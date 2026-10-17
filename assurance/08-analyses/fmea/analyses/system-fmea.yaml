@@ -109,6 +109,8 @@
 # (opendbc#18) and SFM-034 (panda#17 relay-malfunction latch, ratings with the DFMEA). SFM-004.C2 and SFM-005 cite the EPS-fault events;
 # their text still holds (steerTempUnavailable now also follows the lighter prompt after 1.5 s). No other row cites a changed file.
 # SFM-038.C1 links SW FMEA SWF-088 (#187), still rated at BL-005 there.
+# Rev 0.28 (2026-10-17): SFM-034 latch mechanism cites SW FMEA SWF-090 (#196). SWF-088 now O 5 D 8 at BL-006 (#196), matching
+# SFM-038.C1, so the inherited-rating warnings clear. No rating change.
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -117,7 +119,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.27"
+  revision: "0.28"
   status: draft
   baseline: BL-006
   rating_tables: RT-2
@@ -3484,8 +3486,9 @@ failure_modes:
       - description: relayMalfunction fault from panda -> IMMEDIATE_DISABLE
         ref: openpilot/selfdrive/selfdrived/selfdrived.py
       - description: 'BL-006 (reference build): a relay malfunction is latched for the ignition cycle; TOYOTA is refused until ignition
-          off, so a safety-mode change cannot clear the malfunction before a quick re-engagement (panda#17, DFA DM-25). Ratings stay
-          with the DFMEA (DFM-010, DFM-011)'
+          off, so a safety-mode change cannot clear the malfunction before a quick re-engagement (panda#17, DFA DM-25; the software
+          failure mode of this reaction is SW FMEA SWF-090, O 3 D 4 at BL-006). Ratings of the switch causes stay with the DFMEA
+          (DFM-010, DFM-011)'
         ref: panda/board/reference_lock.h
     causes:
       - id: SFM-034.C1

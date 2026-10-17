@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Doc ID** | LD-ITEM-001 |
-| **Revision** | 0.4 (draft; reviewer named, DQ-027 A). 0.3 (draft; the lead's answers applied: Corolla Cross and Lexus UX Hybrid carried along as not assessed, DQ-099 A, IOI-003 closed; comma 3X and comma four both in scope, DQ-011). 0.2 (draft; §A.3 boundary diagram redrawn as Figure A-1, text version kept). 0.1 (draft) |
+| **Revision** | 0.5 (draft; NHTSA SGO applicability assessed by the project, DQ-087 B, IOI-005 closed). 0.4 (draft; reviewer named, DQ-027 A). 0.3 (draft; the lead's answers applied: Corolla Cross and Lexus UX Hybrid carried along as not assessed, DQ-099 A, IOI-003 closed; comma 3X and comma four both in scope, DQ-011). 0.2 (draft; §A.3 boundary diagram redrawn as Figure A-1, text version kept). 0.1 (draft) |
 | **Date** | 2026-10-16 |
 | **Status** | Draft — requires review by the volunteer reviewer once recruited (DQ-027); item-definition confirmation per ISO 26262-2 not yet performed |
 | **Standard** | ISO 26262-3:2018 clause 5 |
@@ -181,7 +181,7 @@ The same modes apply to every vehicle. The FSC (OM-01…OM-08) allocates them.
 | Item | Relevance |
 |---|---|
 | FMVSS (US) | No L2-specific standard; the installation must not compromise compliance of the vehicle's systems |
-| NHTSA Standing General Order 2021-01 (L2 ADAS crash reporting) | Applicability to an open-source, owner-installed system to be assessed (IOI-005) |
+| NHTSA Standing General Order 2021-01 (L2 ADAS crash reporting) | Assessed 2026-10-17 by the project, without legal review (DQ-087 B): no reporting duty on LionDriver today. See IOI-005 |
 | UN R79, UN R171 (non-US markets) | Steering and driver-control-assistance requirements where the vehicle is used outside the US |
 | SAE J3016 | Level 2 classification |
 | ISO 11270, ISO 15622, ISO 22179 | Lane-keeping, ACC and full-speed-range ACC performance references (SAFETY.md lateral limit basis) |
@@ -290,5 +290,5 @@ The identical panda and SoC steering limits under P2 are concrete evidence for D
 | IOI-002 | Variant impact analysis for the other VF-001 members (hatchback, US hybrid, South America hybrid) against §A.10, starting with P3, P5, P7 and P8. | VF-001 |
 | IOI-003 | Closed 2026-10-14: the Corolla Cross and Lexus UX Hybrid stay on the shared `TOYOTA_COROLLA_TSS2` platform and are carried along as not assessed (decision register DQ-099, A). Changes to the platform, including LD-DES-001 vehicle lock records, reach them unassessed; WP-O-03 states it. | VF-001, LD-DES-001 |
 | IOI-004 | Platform-level HARA approach: confirm that the 13 hazards hold for all vehicles, and define how variant ratings are derived (P2, P3, P5, P7, P8 drive S/E/C). | PL-001 |
-| IOI-005 | Assess NHTSA Standing General Order 2021-01 and other reporting obligations for an owner-installed open-source L2 system. | §A.8 |
+| IOI-005 | Closed 2026-10-17, assessed by the project without a lawyer (decision register DQ-087, B; the lead accepts the risk of a wrong conclusion). **SGO 2021-01** (Third Amended, in force 2025-06-16, [NHTSA](https://www.nhtsa.gov/SGOCrashReporting)) binds the manufacturers and operators NHTSA served with it. To the project's knowledge LionDriver and its maintainer have not been served, so the order places no reporting duty on the project. **49 CFR Part 573** (defect reports by equipment manufacturers): whether publishing a retrofit makes the maintainer an equipment manufacturer is not settled here. While the item runs only on the reference vehicle, the project treats it as not applicable. **Recheck** both before any release to other users (G5), or at once if NHTSA serves the order. Meanwhile the SGO criteria remain the model for internal reporting (WP-O-04 §8, T-13). | §A.8 |
 | IOI-006 | Item-definition review and confirmation (ISO 26262-2): by the volunteer reviewer once recruited (decision register DQ-027, A). Until then only the AI pre-check exists, and the HARA cannot be confirmed. | LD-ITEM-001 |

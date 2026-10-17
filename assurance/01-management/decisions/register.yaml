@@ -572,12 +572,13 @@
       title: "You sign, with an external SOTIF review"
       detail: "Uses the external review for independence. Cost: needs that reviewer, parked with the assessor."
   sources: ["assurance/10-safety-case/WP-K-02-sotif-release-argument.md OI-3", "assurance/10-safety-case/WP-K-06-release-record.md OI-3"]
-  status: answered
+  status: applied
   answer:
     choice: B
     via: inbox
     at: 2026-10-14
     by: u_DgEswP8TFzpISXlzh3BD1g
+  applied: {ref: be498d1, record: "WP-K-02 §5.3 and OI-3; WP-K-06 §8 and OI-3; WP-M-08 §3 roles", at: 2026-10-17}
 
 - id: DQ-026
   question: "Should an external human-factors reviewer oversee the tests on human subjects?"
@@ -596,12 +597,13 @@
       title: "You supervise with a written protocol and consent"
       detail: "No cost. Cost: weaker independence and a single point of failure."
   sources: ["assurance/06-validation/WP-V-01-safety-validation.md OI-5", "assurance/01-management/WP-M-08-sotif-plan.md OI-6"]
-  status: answered
+  status: applied
   answer:
     choice: B
     via: inbox
     at: 2026-10-14
     by: u_DgEswP8TFzpISXlzh3BD1g
+  applied: {ref: be498d1, record: "WP-V-01 §5.2 and OI-5; WP-M-08 §3 roles and OI-6", at: 2026-10-17}
 
 - id: DQ-027
   question: "Who reviews and confirms the item definition?"
@@ -641,7 +643,7 @@
       title: "Leave them as notes"
       detail: "No effort now. Cost: they stay unconfirmed until a reviewer looks."
   sources: ["assurance/08-analyses/fmea/reviews/hara-r0.1-precheck.md Pending"]
-  note: "HARA and item-definition pre-checks refreshed; the eleven items for the lead to rate are in precheck-refresh-2026-10-16.md §3. Left: the FSC and DFMEA pre-checks (safety-concept and DFMEA sessions), and the lead's ratings."
+  note: "HARA and item-definition pre-checks refreshed; the eleven items for the lead to rate are in precheck-refresh-2026-10-16.md §3. The lead rated all eleven as proposed (chat, 2026-10-17); recorded in §3. Left: the FSC and DFMEA pre-checks (safety-concept and DFMEA sessions)."
   status: applied
   applied: {ref: "jherrodthomas/LionDriver#162", record: "assurance/08-analyses/fmea/reviews/precheck-refresh-2026-10-16.md", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
@@ -1150,12 +1152,13 @@
       title: "Move the warning to the safety chip"
       detail: "Architecturally clean. Cost: a firmware design change."
   sources: ["assurance/02-concept/WP-C-04-functional-safety-concept.md OI-9", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-625"]
-  status: answered
+  status: applied
   answer:
     choice: A
     via: inbox
     at: 2026-10-14
     by: u_DgEswP8TFzpISXlzh3BD1g
+  applied: {ref: 664d30e, record: "WP-C-04 v0.11 FSR-04.06, §10 E-01 row, OI-9 (route recorded; re-rating waits for the WP-V-02 evidence); WP-S-02 v0.29 TSR-625; WP-W-02 v0.28 SWSR-625", at: 2026-10-17}
 
 - id: DQ-053
   question: "When the driver steers against LionDriver, should it back off, or just show it noticed?"
@@ -1346,12 +1349,13 @@
       title: "Yes: add the fast siren here"
       detail: "Meets the requirement as written. Cost: a firmware change."
   sources: ["assurance/03-system/WP-S-04-timing-ftti-budget.md OI-9"]
-  status: answered
+  status: applied
   answer:
     choice: A
     via: inbox
     at: 2026-10-14
     by: u_DgEswP8TFzpISXlzh3BD1g
+  applied: {ref: 664d30e, record: "WP-S-02 v0.29 TSR-516(a) reworded; WP-S-04 v0.13 §5 heartbeat-loss row, OI-9 closed", at: 2026-10-17}
 
 - id: DQ-062
   question: "How much delay to the car's own emergency braking caused by LionDriver is acceptable?"
@@ -1858,12 +1862,16 @@
       title: "Encrypted offline file with written access rules"
       detail: "No hardware cost. Cost: weaker protection."
   sources: ["assurance/07-supporting/WP-P-10-release-management.md OI-3", "assurance/08-analyses/fmea/design/panda-config-lock-and-fw-authenticity.md D1"]
-  status: answered
+  status: applied
   answer:
     choice: A
     via: inbox
     at: 2026-10-14
     by: u_DgEswP8TFzpISXlzh3BD1g
+  applied:
+    ref: 9b1c06ed2
+    record: "LD-DES-001 §7 D1 (rev 0.2); WP-P-10 §6 key row and OI-3 (v0.4)"
+    at: 2026-10-17
 
 - id: DQ-087
   question: "Does crash reporting (NHTSA's Standing General Order) apply to LionDriver, and should a lawyer check?"
@@ -1882,7 +1890,9 @@
       title: "Assess it yourselves and record why"
       detail: "No cost. Cost: risk of a wrong conclusion."
   sources: ["assurance/08-analyses/fmea/item-definition.md IOI-005", "assurance/09-production-operation/WP-O-04-field-monitoring.md OI-6"]
-  status: answered
+  note: "Applied: the project's own assessment is in item-definition.md IOI-005 (closed). The SGO binds only the entities NHTSA served with it, so no duty unless the project is served. Part 573 is treated as not applicable while the item runs only on the reference vehicle. Recheck both before release to other users (G5). WP-O-04 OI-6 and WP-C-01 §5 point to it."
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#206", record: "assurance/08-analyses/fmea/item-definition.md", at: 2026-10-17}
   answer:
     choice: B
     via: inbox
@@ -2191,7 +2201,9 @@
       title: "Closed courses only until confirmed"
       detail: "No legal risk. Cost: no public-road drive data for now."
   sources: ["assurance/02-concept/WP-C-01-item-definition.md OI-6"]
-  status: answered
+  note: "Applied: vehicle testing on closed courses only until public-road legality is confirmed for the test state, passive data collection included. Recorded in WP-C-01 OI-6 (still open for the confirmation) and §5, and as WP-V-07 basic rule 2."
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#206", record: "assurance/02-concept/WP-C-01-item-definition.md", at: 2026-10-17}
   answer:
     choice: B
     via: inbox

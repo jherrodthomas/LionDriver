@@ -16,6 +16,7 @@
 # partly in the pinned code. Decomposition statuses unchanged.
 # Rev 0.13: panda pinned at 0a7da85 (jherrodthomas/panda#17, LionDriver e5109376): the relay-malfunction part of DM-25 is coded;
 # DM-25 required -> existing_unverified; DFI-07 stays open pending the bench checks.
+# Rev 0.14: DFI-07 also cites SWF-090 (sw-fmea.yaml rev 1.4), the SW FMEA row for the relay-malfunction part of DM-25.
 # Rev 0.10 applies lead decision DQ-209 option A (keep comma's harness box, bench-test it) to DFI-20, DFI-21 and DOI-008.
 # 2026-10-16: fsc_revision 0.3 -> 0.4. FSC rev 0.4 only adds notes on two lead decisions (DQ-053, DQ-064) to
 # FSR-031 and FSR-038; no statement, ASIL, allocation or decomposition changed, so no DFI changes.
@@ -25,7 +26,7 @@ analysis:
   type: dfa
   doc_id: LD-DFA-001
   title: "Dependent Failure Analysis — panda/SoC decompositions (LD-FSC-001)"
-  revision: "0.13"
+  revision: "0.14"
   status: draft
   baseline: BL-004
   fsc_revision: "0.4"
@@ -61,6 +62,7 @@ analysis:
     - {revision: "0.11", date: 2026-10-16, author: Claude (AI-assisted draft), change: "References to the SW FMEA pull requests (#95, #111) replaced by the merged rows SWF-054, SWF-055 (DFI-07) and SWF-056, SWF-057 (DFI-05) of sw-fmea.yaml rev 1.0. Each row checked to describe the coupling cited. No content change"}
     - {revision: "0.12", date: 2026-10-17, author: Claude (AI-assisted draft), change: "opendbc pin 9a13f60 -> 515b9a2 (jherrodthomas/opendbc#15, liondriver-dev 3ba8ca10) checked in the code. DFI-07 insufficient -> open: after a mode change authority needs CRUISE_ACTIVE = 0 then a new rising edge (ATC-26, SWSR-311), a TX-rate revocation keeps blocking engagement for one full window after the last rejected frame (ATC-20, SWSR-518), and the RX checks, EPS_STATUS (0x262) among them, must be valid again before a grant. Still open: relay-malfunction detection is suspended for 1-2 s after each mode set, and nothing is verified on hardware. DM-25 reworded, stays required. Decomposition statuses unchanged"}
     - {revision: "0.13", date: 2026-10-17, author: Claude (AI-assisted draft), change: "panda pin a55bdfc -> 0a7da85 (jherrodthomas/panda#17, liondriver-dev e5109376) checked in the code: the reference lock latches a relay malfunction for the ignition cycle and refuses TOYOTA until the ignition goes off, fed from the 8 Hz tick and from set_safety_mode() before set_safety_hooks() clears the flag. All parts of DM-25 now coded and unit-tested: required -> existing_unverified. DFI-07 stays open: HIL test_11_reference_lock, DM-22 and the latch bench test (impact record change-2026-10-17-relay-malfunction-latch OI-1) not run. Decomposition statuses unchanged"}
+    - {revision: "0.14", date: 2026-10-17, author: Claude (AI-assisted draft), change: "DFI-07 cites SWF-090 of sw-fmea.yaml rev 1.4 (#196): the relay-malfunction reaction cleared by a mode change, fixed by panda#17, O3 D4 AP L. Row checked against the coupling cited. No content change"}
 
 categories:
   - {id: CAT-01, name: Shared power supply, applicable: true, rationale: "Panda and SoC are on the same comma 3X board, powered from the same 12 V input. On the Toyota harness that input is the harness-box supply VIN (ignition through D1, or comma power), which also powers both intercept switches; the ignition sense hangs on the same ignition line (RR-2026-010 HB-03, HB-06)."}
@@ -282,6 +284,7 @@ dfis:
       is now in the pinned code. Still open, not sufficient: nothing is verified on the board (HIL test_11_reference_lock,
       DM-22, and the latch bench test of change-2026-10-17-relay-malfunction-latch OI-1). A false relay malfunction now
       costs the car mode for the rest of the ignition cycle, an availability loss in the safe direction.
+      Rev 0.14: the SW FMEA carries this part as SWF-090 (sw-fmea.yaml rev 1.4, O3 D4 AP L), next to SWF-054 and SWF-055.
   - id: DFI-08
     category: CAT-06
     kind: cascading

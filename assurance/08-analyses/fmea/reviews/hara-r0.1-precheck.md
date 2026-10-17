@@ -7,7 +7,7 @@
 | **Date** | 2026-10-10 |
 | **Performed by** | Claude (AI assistant) |
 | **Nature** | Automated pre-check. **Not** the confirmation review required by ISO 26262-2 (independence I3); that remains OI-007. |
-| **Refreshed** | 2026-10-16 in [precheck-refresh-2026-10-16.md](precheck-refresh-2026-10-16.md): stale items updated and the items for the lead to rate listed (DQ-028) |
+| **Refreshed** | 2026-10-16 in [precheck-refresh-2026-10-16.md](precheck-refresh-2026-10-16.md): stale items updated and the items for the lead to rate listed (DQ-028). The lead rated all eleven as proposed on 2026-10-17 |
 
 ## How to reproduce
 
