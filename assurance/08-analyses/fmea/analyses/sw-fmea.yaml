@@ -81,6 +81,8 @@
 #     reaction cleared by a safety-mode change; DFA DM-25, panda#17): both found after BL-005 and fixed in the reference build at BL-006, O3 D4 L.
 #   - opendbc#18 (ATC-25): a wrong-length frame of an RX-checked message is an RX fault in the reference build; added as a safety mechanism to
 #     SWF-005 and SWF-057 (the host parser still reads short frames, so SWF-057.C2 keeps its rating).
+# Post rev 1.4, ratings unchanged: SWF-088 mechanism text updated for panda bf8102a (after BL-006): EPS-fault siren persistence 0.7 s (DQ-048 A,
+#   worst case 0.96 s from onset, WP-S-04 OI-8 closed) and the siren still sounding after a revocation (DQ-367, panda#18).
 #
 # SW FMEA element pandad (FSC EL-06, System FMEA SFM-SE-017). Ratings per RT-1, against BL-004 (liondriver-dev 682f184,
 # panda 8aa8671, opendbc 7993399). The LIONDRIVER_REFERENCE firmware build is not enabled by any build path at BL-004, so the
@@ -5310,7 +5312,7 @@ failure_modes:
       (soft disable), or no EPS event at all while the driver keeps steering
   - level: next_higher
     description: The item stays engaged with lateral assist lost; the envelope refuses lateral frames (EPS-fault refusal, reference build) and the panda siren sounds
-      after about 1 s of a persistent fault while authority is granted
+      after about 1 s of a persistent fault while authority is granted (0.7 s since panda bf8102a, DQ-048)
   - level: end
     description: Driver not prompted to take over while lateral control is lost; lane departure (counterpart of SFM-038.C1)
     hazard: HZ-004
@@ -5365,7 +5367,9 @@ failure_modes:
     - SWF-ACT-077
     - SWF-ACT-078
   safety_mechanisms:
-  - description: Panda EPS-fault siren after the EPS reports a fault for 1 s while authority is granted (TSR-516(b)); independent of the SoC alerts
+  - description: Panda EPS-fault siren after the EPS reports a fault for 1 s while authority is granted (TSR-516(b), at BL-006 up to 1.26 s from onset); independent
+      of the SoC alerts. Since panda bf8102a (after BL-006) the persistence is 0.7 s, at most 0.96 s from onset within the SG-02 1 s budget (DQ-048 A, WP-S-04 OI-8
+      closed), and a fault seen while engaged still sounds after authority is revoked (DQ-367, panda#18)
     ref: panda/board/drivers/eps_fault_siren.h
   - description: Envelope refuses lateral actuation from the first EPS-fault frame (TSR-110, reference build), so the item does not steer on a faulted EPS
     ref: opendbc_repo/opendbc/safety/modes/toyota.h
