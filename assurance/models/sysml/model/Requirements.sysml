@@ -1363,12 +1363,12 @@ package LionDriverRequirements {
         :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'TSR-634'> tsr_634 : TechnicalSafetyRequirement {
-        doc /* When driver monitoring has fallen back to the wheel-touch policy (camera confidence too low), the escalation times of TSR-608 shall shorten as vehicle speed rises, so that the distance driven without driver supervision up to each alert stays within a bound set in WP-C-08 §5; at highway speed the time to the strongest alert shall be shorter than the fixed 25 s (register DQ-077, A, decided 2026-10-14). The speed table and the bound are derived in WP-C-08 §5 and validated under WP-V-02. */
+        doc /* When driver monitoring has fallen back to the wheel-touch policy (camera confidence too low), the escalation times of TSR-608 shall shorten as vehicle speed rises, so that the distance driven without driver supervision up to each alert stays within a bound set in WP-C-08 §5.4; at highway speed the time to the strongest alert shall be shorter than the fixed 25 s (register DQ-077, A, decided 2026-10-14). The speed table and the bound are set in WP-C-08 §5.4 (DMP-05) and validated under WP-V-02. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
         :>> asil = "A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11)";
         :>> mechanism = "WRN";
-        :>> timing = "speed table in WP-C-08 §5 (to be derived)";
+        :>> timing = "alert k at T_k = 5/15/25 s or D_k = 150/240/395 m since the last driver input, whichever comes first (WP-C-08 §5.4)";
         :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'TSR-701'> tsr_701 : TechnicalSafetyRequirement {
