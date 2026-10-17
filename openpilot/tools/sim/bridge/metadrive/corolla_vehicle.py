@@ -10,9 +10,9 @@ test run on a machine without MetaDrive (see tools/sim/tests/test_corolla_vehicl
 
 What the class changes in MetaDrive and what it does not (assurance/sim/vehicle-3d-model.md sections 1-2):
   * chassis box and drawn body: 4.63 x 1.781 x 1.435 m (E210 sedan; width from the vehicle register, "to confirm")
-  * wheel positions and tyre radius: read from geometry.json so the wheels sit under the mesh's arches
+  * wheel positions and tire radius: read from geometry.json so the wheels sit under the mesh's arches
     (the mesh's wheelbase is 2.709 m against opendbc's 2.700)
-  * mass, suspension, steering, engine and tyre friction: inherited from DefaultVehicle, untouched
+  * mass, suspension, steering, engine and tire friction: inherited from DefaultVehicle, untouched
   * nothing in layer 1 (plant), the safety case or openpilot's camera path: the bridge keeps render_vehicle False,
     so the ego body is not in the images openpilot consumes
 
@@ -28,13 +28,13 @@ VEHICLE_FILE = "vehicle.gltf"
 WHEEL_FILES = ("right_tire_front.gltf", "right_tire_back.gltf")
 GEOMETRY_FILE = "geometry.json"
 
-# E210 sedan, metres (vehicle-3d-model.md section 2)
+# E210 sedan, meters (vehicle-3d-model.md section 2)
 DEFAULT_LENGTH = 4.63
 DEFAULT_WIDTH = 1.781
 DEFAULT_HEIGHT = 1.435
 
-# Fallback when geometry.json is absent: hub centres from the receipt check (vehicle-3d-model.md section 4), metres,
-# relative to the body centre, and the mesh's 18-inch tyre. The export script writes the measured values.
+# Fallback when geometry.json is absent: hub centers from the receipt check (vehicle-3d-model.md section 4), meters,
+# relative to the body center, and the mesh's 18-inch tire. The export script writes the measured values.
 RECEIPT_GEOMETRY = {   # the delivered mesh names its wheel pairs the wrong way round; these follow the tail lamps
   "front_wheelbase": 1.396,
   "rear_wheelbase": 1.314,
@@ -78,19 +78,21 @@ def asset_dir(env=None) -> Path:
 def load_geometry(d: Path) -> dict:
   """Hub geometry measured by the export script, or the receipt-check fallback (with a 'source' key saying which)."""
   p = Path(d) / GEOMETRY_FILE
-  geom = dict(RECEIPT_GEOMETRY)
+  values: dict[str, float] = dict(RECEIPT_GEOMETRY)
   if p.is_file():
     with open(p, encoding="utf-8") as f:
       data = json.load(f)
     for k in RECEIPT_GEOMETRY:
       if k in data:
-        geom[k] = float(data[k])
-    geom["source"] = str(p)
+        values[k] = float(data[k])
+    source = str(p)
   else:
-    geom["source"] = "receipt check (vehicle-3d-model.md section 4); geometry.json not found"
+    source = "receipt check (vehicle-3d-model.md section 4); geometry.json not found"
   for k in RECEIPT_GEOMETRY:
-    if not geom[k] > 0:
-      raise VehicleAssetError(f"{GEOMETRY_FILE}: {k} must be positive, got {geom[k]!r}")
+    if not values[k] > 0:
+      raise VehicleAssetError(f"{GEOMETRY_FILE}: {k} must be positive, got {values[k]!r}")
+  geom: dict[str, float | str] = dict(values)
+  geom["source"] = source
   return geom
 
 
