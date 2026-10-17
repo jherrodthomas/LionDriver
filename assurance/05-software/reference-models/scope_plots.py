@@ -49,6 +49,12 @@ PLOTS = [
    "T11: 0x2E4 at twice its rate; revoked on the 3rd rejected frame in a half-window", ["TX_2E4", "AUTH", "TXFLAG"]),
   ("scope-d18-0x2e4-stops", "D18 T10b 0x2e4 stops while allowed (limit 50 ms)",
    "T10b: the SoC stops sending 0x2E4; authority cleared after more than 50 ms", ["TX_2E4", "AUTH"]),
+  ("scope-d21a-engage-window", "D21a T1a then T1b: heartbeat engaged 200 ms after the edge",
+   "T1a, T1b: the cruise edge opens the 1 s window; authority waits for the heartbeat's engaged flag (LS-06)",
+   ["CRUISE_ACTIVE", "HEARTBEAT", "AUTH"]),
+  ("scope-d21g-main-off-window", "D21g T8: edge while MAIN_ON = 0, heartbeat engaged 50 ms later (SM-F1)",
+   "SM-F1 fixed: an edge while MAIN_ON = 0 opens no window; the later engaged flag grants nothing",
+   ["MAIN_ON", "CRUISE_ACTIVE", "HEARTBEAT", "AUTH"]),
   ("scope-d14-wrong-dlc-brake", "D14 OI-1 brake pressed in a 0x226 frame that fails validation",
    "B2B-01: brake pressed in a wrong-length 0x226 frame (C ignores it; the specification clears)",
    ["BRAKE_PRESSED", "BAD_FRAME", "AUTH"]),
@@ -58,6 +64,7 @@ STRIP = {  # name: (label, kind, unit)
   "MAIN_ON": ("MAIN_ON (0x1D3)", "bool", ""),
   "BRAKE_PRESSED": ("BRAKE_PRESSED (0x226)", "bool", ""),
   "moving": ("any wheel speed ≠ 0", "bool", ""),
+  "HEARTBEAT": ("heartbeat engaged (0xf3)", "bool", ""),
   "AGE_1D2": ("0x1D2 frame age", "num", "ms"),
   "TX_2E4": ("0x2E4 frames sent, per 10 ms", "num", ""),
   "BAD_FRAME": ("wrong-DLC 0x226 frame", "event", ""),
@@ -77,12 +84,12 @@ def opendbc_commit() -> str:
 
 def record(name: str) -> list[dict]:
   import b2b_toy_auth as B
-  from sm_toy_auth_model import Rx, SetMode, SmToyAuth, Tx
+  from sm_toy_auth_model import Heartbeat, Rx, SetMode, SmToyAuth, Tx
   events = sorted(B.directed(True)[name], key=lambda te: te[0])
   c = B.CSide()
   c.start()
   m = SmToyAuth(True, {})
-  sig = {"CRUISE_ACTIVE": 0, "MAIN_ON": 0, "BRAKE_PRESSED": 0, "moving": 0}
+  sig = {"CRUISE_ACTIVE": 0, "MAIN_ON": 0, "BRAKE_PRESSED": 0, "moving": 0, "HEARTBEAT": 1}  # libsafety starts engaged
   last_1d2 = None
   rows = []
   for t, ev in events:
@@ -107,6 +114,8 @@ def record(name: str) -> list[dict]:
         sig["moving"] = int(any(s[f"WHEEL_SPEED_{w}_RAW"] != B.STANDING for w in B.WHEELS))
     if isinstance(ev, Tx) and ev.addr == 0x2E4:
       tx = 1
+    if isinstance(ev, Heartbeat):
+      sig["HEARTBEAT"] = int(ev.engaged)
     rows.append({"t_ms": t / 1000, **sig,
                  "AGE_1D2": (t - last_1d2) / 1000 if last_1d2 is not None else 0.0,
                  "TX_2E4": tx, "BAD_FRAME": bad, "BAD_CKS": cks, "MODE_SET": mode,

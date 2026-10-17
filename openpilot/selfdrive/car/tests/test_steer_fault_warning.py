@@ -69,11 +69,20 @@ class TestSteerFaultWarning(unittest.TestCase):
     self.assertEqual(set(names[STEER_FAULT_SILENT_FRAMES:]), {FULL})
 
   def test_released_after_holding(self):
-    # driver keeps steering through the fault onset: no alert while holding (upstream), but after release the
-    # fault is older than 1.5 s, so the take-over request follows at once
+    # TSR-607 (c): driver keeps steering through the fault onset: no alert for the first 1.5 s, then the lighter
+    # prompt while still steering; after release the fault is older than 1.5 s, so the take-over request follows at once
     self.step(car_state(pressed=True), 10)
-    self.assertEqual(set(self.step(car_state(fault=True, pressed=True), int(3 / DT_CTRL))), {None})
+    names = self.step(car_state(fault=True, pressed=True), int(3 / DT_CTRL))
+    self.assertEqual(set(names[:STEER_FAULT_SILENT_FRAMES]), {None})
+    self.assertEqual(set(names[STEER_FAULT_SILENT_FRAMES:]), {SILENT})
     self.assertEqual(set(self.step(car_state(fault=True), int(1 / DT_CTRL))), {FULL})
+
+  def test_short_fault_while_holding(self):
+    # a fault shorter than 1.5 s while the driver steers stays quiet, as upstream
+    self.step(car_state(pressed=True), 10)
+    names = self.step(car_state(fault=True, pressed=True), STEER_FAULT_SILENT_FRAMES)
+    self.assertEqual(set(names), {None})
+    self.assertEqual(set(self.step(car_state(pressed=True), 10)), {None})
 
   def test_new_fault_rearms(self):
     # a fault that clears and returns after a new override gets the lighter prompt again

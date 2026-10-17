@@ -174,8 +174,8 @@ svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:
 <path class="arrow " d="M482.0,506.0 L476.0,508.7 L476.0,503.3 Z"/>
 <text x="492.0" y="510.0" class="tb" text-anchor="start">T7</text>
 <text x="534.0" y="510.0" class="t" text-anchor="start">safety mode set</text>
-<rect class="k3" x="771.3" y="499" width="88.7" height="15" rx="7"/>
-<text x="815.6" y="510.0" class="ts" text-anchor="middle">D10 D19a D19b</text>
+<rect class="k3" x="741.8" y="499" width="118.2" height="15" rx="7"/>
+<text x="800.9" y="510.0" class="ts" text-anchor="middle">D10 D19a D19b D21f</text>
 <path class="edge todo" d="M460.0,528 L480.0,528"/>
 <path class="arrow todo" d="M482.0,528.0 L476.0,530.7 L476.0,525.3 Z"/>
 <text x="492.0" y="532.0" class="tb" text-anchor="start">T10d</text>
