@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.25 | draft | BL-005 | RT-2 | 2026-10-16 |
+| 0.26 | draft | BL-005 | RT-2 | 2026-10-16 |
 
 **Scope.** LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda, software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005), while the vehicle is driven by a licensed driver inside the ODD: limited-access highways only since WP-C-02 / WP-C-03 v0.4 (DQ-023), up to 110 km/h (DQ-260). Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are preserved), added because the harness intercepts the stock ADAS camera.
 
@@ -489,10 +489,11 @@ Effects:
 |---|---|---|:-:|:-:|:-:|---|
 | `SFM-018.C1` Driver torque threshold too high or signal parsed wrong | • Upstream opendbc Toyota port (DBC, carstate, carcontroller) with upstream review and route-based car tests; no LionDriver requirements; no field-exposure evidence for this configuration is credited <sub>opendbc_repo/opendbc/car/toyota</sub> | • As rated in the SW FMEA (SWF-057.C1, D 9 at BL-005): process_replay (CI) replays the TOYOTA3 Corolla TSS2 segment and compares with reference logs made from the same code, so it cannot find a defect already present at the baseline; not designed for this cause <sub>openpilot/selfdrive/test/process_replay/test_processes.py</sub><br>• opendbc car tests check carState against the panda safety model on recorded routes (test_models); targeted at parse and pack consistency, not proven by fault injection, and run only where the route corpus is available <sub>opendbc_repo/opendbc/car/tests/test_models.py</sub> | 6 | 9 | 🔴 **H** | SFM-ACT-003 |
 | `SFM-018.C2` Controller keeps commanding torque during override | • Upstream design intent (driver overpowers a bounded torque); no LionDriver requirement analysis of the deviation <sub>openpilot/selfdrive/selfdrived/state.py:8</sub> | • test_maintain_states checks that overriding persists with OVERRIDE events; it does not check commanded torque <sub>openpilot/selfdrive/selfdrived/tests/test_state_machine.py</sub> | 8 | 9 | 🔴 **H** | — |
+| `SFM-018.C3` The panda envelope passes STEERING_LKA torque that opposes the driver while the driver overrides: the Toyota LKA check covers magnitude, rate and measured-torque error only, and STEER_TORQUE_DRIVER is used only on the LTA path (toyota.h:298-310, 421-424; GAP-02). TSR-304 is not implemented in either build, so only the host 500-unit cut-off (C1, C2) stops the torque | • Upstream design (a bounded torque the driver can overpower); TSR-304 decided (DQ-053) but not implemented <sub>opendbc_repo/opendbc/safety/modes/toyota.h</sub> | • As rated in the SW FMEA (SWF-087.C1, D 10): test_toyota.py tests the measured-torque limit, not torque opposing the driver on the LKA path | 8 | 10 | 🔴 **H** | SFM-ACT-016 |
 
 Safety mechanisms: (1) steerOverride -> OVERRIDE_LATERAL state · (2) EPS torque limit allows driver to overpower the request
 
-[Monitoring and system response](#7-monitoring-and-system-response): `SFM-018.C1` mechanism 2: M 10 · F 6 · S after response 10 → 🔴 **H**<br>`SFM-018.C2` mechanism 2: M 10 · F 8 · S after response 10 → 🔴 **H**
+[Monitoring and system response](#7-monitoring-and-system-response): `SFM-018.C1` mechanism 2: M 10 · F 6 · S after response 10 → 🔴 **H**<br>`SFM-018.C2` mechanism 2: M 10 · F 8 · S after response 10 → 🔴 **H**<br>`SFM-018.C3` not rated here: The cause is the missing panda override supervision itself, which is the MSR mechanism of C1 and C2; its absence is rated there as M 10 (msr-plan §3)
 
 <sub>Note: HARA input: automation resists evasive steering. Lead decision DQ-053 (2026-10-14, option A): when the driver steers against LionDriver it backs off and shows a cue; SFM-ACT-016 carries the design.</sub>
 
@@ -911,7 +912,7 @@ Safety mechanisms: (1) EPS-fault siren from the panda when LKA_STATE reports a f
 | SFM-ACT-013 | monitoring | Check on the host, within the SG-01 FTTI, that the panda reports controls_allowed false while the item is disengaged (the reverse of the controlsMismatch check, which at BL-005 still covers only engaged with authority withdrawn), with a disable and an alert. The requirement is TSR-630, within 0.3 s (WP-S-02 §12.3a; WP-S-04 T-32, not implemented) |  | open | — | — |
 | SFM-ACT-014 | monitoring | Specify in the TSC a steering-direction plausibility monitor (commanded torque sign against measured yaw rate and lane-relative lateral motion), or justify its absence against HZ-003 |  | open | — | — |
 | SFM-ACT-015 | monitoring | Detect stale commands and inputs within the SG-01 FTTI: command-frame freshness in the MCU with an active zero frame (TSR-408, TSR-109) and frozen-content and age checks on model outputs in controlsd (TSR-602, TSR-631, AIR-17) |  | in_progress | — | — |
-| SFM-ACT-016 | monitoring | Supervise driver override in the panda: driver steering torque above the override threshold limits or revokes lateral authority within the SG-05 0.2 s budget (TSR-304). Behaviour decided by the lead (DQ-053, option A): back off on override and show a cue. Requirements: TSR-304 (timing tied to the SG-05 budget) and TSR-628 (WP-S-02 §12.3a) |  | open | — | — |
+| SFM-ACT-016 | monitoring | Supervise driver override in the panda: driver steering torque above the override threshold limits or revokes lateral authority within the SG-05 0.2 s budget (TSR-304). Behaviour decided by the lead (DQ-053, option A): back off on override and show a cue. Requirements: TSR-304 (timing tied to the SG-05 budget) and TSR-628 (WP-S-02 §12.3a) |  | open | SFM-018.C3 | — |
 | SFM-ACT-017 | monitoring | Add WP-S-04 FTTI rows for the warning paths without one (insufficient lateral control, late or insufficient braking warnings, SG-008 unintended engagement, driver monitoring), so these mechanisms can be compared with a time budget |  | completed | — | — |
 | SFM-ACT-018 | monitoring | Detect silent loss of the actuation path: report forwarded and refused TX frames from the panda, and compare EPS and PCM acceptance (LKA_STATE, ACC status) with the commands, warning within the SG-02/06 1 s budget |  | in_progress | — | — |
 | SFM-ACT-019 | design_change | Revoke lateral authority in the panda when it rejects a steering frame while authority is granted, and keep it revoked until a new valid engagement (TSR-108; lead decision DQ-060, option A). At BL-005 the frame is dropped and only the host disengages (pandaTxBlocked) |  | open | SFM-002.C1, SFM-002.C2, SFM-002.C4 | — |
@@ -975,6 +976,7 @@ Safety mechanisms: (1) EPS-fault siren from the panda when LKA_STATE reports a f
 | `SFM-017.C2` | Brake press does not disengage | 10/7/8 | **none** |
 | `SFM-018.C1` | Item resists driver steering input | 10/6/9 | SFM-ACT-003 |
 | `SFM-018.C2` | Item resists driver steering input | 10/8/9 | **none** |
+| `SFM-018.C3` | Item resists driver steering input | 10/8/10 | SFM-ACT-016 |
 | `SFM-019.C1` | Cancel button does not disengage | 10/6/9 | SFM-ACT-003 |
 | `SFM-020.C1` | Accelerator override not honored | 10/6/9 | SFM-ACT-003 |
 | `SFM-022.C1` | Inattentive driver not detected | 10/7/10 | SFM-ACT-009 |
@@ -1016,7 +1018,7 @@ Safety mechanisms: (1) EPS-fault siren from the panda when LKA_STATE reports a f
 
 FMEA-MSR rates what happens in the car when a cause occurs: does a diagnostic catch it, and does the system reach a safe state within the fault-tolerant time interval (FTTI)? It adds frequency (F), monitoring (M) and the severity after the response, with its own action priority; S, O, D and AP above are unchanged. Scales: [rating-tables.md §7](../../rating-tables.md#7-fmea-msr--monitoring-and-system-response-added-in-rt-2); scope and plan: [msr-plan.md](../../msr-plan.md); FTTI rows: [WP-S-04 §3.7](../../../../03-system/WP-S-04-timing-ftti-budget.md#37-summary-of-fttis-and-budgets).
 
-**Coverage:** 67 of 74 in-scope causes rated, 7 rated elsewhere (`msr: complete`).
+**Coverage:** 67 of 75 in-scope causes rated, 8 rated elsewhere (`msr: complete`).
 
 > [!WARNING]
 > The MSR action priority uses a provisional table until the AIAG-VDA handbook table is transcribed (rating-tables §7.4). Read the M and F columns; the AP column will be re-rated.

@@ -66,8 +66,8 @@
 <line x1="634.0" y1="425.0" x2="634.0" y2="476.0" class="w"/>
 <line x1="876.0" y1="425.0" x2="876.0" y2="476.0" class="w"/>
 <line x1="1118.0" y1="425.0" x2="1118.0" y2="476.0" class="w"/>
-<rect x="525.5" y="478.5" width="220" height="136.5" rx="9" class="shadow"/>
-<rect x="524" y="476.0" width="220" height="136.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<rect x="525.5" y="478.5" width="220" height="158.5" rx="9" class="shadow"/>
+<rect x="524" y="476.0" width="220" height="158.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
 <path d="M533,476.0 H735 A9,9 0 0 1 744,485.0 V481.0 H524 V485.0 A9,9 0 0 1 533,476.0 Z" fill="#5f6368"/>
 <text x="538" y="501.0" class="id">BE-5.05</text>
 <text x="730" y="501.0" class="kind">BASIC</text>
@@ -80,7 +80,9 @@
 <text x="584.9" y="593.0" class="chip" fill="#fff">latent, design</text>
 <rect x="636.8" y="581.5" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="663.8" y="593.0" class="chip" fill="#fff">SWF-087</text>
-<circle cx="634.0" cy="629.5" r="16" fill="#eceef1" stroke="#5f6368" stroke-width="1.7"/>
+<rect x="538.0" y="603.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="565.0" y="615.0" class="chip" fill="#fff">SFM-018</text>
+<circle cx="634.0" cy="651.5" r="16" fill="#eceef1" stroke="#5f6368" stroke-width="1.7"/>
 <rect x="767.5" y="478.5" width="220" height="173.0" rx="9" class="shadow"/>
 <rect x="766" y="476.0" width="220" height="173.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
 <path d="M775,476.0 H977 A9,9 0 0 1 986,485.0 V481.0 H766 V485.0 A9,9 0 0 1 775,476.0 Z" fill="#5f6368"/>

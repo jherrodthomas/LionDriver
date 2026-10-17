@@ -632,10 +632,11 @@ events:
     ref: AOU-03R
   - id: BE-5.05
     class: systematic_sw
-    fmea: [SWF-087]
+    fmea: [SWF-087, SFM-018]
     note: >-
       SWF-087.C1 (no driver-override check on the LKA path in toyota.h, GAP-02; TSR-304 not implemented, SWF-ACT-074). The
-      host side is BE-5.06 (SWF-038, SWF-044). SW FMEA rev 1.2 closes this part of F-28
+      host side is BE-5.06 (SWF-038, SWF-044). SW FMEA rev 1.2 closes this part of F-28. SFM-018.C3 (System FMEA rev 0.26)
+      is the system-level view, linked to SWF-087
   - id: BE-5.06
     class: systematic_sw
     fmea: [SWF-038, SWF-044, SFM-018]
