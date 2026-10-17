@@ -1487,7 +1487,7 @@
   acceptance: "Warning ≤ 1 s"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `steerFaultTemporary/Permanent`"
+  baseline_impl: "Impl: `steerFaultTemporary/Permanent`; TSR-607 (b) escalation after 1.5 s in `7158a9a` (`car_events.py`, `tests/test_steer_fault_warning.py`)"
   status: proposed
   source: WP-W-02
 
