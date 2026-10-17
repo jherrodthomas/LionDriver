@@ -711,7 +711,7 @@
       title: "Leave them unstated"
       detail: "No work. Cost: a near-certain reviewer finding."
   sources: ["assurance/trace/README.md “4 | WP-C-03 marks HE-01.3 and HE-01.4 ⚠ but states no altern”"]
-  note: "The fallback ASILs are stated for every ⚠ event; the lead confirms them in the HARA review (WP-C-03 OI-9)."
+  note: "The fallback ASILs are stated for every ⚠ event (WP-C-03 §5.12). The lead confirmed them as proposed in chat on 2026-10-17; WP-C-03 v0.4.4 records it and closes OI-9."
   status: applied
   applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 §5.12; trace hazards.yaml asil_if_aou_fails", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
