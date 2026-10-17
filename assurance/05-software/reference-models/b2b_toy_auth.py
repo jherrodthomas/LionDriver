@@ -61,6 +61,7 @@ MSG_NAME = {0x0AA: "WHEEL_SPEEDS", 0x260: "STEER_TORQUE_SENSOR", 0x1D2: "PCM_CRU
 ACTUATION = {0x2E4: 100, 0x343: 33}  # SoC actuation frames a running host sends (SWSR-408 supervises both)
 WHEELS = ("FR", "FL", "RR", "RL")
 STANDING = 6767            # raw wheel speed for 0 km/h (factor 0.01, offset -67.67)
+WINDOW_US = 1_000_000      # record T1b "within 1 s of the edge": scenario timing, independent of the model's constant
 
 
 # ------------------------------------------------------------------ event streams
@@ -249,7 +250,7 @@ def directed(reference: bool) -> dict[str, list]:
     if before:
       before(f)
     if hb_after_us is not None:
-      edge = max(t for t, ev in f.events if isinstance(ev, Rx) and ev.addr == 0x1D2 and ev.signals["CRUISE_ACTIVE"])
+      edge = min(t for t, ev in f.events if isinstance(ev, Rx) and ev.addr == 0x1D2 and ev.signals["CRUISE_ACTIVE"])  # the rising edge
       f.run(max(0, edge + hb_after_us - f.now)); f.emit(Heartbeat(True))
     f.run(200_000)
     return f
@@ -258,9 +259,9 @@ def directed(reference: bool) -> dict[str, list]:
   if reference:
     for delta, tag in ((0, "at"), (1, "1 us past")):
       f = new(); f.emit(Heartbeat(False)); f.engage()
-      edge = max(t for t, ev in f.events if isinstance(ev, Rx) and ev.addr == 0x1D2 and ev.signals["CRUISE_ACTIVE"])
-      f.run(edge + M.ENGAGE_WINDOW_US + delta - f.now - 1)
-      f.now = edge + M.ENGAGE_WINDOW_US + delta
+      edge = min(t for t, ev in f.events if isinstance(ev, Rx) and ev.addr == 0x1D2 and ev.signals["CRUISE_ACTIVE"])  # the rising edge
+      f.run(edge + WINDOW_US + delta - f.now - 1)
+      f.now = edge + WINDOW_US + delta
       f.emit(Heartbeat(True)); f.emit(Tick()); f.run(100_000)
       S[f"D21b T1b or T1c: heartbeat engaged and a safety tick {tag} 1 s after the edge"] = f.events
 
