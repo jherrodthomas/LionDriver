@@ -153,3 +153,38 @@ baselines:
         teleoprtc_repo: 1aa8fc433bef1519a95c0700c96258c3be6dfb34
         tinygrad_repo: d3f09c9bbd542fbfbe68c8569a1173550c408969
       os: AGNOS 19.9 (launch_env.sh)
+  - id: BL-006
+    status: proposed
+    description: >-
+      BL-005 plus liondriver-dev up to #186 (2026-10-17). Host: a temporary EPS fault after a recent override or at standstill
+      gets the lighter prompt for at most 1.5 s, then the take-over request (TSR-607 (b), DQ-342 A, #174), and while the
+      driver keeps steering through a fault the lighter prompt follows after 1.5 s (TSR-607 (c), DQ-366 A, f350f5b);
+      test_steer_fault_warning.py collected by the CI test runner. opendbc 9a13f60 -> 62b89a3: no re-engagement while a
+      TX-rate excess persists (ATC-20) and no authority after a safety-mode change without a new engagement
+      (#15, DQ-079, DQ-080); safety tests for angle-initializing frames and TX-rate rejection saturation (#16); a cruise
+      edge refused for MAIN_ON = 0 also closes the engagement window (#17, SM-F1); in the reference build a wrong-length
+      frame of an RX-checked message is an RX fault that clears controls_allowed at once (#18, ATC-25, SWSR-402, B2B-01).
+      panda a55bdfc -> 0a7da85: in the reference build a relay malfunction is latched for the ignition cycle and TOYOTA is
+      refused until ignition off (panda#17, DFA DM-25). Not in BL-006: TSR-630..633, SFM-ACT-005, the host use of the
+      panda epsFault and requestsRejected fields (SFM-ACT-024) and the panda driver-override check (TSR-304).
+    vehicle:
+      make: Toyota
+      model: Corolla
+      model_year: 2020
+      trim: LE
+      market: US
+      platform_notes: TSS2; openpilot longitudinal per docs/CARS.md (Corolla 2020-22)
+    hardware:
+      device: comma 3X
+      panda: integrated in device
+      harness: Toyota A connector + harness box + comma power v3 (per docs/CARS.md)
+    software:
+      repo_commit: c61e31b909a50e360355409309b059da3246f8a2
+      submodules:
+        panda: 0a7da851d6a7c7ca65cee19fa09ea2d90a2ceb17
+        opendbc_repo: 62b89a3e651a3a3dd6aa8e4da1ea859a9d9b2aff
+        msgq_repo: 0e266c1dbcf7328beee3e57b4a8688555387c877
+        rednose_repo: 8671c17c3a4cdc4be5df07a068039e2da5b94eaa
+        teleoprtc_repo: 1aa8fc433bef1519a95c0700c96258c3be6dfb34
+        tinygrad_repo: d3f09c9bbd542fbfbe68c8569a1173550c408969
+      os: AGNOS 19.9 (launch_env.sh)
