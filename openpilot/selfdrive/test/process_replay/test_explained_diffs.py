@@ -7,6 +7,7 @@ from openpilot.selfdrive.test.process_replay.test_processes import EXPLAINED_DIF
 # LionDriver: the process-replay exclusions for explained diffs stay as narrow as their entries say
 
 TESLA_CARD = ("aebd8f1d4ea16066|000002d8--5850d3ea5c--2", "card")
+TOYOTA_DMONITORINGD = ("regen218A4DCFAA1|2025-04-08--22-57-51--0", "dmonitoringd")
 
 
 def sendcan(*frames):
@@ -55,3 +56,18 @@ class TestExplainedDiffs(unittest.TestCase):
     new_builder = new[0].as_builder()
     new_builder.carParams.steerRatio = 16.
     self.assertTrue(compare_logs(ref, [new_builder.as_reader()], entry["fields"]))
+
+  def test_tsr634_wheeltouch_awareness_diff_is_explained(self):
+    entry = EXPLAINED_DIFFS[TOYOTA_DMONITORINGD]
+
+    def dm_state(awareness_percent, alert_level=log.DriverMonitoringState.AlertLevel.none):
+      msg = log.Event.new_message()
+      msg.init("driverMonitoringState")
+      msg.driverMonitoringState.wheeltouchPolicyState.awarenessPercent = awareness_percent
+      msg.driverMonitoringState.alertLevel = alert_level
+      return msg.as_reader()
+
+    self.assertTrue(compare_logs([dm_state(78)], [dm_state(77)]))
+    self.assertEqual(compare_logs([dm_state(78)], [dm_state(77)], entry["fields"]), [])
+    # the alert level is still compared
+    self.assertTrue(compare_logs([dm_state(78)], [dm_state(77, log.DriverMonitoringState.AlertLevel.one)], entry["fields"]))
