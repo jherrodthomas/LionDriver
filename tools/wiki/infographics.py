@@ -65,7 +65,7 @@ REQUIREMENTS = (
 )
 WORKFLOW_NOTE = {
   "assurance": "records, trace, links, figures, register", "safety": "envelope tests, coverage, MISRA",
-  "b2b": "model against the safety C", "safety case snapshot": "builds the PDF", "wiki": "pages, links, infographics",
+  "b2b": "reference model vs the safety C code", "safety case snapshot": "builds the PDF", "wiki": "pages, links, infographics",
   "tests": "upstream unit tests, replay", "docs": "upstream docs build", "PR review": "labels by path",
   "diff report": "replay diff comment",
 }
