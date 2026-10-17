@@ -14,8 +14,26 @@ restriction (Toyota design rights). This folder is git-ignored except for this f
 | Where they live | Private repository `jherrodthomas/LionDriver-assets` (Git LFS), folder `corolla-e210-3dmolier-1450755/` with SHA-256 sums; a local copy goes in this folder (see [`../vehicle-3d-model.md`](../vehicle-3d-model.md) §4–5) |
 | What is allowed in public | Code that loads the mesh from a path, and rendered images and figures made from it |
 
-`tools/` is the one committed subfolder: `vehicle_figures.py` (silhouette extraction and the mock-up figures) and
-`render_views.py` (the documentation renders). Both read the GLB from this folder when it is present.
+`tools/` is the one committed subfolder: `vehicle_figures.py` (silhouette extraction and the mock-up figures),
+`render_views.py` (the documentation renders) and `corolla_e210_metadrive_export.py` (headless Blender script that
+writes the MetaDrive files below). All read the GLB from this folder when it is present.
 
-To use the mesh locally, place the files here and point the loader at this folder (`LIONDRIVER_VEHICLE_ASSETS`, to
-be defined with the MetaDrive vehicle class). Nothing in CI depends on these files.
+## Derived files for MetaDrive (`corolla_e210/`, ignored)
+
+Written by `tools/corolla_e210_metadrive_export.py` from `1450755-gltf-extended.glb` (see
+[`../vehicle-3d-model.md`](../vehicle-3d-model.md) §2 and §6). Same licence as the source: private repository only,
+folder `blender-decimated-corolla_e210/` next to the delivered files, with the `SHA256SUMS` the script writes.
+
+| File | Content | SHA-256 |
+|---|---|---|
+| `vehicle.gltf` (+ `.bin`, `textures/`) | body without wheels or interior (body and wheels together target 70 k triangles), origin on the ground under the body centre, forward +Y | *pending: the script has not been run yet (no Blender on the authoring machine, 2026-10-17); paste from `SHA256SUMS` after the first run* |
+| `right_tire_front.gltf`, `right_tire_back.gltf` | right wheels (rim, tyre, disc), origin at the hub; MetaDrive mirrors them for the left side | *pending, as above* |
+| `vehicle_full.gltf` | body plus four wheels on hub empties, for figures and viewers, not read by MetaDrive | *pending, as above* |
+| `geometry.json` | hub centres, tyre radius, body box, triangle counts, source checksum; read by the vehicle class | *pending, as above* |
+
+To use the mesh in layer 3, set `LIONDRIVER_VEHICLE_ASSETS` to the folder that holds these files (this folder's
+`corolla_e210/`, or the private repository's `blender-decimated-corolla_e210/`) before starting the bridge;
+`openpilot/tools/sim/bridge/metadrive/corolla_vehicle.py` fails with a message naming the missing file otherwise.
+Unset, the bridge uses MetaDrive's stock vehicle. Nothing in CI depends on these files.
+
+`tools/corolla_e210_gltf_export.py` (pure Python, no Blender, no decimation) wrote `corolla_e210/` on 2026-10-17; `vehicle.gltf` sha256 starts `4cee6578f03b50a1`; the full set with `SHA256SUMS` is `gltf-export-corolla_e210/` in the private repository.
