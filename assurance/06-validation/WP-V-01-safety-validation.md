@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-01 Safety validation plan, specification and report |
 | Standard reference | ISO 26262-4:2018 §8 (safety validation); ISO 26262-3:2018 §6 (controllability basis), §7 (external measures, AoU); ASPICE 4.0 VAL.1. Informative: RESPONSE 3 Code of Practice for ADAS controllability assessment; ISO 11270, ISO 15622 |
-| Version | 0.6 (VS-VAL-07 parents corrected to H-01, H-04 and HE-04.2, the hazards AOU-10 is credited for in WP-C-01; 2026-10-13). 0.5 (§3 verification and validation hierarchy added as Figure 3-1; 2026-10-13). 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
+| Version | 0.7 (§5.2 supervision decided: the project lead supervises the human-subject tests with a written protocol and consent, no external human-factors reviewer, DQ-026; 2026-10-17). 0.6 (VS-VAL-07 parents corrected to H-01, H-04 and HE-04.2, the hazards AOU-10 is credited for in WP-C-01; 2026-10-13). 0.5 (§3 verification and validation hierarchy added as Figure 3-1; 2026-10-13). 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (plan and specification). Report section is a template: **Not yet executed** |
 | ASIL / scope | Up to ASIL C (SG-01), D if AOU-01/02 fail ([WP-C-03](../02-concept/WP-C-03-hara.md)) |
 | Author | Assurance team (initial draft) |
@@ -83,7 +83,7 @@ Timing values are the preliminary FTTI allocation of [WP-C-04 §8](../02-concept
 
 ### 5.2 Driver controllability tests
 
-Test subjects: licensed drivers who are not project members and have not driven LD-SDA before, briefed only with the user information ([WP-O-03](../09-production-operation/WP-O-03-user-information-safety-warnings.md)). The safety driver sits in the front passenger seat with the abort switch; the test operator in the rear. Twenty valid subjects per test condition, unless the worst-case condition is shown on a smaller set first (speed escalation: a condition is run only after the slower one passed). Ethics: informed consent, right to stop, debrief.
+Test subjects: licensed drivers who are not project members and have not driven LD-SDA before, briefed only with the user information ([WP-O-03](../09-production-operation/WP-O-03-user-information-safety-warnings.md)). The safety driver sits in the front passenger seat with the abort switch; the test operator in the rear. Twenty valid subjects per test condition, unless the worst-case condition is shown on a smaller set first (speed escalation: a condition is run only after the slower one passed). Ethics: informed consent, right to stop, debrief. Supervision (decided 2026-10-14 by the project lead, DQ-026 option B): the project lead supervises every §5.2 session under a written test protocol and signed consent; there is no external human-factors reviewer. This is weaker independence and makes the lead a single point of failure for subject protection; the protocol therefore names the abort criteria, and any subject may stop a run.
 
 VS-VAL-10, -12, -13, -14 and -16 also supply P(not controlled) to the SOTIF validation targets ([WP-V-02](WP-V-02-sotif-vv-strategy.md) §3.3). Their result row therefore reports, per tested speed and condition, the number of valid subjects, the number who did not control the event and the one-sided 95 % upper bound on that share.
 
@@ -189,5 +189,5 @@ Vehicle-level repetition of selected [WP-V-05](WP-V-05-fault-injection.md) cases
 | OI-2 | Replace preliminary SG timing values with WP-S-04 FTTIs |
 | OI-3 | Fix the AOU-02R force limit and the CA-01 lateral margin with the WP-C-04 / WP-C-08 owners before §5.2 starts |
 | OI-4 | Define the configuration-control procedure for characterization and fault-injection builds (VS-VAL-02, -05, §5.3) with WP-P-01 |
-| OI-5 | Prepare consent, recruitment and debrief material for test subjects; decide whether an external human-factors reviewer supervises §5.2 (WP-M-08 OI-6) |
+| OI-5 | Write the §5.2 test protocol and the consent, recruitment and debrief material for test subjects. Supervision decided 2026-10-14 (DQ-026 option B): the project lead supervises, no external human-factors reviewer (WP-M-08 OI-6) |
 | OI-6 | Procure the instrumented steering wheel, independent CAN logger, soft target, abort switch and rear-facing camera |
