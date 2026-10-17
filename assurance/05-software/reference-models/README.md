@@ -71,7 +71,7 @@ Deviations: the places where the literal specification and the C are found to di
 
 The two temporary deviations `mode_set_regrant` and `tx_rate_regrant` reproduced the C before ATC-26 and ATC-20. They were deleted at the pin bump to opendbc `515b9a2`, which contains both changes ([results](results/B2B-TOY-AUTH-2026-10-13.md) §11).
 
-The harness keeps the heartbeat's engaged flag set, so the LS-06 engagement window (record state ENGAGE_PENDING) grants at the edge and is not exercised; the model has no window. Finding SM-F1 (an edge while MAIN_ON = 0 opens the window) was found by reading the code and a unit-level probe, not by this harness ([change record](../../07-supporting/impact/change-2026-10-16-pin-515b9a2.md)).
+The harness keeps the heartbeat's engaged flag set, so the LS-06 engagement window (record state ENGAGE_PENDING) grants at the edge and is not exercised; the model has no window. Finding SM-F1 (an edge while MAIN_ON = 0 opens the window) was found by reading the code and a unit-level probe, not by this harness ([change record](../../07-supporting/impact/change-2026-10-16-pin-515b9a2.md)). It is fixed since opendbc `98d3be1` and covered by an opendbc unit test, still not by this harness ([change record](../../07-supporting/impact/change-2026-10-17-pin-98d3be1.md) OI-1).
 
 Seeded model faults (`MUTANTS` in the harness) check the comparison itself. Each one changes a constant or a guard in the model. Each is run with all deviations on and must cause at least one divergence; one that does not is reported as `detected=False`.
 

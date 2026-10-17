@@ -136,3 +136,12 @@
   aou_status: "Unverified"
   status: proposed
   source: WP-C-01
+
+- id: AOU-16
+  kind: aou
+  text: "When the item brings the vehicle to a standstill under ACC (the no-response reaction of FSR-02.09), the PCM keeps it stopped and held, without the driver pressing the brake, for as long as ACC stays engaged, and does not let it roll or move off. How long the PCM holds, and whether it releases after a time-out, is not known for the reference car"
+  credited_in: "WP-C-03 SG-08 safe state (DQ-365 A); WP-C-04 FSR-02.09; WP-A-04 §13 UE-8.11"
+  verification_approach: "Vehicle test on the reference Corolla (DQ-365 option A): forced stop under ACC on level ground and on a grade at the ODD bound (6 %), with the hold duration and any time-out measured"
+  aou_status: "Not started"
+  status: proposed
+  source: WP-C-01
