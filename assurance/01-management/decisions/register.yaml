@@ -4585,3 +4585,30 @@
       detail: "Most useful in daily driving. Cost: the ODD limit rests on the driver; LS-13 stays a known gap, and an assessor may ask why an ODD boundary has no technical check."
   sources: ["assurance/08-analyses/WP-A-05-stpa.md LS-13, OI-15", "assurance/01-management/decisions/register.yaml DQ-023", "assurance/02-concept/WP-C-07-sotif-functional-modifications.md FM-08"]
   status: queued
+
+- id: DQ-367
+  question: "With an EPS fault and a host that keeps asking for torque, authority now drops after 50 ms and the panda's EPS-fault siren no longer sounds. Restore the siren, accept losing it, or keep the old rule?"
+  context: "The SWSR-408 change (opendbc#19, not yet pinned) counts only accepted command frames. During an EPS fault the panda refuses torque frames (TSR-110), so if the host keeps sending them, authority is revoked after 50 ms. The EPS-fault siren (TSR-516(b), panda `eps_fault_siren.h`) needs the fault to last 1 s **while authority is granted**, so it now never sounds. In the plant simulation F-07 the siren at 1.0 s disappears; drift and driver correction times are unchanged. A healthy openpilot stops asking for torque on an EPS fault and is not affected: this is the failed-host case the panda siren exists for."
+  reversibility: easy
+  blocks: "LionDriver pin bump to opendbc 27f20db (SWSR-408, B2B-05); TSR-516(b)"
+  gate: G3
+  decider: lead
+  asked: 2026-10-17
+  batch: 7
+  options:
+    - key: A
+      recommended: true
+      title: "Keep the new rule and restore the siren: a fault that began while authority was granted still sounds after 1 s"
+      detail: "F-07 sounds at 1.0 s again and no new siren cases appear. Cost: a small panda change to eps_fault_siren.h with a test, before the pin bump."
+    - key: B
+      title: "Keep the new rule and also sound the siren whenever arrival supervision revokes authority"
+      detail: "Matches SWSR-516(b), which already lists a TX failure as a siren cause. Cost: a new siren case (a host that stalls but keeps its heartbeat), more firmware work and a nuisance-rate check on reference logs."
+    - key: C
+      title: "Keep the new rule and accept that this case has no panda siren"
+      detail: "No more work. Cost: with a failed host the driver gets only the host's alert, if any; TSR-516(b) is met in fewer cases than before."
+    - key: D
+      title: "Go back to the old rule: refused frames count as arrivals"
+      detail: "Siren as before. Cost: revert opendbc#19; SWSR-408 says received instead of accepted, and a host sending only refused frames keeps authority (B2B-05)."
+  sources: ["assurance/sim/results/plant-results.md F-07, F-07-KS01, F-07-OS (regenerated at opendbc 27f20db)", "panda board/drivers/eps_fault_siren.h", "opendbc safety.h safety_tx_hook at 27f20db", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-408, SWSR-516"]
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-17}
