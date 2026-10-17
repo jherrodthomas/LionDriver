@@ -78,8 +78,8 @@
 <text x="538" y="573.5" class="d">carcontroller.py:33, 83)</text>
 <rect x="538.0" y="581.5" width="93.8" height="16" rx="8" fill="#5f6368"/>
 <text x="584.9" y="593.0" class="chip" fill="#fff">latent, design</text>
-<rect x="636.8" y="581.5" width="53.9" height="16" rx="8" fill="#fff1f1"/>
-<text x="663.8" y="593.0" class="chip" fill="#c62828">no FMEA</text>
+<rect x="636.8" y="581.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="663.8" y="593.0" class="chip" fill="#fff">SWF-087</text>
 <circle cx="634.0" cy="629.5" r="16" fill="#eceef1" stroke="#5f6368" stroke-width="1.7"/>
 <rect x="767.5" y="478.5" width="220" height="173.0" rx="9" class="shadow"/>
 <rect x="766" y="476.0" width="220" height="173.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
