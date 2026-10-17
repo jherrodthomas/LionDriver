@@ -709,17 +709,17 @@
 
 - id: SWSR-408
   kind: swsr
-  text: "While lateral authority is granted, the envelope shall clear authority when no `0x2E4` frame has been accepted for > 50 ms; while longitudinal authority is granted, the same for `0x343` with > 100 ms."
+  text: "While lateral authority is granted, the envelope shall clear authority when no `0x2E4` frame has been accepted for > 50 ms; while longitudinal authority is granted, the same for `0x343` with > 100 ms. Supervision starts at the first safety task that finds authority granted. A frame is accepted when the TX hook passes it on: it is on the whitelist and passes the TX rate check (SWSR-518) and the mode's content checks; a refused frame does not count."
   asil: "B‡"
   parents: [TSR-408]
   parent_text: "TSR-408"
   other_parents: false
   allocated_to: "U-PND-MAIN, U-SAF-CORE"
   verification: "HIL, FI, IT"
-  acceptance: "Clear at 50/100 ms + task period; SS-L via SWSR-109a"
+  acceptance: "Clear at 50/100 ms + task period after the later of the last accepted frame and the start of supervision; SS-L via SWSR-109a"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl in the reference build (opendbc `273f44e`): `tx_arrival_checks` (`safety.h`), Toyota table (`modes/toyota.h`); unit tests `test_tx_arrival_*`; HIL, FI open"
+  baseline_impl: "Impl in the reference build (opendbc `273f44e`): `tx_arrival_checks` (`safety.h`), Toyota table (`modes/toyota.h`); unit tests `test_tx_arrival_*`. Accepted frames only since opendbc `27f20db` (`safety.h:288-297, 362-367`; test `test_tx_arrival_counts_accepted_frames_only`; B2B-05 closed); start of supervision as worded (`tx_arrival_ok`, B2B-04 closed). HIL, FI open"
   status: proposed
   source: WP-W-02
 
@@ -1327,7 +1327,7 @@
   acceptance: "Siren ≤ 0.5 s for each trigger; no siren on a brake press or PCM cancel alone"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: heartbeat loss (SWSR-407) revoking authority that was granted → 3 s siren at once, ≈ 0.56 s after the last heartbeat (0.3 s + 10 ms + 2 × 125 ms speaker tick), all builds (panda `c33343b`, `drivers/heartbeat_siren.h`, host test `tests/heartbeat_siren`, HIL `tests/hitl/test_15_heartbeat_siren.py` not run); 1 Hz path unchanged: 3 s siren after 4–5 s heartbeat loss (`main.c:169-171, 198-201`), the only siren when authority ended within the 5 s before the loss; EPS fault (SWSR-110) persisting 1 s while authority is granted → siren ≥ 3 s (panda `b790fca`, `drivers/eps_fault_siren.h`, host test `tests/eps_fault_siren`; HIL not run). Other (b) triggers and (c) not impl"
+  baseline_impl: "Partial: heartbeat loss (SWSR-407) revoking authority that was granted → 3 s siren at once, ≈ 0.56 s after the last heartbeat (0.3 s + 10 ms + 2 × 125 ms speaker tick), all builds (panda `c33343b`, `drivers/heartbeat_siren.h`, host test `tests/heartbeat_siren`, HIL `tests/hitl/test_15_heartbeat_siren.py` not run); 1 Hz path unchanged: 3 s siren after 4–5 s heartbeat loss (`main.c:169-171, 198-201`), the only siren when authority ended within the 5 s before the loss; EPS fault (SWSR-110) persisting 1 s while authority is granted → siren ≥ 3 s (panda `b790fca`, `drivers/eps_fault_siren.h`, host test `tests/eps_fault_siren`; HIL not run); since panda `3ee2796` (register DQ-367) the fault counts once it has been seen while authority was granted, so the siren also sounds when SWSR-408 revokes authority during the fault. Other (b) triggers and (c) not impl"
   status: proposed
   source: WP-W-02
 

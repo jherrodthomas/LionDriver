@@ -46,6 +46,7 @@ CRUISE_MAIN_TOLERANCE_US = 150_000  # SM record T10c "> 150 ms"
 ENGAGE_WINDOW_US = 1_000_000    # SM record T1b "within 1 s of the edge" (TSR-301 v0.20, LS-06); MA-10: 1 s itself is within
 HEARTBEAT_GATE = True           # TSR-301 v0.20: the grant waits for the heartbeat's engaged flag (reference build)
 MAIN_OFF_CLOSES_WINDOW = True   # SWSR-405(c) "at once": a refusal for MAIN_ON = 0 leaves no window open (SM-F1)
+ARRIVAL_NEEDS_ACCEPTED = True   # SWSR-408 (B2B-05): a frame refused for its content does not count as an arrival
 
 # DN-01 §4.1 (reference build): addr -> (f Hz, burst). TX whitelist DLC from WP-W-09 CD-04 TX column.
 TX_RATE_ROWS = {0x2E4: (100, 5), 0x191: (50, 3), 0x343: (33, 3), 0x412: (5, 4), 0x283: (1, 2), 0x1D2: (1, 2),
@@ -65,9 +66,6 @@ DEVIATIONS = {
   "length_not_checked": False,
   # SWSR-302 says "any wheel speed is non-zero". Option: moving = sum of the four wheel speeds non-zero.
   "moving_from_sum": False,
-  # SWSR-408 / MA-08: supervision starts when authority is granted (B2B-04). Option: it starts at the first safety task that
-  # finds authority granted, and "granted before" is what the previous safety task saw.
-  "arrival_from_first_tick": False,
 }
 
 
@@ -100,10 +98,12 @@ class Tick:
 
 @dataclass
 class Tx:
-  """One SoC frame offered to the TX hook. Content is not modelled: only the rate supervision acts on authority."""
+  """One SoC frame offered to the TX hook. Content is modelled only as accepted or refused (MA-09): content_ok=False is
+  a frame the mode's content checks refuse (harness: 0x343 with ACCEL_CMD 10 m/s^2, above the limit)."""
   addr: int
   bus: int = 0
   dlc: int = 8
+  content_ok: bool = True
 
 
 @dataclass
@@ -241,14 +241,14 @@ class SmToyAuth:
           fired.append("T1c")
     # T10b (reference build), SWSR-408: an actuation message not accepted for longer than its limit -> clear.
     # MA-07: evaluated in the safety task (acceptance: "50/100 ms + task period")
+    # SWSR-408 v0.28 (B2B-04): supervision starts at the first safety task that finds authority granted (MA-08)
     if self.reference:
-      if self.dev["arrival_from_first_tick"] and self.allowed and not self.allowed_prev_tick:
+      if self.allowed and not self.allowed_prev_tick:
         self.arrival_last = {a: self.now for a in TX_ARRIVAL_US}
       if self.allowed:
         for a, limit in TX_ARRIVAL_US.items():
-          since = [x for x in (self.arrival_last[a], None if self.dev["arrival_from_first_tick"] else self.grant_ts)
-                   if x is not None]
-          if since and self.now - max(since) > limit:
+          since = self.arrival_last[a]
+          if since is not None and self.now - since > limit:
             self.allowed = False
             fired.append("T10b")
             break
@@ -280,8 +280,8 @@ class SmToyAuth:
         return ["T11"]
     else:
       row.msgs += 1
-      if supervised:
-        self.arrival_last[ev.addr] = self.now   # SWSR-408: accepted. MA-09: content is not modelled (B2B-05)
+      if supervised and (ev.content_ok or not ARRIVAL_NEEDS_ACCEPTED):
+        self.arrival_last[ev.addr] = self.now   # SWSR-408: accepted, i.e. passed the rate and content checks (B2B-05)
     return []
 
   def _rx(self, ev: Rx) -> list[str]:
