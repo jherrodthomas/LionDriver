@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.7 | draft | BL-005 | RT-2 | 2026-10-16 |
+| 0.8 | draft | BL-005 | RT-2 | 2026-10-16 |
 
 **Scope.** Safety-relevant hardware of AC-001 at BL-005 (hardware as at BL-002): comma 3X panda section (STM32H725, clock and watchdog, MCU supply, CAN transceivers), Toyota harness and relay box, SoC-MCU interface, siren path, enclosure and cooling. SoC, cameras and other QM hardware only where they couple into these (WP-A-03).
 
@@ -517,10 +517,10 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `DFM-017.C1` Siren shares the codec, amplifier or speaker with the SoC audio, which the faulty SoC powers down | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 5 | 10 | 🔴 **H** | DFM-ACT-011 |
-| `DFM-017.C2` Siren path fault stays latent (no self-test) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 4 | 10 | 🔴 **H** | DFM-ACT-011 |
+| `DFM-017.C1` Siren shares the codec, amplifier or speaker with the SoC audio, which the faulty SoC powers down | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 5 | 10 | 🔴 **H** | DFM-ACT-011, DFM-ACT-016 |
+| `DFM-017.C2` Siren path fault stays latent (no self-test) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 4 | 10 | 🔴 **H** | DFM-ACT-011, DFM-ACT-016 |
 
-Safety mechanisms: (1) BL-005: the panda commands the siren itself when the 0.3 s heartbeat monitor revokes granted authority (panda#15, heartbeat_siren.h) and when an EPS fault persists 1 s while engaged (panda#14, eps_fault_siren.h). Both rely on the speaker path that DFM-017.C1 questions
+Safety mechanisms: (1) BL-005: the panda commands the siren itself when the 0.3 s heartbeat monitor revokes granted authority (panda#15, heartbeat_siren.h) and when an EPS fault persists 0.7 s while engaged (panda#14, eps_fault_siren.h; 0.7 s since panda bf8102a, DQ-048, siren at most 0.96 s after fault onset by design, WP-S-04 T-28; not yet timed on hardware, DFM-ACT-016). Both rely on the speaker path that DFM-017.C1 questions
 
 [Monitoring and system response](#7-monitoring-and-system-response): `DFM-017.C1` mechanism 1: M 10 · F 5 · S after response 10 → 🔴 **H**<br>`DFM-017.C2` mechanism 1: M 10 · F 4 · S after response 10 → 🔴 **H**
 
@@ -564,6 +564,7 @@ Effects:
 | DFM-ACT-013 | design_change | Implement TSR-517: read back the item's own TX frames from the bus and compare with the approved frame, revoking on a mismatch; enable RAMECC handling for the FDCAN message RAM if the H725 provides it | Jherrod Thomas | open | DFM-019.C1, DFM-019.C2 | — |
 | DFM-ACT-014 | detection | Bench-test the harness box failure behaviour (RR-2026-010): box unpowered with car and camera powered; R2/R3 forced open with the device silent; supply at 14-16 V against the DG419LE ratings; pass-through signal integrity; clamp-diode short on CAN0; confirm the shipped box matches the v3 drawing (VS-HW-02). The decided route for the harness box (DQ-209 option A, 2026-10-16); procedures in WP-H-06 §3.1 | Jherrod Thomas | open | DFM-010.C3, DFM-010.C4, DFM-011.C2, DFM-014.C2, DFM-020.C1, DFM-020.C2, DFM-021.C1 | — |
 | DFM-ACT-015 | detection | Read the Vishay DG417LE/DG418LE/DG419LE datasheet (document 76432) and record the absolute maximum V+ to V-, VL and IN ratings, the single-supply operating range and VINH/VINL at VL = V+ = 14 V; compare with VIN including the D4 clamp level. If a limit is exceeded, raise it with comma.ai and with DQ-209 (RR-2026-010 F-05; blocked at 2026-10-16: vendor and datasheet hosts unreachable from the analysis environment) | Jherrod Thomas | open | DFM-010.C4, DFM-011.C2 | — |
+| DFM-ACT-016 | detection | Time the EPS-fault warning chain on the HIL bench (WP-S-04 T-28): inject a persistent LKA_STATE fault on 0x262 while authority is granted and measure fault onset to audible siren against the 0.96 s design worst case and the SG-02 1 s budget (margin 0.04 s), with the speaker phase varied. Persistence 0.7 s since panda bf8102a (DQ-048). Waits for the HIL bench, which the lead deferred (DQ-049, 2026-10-14) | Jherrod Thomas | open | DFM-017.C1, DFM-017.C2 | — |
 
 ## 6. Priority H causes without a completed action
 
@@ -591,8 +592,8 @@ Effects:
 | `DFM-014.C2` | Ignition sense reads on when the ignition is off | 10/3/10 | DFM-ACT-008, DFM-ACT-014 |
 | `DFM-015.C1` | Corrupted SoC-to-MCU transfer accepted | 10/4/10 | DFM-ACT-009 |
 | `DFM-016.C1` | MCU forced into the ROM bootloader or reflashed by the SoC | 10/4/10 | DFM-ACT-010 |
-| `DFM-017.C1` | No SoC-independent warning on SoC loss | 10/5/10 | DFM-ACT-011 |
-| `DFM-017.C2` | No SoC-independent warning on SoC loss | 10/4/10 | DFM-ACT-011 |
+| `DFM-017.C1` | No SoC-independent warning on SoC loss | 10/5/10 | DFM-ACT-011, DFM-ACT-016 |
+| `DFM-017.C2` | No SoC-independent warning on SoC loss | 10/4/10 | DFM-ACT-011, DFM-ACT-016 |
 | `DFM-018.C1` | MCU runs above its temperature rating | 10/4/10 | DFM-ACT-012 |
 | `DFM-019.C1` | Approved CAN frame altered between the TX check and the bus | 10/3/10 | DFM-ACT-013 |
 | `DFM-019.C2` | Approved CAN frame altered between the TX check and the bus | 10/2/10 | DFM-ACT-013 |
@@ -618,11 +619,11 @@ Sorted by monitoring, weakest first. Timing is detection + reaction time against
 | `DFM-010.C1` Analog switch U1 or U2 stuck in the intercept (NO) position, or its IN input damaged high | None: no relay readback (GAP-12) → None | unknown | 10 | 6 | **10** | 🔴 **H** | DFM-ACT-007 |
 | `DFM-003.C1` Double-bit soft error or permanent SRAM fault; RAMECC monitors not configured, ECC interrupt not registered | None at BL-002: RAMECC monitors not configured, no redundant storage → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-002 |
 | `DFM-007.C1` Vehicle supply dip (cranking, alternator fault) with BOR level not set and PVD not enabled | None at BL-002: PVD handler is a stub and the BOR level is unknown (UK-04) → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-005 |
-| `DFM-017.C1` Siren shares the codec, amplifier or speaker with the SoC audio, which the faulty SoC powers down | None: nothing checks that the speaker path works without the SoC; the panda siren commands assume it does → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-011 |
+| `DFM-017.C1` Siren shares the codec, amplifier or speaker with the SoC audio, which the faulty SoC powers down | None: nothing checks that the speaker path works without the SoC; the panda siren commands assume it does → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-011, DFM-ACT-016 |
 | `DFM-020.C1` Ignition branch to the box open (crimp, connector) or D1 open, without comma power installed | None: the box supply is not supervised, and the device loses power with it → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-014 |
 | `DFM-010.C2` SBU1 drive stuck high (device-side driver or MCU pin, UK-06) | None: no relay readback (GAP-12) → None | unknown | 10 | 4 | **10** | 🔴 **H** | DFM-ACT-007 |
 | `DFM-010.C4` U1/U2 overstressed or latched up by box supply transients above the DG419LE absolute maximum (V+ = VL = VIN with no regulator; the SMF16A clamp D4 only starts to conduct above its 16 V stand-off). Damage can leave the switch in either position or open a channel (also DFM-011, DFM-013) | None: no relay readback (GAP-12) and no supervision of the box supply → None | unknown | 10 | 4 | **10** | 🔴 **H** | DFM-ACT-014, DFM-ACT-015 |
-| `DFM-017.C2` Siren path fault stays latent (no self-test) | None: no siren self-test at start-up or in operation (WP-H-04 OI-4) → None | unknown | 10 | 4 | **10** | 🔴 **H** | DFM-ACT-011 |
+| `DFM-017.C2` Siren path fault stays latent (no self-test) | None: no siren self-test at start-up or in operation (WP-H-04 OI-4) → None | unknown | 10 | 4 | **10** | 🔴 **H** | DFM-ACT-011, DFM-ACT-016 |
 | `DFM-019.C1` Soft error or permanent fault in the copy into FDCAN message RAM, the message RAM or the FDCAN core. The packet XOR is checked at the FDCAN load (fdcan.h:100) and covers only the software queue; the CAN CRC is computed after the fault | None after the FDCAN load: no TX read-back (TSR-517 not implemented) → None | unknown | 10 | 4 | **10** | 🔴 **H** | DFM-ACT-013 |
 | `DFM-003.C2` Wrong-address write by the SPI DMA (no MPU) | None at BL-002: no MPU and no redundant storage of the safety state → None | unknown | 10 | 3 | **10** | 🔴 **H** | DFM-ACT-002 |
 | `DFM-020.C2` Box VIN shorted to ground (TVS D4 short, connector or wiring) | None: the box supply is not supervised, and the device loses power with it → None | unknown | 10 | 3 | **10** | 🔴 **H** | DFM-ACT-014 |
