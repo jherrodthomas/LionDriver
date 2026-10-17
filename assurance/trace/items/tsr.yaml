@@ -1430,14 +1430,14 @@
 
 - id: TSR-634
   kind: tsr
-  text: "When driver monitoring has fallen back to the wheel-touch policy (camera confidence too low), the escalation times of TSR-608 shall shorten as vehicle speed rises, so that the distance driven without driver supervision up to each alert stays within a bound set in WP-C-08 §5; at highway speed the time to the strongest alert shall be shorter than the fixed 25 s (register DQ-077, A, decided 2026-10-14). The speed table and the bound are derived in WP-C-08 §5 and validated under WP-V-02."
+  text: "When driver monitoring has fallen back to the wheel-touch policy (camera confidence too low), the escalation times of TSR-608 shall shorten as vehicle speed rises, so that the distance driven without driver supervision up to each alert stays within a bound set in WP-C-08 §5.4; at highway speed the time to the strongest alert shall be shorter than the fixed 25 s (register DQ-077, A, decided 2026-10-14). The speed table and the bound are set in WP-C-08 §5.4 (DMP-05) and validated under WP-V-02."
   asil: "A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11)"
   parents: [FSR-02.06]
   parent_text: "FSR-02.06"
   other_parents: false
   allocated_to: "SoC"
   mechanism: "WRN"
-  timing: "speed table in WP-C-08 §5 (to be derived)"
+  timing: "alert k at T_k = 5/15/25 s or D_k = 150/240/395 m since the last driver input, whichever comes first (WP-C-08 §5.4)"
   verification: "T-SIL, T-VEH"
   baseline_impl: "Not met: fixed 5/15/25 s at every speed (`selfdrive/monitoring/policy.py:31-33`). WP-A-05 LS-09, OI-6. Added v0.31"
   status: proposed
