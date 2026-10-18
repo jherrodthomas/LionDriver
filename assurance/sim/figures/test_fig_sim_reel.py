@@ -14,11 +14,18 @@ class TestReel(unittest.TestCase):
     self.assertEqual(fr.problems(), [])
 
   def test_every_segment_labelled_with_a_rating_or_sotif(self):
-    for clip, _s, _d, event, rating, text in fr.SEGMENTS:
+    for clip, _s, _d, event, rating, text, _sit in fr.SEGMENTS:
       lab = fr.label(event, rating, text)
       self.assertTrue(lab.startswith(f"{event} · "), clip)
       self.assertTrue("ASIL " in lab or "SOTIF hazard" in lab, clip)
     self.assertIn("no evidence credit", fr.BAND_TEXT)
+
+  def test_odd_tags_follow_wp_c02(self):
+    # ODD-H is highways only (DQ-023): the rural and urban scenes are tagged as misuse, the highway one is not
+    misuse = fr.misuse_situations()
+    self.assertTrue({"OS-03", "OS-04"} <= misuse)
+    outside = {event: fr.odd_tag(sit, misuse)[1] for _c, _s, _d, event, _r, _t, sit in fr.SEGMENTS}
+    self.assertEqual(outside, {"HE-02.1": False, "HE-01.1": True, "SH-11": True})
 
   def test_segments_inside_their_clips(self):
     # clip lengths (s) as committed; each clip starts 1.5 s before the fault

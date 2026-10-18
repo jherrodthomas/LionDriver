@@ -16,6 +16,7 @@ wrong size or frame count, or over the size limit.
 
 from __future__ import annotations
 
+import re
 import shutil
 import struct
 import subprocess
@@ -28,13 +29,15 @@ SIM = HERE.parent
 CLIPS = SIM / "blender" / "dashboards" / "clips"
 OUT = HERE / "sim-reel-3d.webp"
 sys.path.insert(0, str(HERE))
+CONCEPT = SIM.parent / "02-concept"
 
-# (clip, start s into the clip, duration s, event, rating as drawn or None for a SOTIF hazard, label)
-# The clips start 1.5 s before the fault, so start 1.5 is the fault onset.
+# (clip, start s into the clip, duration s, event, rating as drawn or None for a SOTIF hazard, label, situation of
+# the scene). The clips start 1.5 s before the fault, so start 1.5 is the fault onset.
 SEGMENTS = [
-  ("he-02-1-eps-loss-curve", 1.4, 3.2, "HE-02.1", "C", "EPS assist lost in a curve · plant run"),
-  ("he-01-1-rural-hardover-oncoming", 1.1, 2.9, "HE-01.1", "A", "hard-over toward oncoming traffic · plant run"),
-  ("sh-11-pedestrian-occluded", 1.0, 3.0, "SH-11", None, "pedestrian behind a parked truck · kinematic"),
+  ("he-02-1-eps-loss-curve", 1.4, 3.2, "HE-02.1", "C", "EPS assist lost in a curve · plant run", "OS-02"),
+  ("he-01-1-rural-hardover-oncoming", 1.1, 2.9, "HE-01.1", "A", "hard-over toward oncoming traffic · plant run",
+   "OS-03"),
+  ("sh-11-pedestrian-occluded", 1.0, 3.0, "SH-11", None, "pedestrian behind a parked truck · kinematic", "OS-04"),
 ]
 CROP = (386, 66, 1092, 613)   # x, y, w, h of the 3D view in a 1920 x 1080 dashboard clip
 WIDTH = 480
@@ -59,16 +62,42 @@ def label(event: str, rating: str | None, text: str) -> str:
   return f"{event} · " + (f"ASIL {rating}" if rating else "SOTIF hazard") + f" · {text}"
 
 
+def misuse_situations() -> set[str]:
+  """Situations outside the highway-only ODD, rated as foreseeable misuse (WP-C-02 §3, DQ-023)."""
+  md = (CONCEPT / "WP-C-02-odd-and-intended-functionality.md").read_text(encoding="utf-8")
+  m = re.search(r"engagement off the highway as foreseeable misuse \((OS-\d\d(?:, OS-\d\d)*) at E2\)", md)
+  return set(m.group(1).split(", ")) if m else set()
+
+
+def event_situations(event: str) -> set[str]:
+  """The situations an event is rated in: WP-C-03 §5 for HE-, WP-C-05 for SH-."""
+  if event.startswith("HE-"):
+    md = (CONCEPT / "WP-C-03-hara.md").read_text(encoding="utf-8")
+    m = re.search(rf"^\| {re.escape(event)} \| ([^|]*) \|", md, re.M)
+  else:
+    md = (CONCEPT / "WP-C-05-sotif-hazard-identification.md").read_text(encoding="utf-8")
+    m = re.search(rf"^\| {re.escape(event)} \|(?: [^|]* \|){{3}} ([^|]*) \|", md, re.M)
+  return set(re.findall(r"OS-\d\d", m.group(1))) if m else set()
+
+
+def odd_tag(situation: str, misuse: set[str]) -> tuple[str, bool]:
+  """The tag under a segment's label, and whether the scene is outside the ODD."""
+  if situation in misuse:
+    return f"Outside the ODD (highways only): foreseeable misuse, {situation}", True
+  return f"Inside the ODD: highway, {situation}", False
+
+
 def build() -> None:
   from PIL import Image, ImageDraw, ImageFont
   font_path = next((f for f in FONTS if Path(f).exists()), None)
   big = ImageFont.truetype(font_path, 13) if font_path else ImageFont.load_default()
   small = ImageFont.truetype(font_path, 11) if font_path else ImageFont.load_default()
   h_pic = height() - BAND
+  misuse = misuse_situations()
   with tempfile.TemporaryDirectory() as tmp:
     tmp = Path(tmp)
     n = 0
-    for clip, start, dur, event, rating, text in SEGMENTS:
+    for clip, start, dur, event, rating, text, situation in SEGMENTS:
       seg = tmp / clip
       seg.mkdir()
       x, y, w, h = CROP
@@ -76,6 +105,7 @@ def build() -> None:
                       "-vf", f"crop={w}:{h}:{x}:{y},scale={WIDTH}:{h_pic}:flags=lanczos,fps={FPS}",
                       "-frames:v", str(round(dur * FPS)), str(seg / "%04d.png")], check=True)
       lab = label(event, rating, text)
+      tag, outside = odd_tag(situation, misuse)
       for f in sorted(seg.glob("*.png")):
         im = Image.new("RGB", (WIDTH, height()), (26, 26, 25))
         with Image.open(f) as fr:
@@ -84,6 +114,10 @@ def build() -> None:
         tw = d.textlength(lab, font=big)
         d.rounded_rectangle((8, 8, 8 + tw + 16, 8 + 24), radius=6, fill=(26, 26, 25))
         d.text((16, 12), lab, font=big, fill=(240, 239, 236))
+        tw2 = d.textlength(tag, font=small)
+        d.rounded_rectangle((8, 36, 8 + tw2 + 14, 36 + 19), radius=6,
+                            fill=(201, 133, 0) if outside else (26, 26, 25))
+        d.text((15, 39), tag, font=small, fill=(255, 255, 255) if outside else (195, 194, 183))
         d.text((10, h_pic + 7), BAND_TEXT, font=small, fill=(230, 103, 103))
         im.save(tmp / f"f{n:04d}.png")
         n += 1
@@ -112,7 +146,13 @@ def problems() -> list[str]:
   import fig_sim_he
   errs = []
   hara = fig_sim_he.hara()
-  for clip, _s, _d, event, rating, _t in SEGMENTS:
+  misuse = misuse_situations()
+  if not misuse:
+    errs.append("WP-C-02 no longer lists the situations rated as foreseeable misuse off the highway")
+  for clip, _s, _d, event, rating, _t, situation in SEGMENTS:
+    if situation not in event_situations(event):
+      errs.append(f"{event}: the scene's situation {situation} is not among its rated situations "
+                  f"{sorted(event_situations(event))}")
     if not (CLIPS / f"{clip}.mp4").exists():
       errs.append(f"source clip missing: blender/dashboards/clips/{clip}.mp4")
     if rating is not None and hara.get(event, {}).get("asil") != rating:
@@ -140,7 +180,7 @@ def main(argv: list[str]) -> int:
   for e in errs:
     print(f"error: {e}", file=sys.stderr)
   if not errs and "--check" in argv:
-    print(f"fig_sim_reel: {OUT.name} present, {frames_expected()} frames, ratings match WP-C-03")
+    print(f"fig_sim_reel: {OUT.name} present, {frames_expected()} frames, ratings match WP-C-03, ODD tags match WP-C-02")
   return 1 if errs else 0
 
 
