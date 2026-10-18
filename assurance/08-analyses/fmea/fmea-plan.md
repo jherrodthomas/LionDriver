@@ -160,9 +160,10 @@ Prioritised by safety relevance (path from perception to actuator):
 
 **DFMEA (rev 0.8, BL-005, `analyses/dfmea.yaml`):** 21 failure modes and 30 causes across 10 hardware elements of the comma 3X panda section, harness and relay box, based on WP-H-02/WP-H-03. Every row is S10, AP H, and most have no LionDriver hardware verification (D9–D10). The watchdog (DFM-004) is the only cause whose occurrence the BL-002 firmware lowers. At BL-005 the hardware is unchanged; the MSR rows credit the host controlsMismatch timing (DFM-009.C1, M 6) and list the panda siren on heartbeat loss and EPS fault (DFM-017) (msr-plan §4.7). Rev 0.8: EPS-fault siren persistence 0.7 s (DQ-048, panda `bf8102a`); HIL timing of the chain is open (DFM-ACT-016).
 
-**FMEDA (rev 0.4, `analyses/fmeda-sg001.yaml`, `fmeda-sg009.yaml`):** block-level, **generic failure rates**, except the harness box switches U1/U2 at the SN 29500-2 reference value from a secondary source (WP-H-03 §6.3). Results:
+**FMEDA (rev 0.5, `analyses/fmeda-sg001.yaml`, `fmeda-sg009.yaml`):** block-level, **generic failure rates**, except the harness box switches U1/U2 at the SN 29500-2 reference value from a secondary source (WP-H-03 §6.3). Results:
 - SG-001: 255 FIT, SPFM 96.8 %, LFM 88.9 %, λSPF + λRF 8.1 FIT.
 - SG-009: 287 FIT, SPFM 78.1 %, LFM 97.7 %, λSPF + λRF 62.9 FIT.
+- Rev 0.5 (DQ-362): the SG-001 and SG-009 rows also stand for assurance SG-02, SG-03, SG-05 and SG-06, a note per goal (WP-H-03 §6.4). SG-02, SG-03 and SG-06 are ASIL C, so the shared SPFM of 96.84 % misses 97 % by 0.16 points (WP-H-04 OI-6, G2).
 
 Neither meets its target yet. The effect of the planned DFMEA measures and the soft-error sensitivity are in WP-H-03 §6.3. Workbooks: `tools/safety/export_fmeda_xlsx.py <name>`.
 

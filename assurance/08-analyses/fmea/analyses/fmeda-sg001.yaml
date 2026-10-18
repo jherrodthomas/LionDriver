@@ -7,17 +7,24 @@
 # functional-safety reports (standard not read, no stress conversion); was 2 × 5 FIT generic. The box discretes and resistors keep generic rates
 # with their SN 29500 class named; no reference value was reachable. Mission profile: the harness box sits behind the camera in the same
 # sun-loaded windscreen zone and takes the same profile.
+# Rev 0.5 (2026-10-18, decision DQ-362 option A): this analysis and the SG-009 FMEDA also stand for assurance SG-02, SG-03 and SG-06
+# (ASIL C since HARA v0.4) and for SG-05 (ASIL B): their random hardware faults run through the same panda, transceiver and harness
+# box rows. One analysis, a note per goal (WP-H-03 §6.4); no rate, classification or metric changes. The rows are classified for SG-001.
+# The SG-001 figures (SPFM 96.84 %, LFM 88.94 %) are carried for the shared path and miss the ASIL C SPFM target (97 %) by 0.16
+# points: an open hardware item for G2 (WP-H-04 OI-6), closed with supplier rates or the TSR-517 transmit read-back, or back to the
+# lead. Rows the FTA cites for those goals carry a note naming the goal.
 schema_version: 1
 analysis:
   id: FMD
   type: fmeda
   title: FMEDA — SG-001 lateral (panda safety path), generic failure rates
-  revision: '0.4'
+  revision: '0.5'
   status: draft
   baseline: BL-002
   rating_tables: RT-1
   scope: Random hardware faults of the panda section that can let an out-of-envelope or unauthorised steering request reach the EPS (LD-HARA-001 SG-001, ASIL D; assurance
-    WP-C-03 SG-01, ASIL C pending OI-1). Reference device at BL-002
+    WP-C-03 SG-01, ASIL C pending OI-1). Reference device at BL-002. By decision DQ-362 (2026-10-18) the rows also stand for assurance SG-02, SG-03, SG-06
+    (ASIL C) and SG-05 (ASIL B), classified for SG-001; per-goal notes in WP-H-03 §6.4
   safety_goal: SG-001
   asil_target: D
   mission_profile: 'Passenger car, windscreen-mounted device: ambient up to +85 °C in the sun-loaded enclosure, Tj up to about +105 °C; about 500 operating h/year
@@ -33,7 +40,7 @@ analysis:
   - assurance/08-analyses/fmea/analyses/dfmea.yaml
   - assurance/08-analyses/fmea/rating-tables.md
   - ISO 26262-5:2018 §8-9 and Annex D; ISO 26262-11:2018 §4.6 (semiconductors)
-  updated: '2026-10-16'
+  updated: '2026-10-18'
 safety_mechanisms:
 - id: FMD-SM-001
   description: Flash ECC (single-error correction in silicon; corrected reads are transparent)
@@ -83,7 +90,9 @@ components:
     violates_sg_directly: false
     mpf_potential: true
     dfmea_ref: DFM-001
-    notes: Needs a SoC command outside the envelope as second fault. No CPU self-test, so fully latent
+    notes: 'Needs a SoC command outside the envelope as second fault. No CPU self-test, so fully latent. Also stands for SG-05 (FTA BE-5.02,
+      DQ-362): a wrong authority check that keeps authority after the brake or cancel needs no second fault there, so for SG-05 it is
+      effectively single-point; the classification here is for SG-001 only'
   - id: FMD-002
     mode: Frame content altered after the TX check (data-path fault)
     distribution: 0.05
@@ -92,14 +101,17 @@ components:
     dfmea_ref: DFM-019
     safety_mechanism_spf: FMD-SM-004
     dc_spf: 0.6
-    notes: 'Only the software-queue part is covered by the XOR; the FDCAN copy and message RAM are not (TSR-517). Also covers SG-04 (deceleration): 0x343 leaves through the same TX path as 0x2E4, so this row and its rates stand for FTA event BE-4.03 too (decision register DQ-002, 2026-10-14)'
+    notes: 'Only the software-queue part is covered by the XOR; the FDCAN copy and message RAM are not (TSR-517). Also covers SG-04 (deceleration): 0x343 leaves through the same TX path as 0x2E4, so this row and its rates stand for FTA event BE-4.03 too (decision register DQ-002, 2026-10-14), and for SG-03 (unintended
+      acceleration, FTA BE-3.04) by DQ-362 (2026-10-18)'
   - id: FMD-003
     mode: Hang or unexpected exception (no TX)
     distribution: 0.4
     violates_sg_directly: false
     mpf_potential: false
     dfmea_ref: DFM-004
-    notes: 'Safe for SG-001: no LKA frames, the EPS times out (AOU-01). Relevant to SG-009'
+    notes: 'Safe for SG-001: no LKA frames, the EPS times out (AOU-01). Relevant to SG-009. Not safe for SG-02/SG-06 (DQ-362): actuation
+      stops, and the goal is violated if no warning follows; the warning comes from the host (controlsMismatch, TSR-621), not from the
+      hung panda'
   - id: FMD-004
     mode: Other faults without effect on the safety path
     distribution: 0.3
@@ -161,7 +173,9 @@ components:
     violates_sg_directly: false
     mpf_potential: true
     dfmea_ref: DFM-003
-    notes: Needs a SoC command outside the envelope or while not engaged; double-error flag not handled (latent)
+    notes: 'Needs a SoC command outside the envelope or while not engaged; double-error flag not handled (latent). Also stands for
+      SG-05 (FTA BE-5.02, DQ-362): a corrupted controls_allowed that stays true after the brake is effectively single-point there;
+      the classification here is for SG-001 only'
   - id: FMD-010
     mode: Multi-bit upset in the TX queue after the check
     distribution: 0.02
@@ -170,7 +184,7 @@ components:
     dfmea_ref: DFM-019
     safety_mechanism_spf: FMD-SM-004
     dc_spf: 0.6
-    notes: Also covers SG-04 (deceleration), as FMD-002 (decision register DQ-002, 2026-10-14)
+    notes: Also covers SG-04 (deceleration), as FMD-002 (decision register DQ-002, 2026-10-14), and SG-03 (FTA BE-3.04, DQ-362)
   - id: FMD-011
     mode: 'Multi-bit upset elsewhere (stack, buffers: crash or dropped frame)'
     distribution: 0.04
@@ -215,7 +229,7 @@ components:
     violates_sg_directly: false
     mpf_potential: false
     dfmea_ref: DFM-007
-    notes: MCU off, relay released
+    notes: 'MCU off, relay released. For SG-02/SG-06 (DQ-362) the loss itself is the hazard unless the host warns (FTA BE-2.07)'
   - id: FMD-015
     mode: Under-voltage in the brown-out zone or over-voltage (erratic logic)
     distribution: 0.3
@@ -243,14 +257,14 @@ components:
     violates_sg_directly: false
     mpf_potential: false
     dfmea_ref: DFM-008
-    notes: 'Bus blocked: no LKA torque; SG-003 effect, not SG-001'
+    notes: 'Bus blocked: no LKA torque; SG-003 effect, not SG-001. For SG-02/SG-06 (DQ-362): actuation lost, warning from the host (FTA BE-2.06)'
   - id: FMD-018
     mode: RX open or stuck recessive
     distribution: 0.3
     violates_sg_directly: false
     mpf_potential: false
     dfmea_ref: DFM-009
-    notes: RX timeout withdraws authority
+    notes: 'RX timeout withdraws authority. For SG-02/SG-06 (DQ-362): actuation lost, warning from the host (FTA BE-6.02)'
   - id: FMD-019
     mode: Bit errors on the line
     distribution: 0.4
@@ -258,7 +272,7 @@ components:
     mpf_potential: true
     safety_mechanism_lf: FMD-SM-008
     dc_lf: 0.99
-    notes: CAN CRC
+    notes: CAN CRC. Also stands for SG-03 (FTA BE-3.04, DQ-362)
 - id: FMD-C-007
   ref_des: U1, U2 (harness box)
   part: 'Intercept switch: 2 × DG419LE CMOS analog SPDT (harness box)'
