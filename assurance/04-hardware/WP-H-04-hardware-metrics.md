@@ -4,9 +4,9 @@
 |---|---|
 | Work product | WP-H-04 Hardware architectural metrics (SPFM, LFM) |
 | Standard reference | ISO 26262-5:2018 §8 (evaluation of the hardware architectural metrics), Annex C (metric definitions, informative), Annex D (diagnostic coverage, informative); ISO 26262-11:2018 (semiconductors, informative) |
-| Version | 0.6 (§5.3 SG-07 SPFM deviation accepted by the lead, DQ-320 option A, conditional on the harness box bench tests; 2026-10-16). 0.5 (§5.2 generic-rate estimate from FMEDA rev 0.4 with SG-01 shown against C and B; Figure 5-1 marks the estimates; 2026-10-16). 0.4 (decisions applied: SG-01 target C with B alongside, DQ-063; route to the BOM, DQ-065; added hardware allowed in principle, DQ-051; HIL bench deferred, DQ-049; IWDG credit conditional, DQ-114; 2026-10-16). 0.3 (§5 status and §4 targets drawn as Figure 5-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12: DC-01 implemented, not verified, no DC credit; §5.1, §6 step 4). 0.1: initial draft |
+| Version | 0.7 (SG-02, SG-03 and SG-06 at ASIL C since WP-C-03 v0.4: §4 targets updated; §5.2 carries the SG-01 estimate for them, decision DQ-362 option A; new OI-6, the 0.16-point ASIL C SPFM miss, for G2; Figure 5-1 updated; 2026-10-18). 0.6 (§5.3 SG-07 SPFM deviation accepted by the lead, DQ-320 option A, conditional on the harness box bench tests; 2026-10-16). 0.5 (§5.2 generic-rate estimate from FMEDA rev 0.4 with SG-01 shown against C and B; Figure 5-1 marks the estimates; 2026-10-16). 0.4 (decisions applied: SG-01 target C with B alongside, DQ-063; route to the BOM, DQ-065; added hardware allowed in principle, DQ-051; HIL bench deferred, DQ-049; IWDG credit conditional, DQ-114; 2026-10-16). 0.3 (§5 status and §4 targets drawn as Figure 5-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12: DC-01 implemented, not verified, no DC credit; §5.1, §6 step 4). 0.1: initial draft |
 | Status | Draft (method and plan; no metric computed) |
-| ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
+| ASIL / scope | ASIL C (SG-01 provisional; SG-02, SG-03, SG-06 since WP-C-03 v0.4) / ASIL B (SG-04, SG-05, SG-07) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1 minimum, external reviewer, T-09) |
 | Approver | TBD (per [WP-M-02](../01-management/WP-M-02-safety-plan.md)) |
@@ -91,7 +91,8 @@ Applicable targets ([WP-H-01](WP-H-01-hardware-safety-requirements.md) §3). For
 | SG | Current ASIL | Target set | Expected after FSC option (c) |
 |---|---|---|---|
 | SG-01 | C (provisional) | SPFM ≥ 97 %, LFM ≥ 80 %; the ASIL B result is reported alongside (DQ-063) | B: SPFM ≥ 90 %, LFM ≥ 60 % |
-| SG-02…SG-06 | B | SPFM ≥ 90 %, LFM ≥ 60 % | unchanged |
+| SG-02, SG-03, SG-06 | C (WP-C-03 v0.4) | SPFM ≥ 97 %, LFM ≥ 80 % | unchanged |
+| SG-04, SG-05 | B | SPFM ≥ 90 %, LFM ≥ 60 % | unchanged |
 | SG-07 | B | SPFM ≥ 90 %, LFM ≥ 60 % | unchanged |
 
 ## 5. Current status
@@ -139,22 +140,25 @@ channel. This supports the FSC recommendation of option (c).
 **For SG-07:** ASIL B is *unlikely* to be met without relay readback (DC-03) unless the relay's
 "stuck intercepting" rate is shown to be small relative to the total, which needs part data.
 
-![Figure 5-1: SPFM and LFM status: calculation steps 1 to 7 not done or qualitative only for lack of a BOM, and for SG-01, SG-03/SG-04, SG-05, SG-02/SG-06 and SG-07 the ASIL targets marked with no computed value](figures/fig-h04-5-1-metric-status.svg)
+![Figure 5-1: SPFM and LFM status: calculation steps 1 to 7 not done or qualitative only for lack of a BOM, and for SG-01, SG-03/SG-04, SG-05, SG-02/SG-06 and SG-07 the ASIL targets marked with no computed value; the SG-01 estimate is drawn on the SG-03/SG-04 and SG-02/SG-06 rows too (DQ-362)](figures/fig-h04-5-1-metric-status.svg)
 
-*Figure 5-1.* Top: the calculation steps of §3.2 with their status from the §5 table. Bottom: the §4 targets per safety-goal row of §7 on a 50–100 % scale; the hatched track means no metric exists (every “Met?” cell in §7 is “Not yet computed”). Hollow diamonds mark the generic-rate estimates of §5.2, which are not metrics. The right column repeats the engineering judgement of §5.1, which is not a metric. Drawn from §4, §5, §5.1, §5.2 and §7. Source: [`figures/fig-h04-5-1-metric-status.svg`](figures/fig-h04-5-1-metric-status.svg); change it together with §4, §5 and §7.
+*Figure 5-1.* Top: the calculation steps of §3.2 with their status from the §5 table. Bottom: the §4 targets per safety-goal row of §7 on a 50–100 % scale; the hatched track means no metric exists (every “Met?” cell in §7 is “Not yet computed”). Hollow diamonds mark the generic-rate estimates of §5.2, which are not metrics; on the SG-03/SG-04 and SG-02/SG-06 rows they repeat the SG-01 estimate reused by DQ-362. The right column repeats the engineering judgement of §5.1, which is not a metric. Drawn from §4, §5, §5.1, §5.2 and §7. Source: [`figures/fig-h04-5-1-metric-status.svg`](figures/fig-h04-5-1-metric-status.svg); change it together with §4, §5 and §7.
 
 ### 5.2 Generic-rate estimate (not a metric)
 
-[WP-H-03](WP-H-03-hardware-safety-analysis-fmeda.md) §6.3 keeps a block-level FMEDA with generic failure rates, plus one secondary-source rate: the harness box switches U1/U2 at the SN 29500-2 reference value. It is computed by `tools/safety/fmea_lint.py` from [`fmeda-sg001.yaml`](../08-analyses/fmea/analyses/fmeda-sg001.yaml) and [`fmeda-sg009.yaml`](../08-analyses/fmea/analyses/fmeda-sg009.yaml), rev 0.4, 2026-10-16. It shows where the architecture falls short. **It is not a metric and does not fill §7.**
+[WP-H-03](WP-H-03-hardware-safety-analysis-fmeda.md) §6.3 keeps a block-level FMEDA with generic failure rates, plus one secondary-source rate: the harness box switches U1/U2 at the SN 29500-2 reference value. It is computed by `tools/safety/fmea_lint.py` from [`fmeda-sg001.yaml`](../08-analyses/fmea/analyses/fmeda-sg001.yaml) and [`fmeda-sg009.yaml`](../08-analyses/fmea/analyses/fmeda-sg009.yaml), rev 0.4, 2026-10-16 (rev 0.5 of 2026-10-18 adds the per-goal notes of DQ-362; the figures are unchanged). It shows where the architecture falls short. **It is not a metric and does not fill §7.**
 
 | SG | λ (FIT) | SPFM | LFM | Against the current ASIL | Against ASIL B (DQ-063) |
 |---|---|---|---|---|---|
 | SG-01 | 255 | 96.8 % | 88.9 % | C: misses SPFM (97 %) by 0.2 points; LFM met | B: both met |
+| SG-02, SG-03, SG-06 | SG-01 rows reused (DQ-362) | 96.8 % | 88.9 % | C: misses SPFM (97 %) by 0.16 points (96.84 %); LFM met. Open for G2 (OI-6) | — |
 | SG-07 | 287 | 78.1 % | 97.7 % | B: misses SPFM (90 %); accepted as a recorded deviation (§5.3, DQ-320) | — |
 
 With the planned measures and the DC assumptions stated in WP-H-03 §6.3, the estimates are:
 - SG-01: 99.1 % / 95.4 %.
 - SG-07: 94.6 %. This needs switch readback, the transceiver release and a stock-path continuity check; position readback alone gives 83.6 %.
+
+The lead decided to reuse the SG-01 and SG-07 rows for SG-02, SG-03, SG-05 and SG-06, with a note per goal in WP-H-03 §6.4, rather than a separate FMEDA per goal ([DQ-362](../01-management/decisions/register.yaml), option A, 2026-10-18). The rows stay classified for SG-01, so the SG-02/SG-03/SG-06 line above is the shared-path estimate, not a goal-specific one. No SG-05 estimate is given: two of its rows are multiple-point for SG-01 but single-point for SG-05 (WP-H-03 §6.4).
 
 ### 5.3 Deviation: SG-07 SPFM with comma's harness box
 
@@ -202,3 +206,4 @@ The lead decided to keep comma's harness box and bench-test it, with no switch r
 | OI-3 | Confirm that QM-SoC mechanisms are excluded from DC (§3.3) with the external assessor | G2 |
 | OI-4 | Define the start-up test set needed for LFM (IWDG test reset, ECC test, relay check by a controlled toggle with readback, siren self-test) and its effect on availability | G3 |
 | OI-5 | Verify target values and metric definitions against the licensed ISO 26262-5 | G2 |
+| OI-6 | SG-01, SG-02, SG-03, SG-06 (ASIL C): SPFM 96.84 % on the shared generic-rate estimate, 0.16 points below 97 %. Close with supplier rates (WP-H-03 OI-3/OI-10; DQ-069 on ST's data) or the TSR-517 transmit read-back (estimate 97.53 % at an assumed DC 99 %, WP-H-03 §6.4). If neither closes it by G2, back to the lead (DQ-362) | G2 |
