@@ -133,6 +133,7 @@ AOU_LAYER = {
   "AOU-14": ("ops", "is used with openpilot's default alternative experience"),
   "AOU-15": ("ops", "is used only on camera-ACC configurations"),
   "AOU-16": ("vehicle", "the PCM keeps it stopped and held"),
+  "AOU-17": ("vehicle", "The EPS signals every drop of LKA assistance"),
 }
 
 # Short goal labels; src must appear in the goal's text in goals.yaml.

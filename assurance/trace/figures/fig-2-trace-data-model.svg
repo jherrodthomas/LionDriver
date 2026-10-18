@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="690" viewBox="0 0 1280 690" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 2 · Trace data model</title>
-<desc>The item kinds of each standard with their counts and the parent links between them. ISO 26262 kinds are in the trace data (H 9, HE 38, SG 8, AOU 16, FSR 57, TSR 126, SWSR 135, HWSR 46); SOTIF, AI, cybersecurity and system requirement kinds exist only in their work products.</desc>
+<desc>The item kinds of each standard with their counts and the parent links between them. ISO 26262 kinds are in the trace data (H 9, HE 38, SG 8, AOU 17, FSR 57, TSR 126, SWSR 135, HWSR 46); SOTIF, AI, cybersecurity and system requirement kinds exist only in their work products.</desc>
 <defs><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F172A"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="faint" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><marker id="sw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F766E"/></marker><marker id="hw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker><marker id="aou" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D97706"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D2553F"/></marker></defs>
 <rect x="0" y="0" width="1280" height="690" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 2 · Trace data model: what is in, what is missing</text>
@@ -64,7 +64,7 @@
 <rect x="238" y="483" width="104" height="34" rx="7" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
 <text x="290" y="504" font-size="12" fill="#0F766E" font-weight="700" text-anchor="middle">HWSR  46</text>
 <rect x="28" y="193" width="104" height="34" rx="7" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
-<text x="80" y="214" font-size="12" fill="#0F766E" font-weight="700" text-anchor="middle">AOU  16</text>
+<text x="80" y="214" font-size="12" fill="#0F766E" font-weight="700" text-anchor="middle">AOU  17</text>
 <rect x="608" y="193" width="104" height="34" rx="7" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 4"/>
 <text x="660" y="214" font-size="12" fill="#475569" font-weight="700" text-anchor="middle">SH  13</text>
 <rect x="548" y="313" width="104" height="34" rx="7" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 4"/>
@@ -91,7 +91,7 @@
 <text x="58" y="614" font-size="11" fill="#475569">See Figure 8 and the allocation resolution report.</text>
 <rect x="650" y="552" width="590" height="74" rx="10" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2" stroke-dasharray="5 4"/>
 <text x="668" y="576" font-size="12" fill="#D2553F" font-weight="700">Code and tests · @req tags, links/verification.yaml</text>
-<text x="668" y="596" font-size="11" fill="#475569">0 tags in code or tests. 296 of 435 items are named by a test-specification case:</text>
+<text x="668" y="596" font-size="11" fill="#475569">0 tags in code or tests. 296 of 436 items are named by a test-specification case:</text>
 <text x="668" y="614" font-size="11" fill="#475569">a specified link, not a passed test.</text>
 <rect x="40" y="650" width="14" height="12" rx="3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.2"/>
 <text x="60" y="660" font-size="11" fill="#475569">in items/, checked</text>
