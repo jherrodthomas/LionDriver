@@ -59,7 +59,12 @@ def main() -> int:
           "plant's driver assumptions and WP-S-04 §3 values. Contact is not modelled by either: the outcome column "
           "reports the first overlap of the body outlines and the relative speed there.\n\n"
           "| Scene | Entry | Effect (HARA / WP-C-05) | Motion | Outcome in the scene |\n|---|---|---|---|---|\n")
-  (GAL / "README.md").write_text(head + "\n".join(rows) + "\n")
+  clips = sorted((GAL / "clips").glob("*.mp4")) if (GAL / "clips").exists() else []
+  tail = ""
+  if clips:
+    tail = ("\n## Clips\n\nThe whole scene with the dashboard running, 24 fps (`hazard_scene.py --video`, "
+            "`compose.py --video`):\n\n" + "\n".join(f"- [{c.stem}](clips/{c.name})" for c in clips) + "\n")
+  (GAL / "README.md").write_text(head + "\n".join(rows) + "\n" + tail)
   print(f"{len(rows)} dashboards in {GAL}" + (f"; not rendered yet: {', '.join(missing)}" if missing else ""))
   return 0
 
