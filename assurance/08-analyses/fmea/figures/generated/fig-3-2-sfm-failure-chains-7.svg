@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="866" viewBox="0 0 1280 866" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-2. System FMEA failure chains — sheet 7 of 7 (SFM)</title>
-  <desc id="d">System FMEA failure chains, sheet 7 of 7 (SFM rev 0.28): failure modes SFM-034 to SFM-036 (3 failure modes, 6 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <desc id="d">System FMEA failure chains, sheet 7 of 7 (SFM rev 0.29): failure modes SFM-034 to SFM-036 (3 failure modes, 6 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,7 +9,7 @@
   </defs>
   <rect width="1280" height="866" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-2 · System FMEA failure chains — sheet 7 of 7</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SFM rev 0.28 · BL-006 · draft · SFM-034 … SFM-036 · 6 causes on this sheet</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SFM rev 0.29 · BL-006 · draft · SFM-034 … SFM-036 · 6 causes on this sheet</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.1</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/system-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -108,7 +108,7 @@
   <text x="885" y="603.4" font-size="10.5" fill="#0F172A">command; controlsd keeps requesting the planner's acceleration</text>
   <text x="885" y="617.4" font-size="10.5" fill="#0F172A">(design gap, FTA BE-7.13)</text>
   <text x="885" y="630.6" font-size="9.8" fill="#475569" font-weight="600">O8 · D10 · in SFM-SE-013</text>
-  <rect x="885" y="636.6" width="166.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/><text x="968.2" y="647.5" font-size="9.5" font-weight="700" fill="#D97706" text-anchor="middle" letter-spacing=".02em">SFM-ACT-020 decision pending</text>
+  <rect x="885" y="636.6" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="647.5" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SFM-ACT-020 open</text>
   <rect x="876" y="667.6" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
   <text x="885" y="687.1" font-size="12" fill="#0F172A" font-weight="700">SFM-036.C2</text>
   <rect x="1194.5" y="676.1" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="687" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
@@ -123,9 +123,8 @@
   <rect x="179.4" y="796.8" width="36.5" height="15" rx="7.5" fill="#0F766E"/><text x="197.7" y="807.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP L</text>
   <text x="223.9" y="807.8" font-size="10.5" fill="#0F172A">Action Priority as rated (rating-tables §5)</text>
   <rect x="455.4" y="796.8" width="59.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="485" y="807.8" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">ACT open</text>
-  <rect x="518.7" y="796.8" width="116.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/><text x="577.1" y="807.8" font-size="9.5" font-weight="700" fill="#D97706" text-anchor="middle" letter-spacing=".02em">ACT decision pending</text>
-  <rect x="639.5" y="796.8" width="104.4" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="691.7" y="807.8" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">rationale, no action</text>
-  <text x="751.9" y="807.8" font-size="10.5" fill="#0F172A">action status (step 6)</text>
+  <rect x="518.7" y="796.8" width="104.4" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="570.9" y="807.8" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">rationale, no action</text>
+  <text x="631.1" y="807.8" font-size="10.5" fill="#0F172A">action status (step 6)</text>
   <text x="40" y="827.8" font-size="10" fill="#475569">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
   <text x="40" y="845.8" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/system-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>

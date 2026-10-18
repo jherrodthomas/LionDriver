@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1550" viewBox="0 0 1280 1550" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-11. FMEDA SG-009 metrics against ASIL B (estimate)</title>
-  <desc id="d">FMEDA for SG-009 (ASIL B target, FMD rev 0.4, BL-002, draft) with generic estimated failure rates: SPFM 78.11 % against ≥ 90 % (missed), LFM 97.71 % against ≥ 60 % (met on the estimate, not verified), λSPF+λRF 62.9 FIT against PMHF &lt; 100 FIT (below, partial PMHF only, not verified); failure-rate split per component and failure mode, and the safety mechanisms with the failure modes they are credited on.</desc>
+  <desc id="d">FMEDA for SG-009 (ASIL B target, FMD rev 0.5, BL-002, draft) with generic estimated failure rates: SPFM 78.11 % against ≥ 90 % (missed), LFM 97.71 % against ≥ 60 % (met on the estimate, not verified), λSPF+λRF 62.9 FIT against PMHF &lt; 100 FIT (below, partial PMHF only, not verified); failure-rate split per component and failure mode, and the safety mechanisms with the failure modes they are credited on.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,7 +9,7 @@
   </defs>
   <rect width="1280" height="1550" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-11 · FMEDA SG-009 — metrics against the ASIL B target</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">FMD rev 0.4 · BL-002 · draft · FMEDA — SG-009 stock AEB availability (relay and forwarding path), generic failure rates</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">FMD rev 0.5 · BL-002 · draft · FMEDA — SG-009 stock AEB availability (relay and forwarding path), generic failure rates</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.5</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/fmeda-sg009.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>

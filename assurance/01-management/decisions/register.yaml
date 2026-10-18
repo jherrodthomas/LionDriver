@@ -4551,8 +4551,9 @@
       title: "Accept 96.84 % now with a written rationale"
       detail: "Close the item without a design change. Cost: an assessor may not accept a missed ASIL C target."
   sources: ["assurance/08-analyses/fta-fmea-mapping.md F-22", "assurance/08-analyses/fmea/analyses/fmeda-sg001.yaml", "assurance/02-concept/WP-C-03-hara.md SG-02, SG-03, SG-06"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#249", record: "assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md §6.4; WP-H-04 OI-6", at: 2026-10-19}
 
 - id: DQ-363
   question: "When the driver presses the accelerator while LionDriver is braking, and the accelerator signal is stuck at \"not pressed\", which goal owns it: braking (SG-04) or release on driver action (SG-05)?"

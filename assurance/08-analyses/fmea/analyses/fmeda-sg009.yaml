@@ -8,12 +8,15 @@
 # functional-safety reports (standard not read, no stress conversion); was 2 × 5 FIT generic. The box discretes and resistors keep generic rates
 # with their SN 29500 class named; no reference value was reachable. Mission profile: the harness box sits behind the camera in the same
 # sun-loaded windscreen zone and takes the same profile.
+# Rev 0.5 (2026-10-18, decision DQ-362 option A): the rows that stop the item's actuation (MCU hang with the relay driven, harness and
+# box supply loss) also stand for assurance SG-02 and SG-06 (ASIL C, loss without warning), next to the SG-001 FMEDA. No rate,
+# classification or metric changes; the rows are classified for SG-009. Per-goal notes in WP-H-03 §6.4.
 schema_version: 1
 analysis:
   id: FMD
   type: fmeda
   title: FMEDA — SG-009 stock AEB availability (relay and forwarding path), generic failure rates
-  revision: '0.4'
+  revision: '0.5'
   status: draft
   baseline: BL-002
   rating_tables: RT-1
@@ -34,7 +37,7 @@ analysis:
   - assurance/08-analyses/fmea/analyses/dfmea.yaml
   - assurance/08-analyses/fmea/rating-tables.md
   - ISO 26262-5:2018 §8-9 and Annex D; ISO 26262-11:2018 §4.6 (semiconductors)
-  updated: '2026-10-16'
+  updated: '2026-10-18'
 safety_mechanisms:
 - id: FMD-SM-001
   description: Flash ECC (single-error correction in silicon; corrected reads are transparent)
@@ -78,7 +81,8 @@ components:
     dfmea_ref: DFM-004
     safety_mechanism_spf: FMD-SM-007
     dc_spf: 0.9
-    notes: Watchdog reset releases the relay (if the drive circuit is de-energise-to-safe, UK-06)
+    notes: 'Watchdog reset releases the relay (if the drive circuit is de-energise-to-safe, UK-06). For SG-02/SG-06 (DQ-362): actuation
+      lost, warning from the host (FTA BE-2.06)'
   - id: FMD-002
     mode: Wrong forwarding decision (stock PCS frame dropped while forwarding runs)
     distribution: 0.05
@@ -328,7 +332,8 @@ components:
     violates_sg_directly: true
     mpf_potential: false
     dfmea_ref: DFM-020
-    notes: Switch unpowered, pass-through not guaranteed (RR-2026-010 F-02, to confirm on the bench)
+    notes: 'Switch unpowered, pass-through not guaranteed (RR-2026-010 F-02, to confirm on the bench). The device loses power with the
+      box, so for SG-02/SG-06 (DQ-362) actuation is lost and only the host can warn (FTA BE-2.07, DFM-020)'
   - id: FMD-031
     mode: 'D4 short: box VIN to ground'
     distribution: 0.2
