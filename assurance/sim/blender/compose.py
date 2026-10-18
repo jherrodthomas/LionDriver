@@ -375,8 +375,11 @@ def main(argv: list[str]) -> int:
   (out / "dashboard").mkdir(exist_ok=True)
   for f, views in stills.items():
     frame(sc, screen, keys, views, f - 1, thumbs).save(out / "dashboard" / f"f{f:04d}.png", optimize=True)
+  # the contact, else the driver's response (not an earlier "item brakes" or "lead brakes"), else the middle key
+  response = lambda k: "correction" in k["label"] or "brakes" in k["label"]
   decisive = next((k for k in keys if is_red(k["label"])), None) \
-    or next((k for k in keys if "correction" in k["label"] or "brakes" in k["label"]), None) or keys[len(keys) // 2]
+    or next((k for k in keys if k["label"].startswith("driver") and response(k)), None) \
+    or next((k for k in keys if response(k)), None) or keys[len(keys) // 2]
   shutil.copy(out / "dashboard" / f"f{decisive['frame']:04d}.png", out / "dashboard.png")
   print(f"{sc['id']}: {len(stills)} dashboards; {out / 'dashboard.png'} ({decisive['label']})")
 
