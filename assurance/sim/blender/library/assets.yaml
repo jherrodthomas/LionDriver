@@ -6,10 +6,11 @@
 #
 #   kind         hdri (an equirectangular sky) or pbr (a tiling ground material)
 #   use          what it is for
-#   size_m       pbr: the real-world size one texture tile covers
+#   size_m       pbr: the real-world size one texture tile covers ([x, y] for a non-square image), as the source publishes it for the first
+#                candidate (Poly Haven "dimensions", ambientCG dimensionX); a fallback asset is drawn at the same size
 #   strength     hdri: background strength (the sun lamp still lights the scene and casts the shadows)
-#   candidates   tried in order: source (polyhaven, ambientcg) and asset ID. These IDs were chosen from the sites'
-#                catalogues without network access (2026-10-18); the first one that resolves is used
+#   candidates   tried in order: source (polyhaven, ambientcg) and asset ID; the first one that resolves is used.
+#                Chosen offline, then checked against the sites' previews and dimensions on 2026-10-18
 #   search       when no candidate resolves: the source and what to search for (Poly Haven categories, ambientCG
 #                query); the most downloaded match is used
 #   maps         pbr: the texture maps wanted (color, normal, roughness, displacement, ao)
@@ -67,7 +68,7 @@ slots:
   asphalt:
     kind: pbr
     use: Carriageway, parking lane and the highway shoulder
-    size_m: 4.0
+    size_m: 3.0
     resolution: 2k
     maps: [color, normal, roughness]
     candidates:
@@ -79,13 +80,13 @@ slots:
   grass:
     kind: pbr
     use: Verges and fields
-    size_m: 3.0
+    size_m: 1.4
     resolution: 1k
     maps: [color, normal, roughness]
-    candidates:
-      - {source: polyhaven, id: aerial_grass_rock}
+    candidates:                         # aerial_grass_rock (15 m, mostly bare earth) dropped: a mud field, not a verge
       - {source: ambientcg, id: Grass004}
       - {source: ambientcg, id: Grass001}
+      - {source: polyhaven, id: leafy_grass}
     search: {source: ambientcg, query: grass}
 
   gravel:
@@ -95,7 +96,7 @@ slots:
     resolution: 1k
     maps: [color, normal, roughness]
     candidates:
-      - {source: polyhaven, id: gravelly_sand}
+      - {source: polyhaven, id: gravel_floor_02}  # gravelly_sand dropped: orange desert sand, not a road shoulder
       - {source: ambientcg, id: Gravel022}
       - {source: ambientcg, id: Gravel023}
     search: {source: ambientcg, query: gravel}
@@ -103,19 +104,19 @@ slots:
   concrete:
     kind: pbr
     use: Sidewalks, overpass, kerbs
-    size_m: 3.0
+    size_m: [1.1, 0.55]
     resolution: 1k
     maps: [color, normal, roughness]
-    candidates:
-      - {source: polyhaven, id: concrete_floor_02}
+    candidates:                         # concrete_floor_02 (a stained indoor floor) moved to the back
       - {source: ambientcg, id: Concrete034}
       - {source: ambientcg, id: PavingStones130}
+      - {source: polyhaven, id: concrete_floor_02}
     search: {source: ambientcg, query: concrete}
 
   snow:
     kind: pbr
     use: Verges and shoulders under W05
-    size_m: 3.0
+    size_m: 2.0
     resolution: 1k
     maps: [color, normal, roughness]
     candidates:

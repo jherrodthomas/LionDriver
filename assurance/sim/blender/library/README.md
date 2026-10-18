@@ -87,7 +87,21 @@ patches; voronoi gravel; concrete slabs; a Nishita or overcast sky. The wet, sno
 Road surfaces carry UVs in metres (u lateral, v along the road), so a texture follows the road round a curve and
 its tangent-space normal map is correct.
 
-**Status (2026-10-18):** `assets.lock.json` is not written yet. The cloud environment that built this library could
-not reach the three hosts (its network policy refused them). Run `fetch_assets.py` on a machine that can reach them
-and commit the lock it writes. The candidate IDs were chosen without network access, so the search fallback may pick
-some slots.
+**Fetched (2026-10-18)**, all CC0 1.0, every first candidate resolved; `assets.lock.json` holds the files and their
+SHA-256. Tile sizes are the ones each source publishes.
+
+| Slot | Asset | Tile |
+|---|---|---|
+| `hdri_clear` | Poly Haven [`kloofendal_48d_partly_cloudy_puresky`](https://polyhaven.com/a/kloofendal_48d_partly_cloudy_puresky) | 2k HDR |
+| `hdri_overcast` | Poly Haven [`overcast_soil_puresky`](https://polyhaven.com/a/overcast_soil_puresky) | 2k HDR |
+| `hdri_low_sun` | Poly Haven [`spruit_sunrise`](https://polyhaven.com/a/spruit_sunrise) | 2k HDR |
+| `hdri_night` | Poly Haven [`moonless_golf`](https://polyhaven.com/a/moonless_golf) | 2k HDR |
+| `asphalt` | Poly Haven [`asphalt_02`](https://polyhaven.com/a/asphalt_02) | 3 m, 2k |
+| `grass` | ambientCG [`Grass004`](https://ambientcg.com/view?id=Grass004) | 1.4 m, 1K |
+| `gravel` | Poly Haven [`gravel_floor_02`](https://polyhaven.com/a/gravel_floor_02) | 2 m, 1k |
+| `concrete` | ambientCG [`Concrete034`](https://ambientcg.com/view?id=Concrete034) | 1.1 × 0.55 m, 1K |
+| `snow` | Poly Haven [`snow_02`](https://polyhaven.com/a/snow_02) | 2 m, 1k |
+
+The offline picks were checked against the sites' previews before locking. Three were replaced:
+`aerial_grass_rock` (a 15 m aerial of mostly bare earth) by `Grass004`, `gravelly_sand` (orange desert sand) by
+`gravel_floor_02`, and `concrete_floor_02` (a stained floor) by `Concrete034`.

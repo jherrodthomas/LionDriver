@@ -118,7 +118,7 @@ class TestFetchAssets(unittest.TestCase):
         self.assertEqual(data["slots"]["asphalt"]["id"], "asphalt_02")
         self.assertEqual(data["slots"]["grass"]["source"], "ambientcg")
         self.assertEqual(data["slots"]["hdri_night"]["files"]["hdri"]["sha256"], hashlib.sha256(b"hdr").hexdigest())
-        self.assertEqual(data["slots"]["grass"]["size_m"], 3.0)
+        self.assertEqual(data["slots"]["grass"]["size_m"], 1.4)
         for f in (Path(d) / "lib").rglob("*.*"):
           f.unlink()
         n = len(web.urls)
@@ -142,6 +142,8 @@ class TestFetchAssets(unittest.TestCase):
       self.assertTrue(slot["candidates"] and slot.get("search"), name)
       if slot["kind"] == "pbr":
         self.assertIn("size_m", slot, name)
+        size = slot["size_m"] if isinstance(slot["size_m"], list) else [slot["size_m"]] * 2
+        self.assertTrue(len(size) == 2 and all(v > 0 for v in size), name)
         self.assertTrue({"color", "normal", "roughness"} <= set(slot["maps"]), name)
     lock = F.LOCK
     if lock.exists():                                   # the committed lock names only known slots

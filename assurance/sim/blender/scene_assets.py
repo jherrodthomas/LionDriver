@@ -186,7 +186,8 @@ class Graph:
 def _pbr(g: Graph, slot: dict, assets: Assets):
   """(colour, roughness, normal) sockets of a fetched texture set on the road UVs, with a large-scale tint variation
   so the tiling does not show."""
-  vec = g.node("ShaderNodeMapping", {"Vector": g.uv(), "Scale": (1 / slot["size_m"],) * 3}).outputs[0]
+  sx, sy = slot["size_m"] if isinstance(slot["size_m"], list) else (slot["size_m"],) * 2   # [x, y]: a non-square tile
+  vec = g.node("ShaderNodeMapping", {"Vector": g.uv(), "Scale": (1 / sx, 1 / sy, 1.0)}).outputs[0]
   img = lambda m, colour: g.node("ShaderNodeTexImage", {"Vector": vec}, image=assets.image(slot["files"][m], colour))
   macro = g.remap(g.noise(g.uv(), 0.04, 3).outputs[0], 0.3, 0.7, 0.82, 1.12)
   col = g.mix(1.0, img("color", True).outputs[0], macro, "MULTIPLY")

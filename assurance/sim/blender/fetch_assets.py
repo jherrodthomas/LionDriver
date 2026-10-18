@@ -266,8 +266,8 @@ def check_hosts() -> int:
       try:
         get_bytes(f"https://{h}/")
         print(f"{h}: reachable")
-      except NotFound:
-        print(f"{h}: reachable")
+      except (NotFound, urllib.error.HTTPError) as e:   # any HTTP answer means the host is reachable
+        print(f"{h}: reachable (HTTP {getattr(e, 'code', None) or 404} at /)")
       except (urllib.error.URLError, OSError) as e:
         bad += 1
         print(f"{h}: NOT reachable ({getattr(e, 'reason', e)})")
