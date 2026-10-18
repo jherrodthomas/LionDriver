@@ -1,5 +1,5 @@
 """Tests of fetch_assets.py against fake Poly Haven and ambientCG responses (CI; no network, no Blender): candidates
-in order, the search fallback, zip members, MD5 checks, the lock file and --locked."""
+in order, the search fallback, zip members, MD5 checks, models with their textures, the lock file and --locked."""
 
 from __future__ import annotations
 
@@ -17,6 +17,9 @@ import fetch_assets as F
 
 TEX = {"kind": "pbr", "resolution": "1k", "maps": ["color", "normal", "roughness"]}
 SKY = {"kind": "hdri", "resolution": "2k"}
+TREE = {"kind": "model", "role": "broadleaf", "use": "trees", "height_m": [6.0, 8.0], "resolution": "1k",
+        "candidates": [{"source": "polyhaven", "id": "oak_01"}], "search": {"source": "polyhaven",
+                                                                            "categories": ["trees"]}}
 
 
 def _zip(names: list[str]) -> bytes:
@@ -28,7 +31,7 @@ def _zip(names: list[str]) -> bytes:
 
 
 class FakeWeb:
-  """Poly Haven knows asphalt_02 and a night sky; ambientCG knows Grass004 (as a zip)."""
+  """Poly Haven knows asphalt_02, a night sky and a tree model; ambientCG knows Grass004 (as a zip)."""
 
   def __init__(self):
     self.blobs = {
@@ -36,6 +39,9 @@ class FakeWeb:
       "https://dl.polyhaven.org/asphalt_02_nor_gl_1k.jpg": b"nor",
       "https://dl.polyhaven.org/asphalt_02_rough_1k.jpg": b"rough",
       "https://dl.polyhaven.org/moonless_golf_2k.hdr": b"hdr",
+      "https://dl.polyhaven.org/oak_01_1k.gltf": b"gltf",
+      "https://dl.polyhaven.org/oak_01.bin": b"bin",
+      "https://dl.polyhaven.org/oak_01_leaves_diff_1k.jpg": b"leaves",
       "https://ambientcg.com/get?file=Grass004_1K-JPG.zip": _zip(["Grass004_1K-JPG_Color.jpg",
                                                                   "Grass004_1K-JPG_NormalGL.jpg",
                                                                   "Grass004_1K-JPG_NormalDX.jpg",
@@ -53,6 +59,10 @@ class FakeWeb:
               for k, n in (("Diffuse", "diff"), ("nor_gl", "nor_gl"), ("Rough", "rough"))}
     if url == f"{F.POLYHAVEN_API}/files/moonless_golf":
       return {"hdri": {"2k": {"hdr": self._ph("https://dl.polyhaven.org/moonless_golf_2k.hdr")}}}
+    if url == f"{F.POLYHAVEN_API}/files/oak_01":
+      inc = {"oak_01.bin": self._ph("https://dl.polyhaven.org/oak_01.bin"),
+             "textures/oak_01_leaves_diff_1k.jpg": self._ph("https://dl.polyhaven.org/oak_01_leaves_diff_1k.jpg")}
+      return {"gltf": {"1k": {"gltf": {**self._ph("https://dl.polyhaven.org/oak_01_1k.gltf"), "include": inc}}}}
     if url.startswith(f"{F.POLYHAVEN_API}/assets?"):
       return {"other_sky": {"download_count": 5}, "moonless_golf": {"download_count": 900}}
     if url.startswith(f"{F.POLYHAVEN_API}/files/"):
@@ -130,21 +140,60 @@ class TestFetchAssets(unittest.TestCase):
       finally:
         del os.environ["LIONDRIVER_ASSET_LIBRARY"]
 
+  def test_model_keeps_the_gltf_layout(self):
+    web = FakeWeb()
+    with tempfile.TemporaryDirectory() as d:
+      lock = Path(d) / "assets.lock.json"
+      lib = Path(d) / "lib"
+      os.environ["LIONDRIVER_ASSET_LIBRARY"] = str(lib)
+      spec = {"licence": "CC0", "dest": "x", "slots": {"tree": TREE}}
+      real = F.load_slots
+      F.load_slots = lambda: spec
+      try:
+        self.assertEqual(F.fetch(["tree"], False, web.json, web.bytes, lock, "2026-10-18"), 0)
+        entry = json.loads(lock.read_text())["slots"]["tree"]
+        self.assertEqual((entry["kind"], entry["role"], entry["height_m"]), ("model", "broadleaf", [6.0, 8.0]))
+        self.assertEqual(entry["files"]["gltf"]["path"], "tree/oak_01_1k.gltf")
+        self.assertTrue((lib / "tree" / "textures" / "oak_01_leaves_diff_1k.jpg").exists())   # beside the .gltf
+        self.assertTrue((lib / "tree" / "oak_01.bin").exists())
+        (lib / "tree" / "textures" / "oak_01_leaves_diff_1k.jpg").unlink()
+        self.assertEqual(F.fetch(["tree"], True, web.json, web.bytes, lock), 0)                 # --locked, same layout
+        self.assertTrue((lib / "tree" / "textures" / "oak_01_leaves_diff_1k.jpg").exists())
+      finally:
+        F.load_slots = real
+        del os.environ["LIONDRIVER_ASSET_LIBRARY"]
+    with self.assertRaises(F.NotFound):                                                       # models: Poly Haven only
+      F.ambientcg_files(TREE, "Tree001", web.json)
+
   def test_unsafe_names(self):
     self.assertEqual(F._safe_name("../../etc/x.jpg"), "x.jpg")
     with self.assertRaises(ValueError):
       F._safe_name("..")
+    self.assertEqual(F._safe_relpath("textures/x.jpg"), "textures/x.jpg")
+    for bad in ("../x.jpg", "textures/../../x.jpg", "/etc/x.jpg", ".hidden/x.jpg", ""):
+      with self.assertRaises(ValueError):
+        F._safe_relpath(bad)
 
   def test_slots_are_complete(self):
     spec = F.load_slots()
     for name, slot in spec["slots"].items():
-      self.assertIn(slot["kind"], ("hdri", "pbr"), name)
+      self.assertIn(slot["kind"], ("hdri", "pbr", "model"), name)
       self.assertTrue(slot["candidates"] and slot.get("search"), name)
       if slot["kind"] == "pbr":
         self.assertIn("size_m", slot, name)
         size = slot["size_m"] if isinstance(slot["size_m"], list) else [slot["size_m"]] * 2
         self.assertTrue(len(size) == 2 and all(v > 0 for v in size), name)
         self.assertTrue({"color", "normal", "roughness"} <= set(slot["maps"]), name)
+      if slot["kind"] == "model":
+        self.assertIn(slot["role"], ("broadleaf", "conifer", "shrub", "verge_short", "verge_meadow", "bin", "bench",
+                                     "hydrant", "utility_box"), name)
+        if slot["role"] in ("broadleaf", "conifer", "shrub", "verge_short", "verge_meadow"):   # plants are scaled
+          rng = slot["scale"] if slot["role"].startswith("verge") else slot["height_m"]
+          self.assertTrue(len(rng) == 2 and 0 < rng[0] <= rng[1], name)
+        else:                                                                                    # furniture is not
+          self.assertFalse({"scale", "height_m"} & set(slot), name)
+        self.assertTrue(all(g and all(isinstance(n, str) for n in g) for g in slot.get("groups", [])), name)
+        self.assertTrue(all(c["source"] == "polyhaven" for c in slot["candidates"]), name)
     lock = F.LOCK
     if lock.exists():                                   # the committed lock names only known slots
       self.assertLessEqual(set(json.loads(lock.read_text())["slots"]), set(spec["slots"]))

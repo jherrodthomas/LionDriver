@@ -387,12 +387,13 @@
       title: "A full competence record per contributor"
       detail: "Strong evidence. Cost: puts contributors off."
   sources: ["assurance/01-management/WP-M-04-organization-competence-safety-culture.md OI-3"]
-  status: answered
+  status: applied
   answer:
     choice: B
     via: inbox
     at: 2026-10-14
     by: u_DgEswP8TFzpISXlzh3BD1g
+  applied: {ref: "jherrodthomas/LionDriver#237", record: "WP-M-04 v0.3 §4.5 (full competence record per contributor before the first merged PR), OI-3 closed", at: 2026-10-18}
 
 - id: DQ-017
   question: "Does LionDriver's name and branding stay clear of the openpilot trademark?"
@@ -793,12 +794,13 @@
       title: "Quantify them with Claude"
       detail: "More precise. Cost: effort for no change in risk."
   sources: ["assurance/02-concept/WP-C-09-tara.md OI-2"]
-  status: answered
+  status: applied
   answer:
     choice: B
     via: inbox
     at: 2026-10-14
     by: u_DgEswP8TFzpISXlzh3BD1g
+  applied: {ref: "jherrodthomas/LionDriver#237", record: "WP-C-09 v0.4 §3 (financial impact quantified for the road user; no maximum level or risk value changed), OI-2 closed", at: 2026-10-18}
 
 - id: DQ-036
   question: "How often does the car close on a slower car at highway speed: rated as \"often\" (E4) or \"for a share of driving time\" (E3)?"
@@ -1640,12 +1642,13 @@
       title: "Start now with documented exceptions"
       detail: "Earlier gap assessment. Cost: rework as the HARA and concept change."
   sources: ["assurance/01-management/WP-M-01-assurance-strategy.md D-14"]
-  status: answered
+  status: applied
   answer:
     choice: B
     via: inbox
     at: 2026-10-14
     by: u_DgEswP8TFzpISXlzh3BD1g
+  applied: {ref: "jherrodthomas/LionDriver#237", record: "WP-M-01 v0.8 D-14; WP-M-07 v0.5 D-14; WP-M-14 v0.5 Activation, §3.3 exceptions X-01…X-05, §15, §16, OI-1 closed", at: 2026-10-18}
 
 - id: DQ-075
   question: "How should LionDriver deliver software updates: signed releases, or manual installs only?"
@@ -2350,12 +2353,13 @@
       title: "Stay on your personal account"
       detail: "No migration. Cost: no teams, and everything depends on one account."
   sources: ["assurance/07-supporting/WP-P-01-configuration-management-plan.md OI-1"]
-  status: answered
+  status: applied
   answer:
     choice: B
     via: inbox
     at: 2026-10-14
     by: u_DgEswP8TFzpISXlzh3BD1g
+  applied: {ref: "jherrodthomas/LionDriver#237", record: "WP-P-01 v0.5 §6, §10, OI-1 closed; WP-P-02 v0.3 §7.2 (code owners named individually), OI-4", at: 2026-10-18}
 
 - id: DQ-112
   question: "Where are drive logs referenced by problem reports stored (LionDriver-controlled, privacy reviewed)?"
@@ -2390,12 +2394,13 @@
       title: "A shorter period after legal advice"
       detail: "Lower cost. Cost: records may be missing in a liability case."
   sources: ["assurance/07-supporting/WP-P-04-documentation-management.md OI-6"]
-  status: answered
+  status: applied
   answer:
     choice: A
     via: inbox
     at: 2026-10-14
     by: u_DgEswP8TFzpISXlzh3BD1g
+  applied: {ref: "jherrodthomas/LionDriver#237", record: "WP-P-04 v0.4 §10, OI-6 closed", at: 2026-10-18}
 
 - id: DQ-114
   question: "Should the improved panda watchdog (90 ms, window mode) replace the interim residuals you accepted?"
@@ -4741,3 +4746,28 @@
       detail: "G1 also covers the hatchback and the hybrids. Cost: their checks (IOI-002) must be done first, which delays G1."
   sources: ["assurance/01-management/WP-M-01-assurance-strategy.md §3.1", "assurance/01-management/WP-M-12-impact-analysis.md M-1", "assurance/08-analyses/fmea/item-definition.md §1, IOI-002", "docs/liondriver/vehicles/vehicles.yaml VF-001"]
   status: open
+
+- id: DQ-400
+  question: "The closed-loop driving simulation cannot run in real time on GitHub's free 4-core runners. Should it run on your own computer as a self-hosted runner, on a paid larger GitHub runner, or stay off CI for now?"
+  context: "The MetaDrive simulation drives the reference Corolla with the full openpilot stack and the panda safety code in the loop (PR #124). On the free runner, the rendered road (MetaDrive's terrain) takes about 160 ms per camera frame. That is about 6 frames per second against the 20 openpilot needs, measured on a 4-core machine like the runner. In CI the driving model then dropped a third of its frames, so camera odometry, calibration and localization were never valid and the test could not engage. Smaller images do not help (126 ms at a quarter of the size); turning the terrain off is fast but removes the road and lane lines. Results get no credit either way (WP-V-02 §5.3); this is about having a working closed-loop check at all."
+  reversibility: easy
+  blocks: "Closed-loop simulation in CI: the re-enabled simulator_driving job (PR #124), and the later MetaDrive scenario runs (WP-V-02 §5.3, M4)"
+  gate: G4
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Self-hosted runner on a computer you already have, ideally with a graphics card"
+      detail: "Free if the machine exists; a GPU renders the scene in real time. Cost: the machine must be on for CI, and a self-hosted runner on a public repository should only run trusted branches (the job would be limited to this repository's own PRs)."
+    - key: B
+      title: "Paid larger GitHub runner (8 or more cores)"
+      detail: "No hardware to look after. Cost: billed per minute; still CPU rendering, so real-time speed is not certain until measured."
+    - key: C
+      title: "Keep the closed-loop job off CI for now"
+      detail: "No cost. The plant model and esmini scenario checks keep running; the full-stack loop is run by hand when needed. Cost: no automatic end-to-end check."
+  sources: ["openpilot/tools/sim (PR #124, simulator_driving job logs 2026-10-16)", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md §5.3.1", "assurance/sim/README.md §6"]
+  asked: 2026-10-18
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-18}
+  applied: {ref: "#124", record: "assurance/sim/README.md §3.8; .github/workflows/tests.yaml (simulator_driving)", at: 2026-10-18}
+  note: "The job runs once the lead registers the runner (label liondriver-sim) and sets the repository variable LIONDRIVER_SIM_RUNNER to true (README §3.8)."

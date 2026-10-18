@@ -4,6 +4,8 @@
 - Figure 2-1 (`fig-c03-2-1-asil-heatmap.svg`): every hazardous-event row of the reference-scope
   Cartesian HARA counted per S x E x C cell of the ISO 26262-3 Table 4 ASIL matrix, as rated and
   with C+1 on every row that credits an unverified AoU (⚠). Data: `hara_model.build(False)`.
+- Guide-word scenes (`fig-c03-4-1-f01-guide-words.svg`): one card per guide word for F-01, the function against time over a
+  top-down road scene. Drawn by `guideword_scenes.py` (see there); built and checked here with the others.
 - Figure 6-1 (`fig-c03-6-1-hazard-sg-overview.svg`): hazards H-01...H-09 -> the representative
   hazardous events of WP-C-03 §5 -> safety goals SG-01...SG-08 of §6 (by their "Source HEs" column),
   with the Cartesian row statistics per hazard from the model.
@@ -441,8 +443,10 @@ def fig_overview() -> str:
 # ---------------------------------------------------------------- outputs
 
 def build() -> dict[str, str]:
+  import guideword_scenes  # guide-word scenes; imports this module, so it is loaded here
   return {
     "fig-c03-2-1-asil-heatmap.svg": fig_heatmap(),
+    **guideword_scenes.build(),
     "fig-c03-6-1-hazard-sg-overview.svg": fig_overview(),
   }
 

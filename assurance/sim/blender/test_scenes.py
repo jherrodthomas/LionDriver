@@ -2,15 +2,18 @@
 (or a SOTIF hazard) and plant case, exports, keeps its events inside its window, and every HARA hazardous event has a
 scene. Every scene is built from the library (environment, condition, traffic) with a condition its environment
 allows, a plant case drives the geometry its environment has, the library's codes match the HARA, and a variant
-shows its base scene's motion and outcome under another condition."""
+shows its base scene's motion and outcome under another condition. The street furniture of an urban scene stays on
+its pavement and clear of every pedestrian and cyclist, intersection, traffic light and crosswalk."""
 
 from __future__ import annotations
 
 import copy
+import math
 import sys
 import unittest
 
 import export_scene
+import street_layout
 
 sys.path.insert(0, str(export_scene.ASSURANCE / "02-concept" / "hara"))
 import hara_model  # noqa: E402
@@ -117,6 +120,26 @@ class TestScenes(unittest.TestCase):
         self.assertEqual(a[k], b[k], f"{v['id']}: {k}")
       own = lambda sc: {x["name"]: x["poses"] for x in sc["actors"] if not x.get("traffic")}
       self.assertEqual(own(a), own(b), v["id"])
+
+  def test_street_furniture_keeps_clear(self):
+    urban = [sc for sc in self.built.values() if sc["road"]["scenery"] == "urban"]
+    self.assertTrue(urban)
+    for sc in urban:
+      items = street_layout.layout(sc)
+      kinds = {it["kind"] for it in items}
+      self.assertTrue({"lamp", "tree", "shelter"} <= kinds, sc["id"])
+      walks = {side: (kerb, back) for side, kerb, back in street_layout.pavements(sc["road"])}
+      users = [q for a in sc["actors"] if a["kind"] in ("pedestrian", "cyclist") for q in a["poses"]]
+      junctions = [(p["s"], p.get("width", 14.0) / 2) for p in sc["props"] if p["kind"] == "intersection"]
+      for it in items:
+        kerb, back = walks[it["side"]]
+        self.assertTrue(min(kerb, back) < it["d"] < max(kerb, back), (sc["id"], it))         # on the pavement
+        near = min((math.hypot(it["x"] - q[0], it["y"] - q[1]) for q in users), default=math.inf)
+        self.assertGreaterEqual(near, street_layout.CLEAR_M, (sc["id"], it))                   # nobody hidden
+        for s0, half in junctions:
+          self.assertGreater(abs(it["s"] - s0), half, (sc["id"], it))                         # not in the junction
+        for cs in sc["road"].get("crosswalks") or []:
+          self.assertGreater(abs(it["s"] - cs), street_layout.CLEAR_CROSSWALK_M, (sc["id"], it))
 
   def test_kinematic_values_resolve(self):
     self.assertEqual(export_scene.value("t_r"), 1.5)
