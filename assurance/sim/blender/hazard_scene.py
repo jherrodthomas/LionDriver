@@ -272,7 +272,7 @@ def build_cameras(sc: dict):
   urban = r["type"] == "urban"
   back, up, side, ahead = (12.0, 5.0, 2.5, 12.0) if urban else (15.0, 6.5, 4.0, 14.0)
   if rear_view(sc):                             # the critical road user comes from behind: look back past the ego
-    back, ahead, up = -18.0, -16.0, 7.0
+    back, ahead, up = -18.0, -16.0, 9.5
 
   cams = {}
   chase = bpy.data.objects.new("cam_chase", bpy.data.cameras.new("cam_chase"))
