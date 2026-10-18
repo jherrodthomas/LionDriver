@@ -1,10 +1,11 @@
-# CC0 asset slots of the hazardous-event scenes: sky HDRIs and PBR ground textures from Poly Haven
-# (polyhaven.com, every asset CC0 1.0) and ambientCG (ambientcg.com, every asset CC0 1.0). fetch_assets.py downloads
+# CC0 asset slots of the hazardous-event scenes: sky HDRIs, PBR ground textures and scanned plant models from Poly
+# Haven (polyhaven.com, every asset CC0 1.0) and ambientCG (ambientcg.com, every asset CC0 1.0). fetch_assets.py downloads
 # each slot into dest (git-ignored, under assurance/sim/assets/library/) and writes the chosen asset IDs, file names
 # and SHA-256 sums to library/assets.lock.json, which is committed. hazard_scene.py uses a slot's files when they are
 # present and its procedural look when they are not, so CI and offline runs need none of them.
 #
-#   kind         hdri (an equirectangular sky) or pbr (a tiling ground material)
+#   kind         hdri (an equirectangular sky), pbr (a tiling ground material) or model (a scanned plant or piece of
+#                street furniture, glTF; Poly Haven only)
 #   use          what it is for
 #   size_m       pbr: the real-world size one texture tile covers ([x, y] for a non-square image), as the source publishes it for the first
 #                candidate (Poly Haven "dimensions", ambientCG dimensionX); a fallback asset is drawn at the same size
@@ -12,12 +13,21 @@
 #   tint         pbr, optional: multiplies the colour map, to bring a scan to the surface's real albedo (fresh
 #                asphalt about 0.05, dry gravel shoulder about 0.15, linear)
 #   roughness_min  pbr, optional: floor on the roughness map, where a glossy scan would shine at grazing angles
+#   role         model: what it stands in for: broadleaf or conifer (the roadside trees), shrub (under the trees of a
+#                tree-lined road), verge_short or verge_meadow (grass clumps beside the road; short on the first metre);
+#                bin, bench, hydrant or utility_box (urban street furniture, placed by street_layout.py at scanned size)
+#   height_m     model, trees and shrubs: [low, high] height of an instance before the scenery's own scale (urban
+#                street trees are 0.55 of it); each mesh of the glTF is a variant, scaled to that height
+#   scale        model, grass: [low, high] scale of a clump, which keeps its scanned size at 1
+#   exclude      model, optional: meshes whose names contain any of these are left out
+#   groups       model, optional: each variant as a list of the glTF's mesh names (a bench is a seat, legs and
+#                arm rests); without it every mesh is a variant
 #   candidates   tried in order: source (polyhaven, ambientcg) and asset ID; the first one that resolves is used.
 #                Chosen offline, then checked against the sites' previews and dimensions on 2026-10-18
 #   search       when no candidate resolves: the source and what to search for (Poly Haven categories, ambientCG
 #                query); the most downloaded match is used
 #   maps         pbr: the texture maps wanted (color, normal, roughness, displacement, ao)
-#   resolution   1k or 2k (Poly Haven) / 1K-JPG or 2K-JPG (ambientCG)
+#   resolution   1k or 2k (Poly Haven) / 1K-JPG or 2K-JPG (ambientCG); models at 1k
 schema_version: 1
 licence: CC0 1.0 Universal (public domain dedication); no attribution required
 dest: assurance/sim/assets/library
@@ -130,3 +140,123 @@ slots:
       - {source: ambientcg, id: Snow006}
       - {source: ambientcg, id: Snow010A}
     search: {source: ambientcg, query: snow}
+
+  # ---------------------------------------------------------------------------------------------- plants
+  # Poly Haven's glTFs hold only the full-detail mesh (0.4 to 2 million triangles a tree). Every instance shares it,
+  # so memory grows with the number of models, not trees: about +3 GB peak and +12 s a 1280 x 720 still at 16
+  # samples on 4 cores (2026-10-18). Chosen for a temperate roadside; checked against the site previews.
+  tree_broadleaf_a:
+    kind: model
+    role: broadleaf
+    use: Roadside and field trees (scenery trees, open), urban street trees
+    height_m: [6.0, 8.4]
+    resolution: 1k
+    candidates:
+      - {source: polyhaven, id: island_tree_02}
+      - {source: polyhaven, id: island_tree_01}
+    search: {source: polyhaven, categories: [trees]}
+
+  tree_broadleaf_b:
+    kind: model
+    role: broadleaf
+    use: Roadside and field trees (scenery trees, open), urban street trees
+    height_m: [6.0, 8.4]
+    resolution: 1k
+    candidates:                         # jacaranda_tree dropped: a 200 MB mesh at 1k
+      - {source: polyhaven, id: tree_small_02}
+      - {source: polyhaven, id: island_tree_03}
+    search: {source: polyhaven, categories: [trees]}
+
+  tree_conifer:
+    kind: model
+    role: conifer
+    use: Conifers among the roadside and field trees (more of them under W05)
+    height_m: [6.4, 9.0]
+    resolution: 1k
+    candidates:                         # pine_tree_01 dropped: 17 million triangles
+      - {source: polyhaven, id: fir_sapling_medium}
+      - {source: polyhaven, id: pine_sapling_medium}
+    search: {source: polyhaven, categories: [trees]}
+
+  shrub:
+    kind: model
+    role: shrub
+    use: Shrubs under the trees of a tree-lined road
+    height_m: [0.7, 1.3]
+    resolution: 1k
+    candidates:
+      - {source: polyhaven, id: shrub_02}
+      - {source: polyhaven, id: shrub_04}
+    search: {source: polyhaven, categories: [plants, ground cover]}
+
+  verge_short:
+    kind: model
+    role: verge_short
+    use: Short grass on the first metre beside the road (rural and highway verges, not under snow)
+    scale: [0.7, 1.1]
+    exclude: [single, dead]             # lone blades and dead stalks: noise at road distance
+    resolution: 1k
+    candidates:
+      - {source: polyhaven, id: grass_bermuda_01}
+      - {source: polyhaven, id: grass_medium_01}
+    search: {source: polyhaven, categories: [grass]}
+
+  verge_meadow:
+    kind: model
+    role: verge_meadow
+    use: Longer grass from 0.5 m to 6.5 m beside the road, thinning out into the field
+    scale: [1.0, 1.8]
+    resolution: 1k
+    candidates:
+      - {source: polyhaven, id: grass_medium_02}
+      - {source: polyhaven, id: grass_medium_01}
+    search: {source: polyhaven, categories: [grass]}
+
+  # ---------------------------------------------------------------------------------------------- street furniture
+  # Urban pavements (street_layout.py). Lamp columns and bus shelters are procedural: Poly Haven has only 3.9 m
+  # heritage lamp posts and no shelter.
+  bin:
+    kind: model
+    role: bin
+    use: Litter bins by the lamp columns
+    resolution: 1k
+    groups:                             # a clean and a rusted bin, each with its lid and handles
+      - [metal_trash_can, metal_trash_can_handle_left, metal_trash_can_handle_right, metal_trash_can_lid]
+      - [metal_trash_can_rust, metal_trash_can_rust_handle_left, metal_trash_can_rust_handle_right,
+         metal_trash_can_rust_lid]
+    candidates:
+      - {source: polyhaven, id: metal_trash_can}
+    search: {source: polyhaven, categories: [containers]}
+
+  bench:
+    kind: model
+    role: bench
+    use: Benches facing the carriageway
+    resolution: 1k
+    groups:                             # the bench with a back, out of the modular set
+      - [arm_rest_01, arm_rest_02, back_support_l, back_support_r, crossbar, legs_double, legs_single, seat,
+         seat_back, suspended_support_01]
+    candidates:
+      - {source: polyhaven, id: modular_street_seating}
+    search: {source: polyhaven, categories: [seating]}
+
+  hydrant:
+    kind: model
+    role: hydrant
+    use: Fire hydrants at the kerb
+    resolution: 1k
+    groups:                             # the painted one; fire_hydrant_aged is its weathered twin
+      - [fire_hydrant, fire_hydrant_cap_01, fire_hydrant_cap_02, fire_hydrant_cap_03, fire_hydrant_chain]
+    candidates:
+      - {source: polyhaven, id: fire_hydrant}
+    search: {source: polyhaven, categories: [industrial]}
+
+  utility_box:
+    kind: model
+    role: utility_box
+    use: Street cabinets against the buildings
+    resolution: 1k
+    candidates:
+      - {source: polyhaven, id: utility_box_01}
+      - {source: polyhaven, id: utility_box_02}
+    search: {source: polyhaven, categories: [structures]}
