@@ -1,0 +1,49 @@
+# Hazardous-event scenes for Blender (assurance/sim/blender). One entry per scene: which HARA hazardous event it
+# pictures, which layer-1 plant case drives the ego car, the road it is drawn on, and any other road users.
+# export_scene.py checks every reference (he in trace/items/hazards.yaml, case in plant/cases.py) and writes the
+# scene file that hazard_scene.py builds and renders. Pictures only: no evidence credit (DSR-12), see README.md.
+#
+#   id          scene ID, used for the output folder
+#   he          HARA hazardous event (HE-) the scene pictures
+#   case        layer-1 plant case (faults.yaml id, or N-/-H/-OS variants) that drives the ego; its ego motion,
+#               panda events and, in longitudinal cases, the lead and follower are the plant's own output
+#   window      seconds before and after the fault onset to show
+#   road        lanes_left / lanes_right: lanes beside the ego lane (same direction); shoulder_m: right shoulder;
+#               barrier: draw a steel barrier at the edge of the right shoulder
+#   actors      other road users not modelled by the plant, drawn as stated (source: illustrative). lane: offset in
+#               lanes from the ego lane (+1 left, -1 right); ds_m: start distance ahead of the ego (body centres);
+#               speed_kph: constant. A scene with illustrative actors ends shortly after the first contact
+#   cameras     chase (behind and above, follows the ego) and top (orthographic, follows the ego)
+#   caption     one line under the storyboard
+schema_version: 1
+scenes:
+  - id: he-01-2-hardover-adjacent
+    he: HE-01.2
+    case: F-01b
+    window: [-1.5, 6.0]
+    road: {lanes_left: 1, lanes_right: 1, shoulder_m: 3.0, barrier: true}
+    actors:
+      - {name: adjacent car, kind: car, lane: -1, ds_m: -2.0, speed_kph: 110, source: illustrative}
+    caption: >-
+      Hard-over within the envelope on a straight highway at 110 km/h (plant case F-01b): the panda passes it and only
+      the driver can stop it. The car in the right lane is illustrative; the plant does not model it or the contact.
+
+  - id: he-02-1-eps-loss-curve
+    he: HE-02.1
+    case: F-07
+    window: [-1.5, 5.0]
+    road: {lanes_left: 1, lanes_right: 1, shoulder_m: 3.0, barrier: true}
+    actors: []
+    caption: >-
+      EPS fault with loss of assist at curve entry (plant case F-07, the plant's curve inside the ODD): the car runs
+      wide toward the outside of the curve until the driver, cued by the siren, corrects.
+
+  - id: he-04-1-step-decel-follower
+    he: HE-04.1
+    case: L-03
+    window: [-1.5, 5.0]
+    road: {lanes_left: 1, lanes_right: 1, shoulder_m: 3.0, barrier: true}
+    actors: []
+    caption: >-
+      Deceleration step at the envelope minimum, -3.5 m/s² (plant case L-03), with the follower at a 1.0 s gap
+      braking after its driver's reaction time; lead and follower are the plant's own.
