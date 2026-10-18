@@ -8,7 +8,7 @@
 <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-M-03 §3, §5, §9</text>
 <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
 <rect x="40" y="96" width="1200" height="24" rx="12" fill="#FEF2F2" stroke="#F3B7AB" stroke-width="1.2"/>
-<text x="640" y="112" font-size="11" fill="#D2553F" font-weight="700" text-anchor="middle">No gate is recorded as passed · no milestones exist yet (B-01) · the plan is Draft; G5 Mar 2036 at the earliest</text>
+<text x="640" y="112" font-size="11" fill="#D2553F" font-weight="700" text-anchor="middle">No gate is recorded as passed · no milestones exist yet (B-01) · the plan is Draft; G5 Jul 2031 at the earliest</text>
 <rect x="40" y="138" width="131.4" height="86" rx="10" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
 <text x="52" y="160" font-size="15" fill="#0F172A" font-weight="700">P0</text>
 <text x="52" y="178" font-size="11" fill="#0F172A">Governance</text>

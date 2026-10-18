@@ -37,7 +37,7 @@ SRC = {
                    "verification → validation → FSA."),
   "m03_longlead": (WP_M_03, "Long-lead items to start early: assessor engagement (P0), HIL bench parts (P2), test vehicle "
                    "access and safety driver training (P1), pen-test procurement (P4)."),
-  "m03_calendar": (WP_M_03, "Calendar: start 2026-11-01, maintainer effort about 10 h/week."),
+  "m03_calendar": (WP_M_03, "Calendar: start 2026-11-01, maintainer effort about 20 h/week."),
   "m03_staff": (WP_M_03, "Realistic delivery needs at least: one additional envelope engineer or reviewer (from P0), a "
                 "SOTIF/ML person (from P1), a hardware safety engineer (P3, can be external), and a test driver (P1)."),
   "m03_no_milestones": (WP_M_03, "None of these milestones, labels or issues exist yet; creating them is backlog item B-01."),

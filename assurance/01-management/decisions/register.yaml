@@ -4185,6 +4185,7 @@
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
   applied: {ref: "jherrodthomas/LionDriver#248", record: "assurance/01-management/WP-M-03-project-plan.md §5, §6, Figure 5-2 (OI-1 closed)", at: 2026-10-19}
+  note: "On 2026-10-19 the lead set the figure to about 20 h/week (chat). WP-M-03 §5 is dated at 20 h/week: G1 Nov 2027–May 2028, G5 Jul 2031–Mar 2034."
 
 - id: DQ-209
   question: "The stock emergency-braking path runs through powered electronics in comma's harness box. Accept that and test it, or build our own adapter with a passive fail-safe relay?"
