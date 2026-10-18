@@ -20,7 +20,7 @@ hazards:
   - {second: HZ-007, wp_c03: [H-06], events: [HE-06.1, HE-06.2, HE-06.3]}
   - {second: HZ-008, wp_c03: [H-05], events: [HE-05.1, HE-05.3, HE-05.4]}
   - {second: HZ-009, wp_c03: [H-05], events: [HE-05.2]}
-  - {second: HZ-010, wp_c03: [H-01, H-03], events: [HE-01.4], note: "Unintended engagement: WP-C-03 rates it inside H-01 (torque while not engaged) and H-03 (acceleration when not intended)"}
+  - {second: HZ-010, wp_c03: [H-01, H-03], events: [HE-01.4, HE-03.7], note: "Unintended engagement: WP-C-03 rates it as steering while not engaged (HE-01.4, H-01) and, since v0.5, as acceleration while not engaged or just after a brake press (HE-03.7, H-03; DQ-364 A)"}
   - {second: HZ-011, wp_c03: [H-08], events: [HE-08.1]}
   - {second: HZ-012, wp_c03: [H-07], events: [HE-07.1, HE-07.2, HE-07.3]}
   - {second: HZ-013, wp_c03: [H-09], events: [HE-09.1, HE-09.2], note: "Unresponsive driver: H-09 since WP-C-03 v0.4 (RD-3 decided, decision register DQ-205 A)"}

@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1538" viewBox="0 0 1280 1538" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1568" viewBox="0 0 1280 1568" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
 <title id="t">Figure 6-1. Hazards, hazardous events and safety goals (WP-C-03 §4-§6)</title>
-<desc id="d">Left: the 9 hazards H-01 to H-09 of WP-C-03 §4 with the number of Cartesian HARA rows rated ASIL A or higher and the worst case. Middle: the representative hazardous events of §5 with S, E, C and ASIL. Right: safety goals SG-01 to SG-08 of §6 with ASIL; each event is connected to the goals whose Source HEs column lists it. SG-01 ASIL C ⚠ (D if AOU-01/02 fail) from HE-01.1, HE-01.2, HE-01.3, HE-01.4, HE-01.5, HE-02.3; SG-02 ASIL C from HE-02.1, HE-02.2, HE-02.4, HE-02.5, HE-02.6, HE-07.1, HE-07.2, HE-07.4; SG-03 ASIL C ⚠ (D if AOU-03/05 fail) from HE-03.1, HE-03.2, HE-03.3, HE-03.4, HE-03.5, HE-03.6; SG-04 ASIL B ⚠ (C if AOU-05 fails) from HE-04.1, HE-04.2, HE-04.3, HE-04.4, HE-04.5; SG-05 ASIL B ⚠ (C if AOU-01/02/03 fail) from HE-05.1, HE-05.2, HE-05.3, HE-05.4; SG-06 ASIL C from HE-06.1, HE-06.3, HE-06.4, HE-07.3; SG-07 ASIL B from HE-08.1; SG-08 ASIL A from HE-09.1, HE-09.2. HE-06.2 is QM and has no goal.</desc>
+<desc id="d">Left: the 9 hazards H-01 to H-09 of WP-C-03 §4 with the number of Cartesian HARA rows rated ASIL A or higher and the worst case. Middle: the representative hazardous events of §5 with S, E, C and ASIL. Right: safety goals SG-01 to SG-08 of §6 with ASIL; each event is connected to the goals whose Source HEs column lists it. SG-01 ASIL C ⚠ (D if AOU-01/02 fail) from HE-01.1, HE-01.2, HE-01.3, HE-01.4, HE-01.5, HE-02.3; SG-02 ASIL C from HE-02.1, HE-02.2, HE-02.4, HE-02.5, HE-02.6, HE-07.1, HE-07.2, HE-07.4; SG-03 ASIL C ⚠ (D if AOU-03/05 fail) from HE-03.1, HE-03.2, HE-03.3, HE-03.4, HE-03.5, HE-03.6, HE-03.7; SG-04 ASIL B ⚠ (C if AOU-05 fails) from HE-04.1, HE-04.2, HE-04.3, HE-04.4, HE-04.5; SG-05 ASIL B ⚠ (C if AOU-01/02/03 fail) from HE-05.1, HE-05.2, HE-05.3, HE-05.4; SG-06 ASIL C from HE-06.1, HE-06.3, HE-06.4, HE-07.3; SG-07 ASIL B from HE-08.1; SG-08 ASIL A from HE-09.1, HE-09.2. HE-06.2 is QM and has no goal.</desc>
 <defs><marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker><marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#64748B"/></marker></defs>
-<rect width="1280" height="1538" fill="#FFFFFF"/>
+<rect width="1280" height="1568" fill="#FFFFFF"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 6-1 · Hazards, hazardous events and safety goals</text>
-<text x="40" y="66" font-size="12.5" fill="#475569">9 hazards (§4) → 37 representative hazardous events (§5) → 8 safety goals (§6)</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">9 hazards (§4) → 38 representative hazardous events (§5) → 8 safety goals (§6)</text>
 <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-03 §4–§6</text>
 <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">row statistics: hara_model.py</text>
 <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
@@ -90,12 +90,12 @@
 <text x="446" y="460" font-size="10.5" fill="#475569">S3 E2 C3</text>
 <rect x="568" y="448.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
 <text x="584" y="459.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
-<rect x="40" y="537.5" width="300" height="71" rx="9" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
-<text x="52" y="557.5" font-size="12.5" fill="#0F172A" font-weight="700">H-03</text>
-<text x="52" y="574.5" font-size="11.5" fill="#0F172A" font-weight="600">Unintended acceleration</text>
-<text x="52" y="593.5" font-size="10.5" fill="#475569">168 rows ≥ A · worst C (D if ⚠ AoUs fail)</text>
-<path d="M340 573 H356" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
-<path d="M356 498 V648" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
+<rect x="40" y="552.5" width="300" height="71" rx="9" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="52" y="572.5" font-size="12.5" fill="#0F172A" font-weight="700">H-03</text>
+<text x="52" y="589.5" font-size="11.5" fill="#0F172A" font-weight="600">Unintended acceleration</text>
+<text x="52" y="608.5" font-size="10.5" fill="#475569">172 rows ≥ A · worst C (D if ⚠ AoUs fail)</text>
+<path d="M340 588 H356" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
+<path d="M356 498 V678" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <path d="M356 498 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="486" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
 <text x="382" y="502" font-size="11" fill="#0F172A" font-weight="700">HE-03.1</text>
@@ -132,259 +132,266 @@
 <text x="446" y="652" font-size="10.5" fill="#475569">S2 E2 C3</text>
 <rect x="568" y="640.0" width="32" height="16" rx="8" fill="#FED7AA" stroke="#FDBA74"/>
 <text x="584" y="651.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">A</text>
-<rect x="40" y="714.5" width="300" height="71" rx="9" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
-<text x="52" y="734.5" font-size="12.5" fill="#0F172A" font-weight="700">H-04</text>
-<text x="52" y="751.5" font-size="11.5" fill="#0F172A" font-weight="600">Unintended or excessive deceleration</text>
-<text x="52" y="770.5" font-size="10.5" fill="#475569">99 rows ≥ A · worst B (C if ⚠ AoUs fail)</text>
-<path d="M340 750 H356" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
-<path d="M356 690 V810" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
-<path d="M356 690 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
-<rect x="372" y="678" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="382" y="694" font-size="11" fill="#0F172A" font-weight="700">HE-04.1</text>
-<text x="446" y="694" font-size="10.5" fill="#475569">S2 E4 C2 ⚠</text>
-<rect x="568" y="682.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
-<text x="584" y="693.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<path d="M356 678 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
+<rect x="372" y="666" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="382" y="682" font-size="11" fill="#0F172A" font-weight="700">HE-03.7</text>
+<text x="446" y="682" font-size="10.5" fill="#475569">S2 E4 C2 ⚠</text>
+<rect x="568" y="670.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="584" y="681.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<rect x="40" y="744.5" width="300" height="71" rx="9" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="52" y="764.5" font-size="12.5" fill="#0F172A" font-weight="700">H-04</text>
+<text x="52" y="781.5" font-size="11.5" fill="#0F172A" font-weight="600">Unintended or excessive deceleration</text>
+<text x="52" y="800.5" font-size="10.5" fill="#475569">99 rows ≥ A · worst B (C if ⚠ AoUs fail)</text>
+<path d="M340 780 H356" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
+<path d="M356 720 V840" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <path d="M356 720 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="708" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="382" y="724" font-size="11" fill="#0F172A" font-weight="700">HE-04.2</text>
-<text x="446" y="724" font-size="10.5" fill="#475569">S3 E3 C1 ⚠</text>
-<rect x="568" y="712.0" width="32" height="16" rx="8" fill="#FED7AA" stroke="#FDBA74"/>
-<text x="584" y="723.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">A</text>
+<text x="382" y="724" font-size="11" fill="#0F172A" font-weight="700">HE-04.1</text>
+<text x="446" y="724" font-size="10.5" fill="#475569">S2 E4 C2 ⚠</text>
+<rect x="568" y="712.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="584" y="723.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
 <path d="M356 750 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="738" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="382" y="754" font-size="11" fill="#0F172A" font-weight="700">HE-04.3</text>
-<text x="446" y="754" font-size="10.5" fill="#475569">S2 E4 C2 ⚠</text>
-<rect x="568" y="742.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
-<text x="584" y="753.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<text x="382" y="754" font-size="11" fill="#0F172A" font-weight="700">HE-04.2</text>
+<text x="446" y="754" font-size="10.5" fill="#475569">S3 E3 C1 ⚠</text>
+<rect x="568" y="742.0" width="32" height="16" rx="8" fill="#FED7AA" stroke="#FDBA74"/>
+<text x="584" y="753.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">A</text>
 <path d="M356 780 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="768" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="382" y="784" font-size="11" fill="#0F172A" font-weight="700">HE-04.4</text>
+<text x="382" y="784" font-size="11" fill="#0F172A" font-weight="700">HE-04.3</text>
 <text x="446" y="784" font-size="10.5" fill="#475569">S2 E4 C2 ⚠</text>
 <rect x="568" y="772.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
 <text x="584" y="783.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
 <path d="M356 810 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="798" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="382" y="814" font-size="11" fill="#0F172A" font-weight="700">HE-04.5</text>
-<text x="446" y="814" font-size="10.5" fill="#475569">S2 E4 C1</text>
-<rect x="568" y="802.0" width="32" height="16" rx="8" fill="#FED7AA" stroke="#FDBA74"/>
-<text x="584" y="813.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">A</text>
-<rect x="40" y="861.5" width="300" height="71" rx="9" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
-<text x="52" y="881.5" font-size="12.5" fill="#0F172A" font-weight="700">H-05</text>
-<text x="52" y="898.5" font-size="11.5" fill="#0F172A" font-weight="600">Driver unable to override or disengage</text>
-<text x="52" y="917.5" font-size="10.5" fill="#475569">30 rows ≥ A · worst B (C if ⚠ AoUs fail)</text>
-<path d="M340 897 H356" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
-<path d="M356 852 V942" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
-<path d="M356 852 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
-<rect x="372" y="840" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="382" y="856" font-size="11" fill="#0F172A" font-weight="700">HE-05.1</text>
-<text x="446" y="856" font-size="10.5" fill="#475569">S3 E3 C2 ⚠</text>
-<rect x="568" y="844.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
-<text x="584" y="855.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<text x="382" y="814" font-size="11" fill="#0F172A" font-weight="700">HE-04.4</text>
+<text x="446" y="814" font-size="10.5" fill="#475569">S2 E4 C2 ⚠</text>
+<rect x="568" y="802.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="584" y="813.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<path d="M356 840 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
+<rect x="372" y="828" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="382" y="844" font-size="11" fill="#0F172A" font-weight="700">HE-04.5</text>
+<text x="446" y="844" font-size="10.5" fill="#475569">S2 E4 C1</text>
+<rect x="568" y="832.0" width="32" height="16" rx="8" fill="#FED7AA" stroke="#FDBA74"/>
+<text x="584" y="843.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">A</text>
+<rect x="40" y="891.5" width="300" height="71" rx="9" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="52" y="911.5" font-size="12.5" fill="#0F172A" font-weight="700">H-05</text>
+<text x="52" y="928.5" font-size="11.5" fill="#0F172A" font-weight="600">Driver unable to override or disengage</text>
+<text x="52" y="947.5" font-size="10.5" fill="#475569">30 rows ≥ A · worst B (C if ⚠ AoUs fail)</text>
+<path d="M340 927 H356" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
+<path d="M356 882 V972" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <path d="M356 882 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="870" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="382" y="886" font-size="11" fill="#0F172A" font-weight="700">HE-05.2</text>
+<text x="382" y="886" font-size="11" fill="#0F172A" font-weight="700">HE-05.1</text>
 <text x="446" y="886" font-size="10.5" fill="#475569">S3 E3 C2 ⚠</text>
 <rect x="568" y="874.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
 <text x="584" y="885.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
 <path d="M356 912 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="900" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="382" y="916" font-size="11" fill="#0F172A" font-weight="700">HE-05.3</text>
-<text x="446" y="916" font-size="10.5" fill="#475569">S3 E3 C2</text>
+<text x="382" y="916" font-size="11" fill="#0F172A" font-weight="700">HE-05.2</text>
+<text x="446" y="916" font-size="10.5" fill="#475569">S3 E3 C2 ⚠</text>
 <rect x="568" y="904.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
 <text x="584" y="915.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
 <path d="M356 942 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="930" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="382" y="946" font-size="11" fill="#0F172A" font-weight="700">HE-05.4</text>
-<text x="446" y="946" font-size="10.5" fill="#475569">S3 E3 C2 ⚠</text>
+<text x="382" y="946" font-size="11" fill="#0F172A" font-weight="700">HE-05.3</text>
+<text x="446" y="946" font-size="10.5" fill="#475569">S3 E3 C2</text>
 <rect x="568" y="934.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
 <text x="584" y="945.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
-<rect x="40" y="993.5" width="300" height="71" rx="9" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
-<text x="52" y="1013.5" font-size="12.5" fill="#0F172A" font-weight="700">H-06</text>
-<text x="52" y="1030.5" font-size="11.5" fill="#0F172A" font-weight="600">Unannounced loss of longitudinal deceleration</text>
-<text x="52" y="1049.5" font-size="10.5" fill="#475569">132 rows ≥ A · worst C</text>
-<path d="M340 1029 H356" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
-<path d="M356 984 V1074" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
-<path d="M356 984 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
-<rect x="372" y="972" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="382" y="988" font-size="11" fill="#0F172A" font-weight="700">HE-06.1</text>
-<text x="446" y="988" font-size="10.5" fill="#475569">S3 E4 C2</text>
-<rect x="568" y="976.0" width="32" height="16" rx="8" fill="#C2410C" stroke="#9A3412"/>
-<text x="584" y="987.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<path d="M356 972 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
+<rect x="372" y="960" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="382" y="976" font-size="11" fill="#0F172A" font-weight="700">HE-05.4</text>
+<text x="446" y="976" font-size="10.5" fill="#475569">S3 E3 C2 ⚠</text>
+<rect x="568" y="964.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="584" y="975.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<rect x="40" y="1023.5" width="300" height="71" rx="9" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="52" y="1043.5" font-size="12.5" fill="#0F172A" font-weight="700">H-06</text>
+<text x="52" y="1060.5" font-size="11.5" fill="#0F172A" font-weight="600">Unannounced loss of longitudinal deceleration</text>
+<text x="52" y="1079.5" font-size="10.5" fill="#475569">132 rows ≥ A · worst C</text>
+<path d="M340 1059 H356" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
+<path d="M356 1014 V1104" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <path d="M356 1014 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="1002" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="382" y="1018" font-size="11" fill="#0F172A" font-weight="700">HE-06.2</text>
-<text x="446" y="1018" font-size="10.5" fill="#475569">S1 E3 C2 · no goal</text>
-<rect x="568" y="1006.0" width="32" height="16" rx="8" fill="#F8FAFC" stroke="#CBD5E1"/>
-<text x="584" y="1017.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">QM</text>
+<text x="382" y="1018" font-size="11" fill="#0F172A" font-weight="700">HE-06.1</text>
+<text x="446" y="1018" font-size="10.5" fill="#475569">S3 E4 C2</text>
+<rect x="568" y="1006.0" width="32" height="16" rx="8" fill="#C2410C" stroke="#9A3412"/>
+<text x="584" y="1017.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
 <path d="M356 1044 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="1032" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="382" y="1048" font-size="11" fill="#0F172A" font-weight="700">HE-06.3</text>
-<text x="446" y="1048" font-size="10.5" fill="#475569">S2 E4 C2</text>
-<rect x="568" y="1036.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
-<text x="584" y="1047.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<text x="382" y="1048" font-size="11" fill="#0F172A" font-weight="700">HE-06.2</text>
+<text x="446" y="1048" font-size="10.5" fill="#475569">S1 E3 C2 · no goal</text>
+<rect x="568" y="1036.0" width="32" height="16" rx="8" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="584" y="1047.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">QM</text>
 <path d="M356 1074 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="1062" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="382" y="1078" font-size="11" fill="#0F172A" font-weight="700">HE-06.4</text>
-<text x="446" y="1078" font-size="10.5" fill="#475569">S3 E2 C3</text>
+<text x="382" y="1078" font-size="11" fill="#0F172A" font-weight="700">HE-06.3</text>
+<text x="446" y="1078" font-size="10.5" fill="#475569">S2 E4 C2</text>
 <rect x="568" y="1066.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
 <text x="584" y="1077.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
-<rect x="40" y="1118" width="300" height="86" rx="9" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
-<text x="52" y="1138" font-size="12.5" fill="#0F172A" font-weight="700">H-07</text>
-<text x="52" y="1155" font-size="11.5" fill="#0F172A" font-weight="600">Displayed system state differs from actual state</text>
-<text x="52" y="1170" font-size="11.5" fill="#0F172A" font-weight="600">(mode confusion)</text>
-<text x="52" y="1189" font-size="10.5" fill="#475569">78 rows ≥ A · worst C</text>
-<path d="M340 1161 H356" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
-<path d="M356 1116 V1206" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
-<path d="M356 1116 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
-<rect x="372" y="1104" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="382" y="1120" font-size="11" fill="#0F172A" font-weight="700">HE-07.1</text>
-<text x="446" y="1120" font-size="10.5" fill="#475569">S3 E3 C3</text>
-<rect x="568" y="1108.0" width="32" height="16" rx="8" fill="#C2410C" stroke="#9A3412"/>
-<text x="584" y="1119.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<path d="M356 1104 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
+<rect x="372" y="1092" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="382" y="1108" font-size="11" fill="#0F172A" font-weight="700">HE-06.4</text>
+<text x="446" y="1108" font-size="10.5" fill="#475569">S3 E2 C3</text>
+<rect x="568" y="1096.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="584" y="1107.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<rect x="40" y="1148" width="300" height="86" rx="9" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="52" y="1168" font-size="12.5" fill="#0F172A" font-weight="700">H-07</text>
+<text x="52" y="1185" font-size="11.5" fill="#0F172A" font-weight="600">Displayed system state differs from actual state</text>
+<text x="52" y="1200" font-size="11.5" fill="#0F172A" font-weight="600">(mode confusion)</text>
+<text x="52" y="1219" font-size="10.5" fill="#475569">78 rows ≥ A · worst C</text>
+<path d="M340 1191 H356" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
+<path d="M356 1146 V1236" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <path d="M356 1146 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="1134" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="382" y="1150" font-size="11" fill="#0F172A" font-weight="700">HE-07.2</text>
-<text x="446" y="1150" font-size="10.5" fill="#475569">S3 E4 C1</text>
-<rect x="568" y="1138.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
-<text x="584" y="1149.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<text x="382" y="1150" font-size="11" fill="#0F172A" font-weight="700">HE-07.1</text>
+<text x="446" y="1150" font-size="10.5" fill="#475569">S3 E3 C3</text>
+<rect x="568" y="1138.0" width="32" height="16" rx="8" fill="#C2410C" stroke="#9A3412"/>
+<text x="584" y="1149.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
 <path d="M356 1176 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="1164" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="382" y="1180" font-size="11" fill="#0F172A" font-weight="700">HE-07.3</text>
-<text x="446" y="1180" font-size="10.5" fill="#475569">S3 E4 C2</text>
-<rect x="568" y="1168.0" width="32" height="16" rx="8" fill="#C2410C" stroke="#9A3412"/>
-<text x="584" y="1179.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<text x="382" y="1180" font-size="11" fill="#0F172A" font-weight="700">HE-07.2</text>
+<text x="446" y="1180" font-size="10.5" fill="#475569">S3 E4 C1</text>
+<rect x="568" y="1168.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="584" y="1179.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
 <path d="M356 1206 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="1194" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="382" y="1210" font-size="11" fill="#0F172A" font-weight="700">HE-07.4</text>
-<text x="446" y="1210" font-size="10.5" fill="#475569">S3 E2 C3</text>
-<rect x="568" y="1198.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
-<text x="584" y="1209.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
-<rect x="40" y="1236" width="300" height="86" rx="9" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
-<text x="52" y="1256" font-size="12.5" fill="#0F172A" font-weight="700">H-08</text>
-<text x="52" y="1273" font-size="11.5" fill="#0F172A" font-weight="600">Suppression of the vehicle's stock pre-collision</text>
-<text x="52" y="1288" font-size="11.5" fill="#0F172A" font-weight="600">braking</text>
-<text x="52" y="1307" font-size="10.5" fill="#475569">6 rows ≥ A · worst B</text>
-<path d="M340 1279 H356" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
-<path d="M356 1279 V1279" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
-<path d="M356 1279 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
-<rect x="372" y="1267" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="382" y="1283" font-size="11" fill="#0F172A" font-weight="700">HE-08.1</text>
-<text x="446" y="1283" font-size="10.5" fill="#475569">S3 E2 C3</text>
-<rect x="568" y="1271.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
-<text x="584" y="1282.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
-<rect x="40" y="1340" width="300" height="86" rx="9" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
-<text x="52" y="1360" font-size="12.5" fill="#0F172A" font-weight="700">H-09</text>
-<text x="52" y="1377" font-size="11.5" fill="#0F172A" font-weight="600">Automated control continues with a driver who</text>
-<text x="52" y="1392" font-size="11.5" fill="#0F172A" font-weight="600">is not supervising or not responding</text>
-<text x="52" y="1411" font-size="10.5" fill="#475569">11 rows ≥ A · worst A</text>
-<path d="M340 1383 H356" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
-<path d="M356 1368 V1398" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
-<path d="M356 1368 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
-<rect x="372" y="1356" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="382" y="1372" font-size="11" fill="#0F172A" font-weight="700">HE-09.1</text>
-<text x="446" y="1372" font-size="10.5" fill="#475569">S3 E2 C2</text>
-<rect x="568" y="1360.0" width="32" height="16" rx="8" fill="#FED7AA" stroke="#FDBA74"/>
-<text x="584" y="1371.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">A</text>
+<text x="382" y="1210" font-size="11" fill="#0F172A" font-weight="700">HE-07.3</text>
+<text x="446" y="1210" font-size="10.5" fill="#475569">S3 E4 C2</text>
+<rect x="568" y="1198.0" width="32" height="16" rx="8" fill="#C2410C" stroke="#9A3412"/>
+<text x="584" y="1209.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<path d="M356 1236 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
+<rect x="372" y="1224" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="382" y="1240" font-size="11" fill="#0F172A" font-weight="700">HE-07.4</text>
+<text x="446" y="1240" font-size="10.5" fill="#475569">S3 E2 C3</text>
+<rect x="568" y="1228.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="584" y="1239.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<rect x="40" y="1266" width="300" height="86" rx="9" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="52" y="1286" font-size="12.5" fill="#0F172A" font-weight="700">H-08</text>
+<text x="52" y="1303" font-size="11.5" fill="#0F172A" font-weight="600">Suppression of the vehicle's stock pre-collision</text>
+<text x="52" y="1318" font-size="11.5" fill="#0F172A" font-weight="600">braking</text>
+<text x="52" y="1337" font-size="10.5" fill="#475569">6 rows ≥ A · worst B</text>
+<path d="M340 1309 H356" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
+<path d="M356 1309 V1309" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
+<path d="M356 1309 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
+<rect x="372" y="1297" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="382" y="1313" font-size="11" fill="#0F172A" font-weight="700">HE-08.1</text>
+<text x="446" y="1313" font-size="10.5" fill="#475569">S3 E2 C3</text>
+<rect x="568" y="1301.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="584" y="1312.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<rect x="40" y="1370" width="300" height="86" rx="9" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="52" y="1390" font-size="12.5" fill="#0F172A" font-weight="700">H-09</text>
+<text x="52" y="1407" font-size="11.5" fill="#0F172A" font-weight="600">Automated control continues with a driver who</text>
+<text x="52" y="1422" font-size="11.5" fill="#0F172A" font-weight="600">is not supervising or not responding</text>
+<text x="52" y="1441" font-size="10.5" fill="#475569">11 rows ≥ A · worst A</text>
+<path d="M340 1413 H356" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
+<path d="M356 1398 V1428" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <path d="M356 1398 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="1386" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="382" y="1402" font-size="11" fill="#0F172A" font-weight="700">HE-09.2</text>
-<text x="446" y="1402" font-size="10.5" fill="#475569">S3 E1 C3</text>
+<text x="382" y="1402" font-size="11" fill="#0F172A" font-weight="700">HE-09.1</text>
+<text x="446" y="1402" font-size="10.5" fill="#475569">S3 E2 C2</text>
 <rect x="568" y="1390.0" width="32" height="16" rx="8" fill="#FED7AA" stroke="#FDBA74"/>
 <text x="584" y="1401.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">A</text>
+<path d="M356 1428 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
+<rect x="372" y="1416" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="382" y="1432" font-size="11" fill="#0F172A" font-weight="700">HE-09.2</text>
+<text x="446" y="1432" font-size="10.5" fill="#475569">S3 E1 C3</text>
+<rect x="568" y="1420.0" width="32" height="16" rx="8" fill="#FED7AA" stroke="#FDBA74"/>
+<text x="584" y="1431.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">A</text>
 <rect x="900" y="187" width="340" height="88" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
 <text x="912" y="209" font-size="13" fill="#0F172A" font-weight="700">SG-01</text>
 <rect x="966" y="196" width="172.5" height="18" rx="9" fill="#C2410C" stroke="#9A3412"/><text x="1052.23" y="208.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">ASIL C ⚠ (D if AOU-01/02 fail)</text>
 <text x="912" y="231" font-size="11" fill="#475569">The item shall not cause lateral motion of the vehicle that</text>
 <text x="912" y="245" font-size="11" fill="#475569">exceeds what the driver can control, including any</text>
 <text x="912" y="259" font-size="11" fill="#475569">steering actuation while the item is not engaged</text>
-<rect x="900" y="629.5" width="340" height="88" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
-<text x="912" y="651.5" font-size="13" fill="#0F172A" font-weight="700">SG-02</text>
-<rect x="966" y="638.5" width="54.9" height="18" rx="9" fill="#C2410C" stroke="#9A3412"/><text x="993.458" y="651.1" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">ASIL C</text>
-<text x="912" y="673.5" font-size="11" fill="#475569">The item shall not lose or degrade lateral control while</text>
-<text x="912" y="687.5" font-size="11" fill="#475569">engaged without giving the driver an adequate take-over</text>
-<text x="912" y="701.5" font-size="11" fill="#475569">warning</text>
-<rect x="900" y="729.5" width="340" height="60" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
-<text x="912" y="751.5" font-size="13" fill="#0F172A" font-weight="700">SG-03</text>
-<rect x="966" y="738.5" width="172.5" height="18" rx="9" fill="#C2410C" stroke="#9A3412"/><text x="1052.23" y="751.1" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">ASIL C ⚠ (D if AOU-03/05 fail)</text>
-<text x="912" y="773.5" font-size="11" fill="#475569">The item shall not cause unintended vehicle acceleration</text>
-<rect x="900" y="801.5" width="340" height="74" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
-<text x="912" y="823.5" font-size="13" fill="#0F172A" font-weight="700">SG-04</text>
-<rect x="966" y="810.5" width="162.6" height="18" rx="9" fill="#FB923C" stroke="#EA580C"/><text x="1047.31" y="823.1" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">ASIL B ⚠ (C if AOU-05 fails)</text>
-<text x="912" y="845.5" font-size="11" fill="#475569">The item shall not cause deceleration that exceeds what</text>
-<text x="912" y="859.5" font-size="11" fill="#475569">following traffic and the driver can control</text>
-<rect x="900" y="887.5" width="340" height="74" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
-<text x="912" y="909.5" font-size="13" fill="#0F172A" font-weight="700">SG-05</text>
-<rect x="966" y="896.5" width="188.2" height="18" rx="9" fill="#FB923C" stroke="#EA580C"/><text x="1060.08" y="909.1" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">ASIL B ⚠ (C if AOU-01/02/03 fail)</text>
-<text x="912" y="931.5" font-size="11" fill="#475569">The item shall release control immediately when the driver</text>
-<text x="912" y="945.5" font-size="11" fill="#475569">brakes, cancels, or overrides steering</text>
-<rect x="900" y="1025.5" width="340" height="88" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
-<text x="912" y="1047.5" font-size="13" fill="#0F172A" font-weight="700">SG-06</text>
-<rect x="966" y="1034.5" width="54.9" height="18" rx="9" fill="#C2410C" stroke="#9A3412"/><text x="993.458" y="1047.1" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">ASIL C</text>
-<text x="912" y="1069.5" font-size="11" fill="#475569">The item shall not lose longitudinal deceleration capability</text>
-<text x="912" y="1083.5" font-size="11" fill="#475569">while engaged without giving the driver an adequate</text>
-<text x="912" y="1097.5" font-size="11" fill="#475569">take-over warning</text>
-<rect x="900" y="1242" width="340" height="74" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
-<text x="912" y="1264" font-size="13" fill="#0F172A" font-weight="700">SG-07</text>
-<rect x="966" y="1251" width="54.9" height="18" rx="9" fill="#FB923C" stroke="#EA580C"/><text x="993.458" y="1263.6" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">ASIL B</text>
-<text x="912" y="1286" font-size="11" fill="#475569">The item shall not suppress, delay or alter the vehicle's</text>
-<text x="912" y="1300" font-size="11" fill="#475569">stock pre-collision (PCS/AEB) function</text>
-<rect x="900" y="1338" width="340" height="88" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
-<text x="912" y="1360" font-size="13" fill="#0F172A" font-weight="700">SG-08</text>
-<rect x="966" y="1347" width="54.9" height="18" rx="9" fill="#FED7AA" stroke="#FDBA74"/><text x="993.458" y="1359.6" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">ASIL A</text>
-<text x="912" y="1382" font-size="11" fill="#475569">The item shall not continue automated control while the</text>
-<text x="912" y="1396" font-size="11" fill="#475569">driver is not supervising or not responding without</text>
-<text x="912" y="1410" font-size="11" fill="#475569">escalating to a minimal-risk reaction</text>
+<rect x="900" y="640.75" width="340" height="88" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
+<text x="912" y="662.75" font-size="13" fill="#0F172A" font-weight="700">SG-02</text>
+<rect x="966" y="649.75" width="54.9" height="18" rx="9" fill="#C2410C" stroke="#9A3412"/><text x="993.458" y="662.35" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">ASIL C</text>
+<text x="912" y="684.75" font-size="11" fill="#475569">The item shall not lose or degrade lateral control while</text>
+<text x="912" y="698.75" font-size="11" fill="#475569">engaged without giving the driver an adequate take-over</text>
+<text x="912" y="712.75" font-size="11" fill="#475569">warning</text>
+<rect x="900" y="740.75" width="340" height="60" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
+<text x="912" y="762.75" font-size="13" fill="#0F172A" font-weight="700">SG-03</text>
+<rect x="966" y="749.75" width="172.5" height="18" rx="9" fill="#C2410C" stroke="#9A3412"/><text x="1052.23" y="762.35" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">ASIL C ⚠ (D if AOU-03/05 fail)</text>
+<text x="912" y="784.75" font-size="11" fill="#475569">The item shall not cause unintended vehicle acceleration</text>
+<rect x="900" y="812.75" width="340" height="74" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
+<text x="912" y="834.75" font-size="13" fill="#0F172A" font-weight="700">SG-04</text>
+<rect x="966" y="821.75" width="162.6" height="18" rx="9" fill="#FB923C" stroke="#EA580C"/><text x="1047.31" y="834.35" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">ASIL B ⚠ (C if AOU-05 fails)</text>
+<text x="912" y="856.75" font-size="11" fill="#475569">The item shall not cause deceleration that exceeds what</text>
+<text x="912" y="870.75" font-size="11" fill="#475569">following traffic and the driver can control</text>
+<rect x="900" y="898.75" width="340" height="74" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
+<text x="912" y="920.75" font-size="13" fill="#0F172A" font-weight="700">SG-05</text>
+<rect x="966" y="907.75" width="188.2" height="18" rx="9" fill="#FB923C" stroke="#EA580C"/><text x="1060.08" y="920.35" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">ASIL B ⚠ (C if AOU-01/02/03 fail)</text>
+<text x="912" y="942.75" font-size="11" fill="#475569">The item shall release control immediately when the driver</text>
+<text x="912" y="956.75" font-size="11" fill="#475569">brakes, cancels, or overrides steering</text>
+<rect x="900" y="1055.5" width="340" height="88" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
+<text x="912" y="1077.5" font-size="13" fill="#0F172A" font-weight="700">SG-06</text>
+<rect x="966" y="1064.5" width="54.9" height="18" rx="9" fill="#C2410C" stroke="#9A3412"/><text x="993.458" y="1077.1" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">ASIL C</text>
+<text x="912" y="1099.5" font-size="11" fill="#475569">The item shall not lose longitudinal deceleration capability</text>
+<text x="912" y="1113.5" font-size="11" fill="#475569">while engaged without giving the driver an adequate</text>
+<text x="912" y="1127.5" font-size="11" fill="#475569">take-over warning</text>
+<rect x="900" y="1272" width="340" height="74" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
+<text x="912" y="1294" font-size="13" fill="#0F172A" font-weight="700">SG-07</text>
+<rect x="966" y="1281" width="54.9" height="18" rx="9" fill="#FB923C" stroke="#EA580C"/><text x="993.458" y="1293.6" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">ASIL B</text>
+<text x="912" y="1316" font-size="11" fill="#475569">The item shall not suppress, delay or alter the vehicle's</text>
+<text x="912" y="1330" font-size="11" fill="#475569">stock pre-collision (PCS/AEB) function</text>
+<rect x="900" y="1368" width="340" height="88" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
+<text x="912" y="1390" font-size="13" fill="#0F172A" font-weight="700">SG-08</text>
+<rect x="966" y="1377" width="54.9" height="18" rx="9" fill="#FED7AA" stroke="#FDBA74"/><text x="993.458" y="1389.6" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">ASIL A</text>
+<text x="912" y="1412" font-size="11" fill="#475569">The item shall not continue automated control while the</text>
+<text x="912" y="1426" font-size="11" fill="#475569">driver is not supervising or not responding without</text>
+<text x="912" y="1440" font-size="11" fill="#475569">escalating to a minimal-risk reaction</text>
 <path d="M608 144 C728 144 780 206.0 898 206.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
 <path d="M608 174 C728 174 780 216.0 898 216.0" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#aR)"/>
 <path d="M608 204 C728 204 780 226.0 898 226.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
 <path d="M608 234 C728 234 780 236.0 898 236.0" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#aR)"/>
 <path d="M608 264 C728 264 780 246.0 898 246.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
 <path d="M608 366 C728 366 780 256.0 898 256.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 306 C728 306 780 647.2 898 647.2" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#aR)"/>
-<path d="M608 336 C728 336 780 654.8 898 654.8" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 396 C728 396 780 662.2 898 662.2" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 426 C728 426 780 669.8 898 669.8" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 456 C728 456 780 677.2 898 677.2" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 1116 C728 1116 780 684.8 898 684.8" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#aR)"/>
-<path d="M608 1146 C728 1146 780 692.2 898 692.2" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 1206 C728 1206 780 699.8 898 699.8" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 498 C728 498 780 746.2 898 746.2" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 528 C728 528 780 751.5 898 751.5" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 558 C728 558 780 756.8 898 756.8" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#aR)"/>
-<path d="M608 588 C728 588 780 762.2 898 762.2" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 618 C728 618 780 767.5 898 767.5" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 648 C728 648 780 772.8 898 772.8" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 690 C728 690 780 820.1 898 820.1" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 720 C728 720 780 829.3 898 829.3" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 750 C728 750 780 838.5 898 838.5" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 780 C728 780 780 847.7 898 847.7" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 810 C728 810 780 856.9 898 856.9" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 852 C728 852 780 907.2 898 907.2" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 882 C728 882 780 918.8 898 918.8" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 912 C728 912 780 930.2 898 930.2" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 942 C728 942 780 941.8 898 941.8" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 984 C728 984 780 1047.0 898 1047.0" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#aR)"/>
-<path d="M608 1044 C728 1044 780 1062.0 898 1062.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 1074 C728 1074 780 1077.0 898 1077.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 1176 C728 1176 780 1092.0 898 1092.0" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#aR)"/>
-<path d="M608 1279 C728 1279 780 1279.0 898 1279.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 1368 C728 1368 780 1367.0 898 1367.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 306 C728 306 780 658.5 898 658.5" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#aR)"/>
+<path d="M608 336 C728 336 780 666.0 898 666.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 396 C728 396 780 673.5 898 673.5" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 426 C728 426 780 681.0 898 681.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 456 C728 456 780 688.5 898 688.5" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 1146 C728 1146 780 696.0 898 696.0" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#aR)"/>
+<path d="M608 1176 C728 1176 780 703.5 898 703.5" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 1236 C728 1236 780 711.0 898 711.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 498 C728 498 780 757.0 898 757.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 528 C728 528 780 761.6 898 761.6" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 558 C728 558 780 766.2 898 766.2" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#aR)"/>
+<path d="M608 588 C728 588 780 770.8 898 770.8" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 618 C728 618 780 775.3 898 775.3" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 648 C728 648 780 779.9 898 779.9" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 678 C728 678 780 784.5 898 784.5" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 720 C728 720 780 831.4 898 831.4" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 750 C728 750 780 840.5 898 840.5" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 780 C728 780 780 849.8 898 849.8" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 810 C728 810 780 859.0 898 859.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 840 C728 840 780 868.1 898 868.1" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 882 C728 882 780 918.5 898 918.5" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 912 C728 912 780 930.0 898 930.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 942 C728 942 780 941.5 898 941.5" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 972 C728 972 780 953.0 898 953.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 1014 C728 1014 780 1077.0 898 1077.0" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#aR)"/>
+<path d="M608 1074 C728 1074 780 1092.0 898 1092.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 1104 C728 1104 780 1107.0 898 1107.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 1206 C728 1206 780 1122.0 898 1122.0" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#aR)"/>
+<path d="M608 1309 C728 1309 780 1309.0 898 1309.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
 <path d="M608 1398 C728 1398 780 1397.0 898 1397.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<text x="40" y="1452" font-size="11" fill="#475569">Connections follow the Source HEs column of §6. No goal of its own: H-07 → SG-02 / SG-06. Covered by the goal of another hazard: HE-02.3 → SG-01. Rated QM, no goal: HE-06.2.</text>
-<text x="40" y="1468" font-size="11" fill="#475569">Ratings are proposals for review, not approved until the I3 confirmation review (WP-C-03 header). ⚠ = C credits an unverified AoU; the goal ASIL in brackets applies if it fails.</text>
-<line x1="40" y1="1490" x2="1240" y2="1490" stroke="#E2E8F0"/>
-<line x1="40" y1="1510" x2="68" y2="1510" stroke="#C2410C" stroke-width="1.8"/>
-<text x="76" y="1514" font-size="10.5" fill="#0F172A">Event rated ASIL C → goal</text>
-<line x1="230" y1="1510" x2="258" y2="1510" stroke="#64748B" stroke-width="1.2"/>
-<text x="266" y="1514" font-size="10.5" fill="#0F172A">Event rated A/B → goal (§6 Source HEs)</text>
-<rect x="480" y="1503" width="26" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1"/>
-<text x="493" y="1514" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">QM</text>
-<rect x="512" y="1503" width="26" height="15" rx="7.5" fill="#FED7AA" stroke="#FDBA74"/>
-<text x="525" y="1514" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">A</text>
-<rect x="544" y="1503" width="26" height="15" rx="7.5" fill="#FB923C" stroke="#EA580C"/>
-<text x="557" y="1514" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
-<rect x="576" y="1503" width="26" height="15" rx="7.5" fill="#C2410C" stroke="#9A3412"/>
-<text x="589" y="1514" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
-<text x="610" y="1514" font-size="10.5" fill="#0F172A">ASIL</text>
-<text x="1240" y="1514" font-size="10" fill="#475569" text-anchor="end">Generated by hara_figures.py</text>
+<path d="M608 1428 C728 1428 780 1427.0 898 1427.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<text x="40" y="1482" font-size="11" fill="#475569">Connections follow the Source HEs column of §6. No goal of its own: H-07 → SG-02 / SG-06. Covered by the goal of another hazard: HE-02.3 → SG-01. Rated QM, no goal: HE-06.2.</text>
+<text x="40" y="1498" font-size="11" fill="#475569">Ratings are proposals for review, not approved until the I3 confirmation review (WP-C-03 header). ⚠ = C credits an unverified AoU; the goal ASIL in brackets applies if it fails.</text>
+<line x1="40" y1="1520" x2="1240" y2="1520" stroke="#E2E8F0"/>
+<line x1="40" y1="1540" x2="68" y2="1540" stroke="#C2410C" stroke-width="1.8"/>
+<text x="76" y="1544" font-size="10.5" fill="#0F172A">Event rated ASIL C → goal</text>
+<line x1="230" y1="1540" x2="258" y2="1540" stroke="#64748B" stroke-width="1.2"/>
+<text x="266" y="1544" font-size="10.5" fill="#0F172A">Event rated A/B → goal (§6 Source HEs)</text>
+<rect x="480" y="1533" width="26" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="493" y="1544" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">QM</text>
+<rect x="512" y="1533" width="26" height="15" rx="7.5" fill="#FED7AA" stroke="#FDBA74"/>
+<text x="525" y="1544" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">A</text>
+<rect x="544" y="1533" width="26" height="15" rx="7.5" fill="#FB923C" stroke="#EA580C"/>
+<text x="557" y="1544" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<rect x="576" y="1533" width="26" height="15" rx="7.5" fill="#C2410C" stroke="#9A3412"/>
+<text x="589" y="1544" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<text x="610" y="1544" font-size="10.5" fill="#0F172A">ASIL</text>
+<text x="1240" y="1544" font-size="10" fill="#475569" text-anchor="end">Generated by hara_figures.py</text>
 </svg>

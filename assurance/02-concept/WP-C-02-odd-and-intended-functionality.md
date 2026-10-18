@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-02 ODD and intended functionality specification |
 | Standard reference | ISO 21448:2022 §5 (specification of the functionality); ISO 26262-3:2018 §5 (item definition input); ISO/PAS 8800:2024 (input space definition); ASPICE 4.0 SYS.1; SAE J3016 and ISO 34503 (ODD taxonomy, informative) |
-| Version | 0.5 (ODD speed bound 110 km/h, DQ-260 A; OI-8 closed; Figure 3-2 redrawn; 2026-10-16). 0.4 (highway only: ODD-A dropped by the lead's decision DQ-023, option B; speed range and its test evidence per DQ-091, option A; curve bound kept and the HARA re-rated instead, DQ-059 B; driver-state misuse linked to HARA OS-17/OS-18; Figures 3-1 and 3-2 redrawn for one ODD part; 2026-10-16). 0.3 (Figures 3-1 and 3-2 added, generated from §3.1 and §3.2; 2026-10-13). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
+| Version | 0.6 (ODD entry condition: no engagement below a highway speed floor, proposed 60 km/h, until road-type data exist, DQ-280 A; §3.1, §4.3, §5.2, §5.3; OI-9 narrowed; 2026-10-18). 0.5 (ODD speed bound 110 km/h, DQ-260 A; OI-8 closed; Figure 3-2 redrawn; 2026-10-16). 0.4 (highway only: ODD-A dropped by the lead's decision DQ-023, option B; speed range and its test evidence per DQ-091, option A; curve bound kept and the HARA re-rated instead, DQ-059 B; driver-state misuse linked to HARA OS-17/OS-18; Figures 3-1 and 3-2 redrawn for one ODD part; 2026-10-16). 0.3 (Figures 3-1 and 3-2 added, generated from §3.1 and §3.2; 2026-10-13). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF; input to HARA exposure ratings |
 | Author | Assurance team (initial draft) |
@@ -58,7 +58,8 @@ Until version 0.3 the ODD also had an arterial and rural part (ODD-A). The lead 
 | Geometry | Lane width | 3.0–3.9 m | Narrow lanes < 2.9 m; lane shifts in work zones | `LIMITATIONS.md:19` ("narrow") |
 | Lane markings | Presence | Visible longitudinal markings on at least one side, US MUTCD style | Unmarked roads; faded or missing markings over long sections; conflicting old/new markings | End-to-end model; markings not strictly required but needed for validated performance |
 | Speed | Ego speed | 0 – 110 km/h (68 mph), not above the posted limit | > 110 km/h (capped by the lead, DQ-260 A; roads posted above 68 mph get no assistance above 110 km/h). Note: the system allows engagement up to 149 km/h (`MAX_CTRL_SPEED`) | Every claimed speed is the speed controllability is tested to, after a test risk review (DQ-091 A, DQ-260 A); HARA engaged situations rated to 110 km/h; FM-07 is to warn and then disengage above it; `LIMITATIONS.md:36` (speed limits not detected) |
-| Speed | Stop-and-go | Following a lead to standstill and auto-resume | Starting from standstill with no lead in front (e.g. at a stop line) | `interface.py:52, 107`; HE-03.2 |
+| Speed | Engagement (entry condition) | At or above the highway speed floor, proposed 60 km/h (37 mph); the value is set in the FSR (DQ-280 A) | Engaging below the floor. Since the item cannot yet tell a highway from other roads, the floor is the check it can make today, and it keeps engagement off most city streets; road-type data follow later (FM-08) | Decision register DQ-280, option A (2026-10-18); STPA LS-13. Cost accepted: no engagement in highway stop-and-go traffic, and a fast arterial road still passes until road-type data exist |
+| Speed | Stop-and-go | Following a lead to standstill and auto-resume, once engaged above the floor | Starting from standstill with no lead in front (e.g. at a stop line) | `interface.py:52, 107`; HE-03.2 |
 | Weather | Precipitation | None or light rain | Moderate/heavy rain, snow, sleet, hail, freezing rain | `LIMITATIONS.md:10, 29` |
 | Weather | Visibility | ≥ 200 m | Fog, smoke, dust, spray reducing visibility below the bound | `LIMITATIONS.md:10` |
 | Weather | Wind | Normal | Strong cross-wind (warnings issued or gusts noticeable) | `LIMITATIONS.md:16` |
@@ -142,7 +143,7 @@ The driver:
 | Lateral acceleration command | ≤ 3.0 m/s² (roll-compensated) | `drive_helpers.py:14, 37-38` |
 | Max curvature | 0.2 1/m | `drive_helpers.py:9` |
 | Acceleration command | −3.5 … +2.0 m/s² | `toyota.h:208-209`, `interfaces.py:25-26` |
-| Engagement speed | From standstill | `toyota/interface.py:115` |
+| Engagement speed | From standstill today. Required: at or above the highway speed floor (§3.1, DQ-280 A); not yet implemented | `toyota/interface.py:115` |
 | Max control speed | ≈149 km/h: warning + no-entry only | `interfaces.py:24`, `selfdrive/car/car_events.py:126`, `events.py:989-996` |
 | LDW active | > 31 mph, not laterally engaged | `ldw.py:7, 21` |
 | DM active | > 2.8 m/s | `policy.py:29` |
@@ -160,7 +161,7 @@ LD-SDA has **no ODD monitor**. The driver detects ODD exit and disengages. The s
 | Speed > 110 km/h (ODD bound, DQ-260) | No | None | FM-07 in WP-C-07: warn, then disengage (speed bound enforcement); until it exists, engaged driving above 110 km/h is foreseeable misuse (WP-C-03 §3) |
 | Speed > 149 km/h | Yes, `speedTooHigh` (`car_events.py:126`) | Warning + no-entry; **stays engaged** (`events.py:989-996`) | GAP-19; FM-07 |
 | Curve tighter than R_ODD | Partly: `steerSaturated` warning when the controller saturates (`events.py:619`) | Warning only | Driver task |
-| Missing/faded markings, construction zone, road type change (leaving the highway), intersection | No | None | Driver task; FM-08 (map/road-type, if feasible). With the highway-only ODD (DQ-023) this exit is the one the lead's decision assumes the system will refuse or warn about |
+| Missing/faded markings, construction zone, road type change (leaving the highway), intersection | No | None | Driver task; FM-08 (map/road-type, if feasible). With the highway-only ODD (DQ-023) this exit is the one the lead's decision assumes the system will refuse or warn about. Decided 2026-10-18 (DQ-280 A): refuse to engage below the highway speed floor now, road-type data later. The floor is a no-entry check, so it does not detect a road change after engagement |
 | Heavy rain, fog, glare, camera blocked | Not directly; possible model degradation without gating | None specific (GAP-22) | FM-09 (uncertainty monitor) |
 | Snow / ice | No | None | Driver task |
 | Device mis-calibration | Yes, `calibrationInvalid` (`events.py:816`) | Soft disable | Implemented |
@@ -170,7 +171,7 @@ LD-SDA has **no ODD monitor**. The driver detects ODD exit and disengages. The s
 
 ### 5.3 Required behaviour at ODD exit
 
-- If the system detects an exit: it shall give a take-over request and shall not remain engaged indefinitely (see FM-07). Engagement outside the ODD shall be prevented where the system can detect it (no-entry).
+- If the system detects an exit: it shall give a take-over request and shall not remain engaged indefinitely (see FM-07). Engagement outside the ODD shall be prevented where the system can detect it (no-entry). The first such check is the highway speed floor: no engagement below it (§3.1, DQ-280 A).
 - If the system does not detect an exit: the driver disengages. User information (WP-O-03) must state the ODD in terms the driver can recognise (road type, weather, speed).
 
 ## 6. Experimental Mode recommendation (GAP-18, D-08, WP-C-01 OI-8)
@@ -217,4 +218,4 @@ Decision record: **pending** — maintainer decision under D-08 / WP-C-01 OI-8.
 | OI-5 | Confirm grade and banking bounds (6 %) by vehicle test | Safety engineer | G2 |
 | OI-7 | Feed the ODD in driver-recognisable terms into WP-O-03 user information | Maintainer | G5 |
 | OI-8 | Closed 2026-10-16: the ODD stops at 110 km/h, the highest tested speed (DQ-260, A, after DQ-091, A). Left elsewhere: FM-07 implementation (software) and the 110 km/h controllability test (WP-V-01 VS-VAL-10) | SOTIF lead | — |
-| OI-9 | Off-highway refusal or warning (FM-08): the highway-only ODD assumes it, and the HARA's E2 for engagement off the highway (assumption A-ODD) rests on it until it exists | SW lead | G2 |
+| OI-9 | Off-highway refusal (FM-08). Decided 2026-10-18 (DQ-280, A): refuse to engage below a highway speed floor now (§3.1), add road-type data later. Open: the floor value and requirement (safety concept), its implementation and verification, and the road-type source. Until the floor is verified, the HARA's E2 for engagement off the highway (assumption A-ODD) is not credited to it | SW lead | G2 |

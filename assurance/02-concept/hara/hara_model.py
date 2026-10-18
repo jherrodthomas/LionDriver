@@ -103,7 +103,7 @@ FM: dict[str, dict[str, tuple[str, str, str, str]]] = {
     "M02": (SC, "H-06", "", "Deceleration stops while still needed (e.g. stale plan holds zero acceleration, HE-06.1)."),
     "M03": (SC, "H-04", "", "Braking with no reason (phantom braking), incl. a stop from speed. Unrequested acceleration has the same root but a different effect and is rated under M05."),
     "M04": (SC, "H-03", "", "Acceleration request frozen at a positive value while the lead slows or stops."),
-    "M05": (SC, "H-03", "", "Acceleration above intended, or acceleration from standstill when not intended (HE-03.x)."),
+    "M05": (SC, "H-03", "", "Acceleration above intended, or acceleration from standstill when not intended (HE-03.x). Also acceleration while not engaged, including just after a brake press has cancelled engagement (OS-13, HE-03.7, DQ-364)."),
     "M06": (SC, "H-06", "", "Deceleration below the required value when closing on a lead."),
     "M07": (SC, "H-04", "M03", "Braking before there is a reason; same response as unrequested braking."),
     "M08": (SC, "H-06", "M11", "Braking starts after it was needed; same as delayed."),
@@ -117,7 +117,7 @@ FM: dict[str, dict[str, tuple[str, str, str, str]]] = {
   "F-03": {
     "M01": (SC, "H-05", "", "Disengagement on brake, cancel or override does not happen (HE-05.x). Engagement failing to happen is safe (driver drives)."),
     "M02": (SC, "H-02", "", "System disengages while the driver relies on it, without adequate warning (lateral and longitudinal lost)."),
-    "M03": (SC, "H-01", "", "Engagement without a driver request (the envelope gates on the PCM cruise rising edge); unexpected steering and acceleration. Lateral is the worst case."),
+    "M03": (SC, "H-01", "", "Engagement without a driver request (the envelope gates on the PCM cruise rising edge); unexpected steering and acceleration. Lateral is the worst case and is rated here; the acceleration of a false engagement is rated as F-02 M05 in OS-13 (HE-03.7, DQ-364)."),
     "M04": (SC, "H-05", "M01", "Engagement state stuck at 'engaged'; same as disengagement not happening."),
     "M05": (NA, "", "", "Engagement is a discrete state; no magnitude."),
     "M06": (SC, "H-05", "", "Partial disengagement: one axis released, the other still actuating after brake or cancel."),
@@ -331,7 +331,7 @@ RULES: dict[str, dict[str, tuple[str, str, str, str]]] = {
     "OS-09": ("S3", "C3", "S3: acceleration during an imminent collision.", "C3: by definition the driver has not avoided the situation."),
     "OS-10": ("S3", "C2", "S3: acceleration continues while the driver brakes in an emergency.", ACC_C),
     "OS-12": ("S2", "C1", "S2: acceleration during a lane change.", "C1 ⚠: the driver controls the manoeuvre and brakes (credits AOU-03)."),
-    "OS-13": ("S2", "C2", "S2: unexpected acceleration during manual driving.", ACC_C),
+    "OS-13": ("S2", "C2", "S2: unexpected acceleration while not engaged: during manual driving, after a false engagement, or just after a brake press has cancelled engagement (HE-03.7, DQ-364).", ACC_C),
     "OS-14": ("S3", "C2", "S3: acceleration in a residential street towards VRUs.", ACC_C),
     "OS-15": ("S3", "C2", "S3: acceleration into an intersection with crossing traffic or VRUs.", ACC_C),
     "OS-16": ("S3", "C2", "S3: speed rises in a rural curve beyond the lateral limit; run-off or oncoming lane.", ACC_C),
@@ -421,6 +421,9 @@ NOT_ENGAGED = {"OS-13"}
 # Functions that cannot act at all while not engaged (DM forced deceleration is applied through controlsd only when engaged).
 ENGAGED_ONLY = {"F-04"}
 UNREQUESTED = {"M03", "M10"}
+# Pairs that also occur while not engaged although their guide word is not M03/M10: acceleration while not engaged or
+# just after a brake press (FTA G3.3; false engagement F-03 M03 reaches the vehicle as an F-02 acceleration), DQ-364.
+NOT_ENGAGED_PAIRS = {("F-02", "M05")}
 # AoU-credited ratings ("⚠" in C rationale) get a sensitivity line: C+1 if the AoU fails.
 
 C_UP = {"C0": "C1", "C1": "C2", "C2": "C3", "C3": "C3"}
@@ -470,7 +473,8 @@ def rate(f_id, m_id, h, os_row, w_row):
   e_rat = f"{E}: situation {os_code} is {os_e}, condition {w_code} is {w_e}; the combination is no more frequent than the rarer of the two (ISO 26262-3 Table B.2, duration)."
   if os_code in NOT_ENGAGED and f_id in ENGAGED_ONLY:
     return ("S0", E, "C0", f"S0: item not engaged; {f_id} acts on the vehicle only while engaged (controlsd).", e_rat, "n/a")
-  if h != "H-08" and f_id not in FUNCTION_RULES and os_code in NOT_ENGAGED and m_id not in UNREQUESTED:
+  if h != "H-08" and f_id not in FUNCTION_RULES and os_code in NOT_ENGAGED and m_id not in UNREQUESTED \
+     and (f_id, m_id) not in NOT_ENGAGED_PAIRS:
     return ("S0", E, "C0", f"S0: item not engaged; {m_id} cannot occur without a request (only unrequested actuation, M03/M10, applies).", e_rat, "n/a")
   rules = FUNCTION_RULES.get(f_id, RULES[h])
   rule = rules.get(os_code)
@@ -510,7 +514,7 @@ def build(experimental: bool) -> tuple[dict, list[dict]]:
   data = {
     "item": {"name": "LionDriver Supervised Driving Assistance", "abbr": "LD-SDA", "project": "LionDriver",
              "doc_id": "WP-C-03" + (" (Experimental Mode variant)" if experimental else ""),
-             "revision": "0.4 (Cartesian)", "date": "2026-10-16", "author": "Assurance team (draft)",
+             "revision": "0.5 (Cartesian)", "date": "2026-10-18", "author": "Assurance team (draft)",
              "approver": "Safety manager", "company": "LionDriver"},
     "scope_description": "Aftermarket supervised SAE Level 2 feature on the Toyota Corolla, 12th generation (E210), TSS 2.0 (reference configuration, WP-C-01), on limited-access highways only (WP-C-02). Lateral (LKA torque) and longitudinal (ACC) control with driver monitoring; the panda safety MCU envelope bounds actuation. Experimental Mode is "
                          + ("INCLUDED in this variant (D-08 option B)." if experimental else "EXCLUDED (D-08 option A, recommended)."),

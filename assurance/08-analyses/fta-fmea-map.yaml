@@ -947,6 +947,29 @@ not_in_fta:
     goal: SG-03
     kind: justified
     reason: "As for SG-01: an update to an unapproved release replaces the analysed item. Controlled by WP-P-10 and the update policy (DQ-075); the envelope part is BE-1.09."
+  - fm: SWF-055
+    goal: SG-03
+    kind: tree_gap
+    reason: >-
+      Reaches SG-03 since DQ-364 A routed HZ-010 (unintended engagement) to SG-03 (WP-C-03 HE-03.7). Authority returning
+      without a new driver engagement is false authority, which G3.3.1 takes from SG-01 as BE-1.12…BE-1.14; the SG-01 tree
+      holds this mode in BE-1.25, which G3.3.1 does not borrow. For the FTA owner to add BE-1.25 to G3.3.1 or justify
+      leaving it out.
+  - fm: SWF-089
+    goal: SG-03
+    kind: tree_gap
+    reason: As SWF-055 (authority granted with cruise main off through a left-open engagement window; BE-1.25 in the SG-01 tree, fixed in the reference build at BL-006).
+  - fm: SWF-057
+    goal: SG-03
+    kind: tree_gap
+    reason: >-
+      Reaches SG-03 through HZ-010 since DQ-364 A. A carState field decoded wrong (e.g. a spurious cruise enable) feeds the
+      host's engagement state; the SG-01 tree has it in BE-1.15 next to SFM-013 and SWF-030, while the SG-03 counterpart
+      BE-3.13 lists SFM-013 and SWF-030 but not SWF-057. For the FTA owner to add it to BE-3.13 or justify leaving it out.
+  - fm: SWF-054
+    goal: SG-03
+    kind: justified
+    reason: As for SG-01. A re-grant after a TX-rate revocation needs a driver cruise edge and the heartbeat engaged flag, so the driver has engaged the item; the host's frames stay under the envelope's TX-rate and acceleration checks (G3.1), so no path to acceleration while not engaged arises (SW FMEA rev 0.8, DQ-079).
   # ---- SG-05
   - fm: SWF-031
     goal: SG-05
