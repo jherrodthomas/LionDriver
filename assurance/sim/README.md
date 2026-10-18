@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Scope | Simulation for LionDriver; modelling-plan work item 4, the HIL plant ([models README](../models/README.md), MD-01, MD-04): fault-injection plant model (layer 1), known scenarios as OpenSCENARIO (layer 2), MetaDrive closed loop (layer 3), unknown-scenario search (layer 4) |
-| Version | 0.11 (§1.1: how to read a scene dashboard, with an annotated overview and four spotlights, 2026-10-18). 0.10 (scenes outside the highway-only ODD tagged as misuse in the compilation and stills, 2026-10-18). 0.9 (3D compilation of the three Blender clips at the top, 2026-10-18). 0.8 (§3.7: loop diagram and animation for each ASIL C hazardous event the plant runs, 2026-10-18). 0.7 (pictures: hero strip, a figure per section from `figures/fig_sim_readme.py`, the existing renders and dashboards embedded, 2026-10-18). 0.6 (reference-car outline in the layer-1 figures, 2026-10-17). 0.5 (vehicle 3D-model note, 2026-10-17). 0.4 (§3.6: Julia retired, the bound computed exactly with numpy; 2026-10-17). 0.3 (reachability pilot, §3.6, 2026-10-16). 0.2 (layer 2, 2026-10-16). 0.1 (layer 1, 2026-10-16) |
+| Version | 0.12 (§3.8: layer 3 on a self-hosted runner, DQ-400 A, 2026-10-18). 0.11 (§1.1: how to read a scene dashboard, with an annotated overview and four spotlights, 2026-10-18). 0.10 (scenes outside the highway-only ODD tagged as misuse in the compilation and stills, 2026-10-18). 0.9 (3D compilation of the three Blender clips at the top, 2026-10-18). 0.8 (§3.7: loop diagram and animation for each ASIL C hazardous event the plant runs, 2026-10-18). 0.7 (pictures: hero strip, a figure per section from `figures/fig_sim_readme.py`, the existing renders and dashboards embedded, 2026-10-18). 0.6 (reference-car outline in the layer-1 figures, 2026-10-17). 0.5 (vehicle 3D-model note, 2026-10-17). 0.4 (§3.6: Julia retired, the bound computed exactly with numpy; 2026-10-17). 0.3 (reachability pilot, §3.6, 2026-10-16). 0.2 (layer 2, 2026-10-16). 0.1 (layer 1, 2026-10-16) |
 | Status | Draft. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed. **No result here is evidence until the model is validated against Corolla logs; until then results rank risks and guide tests only** (§4) |
 | Feeds | [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) timing (owned by the safety-concept session); [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) M4, [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md), [WP-V-04](../06-validation/WP-V-04-sotif-unknown-scenarios.md) (owned by the SOTIF session); previews [WP-V-05](../06-validation/WP-V-05-fault-injection.md) cases |
 
@@ -405,6 +405,35 @@ stationary car) and [HE-07.3](blender/dashboards/he-07-3-believes-acc-active.jpg
 have kinematic scenes only. No panda code ran in them, so a loop diagram would claim something the scene does not show.
 A loop for them needs longitudinal plant cases for their situations first.
 
+### 3.8 Layer 3 in CI: the self-hosted runner (DQ-400, option A)
+
+The closed-loop MetaDrive run (the 'simulator driving' job in `.github/workflows/tests.yaml`, PR #124) cannot keep real
+time on GitHub's free 4-core runners: the rendered terrain takes about 160 ms per camera frame, about 6 frames/s
+against the 20 openpilot needs, and the driving model then drops a third of its frames. The lead chose a self-hosted
+runner (DQ-400, option A, 2026-10-18). The job now runs on a runner labelled `liondriver-sim`:
+
+- **Only trusted code.** It runs for pushes and for pull requests from this repository's own branches; a fork's pull
+  request never reaches the runner.
+- **Off until switched on.** It runs only when the repository variable `LIONDRIVER_SIM_RUNNER` is `true`. Until then it
+  is skipped, as it was before, rather than waiting for a runner that does not exist.
+
+**Setting it up (the lead, once):**
+
+1. A Linux x64 machine that can stay on during CI: Ubuntu 24.04, or Ubuntu 24.04 under WSL2 on Windows. A graphics
+   card is what makes the scene render in real time; whether it is used through EGL on that machine is shown by the
+   first run.
+2. GitHub → the repository → Settings → Actions → Runners → **New self-hosted runner** → Linux, x64. Run the commands
+   it shows on the machine, and add the label `liondriver-sim` when `config.sh` asks for labels. Install it as a
+   service (`sudo ./svc.sh install && sudo ./svc.sh start`) so it survives restarts.
+3. The job installs packages with `sudo apt-get`, so the runner's user needs passwordless sudo for `apt-get`.
+4. Settings → Actions → General → **Fork pull request workflows from outside collaborators**: require approval for all
+   outside collaborators.
+5. Settings → Secrets and variables → Actions → Variables → **New repository variable**: `LIONDRIVER_SIM_RUNNER` =
+   `true`. The next push runs the job.
+
+What the first run shows (frame rate, whether openpilot engages, the bridge test result) goes into SIM-OI-4 as CI shows
+it.
+
 ## 4. Credit and hand-back
 
 ![Evidence gate: a result from layers 1 to 4 counts only if a WP-V-02 §5.3 fidelity case is approved for its scenario family (DQ-139); today no family has one, so results rank risks and guide bench and car tests; results are handed back to the safety-concept, SOTIF and System FMEA sessions](figures/fig-sim-r5-credit.svg)
@@ -467,7 +496,7 @@ opendbc code is the project's own (MIT).
 | SIM-OI-1 | The EPS reaction to lost STEERING_LKA frames decides most layer-1 results (release vs hold). Replace both cases with M-02 once measured |
 | SIM-OI-2 | Replace the driver assumptions with WP-C-08 §8 values; add the SoC take-over alert once openpilot runs in the loop (layer 3) |
 | SIM-OI-3 | Model the LSI tolerance and the other hang types of WP-V-05 VS-FI-17 (main loop only, tick, safety task) |
-| SIM-OI-4 | Layer 3 end to end (PR #124, CI) and the search over MetaDrive and the scenario files |
+| SIM-OI-4 | Layer 3 end to end (PR #124) on the self-hosted runner (§3.8): waits for the lead to register it and set `LIONDRIVER_SIM_RUNNER`; then the search over MetaDrive and the scenario files |
 | SIM-OI-6 | Scenic and VerifAI if rv-ltl is published with a licence (§5) |
 | SIM-OI-5 | KS-04 (lane split and merge) as an OpenDRIVE junction or lane-width polynomial |
 | SIM-OI-7 | L2 column parameters (§3.5) are assumed. Published column-EPS parameter tables were found but could not be read: their hosts are not reachable from the build environment. Check the values against those sources, then replace them with M-02 measurements |
