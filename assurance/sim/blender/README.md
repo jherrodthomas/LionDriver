@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Scope | A 3D scene and a review dashboard for every HARA hazardous event (37 HE-, WP-C-03) and every SOTIF hazard (12 SH-, WP-C-05, with its triggering conditions from WP-C-06 and known scenarios from WP-V-03) |
-| Version | 0.4 (2026-10-18): scanned CC0 plants (Poly Haven trees, shrubs and verge grass, with snow under W05) in place of the procedural trees when fetched; dry patches and mowing rows in the fields. 0.3 (2026-10-18): scene library (environments, HARA weather codes and low sun, traffic presets, CC0 assets with a procedural fallback); 40 condition variants; richer procedural road, grass, trees and road furniture. 0.2 (2026-10-18): all HEs and SOTIF hazards, kinematic scenes, the purchased Corolla mesh on every car, rural and urban roads, props, night and wet road. 0.1 (2026-10-18): three plant scenes |
+| Version | 0.4 (2026-10-18): scanned CC0 plants (Poly Haven trees, shrubs and verge grass, with snow under W05) in place of the procedural trees when fetched; dry patches and mowing rows in the fields; urban streets with fewer, kerbside street trees, 8 m lamp columns, bus shelters and scanned bins, benches, hydrants and street cabinets, kept clear of every pedestrian, cyclist and junction. 0.3 (2026-10-18): scene library (environments, HARA weather codes and low sun, traffic presets, CC0 assets with a procedural fallback); 40 condition variants; richer procedural road, grass, trees and road furniture. 0.2 (2026-10-18): all HEs and SOTIF hazards, kinematic scenes, the purchased Corolla mesh on every car, rural and urban roads, props, night and wet road. 0.1 (2026-10-18): three plant scenes |
 | Status | Draft. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed. Synthetic (DSR-12): **pictures only, no evidence credit** |
 | Feeds | Review of the HARA, the SOTIF analysis and the WP-V-03 scenarios; figures. Nothing in the safety case |
 
@@ -32,9 +32,9 @@ occluding truck, an overpass, cones) is drawn in the scene, not simulated.
 
 | Step | Script | Runs in | Writes (under `out/<scene>/`, git-ignored) |
 |---|---|---|---|
-| 0 (optional) | [`fetch_assets.py`](fetch_assets.py) | Python; network access to Poly Haven and ambientCG | CC0 HDRIs, textures and scanned plants under `assets/library/` (git-ignored); [`library/assets.lock.json`](library/README.md#4-cc0-assets) (committed). Without them the scenes use the procedural look |
+| 0 (optional) | [`fetch_assets.py`](fetch_assets.py) | Python; network access to Poly Haven and ambientCG | CC0 HDRIs, textures, scanned plants and street furniture under `assets/library/` (git-ignored); [`library/assets.lock.json`](library/README.md#4-cc0-assets) (committed). Without them the scenes use the procedural look |
 | 1 | [`export_scene.py`](export_scene.py) | the track's Python (the plant needs `opendbc_repo`, `panda`, [`../requirements.txt`](../requirements.txt)) | `scene.json`: the scene resolved through the [library](library/README.md) (road cross-section, props, condition, traffic), poses at 24 fps, signals, gap and TTC, events, the HARA or SOTIF entry |
-| 2 | [`hazard_scene.py`](hazard_scene.py) with [`scene_assets.py`](scene_assets.py) | Blender 4.2+ (`blender -b -P`) or Python 3.13 with `pip install bpy` | `scene.blend` (animated, three cameras), `screen.json`, `stills/`, `frames/` with `--video` |
+| 2 | [`hazard_scene.py`](hazard_scene.py) with [`scene_assets.py`](scene_assets.py) and [`street_layout.py`](street_layout.py) | Blender 4.2+ (`blender -b -P`) or Python 3.13 with `pip install bpy` | `scene.blend` (animated, three cameras), `screen.json`, `stills/`, `frames/` with `--video` |
 | 3 | [`compose.py`](compose.py) | Python with Pillow; ffmpeg for `--video` | `dashboard/`, `dashboard.png`, `<scene>.mp4` |
 | 4 | [`gallery.py`](gallery.py) | Python with Pillow | [`dashboards/`](dashboards/README.md) (committed) |
 
@@ -43,7 +43,7 @@ python3 assurance/sim/blender/export_scene.py                                   
 blender -b -P assurance/sim/blender/hazard_scene.py -- assurance/sim/blender/out/sh-11-pedestrian-occluded/scene.json --stills
 python3 assurance/sim/blender/compose.py assurance/sim/blender/out/sh-11-pedestrian-occluded
 python3 assurance/sim/blender/gallery.py
-python3 assurance/sim/blender/test_scenes.py                                    # CI: every HE has a scene; all export; library and variant checks
+python3 assurance/sim/blender/test_scenes.py                                    # CI: every HE has a scene; all export; library, variant and street-furniture checks
 python3 assurance/sim/blender/test_fetch_assets.py                              # CI: fetch_assets.py against fake API answers
 ```
 

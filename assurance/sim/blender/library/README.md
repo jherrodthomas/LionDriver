@@ -9,7 +9,7 @@ weather or lighting code it is rated for. Pictures only: synthetic (DSR-12), no 
 | [`environments.yaml`](environments.yaml) | 10 static worlds: cross-section, geometry, scenery, road furniture, the operational situations (OS-) they represent, the conditions each allows | `export_scene.py` |
 | [`conditions.yaml`](conditions.yaml) | W01 to W06 of the HARA and the TC-01 low-sun preset: exposure, ODD, what the HARA model changes, and the look | `export_scene.py`, `hazard_scene.py` |
 | [`traffic.yaml`](traffic.yaml) | Illustrative traffic presets placed relative to the ego | `export_scene.py` |
-| [`assets.yaml`](assets.yaml) | CC0 sky HDRIs, ground textures and scanned plant models (Poly Haven, ambientCG) with candidate IDs and a search fallback | `fetch_assets.py`, `hazard_scene.py` |
+| [`assets.yaml`](assets.yaml) | CC0 sky HDRIs, ground textures, scanned plants and street furniture (Poly Haven, ambientCG) with candidate IDs and a search fallback | `fetch_assets.py`, `hazard_scene.py` |
 | `assets.lock.json` | The asset IDs and SHA-256 sums `fetch_assets.py` chose; committed once it has run (section 4) | `fetch_assets.py --locked`, `hazard_scene.py` |
 
 ## 1. How a scene uses it
@@ -134,3 +134,23 @@ Cost, measured on 1280 × 720 chase stills at 16 samples on 4 CPU cores: Poly Ha
 0.4 to 2 million triangles a tree. Peak memory goes from about 1.5 GB to 4.4 GB for each Blender process, and a still
 takes about 12 to 20 s longer (23 to 37–42 s; 47 to 65 s with snowfall). Building a scene takes about 14 s longer, once
 per scene. Leave the plant slots unfetched, or delete their folders, to render with the procedural trees.
+
+**Street furniture (2026-10-18).** Urban pavements are laid out by [`../street_layout.py`](../street_layout.py), which
+is plain Python, so CI checks every urban scene (`test_scenes.py`). Each side gets street trees in kerbside pits about
+every 36 m, the two sides staggered (the scanned broadleaf trees at 0.75 of their height, or the procedural tree). It
+also gets lamp columns every 30 m with a bin by most of them, benches facing the carriageway, hydrants at the kerb,
+street cabinets against the buildings, and a bus stop 45 m (left) and 95 m (right) ahead of the ego's start, then
+every 180 m. Nothing stands within 6 m of any pedestrian or cyclist pose, across an intersection (plus 6 m), within
+3 m of a traffic light or within 6 m of a crosswalk. Furniture must not hide a road user the scene does not already
+hide.
+
+| Slot | Asset | Use |
+|---|---|---|
+| `bin` | Poly Haven [`metal_trash_can`](https://polyhaven.com/a/metal_trash_can) (clean and rusted) | By the lamp columns |
+| `bench` | Poly Haven [`modular_street_seating`](https://polyhaven.com/a/modular_street_seating) (the bench with a back) | Facing the carriageway |
+| `hydrant` | Poly Haven [`fire_hydrant`](https://polyhaven.com/a/fire_hydrant) | At the kerb |
+| `utility_box` | Poly Haven [`utility_box_01`](https://polyhaven.com/a/utility_box_01) | Against the buildings |
+
+The lamp columns (8 m, with a 1.6 m arm over the carriageway and a point light at night) and the glass bus shelters
+(with a bench, a lit advert and the stop sign) are procedural. Poly Haven has only 3.9 m heritage lamp posts and no
+shelter. The furniture models are small (4,000 to 75,000 triangles), so render time and memory do not change.

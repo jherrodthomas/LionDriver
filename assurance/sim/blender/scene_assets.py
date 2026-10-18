@@ -600,60 +600,72 @@ def snow_on(m, snow: float):
   g.set(sock, g.mix(cover, col, SNOW_RGB))
 
 
-class PlantModel:
-  """A scanned plant (a model slot of library/assets.yaml): each mesh of its glTF is a variant, centred on the origin
-  with its base at Z = 0 and kept out of the scene as a template; instances share its mesh data, as the road users
-  share CarModel's. Under snow its own materials get snow on top."""
+class ScannedModel:
+  """A scanned plant or piece of street furniture (a model slot of library/assets.yaml), kept out of the scene as a
+  template; instances share its mesh data, as the road users share CarModel's. Each variant is one mesh of the glTF,
+  or one of the slot's groups of meshes, centred on the origin with its base at Z = 0. Under snow its own materials
+  get snow on top."""
 
   def __init__(self, slot: dict, env: dict):
     before = set(bpy.data.objects)
     bpy.ops.import_scene.gltf(filepath=str(slot["files"]["gltf"]))
     new = [o for o in bpy.data.objects if o not in before]
     bpy.context.view_layer.update()
+    meshes = {o.name: o for o in new if o.type == "MESH" and not any(x in o.name for x in slot.get("exclude", []))}
     self.slot, self.variants = slot, []
-    for o in new:
-      if o.type != "MESH" or any(x in o.name for x in slot.get("exclude", [])):
+    for names in slot.get("groups") or [[n] for n in meshes]:
+      objs = [meshes[n] for n in names if n in meshes]
+      if len(objs) < len(names):                # a fallback asset without the slot's meshes: not this variant
+        print(f"model: {slot['id']} has no {', '.join(n for n in names if n not in meshes)}")
         continue
-      bb = [o.matrix_world @ Vector(c) for c in o.bound_box]
+      bb = [o.matrix_world @ Vector(c) for o in objs for c in o.bound_box]
       lo = [min(v[i] for v in bb) for i in range(3)]
       hi = [max(v[i] for v in bb) for i in range(3)]
-      t = Matrix.Translation((-(lo[0] + hi[0]) / 2, -(lo[1] + hi[1]) / 2, -max(lo[2], 0.0) - 0.02)) @ o.matrix_world
-      o.data.use_fake_user = True
-      self.variants.append((o.data, t, hi[2] - lo[2]))
+      t = Matrix.Translation((-(lo[0] + hi[0]) / 2, -(lo[1] + hi[1]) / 2, -max(lo[2], 0.0) - 0.02))
+      self.variants.append(([(o.data, t @ o.matrix_world) for o in objs], hi[2] - lo[2]))
+    for parts, _ in self.variants:
+      for me, _ in parts:
+        me.use_fake_user = True
     for o in new:
       bpy.data.objects.remove(o, do_unlink=True)
     if env.get("snow"):
-      for m in {m for me, _, _ in self.variants for m in me.materials if m and m.use_nodes}:
+      for m in {m for parts, _ in self.variants for me, _ in parts for m in me.materials if m and m.use_nodes}:
         snow_on(m, float(env["snow"]))
-    print(f"plant: {slot['id']} ({slot['role']}), {len(self.variants)} variant(s)")
+    print(f"model: {slot['id']} ({slot['role']}), {len(self.variants)} variant(s)")
 
-  def place(self, rnd, name: str, coll, parent, loc, sc: float = 1.0):
-    """An instance at loc, turned at random, as tall as the slot's height_m times sc."""
-    me, t, h = rnd.choice(self.variants)
-    ob = bpy.data.objects.new(name, me)
-    ob.parent = parent
-    k = sc * rnd.uniform(*self.slot["height_m"]) / h
-    ob.matrix_basis = Matrix.Translation(loc) @ Matrix.Rotation(rnd.uniform(0, 6.28), 4, "Z") @ Matrix.Scale(k, 4) @ t
-    coll.objects.link(ob)
-    return ob
+  def place(self, rnd, name: str, coll, parent, loc, sc: float = 1.0, yaw: float | None = None):
+    """An instance at loc: a plant as tall as the slot's height_m times sc and turned at random, furniture at its
+    scanned size and turned to yaw."""
+    parts, h = rnd.choice(self.variants)
+    k = sc * rnd.uniform(*self.slot["height_m"]) / h if "height_m" in self.slot else 1.0
+    yaw = rnd.uniform(0, 6.28) if yaw is None else yaw
+    m0 = Matrix.Translation(loc) @ Matrix.Rotation(yaw, 4, "Z") @ Matrix.Scale(k, 4)
+    for j, (me, t) in enumerate(parts):
+      ob = bpy.data.objects.new(name if len(parts) == 1 else f"{name}.{j:02d}", me)
+      ob.parent = parent
+      ob.matrix_basis = m0 @ t
+      coll.objects.link(ob)
 
   def template(self) -> bpy.types.Collection:
-    """The variants as a collection outside the scene, for geometry-node instancing."""
+    """The variants (one mesh each) as a collection outside the scene, for geometry-node instancing."""
     c = bpy.data.collections.new(f"{self.slot['id']}_variants")
     c.use_fake_user = True
-    for me, t, _ in self.variants:
+    for parts, _ in self.variants:
+      me, t = parts[0]
       ob = bpy.data.objects.new(me.name, me)
       ob.matrix_basis = t
       c.objects.link(ob)
     return c
 
 
-def plant_models(assets: Assets, env: dict, roles) -> dict[str, list[PlantModel]]:
-  """{role: [PlantModel]} of the fetched model slots in roles."""
+def scanned_models(assets: Assets, env: dict, roles) -> dict[str, list[ScannedModel]]:
+  """{role: [ScannedModel]} of the fetched model slots in roles."""
   out = {}
   for _, s in sorted(assets.slots.items()):
     if s.get("kind") == "model" and s.get("role") in roles:
-      out.setdefault(s["role"], []).append(PlantModel(s, env))
+      m = ScannedModel(s, env)
+      if m.variants:
+        out.setdefault(s["role"], []).append(m)
   return out
 
 
@@ -713,11 +725,87 @@ def verge_grass(r: dict, plants: dict, coll):
       ob.modifiers.new("verge", "NODES").node_group = ng
 
 
-def build_scenery(r: dict, env: dict, assets: Assets | None = None, seed: int = 7):
-  """Trees (broadleaf and conifer), shrubs, verge grass, buildings and street lights beside the road, as the road's
-  scenery asks: trees (a row either side, shrubs under them), open (sparse trees in fields), urban (buildings, street
-  trees, street lights); grass on rural and highway verges except under snow. Scanned plants where their model slots
-  are fetched, procedural trees otherwise; the trees stand in the same places either way."""
+def lamp_column(name: str, coll, parent, loc, yaw: float, night: bool):
+  """An 8 m street-lighting column with a 1.6 m arm over the carriageway (toward -Y) and a flat luminaire; at night a
+  point light under the luminaire. Procedural: Poly Haven has only short heritage posts."""
+  steel = material("lamp_column", (0.32, 0.33, 0.35), rough=0.45, metal=0.7)
+  glow = material("luminaire_on" if night else "luminaire", (1.0, 0.86, 0.65) if night else (0.75, 0.75, 0.72),
+                  rough=0.3, emit=30.0 if night else 0.0)
+  m0 = Matrix.Translation(loc) @ Matrix.Rotation(yaw, 4, "Z")
+  meshes = bpy.data.meshes                       # one mesh of each part for every column
+  parts = ((meshes.get("lamp_column_pole") or cyl_mesh("lamp_column_pole", 0.09, 8.0, mat=steel, r2=0.06), (0, 0, 4.0)),
+           (meshes.get("lamp_column_arm") or cyl_mesh("lamp_column_arm", 0.04, 1.6, axis="Y", mat=steel),
+            (0, -0.8, 7.95)),
+           (meshes.get("lamp_column_head") or box_mesh("lamp_column_head", 0.28, 0.6, 0.1, 0.0, steel),
+            (0, -1.55, 7.86)),
+           (meshes.get(glow.name) or box_mesh(glow.name, 0.24, 0.5, 0.02, 0.0, glow), (0, -1.55, 7.84)))
+  for k, (me, xyz) in enumerate(parts):
+    m = Matrix.Translation(xyz)
+    ob = bpy.data.objects.new(f"{name}.{k}", me)
+    ob.parent = parent
+    ob.matrix_basis = m0 @ m
+    coll.objects.link(ob)
+  if night:
+    lt = bpy.data.objects.new("street_light", bpy.data.lights.new("street_light", "POINT"))
+    lt.data.energy, lt.data.color, lt.data.shadow_soft_size = 1500, (1.0, 0.82, 0.6), 0.3
+    lt.location = m0 @ Vector((0, -1.55, 7.6))
+    coll.objects.link(lt)
+
+
+def bus_shelter(name: str, coll, parent, loc, yaw: float, night: bool):
+  """A glass bus shelter 3.6 m long and 1.4 m deep, open toward -Y (the carriageway), with a bench, a lit advert at
+  one end and the stop sign at the kerb ahead of it. Procedural: Poly Haven has none."""
+  glass = material("shelter_glass", (0.55, 0.62, 0.65), rough=0.05, alpha=0.3)
+  frame = material("shelter_frame", (0.12, 0.13, 0.14), rough=0.4, metal=0.7)
+  advert = material("shelter_advert_on" if night else "shelter_advert", (0.85, 0.82, 0.7), emit=2.5 if night else 0.8)
+  pole = material("pole", (0.2, 0.2, 0.22), rough=0.5, metal=0.6)
+  plate = material("bus_sign", (0.08, 0.32, 0.18), rough=0.4)
+  parts = [("back", (3.6, 0.03, 2.0, 0.3), (0, 0.65), glass), ("roof", (3.9, 1.6, 0.08, 2.45), (0, 0.05), frame),
+           ("advert", (0.12, 1.2, 1.9, 0.35), (1.8, 0.05), advert),
+           ("side", (0.03, 1.2, 2.0, 0.3), (-1.8, 0.05), glass), ("bench", (2.0, 0.4, 0.06, 0.45), (0, 0.4), frame),
+           ("sign", (0.04, 0.55, 0.55, 2.35), (2.6, -0.9), plate)]
+  parts += [("post", (0.07, 0.07, 2.45, 0.0), xy, frame) for xy in ((-1.8, 0.65), (1.8, 0.65), (-1.8, -0.55),
+                                                                    (1.8, -0.55))]
+  m0 = Matrix.Translation(loc) @ Matrix.Rotation(yaw, 4, "Z")
+  meshes = [(f"{n}{k}", box_mesh(f"{name}_{n}{k}", *dims, mat), Matrix.Translation((*xy, 0)))
+            for k, (n, dims, xy, mat) in enumerate(parts)]
+  meshes.append(("sign_pole", cyl_mesh(f"{name}_sign_pole", 0.035, 2.9, mat=pole),
+                 Matrix.Translation((2.6, -0.9, 1.45))))
+  for n, me, m in meshes:
+    ob = bpy.data.objects.new(f"{name}_{n}", me)
+    ob.parent = parent
+    ob.matrix_basis = m0 @ m
+    coll.objects.link(ob)
+
+
+def street_furniture(items: list, r: dict, env: dict, coll, models: dict, trunk, crowns, rnd):
+  """Build the items street_layout.layout lists: lamp columns and bus shelters (procedural), street trees (scanned or
+  procedural), and bins, benches, hydrants and utility boxes where their model slots are fetched."""
+  night = env.get("night", False)
+  root = empty("street_furniture", coll)
+  for k, it in enumerate(items):
+    loc, kind = (it["x"], it["y"], 0.0), it["kind"]
+    if kind == "lamp":
+      lamp_column(f"lamp_{k}", coll, root, loc, it["yaw"], night)
+    elif kind == "shelter":
+      bus_shelter(f"shelter_{k}", coll, root, loc, it["yaw"], night)
+    elif kind == "tree" and models.get("broadleaf"):
+      rnd.choice(models["broadleaf"]).place(rnd, "tree", coll, root, loc, 0.75, it["yaw"])
+    elif kind == "tree":
+      sc = rnd.uniform(0.8, 1.3) * 0.55
+      part("tree", trunk, root, coll, (loc[0], loc[1], 1.5 * sc)).scale = (sc, sc, sc)
+      part("crown", rnd.choice(crowns), root, coll, (loc[0], loc[1], 4.6 * sc), (0, 0, it["yaw"])).scale = (
+        sc, sc, sc * 1.15)
+    elif models.get(kind):
+      rnd.choice(models[kind]).place(rnd, kind, coll, root, loc, yaw=it["yaw"])
+
+
+def build_scenery(r: dict, env: dict, assets: Assets | None = None, seed: int = 7, furniture: list | None = None):
+  """Trees (broadleaf and conifer), shrubs, verge grass, buildings and street furniture beside the road, as the road's
+  scenery asks: trees (a row either side, shrubs under them), open (sparse trees in fields), urban (buildings and the
+  street furniture street_layout.layout lists); grass on rural and highway verges except under snow. Scanned plants
+  and furniture where their model slots are fetched, procedural trees otherwise; the trees stand in the same places
+  either way."""
   assets = assets or no_assets()
   rnd = random.Random(seed)
   c = r["centre"]
@@ -745,8 +833,9 @@ def build_scenery(r: dict, env: dict, assets: Assets | None = None, seed: int = 
       me.materials.append(conifer_mat)
       conifers.append(me)
     verge = kind in ("trees", "open") and not env.get("snow")
-    roles = {"urban": {"broadleaf"}, "open": {"broadleaf", "conifer"}, "trees": {"broadleaf", "conifer", "shrub"}}
-    plants = plant_models(assets, env, roles[kind] | ({"verge_short", "verge_meadow"} if verge else set()))
+    roles = {"urban": {"broadleaf", "bin", "bench", "hydrant", "utility_box"}, "open": {"broadleaf", "conifer"},
+             "trees": {"broadleaf", "conifer", "shrub"}}
+    plants = scanned_models(assets, env, roles[kind] | ({"verge_short", "verge_meadow"} if verge else set()))
     prnd = random.Random(seed + 1)               # the scanned plants' own draws: the trees keep their places
     root = empty("trees", coll)
     step = {"trees": 14.0, "urban": 18.0, "open": 38.0}[kind]
@@ -767,7 +856,9 @@ def build_scenery(r: dict, env: dict, assets: Assets | None = None, seed: int = 
             t.scale = (sc, sc, sc * stretch)
         else:
           me, turn = rnd.choice(crowns), rnd.uniform(0, 6.28)
-          if plants.get("broadleaf"):
+          if kind == "urban":
+            pass                                 # street trees come from street_layout; the draws keep the buildings
+          elif plants.get("broadleaf"):
             prnd.choice(plants["broadleaf"]).place(prnd, "tree", coll, root, (x, y, 0.0), sc)
           else:
             t = part("tree", trunk, root, coll, (x, y, 1.5 * sc))
@@ -800,18 +891,7 @@ def build_scenery(r: dict, env: dict, assets: Assets | None = None, seed: int = 
         part("roof", box_mesh(f"roof_{side}_{s:.0f}", wdt - 1.3, dep + 0.2, 0.3, hgt, roof), root, coll, (x, y, 0),
              (0, 0, p[2]))
         s += wdt + (12.0 if r.get("crosswalks") and any(abs(mid - cs) < 14 for cs in r["crosswalks"]) else 0.0)
-    pole = cyl_mesh("lamp_pole", 0.08, 7.0, mat=material("pole", (0.2, 0.2, 0.22), rough=0.5, metal=0.6))
-    lroot = empty("street_lights", coll)
-    for s in range(int(c[0][3]) + 10, int(c[-1][3]), 30):
-      p = c[min(int((s - c[0][3]) / (c[1][3] - c[0][3])), len(c) - 1)]
-      for d in (left_out - 0.6, right_out + 0.6):
-        x, y, _ = offset(p, d)
-        part("lamp", pole, lroot, coll, (x, y, 3.5))
-        if night:
-          lt = bpy.data.objects.new("street_light", bpy.data.lights.new("street_light", "POINT"))
-          lt.data.energy, lt.data.color, lt.data.shadow_soft_size = 1500, (1.0, 0.82, 0.6), 0.3
-          lt.location = offset(p, d - 1.0 if d > 0 else d + 1.0, 7.0)
-          coll.objects.link(lt)
+    street_furniture(furniture or [], r, env, coll, plants, trunk, crowns, random.Random(seed + 3))
   return coll
 
 

@@ -185,9 +185,14 @@ class TestFetchAssets(unittest.TestCase):
         self.assertTrue(len(size) == 2 and all(v > 0 for v in size), name)
         self.assertTrue({"color", "normal", "roughness"} <= set(slot["maps"]), name)
       if slot["kind"] == "model":
-        self.assertIn(slot["role"], ("broadleaf", "conifer", "shrub", "verge_short", "verge_meadow"), name)
-        rng = slot["scale"] if slot["role"].startswith("verge") else slot["height_m"]
-        self.assertTrue(len(rng) == 2 and 0 < rng[0] <= rng[1], name)
+        self.assertIn(slot["role"], ("broadleaf", "conifer", "shrub", "verge_short", "verge_meadow", "bin", "bench",
+                                     "hydrant", "utility_box"), name)
+        if slot["role"] in ("broadleaf", "conifer", "shrub", "verge_short", "verge_meadow"):   # plants are scaled
+          rng = slot["scale"] if slot["role"].startswith("verge") else slot["height_m"]
+          self.assertTrue(len(rng) == 2 and 0 < rng[0] <= rng[1], name)
+        else:                                                                                    # furniture is not
+          self.assertFalse({"scale", "height_m"} & set(slot), name)
+        self.assertTrue(all(g and all(isinstance(n, str) for n in g) for g in slot.get("groups", [])), name)
         self.assertTrue(all(c["source"] == "polyhaven" for c in slot["candidates"]), name)
     lock = F.LOCK
     if lock.exists():                                   # the committed lock names only known slots

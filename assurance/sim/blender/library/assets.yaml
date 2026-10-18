@@ -4,8 +4,8 @@
 # and SHA-256 sums to library/assets.lock.json, which is committed. hazard_scene.py uses a slot's files when they are
 # present and its procedural look when they are not, so CI and offline runs need none of them.
 #
-#   kind         hdri (an equirectangular sky), pbr (a tiling ground material) or model (a scanned plant, glTF; Poly
-#                Haven only)
+#   kind         hdri (an equirectangular sky), pbr (a tiling ground material) or model (a scanned plant or piece of
+#                street furniture, glTF; Poly Haven only)
 #   use          what it is for
 #   size_m       pbr: the real-world size one texture tile covers ([x, y] for a non-square image), as the source publishes it for the first
 #                candidate (Poly Haven "dimensions", ambientCG dimensionX); a fallback asset is drawn at the same size
@@ -14,11 +14,14 @@
 #                asphalt about 0.05, dry gravel shoulder about 0.15, linear)
 #   roughness_min  pbr, optional: floor on the roughness map, where a glossy scan would shine at grazing angles
 #   role         model: what it stands in for: broadleaf or conifer (the roadside trees), shrub (under the trees of a
-#                tree-lined road), verge_short or verge_meadow (grass clumps beside the road; short on the first metre)
+#                tree-lined road), verge_short or verge_meadow (grass clumps beside the road; short on the first metre);
+#                bin, bench, hydrant or utility_box (urban street furniture, placed by street_layout.py at scanned size)
 #   height_m     model, trees and shrubs: [low, high] height of an instance before the scenery's own scale (urban
 #                street trees are 0.55 of it); each mesh of the glTF is a variant, scaled to that height
 #   scale        model, grass: [low, high] scale of a clump, which keeps its scanned size at 1
 #   exclude      model, optional: meshes whose names contain any of these are left out
+#   groups       model, optional: each variant as a list of the glTF's mesh names (a bench is a seat, legs and
+#                arm rests); without it every mesh is a variant
 #   candidates   tried in order: source (polyhaven, ambientcg) and asset ID; the first one that resolves is used.
 #                Chosen offline, then checked against the sites' previews and dimensions on 2026-10-18
 #   search       when no candidate resolves: the source and what to search for (Poly Haven categories, ambientCG
@@ -208,3 +211,52 @@ slots:
       - {source: polyhaven, id: grass_medium_02}
       - {source: polyhaven, id: grass_medium_01}
     search: {source: polyhaven, categories: [grass]}
+
+  # ---------------------------------------------------------------------------------------------- street furniture
+  # Urban pavements (street_layout.py). Lamp columns and bus shelters are procedural: Poly Haven has only 3.9 m
+  # heritage lamp posts and no shelter.
+  bin:
+    kind: model
+    role: bin
+    use: Litter bins by the lamp columns
+    resolution: 1k
+    groups:                             # a clean and a rusted bin, each with its lid and handles
+      - [metal_trash_can, metal_trash_can_handle_left, metal_trash_can_handle_right, metal_trash_can_lid]
+      - [metal_trash_can_rust, metal_trash_can_rust_handle_left, metal_trash_can_rust_handle_right,
+         metal_trash_can_rust_lid]
+    candidates:
+      - {source: polyhaven, id: metal_trash_can}
+    search: {source: polyhaven, categories: [containers]}
+
+  bench:
+    kind: model
+    role: bench
+    use: Benches facing the carriageway
+    resolution: 1k
+    groups:                             # the bench with a back, out of the modular set
+      - [arm_rest_01, arm_rest_02, back_support_l, back_support_r, crossbar, legs_double, legs_single, seat,
+         seat_back, suspended_support_01]
+    candidates:
+      - {source: polyhaven, id: modular_street_seating}
+    search: {source: polyhaven, categories: [seating]}
+
+  hydrant:
+    kind: model
+    role: hydrant
+    use: Fire hydrants at the kerb
+    resolution: 1k
+    groups:                             # the painted one; fire_hydrant_aged is its weathered twin
+      - [fire_hydrant, fire_hydrant_cap_01, fire_hydrant_cap_02, fire_hydrant_cap_03, fire_hydrant_chain]
+    candidates:
+      - {source: polyhaven, id: fire_hydrant}
+    search: {source: polyhaven, categories: [industrial]}
+
+  utility_box:
+    kind: model
+    role: utility_box
+    use: Street cabinets against the buildings
+    resolution: 1k
+    candidates:
+      - {source: polyhaven, id: utility_box_01}
+      - {source: polyhaven, id: utility_box_02}
+    search: {source: polyhaven, categories: [structures]}

@@ -50,7 +50,7 @@ AMBIENTCG_MAPS = {"color": "_Color", "normal": "_NormalGL", "roughness": "_Rough
 
 
 # Slot fields copied into the lock, where hazard_scene.py reads them (Blender's Python has no YAML)
-TUNING = ("strength", "size_m", "tint", "roughness_min", "role", "height_m", "scale", "exclude")
+TUNING = ("strength", "size_m", "tint", "roughness_min", "role", "height_m", "scale", "exclude", "groups")
 
 
 class NotFound(Exception):
