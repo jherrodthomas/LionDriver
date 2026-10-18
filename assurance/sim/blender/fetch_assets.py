@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-"""Fetch the CC0 sky HDRIs and ground textures of the hazardous-event scenes (library/assets.yaml) from Poly Haven
-and ambientCG, and record what was fetched in library/assets.lock.json (committed).
+"""Fetch the CC0 sky HDRIs, ground textures and scanned plant models of the hazardous-event scenes
+(library/assets.yaml) from Poly Haven and ambientCG, and record what was fetched in library/assets.lock.json
+(committed).
 
 Each slot tries its candidate asset IDs in order and, when none resolves, searches the source's API and takes the
-most downloaded match. Files go under assurance/sim/assets/library/<slot>/ (git-ignored); the lock holds the asset
-ID, the source URL and the SHA-256 of every file. With --locked, exactly the locked files are fetched and each is
-checked against its SHA-256, so two machines render with the same pixels. Nothing in CI needs the files:
-hazard_scene.py falls back to its procedural look per slot.
+most downloaded match. Files go under assurance/sim/assets/library/<slot>/ (git-ignored; a model keeps the glTF's
+own layout, textures/ beside the .gltf and .bin); the lock holds the asset ID, the source URL and the SHA-256 of
+every file. With --locked, exactly the locked files are fetched and each is checked against its SHA-256, so two
+machines render with the same pixels. Nothing in CI needs the files: hazard_scene.py falls back to its procedural
+look per slot.
 
   python3 assurance/sim/blender/fetch_assets.py                 # resolve, fetch what is missing, write the lock
   python3 assurance/sim/blender/fetch_assets.py --locked        # fetch the locked files, check their SHA-256
@@ -48,7 +50,7 @@ AMBIENTCG_MAPS = {"color": "_Color", "normal": "_NormalGL", "roughness": "_Rough
 
 
 # Slot fields copied into the lock, where hazard_scene.py reads them (Blender's Python has no YAML)
-TUNING = ("strength", "size_m", "tint", "roughness_min")
+TUNING = ("strength", "size_m", "tint", "roughness_min", "role", "height_m", "scale", "exclude", "groups")
 
 
 class NotFound(Exception):
@@ -83,6 +85,15 @@ def polyhaven_files(slot: dict, asset_id: str, fetch_json=get_json) -> dict[str,
   except NotFound:
     raise NotFound(f"polyhaven {asset_id}") from None
   res = slot.get("resolution", "1k").lower()
+  if slot["kind"] == "model":                   # the .gltf, its .bin and textures, each at its relative path
+    entry = files.get("gltf", {}).get(res, {}).get("gltf")
+    if not entry:
+      raise NotFound(f"polyhaven {asset_id}: no {res} glTF")
+    name = Path(urllib.parse.urlparse(entry["url"]).path).name
+    out = {"gltf": {"url": entry["url"], "md5": entry.get("md5"), "name": name}}
+    for rel, inc in sorted(entry.get("include", {}).items()):
+      out[rel] = {"url": inc["url"], "md5": inc.get("md5"), "name": rel}
+    return out
   if slot["kind"] == "hdri":
     entry = files.get("hdri", {}).get(res, {}).get("hdr")
     if not entry:
@@ -103,7 +114,7 @@ def polyhaven_files(slot: dict, asset_id: str, fetch_json=get_json) -> dict[str,
 
 
 def polyhaven_search(slot: dict, search: dict, fetch_json=get_json) -> list[str]:
-  kind = "hdris" if slot["kind"] == "hdri" else "textures"
+  kind = {"hdri": "hdris", "model": "models"}.get(slot["kind"], "textures")
   q = {"t": kind}
   if search.get("categories"):
     q["c"] = ",".join(search["categories"])
@@ -114,6 +125,8 @@ def polyhaven_search(slot: dict, search: dict, fetch_json=get_json) -> list[str]
 # ------------------------------------------------------------------------------------------------- ambientCG
 def ambientcg_files(slot: dict, asset_id: str, fetch_json=get_json) -> dict[str, dict]:
   """{map: {url, member}} for an ambientCG asset: the download is one zip; member is the file inside it."""
+  if slot["kind"] == "model":
+    raise NotFound(f"ambientcg {asset_id}: models come from Poly Haven only")
   q = urllib.parse.urlencode({"id": asset_id, "include": "downloadData"})
   found = fetch_json(f"{AMBIENTCG_API}?{q}").get("foundAssets", [])
   if not found:
@@ -168,9 +181,17 @@ def _safe_name(name: str) -> str:
   return name
 
 
+def _safe_relpath(rel: str) -> str:
+  """A path inside the slot's directory (a model's textures/...): relative, no '..', no hidden parts."""
+  p = Path(rel)
+  if p.is_absolute() or not p.parts or any(x == ".." or x.startswith(".") for x in p.parts):
+    raise ValueError(f"unsafe file path {rel!r}")
+  return p.as_posix()
+
+
 def download(name: str, files: dict, dest: Path, fetch_bytes=get_bytes) -> dict[str, dict]:
   """Write each map of a slot under dest/<slot>/ and return {map: {path, sha256, url}}; a zip is fetched once and
-  only the members wanted are written."""
+  only the members wanted are written, and a file with a name (a model's) keeps that relative path."""
   out_dir = dest / name
   out_dir.mkdir(parents=True, exist_ok=True)
   zips: dict[str, zipfile.ZipFile] = {}
@@ -192,7 +213,8 @@ def download(name: str, files: dict, dest: Path, fetch_bytes=get_bytes) -> dict[
       data = fetch_bytes(url)
       if f.get("md5") and hashlib.md5(data).hexdigest() != f["md5"]:
         raise RuntimeError(f"{name}: {url} does not match the MD5 the source publishes")
-      fname = _safe_name(urllib.parse.urlparse(url).path)
+      fname = _safe_relpath(f["name"]) if f.get("name") else _safe_name(urllib.parse.urlparse(url).path)
+    (out_dir / fname).parent.mkdir(parents=True, exist_ok=True)
     (out_dir / fname).write_bytes(data)
     out[m] = {"path": f"{name}/{fname}", "sha256": sha256(data), "url": url}
   return out
@@ -234,8 +256,9 @@ def fetch(names: list[str], locked: bool, fetch_json=get_json, fetch_bytes=get_b
       if locked:
         if not entry:
           raise NotFound(f"{name}: not in {lock_path.name}")
-        got = download(name, {m: {"url": f["url"], "member": f.get("member")} for m, f in entry["files"].items()},
-                       dest, fetch_bytes)
+        got = download(name, {m: {"url": f["url"], "member": f.get("member"),
+                                  "name": None if f.get("member") else f["path"].split("/", 1)[1]}
+                              for m, f in entry["files"].items()}, dest, fetch_bytes)
         bad = [m for m in got if got[m]["sha256"] != entry["files"][m]["sha256"]]
         if bad:
           raise RuntimeError(f"{name}: SHA-256 of {', '.join(bad)} differs from the lock")

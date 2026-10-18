@@ -34,6 +34,7 @@ import bpy
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import scene_assets as A  # noqa: E402
+import street_layout  # noqa: E402
 
 SIM = HERE.parent
 DEFAULT_GLB = SIM / "assets" / "1450755-gltf-extended.glb"
@@ -506,7 +507,8 @@ def build(sc: dict, vehicle: Path | None, front: str | None) -> dict:
   assets = A.Assets()
   A.build_environment(env, sc["actors"][0]["poses"][0][2], assets)
   A.build_road(sc["road"], env, assets)
-  A.build_scenery(sc["road"], env)
+  furniture = street_layout.layout(sc) if sc["road"]["scenery"] == "urban" else None
+  A.build_scenery(sc["road"], env, assets, furniture=furniture)
   props = bpy.data.collections.new("props")
   scene.collection.children.link(props)
   build_props(sc, props, env)
