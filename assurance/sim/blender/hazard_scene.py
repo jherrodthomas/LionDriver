@@ -133,10 +133,10 @@ def centre_at(centre, s: float):
 
 
 # ------------------------------------------------------------------------------------------------- road users
-def headlights(root, coll, front: float = 2.25):
+def headlights(root, coll, front: float = 2.25, energy: float = 4000):
   for y in (0.62, -0.62):
     lt = bpy.data.objects.new("headlight", bpy.data.lights.new("headlight", "SPOT"))
-    lt.data.energy, lt.data.spot_size, lt.data.spot_blend = 4000, math.radians(60), 0.5
+    lt.data.energy, lt.data.spot_size, lt.data.spot_blend = energy, math.radians(60), 0.5
     lt.data.color = (1.0, 0.95, 0.85)
     lt.parent = root
     lt.location = (front, y, 0.7)
@@ -144,7 +144,15 @@ def headlights(root, coll, front: float = 2.25):
     coll.objects.link(lt)
 
 
-def make_actor(a: dict, model, coll, night: bool):
+def taillights(root, coll, rear: float, half: float = 0.62, z: float = 0.85):
+  red = A.material("tail_lamp", (1.0, 0.04, 0.02), rough=0.3, emit=12.0)
+  me = bpy.data.meshes.get("tail_lamp") or A.box_mesh("tail_lamp", 0.05, 0.28, 0.1, mat=red)
+  for y in (half, -half):
+    A.part("tail_lamp", me, root, coll, (rear, y, z))
+
+
+def make_actor(a: dict, model, coll, lights: bool, night: bool = False):
+  """A road user; lights: headlights and tail lamps (night, or poor visibility by day: dipped, dimmer)."""
   kind = a["kind"]
   name = a["name"].replace(" ", "_")
   limbs = None
@@ -152,12 +160,14 @@ def make_actor(a: dict, model, coll, night: bool):
     rgb = EGO_RGB if kind == "ego" else tuple(a.get("paint") or (PLANT_RGB if a["source"] == "plant" else OTHER_RGB))
     body = A.paint(rgb)
     ob = model.instance(name, coll, body=body) if model else A.standin_car(name, coll, body=body)
-    if night:
-      headlights(ob, coll)
+    if lights and a["poses"][0] != a["poses"][-1]:      # parked cars stay dark
+      headlights(ob, coll, energy=4000 if night else 1200)
+      taillights(ob, coll, -2.32)
   elif kind == "truck":
     ob = A.truck(name, coll)
-    if night:
-      headlights(ob, coll, 4.8)
+    if lights:
+      headlights(ob, coll, 4.8, 4000 if night else 1200)
+      taillights(ob, coll, -4.76, 1.05, 1.0)
   elif kind == "pedestrian":
     ob, limbs = A.pedestrian(name, coll)
   elif kind == "cyclist":
@@ -171,10 +181,61 @@ def make_actor(a: dict, model, coll, night: bool):
 
 
 # ------------------------------------------------------------------------------------------------- props
-def build_props(sc: dict, coll):
+def sign_text(text: str, coll, loc, heading: float, size: float, rgb):
+  """Text standing upright at loc, facing the ego's direction of travel, reading left to right."""
+  cu = bpy.data.curves.new("sign_text", "FONT")
+  cu.body = text
+  cu.align_x, cu.align_y = "CENTER", "CENTER"
+  cu.size = size
+  cu.extrude = 0.005
+  ob = bpy.data.objects.new("sign_text", cu)
+  ob.location = loc
+  ob.rotation_euler = (math.pi / 2, 0.0, heading - math.pi / 2)
+  cu.materials.append(A.material(f"sign_ink_{'%02x%02x%02x' % tuple(int(255 * v) for v in rgb)}", rgb, rough=0.6))
+  coll.objects.link(ob)
+  return ob
+
+
+SIGN_STYLES = {           # panel colour, ink colour, shape (MUTCD-like)
+  "speed": ((0.92, 0.92, 0.9), (0.02, 0.02, 0.02), "rect"),
+  "warning": ((0.95, 0.75, 0.05), (0.02, 0.02, 0.02), "diamond"),
+  "works": ((0.95, 0.42, 0.05), (0.02, 0.02, 0.02), "diamond"),
+  "guide": ((0.02, 0.35, 0.18), (0.95, 0.95, 0.95), "rect"),
+}
+
+
+def build_sign(p: dict, c, coll, k: int):
+  cc = centre_at(c, p["s"])
+  h = cc[2]
+  x, y, _ = A.offset(cc, p.get("d", -10.0))
+  panel_rgb, ink, shape = SIGN_STYLES[p.get("style", "warning")]
+  grey = A.material("pole", (0.2, 0.2, 0.22), rough=0.5, metal=0.6)
+  A.part("sign_post", A.cyl_mesh(f"signpost{k}", 0.04, 2.6, mat=grey), None, coll, (x, y, 1.3))
+  panel = A.material(f"sign_{p.get('style')}", panel_rgb, rough=0.35, emit=0.15)
+  size = 1.1 if shape == "diamond" else 1.0
+  A.part("sign_panel", A.box_mesh(f"signpanel{k}", 0.04, size, size * (1.0 if shape == "diamond" else 1.25), 0.0,
+                                  panel), None, coll, (x, y, 2.6 - (0 if shape == "rect" else size * 0.2)),
+         (math.pi / 4, 0, h) if shape == "diamond" else (0, 0, h))
+  zc = 2.6 + (size * 1.25 / 2 if shape == "rect" else size * 0.5)
+  front = (x - 0.04 * math.cos(h), y - 0.04 * math.sin(h), zc)
+  text = {"speed": f"SPEED\nLIMIT\n{p.get('text', '65')}", "works": "ROAD\nWORK"}.get(p.get("style"),
+                                                                                      p.get("text", "").upper())
+  if p.get("style") == "warning" and p.get("text") == "curve":   # a bent arrow instead of words
+    black = A.material("sign_ink_050505", ink, rough=0.6)
+    A.part("arrow_a", A.box_mesh(f"arrowa{k}", 0.02, 0.1, 0.45, 0.0, black), None, coll,
+           (front[0], front[1], zc - 0.3), (0, 0, h))
+    A.part("arrow_b", A.box_mesh(f"arrowb{k}", 0.02, 0.1, 0.4, 0.0, black), None, coll,
+           (front[0], front[1], zc + 0.1), (math.radians(-35), 0, h))
+  elif text:
+    sign_text(text, coll, front, h, 0.22 if "\n" in text else 0.3, ink)
+
+
+def build_props(sc: dict, coll, env: dict | None = None):
+  env = env or {}
   c = sc["road"]["centre"]
   r = sc["road"]
   left, right = r["outer"]
+  night = bool(env.get("night"))
   concrete = A.material("concrete", (0.5, 0.49, 0.47), rough=0.85)
   for k, p in enumerate(sc["props"]):
     kind = p["kind"]
@@ -194,7 +255,10 @@ def build_props(sc: dict, coll):
       x, y, h = cc[:3]
       w = p.get("width", 14.0)
       asphalt = bpy.data.materials.get("asphalt") or A.material("asphalt", (0.05, 0.05, 0.055), rough=0.85)
-      A.part("cross_road", A.box_mesh(f"cross{k}", w, 160.0, 0.16, -0.005, asphalt), None, coll, (x, y, 0), (0, 0, h))
+      cs, sn = math.cos(h), math.sin(h)                 # the cross road: a flat quad with road UVs, just above
+      corners = [(-w / 2, -80.0), (w / 2, -80.0), (w / 2, 80.0), (-w / 2, 80.0)]
+      A.mesh_object(f"cross_road{k}", [(x + a * cs - b * sn, y + a * sn + b * cs, 0.155) for a, b in corners],
+                    [(0, 1, 2, 3)], asphalt, coll, uvs=[(b, a) for a, b in corners])
       white = A.material("paint_white", (0.85, 0.85, 0.82), rough=0.5)
       for side in (-1, 1):                      # zebra crossings either side of the junction
         cz = centre_at(c, p["s"] + side * (w / 2 + 2.5))
@@ -244,6 +308,74 @@ def build_props(sc: dict, coll):
         if i:
           faces.append((2 * i - 2, 2 * i - 1, 2 * i + 1, 2 * i))
       A.mesh_object("seam", verts, faces, tar, coll)
+    elif kind == "posts":                       # white delineator posts with a reflector
+      white = A.material("delineator", (0.85, 0.85, 0.82), rough=0.6)
+      refl = A.material("reflector", (1.0, 0.75, 0.2), rough=0.2, emit=2.0 if night else 0.3)
+      post = A.box_mesh(f"delin{k}", 0.1, 0.12, 1.0, 0.0, white)
+      cap = A.box_mesh(f"delinr{k}", 0.11, 0.08, 0.12, 0.8, refl)
+      root = A.empty("delineators", coll)
+      s = c[0][3]
+      while s < c[-1][3]:
+        cc = centre_at(c, s)
+        x, y, _ = A.offset(cc, p["d"])
+        A.part("delineator", post, root, coll, (x, y, 0), (0, 0, cc[2]))
+        A.part("reflector", cap, root, coll, (x, y, 0), (0, 0, cc[2]))
+        s += p.get("every_m", 50)
+    elif kind == "lamps":                       # lighting columns with an arm over the road, lit at night
+      grey = A.material("pole", (0.2, 0.2, 0.22), rough=0.5, metal=0.6)
+      head = A.material("luminaire", (1.0, 0.85, 0.6), rough=0.3, emit=40.0 if night else 0.0)
+      column = A.cyl_mesh(f"col{k}", 0.11, 10.0, mat=grey, r2=0.07)
+      arm = A.box_mesh(f"arm{k}", 0.08, 2.4, 0.08, 0.0, grey)
+      lum = A.box_mesh(f"lum{k}", 0.6, 0.3, 0.12, -0.12, head)
+      inward = -1 if p["d"] > 0 else 1
+      root = A.empty("lighting_columns", coll)
+      s = c[0][3] + 5.0
+      while s < c[-1][3]:
+        cc = centre_at(c, s)
+        x, y, _ = A.offset(cc, p["d"])
+        A.part("column", column, root, coll, (x, y, 5.0))
+        ax, ay, _ = A.offset(cc, p["d"] + inward * 1.2)
+        A.part("arm", arm, root, coll, (ax, ay, 9.9), (0, 0, cc[2]))
+        lx, ly, _ = A.offset(cc, p["d"] + inward * 2.3)
+        A.part("luminaire", lum, root, coll, (lx, ly, 9.9), (0, 0, cc[2]))
+        if night:
+          lt = bpy.data.objects.new("road_light", bpy.data.lights.new("road_light", "SPOT"))
+          lt.data.energy, lt.data.color, lt.data.spot_size = 9000, (1.0, 0.8, 0.55), math.radians(120)
+          lt.data.shadow_soft_size = 0.3
+          lt.location = (lx, ly, 9.7)
+          coll.objects.link(lt)
+        s += p.get("every_m", 45)
+    elif kind == "sign":
+      build_sign(p, c, coll, k)
+    elif kind == "gantry":                      # an overhead guide sign on two posts across the carriageway
+      cc = centre_at(c, p["s"])
+      h = cc[2]
+      grey = A.material("gantry", (0.55, 0.56, 0.58), rough=0.4, metal=0.7)
+      lo, hi = (r["barrier"] if r.get("barrier") is not None else r["right_edge"]) - 0.8, r["left_edge"] + 1.2
+      for d in (lo, hi):
+        x, y, _ = A.offset(cc, d)
+        A.part("gantry_post", A.cyl_mesh(f"gpost{k}{d:.0f}", 0.2, 7.2, mat=grey), None, coll, (x, y, 3.6))
+      mx, my, _ = A.offset(cc, 0.5 * (lo + hi))
+      A.part("gantry_beam", A.box_mesh(f"gbeam{k}", 0.6, hi - lo, 0.6, 6.6, grey), None, coll, (mx, my, 0), (0, 0, h))
+      green, _, _ = SIGN_STYLES["guide"]
+      px, py, _ = A.offset(cc, -r["lane_width"])
+      A.part("gantry_panel", A.box_mesh(f"gpanel{k}", 0.08, 5.0, 2.2, 5.6, A.material("sign_guide", green, rough=0.35,
+                                                                                        emit=0.15)),
+             None, coll, (px - 0.4 * math.cos(h), py - 0.4 * math.sin(h), 0), (0, 0, h))
+      sign_text(p.get("text", "EXIT"), coll, (px - 0.46 * math.cos(h), py - 0.46 * math.sin(h), 6.7), h, 0.6,
+                (0.95, 0.95, 0.95))
+    elif kind == "barrels":                     # orange and white channelising drums
+      orange = A.material("drum_orange", (0.95, 0.3, 0.03), rough=0.5, emit=0.2)
+      white = A.material("drum_white", (0.9, 0.9, 0.88), rough=0.4, emit=0.6 if night else 0.1)
+      drum = A.cyl_mesh(f"drum{k}", 0.3, 0.95, mat=orange, segs=14)
+      band = A.cyl_mesh(f"band{k}", 0.305, 0.12, mat=white, segs=14)
+      s = p["from_s"]
+      while s <= p["to_s"]:
+        x, y, _ = A.offset(centre_at(c, s), p["d"])
+        A.part("drum", drum, None, coll, (x, y, 0.475))
+        for z in (0.35, 0.7):
+          A.part("drum_band", band, None, coll, (x, y, z))
+        s += p.get("every_m", 12)
     else:
       raise ValueError(kind)
 
@@ -371,18 +503,21 @@ def build(sc: dict, vehicle: Path | None, front: str | None) -> dict:
   scene.render.fps = sc["fps"]
   scene.frame_start, scene.frame_end = 1, frames
   env = dict(sc.get("env", {}), urban=sc["road"]["type"] == "urban")
-  A.build_environment(env, sc["actors"][0]["poses"][0][2])
-  A.build_road(sc["road"], env)
+  assets = A.Assets()
+  A.build_environment(env, sc["actors"][0]["poses"][0][2], assets)
+  A.build_road(sc["road"], env, assets)
   A.build_scenery(sc["road"], env)
   props = bpy.data.collections.new("props")
   scene.collection.children.link(props)
-  build_props(sc, props)
+  build_props(sc, props, env)
 
   model = A.CarModel(vehicle, front) if vehicle else None
   users = bpy.data.collections.new("road_users")
   scene.collection.children.link(users)
-  for a in sc["actors"]:
-    make_actor(a, model, users, env.get("night", False))
+  lights = bool(env.get("night")) or (env.get("visibility_m") or 1e9) < 1000
+  obs = [make_actor(a, model, users, lights, bool(env.get("night"))) for a in sc["actors"]]
+  A.build_weather(env, obs[0], sc["road"]["centre"], frames, sc["fps"])
+  A.setup_glare(env)
 
   ghosts = bpy.data.collections.new("event_ghosts")
   scene.collection.children.link(ghosts)
@@ -438,6 +573,9 @@ def render_frame(cam, frame: int, path: Path):
   ghosts = bpy.data.collections.get("event_ghosts")
   if ghosts:                                    # the ghosts and the path read from above; from the road they block the view
     ghosts.hide_render = cam.name != "cam_top"
+  weather = bpy.data.collections.get("weather")
+  if weather:                                   # weather reads from the road; from above it hides the layout
+    weather.hide_render = cam.name == "cam_top"
   s.frame_set(frame)
   s.render.filepath = str(path)
   bpy.ops.render.render(write_still=True)

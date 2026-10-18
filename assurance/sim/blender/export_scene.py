@@ -6,6 +6,14 @@ rate, the signals for the dashboard (speed, accelerations, lateral offset, gap a
 road user), the events, and the HARA or SOTIF entry the scene pictures. hazard_scene.py (Blender) builds and renders
 it; compose.py lays the renders out as a dashboard.
 
+A scene is an environment, a condition, traffic and a motion source, each from the library (library/*.yaml):
+  environment  the road, its furniture and props, and the operational situations it represents (environments.yaml)
+  conditions   the HARA weather and surface code (W01..W06) or a SOTIF lighting preset (TC-01) (conditions.yaml)
+  traffic      illustrative road users around the ego (traffic.yaml)
+A scene's own road fields override its environment's; its own props, env fields and actors are added. `variants`
+re-renders the scene under other conditions as scenes <id>--<code>, with the same motion and outcome (a condition
+changes the picture only) and the preset traffic moved slightly.
+
 Two motion sources, named on every dashboard:
   plant      the ego (and, in longitudinal cases, the lead and follower) from a layer-1 plant run: the real panda
              safety code in the loop, under the plant's stated assumptions. A scene can vary the catalog case (speed,
@@ -25,7 +33,9 @@ from __future__ import annotations
 import dataclasses
 import json
 import math
+import random
 import sys
+import zlib
 from pathlib import Path
 
 import yaml
@@ -40,6 +50,7 @@ import corolla  # noqa: E402
 import simulate  # noqa: E402
 
 OUT = HERE / "out"
+LIBRARY = HERE / "library"
 FPS = 24
 DT = 0.01                # s, kinematic integration step
 END_AFTER_CONTACT = 0.5  # s shown after the first contact
@@ -72,8 +83,74 @@ def value(x, extra: dict | None = None) -> float:
   return float(eval(str(x), {"__builtins__": {}, "math": math}, ASSUMPTIONS | (extra or {})))
 
 
-def load_scenes() -> list[dict]:
+def load_library() -> dict[str, dict]:
+  """environments, conditions and traffic presets of library/*.yaml."""
+  return {k: yaml.safe_load((LIBRARY / f"{k}.yaml").read_text())[k] for k in ("environments", "conditions", "traffic")}
+
+
+def load_raw_scenes() -> list[dict]:
   return yaml.safe_load((HERE / "scenes.yaml").read_text())["scenes"]
+
+
+def resolve(scene: dict, lib: dict) -> dict:
+  """The scene with its library parts filled in: the environment's road (the scene's road fields override), its props
+  and look adjustments, the condition's look (the scene's env fields override), the traffic preset's name."""
+  sid = scene["id"]
+  name = scene.get("environment")
+  if name not in lib["environments"]:
+    raise SystemExit(f"{sid}: environment {name!r} not in library/environments.yaml")
+  env = lib["environments"][name]
+  code = scene.get("conditions", "W01")
+  if code not in lib["conditions"]:
+    raise SystemExit(f"{sid}: conditions {code!r} not in library/conditions.yaml")
+  if code not in env["conditions"]:
+    raise SystemExit(f"{sid}: environment {name} does not allow conditions {code} (allowed: {env['conditions']})")
+  traffic = scene.get("traffic", env.get("traffic", "none"))
+  if traffic not in lib["traffic"]:
+    raise SystemExit(f"{sid}: traffic {traffic!r} not in library/traffic.yaml")
+  cond = lib["conditions"][code]
+  return {**scene, "road": {**env["road"], **scene.get("road", {})},
+          "props": list(env.get("props", [])) + list(scene.get("props", [])),
+          "env": {**cond["env"], **env.get("env", {}), **scene.get("env", {})}, "traffic": traffic,
+          "conditions": code, "condition": {"code": code, **{k: cond[k] for k in ("title", "exposure", "odd", "hara")}},
+          "environment_info": {"id": name, "title": " ".join(env["title"].split()), "os": env["os"],
+                               "odd": env["odd"]}}
+
+
+def expand(scene: dict) -> list[dict]:
+  """The scene and its variants: one per entry of `variants` (a condition code, or {conditions, traffic}) other than
+  the scene's own condition, as <id>--<code> with the base scene's motion."""
+  out = [scene]
+  for v in scene.get("variants", []):
+    v = {"conditions": v} if isinstance(v, str) else dict(v)
+    if v["conditions"] == scene.get("conditions", "W01") and "traffic" not in v:
+      continue
+    out.append({**{k: x for k, x in scene.items() if k != "variants"}, **v,
+                "id": f"{scene['id']}--{v['conditions'].lower()}", "variant_of": scene["id"]})
+  return out
+
+
+def load_scenes() -> list[dict]:
+  """Every scene of scenes.yaml and its variants, resolved through the library."""
+  lib = load_library()
+  return [resolve(v, lib) for s in load_raw_scenes() for v in expand(s)]
+
+
+def traffic_actors(scene: dict, lib: dict, v_ego: float) -> list[dict]:
+  """The scene's traffic preset as actors (illustrative, never critical); a variant moves each one by up to the
+  preset's jitter_m along the road, seeded by the variant's ID."""
+  preset = lib["traffic"][scene.get("traffic", "none")]
+  rnd = random.Random(zlib.crc32(scene["id"].encode())) if scene.get("variant_of") else None
+  out = []
+  for a in preset["actors"]:
+    q = {k: v for k, v in a.items() if k not in ("speed_rel_kph", "oncoming")}
+    q["ds_m"] = value(a.get("ds_m", 0.0), {"v_ego": v_ego}) + (rnd.uniform(-1.0, 1.0) * preset.get("jitter_m", 0)
+                                                               if rnd else 0.0)
+    if "speed_kph" not in a:
+      v = v_ego * 3.6 + value(a.get("speed_rel_kph", 0.0))
+      q["speed_kph"] = -v if a.get("oncoming") else v
+    out.append({**q, "source": "illustrative", "critical": False, "traffic": True})
+  return out
 
 
 def hazardous_events() -> dict[str, dict]:
@@ -285,6 +362,13 @@ def _gap(p, q, sp, sq) -> float:
 
 
 # ------------------------------------------------------------------------------------------------- scene
+def condition_text(scene: dict) -> str:
+  c = scene.get("condition")
+  if not c:
+    return "—"
+  return f"{c['code']}" + (f" {c['exposure']}" if c["exposure"] else "") + f", {c['odd']} ODD"
+
+
 def card(scene: dict, hes: dict) -> dict:
   if "he" in scene:
     he = hes.get(scene["he"])
@@ -294,15 +378,17 @@ def card(scene: dict, hes: dict) -> dict:
     return {"kind": "HARA", "id": he["id"], "badge": f"{he['id']}  ASIL {he['asil']}",
             "title": f"{hz['id']}: {hz['title']}", "situation": he["situation"], "effect": he["effect"],
             "rows": [["Severity", f"S{he['s']}"], ["Exposure", f"E{he['e']}"], ["Controllability", f"C{he['c']}"],
-                     ["ASIL", he["asil"]]],
-            "note": "Ratings are WP-C-03 proposals, not approved",
+                     ["ASIL", he["asil"]], ["Condition", condition_text(scene)]],
+            "note": "Ratings are WP-C-03 proposals, not approved" + (
+              f"; the HE is rated for its governing condition, this is {scene['condition']['code']}"
+              if scene.get("variant_of") else ""),
             "tc": scene.get("tc", []), "ks": scene.get("ks", [])}
   sh = scene["sotif"]
   return {"kind": "SOTIF", "id": sh["id"], "badge": f"{sh['id']}  SOTIF  S{sh['s']} C{sh['c']}",
           "title": sh["title"], "situation": sh["situation"], "effect": sh["effect"],
           "rows": [["Severity", f"S{sh['s']}"], ["Controllability", f"C{sh['c']}"],
                    ["Triggering condition", ", ".join(scene.get("tc", [])) or "—"],
-                   ["Known scenario", ", ".join(scene.get("ks", [])) or "—"]],
+                   ["Known scenario", ", ".join(scene.get("ks", [])) or "—"], ["Condition", condition_text(scene)]],
           "note": "WP-C-05 rates S and C only; triggering conditions WP-C-06, scenarios WP-V-03",
           "tc": scene.get("tc", []), "ks": scene.get("ks", [])}
 
@@ -318,7 +404,21 @@ def plant_case(scene: dict):
   return base, case
 
 
-def build(scene: dict, hes: dict[str, dict]) -> dict:
+_PLANT_RUNS: dict = {}
+
+
+def caption(scene: dict) -> str:
+  text = " ".join(scene["caption"].split())
+  if not scene.get("variant_of"):
+    return text
+  c = scene["condition"]
+  return (f"Variant of {scene['variant_of']} under {c['code']}, {c['title'][0].lower() + c['title'][1:]}"
+          + (f" ({c['exposure']})" if c["exposure"] else "") + f". HARA: {c['hara']}. Same motion as the base scene: "
+          "the condition changes the picture, not the dynamics. " + text)
+
+
+def build(scene: dict, hes: dict[str, dict], lib: dict | None = None) -> dict:
+  lib = lib or load_library()
   info = card(scene, hes)
   width = corolla.as_dict()["width"]
   SIZES["ego"] = SIZES["car"] = (SIZES["car"][0], width)
@@ -330,7 +430,10 @@ def build(scene: dict, hes: dict[str, dict]) -> dict:
 
   if motion == "plant":
     base, case = plant_case(scene)
-    res = simulate.simulate(case, scene.get("assumptions"))
+    key = (repr(case), json.dumps(scene.get("assumptions"), sort_keys=True))
+    if key not in _PLANT_RUNS:                    # variants share their base scene's plant run
+      _PLANT_RUNS[key] = simulate.simulate(case, scene.get("assumptions"))
+    res = _PLANT_RUNS[key]
     v0 = case.speed_kph / 3.6
     road = simulate.make_road(case.road, v0, case.lane_width)
     lw = road.lane_width
@@ -405,9 +508,9 @@ def build(scene: dict, hes: dict[str, dict]) -> dict:
   for e in scene.get("events", []):
     events.append({"t": value(e["t"]), "label": e["label"]})
 
-  # other road users from the scene (kinematic or illustrative), relative to the ego at t = 0
+  # other road users: the traffic preset, then the scene's own (kinematic or illustrative), relative to the ego at t = 0
   times = [rel[0] + i * DT for i in range(int(round((rel[-1] - rel[0]) / DT)) + 1)]
-  for a in scene.get("actors", []):
+  for a in traffic_actors(scene, lib, v0) + scene.get("actors", []):
     kind = a["kind"]
     d0 = value(a.get("d", value(a.get("lane", 0)) * lw))
     v = value(a.get("speed_kph", 0.0)) / 3.6
@@ -423,7 +526,7 @@ def build(scene: dict, hes: dict[str, dict]) -> dict:
     if a.get("yaw_deg") is not None:
       poses = [[x, y, h + math.radians(a["yaw_deg"])] for x, y, h in poses]
     actors.append({"name": a["name"], "kind": kind, "source": a.get("source", "kinematic"), "poses": poses,
-                   "paint": a.get("paint"), "critical": bool(a.get("critical"))})
+                   "paint": a.get("paint"), "critical": bool(a.get("critical")), "traffic": bool(a.get("traffic"))})
 
   # props in road coordinates (s relative to the ego at t = 0)
   props = []
@@ -431,6 +534,9 @@ def build(scene: dict, hes: dict[str, dict]) -> dict:
     q = dict(p)
     if "ds_m" in q:
       q["s"] = s_ego0 + value(q.pop("ds_m"))
+    for k in ("from", "to"):
+      if f"{k}_ds" in q:
+        q[f"{k}_s"] = s_ego0 + value(q.pop(f"{k}_ds"))
     if q["kind"] == "cones":
       q["points"] = [[s_ego0 + value(c[0]), value(c[1])] for c in q["points"]]
     props.append(q)
@@ -524,7 +630,7 @@ def build(scene: dict, hes: dict[str, dict]) -> dict:
   return {
     "schema_version": 2,
     "id": scene["id"],
-    "caption": " ".join(scene["caption"].split()),
+    "caption": caption(scene),
     "card": info,
     "case": case_info,
     "motion": motion,
@@ -545,6 +651,10 @@ def build(scene: dict, hes: dict[str, dict]) -> dict:
     "car": {"length": SIZES["car"][0], "width": width},
     "road": layout,
     "env": scene.get("env", {}),
+    "condition": scene.get("condition"),
+    "environment": scene.get("environment_info"),
+    "traffic": scene.get("traffic", "none"),
+    "variant_of": scene.get("variant_of"),
     "props": props,
     "actors": actors,
     "events": events,
@@ -553,6 +663,7 @@ def build(scene: dict, hes: dict[str, dict]) -> dict:
 
 def main(argv: list[str]) -> int:
   hes = hazardous_events()
+  lib = load_library()
   scenes = load_scenes()
   want = set(argv)
   unknown = want - {s["id"] for s in scenes}
@@ -562,7 +673,7 @@ def main(argv: list[str]) -> int:
   for sc in scenes:
     if want and sc["id"] not in want:
       continue
-    data = build(sc, hes)
+    data = build(sc, hes, lib)
     out = OUT / sc["id"]
     out.mkdir(parents=True, exist_ok=True)
     text = json.dumps(data, indent=1)
