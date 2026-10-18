@@ -30,6 +30,7 @@ SILHOUETTE = HERE.parent / "figures" / "corolla-e210-silhouette.json"
 ASSET_LOCK = HERE / "library" / "assets.lock.json"
 ASSET_DIR = HERE.parents[2] / "assurance" / "sim" / "assets" / "library"
 SNOW_RGB = (0.80, 0.82, 0.86)
+MOON_AZ = 2.2                                   # moonlight from behind and to the left of the road heading (rad)
 
 
 # ------------------------------------------------------------------------------------------------- assets
@@ -704,7 +705,8 @@ def build_environment(env: dict, heading: float, assets: Assets | None = None):
     tex.image = image
     mp = nodes.new("ShaderNodeMapping")
     # the mapping rotates the lookup direction: the HDRI's sun appears at its own azimuth minus this rotation
-    mp.inputs["Rotation"].default_value = (0.0, 0.0, h_az - az)
+    # (at night its brightest spot is a light on the horizon, not a sun: it goes with the moonlight, off to the side)
+    mp.inputs["Rotation"].default_value = (0.0, 0.0, h_az - (heading + MOON_AZ if night else az))
     links.new(nodes.new("ShaderNodeTexCoord").outputs["Generated"], mp.inputs["Vector"])
     links.new(mp.outputs[0], tex.inputs["Vector"])
     links.new(tex.outputs[0], bg.inputs["Color"])
@@ -715,7 +717,7 @@ def build_environment(env: dict, heading: float, assets: Assets | None = None):
       bg.inputs["Strength"].default_value = 1.5
     sun.data.energy = 0.25
     sun.data.color = (0.6, 0.7, 1.0)
-    sun.rotation_euler = _track((math.cos(heading + 2.2), math.sin(heading + 2.2), 0.6))
+    sun.rotation_euler = _track((math.cos(heading + MOON_AZ), math.sin(heading + MOON_AZ), 0.6))
   elif sky == "overcast":                       # soft light from a bright grey dome; a weak, diffuse sun
     if not slot:
       grad = nodes.new("ShaderNodeTexGradient")

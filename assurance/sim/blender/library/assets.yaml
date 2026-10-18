@@ -62,8 +62,8 @@ slots:
     strength: 0.4
     resolution: 2k
     candidates:
-      - {source: polyhaven, id: moonless_golf}
       - {source: polyhaven, id: dikhololo_night}
+      - {source: polyhaven, id: moonless_golf}   # floodlights on its horizon: the brightest spot is not a sky
       - {source: ambientcg, id: NightSkyHDRI008}
     search: {source: polyhaven, categories: [skies, night]}
 
