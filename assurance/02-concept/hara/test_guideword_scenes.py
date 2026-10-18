@@ -35,6 +35,17 @@ class TestGuidewordScenes(unittest.TestCase):
       self.assertIn(f">{label}</text>", svg)
     self.assertEqual(svg, gs.sheet("F-01")[1])
 
+  def test_scenes_loop_and_still_frame_is_the_end(self):
+    _, svg = gs.sheet("F-01")
+    self.assertEqual(svg.count('<clipPath id="rM'), 14)                   # one band reveal per card
+    self.assertEqual(svg.count('type="translate"'), 28)                  # red car and intended ghost per card
+    self.assertNotIn('repeatCount="1"', svg)
+    self.assertEqual(svg.count('repeatCount="indefinite"'), svg.count("<animate"))
+    c = gs.cards("F-01")[0]
+    car = c["scene"][-3] if c["scene"][-1].startswith("<g><animate") else c["scene"][-2]
+    x, y = gs._pts(gs.F01["M01"][3])[-1]
+    self.assertIn(f'translate({x:.1f} {y:.1f})', car)                     # static pose = end of the path
+
   def test_missing_model_rejected(self):
     model = dict(gs.F01)
     del model["M05"]
