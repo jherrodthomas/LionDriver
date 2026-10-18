@@ -19,6 +19,7 @@ package LionDriverLibrary {
         enum QMBsup;
         enum B;
         enum BDagger;
+        enum C;
         enum AoU;
         enum Untrusted;
     }

@@ -219,5 +219,84 @@ class TestFigures(unittest.TestCase):
       self.assertIn(f"({name})", readme)
 
 
+class TestStudyFigures(unittest.TestCase):
+  """Figures 3-14..3-16 draw the `previous`, timed safety-mechanism and `sotif` fields of the SW FMEA."""
+
+  @classmethod
+  def setUpClass(cls):
+    cls.doc = fd.load_analyses()["sw-fmea"]
+    cls.f = fd.Fmea("sw-fmea", cls.doc, "3-5", "3-6", "swf")
+
+  def test_baseline_delta_draws_each_rerated_cause_once(self):
+    svg = fd.render_baseline_delta(self.f, "3-14")
+    ids = [c["id"] for fm in self.doc["failure_modes"] for c in fm["causes"] if c.get("previous")]
+    self.assertTrue(ids)
+    for i in ids:
+      self.assertEqual(len(re.findall(rf">{re.escape(i)}(?: · S\d+→\d+)?</text>", svg)), 1, i)
+    out_h = sum(1 for fm in self.doc["failure_modes"] for c in fm["causes"]
+                if c.get("previous", {}).get("ap") == "H" and c["ap"] != "H")
+    self.assertIn(f"{out_h} left AP H", svg)
+
+  def test_reaction_layers_rows_and_untimed_warning(self):
+    svg = fd.render_reaction_layers(self.f, "3-15")
+    rows = [fm for fm in self.doc["failure_modes"] if any("reaction_s" in m for m in fm.get("safety_mechanisms", []))]
+    for fm in rows:
+      self.assertIn(f">{fm['id']}</text>", svg)
+    no_warn = [fm for fm in rows if not any(m.get("layer") in fd.WARN_LAYERS and "reaction_s" in m
+                                            for m in fm["safety_mechanisms"])]
+    self.assertEqual(svg.count(">none timed</text>"), len(no_warn))
+
+  def test_time_labels(self):
+    self.assertEqual(fd.fmt_s(0.05), "50 ms")
+    self.assertEqual(fd.fmt_s(5.0), "5 s")
+
+  def test_sotif_boundary_counts_every_cause_once(self):
+    svg = fd.render_sotif_boundary(self.f, "3-16")
+    tops = [x for x in self.doc["structure"] if not x.get("parent")]
+    for x in tops:
+      self.assertIn(f">{x['id'].replace('SWF-SE-', 'SE-')}</text>", svg)
+    drawn = sum(int(m) for m in re.findall(r"FM · (\d+) causes", svg))
+    self.assertEqual(drawn, sum(1 for fm in self.doc["failure_modes"] for c in fm["causes"] if c.get("ap")))
+    for x in tops:
+      if x.get("sotif", {}).get("ref"):
+        self.assertIn(fd.e(x["sotif"]["ref"]), svg)
+
+
+class TestDetectionEvidence(unittest.TestCase):
+  """Figure 3-13 classifies cited tests from the repository; check the rules on known files."""
+
+  @classmethod
+  def setUpClass(cls):
+    cls.idx = fd.TestIndex(workflows="run: openpilot/selfdrive/test/process_replay/test_processes.py",
+                           ignored=["openpilot/tools/sim"], native="", panda_suites={"reference_lock"})
+
+  def test_submodule_paths_by_rule(self):
+    c = self.idx.classify
+    self.assertEqual(c("opendbc_repo/opendbc/safety/tests/test_toyota.py")[0], "ci")
+    self.assertEqual(c("panda/tests/reference_lock/test_reference_lock.py")[0], "ci")
+    self.assertEqual(c("panda/tests/heartbeat_monitor/test_heartbeat_monitor.py")[0], "not_run")
+    self.assertEqual(c("panda/tests/hitl/test_6_safety.py")[0], "hardware")
+    self.assertEqual(c("msgq_repo/msgq/tests/test_fake.py")[0], "not_run")
+
+  def test_openpilot_files_read_from_the_repository(self):
+    c = self.idx.classify
+    self.assertEqual(c("openpilot/selfdrive/test/process_replay/test_processes.py")[0], "ci")   # named in a workflow
+    self.assertEqual(c("openpilot/selfdrive/selfdrived/tests/test_state_machine.py")[0], "ci")  # TestCase
+    self.assertEqual(c("openpilot/selfdrive/pandad/tests/test_pandad_spi.py")[0], "hardware")  # COMMA_HARDWARE_TEST
+    self.assertEqual(c("openpilot/selfdrive/no_such_test.py")[0], "missing")
+
+  def test_cause_class_uses_detection_rating(self):
+    ci = {"detection_controls": [{"test": "opendbc_repo/opendbc/safety/tests/test_toyota.py"}]}
+    self.assertEqual(fd.cause_evidence({**ci, "detection": 3}, self.idx), "proven")
+    self.assertEqual(fd.cause_evidence({**ci, "detection": 7}, self.idx), "targeted")
+    self.assertEqual(fd.cause_evidence({**ci, "detection": 9}, self.idx), "generic")
+    self.assertEqual(fd.cause_evidence({"detection_controls": [{"description": "x"}], "detection": 10}, self.idx), "none")
+
+  def test_suites_and_ignores_parsed_from_ci(self):
+    idx = fd.TestIndex.load()
+    self.assertIn("reference_lock", idx.panda_suites)
+    self.assertIn("openpilot/selfdrive/test/process_replay/test_processes.py", idx.ignored)
+
+
 if __name__ == "__main__":
   unittest.main()

@@ -8,6 +8,7 @@
 
 <p align="center">
   <a href="docs/liondriver/README.md">Documentation</a> &nbsp;·&nbsp;
+  <a href="https://github.com/jherrodthomas/LionDriver/wiki">Wiki</a> &nbsp;·&nbsp;
   <a href="#platform-architecture">Architecture</a> &nbsp;·&nbsp;
   <a href="#living-safety-case">Living Safety Case</a> &nbsp;·&nbsp;
   <a href="#300-vehicle-ecosystem">Vehicle Compatibility</a> &nbsp;·&nbsp;
@@ -87,7 +88,7 @@ LionDriver follows standards-informed development: its work products are structu
 | Automotive SPICE | [Capability baseline](assurance/01-management/WP-M-13-aspice-capability-baseline.md) |
 | Systems engineering and requirements management | [System requirements](assurance/03-system/WP-S-01-system-requirements.md) · [traceability procedure](assurance/07-supporting/WP-P-06-requirements-management-traceability.md) · [trace data](assurance/trace/README.md) |
 | Safety analysis | [ASIL decomposition](assurance/08-analyses/WP-A-01-asil-decomposition.md) · [freedom from interference](assurance/08-analyses/WP-A-02-coexistence-freedom-from-interference.md) · [dependent failures](assurance/08-analyses/WP-A-03-dependent-failure-analysis.md) · [FTA/FMEA](assurance/08-analyses/WP-A-04-system-fta-fmea.md) |
-| Simulation, SIL and HIL | [Embedded software testing](assurance/05-software/WP-W-08-embedded-software-testing.md) · [SOTIF verification and validation strategy](assurance/06-validation/WP-V-02-sotif-vv-strategy.md) |
+| Simulation, SIL and HIL | [Embedded software testing](assurance/05-software/WP-W-08-embedded-software-testing.md) · [SOTIF verification and validation strategy](assurance/06-validation/WP-V-02-sotif-vv-strategy.md) · [simulation track](assurance/sim/README.md) · [ASIL C hazardous events in the plant loop](assurance/sim/README.md#37-the-asil-c-hazardous-events-in-the-loop) |
 | Fault injection | [Fault injection specification](assurance/06-validation/WP-V-05-fault-injection.md) |
 | Independent review | [Confirmation measures plan](assurance/01-management/WP-M-06-confirmation-measures-plan.md) · [verification review procedure](assurance/07-supporting/WP-P-05-verification-review-procedure.md) |
 | IEC 61508 | Referenced for supplier safety documentation of the safety microcontroller ([component qualification](assurance/04-hardware/WP-H-07-hardware-component-qualification.md)) |
@@ -145,6 +146,7 @@ Contributions are welcome in software, functional safety, SOTIF, cybersecurity, 
 | [Contributing to LionDriver](docs/liondriver/contributing.md) | Rules for safety-relevant changes and assurance records |
 | [Issues](https://github.com/jherrodthomas/LionDriver/issues) · [Pull requests](https://github.com/jherrodthomas/LionDriver/pulls) | Questions, bugs, reviews of the analyses; pull requests target `liondriver-dev` |
 | [Documentation](docs/liondriver/README.md) | Architecture, compatibility, assurance and the inherited openpilot docs |
+| [Wiki](https://github.com/jherrodthomas/LionDriver/wiki) | Orientation: roadmap, glossary, how decisions are made, reading the safety case. Kept in [`wiki/`](wiki/README.md) and mirrored on merge |
 | [Upstream openpilot](https://github.com/commaai/openpilot) | The driving platform LionDriver is derived from |
 
 ## Maintainer and Upstream Attribution

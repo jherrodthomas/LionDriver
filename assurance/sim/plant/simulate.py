@@ -51,8 +51,15 @@ ASSUMPTIONS = {
 }
 
 
+_OVERRIDES: dict[str, float] = {}   # per-run assumption values (the search varies e.g. the driver reaction time)
+
+
 def A(key: str) -> float:
-  return ASSUMPTIONS[key][0]
+  return _OVERRIDES.get(key, ASSUMPTIONS[key][0])
+
+
+ODD_KPH = 110.0        # ODD-H speed bound (decision register DQ-260)
+OVERSPEED_KPH = 120.0  # margin cases outside the ODD (rows ending -OS)
 
 
 @dataclass
@@ -65,7 +72,8 @@ class Case:
   fmea: str
   wpv05: str = ""
   eps: str = "release"        # 'release' or 'hold' (ASSUMPTIONS)
-  speed_kph: float = 120.0
+  speed_kph: float = ODD_KPH
+  lane_width: float = 3.7     # m; generic roads only (a KS road has its own)
   t_fault: float | None = 6.0  # s; None: when the vehicle reaches the curve
   duration: float = 6.0       # s after the fault
   engaged: bool = True
@@ -106,15 +114,20 @@ def scenario_param(ks: str, name: str) -> float:
   return float(re.search(rf'<ParameterDeclaration name="{name}" parameterType="double" value="([^"]*)"', text).group(1))
 
 
-def make_road(kind: str, v: float) -> Road:
+def make_road(kind: str, v: float, lane_width: float = 3.7) -> Road:
   # a scenario road (OpenDRIVE of ../scenarios/xodr), ego lane -2;
   # curve inside the ODD: required lateral acceleration 1.5 m/s2; at the ODD bound: 2.5 m/s2 (R_ODD = v^2 / 2.5)
   if kind.startswith("KS-"):
     return from_xodr(SCENARIOS / "xodr" / f"{kind}.xodr")
   if kind == "straight":
-    return Road("straight highway", 3.7, straight=3000.0, length=1200.0)
-  a_y = {"curve": 1.5, "curve-odd-bound": 2.5}[kind]
-  return Road(f"left curve, R = v²/{a_y:g} m/s²", 3.7, straight=60.0, radius=v * v / a_y, length=1200.0)
+    return Road("straight highway", lane_width, straight=3000.0, length=1200.0)
+  # "curve@<a_y>": a left curve whose steady lateral acceleration at speed v is a_y; "rcurve@<a_y>": the same to the
+  # right (scenes of ../blender only; no catalog case uses it)
+  if kind.startswith("rcurve@"):
+    a_y = float(kind.split("@")[1])
+    return Road(f"right curve, R = v²/{a_y:g} m/s²", lane_width, straight=60.0, radius=-v * v / a_y, length=1200.0)
+  a_y = float(kind.split("@")[1]) if kind.startswith("curve@") else {"curve": 1.5, "curve-odd-bound": 2.5}[kind]
+  return Road(f"left curve, R = v²/{a_y:g} m/s²", lane_width, straight=60.0, radius=v * v / a_y, length=1200.0)
 
 
 class SoC:
@@ -159,11 +172,24 @@ class LIMITS:   # opendbc toyota CarControllerParams with torque lateral tuning 
   STEER_ERROR_MAX = 350
 
 
-def simulate(case: Case) -> Result:
+def simulate(case: Case, overrides: dict[str, float] | None = None) -> Result:
+  """Run one case. overrides: assumption values for this run only (keys of ASSUMPTIONS)."""
+  unknown = set(overrides or {}) - set(ASSUMPTIONS)
+  if unknown:
+    raise KeyError(f"not an assumption: {sorted(unknown)}")
+  _OVERRIDES.clear()
+  _OVERRIDES.update(overrides or {})
+  try:
+    return _simulate(case)
+  finally:
+    _OVERRIDES.clear()
+
+
+def _simulate(case: Case) -> Result:
   d = corolla.as_dict()
   p = corolla.commonroad_parameters()
   v0 = case.speed_kph / 3.6
-  road = make_road(case.road, v0)
+  road = make_road(case.road, v0, case.lane_width)
   panda = Panda(reference=True)
   soc = SoC(d, panda.packer)
   plant = CorollaPlant(v0, A("eps_hold_s") if case.eps == "hold" else A("eps_release_s"), A("pcm_timeout_s"), d, p)
@@ -223,6 +249,8 @@ def simulate(case: Case) -> Result:
         soc.override_torque = -3000
       elif f == "hardover":
         soc.hardover = -1.0
+      elif f == "hardover_left":             # mirror of hardover (scenes of ../blender only; no catalog case uses it)
+        soc.hardover = 1.0
       elif f == "not_engaged":
         soc.override_torque = -STEER_MAX
       elif f in ("frozen", "heartbeat_frozen"):

@@ -7,6 +7,11 @@
 #   - a cited fault-tree event lies in the tree of a safety goal of the scenario's hazards (warning otherwise)
 #   - status covered / known_gap needs at least one event or failure mode; status new needs a finding
 # Status: draft, AI-assisted, 2026-10-13; v0.4 re-baseline and harness box (RR-2026-010) 2026-10-16; each link needs review.
+#
+# v0.5: optional keys, not checked by fmea_lint (checked against the FMEA files and the decision register when written):
+#   actions       FMEA actions (SFM-/SWF-/DFM-/PFM-ACT-) that address the scenario
+#   decisions     decision-register entries (DQ-) that decide or wait on it
+#   open_because  for a known gap: why it stays open (WP-A-05 §5.6)
 schema_version: 1
 source: assurance/08-analyses/WP-A-05-stpa.md
 fta_source: assurance/08-analyses/WP-A-04-system-fta-fmea.md
@@ -21,7 +26,7 @@ hazards:   # STPA system-level hazard -> safety goals whose fault trees cover it
   H-06: [SG-06]
   H-07: [SG-02, SG-05, SG-06]
   H-08: [SG-07]
-  H-STPA-1: []
+  H-STPA-1: [SG-08]   # H-09 / SG-08 (WP-C-03 v0.4); SG-08 tree in WP-A-04 §13
 
 external_ucas:
   - {uca: UCA-40, assumption: AOU-01, note: EPS limits LKA torque to an overpowerable level and shows LKA loss}
@@ -34,6 +39,9 @@ scenarios:
     fta: [BE-5.05, BE-5.06]
     fmea: [SFM-018, SWF-038, SWF-044]
     requirements: [TSR-304]
+    actions: [SWF-ACT-046, SFM-ACT-016, SWF-ACT-039]
+    decisions: [DQ-053, DQ-081]
+    open_because: "Back-off and cue decided, not implemented; thresholds wait on DQ-081 and AOU-02R"
   - id: LS-02
     ucas: [UCA-04]
     hazards: [H-05, H-07]
@@ -42,11 +50,16 @@ scenarios:
     fmea: [SFM-018, SFM-028]
     finding: >-
       Steering corrections below the 100-raw override threshold are never detected, and above it the only cue is a grey border shared with other states. No FMEA cause or requirement covers the sub-threshold case or a lateral-override indication (CC-1, CC-2; OI-2).
+    actions: [SWF-ACT-046, SFM-ACT-016]
+    decisions: [DQ-053, DQ-081]
   - id: LS-03
     ucas: [UCA-06]
     hazards: [H-06, H-07, H-STPA-1]
     status: known_gap
     fmea: [PFM-011, PFM-015]
+    actions: [PFM-ACT-010, PFM-ACT-008]
+    decisions: [DQ-001]
+    open_because: "User information (WP-O-03) not written"
   - id: LS-04
     ucas: [UCA-35]
     hazards: [H-02, H-06, H-07]
@@ -54,6 +67,9 @@ scenarios:
     fta: [BE-2.14]
     fmea: [DFM-017, SFM-015, SWF-019, SWF-029, SWF-034]
     requirements: [TSR-516, TSR-621]
+    actions: [SWF-ACT-011, DFM-ACT-003, SFM-ACT-018]
+    decisions: [DQ-054]
+    open_because: "Engaged flag across reset decided, not implemented; TSR-516 not amended; bench confirmation open"
   - id: LS-05
     ucas: [UCA-32, UCA-13]
     hazards: [H-01, H-02]
@@ -61,6 +77,7 @@ scenarios:
     fta: [BE-1.19, BE-1.21, BE-1.22, BE-2.17]
     fmea: [SFM-006, SWF-020, SWF-023, SWF-040, SWF-043, SWF-047]
     requirements: [TSR-407, TSR-408, TSR-602]
+    actions: [SFM-ACT-015]
   - id: LS-06
     ucas: [UCA-19]
     hazards: [H-01, H-03, H-04, H-07]
@@ -68,6 +85,7 @@ scenarios:
     fta: [BE-3.13, BE-4.13, BE-5.10]
     fmea: [SFM-021, SWF-039, SWF-048]
     requirements: [TSR-301, TSR-308]
+    actions: [SFM-ACT-013]
   - id: LS-07
     ucas: [UCA-33]
     hazards: [H-08]
@@ -85,13 +103,20 @@ scenarios:
     ucas: [UCA-18, UCA-05]
     hazards: [H-STPA-1]
     status: known_gap
+    fta: [BE-8.01, BE-8.03, BE-8.05, BE-8.07]
     fmea: [SFM-022, SFM-023]
+    requirements: [TSR-634]
+    actions: [SFM-ACT-005, SFM-ACT-009, SFM-ACT-017]
+    decisions: [DQ-205, DQ-077]
+    open_because: "Speed-dependent wheel-touch escalation decided (DQ-077 A) and required by TSR-634; implemented (SWSR-634, unit tests only), not yet validated in the vehicle (WP-V-02 §4.4); the speed table is in WP-C-08 §5.4"
   - id: LS-10
     ucas: [UCA-11]
     hazards: [H-01]
     status: known_gap
     fta: [BE-1.03]
     fmea: [SFM-003]
+    actions: [SFM-ACT-009, SFM-ACT-014]
+    open_because: "SOTIF residual: model error inside the envelope, controlled by the driver and argued by validation"
   - id: LS-11
     ucas: [UCA-30]
     hazards: [H-01, H-03, H-04]
@@ -99,6 +124,9 @@ scenarios:
     fta: [BE-1.01, BE-3.01, BE-4.01]
     fmea: [SFM-029, SWF-001, SWF-003]
     requirements: [TSR-202, TSR-605]
+    actions: [SFM-ACT-001, SWF-ACT-003, SFM-ACT-012]
+    decisions: [DQ-081, DQ-039]
+    open_because: "Envelope needs vehicle measurements that do not exist yet"
   - id: LS-12
     ucas: [UCA-20, UCA-58]
     hazards: [H-01, H-03, H-05]
@@ -112,6 +140,8 @@ scenarios:
     status: known_gap
     fta: [BE-1.03]
     fmea: [SFM-013]
+    decisions: [DQ-023, DQ-280]
+    open_because: "No ODD entry gate; refuse or warn off-highway is the lead's call (DQ-280)"
   - id: LS-14
     ucas: [UCA-02]
     hazards: [H-01, H-03, H-05]
@@ -119,6 +149,9 @@ scenarios:
     fta: [BE-5.05, BE-5.10]
     fmea: [SFM-018, SFM-028, SWF-038]
     requirements: [TSR-304]
+    actions: [SWF-ACT-046, SFM-ACT-016, PFM-ACT-010]
+    decisions: [DQ-053]
+    open_because: "As LS-01"
   - id: LS-15
     ucas: [UCA-03, UCA-12]
     hazards: [H-02, H-06]
@@ -128,6 +161,8 @@ scenarios:
     requirements: [TSR-110, TSR-516]
     finding: >-
       An EPS temporary fault that starts while the driver touches the wheel suppresses the take-over alert entirely (no_steer_warning, car_events.py:163-168). SFM-005 and SWF-032 have no cause for an alert that the event logic suppresses by design; the EPS-fault siren (1 s persistence) is then the only cue.
+    actions: [SFM-ACT-018]
+    decisions: [DQ-048]
   - id: LS-16
     ucas: [UCA-12]
     hazards: [H-02]
@@ -135,6 +170,9 @@ scenarios:
     fta: [BE-2.04, BE-2.11]
     fmea: [SFM-004, SFM-005, SWF-045]
     requirements: [TSR-604]
+    actions: [SWF-ACT-041, SFM-ACT-017, SFM-ACT-018]
+    decisions: [DQ-059]
+    open_because: "Saturation warning suppressed 2 s after a steering press, no FTTI row; TSR-604 partly implemented"
   - id: LS-17
     ucas: [UCA-14, UCA-52]
     hazards: [H-03]
@@ -142,6 +180,8 @@ scenarios:
     fta: [BE-3.02, BE-3.06, BE-3.07]
     fmea: [SFM-008, SFM-010, SWF-046]
     requirements: [TSR-201]
+    actions: [SFM-ACT-009]
+    open_because: "SOTIF residual: the envelope has no lead information"
   - id: LS-18
     ucas: [UCA-15, UCA-51]
     hazards: [H-06]
@@ -150,20 +190,26 @@ scenarios:
     fmea: [SFM-010, SFM-012]
     finding: >-
       Leads, planner braking and the FCW all come from one model on the Corolla (no radar parsed), so one late detection removes braking and the warning together. The SG-06 fault tree models a lost plan (BE-6.01), not a late one; WP-C-06 must carry the late-detection case and DFI-26 its common cause.
+    actions: [SFM-ACT-017]
   - id: LS-19
     ucas: [UCA-16]
     hazards: [H-04]
     status: known_gap
     fta: [BE-4.05, BE-4.06, BE-4.07, BE-4.17]
     fmea: [SFM-009, SWF-046]
-    requirements: [TSR-205, TSR-605]
+    requirements: [TSR-205, TSR-605, TSR-624]
+    actions: [SWF-ACT-005, SWF-ACT-045, SWF-ACT-050]
+    decisions: [DQ-081]
+    open_because: "Not implemented; jerk values wait on DQ-081"
   - id: LS-20
     ucas: [UCA-17]
     hazards: [H-02, H-06, H-07]
     status: known_gap
     fta: [BE-2.12, BE-2.13, BE-2.14, BE-2.15]
     fmea: [SFM-026, SFM-027, SWF-035]
-    requirements: [TSR-516, TSR-615, TSR-622, TSR-623]
+    requirements: [TSR-516, TSR-615, TSR-622, TSR-623, TSR-627]
+    actions: [SFM-ACT-007, SWF-ACT-035, SWF-ACT-036, SWF-ACT-037]
+    open_because: "HMI liveness supervision and the SOFT_DISABLE review not implemented"
   - id: LS-21
     ucas: [UCA-31]
     hazards: [H-01, H-03, H-05]
@@ -171,6 +217,8 @@ scenarios:
     fta: [BE-1.16, BE-1.17, BE-5.01, BE-5.03]
     fmea: [SFM-017, SWF-005, SWF-008, SWF-009]
     requirements: [TSR-401, TSR-405]
+    actions: [SWF-ACT-006, SFM-ACT-012]
+    open_because: "GAP-01: 0x226 has no checksum or counter; diverse PCM path needs a vehicle test"
   - id: LS-22
     ucas: [UCA-34]
     hazards: [H-01, H-04]
@@ -178,6 +226,9 @@ scenarios:
     fta: [BE-4.19, BE-4.20, BE-4.21]
     fmea: [DFM-011, SFM-034, SWF-010, SWF-012]
     requirements: [TSR-506]
+    actions: [DFM-ACT-007]
+    decisions: [DQ-064, DQ-209]
+    open_because: "Readback needs the hardware change DQ-209 decides"
   - id: LS-23
     ucas: [UCA-53]
     hazards: [H-01, H-03, H-04, H-06]
@@ -185,6 +236,7 @@ scenarios:
     fta: [BE-1.19, BE-4.18, BE-6.05]
     fmea: [SFM-006, SWF-043]
     requirements: [TSR-602]
+    actions: [SFM-ACT-015]
   - id: LS-24
     ucas: [UCA-54]
     hazards: [H-02, H-06, H-07]
@@ -199,22 +251,28 @@ scenarios:
     fta: [BE-2.03]
     fmea: [SFM-005, SWF-043]
     requirements: [TSR-603]
+    actions: [SWF-ACT-031]
+    decisions: [DQ-021]
+    open_because: "Exclusion decided; the engagement guard is not implemented"
   - id: LS-26
     ucas: [UCA-56]
     hazards: [H-01, H-02]
-    status: new
+    status: known_gap
     fta: [BE-1.02, BE-2.03]
-    fmea: [SFM-004, SWF-042]
-    finding: >-
-      Learned vehicle parameters (paramsd, torqued) are bounded only to 0.5-2x the platform value. No FMEA cause, TSR or fault-tree event covers a learned parameter that is wrong for the vehicle (CC-10).
+    fmea: [SFM-002, SFM-004, SWF-042]
+    requirements: [TSR-605]
+    actions: [SWF-ACT-045, SWF-ACT-040]
+    decisions: [DQ-072]
+    open_because: "CC-10 has no requirement; bounds need vehicle data"
   - id: LS-27
     ucas: [UCA-50, UCA-57]
     hazards: [H-01, H-03, H-04]
-    status: new
+    status: known_gap
     fta: [BE-1.03]
     fmea: [PFM-009, SFM-003]
-    finding: >-
-      Calibration that becomes wrong in operation (mount shift below the recalibration threshold, partly blinded camera) has no FMEA row; PFM-009 covers only the installation tolerance (CC-11).
+    actions: [SFM-ACT-003, SFM-ACT-014, PFM-ACT-007]
+    decisions: [DQ-175]
+    open_because: "CC-11 has no requirement"
   - id: LS-28
     ucas: [UCA-59]
     hazards: [H-01, H-02, H-03, H-06, H-08]
@@ -234,25 +292,55 @@ scenarios:
     hazards: [H-01, H-02, H-03, H-04, H-05, H-06, H-07, H-08]
     status: known_gap
     fmea: [PFM-005, PFM-016]
+    actions: [PFM-ACT-004, PFM-ACT-011]
+    decisions: [DQ-075]
+    open_because: "Signed releases and installer not built"
   - id: LS-31
     ucas: [UCA-62]
     hazards: [H-03, H-04, H-06, H-STPA-1]
-    status: known_gap
+    status: covered
     fmea: [PFM-011, PFM-015]
+    actions: [PFM-ACT-008]
+    decisions: [DQ-001]
   - id: LS-32
     ucas: [UCA-36]
     hazards: [H-08]
     status: known_gap
     fta: [BE-7.12]
     fmea: [DFM-020, DFM-021, SFM-033]
+    actions: [DFM-ACT-014, DFM-ACT-007]
+    decisions: [DQ-209]
+    open_because: "Waits on DQ-209 and the bench results"
   - id: LS-33
     ucas: [UCA-33]
     hazards: [H-08]
     status: known_gap
     fta: [BE-7.09, BE-7.10]
     fmea: [DFM-010, SWF-018]
+    actions: [DFM-ACT-014, DFM-ACT-007]
+    decisions: [DQ-064, DQ-209]
+    open_because: "Latent fault with no monitor until readback exists"
   - id: LS-34
     ucas: [UCA-63]
     hazards: [H-08]
     status: covered
     fmea: [SFM-033, PFM-011]
+  - id: LS-35
+    ucas: [UCA-21]
+    hazards: [H-STPA-1]
+    status: known_gap
+    fta: [BE-8.08, UE-8.09, UE-8.11]
+    fmea: [SFM-025]
+    requirements: [TSR-624, TSR-633]
+    actions: [SFM-ACT-005]
+    decisions: [DQ-205, DQ-365]
+    open_because: "Reaction decided (DQ-365, TSR-633): stop in the lane, stay stopped and held, re-engagement locked out until the driver responds; today the car stops 5 s after the last alert with no announcement or lockout, and the hold rests on the untested AOU-16 (UE-8.11); the forced stop is a single point in the SG-08 tree (MCS-08.7)"
+  - id: LS-36
+    ucas: [UCA-07]
+    hazards: [H-07, H-03, H-04]
+    status: known_gap
+    fmea: [SFM-028, SFM-020]
+    requirements: [TSR-305]
+    actions: [PFM-ACT-010]
+    decisions: [DQ-022]
+    open_because: "On-screen override alert and HMI clinic do not exist"

@@ -1,5 +1,5 @@
 {
-  "opendbc": "9a13f60",
+  "opendbc": "27f20db",
   "units": {
     "U-SAF-LAT": {
       "branches_uncovered": 105,
@@ -14,16 +14,16 @@
       "mcdc_total": 14
     },
     "U-SAF-TOY": {
-      "branches_uncovered": 2,
+      "branches_uncovered": 1,
       "branches_total": 202,
       "mcdc_uncovered": 0,
       "mcdc_total": 36
     },
     "U-SAF-CORE": {
-      "branches_uncovered": 53,
-      "branches_total": 248,
+      "branches_uncovered": 52,
+      "branches_total": 270,
       "mcdc_uncovered": 17,
-      "mcdc_total": 56
+      "mcdc_total": 58
     }
   }
 }

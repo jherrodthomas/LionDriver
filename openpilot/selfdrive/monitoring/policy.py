@@ -34,6 +34,11 @@ class DRIVER_MONITOR_SETTINGS:
     self._VISION_POLICY_ALERT_1_TIMEOUT = 5.
     self._VISION_POLICY_ALERT_2_TIMEOUT = 8.
     self._VISION_POLICY_ALERT_3_TIMEOUT = 13.
+    # LionDriver TSR-634 (WP-C-08 §5.4): in the wheel-touch policy, alert k also fires once the distance driven since
+    # the last driver interaction reaches D_k, whichever comes first. D_k = vision-policy time k at 110 km/h
+    self._WHEELTOUCH_POLICY_ALERT_1_DISTANCE = 150.  # m
+    self._WHEELTOUCH_POLICY_ALERT_2_DISTANCE = 240.  # m
+    self._WHEELTOUCH_POLICY_ALERT_3_DISTANCE = 395.  # m
 
     # no response = alert_3 sustained for certain amount of time
     self._NO_RESPONSE_TIMEOUT = 5.
@@ -168,6 +173,15 @@ class DriverMonitoring:
     self.threshold_alert_2 = 0.
     self.dcam_uncertain_cnt = 0
     self.dcam_reset_cnt = 0
+    self.wheeltouch_distance = 0.
+    self.wheeltouch_time_awareness = 1.
+
+    # wheel-touch awareness at each distance bound: 1 at the last interaction, the alert k threshold at D_k
+    s = self.settings
+    self._wheeltouch_distance_bp = [0., s._WHEELTOUCH_POLICY_ALERT_1_DISTANCE, s._WHEELTOUCH_POLICY_ALERT_2_DISTANCE,
+                                    s._WHEELTOUCH_POLICY_ALERT_3_DISTANCE]
+    self._wheeltouch_distance_awareness_bp = [1., 1. - s._WHEELTOUCH_POLICY_ALERT_1_TIMEOUT / s._WHEELTOUCH_POLICY_ALERT_3_TIMEOUT,
+                                              1. - s._WHEELTOUCH_POLICY_ALERT_2_TIMEOUT / s._WHEELTOUCH_POLICY_ALERT_3_TIMEOUT, 0.]
 
     self._reset_awareness()
     self._set_policy(MonitoringPolicy.vision)
@@ -176,6 +190,18 @@ class DriverMonitoring:
     self.awareness = 1.
     self.last_vision_awareness = 1.
     self.last_wheeltouch_awareness = 1.
+    self.wheeltouch_distance = 0.
+    self.wheeltouch_time_awareness = 1.
+
+  def _distance_awareness(self, distance):
+    # lowest wheel-touch awareness the distance bound allows after driving this far
+    return float(np.interp(distance, self._wheeltouch_distance_bp, self._wheeltouch_distance_awareness_bp))
+
+  def _restore_wheeltouch_bounds(self, wheeltouch_awareness):
+    # wheel-touch awareness is the lower of a time track and a distance track; when it recovers, both recover with it
+    self.wheeltouch_time_awareness = max(self.wheeltouch_time_awareness, wheeltouch_awareness)
+    self.wheeltouch_distance = min(self.wheeltouch_distance, float(np.interp(wheeltouch_awareness, self._wheeltouch_distance_awareness_bp[::-1],
+                                                                             self._wheeltouch_distance_bp[::-1])))
 
   def _set_policy(self, target_policy):
     if self.active_policy == MonitoringPolicy.vision and self.awareness <= self.threshold_alert_2:
@@ -311,7 +337,7 @@ class DriverMonitoring:
     elif self.face_detected and self.pose.low_std:
       self.hi_stds = 0
 
-  def _update_events(self, driver_engaged, op_engaged, lowspeed, wrong_gear):
+  def _update_events(self, driver_engaged, op_engaged, lowspeed, wrong_gear, car_speed=0.):
     self.alert_level = AlertLevel.none
     self.driver_interacting = driver_engaged
 
@@ -339,6 +365,9 @@ class DriverMonitoring:
       self._reset_awareness()
       return
 
+    if self.active_policy == MonitoringPolicy.wheeltouch and op_engaged:
+      self.wheeltouch_distance += car_speed * DT_DMON
+
     awareness_prev = self.awareness
     _reaching_alert_1 = self.awareness - self.step_change <= self.threshold_alert_1
     _reaching_alert_3 = self.awareness - self.step_change <= 0
@@ -353,8 +382,11 @@ class DriverMonitoring:
       # only restore awareness when paying attention and alert is not red
       self.awareness = min(self.awareness + ((self.settings._TIMEOUT_RECOVERY_FACTOR_MAX-self.settings._TIMEOUT_RECOVERY_FACTOR_MIN)*
                                              (1.-self.awareness)+self.settings._TIMEOUT_RECOVERY_FACTOR_MIN)*self.step_change, 1.)
-      if self.awareness == 1.:
+      if self.active_policy == MonitoringPolicy.wheeltouch:
+        self._restore_wheeltouch_bounds(self.awareness)
+      elif self.awareness == 1.:
         self.last_wheeltouch_awareness = min(self.last_wheeltouch_awareness + self.step_change, 1.)
+        self._restore_wheeltouch_bounds(self.last_wheeltouch_awareness)
       # don't display alert banner when awareness is recovering and has cleared orange
       if self.awareness > self.threshold_alert_2:
         return
@@ -367,6 +399,13 @@ class DriverMonitoring:
       # also will not be reaching 0 if DM is active when not engaged
       if not (lowspeed_exemption or always_on_exemption):
         self.awareness = max(self.awareness - self.step_change, -0.1)
+        # TSR-634: wheel-touch alert k at T_k or D_k, whichever comes first
+        if self.active_policy == MonitoringPolicy.wheeltouch:
+          self.wheeltouch_time_awareness = max(self.wheeltouch_time_awareness - self.step_change, -0.1)
+          distance_awareness = self._distance_awareness(self.wheeltouch_distance)
+          if lowspeed:  # no alert from distance below the alert speed, as for the timers
+            distance_awareness = max(distance_awareness, self.threshold_alert_1 + 1e-6)
+          self.awareness = min(self.wheeltouch_time_awareness, distance_awareness)
 
     if self.awareness <= 0.:
       # terminal alert: disengagement required
@@ -470,4 +509,5 @@ class DriverMonitoring:
       op_engaged=enabled,
       lowspeed=lowspeed,
       wrong_gear=wrong_gear,
+      car_speed=car_speed,
     )

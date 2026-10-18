@@ -185,6 +185,9 @@ def check_fmea(name, doc, ctx, res: Result):
       res.error(f"{name} {e['id']}", f"parent {e['parent']} not found")
     for p in e.get("paths", []):
       ctx.check_path(p, f"{name} {e['id']}", res)
+    sot = e.get("sotif")
+    if sot and sot["boundary"] in ("split", "sotif") and not sot.get("sotif_part"):
+      res.error(f"{name} {e['id']}", f"sotif boundary {sot['boundary']} must say what belongs to SOTIF (sotif_part)")
   for f in doc["functions"]:
     own(f["id"], name)
     if f["element"] not in elements:
@@ -209,6 +212,8 @@ def check_fmea(name, doc, ctx, res: Result):
     s = fm["severity"]
     if effect_sev and s is not None and s != max(effect_sev):
       res.error(where, f"severity {s} != max effect severity {max(effect_sev)}")
+    for sm in fm.get("safety_mechanisms", []):
+      check_safety_mechanism(sm, where, ctx, res)
 
     for c in fm["causes"]:
       cwhere = f"{name} {c['id']}"
@@ -218,6 +223,8 @@ def check_fmea(name, doc, ctx, res: Result):
         res.error(cwhere, f"element {c['element']} not found")
       if c.get("linked_failure_mode") and c["linked_failure_mode"] not in ctx.failure_modes:
         res.error(cwhere, f"linked_failure_mode {c['linked_failure_mode']} not found in any analysis")
+      if doc["analysis"]["type"] == "system_fmea":
+        check_inherited_rating(c, cwhere, ctx, res)
       for ctl in c["prevention_controls"] + c["detection_controls"]:
         if ctl.get("test"):
           ctx.check_path(ctl["test"], cwhere, res)
@@ -244,6 +251,8 @@ def check_fmea(name, doc, ctx, res: Result):
       expected = compute_ap(s, o, d)
       if ap != expected:
         res.error(cwhere, f"ap is {ap}, table gives {expected} for S{s} O{o} D{d}")
+      if c.get("previous"):
+        check_previous(c["previous"], s, o, d, doc["analysis"]["baseline"], cwhere, ctx, res)
       ctx.ap_counts[expected] += 1
       if expected == "H" and not c.get("actions") and not c.get("rationale"):
         res.error(cwhere, "AP=H requires an action or a rationale")
@@ -253,6 +262,52 @@ def check_fmea(name, doc, ctx, res: Result):
   for a in actions:
     if a not in referenced_actions:
       res.warn(f"{name} {a}", "action not referenced by any cause")
+
+
+def check_inherited_rating(c, cwhere, ctx, res: Result):
+  # a System FMEA cause linked to a lower-level mode inherits that mode's O and D (the worst where several are cited, fmea-plan
+  # §3.3); outside the range of the linked mode's causes it is stale, typically after the lower-level analysis was re-rated
+  linked = ctx.fm_index.get(c.get("linked_failure_mode") or "")
+  if not linked or c["occurrence"] is None or c["detection"] is None:
+    return
+  rated = [x for x in linked["causes"] if x.get("occurrence") is not None and x.get("detection") is not None]
+  if not rated:
+    return
+  for key, label in (("occurrence", "O"), ("detection", "D")):
+    lo, hi = min(x[key] for x in rated), max(x[key] for x in rated)
+    if not lo <= c[key] <= hi:
+      res.warn(cwhere, f"{label} {c[key]} is outside {linked['id']}'s causes ({label} {lo}-{hi}); re-inherit the linked rating")
+
+
+def check_previous(prev, s, o, d, baseline, where, ctx, res: Result):
+  """A cause's rating at an earlier baseline (the baseline-to-baseline delta)."""
+  order = ctx.baseline_order
+  if prev["baseline"] not in order:
+    res.error(where, f"previous baseline {prev['baseline']} not in baseline.yaml")
+  elif baseline in order and order.index(prev["baseline"]) >= order.index(baseline):
+    res.error(where, f"previous baseline {prev['baseline']} is not earlier than the analysis baseline {baseline}")
+  ps = prev.get("severity", s)
+  if None not in (ps, prev["occurrence"], prev["detection"]):
+    expected = compute_ap(ps, prev["occurrence"], prev["detection"])
+    if prev["ap"] != expected:
+      res.error(where, f"previous ap is {prev['ap']}, table gives {expected} for S{ps} O{prev['occurrence']} D{prev['detection']}")
+  if (ps, prev["occurrence"], prev["detection"]) == (s, o, d):
+    res.warn(where, f"previous rating at {prev['baseline']} equals the current one; drop it or say what changed")
+
+
+def check_safety_mechanism(sm, where, ctx, res: Result):
+  """Defence layer and reaction time of an in-field mechanism (fmea-plan section 3.3, figure 3-15)."""
+  if sm.get("test"):
+    ctx.check_path(sm["test"], where, res)
+  if "reaction_s" in sm:
+    if not sm.get("layer"):
+      res.error(where, "safety mechanism with reaction_s must name its layer")
+    if not sm.get("timing_basis"):
+      res.error(where, "safety mechanism with reaction_s must give its timing_basis")
+    elif sm["timing_basis"] in ("code_derived", "measured") and not sm.get("timing_ref"):
+      res.error(where, f"timing_basis {sm['timing_basis']} needs a timing_ref (code line, WP-S-04 row, test or log)")
+  elif sm.get("timing_basis") or sm.get("timing_ref"):
+    res.error(where, "timing_basis or timing_ref given without reaction_s")
 
 
 def msr_in_scope(kind: str, fm: dict) -> bool:
@@ -1180,6 +1235,7 @@ class Context:
     self.hara_open_items: set[str] = set()
     self.fsc: dict | None = None
     self.ap_counts = {"H": 0, "M": 0, "L": 0}
+    self.baseline_order: list[str] = []  # baseline ids in baseline.yaml order (oldest first)
     self.msr_counts = {"in_scope": 0, "exempt": 0, "H": 0, "M": 0, "L": 0}
     self.fmeda_dc: dict[str, float | None] = {}  # "<fmeda file stem>/<failure mode id>" -> dc_spf
     wp = root / WP_S04
@@ -1206,6 +1262,7 @@ def lint(root: Path = ROOT) -> Result:
     bl = load_yaml(bl_path.read_text())
     schema_errors(bl, load_schema(root, "baseline.schema.json"), "baseline.yaml", res)
     baseline_ids = {b.get("id") for b in (bl or {}).get("baselines", [])}
+    ctx.baseline_order = [b.get("id") for b in (bl or {}).get("baselines", [])]
   else:
     res.error("baseline.yaml", "missing")
 

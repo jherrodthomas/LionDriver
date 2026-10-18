@@ -94,6 +94,12 @@ jobs:
         python3 assurance/07-supporting/figures/test_fig_p_process.py
         python3 assurance/06-validation/figures/fig_v05_fault_coverage.py --check
         python3 assurance/06-validation/figures/test_fig_v05_fault_coverage.py
+        python3 assurance/sim/figures/fig_sim_readme.py --check
+        python3 assurance/sim/figures/test_fig_sim_readme.py
+        python3 assurance/sim/figures/fig_sim_reel.py --check
+        python3 assurance/sim/figures/test_fig_sim_reel.py
+        python3 assurance/sim/figures/fig_sim_guide.py --check
+        python3 assurance/sim/figures/test_fig_sim_guide.py
     - name: Traceability figures of WP-T-01 match the data (and their tests)
       run: |
         python3 assurance/trace/tools/trace_figures.py --check
@@ -146,6 +152,10 @@ jobs:
         python3 -m unittest discover -s tools/safety -p 'test_fmea_lint.py'
         python3 tools/safety/fmea_review_xlsx.py --check
         python3 tools/safety/test_fmea_review_xlsx.py
+    - name: STPA figures match WP-A-05, stpa-map.yaml and the decision register (and their tests)
+      run: |
+        python3 assurance/08-analyses/figures/fig_a05_stpa.py --check
+        python3 assurance/08-analyses/figures/test_fig_a05_stpa.py
     - name: Vehicle register page current, citing documents agree with it (and its tests)
       run: |
         python3 tools/vehicles/vehicle_register.py --check
@@ -254,8 +264,68 @@ jobs:
       run: |
         python3 assurance/sim/plant/report.py --check
         python3 assurance/sim/plant/test_plant.py
+    - name: Failure search (Monte Carlo and cross-entropy over the plant model) current, and its tests
+      run: |
+        python3 assurance/sim/search/search.py --check
+        python3 assurance/sim/search/test_search.py
+    - name: ASIL C hazardous-event loop diagrams and animations (sim README §3.7) current, and their tests
+      run: |
+        python3 assurance/sim/figures/fig_sim_he.py --check
+        python3 assurance/sim/figures/test_fig_sim_he.py
     - name: Plant FMU (FMI 2.0, pythonfmu) built and run by FMPy, same trajectory as the plant in-process
       run: python3 assurance/sim/plant/fmu/test_fmu.py
+    - name: Reachability bound (exact, numpy) current, every sampled fault run inside it, and its tests
+      run: |
+        python3 assurance/sim/reach/reach_inputs.py --check
+        python3 assurance/sim/reach/reach_compare.py --check
+        python3 assurance/sim/reach/test_reach.py
+    - name: Hazardous-event scene list and library, and the asset fetcher against fake answers (assurance/sim/blender; no Blender, no network)
+      run: |
+        python3 assurance/sim/blender/test_scenes.py
+        python3 assurance/sim/blender/test_fetch_assets.py
+
+  sim-column:
+    name: simulation L2 column
+    # L2 steering column (assurance/sim README §3.5): OpenModelica 1.27.1 (tool TL-44) exports the column as an FMU;
+    # FMPy runs it in the driver-override study with the real panda safety code. The OpenModelica environment comes
+    # from an explicit conda lock (every package pinned by URL and md5) and is cached on the lock's hash.
+    # Synthetic data (DSR-12), no evidence credit.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      MICROMAMBA_URL: https://github.com/mamba-org/micromamba-releases/releases/download/2.3.2-0/micromamba-linux-64
+      MICROMAMBA_SHA256: ffc3cb8d52d4d6b354bdbb979c407719c485392b74e462cbd50811aa88e58f85
+      OMC_ENV: ${{ github.workspace }}/../omc-env
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Checkout opendbc and panda submodules
+      run: git submodule update --init --depth 1 opendbc_repo panda
+    - name: Install the pinned packages of the simulation track
+      run: python3 -m pip install --quiet --user --break-system-packages -r assurance/sim/requirements.txt
+    - name: Cache the OpenModelica environment (keyed on the lock)
+      id: omc-cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.OMC_ENV }}
+        key: omc-env-${{ hashFiles('assurance/sim/plant/modelica/omc-linux-64.lock') }}
+    - name: Create the OpenModelica environment from the explicit lock
+      if: steps.omc-cache.outputs.cache-hit != 'true'
+      run: |
+        curl -sSL -o "$RUNNER_TEMP/micromamba" "$MICROMAMBA_URL"
+        echo "$MICROMAMBA_SHA256  $RUNNER_TEMP/micromamba" | sha256sum -c -
+        chmod +x "$RUNNER_TEMP/micromamba"
+        MAMBA_ROOT_PREFIX="$RUNNER_TEMP/mamba" "$RUNNER_TEMP/micromamba" create -y -q -p "$OMC_ENV" \
+          --file assurance/sim/plant/modelica/omc-linux-64.lock
+    - name: Column FMU checks (analytic steady states and step response, back-to-back with the L1 EPS)
+      env:
+        REQUIRE_OMC: "1"
+      run: OMC="$OMC_ENV/bin/omc" python3 assurance/sim/plant/modelica/test_column.py
+    - name: Driver-override study current, and its --scales option (M-08) tested
+      run: |
+        python3 assurance/sim/plant/override.py --fmu build/sim-column/SteeringColumn.fmu --check
+        python3 assurance/sim/plant/test_override.py
 
   sim-scenarios:
     name: simulation known scenarios

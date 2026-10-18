@@ -575,7 +575,7 @@
   acceptance: "All state variables of WP-W-05 §5.1 at reset values after `set_safety_hooks`"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `safety.h:57, 425-460`. Edge state \"not yet seen disengaged\" (amendment, ATC-26): not at the pinned opendbc; proposed change change-2026-10-14-mode-set-regrant (assurance/07-supporting/impact/change-2026-10-14-mode-set-regrant.md)"
+  baseline_impl: "Impl: `safety.h:57, 425-460`. Edge state \"not yet seen disengaged\" (amendment, ATC-26): at the pin since opendbc `515b9a2` (`pcm_cruise_seen_disengaged`, `safety.h:414, 640, 716, 725`; test `test_no_grant_after_mode_set_without_new_engagement`; change-2026-10-14-mode-set-regrant (assurance/07-supporting/impact/change-2026-10-14-mode-set-regrant.md))"
   status: proposed
   source: WP-W-02
 
@@ -623,7 +623,7 @@
   acceptance: "Single bit flip in data or checksum → fault"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `safety.h:164-197`; `modes/toyota.h:40-46, 65-77`; 8-bit additive (GAP-01)"
+  baseline_impl: "Impl: `safety.h:164-197`; `modes/toyota.h:40-46, 65-77`; 8-bit additive (GAP-01). Length: reference build since opendbc `62b89a3` (ATC-25, `safety.h:178-197`; back-to-back finding B2B-01 closed): a frame of another length is an RX fault, the entry invalid until a frame of the right length; upstream build: such a frame is ignored and only the RX timeout (SWSR-401) catches it"
   status: proposed
   source: WP-W-02
 
@@ -671,7 +671,7 @@
   acceptance: "Each disagreement detected ≤ 0.2 s; no false detection on reference logs"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial (reference build, opendbc `875e325`): (c) implemented (`toyota_cruise_main_check`, `modes/toyota.h`; test `test_cruise_active_with_main_off`; tolerance 150 ms). Not impl: (a) (`speed_mismatch_check` exists, unused, `safety.h:529-537`); (b) pending the `0x1D3` BRAKE_PRESSED semantics on reference logs; (d) (GAP-01)"
+  baseline_impl: "Partial (reference build, opendbc `875e325`): (c) implemented (`toyota_cruise_main_check`, `modes/toyota.h`; test `test_cruise_active_with_main_off`; tolerance 150 ms); since opendbc `98d3be1` the refusal also closes the LS-06 engagement window (`pcm_engage_cancel`; test `test_main_off_closes_engagement_window`), which fixes finding SM-F1 (change-2026-10-17-pin-98d3be1 (assurance/07-supporting/impact/change-2026-10-17-pin-98d3be1.md)). Not impl: (a) (`speed_mismatch_check` exists, unused, `safety.h:529-537`); (b) pending the `0x1D3` BRAKE_PRESSED semantics on reference logs; (d) (GAP-01)"
   status: proposed
   source: WP-W-02
 
@@ -709,17 +709,17 @@
 
 - id: SWSR-408
   kind: swsr
-  text: "While lateral authority is granted, the envelope shall clear authority when no `0x2E4` frame has been accepted for > 50 ms; while longitudinal authority is granted, the same for `0x343` with > 100 ms."
+  text: "While lateral authority is granted, the envelope shall clear authority when no `0x2E4` frame has been accepted for > 50 ms; while longitudinal authority is granted, the same for `0x343` with > 100 ms. Supervision starts at the first safety task that finds authority granted. A frame is accepted when the TX hook passes it on: it is on the whitelist and passes the TX rate check (SWSR-518) and the mode's content checks; a refused frame does not count."
   asil: "B‡"
   parents: [TSR-408]
   parent_text: "TSR-408"
   other_parents: false
   allocated_to: "U-PND-MAIN, U-SAF-CORE"
   verification: "HIL, FI, IT"
-  acceptance: "Clear at 50/100 ms + task period; SS-L via SWSR-109a"
+  acceptance: "Clear at 50/100 ms + task period after the later of the last accepted frame and the start of supervision; SS-L via SWSR-109a"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl in the reference build (opendbc `273f44e`): `tx_arrival_checks` (`safety.h`), Toyota table (`modes/toyota.h`); unit tests `test_tx_arrival_*`; HIL, FI open"
+  baseline_impl: "Impl in the reference build (opendbc `273f44e`): `tx_arrival_checks` (`safety.h`), Toyota table (`modes/toyota.h`); unit tests `test_tx_arrival_*`. Accepted frames only since opendbc `27f20db` (`safety.h:288-297, 362-367`; test `test_tx_arrival_counts_accepted_frames_only`; B2B-05 closed); start of supervision as worded (`tx_arrival_ok`, B2B-04 closed). HIL, FI open"
   status: proposed
   source: WP-W-02
 
@@ -1295,7 +1295,7 @@
   acceptance: "`0x2E4` at 2× rate: excess frames rejected; revocation ≤ 0.1 s after the first rejected frame (≤ 0.2 s from flood onset at 2×), as TSR-518 v0.13"
   applies_to: "CFG-001, reference build only (`LIONDRIVER_REFERENCE=1`); other builds keep the upstream behaviour"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl (reference build, opendbc `7993399`, panda `8aa8671`): `tx_rate_check` (`opendbc/safety/safety.h`), Toyota budgets (`modes/toyota.h`), health flag bit 11 → `pandaState.txRateExceeded`; unit tests `test_tx_rate_*` (flood, sliding window, host cadence, revocation timing, catch-up bursts, no limit-state update); HIL `tests/hitl/test_14_tx_rate.py` (not run). Design DN-01 (assurance/05-software/design-notes/DN-01-tx-rate-supervision.md). Re-engagement block (amendment, ATC-20): not at the pinned opendbc; proposed change change-2026-10-13-tx-rate-reengagement (assurance/07-supporting/impact/change-2026-10-13-tx-rate-reengagement.md)"
+  baseline_impl: "Impl (reference build, opendbc `7993399`, panda `8aa8671`): `tx_rate_check` (`opendbc/safety/safety.h`), Toyota budgets (`modes/toyota.h`), health flag bit 11 → `pandaState.txRateExceeded`; unit tests `test_tx_rate_*` (flood, sliding window, host cadence, revocation timing, catch-up bursts, no limit-state update); HIL `tests/hitl/test_14_tx_rate.py` (not run). Design DN-01 (assurance/05-software/design-notes/DN-01-tx-rate-supervision.md). Re-engagement block (amendment, ATC-20): at the pin since opendbc `515b9a2` (`tx_rate_engagement_blocked`, `safety.h:261, 288, 431-437`; test `test_tx_rate_no_reengagement_while_excess_persists`; change-2026-10-13-tx-rate-reengagement (assurance/07-supporting/impact/change-2026-10-13-tx-rate-reengagement.md))"
   status: proposed
   source: WP-W-02
 
@@ -1327,7 +1327,7 @@
   acceptance: "Siren ≤ 0.5 s for each trigger; no siren on a brake press or PCM cancel alone"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: heartbeat loss (SWSR-407) revoking authority that was granted → 3 s siren at once, ≈ 0.56 s after the last heartbeat (0.3 s + 10 ms + 2 × 125 ms speaker tick), all builds (panda `c33343b`, `drivers/heartbeat_siren.h`, host test `tests/heartbeat_siren`, HIL `tests/hitl/test_15_heartbeat_siren.py` not run); 1 Hz path unchanged: 3 s siren after 4–5 s heartbeat loss (`main.c:169-171, 198-201`), the only siren when authority ended within the 5 s before the loss; EPS fault (SWSR-110) persisting 1 s while authority is granted → siren ≥ 3 s (panda `b790fca`, `drivers/eps_fault_siren.h`, host test `tests/eps_fault_siren`; HIL not run). Other (b) triggers and (c) not impl"
+  baseline_impl: "Partial: heartbeat loss (SWSR-407) revoking authority that was granted → 3 s siren at once, ≈ 0.56 s after the last heartbeat (0.3 s + 10 ms + 2 × 125 ms speaker tick), all builds (panda `c33343b`, `drivers/heartbeat_siren.h`, host test `tests/heartbeat_siren`, HIL `tests/hitl/test_15_heartbeat_siren.py` not run); 1 Hz path unchanged: 3 s siren after 4–5 s heartbeat loss (`main.c:169-171, 198-201`), the only siren when authority ended within the 5 s before the loss; EPS fault (SWSR-110) persisting 0.7 s (DQ-048, panda `bf8102a`; 1 s before) while authority is granted → siren ≥ 3 s, ≤ 0.96 s after the fault onset (panda `b790fca`, `drivers/eps_fault_siren.h`, host test `tests/eps_fault_siren`; HIL not run); since panda `3ee2796` (register DQ-367) the fault counts once it has been seen while authority was granted, so the siren also sounds when SWSR-408 revokes authority during the fault. Other (b) triggers and (c) not impl"
   status: proposed
   source: WP-W-02
 
@@ -1487,7 +1487,7 @@
   acceptance: "Warning ≤ 1 s"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `steerFaultTemporary/Permanent`"
+  baseline_impl: "Impl: `steerFaultTemporary/Permanent`; TSR-607 (b) escalation after 1.5 s in `7158a9a` and (c) prompt while steering in `487d4ef` (`car_events.py`, `tests/test_steer_fault_warning.py`)"
   status: proposed
   source: WP-W-02
 
@@ -1551,7 +1551,7 @@
   acceptance: "As specified"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `policy.py:39-44`; `controlsd.py:203-204`"
+  baseline_impl: "Impl: `policy.py:44-49`; `controlsd.py:203-204`"
   status: proposed
   source: WP-W-02
 
@@ -1567,7 +1567,7 @@
   acceptance: "Small inputs do not reset"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met (`policy.py:334-335`) (GAP-21)"
+  baseline_impl: "Not met (`policy.py:360-361`) (GAP-21)"
   status: proposed
   source: WP-W-02
 
@@ -1782,7 +1782,7 @@
 - id: SWSR-625
   kind: swsr
   text: "`selfdrived` shall raise FCW only when `modelV2` and `longitudinalPlan` are each within 2 nominal periods and valid; it shall log every FCW with its trigger source so that the false-FCW rate per driving hour can be measured against the WP-V-02 target."
-  asil: "A (open: WP-C-04 OI-9)"
+  asil: "A (until re-rated: DQ-052 A, WP-C-04 OI-9)"
   parents: [TSR-625]
   parent_text: "TSR-625"
   other_parents: false
@@ -1824,6 +1824,22 @@
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not met: no real-time priority for `soundd`; `ui` at `Priority.CTRL_HIGH` (`selfdrive/ui/ui.py:19`)"
+  status: proposed
+  source: WP-W-02
+
+- id: SWSR-634
+  kind: swsr
+  text: "While the wheel-touch policy is active, `dmonitoringd` shall raise alert *k* (1, 2, 3) no later than T*k* = 5 / 15 / 25 s or D*k* = 150 / 240 / 395 m driven while engaged since the last driver interaction, whichever comes first (WP-C-08 §5.4 (assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md)); below the DM alert speed (10 km/h) the distance shall raise no alert, as for the timers. Distance is the integral of `carState.vEgo`. An interaction that resets wheel-touch awareness resets the distance; when wheel-touch awareness recovers (low-speed exemption, or a driver the vision policy sees as attentive), the distance recovers in the same proportion. The time caps, the vision-policy timers, the no-response stage and the lockout are unchanged."
+  asil: "A (TSR-634; allocated to the QM SoC, open: WP-C-04 OI-11)"
+  parents: [TSR-634]
+  parent_text: "TSR-634"
+  other_parents: false
+  allocated_to: "`host.dm`"
+  verification: "UT, IT, VT"
+  acceptance: "Constant 30…120 km/h in 10 km/h steps (and 0, 50, 57 km/h) and ±1.5 m/s² ramps between 40 and 100 km/h: each alert within one DM step (50 ms) of the first time T*k* or D*k* is reached, and the distance at each alert ≤ D*k* plus one step; an interaction resets the distance; vision recovery restarts it; no alert below 10 km/h"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Impl: `selfdrive/monitoring/policy.py:37-41, 176-184, 193-204, 368-369, 385-389, 402-408`; 6 tests in `selfdrive/monitoring/test_monitoring.py`. Not verified in the vehicle (WP-V-02 §4.4)"
   status: proposed
   source: WP-W-02
 
@@ -1974,7 +1990,7 @@
 - id: SWSR-501b
   kind: swsr
   text: "The firmware shall configure and start IWDG1 in window mode (timeout ≤ 0.1 s including reset; SG-07 FDTI) no later than the first time the harness relay is energised after a reset, on every path that energises it, and no software path shall be able to stop it afterwards. (Amended in v0.14 to the TSR-501 v0.4 / HWSR-501c start condition; it previously required a start in the bootstub.) Start in the bootstub before the application runs remains a target (OI-10)."
-  asil: "B‡"
+  asil: "C"
   parents: [TSR-501]
   parent_text: "TSR-501 (WP-W-02 §11; ASIL taken from TSR-501)"
   other_parents: false
@@ -1990,7 +2006,7 @@
 - id: SWSR-502c
   kind: swsr
   text: "The first actions after reset shall put both relay drive outputs in the released level and leave the car-side transceivers disabled until a car mode is set."
-  asil: "B‡"
+  asil: "C"
   parents: [TSR-502]
   parent_text: "TSR-502 (WP-W-02 §11; ASIL taken from TSR-502)"
   other_parents: false
@@ -2006,7 +2022,7 @@
 - id: SWSR-503c
   kind: swsr
   text: "The firmware shall enable RAMECC monitoring of all SRAM regions holding safety data and route uncorrectable-error events to SWSR-502."
-  asil: "B‡"
+  asil: "C"
   parents: [TSR-503]
   parent_text: "TSR-503 (WP-W-02 §11; ASIL taken from TSR-503)"
   other_parents: false
@@ -2022,7 +2038,7 @@
 - id: SWSR-504a
   kind: swsr
   text: "The clock cross-check of SWSR-504 shall use an oscillator independent of HSE."
-  asil: "B‡"
+  asil: "C"
   parents: [TSR-504]
   parent_text: "TSR-504 (WP-W-02 §11; ASIL taken from TSR-504)"
   other_parents: false
@@ -2038,7 +2054,7 @@
 - id: SWSR-505a
   kind: swsr
   text: "The firmware shall configure the PVD threshold and handle its interrupt; it shall sample the input voltage ADC in the safety task."
-  asil: "B‡"
+  asil: "C"
   parents: [TSR-505]
   parent_text: "TSR-505 (WP-W-02 §11; ASIL taken from TSR-505)"
   other_parents: false
@@ -2054,7 +2070,7 @@
 - id: SWSR-506b
   kind: swsr
   text: "The firmware shall read the relay feedback input defined in WP-S-05 in the safety task (SWSR-506)."
-  asil: "B‡ (blocking), B (PCS restore)"
+  asil: "C (blocking), B (PCS restore)"
   parents: [TSR-506]
   parent_text: "TSR-506 (WP-W-02 §11; ASIL taken from TSR-506)"
   other_parents: false
@@ -2070,7 +2086,7 @@
 - id: SWSR-507a
   kind: swsr
   text: "MPU regions shall follow the memory map of WP-S-05 §8 (`stm32h7/stm32h7x5_flash.ld:70-79`)."
-  asil: "B‡"
+  asil: "C"
   parents: [TSR-507]
   parent_text: "TSR-507 (WP-W-02 §11; ASIL taken from TSR-507)"
   other_parents: false
@@ -2086,7 +2102,7 @@
 - id: SWSR-508a
   kind: swsr
   text: "The firmware shall disable the car-side transceivers as part of SS-S."
-  asil: "B‡"
+  asil: "C"
   parents: [TSR-508]
   parent_text: "TSR-508 (WP-W-02 §11; ASIL taken from TSR-508)"
   other_parents: false
@@ -2102,7 +2118,7 @@
 - id: SWSR-410b
   kind: swsr
   text: "The SPI driver shall treat DMA transfer-error, SPI overrun and mode-fault flags as SPI errors (SWSR-413)."
-  asil: "B‡"
+  asil: "C"
   parents: [TSR-410]
   parent_text: "TSR-410 (WP-W-02 §11; ASIL taken from TSR-410)"
   other_parents: false
@@ -2118,7 +2134,7 @@
 - id: SWSR-516a
   kind: swsr
   text: "The siren shall be driven through a path that does not depend on the SoC audio stack."
-  asil: "B"
+  asil: "C"
   parents: [TSR-516]
   parent_text: "TSR-516 (WP-W-02 §11; ASIL taken from TSR-516)"
   other_parents: false

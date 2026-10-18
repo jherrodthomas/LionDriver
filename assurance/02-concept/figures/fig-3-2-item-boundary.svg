@@ -98,7 +98,7 @@
   <text x="806" y="283" class="t b" font-size="12.5">E-03 panda safety MCU</text>
   <text x="806" y="299" class="m s">STM32H7 · opendbc safety</text>
   <rect x="806" y="309" width="150" height="22" rx="11" fill="#C2410C"/>
-  <text x="881" y="324" fill="#FFFFFF" font-size="10.5" font-weight="700" text-anchor="middle" letter-spacing=".05em">SAFETY ENVELOPE · B‡</text>
+  <text x="881" y="324" fill="#FFFFFF" font-size="10.5" font-weight="700" text-anchor="middle" letter-spacing=".05em">SAFETY ENVELOPE · C</text>
   <text x="806" y="350" class="t xs">• TX whitelist, limits, rate</text>
   <text x="806" y="365" class="t xs">• RX timeouts, EPS fault</text>
   <text x="806" y="380" class="t xs">• heartbeat · mode lock</text>
@@ -224,6 +224,6 @@
     <line x1="672" y1="0" x2="700" y2="0" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4"/><text x="708" y="4" class="t">Untrusted network</text>
     <rect x="828" y="-8" width="28" height="16" rx="4" fill="#FFFBEB" stroke="#B45309" stroke-dasharray="5 3"/><text x="864" y="4" class="t">Item boundary</text>
     <rect x="958" y="-8" width="28" height="16" rx="4" fill="#F1F5F9" stroke="#94A3B8"/><text x="994" y="4" class="t">Outside the item</text>
-    <text x="1200" y="4" class="m" text-anchor="end">B‡: ASIL B target</text>
+    <text x="1200" y="4" class="m" text-anchor="end">C: ASIL C (DQ-341)</text>
   </g>
 </svg>

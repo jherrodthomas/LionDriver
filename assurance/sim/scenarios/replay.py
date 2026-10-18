@@ -30,6 +30,8 @@ import generate  # noqa: E402
 from fetch_esmini import esmini_bin  # noqa: E402
 
 TABLE = HERE.parent / "results" / "scenario-replay.md"
+# scenario families of WP-V-02 §5.3.2; scenarios the section does not assign are marked so, not guessed
+FAMILY = {"KS-01": "SF-1", "KS-08": "SF-2", "KS-05": "SF-3", "KS-09": "SF-3", "KS-07": "SF-4", "KS-25": "SF-6"}
 DT = 0.05
 
 
@@ -149,7 +151,7 @@ def points(sc) -> list[dict]:
 
 
 def replay(bin_dir: Path) -> tuple[str, int]:
-  rows = ["| Scenario | Parameter point | Check | Result | Measured |", "|---|---|---|---|---|"]
+  rows = ["| Scenario | Family | Parameter point | Check | Result | Measured |", "|---|---|---|---|---|---|"]
   failures = 0
   for sc in generate.SCENARIOS:
     for p in points(sc):
@@ -157,7 +159,8 @@ def replay(bin_dir: Path) -> tuple[str, int]:
       changed = ", ".join(f"{k} = {v:g}" for k, v in p.items() if v != sc.params[k][0]) or "defaults"
       for name, ok, measured in check(sc.id, p, R):
         failures += not ok
-        rows.append(f"| {sc.id} | {changed} | {name} | {'pass' if ok else '**fail**'} | {measured or '—'} |")
+        fam = FAMILY.get(sc.id, "not assigned in WP-V-02 §5.3.2")
+        rows.append(f"| {sc.id} | {fam} | {changed} | {name} | {'pass' if ok else '**fail**'} | {measured or '—'} |")
   return "\n".join(rows), failures
 
 
@@ -171,10 +174,26 @@ def table(body: str) -> str:
     "is about LionDriver's behaviour**, and nothing is evidence. Method: [README](../README.md) §2 and "
     "[scenarios](../scenarios/README.md).",
     "",
+    "| Label (WP-V-02 §5.3.5) | Value |",
+    "|---|---|",
+    "| data_kind | synthetic |",
+    f"| simulator | esmini {generate_esmini_version()} (Linux release; archive SHA-256 `{esmini_sha()}`), default "
+    "controllers; scenario files from scenariogeneration |",
+    "| asset archive hash | none (headless, nothing rendered) |",
+    "| scenario ID and family | per row below |",
+    "| fidelity-case status | none |",
+    "| credit | none |",
+    "| camera frame rate | not applicable (no camera) |",
+    "",
     "Each scenario runs at its defaults and at each sweep value of one parameter at a time.",
     "",
   ]
-  return "\n".join(head) + body + "\n"
+  return "\n".join(head) + "\n" + body + "\n"
+
+
+def esmini_sha() -> str:
+  from fetch_esmini import SHA256
+  return SHA256[:12]
 
 
 def generate_esmini_version() -> str:

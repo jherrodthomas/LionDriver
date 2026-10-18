@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-02 ODD and intended functionality specification |
 | Standard reference | ISO 21448:2022 §5 (specification of the functionality); ISO 26262-3:2018 §5 (item definition input); ISO/PAS 8800:2024 (input space definition); ASPICE 4.0 SYS.1; SAE J3016 and ISO 34503 (ODD taxonomy, informative) |
-| Version | 0.4 (highway only: ODD-A dropped by the lead's decision DQ-023, option B; speed range and its test evidence per DQ-091, option A; curve bound kept and the HARA re-rated instead, DQ-059 B; driver-state misuse linked to HARA OS-17/OS-18; Figures 3-1 and 3-2 redrawn for one ODD part; 2026-10-16). 0.3 (Figures 3-1 and 3-2 added, generated from §3.1 and §3.2; 2026-10-13). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
+| Version | 0.5 (ODD speed bound 110 km/h, DQ-260 A; OI-8 closed; Figure 3-2 redrawn; 2026-10-16). 0.4 (highway only: ODD-A dropped by the lead's decision DQ-023, option B; speed range and its test evidence per DQ-091, option A; curve bound kept and the HARA re-rated instead, DQ-059 B; driver-state misuse linked to HARA OS-17/OS-18; Figures 3-1 and 3-2 redrawn for one ODD part; 2026-10-16). 0.3 (Figures 3-1 and 3-2 added, generated from §3.1 and §3.2; 2026-10-13). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF; input to HARA exposure ratings |
 | Author | Assurance team (initial draft) |
@@ -57,7 +57,7 @@ Until version 0.3 the ODD also had an arterial and rural part (ODD-A). The lead 
 | Geometry | Cross-slope / banking | ≤ 6 % | "Highly banked roads" | `LIMITATIONS.md:16`; roll compensation `drive_helpers.py:37-38` |
 | Geometry | Lane width | 3.0–3.9 m | Narrow lanes < 2.9 m; lane shifts in work zones | `LIMITATIONS.md:19` ("narrow") |
 | Lane markings | Presence | Visible longitudinal markings on at least one side, US MUTCD style | Unmarked roads; faded or missing markings over long sections; conflicting old/new markings | End-to-end model; markings not strictly required but needed for validated performance |
-| Speed | Ego speed | 0 – 120 km/h (75 mph), not above the posted limit | > 120 km/h. Note: the system allows engagement up to 149 km/h (`MAX_CTRL_SPEED`) | HARA OS-01 rated to 120 km/h; `LIMITATIONS.md:36` (speed limits not detected). Test evidence planned up to 110 km/h after a test risk review (DQ-091, A); the 110–120 km/h band is claimed only if the evidence is extended to it (OI-8) |
+| Speed | Ego speed | 0 – 110 km/h (68 mph), not above the posted limit | > 110 km/h (capped by the lead, DQ-260 A; roads posted above 68 mph get no assistance above 110 km/h). Note: the system allows engagement up to 149 km/h (`MAX_CTRL_SPEED`) | Every claimed speed is the speed controllability is tested to, after a test risk review (DQ-091 A, DQ-260 A); HARA engaged situations rated to 110 km/h; FM-07 is to warn and then disengage above it; `LIMITATIONS.md:36` (speed limits not detected) |
 | Speed | Stop-and-go | Following a lead to standstill and auto-resume | Starting from standstill with no lead in front (e.g. at a stop line) | `interface.py:52, 107`; HE-03.2 |
 | Weather | Precipitation | None or light rain | Moderate/heavy rain, snow, sleet, hail, freezing rain | `LIMITATIONS.md:10, 29` |
 | Weather | Visibility | ≥ 200 m | Fog, smoke, dust, spray reducing visibility below the bound | `LIMITATIONS.md:10` |
@@ -90,7 +90,9 @@ R_ctrl = v² / 3.0 m/s² is the curve the controller can command at its lateral 
 | 100 | 27.8 | 257 | 309 |
 | 120 | 33.3 | 370 | 444 |
 
-![Figure 3-2: ODD speed–curvature envelope, minimum curve radius against speed 0–130 km/h, with the controller limit R_ctrl = v²/3.0 m/s² and the proposed ODD bound R_ODD = v²/2.5 m/s², the §3.2 table points, the regions inside the proposed ODD, the 0.5 m/s² margin and beyond controller authority, the 90 and 120 km/h speed bounds, and the AOU-01 assumption marked unverified](figures/fig-c02-3-2-odd-envelope.svg)
+The 120 km/h row lies above the ODD speed bound (110 km/h, DQ-260) and is kept to show the trend.
+
+![Figure 3-2: ODD speed–curvature envelope, minimum curve radius against speed 0–130 km/h, with the controller limit R_ctrl = v²/3.0 m/s² and the proposed ODD bound R_ODD = v²/2.5 m/s², the §3.2 table points, the regions inside the proposed ODD, the 0.5 m/s² margin and beyond controller authority, the 110 km/h ODD speed bound, and the AOU-01 assumption marked unverified](figures/fig-c02-3-2-odd-envelope.svg)
 
 *Figure 3-2.* The table above drawn with the two formulas of this section as continuous curves. Above the dashed R_ODD curve is inside the proposed ODD; between the curves is the 0.5 m/s² margin; below R_ctrl the curve is beyond the controller's lateral acceleration limit. Below R_ODD is a driver task, because Chill mode does not slow for curves. Both curves assume AOU-01 (EPS torque authority suffices), which is not yet characterised (GAP-04, OI-2). Drawn from the §3.2 table and text, with the speed bounds of §3.1. Generated by [`figures/fig_c02_odd.py`](figures/fig_c02_odd.py); CI fails if it is stale or if the table no longer equals the formulas. Source: [`figures/fig-c02-3-2-odd-envelope.svg`](figures/fig-c02-3-2-odd-envelope.svg); change it together with §3.2.
 
@@ -116,7 +118,7 @@ The training-data ODD of the driving model is unknown. comma.ai has not publishe
 | F-01 Lateral control | Keeps the vehicle near the centre of the lane by commanding steering torque from the driving model's desired curvature; lateral acceleration ≤ 3.0 m/s², jerk ≤ 5 m/s³. Assisted lane change when the driver signals and nudges the wheel, above 20 mph, within 10 s (`desire_helper.py:8-9`) | Blind-spot checking (blind-spot monitoring input is not used by LionDriver, whether or not the trim fitted has it; the driver checks), turning at intersections, evasive steering, steering at standstill |
 | F-02 Longitudinal control (Chill mode) | Holds the set speed; follows the lead vehicle (radar track fused with vision, `radard.py:153-165`) at the selected personality gap; stops behind a stopping lead and resumes when it moves; acceleration −3.5…+2.0 m/s², cruise acceleration 1.6→0.6 m/s² by speed | Stopping for traffic lights, stop signs, pedestrians, stationary vehicles not previously tracked as lead; detecting speed limits (`LIMITATIONS.md:35-37`); emergency braking (stock PCS remains responsible) |
 | F-03 Engagement and modes | Engages only through the stock cruise controls; the envelope grants authority on the PCM cruise rising edge. Driver brake or cancel disengages; gas overrides longitudinal (does not disengage, `DisengageOnAccelerator` default `0`, `common/params_keys.h:35`); steering input overrides lateral | Engagement without driver action; staying engaged after brake |
-| F-04 Driver monitoring | Above 2.8 m/s, monitors driver attention by camera; escalating alerts 5/8/13 s (vision) or 5/15/25 s (wheel-touch fallback); force deceleration and lockout on no response (`policy.py:29-44`) | Exact alertness measurement (`LIMITATIONS.md:49`); monitoring below 10 km/h |
+| F-04 Driver monitoring | Above 2.8 m/s, monitors driver attention by camera; escalating alerts 5/8/13 s (vision) or 5/15/25 s (wheel-touch fallback); force deceleration and lockout on no response (`policy.py:29-49`) | Exact alertness measurement (`LIMITATIONS.md:49`); monitoring below 10 km/h |
 | F-05 Driver information | Shows engagement state, alerts (warning, soft disable, immediate disable, no entry) on the device with sounds; cluster LKAS HUD | Explaining every limitation in real time |
 | F-06 FCW | Visual + acoustic "BRAKE!" alert when the model predicts hard braking or the planner predicts a collision (`selfdrived.py:441-445`, `events.py:493`) | Braking; the stock PCS remains responsible for AEB |
 | F-07 LDW | When not laterally engaged, above 31 mph and no turn signal in the last 5 s, warns when the vehicle drifts towards a visible lane line (`ldw.py:7-35`) | Steering correction |
@@ -155,7 +157,7 @@ LD-SDA has **no ODD monitor**. The driver detects ODD exit and disengages. The s
 
 | ODD exit | Detected by system? | Current reaction | Gap / proposal |
 |---|---|---|---|
-| Speed > 120 km/h (reference bound) | No | None | FM-07 in WP-C-07 (speed bound enforcement) |
+| Speed > 110 km/h (ODD bound, DQ-260) | No | None | FM-07 in WP-C-07: warn, then disengage (speed bound enforcement); until it exists, engaged driving above 110 km/h is foreseeable misuse (WP-C-03 §3) |
 | Speed > 149 km/h | Yes, `speedTooHigh` (`car_events.py:126`) | Warning + no-entry; **stays engaged** (`events.py:989-996`) | GAP-19; FM-07 |
 | Curve tighter than R_ODD | Partly: `steerSaturated` warning when the controller saturates (`events.py:619`) | Warning only | Driver task |
 | Missing/faded markings, construction zone, road type change (leaving the highway), intersection | No | None | Driver task; FM-08 (map/road-type, if feasible). With the highway-only ODD (DQ-023) this exit is the one the lead's decision assumes the system will refuse or warn about |
@@ -163,7 +165,7 @@ LD-SDA has **no ODD monitor**. The driver detects ODD exit and disengages. The s
 | Snow / ice | No | None | Driver task |
 | Device mis-calibration | Yes, `calibrationInvalid` (`events.py:816`) | Soft disable | Implemented |
 | Device overheat | Yes, `overheat` (`events.py:800`) | Soft disable | Implemented |
-| Driver not visible to DM | Yes (no face / high uncertainty) | Wheel-touch fallback (`policy.py:77-78`) | GAP-21 |
+| Driver not visible to DM | Yes (no face / high uncertainty) | Wheel-touch fallback (`policy.py:82-83`) | GAP-21 |
 | Vehicle state (VSC off, door, seatbelt, gear) | Yes (`espDisabled`, `doorOpen`, `seatbeltNotLatched`, `wrongGear`) | Soft disable / no entry | Implemented |
 
 ### 5.3 Required behaviour at ODD exit
@@ -214,5 +216,5 @@ Decision record: **pending** — maintainer decision under D-08 / WP-C-01 OI-8.
 | OI-4 | Closed 2026-10-16: ODD-A dropped (DQ-023, B); the HARA exposure is re-rated (WP-C-03 v0.4, OS-03/OS-04/OS-15/OS-16 foreseeable misuse at E2) | HARA owner | — |
 | OI-5 | Confirm grade and banking bounds (6 %) by vehicle test | Safety engineer | G2 |
 | OI-7 | Feed the ODD in driver-recognisable terms into WP-O-03 user information | Maintainer | G5 |
-| OI-8 | Highway speed range (DQ-091, A): hold the test risk review and test up to 110 km/h (WP-V-02, WP-V-07). Decide from the result whether 110–120 km/h is claimed by an evidence-based extension or the bound drops to 110 km/h; the lead's question on the bound is DQ-260 | SOTIF lead | G1 |
+| OI-8 | Closed 2026-10-16: the ODD stops at 110 km/h, the highest tested speed (DQ-260, A, after DQ-091, A). Left elsewhere: FM-07 implementation (software) and the 110 km/h controllability test (WP-V-01 VS-VAL-10) | SOTIF lead | — |
 | OI-9 | Off-highway refusal or warning (FM-08): the highway-only ODD assumes it, and the HARA's E2 for engagement off the highway (assumption A-ODD) rests on it until it exists | SW lead | G2 |

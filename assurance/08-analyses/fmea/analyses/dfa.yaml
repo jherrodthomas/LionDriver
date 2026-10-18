@@ -11,6 +11,15 @@
 # release tooling of #80. All stay insufficient. Rev 0.8 records DQ-007 C on DFI-14 and DM-10.
 # Rev 0.9 takes in shared root causes reported by the SW FMEA (PR #95, #111): DFI-07 open -> insufficient
 # (a mode cycle clears the panda's latched fault reactions), DM-25; DFI-05 note on the host side.
+# Rev 0.11: SW FMEA references point at the merged rows SWF-054..057 (sw-fmea.yaml rev 1.0).
+# Rev 0.12: opendbc pinned at 515b9a2 (jherrodthomas/opendbc#15, LionDriver 3ba8ca10): DFI-07 insufficient -> open, DM-25
+# partly in the pinned code. Decomposition statuses unchanged.
+# Rev 0.13: panda pinned at 0a7da85 (jherrodthomas/panda#17, LionDriver e5109376): the relay-malfunction part of DM-25 is coded;
+# DM-25 required -> existing_unverified; DFI-07 stays open pending the bench checks.
+# Rev 0.15 records lead decision DQ-055 A on DFI-14 and DM-10 (safety limits derived apart from the controller tuning,
+# controller set lower). No assessment changed.
+# Rev 0.14: DFI-07 also cites SWF-090 (sw-fmea.yaml rev 1.4), the SW FMEA row for the relay-malfunction part of DM-25.
+# Rev 0.10 applies lead decision DQ-209 option A (keep comma's harness box, bench-test it) to DFI-20, DFI-21 and DOI-008.
 # 2026-10-16: fsc_revision 0.3 -> 0.4. FSC rev 0.4 only adds notes on two lead decisions (DQ-053, DQ-064) to
 # FSR-031 and FSR-038; no statement, ASIL, allocation or decomposition changed, so no DFI changes.
 schema_version: 1
@@ -19,7 +28,7 @@ analysis:
   type: dfa
   doc_id: LD-DFA-001
   title: "Dependent Failure Analysis — panda/SoC decompositions (LD-FSC-001)"
-  revision: "0.9"
+  revision: "0.15"
   status: draft
   baseline: BL-004
   fsc_revision: "0.4"
@@ -51,6 +60,12 @@ analysis:
     - {revision: "0.7", date: 2026-10-16, author: Claude (AI-assisted draft), change: "The four insufficient DFIs (05, 09, 14, 18) re-checked against liondriver-dev 1033d98 (panda a55bdfc, opendbc 9a13f60, release tooling of #80). Since rev 0.5: the reference release variant builds the panda with RELEASE=1 and no ALLOW_DEBUG, checked in CI (safety.yaml panda_reference_release_build, ATC-19), so a release bootstub would no longer trust the debug key (DFI-09, DFI-18); opendbc b9f7451 grants authority on a PCM edge only with the heartbeat's engaged flag (no diverse input for DFI-05). All four stay insufficient; decomposition statuses unchanged"}
     - {revision: "0.8", date: 2026-10-16, author: Claude (AI-assisted draft), change: "Answered lead decision DQ-007 C (lower steering authority, limits derived physically per speed) recorded on DFI-14 and DM-10 as the route for the shared-envelope coupling. No assessment changed"}
     - {revision: "0.9", date: 2026-10-16, author: Claude (AI-assisted draft), change: "Shared root causes from the SW FMEA (PR #95 SWF-054/055, PR #111 SWF-056/057, both not yet merged), each checked in the code at opendbc 9a13f60 and panda a55bdfc. DFI-07 open -> insufficient: the reference lock lets the SoC go TOYOTA -> NOOUTPUT -> TOYOTA at any time, and set_safety_hooks() clears the cruise edge state and the latched TX-rate, EPS-fault, RX-check and relay-malfunction flags, so a faulty SoC can undo the panda's fault reaction while cruise stays on; the rev 0.5 statement that the SoC can only downgrade is corrected. New DM-25 (required). DFI-05: the host has no counter check on these messages either (SW FMEA); the decoding code is diverse, the signal definitions are shared. Decomposition statuses unchanged"}
+    - {revision: "0.10", date: 2026-10-16, author: Claude (AI-assisted draft), change: "Lead decision DQ-209 option A applied: comma's harness box is kept and bench-tested, no adapter, no readback, comma power not required. DFI-20 stays safe by design; DFI-21 stays open, now closed only by the bench test and the cluster observation (options B and C are no longer routes). DOI-008 reworded. No assessment or decomposition status changed"}
+    - {revision: "0.11", date: 2026-10-16, author: Claude (AI-assisted draft), change: "References to the SW FMEA pull requests (#95, #111) replaced by the merged rows SWF-054, SWF-055 (DFI-07) and SWF-056, SWF-057 (DFI-05) of sw-fmea.yaml rev 1.0. Each row checked to describe the coupling cited. No content change"}
+    - {revision: "0.12", date: 2026-10-17, author: Claude (AI-assisted draft), change: "opendbc pin 9a13f60 -> 515b9a2 (jherrodthomas/opendbc#15, liondriver-dev 3ba8ca10) checked in the code. DFI-07 insufficient -> open: after a mode change authority needs CRUISE_ACTIVE = 0 then a new rising edge (ATC-26, SWSR-311), a TX-rate revocation keeps blocking engagement for one full window after the last rejected frame (ATC-20, SWSR-518), and the RX checks, EPS_STATUS (0x262) among them, must be valid again before a grant. Still open: relay-malfunction detection is suspended for 1-2 s after each mode set, and nothing is verified on hardware. DM-25 reworded, stays required. Decomposition statuses unchanged"}
+    - {revision: "0.13", date: 2026-10-17, author: Claude (AI-assisted draft), change: "panda pin a55bdfc -> 0a7da85 (jherrodthomas/panda#17, liondriver-dev e5109376) checked in the code: the reference lock latches a relay malfunction for the ignition cycle and refuses TOYOTA until the ignition goes off, fed from the 8 Hz tick and from set_safety_mode() before set_safety_hooks() clears the flag. All parts of DM-25 now coded and unit-tested: required -> existing_unverified. DFI-07 stays open: HIL test_11_reference_lock, DM-22 and the latch bench test (impact record change-2026-10-17-relay-malfunction-latch OI-1) not run. Decomposition statuses unchanged"}
+    - {revision: "0.14", date: 2026-10-17, author: Claude (AI-assisted draft), change: "DFI-07 cites SWF-090 of sw-fmea.yaml rev 1.4 (#196): the relay-malfunction reaction cleared by a mode change, fixed by panda#17, O3 D4 AP L. Row checked against the coupling cited. No content change"}
+    - {revision: "0.15", date: 2026-10-17, author: Claude (AI-assisted draft), change: "Lead decision DQ-055 A (2026-10-14) recorded on DFI-14 and DM-10: the safety limits are derived independently of the controller tuning, and the controller is set lower. It confirms the route DQ-007 C set for the lateral limits and extends it to every envelope limit. DFI-14 stays insufficient until DM-10 exists. No assessment or decomposition status changed"}
 
 categories:
   - {id: CAT-01, name: Shared power supply, applicable: true, rationale: "Panda and SoC are on the same comma 3X board, powered from the same 12 V input. On the Toyota harness that input is the harness-box supply VIN (ignition through D1, or comma power), which also powers both intercept switches; the ignition sense hangs on the same ignition line (RR-2026-010 HB-03, HB-06)."}
@@ -189,7 +204,7 @@ dfis:
       Rev 0.7 (opendbc 9a13f60): b9f7451 makes a PCM cruise edge grant authority only together with the heartbeat's
       engaged flag (STPA LS-06). That adds a SoC condition to engagement, not a vehicle input diverse from the shared
       brake, cruise or torque messages, so the coupling is unchanged.
-      Rev 0.9: the SW FMEA (PR #111, SWF-056/057) reports the host side. The host also checks no counter on the Toyota
+      Rev 0.9: the SW FMEA (sw-fmea.yaml SWF-056, SWF-057) reports the host side. The host also checks no counter on the Toyota
       RX messages, and BRAKE_MODULE has no checksum, so a frozen frame with a valid checksum passes both channels
       (the panda sets ignore_counter on 0x260, 0x1D2 and 0x226, toyota.h:48-69). The decoding code is diverse: the
       panda extracts bits by hand in C, the host decodes through the DBC. What both share is the signal definition
@@ -221,7 +236,7 @@ dfis:
       longitudinal, LTA, SecOC and EPS torque factor; with ALLOW_DEBUG (LionDriver default build) opendbc
       safety.h:413-421 adds SAFETY_ALLOUTPUT (LD-DES-001 F1-F4)
     measures: [DM-04, DM-07, DM-21, DM-22, DM-25]
-    assessment: insufficient
+    assessment: open
     rationale: >-
       At rev 0.4 the only check (controlsMismatch, DM-04) ran on the SoC itself and one host command selected
       ALLOUTPUT. Rev 0.5: the panda reference build (DM-21, panda board/reference_lock.h, on by default in the
@@ -233,7 +248,7 @@ dfis:
       required only beyond AC-001). Open, not sufficient: the gate is unit-tested in CI
       (panda/tests/reference_lock) but its effect on the board is not verified (HIL test_11_reference_lock not
       run). Needed for sufficient: run the HIL test and the DM-22 integration check on the bench.
-      Rev 0.9 (opendbc 9a13f60, panda a55bdfc; SW FMEA SWF-054/055, PR #95): open -> insufficient. "The SoC can only
+      Rev 0.9 (opendbc 9a13f60, panda a55bdfc; sw-fmea.yaml SWF-054, SWF-055): open -> insufficient. "The SoC can only
       downgrade" was wrong. In TOYOTA the lock accepts NOOUTPUT or SILENT, and from there TOYOTA with parameter 73 at
       any time (reference_lock.h:56-62, no ignition or speed condition). Every mode set runs set_safety_hooks()
       (safety.h:578-620), which clears cruise_engaged_prev, safety_tx_rate_exceeded, safety_eps_fault,
@@ -245,6 +260,34 @@ dfis:
       reactions re-trigger only if the fault persists. The fix for the edge state and the TX-rate block is in
       jherrodthomas/opendbc#15 (DQ-079, DQ-080), merged in the fork but not pinned. Needed: DM-25 pinned and tested,
       plus the HIL and DM-22 checks above.
+      Rev 0.12 (opendbc 515b9a2, pinned by liondriver-dev 3ba8ca10; panda a55bdfc unchanged): insufficient -> open. The
+      lock still allows TOYOTA -> NOOUTPUT -> TOYOTA at any time, but the mode cycle no longer undoes the fault reactions
+      that matter for authority. set_safety_hooks() resets pcm_cruise_seen_disengaged, and pcm_cruise_check() opens the
+      engagement window only on a rising edge after CRUISE_ACTIVE = 0 has been received in the new mode
+      (safety.h:636-640, 713-727; ATC-26, SWSR-311), so a cruise held through the cycle grants nothing. A TX-rate
+      revocation sets tx_rate_engagement_blocked, and rx_checks_allow_engagement() refuses a grant until one full
+      250 ms window has passed without a rejected frame (safety.h:258-289, 420-441; ATC-20, SWSR-518); that block is
+      cleared by a mode set, but the new mode needs a new engagement anyway. The RX check status is zeroed by the mode
+      set, so no grant until every RX check, EPS_STATUS 0x262 included, is valid again; safety_eps_fault is then set
+      from a fresh 0x262 frame before any torque can pass (toyota.h:46-58, 262-265, 455-458). Unit tests:
+      test_no_grant_after_mode_set_without_new_engagement, test_tx_rate_no_reengagement_while_excess_persists
+      (tests/test_toyota.py). Not sufficient: (1) the relay-malfunction latch is cleared and stock_ecu_check() ignores
+      the stock ECU until safety_mode_cnt > 1, a 1 Hz count (panda board/main.c:296), so a driver re-engagement 1-2 s
+      after a mode cycle can be granted while a stuck harness switch is not yet re-detected; (2) none of this is
+      verified on the bench (HIL test_11_reference_lock, DM-22). Needed: keep the relay-malfunction state across a mode
+      set (or refuse re-entry to TOYOTA in the same ignition cycle), and the HIL and DM-22 checks.
+      Rev 0.13 (panda 0a7da85, pinned by liondriver-dev e5109376; opendbc 98d3be1): the relay-malfunction gap is closed
+      by the second route. The reference lock keeps reference_relay_fault_this_ignition, set from relay_malfunction in
+      the 8 Hz tick and in set_safety_mode() just before set_safety_hooks() clears the flag (board/main.c:46, 188), and
+      refuses TOYOTA while it is set; only the ignition-off branch of reference_lock_ignition_update() clears it
+      (board/reference_lock.h:40-65, 80-81). A mode cycle therefore cannot hide a stuck harness switch, internal mode
+      changes included. Unit tests: tests/reference_lock/test_reference_lock.py
+      test_toyota_refused_after_a_relay_malfunction_while_ignition_on, test_toyota_allowed_again_after_ignition_off,
+      test_no_relay_malfunction_keeps_toyota, test_refused_toyota_after_relay_malfunction_counted. Every part of DM-25
+      is now in the pinned code. Still open, not sufficient: nothing is verified on the board (HIL test_11_reference_lock,
+      DM-22, and the latch bench test of change-2026-10-17-relay-malfunction-latch OI-1). A false relay malfunction now
+      costs the car mode for the rest of the ignition cycle, an availability loss in the safe direction.
+      Rev 0.14: the SW FMEA carries this part as SWF-090 (sw-fmea.yaml rev 1.4, O3 D4 AP L), next to SWF-054 and SWF-055.
   - id: DFI-08
     category: CAT-06
     kind: cascading
@@ -360,6 +403,9 @@ dfis:
       will be a borrowed or rented one (DQ-039 B), so DM-10 waits on that arrangement. The lead chose to lower
       steering authority, with limits derived physically per speed (DQ-007 C, 2026-10-14), which is DM-10's route
       for the lateral limits.
+      Rev 0.15: lead decision DQ-055 A (2026-10-14) makes that the rule for every envelope limit: the safety limits
+      are derived independently of the controller's tuning values, and the controller is set lower, with a margin.
+      Unchanged: insufficient until the derivation record and the measurements behind DM-10 exist.
   # --- CAT-10 development process
   - id: DFI-15
     category: CAT-10
@@ -454,7 +500,7 @@ dfis:
       take, nothing generates item messages, and the EPS and PCM end LKA/ACC on message loss (DM-03, unverified,
       DOI-001). A disturbed car-side bus gives more missing messages, not wrong ones, unless the bench test shows
       otherwise (DM-23). The same loss removes the stock camera path (SG-009, FSR-037/038, not decomposed): that is
-      DFMEA DFM-020, FMEDA SG-009 and WP-A-03 DFI-27, and the lead decision DQ-209.
+      DFMEA DFM-020, FMEDA SG-009 and WP-A-03 DFI-27; the lead kept comma's box (DQ-209 option A, 2026-10-16).
   - id: DFI-21
     category: CAT-01
     kind: common_cause
@@ -474,8 +520,8 @@ dfis:
       Unlike DFI-01, where the pull-down returns the stock camera and the cluster sees a clean bus, here the second
       channel depends on cluster behaviour on a possibly disturbed bus, which nobody has observed. XM-04 is not
       credited (FSC FOI-005). Needed to close: the box-unpowered bench test (DM-23, VS-HW-22) and the cluster
-      reaction to it on the reference vehicle (DOI-005, DOI-008); or the lead's DQ-209 option B or C, which removes
-      the cause.
+      reaction to it on the reference vehicle (DOI-005, DOI-008). Rev 0.10: the lead chose DQ-209 option A (keep
+      comma's box, bench-test it), so removing the cause with an adapter or mandatory comma power is not a route.
 
 measures:
   - {id: DM-01, description: "All item CAN transmission passes through the panda; an unpowered or reset panda transmits nothing.", status: existing, ref: openpilot/selfdrive/pandad, allocated_to: [EL-07]}
@@ -487,7 +533,7 @@ measures:
   - {id: DM-07, description: "Panda-side configuration lock: accept only the safety model and parameter provisioned for the installed vehicle, reject changes while onroad, force alternative experience to 0 in release builds.", status: required, ref: "LD-DES-001 DR-01..DR-07", allocated_to: [EL-07]}
   - {id: DM-08, description: "Firmware authenticity: panda bootloader accepts only signed LionDriver release firmware, rejects downgrade, and flashing is allowed only offroad.", status: required, ref: "LD-DES-001 DR-10..DR-16", allocated_to: [EL-07]}
   - {id: DM-09, description: "Separate release gate for panda firmware and safety model (safety test suite, HIL, independent review), versioned independently of SoC software.", status: required, allocated_to: [process]}
-  - {id: DM-10, description: "Envelope derived from vehicle measurements independently of opendbc, with both channels' limits checked against it. For steering, authority limits derived physically per speed from controllability (lead decision DQ-007 C).", status: required, allocated_to: [process]}
+  - {id: DM-10, description: "Envelope derived from vehicle measurements independently of opendbc, with both channels' limits checked against it. For steering, authority limits derived physically per speed from controllability (lead decision DQ-007 C). Every limit derived independently of the controller tuning, with the controller set lower (lead decision DQ-055 A).", status: required, allocated_to: [process]}
   - {id: DM-11, description: "Panda blocks assist-active HUD and status bits when controls are not allowed. Reference build: LKAS_HUD with BARRIERS != 0 refused unless controls are allowed or were allowed within 1 s. Unit-tested; not verified on the vehicle.", status: existing_unverified, ref: opendbc_repo/opendbc/safety/modes/toyota.h, allocated_to: [EL-07]}
   - {id: DM-12, description: "Panda accepts diagnostic (ELM327) mode only offroad. Reference build: ELM327 refused once the car mode has been accepted, until the ignition is off (LD-DES-001 DR-05 without the stationary alternative). Unit-tested; HIL not run.", status: existing_unverified, ref: panda/board/reference_lock.h, allocated_to: [EL-07]}
   - {id: DM-13, description: "EMC/ESD immunity testing of device and harness (ISO 7637-2, ISO 11452, ISO 10605).", status: required, allocated_to: [process]}
@@ -501,7 +547,7 @@ measures:
   - {id: DM-21, description: "Panda reference-build configuration lock (TSR-512/513): only SILENT, NOOUTPUT, ELM327 and TOYOTA with parameter 73 are accepted; in TOYOTA only a downgrade to NOOUTPUT or SILENT; 0xdf refused; relay, CAN and comms commands refused in a car mode; refused requests counted in the health packet. Unit-tested in CI; HIL test not run.", status: existing_unverified, ref: panda/board/reference_lock.h, allocated_to: [EL-07]}
   - {id: DM-22, description: "The SoC does not configure a car safety mode, and raises pandaNotReferenceBuild, when the panda does not report HEALTH_FLAG_REFERENCE_BUILD (TSR-514, TSR-619).", status: existing_unverified, ref: openpilot/selfdrive/selfdrived/selfdrived.py, allocated_to: [EL-04]}
   - {id: DM-23, description: "Bench tests of the harness box failure behaviour: box unpowered with camera and car powered (pass-through continuity, CAN0/CAN2 levels), pull-down open, supply stress (WP-H-06 VS-HW-22, VS-HW-23, VS-HW-24; DFMEA DFM-ACT-014).", status: required, ref: assurance/04-hardware/WP-H-06-hardware-integration-verification.md, allocated_to: [process]}
-  - {id: DM-25, description: "A safety-mode change does not undo the panda's fault reactions: after a mode change authority needs cruise off and on again (DQ-080, SWSR-311), a TX-rate revocation persists (DQ-079, SWSR-518), and the EPS-fault, RX-check and relay-malfunction states are re-established before a grant; or the reference lock refuses re-entry to TOYOTA in the same ignition cycle while cruise is on. Partly coded in jherrodthomas/opendbc#15, not pinned.", status: required, ref: opendbc_repo/opendbc/safety/safety.h, allocated_to: [EL-07]}
+  - {id: DM-25, description: "A safety-mode change does not undo the panda's fault reactions: after a mode change authority needs cruise off and on again (DQ-080, SWSR-311), a TX-rate revocation persists (DQ-079, SWSR-518), and the EPS-fault, RX-check and relay-malfunction states are re-established before a grant; or the reference lock refuses re-entry to TOYOTA in the same ignition cycle while cruise is on. In the pinned code and unit-tested: the new engagement, the TX-rate block and the RX-check and EPS-fault re-establishment (opendbc 515b9a2, jherrodthomas/opendbc#15); the relay malfunction latched for the ignition cycle, TOYOTA refused until ignition off (panda 0a7da85, jherrodthomas/panda#17). Not verified on hardware.", status: existing_unverified, ref: opendbc_repo/opendbc/safety/safety.h, allocated_to: [EL-07]}
   - {id: DM-24, description: "The panda releases the ELM327 lock (DM-12) only on an ignition-off confirmed by a second source, for example no vehicle CAN traffic or zero vehicle speed for a set time, not on the harness ignition line alone.", status: required, ref: panda/board/reference_lock.h, allocated_to: [EL-07]}
 
 open_items:
@@ -557,8 +603,8 @@ open_items:
     text: >-
       Harness box (RR-2026-010): run the bench tests DM-23 and record what the unpowered switches do to the stock
       path and to CAN0, and what the reference cluster shows when the box loses power while driving (DFI-21). The
-      lead decides in DQ-209 whether to keep comma's box, build a LionDriver adapter, or require comma power; re-assess
-      DFI-20 and DFI-21 after the answer. Implement DM-24 in the panda reference build (handed to the panda software
+      lead kept comma's box (DQ-209 option A, 2026-10-16), so these tests are the route: re-assess DFI-20 and DFI-21
+      on their results; a failed test returns the decision to the lead (DQ-320). Implement DM-24 in the panda reference build (handed to the panda software
       work).
     affects: [DFI-08, DFI-20, DFI-21, DM-02, DM-23, DM-24]
     status: open

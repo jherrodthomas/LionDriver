@@ -51,7 +51,7 @@ def style_of(e: sysml_lite.Element | None, override: str | None = None) -> dict:
     return k.UNTRUSTED
   if scope != "inside":
     return k.OUTSIDE
-  if integ == "BDagger":
+  if integ in ("C", "BDagger"):
     return k.ENVELOPE
   if integ == "B":
     return k.ASIL_B
@@ -63,7 +63,7 @@ def integrity_pill(x, y, e: sysml_lite.Element, anchor="end", h=17, size=9.5):
   if integ is None:
     return "", 0
   label = k.INTEGRITY_LABEL[integ]
-  if integ == "BDagger":
+  if integ in ("C", "BDagger"):
     return k.pill(x, y, label, k.ENVELOPE["chip"], h=h, size=size, anchor=anchor)
   if integ == "B":
     return k.pill(x, y, label, k.ASIL_B["chip"], h=h, size=size, anchor=anchor)
@@ -571,7 +571,7 @@ class Canvas:
       if x + w > x0 + width:
         x, y = x0, y + 20
       integ = c.integrity()
-      fill, stroke = ("#FFEDD5", "#FDBA74") if integ == "BDagger" else (
+      fill, stroke = ("#FFEDD5", "#FDBA74") if integ in ("C", "BDagger") else (
         ("#FFF7ED", "#FED7AA") if integ == "B" else ("#FFFFFF", k.HAIR))
       out.append(k.rect(x, y, w, 16, fill, stroke, rx=4, sw=1))
       out.append(k.text(x + 6, y + 11.4, label, 8.8, k.INK2, 400, mono=True))
@@ -636,7 +636,7 @@ def legend(w: float, y: float, classes: list[str], spec: dict) -> list[str]:
     x += 34 + k.text_w(st["label"], 10.5) + 26
   x = 40
   yy = y + 50
-  swatches = [(k.ENVELOPE, "B‡ safety envelope"), (k.ASIL_B, "ASIL B element"), (k.SLATE, "QM element"),
+  swatches = [(k.ENVELOPE, "ASIL C safety envelope"), (k.ASIL_B, "ASIL B element"), (k.SLATE, "QM element"),
               (k.ML, "ML element (E-02)"), (k.OUTSIDE, "Outside the item"), (k.UNTRUSTED, "Untrusted")]
   for st, label in swatches:
     items.append(k.rect(x, yy - 10, 22, 14, st["fill"], st["stroke"], rx=4))
@@ -670,7 +670,7 @@ def node_label(e: sysml_lite.Element) -> tuple[str, bool]:
   return (e.short or Canvas.default_title(e)), False
 
 
-INTEGRITY_DOT = {"BDagger": "#C2410C", "B": "#FB923C", "QMBsup": "#475569", "QM": "#CBD5E1", "AoU": "#E2E8F0"}
+INTEGRITY_DOT = {"C": "#C2410C", "BDagger": "#C2410C", "B": "#FB923C", "QMBsup": "#475569", "QM": "#CBD5E1", "AoU": "#E2E8F0"}
 
 
 def render_hierarchy(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str:
@@ -766,7 +766,7 @@ def render_hierarchy(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> 
   legend_y = max_bottom + 24
   items = []
   lx = 40
-  for integ, label in (("BDagger", "B‡"), ("B", "ASIL B"), ("QMBsup", "QM (B-sup)"), ("QM", "QM")):
+  for integ, label in (("C", "ASIL C"), ("B", "ASIL B"), ("QMBsup", "QM (B-sup)"), ("QM", "QM")):
     items.append(f'<circle cx="{lx + 4}" cy="{k.f(legend_y + 26)}" r="4" fill="{INTEGRITY_DOT[integ]}"/>')
     items.append(k.text(lx + 14, legend_y + 30, label, 10.5, k.INK2))
     lx += 14 + k.text_w(label, 10.5) + 24
@@ -855,7 +855,7 @@ def render_matrix(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str
   items = []
   lx = 40
   for st, lab in ((k.SLATE, "performed by a QM element"), (k.ML, "by an ML element"),
-                  (k.ENVELOPE, "by a B‡ element")):
+                  (k.ENVELOPE, "by an ASIL C element")):
     items.append(f'<circle cx="{lx + 5}" cy="{k.f(legend_y + 26)}" r="5" fill="{st["chip"]}"/>')
     items.append(k.text(lx + 15, legend_y + 30, lab, 10.5, k.INK2))
     lx += 15 + k.text_w(lab, 10.5) + 20

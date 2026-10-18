@@ -1,0 +1,72 @@
+# Traffic presets of the hazardous-event scenes: illustrative road users placed relative to the ego, so a scene or a
+# variant can be busier or quieter without changing what it shows. They are drawn, not simulated (source
+# illustrative), and are never the critical road user. A scene's own `actors:` are added after its preset's.
+# test_scenes.py checks that a preset never changes the base scene's contact.
+#
+#   actors   name, kind (car, truck), lane (+ left of the ego lane; on rural and urban roads lane 1 is the oncoming
+#            lane) or d, ds_m (body centre ahead of the ego at t = 0; may use v_ego, the ego's initial speed in m/s),
+#            speed_rel_kph (added to the ego's initial speed; the default 0) or speed_kph, oncoming (true: drives
+#            toward the ego at the ego's speed plus speed_rel_kph), paint (RGB 0..1), lateral and accel (as an actor
+#            of scenes.yaml)
+#   jitter_m a variant moves each preset road user by up to this much along the road (seeded by the variant), so
+#            the same event under another condition does not look copied
+schema_version: 1
+traffic:
+  none:
+    title: No other traffic
+    actors: []
+
+  free-flow:
+    title: Light traffic in the other lanes, well clear of the ego
+    jitter_m: 8
+    actors:
+      - {name: car ahead left, kind: car, lane: 1, ds_m: 75, speed_rel_kph: 4, paint: [0.62, 0.64, 0.66]}
+      - {name: car far ahead, kind: car, lane: 0, ds_m: 160, speed_rel_kph: 0, paint: [0.12, 0.13, 0.15]}
+
+  dense:
+    title: Dense traffic in the other lanes, about a 1.5 s gap between road users
+    jitter_m: 5
+    actors:
+      - {name: car ahead left, kind: car, lane: 1, ds_m: 40, speed_rel_kph: 2, paint: [0.62, 0.64, 0.66]}
+      - {name: car left 2, kind: car, lane: 1, ds_m: "40 + 1.5 * v_ego + 4.63", speed_rel_kph: 2, paint: [0.55, 0.08, 0.08]}
+      - {name: truck ahead right, kind: truck, lane: -1, ds_m: 55, speed_rel_kph: -8}
+      - {name: car right 2, kind: car, lane: -1, ds_m: "55 + 1.5 * v_ego + 7.07", speed_rel_kph: -8, paint: [0.9, 0.9, 0.88]}
+
+  adjacent-truck:
+    title: A truck in the right lane just ahead of the ego (spray, occlusion)
+    jitter_m: 3
+    actors:
+      - {name: adjacent truck, kind: truck, lane: -1, ds_m: 14, speed_rel_kph: -3}
+
+  close-follower:
+    title: A car following the ego at a 1.0 s gap (OS-08)
+    jitter_m: 0
+    actors:
+      - {name: close follower, kind: car, lane: 0, ds_m: "-(1.0 * v_ego + 4.63)", speed_rel_kph: 0, paint: [0.7, 0.7, 0.74]}
+
+  cut-in:
+    title: A car in the right lane cuts in ahead of the ego (TC-07)
+    jitter_m: 0
+    actors:
+      - name: cutting-in car
+        kind: car
+        lane: -1
+        ds_m: 22
+        speed_rel_kph: -8
+        paint: [0.2, 0.32, 0.22]
+        lateral: [{t: 0.5, law: track, to: 0.0, wn: 0.9, ay_max: 1.5}]
+
+  oncoming:
+    title: Oncoming cars on an undivided road, beyond the scene's own critical one
+    jitter_m: 10
+    actors:
+      - {name: oncoming car 2, kind: car, lane: 1, ds_m: 230, oncoming: true, paint: [0.3, 0.3, 0.34]}
+      - {name: oncoming truck, kind: truck, lane: 1, ds_m: 330, oncoming: true, speed_rel_kph: -10}
+
+  parked:
+    title: Cars parked along the right kerb of an urban street
+    jitter_m: 2
+    actors:
+      - {name: parked car a, kind: car, d: -2.85, ds_m: 70, speed_kph: 0, paint: [0.55, 0.55, 0.52]}
+      - {name: parked car b, kind: car, d: -2.85, ds_m: 82, speed_kph: 0, paint: [0.1, 0.18, 0.32]}
+      - {name: parked car c, kind: car, d: -2.85, ds_m: 104, speed_kph: 0, paint: [0.6, 0.12, 0.1]}

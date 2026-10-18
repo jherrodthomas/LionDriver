@@ -133,7 +133,7 @@ faults:
     causes: [SFM-005]
     tsr: [TSR-110, TSR-516]
     injection: {point: EPS (EPS_STATUS LKA_STATE and assist), trigger: steady curve, duration: until the end of the run}
-    expected: LKA frames refused from the first fault frame; siren after 1 s persistence (T-28)
+    expected: LKA frames refused from the first fault frame; siren after 0.7 s persistence (T-28, DQ-048)
     wp_v_05: VS-FI-31
     road: curve
     t_fault: 7.0

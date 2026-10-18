@@ -107,7 +107,7 @@
 <text x="1050" y="624" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">lockout · N1 refuses ENABLE</text>
 <rect x="1166" y="609" width="74" height="22" rx="0" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="1203" y="624" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">1–30 min</text>
-<text x="1240" y="650" font-size="10" fill="#475569" text-anchor="end" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">policy.py:42-44</text>
+<text x="1240" y="650" font-size="10" fill="#475569" text-anchor="end" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">policy.py:47-49</text>
 <line x1="240" y1="696" x2="1140" y2="696" stroke="#94A3B8" stroke-width="1"/>
 <line x1="240" y1="696" x2="240" y2="702" stroke="#94A3B8" stroke-width="1"/>
 <text x="240" y="716" font-size="10.5" fill="#475569" text-anchor="middle">0 s</text>
@@ -137,7 +137,7 @@
 <text x="1203" y="716" font-size="10.5" fill="#475569" text-anchor="middle">+1 … 30 min</text>
 <text x="1140" y="732" font-size="10.5" fill="#475569" text-anchor="end">time (s), illustrative</text>
 <line x1="40" y1="740" x2="1240" y2="740" stroke="#E2E8F0" stroke-width="1"/>
-<text x="40" y="758" font-size="11" fill="#475569">Illustrative: the times between events are made up. Code values: the 3 s soft-disable (state.py:7; sm-selfdrived E1 "soft-disable timer = 3 s (300 cycles)") and the 1–30 min lockout (policy.py:42-44).</text>
+<text x="40" y="758" font-size="11" fill="#475569">Illustrative: the times between events are made up. Code values: the 3 s soft-disable (state.py:7; sm-selfdrived E1 "soft-disable timer = 3 s (300 cycles)") and the 1–30 min lockout (policy.py:47-49).</text>
 <text x="40" y="776" font-size="11" fill="#475569">Red band (GAP-16): for up to 3 s the host keeps commanding and the panda keeps allowing it; the envelope has no soft-disable of its own.</text>
 <text x="40" y="794" font-size="11" fill="#475569">After SD2 no record transition clears controls_allowed directly: the host requests a PCM cancel (controlsd.py, not in a record), the PCM drops cruise</text>
 <text x="40" y="812" font-size="11" fill="#475569">(AOU-05, unverified) and T2 clears; otherwise T6 clears after 3 heartbeat ticks (1 Hz) with engaged = 0. The hatched window marks that interval.</text>

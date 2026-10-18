@@ -3,9 +3,24 @@
 | Field | Value |
 |---|---|
 | Scope | Simulation for LionDriver; modelling-plan work item 4, the HIL plant ([models README](../models/README.md), MD-01, MD-04): fault-injection plant model (layer 1), known scenarios as OpenSCENARIO (layer 2), MetaDrive closed loop (layer 3), unknown-scenario search (layer 4) |
-| Version | 0.2 (layer 2, 2026-10-16). 0.1 (layer 1, 2026-10-16) |
+| Version | 0.12 (§3.8: layer 3 on a self-hosted runner, DQ-400 A, 2026-10-18). 0.11 (§1.1: how to read a scene dashboard, with an annotated overview and four spotlights, 2026-10-18). 0.10 (scenes outside the highway-only ODD tagged as misuse in the compilation and stills, 2026-10-18). 0.9 (3D compilation of the three Blender clips at the top, 2026-10-18). 0.8 (§3.7: loop diagram and animation for each ASIL C hazardous event the plant runs, 2026-10-18). 0.7 (pictures: hero strip, a figure per section from `figures/fig_sim_readme.py`, the existing renders and dashboards embedded, 2026-10-18). 0.6 (reference-car outline in the layer-1 figures, 2026-10-17). 0.5 (vehicle 3D-model note, 2026-10-17). 0.4 (§3.6: Julia retired, the bound computed exactly with numpy; 2026-10-17). 0.3 (reachability pilot, §3.6, 2026-10-16). 0.2 (layer 2, 2026-10-16). 0.1 (layer 1, 2026-10-16) |
 | Status | Draft. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed. **No result here is evidence until the model is validated against Corolla logs; until then results rank risks and guide tests only** (§4) |
 | Feeds | [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) timing (owned by the safety-concept session); [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) M4, [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md), [WP-V-04](../06-validation/WP-V-04-sotif-unknown-scenarios.md) (owned by the SOTIF session); previews [WP-V-05](../06-validation/WP-V-05-fault-injection.md) cases |
+
+![Looping 3D compilation of three Blender scenes, about 9 s, each labelled: HE-02.1 (ASIL C, inside the ODD), the Corolla running wide in a highway curve after losing EPS assist until the driver corrects; HE-01.1 (ASIL A, tagged outside the ODD as foreseeable misuse), a hard-over on a rural road taking the car across the centre line toward an oncoming car; SH-11 (SOTIF hazard, tagged outside the ODD as foreseeable misuse), a pedestrian stepping out from behind a parked truck in a city street; a red band on every frame reads synthetic, no evidence credit](figures/sim-reel-3d.webp)
+
+*3D compilation, cut at real speed from the three committed clips by [`figures/fig_sim_reel.py`](figures/fig_sim_reel.py); the stills below are for viewers that do not animate. The ODD is limited-access highways only ([WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md) §3, DQ-023): the rural and city scenes show engagement off the highway, which the HARA rates as foreseeable misuse, and why the system must refuse or warn there (FM-08).*
+
+![Three hazardous-event scenes rendered in Blender, cropped to their 3D view: the orange ego Corolla touching a car in the adjacent highway lane after a steering hard-over; the ego going straight on in a highway curve after losing EPS assist; the ego reaching a pedestrian who steps out from behind a parked truck in a city street](figures/sim-hero-dashboards.jpg)
+
+*Hard-over into the adjacent lane ([HE-01.2](blender/dashboards/he-01-2-hardover-adjacent.jpg), plant F-01b), EPS assist lost in a curve ([HE-02.1](blender/dashboards/he-02-1-eps-loss-curve.jpg), plant F-07), occluded pedestrian ([SH-11](blender/dashboards/sh-11-pedestrian-occluded.jpg), kinematic; a city street, outside the ODD); all 49 in the [gallery](blender/dashboards/README.md).*
+
+Clips (mp4, open to play): [HE-01.1 rural hard-over toward oncoming traffic](blender/dashboards/clips/he-01-1-rural-hardover-oncoming.mp4) ·
+[HE-02.1 EPS loss in a curve](blender/dashboards/clips/he-02-1-eps-loss-curve.mp4) ·
+[SH-11 occluded pedestrian](blender/dashboards/clips/sh-11-pedestrian-occluded.mp4).
+
+> **Pictures only.** Every image on this page is synthetic data (DSR-12) and earns no evidence credit (§4). The
+> diagrams restate this page's text; the renders and plots come from plant runs or kinematic motions under stated assumptions.
 
 ## 1. Where things are
 
@@ -13,17 +28,33 @@ Everything the simulation track adds lives in `assurance/sim/`: code next to the
 the figure tools of the other work products do. The MetaDrive bridge stays where openpilot keeps it,
 `openpilot/tools/sim/` (layer 3).
 
+The Blender scenes ([`blender/`](blender/README.md)) sit beside the layers, not in them: one scene per HARA hazardous
+event and SOTIF hazard takes the motion of a layer-1 plant run, or a kinematic motion where the plant cannot represent
+the situation, writes it to `scene.json`, has it rendered in Blender and composed into a review dashboard and, for
+some, a clip. They are for review and earn no credit.
+
+![Overview: faults.yaml feeds layer 1, the plant model with the real panda safety code (built); WP-V-03 feeds layer 2, the known scenarios (9 of 26 built); layer 1 feeds layer 4, the failure search and reachability bound (prototype); layer 2 and the panda code feed layer 3, MetaDrive (planned); plant runs or kinematic motions go through scene.json and a Blender render to a dashboard and clip; results only rank risks and guide tests](figures/fig-sim-r1-overview.svg)
+
+*Figure 1. The four layers and the Blender scenes; generated by [`figures/fig_sim_readme.py`](figures/fig_sim_readme.py) from this page (CI fails if stale).*
+
 | Path | Content |
 |---|---|
 | [`faults.yaml`](faults.yaml) | Fault catalog: each fault with its FMEA causes, TSRs, injection point, trigger, duration and expected mechanism |
 | [`INTERFACE.md`](INTERFACE.md) | Plant interface: signals, units and rates shared by every harness |
 | [`plant/`](plant/) | Layer 1: the fault-injection plant model and its tests; the plant itself is [`plant/plant.py`](plant/plant.py) |
 | [`plant/fmu/`](plant/fmu/) | The same plant as an FMI 2.0 co-simulation FMU (built, not committed), and its test under FMPy |
+| [`plant/modelica/`](plant/modelica/SteeringColumn.mo) | Fidelity L2: the steering column in Modelica, its OpenModelica FMU build (pinned lock) and tests |
+| [`plant/override.py`](plant/override.py), [`results/override-l2.md`](results/override-l2.md) | Driver override against LKA torque on the L2 column (SG-05), and its table (generated) |
 | [`scenarios/`](scenarios/README.md) | Layer 2: WP-V-03 known scenarios as OpenSCENARIO/OpenDRIVE files, their generator and the esmini replay |
 | [`results/scenario-replay.md`](results/scenario-replay.md) | Layer 2 replay checks (generated) |
 | [`results/plant-results.md`](results/plant-results.md) | Layer 1 results table, event log and model inputs (generated) |
-| [`figures/`](figures/) | Layer 1 figures, one per selected case (generated) |
+| [`search/`](search/search.py) | Layer 4: failure search (Monte Carlo and cross-entropy) over the plant model |
+| [`results/search-curve-assist-loss.md`](results/search-curve-assist-loss.md) | Layer 4 search results (generated) |
+| [`figures/`](figures/) | This page's diagrams and hero strip ([`fig_sim_readme.py`](figures/fig_sim_readme.py)), the ASIL C loops and animations of §3.7 ([`fig_sim_he.py`](figures/fig_sim_he.py)), the 3D compilation at the top ([`fig_sim_reel.py`](figures/fig_sim_reel.py)), the dashboard guide of §1.1 ([`fig_sim_guide.py`](figures/fig_sim_guide.py)); layer 1 figures, one per selected case (generated); the ego is drawn from [`figures/corolla-e210-silhouette.json`](figures/corolla-e210-silhouette.json), the reference car's outline ([vehicle-3d-model.md](vehicle-3d-model.md) §6) |
+| [`reach/`](reach/reach_compare.py) | Reachability bound (exact, numpy): the drift under any LKA command the panda passes, and its check against sampled runs (§3.6) |
 | [`requirements.txt`](requirements.txt) | Pinned Python packages of the track |
+| [`blender/`](blender/README.md) | Hazardous-event scenes: plant runs drawn as animated Blender scenes and review dashboards (pictures only, no evidence credit) |
+| [`vehicle-3d-model.md`](vehicle-3d-model.md) | Layer 3 asset note: which Corolla E210 mesh to buy for the MetaDrive ego car and the figures, what it does and does not change, and the handover for the next session (DQ-368) |
 
 ```sh
 git submodule update --init opendbc_repo panda
@@ -33,18 +64,94 @@ python3 assurance/sim/plant/report.py --check   # CI: fail if the committed outp
 python3 assurance/sim/plant/test_plant.py       # unit tests (CI)
 ```
 
+### 1.1 Reading a scene dashboard
+
+Every Blender scene ends in one review dashboard ([gallery](blender/dashboards/README.md)). They all share one layout.
+The guide below uses [HE-02.1](blender/dashboards/he-02-1-eps-loss-curve.jpg), the EPS assist lost in a highway curve
+(ASIL C, a plant run with the real panda code). Like the dashboards, it is synthetic (DSR-12) and earns no evidence
+credit.
+
+![The HE-02.1 dashboard with its ten panels outlined in amber and numbered: 1 header strip across the top, 2 hazardous-event card top left, 3 ego state below it, 4 the large 3D view in the centre, 5 forward and top views on the right, 6 outcome tiles under the 3D view, 7 event list bottom right, 8 the row of plots, 9 the filmstrip of stills, 10 the footer line](figures/sim-guide-0-overview.jpg)
+
+*Figure 1.1. The ten panels of a scene dashboard; the key below says what each one shows.*
+
+1. **Header strip**: the scene, its event and ASIL, and the **motion source**, which says how far to trust the
+   motion. *Plant* means a layer-1 run with the real panda safety code in the loop. *Kinematic* means stated
+   accelerations with no item code at all. Also the road, the light, the start speed, and the time shown, counted
+   from the fault.
+2. **Hazardous-event card**: the HARA or SOTIF entry: hazard, situation, effect, and S, E, C and ASIL. Its footnote
+   is part of the reading: the ratings are WP-C-03 proposals, not approved.
+3. **Ego state**: the car's speed, accelerations and lateral offset at the time shown, its **margin to the lane line**
+   (red once negative), and the EPS LKA torque.
+4. **3D view**: the scene at the time shown. Each road user's label names its source: plant, kinematic, or
+   *illustrative* (drawn, not simulated). The banner at the bottom names the current event.
+5. **Forward and top views**: roughly what the driver sees, and the path from above with "ghosts" of the car at
+   each event.
+6. **Outcome tiles**: time from the fault, offset, when the body reaches the lane line, the peak offset, and contact.
+   A contact is reported where two outlines first overlap; what happens after it is not modelled.
+7. **Event list**: the run's events with their times. In a plant scene these are the panda's own decisions (refuse,
+   revoke, siren) and the driver model's cue and correction.
+8. **Plots**: each signal over the whole run. The red dashed line is the fault, the white line the time shown, and the
+   yellow dashed lines the thresholds: the lane line for the offset, a time to collision where a gap is shown.
+9. **Filmstrip**: a still at each key event; the outlined one is the time shown.
+10. **Footer**: where the motion came from (plant case and its overrides, or the kinematic assumptions) and the
+    synthetic label.
+
+![Spotlight 1: the HE-02.1 dashboard dimmed except the header strip and the hazardous-event card, outlined and numbered 1 and 2](figures/sim-guide-1-what.jpg)
+
+*Spotlight 1. What is this scene? Panels 1 and 2: the event, its rating and the motion source.*
+
+![Spotlight 2: the dashboard dimmed except the 3D view, the forward and top views and the filmstrip, numbered 4, 5 and 9](figures/sim-guide-2-happens.jpg)
+
+*Spotlight 2. What happens? Panels 4, 5 and 9: the car running wide in the curve, seen three ways.*
+
+![Spotlight 3: the dashboard dimmed except the ego state, the outcome tiles and the event list, numbered 3, 6 and 7](figures/sim-guide-3-close.jpg)
+
+*Spotlight 3. How close did it get? Panels 3, 6 and 7: here the body is on the lane line at 2.00 s and the driver
+corrects at 2.29 s.*
+
+![Spotlight 4: the dashboard dimmed except the row of plots, numbered 8, showing speed, accelerations, lateral offset and EPS torque against time](figures/sim-guide-4-time.jpg)
+
+*Spotlight 4. How does it unfold? Panel 8: the offset crosses the yellow lane-line threshold after the red fault line.*
+
+**What a dashboard cannot tell you.**
+
+- *Perception.* Nothing in the scenes models a camera. Low sun, night, faded markings or an occluding truck are drawn
+  in the scene, not simulated.
+- *Contact.* An overlap is reported, with the relative speed there; the collision itself is not modelled.
+- *The item, in a kinematic scene.* No panda code runs. The scene shows the hazardous behaviour the entry describes
+  and what the stated driver does about it.
+- *A rating.* The S, E, C and ASIL shown are the HARA's proposals, and the scene is not evidence for them.
+
+The images are drawn from the committed HE-02.1 dashboard by [`figures/fig_sim_guide.py`](figures/fig_sim_guide.py).
+CI fails if that dashboard changes, so the boxes are redrawn whenever its layout moves.
+
 ## 2. Layers: what each can and cannot show
+
+![Four cards, one per layer, each with its status and what it can and cannot show: layer 1 plant model built, layer 2 known scenarios built for 9 of 26, layer 3 MetaDrive closed loop planned, layer 4 unknown-scenario search prototype](figures/fig-sim-r2-layers.svg)
+
+*Figure 2. The table below in short form; the table is the full wording.*
 
 | Layer | Status | Can show | Cannot show |
 |---|---|---|---|
 | 1. Fault-injection plant model (`plant/`) | Built | What the **real panda safety code** of the reference build does with each injected fault, frame by frame and in time: refusal, revocation, siren, IWDG reset, relay-malfunction detection. How far the car moves meanwhile under stated EPS, PCM and driver assumptions, against the WP-S-04 §3 kinematic estimates. Which assumptions decide the outcome (sensitivity runs) | Anything the assumptions decide: the EPS reaction to lost frames, the torque-to-lateral-acceleration gain, the driver. The SoC: openpilot is replaced by a perfect-perception controller, so no SoC alert, no model or planner fault. Interrupt latency and bus load on the real MCU. Tyre limits beyond the linear single-track model. Results are not measurements and not code-derived times |
 | 2. Known scenarios as data (OpenSCENARIO + OpenDRIVE, esmini) | Built for 9 of the 26 WP-V-03 scenarios; the reasons for the others are listed ([scenarios](scenarios/README.md)) | That each WP-V-03 scenario that simulation can represent is written down unambiguously, parses and replays headless; the same road and traffic used by layers 1 and 3 | Any behaviour of the item: esmini plays the scenario with its own simple controllers |
 | 3. MetaDrive closed loop (`openpilot/tools/sim`) | Planned (backlog item 3) | The full openpilot stack driving on rendered images, with the Corolla CarParams and the panda safety code in the loop, in WP-V-03 scenarios with traffic: lateral and longitudinal behaviour, alert timing, outcome class | Camera realism, sensor faults, the real EPS and PCM; credit only per scenario family after the WP-V-02 §5.3 fidelity case (DQ-139) |
-| 4. Unknown-scenario search (Scenic with VerifAI) | Planned (backlog item 4) | Parameter regions of layer 2/3 scenarios where the item fails, to direct closed-course tests (WP-V-04 U-4) | That no other failure exists; a rate of failure in the real ODD |
+| 4. Unknown-scenario search | Prototype over the plant model: seeded Monte Carlo and cross-entropy falsification in plain numpy (§3.4). Scenic with VerifAI was the plan; it is not used, because Scenic requires a package published without a licence (§5) | Parameter regions of layer 2/3 scenarios where the item fails, to direct closed-course tests (WP-V-04 U-4) | That no other failure exists; a rate of failure in the real ODD |
+
+![Mock-up of a layer-3 MetaDrive clip frame: plan view of a scenario with the Corolla and a lead vehicle, and an instrument strip with scenario, time, speed, engaged state, lateral error, alert and outcome class; illustrative numbers](figures/fig-sim-mock-02-metadrive-frame.svg)
+
+*Figure 3. Mock-up of what a layer-3 clip frame will show (illustrative numbers, not a result; [vehicle-3d-model.md](vehicle-3d-model.md) §7 has the other mock-ups).*
 
 ## 3. Layer 1: fault-injection plant model
 
 ### 3.1 Loop
+
+![The layer-1 loop: SoC stand-in (model) to host frames (real opendbc code) to the panda safety code (real, reference build) to the harness switch (model) to the EPS and PCM (assumed) to the CommonRoad single-track Corolla (model); perfect perception back to the SoC, car-bus RX back to the panda; the driver (assumed) reacts 1.5 s after a cue; orange tags mark where faults F-01 to F-08 and L-01 to L-04 are injected](figures/fig-sim-r3-loop.svg)
+
+*Figure 4. Blue is real code, grey a model, dashed amber an assumption; the tags are the §3.3 fault injection points.*
+
+<details><summary>Text version of Figure 4</summary>
 
 ```
 SoC stand-in ── STEERING_LKA 100 Hz, ACC_CONTROL 33 Hz, heartbeat 10 Hz ──▶ panda safety code (real)
@@ -55,6 +162,8 @@ CommonRoad single-track Corolla ◀── EPS model, PCM model ◀────�
      └─ driver model ────────────────────┘
 car bus RX at the nominal rates (0xAA, 0x260, 0x262, 0x1D2, 0x1D3, 0x226) ──▶ panda RX hook and 100 Hz safety task
 ```
+
+</details>
 
 | Part | Real code or model | Detail |
 |---|---|---|
@@ -91,6 +200,10 @@ of opendbc's `scale_rot_inertia`), and the body width checked in WP-V-02 §3.5. 
 rate stay at vehicle 2. With one normalised cornering stiffness front and rear the single-track model is neutral-steer;
 the test suite checks it. Nothing is measured on the reference car (WP-S-04 M-01).
 
+![Render of the reference Corolla E210 sedan, three-quarter front view, grey body on a white floor](figures/corolla-e210-render-three-quarter.png)
+
+*Figure 5. The reference car's mesh ([vehicle-3d-model.md](vehicle-3d-model.md)): it gives the figures their outline; the plant takes only the parameters above.*
+
 ### 3.3 Faults and measurements
 
 The faults are those of the backlog, each traced to its FMEA rows and to the WP-V-05 case it previews:
@@ -111,15 +224,230 @@ Figures follow the layout the lead approved: a top-down lane view with the ego p
 time with the 0.5 s FTTI band and the lane-line thresholds, and an event timeline. They use colour tokens with a dark
 variant, so they read in either theme.
 
+![Plant case F-01b, hard-over within the panda envelope at 110 km/h: top-down lane view with the ego path drifting to the lane line, lateral deviation against time with the 0.5 s FTTI band and the lane-line thresholds, and the event timeline up to the driver correction at 2.64 s](figures/fig-sim-f-01b.svg)
+
+*Figure 6. Case F-01b, torque ramped at the panda's limit to full scale; the others: [F-03](figures/fig-sim-f-03.svg), [F-04a](figures/fig-sim-f-04a.svg), [F-05](figures/fig-sim-f-05.svg), [F-07](figures/fig-sim-f-07.svg).*
+
+![Review dashboard of HE-01.2: the F-01b hard-over drawn as a Blender scene, the ego touching a car in the adjacent lane at 10 km/h relative, with the ego state, gap and lateral-offset plots and the event list](blender/dashboards/he-01-2-hardover-adjacent.jpg)
+
+*Figure 7. The same kind of run as a review scene (HE-01.2), with an adjacent car the plant does not simulate; contact is not modelled.*
+
+### 3.4 Failure search (layer 4)
+
+[`search/search.py`](search/search.py) searches one family, loss of lateral assistance in a highway curve (the EPS
+fault of case F-07), over speed, curve lateral acceleration, lane width, driver reaction time and drift cue. It maps
+where departures happen with seeded uniform Monte Carlo samples, then runs a cross-entropy falsification search for
+the worst cases. Robustness is the margin from the body edge to the lane line. The share of departing samples
+describes the sampled box, not a probability on the road. The results rank where bench and closed-course tests should
+look first (WP-V-04 U-4); the search over MetaDrive and the scenario files comes after layer 3 runs end to end.
+
+![Search map for loss of lateral assistance in a highway curve: Monte Carlo samples against curve lateral acceleration and driver reaction time, red where the body edge crossed the lane line and blue where it stayed in, with rings at the cross-entropy worst cases](figures/fig-search-curve-assist-loss.svg)
+
+*Figure 8. Where the departures are in the sampled box (not a probability on the road); the family's case as a scene: [HE-02.1 dashboard](blender/dashboards/he-02-1-eps-loss-curve.jpg), [clip](blender/dashboards/clips/he-02-1-eps-loss-curve.mp4).*
+
+### 3.5 L2 steering column and the driver-override study (SG-05)
+
+The L1 EPS is a torque command with a first-order lag: it has no steering wheel, no torsion bar and no driver torque,
+so it cannot show what happens when the driver steers against LKA (Figure 9). [`plant/modelica/SteeringColumn.mo`](plant/modelica/SteeringColumn.mo)
+adds that, in plain Modelica without libraries: the steering wheel inertia (driver torque in), the torsion bar (its
+torque is what the EPS reports as STEER_TORQUE_DRIVER), and the lower column, motor and rack as one inertia held by a
+rack stiffness. The motor follows the LKA command through the same lag as L1, up to a torque limit.
+OpenModelica 1.27.1 (tool TL-44, TCL1 while no credit is taken) exports it as an FMI 2.0 FMU with CVODE inside
+([`build_column_fmu.py`](plant/modelica/build_column_fmu.py)); the environment is an explicit conda lock, every
+package pinned by URL and md5 ([`omc-linux-64.lock`](plant/modelica/omc-linux-64.lock)). The FMU is a build product.
+
+**Checks (TL-44 detection).** [`test_column.py`](plant/modelica/test_column.py): the steady states (hands off, driver
+only, motor limit) against the analytic values; the motor step response against 1 − e^(−t/τ) (within 1e-3); and
+back-to-back with the L1 EPS on the same command sequence (within 3 % of full scale, the forward-Euler step of L1).
+The rack stiffness is set so that full LKA torque gives the L1 steady state (LAT_ACCEL_FACTOR at 110 km/h).
+
+**Override study.** [`plant/override.py`](plant/override.py) holds full LKA torque to one side and lets the driver ramp
+torque to the other. Around the FMU run the real panda code (reference build) and the Toyota car controller's own
+rule: LKA is dropped when |STEER_TORQUE_DRIVER| reaches `MAX_USER_TORQUE` (500 units). The panda does not act on
+driver torque on the LKA path (TSR-304 not implemented, GAP-02), so that host rule is the only override path. Two
+scales decide the result and are not known: what 1500 LKA units and 500 driver-torque units are in N·m. Both are
+swept, with the driver's peak torque and rise time. Under these assumptions ([table](results/override-l2.md)):
+
+- the host drops LKA within 0.2 s of the driver's input only where the driver's torque passes the host threshold
+  quickly; with a slow or light driver, or a high threshold, it does not;
+- where the driver's peak stays below the threshold, LKA is never dropped and keeps steering against the driver;
+- after the drop, the motor torque falls below 5 % after a further ≈ 0.36 s (three motor time constants of the
+  assumed lag), so 0.41–0.77 s after the driver's input in the sweep.
+
+Every column parameter is an assumption until M-02 (SIM-OI-7), and both scales are measurement items (SIM-OI-8).
+
+![The L2 column: driver torque on the steering wheel, a torsion bar whose torque is STEER_TORQUE_DRIVER, the column, motor and rack held by a rack stiffness; the LKA command reaches the motor through a lag and limit; the host drops LKA when the driver torque reaches 500; the panda does not act on driver torque; results of the sweep and the two unknown N·m scales](figures/fig-sim-r4-column.svg)
+
+*Figure 9. The column and the one override path (the host's `MAX_USER_TORQUE` rule), with the sweep's findings.*
+
+**When M-08 has measured the scales**, one run puts them in:
+
+```sh
+python3 assurance/sim/plant/modelica/build_column_fmu.py      # prints the FMU path (build/sim-column/...)
+python3 assurance/sim/plant/override.py --fmu build/sim-column/SteeringColumn.fmu \
+    --scales driver=<N·m per STEER_TORQUE_DRIVER unit>,lka=<N·m at the column per LKA command unit> \
+    --source "<M-08 record>"
+```
+
+It runs the driver sweep at those two scales and writes [`results/override-l2-m08.md`](results/) beside the
+swept table, which stays. `--source` is required, so every measured table names its record. The column parameters
+remain assumed, so the result stays synthetic. When that table is committed, add the same command with `--check` to
+the 'simulation L2 column' CI job.
+
+### 3.6 Reachability bound: the drift under any LKA command the panda passes
+
+The fault-injection runs sample command sequences; a reachable set covers all of them.
+
+- **Case.** Straight road at 110 km/h (ODD-H bound), engaged, no driver input. From t = 0 a faulty host sends any LKA
+  command the panda passes. Horizon 3 s, past the driver's correction in the hard-over run (drift cue 0.2 m plus
+  reaction time 1.5 s, the plant's driver model: 2.64 s).
+- **Model.** The L1 plant (CommonRoad single-track Corolla, EPS lag, steering tracking) linearised numerically at that
+  speed, with the LKA command u as input ([`reach_inputs.py`](reach/reach_inputs.py) → `model.json`).
+- **Input set.** The panda (Toyota, torque-motor limited) lets |u| grow by at most 15 units per 10 ms frame from the 0
+  sent before the fault, and lets it fall toward 0 within one frame. A symmetric rate limit on u would therefore not
+  be sound; the sound description is the envelope |u| ≤ min(1500, 15 (k + 1)) in frame k.
+- **Bound** ([`reach_compare.py`](reach/reach_compare.py)). With one bounded input and a linear model, the reachable
+  set's support function in the direction of y or ψ is |impulse response| × envelope, summed or integrated, so the
+  bound is exact and needs no reachability tool:
+  - *held per step* (the bound): commands held over each 5 ms plant step, the plant's own input structure; a sum
+    over plant steps;
+  - *any input in the envelope*: commands may also change between plant steps; an integral by quadrature;
+  - *no panda ramp*: |u| ≤ 1500 from t = 0, for comparison.
+- **Checks** (`reach_compare.py --check`, [`test_reach.py`](reach/test_reach.py), in the 'simulation plant model' CI
+  job): every sampled run of the same linear model lies inside the bound (62 runs with the real panda code in the
+  loop: the two hard-overs and 60 seeded random command sequences within what the panda passes), and the nonlinear
+  plant runs lie inside it widened by the linearisation error measured on the same runs (0.045 m in y; measured, not
+  proven).
+
+Results (generated): [`reach/results/reach.md`](reach/results/reach.md) and
+[`reach/results/reach-y.svg`](reach/results/reach-y.svg).
+
+![Reachability bound: upper bound of the lateral offset and heading from fault onset under any LKA command the panda passes, with and without the panda ramp, against the sampled runs of the nonlinear plant and the driver correction time of the hard-over run](reach/results/reach-y.svg)
+
+*Figure 10. The bound and the sampled runs; the hard-over run reaches the bound.*
+
+```sh
+python3 assurance/sim/reach/reach_inputs.py     # model.json and samples.json (about 7 s)
+python3 assurance/sim/reach/reach_compare.py    # the bound, the table and the figure (about 1 s)
+python3 assurance/sim/reach/test_reach.py
+```
+
+**What it shows.** Every sampled run lies inside the bound, and the hard-over run reaches it: under any command the
+panda passes, the linear model drifts at most 3.27 m by the driver's correction (2.64 s), and the hard-over is that
+worst case (the nonlinear plant's hard-over: 3.31 m). So a hard-over run is the right case to study for lateral drift
+under an LKA torque fault. Without the panda's ramp the bound would be 5.17 m at 2.64 s and 18 times larger at 0.2 s
+(3.7 mm against 0.2 mm): the ramp is what keeps the first 0.2 s small. The bound covers the linear model on a straight
+road at one speed only, and earns no credit (DQ-139).
+
+**Julia pilot, retired 2026-10-17.** The bound was first computed with Julia and JuliaReach (tool TL-46, #155, at the
+coordinator's request). Its exact zonotope recursion (LazySets) gave the same values as the numpy sum to rounding.
+The general-purpose continuous-time method (ReachabilityAnalysis.jl 0.33.0, GLGM06) depended on its discretisation
+setting: `Forward()` gave 1.07 times the exact bound at the correction; the package default gave 2.19 m at 0.2 s
+(about 10⁴ times the exact bound) and 2847 m at the correction; `CorrectionHull` failed inside GLGM06. The result
+equals a short numpy sum, the general method was only trustworthy once checked against that sum, and it brought 134
+packages into CI. The coordinator retired the job and TL-46 and kept the numpy computation as the cross-check. The
+pilot's code, pins and CI output stay in the history of #155. Reconsider a reachability tool only for a question
+with no closed form: the nonlinear tyre model, a curved road, or the panda's mode switching as a hybrid system.
+
+### 3.7 The ASIL C hazardous events in the loop
+
+Seven hazardous events are rated ASIL C in [WP-C-03](../02-concept/WP-C-03-hara.md) §5, and none is ASIL D. HE-01.2,
+HE-01.4 and HE-03.3 would become ASIL D if the assumptions they credit fail (WP-C-03 §5.12). Four of the seven have a
+plant run behind their scene. For each of those, a loop diagram shows the §3.1 loop with that run's path: where the
+fault enters, what each part does with it and when, and who stops it. An animation of the same run follows. Both are
+drawn by [`figures/fig_sim_he.py`](figures/fig_sim_he.py), which runs the plant itself. The 'simulation plant model' CI
+job fails if WP-C-03's list of ASIL C events changes, or if a run no longer shows the reaction a diagram describes.
+The road in the animations is drawn straight; in the two curve runs the offset is measured from the curve's lane centre.
+
+**HE-01.2, hard-over into the adjacent lane** (plant run F-01b). The panda passes the hard-over: the ramp stays inside the envelope, and there is no siren. Only the driver ends it, after the 0.2 m drift cue and the 1.5 s reaction.
+
+![Loop diagram of HE-01.2, plant run F-01b on a straight highway: the SoC commands a hard-over within the envelope; the host frames, the panda, the harness switch and the EPS all pass it on; the car's body reaches the 3.7 m lane line at 1.77 s; the driver, cued by the 0.2 m drift at 1.14 s, corrects from 2.64 s](figures/fig-sim-he-01-2-loop.svg)
+
+*Figure 11. HE-01.2 in the loop: what each part does with the fault, when, and who stops it.*
+
+![Animation of HE-01.2: the Corolla drifts right across the lane line on a straightened highway while the offset plot's cursor runs from 1 s before the fault to 4.6 s after it, and the events light up: fault at 0, drift cue 1.14 s, body on the lane line 1.77 s, correction 2.64 s](figures/fig-sim-he-01-2-anim.svg)
+
+*Figure 12. The same run, looping (it plays in a browser; a viewer that shows the SVG as a still shows 1 s before the fault). Scene: [dashboard](blender/dashboards/he-01-2-hardover-adjacent.jpg).*
+
+**HE-01.4, torque while driving manually** (plant run F-02). The panda refuses the frame at once because the item is not engaged, so nothing reaches the car. The diagram shows the reference build's check doing its job; the rating still rests on AOU-01/02.
+
+![Loop diagram of HE-01.4, plant run F-02 on a straight highway while not engaged: the SoC sends a torque request; the panda refuses STEERING_LKA at 0.000 s; the switch, the EPS, the vehicle and the driver are not involved; the car stays in its lane](figures/fig-sim-he-01-4-loop.svg)
+
+*Figure 13. HE-01.4 in the loop: what each part does with the fault, when, and who stops it.*
+
+![Animation of HE-01.4: the Corolla stays in the centre of its lane on a straightened highway, the offset plot stays at zero, and the events light up: fault at 0 and the panda's refusal at 0](figures/fig-sim-he-01-4-anim.svg)
+
+*Figure 14. The same run, looping (it plays in a browser; a viewer that shows the SVG as a still shows 1 s before the fault). Scene: [dashboard](blender/dashboards/he-01-4-not-engaged-torque.jpg).*
+
+**HE-02.1, EPS assist lost in a curve at R_ODD** (plant run F-07). The panda sees the EPS fault on the bus: it refuses and revokes within 0.05 s and sounds the siren at 0.79 s, but it cannot restore steering. The driver ends it, cued by the siren.
+
+![Loop diagram of HE-02.1, plant run F-07 in a left curve at R_ODD: the fault enters at the EPS (LKA_STATE 9, assist lost); the panda reads it on the car bus, refuses LKA frames at 0.005 s, revokes at 0.048 s and sounds the siren at 0.79 s; the car runs wide and its body reaches the lane line at 1.97 s; the driver corrects from 2.29 s](figures/fig-sim-he-02-1-loop.svg)
+
+*Figure 15. HE-02.1 in the loop: what each part does with the fault, when, and who stops it.*
+
+![Animation of HE-02.1: on the straightened curve the Corolla drifts toward the outside across the lane line while the offset plot's cursor runs to 4.3 s, and the events light up: fault, refusal, revocation, siren at 0.79 s, body on the lane line at 1.97 s, correction at 2.29 s](figures/fig-sim-he-02-1-anim.svg)
+
+*Figure 16. The same run, looping (it plays in a browser; a viewer that shows the SVG as a still shows 1 s before the fault). Scene: [dashboard](blender/dashboards/he-02-1-eps-loss-curve.jpg), [clip](blender/dashboards/clips/he-02-1-eps-loss-curve.mp4).*
+
+**HE-07.1, the item stops steering in a curve without a warning** (plant run F-04b). The panda revokes authority when the heartbeat stops but sounds no siren in this run, so the driver gets no warning. They notice only the drift, and correct later than in HE-02.1.
+
+![Loop diagram of HE-07.1, plant run F-04b in a left curve at R_ODD: the SoC stalls and heartbeat and commands stop; the panda revokes authority at 0.048 s with no siren; the EPS gets no torque and the car runs wide, its body on the lane line at 1.97 s; the driver, cued only by the 0.2 m drift at 1.18 s, corrects from 2.68 s](figures/fig-sim-he-07-1-loop.svg)
+
+*Figure 17. HE-07.1 in the loop: what each part does with the fault, when, and who stops it.*
+
+![Animation of HE-07.1: on the straightened curve the Corolla drifts toward the outside, further than in HE-02.1, while the offset plot's cursor runs to 4.7 s, and the events light up: fault, revocation, drift cue at 1.18 s, body on the lane line at 1.97 s, correction at 2.68 s](figures/fig-sim-he-07-1-anim.svg)
+
+*Figure 18. The same run, looping (it plays in a browser; a viewer that shows the SVG as a still shows 1 s before the fault). Scene: [dashboard](blender/dashboards/he-07-1-mode-confusion-curve.jpg).*
+
+**The other three have no loop.** [HE-03.3](blender/dashboards/he-03-3-accel-toward-slower-lead.jpg) (acceleration
+toward the lead), [HE-06.1](blender/dashboards/he-06-1-stationary-decel-lost.jpg) (deceleration lost before a
+stationary car) and [HE-07.3](blender/dashboards/he-07-3-believes-acc-active.jpg) (the driver believes ACC is active)
+have kinematic scenes only. No panda code ran in them, so a loop diagram would claim something the scene does not show.
+A loop for them needs longitudinal plant cases for their situations first.
+
+### 3.8 Layer 3 in CI: the self-hosted runner (DQ-400, option A)
+
+The closed-loop MetaDrive run (the 'simulator driving' job in `.github/workflows/tests.yaml`, PR #124) cannot keep real
+time on GitHub's free 4-core runners: the rendered terrain takes about 160 ms per camera frame, about 6 frames/s
+against the 20 openpilot needs, and the driving model then drops a third of its frames. The lead chose a self-hosted
+runner (DQ-400, option A, 2026-10-18). The job now runs on a runner labelled `liondriver-sim`:
+
+- **Only trusted code.** It runs for pushes and for pull requests from this repository's own branches; a fork's pull
+  request never reaches the runner.
+- **Off until switched on.** It runs only when the repository variable `LIONDRIVER_SIM_RUNNER` is `true`. Until then it
+  is skipped, as it was before, rather than waiting for a runner that does not exist.
+
+**Setting it up (the lead, once):**
+
+1. A Linux x64 machine that can stay on during CI: Ubuntu 24.04, or Ubuntu 24.04 under WSL2 on Windows. A graphics
+   card is what makes the scene render in real time; whether it is used through EGL on that machine is shown by the
+   first run.
+2. GitHub → the repository → Settings → Actions → Runners → **New self-hosted runner** → Linux, x64. Run the commands
+   it shows on the machine, and add the label `liondriver-sim` when `config.sh` asks for labels. Install it as a
+   service (`sudo ./svc.sh install && sudo ./svc.sh start`) so it survives restarts.
+3. The job installs packages with `sudo apt-get`, so the runner's user needs passwordless sudo for `apt-get`.
+4. Settings → Actions → General → **Fork pull request workflows from outside collaborators**: require approval for all
+   outside collaborators.
+5. Settings → Secrets and variables → Actions → Variables → **New repository variable**: `LIONDRIVER_SIM_RUNNER` =
+   `true`. The next push runs the job.
+
+What the first run shows (frame rate, whether openpilot engages, the bridge test result) goes into SIM-OI-4 as CI shows
+it.
+
 ## 4. Credit and hand-back
+
+![Evidence gate: a result from layers 1 to 4 counts only if a WP-V-02 §5.3 fidelity case is approved for its scenario family (DQ-139); today no family has one, so results rank risks and guide bench and car tests; results are handed back to the safety-concept, SOTIF and System FMEA sessions](figures/fig-sim-r5-credit.svg)
+
+*Figure 19. The evidence gate (today every result takes the left branch) and where results go.*
 
 **Evidence rule.** No result of this track is evidence until the model is validated against Corolla logs (roadmap
 phase S7: system identification of EPS lag, steer ratio and tyre stiffness, and the WP-V-02 §5.3 fidelity case).
 Until then the results only rank risks and guide which tests to run on the bench and the car.
 
 - **No evidence credit.** Simulation earns credit only once the WP-V-02 §5.3 fidelity case is approved for the scenario
-  family; whether any family may get credit is queued for the lead as DQ-139 (DQ-107 is its duplicate). Every output is labelled synthetic data
-  under DSR-12 and is kept apart from real-world data.
+  family: the lead decided so on 2026-10-16 (DQ-139, option A; DQ-107 is its duplicate), and no family has an approved
+  fidelity case yet. CARLA and GPU rendering are not pursued before G3 (DQ-261, option A). Every output is labelled
+  synthetic data under DSR-12 and is kept apart from real-world data.
 - **Not self-credited.** Timing results go to the safety-concept session, which decides what enters WP-S-04. Scenario
   results go to the SOTIF session for WP-V-03/04. The simulation track does not edit those documents.
 - **Rating tables.** The FMEA-MSR rating tables (RT-2 §7) allow `measured | code_derived | unknown` timing only. A
@@ -138,6 +466,19 @@ Until then the results only rank risks and guide which tests to run on the bench
 | esmini (binary release, not a Python package) | v3.9.0, SHA-256 pinned in `scenarios/fetch_esmini.py` | MPL-2.0 | replaying the scenario files headless |
 | pythonfmu | 0.7.0 | MIT | packaging the plant as an FMU |
 | fmpy | 0.3.32 | BSD-2-Clause; its dependencies MIT, BSD-3-Clause, Apache-2.0 | running the FMU in the test |
+| OpenModelica (`omc`, conda-forge) | 1.27.1, build `hf6fb681_0`; explicit lock `plant/modelica/omc-linux-64.lock` | OSMC-PL 1.8, used under its AGPL-3 option; the simulation runtime compiled into the FMU is BSD-new (or AGPL-3/OSMC-PL), its solver SUNDIALS CVODE BSD-3 | exporting the L2 column FMU (TL-44) |
+| micromamba | 2.3.2-0, SHA-256 pinned in `assurance.yaml` | BSD-3-Clause | creating the OpenModelica environment from the lock in CI |
+
+![Packages grouped by use and coloured by licence: layer 1 plant and its FMU on permissive licences; OpenModelica for the L2 column under its AGPL-3 option; scenariogeneration and esmini for layer 2 under MPL-2.0; Scenic and VerifAI not used because rv-ltl has no licence](figures/fig-sim-r6-deps.svg)
+
+*Figure 20. The table above by use; red marks the two licence points: OpenModelica's AGPL option and rv-ltl without a licence.*
+
+**Not used: Scenic and VerifAI.** Scenic 3.0.0–3.1.1 (BSD-3) requires `rv-ltl ~= 0.1`, imported by its core
+(`scenic/core/requirements.py`), and VerifAI 2.2 (BSD-3) requires and imports Scenic. rv-ltl 0.1.1 is published on PyPI
+without a licence: no licence field, no licence file in the wheel, no project URL, and no public source repository was
+found (checked 2026-10-16). Without a licence it is not open source, so it is not added. Their other dependencies were
+also checked: all MIT, BSD or Apache except lenses (GPL-3.0+), easydict (LGPL-3.0) and pygame-ce (LGPL-2.1). The
+search uses numpy instead (§3.4). Scenic can be reconsidered if rv-ltl is given a licence.
 
 Licences read from the package metadata on 2026-10-16. All were reachable through the network proxy. MPL-2.0 is a file-level copyleft: it covers changes to the
 scenariogeneration and esmini files themselves, which this track does not make, and not the scenario files they
@@ -146,10 +487,18 @@ opendbc code is the project's own (MIT).
 
 ## 6. Open items
 
+![Open items grouped by what closes them: SIM-OI-1, 7 and 8 need measurements on the reference Corolla (M-02, M-08); SIM-OI-2 needs WP-C-08; SIM-OI-3, 4 and 5 are simulation-track work; SIM-OI-6 waits on a licence outside the project; SIM-OI-9 is closed](figures/fig-sim-r7-open.svg)
+
+*Figure 21. Three items wait on measurements on the car; the table below has the full wording.*
+
 | ID | Item |
 |---|---|
 | SIM-OI-1 | The EPS reaction to lost STEERING_LKA frames decides most layer-1 results (release vs hold). Replace both cases with M-02 once measured |
 | SIM-OI-2 | Replace the driver assumptions with WP-C-08 §8 values; add the SoC take-over alert once openpilot runs in the loop (layer 3) |
 | SIM-OI-3 | Model the LSI tolerance and the other hang types of WP-V-05 VS-FI-17 (main loop only, tick, safety task) |
-| SIM-OI-4 | Layers 3–4 (backlog items 3–4) |
+| SIM-OI-4 | Layer 3 end to end (PR #124) on the self-hosted runner (§3.8): waits for the lead to register it and set `LIONDRIVER_SIM_RUNNER`; then the search over MetaDrive and the scenario files |
+| SIM-OI-6 | Scenic and VerifAI if rv-ltl is published with a licence (§5) |
 | SIM-OI-5 | KS-04 (lane split and merge) as an OpenDRIVE junction or lane-width polynomial |
+| SIM-OI-7 | L2 column parameters (§3.5) are assumed. Published column-EPS parameter tables were found but could not be read: their hosts are not reachable from the build environment. Check the values against those sources, then replace them with M-02 measurements |
+| SIM-OI-9 | **Closed 2026-10-17:** reachability pilot (§3.6) done; Julia retired by the coordinator, the bound kept in numpy |
+| SIM-OI-8 | Measure the N·m scale of STEER_TORQUE_DRIVER and of the LKA torque command on the reference Corolla (now in WP-S-04 M-08); they decide whether the host's `MAX_USER_TORQUE` rule meets SG-05. `override.py --scales` is ready to take them (§3.5) |

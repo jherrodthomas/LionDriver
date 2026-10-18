@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1798" viewBox="0 0 1280 1798" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 2-1. DFA initiators against the ASIL decompositions</title>
-  <desc id="d">Dependent failure analysis LD-DFA-001 rev 0.9 against FSC rev 0.4: 21 dependent failure initiators in 13 categories mapped onto 11 ASIL decompositions. Initiators: 5 insufficient, 13 open, 3 safe by design. Decompositions: 10 not accepted, 1 not assessable. 25 measures with their status (11 required) and the DFA open items.</desc>
+  <desc id="d">Dependent failure analysis LD-DFA-001 rev 0.15 against FSC rev 0.4: 21 dependent failure initiators in 13 categories mapped onto 11 ASIL decompositions. Initiators: 4 insufficient, 14 open, 3 safe by design. Decompositions: 10 not accepted, 1 not assessable. 25 measures with their status (10 required) and the DFA open items.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,7 +9,7 @@
   </defs>
   <rect width="1280" height="1798" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 2-1 · Dependent failure initiators × ASIL decompositions</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">LD-DFA-001 rev 0.9 · FSC rev 0.4 · BL-004 · draft · cell = the initiator affects that decomposition, coloured by the initiator's assessment</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">LD-DFA-001 rev 0.15 · FSC rev 0.4 · BL-004 · draft · cell = the initiator affects that decomposition, coloured by the initiator's assessment</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §2</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/dfa.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -204,21 +204,21 @@
   <text x="46" y="578" font-size="10.5" fill="#0F172A" font-weight="700">DFI-07</text>
   <rect x="94" y="567" width="32.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="110.4" y="577.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CAS</text>
   <text x="132.7" y="578" font-size="10" fill="#0F172A">The SoC sets the panda's safety model, safety parameter an…</text>
-  <rect x="468" y="566" width="18" height="18" fill="#D2553F" rx="4"/>
-  <rect x="522" y="566" width="18" height="18" fill="#D2553F" rx="4"/>
-  <rect x="576" y="566" width="18" height="18" fill="#D2553F" rx="4"/>
-  <rect x="684" y="566" width="18" height="18" fill="#D2553F" rx="4"/>
-  <rect x="738" y="566" width="18" height="18" fill="#D2553F" rx="4"/>
-  <rect x="792" y="566" width="18" height="18" fill="#D2553F" rx="4"/>
-  <rect x="846" y="566" width="18" height="18" fill="#D2553F" rx="4"/>
-  <rect x="900" y="566" width="18" height="18" fill="#D2553F" rx="4"/>
-  <rect x="954" y="566" width="18" height="18" fill="#D2553F" rx="4"/>
-  <rect x="1008" y="566" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="468" y="566" width="18" height="18" fill="#D97706" rx="4"/>
+  <rect x="522" y="566" width="18" height="18" fill="#D97706" rx="4"/>
+  <rect x="576" y="566" width="18" height="18" fill="#D97706" rx="4"/>
+  <rect x="684" y="566" width="18" height="18" fill="#D97706" rx="4"/>
+  <rect x="738" y="566" width="18" height="18" fill="#D97706" rx="4"/>
+  <rect x="792" y="566" width="18" height="18" fill="#D97706" rx="4"/>
+  <rect x="846" y="566" width="18" height="18" fill="#D97706" rx="4"/>
+  <rect x="900" y="566" width="18" height="18" fill="#D97706" rx="4"/>
+  <rect x="954" y="566" width="18" height="18" fill="#D97706" rx="4"/>
+  <rect x="1008" y="566" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="1060" y="567" width="44.6" height="15" rx="7.5" fill="#2E9E6A"/><text x="1082.3" y="577.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">DM-04</text>
   <rect x="1108.6" y="567" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="1130.9" y="577.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-07</text>
   <rect x="1157.3" y="567" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1179.6" y="577.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-21</text>
   <rect x="1205.9" y="567" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1228.2" y="577.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-22</text>
-  <rect x="1254.5" y="567" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="1276.8" y="577.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-25</text>
+  <rect x="1254.5" y="567" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1276.8" y="577.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-25</text>
   <line x1="40" y1="588" x2="1240" y2="588" stroke="#F1F5F9" stroke-width="1"/>
   <text x="46" y="604" font-size="10.5" fill="#0F172A" font-weight="700">DFI-08</text>
   <rect x="94" y="593" width="32.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="110.4" y="603.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CAS</text>
@@ -497,7 +497,7 @@
   <rect x="660" y="1525" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1535.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-23</text>
   <text x="712" y="1536" font-size="10" fill="#0F172A">Bench tests of the harness box failure behaviour: box unpowered with camera and…</text>
   <text x="1240" y="1536" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">process</text>
-  <rect x="660" y="1541" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1551.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-25</text>
+  <rect x="660" y="1541" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="682.3" y="1551.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-25</text>
   <text x="712" y="1552" font-size="10" fill="#0F172A">A safety-mode change does not undo the panda's fault reactions: after a mode…</text>
   <text x="1240" y="1552" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">EL-07</text>
   <rect x="660" y="1557" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1567.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-24</text>

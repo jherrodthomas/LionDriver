@@ -1,276 +1,205 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="2478" height="1352" viewBox="0 0 2478 1352">
-<title>FTA SG-08 sheet 1 of 1: automated control continues with a driver who is not supervising or not responding</title>
+<svg xmlns="http://www.w3.org/2000/svg" width="1752" height="986" viewBox="0 0 1752 986">
+<title>FTA SG-08 sheet 1 of 2: automated control continues with a driver who is not supervising or not responding</title>
 <style>.id{font:700 13px 'JetBrains Mono', Menlo, Consolas, monospace;fill:#1d2433}.kind{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.1em;fill:#8a93a3;text-anchor:end}.d{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#2b3343}.n{font:italic 400 10.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#6b7385}.chip{font:600 9.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;text-anchor:middle}.gl{font:700 7.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.06em;text-anchor:middle}.eyebrow{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.14em;fill:#9fb7d1}.title{font:600 21px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.title2{font:600 17px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.hc{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.04em;fill:#fff;text-anchor:middle}.lh{font:600 13px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.lb{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.s{font:400 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#5b6475}.tbh{font:700 14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#0f2a44}.k{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.12em;fill:#8a93a3}.v{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.mm{font:700 11px 'JetBrains Mono', Menlo, Consolas, monospace;text-anchor:middle}.w{stroke:#9aa3b2;stroke-width:1.4;stroke-linecap:round}.wh{stroke:#c62828;stroke-width:3.2;stroke-linecap:round}.shadow{fill:#0f172a;opacity:.06}</style>
 <defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e3e7ee"/></pattern></defs>
 <rect width="100%" height="100%" fill="#f7f8fa"/>
-<rect y="78" width="100%" height="1274" fill="url(#dots)"/>
+<rect y="78" width="100%" height="908" fill="url(#dots)"/>
 <rect width="100%" height="78" fill="#0f2a44"/>
 <text x="40" y="32" class="eyebrow">FTA · SG-08 · WP-A-04 §13</text>
 <text x="40" y="59" class="title">Automated control continues with a driver who is not supervising or not responding</text>
-<rect x="2202" y="21" width="236" height="36" rx="18" fill="#ffffff14" stroke="#ffffff40"/>
-<text x="2320" y="44" class="hc">Sheet 1 of 1  ·  ASIL A</text>
-<rect x="1372.5" y="116.5" width="220" height="85.5" rx="9" class="shadow"/>
-<rect x="1371.0" y="114" width="220" height="85.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
-<path d="M1380.0,114 H1582.0 A9,9 0 0 1 1591.0,123 V119 H1371.0 V123 A9,9 0 0 1 1380.0,114 Z" fill="#0f2a44"/>
-<text x="1385.0" y="139" class="id">TE-08</text>
-<text x="1577.0" y="139" class="kind">TOP EVENT</text>
-<text x="1385.0" y="153.5" class="d">Automated control continues with</text>
-<text x="1385.0" y="168.0" class="d">an inattentive or unresponsive</text>
-<text x="1385.0" y="182.5" class="d">driver</text>
-<path d="M1461.0,237.5 Q1481.0,228.5 1501.0,237.5 Q1499.0,210.5 1481.0,199.5 Q1463.0,210.5 1461.0,237.5 Z" fill="#fff" stroke="#c62828" stroke-width="2.4"/><text x="1481.0" y="229.5" class="gl" fill="#c62828">OR</text>
-<line x1="755.0" y1="260.5" x2="2207.0" y2="260.5" class="w"/>
-<line x1="755.0" y1="260.5" x2="2207.0" y2="260.5" class="wh"/>
-<line x1="1481.0" y1="237.5" x2="1481.0" y2="260.5" class="wh"/>
-<line x1="755.0" y1="260.5" x2="755.0" y2="285.5" class="wh"/>
-<line x1="1723.0" y1="260.5" x2="1723.0" y2="285.5" class="wh"/>
-<line x1="2207.0" y1="260.5" x2="2207.0" y2="285.5" class="wh"/>
-<rect x="646.5" y="288.0" width="220" height="85.5" rx="9" class="shadow"/>
-<rect x="645.0" y="285.5" width="220" height="85.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
-<path d="M654.0,285.5 H856.0 A9,9 0 0 1 865.0,294.5 V290.5 H645.0 V294.5 A9,9 0 0 1 654.0,285.5 Z" fill="#1d2433"/>
-<text x="659.0" y="310.5" class="id">G8.1</text>
-<text x="851.0" y="310.5" class="kind">INTERMEDIATE</text>
-<text x="659.0" y="325.0" class="d">Inattentive or unresponsive</text>
-<text x="659.0" y="339.5" class="d">driver not detected while</text>
-<text x="659.0" y="354.0" class="d">engaged</text>
-<path d="M735.0,409.0 Q755.0,400.0 775.0,409.0 Q773.0,382.0 755.0,371.0 Q737.0,382.0 735.0,409.0 Z" fill="#fff" stroke="#c62828" stroke-width="2.4"/><text x="755.0" y="401.0" class="gl" fill="#c62828">OR</text>
-<line x1="150.0" y1="432.0" x2="1360.0" y2="432.0" class="w"/>
-<line x1="150.0" y1="432.0" x2="1360.0" y2="432.0" class="wh"/>
-<line x1="755.0" y1="409.0" x2="755.0" y2="432.0" class="wh"/>
-<line x1="150.0" y1="432.0" x2="150.0" y2="464.5" class="wh"/>
-<line x1="392.0" y1="432.0" x2="392.0" y2="464.5" class="wh"/>
-<line x1="815.5" y1="432.0" x2="815.5" y2="464.5" class="w"/>
-<line x1="1360.0" y1="432.0" x2="1360.0" y2="464.5" class="wh"/>
-<rect x="41.5" y="467.0" width="220" height="107.5" rx="9" class="shadow"/>
-<rect x="40" y="464.5" width="220" height="107.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
-<path d="M49,464.5 H251 A9,9 0 0 1 260,473.5 V469.5 H40 V473.5 A9,9 0 0 1 49,464.5 Z" fill="#6a3fb5"/>
-<text x="54" y="489.5" class="id">BE-8.01</text>
-<text x="246" y="489.5" class="kind">BASIC</text>
-<text x="54" y="504.0" class="d">DM model false negative: eyes</text>
-<text x="54" y="518.5" class="d">off the road or eyes closed</text>
-<text x="54" y="533.0" class="d">classified attentive</text>
-<rect x="54.0" y="541.0" width="42.5" height="16" rx="8" fill="#6a3fb5"/>
-<text x="75.2" y="552.5" class="chip" fill="#fff">SOTIF</text>
-<rect x="101.5" y="541.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="128.4" y="552.5" class="chip" fill="#fff">SFM-022</text>
-<circle cx="150.0" cy="589.0" r="16" fill="#efe8fb" stroke="#c62828" stroke-width="2.4"/>
-<rect x="283.5" y="467.0" width="220" height="107.5" rx="9" class="shadow"/>
-<rect x="282" y="464.5" width="220" height="107.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
-<path d="M291,464.5 H493 A9,9 0 0 1 502,473.5 V469.5 H282 V473.5 A9,9 0 0 1 291,464.5 Z" fill="#64748b"/>
-<text x="296" y="489.5" class="id">BE-8.02</text>
-<text x="488" y="489.5" class="kind">BASIC</text>
-<text x="296" y="504.0" class="d">Pose thresholds or the pose</text>
-<text x="296" y="518.5" class="d">calibration wrong for the driver</text>
-<text x="296" y="533.0" class="d">or the mount (policy.py:55-83)</text>
-<rect x="296.0" y="541.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="322.9" y="552.5" class="chip" fill="#fff">SFM-022</text>
-<circle cx="392.0" cy="589.0" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
-<rect x="707.0" y="467.0" width="220" height="71.0" rx="9" class="shadow"/>
-<rect x="705.5" y="464.5" width="220" height="71.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
-<path d="M714.5,464.5 H916.5 A9,9 0 0 1 925.5,473.5 V469.5 H705.5 V473.5 A9,9 0 0 1 714.5,464.5 Z" fill="#1d2433"/>
-<text x="719.5" y="489.5" class="id">G8.1.1</text>
-<text x="911.5" y="489.5" class="kind">INTERMEDIATE</text>
-<text x="719.5" y="504.0" class="d">DM input degraded and not</text>
-<text x="719.5" y="518.5" class="d">escalated</text>
-<path d="M795.5,573.5 L795.5,553.5 A20,18 0 0 1 835.5,553.5 L835.5,573.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="815.5" y="565.5" class="gl" fill="#1d2433">AND</text>
-<line x1="634.0" y1="596.5" x2="997.0" y2="596.5" class="w"/>
-<line x1="815.5" y1="573.5" x2="815.5" y2="596.5" class="w"/>
-<line x1="634.0" y1="596.5" x2="634.0" y2="701.5" class="w"/>
-<line x1="997.0" y1="596.5" x2="997.0" y2="701.5" class="w"/>
-<rect x="525.5" y="704.0" width="220" height="122.0" rx="9" class="shadow"/>
-<rect x="524" y="701.5" width="220" height="122.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
-<path d="M533,701.5 H735 A9,9 0 0 1 744,710.5 V706.5 H524 V710.5 A9,9 0 0 1 533,701.5 Z" fill="#64748b"/>
-<text x="538" y="726.5" class="id">BE-8.03</text>
-<text x="730" y="726.5" class="kind">BASIC</text>
-<text x="538" y="741.0" class="d">Driver camera or IR illumination</text>
-<text x="538" y="755.5" class="d">degraded, covered or failed, or</text>
-<text x="538" y="770.0" class="d">dmonitoringmodeld stopped</text>
-<text x="538" y="784.5" class="d">(random HW)</text>
-<rect x="538.0" y="792.5" width="53.9" height="16" rx="8" fill="#fff1f1"/>
-<text x="565.0" y="804.0" class="chip" fill="#c62828">no FMEA</text>
-<circle cx="634.0" cy="840.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
-<rect x="888.5" y="704.0" width="220" height="71.0" rx="9" class="shadow"/>
-<rect x="887.0" y="701.5" width="220" height="71.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
-<path d="M896.0,701.5 H1098.0 A9,9 0 0 1 1107.0,710.5 V706.5 H887.0 V710.5 A9,9 0 0 1 896.0,701.5 Z" fill="#1d2433"/>
-<text x="901.0" y="726.5" class="id">G8.1.2</text>
-<text x="1093.0" y="726.5" class="kind">INTERMEDIATE</text>
-<text x="901.0" y="741.0" class="d">Degraded input does not lead to</text>
-<text x="901.0" y="755.5" class="d">an alert</text>
-<path d="M977.0,810.5 Q997.0,801.5 1017.0,810.5 Q1015.0,783.5 997.0,772.5 Q979.0,783.5 977.0,810.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="997.0" y="802.5" class="gl" fill="#1d2433">OR</text>
-<line x1="876.0" y1="833.5" x2="1118.0" y2="833.5" class="w"/>
-<line x1="997.0" y1="810.5" x2="997.0" y2="833.5" class="w"/>
-<line x1="876.0" y1="833.5" x2="876.0" y2="909.5" class="w"/>
-<line x1="1118.0" y1="833.5" x2="1118.0" y2="909.5" class="w"/>
-<rect x="767.5" y="912.0" width="220" height="122.0" rx="9" class="shadow"/>
-<rect x="766" y="909.5" width="220" height="122.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
-<path d="M775,909.5 H977 A9,9 0 0 1 986,918.5 V914.5 H766 V918.5 A9,9 0 0 1 775,909.5 Z" fill="#5f6368"/>
-<text x="780" y="934.5" class="id">BE-8.04</text>
-<text x="972" y="934.5" class="kind">BASIC</text>
-<text x="780" y="949.0" class="d">driverStateV2 always valid=True</text>
-<text x="780" y="963.5" class="d">at the source</text>
-<text x="780" y="978.0" class="d">(dmonitoringmodeld.py:99;</text>
-<text x="780" y="992.5" class="d">GAP-21, TSR-609 not met)</text>
-<rect x="780.0" y="1000.5" width="93.8" height="16" rx="8" fill="#5f6368"/>
-<text x="826.9" y="1012.0" class="chip" fill="#fff">latent, design</text>
-<rect x="878.8" y="1000.5" width="53.9" height="16" rx="8" fill="#fff1f1"/>
-<text x="905.8" y="1012.0" class="chip" fill="#c62828">no FMEA</text>
-<circle cx="876.0" cy="1048.5" r="16" fill="#eceef1" stroke="#5f6368" stroke-width="1.7"/>
-<rect x="1009.5" y="912.0" width="220" height="122.0" rx="9" class="shadow"/>
-<rect x="1008" y="909.5" width="220" height="122.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
-<path d="M1017,909.5 H1219 A9,9 0 0 1 1228,918.5 V914.5 H1008 V918.5 A9,9 0 0 1 1017,909.5 Z" fill="#5f6368"/>
-<text x="1022" y="934.5" class="id">BE-8.05</text>
-<text x="1214" y="934.5" class="kind">BASIC</text>
-<text x="1022" y="949.0" class="d">Wheel-touch fallback resets</text>
-<text x="1022" y="963.5" class="d">awareness on any steering or gas</text>
-<text x="1022" y="978.0" class="d">input (policy.py:334-335;</text>
-<text x="1022" y="992.5" class="d">GAP-21, TSR-612 not met)</text>
-<rect x="1022.0" y="1000.5" width="93.8" height="16" rx="8" fill="#5f6368"/>
-<text x="1068.9" y="1012.0" class="chip" fill="#fff">latent, design</text>
-<rect x="1120.8" y="1000.5" width="53.9" height="16" rx="8" fill="#fff1f1"/>
-<text x="1147.8" y="1012.0" class="chip" fill="#c62828">no FMEA</text>
-<circle cx="1118.0" cy="1048.5" r="16" fill="#eceef1" stroke="#5f6368" stroke-width="1.7"/>
-<rect x="1251.5" y="467.0" width="220" height="136.5" rx="9" class="shadow"/>
-<rect x="1250" y="464.5" width="220" height="136.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
-<path d="M1259,464.5 H1461 A9,9 0 0 1 1470,473.5 V469.5 H1250 V473.5 A9,9 0 0 1 1259,464.5 Z" fill="#64748b"/>
-<text x="1264" y="489.5" class="id">BE-8.06</text>
-<text x="1456" y="489.5" class="kind">BASIC</text>
-<text x="1264" y="504.0" class="d">DM demo mode</text>
-<text x="1264" y="518.5" class="d">(IsDriverViewEnabled) active</text>
-<text x="1264" y="533.0" class="d">while the item can engage</text>
-<text x="1264" y="547.5" class="d">(dmonitoringd.py:26-38; GAP-20,</text>
-<text x="1264" y="562.0" class="d">TSR-610 not met)</text>
-<rect x="1264.0" y="570.0" width="53.9" height="16" rx="8" fill="#fff1f1"/>
-<text x="1291.0" y="581.5" class="chip" fill="#c62828">no FMEA</text>
-<circle cx="1360.0" cy="618.0" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
-<rect x="1614.5" y="288.0" width="220" height="71.0" rx="9" class="shadow"/>
-<rect x="1613.0" y="285.5" width="220" height="71.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
-<path d="M1622.0,285.5 H1824.0 A9,9 0 0 1 1833.0,294.5 V290.5 H1613.0 V294.5 A9,9 0 0 1 1622.0,285.5 Z" fill="#1d2433"/>
-<text x="1627.0" y="310.5" class="id">G8.2</text>
-<text x="1819.0" y="310.5" class="kind">INTERMEDIATE</text>
-<text x="1627.0" y="325.0" class="d">Take-over escalation too slow or</text>
-<text x="1627.0" y="339.5" class="d">not delivered</text>
-<path d="M1703.0,394.5 Q1723.0,385.5 1743.0,394.5 Q1741.0,367.5 1723.0,356.5 Q1705.0,367.5 1703.0,394.5 Z" fill="#fff" stroke="#c62828" stroke-width="2.4"/><text x="1723.0" y="386.5" class="gl" fill="#c62828">OR</text>
-<line x1="1602.0" y1="417.5" x2="1844.0" y2="417.5" class="w"/>
-<line x1="1602.0" y1="417.5" x2="1844.0" y2="417.5" class="wh"/>
-<line x1="1723.0" y1="394.5" x2="1723.0" y2="417.5" class="wh"/>
-<line x1="1602.0" y1="417.5" x2="1602.0" y2="464.5" class="wh"/>
-<line x1="1844.0" y1="417.5" x2="1844.0" y2="464.5" class="wh"/>
-<rect x="1493.5" y="467.0" width="220" height="122.0" rx="9" class="shadow"/>
-<rect x="1492" y="464.5" width="220" height="122.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
-<path d="M1501,464.5 H1703 A9,9 0 0 1 1712,473.5 V469.5 H1492 V473.5 A9,9 0 0 1 1501,464.5 Z" fill="#64748b"/>
-<text x="1506" y="489.5" class="id">BE-8.07</text>
-<text x="1698" y="489.5" class="kind">BASIC</text>
-<text x="1506" y="504.0" class="d">Policy timers, recovery factor</text>
-<text x="1506" y="518.5" class="d">or exemptions misconfigured</text>
-<text x="1506" y="533.0" class="d">(alerts later than 5/8/13 s; no</text>
-<text x="1506" y="547.5" class="d">monitoring below 10 km/h)</text>
-<rect x="1506.0" y="555.5" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="1533.0" y="567.0" class="chip" fill="#fff">SFM-023</text>
-<circle cx="1602.0" cy="603.5" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
-<rect x="1735.5" y="467.0" width="220" height="105.5" rx="9" class="shadow"/>
-<rect x="1734" y="464.5" width="220" height="105.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
-<path d="M1743,464.5 H1945 A9,9 0 0 1 1954,473.5 V469.5 H1734 V473.5 A9,9 0 0 1 1743,464.5 Z" fill="#64748b"/>
-<text x="1748" y="489.5" class="id">G-HMI</text>
-<text x="1940" y="489.5" class="kind">TRANSFER IN</text>
-<text x="1748" y="504.0" class="d">HMI does not deliver the warning</text>
-<text x="1748" y="517.5" class="n">HMI hang, mute or masked alert; as</text>
-<text x="1748" y="531.0" class="n">SG-02</text>
-<rect x="1748.0" y="539.0" width="71.0" height="16" rx="8" fill="#b45309"/>
-<text x="1783.5" y="550.5" class="chip" fill="#fff">CCF DFI-25</text>
-<rect x="1824.0" y="539.0" width="99.5" height="16" rx="8" fill="#e6e9ef"/>
-<text x="1873.8" y="550.5" class="chip" fill="#334155">→ SG-02 sheet 9</text>
-<path d="M1844.0,570.0 L1864.0,603.0 L1824.0,603.0 Z" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
-<rect x="2098.5" y="288.0" width="220" height="93.0" rx="9" class="shadow"/>
-<rect x="2097.0" y="285.5" width="220" height="93.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
-<path d="M2106.0,285.5 H2308.0 A9,9 0 0 1 2317.0,294.5 V290.5 H2097.0 V294.5 A9,9 0 0 1 2106.0,285.5 Z" fill="#1d2433"/>
-<text x="2111.0" y="310.5" class="id">G8.3</text>
-<text x="2303.0" y="310.5" class="kind">INTERMEDIATE</text>
-<text x="2111.0" y="325.0" class="d">No-response reaction does not</text>
-<text x="2111.0" y="339.5" class="d">stop the vehicle</text>
-<rect x="2111.0" y="347.5" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="2137.9" y="359.0" class="chip" fill="#fff">SFM-025</text>
-<path d="M2187.0,416.5 Q2207.0,407.5 2227.0,416.5 Q2225.0,389.5 2207.0,378.5 Q2189.0,389.5 2187.0,416.5 Z" fill="#fff" stroke="#c62828" stroke-width="2.4"/><text x="2207.0" y="408.5" class="gl" fill="#c62828">OR</text>
-<line x1="2086.0" y1="439.5" x2="2328.0" y2="439.5" class="w"/>
-<line x1="2086.0" y1="439.5" x2="2207.0" y2="439.5" class="wh"/>
-<line x1="2207.0" y1="416.5" x2="2207.0" y2="439.5" class="wh"/>
-<line x1="2086.0" y1="439.5" x2="2086.0" y2="464.5" class="wh"/>
-<line x1="2328.0" y1="439.5" x2="2328.0" y2="464.5" class="w"/>
-<rect x="1977.5" y="467.0" width="220" height="151.0" rx="9" class="shadow"/>
-<rect x="1976" y="464.5" width="220" height="151.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
-<path d="M1985,464.5 H2187 A9,9 0 0 1 2196,473.5 V469.5 H1976 V473.5 A9,9 0 0 1 1985,464.5 Z" fill="#64748b"/>
-<text x="1990" y="489.5" class="id">BE-8.08</text>
-<text x="2182" y="489.5" class="kind">BASIC</text>
-<text x="1990" y="504.0" class="d">noResponseForceDecel not set, or</text>
-<text x="1990" y="518.5" class="d">not turned into a stop: defect</text>
-<text x="1990" y="533.0" class="d">in the policy, controlsd or the</text>
-<text x="1990" y="547.5" class="d">planner (policy.py:398,</text>
-<text x="1990" y="562.0" class="d">controlsd.py:235,</text>
-<text x="1990" y="576.5" class="d">longitudinal_planner.py:84)</text>
-<rect x="1990.0" y="584.5" width="53.9" height="16" rx="8" fill="#fff1f1"/>
-<text x="2017.0" y="596.0" class="chip" fill="#c62828">no FMEA</text>
-<circle cx="2086.0" cy="632.5" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
-<rect x="2219.5" y="467.0" width="220" height="71.0" rx="9" class="shadow"/>
-<rect x="2218" y="464.5" width="220" height="71.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
-<path d="M2227,464.5 H2429 A9,9 0 0 1 2438,473.5 V469.5 H2218 V473.5 A9,9 0 0 1 2227,464.5 Z" fill="#3d6b3d"/>
-<text x="2232" y="489.5" class="id">UE-8.09</text>
-<text x="2424" y="489.5" class="kind">UNDEVELOPED</text>
-<text x="2232" y="504.0" class="d">PCM does not execute the stop</text>
-<text x="2232" y="518.5" class="d">request (AOU-05R)</text>
-<path d="M2328.0,535.5 L2350.0,552.5 L2328.0,569.5 L2306.0,552.5 Z" fill="#e7f1e7" stroke="#3d6b3d" stroke-width="1.7"/>
-<text x="40" y="1129.5" class="lh">Symbols · IEC 61025</text>
-<rect x="46" y="1149.5" width="44" height="28" rx="6" fill="#fff" stroke="#d9dee6"/>
-<rect x="46" y="1149.5" width="44" height="4" rx="2" fill="#1d2433"/>
-<text x="68" y="1203.5" class="s" text-anchor="middle">Event</text>
-<path d="M128,1183.5 Q148,1174.5 168,1183.5 Q166,1156.5 148,1145.5 Q130,1156.5 128,1183.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="148" y="1175.5" class="gl" fill="#1d2433">OR</text>
-<text x="148" y="1203.5" class="s" text-anchor="middle">OR gate</text>
-<path d="M208,1183.5 L208,1163.5 A20,18 0 0 1 248,1163.5 L248,1183.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="228" y="1175.5" class="gl" fill="#1d2433">AND</text>
-<text x="228" y="1203.5" class="s" text-anchor="middle">AND gate</text>
-<circle cx="308" cy="1163.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
-<text x="308" y="1203.5" class="s" text-anchor="middle">Basic event</text>
-<path d="M388,1146.5 L410,1163.5 L388,1180.5 L366,1163.5 Z" fill="#e7f1e7" stroke="#3d6b3d" stroke-width="1.7"/>
-<text x="388" y="1203.5" class="s" text-anchor="middle">Undeveloped</text>
-<path d="M468,1145.5 L488,1178.5 L448,1178.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><line x1="478" y1="1161.5" x2="502" y2="1161.5" stroke="#1d2433" stroke-width="1.7" stroke-linecap="round"/>
-<text x="468" y="1203.5" class="s" text-anchor="middle">Transfer out</text>
-<path d="M548,1146.5 L568,1179.5 L528,1179.5 Z" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
-<text x="548" y="1203.5" class="s" text-anchor="middle">Transfer in</text>
-<rect x="40.0" y="1221.5" width="31.1" height="16" rx="8" fill="#c62828"/>
-<text x="55.5" y="1233.0" class="chip" fill="#fff">SPF</text>
-<rect x="77.1" y="1221.5" width="48.2" height="16" rx="8" fill="#5f6368"/>
-<text x="101.2" y="1233.0" class="chip" fill="#fff">latent</text>
-<rect x="131.3" y="1221.5" width="42.5" height="16" rx="8" fill="#6a3fb5"/>
-<text x="152.6" y="1233.0" class="chip" fill="#fff">SOTIF</text>
-<rect x="179.8" y="1221.5" width="71.0" height="16" rx="8" fill="#b45309"/>
-<text x="215.3" y="1233.0" class="chip" fill="#fff">CCF DFI-nn</text>
-<rect x="256.8" y="1221.5" width="31.1" height="16" rx="8" fill="#1a5fb4"/>
-<text x="272.4" y="1233.0" class="chip" fill="#fff">FFI</text>
-<rect x="293.9" y="1221.5" width="82.4" height="16" rx="8" fill="#3d6b3d"/>
-<text x="335.1" y="1233.0" class="chip" fill="#fff">outside item</text>
-<rect x="382.3" y="1221.5" width="122.3" height="16" rx="8" fill="#e6e9ef"/>
-<text x="443.5" y="1233.0" class="chip" fill="#334155">repeated / transfer</text>
-<rect x="510.6" y="1221.5" width="105.2" height="16" rx="8" fill="#111827"/>
-<text x="563.2" y="1233.0" class="chip" fill="#fff">FMEA / FMEDA row</text>
-<rect x="621.8" y="1221.5" width="53.9" height="16" rx="8" fill="#fff1f1"/>
-<text x="648.8" y="1233.0" class="chip" fill="#c62828">no FMEA</text>
-<line x1="40" y1="1255.5" x2="74" y2="1255.5" class="wh"/>
-<text x="86" y="1259.5" class="lb">Single-point path</text>
-<text x="86" y="1275.5" class="s">One basic event in the item reaches the top event; undeveloped events outside the item assumed.</text>
-<text x="86" y="1290.5" class="s">Computed from the gate logic (see cut-sets.md); the SPF tags are WP-A-04's own claims.</text>
-<rect x="1938" y="1115.5" width="500" height="196" rx="10" fill="#fff" stroke="#d9dee6"/>
-<line x1="1938" y1="1161.5" x2="2438" y2="1161.5" stroke="#d9dee6"/>
-<line x1="2256" y1="1161.5" x2="2256" y2="1311.5" stroke="#d9dee6"/>
-<text x="1956" y="1144.5" class="tbh">LionDriver · FTA SG-08</text>
-<rect x="2288" y="1129.5" width="132" height="20" rx="10" fill="#fff4e0" stroke="#f0c36d"/>
-<text x="2354" y="1143.5" class="chip" fill="#8a5a00">DRAFT · NOT VERIFIED</text>
-<text x="1956" y="1187.5" class="k">TOP OF SHEET</text>
-<text x="2054" y="1187.5" class="v">TE-08</text>
-<text x="1956" y="1213.5" class="k">SINGLE-POINT</text>
-<text x="2054" y="1213.5" class="v">5 basic events on this sheet</text>
-<text x="1956" y="1239.5" class="k">SOURCE</text>
-<text x="2054" y="1239.5" class="v">WP-A-04 §13 (analysis of record)</text>
-<text x="1956" y="1265.5" class="k">GENERATED BY</text>
-<text x="2054" y="1265.5" class="v">fta_diagrams.py</text>
-<text x="1956" y="1291.5" class="k">EDIT</text>
-<text x="2054" y="1291.5" class="v">WP-A-04, not this file</text>
-<text x="2272" y="1185.5" class="k">SHEETS</text>
-<rect x="2333.0" y="1200.5" width="28" height="20" rx="5" fill="#0f2a44" stroke="#0f2a44" stroke-width="1.3"/>
-<text x="2347.0" y="1214.5" class="mm" fill="#fff">1</text>
+<rect x="1476" y="21" width="236" height="36" rx="18" fill="#ffffff14" stroke="#ffffff40"/>
+<text x="1594" y="44" class="hc">Sheet 1 of 2  ·  ASIL A</text>
+<rect x="586.0" y="116.5" width="220" height="85.5" rx="9" class="shadow"/>
+<rect x="584.5" y="114" width="220" height="85.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M593.5,114 H795.5 A9,9 0 0 1 804.5,123 V119 H584.5 V123 A9,9 0 0 1 593.5,114 Z" fill="#0f2a44"/>
+<text x="598.5" y="139" class="id">TE-08</text>
+<text x="790.5" y="139" class="kind">TOP EVENT</text>
+<text x="598.5" y="153.5" class="d">Automated control continues with</text>
+<text x="598.5" y="168.0" class="d">an inattentive or unresponsive</text>
+<text x="598.5" y="182.5" class="d">driver</text>
+<path d="M674.5,237.5 Q694.5,228.5 714.5,237.5 Q712.5,210.5 694.5,199.5 Q676.5,210.5 674.5,237.5 Z" fill="#fff" stroke="#c62828" stroke-width="2.4"/><text x="694.5" y="229.5" class="gl" fill="#c62828">OR</text>
+<line x1="150.0" y1="260.5" x2="1239.0" y2="260.5" class="w"/>
+<line x1="150.0" y1="260.5" x2="1239.0" y2="260.5" class="wh"/>
+<line x1="694.5" y1="237.5" x2="694.5" y2="260.5" class="wh"/>
+<line x1="150.0" y1="260.5" x2="150.0" y2="285.5" class="wh"/>
+<line x1="513.0" y1="260.5" x2="513.0" y2="285.5" class="wh"/>
+<line x1="1239.0" y1="260.5" x2="1239.0" y2="285.5" class="wh"/>
+<rect x="41.5" y="288.0" width="220" height="107.5" rx="9" class="shadow"/>
+<rect x="40" y="285.5" width="220" height="107.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M49,285.5 H251 A9,9 0 0 1 260,294.5 V290.5 H40 V294.5 A9,9 0 0 1 49,285.5 Z" fill="#1d2433"/>
+<text x="54" y="310.5" class="id">G8.1</text>
+<text x="246" y="310.5" class="kind">TRANSFER OUT</text>
+<text x="54" y="325.0" class="d">Inattentive or unresponsive</text>
+<text x="54" y="339.5" class="d">driver not detected while</text>
+<text x="54" y="354.0" class="d">engaged</text>
+<rect x="54.0" y="362.0" width="128.0" height="16" rx="8" fill="#e6e9ef"/>
+<text x="118.0" y="373.5" class="chip" fill="#334155">continued on sheet 2</text>
+<path d="M150.0,393.0 L170.0,426.0 L130.0,426.0 Z" fill="#fff" stroke="#c62828" stroke-width="2.4"/><line x1="160.0" y1="409.0" x2="184.0" y2="409.0" stroke="#c62828" stroke-width="2.4" stroke-linecap="round"/>
+<rect x="404.5" y="288.0" width="220" height="71.0" rx="9" class="shadow"/>
+<rect x="403.0" y="285.5" width="220" height="71.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M412.0,285.5 H614.0 A9,9 0 0 1 623.0,294.5 V290.5 H403.0 V294.5 A9,9 0 0 1 412.0,285.5 Z" fill="#1d2433"/>
+<text x="417.0" y="310.5" class="id">G8.2</text>
+<text x="609.0" y="310.5" class="kind">INTERMEDIATE</text>
+<text x="417.0" y="325.0" class="d">Take-over escalation too slow or</text>
+<text x="417.0" y="339.5" class="d">not delivered</text>
+<path d="M493.0,394.5 Q513.0,385.5 533.0,394.5 Q531.0,367.5 513.0,356.5 Q495.0,367.5 493.0,394.5 Z" fill="#fff" stroke="#c62828" stroke-width="2.4"/><text x="513.0" y="386.5" class="gl" fill="#c62828">OR</text>
+<line x1="392.0" y1="417.5" x2="634.0" y2="417.5" class="w"/>
+<line x1="392.0" y1="417.5" x2="634.0" y2="417.5" class="wh"/>
+<line x1="513.0" y1="394.5" x2="513.0" y2="417.5" class="wh"/>
+<line x1="392.0" y1="417.5" x2="392.0" y2="479.0" class="wh"/>
+<line x1="634.0" y1="417.5" x2="634.0" y2="479.0" class="wh"/>
+<rect x="283.5" y="481.5" width="220" height="122.0" rx="9" class="shadow"/>
+<rect x="282" y="479.0" width="220" height="122.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M291,479.0 H493 A9,9 0 0 1 502,488.0 V484.0 H282 V488.0 A9,9 0 0 1 291,479.0 Z" fill="#64748b"/>
+<text x="296" y="504.0" class="id">BE-8.07</text>
+<text x="488" y="504.0" class="kind">BASIC</text>
+<text x="296" y="518.5" class="d">Policy timers, recovery factor</text>
+<text x="296" y="533.0" class="d">or exemptions misconfigured</text>
+<text x="296" y="547.5" class="d">(alerts later than 5/8/13 s; no</text>
+<text x="296" y="562.0" class="d">monitoring below 10 km/h)</text>
+<rect x="296.0" y="570.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="322.9" y="581.5" class="chip" fill="#fff">SFM-023</text>
+<rect x="354.9" y="570.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="381.8" y="581.5" class="chip" fill="#fff">SWF-061</text>
+<circle cx="392.0" cy="618.0" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
+<rect x="525.5" y="481.5" width="220" height="105.5" rx="9" class="shadow"/>
+<rect x="524" y="479.0" width="220" height="105.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M533,479.0 H735 A9,9 0 0 1 744,488.0 V484.0 H524 V488.0 A9,9 0 0 1 533,479.0 Z" fill="#64748b"/>
+<text x="538" y="504.0" class="id">G-HMI</text>
+<text x="730" y="504.0" class="kind">TRANSFER IN</text>
+<text x="538" y="518.5" class="d">HMI does not deliver the warning</text>
+<text x="538" y="532.0" class="n">HMI hang, mute or masked alert; as</text>
+<text x="538" y="545.5" class="n">SG-02</text>
+<rect x="538.0" y="553.5" width="71.0" height="16" rx="8" fill="#b45309"/>
+<text x="573.5" y="565.0" class="chip" fill="#fff">CCF DFI-25</text>
+<rect x="614.0" y="553.5" width="99.5" height="16" rx="8" fill="#e6e9ef"/>
+<text x="663.8" y="565.0" class="chip" fill="#334155">→ SG-02 sheet 9</text>
+<path d="M634.0,584.5 L654.0,617.5 L614.0,617.5 Z" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
+<rect x="1130.5" y="288.0" width="220" height="93.0" rx="9" class="shadow"/>
+<rect x="1129.0" y="285.5" width="220" height="93.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M1138.0,285.5 H1340.0 A9,9 0 0 1 1349.0,294.5 V290.5 H1129.0 V294.5 A9,9 0 0 1 1138.0,285.5 Z" fill="#1d2433"/>
+<text x="1143.0" y="310.5" class="id">G8.3</text>
+<text x="1335.0" y="310.5" class="kind">INTERMEDIATE</text>
+<text x="1143.0" y="325.0" class="d">No-response reaction does not</text>
+<text x="1143.0" y="339.5" class="d">reach the safe state</text>
+<rect x="1143.0" y="347.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1170.0" y="359.0" class="chip" fill="#fff">SFM-025</text>
+<path d="M1219.0,416.5 Q1239.0,407.5 1259.0,416.5 Q1257.0,389.5 1239.0,378.5 Q1221.0,389.5 1219.0,416.5 Z" fill="#fff" stroke="#c62828" stroke-width="2.4"/><text x="1239.0" y="408.5" class="gl" fill="#c62828">OR</text>
+<line x1="876.0" y1="439.5" x2="1602.0" y2="439.5" class="w"/>
+<line x1="876.0" y1="439.5" x2="1360.0" y2="439.5" class="wh"/>
+<line x1="1239.0" y1="416.5" x2="1239.0" y2="439.5" class="wh"/>
+<line x1="876.0" y1="439.5" x2="876.0" y2="479.0" class="wh"/>
+<line x1="1118.0" y1="439.5" x2="1118.0" y2="479.0" class="w"/>
+<line x1="1360.0" y1="439.5" x2="1360.0" y2="479.0" class="wh"/>
+<line x1="1602.0" y1="439.5" x2="1602.0" y2="479.0" class="w"/>
+<rect x="767.5" y="481.5" width="220" height="151.0" rx="9" class="shadow"/>
+<rect x="766" y="479.0" width="220" height="151.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M775,479.0 H977 A9,9 0 0 1 986,488.0 V484.0 H766 V488.0 A9,9 0 0 1 775,479.0 Z" fill="#64748b"/>
+<text x="780" y="504.0" class="id">BE-8.08</text>
+<text x="972" y="504.0" class="kind">BASIC</text>
+<text x="780" y="518.5" class="d">noResponseForceDecel not set, or</text>
+<text x="780" y="533.0" class="d">not turned into a stop: defect</text>
+<text x="780" y="547.5" class="d">in the policy, controlsd or the</text>
+<text x="780" y="562.0" class="d">planner (policy.py:437,</text>
+<text x="780" y="576.5" class="d">controlsd.py:235,</text>
+<text x="780" y="591.0" class="d">longitudinal_planner.py:84)</text>
+<rect x="780.0" y="599.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="807.0" y="610.5" class="chip" fill="#fff">SWF-086</text>
+<circle cx="876.0" cy="647.0" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
+<rect x="1009.5" y="481.5" width="220" height="71.0" rx="9" class="shadow"/>
+<rect x="1008" y="479.0" width="220" height="71.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M1017,479.0 H1219 A9,9 0 0 1 1228,488.0 V484.0 H1008 V488.0 A9,9 0 0 1 1017,479.0 Z" fill="#3d6b3d"/>
+<text x="1022" y="504.0" class="id">UE-8.09</text>
+<text x="1214" y="504.0" class="kind">UNDEVELOPED</text>
+<text x="1022" y="518.5" class="d">PCM does not execute the stop</text>
+<text x="1022" y="533.0" class="d">request (AOU-05R)</text>
+<path d="M1118.0,550.0 L1140.0,567.0 L1118.0,584.0 L1096.0,567.0 Z" fill="#e7f1e7" stroke="#3d6b3d" stroke-width="1.7"/>
+<rect x="1251.5" y="481.5" width="220" height="187.5" rx="9" class="shadow"/>
+<rect x="1250" y="479.0" width="220" height="187.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M1259,479.0 H1461 A9,9 0 0 1 1470,488.0 V484.0 H1250 V488.0 A9,9 0 0 1 1259,479.0 Z" fill="#5f6368"/>
+<text x="1264" y="504.0" class="id">BE-8.10</text>
+<text x="1456" y="504.0" class="kind">BASIC</text>
+<text x="1264" y="518.5" class="d">Vehicle not kept stopped, or the</text>
+<text x="1264" y="533.0" class="d">item not locked out, after the</text>
+<text x="1264" y="547.5" class="d">stop: no standstill hold and no</text>
+<text x="1264" y="562.0" class="d">re-engagement or resume lockout</text>
+<text x="1264" y="576.5" class="d">until the driver responds</text>
+<text x="1264" y="591.0" class="d">(TSR-633 not met, TSR-611</text>
+<text x="1264" y="605.5" class="d">partial)</text>
+<rect x="1264.0" y="613.5" width="93.8" height="16" rx="8" fill="#5f6368"/>
+<text x="1310.9" y="625.0" class="chip" fill="#fff">latent, design</text>
+<rect x="1362.8" y="613.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1389.8" y="625.0" class="chip" fill="#fff">SWF-062</text>
+<rect x="1264.0" y="635.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1291.0" y="647.0" class="chip" fill="#fff">SFM-025</text>
+<circle cx="1360.0" cy="683.5" r="16" fill="#eceef1" stroke="#c62828" stroke-width="2.4"/>
+<rect x="1493.5" y="481.5" width="220" height="85.5" rx="9" class="shadow"/>
+<rect x="1492" y="479.0" width="220" height="85.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M1501,479.0 H1703 A9,9 0 0 1 1712,488.0 V484.0 H1492 V488.0 A9,9 0 0 1 1501,479.0 Z" fill="#3d6b3d"/>
+<text x="1506" y="504.0" class="id">UE-8.11</text>
+<text x="1698" y="504.0" class="kind">UNDEVELOPED</text>
+<text x="1506" y="518.5" class="d">PCM does not hold the vehicle at</text>
+<text x="1506" y="533.0" class="d">standstill under ACC (AOU-16;</text>
+<text x="1506" y="547.5" class="d">vehicle test, DQ-365)</text>
+<path d="M1602.0,564.5 L1624.0,581.5 L1602.0,598.5 L1580.0,581.5 Z" fill="#e7f1e7" stroke="#3d6b3d" stroke-width="1.7"/>
+<text x="40" y="764.5" class="lh">Symbols · IEC 61025</text>
+<rect x="46" y="784.5" width="44" height="28" rx="6" fill="#fff" stroke="#d9dee6"/>
+<rect x="46" y="784.5" width="44" height="4" rx="2" fill="#1d2433"/>
+<text x="68" y="838.5" class="s" text-anchor="middle">Event</text>
+<path d="M128,818.5 Q148,809.5 168,818.5 Q166,791.5 148,780.5 Q130,791.5 128,818.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="148" y="810.5" class="gl" fill="#1d2433">OR</text>
+<text x="148" y="838.5" class="s" text-anchor="middle">OR gate</text>
+<path d="M208,818.5 L208,798.5 A20,18 0 0 1 248,798.5 L248,818.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="228" y="810.5" class="gl" fill="#1d2433">AND</text>
+<text x="228" y="838.5" class="s" text-anchor="middle">AND gate</text>
+<circle cx="308" cy="798.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<text x="308" y="838.5" class="s" text-anchor="middle">Basic event</text>
+<path d="M388,781.5 L410,798.5 L388,815.5 L366,798.5 Z" fill="#e7f1e7" stroke="#3d6b3d" stroke-width="1.7"/>
+<text x="388" y="838.5" class="s" text-anchor="middle">Undeveloped</text>
+<path d="M468,780.5 L488,813.5 L448,813.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><line x1="478" y1="796.5" x2="502" y2="796.5" stroke="#1d2433" stroke-width="1.7" stroke-linecap="round"/>
+<text x="468" y="838.5" class="s" text-anchor="middle">Transfer out</text>
+<path d="M548,781.5 L568,814.5 L528,814.5 Z" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<text x="548" y="838.5" class="s" text-anchor="middle">Transfer in</text>
+<rect x="40.0" y="856.5" width="31.1" height="16" rx="8" fill="#c62828"/>
+<text x="55.5" y="868.0" class="chip" fill="#fff">SPF</text>
+<rect x="77.1" y="856.5" width="48.2" height="16" rx="8" fill="#5f6368"/>
+<text x="101.2" y="868.0" class="chip" fill="#fff">latent</text>
+<rect x="131.3" y="856.5" width="42.5" height="16" rx="8" fill="#6a3fb5"/>
+<text x="152.6" y="868.0" class="chip" fill="#fff">SOTIF</text>
+<rect x="179.8" y="856.5" width="71.0" height="16" rx="8" fill="#b45309"/>
+<text x="215.3" y="868.0" class="chip" fill="#fff">CCF DFI-nn</text>
+<rect x="256.8" y="856.5" width="31.1" height="16" rx="8" fill="#1a5fb4"/>
+<text x="272.4" y="868.0" class="chip" fill="#fff">FFI</text>
+<rect x="293.9" y="856.5" width="82.4" height="16" rx="8" fill="#3d6b3d"/>
+<text x="335.1" y="868.0" class="chip" fill="#fff">outside item</text>
+<rect x="382.3" y="856.5" width="122.3" height="16" rx="8" fill="#e6e9ef"/>
+<text x="443.5" y="868.0" class="chip" fill="#334155">repeated / transfer</text>
+<rect x="510.6" y="856.5" width="105.2" height="16" rx="8" fill="#111827"/>
+<text x="563.2" y="868.0" class="chip" fill="#fff">FMEA / FMEDA row</text>
+<rect x="621.8" y="856.5" width="53.9" height="16" rx="8" fill="#fff1f1"/>
+<text x="648.8" y="868.0" class="chip" fill="#c62828">no FMEA</text>
+<line x1="40" y1="890.5" x2="74" y2="890.5" class="wh"/>
+<text x="86" y="894.5" class="lb">Single-point path</text>
+<text x="86" y="910.5" class="s">One basic event in the item reaches the top event; undeveloped events outside the item assumed.</text>
+<text x="86" y="925.5" class="s">Computed from the gate logic (see cut-sets.md); the SPF tags are WP-A-04's own claims.</text>
+<rect x="1212" y="750.5" width="500" height="196" rx="10" fill="#fff" stroke="#d9dee6"/>
+<line x1="1212" y1="796.5" x2="1712" y2="796.5" stroke="#d9dee6"/>
+<line x1="1530" y1="796.5" x2="1530" y2="946.5" stroke="#d9dee6"/>
+<text x="1230" y="779.5" class="tbh">LionDriver · FTA SG-08</text>
+<rect x="1562" y="764.5" width="132" height="20" rx="10" fill="#fff4e0" stroke="#f0c36d"/>
+<text x="1628" y="778.5" class="chip" fill="#8a5a00">DRAFT · NOT VERIFIED</text>
+<text x="1230" y="822.5" class="k">TOP OF SHEET</text>
+<text x="1328" y="822.5" class="v">TE-08</text>
+<text x="1230" y="848.5" class="k">SINGLE-POINT</text>
+<text x="1328" y="848.5" class="v">3 basic events on this sheet</text>
+<text x="1230" y="874.5" class="k">SOURCE</text>
+<text x="1328" y="874.5" class="v">WP-A-04 §13 (analysis of record)</text>
+<text x="1230" y="900.5" class="k">GENERATED BY</text>
+<text x="1328" y="900.5" class="v">fta_diagrams.py</text>
+<text x="1230" y="926.5" class="k">EDIT</text>
+<text x="1328" y="926.5" class="v">WP-A-04, not this file</text>
+<text x="1546" y="820.5" class="k">SHEETS</text>
+<line x1="1621.0" y1="855.5" x2="1621.0" y2="869.5" stroke="#9aa3b2" stroke-width="1.3"/>
+<rect x="1607.0" y="835.5" width="28" height="20" rx="5" fill="#0f2a44" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1621.0" y="849.5" class="mm" fill="#fff">1</text>
+<rect x="1607.0" y="869.5" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1621.0" y="883.5" class="mm" fill="#0f2a44">2</text>
 </svg>

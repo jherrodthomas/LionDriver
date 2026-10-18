@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-02 SOTIF verification and validation strategy, validation targets |
 | Standard reference | ISO 21448:2022 §9 (V&V strategy, validation targets), Annex C (informative, validation target derivation); ISO/PAS 8800:2024 (AI V&V); ASPICE 4.0 VAL.1 |
-| Version | 0.5 (ODD speed bound 110 km/h, decision register DQ-260: §3.3, §3.4, §4; 2026-10-16). 0.4 (§5.3 fidelity-case plan written: scenario families, fidelity elements, comparison, synthetic-data labelling for DSR-12; §5.4 CARLA assessed, decision queued as DQ-261; 2026-10-16). 0.3 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; controllability pass limits fixed before testing, DQ-042; public-road limits, DQ-046; no uploads to comma, DQ-084; 2026-10-16). 0.2 (Figure 4-1 added, generated from §3.1, §3.2 and §4; 2026-10-13). 0.1 |
+| Version | 0.8 (§4.4: the rule is implemented in `policy.py` (SWSR-634); its unit tests run the check (a) speed profiles; 2026-10-17). 0.7 (§4.4 added: validation of the speed-dependent wheel-touch reminder timing, TSR-634 (DQ-077 A); VT-08 covers DMP-05; 2026-10-17). 0.6 (the lead's decisions: simulation credit per scenario family once its fidelity case is approved, DQ-139; CARLA not now, revisit at G3, DQ-261; §5.3, §5.4, OI-4; 2026-10-16). 0.5.1 (§5.3.1 simulator status brought up to date by the simulation session at the SOTIF session's request: bridge PR #124, scenario files, plant model; no plan or target changed; 2026-10-16). 0.5 (ODD speed bound 110 km/h, decision register DQ-260: §3.3, §3.4, §4; 2026-10-16). 0.4 (§5.3 fidelity-case plan written: scenario families, fidelity elements, comparison, synthetic-data labelling for DSR-12; §5.4 CARLA assessed, decision queued as DQ-261; 2026-10-16). 0.3 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; controllability pass limits fixed before testing, DQ-042; public-road limits, DQ-046; no uploads to comma, DQ-084; 2026-10-16). 0.2 (Figure 4-1 added, generated from §3.1, §3.2 and §4; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -316,7 +316,7 @@ Targets are **proposals**: numeric values are placeholders for the assessor revi
 | VT-05 | SH-05 override not effective | Release on brake / cancel / steering override | 100 % release within SG-05 budget in ≥ 299 trials per input type and speed band (p ≤ 1 % at 95 %) | Deterministic function, tested as a sample | CC, HIL (WP-V-05) | Yes |
 | VT-06 | SH-06 missed or late stationary/slow lead | Collision or required driver braking > 5 m/s² | p_s ≤ 1 % per approach-speed band in the ODD (KS-05, KS-08); FCW at TTC ≥ 2 s (AIR-06) | §3 step 5, case E; B2 comparison | CC with soft target, SIM | Yes for the bands tested |
 | VT-07 | SH-08 PCS suppression | Stock PCS activation with LD-SDA installed vs stock | Equivalent activation (same TTC ± 0.2 s) in every PCS soft-target test | B2 | CC (KS-20; VS-VAL in WP-V-01) | Yes |
-| VT-08 | SH-12 prolonged unsupervised operation (DM) | Distraction, phone, sleep detection; fallback on camera blockage | AIR-07/AIR-08 thresholds per DM stratum; DMP-01…DMP-04; AC-05 | WP-C-08 §5.3 | EVAL (VS-ML-06), CC (WP-C-08 §8 V-5) | Yes |
+| VT-08 | SH-12 prolonged unsupervised operation (DM) | Distraction, phone, sleep detection; fallback on camera blockage; reminder timing in the wheel-touch fallback | AIR-07/AIR-08 thresholds per DM stratum; DMP-01…DMP-05; AC-05; fallback timing per §4.4 | WP-C-08 §5.3, §5.4; §4.4 | EVAL (VS-ML-06), CC (WP-C-08 §8 V-5), T-SIL and PR for §4.4 | Yes, once TSR-634 is implemented |
 | VT-09 | All | Comparative performance vs stock TSS2 (B2) | LD-SDA not worse than stock in any KS scenario run with both (metric per scenario in WP-V-03) | B2 | CC, PR (paired routes) | Yes for scenarios run |
 | VT-10 | All | Unknown-scenario discovery rate | Discovery rate of new hazardous scenario classes (WP-V-04 §5) decreasing over the last 3 exploration blocks, with no class of severity S3 found in the last block | 21448 §11 | PR, SIM exploration, log mining | Yes as a trend; not as a proof |
 | VT-11 | All | Field: harm-level events attributable to LD-SDA | Zero injury crashes; trigger thresholds for restriction defined in WP-O-04 | B1 (long-term) | Field monitoring | Long-term only |
@@ -395,6 +395,19 @@ At the ODD speed bound, the required report distance is 33.3 + 33.3² / 6 ≈ 21
 
 Result: eight values are confirmed or replaced (C). AIR-11 and AIR-14 are confirmed through VT-14 and VT-15, and AIR-01, AIR-03 and AIR-04 through the derivation of §4.3. No value is left at D or G. The remaining six take their value from timing, ML engineering or data documents, not from this one (N). Until then, every (TBC) in WP-C-11 stays (TBC).
 
+### 4.4 Validation of the wheel-touch reminder timing (TSR-634)
+
+[WP-C-08 §5.4](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) sets the speed-dependent reminder timing for the wheel-touch fallback: alert *k* fires at 150 / 240 / 395 m driven, or 5 / 15 / 25 s if that comes first (DMP-05, TSR-634, DQ-077 A). VT-08 covers it with the four checks below. The values are proposals for the assessor review (OI-3). The rule is implemented in `policy.py` (WP-W-02 SWSR-634, 2026-10-17). Its unit tests run the check (a) speed profiles against the policy alone: each alert falls within one DM cycle of the rule. That is unit-level evidence, not the T-SIL replay of check (a), which still needs its entry in WP-S-09. Checks (b) to (d) have not been run.
+
+| Check | Question | Proposed criterion | Method | Where |
+|---|---|---|---|---|
+| (a) Conformance | Does the code implement the rule, including while speed changes? | Every alert at min(T*k*, D*k*) within one DM cycle, for constant speeds 30…120 km/h in 10 km/h steps and for acceleration and deceleration ramps of ±1.5 m/s² across 57 km/h, the speed where distance starts to govern | T-SIL replay of synthetic speed profiles | Verification entry in [WP-S-09](../03-system/WP-S-09-system-verification.md) (§7) |
+| (b) Response | Do drivers in the fallback respond to the faster alerts before the no-response stage? | 20/20 valid subjects give a wheel input before the no-response stage, at 90 and 110 km/h, with the fallback forced (sunglasses) during a scripted secondary task (CA-07 sample logic) | CC: DM clinic, WP-C-08 §8 V-5; subjects per [WP-V-01](WP-V-01-safety-validation.md) §5.2 | WP-V-01 VS-VAL-17 |
+| (c) Nuisance | Do the extra alerts annoy attentive drivers enough that they defeat the system? | Alert 2 or 3 in the fallback with an attentive, hands-on driver: ≤ 1 per hour at 95 %, on highway drives at 90–110 km/h. This is the χ² bound of §3 step 3 with the AIR-08 nuisance budget | PR with safety driver, fallback forced; alerts reviewed against cabin video | VT-08 result row |
+| (d) Exposure | How often is the fallback active? | No criterion. The share of engaged time in the fallback is reported per DM stratum (sunglasses, night, glare) and sizes the residual of LS-09 | PR, log mining | [WP-V-04](WP-V-04-sotif-unknown-scenarios.md) residual estimate |
+
+If (b) or (c) fails, the anchor of D*k* is revisited (WP-C-08 OI-8). A change of D*k* goes back through WP-C-08 §5.4 and TSR-634, not into the code alone.
+
 ## 5. Test methods
 
 ### 5.1 Methods matrix
@@ -421,7 +434,7 @@ Result: eight values are confirmed or replaced (C). AIR-11 and AIR-14 are confir
 
 ### 5.3 Simulation fidelity case (required before M4 gets credit)
 
-**Rule.** A simulation result gets no credit toward any target until the fidelity case for its scenario family is approved. Whether MetaDrive counts as evidence at all, and for which families, is a lead decision at G2 (WP-M-08 OI-3, decision register DQ-139). Until then, M4 is used for exploration and to choose closed-course parameter points. Every M4 result is labelled as synthetic data (§5.3.5).
+**Rule.** A simulation result gets no credit toward any target until the fidelity case for its scenario family is approved. The project lead decided this rule on 2026-10-16 (decision register DQ-139 option A, WP-M-08 OI-3): credit is given per scenario family, and only once that family's fidelity case passes and is approved. A family without an approved case is used only for exploration and to choose closed-course parameter points. Every M4 result is labelled as synthetic data (§5.3.5).
 
 This section is the plan for building that case. Nothing in it has been executed.
 
@@ -430,9 +443,10 @@ This section is the plan for building that case. Nothing in it has been executed
 | Item | State |
 |---|---|
 | Bridge `openpilot/tools/sim` (MetaDrive) | Upstream state: Honda Civic CAN, panda bypassed (`can`/`pandaStates` published directly), one loop track, no traffic. CI job disabled (`.github/workflows/tests.yaml`, `simulator_driving`, `if: false`) |
-| Adaptation to the item | In progress by the simulation session. The work-in-progress branch `claude/sotif-metadrive` (commit `7598c2b`, not merged) holds: Corolla TSS2 CAN on the powertrain, radar and camera buses from opendbc; the LionDriver reference build of the panda safety code (`libsafety`) on every received and sent frame; an EPS/PCM response model; headless rendering; traffic and pedestrian models. None of it has run closed loop with the driving model yet |
+| Adaptation to the item | In progress by the simulation session (update 2026-10-16). PR #124 (draft) takes the SOTIF session's branch `claude/sotif-metadrive` (`7598c2b`) and adds: headless rendering wired into the MetaDrive process, the ego moved kinematically from the plant's curvature and acceleration instead of MetaDrive's vehicle dynamics, the Corolla TSS2 fingerprint, traffic models limited to those licensed CC-BY-4.0, and the `simulator_driving` CI job re-enabled. Checked in the cloud container without the driving model (its LFS host is not reachable there): openpilot fingerprints `TOYOTA_COROLLA_TSS2` with safety parameter 73 from the simulated CAN. Closed loop with the driving model: only in CI, not yet passed |
 | Headless rendering on CPU | Works through panda3d's EGL pipe on Mesa llvmpipe with multisampling off. Measured on a 4-core cloud container: 160–230 ms per rendered frame (about 4–5 frames per second), almost all in the camera's scene pass. The device runs the road camera at 20 frames per second |
-| Scenario scripting | Not built. Scripted vehicles and pedestrians were spawned and moved in a standalone MetaDrive test, not yet through the bridge |
+| Scenario scripting | Scenario files exist: nine WP-V-03 scenarios as OpenSCENARIO/OpenDRIVE (`assurance/sim/scenarios`), replayed headless in esmini in CI; the fault-injection plant model reads their roads. Not yet loaded by the MetaDrive bridge (update 2026-10-16) |
+| Fault-injection plant model | Built (`assurance/sim`, layer 1): the panda safety code in a closed loop with a single-track Corolla, EPS, PCM and driver models; results labelled per §5.3.5; no credit |
 
 #### 5.3.2 Scenario families
 
@@ -498,7 +512,7 @@ Costs:
 - **A new bridge:** upstream openpilot dropped its CARLA bridge in favour of MetaDrive, so LionDriver would build and maintain one, reusing the simulated car and panda of §5.3.1.
 - **Its own fidelity case** under the rules above.
 
-Recommendation: **do not build it now.** First finish MetaDrive and its fidelity case. Revisit at G3, when the fidelity case shows which families MetaDrive cannot carry and the lighting and weather scenarios are scheduled. The decision is the lead's, because it spends money (decision register DQ-261).
+Recommendation: **do not build it now.** First finish MetaDrive and its fidelity case. Revisit at G3, when the fidelity case shows which families MetaDrive cannot carry and the lighting and weather scenarios are scheduled. The project lead accepted this on 2026-10-16 (decision register DQ-261 option A): no GPU and no CARLA work now; the question returns at G3.
 
 ## 6. Coverage of triggering conditions
 
@@ -560,7 +574,7 @@ Each functional modification decided in [WP-C-07](../02-concept/WP-C-07-sotif-fu
 | OI-1 | Keep the §6 TC table in step with WP-C-06 revisions (new TCs need a KS entry) |
 | OI-2 | Select B1 data set and filter to the ODD; replace the illustrative rates of §3.1 (shared with WP-M-08 OI-1) |
 | OI-3 | Approve numeric targets VT-01…VT-15 with the assessor before collecting evidence, together with the derivations of §4.2 and §4.3 |
-| OI-4 | Execute the fidelity-case plan of §5.3 (matched M8 points per family, plant constants from VS-VAL-08 and lateral step tests, radar comparison); which families get credit is the lead's decision at G2 (WP-M-08 OI-3, DQ-139). CARLA is assessed in §5.4 and waits on DQ-261 |
+| OI-4 | Execute the fidelity-case plan of §5.3 (matched M8 points per family, plant constants from VS-VAL-08 and lateral step tests, radar comparison); credit per family once its case is approved (DQ-139 option A). CARLA: not now, revisit at G3 (§5.4, DQ-261 option A) |
 | OI-5 | Define the surrogate-to-harm argument for VT-04 and the takeover-based surrogates (WP-M-08 OI-8) |
 | OI-7 | Fit the rear-facing camera now listed in the [WP-V-01](WP-V-01-safety-validation.md) §2 equipment (procurement: WP-V-01 OI-6), and annotate following vehicles from its recordings, so that P(E-situation) for SH-04 (following vehicle, OS-08) is measured (§3.4). Blocks driven before it is fitted give no SH-04 data |
 | OI-8 | Extract P(severity class) per SH from FARS/CRSS (and injury-risk curves where §3.5 item 3 requires them) for the selected B1 data set (OI-2); record the values and bounds per §3.5 item 4. The extraction tool is [`tools/severity/`](../../tools/severity/README.md); its variable codes must be checked against the NHTSA manual of the release year first. The same download gives the weighted mean age of pedestrians aged 15 and older struck in 2007–2009 (GES person file), which fixes the reference age of the SH-11 age shift (§3.5). Not run yet: the NHTSA download hosts are not reachable from the project's cloud environment |

@@ -64,6 +64,8 @@
 <text x="81.0" y="525.0" class="chip" fill="#fff">SWF-047</text>
 <rect x="112.9" y="513.5" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="139.8" y="525.0" class="chip" fill="#fff">SFM-005</text>
+<rect x="171.8" y="513.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="198.8" y="525.0" class="chip" fill="#fff">SFM-011</text>
 <circle cx="150.0" cy="561.5" r="16" fill="#e6effb" stroke="#1a5fb4" stroke-width="1.7"/>
 <rect x="404.5" y="295.5" width="220" height="56.5" rx="9" class="shadow"/>
 <rect x="403.0" y="293.0" width="220" height="56.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
@@ -95,6 +97,8 @@
 <text x="427.4" y="790.0" class="chip" fill="#fff">SWF-020</text>
 <rect x="296.0" y="800.5" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="322.9" y="812.0" class="chip" fill="#fff">SWF-024</text>
+<rect x="354.9" y="800.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="381.8" y="812.0" class="chip" fill="#fff">SWF-060</text>
 <circle cx="392.0" cy="848.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
 <rect x="525.5" y="633.0" width="220" height="78.5" rx="9" class="shadow"/>
 <rect x="524" y="630.5" width="220" height="78.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>

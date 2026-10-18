@@ -65,7 +65,7 @@ PROSE = {
   "overriding": ["Driver gas or steering input while engaged. Longitudinal blocked while gas pressed (`longitudinal.h:3-5`)"],
   "soft": ["Fault detected; warning; actuation continues up to 3 s (`state.py:7`) — see GAP-16"],
   "immediate": ["Critical fault; control released at once"],
-  "lockout": ["DM non-compliance; engagement prevented for 1–30 min (`policy.py:42-44`)"],
+  "lockout": ["DM non-compliance; engagement prevented for 1–30 min (`policy.py:47-49`)"],
   "chill": ["Longitudinal policy selection (MPC vs end-to-end model). Upstream default is Experimental (`params_keys.h:43`, GAP-18)",
             "| OI-8 | Decide whether Experimental Mode (end-to-end longitudinal, traffic light stopping) is in the reference ODD |"],
   "debug": ["Developer modes that replace control processes (`process_config.py:34-47`)",
@@ -75,7 +75,7 @@ PROSE = {
 # Code values drawn as numbers or as behaviour: (file, exact text). The line-cited ones also give the line.
 CODE_SRC = [
   ("openpilot/selfdrive/selfdrived/state.py", 7, "SOFT_DISABLE_TIME = 3  # seconds"),
-  ("openpilot/selfdrive/monitoring/policy.py", 44, "for n_min in [1, 5, 15, 30]]"),
+  ("openpilot/selfdrive/monitoring/policy.py", 49, "for n_min in [1, 5, 15, 30]]"),
   ("opendbc_repo/opendbc/safety/longitudinal.h", 4, "return controls_allowed && !gas_pressed_prev;"),
   ("opendbc_repo/opendbc/safety/lateral.h", 99, "if (!controls_allowed && torque_requested) {"),
   ("openpilot/selfdrive/pandad/pandad.cc", 0, "panda->set_safety_model(cereal::CarParams::SafetyModel::NO_OUTPUT);"),
@@ -276,7 +276,7 @@ MODES = {
   "Driver lockout": {
     "key": "lock", "host": ["disabled"], "host_text": "selfdrived: disabled · N1 refuses", "panda": [], "panda_text": "",
     "detail": ["DM non-compliance; engagement prevented", f"for {LOCKOUT_MIN[0]}–{LOCKOUT_MIN[1]} min"],
-    "code": "policy.py:42-44", "src": "lockout"},
+    "code": "policy.py:47-49", "src": "lockout"},
 }
 # Record IDs named inside the mode boxes (host_text): P1 (preEnabled -> enabled), X1, N1.
 BOX_IDS = [(SD, "P1"), (SD, "X1"), (SD, "N1")]
@@ -285,7 +285,7 @@ CONFIG = {
   "Debug / maneuver / joystick modes": "debug",
 }
 CODE_REFS = ["pandad.cc:204-207", "lateral.h:98-101", "state.py:79-90", "longitudinal.h:3-5", "state.py:7",
-             "policy.py:42-44", "params_keys.h:43", "process_config.py:34-47"]
+             "policy.py:47-49", "params_keys.h:43", "process_config.py:34-47"]
 
 # Kinds of enforcement
 ENV, HOST, GAP = "envelope", "host", "gap16"
@@ -312,7 +312,7 @@ def envelope_fault_ids(recs: dict) -> tuple[list[str], list[str], list[str]]:
   own = {"T2", "T3", "T6", "T7"}
   allb, ref, notimpl = [], [], []
   for t in recs[TA]["transitions"]:
-    if t["to"] != "NOT_ALLOWED" or t["from"] == "NOT_ALLOWED" or t["id"] in own:
+    if t["to"] != "NOT_ALLOWED" or t["from"] not in ("ALLOWED", "any") or t["id"] in own:  # only a granted authority is cleared
       continue
     if t.get("code", "").startswith("not implemented"):
       notimpl.append(t["id"])
@@ -686,7 +686,7 @@ def figure_4_2(md: str, recs: dict) -> str:
   cx = (bx + 10 + W - 40) / 2
   b.append(rect(bx + 10, yk - 11, W - 40 - bx - 10, 22, fill="url(#hatch)", stroke=FAINT, dash="4 3", rx=0))
   b.append(htext(cx, yk + 4, f"{LOCKOUT_MIN[0]}–{LOCKOUT_MIN[1]} min", fill=INK, weight=700, anchor="middle"))
-  b.append(text(W - 40, yk + 30, "policy.py:42-44", size=10, fill=MUTED, anchor="end", family=MONO))
+  b.append(text(W - 40, yk + 30, "policy.py:47-49", size=10, fill=MUTED, anchor="end", family=MONO))
   # axis
   ya = bottom + 6
   b.append(line(X0, ya, xe, ya, stroke=FAINT, sw=1))
@@ -701,7 +701,7 @@ def figure_4_2(md: str, recs: dict) -> str:
   b.append(line(40, fy - 18, W - 40, fy - 18, stroke=HAIR, sw=1))
   notes = [
     f"Illustrative: the times between events are made up. Code values: the {SOFT_S} s soft-disable (state.py:7; " +
-    f"sm-selfdrived E1 \"{E1_ACTION}\") and the {LOCKOUT_MIN[0]}–{LOCKOUT_MIN[1]} min lockout (policy.py:42-44).",
+    f"sm-selfdrived E1 \"{E1_ACTION}\") and the {LOCKOUT_MIN[0]}–{LOCKOUT_MIN[1]} min lockout (policy.py:47-49).",
     f"Red band (GAP-16): for up to {SOFT_S} s the host keeps commanding and the panda keeps allowing it; the envelope " +
     "has no soft-disable of its own.",
     "After SD2 no record transition clears controls_allowed directly: the host requests a PCM cancel (controlsd.py, " +
@@ -740,6 +740,7 @@ AOU_MAP = {
   "AOU-05": ("veh", "PCM", "The PCM bounds ACC acceleration"),
   "AOU-10": ("veh", "VSC/ABS", "VSC/ABS are enabled and functional"),
   "AOU-12": ("veh", "cluster", "The cluster cruise indicator is driven by PCM state"),
+  "AOU-16": ("veh", "PCM", "the PCM keeps it stopped and held"),
   "AOU-08": ("inst", "device mount", "The device is mounted and calibrated"),
   "AOU-09": ("inst", "vehicle", "The vehicle is maintained, unmodified"),
   "AOU-13": ("inst", "harness", "The de-energised harness relay connects the forward camera"),

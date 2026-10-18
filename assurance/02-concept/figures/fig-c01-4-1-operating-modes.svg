@@ -72,7 +72,7 @@
 <text x="394" y="641" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">selfdrived: disabled · N1 refuses</text>
 <text x="394" y="662" font-size="10.5" fill="#475569">DM non-compliance; engagement prevented</text>
 <text x="394" y="677" font-size="10.5" fill="#475569">for 1–30 min</text>
-<text x="394" y="692" font-size="10" fill="#94A3B8" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">policy.py:42-44</text>
+<text x="394" y="692" font-size="10" fill="#94A3B8" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">policy.py:47-49</text>
 <rect x="394" y="705" width="86" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
 <text x="437" y="717.5" font-size="10" fill="#475569" font-weight="700" text-anchor="middle">no actuation</text>
 <path d="M236,378 L380,378" stroke="#C2410C" stroke-width="2.2" fill="none" marker-end="url(#safety)" stroke-linejoin="round"/>

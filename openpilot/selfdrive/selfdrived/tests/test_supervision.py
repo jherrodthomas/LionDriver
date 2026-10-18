@@ -1,3 +1,5 @@
+import unittest
+
 from openpilot.selfdrive.selfdrived.supervision import ControlsMismatch, TxBlockedMonitor
 
 DT = 0.01  # selfdrived runs at 100 Hz; pandaStates arrives at 10 Hz
@@ -13,7 +15,7 @@ def run(mismatch_frames, sample_every=10, samples=2, max_time=0.5):
   return None
 
 
-class TestControlsMismatch:
+class TestControlsMismatch(unittest.TestCase):
   def test_triggers_on_second_consecutive_sample(self):
     # first sample at frame 0, second at frame 10: 0.1 s, inside the 0.5 s bound of TSR-621
     assert run(100) == 10
@@ -90,7 +92,7 @@ class TestControlsMismatch:
       assert not cm.triggered(f)
 
 
-class TestTxBlockedMonitor:
+class TestTxBlockedMonitor(unittest.TestCase):
   def test_first_sample_sets_baseline(self):
     m = TxBlockedMonitor()
     assert not m.update(0, 5, True)

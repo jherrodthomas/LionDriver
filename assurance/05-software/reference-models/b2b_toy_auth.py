@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Back-to-back run: reference model SM-TOY-AUTH (sm_toy_auth_model.py) against the opendbc safety C (libsafety).
 
-Each event (RX frame, safety tick, TX frame, safety-mode set) goes to both. The C gets real CAN frames, packed with
+Each event (RX frame, safety tick, TX frame, safety-mode set, heartbeat engaged flag) goes to both. The C gets real CAN frames, packed with
 opendbc's CANPacker from the toyota_nodsu_pt DBC and fed through the libsafety_py harness of
 opendbc_repo/opendbc/safety/tests; the model gets the decoded event. After every event `controls_allowed` (and, in
 the reference build, the reported TX-rate flag) is compared. The first divergence ends a sequence and is recorded.
@@ -29,8 +29,8 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 sys.path.insert(0, str(HERE))
-from sm_toy_auth_model import (DEVIATIONS, RX_SET_COMMON, RX_SET_REFERENCE, TX_RATE_ROWS, Rx, SetMode,  # noqa: E402
-                               SmToyAuth, Tick, Tx, timeout_us)
+from sm_toy_auth_model import (DEVIATIONS, RX_SET_COMMON, RX_SET_REFERENCE, TX_RATE_ROWS, Heartbeat, Rx,  # noqa: E402
+                               SetMode, SmToyAuth, Tick, Tx, timeout_us)
 
 import sm_toy_auth_model as M  # noqa: E402
 
@@ -46,10 +46,14 @@ MUTANTS = {
   "engagement_not_gated": lambda: setattr(M.SmToyAuth, "_all_checks_ok", lambda self: True),
   "quality_flag_ignored": lambda: M.RX_SET_COMMON.__setitem__(0x0AA, (83, False, False)),
   "tx_arrival_limit_60ms": lambda: M.TX_ARRIVAL_US.__setitem__(0x2E4, 60_000),
+  "engage_window_2s": lambda: setattr(M, "ENGAGE_WINDOW_US", 2_000_000),
+  "heartbeat_gate_ignored": lambda: setattr(M, "HEARTBEAT_GATE", False),
+  "main_off_keeps_window": lambda: setattr(M, "MAIN_OFF_CLOSES_WINDOW", False),
+  "arrival_counts_refused": lambda: setattr(M, "ARRIVAL_NEEDS_ACCEPTED", False),
 }
 
-IN_SCOPE = ["T1", "T2", "T3", "T4", "T5", "T7", "T8", "T10b", "T10c", "T11"]
-REFERENCE_ONLY = {"T10b", "T10c", "T11"}
+IN_SCOPE = ["T1", "T1a", "T1b", "T1c", "T2", "T3", "T4", "T5", "T7", "T8", "T10b", "T10c", "T11"]
+REFERENCE_ONLY = {"T1a", "T1b", "T1c", "T10b", "T10c", "T11"}
 TOYOTA_PARAM = 73          # reference configuration (CD-01): EPS factor 73, no flags
 TICK_US = 10_000           # 100 Hz safety task (SWSR-401a)
 TX_DLC = {0x2E4: 5, 0x191: 8, 0x412: 8, 0x343: 8, 0x1D2: 8, 0x283: 7, 0x750: 8}  # whitelist lengths (CD-04)
@@ -58,6 +62,7 @@ MSG_NAME = {0x0AA: "WHEEL_SPEEDS", 0x260: "STEER_TORQUE_SENSOR", 0x1D2: "PCM_CRU
 ACTUATION = {0x2E4: 100, 0x343: 33}  # SoC actuation frames a running host sends (SWSR-408 supervises both)
 WHEELS = ("FR", "FL", "RR", "RL")
 STANDING = 6767            # raw wheel speed for 0 km/h (factor 0.01, offset -67.67)
+WINDOW_US = 1_000_000      # record T1b "within 1 s of the edge": scenario timing, independent of the model's constant
 
 
 # ------------------------------------------------------------------ event streams
@@ -78,6 +83,7 @@ class Feeder:
     self.actuate = True                        # emit nominal SoC actuation traffic
     self.next_tx = {a: 0 for a in ACTUATION}
     self.tx_muted: set[int] = set()
+    self.tx_refused: set[int] = set()     # IDs whose nominal frames are sent with content the mode refuses (MA-09)
     self.sig = {"CRUISE_ACTIVE": 0, "GAS_RELEASED": 1, "MAIN_ON": 1, "BRAKE_PRESSED": 0, "LKA_STATE": 5,
                 **{f"WHEEL_SPEED_{w}_RAW": STANDING for w in WHEELS}, **{f"WHEEL_SPEED_{w}_FAULT": 0 for w in WHEELS}}
     self.events: list[tuple[int, object]] = []
@@ -111,7 +117,7 @@ class Feeder:
         for a, hz in ACTUATION.items():
           if self.next_tx[a] == due:
             if a not in self.tx_muted:
-              self.emit(Tx(a, dlc=TX_DLC[a]))
+              self.emit(Tx(a, dlc=TX_DLC[a], content_ok=a not in self.tx_refused))
             self.next_tx[a] = due + 1_000_000 // hz
     self.now = end
 
@@ -179,8 +185,9 @@ def directed(reference: bool) -> dict[str, list]:
   S["D10 T7 safety mode set while allowed"] = f.events
 
   # Ported from the retired models/b2b harness (BB-08a, BB-08b, BB-01c). D19: a mode set while CRUISE_ACTIVE is held 1
-  # (B2B-06 / BB-C-01). After the reset the held 1 is a new edge (MA-01, SWSR-311); whether authority comes back
-  # depends on every RX check being received again before the next 0x1D2.
+  # (B2B-06 / BB-C-01). Upstream build: after the reset the held 1 is a new edge (MA-01), and whether authority comes
+  # back depends on every RX check being received again before the next 0x1D2. Reference build (SWSR-311 v0.24,
+  # ATC-26): no grant until CRUISE_ACTIVE = 0 has been received after the mode set.
   f = new(); f.engage(); f.run(100_000); f.emit(SetMode()); f.muted = {0x226}
   f.run(f.next_due[0x1D2] - f.now + 1_000); f.muted = set(); f.run(200_000)
   S["D19a T7 mode set, cruise held; 0x226 arrives after the next 0x1D2: no regrant"] = f.events
@@ -190,7 +197,7 @@ def directed(reference: bool) -> dict[str, list]:
     if a != 0x1D2:
       f.now += 100; f.emit(f.frame(a))
   f.run(200_000)
-  S["D19b T7 mode set, cruise held; every RX check received before the next 0x1D2: authority granted again"] = f.events
+  S["D19b T7 mode set, cruise held; every RX check received before the next 0x1D2"] = f.events
 
   f = new(); f.sig["CRUISE_ACTIVE"] = 1; f.run(300_000)
   f.sig["CRUISE_ACTIVE"] = 0; f.emit(f.frame(0x1D2)); f.run(100_000)
@@ -238,6 +245,59 @@ def directed(reference: bool) -> dict[str, list]:
       f = new(); f.engage(); f.run(100_000); f.tx_muted = {a}; f.run(limit + 100_000)
       S[f"D18 T10b {a:#x} stops while allowed (limit {limit // 1000} ms)"] = f.events
 
+    # D22: SWSR-408 (B2B-05): 0x343 keeps arriving at its rate, but only with content the mode refuses (ACCEL_CMD above
+    # the limit); a refused frame is not an accepted one, so authority is cleared as if the frames had stopped
+    f = new(); f.engage(); f.run(100_000); f.tx_refused = {0x343}; f.run(250_000)
+    S["D22 T10b 0x343 keeps arriving with refused content (SWSR-408 accepted, B2B-05)"] = f.events
+
+  # D21: the LS-06 engagement window (record T1a, T1b, T1c; TSR-301 v0.20). The heartbeat's engaged flag is 0 at the
+  # cruise edge, so the edge opens the window; what happens next decides the grant. Upstream: the edge grants at once.
+  def window(hb_after_us: int | None = 200_000, before=None) -> Feeder:
+    f = new(); f.emit(Heartbeat(False)); f.engage()           # engage() leaves f.now 50 ms after the edge
+    if before:
+      before(f)
+    if hb_after_us is not None:
+      edge = min(t for t, ev in f.events if isinstance(ev, Rx) and ev.addr == 0x1D2 and ev.signals["CRUISE_ACTIVE"])  # the rising edge
+      f.run(max(0, edge + hb_after_us - f.now)); f.emit(Heartbeat(True))
+    f.run(200_000)
+    return f
+
+  S["D21a T1a then T1b: heartbeat engaged 200 ms after the edge"] = window().events
+  if reference:
+    for delta, tag in ((0, "at"), (1, "1 us past")):
+      f = new(); f.emit(Heartbeat(False)); f.engage()
+      edge = min(t for t, ev in f.events if isinstance(ev, Rx) and ev.addr == 0x1D2 and ev.signals["CRUISE_ACTIVE"])  # the rising edge
+      f.run(edge + WINDOW_US + delta - f.now - 1)
+      f.now = edge + WINDOW_US + delta
+      f.emit(Heartbeat(True)); f.emit(Tick()); f.run(100_000)
+      S[f"D21b T1b or T1c: heartbeat engaged and a safety tick {tag} 1 s after the edge"] = f.events
+
+    def cruise_off(f):
+      f.sig["CRUISE_ACTIVE"] = 0; f.emit(f.frame(0x1D2)); f.run(20_000)
+    S["D21c T1c: cruise off during the window"] = window(300_000, cruise_off).events
+
+    def brake(f):
+      f.sig["BRAKE_PRESSED"] = 1; f.emit(f.frame(0x226)); f.run(20_000); f.sig["BRAKE_PRESSED"] = 0
+    S["D21d T1c: brake pressed during the window"] = window(300_000, brake).events
+
+    def rx_timeout(f):
+      f.muted = {0x260}; f.run(200_000); f.muted = set(); f.run(50_000)
+    S["D21e T1c: 0x260 times out during the window, then recovers"] = window(400_000, rx_timeout).events
+
+    def mode_set(f):
+      f.emit(SetMode()); f.run(20_000)
+    S["D21f T7 during the window"] = window(300_000, mode_set).events
+
+    f = new(); f.emit(Heartbeat(False)); f.sig["MAIN_ON"] = 0; f.engage()   # f.now: 50 ms after the edge
+    f.emit(Heartbeat(True)); f.run(300_000)
+    S["D21g T8: edge while MAIN_ON = 0, heartbeat engaged 50 ms later (SM-F1)"] = f.events
+
+    for hb_after, tag in ((60_000, "within"), (250_000, "after")):
+      def main_off(f):
+        f.sig["MAIN_ON"] = 0; f.emit(f.frame(0x1D3))
+      S[f"D21h main off during the window, heartbeat engaged {tag} the 150 ms tolerance"] = window(
+        hb_after, main_off).events
+
   f = new(); f.engage(); f.sig["BRAKE_PRESSED"] = 1; f.emit(f.frame(0x226, dlc=7)); f.now += 1_000
   f.emit(f.frame(0x260)); f.run(100_000)
   S["D14 OI-1 brake pressed in a 0x226 frame that fails validation"] = f.events
@@ -259,11 +319,15 @@ def random_sequence(reference: bool, seed: int, n_events: int) -> list:
   rng = random.Random(seed)
   f = Feeder(reference)
   f.sig["MAIN_ON"] = int(rng.random() < 0.9)
+  hb = rng.random() < 0.5                      # the heartbeat's engaged flag; the C starts with it set
+  if not hb:
+    f.emit(Heartbeat(False))
   dropout: dict[int, int] = {}
   flood: tuple[int, float, int] | None = None   # (addr, multiplier, until)
   f.actuate = False                            # TX traffic is generated below, with floods and dropouts
   next_tx = {0x2E4: 0, 0x343: 0, 0x412: 0}
   tx_gap: dict[int, int] = {}                  # actuation dropouts (T10b): addr -> until
+  refused_until = 0                            # 0x343 sent with refused content until then (B2B-05)
   while len(f.events) < n_events:
     # one 10 ms slice at a time, frames at nominal rates with jitter and occasional long gaps
     f.muted = {a for a, until in dropout.items() if until > f.now}
@@ -290,6 +354,9 @@ def random_sequence(reference: bool, seed: int, n_events: int) -> list:
                                          "mixed": STANDING + rng.choice([-1, 1])}[kind]
     elif r < 0.065:
       f.sig["LKA_STATE"] = rng.choice([0, 3, 5, 9, 11, 17, 21, 25])
+    elif r < 0.075:
+      hb = not hb
+      f.emit(Heartbeat(hb))
     # corrupted or unusual frames
     if rng.random() < 0.01:
       a = rng.choice(sorted(f.rx))
@@ -312,10 +379,12 @@ def random_sequence(reference: bool, seed: int, n_events: int) -> list:
     if rng.random() < 0.004:
       a = rng.choice(sorted(ACTUATION))
       tx_gap[a] = f.now + rng.choice([20_000, 40_000, 50_000, 60_000, 90_000, 100_000, 110_000, 200_000])
+    if rng.random() < 0.003:   # 0x343 with content the mode refuses for a while (B2B-05)
+      refused_until = f.now + rng.choice([30_000, 90_000, 100_000, 110_000, 150_000, 300_000])
     for a, hz in ((0x2E4, 100), (0x343, 33), (0x412, 5)):
       while next_tx[a] <= f.now:
         if tx_gap.get(a, 0) <= next_tx[a]:
-          f.emit(Tx(a, dlc=TX_DLC[a]), at=next_tx[a])
+          f.emit(Tx(a, dlc=TX_DLC[a], content_ok=not (a == 0x343 and next_tx[a] < refused_until)), at=next_tx[a])
         next_tx[a] += int(1_000_000 / hz)
     if flood is not None:
       a, mult, until = flood
@@ -352,8 +421,14 @@ class CSide:
       self.s.safety_tick()
     elif isinstance(ev, SetMode):
       self.s.set_safety_hooks(self.mode, TOYOTA_PARAM)
+    elif isinstance(ev, Heartbeat):
+      self.s.set_heartbeat_engaged(ev.engaged)
     elif isinstance(ev, Tx):
-      self.s.safety_tx_hook(self.lp.make_CANPacket(ev.addr, ev.bus, b"\x00" * ev.dlc))
+      dat = b"\x00" * ev.dlc
+      if not ev.content_ok:
+        assert ev.addr == 0x343, "content refusal is modelled for 0x343 only (MA-09)"
+        dat = (10_000).to_bytes(2, "big") + b"\x00" * (ev.dlc - 2)   # ACCEL_CMD 10 m/s^2 (0.001 m/s^2 per bit)
+      self.s.safety_tx_hook(self.lp.make_CANPacket(ev.addr, ev.bus, dat))
     else:
       self.s.safety_rx_hook(self.lp.make_CANPacket(ev.addr, ev.bus, self.encode(ev)))
 
@@ -399,7 +474,9 @@ def describe(ev) -> str:
            for k, v in ev.signals.items() if k in keys.get(ev.addr, []) and (v or k.endswith("_RAW"))}
     return f"RX {ev.addr:#x}" + (f" ({', '.join(extra)})" if extra else "") + (f" {sig}" if sig else "")
   if isinstance(ev, Tx):
-    return f"TX {ev.addr:#x}"
+    return f"TX {ev.addr:#x}" + ("" if ev.content_ok else " (refused content)")
+  if isinstance(ev, Heartbeat):
+    return f"heartbeat engaged={int(ev.engaged)}"
   return type(ev).__name__
 
 

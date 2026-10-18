@@ -160,7 +160,7 @@
 - id: FSR-02.01
   kind: fsr
   text: "The item shall detect EPS conditions that remove or reduce LKA assistance (EPS LKA fault states) while engaged."
-  asil: "B"
+  asil: "C"
   parents: [SG-02]
   allocated_to: "E-03 (detection), E-01 (diagnosis text)"
   verification: "T-SIL, T-VEH"
@@ -171,7 +171,7 @@
 - id: FSR-02.02
   kind: fsr
   text: "The item shall detect loss of the inputs that the lateral command depends on (driving model output, calibration, localization, vehicle state) and shall not continue to actuate on inputs that are no longer valid."
-  asil: "B"
+  asil: "C"
   parents: [SG-02]
   allocated_to: "E-01 (QM, see note), E-03 (FSR-01.07 as backstop)"
   verification: "T-SIL, FI"
@@ -182,7 +182,7 @@
 - id: FSR-02.03
   kind: fsr
   text: "On a detected loss or degradation of lateral control, the item shall give a visual and acoustic take-over request within 1 s of fault detection and before or at the start of torque reduction."
-  asil: "B"
+  asil: "C"
   parents: [SG-02]
   allocated_to: "E-01/HMI, E-03 siren for SoC loss"
   verification: "T-HIL, T-VEH"
@@ -193,7 +193,7 @@
 - id: FSR-02.04
   kind: fsr
   text: "When torque is withdrawn because of a fault (not a driver action), the reduction shall follow a bounded ramp unless the fault makes the command itself untrusted, in which case torque shall go to zero at once."
-  asil: "B"
+  asil: "C"
   parents: [SG-02]
   allocated_to: "E-01, E-03"
   verification: "A, T-SIL"
@@ -204,7 +204,7 @@
 - id: FSR-02.05
   kind: fsr
   text: "On loss of communication with the SoC while engaged, and on a reset of the safety MCU (watchdog or fault reset) that interrupts granted actuation authority, the safety MCU shall give an acoustic warning that does not depend on the SoC. The reset case was added 2026-10-14 (DQ-054: the engaged state is kept across the reset; TSR-516(d))."
-  asil: "B"
+  asil: "C"
   parents: [SG-02]
   allocated_to: "E-03 (panda buzzer)"
   verification: "T-HIL"
@@ -215,7 +215,7 @@
 - id: FSR-02.06
   kind: fsr
   text: "Driver monitoring shall detect an inattentive or unresponsive driver while engaged and escalate warnings within the timing set in WP-C-08 (assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md) §5."
-  asil: "QM (see §7)"
+  asil: "A"
   parents: [SG-02, SG-06, SG-08]
   allocated_to: "E-01/DM, E-02"
   verification: "T-SIL, T-VEH"
@@ -226,40 +226,40 @@
 - id: FSR-02.07
   kind: fsr
   text: "Driver monitoring shall detect its own invalidity (no driver image, camera blocked, model output missing or not credible) and fall back to a policy that is no less strict than the active policy."
-  asil: "QM (see §7)"
+  asil: "A"
   parents: [SG-02, SG-06, SG-08]
   allocated_to: "E-01/DM"
   verification: "T-SIL, FI"
-  baseline_impl: "Partial: high-uncertainty → wheel-touch fallback (`policy.py:77-78`); source validity hard-coded `True` (`selfdrive/modeld/dmonitoringmodeld.py:99`); wheel-touch awareness reset by any steer/gas input (`policy.py:334-335`) (GAP-21)"
+  baseline_impl: "Partial: high-uncertainty → wheel-touch fallback (`policy.py:82-83`); source validity hard-coded `True` (`selfdrive/modeld/dmonitoringmodeld.py:99`); wheel-touch awareness reset by any steer/gas input (`policy.py:360-361`) (GAP-21)"
   status: proposed
   source: WP-C-04
 
 - id: FSR-02.08
   kind: fsr
   text: "Driver monitoring shall not be disabled, put into demo mode or replaced by synthetic inputs while the item can engage."
-  asil: "QM (see §7)"
+  asil: "A"
   parents: [SG-02, SG-06, SG-08]
   allocated_to: "E-01/DM"
   verification: "R, T-SIL"
-  baseline_impl: "Not met: `IsDriverViewEnabled` demo mode (`selfdrive/monitoring/dmonitoringd.py:26-27`, `policy.py:428-437`) (GAP-20)"
+  baseline_impl: "Not met: `IsDriverViewEnabled` demo mode (`selfdrive/monitoring/dmonitoringd.py:26-27`, `policy.py:467-476`) (GAP-20)"
   status: proposed
   source: WP-C-04
 
 - id: FSR-02.09
   kind: fsr
-  text: "If the driver does not respond to the highest DM warning, the item shall decelerate the vehicle, disengage and prevent re-engagement for a lockout period."
-  asil: "QM (see §7)"
+  text: "If the driver does not respond to the highest DM warning, the item shall decelerate the vehicle in a controlled way in its lane to a standstill, keep it stopped and held, and prevent the item from driving off again or being re-engaged until the driver responds; after the driver responds, the lockout period applies. This is the SG-08 safe state (WP-C-03 v0.4), decided 2026-10-16, DQ-365 A: steering stays on while the vehicle decelerates in lane to a standstill within the envelope limits with the alert sounding; the vehicle then stays stopped and held, and the item cannot drive off again: re-engagement and resumption are locked out until the driver responds. Lateral and longitudinal control shall not stay active at the set speed."
+  asil: "A"
   parents: [SG-02, SG-04, SG-06, SG-08]
   allocated_to: "E-01/DM"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Partial: no-response force decel after 5 s at the terminal alert (`policy.py:39-44, 398`; `selfdrive/controls/controlsd.py:235`), but no disengagement, so the lockout of 1/5/15/30 min acts only after a later disengagement (System FMEA SFM-025.C1; corrected 2026-10-16). Refined by TSR-633; the reaction is queued for the lead (DQ-340)"
+  baseline_impl: "Partial: no-response force decel after 5 s at the terminal alert (`policy.py:44-49, 437`; `selfdrive/controls/controlsd.py:235`), but no disengagement, so the lockout of 1/5/15/30 min acts only after a later disengagement (System FMEA SFM-025.C1; corrected 2026-10-16). Refined by TSR-633; reaction decided (DQ-365, A); standstill hold and the lockout while stopped not implemented"
   status: proposed
   source: WP-C-04
 
 - id: FSR-02.10
   kind: fsr
   text: "The item shall detect that the envelope does not grant actuation authority while the SoC is engaged (envelope blocking, stuck authority, safety-mode mismatch) and give a take-over request within the SG-02/SG-06 warning budget (§8)."
-  asil: "B"
+  asil: "C"
   parents: [SG-02, SG-06]
   allocated_to: "E-01 (detection, alert), E-03 (reports authority state)"
   verification: "T-SIL, FI"
@@ -270,7 +270,7 @@
 - id: FSR-02.11
   kind: fsr
   text: "The item shall detect failure of the HMI path that shows the engagement state and gives take-over requests (display, sound) and treat it as a fault leading to disengagement with the SoC-independent indications (FSR-02.05 buzzer, FSR-05.05 cluster cruise state)."
-  asil: "B"
+  asil: "C"
   parents: [SG-02, SG-06]
   allocated_to: "E-01/HMI, E-03"
   verification: "T-SIL, FI"
@@ -292,7 +292,7 @@
 - id: FSR-03.01
   kind: fsr
   text: "The envelope shall limit the commanded acceleration to an upper bound derived from controllability for the reference vehicle."
-  asil: "B"
+  asil: "C"
   parents: [SG-03]
   allocated_to: "E-03"
   verification: "A, T-SIL, T-VEH"
@@ -303,7 +303,7 @@
 - id: FSR-03.02
   kind: fsr
   text: "The envelope shall allow only the inactive acceleration value while longitudinal authority is not granted or while the driver presses the accelerator."
-  asil: "B"
+  asil: "C"
   parents: [SG-03, SG-04]
   allocated_to: "E-03"
   verification: "T-SIL"
@@ -314,7 +314,7 @@
 - id: FSR-03.03
   kind: fsr
   text: "The envelope shall limit the rate of increase of commanded acceleration (jerk)."
-  asil: "B"
+  asil: "C"
   parents: [SG-03]
   allocated_to: "E-03"
   verification: "T-SIL"
@@ -325,7 +325,7 @@
 - id: FSR-03.04
   kind: fsr
   text: "FSR-01.05…01.12 apply to the longitudinal path (shared mechanisms; see trace §9)."
-  asil: "B"
+  asil: "C"
   parents: [SG-03]
   allocated_to: "E-03"
   verification: "as referenced"
@@ -336,7 +336,7 @@
 - id: FSR-03.05
   kind: fsr
   text: "On a detected fault affecting longitudinal control, the item shall stop requesting positive acceleration and request ACC cancel from the PCM."
-  asil: "B"
+  asil: "C"
   parents: [SG-03]
   allocated_to: "E-03 (inactive value), E-01 (cancel)"
   verification: "T-SIL, T-VEH"
@@ -417,7 +417,7 @@
   parents: [SG-04]
   allocated_to: "E-01"
   verification: "T-SIL, validation (WP-V-02)"
-  baseline_impl: "Partial: FCW from model hard-brake prediction or planner (`selfdrive/selfdrived/selfdrived.py:440-445`); no false-rate target. **ASIL A on a QM element (E-01):** see OI-9. New in v0.2 (HE-04.5)"
+  baseline_impl: "Partial: FCW from model hard-brake prediction or planner (`selfdrive/selfdrived/selfdrived.py:440-445`); no false-rate target. **ASIL A on a QM element (E-01):** decided 2026-10-14, DQ-052 A: SOTIF validation shows that a false FCW is not dangerous, then HE-04.5 is re-rated (OI-9); ASIL A applies until then. New in v0.2 (HE-04.5)"
   status: proposed
   source: WP-C-04
 
@@ -468,7 +468,7 @@
 - id: FSR-05.05
   kind: fsr
   text: "The engagement state that the envelope enforces shall equal the PCM cruise state, so that the vehicle's own cruise indicator gives the driver an indication of engagement independent of the item's HMI."
-  asil: "B"
+  asil: "C"
   parents: [SG-02, SG-05, SG-06]
   allocated_to: "E-03, EXT-CLU"
   verification: "A, T-VEH"
@@ -479,7 +479,7 @@
 - id: FSR-05.06
   kind: fsr
   text: "If PCM cruise is active while the item is not engaged (or the reverse) for longer than a bounded time, the item shall warn the driver and request cancel."
-  asil: "B"
+  asil: "C"
   parents: [SG-02, SG-05, SG-06]
   allocated_to: "E-01, E-03"
   verification: "T-SIL"
@@ -501,7 +501,7 @@
 - id: FSR-06.01
   kind: fsr
   text: "The item shall detect loss or staleness of the longitudinal plan, lead information (radar/vision) and model output while engaged."
-  asil: "B"
+  asil: "C"
   parents: [SG-06]
   allocated_to: "E-01 (QM), E-03 backstop via FSR-01.07"
   verification: "T-SIL, FI"
@@ -512,7 +512,7 @@
 - id: FSR-06.02
   kind: fsr
   text: "On detected loss, the item shall give a take-over request within 1 s and cancel ACC so that control returns to the driver; it shall not hold a stale acceleration command."
-  asil: "B"
+  asil: "C"
   parents: [SG-06]
   allocated_to: "E-01, E-03"
   verification: "T-SIL, T-VEH"
@@ -523,7 +523,7 @@
 - id: FSR-06.03
   kind: fsr
   text: "The item shall detect that the PCM does not execute ACC (ACC fault, cruise fault) and warn the driver."
-  asil: "B"
+  asil: "C"
   parents: [SG-06]
   allocated_to: "E-01"
   verification: "T-SIL"
@@ -534,7 +534,7 @@
 - id: FSR-06.04
   kind: fsr
   text: "Non-finite or out-of-range actuator commands shall be treated as faults with a fault reaction, not silently replaced."
-  asil: "B"
+  asil: "C"
   parents: [SG-06]
   allocated_to: "E-01, E-03"
   verification: "T-SIL"
@@ -616,5 +616,16 @@
   allocated_to: "E-03 (detection), E-05 (readback), E-01/HMI (warning)"
   verification: "T-HIL, FI"
   baseline_impl: "Not implemented: the harness box has no state feedback (RR-2026-010: two analog switches with a pull-down default); readback depends on the harness choice (DQ-209, queued). New in v0.6"
+  status: proposed
+  source: WP-C-04
+
+- id: FSR-08.01
+  kind: fsr
+  text: "While engaged, the item shall give the first driver alert within 6 s of the loss of attention, measured end to end from the driver's change of state to the alert (including camera frame time, DM model latency and policy timers), and shall reach the no-response reaction of FSR-02.09 within the time set in WP-S-04 (assurance/03-system/WP-S-04-timing-ftti-budget.md)."
+  asil: "A"
+  parents: [SG-08]
+  allocated_to: "E-01/DM, E-01/HMI"
+  verification: "T-SIL, T-VEH"
+  baseline_impl: "Partial: first vision alert at 5 s of distraction, wheel-touch at 5 s (`selfdrive/monitoring/policy.py:31-36`); latency not counted, end-to-end time not measured (WP-C-08 OI-2). New in v0.8"
   status: proposed
   source: WP-C-04

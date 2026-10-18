@@ -295,6 +295,17 @@ class TestFmeaRules(LintFixture):
     self.assertEqual(self.lint(swf=SWF, sfm=sfm).errors, [])
     self.assertError(self.lint(swf=SWF, swf2=SWF), "duplicate id SWF-001")
 
+  def test_inherited_rating_out_of_range(self):
+    sfm = yaml.safe_load(yaml.safe_dump(SWF).replace("SWF-", "SFM-").replace("value_high", "excessive"))
+    sfm["analysis"].update(id="SFM", type="system_fmea")
+    sfm["failure_modes"][0]["causes"][0]["linked_failure_mode"] = "SWF-001"
+    swf = copy.deepcopy(SWF)
+    self.assertFalse(any("re-inherit" in w for w in self.lint(swf=swf, sfm=sfm).warnings))
+    swf["failure_modes"][0]["causes"][0]["occurrence"] = 6  # source re-rated worse; S10 O6 D4 stays AP H
+    res = self.lint(swf=swf, sfm=sfm)
+    self.assertEqual(res.errors, [])
+    self.assertTrue(any("SFM-001.C1" in w and "O 5 is outside SWF-001" in w for w in res.warnings))
+
   def test_unquoted_date_is_accepted(self):
     text = yaml.safe_dump(SWF, sort_keys=False).replace("analysis:\n", "analysis:\n  updated: 2026-10-09\n", 1)
     (self.tmp / "assurance/08-analyses/fmea/analyses/swf.yaml").write_text(text)
@@ -304,6 +315,66 @@ class TestFmeaRules(LintFixture):
     doc = copy.deepcopy(SWF)
     doc["analysis"]["rating_tables"] = "RT-0"
     self.assertError(self.lint(swf=doc), "re-rate")
+
+
+class TestStudyFields(LintFixture):
+  """Optional fields for the baseline delta, reaction time by layer and the SOTIF boundary (fmea-plan section 3.3)."""
+
+  def doc(self):
+    doc = copy.deepcopy(SWF)
+    doc["analysis"]["baseline"] = "BL-005"
+    return doc
+
+  def test_all_fields_valid(self):
+    doc = self.doc()
+    doc["structure"][0]["sotif"] = {"boundary": "split", "sotif_part": "model accuracy", "ref": "WP-C-05 SH-01"}
+    doc["failure_modes"][0]["safety_mechanisms"] = [
+      {"description": "panda torque limit", "layer": "envelope", "reaction_s": 0.0, "timing_basis": "code_derived",
+       "timing_ref": "opendbc safety.h:1"},
+      {"description": "alert", "layer": "alert", "reaction_s": 0.5, "timing_basis": "requirement"}]
+    doc["failure_modes"][0]["causes"][0]["previous"] = {"baseline": "BL-004", "occurrence": 8, "detection": 8, "ap": "H",
+                                                         "change": "PR #95"}
+    self.assertEqual(self.lint(swf=doc).errors, [])
+
+  def test_previous_ap_checked(self):
+    doc = self.doc()
+    doc["failure_modes"][0]["causes"][0]["previous"] = {"baseline": "BL-004", "occurrence": 8, "detection": 8, "ap": "L"}
+    self.assertError(self.lint(swf=doc), "previous ap is L")
+
+  def test_previous_must_be_earlier(self):
+    doc = self.doc()
+    doc["failure_modes"][0]["causes"][0]["previous"] = {"baseline": "BL-005", "occurrence": 8, "detection": 8, "ap": "H"}
+    self.assertError(self.lint(swf=doc), "not earlier")
+
+  def test_previous_equal_warns(self):
+    doc = self.doc()
+    doc["failure_modes"][0]["causes"][0]["previous"] = {"baseline": "BL-004", "occurrence": 5, "detection": 4, "ap": "H"}
+    res = self.lint(swf=doc)
+    self.assertEqual(res.errors, [])
+    self.assertTrue(any("equals the current one" in w for w in res.warnings))
+
+  def test_reaction_needs_layer_and_basis(self):
+    doc = self.doc()
+    doc["failure_modes"][0]["safety_mechanisms"] = [{"description": "x", "reaction_s": 1.0}]
+    res = self.lint(swf=doc)
+    self.assertError(res, "must name its layer")
+    self.assertError(res, "timing_basis")
+
+  def test_code_derived_needs_ref(self):
+    doc = self.doc()
+    doc["failure_modes"][0]["safety_mechanisms"] = [{"description": "x", "layer": "host", "reaction_s": 1.0,
+                                                     "timing_basis": "code_derived"}]
+    self.assertError(self.lint(swf=doc), "needs a timing_ref")
+
+  def test_sotif_split_needs_part(self):
+    doc = self.doc()
+    doc["structure"][0]["sotif"] = {"boundary": "split"}
+    self.assertError(self.lint(swf=doc), "sotif_part")
+
+  def test_unknown_layer_is_schema_error(self):
+    doc = self.doc()
+    doc["failure_modes"][0]["safety_mechanisms"] = [{"description": "x", "layer": "driver"}]
+    self.assertError(self.lint(swf=doc), "schema")
 
 
 class TestHara(LintFixture):

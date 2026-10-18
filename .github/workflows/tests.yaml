@@ -178,13 +178,16 @@ jobs:
   simulator_driving:
     name: simulator driving
     # LionDriver: the MetaDrive bridge drives the reference Corolla (TSS2 CAN from opendbc, panda safety code in the
-    # loop, plant-driven kinematics) headless on CPU. Synthetic data (DSR-12), no evidence credit (WP-V-02 §5.3).
-    runs-on: ${{
-      (github.repository == 'commaai/openpilot') &&
+    # loop, plant-driven kinematics) headless. Synthetic data (DSR-12), no evidence credit (WP-V-02 §5.3).
+    # The free 4-core runners render about 6 frames/s against the 20 openpilot needs, so it runs on the lead's
+    # self-hosted runner (DQ-400, option A; setup in assurance/sim/README.md §3.8). Only this repository's own
+    # branches run there, never a fork's code; and only once the repository variable LIONDRIVER_SIM_RUNNER is 'true',
+    # so the job is skipped, not left queued, while no runner is registered.
+    if: >-
+      vars.LIONDRIVER_SIM_RUNNER == 'true' &&
       ((github.event_name != 'pull_request') ||
-      (github.event.pull_request.head.repo.full_name == 'commaai/openpilot'))
-      && fromJSON('["namespace-profile-amd64-8x16"]')
-      || fromJSON('["ubuntu-24.04"]') }}
+      (github.event.pull_request.head.repo.full_name == github.repository))
+    runs-on: [self-hosted, linux, x64, liondriver-sim]
     timeout-minutes: 60
     steps:
     - uses: actions/checkout@v7

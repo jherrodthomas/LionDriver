@@ -12,6 +12,7 @@ LionDriver is openpilot plus an open engineering assurance framework. This page 
 | See the current assurance state and how it is computed | [Living Safety Case](../../assurance/case/README.md) |
 | Browse every safety, SOTIF, cybersecurity and AI-safety work product | [Assurance work products](../../assurance/README.md) |
 | Contribute, especially to safety-relevant code | [Contributing to LionDriver](contributing.md) |
+| Get oriented: roadmap, glossary, how decisions are made | [Wiki](https://github.com/jherrodthomas/LionDriver/wiki), kept in [`wiki/`](../../wiki/README.md) and mirrored on merge |
 
 ## Engineering areas
 

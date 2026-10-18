@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-03 Evaluation of known hazardous scenarios (specification and results) |
 | Standard reference | ISO 21448:2022 §10 (verification of the SOTIF, known hazardous scenarios); ISO/PAS 8800:2024 (AI V&V); ASPICE 4.0 SYS.5, VAL.1 |
-| Version | 0.5 (KS-25 at the 110 km/h ODD bound, decision register DQ-260; 2026-10-16). 0.4 (§5.4: first simulation result recorded as synthetic data with no credit, SIM-2026-001 from the layer-1 plant model; OI-7; 2026-10-16). 0.3 (simulation rule: synthetic-data labelling and scenario families per WP-V-02 §5.3; 2026-10-16). 0.2 (the lead's decisions applied: highways only, decision register DQ-023, KS-22 re-scoped to the highway shoulder and OI-2 closed; public-road limits, DQ-046; closed-course speeds to 110 km/h, DQ-091; logs kept by LionDriver, DQ-084; model-change re-runs, DQ-038; 2026-10-16). 0.1 |
+| Version | 0.6 (simulation credit rule decided by the lead, DQ-139: §2 and §5.4; 2026-10-16). 0.5 (KS-25 at the 110 km/h ODD bound, decision register DQ-260; 2026-10-16). 0.4 (§5.4: first simulation result recorded as synthetic data with no credit, SIM-2026-001 from the layer-1 plant model; OI-7; 2026-10-16). 0.3 (simulation rule: synthetic-data labelling and scenario families per WP-V-02 §5.3; 2026-10-16). 0.2 (the lead's decisions applied: highways only, decision register DQ-023, KS-22 re-scoped to the highway shoulder and OI-2 closed; public-road limits, DQ-046; closed-course speeds to 110 km/h, DQ-091; logs kept by LionDriver, DQ-084; model-change re-runs, DQ-038; 2026-10-16). 0.1 |
 | Status | Draft (specification). Results section is a template: **Not yet executed** |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -40,7 +40,7 @@ Scope: reference configuration, Chill longitudinal mode. Experimental Mode scena
 | B2 comparison | Where marked "B2", the same trial is repeated with LD-SDA disengaged and the stock TSS2 functions active (Lane Tracing Assist / DRCC) — this needs the harness removed or the item in a mode where the stock functions are restored, recorded per trial |
 | Trial count | Per VT-nn: zero-failure demonstration of p ≤ 5 % needs 59 trials, p ≤ 1 % needs 299 (95 % confidence). Closed-course trials start with an exploratory set of 10 per parameter point and are extended where the WP-V-02 target requires it |
 | Abort | Any trial is aborted by the safety driver per WP-V-07 §8; an aborted trial counts as a **failure** unless the abort cause is unrelated to the item (recorded) |
-| Simulation | MetaDrive (M4) results are recorded but get no credit until the WP-V-02 §5.3 fidelity case is approved for that scenario family (lead decision, DQ-139). Each result is labelled as synthetic (WP-V-02 §5.3.5, DSR-12), reported on its own line and never pooled with real-world trials. Families and the scenarios MetaDrive cannot represent: WP-V-02 §5.3.2 |
+| Simulation | MetaDrive (M4) results are recorded but get no credit until the WP-V-02 §5.3 fidelity case is approved for that scenario family (decided by the project lead, DQ-139 option A). Each result is labelled as synthetic (WP-V-02 §5.3.5, DSR-12), reported on its own line and never pooled with real-world trials. Families and the scenarios MetaDrive cannot represent: WP-V-02 §5.3.2 |
 
 Abbreviations: M1 process replay, M3 model evaluation on recorded data, M4 MetaDrive simulation, M5 longitudinal planner maneuver tests (`openpilot/selfdrive/test/longitudinal_maneuvers/`), M8 closed course, M9 public road with safety driver. "Fail" means the pass criterion is not met in a trial.
 
@@ -83,7 +83,7 @@ Abbreviations: M1 process replay, M3 model evaluation on recorded data, M4 MetaD
 
 | ID | Scenario | SH | TC (WP-C-06) | Parameters | Methods | Pass criteria | VT |
 |---|---|---|---|---|---|---|---|
-| KS-17 | DM under night, glare, sunglasses, glasses | SH-12 | TC-24 | Day/night; IR-opaque and IR-transparent sunglasses; low sun on face | WP-W-10 VS-ML-06 (M3), M8 parked + CC | Scripted look-away detected per AIR-07 timing; if the model is uncertain, the wheel-touch fallback activates (`policy.py:77-78`); no stratum where distraction is missed **and** no fallback is active | VT-08 |
+| KS-17 | DM under night, glare, sunglasses, glasses | SH-12 | TC-24 | Day/night; IR-opaque and IR-transparent sunglasses; low sun on face | WP-W-10 VS-ML-06 (M3), M8 parked + CC | Scripted look-away detected per AIR-07 timing; if the model is uncertain, the wheel-touch fallback activates (`policy.py:82-83`); no stratum where distraction is missed **and** no fallback is active | VT-08 |
 | KS-18 | Distraction behaviours and face out of view | SH-12 | TC-24, TC-25 | Phone in lap / at ear, looking at passenger, eyes closed, leaning out of camera view | VS-ML-06, M8 | Alerts follow 5/8/13 s vision timers (`policy.py:34-36`); no-response → forced deceleration (`policy.py`, `noResponseForceDecel`); lockout counts as specified | VT-08 |
 | KS-19 | Driver override interactions | SH-05 | TC-29 | Steering override in a curve; gas override while following; brake tap; cancel button; at 30/60/90 km/h | M8 (≥ 299 trials per input type for VT-05, accumulated over campaigns) | Release within the SG-05 budget (≤ 0.2 s preliminary) for brake and cancel; steering override possible with ≤ AOU-02 force; no residual torque after disengagement | VT-05 |
 
@@ -174,7 +174,7 @@ The suite (or the affected scenarios) is re-run after any change listed in [WP-W
 
 ### 5.4 Simulation results (synthetic data, no credit)
 
-Results from the simulation track ([`assurance/sim/`](../sim/README.md)), recorded under the rule of §2 and [WP-V-02](WP-V-02-sotif-vv-strategy.md) §5.3.5. They are synthetic data (DSR-12): they are not pooled with the trials of §5.2, they set no verdict there, and they get **no evidence credit**. No scenario family has an approved fidelity case, and whether any may get one is the lead's decision (DQ-139). They are used to rank risks and to choose closed-course parameter points.
+Results from the simulation track ([`assurance/sim/`](../sim/README.md)), recorded under the rule of §2 and [WP-V-02](WP-V-02-sotif-vv-strategy.md) §5.3.5. They are synthetic data (DSR-12): they are not pooled with the trials of §5.2, they set no verdict there, and they get **no evidence credit**. Credit is possible per scenario family once its fidelity case is approved (DQ-139 option A); no family has one yet. They are used to rank risks and to choose closed-course parameter points.
 
 | Run | Source | Layer and model | Scenario | Relates to | Result | Use |
 |---|---|---|---|---|---|---|

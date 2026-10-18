@@ -1,0 +1,72 @@
+# Weather, surface and lighting conditions of the hazardous-event scenes: the HARA's W-codes (WP-C-03 §3.1,
+# 02-concept/hara/hara_model.py WEATHER) and one SOTIF lighting preset (TC-01, WP-C-06). A scene names one with
+# `conditions:`; `variants:` re-renders it under others. A condition changes the picture only: the motion is the same
+# under every condition (the plant's tyre model is linear, with no friction limit; the kinematic scenes use the stated
+# accelerations), and the dashboard says so.
+#
+#   title       as the HARA writes it
+#   exposure    the condition's exposure class (HARA), or null for a SOTIF triggering condition
+#   odd         in or outside the ODD (WP-C-02 §3: precipitation none or light rain; visibility >= 200 m)
+#   hara        what hara_model.weather_adjust changes for this condition (shown on the dashboard)
+#   env         what hazard_scene.py draws:
+#                 sky            clear, partly, overcast, night (picks the HDRI slot of library/assets.yaml when present)
+#                 sun            behind, ahead (in the driver's eyes), side; sun_elevation in degrees;
+#                                sun_strength: the sun lamp relative to a clear day's (overcast default 0.35)
+#                 night          no sun; headlights on every car, street lights where the environment has them
+#                 wet            0..1: darker, glossier asphalt; puddles in its low spots above 0.5
+#                 rain           0..1: falling streaks around the ego (1 = heavy)
+#                 snow           0..1: snow on the verges and shoulders, slush beside the wheel tracks; snowfall
+#                 ice            glossy patches on the road
+#                 visibility_m   haze or fog: meteorological visibility (extinction 3 / V per metre)
+#                 glare          bloom round the sun, lamps and bright reflections
+schema_version: 1
+conditions:
+  W01:
+    title: Dry, daylight
+    exposure: E4
+    odd: in
+    hara: The reference condition of most hazardous events
+    env: {sky: clear, sun: behind, sun_elevation: 30, wet: 0.0}
+
+  W02:
+    title: Wet road or light rain
+    exposure: E3
+    odd: in
+    hara: "H-04 in a curve (OS-02, OS-14, OS-16): S3, C1 ⚠ (instability under unexpected braking, HE-04.2)"
+    env: {sky: overcast, sun: behind, sun_elevation: 30, sun_strength: 0.5, wet: 0.75, rain: 0.25, visibility_m: 1500}
+
+  W03:
+    title: Night, dry, headlights
+    exposure: E3
+    odd: in
+    hara: No change to S or C; exposure E3
+    env: {sky: night, night: true, wet: 0.0, glare: true}
+
+  W04:
+    title: Moderate or heavy rain (outside the ODD, foreseeable)
+    exposure: E2
+    odd: outside
+    hara: "H-04 in a curve: S3, C1 ⚠; H-06 and H-10: C+1 (reduced visibility delays the driver's detection)"
+    env: {sky: overcast, sun: behind, sun_elevation: 25, sun_strength: 0.3, wet: 1.0, rain: 1.0, visibility_m: 350}
+
+  W05:
+    title: Snow or ice (outside the ODD, foreseeable)
+    exposure: E2
+    odd: outside
+    hara: "H-01, H-02, H-03, H-06, H-07, H-10: C+1 (low friction); H-04: S+1, C+1 (braking can destabilise)"
+    env: {sky: overcast, sun: behind, sun_elevation: 20, sun_strength: 0.45, wet: 0.5, snow: 1.0, ice: true,
+          visibility_m: 600}
+
+  W06:
+    title: Fog, visibility below the ODD bound (outside the ODD, foreseeable)
+    exposure: E1
+    odd: outside
+    hara: "H-06 and H-10: C+1 (reduced visibility delays the driver's detection)"
+    env: {sky: overcast, sun: behind, sun_elevation: 30, sun_strength: 0.35, wet: 0.3, visibility_m: 120}
+
+  TC-01:
+    title: Low sun in the camera field of view (SOTIF triggering condition, WP-C-06)
+    exposure: null
+    odd: in
+    hara: Not a HARA condition; drawn for SOTIF hazards (SH-06, SH-11) whose triggering condition it is
+    env: {sky: clear, sun: ahead, sun_elevation: 5, wet: 0.0, glare: true}

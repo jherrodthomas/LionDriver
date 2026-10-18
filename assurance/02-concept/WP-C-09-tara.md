@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-09 Threat analysis and risk assessment (TARA) |
 | Standard reference | ISO/SAE 21434:2021 §15 (threat analysis and risk assessment methods); §9.3 (item definition, CS view); UN R155 Annex 5 (informative threat catalogue); ASPICE 4.0 SEC.1 |
-| Version | 0.3 (§8 risk matrix drawn as Figure 8-1 and §9 top-risk attack paths as Figure 9-1; no rating changed; 2026-10-13). 0.2 (status update 2026-10-12: treatment status of AP-02/TS-02 at `bf6ce8c`; new TS-14/AP-14 (SoC injects PCS/DSU frames or floods whitelisted actuation IDs), rated at the shipped baseline; ratings unapproved). History: 0.1 |
+| Version | 0.4 (§3 financial impact quantified for the road user in US dollars (DQ-035, B): DS-01…03 and DS-05…07 Moderate → Major, DS-10 Major → Moderate; no maximum impact level or risk value changes; OI-2 closed; 2026-10-18). 0.3 (§8 risk matrix drawn as Figure 8-1 and §9 top-risk attack paths as Figure 9-1; no rating changed; 2026-10-13). 0.2 (status update 2026-10-12: treatment status of AP-02/TS-02 at `bf6ce8c`; new TS-14/AP-14 (SoC injects PCS/DSU frames or floods whitelisted actuation IDs), rated at the shipped baseline; ratings unapproved). History: 0.1 |
 | Status | Draft — ratings are engineering proposals for review, not approved. They must not be used to argue cybersecurity until the preliminary assessment ([WP-M-09 §8](../01-management/WP-M-09-cybersecurity-plan.md)) passes |
 | ASIL / scope | CS (cybersecurity); safety impact traced to the HARA ASILs |
 | Author | Assurance team (initial draft) |
@@ -63,16 +63,16 @@ Impact levels: **Severe / Major / Moderate / Negligible** per ISO/SAE 21434 §15
 
 | ID | Damage scenario | HARA link | S | F | O | P | Max level |
 |---|---|---|---|---|---|---|---|
-| DS-01 | Unintended/excessive lateral actuation induced by manipulation | H-01 (ASIL C/D) | Severe | Moderate | Major | Negligible | 4 |
-| DS-02 | Lateral control silently lost or frozen | H-02 (ASIL B) | Severe | Moderate | Major | Negligible | 4 |
-| DS-03 | Unintended acceleration induced | H-03 (ASIL B/C) | Severe | Moderate | Major | Negligible | 4 |
+| DS-01 | Unintended/excessive lateral actuation induced by manipulation | H-01 (ASIL C/D) | Severe | Major | Major | Negligible | 4 |
+| DS-02 | Lateral control silently lost or frozen | H-02 (ASIL B) | Severe | Major | Major | Negligible | 4 |
+| DS-03 | Unintended acceleration induced | H-03 (ASIL B/C) | Severe | Major | Major | Negligible | 4 |
 | DS-04 | Unintended/excessive deceleration induced | H-04 (ASIL B/C) | Major | Moderate | Major | Negligible | 3 |
-| DS-05 | Driver prevented from overriding/disengaging | H-05 (ASIL B/C) | Severe | Moderate | Major | Negligible | 4 |
-| DS-06 | Longitudinal deceleration silently lost | H-06 (ASIL B) | Severe | Moderate | Major | Negligible | 4 |
-| DS-07 | Stock PCS/AEB suppressed or altered | H-08 (ASIL B) | Severe | Moderate | Major | Negligible | 4 |
+| DS-05 | Driver prevented from overriding/disengaging | H-05 (ASIL B/C) | Severe | Major | Major | Negligible | 4 |
+| DS-06 | Longitudinal deceleration silently lost | H-06 (ASIL B) | Severe | Major | Major | Negligible | 4 |
+| DS-07 | Stock PCS/AEB suppressed or altered | H-08 (ASIL B) | Severe | Major | Major | Negligible | 4 |
 | DS-08 | Disclosure of driver-facing video / cabin imagery | — | Negligible | Moderate | Moderate | Severe | 4 |
 | DS-09 | Disclosure of location / trajectory history | — | Negligible | Moderate | Moderate | Major | 3 |
-| DS-10 | Device identity key theft → back-end impersonation, data forgery | — | Negligible | Major | Major | Major | 3 |
+| DS-10 | Device identity key theft → back-end impersonation, data forgery | — | Negligible | Moderate | Major | Major | 3 |
 | DS-11 | Fleet-wide compromise (many devices via update/supply chain) | H-01…H-08 ×N | Severe | Major | Severe | Major | 4 |
 | DS-12 | Data-at-rest exposure after device theft (video, location, keys) | — | Negligible | Moderate | Moderate | Severe | 4 |
 
@@ -80,7 +80,8 @@ Notes:
 - Safety "Severe" tracks the S3/ASIL C hazards; "Major" tracks the S2/ASIL B rear-end hazards (H-04).
 - Operational impact is "Major" for a loss of the driving function; "Severe" for DS-11 because a fleet event removes the function from many vehicles at once.
 - Privacy "Severe" for driver-facing video because it is biometric/cabin content; "Major" for location history.
-- Financial impact is held conservative (Moderate/Major) for a single-maintainer open-source retrofit with no commercial warranty exposure; it is not the dimensioning category for any scenario.
+- Financial impact is the damage to the road user (ISO/SAE 21434 Annex F), quantified in US dollars for the reference configuration (decision register DQ-035, B). Reference values: a Corolla E210 is worth about USD 15,000–22,000; the comma device about USD 1,000. Bands: **Negligible** below USD 100; **Moderate** USD 100–2,500 (towing, an insurance deductible, replacing the device); **Major** USD 2,500–25,000 (collision repair up to the loss of the vehicle, covered in part by insurance); **Severe** a loss the road user may not overcome (uninsured liability above the vehicle's value). Personal injury is rated in the safety column, not here.
+- On these bands the collision scenarios DS-01…03 and DS-05…07 are Major (repair or loss of the car); DS-04 stays Moderate (in a rear-end collision caused by sudden braking the following driver is normally liable, so the road user bears the deductible and the inconvenience); DS-11 stays Major (per road user, as DS-01); DS-08, DS-09 and DS-12 stay Moderate (no direct loss, device replacement after theft); DS-10 falls to Moderate (re-registering or replacing the device). Financial impact still dimensions no scenario: every maximum level and risk value is unchanged.
 
 ## 4. Threat scenarios (STRIDE)
 
@@ -211,7 +212,7 @@ All safety-impacting threat scenarios reach risk 4–5 because the item currentl
 | ID | Item |
 |---|---|
 | OI-1 | Confirm the reference-configuration decisions (SSH off, athena RPC scope, Experimental Mode) so TS-07/TS-08 feasibilities can be finalized ([WP-M-09 OI-2](../01-management/WP-M-09-cybersecurity-plan.md)) |
-| OI-2 | Quantify financial impact for the open-source distribution model with the maintainer; current F ratings are conservative placeholders |
+| OI-2 | Closed 2026-10-18: financial impact quantified for the road user in §3 (decision register DQ-035, B). No maximum impact level or risk value changed |
 | OI-3 | Verify whether persisted video, location and the identity key are encrypted at rest on AGNOS (dimensions TS-11/TS-12 impact) |
 | OI-4 | Decide the panda boot-chain/signing approach (shared with [WP-M-09 OI-1](../01-management/WP-M-09-cybersecurity-plan.md)); it changes TS-03/TS-05 feasibility after treatment |
 | OI-5 | Re-rate feasibilities after the first round of controls from [WP-C-10](WP-C-10-cybersecurity-goals-and-concept.md)/[WP-S-07](../03-system/WP-S-07-cybersecurity-requirements-architecture.md) are specified (residual-risk TARA iteration) |

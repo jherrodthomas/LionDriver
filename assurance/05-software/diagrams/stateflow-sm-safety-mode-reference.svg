@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="754" viewBox="0 0 900 754" role="img" aria-labelledby="t d">
+<title id="t">SM-SAFETY-MODE state chart (reference build)</title>
+<desc id="d">Stateflow-style chart of SM-SAFETY-MODE (reference build) with 5 states and 6 transitions, generated from sm-safety-mode.yaml; the table below the chart lists every transition. Unreachable in this build: OTHER_CAR.</desc>
+<style>
+svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de;
+       --edge:#3d3c39; --shade:#d9d8d3; --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --hi:#f4f3ef;
+       --c1:#2a78d6; --f1:#dde9f8; --c2:#eb6834; --f2:#fce7df; --c3:#1baf7a; --f3:#dbf2ea; --c4:#eda100; --f4:#fcf0d6; --c6:#008300; --f6:#d6ebd6; --c7:#6250d6; --f7:#e6e3f8; --c8:#e34948; --f8:#fbe2e2; }
+@media (prefers-color-scheme: dark) {
+  svg { --surface:#1a1a19; --panel:#232322; --ink:#f0efec; --ink2:#c3c2b7; --ink3:#8d8c85; --grid:#33322f;
+         --edge:#c3c2b7; --shade:#0e0e0d; --s1:#3987e5; --s2:#d95926; --s3:#199e70; --hi:#2b2b29;
+         --c1:#3987e5; --f1:#2a415c; --c2:#d95926; --f2:#5a3323; --c3:#199e70; --f3:#204839; --c4:#c98500; --f4:#554018; --c6:#008300; --f6:#184018; --c7:#9085e9; --f7:#44405e; --c8:#e66767; --f8:#5e3737; }
+}
+.bg { fill:var(--surface); }
+.t { font-family:-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:11.5px; fill:var(--ink); }
+.t2 { font-family:-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:11.5px; fill:var(--ink2); }
+.tm { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:10.5px; fill:var(--ink2); }
+.tb { font-family:-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:12.5px; font-weight:600; fill:var(--ink); }
+.th { font-family:-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:15px; font-weight:600; fill:var(--ink); }
+.ts { font-family:-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:10.5px; fill:var(--ink3); }
+.box { fill:var(--panel); stroke:var(--edge); stroke-width:1.2; }
+.shadow { fill:var(--shade); }
+.hi { fill:var(--hi); }
+.edge { fill:none; stroke:var(--edge); stroke-width:1.2; }
+.edge.thin { stroke-width:0.8; }
+.edge.target { stroke:var(--ink3); stroke-dasharray:5 4; }
+.grid { stroke:var(--grid); stroke-width:1; }
+.axis { stroke:var(--ink3); stroke-width:1; }
+.s1 { fill:none; stroke:var(--s1); stroke-width:2; }
+.s2 { fill:none; stroke:var(--s2); stroke-width:2; stroke-dasharray:6 3; }
+.s3 { fill:none; stroke:var(--s3); stroke-width:2; }
+.band { fill:var(--f1); }
+.edge.todo { stroke:var(--s2); stroke-dasharray:5 4; }
+.box.dead { fill:none; stroke:var(--ink3); stroke-dasharray:5 4; }
+.sup { fill:var(--hi); stroke:var(--edge); stroke-width:1.2; }
+.arrow.todo { fill:var(--s2); }
+.k1 { fill:var(--f1); stroke:var(--c1); stroke-width:1.4; }
+.k2 { fill:var(--f2); stroke:var(--c2); stroke-width:1.4; }
+.k3 { fill:var(--f3); stroke:var(--c3); stroke-width:1.4; }
+.k4 { fill:var(--f4); stroke:var(--c4); stroke-width:1.4; }
+.k6 { fill:var(--f6); stroke:var(--c6); stroke-width:1.4; }
+.k7 { fill:var(--f7); stroke:var(--c7); stroke-width:1.4; }
+.k8 { fill:var(--f8); stroke:var(--c8); stroke-width:1.4; }
+.m1 { fill:var(--s1); }
+.m2 { fill:var(--s2); }
+.m3 { fill:var(--s3); }
+.arrow { fill:var(--edge); }
+.arrow.target { fill:var(--ink3); }
+.dot { fill:var(--edge); }
+.lbl { fill:var(--surface); }
+</style>
+<rect class="bg" x="0" y="0" width="900" height="754"/>
+<text x="20.0" y="26.0" class="th" text-anchor="start">SM-SAFETY-MODE: Panda safety mode (reference build)</text>
+<text x="20.0" y="44.0" class="ts" text-anchor="start">Stateflow-style chart generated from state-machines/sm-safety-mode.yaml by diagrams/make_diagrams.py. Only the other build: M2, M3 (not drawn).</text>
+<text x="20.0" y="58.0" class="ts" text-anchor="start">Solid grey: in the code. Dashed orange: not in the code. Fill: state role (legend). Status: WP-W-02 Baseline of the cited SWSRs.</text>
+<rect class="sup" x="50" y="78" width="800" height="110" rx="16"/>
+<text x="62.0" y="95.0" class="t2" text-anchor="start">non-car modes: no actuation output</text>
+<path class="edge " d="M446.6,188.0 Q441.3,273.6 363.5,334.0"/>
+<path class="arrow " d="M363.5,334.0 L367.0,327.2 L370.9,332.1 Z"/>
+<rect class="lbl" x="413.1" y="258.8" width="20.2" height="17.0" rx="3"/>
+<text x="423.2" y="269.8" class="tm" text-anchor="middle">M4</text>
+<path class="edge " d="M331.6,334.0 Q338.7,219.4 379.2,188.0"/>
+<path class="arrow " d="M379.2,188.0 L375.7,194.9 L371.7,190.0 Z"/>
+<rect class="lbl" x="337.0" y="231.7" width="20.2" height="17.0" rx="3"/>
+<text x="347.1" y="242.7" class="tm" text-anchor="middle">M5</text>
+<path class="edge " d="M265.0,345.5 Q153.0,320.6 167.5,166.0"/>
+<path class="arrow " d="M167.5,166.0 L170.1,173.2 L163.8,172.7 Z"/>
+<rect class="lbl" x="174.5" y="279.7" width="20.2" height="17.0" rx="3"/>
+<text x="184.6" y="290.7" class="tm" text-anchor="middle">M7</text>
+<path class="edge " d="M725.0,188.0 C725.0,227.6 795.0,227.6 795.0,188.0"/>
+<path class="arrow " d="M795.0,188.0 L798.1,195.0 L791.9,195.0 Z"/>
+<rect class="lbl" x="749.9" y="209.2" width="20.2" height="17.0" rx="3"/>
+<text x="760.0" y="220.2" class="tm" text-anchor="middle">M4</text>
+<rect class="shadow" x="108.0" y="117.0" width="130.0" height="52.0" rx="12"/>
+<rect class="box" x="105.0" y="114.0" width="130.0" height="52.0" rx="12"/>
+<text x="115.0" y="132.0" class="tb" text-anchor="start">SILENT</text>
+<rect class="shadow" x="388.0" y="117.0" width="130.0" height="52.0" rx="12"/>
+<rect class="box" x="385.0" y="114.0" width="130.0" height="52.0" rx="12"/>
+<text x="395.0" y="132.0" class="tb" text-anchor="start">NOOUTPUT</text>
+<rect class="shadow" x="668.0" y="117.0" width="130.0" height="52.0" rx="12"/>
+<rect class="k3" x="665.0" y="114.0" width="130.0" height="52.0" rx="12"/>
+<text x="675.0" y="132.0" class="tb" text-anchor="start">ELM327</text>
+<rect class="shadow" x="268.0" y="337.0" width="130.0" height="52.0" rx="12"/>
+<rect class="k1" x="265.0" y="334.0" width="130.0" height="52.0" rx="12"/>
+<text x="275.0" y="352.0" class="tb" text-anchor="start">TOYOTA</text>
+<rect class="box dead" x="575.0" y="334.0" width="130.0" height="52.0" rx="12"/>
+<text x="585.0" y="352.0" class="tb" text-anchor="start">OTHER_CAR</text>
+<text x="585.0" y="368.0" class="ts" text-anchor="start">unreachable</text>
+<circle class="dot" cx="81.0" cy="140.0" r="4"/>
+<path class="edge" d="M81.0,140.0 L105.0,140.0"/>
+<path class="arrow" d="M105.0,140.0 L98.0,143.2 L98.0,136.8 Z"/>
+<text x="20.0" y="426.0" class="t2" text-anchor="start">In every state, not drawn per state: M1 (reset → SILENT); M6 (0xdc (m, p) → same); M8 (harness status change → same).</text>
+<text x="20.0" y="442.0" class="t2" text-anchor="start">Not drawn, the source is unreachable in this build: M7 from OTHER_CAR.</text>
+<rect class="box" x="20" y="474" width="22" height="14" rx="4"/>
+<text x="48.0" y="485.0" class="t2" text-anchor="start">no actuation output</text>
+<rect class="k3" x="191.60000000000002" y="474" width="22" height="14" rx="4"/>
+<text x="219.6" y="485.0" class="t2" text-anchor="start">diagnostic</text>
+<rect class="k1" x="305.6" y="474" width="22" height="14" rx="4"/>
+<text x="333.6" y="485.0" class="t2" text-anchor="start">car mode: actuation possible with authority</text>
+<path class="edge" d="M20,500 L46,500"/>
+<text x="52.0" y="504.0" class="t2" text-anchor="start">in the code</text>
+<path class="edge todo" d="M144.4,500 L170.4,500"/>
+<text x="176.4" y="504.0" class="t2" text-anchor="start">not in the code (target state)</text>
+<text x="20.0" y="534.0" class="tb" text-anchor="start">Transitions (Stateflow label notation: event [guard] / {action})</text>
+<line class="grid" x1="20" y1="548" x2="880" y2="548"/>
+<text x="20.0" y="562.0" class="t2" text-anchor="start">ID</text>
+<text x="70.0" y="562.0" class="t2" text-anchor="start">Transition</text>
+<text x="620.0" y="562.0" class="t2" text-anchor="start">Build</text>
+<text x="690.0" y="562.0" class="t2" text-anchor="start">WP-W-02 status</text>
+<line class="grid" x1="20" y1="572" x2="880" y2="572"/>
+<text x="20.0" y="585.0" class="tb" text-anchor="start">M1</text>
+<text x="70.0" y="585.0" class="t" text-anchor="start">any → SILENT: reset / {set_safety_mode(SILENT)}</text>
+<text x="620.0" y="585.0" class="t2" text-anchor="start">all</text>
+<text x="690.0" y="585.0" class="t2" text-anchor="start">Partial</text>
+<line class="grid" x1="20" y1="592" x2="880" y2="592"/>
+<text x="20.0" y="605.0" class="tb" text-anchor="start">M4</text>
+<text x="70.0" y="605.0" class="t" text-anchor="start">SILENT, NOOUTPUT, ELM327 → m: 0xdc (m, p) [m ∈ {SILENT, NOOUTPUT, ELM327}, or m =</text>
+<text x="70.0" y="619.0" class="t" text-anchor="start">TOYOTA with p = 73] / {reset state; relay per m}</text>
+<text x="620.0" y="605.0" class="t2" text-anchor="start">reference</text>
+<text x="690.0" y="605.0" class="t2" text-anchor="start">Implemented</text>
+<line class="grid" x1="20" y1="626" x2="880" y2="626"/>
+<text x="20.0" y="639.0" class="tb" text-anchor="start">M5</text>
+<text x="70.0" y="639.0" class="t" text-anchor="start">TOYOTA → m: 0xdc (m, p) [m ∈ {NOOUTPUT, SILENT}] / {reset state; relay released}</text>
+<text x="620.0" y="639.0" class="t2" text-anchor="start">reference</text>
+<text x="690.0" y="639.0" class="t2" text-anchor="start">Implemented</text>
+<line class="grid" x1="20" y1="646" x2="880" y2="646"/>
+<text x="20.0" y="659.0" class="tb" text-anchor="start">M6</text>
+<text x="70.0" y="659.0" class="t" text-anchor="start">any → same: 0xdc (m, p) [any other (m, p)] / {request refused, counted in</text>
+<text x="70.0" y="673.0" class="t" text-anchor="start">requests_rejected_pkt}</text>
+<text x="620.0" y="659.0" class="t2" text-anchor="start">reference</text>
+<text x="690.0" y="659.0" class="t2" text-anchor="start">Implemented</text>
+<line class="grid" x1="20" y1="680" x2="880" y2="680"/>
+<text x="20.0" y="693.0" class="tb" text-anchor="start">M7</text>
+<text x="70.0" y="693.0" class="t" text-anchor="start">TOYOTA, OTHER_CAR → SILENT: 1 Hz tick [heartbeat counter ≥ 5 (ignition on) / 2</text>
+<text x="70.0" y="707.0" class="t" text-anchor="start">(off)] / {siren if recently engaged; heartbeat_lost}</text>
+<text x="620.0" y="693.0" class="t2" text-anchor="start">all</text>
+<text x="690.0" y="693.0" class="t2" text-anchor="start">Partial</text>
+<line class="grid" x1="20" y1="714" x2="880" y2="714"/>
+<text x="20.0" y="727.0" class="tb" text-anchor="start">M8</text>
+<text x="70.0" y="727.0" class="t" text-anchor="start">any → same: harness status change / {set_safety_mode(current) (state reset)}</text>
+<text x="620.0" y="727.0" class="t2" text-anchor="start">all</text>
+<text x="690.0" y="727.0" class="t2" text-anchor="start">Implemented</text>
+</svg>

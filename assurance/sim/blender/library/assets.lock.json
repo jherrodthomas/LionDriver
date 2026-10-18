@@ -1,0 +1,213 @@
+{
+ "schema_version": 1,
+ "slots": {
+  "asphalt": {
+   "source": "polyhaven",
+   "id": "asphalt_02",
+   "page": "https://polyhaven.com/a/asphalt_02",
+   "licence": "CC0 1.0",
+   "kind": "pbr",
+   "use": "Carriageway, parking lane and the highway shoulder",
+   "size_m": 3.0,
+   "files": {
+    "color": {
+     "path": "asphalt/asphalt_02_diff_2k.jpg",
+     "sha256": "28f5ba8690553f192c0e5e1a5ff40f34765b4b93f4cc7059b1a3e9c795b6c28c",
+     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/asphalt_02/asphalt_02_diff_2k.jpg"
+    },
+    "normal": {
+     "path": "asphalt/asphalt_02_nor_gl_2k.jpg",
+     "sha256": "ffe49db71a0fd34c1e259625df66a302a237597d6ef655307987ec4e45bc6f21",
+     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/asphalt_02/asphalt_02_nor_gl_2k.jpg"
+    },
+    "roughness": {
+     "path": "asphalt/asphalt_02_rough_2k.jpg",
+     "sha256": "b9a516b61b7040a9245ac206642d5f767ad9589a0169c4a1668221429e8a998c",
+     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/asphalt_02/asphalt_02_rough_2k.jpg"
+    }
+   },
+   "tint": 0.5
+  },
+  "concrete": {
+   "source": "ambientcg",
+   "id": "Concrete034",
+   "page": "https://ambientcg.com/view?id=Concrete034",
+   "licence": "CC0 1.0",
+   "kind": "pbr",
+   "use": "Sidewalks, overpass, kerbs",
+   "size_m": [
+    1.1,
+    0.55
+   ],
+   "files": {
+    "color": {
+     "path": "concrete/Concrete034_1K-JPG_Color.jpg",
+     "sha256": "8ceb9186d990b31fce785e06fdc6974c160f1d27c43f6160266f164deba713aa",
+     "url": "https://ambientcg.com/get?file=Concrete034_1K-JPG.zip",
+     "member": "_Color"
+    },
+    "normal": {
+     "path": "concrete/Concrete034_1K-JPG_NormalGL.jpg",
+     "sha256": "e509eb9dfa978e780fbebfd2acacc2ce158b5b7ced722ddc0759039dd51e18ca",
+     "url": "https://ambientcg.com/get?file=Concrete034_1K-JPG.zip",
+     "member": "_NormalGL"
+    },
+    "roughness": {
+     "path": "concrete/Concrete034_1K-JPG_Roughness.jpg",
+     "sha256": "a4a9e39857a19afd23a778e5abf44fcdf6bd7f93918f1cf6878b41933e553511",
+     "url": "https://ambientcg.com/get?file=Concrete034_1K-JPG.zip",
+     "member": "_Roughness"
+    }
+   }
+  },
+  "grass": {
+   "source": "ambientcg",
+   "id": "Grass004",
+   "page": "https://ambientcg.com/view?id=Grass004",
+   "licence": "CC0 1.0",
+   "kind": "pbr",
+   "use": "Verges and fields",
+   "size_m": 1.4,
+   "files": {
+    "color": {
+     "path": "grass/Grass004_1K-JPG_Color.jpg",
+     "sha256": "9e1c60da44b34a9738b1256ba827541f097dc583521b1d281e61b5f4b4217bc5",
+     "url": "https://ambientcg.com/get?file=Grass004_1K-JPG.zip",
+     "member": "_Color"
+    },
+    "normal": {
+     "path": "grass/Grass004_1K-JPG_NormalGL.jpg",
+     "sha256": "8014a81d896a5c589b60612a769bc39eb1213e48d96f6146f485ea36e9e9610f",
+     "url": "https://ambientcg.com/get?file=Grass004_1K-JPG.zip",
+     "member": "_NormalGL"
+    },
+    "roughness": {
+     "path": "grass/Grass004_1K-JPG_Roughness.jpg",
+     "sha256": "706580983860f942e141acdd68c4128dd683be50fcc5d85b7c67a9a3a8c7bac0",
+     "url": "https://ambientcg.com/get?file=Grass004_1K-JPG.zip",
+     "member": "_Roughness"
+    }
+   },
+   "roughness_min": 0.8
+  },
+  "gravel": {
+   "source": "polyhaven",
+   "id": "gravel_floor_02",
+   "page": "https://polyhaven.com/a/gravel_floor_02",
+   "licence": "CC0 1.0",
+   "kind": "pbr",
+   "use": "Rural shoulders",
+   "size_m": 2.0,
+   "files": {
+    "color": {
+     "path": "gravel/gravel_floor_02_diff_1k.jpg",
+     "sha256": "ac9874264762a9e8d337e684259d51dac41a012933f0d8013033fee7076383f3",
+     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/gravel_floor_02/gravel_floor_02_diff_1k.jpg"
+    },
+    "normal": {
+     "path": "gravel/gravel_floor_02_nor_gl_1k.jpg",
+     "sha256": "7db09804733f912bd120a1a3179bb867a01819ab9539a1c80eadfaff7e22509e",
+     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/gravel_floor_02/gravel_floor_02_nor_gl_1k.jpg"
+    },
+    "roughness": {
+     "path": "gravel/gravel_floor_02_rough_1k.jpg",
+     "sha256": "5efe350a5e27408bf85c6aebdf725127d7ef064e2c4eaf888fc1a1744e2d7bb6",
+     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/gravel_floor_02/gravel_floor_02_rough_1k.jpg"
+    }
+   },
+   "tint": 0.45
+  },
+  "hdri_clear": {
+   "source": "polyhaven",
+   "id": "kloofendal_48d_partly_cloudy_puresky",
+   "page": "https://polyhaven.com/a/kloofendal_48d_partly_cloudy_puresky",
+   "licence": "CC0 1.0",
+   "kind": "hdri",
+   "use": "W01 dry daylight (sky clear or partly cloudy)",
+   "strength": 0.6,
+   "files": {
+    "hdri": {
+     "path": "hdri_clear/kloofendal_48d_partly_cloudy_puresky_2k.hdr",
+     "sha256": "5244534e9cf5b606f2ff513aa00ddb161b0a4826ffd88a0d3bd03ac29247d198",
+     "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/kloofendal_48d_partly_cloudy_puresky_2k.hdr"
+    }
+   }
+  },
+  "hdri_low_sun": {
+   "source": "polyhaven",
+   "id": "spruit_sunrise",
+   "page": "https://polyhaven.com/a/spruit_sunrise",
+   "licence": "CC0 1.0",
+   "kind": "hdri",
+   "use": "TC-01 low sun ahead (sunrise or sunset)",
+   "strength": 0.6,
+   "files": {
+    "hdri": {
+     "path": "hdri_low_sun/spruit_sunrise_2k.hdr",
+     "sha256": "be35af1e825dc7506df48bf86568f9c05f8a8552cf57edf36beb16e54534ec57",
+     "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/spruit_sunrise_2k.hdr"
+    }
+   }
+  },
+  "hdri_night": {
+   "source": "polyhaven",
+   "id": "dikhololo_night",
+   "page": "https://polyhaven.com/a/dikhololo_night",
+   "licence": "CC0 1.0",
+   "kind": "hdri",
+   "use": "W03 night (dark sky with some ambient light)",
+   "strength": 0.4,
+   "files": {
+    "hdri": {
+     "path": "hdri_night/dikhololo_night_2k.hdr",
+     "sha256": "35b5ef6d664b9d32db5ef852f52f97b4227a0dca1830e9c8bdb3af5dc2f169cf",
+     "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/dikhololo_night_2k.hdr"
+    }
+   }
+  },
+  "hdri_overcast": {
+   "source": "polyhaven",
+   "id": "overcast_soil_puresky",
+   "page": "https://polyhaven.com/a/overcast_soil_puresky",
+   "licence": "CC0 1.0",
+   "kind": "hdri",
+   "use": "W02, W04, W05, W06 (overcast sky, soft light)",
+   "strength": 0.8,
+   "files": {
+    "hdri": {
+     "path": "hdri_overcast/overcast_soil_puresky_2k.hdr",
+     "sha256": "5414e1ac0c35e451d28595b2a2cba05e2ca301fdeb755b0a469408443093dafc",
+     "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/overcast_soil_puresky_2k.hdr"
+    }
+   }
+  },
+  "snow": {
+   "source": "polyhaven",
+   "id": "snow_02",
+   "page": "https://polyhaven.com/a/snow_02",
+   "licence": "CC0 1.0",
+   "kind": "pbr",
+   "use": "Verges and shoulders under W05",
+   "size_m": 2.0,
+   "files": {
+    "color": {
+     "path": "snow/snow_02_diff_1k.jpg",
+     "sha256": "523a4e69c90b96d787dd69b897f29a2b3761a017024405c60aa630d1e8e9009a",
+     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/snow_02/snow_02_diff_1k.jpg"
+    },
+    "normal": {
+     "path": "snow/snow_02_nor_gl_1k.jpg",
+     "sha256": "9495ec680616b8340e2cbecbd151bff84c690cfad4209e90cc98d2d0ba81f810",
+     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/snow_02/snow_02_nor_gl_1k.jpg"
+    },
+    "roughness": {
+     "path": "snow/snow_02_rough_1k.jpg",
+     "sha256": "b6dea8039ac2a5beaed6fd41834fb55540cc76b492edd1d48ba2da2f30f1cb75",
+     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/snow_02/snow_02_rough_1k.jpg"
+    }
+   }
+  }
+ },
+ "fetched": "2026-10-18",
+ "licence": "CC0 1.0 Universal (public domain dedication); no attribution required"
+}

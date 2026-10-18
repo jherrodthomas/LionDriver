@@ -1,0 +1,924 @@
+# Hazardous-event scenes for Blender (assurance/sim/blender): one per HARA hazardous event (HE-, trace/items/
+# hazards.yaml, WP-C-03) and one per SOTIF hazard (SH-, WP-C-05) with its representative triggering condition (TC-,
+# WP-C-06) and known scenario (KS-, WP-V-03). export_scene.py checks every reference and writes the scene files.
+# Pictures only: synthetic (DSR-12), no evidence credit. See README.md for what each motion source can and cannot show.
+#
+#   id            scene ID (output folder)
+#   he | sotif    the entry the scene pictures (sotif: id, title, situation, effect, s, c as WP-C-05 writes them)
+#   tc, ks        triggering conditions and known scenarios shown on the dashboard
+#   motion        plant (default) or kinematic
+#   case          plant: catalog case (faults.yaml, plant/cases.py); case_overrides: fields of that case changed for
+#                 this scene (speed_kph, road, lane_width, engaged, fault, t_fault, duration); assumptions: plant
+#                 assumptions changed for this run (driver_t_r_s 1000: a driver who does not react)
+#   ego           kinematic: speed_kph, d (lateral offset), accel [{t, a, v_to_kph}], lateral [{t, law, ...}]
+#                 (laws: hold, drift ay, track to wn ay_max, walk to v); values are numbers or expressions over the
+#                 named assumptions of export_scene.py (t_r, t_r_min, a_item_max, a_item_min, a_driver_full, a_pcs, ...)
+#   actors        other road users: kind (car, truck, pedestrian, cyclist), lane or d, ds_m (start ahead of the ego
+#                 at t = 0, body centres), speed_kph (negative: oncoming), accel, lateral, source (kinematic or
+#                 illustrative), critical (the gap and TTC on the dashboard are to it)
+#   environment   the static world, from library/environments.yaml (road cross-section, geometry, scenery, props,
+#                 the OS it represents, the conditions it allows)
+#   conditions    W01 (default) .. W06 or TC-01, from library/conditions.yaml: sky, sun, wet, rain, snow, fog, night
+#   traffic       an illustrative traffic preset from library/traffic.yaml (default: the environment's, usually none)
+#   variants      other conditions to render the same scene under, as <id>--<code> (a code, or {conditions,
+#                 traffic}); the motion and outcome stay the base scene's (test_scenes.py)
+#   road          fields that override the environment's: lane_width, shoulder_m, barrier, worn_markings, geometry
+#                 (kinematic: straight, curve@a_y, rcurve@a_y, curve-odd-bound)
+#   props         added to the environment's: overpass, intersection, traffic_light, cones, seam (a dark line the camera
+#                 may follow), sign, gantry, posts, lamps, barrels (library/environments.yaml lists their fields)
+#   env           look fields that override the condition's (e.g. sun: side)
+#   window        seconds around the trigger (t = 0) to show
+schema_version: 2
+scenes:
+  # ---------------------------------------------------------------------------------------------- H-01 lateral
+  - id: he-01-1-rural-hardover-oncoming
+    he: HE-01.1
+    case: F-01b
+    case_overrides: {fault: hardover_left, speed_kph: 80, lane_width: 3.5}
+    case_title: "Hard-over to the left within the envelope (F-01b mirrored) at 80 km/h"
+    trigger_label: steering hard-over
+    window: [-1.5, 5.0]
+    environment: rural-undivided
+    traffic: oncoming
+    variants: [W02, W03]
+    actors:
+      - {name: oncoming car, kind: car, lane: 1, ds_m: 95, speed_kph: -80, source: illustrative, critical: true, paint: [0.8, 0.8, 0.82]}
+    env: {sun: side}
+    caption: >-
+      Engaged outside the highway-only ODD on an undivided road (foreseeable misuse): a hard-over within the envelope,
+      mirrored to the left, takes the car toward the oncoming lane. The oncoming car is illustrative.
+
+  - id: he-01-2-hardover-adjacent
+    he: HE-01.2
+    case: F-01b
+    window: [-1.5, 6.0]
+    environment: highway-free-flow
+    traffic: free-flow
+    variants: [W02, W03, W05]
+    actors:
+      - {name: adjacent car, kind: car, lane: -1, ds_m: -2.0, speed_kph: 110, source: illustrative, critical: true, paint: [0.85, 0.86, 0.88]}
+    caption: >-
+      Hard-over within the envelope on a straight highway at 110 km/h: the panda passes it and only the driver can
+      stop it. The car in the right lane is illustrative; the plant models neither it nor the contact.
+
+  - id: he-01-3-urban-hardover-cyclist
+    he: HE-01.3
+    case: F-01b
+    case_overrides: {speed_kph: 50, lane_width: 3.3}
+    case_title: "Hard-over within the envelope at 50 km/h on a 3.3 m urban lane"
+    trigger_label: steering hard-over
+    window: [-1.5, 4.0]
+    environment: urban-arterial
+    actors:
+      - {name: cyclist, kind: cyclist, d: -1.25, ds_m: 9, speed_kph: 18, source: illustrative, critical: true}
+      - {name: parked car 1, kind: car, d: -2.85, ds_m: 32, source: illustrative, paint: [0.25, 0.3, 0.38]}
+      - {name: parked car 2, kind: car, d: -2.85, ds_m: 45, source: illustrative, paint: [0.7, 0.7, 0.68]}
+    tc: [TC-12]
+    caption: >-
+      Engaged on an urban arterial outside the ODD (misuse): a hard-over at 50 km/h moves the car toward a cyclist at
+      the lane edge. The cyclist and parked cars are illustrative.
+
+  - id: he-01-4-not-engaged-torque
+    he: HE-01.4
+    case: F-02
+    window: [-1.5, 5.0]
+    environment: highway-free-flow
+    actors:
+      - {name: adjacent car, kind: car, lane: -1, ds_m: 4.0, speed_kph: 110, source: illustrative, critical: true, paint: [0.3, 0.32, 0.36]}
+    trigger_label: torque request while not engaged
+    caption: >-
+      Manual driving with the item powered but not engaged: a torque request reaches the panda (plant case F-02). The
+      dashboard shows what the reference build's safety code does with it.
+
+  - id: he-01-5-unsupervised-hardover
+    he: HE-01.5
+    case: F-01b
+    assumptions: {driver_t_r_s: 1000}
+    case_overrides: {duration: 9.0}
+    window: [-1.5, 8.0]
+    environment: highway-free-flow
+    traffic: free-flow
+    caption: >-
+      The same hard-over with a driver who is not supervising (foreseeable misuse): no correction within the scene, so
+      the car crosses the right lane and the shoulder toward the barrier.
+
+  # ---------------------------------------------------------------------------------------------- H-02 loss of lateral
+  - id: he-02-1-eps-loss-curve
+    he: HE-02.1
+    case: F-07
+    case_overrides: {road: curve-odd-bound, t_fault: null}
+    case_title: "EPS fault with loss of assist in a curve at the ODD bound R_ODD (2.5 m/s²)"
+    trigger_label: EPS fault (LKA_STATE 9)
+    window: [-1.5, 6.0]
+    environment: highway-curve
+    traffic: free-flow
+    variants: [W02, W03, W05]
+    caption: >-
+      EPS fault with loss of assist in a curve at R_ODD: the car runs wide toward the outside of the curve until the
+      driver, cued by the siren, corrects.
+
+  - id: he-02-2-rural-curve-oncoming
+    he: HE-02.2
+    case: F-07
+    case_overrides: {speed_kph: 80, road: "rcurve@2.0", lane_width: 3.5, t_fault: null}
+    case_title: "EPS fault with loss of assist at the entry of a right curve (2.0 m/s²) at 80 km/h"
+    trigger_label: EPS fault (LKA_STATE 9)
+    window: [-1.5, 5.0]
+    environment: rural-curve
+    variants: [W03, W05]
+    actors:
+      - {name: oncoming car, kind: car, lane: 1, ds_m: 85, speed_kph: -80, source: illustrative, critical: true, paint: [0.6, 0.1, 0.1]}
+    caption: >-
+      Engaged on a rural curve outside the ODD: lateral control is lost at the entry of a right curve, so the car goes
+      straight on, toward the oncoming lane. The plant's right curve mirrors its left curve; the oncoming car is
+      illustrative.
+
+  - id: he-02-3-frozen-command
+    he: HE-02.3
+    case: F-03
+    window: [-1.5, 6.0]
+    environment: highway-free-flow
+    traffic: free-flow
+    trigger_label: steering command frozen
+    caption: >-
+      The steering command freezes at its last value at curve entry while the heartbeat stays alive (F-03): the bias
+      stays while the road changes.
+
+  - id: he-02-4-silent-loss-truck
+    he: HE-02.4
+    case: F-04b
+    window: [-1.5, 6.0]
+    environment: highway-free-flow
+    variants: [W02, W03, W04, W05]
+    actors:
+      - {name: truck, kind: truck, lane: -1, ds_m: 6.0, speed_kph: 105, source: illustrative, critical: true}
+    trigger_label: SoC stall (no alert)
+    caption: >-
+      The SoC stalls in a curve inside the ODD: heartbeat and commands stop and the EPS releases (F-04b), so lateral
+      control is silently lost and the car drifts out of its lane. The truck is illustrative.
+
+  - id: he-02-5-lane-change-loss
+    he: HE-02.5
+    motion: kinematic
+    case_title: "Lateral control lost halfway through an assisted lane change"
+    window: [-3.0, 4.5]
+    lane_change: true
+    environment: highway-free-flow
+    ego:
+      speed_kph: 100
+      lateral:
+        - {t: -2.6, law: track, to: -3.7, wn: 0.9, ay_max: 1.5}
+        - {t: 0, law: hold}
+        - {t: t_r, law: track, to: -3.7}
+    actors:
+      - {name: overtaking car, kind: car, lane: -1, ds_m: -30, speed_kph: 140, source: illustrative, critical: true, paint: [0.15, 0.2, 0.3]}
+    events:
+      - {t: -2.6, label: assisted lane change starts}
+      - {t: t_r, label: driver steers to complete the change}
+    trigger_label: lateral control lost (no alert)
+    ks: [KS-14]
+    caption: >-
+      Lateral control is lost mid-manoeuvre: the car stops moving sideways and straddles the lanes until the driver
+      completes the change after the reaction time, while a faster car approaches in the target lane.
+
+  - id: he-02-6-unsupervised-silent-loss
+    he: HE-02.6
+    case: F-04b
+    assumptions: {driver_t_r_s: 1000}
+    case_overrides: {duration: 9.0}
+    window: [-1.5, 8.0]
+    environment: highway-free-flow
+    traffic: free-flow
+    trigger_label: SoC stall (no alert)
+    caption: >-
+      Silent loss of lateral control with a driver who is not supervising: nobody corrects the drift within the scene.
+
+  # ---------------------------------------------------------------------------------------------- H-03 acceleration
+  - id: he-03-1-short-gap-accel
+    he: HE-03.1
+    case: L-01
+    critical: lead
+    window: [-1.5, 6.0]
+    environment: highway-free-flow
+    traffic: dense
+    trigger_label: acceleration request +2.0 m/s²
+    caption: >-
+      Following a lead at the KS-08 time gap, the item requests the envelope maximum, +2.0 m/s² (L-01): the gap
+      closes until the driver, cued by the acceleration, brakes.
+
+  - id: he-03-2-queue-pedestrian
+    he: HE-03.2
+    motion: kinematic
+    case_title: "Item moves off from standstill while a pedestrian crosses in front"
+    window: [-2.5, 3.5]
+    environment: urban-arterial
+    traffic: parked
+    variants: [W02, W03]
+    ego:
+      speed_kph: 0
+      accel:
+        - {t: 0, a: a_item_max}
+        - {t: t_r, a: a_driver_full}
+    actors:
+      - {name: lead car, kind: car, lane: 0, ds_m: 8.0, source: illustrative, paint: [0.7, 0.7, 0.72]}
+      - name: pedestrian
+        kind: pedestrian
+        d: 5.0
+        ds_m: 3.6
+        critical: true
+        lateral: [{t: -2.0, law: walk, to: -6.0, v: 1.4}]
+        ks_note: KS-23 dummy 3 m ahead
+    events:
+      - {t: t_r, label: driver brakes}
+    trigger_label: item moves off (+2.0 m/s²)
+    tc: [TC-27]
+    ks: [KS-23]
+    caption: >-
+      Standing in a queue, the item moves off at the envelope maximum while a pedestrian crosses between the ego and
+      the lead (KS-23, dummy 3 m ahead); the driver brakes after the reaction time.
+
+  - id: he-03-3-accel-toward-slower-lead
+    he: HE-03.3
+    motion: kinematic
+    case_title: "Acceleration instead of deceleration when approaching a slower lead"
+    window: [-1.5, 6.0]
+    environment: highway-queue
+    variants: [W03, W05]
+    ego:
+      speed_kph: 110
+      accel:
+        - {t: 0, a: a_item_max}
+        - {t: t_r, a: a_driver_full, v_to_kph: 70}
+    actors:
+      - {name: slower lead, kind: car, lane: 0, ds_m: 44.63, speed_kph: 70, critical: true, paint: [0.82, 0.82, 0.8]}
+    events:
+      - {t: t_r, label: driver brakes (6 m/s²)}
+    trigger_label: acceleration +2.0 m/s² instead of braking
+    caption: >-
+      Closing on a lead 40 km/h slower at a 40 m gap, the item accelerates at the envelope maximum instead of braking;
+      the driver, cued by the acceleration, brakes after the reaction time.
+
+  - id: he-03-4-curve-speed-rise
+    he: HE-03.4
+    case: L-01
+    case_overrides: {road: curve-odd-bound, t_fault: null}
+    case_title: "Acceleration request +2.0 m/s² at the entry of a curve at R_ODD"
+    critical: lead
+    window: [-1.5, 6.0]
+    environment: highway-curve
+    trigger_label: acceleration request +2.0 m/s²
+    caption: >-
+      The speed rises in a curve at R_ODD: the lateral acceleration needed grows with v² past what the envelope torque
+      can give, so the car drifts wide as well as closing on the lead.
+
+  - id: he-03-5-free-flow-accel
+    he: HE-03.5
+    case: L-01
+    hide_plant_traffic: true
+    window: [-1.5, 6.0]
+    environment: highway-free-flow
+    actors:
+      - {name: car ahead, kind: car, lane: 1, ds_m: 60, speed_kph: 110, source: illustrative, paint: [0.85, 0.85, 0.85]}
+    trigger_label: acceleration request +2.0 m/s²
+    caption: >-
+      In free flow the speed rises above the set speed until the driver, cued by the acceleration, brakes (L-01, the
+      plant's lead and follower not drawn).
+
+  - id: he-03-6-unsupervised-accel
+    he: HE-03.6
+    case: L-01
+    assumptions: {driver_t_r_s: 1000}
+    case_overrides: {duration: 10.0}
+    critical: lead
+    window: [-1.5, 9.0]
+    environment: highway-free-flow
+    trigger_label: acceleration request +2.0 m/s²
+    caption: >-
+      The same acceleration with a driver who is not supervising: nobody brakes, and the ego runs into the plant's lead.
+
+  # ---------------------------------------------------------------------------------------------- H-04 deceleration
+  - id: he-04-1-step-decel-follower
+    he: HE-04.1
+    case: L-03
+    critical: follower
+    window: [-1.5, 5.0]
+    environment: highway-free-flow
+    traffic: dense
+    variants: [W02, W05]
+    trigger_label: deceleration step -3.5 m/s²
+    caption: >-
+      Deceleration step at the envelope minimum, -3.5 m/s², with the follower at a 1.0 s gap braking after its
+      driver's reaction time; lead and follower are the plant's own.
+
+  - id: he-04-2-wet-curve-braking
+    he: HE-04.2
+    case: L-03
+    case_overrides: {road: curve-odd-bound, t_fault: null}
+    case_title: "Deceleration step -3.5 m/s² in a curve at R_ODD, wet road (W02)"
+    critical: follower
+    window: [-1.5, 5.0]
+    environment: highway-curve
+    conditions: W02
+    variants: [W04, W05]
+    trigger_label: deceleration step -3.5 m/s²
+    caption: >-
+      Unexpected braking in a curve on a wet road. The plant's tyre model is linear with no friction limit, so the
+      picture shows the motion on a dry-road model; instability on the wet surface is not simulated.
+
+  - id: he-04-3-dm-forced-decel
+    he: HE-04.3
+    case: L-03
+    critical: follower
+    window: [-1.5, 5.0]
+    environment: highway-free-flow
+    conditions: W03
+    trigger_label: DM escalation, forced deceleration
+    caption: >-
+      Driver monitoring escalates to a forced deceleration although the driver is attentive (false positive); the
+      deceleration is drawn as the envelope minimum step, with the plant's follower at a 1.0 s gap, at night (W03).
+
+  - id: he-04-4-manual-braking-command
+    he: HE-04.4
+    case: L-03
+    case_overrides: {engaged: false}
+    case_title: "Deceleration request -3.5 m/s² while the item is not engaged (manual driving)"
+    critical: follower
+    window: [-1.5, 5.0]
+    environment: highway-free-flow
+    trigger_label: braking request while not engaged
+    caption: >-
+      Manual driving with the item not engaged: the item requests braking. The dashboard shows what the reference
+      build's safety code does with the request.
+
+  - id: he-04-5-false-fcw-reflex
+    he: HE-04.5
+    motion: kinematic
+    case_title: "False FCW provokes reflex braking with a close follower"
+    window: [-1.0, 6.0]
+    environment: highway-free-flow
+    ego:
+      speed_kph: 100
+      accel:
+        - {t: t_r_min, a: a_driver_full}
+        - {t: t_r_min + 1.0, a: 0}
+    actors:
+      - name: follower
+        kind: car
+        lane: 0
+        ds_m: -(1.0 * 100 / 3.6 + 4.63)
+        speed_kph: 100
+        critical: true
+        paint: [0.75, 0.75, 0.78]
+        accel: [{t: t_r_min + t_r, a: a_item_min, v_to_kph: 70}]
+    events:
+      - {t: t_r_min, label: driver reflex braking (6 m/s²)}
+      - {t: t_r_min + 1.0, label: driver releases the brake}
+      - {t: t_r_min + t_r, label: follower brakes (3.5 m/s²)}
+    trigger_label: false FCW
+    caption: >-
+      A false forward-collision warning makes the driver brake hard for a second; the follower, at a 1.0 s gap, reacts
+      after its own reaction time with 3.5 m/s² (WP-S-04 §3.4).
+
+  # ---------------------------------------------------------------------------------------------- H-05 override
+  - id: he-05-1-brake-vs-accel
+    he: HE-05.1
+    motion: kinematic
+    case_title: "Driver emergency braking while the item keeps commanding +2.0 m/s²"
+    window: [-1.0, 6.0]
+    environment: highway-free-flow
+    ego:
+      speed_kph: 80
+      accel:
+        - {t: t_r, a: a_driver_full + a_item_max}
+    actors:
+      - {name: lead, kind: car, lane: 0, ds_m: 1.5 * 80 / 3.6 + 4.63, speed_kph: 80, critical: true, accel: [{t: 0, a: -7.0}], paint: [0.8, 0.8, 0.82]}
+    events:
+      - {t: t_r, label: driver brakes; item still +2.0 m/s² (net -4)}
+    trigger_label: lead brakes at 7 m/s² (KS-08)
+    ks: [KS-08]
+    caption: >-
+      The lead brakes at 7 m/s² from 80 km/h at a 1.5 s gap (KS-08). The driver brakes at 6 m/s² after the reaction
+      time, but the item keeps commanding +2.0 m/s², so the net deceleration is 4 m/s².
+
+  - id: he-05-2-evasive-counter-torque
+    he: HE-05.2
+    motion: kinematic
+    case_title: "Evasive steering against the item's counter-torque"
+    window: [-0.5, 4.0]
+    environment: highway-free-flow
+    ego:
+      speed_kph: 80
+      lateral:
+        - {t: t_r_min, law: track, to: 3.7, wn: 2.0, ay_max: ay_driver - ay_lka}
+    actors:
+      - {name: stopped car, kind: car, lane: 0, ds_m: 2.0 * 80 / 3.6 + 4.63, critical: true, paint: [0.7, 0.1, 0.1]}
+    events:
+      - {t: t_r_min, label: driver steers to evade (4 m/s² less 2 m/s² counter-torque)}
+    trigger_label: stopped car revealed, TTC 2 s
+    caption: >-
+      A stopped car appears 2 s ahead; the driver swerves after 0.75 s, but the item keeps the full envelope torque
+      against the driver, cutting the driver's 4 m/s² to about 2 m/s².
+
+  - id: he-05-3-cancel-not-disengaged
+    he: HE-05.3
+    motion: kinematic
+    case_title: "Cancel does not disengage; the item keeps steering while the driver changes lanes"
+    window: [-0.5, 6.0]
+    lane_change: true
+    environment: highway-free-flow
+    ego:
+      speed_kph: 100
+      lateral:
+        - {t: 1.0, law: track, to: -3.7, wn: 0.9, ay_max: 1.5}
+        - {t: 2.2, law: track, to: 0.0, wn: 1.2, ay_max: ay_lka}
+        - {t: 2.2 + t_r, law: track, to: -3.7, wn: 1.0, ay_max: ay_driver - ay_lka}
+    actors:
+      - {name: car in the right lane, kind: car, lane: -1, ds_m: -25, speed_kph: 115, source: illustrative, critical: true, paint: [0.3, 0.3, 0.3]}
+    events:
+      - {t: 1.0, label: driver starts a lane change (believes manual)}
+      - {t: 2.2, label: item steers back to its lane (unexpected)}
+      - {t: 2.2 + t_r, label: driver steers against it}
+    trigger_label: driver presses cancel; item stays engaged
+    caption: >-
+      The driver presses cancel and believes the item is off, but it stays engaged: when the driver starts a lane
+      change, the item steers the car back toward its lane.
+
+  - id: he-05-4-partial-disengagement
+    he: HE-05.4
+    motion: kinematic
+    case_title: "Brake releases longitudinal control only; lateral control continues"
+    window: [-0.5, 6.0]
+    environment: highway-free-flow
+    road: {geometry: "curve@1.5"}
+    ego:
+      speed_kph: 100
+      accel:
+        - {t: 0, a: a_driver}
+      lateral:
+        - {t: 0.5, law: track, to: -3.7, wn: 1.2, ay_max: ay_driver - ay_lka}
+    actors:
+      - {name: debris car, kind: car, lane: 0, ds_m: 70, critical: true, paint: [0.4, 0.4, 0.4]}
+    events:
+      - {t: 0.5, label: driver steers right; item still steers (lateral not released)}
+    trigger_label: driver brakes; only longitudinal releases
+    caption: >-
+      The driver brakes for an obstruction and steers to the right lane; the brake releases only the longitudinal axis,
+      so the item keeps steering toward its lane and cuts the driver's lateral acceleration.
+
+  # ---------------------------------------------------------------------------------------------- H-06 loss of deceleration
+  - id: he-06-1-stationary-decel-lost
+    he: HE-06.1
+    motion: kinematic
+    case_title: "Deceleration silently lost while approaching stationary traffic"
+    window: [-1.5, 6.5]
+    environment: highway-queue
+    variants: [W03, W04, W06]
+    ego:
+      speed_kph: 110
+      accel:
+        - {t: -1.5, a: a_item_min}
+        - {t: 0, a: 0}
+        - {t: t_r, a: a_driver_full}
+    actors:
+      - {name: end of queue, kind: car, lane: 0, ds_m: 101, critical: true, paint: [0.8, 0.8, 0.8]}
+      - {name: queued car, kind: car, lane: 0, ds_m: 109, paint: [0.2, 0.25, 0.4]}
+      - {name: queued truck, kind: truck, lane: -1, ds_m: 105}
+    events:
+      - {t: -1.5, label: item brakes (3.5 m/s²)}
+      - {t: t_r, label: driver brakes (6 m/s²)}
+    trigger_label: deceleration silently lost
+    tc: [TC-08]
+    caption: >-
+      Braking for stationary traffic at highway speed, the item silently stops decelerating. The driver notices the
+      missing deceleration (the plant's 1 m/s² cue) and brakes after the reaction time.
+
+  - id: he-06-2-slow-queue
+    he: HE-06.2
+    motion: kinematic
+    case_title: "Deceleration silently lost in a slow queue"
+    window: [-1.0, 4.0]
+    environment: highway-queue
+    ego:
+      speed_kph: 25
+      accel:
+        - {t: -1.0, a: -2.0}
+        - {t: 0, a: 0}
+        - {t: t_r, a: a_driver_full}
+    actors:
+      - {name: stopped lead, kind: car, lane: 0, ds_m: 4.63 + 6.2, critical: true, paint: [0.8, 0.8, 0.8]}
+      - {name: queued car, kind: car, lane: -1, ds_m: 6, paint: [0.4, 0.1, 0.1]}
+    events:
+      - {t: t_r, label: driver brakes}
+    trigger_label: deceleration silently lost
+    caption: >-
+      In a slow queue the item stops braking without warning; the driver brakes after the reaction time.
+
+  - id: he-06-3-lead-brakes-decel-lost
+    he: HE-06.3
+    motion: kinematic
+    case_title: "Lead brakes; the item's deceleration is silently lost"
+    window: [-1.0, 6.0]
+    environment: highway-free-flow
+    traffic: dense
+    variants: [W02, W04, W06]
+    ego:
+      speed_kph: 80
+      accel:
+        - {t: t_r, a: a_driver_full}
+    actors:
+      - {name: lead, kind: car, lane: 0, ds_m: 1.5 * 80 / 3.6 + 4.63, speed_kph: 80, critical: true, accel: [{t: 0, a: -5.0}], paint: [0.85, 0.85, 0.85]}
+    events:
+      - {t: 0.3, label: item deceleration due (3.5 m/s², WP-S-04 §3.8.2) - lost}
+      - {t: t_r, label: driver brakes (6 m/s²)}
+    trigger_label: lead brakes at 5 m/s² (KS-08)
+    tc: [TC-33]
+    ks: [KS-08]
+    caption: >-
+      The lead brakes at 5 m/s² at a 1.5 s gap (KS-08 default). The item's deceleration, due from 0.3 s, is silently
+      lost; the driver, cued by the lead's brake lights, brakes after the reaction time.
+
+  - id: he-06-4-unsupervised-decel-lost
+    he: HE-06.4
+    motion: kinematic
+    case_title: "Deceleration silently lost approaching stationary traffic, driver not supervising"
+    window: [-1.5, 6.0]
+    environment: highway-queue
+    ego:
+      speed_kph: 110
+      accel:
+        - {t: -1.5, a: a_item_min}
+        - {t: 0, a: 0}
+    actors:
+      - {name: end of queue, kind: car, lane: 0, ds_m: 101, critical: true, paint: [0.8, 0.8, 0.8]}
+      - {name: queued truck, kind: truck, lane: -1, ds_m: 105}
+    events:
+      - {t: -1.5, label: item brakes (3.5 m/s²)}
+    trigger_label: deceleration silently lost
+    caption: >-
+      As HE-06.1 with a driver who is not supervising: nobody brakes.
+
+  # ---------------------------------------------------------------------------------------------- H-07 mode confusion
+  - id: he-07-1-mode-confusion-curve
+    he: HE-07.1
+    case: F-04b
+    case_overrides: {road: curve-odd-bound, t_fault: null}
+    case_title: "Item stops steering in a curve at R_ODD while the display still shows it engaged"
+    window: [-1.5, 6.0]
+    environment: highway-curve
+    traffic: free-flow
+    variants: [W03, W05]
+    trigger_label: steering stops; display still shows engaged
+    caption: >-
+      The item has stopped steering but still shows engaged: the driver, believing the system steers, notices only
+      the drift (the plant's 0.2 m cue) and corrects after the reaction time.
+
+  - id: he-07-2-mode-confusion-gentle
+    he: HE-07.2
+    case: F-04b
+    case_overrides: {road: "curve@0.5"}
+    case_title: "Item stops steering on a gentle curve (0.5 m/s²) while the display still shows it engaged"
+    window: [-1.5, 7.0]
+    environment: highway-free-flow
+    traffic: free-flow
+    trigger_label: steering stops; display still shows engaged
+    caption: >-
+      As HE-07.1 on a straight or gentle curve: a slow drift, noticed late.
+
+  - id: he-07-3-believes-acc-active
+    he: HE-07.3
+    motion: kinematic
+    case_title: "Driver believes ACC is active while approaching slower traffic"
+    window: [-1.0, 6.0]
+    environment: highway-queue
+    ego:
+      speed_kph: 110
+      accel:
+        - {t: t_r, a: a_driver_full, v_to_kph: 60}
+    actors:
+      - {name: slower traffic, kind: truck, lane: 0, ds_m: 73 + 7.07, speed_kph: 60, critical: true}
+    events:
+      - {t: t_r, label: driver brakes (6 m/s²)}
+    trigger_label: expected ACC braking does not come
+    tc: [TC-33]
+    caption: >-
+      ACC is not active although the driver believes it is. Where ACC would start braking (2 m/s² comfort), nothing
+      happens; the driver notices and brakes after the reaction time.
+
+  - id: he-07-4-unsupervised-no-takeover
+    he: HE-07.4
+    case: F-07
+    assumptions: {driver_t_r_s: 1000}
+    case_overrides: {duration: 9.0}
+    window: [-1.5, 8.0]
+    environment: highway-free-flow
+    conditions: W03
+    trigger_label: EPS fault; take-over alert not effective
+    caption: >-
+      The driver, looking away, is not called back when lateral control is lost: the car leaves the curve at night.
+
+  # ---------------------------------------------------------------------------------------------- H-08 PCS
+  - id: he-08-1-pcs-suppressed
+    he: HE-08.1
+    motion: kinematic
+    case_title: "Stock PCS braking suppressed by the item before an imminent collision"
+    window: [-1.0, 4.0]
+    environment: highway-free-flow
+    ego:
+      speed_kph: 40
+      accel:
+        - {t: t_r, a: a_driver_full}
+    actors:
+      - {name: stopped car, kind: car, lane: 0, ds_m: 1.6 * 40 / 3.6 + 4.63, critical: true, paint: [0.75, 0.75, 0.75]}
+    events:
+      - {t: 0.0, label: PCS request (TTC 1.6 s) suppressed; with PCS (6 m/s²) the car stops 7.5 m short}
+      - {t: t_r, label: driver brakes (6 m/s²)}
+    trigger_label: PCS request suppressed
+    ks: [KS-20]
+    caption: >-
+      At 40 km/h the stock PCS would brake at 6 m/s² from TTC 1.6 s (assumed; KS-20 compares TTC ±0.2 s) and stop the
+      car short. With the request suppressed, only the driver brakes, after the reaction time.
+
+  # ---------------------------------------------------------------------------------------------- H-09 driver
+  - id: he-09-1-unsupervised-undetected
+    he: HE-09.1
+    case: N-3
+    assumptions: {driver_t_r_s: 1000}
+    case_overrides: {duration: 10.0}
+    case_title: "No fault, curve at R_ODD; inattentive driver not detected by DM"
+    window: [-1.0, 9.0]
+    environment: highway-curve
+    traffic: free-flow
+    trigger_label: curve entry (driver inattentive, undetected)
+    caption: >-
+      The driver is not supervising and DM does not detect it; the next situation the item cannot handle alone - a
+      curve at R_ODD, where it drifts with no fault (N-3) - meets nobody to correct it.
+
+  - id: he-09-2-asleep-ks01
+    he: HE-09.2
+    case: F-07-KS01
+    assumptions: {driver_t_r_s: 1000}
+    case_overrides: {duration: 10.0}
+    window: [-1.5, 9.0]
+    environment: highway-free-flow
+    conditions: W03
+    trigger_label: EPS fault; driver asleep
+    caption: >-
+      The driver is asleep and DM does not detect it: an EPS fault in the KS-01 curve takes the car off the road with
+      nobody able to take over.
+
+  # ---------------------------------------------------------------------------------------------- SOTIF
+  - id: sh-01-ghost-line
+    sotif: {id: SH-01, title: "Model-commanded steering moves the vehicle out of the lane", situation: "OS-01 highway; faded markings and a tar seam the model follows", effect: "H-01 lane departure", s: 3, c: 2}
+    tc: [TC-05]
+    ks: [KS-03]
+    motion: kinematic
+    case_title: "Path follows a tar seam across faded markings (lateral error 0.5 m/s²)"
+    window: [-1.0, 6.0]
+    environment: highway-worn-markings
+    variants: [W02, W03]
+    props:
+      - {kind: seam, ds_m: -5, len: 70, d0: 0.4, d1: -3.2}
+    ego:
+      speed_kph: 100
+      lateral:
+        - {t: 0, law: drift, ay: -0.5}
+        - {t: 0.89 + t_r, law: track, to: 0.0}
+    actors:
+      - {name: car in the right lane, kind: car, lane: -1, ds_m: 18, speed_kph: 100, source: illustrative, critical: true, paint: [0.82, 0.82, 0.84]}
+    events:
+      - {t: 0.89, label: drift reaches 0.2 m (driver cue)}
+      - {t: 0.89 + t_r, label: driver corrects}
+    trigger_label: model locks onto the seam
+    caption: >-
+      With the lane markings faded, the model takes a tar seam for the lane line and steers along it at 0.5 m/s²
+      (WP-S-04 §3.8.1); the driver notices the 0.2 m drift and corrects after the reaction time.
+
+  - id: sh-02-curve-beyond-capability
+    sotif: {id: SH-02, title: "Lateral control insufficient in a curve tighter than the lateral limit", situation: "OS-02 highway curve at R_ODD at 120 km/h (SIM-2026-001)", effect: "H-02 drift out of the lane, no timely take-over request", s: 3, c: 2}
+    tc: [TC-14]
+    ks: [KS-01]
+    case: N-3
+    case_overrides: {speed_kph: 120, duration: 8.0}
+    case_title: "No fault, curve at R_ODD at 120 km/h (N-3-OS, SIM-2026-001)"
+    window: [-1.0, 7.0]
+    environment: highway-curve
+    traffic: free-flow
+    trigger_label: curve entry
+    caption: >-
+      No fault: at 120 km/h in a curve at R_ODD the full envelope torque gives about 2 m/s² against 2.5 needed, so the
+      car drifts out until the driver corrects.
+
+  - id: sh-03-lead-lost-accel
+    sotif: {id: SH-03, title: "Unintended acceleration: lead lost or misassociated", situation: "OS-05 following in a curve; the lead is lost", effect: "H-03 acceleration toward the lead", s: 3, c: 2}
+    tc: [TC-09]
+    motion: kinematic
+    case_title: "Lead lost in a curve; the item accelerates toward its set speed"
+    window: [-1.0, 6.0]
+    environment: highway-free-flow
+    road: {geometry: "curve@1.5"}
+    ego:
+      speed_kph: 90
+      accel:
+        - {t: 0, a: a_item_max, v_to_kph: 120}
+        - {t: t_r, a: a_driver, v_to_kph: 90}
+    actors:
+      - {name: lead, kind: car, lane: 0, ds_m: 1.5 * 90 / 3.6 + 4.63, speed_kph: 90, critical: true, paint: [0.82, 0.8, 0.78]}
+    events:
+      - {t: t_r, label: driver brakes (3 m/s²)}
+    trigger_label: lead lost in the curve
+    caption: >-
+      The lead drops out of the model's view in a curve, and the item accelerates toward its 120 km/h set speed; the
+      driver brakes after the reaction time.
+
+  - id: sh-04-phantom-braking-overpass
+    sotif: {id: SH-04, title: "Phantom braking", situation: "OS-08 close follower; a false lead under an overpass", effect: "H-04 rear-end impact by the follower", s: 2, c: 2}
+    tc: [TC-10]
+    ks: [KS-10]
+    case: L-03
+    critical: follower
+    case_title: "Phantom braking -3.5 m/s² under an overpass (L-03 step)"
+    window: [-1.5, 5.0]
+    environment: highway-interchange
+    variants: [W02, W03]
+    trigger_label: false lead at the overpass
+    caption: >-
+      A false radar or vision lead at an overpass makes the item brake at the envelope minimum; the plant's follower at
+      a 1.0 s gap brakes after its driver's reaction time.
+
+  - id: sh-05-pcm-cruise-active
+    sotif: {id: SH-05, title: "Driver override not recognised or not effective", situation: "OS-10: the PCM cruise stays active after the driver disengages", effect: "H-05 the car accelerates after the driver believes it is off", s: 3, c: 2}
+    tc: [TC-30]
+    ks: [KS-26]
+    motion: kinematic
+    case_title: "PCM cruise resumes after a brake tap the driver took as a disengagement"
+    window: [-0.5, 6.0]
+    environment: highway-free-flow
+    ego:
+      speed_kph: 80
+      accel:
+        - {t: 0.3, a: a_cruise, v_to_kph: 110}
+        - {t: 0.3 + 1.0 + t_r, a: a_driver, v_to_kph: 60}
+    actors:
+      - {name: slower lead, kind: car, lane: 0, ds_m: 30 + 4.63, speed_kph: 70, critical: true, paint: [0.6, 0.6, 0.62]}
+    events:
+      - {t: 0.3, label: PCM cruise resumes (+1 m/s²)}
+      - {t: 1.3, label: driver notices the acceleration}
+      - {t: 0.3 + 1.0 + t_r, label: driver brakes}
+    trigger_label: brake tap; driver believes cruise is off
+    caption: >-
+      The driver taps the brake and believes the cruise is off, but the PCM cruise stays active and resumes toward its
+      set speed behind a slower lead; the driver brakes after noticing.
+
+  - id: sh-06-stationary-not-lead
+    sotif: {id: SH-06, title: "Insufficient deceleration: stationary vehicle not treated as lead", situation: "OS-07 approach to a stationary vehicle, low sun ahead", effect: "H-06 rear-end collision", s: 3, c: 2}
+    tc: [TC-08, TC-01]
+    ks: [KS-05, KS-12]
+    motion: kinematic
+    case_title: "Stationary vehicle not taken as lead, low sun ahead"
+    window: [-1.0, 5.0]
+    environment: highway-queue
+    conditions: TC-01
+    variants: [W02, W04]
+    ego:
+      speed_kph: 80
+      accel:
+        - {t: t_r, a: a_driver_full}
+    actors:
+      - {name: stationary car, kind: car, lane: 0, ds_m: 3.0 * 80 / 3.6 + 4.63, critical: true, paint: [0.8, 0.8, 0.8]}
+    events:
+      - {t: t_r, label: driver brakes (6 m/s²)}
+    trigger_label: TTC 3 s, no deceleration (KS-05)
+    caption: >-
+      The item does not take a stationary car as its lead in low sun. At TTC 3 s, where KS-05 expects the first
+      deceleration, nothing happens; the driver brakes after the reaction time.
+
+  - id: sh-08-pcs-delayed
+    sotif: {id: SH-08, title: "Stock PCS performance degraded by the item", situation: "OS-09 imminent collision with the item installed", effect: "H-08 collision less mitigated", s: 3, c: 3}
+    ks: [KS-20]
+    motion: kinematic
+    case_title: "Stock PCS braking delayed by 84 ms (plant case P-02) at 40 km/h"
+    window: [-1.0, 3.0]
+    environment: highway-free-flow
+    ego:
+      speed_kph: 40
+      accel:
+        - {t: 0.084, a: a_pcs}
+    actors:
+      - {name: stopped car, kind: car, lane: 0, ds_m: 1.6 * 40 / 3.6 + 4.63, critical: true, paint: [0.75, 0.75, 0.75]}
+    events:
+      - {t: 0.084, label: PCS braking reaches the car (P-02 delay)}
+    trigger_label: PCS request (TTC 1.6 s)
+    caption: >-
+      The stock PCS request reaches the car 84 ms late through the item (plant case P-02, MCU hang and IWDG reset);
+      braking at 6 m/s² still stops the car short of the target.
+
+  - id: sh-09-red-light
+    sotif: {id: SH-09, title: "Traffic-control non-compliance with over-trust", situation: "Signalised intersection, cross traffic (outside the ODD, SH-13)", effect: "The vehicle enters the intersection on red", s: 3, c: 2}
+    tc: [TC-13]
+    ks: [KS-24]
+    motion: kinematic
+    case_title: "Item does not stop at a red light; the over-trusting driver does not intervene"
+    window: [-1.0, 5.0]
+    environment: urban-intersection
+    variants: [W03, W02]
+    ego:
+      speed_kph: 50
+    actors:
+      - name: cross traffic
+        kind: car
+        d: -30
+        ds_m: 61
+        critical: true
+        yaw_deg: 0
+        paint: [0.2, 0.35, 0.6]
+        lateral: [{t: 1.55, law: walk, to: 40, v: 11.1}]
+    trigger_label: red light, no deceleration
+    caption: >-
+      Outside the ODD, the item does not stop for a red light and the over-trusting driver does not intervene; cross
+      traffic enters the intersection on green.
+
+  - id: sh-10-lane-change-blind-spot
+    sotif: {id: SH-10, title: "Assisted lane change into an occupied lane", situation: "OS-01 multi-lane highway, vehicle in the blind spot", effect: "Side collision (like H-01)", s: 3, c: 2}
+    tc: [TC-28]
+    ks: [KS-14]
+    motion: kinematic
+    case_title: "Driver nudges for a lane change with a car in the blind spot"
+    window: [-0.5, 4.0]
+    lane_change: true
+    environment: highway-free-flow
+    ego:
+      speed_kph: 110
+      lateral:
+        - {t: 0.2, law: track, to: -3.7, wn: 0.9, ay_max: 1.5}
+    actors:
+      - {name: car in the blind spot, kind: car, lane: -1, ds_m: -3.5, speed_kph: 112, critical: true, paint: [0.85, 0.85, 0.87]}
+    trigger_label: driver nudge (signal on)
+    caption: >-
+      The driver signals and nudges; with no blind-spot check, the item starts the lane change into a car alongside.
+
+  - id: sh-11-pedestrian-occluded
+    sotif: {id: SH-11, title: "No reaction to a vulnerable road user entering the path", situation: "OS-04 urban, pedestrian emerging from behind a parked truck, low sun", effect: "Pedestrian struck", s: 3, c: 2}
+    tc: [TC-12, TC-01]
+    ks: [KS-22]
+    motion: kinematic
+    case_title: "Pedestrian steps out from behind a parked truck; no item reaction"
+    window: [-1.5, 4.0]
+    environment: urban-arterial
+    conditions: TC-01
+    traffic: parked
+    ego:
+      speed_kph: 50
+      accel:
+        - {t: t_r, a: a_driver_full}
+    actors:
+      - {name: parked truck, kind: truck, d: -3.0, ds_m: 22, source: illustrative}
+      - {name: parked car, kind: car, d: -2.85, ds_m: 45, source: illustrative, paint: [0.2, 0.2, 0.25]}
+      - name: pedestrian
+        kind: pedestrian
+        d: -3.2
+        ds_m: 30
+        critical: true
+        lateral: [{t: 0, law: walk, to: 6.0, v: 1.5}]
+    events:
+      - {t: t_r, label: driver brakes (6 m/s²)}
+    trigger_label: pedestrian emerges (occluded)
+    caption: >-
+      A pedestrian steps out from behind a parked truck 28 m ahead at 50 km/h, into low sun. The item does not react;
+      the driver brakes after the reaction time.
+
+  - id: sh-12-unsupervised-night
+    sotif: {id: SH-12, title: "Prolonged unsupervised operation: DM misses inattention", situation: "Highway at night, sunglasses or low cabin light", effect: "Contributes to all hazards; here the next curve meets nobody", s: "—", c: "—"}
+    tc: [TC-24]
+    ks: [KS-17, KS-18]
+    case: N-3
+    assumptions: {driver_t_r_s: 1000}
+    case_overrides: {duration: 10.0}
+    case_title: "No fault, curve at R_ODD at night; DM misses the inattention"
+    window: [-1.0, 9.0]
+    environment: highway-curve
+    conditions: W03
+    trigger_label: curve entry (driver inattentive, undetected)
+    caption: >-
+      At night DM misses the driver's inattention (TC-24); in a curve at R_ODD, which the item cannot take alone,
+      nobody corrects the drift.
+
+  - id: sh-13-construction-zone
+    sotif: {id: SH-13, title: "Stays engaged outside the ODD", situation: "Construction zone: lane shift, cones (TC-06)", effect: "Raises SH-01 to SH-06: follows the old markings into the cones", s: 3, c: 2}
+    tc: [TC-06]
+    ks: [KS-13]
+    motion: kinematic
+    case_title: "Engaged through a construction zone; follows the old markings"
+    window: [-0.5, 5.0]
+    environment: highway-construction
+    variants: [W03, W02]
+    ego:
+      speed_kph: 100
+      lateral:
+        - {t: 0.3 + t_r, law: track, to: 3.7}
+    events:
+      - {t: 0.3, label: driver sees the taper (first cones)}
+      - {t: 0.3 + t_r, label: driver steers into the open lane}
+    trigger_label: construction zone ahead; item stays engaged
+    caption: >-
+      Outside the ODD the item stays engaged through a construction zone and keeps to the old markings while the
+      cones close its lane; the driver steers into the open lane after the reaction time.

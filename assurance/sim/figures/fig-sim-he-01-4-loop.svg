@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="934" viewBox="0 0 640 934" role="img" aria-labelledby="t d">
+<title id="t">HE-01.4 in the layer-1 loop: plant run F-02</title>
+<desc id="d">Synthetic (DSR-12), no evidence credit. HE-01.4 (ASIL C), Unexpected steering disturbance during manual driving. The layer-1 loop with plant run F-02 (straight highway, not engaged): fault torque request while not engaged. SoC: not engaged, yet sends a torque request. Host: packs the frame. Panda: refuses STEERING_LKA from 0.000 s: not engaged. Switch: nothing to pass. EPS: no LKA torque arrives. Vehicle: stays in lane: largest offset 0.00 m. Driver: drives manually; nothing to correct. The panda stops it at 0.000 s; nothing reaches the car.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
+      --real:#2a78d6; --real-bg:#e9f1fb; --amb:#c98500; --amb-bg:#fdf4dc; --bad:#e34948; --bad-bg:#fdecec;
+      --pic:#6250d6; --pic-bg:#efedfb; --flt:#eb6834; --cop:#eb6834; --cop-bg:#fde9df; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#1a1a19; --ink:#f0efec; --ink2:#c3c2b7; --ink3:#8d8c85; --grid:#33322f; --card:#232321;
+        --real:#3987e5; --real-bg:#16273c; --amb:#eda100; --amb-bg:#3a2f12; --bad:#e66767; --bad-bg:#3d1e1e;
+        --pic:#9085e9; --pic-bg:#26223f; --flt:#d95926; --cop:#d95926; --cop-bg:#3f2417; }
+}
+.bg { fill:var(--bg); }
+.h { font:600 21px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t { font:15px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.tb { font:600 15px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.tl { font:600 17px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.t2b { font:600 13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.chip { font:600 12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:#ffffff; }
+.tbad { font:600 13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--bad); }
+.hair { stroke:var(--grid); stroke-width:1; }
+.card { fill:var(--card); stroke:var(--grid); stroke-width:1.2; }
+.real { fill:var(--real-bg); stroke:var(--real); stroke-width:2.4; }
+.model { fill:var(--card); stroke:var(--ink3); stroke-width:1.4; }
+.amb { fill:var(--amb-bg); stroke:var(--amb); stroke-width:1.6; stroke-dasharray:6 4; }
+.plan { fill:var(--bg); stroke:var(--ink3); stroke-width:1.4; stroke-dasharray:6 4; }
+.pic { fill:var(--pic-bg); stroke:var(--pic); stroke-width:1.4; }
+.picbox { fill:var(--bg); stroke:var(--pic); stroke-width:1.2; }
+.badbox { fill:var(--bad-bg); stroke:var(--bad); stroke-width:1.4; }
+.copbox { fill:var(--cop-bg); stroke:var(--cop); stroke-width:1.4; }
+.f-real { fill:var(--real); } .f-model { fill:var(--ink3); } .f-amb { fill:var(--amb); } .f-bad { fill:var(--bad); }
+.f-pic { fill:var(--pic); } .f-flt { fill:var(--flt); } .f-cop { fill:var(--cop); } .f-ink2 { fill:var(--ink2); }
+.arr { stroke:var(--ink2); stroke-width:1.6; fill:none; }
+.arrd { stroke:var(--ink3); stroke-width:1.6; fill:none; stroke-dasharray:5 4; }
+.arrb { stroke:var(--bad); stroke-width:1.6; fill:none; stroke-dasharray:5 4; }
+.spring { stroke:var(--ink2); stroke-width:1.8; fill:none; stroke-linejoin:round; }
+.strike { stroke:var(--bad); stroke-width:1.6; }
+</style>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-ink2"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-bad"/></marker></defs>
+<rect class="bg" width="640" height="934"/>
+<text x="24" y="34" class="h">HE-01.4 · ASIL C (D if AOU-01, AOU-02 fail)</text>
+<text x="24" y="58" class="t2">Unexpected steering disturbance during manual driving</text>
+<text x="24" y="80" class="tbad">Synthetic (DSR-12) · no evidence credit</text>
+<text x="24" y="99" class="t2b">Plant run F-02: straight highway, not engaged</text>
+<line x1="24" y1="110" x2="616" y2="110" class="hair"/>
+<text x="24" y="132" class="t2b">FAULT: TORQUE REQUEST WHILE NOT ENGAGED</text>
+<rect x="96" y="146" width="448" height="72" rx="8" class="model"/>
+<text x="110" y="170" class="tl">SoC stand-in</text>
+<text x="110" y="188" class="t2b">MODEL · not openpilot</text>
+<text x="110" y="210" class="t">not engaged, yet sends a torque request</text>
+<rect x="434.5" y="156" width="99.5" height="20" rx="10" class="f-flt"/>
+<text x="484.2" y="170" class="chip" text-anchor="middle">FAULT ENTERS</text>
+<path d="M320.0,218 V244" class="arr" marker-end="url(#a)"/>
+<rect x="96" y="248" width="448" height="72" rx="8" class="real"/>
+<text x="110" y="272" class="tl">Host frames</text>
+<text x="110" y="290" class="t2b">REAL CODE · opendbc toyotacan</text>
+<text x="110" y="312" class="t">packs the frame</text>
+<rect x="434.5" y="258" width="99.5" height="20" rx="10" class="f-bad"/>
+<text x="484.2" y="272" class="chip" text-anchor="middle">PASSES IT ON</text>
+<path d="M320.0,320 V346" class="arr" marker-end="url(#a)"/>
+<rect x="96" y="350" width="448" height="72" rx="8" class="real"/>
+<text x="110" y="374" class="tl">Panda safety code</text>
+<text x="110" y="392" class="t2b">REAL CODE · reference build</text>
+<text x="110" y="414" class="t">refuses STEERING_LKA from 0.000 s: not engaged</text>
+<rect x="462.3" y="360" width="71.7" height="20" rx="10" class="f-real"/>
+<text x="498.2" y="374" class="chip" text-anchor="middle">STOPS IT</text>
+<path d="M320.0,422 V448" class="arrd" marker-end="url(#a)"/>
+<rect x="96" y="452" width="448" height="72" rx="8" class="plan"/>
+<text x="110" y="476" class="tl">Harness switch</text>
+<text x="110" y="494" class="t2b">MODEL</text>
+<text x="110" y="516" class="t">nothing to pass</text>
+<rect x="434.5" y="462" width="99.5" height="20" rx="10" class="f-model"/>
+<text x="484.2" y="476" class="chip" text-anchor="middle">NOT INVOLVED</text>
+<path d="M320.0,524 V550" class="arrd" marker-end="url(#a)"/>
+<rect x="96" y="554" width="448" height="72" rx="8" class="plan"/>
+<text x="110" y="578" class="tl">EPS</text>
+<text x="110" y="596" class="t2b">ASSUMED · release on lost frames</text>
+<text x="110" y="618" class="t">no LKA torque arrives</text>
+<rect x="434.5" y="564" width="99.5" height="20" rx="10" class="f-model"/>
+<text x="484.2" y="578" class="chip" text-anchor="middle">NOT INVOLVED</text>
+<path d="M320.0,626 V652" class="arrd" marker-end="url(#a)"/>
+<rect x="96" y="656" width="448" height="72" rx="8" class="plan"/>
+<text x="110" y="680" class="tl">Vehicle</text>
+<text x="110" y="698" class="t2b">MODEL · single-track Corolla</text>
+<text x="110" y="720" class="t">stays in lane: largest offset 0.00 m</text>
+<rect x="434.5" y="666" width="99.5" height="20" rx="10" class="f-model"/>
+<text x="484.2" y="680" class="chip" text-anchor="middle">NOT INVOLVED</text>
+<path d="M320.0,728 V754" class="arrd" marker-end="url(#a)"/>
+<rect x="96" y="758" width="448" height="72" rx="8" class="plan"/>
+<text x="110" y="782" class="tl">Driver</text>
+<text x="110" y="800" class="t2b">ASSUMED · reacts 1.5 s after the cue</text>
+<text x="110" y="822" class="t">drives manually; nothing to correct</text>
+<rect x="434.5" y="768" width="99.5" height="20" rx="10" class="f-model"/>
+<text x="484.2" y="782" class="chip" text-anchor="middle">NOT INVOLVED</text>
+<path d="M96,686 H52 V176 H94" class="arrd" marker-end="url(#a)"/>
+<text x="44" y="416" class="t2" text-anchor="middle" transform="rotate(-90 44 416)">perfect perception</text>
+<path d="M544,584 H588 V380 H546" class="arrd" marker-end="url(#a)"/>
+<text x="600" y="467" class="t2" text-anchor="middle" transform="rotate(90 600 467)">EPS state on the car bus (RX)</text>
+<rect x="24" y="848" width="592" height="42" rx="8" class="real"/>
+<text x="38" y="872" class="tb">The panda stops it at 0.000 s; nothing reaches the car.</text>
+<rect x="24" y="901" width="18" height="14" rx="3" class="f-flt"/>
+<text x="48" y="912" class="t2">fault enters</text>
+<rect x="150.7" y="901" width="18" height="14" rx="3" class="f-bad"/>
+<text x="174.7" y="912" class="t2">passes it on</text>
+<rect x="277.4" y="901" width="18" height="14" rx="3" class="f-real"/>
+<text x="301.4" y="912" class="t2">stops or warns</text>
+<rect x="417.8" y="901" width="18" height="14" rx="3" class="plan"/>
+<text x="441.8" y="912" class="t2">not involved</text>
+</svg>

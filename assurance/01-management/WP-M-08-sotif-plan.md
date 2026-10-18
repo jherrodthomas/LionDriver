@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-08 SOTIF plan |
 | Standard reference | ISO 21448:2022 §4 (management of SOTIF activities), §5–§13; ISO/PAS 8800:2024 (interface for AI-related insufficiencies); ASPICE 4.0 MAN.3 |
-| Version | 0.5 (OI-3 and the simulation row of §7 point to the WP-V-02 §5.3 fidelity-case plan and DQ-139; CARLA, DQ-261; 2026-10-16). 0.4 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; D-05 adopted, DQ-038; no log uploads to comma, DQ-084; 2026-10-16). 0.3 (status in §4 from WP-M-00; Experimental Mode default off since 2026-10-14 in §2 and §8; open items with owner and due gate; 2026-10-14). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
+| Version | 0.7 (roles: the project lead signs the SOTIF recommendation after an external SOTIF review, DQ-025; the lead supervises human-subject tests, no external human-factors reviewer, DQ-026; OI-6 decided; 2026-10-17). 0.6 (OI-3: simulation credit rule decided, DQ-139; CARLA deferred to G3, DQ-261; 2026-10-16). 0.5 (OI-3 and the simulation row of §7 point to the WP-V-02 §5.3 fidelity-case plan and DQ-139; CARLA, DQ-261; 2026-10-16). 0.4 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; D-05 adopted, DQ-038; no log uploads to comma, DQ-084; 2026-10-16). 0.3 (status in §4 from WP-M-00; Experimental Mode default off since 2026-10-14 in §2 and §8; open items with owner and due gate; 2026-10-14). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -30,7 +30,7 @@ The inherited stack has no SOTIF work products. The [gap assessment](../00-asses
 | GAP-18: Experimental Mode on by default (`openpilot/common/params_keys.h:43`, upstream `f21bfc3`) | Makes model-controlled longitudinal behaviour the default, with no recorded hazard re-assessment. Conflicts with `docs/LIMITATIONS.md:35`. Status 2026-10-14: the default is off again (`"0"` at `params_keys.h:43`, commit `38d3320`; decision register DQ-001 option A; [change record](../07-supporting/impact/change-2026-10-14-chill-mode-default.md)). The record is Proposed and not reviewed independently. Devices set up earlier keep their stored value, and the toggle stays |
 | GAP-16: 3 s soft disable that keeps actuating on failed inputs (`openpilot/selfdrive/selfdrived/state.py:7`) | Exposure window for degraded inputs |
 | GAP-17: diagnostics suppressed around the big-model fallback (`openpilot/selfdrive/selfdrived/selfdrived.py:383-384, 403, 457`) | Insufficiency of the monitoring function |
-| GAP-21: driver-monitoring weaknesses (`openpilot/selfdrive/monitoring/policy.py:29, 335`) | Controllability assumptions in HARA and SOTIF depend on an attentive driver |
+| GAP-21: driver-monitoring weaknesses (`openpilot/selfdrive/monitoring/policy.py:29, 361`) | Controllability assumptions in HARA and SOTIF depend on an attentive driver |
 | GAP-22: no uncertainty or OOD gating of the control action | No runtime detection of triggering conditions |
 | No ODD, no validation targets, no scenario catalogue | Nothing to evaluate residual risk against |
 
@@ -41,10 +41,11 @@ The project has one maintainer today (WP-M-01 §9). Roles are listed separately 
 | Role | Holder (today) | Responsibilities in this plan |
 |---|---|---|
 | SOTIF lead | Jherrod Thomas (maintainer, acting; permanent holder TBD per [WP-M-02 §3.1](WP-M-02-safety-plan.md)) | Owns this plan, WP-C-05…C-08, WP-V-02…V-04, WP-K-02. Maintains the shared hazard log entries for SH-/TC-/FI- items |
-| Safety manager (acting) | Jherrod Thomas | Approves this plan and the acceptance criteria; signs the SOTIF release recommendation input to WP-K-06 |
+| Safety manager (acting) | Jherrod Thomas | Approves this plan and the acceptance criteria; signs the SOTIF release recommendation input to WP-K-06, after the external SOTIF review (DQ-025 option B) |
+| External SOTIF reviewer | External, TBD (engaged with the assessor, [WP-M-06](WP-M-06-confirmation-measures-plan.md)) | Reviews WP-K-02 before the recommendation is signed; supplies the independence the acting roles lack (DQ-025 option B) |
 | AI safety lead | Jherrod Thomas (acting) | Supplies model-related insufficiencies and evaluation data ([WP-M-10](WP-M-10-ai-safety-plan.md)) |
 | Safety driver(s) | To be appointed under [WP-V-07](../06-validation/WP-V-07-vehicle-test-operations.md) | Execute validation drives, log events, report anomalies |
-| HMI / human-factors reviewer | External, TBD | Reviews WP-C-08 (driver interaction, misuse) — the maintainer has no human-factors competence record yet ([WP-M-04](WP-M-04-organization-competence-safety-culture.md)) |
+| HMI / human-factors reviewer | None (DQ-026 option B) | The project lead supervises human-subject tests with a written protocol and consent (WP-V-01 §5.2) and reviews WP-C-08. Weaker independence: the maintainer has no human-factors competence record yet ([WP-M-04](WP-M-04-organization-competence-safety-culture.md)) |
 | Independent reviewer / assessor | External, TBD (D-06) | Reviews acceptance criteria, validation targets and the SOTIF release argument |
 
 ## 4. SOTIF activities by clause
@@ -173,9 +174,9 @@ Dates are set in [WP-M-03](WP-M-03-project-plan.md). The ordering is: §4 (G0) �
 |---|---|---|---|
 | OI-1 | Select and justify the B1 human-driver baseline data set and filtering to the ODD (WP-V-02) | SL | G2 |
 | OI-2 | Define how the B2 stock-TSS2 comparison is executed on the reference vehicle (scenario list, test site, measurement) | SL | G2 |
-| OI-3 | Decide whether MetaDrive-based simulation (`openpilot/tools/sim`) has sufficient fidelity to count as evidence, and on which scenario families: a lead decision at G2 (decision register DQ-139), on the fidelity case planned in WP-V-02 §5.3. Re-enable the CI job in the fork (simulation session). CARLA as a later option: WP-V-02 §5.4, DQ-261 | SL | G2 |
+| OI-3 | Decided 2026-10-16 by the project lead (DQ-139 option A): simulation earns credit per scenario family, only once that family's fidelity case (WP-V-02 §5.3) passes and is approved. Open: build and approve the fidelity cases; re-enable the CI job (simulation session). CARLA: not now, revisit at G3 (WP-V-02 §5.4, DQ-261 option A) | SL | G2 |
 | OI-4 | Build a LionDriver-controlled log store so that drive logs do not depend on comma servers (shared with WP-O-04, WP-M-09) | PM | G4 |
 | OI-5 | Generate fork-owned process-replay and model-replay reference sets, including Corolla routes (shared with D-03) | PM / ML | G0 (process replay, with D-03); G2 (model replay, Corolla routes) |
-| OI-6 | Appoint an external HMI / human-factors reviewer for WP-C-08 | PM | G1 |
+| OI-6 | Decided 2026-10-14 by the project lead (DQ-026 option B): no external human-factors reviewer; the lead supervises human-subject tests with a written protocol and consent. Open: write the protocol and consent material (WP-V-01 OI-5) | PM | G1 |
 | OI-7 | Confirm with the assessor that excluding Experimental Mode and Chestnut from claims is an acceptable scoping (D-08) | SL | G1 |
 | OI-8 | Agree which surrogate measures may stand in for harm events, and the argument linking them | SL | G2 |

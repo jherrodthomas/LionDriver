@@ -45,23 +45,24 @@
 <rect x="54.0" y="406.0" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="81.0" y="417.5" class="chip" fill="#fff">FMD-024</text>
 <circle cx="150.0" cy="454.0" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
-<rect x="283.5" y="310.0" width="220" height="136.5" rx="9" class="shadow"/>
-<rect x="282" y="307.5" width="220" height="136.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<rect x="283.5" y="310.0" width="220" height="151.0" rx="9" class="shadow"/>
+<rect x="282" y="307.5" width="220" height="151.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
 <path d="M291,307.5 H493 A9,9 0 0 1 502,316.5 V312.5 H282 V316.5 A9,9 0 0 1 291,307.5 Z" fill="#64748b"/>
 <text x="296" y="332.5" class="id">BE-7.12</text>
 <text x="488" y="332.5" class="kind">BASIC</text>
 <text x="296" y="347.0" class="d">Stock camera path open inside</text>
 <text x="296" y="361.5" class="d">the harness box (U1/U2 channel</text>
-<text x="296" y="376.0" class="d">open, solder joint, contact;</text>
-<text x="296" y="390.5" class="d">TSR-702 cannot be met with this</text>
-<text x="296" y="405.0" class="d">box, RR-2026-010 F-01)</text>
-<rect x="296.0" y="413.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="322.9" y="424.5" class="chip" fill="#fff">DFM-013</text>
-<rect x="354.9" y="413.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="381.8" y="424.5" class="chip" fill="#fff">FMD-022</text>
-<rect x="413.8" y="413.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="440.7" y="424.5" class="chip" fill="#fff">FMD-023</text>
-<circle cx="392.0" cy="461.0" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
+<text x="296" y="376.0" class="d">open, solder joint, contact; the</text>
+<text x="296" y="390.5" class="d">path is not passive, accepted</text>
+<text x="296" y="405.0" class="d">with comma's box, DQ-209 A;</text>
+<text x="296" y="419.5" class="d">RR-2026-010 F-01)</text>
+<rect x="296.0" y="427.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="322.9" y="439.0" class="chip" fill="#fff">DFM-013</text>
+<rect x="354.9" y="427.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="381.8" y="439.0" class="chip" fill="#fff">FMD-022</text>
+<rect x="413.8" y="427.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="440.7" y="439.0" class="chip" fill="#fff">FMD-023</text>
+<circle cx="392.0" cy="475.5" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
 <rect x="525.5" y="310.0" width="220" height="202.0" rx="9" class="shadow"/>
 <rect x="524" y="307.5" width="220" height="202.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
 <path d="M533,307.5 H735 A9,9 0 0 1 744,316.5 V312.5 H524 V316.5 A9,9 0 0 1 533,307.5 Z" fill="#c62828"/>
@@ -72,9 +73,9 @@
 <text x="538" y="376.0" class="d">unpowered, pass-through not</text>
 <text x="538" y="390.5" class="d">guaranteed, D2/D3 clamp</text>
 <text x="538" y="405.0" class="d">CAN0/CAN2 to the dead rail</text>
-<text x="538" y="419.5" class="d">(derived from the v3 drawing,</text>
-<text x="538" y="434.0" class="d">bench test open; RR-2026-010</text>
-<text x="538" y="448.5" class="d">F-02)</text>
+<text x="538" y="419.5" class="d">(derived from the v3 drawing;</text>
+<text x="538" y="434.0" class="d">bench test VS-HW-22, DQ-209 A;</text>
+<text x="538" y="448.5" class="d">RR-2026-010 F-02)</text>
 <rect x="538.0" y="456.5" width="48.2" height="16" rx="8" fill="#c62828"/>
 <text x="562.1" y="468.0" class="chip" fill="#fff">SPF-15</text>
 <rect x="591.2" y="456.5" width="53.9" height="16" rx="8" fill="#111827"/>
