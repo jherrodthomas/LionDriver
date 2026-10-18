@@ -368,8 +368,9 @@ def build(scene: dict, hes: dict[str, dict]) -> dict:
     prov = (f"Layer-1 plant model, case {case.id}" + (f" (catalog {base.id} with {scene['case_overrides']})"
             if case.id != base.id else "") + (f", assumptions {scene['assumptions']}" if scene.get("assumptions")
             else "") + "; real panda safety code in the loop; synthetic (DSR-12), no evidence credit")
+    geom = road.name.replace("straight highway", "straight")
     case_info = {"id": case.id, "title": scene.get("case_title", case.title), "sg": case.sg,
-                 "speed_kph": case.speed_kph, "road": road.name, "eps": case.eps}
+                 "speed_kph": case.speed_kph, "road": f"{rd.get('type', 'highway')}, {geom}", "eps": case.eps}
   else:
     eg = scene["ego"]
     v0 = value(eg["speed_kph"]) / 3.6
@@ -399,7 +400,8 @@ def build(scene: dict, hes: dict[str, dict]) -> dict:
     prov = ("Kinematic illustration: accelerations and times from the plant's driver assumptions and WP-S-04 §3 "
             "(scenes.yaml); not a plant run; synthetic (DSR-12), no evidence credit")
     case_info = {"id": "kinematic", "title": scene.get("case_title", ""), "sg": scene.get("sg", "—"),
-                 "speed_kph": v0 * 3.6, "road": scene.get("road_title", rd.get("type", "highway")), "eps": "—"}
+                 "speed_kph": v0 * 3.6, "road": f"{rd.get('type', 'highway')}, {road.name.replace('straight highway', 'straight')}",
+                 "eps": "—"}
   for e in scene.get("events", []):
     events.append({"t": value(e["t"]), "label": e["label"]})
 
