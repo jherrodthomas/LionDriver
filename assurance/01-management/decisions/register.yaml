@@ -456,7 +456,8 @@
       title: "Leave them informative"
       detail: "No new commitment. Cost: cybersecurity and machine-learning data have no process target, which an assessor may count as a gap."
   sources: ["assurance/01-management/WP-M-13-aspice-capability-baseline.md §3, OI-2", "assurance/01-management/WP-M-01-assurance-strategy.md T-12", "assurance/01-management/WP-M-05-quality-assurance-plan.md QO-5"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-020
   question: "Which remote features are switched off in the reference car?"
@@ -1499,7 +1500,8 @@
       title: "Wait for measured cabin temperatures and usage data"
       detail: "The most defensible values. Cost: the hardware metrics stay provisional until a logging campaign is done; G2 slips or passes with a condition."
   sources: ["assurance/04-hardware/WP-H-05-random-hardware-failures-pmhf.md §3, OI-2", "assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md §2.4"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-068
   question: "Does the safety manager confirm the proposed failure-rate sources (SN 29500 for parts, ST data or an IEC TR 62380-type model for the MCU)?"
@@ -1797,7 +1799,8 @@
       title: "Wait for the vehicle characterisation, then set them once"
       detail: "One set of measured values. Cost: the seven requirements stay unimplemented until the test car and a closed course are ready (DQ-104: closed courses only)."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-4", "assurance/03-system/WP-S-02-technical-safety-requirements.md OI-3, OI-5"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-082
   question: "When the host sends a refused request while steering authority is granted, should the envelope also withdraw authority (treat the host as possibly compromised)?"
@@ -4141,7 +4144,8 @@
       title: "Keep relative months until a second person joins"
       detail: "No commitment now. Cost: no gate dates, so slippage cannot be seen."
   sources: ["assurance/01-management/WP-M-03-project-plan.md OI-1", "assurance/01-management/WP-M-03-project-plan.md §4.3, §5"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-209
   question: "The stock emergency-braking path runs through powered electronics in comma's harness box. Accept that and test it, or build our own adapter with a passive fail-safe relay?"
@@ -4355,7 +4359,8 @@
     - assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-067
     - openpilot/selfdrive/selfdrived/assured_config.py
     - openpilot/selfdrive/selfdrived/selfdrived.py:502-506, 607-626
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-260
   question: "Should the highway ODD stop at 110 km/h, the highest speed at which the driver's control of a steering fault will be tested?"
@@ -4431,7 +4436,8 @@
   - assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-036, SFM-ACT-020
   - assurance/08-analyses/WP-A-04-system-fta-fmea.md MCS-07.10
   - assurance/02-concept/WP-C-04-functional-safety-concept.md AOU-04R
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-360
   question: "If the steering (EPS) or the engine controller (PCM) silently stops obeying LionDriver, without sending a fault, do we rely on a tested assumption about the car, or add a check that compares the car's response with the command?"
@@ -4454,7 +4460,8 @@
       title: "Do both"
       detail: "Tested assumption now, response check before release. Cost: the sum of A and B."
   sources: ["assurance/08-analyses/fta-fmea-mapping.md F-32", "assurance/08-analyses/WP-A-04-system-fta-fmea.md MCS-02.10, MCS-06.11"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-361
   question: "Do the two \"take-over warning\" goals (SG-02 steering, SG-06 braking) also cover the system being too weak by design, such as a curve too tight for the torque limit or a lead car seen too late, or only faults?"
@@ -4474,7 +4481,8 @@
       title: "Faults only; performance limits go to SOTIF alone"
       detail: "Remove G2.8 and G6.9 and justify the three FMEA modes as SOTIF. Cost: the goals' wording should be narrowed to match, and the SOTIF case carries these hazards without the fault-tree view."
   sources: ["assurance/08-analyses/fta-fmea-mapping.md F-33", "assurance/08-analyses/WP-A-04-system-fta-fmea.md G2.8, G6.9"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-362
   question: "SG-02, SG-03 and SG-06 are now ASIL C, and the hardware analysis they share misses the ASIL C single-point target by 0.16 points. Do we reuse it and close the gap at the hardware gate, or build a separate analysis for each goal?"
@@ -4498,7 +4506,8 @@
       title: "Accept 96.84 % now with a written rationale"
       detail: "Close the item without a design change. Cost: an assessor may not accept a missed ASIL C target."
   sources: ["assurance/08-analyses/fta-fmea-mapping.md F-22", "assurance/08-analyses/fmea/analyses/fmeda-sg001.yaml", "assurance/02-concept/WP-C-03-hara.md SG-02, SG-03, SG-06"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-363
   question: "When the driver presses the accelerator while LionDriver is braking, and the accelerator signal is stuck at \"not pressed\", which goal owns it: braking (SG-04) or release on driver action (SG-05)?"
@@ -4544,7 +4553,8 @@
       title: "Narrow the SG-03 top event to while engaged"
       detail: "The not-engaged branch then rests on SG-01's authority checks only. Cost: the acceleration case of a false engagement has no rated hazard."
   sources: ["assurance/08-analyses/fta-fmea-mapping.md F-34", "assurance/08-analyses/fmea/hara-mapping.yaml HZ-010"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-365
   question: "When the driver does not respond to the last driver-monitoring alert, what should LionDriver do: stop in the lane and stay stopped, or stop and then hand back control?"
@@ -4644,7 +4654,8 @@
       title: "Allow engagement anywhere, show a warning off-highway, and rely on the driver and user information"
       detail: "Most useful in daily driving. Cost: the ODD limit rests on the driver; LS-13 stays a known gap, and an assessor may ask why an ODD boundary has no technical check."
   sources: ["assurance/08-analyses/WP-A-05-stpa.md LS-13, OI-15", "assurance/01-management/decisions/register.yaml DQ-023", "assurance/02-concept/WP-C-07-sotif-functional-modifications.md FM-08"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-367
   question: "With an EPS fault and a host that keeps asking for torque, authority now drops after 50 ms and the panda's EPS-fault siren no longer sounds. Restore the siren, accept losing it, or keep the old rule?"
@@ -4725,7 +4736,8 @@
       title: "One worst case for the whole platform"
       detail: "Rate every vehicle as if no EPS or PCM limit helps: SG-01 and SG-03 become ASIL D for all, the Corolla included. Cost: ASIL D methods for the panda and the analyses, much more work before G1."
   sources: ["assurance/02-concept/WP-C-03-hara.md §6 SG-01, SG-03", "assurance/02-concept/WP-C-01-item-definition.md AOU-01…AOU-05", "assurance/08-analyses/fmea/item-definition.md §A.10 P1–P11, IOI-004", "assurance/08-analyses/fmea/item/vehicle-catalog.md"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-370
   question: "With the move to a platform (DQ-037 B), what should the G1 gate claim?"
@@ -4745,7 +4757,8 @@
       title: "The whole Corolla E210 family (VF-001)"
       detail: "G1 also covers the hatchback and the hybrids. Cost: their checks (IOI-002) must be done first, which delays G1."
   sources: ["assurance/01-management/WP-M-01-assurance-strategy.md §3.1", "assurance/01-management/WP-M-12-impact-analysis.md M-1", "assurance/08-analyses/fmea/item-definition.md §1, IOI-002", "docs/liondriver/vehicles/vehicles.yaml VF-001"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-400
   question: "The closed-loop driving simulation cannot run in real time on GitHub's free 4-core runners. Should it run on your own computer as a self-hosted runner, on a paid larger GitHub runner, or stay off CI for now?"
