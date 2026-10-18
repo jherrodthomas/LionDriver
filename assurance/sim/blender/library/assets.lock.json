@@ -151,17 +151,17 @@
   },
   "hdri_night": {
    "source": "polyhaven",
-   "id": "moonless_golf",
-   "page": "https://polyhaven.com/a/moonless_golf",
+   "id": "dikhololo_night",
+   "page": "https://polyhaven.com/a/dikhololo_night",
    "licence": "CC0 1.0",
    "kind": "hdri",
    "use": "W03 night (dark sky with some ambient light)",
    "strength": 0.4,
    "files": {
     "hdri": {
-     "path": "hdri_night/moonless_golf_2k.hdr",
-     "sha256": "d85421f5a0ed59f6f761babf088b80472e7b3b122e492f30668393dd1c1363bd",
-     "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/moonless_golf_2k.hdr"
+     "path": "hdri_night/dikhololo_night_2k.hdr",
+     "sha256": "35b5ef6d664b9d32db5ef852f52f97b4227a0dca1830e9c8bdb3af5dc2f169cf",
+     "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/dikhololo_night_2k.hdr"
     }
    }
   },
