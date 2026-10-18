@@ -359,6 +359,8 @@ drawn by [`figures/fig_sim_he.py`](figures/fig_sim_he.py), which runs the plant 
 job fails if WP-C-03's list of ASIL C events changes, or if a run no longer shows the reaction a diagram describes.
 The road in the animations is drawn straight; in the two curve runs the offset is measured from the curve's lane centre.
 
+The hazards these runs test start from the HARA guide words. The HARA's [guide-word scenes](../02-concept/hara/figures/fig-c03-4-1-f01-guide-words.svg) show all 14 for F-01 lateral control as looping animations: the function (the steering torque) over time, required against performed, over a top-down view of what it does to the car. They are schematic, drawn by [`hara/guideword_scenes.py`](../02-concept/hara/guideword_scenes.py) from `hara_model.FM`; the runs above are the measured cases.
+
 **HE-01.2, hard-over into the adjacent lane** (plant run F-01b). The panda passes the hard-over: the ramp stays inside the envelope, and there is no siren. Only the driver ends it, after the 0.2 m drift cue and the 1.5 s reaction.
 
 ![Loop diagram of HE-01.2, plant run F-01b on a straight highway: the SoC commands a hard-over within the envelope; the host frames, the panda, the harness switch and the EPS all pass it on; the car's body reaches the 3.7 m lane line at 1.77 s; the driver, cued by the 0.2 m drift at 1.14 s, corrects from 2.64 s](figures/fig-sim-he-01-2-loop.svg)
