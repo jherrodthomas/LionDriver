@@ -506,7 +506,7 @@ def build(sc: dict, vehicle: Path | None, front: str | None) -> dict:
   assets = A.Assets()
   A.build_environment(env, sc["actors"][0]["poses"][0][2], assets)
   A.build_road(sc["road"], env, assets)
-  A.build_scenery(sc["road"], env)
+  A.build_scenery(sc["road"], env, assets)
   props = bpy.data.collections.new("props")
   scene.collection.children.link(props)
   build_props(sc, props, env)

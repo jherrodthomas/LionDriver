@@ -9,7 +9,7 @@ weather or lighting code it is rated for. Pictures only: synthetic (DSR-12), no 
 | [`environments.yaml`](environments.yaml) | 10 static worlds: cross-section, geometry, scenery, road furniture, the operational situations (OS-) they represent, the conditions each allows | `export_scene.py` |
 | [`conditions.yaml`](conditions.yaml) | W01 to W06 of the HARA and the TC-01 low-sun preset: exposure, ODD, what the HARA model changes, and the look | `export_scene.py`, `hazard_scene.py` |
 | [`traffic.yaml`](traffic.yaml) | Illustrative traffic presets placed relative to the ego | `export_scene.py` |
-| [`assets.yaml`](assets.yaml) | CC0 sky HDRIs and ground textures (Poly Haven, ambientCG) with candidate IDs and a search fallback | `fetch_assets.py`, `hazard_scene.py` |
+| [`assets.yaml`](assets.yaml) | CC0 sky HDRIs, ground textures and scanned plant models (Poly Haven, ambientCG) with candidate IDs and a search fallback | `fetch_assets.py`, `hazard_scene.py` |
 | `assets.lock.json` | The asset IDs and SHA-256 sums `fetch_assets.py` chose; committed once it has run (section 4) | `fetch_assets.py --locked`, `hazard_scene.py` |
 
 ## 1. How a scene uses it
@@ -83,7 +83,8 @@ Each slot tries its candidate IDs in order. When none resolves, it searches the 
 downloaded match. Files go under `assurance/sim/assets/library/<slot>/`, which is git-ignored. Every asset on both
 sites is CC0 1.0. `hazard_scene.py` uses a slot only when all its files are on disk. Otherwise it falls back to the
 procedural look: noise-varied asphalt with grain, stones, bump and polished wheel tracks; varied grass with dry
-patches; voronoi gravel; concrete slabs; a Nishita or overcast sky. The wet, snow and ice layers apply to both.
+patches; voronoi gravel; concrete slabs; a Nishita or overcast sky; lumpy-crowned trees and stacked-cone conifers,
+with no verge grass. The wet, snow and ice layers apply to both.
 Road surfaces carry UVs in metres (u lateral, v along the road), so a texture follows the road round a curve and
 its tangent-space normal map is correct.
 
@@ -109,3 +110,27 @@ The offline picks were checked against the sites' previews before locking. Three
 2.5 times brighter than fresh asphalt and the grass scan glossy enough to shine at grazing angles, so the slots
 carry a `tint` (asphalt 0.5, gravel 0.45) and a `roughness_min` (grass 0.8), which `fetch_assets.py` copies into the
 lock.
+
+**Plants (2026-10-18).** The `model` slots are scanned Poly Haven plants, fetched as glTF with their 1k textures
+(`textures/` beside the `.gltf`, as the glTF expects). Each mesh in a glTF is a variant; it is imported once, kept out
+of the scene, and every instance shares its mesh data, as the road users share the Corolla mesh.
+
+| Slot | Asset | Use |
+|---|---|---|
+| `tree_broadleaf_a` | Poly Haven [`island_tree_02`](https://polyhaven.com/a/island_tree_02) | Broadleaf trees, 6 to 8.4 m |
+| `tree_broadleaf_b` | Poly Haven [`tree_small_02`](https://polyhaven.com/a/tree_small_02) | Broadleaf trees, 6 to 8.4 m |
+| `tree_conifer` | Poly Haven [`fir_sapling_medium`](https://polyhaven.com/a/fir_sapling_medium) (3 variants) | Conifers, 6.4 to 9 m |
+| `shrub` | Poly Haven [`shrub_02`](https://polyhaven.com/a/shrub_02) (4 variants) | Under the trees of a tree-lined road |
+| `verge_short` | Poly Haven [`grass_bermuda_01`](https://polyhaven.com/a/grass_bermuda_01) (17 clumps) | First metre of a rural or highway verge |
+| `verge_meadow` | Poly Haven [`grass_medium_02`](https://polyhaven.com/a/grass_medium_02) (5 clumps) | 0.5 to 6.5 m beyond the road edge, thinning out into the field |
+
+A scanned tree stands exactly where the procedural tree would, so switching between the two looks does not move
+anything in a scene. Where a role's slot is missing, that role falls back to the procedural look on its own. Verge
+grass is scattered by geometry nodes on rural and highway verges. It is left out under snow, which would cover it,
+and on urban streets, which have pavements. Under snow the plants' own materials get snow on their upward-facing
+parts. With the `grass` texture, the fields also get 50 to 100 m dry patches and faint mowing rows beyond the verge.
+
+Cost, measured on 1280 × 720 chase stills at 16 samples on 4 CPU cores: Poly Haven ships only the full-detail mesh,
+0.4 to 2 million triangles a tree. Peak memory goes from about 1.5 GB to 4.4 GB for each Blender process, and a still
+takes about 12 to 20 s longer (23 to 37–42 s; 47 to 65 s with snowfall). Building a scene takes about 14 s longer, once
+per scene. Leave the plant slots unfetched, or delete their folders, to render with the procedural trees.
