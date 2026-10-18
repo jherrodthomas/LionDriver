@@ -86,6 +86,7 @@ package LionDriverSatisfaction {
     satisfy fsr_07_06 by context.ldsda.safetyFirmware;
     satisfy fsr_07_06 by context.ldsda.harness;
     satisfy fsr_07_06 by context.ldsda.socSoftware;
+    satisfy fsr_07_07 by context.ldsda.socSoftware;
     satisfy fsr_08_01 by context.ldsda.socSoftware;
     satisfy tsr_101 by context.ldsda.safetyFirmware;
     satisfy tsr_102 by context.ldsda.safetyFirmware;
@@ -218,6 +219,7 @@ package LionDriverSatisfaction {
     satisfy tsr_711 by context.ldsda.safetyFirmware;
     satisfy tsr_712 by context.ldsda.safetyFirmware;
     satisfy tsr_712 by context.ldsda.socSoftware;
+    satisfy tsr_713 by context.ldsda.socSoftware;
     satisfy sys_001 by context.ldsda.socSoftware.modeld;
     satisfy sys_001 by context.ldsda.socSoftware.controlsd;
     satisfy sys_002 by context.ldsda.socSoftware.controlsd;
