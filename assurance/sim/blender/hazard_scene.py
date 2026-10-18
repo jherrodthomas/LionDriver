@@ -474,6 +474,8 @@ def main(argv: list[str]) -> int:
     bpy.ops.wm.save_as_mainfile(filepath=str(out / "scene.blend"))
   (out / "screen.json").write_text(json.dumps(screen_positions(sc, built["cams"]["chase"])))
   manifest = {"scene": sc["id"], "vehicle": "purchased mesh" if vehicle else "stand-in", "stills": [], "video": {}}
+  if not args.stills and (out / "render.json").exists():   # a clip-only run keeps the stills already rendered
+    manifest["stills"] = json.loads((out / "render.json").read_text()).get("stills", [])
 
   def sized(name, w, h):
     d = 1 if name == "chase" else 2             # the side views are drawn at half size
