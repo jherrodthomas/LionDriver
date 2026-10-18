@@ -234,13 +234,13 @@ def build_props(sc: dict, coll):
         x, y, _ = A.offset(centre_at(c, s), d)
         A.part("cone", cone, None, coll, (x, y, 0))
     elif kind == "seam":
-      tar = A.material("tar", (0.008, 0.008, 0.01), rough=0.25)
+      tar = A.material("tar", (0.16, 0.16, 0.17), rough=0.12)   # glossy sealant strip, lighter than the asphalt
       n = int(p["len"])
       verts, faces = [], []
       for i in range(n + 1):
         cc = centre_at(c, p["s"] + i)
         d = p["d0"] + (p["d1"] - p["d0"]) * i / n
-        verts += [A.offset(cc, d + 0.14, 0.005), A.offset(cc, d - 0.14, 0.005)]
+        verts += [A.offset(cc, d + 0.2, 0.005), A.offset(cc, d - 0.2, 0.005)]
         if i:
           faces.append((2 * i - 2, 2 * i - 1, 2 * i + 1, 2 * i))
       A.mesh_object("seam", verts, faces, tar, coll)
