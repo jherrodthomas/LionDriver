@@ -2,13 +2,15 @@
 """Cut a short looping 3D compilation for the simulation page from the committed Blender clips.
 
 Three segments, each about 3 s around its key moment at real speed, cropped to the 3D view of the dashboard clip
-(`../blender/dashboards/clips/`), each with a label naming the event and its rating, and a band on every frame:
-synthetic (DSR-12), no evidence credit. Output: `sim-reel-3d.webp` (animated WebP: GitHub plays it inline as an
+(`../blender/dashboards/clips/`), each with a label naming the event and its rating, a tag saying whether the scene is
+inside the highway-only ODD (WP-C-02 §3) or shows misuse outside it, and a band on every frame: synthetic (DSR-12),
+no evidence credit. Output: `sim-reel-3d.webp` (animated WebP: GitHub plays it inline as an
 image, and *.webp is not routed to Git LFS).
 
 Rebuilding needs ffmpeg (with libwebp) and Pillow, so `--check` does not re-encode: it fails when a source clip is
-missing, when a label's rating no longer matches WP-C-03, or when the committed file is missing, not animated, the
-wrong size or frame count, or over the size limit.
+missing, when a label's rating no longer matches WP-C-03, when a scene's situation is not one its event is rated
+in (WP-C-03, WP-C-05) or WP-C-02 no longer lists the misuse situations, or when the committed file is missing, not
+animated, the wrong size or frame count, or over the size limit.
 
     python3 fig_sim_reel.py            # rebuild sim-reel-3d.webp
     python3 fig_sim_reel.py --check
