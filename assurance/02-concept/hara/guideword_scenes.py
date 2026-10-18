@@ -124,7 +124,7 @@ F01 = {
 }
 CALLOUTS = {"F-01": {"M07": "changes lane too early", "M10": "past the target lane"}}
 
-SHEETS = {"F-01": ("fig-c03-4-1-f01-guide-words.svg", "Guide-word scenes", "steering torque", F01)}
+SHEETS = {"F-01": ("fig-c03-4-1-f01-guide-words.svg", "Guide-word scenes", "function", F01)}
 
 
 def _pts(f, n=90):
