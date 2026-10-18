@@ -108,3 +108,6 @@ assurance/08-analyses/fmea/exports/*
 assurance/sim/assets/*
 !assurance/sim/assets/README.md
 !assurance/sim/assets/tools/
+
+# Hazardous-event scene clips (rendered output, may be published; see assurance/sim/blender/README.md)
+!assurance/sim/blender/dashboards/clips/*.mp4

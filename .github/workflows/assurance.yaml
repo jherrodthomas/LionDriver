@@ -269,6 +269,8 @@ jobs:
         python3 assurance/sim/reach/reach_inputs.py --check
         python3 assurance/sim/reach/reach_compare.py --check
         python3 assurance/sim/reach/test_reach.py
+    - name: Hazardous-event scene list (assurance/sim/blender; no Blender needed)
+      run: python3 assurance/sim/blender/test_scenes.py
 
   sim-column:
     name: simulation L2 column
