@@ -1,4 +1,4 @@
-# HARA Cartesian model
+# HARA
 
 This folder holds the Cartesian HARA behind [WP-C-03](../WP-C-03-hara.md) §2.
 
