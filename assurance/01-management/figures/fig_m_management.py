@@ -499,7 +499,7 @@ def load_profile(md: str | None = None) -> Profile:
 
 
 RATING_STYLE = {"N": (RED, "#FFFFFF"), "P": (AMBER, "#FFFFFF"), "L": (HW, "#FFFFFF"), "F": (GREEN, "#FFFFFF")}
-SCOPE_NOTE = {"A": "group A", "B": "group B (supplier-limited)", "C": "group C (informative)"}
+SCOPE_NOTE = {"A": "group A", "B": "group B (supplier-limited)", "C": "group C (CL1, DQ-019)"}
 
 
 def fig_m13(pf: Profile) -> str:

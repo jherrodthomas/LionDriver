@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-13 ASPICE capability baseline (self-assessment) |
 | Standard reference | Automotive SPICE PAM 4.0: process capability levels 1–2 (PA 1.1, PA 2.1, PA 2.2); processes per WP-M-01 T-12 |
-| Version | 0.3 (§9 lists evidence that moved after the rating baseline, no re-rating; open items with owner and due gate; 2026-10-14). 0.2 (Figure 6-1 added, generated from §2–§6; 2026-10-13). 0.1 |
+| Version | 0.4 (group C targets CL1 and VAL.1, ACQ.4 and MAN.7 join the scope, decided by the lead 2026-10-18 (DQ-019, A); the three new processes rated P for PA 1.1 from the current evidence; OI-2 closed; Figure 6-1 regenerated; 2026-10-19). 0.3 (§9 lists evidence that moved after the rating baseline, no re-rating; open items with owner and due gate; 2026-10-14). 0.2 (Figure 6-1 added, generated from §2–§6; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | Process (all) |
 | Author | Assurance team (initial draft) |
@@ -33,7 +33,7 @@ This is the process capability baseline for LionDriver at `8b8c6ae`. It refines 
 |---|---|---|
 | A | SYS.1, SYS.2, SYS.3, SYS.4, SYS.5, SWE.1–SWE.6, SUP.1, SUP.8, SUP.9, SUP.10, MAN.3, MAN.5 | **CL2** |
 | B | MLE.1–MLE.4, HWE.1–HWE.4 | **CL1** (supplier-limited) |
-| C (informative) | SEC.1–SEC.4, SUP.11 | No target set yet (OI-2) |
+| C | SEC.1–SEC.4, SUP.11, VAL.1, ACQ.4, MAN.7 | **CL1** (the lead's answer of 2026-10-18, decision register DQ-019, A: QA checks that each is performed and leaves its outputs) |
 
 Where a process applies to two very different parts of the code, the rating states both: "safety code" = `opendbc_repo/opendbc/safety` (+ panda firmware where stated); "rest" = the openpilot application stack.
 
@@ -89,7 +89,7 @@ Where a process applies to two very different parts of the code, the rating stat
 | MAN.3 Project management | N | README roadmap | No scope definition, estimates, schedule or monitoring at the baseline | 0 |
 | MAN.5 Risk management | N | None | No risk identification or tracking at the baseline | 0 |
 
-### 4.6 Informative processes (group C)
+### 4.6 Cybersecurity, ML data, validation, supplier monitoring (group C)
 
 | Process | PA 1.1 | Note |
 |---|---|---|
@@ -98,6 +98,9 @@ Where a process applies to two very different parts of the code, the rating stat
 | SEC.3 Risk treatment verification | N | None |
 | SEC.4 Risk treatment validation | N | No penetration testing |
 | SUP.11 ML data management | N | No datasets under fork control |
+| VAL.1 Validation | P | Rated 2026-10-19 when added to the scope (DQ-019): the validation specification exists ([WP-V-01](../06-validation/WP-V-01-safety-validation.md), 31 VS-VAL cases; SOTIF strategy [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md)); no validation has been performed |
+| ACQ.4 Supplier monitoring | P | Rated 2026-10-19 when added (DQ-019): the suppliers are upstream openpilot/comma.ai and the device and harness vendor. Upstream changes are qualified per component ([WP-P-08](../07-supporting/WP-P-08-software-component-qualification.md)); no agreed supplier interface or regular review of the device supplier |
+| MAN.7 Cybersecurity risk management | P | Rated 2026-10-19 when added (DQ-019): the cybersecurity plan ([WP-M-09](WP-M-09-cybersecurity-plan.md)) and TARA ([WP-C-09](../02-concept/WP-C-09-tara.md)) exist as drafts; risks are not yet tracked to treatment |
 
 ## 5. Capability level 2 (PA 2.1, PA 2.2)
 
@@ -133,10 +136,15 @@ Even the processes with CL1 (SWE.3/SWE.4 safety code, SWE.5, SUP.8) do not reach
 | MAN.5 | 0 | 2 | 2 | Risk management |
 | MLE.1–MLE.4 | 0 | 1 | 1 | Acquired-model route ([WP-M-10](WP-M-10-ai-safety-plan.md)); MLE.3 can only be met by substitute evidence |
 | HWE.1–HWE.4 | 0 | 1 | 1 | COTS hardware; requirements and verification by LionDriver |
+| SEC.1–SEC.4 | 0 | 1 | 1 | TARA-driven requirements, verification and penetration test (IA-15); target set by DQ-019 |
+| SUP.11 | 0 | 1 | 1 | Datasets under fork control (IA-13); target set by DQ-019 |
+| VAL.1 | 0 | 1 | 1 | Validation performed against WP-V-01; added by DQ-019 |
+| ACQ.4 | 0 | 1 | 1 | Supplier interface and periodic review of upstream and the device vendor; added by DQ-019 |
+| MAN.7 | 0 | 1 | 1 | Cybersecurity risks tracked from the TARA to treatment; added by DQ-019 |
 
 ![Figure 6-1: capability profile, PA 1.1 rating per process of §4.1–§4.6 drawn as its N/P/L/F achievement band (SWE.3 and SWE.4 split into safety code L and rest P), PA 2.1 and PA 2.2 rated N for all, current CL, target CL and gap per process, with a marker at the PA 1.1 level the target CL needs](figures/fig-m13-6-1-capability-profile.svg)
 
-*Figure 6-1.* PA 1.1 per process (§4.1–§4.6) as the band of the §2 rating scale (N 0–15 %, P >15–50 %, L >50–85 %, F >85–100 %), not a measured percentage; split ratings are drawn as two bars (safety code above, rest below). The black marker is the lowest PA 1.1 rating the §6 target CL needs under the §2 rule (CL1: L, CL2: F); group C has no target (OI-2). PA 2.1 and PA 2.2 from §5. Self-assessment, indicative only. Drawn from §2–§6. Generated by [`figures/fig_m_management.py`](figures/fig_m_management.py); CI fails if it is stale. Source: [`figures/fig-m13-6-1-capability-profile.svg`](figures/fig-m13-6-1-capability-profile.svg); change it together with §4, §5 and §6.
+*Figure 6-1.* PA 1.1 per process (§4.1–§4.6) as the band of the §2 rating scale (N 0–15 %, P >15–50 %, L >50–85 %, F >85–100 %), not a measured percentage; split ratings are drawn as two bars (safety code above, rest below). The black marker is the lowest PA 1.1 rating the §6 target CL needs under the §2 rule (CL1: L, CL2: F); group C targets CL1 (DQ-019). PA 2.1 and PA 2.2 from §5. Self-assessment, indicative only. Drawn from §2–§6. Generated by [`figures/fig_m_management.py`](figures/fig_m_management.py); CI fails if it is stale. Source: [`figures/fig-m13-6-1-capability-profile.svg`](figures/fig-m13-6-1-capability-profile.svg); change it together with §4, §5 and §6.
 
 ## 7. Improvement actions
 
@@ -181,7 +189,7 @@ The §2 method counted no `assurance/` work product, because none was tracked at
 | ID | Open item | Owner | Due |
 |---|---|---|---|
 | OI-1 | Decide whether and when to commission a formal ASPICE assessment, and by whom | PM | G2 |
-| OI-2 | Set targets for the informative processes SEC.1–SEC.4 and SUP.11 (and decide whether VAL.1, ACQ.4 and MAN.7 join the scope) | PM / CSM | G1 |
+| OI-2 | Closed 2026-10-19: group C (SEC.1–SEC.4, SUP.11, VAL.1, ACQ.4, MAN.7) targets CL1 (§3, §6; decision register DQ-019, A, the lead 2026-10-18) | PM / CSM | G1 |
 | OI-3 | Verify process names and base-practice content against the licensed PAM 4.0 | PM | G1 |
 | OI-4 | Agree how upstream-only practices (comma Jenkins tests) are treated once the fork has its own equivalents | PM | G1 |
 | OI-5 | MLE.3 cannot be performed by LionDriver; agree with the assessor whether the CL1 target for MLE.3 is achievable with substitute evidence or must be tailored | ML | G1 |

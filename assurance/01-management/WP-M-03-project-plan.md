@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-03 Project plan (scope, WBS, schedule, resources) |
 | Standard reference | ASPICE 4.0 MAN.3 (project management); ISO 26262-2 §6 (planning of safety activities, by reference to WP-M-02) |
-| Version | 0.8 (Figures 3-1 (WBS) and 4-1 (effort and staffing) added, generated from §3, §4.2 and §4.3; 2026-10-14). 0.7 (B-06 done (#74); WBS 4.3 status to 2026-10-14; the lead's answers of 2026-10-14 on the assessor and the HIL bench noted in §6 and new OI-6; Figure 5-1 now generated from §3–§10 and checked in CI; Figure 5-2 schedule; 2026-10-14). 0.6 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.5 (backlog B-14 and B-17 marked done: #45 merged 2026-10-13, #44 merged; Figure 5-1 regenerated; 2026-10-13). 0.4 (§5 gate roadmap with blockers and the §9 backlog drawn as Figure 5-1; no plan content changed; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: WBS 4.3, resources, backlog B-13…B-17; 2026-10-12). 0.1 |
+| Version | 0.9 (dated schedule: about 10 h/week from 2026-11-01, decided by the lead 2026-10-18 (DQ-208, A); §5 gate dates and Figure 5-2 dated; OI-1 closed; 2026-10-19). 0.8 (Figures 3-1 (WBS) and 4-1 (effort and staffing) added, generated from §3, §4.2 and §4.3; 2026-10-14). 0.7 (B-06 done (#74); WBS 4.3 status to 2026-10-14; the lead's answers of 2026-10-14 on the assessor and the HIL bench noted in §6 and new OI-6; Figure 5-1 now generated from §3–§10 and checked in CI; Figure 5-2 schedule; 2026-10-14). 0.6 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.5 (backlog B-14 and B-17 marked done: #45 merged 2026-10-13, #44 merged; Figure 5-1 regenerated; 2026-10-13). 0.4 (§5 gate roadmap with blockers and the §9 backlog drawn as Figure 5-1; no plan content changed; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: WBS 4.3, resources, backlog B-13…B-17; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (project management) |
 | Author | Assurance team (initial draft) |
@@ -135,7 +135,7 @@ WBS elements follow the phases and gates in [WP-M-01 §7](WP-M-01-assurance-stra
 
 ## 5. Schedule
 
-No calendar dates are set until staffing is known (OI-1). The schedule is a phase sequence with relative durations at 1.0 FTE plus the minimum added staff listed in §4.3.
+Calendar: start 2026-11-01, maintainer effort about 10 h/week. This is the lead's answer of 2026-10-18 (decision register DQ-208, option A). The durations in the table are at 1.0 FTE plus the minimum added staff listed in §4.3. With one person at about 10 h/week (0.25 FTE) and no added staff they stretch by a factor of four, which gives the gate dates below and Figure 5-2. Every added person of §4.3 shortens them. The dates are re-drawn whenever the hours change, and are re-estimated with the actual ASILs at OI-5.
 
 | Phase | Relative duration | Depends on | Can overlap with |
 |---|---|---|---|
@@ -147,23 +147,36 @@ No calendar dates are set until staffing is known (OI-1). The schedule is a phas
 | P5 | 5–9 months | G4; vehicle; assessor availability | — |
 | P6 | Continuous | G5 | — |
 
+Gate dates at about 10 h/week from 2026-11-01 (end of each phase, the §5 durations times four; checked against the table above by the figure generator):
+
+| Gate | Earliest | Latest |
+|---|---|---|
+| G0 | Jul 2027 | Nov 2027 |
+| G1 | Nov 2028 | Nov 2029 |
+| G2 | Mar 2030 | Nov 2031 |
+| G3 | Nov 2032 | Nov 2035 |
+| G4 | Jul 2034 | Jul 2038 |
+| G5 | Mar 2036 | Jul 2041 |
+
+At this rate G5 (release) is at least nine years away. The single-maintainer bottleneck (§4.3, WP-M-07 R-01) dominates the schedule; OI-6 re-plans for the lead's answers of 2026-10-14.
+
 Critical path: P0 → HARA → HARA confirmation review → FFI/DFA → envelope hardening → HIL verification → validation → FSA.
 
 Long-lead items to start early: assessor engagement (P0), HIL bench parts (P2), test vehicle access and safety driver training (P1), pen-test procurement (P4).
 
 ![Figure 5-1: gate roadmap of phases P0 to P6 and gates G0 to G6, none passed, with each phase's entry conditions and open items, the critical path, long-lead items, the R-01 bottleneck and backlog items B-01 to B-17 by status](figures/fig-m03-5-1-gate-roadmap.svg)
 
-*Figure 5-1.* Phases and gates of §3 with the relative durations above and the effort of §4.2 (not to scale; no calendar dates, OI-1). No gate is recorded as passed (a gate counts as passed only when its record under [`10-safety-case/gates/`](../10-safety-case/gates/README.md) says Pass). Under each phase are its §5 dependencies and the §10 open items due at its gate; below are the critical path, the long-lead items with their §6 status (in red where the lead's answer of 2026-10-14 defers them), R-01 (WP-M-07 §4), and the §9 backlog by the status written in its table (“Done” there is not verification evidence). Generated from §3, §4.2, §5, §6, §9 and §10 by [`figures/fig_m_management.py`](figures/fig_m_management.py) ([`fig_m_plans.py`](figures/fig_m_plans.py)); CI fails if it is stale. Source: [`figures/fig-m03-5-1-gate-roadmap.svg`](figures/fig-m03-5-1-gate-roadmap.svg).
+*Figure 5-1.* Phases and gates of §3 with the durations above and the effort of §4.2 (not to scale; the calendar dates are in Figure 5-2). No gate is recorded as passed (a gate counts as passed only when its record under [`10-safety-case/gates/`](../10-safety-case/gates/README.md) says Pass). Under each phase are its §5 dependencies and the §10 open items due at its gate; below are the critical path, the long-lead items with their §6 status (in red where the lead's answer of 2026-10-14 defers them), R-01 (WP-M-07 §4), and the §9 backlog by the status written in its table (“Done” there is not verification evidence). Generated from §3, §4.2, §5, §6, §9 and §10 by [`figures/fig_m_management.py`](figures/fig_m_management.py) ([`fig_m_plans.py`](figures/fig_m_plans.py)); CI fails if it is stale. Source: [`figures/fig-m03-5-1-gate-roadmap.svg`](figures/fig-m03-5-1-gate-roadmap.svg).
 
-![Figure 5-2: relative schedule as a Gantt chart: phases P0 to P5 in sequence from month 0, low estimate solid and high estimate hatched, gate ranges from earliest to latest, G5 between month 28 and month 44, long-lead items against the phase that needs them, two of them deferred by the lead's answers of 2026-10-14](figures/fig-m03-5-2-schedule.svg)
+![Figure 5-2: dated schedule as a Gantt chart: phases P0 to P5 in sequence from November 2026 at about 10 hours a week, low estimate solid and high estimate hatched, gate ranges from earliest to latest, G5 between March 2036 and July 2041, long-lead items against the phase that needs them, two of them deferred by the lead's answers of 2026-10-14](figures/fig-m03-5-2-schedule.svg)
 
-*Figure 5-2.* The §5 durations as a Gantt chart, counted from the start of P0 (month 0) because no calendar dates are set (OI-1, decision register DQ-208). Solid bars are the low estimate, hatched bars the high estimate; each gate is drawn from its earliest to its latest month. Long-lead items run from the phase §5 names to the start of the phase whose “Depends on” cell needs them. The plan is drawn as written: it does not yet reflect the lead's answers of 2026-10-14 (OI-6). Generated from §4.2, §5 and §6 by [`figures/fig_m_management.py`](figures/fig_m_management.py); CI fails if it is stale. Source: [`figures/fig-m03-5-2-schedule.svg`](figures/fig-m03-5-2-schedule.svg).
+*Figure 5-2.* The §5 durations as a Gantt chart, dated from 2026-11-01 at about 10 h/week (the §5 durations times four; decision register DQ-208). Solid bars are the low estimate, hatched bars the high estimate; each gate is drawn from its earliest to its latest date. Long-lead items run from the phase §5 names to the start of the phase whose “Depends on” cell needs them. The plan is drawn as written: it does not yet reflect the lead's answers of 2026-10-14 (OI-6). Generated from §4.2, §5 and §6 by [`figures/fig_m_management.py`](figures/fig_m_management.py); CI fails if it is stale. Source: [`figures/fig-m03-5-2-schedule.svg`](figures/fig-m03-5-2-schedule.svg).
 
 ## 6. Resources
 
 | Resource | Need | Status |
 |---|---|---|
-| Project maintainer / acting safety manager | Throughout | Jherrod Thomas; availability (FTE) not recorded (OI-1) |
+| Project maintainer / acting safety manager | Throughout | Jherrod Thomas; about 10 h/week (0.25 FTE) from 2026-11-01 (the lead's answer of 2026-10-18, DQ-208 A; §5) |
 | Additional engineers and reviewers | See §4.3 | TBD |
 | External FuSa assessor | From P0 (engagement), G1 onward | TBD (D-06). The lead answered on 2026-10-14: no assessor for now (DQ-009 option C); see OI-6 |
 | External CS assessor, pen tester | P4–P5 | TBD |
@@ -228,7 +241,7 @@ Derived from [gap assessment §9](../00-assessment/gap-assessment.md#9-priority-
 
 | ID | Open item | Owner | Due |
 |---|---|---|---|
-| OI-1 | Record the maintainer's available FTE and convert relative durations into a dated schedule | PM | G0 |
+| OI-1 | Closed 2026-10-19: about 10 h/week from 2026-11-01 (decision register DQ-208, option A, the lead 2026-10-18); §5 gives the gate dates and Figure 5-2 the dated schedule | PM | G0 |
 | OI-2 | Decide the funding source for external assessor, pen test and HIL hardware | PM | G0 |
 | OI-3 | Confirm access to licensed copies of the standards | PM | G0 |
 | OI-4 | Confirm test vehicle availability, ownership and insurance cover for test use | PM | G1 |
