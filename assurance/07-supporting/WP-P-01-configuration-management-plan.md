@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-01 Configuration management plan (incl. safety-relevant file list, baselines, submodules) |
 | Standard reference | ISO 26262-8:2018 §7; ISO 26262-2:2018 §6 (release, baselines); ISO/SAE 21434:2021 §5 (configuration management); ASPICE 4.0 SUP.8 |
-| Version | 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: §2 marked historical, current pins, build variant in CI-6, OI-1/OI-2/OI-7 status; 2026-10-12). 0.1 |
+| Version | 0.5 (no GitHub organization: the repository and forks stay on the `jherrodthomas` account, decided by the lead 2026-10-14 (DQ-111, B); §6, §10, OI-1; 2026-10-18). 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: §2 marked historical, current pins, build variant in CI-6, OI-1/OI-2/OI-7 status; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (highest: ASIL of the envelope as set by WP-C-03) |
 | Author | Assurance team (initial draft) |
@@ -157,7 +157,7 @@ The upstream `master` branch name and the `release-*`/`nightly*` branches built 
 
 | Step | Action | Closes |
 |---|---|---|
-| 1 | Fork `commaai/opendbc`, `commaai/panda`, `commaai/msgq`, `commaai/rednose`, `commaai/teleoprtc` and `tinygrad/tinygrad` into a LionDriver GitHub organization (today the `jherrodthomas` account; see OI-1) | GAP-29 |
+| 1 | Fork `commaai/opendbc`, `commaai/panda`, `commaai/msgq`, `commaai/rednose`, `commaai/teleoprtc` and `tinygrad/tinygrad` into the `jherrodthomas` account, which hosts the LionDriver repository (no organization; OI-1) | GAP-29 |
 | 2 | Change `.gitmodules` to absolute URLs of the forks. Remove `branch = master` from `tinygrad` | GAP-29 |
 | 3 | Pin every submodule by SHA on the fork's protected default branch. The fork default branch starts at the current pin | GAP-29 |
 | 4 | Replace `check-submodules.sh` logic (currently: "pin must be on `origin/master`") with a check that the pin is reachable from the protected branch of the LionDriver fork, and that the URL matches the approved list | GAP-29 |
@@ -210,7 +210,7 @@ A baseline manifest (`baseline-manifest.yaml`, generated, stored with the tag's 
 | CI results | GitHub Actions artifacts expire (default retention is limited). Release evidence is exported to the evidence package (see [WP-P-10 §5](WP-P-10-release-management.md)) |
 | Signing keys | Private release keys held offline (hardware token or encrypted offline storage), never in Git or CI secrets without a recorded decision. The committed debug key `panda/board/crypto/certs/debug` is not used for release builds (GAP-25) |
 | Retention | Per [WP-P-04 §10](WP-P-04-documentation-management.md#10-retention) |
-| Access | Write to protected branches: maintainers listed in CODEOWNERS only. 2FA required on the organization |
+| Access | Write to protected branches: maintainers listed in CODEOWNERS only. 2FA required on the `jherrodthomas` account and on every collaborator account. The project depends on that one account; the weekly mirror above is the recovery path if it is lost |
 
 ## 11. Configuration audits
 
@@ -232,7 +232,7 @@ A baseline manifest (`baseline-manifest.yaml`, generated, stored with the tag's 
 
 | ID | Item |
 |---|---|
-| OI-1 | Create the LionDriver GitHub organization and forks (D-01); decide whether the `jherrodthomas/LionDriver` repository moves into it. Partly closed 2026-10-12: forks under `jherrodthomas` (D-01); organization and move open |
+| OI-1 | Closed 2026-10-18: no organization. The repository and the forks stay on the `jherrodthomas` account (decision register DQ-111, B, the lead 2026-10-14). The cost the lead accepted: no GitHub teams (code owners are named individually, [WP-P-02 §7.2](WP-P-02-change-management.md)) and a single account everything depends on (risk [WP-M-07](../01-management/WP-M-07-risk-management.md) R-01) |
 | OI-2 | Keep the safety-relevant file list as a machine-readable file (proposed `assurance/trace/safety-relevant-files.txt`) so CI can classify PRs automatically. Closed: [`safety-relevant-paths.txt`](safety-relevant-paths.txt), read by `tools/sync/sync_report.py`; automatic classification of PRs in CI not yet in place |
 | OI-3 | Configure and record branch protection on `liondriver-dev`; current settings were not verified from the local checkout |
 | OI-4 | Change request for `LIONDRIVER_VERSION`, panda `BUILDER`, and identity replacements (GAP-35) |

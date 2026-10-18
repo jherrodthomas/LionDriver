@@ -4,9 +4,9 @@
 |---|---|
 | Work product | WP-M-14 ISO 26262-6 software lifecycle implementation specification (future work) |
 | Standard reference | ISO 26262-6:2018 Clauses 5–11 and Annex C; interfaces to ISO 26262-2, -3, -4, -8, -9. Informative links to ISO 21448:2022, ISO/SAE 21434:2021, ISO/PAS 8800:2024, UL 4600 |
-| Version | 0.4 (SWSR verification count pointed to RR-2026-009 §1 instead of §17; change-record count 16 in §3.2; §8.2 check list; §13 palette aligned with the shared figure palette; open items with due gate; 2026-10-14). 0.3 (merge of PR #47 with the base: activation decision renumbered D-09 → D-14, since the base uses D-08…D-13; review record renumbered RR-2026-008 → RR-2026-009; CFG-001 named by generation (E210); 2026-10-13). 0.2 (aligned with the software work products at `682f184`: pre-entry track §2.3, readiness snapshot §3.2, SWSR field mapping §4.2, trace engine state §8.2, rules §16, alignment audit RR-2026-009 (OI-6); 2026-10-12). 0.1 |
-| Status | Draft — **implementation deferred.** This is a plan. It does not authorize, start or evidence any Part 6 activity |
-| Activation | Not authorized. Needs decision D-14 ([WP-M-01 §8](WP-M-01-assurance-strategy.md#8-strategic-decisions-required)) and an approved entry baseline (§3) |
+| Version | 0.5 (Phase A authorized by D-14 with documented exceptions (DQ-074, B): Activation, §3.3, §15, §16, OI-1; 2026-10-18). 0.4 (SWSR verification count pointed to RR-2026-009 §1 instead of §17; change-record count 16 in §3.2; §8.2 check list; §13 palette aligned with the shared figure palette; open items with due gate; 2026-10-14). 0.3 (merge of PR #47 with the base: activation decision renumbered D-09 → D-14, since the base uses D-08…D-13; review record renumbered RR-2026-008 → RR-2026-009; CFG-001 named by generation (E210); 2026-10-13). 0.2 (aligned with the software work products at `682f184`: pre-entry track §2.3, readiness snapshot §3.2, SWSR field mapping §4.2, trace engine state §8.2, rules §16, alignment audit RR-2026-009 (OI-6); 2026-10-12). 0.1 |
+| Status | Draft. Phase A (readiness and gap assessment) may start; Phases B–F are deferred. This document evidences no Part 6 activity |
+| Activation | **Phase A authorized** by D-14 on 2026-10-14 with documented exceptions (§3.3; decision register DQ-074, B). Phases B–F still need an approved entry baseline (§3.1) |
 | ASIL / scope | Software of the item. Highest proposed ASIL is C (SG-01, [WP-C-03](../02-concept/WP-C-03-hara.md)); ratings are unconfirmed until CR-02 |
 | Author | Project maintainer (specification). Adapted to this repository with AI assistance (Claude Code); the adaptation is AI-generated and has not been reviewed |
 | Reviewer(s) | TBD (I1, external while the project has a single maintainer; [WP-M-01 T-09](WP-M-01-assurance-strategy.md#5-tailoring)) |
@@ -146,6 +146,20 @@ This is an inventory of what exists. It is **not** the Phase A gap assessment, a
 | Living Safety Case | Yes ([`case/`](../case/README.md)) | Development | No claim has accepted evidence |
 
 Conclusion of the snapshot: **no entry criterion is met.** All the prerequisites exist as drafts, and the requirement chain from FSR to SWSR is populated and checked. None is approved or confirmed and no review record exists. Part 6 stays deferred, and the pre-entry track (§2.3) continues.
+
+### 3.3 Phase A exceptions (D-14)
+
+The lead decided on 2026-10-14 (decision register DQ-074, B) to start Phase A before its entry criteria are met. Each unmet criterion is an exception with these terms:
+
+| # | Exception | Consequence for Phase A |
+|---|---|---|
+| X-01 | E-01 safety plan not in review | Phase A plans against the draft WP-M-02; any change to tailoring or independence is rechecked before the Phase A report is approved |
+| X-02 | E-02 item definition not in review | The gap assessment covers the reference configuration CFG-001 only; the platform scope (DQ-037) is not assessed until WP-C-01 is rewritten |
+| X-03 | E-03 HARA not confirmed (CR-02) | ASILs are taken from WP-C-03 as drafted; findings that depend on an ASIL are marked provisional |
+| X-04 | E-04 FSC not in review | FSR allocation to software is taken as drafted and marked provisional |
+| X-05 | E-05 TSRs and TSC not in review | Software-allocated TSRs are taken as drafted; no SWSR is invented to fill a gap (§3.1) |
+
+The Phase A report lists every finding that rests on X-01…X-05. It is rechecked when the input reaches review, and it cannot be approved for Phase B entry while an exception it rests on is still open, unless that exception is justified for Phase B in writing.
 
 ## 4. Lifecycle specification, Clauses 5–11
 
@@ -519,7 +533,7 @@ Meeting these criteria shows that the **framework** exists. It does not show ISO
 
 | Phase | Content | Entry condition | Maps to |
 |---|---|---|---|
-| A — Readiness and gap assessment | Inspect the repository, prerequisites, architecture, toolchain and verification evidence at the entry baseline; produce the Part 6 gap assessment and the implementation plan | D-14 authorizes Phase A; §3.1 E-01…E-05 at least `In review` | Late P2 / G2 |
+| A — Readiness and gap assessment | Inspect the repository, prerequisites, architecture, toolchain and verification evidence at the entry baseline; produce the Part 6 gap assessment and the implementation plan | D-14 authorizes Phase A (decided 2026-10-14, DQ-074 B); E-01…E-05 at least `In review`, or recorded as exceptions in §3.3 | Late P2 / G2 |
 | B — Work product infrastructure | Register, schemas, templates, status model, baselines, trace kinds, CI checks | Phase A report approved; entry baseline approved (all of §3.1, or justified exceptions) | P3 / G3 |
 | C — Requirements and architecture | Clauses 6 and 7 with approved system inputs | Phase B acceptance criteria 1–3 met | P3 / G3 |
 | D — Unit design and verification | Clauses 8 and 9 | SWSRs and architecture approved for the units in scope | P3 / G3 |
@@ -528,9 +542,9 @@ Meeting these criteria shows that the **framework** exists. It does not show ISO
 
 Phases advance on approved outputs, never because templates or scripts exist. Phase dependencies on Parts 2, 3 and 4 are carried in [WP-M-01 §7](WP-M-01-assurance-strategy.md#7-phases-gates-and-sequence) and [WP-M-03 §3](WP-M-03-project-plan.md#3-work-breakdown-structure).
 
-## 16. Rules until activation
+## 16. Rules until Phase B
 
-Until D-14 is recorded:
+D-14 authorizes Phase A only (§3.3). Until the entry baseline for Phase B is approved:
 
 1. This document is kept and maintained as the Part 6 implementation specification.
 2. Pre-entry engineering (§2.3) continues under rules P-01…P-05. No verification results or approvals are recorded except from work that was actually performed and reviewed, and no pre-entry artifact is presented as Part 6 progress.
@@ -542,7 +556,7 @@ Until D-14 is recorded:
 
 | ID | Item | Owner | Due |
 |---|---|---|---|
-| OI-1 | Record decision D-14 (authorize Phase A) when E-01…E-05 reach `In review` | Project maintainer | G2 |
+| OI-1 | Closed 2026-10-18: D-14 recorded (decision register DQ-074, B, the lead 2026-10-14); Phase A starts with the exceptions of §3.3 | Project maintainer | G2 |
 | OI-2 | Check every clause reference and the principal work product lists in §4 against the licensed ISO 26262-6:2018 | Reviewer | G2 |
 | OI-3 | Decide whether to adopt the §2.2 status extension (Planned, Verified, Superseded) project-wide or for Part 6 records only | Project maintainer | G3 |
 | OI-4 | Decide the store for raw verification results (CI artifacts with retention vs a committed results folder) | Project maintainer | G3 |
