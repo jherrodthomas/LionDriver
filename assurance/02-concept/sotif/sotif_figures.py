@@ -4,6 +4,9 @@
 Figure 5-1 (`../figures/fig-c06-5-1-tc-fi-sh-chain.svg`): triggering conditions TC-nn (WP-C-06 §4) ->
 functional insufficiencies FI-nn (§3) -> SOTIF hazards SH-nn (WP-C-05 §3).
 
+The SOTIF scene sheet (`../figures/fig-c06-5-2-sotif-scenes.svg`, one card per hazard) is drawn by `sotif_scenes.py`
+and written and checked here with Figure 5-1.
+
 - TC -> FI edges come from the WP-C-06 §5 evaluation table, coloured by the row's evaluation outcome.
 - FI -> SH edges come from the "Linked SH" column of WP-C-06 §3.
 - SH texts and S/C come from WP-C-05 §3.
@@ -270,14 +273,16 @@ def load() -> Data:
 
 
 def build() -> dict[str, str]:
-  return {NAME: figure(load())}
+  import sotif_scenes  # the SOTIF scene sheet; imports this module, so it is loaded here
+  return {NAME: figure(load()), **sotif_scenes.build()}
 
 
 def main(argv: list[str]) -> int:
   check = "--check" in argv
   try:
+    import sotif_scenes  # the SOTIF scene sheet (see build)
     data = load()
-    outputs = {NAME: figure(data)}
+    outputs = {NAME: figure(data), **sotif_scenes.build()}
   except FigureError as e:
     print(f"sotif_figures: {e}", file=sys.stderr)
     return 1

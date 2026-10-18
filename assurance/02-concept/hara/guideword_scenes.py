@@ -1,20 +1,29 @@
 #!/usr/bin/env python3
-"""Draw the guide-word scene sheet: one card per guide word, the function against time over a top-down road scene.
+"""Draw the guide-word scene sheets: one card per SC guide word, the function against time over a top-down road scene.
 
-- Guide-word scenes (`fig-c03-4-1-f01-guide-words.svg`): F-01 lateral control (lane centring) under the 14 guide words
-  M01...M14 of WP-C-03. Each card shows what the function must deliver over time (required, dashed green) against
-  what the malfunction delivers (performed, red), and under it what that does to the car on a two-lane left curve:
-  intended path, actual path, where the fault starts and the moment it matters (edge line, next lane, off the road).
-  Each card loops (SMIL, no script, 6 s): the cars drive their paths, the red track draws in behind the car, the fault
-  marker and the callout appear when they happen, and a cursor moves along the time axis. A viewer that does not
-  animate shows the last frame.
+One sheet per function that has SC guide words (`fig-c03-4-<n>-<function>-guide-words.svg`; F-07 and F-09 have none).
+Each card shows what the function must deliver over time (required, dashed green) against what the malfunction
+delivers (performed, red), and under it what that does to the car, with where the fault starts and the moment it
+matters. Two scene types:
 
-The guide words, classes, hazards, subsumption and rationale come from `hara_model.FM`; the safety goal and its ASIL
-come from WP-C-03 §6 (through `hara_figures.parse_hara`, which checks the goal table). The behaviour curves below are
-schematic: they explain each hazard and are not simulation results (the plant runs are in assurance/sim §3.7).
+- lateral (F-01, and the lateral cases of F-03, F-05 and F-08): a two-lane left curve; the intended and actual paths.
+- longitudinal (F-02, F-02X, and the longitudinal cases of F-03, F-04, F-06 and F-08): a straight road with a lead,
+  a follower, a stopped car or a red light. A small simulation runs the intended controller (ACC gap keeping, or a
+  stop for the light) twice: once as specified and once with the guide word applied to its output; the chart then
+  plots the commanded acceleration of both runs. The callout is the first moment the faulty run is clearly worse
+  than the intended one (closes on the lead, follower closes in, past the stop line on red).
 
-A function gets a sheet once it has a behaviour model here; the build fails if a model is missing for one of its
-SC guide words or exists for a guide word that is not SC. Regenerate with `python3 hara_figures.py`.
+Each card loops (SMIL, no script, 6 s): the cars drive, the red track draws in, the fault marker, status pills and
+the callout appear when they happen, and a cursor moves along the time axis. A viewer that does not animate shows the
+last frame.
+
+The guide words, classes, hazards, subsumption and rationale come from `hara_model.FM`; the safety goal(s) and ASIL
+come from WP-C-03 §6 (through `hara_figures.parse_hara`, which checks the goal table), mapped by `hara_model.SG_MAP`.
+The behaviour models below are schematic: they explain each hazard and are not simulation results of the item (the
+plant runs are in assurance/sim §3.7).
+
+The build fails if a function with SC guide words has no sheet, or a sheet lacks a model for one of its SC guide words
+or has one for a guide word that is not SC. Regenerate with `python3 hara_figures.py`.
 
 Standard library only.
 """
@@ -22,6 +31,7 @@ Standard library only.
 from __future__ import annotations
 
 import math
+import re
 import sys
 from pathlib import Path
 
@@ -124,7 +134,6 @@ F01 = {
 }
 CALLOUTS = {"F-01": {"M07": "changes lane too early", "M10": "past the target lane"}}
 
-SHEETS = {"F-01": ("fig-c03-4-1-f01-guide-words.svg", "Guide-word scenes", "function", F01)}
 
 
 def _pts(f, n=90):
@@ -224,7 +233,7 @@ def departure(intended, actual):
   return None
 
 
-def scene(intended, actual, gw, callouts, fallback):
+def scene(intended, actual, gw, callouts, fallback, badges=()):
   pr, pp = _pts(intended), _pts(actual)
   m = min(len(pr), len(pp))
   band = _d(pr[:m] + pp[:m][::-1]) + " Z"
@@ -261,9 +270,36 @@ def scene(intended, actual, gw, callouts, fallback):
   if dep is not None and dep[0] is not None:
     x, y = pp[dep[0]]
     out.append(f'<g>{_appear(_key(x))}<circle cx="{x:.1f}" cy="{y:.1f}" r="6" fill="none" stroke="{CALLOUT}" stroke-width="1.6"/>' +
-               t(round(min(236, max(44, x)), 1), round(y - 11 if y > 30 else y + 16, 1), label, 8, CALLOUT, 600, "middle",
+               t(_lx(x, label), round(y - 11 if y > 30 else y + 16, 1), label, 8, CALLOUT, 600, "middle",
                  f' stroke="{INK}" stroke-width="2.4" paint-order="stroke"') + "</g>")
+  out += _badges(badges, lambda tt: DRIVE * tt)
   return out, label
+
+
+def _lx(x, label, size=8):
+  """Keep a centred callout inside the 280-wide scene."""
+  half = hf.text_w(label, size, True) / 2 + 5
+  return round(min(280 - half, max(half, x)), 1)
+
+
+def _badges(badges, key):
+  """Status pills in the scene's top-left corner: (text, from, to or None, style), times as loop fractions 0..1."""
+  out, y = [], 6
+  for text, t0, t1, style in badges:
+    fill, fg, stroke = BADGE[style]
+    w = hf.text_w(text, 7.5, True) + 12
+    if t1 is None:
+      anim = _appear(key(t0)) if t0 > 0 else ""
+    else:
+      anim = (f'<animate attributeName="opacity" values="0;1;0;0" keyTimes="0;{max(key(t0), .001):.4f};{key(t1):.4f};1" '
+              f'calcMode="discrete" dur="{DUR}s" repeatCount="indefinite"/>')
+    out.append(f'<g>{anim}<rect x="6" y="{y}" width="{w:.1f}" height="13" rx="6.5" fill="{fill}" stroke="{stroke}" stroke-width="1"/>' +
+               t(12, y + 9.3, text, 7.5, fg, 700) + "</g>")
+    y += 16
+  return out
+
+
+BADGE = {"bad": ("#7F1D1D", "#FEE2E2", "#FCA5A5"), "ok": ("#14532D", "#DCFCE7", "#4ADE80"), "info": ("#1E293B", "#E2E8F0", "#94A3B8")}
 
 
 def chart(req, perf, axis_y, ylabel):
@@ -282,6 +318,363 @@ def chart(req, perf, axis_y, ylabel):
           f'{_anim("x1", None, [str(CX0), str(CX1), str(CX1)], [0, DRIVE, 1])}{_anim("x2", None, [str(CX0), str(CX1), str(CX1)], [0, DRIVE, 1])}</line>']
 
 
+# ---------------------------------------------------------------- longitudinal scene: a straight two-lane road, 280 x 130
+
+LANE_Y, CAR_L = 84, 22                    # ego lane centre; car length (scene units)
+AMAX_A, AMAX_B = 160, 240                 # full-scale acceleration and braking (scene units per loop time squared)
+V0, VSET, NT = 175, 175, 200              # start speed, set speed, simulation steps over the drive
+
+
+def _acc(st):
+  """The intended ACC law, in percent of full scale (+ accelerate, - brake)."""
+  if st["lead"] is None:
+    a = 0.9 * (VSET - st["v"])
+  else:
+    gap = st["lead"] - st["x"] - CAR_L
+    a = 1.3 * (gap - (24 + 0.16 * st["v"])) + 2.2 * (st["vl"] - st["v"])
+  return max(-100.0, min(60.0, a / (AMAX_A if a > 0 else AMAX_B) * 100))
+
+
+def _stop_ctrl(st, stopx, green_at):
+  """Stop for a red light at stopx (front bumper on the line), go again after green_at."""
+  if green_at is not None and st["t"] >= green_at:
+    return max(-100.0, min(60.0, 0.9 * (VSET - st["v"]) / AMAX_A * 100))
+  d = stopx - (st["x"] + CAR_L / 2) - 1
+  if d <= 0.5:
+    return -100.0 if st["v"] > 0 else 0.0
+  need = st["v"] ** 2 / (2 * d)
+  return -min(100.0, need / AMAX_B * 100) if need > 0.85 * AMAX_B else 0.0
+
+
+def _lead_speed(spec, tt):
+  if spec is None:
+    return None
+  pts = spec["v"]
+  for (t0, v0), (t1, v1) in zip(pts, pts[1:]):
+    if t0 <= tt <= t1:
+      return v0 + (v1 - v0) * (tt - t0) / (t1 - t0) if t1 > t0 else v1
+  return pts[-1][1]
+
+
+def simulate(sc, law):
+  """Run one scenario with ego law(t, st, mem) -> accel %. Returns samples and the commanded accel trace."""
+  lead = sc.get("lead")
+  x0 = float(sc.get("x0", 40))
+  st = {"t": 0.0, "x": x0, "v": float(sc.get("v0", V0)), "lead": lead["x"] if lead else None,
+        "vl": _lead_speed(lead, 0) if lead else 0.0, "fx": x0 - CAR_L - 30, "fv": float(sc.get("v0", V0))}
+  mem, ego, ld, fl, acc = {"hist": []}, [], [], [], []
+  dt = 1 / NT
+  fhist = []
+  for i in range(NT + 1):
+    st["t"] = i / NT
+    a = law(st["t"], st, mem)
+    a = max(-100.0, min(100.0, a))
+    mem["hist"].append(a)
+    acc.append((st["t"], a))
+    ego.append((st["t"], st["x"], LANE_Y)); fl.append((st["t"], st["fx"], LANE_Y))
+    if lead:
+      ld.append((st["t"], st["lead"], LANE_Y))
+    # follower: a driver keeping a gap, reacting 0.1 of the loop late with moderate braking
+    fgap = st["x"] - st["fx"] - CAR_L
+    fhist.append(1.2 * (fgap - (24 + 0.14 * st["fv"])) + 2.0 * (st["v"] - st["fv"]))
+    fa = fhist[max(0, len(fhist) - 1 - int(0.08 * NT))]
+    st["fv"] = max(0.0, st["fv"] + max(-AMAX_B * 0.7, min(AMAX_A, fa)) * dt)
+    st["v"] = max(0.0, st["v"] + a / 100 * (AMAX_A if a > 0 else AMAX_B) * dt)
+    st["x"] += st["v"] * dt
+    st["fx"] = min(st["fx"] + st["fv"] * dt, st["x"] - CAR_L - 2)
+    if lead:
+      st["vl"] = _lead_speed(lead, st["t"] + dt)
+      st["lead"] += st["vl"] * dt
+      st["x"] = min(st["x"], st["lead"] - CAR_L - 2)
+  return ego, ld, fl, acc
+
+
+def _drive_t(samples, inner):
+  """Time-based driving group (straight road, heading 0); its static pose is the last sample."""
+  keys = [DRIVE * f for f, _, _ in samples] + [1]
+  vals = [f"{x:.1f},{y:.1f}" for _, x, y in samples] + [f"{samples[-1][1]:.1f},{samples[-1][2]:.1f}"]
+  # thin the keyframes: SMIL handles linear interpolation between them
+  keep = sorted({0, len(samples) - 1, *range(0, len(samples), 4)})
+  keys = [keys[i] for i in keep] + [1]
+  vals = [vals[i] for i in keep] + [vals[-1]]
+  return (f'<g transform="translate({samples[-1][1]:.1f} {samples[-1][2]:.1f})">{_anim("transform", "translate", vals, keys)}{inner}</g>')
+
+
+def _events(sc, run, ref):
+  """First moment that matters in the actual run, judged against the intended run: (index, label) or None."""
+  (ego, ld, fl), (ego_r, ld_r, fl_r) = run, ref
+  stopx, green = sc.get("stopx"), sc.get("green_at")
+  for i, (tt, x, _) in enumerate(ego):
+    if ld and ld[i][1] - x - CAR_L < 12 and ld[i][1] - x < ld_r[i][1] - ego_r[i][1] - 6:
+      return i, sc.get("lead_label", "closes on the lead")
+    if stopx is not None and (green is None or tt < green) and x + CAR_L / 2 > stopx + 4:
+      return i, "past the stop line on red"
+    if x - fl[i][1] - CAR_L < 14 and x - fl[i][1] < ego_r[i][1] - fl_r[i][1] - 6:
+      return i, "follower closes in"
+  return None
+
+
+def lon_scene(spec):
+  sc = spec["scenario"]
+  ego, ld, fl, acc_p = simulate(sc, spec["perf"])
+  ego_r, ld_r, fl_r, acc_r = simulate(sc, spec["req"])
+  stopx, green = sc.get("stopx"), sc.get("green_at")
+  out = ['<rect width="280" height="130" fill="#C9DDBA"/>', '<rect x="0" y="32" width="280" height="74" fill="#B9C7A6"/>',
+         '<rect x="0" y="35" width="280" height="68" fill="#565E69"/>',
+         '<line x1="0" y1="99" x2="280" y2="99" stroke="#F8FAFC" stroke-width="1.5"/>',
+         '<line x1="0" y1="39" x2="280" y2="39" stroke="#F8FAFC" stroke-width="1.5"/>',
+         '<line x1="0" y1="69" x2="280" y2="69" stroke="#F8FAFC" stroke-width="1.3" stroke-dasharray="9 9"/>',
+         '<g transform="translate(26 54)" opacity="0.55"><path d="M-6 -2 L2 -2 L2 -4.5 L8 0 L2 4.5 L2 2 L-6 2 Z" fill="#E5E7EB"/></g>']
+  if stopx is not None:
+    head = (f'<circle cx="{stopx + 6}" cy="118" r="3.4" fill="#DC2626">' +
+            (_anim("fill", None, ["#DC2626", "#22C55E", "#22C55E"], [0, DRIVE * green, 1]).replace("<animate ", '<animate calcMode="discrete" ')
+             if green is not None else "") + "</circle>")
+    out += [f'<line x1="{stopx}" y1="70" x2="{stopx}" y2="98" stroke="#F8FAFC" stroke-width="3"/>',
+            f'<rect x="{stopx + 2}" y="112" width="8" height="12" rx="2" fill="#1F2937"/>', head]
+  for x, y, txt in sc.get("labels", ()):
+    out.append(t(_lx(x, txt, 7), y, txt, 7, "#334155", 600, "middle"))
+  # gap kept by the intended run, as a ghost outline
+  out.append(_drive_t(ego_r, f'<rect x="-11" y="-5" width="22" height="10" rx="3.5" fill="none" stroke="{REQ_S}" stroke-width="1.3" stroke-dasharray="3 2"/>'))
+  track = [(x, y) for _, x, y in ego]
+  out.append(f'<path d="M{track[0][0]:.1f} {LANE_Y} L{track[-1][0]:.1f} {LANE_Y}" fill="none" stroke="{PERF_S}" stroke-width="2.6" '
+             f'stroke-linecap="round" pathLength="1" stroke-dasharray="1 1">' +
+             _anim("stroke-dashoffset", None, ["1", "0", "0"], [0, DRIVE, 1]) + "</path>")
+  if ld:
+    body = "#9CA3AF" if not sc.get("stopped") else "#94A3B8"
+    out.append(_drive_t(ld, _car_body(body, "#4B5563") + ('<rect x="-12" y="-5.5" width="2" height="2" fill="#F59E0B"/><rect x="-12" y="3.5" width="2" height="2" fill="#F59E0B"/>'
+                                                          if sc.get("stopped") else "")))
+  out.append(_drive_t(fl, _car_body("#9CA3AF", "#4B5563")))
+  out.append(_drive_t(ego, _car_body("#DC2626", "#450A0A")))
+  fi = next((i for i, ((_, a), (_, b)) in enumerate(zip(acc_p, acc_r)) if abs(a - b) > 6), None)
+  if spec.get("fault_t") is not None:
+    fi = int(spec["fault_t"] * NT)
+  if fi is not None:
+    x = ego[fi][1]
+    out.append(f'<g transform="translate({x:.1f} {LANE_Y - 11})">{_appear(DRIVE * ego[fi][0])}<circle r="4.2" fill="{FAULT}" stroke="{INK}" stroke-width="0.9"/>'
+               f'<path d="M0.6 -2.8 L-1.6 0.4 L0 0.4 L-0.6 2.8 L1.6 -0.4 L0 -0.4 Z" fill="{INK}"/></g>')
+  ev = _events(sc, (ego, ld, fl), (ego_r, ld_r, fl_r))
+  label = ev[1] if ev else spec.get("fallback", "")
+  idx = ev[0] if ev else spec.get("fallback_i")
+  if label and idx is not None:
+    tt, x, _ = ego[idx]
+    if label == "follower closes in":
+      x = (x + fl[idx][1]) / 2
+    elif ld and label == sc.get("lead_label", "closes on the lead"):
+      x = x + CAR_L / 2 + 1
+    out.append(f'<g>{_appear(DRIVE * tt)}<circle cx="{x:.1f}" cy="{LANE_Y}" r="7" fill="none" stroke="{CALLOUT}" stroke-width="1.6"/>' +
+               t(_lx(x, label), LANE_Y + 21, label, 8, CALLOUT, 600, "middle",
+                 f' stroke="{INK}" stroke-width="2.4" paint-order="stroke"') + "</g>")
+  out += _badges(spec.get("badges", ()), lambda tt: DRIVE * tt)
+  return out, label, acc_r, acc_p
+
+
+def bpath(pts):
+  """Biaxial chart path from (t 0..1, value -100..100)."""
+  ym = (CY0 + CY1) / 2
+  return "M" + " L".join(f"{_xt(tt * 100):.1f} {ym - v / 100 * (CY1 - CY0) / 2 * 0.92:.1f}" for tt, v in pts[::2] + [pts[-1]])
+
+
+# ---------------------------------------------------------------- behaviour models of the other functions
+
+def lon(scenario, perf, req=None, **kw):
+  return dict(kind="lon", scenario=scenario, perf=perf, req=req or (lambda tt, st, m: scenario["law"](st)), **kw)
+
+
+def lat(req, perf, intended, actual, fallback="", axis=CY1, badges=()):
+  return dict(kind="lat", req=req, perf=perf, axis=axis, intended=intended, actual=actual, fallback=fallback, badges=badges)
+
+
+SLOWS = {"lead": {"x": 132, "v": [(0, V0), (.15, V0), (.38, 45), (1, 45)]}, "law": _acc}
+SLOW_GO = {"lead": {"x": 132, "v": [(0, V0), (.12, V0), (.3, 60), (.4, 60), (.55, V0), (1, V0)]}, "law": _acc}
+FREE = {"lead": None, "law": _acc}
+
+
+def _delayed(d):
+  return lambda tt, st, m: (m["acc"].append(_acc(st)) or m["acc"][max(0, len(m["acc"]) - 1 - int(d * NT))]) if "acc" in m else (m.update(acc=[]) or 0.0)
+
+
+def _brake_limited(dur):
+  def f(tt, st, m):
+    a = _acc(st)
+    if a < -5:
+      m.setdefault("b0", tt)
+      return a if tt - m["b0"] < dur else 0.0
+    return a
+  return f
+
+
+F02 = {
+  "M01": lon(SLOWS, lambda tt, st, m: max(_acc(st), 0.0)),
+  "M02": lon(SLOWS, lambda tt, st, m: _acc(st) if tt < .28 else max(_acc(st), 0.0)),
+  "M03": lon(FREE, lambda tt, st, m: _acc(st) - (90 if .25 <= tt < .5 else 0), lead_label="closes on the lead", fallback="brakes for nothing", fallback_i=int(0.3 * NT)),
+  "M04": lon(SLOWS, lambda tt, st, m: 30.0),
+  "M05": lon(SLOWS, lambda tt, st, m: _acc(st) + (55 if tt > .12 else 0)),
+  "M06": lon(SLOWS, lambda tt, st, m: _acc(st) * (0.35 if _acc(st) < 0 else 1)),
+  "M07": lon(FREE, lambda tt, st, m: _acc(st) - (90 if .12 <= tt < .38 else 0), fallback="brakes for nothing", fallback_i=int(0.15 * NT)),
+  "M08": lon(SLOWS, _delayed(.16)),
+  "M09": lon(SLOWS, _brake_limited(.06)),
+  "M10": lon(SLOW_GO, lambda tt, st, m: min(_acc(st), -60.0) if .22 <= tt < .85 else _acc(st)),
+  "M11": lon(SLOWS, _delayed(.12), fallback="brakes late", fallback_i=int(0.5 * NT)),
+  "M12": lon(SLOWS, lambda tt, st, m: -_acc(st) if _acc(st) < 0 else _acc(st)),
+  "M13": lon(FREE, lambda tt, st, m: _acc(st) + ((-80 if math.sin(2 * math.pi * 6 * tt) < 0 else 40) if tt > .15 else 0), fallback="surges: brake, go, brake", fallback_i=int(0.45 * NT)),
+}
+
+RED = {"lead": None, "x0": 100, "v0": 110, "stopx": 180, "law": lambda st: _stop_ctrl(st, 180, None), "labels": [(180, 28, "red light")]}
+RED_GREEN = {"lead": None, "x0": 80, "v0": 110, "stopx": 150, "green_at": .55, "law": lambda st: _stop_ctrl(st, 150, .55),
+             "labels": [(150, 28, "red, then green")]}
+NO_SIGNAL = {"lead": None, "x0": 100, "v0": 110, "law": lambda st: 0.9 * (110 - st["v"]) / AMAX_A * 100,
+             "labels": [(165, 28, "no signal, shadow on the road")]}
+
+
+def _stop(stopx, gain=1.0, delay=0.0, release=None, creep=None):
+  def f(tt, st, m):
+    m.setdefault("h", []).append(_stop_ctrl(st, stopx, None))
+    a = m["h"][max(0, len(m["h"]) - 1 - int(delay * NT))] * gain
+    if release is not None and tt >= release:
+      return 0.0
+    if creep is not None and tt > creep:
+      return 45.0
+    return a
+  return f
+
+
+F02X = {
+  "M01": lon(RED, lambda tt, st, m: 0.0),
+  "M02": lon(RED, _stop(180, release=.4)),
+  "M03": lon(NO_SIGNAL, _stop(165), fallback="stops for nothing", fallback_i=int(.55 * NT)),
+  "M05": lon(RED, lambda tt, st, m: _stop_ctrl(st, 150, None)),
+  "M06": lon(RED, _stop(180, gain=0.45)),
+  "M07": lon(RED, lambda tt, st, m: _stop_ctrl(st, 140, None)),
+  "M08": lon(RED, _stop(180, delay=.14)),
+  "M09": lon(RED, _stop(180, creep=.6)),
+  "M10": lon(RED_GREEN, lambda tt, st, m: _stop_ctrl(st, 150, None) if tt < .55 else 0.0, fallback="stays stopped on green",
+             fallback_i=int(.7 * NT)),
+  "M11": lon(RED, _stop(180, delay=.1)),
+  "M13": lon(RED, lambda tt, st, m: _stop_ctrl(st, 180, None) + ((-70 if math.sin(2 * math.pi * 5 * tt) < 0 else 45) if tt > .15 else 0), fallback="stop-go at the light", fallback_i=int(0.5 * NT)),
+}
+
+# F-03 engagement: chart is the engaged state (0 off, 100 engaged); the scene shows what the state does to the car
+ENG = lambda pts: step([[tp, v] for tp, v in pts])  # noqa: E731
+STOPPED = {"lead": {"x": 212, "v": [(0, 0), (1, 0)]}, "stopped": True, "law": _acc, "labels": [(212, 28, "stopped car")],
+           "lead_label": "runs into the stopped car"}
+DRIVER_BRAKES = ("driver brakes", .3, None, "info")
+
+
+def _override(net):
+  return lambda tt, st, m: (0.0 if tt < .3 else net)
+
+
+F03 = {
+  "M01": lon(STOPPED, _override(-38), req=_override(-100), chart=(ENG([[0, 100], [30, 100], [30, 0], [100, 0]]), ENG([[0, 100], [100, 100]])),
+             badges=[DRIVER_BRAKES, ("system keeps accelerating", .3, None, "bad")]),
+  "M02": lat(ENG([[0, 100], [100, 100]]), ENG([[0, 100], [35, 100], [35, 0], [100, 0]]), CENTRE, tan(100),
+             badges=[("system drops out, no warning", .35, None, "bad")]),
+  "M03": lat(ENG([[0, 0], [100, 0]]), ENG([[0, 0], [30, 0], [30, 100], [100, 100]]), CENTRE,
+             lambda x: cy(x) - 2 * H * sm(x, 95, 60), badges=[("engages unrequested", .3, None, "bad")]),
+  "M04": lon(STOPPED, _override(-38), req=_override(-100), chart=(ENG([[0, 100], [30, 100], [30, 0], [100, 0]]), ENG([[0, 100], [100, 100]])),
+             badges=[DRIVER_BRAKES, ("state stuck: engaged", .3, None, "bad")]),
+  "M06": lon(STOPPED, _override(-62), req=_override(-100), chart=(ENG([[0, 100], [30, 100], [30, 0], [100, 0]]), ENG([[0, 100], [30, 100], [30, 50], [100, 50]])),
+             badges=[DRIVER_BRAKES, ("steering off, ACC still on", .3, None, "bad")]),
+  "M08": lon(STOPPED, lambda tt, st, m: 0.0 if tt < .3 else (-38 if tt < .5 else -100), req=_override(-100),
+             chart=(ENG([[0, 100], [30, 100], [30, 0], [100, 0]]), ENG([[0, 100], [50, 100], [50, 0], [100, 0]])), badges=[DRIVER_BRAKES], fallback="stops closer to the car", fallback_i=int(0.55 * NT)),
+  "M10": lon(STOPPED, _override(-38), req=_override(-100), chart=(ENG([[0, 100], [30, 100], [30, 0], [100, 0]]), ENG([[0, 100], [100, 100]])),
+             badges=[("driver cancels", .3, None, "info"), ("keeps going", .3, None, "bad")]),
+  "M11": lon(STOPPED, lambda tt, st, m: 0.0 if tt < .3 else (-38 if tt < .42 else -100), req=_override(-100),
+             chart=(ENG([[0, 100], [30, 100], [30, 0], [100, 0]]), ENG([[0, 100], [42, 100], [42, 0], [100, 0]])), badges=[DRIVER_BRAKES], fallback="stops closer to the car", fallback_i=int(0.5 * NT)),
+  "M12": lat(ENG([[0, 100], [30, 100], [30, 0], [100, 0]]), ENG([[0, 100], [30, 100], [30, 0], [34, 0], [34, 100], [100, 100]]), CENTRE,
+             lambda x: cy(x) - 2 * H * sm(x, 105, 60), badges=[("driver cancels", .3, None, "info"), ("re-engages", .34, None, "bad")]),
+  "M13": lat(ENG([[0, 100], [100, 100]]), ENG([[0, 100], [25, 100], [25, 0], [35, 0], [35, 100], [50, 100], [50, 0], [60, 0], [60, 100],
+                                                [75, 100], [75, 0], [85, 0], [85, 100], [100, 100]]),
+             CENTRE, lambda x: cy(x) + 4.5 * (sm(x, 75, 25) - sm(x, 100, 25) + sm(x, 135, 25) - sm(x, 160, 25) + sm(x, 195, 25) - sm(x, 220, 25)) * 2.2,
+             fallback="drops out again and again", badges=[("toggling", .25, None, "bad")]),
+}
+
+# F-04 driver monitoring: chart is the escalation level; the driver looks away from t = .1
+EYES_OFF = ("driver: eyes off road", .1, None, "info")
+ATTENTIVE = ("driver: attentive", 0, None, "ok")
+ESC = [[0, 0], [30, 0], [30, 33], [48, 33], [48, 66], [62, 66], [62, 100], [100, 100]]
+HAZARD = {"lead": {"x": 262, "v": [(0, 0), (1, 0)]}, "stopped": True, "law": _acc, "labels": [(262, 28, "stopped car")]}
+FORCED = lambda t0: (lambda tt, st, m: 0.0 if tt < t0 else -45.0)   # noqa: E731
+
+
+def _dm(perf_esc, perf_law, badges, req_esc=ESC, req_law=FORCED(.62), scen=HAZARD, **kw):
+  return lon(scen, perf_law, req=req_law, chart=(step(req_esc), step(perf_esc)), badges=badges, **kw)
+
+
+NOBODY = dict(fallback="nobody watching, no escalation", fallback_i=int(.7 * NT))
+F04 = {
+  "M01": _dm([[0, 0], [100, 0]], lambda tt, st, m: 0.0, [EYES_OFF], **NOBODY),
+  "M02": _dm([[0, 0], [30, 0], [30, 33], [42, 33], [42, 0], [100, 0]], lambda tt, st, m: 0.0, [EYES_OFF, ("monitoring stops", .42, None, "bad")], **NOBODY),
+  "M03": _dm([[0, 0], [20, 0], [20, 100], [100, 100]], FORCED(.28), [ATTENTIVE, ("forced deceleration", .28, None, "bad")],
+             req_esc=[[0, 0], [100, 0]], req_law=lambda tt, st, m: 0.0, fallback="forced stop, driver attentive", fallback_i=int(0.35 * NT)),
+  "M04": _dm([[0, 0], [100, 0]], lambda tt, st, m: 0.0, [EYES_OFF, ("estimate stuck: attentive", .1, None, "bad")], **NOBODY),
+  "M05": _dm([[0, 0], [12, 0], [12, 66], [22, 66], [22, 100], [100, 100]], FORCED(.24), [ATTENTIVE, ("over-sensitive", .12, None, "bad")],
+             req_esc=[[0, 0], [100, 0]], req_law=lambda tt, st, m: 0.0, fallback="forced stop, driver attentive", fallback_i=int(0.3 * NT)),
+  "M06": _dm([[0, 0], [30, 0], [30, 33], [100, 33]], lambda tt, st, m: 0.0, [EYES_OFF, ("stays at first warning", .3, None, "bad")], **NOBODY),
+  "M07": _dm([[0, 0], [15, 0], [15, 33], [22, 33], [22, 66], [28, 66], [28, 100], [100, 100]], FORCED(.28), [EYES_OFF],
+             req_esc=ESC, fallback="forced stop too early", fallback_i=int(0.35 * NT)),
+  "M08": _dm([[0, 0], [55, 0], [55, 33], [72, 33], [72, 66], [86, 66], [86, 100], [100, 100]], FORCED(.86), [EYES_OFF], **NOBODY),
+  "M11": _dm([[0, 0], [50, 0], [50, 33], [68, 33], [68, 66], [82, 66], [82, 100], [100, 100]], FORCED(.82), [EYES_OFF], **NOBODY),
+}
+
+# F-05 driver information: chart is the take-over alert; the system hands back at t = .3 in the curve
+ALERT_R = [[0, 0], [30, 0], [30, 100], [55, 100], [55, 0], [100, 0]]
+HANDBACK = ("system hands back", .3, None, "info")
+LATE = lambda x: tan(85)(x) if x < 175 else tan(85)(175) + (cy(x) - tan(85)(175)) * sm(x, 175, 70)   # noqa: E731
+F05 = {
+  "M01": lat(step(ALERT_R), step([[0, 0], [100, 0]]), CENTRE, tan(85), badges=[HANDBACK, ("no alert", .3, None, "bad")]),
+  "M02": lat(step(ALERT_R), step([[0, 0], [20, 0], [20, 0], [100, 0]]), CENTRE, tan(85), badges=[("display goes blank", .2, None, "bad"), HANDBACK]),
+  "M04": lat(step([[0, 100], [30, 100], [30, 0], [100, 0]]), step([[0, 100], [100, 100]]), CENTRE, tan(85),
+             badges=[HANDBACK, ("still shows engaged", .3, None, "bad")]),
+  "M06": lat(step(ALERT_R), step([[0, 0], [30, 0], [30, 45], [55, 45], [55, 0], [100, 0]]), CENTRE, LATE, "driver corrects late",
+             badges=[HANDBACK, ("visual only, no sound", .3, None, "bad")]),
+  "M08": lat(step(ALERT_R), step([[0, 0], [58, 0], [58, 100], [80, 100], [80, 0], [100, 0]]), CENTRE, LATE, "driver corrects late",
+             badges=[HANDBACK, ("alert comes late", .58, None, "bad")]),
+  "M09": lat(step(ALERT_R), step([[0, 0], [30, 0], [30, 100], [33, 100], [33, 0], [100, 0]]), CENTRE, tan(85),
+             badges=[HANDBACK, ("alert too short", .3, .4, "bad")]),
+  "M11": lat(step(ALERT_R), step([[0, 0], [50, 0], [50, 100], [75, 100], [75, 0], [100, 0]]), CENTRE, LATE, "driver corrects late",
+             badges=[HANDBACK, ("alert delayed", .5, None, "bad")]),
+  "M12": lat(step([[0, 100], [30, 100], [30, 0], [100, 0]]), step([[0, 100], [100, 100]]), CENTRE, tan(85),
+             badges=[HANDBACK, ("shows engaged", .3, None, "bad")]),
+}
+
+# F-06 forward collision warning: a false warning provokes reflex braking by the driver
+F06 = {
+  "M03": lon(FREE, lambda tt, st, m: -85.0 if .36 <= tt < .56 else _acc(st), chart=(step([[0, 0], [100, 0]]),
+             step([[0, 0], [30, 0], [30, 100], [45, 100], [45, 0], [100, 0]])),
+             badges=[("FCW: BRAKE! (false)", .3, .45, "bad"), ("driver brakes hard", .36, None, "info")], fallback="driver brakes for nothing", fallback_i=int(0.4 * NT)),
+}
+
+# F-08 safety envelope and forwarding
+AEB = {"lead": {"x": 238, "v": [(0, 0), (1, 0)]}, "stopped": True, "law": _acc, "labels": [(238, 28, "stopped car")],
+       "lead_label": "runs into the stopped car"}
+F08 = {
+  "M03": lon(AEB, lambda tt, st, m: 0.0, req=lambda tt, st, m: 0.0 if tt < .38 else -100.0,
+             chart=(step([[0, 0], [38, 0], [38, 100], [100, 100]]), step([[0, 0], [100, 0]])),
+             badges=[("stock AEB brakes", .38, None, "ok"), ("AEB request blocked", .38, None, "bad")]),
+  "M04": lat(step([[0, 100], [100, 100]]), step([[0, 100], [30, 100], [30, 0], [100, 0]]), CENTRE, tan(85),
+             badges=[("envelope stuck blocking", .3, None, "bad"), ("screen: engaged", 0, None, "info")]),
+  "M05": lat(step([[0, 100], [100, 100]]), step([[0, 100], [30, 100], [30, 40], [100, 40]]), CENTRE, lambda x: (cy(x) + tan(85)(x)) / 2, "drifts wide in the curve",
+             badges=[("valid commands cut", .3, None, "bad")]),
+  "M13": lat(step([[0, 100], [100, 100]]), step([[0, 100], [25, 100], [25, 0], [38, 0], [38, 100], [55, 100], [55, 0], [68, 0], [68, 100], [100, 100]]),
+             CENTRE, lambda x: cy(x) + 4 * (sm(x, 75, 30) - sm(x, 110, 30) + sm(x, 150, 30) - sm(x, 185, 30)) * 2.2,
+             fallback="blocks on and off", badges=[("intermittent blocking", .25, None, "bad")]),
+}
+
+# function: (file, figure, what the chart's "function" is for this function, models)
+SHEETS = {
+  "F-01": ("fig-c03-4-1-f01-guide-words.svg", "Guide-word scenes", "steering torque", F01),
+  "F-02": ("fig-c03-4-2-f02-guide-words.svg", "Guide-word scenes", "acceleration command (+ accelerate, − brake)", F02),
+  "F-02X": ("fig-c03-4-3-f02x-guide-words.svg", "Guide-word scenes", "acceleration command (+ accelerate, − brake)", F02X),
+  "F-03": ("fig-c03-4-4-f03-guide-words.svg", "Guide-word scenes", "engaged state (or the car's response, see card)", F03),
+  "F-04": ("fig-c03-4-5-f04-guide-words.svg", "Guide-word scenes", "escalation level (warning → alert → forced deceleration)", F04),
+  "F-05": ("fig-c03-4-6-f05-guide-words.svg", "Guide-word scenes", "take-over alert or displayed state", F05),
+  "F-06": ("fig-c03-4-7-f06-guide-words.svg", "Guide-word scenes", "forward collision warning", F06),
+  "F-08": ("fig-c03-4-8-f08-guide-words.svg", "Guide-word scenes", "commands or messages passed", F08),
+}
+NO_SHEET = {"F-07": "no SC guide word", "F-09": "no SC guide word"}
+
+
 # ---------------------------------------------------------------- sheet
 
 COLS, CW, GAP, M = 3, 380, 20, 40
@@ -294,8 +687,35 @@ def goal_asil():
   return {g.ident: g.asil for g in goals}
 
 
+def _goal(hz, asil):
+  """Safety goal(s) of a hazard per hara_model.SG_MAP that exist in WP-C-03 §6, and the highest ASIL among them."""
+  ids = re.findall(r"SG-\d\d", hm.SG_MAP[hz])
+  if not ids:
+    raise FigureError(f"{hz}: no safety goal in hara_model.SG_MAP")
+  have = [g for g in ids if g in asil]
+  if not have:
+    return hm.SG_MAP[hz], None          # e.g. H-10: SG-09 exists only if D-08 option B is chosen
+  return "/".join(have), max((asil[g] for g in have), key=hf.ORDER.index)
+
+
+def _as_spec(m, gw):
+  if isinstance(m, dict):
+    return m
+  req, perf, intended, actual, fallback = m
+  if gw == "M12" and req is None:
+    (req, perf), axis = _biaxial(70, -70)
+    return lat(req, perf, intended, actual, fallback, axis)
+  return lat(req, perf, intended, actual, fallback)
+
+
+def function_name(fid):
+  if fid == hm.EXPERIMENTAL_FUNCTION[0]:
+    return hm.EXPERIMENTAL_FUNCTION[1]
+  return next(f[1] for f in hm.FUNCTIONS if f[0] == fid)
+
+
 def cards(fid):
-  _, _, ylabel, model = SHEETS[fid]
+  model = SHEETS[fid][3]
   fm = hm.FM[fid]
   sc = [g for g, row in fm.items() if row[0] == hm.SC]
   missing, extra = sorted(set(sc) - set(model)), sorted(set(model) - set(sc))
@@ -306,16 +726,19 @@ def cards(fid):
   out = []
   for gw in sorted(model):
     cls, hz, sub_by, why = fm[gw]
-    sg = hm.SG_MAP[hz]
-    if sg not in asil:
-      raise FigureError(f"{fid}/{gw}: {hz} maps to {sg}, which is not a safety goal in WP-C-03 §6")
-    req, perf, intended, actual, fallback = model[gw]
-    axis_y = CY1
-    if gw == "M12":
-      (req, perf), axis_y = _biaxial(70, -70)
-    sc_body, label = scene(intended, actual, gw, CALLOUTS.get(fid, {}), fallback)
-    out.append(dict(gw=gw, name=names[gw], sub=SUB[gw], hz=hz, hazard=hm.HAZARDS[hz], sg=sg, asil=asil[sg], sub_by=sub_by,
-                    why=why, chart=chart(req, perf, axis_y, ylabel), scene=sc_body, label=label))
+    sg, a = _goal(hz, asil)
+    spec = _as_spec(model[gw], gw)
+    if spec["kind"] == "lat":
+      sc_body, label = scene(spec["intended"], spec["actual"], gw, CALLOUTS.get(fid, {}), spec["fallback"], spec["badges"])
+      ch = chart(spec["req"], spec["perf"], spec["axis"], "function")
+    else:
+      sc_body, label, acc_r, acc_p = lon_scene(spec)
+      if "chart" in spec:
+        ch = chart(*spec["chart"], CY1, "function")
+      else:
+        ch = chart(bpath(acc_r), bpath(acc_p), (CY0 + CY1) / 2, "function")
+    out.append(dict(gw=gw, name=names[gw], sub=SUB[gw], hz=hz, hazard=hm.HAZARDS[hz], sg=sg, asil=a, sub_by=sub_by,
+                    why=why, chart=ch, scene=sc_body, label=label))
   return out
 
 
@@ -326,7 +749,8 @@ def card_svg(x, y, c):
   b.append(t(px + 34, cy_, c["name"], 15, INK, 700))
   b.append(t(px + 34 + hf.text_w(c["name"], 15, True) + 8, cy_, c["sub"], 11, MUTED))
   cy_ += 12
-  p, w = pill(px, cy_, f'{c["hz"]} · {c["sg"]} · ASIL {c["asil"]}', "#FEE2E2", "#7F1D1D", 18, 10)
+  goal = f'{c["hz"]} · {c["sg"]} · ASIL {c["asil"]}' if c["asil"] else f'{c["hz"]} · {c["sg"]}'
+  p, w = pill(px, cy_, goal, "#FEE2E2", "#7F1D1D", 18, 10)
   b.append(p)
   if c["sub_by"]:
     b.append(pill(px + w + 6, cy_, f'covered by {c["sub_by"]}', "#E2E8F0", "#334155", 18, 10)[0])
@@ -379,12 +803,13 @@ def legend(y):
 
 
 def sheet(fid):
-  fname, fig, _, _ = SHEETS[fid]
+  fname, fig, what, _ = SHEETS[fid]
   cs = cards(fid)
-  fname_txt = next(f[1] for f in hm.FUNCTIONS if f[0] == fid)
+  fname_txt = function_name(fid)
   w = 2 * M + COLS * CW + (COLS - 1) * GAP
-  body = hf.header(w, f"{fig} · {fid} {fname_txt} under the 14 guide words",
-                   "Top of each card: the function over time, required against performed. Below: what that does to the car, seen from above.",
+  n = f"All {len(cs)}" if len(cs) == 14 else f"The {len(cs)} safety-relevant (SC)"
+  body = hf.header(w, f"{fig} · {fid} {fname_txt}",
+                   f"{n} guide words. Chart: the function ({what}), required vs performed. Scene: what it does to the car.",
                    "WP-C-03 §4 · hara_model.FM", "Schematic, not simulation output")
   body += legend(108)
   y, rows = 128, []
@@ -397,14 +822,14 @@ def sheet(fid):
     y += row_h + GAP
   for b in rows:
     body += b
-  body.append(t(M, y + 6, "Scenes are drawn to explain each hazard on a two-lane left curve; the plant runs are in assurance/sim §3.7. "
+  body.append(t(M, y + 6, "Scenes are drawn to explain each hazard; the plant runs are in assurance/sim §3.7. "
                 "Ratings are proposals for review until the I3 confirmation review (WP-C-03 header).", 10.5, MUTED))
   body.append(t(w - M, y + 6, hf.GENERATED.split(" — ")[0], 10, MUTED, None, "end"))
   desc = (f"{len(cs)} cards for {fid} {fname_txt}, one per SC guide word. " +
-          " ".join(f"{c['gw']} {c['name']}: {c['hz']}, {c['sg']} ASIL {c['asil']}"
+          " ".join(f"{c['gw']} {c['name']}: {c['hz']}, {c['sg']}{' ASIL ' + c['asil'] if c['asil'] else ''}"
                    f"{', covered by ' + c['sub_by'] if c['sub_by'] else ''}"
                    f"{'; callout: ' + c['label'] if c['label'] else ''}." for c in cs))
-  return fname, svg_doc(w, int(y + 24), f"{fig}: {fid} under the 14 guide words (WP-C-03 §4)", desc, body)
+  return fname, svg_doc(w, int(y + 24), f"{fig}: {fid} {fname_txt} under its SC guide words (WP-C-03 §4)", desc, body)
 
 
 def build() -> dict[str, str]:
