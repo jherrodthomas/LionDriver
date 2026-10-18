@@ -43,7 +43,7 @@ class TestSotifScenes(unittest.TestCase):
     self.assertEqual(by["SH-02"]["row"]["out"], "mod")
     self.assertEqual(by["SH-04"]["hchip"], "SH-04 · H-04 · S2 C2")
     self.assertEqual(by["SH-12"]["hchip"], "SH-12 · enabling")
-    self.assertIsNone(by["SH-08"]["row"])
+    self.assertEqual((by["SH-08"]["tc"], by["SH-08"]["fi"], by["SH-08"]["cls"]), ("TC-34", "FI-23", "S"))
 
   def test_missing_model_rejected(self):
     models = dict(ss.MODELS)
@@ -63,12 +63,11 @@ class TestSotifScenes(unittest.TestCase):
     with self.assertRaisesRegex(sf.FigureError, "no row"):
       ss.cards(self.docs, models)
 
-  def test_sh08_gets_a_row_once_an_fi_links_it(self):
-    md6 = sf.C06.read_text(encoding="utf-8").replace("| SH-12 | `LIMITATIONS.md:53-56`", "| SH-12, SH-08 | `LIMITATIONS.md:53-56`")
-    docs = ss.load()
-    docs.data = sf.parse(sf.C05.read_text(encoding="utf-8"), md6)
+  def test_card_without_row_rejected_once_an_fi_links_it(self):
+    models = dict(ss.MODELS)
+    models["SH-08"] = ("x", None, None, ss.sh08)              # FI-23 links SH-08, so the card needs its row
     with self.assertRaisesRegex(sf.FigureError, "SH-08"):
-      ss.cards(docs)
+      ss.cards(self.docs, models)
 
   def test_scenes_loop_and_still_frame_is_the_end(self):
     self.assertEqual(self.svg.count('repeatCount="indefinite"'), self.svg.count("<animate"))
