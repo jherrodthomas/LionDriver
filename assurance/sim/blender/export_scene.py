@@ -110,6 +110,9 @@ def build(scene: dict, hes: dict[str, dict]) -> dict:
   ey = [_interp(res.t, res.y, t) for t in times]
   es = [_interp(res.t, res.s, t) for t in times]
   e_lat = [_interp(res.t, res.e_y, t) for t in times]
+  ax = [_interp(res.t, res.ax, t) for t in times]
+  ay = [_interp(res.t, res.ay, t) for t in times]
+  torque = [_interp(res.t, res.torque, t) for t in times]
   gap_lead = [_interp(res.t, [g[0] for g in res.gap], t) for t in times]
   gap_follow = [_interp(res.t, [g[1] for g in res.gap], t) for t in times]
   eyaw = []
@@ -161,6 +164,7 @@ def build(scene: dict, hes: dict[str, dict]) -> dict:
     events.append({"t": contact[0] - t_fault, "label": contact[1]})
     cut = min(n, int(round((contact[0] + END_AFTER_CONTACT - t_start) * FPS)) + 1)
     times, speed, e_lat = times[:cut], speed[:cut], e_lat[:cut]
+    ax, ay, torque = ax[:cut], ay[:cut], torque[:cut]
     gap_lead, gap_follow = gap_lead[:cut], gap_follow[:cut]
     for a in actors:
       a["poses"] = a["poses"][:cut]
@@ -193,6 +197,9 @@ def build(scene: dict, hes: dict[str, dict]) -> dict:
     "t": [t - t_fault for t in times],
     "speed": speed,
     "lateral": e_lat,
+    "ax": ax,
+    "ay": ay,
+    "eps_torque": torque,
     "lane_threshold": thr,
     "gap": {"lead": gap_lead, "follower": gap_follow} if case.longitudinal else None,
     "car": {"length": LENGTH, "width": width},

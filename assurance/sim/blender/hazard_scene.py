@@ -110,8 +110,8 @@ def build_road(sc: dict):
   outer = r["barrier"] if r["barrier"] is not None else right - r["shoulder_m"]
   strip("carriageway", c, left + 0.6, right, 0.0, asphalt, coll)
   strip("shoulder", c, right, outer - 0.4, -0.002, shoulder, coll)
-  strip("verge_left", c, left + 60, left + 0.6, -0.03, grass, coll)
-  strip("verge_right", c, outer - 0.4, outer - 60, -0.03, grass, coll)
+  strip("verge_left", c, left + 400, left + 0.6, -0.03, grass, coll)
+  strip("verge_right", c, outer - 0.4, outer - 400, -0.03, grass, coll)
   # markings: solid edge lines, dashed lane lines (3 m dash, 9 m gap)
   strip("edge_left", c, left - 0.1, left - 0.25, 0.004, paint, coll)
   strip("edge_right", c, right + 0.25, right + 0.1, 0.004, paint, coll)
@@ -174,10 +174,13 @@ def standin_mesh(name: str):
         mats.append(1 if cabin and j in (2, 3, 5, 6) else 0)
     ring = k
   n = 10
-  faces.append(tuple(range(0, n)))
-  mats.append(0)
-  faces.append(tuple(range(ring + n - 1, ring - 1, -1)))
-  mats.append(0)
+  for first, sign in ((0, -1), (ring, 1)):        # end caps as fans round their centre
+    c = len(verts)
+    verts.append(tuple(sum(verts[first + j][i] for j in range(n)) / n for i in range(3)))
+    for j in range(n):
+      a, b = first + j, first + (j + 1) % n
+      faces.append((c, a, b) if sign > 0 else (c, b, a))
+      mats.append(0)
   me = bpy.data.meshes.new(name)
   me.from_pydata(verts, [], faces)
   for p, m in zip(me.polygons, mats):
@@ -381,6 +384,19 @@ def build_cameras(sc: dict):
     top.keyframe_insert("rotation_euler", frame=f)
   linear(top)
   cams["top"] = top
+
+  # forward view from just ahead of the windscreen, 1.2 m up, along the ego's own heading (bonnet in view)
+  front = bpy.data.objects.new("cam_driver", bpy.data.cameras.new("cam_driver"))
+  front.data.lens = 24
+  bpy.context.scene.collection.objects.link(front)
+  yaws = unwrap([p[2] for p in ego])
+  for f, (p, h) in enumerate(zip(ego, yaws), start=1):
+    front.location = (p[0] + 1.2 * math.cos(h), p[1] + 1.2 * math.sin(h), 1.2)
+    front.rotation_euler = (math.radians(86), 0.0, h - math.pi / 2)
+    front.keyframe_insert("location", frame=f)
+    front.keyframe_insert("rotation_euler", frame=f)
+  linear(front)
+  cams["driver"] = front
   return cams
 
 
@@ -434,14 +450,27 @@ def build(sc: dict, vehicle: Path | None, front: str | None) -> dict:
 
   world = bpy.data.worlds.new("sky")
   world.use_nodes = True
-  bg = world.node_tree.nodes["Background"]
-  bg.inputs["Color"].default_value = (0.55, 0.68, 0.85, 1.0)
-  bg.inputs["Strength"].default_value = 0.8
+  nodes = world.node_tree.nodes
+  bg = nodes["Background"]
+  try:                                          # physical sky, low evening light
+    sky = nodes.new("ShaderNodeTexSky")
+    sky.sun_elevation = math.radians(9)
+    sky.sun_disc = False                        # the lamp below lights the scene; no glare in the forward view
+    world.node_tree.links.new(sky.outputs["Color"], bg.inputs["Color"])
+    bg.inputs["Strength"].default_value = 0.12
+  except (RuntimeError, AttributeError, KeyError):
+    bg.inputs["Color"].default_value = (0.55, 0.68, 0.85, 1.0)
+    bg.inputs["Strength"].default_value = 0.8
   scene.world = world
+  try:
+    scene.view_settings.look = "AgX - Medium High Contrast"
+  except TypeError:
+    pass
   sun = bpy.data.objects.new("sun", bpy.data.lights.new("sun", "SUN"))
-  sun.data.energy = 3.5
-  sun.data.angle = math.radians(3)
-  sun.rotation_euler = (math.radians(40), math.radians(10), math.radians(-35))
+  sun.data.energy = 2.6
+  sun.data.color = (1.0, 0.78, 0.55)
+  sun.data.angle = math.radians(1.5)
+  sun.rotation_euler = (math.radians(76), 0.0, math.radians(-120))   # low, behind and to the left of the ego
   scene.collection.objects.link(sun)
 
   build_road(sc)
@@ -470,6 +499,22 @@ def build(sc: dict, vehicle: Path | None, front: str | None) -> dict:
   cams = build_cameras(sc)
   scene.camera = cams["chase"]
   return {"keys": keys, "cams": cams}
+
+
+def screen_positions(sc: dict, cam) -> dict:
+  """Where each road user's roof appears in the chase view, per frame (0..1 from the top left; null if behind)."""
+  from bpy_extras.object_utils import world_to_camera_view
+  from mathutils import Vector
+  s = bpy.context.scene
+  names = ["ego" if a["kind"] == "ego" else a["name"] for a in sc["actors"]]
+  out = {n: [] for n in names}
+  for f in range(1, len(sc["t"]) + 1):
+    s.frame_set(f)
+    for n, a in zip(names, sc["actors"]):
+      x, y, _ = a["poses"][f - 1]
+      p = world_to_camera_view(s, cam, Vector((x, y, 1.6)))
+      out[n].append([round(p.x, 4), round(1 - p.y, 4)] if p.z > 0 else None)
+  return out
 
 
 def render_setup(res: tuple[int, int], samples: int):
@@ -521,21 +566,25 @@ def main(argv: list[str]) -> int:
       return 1
   built = build(sc, vehicle, args.front)
   bpy.ops.wm.save_as_mainfile(filepath=str(out / "scene.blend"))
+  (out / "screen.json").write_text(json.dumps(screen_positions(sc, built["cams"]["chase"])))
   manifest = {"scene": sc["id"], "vehicle": "purchased mesh" if vehicle else "stand-in", "stills": [], "video": {}}
 
   if args.stills:
-    render_setup(tuple(int(v) for v in args.res.split("x")), args.samples)
+    w, h = (int(v) for v in args.res.split("x"))
+    render_setup((w, h), args.samples)
     for k in built["keys"]:
       for name, cam in built["cams"].items():
+        d = 1 if name == "chase" else 2         # the side views are drawn at half size
+        bpy.context.scene.render.resolution_x, bpy.context.scene.render.resolution_y = w // d, h // d
         p = out / "stills" / f"f{k['frame']:04d}_{name}.png"
         render_frame(cam, k["frame"], p)
         manifest["stills"].append({**k, "camera": name, "file": str(p.relative_to(out))})
   if args.video:
-    render_setup(tuple(int(v) for v in args.video_res.split("x")), max(4, args.samples // 2))
+    w, h = (int(v) for v in args.video_res.split("x"))
+    render_setup((w, h), max(4, args.samples // 2))
     for name, cam in built["cams"].items():
-      if name == "top":
-        bpy.context.scene.render.resolution_x //= 2
-        bpy.context.scene.render.resolution_y //= 2
+      k = 1 if name == "chase" else 2          # the side views are drawn at half size
+      bpy.context.scene.render.resolution_x, bpy.context.scene.render.resolution_y = w // k, h // k
       for f in range(1, len(sc["t"]) + 1):
         render_frame(cam, f, out / "frames" / name / f"{f:04d}.png")
       manifest["video"][name] = f"frames/{name}/%04d.png"

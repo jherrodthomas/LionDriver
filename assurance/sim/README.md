@@ -29,6 +29,7 @@ the figure tools of the other work products do. The MetaDrive bridge stays where
 | [`figures/`](figures/) | Layer 1 figures, one per selected case (generated); the ego is drawn from [`figures/corolla-e210-silhouette.json`](figures/corolla-e210-silhouette.json), the reference car's outline ([vehicle-3d-model.md](vehicle-3d-model.md) §6) |
 | [`reach/`](reach/reach_compare.py) | Reachability bound (exact, numpy): the drift under any LKA command the panda passes, and its check against sampled runs (§3.6) |
 | [`requirements.txt`](requirements.txt) | Pinned Python packages of the track |
+| [`blender/`](blender/README.md) | Hazardous-event scenes: plant runs drawn as animated Blender scenes and review dashboards (pictures only, no evidence credit) |
 | [`vehicle-3d-model.md`](vehicle-3d-model.md) | Layer 3 asset note: which Corolla E210 mesh to buy for the MetaDrive ego car and the figures, what it does and does not change, and the handover for the next session (DQ-368) |
 
 ```sh
