@@ -1,10 +1,15 @@
 name: wiki
 
 # The GitHub wiki is a mirror of wiki/ on liondriver-dev. Pages are written and reviewed in the
-# repository by pull request; this workflow checks them on every pull request and, on a push to
+# repository by pull request; this workflow checks them on every pull request and, on every push to
 # liondriver-dev, builds them with tools/wiki/build_wiki.py and pushes the result to the wiki
 # repository (<owner>/<repo>.wiki.git). The wiki is never edited in place: the next sync would
 # overwrite the edit.
+#
+# Both triggers run on every change, not only one that touches wiki/: a pull request that moves or
+# renames a file the pages link to must fail here, not break the wiki after merge, and the Session
+# log, the sync stamp and the infographics are read from the checkout, so they are current only if
+# every merge syncs. The check takes seconds; the publish pushes nothing when the pages are unchanged.
 #
 # One-time setup: the wiki repository exists only after a first page has been created from the
 # repository's Wiki tab. Until then the publish job fails at "Clone the wiki" and says so.
@@ -13,15 +18,7 @@ on:
   push:
     branches:
       - liondriver-dev
-    paths:
-      - 'wiki/**'
-      - 'tools/wiki/**'
-      - '.github/workflows/wiki.yaml'
   pull_request:
-    paths:
-      - 'wiki/**'
-      - 'tools/wiki/**'
-      - '.github/workflows/wiki.yaml'
   workflow_dispatch:
 
 permissions:
