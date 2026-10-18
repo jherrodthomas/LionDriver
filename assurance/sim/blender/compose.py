@@ -382,7 +382,7 @@ def main(argv: list[str]) -> int:
       frame(sc, screen, keys, views, f - 1, thumbs).save(tmp / f"{f:04d}.png")
     mp4 = out / f"{sc['id']}.mp4"
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-framerate", str(sc["fps"]), "-i", str(tmp / "%04d.png"),
-                    "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "20", str(mp4)], check=True)
+                    "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "27", str(mp4)], check=True)
     print(f"{sc['id']}: {mp4}")
   return 0
 
