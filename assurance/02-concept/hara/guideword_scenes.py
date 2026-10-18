@@ -5,6 +5,9 @@
   M01...M14 of WP-C-03. Each card shows what the function must deliver over time (required, dashed green) against
   what the malfunction delivers (performed, red), and under it what that does to the car on a two-lane left curve:
   intended path, actual path, where the fault starts and the moment it matters (edge line, next lane, off the road).
+  Each card loops (SMIL, no script, 6 s): the cars drive their paths, the red track draws in behind the car, the fault
+  marker and the callout appear when they happen, and a cursor moves along the time axis. A viewer that does not
+  animate shows the last frame.
 
 The guide words, classes, hazards, subsumption and rationale come from `hara_model.FM`; the safety goal and its ASIL
 come from WP-C-03 §6 (through `hara_figures.parse_hara`, which checks the goal table). The behaviour curves below are
@@ -121,7 +124,7 @@ F01 = {
 }
 CALLOUTS = {"F-01": {"M07": "changes lane too early", "M10": "past the target lane"}}
 
-SHEETS = {"F-01": ("fig-c03-4-1-f01-guide-words.svg", "Guide-word scenes", "LKA torque", F01)}
+SHEETS = {"F-01": ("fig-c03-4-1-f01-guide-words.svg", "Guide-word scenes", "steering torque", F01)}
 
 
 def _pts(f, n=90):
@@ -149,13 +152,63 @@ def _pose(p, i):
   return f"translate({x1:.1f} {y1:.1f}) rotate({math.degrees(math.atan2(y1 - y0, x1 - x0)):.1f})"
 
 
-def _car(pose, body, opacity=1.0, stroke=INK):
+def _car_body(body, stroke=INK):
   wheels = "".join(f'<rect x="{x}" y="{y}" width="4.5" height="2.4" rx="1" fill="#111827"/>' for x in (-8.5, 4.5) for y in (-6, 3.6))
-  return (f'<g transform="{pose}" opacity="{opacity:g}">{wheels}'
-          f'<rect x="-11" y="-5" width="22" height="10" rx="3.5" fill="{body}" stroke="{stroke}" stroke-width="0.9"/>'
+  return (f'{wheels}<rect x="-11" y="-5" width="22" height="10" rx="3.5" fill="{body}" stroke="{stroke}" stroke-width="0.9"/>'
           '<path d="M2.5 -4 L6.5 -3.2 L6.5 3.2 L2.5 4 Z" fill="#1F2937" opacity="0.75"/>'
           '<path d="M-6.5 -3.6 L-8.5 -3 L-8.5 3 L-6.5 3.6 Z" fill="#1F2937" opacity="0.6"/>'
-          '<rect x="10" y="-4.2" width="1.2" height="2" fill="#FDE68A"/><rect x="10" y="2.2" width="1.2" height="2" fill="#FDE68A"/></g>')
+          '<rect x="10" y="-4.2" width="1.2" height="2" fill="#FDE68A"/><rect x="10" y="2.2" width="1.2" height="2" fill="#FDE68A"/>')
+
+
+def _car(pose, body, opacity=1.0, stroke=INK):
+  return f'<g transform="{pose}" opacity="{opacity:g}">{_car_body(body, stroke)}</g>'
+
+
+# ---------------------------------------------------------------- animation (SMIL, no script; a still viewer shows the last frame)
+
+DUR, DRIVE = 6, 0.8                       # loop length in s; share of the loop spent driving, the rest holds the end
+
+
+def _key(x):
+  return DRIVE * (x - X0) / (XE - X0)
+
+
+def _heading(p, i):
+  i = max(1, min(len(p) - 1, i))
+  (x0, y0), (x1, y1) = p[i - 1], p[i]
+  return math.degrees(math.atan2(y1 - y0, x1 - x0))
+
+
+def _anim(attr, kind, values, keys):
+  kt = ";".join(f"{k:.4f}" for k in keys)
+  tag = "animateTransform" if kind else "animate"
+  ty = f' type="{kind}"' if kind else ""
+  return f'<{tag} attributeName="{attr}"{ty} values="{";".join(values)}" keyTimes="{kt}" dur="{DUR}s" repeatCount="indefinite"/>'
+
+
+def _driving(p, inner):
+  """A group that drives along p and holds at its end; its static pose is the end (the still frame)."""
+  keys = [_key(x) for x, _ in p] + [1]
+  tr = [f"{x:.1f},{y:.1f}" for x, y in p] + [f"{p[-1][0]:.1f},{p[-1][1]:.1f}"]
+  rot = [f"{_heading(p, i):.1f}" for i in range(len(p))] + [f"{_heading(p, len(p) - 1):.1f}"]
+  keys[0] = 0
+  return (f'<g transform="translate({p[-1][0]:.1f} {p[-1][1]:.1f})">{_anim("transform", "translate", tr, keys)}'
+          f'<g transform="rotate({_heading(p, len(p) - 1):.1f})">{_anim("transform", "rotate", rot, keys)}{inner}</g></g>')
+
+
+def _appear(k):
+  """Hidden until loop time k, then shown to the end of the loop."""
+  return f'<animate attributeName="opacity" values="0;1" keyTimes="0;{max(k, 0.001):.4f}" calcMode="discrete" dur="{DUR}s" repeatCount="indefinite"/>'
+
+
+def _draw_on(p):
+  """Reveal a path from its start in step with the car (stroke-dashoffset over pathLength 1)."""
+  seg = [math.dist(a, b) for a, b in zip(p, p[1:])]
+  total, run, vals = sum(seg) or 1, 0.0, ["1"]
+  for d in seg:
+    run += d
+    vals.append(f"{1 - run / total:.4f}")
+  return _anim("stroke-dashoffset", None, vals + ["0"], [0] + [_key(x) for x, _ in p[1:]] + [1])
 
 
 def departure(intended, actual):
@@ -182,8 +235,8 @@ def scene(intended, actual, gw, callouts, fallback):
   if dep is None and fallback:
     dep, label = (max(range(m), key=lambda i: abs(pp[i][1] - pr[i][1])), ""), fallback
   fi = next((i for i in range(m) if abs(pp[i][1] - pr[i][1]) > 1.2), None)
-  n = len(pp) - 1
   asphalt = _d(_edge(H + 4) + _edge(-3 * H - 4)[::-1]) + " Z"
+  kf = _key(pp[fi][0]) if fi is not None else 0
   out = ['<rect width="280" height="130" fill="#C9DDBA"/>',
          *[f'<path d="{_d(_edge(k))}" fill="none" stroke="#B9C7A6" stroke-width="7"/>' for k in (H + 4, -3 * H - 4)],
          f'<path d="{asphalt}" fill="#565E69"/>',
@@ -191,23 +244,25 @@ def scene(intended, actual, gw, callouts, fallback):
          f'<path d="{_d(_edge(-H))}" fill="none" stroke="#F8FAFC" stroke-width="1.3" stroke-dasharray="9 9"/>',
          f'<g transform="{_pose(_edge(0), 6)}" opacity="0.55"><path d="M-6 -2 L2 -2 L2 -4.5 L8 0 L2 4.5 L2 2 L-6 2 Z" fill="#E5E7EB"/></g>',
          _car(_pose([(199, cy(199) - 2 * H), (201, cy(201) - 2 * H)], 1), "#9CA3AF", 1, "#4B5563"),
-         f'<path d="{band}" fill="{PERF_S}" opacity="0.22"/>',
+         # the gap fills in behind the car: clipped to the distance driven so far
+         f'<clipPath id="r{gw}"><rect width="280" height="130">{_anim("width", None, [str(X0), str(XE), "280"], [0, DRIVE, 1])}</rect></clipPath>',
+         f'<path d="{band}" fill="{PERF_S}" opacity="0.22" clip-path="url(#r{gw})"/>',
          f'<path d="{_d(pr)}" fill="none" stroke="{REQ_S}" stroke-width="2.2" stroke-dasharray="5 3" stroke-linecap="round"/>',
-         f'<path d="{_d(pp)}" fill="none" stroke="{PERF_S}" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>',
-         f'<g transform="{_pose(pr, min(len(pr) - 1, n))}"><rect x="-11" y="-5" width="22" height="10" rx="3.5" fill="none" '
-         f'stroke="{REQ_S}" stroke-width="1.3" stroke-dasharray="3 2"/></g>',
-         _car(_pose(pp, 1), "#F8FAFC"),
-         *[_car(_pose(pp, round(n * f)), "#FCA5A5", o) for f, o in ((.28, .35), (.52, .5), (.76, .7))],
-         _car(_pose(pp, n), "#DC2626", 1, "#450A0A")]
+         f'<path d="{_d(pp)}" fill="none" stroke="{PERF_S}" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" '
+         f'pathLength="1" stroke-dasharray="1 1">{_draw_on(pp)}</path>',
+         _car(_pose(pp, 1), "#F8FAFC", 0.45),
+         _driving(pr[:next((i for i, (x, _) in enumerate(pr) if x >= pp[-1][0]), len(pr) - 1) + 1],
+                  f'<rect x="-11" y="-5" width="22" height="10" rx="3.5" fill="none" stroke="{REQ_S}" stroke-width="1.3" stroke-dasharray="3 2"/>'),
+         _driving(pp, _car_body("#DC2626", "#450A0A"))]
   if fi is not None:
     x, y = pp[fi]
-    out.append(f'<g transform="translate({x:.1f} {y:.1f})"><circle r="4.2" fill="{FAULT}" stroke="{INK}" stroke-width="0.9"/>'
+    out.append(f'<g transform="translate({x:.1f} {y:.1f})">{_appear(kf)}<circle r="4.2" fill="{FAULT}" stroke="{INK}" stroke-width="0.9"/>'
                f'<path d="M0.6 -2.8 L-1.6 0.4 L0 0.4 L-0.6 2.8 L1.6 -0.4 L0 -0.4 Z" fill="{INK}"/></g>')
   if dep is not None and dep[0] is not None:
     x, y = pp[dep[0]]
-    out.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="6" fill="none" stroke="{CALLOUT}" stroke-width="1.6"/>')
-    out.append(t(round(min(236, max(44, x)), 1), round(y - 11 if y > 30 else y + 16, 1), label, 8, CALLOUT, 600, "middle",
-                 f' stroke="{INK}" stroke-width="2.4" paint-order="stroke"'))
+    out.append(f'<g>{_appear(_key(x))}<circle cx="{x:.1f}" cy="{y:.1f}" r="6" fill="none" stroke="{CALLOUT}" stroke-width="1.6"/>' +
+               t(round(min(236, max(44, x)), 1), round(y - 11 if y > 30 else y + 16, 1), label, 8, CALLOUT, 600, "middle",
+                 f' stroke="{INK}" stroke-width="2.4" paint-order="stroke"') + "</g>")
   return out, label
 
 
@@ -215,10 +270,16 @@ def chart(req, perf, axis_y, ylabel):
   return [f'<rect x="{CX0}" y="{CY0}" width="{CX1 - CX0}" height="{CY1 - CY0}" fill="#FFFFFF"/>',
           f'<line x1="{CX0}" y1="{CY0}" x2="{CX0}" y2="{CY1}" stroke="#94A3B8"/>',
           f'<line x1="{CX0}" y1="{axis_y:g}" x2="{CX1}" y2="{axis_y:g}" stroke="#94A3B8"/>',
-          t(CX0 + 4, CY0 + 7, ylabel, 7.5, MUTED),
+          t(0, 0, ylabel, 8, MUTED, 600, "middle", f' transform="translate(8 {(CY0 + CY1) / 2:g}) rotate(-90)"'),
+          *([t(CX0 - 3, CY0 + 3, "+", 8, MUTED, None, "end"), t(CX0 - 3, CY1, "−", 8, MUTED, None, "end"),
+             t(CX0 - 3, axis_y + 3, "0", 7.5, MUTED, None, "end")] if axis_y != CY1 else
+            [t(CX0 - 3, CY1, "0", 7.5, MUTED, None, "end"), t(CX0 - 3, CY0 + 6, "max", 7.5, MUTED, None, "end")]),
           t(CX1, 106, "time", 7.5, MUTED, None, "end"),
           f'<path d="{req}" fill="none" stroke="{REQ}" stroke-width="2.2" stroke-dasharray="6 3"/>',
-          f'<path d="{perf}" fill="none" stroke="{PERF}" stroke-width="2.6" stroke-linejoin="round"/>']
+          f'<path d="{perf}" fill="none" stroke="{PERF}" stroke-width="2.6" stroke-linejoin="round"/>',
+          # time cursor in step with the car below; the still frame leaves it at the end of the axis
+          f'<line x1="{CX1}" y1="{CY0}" x2="{CX1}" y2="{CY1}" stroke="{INK}" stroke-width="0.8" opacity="0.45">'
+          f'{_anim("x1", None, [str(CX0), str(CX1), str(CX1)], [0, DRIVE, 1])}{_anim("x2", None, [str(CX0), str(CX1), str(CX1)], [0, DRIVE, 1])}</line>']
 
 
 # ---------------------------------------------------------------- sheet
