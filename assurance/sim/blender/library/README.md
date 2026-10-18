@@ -104,4 +104,7 @@ SHA-256. Tile sizes are the ones each source publishes.
 
 The offline picks were checked against the sites' previews before locking. Three were replaced:
 `aerial_grass_rock` (a 15 m aerial of mostly bare earth) by `Grass004`, `gravelly_sand` (orange desert sand) by
-`gravel_floor_02`, and `concrete_floor_02` (a stained floor) by `Concrete034`.
+`gravel_floor_02`, and `concrete_floor_02` (a stained floor) by `Concrete034`. Test renders then showed the asphalt scan about
+2.5 times brighter than fresh asphalt and the grass scan glossy enough to shine at grazing angles, so the slots
+carry a `tint` (asphalt 0.5, gravel 0.45) and a `roughness_min` (grass 0.8), which `fetch_assets.py` copies into the
+lock.

@@ -9,6 +9,9 @@
 #   size_m       pbr: the real-world size one texture tile covers ([x, y] for a non-square image), as the source publishes it for the first
 #                candidate (Poly Haven "dimensions", ambientCG dimensionX); a fallback asset is drawn at the same size
 #   strength     hdri: background strength (the sun lamp still lights the scene and casts the shadows)
+#   tint         pbr, optional: multiplies the colour map, to bring a scan to the surface's real albedo (fresh
+#                asphalt about 0.05, dry gravel shoulder about 0.15, linear)
+#   roughness_min  pbr, optional: floor on the roughness map, where a glossy scan would shine at grazing angles
 #   candidates   tried in order: source (polyhaven, ambientcg) and asset ID; the first one that resolves is used.
 #                Chosen offline, then checked against the sites' previews and dimensions on 2026-10-18
 #   search       when no candidate resolves: the source and what to search for (Poly Haven categories, ambientCG
@@ -69,6 +72,7 @@ slots:
     kind: pbr
     use: Carriageway, parking lane and the highway shoulder
     size_m: 3.0
+    tint: 0.5
     resolution: 2k
     maps: [color, normal, roughness]
     candidates:
@@ -81,6 +85,7 @@ slots:
     kind: pbr
     use: Verges and fields
     size_m: 1.4
+    roughness_min: 0.8
     resolution: 1k
     maps: [color, normal, roughness]
     candidates:                         # aerial_grass_rock (15 m, mostly bare earth) dropped: a mud field, not a verge
@@ -93,6 +98,7 @@ slots:
     kind: pbr
     use: Rural shoulders
     size_m: 2.0
+    tint: 0.45
     resolution: 1k
     maps: [color, normal, roughness]
     candidates:

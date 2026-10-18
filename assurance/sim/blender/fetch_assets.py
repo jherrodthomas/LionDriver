@@ -47,6 +47,10 @@ AMBIENTCG_MAPS = {"color": "_Color", "normal": "_NormalGL", "roughness": "_Rough
                   "displacement": "_Displacement", "ao": "_AmbientOcclusion"}
 
 
+# Slot fields copied into the lock, where hazard_scene.py reads them (Blender's Python has no YAML)
+TUNING = ("strength", "size_m", "tint", "roughness_min")
+
+
 class NotFound(Exception):
   """The source has no such asset, or not in the wanted form."""
 
@@ -222,6 +226,8 @@ def fetch(names: list[str], locked: bool, fetch_json=get_json, fetch_bytes=get_b
     slot = spec["slots"][name]
     entry = lock["slots"].get(name)
     if entry and present(entry, dest):
+      if not locked:                            # pick up retuned values without a new download
+        entry.update({k: slot[k] for k in TUNING if k in slot})
       print(f"{name}: {entry['source']} {entry['id']} present")
       continue
     try:
@@ -242,8 +248,7 @@ def fetch(names: list[str], locked: bool, fetch_json=get_json, fetch_bytes=get_b
           got[m]["member"] = f["member"]
       lock["slots"][name] = {"source": source, "id": asset_id, "page": SOURCES[source][2].format(id=asset_id),
                              "licence": "CC0 1.0", "kind": slot["kind"], "use": slot["use"],
-                             **({"strength": slot["strength"]} if "strength" in slot else {}),
-                             **({"size_m": slot["size_m"]} if "size_m" in slot else {}), "files": got}
+                             **{k: slot[k] for k in TUNING if k in slot}, "files": got}
       print(f"{name}: {source} {asset_id} ({', '.join(got)})")
     except (NotFound, RuntimeError, urllib.error.URLError, OSError, zipfile.BadZipFile) as e:
       failed.append(name)

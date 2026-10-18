@@ -191,7 +191,11 @@ def _pbr(g: Graph, slot: dict, assets: Assets):
   img = lambda m, colour: g.node("ShaderNodeTexImage", {"Vector": vec}, image=assets.image(slot["files"][m], colour))
   macro = g.remap(g.noise(g.uv(), 0.04, 3).outputs[0], 0.3, 0.7, 0.82, 1.12)
   col = g.mix(1.0, img("color", True).outputs[0], macro, "MULTIPLY")
+  if slot.get("tint", 1.0) != 1.0:              # bring a bright scan to the albedo of the real surface
+    col = g.mix(1.0, col, (slot["tint"],) * 3, "MULTIPLY")
   rough = img("roughness", False).outputs[0]
+  if slot.get("roughness_min"):                 # no sheen at grazing angles from a glossy scan
+    rough = g.math("MAXIMUM", rough, slot["roughness_min"])
   normal = g.node("ShaderNodeNormalMap", {"Color": img("normal", False).outputs[0], "Strength": 1.0},
                   space="TANGENT", uv_map="road").outputs[0]
   return col, rough, normal

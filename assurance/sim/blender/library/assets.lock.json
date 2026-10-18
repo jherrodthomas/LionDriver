@@ -25,7 +25,8 @@
      "sha256": "b9a516b61b7040a9245ac206642d5f767ad9589a0169c4a1668221429e8a998c",
      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/asphalt_02/asphalt_02_rough_2k.jpg"
     }
-   }
+   },
+   "tint": 0.5
   },
   "concrete": {
    "source": "ambientcg",
@@ -86,7 +87,8 @@
      "url": "https://ambientcg.com/get?file=Grass004_1K-JPG.zip",
      "member": "_Roughness"
     }
-   }
+   },
+   "roughness_min": 0.8
   },
   "gravel": {
    "source": "polyhaven",
@@ -112,7 +114,8 @@
      "sha256": "5efe350a5e27408bf85c6aebdf725127d7ef064e2c4eaf888fc1a1744e2d7bb6",
      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/gravel_floor_02/gravel_floor_02_rough_1k.jpg"
     }
-   }
+   },
+   "tint": 0.45
   },
   "hdri_clear": {
    "source": "polyhaven",
