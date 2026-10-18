@@ -269,8 +269,10 @@ jobs:
         python3 assurance/sim/reach/reach_inputs.py --check
         python3 assurance/sim/reach/reach_compare.py --check
         python3 assurance/sim/reach/test_reach.py
-    - name: Hazardous-event scene list (assurance/sim/blender; no Blender needed)
-      run: python3 assurance/sim/blender/test_scenes.py
+    - name: Hazardous-event scene list and library, and the asset fetcher against fake answers (assurance/sim/blender; no Blender, no network)
+      run: |
+        python3 assurance/sim/blender/test_scenes.py
+        python3 assurance/sim/blender/test_fetch_assets.py
 
   sim-column:
     name: simulation L2 column

@@ -153,6 +153,17 @@ def is_red(label: str) -> bool:
   return any(w in label for w in ("contact", "barrier", "strikes"))
 
 
+def condition_label(sc: dict) -> str:
+  """'W05 snow or ice' from the scene's condition (library/conditions.yaml); older scene files: from env."""
+  c = sc.get("condition")
+  if c:
+    short = c["title"].split(" (")[0]
+    return f"{c['code']} {short[0].lower() + short[1:]}"
+  env = sc.get("env", {})
+  return ("night" if env.get("night") else ("low sun ahead" if env.get("sun") == "ahead" else "day")) + (
+    ", wet" if env.get("wet") else "")
+
+
 def frame(sc: dict, screen: dict, keys: list[dict], views: dict[str, Path], i: int, thumbs: dict[int, Path]):
   img = Image.new("RGB", (W, H), BG)
   d = ImageDraw.Draw(img)
@@ -171,10 +182,8 @@ def frame(sc: dict, screen: dict, keys: list[dict], views: dict[str, Path], i: i
   d.rounded_rectangle([bx, 8, bx + F["ss"].getlength(cd["badge"]) + 16, 32], 4, fill=CRITICAL)
   d.text((bx + 8, 12), cd["badge"], font=F["ss"], fill="#ffffff")
   src = "Plant (panda code in loop)" if plant else "Kinematic (WP-S-04 values)"
-  env = sc.get("env", {})
-  light = "night" if env.get("night") else ("low sun ahead" if env.get("sun") == "ahead" else "day")
-  light += ", wet" if env.get("wet") else ""
-  fields = [("Motion source", src), ("Road", clip(str(case["road"]), F["bs"], 230)), ("Light", light),
+  fields = [("Motion source", src), ("Road", clip(str(case["road"]), F["bs"], 230)),
+            ("Condition", clip(condition_label(sc), F["bs"], 230)),
             ("Start speed", f"{case['speed_kph']:.0f} km/h"),
             ("Time from trigger", f"{t[i]:+.2f} s  ({t[0]:+.1f} to {t[-1]:+.1f})")]
   x = W - 16

@@ -1,0 +1,125 @@
+# CC0 asset slots of the hazardous-event scenes: sky HDRIs and PBR ground textures from Poly Haven
+# (polyhaven.com, every asset CC0 1.0) and ambientCG (ambientcg.com, every asset CC0 1.0). fetch_assets.py downloads
+# each slot into dest (git-ignored, under assurance/sim/assets/library/) and writes the chosen asset IDs, file names
+# and SHA-256 sums to library/assets.lock.json, which is committed. hazard_scene.py uses a slot's files when they are
+# present and its procedural look when they are not, so CI and offline runs need none of them.
+#
+#   kind         hdri (an equirectangular sky) or pbr (a tiling ground material)
+#   use          what it is for
+#   size_m       pbr: the real-world size one texture tile covers
+#   strength     hdri: background strength (the sun lamp still lights the scene and casts the shadows)
+#   candidates   tried in order: source (polyhaven, ambientcg) and asset ID. These IDs were chosen from the sites'
+#                catalogues without network access (2026-10-18); the first one that resolves is used
+#   search       when no candidate resolves: the source and what to search for (Poly Haven categories, ambientCG
+#                query); the most downloaded match is used
+#   maps         pbr: the texture maps wanted (color, normal, roughness, displacement, ao)
+#   resolution   1k or 2k (Poly Haven) / 1K-JPG or 2K-JPG (ambientCG)
+schema_version: 1
+licence: CC0 1.0 Universal (public domain dedication); no attribution required
+dest: assurance/sim/assets/library
+slots:
+  # ---------------------------------------------------------------------------------------------- skies
+  hdri_clear:
+    kind: hdri
+    use: W01 dry daylight (sky clear or partly cloudy)
+    strength: 0.6
+    resolution: 2k
+    candidates:
+      - {source: polyhaven, id: kloofendal_48d_partly_cloudy_puresky}
+      - {source: polyhaven, id: kloofendal_43d_clear_puresky}
+      - {source: ambientcg, id: DaySkyHDRI019A}
+    search: {source: polyhaven, categories: [skies, clear]}
+
+  hdri_overcast:
+    kind: hdri
+    use: W02, W04, W05, W06 (overcast sky, soft light)
+    strength: 0.8
+    resolution: 2k
+    candidates:
+      - {source: polyhaven, id: overcast_soil_puresky}
+      - {source: polyhaven, id: kloofendal_overcast_puresky}
+      - {source: ambientcg, id: DaySkyHDRI038A}
+    search: {source: polyhaven, categories: [skies, overcast]}
+
+  hdri_low_sun:
+    kind: hdri
+    use: TC-01 low sun ahead (sunrise or sunset)
+    strength: 0.6
+    resolution: 2k
+    candidates:
+      - {source: polyhaven, id: spruit_sunrise}
+      - {source: polyhaven, id: kloofendal_misty_morning_puresky}
+      - {source: ambientcg, id: EveningSkyHDRI015A}
+    search: {source: polyhaven, categories: [skies, sunrise-sunset]}
+
+  hdri_night:
+    kind: hdri
+    use: W03 night (dark sky with some ambient light)
+    strength: 0.4
+    resolution: 2k
+    candidates:
+      - {source: polyhaven, id: moonless_golf}
+      - {source: polyhaven, id: dikhololo_night}
+      - {source: ambientcg, id: NightSkyHDRI008}
+    search: {source: polyhaven, categories: [skies, night]}
+
+  # ---------------------------------------------------------------------------------------------- ground
+  asphalt:
+    kind: pbr
+    use: Carriageway, parking lane and the highway shoulder
+    size_m: 4.0
+    resolution: 2k
+    maps: [color, normal, roughness]
+    candidates:
+      - {source: polyhaven, id: asphalt_02}
+      - {source: ambientcg, id: Asphalt012}
+      - {source: ambientcg, id: Road007}
+    search: {source: ambientcg, query: asphalt}
+
+  grass:
+    kind: pbr
+    use: Verges and fields
+    size_m: 3.0
+    resolution: 1k
+    maps: [color, normal, roughness]
+    candidates:
+      - {source: polyhaven, id: aerial_grass_rock}
+      - {source: ambientcg, id: Grass004}
+      - {source: ambientcg, id: Grass001}
+    search: {source: ambientcg, query: grass}
+
+  gravel:
+    kind: pbr
+    use: Rural shoulders
+    size_m: 2.0
+    resolution: 1k
+    maps: [color, normal, roughness]
+    candidates:
+      - {source: polyhaven, id: gravelly_sand}
+      - {source: ambientcg, id: Gravel022}
+      - {source: ambientcg, id: Gravel023}
+    search: {source: ambientcg, query: gravel}
+
+  concrete:
+    kind: pbr
+    use: Sidewalks, overpass, kerbs
+    size_m: 3.0
+    resolution: 1k
+    maps: [color, normal, roughness]
+    candidates:
+      - {source: polyhaven, id: concrete_floor_02}
+      - {source: ambientcg, id: Concrete034}
+      - {source: ambientcg, id: PavingStones130}
+    search: {source: ambientcg, query: concrete}
+
+  snow:
+    kind: pbr
+    use: Verges and shoulders under W05
+    size_m: 3.0
+    resolution: 1k
+    maps: [color, normal, roughness]
+    candidates:
+      - {source: polyhaven, id: snow_02}
+      - {source: ambientcg, id: Snow006}
+      - {source: ambientcg, id: Snow010A}
+    search: {source: ambientcg, query: snow}

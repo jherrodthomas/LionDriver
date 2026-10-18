@@ -1,0 +1,157 @@
+# Environments of the hazardous-event scenes: the static world a scene happens in. Each one represents operational
+# situations of the HARA (OS-, WP-C-03 §3) and lists the conditions (library/conditions.yaml) it may be drawn under.
+# A scene names one with `environment:`; its own `road:` fields override the environment's, its own `props:` and
+# `env:` are added to the environment's. test_scenes.py checks that every scene and variant uses an allowed condition.
+#
+#   title        what the environment is
+#   os           the operational situations it represents (WP-C-03 §3)
+#   odd          in or outside the highway-only ODD (WP-C-02 §3, DQ-023)
+#   conditions   the conditions it may be drawn under (W01..W06, TC-01)
+#   road         the cross-section (export_scene.road_layout): type (highway, rural, urban), lanes_left, lanes_right,
+#                lane_width, shoulder_m, barrier, worn_markings, scenery (trees, open, urban), geometry (kinematic
+#                scenes: straight, curve@a_y, rcurve@a_y; a plant scene takes its geometry from its plant case)
+#   geometry     what a plant case on this environment must drive: straight, curve (left or right) or any
+#   props        road furniture and fixed features, in road coordinates (ds_m ahead of the ego at t = 0; d left of the
+#                ego lane's centre): posts (delineators every every_m at d), lamps (lighting columns every every_m at
+#                d; lit at night), sign (a panel at ds_m, d: style warning, guide, works, speed), gantry (an overhead
+#                sign at ds_m, text), barrels (drums at d every every_m from from_ds to to_ds), overpass,
+#                intersection, traffic_light, cones (a contact obstacle), seam (a dark line the camera may
+#                follow)
+#   env          adjustments to the condition's look for this environment (sun_elevation_min: buildings hide a lower
+#                sun)
+#   traffic      the default traffic preset (library/traffic.yaml)
+schema_version: 1
+environments:
+  highway-free-flow:
+    title: Limited-access highway, three lanes, straight or gentle curve, barrier beyond the right shoulder
+    os: [OS-01, OS-05, OS-07, OS-08, OS-09, OS-10, OS-12, OS-13, OS-17, OS-18]
+    odd: in
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    road: {type: highway, lanes_left: 1, lanes_right: 1, lane_width: 3.7, shoulder_m: 3.0, barrier: true,
+           scenery: trees, geometry: straight}
+    geometry: any
+    props:
+      - {kind: posts, d: 7.0, every_m: 50}
+      - {kind: sign, ds_m: 140, d: -10.0, style: speed, text: "65"}
+    traffic: none
+
+  highway-curve:
+    title: Highway curve near R_ODD (2.5 m/s² at the travel speed), barrier on the outside
+    os: [OS-02]
+    odd: in
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    road: {type: highway, lanes_left: 1, lanes_right: 1, lane_width: 3.7, shoulder_m: 3.0, barrier: true,
+           scenery: trees, geometry: curve-odd-bound}
+    geometry: curve
+    props:
+      - {kind: posts, d: 7.0, every_m: 25}
+      - {kind: sign, ds_m: 30, d: -10.0, style: warning, text: curve}
+    traffic: none
+
+  highway-interchange:
+    title: Highway at an interchange, under an overpass, with an overhead guide sign
+    os: [OS-01, OS-08]
+    odd: in
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    road: {type: highway, lanes_left: 1, lanes_right: 1, lane_width: 3.7, shoulder_m: 3.0, barrier: true,
+           scenery: open, geometry: straight}
+    geometry: straight
+    props:
+      - {kind: overpass, ds_m: 12}
+      - {kind: gantry, ds_m: 95, text: EXIT 24}
+      - {kind: lamps, d: -9.6, every_m: 45}
+      - {kind: posts, d: 7.0, every_m: 50}
+    traffic: none
+
+  highway-queue:
+    title: Highway approaching stationary or slow traffic (end of a queue)
+    os: [OS-06, OS-07]
+    odd: in
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    road: {type: highway, lanes_left: 1, lanes_right: 1, lane_width: 3.7, shoulder_m: 3.0, barrier: true,
+           scenery: trees, geometry: straight}
+    geometry: straight
+    props:
+      - {kind: posts, d: 7.0, every_m: 50}
+    traffic: none
+
+  highway-worn-markings:
+    title: Highway with faded lane markings and tar seams (TC-05)
+    os: [OS-01]
+    odd: in
+    conditions: [W01, W02, W03, W04, W06, TC-01]   # W05: snow hides the markings the scene is about
+    road: {type: highway, lanes_left: 1, lanes_right: 1, lane_width: 3.7, shoulder_m: 3.0, barrier: true,
+           worn_markings: true, scenery: trees, geometry: straight}
+    geometry: straight
+    props:
+      - {kind: posts, d: 7.0, every_m: 50}
+    traffic: none
+
+  highway-construction:
+    title: Highway work zone with a lane-closing cone taper (TC-06); outside the ODD
+    os: [OS-14]
+    odd: outside
+    conditions: [W01, W02, W03, W04, W06]           # W05: no winter work zone in the catalogue
+    road: {type: highway, lanes_left: 1, lanes_right: 1, lane_width: 3.7, shoulder_m: 3.0, barrier: true,
+           scenery: trees, geometry: straight}
+    geometry: straight
+    props:
+      - {kind: sign, ds_m: 10, d: -10.0, style: works, text: ROAD WORK}
+      - kind: cones
+        points: [[40, -1.85], [46, -1.48], [52, -1.11], [58, -0.74], [64, -0.37], [70, 0.0], [76, 0.37], [82, 0.74],
+                 [88, 1.11], [94, 1.48], [100, 1.85], [112, 1.85], [124, 1.85], [136, 1.85], [148, 1.85]]
+      - {kind: barrels, d: -7.6, from_ds: 30, to_ds: 160, every_m: 12}
+    traffic: none
+
+  rural-undivided:
+    title: Undivided two-lane rural road, gravel shoulders, oncoming traffic; outside the ODD
+    os: [OS-03]
+    odd: outside
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    road: {type: rural, lanes_left: 1, lanes_right: 0, lane_width: 3.5, shoulder_m: 1.0, scenery: trees,
+           geometry: straight}
+    geometry: any
+    props:
+      - {kind: posts, d: -3.0, every_m: 50}
+      - {kind: posts, d: 6.5, every_m: 50}
+    traffic: none
+
+  rural-curve:
+    title: Rural curve with oncoming traffic; outside the ODD
+    os: [OS-16]
+    odd: outside
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    road: {type: rural, lanes_left: 1, lanes_right: 0, lane_width: 3.5, shoulder_m: 1.0, scenery: trees,
+           geometry: "rcurve@2.0"}
+    geometry: curve
+    props:
+      - {kind: posts, d: -3.0, every_m: 25}
+      - {kind: posts, d: 6.5, every_m: 25}
+      - {kind: sign, ds_m: 25, d: -3.5, style: warning, text: curve}
+    traffic: none
+
+  urban-arterial:
+    title: Urban arterial with parking, sidewalks and buildings; pedestrians and cyclists near the lane edge; outside
+      the ODD
+    os: [OS-04, OS-06]
+    odd: outside
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    road: {type: urban, lanes_left: 1, lanes_right: 0, lane_width: 3.3, scenery: urban, geometry: straight}
+    geometry: any
+    props: []
+    env: {sun_elevation_min: 12}
+    traffic: none
+
+  urban-intersection:
+    title: Signalised urban intersection with cross traffic; outside the ODD
+    os: [OS-15]
+    odd: outside
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    road: {type: urban, lanes_left: 1, lanes_right: 0, lane_width: 3.3, scenery: urban, geometry: straight}
+    geometry: straight
+    props:
+      - {kind: intersection, ds_m: 60, width: 14}
+      - {kind: traffic_light, ds_m: 52, d: -3.9, state: red}
+      - {kind: traffic_light, ds_m: 52, d: 5.6, state: red}
+    env: {sun_elevation_min: 12}
+    traffic: none

@@ -1,24 +1,71 @@
 """Blender building blocks of the hazardous-event scenes: materials, the road from its cross-section, scenery, the
-environment (sun, sky, wet road, night), the reference car from the purchased mesh (instanced, repainted per road
-user), and simple procedural road users (truck, pedestrian, cyclist) and the silhouette stand-in car.
+environment and weather (sky, sun, overcast, night, wet road, rain, snow, fog, low-sun glare), the reference car from
+the purchased mesh (instanced, repainted per road user), and simple procedural road users (truck, pedestrian,
+cyclist) and the silhouette stand-in car.
+
+Ground materials and skies use the CC0 assets of library/assets.yaml when fetch_assets.py has put them on disk
+(library/assets.lock.json names the files), and a procedural look otherwise: noise-varied asphalt with grain, stones,
+bump and polished wheel tracks; varied grass with dry patches; gravel; concrete slabs; Nishita or overcast skies.
+Every condition (wet, puddles, snow, slush, ice) is layered on either.
 
 Imported by hazard_scene.py; runs in Blender (bpy). Units are metres; a road user's origin is on the ground under
-its body centre, forward +X.
+its body centre, forward +X. Road surfaces carry a UV map "road" in metres: u is the lateral offset from the ego
+lane's centre (left positive), v the arc length.
 """
 
 from __future__ import annotations
 
 import json
 import math
+import os
 import random
 from pathlib import Path
 
 import bmesh
 import bpy
-from mathutils import Matrix
+from mathutils import Matrix, Vector, noise
 
 HERE = Path(__file__).resolve().parent
 SILHOUETTE = HERE.parent / "figures" / "corolla-e210-silhouette.json"
+ASSET_LOCK = HERE / "library" / "assets.lock.json"
+ASSET_DIR = HERE.parents[2] / "assurance" / "sim" / "assets" / "library"
+SNOW_RGB = (0.80, 0.82, 0.86)
+
+
+# ------------------------------------------------------------------------------------------------- assets
+class Assets:
+  """The CC0 slots fetched by fetch_assets.py. A slot is used only when every file the lock names is on disk;
+  otherwise the scene falls back to the procedural look for that slot."""
+
+  def __init__(self, lock: Path | None = None, root: Path | None = None):
+    lock = lock or Path(os.environ.get("LIONDRIVER_ASSET_LOCK") or ASSET_LOCK)
+    root = root or Path(os.environ.get("LIONDRIVER_ASSET_LIBRARY") or ASSET_DIR)
+    self.slots = {}
+    if lock.exists():
+      for name, s in json.loads(lock.read_text()).get("slots", {}).items():
+        files = {m: root / f["path"] for m, f in s["files"].items()}
+        if all(p.exists() for p in files.values()):
+          self.slots[name] = {**s, "files": files}
+    print("assets: " + (", ".join(f"{k} ({v['id']})" for k, v in sorted(self.slots.items())) or "none (procedural)"))
+
+  def get(self, name: str):
+    return self.slots.get(name)
+
+  def image(self, path: Path, colour: bool):
+    im = bpy.data.images.load(str(path), check_existing=True)
+    if not colour:
+      im.colorspace_settings.name = "Non-Color"
+    return im
+
+
+NO_ASSETS = None
+
+
+def no_assets() -> Assets:
+  global NO_ASSETS
+  if NO_ASSETS is None:
+    NO_ASSETS = Assets(lock=Path("/nonexistent"))
+  return NO_ASSETS
 
 
 # ------------------------------------------------------------------------------------------------- materials
@@ -71,23 +118,271 @@ def facade_material(name: str, wall, glass=(0.05, 0.07, 0.09), lit: float = 0.0)
   br.inputs["Color2"].default_value = (*glass, 1)
   br.inputs["Mortar"].default_value = (*wall, 1)
   nt.links.new(tc.outputs["Object"], br.inputs["Vector"])
-  nt.links.new(br.outputs["Color"], b.inputs["Base Color"])
-  nt.links.new(br.outputs["Fac"], b.inputs["Roughness"])
+  nt.links.new(br.outputs[0], b.inputs["Base Color"])
+  nt.links.new(br.outputs[1], b.inputs["Roughness"])
   if lit:
     inv = nt.nodes.new("ShaderNodeMath")
     inv.operation = "SUBTRACT"
     inv.inputs[0].default_value = 1.0
-    nt.links.new(br.outputs["Fac"], inv.inputs[1])
+    nt.links.new(br.outputs[1], inv.inputs[1])
     nt.links.new(inv.outputs[0], b.inputs["Emission Strength"])
     b.inputs["Emission Color"].default_value = (1.0, 0.8, 0.5, 1)
   return m
 
 
+# ------------------------------------------------------------------------------------------------- shader nodes
+class Graph:
+  """A small helper over a material's node tree: nodes from a type and inputs (values or sockets), outputs by index
+  (socket names differ between Blender 4.2 and 5.x)."""
+
+  def __init__(self, mat):
+    self.nt = mat.node_tree
+    self.bsdf = self.nt.nodes["Principled BSDF"]
+
+  def node(self, kind: str, inputs: dict | None = None, **props):
+    n = self.nt.nodes.new(kind)
+    for k, v in props.items():
+      setattr(n, k, v)
+    for k, v in (inputs or {}).items():
+      self.set(n.inputs[k], v)
+    return n
+
+  def set(self, sock, v):
+    if isinstance(v, bpy.types.NodeSocket):
+      self.nt.links.new(v, sock)
+    elif sock.type == "RGBA" and isinstance(v, (tuple, list)) and len(v) == 3:
+      sock.default_value = (*v, 1.0)
+    else:
+      sock.default_value = v
+
+  def uv(self):
+    return self.node("ShaderNodeUVMap", uv_map="road").outputs[0]
+
+  def noise(self, vec, scale: float, detail: float = 2.0, rough: float = 0.5):
+    return self.node("ShaderNodeTexNoise", {"Vector": vec, "Scale": scale, "Detail": detail, "Roughness": rough})
+
+  def mix(self, fac, a, b, blend: str = "MIX"):
+    return self.node("ShaderNodeMixRGB", {0: fac, 1: a, 2: b}, blend_type=blend).outputs[0]
+
+  def remap(self, v, a0: float, a1: float, b0: float, b1: float):
+    return self.node("ShaderNodeMapRange", {0: v, 1: a0, 2: a1, 3: b0, 4: b1}, clamp=True).outputs[0]
+
+  def math(self, op: str, a, b=0.0):
+    return self.node("ShaderNodeMath", {0: a, 1: b}, operation=op).outputs[0]
+
+  def bump(self, height, strength: float, distance: float, normal=None):
+    n = self.node("ShaderNodeBump", {"Strength": strength, "Distance": distance, "Height": height})
+    if normal is not None:
+      self.set(n.inputs["Normal"], normal)
+    return n.outputs[0]
+
+  def finish(self, col, rough, normal=None):
+    self.set(self.bsdf.inputs["Base Color"], col)
+    self.set(self.bsdf.inputs["Roughness"], rough)
+    if normal is not None:
+      self.set(self.bsdf.inputs["Normal"], normal)
+
+
+def _pbr(g: Graph, slot: dict, assets: Assets):
+  """(colour, roughness, normal) sockets of a fetched texture set on the road UVs, with a large-scale tint variation
+  so the tiling does not show."""
+  vec = g.node("ShaderNodeMapping", {"Vector": g.uv(), "Scale": (1 / slot["size_m"],) * 3}).outputs[0]
+  img = lambda m, colour: g.node("ShaderNodeTexImage", {"Vector": vec}, image=assets.image(slot["files"][m], colour))
+  macro = g.remap(g.noise(g.uv(), 0.04, 3).outputs[0], 0.3, 0.7, 0.82, 1.12)
+  col = g.mix(1.0, img("color", True).outputs[0], macro, "MULTIPLY")
+  rough = img("roughness", False).outputs[0]
+  normal = g.node("ShaderNodeNormalMap", {"Color": img("normal", False).outputs[0], "Strength": 1.0},
+                  space="TANGENT", uv_map="road").outputs[0]
+  return col, rough, normal
+
+
+def _weather_layer(g: Graph, col, rough, normal, env: dict, tracks=None, puddles: bool = True):
+  """Wet darkening and gloss, puddles in low spots, snow or slush cover (off the wheel tracks), ice gloss."""
+  w = float(env.get("wet", 0.0) or 0.0)
+  s = float(env.get("snow", 0.0) or 0.0)
+  if w > 0:
+    col = g.mix(w * 0.55, col, g.mix(1.0, col, (0.42, 0.42, 0.44), "MULTIPLY"))
+    rough = g.math("MULTIPLY", rough, 1.0 - 0.7 * w)
+    if puddles and w > 0.5:
+      t0 = 0.66 - 0.16 * (w - 0.5) * 2
+      pud = g.remap(g.noise(g.uv(), 0.18, 3).outputs[0], t0, t0 + 0.03, 0.0, 1.0)
+      if tracks is not None:
+        pud = g.math("MAXIMUM", pud, g.math("MULTIPLY", tracks, 0.8 * w))
+      rough = g.node("ShaderNodeMix", {0: pud, 2: rough, 3: 0.02}, data_type="FLOAT").outputs[0]
+      col = g.mix(pud, col, g.mix(1.0, col, (0.6, 0.6, 0.62), "MULTIPLY"))
+  if s > 0:
+    lo, hi = (0.62 - 0.22 * s, 0.7 - 0.15 * s) if tracks is not None else (0.62 - 0.35 * s, 0.7 - 0.25 * s)
+    cover = g.remap(g.noise(g.uv(), 1.6, 3).outputs[0], lo, hi, 0.0, 1.0)
+    if tracks is not None:                       # slush beside and between the wheel tracks, dark wet tracks
+      cover = g.math("MULTIPLY", cover, g.math("SUBTRACT", 1.0, tracks))
+      cover = g.math("MULTIPLY", cover, 0.85)
+    col = g.mix(cover, col, SNOW_RGB)
+    rough = g.node("ShaderNodeMix", {0: cover, 2: rough, 3: 0.55}, data_type="FLOAT").outputs[0]
+  if env.get("ice") and tracks is not None:
+    rough = g.node("ShaderNodeMix", {0: g.math("MULTIPLY", tracks, 0.7), 2: rough, 3: 0.04},
+                   data_type="FLOAT").outputs[0]
+  return col, rough, normal
+
+
+def _tracks(g: Graph, lane_width: float):
+  """1 on the wheel tracks of every lane (0.8 m either side of its centre), 0 between them."""
+  u = g.node("ShaderNodeSeparateXYZ", {0: g.uv()}).outputs[0]
+  p = g.math("FRACT", g.math("DIVIDE", g.math("ADD", u, lane_width / 2), lane_width))
+  centre = g.math("MULTIPLY", g.math("ABSOLUTE", g.math("SUBTRACT", p, 0.5)), lane_width)
+  return g.remap(g.math("ABSOLUTE", g.math("SUBTRACT", centre, 0.8)), 0.0, 0.45, 1.0, 0.0)
+
+
+def asphalt_material(name: str, env: dict, assets: Assets, lane_width: float = 3.7, tracks: bool = True,
+                     tint: float = 1.0):
+  m = bpy.data.materials.get(name)
+  if m:
+    return m
+  m = bpy.data.materials.new(name)
+  m.use_nodes = True
+  g = Graph(m)
+  uv = g.uv()
+  slot = assets.get("asphalt")
+  if slot:
+    col, rough, normal = _pbr(g, slot, assets)
+    col = g.mix(1.0, col, (tint,) * 3, "MULTIPLY")
+  else:
+    big = g.noise(uv, 0.06, 3).outputs[0]                       # resurfacing patches
+    mid = g.noise(uv, 0.7, 4).outputs[0]
+    grain = g.noise(uv, 22.0, 2).outputs[0]
+    cells = g.node("ShaderNodeTexVoronoi", {"Vector": uv, "Scale": 75.0})
+    stones = g.node("ShaderNodeValToRGB", {0: cells.outputs[1]})
+    stones.color_ramp.elements[0].position, stones.color_ramp.elements[1].position = 0.86, 0.9
+    base = g.mix(big, tuple(tint * v for v in (0.032, 0.032, 0.034)), tuple(tint * v for v in (0.064, 0.061, 0.058)))
+    base = g.mix(g.remap(mid, 0.3, 0.7, 0.0, 0.5), base, tuple(tint * v for v in (0.024, 0.024, 0.025)))
+    base = g.mix(1.0, base, g.remap(grain, 0.25, 0.75, 0.7, 1.3), "MULTIPLY")
+    col = g.mix(g.math("MULTIPLY", stones.outputs[0], 0.6), base, (0.24, 0.235, 0.22))
+    rough = g.remap(mid, 0.2, 0.8, 0.8, 0.92)
+    normal = g.bump(g.math("ADD", grain, g.math("MULTIPLY", stones.outputs[0], 0.5)), 0.22, 0.008)
+  tr = _tracks(g, lane_width) if tracks else None
+  if tr is not None:                             # polished, darker wheel tracks
+    col = g.mix(g.math("MULTIPLY", tr, 0.45), col, g.mix(1.0, col, (0.68, 0.68, 0.68), "MULTIPLY"))
+    rough = g.math("SUBTRACT", rough, g.math("MULTIPLY", tr, 0.12))
+  col, rough, normal = _weather_layer(g, col, rough, normal, env, tr)
+  g.finish(col, rough, normal)
+  m.diffuse_color = (0.05, 0.05, 0.055, 1)
+  return m
+
+
+def grass_material(name: str, env: dict, assets: Assets):
+  m = bpy.data.materials.get(name)
+  if m:
+    return m
+  m = bpy.data.materials.new(name)
+  m.use_nodes = True
+  g = Graph(m)
+  uv = g.uv()
+  slot = assets.get("grass")
+  n2 = g.noise(uv, 0.6, 4).outputs[0]
+  n3 = g.noise(uv, 9.0, 3).outputs[0]
+  if slot:
+    col, rough, normal = _pbr(g, slot, assets)
+  else:
+    n1 = g.noise(uv, 0.04, 3).outputs[0]
+    col = g.mix(n1, (0.055, 0.12, 0.03), (0.11, 0.155, 0.045))
+    col = g.mix(g.remap(n2, 0.56, 0.72, 0.0, 0.65), col, (0.2, 0.17, 0.07))             # dry patches
+    col = g.mix(1.0, col, g.remap(n3, 0.2, 0.8, 0.65, 1.25), "MULTIPLY")
+    u = g.math("ABSOLUTE", g.node("ShaderNodeSeparateXYZ", {0: uv}).outputs[0])
+    far = g.remap(g.math("ADD", u, g.math("MULTIPLY", n2, 8.0)), 14.0, 26.0, 0.0, 1.0)  # mown verge, then meadow
+    col = g.mix(g.math("MULTIPLY", far, 0.55), col, g.mix(n1, (0.05, 0.085, 0.03), (0.16, 0.15, 0.06)))
+    rough = 0.95
+    normal = g.bump(n3, 0.5, 0.03)
+  w = float(env.get("wet", 0.0) or 0.0)
+  if w:
+    col = g.mix(w * 0.4, col, g.mix(1.0, col, (0.6, 0.62, 0.6), "MULTIPLY"))
+    rough = g.math("MULTIPLY", rough, 1.0 - 0.35 * w)
+  s = float(env.get("snow", 0.0) or 0.0)
+  if s:                                          # snow cover with grass showing through in places
+    cover = g.remap(g.math("ADD", g.math("MULTIPLY", n2, 0.6), g.math("MULTIPLY", n3, 0.4)), 0.62 - 0.27 * s,
+                    0.7 - 0.18 * s, 0.0, 1.0)
+    col = g.mix(cover, col, SNOW_RGB)
+    rough = g.node("ShaderNodeMix", {0: cover, 2: rough, 3: 0.6}, data_type="FLOAT").outputs[0]
+  g.finish(col, rough, normal)
+  m.diffuse_color = (0.08, 0.15, 0.05, 1)
+  return m
+
+
+def gravel_material(name: str, env: dict, assets: Assets):
+  m = bpy.data.materials.get(name)
+  if m:
+    return m
+  m = bpy.data.materials.new(name)
+  m.use_nodes = True
+  g = Graph(m)
+  uv = g.uv()
+  slot = assets.get("gravel")
+  if slot:
+    col, rough, normal = _pbr(g, slot, assets)
+  else:
+    cells = g.node("ShaderNodeTexVoronoi", {"Vector": uv, "Scale": 28.0})
+    ramp = g.node("ShaderNodeValToRGB", {0: cells.outputs[1]})
+    ramp.color_ramp.elements[0].color = (0.13, 0.12, 0.10, 1)
+    ramp.color_ramp.elements[1].color = (0.33, 0.30, 0.26, 1)
+    col = g.mix(g.remap(g.noise(uv, 0.3, 2).outputs[0], 0.3, 0.7, 0.0, 0.4), ramp.outputs[0], (0.18, 0.16, 0.12))
+    rough = 0.95
+    normal = g.bump(g.math("SUBTRACT", 1.0, cells.outputs[0]), 0.6, 0.02)
+  col, rough, normal = _weather_layer(g, col, rough, normal, env, None, puddles=False)
+  g.finish(col, rough, normal)
+  m.diffuse_color = (0.22, 0.2, 0.17, 1)
+  return m
+
+
+def concrete_material(name: str, env: dict, assets: Assets, slab: float = 1.5):
+  m = bpy.data.materials.get(name)
+  if m:
+    return m
+  m = bpy.data.materials.new(name)
+  m.use_nodes = True
+  g = Graph(m)
+  uv = g.uv()
+  slot = assets.get("concrete")
+  if slot:
+    col, rough, normal = _pbr(g, slot, assets)
+  else:
+    br = g.node("ShaderNodeTexBrick", {"Vector": uv, "Scale": 1.0 / slab, "Mortar Size": 0.012,
+                                        "Brick Width": 1.0, "Row Height": 1.0, "Color1": (0.44, 0.43, 0.41),
+                                        "Color2": (0.40, 0.39, 0.37), "Mortar": (0.22, 0.22, 0.21)}, offset=0.0)
+    n = g.noise(uv, 3.0, 4).outputs[0]
+    col = g.mix(1.0, br.outputs[0], g.remap(n, 0.3, 0.7, 0.85, 1.12), "MULTIPLY")
+    rough = 0.88
+    normal = g.bump(g.math("ADD", g.math("MULTIPLY", br.outputs[1], -0.6), g.math("MULTIPLY", n, 0.2)), 0.3, 0.01)
+  col, rough, normal = _weather_layer(g, col, rough, normal, env, None, puddles=False)
+  g.finish(col, rough, normal)
+  m.diffuse_color = (0.42, 0.41, 0.39, 1)
+  return m
+
+
+def marking_material(name: str, rgb, env: dict, rough: float = 0.5):
+  """Lane paint: glossier when wet, partly under snow."""
+  m = bpy.data.materials.get(name)
+  if m:
+    return m
+  m = bpy.data.materials.new(name)
+  m.use_nodes = True
+  g = Graph(m)
+  w = float(env.get("wet", 0.0) or 0.0)
+  col, r = rgb, rough * (1.0 - 0.6 * w)
+  if env.get("snow"):
+    cover = g.remap(g.noise(g.uv(), 1.6, 3).outputs[0], 0.62 - 0.22 * env["snow"], 0.7 - 0.15 * env["snow"], 0, 0.7)
+    col = g.mix(cover, rgb, SNOW_RGB)
+  g.finish(col, r)
+  m.diffuse_color = (*rgb, 1)
+  return m
+
+
 # ------------------------------------------------------------------------------------------------- meshes
-def mesh_object(name: str, verts, faces, mat=None, coll=None, smooth=False):
+def mesh_object(name: str, verts, faces, mat=None, coll=None, smooth=False, uvs=None):
   me = bpy.data.meshes.new(name)
   me.from_pydata(verts, [], faces)
   me.update()
+  if uvs is not None:
+    layer = me.uv_layers.new(name="road")
+    for loop in me.loops:
+      layer.data[loop.index].uv = uvs[loop.vertex_index]
   if smooth:
     for p in me.polygons:
       p.use_smooth = True
@@ -112,10 +407,10 @@ def box_mesh(name: str, sx: float, sy: float, sz: float, z0: float = 0.0, mat=No
   return me
 
 
-def cyl_mesh(name: str, r: float, length: float, axis: str = "Z", segs: int = 16, mat=None):
+def cyl_mesh(name: str, r: float, length: float, axis: str = "Z", segs: int = 16, mat=None, r2: float | None = None):
   me = bpy.data.meshes.new(name)
   bm = bmesh.new()
-  bmesh.ops.create_cone(bm, cap_ends=True, segments=segs, radius1=r, radius2=r, depth=length)
+  bmesh.ops.create_cone(bm, cap_ends=True, segments=segs, radius1=r, radius2=r if r2 is None else r2, depth=length)
   rot = {"Z": Matrix.Identity(3), "X": Matrix.Rotation(math.pi / 2, 3, "Y"), "Y": Matrix.Rotation(math.pi / 2, 3, "X")}
   bmesh.ops.rotate(bm, matrix=rot[axis], verts=bm.verts)
   for f in bm.faces:
@@ -127,10 +422,16 @@ def cyl_mesh(name: str, r: float, length: float, axis: str = "Z", segs: int = 16
   return me
 
 
-def sphere_mesh(name: str, r: float, subdiv: int = 2, mat=None):
+def sphere_mesh(name: str, r: float, subdiv: int = 2, mat=None, lumpy: float = 0.0, seed: int = 0):
+  """An icosphere; lumpy > 0 pushes its surface in and out with smooth noise (tree crowns)."""
   me = bpy.data.meshes.new(name)
   bm = bmesh.new()
   bmesh.ops.create_icosphere(bm, subdivisions=subdiv, radius=r)
+  if lumpy:
+    off = Vector((seed * 7.1, seed * 3.3, seed * 1.7))
+    for v in bm.verts:
+      n = v.co.normalized()
+      v.co += n * r * lumpy * noise.noise(v.co * (1.6 / r) + off)
   for f in bm.faces:
     f.smooth = True
   bm.to_mesh(me)
@@ -161,9 +462,9 @@ def offset(c, d: float, z: float = 0.0):
 
 
 def strip(name, centre, d0: float, d1: float, z: float, mat, coll, s_ranges=None, z1: float | None = None):
-  """A ribbon between lateral offsets d0 and d1 (left positive) at height z (sloping to z1 at d1 if given);
-  s_ranges limits it to dashes."""
-  verts, faces = [], []
+  """A ribbon between lateral offsets d0 and d1 (left positive) at height z (sloping to z1 at d1 if given), with UVs
+  in metres (u lateral, v along); s_ranges limits it to dashes."""
+  verts, faces, uvs = [], [], []
   z1 = z if z1 is None else z1
   for i in range(len(centre) - 1):
     a, b = centre[i], centre[i + 1]
@@ -171,8 +472,9 @@ def strip(name, centre, d0: float, d1: float, z: float, mat, coll, s_ranges=None
       continue
     k = len(verts)
     verts += [offset(a, d0, z), offset(a, d1, z1), offset(b, d1, z1), offset(b, d0, z)]
+    uvs += [(d0, a[3]), (d1, a[3]), (d1, b[3]), (d0, b[3])]
     faces.append((k, k + 1, k + 2, k + 3))
-  return mesh_object(name, verts, faces, mat, coll)
+  return mesh_object(name, verts, faces, mat, coll, uvs=uvs)
 
 
 def wall(name, centre, d: float, z0: float, z1: float, mat, coll, thick: float = 0.0):
@@ -191,26 +493,26 @@ def dash_ranges(c, dash: float, gap: float):
   return [(s, s + dash) for s in [s0 + (dash + gap) * i for i in range(int((s1 - s0) / (dash + gap)) + 1)]]
 
 
-def build_road(r: dict, env: dict):
+def build_road(r: dict, env: dict, assets: Assets | None = None):
   """The road from its cross-section (export_scene.py road_layout): surfaces, markings, kerbs, barrier, crossings."""
+  assets = assets or no_assets()
   c = r["centre"]
   coll = bpy.data.collections.new("road")
   bpy.context.scene.collection.children.link(coll)
-  wet = env.get("wet", False)
-  asphalt = material("asphalt_wet" if wet else "asphalt", (0.03, 0.03, 0.035) if wet else (0.05, 0.05, 0.055),
-                     rough=0.12 if wet else 0.85)
+  lw = r["lane_width"]
+  asphalt = asphalt_material("asphalt", env, assets, lw)
   mats = {
     "asphalt": asphalt,
-    "shoulder": material("shoulder", (0.08, 0.08, 0.085), rough=0.12 if wet else 0.9),
-    "gravel": material("gravel", (0.22, 0.2, 0.17), rough=1.0),
-    "parking": asphalt,
-    "sidewalk": material("sidewalk", (0.42, 0.41, 0.39), rough=0.9),
-    "grass": material("grass", (0.08, 0.15, 0.05), rough=1.0),
-    "median": material("median", (0.08, 0.15, 0.05), rough=1.0),
+    "shoulder": asphalt_material("shoulder", env, assets, lw, tracks=False, tint=1.25),
+    "gravel": gravel_material("gravel", env, assets),
+    "parking": asphalt_material("parking", env, assets, lw, tracks=False, tint=1.1),
+    "sidewalk": concrete_material("sidewalk", env, assets),
+    "grass": grass_material("grass", env, assets),
+    "median": grass_material("grass", env, assets),
   }
-  white = material("paint_white", (0.85, 0.85, 0.82), rough=0.5)
-  yellow = material("paint_yellow", (0.85, 0.6, 0.05), rough=0.5)
-  worn = material("paint_worn", (0.3, 0.3, 0.29), rough=0.8)
+  white = marking_material("paint_white", (0.85, 0.85, 0.82), env)
+  yellow = marking_material("paint_yellow", (0.85, 0.6, 0.05), env)
+  worn = marking_material("paint_worn", (0.3, 0.3, 0.29), env, rough=0.8)
   kerb = material("kerb", (0.55, 0.55, 0.52), rough=0.8)
   steel = material("barrier", (0.55, 0.57, 0.6), rough=0.35, metal=0.8)
 
@@ -249,37 +551,80 @@ def build_road(r: dict, env: dict):
   return coll
 
 
+def leaves_material(name: str, rgb, env: dict):
+  """Foliage with a little colour variation; snow on the upward-facing parts under W05."""
+  m = bpy.data.materials.get(name)
+  if m:
+    return m
+  m = bpy.data.materials.new(name)
+  m.use_nodes = True
+  g = Graph(m)
+  pos = g.node("ShaderNodeNewGeometry")
+  n = g.noise(pos.outputs["Position"], 1.4, 4).outputs[0]
+  col = g.mix(1.0, rgb, g.remap(n, 0.3, 0.7, 0.65, 1.3), "MULTIPLY")
+  rough = 0.9
+  if env.get("snow"):
+    up = g.node("ShaderNodeSeparateXYZ", {0: pos.outputs["Normal"]}).outputs[2]
+    col = g.mix(g.remap(g.math("ADD", up, g.math("MULTIPLY", n, 0.4)), 0.55, 0.85, 0.0, env["snow"]), col, SNOW_RGB)
+  normal = g.bump(n, 0.6, 0.15)
+  g.finish(col, rough, normal)
+  m.diffuse_color = (*rgb, 1)
+  return m
+
+
 def build_scenery(r: dict, env: dict, seed: int = 7):
-  """Trees, buildings and street lights beside the road, as the road type asks."""
+  """Trees (broadleaf and conifer), buildings and street lights beside the road, as the road's scenery asks:
+  trees (a row either side), open (sparse trees in fields), urban (buildings, street trees, street lights)."""
   rnd = random.Random(seed)
   c = r["centre"]
   coll = bpy.data.collections.new("scenery")
   bpy.context.scene.collection.children.link(coll)
   kind = r["scenery"]
   left_out, right_out = r["outer"]
-  if kind in ("trees", "urban"):
-    trunk = cyl_mesh("trunk", 0.18, 3.0, mat=material("bark", (0.12, 0.08, 0.05), rough=1.0))
-    crowns = [sphere_mesh(f"crown_{k}", 2.2 + 0.4 * k, 2, material(f"leaves_{k}", g, rough=1.0))
-              for k, g in enumerate([(0.06, 0.14, 0.04), (0.08, 0.17, 0.05), (0.05, 0.11, 0.035)])]
+  if kind in ("trees", "urban", "open"):
+    bark = material("bark", (0.12, 0.08, 0.05), rough=1.0)
+    trunk = cyl_mesh("trunk", 0.18, 3.0, mat=bark, r2=0.12)
+    greens = [(0.06, 0.14, 0.04), (0.08, 0.17, 0.05), (0.05, 0.11, 0.035), (0.1, 0.16, 0.04)]
+    crowns = [sphere_mesh(f"crown_{k}", 2.2 + 0.4 * (k % 3), 3, leaves_material(f"leaves_{k}", g, env), 0.22, k)
+              for k, g in enumerate(greens)]
+    conifer_mat = leaves_material("needles", (0.03, 0.08, 0.04), env)
+    conifers = []
+    for k in range(2):
+      me = bpy.data.meshes.new(f"conifer_{k}")
+      bm = bmesh.new()
+      for j, (rad, z) in enumerate(((2.0, 1.2), (1.6, 2.6), (1.15, 3.9), (0.7, 5.0))):
+        geo = bmesh.ops.create_cone(bm, cap_ends=True, segments=10, radius1=rad * (1 + 0.1 * k), radius2=0.05,
+                                    depth=2.4)
+        bmesh.ops.translate(bm, vec=(0, 0, z + 1.2), verts=geo["verts"])
+      bm.to_mesh(me)
+      bm.free()
+      me.materials.append(conifer_mat)
+      conifers.append(me)
     root = empty("trees", coll)
-    step = 14.0 if kind == "trees" else 18.0
-    for side, d_base in ((1, left_out + (3.5 if kind == "trees" else -1.2)),
-                         (-1, right_out - (3.5 if kind == "trees" else -1.2))):
+    step = {"trees": 14.0, "urban": 18.0, "open": 38.0}[kind]
+    for side, d_base in ((1, left_out + (3.5 if kind != "urban" else -1.2)),
+                         (-1, right_out - (3.5 if kind != "urban" else -1.2))):
       s = c[0][3] + rnd.uniform(0, step)
       while s < c[-1][3]:
         p = c[min(int((s - c[0][3]) / (c[1][3] - c[0][3])), len(c) - 1)]
-        d = d_base + side * rnd.uniform(0, 6.0 if kind == "trees" else 0.3)
+        d = d_base + side * rnd.uniform(0, {"trees": 6.0, "urban": 0.3, "open": 40.0}[kind])
         x, y, _ = offset(p, d)
         sc = rnd.uniform(0.8, 1.3) * (0.55 if kind == "urban" else 1.0)
-        t = part("tree", trunk, root, coll, (x, y, 1.5 * sc))
-        t.scale = (sc, sc, sc)
-        cr = part("crown", rnd.choice(crowns), root, coll, (x, y, 3.0 * sc + 1.6 * sc))
-        cr.scale = (sc, sc, sc * 1.15)
+        if kind != "urban" and rnd.random() < (0.55 if env.get("snow") else 0.3):
+          t = part("conifer", rnd.choice(conifers), root, coll, (x, y, 0.0), (0, 0, rnd.uniform(0, 6.28)))
+          t.scale = (sc, sc, sc * rnd.uniform(1.0, 1.4))
+        else:
+          t = part("tree", trunk, root, coll, (x, y, 1.5 * sc))
+          t.scale = (sc, sc, sc)
+          cr = part("crown", rnd.choice(crowns), root, coll, (x, y, 3.0 * sc + 1.6 * sc),
+                    (0, 0, rnd.uniform(0, 6.28)))
+          cr.scale = (sc, sc, sc * 1.15)
         s += step * rnd.uniform(0.6, 1.4)
   if kind == "urban":
     night = env.get("night", False)
     walls = [(0.55, 0.5, 0.45), (0.45, 0.42, 0.4), (0.62, 0.58, 0.5), (0.35, 0.33, 0.33), (0.5, 0.38, 0.3)]
     facades = [facade_material(f"facade_{k}", w, lit=1.5 if night else 0.0) for k, w in enumerate(walls)]
+    roof = material("roof", SNOW_RGB if env.get("snow") else (0.2, 0.2, 0.21), rough=0.8)
     root = empty("buildings", coll)
     for side, d_face in ((1, left_out + 1.0), (-1, right_out - 1.0)):
       s = c[0][3]
@@ -291,7 +636,9 @@ def build_scenery(r: dict, env: dict, seed: int = 7):
         p = c[min(int((mid - c[0][3]) / (c[1][3] - c[0][3])), len(c) - 1)]
         x, y, _ = offset(p, d_face + side * dep / 2)
         me = box_mesh(f"bld_{side}_{s:.0f}", wdt - 1.5, dep, hgt, mat=rnd.choice(facades))
-        ob = part("building", me, root, coll, (x, y, 0), (0, 0, p[2]))
+        part("building", me, root, coll, (x, y, 0), (0, 0, p[2]))
+        part("roof", box_mesh(f"roof_{side}_{s:.0f}", wdt - 1.3, dep + 0.2, 0.3, hgt, roof), root, coll, (x, y, 0),
+             (0, 0, p[2]))
         s += wdt + (12.0 if r.get("crosswalks") and any(abs(mid - cs) < 14 for cs in r["crosswalks"]) else 0.0)
     pole = cyl_mesh("lamp_pole", 0.08, 7.0, mat=material("pole", (0.2, 0.2, 0.22), rough=0.5, metal=0.6))
     lroot = empty("street_lights", coll)
@@ -309,18 +656,28 @@ def build_scenery(r: dict, env: dict, seed: int = 7):
 
 
 # ------------------------------------------------------------------------------------------------- environment
-def build_environment(env: dict, heading: float):
-  """Sky and sun. env['sun']: 'behind' (default), 'ahead' (low sun in the driver's eyes: glare) or 'side';
-  env['night']: no sun, dim sky; env['fog']: volumetric haze. heading: road heading at the ego's start."""
+def sun_colour(elev_deg: float):
+  """Warm near the horizon, near white high up."""
+  f = max(0.0, min(1.0, (elev_deg - 3.0) / 35.0))
+  return (1.0, 0.7 + 0.24 * f, 0.45 + 0.42 * f)
+
+
+def build_environment(env: dict, heading: float, assets: Assets | None = None):
+  """Sky and sun. env (library/conditions.yaml): sky (clear, partly, overcast, night), sun ('behind', 'ahead': low sun
+  in the driver's eyes, 'side'), sun_elevation (degrees, raised to sun_elevation_min), sun_strength, night.
+  heading: road heading at the ego's start."""
+  assets = assets or no_assets()
   scene = bpy.context.scene
   world = bpy.data.worlds.new("sky")
   world.use_nodes = True
   nodes, links = world.node_tree.nodes, world.node_tree.links
   bg = nodes["Background"]
-  night = env.get("night", False)
+  night = bool(env.get("night")) or env.get("sky") == "night"
+  sky = "night" if night else env.get("sky", "clear")
   where = env.get("sun", "behind")
-  elev = math.radians(env.get("sun_elevation", (12.0 if env.get("urban") else 4.0) if where == "ahead" else
-                               (25.0 if env.get("urban") else 9.0)))
+  default_elev = (12.0 if env.get("urban") else 4.0) if where == "ahead" else (25.0 if env.get("urban") else 9.0)
+  elev_deg = max(env.get("sun_elevation", default_elev), env.get("sun_elevation_min", -90.0))
+  elev = math.radians(elev_deg)
   az = heading + {"behind": math.radians(150), "ahead": math.radians(-6), "side": math.radians(80)}[where]
   # the sun lamp points from the sun toward the scene: from direction (az, elev)
   sun = bpy.data.objects.new("sun", bpy.data.lights.new("sun", "SUN"))
@@ -328,36 +685,62 @@ def build_environment(env: dict, heading: float):
   d = (math.cos(elev) * math.cos(az), math.cos(elev) * math.sin(az), math.sin(elev))
   sun.rotation_euler = _track(d)
   sun.data.angle = math.radians(1.0)
+  slot = assets.get({"clear": "hdri_clear", "partly": "hdri_clear", "overcast": "hdri_overcast",
+                     "night": "hdri_night"}[sky] if not (where == "ahead" and elev_deg < 12 and sky == "clear")
+                    else "hdri_low_sun")
+  if slot:
+    tex = nodes.new("ShaderNodeTexEnvironment")
+    tex.image = assets.image(slot["files"]["hdri"], True)
+    mp = nodes.new("ShaderNodeMapping")
+    # the mapping rotates the lookup direction: the HDRI's sun appears at its own azimuth minus this rotation
+    mp.inputs["Rotation"].default_value = (0.0, 0.0, hdri_sun_azimuth(tex.image) - az)
+    links.new(nodes.new("ShaderNodeTexCoord").outputs["Generated"], mp.inputs["Vector"])
+    links.new(mp.outputs[0], tex.inputs["Vector"])
+    links.new(tex.outputs[0], bg.inputs["Color"])
+    bg.inputs["Strength"].default_value = slot.get("strength", 1.0)
   if night:                                     # moonlit sky: dark blue ambient and a faint cool key light
-    bg.inputs["Color"].default_value = (0.02, 0.03, 0.07, 1.0)
-    bg.inputs["Strength"].default_value = 1.5
+    if not slot:
+      bg.inputs["Color"].default_value = (0.02, 0.03, 0.07, 1.0)
+      bg.inputs["Strength"].default_value = 1.5
     sun.data.energy = 0.25
     sun.data.color = (0.6, 0.7, 1.0)
     sun.rotation_euler = _track((math.cos(heading + 2.2), math.sin(heading + 2.2), 0.6))
+  elif sky == "overcast":                       # soft light from a bright grey dome; a weak, diffuse sun
+    if not slot:
+      grad = nodes.new("ShaderNodeTexGradient")
+      ramp = nodes.new("ShaderNodeValToRGB")
+      sep = nodes.new("ShaderNodeSeparateXYZ")
+      links.new(nodes.new("ShaderNodeTexCoord").outputs["Generated"], sep.inputs[0])
+      links.new(sep.outputs[2], ramp.inputs[0])
+      ramp.color_ramp.elements[0].position, ramp.color_ramp.elements[1].position = 0.5, 0.75
+      ramp.color_ramp.elements[0].color = (0.62, 0.64, 0.67, 1)
+      ramp.color_ramp.elements[1].color = (0.42, 0.45, 0.5, 1)
+      links.new(ramp.outputs[0], bg.inputs["Color"])
+      bg.inputs["Strength"].default_value = 2.8 if env.get("urban") else 2.4
+      nodes.remove(grad)
+    sun.data.energy = 3.0 * env.get("sun_strength", 0.35)
+    sun.data.angle = math.radians(25.0)
+    sun.data.color = (0.95, 0.96, 1.0)
   else:
-    try:
-      sky = nodes.new("ShaderNodeTexSky")
+    if not slot:
       try:
-        sky.sky_type = "NISHITA"
-      except TypeError:
-        pass
-      sky.sun_elevation = elev
-      # Nishita sun_rotation: azimuth measured from +Y toward -X (Blender's sky convention)
-      sky.sun_rotation = (math.pi / 2 - az) % (2 * math.pi)
-      sky.sun_disc = where == "ahead"
-      sky.sun_intensity = 0.6
-      links.new(sky.outputs["Color"], bg.inputs["Color"])
-      bg.inputs["Strength"].default_value = 0.3 if env.get("urban") else 0.15
-    except (RuntimeError, AttributeError, KeyError):
-      bg.inputs["Color"].default_value = (0.55, 0.68, 0.85, 1.0)
-      bg.inputs["Strength"].default_value = 0.8
-    sun.data.energy = 2.6 if where != "ahead" else 3.2
-    sun.data.color = (1.0, 0.78, 0.55)
-  if env.get("fog"):
-    vol = nodes.new("ShaderNodeVolumePrincipled")
-    vol.inputs["Density"].default_value = env["fog"]
-    vol.inputs["Color"].default_value = (0.8, 0.8, 0.82, 1.0)
-    links.new(vol.outputs["Volume"], nodes["World Output"].inputs["Volume"])
+        sky_tex = nodes.new("ShaderNodeTexSky")
+        try:
+          sky_tex.sky_type = "NISHITA"
+        except TypeError:
+          pass
+        sky_tex.sun_elevation = elev
+        # Nishita sun_rotation: azimuth measured from +Y toward -X (Blender's sky convention)
+        sky_tex.sun_rotation = (math.pi / 2 - az) % (2 * math.pi)
+        sky_tex.sun_disc = where == "ahead"
+        sky_tex.sun_intensity = 0.6
+        links.new(sky_tex.outputs["Color"], bg.inputs["Color"])
+        bg.inputs["Strength"].default_value = 0.3 if env.get("urban") else 0.15
+      except (RuntimeError, AttributeError, KeyError):
+        bg.inputs["Color"].default_value = (0.55, 0.68, 0.85, 1.0)
+        bg.inputs["Strength"].default_value = 0.8
+    sun.data.energy = (2.6 if where != "ahead" else 3.2) * env.get("sun_strength", 1.0)
+    sun.data.color = sun_colour(elev_deg)
   scene.world = world
   try:
     scene.view_settings.look = "AgX - Medium High Contrast"
@@ -366,10 +749,115 @@ def build_environment(env: dict, heading: float):
   return sun
 
 
+def hdri_sun_azimuth(image) -> float:
+  """Azimuth of the brightest column of an equirectangular image, in Blender's world frame (0 along +X)."""
+  try:
+    import numpy as np
+    w, h = image.size
+    px = np.empty(w * h * 4, dtype=np.float32)
+    image.pixels.foreach_get(px)
+    lum = px.reshape(h, w, 4)[h // 2:, :, :3].sum(axis=2)          # upper half (rows run bottom to top)
+    col = int(np.unravel_index(np.argmax(lum), lum.shape)[1])
+  except Exception:                             # numpy missing or the image not loaded: no alignment
+    return 0.0
+  # Blender's equirectangular lookup: u = atan2(dir.y, -dir.x) / (2 pi) + 0.5, so the column's azimuth is pi - phi
+  return math.pi - 2 * math.pi * (col / image.size[0] - 0.5)
+
+
 def _track(direction):
   """Euler rotation that points a lamp's -Z along -direction (toward the scene)."""
-  from mathutils import Vector
   return Vector(direction).to_track_quat("Z", "Y").to_euler()
+
+
+# ------------------------------------------------------------------------------------------------- weather
+def build_weather(env: dict, follow, centre, frames: int, fps: int, seed: int = 11):
+  """Fog or haze (a volume layer over the scene with extinction 3 / visibility, from visibility_m), and falling rain
+  or snow in a box that travels with `follow` (the ego). Returns the collection (hidden from the top camera, which
+  shows the layout)."""
+  coll = bpy.data.collections.new("weather")
+  bpy.context.scene.collection.children.link(coll)
+  vis = env.get("visibility_m")
+  if vis and vis < 2500:
+    mid = centre[len(centre) // 2]
+    span = max(800.0, 1.4 * math.hypot(centre[-1][0] - centre[0][0], centre[-1][1] - centre[0][1]))
+    # a layer 50 m deep: deep enough for every view along the road, shallow enough to let the sky light through
+    dome = bpy.data.objects.new("fog", box_mesh("fog_box", span, span, 50.0, -5.0))
+    dome.location = (mid[0], mid[1], 0.0)
+    coll.objects.link(dome)
+    m = bpy.data.materials.new("fog")
+    m.use_nodes = True
+    nt = m.node_tree
+    nt.nodes.remove(nt.nodes["Principled BSDF"])
+    vol = nt.nodes.new("ShaderNodeVolumePrincipled")
+    vol.inputs["Density"].default_value = 3.0 / vis
+    vol.inputs["Color"].default_value = (0.88, 0.89, 0.91, 1.0)
+    vol.inputs["Anisotropy"].default_value = 0.3
+    nt.links.new(vol.outputs[0], nt.nodes["Material Output"].inputs["Volume"])
+    dome.data.materials.append(m)
+  rnd = random.Random(seed)
+  for kind, amount in (("rain", env.get("rain", 0.0)), ("snow", env.get("snow", 0.0) * 0.8)):
+    if not amount:
+      continue
+    period = 14.0
+    speed = 9.0 if kind == "rain" else 1.1
+    n = int((4500 if kind == "rain" else 6000) * amount)
+    verts, faces = [], []
+    for i in range(n):
+      x, y, z = rnd.uniform(-18, 70), rnd.uniform(-16, 16), rnd.uniform(0, period)
+      for zz in (z, z + period):                 # two copies one period apart: the fall loops without a gap
+        k = len(verts)
+        if kind == "rain":
+          ln, w = rnd.uniform(0.4, 0.75), 0.006
+          a = rnd.uniform(0, math.pi)
+          dx, dy = w * math.cos(a), w * math.sin(a)
+          verts += [(x - dx, y - dy, zz), (x + dx, y + dy, zz), (x + dx + 0.04, y + dy, zz + ln),
+                    (x - dx + 0.04, y - dy, zz + ln)]
+          faces.append((k, k + 1, k + 2, k + 3))
+        else:
+          r = rnd.uniform(0.025, 0.045)
+          verts += [(x + r, y, zz), (x - r, y, zz), (x, y + r, zz), (x, y - r, zz), (x, y, zz + r), (x, y, zz - r)]
+          faces += [(k, k + 2, k + 4), (k + 2, k + 1, k + 4), (k + 1, k + 3, k + 4), (k + 3, k, k + 4),
+                    (k + 2, k, k + 5), (k + 1, k + 2, k + 5), (k + 3, k + 1, k + 5), (k, k + 3, k + 5)]
+    mat = (material("rain_streak", (0.75, 0.78, 0.82), rough=0.1, alpha=0.18, emit=0.15) if kind == "rain"
+           else material("snowflake", (0.95, 0.96, 1.0), rough=0.7, emit=0.2))
+    ob = mesh_object(kind, verts, faces, mat, coll)
+    holder = empty(f"{kind}_fall", coll)
+    holder.parent = follow
+    ob.parent = holder
+    for f in range(1, frames + 1):
+      holder.location = (0.0, 0.0, -((f / fps * speed) % period))
+      holder.keyframe_insert("location", frame=f)
+  return coll
+
+
+def setup_glare(env: dict):
+  """Bloom round the sun and bright reflections (low sun, night lights), in the compositor (Blender 5.x or 4.x)."""
+  if not env.get("glare"):
+    return
+  scene = bpy.context.scene
+  try:
+    if hasattr(scene, "compositing_node_group"):                    # Blender 5: compositor node groups
+      ng = bpy.data.node_groups.new("glare", "CompositorNodeTree")
+      ng.interface.new_socket("Image", in_out="OUTPUT", socket_type="NodeSocketColor")
+      scene.compositing_node_group = ng
+      rl, gl, out = (ng.nodes.new(k) for k in ("CompositorNodeRLayers", "CompositorNodeGlare", "NodeGroupOutput"))
+      for k, v in (("Type", "Bloom"), ("Quality", "High"), ("Threshold", 1.2), ("Strength", 0.6), ("Size", 0.6)):
+        try:
+          gl.inputs[k].default_value = v
+        except (KeyError, TypeError):
+          pass
+      ng.links.new(rl.outputs["Image"], gl.inputs["Image"])
+      ng.links.new(gl.outputs[0], out.inputs[0])
+    else:                                                            # Blender 4.x
+      scene.use_nodes = True
+      nt = scene.node_tree
+      rl, comp = nt.nodes["Render Layers"], nt.nodes["Composite"]
+      gl = nt.nodes.new("CompositorNodeGlare")
+      gl.glare_type, gl.threshold, gl.size = "FOG_GLOW", 1.2, 7
+      nt.links.new(rl.outputs["Image"], gl.inputs["Image"])
+      nt.links.new(gl.outputs["Image"], comp.inputs["Image"])
+  except (AttributeError, KeyError, RuntimeError, TypeError) as e:
+    print(f"glare not set up: {e}")
 
 
 # ------------------------------------------------------------------------------------------------- road users
