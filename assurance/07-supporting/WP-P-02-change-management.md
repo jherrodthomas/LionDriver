@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-02 Change management plan |
 | Standard reference | ISO 26262-8:2018 §8; ISO 26262-2:2018 §6 (impact analysis); ISO/SAE 21434:2021 §6 (change management in cybersecurity activities); ASPICE 4.0 SUP.10 |
-| Version | 0.2 (§5 Figure 5-1, change request swimlane generated from the §5 table; 2026-10-14). 0.1 |
+| Version | 0.3 (§7.2 code owners named individually, since the repository stays on a personal account (DQ-111, B); 2026-10-18). 0.2 (§5 Figure 5-1, change request swimlane generated from the §5 table; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | All |
 | Author | Assurance team (initial draft) |
@@ -110,7 +110,7 @@ Copy into the PR for any SR-* change.
 
 ### 7.2 Proposed CODEOWNERS content
 
-Proposed for `.github/CODEOWNERS` in the superproject (not created by this document). Team names assume the organization from [WP-P-01 OI-1](WP-P-01-configuration-management-plan.md#13-open-items).
+Proposed for `.github/CODEOWNERS` in the superproject (not created by this document). The repository stays on the personal `jherrodthomas` account, so GitHub teams are not available ([WP-P-01 OI-1](WP-P-01-configuration-management-plan.md#13-open-items); decision register DQ-111, B). Each `@liondriver/<group>` below stands for a list of individual collaborator accounts, written out by handle in the real file. The members of a group are the people whose competence record ([WP-M-04 §4.4](../01-management/WP-M-04-organization-competence-safety-culture.md)) shows the level for that review; until there is one, the group is `@jherrodthomas`.
 
 ```text
 # Default
@@ -246,6 +246,6 @@ Number of SR changes per month; median CR lead time; changes merged without requ
 | OI-1 | Name at least one second reviewer (internal or external) with GitHub access so SR-A approvals can meet the two-approval rule |
 | OI-2 | Implement automatic PR classification from the machine-readable file list |
 | OI-3 | Raise CR-CI-01 to CR-CI-08 as issues and implement |
-| OI-4 | Create `.github/CODEOWNERS` and `.github/pull_request_template.md` from §7.2 and §8 via a CR; create GitHub teams |
+| OI-4 | Create `.github/CODEOWNERS` and `.github/pull_request_template.md` from §7.2 and §8 via a CR, with each reviewer group written out as individual handles (no teams; DQ-111) |
 | OI-5 | ~~Decide where impact analysis files for syncs live~~ Closed: [`impact/`](impact/README.md) (D-02 tooling) |
 | OI-6 | Decide merge strategy (squash vs merge commit) so that review records remain linked to commits in submodule forks |

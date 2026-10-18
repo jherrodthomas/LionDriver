@@ -3,20 +3,24 @@
 | Field | Value |
 |---|---|
 | Scope | Simulation for LionDriver; modelling-plan work item 4, the HIL plant ([models README](../models/README.md), MD-01, MD-04): fault-injection plant model (layer 1), known scenarios as OpenSCENARIO (layer 2), MetaDrive closed loop (layer 3), unknown-scenario search (layer 4) |
-| Version | 0.8 (§3.7: loop diagram and animation for each ASIL C hazardous event the plant runs, 2026-10-18). 0.7 (pictures: hero strip, a figure per section from `figures/fig_sim_readme.py`, the existing renders and dashboards embedded, 2026-10-18). 0.6 (reference-car outline in the layer-1 figures, 2026-10-17). 0.5 (vehicle 3D-model note, 2026-10-17). 0.4 (§3.6: Julia retired, the bound computed exactly with numpy; 2026-10-17). 0.3 (reachability pilot, §3.6, 2026-10-16). 0.2 (layer 2, 2026-10-16). 0.1 (layer 1, 2026-10-16) |
+| Version | 0.11 (§1.1: how to read a scene dashboard, with an annotated overview and four spotlights, 2026-10-18). 0.10 (scenes outside the highway-only ODD tagged as misuse in the compilation and stills, 2026-10-18). 0.9 (3D compilation of the three Blender clips at the top, 2026-10-18). 0.8 (§3.7: loop diagram and animation for each ASIL C hazardous event the plant runs, 2026-10-18). 0.7 (pictures: hero strip, a figure per section from `figures/fig_sim_readme.py`, the existing renders and dashboards embedded, 2026-10-18). 0.6 (reference-car outline in the layer-1 figures, 2026-10-17). 0.5 (vehicle 3D-model note, 2026-10-17). 0.4 (§3.6: Julia retired, the bound computed exactly with numpy; 2026-10-17). 0.3 (reachability pilot, §3.6, 2026-10-16). 0.2 (layer 2, 2026-10-16). 0.1 (layer 1, 2026-10-16) |
 | Status | Draft. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed. **No result here is evidence until the model is validated against Corolla logs; until then results rank risks and guide tests only** (§4) |
 | Feeds | [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) timing (owned by the safety-concept session); [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) M4, [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md), [WP-V-04](../06-validation/WP-V-04-sotif-unknown-scenarios.md) (owned by the SOTIF session); previews [WP-V-05](../06-validation/WP-V-05-fault-injection.md) cases |
 
+![Looping 3D compilation of three Blender scenes, about 9 s, each labelled: HE-02.1 (ASIL C, inside the ODD), the Corolla running wide in a highway curve after losing EPS assist until the driver corrects; HE-01.1 (ASIL A, tagged outside the ODD as foreseeable misuse), a hard-over on a rural road taking the car across the centre line toward an oncoming car; SH-11 (SOTIF hazard, tagged outside the ODD as foreseeable misuse), a pedestrian stepping out from behind a parked truck in a city street; a red band on every frame reads synthetic, no evidence credit](figures/sim-reel-3d.webp)
+
+*3D compilation, cut at real speed from the three committed clips by [`figures/fig_sim_reel.py`](figures/fig_sim_reel.py); the stills below are for viewers that do not animate. The ODD is limited-access highways only ([WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md) §3, DQ-023): the rural and city scenes show engagement off the highway, which the HARA rates as foreseeable misuse, and why the system must refuse or warn there (FM-08).*
+
 ![Three hazardous-event scenes rendered in Blender, cropped to their 3D view: the orange ego Corolla touching a car in the adjacent highway lane after a steering hard-over; the ego going straight on in a highway curve after losing EPS assist; the ego reaching a pedestrian who steps out from behind a parked truck in a city street](figures/sim-hero-dashboards.jpg)
 
-*Hard-over into the adjacent lane ([HE-01.2](blender/dashboards/he-01-2-hardover-adjacent.jpg), plant F-01b), EPS assist lost in a curve ([HE-02.1](blender/dashboards/he-02-1-eps-loss-curve.jpg), plant F-07), occluded pedestrian ([SH-11](blender/dashboards/sh-11-pedestrian-occluded.jpg), kinematic); all 49 in the [gallery](blender/dashboards/README.md).*
+*Hard-over into the adjacent lane ([HE-01.2](blender/dashboards/he-01-2-hardover-adjacent.jpg), plant F-01b), EPS assist lost in a curve ([HE-02.1](blender/dashboards/he-02-1-eps-loss-curve.jpg), plant F-07), occluded pedestrian ([SH-11](blender/dashboards/sh-11-pedestrian-occluded.jpg), kinematic; a city street, outside the ODD); all 49 in the [gallery](blender/dashboards/README.md).*
 
 Clips (mp4, open to play): [HE-01.1 rural hard-over toward oncoming traffic](blender/dashboards/clips/he-01-1-rural-hardover-oncoming.mp4) ·
 [HE-02.1 EPS loss in a curve](blender/dashboards/clips/he-02-1-eps-loss-curve.mp4) ·
 [SH-11 occluded pedestrian](blender/dashboards/clips/sh-11-pedestrian-occluded.mp4).
 
 > **Pictures only.** Every image on this page is synthetic data (DSR-12) and earns no evidence credit (§4). The
-> diagrams restate this page's text; the renders and plots come from model runs under stated assumptions.
+> diagrams restate this page's text; the renders and plots come from plant runs or kinematic motions under stated assumptions.
 
 ## 1. Where things are
 
@@ -46,7 +50,7 @@ some, a clip. They are for review and earn no credit.
 | [`results/plant-results.md`](results/plant-results.md) | Layer 1 results table, event log and model inputs (generated) |
 | [`search/`](search/search.py) | Layer 4: failure search (Monte Carlo and cross-entropy) over the plant model |
 | [`results/search-curve-assist-loss.md`](results/search-curve-assist-loss.md) | Layer 4 search results (generated) |
-| [`figures/`](figures/) | This page's diagrams and hero strip ([`fig_sim_readme.py`](figures/fig_sim_readme.py)), the ASIL C loops and animations of §3.7 ([`fig_sim_he.py`](figures/fig_sim_he.py)); layer 1 figures, one per selected case (generated); the ego is drawn from [`figures/corolla-e210-silhouette.json`](figures/corolla-e210-silhouette.json), the reference car's outline ([vehicle-3d-model.md](vehicle-3d-model.md) §6) |
+| [`figures/`](figures/) | This page's diagrams and hero strip ([`fig_sim_readme.py`](figures/fig_sim_readme.py)), the ASIL C loops and animations of §3.7 ([`fig_sim_he.py`](figures/fig_sim_he.py)), the 3D compilation at the top ([`fig_sim_reel.py`](figures/fig_sim_reel.py)), the dashboard guide of §1.1 ([`fig_sim_guide.py`](figures/fig_sim_guide.py)); layer 1 figures, one per selected case (generated); the ego is drawn from [`figures/corolla-e210-silhouette.json`](figures/corolla-e210-silhouette.json), the reference car's outline ([vehicle-3d-model.md](vehicle-3d-model.md) §6) |
 | [`reach/`](reach/reach_compare.py) | Reachability bound (exact, numpy): the drift under any LKA command the panda passes, and its check against sampled runs (§3.6) |
 | [`requirements.txt`](requirements.txt) | Pinned Python packages of the track |
 | [`blender/`](blender/README.md) | Hazardous-event scenes: plant runs drawn as animated Blender scenes and review dashboards (pictures only, no evidence credit) |
@@ -59,6 +63,68 @@ python3 assurance/sim/plant/report.py           # run all cases (about 7 s), wri
 python3 assurance/sim/plant/report.py --check   # CI: fail if the committed outputs differ from a fresh run
 python3 assurance/sim/plant/test_plant.py       # unit tests (CI)
 ```
+
+### 1.1 Reading a scene dashboard
+
+Every Blender scene ends in one review dashboard ([gallery](blender/dashboards/README.md)). They all share one layout.
+The guide below uses [HE-02.1](blender/dashboards/he-02-1-eps-loss-curve.jpg), the EPS assist lost in a highway curve
+(ASIL C, a plant run with the real panda code). Like the dashboards, it is synthetic (DSR-12) and earns no evidence
+credit.
+
+![The HE-02.1 dashboard with its ten panels outlined in amber and numbered: 1 header strip across the top, 2 hazardous-event card top left, 3 ego state below it, 4 the large 3D view in the centre, 5 forward and top views on the right, 6 outcome tiles under the 3D view, 7 event list bottom right, 8 the row of plots, 9 the filmstrip of stills, 10 the footer line](figures/sim-guide-0-overview.jpg)
+
+*Figure 1.1. The ten panels of a scene dashboard; the key below says what each one shows.*
+
+1. **Header strip**: the scene, its event and ASIL, and the **motion source**, which says how far to trust the
+   motion. *Plant* means a layer-1 run with the real panda safety code in the loop. *Kinematic* means stated
+   accelerations with no item code at all. Also the road, the light, the start speed, and the time shown, counted
+   from the fault.
+2. **Hazardous-event card**: the HARA or SOTIF entry: hazard, situation, effect, and S, E, C and ASIL. Its footnote
+   is part of the reading: the ratings are WP-C-03 proposals, not approved.
+3. **Ego state**: the car's speed, accelerations and lateral offset at the time shown, its **margin to the lane line**
+   (red once negative), and the EPS LKA torque.
+4. **3D view**: the scene at the time shown. Each road user's label names its source: plant, kinematic, or
+   *illustrative* (drawn, not simulated). The banner at the bottom names the current event.
+5. **Forward and top views**: roughly what the driver sees, and the path from above with "ghosts" of the car at
+   each event.
+6. **Outcome tiles**: time from the fault, offset, when the body reaches the lane line, the peak offset, and contact.
+   A contact is reported where two outlines first overlap; what happens after it is not modelled.
+7. **Event list**: the run's events with their times. In a plant scene these are the panda's own decisions (refuse,
+   revoke, siren) and the driver model's cue and correction.
+8. **Plots**: each signal over the whole run. The red dashed line is the fault, the white line the time shown, and the
+   yellow dashed lines the thresholds: the lane line for the offset, a time to collision where a gap is shown.
+9. **Filmstrip**: a still at each key event; the outlined one is the time shown.
+10. **Footer**: where the motion came from (plant case and its overrides, or the kinematic assumptions) and the
+    synthetic label.
+
+![Spotlight 1: the HE-02.1 dashboard dimmed except the header strip and the hazardous-event card, outlined and numbered 1 and 2](figures/sim-guide-1-what.jpg)
+
+*Spotlight 1. What is this scene? Panels 1 and 2: the event, its rating and the motion source.*
+
+![Spotlight 2: the dashboard dimmed except the 3D view, the forward and top views and the filmstrip, numbered 4, 5 and 9](figures/sim-guide-2-happens.jpg)
+
+*Spotlight 2. What happens? Panels 4, 5 and 9: the car running wide in the curve, seen three ways.*
+
+![Spotlight 3: the dashboard dimmed except the ego state, the outcome tiles and the event list, numbered 3, 6 and 7](figures/sim-guide-3-close.jpg)
+
+*Spotlight 3. How close did it get? Panels 3, 6 and 7: here the body is on the lane line at 2.00 s and the driver
+corrects at 2.29 s.*
+
+![Spotlight 4: the dashboard dimmed except the row of plots, numbered 8, showing speed, accelerations, lateral offset and EPS torque against time](figures/sim-guide-4-time.jpg)
+
+*Spotlight 4. How does it unfold? Panel 8: the offset crosses the yellow lane-line threshold after the red fault line.*
+
+**What a dashboard cannot tell you.**
+
+- *Perception.* Nothing in the scenes models a camera. Low sun, night, faded markings or an occluding truck are drawn
+  in the scene, not simulated.
+- *Contact.* An overlap is reported, with the relative speed there; the collision itself is not modelled.
+- *The item, in a kinematic scene.* No panda code runs. The scene shows the hazardous behaviour the entry describes
+  and what the stated driver does about it.
+- *A rating.* The S, E, C and ASIL shown are the HARA's proposals, and the scene is not evidence for them.
+
+The images are drawn from the committed HE-02.1 dashboard by [`figures/fig_sim_guide.py`](figures/fig_sim_guide.py).
+CI fails if that dashboard changes, so the boxes are redrawn whenever its layout moves.
 
 ## 2. Layers: what each can and cannot show
 

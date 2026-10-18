@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-04 Documentation management |
 | Standard reference | ISO 26262-8:2018 §10; ISO/SAE 21434:2021 §5 (documentation management); ASPICE 4.0 SUP.7 (informative), SUP.8 |
-| Version | 0.3 (§5 Figure 5-1, work-product lifecycle generated from the status, §5 and §7 tables; 2026-10-14). 0.2 (§9.1 distribution of the safety case: uncontrolled public snapshots and recorded controlled copies; 2026-10-14). 0.1 |
+| Version | 0.4 (§10 retention period confirmed by the lead 2026-10-14 (DQ-113, A); OI-6 closed; 2026-10-18). 0.3 (§5 Figure 5-1, work-product lifecycle generated from the status, §5 and §7 tables; 2026-10-14). 0.2 (§9.1 distribution of the safety case: uncontrolled public snapshots and recorded controlled copies; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | All |
 | Author | Assurance team (initial draft) |
@@ -117,7 +117,7 @@ This section sets the retention period that [WP-M-04](../01-management/WP-M-04-o
 
 | Record | Retention |
 |---|---|
-| Work products, review, change and problem records of a released baseline | Until the last installation of that release is out of service, plus 15 years (proposed; OI-6) |
+| Work products, review, change and problem records of a released baseline | Until the last installation of that release is out of service, plus 15 years (decided by the lead 2026-10-14, decision register DQ-113, A) |
 | Evidence package of a released baseline ([WP-P-10 §5](WP-P-10-release-management.md#5-evidence-package)) | Same as above |
 | Records of unreleased baselines (gate baselines, RCs not released) | 5 years after the next release |
 | Vehicle test drive logs containing personal data | Per the privacy rules in [WP-V-07](../06-validation/WP-V-07-vehicle-test-operations.md); safety-relevant extracts kept as above |
@@ -141,4 +141,4 @@ Git history is never rewritten on protected branches. Superseded documents remai
 | OI-3 | Script for the assessor export (§8), including GitHub PR/issue export |
 | OI-4 | Add the "Revision history" table to every WP at first approval |
 | OI-5 | Decide where non-redistributable reference documents are stored |
-| OI-6 | Confirm the retention periods in §10 with the safety manager and, for the US market, against any product-liability advice obtained |
+| OI-6 | Closed 2026-10-18: the §10 period was confirmed by the lead (decision register DQ-113, A) without legal advice; the lead accepted the long storage commitment |
