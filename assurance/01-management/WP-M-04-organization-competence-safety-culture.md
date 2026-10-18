@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-04 Organization-specific rules, safety culture, competence management |
 | Standard reference | ISO 26262-2:2018 §5 (overall safety management: rules and processes, safety culture, competence management, QMS link); ISO/SAE 21434:2021 §5 (organizational cybersecurity management, cybersecurity culture, competence); ISO 21448:2022 §4 (competence for SOTIF activities); ISO/PAS 8800:2024 (AI safety management, competence) |
-| Version | 0.2 (status update: §6 private security channel published in `SECURITY.md` 2026-10-12, gate and confirmation record folders exist; OI-4 closed except the repository setting; the lead's answers of 2026-10-14 noted at OI-2 and OI-6; 2026-10-14). 0.1 |
+| Version | 0.3 (§4.5 every contributor keeps a full competence record, decided by the lead 2026-10-14 (DQ-016, B); OI-3 closed; 2026-10-18). 0.2 (status update: §6 private security channel published in `SECURITY.md` 2026-10-12, gate and confirmation record folders exist; OI-4 closed except the repository setting; the lead's answers of 2026-10-14 noted at OI-2 and OI-6; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (organization level; FuSa, SOTIF, CS, AI) |
 | Author | Assurance team (initial draft) |
@@ -150,6 +150,8 @@ Next review: <at next gate or 12 months>
 
 - A person is assigned to a role only if their record shows the required level, or a gap with a plan and a supervisor who has the required level.
 - Records are reviewed at each gate and when a person takes a new role.
+- **Every contributor has a full record (§4.4) before their first pull request is merged**, whatever the files it touches (decided by the lead on 2026-10-14, decision register DQ-016, B). The record states the contributor's levels in all eight areas and the TR-1 induction checklist (§5). A reviewer who approves a pull request checks that the author's record exists; a contribution from someone without one waits until the record is written. The lead accepted the cost: a full record is more effort for a volunteer than a checklist, and may put contributors off.
+- An AI-drafted change is the work of the person who commits it ([WP-M-02 §3.3](WP-M-02-safety-plan.md)); that person's record covers it.
 - Where nobody in the project meets a requirement, the activity is either supported by an external expert (recorded as such) or deferred. The gap is recorded in [WP-M-07](WP-M-07-risk-management.md).
 
 ## 5. Training plan
@@ -187,7 +189,7 @@ Training completion is recorded in the competence record (§4.4).
 |---|---|---|---|
 | OI-1 | Create the first competence record (maintainer / acting safety manager) and have it assessed by someone other than the subject | PM | G0 |
 | OI-2 | The safety manager role requires FS level E; record evidence or name an external mentor/supervisor for the gap. Answered by the lead 2026-10-14 (decision register DQ-015): record the evidence held. Open: the record itself (OI-1) | PM | G0 |
-| OI-3 | Decide how contributors' competence is checked without making contribution impractical (proposal: TR-1 checklist for safety-relevant PRs only; reviewers carry the competence requirement) | SM | G0 |
+| OI-3 | Closed 2026-10-18: every contributor keeps a full competence record before their first merged pull request (§4.5; decision register DQ-016, B, the lead 2026-10-14). The checklist-only proposal was not taken | SM | G0 |
 | OI-4 | Define the private vulnerability channel and publish `SECURITY.md`. Status 2026-10-14: `SECURITY.md` published 2026-10-12 (GitHub private vulnerability reporting, response times, scope, testing rules). Open: enable private vulnerability reporting in the repository settings (WP-M-03 B-07; [WP-M-09](WP-M-09-cybersecurity-plan.md) OI-5) | CSM | G0 |
 | OI-5 | Confirm whether LionDriver will create a legal entity or other structure for contracts (assessor, pen test, insurance) | PM | G1 |
 | OI-6 | Confirm the project name and release artefacts comply with the upstream trademark constraint (§2.3). The lead decided on 2026-10-14 (decision register DQ-017) to do this check before release, not now | PM | G5 |
