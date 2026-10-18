@@ -320,9 +320,9 @@ def gravel_material(name: str, env: dict, assets: Assets):
   else:
     cells = g.node("ShaderNodeTexVoronoi", {"Vector": uv, "Scale": 28.0})
     ramp = g.node("ShaderNodeValToRGB", {0: cells.outputs[1]})
-    ramp.color_ramp.elements[0].color = (0.13, 0.12, 0.10, 1)
-    ramp.color_ramp.elements[1].color = (0.33, 0.30, 0.26, 1)
-    col = g.mix(g.remap(g.noise(uv, 0.3, 2).outputs[0], 0.3, 0.7, 0.0, 0.4), ramp.outputs[0], (0.18, 0.16, 0.12))
+    ramp.color_ramp.elements[0].color = (0.075, 0.07, 0.06, 1)
+    ramp.color_ramp.elements[1].color = (0.2, 0.18, 0.15, 1)
+    col = g.mix(g.remap(g.noise(uv, 0.3, 2).outputs[0], 0.3, 0.7, 0.0, 0.4), ramp.outputs[0], (0.11, 0.1, 0.08))
     rough = 0.95
     normal = g.bump(g.math("SUBTRACT", 1.0, cells.outputs[0]), 0.6, 0.02)
   col, rough, normal = _weather_layer(g, col, rough, normal, env, None, puddles=False)
@@ -836,6 +836,8 @@ def setup_glare(env: dict):
     return
   scene = bpy.context.scene
   try:
+    if hasattr(scene.render, "compositor_device"):                 # headless: no GPU compositor (EGL)
+      scene.render.compositor_device = "CPU"
     if hasattr(scene, "compositing_node_group"):                    # Blender 5: compositor node groups
       ng = bpy.data.node_groups.new("glare", "CompositorNodeTree")
       ng.interface.new_socket("Image", in_out="OUTPUT", socket_type="NodeSocketColor")
@@ -991,6 +993,22 @@ def truck(name: str, coll, colour=(0.85, 0.85, 0.83), length: float = 9.5):
   part(f"{name}_cab", box_mesh(f"{name}_cabm", 2.2, 2.4, 1.9, 1.0, cab), root, coll, (length / 2 - 1.2, 0, 0))
   part(f"{name}_ws", box_mesh(f"{name}_wsm", 0.05, 2.2, 0.8, 2.0, glass), root, coll, (length / 2 - 0.08, 0, 0))
   part(f"{name}_chassis", box_mesh(f"{name}_chm", length - 0.4, 2.0, 0.35, 0.65, dark), root, coll)
+  stripe = material("truck_stripe", (0.08, 0.22, 0.45), rough=0.5)
+  steel = material("truck_steel", (0.5, 0.5, 0.52), rough=0.4, metal=0.8)
+  amber = material("truck_marker", (1.0, 0.55, 0.05), rough=0.3, emit=3.0)
+  bx = -length / 2 + box_len / 2
+  part(f"{name}_stripe", box_mesh(f"{name}_stm", box_len - 0.1, 2.52, 0.28, 1.45, stripe), root, coll, (bx, 0, 0))
+  for y in (1.27, -1.27):                       # rear door frame, cab side windows, side markers
+    part(f"{name}_door", box_mesh(f"{name}_drm{y}", 0.04, 0.08, 2.6, 1.1, steel), root, coll,
+         (-length / 2 - 0.01, y * 0.98, 0))
+    part(f"{name}_sidewin", box_mesh(f"{name}_swm{y}", 0.9, 0.04, 0.6, 2.05, glass), root, coll,
+         (length / 2 - 0.9, y * 0.95, 0))
+    for x in (bx - box_len / 3, bx, bx + box_len / 3):
+      part(f"{name}_marker", box_mesh(f"{name}_mk", 0.12, 0.03, 0.06, 1.15, amber), root, coll, (x, y * 0.995, 0))
+  part(f"{name}_doorgap", box_mesh(f"{name}_dgm", 0.04, 0.05, 2.5, 1.12, steel), root, coll, (-length / 2 - 0.01, 0, 0))
+  part(f"{name}_grille", box_mesh(f"{name}_grm", 0.05, 1.6, 0.6, 1.15, dark), root, coll, (length / 2 - 0.08, 0, 0))
+  part(f"{name}_bumper", box_mesh(f"{name}_bpm", 0.25, 2.4, 0.3, 0.55, steel), root, coll, (length / 2 - 0.05, 0, 0))
+  part(f"{name}_underrun", box_mesh(f"{name}_urm", 0.12, 2.3, 0.15, 0.55, steel), root, coll, (-length / 2 + 0.1, 0, 0))
   wm = cyl_mesh(f"{name}_wheel", 0.5, 0.35, "Y", 20, dark)
   for x in (length / 2 - 1.3, -length / 2 + 2.0, -length / 2 + 3.3):
     for y in (1.05, -1.05):
