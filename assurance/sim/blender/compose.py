@@ -9,9 +9,9 @@ the panda and driver event log, and a strip of the key-event stills along the bo
   python3 assurance/sim/blender/compose.py assurance/sim/blender/out/<scene> --video   # and a clip, if frames exist
 
 Writes out/<scene>/dashboard/f<frame>.png, out/<scene>/dashboard.png (the frame of the decisive event) and, with
---video, out/<scene>/<scene>.mp4 (ffmpeg). Every number on a frame is read from scene.json, i.e. from the plant;
-nothing is drawn that the plant does not compute (there is no perception layer in layer 1, so there is no
-perception panel).
+--video, out/<scene>/<scene>.mp4 (ffmpeg). Every number on a frame is read from scene.json, i.e. from the plant run or
+the kinematic scene that export_scene.py computed, and the dashboard names which; there is no perception layer in
+either, so there is no perception panel.
 """
 
 from __future__ import annotations
@@ -149,23 +149,34 @@ def tag(d, xy, text: str, colour: str, img_box):
 
 
 # ------------------------------------------------------------------------------------------------- frame
+def is_red(label: str) -> bool:
+  return any(w in label for w in ("contact", "barrier", "strikes"))
+
+
 def frame(sc: dict, screen: dict, keys: list[dict], views: dict[str, Path], i: int, thumbs: dict[int, Path]):
   img = Image.new("RGB", (W, H), BG)
   d = ImageDraw.Draw(img)
   t = sc["t"]
-  he, hz, case = sc["he"], sc["hazard"], sc["case"]
+  cd, case = sc["card"], sc["case"]
+  plant = sc["motion"] == "plant"
+  crit = sc.get("critical")
 
   # top bar
   d.rectangle([0, 0, W, 56], fill=PANEL)
   d.line([(0, 56), (W, 56)], fill=EDGE)
   d.text((16, 9), f"Scene {sc['id']}", font=F["h1"], fill=TEXT)
-  d.text((16, 33), f"Plant case {case['id']}: {case['title']}", font=F["s"], fill=TEXT2)
+  sub = (f"Plant case {case['id']}: {case['title']}" if plant else f"Kinematic scene: {case['title']}")
+  d.text((16, 33), clip(sub, F["s"], 900), font=F["s"], fill=TEXT2)
   bx = 16 + F["h1"].getlength(f"Scene {sc['id']}") + 16
-  badge = f"{he['id']}  ASIL {he['asil']}"
-  d.rounded_rectangle([bx, 8, bx + F["ss"].getlength(badge) + 16, 32], 4, fill=CRITICAL)
-  d.text((bx + 8, 12), badge, font=F["ss"], fill="#ffffff")
-  fields = [("Road", case["road"]), ("Set speed", f"{case['speed_kph']:.0f} km/h"), ("EPS assumption", case["eps"]),
-            ("Safety goal", case["sg"]), ("Time from fault", f"{t[i]:+.2f} s  ({t[0]:+.1f} to {t[-1]:+.1f})")]
+  d.rounded_rectangle([bx, 8, bx + F["ss"].getlength(cd["badge"]) + 16, 32], 4, fill=CRITICAL)
+  d.text((bx + 8, 12), cd["badge"], font=F["ss"], fill="#ffffff")
+  src = "Plant (panda code in loop)" if plant else "Kinematic (WP-S-04 values)"
+  env = sc.get("env", {})
+  light = "night" if env.get("night") else ("low sun ahead" if env.get("sun") == "ahead" else "day")
+  light += ", wet" if env.get("wet") else ""
+  fields = [("Motion source", src), ("Road", clip(str(case["road"]), F["bs"], 230)), ("Light", light),
+            ("Start speed", f"{case['speed_kph']:.0f} km/h"),
+            ("Time from trigger", f"{t[i]:+.2f} s  ({t[0]:+.1f} to {t[-1]:+.1f})")]
   x = W - 16
   for k, v in reversed(fields):
     w = max(F["s"].getlength(k), F["bs"].getlength(v)) + 28
@@ -174,77 +185,95 @@ def frame(sc: dict, screen: dict, keys: list[dict], views: dict[str, Path], i: i
     d.text((x, 9), k, font=F["s"], fill=MUTED)
     d.text((x, 29), v, font=F["bs"], fill=TEXT)
 
-  # main view
+  # main view, tags on the road users
   mb = (384, 64, 384 + 1095, 64 + 616)
   if views.get("chase"):
     img.paste(fit(Image.open(views["chase"]).convert("RGB"), mb[2] - mb[0], mb[3] - mb[1]), mb[:2])
   d.rectangle(mb, outline=EDGE)
   past = [e for e in sc["events"] if e["t"] <= t[i] + 1e-6]
+  hit = sc.get("contact") if sc.get("contact") and sc["contact"]["t"] <= t[i] + 1e-6 else None
   for a in sc["actors"]:
-    name = "ego" if a["kind"] == "ego" else a["name"]
-    pos = screen.get(name, [None] * len(t))[i]
+    pos = screen.get(a["name"], [None] * len(t))[i]
     if pos is None:
       continue
     if a["kind"] == "ego":
       dev = sc["lateral"][i]
-      label = f"Ego (plant)  {abs(dev):.2f} m {'right' if dev < 0 else 'left'} of lane centre"
+      label = f"Ego ({'plant' if plant else 'kinematic'})  {sc['speed'][i] * 3.6:.0f} km/h"
+      if abs(dev) >= 0.05:
+        label += f", {abs(dev):.2f} m {'right' if dev < 0 else 'left'} of lane centre"
       tag(d, pos, label, EGO, mb)
     else:
-      contact = any("contact" in e["label"] and a["name"] in e["label"] for e in past)
-      src = "plant" if a["source"] == "plant" else "illustrative, not simulated"
-      tag(d, pos, f"{a['name'].capitalize()} ({src})" + ("  CONTACT" if contact else ""),
-          CRITICAL if contact else "#4b5563", mb)
+      src = {"plant": "plant", "kinematic": "kinematic", "illustrative": "illustrative"}[a["source"]]
+      txt = f"{a['name'].capitalize()} ({src})"
+      if a["name"] == crit and sc["gap"] and not hit:
+        ttc = sc["ttc"][i]
+        txt += f"  {sc['gap'][i]:.1f} m" + (f", TTC {ttc:.1f} s" if ttc < 20 else "")
+      if hit and hit["who"] == a["name"]:
+        txt += f"  CONTACT {hit['rel_kph']:.0f} km/h"
+      tag(d, pos, txt, CRITICAL if (hit and hit["who"] == a["name"]) or a["name"] == crit else "#4b5563", mb)
   if past:
     last = past[-1]
-    msg = f"{last['label']}  at {last['t']:+.2f} s"
+    msg = clip(f"{last['label']}  at {last['t']:+.2f} s", F["bs"], mb[2] - mb[0] - 60)
     w = F["bs"].getlength(msg) + 24
-    d.rounded_rectangle([mb[0] + 12, mb[3] - 44, mb[0] + 12 + w, mb[3] - 12], 5, fill="#000000c0", outline=CRITICAL)
+    d.rounded_rectangle([mb[0] + 12, mb[3] - 44, mb[0] + 12 + w, mb[3] - 12], 5, fill="#000000",
+                        outline=CRITICAL if is_red(last["label"]) or last["t"] == 0.0 else EDGE)
     d.text((mb[0] + 24, mb[3] - 37), msg, font=F["bs"], fill=TEXT)
 
-  # left: hazardous event (HARA) and ego state
+  # left: the HARA or SOTIF entry
   hb = (12, 64, 372, 412)
   panel(d, hb, edge=CRITICAL)
-  d.text((24, 74), f"Hazardous event {he['id']}", font=F["h1"], fill=CRITICAL)
-  y = wrap(d, (24, 102), f"{hz['id']}: {hz['title']}", F["bs"], TEXT, 330)
-  y = wrap(d, (24, y + 6), "Situation: " + he["situation"], F["s"], TEXT2, 330, 3)
-  y = wrap(d, (24, y + 4), "Effect: " + he["effect"], F["s"], TEXT2, 330, 3)
-  rows = [("Severity", f"S{he['s']}"), ("Exposure", f"E{he['e']}"), ("Controllability", f"C{he['c']}"),
-          ("ASIL", he["asil"])]
-  y = max(y + 8, 300)
+  d.text((24, 74), ("Hazardous event " if cd["kind"] == "HARA" else "SOTIF hazard ") + cd["id"], font=F["h1"],
+         fill=CRITICAL)
+  y = wrap(d, (24, 102), cd["title"], F["bs"], TEXT, 330)
+  y = wrap(d, (24, y + 6), "Situation: " + cd["situation"], F["s"], TEXT2, 330, 3)
+  y = wrap(d, (24, y + 4), "Effect: " + cd["effect"], F["s"], TEXT2, 330, 3)
+  extra = []
+  if cd["kind"] == "HARA" and (cd.get("tc") or cd.get("ks")):
+    extra = [["Triggering condition", ", ".join(cd["tc"]) or "—"], ["Known scenario", ", ".join(cd["ks"]) or "—"]]
+  rows = cd["rows"] + extra
+  y = max(y + 8, hb[3] - 30 - 20 * len(rows))
   for k, v in rows:
     d.text((24, y), k, font=F["s"], fill=TEXT2)
-    d.text((200, y), v, font=F["ss"], fill=CRITICAL if k == "ASIL" else TEXT)
+    d.text((200, y), clip(str(v), F["ss"], 160), font=F["ss"], fill=CRITICAL if k == "ASIL" else TEXT)
     y += 20
-  d.text((24, hb[3] - 22), "Ratings are WP-C-03 proposals, not approved", font=F["xs"], fill=MUTED)
+  d.text((24, hb[3] - 22), clip(cd["note"], F["xs"], 335), font=F["xs"], fill=MUTED)
 
+  # left: ego state
   eb = (12, 420, 372, 768)
-  panel(d, eb, "Ego state (plant)")
+  panel(d, eb, f"Ego state ({'plant' if plant else 'kinematic'})")
+  margin = sc["lane_threshold"] - abs(sc["lateral"][i])
   rows = [("Speed", f"{sc['speed'][i] * 3.6:.1f} km/h"), ("Longitudinal accel.", f"{sc['ax'][i]:+.2f} m/s²"),
           ("Lateral accel.", f"{sc['ay'][i]:+.2f} m/s²"), ("Lateral offset", f"{sc['lateral'][i]:+.2f} m"),
-          ("Margin to lane line", f"{sc['lane_threshold'] - abs(sc['lateral'][i]):+.2f} m"),
-          ("EPS LKA torque", f"{sc['eps_torque'][i]:.0f}")]
-  if sc.get("gap"):
-    rows += [("Gap to lead", f"{sc['gap']['lead'][i]:.1f} m"), ("Gap to follower", f"{sc['gap']['follower'][i]:.1f} m")]
+          ("Margin to lane line", f"{margin:+.2f} m")]
+  if sc.get("eps_torque"):
+    rows.append(("EPS LKA torque", f"{sc['eps_torque'][i]:.0f}"))
+  if crit and sc.get("gap"):
+    ttc = sc["ttc"][i]
+    rows += [(f"Gap to {crit}", f"{sc['gap'][i]:.1f} m"), ("Time to collision", f"{ttc:.2f} s" if ttc < 20 else "—")]
   y = 452
+  step = min(36, (eb[3] - 460) // max(len(rows), 1))
   for k, v in rows:
-    d.text((28, y), k, font=F["b"], fill=TEXT2)
-    neg = k == "Margin to lane line" and v.startswith("-")
-    d.text((356, y), v, font=F["bs"], fill=CRITICAL if neg else TEXT, anchor="ra")
-    y += 36 if not sc.get("gap") else 34
+    d.text((28, y), clip(k, F["b"], 200), font=F["b"], fill=TEXT2)
+    red = (k == "Margin to lane line" and v.startswith("-")) or (k == "Time to collision" and v != "—"
+                                                                   and float(v.split()[0]) < 2.0)
+    d.text((356, y), v, font=F["bs"], fill=CRITICAL if red else TEXT, anchor="ra")
+    y += step
 
   # right: forward and top views, event log
-  for title, name, top in (("Forward view", "driver", 64), ("Top view", "top", 333)):
+  for title, name, top in (("Forward view", "driver", 64), ("Top view (event ghosts, path)", "top", 333)):
     vb = (1491, top, 1908, top + 261)
     panel(d, vb, title)
     if views.get(name):
       img.paste(fit(Image.open(views[name]).convert("RGB"), 417 - 2, 261 - 34), (vb[0] + 1, vb[1] + 33))
   lb = (1491, 602, 1908, 768)
-  panel(d, lb, "Panda and driver events (plant)")
+  panel(d, lb, "Events" + (" (plant)" if plant else " (scene)"))
   ev = sc["events"]
+  done_n = sum(1 for e in ev if e["t"] <= t[i] + 1e-6)
+  first = max(0, min(done_n - 3, len(ev) - 6))
   y = 632
-  for e in ev[-6:] if len(ev) > 6 else ev:
+  for e in ev[first:first + 6]:
     done = e["t"] <= t[i] + 1e-6
-    col = CRITICAL if ("contact" in e["label"] or e["label"] == "fault") and done else (TEXT if done else MUTED)
+    col = CRITICAL if done and (is_red(e["label"]) or e["t"] == 0.0) else (TEXT if done else MUTED)
     r = 5
     if done:
       d.ellipse([1505, y + 4, 1505 + 2 * r, y + 4 + 2 * r], fill=col)
@@ -255,36 +284,41 @@ def frame(sc: dict, screen: dict, keys: list[dict], views: dict[str, Path], i: i
     y += 22
 
   # tiles under the main view
-  m = sc["metrics"]
-  tiles = [("Time from fault", f"{t[i]:+.2f} s", TEXT)]
-  if sc.get("gap"):
-    g = sc["gap"]["follower"]
-    tg = g[i] / max(sc["speed"][i], 0.1)
-    tiles += [("Gap to follower", f"{g[i]:.1f} m", TEXT), ("Minimum follower gap", f"{min(g):.1f} m", TEXT),
-              ("Follower time gap", f"{tg:.2f} s", WARNING if tg < 1.0 else TEXT)]
+  tiles = [("Time from trigger", f"{t[i]:+.2f} s", TEXT)]
+  if crit and sc.get("gap"):
+    ttcs = [v for v in sc["ttc"] if v < 20]
+    mt = min(ttcs) if ttcs else None
+    tiles += [(f"Gap to {crit}", f"{sc['gap'][i]:.1f} m", TEXT),
+              ("Minimum gap", f"{min(sc['gap']):.1f} m", CRITICAL if min(sc["gap"]) < 0.05 else TEXT),
+              ("Minimum TTC", f"{mt:.2f} s" if mt is not None else "—", WARNING if mt is not None and mt < 2.0 else TEXT)]
   else:
-    tl = m.get("t_line")
+    line = next((e for e in sc["events"] if e["label"] == "body reaches the lane line"), None)
+    peak = max(abs(v) for v in sc["lateral"])
     tiles += [("Lateral offset", f"{sc['lateral'][i]:+.2f} m", TEXT),
-              ("Body at lane line", f"{tl:.2f} s" if tl is not None else "not reached", WARNING if tl else TEXT),
-              ("Peak offset (whole run)", f"{m['max_offset']:.2f} m", TEXT)]
-  contact = next((e for e in sc["events"] if "contact" in e["label"] or "barrier" in e["label"]), None)
-  tiles.append(("Contact", f"{contact['t']:+.2f} s" if contact else "none", CRITICAL if contact else TEXT))
+              ("Body at lane line", f"{line['t']:+.2f} s" if line else "not reached", WARNING if line else TEXT),
+              ("Peak offset (shown)", f"{peak:.2f} m", TEXT)]
+  c = sc.get("contact")
+  tiles.append((f"Contact at {c['t']:+.2f} s (relative speed)" if c else "Contact", f"{c['rel_kph']:.0f} km/h" if c
+                else "none", CRITICAL if c else TEXT))
   tw = (1095 - 4 * 8) / 5
   for k, (label, value, col) in enumerate(tiles):
     x0 = 384 + k * (tw + 8)
-    tile(d, (x0, 688, x0 + tw, 768), label, value, col)
+    tile(d, (x0, 688, x0 + tw, 768), clip(label, F["s"], tw - 24), value, col)
 
   # strip charts
   series = [("Speed", "km/h", [v * 3.6 for v in sc["speed"]], (), False, 20.0),
             ("Longitudinal acceleration", "m/s²", sc["ax"], (), True, 2.0),
             ("Lateral offset from lane centre", "m", sc["lateral"], (sc["lane_threshold"], -sc["lane_threshold"]),
-             True, 2.0),
-            ("Lateral acceleration", "m/s²", sc["ay"], (), True, 2.0)]
-  if sc.get("gap"):
-    series.append(("Gap to follower", "m", sc["gap"]["follower"], (), False, 10.0))
+             True, 2.0)]
+  if crit and sc.get("gap"):
+    series += [(f"Gap to {crit}", "m", sc["gap"], (), False, 10.0),
+               ("Time to collision (≤ 10 s)", "s", [min(v, 10.0) for v in sc["ttc"]], (2.0,), False, 4.0)]
   else:
-    series.append(("EPS LKA torque", "", sc["eps_torque"], (), True, 300.0))
-  cw = (W - 24 - 4 * 8) / 5
+    series.append(("Lateral acceleration", "m/s²", sc["ay"], (), True, 2.0))
+    if sc.get("eps_torque"):
+      series.append(("EPS LKA torque", "", sc["eps_torque"], (), True, 300.0))
+  n = len(series)
+  cw = (W - 24 - (n - 1) * 8) / n
   for k, (title, unit, v, bands, zero, span) in enumerate(series):
     x0 = 12 + k * (cw + 8)
     chart(d, (x0, 776, x0 + cw, 942), title, unit, t, v, i, bands, zero, span)
@@ -332,8 +366,8 @@ def main(argv: list[str]) -> int:
   (out / "dashboard").mkdir(exist_ok=True)
   for f, views in stills.items():
     frame(sc, screen, keys, views, f - 1, thumbs).save(out / "dashboard" / f"f{f:04d}.png", optimize=True)
-  decisive = next((k for k in keys if "contact" in k["label"] or "barrier" in k["label"]), None) \
-    or next((k for k in keys if "correction" in k["label"]), None) or keys[len(keys) // 2]
+  decisive = next((k for k in keys if is_red(k["label"])), None) \
+    or next((k for k in keys if "correction" in k["label"] or "brakes" in k["label"]), None) or keys[len(keys) // 2]
   shutil.copy(out / "dashboard" / f"f{decisive['frame']:04d}.png", out / "dashboard.png")
   print(f"{sc['id']}: {len(stills)} dashboards; {out / 'dashboard.png'} ({decisive['label']})")
 

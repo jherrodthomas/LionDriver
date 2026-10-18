@@ -1,17 +1,18 @@
 """Build and render a hazardous-event scene in Blender (assurance/sim/blender, step 2 of 3).
 
-Reads out/<scene>/scene.json from export_scene.py and builds an animated Blender scene: the road with its lanes,
-markings, shoulder and barrier; the ego car and the other road users keyframed frame by frame from the plant output;
-a translucent ego "ghost" left at each panda or driver event; the ego's path drawn on the road as it goes; a chase
-camera and an orthographic top camera that follow the ego. Saves scene.blend (open it in Blender to scrub, re-light
-or re-frame), then renders the key-event stills and, if asked, the frames of a clip. compose.py adds the HUD.
+Reads out/<scene>/scene.json from export_scene.py and builds an animated Blender scene: the road from its
+cross-section, scenery and props, the sky and sun (or night), every road user keyframed frame by frame, a
+translucent ego "ghost" left at each event, the ego's path drawn on the road as it goes, and three cameras that follow
+the ego (chase, forward, orthographic top). Saves scene.blend (open it in Blender to scrub, re-light or re-frame),
+writes where each road user appears in the chase view (screen.json, for the dashboard tags), then renders the
+key-event stills and, if asked, the frames of a clip. compose.py adds the dashboard.
 
-The ego is the purchased Corolla E210 mesh when the GLB is present (assets/1450755-gltf-extended.glb, or --vehicle,
-or LIONDRIVER_VEHICLE_GLB), and otherwise a stand-in lofted from the committed silhouette
-(figures/corolla-e210-silhouette.json). Other cars are always the stand-in. A scene.blend or a render made with the
-purchased mesh holds licensed content: renders may be published, the .blend may not (assets/README.md).
+Every car is the purchased Corolla E210 mesh when the GLB is present (assets/1450755-gltf-extended.glb, or --vehicle,
+or LIONDRIVER_VEHICLE_GLB), instanced and repainted per road user; otherwise a stand-in lofted from the committed
+silhouette. Trucks, pedestrians and cyclists are simple procedural models. A scene.blend made with the purchased mesh
+holds licensed content: its renders may be published, the .blend may not (assets/README.md).
 
-Runs in Blender 4.2 or later, or in Python with the bpy module (pip install bpy; Blender 5.x needs Python 3.13):
+Runs in Blender 4.2 or later, or in Python 3.13 with the bpy module (pip install bpy):
 
   blender -b -P assurance/sim/blender/hazard_scene.py -- assurance/sim/blender/out/<scene>/scene.json --stills
   python3 assurance/sim/blender/hazard_scene.py assurance/sim/blender/out/<scene>/scene.json --stills --video
@@ -31,250 +32,16 @@ from pathlib import Path
 import bpy
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+import scene_assets as A  # noqa: E402
+
 SIM = HERE.parent
-SILHOUETTE = SIM / "figures" / "corolla-e210-silhouette.json"
 DEFAULT_GLB = SIM / "assets" / "1450755-gltf-extended.glb"
 
-EGO_RGB = (0.85, 0.22, 0.05)           # ego body
-PLANT_RGB = (0.16, 0.30, 0.55)         # road users the plant models (lead, follower)
-ILLUSTRATIVE_RGB = (0.62, 0.64, 0.68)  # road users drawn but not simulated
-
-
-# ------------------------------------------------------------------------------------------------- materials
-def material(name: str, rgb, rough: float = 0.5, metal: float = 0.0, alpha: float = 1.0, emit: float = 0.0):
-  m = bpy.data.materials.get(name) or bpy.data.materials.new(name)
-  m.use_nodes = True
-  b = m.node_tree.nodes.get("Principled BSDF")
-  b.inputs["Base Color"].default_value = (*rgb, 1.0)
-  b.inputs["Roughness"].default_value = rough
-  b.inputs["Metallic"].default_value = metal
-  b.inputs["Alpha"].default_value = alpha
-  if emit:
-    b.inputs["Emission Color"].default_value = (*rgb, 1.0)
-    b.inputs["Emission Strength"].default_value = emit
-  m.diffuse_color = (*rgb, alpha)
-  return m
-
-
-def mesh_object(name: str, verts, faces, mat=None, collection=None, smooth=False):
-  me = bpy.data.meshes.new(name)
-  me.from_pydata(verts, [], faces)
-  me.update()
-  if smooth:
-    for p in me.polygons:
-      p.use_smooth = True
-  ob = bpy.data.objects.new(name, me)
-  (collection or bpy.context.scene.collection).objects.link(ob)
-  if mat:
-    me.materials.append(mat)
-  return ob
-
-
-def collection(name: str):
-  c = bpy.data.collections.new(name)
-  bpy.context.scene.collection.children.link(c)
-  return c
-
-
-# ------------------------------------------------------------------------------------------------- road
-def offset(c, d: float, z: float = 0.0):
-  x, y, h = c[0], c[1], c[2]
-  return (x - d * math.sin(h), y + d * math.cos(h), z)
-
-
-def strip(name, centre, d0: float, d1: float, z: float, mat, coll, s_ranges=None):
-  """A flat ribbon between lateral offsets d0 and d1 (left positive); s_ranges limits it to dashes."""
-  verts, faces = [], []
-  for i in range(len(centre) - 1):
-    a, b = centre[i], centre[i + 1]
-    if s_ranges is not None and not any(lo <= a[3] < hi for lo, hi in s_ranges):
-      continue
-    k = len(verts)
-    verts += [offset(a, d0, z), offset(a, d1, z), offset(b, d1, z), offset(b, d0, z)]
-    faces.append((k, k + 1, k + 2, k + 3))
-  return mesh_object(name, verts, faces, mat, coll)
-
-
-def build_road(sc: dict):
-  r = sc["road"]
-  c = r["centre"]
-  coll = collection("road")
-  asphalt = material("asphalt", (0.045, 0.045, 0.05), rough=0.85)
-  shoulder = material("shoulder", (0.075, 0.075, 0.08), rough=0.9)
-  paint = material("paint", (0.85, 0.85, 0.82), rough=0.6)
-  grass = material("grass", (0.10, 0.17, 0.06), rough=1.0)
-  steel = material("barrier", (0.55, 0.57, 0.6), rough=0.35, metal=0.8)
-
-  lw = r["lane_width"]
-  left, right = r["left_edge"], r["right_edge"]
-  outer = r["barrier"] if r["barrier"] is not None else right - r["shoulder_m"]
-  strip("carriageway", c, left + 0.6, right, 0.0, asphalt, coll)
-  strip("shoulder", c, right, outer - 0.4, -0.002, shoulder, coll)
-  strip("verge_left", c, left + 400, left + 0.6, -0.03, grass, coll)
-  strip("verge_right", c, outer - 0.4, outer - 400, -0.03, grass, coll)
-  # markings: solid edge lines, dashed lane lines (3 m dash, 9 m gap)
-  strip("edge_left", c, left - 0.1, left - 0.25, 0.004, paint, coll)
-  strip("edge_right", c, right + 0.25, right + 0.1, 0.004, paint, coll)
-  s0, s1 = c[0][3], c[-1][3]
-  dashes = [(s, s + 3.0) for s in [s0 + 12.0 * i for i in range(int((s1 - s0) / 12.0) + 1)]]
-  for k in range(1, r["lanes_left"] + r["lanes_right"] + 1):
-    d = left - k * lw
-    strip(f"lane_line_{k}", c, d + 0.075, d - 0.075, 0.004, paint, coll, dashes)
-  if r["barrier"] is not None:
-    b = r["barrier"]
-    verts, faces = [], []
-    for i, p in enumerate(c):
-      verts += [offset(p, b, 0.5), offset(p, b, 0.82), offset(p, b - 0.06, 0.82), offset(p, b - 0.06, 0.5)]
-      if i:
-        k = 4 * i
-        for j in range(4):
-          faces.append((k - 4 + j, k - 4 + (j + 1) % 4, k + (j + 1) % 4, k + j))
-    mesh_object("barrier_rail", verts, faces, steel, coll)
-    verts, faces = [], []
-    for p in c[::2]:
-      k = len(verts)
-      x, y, _ = offset(p, b - 0.15, 0)
-      for dz in (0.0, 0.7):
-        verts += [(x - 0.06, y - 0.06, dz), (x + 0.06, y - 0.06, dz), (x + 0.06, y + 0.06, dz), (x - 0.06, y + 0.06, dz)]
-      faces += [(k, k + 1, k + 5, k + 4), (k + 1, k + 2, k + 6, k + 5), (k + 2, k + 3, k + 7, k + 6),
-                (k + 3, k, k + 4, k + 7), (k + 4, k + 5, k + 6, k + 7)]
-    mesh_object("barrier_posts", verts, faces, steel, coll)
-
-
-# ------------------------------------------------------------------------------------------------- cars
-def standin_mesh(name: str):
-  """A car body lofted from the reference car's top and side outlines: forward +X, ground at Z = 0."""
-  me = bpy.data.meshes.get(name)
-  if me:
-    return me
-  sil = json.loads(SILHOUETTE.read_text())
-  top = sil["side_outline"]["top"]
-  half = sil["top_outline_body"]["right"]
-  verts, faces, mats = [], [], []
-  ring = None
-  for (along, zt), (_, w) in zip(top[::2], half[::2]):
-    x = -along                                  # the file's -y is the front
-    zb = 0.2
-    zt = max(zt, zb + 0.12)
-    w = max(w, 0.15)
-    belt = min(zt - 0.04, 0.95)
-    cabin = zt > 1.05
-    if cabin:                                   # cabin: glasshouse tapers above the belt line
-      prof = [(0.9 * w, zb), (w, 0.5), (0.97 * w, belt), (0.72 * w, zt - 0.06), (0.5 * w, zt)]
-    else:                                       # bonnet or boot
-      zm = zb + 0.55 * (zt - zb)
-      prof = [(0.9 * w, zb), (w, zm), (0.97 * w, zt - 0.06), (0.85 * w, zt - 0.01), (0.5 * w, zt)]
-    pts = [(x, -y, z) for y, z in prof] + [(x, y, z) for y, z in reversed(prof)]
-    k = len(verts)
-    verts += pts
-    if ring is not None:
-      n = len(pts)
-      for j in range(n):
-        faces.append((ring + j, ring + (j + 1) % n, k + (j + 1) % n, k + j))
-        mats.append(1 if cabin and j in (2, 3, 5, 6) else 0)
-    ring = k
-  n = 10
-  for first, sign in ((0, -1), (ring, 1)):        # end caps as fans round their centre
-    c = len(verts)
-    verts.append(tuple(sum(verts[first + j][i] for j in range(n)) / n for i in range(3)))
-    for j in range(n):
-      a, b = first + j, first + (j + 1) % n
-      faces.append((c, a, b) if sign > 0 else (c, b, a))
-      mats.append(0)
-  me = bpy.data.meshes.new(name)
-  me.from_pydata(verts, [], faces)
-  for p, m in zip(me.polygons, mats):
-    p.material_index = m
-    p.use_smooth = True
-  me.update()
-  return me
-
-
-def wheel_mesh():
-  me = bpy.data.meshes.get("standin_wheel")
-  if me:
-    return me
-  sil = json.loads(SILHOUETTE.read_text())
-  r, w, n = sil["r_tire"], 0.22, 24
-  verts, faces = [], []
-  for side in (-w / 2, w / 2):
-    for i in range(n):
-      a = 2 * math.pi * i / n
-      verts.append((r * math.cos(a), side, r * math.sin(a) + r))
-  for i in range(n):
-    faces.append((i, (i + 1) % n, n + (i + 1) % n, n + i))
-  faces += [tuple(range(n)), tuple(range(2 * n - 1, n - 1, -1))]
-  me = bpy.data.meshes.new("standin_wheel")
-  me.from_pydata(verts, [], faces)
-  me.update()
-  me.materials.append(material("tyre", (0.02, 0.02, 0.02), rough=0.9))
-  return me
-
-
-def standin_car(name: str, rgb, coll, alpha: float = 1.0):
-  """Empty at the body centre on the ground, forward +X, with the lofted body and four wheels."""
-  root = bpy.data.objects.new(name, None)
-  coll.objects.link(root)
-  tag = f"{name}_paint"
-  body = bpy.data.objects.new(f"{name}_body", standin_mesh("standin_body").copy())
-  body.data.materials.append(material(tag, rgb, rough=0.25, metal=0.4, alpha=alpha))
-  body.data.materials.append(material(f"glass_{alpha:g}", (0.03, 0.04, 0.05), rough=0.05, alpha=min(alpha, 0.9)))
-  body.parent = root
-  coll.objects.link(body)
-  sil = json.loads(SILHOUETTE.read_text())
-  for wh in sil["wheels"]:
-    ob = bpy.data.objects.new(f"{name}_{wh['name']}", wheel_mesh())
-    ob.location = (-wh["y"], wh["x"] * 1.04, 0.0)
-    ob.parent = root
-    coll.objects.link(ob)
-  return root
-
-
-def glb_car(path: Path, front: str | None, coll):
-  """The purchased mesh, centred on the ground and turned to face +X, under an empty named ego."""
-  before = set(bpy.data.objects)
-  bpy.ops.import_scene.gltf(filepath=str(path))
-  new = [o for o in bpy.data.objects if o not in before]
-  for o in new:
-    for c in o.users_collection:
-      c.objects.unlink(o)
-    coll.objects.link(o)
-  meshes = [o for o in new if o.type == "MESH"]
-  bpy.context.view_layer.update()
-  pts = [o.matrix_world @ v.co for o in meshes for v in o.data.vertices]
-  lo = [min(p[i] for p in pts) for i in range(3)]
-  hi = [max(p[i] for p in pts) for i in range(3)]
-  ext = [hi[i] - lo[i] for i in range(3)]
-  along = 0 if ext[0] >= ext[1] else 1
-  if front is None:
-    # the bonnet end is lower than the boot end (silhouette: 0.87 m against 1.15 m over the outer quarters)
-    q = 0.25 * ext[along]
-    near = [p[2] for p in pts if p[along] < lo[along] + q]
-    far = [p[2] for p in pts if p[along] > hi[along] - q]
-    def top(zs):
-      zs = sorted(zs)
-      return zs[int(0.98 * (len(zs) - 1))] if zs else 0.0
-    sign = -1 if top(near) < top(far) else 1
-    front = ("-" if sign < 0 else "+") + "xy"[along]
-  yaw = {"+x": 0.0, "-x": math.pi, "+y": -math.pi / 2, "-y": math.pi / 2}[front]
-  holder = bpy.data.objects.new("ego_mesh", None)
-  coll.objects.link(holder)
-  cx, cy = 0.5 * (lo[0] + hi[0]), 0.5 * (lo[1] + hi[1])
-  for o in new:
-    if o.parent is None:
-      o.parent = holder
-      o.matrix_parent_inverse.identity()
-  holder.location = (0, 0, 0)
-  holder.rotation_euler = (0, 0, yaw)
-  # shift so the bounding-box centre is at the origin and the lowest point on the ground, before the turn
-  for o in new:
-    if o.parent is holder:
-      o.location = (o.location[0] - cx, o.location[1] - cy, o.location[2] - lo[2])
-  root = bpy.data.objects.new("ego", None)
-  coll.objects.link(root)
-  holder.parent = root
-  print(f"vehicle: {path.name}, front {front}, extent {ext[0]:.2f} x {ext[1]:.2f} x {ext[2]:.2f} m")
-  return root
+EGO_RGB = (0.62, 0.12, 0.03)            # ego body paint (the dashboard's ego colour, darkened for metallic paint)
+GHOST_RGB = (0.85, 0.22, 0.05)
+PLANT_RGB = (0.12, 0.22, 0.45)          # road users the plant models (lead, follower)
+OTHER_RGB = (0.72, 0.73, 0.75)          # other cars, unless the scene gives a paint
 
 
 # ------------------------------------------------------------------------------------------------- animation
@@ -291,6 +58,22 @@ def unwrap(angles):
   return out
 
 
+def fcurves(ob):
+  ad = ob.animation_data
+  if not ad or not ad.action:
+    return []
+  try:
+    return list(ad.action.fcurves)
+  except AttributeError:                        # Blender 5: layered actions
+    return [fc for layer in ad.action.layers for st in layer.strips for bag in st.channelbags for fc in bag.fcurves]
+
+
+def linear(ob):
+  for fc in fcurves(ob):
+    for kp in fc.keyframe_points:
+      kp.interpolation = "LINEAR"
+
+
 def keyframe_poses(ob, poses, z: float = 0.0):
   yaws = unwrap([p[2] for p in poses])
   for f, (p, yaw) in enumerate(zip(poses, yaws), start=1):
@@ -301,18 +84,22 @@ def keyframe_poses(ob, poses, z: float = 0.0):
   linear(ob)
 
 
-def linear(ob):
-  ad = ob.animation_data
-  if not ad or not ad.action:
-    return
-  try:
-    curves = ad.action.fcurves
-  except AttributeError:                        # Blender 5: layered actions
-    curves = [fc for layer in ad.action.layers for strip_ in layer.strips
-              for bag in strip_.channelbags for fc in bag.fcurves]
-  for fc in curves:
-    for kp in fc.keyframe_points:
-      kp.interpolation = "LINEAR"
+def walk_cycle(limbs, poses, stride: float = 0.75):
+  """Swing legs and arms with the distance walked (a step every `stride` metres)."""
+  dist = 0.0
+  for f, p in enumerate(poses, start=1):
+    if f > 1:
+      dist += math.hypot(p[0] - poses[f - 2][0], p[1] - poses[f - 2][1])
+    sw = 0.45 * math.sin(math.pi * dist / stride)
+    for k, (hip, sh) in enumerate(limbs):
+      sgn = 1 if k == 0 else -1
+      hip.rotation_euler = (0, sgn * sw, 0)
+      sh.rotation_euler = (0, -sgn * sw * 0.8, 0)
+      hip.keyframe_insert("rotation_euler", frame=f)
+      sh.keyframe_insert("rotation_euler", frame=f)
+  for hip, sh in limbs:
+    linear(hip)
+    linear(sh)
 
 
 def show_from(ob, frame: int):
@@ -340,6 +127,128 @@ def nearest_centre(centre, x, y, hint=0):
   return j
 
 
+def centre_at(centre, s: float):
+  i = min(max(int(round(s - centre[0][3])), 0), len(centre) - 1)
+  return centre[i]
+
+
+# ------------------------------------------------------------------------------------------------- road users
+def headlights(root, coll, front: float = 2.25):
+  for y in (0.62, -0.62):
+    lt = bpy.data.objects.new("headlight", bpy.data.lights.new("headlight", "SPOT"))
+    lt.data.energy, lt.data.spot_size, lt.data.spot_blend = 4000, math.radians(60), 0.5
+    lt.data.color = (1.0, 0.95, 0.85)
+    lt.parent = root
+    lt.location = (front, y, 0.7)
+    lt.rotation_euler = (0, math.radians(-88), 0)       # the spot points along +X, a little down
+    coll.objects.link(lt)
+
+
+def make_actor(a: dict, model, coll, night: bool):
+  kind = a["kind"]
+  name = a["name"].replace(" ", "_")
+  limbs = None
+  if kind in ("ego", "car"):
+    rgb = EGO_RGB if kind == "ego" else tuple(a.get("paint") or (PLANT_RGB if a["source"] == "plant" else OTHER_RGB))
+    body = A.paint(rgb)
+    ob = model.instance(name, coll, body=body) if model else A.standin_car(name, coll, body=body)
+    if night:
+      headlights(ob, coll)
+  elif kind == "truck":
+    ob = A.truck(name, coll)
+    if night:
+      headlights(ob, coll, 4.8)
+  elif kind == "pedestrian":
+    ob, limbs = A.pedestrian(name, coll)
+  elif kind == "cyclist":
+    ob = A.cyclist(name, coll)
+  else:
+    raise ValueError(kind)
+  keyframe_poses(ob, a["poses"])
+  if limbs:
+    walk_cycle(limbs, a["poses"])
+  return ob
+
+
+# ------------------------------------------------------------------------------------------------- props
+def build_props(sc: dict, coll):
+  c = sc["road"]["centre"]
+  r = sc["road"]
+  left, right = r["outer"]
+  concrete = A.material("concrete", (0.5, 0.49, 0.47), rough=0.85)
+  for k, p in enumerate(sc["props"]):
+    kind = p["kind"]
+    if kind == "overpass":
+      x, y, h = centre_at(c, p["s"])[:3]
+      span = (left - right) + 16
+      mx, my, _ = A.offset(centre_at(c, p["s"]), 0.5 * (left + right))
+      A.part("overpass_deck", A.box_mesh(f"deck{k}", 12.0, span, 1.2, 5.6, concrete), None, coll, (mx, my, 0), (0, 0, h))
+      A.part("overpass_rail", A.box_mesh(f"rail{k}", 0.3, span, 1.0, 6.8, concrete), None, coll,
+             A.offset(centre_at(c, p["s"] - 5.8), 0.5 * (left + right)), (0, 0, h))
+      for d in (left + 2.0, right - 2.0):
+        px, py, _ = A.offset(centre_at(c, p["s"]), d)
+        A.part("overpass_pier", A.box_mesh(f"pier{k}{d:.0f}", 2.0, 1.2, 5.6, 0.0, concrete), None, coll, (px, py, 0),
+               (0, 0, h))
+    elif kind == "intersection":
+      cc = centre_at(c, p["s"])
+      x, y, h = cc[:3]
+      w = p.get("width", 14.0)
+      asphalt = bpy.data.materials.get("asphalt") or A.material("asphalt", (0.05, 0.05, 0.055), rough=0.85)
+      A.part("cross_road", A.box_mesh(f"cross{k}", w, 160.0, 0.16, -0.005, asphalt), None, coll, (x, y, 0), (0, 0, h))
+      white = A.material("paint_white", (0.85, 0.85, 0.82), rough=0.5)
+      for side in (-1, 1):                      # zebra crossings either side of the junction
+        cz = centre_at(c, p["s"] + side * (w / 2 + 2.5))
+        d = right
+        while d < left:
+          zx, zy, _ = A.offset(cz, d + 0.25)
+          A.part("zebra", A.box_mesh(f"zebra{k}{side}{d:.1f}", 3.0, 0.5, 0.01, 0.158, white), None, coll, (zx, zy, 0),
+                 (0, 0, cz[2]))
+          d += 1.0
+    elif kind == "traffic_light":
+      cc = centre_at(c, p["s"])
+      x, y, _ = A.offset(cc, p.get("d", 0.0))
+      pole = A.part("signal_pole", A.cyl_mesh(f"sigpole{k}", 0.09, 4.2, mat=A.material("pole", (0.15, 0.15, 0.16))),
+                    None, coll, (x, y, 2.1))
+      head = A.part("signal_head", A.box_mesh(f"sighead{k}", 0.35, 0.4, 1.1, 0.0,
+                                               A.material("signal_box", (0.05, 0.05, 0.05), rough=0.5)),
+                    None, coll, (x, y, 4.2), (0, 0, cc[2]))
+      on = {"red": (1.0, 0.05, 0.02), "amber": (1.0, 0.6, 0.0), "green": (0.1, 1.0, 0.3)}[p.get("state", "red")]
+      lz = {"red": 4.95, "amber": 4.6, "green": 4.25}[p.get("state", "red")]
+      lx, ly, _ = A.offset(cc, p.get("d", 0.0))
+      lx -= 0.19 * math.cos(cc[2])
+      ly -= 0.19 * math.sin(cc[2])
+      A.part("signal_lamp", A.sphere_mesh(f"siglamp{k}", 0.12, 2, A.material(f"lamp_{p.get('state')}", on, emit=25.0)),
+             None, coll, (lx, ly, lz))
+    elif kind == "cones":
+      cone = bpy.data.meshes.get("cone")
+      if cone is None:
+        import bmesh
+        cone = bpy.data.meshes.new("cone")
+        bm = bmesh.new()
+        bmesh.ops.create_cone(bm, cap_ends=True, segments=16, radius1=0.2, radius2=0.03, depth=0.75)
+        bmesh.ops.translate(bm, vec=(0, 0, 0.375), verts=bm.verts)
+        bm.to_mesh(cone)
+        bm.free()
+        cone.materials.append(A.material("cone_orange", (0.95, 0.25, 0.02), rough=0.5, emit=0.3))
+      for s, d in p["points"]:
+        x, y, _ = A.offset(centre_at(c, s), d)
+        A.part("cone", cone, None, coll, (x, y, 0))
+    elif kind == "seam":
+      tar = A.material("tar", (0.008, 0.008, 0.01), rough=0.25)
+      n = int(p["len"])
+      verts, faces = [], []
+      for i in range(n + 1):
+        cc = centre_at(c, p["s"] + i)
+        d = p["d0"] + (p["d1"] - p["d0"]) * i / n
+        verts += [A.offset(cc, d + 0.14, 0.005), A.offset(cc, d - 0.14, 0.005)]
+        if i:
+          faces.append((2 * i - 2, 2 * i - 1, 2 * i + 1, 2 * i))
+      A.mesh_object("seam", verts, faces, tar, coll)
+    else:
+      raise ValueError(kind)
+
+
+# ------------------------------------------------------------------------------------------------- cameras, path
 def build_cameras(sc: dict):
   ego = sc["actors"][0]["poses"]
   c = sc["road"]["centre"]
@@ -351,6 +260,8 @@ def build_cameras(sc: dict):
     heads.append(c[j][2])
   heads = smooth(unwrap(heads), 12)
   ex, ey = smooth([p[0] for p in ego], 6), smooth([p[1] for p in ego], 6)
+  urban = r["type"] == "urban"
+  back, up, side, ahead = (12.0, 5.0, 2.5, 12.0) if urban else (15.0, 6.5, 4.0, 14.0)
 
   cams = {}
   chase = bpy.data.objects.new("cam_chase", bpy.data.cameras.new("cam_chase"))
@@ -361,8 +272,8 @@ def build_cameras(sc: dict):
   tc = chase.constraints.new("TRACK_TO")
   tc.target, tc.track_axis, tc.up_axis = target, "TRACK_NEGATIVE_Z", "UP_Y"
   for f, (x, y, h) in enumerate(zip(ex, ey, heads), start=1):
-    chase.location = (x - 15 * math.cos(h) - 4 * math.sin(h), y - 15 * math.sin(h) + 4 * math.cos(h), 6.5)
-    target.location = (x + 14 * math.cos(h), y + 14 * math.sin(h), 0.0)
+    chase.location = (x - back * math.cos(h) - side * math.sin(h), y - back * math.sin(h) + side * math.cos(h), up)
+    target.location = (x + ahead * math.cos(h), y + ahead * math.sin(h), 0.0)
     chase.keyframe_insert("location", frame=f)
     target.keyframe_insert("location", frame=f)
   linear(chase)
@@ -371,13 +282,14 @@ def build_cameras(sc: dict):
 
   top = bpy.data.objects.new("cam_top", bpy.data.cameras.new("cam_top"))
   top.data.type = "ORTHO"
-  span = (r["left_edge"] + 1.0) - ((r["barrier"] if r["barrier"] is not None else r["right_edge"]) - 1.5)
-  top.data.ortho_scale = max(48.0, span * 16 / 9 * 1.1)
-  mid = 0.5 * ((r["left_edge"] + 1.0) + ((r["barrier"] if r["barrier"] is not None else r["right_edge"]) - 1.5))
+  left = r["left_edge"] + 1.0
+  rightb = (r["barrier"] if r.get("barrier") is not None else r["right_edge"]) - 1.5
+  top.data.ortho_scale = max(48.0, (left - rightb) * 16 / 9 * 1.1)
+  mid = 0.5 * (left + rightb)
   bpy.context.scene.collection.objects.link(top)
   for f, (j, h) in enumerate(zip(idx, heads), start=1):
     p = c[min(j + 6, len(c) - 1)]
-    x, y, _ = offset(p, mid)
+    x, y, _ = A.offset(p, mid)
     top.location = (x, y, 60.0)
     top.rotation_euler = (0.0, 0.0, h)
     top.keyframe_insert("location", frame=f)
@@ -412,14 +324,14 @@ def build_path(sc: dict, frames: int):
   for p, (x, y, _) in zip(sp.points, poses):
     p.co = (x, y, 0.03, 1.0)
   ob = bpy.data.objects.new("ego_path", cu)
-  cu.materials.append(material("path", EGO_RGB, emit=2.0))
+  cu.materials.append(A.material("path", GHOST_RGB, emit=2.0))
   bpy.context.scene.collection.objects.link(ob)
   lengths = [0.0]
   for a, b in zip(poses, poses[1:]):
     lengths.append(lengths[-1] + math.hypot(b[0] - a[0], b[1] - a[1]))
   total = lengths[-1] or 1.0
   for f in range(1, frames + 1):
-    cu.bevel_factor_end = lengths[f - 1] / total
+    cu.bevel_factor_end = lengths[f - 1] / total if total > 0.5 else 0.0
     cu.keyframe_insert("bevel_factor_end", frame=f)
   return ob
 
@@ -430,8 +342,8 @@ def key_frames(sc: dict) -> list[dict]:
   out = [{"frame": 1, "t": t[0], "label": "start"}]
   for e in sc["events"]:
     f = min(range(len(t)), key=lambda i: abs(t[i] - e["t"])) + 1
-    if out and abs(out[-1]["t"] - e["t"]) < 0.15:
-      out[-1]["label"] += "; " + e["label"]
+    if abs(out[-1]["t"] - e["t"]) < 0.15:
+      out[-1]["label"] = e["label"] if out[-1]["label"] == "start" else out[-1]["label"] + "; " + e["label"]
       continue
     out.append({"frame": f, "t": e["t"], "label": e["label"]})
   if out[-1]["frame"] != len(t):
@@ -447,52 +359,29 @@ def build(sc: dict, vehicle: Path | None, front: str | None) -> dict:
   frames = len(sc["t"])
   scene.render.fps = sc["fps"]
   scene.frame_start, scene.frame_end = 1, frames
+  env = dict(sc.get("env", {}), urban=sc["road"]["type"] == "urban")
+  A.build_environment(env, sc["actors"][0]["poses"][0][2])
+  A.build_road(sc["road"], env)
+  A.build_scenery(sc["road"], env)
+  props = bpy.data.collections.new("props")
+  scene.collection.children.link(props)
+  build_props(sc, props)
 
-  world = bpy.data.worlds.new("sky")
-  world.use_nodes = True
-  nodes = world.node_tree.nodes
-  bg = nodes["Background"]
-  try:                                          # physical sky, low evening light
-    sky = nodes.new("ShaderNodeTexSky")
-    sky.sun_elevation = math.radians(9)
-    sky.sun_disc = False                        # the lamp below lights the scene; no glare in the forward view
-    world.node_tree.links.new(sky.outputs["Color"], bg.inputs["Color"])
-    bg.inputs["Strength"].default_value = 0.12
-  except (RuntimeError, AttributeError, KeyError):
-    bg.inputs["Color"].default_value = (0.55, 0.68, 0.85, 1.0)
-    bg.inputs["Strength"].default_value = 0.8
-  scene.world = world
-  try:
-    scene.view_settings.look = "AgX - Medium High Contrast"
-  except TypeError:
-    pass
-  sun = bpy.data.objects.new("sun", bpy.data.lights.new("sun", "SUN"))
-  sun.data.energy = 2.6
-  sun.data.color = (1.0, 0.78, 0.55)
-  sun.data.angle = math.radians(1.5)
-  sun.rotation_euler = (math.radians(76), 0.0, math.radians(-120))   # low, behind and to the left of the ego
-  scene.collection.objects.link(sun)
+  model = A.CarModel(vehicle, front) if vehicle else None
+  users = bpy.data.collections.new("road_users")
+  scene.collection.children.link(users)
+  for a in sc["actors"]:
+    make_actor(a, model, users, env.get("night", False))
 
-  build_road(sc)
-  cars = collection("road_users")
-  ghosts = collection("event_ghosts")
-  ego_actor, others = sc["actors"][0], sc["actors"][1:]
-  if vehicle is not None:
-    ego = glb_car(vehicle, front, cars)
-  else:
-    ego = standin_car("ego", EGO_RGB, cars)
-  keyframe_poses(ego, ego_actor["poses"])
-  for a in others:
-    rgb = PLANT_RGB if a["source"] == "plant" else ILLUSTRATIVE_RGB
-    ob = standin_car(a["name"].replace(" ", "_"), rgb, cars)
-    keyframe_poses(ob, a["poses"])
-
+  ghosts = bpy.data.collections.new("event_ghosts")
+  scene.collection.children.link(ghosts)
   keys = key_frames(sc)
+  ghost = A.ghost_material(GHOST_RGB)
   for k in keys[1:]:
     if k["label"] == "end":
       continue
-    g = standin_car(f"ghost_{k['frame']:04d}", EGO_RGB, ghosts, alpha=0.28)
-    x, y, h = ego_actor["poses"][k["frame"] - 1]
+    g = A.standin_car(f"ghost_{k['frame']:04d}", ghosts, override=ghost)
+    x, y, h = sc["actors"][0]["poses"][k["frame"] - 1]
     g.location, g.rotation_euler = (x, y, 0.0), (0.0, 0.0, h)
     show_from(g, k["frame"] + 1)
   build_path(sc, frames)
@@ -506,14 +395,14 @@ def screen_positions(sc: dict, cam) -> dict:
   from bpy_extras.object_utils import world_to_camera_view
   from mathutils import Vector
   s = bpy.context.scene
-  names = ["ego" if a["kind"] == "ego" else a["name"] for a in sc["actors"]]
-  out = {n: [] for n in names}
+  heights = {"pedestrian": 1.9, "cyclist": 1.8, "truck": 3.9}
+  out = {}
   for f in range(1, len(sc["t"]) + 1):
     s.frame_set(f)
-    for n, a in zip(names, sc["actors"]):
+    for a in sc["actors"]:
       x, y, _ = a["poses"][f - 1]
-      p = world_to_camera_view(s, cam, Vector((x, y, 1.6)))
-      out[n].append([round(p.x, 4), round(1 - p.y, 4)] if p.z > 0 else None)
+      p = world_to_camera_view(s, cam, Vector((x, y, heights.get(a["kind"], 1.6))))
+      out.setdefault(a["name"], []).append([round(p.x, 4), round(1 - p.y, 4)] if p.z > 0 else None)
   return out
 
 
@@ -524,6 +413,7 @@ def render_setup(res: tuple[int, int], samples: int):
   s.cycles.samples = samples
   s.cycles.use_denoising = True
   s.cycles.max_bounces = 4
+  s.cycles.transparent_max_bounces = 8
   s.render.use_persistent_data = True
   s.render.resolution_x, s.render.resolution_y = res
   s.render.resolution_percentage = 100
@@ -534,6 +424,9 @@ def render_setup(res: tuple[int, int], samples: int):
 def render_frame(cam, frame: int, path: Path):
   s = bpy.context.scene
   s.camera = cam
+  ghosts = bpy.data.collections.get("event_ghosts")
+  if ghosts:                                    # the ghosts and the path read from above; from the road they block the view
+    ghosts.hide_render = cam.name != "cam_top"
   s.frame_set(frame)
   s.render.filepath = str(path)
   bpy.ops.render.render(write_still=True)
@@ -543,14 +436,15 @@ def main(argv: list[str]) -> int:
   argv = argv[argv.index("--") + 1:] if "--" in argv else argv[1:]
   ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
   ap.add_argument("scene", type=Path, help="scene.json written by export_scene.py")
-  ap.add_argument("--vehicle", type=Path, help="GLB of the ego car (default: the purchased mesh if present)")
+  ap.add_argument("--vehicle", type=Path, help="GLB of the reference car (default: the purchased mesh if present)")
   ap.add_argument("--standin", action="store_true", help="use the silhouette stand-in even if the GLB is present")
   ap.add_argument("--front", choices=["+x", "-x", "+y", "-y"], help="front of the GLB after import (default: found)")
-  ap.add_argument("--stills", action="store_true", help="render the key-event frames from both cameras")
-  ap.add_argument("--video", action="store_true", help="render every frame of the chase camera (and the top camera)")
-  ap.add_argument("--res", default="1280x720", help="still resolution, WxH (default 1280x720)")
-  ap.add_argument("--video-res", default="960x540", help="clip resolution, WxH (default 960x540)")
-  ap.add_argument("--samples", type=int, default=24, help="Cycles samples for stills (clip: half)")
+  ap.add_argument("--stills", action="store_true", help="render the key-event frames from the three cameras")
+  ap.add_argument("--video", action="store_true", help="render every frame from the three cameras")
+  ap.add_argument("--res", default="1280x720", help="chase still resolution, WxH (side views at half)")
+  ap.add_argument("--video-res", default="960x540", help="chase clip resolution, WxH (side views at half)")
+  ap.add_argument("--samples", type=int, default=16, help="Cycles samples for stills (clip: half)")
+  ap.add_argument("--no-blend", action="store_true", help="do not save scene.blend")
   args = ap.parse_args(argv)
 
   sc = json.loads(args.scene.read_text())
@@ -565,17 +459,21 @@ def main(argv: list[str]) -> int:
       print(f"{cand}: not found", file=sys.stderr)
       return 1
   built = build(sc, vehicle, args.front)
-  bpy.ops.wm.save_as_mainfile(filepath=str(out / "scene.blend"))
+  if not args.no_blend:
+    bpy.ops.wm.save_as_mainfile(filepath=str(out / "scene.blend"))
   (out / "screen.json").write_text(json.dumps(screen_positions(sc, built["cams"]["chase"])))
   manifest = {"scene": sc["id"], "vehicle": "purchased mesh" if vehicle else "stand-in", "stills": [], "video": {}}
+
+  def sized(name, w, h):
+    d = 1 if name == "chase" else 2             # the side views are drawn at half size
+    bpy.context.scene.render.resolution_x, bpy.context.scene.render.resolution_y = w // d, h // d
 
   if args.stills:
     w, h = (int(v) for v in args.res.split("x"))
     render_setup((w, h), args.samples)
     for k in built["keys"]:
       for name, cam in built["cams"].items():
-        d = 1 if name == "chase" else 2         # the side views are drawn at half size
-        bpy.context.scene.render.resolution_x, bpy.context.scene.render.resolution_y = w // d, h // d
+        sized(name, w, h)
         p = out / "stills" / f"f{k['frame']:04d}_{name}.png"
         render_frame(cam, k["frame"], p)
         manifest["stills"].append({**k, "camera": name, "file": str(p.relative_to(out))})
@@ -583,13 +481,12 @@ def main(argv: list[str]) -> int:
     w, h = (int(v) for v in args.video_res.split("x"))
     render_setup((w, h), max(4, args.samples // 2))
     for name, cam in built["cams"].items():
-      k = 1 if name == "chase" else 2          # the side views are drawn at half size
-      bpy.context.scene.render.resolution_x, bpy.context.scene.render.resolution_y = w // k, h // k
+      sized(name, w, h)
       for f in range(1, len(sc["t"]) + 1):
         render_frame(cam, f, out / "frames" / name / f"{f:04d}.png")
       manifest["video"][name] = f"frames/{name}/%04d.png"
   (out / "render.json").write_text(json.dumps(manifest, indent=1))
-  print(f"{sc['id']}: {out / 'scene.blend'}; {len(manifest['stills'])} stills; clip cameras {list(manifest['video'])}")
+  print(f"{sc['id']}: {len(manifest['stills'])} stills ({manifest['vehicle']}); clip cameras {list(manifest['video'])}")
   return 0
 
 

@@ -121,7 +121,11 @@ def make_road(kind: str, v: float, lane_width: float = 3.7) -> Road:
     return from_xodr(SCENARIOS / "xodr" / f"{kind}.xodr")
   if kind == "straight":
     return Road("straight highway", lane_width, straight=3000.0, length=1200.0)
-  # "curve@<a_y>": a left curve whose steady lateral acceleration at speed v is a_y
+  # "curve@<a_y>": a left curve whose steady lateral acceleration at speed v is a_y; "rcurve@<a_y>": the same to the
+  # right (scenes of ../blender only; no catalog case uses it)
+  if kind.startswith("rcurve@"):
+    a_y = float(kind.split("@")[1])
+    return Road(f"right curve, R = v²/{a_y:g} m/s²", lane_width, straight=60.0, radius=-v * v / a_y, length=1200.0)
   a_y = float(kind.split("@")[1]) if kind.startswith("curve@") else {"curve": 1.5, "curve-odd-bound": 2.5}[kind]
   return Road(f"left curve, R = v²/{a_y:g} m/s²", lane_width, straight=60.0, radius=v * v / a_y, length=1200.0)
 
@@ -245,6 +249,8 @@ def _simulate(case: Case) -> Result:
         soc.override_torque = -3000
       elif f == "hardover":
         soc.hardover = -1.0
+      elif f == "hardover_left":             # mirror of hardover (scenes of ../blender only; no catalog case uses it)
+        soc.hardover = 1.0
       elif f == "not_engaged":
         soc.override_torque = -STEER_MAX
       elif f in ("frozen", "heartbeat_frozen"):
