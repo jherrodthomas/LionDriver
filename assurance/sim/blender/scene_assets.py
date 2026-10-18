@@ -121,12 +121,30 @@ def facade_material(name: str, wall, glass=(0.05, 0.07, 0.09), lit: float = 0.0)
   nt.links.new(tc.outputs["Object"], br.inputs["Vector"])
   nt.links.new(br.outputs[0], b.inputs["Base Color"])
   nt.links.new(br.outputs[1], b.inputs["Roughness"])
-  if lit:
-    inv = nt.nodes.new("ShaderNodeMath")
-    inv.operation = "SUBTRACT"
-    inv.inputs[0].default_value = 1.0
-    nt.links.new(br.outputs[1], inv.inputs[1])
-    nt.links.new(inv.outputs[0], b.inputs["Emission Strength"])
+  if lit:                                       # some windows lit at night: a twin brick texture gives each window
+    pick = nt.nodes.new("ShaderNodeTexBrick")   # a random grey; those above the threshold glow at strength lit / 4
+    pick.offset = 0.0
+    for k in ("Scale", "Mortar Size", "Brick Width", "Row Height"):
+      pick.inputs[k].default_value = br.inputs[k].default_value
+    pick.inputs["Color1"].default_value, pick.inputs["Color2"].default_value = (0, 0, 0, 1), (1, 1, 1, 1)
+    nt.links.new(tc.outputs["Object"], pick.inputs["Vector"])
+    on = nt.nodes.new("ShaderNodeMath")
+    on.operation = "GREATER_THAN"
+    on.inputs[1].default_value = 0.6
+    nt.links.new(pick.outputs[0], on.inputs[0])
+    glass_only = nt.nodes.new("ShaderNodeMath")
+    glass_only.operation = "SUBTRACT"
+    glass_only.inputs[0].default_value = 1.0
+    nt.links.new(br.outputs[1], glass_only.inputs[1])
+    mask = nt.nodes.new("ShaderNodeMath")
+    mask.operation = "MULTIPLY"
+    nt.links.new(on.outputs[0], mask.inputs[0])
+    nt.links.new(glass_only.outputs[0], mask.inputs[1])
+    strength = nt.nodes.new("ShaderNodeMath")
+    strength.operation = "MULTIPLY"
+    strength.inputs[1].default_value = lit / 4
+    nt.links.new(mask.outputs[0], strength.inputs[0])
+    nt.links.new(strength.outputs[0], b.inputs["Emission Strength"])
     b.inputs["Emission Color"].default_value = (1.0, 0.8, 0.5, 1)
   return m
 
