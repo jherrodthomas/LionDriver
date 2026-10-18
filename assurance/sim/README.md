@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Scope | Simulation for LionDriver; modelling-plan work item 4, the HIL plant ([models README](../models/README.md), MD-01, MD-04): fault-injection plant model (layer 1), known scenarios as OpenSCENARIO (layer 2), MetaDrive closed loop (layer 3), unknown-scenario search (layer 4) |
-| Version | 0.7 (pictures: hero strip, a figure per section from `figures/fig_sim_readme.py`, the existing renders and dashboards embedded, 2026-10-18). 0.6 (reference-car outline in the layer-1 figures, 2026-10-17). 0.5 (vehicle 3D-model note, 2026-10-17). 0.4 (§3.6: Julia retired, the bound computed exactly with numpy; 2026-10-17). 0.3 (reachability pilot, §3.6, 2026-10-16). 0.2 (layer 2, 2026-10-16). 0.1 (layer 1, 2026-10-16) |
+| Version | 0.8 (§3.7: loop diagram and animation for each ASIL C hazardous event the plant runs, 2026-10-18). 0.7 (pictures: hero strip, a figure per section from `figures/fig_sim_readme.py`, the existing renders and dashboards embedded, 2026-10-18). 0.6 (reference-car outline in the layer-1 figures, 2026-10-17). 0.5 (vehicle 3D-model note, 2026-10-17). 0.4 (§3.6: Julia retired, the bound computed exactly with numpy; 2026-10-17). 0.3 (reachability pilot, §3.6, 2026-10-16). 0.2 (layer 2, 2026-10-16). 0.1 (layer 1, 2026-10-16) |
 | Status | Draft. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed. **No result here is evidence until the model is validated against Corolla logs; until then results rank risks and guide tests only** (§4) |
 | Feeds | [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) timing (owned by the safety-concept session); [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) M4, [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md), [WP-V-04](../06-validation/WP-V-04-sotif-unknown-scenarios.md) (owned by the SOTIF session); previews [WP-V-05](../06-validation/WP-V-05-fault-injection.md) cases |
 
@@ -46,7 +46,7 @@ some, a clip. They are for review and earn no credit.
 | [`results/plant-results.md`](results/plant-results.md) | Layer 1 results table, event log and model inputs (generated) |
 | [`search/`](search/search.py) | Layer 4: failure search (Monte Carlo and cross-entropy) over the plant model |
 | [`results/search-curve-assist-loss.md`](results/search-curve-assist-loss.md) | Layer 4 search results (generated) |
-| [`figures/`](figures/) | This page's diagrams and hero strip ([`fig_sim_readme.py`](figures/fig_sim_readme.py)); layer 1 figures, one per selected case (generated); the ego is drawn from [`figures/corolla-e210-silhouette.json`](figures/corolla-e210-silhouette.json), the reference car's outline ([vehicle-3d-model.md](vehicle-3d-model.md) §6) |
+| [`figures/`](figures/) | This page's diagrams and hero strip ([`fig_sim_readme.py`](figures/fig_sim_readme.py)), the ASIL C loops and animations of §3.7 ([`fig_sim_he.py`](figures/fig_sim_he.py)); layer 1 figures, one per selected case (generated); the ego is drawn from [`figures/corolla-e210-silhouette.json`](figures/corolla-e210-silhouette.json), the reference car's outline ([vehicle-3d-model.md](vehicle-3d-model.md) §6) |
 | [`reach/`](reach/reach_compare.py) | Reachability bound (exact, numpy): the drift under any LKA command the panda passes, and its check against sampled runs (§3.6) |
 | [`requirements.txt`](requirements.txt) | Pinned Python packages of the track |
 | [`blender/`](blender/README.md) | Hazardous-event scenes: plant runs drawn as animated Blender scenes and review dashboards (pictures only, no evidence credit) |
@@ -283,11 +283,67 @@ packages into CI. The coordinator retired the job and TL-46 and kept the numpy c
 pilot's code, pins and CI output stay in the history of #155. Reconsider a reachability tool only for a question
 with no closed form: the nonlinear tyre model, a curved road, or the panda's mode switching as a hybrid system.
 
+### 3.7 The ASIL C hazardous events in the loop
+
+Seven hazardous events are rated ASIL C in [WP-C-03](../02-concept/WP-C-03-hara.md) §5, and none is ASIL D. HE-01.2,
+HE-01.4 and HE-03.3 would become ASIL D if the assumptions they credit fail (WP-C-03 §5.12). Four of the seven have a
+plant run behind their scene. For each of those, a loop diagram shows the §3.1 loop with that run's path: where the
+fault enters, what each part does with it and when, and who stops it. An animation of the same run follows. Both are
+drawn by [`figures/fig_sim_he.py`](figures/fig_sim_he.py), which runs the plant itself. The 'simulation plant model' CI
+job fails if WP-C-03's list of ASIL C events changes, or if a run no longer shows the reaction a diagram describes.
+The road in the animations is drawn straight; in the two curve runs the offset is measured from the curve's lane centre.
+
+**HE-01.2, hard-over into the adjacent lane** (plant run F-01b). The panda passes the hard-over: the ramp stays inside the envelope, and there is no siren. Only the driver ends it, after the 0.2 m drift cue and the 1.5 s reaction.
+
+![Loop diagram of HE-01.2, plant run F-01b on a straight highway: the SoC commands a hard-over within the envelope; the host frames, the panda, the harness switch and the EPS all pass it on; the car's body reaches the 3.7 m lane line at 1.77 s; the driver, cued by the 0.2 m drift at 1.14 s, corrects from 2.64 s](figures/fig-sim-he-01-2-loop.svg)
+
+*Figure 11. HE-01.2 in the loop: what each part does with the fault, when, and who stops it.*
+
+![Animation of HE-01.2: the Corolla drifts right across the lane line on a straightened highway while the offset plot's cursor runs from 1 s before the fault to 4.6 s after it, and the events light up: fault at 0, drift cue 1.14 s, body on the lane line 1.77 s, correction 2.64 s](figures/fig-sim-he-01-2-anim.svg)
+
+*Figure 12. The same run, looping (it plays in a browser; a viewer that shows the SVG as a still shows 1 s before the fault). Scene: [dashboard](blender/dashboards/he-01-2-hardover-adjacent.jpg).*
+
+**HE-01.4, torque while driving manually** (plant run F-02). The panda refuses the frame at once because the item is not engaged, so nothing reaches the car. The diagram shows the reference build's check doing its job; the rating still rests on AOU-01/02.
+
+![Loop diagram of HE-01.4, plant run F-02 on a straight highway while not engaged: the SoC sends a torque request; the panda refuses STEERING_LKA at 0.000 s; the switch, the EPS, the vehicle and the driver are not involved; the car stays in its lane](figures/fig-sim-he-01-4-loop.svg)
+
+*Figure 13. HE-01.4 in the loop: what each part does with the fault, when, and who stops it.*
+
+![Animation of HE-01.4: the Corolla stays in the centre of its lane on a straightened highway, the offset plot stays at zero, and the events light up: fault at 0 and the panda's refusal at 0](figures/fig-sim-he-01-4-anim.svg)
+
+*Figure 14. The same run, looping (it plays in a browser; a viewer that shows the SVG as a still shows 1 s before the fault). Scene: [dashboard](blender/dashboards/he-01-4-not-engaged-torque.jpg).*
+
+**HE-02.1, EPS assist lost in a curve at R_ODD** (plant run F-07). The panda sees the EPS fault on the bus: it refuses and revokes within 0.05 s and sounds the siren at 0.79 s, but it cannot restore steering. The driver ends it, cued by the siren.
+
+![Loop diagram of HE-02.1, plant run F-07 in a left curve at R_ODD: the fault enters at the EPS (LKA_STATE 9, assist lost); the panda reads it on the car bus, refuses LKA frames at 0.005 s, revokes at 0.048 s and sounds the siren at 0.79 s; the car runs wide and its body reaches the lane line at 1.97 s; the driver corrects from 2.29 s](figures/fig-sim-he-02-1-loop.svg)
+
+*Figure 15. HE-02.1 in the loop: what each part does with the fault, when, and who stops it.*
+
+![Animation of HE-02.1: on the straightened curve the Corolla drifts toward the outside across the lane line while the offset plot's cursor runs to 4.3 s, and the events light up: fault, refusal, revocation, siren at 0.79 s, body on the lane line at 1.97 s, correction at 2.29 s](figures/fig-sim-he-02-1-anim.svg)
+
+*Figure 16. The same run, looping (it plays in a browser; a viewer that shows the SVG as a still shows 1 s before the fault). Scene: [dashboard](blender/dashboards/he-02-1-eps-loss-curve.jpg), [clip](blender/dashboards/clips/he-02-1-eps-loss-curve.mp4).*
+
+**HE-07.1, the item stops steering in a curve without a warning** (plant run F-04b). The panda revokes authority when the heartbeat stops but sounds no siren in this run, so the driver gets no warning. They notice only the drift, and correct later than in HE-02.1.
+
+![Loop diagram of HE-07.1, plant run F-04b in a left curve at R_ODD: the SoC stalls and heartbeat and commands stop; the panda revokes authority at 0.048 s with no siren; the EPS gets no torque and the car runs wide, its body on the lane line at 1.97 s; the driver, cued only by the 0.2 m drift at 1.18 s, corrects from 2.68 s](figures/fig-sim-he-07-1-loop.svg)
+
+*Figure 17. HE-07.1 in the loop: what each part does with the fault, when, and who stops it.*
+
+![Animation of HE-07.1: on the straightened curve the Corolla drifts toward the outside, further than in HE-02.1, while the offset plot's cursor runs to 4.7 s, and the events light up: fault, revocation, drift cue at 1.18 s, body on the lane line at 1.97 s, correction at 2.68 s](figures/fig-sim-he-07-1-anim.svg)
+
+*Figure 18. The same run, looping (it plays in a browser; a viewer that shows the SVG as a still shows 1 s before the fault). Scene: [dashboard](blender/dashboards/he-07-1-mode-confusion-curve.jpg).*
+
+**The other three have no loop.** [HE-03.3](blender/dashboards/he-03-3-accel-toward-slower-lead.jpg) (acceleration
+toward the lead), [HE-06.1](blender/dashboards/he-06-1-stationary-decel-lost.jpg) (deceleration lost before a
+stationary car) and [HE-07.3](blender/dashboards/he-07-3-believes-acc-active.jpg) (the driver believes ACC is active)
+have kinematic scenes only. No panda code ran in them, so a loop diagram would claim something the scene does not show.
+A loop for them needs longitudinal plant cases for their situations first.
+
 ## 4. Credit and hand-back
 
 ![Evidence gate: a result from layers 1 to 4 counts only if a WP-V-02 §5.3 fidelity case is approved for its scenario family (DQ-139); today no family has one, so results rank risks and guide bench and car tests; results are handed back to the safety-concept, SOTIF and System FMEA sessions](figures/fig-sim-r5-credit.svg)
 
-*Figure 11. The evidence gate (today every result takes the left branch) and where results go.*
+*Figure 19. The evidence gate (today every result takes the left branch) and where results go.*
 
 **Evidence rule.** No result of this track is evidence until the model is validated against Corolla logs (roadmap
 phase S7: system identification of EPS lag, steer ratio and tyre stiffness, and the WP-V-02 §5.3 fidelity case).
@@ -320,7 +376,7 @@ Until then the results only rank risks and guide which tests to run on the bench
 
 ![Packages grouped by use and coloured by licence: layer 1 plant and its FMU on permissive licences; OpenModelica for the L2 column under its AGPL-3 option; scenariogeneration and esmini for layer 2 under MPL-2.0; Scenic and VerifAI not used because rv-ltl has no licence](figures/fig-sim-r6-deps.svg)
 
-*Figure 12. The table above by use; red marks the two licence points: OpenModelica's AGPL option and rv-ltl without a licence.*
+*Figure 20. The table above by use; red marks the two licence points: OpenModelica's AGPL option and rv-ltl without a licence.*
 
 **Not used: Scenic and VerifAI.** Scenic 3.0.0–3.1.1 (BSD-3) requires `rv-ltl ~= 0.1`, imported by its core
 (`scenic/core/requirements.py`), and VerifAI 2.2 (BSD-3) requires and imports Scenic. rv-ltl 0.1.1 is published on PyPI
@@ -338,7 +394,7 @@ opendbc code is the project's own (MIT).
 
 ![Open items grouped by what closes them: SIM-OI-1, 7 and 8 need measurements on the reference Corolla (M-02, M-08); SIM-OI-2 needs WP-C-08; SIM-OI-3, 4 and 5 are simulation-track work; SIM-OI-6 waits on a licence outside the project; SIM-OI-9 is closed](figures/fig-sim-r7-open.svg)
 
-*Figure 13. Three items wait on measurements on the car; the table below has the full wording.*
+*Figure 21. Three items wait on measurements on the car; the table below has the full wording.*
 
 | ID | Item |
 |---|---|

@@ -264,6 +264,10 @@ jobs:
       run: |
         python3 assurance/sim/search/search.py --check
         python3 assurance/sim/search/test_search.py
+    - name: ASIL C hazardous-event loop diagrams and animations (sim README §3.7) current, and their tests
+      run: |
+        python3 assurance/sim/figures/fig_sim_he.py --check
+        python3 assurance/sim/figures/test_fig_sim_he.py
     - name: Plant FMU (FMI 2.0, pythonfmu) built and run by FMPy, same trajectory as the plant in-process
       run: python3 assurance/sim/plant/fmu/test_fmu.py
     - name: Reachability bound (exact, numpy) current, every sampled fault run inside it, and its tests
