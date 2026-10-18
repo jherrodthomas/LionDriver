@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1091" viewBox="0 0 1280 1091" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1157" viewBox="0 0 1280 1157" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 6-1 · Capability profile (WP-M-13)</title>
-<desc>Capability profile of the WP-M-13 self-assessment: PA 1.1 per process SYS.1 N; SYS.2 N; SYS.3 P; SYS.4 P; SYS.5 P; SWE.1 N; SWE.2 N; SWE.3 L safety code / P rest; SWE.4 L safety code / P rest; SWE.5 L; SWE.6 P; MLE.1 N; MLE.2 N; MLE.3 N; MLE.4 P; HWE.1 N; HWE.2 N; HWE.3 N; HWE.4 P; SUP.1 N; SUP.8 L; SUP.9 N; SUP.10 P; MAN.3 N; MAN.5 N; SEC.1 N; SEC.2 P; SEC.3 N; SEC.4 N; SUP.11 N. PA 2.1 and PA 2.2 N for all. Target CL2 for group A, CL1 for group B, none for group C.</desc>
+<desc>Capability profile of the WP-M-13 self-assessment: PA 1.1 per process SYS.1 N; SYS.2 N; SYS.3 P; SYS.4 P; SYS.5 P; SWE.1 N; SWE.2 N; SWE.3 L safety code / P rest; SWE.4 L safety code / P rest; SWE.5 L; SWE.6 P; MLE.1 N; MLE.2 N; MLE.3 N; MLE.4 P; HWE.1 N; HWE.2 N; HWE.3 N; HWE.4 P; SUP.1 N; SUP.8 L; SUP.9 N; SUP.10 P; MAN.3 N; MAN.5 N; SEC.1 N; SEC.2 P; SEC.3 N; SEC.4 N; SUP.11 N; VAL.1 P; ACQ.4 P; MAN.7 P. PA 2.1 and PA 2.2 N for all. Target CL2 for group A, CL1 for group B, none for group C.</desc>
 <defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
-<rect x="0" y="0" width="1280" height="1091" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="0" y="0" width="1280" height="1157" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 6-1 · Capability profile</text>
 <text x="40" y="66" font-size="12.5" fill="#475569">PA 1.1 rating per process as its ISO/IEC 33020 achievement band, PA 2.1 / PA 2.2, current CL, and the PA 1.1 level the target CL needs (self-assessment, not a formal assessment)</text>
 <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-M-13 §2, §4, §5, §6</text>
@@ -18,9 +18,9 @@
 <text x="960" y="116" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">Current CL</text>
 <text x="1050" y="116" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">Target CL</text>
 <text x="1150" y="116" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">Gap</text>
-<line x1="438" y1="126" x2="438" y2="996" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="3 3"/>
-<line x1="592" y1="126" x2="592" y2="996" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="3 3"/>
-<line x1="746" y1="126" x2="746" y2="996" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="438" y1="126" x2="438" y2="1062" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="592" y1="126" x2="592" y2="1062" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="746" y1="126" x2="746" y2="1062" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="3 3"/>
 <rect x="40" y="128" width="1200" height="20" rx="4" fill="#F1F5F9" stroke="none" stroke-width="0"/>
 <text x="48" y="142" font-size="11" fill="#0F172A" font-weight="700">§4.1 System engineering</text>
 <text x="1232" y="142" font-size="10" fill="#475569" text-anchor="end">group A · target CL2</text>
@@ -422,83 +422,138 @@
 <text x="1050" y="847" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">CL2</text>
 <text x="1150" y="847" font-size="11" fill="#D2553F" font-weight="700" text-anchor="middle">2</text>
 <rect x="40" y="862" width="1200" height="20" rx="4" fill="#F1F5F9" stroke="none" stroke-width="0"/>
-<text x="48" y="876" font-size="11" fill="#0F172A" font-weight="700">§4.6 Informative processes</text>
-<text x="1232" y="876" font-size="10" fill="#475569" text-anchor="end">group C (informative) · no target set</text>
+<text x="48" y="876" font-size="11" fill="#0F172A" font-weight="700">§4.6 Cybersecurity, ML data, validation, supplier monitoring</text>
+<text x="1232" y="876" font-size="10" fill="#475569" text-anchor="end">group C (CL1, DQ-019) · target CL1</text>
 <line x1="40" y1="908" x2="1240" y2="908" stroke="#E2E8F0" stroke-width="1"/>
 <text x="44" y="901" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">SEC.1</text>
 <text x="98" y="901" font-size="10.5" fill="#0F172A">Cybersecurity requirement elicitation</text>
 <rect x="372" y="890" width="440" height="14" rx="3" fill="#F8FAFC" stroke="none" stroke-width="0"/>
 <rect x="372" y="891.5" width="66" height="11" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
 <text x="405" y="900.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<line x1="592" y1="888" x2="592" y2="906" stroke="#0F172A" stroke-width="2"/>
+<path d="M588,887 L596,887 L592,892 Z" stroke="none" stroke-width="1.4" fill="#0F172A" stroke-linejoin="round"/>
 <rect x="846" y="889" width="24" height="16" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
 <text x="858" y="900.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
 <rect x="890" y="889" width="24" height="16" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
 <text x="902" y="900.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
 <text x="960" y="901" font-size="11" fill="#94A3B8" font-weight="700" text-anchor="middle">–</text>
-<text x="1050" y="901" font-size="10" fill="#94A3B8" text-anchor="middle">none (OI-2)</text>
-<text x="1150" y="901" font-size="11" fill="#94A3B8" text-anchor="middle">–</text>
+<text x="1050" y="901" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">CL1</text>
+<text x="1150" y="901" font-size="11" fill="#D2553F" font-weight="700" text-anchor="middle">1</text>
 <line x1="40" y1="930" x2="1240" y2="930" stroke="#E2E8F0" stroke-width="1"/>
 <text x="44" y="923" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">SEC.2</text>
 <text x="98" y="923" font-size="10.5" fill="#0F172A">Cybersecurity implementation</text>
 <rect x="372" y="912" width="440" height="14" rx="3" fill="#F8FAFC" stroke="none" stroke-width="0"/>
 <rect x="438" y="913.5" width="154" height="11" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
 <text x="515" y="922.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<line x1="592" y1="910" x2="592" y2="928" stroke="#0F172A" stroke-width="2"/>
+<path d="M588,909 L596,909 L592,914 Z" stroke="none" stroke-width="1.4" fill="#0F172A" stroke-linejoin="round"/>
 <rect x="846" y="911" width="24" height="16" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
 <text x="858" y="922.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
 <rect x="890" y="911" width="24" height="16" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
 <text x="902" y="922.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
 <text x="960" y="923" font-size="11" fill="#94A3B8" font-weight="700" text-anchor="middle">–</text>
-<text x="1050" y="923" font-size="10" fill="#94A3B8" text-anchor="middle">none (OI-2)</text>
-<text x="1150" y="923" font-size="11" fill="#94A3B8" text-anchor="middle">–</text>
+<text x="1050" y="923" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">CL1</text>
+<text x="1150" y="923" font-size="11" fill="#D2553F" font-weight="700" text-anchor="middle">1</text>
 <line x1="40" y1="952" x2="1240" y2="952" stroke="#E2E8F0" stroke-width="1"/>
 <text x="44" y="945" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">SEC.3</text>
 <text x="98" y="945" font-size="10.5" fill="#0F172A">Risk treatment verification</text>
 <rect x="372" y="934" width="440" height="14" rx="3" fill="#F8FAFC" stroke="none" stroke-width="0"/>
 <rect x="372" y="935.5" width="66" height="11" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
 <text x="405" y="944.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<line x1="592" y1="932" x2="592" y2="950" stroke="#0F172A" stroke-width="2"/>
+<path d="M588,931 L596,931 L592,936 Z" stroke="none" stroke-width="1.4" fill="#0F172A" stroke-linejoin="round"/>
 <rect x="846" y="933" width="24" height="16" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
 <text x="858" y="944.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
 <rect x="890" y="933" width="24" height="16" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
 <text x="902" y="944.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
 <text x="960" y="945" font-size="11" fill="#94A3B8" font-weight="700" text-anchor="middle">–</text>
-<text x="1050" y="945" font-size="10" fill="#94A3B8" text-anchor="middle">none (OI-2)</text>
-<text x="1150" y="945" font-size="11" fill="#94A3B8" text-anchor="middle">–</text>
+<text x="1050" y="945" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">CL1</text>
+<text x="1150" y="945" font-size="11" fill="#D2553F" font-weight="700" text-anchor="middle">1</text>
 <line x1="40" y1="974" x2="1240" y2="974" stroke="#E2E8F0" stroke-width="1"/>
 <text x="44" y="967" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">SEC.4</text>
 <text x="98" y="967" font-size="10.5" fill="#0F172A">Risk treatment validation</text>
 <rect x="372" y="956" width="440" height="14" rx="3" fill="#F8FAFC" stroke="none" stroke-width="0"/>
 <rect x="372" y="957.5" width="66" height="11" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
 <text x="405" y="966.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<line x1="592" y1="954" x2="592" y2="972" stroke="#0F172A" stroke-width="2"/>
+<path d="M588,953 L596,953 L592,958 Z" stroke="none" stroke-width="1.4" fill="#0F172A" stroke-linejoin="round"/>
 <rect x="846" y="955" width="24" height="16" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
 <text x="858" y="966.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
 <rect x="890" y="955" width="24" height="16" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
 <text x="902" y="966.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
 <text x="960" y="967" font-size="11" fill="#94A3B8" font-weight="700" text-anchor="middle">–</text>
-<text x="1050" y="967" font-size="10" fill="#94A3B8" text-anchor="middle">none (OI-2)</text>
-<text x="1150" y="967" font-size="11" fill="#94A3B8" text-anchor="middle">–</text>
+<text x="1050" y="967" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">CL1</text>
+<text x="1150" y="967" font-size="11" fill="#D2553F" font-weight="700" text-anchor="middle">1</text>
 <line x1="40" y1="996" x2="1240" y2="996" stroke="#E2E8F0" stroke-width="1"/>
 <text x="44" y="989" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">SUP.11</text>
 <text x="98" y="989" font-size="10.5" fill="#0F172A">ML data management</text>
 <rect x="372" y="978" width="440" height="14" rx="3" fill="#F8FAFC" stroke="none" stroke-width="0"/>
 <rect x="372" y="979.5" width="66" height="11" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
 <text x="405" y="988.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<line x1="592" y1="976" x2="592" y2="994" stroke="#0F172A" stroke-width="2"/>
+<path d="M588,975 L596,975 L592,980 Z" stroke="none" stroke-width="1.4" fill="#0F172A" stroke-linejoin="round"/>
 <rect x="846" y="977" width="24" height="16" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
 <text x="858" y="988.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
 <rect x="890" y="977" width="24" height="16" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
 <text x="902" y="988.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
 <text x="960" y="989" font-size="11" fill="#94A3B8" font-weight="700" text-anchor="middle">–</text>
-<text x="1050" y="989" font-size="10" fill="#94A3B8" text-anchor="middle">none (OI-2)</text>
-<text x="1150" y="989" font-size="11" fill="#94A3B8" text-anchor="middle">–</text>
-<text x="40" y="1018" font-size="10.5" fill="#475569">CL1 reached: SWE.3 (safety code), SWE.4 (safety code), SWE.5, SUP.8. CL2 reached: none. At target: 0 of 25 processes with a target (17 group A, 8 group B). PA 2.1 and PA 2.2 are N for every process (§5).</text>
-<text x="40" y="1035" font-size="10.5" fill="#475569">Bars show the band the rating stands for, not a measured percentage. Split ratings: upper bar = safety code (opendbc safety + panda firmware where stated), lower bar = rest. Ratings are indicative (self-assessment at 8b8c6ae).</text>
-<line x1="40" y1="1051" x2="1240" y2="1051" stroke="#E2E8F0" stroke-width="1"/>
-<rect x="40" y="1063" width="14" height="12" rx="3" fill="#D2553F" stroke="#D2553F" stroke-width="1.2"/>
-<text x="60" y="1073" font-size="11" fill="#475569">N not achieved</text>
-<rect x="151.1" y="1063" width="14" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1.2"/>
-<text x="171.1" y="1073" font-size="11" fill="#475569">P partially</text>
-<rect x="238.1" y="1063" width="14" height="12" rx="3" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.2"/>
-<text x="258.1" y="1073" font-size="11" fill="#475569">L largely</text>
-<line x1="324.1" y1="1062" x2="324.1" y2="1075" stroke="#0F172A" stroke-width="2"/>
-<text x="332.1" y="1073" font-size="11" fill="#475569">PA 1.1 level the target needs (CL1: L, CL2: F; §2 rule)</text>
-<text x="1240" y="1073" font-size="10.5" fill="#94A3B8" text-anchor="end">Generated by fig_m_management.py</text>
+<text x="1050" y="989" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">CL1</text>
+<text x="1150" y="989" font-size="11" fill="#D2553F" font-weight="700" text-anchor="middle">1</text>
+<line x1="40" y1="1018" x2="1240" y2="1018" stroke="#E2E8F0" stroke-width="1"/>
+<text x="44" y="1011" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">VAL.1</text>
+<text x="98" y="1011" font-size="10.5" fill="#0F172A">Validation</text>
+<rect x="372" y="1000" width="440" height="14" rx="3" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<rect x="438" y="1001.5" width="154" height="11" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="515" y="1010.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<line x1="592" y1="998" x2="592" y2="1016" stroke="#0F172A" stroke-width="2"/>
+<path d="M588,997 L596,997 L592,1002 Z" stroke="none" stroke-width="1.4" fill="#0F172A" stroke-linejoin="round"/>
+<rect x="846" y="999" width="24" height="16" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="858" y="1010.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<rect x="890" y="999" width="24" height="16" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="902" y="1010.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<text x="960" y="1011" font-size="11" fill="#94A3B8" font-weight="700" text-anchor="middle">–</text>
+<text x="1050" y="1011" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">CL1</text>
+<text x="1150" y="1011" font-size="11" fill="#D2553F" font-weight="700" text-anchor="middle">1</text>
+<line x1="40" y1="1040" x2="1240" y2="1040" stroke="#E2E8F0" stroke-width="1"/>
+<text x="44" y="1033" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">ACQ.4</text>
+<text x="98" y="1033" font-size="10.5" fill="#0F172A">Supplier monitoring</text>
+<rect x="372" y="1022" width="440" height="14" rx="3" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<rect x="438" y="1023.5" width="154" height="11" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="515" y="1032.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<line x1="592" y1="1020" x2="592" y2="1038" stroke="#0F172A" stroke-width="2"/>
+<path d="M588,1019 L596,1019 L592,1024 Z" stroke="none" stroke-width="1.4" fill="#0F172A" stroke-linejoin="round"/>
+<rect x="846" y="1021" width="24" height="16" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="858" y="1032.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<rect x="890" y="1021" width="24" height="16" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="902" y="1032.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<text x="960" y="1033" font-size="11" fill="#94A3B8" font-weight="700" text-anchor="middle">–</text>
+<text x="1050" y="1033" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">CL1</text>
+<text x="1150" y="1033" font-size="11" fill="#D2553F" font-weight="700" text-anchor="middle">1</text>
+<line x1="40" y1="1062" x2="1240" y2="1062" stroke="#E2E8F0" stroke-width="1"/>
+<text x="44" y="1055" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">MAN.7</text>
+<text x="98" y="1055" font-size="10.5" fill="#0F172A">Cybersecurity risk management</text>
+<rect x="372" y="1044" width="440" height="14" rx="3" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<rect x="438" y="1045.5" width="154" height="11" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="515" y="1054.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<line x1="592" y1="1042" x2="592" y2="1060" stroke="#0F172A" stroke-width="2"/>
+<path d="M588,1041 L596,1041 L592,1046 Z" stroke="none" stroke-width="1.4" fill="#0F172A" stroke-linejoin="round"/>
+<rect x="846" y="1043" width="24" height="16" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="858" y="1054.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<rect x="890" y="1043" width="24" height="16" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="902" y="1054.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<text x="960" y="1055" font-size="11" fill="#94A3B8" font-weight="700" text-anchor="middle">–</text>
+<text x="1050" y="1055" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">CL1</text>
+<text x="1150" y="1055" font-size="11" fill="#D2553F" font-weight="700" text-anchor="middle">1</text>
+<text x="40" y="1084" font-size="10.5" fill="#475569">CL1 reached: SWE.3 (safety code), SWE.4 (safety code), SWE.5, SUP.8. CL2 reached: none. At target: 0 of 25 processes with a target (17 group A, 8 group B). PA 2.1 and PA 2.2 are N for every process (§5).</text>
+<text x="40" y="1101" font-size="10.5" fill="#475569">Bars show the band the rating stands for, not a measured percentage. Split ratings: upper bar = safety code (opendbc safety + panda firmware where stated), lower bar = rest. Ratings are indicative (self-assessment at 8b8c6ae).</text>
+<line x1="40" y1="1117" x2="1240" y2="1117" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="40" y="1129" width="14" height="12" rx="3" fill="#D2553F" stroke="#D2553F" stroke-width="1.2"/>
+<text x="60" y="1139" font-size="11" fill="#475569">N not achieved</text>
+<rect x="151.1" y="1129" width="14" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1.2"/>
+<text x="171.1" y="1139" font-size="11" fill="#475569">P partially</text>
+<rect x="238.1" y="1129" width="14" height="12" rx="3" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.2"/>
+<text x="258.1" y="1139" font-size="11" fill="#475569">L largely</text>
+<line x1="324.1" y1="1128" x2="324.1" y2="1141" stroke="#0F172A" stroke-width="2"/>
+<text x="332.1" y="1139" font-size="11" fill="#475569">PA 1.1 level the target needs (CL1: L, CL2: F; §2 rule)</text>
+<text x="1240" y="1139" font-size="10.5" fill="#94A3B8" text-anchor="end">Generated by fig_m_management.py</text>
 </svg>

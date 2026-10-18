@@ -456,8 +456,9 @@
       title: "Leave them informative"
       detail: "No new commitment. Cost: cybersecurity and machine-learning data have no process target, which an assessor may count as a gap."
   sources: ["assurance/01-management/WP-M-13-aspice-capability-baseline.md §3, OI-2", "assurance/01-management/WP-M-01-assurance-strategy.md T-12", "assurance/01-management/WP-M-05-quality-assurance-plan.md QO-5"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#TBD", record: "assurance/01-management/WP-M-13-aspice-capability-baseline.md §3, §6 (OI-2 closed); WP-M-01 T-12; WP-M-05 QO-5", at: 2026-10-19}
 
 - id: DQ-020
   question: "Which remote features are switched off in the reference car?"
@@ -1514,8 +1515,9 @@
       title: "Wait for measured cabin temperatures and usage data"
       detail: "The most defensible values. Cost: the hardware metrics stay provisional until a logging campaign is done; G2 slips or passes with a condition."
   sources: ["assurance/04-hardware/WP-H-05-random-hardware-failures-pmhf.md §3, OI-2", "assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md §2.4"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#TBD", record: "assurance/04-hardware/WP-H-05-random-hardware-failures-pmhf.md §3 (OI-2 closed, OI-6); WP-H-03 §2.4", at: 2026-10-19}
 
 - id: DQ-068
   question: "Which failure-rate handbooks should the hardware calculations use?"
@@ -4180,8 +4182,9 @@
       title: "Keep relative months until a second person joins"
       detail: "No commitment now. Cost: no gate dates, so slippage cannot be seen."
   sources: ["assurance/01-management/WP-M-03-project-plan.md OI-1", "assurance/01-management/WP-M-03-project-plan.md §4.3, §5"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#TBD", record: "assurance/01-management/WP-M-03-project-plan.md §5, §6, Figure 5-2 (OI-1 closed)", at: 2026-10-19}
 
 - id: DQ-209
   question: "The stock emergency-braking path runs through powered electronics in comma's harness box. Accept that and test it, or build our own adapter with a passive fail-safe relay?"
@@ -4798,8 +4801,9 @@
       title: "The whole Corolla E210 family (VF-001)"
       detail: "G1 also covers the hatchback and the hybrids. Cost: their checks (IOI-002) must be done first, which delays G1."
   sources: ["assurance/01-management/WP-M-01-assurance-strategy.md §3.1", "assurance/01-management/WP-M-12-impact-analysis.md M-1", "assurance/08-analyses/fmea/item-definition.md §1, IOI-002", "docs/liondriver/vehicles/vehicles.yaml VF-001"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#TBD", record: "assurance/01-management/WP-M-01-assurance-strategy.md §3.1, §3.2, §7, D-15; WP-M-07 §5 D-15; WP-M-12 M-1", at: 2026-10-19}
 
 - id: DQ-400
   question: "The closed-loop driving simulation cannot run in real time on GitHub's free 4-core runners. Should it run on your own computer as a self-hosted runner, on a paid larger GitHub runner, or stay off CI for now?"
