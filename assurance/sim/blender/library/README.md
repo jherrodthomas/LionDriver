@@ -87,7 +87,7 @@ patches; voronoi gravel; concrete slabs; a Nishita or overcast sky. The wet, sno
 Road surfaces carry UVs in metres (u lateral, v along the road), so a texture follows the road round a curve and
 its tangent-space normal map is correct.
 
-**Fetched (2026-10-18)**, all CC0 1.0, every first candidate resolved; `assets.lock.json` holds the files and their
+**Fetched (2026-10-18)**, all CC0 1.0; `assets.lock.json` holds the files and their
 SHA-256. Tile sizes are the ones each source publishes.
 
 | Slot | Asset | Tile |
@@ -95,7 +95,7 @@ SHA-256. Tile sizes are the ones each source publishes.
 | `hdri_clear` | Poly Haven [`kloofendal_48d_partly_cloudy_puresky`](https://polyhaven.com/a/kloofendal_48d_partly_cloudy_puresky) | 2k HDR |
 | `hdri_overcast` | Poly Haven [`overcast_soil_puresky`](https://polyhaven.com/a/overcast_soil_puresky) | 2k HDR |
 | `hdri_low_sun` | Poly Haven [`spruit_sunrise`](https://polyhaven.com/a/spruit_sunrise) | 2k HDR |
-| `hdri_night` | Poly Haven [`moonless_golf`](https://polyhaven.com/a/moonless_golf) | 2k HDR |
+| `hdri_night` | Poly Haven [`dikhololo_night`](https://polyhaven.com/a/dikhololo_night) | 2k HDR |
 | `asphalt` | Poly Haven [`asphalt_02`](https://polyhaven.com/a/asphalt_02) | 3 m, 2k |
 | `grass` | ambientCG [`Grass004`](https://ambientcg.com/view?id=Grass004) | 1.4 m, 1K |
 | `gravel` | Poly Haven [`gravel_floor_02`](https://polyhaven.com/a/gravel_floor_02) | 2 m, 1k |
@@ -104,7 +104,8 @@ SHA-256. Tile sizes are the ones each source publishes.
 
 The offline picks were checked against the sites' previews before locking. Three were replaced:
 `aerial_grass_rock` (a 15 m aerial of mostly bare earth) by `Grass004`, `gravelly_sand` (orange desert sand) by
-`gravel_floor_02`, and `concrete_floor_02` (a stained floor) by `Concrete034`. Test renders then showed the asphalt scan about
+`gravel_floor_02`, and `concrete_floor_02` (a stained floor) by `Concrete034`; after a test render, `moonless_golf`
+(floodlights on its horizon, which drew as a glowing patch in the sky) by `dikhololo_night`. Test renders then showed the asphalt scan about
 2.5 times brighter than fresh asphalt and the grass scan glossy enough to shine at grazing angles, so the slots
 carry a `tint` (asphalt 0.5, gravel 0.45) and a `roughness_min` (grass 0.8), which `fetch_assets.py` copies into the
 lock.
