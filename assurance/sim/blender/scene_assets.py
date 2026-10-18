@@ -691,14 +691,20 @@ def build_environment(env: dict, heading: float, assets: Assets | None = None):
   sun.rotation_euler = _track(d)
   sun.data.angle = math.radians(1.0)
   slot = assets.get({"clear": "hdri_clear", "partly": "hdri_clear", "overcast": "hdri_overcast",
-                     "night": "hdri_night"}[sky] if not (where == "ahead" and elev_deg < 12 and sky == "clear")
+                     "night": "hdri_night"}[sky] if not (where == "ahead" and sky == "clear")
                     else "hdri_low_sun")
+  image = assets.image(slot["files"]["hdri"], True) if slot else None
+  h_az, h_elev = hdri_sun(image) if image else (0.0, 0.0)
+  if slot and where == "ahead" and elev > h_elev + math.radians(1.0):
+    # the sun in the driver's eyes is the triggering condition: an HDRI only turns about the vertical, so where the
+    # environment lifts the sun above the HDRI's own (buildings, sun_elevation_min) the procedural sky draws it
+    slot = None
   if slot:
     tex = nodes.new("ShaderNodeTexEnvironment")
-    tex.image = assets.image(slot["files"]["hdri"], True)
+    tex.image = image
     mp = nodes.new("ShaderNodeMapping")
     # the mapping rotates the lookup direction: the HDRI's sun appears at its own azimuth minus this rotation
-    mp.inputs["Rotation"].default_value = (0.0, 0.0, hdri_sun_azimuth(tex.image) - az)
+    mp.inputs["Rotation"].default_value = (0.0, 0.0, h_az - az)
     links.new(nodes.new("ShaderNodeTexCoord").outputs["Generated"], mp.inputs["Vector"])
     links.new(mp.outputs[0], tex.inputs["Vector"])
     links.new(tex.outputs[0], bg.inputs["Color"])
@@ -754,19 +760,21 @@ def build_environment(env: dict, heading: float, assets: Assets | None = None):
   return sun
 
 
-def hdri_sun_azimuth(image) -> float:
-  """Azimuth of the brightest column of an equirectangular image, in Blender's world frame (0 along +X)."""
+def hdri_sun(image) -> tuple[float, float]:
+  """(azimuth, elevation) of the brightest pixel of an equirectangular image's upper half, in Blender's world frame
+  (azimuth 0 along +X); (0, 0) when it cannot be read."""
   try:
     import numpy as np
     w, h = image.size
     px = np.empty(w * h * 4, dtype=np.float32)
     image.pixels.foreach_get(px)
     lum = px.reshape(h, w, 4)[h // 2:, :, :3].sum(axis=2)          # upper half (rows run bottom to top)
-    col = int(np.unravel_index(np.argmax(lum), lum.shape)[1])
+    row, col = (int(v) for v in np.unravel_index(np.argmax(lum), lum.shape))
   except Exception:                             # numpy missing or the image not loaded: no alignment
-    return 0.0
-  # Blender's equirectangular lookup: u = atan2(dir.y, -dir.x) / (2 pi) + 0.5, so the column's azimuth is pi - phi
-  return math.pi - 2 * math.pi * (col / image.size[0] - 0.5)
+    return 0.0, 0.0
+  # Blender's equirectangular lookup: u = -atan2(dir.y, dir.x) / (2 pi) + 0.5 (the image centre faces +X; checked with
+  # a panoramic render), so the column's azimuth is -2 pi (u - 0.5)
+  return (-2 * math.pi * ((col + 0.5) / w - 0.5), math.pi * ((h // 2 + row + 0.5) / h - 0.5))
 
 
 def _track(direction):
