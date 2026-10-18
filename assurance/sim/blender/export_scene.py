@@ -483,7 +483,7 @@ def build(scene: dict, hes: dict[str, dict]) -> dict:
 
   # body at the lane line, from the lateral offset (both sources)
   for i in range(1, n):
-    if abs(lat[i]) >= thr > abs(lat[i - 1]) and rel[i] >= 0 and not scene.get("lane_change"):
+    if abs(lat[i]) >= thr > abs(lat[i - 1]) and not scene.get("lane_change"):
       events.append({"t": rel[i], "label": "body reaches the lane line"})
       break
 
@@ -565,7 +565,10 @@ def main(argv: list[str]) -> int:
     data = build(sc, hes)
     out = OUT / sc["id"]
     out.mkdir(parents=True, exist_ok=True)
-    (out / "scene.json").write_text(json.dumps(data, indent=1))
+    text = json.dumps(data, indent=1)
+    f = out / "scene.json"
+    if not f.exists() or f.read_text() != text:   # unchanged scenes keep their date, so their renders stay current
+      f.write_text(text)
     c = data["contact"]
     print(f"{sc['id']}: {len(data['t'])} frames, {len(data['events'])} events"
           + (f", contact {c['who']} at {c['t']:+.2f} s, {c['rel_kph']:.0f} km/h" if c else ""))
