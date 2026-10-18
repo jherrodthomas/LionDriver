@@ -141,7 +141,7 @@ scenarios:
     fta: [BE-1.03]
     fmea: [SFM-013]
     decisions: [DQ-023, DQ-280]
-    open_because: "No ODD entry gate; refuse or warn off-highway is the lead's call (DQ-280)"
+    open_because: "No ODD entry gate yet; DQ-280 A (refuse to engage off-highway, speed floor until road-type data) has no requirement or implementation"
   - id: LS-14
     ucas: [UCA-02]
     hazards: [H-01, H-03, H-05]
