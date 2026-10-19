@@ -7,7 +7,7 @@ suppress or override the stock OEM AEB/PCS function.
 On several platforms, alpha openpilot longitudinal control takes over by silencing
 the stock radar/ADAS ECU. On radar-ACC Toyotas, for example, the car port disables
 the radar ECU over UDS and reports PCS as off. That removes the vehicle's independent
-last-resort braking barrier (FI-2026-001, RC-01, HZ-002). No platform has evidence
+last-resort braking barrier (FI-2026-001, RC-01, FHZ-002). No platform has evidence
 that alpha longitudinal preserves stock AEB, so it is never permitted on a vehicle.
 Permitting it on a platform needs an approved safety case (impact analysis plus a
 vehicle test showing stock AEB still intervenes) and a change to this module.

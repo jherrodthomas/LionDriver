@@ -57,8 +57,9 @@ Every car is the purchased Corolla E210 mesh when `assets/1450755-gltf-extended.
 or `LIONDRIVER_VEHICLE_GLB`): imported once, centred on the ground, turned to face forward (front found from the lower
 bonnet end; override with `--front`), and instanced per road user with its own body paint. The ego is orange-red; the
 plant's lead and follower are blue. Without the GLB, cars are a stand-in lofted from the committed outline
-[`../figures/corolla-e210-silhouette.json`](../figures/corolla-e210-silhouette.json). Trucks, pedestrians (with a
-walk cycle) and cyclists are procedural. The GLB is a Git LFS file in the private `jherrodthomas/LionDriver-assets`
+[`../figures/corolla-e210-silhouette.json`](../figures/corolla-e210-silhouette.json). Pedestrians are the two
+CC0 Quaternius figures of [library/people/](library/people/README.md), walking with a scanned walk cycle played by the
+distance walked (the procedural figure when the files are missing); trucks and cyclists are procedural. The GLB is a Git LFS file in the private `jherrodthomas/LionDriver-assets`
 (sha256 `1dc000e5…8216`): GitHub's "Download ZIP" holds only the LFS pointer, so fetch the file itself. Renders made
 with it may be published; a `scene.blend` made with it holds the licensed mesh and stays private
 ([assets/README.md](../assets/README.md)).

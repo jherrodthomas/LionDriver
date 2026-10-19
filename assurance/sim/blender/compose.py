@@ -374,6 +374,7 @@ def main(argv: list[str]) -> int:
   ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
   ap.add_argument("scene_dir", type=Path)
   ap.add_argument("--video", action="store_true", help="also compose every rendered frame and encode an MP4")
+  ap.add_argument("--crf", type=int, default=20, help="x264 quality of the MP4 (lower is better and larger)")
   args = ap.parse_args(argv)
   out = args.scene_dir
   sc = json.loads((out / "scene.json").read_text())
@@ -411,7 +412,7 @@ def main(argv: list[str]) -> int:
       frame(sc, screen, keys, views, f - 1, thumbs).save(tmp / f"{f:04d}.png")
     mp4 = out / f"{sc['id']}.mp4"
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-framerate", str(sc["fps"]), "-i", str(tmp / "%04d.png"),
-                    "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "20", str(mp4)], check=True)
+                    "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", str(args.crf), str(mp4)], check=True)
     print(f"{sc['id']}: {mp4}")
   return 0
 

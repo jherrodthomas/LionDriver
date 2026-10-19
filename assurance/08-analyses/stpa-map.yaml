@@ -140,8 +140,8 @@ scenarios:
     status: known_gap
     fta: [BE-1.03]
     fmea: [SFM-013]
-    decisions: [DQ-023, DQ-280]
-    open_because: "No ODD entry gate yet; DQ-280 A (refuse to engage off-highway, speed floor until road-type data) has no requirement or implementation"
+    decisions: [DQ-023, DQ-280, DQ-402]
+    open_because: "60 km/h entry floor implemented (#287) but not verified in the vehicle and without a parent TSR; a speed floor does not see road type (FM-08); staying engaged below it is DQ-402"
   - id: LS-14
     ucas: [UCA-02]
     hazards: [H-01, H-03, H-05]

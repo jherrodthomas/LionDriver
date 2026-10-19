@@ -103,6 +103,24 @@ def walk_cycle(limbs, poses, stride: float = 0.75):
     linear(sh)
 
 
+def walk_rig(rig, poses, cycle_m: float = 1.45):
+  """Play the rig's walk loop by the distance walked: one loop (two steps) every cycle_m metres, still when standing."""
+  walk = bpy.data.actions[rig["walk_action"]]
+  f0, f1 = walk.frame_range
+  rig.animation_data_create()
+  strip = rig.animation_data.nla_tracks.new().strips.new("walk", int(f0), walk)
+  strip.use_animated_time = True
+  dist = 0.0
+  for f, p in enumerate(poses, start=1):
+    if f > 1:
+      dist += math.hypot(p[0] - poses[f - 2][0], p[1] - poses[f - 2][1])
+    strip.strip_time = f0 + ((dist / cycle_m) % 1.0) * (f1 - f0)
+    strip.keyframe_insert("strip_time", frame=f)
+  for fc in fcurves(rig):
+    for kp in fc.keyframe_points:
+      kp.interpolation = "LINEAR"
+
+
 def show_from(ob, frame: int):
   for o in [ob] + list(ob.children_recursive):
     o.hide_render = o.hide_viewport = True
@@ -152,7 +170,7 @@ def taillights(root, coll, rear: float, half: float = 0.62, z: float = 0.85):
     A.part("tail_lamp", me, root, coll, (rear, y, z))
 
 
-def make_actor(a: dict, model, coll, lights: bool, night: bool = False):
+def make_actor(a: dict, model, coll, lights: bool, night: bool = False, seed: str = ""):
   """A road user; lights: headlights and tail lamps (night, or poor visibility by day: dipped, dimmer)."""
   kind = a["kind"]
   name = a["name"].replace(" ", "_")
@@ -170,13 +188,16 @@ def make_actor(a: dict, model, coll, lights: bool, night: bool = False):
       headlights(ob, coll, 4.8, 4000 if night else 1200)
       taillights(ob, coll, -4.76, 1.05, 1.0)
   elif kind == "pedestrian":
-    ob, limbs = A.pedestrian(name, coll)
+    scanned = A.scanned_pedestrian(name, coll, seed, a.get("figure"))
+    ob, limbs = scanned if scanned else A.pedestrian(name, coll)
   elif kind == "cyclist":
     ob = A.cyclist(name, coll)
   else:
     raise ValueError(kind)
   keyframe_poses(ob, a["poses"])
-  if limbs:
+  if isinstance(limbs, bpy.types.Object):       # a scanned figure: its rig
+    walk_rig(limbs, a["poses"])
+  elif limbs:
     walk_cycle(limbs, a["poses"])
   return ob
 
@@ -505,7 +526,8 @@ def build(sc: dict, vehicle: Path | None, front: str | None) -> dict:
   users = bpy.data.collections.new("road_users")
   scene.collection.children.link(users)
   lights = bool(env.get("night")) or (env.get("visibility_m") or 1e9) < 1000
-  obs = [make_actor(a, model, users, lights, bool(env.get("night"))) for a in sc["actors"]]
+  seed = sc.get("variant_of") or sc["id"]       # a condition variant draws the same people as its base scene
+  obs = [make_actor(a, model, users, lights, bool(env.get("night")), seed) for a in sc["actors"]]
   A.setup_glare(env)
 
   ghosts = bpy.data.collections.new("event_ghosts")

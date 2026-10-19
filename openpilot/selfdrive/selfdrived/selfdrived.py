@@ -34,7 +34,7 @@ SIMULATION = "SIMULATION" in os.environ
 TESTING_CLOSET = "TESTING_CLOSET" in os.environ
 
 LONGITUDINAL_PERSONALITY_MAP = {v: k for k, v in log.LongitudinalPersonality.schema.enumerants.items()}
-# LionDriver CA-011: the assured configuration follows at the relaxed distance (FI-2026-001, HZ-008)
+# LionDriver CA-011: the assured configuration follows at the relaxed distance (FI-2026-001, FHZ-008)
 ASSURED_PERSONALITY = log.LongitudinalPersonality.relaxed
 
 ThermalStatus = log.DeviceState.ThermalStatus
