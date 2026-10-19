@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1320" height="1610" viewBox="0 0 1320 1610" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
 <title id="t">Figure 7-1. Hazard log: what reaches each hazard, and what holds it (WP-C-03 §7)</title>
-<desc id="d">9 cards, one per hazard of WP-C-03. H-01 Unintended or excessive lateral motion: goals SG-01; 14 FSRs, 5 implemented.  H-02 Unannounced loss or degradation of lateral control: goals SG-01, SG-02; 28 FSRs, 7 implemented.  H-03 Unintended acceleration: goals SG-03; 13 FSRs, 4 implemented.  H-04 Unintended or excessive deceleration: goals SG-04; 14 FSRs, 4 implemented.  H-05 Driver unable to override or disengage: goals SG-05; 12 FSRs, 5 implemented.  H-06 Unannounced loss of longitudinal deceleration: goals SG-06; 16 FSRs, 3 implemented.  H-07 Displayed system state differs from actual state (mode confusion): goals SG-02, SG-06; 21 FSRs, 3 implemented.  H-08 Suppression of the vehicle's stock pre-collision braking: goals SG-07; 10 FSRs, 3 implemented.  H-09 Automated control continues with a driver who is not supervising or not responding: goals SG-08; 5 FSRs, 1 implemented. </desc>
+<desc id="d">9 cards, one per hazard of WP-C-03. H-01 Unintended or excessive lateral motion: goals SG-01; 14 FSRs, 5 implemented.  H-02 Unannounced loss or degradation of lateral control: goals SG-01, SG-02; 28 FSRs, 7 implemented.  H-03 Unintended acceleration: goals SG-03; 13 FSRs, 4 implemented.  H-04 Unintended or excessive deceleration: goals SG-04; 14 FSRs, 4 implemented.  H-05 Driver unable to override or disengage: goals SG-05; 12 FSRs, 5 implemented.  H-06 Unannounced loss of longitudinal deceleration: goals SG-06; 16 FSRs, 3 implemented.  H-07 Displayed system state differs from actual state (mode confusion): goals SG-02, SG-06; 21 FSRs, 3 implemented.  H-08 Suppression of the vehicle's stock pre-collision braking: goals SG-07; 10 FSRs, 4 implemented.  H-09 Automated control continues with a driver who is not supervising or not responding: goals SG-08; 5 FSRs, 1 implemented. </desc>
 <defs><marker id="hl-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#64748B"/></marker></defs>
 <rect width="1320" height="1610" fill="#FFFFFF"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Hazard log · what reaches each hazard, and what holds it</text>
@@ -374,15 +374,15 @@
 <text x="472" y="1404" font-size="9.5" fill="#475569">HE-08.1: Collision not mitigated</text>
 <text x="472" y="1422" font-size="9" fill="#475569" font-weight="700">WHAT HOLDS IT TODAY</text>
 <text x="472" y="1439" font-size="9.5" fill="#475569">10 FSRs serve SG-07 (WP-C-04 §9)</text>
-<rect x="472.0" y="1444.0" width="112.8" height="12" fill="#16A34A"/>
-<text x="528.4" y="1453.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
-<rect x="584.8" y="1444.0" width="37.6" height="12" fill="#F59E0B"/>
-<text x="603.6" y="1453.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
-<rect x="622.4" y="1444.0" width="188.0" height="12" fill="#DC2626"/>
-<text x="716.4" y="1453.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<rect x="472.0" y="1444.0" width="150.4" height="12" fill="#16A34A"/>
+<text x="547.2" y="1453.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<rect x="622.4" y="1444.0" width="37.6" height="12" fill="#F59E0B"/>
+<text x="641.2" y="1453.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<rect x="660.0" y="1444.0" width="150.4" height="12" fill="#DC2626"/>
+<text x="735.2" y="1453.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
 <rect x="810.4" y="1444.0" width="37.6" height="12" fill="#64748B"/>
 <text x="829.2" y="1453.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
-<text x="472" y="1468" font-size="8.5" fill="#475569">3 implemented · 1 partial · 5 not met · 1 unverified</text>
+<text x="472" y="1468" font-size="8.5" fill="#475569">4 implemented · 1 partial · 4 not met · 1 unverified</text>
 <circle cx="476" cy="1474.5" r="3.5" fill="#F59E0B"/><text x="484" y="1478" font-size="9.5" fill="#475569" font-weight="600">TARA</text>
 <text x="530" y="1478" font-size="9.5" fill="#0F172A">TS-02, TS-03, TS-14 at risk 5: Reduce</text>
 <rect x="880" y="1097.0" width="400" height="457" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/>
