@@ -252,7 +252,7 @@
   parents: [SG-02, SG-04, SG-06, SG-08]
   allocated_to: "E-01/DM"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Partial: no-response force decel after 5 s at the terminal alert (`policy.py:44-49, 437`; `selfdrive/controls/controlsd.py:235`), but no disengagement, so the lockout of 1/5/15/30 min acts only after a later disengagement (System FMEA SFM-025.C1; corrected 2026-10-16). Refined by TSR-633; reaction decided (DQ-365, A); standstill hold and the lockout while stopped not implemented"
+  baseline_impl: "Partial: no-response force decel after 5 s at the terminal alert (`policy.py:44-49, 437`; `selfdrive/controls/controlsd.py:236`), but no disengagement, so the lockout of 1/5/15/30 min acts only after a later disengagement (System FMEA SFM-025.C1; corrected 2026-10-16). Refined by TSR-633; reaction decided (DQ-365, A); standstill hold and the lockout while stopped not implemented"
   status: proposed
   source: WP-C-04
 
@@ -516,7 +516,7 @@
   parents: [SG-06]
   allocated_to: "E-01, E-03"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Partial: soft disable with force decel (`controlsd.py:203-204`, `selfdrive/controls/lib/longitudinal_planner.py:84-85`); stale inputs used for up to ≈3.5 s (GAP-16)"
+  baseline_impl: "Partial: soft disable with force decel (`controlsd.py:204-205`, `selfdrive/controls/lib/longitudinal_planner.py:84-85`); stale inputs used for up to ≈3.5 s (GAP-16)"
   status: proposed
   source: WP-C-04
 
@@ -626,7 +626,7 @@
   parents: [SG-07]
   allocated_to: "E-01"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Not implemented: on `stockAeb` the item only alerts and keeps its longitudinal request. New in v0.12"
+  baseline_impl: "Partial: the host request is capped at ≤ 0 m/s² while `stockAeb` is set (`c045874`, #292; unit-tested); the `0x343` command follows after the opendbc rate limit (≈ 0.4 s) and may keep a small positive term (TSR-713); not verified on the vehicle. New in v0.12"
   status: proposed
   source: WP-C-04
 

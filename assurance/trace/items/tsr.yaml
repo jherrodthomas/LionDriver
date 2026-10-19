@@ -329,7 +329,7 @@
   mechanism: "FR"
   timing: "≤ 0.1 s after disengagement"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Implemented on host: cancel whenever PCM cruise is on and the item is not enabled (`openpilot/selfdrive/controls/controlsd.py:162`), sent in ACC_CONTROL in both longitudinal modes (`opendbc_repo/opendbc/car/toyota/carcontroller.py:253-254, 269-273`). The host replaces the PCM's own fault sound on a forced cancel with its own UI sound (`carcontroller.py:283-287`); whether the PCM sound is an independent cue is part of AOU-12"
+  baseline_impl: "Implemented on host: cancel whenever PCM cruise is on and the item is not enabled (`openpilot/selfdrive/controls/controlsd.py:163`), sent in ACC_CONTROL in both longitudinal modes (`opendbc_repo/opendbc/car/toyota/carcontroller.py:253-254, 269-273`). The host replaces the PCM's own fault sound on a forced cancel with its own UI sound (`carcontroller.py:283-287`); whether the PCM sound is an independent cue is part of AOU-12"
   status: proposed
   source: WP-S-02
 
@@ -1094,7 +1094,7 @@
   mechanism: "FR"
   timing: "per policy"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Partial: after 5 s at the terminal alert the policy requests a forced deceleration (`noResponseForceDecel`, `selfdrive/monitoring/policy.py:44-49, 437`; `selfdrive/controls/controlsd.py:235`), but nothing disengages the item, so the lockout (`policy.py:344-357`) acts only after a later disengagement (System FMEA SFM-025.C1, corrected 2026-10-16). The terminal reaction is refined in TSR-633"
+  baseline_impl: "Partial: after 5 s at the terminal alert the policy requests a forced deceleration (`noResponseForceDecel`, `selfdrive/monitoring/policy.py:44-49, 437`; `selfdrive/controls/controlsd.py:236`), but nothing disengages the item, so the lockout (`policy.py:344-357`) acts only after a later disengagement (System FMEA SFM-025.C1, corrected 2026-10-16). The terminal reaction is refined in TSR-633"
   status: proposed
   source: WP-S-02
 
@@ -1634,7 +1634,7 @@
   mechanism: "FR"
   timing: "from the first frame that reports the event"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Not implemented: on `stockAeb` the SoC alerts only and keeps its longitudinal request; code by the implementation spec"
+  baseline_impl: "**Partial, host side implemented, not verified on the vehicle** (`c045874`, #292): while `stockAeb` is set, `controlsd` caps the longitudinal target and the upper limit at 0 m/s² (`selfdrive/controls/lib/longcontrol.py` `stock_aeb_stand_down`, `controlsd.py`), so `actuators.accel` ≤ 0 from the first frame; a braking request still passes; 4 unit tests (`selfdrive/controls/tests/test_stock_aeb.py`). Not yet met at `0x343`: the opendbc Toyota controller's 4 m/s³ rate limit brings a +1.5 m/s² request to 0 only ≈ 0.4 s after the event starts, and its feedback and pitch terms can add a small positive value (change record (assurance/07-supporting/impact/change-2026-10-19-stock-aeb-stand-down.md) OI-2). SWSR by the WP-W-02 owner"
   status: proposed
   source: WP-S-02
 
