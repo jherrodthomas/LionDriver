@@ -619,6 +619,17 @@
   status: proposed
   source: WP-C-04
 
+- id: FSR-07.07
+  kind: fsr
+  text: "While the stock system reports an AEB event, the item shall request zero acceleration from the PCM (no added drive), so that stock AEB braking does not depend on PCM arbitration alone. FSR-07.04 and its AOU-04R test still apply. (Decided 2026-10-18, DQ-300 A; System FMEA SFM-036, SFM-ACT-020; FTA MCS-07.10.)"
+  asil: "QM (no ASIL claim; FSR-07.04 stays the measure)"
+  parents: [SG-07]
+  allocated_to: "E-01"
+  verification: "T-SIL, T-VEH"
+  baseline_impl: "Not implemented: on `stockAeb` the item only alerts and keeps its longitudinal request. New in v0.12"
+  status: proposed
+  source: WP-C-04
+
 - id: FSR-08.01
   kind: fsr
   text: "While engaged, the item shall give the first driver alert within 6 s of the loss of attention, measured end to end from the driver's change of state to the alert (including camera frame time, DM model latency and policy timers), and shall reach the no-response reaction of FSR-02.09 within the time set in WP-S-04 (assurance/03-system/WP-S-04-timing-ftti-budget.md)."

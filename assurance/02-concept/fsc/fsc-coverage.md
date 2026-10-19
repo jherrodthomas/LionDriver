@@ -175,7 +175,7 @@ Block diagram: 20 ASIL-relevant nodes, 5 external context nodes. Basic events (s
 | N15 Envelope software (opendbc Toyota safety mode + panda firmware) | software | FSR-07.01, FSR-07.02 | Forwarding and PCS TX block |
 | N16 Safety MCU memory (flash, RAM) | memory | FSR-01.09, FSR-01.10 | Memory corruption detected; safety parameters fixed |
 | N17 Harness intercept relay | actuator | FSR-07.03, FSR-07.06 | Released relay = stock path; stuck in intercept -> warn and refuse engagement |
-| N18 Car-side CAN TX: 0x2E4/0x191 LKA, 0x343 ACC, 0x412 HUD, 0x1D2 | comm_out | FSR-07.02, FSR-07.04 | No PCS message originated; PCS priority in the PCM (AOU-04R) |
+| N18 Car-side CAN TX: 0x2E4/0x191 LKA, 0x343 ACC, 0x412 HUD, 0x1D2 | comm_out | FSR-07.02, FSR-07.04, FSR-07.07 | No PCS message originated; PCS priority in the PCM (AOU-04R); zero acceleration request during stock AEB |
 | N19 Device display and speaker | actuator | — | Not relevant: Node has no path to the camera-to-vehicle PCS messages |
 | N20 Panda buzzer (siren) | actuator | — | Not relevant: Node has no path to the camera-to-vehicle PCS messages |
 
@@ -206,4 +206,4 @@ Block diagram: 20 ASIL-relevant nodes, 5 external context nodes. Basic events (s
 
 ## FSR usage
 
-57 of 57 FSRs in WP-C-04 are cited above. Every WP-C-04 FSR is cited at least once (checked).
+58 of 58 FSRs in WP-C-04 are cited above. Every WP-C-04 FSR is cited at least once (checked).
