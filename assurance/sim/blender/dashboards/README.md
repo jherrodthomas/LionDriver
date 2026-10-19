@@ -107,5 +107,7 @@ Variants re-render a scene under another weather or lighting code it is rated fo
 The whole scene with the dashboard running, 24 fps (`hazard_scene.py --video`, `compose.py --video`):
 
 - [he-01-1-rural-hardover-oncoming](clips/he-01-1-rural-hardover-oncoming.mp4)
+- [he-01-2-hardover-adjacent](clips/he-01-2-hardover-adjacent.mp4)
+- [he-01-3-urban-hardover-cyclist](clips/he-01-3-urban-hardover-cyclist.mp4)
 - [he-02-1-eps-loss-curve](clips/he-02-1-eps-loss-curve.mp4)
 - [sh-11-pedestrian-occluded](clips/sh-11-pedestrian-occluded.mp4)
