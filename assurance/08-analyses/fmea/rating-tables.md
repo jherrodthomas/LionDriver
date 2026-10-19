@@ -293,5 +293,6 @@ The executable copy is `tools/safety/fmea_lint.py` (`AP_MSR_TABLE`, `compute_ap_
 - **MSR AP = M:** action or rationale recommended.
 - Every mechanism an MSR row rates must cite a `ref` or `test` on the failure mode.
 - `ftti_ms` must equal the FTTI of the cited WP-S-04 row.
-- MSR AP never closes a hazard-linked cause by itself. Whether it may count toward accepting residual risk is a lead decision (decision register).
+- **Closing a cause (lead decision DQ-206, option A, 2026-10-19; [WP-S-04 §6](../../03-system/WP-S-04-timing-ftti-budget.md#6-measurement-plan)).** A diagnostic followed by a safe state closes a hazard-linked cause only when its fault-injection timing has been **measured** (WP-S-04 §6, e.g. M-04, M-05, M-06, M-10) and lies inside the FTTI of WP-S-04 §3.7: the row has `basis: measured` with a `ref` to the measurement (so M ≤ 4) and an MSR AP of L or M. Until that measurement passes, the cause stays open whatever its MSR AP.
+- Code-derived timing (WP-S-04 §4, M 5–6) and simulated timing (WP-S-04 §3.9, evidence only, msr-plan §4.2) **rank** the work; they never close a cause.
 

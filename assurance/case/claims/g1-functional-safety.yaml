@@ -119,7 +119,7 @@
   related_requirements: []
   related_assumptions: []
   evidence_refs: [Sn-04, Sn-13, Sn-15]
-  defeaters: [DF-01, DF-02, DF-03, DF-04, DF-05, DF-06, DF-29, DF-36, DF-40]
+  defeaters: [DF-01, DF-02, DF-03, DF-04, DF-05, DF-06, DF-29, DF-36, DF-40, DF-42]
   review_state: not-reviewed
   reviewer: null
   review_date: null
@@ -287,7 +287,7 @@
   related_requirements: []
   related_assumptions: []
   evidence_refs: [Sn-07, Sn-08, Sn-09, Sn-11]
-  defeaters: [DF-04, DF-13, DF-01, DF-33]
+  defeaters: [DF-04, DF-13, DF-01, DF-33, DF-42]
   review_state: not-reviewed
   reviewer: null
   review_date: null

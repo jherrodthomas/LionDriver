@@ -180,6 +180,8 @@
 <text x="1649.8" y="576.5" class="chip" fill="#fff">DF-36</text>
 <rect x="1486.0" y="587.0" width="42.5" height="16" rx="8" fill="#c62828"/>
 <text x="1507.2" y="598.5" class="chip" fill="#fff">DF-40</text>
+<rect x="1533.5" y="587.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="1554.8" y="598.5" class="chip" fill="#fff">DF-42</text>
 <line x1="1594.0" y1="618" x2="1594.0" y2="641.0" class="w"/>
 <line x1="1450.0" y1="641.0" x2="1738.0" y2="641.0" class="w"/>
 <line x1="1450.0" y1="641.0" x2="1450.0" y2="671.0" class="w"/><path d="M1450.0,671.0 L1445.9,661.9 L1454.1,661.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
