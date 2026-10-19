@@ -23,7 +23,7 @@
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 4 performed: CR-12, FSA-F, SR-03, SR-04@G5 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 67 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 66 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
@@ -31,7 +31,7 @@
 |---|---|---|---|---|
 | [WP-V-01](../../../06-validation/WP-V-01-safety-validation.md) Safety validation plan, specification and report | REL-01 | Draft | 5 | |
 | [WP-V-04](../../../06-validation/WP-V-04-sotif-unknown-scenarios.md) Evaluation of unknown hazardous scenarios | REL-02 | Draft | 4 | |
-| [WP-V-06](../../../06-validation/WP-V-06-cybersecurity-validation.md) Cybersecurity validation and penetration testing | REL-03 | Draft | 5 | |
+| [WP-V-06](../../../06-validation/WP-V-06-cybersecurity-validation.md) Cybersecurity validation and penetration testing | REL-03 | Draft | 4 | |
 | [WP-O-01](../../../09-production-operation/WP-O-01-installation-and-provisioning-control.md) Installation, provisioning and production control | REL-04 | Draft | 8 | |
 | [WP-O-03](../../../09-production-operation/WP-O-03-user-information-safety-warnings.md) User information and safety warnings | REL-05 | Draft | 7 | |
 | [WP-O-02](../../../09-production-operation/WP-O-02-operation-service-decommissioning.md) Operation, service (maintenance, repair) and decommissioning | REL-06 | Draft | 6 | |
