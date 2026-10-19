@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-07 Qualification of hardware components (comma device, STM32H7, harness) |
 | Standard reference | ISO 26262-8:2018 §13 (qualification of hardware components); ISO 26262-5:2018 §7–§9 (for complex elements); ISO 26262-11:2018 (semiconductors, informative); ASPICE 4.0 — (no direct process; supports HWE.1–4 at CL1 per T-12) |
-| Version | 0.3 (decisions applied 2026-10-19: no ST licence, own self-tests with low CPU coverage, DQ-069 option B (QE-03, §5, OI-2); §5 residual risks accepted with the stated conditions, EMC and environment recorded as residual risks, DQ-078 option A (OI-6); harness rows re-based from a relay to the harness box v3 analog switches (RR-2026-010), with the Toyota A harness and box v3 still assumed, not read from the parts, DQ-211 option C). 0.2 (OI-5: no teardown, DQ-065; 2026-10-16). 0.1 |
+| Version | 0.4 (OI-6 closed: the §5 residual risks are recorded as WP-M-07 R-30 and WP-K-01 DF-42; 2026-10-19). 0.3 (decisions applied 2026-10-19: no ST licence, own self-tests with low CPU coverage, DQ-069 option B (QE-03, §5, OI-2); §5 residual risks accepted with the stated conditions, EMC and environment recorded as residual risks, DQ-078 option A (OI-6); harness rows re-based from a relay to the harness box v3 analog switches (RR-2026-010), with the Toyota A harness and box v3 still assumed, not read from the parts, DQ-211 option C). 0.2 (OI-5: no teardown, DQ-065; 2026-10-16). 0.1 |
 | Status | Draft (qualification plan; no qualification performed) |
 | ASIL / scope | ASIL C (SG-01 provisional; SG-02, SG-03, SG-06 since WP-C-03 v0.4) / ASIL B (SG-04, SG-05, SG-07) |
 | Author | Assurance team (initial draft) |
@@ -174,4 +174,4 @@ ISO 26262-11 is informative. The following topics are used as hints for QC-02 an
 | OI-3 | Confirm the fitted MCU ordering code, package and temperature grade on the reference device (H725 vs H735 vs H723) | G2 |
 | OI-4 | Contact comma.ai for QE-01, QE-05, QE-07…QE-10 under WP-M-11 | G2 |
 | OI-5 | ~~Plan the teardown of one device and one harness if comma.ai declines~~ **Not planned:** the lead chose to ask comma.ai and wait, with no teardown (DQ-065, option B, 2026-10-14). Revisit only if the lead reopens that decision | G2 |
-| OI-6 | Record residual risks of §5 in the safety case and the risk register ([WP-M-07](../01-management/WP-M-07-risk-management.md)). Acceptance decided ([DQ-078](../01-management/decisions/register.yaml), option A, 2026-10-19); the entries in WP-K-01 and WP-M-07 are for their owners, so this stays open until they exist | G3 |
+| OI-6 | ~~Record residual risks of §5 in the safety case and the risk register~~ **Closed 2026-10-19:** accepted by the lead ([DQ-078](../01-management/decisions/register.yaml), option A) and recorded as [WP-M-07](../01-management/WP-M-07-risk-management.md) R-30 and [WP-K-01](../10-safety-case/WP-K-01-safety-case.md) DF-42 | G3 |

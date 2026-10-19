@@ -113,6 +113,8 @@
 # SFM-038.C1, so the inherited-rating warnings clear. No rating change.
 # Rev 0.29 (2026-10-18): DQ-300 answered (A, stand down during stock AEB): SFM-ACT-020 moves from decision_pending to open with
 # the decided behaviour (zero acceleration request while stockAeb is set). Not implemented at BL-006, so SFM-036 keeps its ratings.
+# Rev 0.30 (2026-10-19, RT-3, DQ-207 A): MSR AP from the AIAG-VDA handbook table for S 9-10 (rating-tables §7.4). Only the F 2
+# rows move: SFM-014.C3 and SFM-029.C4 MSR AP H -> M. Every other MSR row (S 10, F >= 3) keeps H. No S/O/D change.
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -121,10 +123,10 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.29"
+  revision: "0.30"
   status: draft
   baseline: BL-006
-  rating_tables: RT-2
+  rating_tables: RT-3
   msr: complete
   scope: >-
     LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda,
@@ -2069,7 +2071,7 @@ failure_modes:
           severity_after: 10
           frequency: 2
           monitoring: 10
-          ap: H
+          ap: M
           timing:
             basis: unknown
           rationale: Masking of the catch-all is a design property rated in the SW FMEA; no in-field monitor can see it. F 2
@@ -3258,7 +3260,7 @@ failure_modes:
           severity_after: 10
           frequency: 2
           monitoring: 10
-          ap: H
+          ap: M
           timing:
             basis: unknown
           rationale: Only the harness design keeps the device behind the panda; no in-field monitor can see a bypass. The barrier

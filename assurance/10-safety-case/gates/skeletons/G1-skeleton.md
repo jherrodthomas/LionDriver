@@ -23,7 +23,7 @@
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 6 performed: CR-02, CR-03@G1, CR-04, FSA-I1, SR-01, CS-I1 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 83 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 84 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
@@ -39,7 +39,7 @@
 | [WP-C-07](../../../02-concept/WP-C-07-sotif-functional-modifications.md) Functional modifications addressing SOTIF risk | CON-08 | Draft | 5 | |
 | [WP-C-11](../../../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) AI system definition and AI safety requirements | CON-09 | Draft | 6 | |
 | [WP-C-09](../../../02-concept/WP-C-09-tara.md) Threat analysis and risk assessment (TARA) | CON-10 | Draft | 6 | |
-| [WP-C-10](../../../02-concept/WP-C-10-cybersecurity-goals-and-concept.md) Cybersecurity goals, claims and concept | CON-11 | Draft | 6 | |
+| [WP-C-10](../../../02-concept/WP-C-10-cybersecurity-goals-and-concept.md) Cybersecurity goals, claims and concept | CON-11 | Draft | 7 | |
 | [WP-V-07](../../../06-validation/WP-V-07-vehicle-test-operations.md) Vehicle test operations and safety-driver procedures | CON-12 | Draft | 7 | |
 | [WP-T-01](../../../trace/README.md) Requirements and traceability data (machine-readable), consistency evidence | CON-13 | Draft | 4 | |
 | [WP-K-01](../../../10-safety-case/WP-K-01-safety-case.md) Safety case (GSN, integrated FuSa, SOTIF and AI argument) | CON-13 | Draft | 5 | |
