@@ -166,6 +166,17 @@ Work products change through pull requests in the same way code does (see
 (see the safety-relevant file list in [WP-P-01 configuration management](07-supporting/WP-P-01-configuration-management-plan.md)),
 it updates the affected work products or records an impact analysis that says why none are affected.
 
+Some figures read tables from work products other than their own. If you edit one of these tables, the assurance
+workflow's `--check` for that figure fails until you regenerate it. The fix is to run the generator named below and
+commit its SVGs:
+
+| Figure generator (run this) | Its figures | Tables it reads |
+|---|---|---|
+| `python3 assurance/02-concept/hara/hara_figures.py` | WP-C-03 Figure 7-1, the hazard log cards (`hazlog_cards.py`) | WP-C-03 §3–§7; WP-C-04 §5 Impl and §9 trace; WP-C-06 §3–§5; WP-C-07 §2–§3; WP-C-09 §3, §4, §8 |
+| `python3 assurance/02-concept/sotif/sotif_figures.py` | WP-C-07 Figures 3-1 and 3-2, the modification cards (`fm_scenes.py`) | WP-C-07 §2–§3; passages quoted from WP-C-02 §7, WP-C-04 §8 and the gap assessment |
+| `python3 assurance/02-concept/fsc/fsc_figures.py` | WP-C-04 Figures 8-1 to 8-3, the FTTI scene cards (`fsc_scenes.py`) | WP-C-04 §3, §5, §8 (quoted Current-behaviour text), §9 |
+| `python3 assurance/02-concept/figures/fig_c09_scenes.py` | WP-C-09 Figures 9-2 and 9-3, the threat scene cards | WP-C-09 §3–§9; WP-C-10 §4 (goals and CALs) |
+
 ### Standards text
 
 The standards are copyrighted and are not reproduced here. Clause references point to the
