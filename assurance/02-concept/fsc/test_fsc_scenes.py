@@ -59,7 +59,7 @@ class TestFttiScenes(unittest.TestCase):
         fs.build(self.goals, self.md, ff)
 
   def test_quoted_current_behaviour_must_still_be_in_its_row(self):
-    md = self.md.replace("No forwarding supervision", "Forwarding supervised")
+    md = self.md.replace("No supervision of forwarding while the MCU runs", "Forwarding supervised")
     with self.assertRaisesRegex(ff.FigureError, "no longer in the Current behaviour"):
       fs.build(ff.parse(md), md, ff)
 
