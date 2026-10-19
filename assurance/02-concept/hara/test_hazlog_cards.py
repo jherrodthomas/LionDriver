@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Tests for hazlog_cards.py: one card per WP-C-03 hazard, IDs and counts read from the documents."""
 
+import copy
 import sys
 import unittest
 from pathlib import Path
@@ -41,10 +42,18 @@ class TestHazlogCards(unittest.TestCase):
     self.assertTrue(lanes["H-06"]["sotif"][0].startswith("SH-06 "))
     self.assertIn("DS-06", lanes["H-06"]["attack"][0])
     self.assertFalse(lanes["H-07"]["sotif"][1])                # §7 names no SOTIF hazard for H-07
-    self.assertFalse(lanes["H-09"]["attack"][1])               # no WP-C-09 damage scenario names H-09
+    self.assertIn("DS-14", lanes["H-09"]["attack"][0])        # WP-C-09 v0.8 links H-09
+    self.assertTrue(lanes["H-09"]["attack"][1])
     self.assertNotIn("misuse", lanes["H-08"])
     for v in c.values():
       self.assertEqual(sum(v["counts"]), v["fsr_n"])
+
+  def test_hazard_without_damage_scenario_shows_the_gap(self):
+    D = dict(self.D, tara=copy.deepcopy(self.D["tara"]))
+    del D["tara"].ds["DS-14"]
+    txt, linked = next((t, l) for k, t, l in hl.card_data("H-09", D)["lanes"] if k == "attack")
+    self.assertFalse(linked)
+    self.assertIn("no WP-C-09 §3 damage scenario names H-09", txt)
 
   def test_he_ranges(self):
     self.assertEqual(hl.he_ids("HE-06.1, HE-06.3–06.4"), ["HE-06.1", "HE-06.3", "HE-06.4"])
