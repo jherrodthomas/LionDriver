@@ -36,6 +36,10 @@ SPRITES = Path(os.environ.get("KENNEY_RACING_DIR", HERE / "assets" / "kenney-rac
 STEP = 0.1           # s between keyframes
 HOLD = 1.5           # s held on the last frame before the loop restarts
 LANE_W = 3.7
+MIN_CAR_PX = 45.0    # shortest drawn car, so that it reads on a phone at 640 px
+MIN_PANEL_PX = 90.0  # lowest road panel
+LABEL_W = 70.0       # room for the lane labels at the panel's left edge
+NAMES = {"stopped": "stopped car", "lead": "lead", "cutin": "cut-in car", "target": "car behind", "truck": "truck"}
 
 # sprite per role: (file, hue rotation in degrees applied by an SVG filter, 0 for none)
 EGO_SPRITE = ("car_red_1.png", 0)
@@ -153,7 +157,8 @@ def ks_spec(sc, R, D) -> dict:
       e, k = at(ego, t), at(tr, t)
       return abs(k["t"] - e["t"]) - (D["ego"][1] + D["truck"][1]) / 2
     return dict(situation="A truck alongside in the right lane; lanes 3.3 m wide",
-                t0=0.0, t1=min(dur, 6.0), view=40, back=14, lane_w=sc.road.get("lane_width", LANE_W),
+                t0=0.0, t1=min(dur, 6.0), view=40, back=14, lane_w=sc.road.get("lane_width", LANE_W), still=True,
+                ego_label="above",
                 plot=("SIDE-TO-SIDE CLEARANCE, EGO TO TRUCK (m)", clear, 0.0, 2.0, []),
                 events=[(0.0, f"truck alongside at the ego speed, {clear(0.0):.2f} m clear")])
   if sid == "KS-07":
@@ -201,7 +206,7 @@ def ks_spec(sc, R, D) -> dict:
     t_done = first_time(allt, lambda t: t > 3.0 and at(ego, t)["laneId"] == -3 and abs(at(ego, t)["offset"]) < 0.05)
     behind = (at(ego, 0)["s"] - at(tg, 0)["s"]) / ego[0]["speed"]
     return dict(situation=f"The driver changes lane to the right, a car {behind:.1f} s behind in the target lane",
-                t0=0.0, t1=min(dur, (t_done or 7.0) + 2.0), view=100, back=80,
+                t0=0.0, t1=min(dur, (t_done or 7.0) + 2.0), view=100, back=80, lane_labels="right",
                 plot=("EGO LATERAL POSITION FROM THE LANE -2 CENTRE (m)", lat, -4.5, 1.0, [(-LANE_W, "lane -3 centre", "hairl")]),
                 band=(3.0, t_done or 7.0, "lane change"),
                 footer="The ego's lane change is scripted in the file; in a closed loop the driver's nudge starts it.",
@@ -221,7 +226,7 @@ def ks_spec(sc, R, D) -> dict:
     t_x = first_time(allt, lambda t: spd(t) > 120)
     return dict(situation="The ego accelerates through the 120 km/h ODD bound",
                 t0=0.0, t1=min(dur, (t_x or 10.0) + 3.0), view=60, back=10,
-                plot=("EGO SPEED (km/h)", spd, 100.0, 135.0, [(120.0, "ODD bound 120 km/h", "thr")]),
+                plot=("EGO SPEED (km/h)", spd, 100.0, 135.0, [(120.0, "ODD bound 120 km/h", "thr", "left")]),
                 events=[(1.0, "ego accelerates at 0.5 m/s² (scripted here)"), (t_x, "ego crosses 120 km/h")],
                 footer="The ego's acceleration is scripted in the file; in a closed loop the item limits it.")
   if sid == "KS-27":
@@ -285,12 +290,18 @@ def fig(sc, R, D) -> tuple[str, list[str]]:
   dur = span + HOLD
   kt = ";".join(f"{(f - t0) / dur:.4f}" for f in frames) + ";1"
 
-  def anim(attr, vals, typ=None):
+  still = sp.get("still", False)
+
+  def anim(attr, vals, typ=None, discrete=False):
+    if still:
+      return ""
     v = ";".join(vals) + ";" + vals[-1]
+    cm = ' calcMode="discrete"' if discrete else ""
     if typ:
       return (f'<animateTransform attributeName="transform" type="{typ}" values="{v}" keyTimes="{kt}" '
               f'dur="{dur:.2f}s" repeatCount="indefinite"/>')
-    return f'<animate attributeName="{attr}" values="{v}" keyTimes="{kt}" dur="{dur:.2f}s" repeatCount="indefinite"/>'
+    return (f'<animate attributeName="{attr}" values="{v}" keyTimes="{kt}"{cm} dur="{dur:.2f}s" '
+            f'repeatCount="indefinite"/>')
 
   ego = R["ego"]
   others = [n for n in R if n != "ego"]
@@ -301,19 +312,27 @@ def fig(sc, R, D) -> tuple[str, list[str]]:
   hl, hy = para(24, 34, f"{sc.id} · {sc.title}", W - 48, "h", lh=26)
   sl, sy = para(24, hy - 4, sp["situation"], W - 48, "t2", lh=17)   # para returns the next line's y
   b = [*hl, *sl, T(24, sy + 4, "Synthetic (DSR-12) · no evidence credit", "tbad"),
-       T(24, sy + 23, f"esmini replay of {sc.id}.xosc at its defaults, {t0:.1f}–{t1:.1f} s", "t2b"),
+       T(24, sy + 23, f"esmini replay of {sc.id}.xosc at its defaults, " +
+         f"{t0:.1f}–{t1:.1f} s", "t2b"),
        el("line", None, x1=24, y1=sy + 34, x2=W - 24, y2=sy + 34, class_="hair")]
 
-  # road panel: s along x (ego fixed), t along y (reference line at the top, lanes below)
+  # road panel: s along x (ego held in place), t along y (reference line at the top, lanes below). Cars shorter than
+  # MIN_CAR_PX at this scale are drawn at MIN_CAR_PX, wider in proportion, and the panel note says so.
   lanes = sp.get("lanes", 3)
   lw = sp.get("lane_w", LANE_W)
   px = (W - 48) / sp["view"]
+  grow = max(1.0, MIN_CAR_PX / (D["ego"][0] * px))
+  label_right = sp.get("lane_labels") == "right"
+  # keep the ego's rear clear of the lane labels on the left
   x_ego = 24 + sp["back"] * px
+  if not label_right:
+    x_ego = max(x_ego, 24 + LABEL_W + D["ego"][0] * px * grow / 2 - D["ego"][2] * px)
   ry = sy + 46
-  margin = 14
   wall = sp.get("wall")
-  top_extra = (wall + 1.0) * px if wall is not None else 0
-  rh = lanes * lw * px + 2 * margin + top_extra
+  top_extra = (wall + 1.0) * px + 16 if wall is not None else 0
+  road_h = lanes * lw * px
+  margin = max(14.0, (MIN_PANEL_PX - road_h - top_extra) / 2)
+  rh = road_h + 2 * margin + top_extra
   y_ref = ry + margin + top_extra
 
   def X(s_rel):
@@ -323,7 +342,7 @@ def fig(sc, R, D) -> tuple[str, list[str]]:
     return y_ref - tl * px
   b += [f'<clipPath id="road"><rect x="24" y="{fmt(ry)}" width="{W - 48}" height="{fmt(rh)}" rx="8"/></clipPath>',
         el("rect", None, x=24, y=fmt(ry), width=W - 48, height=fmt(rh), rx=8, class_="card"),
-        el("rect", None, x=24, y=fmt(Y(0)), width=W - 48, height=fmt(lanes * lw * px), class_="asph")]
+        el("rect", None, x=24, y=fmt(Y(0)), width=W - 48, height=fmt(road_h), class_="asph")]
   ds = [at(ego, f)["s"] for f in frames]
   dash, gap_ = 3.0 * px, 9.0 * px
   for k in range(lanes + 1):
@@ -337,43 +356,66 @@ def fig(sc, R, D) -> tuple[str, list[str]]:
   ego_lane = ego[0]["laneId"]
   for k in range(lanes):
     lid = -(k + 1)
-    b += [T(W - 30, Y(-(k + 0.5) * lw) + 4, "ego lane" if lid == ego_lane else f"lane {lid}",
-            "t2b" if lid == ego_lane else "t2", "end")]
+    txt, cls = ("ego lane", "t2b") if lid == ego_lane else (f"lane {lid}", "t2")
+    yl = Y(-(k + 0.5) * lw) + 4
+    b += [T(W - 30, yl, txt, cls, "end") if label_right else T(30, yl, txt, cls)]
   if wall is not None:
-    b += [el("rect", None, x=24, y=fmt(Y(wall) - 0.3 * px), width=W - 48, height=fmt(max(2.0, 0.3 * px)), class_="wall"),
-          T(W - 30, Y(wall) - 0.3 * px - 4, "wall on the inside of the curve, 2 m high", "t2", "end")]
+    wy = Y(wall)
+    b += [el("rect", None, x=24, y=fmt(wy - 4), width=W - 48, height=4, class_="wall"),
+          T(30, wy - 8, "wall on the inside of the curve, 2 m high", "t2")]
   b += ['<g clip-path="url(#road)">']
+  markers = []
   for name, role in zip(["ego"] + others, roles):
     rows = R[name]
     L, Wd, cx = D[name]
-    pos, rot = [], []
+    pos, rot, off = [], [], []
+    g = grow if name != "truck" else max(1.0, MIN_CAR_PX / (L * px))
     for i, f in enumerate(frames):
       r = at(rows, f)
-      pos.append(f"{fmt(X(r['s'] + cx - ds[i]))},{fmt(Y(r['t']))}")
+      xc = X(r["s"] + cx - ds[i])
+      pos.append(f"{fmt(xc)},{fmt(Y(r['t']))}")
+      off.append(">" if xc - L * px * g / 2 > W - 24 else "<" if xc + L * px * g / 2 < 24 else "")
       a, c = at(rows, max(0.0, f - 0.2)), at(rows, f + 0.2)
       dsr, dtr = c["s"] - a["s"], c["t"] - a["t"]
       rot.append(f"{-math.degrees(math.atan2(dtr, dsr)) if abs(dsr) > 0.05 else 0.0:.2f}")
     turning = any(abs(float(x)) > 0.2 for x in rot)
     if name == "truck":
-      body = (el("rect", None, x=fmt(-L * px / 2), y=fmt(-Wd * px / 2), width=fmt(L * px), height=fmt(Wd * px), rx=2,
-                 class_="truck") + T(0, 4, "truck", "t2", "middle"))
+      tl, tw = L * px * g, Wd * px * g
+      body = (el("rect", None, x=fmt(-tl / 2 + 1), y=fmt(-tw / 2 + 1), width=fmt(tl), height=fmt(tw), rx=3, class_="shadow")
+              + el("rect", None, x=fmt(-tl / 2), y=fmt(-tw / 2), width=fmt(tl), height=fmt(tw), rx=3, class_="truck")
+              + el("line", None, x1=fmt(tl / 2 - 2.0 * px * g), y1=fmt(-tw / 2), x2=fmt(tl / 2 - 2.0 * px * g),
+                   y2=fmt(tw / 2), class_="cab") + T(0, 4, "truck", "t2", "middle"))
     else:
-      body = car_use(ids[role], L * px, 2.0 * px)
+      body = car_use(ids[role], L * px * g, 2.0 * px * g)
+    if name == "ego":
+      above = sp.get("ego_label") == "above"
+      body += T(0, -(2.0 * px * g / 2 + 4) if above else 2.0 * px * g / 2 + 12, "ego", "t2b", "middle")
     inner = f"<g>{anim(None, rot, 'rotate')}{body}</g>" if turning else body
     hid = sp.get("hidden")
-    if hid and hid[0] == name:
+    if hid and hid[0] == name and not still:
       k0 = max(0.0, (hid[1] - t0) / dur)
       b += [f'<g opacity="0.3"><animate attributeName="opacity" values="0.3;1" keyTimes="0;{k0:.4f}" calcMode="discrete" '
             f'dur="{dur:.2f}s" repeatCount="indefinite"/>']
     else:
       b += ["<g>"]
-    b += [f"<g>{anim(None, pos, 'translate')}{inner}</g>", "</g>"]
-    if name == "ego":
-      b += [T(x_ego, ry + rh - 4, "ego", "t2b", "middle")]
-  note = "road straightened, ego held in place; dashes stream at its speed"
+    b += [f'<g transform="translate({pos[0].replace(",", " ")})">{anim(None, pos, "translate")}{inner}</g>', "</g>"]
+    # an edge marker while the car is off the panel: "lead ahead →" at the right edge, "← car behind" at the left
+    for side in "<>":
+      if name != "ego" and any(o == side for o in off):
+        lab = NAMES.get(name, name)
+        ym = Y(at(rows, frames[[o == side for o in off].index(True)])["t"]) + 4
+        txt = f"{lab} ahead →" if side == ">" else f"← {lab}"
+        vis = ["1" if o == side else "0" for o in off]
+        markers += [f'<g opacity="{vis[0]}">{anim("opacity", vis, discrete=True)}' +
+                    (T(W - 32, ym, txt, "mark", "end") if side == ">" else T(32 + (LABEL_W if not label_right else 0), ym, txt, "mark")) +
+                    "</g>"]
+  b += ["</g>", *markers]
+  note = "road straightened, ego held in place" + ("" if still else "; dashes stream at its speed")
+  if grow > 1.01:
+    note += "; cars drawn larger than scale"
   if sp.get("hidden"):
-    note += "; faded: hidden behind the wall"
-  b += ["</g>", T(36, ry + rh + 16, note, "t2")]
+    note = "road straightened; faded car: hidden behind the wall" + ("; cars larger than scale" if grow > 1.01 else "")
+  b += [T(36, ry + rh + 16, note, "t2")]
 
   # plot
   title, fn, lo, hi, lines_ = sp["plot"]
@@ -416,21 +458,25 @@ def fig(sc, R, D) -> tuple[str, list[str]]:
             T(px0 + 6, DY(yv) - 4, lab, "t2") if left else T(px1, DY(yv) - 4, lab, "t2", "end")]
   b += [el("path", None, d="M" + " L".join(f"{fmt(TX(f))},{fmt(DY(v))}" for f, v in zip(frames, vals)), class_="trace")]
   cur = [f"{fmt(TX(f) - px0)},0" for f in frames]
-  b += [f'<g>{anim(None, cur, "translate")}<line x1="{px0}" y1="{fmt(py)}" x2="{px0}" y2="{fmt(py + ph)}" class="cursor"/></g>']
+  if not still:
+    b += [f'<g>{anim(None, cur, "translate")}<line x1="{px0}" y1="{fmt(py)}" x2="{px0}" y2="{fmt(py + ph)}" class="cursor"/></g>']
 
   # events
   ev = sorted((te, lab) for te, lab in sp["events"] if te is not None)
+  if not still and not any(abs(te - t1) < 1e-6 for te, _l in ev):
+    ev.append((t1, "loop ends"))
   for te, lab in sp["events"]:
     if te is None:
       errs.append(f"{sc.id}: event '{lab}' did not happen in the replay")
   y = py + ph + 52
-  b += [T(24, y - 6, "EVENTS (light up as they happen)", "t2b")]
+  b += [T(24, y - 6, "EVENTS" if still else "EVENTS (light up as they happen)", "t2b")]
   y += 14
   for te, lab in ev:
     k0 = min(1.0, max(0.0, (te - t0) / dur))
-    b += [f'<g opacity="0.25"><animate attributeName="opacity" values="0.25;1" keyTimes="0;{k0:.4f}" '
-          f'calcMode="discrete" dur="{dur:.2f}s" repeatCount="indefinite"/>' +
-          T(24, y, f"{te:.1f} s", "tb") + T(84, y, lab, "t") + "</g>"]
+    row = T(24, y, f"{te:.1f} s", "tb") + T(84, y, lab, "t")
+    b += [f"<g>{row}</g>" if still else
+          f'<g opacity="0.25"><animate attributeName="opacity" values="0.25;1" keyTimes="0;{k0:.4f}" '
+          f'calcMode="discrete" dur="{dur:.2f}s" repeatCount="indefinite"/>{row}</g>']
     y += 22
   foot = ("Layer 2 fixes the road and the other road users. " +
           sp.get("footer", "The ego only holds its start speed here; the item under test drives it in layer 1 and on "
@@ -440,11 +486,12 @@ def fig(sc, R, D) -> tuple[str, list[str]]:
   b += fl
   y = fy + 10
   style = ("<style>.laned { stroke:var(--ink3); stroke-width:2; } .edge { stroke:var(--ink2); stroke-width:2; } "
-           ".asph { fill:var(--grid); } .wall { fill:var(--ink2); } .truck { fill:var(--card); stroke:var(--ink2); "
-           "stroke-width:1.5; } .trace { fill:none; stroke:var(--real); stroke-width:2.2; } .thr { stroke:var(--bad); "
+           ".asph { fill:var(--grid); } .wall { fill:var(--ink2); } .truck { fill:var(--ink3); stroke:var(--ink); "
+           "stroke-width:1; } .shadow { fill:var(--ink); opacity:0.45; } .cab { stroke:var(--ink); stroke-width:1; } "
+           ".mark { fill:var(--amb); font:600 12px system-ui, sans-serif; } .trace { fill:none; stroke:var(--real); stroke-width:2.2; } .thr { stroke:var(--bad); "
            "stroke-width:1.3; stroke-dasharray:6 4; } .hairl { stroke:var(--ink3); stroke-width:1; stroke-dasharray:3 3; } "
            ".band { fill:var(--amb-bg); } .cursor { stroke:var(--ink); stroke-width:1.6; }</style>")
-  desc = (f"Synthetic (DSR-12), no evidence credit. Looping top view of {sc.id} ({sc.title}) from its esmini replay at the "
+  desc = (f"Synthetic (DSR-12), no evidence credit. {'Still' if still else 'Looping'} top view of {sc.id} ({sc.title}) from its esmini replay at the "
           f"parameter defaults, {t0:.1f} to {t1:.1f} s: {sp['situation']}. Plot: {title.lower()}. Events: " +
           "; ".join(f"{lab} at {te:.1f} s" for te, lab in ev) + f". {foot}")
   out = fs.svg(int(y + 6), f"{sc.id} animated top view", desc, b)
