@@ -1631,7 +1631,8 @@
       title: "Turn learning off in the reference release"
       detail: "Reproducible and representative. Cost: changes the product and may worsen control."
   sources: ["assurance/05-software/WP-W-09-configuration-calibration-data.md OI-4"]
-  status: answered
+  status: applied
+  applied: {ref: "#306", record: "WP-W-09 OI-4", at: 2026-10-19}
   answer:
     choice: A
     via: inbox
@@ -1655,7 +1656,8 @@
       title: "Forbid it until ignition off"
       detail: "Stricter. Cost: no assistance for the rest of the drive after any drop to silent."
   sources: ["assurance/05-software/WP-W-09-configuration-calibration-data.md OI-8"]
-  status: answered
+  status: applied
+  applied: {ref: "#306", record: "WP-W-09 DVR-02 reworded, OI-8 closed", at: 2026-10-19}
   answer:
     choice: A
     via: inbox
@@ -1849,7 +1851,8 @@
       title: "Wait for the vehicle characterisation, then set them once"
       detail: "One set of measured values. Cost: the seven requirements stay unimplemented until the test car and a closed course are ready (DQ-104: closed courses only)."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-4", "assurance/03-system/WP-S-02-technical-safety-requirements.md OI-3, OI-5"]
-  status: answered
+  status: applied
+  applied: {ref: "#306", record: "WP-W-02 §2.5 provisional values (OI-15 opened, closed by #311)", at: 2026-10-19}
   answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-082
@@ -1869,7 +1872,8 @@
       title: "Keep ignoring the request"
       detail: "No change, no extra disengagements. Cost: CSR-012's intent is not met; it stays an open item in the cybersecurity case."
   sources: ["assurance/05-software/WP-W-03-software-architecture.md ATC-21", "assurance/05-software/reviews/RR-2026-009.md F-36"]
-  status: answered
+  status: applied
+  applied: {ref: "#306", record: "WP-S-07 SWSR-512/513 wording; ATC-21 not taken", at: 2026-10-19}
   answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-083
@@ -1890,7 +1894,8 @@
       title: "Remove the suppressions by changing the code where possible"
       detail: "Fewer deviations. Cost: churn in safety code (WP-W-01 OI-9); each change needs its own review and tests."
   sources: ["assurance/05-software/WP-W-01-software-development-environment-guidelines.md OI-2"]
-  status: answered
+  status: applied
+  applied: {ref: "#306", record: "WP-W-01 OI-2 (rationale drafts still to write)", at: 2026-10-19}
   answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-084
@@ -2592,7 +2597,8 @@
       title: "Change the requirement to 10"
       detail: "Code and requirement match. Cost: permanently weaker."
   sources: ["assurance/07-supporting/impact/change-2026-10-13-host-supervision.md OI-1"]
-  status: answered
+  status: applied
+  applied: {ref: "#306", record: "noted in its record", at: 2026-10-19}
   answer:
     choice: A
     via: inbox
@@ -2619,7 +2625,8 @@
       title: "Reject it"
       detail: "Keeps current behaviour. Cost: drift from upstream grows."
   sources: ["assurance/07-supporting/impact/sync-2026-10-10-openpilot-b9c815d.md “`263e8d1966` | longitudinal planner: set A_CRUISE_MIN to -0.”"]
-  status: answered
+  status: applied
+  applied: {ref: "#306", record: "noted in its record", at: 2026-10-19}
   answer:
     choice: C
     via: inbox
@@ -4634,8 +4641,9 @@
   - assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-036, SFM-ACT-020
   - assurance/08-analyses/WP-A-04-system-fta-fmea.md MCS-07.10
   - assurance/02-concept/WP-C-04-functional-safety-concept.md AOU-04R
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "#292", record: "change-2026-10-19-stock-aeb-stand-down (merged with the lead's explicit OK; new tests ran locally only, the scons CI jobs were down on the LFS 404)", at: 2026-10-19}
 
 - id: DQ-360
   question: "If the steering (EPS) or the engine controller (PCM) silently stops obeying LionDriver, without sending a fault, do we rely on a tested assumption about the car, or add a check that compares the car's response with the command?"
@@ -5057,4 +5065,34 @@
       title: "Leave as built: takes effect at once"
       detail: "No change. Cost: the item can run outside its assured settings until it is next engaged, which the safety case must argue away."
   sources: ["PR #287 (Open: OI-3)", "DQ-221"]
+  status: queued
+
+- id: DQ-404
+  question: "When the panda takes steering away because the openpilot computer has frozen, should it also sound the alarm?"
+  context: >-
+    If the openpilot computer stalls, the panda revokes steering 0.04 s later but **sounds no siren**: its heartbeat
+    check does not fire once authority is gone (WP-S-04 T-34), and openpilot cannot alert because it is the part that
+    froze. The driver's only cue is the car drifting. In the plant at the ODD curve bound (HE-07.1, ASIL C) the driver
+    corrects at 2.68 s and the car drifts 7.3 m; with a siren at revocation, 1.66 s and 1.5 m. Inside the ODD curve the
+    siren keeps the car in its 3.7 m lane (peak 0.7 m against 3.6 m). Synthetic, no evidence credit.
+  reversibility: revisit
+  blocks: "WP-S-04 T-34 (the siren gap on a SoC stall); the warning argument for HE-07.1, HE-02.4 and HE-02.6"
+  decider: lead
+  figure: figures/dq-404.svg
+  caption: >-
+    Plant run F-04b with the real panda code: as built (red) and with a siren when the panda revokes (blue). The siren
+    moves the correction about 1 s earlier; at the curve bound the body still touches the lane line, inside the ODD it
+    does not. Driver, EPS and road are the plant's assumptions.
+  options:
+    - key: A
+      recommended: true
+      title: "Siren when the panda revokes because openpilot stopped"
+      detail: "Sound the existing siren when authority is revoked for missing command frames or heartbeat, not when the driver disengages. Cost: a change to the panda safety code and a new or changed TSR (the safety-concept session's), tests and a fault-injection case; differs from upstream panda."
+    - key: B
+      title: "Keep it silent and argue the drift is enough"
+      detail: "No code change. Cost: HE-07.1 keeps C3 with no warning measure; the driver corrects about 1 s later and the car drifts up to 7.3 m at the curve bound, which the safety case has to accept."
+    - key: C
+      title: "Warn through the car's own cluster instead"
+      detail: "Rely on what the stock Corolla shows when LKA frames stop. Cost: not known yet (it depends on the EPS behaviour M-02 measures); likely later and quieter than the siren, and outside our code."
+  sources: ["WP-S-04 T-34", "System FMEA F-04b row (TSR-408)", "WP-C-03 HE-07.1, HE-02.4, HE-02.6", "assurance/sim/results/silent-stall.md", "assurance/sim/README.md §3.7"]
   status: queued

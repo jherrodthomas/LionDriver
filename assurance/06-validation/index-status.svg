@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="426" viewBox="0 0 640 426" role="img" aria-labelledby="t d">
+<title id="t">06-validation: work products by gate and status</title>
+<desc id="d">Work products of 06-validation from WP-M-00 §3, by the gates they are needed for: WP-V-01 Safety validation plan, specification and report: G5, Draft; WP-V-02 SOTIF verification and validation strategy, validation targets: G2, Draft; WP-V-03 Evaluation of known hazardous scenarios: G4, Draft; WP-V-04 Evaluation of unknown hazardous scenarios: G5, Draft; WP-V-05 Fault injection test specification and report: G4, Draft; WP-V-06 Cybersecurity validation and penetration testing: G5, Draft; WP-V-07 Vehicle test operations and safety-driver procedures: G1, Draft.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
+      --amb:#c98500; --amb-bg:#fdf4dc; --ok:#2e9e6a; --ok2:#166534; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#1a1a19; --ink:#f0efec; --ink2:#c3c2b7; --ink3:#8d8c85; --grid:#33322f; --card:#232321;
+        --amb:#eda100; --amb-bg:#3a2f12; --ok:#3fb97d; --ok2:#2f9e5f; }
+}
+.bg { fill:var(--bg); }
+.h { font:600 21px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.tb { font:600 13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.g { font:600 13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.hair { stroke:var(--grid); stroke-width:1; }
+.lane { fill:var(--card); }
+.s-skel { fill:var(--bg); stroke:var(--ink3); stroke-width:1.4; stroke-dasharray:4 3; }
+.s-draft { fill:var(--amb); } .s-rev { fill:var(--amb-bg); stroke:var(--amb); stroke-width:1.6; }
+.s-appr { fill:var(--ok); } .s-base { fill:var(--ok2); }
+.s-na { fill:var(--bg); stroke:var(--grid); stroke-width:1.2; stroke-dasharray:2 2; }
+</style>
+<rect class="bg" width="640" height="426"/>
+<text x="24" y="34" class="h">06-validation: work products by gate</text>
+<text x="24" y="56" class="t2">WP-M-00 §3 (Validation): a chip at each gate the work product is needed for</text>
+<line x1="24" y1="70" x2="616" y2="70" class="hair"/>
+<text x="389.429" y="96" class="g" text-anchor="middle">G0</text>
+<text x="424.286" y="96" class="g" text-anchor="middle">G1</text>
+<text x="459.143" y="96" class="g" text-anchor="middle">G2</text>
+<text x="494" y="96" class="g" text-anchor="middle">G3</text>
+<text x="528.857" y="96" class="g" text-anchor="middle">G4</text>
+<text x="563.714" y="96" class="g" text-anchor="middle">G5</text>
+<text x="598.571" y="96" class="g" text-anchor="middle">G6</text>
+<rect x="16" y="106" width="608" height="40" rx="4" class="lane"/>
+<text x="24" y="122" class="tb">WP-V-01</text>
+<text x="24" y="138" class="t2">Safety validation plan, specification and report</text>
+<rect x="550.3" y="119" width="26.9" height="14" rx="7" class="s-draft"/>
+<text x="24" y="162" class="tb">WP-V-02</text>
+<text x="24" y="178" class="t2">SOTIF verification and validation strategy, val…</text>
+<rect x="445.7" y="159" width="26.9" height="14" rx="7" class="s-draft"/>
+<rect x="16" y="186" width="608" height="40" rx="4" class="lane"/>
+<text x="24" y="202" class="tb">WP-V-03</text>
+<text x="24" y="218" class="t2">Evaluation of known hazardous scenarios</text>
+<rect x="515.4" y="199" width="26.9" height="14" rx="7" class="s-draft"/>
+<text x="24" y="242" class="tb">WP-V-04</text>
+<text x="24" y="258" class="t2">Evaluation of unknown hazardous scenarios</text>
+<rect x="550.3" y="239" width="26.9" height="14" rx="7" class="s-draft"/>
+<rect x="16" y="266" width="608" height="40" rx="4" class="lane"/>
+<text x="24" y="282" class="tb">WP-V-05</text>
+<text x="24" y="298" class="t2">Fault injection test specification and report</text>
+<rect x="515.4" y="279" width="26.9" height="14" rx="7" class="s-draft"/>
+<text x="24" y="322" class="tb">WP-V-06</text>
+<text x="24" y="338" class="t2">Cybersecurity validation and penetration testing</text>
+<rect x="550.3" y="319" width="26.9" height="14" rx="7" class="s-draft"/>
+<rect x="16" y="346" width="608" height="40" rx="4" class="lane"/>
+<text x="24" y="362" class="tb">WP-V-07</text>
+<text x="24" y="378" class="t2">Vehicle test operations and safety-driver proce…</text>
+<rect x="410.9" y="359" width="26.9" height="14" rx="7" class="s-draft"/>
+<rect x="24" y="397" width="26" height="14" rx="7" class="s-draft"/>
+<text x="56" y="408" class="t2">Draft</text>
+</svg>

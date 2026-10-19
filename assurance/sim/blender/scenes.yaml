@@ -15,7 +15,8 @@
 #                 named assumptions of export_scene.py (t_r, t_r_min, a_item_max, a_item_min, a_driver_full, a_pcs, ...)
 #   actors        other road users: kind (car, truck, pedestrian, cyclist), lane or d, ds_m (start ahead of the ego
 #                 at t = 0, body centres), speed_kph (negative: oncoming), accel, lateral, source (kinematic or
-#                 illustrative), critical (the gap and TTC on the dashboard are to it)
+#                 illustrative), critical (the gap and TTC on the dashboard are to it), figure (pedestrian: male or
+#                 female, library/people/; default: picked from the name and the scene ID)
 #   environment   the static world, from library/environments.yaml (road cross-section, geometry, scenery, props,
 #                 the OS it represents, the conditions it allows)
 #   conditions    W01 (default) .. W06 or TC-01, from library/conditions.yaml: sky, sun, wet, rain, snow, fog, night
@@ -889,6 +890,7 @@ scenes:
       - {name: parked car, kind: car, d: -2.85, ds_m: 45, source: illustrative, paint: [0.2, 0.2, 0.25]}
       - name: pedestrian
         kind: pedestrian
+        figure: male
         d: -3.2
         ds_m: 30
         critical: true

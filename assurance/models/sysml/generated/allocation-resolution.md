@@ -12,11 +12,11 @@ This report is informational: it does not fail CI. It changes, and CI asks for i
 |---|---|---|---|---|
 | fsr | 58 | 57 | 0 | 1 |
 | hwsr | 46 | 3 | 0 | 43 |
-| swsr | 135 | 125 | 0 | 10 |
+| swsr | 136 | 126 | 0 | 10 |
 | tsr | 127 | 127 | 0 | 0 |
-| **all** | **366** | **312** | **0** | **54** |
+| **all** | **367** | **313** | **0** | **54** |
 
-166 distinct `allocated_to` values.
+167 distinct `allocated_to` values.
 
 ## Not resolved (51 values)
 

@@ -3,7 +3,8 @@
 scene. Every scene is built from the library (environment, condition, traffic) with a condition its environment
 allows, a plant case drives the geometry its environment has, the library's codes match the HARA, and a variant
 shows its base scene's motion and outcome under another condition. The street furniture of an urban scene stays on
-its pavement and clear of every pedestrian and cyclist, intersection, traffic light and crosswalk."""
+its pavement and clear of every pedestrian and cyclist, intersection, traffic light and crosswalk. The committed
+pedestrian figures carry their walk and clothes slots."""
 
 from __future__ import annotations
 
@@ -140,6 +141,24 @@ class TestScenes(unittest.TestCase):
           self.assertGreater(abs(it["s"] - s0), half, (sc["id"], it))                         # not in the junction
         for cs in sc["road"].get("crosswalks") or []:
           self.assertGreater(abs(it["s"] - cs), street_layout.CLEAR_CROSSWALK_M, (sc["id"], it))
+
+  def test_pedestrian_figures(self):
+    """The committed CC0 figures carry the walk, the rig and the clothes slots hazard_scene.py recolours."""
+    import json
+    import struct
+    people = export_scene.HERE / "library" / "people"
+    for name in ("pedestrian_male.glb", "pedestrian_female.glb"):
+      blob = (people / name).read_bytes()
+      self.assertEqual(blob[:4], b"glTF", name)
+      gltf = json.loads(blob[20:20 + struct.unpack("<I", blob[12:16])[0]])
+      self.assertIn("Walk_Loop", [a.get("name") for a in gltf.get("animations", [])], name)
+      self.assertEqual(len(gltf.get("skins", [])), 1, name)
+      self.assertLessEqual({"shirt", "trousers", "shoes"}, {m["name"] for m in gltf["materials"]}, name)
+      self.assertLess(len(blob), 3_000_000, name)
+    for s in self.raw:
+      for a in s.get("actors", []):
+        if "figure" in a:
+          self.assertIn(a["figure"], ("male", "female"), s["id"])
 
   def test_kinematic_values_resolve(self):
     self.assertEqual(export_scene.value("t_r"), 1.5)

@@ -27,6 +27,7 @@ from xml.sax.saxutils import escape
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import stpa_ls_scenes
 import stpa_scenes
 
 HERE = Path(__file__).resolve().parent
@@ -819,7 +820,7 @@ def fig_5_5(S):
   d.arrow(d.port("q", "r"), d.port("miss", "l"), "", "fix")
   d.fail(100, 130, "LS-09", "sunglasses, low light:\nfalls back to 25 s")
   d.fail(645, 135, "LS-35", "", "end")
-  d.note(20, 310, "From inattention to the slow-down: about 18 s (vision) or 30 s (wheel-touch). policy.py:31-44, 418-437; controlsd.py:235; longitudinal_planner.py:84.")
+  d.note(20, 310, "From inattention to the slow-down: about 18 s (vision) or 30 s (wheel-touch). policy.py:31-44, 418-437; controlsd.py:236; longitudinal_planner.py:84.")
   return d.render("Figure 5-5", 1180, 330, "Figure 5-5. The driver stops responding: LS-09, LS-35 (WP-A-05 §5)",
                   "Driver camera, monitoring policy, alert levels with their times, forced deceleration and the stop in the lane.")
 
@@ -986,6 +987,7 @@ def build() -> dict[str, str]:
   S = load()
   out = {name: fn(S) for name, fn in FIGURES.items()}
   out.update(stpa_scenes.sheets(S, sys.modules[__name__]))  # Figures 4-2 … 4-4, one scene sheet per controller
+  out.update(stpa_ls_scenes.sheets(S, sys.modules[__name__]))  # Figures 5-7 … 5-10, the loss scenario cards
   return out
 
 

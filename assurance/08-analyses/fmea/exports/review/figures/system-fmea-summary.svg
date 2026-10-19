@@ -27,9 +27,9 @@ text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helveti
 <rect x="24" y="52" width="832" height="30" rx="4" class="frame"/>
 <text x="24.0" y="124.0" class="h" font-size="24" font-weight="700" text-anchor="start">90</text>
 <text x="24.0" y="146.0" class="mut" font-size="12" text-anchor="start">causes with priority H</text>
-<text x="232.0" y="124.0" class="h" font-size="24" font-weight="700" text-anchor="start">87</text>
+<text x="232.0" y="124.0" class="h" font-size="24" font-weight="700" text-anchor="start">86</text>
 <text x="232.0" y="146.0" class="mut" font-size="12" text-anchor="start">H without a completed action</text>
-<text x="440.0" y="124.0" class="acc" font-size="24" font-weight="700" text-anchor="start">20 of 23</text>
+<text x="440.0" y="124.0" class="acc" font-size="24" font-weight="700" text-anchor="start">19 of 23</text>
 <text x="440.0" y="146.0" class="mut" font-size="12" text-anchor="start">actions still open</text>
 <text x="648.0" y="124.0" class="ink" font-size="24" font-weight="700" text-anchor="start">S 10</text>
 <text x="648.0" y="146.0" class="mut" font-size="12" text-anchor="start">highest severity</text>
