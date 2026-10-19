@@ -781,8 +781,9 @@
       title: "Wait for an assessor before setting them"
       detail: "No rework risk. Cost: no controllability tests until an assessor is engaged, so the HARA I3 review and G1 stay blocked."
   sources: ["assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md OI-3"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: cc0c55e, record: "WP-C-08 v0.7 §7.1, criteria frozen by the lead 2026-10-19 (#265)", at: 2026-10-19}
 
 - id: DQ-035
   question: "Should the threat analysis's financial-damage ratings stay at their conservative placeholders?"
@@ -4281,8 +4282,9 @@
       title: "Keep the stand-in table for now"
       detail: "No cost now. The monitoring-and-response results stay provisional, and any later assessor will ask for the official table."
   sources: ["assurance/08-analyses/fmea/rating-tables.md", "assurance/08-analyses/fmea/msr-plan.md"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g, note: "The inbox answer was C (02:14Z); the lead then sent pictures of the FMEA-MSR AP matrix for S 9 and S 10 in chat, which is option A. S 1-8 pages still to come."}
+  applied: {ref: bf635c0, record: "rating-tables §7.4 RT-3, fmea_lint AP_MSR_HANDBOOK (S 9-10); S 1-8 stay provisional (#267)", at: 2026-10-19}
 
 - id: DQ-208
   question: "How much of your time goes to LionDriver, and from what date should the schedule count?"
