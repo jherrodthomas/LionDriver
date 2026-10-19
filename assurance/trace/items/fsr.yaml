@@ -626,7 +626,7 @@
   parents: [SG-07]
   allocated_to: "E-01"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Not implemented: on `stockAeb` the item only alerts and keeps its longitudinal request. New in v0.12"
+  baseline_impl: "Partial: the host request is capped at ≤ 0 m/s² while `stockAeb` is set (`c045874`, #292; unit-tested); the `0x343` command follows after the opendbc rate limit (≈ 0.4 s) and may keep a small positive term (TSR-713); not verified on the vehicle. New in v0.12"
   status: proposed
   source: WP-C-04
 
