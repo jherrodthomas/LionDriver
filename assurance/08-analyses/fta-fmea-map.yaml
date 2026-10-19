@@ -614,12 +614,14 @@ events:
     ref: AOU-05R
   - id: BE-3.13
     class: systematic_sw
-    fmea: [SFM-008, SWF-052, SWF-040, SFM-013, SWF-030, SFM-017, SWF-031]
+    fmea: [SFM-008, SWF-052, SWF-040, SFM-013, SWF-030, SFM-017, SWF-031, SWF-057]
     note: >-
       SFM-008 (positive acceleration requested when not engaged, local effect); SWF-052.C1 (CarController takes pcm_accel_cmd
       with no longActive gate; direction-neutral cause, but the mode is worded for negative acceleration and cites HZ-006 only);
       SWF-040.C1 (controlsd acts on a stale selfdriveState.enabled); SFM-013 and SWF-030 (host engaged without a driver
-      request, HZ-010); SFM-017 and SWF-031 (host does not disengage on brake, the "after driver brake" half of G3.3, HZ-008)
+      request, HZ-010); SFM-017 and SWF-031 (host does not disengage on brake, the "after driver brake" half of G3.3, HZ-008);
+      SWF-057.C1 (a carState field decoded wrong, e.g. a spurious cruise enable, feeds the host engagement state, as in
+      SG-01 BE-1.15; added in WP-A-04 v1.12 for HE-03.7, DQ-364 A)
 
   # ---- SG-05 tree (§6)
   - id: BE-5.01
@@ -950,25 +952,6 @@ not_in_fta:
     goal: SG-03
     kind: justified
     reason: "As for SG-01: an update to an unapproved release replaces the analysed item. Controlled by WP-P-10 and the update policy (DQ-075); the envelope part is BE-1.09."
-  - fm: SWF-055
-    goal: SG-03
-    kind: tree_gap
-    reason: >-
-      Reaches SG-03 since DQ-364 A routed HZ-010 (unintended engagement) to SG-03 (WP-C-03 HE-03.7). Authority returning
-      without a new driver engagement is false authority, which G3.3.1 takes from SG-01 as BE-1.12…BE-1.14; the SG-01 tree
-      holds this mode in BE-1.25, which G3.3.1 does not borrow. For the FTA owner to add BE-1.25 to G3.3.1 or justify
-      leaving it out.
-  - fm: SWF-089
-    goal: SG-03
-    kind: tree_gap
-    reason: As SWF-055 (authority granted with cruise main off through a left-open engagement window; BE-1.25 in the SG-01 tree, fixed in the reference build at BL-006).
-  - fm: SWF-057
-    goal: SG-03
-    kind: tree_gap
-    reason: >-
-      Reaches SG-03 through HZ-010 since DQ-364 A. A carState field decoded wrong (e.g. a spurious cruise enable) feeds the
-      host's engagement state; the SG-01 tree has it in BE-1.15 next to SFM-013 and SWF-030, while the SG-03 counterpart
-      BE-3.13 lists SFM-013 and SWF-030 but not SWF-057. For the FTA owner to add it to BE-3.13 or justify leaving it out.
   - fm: SWF-054
     goal: SG-03
     kind: justified

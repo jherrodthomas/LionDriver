@@ -4,11 +4,11 @@
 |---|---|
 | Work product | WP-V-02 SOTIF verification and validation strategy, validation targets |
 | Standard reference | ISO 21448:2022 §9 (V&V strategy, validation targets), Annex C (informative, validation target derivation); ISO/PAS 8800:2024 (AI V&V); ASPICE 4.0 VAL.1 |
-| Version | 0.10 (§3 step 3: confidence level C = 95 % one-sided for every target and for release criterion R-08, DQ-057 A; 2026-10-19). 0.9 (§6: TC-34, stock PCS interaction, covered by KS-20; inputs FI-01…FI-23 and TC-01…TC-34; 2026-10-18). 0.8 (§4.4: the rule is implemented in `policy.py` (SWSR-634); its unit tests run the check (a) speed profiles; 2026-10-17). 0.7 (§4.4 added: validation of the speed-dependent wheel-touch reminder timing, TSR-634 (DQ-077 A); VT-08 covers DMP-05; 2026-10-17). 0.6 (the lead's decisions: simulation credit per scenario family once its fidelity case is approved, DQ-139; CARLA not now, revisit at G3, DQ-261; §5.3, §5.4, OI-4; 2026-10-16). 0.5.1 (§5.3.1 simulator status brought up to date by the simulation session at the SOTIF session's request: bridge PR #124, scenario files, plant model; no plan or target changed; 2026-10-16). 0.5 (ODD speed bound 110 km/h, decision register DQ-260: §3.3, §3.4, §4; 2026-10-16). 0.4 (§5.3 fidelity-case plan written: scenario families, fidelity elements, comparison, synthetic-data labelling for DSR-12; §5.4 CARLA assessed, decision queued as DQ-261; 2026-10-16). 0.3 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; controllability pass limits fixed before testing, DQ-042; public-road limits, DQ-046; no uploads to comma, DQ-084; 2026-10-16). 0.2 (Figure 4-1 added, generated from §3.1, §3.2 and §4; 2026-10-13). 0.1 |
+| Version | 0.11 (targets are frozen by the project lead in a dated record once the B1 crash data replaces the illustrative rates, with a later assessor review, DQ-096 B; no SOTIF campaign counts before; §3 step 1 holds back a 10 % reserve for unknown scenarios, proposed with WP-V-04 R3, DQ-108; 2026-10-19). 0.10 (§3 step 3: confidence level C = 95 % one-sided for every target and for release criterion R-08, DQ-057 A; 2026-10-19). 0.9 (§6: TC-34, stock PCS interaction, covered by KS-20; inputs FI-01…FI-23 and TC-01…TC-34; 2026-10-18). 0.8 (§4.4: the rule is implemented in `policy.py` (SWSR-634); its unit tests run the check (a) speed profiles; 2026-10-17). 0.7 (§4.4 added: validation of the speed-dependent wheel-touch reminder timing, TSR-634 (DQ-077 A); VT-08 covers DMP-05; 2026-10-17). 0.6 (the lead's decisions: simulation credit per scenario family once its fidelity case is approved, DQ-139; CARLA not now, revisit at G3, DQ-261; §5.3, §5.4, OI-4; 2026-10-16). 0.5.1 (§5.3.1 simulator status brought up to date by the simulation session at the SOTIF session's request: bridge PR #124, scenario files, plant model; no plan or target changed; 2026-10-16). 0.5 (ODD speed bound 110 km/h, decision register DQ-260: §3.3, §3.4, §4; 2026-10-16). 0.4 (§5.3 fidelity-case plan written: scenario families, fidelity elements, comparison, synthetic-data labelling for DSR-12; §5.4 CARLA assessed, decision queued as DQ-261; 2026-10-16). 0.3 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; controllability pass limits fixed before testing, DQ-042; public-road limits, DQ-046; no uploads to comma, DQ-084; 2026-10-16). 0.2 (Figure 4-1 added, generated from §3.1, §3.2 and §4; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
-| Reviewer(s) | TBD (I1); validation targets reviewed by the external assessor (D-06, [WP-M-08 §10](../01-management/WP-M-08-sotif-plan.md)) |
+| Reviewer(s) | TBD (I1); validation targets frozen by the project lead (DQ-096 B) and reviewed later by an external assessor (D-06, [WP-M-08 §10](../01-management/WP-M-08-sotif-plan.md)) |
 | Approver | Project maintainer (acting safety manager, SOTIF lead) |
 | Baseline | `8b8c6ae` |
 
@@ -35,7 +35,7 @@ The acceptance criteria are those of [WP-C-05 §5](../02-concept/WP-C-05-sotif-h
 
 For each SOTIF hazardous behaviour SH-nn:
 
-1. **Harm budget.** Allocate to each SH group of WP-C-05 §5.2 step 3 (lateral SH-01/02/10; longitudinal SH-03/04/06/11; mode and override SH-05/09; SH-08) a share `k` of the road-class-specific B1 harm rate `λ_B1` for the relevant harm class (injury crash or fatality), for ODD-H (ODD-A is no longer claimed, DQ-023):  `λ_harm,SH ≤ k · λ_B1`.
+1. **Harm budget.** Allocate to each SH group of WP-C-05 §5.2 step 3 (lateral SH-01/02/10; longitudinal SH-03/04/06/11; mode and override SH-05/09; SH-08) a share `k` of the road-class-specific B1 harm rate `λ_B1` for the relevant harm class (injury crash or fatality), for ODD-H (ODD-A is no longer claimed, DQ-023):  `λ_harm,SH ≤ k · λ_B1`. Proposed: the targets use 90 % of each group's share. The other 10 % is a reserve for scenarios not yet known, which the stop rule R3 of [WP-V-04](WP-V-04-sotif-unknown-scenarios.md) §5.4 checks (decision register DQ-108; the value goes to the lead for approval as DQ-262).
 2. **Hazardous-behaviour rate.** Divide by the probability that the hazardous behaviour, once it occurs, leads to harm: `P(harm | HB) = P(E-situation) · P(not controlled) · P(severity class)`. Each factor needs evidence: P(E-situation) from LionDriver drive logs (§3.4), P(not controlled) from the controllability tests in [WP-V-01](WP-V-01-safety-validation.md) (§3.3), and P(severity class) from crash statistics (§3.5). A factor without evidence is set to 1. Some SHs cause harm in more than one situation s with different severity, such as SH-03 following (OS-05) and approaching (OS-07). For those, the probability is summed over the situations: `P(harm | HB) = Σ_s P(E_s) · P(not controlled)_s · P(severity class)_s`.
    `λ_HB,SH ≤ k · λ_B1 / P(harm | HB)`
 3. **Demonstration size.** For a zero-failure demonstration at confidence C, the exposure needed is
@@ -154,7 +154,7 @@ The rule:
    - the curve and the impact speed used;
    - the upper bound.
 
-   The values are part of the target set the assessor approves (OI-3).
+   The values are part of the target set the project lead freezes (OI-3).
 5. **Consistency with the HARA.** A value that implies low severity for a hazardous event rated S3 is reported to the HARA owner and explained before it is used.
 
 What this gives: for the S2 collisions (sideswipe; rear impacts at moderate speed difference, struck from behind), fatal crashes are well under 1 % of police-reported crashes of these types, so the factor can earn about two orders of magnitude for a fatality budget. For an injury-crash budget it earns little. For the S3 collisions at highway speed (head-on, high-speed rear-end into stationary traffic, barrier impact), the factor is close to 1 for either budget. Their targets therefore rest on P(E-situation) and P(not controlled), or on narrowing the ODD. No FARS/CRSS value has been extracted yet (OI-8). The ratios are computed by [`tools/severity/`](../../tools/severity/README.md).
@@ -177,7 +177,7 @@ SH-04 (struck from behind after phantom braking, OS-08, HE-04.1) is simulated:
 - **The ego** brakes at the envelope minimum (−3.5 m/s²) to a stop, because it is not controlled.
 - **The follower** at a time gap of 0.5–1.5 s holds its speed for its reaction time and then brakes. The worst credible follower is taken as reacting after 2.0 s and braking at 3.0 m/s², below the ego's deceleration. These two values are assumptions; `risk_curve.py --sensitivity` shows how the impact speed depends on them.
 - **The result** is impacts at 27–35 km/h relative speed and a fatal-crash bound of **0.053 in ODD-H and 0.040 in ODD-A**, with a fully loaded heavy truck behind (0.008 and 0.006 car-to-car). This is a factor of about 19–25 of credit, matching the HARA's S2 rating of HE-04.1.
-- **Not covered:** a follower that never brakes before impact is outside this bound. Whether it is credible within OS-08 is for the assessor to decide (OI-3).
+- **Not covered:** a follower that never brakes before impact is outside this bound. Whether it is credible within OS-08 is decided when the targets are frozen (OI-3) and checked in the later assessor review.
 - **Rear impacts:** the SH-04 bound is driven by the ego's own occupants, struck from behind (with a heavy truck behind, 0.011 per ego occupant against 0.000 for the truck driver). The Joksch curve's use for rear-struck occupants is checked under the curve-constant check below and is conservative.
 
 SH-01 and SH-02 (lane departure) are split by collision, and each part counts as its own situation in step 2:
@@ -198,7 +198,7 @@ SH-10 (lane change into an occupied lane, HE-02.5) is deliberately **not** mappe
 - **Contact check (`risk_curve.py --sh10`).** This checks that an SH-10 contact belongs to the sideswipe class.
   - **Set-up.** The lane change accelerates sideways at the controller's 3.0 m/s² limit over the whole distance to contact, with no S-curve easing. That distance is the two widest lane margins, 2 × 1.06 m (WP-S-04 §3.1). Ego speeds run from openpilot's lane-change minimum, 20 mph (`desire_helper.py`), to 120 km/h.
   - **Result.** The lateral closing speed is at most 13 km/h, about 7 km/h of Δv per car. The contact angle is 6–12° at 60–120 km/h, and 22° at the 20 mph minimum.
-  - **Conclusion.** That is the low-angle, low-lateral-speed contact of a same-direction sideswipe, not the near-perpendicular impact coded as an angle crash. It supports item 3's condition, which the assessor is to accept (OI-3).
+  - **Conclusion.** That is the low-angle, low-lateral-speed contact of a same-direction sideswipe, not the near-perpendicular impact coded as an angle crash. It supports item 3's condition, which is accepted when the targets are frozen (OI-3) and checked in the later assessor review.
 
 SH-11 (no reaction to a pedestrian or cyclist, HE-01.3, HE-03.2) moves from the FARS/CRSS ratio to a curve:
 - **Why a curve.** There is no braking before impact, so the crash is worse than the average pedestrian crash (item 3).
@@ -307,7 +307,14 @@ SH-11 (no reaction to a pedestrian or cyclist, HE-01.3, HE-03.2) moves from the 
 
 **Speed bound.** The derivations above and in §4.3 were made at the earlier ODD bound of 120 km/h. They are kept, and stay conservative for the 110 km/h bound (DQ-260): stopping distances, impact speeds and the severity bounds all grow with speed. The departure angles of SH-01/02 grow as speed falls, but the range given already covers 90–120 km/h.
 
-Targets are **proposals**: numeric values are placeholders for the assessor review and WP-C-05 acceptance criteria (OI-3). "Demonstration" names the primary method; §5 defines the methods.
+Targets are **proposals** until they are frozen (OI-3). The rule was decided 2026-10-19 by the project lead, decision register DQ-096 option B:
+
+- Claude updates the derivations once the B1 crash data replaces the illustrative rates of §3.1 (OI-2).
+- The project lead then freezes the targets in a dated record.
+- An assessor reviews them later.
+- Evidence from a SOTIF test campaign (WP-V-03, WP-V-04) counts only if it was collected after the freeze.
+
+A later change to a frozen target needs a new dated record, and evidence collected before that change is re-assessed against it. "Demonstration" names the primary method; §5 defines the methods.
 
 | ID | SH | Quantity | Proposed target | Derivation | Demonstration | Achievable? |
 |---|---|---|---|---|---|---|
@@ -367,7 +374,7 @@ The time share is still reported, as a KPI without a pass value.
 - **a_lim = 3.0 m/s².** This sits between the planner's comfort braking (COMFORT_BRAKE 2.5 m/s²) and the envelope minimum (3.5 m/s²). The 0.5 m/s² left before the envelope minimum covers the AIR-03 distance error above.
 - **t_r = 1.0 s.** This is the AIR-03 detection latency (0.5 s) plus the planning-to-actuation share (0.5 s), as above.
 
-At the ODD speed bound, the required report distance is 33.3 + 33.3² / 6 ≈ 218 m. The 180 m given as an example in AIR-04 is for 30 m/s. Both values are confirmed. They remain proposals until the assessor approves them (OI-3).
+At the ODD speed bound, the required report distance is 33.3 + 33.3² / 6 ≈ 218 m. The 180 m given as an example in AIR-04 is for 30 m/s. Both values are confirmed. They remain proposals until the targets are frozen (OI-3).
 
 ### 4.1 (TBC) values of WP-C-11 and the targets that confirm them
 
@@ -576,7 +583,7 @@ Each functional modification decided in [WP-C-07](../02-concept/WP-C-07-sotif-fu
 |---|---|
 | OI-1 | Keep the §6 TC table in step with WP-C-06 revisions (new TCs need a KS entry) |
 | OI-2 | Select B1 data set and filter to the ODD; replace the illustrative rates of §3.1 (shared with WP-M-08 OI-1) |
-| OI-3 | Approve numeric targets VT-01…VT-15 with the assessor before collecting evidence, together with the derivations of §4.2 and §4.3 |
+| OI-3 | Decided 2026-10-19 (DQ-096 option B): the project lead freezes VT-01…VT-15, the derivations of §4.2 and §4.3 and the values marked "approved with the targets" in a dated record, once the B1 data (OI-2) has replaced the illustrative rates; an assessor reviews them later. Open: update the derivations with the B1 data, then the freeze. SOTIF campaigns wait for it |
 | OI-4 | Execute the fidelity-case plan of §5.3 (matched M8 points per family, plant constants from VS-VAL-08 and lateral step tests, radar comparison); credit per family once its case is approved (DQ-139 option A). CARLA: not now, revisit at G3 (§5.4, DQ-261 option A) |
 | OI-5 | Define the surrogate-to-harm argument for VT-04 and the takeover-based surrogates (WP-M-08 OI-8) |
 | OI-7 | Fit the rear-facing camera now listed in the [WP-V-01](WP-V-01-safety-validation.md) §2 equipment (procurement: WP-V-01 OI-6), and annotate following vehicles from its recordings, so that P(E-situation) for SH-04 (following vehicle, OS-08) is measured (§3.4). Blocks driven before it is fitted give no SH-04 data |

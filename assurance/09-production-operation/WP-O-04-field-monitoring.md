@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-O-04 Field monitoring (safety, SOTIF and AI) and crash reporting |
 | Standard reference | ISO 26262-2:2018 §7 (safety management after release: field monitoring, anomaly handling); ISO 21448:2022 §13 (operation phase activities, field monitoring); ISO/SAE 21434:2021 §8 (cybersecurity monitoring, by reference to WP-O-05); ISO/PAS 8800:2024 (AI system operation and continuous assurance); NHTSA Standing General Order 2021-01 as amended (model, see §8); UL 4600 (informative: field feedback) |
-| Version | 0.1 |
+| Version | 0.2 (KPI thresholds are frozen with the WP-V-02 targets by the project lead, with a later assessor review, DQ-096 B; OI-5; 2026-10-19). 0.1 |
 | Status | Draft |
 | ASIL / scope | All safety goals (SG-01…SG-08); SOTIF; AI; CS interface |
 | Author | Assurance team (initial draft) |
@@ -120,7 +120,7 @@ A T3 event becomes T2 when its rate exceeds the threshold in §5 or a new patter
 
 ## 5. KPIs and thresholds
 
-The thresholds below are **proposals** (OI-5). Where a validation target of [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) §4 sets a rate, the threshold is derived from it. Where none does, the KPI is reported against a baseline from development driving, which does not exist yet. Both the targets (WP-V-02 OI-3) and these derivations wait for the assessor. A KPI breach is a problem report, not an automatic field action.
+The thresholds below are **proposals** (OI-5). Where a validation target of [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) §4 sets a rate, the threshold is derived from it. Where none does, the KPI is reported against a baseline from development driving, which does not exist yet. The project lead freezes these derivations with the targets (WP-V-02 OI-3), once the B1 crash data has replaced the illustrative rates; an assessor reviews them later (decided 2026-10-19 by the project lead, decision register DQ-096 option B). A KPI breach is a problem report, not an automatic field action.
 
 | KPI | Definition | Proposed threshold | Derivation | Linked claim |
 |---|---|---|---|---|
@@ -225,7 +225,7 @@ Every field action is recorded with: trigger, affected releases and installation
 | OI-2 | Decide the post-release data path (manual vs. LionDriver endpoint) | G5 |
 | OI-3 | Privacy and consent review (data categories, consent text, retention) | G1 |
 | OI-4 | Event extraction: the script exists (`tools/field_monitoring/`, §4.1). Still open: run it on the first recorded development drives and check each MON class against a manual review of the same drives; then score AS-08 curvature divergence and AS-09 once WP-V-04 gives their thresholds (evaluation-set percentiles) | G1 (for development driving) |
-| OI-5 | KPI thresholds: proposed in §5 from the validation targets, with the BREACH/WATCH/MET/OPEN rule. Still open: assessor review of the proposals (with WP-V-02 OI-3), and baselines from development drives for K-04, K-05 and K-08 | G4 |
+| OI-5 | KPI thresholds: proposed in §5 from the validation targets, with the BREACH/WATCH/MET/OPEN rule. Approval decided 2026-10-19 (DQ-096 option B): frozen by the project lead with the WP-V-02 targets (WP-V-02 OI-3), assessor review later. Still open: the freeze itself, and baselines from development drives for K-04, K-05 and K-08 | G4 |
 | OI-6 | SGO and Part 573 applicability: assessed by the project without legal review (DQ-087 B, item-definition IOI-005): no SGO duty unless served; Part 573 treated as not applicable while the item runs only on the reference vehicle. Recheck before release to other users | G5 |
 | OI-7 | Establish a field-action notification channel with confirmed receipt | G5 |
 | OI-8 | Define crash detection criteria from IMU/`carState` for MON-14 (automatic flagging). Interim, accepted by the project maintainer on 2026-10-13: `carState.aEgo` < −6 m/s² flags a crash candidate for review; it is a placeholder, not a validated criterion | G4 |
