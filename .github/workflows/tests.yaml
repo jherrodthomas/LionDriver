@@ -108,6 +108,12 @@ jobs:
     - run: ./tools/op.sh setup
     - name: Build openpilot
       run: scons
+    # LionDriver: the runner below collects openpilot/ only, so the reference car's controller tests in the pinned
+    # opendbc fork run here, each named in the log (change-2026-10-19-pin-e233362 OI-5)
+    - name: Run opendbc Toyota car tests
+      timeout-minutes: 5
+      working-directory: opendbc_repo
+      run: ../.venv/bin/python -m unittest discover -v -s opendbc/car/toyota/tests -t .
     - name: Run unit tests
       timeout-minutes: ${{ contains(runner.name, 'nsc') && 2 || 20 }}
       env:
