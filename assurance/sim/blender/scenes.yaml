@@ -946,6 +946,7 @@ scenes:
   # row exactly. Synthetic (DSR-12), no evidence credit.
   - id: ec-11-lane-change-frozen-overshoot
     he: HE-02.5
+    variants: [{conditions: W06, traffic: dense}]
     edge_case: EC-11
     case: F-03
     case_overrides: {road: straight, speed_kph: 80.0, t_fault: 7.069, duration: 8.0, lane_change: 6.0, lane_change_s: 3.96}
@@ -964,6 +965,7 @@ scenes:
 
   - id: ec-12-lane-change-stall-exit
     he: HE-02.5
+    variants: [{conditions: W04, traffic: dense}]
     edge_case: EC-12
     case: F-04b
     case_overrides: {road: "curve@0.490000", t_fault: 8.13, duration: 8.0, lane_change: 6.0, lane_change_s: 3.0}
@@ -981,6 +983,7 @@ scenes:
 
   - id: ec-03-frozen-curve-exit
     he: HE-02.3
+    variants: [{conditions: W06, traffic: dense}]
     edge_case: EC-03
     case: F-03
     case_overrides: {road: "arc@1.460000:144.400", speed_kph: 92.1, t_fault: 15.222, duration: 8.0}
@@ -997,6 +1000,7 @@ scenes:
 
   - id: ec-04-stall-curve-tunnel
     he: HE-02.4
+    variants: [{conditions: W04, traffic: dense}]
     edge_case: EC-04
     case: F-04b
     case_overrides: {road: "arc@1.610000:240.400", speed_kph: 97.4, t_fault: 10.322, duration: 8.0}
@@ -1013,6 +1017,7 @@ scenes:
 
   - id: ec-18-wrong-direction-correction
     he: HE-01.2
+    variants: [{conditions: W06, traffic: dense}]
     edge_case: EC-18
     case: F-01b
     case_overrides: {road: "curve@1.980000", speed_kph: 83.3, t_fault: 7.0, duration: 10.0}
@@ -1029,6 +1034,7 @@ scenes:
 
   - id: ec-20-brakes-instead-of-steering
     he: HE-01.2
+    variants: [{conditions: W04, traffic: dense}]
     edge_case: EC-20
     case: F-01b
     case_overrides: {road: "curve@1.900000", t_fault: 7.0, duration: 10.0}
@@ -1044,6 +1050,7 @@ scenes:
 
   - id: ec-24-silent-stall-r-odd
     he: HE-07.1
+    variants: [{conditions: W06, traffic: dense}]
     edge_case: EC-24
     case: F-04b
     case_overrides: {road: "curve@2.405457", speed_kph: 107.9, lane_width: 3.54, t_fault: null, duration: 8.0}
@@ -1060,6 +1067,7 @@ scenes:
 
   - id: ec-26-narrow-lane-truck-hardover
     he: HE-01.2
+    variants: [{conditions: W04, traffic: dense}]
     edge_case: EC-26
     case: F-01b
     case_overrides: {road: "curve@1.350000", speed_kph: 82.3, lane_width: 3.18, t_fault: 7.0, duration: 8.0, ay_disturbance: -0.5}
@@ -1079,6 +1087,7 @@ scenes:
 
   - id: ec-27-crosswind-hardover-left
     he: HE-01.2
+    variants: [{conditions: W06, traffic: dense}]
     edge_case: EC-27
     case: F-01b
     case_overrides: {fault: hardover_left, road: "curve@0.090000", speed_kph: 87.7, lane_width: 3.22, t_fault: 7.0, duration: 8.0, ay_disturbance: 0.22}
