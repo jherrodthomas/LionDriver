@@ -5,7 +5,7 @@ One SVG per scenario, fig-sim-ks-<nn>-anim.svg, in the style of fig_sim_he.py's 
 road straightened with the ego held in place and the lane dashes streaming at its speed, the other road users where
 the replay puts them, a plot of the scenario's key quantity with a moving cursor, and the events lighting up as they
 happen. Motion: replay.run() at the parameter defaults, sampled every STEP. Cars: Kenney Racing Pack sprites (CC0),
-sized to the Dimensions in the xosc file; see assets/kenney-racing/SOURCES.md.
+sized to the Dimensions in the xosc file; pinned in assets/kenney-racing/sources.yaml.
 
 The ego only holds the speed its file gives it (the harness is meant to drive it), so in the scenarios with a slower
 or stopped vehicle ahead it would drive through it: those loops end before the bodies overlap.
@@ -18,7 +18,6 @@ from __future__ import annotations
 
 import base64
 import math
-import os
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -32,7 +31,7 @@ sys.path.insert(0, str(SCEN))
 import fig_sim_readme as fs  # noqa: E402  (style and SVG helpers)
 from fig_sim_readme import T, el, fmt, para, W  # noqa: E402
 
-SPRITES = Path(os.environ.get("KENNEY_RACING_DIR", HERE / "assets" / "kenney-racing"))
+SPRITES = HERE / "assets" / "kenney-racing"
 STEP = 0.1           # s between keyframes
 HOLD = 1.5           # s held on the last frame before the loop restarts
 LANE_W = 3.7
@@ -45,13 +44,10 @@ NAMES = {"stopped": "stopped car", "lead": "lead", "cutin": "cut-in car", "targe
 # sprite per role: (file, hue rotation in degrees applied by an SVG filter, 0 for none)
 EGO_SPRITE = ("car_red_1.png", 0)
 OTHER_SPRITES = [("car_blue_1.png", 0), ("car_green_1.png", 0), ("car_yellow_1.png", 0)]
-# without those colours (a partial copy of the pack), the red car hue-rotated: blue, green, yellow
-HUE_FALLBACK = [216, 120, 60]
 
 
 def other_sprite(i: int) -> tuple[str, int]:
-  f, hue = OTHER_SPRITES[i % len(OTHER_SPRITES)]
-  return (f, hue) if (SPRITES / f).exists() else (EGO_SPRITE[0], HUE_FALLBACK[i % len(HUE_FALLBACK)])
+  return OTHER_SPRITES[i % len(OTHER_SPRITES)]
 
 
 def sprite_problems() -> list[str]:
@@ -262,8 +258,7 @@ def sprite_defs(roles: list[tuple[str, int]]) -> tuple[str, dict]:
   for f, hue in roles:
     if f not in seen:
       data = (SPRITES / f).read_bytes()
-      from PIL import Image  # size only
-      w, h = Image.open(SPRITES / f).size
+      w, h = int.from_bytes(data[16:20], "big"), int.from_bytes(data[20:24], "big")   # PNG IHDR
       seen[f] = (f"spr{len(seen)}", w, h)
       out.append(f'<image id="{seen[f][0]}" width="{w}" height="{h}" '
                  f'href="data:image/png;base64,{base64.b64encode(data).decode()}"/>')
