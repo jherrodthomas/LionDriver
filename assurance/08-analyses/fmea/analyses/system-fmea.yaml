@@ -115,6 +115,8 @@
 # the decided behaviour (zero acceleration request while stockAeb is set). Not implemented at BL-006, so SFM-036 keeps its ratings.
 # Rev 0.30 (2026-10-19, RT-3, DQ-207 A): MSR AP from the AIAG-VDA handbook table for S 9-10 (rating-tables §7.4). Only the F 2
 # rows move: SFM-014.C3 and SFM-029.C4 MSR AP H -> M. Every other MSR row (S 10, F >= 3) keeps H. No S/O/D change.
+# Rev 0.31 (2026-10-19): SFM-ACT-020 completed for the host code by #292 (c045874, DQ-300 A); predicted rating only. The
+# change is not in BL-006, so SFM-036.C1 keeps O 8 D 10 until the next baseline. No S/O/D change.
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -123,7 +125,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.30"
+  revision: "0.31"
   status: draft
   baseline: BL-006
   rating_tables: RT-3
@@ -3708,7 +3710,8 @@ failure_modes:
     notes: >-
       Backs FTA BE-7.13 (WP-A-04 SG-07, F-17); the PCM side is UE-7.14 (AOU-04R). Cut set MCS-07.10 = {BE-7.13, UE-7.14}: at the
       baseline BE-7.13 is always true (C1), so the PCM assumption carries the goal alone. The lead decided the item stands down on a stock
-      PCS event (DQ-300 A, 2026-10-18: zero acceleration request while stockAeb is set); SFM-ACT-020 carries the change.
+      PCS event (DQ-300 A, 2026-10-18: zero acceleration request while stockAeb is set); SFM-ACT-020 carries the change; it is implemented in #292 (c045874) but not in BL-006, so the ratings stay until the
+      next baseline.
 
   # ----- F2 Longitudinal command frozen (FTA SG-03 BE-1.19, map note "no System FMEA mode for a frozen longitudinal request") -----
   - id: SFM-037
@@ -4045,10 +4048,23 @@ actions:
       only the host disengages (pandaTxBlocked)'
   - id: SFM-ACT-020
     kind: design_change
-    status: open
+    status: completed
     description: 'Stand down during stock AEB: while the car reports a stock PCS/AEB event (stockAeb), LionDriver requests zero
       acceleration, so stock AEB does not depend on PCM arbitration alone (AOU-04R). Lead decision DQ-300, option A (2026-10-18); the
-      AOU-04R vehicle test still runs. Code change with the implementation-spec session; not in BL-006, so SFM-036 keeps its ratings'
+      AOU-04R vehicle test still runs. SFM-036.C1; FTA BE-7.13'
+    evidence: 'Merged in jherrodthomas/LionDriver#292 (c045874): stock_aeb_stand_down in longcontrol.py, called from controlsd.py,
+      caps the acceleration target and the upper PID limit at 0 m/s² while stockAeb is set and keeps any braking request;
+      selfdrive/controls/tests/test_stock_aeb.py, 4 tests, run locally only (CI scons is blocked by the LFS 404, DQ-401; cite the CI
+      run once it re-runs). Impact record assurance/07-supporting/impact/change-2026-10-19-stock-aeb-stand-down.md. Host code only:
+      the opendbc Toyota controller still applies its rate limit and positive terms, so the command reaches 0 about 0.4 s after
+      +1.5 m/s² (impact OI-2); the parent TSR/SWSR are open (OI-1); not verified on the vehicle (OI-3, the AOU-04R test, also
+      checks that stockAeb is reported during a PCS event) and not reviewed independently. Not in BL-006, so SFM-036.C1 keeps
+      O 8 D 10 until the next baseline; the prediction below assumes targeted tests, not mutation-proven (rating tables D 8)'
+    revised:
+      severity: 10
+      occurrence: 5
+      detection: 8
+      ap: H
   - id: SFM-ACT-021
     kind: monitoring
     status: open
