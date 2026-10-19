@@ -1,0 +1,275 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1344" height="1472" viewBox="0 0 1344 1472" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">Figure 3-SG-08-1. SG-08: from the fault tree to the FMEA</title>
+<desc id="d">Figure 3-SG-08-1. SG-08: 14 events (backed 11, by design 0, external 2, unbacked 1); 12 FMEA modes reach SG-08 (in the tree 12, justified 0, tree gaps 0). Single points: BE-8.01: SFM-022, 3 causes, D 8–10, not detected; BE-8.02: SFM-022, 3 causes, D 8–10, not detected; BE-8.06: SWF-085, 2 causes, D 10, not detected; BE-8.07: SFM-023, SWF-061, 5 causes, D 8–9, not detected; BE-8.08: SWF-086, 2 causes, D 8–9, not detected; BE-8.10: SWF-062, SFM-025, 2 causes, D 9, not detected. BE-8.01 (DM model false negative: eyes off the road or eyes closed classified attentive) → SFM-022: Inattentive driver not detected; worst cause SFM-022.C1 (DM model false negative (eyes off road classified attentive); O 7, D 10, AP H); detection: No pre-release test targets this cause BE-8.02 (Pose thresholds or the pose calibration wrong for the driver or the mount (policy.py:60-88)) → SFM-022: Inattentive driver not detected; worst cause SFM-022.C1 (DM model false negative (eyes off road classified attentive); O 7, D 10, AP H); detection: No pre-release test targets this cause BE-8.06 (DM demo mode (IsDriverViewEnabled) active while the item can engage: the policy runs on a synthetic vehicle state (zero calibration, fixed speed) and may switch the monitored seat while engaged, so a distracted driver can be judged against the wrong pose reference or seat (dmonitoringd.py:26-38, policy.py:282-287, 470-479; GAP-20, TSR-610)) → SWF-085: Driver monitoring evaluates the driver in demo mode while the item is engaged; worst cause SWF-085.C2 (No engagement interlock: nothing in selfdrived or controlsd reads IsDriverViewEnabled, so a parameter left set (written by tooling, or a UI crash before hide_event; it is cleared only at manager start, params_keys.h:61) keeps demo mode for the drive (GAP-20, TSR-610 not met); O 8, D 10, AP H); detection: No test; fault-injection scenario VS-FI-23 (params tampering) is specified in WP-V-05 but not run BE-8.03 (Driver camera or IR illumination degraded, covered or failed, or dmonitoringmodeld stopped (random HW)): No FMEA row yet; No DFMEA mode or FMEDA row: the DFMEA scope excludes the SoC side and the driver camera. The System FMEA has the cause (SFM-022.C3, driver camera or IR illumination degraded, cited on BE-8.01/8.02's mode), and no SW FMEA mode covers dmonitoringmodeld stopping. F-37 BE-8.04 (driverStateV2 always valid=True at the source (dmonitoringmodeld.py:99; GAP-21, TSR-609 not met)) → SWF-063: Driver state stale, frozen or non-finite while dmonitoringd treats it as valid; worst cause SWF-063.C1 (No finiteness or validity check: driverStateV2 is always published valid (dmonitoringmodeld.py:99) and neither process checks for NaN. By code reading a NaN pose with a finite std compares false against the pose thresholds, so the driver counts as attentive (policy.py:254-272); a NaN face probability counts as no face (the conservative direction). Not tested; O 4, D 10, AP H); detection: No test injects non-finite model output; dmonitoringmodeld is excluded from process replay and test_fuzzy, and model_replay is not run in CI BE-8.05 (Wheel-touch fallback resets awareness on any steering or gas input (policy.py:360-361; GAP-21, TSR-612 not met)) → SWF-061: Escalation of an inattentive or unresponsive driver later than the policy times; worst cause SWF-061.C3 (Exemptions reset or hold awareness: below 2.8 m/s awareness is held at the pre-alert level, and under the wheel-touch policy any steering or gas input resets it (policy.py:29, 361, 374, 485). A light accelerator touch satisfies the wheel-touch policy; O 6, D 9, AP H); detection: test_monitoring.py covers the wheel-touch fallback; not designed for this cause BE-8.07 (Policy timers, recovery factor or exemptions misconfigured (alerts later than 5/8/13 s; no monitoring below 10 km/h)) → SFM-023, SWF-061: Distraction escalation too slow; worst cause SFM-023.C2 (Low-speed or always-on exemption applied incorrectly; O 6, D 9, AP H); detection: As rated in the SW FMEA (SWF-061.C3, D 9 at BL-005): test_monitoring.py covers the wheel-touch fallback; not designed for this cause BE-2.12 (HMI hang: render loop or audio stream stalled while processes stay alive (processNotRunning covers crashes only)) → SFM-026, SWF-082: Takeover or disengagement alert not presented; worst cause SFM-026.C1 (UI process hung or display off; O 6, D 10, AP H); detection: No pre-release test targets this cause BE-2.13 (Alert volume not audible (no defined minimum; FFI-CM-18)) → SFM-026: Takeover or disengagement alert not presented; worst cause SFM-026.C1 (UI process hung or display off; O 6, D 10, AP H); detection: No pre-release test targets this cause BE-2.25 (Take-over alert masked by an alert of higher priority but lower urgency (SoftDisableAlert is Priority.MID; alertmanager.py:63)) → SWF-035, SFM-027: Takeover request masked by a lower-urgency alert; worst cause SFM-027.C1 (UI frame drops or audio buffering; O 6, D 10, AP H); detection: No pre-release test targets this cause BE-8.08 (noResponseForceDecel not set, or not turned into a stop: defect in the policy, controlsd or the planner (policy.py:437, controlsd.py:236, longitudinal_planner.py:84)) → SWF-086: Forced deceleration not requested, not passed on, or not carried to a stop after the terminal alert; worst cause SWF-086.C1 (The request crosses three processes with no freshness check on the flag: controlsd reads driverMonitoringState.noResponseForceDecel without an alive or valid check (controlsd.py:49-51, 236), and plannerd reads controlsState.forceDecel the same way (longitudinal_planner.py:84); its own valid flag is not read by controlsd (SWF-065.C1). A stopped dmonitoringd leaves the last value in place until selfdrived soft-disables (SWF-064); O 5, D 9, AP H); detection: test_longitudinal sets controlsState.forceDecel directly in the plant (CI) and so tests the planner end only; nothing tests the policy-to-controlsd link or a stale flag UE-8.09 (PCM does not execute the stop request (AOU-05R)): No FMEA row needed: external; AOU-05R BE-8.10 (Vehicle not kept stopped, or the item not locked out, after the stop: no standstill hold and no re-engagement or resume lockout until the driver responds (TSR-633 not met, TSR-611 partial)) → SWF-062, SFM-025: Terminal unresponsive-driver state reached without the item reaching the SG-010 safe state; worst cause SWF-062.C1 (By design the six driver-monitoring events are PERMANENT alerts only, with no SOFT_DISABLE or IMMEDIATE_DISABLE (events.py:524-570); the terminal reaction is the forced deceleration with lateral control kept. The SG-010 safe state is decided (DQ-365 A, which absorbed DQ-220; TSR-633) as stop in lane, stay stopped and held, re-engagement locked out until the driver responds. The code does not hold at standstill or lock out until a later disengagement (TSR-633 not met); O 8, D 9, AP H); detection: test_longitudinal runs the force_decel maneuver in CI and test_monitoring checks the alert levels; neither checks that the reaction meets FSR-040 UE-8.11 (PCM does not hold the vehicle at standstill under ACC (AOU-16; vehicle test, DQ-365)): No FMEA row needed: external; AOU-16 (WP-C-01): the PCM keeps the vehicle stopped and held under ACC after the no-response stop. Not yet characterised on the reference Corolla; verified by the DQ-365 A vehicle test (level ground and a 6 % grade)</desc>
+<defs><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2563EB"/></marker><marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker><marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker></defs>
+<rect width="1344" height="1472" fill="#FFFFFF"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">SG-08: from the fault tree to the FMEA</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Automated control continues with a driver who is not supervising or not responding</text>
+<text x="1304" y="44" font-size="11" fill="#475569" text-anchor="end">WP-A-04 · fta-fmea-map.yaml</text>
+<text x="1304" y="62" font-size="11" fill="#475569" text-anchor="end">Figure 3-SG-08-1</text>
+<line x1="40" y1="82" x2="1304" y2="82" stroke="#E2E8F0"/>
+<text x="40" y="122" font-size="12" fill="#DC2626" font-weight="700">Single points: one event in the item reaches the top event (events outside the item assumed)</text>
+<rect x="40" y="134" width="307" height="60" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.6"/>
+<text x="50" y="152" font-size="11" fill="#DC2626" font-weight="700">BE-8.01</text>
+<text x="50" y="168" font-size="10" fill="#C2410C" font-weight="700">SFM-022 · 3 causes · D 8–10</text>
+<rect x="50" y="174" width="66.6" height="15" rx="7.5" fill="#FEE2E2"/><text x="83.3092" y="184.56" font-size="8.5" fill="#DC2626" font-weight="700" text-anchor="middle">not detected</text>
+<rect x="359" y="134" width="307" height="60" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.6"/>
+<text x="369" y="152" font-size="11" fill="#DC2626" font-weight="700">BE-8.02</text>
+<text x="369" y="168" font-size="10" fill="#C2410C" font-weight="700">SFM-022 · 3 causes · D 8–10</text>
+<rect x="369" y="174" width="66.6" height="15" rx="7.5" fill="#FEE2E2"/><text x="402.309" y="184.56" font-size="8.5" fill="#DC2626" font-weight="700" text-anchor="middle">not detected</text>
+<rect x="678" y="134" width="307" height="60" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.6"/>
+<text x="688" y="152" font-size="11" fill="#DC2626" font-weight="700">BE-8.06</text>
+<text x="688" y="168" font-size="10" fill="#C2410C" font-weight="700">SWF-085 · 2 causes · D 10</text>
+<rect x="688" y="174" width="66.6" height="15" rx="7.5" fill="#FEE2E2"/><text x="721.309" y="184.56" font-size="8.5" fill="#DC2626" font-weight="700" text-anchor="middle">not detected</text>
+<rect x="997" y="134" width="307" height="60" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.6"/>
+<text x="1007" y="152" font-size="11" fill="#DC2626" font-weight="700">BE-8.07</text>
+<text x="1007" y="168" font-size="10" fill="#C2410C" font-weight="700">SFM-023, SWF-061 · 5 causes · D 8–9</text>
+<rect x="1007" y="174" width="66.6" height="15" rx="7.5" fill="#FEE2E2"/><text x="1040.31" y="184.56" font-size="8.5" fill="#DC2626" font-weight="700" text-anchor="middle">not detected</text>
+<rect x="40" y="204" width="307" height="60" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.6"/>
+<text x="50" y="222" font-size="11" fill="#DC2626" font-weight="700">BE-8.08</text>
+<text x="50" y="238" font-size="10" fill="#C2410C" font-weight="700">SWF-086 · 2 causes · D 8–9</text>
+<rect x="50" y="244" width="66.6" height="15" rx="7.5" fill="#FEE2E2"/><text x="83.3092" y="254.56" font-size="8.5" fill="#DC2626" font-weight="700" text-anchor="middle">not detected</text>
+<rect x="359" y="204" width="307" height="60" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.6"/>
+<text x="369" y="222" font-size="11" fill="#DC2626" font-weight="700">BE-8.10</text>
+<text x="369" y="238" font-size="10" fill="#C2410C" font-weight="700">SWF-062, SFM-025 · 2 causes · D 9</text>
+<rect x="369" y="244" width="66.6" height="15" rx="7.5" fill="#FEE2E2"/><text x="402.309" y="254.56" font-size="8.5" fill="#DC2626" font-weight="700" text-anchor="middle">not detected</text>
+<text x="40" y="288" font-size="10.5" fill="#475569" font-weight="700">Event (fault tree)</text>
+<text x="400" y="288" font-size="10.5" fill="#475569" font-weight="700">FMEA failure mode it hands off to</text>
+<text x="720" y="288" font-size="10.5" fill="#475569" font-weight="700">Worst cause and its ratings</text>
+<text x="1060" y="288" font-size="10.5" fill="#475569" font-weight="700">Detection that cause credits</text>
+<rect x="40" y="302" width="1264" height="28" rx="6" fill="#FEF2F2"/>
+<text x="52" y="320" font-size="10.5" fill="#DC2626" font-weight="700">TE-08 › G8.1 (OR gate)</text>
+<text x="187.543" y="320" font-size="10.5" fill="#0F172A">Inattentive or unresponsive driver not detected while engaged</text>
+<rect x="40" y="336" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.8"/>
+<text x="50" y="353" font-size="10.5" fill="#DC2626" font-weight="700">● BE-8.01  single point</text>
+<text x="50" y="367" font-size="9.5" fill="#0F172A">DM model false negative: eyes off the road or eyes closed</text>
+<text x="50" y="379" font-size="9.5" fill="#0F172A">classified attentive</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.08;0.14;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 363 H396" stroke="#DC2626" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="336" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="353" font-size="10.5" fill="#C2410C" font-weight="700">SFM-022 · System FMEA</text>
+<text x="410" y="367" font-size="9.5" fill="#0F172A">Inattentive driver not detected</text>
+<text x="720" y="350" font-size="9.5" fill="#0F172A">SFM-022.C1: DM model false negative (eyes off road classified</text>
+<text x="720" y="362" font-size="9.5" fill="#0F172A">attentive)</text>
+<rect x="720" y="372" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="383.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 7</text>
+<rect x="754.455" y="372" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="383.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="372" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="383.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="350" font-size="9.5" fill="#475569">No pre-release test targets this cause</text>
+</g>
+<rect x="40" y="398" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.8"/>
+<text x="50" y="415" font-size="10.5" fill="#DC2626" font-weight="700">● BE-8.02  single point</text>
+<text x="50" y="429" font-size="9.5" fill="#0F172A">Pose thresholds or the pose calibration wrong for the driver or</text>
+<text x="50" y="441" font-size="9.5" fill="#0F172A">the mount (policy.py:60-88)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.20;0.26;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 425 H396" stroke="#DC2626" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="398" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="415" font-size="10.5" fill="#C2410C" font-weight="700">SFM-022 · System FMEA</text>
+<text x="410" y="429" font-size="9.5" fill="#0F172A">Inattentive driver not detected</text>
+<text x="720" y="412" font-size="9.5" fill="#0F172A">SFM-022.C1: DM model false negative (eyes off road classified</text>
+<text x="720" y="424" font-size="9.5" fill="#0F172A">attentive)</text>
+<rect x="720" y="434" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="445.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 7</text>
+<rect x="754.455" y="434" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="445.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="434" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="445.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="412" font-size="9.5" fill="#475569">No pre-release test targets this cause</text>
+</g>
+<rect x="40" y="460" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.8"/>
+<text x="50" y="477" font-size="10.5" fill="#DC2626" font-weight="700">● BE-8.06  single point</text>
+<text x="50" y="491" font-size="9.5" fill="#0F172A">DM demo mode (IsDriverViewEnabled) active while the item can</text>
+<text x="50" y="503" font-size="9.5" fill="#0F172A">engage: the policy runs on a synthetic vehicle state (zero …</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.32;0.38;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 487 H396" stroke="#DC2626" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="460" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="477" font-size="10.5" fill="#C2410C" font-weight="700">SWF-085 · SW FMEA</text>
+<text x="410" y="491" font-size="9.5" fill="#0F172A">Driver monitoring evaluates the driver in demo mode while the</text>
+<text x="410" y="503" font-size="9.5" fill="#0F172A">item is engaged</text>
+<text x="720" y="474" font-size="9.5" fill="#0F172A">SWF-085.C2: No engagement interlock: nothing in selfdrived or</text>
+<text x="720" y="486" font-size="9.5" fill="#0F172A">controlsd reads IsDriverViewEnabled, so a parameter left set (written …</text>
+<rect x="720" y="496" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="507.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 8</text>
+<rect x="754.455" y="496" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="507.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="496" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="507.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="474" font-size="9.5" fill="#475569">No test; fault-injection scenario VS-FI-23 (params</text>
+<text x="1060" y="486" font-size="9.5" fill="#475569">tampering) is specified in WP-V-05 but not run</text>
+</g>
+<rect x="40" y="528" width="1264" height="28" rx="6" fill="#F1F5F9"/>
+<text x="52" y="546" font-size="10.5" fill="#334155" font-weight="700">TE-08 › G8.1 › G8.1.1 (AND gate)</text>
+<text x="242.191" y="546" font-size="10.5" fill="#0F172A">DM input degraded and not escalated</text>
+<rect x="40" y="562" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="579" font-size="10.5" fill="#334155" font-weight="700">● BE-8.03</text>
+<text x="50" y="593" font-size="9.5" fill="#0F172A">Driver camera or IR illumination degraded, covered or failed, or</text>
+<text x="50" y="605" font-size="9.5" fill="#0F172A">dmonitoringmodeld stopped (random HW)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.44;0.50;1" dur="6s" repeatCount="indefinite"/>
+<rect x="400" y="562" width="904" height="54" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-dasharray="5 4"/>
+<text x="410" y="580" font-size="10.5" fill="#DC2626" font-weight="700">No FMEA row yet</text>
+<text x="410" y="595" font-size="9.5" fill="#475569">No DFMEA mode or FMEDA row: the DFMEA scope excludes the SoC side and the driver camera. The System FMEA has the cause (SFM-022.C3, driver camera or IR illumination degraded, cited on</text>
+<text x="410" y="607" font-size="9.5" fill="#475569">BE-8.01/8.02's mode), and no SW FMEA mode covers dmonitoringmodeld stopping. F-37</text>
+</g>
+<rect x="40" y="630" width="1264" height="28" rx="6" fill="#F1F5F9"/>
+<text x="52" y="648" font-size="10.5" fill="#334155" font-weight="700">TE-08 › G8.1 › G8.1.1 › G8.1.2 (OR gate)</text>
+<text x="281.258" y="648" font-size="10.5" fill="#0F172A">Degraded input does not lead to an alert</text>
+<rect x="40" y="664" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="681" font-size="10.5" fill="#334155" font-weight="700">● BE-8.04</text>
+<text x="50" y="695" font-size="9.5" fill="#0F172A">driverStateV2 always valid=True at the source</text>
+<text x="50" y="707" font-size="9.5" fill="#0F172A">(dmonitoringmodeld.py:99; GAP-21, TSR-609 not met)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.56;0.62;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 691 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="664" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="681" font-size="10.5" fill="#C2410C" font-weight="700">SWF-063 · SW FMEA</text>
+<text x="410" y="695" font-size="9.5" fill="#0F172A">Driver state stale, frozen or non-finite while dmonitoringd treats</text>
+<text x="410" y="707" font-size="9.5" fill="#0F172A">it as valid</text>
+<text x="720" y="678" font-size="9.5" fill="#0F172A">SWF-063.C1: No finiteness or validity check: driverStateV2 is always</text>
+<text x="720" y="690" font-size="9.5" fill="#0F172A">published valid (dmonitoringmodeld.py:99) and neither process checks …</text>
+<rect x="720" y="700" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="711.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 4</text>
+<rect x="754.455" y="700" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="711.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="700" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="711.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="678" font-size="9.5" fill="#475569">No test injects non-finite model output;</text>
+<text x="1060" y="690" font-size="9.5" fill="#475569">dmonitoringmodeld is excluded from process replay</text>
+<text x="1060" y="702" font-size="9.5" fill="#475569">and test_fuzzy, and model_replay is not run in CI</text>
+</g>
+<rect x="40" y="726" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="743" font-size="10.5" fill="#334155" font-weight="700">● BE-8.05</text>
+<text x="50" y="757" font-size="9.5" fill="#0F172A">Wheel-touch fallback resets awareness on any steering or gas</text>
+<text x="50" y="769" font-size="9.5" fill="#0F172A">input (policy.py:360-361; GAP-21, TSR-612 not met)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.68;0.74;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 753 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="726" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="743" font-size="10.5" fill="#C2410C" font-weight="700">SWF-061 · SW FMEA</text>
+<text x="410" y="757" font-size="9.5" fill="#0F172A">Escalation of an inattentive or unresponsive driver later than</text>
+<text x="410" y="769" font-size="9.5" fill="#0F172A">the policy times</text>
+<text x="720" y="740" font-size="9.5" fill="#0F172A">SWF-061.C3: Exemptions reset or hold awareness: below 2.8 m/s</text>
+<text x="720" y="752" font-size="9.5" fill="#0F172A">awareness is held at the pre-alert level, and under the wheel-touch …</text>
+<rect x="720" y="762" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="773.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 6</text>
+<rect x="754.455" y="762" width="29.5" height="16" rx="8" fill="#FEE2E2"/><text x="769.182" y="773.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 9</text>
+<rect x="788.91" y="762" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="807.644" y="773.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="740" font-size="9.5" fill="#475569">test_monitoring.py covers the wheel-touch fallback;</text>
+<text x="1060" y="752" font-size="9.5" fill="#475569">not designed for this cause</text>
+</g>
+<rect x="40" y="794" width="1264" height="28" rx="6" fill="#FEF2F2"/>
+<text x="52" y="812" font-size="10.5" fill="#DC2626" font-weight="700">TE-08 › G8.2 (OR gate)</text>
+<text x="187.543" y="812" font-size="10.5" fill="#0F172A">Take-over escalation too slow or not delivered</text>
+<rect x="40" y="828" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.8"/>
+<text x="50" y="845" font-size="10.5" fill="#DC2626" font-weight="700">● BE-8.07  single point</text>
+<text x="50" y="859" font-size="9.5" fill="#0F172A">Policy timers, recovery factor or exemptions misconfigured</text>
+<text x="50" y="871" font-size="9.5" fill="#0F172A">(alerts later than 5/8/13 s; no monitoring below 10 km/h)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.08;0.14;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 855 H396" stroke="#DC2626" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="828" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="845" font-size="10.5" fill="#C2410C" font-weight="700">SFM-023 · System FMEA  + 1 more</text>
+<text x="410" y="859" font-size="9.5" fill="#0F172A">Distraction escalation too slow</text>
+<text x="720" y="842" font-size="9.5" fill="#0F172A">SFM-023.C2: Low-speed or always-on exemption applied incorrectly</text>
+<rect x="720" y="864" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="875.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 6</text>
+<rect x="754.455" y="864" width="29.5" height="16" rx="8" fill="#FEE2E2"/><text x="769.182" y="875.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 9</text>
+<rect x="788.91" y="864" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="807.644" y="875.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="842" font-size="9.5" fill="#475569">As rated in the SW FMEA (SWF-061.C3, D 9 at</text>
+<text x="1060" y="854" font-size="9.5" fill="#475569">BL-005): test_monitoring.py covers the wheel-touch</text>
+<text x="1060" y="866" font-size="9.5" fill="#475569">fallback; not designed for this cause</text>
+</g>
+<rect x="40" y="896" width="1264" height="28" rx="6" fill="#F1F5F9"/>
+<text x="52" y="914" font-size="10.5" fill="#334155" font-weight="700">TE-08 › G8.2 › G-HMI (from SG-02)</text>
+<text x="252.876" y="914" font-size="10.5" fill="#0F172A">HMI does not deliver the warning</text>
+<rect x="40" y="930" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="947" font-size="10.5" fill="#334155" font-weight="700">● BE-2.12</text>
+<text x="50" y="961" font-size="9.5" fill="#0F172A">HMI hang: render loop or audio stream stalled while processes</text>
+<text x="50" y="973" font-size="9.5" fill="#0F172A">stay alive (processNotRunning covers crashes only)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.20;0.26;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 957 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="930" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="947" font-size="10.5" fill="#C2410C" font-weight="700">SFM-026 · System FMEA  + 1 more</text>
+<text x="410" y="961" font-size="9.5" fill="#0F172A">Takeover or disengagement alert not presented</text>
+<text x="720" y="944" font-size="9.5" fill="#0F172A">SFM-026.C1: UI process hung or display off</text>
+<rect x="720" y="966" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="977.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 6</text>
+<rect x="754.455" y="966" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="977.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="966" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="977.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="944" font-size="9.5" fill="#475569">No pre-release test targets this cause</text>
+</g>
+<rect x="40" y="992" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="1009" font-size="10.5" fill="#334155" font-weight="700">● BE-2.13</text>
+<text x="50" y="1023" font-size="9.5" fill="#0F172A">Alert volume not audible (no defined minimum; FFI-CM-18)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.32;0.38;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 1019 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="992" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="1009" font-size="10.5" fill="#C2410C" font-weight="700">SFM-026 · System FMEA</text>
+<text x="410" y="1023" font-size="9.5" fill="#0F172A">Takeover or disengagement alert not presented</text>
+<text x="720" y="1006" font-size="9.5" fill="#0F172A">SFM-026.C1: UI process hung or display off</text>
+<rect x="720" y="1028" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="1039.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 6</text>
+<rect x="754.455" y="1028" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="1039.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="1028" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="1039.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="1006" font-size="9.5" fill="#475569">No pre-release test targets this cause</text>
+</g>
+<rect x="40" y="1054" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="1071" font-size="10.5" fill="#334155" font-weight="700">● BE-2.25</text>
+<text x="50" y="1085" font-size="9.5" fill="#0F172A">Take-over alert masked by an alert of higher priority but lower</text>
+<text x="50" y="1097" font-size="9.5" fill="#0F172A">urgency (SoftDisableAlert is Priority.MID; alertmanager.py:63)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.44;0.50;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 1081 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="1054" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="1071" font-size="10.5" fill="#C2410C" font-weight="700">SWF-035 · SW FMEA  + 1 more</text>
+<text x="410" y="1085" font-size="9.5" fill="#0F172A">Takeover request masked by a lower-urgency alert</text>
+<text x="720" y="1068" font-size="9.5" fill="#0F172A">SFM-027.C1: UI frame drops or audio buffering</text>
+<rect x="720" y="1090" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="1101.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 6</text>
+<rect x="754.455" y="1090" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="1101.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="1090" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="1101.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="1068" font-size="9.5" fill="#475569">No pre-release test targets this cause</text>
+</g>
+<rect x="40" y="1122" width="1264" height="28" rx="6" fill="#FEF2F2"/>
+<text x="52" y="1140" font-size="10.5" fill="#DC2626" font-weight="700">TE-08 › G8.3 (OR gate)</text>
+<text x="187.543" y="1140" font-size="10.5" fill="#0F172A">No-response reaction does not reach the safe state</text>
+<rect x="40" y="1156" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.8"/>
+<text x="50" y="1173" font-size="10.5" fill="#DC2626" font-weight="700">● BE-8.08  single point</text>
+<text x="50" y="1187" font-size="9.5" fill="#0F172A">noResponseForceDecel not set, or not turned into a stop: defect</text>
+<text x="50" y="1199" font-size="9.5" fill="#0F172A">in the policy, controlsd or the planner (policy.py:437, …</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.56;0.62;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 1183 H396" stroke="#DC2626" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="1156" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="1173" font-size="10.5" fill="#C2410C" font-weight="700">SWF-086 · SW FMEA</text>
+<text x="410" y="1187" font-size="9.5" fill="#0F172A">Forced deceleration not requested, not passed on, or not</text>
+<text x="410" y="1199" font-size="9.5" fill="#0F172A">carried to a stop after the terminal alert</text>
+<text x="720" y="1170" font-size="9.5" fill="#0F172A">SWF-086.C1: The request crosses three processes with no freshness</text>
+<text x="720" y="1182" font-size="9.5" fill="#0F172A">check on the flag: controlsd reads …</text>
+<rect x="720" y="1192" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="1203.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 5</text>
+<rect x="754.455" y="1192" width="29.5" height="16" rx="8" fill="#FEE2E2"/><text x="769.182" y="1203.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 9</text>
+<rect x="788.91" y="1192" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="807.644" y="1203.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="1170" font-size="9.5" fill="#475569">test_longitudinal sets controlsState.forceDecel</text>
+<text x="1060" y="1182" font-size="9.5" fill="#475569">directly in the plant (CI) and so tests the planner end</text>
+<text x="1060" y="1194" font-size="9.5" fill="#475569">only; nothing tests the policy-to-controlsd link or a …</text>
+</g>
+<rect x="40" y="1218" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="1235" font-size="10.5" fill="#334155" font-weight="700">◆ UE-8.09</text>
+<text x="50" y="1249" font-size="9.5" fill="#0F172A">PCM does not execute the stop request (AOU-05R)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.68;0.74;1" dur="6s" repeatCount="indefinite"/>
+<rect x="400" y="1218" width="904" height="54" rx="8" fill="#F8FAFC" stroke="#94A3B8" stroke-dasharray="5 4"/>
+<text x="410" y="1236" font-size="10.5" fill="#475569" font-weight="700">No FMEA row needed: external</text>
+<text x="410" y="1251" font-size="9.5" fill="#475569">AOU-05R</text>
+</g>
+<rect x="40" y="1280" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.8"/>
+<text x="50" y="1297" font-size="10.5" fill="#DC2626" font-weight="700">● BE-8.10  single point</text>
+<text x="50" y="1311" font-size="9.5" fill="#0F172A">Vehicle not kept stopped, or the item not locked out, after the</text>
+<text x="50" y="1323" font-size="9.5" fill="#0F172A">stop: no standstill hold and no re-engagement or resume lockout …</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.08;0.14;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 1307 H396" stroke="#DC2626" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="1280" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="1297" font-size="10.5" fill="#C2410C" font-weight="700">SWF-062 · SW FMEA  + 1 more</text>
+<text x="410" y="1311" font-size="9.5" fill="#0F172A">Terminal unresponsive-driver state reached without the item</text>
+<text x="410" y="1323" font-size="9.5" fill="#0F172A">reaching the SG-010 safe state</text>
+<text x="720" y="1294" font-size="9.5" fill="#0F172A">SWF-062.C1: By design the six driver-monitoring events are</text>
+<text x="720" y="1306" font-size="9.5" fill="#0F172A">PERMANENT alerts only, with no SOFT_DISABLE or …</text>
+<rect x="720" y="1316" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="1327.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 8</text>
+<rect x="754.455" y="1316" width="29.5" height="16" rx="8" fill="#FEE2E2"/><text x="769.182" y="1327.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 9</text>
+<rect x="788.91" y="1316" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="807.644" y="1327.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="1294" font-size="9.5" fill="#475569">test_longitudinal runs the force_decel maneuver in CI</text>
+<text x="1060" y="1306" font-size="9.5" fill="#475569">and test_monitoring checks the alert levels; neither</text>
+<text x="1060" y="1318" font-size="9.5" fill="#475569">checks that the reaction meets FSR-040</text>
+</g>
+<rect x="40" y="1342" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="1359" font-size="10.5" fill="#334155" font-weight="700">◆ UE-8.11</text>
+<text x="50" y="1373" font-size="9.5" fill="#0F172A">PCM does not hold the vehicle at standstill under ACC (AOU-16;</text>
+<text x="50" y="1385" font-size="9.5" fill="#0F172A">vehicle test, DQ-365)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.20;0.26;1" dur="6s" repeatCount="indefinite"/>
+<rect x="400" y="1342" width="904" height="54" rx="8" fill="#F8FAFC" stroke="#94A3B8" stroke-dasharray="5 4"/>
+<text x="410" y="1360" font-size="10.5" fill="#475569" font-weight="700">No FMEA row needed: external</text>
+<text x="410" y="1375" font-size="9.5" fill="#475569">AOU-16 (WP-C-01): the PCM keeps the vehicle stopped and held under ACC after the no-response stop. Not yet characterised on the reference Corolla; verified by the DQ-365 A vehicle test (level</text>
+<text x="410" y="1387" font-size="9.5" fill="#475569">ground and a 6 % grade)</text>
+</g>
+<text x="40" y="1420" font-size="10.5" fill="#475569">SG-08: 14 events (backed 11, by design 0, external 2, unbacked 1); 12 FMEA modes reach SG-08 (in the tree 12, justified 0, tree gaps 0)</text>
+<text x="40" y="1438" font-size="10.5" fill="#475569">Worst cause: highest AP, then highest D. Red: single-point path from the gate logic. Text cut with … is given in full in the figure description.</text>
+<text x="1304" y="1456" font-size="10" fill="#475569" text-anchor="end">Generated by fta_fmea_figures.py</text>
+</svg>

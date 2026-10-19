@@ -1,0 +1,213 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1344" height="1152" viewBox="0 0 1344 1152" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">Figure 3-SG-03-2. SG-03: from the fault tree to the FMEA</title>
+<desc id="d">Figure 3-SG-03-2. SG-03: 29 events (backed 25, by design 1, external 3, unbacked 0); 43 FMEA modes reach SG-03 (in the tree 32, justified 11, tree gaps 0). BE-3.09 (Brake 0x226 not detected (no checksum/counter, GAP-01) AND PCM does not cancel ACC on brake (AOU-03R)) → SWF-005, SWF-006, SWF-008: Corrupted brake-pressed value accepted; worst cause SWF-005.C1 (BRAKE_MODULE (0x226) has no checksum or counter in the vehicle DBC; the RX check ignores checksum, counter and quality and checks timing only; O 3, D 9, AP H); detection: No test targets this cause BE-3.10 (Inactive value check bypassed by mode/param change (e.g. param that selects another brake signal or stock-longitudinal branch, toyota.h:216-248)) → SWF-013: Wrong or permissive safety mode accepted from the host; worst cause SWF-013.C1 (Defect in the reference-build allow-list for 0xdc/0xdf and the car-mode request gate; O 3, D 4, AP L); detection: Host unit tests compiled against the real firmware headers, run by panda CI (test.sh): reference_lock and hw_watchdog, 14 tests, pass at BL-002 locally. Not on target hardware BE-3.13 (SoC sends a positive acceleration while not engaged (QM; its engagement state is fed by the same CAN data)) → SFM-008, SWF-052, SWF-040, SFM-013, SWF-030, SFM-017, SWF-031, SWF-057: Unintended acceleration; worst cause SFM-008.C2 (Longitudinal controller output too high; O 7, D 10, AP H); detection: test_longcontrol.py covers state transitions, not limits BE-3.11 (Gas-pressed signal (PCM_CRUISE.GAS_RELEASED) stuck "pressed": envelope then allows only inactive accel (safe direction) — or stuck "released" while the driver presses: envelope allows accel (longitudinal.h:3-5)) → SWF-017, SWF-006: Item deceleration passed while the driver presses the accelerator; worst cause SWF-017.C1 (Defect in get_longitudinal_allowed (controls_allowed &amp;&amp; !gas_pressed_prev) or GAS_RELEASED decoding (0x1D2 bit 4); O 5, D 3, AP H); detection: opendbc safety suite with 100% line coverage and mutation tests, run by fork CI on every change (.github/workflows/safety.yaml, CR-CI-05). At BL-002 the Toyota tests pass locally (287, 34 skipped); mutation was last run locally at BL-001 (2705/2705 killed). Tests are derived from the implementation, not from requirements UE-3.12 (PCM adds item accel on top of driver pedal (to verify, AOU-05R)): No FMEA row needed: external; AOU-05R BE-1.19 (controlsd hang / stale modelV2 used up to ≈3.5 s (GAP-16)) → SFM-006, SFM-037, SWF-040, SWF-043, SWF-033, SWF-072, SWF-078, SWF-080, SWF-081: Lateral command frozen at last value; worst cause SFM-006.C1 (controlsd hangs while card keeps sending the last carControl; O 6, D 10, AP H); detection: No test injects non-finite lateralDelay BE-1.21 (SoC replays an old command buffer (no sequence counter, GAP-10)) → SWF-023: Stale or burst-replayed sendcan frames forwarded to the panda; worst cause SWF-023.C1 (The age gate is 1 s (pandad.cc:78-79). That exceeds the 0.9 s preliminary SG-001 FTTI and is 100 control periods long. The sendcan subscriber is a non-conflated FIFO (pandad.cc:64; services.py sendcan MEDIUM queue), so a backlog of up to 1 s is forwarded in order but back-to-back. No newest-only policy applies per address (WP-W-04 SWF-47, SWSR-411); O 8, D 10, AP H); detection: No test targets this cause BE-1.22 (Command freshness not supervised: heartbeat shows pandad liveness only; mismatch 3 s, loss 5 s (main.c:182-213; GAP-06, GAP-10) . 2026-10-12, reference build: heartbeat loss revokes at 0.3 s (TSR-407); actuation-frame arrival supervised (TSR-408, opendbc 273f44e); value freshness (TSR-409) open) → SWF-014, SWF-020, SWF-018, DFM-014: Controls withdrawn later than the FTTI after host loss; worst cause SWF-020.C1 (engaged is derived only from selfdriveState alive (&lt;0.1 s), valid and enabled (pandad.cc:424). Neither carControl/sendcan freshness nor the forwarding thread's progress goes into the heartbeat, which is sent from the main thread (pandad.cc:313), so the heartbeat shows pandad and selfdrived liveness only (host side of SWF-014.C2; TSR-409 / TSR-602 not implemented); O 8, D 10, AP H); detection: No test targets this cause BE-4.19 ((relay stays released; as SG-04)) → DFM-011, SFM-034: Intercept switch stays in pass-through when driven; worst cause SFM-034.C1 (Switch U1 or U2 stuck in intercept, its IN input damaged high or driven high, its pull-down R2/R3 open, or the switches damaged by box supply transients (DG419LE, RR-2026-010); O 4, D 10, AP H); detection: As rated in the DFMEA: no pre-release test of this hardware fault BE-4.20 ((stock 0x343 forwarded while the item transmits; as SG-04)) → SWF-010: Stock camera steering or ACC messages forwarded while the item transmits; worst cause SWF-010.C1 (check_relay flag missing for a replaced message in the TX table, or defect in safety_fwd_hook; O 5, D 3, AP H); detection: opendbc safety suite with 100% line coverage and mutation tests, run by fork CI on every change (.github/workflows/safety.yaml, CR-CI-05). At BL-002 the Toyota tests pass locally (287, 34 skipped); mutation was last run locally at BL-001 (2705/2705 killed). Tests are derived from the implementation, not from requirements BE-4.21 ((relay malfunction detected after 1–2 s, not at all, or cleared by a mode change; as SG-04)) → SWF-012, SWF-090: Relay malfunction not detected; worst cause SWF-012.C1 (Defect in stock_ecu_check, or a replaced message without check_relay; detection starts 1 s after a mode change (safety.h:372-380); O 5, D 3, AP H); detection: opendbc safety suite with 100% line coverage and mutation tests, run by fork CI on every change (.github/workflows/safety.yaml, CR-CI-05). At BL-002 the Toyota tests pass locally (287, 34 skipped); mutation was last run locally at BL-001 (2705/2705 killed). Tests are derived from the implementation, not from requirements</desc>
+<defs><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2563EB"/></marker><marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker><marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker></defs>
+<rect width="1344" height="1152" fill="#FFFFFF"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">SG-03: from the fault tree to the FMEA (2 of 2)</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Unintended acceleration</text>
+<text x="1304" y="44" font-size="11" fill="#475569" text-anchor="end">WP-A-04 · fta-fmea-map.yaml</text>
+<text x="1304" y="62" font-size="11" fill="#475569" text-anchor="end">Figure 3-SG-03-2</text>
+<line x1="40" y1="82" x2="1304" y2="82" stroke="#E2E8F0"/>
+<text x="40" y="114" font-size="10.5" fill="#475569" font-weight="700">Event (fault tree)</text>
+<text x="400" y="114" font-size="10.5" fill="#475569" font-weight="700">FMEA failure mode it hands off to</text>
+<text x="720" y="114" font-size="10.5" fill="#475569" font-weight="700">Worst cause and its ratings</text>
+<text x="1060" y="114" font-size="10.5" fill="#475569" font-weight="700">Detection that cause credits</text>
+<rect x="40" y="128" width="1264" height="28" rx="6" fill="#F1F5F9"/>
+<text x="52" y="146" font-size="10.5" fill="#334155" font-weight="700">TE-03 › G3.3 › G3.3.1 (OR gate)</text>
+<text x="234.4" y="146" font-size="10.5" fill="#0F172A">Inactive-value check not effective (continued)</text>
+<rect x="40" y="162" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="179" font-size="10.5" fill="#334155" font-weight="700">● BE-3.09</text>
+<text x="50" y="193" font-size="9.5" fill="#0F172A">Brake 0x226 not detected (no checksum/counter, GAP-01) AND</text>
+<text x="50" y="205" font-size="9.5" fill="#0F172A">PCM does not cancel ACC on brake (AOU-03R)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.08;0.14;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 189 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="162" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="179" font-size="10.5" fill="#C2410C" font-weight="700">SWF-005 · SW FMEA  + 2 more</text>
+<text x="410" y="193" font-size="9.5" fill="#0F172A">Corrupted brake-pressed value accepted</text>
+<text x="720" y="176" font-size="9.5" fill="#0F172A">SWF-005.C1: BRAKE_MODULE (0x226) has no checksum or counter in</text>
+<text x="720" y="188" font-size="9.5" fill="#0F172A">the vehicle DBC; the RX check ignores checksum, counter and quality …</text>
+<rect x="720" y="198" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="209.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 3</text>
+<rect x="754.455" y="198" width="29.5" height="16" rx="8" fill="#FEE2E2"/><text x="769.182" y="209.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 9</text>
+<rect x="788.91" y="198" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="807.644" y="209.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="176" font-size="9.5" fill="#475569">No test targets this cause</text>
+</g>
+<rect x="40" y="224" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="241" font-size="10.5" fill="#334155" font-weight="700">● BE-3.10</text>
+<text x="50" y="255" font-size="9.5" fill="#0F172A">Inactive value check bypassed by mode/param change (e.g.</text>
+<text x="50" y="267" font-size="9.5" fill="#0F172A">param that selects another brake signal or stock-longitudinal …</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.20;0.26;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 251 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="224" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="241" font-size="10.5" fill="#C2410C" font-weight="700">SWF-013 · SW FMEA</text>
+<text x="410" y="255" font-size="9.5" fill="#0F172A">Wrong or permissive safety mode accepted from the host</text>
+<text x="720" y="238" font-size="9.5" fill="#0F172A">SWF-013.C1: Defect in the reference-build allow-list for 0xdc/0xdf and</text>
+<text x="720" y="250" font-size="9.5" fill="#0F172A">the car-mode request gate</text>
+<rect x="720" y="260" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="271.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 3</text>
+<rect x="754.455" y="260" width="29.5" height="16" rx="8" fill="#DCFCE7"/><text x="769.182" y="271.24" font-size="9" fill="#14532D" font-weight="700" text-anchor="middle">D 4</text>
+<rect x="788.91" y="260" width="37.5" height="16" rx="8" fill="#0F766E"/><text x="807.644" y="271.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP L</text>
+<text x="1060" y="238" font-size="9.5" fill="#475569">Host unit tests compiled against the real firmware</text>
+<text x="1060" y="250" font-size="9.5" fill="#475569">headers, run by panda CI (test.sh): reference_lock</text>
+<text x="1060" y="262" font-size="9.5" fill="#475569">and hw_watchdog, 14 tests, pass at BL-002 locally. …</text>
+</g>
+<rect x="40" y="292" width="1264" height="28" rx="6" fill="#F1F5F9"/>
+<text x="52" y="310" font-size="10.5" fill="#334155" font-weight="700">TE-03 › G3.3 (AND gate)</text>
+<text x="195.334" y="310" font-size="10.5" fill="#0F172A">Acceleration while not engaged or after driver brake</text>
+<rect x="40" y="326" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="343" font-size="10.5" fill="#334155" font-weight="700">● BE-3.13</text>
+<text x="50" y="357" font-size="9.5" fill="#0F172A">SoC sends a positive acceleration while not engaged (QM; its</text>
+<text x="50" y="369" font-size="9.5" fill="#0F172A">engagement state is fed by the same CAN data)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.32;0.38;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 353 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="326" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="343" font-size="10.5" fill="#C2410C" font-weight="700">SFM-008 · System FMEA  + 7 more</text>
+<text x="410" y="357" font-size="9.5" fill="#0F172A">Unintended acceleration</text>
+<text x="720" y="340" font-size="9.5" fill="#0F172A">SFM-008.C2: Longitudinal controller output too high</text>
+<rect x="720" y="362" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="373.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 7</text>
+<rect x="754.455" y="362" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="373.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="362" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="373.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="340" font-size="9.5" fill="#475569">test_longcontrol.py covers state transitions, not limits</text>
+</g>
+<rect x="40" y="394" width="1264" height="28" rx="6" fill="#FEF2F2"/>
+<text x="52" y="412" font-size="10.5" fill="#DC2626" font-weight="700">TE-03 › G3.4 (AND gate)</text>
+<text x="195.334" y="412" font-size="10.5" fill="#0F172A">Gas override misinterpreted</text>
+<rect x="40" y="428" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.8"/>
+<text x="50" y="445" font-size="10.5" fill="#DC2626" font-weight="700">● BE-3.11  single point</text>
+<text x="50" y="459" font-size="9.5" fill="#0F172A">Gas-pressed signal (PCM_CRUISE.GAS_RELEASED) stuck</text>
+<text x="50" y="471" font-size="9.5" fill="#0F172A">"pressed": envelope then allows only inactive accel (safe …</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.44;0.50;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 455 H396" stroke="#DC2626" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="428" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="445" font-size="10.5" fill="#C2410C" font-weight="700">SWF-017 · SW FMEA  + 1 more</text>
+<text x="410" y="459" font-size="9.5" fill="#0F172A">Item deceleration passed while the driver presses the</text>
+<text x="410" y="471" font-size="9.5" fill="#0F172A">accelerator</text>
+<text x="720" y="442" font-size="9.5" fill="#0F172A">SWF-017.C1: Defect in get_longitudinal_allowed (controls_allowed &amp;&amp;</text>
+<text x="720" y="454" font-size="9.5" fill="#0F172A">!gas_pressed_prev) or GAS_RELEASED decoding (0x1D2 bit 4)</text>
+<rect x="720" y="464" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="475.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 5</text>
+<rect x="754.455" y="464" width="29.5" height="16" rx="8" fill="#DCFCE7"/><text x="769.182" y="475.24" font-size="9" fill="#14532D" font-weight="700" text-anchor="middle">D 3</text>
+<rect x="788.91" y="464" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="807.644" y="475.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="442" font-size="9.5" fill="#475569">opendbc safety suite with 100% line coverage and</text>
+<text x="1060" y="454" font-size="9.5" fill="#475569">mutation tests, run by fork CI on every change</text>
+<text x="1060" y="466" font-size="9.5" fill="#475569">(.github/workflows/safety.yaml, CR-CI-05). At BL-002 …</text>
+</g>
+<rect x="40" y="490" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="507" font-size="10.5" fill="#334155" font-weight="700">◆ UE-3.12</text>
+<text x="50" y="521" font-size="9.5" fill="#0F172A">PCM adds item accel on top of driver pedal (to verify, AOU-05R)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.56;0.62;1" dur="6s" repeatCount="indefinite"/>
+<rect x="400" y="490" width="904" height="54" rx="8" fill="#F8FAFC" stroke="#94A3B8" stroke-dasharray="5 4"/>
+<text x="410" y="508" font-size="10.5" fill="#475569" font-weight="700">No FMEA row needed: external</text>
+<text x="410" y="523" font-size="9.5" fill="#475569">AOU-05R</text>
+</g>
+<rect x="40" y="558" width="1264" height="28" rx="6" fill="#F1F5F9"/>
+<text x="52" y="576" font-size="10.5" fill="#334155" font-weight="700">SG-03 (OR gate)</text>
+<rect x="40" y="592" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="609" font-size="10.5" fill="#334155" font-weight="700">● BE-1.19</text>
+<text x="50" y="623" font-size="9.5" fill="#0F172A">controlsd hang / stale modelV2 used up to ≈3.5 s (GAP-16)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.68;0.74;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 619 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="592" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="609" font-size="10.5" fill="#C2410C" font-weight="700">SFM-006 · System FMEA  + 8 more</text>
+<text x="410" y="623" font-size="9.5" fill="#0F172A">Lateral command frozen at last value</text>
+<text x="720" y="606" font-size="9.5" fill="#0F172A">SFM-006.C1: controlsd hangs while card keeps sending the last</text>
+<text x="720" y="618" font-size="9.5" fill="#0F172A">carControl</text>
+<rect x="720" y="628" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="639.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 6</text>
+<rect x="754.455" y="628" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="639.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="628" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="639.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="606" font-size="9.5" fill="#475569">No test injects non-finite lateralDelay</text>
+</g>
+<rect x="40" y="654" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="671" font-size="10.5" fill="#334155" font-weight="700">● BE-1.21</text>
+<text x="50" y="685" font-size="9.5" fill="#0F172A">SoC replays an old command buffer (no sequence counter,</text>
+<text x="50" y="697" font-size="9.5" fill="#0F172A">GAP-10)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.08;0.14;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 681 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="654" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="671" font-size="10.5" fill="#C2410C" font-weight="700">SWF-023 · SW FMEA</text>
+<text x="410" y="685" font-size="9.5" fill="#0F172A">Stale or burst-replayed sendcan frames forwarded to the panda</text>
+<text x="720" y="668" font-size="9.5" fill="#0F172A">SWF-023.C1: The age gate is 1 s (pandad.cc:78-79). That exceeds the</text>
+<text x="720" y="680" font-size="9.5" fill="#0F172A">0.9 s preliminary SG-001 FTTI and is 100 control periods long. The …</text>
+<rect x="720" y="690" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="701.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 8</text>
+<rect x="754.455" y="690" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="701.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="690" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="701.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="668" font-size="9.5" fill="#475569">No test targets this cause</text>
+</g>
+<rect x="40" y="722" width="1264" height="28" rx="6" fill="#F1F5F9"/>
+<text x="52" y="740" font-size="10.5" fill="#334155" font-weight="700">TE-03 › G3.5 (AND gate)</text>
+<text x="195.334" y="740" font-size="10.5" fill="#0F172A">Stale positive acceleration held beyond FTTI</text>
+<rect x="40" y="756" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="773" font-size="10.5" fill="#334155" font-weight="700">● BE-1.22</text>
+<text x="50" y="787" font-size="9.5" fill="#0F172A">Command freshness not supervised: heartbeat shows pandad</text>
+<text x="50" y="799" font-size="9.5" fill="#0F172A">liveness only; mismatch 3 s, loss 5 s (main.c:182-213; GAP-06, …</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.20;0.26;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 783 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="756" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="773" font-size="10.5" fill="#C2410C" font-weight="700">SWF-014 · SW FMEA  + 3 more</text>
+<text x="410" y="787" font-size="9.5" fill="#0F172A">Controls withdrawn later than the FTTI after host loss</text>
+<text x="720" y="770" font-size="9.5" fill="#0F172A">SWF-020.C1: engaged is derived only from selfdriveState alive (&lt;0.1 s),</text>
+<text x="720" y="782" font-size="9.5" fill="#0F172A">valid and enabled (pandad.cc:424). Neither carControl/sendcan …</text>
+<rect x="720" y="792" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="803.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 8</text>
+<rect x="754.455" y="792" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="803.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="792" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="803.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="770" font-size="9.5" fill="#475569">No test targets this cause</text>
+</g>
+<rect x="40" y="824" width="1264" height="28" rx="6" fill="#F1F5F9"/>
+<text x="52" y="842" font-size="10.5" fill="#334155" font-weight="700">TE-03 › G3.7 › G3.7.1 (OR gate)</text>
+<text x="234.4" y="842" font-size="10.5" fill="#0F172A">Stock camera ACC_CONTROL reaches the car side</text>
+<rect x="40" y="858" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="875" font-size="10.5" fill="#334155" font-weight="700">● BE-4.19</text>
+<text x="50" y="889" font-size="9.5" fill="#0F172A">(relay stays released; as SG-04)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.32;0.38;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 885 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="858" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="875" font-size="10.5" fill="#C2410C" font-weight="700">DFM-011 · DFMEA  + 1 more</text>
+<text x="410" y="889" font-size="9.5" fill="#0F172A">Intercept switch stays in pass-through when driven</text>
+<text x="720" y="872" font-size="9.5" fill="#0F172A">SFM-034.C1: Switch U1 or U2 stuck in intercept, its IN input damaged</text>
+<text x="720" y="884" font-size="9.5" fill="#0F172A">high or driven high, its pull-down R2/R3 open, or the switches damaged …</text>
+<rect x="720" y="894" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="905.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 4</text>
+<rect x="754.455" y="894" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="905.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="894" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="905.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="872" font-size="9.5" fill="#475569">As rated in the DFMEA: no pre-release test of this</text>
+<text x="1060" y="884" font-size="9.5" fill="#475569">hardware fault</text>
+</g>
+<rect x="40" y="920" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="937" font-size="10.5" fill="#334155" font-weight="700">● BE-4.20</text>
+<text x="50" y="951" font-size="9.5" fill="#0F172A">(stock 0x343 forwarded while the item transmits; as SG-04)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.44;0.50;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 947 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="920" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="937" font-size="10.5" fill="#C2410C" font-weight="700">SWF-010 · SW FMEA</text>
+<text x="410" y="951" font-size="9.5" fill="#0F172A">Stock camera steering or ACC messages forwarded while the</text>
+<text x="410" y="963" font-size="9.5" fill="#0F172A">item transmits</text>
+<text x="720" y="934" font-size="9.5" fill="#0F172A">SWF-010.C1: check_relay flag missing for a replaced message in the</text>
+<text x="720" y="946" font-size="9.5" fill="#0F172A">TX table, or defect in safety_fwd_hook</text>
+<rect x="720" y="956" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="967.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 5</text>
+<rect x="754.455" y="956" width="29.5" height="16" rx="8" fill="#DCFCE7"/><text x="769.182" y="967.24" font-size="9" fill="#14532D" font-weight="700" text-anchor="middle">D 3</text>
+<rect x="788.91" y="956" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="807.644" y="967.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="934" font-size="9.5" fill="#475569">opendbc safety suite with 100% line coverage and</text>
+<text x="1060" y="946" font-size="9.5" fill="#475569">mutation tests, run by fork CI on every change</text>
+<text x="1060" y="958" font-size="9.5" fill="#475569">(.github/workflows/safety.yaml, CR-CI-05). At BL-002 …</text>
+</g>
+<rect x="40" y="988" width="1264" height="28" rx="6" fill="#F1F5F9"/>
+<text x="52" y="1006" font-size="10.5" fill="#334155" font-weight="700">TE-03 › G3.7 (AND gate)</text>
+<text x="195.334" y="1006" font-size="10.5" fill="#0F172A">Stock ACC and item 0x343 on the car bus together while engaged</text>
+<rect x="40" y="1022" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="1039" font-size="10.5" fill="#334155" font-weight="700">● BE-4.21</text>
+<text x="50" y="1053" font-size="9.5" fill="#0F172A">(relay malfunction detected after 1–2 s, not at all, or cleared by</text>
+<text x="50" y="1065" font-size="9.5" fill="#0F172A">a mode change; as SG-04)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.56;0.62;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 1049 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="1022" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="1039" font-size="10.5" fill="#C2410C" font-weight="700">SWF-012 · SW FMEA  + 1 more</text>
+<text x="410" y="1053" font-size="9.5" fill="#0F172A">Relay malfunction not detected</text>
+<text x="720" y="1036" font-size="9.5" fill="#0F172A">SWF-012.C1: Defect in stock_ecu_check, or a replaced message</text>
+<text x="720" y="1048" font-size="9.5" fill="#0F172A">without check_relay; detection starts 1 s after a mode change …</text>
+<rect x="720" y="1058" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="1069.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 5</text>
+<rect x="754.455" y="1058" width="29.5" height="16" rx="8" fill="#DCFCE7"/><text x="769.182" y="1069.24" font-size="9" fill="#14532D" font-weight="700" text-anchor="middle">D 3</text>
+<rect x="788.91" y="1058" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="807.644" y="1069.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="1036" font-size="9.5" fill="#475569">opendbc safety suite with 100% line coverage and</text>
+<text x="1060" y="1048" font-size="9.5" fill="#475569">mutation tests, run by fork CI on every change</text>
+<text x="1060" y="1060" font-size="9.5" fill="#475569">(.github/workflows/safety.yaml, CR-CI-05). At BL-002 …</text>
+</g>
+<text x="40" y="1100" font-size="10.5" fill="#475569">SG-03: 29 events (backed 25, by design 1, external 3, unbacked 0); 43 FMEA modes reach SG-03 (in the tree 32, justified 11, tree gaps 0)</text>
+<text x="40" y="1118" font-size="10.5" fill="#475569">Worst cause: highest AP, then highest D. Red: single-point path from the gate logic. Text cut with … is given in full in the figure description.</text>
+<text x="1304" y="1136" font-size="10" fill="#475569" text-anchor="end">Generated by fta_fmea_figures.py</text>
+</svg>
