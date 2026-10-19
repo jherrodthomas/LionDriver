@@ -1,36 +1,120 @@
 #!/usr/bin/env python3
-"""One-page spreadsheet viewer for the HARA workbooks: tabs, frozen header and ID column, filters, search, row detail.
+"""One-page spreadsheet viewer for every assurance workbook: tabs, frozen header and ID column, filters, search, detail.
 
-GitHub shows an .xlsx only as a download, and its Markdown and CSV views cannot freeze a column, filter or show a
-long rationale on a phone. This builds a single self-contained HTML page from the same workbooks as
-`xlsx_review.py` (its WORKBOOKS list), with the cell values embedded, to be published as a private claude.ai page
-and opened from a phone or a laptop.
+GitHub shows an .xlsx only as a download. This reads every workbook under assurance/ (the cached values of their
+formulas, so a workbook must be recalculated before it is committed, as its builder already does) and writes one
+self-contained HTML page with the values embedded. The page is published as a private claude.ai page (URL below) and
+opened from a phone or a laptop.
+
+The published page has to follow the workbooks. xlsx_viewer.sha256 holds a fingerprint of the page as last built;
+CI runs --check, which fails when a workbook or this tool changed and the page was not rebuilt. The fix is to rebuild
+(which rewrites the fingerprint) and republish the page to the same URL.
 
 Usage:
-  tools/xlsx_viewer.py --out <file.html>     write the viewer page
+  tools/xlsx_viewer.py --out <file.html>     write the page and its fingerprint; then republish it to VIEWER_URL
+  tools/xlsx_viewer.py --check               exit 1 if the fingerprint does not match a fresh build
 """
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import subprocess
 import sys
 from pathlib import Path
 
 import openpyxl
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import xlsx_review as xr
-
-# Columns offered as filter chips when a sheet has them, in this order.
+ROOT = Path(__file__).resolve().parents[1]
+FINGERPRINT = Path(__file__).with_name("xlsx_viewer.sha256")
+VIEWER_URL = "https://claude.ai/artifact/WHMhKBZQywWzDetcTKaDe3"
+# A readable name where the file name alone is not one; the others are named from their file.
+TITLES = {
+  "assurance/02-concept/hara/WP-C-03-hara-cartesian.xlsx": "WP-C-03 HARA (reference scope, Chill mode)",
+  "assurance/02-concept/hara/WP-C-03-hara-cartesian_experimental.xlsx": "WP-C-03 HARA (Experimental Mode variant)",
+  "assurance/00-assessment/iso26262-2018/LionDriver_ISO26262_Audit.xlsx": "ISO 26262:2018 audit workbook",
+  "assurance/02-concept/fsc/WP-C-04-fsc-completeness.xlsx": "WP-C-04 FSC completeness",
+  "assurance/08-analyses/fmea/exports/review/dfmea-review.xlsx": "DFMEA review workbook",
+  "assurance/08-analyses/fmea/exports/review/pfmea-review.xlsx": "PFMEA review workbook",
+  "assurance/08-analyses/fmea/exports/review/sw-fmea-review.xlsx": "SW FMEA review workbook",
+  "assurance/08-analyses/fmea/exports/review/system-fmea-review.xlsx": "System FMEA review workbook",
+}
+FIRST = "assurance/02-concept/hara/WP-C-03-hara-cartesian.xlsx"   # opens first
+# Columns offered as filter chips when a sheet has them, in this order (a column with 2-24 values only).
 FILTERS = ["Function", "Malfunction", "ASIL", "S", "E", "C", "Location", "Weather", "Section", "Assessment",
-           "Obligation", "Worst-case ASIL", "Consolidated into"]
-# Columns kept in the grid on a phone; everything else is in the row detail.
-NARROW = ["HARA ID", "SG_ID", "ID", "ASIL", "Worst-case ASIL", "Assessment", "S", "E", "C", "Malfunction", "Location",
-          "Requirement", "Hazard"]   # phone order: ID, then the rating, then what tells rows apart
-LONG = 60   # a column whose cells average more characters than this is clamped in the grid
+           "Obligation", "Worst-case ASIL", "Consolidated into", "AP", "Status", "Severity", "Occurrence", "Detection"]
+# Columns kept in the grid on a phone, in this order; everything else is in the row detail.
+NARROW = ["HARA ID", "SG_ID", "ID", "ASIL", "Worst-case ASIL", "Assessment", "AP", "S", "E", "C", "O", "D",
+          "Malfunction", "Location", "Requirement", "Hazard", "Failure mode", "Status"]
+LONG = 60   # a column whose cells average more characters than this is clamped to two lines in the grid
 
 
-def collect(root: Path = xr.ROOT) -> dict:
+def text(v) -> str:
+  if v is None:
+    return ""
+  if isinstance(v, float) and v.is_integer():
+    v = int(v)
+  return str(v).strip()
+
+
+def label_line(cells: list[str]) -> str:
+  """A key/value row outside a table: "**Key.** value"; a single cell stays as it is."""
+  if len(cells) < 2:
+    return cells[0] if cells else ""
+  return f"**{cells[0].rstrip('.:')}.** " + " · ".join(cells[1:])
+
+
+def read_sheet(ws) -> tuple[list[str], list[str], list[list[str]], list[str]]:
+  """(lines above the table, header, data rows, lines below it). The header is the first row with as many filled
+  cells as the widest row; columns that are empty all the way down are dropped."""
+  rows = [[text(c) for c in r] for r in ws.iter_rows(values_only=True)]
+  width = max((sum(1 for c in r if c) for r in rows), default=0)
+  if width == 0:
+    return [], [], [], []
+  hi = next(i for i, r in enumerate(rows) if sum(1 for c in r if c) == width)
+  above = [label_line([c for c in r if c]) for r in rows[:hi] if any(r)]
+  cols = [j for j in range(len(rows[hi])) if any(r[j] for r in rows[hi:] if j < len(r))]
+  header = [rows[hi][j] for j in cols]
+  body, below = [], []
+  for r in rows[hi + 1:]:
+    cells = [r[j] if j < len(r) else "" for j in cols]
+    filled = sum(1 for c in cells if c)
+    if filled == 0:
+      if body:
+        below.append("")
+      continue
+    if below or (filled == 1 and cells[0] and len(cells) > 2 and len(cells[0]) > 60):
+      below.append(label_line([c for c in cells if c]))   # a note under the table
+    else:
+      body.append(cells)
+  return above, header, body, [b for b in below if b]
+
+
+def workbooks(root: Path = ROOT) -> list[str]:
+  out = subprocess.run(["git", "-C", str(root), "ls-files", "assurance/*.xlsx"], capture_output=True, text=True,
+                       check=True).stdout.split()
+  return sorted(out, key=lambda p: (p != FIRST, p))
+
+
+def title(path: str) -> str:
+  if path in TITLES:
+    return TITLES[path]
+  stem = Path(path).stem
+  stem = stem.replace("-review", "").replace("_", " ")
+  parts = stem.split("-")
+  if parts[0] == "RR":   # RR-2026-003-hara-checklist -> RR-2026-003 HARA checklist
+    rest = " ".join(parts[3:])
+    return f"{'-'.join(parts[:3])} {rest.replace('hara', 'HARA').replace('fsc', 'FSC').replace('hsi', 'HSI').replace('tsc', 'TSC').replace('hwsr', 'HWSR')}"
+  return stem.replace("-", " ")
+
+
+def group(path: str) -> str:
+  part = Path(path).parts[1]   # 02-concept -> 02 Concept
+  num, _, name = part.partition("-")
+  return f"{num} {name.capitalize()}" if name else part
+
+
+def collect(root: Path = ROOT) -> dict:
   strings: dict[str, int] = {}
 
   def s(v: str) -> int:
@@ -39,22 +123,22 @@ def collect(root: Path = xr.ROOT) -> dict:
     return strings[v]
 
   books = []
-  for wb in xr.WORKBOOKS:
-    book = openpyxl.load_workbook(root / wb.src, data_only=True)
+  for path in workbooks(root):
+    book = openpyxl.load_workbook(root / path, data_only=True)
     sheets = []
     for ws in book.worksheets:
-      above, header, body, below = xr.read_sheet(ws)
+      above, header, body, below = read_sheet(ws)
       widths = [sum(len(r[j]) for r in body) / max(len(body), 1) for j in range(len(header))]
       sheets.append({"name": ws.title, "above": above, "below": below, "header": header,
                      "long": [w > LONG for w in widths],
                      "filters": [header.index(f) for f in FILTERS if f in header and any(header)],
                      "narrow": [header.index(h) for h in NARROW if h in header],
                      "rows": [[s(c) for c in r] for r in body]})
-    books.append({"title": wb.title, "src": wb.src, "sheets": sheets})
+    books.append({"title": title(path), "group": group(path), "src": path, "sheets": sheets})
   return {"strings": list(strings), "books": books}
 
 
-PAGE = r"""<title>HARA Workbook Viewer</title>
+PAGE = r"""<title>Assurance Workbook Viewer</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+Condensed:wght@600&display=swap">
 <style>
@@ -93,6 +177,8 @@ h1{font:600 21px/1.15 var(--f-head);margin:0;letter-spacing:.01em;text-wrap:bala
 .src select{flex:1 1 auto;min-width:0;max-width:100%;text-overflow:ellipsis}
 select,input[type=search]{font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:7px 10px;min-width:0}
 select:focus-visible,input:focus-visible,button:focus-visible,.tab:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.tt{display:flex;flex-direction:column;gap:2px;min-width:0}
+#path{overflow-wrap:anywhere}
 .tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
 .tab{flex:none;font:600 13px var(--f-head);letter-spacing:.02em;border:1px solid var(--line);background:var(--panel);color:var(--muted);
   border-radius:6px;padding:6px 10px;cursor:pointer;white-space:nowrap}
@@ -149,7 +235,7 @@ td.short{white-space:nowrap}
 </style>
 <header>
   <div class="top">
-    <h1 id="title"></h1>
+    <div class="tt"><h1 id="title"></h1><span class="src" id="path"></span></div>
     <label class="src">Workbook <select id="book" aria-label="Workbook"></select></label>
   </div>
   <div class="tabs" id="tabs" role="tablist" aria-label="Sheets"></div>
@@ -171,7 +257,8 @@ td.short{white-space:nowrap}
 <script id="data" type="application/json">__DATA__</script>
 <script>
 const D=JSON.parse(document.getElementById('data').textContent), S=D.strings;
-const RATED=new Set(['ASIL','Worst-case ASIL','S','E','C','Assessment']);
+const RATED=new Set(['ASIL','Worst-case ASIL','S','E','C','Assessment','AP']);
+const AP={H:'D',M:'B',L:'A'};
 const PAGE=200;
 let st={b:0,s:0,q:'',f:{},shown:PAGE,all:false,sel:-1};
 const $=id=>document.getElementById(id);
@@ -181,11 +268,12 @@ const book=()=>D.books[st.b], sheet=()=>book().sheets[st.s];
 function esc(t){return t.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function badge(h,v){
   if(!RATED.has(h)||!v) return esc(v);
-  const k=v==='—'?'S0':(/^(QM|A|B|C|D)$/.test(v)?v:(/^[SEC]\d$/.test(v)?({0:'QM',1:'A',2:'B',3:'C',4:'D'}[v[1]]):null));
+  const k=v==='—'?'S0':(h==='AP'&&AP[v])?AP[v]:(/^(QM|A|B|C|D)$/.test(v)?v:(/^[SEC]\d$/.test(v)?({0:'QM',1:'A',2:'B',3:'C',4:'D'}[v[1]]):null));
   return k?`<span class="r ${k}">${esc(v)}</span>`:esc(v);
 }
 function init(){
-  $('book').innerHTML=D.books.map((b,i)=>`<option value="${i}">${esc(b.title)}</option>`).join('');
+  const groups=[...new Set(D.books.map(b=>b.group))].sort();
+  $('book').innerHTML=groups.map(g=>`<optgroup label="${esc(g)}">`+D.books.map((b,i)=>b.group===g?`<option value="${i}">${esc(b.title)}</option>`:'').join('')+'</optgroup>').join('');
   $('book').onchange=e=>{st.b=+e.target.value;st.s=0;reset();render()};
   $('q').oninput=e=>{st.q=e.target.value.toLowerCase();st.shown=PAGE;grid()};
   $('all').onchange=e=>{st.all=e.target.checked;save();grid()};
@@ -199,7 +287,7 @@ function init(){
 function reset(){st.f={};st.q='';st.shown=PAGE;st.sel=-1;$('q').value='';close()}
 function render(){
   if(st.s>=book().sheets.length)st.s=0;
-  $('book').value=st.b; $('title').textContent=book().title; $('all').checked=st.all;
+  $('book').value=st.b; $('title').textContent=book().title; $('path').textContent=book().src; $('all').checked=st.all;
   $('tabs').innerHTML=book().sheets.map((s,i)=>`<button class="tab" role="tab" aria-selected="${i===st.s}" data-i="${i}">${esc(s.name.replace(/^\d+_/,'').replace(/_/g,' '))}<span class="n">${s.rows.length}</span></button>`).join('');
   $('tabs').querySelectorAll('.tab').forEach(t=>t.onclick=()=>{st.s=+t.dataset.i;reset();save();render();t.scrollIntoView({inline:'nearest',block:'nearest'})});
   const sh=sheet();
@@ -255,17 +343,36 @@ init();
 """
 
 
-def build(root: Path = xr.ROOT) -> str:
+def build(root: Path = ROOT) -> str:
   data = json.dumps(collect(root), ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
   return PAGE.replace("__DATA__", data)
 
 
+def fingerprint(page: str) -> str:
+  return hashlib.sha256(page.encode()).hexdigest()
+
+
 def main() -> int:
   ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-  ap.add_argument("--out", required=True, help="where to write the page")
+  ap.add_argument("--out", help="write the page here and update the fingerprint")
+  ap.add_argument("--check", action="store_true", help="fail if the fingerprint does not match a fresh build")
   args = ap.parse_args()
-  Path(args.out).write_text(build(), encoding="utf-8")
-  print(f"xlsx_viewer: wrote {args.out}")
+  page = build()
+  fp = fingerprint(page)
+  if args.check:
+    stored = FINGERPRINT.read_text(encoding="utf-8").split()[0] if FINGERPRINT.exists() else ""
+    if stored != fp:
+      print("xlsx_viewer: a workbook or the viewer changed since the page was last built. Run\n"
+            "  python3 tools/xlsx_viewer.py --out <scratch>/workbook-viewer.html\n"
+            f"and republish that file to {VIEWER_URL}", file=sys.stderr)
+      return 1
+    print(f"xlsx_viewer: page current ({len(collect()['books'])} workbooks)")
+    return 0
+  if not args.out:
+    ap.error("give --out or --check")
+  Path(args.out).write_text(page, encoding="utf-8")
+  FINGERPRINT.write_text(f"{fp}  published at {VIEWER_URL}\n", encoding="utf-8")
+  print(f"xlsx_viewer: wrote {args.out}; republish it to {VIEWER_URL}")
   return 0
 
 
