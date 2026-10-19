@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-09 System verification (qualification) specification and report |
 | Standard reference | ISO 26262-4:2018 §7 (integration and testing at vehicle level, verification of the technical safety requirements and of AoU on external measures); ISO 21448:2022 §10 (verification of the SOTIF-related functions, interface to WP-V-03); ASPICE 4.0 SYS.5 (system verification) |
-| Version | 0.3 (VS-SQ-16 names the requirements it covers explicitly: lane change runs in modeld, which process replay does not replay; 2026-10-14). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
+| Version | 0.4 (OI-2: test builds kept off public roads by procedure only, DQ-105 B, 2026-10-19). 0.3 (VS-SQ-16 names the requirements it covers explicitly: lane change runs in modeld, which process replay does not replay; 2026-10-14). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft (specification). **Results: not yet executed** |
 | ASIL / scope | ASIL C (SG-01 until re-rated), ASIL B (SG-02…SG-07); reference configuration (Toyota Corolla, 12th generation (E210), TSS 2.0, `TOYOTA_COROLLA_TSS2`) |
 | Author | Assurance team (initial draft) |
@@ -150,7 +150,7 @@ Summary (to complete after execution): AoU verdicts and their effect on HARA ⚠
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
 | OI-1 | Re-check TSR and SYS references when WP-S-01/WP-S-02 leave Draft | Safety engineer | G2 |
-| OI-2 | Define the closed-course test builds (host and panda) for VS-SQ-02, -03, -05, -12, -13 as configuration items, including how they are prevented from reaching public-road use | Maintainer | Before first closed-course session |
+| OI-2 | Define the closed-course test builds (host and panda) for VS-SQ-02, -03, -05, -12, -13 as configuration items, including how they are prevented from reaching public-road use. The lead decided on 2026-10-19 (decision register DQ-105, B): procedure only. The release build is reflashed after every closed-course session and the reflash is recorded in the logbook; no hardware interlock. The barrier rests on discipline, so the logbook entry is a session exit criterion | Maintainer | Before first closed-course session |
 | OI-3 | Specify course geometry and speeds per case from the FTTI derivation (WP-S-04) | Safety engineer | G2 |
 | OI-4 | Run VS-SQ-01, -02, -04, -05, -06 early (G1): they decide the HARA ⚠ ratings and the envelope strategy (WP-C-04 OI-2) | Safety engineer | G1 |
 | OI-5 | Fix the margin target for VS-SQ-18 together with the derived limits (TSR-605) | Safety engineer | G2 |

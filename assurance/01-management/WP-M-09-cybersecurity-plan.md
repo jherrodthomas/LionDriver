@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-09 Cybersecurity plan |
 | Standard reference | ISO/SAE 21434:2021 §6 (project dependent cybersecurity management), with activity references to §7–§15; UN R155 / R156 (informative); ASPICE 4.0 MAN.7, SEC.1–SEC.4 |
-| Version | 0.3 (status update: §2 GAP-28 and GAP-29 rows, §5 status of the concept and post-development work products (now Draft), §6 tinygrad pin, owner and due gate for each open item, the lead's answers of 2026-10-14 noted at OI-2 and OI-3; 2026-10-14). 0.2 (status update for the integrated envelope changes: §5 activity status, GAP-09, OI-5; 2026-10-12). 0.1 |
+| Version | 0.4 (OI-8 decided: rely on the TARA privacy rating, DQ-095 A, 2026-10-19). 0.3 (status update: §2 GAP-28 and GAP-29 rows, §5 status of the concept and post-development work products (now Draft), §6 tinygrad pin, owner and due gate for each open item, the lead's answers of 2026-10-14 noted at OI-2 and OI-3; 2026-10-14). 0.2 (status update for the integrated envelope changes: §5 activity status, GAP-09, OI-5; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | CS |
 | Author | Assurance team (initial draft) |
@@ -146,4 +146,4 @@ Tooling for SBOM generation and scanning is not in the repository today; selecti
 | OI-5 | Publish a LionDriver `SECURITY.md` and intake channel (GAP-28). Status 2026-10-12: `SECURITY.md` published (private vulnerability reporting, response times, scope); private vulnerability reporting not yet enabled in the repository settings (B-07) | CSM | G0 |
 | OI-6 | Engage an independent cybersecurity assessor and penetration tester | PM | G1 |
 | OI-7 | Agree with the assessor the tailoring entries CT-1…CT-4 | CSM | G1 |
-| OI-8 | Determine whether driver-camera and location data handling needs a privacy impact assessment beyond the TARA privacy impact category. Queued for the lead (decision register DQ-095) | CSM | G1 |
+| OI-8 | Determine whether driver-camera and location data handling needs a privacy impact assessment beyond the TARA privacy impact category. The lead decided on 2026-10-19 (decision register DQ-095, A): rely on the TARA privacy rating for now; revisit if the encryption-at-rest check (WP-C-09 OI-3) shows the data is exposed. A reviewer may still expect a formal assessment | CSM | G1 |
