@@ -62,7 +62,7 @@
 <text x="488" y="548.0" class="kind">BASIC</text>
 <text x="296" y="562.5" class="d">Envelope blocking detected by</text>
 <text x="296" y="577.0" class="d">controlsMismatch after ≈2 s</text>
-<text x="296" y="591.5" class="d">(selfdrived.py:338, 508-510) or</text>
+<text x="296" y="591.5" class="d">(selfdrived.py:340, 529-531) or</text>
 <text x="296" y="606.0" class="d">not at all if pandaStates is</text>
 <text x="296" y="620.5" class="d">stale with authority shown</text>
 <text x="296" y="634.0" class="n">controlsMismatch after ≈2 s, as</text>
