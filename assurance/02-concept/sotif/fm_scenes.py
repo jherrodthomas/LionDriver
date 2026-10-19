@@ -46,7 +46,7 @@ SHEETS = {"fig-c07-3-1-fm-scenes-p1.svg": ("3-1", "P1 modifications", ["P1"]),
 PRIO = {"P1": ("#FEE2E2", "#7F1D1D", "P1 · before on-road use"), "P2": ("#FEF3C7", "#78350F", "P2 · before G5 release"),
         "P3": ("#E0F2FE", "#075985", "P3 · decide at G2")}
 STATUS = {"open": ("#E2E8F0", "#334155", "No implementation recorded"), "gap": ("#FFEDD5", "#7C2D12", "Open, recorded"),
-          "decided": ("#EDE9FE", "#4C1D95", "Decided, not implemented")}
+          "decided": ("#EDE9FE", "#4C1D95", "Decided, not implemented"), "partial": ("#DCFCE7", "#14532D", "Partly implemented")}
 GREEN_FILL = "#16A34A"
 
 
@@ -182,11 +182,11 @@ def fm01():
   ch = chart("speed", [(24, "cruise"), (96, "0")], [(0, 24), (stop, 24), (stop + 0.12, 70), (1, 74)], [(0, 24), (1, 24)],
              [(stop + 0.14, 62, "e2e false stop", CR, "start"), (0.5, 20, "Chill: cruise held", CG, "middle")])
   sc_today = road() + [other(follow)] + ego(today) + [marker(xs(stop), LANE, stop), badge("TODAY", CR),
-                                                     tag(stop, xs(stop), 34, "phantom light: hard stop", BAD),
+                                                     tag(stop, xs(stop), 34, "Experimental on: phantom stop", BAD),
                                                      tag(0.8, 140, 66, "follower closes in", NOTE)]
   fm_path = straight_path()
   sc_fm = road() + [other(sample(lambda f: (X0 - 30 + 248 * f, LANE)))] + ego(fm_path, CG) + [
-    badge("WITH FM-01", CG), tag(stop, 120, 34, "Chill: no end-to-end stop", GOOD)]
+    badge("WITH FM-01", CG), tag(stop, 120, 34, "Chill locked: no end-to-end stop", GOOD)]
   return ch, sc_today, sc_fm
 
 
@@ -358,11 +358,15 @@ C04_SG02 = ("WP-C-04", "Soft disable warns at once, but actuates on stale inputs
 OI2 = ("WP-C-07", "Raise change requests for P1 FMs under WP-P-02")
 MODELS = {
   "FM-01": dict(title="Experimental Mode off and locked", sh="SH-09", draw=fm01,
-                today="Experimental Mode is on by default; it adds false-stop behaviour and raises cruise acceleration.",
-                src=[("FM-01.Rationale", "Experimental Mode was made default upstream without hazard assessment"),
-                     ("FM-01.Rationale", "adds false-stop behaviour (FI-05)")],
-                status="open", status_text="No implementation recorded; change requests for P1 FMs are open (WP-C-07 OI-2).",
-                status_src=[OI2]),
+                today="Chill is the default on new installs, but the owner can still turn Experimental Mode on, and a stored 1 persists.",
+                src=[("FM-01.Status", "implemented 2026-10-14"),
+                     ("FM-01.Status", "the toggle stays and the owner can still turn Experimental Mode on"),
+                     ("FM-01.Status", "a device that already stored `1` keeps it")],
+                status="partial", status_text="(a) Chill default in the code since 2026-10-14 (DQ-001 A), not verified on the vehicle; "
+                                              "(b) the lock and (c) ignoring a stored 1 are not implemented (WP-C-07 §3).",
+                status_src=[("FM-01.Status", "not reviewed independently, not verified on the vehicle"),
+                            ("FM-01.Status", "Toggle disabled: **not implemented**"),
+                            ("FM-01.Status", "Stored `\"1\"` ignored: **not implemented**")]),
   "FM-02": dict(title="No diagnostic masking, no hot switch", sh="SH-01", draw=fm02,
                 today="Diagnostics are masked while the big model loads; a failure hot-switches to a model with zero recurrent state.",
                 src=[("FM-02.Rationale", "Diagnostics are masked while the system may be engaged"),
