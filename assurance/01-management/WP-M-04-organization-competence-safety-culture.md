@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-04 Organization-specific rules, safety culture, competence management |
 | Standard reference | ISO 26262-2:2018 §5 (overall safety management: rules and processes, safety culture, competence management, QMS link); ISO/SAE 21434:2021 §5 (organizational cybersecurity management, cybersecurity culture, competence); ISO 21448:2022 §4 (competence for SOTIF activities); ISO/PAS 8800:2024 (AI safety management, competence) |
-| Version | 0.3 (§4.5 every contributor keeps a full competence record, decided by the lead 2026-10-14 (DQ-016, B); OI-3 closed; 2026-10-18). 0.2 (status update: §6 private security channel published in `SECURITY.md` 2026-10-12, gate and confirmation record folders exist; OI-4 closed except the repository setting; the lead's answers of 2026-10-14 noted at OI-2 and OI-6; 2026-10-14). 0.1 |
+| Version | 0.4 (OI-5 notes the lead's answer of 2026-10-19 (DQ-040, C); 2026-10-19). 0.3 (§4.5 every contributor keeps a full competence record, decided by the lead 2026-10-14 (DQ-016, B); OI-3 closed; 2026-10-18). 0.2 (status update: §6 private security channel published in `SECURITY.md` 2026-10-12, gate and confirmation record folders exist; OI-4 closed except the repository setting; the lead's answers of 2026-10-14 noted at OI-2 and OI-6; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (organization level; FuSa, SOTIF, CS, AI) |
 | Author | Assurance team (initial draft) |
@@ -191,5 +191,5 @@ Training completion is recorded in the competence record (§4.4).
 | OI-2 | The safety manager role requires FS level E; record evidence or name an external mentor/supervisor for the gap. Answered by the lead 2026-10-14 (decision register DQ-015): record the evidence held. Open: the record itself (OI-1) | PM | G0 |
 | OI-3 | Closed 2026-10-18: every contributor keeps a full competence record before their first merged pull request (§4.5; decision register DQ-016, B, the lead 2026-10-14). The checklist-only proposal was not taken | SM | G0 |
 | OI-4 | Define the private vulnerability channel and publish `SECURITY.md`. Status 2026-10-14: `SECURITY.md` published 2026-10-12 (GitHub private vulnerability reporting, response times, scope, testing rules). Open: enable private vulnerability reporting in the repository settings (WP-M-03 B-07; [WP-M-09](WP-M-09-cybersecurity-plan.md) OI-5) | CSM | G0 |
-| OI-5 | Confirm whether LionDriver will create a legal entity or other structure for contracts (assessor, pen test, insurance) | PM | G1 |
+| OI-5 | Confirm whether LionDriver will create a legal entity or other structure for contracts (assessor, pen test, insurance). Status 2026-10-19: the lead decided (decision register DQ-040, C) to decide this when the first contract is actually needed. Until then, test insurance (WP-M-03 OI-4) stays open and blocks G1 test sessions | PM | G1 |
 | OI-6 | Confirm the project name and release artefacts comply with the upstream trademark constraint (§2.3). The lead decided on 2026-10-14 (decision register DQ-017) to do this check before release, not now | PM | G5 |
