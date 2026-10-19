@@ -46,7 +46,7 @@ Freshness is judged on two clocks. `selfdriveState` drives the `controlsd` loop,
 
 | ID | Item |
 |---|---|
-| OI-1 | TSR-602 asks for 2 nominal periods; this change uses 10, the same bound as `commIssue`, until reference logs show the input jitter. The stale-input event is `commIssue` (SOFT_DISABLE), not a new immediate disable (SWF-ACT-040) |
+| OI-1 | TSR-602 asks for 2 nominal periods; this change uses 10, the same bound as `commIssue`, until reference logs show the input jitter. The stale-input event is `commIssue` (SOFT_DISABLE), not a new immediate disable (SWF-ACT-040). **Accepted for now** by the lead 2026-10-14 (register DQ-115 A): 10 periods stay until the logs show the jitter, then the bound is tightened |
 | OI-2 | TSR-615: panda fault flags other than `relayMalfunction` and SPI error bursts still have no reaction; the EPS-fault flag is covered by the EPS status events from `card` |
 | OI-3 | Replay the reference-vehicle logs for `safetyTxBlocked` increments and `controlsAllowed` mismatches while engaged to confirm no nuisance disengagements |
 | OI-4 | Non-finite values skip a step without an event or alert (SWF-ACT-041 asks for an immediate disable with alert) |

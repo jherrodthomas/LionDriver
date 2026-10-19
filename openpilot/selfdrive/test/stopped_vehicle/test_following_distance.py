@@ -8,7 +8,7 @@ from openpilot.selfdrive.selfdrived import selfdrived
 from openpilot.selfdrive.test.stopped_vehicle import scenarios as S
 from openpilot.selfdrive.test.stopped_vehicle.harness import run
 
-# CA-011 verification: relaxed following distance by default (FI-2026-001, HZ-008)
+# CA-011 verification: relaxed following distance by default (FI-2026-001, FHZ-008)
 
 RELAXED = log.LongitudinalPersonality.relaxed
 
