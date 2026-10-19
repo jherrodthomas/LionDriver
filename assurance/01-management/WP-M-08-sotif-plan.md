@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-08 SOTIF plan |
 | Standard reference | ISO 21448:2022 §4 (management of SOTIF activities), §5–§13; ISO/PAS 8800:2024 (interface for AI-related insufficiencies); ASPICE 4.0 MAN.3 |
-| Version | 0.7 (roles: the project lead signs the SOTIF recommendation after an external SOTIF review, DQ-025; the lead supervises human-subject tests, no external human-factors reviewer, DQ-026; OI-6 decided; 2026-10-17). 0.6 (OI-3: simulation credit rule decided, DQ-139; CARLA deferred to G3, DQ-261; 2026-10-16). 0.5 (OI-3 and the simulation row of §7 point to the WP-V-02 §5.3 fidelity-case plan and DQ-139; CARLA, DQ-261; 2026-10-16). 0.4 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; D-05 adopted, DQ-038; no log uploads to comma, DQ-084; 2026-10-16). 0.3 (status in §4 from WP-M-00; Experimental Mode default off since 2026-10-14 in §2 and §8; open items with owner and due gate; 2026-10-14). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
+| Version | 0.8 (§5.2 step 3: confidence level one-sided 95 %, DQ-057 A; 2026-10-19). 0.7 (roles: the project lead signs the SOTIF recommendation after an external SOTIF review, DQ-025; the lead supervises human-subject tests, no external human-factors reviewer, DQ-026; OI-6 decided; 2026-10-17). 0.6 (OI-3: simulation credit rule decided, DQ-139; CARLA deferred to G3, DQ-261; 2026-10-16). 0.5 (OI-3 and the simulation row of §7 point to the WP-V-02 §5.3 fidelity-case plan and DQ-139; CARLA, DQ-261; 2026-10-16). 0.4 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; D-05 adopted, DQ-038; no log uploads to comma, DQ-084; 2026-10-16). 0.3 (status in §4 from WP-M-00; Experimental Mode default off since 2026-10-14 in §2 and §8; open items with owner and due gate; 2026-10-14). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -93,7 +93,7 @@ For each SOTIF hazardous behaviour SH-nn in WP-C-05:
 
 1. Take the acceptable rate of harm from the baseline (B1), apportioned to the hazard.
 2. Divide by the probability that the hazardous behaviour leads to harm, using the controllability and exposure assumptions shared with the HARA. Each such factor needs its own evidence or is set to 1 (conservative).
-3. The result is a target rate for the hazardous behaviour, from which a test-distance or test-count target follows with a stated confidence level.
+3. The result is a target rate for the hazardous behaviour, from which a test-distance or test-count target follows at one-sided 95 % confidence (WP-V-02 §3 step 3; decided 2026-10-19 by the project lead, decision register DQ-057 option A).
 4. Where a target is not achievable by LionDriver-owned driving (expected for most targets, given one vehicle and one maintainer), the target is decomposed into scenario-level targets that can be evaluated by replay and simulation, and the ODD is narrowed (§8). The rationale for each decomposition is recorded in WP-V-02.
 
 Surrogate measures (driver takeovers, disengagements, FCW events, envelope limit hits, DM alerts) may be used as leading indicators. Their relationship to harm must be argued, not assumed.

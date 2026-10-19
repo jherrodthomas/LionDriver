@@ -23,7 +23,7 @@
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 4 performed: CR-12, FSA-F, SR-03, SR-04@G5 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 68 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 67 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
@@ -35,7 +35,7 @@
 | [WP-O-01](../../../09-production-operation/WP-O-01-installation-and-provisioning-control.md) Installation, provisioning and production control | REL-04 | Draft | 8 | |
 | [WP-O-03](../../../09-production-operation/WP-O-03-user-information-safety-warnings.md) User information and safety warnings | REL-05 | Draft | 7 | |
 | [WP-O-02](../../../09-production-operation/WP-O-02-operation-service-decommissioning.md) Operation, service (maintenance, repair) and decommissioning | REL-06 | Draft | 6 | |
-| [WP-K-02](../../../10-safety-case/WP-K-02-sotif-release-argument.md) SOTIF achievement evaluation and release recommendation | REL-07 | Skeleton | 3 | |
+| [WP-K-02](../../../10-safety-case/WP-K-02-sotif-release-argument.md) SOTIF achievement evaluation and release recommendation | REL-07 | Skeleton | 2 | |
 | [WP-K-03](../../../10-safety-case/WP-K-03-cybersecurity-case.md) Cybersecurity case | REL-08 | Draft | 5 | |
 | [WP-P-10](../../../07-supporting/WP-P-10-release-management.md) Release management and baseline procedure | REL-09 | Draft | 6 | |
 | [WP-K-01](../../../10-safety-case/WP-K-01-safety-case.md) Safety case (GSN, integrated FuSa, SOTIF and AI argument) (update) | REL-10 | Draft | 5 | |
