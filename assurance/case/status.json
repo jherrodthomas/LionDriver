@@ -23,7 +23,7 @@
       "stated_count": 335
     }
   },
-  "defeaters_open": 41,
+  "defeaters_open": 42,
   "evidence": {
     "accepted": 0,
     "available": 0,
@@ -97,6 +97,6 @@
       "title": "Safety Case and Review"
     }
   ],
-  "records_digest": "6e29a9ae1b5e",
+  "records_digest": "70cd6852eb64",
   "reviews": 0
 }

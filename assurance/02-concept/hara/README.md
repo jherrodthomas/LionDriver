@@ -36,6 +36,34 @@ The other functions have a sheet each, in the same layout:
 
 In the longitudinal scenes a small simulation runs the intended controller twice, as specified and with the guide word applied to its output, so the chart plots the commanded acceleration of both runs and the callout marks the first moment the faulty run is clearly worse (closes on the lead, follower closes in, past the stop line on red). Pills in the scene's corner give the state the card depends on (driver brakes, no alert, AEB request blocked). The cards list the safety goal of each hazard from `SG_MAP`: H-07 cards show both SG-02 and SG-06; H-10 (F-02X) shows that SG-09 exists only under D-08 option B.
 
+### F-02 Longitudinal control (ACC, Chill mode)
+
+![F-02 Longitudinal control (ACC, Chill mode): 13 cards, one per guide word. Following a lead that slows; chart = commanded acceleration](figures/fig-c03-4-2-f02-guide-words.svg)
+
+### F-02X Longitudinal control, Experimental Mode
+
+![F-02X Longitudinal control, Experimental Mode: 11 cards, one per guide word. Approaching a red light; chart = commanded acceleration](figures/fig-c03-4-3-f02x-guide-words.svg)
+
+### F-03 Engagement and mode management
+
+![F-03 Engagement and mode management: 10 cards, one per guide word. Driver brakes toward a stopped car, or engagement changes in the curve; chart = engaged state](figures/fig-c03-4-4-f03-guide-words.svg)
+
+### F-04 Driver monitoring
+
+![F-04 Driver monitoring: 9 cards, one per guide word. Driver looks away, or is attentive; chart = escalation (warning → alert → forced deceleration)](figures/fig-c03-4-5-f04-guide-words.svg)
+
+### F-05 Driver information and warnings
+
+![F-05 Driver information and warnings: 8 cards, one per guide word. The system hands back in the curve; chart = take-over alert or displayed state](figures/fig-c03-4-6-f05-guide-words.svg)
+
+### F-06 Forward collision warning
+
+![F-06 Forward collision warning: 1 card, one per guide word. A false warning and the driver's reflex braking](figures/fig-c03-4-7-f06-guide-words.svg)
+
+### F-08 Safety envelope and forwarding
+
+![F-08 Safety envelope and forwarding: 4 cards, one per guide word. Stock AEB request blocked before a stopped car, or commands blocked in the curve](figures/fig-c03-4-8-f08-guide-words.svg)
+
 ## Regenerating
 
 1. Write the generator inputs to `build/` (not committed), the summary, and the counts table in WP-C-03 §2.1:
