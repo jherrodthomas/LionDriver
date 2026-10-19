@@ -72,10 +72,12 @@ jobs:
         python3 assurance/trace/tools/trace_map.py --check
         python3 assurance/trace/tools/test_trace_map.py
         python3 assurance/trace/tools/test_vmodel.py
-    - name: Decision register follows its lifecycle rules, and the inbox page builds (and their tests)
+    - name: Decision register follows its lifecycle rules, the inbox page builds, the lifecycle figure is current (and their tests)
       run: |
         python3 assurance/01-management/decisions/check_decisions.py
         python3 assurance/01-management/decisions/test_decisions.py
+        python3 assurance/01-management/decisions/fig_lifecycle.py --check
+        python3 assurance/01-management/decisions/test_fig_lifecycle.py
     - name: Work-product figures match their source tables and records (and their tests)
       run: |
         python3 assurance/01-management/figures/fig_m_management.py --check
