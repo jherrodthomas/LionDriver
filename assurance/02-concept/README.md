@@ -32,7 +32,6 @@ Standard clauses: 26262-3, 21448 §5–8, 21434 §9/§15, PAS 8800.
 |---|---|
 | [`fsc/`](fsc/README.md) | FSC completeness check |
 | [`hara/`](hara/README.md) | HARA |
-| [`hatara/`](hatara/) | — |
 | [`reviews/`](reviews/) | — |
 | [`sotif/`](sotif/README.md) | SOTIF figure generator |
 
