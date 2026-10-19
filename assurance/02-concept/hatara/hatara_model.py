@@ -6,8 +6,9 @@ dependency, mutual reinforcement, antagonism; independent pairs are not listed),
 side and on the security side, what follows, and the records it ties to. The model checks them against the analyses:
 
 - every ID an interaction ties to exists in the assurance records outside this folder;
-- a conditional dependency that names a threat scenario and a hazard which WP-C-09 §3 does not link is marked as a gap,
-  and a gap whose link WP-C-09 now carries fails, so it is closed here too;
+- a conditional dependency that names a threat scenario and a hazard which WP-C-09 §3 does not link must be marked as a
+  gap; its status is derived, so it reads "closed" as soon as WP-C-09 §3 carries the link (the generated table and
+  figures then need regenerating, like every figure that reads another work product's tables);
 - the requirement statuses on the cards are read from WP-C-10 §7, never typed here.
 
     python3 hatara_model.py            # write hatara-interactions.md
@@ -63,7 +64,7 @@ INTERACTIONS = [
        security="Verified boot leaves the panda unable to run firmware that fails its check",
        follows="The item may stop, but the stock path must stay: the switches fall back to pass-through only while the pull-down holds (LS-33).",
        ties=["CSR-C-03", "SG-07", "H-08", "LS-33"]),
-  dict(id="IX-06", title="A fault reaction is a denial-of-service lever", kind="anta", dir="safety → security",
+  dict(id="IX-06", title="A fault reaction is a DoS lever", kind="anta", dir="safety → security",
        safety="Heartbeat loss or a controls mismatch withdraws authority at once, with an alert (LS-24)",
        security="An attacker who stalls SoC processes (TS-12) can trigger that withdrawal at will",
        follows="It stays safe only while the alert path survives the same attack; otherwise it is the silent loss of H-02 and H-06.",
@@ -83,16 +84,16 @@ INTERACTIONS = [
        security="Its video is personal data that an attacker or a thief can take (TS-11, DS-08)",
        follows="Every frame the safety function keeps is a privacy exposure. Keep and upload only what it needs (CSG-08).",
        ties=["TS-11", "DS-08", "CSG-08", "H-09", "CSR-C-14"]),
-  dict(id="IX-10", title="Firmware integrity holds up every safety goal", kind="dep", dir="security → safety",
+  dict(id="IX-10", title="Firmware integrity holds up every goal", kind="dep", dir="security → safety",
        safety="Every safety goal has a requirement in the envelope firmware (WP-C-04)",
        security="Safety-mode integrity (CSG-01) and firmware authenticity (CSG-02) protect that firmware",
        follows="Until both are met, no safety goal's argument holds against an attacker on the SoC.",
        ties=["CSG-01", "CSG-02", "SG-01", "TS-02", "TS-03"], status="Recorded in WP-C-10 §8"),
-  dict(id="IX-11", title="Screen and driver-monitoring attacks have no damage", kind="dep", dir="security → safety", gap=True,
+  dict(id="IX-11", title="Screen and DM attacks: no damage", kind="dep", dir="security → safety", gap=True,
        safety="WP-C-03 names spoofed HMI state for mode confusion (H-07); missed inattention is H-09",
-       security="TS-04 can alter DM behaviour, yet WP-C-09 §3 links no damage scenario to H-07 or H-09",
-       follows="Add damage scenarios for H-07 and H-09, or record why none applies. The matrix shows the gap until then.",
-       ties=["TS-04", "H-07", "H-09", "CSG-03"], status="Open: no damage scenario in WP-C-09"),
+       security="TS-04 can alter DM behaviour, yet none of its damage scenarios reaches H-07 or H-09",
+       follows="Link TS-04 to H-07 and H-09 through damage scenarios, or record why not. H-09 has none from any threat.",
+       ties=["TS-04", "H-07", "H-09", "CSG-03"]),
 ]
 
 
@@ -159,16 +160,18 @@ class Model:
           raise ParseError(f"{i}: {t} is not a WP-C-09 threat scenario")
         if t.startswith("CSR-C-") and t not in self.goals.csr:
           raise ParseError(f"{i}: {t} is not a WP-C-10 §7 requirement")
-      if not [t for t in ix["ties"] if t.startswith("CSR-C-")] and not ix.get("status"):
+      if not [t for t in ix["ties"] if t.startswith("CSR-C-")] and not ix.get("status") and not ix.get("gap"):
         raise ParseError(f"{i}: no requirement to read a status from, so it needs its own status")
       g = self.gaps(ix) if ix["kind"] == "dep" else []
-      if ix.get("gap") and not g:
-        raise ParseError(f"{i}: WP-C-09 §3 now links every hazard and threat it names; close the gap here too")
       if g and not ix.get("gap"):
         raise ParseError(f"{i}: WP-C-09 §3 does not link {', '.join(f'{h}/{t}' for h, t in g)}; mark it as a gap")
 
   def status(self, ix) -> list[tuple[str, str]]:
     """(label, CSR_ST key or '') per line of the card's status: one per tied requirement, else the row's own."""
+    if ix.get("gap"):  # derived, so the TARA owner's damage scenarios close it without an edit here
+      g = self.gaps(ix)
+      return [(f"Open: WP-C-09 lacks {', '.join(f'{h}/{t}' for h, t in g)}", "open")] if g else \
+             [("Closed: WP-C-09 §3 links them now", "done")]
     csrs = [t for t in ix["ties"] if t.startswith("CSR-C-")]
     return [(f"{r} {fg.CSR_ST[self.goals.csr[r]['status']][2].lower()}", self.goals.csr[r]["status"]) for r in csrs] or \
            [(ix["status"], "")]
