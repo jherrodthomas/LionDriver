@@ -37,7 +37,7 @@ SRC = {
                    "verification → validation → FSA."),
   "m03_longlead": (WP_M_03, "Long-lead items to start early: assessor engagement (P0), HIL bench parts (P2), test vehicle "
                    "access and safety driver training (P1), pen-test procurement (P4)."),
-  "m03_no_dates": (WP_M_03, "No calendar dates are set until staffing is known (OI-1)."),
+  "m03_calendar": (WP_M_03, "Calendar: start 2026-11-01, maintainer effort about 20 h/week."),
   "m03_staff": (WP_M_03, "Realistic delivery needs at least: one additional envelope engineer or reviewer (from P0), a "
                 "SOTIF/ML person (from P1), a hardware safety engineer (P3, can be external), and a test driver (P1)."),
   "m03_no_milestones": (WP_M_03, "None of these milestones, labels or issues exist yet; creating them is backlog item B-01."),
@@ -84,6 +84,8 @@ class Backlog:
 
 @dataclass
 class Plan:
+  start: tuple[int, int] | None    # §5 "Calendar:" start (year, month); None = relative only
+  stretch: float                   # §5 durations are at 1.0 FTE; the calendar stretches them by 40 h / hours a week
   phases: list[Phase]
   critical: list[str]
   long_lead: list[tuple[str, str, str, str]]   # (item, phase, §6 status, needed-by phase)
@@ -162,6 +164,8 @@ def load_plan(md: str | None = None, m07: str | None = None) -> Plan:
                         plain(r[col(head, "Can overlap with")])))
   head, ois = table(section(md, "## 10. Open items"), "ID")
   for r in ois:
+    if plain(r[col(head, "Open item")]).startswith("Closed"):
+      continue
     for ph in phases:
       if plain(r[col(head, "Due")]) == ph.gate:
         ph.due.append((r[0], short(r[col(head, "Open item")])))
@@ -187,7 +191,41 @@ def load_plan(md: str | None = None, m07: str | None = None) -> Plan:
   head, risks = table(section(m07, "## 4. Risk register"), "ID")
   r01 = next(plain(r[col(head, "Risk (cause → effect)")]) for r in risks if r[0] == "R-01")
   st = re.search(r"^\| Status \| ([^|]+) \|", md, re.M)
-  return Plan(phases, crit, long_lead, backlog, r01, passed_gates(), plain(st.group(1)) if st else "?")
+  cal = re.search(r"Calendar: start (\d{4})-(\d\d)-\d\d, maintainer effort about (\d+) h/week", section(md, "## 5. Schedule"))
+  start, stretch = ((int(cal.group(1)), int(cal.group(2))), 40 / int(cal.group(3))) if cal else (None, 1.0)
+  plan = Plan(start, stretch, phases, crit, long_lead, backlog, r01, passed_gates(), plain(st.group(1)) if st else "?")
+  if start:
+    check_gate_dates(md, plan)
+  return plan
+
+
+MONTHS = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
+
+
+def cal_month(pl: Plan, m: float) -> str:
+  """Calendar month of plan month m (0 = the start month), e.g. 'Jul 2027'."""
+  i = pl.start[0] * 12 + pl.start[1] - 1 + round(m)
+  return f"{MONTHS[i % 12]} {i // 12}"
+
+
+def gate_months(pl: Plan) -> dict[str, tuple[float, float]]:
+  """Earliest and latest end of each timed phase, in calendar months after the start (durations x stretch)."""
+  out, lo, hi = {}, 0.0, 0.0
+  for p in pl.phases:
+    if p.months:
+      lo += p.months[0] * pl.stretch
+      hi += p.months[1] * pl.stretch
+      out[p.gate] = (lo, hi)
+  return out
+
+
+def check_gate_dates(md: str, pl: Plan) -> None:
+  """The §5 gate-date table must equal the dates computed from the phase table and the calendar line."""
+  head, rows = table(section(md, "## 5. Schedule"), "Gate")
+  want = {g: (cal_month(pl, a), cal_month(pl, b)) for g, (a, b) in gate_months(pl).items()}
+  got = {plain(r[0]): (plain(r[1]), plain(r[2])) for r in rows}
+  if got != want:
+    raise FigureError(f"WP-M-03 §5 gate dates {got} differ from the computed {want}; update the table")
 
 
 # ================================================================ drawing helpers
@@ -224,14 +262,15 @@ def fig_m03_roadmap(pl: Plan) -> str:
   n = len(pl.phases)
   body = header(W, "5-1", f"Gate roadmap G0…G{n - 1}: " + ("no gate passed yet" if not pl.passed else
                 f"{', '.join(pl.passed)} passed"),
-                "Phases and gates of §3 with the relative durations of §5 and effort of §4.2 (not to scale; no calendar "
-                "dates, OI-1) · blockers from §5, §6, §10 · backlog from §9", "WP-M-03 §3, §5, §9")
+                "Phases and gates of §3 with the durations of §5 and effort of §4.2 (not to scale; calendar dates in "
+                "Figure 5-2) · blockers from §5, §6, §10 · backlog from §9", "WP-M-03 §3, §5, §9")
   y = 96
   b01 = next((b for b in pl.backlog if b.bid == "B-01"), None)
   banner = ["No gate is recorded as passed" if not pl.passed else f"Passed: {', '.join(pl.passed)}"]
   if b01 and b01.status != "done":
     banner.append("no milestones exist yet (B-01)")
-  banner.append(f"the plan is {pl.status} and the schedule is relative only (OI-1)")
+  banner.append(f"the plan is {pl.status}" + (f"; G5 {cal_month(pl, gate_months(pl)['G5'][0])} at the earliest"
+                                               if pl.start and "G5" in gate_months(pl) else "; the schedule is relative only"))
   body.append(rect(40, y, W - 80, 24, fill=RED_BG, stroke="#F3B7AB", rx=12))
   body.append(text(W / 2, y + 16, " · ".join(banner), size=11, fill=RED, weight=700, anchor="middle"))
   # phases and gates
@@ -392,29 +431,41 @@ def fig_m03_roadmap(pl: Plan) -> str:
 
 def fig_m03_schedule(pl: Plan) -> str:
   W = 1280
+  k = pl.stretch                  # calendar months per §5 month (1.0 when the schedule is relative only)
   timed = [p for p in pl.phases if p.months]
-  lo_end, hi_end, t_lo, t_hi = {}, {}, 0, 0
+  lo_end, hi_end, t_lo, t_hi = {}, {}, 0.0, 0.0
   spans = {}
   for p in timed:
-    spans[p.pid] = ((t_lo, t_lo + p.months[0]), (t_hi, t_hi + p.months[1]))
-    t_lo += p.months[0]
-    t_hi += p.months[1]
+    spans[p.pid] = ((t_lo, t_lo + p.months[0] * k), (t_hi, t_hi + p.months[1] * k))
+    t_lo += p.months[0] * k
+    t_hi += p.months[1] * k
     lo_end[p.gate], hi_end[p.gate] = t_lo, t_hi
-  months = (t_hi // 6 + 1) * 6
+  step = 12 if pl.start else 6
+  months = int(t_hi // step + 1) * step
   X0, X1 = 330, W - 60
   px = (X1 - X0) / months
 
   def X(m: float) -> float:
     return X0 + m * px
-  body = header(W, "5-2", f"Relative schedule: G{len(timed) - 1} between month {t_lo} and month {t_hi}",
-                "Month 0 = start of P0; no calendar dates (§5, OI-1). Durations of §5 at 1.0 FTE plus the minimum added "
-                "staff of §4.3: solid = low estimate, hatched = high estimate", "WP-M-03 §4.2, §5")
+
+  def when(m: float) -> str:
+    return cal_month(pl, m) if pl.start else f"M{fmt(m)}"
+  last = f"G{len(timed) - 1}"
+  if pl.start:
+    title = f"Dated schedule: {last} between {when(t_lo)} and {when(t_hi)}"
+    sub = (f"Start {when(0)} at about {fmt(40 / k)} h/week: the §5 durations (at 1.0 FTE) times {fmt(k)}. "
+           "Solid = low estimate, hatched = high estimate; added staff (§4.3) would shorten every bar")
+  else:
+    title = f"Relative schedule: {last} between month {fmt(t_lo)} and month {fmt(t_hi)}"
+    sub = ("Month 0 = start of P0; no calendar dates (§5). Durations of §5 at 1.0 FTE plus the minimum added "
+           "staff of §4.3: solid = low estimate, hatched = high estimate")
+  body = header(W, "5-2", title, sub, "WP-M-03 §4.2, §5")
   y = 108
   top = y
-  for m in range(0, months + 1, 3):
+  for m in range(0, months + 1, step // 2):
     body.append(line(X(m), y + 8, X(m), y + 8, stroke=HAIR, sw=1))
-  for m in range(0, months + 1, 6):
-    body.append(text(X(m), y, f"M{m}", size=10.5, fill=MUTED, anchor="middle"))
+  for m in range(0, months + 1, step):
+    body.append(text(X(m), y, when(m), size=10.5, fill=MUTED, anchor="middle"))
   grid_top = y + 8
   y += 22
   body.append(text(40, y, "Phase", size=11, weight=700, fill=MUTED))
@@ -432,8 +483,8 @@ def fig_m03_schedule(pl: Plan) -> str:
       crit = True
       body.append(rect(X(a), y + 8, (b - a) * px, 13, fill=SAFETY if crit else MUTED, stroke="none", rx=3))
       body.append(rect(X(c), y + 26, (d - c) * px, 13, fill="url(#hatch)", stroke=SAFETY, sw=1, rx=3))
-      body.append(text(X(b) + 6, y + 19, f"{p.months[0]} mo", size=10, fill=SAFETY, weight=700))
-      body.append(text(X(d) + 6, y + 37, f"{p.months[1]} mo", size=10, fill=MUTED))
+      body.append(text(X(b) + 6, y + 19, f"{fmt(p.months[0] * k)} mo", size=10, fill=SAFETY, weight=700))
+      body.append(text(X(d) + 6, y + 37, f"{fmt(p.months[1] * k)} mo", size=10, fill=MUTED))
     else:
       body.append(text(70, y + 36, "continuous after G5; " + p.pw, size=9.5, fill=MUTED))
       body.append(line(X(t_lo), y + 18, X1, y + 18, stroke=SW, sw=5, dash="2 4"))
@@ -450,7 +501,7 @@ def fig_m03_schedule(pl: Plan) -> str:
     body.append(line(X(a), y + 14, X(b), y + 14, stroke=AMBER, sw=1.6, dash="3 3"))
     body.append(diamond(X(a), y + 14, 7, AMBER, AMBER))
     body.append(diamond(X(b), y + 14, 7, "#FFFFFF", AMBER))
-    body.append(text(X(a), y + 36 + (i % 2) * 12, f"{g} M{a}", size=10, weight=700, fill=AMBER, anchor="middle"))
+    body.append(text(X(a), y + 36 + (i % 2) * 12, f"{g} {when(a)}", size=10, weight=700, fill=AMBER, anchor="middle"))
   y += 64
   # long-lead
   body.append(line(40, y, W - 40, y, stroke=HAIR, sw=1))
@@ -468,7 +519,7 @@ def fig_m03_schedule(pl: Plan) -> str:
     body.append(rect(X(s), y - 6, max((e - s) * px, 8), 12, fill=RED_BG if lead else SW_BG, stroke=c, sw=1, rx=6))
     body.append(diamond(X(e), y, 7, c, c))
     note = (f"lead {lead.group(1)}: {lead.group(2).strip()} ({lead.group(3)})" if lead
-            else f"needed at {needed} start (M{e})")
+            else f"needed at {needed} start ({when(e)})")
     body.append(text(X(e) + 12, y + 4, fit(note, X1 - X(e) + 30, 10), size=10, fill=c, weight=700 if lead else ""))
   y += 26
   body.append(rect(X(0) - 1, grid_top, 2, y - grid_top, fill=RED, stroke="none", rx=0))
@@ -484,9 +535,11 @@ def fig_m03_schedule(pl: Plan) -> str:
                          (RED_BG, RED, "the lead's answer defers it")])
   body += lg
   body.append(text(W - 40, y, GENERATED, size=10, fill=FAINT, anchor="end"))
-  desc = (f"Phases {', '.join(f'{p.pid} {p.months[0]}–{p.months[1]} months' for p in timed)} in sequence from month 0. "
-          f"Earliest end of P{len(timed) - 1} month {t_lo}, latest month {t_hi}. No calendar dates are set.")
-  return svg(W, int(y + 20), "Figure 5-2. Relative schedule (WP-M-03 §4.2, §5)", desc, body)
+  desc = (f"Phases {', '.join(f'{p.pid} {fmt(p.months[0] * k)}–{fmt(p.months[1] * k)} months' for p in timed)} in sequence "
+          f"from {when(0)}. Earliest end of P{len(timed) - 1} {when(t_lo)}, latest {when(t_hi)}." +
+          (f" Dated at about {fmt(40 / k)} h/week (§5 durations at 1.0 FTE times {fmt(k)})." if pl.start else
+           " No calendar dates are set."))
+  return svg(W, int(y + 20), f"Figure 5-2. {'Dated' if pl.start else 'Relative'} schedule (WP-M-03 §4.2, §5)", desc, body)
 
 
 # ================================================================ Figure 3-1 work breakdown structure

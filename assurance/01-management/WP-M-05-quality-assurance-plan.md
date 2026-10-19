@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-05 Quality management and quality assurance plan |
 | Standard reference | ASPICE 4.0 SUP.1 (quality assurance); ISO 26262-2:2018 §5 (quality management as a prerequisite for functional safety); ISO/SAE 21434:2021 §5 (quality management for cybersecurity); IATF 16949 (informative only) |
-| Version | 0.2 (status update: §1 current state, §5.3 CI gate status for the fork CI of D-01/D-03 (`safety.yaml`, `check-submodules.sh` against the forks, link check), OI-2, OI-3 and OI-6 closed; 2026-10-14). 0.1 |
+| Version | 0.3 (QO-5 covers the group C processes at CL1, decided by the lead 2026-10-18 (DQ-019, A); 2026-10-19). 0.2 (status update: §1 current state, §5.3 CI gate status for the fork CI of D-01/D-03 (`safety.yaml`, `check-submodules.sh` against the forks, link check), OI-2, OI-3 and OI-6 closed; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (process) |
 | Author | Assurance team (initial draft) |
@@ -26,7 +26,7 @@ Current state at baseline `8b8c6ae`: no QA function, plan or audit record existe
 | QO-2 | Safety-relevant changes are reviewed and impact-analysed | Merges to safety-relevant files without required review / impact statement | Zero |
 | QO-3 | CI quality gates are enforced for safety-relevant code | Safety-relevant merges with a failing or skipped required check | Zero |
 | QO-4 | Non-conformances are closed in time | Open QA findings past due date | Zero at gate review |
-| QO-5 | Process capability reaches the T-12 targets | Self-assessment rating ([WP-M-13](WP-M-13-aspice-capability-baseline.md)) | CL2 / CL1 per WP-M-01 T-12 by G5 |
+| QO-5 | Process capability reaches the T-12 targets | Self-assessment rating ([WP-M-13](WP-M-13-aspice-capability-baseline.md)); for the group C processes (SEC.1–4, SUP.11, VAL.1, ACQ.4, MAN.7) QA checks that each is performed and leaves its outputs | CL2 / CL1 per WP-M-01 T-12 by G5 (group C at CL1 since DQ-019 A, 2026-10-18) |
 
 ## 3. Quality management elements
 

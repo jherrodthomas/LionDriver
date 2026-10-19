@@ -22,7 +22,7 @@ WP-C-05 and WP-C-06 are the analysis of record. Do not edit the SVGs by hand.
 - **P, performance insufficiency** ("it sees it wrong"): the blue dashed layer is what the camera or radar believes, drawn over the true road. The chart sets that belief against what is true.
 - **S, specification insufficiency** ("not enough as specified"): the chart sets what the situation needs against what the specification delivers, with the specified limit as a grey dashed line and the gap shaded.
 
-SH-08 has no insufficiency in WP-C-06 yet; its card says so, and the generator fails once one links to it. The scenes are schematic, to explain each hazard; the measured cases are the plant runs in [assurance/sim §3.7](../../sim/README.md#37-the-asil-c-hazardous-events-in-the-loop). Each card loops in a browser; a viewer that shows the SVG as a still shows the last frame.
+The scenes are schematic, to explain each hazard; the measured cases are the plant runs in [assurance/sim §3.7](../../sim/README.md#37-the-asil-c-hazardous-events-in-the-loop). Each card loops in a browser; a viewer that shows the SVG as a still shows the last frame.
 
 ## Regenerating
 
@@ -41,6 +41,6 @@ The generator fails if:
 - an evaluation outcome is not one of the three defined in WP-C-06 §1;
 - an FI links to a hazard that WP-C-05 §3 does not define.
 
-A §5 row that names a hazard which none of its FIs links to in §3 is printed as a warning. The figure follows §3. The current warning is TC-33 → SH-03, where FI-10 links only to SH-06.
+A §5 row that names a hazard which none of its FIs links to in §3 is printed as a warning. The figure follows §3. There is no such row at present.
 
 The drawing helpers and the ASIL colour scale are shared with [`../hara/hara_figures.py`](../hara/hara_figures.py).

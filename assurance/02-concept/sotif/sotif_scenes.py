@@ -17,8 +17,8 @@ from WP-C-05 §3; the triggering condition, insufficiency, system response, eval
 behaviour curves below are schematic: they explain each hazard and are not simulation results.
 
 The build fails if a card's triggering condition, insufficiency or hazard is not in the documents, if the insufficiency
-does not link to the hazard in §3 or the §5 row does not name it, or if a hazard has no card. SH-08 has no insufficiency
-in WP-C-06; its card says so and the build fails once an insufficiency links to it, so the card then gets a §5 row.
+does not link to the hazard in §3 or the §5 row does not name it, or if a hazard has no card. A card may have no row (a
+model with no triggering condition) only while no insufficiency links its hazard; the build fails once one does.
 Built and checked by `sotif_figures.py`.
 
 Standard library only. Drawing helpers come from ../hara/.
@@ -405,7 +405,7 @@ def sh06():
 
 
 def sh08():
-  """No WP-C-06 insufficiency: stock PCS braking delayed by the item's message handling (AOU-04 unverified)."""
+  """TC-34 / FI-23: stock PCS braking delayed by the item's commands or message handling (AOU-04 unverified)."""
   def run(f0, a, x0=40.0, v=230.0, n=100):
     out, x, s = [], x0, v
     for i in range(n + 1):
@@ -525,7 +525,7 @@ def sh13():
   return ch, sc
 
 
-# hazard: (short title, primary TC, primary FI, draw); SH-08 has no WP-C-06 row (see the module docstring)
+# hazard: (short title, primary TC, primary FI, draw)
 MODELS = {
   "SH-01": ("Leaves the lane on a false line", "TC-05", "FI-01", sh01),
   "SH-02": ("Runs wide in a tight curve", "TC-14", "FI-11", sh02),
@@ -533,7 +533,7 @@ MODELS = {
   "SH-04": ("Phantom braking under a gantry", "TC-10", "FI-06", sh04),
   "SH-05": ("Gas override does not disengage", "TC-29", "FI-21", sh05),
   "SH-06": ("Lead brakes harder than the bound", "TC-33", "FI-10", sh06),
-  "SH-08": ("Stock PCS braking delayed", None, None, sh08),
+  "SH-08": ("Stock PCS braking delayed", "TC-34", "FI-23", sh08),
   "SH-09": ("Drives through a red light", "TC-13", "FI-05", sh09),
   "SH-10": ("Lane change into an occupied lane", "TC-28", "FI-13", sh10),
   "SH-11": ("No reaction to a pedestrian", "TC-12", "FI-04", sh11),

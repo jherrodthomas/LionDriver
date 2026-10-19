@@ -83,10 +83,7 @@ class TestManagementFigures(unittest.TestCase):
       if p.cl:
         derived = " / ".join("1" if r in "LF" else "0" for r, _ in p.ratings)
         self.assertEqual(re.sub(r"\s*\([^)]*\)", "", p.cl), derived, p.code)
-      if p.group == "C":
-        self.assertIsNone(p.target, p.code)
-      else:
-        self.assertIn(p.target, fm.CL_NEEDS, p.code)
+      self.assertIn(p.target, fm.CL_NEEDS, p.code)   # every group has a target since DQ-019 (group C at CL1)
     svg = self.outputs["fig-m13-6-1-capability-profile.svg"]
     self.assertEqual(svg.count(">safety code<"), len(split))
 
@@ -115,9 +112,13 @@ class TestManagementFigures(unittest.TestCase):
 
   def test_m03_schedule_sums_match_section_5(self):
     pl = fm.fig_m_plans.load_plan()
-    lo = sum(p.months[0] for p in pl.phases if p.months)
-    hi = sum(p.months[1] for p in pl.phases if p.months)
-    self.assertIn(f"between month {lo} and month {hi}", self.outputs["fig-m03-5-2-schedule.svg"])
+    lo = sum(p.months[0] for p in pl.phases if p.months) * pl.stretch
+    hi = sum(p.months[1] for p in pl.phases if p.months) * pl.stretch
+    if pl.start:
+      want = f"between {fm.fig_m_plans.cal_month(pl, lo)} and {fm.fig_m_plans.cal_month(pl, hi)}"
+    else:
+      want = f"between month {fm.fmt(lo)} and month {fm.fmt(hi)}"
+    self.assertIn(want, self.outputs["fig-m03-5-2-schedule.svg"])
 
   def test_m03_long_lead_items_resolve(self):
     pl = fm.fig_m_plans.load_plan()

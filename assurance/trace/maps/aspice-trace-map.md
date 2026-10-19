@@ -36,7 +36,7 @@ block-beta
   space
   VAL1["<b>VAL.1</b><br/>Validation<br/>VS-VAL: 31 cases"]
   space
-  SYS2["<b>SYS.2</b><br/>System requirements<br/>SYS 39* · FSR 58 · TSR 127<br/>TC 33* · FI 22* · FM 11*<br/>CSG 8*<br/><i>from SG: 8/8</i>"]
+  SYS2["<b>SYS.2</b><br/>System requirements<br/>SYS 39* · FSR 58 · TSR 127<br/>TC 34* · FI 23* · FM 11*<br/>CSG 8*<br/><i>from SG: 8/8</i>"]
   space
   space
   space
@@ -163,7 +163,7 @@ A named item is a **specified** link, not a passed test. 0 of 438 traced items c
 | Process | Name | Work products | Items or test cases |
 |---|---|---|---|
 | **SYS.1** | Requirements elicitation | WP-C-01, WP-C-02, WP-C-03, WP-C-05, WP-C-09 | AOU (17, trace data), H (9, trace data), HE (38, trace data), SG (8, trace data), SH (13, document), TS (14, document) |
-| **SYS.2** | System requirements analysis | WP-S-01, WP-C-04, WP-S-02, WP-C-07, WP-C-10 | SYS (39, document), FSR (58, trace data), TSR (127, trace data), TC (33, document), FI (22, document), FM (11, document), CSG (8, document) |
+| **SYS.2** | System requirements analysis | WP-S-01, WP-C-04, WP-S-02, WP-C-07, WP-C-10 | SYS (39, document), FSR (58, trace data), TSR (127, trace data), TC (34, document), FI (23, document), FM (11, document), CSG (8, document) |
 | **SYS.3** | System architectural design | WP-S-03, WP-S-05, WP-S-07 | CSR (64, document) |
 | **SWE.1** | SW requirements analysis | WP-W-02 | SWSR (135, trace data) |
 | **HWE.1** | HW requirements analysis | WP-H-01 | HWSR (46, trace data) |
@@ -202,8 +202,8 @@ flowchart LR
   subgraph ISO21448["ISO 21448"]
     direction LR
     kSH["<b>SH</b> 13<br/>SOTIF hazards"]:::doc
-    kTC["<b>TC</b> 33<br/>triggering conditions"]:::doc
-    kFI["<b>FI</b> 22<br/>functional insufficiencies"]:::doc
+    kTC["<b>TC</b> 34<br/>triggering conditions"]:::doc
+    kFI["<b>FI</b> 23<br/>functional insufficiencies"]:::doc
     kFM["<b>FM</b> 11<br/>functional modifications"]:::doc
   end
   style ISO21448 fill:#FFFFFF,stroke:#CBD5E1
@@ -250,7 +250,7 @@ flowchart LR
 | Standard | Kinds | In trace data | Defined in documents only |
 |---|---|---|---|
 | ISO 26262 | H, HE, SG, AOU, FSR, TSR, SWSR, HWSR | H 9, HE 38, SG 8, AOU 17, FSR 58, TSR 127, SWSR 135, HWSR 46 | — |
-| ISO 21448 | SH, TC, FI, FM | — | SH 13, TC 33, FI 22, FM 11 |
+| ISO 21448 | SH, TC, FI, FM | — | SH 13, TC 34, FI 23, FM 11 |
 | ISO/PAS 8800 | AIR, DSR | — | AIR 30, DSR 13 |
 | ISO/SAE 21434 | TS, CSG, CSR | — | TS 14, CSG 8, CSR 64 |
 | ASPICE | SYS | — | SYS 39 |
@@ -294,6 +294,6 @@ None.
 
 ## 7. Not yet traced
 
-- **Kinds outside the trace data:** SH (13), TC (33), FI (22), FM (11), AIR (30), DSR (13), TS (14), CSG (8), CSR (64), SYS (39). Their links (SH → TC/FI → FM, FI → AIR → DSR, TS → CSG → CSR, CSG ↔ SG, SH ↔ HE, SYS → TSR) are dashed in §3 until they are added to `items/` (README §3.1).
+- **Kinds outside the trace data:** SH (13), TC (34), FI (23), FM (11), AIR (30), DSR (13), TS (14), CSG (8), CSR (64), SYS (39). Their links (SH → TC/FI → FM, FI → AIR → DSR, TS → CSG → CSR, CSG ↔ SG, SH ↔ HE, SYS → TSR) are dashed in §3 until they are added to `items/` (README §3.1).
 - **Allocation to elements** (SYS.3, SWE.2, HWE.2): `allocated_to` holds work-product cells; element IDs need `elements.yaml` (WP-P-06 OI-4).
 - **Code and test results:** no `@req` tags and no `links/verification.yaml` yet, so the SWE.3 → code link and every test → result link are absent (WP-P-06 §5.3, §6).
