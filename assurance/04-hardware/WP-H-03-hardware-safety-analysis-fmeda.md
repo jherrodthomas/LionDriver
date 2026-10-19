@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-03 Hardware safety analysis (FMEA/FMEDA) |
 | Standard reference | ISO 26262-5:2018 §7 (safety analyses on HW design), §8 (metrics input), Annex D (diagnostic coverage of safety mechanisms, informative); ISO 26262-9:2018 §8 (safety analyses); ISO 26262-11:2018 (semiconductor failure modes, informative); ASPICE 4.0 HWE.2 |
-| Version | 0.6 (§2.4 mission profile: the WP-H-05 §3 working values approved by the lead 2026-10-18 (DQ-067, A); 2026-10-19). 0.5 (§6.4 added: the SG-001/SG-009 FMEDA rows reused for SG-02, SG-03, SG-05 and SG-06, a note per goal, decision DQ-362 option A; the ASIL C SPFM miss of 0.16 points carried as WP-H-04 OI-6 for G2; 2026-10-18). 0.4 (§6.3 recomputed with FMEDA rev 0.4: U1/U2 at the SN 29500-2 reference value, 2 × 25 FIT, SG-07 SPFM 78.1 %; planned-measure cases recomputed with stated DC assumptions; §2.3 source status; 2026-10-16). 0.3 (OI-9 closed by DQ-064; 2026-10-16). 0.2 (status update 2026-10-12: IWDG (DC-01), 0.3 s heartbeat revocation and the reference-build `0xc5` refusal recorded in the existing-diagnostic cells of FM-CPU-03/05/06, FM-CLK-04, FM-SPI-02, FM-REL-05; no DC credit taken until HIL evidence). 0.1: initial draft |
+| Version | 0.7 (§2.3 handbook set approved, DQ-068 option A, OI-2 closed; no ST licence, own self-tests with low CPU coverage, DQ-069 option B: §2.3 STM32H7 row, OI-3 and §6.4 updated, the ASIL C SPFM target likely missed and carried to G2; 2026-10-19). 0.6 (§2.4 mission profile: the WP-H-05 §3 working values approved by the lead 2026-10-18 (DQ-067, A); 2026-10-19). 0.5 (§6.4 added: the SG-001/SG-009 FMEDA rows reused for SG-02, SG-03, SG-05 and SG-06, a note per goal, decision DQ-362 option A; the ASIL C SPFM miss of 0.16 points carried as WP-H-04 OI-6 for G2; 2026-10-18). 0.4 (§6.3 recomputed with FMEDA rev 0.4: U1/U2 at the SN 29500-2 reference value, 2 × 25 FIT, SG-07 SPFM 78.1 %; planned-measure cases recomputed with stated DC assumptions; §2.3 source status; 2026-10-16). 0.3 (OI-9 closed by DQ-064; 2026-10-16). 0.2 (status update 2026-10-12: IWDG (DC-01), 0.3 s heartbeat revocation and the reference-build `0xc5` refusal recorded in the existing-diagnostic cells of FM-CPU-03/05/06, FM-CLK-04, FM-SPI-02, FM-REL-05; no DC credit taken until HIL evidence). 0.1: initial draft |
 | Status | Draft (qualitative FMEA); quantitative FMEDA: generic-rate estimate in §6.3, part-level template TBD |
 | ASIL / scope | ASIL C (SG-01 provisional; SG-02, SG-03, SG-06 since WP-C-03 v0.4) / ASIL B (SG-04, SG-05, SG-07) |
 | Author | Assurance team (initial draft) |
@@ -58,18 +58,18 @@ The numeric values are the conventional anchors of the Annex D scale; **verify a
 licensed text**. A coverage claim above "low" requires justification (analysis or fault injection,
 [WP-H-06](WP-H-06-hardware-integration-verification.md)).
 
-### 2.3 Failure-rate sources (proposal)
+### 2.3 Failure-rate sources (approved)
 
 | Element class | Proposed source | Reason |
 |---|---|---|
 | Discrete parts, relay, connectors, crystal, transceivers, regulators | **SN 29500** (Siemens) series, with its reference conditions adjusted to the mission profile | Widely used in automotive FMEDAs, covers relays and connectors, publicly purchasable, consistent stress model |
 | Integrated circuits without supplier data | SN 29500 (IC part) as primary; **IEC 61709** for the conversion of reference conditions | Consistency with the above |
-| STM32H7 (die + package) | Supplier FIT and failure-mode distribution from ST if obtainable ([WP-H-07](WP-H-07-hardware-component-qualification.md) QE-02); otherwise a die/package model of the IEC TR 62380 type as referenced in ISO 26262-11 (IEC TR 62380 is no longer maintained by IEC — verify status) | ISO 26262-11 gives the method for splitting a microcontroller into parts and distributing failure modes |
+| STM32H7 (die + package) | Supplier FIT and failure-mode distribution from ST only if ST provides them without a licence: the lead decided not to pay for ST's safety package ([DQ-069](../01-management/decisions/register.yaml), option B, 2026-10-19; [WP-H-07](WP-H-07-hardware-component-qualification.md) QE-02, QE-03); otherwise a die/package model of the IEC TR 62380 type as referenced in ISO 26262-11 (IEC TR 62380 is no longer maintained by IEC — verify status) | ISO 26262-11 gives the method for splitting a microcontroller into parts and distributing failure modes |
 | Soft errors (SRAM, flash, registers) | Supplier soft-error data (SER in FIT/Mbit) if available; otherwise a literature value with justification | Transient faults dominate SRAM; ECC credit depends on it |
 | Harness wiring and crimps | SN 29500 (connections) | |
 
 One source per class is used throughout; mixing handbooks within one class is avoided. The
-choice is to be confirmed by the safety manager (OI-2).
+lead approved this set as safety manager ([DQ-068](../01-management/decisions/register.yaml), option A, 2026-10-19; OI-2 closed). Buying the SN 29500 series and IEC 61709 is part of that choice; neither is held yet (status below).
 
 *Status 2026-10-16:* neither SN 29500 nor IEC 61709 is held by the project, and neither could be reached from the analysis environment. The FMEDA uses one secondary quote of SN 29500-2 (CMOS analog ICs, §6.3) and generic rates elsewhere. Each harness box part has its SN 29500 class recorded so that the values can be filled in once the standard is available.
 
@@ -323,7 +323,7 @@ The lead decided to reuse the rows of the two FMEDA files for the other goals ra
 | SG-03 unintended acceleration | C | SG-001: FMD-002, FMD-010 (frame altered after the TX check), FMD-019 (bit errors on the line) | `0x343` leaves through the same TX path as `0x2E4`, so the rows and rates apply as for SG-04 |
 | SG-05 release on brake, cancel or override | B | SG-001: FMD-001 (wrong authority check), FMD-009 (multi-bit upset in authority variables) | Multiple-point for SG-01 (they need an out-of-envelope SoC command), but effectively single-point for SG-05: authority that stays on after the brake needs no second fault. No SG-05 metric is reported |
 
-**Result against ASIL C.** SG-02, SG-03 and SG-06 carry the SG-01 estimate: SPFM 96.84 %, LFM 88.94 %. LFM meets the ASIL C target (80 %). SPFM misses 97 % by 0.16 points. The lead accepted this as an open hardware item for G2, [WP-H-04](WP-H-04-hardware-metrics.md) OI-6. It closes with supplier rates (OI-3, OI-10; whether to pay for ST's data is DQ-069) or with the TSR-517 transmit read-back. As an estimate, TSR-517 alone at an assumed DC 99 % on FMD-002 and FMD-010 gives SPFM 97.53 % and LFM 89.02 %. If neither closes the gap by G2, it goes back to the lead.
+**Result against ASIL C.** SG-02, SG-03 and SG-06 carry the SG-01 estimate: SPFM 96.84 %, LFM 88.94 %. LFM meets the ASIL C target (80 %). SPFM misses 97 % by 0.16 points. The lead accepted this as an open hardware item for G2, [WP-H-04](WP-H-04-hardware-metrics.md) OI-6. It closes with supplier rates (OI-3, OI-10) or with the TSR-517 transmit read-back. The lead decided not to pay for ST's safety package and to write LionDriver's own CPU and RAM self-tests with low CPU coverage ([DQ-069](../01-management/decisions/register.yaml), option B, 2026-10-19), so part-specific MCU rates and a higher CPU coverage claim are unlikely and **the ASIL C SPFM target is likely missed**; the gap moves to G2. As an estimate, TSR-517 alone at an assumed DC 99 % on FMD-002 and FMD-010 gives SPFM 97.53 % and LFM 89.02 %. If neither closes the gap by G2, it goes back to the lead.
 
 **Not covered.** Reusing SG-01 classifications means the faults that are safe for SG-01 and dangerous for SG-02/SG-06 (loss of actuation) are not scored as such. A goal-specific classification was the option the lead did not choose (DQ-362 option B). The FTA events that rest on these rows (BE-2.06, BE-2.07, BE-3.04, BE-5.02, BE-6.02) now have their FMEDA rows named here.
 
@@ -332,8 +332,8 @@ The lead decided to reuse the rows of the two FMEDA files for the other goals ra
 | ID | Item | Needed by |
 |---|---|---|
 | OI-1 | Obtain BOM and schematic (WP-H-02 OI-1) and fill §6.1 | G3 |
-| OI-2 | Safety manager to confirm the failure-rate source choice in §2.3 | G2 |
-| OI-3 | Request ST FIT and failure-mode distribution for STM32H72x/73x, or select a die/package model and justify it (WP-H-07 QE-02) | G3 |
+| OI-2 | ~~Safety manager to confirm the failure-rate source choice in §2.3~~ **Decided** ([DQ-068](../01-management/decisions/register.yaml), option A, 2026-10-19): the §2.3 set is approved. Obtaining SN 29500 and IEC 61709 stays with OI-10 | G2 |
+| OI-3 | Request ST FIT and failure-mode distribution for STM32H72x/73x where ST gives them without a licence; no licence is bought ([DQ-069](../01-management/decisions/register.yaml), option B, 2026-10-19). Otherwise select a die/package model per ISO 26262-11 and justify it (WP-H-07 QE-02) | G3 |
 | OI-4 | Confirm which STM32H725 SRAM regions have ECC and how errors are signalled (RM0468) and adjust FM-RAM rows | G2 |
 | OI-5 | Perform the deductive (FTA) check of this FMEA in WP-A-04 | G3 |
 | OI-6 | Define fault-injection methods for each "planned" DC claim (WP-H-06) | G3 |
