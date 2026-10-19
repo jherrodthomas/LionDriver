@@ -1,0 +1,293 @@
+#!/usr/bin/env python3
+"""Draw the System FMEA failure-mode cards (fmea-plan Figure 3-17, three sheets) from analyses/system-fmea.yaml.
+
+One card per failure mode SFM-nnn. Each card shows:
+
+- the failure mode, its severity, the WP-C-03 hazards of its end effects (through hara-mapping.yaml), its guide word and
+  how many of its causes are rated AP H;
+- the effect chain local → next higher level → end effect, lighting up in turn;
+- a looping road scene of the end effect (SMIL, 6 s; a still viewer shows the end pose);
+- every cause with three 1–10 meters: occurrence, detection and FMEA-MSR monitoring (green where a monitor reacts,
+  amber where it only warns or is late, red where nothing monitors it, grey where the cause has no MSR rating), and its AP;
+- the actions of its causes, with their status.
+
+Everything on a card is read from the YAML except the scene, which is chosen per failure mode below. The build fails if
+a failure mode has no scene or sheet, a scene or sheet names one that is not in the YAML, a hazard is not mapped or an
+action does not exist. Long texts are cut with "…" on the card and given in full in the figure's text description.
+
+    python3 tools/safety/fmea_cards.py            # regenerate the SVGs
+    python3 tools/safety/fmea_cards.py --check    # fail if the YAML disagrees or an SVG is stale
+
+Standard library only (the YAML is read with fmea_diagrams' loader). Output is deterministic.
+"""
+
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[1]
+sys.path.insert(0, str(HERE))
+for p in ("assurance/08-analyses/figures", "assurance/02-concept/sotif", "assurance/02-concept/hara"):
+  sys.path.insert(0, str(ROOT / p))
+import fmea_diagrams as fd  # the FMEA's own stdlib YAML loader
+import stpa_ls_scenes as ls  # road scenes, shared with the STPA loss scenario cards
+from hara_figures import HAIR, INK, MUTED, header, pill, svg_doc, t, text_w, wrap  # noqa: E402
+
+OUT = fd.FMEA_DIR / "figures" / "cards"
+MAPPING = fd.FMEA_DIR / "hara-mapping.yaml"
+
+
+class CardError(Exception):
+  pass
+
+
+SHEETS = {  # file -> (figure, title, failure modes in card order)
+  "fig-3-17-sfm-cards-1.svg": ("3-17a", "lateral and longitudinal control",
+                               ["SFM-001", "SFM-002", "SFM-003", "SFM-004", "SFM-005", "SFM-006", "SFM-007", "SFM-038",
+                                "SFM-008", "SFM-009", "SFM-010", "SFM-011", "SFM-012", "SFM-037"]),
+  "fig-3-17-sfm-cards-2.svg": ("3-17b", "engagement, disengagement, driver monitoring and alerts",
+                               ["SFM-013", "SFM-014", "SFM-015", "SFM-016", "SFM-017", "SFM-018", "SFM-019", "SFM-020",
+                                "SFM-021", "SFM-022", "SFM-023", "SFM-024", "SFM-025", "SFM-026", "SFM-027", "SFM-028"]),
+  "fig-3-17-sfm-cards-3.svg": ("3-17c", "limits, configuration and the stock functions",
+                               ["SFM-029", "SFM-030", "SFM-031", "SFM-032", "SFM-033", "SFM-034", "SFM-035", "SFM-036"]),
+}
+SCENE = {  # failure mode -> (scene kind, first tag, second tag); a drawing of the end effect, not data
+  "SFM-001": ("steer", "not engaged", "wheel turns"), "SFM-002": ("lane", "torque above limit", "jerks off line"),
+  "SFM-003": ("lane", "steers the wrong way", "toward the line"), "SFM-004": ("curve", "too little steering", "drifts wide"),
+  "SFM-005": ("fault", "steering lost", "no alert"), "SFM-006": ("curve", "command frozen", "leaves the lane"),
+  "SFM-007": ("lane", "oscillating", "weaves"), "SFM-038": ("fault", "lateral fault", "warning late"),
+  "SFM-008": ("accel", "unintended", "accelerates"), "SFM-009": ("phantom", "phantom braking", "hard brake"),
+  "SFM-010": ("late", "too little braking", "closes on lead"), "SFM-011": ("late", "braking lost", "no alert"),
+  "SFM-012": ("late", "lead brakes", "reacts late"), "SFM-037": ("late", "command frozen", "no braking"),
+  "SFM-013": ("resume", "engages unasked", "item takes over"), "SFM-014": ("fault", "fault, still engaged", "keeps control"),
+  "SFM-015": ("fault", "drops out", "no alert"), "SFM-016": ("fault", "fault", "disengages late"),
+  "SFM-017": ("accel", "driver brakes", "still engaged"), "SFM-018": ("steer", "driver steers", "item resists"),
+  "SFM-019": ("straight", "cancel pressed", "still engaged"), "SFM-020": ("straight", "driver accelerates", "not honoured"),
+  "SFM-021": ("straight", "item off", "stock cruise on"), "SFM-022": ("straight", "driver looks away", "not detected"),
+  "SFM-023": ("straight", "distracted", "escalates slowly"), "SFM-024": ("straight", "attentive driver", "false alerts"),
+  "SFM-025": ("straight", "driver unresponsive", "still engaged"), "SFM-026": ("fault", "take-over needed", "no alert"),
+  "SFM-027": ("late", "alert late", "driver late"), "SFM-028": ("straight", "shows engaged", "is not"),
+  "SFM-029": ("lane", "limits not enforced", "excess torque"), "SFM-030": ("lane", "excess actuation", "not detected"),
+  "SFM-031": ("straight", "normal driving", "false alarm"), "SFM-032": ("lane", "wrong car profile", "wrong limits"),
+  "SFM-033": ("pcs", "stock PCS degraded", "no stock braking"), "SFM-034": ("pcs", "switch stuck", "stock cut off"),
+  "SFM-035": ("pcs", "frame alters PCS", "stock braking off"), "SFM-036": ("pcs", "PCS brakes", "item accelerates"),
+}
+CW, GAP, M, COLS = 400, 20, 40, 3
+PW = CW - 24
+STEP = ["#475569", "#B45309", "#DC2626"]
+LEVELS = (("local", "Local"), ("next_higher", "Next level"), ("end", "End effect"))
+ACT_C = {"open": ("#FEE2E2", "#7F1D1D"), "in_progress": ("#FEF3C7", "#78350F"), "completed": ("#DCFCE7", "#14532D")}
+AP_C = {"H": "#DC2626", "M": "#D97706", "L": "#0F766E"}
+
+
+def monitoring(m):
+  if m is None:
+    return "#94A3B8", "no MSR rating"
+  if m <= 5:
+    return "#16A34A", "a monitor reacts"
+  if m <= 8:
+    return "#D97706", "warns, or late"
+  return "#DC2626", "no monitor"
+
+
+def cut(text, width, size, n, bold=False):
+  ls_ = wrap(text, width, size, bold)
+  return ls_[:n - 1] + [ls_[n - 1] + " …"] if len(ls_) > n else ls_
+
+
+def load():
+  doc = fd.load_analyses()["system-fmea"]
+  mapping = {h["second"]: h["wp_c03"] for h in fd.load_yaml(MAPPING.read_text(encoding="utf-8"))["hazards"]}
+  return doc, mapping
+
+
+def cards(doc, mapping):
+  fms = {f["id"]: f for f in doc["failure_modes"]}
+  acts = {a["id"]: a["status"] for a in doc["actions"]}
+  placed = [s for _, _, ids in SHEETS.values() for s in ids]
+  if dupes := sorted({s for s in placed if placed.count(s) > 1}):
+    raise CardError(f"on two sheets: {', '.join(dupes)}")
+  if missing := sorted(set(fms) - set(placed)):
+    raise CardError(f"failure mode with no sheet: {', '.join(missing)}; add it to SHEETS and SCENE")
+  if extra := sorted(set(placed) - set(fms)):
+    raise CardError(f"sheet names a failure mode the System FMEA does not have: {', '.join(extra)}")
+  if bad := sorted(set(fms) ^ set(SCENE)):
+    raise CardError(f"scene list and System FMEA differ: {', '.join(bad)}")
+  for k, *_ in SCENE.values():
+    if k not in ls.SCENES:
+      raise CardError(f"unknown scene kind '{k}'")
+  out = {}
+  for fid, f in fms.items():
+    hz = []
+    for e in f["effects"]:
+      h = e.get("hazard")
+      if h:
+        if h not in mapping:
+          raise CardError(f"{fid}: {h} is not in hara-mapping.yaml")
+        hz += [x for x in mapping[h] if x not in hz]
+    chain = []
+    for lvl, lab in LEVELS:
+      es = [e["description"] for e in f["effects"] if e["level"] == lvl]
+      if not es:
+        raise CardError(f"{fid}: no {lvl} effect")
+      chain.append((lab + (f" (+{len(es) - 1})" if len(es) > 1 else ""), es[0], es))
+    causes, a_ids = [], []
+    for c in f["causes"]:
+      msr = c.get("msr") or {}
+      causes.append(dict(id=c["id"], text=c["description"], o=c["occurrence"], d=c["detection"], m=msr.get("monitoring"), ap=c["ap"]))
+      for a in (c.get("actions") or []) + (msr.get("actions") or []):
+        if a not in acts:
+          raise CardError(f"{c['id']}: action {a} is not in the System FMEA actions")
+        if a not in a_ids:
+          a_ids.append(a)
+    out[fid] = dict(id=fid, title=f["failure_mode"], s=f["severity"], gw=f["guideword"], hz=hz, chain=chain, causes=causes,
+                    actions=[(a, acts[a]) for a in sorted(a_ids)], scene=SCENE[fid])
+  return out
+
+
+def meter(x, y, v, col, lab):
+  b = [t(x, y + 8, lab, 8.5, MUTED, 700)]
+  for i in range(10):
+    b.append(f'<rect x="{x + 12 + i * 6}" y="{y}" width="4.5" height="9" rx="1" fill="{col if v and i < v else "#E2E8F0"}"/>')
+  return b
+
+
+def card(x, y, c):
+  b = [None, f"<title>{c['id']}: {c['title']}</title>"]
+  px, yy = x + 12, y + 24
+  b.append(t(px, yy, c["id"], 12, MUTED, 600))
+  tl = cut(c["title"], PW - 70, 13.5, 2, True)
+  for i, ln in enumerate(tl):
+    b.append(t(px + 68, yy + 17 * i, ln, 13.5, INK, 700))
+  yy += 17 * len(tl) - 4
+  aps = [k["ap"] for k in c["causes"]]
+  chips = [("#0F172A", "#FFFFFF", None, f"S {c['s']}")] + [("#FEE2E2", "#B91C1C", None, h) for h in c["hz"]] + \
+          [("#F1F5F9", "#334155", None, c["gw"]), ("#FFFFFF", "#DC2626", "#DC2626", f"AP H × {aps.count('H')} of {len(aps)}")]
+  cx = px
+  for bg, fg, st, s in chips:
+    w = text_w(s, 10, True) + 14
+    if cx + w > px + PW:
+      cx, yy = px, yy + 22
+    b.append(pill(cx, yy, s, bg, fg, 18, 10, st)[0])
+    cx += w + 6
+  yy += 30
+  sw, sh = (PW - 28) / 3, 100
+  for i, (lab, text, _) in enumerate(c["chain"]):
+    sx = px + i * (sw + 14)
+    an = (f'<animate attributeName="opacity" values="0.35;0.35;1;1" keyTimes="0;{0.1 + 0.25 * i:.2f};{0.13 + 0.25 * i:.2f};1" '
+          f'dur="6s" repeatCount="indefinite"/>')
+    b.append(f'<g>{an}<rect x="{sx:.1f}" y="{yy}" width="{sw:.1f}" height="{sh}" rx="7" fill="#FFFFFF" stroke="{STEP[i]}" stroke-width="1.4"/>')
+    b.append(t(round(sx + 8, 1), yy + 15, lab, 9.5, STEP[i], 700))
+    for k, ln in enumerate(cut(text, sw - 14, 9, 6)):
+      b.append(t(round(sx + 8, 1), yy + 30 + 11.5 * k, ln, 9, INK))
+    b.append("</g>")
+    if i < 2:
+      b.append(f'<path d="M{sx + sw + 3:.1f} {yy + sh / 2 - 6} L{sx + sw + 11:.1f} {yy + sh / 2} L{sx + sw + 3:.1f} {yy + sh / 2 + 6} Z" fill="#94A3B8"/>')
+  yy += sh + 8
+  sth = PW * 70 / 280
+  kind, t1, t2 = c["scene"]
+  cid = f"c{c['id']}"
+  b.append(f'<svg x="{px}" y="{yy:.1f}" width="{PW}" height="{sth:.1f}" viewBox="0 0 280 70"><clipPath id="{cid}"><rect width="280" height="70" rx="5"/>'
+           f'</clipPath><g clip-path="url(#{cid})">' + "".join(ls.SCENES[kind](t1, t2) + ([ls.badge(" · ".join(c["hz"][:3]), "#DC2626")] if c["hz"] else []))
+           + "</g></svg>")
+  yy += sth + 16
+  b.append(t(px, yy, f"Causes ({len(c['causes'])})", 9.5, MUTED, 700))
+  b.append(t(px + PW, yy, "O occurrence · D detection · M monitoring (1 best … 10 none)", 8.5, MUTED, None, "end"))
+  yy += 8
+  for k in c["causes"]:
+    col, _ = monitoring(k["m"])
+    lines = cut(f"{k['id'].split('.')[-1]}  {k['text']}", PW - 150, 9.5, 2)
+    for i, ln in enumerate(lines):
+      b.append(t(px, yy + 12 + 12 * i, ln, 9.5, INK))
+    mx = px + PW - 140
+    b += meter(mx, yy + 2, k["o"], "#64748B", "O") + meter(mx, yy + 14, k["d"], "#64748B", "D") + meter(mx, yy + 26, k["m"], col, "M")
+    b.append(t(px + PW, yy + 11, k["ap"], 10, AP_C.get(k["ap"], MUTED), 700, "end"))
+    yy += max(12 * len(lines), 36) + 6
+  yy += 4
+  b.append(t(px, yy + 6, "Actions", 9.5, MUTED))
+  cx, row0 = px + 56, yy
+  if not c["actions"]:
+    b.append(t(cx, yy + 6, "none", 9.5, MUTED))
+  for a, st in c["actions"]:
+    bg, fg = ACT_C.get(st, ("#F1F5F9", "#334155"))
+    s = f"{a} {st.replace('_', ' ')}"
+    w = text_w(s, 9, True) + 12
+    if cx + w > px + PW:
+      cx, yy = px + 56, yy + 21
+    b.append(pill(cx, yy - 7, s, bg, fg, 17, 9)[0])
+    cx += w + 6
+  return b, yy + 22 - y
+
+
+def legend(y):
+  b, x = [], M
+  for col, lab in (("#16A34A", "M 1–5: a monitor reacts"), ("#D97706", "M 6–8: warns, or late"), ("#DC2626", "M 9–10: no monitor"),
+                   ("#94A3B8", "no MSR rating")):
+    b.append(f'<rect x="{x}" y="{y - 9}" width="22" height="9" rx="1" fill="{col}"/>')
+    b.append(t(x + 28, y, lab, 10.5, INK))
+    x += 28 + text_w(lab, 10.5) + 22
+  for st, (bg, fg) in ACT_C.items():
+    s = f"action {st.replace('_', ' ')}"
+    b.append(pill(x, y - 12, s, bg, fg, 17, 9)[0])
+    x += text_w(s, 9, True) + 18
+  return b
+
+
+def sheet(name, cs):
+  num, title, ids = SHEETS[name]
+  w = 2 * M + COLS * CW + (COLS - 1) * GAP
+  body = header(w, f"System FMEA · {title}",
+                "Each failure mode from its causes to the road: the effect chain, a scene of the end effect, every cause with its "
+                "ratings and monitoring, and the actions.", "fmea/analyses/system-fmea.yaml · hara-mapping.yaml", "Schematic scenes")
+  body += legend(104)
+  y = 122
+  for r in range(0, len(ids), COLS):
+    built = [card(M + k * (CW + GAP), y, cs[i]) for k, i in enumerate(ids[r:r + COLS])]
+    row_h = max(h for _, h in built)
+    for k, (b, _) in enumerate(built):
+      b[0] = f'<rect x="{M + k * (CW + GAP)}" y="{y}" width="{CW}" height="{row_h:.0f}" rx="12" fill="#FFFFFF" stroke="{HAIR}"/>'
+      body += ["<g>"] + b + ["</g>"]
+    y += row_h + GAP
+  body.append(t(M, y + 6, "Ratings, effects, hazards and actions from the YAML at its current baseline; scenes are drawings. Text cut with … "
+                "is given in full in the figure description.", 10.5, MUTED))
+  body.append(t(w - M, y + 24, "Generated by tools/safety/fmea_cards.py", 10, MUTED, None, "end"))
+  desc = f"Figure {num}: {len(ids)} System FMEA failure modes, {title}. " + " ".join(
+    f"{cs[i]['id']} {cs[i]['title']} (S {cs[i]['s']}; {', '.join(cs[i]['hz']) or 'no hazard'}). Effects: " +
+    " / ".join(" ; ".join(es) for _, _, es in cs[i]["chain"]) + ". Causes: " +
+    "; ".join(f"{k['id']} {k['text']} (O {k['o']}, D {k['d']}, M {k['m'] if k['m'] is not None else '-'}, AP {k['ap']})" for k in cs[i]["causes"]) +
+    ". Actions: " + (", ".join(f"{a} {s}" for a, s in cs[i]["actions"]) or "none") + "." for i in ids)
+  return svg_doc(w, int(y + 38), f"Figure {num}. System FMEA failure modes: {title}", desc, body)
+
+
+def build() -> dict[str, str]:
+  cs = cards(*load())
+  return {name: sheet(name, cs) for name in SHEETS}
+
+
+def main(argv: list[str]) -> int:
+  check = "--check" in argv
+  try:
+    out = build()
+  except (CardError, fd.FigError) as e:
+    print(f"fmea_cards: {e}", file=sys.stderr)
+    return 1
+  stale = []
+  OUT.mkdir(parents=True, exist_ok=True)
+  for name, content in out.items():
+    p = OUT / name
+    if check:
+      if not p.exists() or p.read_text(encoding="utf-8") != content:
+        stale.append(name)
+    else:
+      p.write_text(content, encoding="utf-8")
+  if stale:
+    print("stale System FMEA cards; run tools/safety/fmea_cards.py: " + ", ".join(stale), file=sys.stderr)
+    return 1
+  print(f"fmea_cards: {len(out)} sheets {'current' if check else 'written'}")
+  return 0
+
+
+if __name__ == "__main__":
+  sys.exit(main(sys.argv[1:]))
