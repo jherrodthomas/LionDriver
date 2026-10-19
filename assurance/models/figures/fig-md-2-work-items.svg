@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="476" viewBox="0 0 640 476" role="img" aria-labelledby="t d">
+<title id="t">Modelling plan: work items and their state</title>
+<desc id="d">Work items of the modelling plan: 1 Tool comparison: Done; 2 SM-SELFDRIVED record: Exists; 3 Back-to-back test: Exists; 4 HIL plant model: In progress; unnumbered Envelope calculations and plots: Exists; 5 Architecture model: Draft</desc>
+<style>
+svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
+      --py:#2a78d6; --py-bg:#e9f1fb; --om:#6250d6; --om-bg:#efedfb; --oc:#0f8a6e; --oc-bg:#e3f5ef;
+      --sy:#b4570f; --sy-bg:#fbeee2; --amb:#c98500; --amb-bg:#fdf4dc; --ok:#2e9e6a; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#1a1a19; --ink:#f0efec; --ink2:#c3c2b7; --ink3:#8d8c85; --grid:#33322f; --card:#232321;
+        --py:#3987e5; --py-bg:#16273c; --om:#9085e9; --om-bg:#26223f; --oc:#2fb08f; --oc-bg:#14302a;
+        --sy:#e07b33; --sy-bg:#3a2617; --amb:#eda100; --amb-bg:#3a2f12; --ok:#3fb97d; }
+}
+.bg { fill:var(--bg); }
+.h { font:600 21px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t { font:15px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.tb { font:600 15px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.t2b { font:600 13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.ta { font:600 13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--amb); }
+.num { font:600 24px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink3); }
+.chip { font:600 12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:#ffffff; }
+.chipo { font:600 12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.hair { stroke:var(--grid); stroke-width:1; }
+.card { fill:var(--card); stroke:var(--grid); stroke-width:1.2; }
+.gate { fill:var(--amb-bg); stroke:var(--amb); stroke-width:1.6; stroke-dasharray:6 4; }
+.f-py { fill:var(--py); } .f-om { fill:var(--om); } .f-oc { fill:var(--oc); } .f-sy { fill:var(--sy); }
+.o-py { fill:var(--bg); stroke:var(--py); stroke-width:1.4; } .o-om { fill:var(--bg); stroke:var(--om); stroke-width:1.4; stroke-dasharray:4 3; }
+.o-oc { fill:var(--bg); stroke:var(--oc); stroke-width:1.4; } .o-sy { fill:var(--bg); stroke:var(--sy); stroke-width:1.4; }
+.s-done { fill:var(--ok); } .s-exists { fill:var(--py); } .s-prog { fill:var(--amb); }
+.s-draft { fill:var(--bg); stroke:var(--ink3); stroke-width:1.4; stroke-dasharray:4 3; }
+.f-ink2 { fill:var(--ink2); }
+.arr { stroke:var(--ink2); stroke-width:1.6; fill:none; }
+</style>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-ink2"/></marker></defs>
+<rect class="bg" width="640" height="476"/>
+<text x="24" y="34" class="h">Modelling work items: state</text>
+<text x="24" y="56" class="t2">From the §2 table of this page</text>
+<line x1="24" y1="70" x2="616" y2="70" class="hair"/>
+<rect x="16" y="82" width="608" height="58" rx="8" class="card"/>
+<text x="24" y="109" class="tb">1</text>
+<rect x="52" y="92" width="43.8" height="20" rx="10" class="s-done"/>
+<text x="73.9" y="106" class="chip" text-anchor="middle">Done</text>
+<text x="168" y="106" class="tb">Tool comparison</text>
+<text x="168" y="126" class="t2">no tool</text>
+<rect x="16" y="146" width="608" height="58" rx="8" class="card"/>
+<text x="24" y="173" class="tb">2</text>
+<rect x="52" y="156" width="57.8" height="20" rx="10" class="s-exists"/>
+<text x="80.9" y="170" class="chip" text-anchor="middle">Exists</text>
+<text x="168" y="170" class="tb">SM-SELFDRIVED record</text>
+<text x="168" y="190" class="t2">Python checker</text>
+<rect x="16" y="210" width="608" height="58" rx="8" class="card"/>
+<text x="24" y="237" class="tb">3</text>
+<rect x="52" y="220" width="57.8" height="20" rx="10" class="s-exists"/>
+<text x="80.9" y="234" class="chip" text-anchor="middle">Exists</text>
+<text x="168" y="234" class="tb">Back-to-back test</text>
+<text x="168" y="254" class="t2">Python</text>
+<rect x="16" y="274" width="608" height="58" rx="8" class="card"/>
+<text x="24" y="301" class="tb">4</text>
+<rect x="52" y="284" width="92.6" height="20" rx="10" class="s-prog"/>
+<text x="98.3" y="298" class="chip" text-anchor="middle">In progress</text>
+<text x="168" y="298" class="tb">HIL plant model</text>
+<text x="168" y="318" class="t2">Python (OpenModelica only as in MD-01)</text>
+<rect x="16" y="338" width="608" height="58" rx="8" class="card"/>
+<text x="24" y="365" class="tb">–</text>
+<rect x="52" y="348" width="57.8" height="20" rx="10" class="s-exists"/>
+<text x="80.9" y="362" class="chip" text-anchor="middle">Exists</text>
+<text x="168" y="362" class="tb">Envelope calculations and plots</text>
+<text x="168" y="382" class="t2">Octave</text>
+<rect x="16" y="402" width="608" height="58" rx="8" class="card"/>
+<text x="24" y="429" class="tb">5</text>
+<rect x="52" y="412" width="50.8" height="20" rx="10" class="s-draft"/>
+<text x="77.4" y="426" class="chipo" text-anchor="middle">Draft</text>
+<text x="168" y="426" class="tb">Architecture model</text>
+<text x="168" y="446" class="t2">SysML v2 textual notation; OMG pilot implementation 0.62.0 for …</text>
+</svg>

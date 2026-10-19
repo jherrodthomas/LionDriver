@@ -9,6 +9,10 @@
 
 Nothing listed under "Planned" exists yet. No model output is verification evidence until the tool that produced it is classified at the confidence level the evidence needs (WP-P-07 §5) and the result has been reviewed.
 
+![Tool map in five rows. Python models the SM-SELFDRIVED record (item 2, exists; WP-P-07 TL-28, TCL2, envelope design description) and the back-to-back test (item 3, exists; TL-29, TCL1, envelope verification with no credit). Python, with OpenModelica only if needed, models the HIL plant (item 4, in progress; TL-30, TCL1 or TCL2, envelope verification on the bench). Octave does the envelope calculations and plots (exists; TL-25, TCL1, design support only). SysML v2 with in-house Python tools holds the architecture model (item 5, draft; TL-26 and TL-27, TCL1, design description and consistency support only). An amber dashed band marks the WP-P-07 classification gate, and a box below says no model output is verification evidence until its tool is classified and the result reviewed](figures/fig-md-1-tool-map.svg)
+
+*Figure 1. Which tool models what, how WP-P-07 classifies it, and what the output may be used for; drawn from §2 and the WP-P-07 §3 inventory by [`figures/fig_models.py`](figures/fig_models.py) (CI fails if stale).*
+
 ## 1. Decisions
 
 | ID | Question | Decision | Consequence |
@@ -19,6 +23,10 @@ Nothing listed under "Planned" exists yet. No model output is verification evide
 | MD-04 | EPS torque lag for the plant model | Start with an **assumed value, marked as assumed** in the model and in every result that uses it; replace it with a value fitted from fork-owned Corolla logs when they exist (WP-W-06 OI-9) | Results from the assumed value can only be used to check the bench and the model, never as evidence about the vehicle |
 
 ## 2. Work items
+
+![The six work items and their state: 1 tool comparison, done; 2 SM-SELFDRIVED record, exists; 3 back-to-back test, exists; 4 HIL plant model, in progress; the unnumbered Octave envelope calculations and plots, exists; 5 architecture model, draft](figures/fig-md-2-work-items.svg)
+
+*Figure 2. State of each work item, drawn from the table below by [`figures/fig_models.py`](figures/fig_models.py).*
 
 | # | Item | Tool | State |
 |---|---|---|---|
