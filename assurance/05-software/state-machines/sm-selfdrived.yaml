@@ -1,7 +1,7 @@
 # selfdrived engagement state machine (openpilot host, QM / QM (B-sup)). Normative source of WP-W-05 §5.3, which is
 # generated from this file by assurance/trace/tools/check_state_machines.py (do not edit §5.3 by hand).
 # Describes openpilot/selfdrive/selfdrived/state.py at superproject 682f184 (unchanged up to this record). The machine
-# runs once per selfdrived cycle at 100 Hz (selfdrived.py:134); its input is the set of event types raised in that
+# runs once per selfdrived cycle at 100 Hz (selfdrived.py:136); its input is the set of event types raised in that
 # cycle (events.py:36-46). Several transitions can have their event types present in the same cycle; the code takes
 # them in a fixed order (state.py:25-90), which the guards below spell out, so transitions with a common source are
 # mutually exclusive. "Not engaged" here is host state only: authority on the car is SM-TOY-AUTH (envelope).
