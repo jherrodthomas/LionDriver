@@ -4,9 +4,9 @@
 |---|---|
 | Work product | WP-C-03 Hazard analysis and risk assessment, safety goals |
 | Standard reference | ISO 26262-3:2018 §6 (and Annex B for E/C classification guidance); shared hazard log with ISO 21448 §6 |
-| Version | 0.4.4 (fallback ASILs of §5.12 confirmed by the lead as proposed, DQ-031; OI-9 closed; 2026-10-17). 0.4.3 (SG-08 safe state from DQ-365 A, the hold credited to AOU-16; OI-10 narrowed to the FTTI; 2026-10-16). 0.4.2 (engaged situations end at 110 km/h, the ODD bound, DQ-260 A; workbooks regenerated; 2026-10-16). 0.4.1 (SG-06 ASIL C confirmed by the lead, DQ-210 A; 2026-10-16). 0.4 (the lead's answers applied: highway-only ODD (DQ-023, DQ-091); OS-07 rated by frequency, SG-03 and SG-06 ASIL C (DQ-036); SG-02 ASIL C after re-rating the curve case (DQ-059); SG-01 kept at C2 with the measurement a G1 entry condition (DQ-008); the driver who stops supervising rated as foreseeable misuse (OS-17, DQ-003) and the unresponsive driver as hazard H-09 with SG-08, ASIL A (OS-18, DQ-205); fallback ASILs stated for every ⚠ event (§5.12, DQ-031); fault-induced SH-09…SH-11 argued as covered (§7.1, DQ-033); Experimental Mode hazard renumbered H-10; 2026-10-16). 0.3 (Figures 2-1 and 6-1 added, generated from the model and this document; 2026-10-13). 0.2 (Cartesian method, 2026-10-12) |
+| Version | 0.5 (acceleration while not engaged or just after a brake press rated as HE-03.7 under H-03 and SG-03, DQ-364 A; ratings per vehicle family with AOU-01…AOU-05 as entry criteria, §1.1, DQ-369 A; engagement speed floor noted, no exposure credit taken, §3, DQ-280 A; workbooks regenerated; 2026-10-18). 0.4.4 (fallback ASILs of §5.12 confirmed by the lead as proposed, DQ-031; OI-9 closed; 2026-10-17). 0.4.3 (SG-08 safe state from DQ-365 A, the hold credited to AOU-16; OI-10 narrowed to the FTTI; 2026-10-16). 0.4.2 (engaged situations end at 110 km/h, the ODD bound, DQ-260 A; workbooks regenerated; 2026-10-16). 0.4.1 (SG-06 ASIL C confirmed by the lead, DQ-210 A; 2026-10-16). 0.4 (the lead's answers applied: highway-only ODD (DQ-023, DQ-091); OS-07 rated by frequency, SG-03 and SG-06 ASIL C (DQ-036); SG-02 ASIL C after re-rating the curve case (DQ-059); SG-01 kept at C2 with the measurement a G1 entry condition (DQ-008); the driver who stops supervising rated as foreseeable misuse (OS-17, DQ-003) and the unresponsive driver as hazard H-09 with SG-08, ASIL A (OS-18, DQ-205); fallback ASILs stated for every ⚠ event (§5.12, DQ-031); fault-induced SH-09…SH-11 argued as covered (§7.1, DQ-033); Experimental Mode hazard renumbered H-10; 2026-10-16). 0.3 (Figures 2-1 and 6-1 added, generated from the model and this document; 2026-10-13). 0.2 (Cartesian method, 2026-10-12) |
 | Status | Draft — **ratings are proposals for review. They are not approved and must not be used to argue safety until the confirmation review (I3) passes** |
-| ASIL / scope | Item LD-SDA, reference configuration |
+| ASIL / scope | Item LD-SDA, reference configuration CFG-001 of platform PL-001 (ratings per vehicle family, §1.1) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); confirmation review by an independent assessor (I3) per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
 | Approver | Safety manager |
@@ -14,11 +14,32 @@
 
 ## 1. Scope and inputs
 
-- Item: [WP-C-01 item definition](WP-C-01-item-definition.md) (functions F-01…F-09, boundary, AOU-01…AOU-11).
+- Item: [WP-C-01 item definition](WP-C-01-item-definition.md) (functions F-01…F-09, boundary, AOU-01…AOU-16).
 - ODD: [WP-C-02](WP-C-02-odd-and-intended-functionality.md). Since version 0.4 the ODD is **limited-access highways only** (decision register DQ-023, option B). Situations off the highway (OS-03, OS-04, OS-15, OS-16) stay in the catalogue as reasonably foreseeable misuse, because the item does not yet prevent engagement there (§3).
 - The HARA rates **malfunctioning behaviour of the item** (E/E faults). Hazards caused by functional insufficiencies of the intended functionality (perception and ML performance limits) use the same hazard list, but they are evaluated in [WP-C-05](WP-C-05-sotif-hazard-identification.md) under ISO 21448.
 - **Reasonably foreseeable misuse** (ISO 26262-3 §6.4.2) is rated here as well as in SOTIF. Engagement outside the ODD (OS-03, OS-04, OS-14…OS-16) and the driver who stops supervising (STPA hazard H-STPA-1, situations OS-17 and OS-18) are operational situations of the catalogue, so every malfunction is crossed with them. The lead decided that H-STPA-1 is foreseeable misuse in both analyses (decision register DQ-003); its SOTIF side is [WP-C-08](WP-C-08-driver-hmi-misuse-analysis.md) MC-01…MC-03.
 - As ISO 26262-3 §6 requires, the item's own safety mechanisms (the panda envelope, selfdrived checks, DM) are **not** credited in the ratings. External measures and existing vehicle elements (the EPS's own LKA torque authority, the brake system, the PCM) are credited in controllability **only where an AoU states it**. If that AoU fails verification, the alternative rating shown applies.
+
+### 1.1 Platform: ratings per vehicle family
+
+LionDriver is moving from the single Corolla to a platform (decision register DQ-037, option B): platform PL-001, vehicle families VF-nnn and configurations CFG-nnn ([vehicle register](../../docs/liondriver/vehicles/README.md)). The lead chose how this HARA extends to it (DQ-369, option A, 2026-10-18):
+
+- **Hazards, functions, guide words and situations are platform-wide.** S, E and C are rated **per vehicle family**, because the controllability ratings credit the family's own EPS, brake and PCM behaviour.
+- **The vehicle assumptions AOU-01…AOU-05 are entry criteria.** A vehicle whose EPS or PCM does not meet them is not admitted to the platform:
+  - AOU-01 and AOU-02: the EPS limits LKA torque to an overpowerable level;
+  - AOU-03: the brake overrides ACC;
+  - AOU-04: the stock PCS keeps working;
+  - AOU-05: the PCM bounds ACC acceleration.
+
+  So the ⚠ credit is never extended to a vehicle that has not shown it.
+- **The reference Corolla (VF-001, CFG-001) keeps the ratings of this document**: SG-01 and SG-03 stay ASIL C. Without the AoU credit both would be ASIL D (§5.12). The lead did not choose the alternative, one worst case for every vehicle (option B), which would have made both goals ASIL D for all vehicles, the Corolla included.
+- **Each new family needs its own HARA delta and vehicle tests before it is admitted.**
+  - The delta re-rates the situations and rules that differ for that family (LD-ITEM-001 §A.10 parameters P2, P3, P5, P7 and P8). Examples: angle-based steering instead of torque, a different longitudinal interface or minimum engagement speed, a hybrid powertrain.
+  - The tests verify AOU-01…AOU-05 on that family.
+  - The delta is recorded against this document's model. A family is not admitted on the Corolla's ratings.
+- G1 claims only CFG-001, with this method in place (DQ-370, option A; [WP-M-01](../01-management/WP-M-01-assurance-strategy.md)).
+
+This answers the platform question of the item definition (LD-ITEM-001 IOI-004).
 
 ## 2. Method
 
@@ -71,15 +92,15 @@ Rationale is given for every rating. Ratings that depend on unverified AoUs are 
 | Pairs classified SC / NSC / NA | 59 / 41 / 26 | 70 / 42 / 28 |
 | SC pairs expanded (not subsumed) | 32 | 34 |
 | Rows generated (pairs × 17 situations × 6 conditions) | 3264 | 3468 |
-| Rows not hazardous in that situation (S0, reason recorded) | 1014 | 1110 |
-| Rows rated QM | 869 | 940 |
-| Rows rated ASIL A / B / C / D | 713 / 606 / 62 / 0 | 739 / 617 / 62 / 0 |
-| Rows ASIL A / B / C / D if every ⚠ AoU fails | 594 / 807 / 192 / 29 | 618 / 839 / 195 / 29 |
-| Distinct hazardous events (function × guide word × situation, S ≠ S0) | 375 | 393 |
-| … with ASIL ≥ A in at least one condition | 329 | 342 |
+| Rows not hazardous in that situation (S0, reason recorded) | 1008 | 1104 |
+| Rows rated QM | 871 | 942 |
+| Rows rated ASIL A / B / C / D | 716 / 607 / 62 / 0 | 742 / 618 / 62 / 0 |
+| Rows ASIL A / B / C / D if every ⚠ AoU fails | 596 / 809 / 193 / 29 | 620 / 841 / 196 / 29 |
+| Distinct hazardous events (function × guide word × situation, S ≠ S0) | 376 | 394 |
+| … with ASIL ≥ A in at least one condition | 330 | 343 |
 <!-- hara-counts:end -->
 
-Representative hazardous events recorded in §5: 37 (HE-01.1 … HE-09.2), plus 2 variant events for Experimental Mode (§5.11).
+Representative hazardous events recorded in §5: 38 (HE-01.1 … HE-09.2), plus 2 variant events for Experimental Mode (§5.11).
 
 The table above is written by `hara_model.py`; CI runs `hara_model.py --check`, which fails if this table or [`hara-cartesian-summary.md`](hara/hara-cartesian-summary.md) no longer match the model.
 
@@ -96,6 +117,7 @@ Version 0.4 changes, from the lead's answers:
 - **Highway only (DQ-023, B).** OS-03, OS-04, OS-15 and OS-16 were part of the arterial and rural ODD (ODD-A), which is dropped. They stay in the catalogue as engagement outside the ODD, rated E2 like OS-14: the item does not yet prevent engagement off the highway (WP-C-02 §5), so the E2 is an assumption (A-ODD in the model). Rated E3 instead, no safety goal ASIL changes (§6.1). OS-13 (manual driving, item powered) still covers every road type.
 - **OS-07 by frequency (DQ-036, B):** E4 instead of E3 (§2).
 - **Driver state (DQ-003, DQ-205).** OS-17 (not supervising, still responds) and OS-18 (unresponsive) are new. Driver monitoring is an item measure and is not credited in their exposure.
+- **Engagement speed floor (DQ-280 A, 2026-10-18).** The item shall refuse to engage below a highway speed floor (proposed 60 km/h; WP-C-02 §3.1) until road-type data exist (FM-08). Once implemented and verified, it lowers the exposure of the off-highway misuse situations below the floor (OS-04, OS-14). **No credit is taken yet:** they stay E2 under A-ODD, and no rating changes. A floor checks only at engagement, so it does not remove a situation entered after engaging on the highway (OS-06 stop-and-go after a slowdown stays in the ODD).
 - **Speed (DQ-091 A, DQ-260 A).** The engaged highway situations end at 110 km/h, the ODD bound since 2026-10-16 (DQ-260, option A): every claimed speed is the speed controllability is tested to (DQ-091). Manual driving (OS-13) and the stock PCS (OS-09) keep 0–120 km/h, because they do not depend on the item being engaged. Engaged driving above 110 km/h is foreseeable misuse until the speed bound is enforced (FM-07, [WP-C-07](WP-C-07-sotif-functional-modifications.md)): S3, E2 at most, and with no controllability credit (C3) at worst ASIL B, below SG-01 and SG-02 (C), so it adds no goal and changes none. The S and C ratings of the in-ODD rows do not change; at 110 km/h the C2 ratings rest on evidence that is to be measured (DQ-008, OI-1).
 
 | ID | Situation | Speed (km/h) | Exposure (within ODD unless stated) |
@@ -190,6 +212,7 @@ Pairs classified NSC that need a note:
 | HE-03.4 | OS-02 highway curve (F-02 M04 stuck positive, M05 excessive, M12 inverse) | Speed rises in the curve beyond the lateral limit; run-off | S3 | E3 | C2 ⚠ | **B** | S3: run-off at curve speed. E3: curves near R_ODD. C2 credits AOU-03/AOU-05 (driver braking overrides; PCM bounds acceleration). Without them → C3 → ASIL C. The same malfunction in a rural curve (OS-16) is outside the ODD: E2, ASIL A |
 | HE-03.5 | OS-01 highway free flow (F-02 M04/M05/M12) | Speed rises above the set speed; moderate impacts if traffic slows | S2 | E4 | C1 ⚠ | **A** | S2: moderate speed difference. E4. C1: the driver brakes; acceleration bounded to +2.0 m/s² by the envelope. Credits AOU-03; without it → C2 → ASIL B |
 | HE-03.6 | OS-17 highway, engaged, the driver not supervising: foreseeable misuse (F-02 M04/M05/M12) | Speed rises above the set speed and nobody brakes | S2 | E2 | C3 | **A** | New in 0.4 (H-STPA-1, DQ-003). S2 as HE-03.5. E2 as HE-01.5. C3: the driver is not watching |
+| HE-03.7 | OS-13 manual driving, item not engaged: acceleration commanded while not engaged, after a false engagement (F-03 M03) or just after a brake press has cancelled engagement (F-02 M05) | Unexpected acceleration while the driver is driving or has just braked; rear-end on a lead | S2 | E4 | C2 ⚠ | **B** | New in 0.5 (decision register DQ-364, option A; FTA G3.3, WP-A-04). Until 0.4 the false engagement was rated only as steering (HE-01.4). S2: the driver is already driving and usually braking, so the speed difference stays moderate. E4: manual driving with the device installed. C2: the driver's foot is on or near the brake; credits AOU-03 (brake overrides) and AOU-05 (PCM bounds the request). Without them → C3 → ASIL C. Below SG-03's C (HE-03.3), so the goal ASIL is unchanged |
 
 ### 5.4 H-04 Unintended or excessive deceleration
 
@@ -276,6 +299,7 @@ Every event whose controllability credits an unverified AoU (⚠), with the ASIL
 | HE-03.3 | AOU-03, AOU-05 | C | D |
 | HE-03.4 | AOU-03, AOU-05 | B | C |
 | HE-03.5 | AOU-03 | A | B |
+| HE-03.7 | AOU-03, AOU-05 | B | C |
 | HE-04.1 | AOU-05 | B | C |
 | HE-04.2 | AOU-10 | A | B |
 | HE-04.3 | AOU-05 | B | C |
@@ -283,6 +307,8 @@ Every event whose controllability credits an unverified AoU (⚠), with the ASIL
 | HE-05.1 | AOU-03 | B | C |
 | HE-05.2 | AOU-01, AOU-02 | B | C |
 | HE-05.4 | AOU-01, AOU-02, AOU-03 | B | C |
+
+HE-03.7 was added in version 0.5 (DQ-364), after the lead confirmed the table on 2026-10-17. Its fallback follows the same C+1 rule and is for the I1 review (OI-8) to check.
 
 The two events DQ-031 named: HE-01.4 (steering while not engaged) goes from C to D if AOU-01/02 fail, and HE-04.2 (braking in a wet curve) from A to B if AOU-10 fails. HE-01.3, the third event the trace README listed, is now foreseeable misuse (A, B if the AoUs fail).
 
@@ -292,7 +318,7 @@ The two events DQ-031 named: HE-01.4 (steering while not engaged) goes from C to
 |---|---|---|---|---|---|---|
 | **SG-01** | The item shall not cause lateral motion of the vehicle that exceeds what the driver can control, including any steering actuation while the item is not engaged | **C** ⚠ (D if AOU-01/02 fail) | HE-01.1–01.5, HE-02.3 | LKA torque request zero, steer request bit cleared; driver informed | **≤ 0.5 s** (preliminary: `docs/SAFETY.md` cites 0.9 s to reach 1 m lateral deviation at maximum actuation; FTTI to be derived in [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md)) | The current envelope detection times (RX ≤ 2 s, heartbeat 3–5 s) are not consistent with this FTTI (GAP-06). The envelope's continuous limiting (magnitude, rate, measured tracking) does act within one frame. C2 kept until measured; the measurement is a G1 entry condition and the panda path is designed to the ASIL D measures meanwhile (DQ-008, A) |
 | **SG-02** | The item shall not lose or degrade lateral control while engaged without giving the driver an adequate take-over warning | **C** | HE-02.1–02.2, HE-02.4–02.6, HE-07.1–07.2, HE-07.4 | Driver warned (visual + acoustic) and lateral control handed back with a smooth torque ramp-down | ≤ 1 s from fault to warning (preliminary) | Mode awareness (HMI) and DM integrity contribute. Covers H-07: a wrong or frozen engagement indication is a missing take-over warning. ASIL C since version 0.4: the curve case at the bound is C3 (HE-02.1, HE-07.1; DQ-059, B). At the bound, a 1 s warning time is longer than the 0.7 s drift, so the FTTI needs review in WP-S-04 |
-| **SG-03** | The item shall not cause unintended vehicle acceleration | **C** ⚠ (D if AOU-03/05 fail) | HE-03.1–03.6 | Acceleration request ≤ 0 (no positive acceleration); ACC cancelled to the PCM | ≤ 1 s (preliminary) | ASIL C since version 0.4: OS-07 is rated by frequency, E4 (HE-03.3; DQ-036, B) |
+| **SG-03** | The item shall not cause unintended vehicle acceleration | **C** ⚠ (D if AOU-03/05 fail) | HE-03.1–03.7 | Acceleration request ≤ 0 (no positive acceleration); ACC cancelled to the PCM | ≤ 1 s (preliminary) | ASIL C since version 0.4: OS-07 is rated by frequency, E4 (HE-03.3; DQ-036, B) |
 | **SG-04** | The item shall not cause deceleration that exceeds what following traffic and the driver can control | **B** ⚠ (C if AOU-05 fails) | HE-04.1–04.5 | Deceleration limited; transition to "inactive" (no ACC command; coast) with a bounded jerk | ≤ 1 s (preliminary) | The envelope has no longitudinal jerk limit (GAP-04) |
 | **SG-05** | The item shall release control immediately when the driver brakes, cancels, or overrides steering | **B** ⚠ (C if AOU-01/02/03 fail) | HE-05.1–05.4 | Disengaged: no lateral or longitudinal actuation | ≤ 0.2 s from driver input to release (preliminary) | The envelope does not monitor driver steering torque on the LKA path (GAP-02) |
 | **SG-06** | The item shall not lose longitudinal deceleration capability while engaged without giving the driver an adequate take-over warning | **C** | HE-06.1, HE-06.3–06.4, HE-07.3 | Driver warned; ACC cancelled so that the driver brakes | ≤ 1 s (preliminary) | Covers the longitudinal part of H-07. ASIL C since version 0.4: the OS-07 exposure (E4, DQ-036) applies to every hazard in that situation (HE-06.1, HE-07.3) |
@@ -318,9 +344,10 @@ The two events DQ-031 named: HE-01.4 (steering while not engaged) goes from C to
    - Driver monitoring commanding forced deceleration while the driver is attentive (HE-04.3). DM is a source of H-04 as well as a controllability measure. SG-04 therefore applies to the DM-initiated deceleration; WP-C-04 covers it with FSR-04.05 and the envelope bounds FSR-04.01/04.02, so the DM chain itself can stay QM (WP-C-04 §7).
    - The envelope stuck in a blocking state while the SoC shows "engaged" (F-08 M04, HE-02.4). SG-02 then requires that a block by the envelope is detected and announced to the driver within the SG-02 time.
    - Braking commanded while not engaged (HE-04.4). This adds to HE-01.4 (torque while not engaged): the engagement gating carries SG-01 and SG-04.
+   - Acceleration while not engaged or just after a brake press (HE-03.7, version 0.5, DQ-364): the engagement gating and the inactive-value check carry SG-03 as well (FTA G3.3). The FMEA's engagement modes (SFM-013, SWF-030, SWF-007) now reach SG-03 through it.
    - Mode confusion (H-07), now rated, is covered by SG-02 and SG-06. The HMI path that shows the engagement state and gives take-over alerts carries ASIL B.
    - False FCW with a close follower is ASIL A (HE-04.5), not QM as in version 0.1.
-6. **AoU sensitivity.** If every ⚠ AoU fails, 29 rows reach ASIL D: H-01 at E4 (OS-01, OS-05, OS-07, OS-08, OS-13) and H-03 at OS-07 (HE-03.3); 192 rows reach ASIL C. AOU-01/02 (EPS torque authority) carry the SG-01 rating and, since OS-07 is E4, AOU-03/05 (brake override, PCM acceleration bound) carry SG-03.
+6. **AoU sensitivity.** If every ⚠ AoU fails, 29 rows reach ASIL D: H-01 at E4 (OS-01, OS-05, OS-07, OS-08, OS-13) and H-03 at OS-07 (HE-03.3); 193 rows reach ASIL C. AOU-01/02 (EPS torque authority) carry the SG-01 rating and, since OS-07 is E4, AOU-03/05 (brake override, PCM acceleration bound) carry SG-03.
 7. **What changed in version 0.4, and what it rests on.**
    - Three goals rise from B to C: SG-02 (the curve case re-rated C3, DQ-059), SG-03 (OS-07 by frequency, DQ-036) and SG-06. **SG-06 rises as a consequence of DQ-036, not by a decision of its own:** an exposure class belongs to the situation, so OS-07 at E4 applies to the lost-deceleration events HE-06.1 and HE-07.3 as much as to the acceleration event HE-03.3. The lead's question named only SG-03, so the SG-06 consequence was put to the lead, who accepted it on 2026-10-16 (decision register DQ-210, option A): SG-06 is ASIL C.
    - The highway-only ODD (DQ-023) moves HE-01.1, HE-01.3 and HE-02.2 to foreseeable misuse (E2). No goal falls, because the highway events HE-01.2 and HE-02.1 govern SG-01 and SG-02. The E2 rests on assumption A-ODD (engaged driving off the highway is < 1 %) while nothing in the item prevents it; rated E3 instead, every goal ASIL stays the same.

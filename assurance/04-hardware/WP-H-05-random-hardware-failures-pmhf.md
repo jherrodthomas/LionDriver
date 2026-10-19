@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-05 Evaluation of safety goal violations due to random HW failures (PMHF) |
 | Standard reference | ISO 26262-5:2018 §9 (evaluation of safety goal violations due to random hardware failures: probabilistic metric and evaluation of each cause), Annex C; ISO 26262-10:2018 (PMHF explanations, informative); ISO 26262-11:2018 (informative) |
-| Version | 0.4 (§3 working mission-profile values shown as used by the generic FMEDA; §6 status and λSPF + λRF note from FMEDA rev 0.4; plan step 2 per DQ-065; 2026-10-16). 0.3 (§6 status and §8 template drawn as Figure 6-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12 in §6: DC-01 implemented, not verified, not credited). 0.1: initial draft |
+| Version | 0.5 (§3 mission-profile working values approved by the lead 2026-10-18 (DQ-067, A); OI-2 closed, OI-6 for logged operating hours; 2026-10-19). 0.4 (§3 working mission-profile values shown as used by the generic FMEDA; §6 status and λSPF + λRF note from FMEDA rev 0.4; plan step 2 per DQ-065; 2026-10-16). 0.3 (§6 status and §8 template drawn as Figure 6-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12 in §6: DC-01 implemented, not verified, not credited). 0.1: initial draft |
 | Status | Draft (method and plan; no value computed) |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
@@ -52,16 +52,18 @@ T_exposure = vehicle lifetime T_life for latent faults (not detected),
 The PMHF is expressed as an average probability per hour over the vehicle lifetime. Only
 dual-point faults are normally evaluated; higher-order combinations are argued negligible.
 
-## 3. Mission profile (to be fixed)
+## 3. Mission profile
 
 | Parameter | Proposed value / source | Status |
 |---|---|---|
-| Vehicle service life T_life | 15 years (common automotive assumption) | Proposal |
-| Operating hours | To be derived from user data and the ODD ([WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md)); LD-SDA is energised only with ignition on. Working value used by the generic FMEDA: about 500 h/year, so 7,500 h over 15 years | TBD (working value in use) |
+| Vehicle service life T_life | 15 years (common automotive assumption) | Approved working value (DQ-067, A, the lead 2026-10-18) |
+| Operating hours | To be derived from user data and the ODD ([WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md)); LD-SDA is energised only with ignition on. Working value used by the generic FMEDA: about 500 h/year, so 7,500 h over 15 years | Approved working value (DQ-067, A, 2026-10-18); to be replaced with logged driving data once there is some (OI-6) |
 | Item fitted life | An aftermarket item may be fitted for less than the vehicle life; LionDriver will still use the vehicle life (conservative) unless an end-of-life rule is defined in [WP-O-02](../09-production-operation/WP-O-02-operation-service-decommissioning.md) | Proposal |
-| Temperature profile | Windscreen-mounted device in the cabin, sun load: define a profile (e.g. distribution of junction temperatures) for SN 29500 stress factors. Working value used by the generic FMEDA: ambient up to +85 °C in the sun-loaded enclosure, Tj up to about +105 °C. The harness box sits behind the camera in the same windscreen zone and takes the same profile. No stress conversion has been applied to any rate yet | TBD (working value in use) |
-| On/off cycles | One per drive cycle; intercept switch changeovers per drive (mode changes). The harness box switch is an analog IC, so changeovers cause no wear ([RR-2026-010](reviews/RR-2026-010.md) F-04) | TBD |
+| Temperature profile | Windscreen-mounted device in the cabin, sun load: define a profile (e.g. distribution of junction temperatures) for SN 29500 stress factors. Working value used by the generic FMEDA: ambient up to +85 °C in the sun-loaded enclosure, Tj up to about +105 °C. The harness box sits behind the camera in the same windscreen zone and takes the same profile. No stress conversion has been applied to any rate yet | Approved working value (DQ-067, A, 2026-10-18) |
+| On/off cycles | One per drive cycle; intercept switch changeovers per drive (mode changes). The harness box switch is an analog IC, so changeovers cause no wear ([RR-2026-010](reviews/RR-2026-010.md) F-04) | One power cycle per drive: approved working value (DQ-067, A, 2026-10-18) |
 | Multiple-point fault detection interval | One drive cycle, if start-up tests are implemented ([WP-H-04](WP-H-04-hardware-metrics.md) OI-4) | Proposal |
+
+The lead approved the working values on 2026-10-18 (decision register DQ-067, A): conservative, and already used by the generic FMEDA, so no figure changes. A 15-year life makes the latent-fault metric and PMHF harder to meet than a shorter life would. The item fitted life and the multiple-point fault detection interval remain proposals.
 
 ## 4. Targets
 
@@ -165,7 +167,8 @@ reported as "met" or "not met" until computed.
 | ID | Item | Needed by |
 |---|---|---|
 | OI-1 | Safety manager to approve the method choice (§2) | G2 |
-| OI-2 | Fix the mission profile values marked TBD (§3) | G2 |
+| OI-2 | Closed 2026-10-19: the working values of §3 (15 years, 500 h/year, +85 °C sun-loaded cabin, one power cycle per drive) are approved by the lead (decision register DQ-067, A, 2026-10-18). They are already in the figures, so nothing is recalculated. Replacing the hours with logged data is OI-6 | G2 |
 | OI-3 | Confirm with the external assessor the use of vehicle external measures in the effect analysis (§5) | G2 |
 | OI-4 | Verify target values and PMHF approximations against licensed ISO 26262-5 and -10 | G2 |
 | OI-5 | Obtain data (plan steps 2 and 8) | G2/G3 |
+| OI-6 | Replace the operating-hours working value (500 h/year) with logged driving data once there is some (DQ-067, A); re-check the latent-fault exposure time and PMHF with it | G3 |

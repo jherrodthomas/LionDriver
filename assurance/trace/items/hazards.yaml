@@ -331,6 +331,22 @@
   status: proposed
   source: WP-C-03
 
+- id: HE-03.7
+  kind: hazardous-event
+  parents: [H-03]
+  situation: "OS-13 manual driving, item not engaged: acceleration commanded while not engaged, after a false engagement (F-03 M03) or just after a brake press has cancelled engagement (F-02 M05)"
+  effect: "Unexpected acceleration while the driver is driving or has just braked; rear-end on a lead"
+  s: 2
+  e: 4
+  c: 2
+  asil: B
+  aou_flag: true
+  aou_dependency: [AOU-03, AOU-05]
+  asil_if_aou_fails: C
+  notes: "Added in WP-C-03 v0.5 (decision register DQ-364, option A; FTA G3.3): the acceleration of a false engagement, rated until v0.4 only as steering (HE-01.4)"
+  status: proposed
+  source: WP-C-03
+
 - id: HE-04.1
   kind: hazardous-event
   parents: [H-04]
