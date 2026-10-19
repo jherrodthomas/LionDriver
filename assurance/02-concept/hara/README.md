@@ -3,6 +3,8 @@
 
 This folder holds the Cartesian HARA behind [WP-C-03](../WP-C-03-hara.md) §2.
 
+Where these hazards meet the TARA's threats, and where a safety measure changes a security risk or the reverse: [HATARA](../hatara/README.md).
+
 | File | What it is |
 |---|---|
 | [`hara_model.py`](hara_model.py) | Source of truth. It holds every analyst input: functions, the 14-guide-word classification with rationale, situations, conditions, and the S/C rating rules |
