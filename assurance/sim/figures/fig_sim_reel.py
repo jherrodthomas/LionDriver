@@ -37,7 +37,7 @@ CONCEPT = SIM.parent / "02-concept"
 # the scene). The clips start 1.5 s before the fault, so start 1.5 is the fault onset.
 SEGMENTS = [
   ("he-02-1-eps-loss-curve", 1.4, 3.2, "HE-02.1", "C", "EPS assist lost in a curve · plant run", "OS-02"),
-  ("he-01-1-rural-hardover-oncoming", 1.1, 2.9, "HE-01.1", "A", "hard-over toward oncoming traffic · plant run",
+  ("he-01-1-rural-hardover-oncoming", 1.1, 2.9, "HE-01.1", "B", "hard-over toward oncoming traffic · plant run",
    "OS-03"),
   ("sh-11-pedestrian-occluded", 1.0, 3.0, "SH-11", None, "pedestrian behind a parked truck · kinematic", "OS-04"),
 ]

@@ -3,6 +3,8 @@
 
 This folder holds the Cartesian HARA behind [WP-C-03](../WP-C-03-hara.md) §2.
 
+Where these hazards meet the TARA's threats, and where a safety measure changes a security risk or the reverse: [HATARA](../hatara/README.md).
+
 | File | What it is |
 |---|---|
 | [`hara_model.py`](hara_model.py) | Source of truth. It holds every analyst input: functions, the 14-guide-word classification with rationale, situations, conditions, and the S/C rating rules |
@@ -126,4 +128,4 @@ Sheets: [F-01](#f-01-lateral-control) · [F-02](#f-02-longitudinal-control-acc-c
 - Changing a rating means changing a rule in `hara_model.py`. Regenerate, and the CSV diff shows every row the rule affects.
 - The CSVs and workbooks come from the same model; every ASIL in the CSVs equals the workbook's tab 12, row for row.
 
-The workbooks were generated with hara-builder `generate_hara.py` (sha256 `188f7e51df06aceae7668bb6563f009b8e28189754d3eedc87f93c05f2a91a33`, after removing trailing NUL padding from the synced copy). Every ASIL in both workbooks was checked against the independent computation in `hara_model.py`, and they agree: 3 264 and 3 468 rows, 0 mismatches (regenerated 2026-10-18 for WP-C-03 v0.5; at v0.4 the same row counts, at v0.3 2 790 and 2 970 rows).
+The workbooks were generated with hara-builder `generate_hara.py` (sha256 `188f7e51df06aceae7668bb6563f009b8e28189754d3eedc87f93c05f2a91a33`, after removing trailing NUL padding from the synced copy). Every ASIL in both workbooks was checked against the independent computation in `hara_model.py`, and they agree: 3 840 and 4 080 rows, 0 mismatches (regenerated 2026-10-19 for WP-C-03 v0.6, 20 situations; 3 264 and 3 468 at v0.4–v0.5, 2 790 and 2 970 at v0.3).

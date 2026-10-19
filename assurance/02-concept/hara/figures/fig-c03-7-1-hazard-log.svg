@@ -44,7 +44,7 @@
 <rect x="58" y="323.0" width="284" height="24" rx="5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.2"/>
 <rect x="58" y="323.0" width="4" height="24" rx="2" fill="#0F766E"/>
 <text x="68" y="333" font-size="8.5" fill="#0F766E" font-weight="700">Foreseeable misuse · HARA §5</text>
-<text x="68" y="343.5" font-size="8.5" fill="#0F172A">HE-01.1 A, HE-01.3 A, HE-01.5 B · OS-03, OS-04, OS-17</text>
+<text x="68" y="343.5" font-size="8.5" fill="#0F172A">HE-01.1 B, HE-01.3 B, HE-01.5 B · OS-03, OS-04, OS-17</text>
 <path d="M342 335.0 C366 335.0 358.0 290.0 371.0 290.0" fill="none" stroke="#0F766E" stroke-width="1.5" marker-end="url(#hl-arr)"/>
 <circle cx="394" cy="290.0" r="21" fill="#FEE2E2" stroke="#DC2626" stroke-width="2"/>
 <text x="394" y="294" font-size="11" fill="#7F1D1D" font-weight="700" text-anchor="middle">H-01</text>
@@ -93,7 +93,7 @@
 <rect x="478" y="340.0" width="284" height="24" rx="5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.2"/>
 <rect x="478" y="340.0" width="4" height="24" rx="2" fill="#0F766E"/>
 <text x="488" y="350" font-size="8.5" fill="#0F766E" font-weight="700">Foreseeable misuse · HARA §5</text>
-<text x="488" y="360.5" font-size="8.5" fill="#0F172A">HE-02.2 B, HE-02.6 B · OS-16, OS-17</text>
+<text x="488" y="360.5" font-size="8.5" fill="#0F172A">HE-02.2 C, HE-02.6 B · OS-16, OS-17</text>
 <path d="M762 352.0 C786 352.0 778.0 307.0 791.0 307.0" fill="none" stroke="#0F766E" stroke-width="1.5" marker-end="url(#hl-arr)"/>
 <circle cx="814" cy="307.0" r="21" fill="#FEE2E2" stroke="#DC2626" stroke-width="2"/>
 <text x="814" y="311" font-size="11" fill="#7F1D1D" font-weight="700" text-anchor="middle">H-02</text>
