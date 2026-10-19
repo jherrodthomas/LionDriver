@@ -24,20 +24,10 @@ Standard clauses: 26262-4, SYS.1–5.
 | [WP-S-08](WP-S-08-system-integration-test.md) | System integration and test strategy, specification and report | G4 | Draft |
 | [WP-S-09](WP-S-09-system-verification.md) | System verification (qualification) specification and report | G4 | Draft |
 
-## Also in this folder
+## Subfolders
 
-| Entry | What it is |
+| Folder | What it holds |
 |---|---|
-| [`reviews/`](reviews/) | 12 files |
+| [`reviews/`](reviews/) | — |
 
-## Figures
-
-Generated figures of this folder's work products, each embedded in its document:
-
-- [Figure 3-2. Technical safety architecture of LD-SDA (WP-S-03 §3.2)](figures/fig-3-2-tsc-block-diagram.svg)
-- [Figure 4-1. Start-up and engagement sequence (WP-S-03 §4.1)](figures/fig-4-1-startup-engagement.svg)
-- [Figure 4-4. Heartbeat and timeout chain (WP-S-03 §4.4)](figures/fig-4-4-heartbeat-timeout-chain.svg)
-- [Figure 3-1. System element hierarchy of LD-SDA (WP-S-03 §3.1, §5, §6, §8)](figures/fig-s03-3-1-system-element-hierarchy.svg)
-- [Figure 6-1 · Defence in depth per safety goal](figures/fig-s03-6-1-defence-in-depth.svg)
-- [Figure 5-1. FTTI, detection and reaction budgets per safety goal against code-derived times (WP-S-04 §3.7, §4, §5)](figures/fig-s04-5-1-timing-budgets.svg)
-- [Figure 5-2. EPS-fault warning chain of the reference build against the SG-02 1 s warning budget (WP-S-04 T-28, OI-8)](figures/fig-s04-5-2-eps-fault-warning.svg)
+GitHub lists this folder's files above this page; each work product's document embeds its own figures.

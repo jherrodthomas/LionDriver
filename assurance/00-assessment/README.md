@@ -6,10 +6,10 @@ Baseline gap assessments; [reconciliation](docs-safety-reconciliation.md) of the
 
 Standard clauses: n/a.
 
-## Also in this folder
+## Subfolders
 
-| Entry | What it is |
+| Folder | What it holds |
 |---|---|
 | [`iso26262-2018/`](iso26262-2018/README.md) | ARA-26262-2018-001 ISO 26262 documentary audit package |
-| [`docs-safety-reconciliation.md`](docs-safety-reconciliation.md) | Reconciliation of the earlier docs/safety/ drafts |
-| [`gap-assessment.md`](gap-assessment.md) | Baseline Gap Assessment |
+
+GitHub lists this folder's files above this page; each work product's document embeds its own figures.

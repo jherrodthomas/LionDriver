@@ -19,3 +19,5 @@ Standard clauses: 26262-7, 21448 §13, 21434 §12–14.
 | [WP-O-03](WP-O-03-user-information-safety-warnings.md) | User information and safety warnings | G5 | Draft |
 | [WP-O-04](WP-O-04-field-monitoring.md) | Field monitoring (safety, SOTIF and AI) and crash reporting | G6 | Draft |
 | [WP-O-05](WP-O-05-cybersecurity-incident-response-updates.md) | Cybersecurity incident response, vulnerability management and software updates | G6 | Draft |
+
+GitHub lists this folder's files above this page; each work product's document embeds its own figures.

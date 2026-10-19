@@ -21,10 +21,12 @@ Standard clauses: 26262-2 §6, 21448 §12, 21434 §6, UL 4600.
 | [WP-K-05](WP-K-05-cybersecurity-assessment.md) | Cybersecurity assessment report (performed independently) | G5 | Skeleton |
 | [WP-K-06](WP-K-06-release-record.md) | Release for production / release record | G5 | Skeleton |
 
-## Also in this folder
+## Subfolders
 
-| Entry | What it is |
+| Folder | What it holds |
 |---|---|
 | [`confirmation/`](confirmation/README.md) | Confirmation measure records |
 | [`gates/`](gates/README.md) | Gate records |
 | [`gsn/`](gsn/README.md) | Safety and cybersecurity case diagrams (GSN) |
+
+GitHub lists this folder's files above this page; each work product's document embeds its own figures.

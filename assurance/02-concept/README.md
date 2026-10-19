@@ -26,36 +26,13 @@ Standard clauses: 26262-3, 21448 §5–8, 21434 §9/§15, PAS 8800.
 | [WP-C-10](WP-C-10-cybersecurity-goals-and-concept.md) | Cybersecurity goals, claims and concept | G1 | Draft |
 | [WP-C-11](WP-C-11-ai-system-definition-and-safety-requirements.md) | AI system definition and AI safety requirements | G1 | Draft |
 
-## Also in this folder
+## Subfolders
 
-| Entry | What it is |
+| Folder | What it holds |
 |---|---|
 | [`fsc/`](fsc/README.md) | FSC completeness check |
 | [`hara/`](hara/README.md) | HARA |
-| [`reviews/`](reviews/) | 6 files |
+| [`reviews/`](reviews/) | — |
 | [`sotif/`](sotif/README.md) | SOTIF figure generator |
 
-## Figures
-
-Generated figures of this folder's work products, each embedded in its document:
-
-- [Figure 3-1. LD-SDA element hierarchy (WP-C-01 §2.1, §3.1, §3.2)](figures/fig-3-1-element-hierarchy.svg)
-- [Figure 3-2. LD-SDA item boundary and interfaces (WP-C-01 §3.3)](figures/fig-3-2-item-boundary.svg)
-- [Figure 2-1 · Stock TSS 2.0 functions with LD-SDA installed](figures/fig-c01-2-1-stock-functions.svg)
-- [Figure 3-3 · CAN interface map](figures/fig-c01-3-3-can-interface-map.svg)
-- [Figure 4-1 · Operating modes and actuation authority](figures/fig-c01-4-1-operating-modes.svg)
-- [Figure 4-2 · One engagement, three layers in time](figures/fig-c01-4-2-engagement-timeline.svg)
-- [Figure 7-1 · Assumptions of use by subject and status](figures/fig-c01-7-1-aou-map.svg)
-- [Figure 8-1 · Inherited actuation envelope](figures/fig-c01-8-1-actuation-envelope.svg)
-- [Figure 3-1 · ODD taxonomy](figures/fig-c02-3-1-odd-taxonomy.svg)
-- [Figure 3-2 · ODD speed–curvature envelope](figures/fig-c02-3-2-odd-envelope.svg)
-- [Figure 2-1. ISO 21448 scenario areas as covered by WP-C-05 and WP-C-06](figures/fig-c05-2-1-sotif-four-areas.svg)
-- [Figure 5-1. Triggering conditions, functional insufficiencies and SOTIF hazards (WP-C-06 §3-§5)](figures/fig-c06-5-1-tc-fi-sh-chain.svg)
-- [SOTIF scenes: one card per SOTIF hazard (WP-C-05, WP-C-06)](figures/fig-c06-5-2-sotif-scenes.svg)
-- [SOTIF modifications: P1 modifications (WP-C-07)](figures/fig-c07-3-1-fm-scenes-p1.svg)
-- [SOTIF modifications: P2 and P3 modifications (WP-C-07)](figures/fig-c07-3-2-fm-scenes-p2-p3.svg)
-- [Figure 8-1. Risk value matrix with the threat scenarios placed (WP-C-09 §7–§8)](figures/fig-c09-8-1-risk-matrix.svg)
-- [Figure 9-1. Attack paths of the risk-5 threat scenarios (WP-C-09 §5, §9)](figures/fig-c09-9-1-top-risk-attack-paths.svg)
-- [Figure 9-2. Threat scenes: the risk-5 threat scenarios (WP-C-09 §9)](figures/fig-c09-9-2-threat-scenes-risk-5.svg)
-- [Figure 9-3. Threat scenes: the risk-3 and risk-4 threat scenarios (WP-C-09 §9)](figures/fig-c09-9-3-threat-scenes-risk-3-4.svg)
-- [Figure 2-1. AI system boundary (WP-C-11 §2.2)](figures/fig-c11-2-1-ai-boundary.svg)
+GitHub lists this folder's files above this page; each work product's document embeds its own figures.

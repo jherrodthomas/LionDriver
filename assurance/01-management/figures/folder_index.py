@@ -7,7 +7,8 @@ exist, so it never needs editing by hand:
 - the folder's line of the Layout table in assurance/README.md (what the folder holds, the standard clauses);
 - its section of the WP-M-00 §3 register (work products, gate, status), the figure `index-status.svg` drawn from it
   (one row per work product, a chip at each gate it is needed for, coloured by status) and a table with links;
-- the subfolders, other files and figures that are in the folder, with their own titles.
+- its subfolders, with the title of their own README. Files are not listed (GitHub shows them above the page), so
+  adding a file to a folder never makes a page stale.
 
     python3 folder_index.py            # write README.md and index-status.svg in every phase folder
     python3 folder_index.py --check    # fail if a page or figure is stale, or a register row has no file
@@ -137,11 +138,6 @@ def md_title(p: Path) -> str:
   return ""
 
 
-def svg_title(p: Path) -> str:
-  m = re.search(r"<title[^>]*>([^<]*)</title>", p.read_text(encoding="utf-8", errors="replace"))
-  return m.group(1).replace("&amp;", "&") if m else ""
-
-
 # ---------------------------------------------------------------- figure
 
 def figure(folder: str, title: str, items: list[dict], reg) -> str:
@@ -191,7 +187,6 @@ def page(folder: str, lay: dict, regs: dict, reg) -> tuple[str, str | None]:
   names = dict(reg.statuses)
   out = [GENERATED, "", f"# {folder}", "", rebase(content, folder) + ".", "", f"Standard clauses: {clauses}." if clauses else "", ""]
   svg = None
-  wp_files = set()
   if items:
     svg = figure(folder, title, items, reg)
     per_gate = [f"{sum(g in it['gates'] for it in items)} at {name}" for g, (name, _) in enumerate(reg.gates)
@@ -206,29 +201,17 @@ def page(folder: str, lay: dict, regs: dict, reg) -> tuple[str, str | None]:
             "## Work products", "", "| ID | Work product | Gate | Status |", "|---|---|---|---|"]
     for it in items:
       href = href_in_folder(it["href"], folder) if it["href"] else ""
-      if href and not href.startswith(".."):
-        wp_files.add(href.split("/")[0].split("#")[0])
       link = f"[{it['id']}]({href})" if href else it["id"]
       out.append(f"| {link} | {it['name']} | {it['gate']} | {names[it['status']]} |")
     out.append("")
   subdirs = sorted(p for p in d.iterdir() if p.is_dir() and p.name not in ("figures", "__pycache__"))
-  files = sorted(p for p in d.iterdir() if p.is_file() and p.name not in ("README.md", SVG_NAME) and p.name not in wp_files)
-  if subdirs or files:
-    out += ["## Also in this folder", "", "| Entry | What it is |", "|---|---|"]
+  if subdirs:
+    out += ["## Subfolders", "", "| Folder | What it holds |", "|---|---|"]
     for p in subdirs:
       rd = p / "README.md"
-      n = sum(1 for f in p.rglob("*") if f.is_file())
-      what = md_title(rd) if rd.exists() else f"{n} file{'s' if n != 1 else ''}"
-      out.append(f"| [`{p.name}/`]({p.name}/{'README.md' if rd.exists() else ''}) | {what} |")
-    for p in files:
-      what = md_title(p) if p.suffix == ".md" else {".yaml": "Data (YAML)", ".txt": "Text list", ".xlsx": "Workbook"}.get(p.suffix, "File")
-      out.append(f"| [`{p.name}`]({p.name}) | {what or 'File'} |")
+      out.append(f"| [`{p.name}/`]({p.name}/{'README.md' if rd.exists() else ''}) | {md_title(rd) if rd.exists() else '—'} |")
     out.append("")
-  figs = sorted((d / "figures").glob("*.svg")) if (d / "figures").is_dir() else []
-  if figs:
-    out += ["## Figures", "", "Generated figures of this folder's work products, each embedded in its document:", ""]
-    out += [f"- [{svg_title(p) or p.name}](figures/{p.name})" for p in figs]
-    out.append("")
+  out += ["GitHub lists this folder's files above this page; each work product's document embeds its own figures.", ""]
   text = "\n".join(ln for i, ln in enumerate(out) if not (ln == "" and i and out[i - 1] == "")).rstrip() + "\n"
   return text, svg
 

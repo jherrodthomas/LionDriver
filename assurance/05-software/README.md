@@ -26,23 +26,16 @@ Standard clauses: 26262-6, SWE.1–6, MLE.1–4, SUP.11.
 | [WP-W-10](WP-W-10-ml-engineering.md) | ML engineering: model requirements, data management, training, testing, deployment | G3 | Draft |
 | [WP-W-11](WP-W-11-cybersecurity-implementation-verification.md) | Cybersecurity implementation and verification | G3 | Draft |
 
-## Also in this folder
+## Subfolders
 
-| Entry | What it is |
+| Folder | What it holds |
 |---|---|
-| [`coverage/`](coverage/) | 2 files |
-| [`design-notes/`](design-notes/) | 1 file |
+| [`coverage/`](coverage/) | — |
+| [`design-notes/`](design-notes/) | — |
 | [`diagrams/`](diagrams/README.md) | Design diagrams (generated) |
 | [`hil-bench/`](hil-bench/README.md) | HIL bench plan |
 | [`reference-models/`](reference-models/README.md) | Reference models (back-to-back) |
-| [`reviews/`](reviews/) | 1 file |
+| [`reviews/`](reviews/) | — |
 | [`state-machines/`](state-machines/README.md) | State machines |
 
-## Figures
-
-Generated figures of this folder's work products, each embedded in its document:
-
-- [Figure 3-1. Software element hierarchy of E-03 and E-01 (WP-W-03 §3.1, §4.1; units from WP-W-05 §2)](figures/fig-w03-3-1-software-element-hierarchy.svg)
-- [Figure 3-2. Software architecture of the panda firmware and its host interface (WP-W-03 §3.2)](figures/fig-w03-3-2-panda-software-architecture.svg)
-- [Figure 3-1. Data flow of the driving model and the driver-monitoring model as received (WP-W-10 §3.1)](figures/fig-w10-3-1-ml-data-flow.svg)
-- [Figure 3-2. Compile and load chain of the driving model (WP-W-10 §3.5)](figures/fig-w10-3-5-compile-load-chain.svg)
+GitHub lists this folder's files above this page; each work product's document embeds its own figures.

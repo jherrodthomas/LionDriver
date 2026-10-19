@@ -22,16 +22,10 @@ Standard clauses: 26262-4 §8, 21448 §9–11, 21434 §11, VAL.1.
 | [WP-V-06](WP-V-06-cybersecurity-validation.md) | Cybersecurity validation and penetration testing | G5 | Draft |
 | [WP-V-07](WP-V-07-vehicle-test-operations.md) | Vehicle test operations and safety-driver procedures | G1 | Draft |
 
-## Also in this folder
+## Subfolders
 
-| Entry | What it is |
+| Folder | What it holds |
 |---|---|
 | [`test-sites/`](test-sites/README.md) | Closed-course test sites |
 
-## Figures
-
-Generated figures of this folder's work products, each embedded in its document:
-
-- [Figure 3-1. LD-SDA verification and validation hierarchy (WP-V-01 §3)](figures/fig-v01-3-1-verification-hierarchy.svg)
-- [Figure 4-1 · Validation targets on a log scale](figures/fig-v02-4-1-validation-targets.svg)
-- [Figure 6-1 · Fault-injection coverage](figures/fig-v05-6-1-fault-coverage.svg)
+GitHub lists this folder's files above this page; each work product's document embeds its own figures.

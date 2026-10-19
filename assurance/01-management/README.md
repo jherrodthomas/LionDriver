@@ -30,26 +30,11 @@ Standard clauses: 26262-2, 21434 §5–8, 21448 §4, MAN.3/5, ACQ.4.
 | [WP-M-13](WP-M-13-aspice-capability-baseline.md) | ASPICE capability baseline (self-assessment) | G0 | Draft |
 | [WP-M-14](WP-M-14-iso26262-6-implementation-specification.md) | ISO 26262-6 software lifecycle implementation specification (future work; activation deferred, D-14) | G2 (activation), G3–G4 (use) | Draft |
 
-## Also in this folder
+## Subfolders
 
-| Entry | What it is |
+| Folder | What it holds |
 |---|---|
 | [`decisions/`](decisions/README.md) | Decision register |
-| [`reviews/`](reviews/) | 4 files |
+| [`reviews/`](reviews/) | — |
 
-## Figures
-
-Generated figures of this folder's work products, each embedded in its document:
-
-- [Figure 3-1 · Work-product status by gate (WP-M-00)](figures/fig-m00-3-1-wp-status.svg)
-- [Figure 4-1. The safety envelope pattern (WP-M-01 §4.1)](figures/fig-m01-4-1-safety-envelope.svg)
-- [Figure 3-1. RACI per activity with role holders (WP-M-02 §3.1, §3.2)](figures/fig-m02-3-1-raci.svg)
-- [Figure 4-1. Safety lifecycle per phase (WP-M-02 §4, §8, §11)](figures/fig-m02-4-1-lifecycle.svg)
-- [Figure 4-2. At-risk changes against the conditions for credit (WP-M-02 §4.1)](figures/fig-m02-4-2-at-risk.svg)
-- [Figure 9-1. Safety anomaly handling (WP-M-02 §9)](figures/fig-m02-9-1-anomaly.svg)
-- [Figure 3-1. Work breakdown structure (WP-M-03 §3)](figures/fig-m03-3-1-wbs.svg)
-- [Figure 4-1. Effort, external effort and staffing (WP-M-03 §4.2, §4.3)](figures/fig-m03-4-1-effort.svg)
-- [Figure 5-1. Gate roadmap with blockers and the 30-day backlog (WP-M-03 §3, §5, §9)](figures/fig-m03-5-1-gate-roadmap.svg)
-- [Figure 5-2. Dated schedule (WP-M-03 §4.2, §5)](figures/fig-m03-5-2-schedule.svg)
-- [Figure 4-1 · Risk heat map (WP-M-07)](figures/fig-m07-4-1-risk-heat-map.svg)
-- [Figure 6-1 · Capability profile (WP-M-13)](figures/fig-m13-6-1-capability-profile.svg)
+GitHub lists this folder's files above this page; each work product's document embeds its own figures.

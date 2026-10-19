@@ -26,20 +26,11 @@ Standard clauses: 26262-8, SUP.1/8/9/10.
 | [WP-P-10](WP-P-10-release-management.md) | Release management and baseline procedure | G5 | Draft |
 | [WP-P-11](../process/README.md) | Integrated process model and generated process maps (all phases G0–G6 modelled) | G0 | Draft |
 
-## Also in this folder
+## Subfolders
 
-| Entry | What it is |
+| Folder | What it holds |
 |---|---|
 | [`impact/`](impact/README.md) | Upstream sync impact analyses |
-| [`tool-evaluations/`](tool-evaluations/) | 1 file |
-| [`safety-relevant-paths.txt`](safety-relevant-paths.txt) | Text list |
+| [`tool-evaluations/`](tool-evaluations/) | — |
 
-## Figures
-
-Generated figures of this folder's work products, each embedded in its document:
-
-- [Figure 5-1 · Change request swimlane (WP-P-02)](figures/fig-p02-5-1-change-swimlane.svg)
-- [Figure 5-1 · Problem resolution swimlane (WP-P-03)](figures/fig-p03-5-1-problem-swimlane.svg)
-- [Figure 5-1 · Work-product lifecycle (WP-P-04)](figures/fig-p04-5-1-wp-lifecycle.svg)
-- [Figure 4-1. Trace model (WP-P-06 §4)](figures/fig-p06-4-1-trace-model.svg)
-- [Figure 4-1 · Release swimlane (WP-P-10)](figures/fig-p10-4-1-release-swimlane.svg)
+GitHub lists this folder's files above this page; each work product's document embeds its own figures.

@@ -22,20 +22,11 @@ Standard clauses: 26262-5, 26262-8 §13, HWE.1–4.
 | [WP-H-06](WP-H-06-hardware-integration-verification.md) | Hardware integration and verification specification and report | G4 | Draft |
 | [WP-H-07](WP-H-07-hardware-component-qualification.md) | Qualification of hardware components (comma device, STM32H7, harness) | G3 | Draft |
 
-## Also in this folder
+## Subfolders
 
-| Entry | What it is |
+| Folder | What it holds |
 |---|---|
-| [`bench/`](bench/) | 1 file |
-| [`reviews/`](reviews/) | 5 files |
+| [`bench/`](bench/) | — |
+| [`reviews/`](reviews/) | — |
 
-## Figures
-
-Generated figures of this folder's work products, each embedded in its document:
-
-- [Figure 3-1. Recovered hardware block diagram of the comma device, panda safety MCU and harness (WP-H-02 §3.1)](figures/fig-h02-3-1-hardware-block-diagram.svg)
-- [Figure 3-2. Hardware element hierarchy of the comma device and harness (WP-H-02 §2, §3.2, §5)](figures/fig-h02-3-2-hardware-element-hierarchy.svg)
-- [Figure 3-3. Power path from the vehicle 12 V supply to the SoC, the panda MCU and the relay coil (WP-H-02 §3.4)](figures/fig-h02-3-3-power-path.svg)
-- [Figure 5-1. SPFM and LFM: status against the ASIL targets (WP-H-04 §4, §5)](figures/fig-h04-5-1-metric-status.svg)
-- [Figure 6-1. PMHF: status of the evaluation against the targets (WP-H-05 §4, §6, §8)](figures/fig-h05-6-1-pmhf-status.svg)
-- [Figure 2-1. Hardware integration test configuration on the HIL bench (WP-H-06 §2.1)](figures/fig-h06-2-1-hil-configuration.svg)
+GitHub lists this folder's files above this page; each work product's document embeds its own figures.
