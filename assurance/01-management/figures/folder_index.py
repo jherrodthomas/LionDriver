@@ -258,6 +258,11 @@ def problems(outputs: dict[Path, str]) -> list[str]:
   return out
 
 
+def orphans(outputs: dict[Path, str]) -> list[Path]:
+  """index-status.svg files of folders that no longer get one (their register section went away)."""
+  return [p for p in (ASSURANCE / f / SVG_NAME for f in FOLDERS) if p.exists() and p not in outputs]
+
+
 def main(argv: list[str]) -> int:
   try:
     outputs = build()
@@ -265,19 +270,28 @@ def main(argv: list[str]) -> int:
     print(f"folder_index: {e}", file=sys.stderr)
     return 1
   errs = problems(outputs)
+  for e in errs:
+    print(f"folder_index: {e}", file=sys.stderr)
   if "--check" in argv:
-    errs += [f"{p.relative_to(ASSURANCE)} is stale; run assurance/01-management/figures/folder_index.py"
-             for p, c in outputs.items() if not p.exists() or p.read_text(encoding="utf-8") != c]
-    for e in errs:
-      print(f"folder_index: {e}", file=sys.stderr)
+    stale = [p for p, c in outputs.items() if not p.exists() or p.read_text(encoding="utf-8") != c]
+    extra = orphans(outputs)
+    for p in stale:
+      print(f"stale: assurance/{p.relative_to(ASSURANCE).as_posix()}", file=sys.stderr)
+    for p in extra:
+      print(f"no longer generated: assurance/{p.relative_to(ASSURANCE).as_posix()}", file=sys.stderr)
+    if stale or extra:
+      print("the phase-folder pages follow WP-M-00 §3, the assurance README Layout table and the files in each folder",
+            file=sys.stderr)
+      print("run: python3 assurance/01-management/figures/folder_index.py", file=sys.stderr)
+      return 1
     if not errs:
       print(f"folder_index: {len(FOLDERS)} folder pages current")
     return 1 if errs else 0
+  for p in orphans(outputs):
+    p.unlink()
   for p, c in outputs.items():
     p.write_text(c, encoding="utf-8")
   print(f"folder_index: wrote {len(outputs)} files for {len(FOLDERS)} folders")
-  for e in errs:
-    print(f"folder_index: warning: {e}", file=sys.stderr)
   return 1 if errs else 0
 
 
