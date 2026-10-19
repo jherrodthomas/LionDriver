@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Scope | Layer 2 of the [simulation track](../README.md) (roadmap phase S2): the [WP-V-03](../../06-validation/WP-V-03-sotif-known-scenarios.md) known scenarios that simulation can represent, as ASAM OpenSCENARIO 1.3 (`xosc/`) and OpenDRIVE 1.5 (`xodr/`) files named by scenario ID |
-| Version | 0.4 (KS-25 crosses the 110 km/h ODD-H bound, DQ-260 A, instead of 120 km/h; 2026-10-19). 0.3 (KS-27 at 400 m and 600 m, the barrier on the lane edge, as WP-V-03 v0.9 asks: files KS-27-R400 and KS-27-R600, reveal gaps measured about 77 m and 94 m; 2026-10-19). 0.2 (KS-27 written: a lead hidden by a wall on the inside of a ramp curve while the ego accelerates to the set speed, TC-35; 2026-10-19). 0.1 (2026-10-16) |
+| Version | 0.5 (§1.1: a top view per scenario file, fig_sim_ks.py, Kenney Racing Pack sprites (CC0); 2026-10-19). 0.4 (KS-25 crosses the 110 km/h ODD-H bound, DQ-260 A, instead of 120 km/h; 2026-10-19). 0.3 (KS-27 at 400 m and 600 m, the barrier on the lane edge, as WP-V-03 v0.9 asks: files KS-27-R400 and KS-27-R600, reveal gaps measured about 77 m and 94 m; 2026-10-19). 0.2 (KS-27 written: a lead hidden by a wall on the inside of a ramp curve while the ego accelerates to the set speed, TC-35; 2026-10-19). 0.1 (2026-10-16) |
 | Status | Draft. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed. Synthetic scenarios (DSR-12); **no evidence credit** |
 
 The files fix the road and the other road users of each scenario. The ego vehicle is the item under test: a file gives

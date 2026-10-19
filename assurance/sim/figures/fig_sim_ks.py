@@ -30,6 +30,7 @@ sys.path.insert(0, str(SCEN))
 
 import fig_sim_readme as fs  # noqa: E402  (style and SVG helpers)
 from fig_sim_readme import T, el, fmt, para, W  # noqa: E402
+import generate  # noqa: E402  (the scenario definitions and the ODD speed bound)
 
 SPRITES = HERE / "assets" / "kenney-racing"
 STEP = 0.1           # s between keyframes
@@ -220,11 +221,12 @@ def ks_spec(sc, R, D) -> dict:
                 footer="The ego stands: its file gives it speed 0; the item under test drives it in layer 1 and on the bench.")
   if sid == "KS-25":
     spd = lambda t: at(ego, t)["speed"] * 3.6  # noqa: E731
-    t_x = first_time(allt, lambda t: spd(t) > 120)
-    return dict(situation="The ego accelerates through the 120 km/h ODD bound",
+    odd = generate.ODD_SPEED * 3.6
+    t_x = first_time(allt, lambda t: spd(t) > odd)
+    return dict(situation=f"The ego accelerates through the {odd:.0f} km/h ODD bound (DQ-260 A)",
                 t0=0.0, t1=min(dur, (t_x or 10.0) + 3.0), view=60, back=10,
-                plot=("EGO SPEED (km/h)", spd, 100.0, 135.0, [(120.0, "ODD bound 120 km/h", "thr", "left")]),
-                events=[(1.0, "ego accelerates at 0.5 m/s² (scripted here)"), (t_x, "ego crosses 120 km/h")],
+                plot=("EGO SPEED (km/h)", spd, 100.0, 135.0, [(odd, f"ODD bound {odd:.0f} km/h", "thr", "left")]),
+                events=[(1.0, "ego accelerates at 0.5 m/s² (scripted here)"), (t_x, f"ego crosses {odd:.0f} km/h")],
                 footer="The ego's acceleration is scripted in the file; in a closed loop the item limits it.")
   if sid == "KS-27":
     ld, r = R["lead"], sc.road
@@ -531,7 +533,6 @@ def slug(sc_id: str) -> str:
 
 
 def build() -> tuple[dict[str, str], list[str]]:
-  import generate
   out, errs = {}, []
   for sc in generate.SCENARIOS:
     R = replay_rows(sc.id)
