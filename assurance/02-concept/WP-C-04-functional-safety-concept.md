@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-04 Functional safety concept (FSRs, allocation, AoUs) |
 | Standard reference | ISO 26262-3:2018 §7; ISO 26262-9:2018 §5 (ASIL decomposition, by reference); ASPICE 4.0 SYS.2 |
-| Version | 0.13 (§8 current-behaviour rows for RX loss and SoC command loss brought up to the reference build: RX timeout ≤ 0.16 s (≈ 0.21 s for `0x262`), heartbeat loss > 0.3 s and command arrival > 50 ms / 100 ms revoke authority; not verified on hardware; 2026-10-19). 0.12 (lead answers of 2026-10-18 applied: FSR-07.07 stock-AEB stand-down (DQ-300 A); AOU-17 EPS and PCM report every drop or non-execution, verified with forced faults (DQ-360 A); 2026-10-18). 0.11 (DQ-052 applied: the false-FCW ASIL A on the QM SoC is to be resolved by SOTIF validation and a re-rating of HE-04.5; FSR-04.06 keeps ASIL A until that evidence exists; OI-9 narrowed; 2026-10-17). 0.10 (DQ-365 applied (DQ-340 merged into it): the no-response reaction keeps the lane, decelerates to a standstill and stays stopped and held, with re-engagement locked out until the driver responds; FSR-02.09, §3, §6, §7, §8; 2026-10-16). 0.9 (DQ-341 applied: the envelope is hardened to ASIL C; DEC-01 only if the ASIL C hardware metrics fail; §4, §10; 2026-10-16). 0.8 (HARA v0.4 ratings applied: SG-02, SG-03 and SG-06 ASIL C, new SG-08 ASIL A; FSR ASILs re-derived; FSR-02.06…02.09 ASIL A for SG-08; FSR-02.09 states the SG-08 safe state; new FSR-08.01 (SG-08 alert time); §4 notes that the envelope target is ASIL C whatever SG-01 becomes, queued for the lead as DQ-341; new OI-11; 2026-10-16). 0.7 (FSR-02.09 Impl corrected: no disengagement at zero awareness; §7 notes the H-09 goal of DQ-205 and the queued reaction DQ-340; System FMEA monitoring actions refined into TSR-630…633 of WP-S-02 v0.22; 2026-10-16). 0.6 (lead decisions of 2026-10-14 applied, register DQ-007, DQ-048, DQ-050, DQ-053, DQ-054, DQ-056, DQ-060, DQ-062, DQ-063, DQ-064, DQ-114: §4 strategy decided, FSR-02.05, FSR-05.03 and FSR-07.03 amended, new FSR-02.12 and FSR-07.06, §3, §8 and §12.1 updated, OI-1 closed; 2026-10-16). 0.5 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.4 (Figure 5-1 added, generated from §3, §5 and §9; 2026-10-13). 0.3 (preliminary SG-07 FTTI from WP-S-04 §3.6; watchdog budget; 2026-10-12) |
+| Version | 0.14 (§8 FTTI scene cards, one per safety goal, drawn as Figures 8-1 to 8-3 by `fsc/fsc_scenes.py`; no requirement or budget changed; 2026-10-19). 0.13 (§8 current-behaviour rows for RX loss and SoC command loss brought up to the reference build: RX timeout ≤ 0.16 s (≈ 0.21 s for `0x262`), heartbeat loss > 0.3 s and command arrival > 50 ms / 100 ms revoke authority; not verified on hardware; 2026-10-19). 0.12 (lead answers of 2026-10-18 applied: FSR-07.07 stock-AEB stand-down (DQ-300 A); AOU-17 EPS and PCM report every drop or non-execution, verified with forced faults (DQ-360 A); 2026-10-18). 0.11 (DQ-052 applied: the false-FCW ASIL A on the QM SoC is to be resolved by SOTIF validation and a re-rating of HE-04.5; FSR-04.06 keeps ASIL A until that evidence exists; OI-9 narrowed; 2026-10-17). 0.10 (DQ-365 applied (DQ-340 merged into it): the no-response reaction keeps the lane, decelerates to a standstill and stays stopped and held, with re-engagement locked out until the driver responds; FSR-02.09, §3, §6, §7, §8; 2026-10-16). 0.9 (DQ-341 applied: the envelope is hardened to ASIL C; DEC-01 only if the ASIL C hardware metrics fail; §4, §10; 2026-10-16). 0.8 (HARA v0.4 ratings applied: SG-02, SG-03 and SG-06 ASIL C, new SG-08 ASIL A; FSR ASILs re-derived; FSR-02.06…02.09 ASIL A for SG-08; FSR-02.09 states the SG-08 safe state; new FSR-08.01 (SG-08 alert time); §4 notes that the envelope target is ASIL C whatever SG-01 becomes, queued for the lead as DQ-341; new OI-11; 2026-10-16). 0.7 (FSR-02.09 Impl corrected: no disengagement at zero awareness; §7 notes the H-09 goal of DQ-205 and the queued reaction DQ-340; System FMEA monitoring actions refined into TSR-630…633 of WP-S-02 v0.22; 2026-10-16). 0.6 (lead decisions of 2026-10-14 applied, register DQ-007, DQ-048, DQ-050, DQ-053, DQ-054, DQ-056, DQ-060, DQ-062, DQ-063, DQ-064, DQ-114: §4 strategy decided, FSR-02.05, FSR-05.03 and FSR-07.03 amended, new FSR-02.12 and FSR-07.06, §3, §8 and §12.1 updated, OI-1 closed; 2026-10-16). 0.5 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.4 (Figure 5-1 added, generated from §3, §5 and §9; 2026-10-13). 0.3 (preliminary SG-07 FTTI from WP-S-04 §3.6; watchdog budget; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (SG-01, SG-02, SG-03, SG-06); ASIL B for SG-04, SG-05, SG-07; ASIL A for SG-08 (WP-C-03 v0.4) |
 | Author | Assurance team (initial draft) |
@@ -275,6 +275,30 @@ FTTIs are preliminary (HARA OI-3). Detailed timing belongs in [WP-S-04](../03-sy
 | SG-08 (driver not supervising) | ≤ 6 s from loss of attention to the first alert | ≤ 5 s (DM policy, vision) | ≤ 1 s (first alert) | First vision alert at 5 s of distraction (`selfdrive/monitoring/policy.py:31-36`), wheel-touch mode at 5 s; DM frame and model latency not counted; end-to-end time not measured (WP-C-08 OI-2); the item stays engaged after the stop and the lockout starts only after a later disengagement, so nothing holds the vehicle or prevents it driving off again (FSR-02.09, DQ-365 A) | GAP-21; time to the no-response reaction preliminary in WP-S-04 §3.8.4 |
 
 Note on SG-02 in curves: [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) §3.2 estimates ≈ 0.7 s to a 0.6 m lateral drift at the ODD curve bound, which is shorter than driver reaction. The SG-02 budget above (≤ 0.5 s detection + ≤ 0.5 s to warning) is sufficient on straight roads and gentle curves but not alone at the ODD curve bound; SG-02 there relies on immediate warning and on torque being ramped rather than cut (FSR-02.04). Resolution (re-rate C of HE-02.1 or tighten R_ODD) is open in WP-S-04 OI-2 and [WP-C-03](WP-C-03-hara.md) OI-7.
+
+### FTTI scenes: lateral
+
+Sheets: **Lateral** · [Longitudinal](#ftti-scenes-longitudinal) · [Stock PCS and driver](#ftti-scenes-stock-pcs-and-driver)
+
+![Figure 8-1: one card each for SG-01, SG-02 and SG-05, each with the §8 FTTI budget against today, a road scene of what the safety mechanism must prevent, a timeline from fault to safe state and warning, what the mechanism must do and does today, the elements that carry the goal's FSRs and how many are met](fsc/figures/fig-c04-8-1-ftti-scenes-lateral.svg)
+
+*Figure 8-1.* FTTI scene cards for the lateral goals. Generated by [`fsc/fsc_scenes.py`](fsc/fsc_scenes.py) through `fsc/fsc_figures.py`, from §3, §5, §8 and §9: the budget bar and the "needed by" marks are the §8 row named on the card, the element tiles the §5 Alloc of the FSRs that the §9 trace links to the goal, the status bar the §5 Impl column. A QM element that carries an ASIL FSR is outlined in red. The scenes and the times shown for today are schematic, not measurements.
+
+### FTTI scenes: longitudinal
+
+Sheets: [Lateral](#ftti-scenes-lateral) · **Longitudinal** · [Stock PCS and driver](#ftti-scenes-stock-pcs-and-driver)
+
+![Figure 8-2: one card each for SG-03, SG-04 and SG-06, in the same layout as Figure 8-1](fsc/figures/fig-c04-8-2-ftti-scenes-longitudinal.svg)
+
+*Figure 8-2.* FTTI scene cards for the longitudinal goals, in the layout of Figure 8-1.
+
+### FTTI scenes: stock PCS and driver
+
+Sheets: [Lateral](#ftti-scenes-lateral) · [Longitudinal](#ftti-scenes-longitudinal) · **Stock PCS and driver**
+
+![Figure 8-3: one card each for SG-07 and SG-08, in the same layout as Figure 8-1](fsc/figures/fig-c04-8-3-ftti-scenes-pcs-driver.svg)
+
+*Figure 8-3.* FTTI scene cards for stock PCS preservation and the driver who is not supervising, in the layout of Figure 8-1.
 
 ## 9. FSR → SG trace
 
