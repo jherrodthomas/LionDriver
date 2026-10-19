@@ -97,6 +97,13 @@ class TestFigures(unittest.TestCase):
     with self.assertRaisesRegex(hm.ParseError, "three lines"):
       hf.build(m)
 
+  def test_too_many_ties_fail(self):
+    ix = copy.deepcopy(hm.INTERACTIONS)
+    ix[0]["ties"] = ix[0]["ties"] * 8
+    m = hm.Model(self.m.tara, self.m.goals, ix, hm.known_ids())
+    with self.assertRaisesRegex(hm.ParseError, "ties run over two lines"):
+      hf.build(m)
+
   def test_loops_and_deterministic(self):
     for svg in self.out.values():
       self.assertEqual(svg.count('repeatCount="indefinite"'), svg.count("<animate"))

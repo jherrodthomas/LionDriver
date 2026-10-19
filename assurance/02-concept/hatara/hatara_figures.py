@@ -125,8 +125,12 @@ def card(m: hm.Model, ix: dict, x: float, y: float, w: float):
     b.append(t(px, yy + 13 * i, ln, 10, INK))
   yy += 13 * len(fl) + 8
   b.append(t(px, yy, "Ties", 9.5, MUTED))
-  b.append(t(px + 50, yy, " · ".join(ix["ties"]), 9.5, INK))
-  yy += 16
+  tl = wrap(" · ".join(ix["ties"]), lw - 50, 9.5)
+  if len(tl) > 2:
+    raise ParseError(f"{ix['id']}: ties run over two lines")
+  for i, ln in enumerate(tl):
+    b.append(t(px + 50, yy + 12 * i, ln, 9.5, INK))
+  yy += 12 * len(tl) + 4
   b.append(t(px, yy, "Status", 9.5, MUTED))
   for i, (s, key) in enumerate(m.status(ix)):
     if text_w(s, 9.5) > lw - 50:
