@@ -1987,6 +1987,22 @@
   status: proposed
   source: WP-W-02
 
+- id: SWSR-713h
+  kind: swsr
+  text: "While `carState.stockAeb` is set, the host shall request no positive acceleration: `controlsd` caps the longitudinal target and the upper PID limit at 0 m/s², and the Toyota car controller caps the ACCEL_CMD of every `0x343` frame at 0 m/s² from the first frame that reports the event, whatever its rate limit, PID and pitch compensation would send. Braking requests pass; normal control resumes when the event ends."
+  asil: "QM"
+  parents: [TSR-713]
+  parent_text: "TSR-713"
+  other_parents: false
+  allocated_to: "`host.controlsd`, `host.card` (opendbc Toyota car controller)"
+  verification: "UT, VT"
+  acceptance: "ACCEL_CMD ≤ 0 in every `0x343` frame from the first frame with `stockAeb`; a braking request unchanged; after the event the command rises at the rate limit"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Impl: `selfdrive/controls/lib/longcontrol.py:39` (`stock_aeb_stand_down`, called at `controlsd.py:149`); opendbc `e233362`, `opendbc_repo/opendbc/car/toyota/carcontroller.py:259-260`. Unit-tested (`selfdrive/controls/tests/test_stock_aeb.py`; opendbc `car/toyota/tests/test_carcontroller.py`); not verified in the vehicle (AOU-04R; change-2026-10-19-stock-aeb-stand-down (assurance/07-supporting/impact/change-2026-10-19-stock-aeb-stand-down.md) OI-3)"
+  status: proposed
+  source: WP-W-02
+
 - id: SWSR-501b
   kind: swsr
   text: "The firmware shall configure and start IWDG1 in window mode (timeout ≤ 0.1 s including reset; SG-07 FDTI) no later than the first time the harness relay is energised after a reset, on every path that energises it, and no software path shall be able to stop it afterwards. (Amended in v0.14 to the TSR-501 v0.4 / HWSR-501c start condition; it previously required a start in the bootstub.) Start in the bootstub before the application runs remains a target (OI-10)."
