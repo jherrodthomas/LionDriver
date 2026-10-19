@@ -403,15 +403,6 @@ def build_props(sc: dict, coll, env: dict | None = None):
 
 
 # ------------------------------------------------------------------------------------------------- cameras, path
-def rear_view(sc: dict) -> bool:
-  """True when the critical road user starts more than 8 m behind the ego (a follower, an overtaking car)."""
-  crit = next((a for a in sc["actors"] if a["name"] == sc.get("critical")), None)
-  if crit is None:
-    return False
-  (ex, ey, h), (cx, cy, _) = sc["actors"][0]["poses"][0], crit["poses"][0]
-  return (cx - ex) * math.cos(h) + (cy - ey) * math.sin(h) < -8.0
-
-
 def build_cameras(sc: dict):
   ego = sc["actors"][0]["poses"]
   c = sc["road"]["centre"]
@@ -423,10 +414,7 @@ def build_cameras(sc: dict):
     heads.append(c[j][2])
   heads = smooth(unwrap(heads), 12)
   ex, ey = smooth([p[0] for p in ego], 6), smooth([p[1] for p in ego], 6)
-  urban = r["type"] == "urban"
-  back, up, side, ahead = (12.0, 5.0, 2.5, 12.0) if urban else (15.0, 6.5, 4.0, 14.0)
-  if rear_view(sc):                             # the critical road user comes from behind: look back past the ego
-    back, ahead, up = -18.0, -16.0, 9.5
+  back, up, side, ahead = street_layout.chase_rig(sc)      # street_layout keeps tall furniture out of this view
 
   cams = {}
   chase = bpy.data.objects.new("cam_chase", bpy.data.cameras.new("cam_chase"))
@@ -540,7 +528,6 @@ def build(sc: dict, vehicle: Path | None, front: str | None) -> dict:
   lights = bool(env.get("night")) or (env.get("visibility_m") or 1e9) < 1000
   seed = sc.get("variant_of") or sc["id"]       # a condition variant draws the same people as its base scene
   obs = [make_actor(a, model, users, lights, bool(env.get("night")), seed) for a in sc["actors"]]
-  A.build_weather(env, obs[0], sc["road"]["centre"], frames, sc["fps"])
   A.setup_glare(env)
 
   ghosts = bpy.data.collections.new("event_ghosts")
@@ -557,6 +544,7 @@ def build(sc: dict, vehicle: Path | None, front: str | None) -> dict:
   build_path(sc, frames)
   cams = build_cameras(sc)
   scene.camera = cams["chase"]
+  A.build_weather(env, obs[0], sc["road"]["centre"], frames, sc["fps"], cams=(cams["chase"], cams["driver"]))
   return {"keys": keys, "cams": cams}
 
 

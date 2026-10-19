@@ -144,10 +144,17 @@ def figure(folder: str, title: str, items: list[dict], reg) -> str:
   gates = [g for g, _ in reg.gates]
   X0, XG, ROW = 24, 372, 40
   GW = (W - 24 - XG) / len(gates)
+  sub = f"WP-M-00 §3 ({title}): a chip at each gate the work product is needed for"
+  per = CHAR["t2"] * SIZE["t2"]
+  if len(sub) * per > W - 48:     # too wide for the phone width: break before the explanation
+    sub = [f"WP-M-00 §3 ({title}):", "a chip at each gate the work product is needed for"]
+  else:
+    sub = [sub]
+  dy = 18 * (len(sub) - 1)
   body = [T(24, 34, f"{folder}: work products by gate", "h"),
-          T(24, 56, f"WP-M-00 §3 ({title}): a chip at each gate the work product is needed for", "t2"),
-          el("line", None, x1=24, y1=70, x2=W - 24, y2=70, class_="hair")]
-  y = 96
+          *(T(24, 56 + 18 * i, ln, "t2") for i, ln in enumerate(sub)),
+          el("line", None, x1=24, y1=70 + dy, x2=W - 24, y2=70 + dy, class_="hair")]
+  y = 96 + dy
   for i, g in enumerate(gates):
     body.append(T(XG + GW * i + GW / 2, y, g, "g", "middle"))
   y += 10

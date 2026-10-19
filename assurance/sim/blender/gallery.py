@@ -46,7 +46,7 @@ def main() -> int:
       continue
     sc = json.loads((OUT / sid / "scene.json").read_text())
     im = Image.open(src).convert("RGB")
-    im.resize((1600, 900), Image.LANCZOS).save(GAL / f"{sid}.jpg", quality=82, optimize=True)
+    im.resize((1600, 900), Image.LANCZOS).save(GAL / f"{sid}.jpg", quality=75, optimize=True)
     cd = sc["card"]
     entry = f"{cd['id']} ({'ASIL ' + cd['badge'].split('ASIL ')[1] if 'ASIL' in cd['badge'] else 'SOTIF'})"
     motion = f"plant {sc['case']['id']}" if sc["motion"] == "plant" else "kinematic"
