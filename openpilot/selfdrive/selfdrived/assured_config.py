@@ -31,15 +31,22 @@ ASSURED_PARAMS: dict[str, tuple[bool | int, str]] = {
 
 ASSURED_ORIGIN = "jherrodthomas/liondriver"
 
+# ODD entry (DQ-280, A): on an assured platform the item engages only at or above this speed. It keeps the item off most
+# city streets until road-type data exists (WP-C-07 FM-08)
+HIGHWAY_SPEED_FLOOR = 60. / 3.6  # m/s
+
 
 @dataclass(frozen=True)
 class AssuredConfigStatus:
   in_scope: bool
   deviations: tuple[str, ...]
   config_hash: str
+  # the settings of ASSURED_PARAMS alone; on an assured platform the item does not engage without them (DQ-221)
+  settings_in_scope: bool = True
 
   def to_dict(self) -> dict:
-    return {"in_scope": self.in_scope, "deviations": list(self.deviations), "config_hash": self.config_hash}
+    return {"in_scope": self.in_scope, "deviations": list(self.deviations), "config_hash": self.config_hash,
+            "settings_in_scope": self.settings_in_scope}
 
 
 def read_params(params) -> dict[str, bool | int]:
@@ -55,9 +62,9 @@ def evaluate(car_fingerprint: str, param_values: dict[str, bool | int], git_comm
   deviations = []
   if car_fingerprint not in ASSURED_PLATFORMS:
     deviations.append(f"platform {car_fingerprint} is not an assured platform")
-  for key, (assured, reason) in ASSURED_PARAMS.items():
-    if param_values.get(key) != assured:
-      deviations.append(f"{key}={param_values.get(key)}: {reason}")
+  setting_deviations = [f"{key}={param_values.get(key)}: {reason}"
+                        for key, (assured, reason) in ASSURED_PARAMS.items() if param_values.get(key) != assured]
+  deviations += setting_deviations
   if ASSURED_ORIGIN not in git_origin.lower():
     deviations.append(f"software origin {git_origin!r} is not LionDriver")
   if is_dirty:
@@ -71,4 +78,4 @@ def evaluate(car_fingerprint: str, param_values: dict[str, bool | int], git_comm
     "is_dirty": is_dirty,
   }
   config_hash = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()[:16]
-  return AssuredConfigStatus(not deviations, tuple(deviations), config_hash)
+  return AssuredConfigStatus(not deviations, tuple(deviations), config_hash, not setting_deviations)

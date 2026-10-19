@@ -75,6 +75,8 @@ class SelfdriveD:
     self.build_metadata = build_metadata
     self.assured_config: AssuredConfigStatus | None = None
     self.update_assured_config()
+    # DQ-221, DQ-280: on the reference platform the item engages only in the assured settings and at highway speed
+    self.reference_platform = self.CP.carFingerprint in assured_config.ASSURED_PLATFORMS
 
     self.car_events = CarEvents(self.CP)
 
@@ -478,6 +480,8 @@ class SelfdriveD:
       if undershooting and turning and lac.saturated:
         self.events.add(EventName.steerSaturated)
 
+    self.add_reference_entry_events(CS)
+
     # Check for FCW
     stock_long_is_braking = self.enabled and not self.CP.openpilotLongitudinalControl and CS.aEgo < -1.25
     model_fcw = self.sm['modelV2'].meta.hardBrakePredicted and not CS.brakePressed and not stock_long_is_braking
@@ -501,9 +505,26 @@ class SelfdriveD:
     # Decrement personality on distance button press
     if self.CP.openpilotLongitudinalControl:
       if any(not be.pressed and be.type == ButtonType.gapAdjustCruise for be in CS.buttonEvents):
-        self.set_personality((self.personality - 1) % 3)
-        self.params.put('LongitudinalPersonality', self.personality)
-        self.events.add(EventName.personalityChanged)
+        self.distance_button_pressed()
+
+  def add_reference_entry_events(self, CS):
+    # LionDriver: on the reference platform, no engagement outside the assured settings (DQ-221, CA-008) or below the
+    # highway speed floor (DQ-280, ODD entry). Both only refuse entry; an engaged item is not disengaged by them
+    if not self.reference_platform:
+      return
+    if self.assured_config is not None and not self.assured_config.settings_in_scope:
+      self.events.add(EventName.settingNotAssured)
+    if CS.vEgo < assured_config.HIGHWAY_SPEED_FLOOR:
+      self.events.add(EventName.belowHighwaySpeed)
+
+  def distance_button_pressed(self):
+    # LionDriver (DQ-221): on the reference platform the following distance stays at the assured value
+    if self.reference_platform:
+      cloudlog.event("distance button ignored: assured configuration")
+      return
+    self.set_personality((self.personality - 1) % 3)
+    self.params.put('LongitudinalPersonality', self.personality)
+    self.events.add(EventName.personalityChanged)
 
   def data_sample(self):
     _car_state = messaging.recv_one(self.car_state_sock)
