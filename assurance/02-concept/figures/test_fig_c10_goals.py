@@ -22,6 +22,11 @@ class TestGoalCards(unittest.TestCase):
     self.assertEqual(len(self.G.csg), 8)
     self.assertIn("Figure 7-1.", self.svg)
 
+  def test_a_cal_with_a_note_is_provisional(self):
+    self.assertEqual(self.G.csg["CSG-05"]["cal_note"], "re-derive, OI-8")
+    self.assertIn("CAL 2 provisional (re-derive, OI-8)", self.svg)
+    self.assertNotIn("CAL 3 provisional", self.svg)
+
   def test_every_requirement_with_a_goal_is_on_its_cards(self):
     for g in self.G.csg:
       self.assertEqual(sorted(fg.MODEL[g][3]), sorted(self.G.under(g)), g)
