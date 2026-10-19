@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-03 Hardware safety analysis (FMEA/FMEDA) |
 | Standard reference | ISO 26262-5:2018 §7 (safety analyses on HW design), §8 (metrics input), Annex D (diagnostic coverage of safety mechanisms, informative); ISO 26262-9:2018 §8 (safety analyses); ISO 26262-11:2018 (semiconductor failure modes, informative); ASPICE 4.0 HWE.2 |
-| Version | 0.5 (§6.4 added: the SG-001/SG-009 FMEDA rows reused for SG-02, SG-03, SG-05 and SG-06, a note per goal, decision DQ-362 option A; the ASIL C SPFM miss of 0.16 points carried as WP-H-04 OI-6 for G2; 2026-10-18). 0.4 (§6.3 recomputed with FMEDA rev 0.4: U1/U2 at the SN 29500-2 reference value, 2 × 25 FIT, SG-07 SPFM 78.1 %; planned-measure cases recomputed with stated DC assumptions; §2.3 source status; 2026-10-16). 0.3 (OI-9 closed by DQ-064; 2026-10-16). 0.2 (status update 2026-10-12: IWDG (DC-01), 0.3 s heartbeat revocation and the reference-build `0xc5` refusal recorded in the existing-diagnostic cells of FM-CPU-03/05/06, FM-CLK-04, FM-SPI-02, FM-REL-05; no DC credit taken until HIL evidence). 0.1: initial draft |
+| Version | 0.6 (§2.4 mission profile: the WP-H-05 §3 working values approved by the lead 2026-10-18 (DQ-067, A); 2026-10-19). 0.5 (§6.4 added: the SG-001/SG-009 FMEDA rows reused for SG-02, SG-03, SG-05 and SG-06, a note per goal, decision DQ-362 option A; the ASIL C SPFM miss of 0.16 points carried as WP-H-04 OI-6 for G2; 2026-10-18). 0.4 (§6.3 recomputed with FMEDA rev 0.4: U1/U2 at the SN 29500-2 reference value, 2 × 25 FIT, SG-07 SPFM 78.1 %; planned-measure cases recomputed with stated DC assumptions; §2.3 source status; 2026-10-16). 0.3 (OI-9 closed by DQ-064; 2026-10-16). 0.2 (status update 2026-10-12: IWDG (DC-01), 0.3 s heartbeat revocation and the reference-build `0xc5` refusal recorded in the existing-diagnostic cells of FM-CPU-03/05/06, FM-CLK-04, FM-SPI-02, FM-REL-05; no DC credit taken until HIL evidence). 0.1: initial draft |
 | Status | Draft (qualitative FMEA); quantitative FMEDA: generic-rate estimate in §6.3, part-level template TBD |
 | ASIL / scope | ASIL C (SG-01 provisional; SG-02, SG-03, SG-06 since WP-C-03 v0.4) / ASIL B (SG-04, SG-05, SG-07) |
 | Author | Assurance team (initial draft) |
@@ -73,11 +73,13 @@ choice is to be confirmed by the safety manager (OI-2).
 
 *Status 2026-10-16:* neither SN 29500 nor IEC 61709 is held by the project, and neither could be reached from the analysis environment. The FMEDA uses one secondary quote of SN 29500-2 (CMOS analog ICs, §6.3) and generic rates elsewhere. Each harness box part has its SN 29500 class recorded so that the values can be filled in once the standard is available.
 
-### 2.4 Mission profile (placeholder)
+### 2.4 Mission profile
 
-To be defined in WP-H-05 §3: vehicle service life, operating hours per year, ambient and
-in-cabin temperature profile (windscreen-mounted device, sun load), and on/off cycles. Needed
-for SN 29500 stress factors and for the latent-fault exposure time.
+Defined in [WP-H-05](WP-H-05-random-hardware-failures-pmhf.md) §3. The lead approved the working values on 2026-10-18
+(decision register DQ-067, A): a 15-year vehicle life, about 500 operating hours a year (7,500 h), up to +85 °C in the
+sun-loaded windscreen enclosure (Tj up to about +105 °C) and one power cycle per drive. They are used for the SN 29500
+stress factors and the latent-fault exposure time; the hours are replaced with logged driving data once there is some
+(WP-H-05 OI-6). No stress conversion has been applied to any rate yet (§6.3).
 
 ## 3. Safety-goal violation mechanisms considered
 

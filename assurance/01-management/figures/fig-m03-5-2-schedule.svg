@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="808" viewBox="0 0 1280 808" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
-<title>Figure 5-2. Relative schedule (WP-M-03 §4.2, §5)</title>
-<desc>Phases P0 2–3 months, P1 4–6 months, P2 4–6 months, P3 8–12 months, P4 5–8 months, P5 5–9 months in sequence from month 0. Earliest end of P5 month 28, latest month 44. No calendar dates are set.</desc>
+<title>Figure 5-2. Dated schedule (WP-M-03 §4.2, §5)</title>
+<desc>Phases P0 4–6 months, P1 8–12 months, P2 8–12 months, P3 16–24 months, P4 10–16 months, P5 10–18 months in sequence from Nov 2026. Earliest end of P5 Jul 2031, latest Mar 2034. Dated at about 20 h/week (§5 durations at 1.0 FTE times 2).</desc>
 <defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
 <rect x="0" y="0" width="1280" height="808" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
-<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 5-2 · Relative schedule: G5 between month 28 and month 44</text>
-<text x="40" y="66" font-size="12.5" fill="#475569">Month 0 = start of P0; no calendar dates (§5, OI-1). Durations of §5 at 1.0 FTE plus the minimum added staff of §4.3: solid = low estimate, hatched = high estimate</text>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 5-2 · Dated schedule: G5 between Jul 2031 and Mar 2034</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Start Nov 2026 at about 20 h/week: the §5 durations (at 1.0 FTE) times 2. Solid = low estimate, hatched = high estimate; added staff (§4.3) would shorten every bar</text>
 <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-M-03 §4.2, §5</text>
 <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
 <line x1="330" y1="116" x2="330" y2="116" stroke="#E2E8F0" stroke-width="1"/>
@@ -24,15 +24,15 @@
 <line x1="1108.8" y1="116" x2="1108.8" y2="116" stroke="#E2E8F0" stroke-width="1"/>
 <line x1="1164.4" y1="116" x2="1164.4" y2="116" stroke="#E2E8F0" stroke-width="1"/>
 <line x1="1220" y1="116" x2="1220" y2="116" stroke="#E2E8F0" stroke-width="1"/>
-<text x="330" y="108" font-size="10.5" fill="#475569" text-anchor="middle">M0</text>
-<text x="441.2" y="108" font-size="10.5" fill="#475569" text-anchor="middle">M6</text>
-<text x="552.5" y="108" font-size="10.5" fill="#475569" text-anchor="middle">M12</text>
-<text x="663.8" y="108" font-size="10.5" fill="#475569" text-anchor="middle">M18</text>
-<text x="775" y="108" font-size="10.5" fill="#475569" text-anchor="middle">M24</text>
-<text x="886.2" y="108" font-size="10.5" fill="#475569" text-anchor="middle">M30</text>
-<text x="997.5" y="108" font-size="10.5" fill="#475569" text-anchor="middle">M36</text>
-<text x="1108.8" y="108" font-size="10.5" fill="#475569" text-anchor="middle">M42</text>
-<text x="1220" y="108" font-size="10.5" fill="#475569" text-anchor="middle">M48</text>
+<text x="330" y="108" font-size="10.5" fill="#475569" text-anchor="middle">Nov 2026</text>
+<text x="441.2" y="108" font-size="10.5" fill="#475569" text-anchor="middle">Nov 2027</text>
+<text x="552.5" y="108" font-size="10.5" fill="#475569" text-anchor="middle">Nov 2028</text>
+<text x="663.8" y="108" font-size="10.5" fill="#475569" text-anchor="middle">Nov 2029</text>
+<text x="775" y="108" font-size="10.5" fill="#475569" text-anchor="middle">Nov 2030</text>
+<text x="886.2" y="108" font-size="10.5" fill="#475569" text-anchor="middle">Nov 2031</text>
+<text x="997.5" y="108" font-size="10.5" fill="#475569" text-anchor="middle">Nov 2032</text>
+<text x="1108.8" y="108" font-size="10.5" fill="#475569" text-anchor="middle">Nov 2033</text>
+<text x="1220" y="108" font-size="10.5" fill="#475569" text-anchor="middle">Nov 2034</text>
 <text x="40" y="130" font-size="11" fill="#475569" font-weight="700">Phase</text>
 <text x="236" y="130" font-size="11" fill="#475569" font-weight="700">Effort (pw)</text>
 <line x1="40" y1="140" x2="1240" y2="140" stroke="#E2E8F0" stroke-width="1"/>
@@ -41,8 +41,8 @@
 <text x="236" y="160" font-size="11" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">6–10</text>
 <rect x="330" y="148" width="37.1" height="13" rx="3" fill="#C2410C" stroke="none" stroke-width="1.2"/>
 <rect x="330" y="166" width="55.6" height="13" rx="3" fill="url(#hatch)" stroke="#C2410C" stroke-width="1"/>
-<text x="373.1" y="159" font-size="10" fill="#C2410C" font-weight="700">2 mo</text>
-<text x="391.6" y="177" font-size="10" fill="#475569">3 mo</text>
+<text x="373.1" y="159" font-size="10" fill="#C2410C" font-weight="700">4 mo</text>
+<text x="391.6" y="177" font-size="10" fill="#475569">6 mo</text>
 <text x="70" y="176" font-size="9.5" fill="#475569">may overlap: Start of P1 item definition</text>
 <line x1="40" y1="188" x2="1240" y2="188" stroke="#E2E8F0" stroke-width="1"/>
 <text x="40" y="208" font-size="13" fill="#0F172A" font-weight="700">P1</text>
@@ -50,8 +50,8 @@
 <text x="236" y="208" font-size="11" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">14–24</text>
 <rect x="367.1" y="196" width="74.2" height="13" rx="3" fill="#C2410C" stroke="none" stroke-width="1.2"/>
 <rect x="385.6" y="214" width="111.2" height="13" rx="3" fill="url(#hatch)" stroke="#C2410C" stroke-width="1"/>
-<text x="447.2" y="207" font-size="10" fill="#C2410C" font-weight="700">4 mo</text>
-<text x="502.9" y="225" font-size="10" fill="#475569">6 mo</text>
+<text x="447.2" y="207" font-size="10" fill="#C2410C" font-weight="700">8 mo</text>
+<text x="502.9" y="225" font-size="10" fill="#475569">12 mo</text>
 <text x="70" y="224" font-size="9.5" fill="#475569">may overlap: P2 requirements back-fill (start only …</text>
 <line x1="40" y1="236" x2="1240" y2="236" stroke="#E2E8F0" stroke-width="1"/>
 <text x="40" y="256" font-size="13" fill="#0F172A" font-weight="700">P2</text>
@@ -59,8 +59,8 @@
 <text x="236" y="256" font-size="11" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">14–22</text>
 <rect x="441.2" y="244" width="74.2" height="13" rx="3" fill="#C2410C" stroke="none" stroke-width="1.2"/>
 <rect x="496.9" y="262" width="111.2" height="13" rx="3" fill="url(#hatch)" stroke="#C2410C" stroke-width="1"/>
-<text x="521.4" y="255" font-size="10" fill="#C2410C" font-weight="700">4 mo</text>
-<text x="614.1" y="273" font-size="10" fill="#475569">6 mo</text>
+<text x="521.4" y="255" font-size="10" fill="#C2410C" font-weight="700">8 mo</text>
+<text x="614.1" y="273" font-size="10" fill="#475569">12 mo</text>
 <text x="70" y="272" font-size="9.5" fill="#475569">may overlap: Start of HIL bench build (5.1)</text>
 <line x1="40" y1="284" x2="1240" y2="284" stroke="#E2E8F0" stroke-width="1"/>
 <text x="40" y="304" font-size="13" fill="#0F172A" font-weight="700">P3</text>
@@ -68,8 +68,8 @@
 <text x="236" y="304" font-size="11" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">30–55</text>
 <rect x="515.4" y="292" width="148.3" height="13" rx="3" fill="#C2410C" stroke="none" stroke-width="1.2"/>
 <rect x="608.1" y="310" width="222.5" height="13" rx="3" fill="url(#hatch)" stroke="#C2410C" stroke-width="1"/>
-<text x="669.8" y="303" font-size="10" fill="#C2410C" font-weight="700">8 mo</text>
-<text x="836.6" y="321" font-size="10" fill="#475569">12 mo</text>
+<text x="669.8" y="303" font-size="10" fill="#C2410C" font-weight="700">16 mo</text>
+<text x="836.6" y="321" font-size="10" fill="#475569">24 mo</text>
 <text x="70" y="320" font-size="9.5" fill="#475569">may overlap: P4 HIL bench, replay references</text>
 <line x1="40" y1="332" x2="1240" y2="332" stroke="#E2E8F0" stroke-width="1"/>
 <text x="40" y="352" font-size="13" fill="#0F172A" font-weight="700">P4</text>
@@ -77,8 +77,8 @@
 <text x="236" y="352" font-size="11" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">20–35</text>
 <rect x="663.8" y="340" width="92.7" height="13" rx="3" fill="#C2410C" stroke="none" stroke-width="1.2"/>
 <rect x="830.6" y="358" width="148.3" height="13" rx="3" fill="url(#hatch)" stroke="#C2410C" stroke-width="1"/>
-<text x="762.5" y="351" font-size="10" fill="#C2410C" font-weight="700">5 mo</text>
-<text x="985" y="369" font-size="10" fill="#475569">8 mo</text>
+<text x="762.5" y="351" font-size="10" fill="#C2410C" font-weight="700">10 mo</text>
+<text x="985" y="369" font-size="10" fill="#475569">16 mo</text>
 <text x="70" y="368" font-size="9.5" fill="#475569">may overlap: Start of validation planning</text>
 <line x1="40" y1="380" x2="1240" y2="380" stroke="#E2E8F0" stroke-width="1"/>
 <text x="40" y="400" font-size="13" fill="#0F172A" font-weight="700">P5</text>
@@ -86,8 +86,8 @@
 <text x="236" y="400" font-size="11" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">20–40</text>
 <rect x="756.5" y="388" width="92.7" height="13" rx="3" fill="#C2410C" stroke="none" stroke-width="1.2"/>
 <rect x="979" y="406" width="166.9" height="13" rx="3" fill="url(#hatch)" stroke="#C2410C" stroke-width="1"/>
-<text x="855.2" y="399" font-size="10" fill="#C2410C" font-weight="700">5 mo</text>
-<text x="1151.8" y="417" font-size="10" fill="#475569">9 mo</text>
+<text x="855.2" y="399" font-size="10" fill="#C2410C" font-weight="700">10 mo</text>
+<text x="1151.8" y="417" font-size="10" fill="#475569">18 mo</text>
 <line x1="40" y1="428" x2="1240" y2="428" stroke="#E2E8F0" stroke-width="1"/>
 <text x="40" y="448" font-size="13" fill="#0F172A" font-weight="700">P6</text>
 <text x="70" y="448" font-size="11.5" fill="#0F172A">Operation</text>
@@ -100,27 +100,27 @@
 <line x1="367.1" y1="502" x2="385.6" y2="502" stroke="#D97706" stroke-width="1.6" stroke-dasharray="3 3"/>
 <path d="M367.1 495 l7 7 l-7 7 l-7 -7 z" fill="#D97706" stroke="#D97706" stroke-width="1.5"/>
 <path d="M385.6 495 l7 7 l-7 7 l-7 -7 z" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
-<text x="367.1" y="524" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle">G0 M2</text>
+<text x="367.1" y="524" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle">G0 Mar 2027</text>
 <line x1="441.2" y1="502" x2="496.9" y2="502" stroke="#D97706" stroke-width="1.6" stroke-dasharray="3 3"/>
 <path d="M441.2 495 l7 7 l-7 7 l-7 -7 z" fill="#D97706" stroke="#D97706" stroke-width="1.5"/>
 <path d="M496.9 495 l7 7 l-7 7 l-7 -7 z" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
-<text x="441.2" y="536" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle">G1 M6</text>
+<text x="441.2" y="536" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle">G1 Nov 2027</text>
 <line x1="515.4" y1="502" x2="608.1" y2="502" stroke="#D97706" stroke-width="1.6" stroke-dasharray="3 3"/>
 <path d="M515.4 495 l7 7 l-7 7 l-7 -7 z" fill="#D97706" stroke="#D97706" stroke-width="1.5"/>
 <path d="M608.1 495 l7 7 l-7 7 l-7 -7 z" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
-<text x="515.4" y="524" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle">G2 M10</text>
+<text x="515.4" y="524" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle">G2 Jul 2028</text>
 <line x1="663.8" y1="502" x2="830.6" y2="502" stroke="#D97706" stroke-width="1.6" stroke-dasharray="3 3"/>
 <path d="M663.8 495 l7 7 l-7 7 l-7 -7 z" fill="#D97706" stroke="#D97706" stroke-width="1.5"/>
 <path d="M830.6 495 l7 7 l-7 7 l-7 -7 z" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
-<text x="663.8" y="536" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle">G3 M18</text>
+<text x="663.8" y="536" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle">G3 Nov 2029</text>
 <line x1="756.5" y1="502" x2="979" y2="502" stroke="#D97706" stroke-width="1.6" stroke-dasharray="3 3"/>
 <path d="M756.5 495 l7 7 l-7 7 l-7 -7 z" fill="#D97706" stroke="#D97706" stroke-width="1.5"/>
 <path d="M979 495 l7 7 l-7 7 l-7 -7 z" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
-<text x="756.5" y="524" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle">G4 M23</text>
+<text x="756.5" y="524" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle">G4 Sep 2030</text>
 <line x1="849.2" y1="502" x2="1145.8" y2="502" stroke="#D97706" stroke-width="1.6" stroke-dasharray="3 3"/>
 <path d="M849.2 495 l7 7 l-7 7 l-7 -7 z" fill="#D97706" stroke="#D97706" stroke-width="1.5"/>
 <path d="M1145.8 495 l7 7 l-7 7 l-7 -7 z" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
-<text x="849.2" y="536" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle">G5 M28</text>
+<text x="849.2" y="536" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle">G5 Jul 2031</text>
 <line x1="40" y1="552" x2="1240" y2="552" stroke="#E2E8F0" stroke-width="1"/>
 <text x="40" y="574" font-size="12" fill="#0F172A" font-weight="700">Long-lead items (§5): start in the phase named, ready by the start of the phase that needs it</text>
 <text x="40" y="612" font-size="11.5" fill="#0F172A" font-weight="600">Assessor engagement</text>
@@ -132,7 +132,7 @@
 <text x="40" y="660" font-size="9.5" fill="#475569">starts P1 · needed by P1</text>
 <rect x="367.1" y="636" width="8" height="12" rx="6" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/>
 <path d="M367.1 635 l7 7 l-7 7 l-7 -7 z" fill="#0F766E" stroke="#0F766E" stroke-width="1.5"/>
-<text x="379.1" y="646" font-size="10" fill="#0F766E">needed at P1 start (M2)</text>
+<text x="379.1" y="646" font-size="10" fill="#0F766E">needed at P1 start (Mar 2027)</text>
 <text x="40" y="680" font-size="11.5" fill="#0F172A" font-weight="600">HIL bench parts</text>
 <text x="40" y="694" font-size="9.5" fill="#475569">starts P2 · needed by P4</text>
 <rect x="441.2" y="670" width="222.5" height="12" rx="6" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
@@ -142,7 +142,7 @@
 <text x="40" y="728" font-size="9.5" fill="#475569">starts P4 · needed by P5</text>
 <rect x="663.8" y="704" width="92.7" height="12" rx="6" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/>
 <path d="M756.5 703 l7 7 l-7 7 l-7 -7 z" fill="#0F766E" stroke="#0F766E" stroke-width="1.5"/>
-<text x="768.5" y="714" font-size="10" fill="#0F766E">needed at P5 start (M23)</text>
+<text x="768.5" y="714" font-size="10" fill="#0F766E">needed at P5 start (Sep 2030)</text>
 <rect x="329" y="116" width="2" height="620" rx="0" fill="#D2553F" stroke="none" stroke-width="1.2"/>
 <rect x="336" y="118" width="131.9" height="16" rx="8.0" fill="#D2553F" stroke="none" stroke-width="1"/>
 <text x="402" y="129.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">NOW: in P0, G0 not passed</text>
