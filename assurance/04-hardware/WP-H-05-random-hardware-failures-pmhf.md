@@ -4,9 +4,9 @@
 |---|---|
 | Work product | WP-H-05 Evaluation of safety goal violations due to random HW failures (PMHF) |
 | Standard reference | ISO 26262-5:2018 §9 (evaluation of safety goal violations due to random hardware failures: probabilistic metric and evaluation of each cause), Annex C; ISO 26262-10:2018 (PMHF explanations, informative); ISO 26262-11:2018 (informative) |
-| Version | 0.5 (§3 mission-profile working values approved by the lead 2026-10-18 (DQ-067, A); OI-2 closed, OI-6 for logged operating hours; 2026-10-19). 0.4 (§3 working mission-profile values shown as used by the generic FMEDA; §6 status and λSPF + λRF note from FMEDA rev 0.4; plan step 2 per DQ-065; 2026-10-16). 0.3 (§6 status and §8 template drawn as Figure 6-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12 in §6: DC-01 implemented, not verified, not credited). 0.1: initial draft |
+| Version | 0.6 (method approved by the lead: PMHF plus a per-cause check of the biggest contributors, DQ-066 option A, 2026-10-19; OI-1 closed; §4 ASILs follow WP-C-03 v0.4; §6 and Figure 6-1 updated). 0.5 (§3 mission-profile working values approved by the lead 2026-10-18 (DQ-067, A); OI-2 closed, OI-6 for logged operating hours; 2026-10-19). 0.4 (§3 working mission-profile values shown as used by the generic FMEDA; §6 status and λSPF + λRF note from FMEDA rev 0.4; plan step 2 per DQ-065; 2026-10-16). 0.3 (§6 status and §8 template drawn as Figure 6-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12 in §6: DC-01 implemented, not verified, not credited). 0.1: initial draft |
 | Status | Draft (method and plan; no value computed) |
-| ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
+| ASIL / scope | ASIL C (SG-01 provisional; SG-02, SG-03, SG-06 since WP-C-03 v0.4) / ASIL B (SG-04, SG-05, SG-07) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1 minimum, external reviewer, T-09) |
 | Approver | TBD (per [WP-M-02](../01-management/WP-M-02-safety-plan.md)) |
@@ -34,10 +34,10 @@ per-fault targets (EEC, "method 2"). Comparison for LionDriver:
 | Comparability | Directly comparable with a target and with other systems | Harder to communicate as one figure |
 | Effort | Lower once the FMEDA exists | Higher (per fault) |
 
-**Decision proposed: PMHF (method 1) as the primary evaluation, complemented by an
+**Decided: PMHF (method 1) as the primary evaluation, complemented by an
 EEC-style per-cause check of the dominant single-point and residual contributors** (MCU core,
-SRAM, relay stuck intercepting) so that a low overall figure cannot hide one uncovered part.
-To be confirmed by the safety manager (OI-1).
+SRAM, harness box intercept switch U1/U2, which replaced the relay of earlier drafts) so that a low overall figure cannot hide one uncovered part.
+Approved by the lead as safety manager ([DQ-066](../01-management/decisions/register.yaml), option A, 2026-10-19; OI-1).
 
 ### 2.1 Calculation basis (our words; verify against licensed text and ISO 26262-10)
 
@@ -70,7 +70,8 @@ The lead approved the working values on 2026-10-18 (decision register DQ-067, A)
 | SG | ASIL | PMHF target | Note |
 |---|---|---|---|
 | SG-01 | C (provisional; B expected after FSC option (c)) | < 10⁻⁷ /h (100 FIT) | Commonly used value for ASIL B and C — **verify against licensed text** |
-| SG-02…SG-06 | B | < 10⁻⁷ /h (100 FIT) | as above |
+| SG-02, SG-03, SG-06 | C (WP-C-03 v0.4) | < 10⁻⁷ /h (100 FIT) | as above |
+| SG-04, SG-05 | B | < 10⁻⁷ /h (100 FIT) | as above |
 | SG-07 | B | < 10⁻⁷ /h (100 FIT) | as above |
 | (reference) | D | < 10⁻⁸ /h (10 FIT) | not applicable unless AOU-01/02 fail (HARA) |
 
@@ -116,8 +117,8 @@ Rules for using them:
 
 | Item | Status |
 |---|---|
-| Method decision | Proposed (§2), not approved |
-| Mission profile | Proposed in part (§3) |
+| Method decision | **Approved** (§2; DQ-066, 2026-10-19) |
+| Mission profile | **Working values approved** (§3; DQ-067, 2026-10-18); operating hours to be replaced with logged driving data (OI-6) |
 | Failure rates | **No part-level rates (no BOM).** Generic block rates in the FMEDA; the harness box switches U1/U2 at the SN 29500-2 reference value from a secondary source ([WP-H-03](WP-H-03-hardware-safety-analysis-fmeda.md) §6.3) |
 | FMEDA | Qualitative block level, plus a generic-rate block FMEDA ([WP-H-03](WP-H-03-hardware-safety-analysis-fmeda.md) §6.3) |
 | PMHF per SG | **Cannot be computed** |
@@ -141,11 +142,11 @@ reported as "met" or "not met" until computed.
 
 | # | Activity | Depends on | Gate |
 |---|---|---|---|
-| 1 | Approve method (§2) and mission profile (§3) | Safety manager | G2 |
+| 1 | ~~Approve method (§2) and mission profile (§3)~~ Done: DQ-066 and DQ-067 | Safety manager | G2 |
 | 2 | Obtain BOM, schematic, harness relay data (WP-H-02 OI-1) and ST failure-rate data (WP-H-07 QE-02) | Supplier (ask and wait, no teardown, DQ-065) | G2 |
 | 3 | Fill FMEDA (WP-H-03 §6) and classify faults, marking those that rely on external measures | 2 | G3 |
 | 4 | Compute PMHF per SG in two variants: with external measures (AoUs verified) and without | 3 | G3 |
-| 5 | EEC-style check of the dominant contributors (MCU core, SRAM, relay) | 3 | G3 |
+| 5 | EEC-style check of the dominant contributors (MCU core, SRAM, intercept switch U1/U2) | 3 | G3 |
 | 6 | Sensitivity analysis on die rate, relay rate and DC | 4 | G3 |
 | 7 | If above target: decide DC-02/DC-03 or other measures and recompute | 6 | G3 |
 | 8 | Vehicle characterization of AOU-01R/04R/05R (WP-C-04) — prerequisite for the "with external measures" variant | Vehicle tests | G2–G4 |
@@ -166,7 +167,7 @@ reported as "met" or "not met" until computed.
 
 | ID | Item | Needed by |
 |---|---|---|
-| OI-1 | Safety manager to approve the method choice (§2) | G2 |
+| OI-1 | ~~Safety manager to approve the method choice (§2)~~ **Decided** ([DQ-066](../01-management/decisions/register.yaml), option A, 2026-10-19): PMHF plus a per-cause check of the biggest contributors | G2 |
 | OI-2 | Closed 2026-10-19: the working values of §3 (15 years, 500 h/year, +85 °C sun-loaded cabin, one power cycle per drive) are approved by the lead (decision register DQ-067, A, 2026-10-18). They are already in the figures, so nothing is recalculated. Replacing the hours with logged data is OI-6 | G2 |
 | OI-3 | Confirm with the external assessor the use of vehicle external measures in the effect analysis (§5) | G2 |
 | OI-4 | Verify target values and PMHF approximations against licensed ISO 26262-5 and -10 | G2 |

@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.8 | draft | BL-005 | RT-2 | 2026-10-16 |
+| 0.9 | draft | BL-005 | RT-2 | 2026-10-16 |
 
 **Scope.** Safety-relevant hardware of AC-001 at BL-005 (hardware as at BL-002): comma 3X panda section (STM32H725, clock and watchdog, MCU supply, CAN transceivers), Toyota harness and relay box, SoC-MCU interface, siren path, enclosure and cooling. SoC, cameras and other QM hardware only where they couple into these (WP-A-03).
 
@@ -549,7 +549,7 @@ Effects:
 
 | ID | Kind | Action | Owner | Status | Causes | Revised S/O/D → AP |
 |---|---|---|---|---|---|---|
-| DFM-ACT-001 | prevention | Add a CPU self-test (vendor STL if available for STM32H7) at start-up and periodically, or argue the ASIL B target without CPU coverage (WP-H-03 finding 4) | Jherrod Thomas | open | DFM-001.C1 | — |
+| DFM-ACT-001 | prevention | Add a LionDriver CPU self-test at start-up and periodically (WP-H-03 finding 4). No vendor self-test library is licensed (decision DQ-069 option B, 2026-10-19), so CPU coverage is claimed only as low and the ASIL C SPFM target is likely missed (WP-H-04 OI-6, G2) | Jherrod Thomas | open | DFM-001.C1 | — |
 | DFM-ACT-002 | design_change | Integrate the G1 layer 1 MCU measures (RAMECC handling, redundant storage, code CRC, start-up RAM test, fault escalation) from panda branch liondriver/g1-layer1 after review and HIL evidence | Jherrod Thomas | open | DFM-002.C1, DFM-003.C1, DFM-003.C2 | — |
 | DFM-ACT-003 | detection | Run the watchdog HIL test (test_10_hw_watchdog) on the bench and confirm the relay releases on reset (HWSR-502, UK-06) (D-04). The lead deferred the HIL bench (DQ-049, 2026-10-14), so this waits for the bench | Jherrod Thomas | open | DFM-004.C1, DFM-006.C1 | — |
 | DFM-ACT-004 | design_change | Cross-check the HSE-derived time base against LSI or HSI and react on deviation (HWSR-504a) | Jherrod Thomas | open | DFM-005.C1 | — |
