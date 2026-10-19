@@ -109,7 +109,7 @@ class TestReferenceEntry(OpenpilotTestCase):
     for key, (assured, _) in assured_config.ASSURED_PARAMS.items():
       other = (not assured) if isinstance(assured, bool) else log.LongitudinalPersonality.standard
       self.assertFalse(evaluate(params={key: other}).settings_in_scope, key)
-    self.assertIn("settings_in_scope", evaluate().to_dict())
+    assert "settings_in_scope" in evaluate().to_dict()
 
   def test_reference_platform_in_assured_settings_engages_at_floor(self):
     sd = selfdrive()
@@ -160,8 +160,8 @@ class TestReferenceEntry(OpenpilotTestCase):
     self.assertEqual(sd.events.names, [EventName.personalityChanged])
 
   def test_alerts(self):
-    self.assertIn(ET.NO_ENTRY, EVENTS[EventName.settingNotAssured])
+    assert ET.NO_ENTRY in EVENTS[EventName.settingNotAssured]
     alert = EVENTS[EventName.belowHighwaySpeed][ET.NO_ENTRY]
     for metric, shown in ((True, "60 km/h"), (False, "37 mph")):
       a = alert(None, None, None, metric, 0, None)
-      self.assertIn(shown, a.alert_text_1 + a.alert_text_2)
+      assert shown in a.alert_text_1 + a.alert_text_2
