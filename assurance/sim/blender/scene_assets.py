@@ -20,6 +20,7 @@ import json
 import math
 import os
 import random
+import zlib
 from pathlib import Path
 
 import bmesh
@@ -32,6 +33,9 @@ ASSET_LOCK = HERE / "library" / "assets.lock.json"
 ASSET_DIR = HERE.parents[2] / "assurance" / "sim" / "assets" / "library"
 SNOW_RGB = (0.80, 0.82, 0.86)
 MOON_AZ = 2.2                                   # moonlight from behind and to the left of the road heading (rad)
+PEOPLE_DIR = HERE / "library" / "people"        # CC0 pedestrians built by library/people/build_people.py
+PEOPLE = (("pedestrian_male.glb", 1.78), ("pedestrian_female.glb", 1.66))   # file, standing height (m)
+SHIRTS = ((0.13, 0.22, 0.42), (0.45, 0.08, 0.08), (0.22, 0.30, 0.18), (0.55, 0.50, 0.42), (0.30, 0.18, 0.40))
 
 
 # ------------------------------------------------------------------------------------------------- assets
@@ -122,12 +126,30 @@ def facade_material(name: str, wall, glass=(0.05, 0.07, 0.09), lit: float = 0.0)
   nt.links.new(tc.outputs["Object"], br.inputs["Vector"])
   nt.links.new(br.outputs[0], b.inputs["Base Color"])
   nt.links.new(br.outputs[1], b.inputs["Roughness"])
-  if lit:
-    inv = nt.nodes.new("ShaderNodeMath")
-    inv.operation = "SUBTRACT"
-    inv.inputs[0].default_value = 1.0
-    nt.links.new(br.outputs[1], inv.inputs[1])
-    nt.links.new(inv.outputs[0], b.inputs["Emission Strength"])
+  if lit:                                       # some windows lit at night: a twin brick texture gives each window
+    pick = nt.nodes.new("ShaderNodeTexBrick")   # a random grey; those above the threshold glow at strength lit / 4
+    pick.offset = 0.0
+    for k in ("Scale", "Mortar Size", "Brick Width", "Row Height"):
+      pick.inputs[k].default_value = br.inputs[k].default_value
+    pick.inputs["Color1"].default_value, pick.inputs["Color2"].default_value = (0, 0, 0, 1), (1, 1, 1, 1)
+    nt.links.new(tc.outputs["Object"], pick.inputs["Vector"])
+    on = nt.nodes.new("ShaderNodeMath")
+    on.operation = "GREATER_THAN"
+    on.inputs[1].default_value = 0.6
+    nt.links.new(pick.outputs[0], on.inputs[0])
+    glass_only = nt.nodes.new("ShaderNodeMath")
+    glass_only.operation = "SUBTRACT"
+    glass_only.inputs[0].default_value = 1.0
+    nt.links.new(br.outputs[1], glass_only.inputs[1])
+    mask = nt.nodes.new("ShaderNodeMath")
+    mask.operation = "MULTIPLY"
+    nt.links.new(on.outputs[0], mask.inputs[0])
+    nt.links.new(glass_only.outputs[0], mask.inputs[1])
+    strength = nt.nodes.new("ShaderNodeMath")
+    strength.operation = "MULTIPLY"
+    strength.inputs[1].default_value = lit / 4
+    nt.links.new(mask.outputs[0], strength.inputs[0])
+    nt.links.new(strength.outputs[0], b.inputs["Emission Strength"])
     b.inputs["Emission Color"].default_value = (1.0, 0.8, 0.5, 1)
   return m
 
@@ -1283,6 +1305,49 @@ def pedestrian(name: str, coll, shirt=(0.15, 0.25, 0.45), trousers=(0.08, 0.08, 
     part(f"{name}_arm{k}", cyl_mesh(f"{name}_armm{k}", 0.05, 0.62, mat=top), sh, coll, (0, 0, -0.31))
     limbs.append((hip, sh))
   return root, limbs
+
+
+def scanned_pedestrian(name: str, coll, seed: str = "", figure: str | None = None, root_dir: Path | None = None):
+  """A Quaternius CC0 figure (library/people/) facing +X with its rig and Walk_Loop, or None when the file is missing.
+  Which figure and shirt colour follow from the name and seed (the base scene's ID, so a condition variant shows the
+  same person), unless the scene names the figure (male, female). Returns the root and the rig, whose walk
+  hazard_scene.py drives by the distance walked."""
+  pick = zlib.crc32((name + seed).encode())
+  fname, height = next((p for p in PEOPLE if figure and p[0] == f"pedestrian_{figure}.glb"),
+                       PEOPLE[pick % len(PEOPLE)])
+  path = (root_dir or PEOPLE_DIR) / fname
+  if not path.exists():
+    return None
+  objs_before, acts_before = set(bpy.data.objects), set(bpy.data.actions)
+  bpy.ops.import_scene.gltf(filepath=str(path))
+  new = [o for o in bpy.data.objects if o not in objs_before]
+  rig = next(o for o in new if o.type == "ARMATURE")
+  walk = next(a for a in bpy.data.actions if a not in acts_before)
+  if rig.animation_data:                        # the importer's own action and NLA; the walk is re-added by distance
+    rig.animation_data.action = None
+    for t in list(rig.animation_data.nla_tracks):
+      rig.animation_data.nla_tracks.remove(t)
+  rig["walk_action"] = walk.name
+  for o in new:
+    for c in list(o.users_collection):
+      c.objects.unlink(o)
+    coll.objects.link(o)
+  bpy.context.view_layer.update()
+  meshes = [o for o in new if o.type == "MESH"]
+  eyes = next((o for o in meshes if o.name.startswith("Eyes")), None)
+  fwd = (eyes.matrix_world.translation if eyes else Vector((1, 0, 0))) - rig.matrix_world.translation
+  top = max((o.matrix_world @ Vector(c)).z for o in meshes for c in o.bound_box)
+  root = empty(name, coll)
+  rig.parent = root
+  rig.location = (0, 0, 0)
+  rig.rotation_euler.z -= math.atan2(fwd.y, fwd.x)
+  rig.scale = tuple(v * height / top for v in rig.scale)
+  shirt = material(f"shirt_{name}", SHIRTS[pick // len(PEOPLE) % len(SHIRTS)], rough=0.85)
+  for o in meshes:
+    for k, m in enumerate(o.data.materials):
+      if m and m.name.split(".")[0] == "shirt":
+        o.data.materials[k] = shirt
+  return root, rig
 
 
 def cyclist(name: str, coll, shirt=(0.6, 0.1, 0.1)):

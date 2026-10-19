@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1518" viewBox="0 0 1280 1518" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-6. SW FMEA failure chains — sheet 8 of 13 (SWF)</title>
-  <desc id="d">SW FMEA failure chains, sheet 8 of 13 (SWF rev 1.4): failure modes SWF-046 to SWF-057 (5 failure modes, 11 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <desc id="d">SW FMEA failure chains, sheet 8 of 13 (SWF rev 1.6): failure modes SWF-046 to SWF-057 (5 failure modes, 11 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,7 +9,7 @@
   </defs>
   <rect width="1280" height="1518" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-6 · SW FMEA failure chains — sheet 8 of 13</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.4 · BL-006 · draft · SWF-046 … SWF-057 · 11 causes on this sheet</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.6 · BL-006 · draft · SWF-046 … SWF-057 · 11 causes on this sheet</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -140,7 +140,7 @@
   <text x="885" y="622.9" font-size="12" fill="#0F172A" font-weight="700">SWF-047.C2</text>
   <rect x="1194.5" y="611.9" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="622.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
   <text x="885" y="637.4" font-size="10.5" fill="#0F172A">Loop overrun or scheduling delay (Python, CTRL_HIGH on core 4,</text>
-  <text x="885" y="651.5" font-size="10.5" fill="#0F172A">controlsd.py:237); Ratekeeper only monitors (228-233) and the loop</text>
+  <text x="885" y="651.5" font-size="10.5" fill="#0F172A">controlsd.py:238); Ratekeeper only monitors (228-233) and the loop</text>
   <text x="885" y="665.6" font-size="10.5" fill="#0F172A">is paced by selfdriveState; card actuates the latest carControl eac…</text>
   <text x="885" y="678.7" font-size="9.8" fill="#475569" font-weight="600">O6 · D8 · in SWF-SE-046</text>
   <rect x="885" y="684.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="695.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-048 open</text>

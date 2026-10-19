@@ -48,7 +48,7 @@ class TestRealSources(unittest.TestCase):
 
   def test_figure_numbers_match_file_names(self):
     for name, content in self.out.items():
-      num = re.match(r"fig-a05-(\d)-(\d)-", name).groups()
+      num = re.match(r"fig-a05-(\d+)-(\d+)-", name).groups()
       self.assertIn(f"Figure {num[0]}-{num[1]}.", content, name)
 
 
