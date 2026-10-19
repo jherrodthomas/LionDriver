@@ -436,7 +436,7 @@ def sp_panel(data: Data, g, y):
     b.append(t(x + 10, yy + 18, ev, 11, RED, 700))
     if ds:
       lo, hi = min(ds), max(ds)
-      lab, fill, fg = (("every cause D ≤ 4: one analysis is wrong", RED, "#FFFFFF") if hi <= 4 else
+      lab, fill, fg = (("every cause D ≤ 4: tree and FMEA disagree", RED, "#FFFFFF") if hi <= 4 else
                        ("not detected", "#FEE2E2", RED) if lo >= 7 else ("partly detected", "#FEF3C7", "#92400E"))
       rng = f"D {lo}" + (f"–{hi}" if hi != lo else "")
       b.append(t(x + 10, yy + 34, cut(f"{', '.join(fids)} · {len(ds)} cause{'s' if len(ds) > 1 else ''} · {rng}", tw - 20, 10, 1, True)[0], 10, ORG, 700))

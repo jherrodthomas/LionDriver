@@ -187,7 +187,7 @@ These were review input for WP-A-04 and the FMEAs. F-1…F-10 (SG-04) are resolv
 
 ## 5. Hand-off sheets
 
-One sheet per goal, continued where a tree is long. Each opens with the goal's single points: the events in the item that reach the top event on their own, from the gate logic, with the detection range of their FMEA causes. A single point whose causes all claim D ≤ 4 is marked, because then the tree or the FMEA is wrong (the third check of §1); today that is BE-3.11, BE-5.14 and BE-7.05, as `fmea_lint.py` warns. Then every event of the tree, borrowed events included, grouped under the gate it feeds: the event, the FMEA failure mode it hands off to, the worst of that mode's causes (highest AP, then highest D) and the detection that cause credits. An event with no FMEA row says why.
+One sheet per goal, continued where a tree is long. Each opens with the goal's single points: the events in the item that reach the top event on their own, from the gate logic, with the detection range of their FMEA causes. A single point whose causes all claim D ≤ 4 is marked, because the tree and the FMEA then disagree on detection (the third check of §1); today that is BE-3.11, BE-5.14 and BE-7.05, as `fmea_lint.py` warns. Then every event of the tree, borrowed events included, grouped under the gate it feeds: the event, the FMEA failure mode it hands off to, the worst of that mode's causes (highest AP, then highest D) and the detection that cause credits. An event with no FMEA row says why.
 
 ### SG-01
 
