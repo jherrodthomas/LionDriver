@@ -44,6 +44,8 @@ RUNS = {
   "HE-01.2": ("F-01b", {}, "straight highway"),
   "HE-01.4": ("F-02", {}, "straight highway, not engaged"),
   "HE-02.1": ("F-07", {"road": "curve-odd-bound", "t_fault": None}, "left curve at R_ODD, fault at curve entry"),
+  "HE-02.2": ("F-07", {"speed_kph": 80, "road": "rcurve@2.0", "lane_width": 3.5, "t_fault": None},
+              "rural right curve (2.0 m/s²) at 80 km/h, outside the ODD, fault at curve entry"),
   "HE-07.1": ("F-04b", {"road": "curve-odd-bound", "t_fault": None}, "left curve at R_ODD, fault at curve entry"),
 }
 # ASIL C events whose scene is kinematic: no panda code ran, so no loop is drawn
@@ -78,6 +80,17 @@ SPEC = {
     "verdict": "The panda stops it at {refuse:.3f} s; nothing reaches the car.",
   },
   "HE-02.1": {
+    "fault": "EPS fault: LKA_STATE 9, assist lost",
+    "SoC": ("idle", "keeps commanding; its frames are refused"),
+    "Host": ("idle", "packs the frames"),
+    "Panda": ("warns", "reads LKA_STATE 9: refuses LKA {refuse:.3f} s, revokes {revoke:.3f} s, siren {siren:.2f} s"),
+    "Switch": ("idle", "intercept"),
+    "EPS": ("fault", "fault: steering assist lost"),
+    "Vehicle": ("passes", "{line}"),
+    "Driver": ("stops", "cue: siren at {siren:.2f} s; corrects from {corr:.2f} s"),
+    "verdict": "The panda warns at {siren:.2f} s; the driver stops it from {corr:.2f} s.",
+  },
+  "HE-02.2": {
     "fault": "EPS fault: LKA_STATE 9, assist lost",
     "SoC": ("idle", "keeps commanding; its frames are refused"),
     "Host": ("idle", "packs the frames"),

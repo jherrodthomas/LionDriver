@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Scope | Simulation for LionDriver; modelling-plan work item 4, the HIL plant ([models README](../models/README.md), MD-01, MD-04): fault-injection plant model (layer 1), known scenarios as OpenSCENARIO (layer 2), MetaDrive closed loop (layer 3), unknown-scenario search (layer 4) |
-| Version | 0.12 (§3.8: layer 3 on a self-hosted runner, DQ-400 A, 2026-10-18). 0.11 (§1.1: how to read a scene dashboard, with an annotated overview and four spotlights, 2026-10-18). 0.10 (scenes outside the highway-only ODD tagged as misuse in the compilation and stills, 2026-10-18). 0.9 (3D compilation of the three Blender clips at the top, 2026-10-18). 0.8 (§3.7: loop diagram and animation for each ASIL C hazardous event the plant runs, 2026-10-18). 0.7 (pictures: hero strip, a figure per section from `figures/fig_sim_readme.py`, the existing renders and dashboards embedded, 2026-10-18). 0.6 (reference-car outline in the layer-1 figures, 2026-10-17). 0.5 (vehicle 3D-model note, 2026-10-17). 0.4 (§3.6: Julia retired, the bound computed exactly with numpy; 2026-10-17). 0.3 (reachability pilot, §3.6, 2026-10-16). 0.2 (layer 2, 2026-10-16). 0.1 (layer 1, 2026-10-16) |
+| Version | 0.13 (§3.7: HE-02.2 added, ASIL C since WP-C-03 v0.6, with its loop diagram and animation, Figures 16a and 16b, 2026-10-19). 0.12 (§3.8: layer 3 on a self-hosted runner, DQ-400 A, 2026-10-18). 0.11 (§1.1: how to read a scene dashboard, with an annotated overview and four spotlights, 2026-10-18). 0.10 (scenes outside the highway-only ODD tagged as misuse in the compilation and stills, 2026-10-18). 0.9 (3D compilation of the three Blender clips at the top, 2026-10-18). 0.8 (§3.7: loop diagram and animation for each ASIL C hazardous event the plant runs, 2026-10-18). 0.7 (pictures: hero strip, a figure per section from `figures/fig_sim_readme.py`, the existing renders and dashboards embedded, 2026-10-18). 0.6 (reference-car outline in the layer-1 figures, 2026-10-17). 0.5 (vehicle 3D-model note, 2026-10-17). 0.4 (§3.6: Julia retired, the bound computed exactly with numpy; 2026-10-17). 0.3 (reachability pilot, §3.6, 2026-10-16). 0.2 (layer 2, 2026-10-16). 0.1 (layer 1, 2026-10-16) |
 | Status | Draft. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed. **No result here is evidence until the model is validated against Corolla logs; until then results rank risks and guide tests only** (§4) |
 | Feeds | [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) timing (owned by the safety-concept session); [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) M4, [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md), [WP-V-04](../06-validation/WP-V-04-sotif-unknown-scenarios.md) (owned by the SOTIF session); previews [WP-V-05](../06-validation/WP-V-05-fault-injection.md) cases |
 
@@ -351,13 +351,13 @@ with no closed form: the nonlinear tyre model, a curved road, or the panda's mod
 
 ### 3.7 The ASIL C hazardous events in the loop
 
-Seven hazardous events are rated ASIL C in [WP-C-03](../02-concept/WP-C-03-hara.md) §5, and none is ASIL D. HE-01.2,
-HE-01.4 and HE-03.3 would become ASIL D if the assumptions they credit fail (WP-C-03 §5.12). Four of the seven have a
+Eight hazardous events are rated ASIL C in [WP-C-03](../02-concept/WP-C-03-hara.md) §5, and none is ASIL D. HE-02.2 joined them in WP-C-03 v0.6 (off-highway engagement at E3, DQ-213 A). HE-01.2,
+HE-01.4 and HE-03.3 would become ASIL D if the assumptions they credit fail (WP-C-03 §5.12). Five of the eight have a
 plant run behind their scene. For each of those, a loop diagram shows the §3.1 loop with that run's path: where the
 fault enters, what each part does with it and when, and who stops it. An animation of the same run follows. Both are
 drawn by [`figures/fig_sim_he.py`](figures/fig_sim_he.py), which runs the plant itself. The 'simulation plant model' CI
 job fails if WP-C-03's list of ASIL C events changes, or if a run no longer shows the reaction a diagram describes.
-The road in the animations is drawn straight; in the two curve runs the offset is measured from the curve's lane centre.
+The road in the animations is drawn straight; in the three curve runs the offset is measured from the curve's lane centre.
 
 The hazards these runs test start from the HARA guide words. The HARA's [guide-word scenes](../02-concept/hara/figures/fig-c03-4-1-f01-guide-words.svg) show every safety-relevant guide word as looping animations, one sheet per function (all 14 for F-01 lateral control; the others are listed in the [HARA README](../02-concept/hara/README.md#guide-word-scenes)): the function over time, required against performed, over a top-down view of what it does to the car. They are schematic, drawn by [`hara/guideword_scenes.py`](../02-concept/hara/guideword_scenes.py) from `hara_model.FM`; the runs above are the measured cases. The SOTIF counterpart, one looping card per SOTIF hazard, is the [SOTIF scene sheet](../02-concept/figures/fig-c06-5-2-sotif-scenes.svg).
 
@@ -390,6 +390,16 @@ The hazards these runs test start from the HARA guide words. The HARA's [guide-w
 ![Animation of HE-02.1: on the straightened curve the Corolla drifts toward the outside across the lane line while the offset plot's cursor runs to 4.3 s, and the events light up: fault, refusal, revocation, siren at 0.79 s, body on the lane line at 1.97 s, correction at 2.29 s](figures/fig-sim-he-02-1-anim.svg)
 
 *Figure 16. The same run, looping (it plays in a browser; a viewer that shows the SVG as a still shows 1 s before the fault). Scene: [dashboard](blender/dashboards/he-02-1-eps-loss-curve.jpg), [clip](blender/dashboards/clips/he-02-1-eps-loss-curve.mp4).*
+
+**HE-02.2, EPS assist lost in a rural curve, outside the ODD** (plant run F-07 at 80 km/h in a right curve at 2.0 m/s²). ASIL C since WP-C-03 v0.6, which rates off-highway engagement at 1–10 % of engaged time (RR-2026-011, DQ-213 A). The item reacts as in HE-02.1: refusal and revocation within 0.07 s, siren at 0.80 s. The car goes straight on, towards the oncoming lane, and the driver ends it, cued by the siren.
+
+![Loop diagram of HE-02.2, plant run F-07 in a right curve at 2.0 m/s² and 80 km/h: the fault enters at the EPS (LKA_STATE 9, assist lost); the panda refuses LKA frames at 0.025 s, revokes at 0.068 s and sounds the siren at 0.80 s; the car runs wide and its body reaches the lane line at 2.28 s; the driver corrects from 2.30 s](figures/fig-sim-he-02-2-loop.svg)
+
+*Figure 16a. HE-02.2 in the loop: what each part does with the fault, when, and who stops it.*
+
+![Animation of HE-02.2: on the straightened rural curve the Corolla drifts toward the oncoming side across the lane line, and the events light up: fault, refusal, revocation, siren at 0.80 s, body on the lane line at 2.28 s, correction at 2.30 s](figures/fig-sim-he-02-2-anim.svg)
+
+*Figure 16b. The same run, looping (it plays in a browser; a viewer that shows the SVG as a still shows 1 s before the fault). Scene: [dashboard](blender/dashboards/he-02-2-rural-curve-oncoming.jpg).*
 
 **HE-07.1, the item stops steering in a curve without a warning** (plant run F-04b). The panda revokes authority when the heartbeat stops but sounds no siren in this run, so the driver gets no warning. They notice only the drift, and correct later than in HE-02.1.
 
