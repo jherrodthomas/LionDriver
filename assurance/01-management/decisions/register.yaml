@@ -4730,7 +4730,7 @@
   sources: ["assurance/08-analyses/fta-fmea-mapping.md F-34", "assurance/08-analyses/fmea/hara-mapping.yaml HZ-010"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
-  applied: {ref: "jherrodthomas/LionDriver#252", record: "assurance/02-concept/WP-C-03-hara.md HE-03.7 (v0.5); fmea/hara-mapping.yaml HZ-010", at: 2026-10-19}
+  applied: {ref: "jherrodthomas/LionDriver#252", record: "assurance/02-concept/WP-C-03-hara.md HE-03.7 (v0.5); fmea/hara-mapping.yaml HZ-010; WP-A-04 v1.12 G3.3.1, BE-3.13 (#262)", at: 2026-10-19}
   note: "FTA G3.3 and the tree gaps SWF-055/057/089 follow in the FTA session's next PR."
 
 - id: DQ-365
