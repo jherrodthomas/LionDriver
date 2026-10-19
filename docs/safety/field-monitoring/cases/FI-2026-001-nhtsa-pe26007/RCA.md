@@ -1,5 +1,7 @@
 # FI-2026-001 — Root Cause Analysis
 
+> **ID note (added 2026-10-19).** HZ-nnn in this dated file is field hazard **FHZ-nnn** of [HAZARD-LOG.md](../../HAZARD-LOG.md) revision C. It is not the FMEA hazard of the same number (`assurance/08-analyses/fmea/analyses/hara.yaml`). The text is otherwise unchanged.
+
 **Method set:** Class A (PROCESS §5.5): timeline, barrier analysis, FTA, STPA, fishbone, 5-Why, SOTIF triggering conditions, escape-point analysis.
 
 **Baselines analyzed:** LionDriver `8b8c6ae` (openpilot tree) and `opendbc_repo` `229dc70`.

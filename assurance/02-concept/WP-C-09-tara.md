@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-09 Threat analysis and risk assessment (TARA) |
 | Standard reference | ISO/SAE 21434:2021 §15 (threat analysis and risk assessment methods); §9.3 (item definition, CS view); UN R155 Annex 5 (informative threat catalogue); ASPICE 4.0 SEC.1 |
-| Version | 0.6 (§9 threat scene cards, one per threat scenario, drawn as Figures 9-2 and 9-3 by `figures/fig_c09_scenes.py`; no rating changed; 2026-10-19). 0.5 (OI-7: no separate privacy assessment for now, DQ-095 A, 2026-10-19). 0.4 (§3 financial impact quantified for the road user in US dollars (DQ-035, B): DS-01…03 and DS-05…07 Moderate → Major, DS-10 Major → Moderate; no maximum impact level or risk value changes; OI-2 closed; 2026-10-18). 0.3 (§8 risk matrix drawn as Figure 8-1 and §9 top-risk attack paths as Figure 9-1; no rating changed; 2026-10-13). 0.2 (status update 2026-10-12: treatment status of AP-02/TS-02 at `bf6ce8c`; new TS-14/AP-14 (SoC injects PCS/DSU frames or floods whitelisted actuation IDs), rated at the shipped baseline; ratings unapproved). History: 0.1 |
+| Version | 0.7 (§3 HARA links brought to WP-C-03 v0.6: H-02 and H-06 ASIL C, H-03 ASIL C, AoU fallbacks named; Safety note reworded; no impact level, risk or CAL changed; 2026-10-19). 0.6 (§9 threat scene cards, one per threat scenario, drawn as Figures 9-2 and 9-3 by `figures/fig_c09_scenes.py`; no rating changed; 2026-10-19). 0.5 (OI-7: no separate privacy assessment for now, DQ-095 A, 2026-10-19). 0.4 (§3 financial impact quantified for the road user in US dollars (DQ-035, B): DS-01…03 and DS-05…07 Moderate → Major, DS-10 Major → Moderate; no maximum impact level or risk value changes; OI-2 closed; 2026-10-18). 0.3 (§8 risk matrix drawn as Figure 8-1 and §9 top-risk attack paths as Figure 9-1; no rating changed; 2026-10-13). 0.2 (status update 2026-10-12: treatment status of AP-02/TS-02 at `bf6ce8c`; new TS-14/AP-14 (SoC injects PCS/DSU frames or floods whitelisted actuation IDs), rated at the shipped baseline; ratings unapproved). History: 0.1 |
 | Status | Draft — ratings are engineering proposals for review, not approved. They must not be used to argue cybersecurity until the preliminary assessment ([WP-M-09 §8](../01-management/WP-M-09-cybersecurity-plan.md)) passes |
 | ASIL / scope | CS (cybersecurity); safety impact traced to the HARA ASILs |
 | Author | Assurance team (initial draft) |
@@ -63,12 +63,12 @@ Impact levels: **Severe / Major / Moderate / Negligible** per ISO/SAE 21434 §15
 
 | ID | Damage scenario | HARA link | S | F | O | P | Max level |
 |---|---|---|---|---|---|---|---|
-| DS-01 | Unintended/excessive lateral actuation induced by manipulation | H-01 (ASIL C/D) | Severe | Major | Major | Negligible | 4 |
-| DS-02 | Lateral control silently lost or frozen | H-02 (ASIL B) | Severe | Major | Major | Negligible | 4 |
-| DS-03 | Unintended acceleration induced | H-03 (ASIL B/C) | Severe | Major | Major | Negligible | 4 |
-| DS-04 | Unintended/excessive deceleration induced | H-04 (ASIL B/C) | Major | Moderate | Major | Negligible | 3 |
-| DS-05 | Driver prevented from overriding/disengaging | H-05 (ASIL B/C) | Severe | Major | Major | Negligible | 4 |
-| DS-06 | Longitudinal deceleration silently lost | H-06 (ASIL B) | Severe | Major | Major | Negligible | 4 |
+| DS-01 | Unintended/excessive lateral actuation induced by manipulation | H-01 (ASIL C; D if AOU-01/02 fail) | Severe | Major | Major | Negligible | 4 |
+| DS-02 | Lateral control silently lost or frozen | H-02 (ASIL C) | Severe | Major | Major | Negligible | 4 |
+| DS-03 | Unintended acceleration induced | H-03 (ASIL C; D if AOU-03/05 fail) | Severe | Major | Major | Negligible | 4 |
+| DS-04 | Unintended/excessive deceleration induced | H-04 (ASIL B; C if AOU-05 fails) | Major | Moderate | Major | Negligible | 3 |
+| DS-05 | Driver prevented from overriding/disengaging | H-05 (ASIL B; C if AoUs fail) | Severe | Major | Major | Negligible | 4 |
+| DS-06 | Longitudinal deceleration silently lost | H-06 (ASIL C) | Severe | Major | Major | Negligible | 4 |
 | DS-07 | Stock PCS/AEB suppressed or altered | H-08 (ASIL B) | Severe | Major | Major | Negligible | 4 |
 | DS-08 | Disclosure of driver-facing video / cabin imagery | — | Negligible | Moderate | Moderate | Severe | 4 |
 | DS-09 | Disclosure of location / trajectory history | — | Negligible | Moderate | Moderate | Major | 3 |
@@ -77,7 +77,8 @@ Impact levels: **Severe / Major / Moderate / Negligible** per ISO/SAE 21434 §15
 | DS-12 | Data-at-rest exposure after device theft (video, location, keys) | — | Negligible | Moderate | Moderate | Severe | 4 |
 
 Notes:
-- Safety "Severe" tracks the S3/ASIL C hazards; "Major" tracks the S2/ASIL B rear-end hazards (H-04).
+- Safety "Severe" tracks the S3 hazards (H-01, H-02, H-03, H-05, H-06, H-08: ASIL B–C in WP-C-03 v0.6). "Major" tracks H-04, whose governing events are S2 rear-end impacts (ASIL B). The HARA links follow WP-C-03 v0.6 §6, where SG-02, SG-03 and SG-06 are ASIL C since v0.4. No impact level changed: DS-02 and DS-06 were already Severe.
+- H-07 (mode confusion) and H-09 (driver not supervising) have no damage scenario of their own; DS-11 reaches H-07. Whether they need one is for the TARA owner (WP-C-03 §7 names attack paths for both).
 - Operational impact is "Major" for a loss of the driving function; "Severe" for DS-11 because a fleet event removes the function from many vehicles at once.
 - Privacy "Severe" for driver-facing video because it is biometric/cabin content; "Major" for location history.
 - Financial impact is the damage to the road user (ISO/SAE 21434 Annex F), quantified in US dollars for the reference configuration (decision register DQ-035, B). Reference values: a Corolla E210 is worth about USD 15,000–22,000; the comma device about USD 1,000. Bands: **Negligible** below USD 100; **Moderate** USD 100–2,500 (towing, an insurance deductible, replacing the device); **Major** USD 2,500–25,000 (collision repair up to the loss of the vehicle, covered in part by insurance); **Severe** a loss the road user may not overcome (uninsured liability above the vehicle's value). Personal injury is rated in the safety column, not here.
