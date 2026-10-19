@@ -5010,3 +5010,4 @@
   asked: 2026-10-19
   status: answered
   answer: {choice: A, via: chat, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "Scope, as the lead confirmed to the STPA session on 2026-10-19: covers document PRs and PRs that change assurance/ tooling (figure and generator scripts, checkers). Vehicle code (openpilot, panda, opendbc, pins) still waits for green. The merge commit says \"Merged under DQ-401 A\"."
