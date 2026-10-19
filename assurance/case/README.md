@@ -88,6 +88,12 @@ A change to safety-relevant code must come with an impact analysis ([WP-M-12](..
 
 [`tools/generate_dashboard.py`](tools/generate_dashboard.py) computes every figure from the records and writes `status.json`, the three SVG cards under [`docs/assets/liondriver/assurance/`](../../docs/assets/liondriver/assurance/), the text table between the `assurance-summary` markers in the [assurance README](../README.md#living-safety-case) and the one-line status strip between the `assurance-headline` markers in the [front-page README](../../README.md#living-safety-case). `--check` fails if any of them is out of date. The output is deterministic: it carries a digest of the record files instead of a timestamp, so it changes only when the records change.
 
+![Dashboard card generated from the records: the assurance state and baseline, then counts of registered safety claims and claims with accepted evidence, evidence items split into available, partial and missing, evidence requiring review, open actions, open defeaters, and evaluated and assurance-supported configurations](../../docs/assets/liondriver/assurance/dashboard.svg)
+
+![Lifecycle-area card generated from the records: one row per area, from safety management and hazard analysis to verification and validation and the safety case, each with the status given by the second table below and its evidence items by state](../../docs/assets/liondriver/assurance/lifecycle.svg)
+
+*Two of the three cards as `generate_dashboard.py` writes them today; the tables below define every number on them.*
+
 | Figure | Definition |
 |---|---|
 | Assurance state | `Evidence Supported` if any configuration is assurance-supported; `Under Review` if any review record exists or any object is in review; otherwise `Development` |

@@ -2,6 +2,10 @@
 
 Generated from the text trees in [WP-A-04](../WP-A-04-system-fta-fmea.md) by `fta_diagrams.py`. WP-A-04 is the analysis of record; edit it and run `python3 fta_diagrams.py` (CI runs `--check`).
 
+![First sheet of the SG-01 fault tree: top event TE-01 uncontrollable lateral motion, or steering actuation while not engaged, with the gates and events beneath it down to the transfers to the next sheets; red marks single-point paths](fta-SG-01-1.svg)
+
+*Sheet 1 of SG-01, as an example of the notation explained under the table; every sheet is listed below.*
+
 | Goal | Top event | Sheets |
 |---|---|---|
 | SG-01 | TE-01 uncontrollable lateral motion, or steering actuation while not engaged | [1: TE-01](fta-SG-01-1.svg), [2: G1.1](fta-SG-01-2.svg), [3: G1.2](fta-SG-01-3.svg), [4: G1.1.1](fta-SG-01-4.svg), [5: G1.2.1](fta-SG-01-5.svg), [6: G1.1.1.a](fta-SG-01-6.svg) |

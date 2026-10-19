@@ -20,6 +20,14 @@ MATLAB-style figures drawn from the project data, with no MATLAB, Simulink or St
 | [`simulink-panda-firmware.svg`](simulink-panda-firmware.svg) | Simulink-style block diagram of the panda firmware grouped by interrupt context, with the shared `controls_allowed` flag as a data store (WP-W-03 §3.2) | `PANDA` in `make_diagrams.py`, from WP-W-03 §3.1, §3.2, §5.1 |
 | [`simulink-host.svg`](simulink-host.svg) | Simulink-style block diagram of the host engagement and control path, modeld → controlsd / selfdrived → card → pandad → panda, with service rates (WP-W-03 §4.2) | `HOST` in `make_diagrams.py`, from WP-W-03 §4.1, §4.2 |
 
+![Coupling of the engagement state machines: selfdrived enabling sends the heartbeat engaged flag, the panda's engagement window waits for it before granting controls_allowed in the Toyota car mode, and the panda reports controlsAllowed back to selfdrived; a timeline below shows the order of events at engagement](stateflow-system-engagement.svg)
+
+*The state machines that meet at engagement (`stateflow-system-engagement.svg`), an explanatory view.*
+
+![Panda firmware block diagram by execution context: the SPI DMA interrupt takes control requests and SoC CAN frames through the TX hook, the FDCAN interrupts forward frames and run the RX hook, the 100 Hz safety task and the 8 Hz tick supervise, the main loop only marks progress, and controls_allowed is a shared data store with its writers](simulink-panda-firmware.svg)
+
+*The panda firmware as a Simulink-style block diagram (`simulink-panda-firmware.svg`, WP-W-03 §3.2).*
+
 **Chart notation.** The charts follow Stateflow conventions:
 
 - Each state is a rounded box, and the initial state has a default-transition dot.
