@@ -7,9 +7,12 @@ One card per failure mode SFM-nnn. Each card shows:
   how many of its causes are rated AP H;
 - the effect chain local → next higher level → end effect, lighting up in turn;
 - a looping road scene of the end effect (SMIL, 6 s; a still viewer shows the end pose);
-- every cause with three 1–10 meters: occurrence, detection and FMEA-MSR monitoring (green where a monitor reacts,
-  amber where it only warns or is late, red where nothing monitors it, grey where the cause has no MSR rating), and its AP;
-- the actions of its causes, with their status.
+- every cause with three 1–10 meters: occurrence, detection and FMEA-MSR monitoring, coloured by the M table of
+  rating-tables §7.3 and DQ-206 A: green for M 1–4 (within the FTTI on measured timing, the only band that can close a
+  cause), amber for M 5–7 (targets the cause, FTTI met on code-derived timing only, or untimed), red for M 8–10 (late, not
+  designed for this cause, or none), grey where the cause has no MSR rating; then its AP and its MSR AP;
+- the actions of its causes, with their status. A completed action on a failure mode whose causes are still rated AP H
+  reads "completed, not yet credited": its effect waits for the next baseline's re-rating.
 
 Everything on a card is read from the YAML except the scene, which is chosen per failure mode below. The build fails if
 a failure mode has no scene or sheet, a scene or sheet names one that is not in the YAML, a hazard is not mapped or an
@@ -78,18 +81,20 @@ CW, GAP, M, COLS = 400, 20, 40, 3
 PW = CW - 24
 STEP = ["#475569", "#B45309", "#DC2626"]
 LEVELS = (("local", "Local"), ("next_higher", "Next level"), ("end", "End effect"))
-ACT_C = {"open": ("#FEE2E2", "#7F1D1D"), "in_progress": ("#FEF3C7", "#78350F"), "completed": ("#DCFCE7", "#14532D")}
+ACT_C = {"open": ("#FEE2E2", "#7F1D1D"), "in_progress": ("#FEF3C7", "#78350F"), "completed": ("#DCFCE7", "#14532D"),
+         "completed, not yet credited": ("#ECFCCB", "#3F6212")}
 AP_C = {"H": "#DC2626", "M": "#D97706", "L": "#0F766E"}
 
 
 def monitoring(m):
+  """Colour and legend of an M rating (rating-tables §7.3, DQ-206 A: only measured timing, M 1–4, can close a cause)."""
   if m is None:
     return "#94A3B8", "no MSR rating"
-  if m <= 5:
-    return "#16A34A", "a monitor reacts"
-  if m <= 8:
-    return "#D97706", "warns, or late"
-  return "#DC2626", "no monitor"
+  if m <= 4:
+    return "#16A34A", "within FTTI, measured"
+  if m <= 7:
+    return "#D97706", "targets the cause; code-derived timing or untimed"
+  return "#DC2626", "late, not designed for this cause, or none"
 
 
 def cut(text, width, size, n, bold=False):
@@ -136,14 +141,17 @@ def cards(doc, mapping):
     causes, a_ids = [], []
     for c in f["causes"]:
       msr = c.get("msr") or {}
-      causes.append(dict(id=c["id"], text=c["description"], o=c["occurrence"], d=c["detection"], m=msr.get("monitoring"), ap=c["ap"]))
+      causes.append(dict(id=c["id"], text=c["description"], o=c["occurrence"], d=c["detection"], m=msr.get("monitoring"), ap=c["ap"],
+                         msr_ap=msr.get("ap")))
       for a in (c.get("actions") or []) + (msr.get("actions") or []):
         if a not in acts:
           raise CardError(f"{c['id']}: action {a} is not in the System FMEA actions")
         if a not in a_ids:
           a_ids.append(a)
+    still_h = any("H" in (k["ap"], k["msr_ap"]) for k in causes)
+    status = {a: ("completed, not yet credited" if acts[a] == "completed" and still_h else acts[a]) for a in a_ids}
     out[fid] = dict(id=fid, title=f["failure_mode"], s=f["severity"], gw=f["guideword"], hz=hz, chain=chain, causes=causes,
-                    actions=[(a, acts[a]) for a in sorted(a_ids)], scene=SCENE[fid])
+                    actions=[(a, status[a]) for a in sorted(a_ids)], scene=SCENE[fid])
   return out
 
 
@@ -194,7 +202,7 @@ def card(x, y, c):
            + "</g></svg>")
   yy += sth + 16
   b.append(t(px, yy, f"Causes ({len(c['causes'])})", 9.5, MUTED, 700))
-  b.append(t(px + PW, yy, "O occurrence · D detection · M monitoring (1 best … 10 none)", 8.5, MUTED, None, "end"))
+  b.append(t(px + PW, yy, "O occurrence · D detection · M monitoring · AP and MSR AP", 8.5, MUTED, None, "end"))
   yy += 8
   for k in c["causes"]:
     col, _ = monitoring(k["m"])
@@ -204,6 +212,8 @@ def card(x, y, c):
     mx = px + PW - 140
     b += meter(mx, yy + 2, k["o"], "#64748B", "O") + meter(mx, yy + 14, k["d"], "#64748B", "D") + meter(mx, yy + 26, k["m"], col, "M")
     b.append(t(px + PW, yy + 11, k["ap"], 10, AP_C.get(k["ap"], MUTED), 700, "end"))
+    if k["msr_ap"]:
+      b.append(t(px + PW, yy + 35, f"MSR {k['msr_ap']}", 8.5, AP_C.get(k["msr_ap"], MUTED), 700, "end"))
     yy += max(12 * len(lines), 36) + 6
   yy += 4
   b.append(t(px, yy + 6, "Actions", 9.5, MUTED))
@@ -223,8 +233,8 @@ def card(x, y, c):
 
 def legend(y):
   b, x = [], M
-  for col, lab in (("#16A34A", "M 1–5: a monitor reacts"), ("#D97706", "M 6–8: warns, or late"), ("#DC2626", "M 9–10: no monitor"),
-                   ("#94A3B8", "no MSR rating")):
+  for col, lab in (("#16A34A", "M 1–4: within FTTI, measured"), ("#D97706", "M 5–7: code-derived timing or untimed"),
+                   ("#DC2626", "M 8–10: late, not designed for it, or none"), ("#94A3B8", "no MSR rating")):
     b.append(f'<rect x="{x}" y="{y - 9}" width="22" height="9" rx="1" fill="{col}"/>')
     b.append(t(x + 28, y, lab, 10.5, INK))
     x += 28 + text_w(lab, 10.5) + 22
@@ -256,7 +266,8 @@ def sheet(name, cs):
   desc = f"Figure {num}: {len(ids)} System FMEA failure modes, {title}. " + " ".join(
     f"{cs[i]['id']} {cs[i]['title']} (S {cs[i]['s']}; {', '.join(cs[i]['hz']) or 'no hazard'}). Effects: " +
     " / ".join(" ; ".join(es) for _, _, es in cs[i]["chain"]) + ". Causes: " +
-    "; ".join(f"{k['id']} {k['text']} (O {k['o']}, D {k['d']}, M {k['m'] if k['m'] is not None else '-'}, AP {k['ap']})" for k in cs[i]["causes"]) +
+    "; ".join(f"{k['id']} {k['text']} (O {k['o']}, D {k['d']}, M {k['m'] if k['m'] is not None else '-'}, AP {k['ap']}"
+              f"{', MSR AP ' + k['msr_ap'] if k['msr_ap'] else ''})" for k in cs[i]["causes"]) +
     ". Actions: " + (", ".join(f"{a} {s}" for a, s in cs[i]["actions"]) or "none") + "." for i in ids)
   return svg_doc(w, int(y + 38), f"Figure {num}. System FMEA failure modes: {title}", desc, body)
 

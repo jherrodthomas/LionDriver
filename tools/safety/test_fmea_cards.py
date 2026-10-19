@@ -57,11 +57,16 @@ class TestCards(unittest.TestCase):
       with self.assertRaisesRegex(fc.CardError, "two sheets"):
         fc.cards(self.doc, self.mapping)
 
-  def test_monitoring_bands(self):
-    self.assertEqual(fc.monitoring(5)[1], "a monitor reacts")
-    self.assertEqual(fc.monitoring(8)[1], "warns, or late")
-    self.assertEqual(fc.monitoring(9)[1], "no monitor")
+  def test_monitoring_bands_follow_the_m_table(self):
+    # rating-tables §7.3, DQ-206 A: only measured timing (M 1-4) is green; code-derived M 5 is not
+    self.assertEqual([fc.monitoring(m)[0] for m in (4, 5, 7, 8, 10)], ["#16A34A", "#D97706", "#D97706", "#DC2626", "#DC2626"])
     self.assertEqual(fc.monitoring(None)[1], "no MSR rating")
+
+  def test_completed_action_on_a_cause_still_rated_h_is_not_credited(self):
+    cs = fc.cards(self.doc, self.mapping)
+    self.assertIn(("SFM-ACT-020", "completed, not yet credited"), cs["SFM-036"]["actions"])
+    svg = "".join(self.out.values())
+    self.assertIn("MSR H", svg)
 
   def test_committed_sheets_current_and_embedded(self):
     plan = (fc.fd.FMEA_DIR / "fmea-plan.md").read_text(encoding="utf-8")
