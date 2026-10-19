@@ -451,3 +451,13 @@
   baseline: BL-001
   source: WP-K-01
   source_revision: "8b8c6ae"
+- id: DF-42
+  kind: defeater
+  title: "No supplier EMC or environmental test evidence for the comma device and harness; failure rates from handbooks only. Accepted as residual risk (DQ-078 A, WP-M-07 R-30)"
+  description: "Closure route: WP-H-07 §5 conditions; part-specific data or own EMC/environment tests if obtained"
+  lifecycle_status: open
+  gaps: []
+  related_claims: [G1.1.4, G1.9]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "d9610b86"

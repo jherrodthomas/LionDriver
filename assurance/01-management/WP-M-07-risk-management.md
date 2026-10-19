@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-07 Project risk management plan and register |
 | Standard reference | ASPICE 4.0 MAN.5 (risk management); ISO 26262-2 §6 (planning and progress, by reference to WP-M-02) |
-| Version | 0.6 (D-15 vehicle scope decided: platform, hazards rated per family, G1 claims CFG-001 only (DQ-037 B, DQ-369 A, DQ-370 A); 2026-10-19). 0.5 (D-14 decided, DQ-074 B; 2026-10-18). 0.4 (decision log brought level with WP-M-01 §8 and the decision register: D-14 added, the lead's answers of 2026-10-14 to D-04, D-05, D-06 and D-13 recorded as answered and not yet applied, a Question column; R-26 record count; OI-3 closed; 2026-10-14). 0.3 (Figure 4-1 added, generated from §2.2 and §4; 2026-10-13). 0.2 (status update for the integrated envelope changes: R-05 closed, R-10 and R-11 re-scored, R-26…R-29 added, D-04 status, D-13 added (envelope strategy); 2026-10-12). 0.1 |
+| Version | 0.7 (R-30 added: EMC and environmental robustness of the comma device and harness accepted as residual risk by the lead, DQ-078 A, 2026-10-19). 0.6 (D-15 vehicle scope decided: platform, hazards rated per family, G1 claims CFG-001 only (DQ-037 B, DQ-369 A, DQ-370 A); 2026-10-19). 0.5 (D-14 decided, DQ-074 B; 2026-10-18). 0.4 (decision log brought level with WP-M-01 §8 and the decision register: D-14 added, the lead's answers of 2026-10-14 to D-04, D-05, D-06 and D-13 recorded as answered and not yet applied, a Question column; R-26 record count; OI-3 closed; 2026-10-14). 0.3 (Figure 4-1 added, generated from §2.2 and §4; 2026-10-13). 0.2 (status update for the integrated envelope changes: R-05 closed, R-10 and R-11 re-scored, R-26…R-29 added, D-04 status, D-13 added (envelope strategy); 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (project risk; not product hazard analysis) |
 | Author | Assurance team (initial draft) |
@@ -65,7 +65,7 @@ Each High and Medium risk has an owner, a treatment action with a due gate, and 
 
 ## 4. Risk register (initial)
 
-P/I/E = probability / impact / exposure. Status at baseline: all **Open**; no treatment had been carried out. Status 2026-10-12: R-05 closed; R-10, R-11 reduced; others open. R-26…R-29 added 2026-10-12.
+P/I/E = probability / impact / exposure. Status at baseline: all **Open**; no treatment had been carried out. Status 2026-10-12: R-05 closed; R-10, R-11 reduced; others open. R-26…R-29 added 2026-10-12. R-30 added 2026-10-19 (DQ-078 A).
 
 | ID | Risk (cause → effect) | Source | P | I | E | Treatment | Owner | Trigger / indicator | Due |
 |---|---|---|---|---|---|---|---|---|---|
@@ -98,6 +98,7 @@ P/I/E = probability / impact / exposure. Status at baseline: all **Open**; no tr
 | R-27 | Timing parameters chosen without measurement (0.3 s heartbeat, 5-period RX timeout, 150 ms cruise tolerance, 1 s EPS siren persistence, TX rate budgets) → false disengagements or missed faults; no reference logs to check them | Change records 2026-10-12; DN-01 | 4 | 3 | 12 | Mitigate: fork-owned reference drive logs (B-16); HIL bench (D-04) | ENG | False disengagements in first logged drives | G3 |
 | R-28 | Envelope mechanisms active only in the reference build (`LIONDRIVER_REFERENCE`) → a non-reference binary is flashed, or evidence is taken from the wrong variant | WP-M-12 M-11 | 2 | 5 | 10 | Mitigate: release check for the reference-build flag and reference-variant evidence ([WP-P-10](../07-supporting/WP-P-10-release-management.md)) | PM | Release record without variant identification | G5 |
 | R-29 | LionDriver changes in the opendbc and panda forks diverge from upstream → each sync costly and error-prone | D-02; `impact/` | 4 | 3 | 12 | Mitigate: sync once per MINOR release (D-02) with sync report and impact analysis; keep LionDriver changes small and behind `LIONDRIVER_REFERENCE` | PM | Sync effort exceeds one week | Each sync |
+| R-30 | No supplier EMC or environmental test evidence for the comma device and harness, and failure rates from handbooks only → the hardware claim rests on generic data; an EMC or environmental weakness is not found before field use | WP-H-07 QE-03, OI-6; DQ-078 | 3 | 4 | 12 | Accept (residual risk; the lead, DQ-078 A, 2026-10-19), with the WP-H-07 §5 conditions; visible to reviewers as WP-K-01 DF-42 | SM | A field or bench anomaly attributable to EMC, temperature or vibration | G5 |
 
 Summary at baseline: 25 risks — High 11, Medium 13, Low 1. Summary 2026-10-12: 29 risks, 1 closed; open: High 10, Medium 17, Low 1 (§4.1).
 
@@ -106,11 +107,11 @@ Summary at baseline: 25 risks — High 11, Medium 13, Low 1. Summary 2026-10-12:
 | Band | Risks |
 |---|---|
 | High (≥ 15) | R-01, R-02, R-03, R-04, R-06, R-07, R-08, R-09, R-20, R-26 |
-| Medium (8–14) | R-10, R-11, R-12, R-13, R-14, R-15, R-16, R-17, R-18, R-19, R-21, R-22, R-23, R-24, R-27, R-28, R-29 |
+| Medium (8–14) | R-10, R-11, R-12, R-13, R-14, R-15, R-16, R-17, R-18, R-19, R-21, R-22, R-23, R-24, R-27, R-28, R-29, R-30 |
 | Low (≤ 7) | R-25 |
 | Closed | R-05 (2026-10-10) |
 
-![Figure 4-1: risk heat map, the 29 risks R-01 to R-29 placed on the 5 × 5 probability × impact grid of §2.2, cells coloured by exposure band (High ≥ 15, Medium 8–14, Low ≤ 7), R-05 closed, R-10 and R-11 shown in their re-scored and previous cells, and the ten open High risks listed with cause, strategy, owner and due gate](figures/fig-m07-4-1-risk-heat-map.svg)
+![Figure 4-1: risk heat map, the 30 risks R-01 to R-30 placed on the 5 × 5 probability × impact grid of §2.2, cells coloured by exposure band (High ≥ 15, Medium 8–14, Low ≤ 7), R-05 closed, R-10 and R-11 shown in their re-scored and previous cells, and the ten open High risks listed with cause, strategy, owner and due gate](figures/fig-m07-4-1-risk-heat-map.svg)
 
 *Figure 4-1.* The §4 register on the §2.2 scales: each risk at its P and I, cell colour = exposure band of §2.2. The closed risk is struck through; a dotted chip marks the cell a re-scored risk had before. The list gives the open High risks with the cause clause of the risk text (before "→"), the first word of the Treatment column, owner and due gate. Scores are single-author judgement (OI-2). Drawn from §2.2, §4 and §4.1. Generated by [`figures/fig_m_management.py`](figures/fig_m_management.py); CI fails if it is stale. Source: [`figures/fig-m07-4-1-risk-heat-map.svg`](figures/fig-m07-4-1-risk-heat-map.svg); change it together with §2.2, §4 and §4.1.
 
