@@ -236,14 +236,15 @@ FM: dict[str, dict[str, tuple[str, str, str, str]]] = {
 # E follows ISO 26262-3:2018 Table B.2 (duration): E2 < 1 %, E3 1-10 %, E4 > 10 % of operating time.
 # OS-07 is the exception: rated by frequency (Table B.3, E4), decision register DQ-036.
 # Highway only (DQ-023 B): OS-03, OS-04, OS-15 and OS-16 are outside the ODD and rated as foreseeable misuse,
-# like OS-14. OS-17 and OS-18 are the driver-state misuse situations of H-STPA-1 (DQ-003, DQ-205).
+# like OS-14; since v0.6 at E3, because upstream owners engage off the highway routinely (RR-2026-011, DQ-213 A).
+# OS-19 (roundabout), OS-20 (road works) and OS-21 (no lane markings) are added from the same audit. OS-17 and OS-18 are the driver-state misuse situations of H-STPA-1 (DQ-003, DQ-205).
 # Engaged situations end at 110 km/h, the ODD bound (DQ-260); manual driving (OS-13) and the stock PCS (OS-09) keep 120.
 # ---------------------------------------------------------------------------------------------
 SITUATIONS = [
   ("OS-01", "Limited-access highway, free flow, adjacent traffic", 90, 110, "E4", "Majority of engaged time (ODD-H)"),
   ("OS-02", "Highway curve near R_ODD with barrier or adjacent traffic", 70, 110, "E3", "Curves of this radius at speed: 1–10 % of time"),
-  ("OS-03", "Engaged on an undivided rural or arterial road, oncoming traffic: outside the ODD, foreseeable misuse", 60, 90, "E2", "Outside the highway-only ODD (DQ-023); engagement is not prevented off-highway, misuse share assumed < 1 % (A-ODD)"),
-  ("OS-04", "Engaged on an urban arterial, pedestrians and cyclists near the lane edge: outside the ODD, foreseeable misuse", 30, 60, "E2", "Outside the highway-only ODD (DQ-023); misuse share assumed < 1 % (A-ODD)"),
+  ("OS-03", "Engaged on an undivided rural or arterial road, oncoming traffic: outside the ODD, foreseeable misuse", 60, 90, "E3", "Outside the highway-only ODD (DQ-023); engagement is not prevented off-highway. RR-2026-011: upstream owners engage openpilot off the highway routinely, so the share is rated 1–10 % (DQ-213 A) (A-ODD)"),
+  ("OS-04", "Engaged on an urban arterial, pedestrians and cyclists near the lane edge: outside the ODD, foreseeable misuse", 30, 60, "E3", "Outside the highway-only ODD (DQ-023). RR-2026-011: upstream owners engage openpilot off the highway routinely, so the share is rated 1–10 % (DQ-213 A) (A-ODD)"),
   ("OS-05", "Following a lead vehicle at a short gap, dense traffic", 30, 110, "E4", "Most engaged time has a lead vehicle"),
   ("OS-06", "Stop-and-go queue or standstill behind a lead; pedestrians may cross", 0, 30, "E3", "Congestion share of driving"),
   ("OS-07", "Approaching slower or stationary traffic from highway speed", 70, 110, "E4", "Rated by frequency: happens on almost every highway drive (DQ-036; ISO 26262-3 Table B.3)"),
@@ -252,11 +253,14 @@ SITUATIONS = [
   ("OS-10", "Driver override while engaged: braking, cancel or evasive steering", 0, 110, "E3", "Overrides are frequent but short; emergency cases rarer"),
   ("OS-12", "Driver-initiated assisted lane change", 70, 110, "E3", "Lane changes: short duration, several per trip"),
   ("OS-13", "Manual driving, item powered but not engaged", 0, 120, "E4", "Large share of onroad time with the device installed"),
-  ("OS-14", "Engaged outside the ODD (residential street, ramp, tight curve): foreseeable misuse", 15, 60, "E2", "Engagement is possible anywhere; misuse share assumed < 1 %"),
-  ("OS-15", "Engaged approaching a signalised or stop-controlled intersection: outside the ODD, foreseeable misuse", 30, 90, "E2", "Outside the highway-only ODD (DQ-023); misuse share assumed < 1 % (A-ODD)"),
-  ("OS-16", "Engaged in a rural or arterial curve with oncoming traffic: outside the ODD, foreseeable misuse", 60, 90, "E2", "Outside the highway-only ODD (DQ-023); misuse share assumed < 1 % (A-ODD)"),
+  ("OS-14", "Engaged outside the ODD (residential street, ramp, tight curve): foreseeable misuse", 15, 60, "E3", "Engagement is possible anywhere. RR-2026-011: upstream owners engage openpilot off the highway routinely, so the share is rated 1–10 % (DQ-213 A) (A-ODD)"),
+  ("OS-15", "Engaged approaching a signalised or stop-controlled intersection: outside the ODD, foreseeable misuse", 30, 90, "E3", "Outside the highway-only ODD (DQ-023). RR-2026-011: upstream owners engage openpilot off the highway routinely, so the share is rated 1–10 % (DQ-213 A) (A-ODD)"),
+  ("OS-16", "Engaged in a rural or arterial curve with oncoming traffic: outside the ODD, foreseeable misuse", 60, 90, "E3", "Outside the highway-only ODD (DQ-023). RR-2026-011: upstream owners engage openpilot off the highway routinely, so the share is rated 1–10 % (DQ-213 A) (A-ODD)"),
   ("OS-17", "Engaged on the highway while the driver is not supervising (eyes off the road or hands off for long periods; responds when alerted): foreseeable misuse", 70, 110, "E2", "H-STPA-1 (DQ-003): sustained non-supervision assumed < 1 % of engaged time; DM is not credited"),
   ("OS-18", "Engaged on the highway with an unresponsive driver (asleep, impaired or incapacitated): foreseeable misuse", 70, 110, "E1", "H-STPA-1, DQ-205: very rare; second-set HE-018 rates it E1"),
+  ("OS-19", "Engaged in a roundabout (rotary), cyclists and pedestrians at the entries: outside the ODD, foreseeable misuse", 15, 40, "E2", "RR-2026-011 (DQ-213 A): shown in upstream use; a roundabout is a short part of any trip, so < 1 % of engaged time"),
+  ("OS-20", "Engaged through road works: lane shifts, cones, workers near the lane: outside the ODD, foreseeable misuse", 30, 90, "E2", "RR-2026-011 (DQ-213 A): shown in upstream use; work zones are a small share of engaged time"),
+  ("OS-21", "Engaged on a road without lane markings (rural back road or residential street): outside the ODD, foreseeable misuse", 30, 90, "E3", "RR-2026-011 (DQ-213 A): the end-to-end model steers without markings and nothing gates on them; rated as OS-03"),
 ]
 WEATHER = [
   ("W01", "Dry, daylight", "E4", "In ODD"),
@@ -302,6 +306,9 @@ RULES: dict[str, dict[str, tuple[str, str, str, str]]] = {
     "OS-16": ("S3", "C2", "S3: departure into the oncoming lane in a rural curve.", LAT_C),
     "OS-17": ("S3", "C3", "S3: lateral departure at highway speed.", NOSUP_C3),
     "OS-18": ("S3", "C3", "S3: lateral departure at highway speed.", UNRESP_C3),
+    "OS-19": ("S3", "C2", "S3: lateral motion into a cyclist or pedestrian at a roundabout entry, or into circulating traffic.", LAT_C),
+    "OS-20": ("S3", "C2", "S3: lateral motion into workers, cones or a barrier in a narrowed lane.", LAT_C),
+    "OS-21": ("S3", "C2", "S3: departure into the oncoming side on an unmarked road (as OS-03).", LAT_C),
   },
   "H-02": {
     "OS-01": ("S3", "C1", "S3: lane departure at 90–110 km/h.", LOSS_C1),
@@ -319,6 +326,9 @@ RULES: dict[str, dict[str, tuple[str, str, str, str]]] = {
     "OS-15": ("S3", "C1", "S3: drift at an intersection towards crossing traffic or VRUs.", LOSS_C1),
     "OS-17": ("S3", "C3", "S3: lane departure at highway speed.", NOSUP_C3),
     "OS-18": ("S3", "C3", "S3: lane departure at highway speed.", UNRESP_C3),
+    "OS-19": ("S2", "C1", "S2: loss of lateral control at roundabout speed; the driver is already steering the tight turn.", "C1: at ≤ 40 km/h the driver has time to steer; the turn needs more steering than the item gives anyway."),
+    "OS-20": ("S3", "C2", "S3: drift through a lane shift into workers or a barrier.", LOSS_C2),
+    "OS-21": ("S3", "C1", "S3: drift towards the oncoming side on an unmarked road.", LOSS_C1),
   },
   "H-03": {
     "OS-01": ("S2", "C1", "S2: speed rises above the set speed in free flow; moderate impacts if traffic slows.", "C1 ⚠: the driver brakes (credits AOU-03); acceleration bounded to +2.0 m/s² by the envelope."),
@@ -337,6 +347,9 @@ RULES: dict[str, dict[str, tuple[str, str, str, str]]] = {
     "OS-16": ("S3", "C2", "S3: speed rises in a rural curve beyond the lateral limit; run-off or oncoming lane.", ACC_C),
     "OS-17": ("S2", "C3", "S2: speed rises above the set speed on the highway; moderate impacts if traffic slows (as OS-01).", NOSUP_C3),
     "OS-18": ("S2", "C3", "S2: as OS-17.", UNRESP_C3),
+    "OS-19": ("S3", "C2", "S3: acceleration in a roundabout towards a cyclist or crossing pedestrian.", ACC_C),
+    "OS-20": ("S3", "C2", "S3: acceleration in a work zone towards workers or a queue.", ACC_C),
+    "OS-21": ("S2", "C1", "S2: overspeed on an unmarked road (as OS-03).", "C1 ⚠: the driver brakes (credits AOU-03)."),
   },
   "H-04": {
     "OS-01": ("S2", "C1", "S2: rear impact by following traffic at a normal gap.", DEC_C1),
@@ -355,6 +368,9 @@ RULES: dict[str, dict[str, tuple[str, str, str, str]]] = {
     "OS-16": ("S2", "C1", "S2: unexpected braking in a rural curve; rear impact or yaw disturbance.", DEC_C1),
     "OS-17": ("S2", "C1", "S2: rear impact by following traffic at a normal gap (as OS-01).", DEC_C1 + " The following driver controls the rear impact; the ego driver's attention does not change it."),
     "OS-18": ("S2", "C1", "S2: as OS-17.", DEC_C1 + " As OS-17."),
+    "OS-19": ("S1", "C1", "S1: low-speed rear impact in a roundabout.", DEC_C1),
+    "OS-20": ("S2", "C1", "S2: rear impact by following traffic in a work zone.", DEC_C1),
+    "OS-21": ("S2", "C1", "S2: rear impact by following traffic.", DEC_C1),
   },
   "H-05": {
     "OS-09": ("S3", "C2", "S3: the driver acts on an imminent collision and the system does not release.", "C2 ⚠: credits AOU-01/02/03 (driver can overpower EPS torque; brakes override ACC)."),
@@ -369,6 +385,8 @@ RULES: dict[str, dict[str, tuple[str, str, str, str]]] = {
     "OS-15": ("S2", "C2", "S2: queue at an intersection; rear-end at moderate speed.", "C2: reliance on ACC."),
     "OS-17": ("S3", "C3", "S3: closing on slower or stationary traffic at highway speed while deceleration is silently lost.", NOSUP_C3),
     "OS-18": ("S3", "C3", "S3: as OS-17.", UNRESP_C3),
+    "OS-20": ("S2", "C2", "S2: queue in a work zone; rear-end at moderate speed.", "C2: reliance on ACC."),
+    "OS-21": ("S2", "C2", "S2: lead or obstacle on an unmarked road at up to 90 km/h.", "C2: reliance on ACC."),
   },
   "H-07": {
     "OS-01": ("S3", "C1", "S3: the driver believes the system steers; lane departure at highway speed.", "C1: on a straight road the drift is slow and an attentive driver notices it."),
@@ -381,6 +399,8 @@ RULES: dict[str, dict[str, tuple[str, str, str, str]]] = {
     "OS-12": ("S3", "C2", "S3: the driver expects assisted lane change; vehicle straddles lanes.", "C2: as OS-02."),
     "OS-15": ("S3", "C1", "S3: unexpected behaviour at an intersection.", "C1: the driver controls all stops at intersections."),
     "OS-17": ("S3", "C3", "S3: the take-over alert is missing or the display shows engaged; with eyes off the road the sound is the only channel left.", NOSUP_C3),
+    "OS-20": ("S3", "C2", "S3: the driver believes the system steers through the lane shift; departure towards workers.", "C2: reliance on a function that is not active."),
+    "OS-21": ("S3", "C1", "S3: drift towards the oncoming side.", "C1: mostly straight road; the drift is slow and an attentive driver notices it."),
   },
   "H-08": {
     "OS-09": ("S3", "C3", "S3: PCS-relevant impacts are severe (HE-08.1).", "C3: by definition the driver did not avoid the situation; the stock function exists for this case."),
@@ -514,7 +534,7 @@ def build(experimental: bool) -> tuple[dict, list[dict]]:
   data = {
     "item": {"name": "LionDriver Supervised Driving Assistance", "abbr": "LD-SDA", "project": "LionDriver",
              "doc_id": "WP-C-03" + (" (Experimental Mode variant)" if experimental else ""),
-             "revision": "0.5 (Cartesian)", "date": "2026-10-18", "author": "Assurance team (draft)",
+             "revision": "0.6 (Cartesian)", "date": "2026-10-19", "author": "Assurance team (draft)",
              "approver": "Safety manager", "company": "LionDriver"},
     "scope_description": "Aftermarket supervised SAE Level 2 feature on the Toyota Corolla, 12th generation (E210), TSS 2.0 (reference configuration, WP-C-01), on limited-access highways only (WP-C-02). Lateral (LKA torque) and longitudinal (ACC) control with driver monitoring; the panda safety MCU envelope bounds actuation. Experimental Mode is "
                          + ("INCLUDED in this variant (D-08 option B)." if experimental else "EXCLUDED (D-08 option A, recommended)."),
@@ -526,8 +546,8 @@ def build(experimental: bool) -> tuple[dict, list[dict]]:
       {"id": "AOU-05", "category": "Vehicle", "assumption": "The PCM bounds ACC acceleration and deceleration.", "rationale": "WP-C-01 §7; unverified (⚠)."},
       {"id": "AOU-06", "category": "Driver", "assumption": "Licensed, briefed, attentive driver supervising continuously; controllability rated for this typical driver.", "rationale": "WP-C-01 §7; ISO 26262-3 controllability."},
       {"id": "AOU-10", "category": "Vehicle", "assumption": "VSC/ABS enabled and functional.", "rationale": "WP-C-01 §7."},
-      {"id": "A-ENV", "category": "Environment", "assumption": "Situations OS-03, OS-04, OS-14…OS-18 and weather W04–W06 are outside the ODD or the intended driver state and included as foreseeable misuse.", "rationale": "ISO 26262-3 §6.4.2 (foreseeable misuse); WP-C-02 §3 (highway only, DQ-023); H-STPA-1 (DQ-003, DQ-205)."},
-      {"id": "A-ODD", "category": "Environment", "assumption": "Engaged driving off the highway is < 1 % of engaged time (E2), although the item does not yet prevent it.", "rationale": "WP-C-02 §5 (FM-08 proposed); if it is E3, no safety goal ASIL changes (WP-C-03 §6.1)."},
+      {"id": "A-ENV", "category": "Environment", "assumption": "Situations OS-03, OS-04, OS-14…OS-21 and weather W04–W06 are outside the ODD or the intended driver state and included as foreseeable misuse.", "rationale": "ISO 26262-3 §6.4.2 (foreseeable misuse); WP-C-02 §3 (highway only, DQ-023); H-STPA-1 (DQ-003, DQ-205)."},
+      {"id": "A-ODD", "category": "Environment", "assumption": "Engaged driving off the highway is 1–10 % of engaged time (E3); the item does not yet prevent it.", "rationale": "RR-2026-011 (upstream use), DQ-213 A; WP-C-02 §5 (speed floor DQ-280, FM-08 later); at E4 SG-02 would be ASIL D (WP-C-03 §6.1)."},
       {"id": "A-CS", "category": "Cybersec", "assumption": "Cyber-induced malfunctions are analysed in the TARA (WP-C-09) and map onto H-01…H-08.", "rationale": "Scope partition."},
     ],
     "interfaces": [

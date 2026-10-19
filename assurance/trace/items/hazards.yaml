@@ -73,12 +73,12 @@
   situation: "OS-03 undivided road, oncoming traffic, 60–90 km/h: engaged outside the highway-only ODD (foreseeable misuse)"
   effect: "Departure into the oncoming lane; head-on collision"
   s: 3
-  e: 2
+  e: 3
   c: 2
-  asil: A
+  asil: B
   aou_flag: true
   aou_dependency: [AOU-01, AOU-02]
-  asil_if_aou_fails: B
+  asil_if_aou_fails: C
   status: proposed
   source: WP-C-03
 
@@ -103,12 +103,12 @@
   situation: "OS-04 urban, pedestrians and cyclists near the lane edge, 30–60 km/h: engaged outside the ODD (foreseeable misuse)"
   effect: "Vehicle drifts into a vulnerable road user"
   s: 3
-  e: 2
+  e: 3
   c: 2
-  asil: A
+  asil: B
   aou_flag: true
   aou_dependency: [AOU-01, AOU-02]
-  asil_if_aou_fails: B
+  asil_if_aou_fails: C
   status: proposed
   source: WP-C-03
 
@@ -164,9 +164,9 @@
   situation: "OS-16 rural curve with oncoming traffic: engaged outside the ODD (foreseeable misuse)"
   effect: "Departure into the oncoming lane"
   s: 3
-  e: 2
+  e: 3
   c: 3
-  asil: B
+  asil: C
   aou_flag: false
   aou_dependency: []
   asil_if_aou_fails: null
@@ -365,7 +365,7 @@
 - id: HE-04.2
   kind: hazardous-event
   parents: [H-04]
-  situation: "OS-02 highway curve on a wet road (W02); the same applies in a rural curve outside the ODD (OS-16, E2)"
+  situation: "OS-02 highway curve on a wet road (W02); the same applies in a rural curve outside the ODD (OS-16, E3)"
   effect: "Instability under unexpected braking"
   s: 3
   e: 3
