@@ -1931,7 +1931,7 @@
   sources: ["assurance/06-validation/WP-V-05-fault-injection.md OI-5", "assurance/06-validation/WP-V-06-cybersecurity-validation.md OI-3"]
   status: applied
   answer: {choice: B, via: inbox, at: 2026-10-19}
-  applied: {ref: "this PR", record: "WP-V-05 §5.2, OI-5; WP-V-06 TC-05, OI-3", at: 2026-10-19}
+  applied: {ref: "#269", record: "WP-V-05 §5.2, OI-5; WP-V-06 TC-05, OI-3", at: 2026-10-19}
 
 - id: DQ-086
   question: "How should the release signing key be stored?"
