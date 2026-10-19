@@ -24,6 +24,10 @@ this page decides nothing and claims nothing.
 | Clause citations are marked "check against the licensed copy"; the standards are to be bought when an assessor is engaged | Decision register entry DQ-014 in [`register.yaml`](../assurance/01-management/decisions/register.yaml); [WP-M-06 OI-1](../assurance/01-management/WP-M-06-confirmation-measures-plan.md#11-open-items) |
 | No work product is approved or baselined; the status of each is in the register | [WP-M-00 §3](../assurance/01-management/WP-M-00-work-product-register.md#3-register) and its generated status figure |
 
+![Where the record stands on the system V: the system V of ASPICE 4.0, SYS.1 to SYS.3 down the left, the software, hardware and machine-learning arms at the bottom, and the verification levels up to VAL.1 on the right; each box is coloured by the register status of its work products and each verification box gives how many test cases are specified and how many have run; a band below shows the gate records G0 to G6](../assurance/trace/figures/fig-9-system-v-status.svg)
+
+*Figure 9 of the [traceability record](../assurance/trace/README.md), generated from the WP-M-00 register and the test specifications by `trace_figures.py`. Green is kept for approved or baselined work products and passed verification.*
+
 The dashboard on the [Home](Home.md) page shows the same picture in figures. [Reading the Living Safety
 Case](Reading-the-Living-Safety-Case.md) explains why zero accepted evidence is the honest number at this stage.
 

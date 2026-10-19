@@ -10,6 +10,8 @@ WP-C-04 is the source of record. Edit it and regenerate:
     python3 fsc_figures.py            # write figures/*.svg
     python3 fsc_figures.py --check    # fail if the committed figure is stale
 
+Figures 8-1 … 8-3 (the FTTI scene sheets, one card per safety goal) are drawn by `fsc_scenes.py` from the same parse.
+
 Standard library only. Drawing helpers and the ASIL colour scale are shared with ../hara/hara_figures.py.
 """
 
@@ -24,6 +26,8 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "hara"))
 import hara_figures as hf  # noqa: E402
 from hara_figures import INK, MUTED, HAIR, ASIL_FILL, ASIL_TEXT, ASIL_STROKE, t, wrap, pill, header, svg_doc  # noqa: E402
+sys.path.insert(0, str(HERE))
+import fsc_scenes  # noqa: E402
 
 SOURCE = HERE.parent / "WP-C-04-functional-safety-concept.md"
 OUT_DIR = HERE / "figures"
@@ -275,7 +279,10 @@ def figure() -> str:
 
 
 def build() -> dict[str, str]:
-  return {NAME: figure()}
+  out = {NAME: figure()}
+  md = SOURCE.read_text(encoding="utf-8")
+  out.update(fsc_scenes.build(parse(md), md, sys.modules[__name__]))  # Figures 8-1 … 8-3, the FTTI scene sheets
+  return out
 
 
 def main(argv: list[str]) -> int:
