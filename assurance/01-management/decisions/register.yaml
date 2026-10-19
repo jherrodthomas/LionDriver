@@ -2096,8 +2096,9 @@
       title: "Signed GitHub release assets, plus an offline copy"
       detail: "No new service. Cost: depends on GitHub staying available and on its file-size limits."
   sources: ["assurance/07-supporting/WP-P-10-release-management.md OI-2"]
-  status: answered
+  status: applied
   answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: adbf0143, record: "WP-P-10 v0.5 OI-2", at: 2026-10-19}
 
 - id: DQ-094
   question: "Do we lock the panda bootloader with write protection plus readout protection level 1 (WRP+RDP1), or leave ROM DFU open and accept the residual risk?"
@@ -2136,8 +2137,9 @@
       title: "Do a separate privacy impact assessment"
       detail: "A stronger record of how personal data is handled. Cost: extra effort, possibly outside legal advice."
   sources: ["assurance/02-concept/WP-C-09-tara.md OI-7", "assurance/01-management/WP-M-09-cybersecurity-plan.md OI-8"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: adbf0143, record: "WP-C-09 v0.5 OI-7; WP-M-09 v0.4 OI-8", at: 2026-10-19}
 
 - id: DQ-096
   question: "Who approves the SOTIF validation targets before evidence is collected, now that there is no assessor?"
@@ -2292,8 +2294,9 @@
       title: "Keep the plan; rely on verification reviews"
       detail: "The standard allows it. Cost: a weaker case for misuse and field monitoring."
   sources: ["assurance/process/README.md “3. **Operation has no independent check.** WP-M-06 plans no”"]
-  status: answered
+  status: applied
   answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: adbf0143, record: "WP-M-06 v0.4 OI-7; process README §6.6", at: 2026-10-19}
 
 - id: DQ-104
   question: "Is it legal to test a modified driver-assistance system on public roads where you'll test?"
