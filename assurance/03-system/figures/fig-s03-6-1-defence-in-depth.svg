@@ -228,10 +228,9 @@
 <text x="48" y="696" font-size="10.5" fill="#475569">Stock PCS/AEB untouched</text>
 <rect x="212" y="648" width="200" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="222" y="666" font-size="12.5" fill="#0F172A" font-weight="700">6 TSRs</text>
-<rect x="222" y="674" width="28.5" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
-<rect x="252" y="674" width="28.5" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="222" y="674" width="58.5" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
 <rect x="282" y="674" width="118.5" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
-<text x="222" y="697" font-size="10.5" fill="#475569">1 impl. · 1 partly · 4 not</text>
+<text x="222" y="697" font-size="10.5" fill="#475569">2 impl. · 4 not</text>
 <text x="222" y="711" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">CFG 2 · FR 2 · PLB 2</text>
 <rect x="422" y="648" width="236" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="432" y="666" font-size="12.5" fill="#0F172A" font-weight="700">28 TSRs + AOU-13</text>

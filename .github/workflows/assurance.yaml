@@ -172,6 +172,7 @@ jobs:
         python3 assurance/08-analyses/figures/fig_a05_stpa.py --check
         python3 assurance/08-analyses/figures/test_fig_a05_stpa.py
         python3 assurance/08-analyses/figures/test_stpa_scenes.py
+        python3 assurance/08-analyses/figures/test_stpa_ls_scenes.py
     - name: Vehicle register page current, citing documents agree with it (and its tests)
       run: |
         python3 tools/vehicles/vehicle_register.py --check
