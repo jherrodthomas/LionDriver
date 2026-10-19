@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="443" viewBox="0 0 640 443" role="img" aria-labelledby="t d">
+<title id="t">KS-06 animated top view</title>
+<desc id="d">Synthetic (DSR-12), no evidence credit. Still top view of KS-06 (Narrow lane with an adjacent truck) from its esmini replay at the parameter defaults, 0.0 to 6.0 s: A truck alongside in the right lane; lanes 3.3 m wide. Events: truck alongside at the ego speed, 1.13 m clear at 0.0 s. Layer 2 fixes the road and the other road users. The ego only holds its start speed here; the item under test drives it in layer 1 and on the bench. Cars: Kenney Racing Pack (CC0).</desc>
+<style>
+svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
+      --real:#2a78d6; --real-bg:#e9f1fb; --amb:#c98500; --amb-bg:#fdf4dc; --bad:#e34948; --bad-bg:#fdecec;
+      --pic:#6250d6; --pic-bg:#efedfb; --flt:#eb6834; --cop:#eb6834; --cop-bg:#fde9df; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#1a1a19; --ink:#f0efec; --ink2:#c3c2b7; --ink3:#8d8c85; --grid:#33322f; --card:#232321;
+        --real:#3987e5; --real-bg:#16273c; --amb:#eda100; --amb-bg:#3a2f12; --bad:#e66767; --bad-bg:#3d1e1e;
+        --pic:#9085e9; --pic-bg:#26223f; --flt:#d95926; --cop:#d95926; --cop-bg:#3f2417; }
+}
+.bg { fill:var(--bg); }
+.h { font:600 21px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t { font:15px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.tb { font:600 15px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.tl { font:600 17px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.t2b { font:600 13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.chip { font:600 12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:#ffffff; }
+.tbad { font:600 13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--bad); }
+.hair { stroke:var(--grid); stroke-width:1; }
+.card { fill:var(--card); stroke:var(--grid); stroke-width:1.2; }
+.real { fill:var(--real-bg); stroke:var(--real); stroke-width:2.4; }
+.model { fill:var(--card); stroke:var(--ink3); stroke-width:1.4; }
+.amb { fill:var(--amb-bg); stroke:var(--amb); stroke-width:1.6; stroke-dasharray:6 4; }
+.plan { fill:var(--bg); stroke:var(--ink3); stroke-width:1.4; stroke-dasharray:6 4; }
+.pic { fill:var(--pic-bg); stroke:var(--pic); stroke-width:1.4; }
+.picbox { fill:var(--bg); stroke:var(--pic); stroke-width:1.2; }
+.badbox { fill:var(--bad-bg); stroke:var(--bad); stroke-width:1.4; }
+.copbox { fill:var(--cop-bg); stroke:var(--cop); stroke-width:1.4; }
+.f-real { fill:var(--real); } .f-model { fill:var(--ink3); } .f-amb { fill:var(--amb); } .f-bad { fill:var(--bad); }
+.f-pic { fill:var(--pic); } .f-flt { fill:var(--flt); } .f-cop { fill:var(--cop); } .f-ink2 { fill:var(--ink2); }
+.arr { stroke:var(--ink2); stroke-width:1.6; fill:none; }
+.arrd { stroke:var(--ink3); stroke-width:1.6; fill:none; stroke-dasharray:5 4; }
+.arrb { stroke:var(--bad); stroke-width:1.6; fill:none; stroke-dasharray:5 4; }
+.spring { stroke:var(--ink2); stroke-width:1.8; fill:none; stroke-linejoin:round; }
+.strike { stroke:var(--bad); stroke-width:1.6; }
+</style><style>.laned { stroke:var(--ink3); stroke-width:2; } .edge { stroke:var(--ink2); stroke-width:2; } .asph { fill:var(--grid); } .wall { fill:var(--ink2); } .truck { fill:var(--ink3); stroke:var(--ink); stroke-width:1; } .shadow { fill:var(--ink); opacity:0.45; } .cab { stroke:var(--ink); stroke-width:1; } .mark { fill:var(--amb); font:600 12px system-ui, sans-serif; } .dim { stroke:var(--amb); stroke-width:1.4; } .trace { fill:none; stroke:var(--real); stroke-width:2.2; } .thr { stroke:var(--bad); stroke-width:1.3; stroke-dasharray:6 4; } .hairl { stroke:var(--ink3); stroke-width:1; stroke-dasharray:3 3; } .band { fill:var(--amb-bg); } .cursor { stroke:var(--ink); stroke-width:1.6; }</style>
+<defs><image id="spr0" width="71" height="131" href="data:image/png;base64,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"/><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-ink2"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-bad"/></marker></defs>
+<rect class="bg" width="640" height="443"/>
+<text x="24" y="34" class="h">KS-06 · Narrow lane with an adjacent truck</text>
+<text x="24" y="56" class="t2">A truck alongside in the right lane; lanes 3.3 m wide</text>
+<text x="24" y="77" class="tbad">Synthetic (DSR-12) · no evidence credit</text>
+<text x="24" y="96" class="t2b">esmini replay of KS-06.xosc at its defaults, 0.0–6.0 s</text>
+<line x1="24" y1="107" x2="616" y2="107" class="hair"/>
+<clipPath id="road"><rect x="24" y="119" width="592" height="174.5" rx="8"/></clipPath>
+<rect x="24" y="119" width="592" height="174.5" rx="8" class="card"/>
+<rect x="24" y="133" width="592" height="146.5" class="asph"/>
+<line x1="24" y1="133" x2="616" y2="133" class="edge"/>
+<line x1="24" y1="181.8" x2="616" y2="181.8" class="laned" stroke-dasharray="44.4 133.2"></line>
+<line x1="24" y1="230.7" x2="616" y2="230.7" class="laned" stroke-dasharray="44.4 133.2"></line>
+<line x1="24" y1="279.5" x2="616" y2="279.5" class="edge"/>
+<text x="30" y="161.4" class="t2">lane -1</text>
+<text x="30" y="210.3" class="t2b">ego lane</text>
+<text x="30" y="259.1" class="t2">lane -3</text>
+<g clip-path="url(#road)">
+<g>
+<g transform="translate(250.4 206.3)"><use href="#spr0" transform="rotate(90) scale(0.4169,0.5231) translate(-35.5,-65.5)"/><text x="-40.3" y="4" class="t2b" text-anchor="end">ego</text></g>
+</g>
+<g>
+<g transform="translate(334.8 255.1)"><rect x="-121.1" y="-17.9" width="244.2" height="37.7" rx="3" class="shadow"/><rect x="-122.1" y="-18.9" width="244.2" height="37.7" rx="3" class="truck"/><line x1="92.5" y1="-18.9" x2="92.5" y2="18.9" class="cab"/><text x="0" y="4" class="t2" text-anchor="middle">truck</text></g>
+</g>
+</g>
+<line x1="250.4" y1="219.4" x2="250.4" y2="236.2" class="dim"/>
+<line x1="245.4" y1="219.4" x2="255.4" y2="219.4" class="dim"/>
+<line x1="245.4" y1="236.2" x2="255.4" y2="236.2" class="dim"/>
+<text x="258.4" y="231.8" class="mark">1.13 m</text>
+<text x="36" y="309.5" class="t2">road straightened, ego held in place</text>
+<text x="24" y="327.5" class="t2b">EVENTS</text>
+<g><text x="24" y="347.5" class="tb">0.0 s</text><text x="84" y="347.5" class="t">truck alongside at the ego speed, 1.13 m clear</text></g>
+<text x="24" y="379.5" class="t2">Layer 2 fixes the road and the other road users. The ego only holds its start speed</text>
+<text x="24" y="395.5" class="t2">here; the item under test drives it in layer 1 and on the bench. Cars: Kenney Racing</text>
+<text x="24" y="411.5" class="t2">Pack (CC0).</text>
+</svg>

@@ -12,6 +12,13 @@ import hatara_figures as hf
 import hatara_model as hm
 
 
+def gapped(tara):
+  """A copy of the TARA without TS-04's links to H-07 and H-09 (DS-13, DS-14), so the gap path stays tested once closed."""
+  t = copy.deepcopy(tara)
+  t.ts["TS-04"]["damage"] = [d for d in t.ts["TS-04"]["damage"] if d not in ("DS-13", "DS-14")]
+  return t
+
+
 class TestModel(unittest.TestCase):
   @classmethod
   def setUpClass(cls):
@@ -36,10 +43,12 @@ class TestModel(unittest.TestCase):
     i = next(k for k, x in enumerate(ix) if x.get("gap"))
     del ix[i]["gap"]
     ix[i]["status"] = "x"
+    t = gapped(self.m.tara)
     with self.assertRaisesRegex(hm.ParseError, "mark it as a gap"):
-      self.model(ix)
-    self.assertEqual(self.m.gaps(hm.INTERACTIONS[i]), [("H-07", "TS-04"), ("H-09", "TS-04")])
-    self.assertTrue(self.m.status(hm.INTERACTIONS[i])[0][0].startswith("Open"))
+      hm.Model(t, self.m.goals, ix, self.ids)
+    m = hm.Model(t, self.m.goals, hm.INTERACTIONS, self.ids)
+    self.assertEqual(m.gaps(hm.INTERACTIONS[i]), [("H-07", "TS-04"), ("H-09", "TS-04")])
+    self.assertTrue(m.status(hm.INTERACTIONS[i])[0][0].startswith("Open"))
 
   def test_gap_closes_without_an_edit_when_the_tara_links_it(self):
     m = hm.Model(self.m.tara, self.m.goals, hm.INTERACTIONS, self.ids)
@@ -86,7 +95,8 @@ class TestFigures(unittest.TestCase):
     self.assertEqual(re.findall(r"<title>(IX-\d+): ", svg), [ix["id"] for ix in hm.INTERACTIONS])
 
   def test_gap_cells_drawn(self):
-    desc = re.search(r"<desc[^>]*>(.*?)</desc>", self.out["fig-hatara-1-matrix.svg"], re.S).group(1)
+    m = hm.Model(gapped(self.m.tara), self.m.goals, hm.INTERACTIONS, hm.known_ids())
+    desc = re.search(r"<desc[^>]*>(.*?)</desc>", hf.build(m)["fig-hatara-1-matrix.svg"], re.S).group(1)
     self.assertIn("H-07/TS-04 (IX-11)", desc)
     self.assertIn("Hazards with no damage scenario: H-09.", desc)
 
