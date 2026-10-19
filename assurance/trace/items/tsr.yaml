@@ -1634,7 +1634,7 @@
   mechanism: "FR"
   timing: "from the first frame that reports the event"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Not implemented: on `stockAeb` the SoC alerts only and keeps its longitudinal request; code by the implementation spec"
+  baseline_impl: "**Partial, host side implemented, not verified on the vehicle** (`c045874`, #292): while `stockAeb` is set, `controlsd` caps the longitudinal target and the upper limit at 0 m/s² (`selfdrive/controls/lib/longcontrol.py` `stock_aeb_stand_down`, `controlsd.py`), so `actuators.accel` ≤ 0 from the first frame; a braking request still passes; 4 unit tests (`selfdrive/controls/tests/test_stock_aeb.py`). Not yet met at `0x343`: the opendbc Toyota controller's 4 m/s³ rate limit brings a +1.5 m/s² request to 0 only ≈ 0.4 s after the event starts, and its feedback and pitch terms can add a small positive value (change record (assurance/07-supporting/impact/change-2026-10-19-stock-aeb-stand-down.md) OI-2). SWSR by the WP-W-02 owner"
   status: proposed
   source: WP-S-02
 
