@@ -916,7 +916,8 @@
       title: "Decide when the first contract is actually needed"
       detail: "No effort now. Cost: test insurance (WP-M-03 OI-4) stays open and blocks G1 test sessions."
   sources: ["assurance/01-management/WP-M-04-organization-competence-safety-culture.md OI-5", "assurance/01-management/WP-M-03-project-plan.md OI-4"]
-  status: open
+  status: answered
+  answer: {choice: C, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-041
   question: "Which closed course should you contact first for the vehicle tests?"
@@ -1293,7 +1294,8 @@
       title: "Leave it until an assessor is engaged"
       detail: "No decision now. Cost: validation driving and simulation cannot be sized, and with no assessor planned (DQ-009 C) it stays open."
   sources: ["assurance/10-safety-case/WP-K-02-sotif-release-argument.md OI-2, R-08", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md §3.3"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-058
   question: "Does PAS 8800 need an AI architecture view at G2?"
@@ -1493,7 +1495,8 @@
       title: "PMHF only"
       detail: "Least effort. Cost: one weak part, such as the MCU core, could be hidden in a good total."
   sources: ["assurance/04-hardware/WP-H-05-random-hardware-failures-pmhf.md OI-1, §2"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-067
   question: "What lifetime, operating hours and temperatures should the hardware failure calculations assume for the device?"
@@ -1537,7 +1540,8 @@
       title: "Use a different handbook set"
       detail: "For example a different industry standard. Cost: the first estimate (§6.3) is redone, and another handbook may need buying."
   sources: ["assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md OI-2, §2.3"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-069
   question: "If ST's safety data for the panda's microcontroller isn't freely available, do we pay for it, or write our own self-tests?"
@@ -1559,7 +1563,8 @@
       title: "Add a hardware supervisor (adapter DC-02) or lower the claim"
       detail: "Moves coverage to LionDriver hardware, or restricts the ASIL claim. Cost: new hardware design, or a weaker safety case."
   sources: ["assurance/04-hardware/WP-H-07-hardware-component-qualification.md OI-2, QE-03, §5"]
-  status: open
+  status: answered
+  answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-070
   question: "Should the project confirm with the external assessor that mechanisms on the QM main computer (SoC) get no diagnostic-coverage credit?"
@@ -1713,7 +1718,8 @@
       title: "Engage external help for all three now"
       detail: "Fastest progress. Cost: the largest spend, before G1 has shown the approach works."
   sources: ["assurance/10-safety-case/gates/skeletons/G3-skeleton.md “HIL bench owner | TBD | G3”", "assurance/06-validation/WP-V-07-vehicle-test-operations.md OI-2, §5", "assurance/10-safety-case/gates/skeletons/G3-skeleton.md participants (hardware safety engineer TBD)"]
-  status: open
+  status: answered
+  answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-077
   question: "When driver-monitoring confidence drops, should the wheel-touch reminders come faster at highway speed?"
@@ -1765,7 +1771,8 @@
       detail: "Moves coverage to LionDriver hardware, or restricts the ASIL claim. Cost: new hardware design, or a weaker safety case."
   sources: ["assurance/04-hardware/WP-H-07-hardware-component-qualification.md OI-6, §5"]
   note: "WP-H-07 still describes the harness as having a relay (QC-04, QE-05); the reference harness box v3 uses two analog switches (RR-2026-010). The residual-risk list should be updated when WP-H-07 is next revised."
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-079
   question: "After the envelope revokes authority for a too-high transmit rate, should re-engagement stay blocked until the rate has been within budget for a full 250 ms window?"
@@ -1851,7 +1858,8 @@
       title: "Keep ignoring the request"
       detail: "No change, no extra disengagements. Cost: CSR-012's intent is not met; it stays an open item in the cybersecurity case."
   sources: ["assurance/05-software/WP-W-03-software-architecture.md ATC-21", "assurance/05-software/reviews/RR-2026-009.md F-36"]
-  status: open
+  status: answered
+  answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-083
   question: "Who approves the MISRA deviation records, and should 'RATIONALE TBD' suppressions be justified or removed by code changes?"
@@ -4139,7 +4147,8 @@
       title: "It can close a cause with calculated timing"
       detail: "Fastest. Timing derived from the code is accepted without measurement. Cost: a reviewer is likely to challenge it."
   sources: ["assurance/08-analyses/fmea/msr-plan.md", "assurance/03-system/WP-S-04-timing-ftti-budget.md", "assurance/08-analyses/fmea/rating-tables.md"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-207
   question: "Can you get the official AIAG-VDA priority table for monitoring-and-response ratings into the project?"
@@ -4330,7 +4339,8 @@
       detail: "Nothing changes yet. Cost: G1 cannot close the harness item; if the part differs, the harness analysis is redone."
   sources: ["assurance/02-concept/WP-C-01-item-definition.md OI-2 (Device and Harness rows, §2)", "assurance/04-hardware/reviews/RR-2026-010.md F-10, F-13"]
   note: "The lead answered on 2026-10-16 that the labels will be read later; reopened in batch 10."
-  status: open
+  status: answered
+  answer: {choice: C, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-212
   question: "With both the comma 3X and the comma four in scope, how many devices should be bought for the bench and the car?"
