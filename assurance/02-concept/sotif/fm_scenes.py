@@ -357,7 +357,7 @@ def fm11():
 C04_SG02 = ("WP-C-04", "Soft disable warns at once, but actuates on stale inputs up to ≈3.5 s")
 OI2 = ("WP-C-07", "Raise change requests for P1 FMs under WP-P-02")
 MODELS = {
-  "FM-01": dict(title="Experimental Mode off and locked", sh="SH-09", draw=fm01,
+  "FM-01": dict(title="Experimental Mode off and locked", sh="SH-04", draw=fm01,
                 today="Chill is the default on new installs, but the owner can still turn Experimental Mode on, and a stored 1 persists.",
                 src=[("FM-01.Status", "implemented 2026-10-14"),
                      ("FM-01.Status", "the toggle stays and the owner can still turn Experimental Mode on"),
