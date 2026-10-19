@@ -24,16 +24,16 @@ How the three machines couple at engagement (WP-W-05 §5.4):
 
 ### SM-SAFETY-MODE: Panda safety mode
 
-![SM-SAFETY-MODE](../diagrams/stateflow-sm-safety-mode-reference.svg)
-![SM-SAFETY-MODE](../diagrams/stateflow-sm-safety-mode-upstream.svg)
+![SM-SAFETY-MODE state chart: Panda safety mode, reference build](../diagrams/stateflow-sm-safety-mode-reference.svg)
+![SM-SAFETY-MODE state chart: Panda safety mode, upstream build](../diagrams/stateflow-sm-safety-mode-upstream.svg)
 
 ### SM-SELFDRIVED: selfdrived engagement state (OpenpilotState)
 
-![SM-SELFDRIVED](../diagrams/stateflow-sm-selfdrived.svg)
+![SM-SELFDRIVED state chart: selfdrived engagement state (OpenpilotState)](../diagrams/stateflow-sm-selfdrived.svg)
 
 ### SM-TOY-AUTH: Toyota authority (controls_allowed)
 
-![SM-TOY-AUTH](../diagrams/stateflow-sm-toy-auth.svg)
+![SM-TOY-AUTH state chart: Toyota authority (controls_allowed)](../diagrams/stateflow-sm-toy-auth.svg)
 
 ## Changing a record
 

@@ -102,6 +102,10 @@ jobs:
         python3 assurance/02-concept/figures/test_fig_c01_modes.py
         python3 assurance/03-system/figures/fig_s03_defence_in_depth.py --check
         python3 assurance/03-system/figures/test_fig_s03_defence_in_depth.py
+        python3 assurance/03-system/figures/fig_s03_hierarchy.py --check
+        python3 assurance/03-system/figures/test_fig_s03_hierarchy.py
+        python3 assurance/03-system/figures/fig_s05_hsi.py --check
+        python3 assurance/03-system/figures/test_fig_s05_hsi.py
         python3 assurance/06-validation/figures/fig_v02_validation_targets.py --check
         python3 assurance/06-validation/figures/test_fig_v02_validation_targets.py
         python3 assurance/07-supporting/figures/fig_p_process.py --check
@@ -303,6 +307,10 @@ jobs:
         python3 assurance/sim/reach/reach_inputs.py --check
         python3 assurance/sim/reach/reach_compare.py --check
         python3 assurance/sim/reach/test_reach.py
+    - name: Result plots as loops (sim README §3.4 and §3.6, fig_sim_plots.py) current, and their tests
+      run: |
+        python3 assurance/sim/figures/fig_sim_plots.py --check
+        python3 assurance/sim/figures/test_fig_sim_plots.py
     - name: Hazardous-event scene list and library, and the asset fetcher against fake answers (assurance/sim/blender; no Blender, no network)
       run: |
         python3 assurance/sim/blender/test_scenes.py

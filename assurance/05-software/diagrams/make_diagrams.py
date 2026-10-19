@@ -826,7 +826,8 @@ def sm_readme(records: list[tuple[str, dict]], sw: dict) -> str:
                f"| {len(T)} | {cell(todo)} | {cell(ids('gap'))} | {cell(ids('s5'))} | {', '.join(sorted(builds))} "
                f"| [WP-W-05 §{SECTION[sm['machine']]}](../WP-W-05-software-unit-design.md) | "
                + ", ".join(f"[{f.removeprefix('stateflow-').removesuffix('.svg')}](../diagrams/{f})" for f in files) + " |")
-    charts += [f"### {sm['machine']}: {sm['title']}", ""] + [f"![{sm['machine']}](../diagrams/{f})" for f in files] + [""]
+    charts += [f"### {sm['machine']}: {sm['title']}", ""] + [f"![{sm['machine']} state chart: {sm['title']}{f', {b} build' if b else ''}](../diagrams/{f})"
+                                                       for f, b in zip(files, names or [""])] + [""]
   out += ["", "How the three machines couple at engagement (WP-W-05 §5.4):", "",
           "![State machine coupling at engagement](../diagrams/stateflow-system-engagement.svg)", "", "## Charts", ""]
   out += charts
