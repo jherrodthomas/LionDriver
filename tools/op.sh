@@ -103,7 +103,9 @@ function op_check_git() {
   fi
 
   echo "Checking for git lfs files..."
-  if [[ $(file -b "$OPENPILOT_ROOT/openpilot/selfdrive/modeld/models/dmonitoring_model.onnx") == "data" ]]; then
+  if [[ -n "$OP_SKIP_LFS" ]]; then
+    echo -e " ↳ [${GREEN}✔${NC}] git lfs files skipped (OP_SKIP_LFS is set)."
+  elif [[ $(file -b "$OPENPILOT_ROOT/openpilot/selfdrive/modeld/models/dmonitoring_model.onnx") == "data" ]]; then
     echo -e " ↳ [${GREEN}✔${NC}] git lfs files found."
   else
     echo -e " ↳ [${RED}✗${NC}] git lfs files not found! Run 'git lfs pull'"
@@ -212,7 +214,11 @@ EOF
   git config --local filter.lfs.required true
   printf '#!/bin/sh\nexec .venv/bin/git-lfs pre-push "$@"\n' > "$(git rev-parse --git-path hooks)/pre-push"
   chmod +x "$(git rev-parse --git-path hooks)/pre-push"
-  if ! retry 3 git lfs pull; then
+  # LionDriver: jobs that never read LFS content (lint, docs build) set OP_SKIP_LFS so an outage of the
+  # upstream LFS store cannot fail them. LFS-tracked files then stay as pointer files.
+  if [[ -n "$OP_SKIP_LFS" ]]; then
+    echo -e " ↳ [${GREEN}✔${NC}] Skipped pulling git lfs files (OP_SKIP_LFS is set)."
+  elif ! retry 3 git lfs pull; then
     echo -e " ↳ [${RED}✗${NC}] Pulling git lfs files failed!"
     return 1
   fi

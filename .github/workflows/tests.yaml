@@ -85,6 +85,9 @@ jobs:
       (github.event.pull_request.head.repo.full_name == 'commaai/openpilot'))
       && fromJSON('["namespace-profile-amd64-8x16"]')
       || fromJSON('["ubuntu-24.04"]') }}
+    # LionDriver: lint reads no LFS content, so it must not depend on the upstream LFS store being reachable
+    env:
+      OP_SKIP_LFS: 1
     steps:
     - uses: actions/checkout@v7
     - run: ./tools/op.sh setup
