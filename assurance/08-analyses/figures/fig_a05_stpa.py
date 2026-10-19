@@ -819,7 +819,7 @@ def fig_5_5(S):
   d.arrow(d.port("q", "r"), d.port("miss", "l"), "", "fix")
   d.fail(100, 130, "LS-09", "sunglasses, low light:\nfalls back to 25 s")
   d.fail(645, 135, "LS-35", "", "end")
-  d.note(20, 310, "From inattention to the slow-down: about 18 s (vision) or 30 s (wheel-touch). policy.py:31-44, 418-437; controlsd.py:235; longitudinal_planner.py:84.")
+  d.note(20, 310, "From inattention to the slow-down: about 18 s (vision) or 30 s (wheel-touch). policy.py:31-44, 418-437; controlsd.py:236; longitudinal_planner.py:84.")
   return d.render("Figure 5-5", 1180, 330, "Figure 5-5. The driver stops responding: LS-09, LS-35 (WP-A-05 §5)",
                   "Driver camera, monitoring policy, alert levels with their times, forced deceleration and the stop in the lane.")
 
