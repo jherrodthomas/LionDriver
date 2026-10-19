@@ -1931,8 +1931,9 @@
       title: "Use the reference device for VS-FI-07; skip TC-05's destructive steps"
       detail: "No purchase; reflash and recheck the reference unit afterwards, and record why TC-05 was cut short. Cost: risk of altering the reference unit, and weaker evidence for boot protection."
   sources: ["assurance/06-validation/WP-V-05-fault-injection.md OI-5", "assurance/06-validation/WP-V-06-cybersecurity-validation.md OI-3"]
-  status: answered
+  status: applied
   answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "#269", record: "WP-V-05 §5.2, OI-5; WP-V-06 TC-05, OI-3", at: 2026-10-19}
 
 - id: DQ-086
   question: "How should the release signing key be stored?"
@@ -4581,6 +4582,28 @@
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-16}
   applied: {ref: 98f5e9966, record: "WP-V-02 §5.4; WP-M-08 OI-3", at: 2026-10-16}
+
+- id: DQ-262
+  question: "Should the search for unknown hazardous scenarios stop once at most 1 in 10 hazardous events is expected to be of a kind not yet seen (with at least 30 events counted)?"
+  context: "You decided the search stops on a number plus the three-block trend rule (DQ-108 A). The number is a Good–Turing estimate: the share of hazardous events whose kind was seen only once. **The proposal ties it to a 10 % reserve held back from every SOTIF harm budget for unknown scenarios.** Below 30 events the estimate says little, so the rule needs at least 30. It must be fixed before road block B1 starts, so the result cannot be fitted to it."
+  reversibility: revisit
+  blocks: "WP-V-04 R3 and the start of exploration block B1; the 10 % reserve in the WP-V-02 target derivation"
+  gate: G1
+  decider: lead
+  after: [DQ-108]
+  options:
+    - key: A
+      recommended: true
+      title: "Up to 1 in 10 (0.10), at least 30 events"
+      detail: "Matches the 10 % reserve in the targets. Cost: if the blocks see fewer than 30 hazardous events, the rule is not met by count and you decide again."
+    - key: B
+      title: "Up to 1 in 20 (0.05), at least 60 events"
+      detail: "Stronger claim, with a 5 % reserve and targets on 95 % of each budget. Cost: about twice the events, so likely more drive blocks before release."
+    - key: C
+      title: "Up to 1 in 5 (0.20), at least 20 events"
+      detail: "Reachable with fewer drives. Cost: a 20 % reserve takes budget from the known-scenario targets, which then get stricter, and the unknown part of the argument is weaker."
+  sources: ["assurance/06-validation/WP-V-04-sotif-unknown-scenarios.md §5.3 R3, §5.4, OI-2", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md §3 step 1"]
+  status: queued
 
 - id: DQ-300
   question: "When the car's own emergency braking (stock AEB) fires, should LionDriver stop asking for acceleration, or keep driving as now?"

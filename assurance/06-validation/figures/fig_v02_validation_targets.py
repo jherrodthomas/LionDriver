@@ -139,7 +139,7 @@ BANDS = [
 NOT_DRAWN_SRC = ["Cases A–C are out of reach of LionDriver driving by roughly three to five orders of magnitude",
                  "| All recorded data, repeatedly, per software change |",
                  "| Grows with the LionDriver fleet (initially one vehicle) |"]
-PLACEHOLDER_SRC = ["Targets are **proposals**: numeric values are placeholders for the assessor review"]
+PLACEHOLDER_SRC = ["Targets are **proposals** until they are frozen (OI-3)"]
 
 
 # ---------------------------------------------------------------- parsing
@@ -435,7 +435,7 @@ def figure(targets: list[Target]) -> str:
   body.append(text(610, ly2, "band edge read from words (\"tens to low hundreds\")", size=10.5, fill=MUTED))
   ly3 = ly2 + 20
   body.append(text(40, ly3, "All marks are dashed: §4 calls every numeric target a placeholder until the " +
-                   "assessor approves it (OI-3); none is demonstrated. Replay and field monitoring have no " +
+                   "project lead freezes it (OI-3); none is demonstrated. Replay and field monitoring have no " +
                    "number in §3.2 and are not drawn.", size=10.5, fill=MUTED))
   height = int(ly3 + 22)
   desc = (f"Two log-scale panels with one row per validation target VT-01 to VT-{n:02d}. Left: driving exposure " +
@@ -443,7 +443,7 @@ def figure(targets: list[Target]) -> str:
           "about 3 × 10^3 km and 3 h. The public-road band of 10^4 to 2 × 10^4 km per year is below case D and " +
           "far below cases A to C. Right: counts per scenario, from 14 to 299, inside or near the closed-course " +
           "band (tens to low hundreds) and below the simulation band (10^3 to 10^5 runs, no credit yet). " +
-          "VT-07 to VT-11 have no exposure figure. All values are placeholders until assessor approval.")
+          "VT-07 to VT-11 have no exposure figure. All values are placeholders until the project lead freezes them (OI-3).")
   return svg(W, height, "Figure 4-1 · Validation targets on a log scale", desc, body)
 
 

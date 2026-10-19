@@ -7,7 +7,8 @@ built from those files; so are the scene sheets 4-2 … 4-4, drawn by `stpa_scen
 and block figures (3-1 … 3-7, 5-3 … 5-6) are laid out here by hand, because a layout is a drawing
 decision. Every ID they name (H-, SC-, CA-, FB-, UCA-, LS-,
 DQ-) is checked against the sources, so a renamed or removed item fails the check.
-Nothing here is analysis content: change WP-A-05 and regenerate.
+Nothing here is analysis content: change WP-A-05 and regenerate. The scene cards' belief lines and road
+scenes illustrate §5 and are not themselves analysis.
 
     python3 fig_a05_stpa.py            # regenerate the SVGs
     python3 fig_a05_stpa.py --check    # fail if a committed SVG is stale or an ID is unknown
