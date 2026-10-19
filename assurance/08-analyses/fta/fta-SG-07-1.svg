@@ -158,16 +158,19 @@
 <line x1="1965.0" y1="380.0" x2="1965.0" y2="403.0" class="wh"/>
 <line x1="1844.0" y1="403.0" x2="1844.0" y2="464.5" class="wh"/>
 <line x1="2086.0" y1="403.0" x2="2086.0" y2="464.5" class="w"/>
-<rect x="1735.5" y="467.0" width="220" height="93.0" rx="9" class="shadow"/>
-<rect x="1734" y="464.5" width="220" height="93.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<rect x="1735.5" y="467.0" width="220" height="136.5" rx="9" class="shadow"/>
+<rect x="1734" y="464.5" width="220" height="136.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
 <path d="M1743,464.5 H1945 A9,9 0 0 1 1954,473.5 V469.5 H1734 V473.5 A9,9 0 0 1 1743,464.5 Z" fill="#64748b"/>
 <text x="1748" y="489.5" class="id">BE-7.13</text>
 <text x="1940" y="489.5" class="kind">BASIC</text>
-<text x="1748" y="504.0" class="d">Item sends an ACC request during</text>
-<text x="1748" y="518.5" class="d">a PCS event</text>
-<rect x="1748.0" y="526.5" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="1775.0" y="538.0" class="chip" fill="#fff">SFM-036</text>
-<circle cx="1844.0" cy="574.5" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
+<text x="1748" y="504.0" class="d">Item sends a positive ACC</text>
+<text x="1748" y="518.5" class="d">request during a PCS event</text>
+<text x="1748" y="533.0" class="d">(stand-down missing or</text>
+<text x="1748" y="547.5" class="d">defective; ramp-down ≤ 0.4 s</text>
+<text x="1748" y="562.0" class="d">through the opendbc rate limit)</text>
+<rect x="1748.0" y="570.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1775.0" y="581.5" class="chip" fill="#fff">SFM-036</text>
+<circle cx="1844.0" cy="618.0" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
 <rect x="1977.5" y="467.0" width="220" height="71.0" rx="9" class="shadow"/>
 <rect x="1976" y="464.5" width="220" height="71.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
 <path d="M1985,464.5 H2187 A9,9 0 0 1 2196,473.5 V469.5 H1976 V473.5 A9,9 0 0 1 1985,464.5 Z" fill="#3d6b3d"/>

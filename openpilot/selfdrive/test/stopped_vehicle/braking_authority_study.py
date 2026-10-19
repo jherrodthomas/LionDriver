@@ -101,7 +101,7 @@ def main():
   print(table(["Confirmation range (m)", *names], [[f"{d:.0f}", *(f"{max_speed_kph(d, e):.0f}" for _, e in OPTIONS)]
                                                     for d in CONFIRMATION_RANGES]))
 
-  print("\n### S5. Rear-end exposure (HZ-007): impact speed of a following car, ego braking to a stop from 100 km/h\n")
+  print("\n### S5. Rear-end exposure (FHZ-007): impact speed of a following car, ego braking to a stop from 100 km/h\n")
   print("Following driver reacts after 1.5 s, then brakes at 6 m/s² (8 m/s² in brackets). Jerk 20 m/s³ for both.\n")
   rows = []
   for headway in (0.8, 1.0, 1.5, 2.0):

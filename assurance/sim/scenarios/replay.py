@@ -31,7 +31,7 @@ from fetch_esmini import esmini_bin  # noqa: E402
 
 TABLE = HERE.parent / "results" / "scenario-replay.md"
 # scenario families of WP-V-02 §5.3.2; scenarios the section does not assign are marked so, not guessed
-FAMILY = {"KS-01": "SF-1", "KS-08": "SF-2", "KS-05": "SF-3", "KS-09": "SF-3", "KS-07": "SF-4", "KS-25": "SF-6"}
+FAMILY = {"KS-01": "SF-1", "KS-08": "SF-2", "KS-05": "SF-3", "KS-09": "SF-3", "KS-07": "SF-4", "KS-25": "SF-6", "KS-27": "SF-3"}
 DT = 0.05
 LANE_HALF = generate.LANE_W / 2
 

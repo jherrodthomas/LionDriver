@@ -9,7 +9,7 @@ from openpilot.common.test import OpenpilotTestCase
 from openpilot.selfdrive.selfdrived import assured_config, selfdrived
 from openpilot.selfdrive.selfdrived.events import ET, EVENTS, Events, below_highway_speed_alert
 
-# CA-008 verification (FI-2026-001 RC-05, HZ-005); DQ-221 and DQ-280 entry checks
+# CA-008 verification (FI-2026-001 RC-05, FHZ-005); DQ-221 and DQ-280 entry checks
 
 REFERENCE = TOYOTA.TOYOTA_COROLLA_TSS2
 ORIGIN = "https://github.com/jherrodthomas/LionDriver.git"

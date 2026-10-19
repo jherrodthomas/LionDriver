@@ -35,6 +35,15 @@ def long_control_state_trans(active, long_control_state, should_stop, brake_pres
 
   return long_control_state
 
+
+def stock_aeb_stand_down(stock_aeb: bool, a_target: float, accel_limits: tuple[float, float]) -> tuple[float, tuple[float, float]]:
+  """LionDriver (DQ-300, SFM-ACT-020): while the car reports a stock AEB event, request no drive. The target and the
+  upper limit are capped at 0 m/s^2, so a braking request still passes; the car's own priority (AOU-04R) is still tested"""
+  if not stock_aeb:
+    return a_target, accel_limits
+  return min(a_target, 0.0), (accel_limits[0], min(accel_limits[1], 0.0))
+
+
 class LongControl:
   def __init__(self, CP):
     self.CP = CP

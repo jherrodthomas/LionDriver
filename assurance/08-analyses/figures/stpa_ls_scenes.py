@@ -199,10 +199,10 @@ MODELS = {
     ("The reference lock stops a wrong brand or parameter, but another Toyota with scale 73 gets the right limits and wrong tuning.",
      "another Toyota with EPS scale 73"),
     ("The wrong safety mode or parameter is sent to the panda.", "Wrong safety mode or parameter sent to the panda")]),
-  "LS-13": ("Engaged on a road it does not handle", "unmarked", ("engaged: no ODD gate", "road it cannot handle"), [
+  "LS-13": ("Engaged on a road it does not handle", "unmarked", ("engaged above 60 km/h", "road it cannot handle"), [
     ("The driver engages on a road the item does not handle.", "The driver engages on a road the item does not handle"),
-    ("Engagement needs only a PCM edge; nothing checks curve radius, road type or glare.",
-     "Nothing checks curve radius, road type or glare before entry"),
+    ("Entry needs only a PCM edge and 60 km/h; nothing checks road type, curve radius or glare.",
+     "none but the 60 km/h floor"),
     ("The item runs outside what it handles.", "Driver engages in conditions outside what the item handles")]),
   "LS-14": ("Steering does not disengage it", "steer", ("driver steers to disengage", "still engaged"), [
     ("The driver steers against the item and expects that to disengage it.", "expects that to disengage it"),

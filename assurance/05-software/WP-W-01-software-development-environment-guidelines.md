@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-01 SW development environment, languages and coding guidelines |
 | Standard reference | ISO 26262-6:2018 §5 (general topics for product development at the software level: development environment, modelling and coding guidelines); ISO 26262-8:2018 §11 (by reference to WP-P-07); ISO/SAE 21434:2021 §10 (secure coding); MISRA C:2012 (incl. amendments as supported by the analyser); ASPICE 4.0 SWE.3 |
-| Version | 0.5 (§14: generated Stateflow-style and Simulink-style figures; 2026-10-13). 0.4 (§14: `selfdrived` state machine recorded, checker finding S7 and unit tests; 2026-10-13). 0.3 (merge of PR #47 software alignment with the base: CI row lists the base's `mutation_reference` and `panda_host_tests` jobs; 2026-10-13). 0.2 ([RR-2026-009](reviews/RR-2026-009.md) F-17: `LIONDRIVER_REFERENCE` in §7 and CF-01, K-2, ENV-R-08; F-18: build manifest and tool versions in CI; F-28: author; 2026-10-12). 0.1 |
+| Version | 0.6 (§9 and OI-2: MISRA deviation rationales drafted by Claude, approved by the lead per entry, not independently (register DQ-083 A); 2026-10-19). 0.5 (§14: generated Stateflow-style and Simulink-style figures; 2026-10-13). 0.4 (§14: `selfdrived` state machine recorded, checker finding S7 and unit tests; 2026-10-13). 0.3 (merge of PR #47 software alignment with the base: CI row lists the base's `mutation_reference` and `panda_host_tests` jobs; 2026-10-13). 0.2 ([RR-2026-009](reviews/RR-2026-009.md) F-17: `LIONDRIVER_REFERENCE` in §7 and CF-01, K-2, ENV-R-08; F-18: build manifest and tool versions in CI; F-28: author; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | Envelope (E-03): ASIL C provisional, ASIL B expected after SG-01 re-rating ([WP-C-04 §4.2](../02-concept/WP-C-04-functional-safety-concept.md)). Host stack (E-01, E-02): QM / SOTIF / CS |
 | Author | Assurance team (AI-assisted draft, Claude) |
@@ -233,7 +233,7 @@ A deviation is a recorded, approved decision that a MISRA guideline is not follo
 
 ## 9. Deviation register
 
-Seeded from the baseline. **Rationale placeholders ("RATIONALE TBD") must be completed and approved before G3.** Rule categories are to be confirmed against the licensed MISRA C:2012 document (OI-2); the categories shown are the assurance team's reading.
+Seeded from the baseline. **Rationale placeholders ("RATIONALE TBD") must be completed and approved before G3.** Claude drafts them and the lead approves each one (register DQ-083 A, OI-2); a drafted rationale stays Open until that approval is recorded. Rule categories are to be confirmed against the licensed MISRA C:2012 document (OI-2); the categories shown are the assurance team's reading.
 
 ### 9.1 Global suppressions — opendbc safety
 
@@ -376,7 +376,7 @@ LionDriver does not use model-based development for production code. Models appe
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
 | OI-1 | Closed 2026-10-12 by `.github/workflows/safety.yaml` (opendbc and panda MISRA on `liondriver-dev` and PRs, D-03). Tool versions and a build manifest are recorded per job since F-18 (`tools/ci/build_manifest.py`); a tool installed inside a job script (cppcheck in `test_misra.sh`) is reported only if it is on PATH | Maintainer | G3 |
-| OI-2 | Confirm MISRA rule categories in §9 against the licensed MISRA C:2012 document; complete all "RATIONALE TBD" entries and get them approved | Safety engineer | G3 |
+| OI-2 | Confirm MISRA rule categories in §9 against the licensed MISRA C:2012 document; complete all "RATIONALE TBD" entries and get them approved. **Decided 2026-10-19** (register DQ-083 A): Claude drafts each rationale from the code sites, marked AI-assisted; the lead approves each entry as safety manager. The approval is not independent while the lead holds every role (DQ-076 B), and the record says so. Drafts not written yet | Safety engineer | G3 |
 | OI-3 | Write a MISRA compliance summary (rules and directives) for the release configuration | Safety engineer | G3 |
 | OI-4 | Review E-03 for single-exit and bounded-loop conformance (ENV-R-03, ENV-R-04) | Reviewer | G3 |
 | OI-5 | Select a complexity metric tool (e.g. lizard or pmccabe) and classify it in WP-P-07 | Maintainer | G3 |

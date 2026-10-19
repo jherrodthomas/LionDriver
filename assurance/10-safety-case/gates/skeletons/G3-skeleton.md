@@ -37,12 +37,12 @@
 | [WP-H-07](../../../04-hardware/WP-H-07-hardware-component-qualification.md) Qualification of hardware components (comma device, STM32H7, harness) | DEV-06 | Draft | 4 | |
 | [WP-H-04](../../../04-hardware/WP-H-04-hardware-metrics.md) Hardware architectural metrics (SPFM, LFM) | DEV-07 | Draft | 6 | |
 | [WP-H-05](../../../04-hardware/WP-H-05-random-hardware-failures-pmhf.md) Evaluation of safety goal violations due to random HW failures (PMHF) | DEV-08 | Draft | 5 | |
-| [WP-W-02](../../../05-software/WP-W-02-software-safety-requirements.md) Software safety requirements specification | DEV-09 | Draft | 11 | |
+| [WP-W-02](../../../05-software/WP-W-02-software-safety-requirements.md) Software safety requirements specification | DEV-09 | Draft | 12 | |
 | [WP-W-03](../../../05-software/WP-W-03-software-architecture.md) Software architectural design | DEV-10 | Draft | 8 | |
 | [WP-W-04](../../../05-software/WP-W-04-software-safety-analysis.md) Software safety analysis and software-level DFA | DEV-11 | Draft | 6 | |
 | [WP-W-05](../../../05-software/WP-W-05-software-unit-design.md) Software unit design and implementation | DEV-12 | Draft | 8 | |
 | [WP-W-06](../../../05-software/WP-W-06-software-unit-verification.md) Software unit verification specification and report (static analysis, MISRA, coverage, mutation) | DEV-13 | Draft | 10 | |
-| [WP-W-09](../../../05-software/WP-W-09-configuration-calibration-data.md) Safety-related configuration and calibration data (car params, fingerprints, limits, model weights) | DEV-14 | Draft | 8 | |
+| [WP-W-09](../../../05-software/WP-W-09-configuration-calibration-data.md) Safety-related configuration and calibration data (car params, fingerprints, limits, model weights) | DEV-14 | Draft | 7 | |
 | [WP-W-10](../../../05-software/WP-W-10-ml-engineering.md) ML engineering: model requirements, data management, training, testing, deployment | DEV-15 | Draft | 5 | |
 | [WP-W-11](../../../05-software/WP-W-11-cybersecurity-implementation-verification.md) Cybersecurity implementation and verification | DEV-16 | Draft | 8 | |
 | [WP-P-08](../../../07-supporting/WP-P-08-software-component-qualification.md) Qualification of software components (third-party and upstream software) | DEV-17 | Draft | 8 | |
