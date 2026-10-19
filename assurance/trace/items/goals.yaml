@@ -37,7 +37,7 @@
   asil: C
   asil_if_aou_fails: D
   aou_dependency: [AOU-03, AOU-05]
-  parents: [HE-03.1, HE-03.2, HE-03.3, HE-03.4, HE-03.5, HE-03.6]
+  parents: [HE-03.1, HE-03.2, HE-03.3, HE-03.4, HE-03.5, HE-03.6, HE-03.7]
   safe_state: "Acceleration request ≤ 0 (no positive acceleration); ACC cancelled to the PCM"
   ftti_ms: 1000
   ftti_text: "≤ 1 s (preliminary)"

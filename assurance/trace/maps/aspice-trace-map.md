@@ -22,7 +22,7 @@ Specification on the left, verification on the right. Each verification process 
 ```mermaid
 block-beta
   columns 13
-  SYS1["<b>SYS.1</b><br/>Requirements elicitation<br/>AOU 16 · H 9 · HE 37<br/>SG 8 · SH 13* · TS 14*"]
+  SYS1["<b>SYS.1</b><br/>Requirements elicitation<br/>AOU 17 · H 9 · HE 38<br/>SG 8 · SH 13* · TS 14*"]
   space
   space
   space
@@ -156,13 +156,13 @@ block-beta
 
 One colour rule for every V: blue when every item of the level is in the trace data, or every item of the paired level is named by a case (done in the design, not verified); amber when some are; red when none is; dashed grey when the level holds nothing yet. Green is kept for approved work products and passed verification; nothing here is either. The gate band shows the gate records of WP-M-00 §2 (none held yet).
 
-A named item is a **specified** link, not a passed test. 0 of 436 traced items carry status `verified`, and the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K6–K10 in the [README](../README.md) §6 are not implemented).
+A named item is a **specified** link, not a passed test. 0 of 438 traced items carry status `verified`, and the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K6–K10 in the [README](../README.md) §6 are not implemented).
 
 ## 2. Process to work product and items
 
 | Process | Name | Work products | Items or test cases |
 |---|---|---|---|
-| **SYS.1** | Requirements elicitation | WP-C-01, WP-C-02, WP-C-03, WP-C-05, WP-C-09 | AOU (16, trace data), H (9, trace data), HE (37, trace data), SG (8, trace data), SH (13, document), TS (14, document) |
+| **SYS.1** | Requirements elicitation | WP-C-01, WP-C-02, WP-C-03, WP-C-05, WP-C-09 | AOU (17, trace data), H (9, trace data), HE (38, trace data), SG (8, trace data), SH (13, document), TS (14, document) |
 | **SYS.2** | System requirements analysis | WP-S-01, WP-C-04, WP-S-02, WP-C-07, WP-C-10 | SYS (39, document), FSR (58, trace data), TSR (127, trace data), TC (34, document), FI (23, document), FM (11, document), CSG (8, document) |
 | **SYS.3** | System architectural design | WP-S-03, WP-S-05, WP-S-07 | CSR (64, document) |
 | **SWE.1** | SW requirements analysis | WP-W-02 | SWSR (135, trace data) |
@@ -190,13 +190,13 @@ flowchart LR
   subgraph ISO26262["ISO 26262"]
     direction LR
     kH["<b>H</b> 9<br/>hazards"]:::traced
-    kHE["<b>HE</b> 37<br/>hazardous events"]:::traced
+    kHE["<b>HE</b> 38<br/>hazardous events"]:::traced
     kSG["<b>SG</b> 8<br/>safety goals"]:::traced
     kFSR["<b>FSR</b> 58<br/>functional safety req."]:::traced
     kTSR["<b>TSR</b> 127<br/>technical safety req."]:::traced
     kSWSR["<b>SWSR</b> 135<br/>SW safety req."]:::traced
     kHWSR["<b>HWSR</b> 46<br/>HW safety req."]:::traced
-    kAOU["<b>AOU</b> 16<br/>assumptions of use"]:::traced
+    kAOU["<b>AOU</b> 17<br/>assumptions of use"]:::traced
   end
   style ISO26262 fill:#FFFFFF,stroke:#CBD5E1
   subgraph ISO21448["ISO 21448"]
@@ -226,7 +226,7 @@ flowchart LR
   end
   style ASPICE fill:#FFFFFF,stroke:#CBD5E1
   kH -->|"9/9"| kHE
-  kHE -->|"36/36"| kSG
+  kHE -->|"37/37"| kSG
   kSG -->|"8/8"| kFSR
   kFSR -->|"58/58"| kTSR
   kTSR -->|"95/103"| kSWSR
@@ -249,7 +249,7 @@ flowchart LR
 
 | Standard | Kinds | In trace data | Defined in documents only |
 |---|---|---|---|
-| ISO 26262 | H, HE, SG, AOU, FSR, TSR, SWSR, HWSR | H 9, HE 37, SG 8, AOU 16, FSR 58, TSR 127, SWSR 135, HWSR 46 | — |
+| ISO 26262 | H, HE, SG, AOU, FSR, TSR, SWSR, HWSR | H 9, HE 38, SG 8, AOU 17, FSR 58, TSR 127, SWSR 135, HWSR 46 | — |
 | ISO 21448 | SH, TC, FI, FM | — | SH 13, TC 34, FI 23, FM 11 |
 | ISO/PAS 8800 | AIR, DSR | — | AIR 30, DSR 13 |
 | ISO/SAE 21434 | TS, CSG, CSR | — | TS 14, CSG 8, CSR 64 |
@@ -262,7 +262,7 @@ Parents with at least one child in the trace data (WP-T-01 checks K4, K12).
 | Link | Covered | Status | Without a child |
 |---|---|---|---|
 | hazard -> hazardous event | 9/9 | complete | — |
-| hazardous event -> safety goal | 36/36 | complete | — |
+| hazardous event -> safety goal | 37/37 | complete | — |
 | safety goal -> FSR | 8/8 | complete | — |
 | FSR -> TSR | 58/58 | complete | — |
 | TSR -> SWSR (SW-allocated TSRs) | 95/103 | partial | TSR-628, TSR-629, TSR-630, TSR-631, TSR-632, TSR-633, TSR-712, TSR-713 |

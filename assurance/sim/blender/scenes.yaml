@@ -296,6 +296,20 @@ scenes:
     caption: >-
       The same acceleration with a driver who is not supervising: nobody brakes, and the ego runs into the plant's lead.
 
+  - id: he-03-7-not-engaged-accel
+    he: HE-03.7
+    case: L-01
+    case_overrides: {engaged: false}
+    case_title: "Acceleration request +2.0 m/s² while the item is not engaged (manual driving, or just after a brake press)"
+    critical: lead
+    window: [-1.5, 6.0]
+    environment: highway-free-flow
+    trigger_label: acceleration request while not engaged
+    caption: >-
+      Manual driving with the item not engaged, as after a false engagement or a brake press that cancelled it: the item
+      requests acceleration (WP-C-03 HE-03.7, DQ-364). The dashboard shows what the reference build's safety code does
+      with the request.
+
   # ---------------------------------------------------------------------------------------------- H-04 deceleration
   - id: he-04-1-step-decel-follower
     he: HE-04.1
