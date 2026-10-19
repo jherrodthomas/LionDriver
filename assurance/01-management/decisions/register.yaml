@@ -781,7 +781,8 @@
       title: "Wait for an assessor before setting them"
       detail: "No rework risk. Cost: no controllability tests until an assessor is engaged, so the HARA I3 review and G1 stay blocked."
   sources: ["assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md OI-3"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-035
   question: "Should the threat analysis's financial-damage ratings stay at their conservative placeholders?"
@@ -1888,7 +1889,8 @@
       title: "Remove the suppressions by changing the code where possible"
       detail: "Fewer deviations. Cost: churn in safety code (WP-W-01 OI-9); each change needs its own review and tests."
   sources: ["assurance/05-software/WP-W-01-software-development-environment-guidelines.md OI-2"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-084
   question: "May LionDriver test drives upload logs to comma's servers?"
@@ -1929,7 +1931,8 @@
       title: "Use the reference device for VS-FI-07; skip TC-05's destructive steps"
       detail: "No purchase; reflash and recheck the reference unit afterwards, and record why TC-05 was cut short. Cost: risk of altering the reference unit, and weaker evidence for boot protection."
   sources: ["assurance/06-validation/WP-V-05-fault-injection.md OI-5", "assurance/06-validation/WP-V-06-cybersecurity-validation.md OI-3"]
-  status: open
+  status: answered
+  answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-086
   question: "How should the release signing key be stored?"
@@ -2093,7 +2096,8 @@
       title: "Signed GitHub release assets, plus an offline copy"
       detail: "No new service. Cost: depends on GitHub staying available and on its file-size limits."
   sources: ["assurance/07-supporting/WP-P-10-release-management.md OI-2"]
-  status: open
+  status: answered
+  answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-094
   question: "Do we lock the panda bootloader with write protection plus readout protection level 1 (WRP+RDP1), or leave ROM DFU open and accept the residual risk?"
@@ -2132,7 +2136,8 @@
       title: "Do a separate privacy impact assessment"
       detail: "A stronger record of how personal data is handled. Cost: extra effort, possibly outside legal advice."
   sources: ["assurance/02-concept/WP-C-09-tara.md OI-7", "assurance/01-management/WP-M-09-cybersecurity-plan.md OI-8"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-096
   question: "Who approves the SOTIF validation targets before evidence is collected, now that there is no assessor?"
@@ -2155,7 +2160,8 @@
       title: "Wait for an assessor to approve them"
       detail: "Strongest independence. Cost: no SOTIF evidence until an assessor is engaged."
   sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md OI-3", "assurance/09-production-operation/WP-O-04-field-monitoring.md OI-5"]
-  status: open
+  status: answered
+  answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-097
   question: "Should the panda refuse to enable controls when the car's VIN does not match the vehicle lock record?"
@@ -2286,7 +2292,8 @@
       title: "Keep the plan; rely on verification reviews"
       detail: "The standard allows it. Cost: a weaker case for misuse and field monitoring."
   sources: ["assurance/process/README.md “3. **Operation has no independent check.** WP-M-06 plans no”"]
-  status: open
+  status: answered
+  answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-104
   question: "Is it legal to test a modified driver-assistance system on public roads where you'll test?"
@@ -2332,7 +2339,8 @@
       title: "Procedure only: reflash and log after each session"
       detail: "Reflash the release build after every session and record it in the logbook. Cost: no hardware, but it rests on discipline; one slip puts a test build on the road."
   sources: ["assurance/03-system/WP-S-09-system-verification.md OI-2"]
-  status: open
+  status: answered
+  answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-106
   question: "Should the SoC-side detection requirements CSR-016 and CSR-053 be verified at CAL 2 rigour instead of their inherited CAL 3?"
@@ -2387,7 +2395,8 @@
       title: "Trend rule only; report the probability without a threshold"
       detail: "Easier to meet. Cost: a weaker argument that a later assessor may reject."
   sources: ["assurance/06-validation/WP-V-04-sotif-unknown-scenarios.md OI-2"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-109
   question: "How many sacrificial devices may be spent on the option-byte / readout-protection test (TC-05)?"
@@ -4216,7 +4225,8 @@
       title: "Keep the stand-in table for now"
       detail: "No cost now. The monitoring-and-response results stay provisional, and any later assessor will ask for the official table."
   sources: ["assurance/08-analyses/fmea/rating-tables.md", "assurance/08-analyses/fmea/msr-plan.md"]
-  status: open
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g, note: "The inbox answer was C (02:14Z); the lead then sent pictures of the FMEA-MSR AP matrix for S 9 and S 10 in chat, which is option A. S 1-8 pages still to come."}
 
 - id: DQ-208
   question: "How much of your time goes to LionDriver, and from what date should the schedule count?"
