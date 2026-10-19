@@ -11,7 +11,8 @@ Where these hazards meet the TARA's threats, and where a safety measure changes 
 | [`hara-cartesian-summary.md`](hara-cartesian-summary.md) | Generated step counts and worst cases per hazard |
 | [`WP-C-03-hara-cartesian.xlsx`](WP-C-03-hara-cartesian.xlsx) | Generated workbook, reference scope (Chill mode only) |
 | [`WP-C-03-hara-cartesian_experimental.xlsx`](WP-C-03-hara-cartesian_experimental.xlsx) | Generated workbook, Experimental Mode variant (D-08 option B) |
-| [`hara-events.csv`](hara-events.csv) | Generated. All 3 264 hazardous-event rows of the reference workbook (tab 12), one per line, with S/E/C rationale, ASIL, ASIL if the ⚠ AoUs fail, and safety goal. **This is the file to review on GitHub**: it renders as a searchable table, and a PR diff shows exactly which rows a rule change moves |
+| [`review/reference/`](review/reference/README.md), [`review/experimental/`](review/experimental/README.md) | Generated previews of the two workbooks, to review on GitHub without downloading: every tab as a table, and tab 12 as an ASIL matrix of function × guide word whose cells open that cell's rows as a searchable table (one CSV per cell, 120 rows each). Built by [`tools/xlsx_review.py`](../../../tools/xlsx_review.py) |
+| [`hara-events.csv`](hara-events.csv) | Generated. All 3 264 hazardous-event rows of the reference workbook (tab 12), one per line, with S/E/C rationale, ASIL, ASIL if the ⚠ AoUs fail, and safety goal. A PR diff of it shows exactly which rows a rule change moves. At 2.4 MB it is too large for GitHub to show as a table; to read the rows, use the previews above |
 | [`hara-events_experimental.csv`](hara-events_experimental.csv) | Generated. The same for the Experimental Mode variant (3 468 rows) |
 | [`hara_figures.py`](hara_figures.py) | Figure generator. It draws WP-C-03 Figure 2-1 (rows per S × E × C cell, as rated and if every ⚠ AoU fails) from the model, and Figure 6-1 (hazards → hazardous events → safety goals) from WP-C-03 §4–§6 and the model. It fails if a goal's ASIL is not the highest ASIL of its source events, or if a rated event has no goal |
 | [`guideword_scenes.py`](guideword_scenes.py) | Draws the guide-word scenes: one card per SC guide word of a function, the function over time (required against performed) over a top-down road scene of what the malfunction does to the car. Words, hazards, subsumption and rationale come from `FM` in `hara_model.py`; goal and ASIL from WP-C-03 §6. The behaviour models are schematic and live in this file; it fails if an SC guide word has no model. One sheet per function with SC guide words (F-07 and F-09 have none). Run through `hara_figures.py` |
@@ -120,10 +121,17 @@ Sheets: [F-01](#f-01-lateral-control) · [F-02](#f-02-longitudinal-control-acc-c
    python3 hara_figures.py
    ```
 
-4. CI runs `python3 hara_model.py --check`. It fails if the summary, the CSV files or the WP-C-03 §2.1 table no longer match the model. `python3 hara_figures.py --check` and `python3 test_hara_figures.py` fail if a figure no longer matches the model or WP-C-03; they are run in CI (`assurance.yaml`) next to the model check.
+4. Rebuild the GitHub previews of the workbooks ([`review/`](review/reference/README.md)) from the repository root:
+
+   ```bash
+   python3 tools/xlsx_review.py
+   ```
+
+5. CI runs `python3 hara_model.py --check`. It fails if the summary, the CSV files or the WP-C-03 §2.1 table no longer match the model. `python3 hara_figures.py --check` and `python3 test_hara_figures.py` fail if a figure no longer matches the model or WP-C-03; they are run in CI (`assurance.yaml`) next to the model check. `python3 tools/xlsx_review.py --check` fails if a preview no longer matches its workbook.
 
 ## Reviewing
 
+- To read the workbooks on GitHub, a phone included, open [`review/reference/`](review/reference/README.md): every tab is a table, and tab 12 is an ASIL matrix whose cells open their rows as a searchable table.
 - Each CSV row has a stable key, `function/guide word/situation/condition` (e.g. `F-01/M04/OS-02/W02`), and the workbook row ID (`H-0001`…) for cross-reference. To comment on a row, open the CSV in a PR and comment on its line, quoting the key.
 - Changing a rating means changing a rule in `hara_model.py`. Regenerate, and the CSV diff shows every row the rule affects.
 - The CSVs and workbooks come from the same model; every ASIL in the CSVs equals the workbook's tab 12, row for row.
