@@ -29,6 +29,8 @@
 #                 may follow), sign, gantry, posts, lamps, barrels (library/environments.yaml lists their fields)
 #   env           look fields that override the condition's (e.g. sun: side)
 #   window        seconds around the trigger (t = 0) to show
+#   edge_case     the row of the edge-case catalogue (../results/edge-cases.md) a plant scene reproduces with that
+#                 row's case, case_overrides and assumptions (search/test_search.py checks its rho)
 schema_version: 2
 scenes:
   # ---------------------------------------------------------------------------------------------- H-01 lateral
@@ -938,3 +940,156 @@ scenes:
     caption: >-
       Outside the ODD the item stays engaged through a construction zone and keeps to the old markings while the
       cones close its lane; the driver steers into the open lane after the reaction time.
+
+  # ---------------------------------------------------------------------------------------------- edge cases (search)
+  # Worst cases of the failure search (search/families.yaml, results/edge-cases.md), each reproducing its catalogue
+  # row exactly. Synthetic (DSR-12), no evidence credit.
+  - id: ec-11-lane-change-frozen-overshoot
+    he: HE-02.5
+    edge_case: EC-11
+    case: F-03
+    case_overrides: {road: straight, speed_kph: 80.0, t_fault: 7.069, duration: 8.0, lane_change: 6.0, lane_change_s: 3.96}
+    assumptions: {driver_t_r_s: 1.5}
+    case_title: "Steering command frozen 27 % into an assisted lane change to the left (F-03), 80 km/h"
+    trigger_label: command frozen mid lane change
+    window: [-1.5, 6.0]
+    environment: highway-free-flow
+    road: {lanes_left: 2}
+    actors:
+      - {name: car two lanes left, kind: car, lane: 2, ds_m: 12, speed_kph: 85, source: illustrative, critical: true, paint: [0.85, 0.86, 0.88]}
+    caption: >-
+      Catalogue row EC-11, a new-hazard finding (EC-N1): the frozen frame keeps the lateral push of the lane change, so
+      the car does not stop in the target lane but runs on toward the lane beyond it, which the driver did not check.
+      HE-02.5 rates the opposite effect (the car stops and straddles). The car two lanes over is illustrative.
+
+  - id: ec-12-lane-change-stall-exit
+    he: HE-02.5
+    edge_case: EC-12
+    case: F-04b
+    case_overrides: {road: "curve@0.490000", t_fault: 8.13, duration: 8.0, lane_change: 6.0, lane_change_s: 3.0}
+    assumptions: {driver_t_r_s: 0.75}
+    case_title: "SoC stall late in a fast lane change away from an exit (F-04b), 110 km/h"
+    trigger_label: SoC stall (no alert)
+    window: [-2.5, 5.0]
+    environment: highway-exit-split
+    tc: [TC-31]
+    caption: >-
+      Catalogue row EC-12 (EC-N1): the SoC stalls 71 % into a 3 s lane change to the left, away from the exit lane.
+      The panda revokes at once but sounds no siren, so the car keeps its lateral speed past the target lane's far
+      line before the driver, cued by the drift, catches it. With a siren at revocation (the DQ-404 what-if) it stays
+      in the lanes. The exit split is drawn, not simulated.
+
+  - id: ec-03-frozen-curve-exit
+    he: HE-02.3
+    edge_case: EC-03
+    case: F-03
+    case_overrides: {road: "arc@1.460000:144.400", speed_kph: 92.1, t_fault: 15.222, duration: 8.0}
+    assumptions: {driver_t_r_s: 1.47}
+    case_title: "Steering command frozen in the arc of a 1.46 m/s² left curve, held through its exit (F-03)"
+    trigger_label: steering command frozen
+    window: [-1.5, 7.0]
+    environment: highway-curve
+    traffic: free-flow
+    caption: >-
+      Catalogue row EC-03: the command freezes halfway round a short curve. Nothing happens until the road straightens;
+      then the frozen curve torque keeps turning the car left, onto the inside lane, about 4.7 s after the fault.
+      HE-02.3 (steering bias while the road changes).
+
+  - id: ec-04-stall-curve-tunnel
+    he: HE-02.4
+    edge_case: EC-04
+    case: F-04b
+    case_overrides: {road: "arc@1.610000:240.400", speed_kph: 97.4, t_fault: 10.322, duration: 8.0}
+    assumptions: {driver_t_r_s: 1.36}
+    case_title: "SoC stall in the entry of a 1.61 m/s² curve at a tunnel portal (F-04b), 97 km/h"
+    trigger_label: SoC stall (no alert)
+    window: [-1.5, 6.0]
+    environment: highway-tunnel
+    tc: [TC-18]
+    caption: >-
+      Catalogue row EC-04: the SoC stalls as the curve tightens, at the tunnel portal. The panda revokes without a
+      siren; the driver's only cue is the drift, and the car runs wide toward the tunnel wall. The tunnel and its
+      lighting change are drawn, not simulated (the plant has no perception).
+
+  - id: ec-18-wrong-direction-correction
+    he: HE-01.2
+    edge_case: EC-18
+    case: F-01b
+    case_overrides: {road: "curve@1.980000", speed_kph: 83.3, t_fault: 7.0, duration: 10.0}
+    assumptions: {driver_t_r_s: 1.12, driver_wrong_s: 0.232}
+    case_title: "Hard-over in a 1.98 m/s² curve; the driver's first correction goes the wrong way for 0.23 s"
+    trigger_label: steering hard-over
+    window: [-1.5, 6.0]
+    environment: highway-curve
+    traffic: free-flow
+    caption: >-
+      Catalogue row EC-18: a hard-over to the right in a curve; the driver reacts after 1.1 s but first steers the
+      wrong way for a quarter of a second (a driver-model option, off in every catalog case) before correcting, and
+      the car is already across the shoulder.
+
+  - id: ec-20-brakes-instead-of-steering
+    he: HE-01.2
+    edge_case: EC-20
+    case: F-01b
+    case_overrides: {road: "curve@1.900000", t_fault: 7.0, duration: 10.0}
+    assumptions: {driver_t_r_s: 1.18, driver_brakes_only: 1.0}
+    case_title: "Hard-over in a 1.9 m/s² curve at 110 km/h; the driver brakes instead of steering"
+    trigger_label: steering hard-over
+    window: [-1.5, 6.0]
+    environment: highway-curve
+    caption: >-
+      Catalogue row EC-20: the driver answers the hard-over with the brake alone. The brake press revokes the item's
+      authority (the hard-over ends 10 ms later), but nobody steers the curve, so the car goes straight on and leaves
+      the road on the outside. Braking ends a hard-over; it does not keep the car in a curve.
+
+  - id: ec-24-silent-stall-r-odd
+    he: HE-07.1
+    edge_case: EC-24
+    case: F-04b
+    case_overrides: {road: "curve@2.405457", speed_kph: 107.9, lane_width: 3.54, t_fault: null, duration: 8.0}
+    assumptions: {driver_t_r_s: 1.31}
+    case_title: "SoC stall at the entry of a curve at R_ODD at 108 km/h (F-04b)"
+    trigger_label: SoC stall (no alert)
+    window: [-1.5, 6.0]
+    environment: highway-curve
+    conditions: W03
+    caption: >-
+      Catalogue row EC-24: at night, the SoC stalls as the car enters a curve at R_ODD. Even without the fault the
+      item would touch the line (it cannot give the 2.4 m/s² the curve needs); the silent stall adds about 4 m more
+      before the drift cues the driver. HE-07.1: no take-over alert.
+
+  - id: ec-26-narrow-lane-truck-hardover
+    he: HE-01.2
+    edge_case: EC-26
+    case: F-01b
+    case_overrides: {road: "curve@1.350000", speed_kph: 82.3, lane_width: 3.18, t_fault: 7.0, duration: 8.0, ay_disturbance: -0.5}
+    assumptions: {driver_t_r_s: 1.25}
+    case_title: "Hard-over toward a truck in a 3.18 m lane, with a 0.5 m/s² crosswind from the left"
+    trigger_label: steering hard-over
+    window: [-1.5, 4.0]
+    environment: highway-narrow-truck
+    traffic: none
+    tc: [TC-32, TC-15]
+    actors:
+      - {name: truck, kind: truck, lane: -1, ds_m: 6, speed_kph: 82, source: illustrative, critical: true}
+    caption: >-
+      Catalogue row EC-26: a narrow lane, a crosswind the item already leans against, and a hard-over to the right. The
+      body edge is on the line 0.89 s after the fault, before the driver can react. The truck is illustrative; the
+      plant models neither it nor the contact.
+
+  - id: ec-27-crosswind-hardover-left
+    he: HE-01.2
+    edge_case: EC-27
+    case: F-01b
+    case_overrides: {fault: hardover_left, road: "curve@0.090000", speed_kph: 87.7, lane_width: 3.22, t_fault: 7.0, duration: 8.0, ay_disturbance: 0.22}
+    assumptions: {driver_t_r_s: 1.47, driver_lat_cue_m: 0.17}
+    case_title: "Hard-over to the left in a 3.22 m lane on an exposed embankment, crosswind 0.22 m/s² to the left"
+    trigger_label: steering hard-over
+    window: [-1.5, 5.0]
+    environment: highway-crosswind
+    traffic: free-flow
+    tc: [TC-15, TC-32]
+    caption: >-
+      Catalogue row EC-27: the mirrored hard-over in a narrow lane, with the wind pushing the same way. The car crosses
+      into the left lane after 1.4 s. The windsocks show the wind; the plant adds it as a steady lateral push.
+

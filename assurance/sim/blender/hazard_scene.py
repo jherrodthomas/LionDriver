@@ -398,6 +398,95 @@ def build_props(sc: dict, coll, env: dict | None = None):
         for z in (0.35, 0.7):
           A.part("drum_band", band, None, coll, (x, y, z))
         s += p.get("every_m", 12)
+    elif kind == "tunnel":                      # TC-18: walls, a roof and a portal over from_s..to_s, lit inside
+      wall = A.material("tunnel_wall", (0.62, 0.61, 0.58), rough=0.7)
+      lamp = A.material("tunnel_lamp", (1.0, 0.86, 0.6), rough=0.3, emit=30.0)
+      lo, hi = (r["barrier"] if r.get("barrier") is not None else right) - 0.5, left + 0.5
+      height = p.get("height", 6.5)
+      n = max(int((p["to_s"] - p["from_s"]) / 2.0), 1)
+      ss = [p["from_s"] + (p["to_s"] - p["from_s"]) * i / n for i in range(n + 1)]
+      earth = A.material("tunnel_earth", (0.28, 0.4, 0.15), rough=0.95)
+      overhead = bpy.data.collections.get("overhead")   # hidden from the top camera, which looks through the roof
+      if overhead is None:
+        overhead = bpy.data.collections.new("overhead")
+        bpy.context.scene.collection.children.link(overhead)
+      cover = height + 2.5                            # the hill the tunnel runs through: a cover and two slopes
+      for name, d0, z0, d1, z1, mat in (("tunnel_wall_r", lo, 0.0, lo, height, wall),
+                                        ("tunnel_wall_l", hi, 0.0, hi, height, wall),
+                                        ("tunnel_roof", lo, height, hi, height, wall),
+                                        ("tunnel_cover", lo - 1.0, cover, hi + 1.0, cover, earth),
+                                        ("tunnel_slope_r", lo - 1.0, cover, lo - 40.0, -0.2, earth),
+                                        ("tunnel_slope_l", hi + 40.0, -0.2, hi + 1.0, cover, earth)):
+        verts, faces = [], []
+        for i, s in enumerate(ss):
+          cc = centre_at(c, s)
+          verts += [A.offset(cc, d0, z0), A.offset(cc, d1, z1)]
+          if i:
+            faces.append((2 * i - 2, 2 * i - 1, 2 * i + 1, 2 * i))
+        A.mesh_object(f"{name}{k}", verts, faces, mat, overhead if name in ("tunnel_roof", "tunnel_cover") else coll)
+      cc = centre_at(c, p["from_s"])                  # the portal: a face wall above and beside the opening
+      mx, my, _ = A.offset(cc, 0.5 * (lo + hi))
+      A.part("tunnel_portal", A.box_mesh(f"portal{k}", 1.5, hi - lo + 8.0, 3.0, height, concrete), None, coll,
+             (mx, my, 0), (0, 0, cc[2]))
+      for d in (lo - 2.0, hi + 2.0):
+        px, py, _ = A.offset(cc, d)
+        A.part("tunnel_portal", A.box_mesh(f"portalw{k}{d:.0f}", 1.5, 4.0, cover + 0.5, 0.0, concrete), None, coll,
+               (px, py, 0), (0, 0, cc[2]))
+      lum = A.box_mesh(f"tlum{k}", 1.2, 0.15, 0.1, -0.1, lamp)
+      s = p["from_s"] + 4.0
+      while s < p["to_s"]:                          # a line of luminaires on each wall, with a few real lights
+        cc = centre_at(c, s)
+        for d in (lo + 0.1, hi - 0.1):
+          x, y, _ = A.offset(cc, d)
+          A.part("tunnel_luminaire", lum, None, coll, (x, y, height - 0.6), (0, 0, cc[2]))
+        if int((s - p["from_s"]) / 8.0) % 3 == 0:
+          lt = bpy.data.objects.new("tunnel_light", bpy.data.lights.new("tunnel_light", "POINT"))
+          lt.data.energy, lt.data.color, lt.data.shadow_soft_size = 2500, (1.0, 0.85, 0.6), 0.5
+          lt.location = A.offset(cc, 0.5 * (lo + hi), height - 1.0)
+          coll.objects.link(lt)
+        s += 8.0
+    elif kind == "gore":                        # TC-31: chevron hatching where a lane splits off at d, widening to width
+      white = A.material("paint_white", (0.85, 0.85, 0.82), rough=0.5)
+      side = 1 if p.get("side", "right") == "left" else -1
+      length = p["to_s"] - p["from_s"]
+
+      def edge(s):
+        return side * p.get("width", 3.0) * min(max((s - p["from_s"]) / length, 0.0), 1.0)
+
+      for which in (0, 1):                      # the two border lines of the hatched area
+        verts, faces = [], []
+        n = max(int(length), 1)
+        for i in range(n + 1):
+          s = p["from_s"] + length * i / n
+          d = p["d"] + (edge(s) if which else 0.0)
+          cc = centre_at(c, s)
+          verts += [A.offset(cc, d + 0.1, 0.012), A.offset(cc, d - 0.1, 0.012)]
+          if i:
+            faces.append((2 * i - 2, 2 * i - 1, 2 * i + 1, 2 * i))
+        A.mesh_object(f"gore_line{k}{which}", verts, faces, white, coll)
+      s = p["from_s"] + 8.0
+      while s < p["to_s"]:                      # diagonal bars across the widening area
+        w = abs(edge(s))
+        if w > 0.4:
+          cc = centre_at(c, s + 0.5 * w)
+          x, y, _ = A.offset(cc, p["d"] + 0.5 * edge(s))
+          bar = A.box_mesh(f"gore{k}{s:.0f}", 0.45, w * 1.35, 0.01, 0.012, white)
+          A.part("gore_bar", bar, None, coll, (x, y, 0), (0, 0, cc[2] + side * math.radians(45)))
+        s += 6.0
+    elif kind == "windsock":                    # TC-15: an orange and white sock on a mast, blown across the road
+      grey = A.material("pole", (0.2, 0.2, 0.22), rough=0.5, metal=0.6)
+      orange = A.material("sock_orange", (0.95, 0.3, 0.03), rough=0.6, emit=0.15)
+      whitem = A.material("sock_white", (0.92, 0.92, 0.9), rough=0.6)
+      cc = centre_at(c, p["s"])
+      x, y, _ = A.offset(cc, p["d"])
+      A.part("windsock_mast", A.cyl_mesh(f"wmast{k}", 0.06, 6.0, mat=grey), None, coll, (x, y, 3.0))
+      toward = cc[2] + (math.pi / 2 if p.get("toward", "left") == "left" else -math.pi / 2)
+      for i in range(5):                        # five bands, tapering, pointing downwind
+        rr = 0.38 - 0.05 * i
+        bx, by = x + (0.35 + 0.5 * i) * math.cos(toward), y + (0.35 + 0.5 * i) * math.sin(toward)
+        band = A.cyl_mesh(f"wband{k}{i}", rr, 0.5, axis="X", mat=orange if i % 2 == 0 else whitem, segs=12,
+                          r2=rr - 0.05)
+        A.part("windsock_band", band, None, coll, (bx, by, 5.75 - 0.06 * i), (0.0, 0.12, toward))
     else:
       raise ValueError(kind)
 
@@ -585,6 +674,9 @@ def render_frame(cam, frame: int, path: Path):
   ghosts = bpy.data.collections.get("event_ghosts")
   if ghosts:                                    # the ghosts and the path read from above; from the road they block the view
     ghosts.hide_render = cam.name != "cam_top"
+  overhead = bpy.data.collections.get("overhead")
+  if overhead:                                  # a tunnel roof hides the road from above
+    overhead.hide_render = cam.name == "cam_top"
   weather = bpy.data.collections.get("weather")
   if weather:                                   # weather reads from the road; from above it hides the layout
     weather.hide_render = cam.name == "cam_top"

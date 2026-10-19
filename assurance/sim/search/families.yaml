@@ -1,0 +1,296 @@
+# Search families of the failure search (search.py; WP-V-04 U-4, roadmap S5). A family is data: the fault, the road,
+# the case, the plant assumptions, the search box and the robustness measure. search.py samples the box (seeded Monte
+# Carlo, then cross-entropy falsification), runs the layer-1 plant with the real panda safety code for every sample,
+# writes one results page per family and the edge-case catalogue (../results/edge-cases.md).
+#
+# Synthetic data (DSR-12): no evidence credit. The plant has no tyre friction limit and no perception.
+#
+#   id           family ID (results page search-<id>.md unless `page` is given)
+#   title        what the family searches
+#   about        one paragraph for its results page
+#   layout       page writer: legacy-curve (the first family's page and figure, kept byte-identical) or generic
+#   seed         RNG seed; mc: Monte Carlo samples; ce: cross-entropy rounds, samples per round, elite share
+#   space        the search box: name: [low, high, unit, meaning], or name: {choice: [...], meaning} (a categorical
+#                dimension, sampled uniformly over its options)
+#   fault, road  the plant fault kind (plant/simulate.py) and road (straight, curve@a_y, rcurve@a_y,
+#                arc@a_y:L, rarc@a_y:L, curve-odd-bound, KS-nn)
+#   case         other fields of plant/simulate.Case
+#   assumptions  plant assumptions and driver-model options for the run (simulate.ASSUMPTIONS, DRIVER_OPTIONS)
+#                A value starting with "=" is a Python expression over the sampled parameters (and math); any other
+#                value is taken as written.
+#   robustness   lane: rho = (lane width - car width) / 2 - max |lateral offset| after the fault;
+#                corridor: the same margin to the outer lines of the ego lane and the lane to its left (an assisted
+#                lane change to the left)
+#   bands        Monte Carlo departure tables on its results page: parameter: [edges]
+#   catalogue    rows for edge-cases.md: the worst sample of each value of `by` (or the worst `per` samples), at most
+#                `max`
+#   probes       assumption probes for the catalogue (which assumption decides the outcome), added to probes_default
+#   hara         first matching rule maps a catalogue row to a HARA hazardous event (HE-) or SOTIF hazard (SH-);
+#                `when` is an expression over the row (its parameters, fault, side, t_line, rho, rho_nofault); a rule
+#                with `new` is a finding for the HARA: listed in the catalogue and queued in the decision register
+schema_version: 1
+
+probes_default:
+  - {label: "driver reacts after 0.75 s", assume: {driver_t_r_s: 0.75}}
+  - {label: "drift cue 0.1 m", assume: {driver_lat_cue_m: 0.1}}
+  - {label: "EPS-hold (keeps its last torque 2 s)", case: {eps: hold}}
+  - {label: "driver corrects with up to 6 m/s²", assume: {driver_ay_max: 6.0}}
+  - {label: "siren when the panda revokes (DQ-404 what-if)", assume: {whatif_siren_on_revoke: 1.0}}
+
+families:
+  - id: curve-assist-loss
+    title: Loss of lateral assistance in a highway curve
+    page: search-curve-assist-loss.md
+    figure: fig-search-curve-assist-loss.svg
+    layout: legacy-curve
+    seed: 20261016
+    mc: 120
+    ce: {rounds: 4, per_round: 30, elite: 0.2}
+    space:
+      speed_kph: [80.0, 110.0, km/h, "ego speed (ODD-H up to 110 km/h, DQ-260)"]
+      a_y: [0.0, 1.8, m/s², "steady lateral acceleration of the curve, from straight to 1.8 m/s²: above LAT_ACCEL_FACTOR (1.99 m/s²) the item cannot hold the curve even without a fault (plant case N-3), so the band to the ODD bound 2.5 m/s² is left out"]
+      lane_width: [3.0, 3.9, m, "lane width (ODD-H 3.0–3.9 m)"]
+      t_r: [0.75, 1.5, s, "driver reaction time from the first cue (WP-S-04 §3.2 range)"]
+      cue: [0.1, 0.3, m, "drift at which the driver notices (assumption, WP-C-08 to replace)"]
+    fault: eps_fault
+    road: "=f'curve@{a_y:.6f}' if a_y > 1e-3 else 'straight'"
+    case: {t_fault: 7.0, duration: 6.0, speed_kph: =speed_kph, lane_width: =lane_width}
+    assumptions: {driver_t_r_s: =t_r, driver_lat_cue_m: =cue}
+    robustness: lane
+    catalogue: {per: 1}
+    hara:
+      - {when: "a_y >= 1.0", he: HE-02.1, sh: SH-02, fit: "loss of assist in a highway curve; the HE names a curve near R_ODD, this one is milder"}
+      - {when: "True", he: HE-02.4, fit: "gentle curve; HE-02.4 is the silent case, this loss is announced by the siren"}
+
+  # ------------------------------------------------------------------------------------------------ fault timing
+  - id: fault-timing-curve
+    title: "Fault timing in a curve: injected before, at, in and after a curve with an exit"
+    about: >-
+      A fault of one of four kinds is injected at a searched point of a left curve that has an exit: on the approach,
+      in the entry clothoid, in the arc, in the exit clothoid or on the straight after it, in curves the item can
+      hold without a fault. `x_inj` places the onset along the curve: 0 is the start of the
+      entry clothoid, 1 the end of the exit clothoid.
+    seed: 20261019
+    mc: 40
+    ce: {rounds: 3, per_round: 16, elite: 0.25}
+    space:
+      fault: {choice: [hardover, frozen, soc_stall, eps_fault], meaning: "F-01b hard-over, F-03 frozen command, F-04b SoC stall, F-07 EPS fault"}
+      a_y: [0.5, 1.8, m/s², "steady lateral acceleration of the arc; above about 1.8 m/s² the car leaves the lane without a fault (LAT_ACCEL_FACTOR 1.99 m/s², plant case N-3), so the band to R_ODD is left to combo-odd-bound"]
+      arc_m: [100.0, 400.0, m, "length of the constant-radius arc between the two 100 m clothoids"]
+      x_inj: [-0.2, 1.2, "—", "onset along the curve: 0 entry clothoid start, 1 exit clothoid end"]
+      speed_kph: [80.0, 110.0, km/h, "ego speed"]
+      t_r: [0.75, 1.5, s, "driver reaction time from the first cue"]
+    fault_param: fault
+    road: "=f'arc@{a_y:.6f}:{arc_m:.3f}'"
+    case: {t_fault: "=(200.0 + x_inj * (200.0 + arc_m)) / (speed_kph / 3.6)", duration: 8.0, speed_kph: =speed_kph}
+    assumptions: {driver_t_r_s: =t_r}
+    robustness: lane
+    bands: {x_inj: [-0.2, 0.0, 0.3, 0.7, 1.0, 1.2]}
+    catalogue: {by: fault, max: 4}
+    hara:
+      - {when: "fault == 'hardover'", he: HE-01.2, fit: "hard-over within the envelope on a highway; in or near a curve"}
+      - {when: "fault == 'frozen'", he: HE-02.3, fit: "frozen command while the road changes; at the curve exit the bias steers into the old curve"}
+      - {when: "fault == 'soc_stall'", he: HE-02.4, fit: "silent loss; the HE names a straight or gentle curve, this one is in a curve"}
+      - {when: "True", he: HE-02.1, sh: SH-02, fit: "announced loss of assist in a curve"}
+
+  - id: fault-timing-refault
+    title: "A transient fault that clears, and a second fault of the same kind shortly after"
+    about: >-
+      The first fault clears after `clear_s` and the same fault returns `gap_s` after that, in a curve inside the
+      ODD. The panda latches its authority off after an EPS fault or a SoC stall (it is regained only by a new
+      engagement), so for those two kinds the second fault changes nothing; a hard-over or a frozen command is not
+      detected, so the item steers again between the two.
+    seed: 20261020
+    mc: 40
+    ce: {rounds: 3, per_round: 16, elite: 0.25}
+    space:
+      fault: {choice: [hardover, frozen, soc_stall, eps_fault], meaning: "kind of both faults"}
+      clear_s: [0.1, 1.5, s, "the first fault clears this long after its onset"]
+      gap_s: [0.05, 1.0, s, "the second fault starts this long after the first clears"]
+      a_y: [0.0, 2.0, m/s², "steady lateral acceleration of the curve"]
+      speed_kph: [80.0, 110.0, km/h, "ego speed"]
+      t_r: [0.75, 1.5, s, "driver reaction time from the first cue"]
+    fault_param: fault
+    road: "=f'curve@{a_y:.6f}' if a_y > 1e-3 else 'straight'"
+    case: {t_fault: "=4.0 + 160.0 / (speed_kph / 3.6)", duration: 8.0, speed_kph: =speed_kph, fault_clear: =clear_s,
+           fault2: =fault, fault2_gap: =gap_s}
+    assumptions: {driver_t_r_s: =t_r}
+    robustness: lane
+    bands: {clear_s: [0.1, 0.5, 1.0, 1.5]}
+    catalogue: {by: fault, max: 4}
+    hara:
+      - {when: "fault == 'hardover'", he: HE-01.2, fit: "two hard-overs; the second starts while the car is already off centre"}
+      - {when: "fault == 'frozen'", he: HE-02.3, fit: "frozen twice; each freeze holds the command of its moment"}
+      - {when: "fault == 'soc_stall'", he: HE-02.4, fit: "authority latched off after the first stall; the second changes nothing"}
+      - {when: "True", he: HE-02.1, sh: SH-02, fit: "authority latched off after the first EPS fault; the second changes nothing"}
+
+  - id: fault-timing-lane-change
+    title: "A fault during an assisted lane change to the left"
+    about: >-
+      The SoC starts an assisted lane change to the left at 6 s, following a cosine path over `lc_s`; the fault
+      starts at phase `phase` of it (0 start, 1 end). The driver's cue is a drift of 0.2 m from the planned path, and
+      the driver completes the change. Robustness is the margin to the outer lines of the two lanes (corridor): the
+      right line of the ego lane and the left line of the target lane.
+    seed: 20261021
+    mc: 40
+    ce: {rounds: 3, per_round: 16, elite: 0.25}
+    space:
+      fault: {choice: [hardover, frozen, soc_stall, eps_fault], meaning: "F-01b hard-over (to the right), F-03, F-04b, F-07"}
+      phase: [0.0, 1.0, "—", "fault onset as a share of the lane change"]
+      lc_s: [3.0, 6.0, s, "duration of the lane change"]
+      a_y: [0.0, 1.0, m/s², "steady lateral acceleration of a gentle left curve (0: straight)"]
+      speed_kph: [80.0, 110.0, km/h, "ego speed"]
+      t_r: [0.75, 1.5, s, "driver reaction time from the first cue"]
+    fault_param: fault
+    road: "=f'curve@{a_y:.6f}' if a_y > 1e-3 else 'straight'"
+    case: {lane_change: 6.0, lane_change_s: =lc_s, t_fault: "=6.0 + phase * lc_s", duration: 8.0, speed_kph: =speed_kph}
+    assumptions: {driver_t_r_s: =t_r}
+    robustness: corridor
+    bands: {phase: [0.0, 0.25, 0.5, 0.75, 1.0]}
+    catalogue: {by: fault, max: 4}
+    hara:
+      - {when: "side == 'left'", new: EC-N1, he: HE-02.5,
+         fit: "the fault leaves the car moving sideways (a frozen command keeps pushing it; a lost one leaves its lateral speed), so it crosses the target lane's far line; HE-02.5 has the car stop and straddle the lanes"}
+      - {when: "fault == 'hardover'", he: HE-01.2, fit: "hard-over during a lane change (OS-12); HE-01.2 names OS-01/OS-02"}
+      - {when: "True", he: HE-02.5, fit: "lateral control lost mid-manoeuvre"}
+
+  - id: fault-timing-correction
+    title: "The fault clears just after the driver's correction starts"
+    about: >-
+      The fault starts at curve entry and clears `clear_s` after the driver's correction begins, while the driver,
+      who feels the item's torque with a lag `lag_s`, is still compensating for it. A hard-over or a frozen command
+      is not detected, so the item steers again when it clears; after an EPS fault the panda keeps its authority off.
+    seed: 20261022
+    mc: 40
+    ce: {rounds: 3, per_round: 16, elite: 0.25}
+    space:
+      fault: {choice: [hardover, frozen, eps_fault], meaning: "F-01b, F-03, F-07"}
+      clear_s: [0.0, 1.0, s, "the fault clears this long after the driver's correction starts"]
+      lag_s: [0.0, 0.5, s, "lag with which the driver feels the item's torque change (driver_eps_lag_s)"]
+      a_y: [0.3, 2.0, m/s², "steady lateral acceleration of the curve"]
+      speed_kph: [80.0, 110.0, km/h, "ego speed"]
+      t_r: [0.75, 1.5, s, "driver reaction time from the first cue"]
+    fault_param: fault
+    road: "=f'curve@{a_y:.6f}'"
+    case: {t_fault: null, duration: 8.0, speed_kph: =speed_kph, clear_after_correction: =clear_s}
+    assumptions: {driver_t_r_s: =t_r, driver_eps_lag_s: =lag_s}
+    robustness: lane
+    bands: {clear_s: [0.0, 0.25, 0.5, 1.0]}
+    catalogue: {by: fault, max: 3}
+    probes:
+      - {label: "driver feels the torque at once", assume: {driver_eps_lag_s: 0.0}}
+    hara:
+      - {when: "fault == 'hardover'", he: HE-01.2, fit: "hard-over at curve entry, ended during the correction"}
+      - {when: "fault == 'frozen'", he: HE-02.3, fit: "frozen command at curve entry"}
+      - {when: "True", he: HE-02.1, sh: SH-02, fit: "EPS fault at curve entry; the authority stays off"}
+
+  # ------------------------------------------------------------------------------------------------ driver edge cases
+  - id: driver-edge
+    title: "Driver edge cases: wrong-direction first correction, over-correction, braking instead of steering"
+    about: >-
+      The driver-model options of plant/simulate.py (DRIVER_OPTIONS, off in every catalog case) applied to three
+      faults in a curve inside the ODD. `k` sets the intensity of the chosen behaviour: a wrong-direction first
+      correction of 0.1 to 0.5 s; over-correction as a return-to-centre loop damped at 0.6 down to 0.15 (critically
+      damped is 1); braking at -3 m/s² instead of steering. The run lasts 10 s after the fault so an over-correction
+      shows its overshoot.
+    seed: 20261023
+    mc: 40
+    ce: {rounds: 3, per_round: 16, elite: 0.25}
+    space:
+      fault: {choice: [hardover, soc_stall, eps_fault], meaning: "F-01b, F-04b, F-07"}
+      behaviour: {choice: [nominal, wrong-direction, over-correction, brakes], meaning: "what the driver does after the reaction time"}
+      k: [0.0, 1.0, "—", "intensity of the behaviour (see above)"]
+      a_y: [0.0, 2.0, m/s², "steady lateral acceleration of the curve"]
+      speed_kph: [80.0, 110.0, km/h, "ego speed"]
+      t_r: [0.75, 1.5, s, "driver reaction time from the first cue"]
+    fault_param: fault
+    road: "=f'curve@{a_y:.6f}' if a_y > 1e-3 else 'straight'"
+    case: {t_fault: 7.0, duration: 10.0, speed_kph: =speed_kph}
+    assumptions:
+      driver_t_r_s: =t_r
+      driver_wrong_s: "=0.1 + 0.4 * k if behaviour == 'wrong-direction' else 0.0"
+      driver_zeta: "=0.6 - 0.45 * k if behaviour == 'over-correction' else 1.0"
+      driver_brakes_only: "=1.0 if behaviour == 'brakes' else 0.0"
+    robustness: lane
+    catalogue: {by: behaviour, max: 4}
+    probes:
+      - {label: "nominal driver", assume: {driver_wrong_s: 0.0, driver_zeta: 1.0, driver_brakes_only: 0.0}}
+    hara:
+      - {when: "fault == 'hardover'", he: HE-01.2, fit: "hard-over; the HE's C rating assumes a steering correction"}
+      - {when: "fault == 'soc_stall'", he: HE-02.4, fit: "silent loss; the HE's C rating assumes a steering correction"}
+      - {when: "True", he: HE-02.1, sh: SH-02, fit: "loss of assist in a curve; the HE's C rating assumes a steering correction"}
+
+  # ------------------------------------------------------------------------------------------------ combinations
+  - id: combo-odd-bound
+    title: "A fault in a curve at R_ODD at a speed near the ODD bound"
+    about: >-
+      The curve has the radius R_ODD = (110 km/h)² / 2.5 m/s² = 373 m; at 100–110 km/h its lateral acceleration is
+      2.07–2.5 m/s², above the 1.99 m/s² the item's full torque gives (plant case N-3), so the car drifts outward even
+      without a fault. Five faults, including the hard-over mirrored to the left (toward the inside of the curve), at
+      the curve entry, on lanes of 3.0–3.9 m. Each catalogue row is also run without the fault, to separate what the
+      fault adds from what the curve does anyway.
+    seed: 20261024
+    mc: 40
+    ce: {rounds: 3, per_round: 16, elite: 0.25}
+    space:
+      fault: {choice: [hardover, hardover_left, frozen, soc_stall, eps_fault], meaning: "F-01b (outward), F-01b mirrored (inward), F-03, F-04b, F-07"}
+      speed_kph: [100.0, 110.0, km/h, "ego speed up to the ODD bound"]
+      lane_width: [3.0, 3.9, m, "lane width (ODD-H 3.0–3.9 m)"]
+      t_r: [0.75, 1.5, s, "driver reaction time from the first cue"]
+    fault_param: fault
+    road: "=f'curve@{2.5 * (speed_kph / 110.0) ** 2:.6f}'"
+    case: {t_fault: null, duration: 8.0, speed_kph: =speed_kph, lane_width: =lane_width}
+    assumptions: {driver_t_r_s: =t_r}
+    robustness: lane
+    bands: {lane_width: [3.0, 3.3, 3.6, 3.9]}
+    catalogue: {by: fault, max: 5}
+    hara:
+      - {when: "fault == 'hardover_left'", he: HE-02.1, sh: SH-02, fit: "the inward hard-over asks for the full left torque the item already commands at R_ODD, so it changes nothing: the curve decides (HE-02.1 / SH-02 situation)"}
+      - {when: "fault == 'hardover'", he: HE-01.2, sh: SH-02, fit: "outward hard-over in a curve at R_ODD; the curve alone already exceeds the item's authority"}
+      - {when: "fault == 'frozen'", he: HE-02.3, sh: SH-02, fit: "frozen at curve entry, before the torque has built up for the curve"}
+      - {when: "fault == 'soc_stall'", he: HE-07.1, fit: "silent loss in a curve near R_ODD (the HE-07.1 situation: no take-over alert)"}
+      - {when: "True", he: HE-02.1, sh: SH-02, fit: "the HE's own situation"}
+
+  - id: combo-hardover-narrow
+    title: "Hard-over in a narrow lane (TC-32), with crosswind or bank (TC-15)"
+    about: >-
+      A hard-over within the envelope, to the right or mirrored to the left, on lanes of 3.0–3.3 m (TC-32: a narrow
+      lane, often beside a truck or a barrier), on a straight or a gentle left curve. In a 3.0 m lane the body edge is
+      0.61 m from the line. The adjacent truck or barrier is not modelled; the time to the line says how soon it would
+      be reached. A steady crosswind or bank of up to 0.5 m/s² either way (TC-15) is held by the item with a small
+      offset before the fault, which eats into the margin on one side.
+    seed: 20261025
+    mc: 40
+    ce: {rounds: 3, per_round: 16, elite: 0.25}
+    space:
+      fault: {choice: [hardover, hardover_left], meaning: "F-01b to the right (outside of the curve), mirrored to the left (inside)"}
+      lane_width: [3.0, 3.3, m, "lane width (TC-32: 3.3 m or less; ODD-H minimum 3.0 m)"]
+      a_y: [0.0, 1.5, m/s², "steady lateral acceleration of a left curve (0: straight)"]
+      speed_kph: [80.0, 110.0, km/h, "ego speed"]
+      t_r: [0.75, 1.5, s, "driver reaction time from the first cue"]
+      cue: [0.1, 0.3, m, "drift at which the driver notices"]
+      wind_ay: [-0.5, 0.5, m/s², "steady crosswind or bank (TC-15), + to the left; the item holds it with an offset before the fault"]
+    fault_param: fault
+    road: "=f'curve@{a_y:.6f}' if a_y > 1e-3 else 'straight'"
+    case: {t_fault: 7.0, duration: 8.0, speed_kph: =speed_kph, lane_width: =lane_width, ay_disturbance: =wind_ay}
+    assumptions: {driver_t_r_s: =t_r, driver_lat_cue_m: =cue}
+    robustness: lane
+    bands: {lane_width: [3.0, 3.1, 3.2, 3.3]}
+    catalogue: {by: fault, max: 2}
+    hara:
+      - {when: "True", he: HE-01.2, sh: SH-01, fit: "hard-over toward an adjacent vehicle or barrier; TC-32 (named for SH-01) makes the margin 0.61–0.76 m"}
+
+# Departures that match no HARA hazardous event (rules with `new` above): findings for the HARA, queued for the
+# project lead in the decision register (01-management/decisions/register.yaml). The HARA is not edited here.
+findings:
+  EC-N1:
+    title: an assisted lane change that does not stop at the target lane
+    dq: DQ-405
+    text: >-
+      HE-02.5 rates a loss of lateral control during an assisted lane change as the car stopping partway and
+      straddling the two lanes. The search finds the opposite effect. A frozen command (F-03) is passed by the panda
+      and keeps the lateral acceleration of the moment it froze, so the car keeps moving sideways through the target
+      lane toward the one beyond it. A loss late in the change (a SoC stall, F-04b, or an EPS fault, F-07) leaves the
+      car with its lateral speed and nothing to stop it at the target lane's centre, so it runs over the far line.
+      Either way the departure is into a lane the driver did not check before the change. No hazardous event of the
+      HARA names that effect.

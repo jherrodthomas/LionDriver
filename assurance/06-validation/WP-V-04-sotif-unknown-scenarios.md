@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-04 Evaluation of unknown hazardous scenarios (method, residual risk estimation, results) |
 | Standard reference | ISO 21448:2022 §11 (evaluation of unknown hazardous scenarios), §13 (interface to operation); ISO/PAS 8800:2024 (AI V&V, operation-phase monitoring); ASPICE 4.0 VAL.1 |
-| Version | 0.5 (R3 stop rule: a numeric Good–Turing threshold plus the three-block trend rule, DQ-108 A; value proposed in §5.4 and queued for the lead as DQ-262; OI-2; 2026-10-19). 0.4 (§5.2: confidence level C = 95 % one-sided, DQ-057 A; 2026-10-19). 0.3 (U-4 status and synthetic-data labelling per WP-V-02 §5.3; 2026-10-16). 0.2 (exploration blocks follow the highway-only ODD, decision register DQ-023, and the 105 km/h public-road cap, DQ-046; block Bn after every model change, DQ-038; log store without uploads to comma, DQ-084; 2026-10-16). 0.1 |
+| Version | 0.6 (§6: the U-4 prototype over the layer-1 plant now searches eight lateral families and writes an edge-case catalogue mapped to the HARA; its one new-hazard finding is queued as DQ-405; synthetic, no credit; 2026-10-19). 0.5 (R3 stop rule: a numeric Good–Turing threshold plus the three-block trend rule, DQ-108 A; value proposed in §5.4 and queued for the lead as DQ-262; OI-2; 2026-10-19). 0.4 (§5.2: confidence level C = 95 % one-sided, DQ-057 A; 2026-10-19). 0.3 (U-4 status and synthetic-data labelling per WP-V-02 §5.3; 2026-10-16). 0.2 (exploration blocks follow the highway-only ODD, decision register DQ-023, and the 105 km/h public-road cap, DQ-046; block Bn after every model change, DQ-038; log store without uploads to comma, DQ-084; 2026-10-16). 0.1 |
 | Status | Draft (method). Results section is a template: **Not yet executed** |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -143,6 +143,16 @@ The value is fixed before the blocks start, so the result cannot be fitted to it
 ## 6. Results
 
 **Not yet executed.** No exploration block has been run. No LionDriver drive logs exist at the baseline.
+
+**U-4 prototype (synthetic, DSR-12, no evidence credit).** Before MetaDrive runs end to end, the failure search runs
+over the layer-1 fault-injection plant ([`sim/search/`](../sim/search/families.yaml)): eight lateral families (loss of
+assist in a curve; fault timing at curve entry, mid-curve and exit, during an assisted lane change and after the
+driver's correction starts, and a fault that clears and returns; driver edge cases; a fault in a curve at R_ODD near
+the ODD speed bound; a hard-over in a narrow lane with crosswind). Its [edge-case catalogue](../sim/results/edge-cases.md)
+lists the worst case of each, which stated assumption decides it, and the HARA hazardous event it falls under. One
+row matches no hazardous event (EC-N1, an assisted lane change that does not stop at the target lane); it is a finding
+for the HARA, queued for the project lead as DQ-405 rather than counted here. These are hypotheses for U-6, not
+exploration-block results: the plant has no tyre friction limit and no perception.
 
 ### 6.1 Block summary template
 
