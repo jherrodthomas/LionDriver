@@ -351,7 +351,8 @@ jobs:
   sim-scenarios:
     name: simulation known scenarios
     # WP-V-03 known scenarios as OpenSCENARIO/OpenDRIVE files (assurance/sim/scenarios, layer 2): the committed files
-    # equal a fresh generation, and every file replays headless in the pinned esmini release as specified.
+    # equal a fresh generation, and every file replays headless in the pinned esmini release as specified; the
+    # top-view loops drawn from those replays are current.
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -371,3 +372,7 @@ jobs:
         python3 assurance/sim/scenarios/fetch_esmini.py
         python3 assurance/sim/scenarios/replay.py --check
         python3 assurance/sim/scenarios/test_scenarios.py
+    - name: Top-view loops of the scenarios current (fig_sim_ks.py, Kenney sprites checked against their SHA-256), tests
+      run: |
+        python3 assurance/sim/figures/fig_sim_ks.py --check
+        python3 assurance/sim/figures/test_fig_sim_ks.py

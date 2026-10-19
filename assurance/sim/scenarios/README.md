@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Scope | Layer 2 of the [simulation track](../README.md) (roadmap phase S2): the [WP-V-03](../../06-validation/WP-V-03-sotif-known-scenarios.md) known scenarios that simulation can represent, as ASAM OpenSCENARIO 1.3 (`xosc/`) and OpenDRIVE 1.5 (`xodr/`) files named by scenario ID |
-| Version | 0.4 (KS-25 crosses the 110 km/h ODD-H bound, DQ-260 A, instead of 120 km/h; 2026-10-19). 0.3 (KS-27 at 400 m and 600 m, the barrier on the lane edge, as WP-V-03 v0.9 asks: files KS-27-R400 and KS-27-R600, reveal gaps measured about 77 m and 94 m; 2026-10-19). 0.2 (KS-27 written: a lead hidden by a wall on the inside of a ramp curve while the ego accelerates to the set speed, TC-35; 2026-10-19). 0.1 (2026-10-16) |
+| Version | 0.5 (§1.1: a top view per scenario file, fig_sim_ks.py, Kenney Racing Pack sprites (CC0); 2026-10-19). 0.4 (KS-25 crosses the 110 km/h ODD-H bound, DQ-260 A, instead of 120 km/h; 2026-10-19). 0.3 (KS-27 at 400 m and 600 m, the barrier on the lane edge, as WP-V-03 v0.9 asks: files KS-27-R400 and KS-27-R600, reveal gaps measured about 77 m and 94 m; 2026-10-19). 0.2 (KS-27 written: a lead hidden by a wall on the inside of a ramp curve while the ego accelerates to the set speed, TC-35; 2026-10-19). 0.1 (2026-10-16) |
 | Status | Draft. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed. Synthetic scenarios (DSR-12); **no evidence credit** |
 
 The files fix the road and the other road users of each scenario. The ego vehicle is the item under test: a file gives
@@ -59,6 +59,38 @@ centre to the wall's centreline). The three files share the scenario and its par
 The replay measures the gap at which the line first clears the wall from esmini's recorded positions. Whether a camera
 actually loses the lead behind the wall is for the harness that renders it (MetaDrive, layer 3); esmini only plays the
 motion.
+
+### 1.1 Top views
+
+One looping top view per file, drawn by [`../figures/fig_sim_ks.py`](../figures/fig_sim_ks.py) from the esmini replay at
+the parameter defaults (CI: `fig_sim_ks.py --check`): the road straightened with the ego held in place, the other road
+users where the replay puts them, the scenario's key quantity with a moving cursor, and the events lighting up as they
+happen. Layer 2 fixes the road and the other road users; the ego only holds its start speed (KS-14 and KS-25 script its
+lane change and acceleration), so the loops with a slower or stopped vehicle ahead end before the bodies overlap. KS-06
+is a still: nothing in it changes over time. Cars are drawn at least 45 px long and some panels are stretched sideways;
+each panel says so. Cars: Kenney Racing Pack (CC0 1.0), pinned in
+[`../figures/assets/kenney-racing/sources.yaml`](../figures/assets/kenney-racing/sources.yaml). KS-27 is drawn at
+R = 250 m only.
+
+![KS-01 top view, looping, from its esmini replay: Left curve R = 300 m at 99 km/h: the speed for 2.5 m/s² lateral acceleration; synthetic, no evidence credit](../figures/fig-sim-ks-01-anim.svg)
+
+![KS-05 top view, looping, from its esmini replay: A stopped car in the ego lane, approached at 80 km/h; synthetic, no evidence credit](../figures/fig-sim-ks-05-anim.svg)
+
+![KS-06 top view, still, from its esmini replay: A truck alongside in the right lane; lanes 3.3 m wide; synthetic, no evidence credit](../figures/fig-sim-ks-06-anim.svg)
+
+![KS-07 top view, looping, from its esmini replay: A car cuts in close from the left lane; synthetic, no evidence credit](../figures/fig-sim-ks-07-anim.svg)
+
+![KS-08 top view, looping, from its esmini replay: The lead brakes hard at 5 m/s² from a 1.5 s gap; synthetic, no evidence credit](../figures/fig-sim-ks-08-anim.svg)
+
+![KS-09 top view, looping, from its esmini replay: The lead changes lane and reveals a stopped car; synthetic, no evidence credit](../figures/fig-sim-ks-09-anim.svg)
+
+![KS-14 top view, looping, from its esmini replay: The driver changes lane to the right, a car 2.5 s behind in the target lane; synthetic, no evidence credit](../figures/fig-sim-ks-14-anim.svg)
+
+![KS-23 top view, looping, from its esmini replay: Stop-and-go: the lead stands, then moves off; synthetic, no evidence credit](../figures/fig-sim-ks-23-anim.svg)
+
+![KS-25 top view, looping, from its esmini replay: The ego accelerates through the 120 km/h ODD bound; synthetic, no evidence credit](../figures/fig-sim-ks-25-anim.svg)
+
+![KS-27 top view, looping, from its esmini replay: A stopped lead hidden by a wall in a 250 m ramp curve while the ego accelerates; synthetic, no evidence credit](../figures/fig-sim-ks-27-anim.svg)
 
 ## 2. Scenarios not written as files
 

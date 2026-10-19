@@ -20,4 +20,5 @@ docs/assets/liondriver/**/*.svg -filter -diff -merge text
 assurance/**/*.svg -filter -diff -merge text
 # LionDriver's own documentation renders stay plain binary blobs; the LFS endpoint above is upstream's
 assurance/sim/figures/*.png -filter -diff -merge binary
+assurance/sim/figures/assets/**/*.png -filter -diff -merge binary
 assurance/sim/blender/library/people/*.glb -filter -diff -merge binary
