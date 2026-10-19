@@ -211,8 +211,11 @@ def _weather_layer(g: Graph, col, rough, normal, env: dict, tracks=None, puddles
     # a water film shows early: sheen and darkening follow sqrt(wet) and the roughness is capped, so W02 (0.75)
     # reads wet while W04 (1.0) stays the wettest; puddles start at 0.4 and reach their W04 extent at 1.0
     e = math.sqrt(w)
-    col = g.mix(e * 0.55, col, g.mix(1.0, col, (0.42, 0.42, 0.44), "MULTIPLY"))
-    rough = g.math("MINIMUM", g.math("MULTIPLY", rough, 1.0 - 0.7 * e), 0.55 - 0.35 * e)
+    col = g.mix(e * 0.7, col, g.mix(1.0, col, (0.38, 0.38, 0.40), "MULTIPLY"))
+    rough = g.math("MINIMUM", g.math("MULTIPLY", rough, 1.0 - 0.7 * e), 0.45 - 0.33 * e)
+    if normal is not None:                       # the film fills the texture's pores: flatter, so the sky reflects
+      flat = g.node("ShaderNodeNewGeometry").outputs["Normal"]
+      normal = g.node("ShaderNodeMix", {0: 0.6 * e, 4: normal, 5: flat}, data_type="VECTOR").outputs[1]
     if puddles and w > 0.4:
       t0 = 0.66 - 0.16 * ((w - 0.4) / 0.6) ** 0.6
       pud = g.remap(g.noise(g.uv(), 0.18, 3).outputs[0], t0, t0 + 0.03, 0.0, 1.0)
