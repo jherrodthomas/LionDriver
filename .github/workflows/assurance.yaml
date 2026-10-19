@@ -82,10 +82,14 @@ jobs:
       run: |
         python3 assurance/01-management/figures/fig_m_management.py --check
         python3 assurance/01-management/figures/test_fig_m_management.py
+        python3 assurance/01-management/figures/folder_index.py --check
+        python3 assurance/01-management/figures/test_folder_index.py
         python3 assurance/02-concept/figures/fig_c02_odd.py --check
         python3 assurance/02-concept/figures/test_fig_c02_odd.py
         python3 assurance/02-concept/figures/fig_c09_scenes.py --check
         python3 assurance/02-concept/figures/test_fig_c09_scenes.py
+        python3 assurance/02-concept/figures/fig_c10_goals.py --check
+        python3 assurance/02-concept/figures/test_fig_c10_goals.py
         python3 assurance/02-concept/figures/fig_c01_interfaces.py --check
         python3 assurance/02-concept/figures/test_fig_c01_interfaces.py
         python3 assurance/02-concept/figures/fig_c01_modes.py --check
@@ -165,6 +169,7 @@ jobs:
         python3 assurance/08-analyses/figures/fig_a05_stpa.py --check
         python3 assurance/08-analyses/figures/test_fig_a05_stpa.py
         python3 assurance/08-analyses/figures/test_stpa_scenes.py
+        python3 assurance/08-analyses/figures/test_stpa_ls_scenes.py
     - name: Vehicle register page current, citing documents agree with it (and its tests)
       run: |
         python3 tools/vehicles/vehicle_register.py --check
@@ -273,6 +278,8 @@ jobs:
       run: |
         python3 assurance/sim/plant/report.py --check
         python3 assurance/sim/plant/test_plant.py
+        python3 assurance/sim/plant/silent_stall.py --check
+        python3 assurance/sim/plant/test_silent_stall.py
     - name: Failure search (Monte Carlo and cross-entropy over the plant model) current, and its tests
       run: |
         python3 assurance/sim/search/search.py --check
