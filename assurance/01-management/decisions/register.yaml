@@ -4537,6 +4537,27 @@
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
+- id: DQ-213
+  question: "openpilot is widely used in the city, on rural roads and on roads without lane lines. Should LionDriver's ODD change?"
+  context: "LionDriver's ODD is highways only (DQ-023). The HARA rates engagement off the highway as foreseeable misuse and assumes it is under 1 % of engaged time (E2), although nothing prevents it yet. Upstream use contradicts that assumption: a video of a 2020 Corolla, the reference car, on a 2021 openpilot fork shows back roads at 72 km/h, narrow roads where it crosses the double yellow, intersections and roundabouts (RR-2026-011). The planned 60 km/h speed floor would not stop the 72 km/h back road. **A model run shows that rating it 1–10 % (E3) changes no goal. Bringing rural roads into the ODD makes the steering-loss goal SG-02 ASIL D.** The city would need functions LionDriver does not have: signals, stop signs, VRUs."
+  reversibility: revisit
+  blocks: "WP-C-02 ODD; WP-C-03 A-ODD exposure (OS-03, OS-04, OS-14, OS-15, OS-16); validation scope"
+  gate: G1
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Keep highways only; rate off-highway misuse at 1–10 % (E3)"
+      detail: "Matches how the system is really used. No goal ASIL changes. The speed floor still keeps it off city streets once built. Cost: a HARA revision; rural roads above 60 km/h stay unblocked until road-type data exist."
+    - key: B
+      title: "Add rural and arterial roads to the ODD"
+      detail: "More useful. Cost: SG-02 becomes ASIL D for users who drive those roads daily (silent steering loss in a rural curve), head-on traffic and VRUs enter the claimed scope, and validation grows a lot."
+    - key: C
+      title: "Leave everything as it is"
+      detail: "No work now. Cost: the HARA rests on an exposure assumption the evidence contradicts; a reviewer would flag it."
+  sources: ["assurance/02-concept/reviews/RR-2026-011.md F-1…F-4", "assurance/02-concept/WP-C-02-odd-and-intended-functionality.md §3.1, OI-9", "assurance/02-concept/WP-C-03-hara.md §3 (A-ODD), §6.1 observation 7"]
+  status: queued
+
 - id: DQ-260
   question: "Should the highway ODD stop at 110 km/h, the highest speed at which the driver's control of a steering fault will be tested?"
   context: "You decided to test controllability up to 110 km/h (DQ-091), but the ODD still runs to 120 km/h. Between 110 and 120 km/h nothing shows the driver can catch a steering fault, so **the SOTIF argument gives no controllability credit there**: the targets for that band must be met without it, or the band leaves the ODD. Posted limits above 110 km/h (68 mph) exist on some US interstates."
