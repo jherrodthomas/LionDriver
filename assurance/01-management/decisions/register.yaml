@@ -4544,6 +4544,7 @@
   blocks: "WP-C-02 ODD; WP-C-03 A-ODD exposure (OS-03, OS-04, OS-14, OS-15, OS-16); validation scope"
   gate: G1
   decider: lead
+  asked: 2026-10-19
   options:
     - key: A
       recommended: true
@@ -4556,7 +4557,10 @@
       title: "Leave everything as it is"
       detail: "No work now. Cost: the HARA rests on an exposure assumption the evidence contradicts; a reviewer would flag it."
   sources: ["assurance/02-concept/reviews/RR-2026-011.md F-1…F-4", "assurance/02-concept/WP-C-02-odd-and-intended-functionality.md §3.1, OI-9", "assurance/02-concept/WP-C-03-hara.md §3 (A-ODD), §6.1 observation 7"]
-  status: queued
+  note: "The lead answered in chat (2026-10-19): analyse every environment in the video and keep the ODD claim on highways."
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-19}
+  applied: {ref: "jherrodthomas/LionDriver#290", record: "assurance/02-concept/WP-C-03-hara.md v0.6 §3; WP-C-02 v0.7; reviews/RR-2026-011.md", at: 2026-10-19}
 
 - id: DQ-260
   question: "Should the highway ODD stop at 110 km/h, the highest speed at which the driver's control of a steering fault will be tested?"
