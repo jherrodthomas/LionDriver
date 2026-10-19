@@ -4191,8 +4191,9 @@
       title: "It can close a cause with calculated timing"
       detail: "Fastest. Timing derived from the code is accepted without measurement. Cost: a reviewer is likely to challenge it."
   sources: ["assurance/08-analyses/fmea/msr-plan.md", "assurance/03-system/WP-S-04-timing-ftti-budget.md", "assurance/08-analyses/fmea/rating-tables.md"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: 8d520f9, record: "WP-S-04 v0.15 §6 (#254); rating-tables.md §7.4, msr-plan.md v0.10 §4.6 (#258)", at: 2026-10-19}
 
 - id: DQ-207
   question: "Can you get the official AIAG-VDA priority table for monitoring-and-response ratings into the project?"
@@ -4584,8 +4585,9 @@
       title: "Faults only; performance limits go to SOTIF alone"
       detail: "Remove G2.8 and G6.9 and justify the three FMEA modes as SOTIF. Cost: the goals' wording should be narrowed to match, and the SOTIF case carries these hazards without the fault-tree view."
   sources: ["assurance/08-analyses/fta-fmea-mapping.md F-33", "assurance/08-analyses/WP-A-04-system-fta-fmea.md G2.8, G6.9"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: 17631fa, record: "WP-A-04 v1.11 MCS-02.12, MCS-06.10 (#259)", at: 2026-10-19}
 
 - id: DQ-362
   question: "SG-02, SG-03 and SG-06 are now ASIL C, and the hardware analysis they share misses the ASIL C single-point target by 0.16 points. Do we reuse it and close the gap at the hardware gate, or build a separate analysis for each goal?"
