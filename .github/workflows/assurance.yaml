@@ -300,6 +300,10 @@ jobs:
         python3 assurance/sim/reach/reach_inputs.py --check
         python3 assurance/sim/reach/reach_compare.py --check
         python3 assurance/sim/reach/test_reach.py
+    - name: Result plots as loops (sim README §3.4 and §3.6, fig_sim_plots.py) current, and their tests
+      run: |
+        python3 assurance/sim/figures/fig_sim_plots.py --check
+        python3 assurance/sim/figures/test_fig_sim_plots.py
     - name: Hazardous-event scene list and library, and the asset fetcher against fake answers (assurance/sim/blender; no Blender, no network)
       run: |
         python3 assurance/sim/blender/test_scenes.py

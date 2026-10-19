@@ -1,4 +1,4 @@
-# Car sprites of the top-view scenario loops (../../fig_sim_ks.py), taken unchanged from the Kenney Racing Pack 1.0.
+# Car sprites of the top-view scenario loops (../../fig_sim_ks.py) and the reachability loop (../../fig_sim_plots.py), taken unchanged from the Kenney Racing Pack 1.0.
 # Pack: kenney_racing-pack.zip from https://kenney.nl/assets/racing-pack, downloaded by the project lead on 2026-10-19 and
 # kept in the private assets repository (kenney-racing-pack/, SHA256SUMS there). Licence: CC0 1.0 (License.txt, copied
 # from the zip); credit to Kenney is welcome, not required. fig_sim_ks.py refuses to draw with a sprite whose SHA-256
