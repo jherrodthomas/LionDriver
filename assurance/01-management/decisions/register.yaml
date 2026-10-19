@@ -5041,7 +5041,7 @@
   question: "If the driver changes an assured setting from the menu while engaged (for example turns Experimental Mode on), should LionDriver disengage, or let it take effect and only refuse the next engagement?"
   context: "You chose to refuse engagement outside the assured settings (DQ-221 A). In #287 that check only covers entry, so a setting changed mid-drive takes effect at once and the item keeps running outside its assured configuration until the next engagement. **A disengage closes that gap; the cost is a sudden takeover caused by a menu tap.**"
   reversibility: easy
-  blocks: "Change record change-2026-10-19-reference-entry-checks OI-3; DQ-221 implementation"
+  blocks: "Change record change-2026-10-19-reference-entry-checks OI-3; DQ-221 implementation; SW FMEA SWF-067.C2 / SWF-ACT-079"
   gate: G1
   decider: lead
   after: [DQ-221]
