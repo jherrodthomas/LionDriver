@@ -41,12 +41,13 @@ def fail(msg):
   raise K.ParseError(f"loss scenario cards: {msg}")
 
 
-SHEETS = {  # by the number of the scenario's first UCA, which follows the §4 sections
-  "fig-a05-5-7-ls-driver.svg": ("5-7", "the driver (C1, §4.1)", lambda n: n < 10),
-  "fig-a05-5-8-ls-openpilot.svg": ("5-8", "openpilot's control actions (C2, §4.2)", lambda n: 10 <= n < 30),
-  "fig-a05-5-9-ls-inside.svg": ("5-9", "inside openpilot, configuration and updates (§4.6)", lambda n: n >= 50),
-  "fig-a05-5-10-ls-panda.svg": ("5-10", "the panda, the harness box and the car's controllers (§4.3, §4.4)",
-                                lambda n: 30 <= n < 50),
+SHEETS = {  # by the controller of the scenario's first UCA, so a UCA moving between sections keeps its sheet
+  "fig-a05-5-7-ls-driver.svg": ("5-7", "the driver (C1)", lambda ctrl: ctrl.startswith("C1 ")),
+  "fig-a05-5-8-ls-openpilot.svg": ("5-8", "openpilot's control actions (C2)", lambda ctrl: ctrl.startswith("C2 ")),
+  "fig-a05-5-9-ls-inside.svg": ("5-9", "inside openpilot, configuration and updates (C2.x, C7)",
+                                lambda ctrl: ctrl.startswith(("C2.", "C7 "))),
+  "fig-a05-5-10-ls-panda.svg": ("5-10", "the panda, the harness box and the car's controllers (C3 to C6)",
+                                lambda ctrl: ctrl.startswith(("C3 ", "C4 ", "C5 ", "C6 "))),
 }
 STATUS = {"new": ("#FEE2E2", "#7F1D1D", "New finding"), "known_gap": ("#FEF3C7", "#78350F", "Known gap"),
           "covered": ("#DCFCE7", "#14532D", "Covered"), "open_test": ("#E0F2FE", "#075985", "Open test")}
@@ -433,7 +434,7 @@ def legend(y):
 
 def sheet(name, cs):
   num, who, pick = SHEETS[name]
-  cs = [c for c in cs if pick(int(c["uca"][4:]))]
+  cs = [c for c in cs if pick(c["ctrl"])]
   if not cs:
     fail(f"sheet {name} has no cards")
   w = 2 * M + COLS * CW + (COLS - 1) * GAP
@@ -462,7 +463,8 @@ def sheets(S, kit) -> dict[str, str]:
   global K
   K = kit
   cs = cards(S)
-  placed = [c["ls"] for name in SHEETS for c in cs if SHEETS[name][2](int(c["uca"][4:]))]
-  if sorted(placed) != sorted(c["ls"] for c in cs):
-    fail(f"each scenario must be on exactly one sheet: {sorted(placed)}")
+  for c in cs:
+    on = [name for name in SHEETS if SHEETS[name][2](c["ctrl"])]
+    if len(on) != 1:
+      fail(f"{c['ls']} ({c['uca']}, {c['ctrl']}) must be on exactly one sheet, not {on or 'none'}")
   return {name: sheet(name, cs) for name in SHEETS}

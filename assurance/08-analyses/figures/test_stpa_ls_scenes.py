@@ -32,9 +32,16 @@ class TestLossScenarioCards(unittest.TestCase):
     by_sheet = {name: re.findall(r"(LS-\d+) \(UCA-", re.search(r"<desc[^>]*>(.*?)</desc>", svg, re.S).group(1))
                 for name, svg in self.out.items()}
     for c in ls.cards(self.S):
-      n = int(c["uca"][4:])
-      [name] = [s for s, (_, _, pick) in ls.SHEETS.items() if pick(n)]
+      [name] = [s for s, (_, _, pick) in ls.SHEETS.items() if pick(self.S.ucas[c["uca"]]["ctrl"])]
       self.assertIn(c["ls"], by_sheet[name], c["ls"])
+
+  def test_scenario_on_no_sheet_fails(self):
+    sheets = dict(ls.SHEETS)
+    num, who, _ = sheets["fig-a05-5-7-ls-driver.svg"]
+    sheets["fig-a05-5-7-ls-driver.svg"] = (num, who, lambda ctrl: False)
+    with mock.patch.object(ls, "SHEETS", sheets):
+      with self.assertRaisesRegex(fs.ParseError, "exactly one sheet, not none"):
+        ls.sheets(self.S, fs)
 
   def test_status_comes_from_the_map(self):
     status = {s["id"]: s["status"] for s in self.S.smap["scenarios"]}
