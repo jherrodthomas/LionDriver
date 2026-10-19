@@ -12,6 +12,12 @@ weather or lighting code it is rated for. Pictures only: synthetic (DSR-12), no 
 | [`assets.yaml`](assets.yaml) | CC0 sky HDRIs, ground textures, scanned plants and street furniture (Poly Haven, ambientCG) with candidate IDs and a search fallback | `fetch_assets.py`, `hazard_scene.py` |
 | `assets.lock.json` | The asset IDs and SHA-256 sums `fetch_assets.py` chose; committed once it has run (section 4) | `fetch_assets.py --locked`, `hazard_scene.py` |
 
+![Dashboard of scene HE-04.2 under condition W02: the orange ego Corolla braking in a left highway curve on wet, glossy asphalt with puddles under an overcast sky, its follower 22.5 m behind; panels around the 3D view give the hazardous event, ego state, plots and a filmstrip](../dashboards/he-04-2-wet-curve-braking.jpg)
+
+![Dashboard of scene SH-12 under condition W03: the ego at night on a moonlit highway, headlights on the barrier as it drifts out of a left curve with the driver inattentive and undetected](../dashboards/sh-12-unsupervised-night.jpg)
+
+*The same library under two conditions of §2: W02 wet road ([HE-04.2](../dashboards/he-04-2-wet-curve-braking.jpg)) and W03 night ([SH-12](../dashboards/sh-12-unsupervised-night.jpg)). Synthetic, no evidence credit.*
+
 ## 1. How a scene uses it
 
 ```yaml

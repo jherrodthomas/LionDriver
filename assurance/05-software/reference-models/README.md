@@ -23,6 +23,14 @@ Event sources:
 - **Directed scenarios D01…D20** (D19a, D19b and D20 ported from the retired `models/b2b` harness, BB-08a, BB-08b, BB-01c). As a running host would, they carry the SoC's actuation frames `0x2E4` (100 Hz) and `0x343` (33 Hz) unless a scenario mutes them (D13 sends its own `0x2E4` flood; D18 stops one of them). At least one per in-scope transition, the timeout and tolerance boundaries (at the limit and 1 µs past it), and WP-W-05 OI-1.
 - **Seeded random sequences.** Nominal frame rates with ±25 % jitter, dropouts across the timeout thresholds, gaps of 20…200 ms in the actuation frames (T10b), signal changes, corrupted frames (checksum, DLC, wheel-speed fault bit), bus-2 copies, safety-mode sets, and TX floods at 0.5×…10× on every rate-checked ID.
 
+![SM-TOY-AUTH as a Stateflow-style chart: three states of the Toyota controls_allowed authority with their transitions, the engagement window, and the revocations grouped by cause, each with the directed back-to-back scenarios that exercise it](../diagrams/stateflow-sm-toy-auth.svg)
+
+*The record the model follows ([`../diagrams/stateflow-sm-toy-auth.svg`](../diagrams/stateflow-sm-toy-auth.svg), from `sm-toy-auth.yaml`).*
+
+![Scope trace of directed scenario D01: the CRUISE_ACTIVE signal of frame 0x1D2 rising, and controls_allowed going true on that edge with all RX checks passing, in the C and the model](results/scope/scope-d01-engage.svg)
+
+*One recorded run as a scope trace (D01, transition T1); the other scenarios are in [`results/scope/`](results/scope/), each with its CSV.*
+
 ## 2. Sources of the model
 
 The model was written from these sources only:
