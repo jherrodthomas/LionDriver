@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for fig_sim_ks.py: one animated top view per scenario file, current, small, synthetic, looping, no script,
+"""Tests for fig_sim_ks.py: one animated top view per scenario file, current, small, synthetic, looping (or a still), no script,
 every listed event seen in the replay, no loop past an overlap, and each embedded in the scenarios README."""
 
 import sys
@@ -41,8 +41,11 @@ class TestKsFigures(unittest.TestCase):
       self.assertEqual(root.get("width"), str(fk.W), name)
       self.assertTrue(root.find(f"{NS}desc").text.startswith("Synthetic (DSR-12)"), name)
       self.assertLess(len(content.encode()), 30_000, name)
-      self.assertIn('repeatCount="indefinite"', content, name)
       self.assertNotIn("<script", content, name)
+      if " Looping top view " in root.find(f"{NS}desc").text:
+        self.assertIn('repeatCount="indefinite"', content, name)
+      else:
+        self.assertNotIn("<animate", content, name)
 
   def test_sprites_are_the_pinned_files(self):
     self.assertEqual(fk.sprite_problems(), [])

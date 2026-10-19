@@ -37,8 +37,9 @@ STEP = 0.1           # s between keyframes
 HOLD = 1.5           # s held on the last frame before the loop restarts
 LANE_W = 3.7
 MIN_CAR_PX = 45.0    # shortest drawn car, so that it reads on a phone at 640 px
-MIN_PANEL_PX = 90.0  # lowest road panel
+MIN_PANEL_PX = 110.0  # lowest road panel: the lateral scale is stretched to reach it
 LABEL_W = 70.0       # room for the lane labels at the panel's left edge
+EGO_LABEL_W = 34.0   # room for the "ego" label behind the ego
 NAMES = {"stopped": "stopped car", "lead": "lead", "cutin": "cut-in car", "target": "car behind", "truck": "truck"}
 
 # sprite per role: (file, hue rotation in degrees applied by an SVG filter, 0 for none)
@@ -158,8 +159,8 @@ def ks_spec(sc, R, D) -> dict:
       return abs(k["t"] - e["t"]) - (D["ego"][1] + D["truck"][1]) / 2
     return dict(situation="A truck alongside in the right lane; lanes 3.3 m wide",
                 t0=0.0, t1=min(dur, 6.0), view=40, back=14, lane_w=sc.road.get("lane_width", LANE_W), still=True,
-                ego_label="above",
-                plot=("SIDE-TO-SIDE CLEARANCE, EGO TO TRUCK (m)", clear, 0.0, 2.0, []),
+                dim=True,
+                plot=None,
                 events=[(0.0, f"truck alongside at the ego speed, {clear(0.0):.2f} m clear")])
   if sid == "KS-07":
     c = R["cutin"]
@@ -326,12 +327,17 @@ def fig(sc, R, D) -> tuple[str, list[str]]:
   # keep the ego's rear clear of the lane labels on the left
   x_ego = 24 + sp["back"] * px
   if not label_right:
-    x_ego = max(x_ego, 24 + LABEL_W + D["ego"][0] * px * grow / 2 - D["ego"][2] * px)
+    x_ego = max(x_ego, 24 + LABEL_W + EGO_LABEL_W + D["ego"][0] * px * grow / 2 - D["ego"][2] * px)
   ry = sy + 46
   wall = sp.get("wall")
-  top_extra = (wall + 1.0) * px + 16 if wall is not None else 0
-  road_h = lanes * lw * px
-  margin = max(14.0, (MIN_PANEL_PX - road_h - top_extra) / 2)
+  margin = 14.0
+  wall_m = (wall + 1.0) if wall is not None else 0.0
+  # lateral scale: true unless the panel would be lower than MIN_PANEL_PX
+  lat = max(1.0, (MIN_PANEL_PX - 2 * margin - (16 if wall is not None else 0)) / ((lanes * lw + wall_m) * px))
+  lat = math.ceil(lat * 2) / 2
+  py_m = px * lat
+  top_extra = wall_m * py_m + 16 if wall is not None else 0
+  road_h = lanes * lw * py_m
   rh = road_h + 2 * margin + top_extra
   y_ref = ry + margin + top_extra
 
@@ -339,7 +345,7 @@ def fig(sc, R, D) -> tuple[str, list[str]]:
     return x_ego + s_rel * px
 
   def Y(tl):
-    return y_ref - tl * px
+    return y_ref - tl * py_m
   b += [f'<clipPath id="road"><rect x="24" y="{fmt(ry)}" width="{W - 48}" height="{fmt(rh)}" rx="8"/></clipPath>',
         el("rect", None, x=24, y=fmt(ry), width=W - 48, height=fmt(rh), rx=8, class_="card"),
         el("rect", None, x=24, y=fmt(Y(0)), width=W - 48, height=fmt(road_h), class_="asph")]
@@ -388,8 +394,7 @@ def fig(sc, R, D) -> tuple[str, list[str]]:
     else:
       body = car_use(ids[role], L * px * g, 2.0 * px * g)
     if name == "ego":
-      above = sp.get("ego_label") == "above"
-      body += T(0, -(2.0 * px * g / 2 + 4) if above else 2.0 * px * g / 2 + 12, "ego", "t2b", "middle")
+      body += T(-L * px * g / 2 - 6, 4, "ego", "t2b", "end")
     inner = f"<g>{anim(None, rot, 'rotate')}{body}</g>" if turning else body
     hid = sp.get("hidden")
     if hid and hid[0] == name and not still:
@@ -410,57 +415,74 @@ def fig(sc, R, D) -> tuple[str, list[str]]:
                     (T(W - 32, ym, txt, "mark", "end") if side == ">" else T(32 + (LABEL_W if not label_right else 0), ym, txt, "mark")) +
                     "</g>"]
   b += ["</g>", *markers]
+  if sp.get("dim"):
+    e0, k0 = at(ego, t0), at(R["truck"], t0)
+    xd = X(at(ego, t0)["s"] - ds[0] + D["ego"][2])
+    y1, y2 = Y(e0["t"] - D["ego"][1] / 2), Y(k0["t"] + D["truck"][1] / 2)
+    clear = abs(e0["t"] - k0["t"]) - (D["ego"][1] + D["truck"][1]) / 2
+    b += [el("line", None, x1=fmt(xd), y1=fmt(y1), x2=fmt(xd), y2=fmt(y2), class_="dim"),
+          el("line", None, x1=fmt(xd - 5), y1=fmt(y1), x2=fmt(xd + 5), y2=fmt(y1), class_="dim"),
+          el("line", None, x1=fmt(xd - 5), y1=fmt(y2), x2=fmt(xd + 5), y2=fmt(y2), class_="dim"),
+          T(xd + 8, (y1 + y2) / 2 + 4, f"{clear:.2f} m", "mark")]
   note = "road straightened, ego held in place" + ("" if still else "; dashes stream at its speed")
   if grow > 1.01:
-    note += "; cars drawn larger than scale"
+    note += "; cars larger than scale"
+  if lat > 1.0:
+    note += f"; lateral ×{lat:g}"
   if sp.get("hidden"):
-    note = "road straightened; faded car: hidden behind the wall" + ("; cars larger than scale" if grow > 1.01 else "")
-  b += [T(36, ry + rh + 16, note, "t2")]
+    note = ("road straightened; faded car: hidden behind the wall" + ("; cars larger than scale" if grow > 1.01 else "")
+            + (f"; lateral ×{lat:g}" if lat > 1.0 else ""))
+  nl, ny = para(36, ry + rh + 16, note, W - 60, "t2", lh=15)
+  b += nl
+  rh += ny - (ry + rh + 16) - 15   # later rows move down by the note's extra lines
 
-  # plot
-  title, fn, lo, hi, lines_ = sp["plot"]
-  vals = [fn(f) for f in frames]
-  lo = min(lo, min(vals)) if lo is not None else min(vals)
-  hi = hi if hi is not None else max(vals) * 1.08
-  hi = max(hi, max(vals))
-  if hi - lo < 1e-6:
-    hi = lo + 1.0
-  py = ry + rh + 46
-  ph = 130
-  px0, px1 = 64, W - 32
+  # plot (none for a still with a dimension line)
+  y_after = ry + rh + 40
+  if sp.get("plot"):
+    title, fn, lo, hi, lines_ = sp["plot"]
+    vals = [fn(f) for f in frames]
+    lo = min(lo, min(vals)) if lo is not None else min(vals)
+    hi = hi if hi is not None else max(vals) * 1.08
+    hi = max(hi, max(vals))
+    if hi - lo < 1e-6:
+      hi = lo + 1.0
+    py = ry + rh + 46
+    ph = 130
+    px0, px1 = 64, W - 32
 
-  def TX(tt):
-    return px0 + (tt - t0) / span * (px1 - px0)
+    def TX(tt):
+      return px0 + (tt - t0) / span * (px1 - px0)
 
-  def DY(v):
-    return py + (hi - v) / (hi - lo) * ph
-  b += [T(24, py - 8, title, "t2b")]
-  if sp.get("band"):
-    a0, a1, lab = sp["band"]
-    a0, a1 = max(a0, t0), min(a1, frames[-1])
-    if a1 > a0:
-      b += [el("rect", None, x=fmt(TX(a0)), y=fmt(py), width=fmt(TX(a1) - TX(a0)), height=ph, class_="band"),
-            T(TX(a0) + 4, py + 14, lab, "t2")]
-  step_v = nice_step(hi - lo)
-  v = math.ceil(lo / step_v) * step_v
-  while v <= hi + 1e-9:
-    b += [el("line", None, x1=px0, y1=fmt(DY(v)), x2=px1, y2=fmt(DY(v)), class_="hair"),
-          T(px0 - 6, DY(v) + 4, f"{v:g}", "t2", "end")]
-    v += step_v
-  tg = math.ceil(t0)
-  while tg <= frames[-1] + 1e-9:
-    b += [T(TX(tg), py + ph + 16, f"{tg:g}", "t2", "middle")]
-    tg += 1 if span <= 12 else 2
-  b += [T(px1, py + ph + 30, "time (s)", "t2", "end")]
-  for yv, lab, cls, *left in lines_:
-    if lo <= yv <= hi:
-      b += [el("line", None, x1=px0, y1=fmt(DY(yv)), x2=px1, y2=fmt(DY(yv)), class_=cls),
-            T(px0 + 6, DY(yv) - 4, lab, "t2") if left else T(px1, DY(yv) - 4, lab, "t2", "end")]
-  b += [el("path", None, d="M" + " L".join(f"{fmt(TX(f))},{fmt(DY(v))}" for f, v in zip(frames, vals)), class_="trace")]
-  cur = [f"{fmt(TX(f) - px0)},0" for f in frames]
-  if not still:
-    b += [f'<g>{anim(None, cur, "translate")}<line x1="{px0}" y1="{fmt(py)}" x2="{px0}" y2="{fmt(py + ph)}" class="cursor"/></g>']
+    def DY(v):
+      return py + (hi - v) / (hi - lo) * ph
+    b += [T(24, py - 8, title, "t2b")]
+    if sp.get("band"):
+      a0, a1, lab = sp["band"]
+      a0, a1 = max(a0, t0), min(a1, frames[-1])
+      if a1 > a0:
+        b += [el("rect", None, x=fmt(TX(a0)), y=fmt(py), width=fmt(TX(a1) - TX(a0)), height=ph, class_="band"),
+              T(TX(a0) + 4, py + 14, lab, "t2")]
+    step_v = nice_step(hi - lo)
+    v = math.ceil(lo / step_v) * step_v
+    while v <= hi + 1e-9:
+      b += [el("line", None, x1=px0, y1=fmt(DY(v)), x2=px1, y2=fmt(DY(v)), class_="hair"),
+            T(px0 - 6, DY(v) + 4, f"{v:g}", "t2", "end")]
+      v += step_v
+    tg = math.ceil(t0)
+    while tg <= frames[-1] + 1e-9:
+      b += [T(TX(tg), py + ph + 16, f"{tg:g}", "t2", "middle")]
+      tg += 1 if span <= 12 else 2
+    b += [T(px1, py + ph + 30, "time (s)", "t2", "end")]
+    for yv, lab, cls, *left in lines_:
+      if lo <= yv <= hi:
+        b += [el("line", None, x1=px0, y1=fmt(DY(yv)), x2=px1, y2=fmt(DY(yv)), class_=cls),
+              T(px0 + 6, DY(yv) - 4, lab, "t2") if left else T(px1, DY(yv) - 4, lab, "t2", "end")]
+    b += [el("path", None, d="M" + " L".join(f"{fmt(TX(f))},{fmt(DY(v))}" for f, v in zip(frames, vals)), class_="trace")]
+    cur = [f"{fmt(TX(f) - px0)},0" for f in frames]
+    if not still:
+      b += [f'<g>{anim(None, cur, "translate")}<line x1="{px0}" y1="{fmt(py)}" x2="{px0}" y2="{fmt(py + ph)}" class="cursor"/></g>']
 
+    y_after = py + ph + 52
   # events
   ev = sorted((te, lab) for te, lab in sp["events"] if te is not None)
   if not still and not any(abs(te - t1) < 1e-6 for te, _l in ev):
@@ -468,7 +490,7 @@ def fig(sc, R, D) -> tuple[str, list[str]]:
   for te, lab in sp["events"]:
     if te is None:
       errs.append(f"{sc.id}: event '{lab}' did not happen in the replay")
-  y = py + ph + 52
+  y = y_after
   b += [T(24, y - 6, "EVENTS" if still else "EVENTS (light up as they happen)", "t2b")]
   y += 14
   for te, lab in ev:
@@ -488,11 +510,12 @@ def fig(sc, R, D) -> tuple[str, list[str]]:
   style = ("<style>.laned { stroke:var(--ink3); stroke-width:2; } .edge { stroke:var(--ink2); stroke-width:2; } "
            ".asph { fill:var(--grid); } .wall { fill:var(--ink2); } .truck { fill:var(--ink3); stroke:var(--ink); "
            "stroke-width:1; } .shadow { fill:var(--ink); opacity:0.45; } .cab { stroke:var(--ink); stroke-width:1; } "
-           ".mark { fill:var(--amb); font:600 12px system-ui, sans-serif; } .trace { fill:none; stroke:var(--real); stroke-width:2.2; } .thr { stroke:var(--bad); "
+           ".mark { fill:var(--amb); font:600 12px system-ui, sans-serif; } .dim { stroke:var(--amb); stroke-width:1.4; } .trace { fill:none; stroke:var(--real); stroke-width:2.2; } .thr { stroke:var(--bad); "
            "stroke-width:1.3; stroke-dasharray:6 4; } .hairl { stroke:var(--ink3); stroke-width:1; stroke-dasharray:3 3; } "
            ".band { fill:var(--amb-bg); } .cursor { stroke:var(--ink); stroke-width:1.6; }</style>")
   desc = (f"Synthetic (DSR-12), no evidence credit. {'Still' if still else 'Looping'} top view of {sc.id} ({sc.title}) from its esmini replay at the "
-          f"parameter defaults, {t0:.1f} to {t1:.1f} s: {sp['situation']}. Plot: {title.lower()}. Events: " +
+          f"parameter defaults, {t0:.1f} to {t1:.1f} s: {sp['situation']}. " +
+          (f"Plot: {sp['plot'][0].lower()}. " if sp.get("plot") else "") + "Events: " +
           "; ".join(f"{lab} at {te:.1f} s" for te, lab in ev) + f". {foot}")
   out = fs.svg(int(y + 6), f"{sc.id} animated top view", desc, b)
   out = out.replace("</style>", "</style>" + style, 1).replace("<defs>", defs[:-7], 1)
