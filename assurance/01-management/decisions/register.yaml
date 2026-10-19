@@ -4634,8 +4634,9 @@
   - assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-036, SFM-ACT-020
   - assurance/08-analyses/WP-A-04-system-fta-fmea.md MCS-07.10
   - assurance/02-concept/WP-C-04-functional-safety-concept.md AOU-04R
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "#292", record: "change-2026-10-19-stock-aeb-stand-down (merged with the lead's explicit OK; new tests ran locally only, the scons CI jobs were down on the LFS 404)", at: 2026-10-19}
 
 - id: DQ-360
   question: "If the steering (EPS) or the engine controller (PCM) silently stops obeying LionDriver, without sending a fault, do we rely on a tested assumption about the car, or add a check that compares the car's response with the command?"
