@@ -87,6 +87,8 @@
 #   SWF-067.C1 rewritten to a defect in the new gate, O6 D9 -> O5 D9 (still AP H): new host code whose targeted tests have run only locally (CI scons down on the
 #   git-lfs 404); D 8 once CI runs them. New SWF-067.C2: a setting changed in the menu while engaged still takes effect, O8 D10 AP H, queued for the lead as
 #   DQ-403 (new action SWF-ACT-079). SWF-ACT-063 in progress. Totals: 90 failure modes, 141 causes (130 H, 1 M, 10 L).
+# rev 1.6 at BL-006: the CI unit_tests job runs again (LFS mirror back) and is green with test_assured_config.py (tests run 39296172878, 6126485).
+#   SWF-067.C1 D 9 -> 8 (still AP H: targeted, not proven by mutation); SWF-ACT-063 completed. Totals unchanged.
 # Post rev 1.4, FTA WP-A-04 v1.12 (BE-1.25 in the SG-04 tree), ratings unchanged: SWF-055 and SWF-089 gain HZ-006 end effects (an authority
 #   grant covers longitudinal commands, as SWF-007). SWF-002 stays steering-only (HZ-001); its note says why HZ-006 and HZ-010 do not apply.
 #
@@ -136,7 +138,7 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.5"
+  revision: "1.6"
   status: draft
   baseline: BL-006
   rating_tables: RT-2
@@ -4425,11 +4427,11 @@ failure_modes:
         No SWSR yet (change record OI-1)'
       ref: assurance/07-supporting/impact/change-2026-10-19-reference-entry-checks.md
     detection_controls:
-    - description: 'test_assured_config.py: each setting refuses entry, entry only, other platforms unchanged, distance button ignored on the reference platform. Collected
-        by the CI unit_tests job but not yet run there (the scons jobs fail in setup on the git-lfs 404); run locally for #287 only. D 8 once CI runs it, D 4 with mutation'
+    - description: 'test_assured_config.py: each setting refuses entry, entry only, other platforms unchanged, distance button ignored on the reference platform. Run
+        by the CI unit_tests job since the LFS mirror returned (tests run 39296172878 at 6126485: 1578 passed, 0 failed); not proven by mutation, so D 8, D 4 with mutation'
       test: openpilot/selfdrive/selfdrived/tests/test_assured_config.py
     occurrence: 5
-    detection: 9
+    detection: 8
     ap: H
     actions:
     - SWF-ACT-063
@@ -4449,7 +4451,7 @@ failure_modes:
     actions:
     - SWF-ACT-079
   notes: 'Rated O6 D9 (AP H) as a single cause up to rev 1.4, when the distance button and the settings menu could both leave the assured configuration while driving.
-    Re-rated in rev 1.5 after #287. Other platforms stay outside the assured scope, allowed and logged (CA-008). The 60 km/h entry floor of the same change (DQ-280 A,
+    Re-rated in rev 1.5 after #287; D 8 in rev 1.6, once CI ran the tests. Other platforms stay outside the assured scope, allowed and logged (CA-008). The 60 km/h entry floor of the same change (DQ-280 A,
     belowHighwaySpeed) is an ODD entry check analysed in the STPA (CC-18, LS-13), not here.'
 - id: SWF-068
   element: SWF-SE-070
@@ -5891,11 +5893,11 @@ actions:
   kind: design_change
   description: 'Apply the lead''s decision on engagement outside the assured configuration (DQ-221): refuse engagement or keep logging, with a test'
   owner: Jherrod Thomas
-  status: in_progress
+  status: completed
   evidence: 'DQ-221 A implemented in #287 (69cddaa): assured_config.py (settings_in_scope), selfdrived.py (add_reference_entry_events, distance_button_pressed), events.py
-    (settingNotAssured); tests in test_assured_config.py; change record assurance/07-supporting/impact/change-2026-10-19-reference-entry-checks.md. The tests ran
-    locally only (the 22 of 24 that do not need the compiled Params library pass, per the #287 merge note); the CI unit_tests job has not run them (scons setup fails on
-    the git-lfs 404). Completes when CI runs them; not verified in the vehicle (change record OI-5)'
+    (settingNotAssured); tests in test_assured_config.py, collected by the CI unit_tests job and green there in tests run 39296172878 (6126485, 2026-10-19: 1578 passed,
+    0 failed); change record assurance/07-supporting/impact/change-2026-10-19-reference-entry-checks.md. Unit-tested, not proven by mutation and not verified in the
+    vehicle (change record OI-5). Achieved: O5 D8 (rev 1.6)'
   revised:
     severity: 10
     occurrence: 5
