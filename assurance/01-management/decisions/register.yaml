@@ -1631,7 +1631,8 @@
       title: "Turn learning off in the reference release"
       detail: "Reproducible and representative. Cost: changes the product and may worsen control."
   sources: ["assurance/05-software/WP-W-09-configuration-calibration-data.md OI-4"]
-  status: answered
+  status: applied
+  applied: {ref: "#306", record: "WP-W-09 OI-4", at: 2026-10-19}
   answer:
     choice: A
     via: inbox
@@ -1655,7 +1656,8 @@
       title: "Forbid it until ignition off"
       detail: "Stricter. Cost: no assistance for the rest of the drive after any drop to silent."
   sources: ["assurance/05-software/WP-W-09-configuration-calibration-data.md OI-8"]
-  status: answered
+  status: applied
+  applied: {ref: "#306", record: "WP-W-09 DVR-02 reworded, OI-8 closed", at: 2026-10-19}
   answer:
     choice: A
     via: inbox
@@ -1849,7 +1851,8 @@
       title: "Wait for the vehicle characterisation, then set them once"
       detail: "One set of measured values. Cost: the seven requirements stay unimplemented until the test car and a closed course are ready (DQ-104: closed courses only)."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-4", "assurance/03-system/WP-S-02-technical-safety-requirements.md OI-3, OI-5"]
-  status: answered
+  status: applied
+  applied: {ref: "#306", record: "WP-W-02 §2.5 provisional values (OI-15 opened, closed by #311)", at: 2026-10-19}
   answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-082
@@ -1869,7 +1872,8 @@
       title: "Keep ignoring the request"
       detail: "No change, no extra disengagements. Cost: CSR-012's intent is not met; it stays an open item in the cybersecurity case."
   sources: ["assurance/05-software/WP-W-03-software-architecture.md ATC-21", "assurance/05-software/reviews/RR-2026-009.md F-36"]
-  status: answered
+  status: applied
+  applied: {ref: "#306", record: "WP-S-07 SWSR-512/513 wording; ATC-21 not taken", at: 2026-10-19}
   answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-083
@@ -1890,7 +1894,8 @@
       title: "Remove the suppressions by changing the code where possible"
       detail: "Fewer deviations. Cost: churn in safety code (WP-W-01 OI-9); each change needs its own review and tests."
   sources: ["assurance/05-software/WP-W-01-software-development-environment-guidelines.md OI-2"]
-  status: answered
+  status: applied
+  applied: {ref: "#306", record: "WP-W-01 OI-2 (rationale drafts still to write)", at: 2026-10-19}
   answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-084
@@ -2592,7 +2597,8 @@
       title: "Change the requirement to 10"
       detail: "Code and requirement match. Cost: permanently weaker."
   sources: ["assurance/07-supporting/impact/change-2026-10-13-host-supervision.md OI-1"]
-  status: answered
+  status: applied
+  applied: {ref: "#306", record: "noted in its record", at: 2026-10-19}
   answer:
     choice: A
     via: inbox
@@ -2619,7 +2625,8 @@
       title: "Reject it"
       detail: "Keeps current behaviour. Cost: drift from upstream grows."
   sources: ["assurance/07-supporting/impact/sync-2026-10-10-openpilot-b9c815d.md “`263e8d1966` | longitudinal planner: set A_CRUISE_MIN to -0.”"]
-  status: answered
+  status: applied
+  applied: {ref: "#306", record: "noted in its record", at: 2026-10-19}
   answer:
     choice: C
     via: inbox
