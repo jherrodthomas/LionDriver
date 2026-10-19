@@ -431,7 +431,7 @@
   acceptance: "CANCEL_REQ = 1 within 0.1 s of disengagement, in both longitudinal modes"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `controlsd.py:162`; `carcontroller.py:253-254, 269-273`"
+  baseline_impl: "Impl: `controlsd.py:163`; `carcontroller.py:253-254, 269-273`"
   status: proposed
   source: WP-W-02
 
@@ -1551,7 +1551,7 @@
   acceptance: "As specified"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `policy.py:44-49`; `controlsd.py:203-204`"
+  baseline_impl: "Impl: `policy.py:44-49`; `controlsd.py:204-205`"
   status: proposed
   source: WP-W-02
 
@@ -1743,7 +1743,7 @@
   acceptance: "Cancel sent on the HMI-stall disable"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: cancel follows from disable (`controlsd.py:162`)"
+  baseline_impl: "Partial: cancel follows from disable (`controlsd.py:163`)"
   status: proposed
   source: WP-W-02
 
