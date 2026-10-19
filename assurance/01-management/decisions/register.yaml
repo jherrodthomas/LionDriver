@@ -5021,7 +5021,7 @@
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
   applied: {ref: "#276", record: "merge commits of #276 and #281-#285 (\"Merged under DQ-401 A\")", at: 2026-10-19}
-  note: "Scope, as the lead confirmed to the STPA session on 2026-10-19: covers document PRs and PRs that change assurance/ tooling (figure and generator scripts, checkers). Vehicle code (openpilot, panda, opendbc, pins) still waits for green. The merge commit says \"Merged under DQ-401 A\"."
+  note: "Scope, as the lead confirmed to the STPA session on 2026-10-19: covers document PRs and PRs that change assurance/ tooling (figure and generator scripts, checkers). Vehicle code (openpilot, panda, opendbc, pins) still waits for green. The merge commit says \"Merged under DQ-401 A\". Lapsed 2026-10-19 ~17:45Z: the LFS store recovered (all scons jobs green on #313), so PRs merge on full green again."
 
 - id: DQ-402
   question: "Once engaged, should LionDriver hand back to the driver when the car slows below 60 km/h, for example in highway stop-and-go traffic?"
