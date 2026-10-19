@@ -5,7 +5,8 @@ Figure 5-1 (`../figures/fig-c06-5-1-tc-fi-sh-chain.svg`): triggering conditions 
 functional insufficiencies FI-nn (§3) -> SOTIF hazards SH-nn (WP-C-05 §3).
 
 The SOTIF scene sheet (`../figures/fig-c06-5-2-sotif-scenes.svg`, one card per hazard) is drawn by `sotif_scenes.py`
-and written and checked here with Figure 5-1.
+and written and checked here with Figure 5-1. The WP-C-07 modification sheets (`../figures/fig-c07-3-1-fm-scenes-p1.svg`,
+`fig-c07-3-2-fm-scenes-p2-p3.svg`, one card per FM) are drawn by `fm_scenes.py` and written and checked here too.
 
 - TC -> FI edges come from the WP-C-06 §5 evaluation table, coloured by the row's evaluation outcome.
 - FI -> SH edges come from the "Linked SH" column of WP-C-06 §3.
@@ -273,16 +274,18 @@ def load() -> Data:
 
 
 def build() -> dict[str, str]:
+  import fm_scenes  # the WP-C-07 modification sheets; imports this module, so it is loaded here
   import sotif_scenes  # the SOTIF scene sheet; imports this module, so it is loaded here
-  return {NAME: figure(load()), **sotif_scenes.build()}
+  return {NAME: figure(load()), **sotif_scenes.build(), **fm_scenes.build()}
 
 
 def main(argv: list[str]) -> int:
   check = "--check" in argv
   try:
+    import fm_scenes  # the WP-C-07 modification sheets (see build)
     import sotif_scenes  # the SOTIF scene sheet (see build)
     data = load()
-    outputs = {NAME: figure(data), **sotif_scenes.build()}
+    outputs = {NAME: figure(data), **sotif_scenes.build(), **fm_scenes.build()}
   except FigureError as e:
     print(f"sotif_figures: {e}", file=sys.stderr)
     return 1

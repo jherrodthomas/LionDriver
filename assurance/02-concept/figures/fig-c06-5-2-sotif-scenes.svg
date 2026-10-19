@@ -95,6 +95,8 @@
 <text x="978" y="662.286" font-size="10" fill="#0F172A">Auto-resume</text>
 <text x="892" y="678.286" font-size="10" fill="#475569">Evaluation</text>
 <text x="978" y="678.286" font-size="10" fill="#0F172A">Needs modification. Action: FM-11</text>
+<text x="892" y="694.286" font-size="10" fill="#475569">Also reached by</text>
+<text x="978" y="694.286" font-size="10" fill="#0F172A">TC-35</text>
 <rect x="40" y="755.2857142857143" width="400" height="607" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/>
 <text x="52" y="781.286" font-size="12" fill="#475569" font-weight="600">SH-04</text>
 <text x="96" y="781.286" font-size="14.5" fill="#0F172A" font-weight="700">Phantom braking under a gantry</text>
@@ -167,7 +169,7 @@
 <text x="978" y="1318.57" font-size="10" fill="#0F172A">WP-V-03 KS-08; WP-O-03</text>
 <text x="892" y="1334.57" font-size="10" fill="#475569">Also reached by</text>
 <text x="978" y="1334.57" font-size="10" fill="#0F172A">TC-01, TC-02, TC-03, TC-04, TC-07, TC-08, TC-09, TC-17,</text>
-<text x="978" y="1347.57" font-size="10" fill="#0F172A">TC-23</text>
+<text x="978" y="1347.57" font-size="10" fill="#0F172A">TC-23, TC-35</text>
 <rect x="40" y="1382.5714285714287" width="400" height="617" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/>
 <text x="52" y="1408.57" font-size="12" fill="#475569" font-weight="600">SH-08</text>
 <text x="96" y="1408.57" font-size="14.5" fill="#0F172A" font-weight="700">Stock PCS braking delayed</text>

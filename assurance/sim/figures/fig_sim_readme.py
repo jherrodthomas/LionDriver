@@ -177,7 +177,7 @@ SRC["fig-sim-r1-overview.svg"] = [
   "fault-injection plant model (layer 1), known scenarios as OpenSCENARIO (layer 2), MetaDrive closed loop (layer 3), unknown-scenario search (layer 4)",
   "Fault catalog: each fault with its FMEA causes, TSRs",
   "What the **real panda safety code** of the reference build does with each injected fault",
-  "Built for 9 of the 26 WP-V-03 scenarios",
+  "Built for 10 of the 27 WP-V-03 scenarios",
   "replays headless",
   "esmini plays the scenario with its own simple controllers",
   "Planned (backlog item 3)",
@@ -217,7 +217,7 @@ def fig_overview() -> str:
   # layer 1 and 2
   b += layer(L, 190, 140, "real", "LAYER 1", "Plant model", "Built", "f-real",
              ["real panda safety code", "+ Corolla single-track plant", "EPS, PCM, driver: assumed"])
-  b += layer(Rx, 190, 140, "card", "LAYER 2", "Known scenarios", "Built · 9 of 26", "f-model",
+  b += layer(Rx, 190, 140, "card", "LAYER 2", "Known scenarios", "Built · 10 of 27", "f-model",
              ["OpenSCENARIO + OpenDRIVE", "replayed headless in esmini", "(its own simple drivers)"])
   # layer 4 and 3
   b += [P(f"M{L + cw / 2},330 V370"), P(f"M{Rx + cw / 2},330 V370", "arrd")]
@@ -254,7 +254,7 @@ def fig_overview() -> str:
   h = oy + 116 + 24
   return svg(h, "Simulation track at a glance: four layers and the Blender scenes",
              "Synthetic (DSR-12), no evidence credit. Inputs faults.yaml and WP-V-03 feed layer 1 (plant model with the "
-             "real panda safety code, built) and layer 2 (known scenarios as OpenSCENARIO, 9 of 26 built). Layer 1 feeds "
+             "real panda safety code, built) and layer 2 (known scenarios as OpenSCENARIO, 10 of 27 built). Layer 1 feeds "
              "layer 4 (failure search and reachability bound, prototype); layer 2 and the panda code feed layer 3 "
              "(MetaDrive closed loop, planned). Plant runs or kinematic motions become scene.json, are rendered in "
              "Blender and composed into review dashboards and clips. Results rank risks and guide tests; no evidence "
@@ -271,7 +271,7 @@ LAYERS = [
    ["The real EPS, PCM and driver: they are assumptions",
     "openpilot itself: no SoC alerts, model or planner faults",
     "MCU latency, bus load, tyre limits"]),
-  ("LAYER 2", "Known scenarios as data", "Built · 9 of 26", "f-model", "card",
+  ("LAYER 2", "Known scenarios as data", "Built · 10 of 27", "f-model", "card",
    ["Each representable WP-V-03 scenario, written down unambiguously",
     "It parses and replays headless; same road and traffic as layers 1 and 3"],
    ["Any behaviour of the item: esmini drives with its own simple controllers"]),
@@ -292,7 +292,7 @@ SRC["fig-sim-r2-layers.svg"] = [
   "Anything the assumptions decide: the EPS reaction to lost frames, the torque-to-lateral-acceleration gain, the driver",
   "no SoC alert, no model or planner fault",
   "Interrupt latency and bus load on the real MCU. Tyre limits",
-  "Built for 9 of the 26 WP-V-03 scenarios",
+  "Built for 10 of the 27 WP-V-03 scenarios",
   "is written down unambiguously, parses and replays headless; the same road and traffic used by layers 1 and 3",
   "Any behaviour of the item: esmini plays the scenario with its own simple controllers",
   "Planned (backlog item 3)",
@@ -332,7 +332,7 @@ def fig_layers() -> str:
   b += legend(y + 16, [("real", "built, real code in it"), ("card", "built"), ("plan", "planned")])[0]
   return svg(int(y + 40), "What each simulation layer can and cannot show",
              "Synthetic (DSR-12), no evidence credit. Four cards, one per layer, with its status and what it can and "
-             "cannot show: layer 1 plant model (built), layer 2 known scenarios (built for 9 of 26), layer 3 MetaDrive "
+             "cannot show: layer 1 plant model (built), layer 2 known scenarios (built for 10 of 27), layer 3 MetaDrive "
              "closed loop (planned), layer 4 unknown-scenario search (prototype).", b)
 
 

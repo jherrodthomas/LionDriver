@@ -150,6 +150,10 @@ struct OnroadEvent @0xc4fa6047f024e718 {
     pandaHeartbeatLost @108;
     # LionDriver: the panda blocked a frame the SoC sent while engaged (TSR-615)
     pandaTxBlocked @109;
+    # LionDriver: a setting is outside the assured configuration, so the item does not engage (DQ-221, CA-008)
+    settingNotAssured @110;
+    # LionDriver: below the highway speed floor, so the item does not engage (DQ-280, ODD entry)
+    belowHighwaySpeed @111;
   }
 }
 

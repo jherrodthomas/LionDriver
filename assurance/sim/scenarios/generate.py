@@ -8,7 +8,8 @@
 Each scenario fixes the road and the other road users. The ego vehicle is the item under test: in the files it only
 gets its initial position and speed, and a harness (the plant model, MetaDrive) or esmini's default controller drives
 it. Parameters carry the WP-V-03 values as defaults; the sweep values are listed in SCENARIOS and in README.md.
-Highway only (ODD-H; DQ-023 answered B): 3 lanes, lane IDs -1 (left) to -3 (right), ego in -2 unless stated.
+Highway only (ODD-H; DQ-023 answered B): 3 lanes, lane IDs -1 (left) to -3 (right), ego in -2 unless stated; KS-27 is
+a one-lane ramp (lane -1) with a wall on the inside of its curve.
 """
 
 from __future__ import annotations
@@ -34,7 +35,8 @@ EGO_S = 50.0
 class Scenario:
   id: str
   title: str
-  road: dict                      # {"length": m} or {"straight": m, "clothoid": m, "radius": m, "arc": m}; "lane_width"
+  road: dict                      # {"length": m} or {"straight": m, "clothoid": m, "radius": m, "arc": m}; "lane_width",
+                                  # "lanes" (default 3), "wall": {"t": m, "height": m} along the curve
   params: dict                    # name -> (default, sweep values, unit, meaning)
   build: callable = None
   checks: list = field(default_factory=list)   # descriptions; replay.py implements them
@@ -100,7 +102,17 @@ def road_xodr(sc: Scenario) -> xodr.OpenDrive:
     geoms = [xodr.Line(r["straight"]), xodr.Spiral(1e-9, k, r["clothoid"]), xodr.Arc(k, r["arc"])]
   else:
     geoms = [xodr.Line(r["length"])]
-  road = xodr.create_road(geoms, 0, left_lanes=0, right_lanes=3, lane_width=w)
+  road = xodr.create_road(geoms, 0, left_lanes=0, right_lanes=r.get("lanes", 3), lane_width=w)
+  if "wall" in r:
+    # a continuous wall from the start of the clothoid to the end of the arc, t > 0: left of the reference line,
+    # which is the inside of the left curve
+    s0, wl = r["straight"], r["clothoid"] + r["arc"]
+    wall = xodr.Object(s0, r["wall"]["t"], Type=xodr.ObjectType.soundBarrier, subtype="wall", name="sight_wall",
+                       height=r["wall"]["height"], length=0.3,
+                       width=0.3)
+    wall.repeat(wl, 0, sStart=s0, tStart=r["wall"]["t"], tEnd=r["wall"]["t"], heightStart=r["wall"]["height"],
+                heightEnd=r["wall"]["height"], widthStart=0.3, widthEnd=0.3)
+    road.add_object(wall)
   odr = xodr.OpenDrive(sc.id)
   odr.add_road(road)
   odr.adjust_roads_and_lanes()
@@ -193,11 +205,26 @@ def ks25(sb_init, ent):
   return [story("speed_up", "ego", acc, at_time(1.0))]
 
 
+def ks27(sb_init, ent):
+  ent.add_scenario_object("ego", corolla())
+  ent.add_scenario_object("lead", car("lead_car"))
+  place(sb_init, "ego", EGO_S, -1, "$EgoSpeed")
+  place(sb_init, "lead", "$LeadS", -1, "$LeadSpeed")
+  # scripted here: in a closed loop the item's longitudinal control accelerates toward the set speed
+  acc = xosc.AbsoluteSpeedAction("${$EgoSpeed + $SetSpeedDelta}", xosc.TransitionDynamics(
+    xosc.DynamicsShapes.linear, xosc.DynamicsDimension.rate, 1.5))
+  return [story("accelerate_to_set_speed", "ego", acc, at_time(0.5))]
+
+
 def kmh(v):
   return round(v / 3.6, 3)
 
 
 R01 = 300.0
+# KS-27 ramp: the smallest radius of TC-35 (shortest sight distance); a 2 m wall 0.3 m inside the lane's left edge.
+# The sight line from the lane centre clears the wall up to a gap of 2·sqrt(2·Rp·m) along the lane, Rp = R + w/2 and
+# m = w/2 + t the clearance: about 66 m at R = 250 m, inside the 40–80 m of WP-V-03.
+R27, WALL27_T = 250.0, 0.3
 SCENARIOS = [
   Scenario("KS-01", "Curve at or beyond the lateral capability",
            {"straight": 200.0, "clothoid": 100.0, "radius": R01, "arc": 900.0},
@@ -238,7 +265,19 @@ SCENARIOS = [
            {"StartSpeed": (kmh(115), [kmh(115)], "m/s", "start speed"),
             "EndSpeed": (kmh(130), [kmh(130)], "m/s", "end speed; crosses the 120 km/h ODD-H bound")},
            ks25, ["ego speed crosses 120 km/h"], 25.0),
+  Scenario("KS-27", "Lead hidden in a ramp curve while accelerating to the set speed",
+           {"straight": 100.0, "clothoid": 60.0, "radius": R27, "arc": 700.0, "lanes": 1,
+            "wall": {"t": WALL27_T, "height": 2.0}},
+           {"EgoSpeed": (kmh(70), [kmh(50), kmh(70), kmh(90)], "m/s", "ego speed entering the curve"),
+            "SetSpeedDelta": (kmh(25), [kmh(20), kmh(25), kmh(30)], "m/s", "set speed above the ego speed"),
+            "LeadSpeed": (0.0, [0.0, kmh(30)], "m/s", "lead speed: stopped or slow"),
+            "LeadS": (360.0, [360.0], "m", "lead position, 200 m into the arc")},
+           ks27, ["the inside wall hides the lead until the gap along the lane is 40–80 m",
+                  "ego accelerates to EgoSpeed + SetSpeedDelta (scripted here: in a closed loop the item does it)",
+                  "lead keeps LeadSpeed in lane -1"], 20.0),
 ]
+
+SCENARIOS_BY_ID = {sc.id: sc for sc in SCENARIOS}
 
 # WP-V-03 scenarios not written as files, with the reason
 NOT_REPRESENTED = {
