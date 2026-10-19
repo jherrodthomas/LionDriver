@@ -82,7 +82,7 @@ def lane_always(rows, lane):
 
 
 # ------------------------------------------------------------------------------------------------ checks per scenario
-def check(sc_id: str, p: dict, R: dict[str, list[dict]]) -> list[tuple[str, bool, str]]:
+def check(sc_id: str, p: dict, R: dict[str, list[dict]], road: dict | None = None) -> list[tuple[str, bool, str]]:
   ego = R.get("ego", [])
   if sc_id == "KS-01":
     v = p["EgoSpeed"]
@@ -139,8 +139,9 @@ def check(sc_id: str, p: dict, R: dict[str, list[dict]]) -> list[tuple[str, bool
     cross = next((r["time"] for r in ego if r["speed"] > 120 / 3.6), None)
     return [("ego speed crosses 120 km/h", cross is not None, "" if cross is None else f"at {cross:.2f} s")]
   if sc_id == "KS-27":
-    ld, r = R["lead"], generate.SCENARIOS_BY_ID["KS-27"].road
-    rp, rw = r["radius"] + LANE_HALF, r["radius"] - generate.WALL27_T
+    ld, r = R["lead"], road or generate.SCENARIOS_BY_ID["KS-27"].road
+    rp, rw = r["radius"] + LANE_HALF, r["radius"] - r["wall"]["t"]
+    lo, hi = r["reveal"]
     arc0 = r["straight"] + r["clothoid"]
 
     def visible(e, l):
@@ -151,8 +152,8 @@ def check(sc_id: str, p: dict, R: dict[str, list[dict]]) -> list[tuple[str, bool
     first = next(((e, l) for e, l in pairs if visible(e, l)), None)
     gap = None if first is None else (first[1]["s"] - first[0]["s"]) / r["radius"] * rp
     target = p["EgoSpeed"] + p["SetSpeedDelta"]
-    return [("lead hidden until a gap of 40–80 m along the lane", bool(pairs) and not visible(*pairs[0]) and gap is not None
-             and 40 <= gap <= 80, "never visible" if gap is None else f"{gap:.1f} m"),
+    return [(f"lead hidden until a gap of {lo:g}–{hi:g} m along the lane", bool(pairs) and not visible(*pairs[0])
+             and gap is not None and lo <= gap <= hi, "never visible" if gap is None else f"{gap:.1f} m"),
             ("ego reaches EgoSpeed + SetSpeedDelta", abs(ego[-1]["speed"] - target) < 0.01, f"{ego[-1]['speed']:.2f} m/s"),
             ("lead keeps LeadSpeed in lane -1", all(abs(x["speed"] - p["LeadSpeed"]) < 1e-6 for x in ld) and lane_always(ld, -1), "")]
   raise ValueError(sc_id)
@@ -172,13 +173,14 @@ def replay(bin_dir: Path) -> tuple[str, int]:
   rows = ["| Scenario | Family | Parameter point | Check | Result | Measured |", "|---|---|---|---|---|---|"]
   failures = 0
   for sc in generate.SCENARIOS:
-    for p in points(sc):
-      R = run(bin_dir, sc.id, p)
-      changed = ", ".join(f"{k} = {v:g}" for k, v in p.items() if v != sc.params[k][0]) or "defaults"
-      for name, ok, measured in check(sc.id, p, R):
-        failures += not ok
-        fam = FAMILY.get(sc.id, "not assigned in WP-V-02 §5.3.2")
-        rows.append(f"| {sc.id} | {fam} | {changed} | {name} | {'pass' if ok else '**fail**'} | {measured or '—'} |")
+    for fid, road in generate.files_of(sc):
+      for p in points(sc):
+        R = run(bin_dir, fid, p)
+        changed = ", ".join(f"{k} = {v:g}" for k, v in p.items() if v != sc.params[k][0]) or "defaults"
+        for name, ok, measured in check(sc.id, p, R, road):
+          failures += not ok
+          fam = FAMILY.get(sc.id, "not assigned in WP-V-02 §5.3.2")
+          rows.append(f"| {fid} | {fam} | {changed} | {name} | {'pass' if ok else '**fail**'} | {measured or '—'} |")
   return "\n".join(rows), failures
 
 
