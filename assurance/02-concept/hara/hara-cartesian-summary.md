@@ -13,24 +13,24 @@ The workbook rows are function × guide word × operational situation × weather
 | … classified SC | 59 (32 expanded, 27 subsumed by another SC pair) |
 | … classified NSC | 41 |
 | … classified NA | 26 |
-| Environments per SC pair (17 situations × 6 conditions) | 102 |
-| Hazardous-event rows generated (32 × 102) | 3264 |
-| … not hazardous in that situation (S0, reason recorded) | 1008 |
-| … rated QM | 871 |
-| … rated ASIL A / B / C / D | 716 / 607 / 62 / 0 |
-| … ASIL A–D if every ⚠ AoU fails (C+1) | 596 / 809 / 193 / 29 |
-| Distinct hazardous events (function × guide word × situation with S ≠ S0, weather variants merged) | 376 |
-| … of which ASIL ≥ A in at least one condition | 330 |
+| Environments per SC pair (20 situations × 6 conditions) | 120 |
+| Hazardous-event rows generated (32 × 120) | 3840 |
+| … not hazardous in that situation (S0, reason recorded) | 1152 |
+| … rated QM | 953 |
+| … rated ASIL A / B / C / D | 889 / 736 / 110 / 0 |
+| … ASIL A–D if every ⚠ AoU fails (C+1) | 863 / 779 / 385 / 29 |
+| Distinct hazardous events (function × guide word × situation with S ≠ S0, weather variants merged) | 448 |
+| … of which ASIL ≥ A in at least one condition | 392 |
 
 | Hazard | Rows rated ASIL ≥ A | Worst-case ASIL | If ⚠ AoUs fail | Worst-case rows (function, guide word, situation, condition) |
 |---|---|---|---|---|
-| H-01 Unintended or excessive lateral motion | 472 | C | D | F-01 M03 OS-01 W01, F-01 M03 OS-05 W01, F-01 M03 OS-07 W01, F-01 M03 OS-08 W01 (+22 more) |
-| H-02 Unannounced loss or degradation of lateral control | 385 | C | C | F-01 M01 OS-02 W01, F-01 M01 OS-02 W02, F-01 M01 OS-02 W03, F-01 M02 OS-02 W01 (+17 more) |
-| H-03 Unintended acceleration | 172 | C | D | F-02 M04 OS-07 W01, F-02 M05 OS-07 W01, F-02 M12 OS-07 W01 |
-| H-04 Unintended or excessive deceleration | 99 | B | C | F-02 M03 OS-05 W01, F-02 M03 OS-05 W05, F-02 M03 OS-08 W01, F-02 M03 OS-08 W05 (+20 more) |
+| H-01 Unintended or excessive lateral motion | 562 | C | D | F-01 M03 OS-01 W01, F-01 M03 OS-05 W01, F-01 M03 OS-07 W01, F-01 M03 OS-08 W01 (+22 more) |
+| H-02 Unannounced loss or degradation of lateral control | 511 | C | C | F-01 M01 OS-02 W01, F-01 M01 OS-02 W02, F-01 M01 OS-02 W03, F-01 M01 OS-14 W01 (+59 more) |
+| H-03 Unintended acceleration | 202 | C | D | F-02 M04 OS-07 W01, F-02 M05 OS-07 W01, F-02 M12 OS-07 W01 |
+| H-04 Unintended or excessive deceleration | 115 | B | C | F-02 M03 OS-05 W01, F-02 M03 OS-05 W05, F-02 M03 OS-08 W01, F-02 M03 OS-08 W05 (+20 more) |
 | H-05 Driver unable to override or disengage | 30 | B | C | F-03 M01 OS-10 W01, F-03 M01 OS-10 W02, F-03 M01 OS-10 W03, F-03 M06 OS-10 W01 (+5 more) |
-| H-06 Unannounced loss of longitudinal deceleration | 132 | C | C | F-02 M01 OS-07 W01, F-02 M02 OS-07 W01, F-02 M06 OS-07 W01, F-02 M11 OS-07 W01 |
-| H-07 Displayed system state differs from actual state (mode confusion) | 78 | C | C | F-05 M01 OS-02 W01, F-05 M01 OS-02 W02, F-05 M01 OS-02 W03, F-05 M01 OS-07 W01 (+4 more) |
+| H-06 Unannounced loss of longitudinal deceleration | 184 | C | C | F-02 M01 OS-07 W01, F-02 M02 OS-07 W01, F-02 M06 OS-07 W01, F-02 M11 OS-07 W01 |
+| H-07 Displayed system state differs from actual state (mode confusion) | 114 | C | C | F-05 M01 OS-02 W01, F-05 M01 OS-02 W02, F-05 M01 OS-02 W03, F-05 M01 OS-07 W01 (+10 more) |
 | H-08 Suppression of the vehicle's stock pre-collision braking | 6 | B | B | F-08 M03 OS-09 W01, F-08 M03 OS-09 W02, F-08 M03 OS-09 W03, F-08 M03 OS-09 W04 (+1 more) |
 | H-09 Automated control continues with a driver who is not supervising or not responding | 11 | A | A | F-04 M01 OS-17 W01, F-04 M01 OS-17 W02, F-04 M01 OS-17 W03, F-04 M01 OS-17 W04 (+7 more) |
 
@@ -43,24 +43,24 @@ The workbook rows are function × guide word × operational situation × weather
 | … classified SC | 70 (34 expanded, 36 subsumed by another SC pair) |
 | … classified NSC | 42 |
 | … classified NA | 28 |
-| Environments per SC pair (17 situations × 6 conditions) | 102 |
-| Hazardous-event rows generated (34 × 102) | 3468 |
-| … not hazardous in that situation (S0, reason recorded) | 1104 |
-| … rated QM | 942 |
-| … rated ASIL A / B / C / D | 742 / 618 / 62 / 0 |
-| … ASIL A–D if every ⚠ AoU fails (C+1) | 620 / 841 / 196 / 29 |
-| Distinct hazardous events (function × guide word × situation with S ≠ S0, weather variants merged) | 394 |
-| … of which ASIL ≥ A in at least one condition | 343 |
+| Environments per SC pair (20 situations × 6 conditions) | 120 |
+| Hazardous-event rows generated (34 × 120) | 4080 |
+| … not hazardous in that situation (S0, reason recorded) | 1266 |
+| … rated QM | 1038 |
+| … rated ASIL A / B / C / D | 913 / 753 / 110 / 0 |
+| … ASIL A–D if every ⚠ AoU fails (C+1) | 897 / 809 / 394 / 29 |
+| Distinct hazardous events (function × guide word × situation with S ≠ S0, weather variants merged) | 469 |
+| … of which ASIL ≥ A in at least one condition | 408 |
 
 | Hazard | Rows rated ASIL ≥ A | Worst-case ASIL | If ⚠ AoUs fail | Worst-case rows (function, guide word, situation, condition) |
 |---|---|---|---|---|
-| H-01 Unintended or excessive lateral motion | 472 | C | D | F-01 M03 OS-01 W01, F-01 M03 OS-05 W01, F-01 M03 OS-07 W01, F-01 M03 OS-08 W01 (+22 more) |
-| H-02 Unannounced loss or degradation of lateral control | 385 | C | C | F-01 M01 OS-02 W01, F-01 M01 OS-02 W02, F-01 M01 OS-02 W03, F-01 M02 OS-02 W01 (+17 more) |
-| H-03 Unintended acceleration | 172 | C | D | F-02 M04 OS-07 W01, F-02 M05 OS-07 W01, F-02 M12 OS-07 W01 |
-| H-04 Unintended or excessive deceleration | 124 | B | C | F-02 M03 OS-05 W01, F-02 M03 OS-05 W05, F-02 M03 OS-08 W01, F-02 M03 OS-08 W05 (+27 more) |
+| H-01 Unintended or excessive lateral motion | 562 | C | D | F-01 M03 OS-01 W01, F-01 M03 OS-05 W01, F-01 M03 OS-07 W01, F-01 M03 OS-08 W01 (+22 more) |
+| H-02 Unannounced loss or degradation of lateral control | 511 | C | C | F-01 M01 OS-02 W01, F-01 M01 OS-02 W02, F-01 M01 OS-02 W03, F-01 M01 OS-14 W01 (+59 more) |
+| H-03 Unintended acceleration | 202 | C | D | F-02 M04 OS-07 W01, F-02 M05 OS-07 W01, F-02 M12 OS-07 W01 |
+| H-04 Unintended or excessive deceleration | 144 | B | C | F-02 M03 OS-05 W01, F-02 M03 OS-05 W05, F-02 M03 OS-08 W01, F-02 M03 OS-08 W05 (+27 more) |
 | H-05 Driver unable to override or disengage | 30 | B | C | F-03 M01 OS-10 W01, F-03 M01 OS-10 W02, F-03 M01 OS-10 W03, F-03 M06 OS-10 W01 (+5 more) |
-| H-06 Unannounced loss of longitudinal deceleration | 132 | C | C | F-02 M01 OS-07 W01, F-02 M02 OS-07 W01, F-02 M06 OS-07 W01, F-02 M11 OS-07 W01 |
-| H-07 Displayed system state differs from actual state (mode confusion) | 78 | C | C | F-05 M01 OS-02 W01, F-05 M01 OS-02 W02, F-05 M01 OS-02 W03, F-05 M01 OS-07 W01 (+4 more) |
+| H-06 Unannounced loss of longitudinal deceleration | 184 | C | C | F-02 M01 OS-07 W01, F-02 M02 OS-07 W01, F-02 M06 OS-07 W01, F-02 M11 OS-07 W01 |
+| H-07 Displayed system state differs from actual state (mode confusion) | 114 | C | C | F-05 M01 OS-02 W01, F-05 M01 OS-02 W02, F-05 M01 OS-02 W03, F-05 M01 OS-07 W01 (+10 more) |
 | H-08 Suppression of the vehicle's stock pre-collision braking | 6 | B | B | F-08 M03 OS-09 W01, F-08 M03 OS-09 W02, F-08 M03 OS-09 W03, F-08 M03 OS-09 W04 (+1 more) |
 | H-09 Automated control continues with a driver who is not supervising or not responding | 11 | A | A | F-04 M01 OS-17 W01, F-04 M01 OS-17 W02, F-04 M01 OS-17 W03, F-04 M01 OS-17 W04 (+7 more) |
-| H-10 Vehicle does not stop for a traffic signal or stop sign it is expected to stop for | 12 | B | B | F-02X M01 OS-14 W04, F-02X M01 OS-14 W05, F-02X M01 OS-15 W04, F-02X M01 OS-15 W05 |
+| H-10 Vehicle does not stop for a traffic signal or stop sign it is expected to stop for | 12 | B | C | F-02X M01 OS-14 W01, F-02X M01 OS-14 W02, F-02X M01 OS-14 W03, F-02X M01 OS-14 W04 (+6 more) |

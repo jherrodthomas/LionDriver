@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-02 ODD and intended functionality specification |
 | Standard reference | ISO 21448:2022 §5 (specification of the functionality); ISO 26262-3:2018 §5 (item definition input); ISO/PAS 8800:2024 (input space definition); ASPICE 4.0 SYS.1; SAE J3016 and ISO 34503 (ODD taxonomy, informative) |
-| Version | 0.6 (ODD entry condition: no engagement below a highway speed floor, proposed 60 km/h, until road-type data exist, DQ-280 A; §3.1, §4.3, §5.2, §5.3; OI-9 narrowed; 2026-10-18). 0.5 (ODD speed bound 110 km/h, DQ-260 A; OI-8 closed; Figure 3-2 redrawn; 2026-10-16). 0.4 (highway only: ODD-A dropped by the lead's decision DQ-023, option B; speed range and its test evidence per DQ-091, option A; curve bound kept and the HARA re-rated instead, DQ-059 B; driver-state misuse linked to HARA OS-17/OS-18; Figures 3-1 and 3-2 redrawn for one ODD part; 2026-10-16). 0.3 (Figures 3-1 and 3-2 added, generated from §3.1 and §3.2; 2026-10-13). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
+| Version | 0.7 (ODD claim kept highway-only; every environment of the upstream-use audit (city, rural and laneless roads, intersections, roundabouts, road works) is analysed in the HARA at realistic exposure as foreseeable misuse, RR-2026-011, DQ-213 A; §3 note, §5.2 rows; 2026-10-19). 0.6 (ODD entry condition: no engagement below a highway speed floor, proposed 60 km/h, until road-type data exist, DQ-280 A; §3.1, §4.3, §5.2, §5.3; OI-9 narrowed; 2026-10-18). 0.5 (ODD speed bound 110 km/h, DQ-260 A; OI-8 closed; Figure 3-2 redrawn; 2026-10-16). 0.4 (highway only: ODD-A dropped by the lead's decision DQ-023, option B; speed range and its test evidence per DQ-091, option A; curve bound kept and the HARA re-rated instead, DQ-059 B; driver-state misuse linked to HARA OS-17/OS-18; Figures 3-1 and 3-2 redrawn for one ODD part; 2026-10-16). 0.3 (Figures 3-1 and 3-2 added, generated from §3.1 and §3.2; 2026-10-13). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF; input to HARA exposure ratings |
 | Author | Assurance team (initial draft) |
@@ -42,6 +42,8 @@ The ODD is the scope of every SOTIF analysis ([WP-C-05](WP-C-05-sotif-hazard-ide
 ## 3. Reference ODD (proposed)
 
 The reference ODD is **limited-access highways only (ODD-H)**. Anything not listed as included is excluded.
+
+**Off-highway use is analysed, not claimed (2026-10-19, DQ-213 A).** Owners of upstream openpilot engage it well off the highway: city streets, rural and laneless roads, intersections, roundabouts and road works (RR-2026-011, a video on the reference Corolla generation). The lead kept the ODD claim highway-only. Every one of those environments is in the HARA as foreseeable misuse at realistic exposure (WP-C-03 v0.6: 1–10 % of engaged time, OS-03, OS-04, OS-14…OS-16, OS-19…OS-21). The item makes no performance claim there, and user information must say so (WP-O-03).
 
 Until version 0.3 the ODD also had an arterial and rural part (ODD-A). The lead dropped it on 2026-10-14 (decision register DQ-023, option B): validation shrinks, and head-on traffic on undivided roads and VRUs at the lane edge leave the claimed scope. The steering goal stays ASIL C, because the highway case governs it ([WP-C-03](WP-C-03-hara.md) HE-01.2). The cost is that the system must refuse or warn off the highway (§5.2, FM-08), which it does not do today; until then the driver keeps it on the highway, and the HARA rates engagement off the highway as foreseeable misuse (OS-03, OS-04, OS-15, OS-16 at E2).
 
@@ -164,6 +166,7 @@ LD-SDA has **no ODD monitor**. The driver detects ODD exit and disengages. The s
 | Missing/faded markings, construction zone, road type change (leaving the highway), intersection | No | None | Driver task; FM-08 (map/road-type, if feasible). With the highway-only ODD (DQ-023) this exit is the one the lead's decision assumes the system will refuse or warn about. Decided 2026-10-18 (DQ-280 A): refuse to engage below the highway speed floor now, road-type data later. The floor is a no-entry check, so it does not detect a road change after engagement |
 | Heavy rain, fog, glare, camera blocked | Not directly; possible model degradation without gating | None specific (GAP-22) | FM-09 (uncertainty monitor) |
 | Snow / ice | No | None | Driver task |
+| Roundabout, road works (cones, lane shifts) | No | None | Driver task. Excluded from ODD-H (§3.1); analysed as foreseeable misuse (WP-C-03 OS-19, OS-20) |
 | Device mis-calibration | Yes, `calibrationInvalid` (`events.py:816`) | Soft disable | Implemented |
 | Device overheat | Yes, `overheat` (`events.py:800`) | Soft disable | Implemented |
 | Driver not visible to DM | Yes (no face / high uncertainty) | Wheel-touch fallback (`policy.py:82-83`) | GAP-21 |
