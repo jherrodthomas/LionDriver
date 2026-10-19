@@ -1,10 +1,12 @@
 # The wiki, kept in the repository
 
 This folder is the source of the [LionDriver GitHub wiki](https://github.com/jherrodthomas/LionDriver/wiki). The
-wiki is a mirror: on every push to `liondriver-dev` that touches this folder, the
+wiki is a mirror: on every push to `liondriver-dev`, the
 [wiki workflow](../.github/workflows/wiki.yaml) builds the pages with
-[`tools/wiki/build_wiki.py`](../tools/wiki/build_wiki.py) and pushes them to the wiki repository. The wiki is never
-edited in place; an edit made there is overwritten by the next sync.
+[`tools/wiki/build_wiki.py`](../tools/wiki/build_wiki.py) and pushes them to the wiki repository, so the session log,
+the sync stamp and the infographics follow every merge. The same workflow checks the pages on every pull request,
+whichever files it touches, so a change that moves a file the pages link to fails before it is merged. The wiki is
+never edited in place; an edit made there is overwritten by the next sync.
 
 This file describes the folder and is not published.
 

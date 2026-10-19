@@ -67,7 +67,7 @@ Every workflow lives in [`.github/workflows/`](../.github/workflows).
 | [b2b](../.github/workflows/b2b.yaml) | A change touches the reference models or the safety code | Back-to-back run of the reference model against the safety C, both build variants |
 | [safety case snapshot](../.github/workflows/safety-case-snapshot.yaml) | A push to `liondriver-dev` touches `assurance/`, or a `bl-*` tag | Builds, attests and publishes the PDF snapshot as a release |
 | [safety case controlled copy](../.github/workflows/safety-case-controlled-copy.yaml) | Started by hand | Issues a numbered controlled copy of the safety case for a named recipient and records it |
-| [wiki](../.github/workflows/wiki.yaml) | A change touches `wiki/` | Builds these pages, checks their links, and on merge pushes them to the GitHub wiki |
+| [wiki](../.github/workflows/wiki.yaml) | Every pull request, and every push to `liondriver-dev` | Builds these pages and checks that every link target still exists; on a push, syncs them and the generated figures to the GitHub wiki |
 | [PR review](../.github/workflows/auto_pr_review.yaml), [diff report](../.github/workflows/diff_report.yaml), [tests](../.github/workflows/tests.yaml), [docs](../.github/workflows/docs.yaml) | Inherited from openpilot | Labels pull requests by the paths they touch, posts the process-replay diff, runs the upstream unit tests and documentation build |
 
 A passing workflow accepts nothing on its own. It can be evidence that a reviewer accepts; see
