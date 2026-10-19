@@ -2,8 +2,8 @@
 <OpenSCENARIO xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="OpenScenario.xsd">
     <FileHeader description="KS-25 Speed above the ODD bound" author="LionDriver simulation track (synthetic scenario, DSR-12)" revMajor="1" revMinor="3" date="2026-10-16T00:00:00"/>
     <ParameterDeclarations>
-        <ParameterDeclaration name="StartSpeed" parameterType="double" value="31.944"/>
-        <ParameterDeclaration name="EndSpeed" parameterType="double" value="36.111"/>
+        <ParameterDeclaration name="StartSpeed" parameterType="double" value="29.167"/>
+        <ParameterDeclaration name="EndSpeed" parameterType="double" value="33.333"/>
     </ParameterDeclarations>
     <CatalogLocations/>
     <RoadNetwork>

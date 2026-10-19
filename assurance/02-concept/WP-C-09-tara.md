@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-09 Threat analysis and risk assessment (TARA) |
 | Standard reference | ISO/SAE 21434:2021 §15 (threat analysis and risk assessment methods); §9.3 (item definition, CS view); UN R155 Annex 5 (informative threat catalogue); ASPICE 4.0 SEC.1 |
-| Version | 0.6 (§9 threat scene cards, one per threat scenario, drawn as Figures 9-2 and 9-3 by `figures/fig_c09_scenes.py`; no rating changed; 2026-10-19). 0.5 (OI-7: no separate privacy assessment for now, DQ-095 A, 2026-10-19). 0.4 (§3 financial impact quantified for the road user in US dollars (DQ-035, B): DS-01…03 and DS-05…07 Moderate → Major, DS-10 Major → Moderate; no maximum impact level or risk value changes; OI-2 closed; 2026-10-18). 0.3 (§8 risk matrix drawn as Figure 8-1 and §9 top-risk attack paths as Figure 9-1; no rating changed; 2026-10-13). 0.2 (status update 2026-10-12: treatment status of AP-02/TS-02 at `bf6ce8c`; new TS-14/AP-14 (SoC injects PCS/DSU frames or floods whitelisted actuation IDs), rated at the shipped baseline; ratings unapproved). History: 0.1 |
+| Version | 0.8 (§3 DS-13 mode confusion from a spoofed HMI state (H-07) and DS-14 driver monitoring defeated (H-09) added and linked from TS-04, closing the gap the HATARA model records as IX-11; pointer to the safety–security interactions in [hatara/](hatara/README.md); no risk value or CAL changed; 2026-10-19). 0.7 (§3 HARA links brought to WP-C-03 v0.6: H-02 and H-06 ASIL C, H-03 ASIL C, AoU fallbacks named; Safety note reworded; no impact level, risk or CAL changed; 2026-10-19). 0.6 (§9 threat scene cards, one per threat scenario, drawn as Figures 9-2 and 9-3 by `figures/fig_c09_scenes.py`; no rating changed; 2026-10-19). 0.5 (OI-7: no separate privacy assessment for now, DQ-095 A, 2026-10-19). 0.4 (§3 financial impact quantified for the road user in US dollars (DQ-035, B): DS-01…03 and DS-05…07 Moderate → Major, DS-10 Major → Moderate; no maximum impact level or risk value changes; OI-2 closed; 2026-10-18). 0.3 (§8 risk matrix drawn as Figure 8-1 and §9 top-risk attack paths as Figure 9-1; no rating changed; 2026-10-13). 0.2 (status update 2026-10-12: treatment status of AP-02/TS-02 at `bf6ce8c`; new TS-14/AP-14 (SoC injects PCS/DSU frames or floods whitelisted actuation IDs), rated at the shipped baseline; ratings unapproved). History: 0.1 |
 | Status | Draft — ratings are engineering proposals for review, not approved. They must not be used to argue cybersecurity until the preliminary assessment ([WP-M-09 §8](../01-management/WP-M-09-cybersecurity-plan.md)) passes |
 | ASIL / scope | CS (cybersecurity); safety impact traced to the HARA ASILs |
 | Author | Assurance team (initial draft) |
@@ -63,21 +63,24 @@ Impact levels: **Severe / Major / Moderate / Negligible** per ISO/SAE 21434 §15
 
 | ID | Damage scenario | HARA link | S | F | O | P | Max level |
 |---|---|---|---|---|---|---|---|
-| DS-01 | Unintended/excessive lateral actuation induced by manipulation | H-01 (ASIL C/D) | Severe | Major | Major | Negligible | 4 |
-| DS-02 | Lateral control silently lost or frozen | H-02 (ASIL B) | Severe | Major | Major | Negligible | 4 |
-| DS-03 | Unintended acceleration induced | H-03 (ASIL B/C) | Severe | Major | Major | Negligible | 4 |
-| DS-04 | Unintended/excessive deceleration induced | H-04 (ASIL B/C) | Major | Moderate | Major | Negligible | 3 |
-| DS-05 | Driver prevented from overriding/disengaging | H-05 (ASIL B/C) | Severe | Major | Major | Negligible | 4 |
-| DS-06 | Longitudinal deceleration silently lost | H-06 (ASIL B) | Severe | Major | Major | Negligible | 4 |
+| DS-01 | Unintended/excessive lateral actuation induced by manipulation | H-01 (ASIL C; D if AOU-01/02 fail) | Severe | Major | Major | Negligible | 4 |
+| DS-02 | Lateral control silently lost or frozen | H-02 (ASIL C) | Severe | Major | Major | Negligible | 4 |
+| DS-03 | Unintended acceleration induced | H-03 (ASIL C; D if AOU-03/05 fail) | Severe | Major | Major | Negligible | 4 |
+| DS-04 | Unintended/excessive deceleration induced | H-04 (ASIL B; C if AOU-05 fails) | Major | Moderate | Major | Negligible | 3 |
+| DS-05 | Driver prevented from overriding/disengaging | H-05 (ASIL B; C if AoUs fail) | Severe | Major | Major | Negligible | 4 |
+| DS-06 | Longitudinal deceleration silently lost | H-06 (ASIL C) | Severe | Major | Major | Negligible | 4 |
 | DS-07 | Stock PCS/AEB suppressed or altered | H-08 (ASIL B) | Severe | Major | Major | Negligible | 4 |
 | DS-08 | Disclosure of driver-facing video / cabin imagery | — | Negligible | Moderate | Moderate | Severe | 4 |
 | DS-09 | Disclosure of location / trajectory history | — | Negligible | Moderate | Moderate | Major | 3 |
 | DS-10 | Device identity key theft → back-end impersonation, data forgery | — | Negligible | Moderate | Major | Major | 3 |
 | DS-11 | Fleet-wide compromise (many devices via update/supply chain) | H-01…H-08 ×N | Severe | Major | Severe | Major | 4 |
 | DS-12 | Data-at-rest exposure after device theft (video, location, keys) | — | Negligible | Moderate | Moderate | Severe | 4 |
+| DS-13 | Mode confusion induced: the driver is shown a false engagement or alert state (spoofed HMI) | H-07 (via SG-02 / SG-06, ASIL C) | Severe | Major | Major | Negligible | 4 |
+| DS-14 | Driver monitoring defeated: inattention or no response not detected or not escalated (DM model, policy or input tampered) | H-09 (SG-08, ASIL A) | Severe | Major | Major | Negligible | 4 |
 
 Notes:
-- Safety "Severe" tracks the S3/ASIL C hazards; "Major" tracks the S2/ASIL B rear-end hazards (H-04).
+- Safety "Severe" tracks the S3 hazards (H-01, H-02, H-03, H-05, H-06, H-08: ASIL B–C in WP-C-03 v0.6). "Major" tracks H-04, whose governing events are S2 rear-end impacts (ASIL B). The HARA links follow WP-C-03 v0.6 §6, where SG-02, SG-03 and SG-06 are ASIL C since v0.4. No impact level changed: DS-02 and DS-06 were already Severe.
+- H-07 (mode confusion) and H-09 (driver not supervising) have their own damage scenarios since version 0.8: DS-13 and DS-14, both reached by TS-04, which can forge IPC to the HMI and alter DM behaviour (WP-C-03 §7 names both attack paths). Both are S3 hazards, so Safety is Severe. TS-04 already reached impact level 4, so its risk value is unchanged. The safety–security interactions behind this are recorded in [hatara/](hatara/README.md) (IX-11).
 - Operational impact is "Major" for a loss of the driving function; "Severe" for DS-11 because a fleet event removes the function from many vehicles at once.
 - Privacy "Severe" for driver-facing video because it is biometric/cabin content; "Major" for location history.
 - Financial impact is the damage to the road user (ISO/SAE 21434 Annex F), quantified in US dollars for the reference configuration (decision register DQ-035, B). Reference values: a Corolla E210 is worth about USD 15,000–22,000; the comma device about USD 1,000. Bands: **Negligible** below USD 100; **Moderate** USD 100–2,500 (towing, an insurance deductible, replacing the device); **Major** USD 2,500–25,000 (collision repair up to the loss of the vehicle, covered in part by insurance); **Severe** a loss the road user may not overcome (uninsured liability above the vehicle's value). Personal injury is rated in the safety column, not here.
@@ -90,7 +93,7 @@ Notes:
 | TS-01 | Forged/altered actuation or RX frames injected on the vehicle bus via physical CAN/OBD access | Spoofing, Tampering | AS-01, AS-15 | Integrity, Authenticity | DS-01…07 | GAP-01 |
 | TS-02 | Compromised SoC user space sets an unsafe panda safety mode/parameter (`0xdc`) | Tampering, Elevation | AS-02, AS-05 | Integrity, Authenticity | DS-01…07 | GAP-09 |
 | TS-03 | Compromised SoC drives panda boot pins and flashes a development bootstub, replacing the envelope | Tampering, Elevation | AS-03, AS-04 | Integrity | DS-01…07 | GAP-38 |
-| TS-04 | Compromised SoC tampers with parameters or publishes forged IPC to override control/model/DM | Tampering | AS-06, AS-07 | Integrity, Authenticity | DS-01…06 | GAP-20 |
+| TS-04 | Compromised SoC tampers with parameters or publishes forged IPC to override control/model/DM | Tampering | AS-06, AS-07 | Integrity, Authenticity | DS-01…06, DS-13, DS-14 | GAP-20 |
 | TS-05 | Panda firmware authenticity defeated (RSA-1024/SHA-1 signing, committed debug key, softloader in release) | Tampering, Spoofing | AS-03 | Integrity, Authenticity | DS-01…07 | GAP-24/25 |
 | TS-06 | Malicious software update delivered through the git-branch OTA path (unsigned beyond TLS + in-tree hashes) | Tampering, Spoofing | AS-09 | Integrity, Authenticity | DS-01…07, DS-11 | GAP-26 |
 | TS-07 | Remote RPC abuse over the athena channel (read services, upload files, tunnel SSH, read keys, stream) | Spoofing, Elevation, Info disclosure, DoS | AS-10, AS-12, AS-13 | Integ., Auth., Conf., Avail. | DS-08…10 | GAP-27 |

@@ -1,0 +1,23 @@
+# Car sprites of the top-view scenario loops (../../fig_sim_ks.py), taken unchanged from the Kenney Racing Pack 1.0.
+# Pack: kenney_racing-pack.zip from https://kenney.nl/assets/racing-pack, downloaded by the project lead on 2026-10-19 and
+# kept in the private assets repository (kenney-racing-pack/, SHA256SUMS there). Licence: CC0 1.0 (License.txt, copied
+# from the zip); credit to Kenney is welcome, not required. fig_sim_ks.py refuses to draw with a sprite whose SHA-256
+# differs from the one below.
+schema_version: 1
+pack: Racing Pack 1.0 by Kenney (www.kenney.nl)
+source: https://kenney.nl/assets/racing-pack
+archive_sha256: a5e5252082e2bcbac177402d3bde3aa161fd81aeb246a36a1ec39255d1f30480
+licence: CC0 1.0 Universal (License.txt, sha256 eb4d367a2b5024535fcfc3e65615d63d9ed9c9fa8d63bfbeb67ac907dc421683)
+files:
+  car_blue_1.png:
+    pack_path: PNG/Cars/car_blue_1.png
+    sha256: aae03c3369f00db344182e426876bd9dc59875dc51583379fded2e469e8883cb
+  car_green_1.png:
+    pack_path: PNG/Cars/car_green_1.png
+    sha256: 22ab853d90abd969f3eafe0acd3665d255fcd2ee0a5b02ab19e1880d74e8f1e5
+  car_red_1.png:
+    pack_path: PNG/Cars/car_red_1.png
+    sha256: 18b02b61145659e5045404175778cd49d71a8f29fb12b4de3dcd8661c55141be
+  car_yellow_1.png:
+    pack_path: PNG/Cars/car_yellow_1.png
+    sha256: 5f67d40f787646f30befa03fa51e307d562e803ebb7450a160412bbb0ad7e937

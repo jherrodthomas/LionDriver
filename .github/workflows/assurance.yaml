@@ -149,6 +149,8 @@ jobs:
       run: |
         python3 tools/safety/fmea_diagrams.py --check
         python3 tools/safety/test_fmea_diagrams.py
+        python3 tools/safety/fmea_cards.py --check
+        python3 tools/safety/test_fmea_cards.py
     - name: Timing-budget and DFI-matrix figures match WP-S-04 and WP-A-03 (and their tests)
       run: |
         python3 assurance/03-system/figures/fig_s04_timing.py --check
@@ -349,7 +351,8 @@ jobs:
   sim-scenarios:
     name: simulation known scenarios
     # WP-V-03 known scenarios as OpenSCENARIO/OpenDRIVE files (assurance/sim/scenarios, layer 2): the committed files
-    # equal a fresh generation, and every file replays headless in the pinned esmini release as specified.
+    # equal a fresh generation, and every file replays headless in the pinned esmini release as specified; the
+    # top-view loops drawn from those replays are current.
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -369,3 +372,7 @@ jobs:
         python3 assurance/sim/scenarios/fetch_esmini.py
         python3 assurance/sim/scenarios/replay.py --check
         python3 assurance/sim/scenarios/test_scenarios.py
+    - name: Top-view loops of the scenarios current (fig_sim_ks.py, Kenney sprites checked against their SHA-256), tests
+      run: |
+        python3 assurance/sim/figures/fig_sim_ks.py --check
+        python3 assurance/sim/figures/test_fig_sim_ks.py

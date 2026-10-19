@@ -1,5 +1,7 @@
 # CA-004 — Braking Authority Study
 
+> **ID note (added 2026-10-19).** HZ-nnn in this dated file is field hazard **FHZ-nnn** of [HAZARD-LOG.md](../../../HAZARD-LOG.md) revision C. It is not the FMEA hazard of the same number (`assurance/08-analyses/fmea/analyses/hara.yaml`). The text is otherwise unchanged.
+
 | Field | Value |
 |---|---|
 | Corrective action | CA-004 (FI-2026-001, RC-02) |

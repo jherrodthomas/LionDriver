@@ -41,6 +41,12 @@ class Scenario:
   build: callable = None
   checks: list = field(default_factory=list)   # descriptions; replay.py implements them
   duration: float = 20.0
+  variants: dict = field(default_factory=dict)  # file suffix -> road overrides: the same scenario on other roads
+
+
+def files_of(sc: Scenario) -> list[tuple[str, dict]]:
+  """(file ID, road) for the scenario's own road and each road variant, e.g. KS-27 and KS-27-R400."""
+  return [(sc.id, sc.road)] + [(f"{sc.id}-{k}", {**sc.road, **v}) for k, v in sc.variants.items()]
 
 
 # ------------------------------------------------------------------------------------------------ entities
@@ -94,8 +100,7 @@ def story(name: str, actor: str, action, trigger) -> xosc.Story:
 
 
 # ------------------------------------------------------------------------------------------------ roads
-def road_xodr(sc: Scenario) -> xodr.OpenDrive:
-  r = sc.road
+def road_xodr(fid: str, r: dict) -> xodr.OpenDrive:
   w = r.get("lane_width", LANE_W)
   if "radius" in r:
     k = 1.0 / r["radius"]
@@ -113,7 +118,7 @@ def road_xodr(sc: Scenario) -> xodr.OpenDrive:
     wall.repeat(wl, 0, sStart=s0, tStart=r["wall"]["t"], tEnd=r["wall"]["t"], heightStart=r["wall"]["height"],
                 heightEnd=r["wall"]["height"], widthStart=0.3, widthEnd=0.3)
     road.add_object(wall)
-  odr = xodr.OpenDrive(sc.id)
+  odr = xodr.OpenDrive(fid)
   odr.add_road(road)
   odr.adjust_roads_and_lanes()
   return odr
@@ -220,11 +225,15 @@ def kmh(v):
   return round(v / 3.6, 3)
 
 
+ODD_SPEED = 110 / 3.6   # ODD-H speed bound, m/s (WP-C-02 §3, decision register DQ-260 A)
+SWEEP_MAX = 120 / 3.6   # highest WP-V-03 sweep speed (KS-05 and KS-07 go to 120 km/h "by simulation only")
 R01 = 300.0
 # KS-27 ramp: the smallest radius of TC-35 (shortest sight distance); a 2 m wall 0.3 m inside the lane's left edge.
 # The sight line from the lane centre clears the wall up to a gap of 2·sqrt(2·Rp·m) along the lane, Rp = R + w/2 and
 # m = w/2 + t the clearance: about 66 m at R = 250 m, inside the 40–80 m of WP-V-03.
 R27, WALL27_T = 250.0, 0.3
+# 400 m and 600 m (WP-V-03 v0.9): the barrier's centreline on the lane edge, m = 1.85 m: about 77 m and 94 m.
+# "reveal" is the band of the reveal gap along the lane that WP-V-03 asks for at that radius.
 SCENARIOS = [
   Scenario("KS-01", "Curve at or beyond the lateral capability",
            {"straight": 200.0, "clothoid": 100.0, "radius": R01, "arc": 900.0},
@@ -262,19 +271,21 @@ SCENARIOS = [
            {"StandTime": (5.0, [3.0, 5.0], "s", "time the lead stands before it leaves")},
            ks23, ["lead leaves at 1.5 m/s² after StandTime; ego starts at standstill"], 15.0),
   Scenario("KS-25", "Speed above the ODD bound", {"length": 2500.0},
-           {"StartSpeed": (kmh(115), [kmh(115)], "m/s", "start speed"),
-            "EndSpeed": (kmh(130), [kmh(130)], "m/s", "end speed; crosses the 120 km/h ODD-H bound")},
-           ks25, ["ego speed crosses 120 km/h"], 25.0),
+           {"StartSpeed": (kmh(105), [kmh(105)], "m/s", "start speed, below the bound"),
+            "EndSpeed": (kmh(120), [kmh(120)], "m/s", "end speed; crosses the 110 km/h ODD-H bound (DQ-260 A)")},
+           ks25, ["ego speed crosses 110 km/h, the ODD-H bound"], 25.0),
   Scenario("KS-27", "Lead hidden in a ramp curve while accelerating to the set speed",
            {"straight": 100.0, "clothoid": 60.0, "radius": R27, "arc": 700.0, "lanes": 1,
-            "wall": {"t": WALL27_T, "height": 2.0}},
+            "wall": {"t": WALL27_T, "height": 2.0}, "reveal": (40.0, 80.0)},
            {"EgoSpeed": (kmh(70), [kmh(50), kmh(70), kmh(90)], "m/s", "ego speed entering the curve"),
             "SetSpeedDelta": (kmh(25), [kmh(20), kmh(25), kmh(30)], "m/s", "set speed above the ego speed"),
             "LeadSpeed": (0.0, [0.0, kmh(30)], "m/s", "lead speed: stopped or slow"),
             "LeadS": (360.0, [360.0], "m", "lead position, 200 m into the arc")},
            ks27, ["the inside wall hides the lead until the gap along the lane is 40–80 m",
                   "ego accelerates to EgoSpeed + SetSpeedDelta (scripted here: in a closed loop the item does it)",
-                  "lead keeps LeadSpeed in lane -1"], 20.0),
+                  "lead keeps LeadSpeed in lane -1"], 20.0,
+           variants={"R400": {"radius": 400.0, "wall": {"t": 0.0, "height": 2.0}, "reveal": (40.0, 80.0)},
+                     "R600": {"radius": 600.0, "wall": {"t": 0.0, "height": 2.0}, "reveal": (80.0, 100.0)}}),
 ]
 
 SCENARIOS_BY_ID = {sc.id: sc for sc in SCENARIOS}
@@ -301,10 +312,10 @@ NOT_REPRESENTED = {
 }
 
 
-def scenario_files(sc: Scenario) -> dict[str, str]:
+def scenario_files(sc: Scenario, fid: str, road: dict) -> dict[str, str]:
   with tempfile.TemporaryDirectory() as tmp:
-    xodr_path = Path(tmp) / f"{sc.id}.xodr"
-    road_xodr(sc).write_xml(str(xodr_path))
+    xodr_path = Path(tmp) / f"{fid}.xodr"
+    road_xodr(fid, road).write_xml(str(xodr_path))
     xodr_text = re.sub(r'date="[^"]*"', 'date="2026-10-16T00:00:00"', xodr_path.read_text(encoding="utf-8"))
     pd = xosc.ParameterDeclarations()
     for name, (default, *_rest) in sc.params.items():
@@ -316,18 +327,20 @@ def scenario_files(sc: Scenario) -> dict[str, str]:
     sb = xosc.StoryBoard(init, stop)
     for st in stories:
       sb.add_story(st)
-    scen = xosc.Scenario(f"{sc.id} {sc.title}", AUTHOR, pd, ent, sb, xosc.RoadNetwork(f"../xodr/{sc.id}.xodr"),
+    title = sc.title if fid == sc.id else f"{sc.title}, R = {road['radius']:g} m"
+    scen = xosc.Scenario(f"{sc.id} {title}", AUTHOR, pd, ent, sb, xosc.RoadNetwork(f"../xodr/{fid}.xodr"),
                          xosc.Catalog(), creation_date=FIXED_DATE)
-    xosc_path = Path(tmp) / f"{sc.id}.xosc"
+    xosc_path = Path(tmp) / f"{fid}.xosc"
     scen.write_xml(str(xosc_path))
-    return {f"xodr/{sc.id}.xodr": xodr_text, f"xosc/{sc.id}.xosc": xosc_path.read_text(encoding="utf-8")}
+    return {f"xodr/{fid}.xodr": xodr_text, f"xosc/{fid}.xosc": xosc_path.read_text(encoding="utf-8")}
 
 
 def build() -> dict[Path, str]:
   out = {}
   for sc in SCENARIOS:
-    for rel, text in scenario_files(sc).items():
-      out[HERE / rel] = text
+    for fid, road in files_of(sc):
+      for rel, text in scenario_files(sc, fid, road).items():
+        out[HERE / rel] = text
   return out
 
 

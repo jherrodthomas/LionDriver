@@ -1,5 +1,7 @@
 # FI-2026-001 — NHTSA PE26007: openpilot collisions with stopped / slow in-lane vehicles
 
+> **ID note (added 2026-10-19).** HZ-nnn in this dated file is field hazard **FHZ-nnn** of [HAZARD-LOG.md](../../HAZARD-LOG.md) revision C. It is not the FMEA hazard of the same number (`assurance/08-analyses/fmea/analyses/hara.yaml`). The text is otherwise unchanged.
+
 ## 1. Header
 
 | Field | Value |
