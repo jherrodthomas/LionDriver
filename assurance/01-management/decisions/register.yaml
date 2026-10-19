@@ -456,7 +456,9 @@
       title: "Leave them informative"
       detail: "No new commitment. Cost: cybersecurity and machine-learning data have no process target, which an assessor may count as a gap."
   sources: ["assurance/01-management/WP-M-13-aspice-capability-baseline.md §3, OI-2", "assurance/01-management/WP-M-01-assurance-strategy.md T-12", "assurance/01-management/WP-M-05-quality-assurance-plan.md QO-5"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#248", record: "assurance/01-management/WP-M-13-aspice-capability-baseline.md §3, §6 (OI-2 closed); WP-M-01 T-12; WP-M-05 QO-5", at: 2026-10-19}
 
 - id: DQ-020
   question: "Which remote features are switched off in the reference car?"
@@ -550,6 +552,7 @@
   reversibility: revisit
   blocks: "WP-C-09 G1 assessment; CAL agreement; WP-S-07 crediting principle (OI-8)"
   gate: G1
+  asked: 2026-10-19
   after: [DQ-009]
   options:
     - key: A
@@ -560,7 +563,8 @@
       title: "Defer and continue with internal review"
       detail: "No cost now; G1 cybersecurity assessment cannot complete."
   sources: ["assurance/02-concept/WP-C-10-cybersecurity-goals-and-concept.md OI-4", "assurance/01-management/WP-M-06-confirmation-measures-plan.md OI-4", "assurance/10-safety-case/WP-K-03-cybersecurity-case.md OI-1", "assurance/06-validation/WP-V-06-cybersecurity-validation.md OI-1"]
-  status: queued
+  status: withdrawn
+  note: "Withdrawn before it was asked: answered by DQ-009 C (no assessor for now). Re-ask if DQ-009 is revisited."
 
 - id: DQ-025
   question: "Who signs the SOTIF release recommendation?"
@@ -891,22 +895,27 @@
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-040
-  question: "Will LionDriver create a legal entity (or other structure) to sign contracts for the assessor, pen test and insurance?"
-  context: "There is no legal entity or contract structure; external assessor, pen-test and insurance contracts need a counterparty."
+  question: "Should LionDriver set up a legal entity, or should you sign contracts and insurance as an individual?"
+  context: "There is no assessor for now (DQ-009 C), but road and closed-course testing still needs insurance cover for test use (WP-M-03 OI-4), and any later pen test, assessor or parts supplier needs a counterparty. Signing as an individual is quick but puts any liability on you personally. This is hard to undo once contracts and policies are in a name."
   reversibility: hard
-  blocks: "D-06 contracts, insurance (OI-4 WP-M-03)"
+  blocks: "Test-use insurance (WP-M-03 OI-4); future contracts (D-06); WP-M-04 OI-5"
   gate: G1
   after: [DQ-009]
+  asked: 2026-10-19
+  batch: 10
   options:
     - key: A
       recommended: true
-      title: "Contract as the individual maintainer"
-      detail: "Fast; personal liability."
+      title: "Sign as an individual now; set up an entity before public release"
+      detail: "Ask your insurer about cover for closed-course test use in your own name. Revisit before any public release or paid contract. Cost: personal liability during development; an entity later."
     - key: B
-      title: "Create a legal entity"
-      detail: "Limits liability; setup cost and time."
-  sources: ["assurance/01-management/WP-M-04-organization-competence-safety-culture.md OI-5"]
-  status: queued
+      title: "Set up a legal entity now (e.g. an LLC)"
+      detail: "Limits personal liability from the start and gives contracts a clear counterparty. Cost: setup fees, yearly filings and admin time."
+    - key: C
+      title: "Decide when the first contract is actually needed"
+      detail: "No effort now. Cost: test insurance (WP-M-03 OI-4) stays open and blocks G1 test sessions."
+  sources: ["assurance/01-management/WP-M-04-organization-competence-safety-culture.md OI-5", "assurance/01-management/WP-M-03-project-plan.md OI-4"]
+  status: open
 
 - id: DQ-041
   question: "Which closed course should you contact first for the vehicle tests?"
@@ -1264,21 +1273,26 @@
   applied: {ref: ebc9fea, record: "WP-C-04 FSR-02.12; WP-S-02 TSR-629 (WP-O-02 OPS-01 and implementation open)", at: 2026-10-16}
 
 - id: DQ-057
-  question: "What confidence level and statistical method define 'meets the validation targets with stated confidence' for unknown-scenario evaluation (R-08)?"
-  context: "R-08 is a SOTIF release criterion. The confidence level determines how much driving or evaluation is needed and how much residual risk is accepted at release."
+  question: "How sure must we be, statistically, that the system meets its SOTIF targets in unknown scenarios before release?"
+  context: "Release criterion R-08 says unknown-scenario evaluation must meet the validation targets \"with stated confidence\", but no confidence level is set. The level fixes how much validation driving and simulation is needed: at 95 % a zero-failure demonstration needs about 3/p trials, at 99 % about 4.6/p. WP-V-02 already uses one-sided 95 % bounds for controllability and exposure."
   reversibility: revisit
-  blocks: "R-08, WP-V-02, SOTIF release"
+  blocks: "R-08 (WP-K-02 OI-2), WP-V-02, WP-V-04, SOTIF release"
   gate: G2
+  asked: 2026-10-19
+  batch: 10
   options:
     - key: A
       recommended: true
-      title: "Set in WP-V-02 (e.g. one-sided 95 % bound as used elsewhere)"
-      detail: "Consistent with WP-V-02 §3.3 method; fixes data needs."
+      title: "One-sided 95 %, the method WP-V-02 already uses"
+      detail: "Zero-failure (or Clopper–Pearson) bounds per scenario class, as in WP-V-02 §3.3. Consistent across the case. Cost: about 3/p trials per target."
     - key: B
-      title: "Leave to assessor"
-      detail: "Delays planning of validation driving."
-  sources: ["assurance/10-safety-case/WP-K-02-sotif-release-argument.md OI-2"]
-  status: queued
+      title: "99 % for ASIL C-related hazards, 95 % for the rest"
+      detail: "Stronger claim where severity is highest. Cost: about 50 % more validation exposure for those hazards."
+    - key: C
+      title: "Leave it until an assessor is engaged"
+      detail: "No decision now. Cost: validation driving and simulation cannot be sized, and with no assessor planned (DQ-009 C) it stays open."
+  sources: ["assurance/10-safety-case/WP-K-02-sotif-release-argument.md OI-2, R-08", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md §3.3"]
+  status: open
 
 - id: DQ-058
   question: "Does PAS 8800 need an AI architecture view at G2?"
@@ -1459,24 +1473,26 @@
   applied: {ref: df2c0ed, record: "WP-H-02 v0.8 OI-1; WP-H-01 OI-3; WP-H-04 plan step 2; WP-H-05 plan step 2; WP-H-07 OI-5", at: 2026-10-16}
 
 - id: DQ-066
-  question: "Does the safety manager approve PMHF (overall failure probability) as the main random-hardware-failure method, with a per-cause check of the biggest contributors?"
-  context: "ISO 26262-5 §9 allows either one overall probability figure (PMHF, method 1) or a per-fault evaluation (EEC, method 2). The proposal is PMHF plus an EEC-style check of the MCU core, SRAM and the stuck relay, so a good overall number cannot hide one uncovered part. The doc says this needs safety-manager approval before calculation starts."
+  question: "Which method should be used for the random hardware failure target: one overall probability, a per-fault check, or both?"
+  context: "ISO 26262-5 §9 allows one overall failure probability (PMHF, method 1) or a per-fault evaluation (EEC, method 2). The proposal is PMHF plus an EEC-style check of the biggest contributors (MCU core, SRAM, harness switch), so a good total cannot hide one uncovered part. As safety manager, you approve the method before the calculation starts; the ASIL C single-point miss stays open for G2 (DQ-362 A)."
   reversibility: easy
-  blocks: "WP-H-05 calculation; G2 method record"
+  blocks: "WP-H-05 calculation (OI-1); G2 method record"
   gate: G2
+  asked: 2026-10-19
+  batch: 10
   options:
     - key: A
       recommended: true
-      title: "PMHF + per-cause check of dominant contributors"
-      detail: "One comparable figure plus visibility of the relay/MCU; moderate effort."
+      title: "PMHF plus a per-cause check of the biggest contributors"
+      detail: "One figure to compare with the ASIL C target, and no single weak part hidden in it. Cost: moderate effort."
     - key: B
-      title: "EEC (method 2) only"
-      detail: "Per-part visibility, but higher effort and harder to communicate."
+      title: "Per-fault evaluation (EEC) only"
+      detail: "Every part seen on its own. Cost: more work and harder to summarise for the safety case."
     - key: C
       title: "PMHF only"
-      detail: "Least effort; a single weak part could be hidden in the total."
-  sources: ["assurance/04-hardware/WP-H-05-random-hardware-failures-pmhf.md OI-1"]
-  status: queued
+      detail: "Least effort. Cost: one weak part, such as the MCU core, could be hidden in a good total."
+  sources: ["assurance/04-hardware/WP-H-05-random-hardware-failures-pmhf.md OI-1, §2"]
+  status: open
 
 - id: DQ-067
   question: "What lifetime, operating hours and temperatures should the hardware failure calculations assume for the device?"
@@ -1499,44 +1515,50 @@
       title: "Wait for measured cabin temperatures and usage data"
       detail: "The most defensible values. Cost: the hardware metrics stay provisional until a logging campaign is done; G2 slips or passes with a condition."
   sources: ["assurance/04-hardware/WP-H-05-random-hardware-failures-pmhf.md §3, OI-2", "assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md §2.4"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#248", record: "assurance/04-hardware/WP-H-05-random-hardware-failures-pmhf.md §3 (OI-2 closed, OI-6); WP-H-03 §2.4", at: 2026-10-19}
 
 - id: DQ-068
-  question: "Does the safety manager confirm the proposed failure-rate sources (SN 29500 for parts, ST data or an IEC TR 62380-type model for the MCU)?"
-  context: "The FMEDA needs one failure-rate handbook per part class. The proposal is SN 29500 with IEC 61709 for conversions, supplier FIT data for the STM32H7 if ST provides it, otherwise a die/package model as referenced in ISO 26262-11 (IEC TR 62380 is no longer maintained — status to verify). The doc asks the safety manager to confirm before numbers are filled in."
+  question: "Which failure-rate handbooks should the hardware calculations use?"
+  context: "Every number in the hardware analysis (FMEDA) comes from a failure-rate source. The proposal: **SN 29500** for discrete parts and ICs, **IEC 61709** to convert to the approved mission profile (DQ-067 A), ST's own FIT data for the STM32H7 if ST provides it, otherwise an ISO 26262-11 die/package model. The current first estimate (FMEDA rev 0.4) already uses SN 29500, so changing source now means redoing it."
   reversibility: easy
-  blocks: "FMEDA §6, WP-H-04/05 numbers"
+  blocks: "FMEDA §6 (WP-H-03 OI-2); WP-H-04/05 numbers"
   gate: G2
+  asked: 2026-10-19
+  batch: 10
   options:
     - key: A
       recommended: true
-      title: "Confirm the proposal in §2.3"
-      detail: "Calculation can start with generic data now and part-specific later."
+      title: "Approve the proposed set (WP-H-03 §2.3)"
+      detail: "Widely used in automotive FMEDAs and already in the first estimate. Generic now, part-specific when ST data arrives. Cost: buying the SN 29500 series if not already held."
     - key: B
-      title: "Choose a different handbook set"
-      detail: "Rework of the first estimate (§6.3); may need purchase of another handbook."
-  sources: ["assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md OI-2"]
-  status: queued
+      title: "Use a different handbook set"
+      detail: "For example a different industry standard. Cost: the first estimate (§6.3) is redone, and another handbook may need buying."
+  sources: ["assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md OI-2, §2.3"]
+  status: open
 
 - id: DQ-069
-  question: "If ST's FIT data and safety package for the STM32H7 are unavailable or need a licence, does the project pay for them or write its own CPU/RAM self-tests with only 'low' coverage?"
-  context: "Without ST's safety package (QE-03), LionDriver must write its own start-up and periodic CPU/RAM tests and may claim only low diagnostic coverage for the CPU, which may make the ASIL B single-point fault metric fail (WP-H-04 §5.1). WP-H-07 §5 says this fallback needs a safety-manager decision; the next step is to ask ST about availability and licence terms."
+  question: "If ST's safety data for the panda's microcontroller isn't freely available, do we pay for it, or write our own self-tests?"
+  context: "Without ST's safety package for the STM32H7 (safety manual, FMEDA, self-test library), LionDriver writes its own CPU/RAM start-up and periodic tests and can claim only **low** coverage for the CPU. That makes the single-point metric, already 0.16 points short of ASIL C (DQ-362 A), harder to reach. The first step is to ask ST about availability and licence terms (WP-H-07 OI-2)."
   reversibility: revisit
-  blocks: "WP-H-03 OI-3 / OI-10 part-specific rates; SPFM for SG-01"
+  blocks: "WP-H-03 OI-3/OI-10 part-specific rates; SPFM for SG-01, SG-02, SG-03, SG-06"
   gate: G2
+  asked: 2026-10-19
+  batch: 10
   options:
     - key: A
       recommended: true
-      title: "Obtain ST package/FIT data (licence if needed)"
-      detail: "Best coverage argument; possible licence cost and terms."
+      title: "Ask ST now; pay a licence if the cost is reasonable"
+      detail: "Best coverage argument for the ASIL C metric. Cost: a possible licence fee and its terms of use, which become assumptions on the firmware."
     - key: B
-      title: "Own self-tests, low CPU coverage"
-      detail: "No licence; higher risk of missing the SPFM target."
+      title: "Write our own self-tests and accept low CPU coverage"
+      detail: "No licence. Cost: the ASIL C single-point target is likely missed, and the gap moves to G2."
     - key: C
-      title: "Hardware adapter (DC-02) or lower claim"
-      detail: "Moves coverage to LionDriver hardware or restricts the ASIL claim."
-  sources: ["assurance/04-hardware/WP-H-07-hardware-component-qualification.md OI-2"]
-  status: queued
+      title: "Add a hardware supervisor (adapter DC-02) or lower the claim"
+      detail: "Moves coverage to LionDriver hardware, or restricts the ASIL claim. Cost: new hardware design, or a weaker safety case."
+  sources: ["assurance/04-hardware/WP-H-07-hardware-component-qualification.md OI-2, QE-03, §5"]
+  status: open
 
 - id: DQ-070
   question: "Should the project confirm with the external assessor that mechanisms on the QM main computer (SoC) get no diagnostic-coverage credit?"
@@ -1671,21 +1693,26 @@
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-076
-  question: "Who fills the test/safety driver (G1), hardware safety engineer (G2, likely external) and HIL bench owner (G3) roles?"
-  context: "These roles are TBD. The HIL bench (decision D-04) does not exist and no parts are bought; the G4 phase cannot start without it, and a late bench slips G3."
+  question: "Who will be the second safety driver, the hardware safety engineer and the test-bench (HIL) owner?"
+  context: "Today you hold every role. Closed-course sessions (DQ-104 B) at level L5 need a two-person crew, so a second qualified safety driver is needed for G1 road tests (WP-V-07 OI-2). The hardware metrics (G2) are planned with an external hardware safety engineer, and the HIL bench (decision D-04), owned by nobody and not bought, gates G3 and G4. With about 10 hours a week (DQ-208 A), these are the roles most likely to slip the schedule."
   reversibility: revisit
-  blocks: "G1 road tests, WP-H-03, HIL bench (D-04), G3/G4"
-  gate: G3
+  blocks: "G1 road tests (WP-V-07 OI-2), WP-H-03/04 review, HIL bench (D-04), G3/G4"
+  gate: G1
+  asked: 2026-10-19
+  batch: 10
   options:
     - key: A
       recommended: true
-      title: "Assign now, engage external HW safety engineer"
-      detail: "Unblocks G2-G4 work; cost for external help and bench parts."
+      title: "Recruit a second safety driver now; you own the HIL bench; hardware engineer at G2"
+      detail: "A trusted second driver (trained per WP-V-07 §5) unblocks two-person sessions. You own the bench and buy parts when G2 nears. An external hardware safety engineer is engaged only for the G2 metric review. Cost: one volunteer to train now, external hours at G2."
     - key: B
-      title: "Defer"
-      detail: "Each gate passes only with conditions."
-  sources: ["assurance/10-safety-case/gates/skeletons/G3-skeleton.md “HIL bench owner | TBD | G3”", "assurance/06-validation/WP-V-07-vehicle-test-operations.md OI-2"]
-  status: queued
+      title: "Hold all three roles yourself for now"
+      detail: "No cost now. Cost: only L0–L4 sessions are possible, the hardware review is not independent, and each gate passes only with conditions."
+    - key: C
+      title: "Engage external help for all three now"
+      detail: "Fastest progress. Cost: the largest spend, before G1 has shown the approach works."
+  sources: ["assurance/10-safety-case/gates/skeletons/G3-skeleton.md “HIL bench owner | TBD | G3”", "assurance/06-validation/WP-V-07-vehicle-test-operations.md OI-2, §5", "assurance/10-safety-case/gates/skeletons/G3-skeleton.md participants (hardware safety engineer TBD)"]
+  status: open
 
 - id: DQ-077
   question: "When driver-monitoring confidence drops, should the wheel-touch reminders come faster at highway speed?"
@@ -1717,21 +1744,27 @@
   note: "Speed table and bound set in WP-C-08 v0.5 §5.4 (jherrodthomas/LionDriver#214). policy.py change done 2026-10-17: alert k at 5/15/25 s or 150/240/395 m, whichever comes first; SWSR-634 (WP-W-02 v0.32), unit tests only. Open: vehicle validation, WP-V-02 §4.4 (b)-(d)."
 
 - id: DQ-078
-  question: "Does the safety authority accept the residual risks listed for missing supplier evidence (no EMC/environment tests, teardown instead of schematic, handbook failure rates)?"
-  context: "comma.ai and ST evidence may never arrive. WP-H-07 §5 proposes accepting most gaps with conditions (incoming inspection per batch, sensitivity margin, relay readback), but EMC and environmental robustness have no LionDriver test and 'must be recorded as residual risk' for the assessor; the relay gap is high risk unless DC-03 is added."
+  question: "Do you accept the residual risks from supplier evidence we can't get (no EMC or environmental tests, handbook failure rates)?"
+  context: "comma.ai and ST may never supply test reports or schematics; you chose to ask and wait, without a teardown (DQ-065 B). WP-H-07 §5 proposes accepting most gaps with conditions (incoming inspection of each batch, margins on failure rates). EMC and environmental robustness have no LionDriver test at all and would stand as recorded residual risks in the safety case. As safety authority, accepting them is your call."
   reversibility: revisit
-  blocks: "Safety case WP-K-01 residual-risk section; risk register WP-M-07"
+  blocks: "Safety case WP-K-01 residual-risk section; risk register WP-M-07; WP-H-07 OI-6"
   gate: G3
+  asked: 2026-10-19
+  batch: 10
   options:
     - key: A
       recommended: true
-      title: "Accept with the stated conditions; record EMC/environment for the assessor"
-      detail: "Lets the safety case proceed; residual risks visible in WP-K-01 and WP-M-07."
+      title: "Accept with the stated conditions; record EMC and environment as residual risks"
+      detail: "The safety case can proceed and the gaps stay visible in WP-K-01 and WP-M-07. Cost: these are limits a reviewer will see, and the claim rests on handbook data."
     - key: B
-      title: "Do not accept; add DC-02/DC-03 adapter or restrict the claim"
-      detail: "More hardware or a lower ASIL claim (FSC option c)."
-  sources: ["assurance/04-hardware/WP-H-07-hardware-component-qualification.md OI-6"]
-  status: queued
+      title: "Don't accept; pay for EMC and environmental tests"
+      detail: "Closes the biggest gaps with evidence. Cost: lab fees and devices used up in testing."
+    - key: C
+      title: "Don't accept; add the hardware adapter (DC-02/DC-03) or lower the claim"
+      detail: "Moves coverage to LionDriver hardware, or restricts the ASIL claim. Cost: new hardware design, or a weaker safety case."
+  sources: ["assurance/04-hardware/WP-H-07-hardware-component-qualification.md OI-6, §5"]
+  note: "WP-H-07 still describes the harness as having a relay (QC-04, QE-05); the reference harness box v3 uses two analog switches (RR-2026-010). The residual-risk list should be updated when WP-H-07 is next revised."
+  status: open
 
 - id: DQ-079
   question: "After the envelope revokes authority for a too-high transmit rate, should re-engagement stay blocked until the rate has been within budget for a full 250 ms window?"
@@ -1797,24 +1830,27 @@
       title: "Wait for the vehicle characterisation, then set them once"
       detail: "One set of measured values. Cost: the seven requirements stay unimplemented until the test car and a closed course are ready (DQ-104: closed courses only)."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-4", "assurance/03-system/WP-S-02-technical-safety-requirements.md OI-3, OI-5"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-082
-  question: "When the host sends a refused request while steering authority is granted, should the envelope also withdraw authority (treat the host as possibly compromised)?"
-  context: "In the reference build a refused host request is ignored. Review finding F-36 proposes that it also clears controls_allowed and is reported, matching cybersecurity requirement CSR-012 ('suspected compromised host → no actuation'). This trades availability (a spurious request disengages) for security."
+  question: "If the main computer sends a request the panda refuses while steering is engaged, should the panda also take away steering authority?"
+  context: "Today a refused request is mapped to nothing and ignored (panda `main_comms.h`). Review finding F-36 proposes that it also ends authority (clears `controls_allowed`) and reports it, matching cybersecurity requirement CSR-012: a host that sends forbidden requests may be compromised, so stop actuating. The trade is safety and security against availability: a stray request would disengage the system, with the take-over alert."
   reversibility: easy
-  blocks: "SWSR-512/513, CSR-012"
+  blocks: "SWSR-512/513, CSR-012 (WP-W-03 ATC-21)"
   gate: G3
+  asked: 2026-10-19
+  batch: 10
   options:
     - key: A
       recommended: true
-      title: "Withdraw authority and report"
-      detail: "Implements CSR-012 intent; possible unexpected disengagements if the host sends a stray request."
+      title: "Withdraw authority and report it"
+      detail: "Meets CSR-012; a misbehaving host can no longer steer. Cost: a small panda change plus tests, and a rare unexpected disengagement if the host ever sends a stray request."
     - key: B
       title: "Keep ignoring the request"
-      detail: "No behaviour change; CSR-012 intent not met."
-  sources: ["assurance/05-software/WP-W-03-software-architecture.md ATC-21"]
-  status: queued
+      detail: "No change, no extra disengagements. Cost: CSR-012's intent is not met; it stays an open item in the cybersecurity case."
+  sources: ["assurance/05-software/WP-W-03-software-architecture.md ATC-21", "assurance/05-software/reviews/RR-2026-009.md F-36"]
+  status: open
 
 - id: DQ-083
   question: "Who approves the MISRA deviation records, and should 'RATIONALE TBD' suppressions be justified or removed by code changes?"
@@ -2150,6 +2186,8 @@
   context: "The platform-level HARA approach is not confirmed. Parameters P2, P3, P5, P7, P8 drive severity, exposure and controllability, so variant ratings (and possibly ASILs) may differ from the reference Corolla."
   reversibility: revisit
   blocks: "PL-001, HARA scope"
+  gate: G1
+  asked: 2026-10-19
   options:
     - key: A
       recommended: true
@@ -2159,7 +2197,8 @@
       title: "Assess reference vehicle only"
       detail: "Restrict claims to the Corolla; other vehicles stay not assessed."
   sources: ["assurance/08-analyses/fmea/item-definition.md IOI-004"]
-  status: queued
+  status: withdrawn
+  note: "Withdrawn before it was asked: superseded by DQ-369 A (2026-10-18): hazards are rated per vehicle family and vehicle assumptions become entry criteria."
 
 - id: DQ-101
   question: "Who is the named deputy for the cybersecurity manager / vulnerability management roles, with documented access to repository and keys?"
@@ -4080,11 +4119,13 @@
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 - id: DQ-206
   question: "When a diagnostic catches a hazardous fault and the car reaches a safe state in time, may that count as accepting the remaining risk?"
-  context: "The new monitoring-and-response rating (FMEA-MSR) scores how well each in-car diagnostic catches a fault and how fast the system reacts. 194 of 201 failure causes are rated high priority today because diagnostics get no credit. The question is whether a good monitoring score can **close** a hazard-linked cause, or only rank which ones to work on first."
+  context: "The monitoring-and-response rating (FMEA-MSR) scores how well each in-car diagnostic catches a fault and how fast the system reacts. 194 of 201 failure causes are rated high priority today because diagnostics get no credit: a panda hang caught by the watchdog in about 90 ms, inside a 0.5 s fault-tolerant time, ranks the same as a cause nobody monitors. The question is whether a good monitoring score can **close** a hazard-linked cause, or only rank which ones to work on first."
   reversibility: revisit
   blocks: "FMEA-MSR step M2; residual-risk argument in the safety case"
   gate: G3
   decider: lead
+  asked: 2026-10-19
+  batch: 10
   options:
     - key: A
       recommended: true
@@ -4095,9 +4136,9 @@
       detail: "Every high-priority cause still needs its own action or a rationale you sign. Safest, but the list of 194 stays open until the actions are done."
     - key: C
       title: "It can close a cause with calculated timing"
-      detail: "Fastest. Timing derived from the code is accepted without measurement. An assessor is likely to challenge it."
+      detail: "Fastest. Timing derived from the code is accepted without measurement. Cost: a reviewer is likely to challenge it."
   sources: ["assurance/08-analyses/fmea/msr-plan.md", "assurance/03-system/WP-S-04-timing-ftti-budget.md", "assurance/08-analyses/fmea/rating-tables.md"]
-  status: queued
+  status: open
 
 - id: DQ-207
   question: "Can you get the official AIAG-VDA priority table for monitoring-and-response ratings into the project?"
@@ -4141,7 +4182,10 @@
       title: "Keep relative months until a second person joins"
       detail: "No commitment now. Cost: no gate dates, so slippage cannot be seen."
   sources: ["assurance/01-management/WP-M-03-project-plan.md OI-1", "assurance/01-management/WP-M-03-project-plan.md §4.3, §5"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#248", record: "assurance/01-management/WP-M-03-project-plan.md §5, §6, Figure 5-2 (OI-1 closed)", at: 2026-10-19}
+  note: "On 2026-10-19 the lead set the figure to about 20 h/week (chat). WP-M-03 §5 is dated at 20 h/week: G1 Nov 2027–May 2028, G5 Jul 2031–Mar 2034."
 
 - id: DQ-209
   question: "The stock emergency-braking path runs through powered electronics in comma's harness box. Accept that and test it, or build our own adapter with a passive fail-safe relay?"
@@ -4264,23 +4308,28 @@
   applied: {ref: "jherrodthomas/LionDriver#154", record: "WP-C-03 v0.4.1 §6.1 observation 7, OI-9 (SG-06 ASIL C, set in v0.4)", at: 2026-10-16}
 
 - id: DQ-211
-  question: "What harness letter and harness-box revision are printed on the reference car's harness, and which device units (comma 3X, comma four) will be used?"
-  context: "comma's documentation lists the Toyota A harness for the 2020-22 Corolla, and the hardware analyses use the published box v3 drawing. The Toyota A and B harnesses differ in connectors (RR-2026-010 F-13). **Only the physical unit can confirm it.** These are facts to read off the parts, not a choice."
+  question: "Which harness and device units are actually on the reference Corolla?"
+  context: "The analyses assume comma's Toyota **A** harness with the published harness box **v3** (two analog switches, no relay). The Toyota A and B harnesses use different connectors, so the hardware analysis of the harness (WP-H-06) and the item definition can only be closed from the parts themselves. This is a fact to read, not a choice: the letter is printed on the harness connector/label, the box revision on the harness box label, and the device board and serial in the device's Settings → Device screen."
   reversibility: easy
   blocks: "WP-C-01 OI-2; WP-H-06 harness unit; RR-2026-010 F-10, F-13"
   gate: G1
   decider: lead
+  asked: 2026-10-19
+  batch: 10
   options:
     - key: A
       recommended: true
-      title: "Read the labels and reply with letter, box revision and device serials"
-      detail: "Photos of the harness box label and the device's about screen are enough. Cost: a few minutes at the car."
+      title: "I'll read the labels and enter them in the note"
+      detail: "Write the harness letter (A or B), the box revision, and for each device: comma 3X or comma four, plus the serial. Photos are fine. Cost: a few minutes at the car; closes WP-C-01 OI-2 and RR-2026-010 F-13."
     - key: B
-      title: "Assume Toyota A and box v3 until a harness is bought"
-      detail: "The analyses stay on comma's drawing. Cost: if the unit differs, the hardware analyses are re-checked."
-  sources: ["assurance/02-concept/WP-C-01-item-definition.md OI-2", "assurance/04-hardware/reviews/RR-2026-010.md F-13"]
-  note: "The lead answered on 2026-10-16 that the labels will be read later; stays queued until then."
-  status: queued
+      title: "It is Toyota A, box v3, as documented"
+      detail: "Confirms what the analyses already assume, without device serials. Cost: the device units stay unrecorded until you add them."
+    - key: C
+      title: "Keep assuming Toyota A and box v3 for now"
+      detail: "Nothing changes yet. Cost: G1 cannot close the harness item; if the part differs, the harness analysis is redone."
+  sources: ["assurance/02-concept/WP-C-01-item-definition.md OI-2 (Device and Harness rows, §2)", "assurance/04-hardware/reviews/RR-2026-010.md F-10, F-13"]
+  note: "The lead answered on 2026-10-16 that the labels will be read later; reopened in batch 10."
+  status: open
 
 - id: DQ-212
   question: "With both the comma 3X and the comma four in scope, how many devices should be bought for the bench and the car?"
@@ -4355,7 +4404,8 @@
     - assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-067
     - openpilot/selfdrive/selfdrived/assured_config.py
     - openpilot/selfdrive/selfdrived/selfdrived.py:502-506, 607-626
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-260
   question: "Should the highway ODD stop at 110 km/h, the highest speed at which the driver's control of a steering fault will be tested?"
@@ -4431,7 +4481,8 @@
   - assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-036, SFM-ACT-020
   - assurance/08-analyses/WP-A-04-system-fta-fmea.md MCS-07.10
   - assurance/02-concept/WP-C-04-functional-safety-concept.md AOU-04R
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-360
   question: "If the steering (EPS) or the engine controller (PCM) silently stops obeying LionDriver, without sending a fault, do we rely on a tested assumption about the car, or add a check that compares the car's response with the command?"
@@ -4454,7 +4505,8 @@
       title: "Do both"
       detail: "Tested assumption now, response check before release. Cost: the sum of A and B."
   sources: ["assurance/08-analyses/fta-fmea-mapping.md F-32", "assurance/08-analyses/WP-A-04-system-fta-fmea.md MCS-02.10, MCS-06.11"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-361
   question: "Do the two \"take-over warning\" goals (SG-02 steering, SG-06 braking) also cover the system being too weak by design, such as a curve too tight for the torque limit or a lead car seen too late, or only faults?"
@@ -4474,7 +4526,8 @@
       title: "Faults only; performance limits go to SOTIF alone"
       detail: "Remove G2.8 and G6.9 and justify the three FMEA modes as SOTIF. Cost: the goals' wording should be narrowed to match, and the SOTIF case carries these hazards without the fault-tree view."
   sources: ["assurance/08-analyses/fta-fmea-mapping.md F-33", "assurance/08-analyses/WP-A-04-system-fta-fmea.md G2.8, G6.9"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-362
   question: "SG-02, SG-03 and SG-06 are now ASIL C, and the hardware analysis they share misses the ASIL C single-point target by 0.16 points. Do we reuse it and close the gap at the hardware gate, or build a separate analysis for each goal?"
@@ -4498,7 +4551,9 @@
       title: "Accept 96.84 % now with a written rationale"
       detail: "Close the item without a design change. Cost: an assessor may not accept a missed ASIL C target."
   sources: ["assurance/08-analyses/fta-fmea-mapping.md F-22", "assurance/08-analyses/fmea/analyses/fmeda-sg001.yaml", "assurance/02-concept/WP-C-03-hara.md SG-02, SG-03, SG-06"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#249", record: "assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md §6.4; WP-H-04 OI-6", at: 2026-10-19}
 
 - id: DQ-363
   question: "When the driver presses the accelerator while LionDriver is braking, and the accelerator signal is stuck at \"not pressed\", which goal owns it: braking (SG-04) or release on driver action (SG-05)?"
@@ -4544,7 +4599,8 @@
       title: "Narrow the SG-03 top event to while engaged"
       detail: "The not-engaged branch then rests on SG-01's authority checks only. Cost: the acceleration case of a false engagement has no rated hazard."
   sources: ["assurance/08-analyses/fta-fmea-mapping.md F-34", "assurance/08-analyses/fmea/hara-mapping.yaml HZ-010"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-365
   question: "When the driver does not respond to the last driver-monitoring alert, what should LionDriver do: stop in the lane and stay stopped, or stop and then hand back control?"
@@ -4644,7 +4700,8 @@
       title: "Allow engagement anywhere, show a warning off-highway, and rely on the driver and user information"
       detail: "Most useful in daily driving. Cost: the ODD limit rests on the driver; LS-13 stays a known gap, and an assessor may ask why an ODD boundary has no technical check."
   sources: ["assurance/08-analyses/WP-A-05-stpa.md LS-13, OI-15", "assurance/01-management/decisions/register.yaml DQ-023", "assurance/02-concept/WP-C-07-sotif-functional-modifications.md FM-08"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-367
   question: "With an EPS fault and a host that keeps asking for torque, authority now drops after 50 ms and the panda's EPS-fault siren no longer sounds. Restore the siren, accept losing it, or keep the old rule?"
@@ -4725,7 +4782,8 @@
       title: "One worst case for the whole platform"
       detail: "Rate every vehicle as if no EPS or PCM limit helps: SG-01 and SG-03 become ASIL D for all, the Corolla included. Cost: ASIL D methods for the panda and the analyses, much more work before G1."
   sources: ["assurance/02-concept/WP-C-03-hara.md §6 SG-01, SG-03", "assurance/02-concept/WP-C-01-item-definition.md AOU-01…AOU-05", "assurance/08-analyses/fmea/item-definition.md §A.10 P1–P11, IOI-004", "assurance/08-analyses/fmea/item/vehicle-catalog.md"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-370
   question: "With the move to a platform (DQ-037 B), what should the G1 gate claim?"
@@ -4745,7 +4803,9 @@
       title: "The whole Corolla E210 family (VF-001)"
       detail: "G1 also covers the hatchback and the hybrids. Cost: their checks (IOI-002) must be done first, which delays G1."
   sources: ["assurance/01-management/WP-M-01-assurance-strategy.md §3.1", "assurance/01-management/WP-M-12-impact-analysis.md M-1", "assurance/08-analyses/fmea/item-definition.md §1, IOI-002", "docs/liondriver/vehicles/vehicles.yaml VF-001"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#248", record: "assurance/01-management/WP-M-01-assurance-strategy.md §3.1, §3.2, §7, D-15; WP-M-07 §5 D-15; WP-M-12 M-1", at: 2026-10-19}
 
 - id: DQ-400
   question: "The closed-loop driving simulation cannot run in real time on GitHub's free 4-core runners. Should it run on your own computer as a self-hosted runner, on a paid larger GitHub runner, or stay off CI for now?"

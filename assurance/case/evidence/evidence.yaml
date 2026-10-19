@@ -381,7 +381,7 @@
 - id: Sn-40
   kind: evidence
   title: "Insufficiencies and triggering conditions"
-  description: "Draft: FI-01…FI-22, TC-01…TC-33"
+  description: "Draft: FI-01…FI-23, TC-01…TC-34"
   evidence_status: partial
   lifecycle_area: hazard-analysis
   location: "assurance/02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md"

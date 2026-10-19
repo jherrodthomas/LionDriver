@@ -46,6 +46,32 @@ class TestGuidewordScenes(unittest.TestCase):
     x, y = gs._pts(gs.F01["M01"][3])[-1]
     self.assertIn(f'translate({x:.1f} {y:.1f})', car)                     # static pose = end of the path
 
+  def test_every_function_with_sc_pairs_has_a_sheet(self):
+    for fid, rows in hm.FM.items():
+      has_sc = any(r[0] == hm.SC for r in rows.values())
+      self.assertEqual(fid in gs.SHEETS, has_sc, fid)
+      if not has_sc:
+        self.assertIn(fid, gs.NO_SHEET)
+
+  def test_every_card_says_what_matters(self):
+    for fid in gs.SHEETS:
+      for c in gs.cards(fid):
+        self.assertTrue(c["label"], f"{fid}/{c['gw']} has no callout")
+
+  def test_longitudinal_consequences(self):
+    got = {(f, c["gw"]): c["label"] for f in ("F-02", "F-02X", "F-03", "F-08") for c in gs.cards(f)}
+    self.assertEqual(got[("F-02", "M01")], "closes on the lead")          # no deceleration behind a slowing lead
+    self.assertEqual(got[("F-02X", "M01")], "past the stop line on red")  # does not stop for the red light
+    self.assertEqual(got[("F-03", "M01")], "runs into the stopped car")   # no disengagement when the driver brakes
+    self.assertEqual(got[("F-08", "M03")], "runs into the stopped car")   # stock AEB request blocked
+
+  def test_goal_chip_without_goal_in_scope(self):
+    c = gs.cards("F-02X")[0]
+    self.assertEqual((c["hz"], c["asil"]), ("H-10", None))                # SG-09 exists only under D-08 option B
+    self.assertIn("SG-09", c["sg"])
+    mc = {c["gw"]: c for c in gs.cards("F-05")}["M01"]
+    self.assertEqual(mc["sg"], "SG-02/SG-06")                             # H-07 is covered by two goals
+
   def test_missing_model_rejected(self):
     model = dict(gs.F01)
     del model["M05"]

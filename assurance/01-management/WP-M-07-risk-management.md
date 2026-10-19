@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-07 Project risk management plan and register |
 | Standard reference | ASPICE 4.0 MAN.5 (risk management); ISO 26262-2 §6 (planning and progress, by reference to WP-M-02) |
-| Version | 0.5 (D-14 decided, DQ-074 B; 2026-10-18). 0.4 (decision log brought level with WP-M-01 §8 and the decision register: D-14 added, the lead's answers of 2026-10-14 to D-04, D-05, D-06 and D-13 recorded as answered and not yet applied, a Question column; R-26 record count; OI-3 closed; 2026-10-14). 0.3 (Figure 4-1 added, generated from §2.2 and §4; 2026-10-13). 0.2 (status update for the integrated envelope changes: R-05 closed, R-10 and R-11 re-scored, R-26…R-29 added, D-04 status, D-13 added (envelope strategy); 2026-10-12). 0.1 |
+| Version | 0.6 (D-15 vehicle scope decided: platform, hazards rated per family, G1 claims CFG-001 only (DQ-037 B, DQ-369 A, DQ-370 A); 2026-10-19). 0.5 (D-14 decided, DQ-074 B; 2026-10-18). 0.4 (decision log brought level with WP-M-01 §8 and the decision register: D-14 added, the lead's answers of 2026-10-14 to D-04, D-05, D-06 and D-13 recorded as answered and not yet applied, a Question column; R-26 record count; OI-3 closed; 2026-10-14). 0.3 (Figure 4-1 added, generated from §2.2 and §4; 2026-10-13). 0.2 (status update for the integrated envelope changes: R-05 closed, R-10 and R-11 re-scored, R-26…R-29 added, D-04 status, D-13 added (envelope strategy); 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (project risk; not product hazard analysis) |
 | Author | Assurance team (initial draft) |
@@ -14,7 +14,7 @@
 
 ## 1. Purpose and scope
 
-This document defines how LionDriver identifies, analyses, treats and monitors **project risks**: events that could stop the project from achieving the assurance path in [WP-M-01](WP-M-01-assurance-strategy.md) on its planned scope, effort and quality. It also tracks the strategic decisions D-01…D-14 from [WP-M-01 §8](WP-M-01-assurance-strategy.md#8-strategic-decisions-required).
+This document defines how LionDriver identifies, analyses, treats and monitors **project risks**: events that could stop the project from achieving the assurance path in [WP-M-01](WP-M-01-assurance-strategy.md) on its planned scope, effort and quality. It also tracks the strategic decisions D-01…D-15 from [WP-M-01 §8](WP-M-01-assurance-strategy.md#8-strategic-decisions-required).
 
 Product risks (hazards to road users, threats to the vehicle) are **not** managed here. They belong to the HARA ([WP-C-03](../02-concept/WP-C-03-hara.md)), the SOTIF analyses ([WP-C-05](../02-concept/WP-C-05-sotif-hazard-identification.md)) and the TARA ([WP-C-09](../02-concept/WP-C-09-tara.md)). Where a project risk would weaken a product safety argument, the register says so and links the affected work product.
 
@@ -136,6 +136,7 @@ This table is the record of the strategic decisions. [WP-M-01 §8](WP-M-01-assur
 | D-12 | LionDriver-only devices | Yes for the reference configuration; development units outside the claims | **Decided** 2026-10-10 as recommended | PM | G3 | — | — |
 | D-13 | Envelope strategy ([WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) §4.2, OI-1) | Option (c): reduce actuation authority so C1 can be shown (SG-01 to ASIL B), with ASIL B hardening of the envelope; (b) as fallback | **Answered** 2026-10-14: option (c), reduce steering authority so SG-01 drops to ASIL B (DQ-007 option C, as recommended); not yet applied to WP-C-03, WP-C-04 and the requirement ASILs | PM / SM | G1 | R-09, R-02 | DQ-007 |
 | D-14 | Authorize the ISO 26262-6 software lifecycle ([WP-M-14](WP-M-14-iso26262-6-implementation-specification.md)) | Hold Phase A until the safety plan, item definition, HARA, FSC and TSC are at least in review; hold Phase B until the full entry baseline is approved or each exception is justified | Decided 2026-10-14 (DQ-074, B): Phase A starts now with the unmet entry criteria as documented exceptions ([WP-M-14 §3.3](WP-M-14-iso26262-6-implementation-specification.md)); Phase B unchanged | PM / SM | G2 | R-01 | DQ-074 |
+| D-15 | Vehicle scope: one reference configuration or a platform | Platform with a per-vehicle entry check; hazards rated per vehicle family; G1 claims the reference configuration only | **Decided** 2026-10-14 (DQ-037, B: move to a platform) and 2026-10-18 (DQ-369, A: rate per family, vehicle assumptions as entry criteria; DQ-370, A: G1 claims CFG-001 only). Applied 2026-10-19 in WP-M-01 §3.1 and WP-M-12 M-1; WP-C-01 and WP-C-03 platform rewrite pending (item definition IOI-004) | PM / SM | G1 | R-01 | DQ-037, DQ-369, DQ-370 |
 
 ## 6. Records
 
