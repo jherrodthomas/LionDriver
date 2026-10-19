@@ -709,7 +709,7 @@ def dq_figure(rows: list[dict]) -> str:
     out.append(f'<line x1="{x0}" y1="{yy - 4}" x2="{x0 + 24}" y2="{yy - 4}" stroke="{col}" stroke-width="3"/>')
     out.append(f'<text x="{x0 + 32}" y="{yy}" class="s-ink" font-size="12.5">{what} at {r["p"]["phase"]:.0%} of the '
                f'change ({r["id"]}): runs past the target lane, rho {r["rho"]:.2f} m</text>')
-  out.append(f'<text x="{x0 + 32}" y="{ly + 78}" class="s-muted" font-size="11">Dotted: the planned change, no '
+  out.append(f'<text x="{x0 + 32}" y="{ly + 62}" class="s-muted" font-size="11">Dotted: the planned change, no '
              'fault. Plant runs with the real panda code; time from the start of the change.</text>')
   out.append("</svg>")
   return "\n".join(out) + "\n"
