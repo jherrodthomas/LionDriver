@@ -997,6 +997,8 @@
   reversibility: revisit
   blocks: "WP-V-07 approval for L5; OI-6 TBC values; L3 deviations"
   gate: G1
+  asked: 2026-10-19
+  batch: 13
   options:
     - key: A
       recommended: true
@@ -1006,7 +1008,7 @@
       title: "Engage a reviewer now"
       detail: "The (TBC) values can be settled early. Cost: search effort and fees before L5 is possible."
   sources: ["assurance/06-validation/WP-V-07-vehicle-test-operations.md OI-1"]
-  status: queued
+  status: open
 
 - id: DQ-045
   question: "Should you buy insurance that covers development testing?"
@@ -2015,7 +2017,8 @@
       title: "Keep comma.ai's flow and add a LionDriver page"
       detail: "Least work. Cost: users see warnings that don't match LionDriver's limits; a reviewer will flag it."
   sources: ["assurance/09-production-operation/WP-O-03-user-information-safety-warnings.md OI-7"]
-  status: open
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all ten (the recommended option of each)"}
 
 - id: DQ-089
   question: "After release, should field data be collected by hand at service visits, or uploaded to a LionDriver server?"
@@ -2037,7 +2040,8 @@
       title: "Decide at G4 when the user count is known"
       detail: "No commitment yet. Cost: WP-O-04 stays open until then."
   sources: ["assurance/09-production-operation/WP-O-04-field-monitoring.md OI-2"]
-  status: open
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all ten (the recommended option of each)"}
 
 - id: DQ-090
   question: "Do you accept the four remaining cybersecurity risks as proposed, once their conditions are met?"
@@ -2059,7 +2063,8 @@
       title: "Decide at G5 with the evidence in hand"
       detail: "Nothing recorded now. Cost: the cybersecurity case shows these as open until G5."
   sources: ["assurance/10-safety-case/WP-K-03-cybersecurity-case.md RR-01"]
-  status: open
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all ten (the recommended option of each)"}
 
 - id: DQ-091
   question: "Now that it's highways only: should testing go above 90 km/h, or should the ODD stop at the tested speed?"
@@ -2103,7 +2108,8 @@
       title: "Never; state the ratings are self-assessed"
       detail: "No cost ever. Cost: rules out any external capability claim."
   sources: ["assurance/01-management/WP-M-13-aspice-capability-baseline.md OI-1"]
-  status: open
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all ten (the recommended option of each)"}
 
 - id: DQ-093
   question: "Where should release evidence be kept for the long term, and who pays for it?"
@@ -2292,7 +2298,8 @@
       title: "Support others without a deputy"
       detail: "Wider use sooner. Cost: incident response stops whenever you are away; WP-O-05 would need changing and the risk recording."
   sources: ["assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md OI-1"]
-  status: open
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all ten (the recommended option of each)"}
 
 - id: DQ-102
   question: "Can you commit to the proposed incident-response times and support period?"
@@ -2314,7 +2321,8 @@
       title: "Decide at G5 with the release plan in hand"
       detail: "No promise yet. Cost: SECURITY.md keeps its current best-effort wording until then."
   sources: ["assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md OI-4"]
-  status: open
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all ten (the recommended option of each)"}
 
 - id: DQ-103
   question: "Should the confirmation plan add independent checks where it has none, even though there is no assessor yet?"
@@ -2403,7 +2411,8 @@
       title: "Keep CAL 3"
       detail: "No agreement needed later. Cost: boundary tests and fuzzing now, and the second-person reviews stay blocked until a second person joins."
   sources: ["assurance/05-software/WP-W-11-cybersecurity-implementation-verification.md OI-7"]
-  status: open
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all ten (the recommended option of each)"}
 
 - id: DQ-107
   question: "Which simulation scenario families, if any, may count as validation credit?"
@@ -2485,7 +2494,8 @@
       title: "Bench only; skip the vehicle stage"
       detail: "No closed course needed. Cost: weaker evidence for CSG-05; the residual risk RR-01 stays harder to argue."
   sources: ["assurance/06-validation/WP-V-06-cybersecurity-validation.md OI-5"]
-  status: open
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all ten (the recommended option of each)"}
 
 - id: DQ-111
   question: "Should LionDriver get its own GitHub organization?"
@@ -3222,7 +3232,8 @@
       title: "Send nothing now, and measure later"
       detail: "Fastest. Cost: the envelope's safe reaction rests on unmeasured EPS behaviour until M-02 runs; not recommended."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-3"]
-  status: open
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all ten (the recommended option of each)"}
 
 - id: DQ-149
   question: "Should starting the hardware watchdog in the bootstub (before the application runs) stay a target for SWSR-501b?"
@@ -3999,7 +4010,8 @@
       title: "Ed25519"
       detail: "Simple, modern and fast. Cost: less hardware support on the STM32 and fewer qualified libraries, so more own verification work."
   sources: ["assurance/03-system/WP-S-07-cybersecurity-requirements-architecture.md OI-4", "assurance/01-management/WP-M-09-cybersecurity-plan.md OI-1"]
-  status: open
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all ten (the recommended option of each)"}
 
 - id: DQ-192
   question: "Which SAST, SBOM and dependency-scanning tools should be selected and qualified?"
@@ -4628,6 +4640,8 @@
   gate: G1
   decider: lead
   after: [DQ-108]
+  asked: 2026-10-19
+  batch: 13
   options:
     - key: A
       recommended: true
@@ -4640,7 +4654,7 @@
       title: "Up to 1 in 5 (0.20), at least 20 events"
       detail: "Reachable with fewer drives. Cost: a 20 % reserve takes budget from the known-scenario targets, which then get stricter, and the unknown part of the argument is weaker."
   sources: ["assurance/06-validation/WP-V-04-sotif-unknown-scenarios.md §5.3 R3, §5.4, OI-2", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md §3 step 1"]
-  status: queued
+  status: open
 
 - id: DQ-300
   question: "When the car's own emergency braking (stock AEB) fires, should LionDriver stop asking for acceleration, or keep driving as now?"
@@ -5056,6 +5070,8 @@
   gate: G1
   decider: lead
   after: [DQ-280]
+  asked: 2026-10-19
+  batch: 13
   options:
     - key: A
       recommended: true
@@ -5068,7 +5084,7 @@
       title: "Hand back below a lower floor (for example 30 km/h)"
       detail: "Allows slowing traffic but not crawling. Cost: a second number to justify, and still a takeover in a full stop."
   sources: ["PR #287 (Open: OI-2)", "DQ-280"]
-  status: queued
+  status: open
 
 - id: DQ-403
   question: "If the driver changes an assured setting from the menu while engaged (for example turns Experimental Mode on), should LionDriver disengage, or let it take effect and only refuse the next engagement?"
@@ -5078,6 +5094,8 @@
   gate: G1
   decider: lead
   after: [DQ-221]
+  asked: 2026-10-19
+  batch: 13
   options:
     - key: A
       recommended: true
@@ -5090,7 +5108,7 @@
       title: "Leave as built: takes effect at once"
       detail: "No change. Cost: the item can run outside its assured settings until it is next engaged, which the safety case must argue away."
   sources: ["PR #287 (Open: OI-3)", "DQ-221"]
-  status: queued
+  status: open
 
 - id: DQ-404
   question: "When the panda takes steering away because the openpilot computer has frozen, should it also sound the alarm?"
@@ -5108,6 +5126,9 @@
     Plant run F-04b with the real panda code: as built (red) and with a siren when the panda revokes (blue). The siren
     moves the correction about 1 s earlier; at the curve bound the body still touches the lane line, inside the ODD it
     does not. Driver, EPS and road are the plant's assumptions.
+  gate: G1
+  asked: 2026-10-19
+  batch: 13
   options:
     - key: A
       recommended: true
@@ -5120,4 +5141,4 @@
       title: "Warn through the car's own cluster instead"
       detail: "Rely on what the stock Corolla shows when LKA frames stop. Cost: not known yet (it depends on the EPS behaviour M-02 measures); likely later and quieter than the siren, and outside our code."
   sources: ["WP-S-04 T-34", "System FMEA F-04b row (TSR-408)", "WP-C-03 HE-07.1, HE-02.4, HE-02.6", "assurance/sim/results/silent-stall.md", "assurance/sim/README.md §3.7"]
-  status: queued
+  status: open
