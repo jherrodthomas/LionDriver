@@ -1,0 +1,15 @@
+name: LFS backfill
+description: >-
+  Restore the LFS objects the upstream store no longer serves (tools/ci/lfs_backfill.txt) into the local LFS store,
+  so the git lfs pull that follows finds them. Remove from the workflows once the upstream store serves them again.
+runs:
+  using: composite
+  steps:
+    - name: Cache the backfilled LFS objects
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/liondriver-lfs-backfill
+        key: lfs-backfill-${{ hashFiles('tools/ci/lfs_backfill.txt') }}
+    - name: Restore LFS objects missing from the upstream store
+      shell: bash
+      run: tools/ci/lfs_backfill.sh
