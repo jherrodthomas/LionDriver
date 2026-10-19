@@ -120,4 +120,5 @@ The whole scene with the dashboard running, 24 fps (`hazard_scene.py --video`, `
 - [he-07-1-mode-confusion-curve](clips/he-07-1-mode-confusion-curve.mp4)
 - [he-07-3-believes-acc-active](clips/he-07-3-believes-acc-active.mp4)
 - [sh-01-ghost-line](clips/sh-01-ghost-line.mp4)
+- [sh-02-curve-beyond-capability](clips/sh-02-curve-beyond-capability.mp4)
 - [sh-11-pedestrian-occluded](clips/sh-11-pedestrian-occluded.mp4)
