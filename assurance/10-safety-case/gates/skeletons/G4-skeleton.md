@@ -23,7 +23,7 @@
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 1 performed: AUD-2 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 35 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 34 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
@@ -32,7 +32,7 @@
 | [WP-H-06](../../../04-hardware/WP-H-06-hardware-integration-verification.md) Hardware integration and verification specification and report | INT-01 | Draft | 6 | |
 | [WP-W-07](../../../05-software/WP-W-07-software-integration-verification.md) Software integration and verification specification and report | INT-02 | Draft | 6 | |
 | [WP-W-08](../../../05-software/WP-W-08-embedded-software-testing.md) Testing of the embedded software (SW qualification, HIL) | INT-03 | Draft | 5 | |
-| [WP-V-05](../../../06-validation/WP-V-05-fault-injection.md) Fault injection test specification and report | INT-04 | Draft | 5 | |
+| [WP-V-05](../../../06-validation/WP-V-05-fault-injection.md) Fault injection test specification and report | INT-04 | Draft | 4 | |
 | [WP-S-08](../../../03-system/WP-S-08-system-integration-test.md) System integration and test strategy, specification and report | INT-05 | Draft | 5 | |
 | [WP-V-03](../../../06-validation/WP-V-03-sotif-known-scenarios.md) Evaluation of known hazardous scenarios | INT-06 | Draft | 3 | |
 | [WP-S-09](../../../03-system/WP-S-09-system-verification.md) System verification (qualification) specification and report | INT-07 | Draft | 5 | |

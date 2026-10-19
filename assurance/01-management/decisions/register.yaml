@@ -1931,8 +1931,9 @@
       title: "Use the reference device for VS-FI-07; skip TC-05's destructive steps"
       detail: "No purchase; reflash and recheck the reference unit afterwards, and record why TC-05 was cut short. Cost: risk of altering the reference unit, and weaker evidence for boot protection."
   sources: ["assurance/06-validation/WP-V-05-fault-injection.md OI-5", "assurance/06-validation/WP-V-06-cybersecurity-validation.md OI-3"]
-  status: answered
+  status: applied
   answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "#269", record: "WP-V-05 §5.2, OI-5; WP-V-06 TC-05, OI-3", at: 2026-10-19}
 
 - id: DQ-086
   question: "How should the release signing key be stored?"
