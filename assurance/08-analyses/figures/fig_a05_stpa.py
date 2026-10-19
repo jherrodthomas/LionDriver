@@ -27,6 +27,7 @@ from xml.sax.saxutils import escape
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import stpa_ls_scenes
 import stpa_scenes
 
 HERE = Path(__file__).resolve().parent
@@ -986,6 +987,7 @@ def build() -> dict[str, str]:
   S = load()
   out = {name: fn(S) for name, fn in FIGURES.items()}
   out.update(stpa_scenes.sheets(S, sys.modules[__name__]))  # Figures 4-2 … 4-4, one scene sheet per controller
+  out.update(stpa_ls_scenes.sheets(S, sys.modules[__name__]))  # Figures 5-7 … 5-10, the loss scenario cards
   return out
 
 
