@@ -389,7 +389,7 @@
   mechanism: "PLB"
   timing: "(a) ≤ 0.3 s / same tick; (b) ≤ 0.3 s"
   verification: "T-HIL, FI"
-  baseline_impl: "(a) 3 consecutive 1 Hz ticks ≈ 2–3 s (`main.c:181-189`). (b) 200 cycles at 100 Hz = 2 s (`selfdrive/selfdrived/selfdrived.py:338, 503-510`) (GAP-06)"
+  baseline_impl: "(a) 3 consecutive 1 Hz ticks ≈ 2–3 s (`main.c:181-189`). (b) 200 cycles at 100 Hz = 2 s (`selfdrive/selfdrived/selfdrived.py:340, 507-531`) (GAP-06)"
   status: proposed
   source: WP-S-02
 
@@ -974,7 +974,7 @@
   mechanism: "DES"
   timing: "—"
   verification: "R, T-SIL"
-  baseline_impl: "Not met: masking during big-model load + 5 s (`selfdrive/selfdrived/selfdrived.py:382-384, 403, 457`); hot switch `selfdrive/modeld/modeld.py:411-419` (GAP-17). AIR-25, AIR-30 (WP-C-11 (assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md))"
+  baseline_impl: "Not met: masking during big-model load + 5 s (`selfdrive/selfdrived/selfdrived.py:384-386, 405, 459`); hot switch `selfdrive/modeld/modeld.py:411-419` (GAP-17). AIR-25, AIR-30 (WP-C-11 (assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md))"
   status: proposed
   source: WP-S-02
 
@@ -1184,7 +1184,7 @@
   mechanism: "PLB"
   timing: "0.25 s"
   verification: "T-SIL"
-  baseline_impl: "Implemented: `selfdrive/selfdrived/helpers.py:12, 30, 41`; latch `selfdrive/selfdrived/selfdrived.py:305-310`"
+  baseline_impl: "Implemented: `selfdrive/selfdrived/helpers.py:12, 30, 41`; latch `selfdrive/selfdrived/selfdrived.py:307-312`"
   status: proposed
   source: WP-S-02
 
@@ -1259,7 +1259,7 @@
   mechanism: "TMO"
   timing: "≤ 1 s / ≤ 0.2 s"
   verification: "T-SIL, FI"
-  baseline_impl: "Partial: a crashed `ui`/`soundd` raises `processNotRunning` (`selfdrive/selfdrived/selfdrived.py:351-357`); a hung render loop or stalled audio stream is not detected"
+  baseline_impl: "Partial: a crashed `ui`/`soundd` raises `processNotRunning` (`selfdrive/selfdrived/selfdrived.py:353-359`); a hung render loop or stalled audio stream is not detected"
   status: proposed
   source: WP-S-02
 
@@ -1304,7 +1304,7 @@
   mechanism: "PLB"
   timing: "≤ 2 periods"
   verification: "T-SIL, LOG"
-  baseline_impl: "Partial: model FCW from `hardBrakePredicted` and planner FCW (`selfdrive/selfdrived/selfdrived.py:440-445`); no explicit freshness gate on FCW inputs; no false-rate target"
+  baseline_impl: "Partial: model FCW from `hardBrakePredicted` and planner FCW (`selfdrive/selfdrived/selfdrived.py:442-447`); no explicit freshness gate on FCW inputs; no false-rate target"
   status: proposed
   source: WP-S-02
 
@@ -1589,7 +1589,7 @@
   mechanism: "PLB, FR"
   timing: "detect: first offending frame after ≤ 1–2 s window / same frame"
   verification: "T-SIL, T-HIL"
-  baseline_impl: "Implemented: `safety.h:211-220, 252, 268, 372-380`; reported `main.c:122-129`; host immediate disable `selfdrive/selfdrived/selfdrived.py:341-342`. Latching and readback per TSR-506"
+  baseline_impl: "Implemented: `safety.h:211-220, 252, 268, 372-380`; reported `main.c:122-129`; host immediate disable `selfdrive/selfdrived/selfdrived.py:343-344`. Latching and readback per TSR-506"
   status: proposed
   source: WP-S-02
 

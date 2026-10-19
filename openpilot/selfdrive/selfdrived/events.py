@@ -12,6 +12,7 @@ from openpilot.common.constants import CV
 from openpilot.common.git import get_short_branch
 from openpilot.common.realtime import DT_CTRL
 from openpilot.selfdrive.locationd.calibrationd import MIN_SPEED_FILTER
+from openpilot.selfdrive.selfdrived.assured_config import HIGHWAY_SPEED_FLOOR
 from openpilot.common.hardware import HARDWARE
 
 AlertSize = log.SelfdriveState.AlertSize
@@ -244,6 +245,10 @@ def startup_master_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubM
 
 def below_engage_speed_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int, personality) -> Alert:
   return NoEntryAlert(f"Drive above {get_display_speed(CP.minEnableSpeed, metric)} to engage")
+
+
+def below_highway_speed_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int, personality) -> Alert:
+  return NoEntryAlert(f"Drive above {get_display_speed(HIGHWAY_SPEED_FLOOR, metric)} to engage")
 
 
 def below_steer_speed_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int, personality) -> Alert:
@@ -1002,6 +1007,17 @@ EVENTS: dict[int, dict[str, Alert | AlertCallbackType]] = {
 
   EventName.pandaTxBlocked: {
     ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Safety Processor: Blocked TX"),
+  },
+
+  # LionDriver (DQ-221, CA-008): on the reference platform the item engages only in the assured settings (relaxed
+  # following distance, Experimental Mode off, no alpha longitudinal or debug modes)
+  EventName.settingNotAssured: {
+    ET.NO_ENTRY: NoEntryAlert("Use Relaxed Distance, Experimental Off"),
+  },
+
+  # LionDriver (DQ-280, ODD entry): on the reference platform the item engages only at highway speed
+  EventName.belowHighwaySpeed: {
+    ET.NO_ENTRY: below_highway_speed_alert,
   },
 
   EventName.relayMalfunction: {
