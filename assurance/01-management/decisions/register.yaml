@@ -5146,5 +5146,6 @@
       title: "Warn through the car's own cluster instead"
       detail: "Rely on what the stock Corolla shows when LKA frames stop. Cost: not known yet (it depends on the EPS behaviour M-02 measures); likely later and quieter than the siren, and outside our code."
   sources: ["WP-S-04 T-34", "System FMEA F-04b row (TSR-408)", "WP-C-03 HE-07.1, HE-02.4, HE-02.6", "assurance/sim/results/silent-stall.md", "assurance/sim/README.md §3.7"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all five (the recommended option of each)"}
+  applied: {ref: "jherrodthomas/LionDriver#339", record: "WP-S-02 v0.41 TSR-516(b); WP-S-04 v0.17 §5 (T-34); WP-C-04 v0.18 FSR-02.05 status; panda code change follows from the implementation session", at: 2026-10-19}
