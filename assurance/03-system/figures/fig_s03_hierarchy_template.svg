@@ -1,0 +1,336 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="{{H}}" viewBox="0 0 1280 {{H}}" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 3-1. System element hierarchy of LD-SDA (WP-S-03 §3.1, §5, §6, §8)</title>
+  <desc id="d">The LD-SDA system, the system node of WP-C-01 Figure 3-1, consists of seven architecture elements (WP-S-03 §3.1). The QM partition holds E-01 SoC software (QM, highest TSR ASIL QM (B-sup)), E-02 ML models (QM, SOTIF/PAS 8800) and E-04b the rest of the device hardware (QM). The ASIL C safety envelope holds E-03a safety layer, E-03b panda platform firmware and E-04a safety MCU hardware (all ASIL C, DQ-341); E-03a and E-03b refine E-03, E-04a and E-04b refine E-04 of WP-C-01. E-05 harness is B for PCS restore and C for blocking. Each element carries its TSRs from §5 and the safety mechanisms of §6 assigned to it alone; twelve mechanisms are shared by two elements and listed separately. E-01 consists of the openpilot processes of §8: nine safety-related processes, seven QM input processes, two HMI processes, hardwared, twelve logging and support processes, five remote-access and update processes, and four debug processes that must be absent. E-02 consists of the driving model and the DM model; E-04b of SoC, cameras, IMU, display, speaker, power supply and enclosure; E-03a of the opendbc safety core and the Toyota mode; E-03b of main loop, tick handler, CAN/SPI drivers, comms handlers, harness/relay driver, fault handling and bootstub; E-04a of clock, supply, memories, SPI4, FDCAN1–3, ADC, GPIO and the DAC/codec siren path; E-05 of intercept relay, ignition line and orientation sense. EXT-EPS, EXT-PCM and EXT-CLU are outside the item, AoU only, with TSR-111, 208, 310 and 708; the system commands them through IF-01 and reads them through IF-02. OPS TSR-801 to 818 are not allocated to an element.</desc>
+  <defs>
+    <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
+    <marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F766E"/></marker>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
+    <style>
+      .t{fill:#0F172A}.m{fill:#475569}.s{font-size:11px}.xs{font-size:10px}.b{font-weight:700}.sb{font-weight:600}
+      .box{fill:#FFFFFF;stroke:#94A3B8;stroke-width:1.2}
+      .ext{fill:#F1F5F9;stroke:#94A3B8;stroke-width:1.2}
+      .chip{fill:#F8FAFC;stroke:#CBD5E1;stroke-width:1}
+      .pan{fill:#FFFFFF;stroke:#E2E8F0;stroke-width:1}
+      .ml{fill:#EEF2FF;stroke:#A5B4FC;stroke-width:1}
+      .tag{font-size:10px;font-weight:700;letter-spacing:.04em}
+      .lvl{font-size:10.5px;font-weight:700;letter-spacing:.08em;fill:#64748B}
+      .agg{fill:none;stroke:#475569;stroke-width:1.4}
+      .dia{fill:#FFFFFF;stroke:#475569;stroke-width:1.4}
+      .code{font-family:'JetBrains Mono','SFMono-Regular',Menlo,Consolas,monospace;font-size:10px;fill:#0F172A}
+      .mult{font-size:11px;font-weight:700;fill:#475569}
+    </style>
+  </defs>
+  <rect width="1280" height="{{H}}" fill="#FFFFFF"/>
+  <text x="40" y="44" class="t b" font-size="20">Figure 3-1 · System element hierarchy</text>
+  <text x="40" y="66" class="m" font-size="12.5">LD-SDA system → architecture elements (§3.1) → hardware parts and software units (§3.1, §8), after ISO 26262-1:2018 3.39 · TSRs of §5 and SMs of §6 per element</text>
+  <text x="1240" y="44" class="m s" text-anchor="end">WP-S-03 §3.1</text>
+  <text x="1240" y="62" class="m s" text-anchor="end">TSRs §5 · SMs §6 · processes §8</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+  <text x="40" y="104" class="m" font-size="9.5" font-weight="600" letter-spacing=".06em">ISO 26262-1 LEVEL</text>
+  <text x="40" y="126" class="lvl">ITEM</text>
+  <text x="40" y="214" class="lvl">SYSTEM</text>
+  <text x="40" y="412" class="lvl">COMPONENTS</text>
+  <text x="40" y="428" class="m" font-size="9.5">§3.1 elements</text>
+  <text x="40" y="698" class="lvl">HW PARTS /</text>
+  <text x="40" y="713" class="lvl">SW UNITS</text>
+  <text x="40" y="729" class="m" font-size="9.5">§3.1, §8</text>
+  <line x1="40" y1="150" x2="140" y2="150" stroke="#F1F5F9"/>
+  <line x1="40" y1="272" x2="140" y2="272" stroke="#F1F5F9"/>
+  <line x1="40" y1="560" x2="140" y2="560" stroke="#F1F5F9"/>
+  <rect x="405.0" y="96" width="300" height="42" rx="10" fill="#FFFBEB" stroke="#B45309" stroke-width="1.6" stroke-dasharray="10 5"/>
+  <text x="419.0" y="114" font-size="12" font-weight="700" fill="#0F172A">LD-SDA item</text>
+  <text x="419.0" y="129" class="m xs">level above: item node of WP-C-01 Figure 3-1</text>
+  <polygon points="555.0,138 561.0,147 555.0,156 549.0,147" class="dia"/>
+  <line x1="555.0" y1="156" x2="555.0" y2="168" class="agg"/>
+  <text x="565.0" y="166" class="mult">1</text>
+  <rect x="150" y="168" width="810" height="84" rx="12" class="box" stroke-width="1.6"/>
+  <text x="166" y="190" class="t b" font-size="13">LD-SDA system</text>
+  <text x="270" y="190" class="m s">= the system node of WP-C-01 Figure 3-1 · reference configuration (§1)</text>
+  <text x="166" y="210" class="t" font-size="10.5">Up to ASIL C (SG-02, SG-03, SG-06); safety envelope hardened to ASIL C (DQ-341) · ASIL notation C, B, B‡, QM (B-sup) per WP-S-02 §2.1</text>
+  <text x="166" y="226" class="t" font-size="10.5">AP-1: all actuation passes through the safety envelope E-03, which enforces the safety goals regardless of the QM SoC</text>
+  <text x="166" y="242" class="m xs">TSRs not allocated to an element: OPS 801–818 (§5) · E-03a/E-03b TSRs refine to SWSR (WP-W-02), E-04a/E-05 TSRs to HWSR (WP-H-01)</text>
+  <rect x="1040" y="160" width="200" height="100" rx="10" class="ext" stroke-dasharray="5 3"/>
+  <text x="1054" y="180" class="t b" font-size="12">EXT · outside the item</text>
+  <text x="1228" y="180" font-size="10.5" font-weight="700" fill="#475569" text-anchor="end">AoU</text>
+  <text x="1054" y="198" class="t" font-size="10.5">EXT-EPS · Toyota EPS</text>
+  <text x="1054" y="213" class="t" font-size="10.5">EXT-PCM · PCM/brake</text>
+  <text x="1054" y="228" class="t" font-size="10.5">EXT-CLU · cluster</text>
+  <text x="1054" y="248" class="m xs">TSRs 111, 208, 310, 708 · WP-C-04 §11</text>
+  <line x1="960" y1="196" x2="1038" y2="196" stroke="#C2410C" stroke-width="2.4" marker-end="url(#aR)"/>
+  <line x1="1038" y1="232" x2="962" y2="232" stroke="#0F766E" stroke-width="2" marker-end="url(#aT)"/>
+  <g class="tag">
+    <rect x="977.0" y="176" width="46" height="18" rx="9" fill="#C2410C"/><text x="1000.0" y="189" fill="#fff" text-anchor="middle">IF-01</text>
+    <rect x="977.0" y="236" width="46" height="18" rx="9" fill="#0F766E"/><text x="1000.0" y="249" fill="#fff" text-anchor="middle">IF-02</text>
+  </g>
+  <rect x="144" y="294" width="526" height="{{QMH}}" rx="14" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1" stroke-dasharray="4 3"/>
+  <rect x="674" y="294" width="421" height="{{ENVH}}" rx="14" fill="#FFF7ED" fill-opacity=".55" stroke="#C2410C" stroke-width="1" stroke-dasharray="4 3"/>
+  <polygon points="555.0,252 561.0,261 555.0,270 549.0,261" class="dia"/>
+  <line x1="555.0" y1="270" x2="555.0" y2="282" class="agg"/>
+  <path d="M268.0 312V282H1170.5V312M459.5 282V312M598.5 282V312M745.5 282V312M884.5 282V312M1023.5 282V312" class="agg"/>
+  <text x="565.0" y="278" class="mult">7</text>
+  <rect x="150" y="312" width="236" height="{{BOXH}}" rx="10" class="box"/>
+  <rect x="160" y="322" width="40" height="18" rx="9" fill="#475569"/><text x="180.0" y="335" fill="#fff" text-anchor="middle" class="tag">E-01</text>
+  <text x="376" y="335" font-size="10.5" font-weight="700" fill="#475569" text-anchor="end">QM</text>
+  <text x="160" y="358" class="t b" font-size="12.5">SoC software</text>
+  <text x="160" y="374" class="m xs">openpilot processes on AGNOS</text>
+  <text x="160" y="387" class="m xs">Linux (Qualcomm SoC); §8</text>
+  <text x="160" y="400" font-size="9.5" fill="#64748B" font-style="italic">= E-01 in WP-C-01</text>
+  <line x1="160" y1="424" x2="376" y2="424" stroke="#E2E8F0"/>
+  <text x="160" y="438" font-size="9" font-weight="700" letter-spacing=".05em" fill="#64748B">TSRs §5 · highest QM (B-sup)</text>
+{{BOX:E-01}}
+  <rect x="394" y="312" width="131" height="{{BOXH}}" rx="10" fill="#EEF2FF" stroke="#6366F1" stroke-width="1.4"/>
+  <rect x="404" y="322" width="40" height="18" rx="9" fill="#4F46E5"/><text x="424.0" y="335" fill="#fff" text-anchor="middle" class="tag">E-02</text>
+  <text x="515" y="335" font-size="10.5" font-weight="700" fill="#475569" text-anchor="end">QM</text>
+  <text x="404" y="358" class="t b" font-size="12.5">ML models</text>
+  <text x="404" y="374" class="m xs">SOTIF / PAS 8800</text>
+  <text x="404" y="387" font-size="9.5" fill="#64748B" font-style="italic">= E-02 in WP-C-01</text>
+  <line x1="404" y1="424" x2="515" y2="424" stroke="#E2E8F0"/>
+  <text x="404" y="438" font-size="9" font-weight="700" letter-spacing=".05em" fill="#64748B">TSRs §5</text>
+{{BOX:E-02}}
+  <rect x="533" y="312" width="131" height="{{BOXH}}" rx="10" class="box"/>
+  <rect x="543" y="322" width="48" height="18" rx="9" fill="#475569"/><text x="567.0" y="335" fill="#fff" text-anchor="middle" class="tag">E-04b</text>
+  <text x="654" y="335" font-size="10.5" font-weight="700" fill="#475569" text-anchor="end">QM</text>
+  <text x="543" y="358" class="t b" font-size="12.5">Device hardware</text>
+  <text x="543" y="373" class="t b" font-size="12.5">(rest)</text>
+  <text x="543" y="389" font-size="9.5" fill="#64748B" font-style="italic">from E-04 in WP-C-01</text>
+  <line x1="543" y1="424" x2="654" y2="424" stroke="#E2E8F0"/>
+  <text x="543" y="438" font-size="9" font-weight="700" letter-spacing=".05em" fill="#64748B">TSRs §5</text>
+{{BOX:E-04b}}
+  <rect x="680" y="312" width="131" height="{{BOXH}}" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
+  <rect x="690" y="322" width="48" height="18" rx="9" fill="#C2410C"/><text x="714.0" y="335" fill="#fff" text-anchor="middle" class="tag">E-03a</text>
+  <text x="801" y="335" font-size="10.5" font-weight="700" fill="#C2410C" text-anchor="end">C</text>
+  <text x="690" y="358" class="t b" font-size="12.5">Safety layer</text>
+  <text x="690" y="374" class="m xs">opendbc safety core</text>
+  <text x="690" y="387" class="m xs">+ Toyota mode</text>
+  <text x="690" y="400" font-size="9.5" fill="#64748B" font-style="italic">from E-03 in WP-C-01</text>
+  <line x1="690" y1="424" x2="801" y2="424" stroke="#E2E8F0"/>
+  <text x="690" y="438" font-size="9" font-weight="700" letter-spacing=".05em" fill="#64748B">TSRs §5 · highest C</text>
+{{BOX:E-03a}}
+  <rect x="819" y="312" width="131" height="{{BOXH}}" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
+  <rect x="829" y="322" width="48" height="18" rx="9" fill="#C2410C"/><text x="853.0" y="335" fill="#fff" text-anchor="middle" class="tag">E-03b</text>
+  <text x="940" y="335" font-size="10.5" font-weight="700" fill="#C2410C" text-anchor="end">C</text>
+  <text x="829" y="358" class="t b" font-size="12.5">Panda platform</text>
+  <text x="829" y="373" class="t b" font-size="12.5">firmware</text>
+  <text x="829" y="389" font-size="9.5" fill="#64748B" font-style="italic">from E-03 in WP-C-01</text>
+  <line x1="829" y1="424" x2="940" y2="424" stroke="#E2E8F0"/>
+  <text x="829" y="438" font-size="9" font-weight="700" letter-spacing=".05em" fill="#64748B">TSRs §5 · highest C</text>
+{{BOX:E-03b}}
+  <rect x="958" y="312" width="131" height="{{BOXH}}" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
+  <rect x="968" y="322" width="48" height="18" rx="9" fill="#C2410C"/><text x="992.0" y="335" fill="#fff" text-anchor="middle" class="tag">E-04a</text>
+  <text x="1079" y="335" font-size="10.5" font-weight="700" fill="#C2410C" text-anchor="end">C</text>
+  <text x="968" y="358" class="t b" font-size="12.5">Safety MCU</text>
+  <text x="968" y="373" class="t b" font-size="12.5">hardware</text>
+  <text x="968" y="389" class="m xs">STM32H7</text>
+  <text x="968" y="402" font-size="9.5" fill="#64748B" font-style="italic">from E-04 in WP-C-01</text>
+  <line x1="968" y1="424" x2="1079" y2="424" stroke="#E2E8F0"/>
+  <text x="968" y="438" font-size="9" font-weight="700" letter-spacing=".05em" fill="#64748B">TSRs §5 · highest C</text>
+{{BOX:E-04a}}
+  <rect x="1105" y="312" width="131" height="{{BOXH}}" rx="10" class="box"/>
+  <rect x="1115" y="322" width="40" height="18" rx="9" fill="#475569"/><text x="1135.0" y="335" fill="#fff" text-anchor="middle" class="tag">E-05</text>
+  <text x="1226" y="335" font-size="10.5" font-weight="700" fill="#C2410C" text-anchor="end">B / C</text>
+  <text x="1115" y="358" class="t b" font-size="12.5">Harness</text>
+  <text x="1115" y="374" class="m xs">Toyota TSS2</text>
+  <text x="1115" y="387" class="m xs">B: PCS restore</text>
+  <text x="1115" y="400" class="m xs">C: blocking</text>
+  <text x="1115" y="413" font-size="9.5" fill="#64748B" font-style="italic">= E-05 in WP-C-01</text>
+  <line x1="1115" y1="424" x2="1226" y2="424" stroke="#E2E8F0"/>
+  <text x="1115" y="438" font-size="9" font-weight="700" letter-spacing=".05em" fill="#64748B">TSRs §5 · highest C/B</text>
+{{BOX:E-05}}
+  <g transform="translate(0,{{D}})">
+  <polygon points="598.5,544 604.5,553 598.5,562 592.5,553" class="dia"/>
+  <line x1="598.5" y1="562" x2="598.5" y2="578" class="agg"/>
+  <text x="608.5" y="573" class="mult">7</text>
+  <rect x="533" y="578" width="131" height="210" rx="10" class="pan"/>
+  <rect x="541" y="586" width="115" height="20" rx="6" class="chip"/>
+  <text x="548" y="600" class="t" font-size="10.5" font-weight="600">SoC</text>
+  <text x="650" y="600" font-size="9" font-weight="700" fill="#475569" text-anchor="end">hosts E-01</text>
+  <rect x="541" y="610" width="115" height="20" rx="6" class="chip"/>
+  <text x="548" y="624" class="t" font-size="10.5">cameras</text>
+  <rect x="541" y="634" width="115" height="20" rx="6" class="chip"/>
+  <text x="548" y="648" class="t" font-size="10.5">IMU</text>
+  <rect x="541" y="658" width="115" height="20" rx="6" class="chip"/>
+  <text x="548" y="672" class="t" font-size="10.5">display</text>
+  <rect x="541" y="682" width="115" height="20" rx="6" class="chip"/>
+  <text x="548" y="696" class="t" font-size="10.5">speaker</text>
+  <rect x="541" y="706" width="115" height="20" rx="6" class="chip"/>
+  <text x="548" y="720" class="t" font-size="10.5">power supply</text>
+  <rect x="541" y="730" width="115" height="20" rx="6" class="chip"/>
+  <text x="548" y="744" class="t" font-size="10.5">enclosure</text>
+  <text x="541" y="764" class="m" font-size="9.5">§3.1; detail in WP-H-02</text>
+  <polygon points="459.5,544 465.5,553 459.5,562 453.5,553" class="dia"/>
+  <line x1="459.5" y1="562" x2="459.5" y2="578" class="agg"/>
+  <text x="469.5" y="573" class="mult">2</text>
+  <rect x="394" y="578" width="131" height="105" rx="10" class="pan"/>
+  <rect x="402" y="586" width="115" height="20" rx="6" class="ml"/>
+  <text x="409" y="600" class="t" font-size="10.5">driving model</text>
+  <rect x="402" y="610" width="115" height="20" rx="6" class="ml"/>
+  <text x="409" y="624" class="t" font-size="10.5">DM model</text>
+  <text x="402" y="644" class="code" font-size="9.5">selfdrive/modeld/</text>
+  <text x="402" y="658" class="m" font-size="9.5">executed by modeld,</text>
+  <text x="402" y="671" class="m" font-size="9.5">dmonitoringmodeld (§8)</text>
+  <polygon points="745.5,544 751.5,553 745.5,562 739.5,553" class="dia"/>
+  <line x1="745.5" y1="562" x2="745.5" y2="578" class="agg"/>
+  <text x="755.5" y="573" class="mult">2</text>
+  <rect x="680" y="578" width="131" height="174" rx="10" class="pan"/>
+  <rect x="688" y="586" width="115" height="74" rx="6" fill="#FFF7ED" stroke="#FDBA74"/>
+  <text x="695" y="601" class="t" font-size="10.5" font-weight="600">safety core</text>
+  <text x="695" y="615" class="code" font-size="9.5">safety.h,</text>
+  <text x="695" y="628" class="code" font-size="9.5">helpers.h,</text>
+  <text x="695" y="641" class="code" font-size="9.5">lateral.h,</text>
+  <text x="695" y="654" class="code" font-size="9.5">longitudinal.h</text>
+  <rect x="688" y="666" width="115" height="35" rx="6" fill="#FFF7ED" stroke="#FDBA74"/>
+  <text x="695" y="681" class="t" font-size="10.5" font-weight="600">Toyota mode</text>
+  <text x="695" y="695" class="code" font-size="9.5">modes/toyota.h</text>
+  <text x="688" y="717" class="code" font-size="9.5">opendbc/safety/</text>
+  <text x="688" y="731" font-size="9.5" font-weight="700" fill="#C2410C">compiled into E-03b</text>
+  <text x="688" y="744" font-size="9.5" font-weight="700" fill="#C2410C">runs on E-04a</text>
+  <polygon points="884.5,544 890.5,553 884.5,562 878.5,553" class="dia"/>
+  <line x1="884.5" y1="562" x2="884.5" y2="578" class="agg"/>
+  <text x="894.5" y="573" class="mult">7</text>
+  <rect x="819" y="578" width="131" height="210" rx="10" class="pan"/>
+  <rect x="827" y="586" width="115" height="20" rx="6" fill="#FFF7ED" stroke="#FDBA74"/>
+  <text x="834" y="600" class="t" font-size="10.5">main loop</text>
+  <rect x="827" y="610" width="115" height="20" rx="6" fill="#FFF7ED" stroke="#FDBA74"/>
+  <text x="834" y="624" class="t" font-size="10.5">tick handler</text>
+  <rect x="827" y="634" width="115" height="20" rx="6" fill="#FFF7ED" stroke="#FDBA74"/>
+  <text x="834" y="648" class="t" font-size="10.5">CAN/SPI drivers</text>
+  <rect x="827" y="658" width="115" height="20" rx="6" fill="#FFF7ED" stroke="#FDBA74"/>
+  <text x="834" y="672" class="t" font-size="10.5">comms handlers</text>
+  <rect x="827" y="682" width="115" height="20" rx="6" fill="#FFF7ED" stroke="#FDBA74"/>
+  <text x="834" y="696" class="t" font-size="10.5">harness/relay driver</text>
+  <rect x="827" y="706" width="115" height="20" rx="6" fill="#FFF7ED" stroke="#FDBA74"/>
+  <text x="834" y="720" class="t" font-size="10.5">fault handling</text>
+  <rect x="827" y="730" width="115" height="20" rx="6" fill="#FFF7ED" stroke="#FDBA74"/>
+  <text x="834" y="744" class="t" font-size="10.5">bootstub</text>
+  <text x="827" y="764" class="code" font-size="9.5">panda/board/</text>
+  <text x="827" y="778" font-size="9.5" font-weight="700" fill="#C2410C">runs on E-04a</text>
+  <polygon points="1023.5,544 1029.5,553 1023.5,562 1017.5,553" class="dia"/>
+  <line x1="1023.5" y1="562" x2="1023.5" y2="578" class="agg"/>
+  <text x="1033.5" y="573" class="mult">8</text>
+  <rect x="958" y="578" width="131" height="234" rx="10" class="pan"/>
+  <rect x="966" y="586" width="115" height="20" rx="6" fill="#FFF7ED" stroke="#FDBA74"/>
+  <text x="973" y="600" class="t" font-size="10.5">clock</text>
+  <rect x="966" y="610" width="115" height="20" rx="6" fill="#FFF7ED" stroke="#FDBA74"/>
+  <text x="973" y="624" class="t" font-size="10.5">supply</text>
+  <rect x="966" y="634" width="115" height="20" rx="6" fill="#FFF7ED" stroke="#FDBA74"/>
+  <text x="973" y="648" class="t" font-size="10.5">memories</text>
+  <rect x="966" y="658" width="115" height="20" rx="6" fill="#FFF7ED" stroke="#FDBA74"/>
+  <text x="973" y="672" class="t" font-size="10.5">SPI4</text>
+  <rect x="966" y="682" width="115" height="20" rx="6" fill="#FFF7ED" stroke="#FDBA74"/>
+  <text x="973" y="696" class="t" font-size="10.5">FDCAN1–3</text>
+  <rect x="966" y="706" width="115" height="20" rx="6" fill="#FFF7ED" stroke="#FDBA74"/>
+  <text x="973" y="720" class="t" font-size="10.5">ADC</text>
+  <rect x="966" y="730" width="115" height="20" rx="6" fill="#FFF7ED" stroke="#FDBA74"/>
+  <text x="973" y="744" class="t" font-size="10.5">GPIO</text>
+  <rect x="966" y="754" width="115" height="20" rx="6" fill="#FFF7ED" stroke="#FDBA74"/>
+  <text x="973" y="768" class="t" font-size="10.5">DAC/codec siren path</text>
+  <text x="966" y="788" font-size="9.5" font-weight="700" fill="#C2410C">hosts E-03a, E-03b</text>
+  <text x="966" y="802" class="m" font-size="9.5">configured by E-03b (§5)</text>
+  <polygon points="1170.5,544 1176.5,553 1170.5,562 1164.5,553" class="dia"/>
+  <line x1="1170.5" y1="562" x2="1170.5" y2="578" class="agg"/>
+  <text x="1180.5" y="573" class="mult">3</text>
+  <rect x="1105" y="578" width="131" height="101" rx="10" class="pan"/>
+  <rect x="1113" y="586" width="115" height="20" rx="6" fill="#FFF7ED" stroke="#FDBA74"/>
+  <text x="1120" y="600" class="t" font-size="10.5">intercept relay</text>
+  <rect x="1113" y="610" width="115" height="20" rx="6" class="chip"/>
+  <text x="1120" y="624" class="t" font-size="10.5">ignition line</text>
+  <rect x="1113" y="634" width="115" height="20" rx="6" class="chip"/>
+  <text x="1120" y="648" class="t" font-size="10.5">orientation sense</text>
+  <text x="1113" y="668" class="m" font-size="9.5">§3.1; detail in WP-H-02</text>
+  <polygon points="268.0,544 274.0,553 268.0,562 262.0,553" class="dia"/>
+  <line x1="268.0" y1="562" x2="268.0" y2="578" class="agg"/>
+  <text x="278.0" y="573" class="mult">40</text>
+  <rect x="150" y="578" width="236" height="683" rx="10" class="pan"/>
+  <!--E01CHILDREN-->
+  <text x="160" y="595" font-size="9" font-weight="700" letter-spacing=".05em" fill="#64748B">SAFETY-RELATED (§8: YES)</text>
+  <rect x="158" y="602" width="220" height="20" rx="6" class="chip"/>
+  <text x="165" y="616" class="code">pandad</text>
+  <text x="372" y="616" font-size="9" font-weight="700" fill="#475569" text-anchor="end">FFI · 409, 614</text>
+  <rect x="158" y="626" width="220" height="20" rx="6" class="chip"/>
+  <text x="165" y="640" class="code">card</text>
+  <text x="372" y="640" font-size="9" font-weight="700" fill="#475569" text-anchor="end">B-sup</text>
+  <rect x="158" y="650" width="220" height="20" rx="6" class="chip"/>
+  <text x="165" y="664" class="code">controlsd</text>
+  <text x="372" y="664" font-size="9" font-weight="700" fill="#475569" text-anchor="end">B-sup · 602, 604, 605</text>
+  <rect x="158" y="674" width="220" height="20" rx="6" class="chip"/>
+  <text x="165" y="688" class="code">selfdrived</text>
+  <text x="372" y="688" font-size="9" font-weight="700" fill="#475569" text-anchor="end">B-sup · 601, 603, 606, 615</text>
+  <rect x="158" y="698" width="220" height="20" rx="6" class="chip"/>
+  <text x="165" y="712" class="code">plannerd</text>
+  <text x="372" y="712" font-size="9" font-weight="700" fill="#475569" text-anchor="end">QM</text>
+  <rect x="158" y="722" width="220" height="20" rx="6" class="chip"/>
+  <text x="165" y="736" class="code">radard</text>
+  <text x="372" y="736" font-size="9" font-weight="700" fill="#475569" text-anchor="end">QM, SOTIF</text>
+  <rect x="158" y="746" width="220" height="20" rx="6" class="ml"/>
+  <text x="165" y="760" class="code">modeld</text>
+  <text x="372" y="760" font-size="9" font-weight="700" fill="#4F46E5" text-anchor="end">E-01/E-02 · 616</text>
+  <rect x="158" y="770" width="220" height="20" rx="6" class="ml"/>
+  <text x="165" y="784" class="code">dmonitoringmodeld</text>
+  <text x="372" y="784" font-size="9" font-weight="700" fill="#4F46E5" text-anchor="end">E-01/E-02 · 608–612</text>
+  <rect x="158" y="794" width="220" height="20" rx="6" class="ml"/>
+  <text x="165" y="808" class="code">dmonitoringd</text>
+  <text x="372" y="808" font-size="9" font-weight="700" fill="#4F46E5" text-anchor="end">E-01/E-02 · 608–612</text>
+  <text x="160" y="827" font-size="9" font-weight="700" letter-spacing=".05em" fill="#64748B">QM INPUTS</text>
+  <rect x="158" y="834" width="107.0" height="20" rx="6" class="chip"/>
+  <text x="165" y="848" class="code">locationd</text>
+  <rect x="271.0" y="834" width="107.0" height="20" rx="6" class="chip"/>
+  <text x="278.0" y="848" class="code">calibrationd</text>
+  <rect x="158" y="858" width="107.0" height="20" rx="6" class="chip"/>
+  <text x="165" y="872" class="code">paramsd</text>
+  <rect x="271.0" y="858" width="107.0" height="20" rx="6" class="chip"/>
+  <text x="278.0" y="872" class="code">torqued</text>
+  <rect x="158" y="882" width="107.0" height="20" rx="6" class="chip"/>
+  <text x="165" y="896" class="code">lagd</text>
+  <rect x="271.0" y="882" width="107.0" height="20" rx="6" class="chip"/>
+  <text x="278.0" y="896" class="code">sensord</text>
+  <rect x="158" y="906" width="107.0" height="20" rx="6" class="chip"/>
+  <text x="165" y="920" class="code">camerad</text>
+  <text x="160" y="939" font-size="9" font-weight="700" letter-spacing=".05em" fill="#64748B">HMI · 606</text>
+  <rect x="158" y="946" width="107.0" height="20" rx="6" class="chip"/>
+  <text x="165" y="960" class="code">ui</text>
+  <rect x="271.0" y="946" width="107.0" height="20" rx="6" class="chip"/>
+  <text x="278.0" y="960" class="code">soundd</text>
+  <text x="160" y="979" font-size="9" font-weight="700" letter-spacing=".05em" fill="#64748B">INDIRECT (ONROAD GATING)</text>
+  <rect x="158" y="986" width="220" height="20" rx="6" class="chip"/>
+  <text x="165" y="1000" class="code">hardwared</text>
+  <rect x="158" y="1016" width="220" height="78" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="5 3"/>
+  <text x="166" y="1031" font-size="9.5" font-weight="700" fill="#475569">not safety-related · logging, support</text>
+  <text x="370" y="1031" class="mult" text-anchor="end" font-size="10">12</text>
+  <text x="166" y="1046" class="code" font-size="9.5" xml:space="preserve">loggerd encoderd deleter</text>
+  <text x="166" y="1059" class="code" font-size="9.5" xml:space="preserve">uploader logmessaged proclogd</text>
+  <text x="166" y="1072" class="code" font-size="9.5" xml:space="preserve">journald tombstoned timed</text>
+  <text x="166" y="1085" class="code" font-size="9.5" xml:space="preserve">micd modem qcomgpsd/ubloxd</text>
+  <rect x="158" y="1100" width="220" height="52" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="5 3"/>
+  <text x="166" y="1115" font-size="9.5" font-weight="700" fill="#475569">not safety-related · CS</text>
+  <text x="370" y="1115" class="mult" text-anchor="end" font-size="10">5</text>
+  <text x="166" y="1130" class="code" font-size="9.5" xml:space="preserve">manage_athenad updated webrtcd</text>
+  <text x="166" y="1143" class="code" font-size="9.5" xml:space="preserve">stream_encoderd bridge</text>
+  <rect x="158" y="1158" width="220" height="52" rx="6" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="5 3"/>
+  <rect x="162" y="1162" width="212" height="44" rx="4" fill="#FFFFFF" fill-opacity=".88"/>
+  <text x="166" y="1173" font-size="9.5" font-weight="700" fill="#475569">must be absent (TSR-613) · debug</text>
+  <text x="370" y="1173" class="mult" text-anchor="end" font-size="10">4</text>
+  <text x="166" y="1188" class="code" font-size="9.5" xml:space="preserve">joystickd joystick maneuversd</text>
+  <text x="166" y="1201" class="code" font-size="9.5" xml:space="preserve">lateral_maneuversd</text>
+  <text x="158" y="1226" font-size="9.5" font-weight="700" fill="#475569">runs on the SoC (E-04b)</text>
+  <text x="158" y="1240" class="code" font-size="9.5">system/manager/</text>
+  <text x="158" y="1253" class="code" font-size="9.5">process_config.py:70-121</text>
+  <rect x="680" y="852" width="556" height="102" rx="10" fill="#F8FAFC" stroke="#CBD5E1"/>
+  <text x="694" y="871" font-size="9" font-weight="700" letter-spacing=".05em" fill="#64748B">SAFETY MECHANISMS WHOSE §6 ELEMENT COLUMN NAMES TWO ELEMENTS</text>
+{{SHARED}}
+  <text x="694" y="984" class="m" font-size="9.5">Implementation and verification status per mechanism: §6 Status column (not shown).</text>
+  <rect x="158" y="1266" width="112" height="18" rx="9" fill="#64748B"/><text x="214" y="1279" fill="#fff" text-anchor="middle" class="tag">QM PARTITION</text>
+  <rect x="676" y="817" width="236" height="18" rx="9" fill="#C2410C"/><text x="794" y="830" fill="#fff" text-anchor="middle" class="tag">ASIL C SAFETY ENVELOPE (AP-1)</text>
+  <line x1="40" y1="1305" x2="1240" y2="1305" stroke="#E2E8F0"/>
+  <g transform="translate(40,1329)" font-size="10.5">
+    <polygon points="0,0 6,-6 12,0 6,6" class="dia"/><line x1="12" y1="0" x2="34" y2="0" class="agg"/><text x="42" y="4" class="t">consists of</text>
+    <text x="128" y="4" class="mult">7</text><text x="142" y="4" class="t">number of children</text>
+    <rect x="262" y="-8" width="28" height="16" rx="4" fill="#FFF7ED" stroke="#C2410C"/><text x="298" y="4" class="t">C safety envelope element</text>
+    <rect x="460" y="-8" width="28" height="16" rx="4" fill="#EEF2FF" stroke="#6366F1"/><text x="496" y="4" class="t">ML element / runs E-02</text>
+    <rect x="636" y="-8" width="28" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="5 3"/><text x="672" y="4" class="t">not safety-related</text>
+    <rect x="790" y="-8" width="28" height="16" rx="4" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="5 3"/><text x="826" y="4" class="t">must be absent</text>
+    <rect x="932" y="-8" width="28" height="16" rx="4" fill="#F1F5F9" stroke="#94A3B8" stroke-dasharray="5 3"/><text x="968" y="4" class="t">outside the item</text>
+    <text x="1084" y="4" class="t"><tspan font-weight="700">QM · C</tspan><tspan dx="4">§3.1 integrity</tspan></text>
+  </g>
+  <text x="40" y="1355" class="m" font-size="10">Numbers are TSR-xxx of WP-S-02 as §5 lists them (ranges as given); notes on processes are the §8 role and TSRs. Static decomposition as inherited at 8b8c6ae; no implementation or verification status is shown.</text>
+  </g>
+</svg>

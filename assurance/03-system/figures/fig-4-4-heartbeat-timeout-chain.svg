@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1000" viewBox="0 0 1280 1000" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
 <title id="t">Figure 4-4. Heartbeat and timeout chain (WP-S-03 §4.4)</title>
-<desc id="d">Top: the command path controlsd (100 Hz) to card (100 Hz) to the pandad send thread to the MCU safety_tx_hook to EPS/PCM, with its freshness gates: card sends only while carControl is alive (0.1 s), pandad drops sendcan older than 1 s (required 20 ms, TSR-614), and the MCU has no command-freshness check (required 50 ms, TSR-408). The heartbeat path runs from selfdrived (100 Hz) through pandad main (10 Hz, 0xf3 with engaged = alive and valid and enabled) to the MCU heartbeat counter on the 1 Hz tick. Bottom: timing on a common axis from -0.5 s to 6 s. Scenario 1, heartbeat lost at t = 0: at the baseline the 1 Hz counter reaches 5 ticks and the MCU goes SILENT after 4 to 5 s; the reference build revokes authority at 0.3 s (at most 0.31 s), meeting TSR-407, and since panda c33343b (2026-10-13, all builds) sounds the siren at that revocation when authority was granted, about 0.56 s after the last heartbeat (WP-S-04 T-07a), while SILENT still comes after 4 to 5 s against a required 2 s. Scenario 2, engaged mismatch from t = 0: three 1 Hz ticks give a revoke after 2 to 3 s against the required 0.3 s of TSR-307.</desc>
+<desc id="d">Top: the command path controlsd (100 Hz) to card (100 Hz) to the pandad send thread to the MCU safety_tx_hook to EPS/PCM, with its freshness gates: card sends only while carControl is alive (0.1 s), pandad drops sendcan older than 1 s (required 20 ms, TSR-614), and at the baseline the MCU has no command-freshness check (required 50 ms, TSR-408); the reference build (opendbc 273f44e, 2026-10-16) revokes authority when 0x2E4 has not arrived for more than 50 ms (WP-S-04 T-34). The heartbeat path runs from selfdrived (100 Hz) through pandad main (10 Hz, 0xf3 with engaged = alive and valid and enabled) to the MCU heartbeat counter on the 1 Hz tick. Bottom: timing on a common axis from -0.5 s to 6 s. Scenario 1, heartbeat lost at t = 0: at the baseline the 1 Hz counter reaches 5 ticks and the MCU goes SILENT after 4 to 5 s; the reference build revokes authority at 0.3 s (at most 0.31 s), meeting TSR-407, and since panda c33343b (2026-10-13, all builds) sounds the siren at that revocation when authority was granted, about 0.56 s after the last heartbeat (WP-S-04 T-07a), while SILENT still comes after 4 to 5 s against a required 2 s. Scenario 2, engaged mismatch from t = 0: three 1 Hz ticks give a revoke after 2 to 3 s against the required 0.3 s of TSR-307.</desc>
 <defs>
 <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
 <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
@@ -36,7 +36,7 @@
 <text x="640.0" y="165" class="m xs" text-anchor="middle">sendcan → SPI</text>
 <rect x="820" y="134" width="160" height="40" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
 <text x="900.0" y="151" class="t sb" font-size="12" text-anchor="middle">MCU safety_tx_hook</text>
-<text x="900.0" y="165" class="m xs" text-anchor="middle">E-03a · B‡</text>
+<text x="900.0" y="165" class="m xs" text-anchor="middle">E-03a · C</text>
 <rect x="1080" y="134" width="160" height="40" rx="8" class="ext"/>
 <text x="1160.0" y="151" class="t sb" font-size="12" text-anchor="middle">EPS / PCM</text>
 <text x="1160.0" y="165" class="m xs" text-anchor="middle">outside the item</text>
@@ -61,10 +61,11 @@
 <text x="570" y="200" class="t" font-size="10">drops sendcan older than 1 s</text>
 <text x="570" y="213.5" class="ref">pandad.cc:79</text>
 <text x="570" y="227.0" font-size="10" font-weight="700" fill="#D2553F">required ≤ 20 ms · TSR-614</text>
-<rect x="820" y="184" width="160" height="58" rx="7" fill="#F8FAFC" stroke="#CBD5E1"/>
-<text x="830" y="200" class="t" font-size="10">no command-freshness check</text>
-<text x="830" y="213.5" class="t" font-size="10">today</text>
-<text x="830" y="227.0" font-size="10" font-weight="700" fill="#D2553F">required ≤ 50 ms · TSR-408</text>
+<rect x="820" y="184" width="160" height="64" rx="7" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="830" y="200" class="t" font-size="10">baseline: no freshness check</text>
+<text x="830" y="213.5" font-size="10" font-weight="700" fill="#2E9E6A">Ref. build 2026-10-16 · TSR-408</text>
+<text x="830" y="227.0" class="t" font-size="10">revoke if no 0x2E4 for &gt; 50 ms</text>
+<text x="830" y="240.5" class="ref">safety.h tx_arrival_ok</text>
 <text x="40" y="200" class="m xs">"alive" = 10 × the service period</text>
 <text x="40" y="214" class="m xs">(§9): 0.1 s for 100 Hz services</text>
 <text x="40" y="266" class="m" font-size="9.5" font-weight="700" letter-spacing=".06em">HEARTBEAT PATH</text>

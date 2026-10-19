@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-05 Hardware-software interface specification |
 | Standard reference | ISO 26262-4:2018 §6 (HSI specification); ISO 26262-5:2018 §6 and ISO 26262-6:2018 §6 (HSI refinement, by reference); ASPICE 4.0 SYS.3 |
-| Version | 0.11 (scope line: the MCU interfaces are ASIL C since WP-C-03 v0.4 raised SG-02, SG-03 and SG-06; 2026-10-16). 0.10 (§11: bit numbering defined; provisional bit positions for S-06, S-07 quality flag, S-12, S-13 MAIN_ON; LC-01, maintainer decision 2026-10-13). 0.9 (S-21: reference-build flag in the health packet, required by `pandad`; panda `6dee6fa`; 2026-10-12). 0.8 (HSI-09: IWDG1 now used, per TSR-501 v0.4; RR-2026-008; 2026-10-12). 0.7 (S-12: siren on a persistent EPS fault, panda `b790fca`; 2026-10-12). 0.6 (S-13: MAIN_ON cross-check implemented in the reference build, opendbc `875e325`; 2026-10-12). 0.5 (S-12: EPS fault reported to the host as `pandaState.epsFault`, panda `877730e`, opendbc `adcb7c2`; 2026-10-12). 0.4 (S-12: EPS fault codes evaluated by the envelope in the reference build, opendbc `242d63d`; 2026-10-12). 0.3 (S-12, S-13: `0x262` and `0x1D3` supervised in the reference build, opendbc `98404a4`; 2026-10-12). 0.2 (§11 signal catalogue, RR-2026-005 F-06; watchdog ≤ 0.1 s; 2026-10-12) |
+| Version | 0.12 (§2 ASIL column: each interface carries the highest ASIL of its TSRs, C for the MCU interfaces since WP-C-03 v0.4 (the column still showed B‡), B for orientation and ignition; Figure 2-1 added, generated from §2; 2026-10-19). 0.11 (scope line: the MCU interfaces are ASIL C since WP-C-03 v0.4 raised SG-02, SG-03 and SG-06; 2026-10-16). 0.10 (§11: bit numbering defined; provisional bit positions for S-06, S-07 quality flag, S-12, S-13 MAIN_ON; LC-01, maintainer decision 2026-10-13). 0.9 (S-21: reference-build flag in the health packet, required by `pandad`; panda `6dee6fa`; 2026-10-12). 0.8 (HSI-09: IWDG1 now used, per TSR-501 v0.4; RR-2026-008; 2026-10-12). 0.7 (S-12: siren on a persistent EPS fault, panda `b790fca`; 2026-10-12). 0.6 (S-13: MAIN_ON cross-check implemented in the reference build, opendbc `875e325`; 2026-10-12). 0.5 (S-12: EPS fault reported to the host as `pandaState.epsFault`, panda `877730e`, opendbc `adcb7c2`; 2026-10-12). 0.4 (S-12: EPS fault codes evaluated by the envelope in the reference build, opendbc `242d63d`; 2026-10-12). 0.3 (S-12, S-13: `0x262` and `0x1D3` supervised in the reference build, opendbc `98404a4`; 2026-10-12). 0.2 (§11 signal catalogue, RR-2026-005 F-06; watchdog ≤ 0.1 s; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Safety MCU (STM32H7 "panda") and its interfaces: ASIL C (SG-02, SG-03, SG-06 since WP-C-03 v0.4; see [WP-S-02 §2.1](WP-S-02-technical-safety-requirements.md)) |
 | Author | Assurance team (initial draft) |
@@ -31,20 +31,24 @@ Paths are under `panda/board/` unless prefixed. HSI IDs (HSI-nn) are referenced 
 
 | HSI | Interface | HW resource | SW owner | Safety relevance | ASIL | TSR / HWSR |
 |---|---|---|---|---|---|---|
-| HSI-01 | SoC ↔ MCU SPI link | SPI4, DMA2 streams 2/3, SRAM1/2 buffers | `drivers/spi.h`, `stm32h7/llspi.h`; host `openpilot/selfdrive/pandad/spi.cc` | FFI; carries commands and configuration | B‡ | TSR-407…413; HWSR-401 |
-| HSI-02 | Control requests over SPI endpoint 0 | — | `main_comms.h:63-322` | Mode set, heartbeat, relay debug, CAN config | B‡ | TSR-407, 409, 511…513 |
-| HSI-03 | CAN packet stream over SPI endpoints 1/3 | SPI4 | `can_comms.h` | Actuation commands, RX data to SoC | B‡ | TSR-410, 411 |
-| HSI-04 | FDCAN1–3 and transceivers | FDCAN, transceiver enable GPIOs | `drivers/fdcan.h`, `stm32h7/llfdcan.h`, `boards/*.h` | Actuation TX, RX for gating, forwarding | B‡ | TSR-401…406, 508, 704, 707; HWSR-508 |
-| HSI-05 | Harness relay drive | GPIO (open-drain, active-low) | `drivers/harness.h` | Blocks camera actuation; restores PCS path | B‡ / B | TSR-506, 706; HWSR-506 |
+| HSI-01 | SoC ↔ MCU SPI link | SPI4, DMA2 streams 2/3, SRAM1/2 buffers | `drivers/spi.h`, `stm32h7/llspi.h`; host `openpilot/selfdrive/pandad/spi.cc` | FFI; carries commands and configuration | C | TSR-407…413; HWSR-401 |
+| HSI-02 | Control requests over SPI endpoint 0 | — | `main_comms.h:63-322` | Mode set, heartbeat, relay debug, CAN config | C | TSR-407, 409, 511…513 |
+| HSI-03 | CAN packet stream over SPI endpoints 1/3 | SPI4 | `can_comms.h` | Actuation commands, RX data to SoC | C | TSR-410, 411 |
+| HSI-04 | FDCAN1–3 and transceivers | FDCAN, transceiver enable GPIOs | `drivers/fdcan.h`, `stm32h7/llfdcan.h`, `boards/*.h` | Actuation TX, RX for gating, forwarding | C | TSR-401…406, 508, 704, 707; HWSR-508 |
+| HSI-05 | Harness relay drive | GPIO (open-drain, active-low) | `drivers/harness.h` | Blocks camera actuation; restores PCS path | C / B | TSR-506, 706; HWSR-506 |
 | HSI-06 | Harness orientation sense | ADC1 ch4/ch17 on SBU1/SBU2 | `drivers/harness.h` | CAN routing, relay pin mapping | B | TSR-701; HWSR-701 |
 | HSI-07 | Ignition line | SBU GPIO input | `drivers/harness.h:35-52` | Heartbeat timeout selection, power states | B | TSR-510; HWSR-510 |
-| HSI-08 | Reset / boot pins from SoC | SoC GPIO → MCU NRST, BOOT0 | `openpilot/common/hardware/comma/hardware.py:400-419` | Firmware substitution; safe state on reset | B‡ (+CS) | TSR-502, 511; HWSR-502c |
-| HSI-09 | Watchdog | IWDG1 (window mode, 90 ms nominal, started at the first relay energisation; panda `3859fa8`), software timestamp check | `stm32h7/stm32h7_config.h:43`, `drivers/hw_watchdog.h`, `drivers/harness.h`, `drivers/simple_watchdog.h` | MCU hang detection | B‡ | TSR-501; HWSR-501 |
-| HSI-10 | Fault / health monitors | NVIC, RCC CSS, DTS, ADC, interrupt-rate counters | `sys/faults.h`, `drivers/interrupts.h`, `drivers/registers.h`, `stm32h7/lldts.h` | Platform fault detection | B‡ | TSR-502…505, 509 |
-| HSI-11 | Siren | DAC/DMA + codec over I2C5 (board-dependent) | `drivers/fake_siren.h`, `boards/*.h` | SoC-independent warning | B | TSR-516 |
-| HSI-12 | Flash and bootstub | Flash bank 1, sector 0 bootstub, app at `0x08020000` | `bootstub.c`, `flasher.h`, `stm32h7/llflash.h` | Firmware integrity | B‡ (+CS) | TSR-503, 511, 514 |
-| HSI-13 | Supply measurement | ADC1 (input divider) | `boards/*.h` | Supply monitoring | B | TSR-505; HWSR-505b |
-| HSI-14 | MPU, RAM ECC (to be added) | Cortex-M7 MPU, RAMECC | new | Memory protection | B‡ | TSR-503, 507 |
+| HSI-08 | Reset / boot pins from SoC | SoC GPIO → MCU NRST, BOOT0 | `openpilot/common/hardware/comma/hardware.py:400-419` | Firmware substitution; safe state on reset | C (+CS) | TSR-502, 511; HWSR-502c |
+| HSI-09 | Watchdog | IWDG1 (window mode, 90 ms nominal, started at the first relay energisation; panda `3859fa8`), software timestamp check | `stm32h7/stm32h7_config.h:43`, `drivers/hw_watchdog.h`, `drivers/harness.h`, `drivers/simple_watchdog.h` | MCU hang detection | C | TSR-501; HWSR-501 |
+| HSI-10 | Fault / health monitors | NVIC, RCC CSS, DTS, ADC, interrupt-rate counters | `sys/faults.h`, `drivers/interrupts.h`, `drivers/registers.h`, `stm32h7/lldts.h` | Platform fault detection | C | TSR-502…505, 509 |
+| HSI-11 | Siren | DAC/DMA + codec over I2C5 (board-dependent) | `drivers/fake_siren.h`, `boards/*.h` | SoC-independent warning | C | TSR-516 |
+| HSI-12 | Flash and bootstub | Flash bank 1, sector 0 bootstub, app at `0x08020000` | `bootstub.c`, `flasher.h`, `stm32h7/llflash.h` | Firmware integrity | C (+CS) | TSR-503, 511, 514 |
+| HSI-13 | Supply measurement | ADC1 (input divider) | `boards/*.h` | Supply monitoring | C | TSR-505; HWSR-505b |
+| HSI-14 | MPU, RAM ECC (to be added) | Cortex-M7 MPU, RAMECC | new | Memory protection | C | TSR-503, 507 |
+
+![Figure 2-1: the safety MCU (STM32H7, E-04a hardware running the E-03 firmware, ASIL C) with its 14 hardware-software interfaces: HSI-01, -02, -03 and -08 link it to the SoC (QM); HSI-09, -10, -12, -13 and -14 are inside the MCU; HSI-04 leads to the vehicle CAN buses, HSI-05, -06 and -07 to the harness and HSI-11 to the shared speaker; 12 interfaces are ASIL C, orientation and ignition sensing are ASIL B](figures/fig-s05-2-1-hsi-overview.svg)
+
+*Figure 2-1.* The rows of this table by where each interface leads: to the SoC (left), inside the MCU (middle), or to the vehicle buses, the harness and the speaker (right). Each card carries the ASIL and the TSR / HWSR column of its row; HSI-14 is dashed because it is not in the firmware yet. Generated from this table by [`figures/fig_s05_hsi.py`](figures/fig_s05_hsi.py), which fails CI when a row is added that the figure does not place; only the placement is fixed in the script.
 
 ## 3. Electrical and timing parameters (to be confirmed)
 
