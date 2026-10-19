@@ -83,6 +83,10 @@
 #     SWF-005 and SWF-057 (the host parser still reads short frames, so SWF-057.C2 keeps its rating).
 # Post rev 1.4, ratings unchanged: SWF-088 mechanism text updated for panda bf8102a (after BL-006): EPS-fault siren persistence 0.7 s (DQ-048 A,
 #   worst case 0.96 s from onset, WP-S-04 OI-8 closed) and the siren still sounding after a revocation (DQ-367, panda#18).
+# rev 1.5 at BL-006, lead answer DQ-221 A applied: #287 (69cddaa, after BL-006) refuses engagement outside the assured settings on the reference platform.
+#   SWF-067.C1 rewritten to a defect in the new gate, O6 D9 -> O5 D9 (still AP H): new host code whose targeted tests have run only locally (CI scons down on the
+#   git-lfs 404); D 8 once CI runs them. New SWF-067.C2: a setting changed in the menu while engaged still takes effect, O8 D10 AP H, queued for the lead as
+#   DQ-403 (new action SWF-ACT-079). SWF-ACT-063 in progress. Totals: 90 failure modes, 141 causes (130 H, 1 M, 10 L).
 # Post rev 1.4, FTA WP-A-04 v1.12 (BE-1.25 in the SG-04 tree), ratings unchanged: SWF-055 and SWF-089 gain HZ-006 end effects (an authority
 #   grant covers longitudinal commands, as SWF-007). SWF-002 stays steering-only (HZ-001); its note says why HZ-006 and HZ-010 do not apply.
 #
@@ -132,7 +136,7 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.4"
+  revision: "1.5"
   status: draft
   baseline: BL-006
   rating_tables: RT-2
@@ -4404,25 +4408,49 @@ failure_modes:
     severity: 10
   severity: 10
   safety_mechanisms:
-  - description: 'Defaults: ExperimentalMode off (DQ-001), LongitudinalPersonality relaxed (CA-011); assured_config and set_personality log a deviation (CA-008)'
+  - description: 'Defaults: ExperimentalMode off (DQ-001), LongitudinalPersonality relaxed (CA-011); assured_config logs every deviation with a configuration hash (CA-008)'
     ref: openpilot/selfdrive/selfdrived/assured_config.py
+  - description: 'Reference platform only (DQ-221 A, #287): NO_ENTRY settingNotAssured while any ASSURED_PARAMS setting differs from its assured value
+      (AssuredConfigStatus.settings_in_scope, re-read every 0.1 s by params_thread); the distance button no longer changes the following distance. Entry check only:
+      an engaged item is not disengaged'
+    ref: openpilot/selfdrive/selfdrived/selfdrived.py
   causes:
   - id: SWF-067.C1
-    description: 'The driver can leave the assured configuration while driving: the distance button cycles the personality and saves it, and ExperimentalMode can be toggled;
-      both are only logged (selfdrived.py:502-506, 607-626). Whether to refuse engagement outside the assured configuration is queued for the lead (DQ-221)'
+    description: 'Defect in the reference entry gate (DQ-221 A, #287): settings_in_scope computed wrongly in assured_config.evaluate, settingNotAssured not raised in
+      add_reference_entry_events, reference_platform set wrongly, or distance_button_pressed still changing the personality, so the item engages in, or is moved to,
+      a setting the analyses do not cover'
+    element: SWF-SE-071
+    prevention_controls:
+    - description: 'Lead decision DQ-221 A implemented in #287 (69cddaa, after BL-006); change record change-2026-10-19-reference-entry-checks; upstream review, ruff + ty.
+        No SWSR yet (change record OI-1)'
+      ref: assurance/07-supporting/impact/change-2026-10-19-reference-entry-checks.md
+    detection_controls:
+    - description: 'test_assured_config.py: each setting refuses entry, entry only, other platforms unchanged, distance button ignored on the reference platform. Collected
+        by the CI unit_tests job but not yet run there (the scons jobs fail in setup on the git-lfs 404); run locally for #287 only. D 8 once CI runs it, D 4 with mutation'
+      test: openpilot/selfdrive/selfdrived/tests/test_assured_config.py
+    occurrence: 5
+    detection: 9
+    ap: H
+    actions:
+    - SWF-ACT-063
+  - id: SWF-067.C2
+    description: 'A setting changed in the settings menu while engaged (following distance, Experimental Mode) takes effect at once; the gate refuses only the next
+      engagement (change record OI-3). What the item should do then is queued for the lead (DQ-403)'
     element: SWF-SE-071
     prevention_controls:
     - description: Defaults set to the assured values; the deviation is logged with a configuration hash
       ref: openpilot/selfdrive/selfdrived/assured_config.py
     detection_controls:
-    - description: test_assured_config.py checks that deviations are reported (CI); it is not designed to keep the configuration
+    - description: No check while engaged; test_assured_config.py checks that the gate is entry-only, which is this behaviour
       test: openpilot/selfdrive/selfdrived/tests/test_assured_config.py
-    occurrence: 6
-    detection: 9
+    occurrence: 8
+    detection: 10
     ap: H
     actions:
-    - SWF-ACT-063
-  notes: A user choice, not a defect; recorded because the analyses of record assume the assured values.
+    - SWF-ACT-079
+  notes: 'Rated O6 D9 (AP H) as a single cause up to rev 1.4, when the distance button and the settings menu could both leave the assured configuration while driving.
+    Re-rated in rev 1.5 after #287. Other platforms stay outside the assured scope, allowed and logged (CA-008). The 60 km/h entry floor of the same change (DQ-280 A,
+    belowHighwaySpeed) is an ODD entry check analysed in the STPA (CC-18, LS-13), not here.'
 - id: SWF-068
   element: SWF-SE-070
   function: SWF-FN-070
@@ -5863,7 +5891,16 @@ actions:
   kind: design_change
   description: 'Apply the lead''s decision on engagement outside the assured configuration (DQ-221): refuse engagement or keep logging, with a test'
   owner: Jherrod Thomas
-  status: decision_pending
+  status: in_progress
+  evidence: 'DQ-221 A implemented in #287 (69cddaa): assured_config.py (settings_in_scope), selfdrived.py (add_reference_entry_events, distance_button_pressed), events.py
+    (settingNotAssured); tests in test_assured_config.py; change record assurance/07-supporting/impact/change-2026-10-19-reference-entry-checks.md. The tests ran
+    locally only (the 22 of 24 that do not need the compiled Params library pass, per the #287 merge note); the CI unit_tests job has not run them (scons setup fails on
+    the git-lfs 404). Completes when CI runs them; not verified in the vehicle (change record OI-5)'
+  revised:
+    severity: 10
+    occurrence: 5
+    detection: 8
+    ap: H
 - id: SWF-ACT-064
   kind: design_change
   description: 'radard and FCW review against SG-005/SG-006 with the SOTIF analysis: catch the Kalman dt assertion (reset the filter), allow FCW from a confirmed radar-only
@@ -5969,3 +6006,9 @@ actions:
     occurrence: 5
     detection: 4
     ap: H
+- id: SWF-ACT-079
+  kind: design_change
+  description: 'Apply the lead''s decision on setting changes while engaged (DQ-403): hold a menu change of an assured setting until the next engagement, disengage with
+    a warning, or keep today''s entry-only check; with a test'
+  owner: Jherrod Thomas
+  status: decision_pending

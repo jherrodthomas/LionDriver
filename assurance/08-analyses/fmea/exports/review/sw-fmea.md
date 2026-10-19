@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 1.4 | draft | BL-006 | RT-2 | 2026-10-17 |
+| 1.5 | draft | BL-006 | RT-2 | 2026-10-17 |
 
 **Scope.** P1 elements for AC-001 at BL-006 (proposed; liondriver-dev c61e31b, panda 0a7da85, opendbc 62b89a3; the LIONDRIVER_REFERENCE build is the default; rows of code unchanged since BL-005 keep their BL-005 ratings): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053). P2 elements: card and the Toyota port (SWF-056..060), driver monitoring (SWF-061..064), plannerd (SWF-065..069), radard (SWF-070, SWF-071). P3 elements: modeld as a software element (SWF-072..074; model performance is SOTIF), localization and calibration (SWF-075..077), camerad (SWF-078), sensord (SWF-079), messaging (SWF-080, SWF-081), manager (SWF-082, SWF-083), updated (SWF-084). Rev 1.1: driver-monitoring demo mode (SWF-085) and the forced stop after the terminal alert (SWF-086), for FTA finding F-37. Rev 1.2: no driver-override check on the LKA path in the envelope (SWF-087), for F-28.
 
@@ -1600,11 +1600,12 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `SWF-067.C1` The driver can leave the assured configuration while driving: the distance button cycles the personality and saves it, and ExperimentalMode can be toggled; both are only logged (selfdrived.py:502-506, 607-626). Whether to refuse engagement outside the assured configuration is queued for the lead (DQ-221) | • Defaults set to the assured values; the deviation is logged with a configuration hash <sub>openpilot/selfdrive/selfdrived/assured_config.py</sub> | • test_assured_config.py checks that deviations are reported (CI); it is not designed to keep the configuration <sub>openpilot/selfdrive/selfdrived/tests/test_assured_config.py</sub> | 6 | 9 | 🔴 **H** | SWF-ACT-063 |
+| `SWF-067.C1` Defect in the reference entry gate (DQ-221 A, #287): settings_in_scope computed wrongly in assured_config.evaluate, settingNotAssured not raised in add_reference_entry_events, reference_platform set wrongly, or distance_button_pressed still changing the personality, so the item engages in, or is moved to, a setting the analyses do not cover | • Lead decision DQ-221 A implemented in #287 (69cddaa, after BL-006); change record change-2026-10-19-reference-entry-checks; upstream review, ruff + ty. No SWSR yet (change record OI-1) <sub>assurance/07-supporting/impact/change-2026-10-19-reference-entry-checks.md</sub> | • test_assured_config.py: each setting refuses entry, entry only, other platforms unchanged, distance button ignored on the reference platform. Collected by the CI unit_tests job but not yet run there (the scons jobs fail in setup on the git-lfs 404); run locally for #287 only. D 8 once CI runs it, D 4 with mutation <sub>openpilot/selfdrive/selfdrived/tests/test_assured_config.py</sub> | 5 | 9 | 🔴 **H** | SWF-ACT-063 |
+| `SWF-067.C2` A setting changed in the settings menu while engaged (following distance, Experimental Mode) takes effect at once; the gate refuses only the next engagement (change record OI-3). What the item should do then is queued for the lead (DQ-403) | • Defaults set to the assured values; the deviation is logged with a configuration hash <sub>openpilot/selfdrive/selfdrived/assured_config.py</sub> | • No check while engaged; test_assured_config.py checks that the gate is entry-only, which is this behaviour <sub>openpilot/selfdrive/selfdrived/tests/test_assured_config.py</sub> | 8 | 10 | 🔴 **H** | SWF-ACT-079 |
 
-Safety mechanisms: (1) Defaults: ExperimentalMode off (DQ-001), LongitudinalPersonality relaxed (CA-011); assured_config and set_personality log a deviation (CA-008)
+Safety mechanisms: (1) Defaults: ExperimentalMode off (DQ-001), LongitudinalPersonality relaxed (CA-011); assured_config logs every deviation with a configuration hash (CA-008) · (2) Reference platform only (DQ-221 A, #287): NO_ENTRY settingNotAssured while any ASSURED_PARAMS setting differs from its assured value (AssuredConfigStatus.settings_in_scope, re-read every 0.1 s by params_thread); the distance button no longer changes the following distance. Entry check only: an engaged item is not disengaged
 
-<sub>Note: A user choice, not a defect; recorded because the analyses of record assume the assured values.</sub>
+<sub>Note: Rated O6 D9 (AP H) as a single cause up to rev 1.4, when the distance button and the settings menu could both leave the assured configuration while driving. Re-rated in rev 1.5 after #287. Other platforms stay outside the assured scope, allowed and logged (CA-008). The 60 km/h entry floor of the same change (DQ-280 A, belowHighwaySpeed) is an ODD entry check analysed in the STPA (CC-18, LS-13), not here.</sub>
 
 ### `SWF-SE-072` Forward collision warning decision
 
@@ -1987,7 +1988,7 @@ Safety mechanisms: (1) updated runs offroad only and the swap happens at boot (l
 | SWF-ACT-060 | detection | Run model_replay for dmonitoringmodeld and modeld in LionDriver CI, and add a non-finite / stale output injection test for dmonitoringd and modeld consumers | Jherrod Thomas | open | SWF-063.C1, SWF-072.C1 | — |
 | SWF-ACT-061 | design_change | Longitudinal input validity: plannerd treats an invalid radarState as no lead plus a fault, and controlsd sets longActive false (with an event) when longitudinalPlan.valid is false; keep the coast limit when orientationNED is missing | Jherrod Thomas | open | SWF-065.C1, SWF-065.C2, SWF-065.C3, SWF-070.C2 | — |
 | SWF-ACT-062 | design_change | plannerd robustness: on an MPC failure keep the last valid solution for a bounded time and raise an event if it persists; rate-limit the final aTarget (TSR-624); handle an unknown personality as relaxed; add MPC-failure injection and plannerd fuzzing in CI | Jherrod Thomas | open | SWF-065.C2, SWF-066.C1, SWF-068.C1 | — |
-| SWF-ACT-063 | design_change | Apply the lead's decision on engagement outside the assured configuration (DQ-221): refuse engagement or keep logging, with a test | Jherrod Thomas | decision_pending | SWF-067.C1 | — |
+| SWF-ACT-063 | design_change | Apply the lead's decision on engagement outside the assured configuration (DQ-221): refuse engagement or keep logging, with a test | Jherrod Thomas | in_progress | SWF-067.C1 | 10/5/8 → 🔴 **H** |
 | SWF-ACT-064 | design_change | radard and FCW review against SG-005/SG-006 with the SOTIF analysis: catch the Kalman dt assertion (reset the filter), allow FCW from a confirmed radar-only lead, and decide the radar-only stationary target treatment (FI-2026-001 CA-002); tests for each | Jherrod Thomas | open | SWF-069.C1, SWF-070.C1, SWF-070.C2, SWF-070.C3, SWF-071.C1, SWF-071.C2 | — |
 | SWF-ACT-065 | design_change | modeld output validity: check finiteness of every output used downstream (small model too, TSR-616), set modelV2.valid false on a non-finite output, a repeated or regressing frame_id, or an invalid calibration status; verify the model file hash at load (GAP-22). WP-A-03 DFI-30 | Jherrod Thomas | open | SWF-072.C1, SWF-072.C2, SWF-072.C3, SWF-073.C1, SWF-074.C1 | — |
 | SWF-ACT-066 | detection | Unit tests for modeld output handling (parse, finiteness, frame-drop accounting) and include modeld in model_replay in LionDriver CI (with SWF-ACT-060) | Jherrod Thomas | open | SWF-073.C1 | — |
@@ -2003,6 +2004,7 @@ Safety mechanisms: (1) updated runs offroad only and the swap happens at boot (l
 | SWF-ACT-074 | design_change | Envelope override check (TSR-304, DQ-053): in toyota.h reject 0x2E4 frames that increase torque opposing STEER_TORQUE_DRIVER beyond the driver allowance, and back off toward zero at no less than the down rate while the override lasts; report the state to the SoC (TSR-628). Add opendbc safety tests and mutation for both branches; host counterpart SWF-ACT-046 | Jherrod Thomas | open | SWF-087.C1 | — |
 | SWF-ACT-077 | design_change | Escalate the EPS-fault warning per TSR-607 (DQ-342 A, DQ-366 A): allow steerTempUnavailableSilent only for the first 1.5 s of the fault (steer_fault_frames, STEER_FAULT_SILENT_FRAMES), then the take-over request; give at least the lighter prompt when the fault lasts over 1.5 s while the driver keeps steering; unit tests | Jherrod Thomas | completed | SWF-088.C1, SWF-088.C2 | 10/5/8 → 🔴 **H** |
 | SWF-ACT-078 | detection | Prove the EPS-fault warning tests: mutate the escalation in car_events.py (the STEER_FAULT_SILENT_FRAMES comparisons, the silent_steer_warning latch and the steering-held branch) and show test_steer_fault_warning.py fails on each mutant, in CI, so D can drop to 4 (System FMEA SFM-ACT-023 points to the same run) | Jherrod Thomas | open | SWF-088.C1, SWF-088.C2 | 10/5/4 → 🔴 **H** |
+| SWF-ACT-079 | design_change | Apply the lead's decision on setting changes while engaged (DQ-403): hold a menu change of an assured setting until the next engagement, disengage with a warning, or keep today's entry-only check; with a test | Jherrod Thomas | decision_pending | SWF-067.C2 | — |
 
 ## 6. Priority H causes without a completed action
 
@@ -2102,7 +2104,8 @@ Safety mechanisms: (1) updated runs offroad only and the swap happens at boot (l
 | `SWF-065.C2` | Planned acceleration too high, or deceleration too low, for the lead | 10/5/9 | SWF-ACT-061, SWF-ACT-062 |
 | `SWF-065.C3` | Planned acceleration too high, or deceleration too low, for the lead | 10/4/10 | SWF-ACT-061 |
 | `SWF-066.C1` | Planned acceleration changes in a step | 10/7/9 | SWF-ACT-050, SWF-ACT-062 |
-| `SWF-067.C1` | Planning in a mode or following distance outside the assured configuration | 10/6/9 | SWF-ACT-063 |
+| `SWF-067.C1` | Planning in a mode or following distance outside the assured configuration | 10/5/9 | SWF-ACT-063 |
+| `SWF-067.C2` | Planning in a mode or following distance outside the assured configuration | 10/8/10 | SWF-ACT-079 |
 | `SWF-068.C1` | plannerd stops or runs late while engaged | 10/4/9 | SWF-ACT-062 |
 | `SWF-068.C2` | plannerd stops or runs late while engaged | 10/4/10 | SWF-ACT-048 |
 | `SWF-069.C1` | Forward collision warning not raised for a predicted collision | 10/6/8 | SWF-ACT-064 |

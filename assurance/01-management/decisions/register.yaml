@@ -4534,8 +4534,9 @@
     - assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-067
     - openpilot/selfdrive/selfdrived/assured_config.py
     - openpilot/selfdrive/selfdrived/selfdrived.py:502-506, 607-626
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "#287", record: "selfdrived.py add_reference_entry_events; assured_config.py; change-2026-10-19-reference-entry-checks (new selfdrived tests ran locally only: the scons CI jobs were down on the LFS 404 at merge)", at: 2026-10-19}
 
 - id: DQ-260
   question: "Should the highway ODD stop at 110 km/h, the highest speed at which the driver's control of a steering fault will be tested?"
@@ -4855,8 +4856,9 @@
       title: "Allow engagement anywhere, show a warning off-highway, and rely on the driver and user information"
       detail: "Most useful in daily driving. Cost: the ODD limit rests on the driver; LS-13 stays a known gap, and an assessor may ask why an ODD boundary has no technical check."
   sources: ["assurance/08-analyses/WP-A-05-stpa.md LS-13, OI-15", "assurance/01-management/decisions/register.yaml DQ-023", "assurance/02-concept/WP-C-07-sotif-functional-modifications.md FM-08"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "#287", record: "selfdrived.py add_reference_entry_events; assured_config.py; change-2026-10-19-reference-entry-checks (new selfdrived tests ran locally only: the scons CI jobs were down on the LFS 404 at merge)", at: 2026-10-19}
 
 - id: DQ-367
   question: "With an EPS fault and a host that keeps asking for torque, authority now drops after 50 ms and the panda's EPS-fault siren no longer sounds. Restore the siren, accept losing it, or keep the old rule?"
@@ -5039,7 +5041,7 @@
   question: "If the driver changes an assured setting from the menu while engaged (for example turns Experimental Mode on), should LionDriver disengage, or let it take effect and only refuse the next engagement?"
   context: "You chose to refuse engagement outside the assured settings (DQ-221 A). In #287 that check only covers entry, so a setting changed mid-drive takes effect at once and the item keeps running outside its assured configuration until the next engagement. **A disengage closes that gap; the cost is a sudden takeover caused by a menu tap.**"
   reversibility: easy
-  blocks: "Change record change-2026-10-19-reference-entry-checks OI-3; DQ-221 implementation"
+  blocks: "Change record change-2026-10-19-reference-entry-checks OI-3; DQ-221 implementation; SW FMEA SWF-067.C2 / SWF-ACT-079"
   gate: G1
   decider: lead
   after: [DQ-221]
