@@ -5058,3 +5058,33 @@
       detail: "No change. Cost: the item can run outside its assured settings until it is next engaged, which the safety case must argue away."
   sources: ["PR #287 (Open: OI-3)", "DQ-221"]
   status: queued
+
+- id: DQ-404
+  question: "When the panda takes steering away because the openpilot computer has frozen, should it also sound the alarm?"
+  context: >-
+    If the openpilot computer stalls, the panda revokes steering 0.04 s later but **sounds no siren**: its heartbeat
+    check does not fire once authority is gone (WP-S-04 T-34), and openpilot cannot alert because it is the part that
+    froze. The driver's only cue is the car drifting. In the plant at the ODD curve bound (HE-07.1, ASIL C) the driver
+    corrects at 2.68 s and the car drifts 7.3 m; with a siren at revocation, 1.66 s and 1.5 m. Inside the ODD curve the
+    siren keeps the car in its 3.7 m lane (peak 0.7 m against 3.6 m). Synthetic, no evidence credit.
+  reversibility: revisit
+  blocks: "WP-S-04 T-34 (the siren gap on a SoC stall); the warning argument for HE-07.1, HE-02.4 and HE-02.6"
+  decider: lead
+  figure: figures/dq-404.svg
+  caption: >-
+    Plant run F-04b with the real panda code: as built (red) and with a siren when the panda revokes (blue). The siren
+    moves the correction about 1 s earlier; at the curve bound the body still touches the lane line, inside the ODD it
+    does not. Driver, EPS and road are the plant's assumptions.
+  options:
+    - key: A
+      recommended: true
+      title: "Siren when the panda revokes because openpilot stopped"
+      detail: "Sound the existing siren when authority is revoked for missing command frames or heartbeat, not when the driver disengages. Cost: a change to the panda safety code and a new or changed TSR (the safety-concept session's), tests and a fault-injection case; differs from upstream panda."
+    - key: B
+      title: "Keep it silent and argue the drift is enough"
+      detail: "No code change. Cost: HE-07.1 keeps C3 with no warning measure; the driver corrects about 1 s later and the car drifts up to 7.3 m at the curve bound, which the safety case has to accept."
+    - key: C
+      title: "Warn through the car's own cluster instead"
+      detail: "Rely on what the stock Corolla shows when LKA frames stop. Cost: not known yet (it depends on the EPS behaviour M-02 measures); likely later and quieter than the siren, and outside our code."
+  sources: ["WP-S-04 T-34", "System FMEA F-04b row (TSR-408)", "WP-C-03 HE-07.1, HE-02.4, HE-02.6", "assurance/sim/results/silent-stall.md", "assurance/sim/README.md §3.7"]
+  status: queued
