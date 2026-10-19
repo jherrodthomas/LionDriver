@@ -83,6 +83,8 @@
 #     SWF-005 and SWF-057 (the host parser still reads short frames, so SWF-057.C2 keeps its rating).
 # Post rev 1.4, ratings unchanged: SWF-088 mechanism text updated for panda bf8102a (after BL-006): EPS-fault siren persistence 0.7 s (DQ-048 A,
 #   worst case 0.96 s from onset, WP-S-04 OI-8 closed) and the siren still sounding after a revocation (DQ-367, panda#18).
+# Post rev 1.4, FTA WP-A-04 v1.12 (BE-1.25 in the SG-04 tree), ratings unchanged: SWF-055 and SWF-089 gain HZ-006 end effects (an authority
+#   grant covers longitudinal commands, as SWF-007). SWF-002 stays steering-only (HZ-001); its note says why HZ-006 and HZ-010 do not apply.
 #
 # SW FMEA element pandad (FSC EL-06, System FMEA SFM-SE-017). Ratings per RT-1, against BL-004 (liondriver-dev 682f184,
 # panda 8aa8671, opendbc 7993399). The LIONDRIVER_REFERENCE firmware build is not enabled by any build path at BL-004, so the
@@ -1159,7 +1161,9 @@ failure_modes:
     ap: H
     actions:
     - SWF-ACT-002
-  notes: Depends on controls_allowed being correct; see SWF-007..SWF-009.
+  notes: Depends on controls_allowed being correct; see SWF-007..SWF-009. Steering only, so its effects cite HZ-001 and not HZ-006 or HZ-010
+    (lint warnings from FTA BE-1.25, which also cites it in the SG-03 and SG-04 trees). The controls_allowed bookkeeping part of SWF-002.C1
+    reaches longitudinal authority and engagement only through SWF-007..SWF-009, which carry HZ-010 and HZ-006.
   safety_mechanisms:
   - description: Panda blocks non-zero torque and the steer-request bit while controls are not allowed
     ref: opendbc_repo/opendbc/safety/lateral.h
@@ -3769,6 +3773,10 @@ failure_modes:
     description: Contributes to HZ-002 (a host that was revoked for flooding regains authority through the mode reset, which also clears the ATC-20 block)
     hazard: HZ-002
     severity: 10
+  - level: end
+    description: Contributes to HZ-006 (the regained authority passes longitudinal commands too; braking without the driver's engagement, HE-04.4)
+    hazard: HZ-006
+    severity: 10
   severity: 10
   causes:
   - id: SWF-055.C1
@@ -5389,6 +5397,10 @@ failure_modes:
   - level: end
     description: Brief actuation without the driver's cruise engagement, from an implausible PCM state
     hazard: HZ-010
+    severity: 10
+  - level: end
+    description: Contributes to HZ-006 (the grant covers longitudinal commands; braking without the driver's engagement for up to the 150 ms tolerance, HE-04.4)
+    hazard: HZ-006
     severity: 10
   severity: 10
   causes:

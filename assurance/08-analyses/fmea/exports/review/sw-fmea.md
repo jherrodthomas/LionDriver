@@ -312,6 +312,7 @@ Effects:
 
 - **End:** Steering and acceleration resume without the driver's decision, after a fault or a host request (HZ-010, S 10)
 - **End:** Contributes to HZ-002 (a host that was revoked for flooding regains authority through the mode reset, which also clears the ATC-20 block) (HZ-002, S 10)
+- **End:** Contributes to HZ-006 (the regained authority passes longitudinal commands too; braking without the driver's engagement, HE-04.4) (HZ-006, S 10)
 - **Next higher:** controls_allowed granted again (once the RX checks are valid and the heartbeat reports engaged) after a host mode request, a heartbeat-loss recovery or a harness change, with the driver doing nothing
 - **Local:** set_safety_hooks clears cruise_engaged_prev, so CRUISE_ACTIVE still 1 is read as a rising edge on the next PCM_CRUISE frame
 
@@ -330,6 +331,7 @@ Safety mechanisms: (1) The grant still needs every RX check valid and the heartb
 Effects:
 
 - **End:** Brief actuation without the driver's cruise engagement, from an implausible PCM state (HZ-010, S 10)
+- **End:** Contributes to HZ-006 (the grant covers longitudinal commands; braking without the driver's engagement for up to the 150 ms tolerance, HE-04.4) (HZ-006, S 10)
 - **Next higher:** The item holds authority while main is off until the 150 ms main-off tolerance revokes it
 - **Local:** pcm_engage_pending stays set after toyota_cruise_main_check refuses a CRUISE_ACTIVE edge for MAIN_ON = 0, so a heartbeat-engaged flag within 1 s grants controls_allowed
 
@@ -377,7 +379,7 @@ Effects:
 
 Safety mechanisms: (1) Panda blocks non-zero torque and the steer-request bit while controls are not allowed
 
-<sub>Note: Depends on controls_allowed being correct; see SWF-007..SWF-009.</sub>
+<sub>Note: Depends on controls_allowed being correct; see SWF-007..SWF-009. Steering only, so its effects cite HZ-001 and not HZ-006 or HZ-010 (lint warnings from FTA BE-1.25, which also cites it in the SG-03 and SG-04 trees). The controls_allowed bookkeeping part of SWF-002.C1 reaches longitudinal authority and engagement only through SWF-007..SWF-009, which carry HZ-010 and HZ-006.</sub>
 
 #### SWF-087 · Envelope passes LKA torque that opposes the driver while the driver overrides the steering
 
