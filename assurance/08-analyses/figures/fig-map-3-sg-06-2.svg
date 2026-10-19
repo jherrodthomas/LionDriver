@@ -1,0 +1,186 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1344" height="1090" viewBox="0 0 1344 1090" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">Figure 3-SG-06-2. SG-06: from the fault tree to the FMEA</title>
+<desc id="d">Figure 3-SG-06-2. SG-06: 26 events (backed 22, by design 1, external 3, unbacked 1); 32 FMEA modes reach SG-06 (in the tree 27, justified 4, tree gaps 1). BE-6.05 (Stale zero or positive accel held (BE-1.19, BE-1.21)) → SFM-037, SWF-043, SWF-023, SWF-040, SWF-072: Longitudinal command frozen at last value; worst cause SWF-023.C1 (The age gate is 1 s (pandad.cc:78-79). That exceeds the 0.9 s preliminary SG-001 FTTI and is 100 control periods long. The sendcan subscriber is a non-conflated FIFO (pandad.cc:64; services.py sendcan MEDIUM queue), so a backlog of up to 1 s is forwarded in order but back-to-back. No newest-only policy applies per address (WP-W-04 SWF-47, SWSR-411); O 8, D 10, AP H); detection: No test targets this cause BE-1.22 (Command freshness not supervised: heartbeat shows pandad liveness only; mismatch 3 s, loss 5 s (main.c:182-213; GAP-06, GAP-10) . 2026-10-12, reference build: heartbeat loss revokes at 0.3 s (TSR-407); actuation-frame arrival supervised (TSR-408, opendbc 273f44e); value freshness (TSR-409) open) → SWF-014, SWF-020, SWF-018, DFM-014: Controls withdrawn later than the FTTI after host loss; worst cause SWF-020.C1 (engaged is derived only from selfdriveState alive (&lt;0.1 s), valid and enabled (pandad.cc:424). Neither carControl/sendcan freshness nor the forwarding thread's progress goes into the heartbeat, which is sent from the main thread (pandad.cc:313), so the heartbeat shows pandad and selfdrived liveness only (host side of SWF-014.C2; TSR-409 / TSR-602 not implemented); O 8, D 10, AP H); detection: No test targets this cause BE-2.05 (SoC crash or hang (whole SoC)) → SFM-005: Loss of lateral control without driver alert; worst cause SFM-005.C3 (Process crash or hang not detected by liveness checks; O 6, D 10, AP H); detection: No pre-release test targets this cause BE-2.21 (selfdrived crash or hang: controlsd and card stop within ≈ 0.1 s, ui/soundd show "System Unresponsive" only after 5 s; pandad keeps the heartbeat (engaged = 0), so no heartbeat-loss siren (SFMEA-07)) → SWF-036: selfdrived stops publishing selfdriveState (crash or hang) while engaged; worst cause SWF-036.C2 (Hang or starvation of the Python process (blocking Params writes in the 100 Hz loop, selfdrived.py:222, 308, 470; GIL contention with params_thread; CPU load); no process watchdog for selfdrived (process_config.py:97); O 5, D 10, AP H); detection: No test targets this cause BE-2.06 (Actuation frames stop reaching the bus: SoC configuration command (0xe5, 0xde, 0xf1; FFI-CM-09), MCU hang (SFMEA-22), car-side bus-off (SFMEA-26)) → DFM-008, DFM-021, DFM-004, DFM-016, DFM-018, DFM-012, PFM-008, PFM-006, SWF-024, SWF-047, SFM-005, SFM-011: Car-side transceiver holds the bus dominant; worst cause SWF-047.C1 (controlsd raises on input it does not guard and exits; the 100 Hz loop has no exception handling. The example of BL-004, int(NaN) when lateralDelay is not finite (latcontrol_torque.py:100), is guarded since #51 (falls back to steerActuatorDelay, controlsd.py:158-160); other inputs are not; O 6, D 10, AP H); detection: No test injects non-finite lateralDelay BE-2.17 (Loss of the actuation frames not reported in time by the SoC: no check that the frames reach the bus; seen only indirectly (pandaStates, canError) with timing not analysed (to confirm, OI-10)) → SWF-020, SWF-024, SWF-060: Heartbeat reports engaged while no fresh command reaches the panda; worst cause SWF-020.C1 (engaged is derived only from selfdriveState alive (&lt;0.1 s), valid and enabled (pandad.cc:424). Neither carControl/sendcan freshness nor the forwarding thread's progress goes into the heartbeat, which is sent from the main thread (pandad.cc:313), so the heartbeat shows pandad and selfdrived liveness only (host side of SWF-014.C2; TSR-409 / TSR-602 not implemented); O 8, D 10, AP H); detection: No test targets this cause BE-2.07 (Loss of the 12 V supply to the device (FSC node N08)) → DFM-012, DFM-020, PFM-008: Harness disconnected or intermittent while driving; worst cause DFM-012.C1 (Connector not fully latched at installation, or vibration loosens it; O 5, D 10, AP H); detection: No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) UE-6.07 (Driver does not notice the end of ACC deceleration or the cluster cruise change (AOU-12; PCM response to missing ACC_CONTROL, XM-02)): No FMEA row needed: external; AOU-12 (cluster cruise indicator); PCM reaction to missing ACC_CONTROL not characterised (XM-02) BE-6.09 (Lead missed, detected late or tracked too slowly: the plan asks for too little or late deceleration (SFM-010.C1, SFM-012.C2; SH-06)) → SFM-010, SFM-012, PFM-012: Insufficient deceleration for lead vehicle or stop; worst cause SFM-010.C2 (Safety model minimum accel limit prevents required braking (by design); O 6, D 10, AP H); detection: No pre-release test targets this cause BE-6.10 (FCW comes from the same model and lead as the plan: no independent source for a missed lead): No FMEA row needed: by design; The FCW is raised by the same planner and driving model, from the same lead, as the deceleration (SFM-010 safety mechanism); a lead missed or seen late is missed or late for the FCW too. The standing condition under which BE-6.09 acts.</desc>
+<defs><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2563EB"/></marker><marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker><marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker></defs>
+<rect width="1344" height="1090" fill="#FFFFFF"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">SG-06: from the fault tree to the FMEA (2 of 2)</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Loss of longitudinal deceleration without take-over warning</text>
+<text x="1304" y="44" font-size="11" fill="#475569" text-anchor="end">WP-A-04 · fta-fmea-map.yaml</text>
+<text x="1304" y="62" font-size="11" fill="#475569" text-anchor="end">Figure 3-SG-06-2</text>
+<line x1="40" y1="82" x2="1304" y2="82" stroke="#E2E8F0"/>
+<text x="40" y="114" font-size="10.5" fill="#475569" font-weight="700">Event (fault tree)</text>
+<text x="400" y="114" font-size="10.5" fill="#475569" font-weight="700">FMEA failure mode it hands off to</text>
+<text x="720" y="114" font-size="10.5" fill="#475569" font-weight="700">Worst cause and its ratings</text>
+<text x="1060" y="114" font-size="10.5" fill="#475569" font-weight="700">Detection that cause credits</text>
+<rect x="40" y="128" width="1264" height="28" rx="6" fill="#F1F5F9"/>
+<text x="52" y="146" font-size="10.5" fill="#334155" font-weight="700">TE-06 › G6.5 (AND gate)</text>
+<text x="195.334" y="146" font-size="10.5" fill="#0F172A">Stale accel held and not removed by the envelope</text>
+<rect x="40" y="162" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="179" font-size="10.5" fill="#334155" font-weight="700">● BE-6.05</text>
+<text x="50" y="193" font-size="9.5" fill="#0F172A">Stale zero or positive accel held (BE-1.19, BE-1.21)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.08;0.14;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 189 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="162" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="179" font-size="10.5" fill="#C2410C" font-weight="700">SFM-037 · System FMEA  + 4 more</text>
+<text x="410" y="193" font-size="9.5" fill="#0F172A">Longitudinal command frozen at last value</text>
+<text x="720" y="176" font-size="9.5" fill="#0F172A">SWF-023.C1: The age gate is 1 s (pandad.cc:78-79). That exceeds the</text>
+<text x="720" y="188" font-size="9.5" fill="#0F172A">0.9 s preliminary SG-001 FTTI and is 100 control periods long. The …</text>
+<rect x="720" y="198" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="209.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 8</text>
+<rect x="754.455" y="198" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="209.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="198" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="209.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="176" font-size="9.5" fill="#475569">No test targets this cause</text>
+</g>
+<rect x="40" y="224" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="241" font-size="10.5" fill="#334155" font-weight="700">● BE-1.22</text>
+<text x="50" y="255" font-size="9.5" fill="#0F172A">Command freshness not supervised: heartbeat shows pandad</text>
+<text x="50" y="267" font-size="9.5" fill="#0F172A">liveness only; mismatch 3 s, loss 5 s (main.c:182-213; GAP-06, …</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.20;0.26;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 251 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="224" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="241" font-size="10.5" fill="#C2410C" font-weight="700">SWF-014 · SW FMEA  + 3 more</text>
+<text x="410" y="255" font-size="9.5" fill="#0F172A">Controls withdrawn later than the FTTI after host loss</text>
+<text x="720" y="238" font-size="9.5" fill="#0F172A">SWF-020.C1: engaged is derived only from selfdriveState alive (&lt;0.1 s),</text>
+<text x="720" y="250" font-size="9.5" fill="#0F172A">valid and enabled (pandad.cc:424). Neither carControl/sendcan …</text>
+<rect x="720" y="260" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="271.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 8</text>
+<rect x="754.455" y="260" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="271.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="260" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="271.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="238" font-size="9.5" fill="#475569">No test targets this cause</text>
+</g>
+<rect x="40" y="292" width="1264" height="28" rx="6" fill="#F1F5F9"/>
+<text x="52" y="310" font-size="10.5" fill="#334155" font-weight="700">TE-06 › G6.6 › G6.6.1 (OR gate)</text>
+<text x="234.4" y="310" font-size="10.5" fill="#0F172A">Control and the SoC warning lost by one SoC fault</text>
+<rect x="40" y="326" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="343" font-size="10.5" fill="#334155" font-weight="700">● BE-2.05</text>
+<text x="50" y="357" font-size="9.5" fill="#0F172A">SoC crash or hang (whole SoC)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.32;0.38;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 353 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="326" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="343" font-size="10.5" fill="#C2410C" font-weight="700">SFM-005 · System FMEA</text>
+<text x="410" y="357" font-size="9.5" fill="#0F172A">Loss of lateral control without driver alert</text>
+<text x="720" y="340" font-size="9.5" fill="#0F172A">SFM-005.C3: Process crash or hang not detected by liveness checks</text>
+<rect x="720" y="362" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="373.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 6</text>
+<rect x="754.455" y="362" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="373.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="362" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="373.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="340" font-size="9.5" fill="#475569">No pre-release test targets this cause</text>
+</g>
+<rect x="40" y="388" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="405" font-size="10.5" fill="#334155" font-weight="700">● BE-2.21</text>
+<text x="50" y="419" font-size="9.5" fill="#0F172A">selfdrived crash or hang: controlsd and card stop within ≈ 0.1 s,</text>
+<text x="50" y="431" font-size="9.5" fill="#0F172A">ui/soundd show "System Unresponsive" only after 5 s; pandad …</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.44;0.50;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 415 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="388" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="405" font-size="10.5" fill="#C2410C" font-weight="700">SWF-036 · SW FMEA</text>
+<text x="410" y="419" font-size="9.5" fill="#0F172A">selfdrived stops publishing selfdriveState (crash or hang) while</text>
+<text x="410" y="431" font-size="9.5" fill="#0F172A">engaged</text>
+<text x="720" y="402" font-size="9.5" fill="#0F172A">SWF-036.C2: Hang or starvation of the Python process (blocking</text>
+<text x="720" y="414" font-size="9.5" fill="#0F172A">Params writes in the 100 Hz loop, selfdrived.py:222, 308, 470; GIL …</text>
+<rect x="720" y="424" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="435.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 5</text>
+<rect x="754.455" y="424" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="435.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="424" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="435.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="402" font-size="9.5" fill="#475569">No test targets this cause</text>
+</g>
+<rect x="40" y="456" width="1264" height="28" rx="6" fill="#F1F5F9"/>
+<text x="52" y="474" font-size="10.5" fill="#334155" font-weight="700">TE-06 › G6.7 (AND gate)</text>
+<text x="195.334" y="474" font-size="10.5" fill="#0F172A">Actuation frames stop and no adequate take-over request</text>
+<rect x="40" y="490" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="507" font-size="10.5" fill="#334155" font-weight="700">● BE-2.06</text>
+<text x="50" y="521" font-size="9.5" fill="#0F172A">Actuation frames stop reaching the bus: SoC configuration</text>
+<text x="50" y="533" font-size="9.5" fill="#0F172A">command (0xe5, 0xde, 0xf1; FFI-CM-09), MCU hang …</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.56;0.62;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 517 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="490" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="507" font-size="10.5" fill="#C2410C" font-weight="700">DFM-008 · DFMEA  + 11 more</text>
+<text x="410" y="521" font-size="9.5" fill="#0F172A">Car-side transceiver holds the bus dominant</text>
+<text x="720" y="504" font-size="9.5" fill="#0F172A">SWF-047.C1: controlsd raises on input it does not guard and exits; the</text>
+<text x="720" y="516" font-size="9.5" fill="#0F172A">100 Hz loop has no exception handling. The example of BL-004, …</text>
+<rect x="720" y="526" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="537.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 6</text>
+<rect x="754.455" y="526" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="537.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="526" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="537.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="504" font-size="9.5" fill="#475569">No test injects non-finite lateralDelay</text>
+</g>
+<rect x="40" y="558" width="1264" height="28" rx="6" fill="#F1F5F9"/>
+<text x="52" y="576" font-size="10.5" fill="#334155" font-weight="700">TE-06 › G6.7 › G6.7.1 (OR gate)</text>
+<text x="234.4" y="576" font-size="10.5" fill="#0F172A">SoC warning missing or late</text>
+<rect x="40" y="592" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="609" font-size="10.5" fill="#334155" font-weight="700">● BE-2.17</text>
+<text x="50" y="623" font-size="9.5" fill="#0F172A">Loss of the actuation frames not reported in time by the SoC: no</text>
+<text x="50" y="635" font-size="9.5" fill="#0F172A">check that the frames reach the bus; seen only indirectly …</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.68;0.74;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 619 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="592" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="609" font-size="10.5" fill="#C2410C" font-weight="700">SWF-020 · SW FMEA  + 2 more</text>
+<text x="410" y="623" font-size="9.5" fill="#0F172A">Heartbeat reports engaged while no fresh command reaches the</text>
+<text x="410" y="635" font-size="9.5" fill="#0F172A">panda</text>
+<text x="720" y="606" font-size="9.5" fill="#0F172A">SWF-020.C1: engaged is derived only from selfdriveState alive (&lt;0.1 s),</text>
+<text x="720" y="618" font-size="9.5" fill="#0F172A">valid and enabled (pandad.cc:424). Neither carControl/sendcan …</text>
+<rect x="720" y="628" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="639.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 8</text>
+<rect x="754.455" y="628" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="639.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="628" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="639.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="606" font-size="9.5" fill="#475569">No test targets this cause</text>
+</g>
+<rect x="40" y="660" width="1264" height="28" rx="6" fill="#FEF2F2"/>
+<text x="52" y="678" font-size="10.5" fill="#DC2626" font-weight="700">TE-06 › G6.8 (AND gate)</text>
+<text x="195.334" y="678" font-size="10.5" fill="#0F172A">Loss of the 12 V supply: the SoC warning and the siren are lost with control</text>
+<rect x="40" y="694" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.8"/>
+<text x="50" y="711" font-size="10.5" fill="#DC2626" font-weight="700">● BE-2.07  single point</text>
+<text x="50" y="725" font-size="9.5" fill="#0F172A">Loss of the 12 V supply to the device (FSC node N08)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.08;0.14;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 721 H396" stroke="#DC2626" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="694" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="711" font-size="10.5" fill="#C2410C" font-weight="700">DFM-012 · DFMEA  + 2 more</text>
+<text x="410" y="725" font-size="9.5" fill="#0F172A">Harness disconnected or intermittent while driving</text>
+<text x="720" y="708" font-size="9.5" fill="#0F172A">DFM-012.C1: Connector not fully latched at installation, or vibration</text>
+<text x="720" y="720" font-size="9.5" fill="#0F172A">loosens it</text>
+<rect x="720" y="730" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="741.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 5</text>
+<rect x="754.455" y="730" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="741.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="730" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="741.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="708" font-size="9.5" fill="#475569">No LionDriver hardware verification or qualification</text>
+<text x="1060" y="720" font-size="9.5" fill="#475569">test exists for this cause (WP-H-06/WP-H-07 not</text>
+<text x="1060" y="732" font-size="9.5" fill="#475569">started; no HIL bench, D-04)</text>
+</g>
+<rect x="40" y="756" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="773" font-size="10.5" fill="#334155" font-weight="700">◆ UE-6.07</text>
+<text x="50" y="787" font-size="9.5" fill="#0F172A">Driver does not notice the end of ACC deceleration or the</text>
+<text x="50" y="799" font-size="9.5" fill="#0F172A">cluster cruise change (AOU-12; PCM response to missing …</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.20;0.26;1" dur="6s" repeatCount="indefinite"/>
+<rect x="400" y="756" width="904" height="54" rx="8" fill="#F8FAFC" stroke="#94A3B8" stroke-dasharray="5 4"/>
+<text x="410" y="774" font-size="10.5" fill="#475569" font-weight="700">No FMEA row needed: external</text>
+<text x="410" y="789" font-size="9.5" fill="#475569">AOU-12 (cluster cruise indicator); PCM reaction to missing ACC_CONTROL not characterised (XM-02)</text>
+</g>
+<rect x="40" y="824" width="1264" height="28" rx="6" fill="#F1F5F9"/>
+<text x="52" y="842" font-size="10.5" fill="#334155" font-weight="700">TE-06 › G6.9 (AND gate)</text>
+<text x="195.334" y="842" font-size="10.5" fill="#0F172A">Lead missed or late and no adequate take-over request</text>
+<rect x="40" y="858" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="875" font-size="10.5" fill="#334155" font-weight="700">● BE-6.09</text>
+<text x="50" y="889" font-size="9.5" fill="#0F172A">Lead missed, detected late or tracked too slowly: the plan asks</text>
+<text x="50" y="901" font-size="9.5" fill="#0F172A">for too little or late deceleration (SFM-010.C1, SFM-012.C2; …</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.32;0.38;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 885 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="858" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="875" font-size="10.5" fill="#C2410C" font-weight="700">SFM-010 · System FMEA  + 2 more</text>
+<text x="410" y="889" font-size="9.5" fill="#0F172A">Insufficient deceleration for lead vehicle or stop</text>
+<text x="720" y="872" font-size="9.5" fill="#0F172A">SFM-010.C2: Safety model minimum accel limit prevents required</text>
+<text x="720" y="884" font-size="9.5" fill="#0F172A">braking (by design)</text>
+<rect x="720" y="894" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="905.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 6</text>
+<rect x="754.455" y="894" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="905.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="894" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="905.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="872" font-size="9.5" fill="#475569">No pre-release test targets this cause</text>
+</g>
+<rect x="40" y="926" width="1264" height="28" rx="6" fill="#F1F5F9"/>
+<text x="52" y="944" font-size="10.5" fill="#334155" font-weight="700">TE-06 › G6.9 › G6.9.1 (OR gate)</text>
+<text x="234.4" y="944" font-size="10.5" fill="#0F172A">Forward collision warning missing or late</text>
+<rect x="40" y="960" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="977" font-size="10.5" fill="#334155" font-weight="700">● BE-6.10</text>
+<text x="50" y="991" font-size="9.5" fill="#0F172A">FCW comes from the same model and lead as the plan: no</text>
+<text x="50" y="1003" font-size="9.5" fill="#0F172A">independent source for a missed lead</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.44;0.50;1" dur="6s" repeatCount="indefinite"/>
+<rect x="400" y="960" width="904" height="54" rx="8" fill="#F8FAFC" stroke="#94A3B8" stroke-dasharray="5 4"/>
+<text x="410" y="978" font-size="10.5" fill="#475569" font-weight="700">No FMEA row needed: by design</text>
+<text x="410" y="993" font-size="9.5" fill="#475569">The FCW is raised by the same planner and driving model, from the same lead, as the deceleration (SFM-010 safety mechanism); a lead missed or seen late is missed or late for the FCW too. The</text>
+<text x="410" y="1005" font-size="9.5" fill="#475569">standing condition under which BE-6.09 acts.</text>
+</g>
+<text x="40" y="1038" font-size="10.5" fill="#475569">SG-06: 26 events (backed 22, by design 1, external 3, unbacked 1); 32 FMEA modes reach SG-06 (in the tree 27, justified 4, tree gaps 1)</text>
+<text x="40" y="1056" font-size="10.5" fill="#475569">Worst cause: highest AP, then highest D. Red: single-point path from the gate logic. Text cut with … is given in full in the figure description.</text>
+<text x="1304" y="1074" font-size="10" fill="#475569" text-anchor="end">Generated by fta_fmea_figures.py</text>
+</svg>
