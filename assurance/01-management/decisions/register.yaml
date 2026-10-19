@@ -1296,8 +1296,9 @@
       title: "Leave it until an assessor is engaged"
       detail: "No decision now. Cost: validation driving and simulation cannot be sized, and with no assessor planned (DQ-009 C) it stays open."
   sources: ["assurance/10-safety-case/WP-K-02-sotif-release-argument.md OI-2, R-08", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md §3.3"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: ffc22dd, record: "WP-V-02 v0.10 §3; WP-V-04 §5.2; WP-K-02 R-08; WP-M-08 §5.2 (#255)", at: 2026-10-19}
 
 - id: DQ-058
   question: "Does PAS 8800 need an AI architecture view at G2?"
