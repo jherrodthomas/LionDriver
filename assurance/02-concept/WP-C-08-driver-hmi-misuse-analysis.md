@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-08 Driver interaction, HMI and reasonably foreseeable misuse analysis |
 | Standard reference | ISO 26262-3:2018 §6 (controllability basis); ISO 21448:2022 §6 and Annex B (misuse, informative); UNECE R79 and R171 (informative benchmarks, WP-M-01 T-13); RESPONSE 3 Code of Practice for ADAS (informative) |
-| Version | 0.6 (§5.4 and OI-8: the rule is implemented in `policy.py`, SWSR-634; validation still open; 2026-10-17). 0.5 (§5.4 added: supervision bound and speed table for the wheel-touch fallback, required by TSR-634 (DQ-077 A); DMP-05; OI-8; 2026-10-17). 0.4 (OI-7, the duplicate OI-4: gas override behaviour kept, DQ-022 A; MC-08 updated; 2026-10-16). 0.3 (§6.1 HARA side recorded: WP-C-03 v0.4 rates H-STPA-1 as OS-17/OS-18 and adds H-09 with SG-08, ASIL A, decision register DQ-003, DQ-205; OI-4 narrowed to the FSC follow-up; 2026-10-16). 0.2 (§6.1: H-STPA-1 treated as reasonably foreseeable misuse in both SOTIF and the HARA, decision register DQ-003; HARA side open; MC-09 updated for the Chill mode default; 2026-10-14). 0.1 |
+| Version | 0.7 (§7.1 controllability pass criteria and sample size drafted from the RESPONSE 3 Code of Practice, for the lead's dated approval (DQ-034 A); CA-01 statistics corrected; OI-3 narrowed; 2026-10-19). 0.6 (§5.4 and OI-8: the rule is implemented in `policy.py`, SWSR-634; validation still open; 2026-10-17). 0.5 (§5.4 added: supervision bound and speed table for the wheel-touch fallback, required by TSR-634 (DQ-077 A); DMP-05; OI-8; 2026-10-17). 0.4 (OI-7, the duplicate OI-4: gas override behaviour kept, DQ-022 A; MC-08 updated; 2026-10-16). 0.3 (§6.1 HARA side recorded: WP-C-03 v0.4 rates H-STPA-1 as OS-17/OS-18 and adds H-09 with SG-08, ASIL A, decision register DQ-003, DQ-205; OI-4 narrowed to the FSC follow-up; 2026-10-16). 0.2 (§6.1: H-STPA-1 treated as reasonably foreseeable misuse in both SOTIF and the HARA, decision register DQ-003; HARA side open; MC-09 updated for the Chill mode default; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF; backs the HARA C2 ratings (SG-01…SG-08) |
 | Author | Assurance team (initial draft) |
@@ -176,15 +176,51 @@ The STPA hazard H-STPA-1, "the vehicle is driven with the item engaged while the
 
 These assumptions underlie the C2 (and target C1) ratings in the HARA and the FSC strategy. Each must be confirmed by §8.
 
-| ID | Assumption | Used in | Pass criterion (proposed, informed by RESPONSE 3 practice) |
+| ID | Assumption | Used in | Pass criterion (summary; the full criteria are in §7.1) |
 |---|---|---|---|
-| CA-01 | A typical attentive driver corrects envelope-bounded worst-case steering torque (step to max, at max rate, in either direction) before the lane departure becomes hazardous | HE-01.x, SG-01; FSC §4 (C1 target) | ≥ 20 valid subjects; 20/20 control the event (no lane exceedance beyond the agreed margin) → supports C1 at ≈85 % confidence of ≥ 90 %; for C1 (≥ 99 %) a larger sample or argument is needed — to be defined with the assessor |
+| CA-01 | A typical attentive driver corrects envelope-bounded worst-case steering torque (step to max, at max rate, in either direction) before the lane departure becomes hazardous | HE-01.x, SG-01; FSC §4 (C1 target) | ≥ 20 valid subjects; 20/20 keep the vehicle in its lane (§7.1 CA-01). This shows ≥ 85 % controllable at 95 % confidence, which confirms the C2 rating. The C1 target (≥ 99 %) would need 299 of 299, or an argument (§7.1 rule 6) |
 | CA-02 | A supervising driver notices an unannounced loss of lateral control in a highway curve and recovers within the lane plus margin | HE-02.1/02.2, SG-02 | Same sample logic; outcome measured as maximum lateral deviation |
 | CA-03 | A driver brakes in time when the system accelerates toward a slower lead or launches from standstill unexpectedly | HE-03.x | Reaction time and minimum distance |
 | CA-04 | Following drivers and the ego driver control an unexpected deceleration at the envelope bound | HE-04.1 | Instrumented follow test on closed course |
 | CA-05 | A driver can overpower the LKA torque during an evasive manoeuvre and the system releases on brake | HE-05.x | Steering force measurement; release time ≤ SG-05 FTTI |
 | CA-06 | A driver who is hands-off but eyes-on responds within the times assumed in CA-01/CA-02 | MC-01, HE-02.1 ("hands off foreseeable") | Repeat CA-01/CA-02 with hands-off posture |
 | CA-07 | Take-over requests (soft and immediate disable) are perceived and understood within 1 s | SG-02, SG-06 | HMI clinic: detection and correct response |
+
+### 7.1 Pass criteria and sample size (drafted 2026-10-19, frozen when the lead approves them)
+
+The lead chose to set the criteria now, before any test runs, and to have an assessor check them later (decision register DQ-034, option A; no assessor is engaged yet, DQ-009 C). Claude drafted them from the RESPONSE 3 Code of Practice for the validation of ADAS, the established practice for controllability evidence under ISO 26262-3. **They take effect when the lead approves them in a dated record.** After that they are frozen. Any change needs a new dated approval made before the affected test runs, never after its results are seen.
+
+**Rules common to all CA tests**
+
+1. **Sample.** At least 20 valid subjects per scenario, at each tested speed and posture.
+   - A subject is valid if they completed the run as specified: naive to the scenario, no protocol deviation, data complete.
+   - Every subject excluded is recorded with the reason. Exclusion is decided before the outcome is evaluated, never because of the outcome, and the subject is replaced.
+2. **Pass.** All valid subjects meet the outcome criterion of the CA (20 of 20).
+   - **One failure means the CA is not met.** The C rating it supports is not confirmed. The HARA rating is revised, or the design changes and the test is repeated with new subjects.
+   - Adding subjects after a failure to dilute it is not allowed.
+3. **What 20 of 20 shows.** At least 85 % of drivers control the event, at 95 % one-sided confidence (0.05^(1/20) = 0.861). The code of practice accepts this as evidence that the situation is controllable. The project uses it to **confirm C2 ratings** (ISO 26262-3 Table B.6: ≥ 90 % of drivers; 20 of 20 gives 88 % confidence of that).
+4. **Subjects.**
+   - Licensed drivers, not members of the project, representative of the intended users in age and driving experience, briefed only as an owner would be (WP-O-03).
+   - The fault and its timing are unknown to the subject.
+   - Informed consent; a safety driver or dual controls; closed course only (WP-V-07, DQ-104 B).
+5. **Measures.** Objective measures are recorded for every run: lateral position, time-to-collision, reaction times, and steering and pedal inputs, all on one clock (WP-V-01 VS-VAL-08). Subjective ratings are recorded too but do not decide the pass.
+6. **C1 claims.** A C1 rating (≥ 99 %) cannot be confirmed with 20 subjects: at 95 % confidence it needs 299 of 299. C1 ratings stay ⚠ unless one of these holds:
+   - that sample is run;
+   - an argument from physical bounds is accepted. For example, a deceleration bounded by the PCM envelope that the following driver's normal headway absorbs (HE-04.x).
+
+   Which route each C1 rating takes is recorded with the result.
+
+**Outcome criterion per CA** (values proposed for the lead's approval)
+
+| CA | Scenario (closed course) | Outcome criterion, met by every valid subject |
+|---|---|---|
+| CA-01 | Injected worst-case lateral torque: step to the envelope maximum at the maximum rate, in either direction. Straight and at R_ODD, at 70, 90 and 110 km/h, hands on the wheel | The vehicle stays in its lane: no tyre beyond the outer edge of the lane line before the subject has corrected and the vehicle is back inside the lane |
+| CA-02 | Unannounced loss of lateral control on a straight, and in a curve of radius above R_ODD, at 90 and 110 km/h | As CA-01. The curve at the R_ODD bound is already rated C3 (HE-02.1, DQ-059) and is not used to claim C2 |
+| CA-03 | Unexpected acceleration at the envelope bound (+2.0 m/s²) towards a slower soft target at 70–110 km/h, and an unexpected launch from standstill behind a soft target | No contact with the target; minimum time-to-collision ≥ 1.0 s at the moment the subject's braking takes effect |
+| CA-04 | Unexpected deceleration step at the envelope bound (−3.5 m/s²) with a following vehicle driven by a subject at a 1.5 s gap, at 70–110 km/h | No contact between the following vehicle and the ego. The ego subject keeps the vehicle in its lane |
+| CA-05 | Evasive lane change with the item applying full LKA torque against it, then a brake application | The subject completes the evasive path without cone contact, with a steering force at the rim of ≤ 50 N (AOU-02). The item releases within the SG-05 FTTI (≤ 0.2 s preliminary) of the brake input |
+| CA-06 | CA-01 and CA-02, repeated with the subject's hands off the wheel and eyes on the road | As CA-01 and CA-02 |
+| CA-07 | Soft and immediate disable alerts at unannounced times, at 70–110 km/h (HMI clinic V-2 and the track) | The subject starts the correct response (hands to the wheel, or braking where asked) within 1 s of alert onset, and afterwards states the system state correctly |
 
 ## 8. Controllability validation plan
 
@@ -205,7 +241,7 @@ Method notes (RESPONSE 3 Code of Practice, informative): use naive subjects repr
 |---|---|---|---|
 | OI-1 | Confirm benchmark values (R79, R171, EU 2025/1899) against licensed texts and finalise §5.2 | HF specialist | G1 |
 | OI-2 | Closed (2026-10-12): the numeric DM performance targets for DMP-01/02 were confirmed by the SOTIF lead and AI/ML safety lead (acting, one person) as proposed in WP-C-11 AIR-07/AIR-08, with the end-to-end alert time set at ≤ 6 s. Validation is VT-08 in WP-V-02. Assessor approval of the numeric validation targets is still WP-V-02 OI-3 | SOTIF lead | G2 |
-| OI-3 | Agree controllability pass criteria and sample size (CA-01…CA-07) with the external assessor | Safety manager | G1 |
+| OI-3 | Controllability pass criteria and sample size (CA-01…CA-07): drafted 2026-10-19 in §7.1 (decision register DQ-034, A). Open: the lead's dated approval, which freezes them before any test, and the later check by an assessor (none engaged yet, DQ-009 C) | Safety manager | G1 |
 | OI-4 | HARA side done 2026-10-16: H-STPA-1 is rated in WP-C-03 v0.4 (OS-17, OS-18, H-09, SG-08 ASIL A; DQ-003, DQ-205). Left: revise WP-C-04 §7 (driver monitoring QM) for SG-08, and confirm the C2 of HE-09.1 with the DM clinic (§8 V-5) | Safety engineer | G1 |
 | OI-7 | Closed 2026-10-14 (listed as a second OI-4 until v0.3): the lead kept today's behaviour, gas pauses speed control only and `DisengageOnAccelerator` stays `0` (decision register DQ-022, A). The confusion of MC-08 is covered by the override alert, which the HMI clinic (§8 V-2) must show is understood | Maintainer | — |
 | OI-5 | Check whether alert volume can be reduced below an audible floor (MC-12) | SW lead | G2 |
