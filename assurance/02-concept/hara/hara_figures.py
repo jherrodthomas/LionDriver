@@ -445,10 +445,12 @@ def fig_overview() -> str:
 
 def build() -> dict[str, str]:
   import guideword_scenes  # guide-word scenes; imports this module, so it is loaded here
+  import hazlog_cards  # Figure 7-1, the hazard log cards; gets this module for its FigureError
   return {
     "fig-c03-2-1-asil-heatmap.svg": fig_heatmap(),
     **guideword_scenes.build(),
     "fig-c03-6-1-hazard-sg-overview.svg": fig_overview(),
+    **hazlog_cards.build(sys.modules[__name__]),
   }
 
 
