@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-06 Cybersecurity validation and penetration testing (plan, specification, report) |
 | Standard reference | ISO/SAE 21434:2021 §11 (cybersecurity validation of the item at vehicle level), §10 (verification inputs), §15 (TARA as basis); UN R155 (informative); ASPICE 4.0 SEC.4 |
-| Version | 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
+| Version | 0.3 (OI-3 closed: TC-05 without its destructive steps, DQ-085 B; 2026-10-19). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft — plan and specification written; **no validation or penetration test has been executed and no tester is engaged** ([WP-M-09](../01-management/WP-M-09-cybersecurity-plan.md) OI-6). All result sections are "Not yet executed" |
 | ASIL / scope | CS (CAL 1–3); safety relation to SG-01…SG-08 |
 | Author | Assurance team (initial draft); report to be authored by the penetration tester |
@@ -56,7 +56,7 @@ Each test case (TC) states the objective, the CSRs covered, the environment and 
 | TC-02 | Safety-configuration lock | Attempt every safety model, parameter and alternative-experience value and every mode sequence from the SoC | CSR-011…CSR-016 | Bench device with panda | Only the locked configuration and non-actuating modes reachable; rejection reported |
 | TC-03 | Firmware authenticity | Present unsigned, debug-signed, tampered and older signed images through every flashing route available to the SoC | CSR-021, CSR-022, CSR-031…CSR-033 | Bench panda | Only current LionDriver-signed image boots |
 | TC-04 | Boot-pin and recovery path | Exercise SoC-driven reset/boot-mode sequences and pandad recovery; verify what firmware runs afterwards and that recovery never installs development firmware | CSR-051…CSR-054 | Bench device | Matches the CS-AD-02/03 decision; no development bootstub installed; events logged |
-| TC-05 | Option bytes and read-out protection | Read option bytes and attempt debug-port access per the chosen RDP level | CSR-041…CSR-043 | Bench panda (sacrificial unit if RDP regression is tested) | Option bytes equal provisioning record; protection effective as specified |
+| TC-05 | Option bytes and read-out protection | Read option bytes and attempt debug-port access per the chosen RDP level | CSR-041…CSR-043 | Bench panda; no sacrificial unit (DQ-085 B): the destructive RDP-regression steps are skipped and the report records why | Option bytes equal provisioning record; protection effective as specified |
 | TC-06 | Params / IPC integrity | From a non-root foothold representing a compromised network-facing process, attempt to change safety-relevant params and publish safety-relevant topics | CSR-062…CSR-064, CSR-071, CSR-072 | Bench device, offroad and simulated onroad (replay) | Writes and foreign publishers denied or detected; engagement blocked on mismatch |
 | TC-07 | Envelope independence under SoC compromise | With root on the SoC (assumed), command maximal actuation through the normal path | CSR-061; TSR-1xx/2xx (envelope) | HIL bench with replayed Corolla CAN | Panda TX never exceeds the envelope limits ([WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md)) |
 | TC-08 | Model artefact integrity | Replace or modify model artefacts and metadata | CSR-081, CSR-082 | Bench device | Modified artefact refused; no code execution from artefact; engagement blocked |
@@ -150,7 +150,7 @@ The rating is mapped to the TARA risk value and to problem severity S-1…S-4 pe
 |---|---|
 | OI-1 | Engage an independent penetration tester ([WP-M-09](../01-management/WP-M-09-cybersecurity-plan.md) OI-6) |
 | OI-2 | Build the HIL bench (D-04) and a bench panda setup able to run release images with a LionDriver test key |
-| OI-3 | Decide sacrificial-unit budget for TC-05 (option bytes / RDP) |
+| OI-3 | **Closed 2026-10-19 (DQ-085, option B):** no sacrificial unit is bought. TC-05 runs its non-destructive steps only; the report records the skipped destructive steps and why. Accepted cost: weaker evidence for boot protection (CSG-02) |
 | OI-4 | Define tester-controlled stand-ins for the athena server and update origin (TC-12, TC-14) |
 | OI-5 | Agree with the safety manager the closed-course procedure additions for TC-09 in [WP-V-07](WP-V-07-vehicle-test-operations.md) |
 | OI-6 | Agree the finding rating scheme (§8) with the assessor |

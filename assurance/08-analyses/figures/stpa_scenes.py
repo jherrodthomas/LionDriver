@@ -20,6 +20,8 @@ names a UCA that is not there, or a card cites an ID (LS-, CA-, FB-, DQ-) that t
 
 Called from `fig_a05_stpa.py` (`build()`), which writes and checks the sheets with the other WP-A-05 figures and passes itself in,
 so this module never imports it.
+Its road scenes and text helpers also draw the WP-C-09 threat scene cards (`assurance/02-concept/figures/fig_c09_scenes.py`), whose
+`--check` therefore also catches a change here.
 """
 
 from __future__ import annotations

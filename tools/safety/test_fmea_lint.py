@@ -1066,7 +1066,7 @@ WP_S04_TEXT = """# WP-S-04
 def msr_sfm(**msr_overrides):
   """System FMEA fixture whose cause carries an MSR row rated M 6 on code-derived timing (S10 F5 M6 -> H, with an action)."""
   doc = copy.deepcopy(SFM)
-  doc["analysis"]["rating_tables"] = "RT-2"
+  doc["analysis"]["rating_tables"] = "RT-3"
   fm = doc["failure_modes"][0]
   fm["safety_mechanisms"] = [{"description": "IWDG resets the MCU; relay releases", "ref": "openpilot/selfdrive/controls/controlsd.py"}]
   msr = {
@@ -1083,16 +1083,41 @@ def msr_sfm(**msr_overrides):
 
 
 class TestMsrActionPriority(unittest.TestCase):
-  def test_provisional_table_is_section_5_with_f_and_m(self):
+  # rating-tables.md section 7.4, AIAG-VDA FMEA-MSR handbook table for S 9-10 (RT-3, DQ-207 A): F -> AP for M = 1..10
+  HANDBOOK = {
+    10: {10: "HHHHHHHHHH", 9: "HHHHHHHHHH", 8: "HHHHHHHHHH", 7: "HHHHHHHHHH", 6: "HHHHHHHHHH", 5: "HHHHHHHHHH",
+         4: "MHHHHHHHHH", 3: "LMMHHHHHHH", 2: "LLLMMMMMMM", 1: "LLLLLLLLLL"},
+    9: {10: "HHHHHHHHHH", 9: "HHHHHHHHHH", 8: "HHHHHHHHHH", 7: "HHHHHHHHHH", 6: "HHHHHHHHHH", 5: "HHHHHHHHHH",
+        4: "HHHHHHHHHH", 3: "LHHHHHHHHH", 2: "LHHHHHHHHH", 1: "LLLLLLLLLL"},
+  }
+
+  def test_handbook_table_s9_s10_every_cell(self):
+    for s, rows in self.HANDBOOK.items():
+      self.assertFalse(fmea_lint.msr_ap_provisional(s))
+      for f, cells in rows.items():
+        for m in range(1, 11):
+          self.assertEqual(fmea_lint.compute_ap_msr(s, 1, f, m), cells[m - 1], f"S{s} F{f} M{m}")
+
+  def test_handbook_rates_original_severity_at_m1(self):
+    self.assertEqual(fmea_lint.compute_ap_msr(10, 4, 4, 1), "M")  # not the S 4 row
+    self.assertEqual(fmea_lint.compute_ap_msr(9, 2, 3, 1), "L")
+
+  def test_provisional_stand_in_below_s9_is_section_5_with_f_and_m(self):
     self.assertTrue(fmea_lint.AP_MSR_PROVISIONAL)
-    for s in range(1, 11):
+    for s in range(1, 9):
+      self.assertTrue(fmea_lint.msr_ap_provisional(s))
       for f in range(1, 11):
         for m in range(2, 11):
           self.assertEqual(fmea_lint.compute_ap_msr(s, 1, f, m), fmea_lint.compute_ap(s, f, m), f"S{s} F{f} M{m}")
 
-  def test_m1_rates_severity_after_response(self):
-    self.assertEqual(fmea_lint.compute_ap_msr(10, 8, 9, 1), fmea_lint.compute_ap(8, 9, 1))
-    self.assertEqual(fmea_lint.compute_ap_msr(10, 8, 9, 2), fmea_lint.compute_ap(10, 9, 2))
+  def test_stand_in_m1_rates_severity_after_response(self):
+    self.assertEqual(fmea_lint.compute_ap_msr(8, 3, 9, 1), fmea_lint.compute_ap(3, 9, 1))
+    self.assertEqual(fmea_lint.compute_ap_msr(8, 3, 9, 2), fmea_lint.compute_ap(8, 9, 2))
+
+  def test_rt_version_between(self):
+    self.assertTrue(fmea_lint.rt_version_between("RT-2", "RT-1", "RT-3"))
+    self.assertFalse(fmea_lint.rt_version_between("RT-4", "RT-1", "RT-3"))
+    self.assertFalse(fmea_lint.rt_version_between("RT-x", "RT-1", "RT-3"))
 
   def test_out_of_range(self):
     with self.assertRaises(ValueError):
@@ -1119,7 +1144,7 @@ class TestMsrRules(LintFixture):
     wp.parent.mkdir(parents=True, exist_ok=True)
     wp.write_text(WP_S04_TEXT)
     rt = self.tmp / "assurance/08-analyses/fmea/rating-tables.md"
-    self.assertIn("RT-2", rt.read_text())
+    self.assertIn("RT-3", rt.read_text())
 
   def errors(self, doc, **more):
     return self.lint(sfm=doc, **more).errors
@@ -1213,10 +1238,13 @@ class TestMsrRules(LintFixture):
     doc["analysis"]["rating_tables"] = "RT-1"
     self.assertError(self.lint(sfm=doc), "re-rate")
     self.assertEqual(self.errors(copy.deepcopy(SFM)), [])  # RT-1 without MSR rows is still current for S/O/D
+    doc = copy.deepcopy(SFM)
+    doc["analysis"]["rating_tables"] = "RT-2"
+    self.assertEqual(self.errors(doc), [])  # so is any later version without MSR rows
 
   def test_complete_requires_every_in_scope_cause(self):
     doc = copy.deepcopy(SFM)
-    doc["analysis"].update(rating_tables="RT-2", msr="complete")
+    doc["analysis"].update(rating_tables="RT-3", msr="complete")
     doc["failure_modes"][0]["safety_mechanisms"] = [{"description": "x", "ref": "y"}]
     self.assertError(self.lint(sfm=doc), "needs an msr row or msr_exempt")
     doc["failure_modes"][0]["causes"][0]["msr_exempt"] = "Mechanism acts on a different cause"

@@ -37,7 +37,7 @@
 <text x="54" y="310.5" class="d">controllable bound executed</text>
 <text x="54" y="325.0" class="d">while engaged</text>
 <rect x="54.0" y="333.0" width="128.0" height="16" rx="8" fill="#e6e9ef"/>
-<text x="118.0" y="344.5" class="chip" fill="#334155">continued on sheet 2</text>
+<text x="118.0" y="344.5" class="chip" fill="#334155">continued on sheet 3</text>
 <rect x="187.0" y="333.0" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="213.9" y="344.5" class="chip" fill="#fff">SFM-009</text>
 <path d="M150.0,364.0 L170.0,397.0 L130.0,397.0 Z" fill="#fff" stroke="#c62828" stroke-width="2.4"/><line x1="160.0" y1="380.0" x2="184.0" y2="380.0" stroke="#c62828" stroke-width="2.4" stroke-linecap="round"/>
@@ -94,7 +94,7 @@
 <text x="1264" y="296.0" class="d">Braking while not engaged</text>
 <text x="1264" y="310.5" class="d">(HE-04.4)</text>
 <rect x="1264.0" y="318.5" width="128.0" height="16" rx="8" fill="#e6e9ef"/>
-<text x="1328.0" y="330.0" class="chip" fill="#334155">continued on sheet 3</text>
+<text x="1328.0" y="330.0" class="chip" fill="#334155">continued on sheet 2</text>
 <path d="M1360.0,349.5 L1380.0,382.5 L1340.0,382.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><line x1="1370.0" y1="365.5" x2="1394.0" y2="365.5" stroke="#1d2433" stroke-width="1.7" stroke-linecap="round"/>
 <rect x="1614.5" y="259.0" width="220" height="85.5" rx="9" class="shadow"/>
 <rect x="1613.0" y="256.5" width="220" height="85.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>

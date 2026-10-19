@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-10 Release management and baseline procedure |
 | Standard reference | ISO 26262-2:2018 §6 (release for production); ISO 26262-8:2018 §7; ISO 21448:2022 §12; ISO/SAE 21434:2021 §6 (release for post-development); ASPICE 4.0 SUP.8 |
-| Version | 0.4 (release key custody decided, DQ-086: hardware token with escrowed backup; §6 key row and OI-3; 2026-10-17). 0.3 (§4 Figure 4-1, release swimlane generated from the §4 table; 2026-10-14). 0.2 (status update for the integrated envelope changes: panda release build is the reference build, `LIONDRIVER_REFERENCE=1`; 2026-10-12). 0.1 |
+| Version | 0.5 (OI-2 decided: release evidence kept as signed GitHub release assets plus an offline copy, DQ-093 B, 2026-10-19). 0.4 (release key custody decided, DQ-086: hardware token with escrowed backup; §6 key row and OI-3; 2026-10-17). 0.3 (§4 Figure 4-1, release swimlane generated from the §4 table; 2026-10-14). 0.2 (status update for the integrated envelope changes: panda release build is the reference build, `LIONDRIVER_REFERENCE=1`; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All |
 | Author | Assurance team (initial draft) |
@@ -119,7 +119,7 @@ Note: upstream updates are git fetches from a configurable branch with no signat
 | ID | Item |
 |---|---|
 | OI-1 | Write a LionDriver release script replacing `build_release.sh` (key path, identity, no force-push of shared branches, evidence capture) |
-| OI-2 | Choose evidence storage outside GitHub Actions and its backup |
+| OI-2 | Choose evidence storage outside GitHub Actions and its backup. Decided by the lead on 2026-10-19 (decision register DQ-093, B): release evidence is kept as signed GitHub release assets, with an offline copy held by the maintainer. No new service; the archive depends on GitHub staying available and on its file-size limits. Open: write the offline-copy step into the release checklist |
 | OI-3 | Generate the LionDriver panda release key and put it on the token. Custody is decided (DQ-086: hardware token held by the lead, escrowed backup); still to do: choose a token that supports the bootstub's signature scheme, name the escrow holder, generate and import the key |
 | OI-4 | Define the update channel for the reference device (which branch `updated` follows) |
 | OI-5 | Define the reduced criteria for vehicle-test baselines with the WP-V-07 author |
