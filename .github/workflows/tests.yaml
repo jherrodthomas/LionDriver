@@ -23,7 +23,9 @@ env:
   PYTHONPATH: ${{ github.workspace }}
   GIT_CONFIG_COUNT: 1
   GIT_CONFIG_KEY_0: lfs.fetchexclude
-  GIT_CONFIG_VALUE_0: openpilot/selfdrive/modeld/models/big_driving_tinygrad.pkl
+  # LionDriver: all big_* models, not only big_driving_tinygrad.pkl: the upstream LFS store lost the two big warps,
+  # and only the chestnut eGPU path loads them
+  GIT_CONFIG_VALUE_0: openpilot/selfdrive/modeld/models/big_*_tinygrad.pkl
 
 jobs:
   build_release:
@@ -41,6 +43,7 @@ jobs:
     - uses: actions/checkout@v7
       with:
         submodules: true
+    - uses: ./.github/actions/lfs-backfill
     - name: Getting LFS files
       uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60
       with:
@@ -73,6 +76,7 @@ jobs:
       run: |
         FILTERED=$(echo "$PATH" | tr ':' '\n' | grep -v '/opt/homebrew' | tr '\n' ':')
         echo "PATH=${FILTERED}/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin" >> $GITHUB_ENV
+    - uses: ./.github/actions/lfs-backfill
     - run: ./tools/op.sh setup
     - name: Building openpilot
       run: scons
@@ -105,6 +109,7 @@ jobs:
       || fromJSON('["ubuntu-24.04"]') }}
     steps:
     - uses: actions/checkout@v7
+    - uses: ./.github/actions/lfs-backfill
     - run: ./tools/op.sh setup
     - name: Build openpilot
       run: scons
@@ -130,6 +135,7 @@ jobs:
       || fromJSON('["ubuntu-24.04"]') }}
     steps:
     - uses: actions/checkout@v7
+    - uses: ./.github/actions/lfs-backfill
     - run: ./tools/op.sh setup
     - name: Build openpilot
       run: scons
@@ -200,6 +206,7 @@ jobs:
     timeout-minutes: 60
     steps:
     - uses: actions/checkout@v7
+    - uses: ./.github/actions/lfs-backfill
     - run: ./tools/op.sh setup
     - name: EGL for headless rendering, and MetaDrive (commaai "minimal" branch, pinned commit, Apache-2.0)
       run: |
@@ -242,6 +249,7 @@ jobs:
       || fromJSON('["ubuntu-24.04"]') }}
     steps:
       - uses: actions/checkout@v7
+      - uses: ./.github/actions/lfs-backfill
       - run: ./tools/op.sh setup
       - name: Build openpilot
         run: scons
