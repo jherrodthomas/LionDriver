@@ -3,6 +3,8 @@
 
 This folder holds the Cartesian HARA behind [WP-C-03](../WP-C-03-hara.md) §2.
 
+Where these hazards meet the TARA's threats, and where a safety measure changes a security risk or the reverse: [HATARA](../hatara/README.md).
+
 | File | What it is |
 |---|---|
 | [`hara_model.py`](hara_model.py) | Source of truth. It holds every analyst input: functions, the 14-guide-word classification with rationale, situations, conditions, and the S/C rating rules |
@@ -13,7 +15,8 @@ This folder holds the Cartesian HARA behind [WP-C-03](../WP-C-03-hara.md) §2.
 | [`hara-events_experimental.csv`](hara-events_experimental.csv) | Generated. The same for the Experimental Mode variant (3 468 rows) |
 | [`hara_figures.py`](hara_figures.py) | Figure generator. It draws WP-C-03 Figure 2-1 (rows per S × E × C cell, as rated and if every ⚠ AoU fails) from the model, and Figure 6-1 (hazards → hazardous events → safety goals) from WP-C-03 §4–§6 and the model. It fails if a goal's ASIL is not the highest ASIL of its source events, or if a rated event has no goal |
 | [`guideword_scenes.py`](guideword_scenes.py) | Draws the guide-word scenes: one card per SC guide word of a function, the function over time (required against performed) over a top-down road scene of what the malfunction does to the car. Words, hazards, subsumption and rationale come from `FM` in `hara_model.py`; goal and ASIL from WP-C-03 §6. The behaviour models are schematic and live in this file; it fails if an SC guide word has no model. One sheet per function with SC guide words (F-07 and F-09 have none). Run through `hara_figures.py` |
-| [`figures/`](figures/) | Generated SVGs `fig-c03-2-1-asil-heatmap.svg` and `fig-c03-6-1-hazard-sg-overview.svg`, embedded in WP-C-03, and `fig-c03-4-1-…` to `fig-c03-4-8-…-guide-words.svg` (guide-word scenes, below). Do not edit by hand |
+| [`hazlog_cards.py`](hazlog_cards.py) | Draws WP-C-03 Figure 7-1, the hazard log: one card per hazard with the malfunctions (§4), SOTIF insufficiencies (§7, WP-C-06), attacks (WP-C-09) and misuse situations (§5) that reach it, a scene of its highest-rated event, and the status of what holds it (WP-C-04 FSR Impl through the §9 trace, WP-C-07 modifications, WP-C-09 treatment). It fails if §4, §5 and §7 list different hazards, a rated event has no goal, or a hazard has no scene. Run through `hara_figures.py`; tested by [`test_hazlog_cards.py`](test_hazlog_cards.py) |
+| [`figures/`](figures/) | Generated SVGs `fig-c03-2-1-asil-heatmap.svg` and `fig-c03-6-1-hazard-sg-overview.svg` and `fig-c03-7-1-hazard-log.svg`, embedded in WP-C-03, and `fig-c03-4-1-…` to `fig-c03-4-8-…-guide-words.svg` (guide-word scenes, below). Do not edit by hand |
 | [`test_hara_figures.py`](test_hara_figures.py), [`test_guideword_scenes.py`](test_guideword_scenes.py) | Unit tests: the figures are current, the heat-map totals equal the model's ASIL counts, inconsistent goal tables are rejected, every function with SC guide words has a sheet, and every SC guide word has one card that agrees with `FM` and §6 and names the moment it matters |
 | [`hara-function-guideword.csv`](hara-function-guideword.csv) | Generated. The 140 function × guide-word pairs (tab 11, both variants) with class SC / NSC / NA, subsumption and the reason. This is the SC filter that decides which rows exist (RR-2026-003 F-01) |
 
@@ -125,4 +128,4 @@ Sheets: [F-01](#f-01-lateral-control) · [F-02](#f-02-longitudinal-control-acc-c
 - Changing a rating means changing a rule in `hara_model.py`. Regenerate, and the CSV diff shows every row the rule affects.
 - The CSVs and workbooks come from the same model; every ASIL in the CSVs equals the workbook's tab 12, row for row.
 
-The workbooks were generated with hara-builder `generate_hara.py` (sha256 `188f7e51df06aceae7668bb6563f009b8e28189754d3eedc87f93c05f2a91a33`, after removing trailing NUL padding from the synced copy). Every ASIL in both workbooks was checked against the independent computation in `hara_model.py`, and they agree: 3 264 and 3 468 rows, 0 mismatches (regenerated 2026-10-18 for WP-C-03 v0.5; at v0.4 the same row counts, at v0.3 2 790 and 2 970 rows).
+The workbooks were generated with hara-builder `generate_hara.py` (sha256 `188f7e51df06aceae7668bb6563f009b8e28189754d3eedc87f93c05f2a91a33`, after removing trailing NUL padding from the synced copy). Every ASIL in both workbooks was checked against the independent computation in `hara_model.py`, and they agree: 3 840 and 4 080 rows, 0 mismatches (regenerated 2026-10-19 for WP-C-03 v0.6, 20 situations; 3 264 and 3 468 at v0.4–v0.5, 2 790 and 2 970 at v0.3).
