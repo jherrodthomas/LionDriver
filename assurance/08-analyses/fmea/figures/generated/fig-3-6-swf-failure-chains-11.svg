@@ -136,7 +136,7 @@
   <rect x="1194.5" y="511.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="522.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
   <text x="885" y="537.1" font-size="10.5" fill="#0F172A">Radar faults reach the planner as data: plannerd uses the leads</text>
   <text x="885" y="551.2" font-size="10.5" fill="#0F172A">whatever radarState.valid says, and radarFault /</text>
-  <text x="885" y="565.2" font-size="10.5" fill="#0F172A">radarTempUnavailable are SOFT_DISABLE (selfdrived.py:408-414…</text>
+  <text x="885" y="565.2" font-size="10.5" fill="#0F172A">radarTempUnavailable are SOFT_DISABLE (selfdrived.py:410-416…</text>
   <text x="885" y="578.4" font-size="9.8" fill="#475569" font-weight="600">O5 · D8 · in SWF-SE-081</text>
   <rect x="885" y="584.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="595.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-061 open</text>
   <rect x="997.9" y="584.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="595.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-064 open</text>

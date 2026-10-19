@@ -43,8 +43,8 @@ The requirements this procedure fulfils are the production and installation requ
 | Fingerprinting | FW-version query over UDS (exact match first) and CAN fingerprint fallback; result logged with `fuzzy` flag | `opendbc_repo/opendbc/car/car_helpers.py:84-148`; `card.py:96-106` | Fuzzy matching is accepted at runtime. A cached `CarParamsCache` can skip the FW query (`car_helpers.py:93-97`) |
 | CarParams record | `card` writes `CarParams`, `CarParamsCache`, `CarParamsPersistent`; `carParams` is logged about every 50 s | `openpilot/selfdrive/car/card.py:141-150, 195-201` | Unauthenticated flat files (GAP-20) |
 | Safety-mode set from CarParams | `pandad` sets ELM327 for fingerprinting, then the mode and param from `CarParams` once `FirmwareQueryDone` and `ControlsReady` | `openpilot/selfdrive/pandad/panda_safety.cc:5-70` | The QM host selects the safety mode (GAP-09) |
-| Safety-mode cross-check | `selfdrived` raises `controlsMismatch` if the panda's reported mode, param or alternative experience differs from `CarParams` after 10 s | `openpilot/selfdrive/selfdrived/selfdrived.py:328-339` | Both sides come from the same QM `CarParams`; a wrong `CarParams` is not detected |
-| Camera calibration | `calibrationd` estimates roll/pitch/yaw and height; status `uncalibrated` / `calibrated` / `invalid` / `recalibrating`; engagement blocked until `calibrated` | `openpilot/selfdrive/locationd/calibrationd.py:24-51, 150-171`; `selfdrived.py:275-286`; `events.py:816-832` | Detects only angles outside limits and large changes; does not detect a small, stable mounting error inside the limits |
+| Safety-mode cross-check | `selfdrived` raises `controlsMismatch` if the panda's reported mode, param or alternative experience differs from `CarParams` after 10 s | `openpilot/selfdrive/selfdrived/selfdrived.py:330-341` | Both sides come from the same QM `CarParams`; a wrong `CarParams` is not detected |
+| Camera calibration | `calibrationd` estimates roll/pitch/yaw and height; status `uncalibrated` / `calibrated` / `invalid` / `recalibrating`; engagement blocked until `calibrated` | `openpilot/selfdrive/locationd/calibrationd.py:24-51, 150-171`; `selfdrived.py:277-288`; `events.py:816-832` | Detects only angles outside limits and large changes; does not detect a small, stable mounting error inside the limits |
 | Relay malfunction detection | Panda latches `relay_malfunction` if intercepted messages appear on the car side | `opendbc_repo/opendbc/safety/safety.h:215-220, 372-380` | Traffic-based, 1–2 s grace, no contact readback (GAP-12) |
 
 ## 3. Installation procedure
@@ -93,7 +93,7 @@ Each step has an ID (`INS-nn`), the check that proves it, and the record field i
 
 ### 3.5 Reference-configuration check
 
-This check confirms that the vehicle the item has just been fitted to is the configuration the safety case covers. It is needed because the item itself accepts fuzzy fingerprints and cached CarParams, and because the safety-mode cross-check (`selfdrived.py:328-339`) only compares two copies of the same QM data.
+This check confirms that the vehicle the item has just been fitted to is the configuration the safety case covers. It is needed because the item itself accepts fuzzy fingerprints and cached CarParams, and because the safety-mode cross-check (`selfdrived.py:330-341`) only compares two copies of the same QM data.
 
 | ID | Step | Acceptance check | Record |
 |---|---|---|---|
