@@ -814,7 +814,7 @@ New in v1.3 for SG-08 (ASIL A), which [WP-C-03](../02-concept/WP-C-03-hara.md) v
 
 Top event **TE-08**: the item keeps driving while the driver is not supervising or not responding, and neither escalates the take-over alerts in time nor brings the vehicle to its safe state: stopped in lane, held, with re-engagement locked out until the driver responds (FSR-02.09, DQ-365 A).
 
-The driver-monitoring (DM) chain runs on the QM SoC: `dmonitoringmodeld` (driver camera and model) → `dmonitoringd` (policy: vision 5/8/13 s, wheel-touch 5/15/25 s; TSR-608) → `selfdrived` alerts and `controlsd`. At alert level 3, `noResponseForceDecel` is set after a further 5 s (`selfdrive/monitoring/policy.py:44, 437`). `controlsd` turns it into `forceDecel` (`controlsd.py:235`), and the planner then targets 0 km/h (`longitudinal_planner.py:84`), so the vehicle decelerates to a stop in lane. **The item does not disengage**: the level-3 alerts are `ET.PERMANENT` only (`events.py:540-567`), and the lockout of TSR-611 acts only after a disengagement. The lead decided the SG-08 safe state on 2026-10-16 (DQ-365 A, FSR-02.09, TSR-633): keep the lane, decelerate to a standstill, keep the vehicle stopped and held, and lock out re-engagement and resumption until the driver responds. The stop exists today; the hold and the lockout while stopped do not, so G8.3 carries them as BE-8.10 (latent, by design until TSR-633 is implemented) and UE-8.11 (the PCM's standstill hold under ACC, not yet characterised on the reference Corolla).
+The driver-monitoring (DM) chain runs on the QM SoC: `dmonitoringmodeld` (driver camera and model) → `dmonitoringd` (policy: vision 5/8/13 s, wheel-touch 5/15/25 s; TSR-608) → `selfdrived` alerts and `controlsd`. At alert level 3, `noResponseForceDecel` is set after a further 5 s (`selfdrive/monitoring/policy.py:44, 437`). `controlsd` turns it into `forceDecel` (`controlsd.py:236`), and the planner then targets 0 km/h (`longitudinal_planner.py:84`), so the vehicle decelerates to a stop in lane. **The item does not disengage**: the level-3 alerts are `ET.PERMANENT` only (`events.py:540-567`), and the lockout of TSR-611 acts only after a disengagement. The lead decided the SG-08 safe state on 2026-10-16 (DQ-365 A, FSR-02.09, TSR-633): keep the lane, decelerate to a standstill, keep the vehicle stopped and held, and lock out re-engagement and resumption until the driver responds. The stop exists today; the hold and the lockout while stopped do not, so G8.3 carries them as BE-8.10 (latent, by design until TSR-633 is implemented) and UE-8.11 (the PCM's standstill hold under ACC, not yet characterised on the reference Corolla).
 
 ```
 TE-08 Automated control continues with an inattentive or unresponsive driver           [OR]
@@ -842,7 +842,7 @@ TE-08 Automated control continues with an inattentive or unresponsive driver    
 │   └── G-HMI (HMI hang, mute or masked alert; as SG-02)                  [CCF → DFI-25]
 └── G8.3 No-response reaction does not reach the safe state                             [OR]
     ├── BE-8.08 noResponseForceDecel not set, or not turned into a stop: defect in the
-    │          policy, controlsd or the planner (policy.py:437, controlsd.py:235,
+    │          policy, controlsd or the planner (policy.py:437, controlsd.py:236,
     │          longitudinal_planner.py:84)
     ├── UE-8.09 PCM does not execute the stop request (AOU-05R)
     ├── BE-8.10 Vehicle not kept stopped, or the item not locked out, after the stop:

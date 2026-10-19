@@ -1,5 +1,5 @@
 """
-LionDriver assured configuration (CA-008; FI-2026-001 RC-05, HZ-005).
+LionDriver assured configuration (CA-008; FI-2026-001 RC-05, FHZ-005).
 
 The safety analyses (CA-001, CA-002, CA-004, CA-011) only cover one configuration:
 the reference vehicle, LionDriver software, and the settings below. A drive in any

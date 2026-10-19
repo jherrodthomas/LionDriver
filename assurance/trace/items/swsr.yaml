@@ -431,7 +431,7 @@
   acceptance: "CANCEL_REQ = 1 within 0.1 s of disengagement, in both longitudinal modes"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `controlsd.py:162`; `carcontroller.py:253-254, 269-273`"
+  baseline_impl: "Impl: `controlsd.py:163`; `carcontroller.py:253-254, 269-273`"
   status: proposed
   source: WP-W-02
 
@@ -1173,7 +1173,7 @@
 
 - id: SWSR-512
   kind: swsr
-  text: "In the reference release build, request `0xdc` shall accept only SILENT, NOOUTPUT, ELM327 and TOYOTA with parameter 73 (no flag bits); once TOYOTA is active only NOOUTPUT or SILENT shall be accepted; any other request shall be rejected and reported."
+  text: "In the reference release build, request `0xdc` shall accept only SILENT, NOOUTPUT, ELM327 and TOYOTA with parameter 73 (no flag bits); once TOYOTA is active only NOOUTPUT or SILENT shall be accepted; any other request shall be rejected and reported. A rejected request is ignored: it shall not change the actuation state and does not by itself end actuation authority (register DQ-082 B)."
   asil: "B‡"
   parents: [TSR-512]
   parent_text: "TSR-512"
@@ -1189,7 +1189,7 @@
 
 - id: SWSR-513
   kind: swsr
-  text: "In the reference release build (`RELEASE=1 LIONDRIVER_REFERENCE=1`), requests `0xc5`, `0xe5`, `0xde`, `0xf9`, `0xfc`, `0xe8`, `0xdb`, `0xe6`, `0xe7`, `0xf1`, `0xd8` and `0xdf` shall be rejected while a car safety mode is active (`0xd1` param 1: SWSR-511a)."
+  text: "In the reference release build (`RELEASE=1 LIONDRIVER_REFERENCE=1`), requests `0xc5`, `0xe5`, `0xde`, `0xf9`, `0xfc`, `0xe8`, `0xdb`, `0xe6`, `0xe7`, `0xf1`, `0xd8` and `0xdf` shall be rejected while a car safety mode is active (`0xd1` param 1: SWSR-511a). A rejected request is ignored: it shall not change the actuation state and does not by itself end actuation authority (register DQ-082 B)."
   asil: "B‡"
   parents: [TSR-513]
   parent_text: "TSR-513"
@@ -1551,7 +1551,7 @@
   acceptance: "As specified"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `policy.py:44-49`; `controlsd.py:203-204`"
+  baseline_impl: "Impl: `policy.py:44-49`; `controlsd.py:204-205`"
   status: proposed
   source: WP-W-02
 
@@ -1743,7 +1743,7 @@
   acceptance: "Cancel sent on the HMI-stall disable"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: cancel follows from disable (`controlsd.py:162`)"
+  baseline_impl: "Partial: cancel follows from disable (`controlsd.py:163`)"
   status: proposed
   source: WP-W-02
 
