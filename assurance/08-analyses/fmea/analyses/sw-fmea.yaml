@@ -86,7 +86,7 @@
 # rev 1.5 at BL-006, lead answer DQ-221 A applied: #287 (69cddaa, after BL-006) refuses engagement outside the assured settings on the reference platform.
 #   SWF-067.C1 rewritten to a defect in the new gate, O6 D9 -> O5 D9 (still AP H): new host code whose targeted tests have run only locally (CI scons down on the
 #   git-lfs 404); D 8 once CI runs them. New SWF-067.C2: a setting changed in the menu while engaged still takes effect, O8 D10 AP H, queued for the lead as
-#   DQ-222 (new action SWF-ACT-079). SWF-ACT-063 in progress. Totals: 90 failure modes, 141 causes (130 H, 1 M, 10 L).
+#   DQ-403 (new action SWF-ACT-079). SWF-ACT-063 in progress. Totals: 90 failure modes, 141 causes (130 H, 1 M, 10 L).
 # Post rev 1.4, FTA WP-A-04 v1.12 (BE-1.25 in the SG-04 tree), ratings unchanged: SWF-055 and SWF-089 gain HZ-006 end effects (an authority
 #   grant covers longitudinal commands, as SWF-007). SWF-002 stays steering-only (HZ-001); its note says why HZ-006 and HZ-010 do not apply.
 #
@@ -4435,7 +4435,7 @@ failure_modes:
     - SWF-ACT-063
   - id: SWF-067.C2
     description: 'A setting changed in the settings menu while engaged (following distance, Experimental Mode) takes effect at once; the gate refuses only the next
-      engagement (change record OI-3). Whether to lock the settings while engaged is queued for the lead (DQ-222)'
+      engagement (change record OI-3). What the item should do then is queued for the lead (DQ-403)'
     element: SWF-SE-071
     prevention_controls:
     - description: Defaults set to the assured values; the deviation is logged with a configuration hash
@@ -6008,7 +6008,7 @@ actions:
     ap: H
 - id: SWF-ACT-079
   kind: design_change
-  description: 'Apply the lead''s decision on setting changes while engaged (DQ-222): lock the following distance and Experimental Mode while engaged on the reference
-    platform, disengage on a change, or keep today''s entry-only check; with a test'
+  description: 'Apply the lead''s decision on setting changes while engaged (DQ-403): hold a menu change of an assured setting until the next engagement, disengage with
+    a warning, or keep today''s entry-only check; with a test'
   owner: Jherrod Thomas
   status: decision_pending

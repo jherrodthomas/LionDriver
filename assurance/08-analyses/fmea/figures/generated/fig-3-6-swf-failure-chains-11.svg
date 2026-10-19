@@ -73,7 +73,7 @@
   <rect x="1194.5" y="242.8" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="253.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
   <text x="885" y="268.4" font-size="10.5" fill="#0F172A">A setting changed in the settings menu while engaged (following</text>
   <text x="885" y="282.5" font-size="10.5" fill="#0F172A">distance, Experimental Mode) takes effect at once; the gate refuses</text>
-  <text x="885" y="296.6" font-size="10.5" fill="#0F172A">only the next engagement (change record OI-3). Whether to lock th…</text>
+  <text x="885" y="296.6" font-size="10.5" fill="#0F172A">only the next engagement (change record OI-3). What the item…</text>
   <text x="885" y="309.7" font-size="9.8" fill="#475569" font-weight="600">O8 · D10 · in SWF-SE-071</text>
   <rect x="885" y="315.7" width="166.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/><text x="968.2" y="326.6" font-size="9.5" font-weight="700" fill="#D97706" text-anchor="middle" letter-spacing=".02em">SWF-ACT-079 decision pending</text>
   <rect x="40" y="380.6" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
