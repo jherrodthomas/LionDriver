@@ -57,6 +57,9 @@ jobs:
     - uses: actions/checkout@v7
       with:
         persist-credentials: false
+        fetch-depth: 2  # the base revision HEAD^1 for check_pin_records.py
+    - name: A moved opendbc or panda pin has a change record (WP-P-07 TL-47)
+      run: python3 tools/ci/check_pin_records.py
     - name: Trace consistency
       run: python3 assurance/trace/tools/check_trace.py
     - name: State machines (WP-W-05 §5 generated from state-machines/*.yaml)
@@ -129,7 +132,7 @@ jobs:
       run: |
         python3 -m unittest discover -s assurance/02-concept/hara -p 'test_*.py' -v
         python3 -m unittest discover -s assurance/02-concept/fsc -p 'test_*.py' -v
-    - name: Build manifest unit tests (WP-P-07 TL-38)
+    - name: Build manifest and pin record unit tests (WP-P-07 TL-38, TL-47)
       run: python3 -m unittest discover -s tools/ci -p 'test_*.py' -v
     - name: Integrated process model and maps (WP-P-11)
       run: python3 assurance/process/tools/process_model.py --check
