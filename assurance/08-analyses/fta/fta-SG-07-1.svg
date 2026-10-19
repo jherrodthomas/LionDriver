@@ -166,8 +166,8 @@
 <text x="1748" y="504.0" class="d">Item sends a positive ACC</text>
 <text x="1748" y="518.5" class="d">request during a PCS event</text>
 <text x="1748" y="533.0" class="d">(stand-down missing or</text>
-<text x="1748" y="547.5" class="d">defective; ramp-down ≤ 0.4 s</text>
-<text x="1748" y="562.0" class="d">through the opendbc rate limit)</text>
+<text x="1748" y="547.5" class="d">defective; opendbc caps 0x343 at</text>
+<text x="1748" y="562.0" class="d">0 from the first frame)</text>
 <rect x="1748.0" y="570.0" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="1775.0" y="581.5" class="chip" fill="#fff">SFM-036</text>
 <circle cx="1844.0" cy="618.0" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
