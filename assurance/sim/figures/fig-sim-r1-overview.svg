@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="856" viewBox="0 0 640 856" role="img" aria-labelledby="t d">
 <title id="t">Simulation track at a glance: four layers and the Blender scenes</title>
-<desc id="d">Synthetic (DSR-12), no evidence credit. Inputs faults.yaml and WP-V-03 feed layer 1 (plant model with the real panda safety code, built) and layer 2 (known scenarios as OpenSCENARIO, 9 of 26 built). Layer 1 feeds layer 4 (failure search and reachability bound, prototype); layer 2 and the panda code feed layer 3 (MetaDrive closed loop, planned). Plant runs or kinematic motions become scene.json, are rendered in Blender and composed into review dashboards and clips. Results rank risks and guide tests; no evidence until an approved fidelity case.</desc>
+<desc id="d">Synthetic (DSR-12), no evidence credit. Inputs faults.yaml and WP-V-03 feed layer 1 (plant model with the real panda safety code, built) and layer 2 (known scenarios as OpenSCENARIO, 10 of 27 built). Layer 1 feeds layer 4 (failure search and reachability bound, prototype); layer 2 and the panda code feed layer 3 (MetaDrive closed loop, planned). Plant runs or kinematic motions become scene.json, are rendered in Blender and composed into review dashboards and clips. Results rank risks and guide tests; no evidence until an approved fidelity case.</desc>
 <style>
 svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
       --real:#2a78d6; --real-bg:#e9f1fb; --amb:#c98500; --amb-bg:#fdf4dc; --bad:#e34948; --bad-bg:#fdecec;
@@ -60,8 +60,8 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 <text x="38" y="282" class="t">+ Corolla single-track plant</text>
 <text x="38" y="302" class="t">EPS, PCM, driver: assumed</text>
 <rect x="332" y="190" width="284" height="140" rx="8" class="card"/>
-<rect x="485.6" y="200" width="120.4" height="20" rx="10" class="f-model"/>
-<text x="545.8" y="214" class="chip" text-anchor="middle">Built · 9 of 26</text>
+<rect x="478.6" y="200" width="127.4" height="20" rx="10" class="f-model"/>
+<text x="542.3" y="214" class="chip" text-anchor="middle">Built · 10 of 27</text>
 <text x="346" y="216" class="t2b">LAYER 2</text>
 <text x="346" y="238" class="tl">Known scenarios</text>
 <text x="346" y="262" class="t">OpenSCENARIO + OpenDRIVE</text>

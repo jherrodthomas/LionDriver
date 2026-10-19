@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="1078" viewBox="0 0 640 1078" role="img" aria-labelledby="t d">
 <title id="t">What each simulation layer can and cannot show</title>
-<desc id="d">Synthetic (DSR-12), no evidence credit. Four cards, one per layer, with its status and what it can and cannot show: layer 1 plant model (built), layer 2 known scenarios (built for 9 of 26), layer 3 MetaDrive closed loop (planned), layer 4 unknown-scenario search (prototype).</desc>
+<desc id="d">Synthetic (DSR-12), no evidence credit. Four cards, one per layer, with its status and what it can and cannot show: layer 1 plant model (built), layer 2 known scenarios (built for 10 of 27), layer 3 MetaDrive closed loop (planned), layer 4 unknown-scenario search (prototype).</desc>
 <style>
 svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
       --real:#2a78d6; --real-bg:#e9f1fb; --amb:#c98500; --amb-bg:#fdf4dc; --bad:#e34948; --bad-bg:#fdecec;
@@ -70,8 +70,8 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 <text x="346" y="296" class="t">MCU latency, bus load, tyre</text>
 <text x="346" y="316" class="t">limits</text>
 <rect x="24" y="380" width="592" height="234" rx="8" class="card"/>
-<rect x="485.6" y="392" width="120.4" height="20" rx="10" class="f-model"/>
-<text x="545.8" y="406" class="chip" text-anchor="middle">Built · 9 of 26</text>
+<rect x="478.6" y="392" width="127.4" height="20" rx="10" class="f-model"/>
+<text x="542.3" y="406" class="chip" text-anchor="middle">Built · 10 of 27</text>
 <text x="38" y="408" class="t2b">LAYER 2</text>
 <text x="38" y="430" class="tl">Known scenarios as data</text>
 <text x="38" y="452" class="t2b">CAN SHOW</text>
