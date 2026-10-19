@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Purpose | Link the deductive fault trees of [WP-A-04](WP-A-04-system-fta-fmea.md) with the inductive FMEAs of [fmea/analyses/](fmea/analyses/) and check each against the other (ISO 26262-9:2018 §8, combination of FTA and FMEA) |
-| Data | [fta-fmea-map.yaml](fta-fmea-map.yaml), checked by `tools/safety/fmea_lint.py` in CI; drawn on the [fault tree sheets](fta/README.md) as dark tags under each event |
+| Data | [fta-fmea-map.yaml](fta-fmea-map.yaml), checked by `tools/safety/fmea_lint.py` in CI; drawn on the [fault tree sheets](fta/README.md) as dark tags under each event, in Figures 1 and 2 (§1.1) and on the hand-off sheets (§5) |
 | Status | **All eight goals mapped** (SG-08 added 2026-10-16 with its new tree, WP-A-04 v1.3, F-37, F-38, DQ-365). (SG-02, SG-03, SG-05, SG-06 on 2026-10-16, WP-A-04 v1.2, findings F-20…F-36; five questions queued for the lead, DQ-360…DQ-364). SG-04 pilot 2026-10-13, findings F-1…F-10 resolved the same day (WP-A-04 v0.9; SW FMEA rev 0.7, DFMEA rev 0.3, System FMEA rev 0.6, PFMEA rev 0.3, HARA rev 0.4). SG-01 2026-10-16, findings F-11…F-16: tree findings resolved in WP-A-04 v1.0, FMEA findings F-14 and F-15 open for the FMEA owners. SG-07 2026-10-16, with its tree re-based on the harness box switches (WP-A-04 v1.1, RR-2026-010); findings F-17…F-19 open for the FMEA owners. Draft, AI-assisted; every link needs review. |
 
 ## 1. Method
@@ -27,6 +27,27 @@ The linter checks both directions for every goal in `scope`:
 1. **Every event in the tree is backed.** Every basic and undeveloped event reachable in the tree, including events borrowed from other trees through transfers, is listed with its FMEA backing, or says why none is needed (by design, external), or states the gap.
 2. **Every FMEA failure mode that reaches the goal is in the tree.** A failure mode whose effects cite a hazard of the goal must be cited by an event or gate of that tree, or be listed as `justified` (with the reason) or as a `tree_gap`.
 3. **Consistency.** The class of an event is backed by the right analysis. A failure mode cited in a tree whose effects do not cite that goal's hazards is reported. So is a single-point event (computed from the gate logic) whose FMEA causes all claim a detection rating ≤ 4, because one of the two analyses must then be wrong.
+
+### 1.1 Figures
+
+Figure 1 shows how the two analyses meet, with one real chain. Figure 2 shows every goal's tree in its real shape and what backs each of its events. §5 has one hand-off sheet per goal.
+
+![Figure 1: the fault tree and the FMEA as two ladders on the levels vehicle, system, element and cause. The tree runs down from the SG-04 top event through gate G4.1.1 to basic event BE-4.03; the FMEA runs up from cause DFM-019.C1 through failure mode DFM-019 to its end effect on HZ-006. The rungs are the checks: the end effect's hazard belongs to the goal, and the basic event is backed by a failure mode the tree cites](figures/fig-map-1-ladders.svg)
+
+*Figure 1. The tree stops at the basic event, which is the top of an FMEA failure mode; the causes live only in the FMEA. The worked chain is read from the documents (`CHAIN` in the generator).*
+
+![Figure 2: the eight fault trees drawn small, each basic event a dot coloured green (FMEA or FMEDA row), grey (by design or external) or red (no FMEA yet), with a stalk for its number of FMEA causes; SG-02, SG-05, SG-06, SG-07 and SG-08 have events without an FMEA row](figures/fig-map-2-trees.svg)
+
+*Figure 2. Every tree, in its real shape. Red edges are single-point paths. The counts are those of `fmea_lint.py --report`.*
+
+The figures and the hand-off sheets are drawn by [`figures/fta_fmea_figures.py`](figures/fta_fmea_figures.py) from WP-A-04, this map and the FMEAs; the System FMEA cards (fmea-plan Figure 3-17) show the same links from the FMEA side. After a change to a tree, this map or an FMEA, regenerate them with the tree sheets and the cut sets:
+
+```bash
+python3 assurance/08-analyses/fta/fta_diagrams.py && python3 assurance/08-analyses/fta/fta_cutsets.py
+python3 assurance/08-analyses/figures/fta_fmea_figures.py && python3 tools/safety/fmea_cards.py
+```
+
+CI runs each with `--check`.
 
 ## 2. SG-04 pilot result
 
@@ -163,3 +184,51 @@ These were review input for WP-A-04 and the FMEAs. F-1…F-10 (SG-04) are resolv
 3. Review the SG-07 links and the re-based tree (WP-A-04 v1.1). The FMEA owners decide F-17…F-19. DQ-209 was answered on 2026-10-16 (option A: keep comma's box and bench-test it). WP-A-04 v1.4 applies it without changing the tree: readback is not pursued, so MCS-07.8 stays undetected, and the bench tests VS-HW-22…24 decide BE-7.16 and BE-7.17.
 4. Review the SG-02, SG-03, SG-05 and SG-06 links and the v1.2 tree changes. The FMEA owners decide F-25…F-28 and F-31; the lead DQ-360…DQ-364. Review the SG-08 tree (WP-A-04 §13) and its mapping; DQ-365 is decided (A, applied in WP-A-04 v1.6), and the FSC decides how SG-08's ASIL A is met on the QM DM chain (SPF-18).
 5. Retire the SFMEA-01…SFMEA-39 table of WP-A-04 §10 in favour of [system-fmea.yaml](fmea/analyses/system-fmea.yaml), so the map has one System FMEA to point at.
+
+## 5. Hand-off sheets
+
+One sheet per goal, continued where a tree is long. Each opens with the goal's single points: the events in the item that reach the top event on their own, from the gate logic, with the detection range of their FMEA causes. A single point whose causes all claim D ≤ 4 is marked, because the tree and the FMEA then disagree on detection (the third check of §1); today that is BE-3.11, BE-5.14 and BE-7.05, as `fmea_lint.py` warns. Then every event of the tree, borrowed events included, grouped under the gate it feeds: the event, the FMEA failure mode it hands off to, the worst of that mode's causes (highest AP, then highest D) and the detection that cause credits. An event with no FMEA row says why.
+
+### SG-01
+
+![Figure 3-SG-01-1: SG-01 hand-off sheet 1 of 2, each event of the fault tree with the FMEA failure mode, worst cause and detection behind it](figures/fig-map-3-sg-01-1.svg)
+
+![Figure 3-SG-01-2: SG-01 hand-off sheet 2 of 2, each event of the fault tree with the FMEA failure mode, worst cause and detection behind it](figures/fig-map-3-sg-01-2.svg)
+
+### SG-02
+
+![Figure 3-SG-02-1: SG-02 hand-off sheet 1 of 2, each event of the fault tree with the FMEA failure mode, worst cause and detection behind it](figures/fig-map-3-sg-02-1.svg)
+
+![Figure 3-SG-02-2: SG-02 hand-off sheet 2 of 2, each event of the fault tree with the FMEA failure mode, worst cause and detection behind it](figures/fig-map-3-sg-02-2.svg)
+
+### SG-03
+
+![Figure 3-SG-03-1: SG-03 hand-off sheet 1 of 2, each event of the fault tree with the FMEA failure mode, worst cause and detection behind it](figures/fig-map-3-sg-03-1.svg)
+
+![Figure 3-SG-03-2: SG-03 hand-off sheet 2 of 2, each event of the fault tree with the FMEA failure mode, worst cause and detection behind it](figures/fig-map-3-sg-03-2.svg)
+
+### SG-04
+
+![Figure 3-SG-04-1: SG-04 hand-off sheet 1 of 2, each event of the fault tree with the FMEA failure mode, worst cause and detection behind it](figures/fig-map-3-sg-04-1.svg)
+
+![Figure 3-SG-04-2: SG-04 hand-off sheet 2 of 2, each event of the fault tree with the FMEA failure mode, worst cause and detection behind it](figures/fig-map-3-sg-04-2.svg)
+
+### SG-05
+
+![Figure 3-SG-05-1: SG-05 hand-off sheet, each event of the fault tree with the FMEA failure mode, worst cause and detection behind it](figures/fig-map-3-sg-05-1.svg)
+
+### SG-06
+
+![Figure 3-SG-06-1: SG-06 hand-off sheet 1 of 2, each event of the fault tree with the FMEA failure mode, worst cause and detection behind it](figures/fig-map-3-sg-06-1.svg)
+
+![Figure 3-SG-06-2: SG-06 hand-off sheet 2 of 2, each event of the fault tree with the FMEA failure mode, worst cause and detection behind it](figures/fig-map-3-sg-06-2.svg)
+
+### SG-07
+
+![Figure 3-SG-07-1: SG-07 hand-off sheet 1 of 2, each event of the fault tree with the FMEA failure mode, worst cause and detection behind it](figures/fig-map-3-sg-07-1.svg)
+
+![Figure 3-SG-07-2: SG-07 hand-off sheet 2 of 2, each event of the fault tree with the FMEA failure mode, worst cause and detection behind it](figures/fig-map-3-sg-07-2.svg)
+
+### SG-08
+
+![Figure 3-SG-08-1: SG-08 hand-off sheet, each event of the fault tree with the FMEA failure mode, worst cause and detection behind it](figures/fig-map-3-sg-08-1.svg)
