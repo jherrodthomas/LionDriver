@@ -259,6 +259,7 @@ NOT_REPRESENTED = {
   "KS-22": "pedestrians and cyclists at the lane edge are outside the highway-only ODD (DQ-023 answered B)",
   "KS-24": "inspection",
   "KS-26": "PCM cruise after disengagement: HIL and closed course (M1, M8)",
+  "KS-27": "lead hidden in a curve while accelerating (TC-35, added 2026-10-19): representable with a curved road and an occluded lead; not built yet (simulation session)",
 }
 
 
