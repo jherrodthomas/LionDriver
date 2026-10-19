@@ -136,8 +136,8 @@ def check(sc_id: str, p: dict, R: dict[str, list[dict]], road: dict | None = Non
             ("lead leaves after StandTime (within 3 steps)", move is not None and 0 < move - p["StandTime"] <= 3 * DT,
              f"{move:.2f} s")]
   if sc_id == "KS-25":
-    cross = next((r["time"] for r in ego if r["speed"] > 120 / 3.6), None)
-    return [("ego speed crosses 120 km/h", cross is not None, "" if cross is None else f"at {cross:.2f} s")]
+    cross = next((r["time"] for r in ego if r["speed"] > generate.ODD_SPEED), None)
+    return [("ego speed crosses 110 km/h, the ODD-H bound", cross is not None, "" if cross is None else f"at {cross:.2f} s")]
   if sc_id == "KS-27":
     ld, r = R["lead"], road or generate.SCENARIOS_BY_ID["KS-27"].road
     rp, rw = r["radius"] + LANE_HALF, r["radius"] - r["wall"]["t"]
