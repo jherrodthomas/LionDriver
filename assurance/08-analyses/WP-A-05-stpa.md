@@ -493,7 +493,7 @@ Figures 5-3 to 5-6 are laid out in [`figures/fig_a05_stpa.py`](figures/fig_a05_s
 
 ### 5.8 Scenario cards (v0.13)
 
-One card per loss scenario of §5.1–§5.5, on four sheets by the controller of its first UCA (C1; C2; C2.x and C7; C3 to C6). Each card tells the scenario in three steps: the cause, what the controller then believes or never learns (the step is named after the scenario's causal-factor type: *Feedback*, *Belief*, *Algorithm*, *Effect* or *Then*), and the unsafe control action. Below it are a road scene, the Covered-by IDs of its row, and its status and open reason from [stpa-map.yaml](stpa-map.yaml). The steps are short paraphrases. Each quotes a phrase of its row (or of its UCA), and the build fails if that phrase changes, so a changed row needs its card redrawn. The scenes are schematic.
+One card per loss scenario of §5.1–§5.5, on four sheets by the controller of its first UCA (C1; C2; C2.x and C7; C3 to C6). Each card tells the scenario in three steps: the cause, what the controller then believes or never learns (the step is named after the scenario's causal-factor type: *Feedback*, *Belief*, *Algorithm*, *Effect* or *Then*), and the unsafe control action. Below it are a road scene, the Covered-by IDs of its row, and its status and open reason from [stpa-map.yaml](stpa-map.yaml). A covered scenario with a residual (a known gap, an open test, or no vehicle verification) shows that residual from its Status cell, and the build fails if a covered row names one the card leaves out. The steps are short paraphrases. Each quotes a phrase of its row (or of its UCA), and the build fails if that phrase changes, so a changed row needs its card redrawn. The scenes are schematic.
 
 #### Driver
 

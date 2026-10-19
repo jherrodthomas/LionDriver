@@ -160,8 +160,8 @@ MODELS = {
     ("Steering and braking stop at once; the panda's own siren cannot sound.", "Withdraws authority abruptly while engaged")]),
   "LS-05": ("controlsd stalls, the last command repeats", "fault", ("controlsd stalls", "≈0.16 s on stale data"), [
     ("controlsd stalls while pandad keeps sending heartbeats.", "controlsd stalls while pandad keeps sending heartbeats"),
-    ("card repeats the last command for about 0.1 s; the arrival check revokes about 0.16 s in all, without a siren.",
-     "about 0.16 s in all"),
+    ("About 0.1 s of a repeated in-limit command (by design); the arrival check revokes at about 0.16 s, no siren.",
+     "about 0.1 s of a repeated in-limit command"),
     ("Authority is kept briefly on stale data.", "Keeps authority too long after SoC loss or stale vehicle data")]),
   "LS-06": ("Cruise on, openpilot off", "straight", ("PCM engages, openpilot not", "cancel, alert at 1 s"), [
     ("The driver presses SET while openpilot is not ready; the PCM engages cruise.",
@@ -182,7 +182,8 @@ MODELS = {
   "LS-09": ("Sunglasses: DM falls back to wheel touch", "straight", ("sunglasses: wheel touch", "unsupervised for 25 s"), [
     ("Sunglasses or low light lower driver-monitoring confidence.", "Sunglasses or low light lower DM confidence"),
     ("The policy falls back to wheel touch (5/15/25 s) while the driver looks at a phone.", "falls back to wheel touch (5/15/25 s)"),
-    ("No escalation for several hundred metres of unsupervised driving.", "several hundred metres unsupervised")]),
+    ("Up to 25 s, several hundred metres, unsupervised; speed escalation (TSR-634) is unit-tested only.",
+     "several hundred metres unsupervised")]),
   "LS-10": ("Faded lines, a wrong path", "lane", ("lines faded", "leaves the lane"), [
     ("Lane lines are faded or misleading (construction).", "Lane lines are faded or misleading (construction)"),
     ("The model plans a wrong curvature; the torque stays within the envelope, so the panda does not act.",
@@ -318,6 +319,23 @@ MODELS = {
 
 # ---------------------------------------------------------------- data
 
+RESIDUAL = {  # covered with a residual: the card's status line carries it (text, phrase of the row's Status cell)
+  "LS-05": ("Covered in the reference build (default since e84f850); not verified on the vehicle.", "not verified on the vehicle"),
+  "LS-06": ("Covered since v0.3.1: authority only once openpilot reports engaged; open test for the PCM response (OI-4).",
+            "open test for the PCM response"),
+  "LS-07": ("Covered for a hang (bench confirmation open); known gap for forwarding stalls.", "known gap for forwarding stalls"),
+  "LS-12": ("Covered in the default build; known gap for same-parameter Toyotas and for the opt-out build.",
+            "known gap for same-parameter Toyotas"),
+  "LS-28": ("Covered for commands; known gap for reset and BOOT0, and for an ELM327 request after a false ignition-off.",
+            "known gap for reset and BOOT0"),
+  "LS-29": ("Covered for a non-reference image; known gap for a DEBUG reference image.", "known gap for a DEBUG reference image"),
+  "LS-31": ("Covered: default off since 2026-10-14. Residual: devices set up before keep a stored 1, logged but not shown to the driver.",
+            "devices set up before the change keep a stored 1"),
+  "LS-24": ("Covered (#51); not verified on the vehicle.", "not verified on the vehicle"),
+  "LS-34": ("Covered: unit-tested, not verified on a vehicle; applies to every non-reference platform.", "not verified on a vehicle"),
+}
+RESIDUAL_WORDS = re.compile(r"known gap|residual|open test|not verified", re.I)
+
 def rows(S):
   out = {}
   for c in S._rows(r"LS-\d+"):
@@ -348,11 +366,18 @@ def cards(S, models=None):
         fail(f"{ls} step {i + 1}: '{q}' is no longer in its {'§5 row' if i < 2 else 'UCA or §5 row'}; redraw the card")
     if scene not in SCENES:
       fail(f"{ls}: unknown scene '{scene}'")
+    why = m.get("open_because") or _plain(r["status_text"]).split(". ")[0]
+    if m["status"] == "covered" and RESIDUAL_WORDS.search(_plain(r["status_text"])):
+      if ls not in RESIDUAL:
+        fail(f"{ls} is covered with a residual ('{_plain(r['status_text'])[:60]}…'); add its RESIDUAL line")
+      why, q = RESIDUAL[ls]
+      if _plain(q) not in _plain(r["status_text"]):
+        fail(f"{ls} residual: '{q}' is no longer in its §5 Status cell; redraw the card")
     head2, col2 = kind(r["type"])
     out.append(dict(ls=ls, title=title, ucas=r["ucas"], uca=uca, uca_type=S.ucas[uca]["type"], ctrl=S.ucas[uca]["ctrl"],
                     uca_text=_plain(S.ucas[uca]["text"]), type=r["type"].split(";")[0].strip(), head2=head2, col2=col2,
                     steps=steps, scene=scene, stags=stags, hazards=m.get("hazards", []), status=m["status"],
-                    why=m.get("open_because") or _plain(r["status_text"]).split(". ")[0], cov=_plain(r["cov"])))
+                    why=why, cov=_plain(r["cov"])))
   return out
 
 
@@ -412,6 +437,8 @@ def card_svg(x, y, c):
   for k, v, n in (("Covered by", c["cov"], 2), ("Open because" if c["status"] != "covered" else "Status", c["why"], 3)):
     ls = wrap(v, PW - 84, 9.5)
     b.append(t(px, yy, k, 9.5, MUTED))
+    if k == "Status" and len(ls) > n:
+      fail(f"{c['ls']}: status line does not fit {n} lines; shorten it")
     for i, ln in enumerate(ls[:n]):
       b.append(t(px + 84, yy + 12 * i, ln + (" …" if i == n - 1 and len(ls) > n else ""), 9.5, INK))
     yy += 12 * min(len(ls), n) + 5
@@ -452,10 +479,10 @@ def sheet(name, cs):
     y += row_h + GAP
   body += out
   body.append(t(M, y + 6, "Steps paraphrase the §5 row; each quotes a phrase of it (or of the UCA), checked at build. Status and "
-                "'open because' from stpa-map.yaml.", 10.5, MUTED))
+                "'open because' from stpa-map.yaml; a covered scenario's residual from its §5 Status cell.", 10.5, MUTED))
   body.append(t(w - M, y + 24, "Generated by stpa_ls_scenes.py", 10, MUTED, None, "end"))
   desc = (f"Figure {num}: {len(cs)} loss scenario cards for {who}. " +
-          " ".join(f"{c['ls']} ({', '.join(c['ucas'])}, {STATUS[c['status']][2]}): " + " ".join(s for s, _ in c["steps"]) for c in cs))
+          " ".join(f"{c['ls']} ({', '.join(c['ucas'])}, {STATUS[c['status']][2]}): " + " ".join(s for s, _ in c["steps"]) + f" {c['why'].rstrip('.')}." for c in cs))
   return svg_doc(w, int(y + 36), f"Figure {num}. Loss scenarios: {who} (WP-A-05 §5)", desc, body)
 
 

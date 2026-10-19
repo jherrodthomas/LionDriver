@@ -43,6 +43,14 @@ class TestLossScenarioCards(unittest.TestCase):
       with self.assertRaisesRegex(fs.ParseError, "exactly one sheet, not none"):
         ls.sheets(self.S, fs)
 
+  def test_covered_with_a_residual_shows_it(self):
+    desc = re.search(r"<desc[^>]*>(.*?)</desc>", self.out["fig-a05-5-10-ls-panda.svg"], re.S).group(1)
+    self.assertIn("Covered for a hang (bench confirmation open); known gap for forwarding stalls.", desc)
+    residual = {k: v for k, v in ls.RESIDUAL.items() if k != "LS-07"}
+    with mock.patch.object(ls, "RESIDUAL", residual):
+      with self.assertRaisesRegex(fs.ParseError, "LS-07 is covered with a residual"):
+        ls.sheets(self.S, fs)
+
   def test_status_comes_from_the_map(self):
     status = {s["id"]: s["status"] for s in self.S.smap["scenarios"]}
     for c in ls.cards(self.S):
