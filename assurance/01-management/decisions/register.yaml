@@ -1499,8 +1499,9 @@
       title: "PMHF only"
       detail: "Least effort. Cost: one weak part, such as the MCU core, could be hidden in a good total."
   sources: ["assurance/04-hardware/WP-H-05-random-hardware-failures-pmhf.md OI-1, §2"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: 3965a9e, record: "WP-H-05 v0.6 §2, OI-1 (#256)", at: 2026-10-19}
 
 - id: DQ-067
   question: "What lifetime, operating hours and temperatures should the hardware failure calculations assume for the device?"
@@ -1544,8 +1545,9 @@
       title: "Use a different handbook set"
       detail: "For example a different industry standard. Cost: the first estimate (§6.3) is redone, and another handbook may need buying."
   sources: ["assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md OI-2, §2.3"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: 3965a9e, record: "WP-H-03 v0.7 §2.3, OI-2 (#256)", at: 2026-10-19}
 
 - id: DQ-069
   question: "If ST's safety data for the panda's microcontroller isn't freely available, do we pay for it, or write our own self-tests?"
@@ -1567,8 +1569,9 @@
       title: "Add a hardware supervisor (adapter DC-02) or lower the claim"
       detail: "Moves coverage to LionDriver hardware, or restricts the ASIL claim. Cost: new hardware design, or a weaker safety case."
   sources: ["assurance/04-hardware/WP-H-07-hardware-component-qualification.md OI-2, QE-03, §5"]
-  status: answered
+  status: applied
   answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: 3965a9e, record: "WP-H-03 §2.3, OI-3, §6.4; WP-H-04 OI-6; WP-H-07 QE-03, §5; DFMEA DFM-ACT-001 (#256)", at: 2026-10-19}
 
 - id: DQ-070
   question: "Should mechanisms on the QM main computer (SoC) get no diagnostic-coverage credit in the hardware metrics?"
@@ -1776,8 +1779,9 @@
       detail: "Moves coverage to LionDriver hardware, or restricts the ASIL claim. Cost: new hardware design, or a weaker safety case."
   sources: ["assurance/04-hardware/WP-H-07-hardware-component-qualification.md OI-6, §5"]
   note: "WP-H-07 still describes the harness as having a relay (QC-04, QE-05); the reference harness box v3 uses two analog switches (RR-2026-010). The residual-risk list should be updated when WP-H-07 is next revised."
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: 3965a9e, record: "WP-H-07 §5, OI-6 (#256); WP-M-07 R-30; WP-K-01 DF-42", at: 2026-10-19}
 
 - id: DQ-079
   question: "After the envelope revokes authority for a too-high transmit rate, should re-engagement stay blocked until the rate has been within budget for a full 250 ms window?"
@@ -4381,8 +4385,9 @@
       detail: "Nothing changes yet. Cost: G1 cannot close the harness item; if the part differs, the harness analysis is redone."
   sources: ["assurance/02-concept/WP-C-01-item-definition.md OI-2 (Device and Harness rows, §2)", "assurance/04-hardware/reviews/RR-2026-010.md F-10, F-13"]
   note: "The lead answered on 2026-10-16 that the labels will be read later; reopened in batch 10."
-  status: answered
+  status: applied
   answer: {choice: C, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: 3965a9e, record: "WP-H-07 QC-04, §4.3; RR-2026-010 F-13 (#256); WP-C-01 OI-2", at: 2026-10-19}
 
 - id: DQ-212
   question: "With both the comma 3X and the comma four in scope, how many devices should be bought for the bench and the car?"
