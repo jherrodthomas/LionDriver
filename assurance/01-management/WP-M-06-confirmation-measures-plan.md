@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-06 Confirmation measures plan (reviews, audit, assessment, independence) |
 | Standard reference | ISO 26262-2:2018 §6 (confirmation measures; Table 1 independence scheme); ISO 21448:2022 §4 (SOTIF management, release argument review); ISO/SAE 21434:2021 §6 (cybersecurity assessment); ISO/PAS 8800:2024 (assurance argument review, informative) |
-| Version | 0.3 (§2 ASIL assumption worded against the draft HARA; OI-5 notes the lead's answer of 2026-10-14 on the assessor; 2026-10-14). 0.2 (status update for the integrated envelope changes: queued maintainer acceptances, CR-05/CR-06 scope, confirmation folder; 2026-10-12). 0.1 |
+| Version | 0.4 (OI-7: no confirmation measures added for operation or the operation documents, DQ-103 B, 2026-10-19). 0.3 (§2 ASIL assumption worded against the draft HARA; OI-5 notes the lead's answer of 2026-10-14 on the assessor; 2026-10-14). 0.2 (status update for the integrated envelope changes: queued maintainer acceptances, CR-05/CR-06 scope, confirmation folder; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All. Planned to ASIL D until the HARA ([WP-C-03](../02-concept/WP-C-03-hara.md)) is approved |
 | Author | Assurance team (initial draft) |
@@ -161,3 +161,4 @@ All confirmation records are stored in [`assurance/10-safety-case/confirmation/`
 | OI-4 | Identify a cybersecurity assessor and a pen tester; agree independence statement | CSM | G1 |
 | OI-5 | CR-01 and CR-03 are due at G0 but no assessor is engaged; decide whether G0 can pass with them scheduled rather than performed. The lead answered on 2026-10-14: no assessor for now (DQ-009 option C), so every I2 and I3 measure in §9 is unscheduled until that changes (WP-M-03 OI-6) | SM | G0 |
 | OI-6 | Closed: `10-safety-case/confirmation/` created with naming rules; the record template is WP-P-05 §7.2 | SM | G0 |
+| OI-7 | Operation (G6) and the operation documents (WP-O-01…03, WP-P-10) have no confirmation measure. The lead decided on 2026-10-19 (decision register DQ-103, B) to keep the plan and rely on verification reviews, which the standard allows. Cost: a weaker case for misuse and field monitoring. Revisit when an assessor is engaged | SM | G6 |
