@@ -31,8 +31,10 @@ class TestScenarios(unittest.TestCase):
 
   def test_files_named_by_scenario_id(self):
     for sc in generate.SCENARIOS:
-      self.assertTrue((HERE / "xosc" / f"{sc.id}.xosc").exists())
-      self.assertTrue((HERE / "xodr" / f"{sc.id}.xodr").exists())
+      for fid, _road in generate.files_of(sc):
+        self.assertTrue(fid == sc.id or fid.startswith(sc.id + "-"), fid)
+        self.assertTrue((HERE / "xosc" / f"{fid}.xosc").exists())
+        self.assertTrue((HERE / "xodr" / f"{fid}.xodr").exists())
 
   def test_defaults_inside_sweeps_and_odd_speed(self):
     for sc in generate.SCENARIOS:

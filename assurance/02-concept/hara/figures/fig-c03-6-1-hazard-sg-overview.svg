@@ -14,15 +14,15 @@
 <rect x="40" y="168.5" width="300" height="71" rx="9" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
 <text x="52" y="188.5" font-size="12.5" fill="#0F172A" font-weight="700">H-01</text>
 <text x="52" y="205.5" font-size="11.5" fill="#0F172A" font-weight="600">Unintended or excessive lateral motion</text>
-<text x="52" y="224.5" font-size="10.5" fill="#475569">472 rows ≥ A · worst C (D if ⚠ AoUs fail)</text>
+<text x="52" y="224.5" font-size="10.5" fill="#475569">562 rows ≥ A · worst C (D if ⚠ AoUs fail)</text>
 <path d="M340 204 H356" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <path d="M356 144 V264" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <path d="M356 144 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="132" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
 <text x="382" y="148" font-size="11" fill="#0F172A" font-weight="700">HE-01.1</text>
-<text x="446" y="148" font-size="10.5" fill="#475569">S3 E2 C2 ⚠</text>
-<rect x="568" y="136.0" width="32" height="16" rx="8" fill="#FED7AA" stroke="#FDBA74"/>
-<text x="584" y="147.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">A</text>
+<text x="446" y="148" font-size="10.5" fill="#475569">S3 E3 C2 ⚠</text>
+<rect x="568" y="136.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="584" y="147.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
 <path d="M356 174 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="162" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
 <text x="382" y="178" font-size="11" fill="#0F172A" font-weight="700">HE-01.2</text>
@@ -32,9 +32,9 @@
 <path d="M356 204 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="192" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
 <text x="382" y="208" font-size="11" fill="#0F172A" font-weight="700">HE-01.3</text>
-<text x="446" y="208" font-size="10.5" fill="#475569">S3 E2 C2 ⚠</text>
-<rect x="568" y="196.0" width="32" height="16" rx="8" fill="#FED7AA" stroke="#FDBA74"/>
-<text x="584" y="207.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">A</text>
+<text x="446" y="208" font-size="10.5" fill="#475569">S3 E3 C2 ⚠</text>
+<rect x="568" y="196.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="584" y="207.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
 <path d="M356 234 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="222" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
 <text x="382" y="238" font-size="11" fill="#0F172A" font-weight="700">HE-01.4</text>
@@ -51,7 +51,7 @@
 <text x="52" y="358" font-size="12.5" fill="#0F172A" font-weight="700">H-02</text>
 <text x="52" y="375" font-size="11.5" fill="#0F172A" font-weight="600">Unannounced loss or degradation of lateral</text>
 <text x="52" y="390" font-size="11.5" fill="#0F172A" font-weight="600">control</text>
-<text x="52" y="409" font-size="10.5" fill="#475569">385 rows ≥ A · worst C</text>
+<text x="52" y="409" font-size="10.5" fill="#475569">511 rows ≥ A · worst C</text>
 <path d="M340 381 H356" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <path d="M356 306 V456" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <path d="M356 306 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
@@ -63,9 +63,9 @@
 <path d="M356 336 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="324" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
 <text x="382" y="340" font-size="11" fill="#0F172A" font-weight="700">HE-02.2</text>
-<text x="446" y="340" font-size="10.5" fill="#475569">S3 E2 C3</text>
-<rect x="568" y="328.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
-<text x="584" y="339.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<text x="446" y="340" font-size="10.5" fill="#475569">S3 E3 C3</text>
+<rect x="568" y="328.0" width="32" height="16" rx="8" fill="#C2410C" stroke="#9A3412"/>
+<text x="584" y="339.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
 <path d="M356 366 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="354" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
 <text x="382" y="370" font-size="11" fill="#0F172A" font-weight="700">HE-02.3</text>
@@ -93,7 +93,7 @@
 <rect x="40" y="552.5" width="300" height="71" rx="9" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
 <text x="52" y="572.5" font-size="12.5" fill="#0F172A" font-weight="700">H-03</text>
 <text x="52" y="589.5" font-size="11.5" fill="#0F172A" font-weight="600">Unintended acceleration</text>
-<text x="52" y="608.5" font-size="10.5" fill="#475569">172 rows ≥ A · worst C (D if ⚠ AoUs fail)</text>
+<text x="52" y="608.5" font-size="10.5" fill="#475569">202 rows ≥ A · worst C (D if ⚠ AoUs fail)</text>
 <path d="M340 588 H356" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <path d="M356 498 V678" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <path d="M356 498 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
@@ -141,7 +141,7 @@
 <rect x="40" y="744.5" width="300" height="71" rx="9" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
 <text x="52" y="764.5" font-size="12.5" fill="#0F172A" font-weight="700">H-04</text>
 <text x="52" y="781.5" font-size="11.5" fill="#0F172A" font-weight="600">Unintended or excessive deceleration</text>
-<text x="52" y="800.5" font-size="10.5" fill="#475569">99 rows ≥ A · worst B (C if ⚠ AoUs fail)</text>
+<text x="52" y="800.5" font-size="10.5" fill="#475569">115 rows ≥ A · worst B (C if ⚠ AoUs fail)</text>
 <path d="M340 780 H356" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <path d="M356 720 V840" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <path d="M356 720 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
@@ -207,7 +207,7 @@
 <rect x="40" y="1023.5" width="300" height="71" rx="9" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
 <text x="52" y="1043.5" font-size="12.5" fill="#0F172A" font-weight="700">H-06</text>
 <text x="52" y="1060.5" font-size="11.5" fill="#0F172A" font-weight="600">Unannounced loss of longitudinal deceleration</text>
-<text x="52" y="1079.5" font-size="10.5" fill="#475569">132 rows ≥ A · worst C</text>
+<text x="52" y="1079.5" font-size="10.5" fill="#475569">184 rows ≥ A · worst C</text>
 <path d="M340 1059 H356" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <path d="M356 1014 V1104" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <path d="M356 1014 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
@@ -238,7 +238,7 @@
 <text x="52" y="1168" font-size="12.5" fill="#0F172A" font-weight="700">H-07</text>
 <text x="52" y="1185" font-size="11.5" fill="#0F172A" font-weight="600">Displayed system state differs from actual state</text>
 <text x="52" y="1200" font-size="11.5" fill="#0F172A" font-weight="600">(mode confusion)</text>
-<text x="52" y="1219" font-size="10.5" fill="#475569">78 rows ≥ A · worst C</text>
+<text x="52" y="1219" font-size="10.5" fill="#475569">114 rows ≥ A · worst C</text>
 <path d="M340 1191 H356" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <path d="M356 1146 V1236" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <path d="M356 1146 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
@@ -347,7 +347,7 @@
 <path d="M608 264 C728 264 780 246.0 898 246.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
 <path d="M608 366 C728 366 780 256.0 898 256.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
 <path d="M608 306 C728 306 780 658.5 898 658.5" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#aR)"/>
-<path d="M608 336 C728 336 780 666.0 898 666.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 336 C728 336 780 666.0 898 666.0" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#aR)"/>
 <path d="M608 396 C728 396 780 673.5 898 673.5" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
 <path d="M608 426 C728 426 780 681.0 898 681.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
 <path d="M608 456 C728 456 780 688.5 898 688.5" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>

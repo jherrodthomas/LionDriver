@@ -117,6 +117,8 @@
 # rows move: SFM-014.C3 and SFM-029.C4 MSR AP H -> M. Every other MSR row (S 10, F >= 3) keeps H. No S/O/D change.
 # Rev 0.31 (2026-10-19): SFM-ACT-020 completed for the host code by #292 (c045874, DQ-300 A); predicted rating only. The
 # change is not in BL-006, so SFM-036.C1 keeps O 8 D 10 until the next baseline. No S/O/D change.
+# Rev 0.32 (2026-10-19): SFM-ACT-020 evidence cites the CI run of test_stock_aeb.py (tests run 39296172878, LFS mirror back) and the
+# opendbc e233362 cap (#311, impact OI-2 done). No S/O/D change.
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -125,7 +127,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.31"
+  revision: "0.32"
   status: draft
   baseline: BL-006
   rating_tables: RT-3
@@ -4054,12 +4056,17 @@ actions:
       AOU-04R vehicle test still runs. SFM-036.C1; FTA BE-7.13'
     evidence: 'Merged in jherrodthomas/LionDriver#292 (c045874): stock_aeb_stand_down in longcontrol.py, called from controlsd.py,
       caps the acceleration target and the upper PID limit at 0 m/s² while stockAeb is set and keeps any braking request;
-      selfdrive/controls/tests/test_stock_aeb.py, 4 tests, run locally only (CI scons is blocked by the LFS 404, DQ-401; cite the CI
-      run once it re-runs). Impact record assurance/07-supporting/impact/change-2026-10-19-stock-aeb-stand-down.md. Host code only:
-      the opendbc Toyota controller still applies its rate limit and positive terms, so the command reaches 0 about 0.4 s after
-      +1.5 m/s² (impact OI-2); the parent TSR/SWSR are open (OI-1); not verified on the vehicle (OI-3, the AOU-04R test, also
-      checks that stockAeb is reported during a PCS event) and not reviewed independently. Not in BL-006, so SFM-036.C1 keeps
-      O 8 D 10 until the next baseline; the prediction below assumes targeted tests, not mutation-proven (rating tables D 8)'
+      selfdrive/controls/tests/test_stock_aeb.py, 4 tests. CI: tests run 39296172878 on liondriver-dev 6126485 (2026-10-19), unit tests
+      job 1578 passed, 42 skipped, 3 xfailed, no failures or collection errors; process replay passed. The runner collects every
+      openpilot/**/test_*.py and prints no test names, so the four tests are shown to have run by collection, not by name; the file
+      has no skip. Second layer, opendbc e233362 (#311, SWSR-713h): the Toyota controller caps the 0x343 command at 0 from the first
+      frame of the event, after its rate limit, PID and pitch compensation (impact OI-2 done); its 6 test_carcontroller.py cases ran
+      locally (pin record). The openpilot runner does not run opendbc_repo tests; tests.yml in the opendbc fork triggers on pull requests, but
+      a CI run on jherrodthomas/opendbc#20 is not confirmed here (the pin record says none). Impact records
+      assurance/07-supporting/impact/change-2026-10-19-stock-aeb-stand-down.md and change-2026-10-19-pin-e233362.md. TSR-713 and
+      FSR-07.07 implemented (#313). Not verified on the vehicle (OI-3, the AOU-04R test, also checks that stockAeb is reported
+      during a PCS event) and not reviewed independently. Not in BL-006, so SFM-036.C1 keeps O 8 D 10 until the next baseline; the
+      prediction below assumes targeted tests, not mutation-proven (rating tables D 8)'
     revised:
       severity: 10
       occurrence: 5

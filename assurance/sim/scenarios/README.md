@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Scope | Layer 2 of the [simulation track](../README.md) (roadmap phase S2): the [WP-V-03](../../06-validation/WP-V-03-sotif-known-scenarios.md) known scenarios that simulation can represent, as ASAM OpenSCENARIO 1.3 (`xosc/`) and OpenDRIVE 1.5 (`xodr/`) files named by scenario ID |
-| Version | 0.2 (KS-27 written: a lead hidden by a wall on the inside of a ramp curve while the ego accelerates to the set speed, TC-35; 2026-10-19). 0.1 (2026-10-16) |
+| Version | 0.3 (KS-27 at 400 m and 600 m, the barrier on the lane edge, as WP-V-03 v0.9 asks: files KS-27-R400 and KS-27-R600, reveal gaps measured about 77 m and 94 m; 2026-10-19). 0.2 (KS-27 written: a lead hidden by a wall on the inside of a ramp curve while the ego accelerates to the set speed, TC-35; 2026-10-19). 0.1 (2026-10-16) |
 | Status | Draft. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed. Synthetic scenarios (DSR-12); **no evidence credit** |
 
 The files fix the road and the other road users of each scenario. The ego vehicle is the item under test: a file gives
@@ -18,7 +18,7 @@ fault-injection plant model (layer 1) reads the scenario roads directly ([`../pl
 
 Highway only (ODD-H; DQ-023 answered B): three lanes, OpenDRIVE lane IDs −1 (left) to −3 (right), the ego in lane −2
 unless stated. KS-27 is the exception: TC-35 happens on ramps and interchanges, so its road is a one-lane ramp (lane
-−1) with a 2 m wall on the inside of a 250 m curve. WP-V-03 parameters are scenario parameters: their defaults are in the file, their sweep values below.
+−1) with a 2 m wall on the inside of the curve, in three files for the radii 250, 400 and 600 m. WP-V-03 parameters are scenario parameters: their defaults are in the file, their sweep values below.
 
 ```sh
 python3 assurance/sim/scenarios/generate.py           # write the files (scenariogeneration, MPL-2.0)
@@ -40,19 +40,25 @@ python3 assurance/sim/scenarios/test_scenarios.py
 | KS-14 | Driver-initiated lane change | [`KS-14.xosc`](xosc/KS-14.xosc), [`KS-14.xodr`](xodr/KS-14.xodr) | `EgoSpeed` 27.778 (27.778) m/s; `TargetGap` 2.5 (2, 2.5, 3, 20) s | ego is in lane -3 after the lane change (scripted here: in a closed loop the driver's nudge starts it) |
 | KS-23 | Stop-and-go queue and resume | [`KS-23.xosc`](xosc/KS-23.xosc), [`KS-23.xodr`](xodr/KS-23.xodr) | `StandTime` 5 (3, 5) s | lead leaves at 1.5 m/s² after StandTime; ego starts at standstill |
 | KS-25 | Speed above the ODD bound | [`KS-25.xosc`](xosc/KS-25.xosc), [`KS-25.xodr`](xodr/KS-25.xodr) | `StartSpeed` 31.944 (31.944) m/s; `EndSpeed` 36.111 (36.111) m/s | ego speed crosses 120 km/h |
-| KS-27 | Lead hidden in a ramp curve while accelerating to the set speed | [`KS-27.xosc`](xosc/KS-27.xosc), [`KS-27.xodr`](xodr/KS-27.xodr) | `EgoSpeed` 19.444 (13.889, 19.444, 25) m/s; `SetSpeedDelta` 6.944 (5.556, 6.944, 8.333) m/s; `LeadSpeed` 0 (0, 8.333) m/s; `LeadS` 360 (360) m | the inside wall hides the lead until the gap along the lane is 40–80 m (geometry: about 66 m); ego accelerates to EgoSpeed + SetSpeedDelta (scripted here: in a closed loop the item does it); lead keeps LeadSpeed in lane -1 |
+| KS-27 | Lead hidden in a ramp curve while accelerating to the set speed | [`KS-27.xosc`](xosc/KS-27.xosc), [`KS-27.xodr`](xodr/KS-27.xodr) (R 250 m); [`KS-27-R400.xosc`](xosc/KS-27-R400.xosc), [`KS-27-R400.xodr`](xodr/KS-27-R400.xodr); [`KS-27-R600.xosc`](xosc/KS-27-R600.xosc), [`KS-27-R600.xodr`](xodr/KS-27-R600.xodr) | `EgoSpeed` 19.444 (13.889, 19.444, 25) m/s; `SetSpeedDelta` 6.944 (5.556, 6.944, 8.333) m/s; `LeadSpeed` 0 (0, 8.333) m/s; `LeadS` 360 (360) m | the inside wall hides the lead until the gap along the lane is 40–80 m at 250 and 400 m (geometry: about 66 and 77 m) and 80–100 m at 600 m (about 94 m); ego accelerates to EgoSpeed + SetSpeedDelta (scripted here: in a closed loop the item does it); lead keeps LeadSpeed in lane -1 |
 
 KS-01 is the one scenario whose sweep goes past the ODD curve bound on purpose (3.0 and 3.5 m/s² at R = 300 m):
 WP-V-03 asks for behaviour at and beyond the lateral capability. KS-25 crosses the 120 km/h ODD-H speed bound on
 purpose.
 
-KS-27 builds the occlusion into the road: the wall stands 0.3 m left of the lane edge, from the start of the
-clothoid to the end of the curve, so the sight line from the ego's lane centre to the lead's clears it only within
-2·√(2·Rp·m) along the lane (Rp = 251.85 m the lane-centre radius, m = 2.15 m the clearance), about 66 m. The replay
-measures the gap at which the line first clears the wall from esmini's recorded positions. The file has one radius,
-250 m, the smallest of TC-35's 250–600 m and the shortest sight distance; larger radii need one road file each and are
-not written. Whether a camera actually loses the lead behind the wall is for the harness that renders it (MetaDrive,
-layer 3); esmini only plays the motion.
+KS-27 builds the occlusion into the road. The sight line from the ego's lane centre to the lead's clears an
+inside wall only within about √(8·Rp·m) along the lane (Rp the lane-centre radius, m the clearance from the lane
+centre to the wall's centreline). The three files share the scenario and its parameters and differ in the road:
+
+| File | Radius | Wall centreline | m | Reveal gap (geometry) | WP-V-03 band |
+|---|---|---|---|---|---|
+| `KS-27` | 250 m | 0.3 m outside the lane edge | 2.15 m | about 66 m | 40–80 m |
+| `KS-27-R400` | 400 m | on the lane edge | 1.85 m | about 77 m | 40–80 m |
+| `KS-27-R600` | 600 m | on the lane edge | 1.85 m | about 94 m | about 95 m: the closest a barrier at the lane edge allows (WP-V-03 v0.9); the replay accepts 80–100 m |
+
+The replay measures the gap at which the line first clears the wall from esmini's recorded positions. Whether a camera
+actually loses the lead behind the wall is for the harness that renders it (MetaDrive, layer 3); esmini only plays the
+motion.
 
 ### 1.1 Top views
 

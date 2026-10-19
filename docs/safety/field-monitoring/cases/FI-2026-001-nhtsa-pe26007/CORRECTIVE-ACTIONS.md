@@ -1,5 +1,7 @@
 # FI-2026-001 — Corrective & Preventive Actions
 
+> **ID note (added 2026-10-19).** HZ-nnn in this dated file is field hazard **FHZ-nnn** of [HAZARD-LOG.md](../../HAZARD-LOG.md) revision C. It is not the FMEA hazard of the same number (`assurance/08-analyses/fmea/analyses/hara.yaml`). The text is otherwise unchanged.
+
 Every action traces to a root cause (RC) in [`RCA.md`](RCA.md) and a hazard (HZ) in [`../../HAZARD-LOG.md`](../../HAZARD-LOG.md).
 
 Control tiers (PROCESS §5.7): **1** Eliminate · **2** Inherent design · **3** Safety mechanism · **4** Warning/HMI · **5** Information/procedure.

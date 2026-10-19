@@ -174,14 +174,14 @@ For each root cause, ask: *was this hazard, triggering condition, misuse or thre
 
 | Finding | Action |
 |---|---|
-| New hazard or hazardous event | New row in `HAZARD-LOG.md`, flagged `HARA-pending` until the HARA is reissued |
+| New hazard or hazardous event | New row in `HAZARD-LOG.md` (ID FHZ-nnn), flagged `HARA-pending` until it is linked to a WP-C-03 hazardous event and safety goal or a WP-C-05 SOTIF hazard, or rejected with a rationale |
 | Known hazard, but S/E/C ratings or ASIL wrong given field data | Raise a HARA change request, citing the FI |
 | New SOTIF triggering condition or performance limitation | Add to the SOTIF triggering-condition catalog and scenario database |
 | New foreseeable misuse | Add to the misuse list; re-check controllability assumptions |
 | New threat or vulnerability | Add to the TARA |
 | Missing or ineffective safety mechanism | Raise a functional/technical safety requirement change |
 
-> Until the first HARA is issued (README roadmap), `HAZARD-LOG.md` is the authoritative input list for it. Every entry must be dispositioned in the first HARA.
+> The HARA exists (WP-C-03, draft). Every `HAZARD-LOG.md` entry is linked to it or to WP-C-05, or rejected with a rationale (revision C, 2026-10-19). A new entry stays `HARA-pending` until the HARA session dispositions it.
 
 ### 5.7 Step 7 — Corrective and preventive actions
 

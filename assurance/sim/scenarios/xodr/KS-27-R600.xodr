@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<OpenDRIVE>
+    <header name="KS-27-R600" revMajor="1" revMinor="5" date="2026-10-16T00:00:00" north="0.0" south="0.0" east="0.0" west="0.0"/>
+    <road rule="RHT" id="0" junction="-1" length="860.0">
+        <link/>
+        <planView>
+            <geometry s="0" x="0" y="0" hdg="0" length="100.0">
+                <line/>
+            </geometry>
+            <geometry s="100.0" x="100.0" y="0.0" hdg="0" length="60.0">
+                <spiral curvStart="1e-09" curvEnd="0.0016666666666666668"/>
+            </geometry>
+            <geometry s="160.0" x="159.98500170901616" y="0.9998226423468333" hdg="0.05000003000000001" length="700.0">
+                <arc curvature="0.0016666666666666668"/>
+            </geometry>
+        </planView>
+        <elevationProfile/>
+        <lateralProfile/>
+        <lanes>
+            <laneSection s="0">
+                <center>
+                    <lane id="0" type="none" level="false">
+                        <roadMark sOffset="0" type="solid" weight="standard" color="standard" width="0.2"/>
+                    </lane>
+                </center>
+                <right>
+                    <lane id="-1" type="driving" level="false">
+                        <link/>
+                        <width a="3.7" b="0.0" c="-0.0" d="0.0" sOffset="0"/>
+                        <roadMark sOffset="0" type="solid" weight="standard" color="standard" width="0.2"/>
+                    </lane>
+                </right>
+            </laneSection>
+        </lanes>
+        <objects>
+            <object id="2" s="100.0" t="0.0" subtype="wall" dynamic="no" zOffset="0" pitch="0" roll="0" width="0.3" height="2.0" name="sight_wall" type="soundBarrier" orientation="none" hdg="0" length="0.3">
+                <repeat length="760.0" distance="0" s="100.0" tStart="0.0" tEnd="0.0" heightStart="2.0" heightEnd="2.0" zOffsetStart="0" zOffsetEnd="0" widthStart="0.3" widthEnd="0.3"/>
+            </object>
+        </objects>
+    </road>
+</OpenDRIVE>
