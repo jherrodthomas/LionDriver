@@ -1008,7 +1008,8 @@
       title: "Engage a reviewer now"
       detail: "The (TBC) values can be settled early. Cost: search effort and fees before L5 is possible."
   sources: ["assurance/06-validation/WP-V-07-vehicle-test-operations.md OI-1"]
-  status: open
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all five (the recommended option of each)"}
 
 - id: DQ-045
   question: "Should you buy insurance that covers development testing?"
@@ -4654,7 +4655,8 @@
       title: "Up to 1 in 5 (0.20), at least 20 events"
       detail: "Reachable with fewer drives. Cost: a 20 % reserve takes budget from the known-scenario targets, which then get stricter, and the unknown part of the argument is weaker."
   sources: ["assurance/06-validation/WP-V-04-sotif-unknown-scenarios.md §5.3 R3, §5.4, OI-2", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md §3 step 1"]
-  status: open
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all five (the recommended option of each)"}
 
 - id: DQ-300
   question: "When the car's own emergency braking (stock AEB) fires, should LionDriver stop asking for acceleration, or keep driving as now?"
@@ -5084,7 +5086,8 @@
       title: "Hand back below a lower floor (for example 30 km/h)"
       detail: "Allows slowing traffic but not crawling. Cost: a second number to justify, and still a takeover in a full stop."
   sources: ["PR #287 (Open: OI-2)", "DQ-280"]
-  status: open
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all five (the recommended option of each)"}
 
 - id: DQ-403
   question: "If the driver changes an assured setting from the menu while engaged (for example turns Experimental Mode on), should LionDriver disengage, or let it take effect and only refuse the next engagement?"
@@ -5108,7 +5111,8 @@
       title: "Leave as built: takes effect at once"
       detail: "No change. Cost: the item can run outside its assured settings until it is next engaged, which the safety case must argue away."
   sources: ["PR #287 (Open: OI-3)", "DQ-221"]
-  status: open
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all five (the recommended option of each)"}
 
 - id: DQ-404
   question: "When the panda takes steering away because the openpilot computer has frozen, should it also sound the alarm?"
@@ -5141,4 +5145,5 @@
       title: "Warn through the car's own cluster instead"
       detail: "Rely on what the stock Corolla shows when LKA frames stop. Cost: not known yet (it depends on the EPS behaviour M-02 measures); likely later and quieter than the siren, and outside our code."
   sources: ["WP-S-04 T-34", "System FMEA F-04b row (TSR-408)", "WP-C-03 HE-07.1, HE-02.4, HE-02.6", "assurance/sim/results/silent-stall.md", "assurance/sim/README.md §3.7"]
-  status: open
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all five (the recommended option of each)"}
