@@ -133,19 +133,33 @@ def tile(d, box, label: str, value: str, colour: str = TEXT):
   d.text((box[0] + 14, box[1] + 32), value, font=F["big"], fill=colour)
 
 
-def tag(d, xy, text: str, colour: str, img_box):
-  """A callout box above a road user in the main view, with a leader line down to it."""
+def tags(d, items, img_box):
+  """Callout boxes above the road users in the main view, with leader lines down to them. items: (xy, text, colour,
+  required) in priority order (ego, critical road user, then the illustrative ones). Each box takes the first free
+  slot above its road user, stepping up a row at a time (then below), so that no two boxes overlap; a box that finds
+  no slot is left out unless it is required. Lines are drawn first, so a box is never crossed by another's line."""
   x0, y0, x1, y1 = img_box
-  x = x0 + xy[0] * (x1 - x0)
-  y = y0 + xy[1] * (y1 - y0)
-  if not (x0 <= x <= x1 and y0 <= y <= y1):
-    return
-  w = F["ss"].getlength(text) + 16
-  bx, by = min(max(x - w / 2, x0 + 4), x1 - w - 4), max(y - 54, y0 + 4)
-  d.line([(x, by + 26), (x, y)], fill=colour, width=2)
-  d.ellipse([x - 4, y - 4, x + 4, y + 4], fill=colour)
-  d.rounded_rectangle([bx, by, bx + w, by + 26], 4, fill=colour)
-  d.text((bx + 8, by + 5), text, font=F["ss"], fill="#ffffff")
+  placed = []
+  for xy, text, colour, required in items:
+    x = x0 + xy[0] * (x1 - x0)
+    y = y0 + xy[1] * (y1 - y0)
+    if not (x0 <= x <= x1 and y0 <= y <= y1):
+      continue
+    w = F["ss"].getlength(text) + 16
+    bx = min(max(x - w / 2, x0 + 4), x1 - w - 4)
+    slots = [y - 54 - 30 * k for k in range(6)] + [y + 14 + 30 * k for k in range(3)]
+    slots = [min(max(s, y0 + 4), y1 - 30) for s in slots]
+    free = [s for s in slots if not any(bx < px1 + 4 and px0 < bx + w + 4 and s < py1 + 4 and py0 < s + 30
+                                        for px0, py0, px1, py1, *_ in placed)]
+    if free or required:
+      by = free[0] if free else slots[0]
+      placed.append((bx, by, bx + w, by + 26, x, y, text, colour))
+  for bx, by, bx1, by1, x, y, _, colour in placed:
+    d.line([(x, by1 if by < y else by), (x, y)], fill=colour, width=2)
+    d.ellipse([x - 4, y - 4, x + 4, y + 4], fill=colour)
+  for bx, by, bx1, by1, _, _, text, colour in placed:
+    d.rounded_rectangle([bx, by, bx1, by1], 4, fill=colour)
+    d.text((bx + 8, by + 5), text, font=F["ss"], fill="#ffffff")
 
 
 # ------------------------------------------------------------------------------------------------- frame
@@ -201,6 +215,7 @@ def frame(sc: dict, screen: dict, keys: list[dict], views: dict[str, Path], i: i
   d.rectangle(mb, outline=EDGE)
   past = [e for e in sc["events"] if e["t"] <= t[i] + 1e-6]
   hit = sc.get("contact") if sc.get("contact") and sc["contact"]["t"] <= t[i] + 1e-6 else None
+  callouts = []                                 # (priority, xy, text, colour, required)
   for a in sc["actors"]:
     pos = screen.get(a["name"], [None] * len(t))[i]
     if pos is None:
@@ -210,7 +225,7 @@ def frame(sc: dict, screen: dict, keys: list[dict], views: dict[str, Path], i: i
       label = f"Ego ({'plant' if plant else 'kinematic'})  {sc['speed'][i] * 3.6:.0f} km/h"
       if abs(dev) >= 0.05:
         label += f", {abs(dev):.2f} m {'right' if dev < 0 else 'left'} of lane centre"
-      tag(d, pos, label, EGO, mb)
+      callouts.append((0, pos, label, EGO, True))
     else:
       src = {"plant": "plant", "kinematic": "kinematic", "illustrative": "illustrative"}[a["source"]]
       txt = f"{a['name'].capitalize()} ({src})"
@@ -219,7 +234,9 @@ def frame(sc: dict, screen: dict, keys: list[dict], views: dict[str, Path], i: i
         txt += f"  {sc['gap'][i]:.1f} m" + (f", TTC {ttc:.1f} s" if ttc < 20 else "")
       if hit and hit["who"] == a["name"]:
         txt += f"  CONTACT {hit['rel_kph']:.0f} km/h"
-      tag(d, pos, txt, CRITICAL if (hit and hit["who"] == a["name"]) or a["name"] == crit else "#4b5563", mb)
+      key = bool(hit and hit["who"] == a["name"]) or a["name"] == crit
+      callouts.append((1 if key else 2, pos, txt, CRITICAL if key else "#4b5563", key))
+  tags(d, [c[1:] for c in sorted(callouts, key=lambda c: c[0])], mb)
   if past:
     last = past[-1]
     msg = clip(f"{last['label']}  at {last['t']:+.2f} s", F["bs"], mb[2] - mb[0] - 60)

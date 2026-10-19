@@ -208,10 +208,13 @@ def _weather_layer(g: Graph, col, rough, normal, env: dict, tracks=None, puddles
   w = float(env.get("wet", 0.0) or 0.0)
   s = float(env.get("snow", 0.0) or 0.0)
   if w > 0:
-    col = g.mix(w * 0.55, col, g.mix(1.0, col, (0.42, 0.42, 0.44), "MULTIPLY"))
-    rough = g.math("MULTIPLY", rough, 1.0 - 0.7 * w)
-    if puddles and w > 0.5:
-      t0 = 0.66 - 0.16 * (w - 0.5) * 2
+    # a water film shows early: sheen and darkening follow sqrt(wet) and the roughness is capped, so W02 (0.75)
+    # reads wet while W04 (1.0) stays the wettest; puddles start at 0.4 and reach their W04 extent at 1.0
+    e = math.sqrt(w)
+    col = g.mix(e * 0.55, col, g.mix(1.0, col, (0.42, 0.42, 0.44), "MULTIPLY"))
+    rough = g.math("MINIMUM", g.math("MULTIPLY", rough, 1.0 - 0.7 * e), 0.55 - 0.35 * e)
+    if puddles and w > 0.4:
+      t0 = 0.66 - 0.16 * ((w - 0.4) / 0.6) ** 0.6
       pud = g.remap(g.noise(g.uv(), 0.18, 3).outputs[0], t0, t0 + 0.03, 0.0, 1.0)
       if tracks is not None:
         pud = g.math("MAXIMUM", pud, g.math("MULTIPLY", tracks, 0.8 * w))
@@ -1019,10 +1022,46 @@ def _track(direction):
 
 
 # ------------------------------------------------------------------------------------------------- weather
-def build_weather(env: dict, follow, centre, frames: int, fps: int, seed: int = 11):
+CLEAR_LENS_M = 3.0            # no rain or snow falls within this distance (on the ground plane) of a camera
+
+
+def snowflake_material():
+  """A soft, round flake: white, with alpha falling off from the middle of its quad to the rim (UV radius)."""
+  m = bpy.data.materials.get("snowflake")
+  if m:
+    return m
+  m = material("snowflake", (0.95, 0.96, 1.0), rough=0.7, emit=0.2)
+  nt = m.node_tree
+  uv = nt.nodes.new("ShaderNodeTexCoord")
+  dist = nt.nodes.new("ShaderNodeVectorMath")
+  dist.operation = "DISTANCE"
+  dist.inputs[1].default_value = (0.5, 0.5, 0.0)
+  fall = nt.nodes.new("ShaderNodeMapRange")
+  fall.interpolation_type = "SMOOTHSTEP"
+  fall.inputs["From Min"].default_value, fall.inputs["From Max"].default_value = 0.1, 0.5
+  fall.inputs["To Min"].default_value, fall.inputs["To Max"].default_value = 0.9, 0.0
+  nt.links.new(uv.outputs["UV"], dist.inputs[0])
+  nt.links.new(dist.outputs["Value"], fall.inputs["Value"])
+  nt.links.new(fall.outputs["Result"], nt.nodes["Principled BSDF"].inputs["Alpha"])
+  return m
+
+
+def lens_zones(follow, cams, frames: int, step: int = 6) -> list[tuple[float, float]]:
+  """Where each camera stands in `follow`'s frame (x, y), sampled every `step` frames."""
+  scene, out = bpy.context.scene, []
+  for f in range(1, frames + 1, step):
+    scene.frame_set(f)
+    inv = follow.matrix_world.inverted()
+    out += [tuple((inv @ c.matrix_world.translation)[:2]) for c in cams]
+  scene.frame_set(1)
+  return out
+
+
+def build_weather(env: dict, follow, centre, frames: int, fps: int, cams=(), seed: int = 11):
   """Fog or haze (a volume layer over the scene with extinction 3 / visibility, from visibility_m), and falling rain
-  or snow in a box that travels with `follow` (the ego). Returns the collection (hidden from the top camera, which
-  shows the layout)."""
+  or snow in a box that travels with `follow` (the ego), kept CLEAR_LENS_M from every camera in `cams` so that no
+  drop or flake fills a corner of a view. Snow is soft round flakes, a little longer than wide as if blurred by the
+  fall. Returns the collection (hidden from the top camera, which shows the layout)."""
   coll = bpy.data.collections.new("weather")
   bpy.context.scene.collection.children.link(coll)
   vis = env.get("visibility_m")
@@ -1044,15 +1083,18 @@ def build_weather(env: dict, follow, centre, frames: int, fps: int, seed: int = 
     nt.links.new(vol.outputs[0], nt.nodes["Material Output"].inputs["Volume"])
     dome.data.materials.append(m)
   rnd = random.Random(seed)
+  lenses = lens_zones(follow, cams, frames) if cams else []
   for kind, amount in (("rain", env.get("rain", 0.0)), ("snow", env.get("snow", 0.0) * 0.8)):
     if not amount:
       continue
     period = 14.0
     speed = 9.0 if kind == "rain" else 1.1
     n = int((4500 if kind == "rain" else 6000) * amount)
-    verts, faces = [], []
+    verts, faces, uvs = [], [], []
     for i in range(n):
       x, y, z = rnd.uniform(-18, 70), rnd.uniform(-16, 16), rnd.uniform(0, period)
+      if any(math.hypot(x - lx, y - ly) < CLEAR_LENS_M for lx, ly in lenses):
+        continue
       for zz in (z, z + period):                 # two copies one period apart: the fall loops without a gap
         k = len(verts)
         if kind == "rain":
@@ -1063,13 +1105,18 @@ def build_weather(env: dict, follow, centre, frames: int, fps: int, seed: int = 
                     (x - dx + 0.04, y - dy, zz + ln)]
           faces.append((k, k + 1, k + 2, k + 3))
         else:
-          r = rnd.uniform(0.025, 0.045)
-          verts += [(x + r, y, zz), (x - r, y, zz), (x, y + r, zz), (x, y - r, zz), (x, y, zz + r), (x, y, zz - r)]
-          faces += [(k, k + 2, k + 4), (k + 2, k + 1, k + 4), (k + 1, k + 3, k + 4), (k + 3, k, k + 4),
-                    (k + 2, k, k + 5), (k + 1, k + 2, k + 5), (k + 3, k + 1, k + 5), (k, k + 3, k + 5)]
+          # a quad facing along the road (the chase and driver views), turned a little at random, 1.6 times as tall
+          # as wide; the material makes it a soft disc, the height a short blur of the fall
+          r = rnd.uniform(0.015, 0.03)
+          a, hz = rnd.uniform(-0.5, 0.5), 1.6 * r
+          dx, dy = r * math.sin(a), r * math.cos(a)
+          verts += [(x + dx, y - dy, zz - hz), (x - dx, y + dy, zz - hz), (x - dx, y + dy, zz + hz),
+                    (x + dx, y - dy, zz + hz)]
+          faces.append((k, k + 1, k + 2, k + 3))
+      uvs += [(0.0, 0.0), (1.0, 0.0), (1.0, 1.0), (0.0, 1.0)] * 2
     mat = (material("rain_streak", (0.75, 0.78, 0.82), rough=0.1, alpha=0.18, emit=0.15) if kind == "rain"
-           else material("snowflake", (0.95, 0.96, 1.0), rough=0.7, emit=0.2))
-    ob = mesh_object(kind, verts, faces, mat, coll)
+           else snowflake_material())
+    ob = mesh_object(kind, verts, faces, mat, coll, uvs=uvs if kind == "snow" else None)
     holder = empty(f"{kind}_fall", coll)
     holder.parent = follow
     ob.parent = holder
