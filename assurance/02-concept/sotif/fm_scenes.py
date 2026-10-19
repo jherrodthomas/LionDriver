@@ -180,7 +180,7 @@ def fm01():
   today = sample(lambda f: (xs(f), LANE))
   follow = sample(lambda f: (min(xs(f) - 26, X0 - 30 + 248 * 0.92 * f), LANE))
   ch = chart("speed", [(24, "cruise"), (96, "0")], [(0, 24), (stop, 24), (stop + 0.12, 70), (1, 74)], [(0, 24), (1, 24)],
-             [(stop + 0.14, 62, "e2e false stop", CR, "start"), (0.5, 20, "Chill: cruise held", CG, "middle")])
+             [(stop + 0.14, 62, "Experimental on (owner): false stop", CR, "start"), (0.5, 20, "Chill: cruise held", CG, "middle")])
   sc_today = road() + [other(follow)] + ego(today) + [marker(xs(stop), LANE, stop), badge("TODAY", CR),
                                                      tag(stop, xs(stop), 34, "Experimental on: phantom stop", BAD),
                                                      tag(0.8, 140, 66, "follower closes in", NOTE)]
@@ -263,18 +263,18 @@ def fm05():
 
 
 def fm06():
-  """A debug or maneuver parameter replaces the control path; with FM-06 reference builds ignore it onroad."""
-  f0 = 0.3
-  ch = chart("lateral offset", [(60, "0"), (24, "line")], [(f0 * k / 10, 60) for k in range(11)] +
-             [(f0 + (1 - f0) * k / 20, 60 - 36 * min(1, (k / 12)) ** 2) for k in range(1, 21)], [(0, 60), (1, 60)],
-             [(0.95, 20, "maneuver plan steers", CR, "end"), (0.5, 72, "parameter ignored onroad", CG, "middle")],
-             [lim(24, "")])
-  sc_today = road() + ego(drifting(f0, -23, k=1.6)) + [marker(X0 + 248 * f0, LANE, f0), badge("TODAY", CR),
-                                                       tag(f0, X0 + 248 * f0, 66, "lateralManeuverPlan", NOTE),
-                                                       tag(0.8, 210, 66, "overrides the model", BAD)]
+  """DM demo mode onroad: today DM runs on synthetic inputs and never alerts; with FM-06 the parameter is ignored onroad."""
+  f0 = 0.25
+  ch = chart("DM watches the driver", [(24, "yes"), (96, "no")], [(0, 24), (f0, 24), (f0 + .001, 96), (1, 96)],
+             [(0, 24), (1, 24)],
+             [(f0 + 0.03, 90, "demo mode: synthetic inputs, no alert", CR, "start"),
+              (0.62, 20, "ignored onroad: DM keeps watching", CG, "middle")])
+  sc_today = road() + ego(straight_path()) + [marker(X0 + 248 * f0, LANE, f0), badge("TODAY", CR),
+                                              tag(f0, X0 + 248 * f0, 34, "IsDriverViewEnabled set", NOTE),
+                                              tag(0.7, 200, 66, "eyes off, no DM alert", BAD)]
   sc_fm = road() + ego(straight_path(), CG) + [marker(X0 + 248 * f0, LANE, f0), badge("WITH FM-06", CG),
-                                               tag(f0, X0 + 248 * f0, 66, "lateralManeuverPlan", NOTE),
-                                               tag(0.5, 200, 34, "not subscribed: no effect", GOOD)]
+                                               tag(f0, X0 + 248 * f0, 34, "IsDriverViewEnabled set", NOTE),
+                                               tag(0.6, 200, 66, "ignored onroad: DM alerts", GOOD)]
   return ch, sc_today, sc_fm
 
 
@@ -391,10 +391,10 @@ MODELS = {
                      ("gap-assessment", "Source validity is always `True`")],
                 status="open", status_text="No implementation recorded; change requests for P1 FMs are open (WP-C-07 OI-2).",
                 status_src=[OI2]),
-  "FM-06": dict(title="Lock out debug and maneuver modes", sh="SH-13", draw=fm06,
-                today="One local parameter can replace control processes or neutralise DM; lateralManeuverPlan overrides model curvature.",
+  "FM-06": dict(title="Lock out debug, maneuver and DM demo modes", sh="SH-12", draw=fm06,
+                today="One local parameter can replace control processes or neutralise DM: IsDriverViewEnabled puts DM into demo mode with synthetic inputs.",
                 src=[("FM-06.Rationale", "One local parameter can replace control processes or neutralise DM (FI-20)"),
-                     ("gap-assessment", "`lateralManeuverPlan` overrides model curvature")],
+                     ("gap-assessment", "`IsDriverViewEnabled` puts DM into demo mode with synthetic inputs")],
                 status="open", status_text="No implementation recorded; change requests for P1 FMs are open (WP-C-07 OI-2).",
                 status_src=[OI2]),
   "FM-07": dict(title="Hold the 110 km/h ODD bound", sh="SH-13", draw=fm07,
