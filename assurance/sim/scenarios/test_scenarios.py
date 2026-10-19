@@ -36,12 +36,17 @@ class TestScenarios(unittest.TestCase):
         self.assertTrue((HERE / "xosc" / f"{fid}.xosc").exists())
         self.assertTrue((HERE / "xodr" / f"{fid}.xodr").exists())
 
-  def test_defaults_inside_sweeps_and_odd_speed(self):
+  def test_defaults_inside_sweeps_and_speeds(self):
     for sc in generate.SCENARIOS:
       for name, (default, sweep, *_r) in sc.params.items():
         self.assertIn(default, sweep, f"{sc.id} {name}")
         if name == "EgoSpeed":
-          self.assertLessEqual(max(sweep), 120 / 3.6 + 1e-6, f"{sc.id}: above the ODD-H speed bound")
+          self.assertLessEqual(max(sweep), generate.SWEEP_MAX + 1e-6, f"{sc.id}: above the highest WP-V-03 sweep speed")
+
+  def test_ks25_crosses_the_odd_speed_bound(self):
+    p = {k: v[0] for k, v in generate.SCENARIOS_BY_ID["KS-25"].params.items()}
+    self.assertLess(p["StartSpeed"], generate.ODD_SPEED)
+    self.assertGreater(p["EndSpeed"], generate.ODD_SPEED)
 
   def test_plant_reads_ks01_lane_centre(self):
     road = from_xodr(HERE / "xodr" / "KS-01.xodr")

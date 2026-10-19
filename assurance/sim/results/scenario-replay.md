@@ -83,7 +83,7 @@ Each scenario runs at its defaults and at each sweep value of one parameter at a
 | KS-23 | not assigned in WP-V-02 §5.3.2 | defaults | lead leaves after StandTime (within 3 steps) | pass | 5.10 s |
 | KS-23 | not assigned in WP-V-02 §5.3.2 | StandTime = 3 | ego starts at standstill | pass | — |
 | KS-23 | not assigned in WP-V-02 §5.3.2 | StandTime = 3 | lead leaves after StandTime (within 3 steps) | pass | 3.10 s |
-| KS-25 | SF-6 | defaults | ego speed crosses 120 km/h | pass | at 3.85 s |
+| KS-25 | SF-6 | defaults | ego speed crosses 110 km/h, the ODD-H bound | pass | at 3.85 s |
 | KS-27 | SF-3 | defaults | lead hidden until a gap of 40–80 m along the lane | pass | 64.9 m |
 | KS-27 | SF-3 | defaults | ego reaches EgoSpeed + SetSpeedDelta | pass | 26.39 m/s |
 | KS-27 | SF-3 | defaults | lead keeps LeadSpeed in lane -1 | pass | — |
