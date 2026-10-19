@@ -145,3 +145,12 @@
   aou_status: "Not started"
   status: proposed
   source: WP-C-01
+
+- id: AOU-17
+  kind: aou
+  text: "The EPS signals every drop of LKA assistance (LKA_STATE or an EPS fault state in `0x262`) and the PCM signals every non-execution of ACC requests (ACC or cruise fault state), so that neither stops acting on the item's requests without a fault the item can see"
+  credited_in: "WP-C-04 §11 (DQ-360 A); FSR-02.01, FSR-06.03; WP-S-02 TSR-626"
+  verification_approach: "Vehicle tests with forced faults (WP-V-07). If a test finds a silent drop, a response-versus-command check is added (TSR-626 (b), (c) extended to that case; DQ-360 option B)"
+  aou_status: "Unverified"
+  status: proposed
+  source: WP-C-01

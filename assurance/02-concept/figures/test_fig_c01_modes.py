@@ -84,7 +84,7 @@ class TestC01ModeFigures(unittest.TestCase):
 
   def test_every_aou_placed_once_with_status(self):
     rows = fm.aou_table(self.md)
-    self.assertEqual(len(rows), 16)  # AOU-16 added for the SG-08 standstill hold (DQ-365 A)
+    self.assertEqual(len(rows), 17)  # AOU-16 for the SG-08 standstill hold (DQ-365 A); AOU-17 EPS/PCM report every drop (DQ-360 A)
     svg = self.out["fig-c01-7-1-aou-map.svg"]
     for r in rows:
       self.assertEqual(svg.count(f">{r['id']}<"), 1, r["id"])
