@@ -133,7 +133,7 @@
 <text x="1264" y="515.5" class="d">Item HMI shows the wrong state,</text>
 <text x="1264" y="530.0" class="d">or cruiseMismatch raised after 6</text>
 <text x="1264" y="544.5" class="d">s with no reaction</text>
-<text x="1264" y="559.0" class="d">(selfdrived.py:420-422,</text>
+<text x="1264" y="559.0" class="d">(selfdrived.py:422-424,</text>
 <text x="1264" y="573.5" class="d">events.py:458-460; GAP-19).</text>
 <text x="1264" y="588.0" class="d">BL-005: cruiseMismatch alerts</text>
 <text x="1264" y="602.5" class="d">after 1 s (TSR-308); not</text>

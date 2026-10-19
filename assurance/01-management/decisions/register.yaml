@@ -781,8 +781,9 @@
       title: "Wait for an assessor before setting them"
       detail: "No rework risk. Cost: no controllability tests until an assessor is engaged, so the HARA I3 review and G1 stay blocked."
   sources: ["assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md OI-3"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: cc0c55e, record: "WP-C-08 v0.7 §7.1, criteria frozen by the lead 2026-10-19 (#265)", at: 2026-10-19}
 
 - id: DQ-035
   question: "Should the threat analysis's financial-damage ratings stay at their conservative placeholders?"
@@ -2183,8 +2184,9 @@
       title: "Wait for an assessor to approve them"
       detail: "Strongest independence. Cost: no SOTIF evidence until an assessor is engaged."
   sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md OI-3", "assurance/09-production-operation/WP-O-04-field-monitoring.md OI-5"]
-  status: answered
+  status: applied
   answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: 6e3828c, record: "WP-V-02 v0.11 OI-3, §4; WP-O-04 v0.2 OI-5 (#266)", at: 2026-10-19}
 
 - id: DQ-097
   question: "Should the panda refuse to enable controls when the car's VIN does not match the vehicle lock record?"
@@ -2435,8 +2437,9 @@
       title: "Trend rule only; report the probability without a threshold"
       detail: "Easier to meet. Cost: a weaker argument that a later assessor may reject."
   sources: ["assurance/06-validation/WP-V-04-sotif-unknown-scenarios.md OI-2"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: 6e3828c, record: "WP-V-04 v0.5 R3, §5.4; threshold for approval as DQ-262 (#266)", at: 2026-10-19}
 
 - id: DQ-109
   question: "How many sacrificial devices may be spent on the option-byte / readout-protection test (TC-05)?"
@@ -4282,8 +4285,9 @@
       title: "Keep the stand-in table for now"
       detail: "No cost now. The monitoring-and-response results stay provisional, and any later assessor will ask for the official table."
   sources: ["assurance/08-analyses/fmea/rating-tables.md", "assurance/08-analyses/fmea/msr-plan.md"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g, note: "The inbox answer was C (02:14Z); the lead then sent pictures of the FMEA-MSR AP matrix for S 9 and S 10 in chat, which is option A. S 1-8 pages still to come."}
+  applied: {ref: bf635c0, record: "rating-tables §7.4 RT-3, fmea_lint AP_MSR_HANDBOOK (S 9-10); S 1-8 stay provisional (#267)", at: 2026-10-19}
 
 - id: DQ-208
   question: "How much of your time goes to LionDriver, and from what date should the schedule count?"
@@ -4530,8 +4534,9 @@
     - assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-067
     - openpilot/selfdrive/selfdrived/assured_config.py
     - openpilot/selfdrive/selfdrived/selfdrived.py:502-506, 607-626
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "#287", record: "selfdrived.py add_reference_entry_events; assured_config.py; change-2026-10-19-reference-entry-checks (new selfdrived tests ran locally only: the scons CI jobs were down on the LFS 404 at merge)", at: 2026-10-19}
 
 - id: DQ-260
   question: "Should the highway ODD stop at 110 km/h, the highest speed at which the driver's control of a steering fault will be tested?"
@@ -4750,7 +4755,7 @@
   sources: ["assurance/08-analyses/fta-fmea-mapping.md F-34", "assurance/08-analyses/fmea/hara-mapping.yaml HZ-010"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
-  applied: {ref: "jherrodthomas/LionDriver#252", record: "assurance/02-concept/WP-C-03-hara.md HE-03.7 (v0.5); fmea/hara-mapping.yaml HZ-010", at: 2026-10-19}
+  applied: {ref: "jherrodthomas/LionDriver#252", record: "assurance/02-concept/WP-C-03-hara.md HE-03.7 (v0.5); fmea/hara-mapping.yaml HZ-010; WP-A-04 v1.12 G3.3.1, BE-3.13 (#262)", at: 2026-10-19}
   note: "FTA G3.3 and the tree gaps SWF-055/057/089 follow in the FTA session's next PR."
 
 - id: DQ-365
@@ -4851,8 +4856,9 @@
       title: "Allow engagement anywhere, show a warning off-highway, and rely on the driver and user information"
       detail: "Most useful in daily driving. Cost: the ODD limit rests on the driver; LS-13 stays a known gap, and an assessor may ask why an ODD boundary has no technical check."
   sources: ["assurance/08-analyses/WP-A-05-stpa.md LS-13, OI-15", "assurance/01-management/decisions/register.yaml DQ-023", "assurance/02-concept/WP-C-07-sotif-functional-modifications.md FM-08"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "#287", record: "selfdrived.py add_reference_entry_events; assured_config.py; change-2026-10-19-reference-entry-checks (new selfdrived tests ran locally only: the scons CI jobs were down on the LFS 404 at merge)", at: 2026-10-19}
 
 - id: DQ-367
   question: "With an EPS fault and a host that keeps asking for torque, authority now drops after 50 ms and the panda's EPS-fault siren no longer sounds. Restore the siren, accept losing it, or keep the old rule?"
@@ -4983,3 +4989,72 @@
   answer: {choice: A, via: chat, at: 2026-10-18}
   applied: {ref: "#124", record: "assurance/sim/README.md §3.8; .github/workflows/tests.yaml (simulator_driving)", at: 2026-10-18}
   note: "The job runs once the lead registers the runner (label liondriver-sim) and sets the repository variable LIONDRIVER_SIM_RUNNER to true (README §3.8)."
+
+- id: DQ-401
+  question: "Comma removed 26 openpilot model files from its file storage this morning. Every test that compiles openpilot now fails on every PR until they come back, so document-only PRs cannot go green. What should we do?"
+  context: "Since 2026-10-19 03:27–03:35Z the Hugging Face LFS store in .lfsconfig (commaai/openpilot-lfs) returns 404 for 26 of its 262 objects, among them driving_supercombo.onnx and dmonitoring_model.onnx. Upstream master still references them and the old GitLab store lacks them, so switching the endpoint does not help. The jobs that run scons (unit tests, build macOS, build release, Create UI Report, process replay) fail in setup on every PR. #280 stops the non-compiling jobs (static analysis, build docs) from pulling LFS."
+  reversibility: "easy"
+  blocks: "Merging any PR while the 26 objects are missing (#274, #276 and later document PRs)"
+  gate: "G0"
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Merge document-only PRs when the only red checks are the compile jobs failing on the missing files"
+      detail: "Their own checks (documents, figures, register, trace) must pass, and each merge notes the reason. PRs that change code still wait. Easy to undo once the files are back."
+    - key: B
+      title: "Host the 26 files ourselves"
+      detail: "From a pre-2026-10-19 openpilot checkout or a device, upload them to our own LFS store and point .lfsconfig at it. Fully green again, but it uses GitHub LFS quota and needs a copy of the files."
+    - key: C
+      title: "Wait for comma"
+      detail: "Merge nothing red until the store recovers. Safest, but all merging stops for an unknown time."
+  sources: [".lfsconfig", "tools/op.sh (git lfs pull)", "PR #280", "actions run 39194260416"]
+  asked: 2026-10-19
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "#276", record: "merge commits of #276 and #281-#285 (\"Merged under DQ-401 A\")", at: 2026-10-19}
+  note: "Scope, as the lead confirmed to the STPA session on 2026-10-19: covers document PRs and PRs that change assurance/ tooling (figure and generator scripts, checkers). Vehicle code (openpilot, panda, opendbc, pins) still waits for green. The merge commit says \"Merged under DQ-401 A\"."
+
+- id: DQ-402
+  question: "Once engaged, should LionDriver hand back to the driver when the car slows below 60 km/h, for example in highway stop-and-go traffic?"
+  context: "You chose to refuse engagement below 60 km/h (DQ-280 A). As built in #287 that check only refuses entry, so an engaged item keeps driving through a highway jam down to a stop. **Handing back below the floor keeps use inside the speed limit you set, at the cost of a takeover every time traffic slows.**"
+  reversibility: easy
+  blocks: "Change record change-2026-10-19-reference-entry-checks OI-2; the ODD exit requirement; user information (WP-O-03)"
+  gate: G1
+  decider: lead
+  after: [DQ-280]
+  options:
+    - key: A
+      recommended: true
+      title: "Keep driving below 60 km/h once engaged; refuse only new engagement"
+      detail: "What #287 does. Stop-and-go on a highway stays assisted. Cost: the speed floor limits where it starts, not where it runs, so the ODD argument has to cover low-speed highway traffic."
+    - key: B
+      title: "Hand back with a warning below 60 km/h"
+      detail: "The item never runs below the floor. Cost: a takeover request in every jam, and a new disengage path with its own alert and tests."
+    - key: C
+      title: "Hand back below a lower floor (for example 30 km/h)"
+      detail: "Allows slowing traffic but not crawling. Cost: a second number to justify, and still a takeover in a full stop."
+  sources: ["PR #287 (Open: OI-2)", "DQ-280"]
+  status: queued
+
+- id: DQ-403
+  question: "If the driver changes an assured setting from the menu while engaged (for example turns Experimental Mode on), should LionDriver disengage, or let it take effect and only refuse the next engagement?"
+  context: "You chose to refuse engagement outside the assured settings (DQ-221 A). In #287 that check only covers entry, so a setting changed mid-drive takes effect at once and the item keeps running outside its assured configuration until the next engagement. **A disengage closes that gap; the cost is a sudden takeover caused by a menu tap.**"
+  reversibility: easy
+  blocks: "Change record change-2026-10-19-reference-entry-checks OI-3; DQ-221 implementation; SW FMEA SWF-067.C2 / SWF-ACT-079"
+  gate: G1
+  decider: lead
+  after: [DQ-221]
+  options:
+    - key: A
+      recommended: true
+      title: "Hold the change until the next engagement"
+      detail: "The new setting is stored but only used after the driver disengages, and the next engagement is still refused. No mid-drive takeover. Cost: a small code change and tests."
+    - key: B
+      title: "Disengage with a warning"
+      detail: "Never runs outside the assured settings. Cost: a takeover request triggered by the driver's own menu tap."
+    - key: C
+      title: "Leave as built: takes effect at once"
+      detail: "No change. Cost: the item can run outside its assured settings until it is next engaged, which the safety case must argue away."
+  sources: ["PR #287 (Open: OI-3)", "DQ-221"]
+  status: queued

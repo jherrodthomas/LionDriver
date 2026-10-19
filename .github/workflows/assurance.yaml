@@ -72,10 +72,12 @@ jobs:
         python3 assurance/trace/tools/trace_map.py --check
         python3 assurance/trace/tools/test_trace_map.py
         python3 assurance/trace/tools/test_vmodel.py
-    - name: Decision register follows its lifecycle rules, and the inbox page builds (and their tests)
+    - name: Decision register follows its lifecycle rules, the inbox page builds, the lifecycle figure is current (and their tests)
       run: |
         python3 assurance/01-management/decisions/check_decisions.py
         python3 assurance/01-management/decisions/test_decisions.py
+        python3 assurance/01-management/decisions/fig_lifecycle.py --check
+        python3 assurance/01-management/decisions/test_fig_lifecycle.py
     - name: Work-product figures match their source tables and records (and their tests)
       run: |
         python3 assurance/01-management/figures/fig_m_management.py --check
@@ -102,6 +104,8 @@ jobs:
         python3 assurance/sim/figures/test_fig_sim_reel.py
         python3 assurance/sim/figures/fig_sim_guide.py --check
         python3 assurance/sim/figures/test_fig_sim_guide.py
+        python3 assurance/models/figures/fig_models.py --check
+        python3 assurance/models/figures/test_fig_models.py
     - name: Traceability figures of WP-T-01 match the data (and their tests)
       run: |
         python3 assurance/trace/tools/trace_figures.py --check
@@ -133,6 +137,7 @@ jobs:
         python3 assurance/02-concept/sotif/sotif_figures.py --check
         python3 assurance/02-concept/sotif/test_sotif_figures.py
         python3 assurance/02-concept/sotif/test_sotif_scenes.py
+        python3 assurance/02-concept/sotif/test_fm_scenes.py
     - name: FMEA, FMEDA and DFA figures match the YAML analyses (and their tests)
       run: |
         python3 tools/safety/fmea_diagrams.py --check

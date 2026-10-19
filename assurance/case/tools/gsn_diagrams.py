@@ -807,6 +807,7 @@ def build() -> dict[str, str]:
     "| Case | Sheet | Argument from | Goals | Solutions |",
     "|---|---|---|---|---|",
   ]
+  first = None
   for prefix, case, source, builder, doc, doc_id in CASES:
     sheets = paginate(builder())
     for no, root_node in enumerate(sheets, 1):
@@ -816,6 +817,7 @@ def build() -> dict[str, str]:
       goals = sum(1 for b in _walk(box) if b.node.kind == "goal")
       sols = sum(1 for b in _walk(box) if b.node.kind == "solution")
       index.append(f"| {doc} | [{no}]({name}) | {root_node.ident} | {goals} | {sols} |")
+      first = first or (name, root_node.ident, case)
   index += ["", "Notation: goal = rectangle; strategy = parallelogram; solution = circle (green available, " +
             "amber partial, white dashed missing); context = rounded box; assumption / justification = oval " +
             "(A / J); diamond = undeveloped goal. Solid arrows are SupportedBy, hollow arrows InContextOf. " +
@@ -824,6 +826,12 @@ def build() -> dict[str, str]:
             "Defeaters (open counter-evidence, WP-K-01 §7, WP-K-03 §6) are listed in red on the goal they " +
             "undermine. In the cybersecurity case the requirements that refine a goal (CSR-nnn) are shown as " +
             "a context.", ""]
+  name, ident, case = first
+  index[7:7] = [f"![First sheet of the {case.lower()}: the top goal {ident} with the strategies and goals that support it, "
+                "each goal coloured by the worst evidence status below it, and open defeaters in red on the goal they "
+                f"undermine]({name})", "",
+                "*Sheet 1, the top of the argument; the notation is explained under the table and every sheet is "
+                "listed in it.*", ""]
   outputs["README.md"] = "\n".join(index)
   return outputs
 

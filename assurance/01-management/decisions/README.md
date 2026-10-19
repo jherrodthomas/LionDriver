@@ -11,6 +11,10 @@ register entry points there.
 
 ## Lifecycle
 
+![A question's path through the register: queued (recorded, not asked yet) moves to open when Claude asks it in a batch of ten; from open, it becomes answered when the lead picks an option, or assumed when there is no answer by proceed_after, which is allowed for easy questions only; answered and assumed both become applied once the change is made; any state can become withdrawn when the question no longer applies. A box at the bottom repeats the rule that a hard question is never assumed and never applied without an answer from the lead](figures/fig-dr-1-lifecycle.svg)
+
+*How an entry moves between the states in the table below; drawn from it by [`fig_lifecycle.py`](fig_lifecycle.py) (CI fails if stale).*
+
 | Status | Meaning | Who moves it |
 |---|---|---|
 | `queued` | Recorded but not asked yet. Listed collapsed on the page; needs no `asked` date and may have no gate. `after` names questions to settle first | Claude |

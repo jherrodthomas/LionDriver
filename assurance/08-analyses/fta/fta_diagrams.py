@@ -827,6 +827,12 @@ def build() -> dict[str, str]:
             "tree that no FMEA row backs yet.", "",
             "Minimal cut sets computed from the same trees, and the check of the WP-A-04 tables: " +
             "[cut-sets.md](cut-sets.md) (`fta_cutsets.py`).", ""]
+  first = trees[0]
+  index[4:4] = [f"![First sheet of the {first.goal} fault tree: top event {first.root.ident} {first.title}, with the "
+                "gates and events beneath it down to the transfers to the next sheets; red marks single-point paths]"
+                f"(fta-{first.goal}-1.svg)", "",
+                f"*Sheet 1 of {first.goal}, as an example of the notation explained under the table; every sheet is "
+                "listed below.*", ""]
   outputs["README.md"] = "\n".join(index)
   return outputs
 

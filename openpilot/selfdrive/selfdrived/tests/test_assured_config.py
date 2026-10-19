@@ -7,8 +7,9 @@ from openpilot.common.params import Params
 from openpilot.common.parameterized import parameterized
 from openpilot.common.test import OpenpilotTestCase
 from openpilot.selfdrive.selfdrived import assured_config, selfdrived
+from openpilot.selfdrive.selfdrived.events import ET, EVENTS, Events, below_highway_speed_alert
 
-# CA-008 verification (FI-2026-001 RC-05, HZ-005)
+# CA-008 verification (FI-2026-001 RC-05, HZ-005); DQ-221 and DQ-280 entry checks
 
 REFERENCE = TOYOTA.TOYOTA_COROLLA_TSS2
 ORIGIN = "https://github.com/jherrodthomas/LionDriver.git"
@@ -79,3 +80,88 @@ class TestAssuredConfig(OpenpilotTestCase):
       stored = params.get("AssuredConfiguration")
       self.assertFalse(stored["in_scope"])
       self.assertEqual(stored["config_hash"], sd.assured_config.config_hash)
+
+
+EventName = log.OnroadEvent.EventName
+FLOOR = assured_config.HIGHWAY_SPEED_FLOOR
+
+
+def selfdrive(platform=REFERENCE, status=None):
+  """Just the state the entry checks and the distance button use"""
+  return SimpleNamespace(reference_platform=platform in assured_config.ASSURED_PLATFORMS, events=Events(),
+                         assured_config=status if status is not None else evaluate(platform=platform),
+                         personality=log.LongitudinalPersonality.relaxed, params=mock.Mock(),
+                         set_personality=mock.Mock())
+
+
+def entry_events(sd, v_ego):
+  sd.events.clear()
+  selfdrived.SelfdriveD.add_reference_entry_events(sd, SimpleNamespace(vEgo=v_ego))
+  return sd.events
+
+
+class TestReferenceEntry(OpenpilotTestCase):
+  def test_settings_in_scope_tracks_settings_only(self):
+    self.assertTrue(evaluate().settings_in_scope)
+    # platform and software deviations are logged but are not settings
+    self.assertTrue(evaluate(platform=TOYOTA.TOYOTA_RAV4_TSS2_2022).settings_in_scope)
+    self.assertTrue(evaluate(dirty=True).settings_in_scope)
+    for key, (assured, _) in assured_config.ASSURED_PARAMS.items():
+      other = (not assured) if isinstance(assured, bool) else log.LongitudinalPersonality.standard
+      self.assertFalse(evaluate(params={key: other}).settings_in_scope, key)
+    assert "settings_in_scope" in evaluate().to_dict()
+
+  def test_reference_platform_in_assured_settings_engages_at_floor(self):
+    sd = selfdrive()
+    self.assertFalse(entry_events(sd, FLOOR).contains(ET.NO_ENTRY))
+    self.assertFalse(entry_events(sd, 30.).contains(ET.NO_ENTRY))
+
+  def test_below_highway_speed_refuses_entry(self):
+    sd = selfdrive()
+    for v_ego in (0., 10., FLOOR - 0.01):
+      events = entry_events(sd, v_ego)
+      self.assertEqual(events.names, [EventName.belowHighwaySpeed], v_ego)
+      self.assertTrue(events.contains(ET.NO_ENTRY))
+      # entry only: an engaged item is not disengaged by it
+      self.assertFalse(events.contains(ET.SOFT_DISABLE) or events.contains(ET.IMMEDIATE_DISABLE))
+
+  @parameterized.expand([
+    ("LongitudinalPersonality", log.LongitudinalPersonality.standard),
+    ("LongitudinalPersonality", log.LongitudinalPersonality.aggressive),
+    ("ExperimentalMode", True),
+    ("AlphaLongitudinalEnabled", True),
+    ("JoystickDebugMode", True),
+  ])
+  def test_setting_outside_assured_refuses_entry(self, key, value):
+    sd = selfdrive(status=evaluate(params={key: value}))
+    events = entry_events(sd, 30.)
+    self.assertEqual(events.names, [EventName.settingNotAssured])
+    self.assertTrue(events.contains(ET.NO_ENTRY))
+    self.assertFalse(events.contains(ET.SOFT_DISABLE) or events.contains(ET.IMMEDIATE_DISABLE))
+
+  def test_other_platforms_unchanged(self):
+    platform = TOYOTA.TOYOTA_RAV4_TSS2_2022
+    sd = selfdrive(platform=platform, status=evaluate(platform=platform, params={"ExperimentalMode": True}))
+    self.assertEqual(entry_events(sd, 5.).names, [])
+
+  def test_distance_button_keeps_assured_distance_on_reference(self):
+    sd = selfdrive()
+    with mock.patch.object(selfdrived.cloudlog, "event") as event:
+      selfdrived.SelfdriveD.distance_button_pressed(sd)
+    sd.set_personality.assert_not_called()
+    sd.params.put.assert_not_called()
+    self.assertEqual(sd.events.names, [])
+    event.assert_called_once()
+
+  def test_distance_button_unchanged_on_other_platforms(self):
+    sd = selfdrive(platform=TOYOTA.TOYOTA_RAV4_TSS2_2022)
+    selfdrived.SelfdriveD.distance_button_pressed(sd)
+    sd.set_personality.assert_called_once_with((log.LongitudinalPersonality.relaxed - 1) % 3)
+    self.assertEqual(sd.events.names, [EventName.personalityChanged])
+
+  def test_alerts(self):
+    assert ET.NO_ENTRY in EVENTS[EventName.settingNotAssured]
+    assert EVENTS[EventName.belowHighwaySpeed][ET.NO_ENTRY] is below_highway_speed_alert
+    for metric, shown in ((True, "60 km/h"), (False, "37 mph")):
+      a = below_highway_speed_alert(mock.Mock(), mock.Mock(), mock.Mock(), metric, 0, None)
+      assert shown in a.alert_text_1 + a.alert_text_2

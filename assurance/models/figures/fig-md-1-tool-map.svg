@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="730" viewBox="0 0 640 730" role="img" aria-labelledby="t d">
+<title id="t">Modelling plan: tools, what they model, and what the output may be used for</title>
+<desc id="d">Tool map of the modelling plan. Python → SM-SELFDRIVED record (Exists) → TL-28 TCL2: Envelope design description | Python → Back-to-back test (Exists) → TL-29 TCL1: Envelope verification (no credit) | Python, OpenModelica → HIL plant model (In progress) → TL-30 TCL1 / TCL2: Envelope verification on the bench | Octave → Envelope calculations and plots (Exists) → TL-25 TCL1: None (design support) | SysML v2, Python → Architecture model (Draft) → TL-26 TCL1: None (design description); TL-27 TCL1: None (consistency support and figures). Rule: No model output is verification evidence until the tool that produced it is classified at the confidence level the evidence needs (WP-P-07 §5) and the result has been reviewed.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
+      --py:#2a78d6; --py-bg:#e9f1fb; --om:#6250d6; --om-bg:#efedfb; --oc:#0f8a6e; --oc-bg:#e3f5ef;
+      --sy:#b4570f; --sy-bg:#fbeee2; --amb:#c98500; --amb-bg:#fdf4dc; --ok:#2e9e6a; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#1a1a19; --ink:#f0efec; --ink2:#c3c2b7; --ink3:#8d8c85; --grid:#33322f; --card:#232321;
+        --py:#3987e5; --py-bg:#16273c; --om:#9085e9; --om-bg:#26223f; --oc:#2fb08f; --oc-bg:#14302a;
+        --sy:#e07b33; --sy-bg:#3a2617; --amb:#eda100; --amb-bg:#3a2f12; --ok:#3fb97d; }
+}
+.bg { fill:var(--bg); }
+.h { font:600 21px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t { font:15px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.tb { font:600 15px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.t2b { font:600 13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.ta { font:600 13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--amb); }
+.num { font:600 24px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink3); }
+.chip { font:600 12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:#ffffff; }
+.chipo { font:600 12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.hair { stroke:var(--grid); stroke-width:1; }
+.card { fill:var(--card); stroke:var(--grid); stroke-width:1.2; }
+.gate { fill:var(--amb-bg); stroke:var(--amb); stroke-width:1.6; stroke-dasharray:6 4; }
+.f-py { fill:var(--py); } .f-om { fill:var(--om); } .f-oc { fill:var(--oc); } .f-sy { fill:var(--sy); }
+.o-py { fill:var(--bg); stroke:var(--py); stroke-width:1.4; } .o-om { fill:var(--bg); stroke:var(--om); stroke-width:1.4; stroke-dasharray:4 3; }
+.o-oc { fill:var(--bg); stroke:var(--oc); stroke-width:1.4; } .o-sy { fill:var(--bg); stroke:var(--sy); stroke-width:1.4; }
+.s-done { fill:var(--ok); } .s-exists { fill:var(--py); } .s-prog { fill:var(--amb); }
+.s-draft { fill:var(--bg); stroke:var(--ink3); stroke-width:1.4; stroke-dasharray:4 3; }
+.f-ink2 { fill:var(--ink2); }
+.arr { stroke:var(--ink2); stroke-width:1.6; fill:none; }
+</style>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-ink2"/></marker></defs>
+<rect class="bg" width="640" height="730"/>
+<text x="24" y="34" class="h">Modelling: tool → what it models → use</text>
+<text x="24" y="56" class="t2">From §2 of this page and the WP-P-07 §3 tool inventory</text>
+<line x1="24" y1="70" x2="616" y2="70" class="hair"/>
+<text x="24" y="96" class="t2b">Tool</text>
+<text x="160" y="96" class="t2b">Models (§2 item)</text>
+<text x="410" y="96" class="ta" text-anchor="middle">WP-P-07</text>
+<text x="462" y="96" class="t2b">Output may be used for</text>
+<rect x="372" y="106" width="76" height="514" rx="6" class="gate"/>
+<rect x="160" y="110" width="196" height="74" rx="8" class="card"/>
+<rect x="462" y="110" width="154" height="74" rx="8" class="card"/>
+<rect x="24" y="120" width="57.8" height="20" rx="10" class="f-py"/>
+<text x="52.9" y="134" class="chip" text-anchor="middle">Python</text>
+<text x="170" y="132" class="tb">SM-SELFDRIVED</text>
+<text x="170" y="152" class="tb">record</text>
+<text x="170" y="172" class="t2">#2 · Exists</text>
+<text x="472" y="130" class="t2">Envelope design</text>
+<text x="472" y="148" class="t2">description</text>
+<text x="410" y="132" class="t2b" text-anchor="middle">TL-28</text>
+<text x="410" y="148" class="t2" text-anchor="middle">TCL2</text>
+<path d="M138 131 H158" class="arr" marker-end="url(#a)"/>
+<path d="M358 131 H370" class="arr" marker-end="url(#a)"/>
+<path d="M450 131 H460" class="arr" marker-end="url(#a)"/>
+<rect x="160" y="194" width="196" height="86" rx="8" class="card"/>
+<rect x="462" y="194" width="154" height="86" rx="8" class="card"/>
+<rect x="24" y="204" width="57.8" height="20" rx="10" class="f-py"/>
+<text x="52.9" y="218" class="chip" text-anchor="middle">Python</text>
+<text x="170" y="216" class="tb">Back-to-back test</text>
+<text x="170" y="236" class="t2">#3 · Exists</text>
+<text x="472" y="214" class="t2">Envelope</text>
+<text x="472" y="232" class="t2">verification (no</text>
+<text x="472" y="250" class="t2">credit)</text>
+<text x="410" y="216" class="t2b" text-anchor="middle">TL-29</text>
+<text x="410" y="232" class="t2" text-anchor="middle">TCL1</text>
+<path d="M138 215 H158" class="arr" marker-end="url(#a)"/>
+<path d="M358 215 H370" class="arr" marker-end="url(#a)"/>
+<path d="M450 215 H460" class="arr" marker-end="url(#a)"/>
+<rect x="160" y="290" width="196" height="86" rx="8" class="card"/>
+<rect x="462" y="290" width="154" height="86" rx="8" class="card"/>
+<rect x="24" y="300" width="57.8" height="20" rx="10" class="f-py"/>
+<text x="52.9" y="314" class="chip" text-anchor="middle">Python</text>
+<rect x="24" y="324" width="99.5" height="20" rx="10" class="o-om"/>
+<text x="73.8" y="338" class="chipo" text-anchor="middle">OpenModelica</text>
+<text x="24" y="356" class="t2">only if needed</text>
+<text x="170" y="312" class="tb">HIL plant model</text>
+<text x="170" y="332" class="t2">#4 · In progress</text>
+<text x="472" y="310" class="t2">Envelope</text>
+<text x="472" y="328" class="t2">verification on the</text>
+<text x="472" y="346" class="t2">bench</text>
+<text x="410" y="312" class="t2b" text-anchor="middle">TL-30</text>
+<text x="410" y="328" class="t2" text-anchor="middle">TCL1/TCL2</text>
+<path d="M138 311 H158" class="arr" marker-end="url(#a)"/>
+<path d="M358 311 H370" class="arr" marker-end="url(#a)"/>
+<path d="M450 311 H460" class="arr" marker-end="url(#a)"/>
+<rect x="160" y="386" width="196" height="94" rx="8" class="card"/>
+<rect x="462" y="386" width="154" height="94" rx="8" class="card"/>
+<rect x="24" y="396" width="57.8" height="20" rx="10" class="f-oc"/>
+<text x="52.9" y="410" class="chip" text-anchor="middle">Octave</text>
+<text x="170" y="408" class="tb">Envelope</text>
+<text x="170" y="428" class="tb">calculations and</text>
+<text x="170" y="448" class="tb">plots</text>
+<text x="170" y="468" class="t2">Exists</text>
+<text x="472" y="406" class="t2">None (design</text>
+<text x="472" y="424" class="t2">support)</text>
+<text x="410" y="408" class="t2b" text-anchor="middle">TL-25</text>
+<text x="410" y="424" class="t2" text-anchor="middle">TCL1</text>
+<path d="M138 407 H158" class="arr" marker-end="url(#a)"/>
+<path d="M358 407 H370" class="arr" marker-end="url(#a)"/>
+<path d="M450 407 H460" class="arr" marker-end="url(#a)"/>
+<rect x="160" y="490" width="196" height="126" rx="8" class="card"/>
+<rect x="462" y="490" width="154" height="126" rx="8" class="card"/>
+<rect x="24" y="500" width="71.7" height="20" rx="10" class="f-sy"/>
+<text x="59.8" y="514" class="chip" text-anchor="middle">SysML v2</text>
+<rect x="24" y="524" width="57.8" height="20" rx="10" class="f-py"/>
+<text x="52.9" y="538" class="chip" text-anchor="middle">Python</text>
+<text x="170" y="512" class="tb">Architecture model</text>
+<text x="170" y="532" class="t2">#5 · Draft</text>
+<text x="472" y="510" class="t2">None (design</text>
+<text x="472" y="528" class="t2">description)</text>
+<text x="472" y="550" class="t2">None (consistency</text>
+<text x="472" y="568" class="t2">support and</text>
+<text x="472" y="586" class="t2">figures)</text>
+<text x="410" y="512" class="t2b" text-anchor="middle">TL-26</text>
+<text x="410" y="528" class="t2" text-anchor="middle">TCL1</text>
+<text x="410" y="550" class="t2b" text-anchor="middle">TL-27</text>
+<text x="410" y="566" class="t2" text-anchor="middle">TCL1</text>
+<path d="M138 511 H158" class="arr" marker-end="url(#a)"/>
+<path d="M358 511 H370" class="arr" marker-end="url(#a)"/>
+<path d="M450 511 H460" class="arr" marker-end="url(#a)"/>
+<rect x="24" y="632" width="592" height="86" rx="8" class="gate"/>
+<text x="40" y="654" class="t">No model output is verification evidence until the tool that produced</text>
+<text x="40" y="674" class="t">it is classified at the confidence level the evidence needs (WP-P-07</text>
+<text x="40" y="694" class="t">§5) and the result has been reviewed.</text>
+</svg>

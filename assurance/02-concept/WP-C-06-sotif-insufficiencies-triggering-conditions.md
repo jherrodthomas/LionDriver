@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-06 Functional insufficiencies and triggering conditions analysis |
 | Standard reference | ISO 21448:2022 §7 (identification and evaluation of functional insufficiencies and triggering conditions); ISO/PAS 8800:2024 (AI error causes, informative) |
-| Version | 0.5 (FI-23 and TC-34 added, so SH-08 has an insufficiency and a triggering condition; the TC-33 row no longer names SH-03, because FI-10 leads to SH-06 only; §5.1 states how the SG-02 and SG-06 fault trees share the performance limits, DQ-361 A; 2026-10-18). 0.4 (TC-20 at the 110 km/h ODD bound, decision register DQ-260; 2026-10-16). 0.3 (TC-12 resolution follows the highway-only ODD, decision register DQ-023; 2026-10-16). 0.2 (Figure 5-1 added: TC → FI → SH chain; 2026-10-13). 0.1 |
+| Version | 0.6 (TC-35: a lead not detected in a curve while the item accelerates to the set speed, from RR-2026-011 F-6; §5.2 records its off-highway observation A-6, centre-line crossing on narrow roads; 2026-10-19). 0.5 (FI-23 and TC-34 added, so SH-08 has an insufficiency and a triggering condition; the TC-33 row no longer names SH-03, because FI-10 leads to SH-06 only; §5.1 states how the SG-02 and SG-06 fault trees share the performance limits, DQ-361 A; 2026-10-18). 0.4 (TC-20 at the 110 km/h ODD bound, decision register DQ-260; 2026-10-16). 0.3 (TC-12 resolution follows the highway-only ODD, decision register DQ-023; 2026-10-16). 0.2 (Figure 5-1 added: TC → FI → SH chain; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -53,14 +53,14 @@ The driving model is a black box from LionDriver's point of view: training data 
 | FI-12 | S | Planner | Auto-resume from standstill when the lead moves, without checking for objects between ego and lead (VRU crossing) | SH-03, SH-11 | `toyota/interface.py:107`; `carcontroller.py:175-185` |
 | FI-13 | S | Lane change assist | No blind-spot or rear sensing; lane change starts on driver nudge | SH-10 | `LIMITATIONS.md:6`; `desire_helper.py:48-55` |
 | FI-14 | S | System supervision | Soft disable keeps actuating for 3 s on the failed inputs; inputs considered alive up to 10× period | SH-02, SH-06 | `state.py:7-8`; `cereal/messaging/__init__.py:152-153`; GAP-16 |
-| FI-15 | S | System supervision | Diagnostics (commIssue, posenet, locationd, modeldLagging) masked during big-model ("Chestnut") load and for 5 s after; cold small-model hot-switch while actuating | SH-01, SH-02, SH-04 | `selfdrived.py:382-384, 403, 457`; `modeld.py:411-419`; GAP-17 |
+| FI-15 | S | System supervision | Diagnostics (commIssue, posenet, locationd, modeldLagging) masked during big-model ("Chestnut") load and for 5 s after; cold small-model hot-switch while actuating | SH-01, SH-02, SH-04 | `selfdrived.py:384-386, 405, 459`; `modeld.py:411-419`; GAP-17 |
 | FI-16 | S | System supervision | `speedTooHigh` warns but does not disengage; no ODD monitor for speed below 149 km/h | SH-13 | `events.py:989-996`; GAP-19 |
 | FI-17 | S | System supervision | `cruiseMismatch` raised with no reaction; `canError` shows misleading text; non-finite commands silently clamped | SH-05, SH-02 | `events.py:458-460, 928-936`; `controlsd.py:140-147`; GAP-19 |
 | FI-18 | P | DM model | Reduced detection with sunglasses, low light, glare, face partly out of view, obstructions; model high-uncertainty fallback to wheel touch | SH-12 | `LIMITATIONS.md:53-56`; `policy.py:82-83` |
 | FI-19 | S | DM policy | Wheel-touch fallback resets awareness on any steering or gas input; source validity hard-coded `True`; alerts only above 2.8 m/s | SH-12 | `policy.py:29, 360-361`; `dmonitoringmodeld.py:99`; GAP-21 |
 | FI-20 | S | Configuration | Behaviour-changing parameters without protection: Experimental default on, debug/maneuver modes, `IsDriverViewEnabled` DM demo mode | SH-09, SH-12, SH-13 | `params_keys.h:43, 59`; `process_config.py:34-47`; GAP-18, GAP-20 |
 | FI-21 | S | Override semantics | Gas overrides longitudinal but does not disengage; host steering override threshold 500 raw; the driver may misjudge the state | SH-05 | `params_keys.h:35`; `carcontroller.py:33, 83` |
-| FI-22 | P | Driving model | Temporal effects: model lag or frame drops degrade the plan; recurrent state reset after model switch | SH-01, SH-02 | `selfdrived.py:457` (`modeldLagging`); `modeld.py:411-419` |
+| FI-22 | P | Driving model | Temporal effects: model lag or frame drops degrade the plan; recurrent state reset after model switch | SH-01, SH-02 | `selfdrived.py:459` (`modeldLagging`); `modeld.py:411-419` |
 | FI-23 | S | Interface to the stock PCS | The specification does not state how the item's behaviour interacts with the stock pre-collision system. When LD-SDA sends its own `ACC_CONTROL`, the stock PCS sees the item's acceleration request in place of stock ACC's. Message interception may change what the PCS receives. A device alert may cover or distract from the PCS warning. Forwarding the PCS messages is intended but not verified | SH-08 | WP-C-01 §2 (AOU-04); `toyotacan.py:56`; `carstate.py:80, 154` (stock AEB and FCW read, not acted on) |
 
 ## 4. Triggering conditions
@@ -96,11 +96,12 @@ The driving model is a black box from LionDriver's point of view: training data 
 | TC-27 | Lead moves off from standstill while a pedestrian crosses between ego and lead | Traffic / VRU | FI-12 |
 | TC-28 | Driver nudges for a lane change with a vehicle in the blind spot | Driver / traffic | `LIMITATIONS.md:6` |
 | TC-29 | Driver presses gas to override and believes the system disengaged | Driver / HMI | `params_keys.h:35` |
-| TC-30 | PCM cruise remains active after an item disengagement (cancel not effective) | Vehicle / system | `selfdrived.py:421`; GAP-19 |
+| TC-30 | PCM cruise remains active after an item disengagement (cancel not effective) | Vehicle / system | `selfdrived.py:423`; GAP-19 |
 | TC-31 | Exit lane or lane split on a highway (path follows the wrong branch) | Infrastructure | domain |
 | TC-32 | Narrow lane (≤ 3.3 m) with an adjacent large vehicle or a concrete barrier close to the lane edge | Infrastructure / traffic | domain; proposed by [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md) KS-06 |
 | TC-33 | Lead vehicle braking harder than the item's deceleration bound (lead decel > 3.5 m/s²), incl. slow lead at highway speed | Traffic | `LIMITATIONS.md:38`; proposed by WP-V-03 KS-08 |
 | TC-34 | Imminent collision in which the stock PCS would warn or brake while LD-SDA is engaged with its own longitudinal control, or while a device alert is shown | Traffic / HMI | WP-C-05 SH-08 (OS-09); WP-V-03 KS-20 |
+| TC-35 | Lead hidden or not acquired in a curve while the item accelerates toward the set speed; it is detected late as the curve opens, and hard braking or a take-over follows | Traffic / infrastructure | RR-2026-011 A-5, F-6 (owner video on the reference configuration); WP-V-03 KS-27 |
 
 ## 5. TC → FI → SH evaluation
 
@@ -137,11 +138,19 @@ The driving model is a black box from LionDriver's point of view: training data 
 | TC-31 | FI-01, FI-03 | SH-01 | None | Needs validation | WP-V-03 |
 | TC-32 | FI-01 | SH-01 | None specific; lateral offset toward the obstacle not bounded | Needs validation | WP-V-03 KS-06 |
 | TC-33 | FI-10 | SH-06 | Decel ≤ 3.5 m/s²; FCW | Needs validation (driver responsibility; user info) | WP-V-03 KS-08; WP-O-03 |
+| TC-35 | FI-04, FI-06, FI-07 | SH-03, SH-06 | Accelerates toward the set speed at up to +2.0 m/s² (envelope) with no lead; once the lead is detected, deceleration ≤ 3.5 m/s² and FCW | Needs validation | WP-V-03 KS-27; FM-09 |
 | TC-34 | FI-23 | SH-08 | Stock PCS stays active and its messages are forwarded; its interaction with the item's commands and alerts is not characterised (AOU-04) | Needs validation | WP-V-03 KS-20 (VT-07, AC-06); WP-V-01 PCS tests |
 
-![Figure 5-1: three-column chain from triggering conditions TC-01 to TC-34, coloured by their §5 evaluation outcome, to functional insufficiencies FI-01 to FI-23, to the SOTIF hazards of WP-C-05](figures/fig-c06-5-1-tc-fi-sh-chain.svg)
+![Figure 5-1: three-column chain from triggering conditions TC-01 to TC-35, coloured by their §5 evaluation outcome, to functional insufficiencies FI-01 to FI-23, to the SOTIF hazards of WP-C-05](figures/fig-c06-5-1-tc-fi-sh-chain.svg)
 
 *Figure 5-1.* Triggering condition → functional insufficiency → hazardous behaviour. The TC → FI edges come from the table above and are coloured by that row's evaluation (needs modification, needs validation, acceptable with a condition). The FI → SH edges come from the Linked SH column of §3. The SH boxes carry the S and C of [WP-C-05](WP-C-05-sotif-hazard-identification.md) §3. Texts in the boxes are shortened. SH-08 (stock PCS degraded) has no insufficiency or triggering condition in this document, so it has no incoming edge. Source: [`figures/fig-c06-5-1-tc-fi-sh-chain.svg`](figures/fig-c06-5-1-tc-fi-sh-chain.svg), generated by [`sotif/sotif_figures.py`](sotif/sotif_figures.py) from §3–§5 and WP-C-05 §3. Change those tables and regenerate; do not edit the SVG.
+
+### 5.2 Off-highway observations (RR-2026-011)
+
+The ODD audit RR-2026-011 (PR #290) checked an owner's video of openpilot on the reference Corolla driving back roads. Two of its observations concern this document:
+
+- **A-5 → TC-35.** In a curve the lead was not seen while the car accelerated to the set speed, then it was detected late and the car braked hard. Curves under acceleration also occur on highway ramps and interchanges, so TC-35 is a triggering condition inside ODD-H, evaluated with the other lead-detection rows.
+- **A-6, centre-line crossing.** On narrow roads the car crossed the double yellow line and cut corners. This is intended-function behaviour of the driving model (FI-01, FI-03) leading to SH-01. The roads where it happened are outside ODD-H (highways only, DQ-023), so no triggering condition is added for them: the ODD exclusion, FM-08 and user information treat it. How often the item is used there is the open question of DQ-213, queued in the decision register. The audit found that the 60 km/h engagement floor proposed for FM-08 would not stop a 72 km/h back road (its F-2/F-5). If the lead decides on a rural ODD instead, A-6 becomes a triggering condition here and needs a known scenario.
 
 ### 5.1 Performance limits in the SG-02 and SG-06 fault trees
 

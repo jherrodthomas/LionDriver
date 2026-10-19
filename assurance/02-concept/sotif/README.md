@@ -6,10 +6,13 @@ This folder holds the generator for the triggering-condition chain in [WP-C-06](
 |---|---|
 | [`sotif_figures.py`](sotif_figures.py) | Generator. It reads the WP-C-06 tables (§3 functional insufficiencies, §4 triggering conditions, §5 evaluation) and the WP-C-05 §3 hazard table, then writes Figure 5-1 of WP-C-06 |
 | [`sotif_scenes.py`](sotif_scenes.py) | Draws the SOTIF scene sheet: one card per SOTIF hazard of WP-C-05 §3, each the chart of one WP-C-06 §5 row (triggering condition → insufficiency → hazard) over a top-down scene. Texts, S/C and evaluations come from the documents; the behaviour curves are schematic and live in this file. Written and checked by `sotif_figures.py` |
+| [`fm_scenes.py`](fm_scenes.py) | Draws the WP-C-07 modification sheets: one card per functional modification, what the car does today against the same scene with it. Chips and cells come from WP-C-07 §2-§3; every "today" and "status" text quotes the documents and the build fails if a quoted passage changes. Written and checked by `sotif_figures.py` |
+| [`test_fm_scenes.py`](test_fm_scenes.py) | Unit tests: one card per modification on the right sheet, chips and cells match WP-C-07, changed quotes, missing cards, unaddressed hazards and priority mismatches are rejected, every scene loops |
 | [`test_sotif_scenes.py`](test_sotif_scenes.py) | Unit tests: one card per hazard, card texts and chips match WP-C-05/06, missing models and unlinked insufficiencies are rejected, every scene loops |
 | [`test_sotif_figures.py`](test_sotif_figures.py) | Unit tests: the committed SVG is current, every TC and FI appears in the chain, and malformed tables are rejected |
 | [`../figures/fig-c06-5-1-tc-fi-sh-chain.svg`](../figures/fig-c06-5-1-tc-fi-sh-chain.svg) | Generated. TC → FI edges come from §5, coloured by the row's evaluation outcome. FI → SH edges come from the "Linked SH" column of §3 |
 | [`../figures/fig-c06-5-2-sotif-scenes.svg`](../figures/fig-c06-5-2-sotif-scenes.svg) | Generated. The SOTIF scene sheet (below) |
+| [`../figures/fig-c07-3-1-fm-scenes-p1.svg`](../figures/fig-c07-3-1-fm-scenes-p1.svg), [`fig-c07-3-2-fm-scenes-p2-p3.svg`](../figures/fig-c07-3-2-fm-scenes-p2-p3.svg) | Generated. The modification sheets of [WP-C-07](../WP-C-07-sotif-functional-modifications.md#modification-scenes-p1) §2: P1, then P2 and P3 |
 
 WP-C-05 and WP-C-06 are the analysis of record. Do not edit the SVGs by hand.
 
@@ -27,10 +30,11 @@ The scenes are schematic, to explain each hazard; the measured cases are the pla
 ## Regenerating
 
 ```bash
-python3 sotif_figures.py            # write ../figures/fig-c06-5-1-tc-fi-sh-chain.svg and fig-c06-5-2-sotif-scenes.svg
+python3 sotif_figures.py            # write ../figures/fig-c06-5-1-*, fig-c06-5-2-* and the two fig-c07-3-* sheets
 python3 sotif_figures.py --check    # fail if the committed SVG is stale (run in CI)
 python3 test_sotif_figures.py
 python3 test_sotif_scenes.py
+python3 test_fm_scenes.py
 ```
 
 The generator fails if:
