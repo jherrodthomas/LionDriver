@@ -51,7 +51,7 @@ From the [process model](../../../process/README.md). Each one is a condition on
 
 | Interface | Topic | Open item | Due | Closed? |
 |---|---|---|---|---|
-| IX-13 | The AI safety requirements carry (TBC) performance values that the SOTIF validation targets VT-01…VT-15 must confirm. WP-V-02 §4.1 traces each value: 8 confirmed or replaced (AIR-11 and AIR-14 through VT-14 and VT-15; AIR-01, AIR-03 and AIR-04 derived in §4.3); 6 come from other documents. The targets are not yet approved by the assessor | WP-V-02 OI-3 | G2 | |
+| IX-13 | The AI safety requirements carry (TBC) performance values that the SOTIF validation targets VT-01…VT-15 must confirm. WP-V-02 §4.1 traces each value: 8 confirmed or replaced (AIR-11 and AIR-14 through VT-14 and VT-15; AIR-01, AIR-03 and AIR-04 derived in §4.3); 6 come from other documents. The targets are not yet frozen: the project lead freezes them once the B1 crash data replaces the illustrative rates, with a later assessor review (DQ-096 B) | WP-V-02 OI-3 | G2 | |
 
 ### Roles WP-M-02 §3.1 needs by this gate that are not assigned
 
