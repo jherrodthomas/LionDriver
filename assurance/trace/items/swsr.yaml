@@ -1173,7 +1173,7 @@
 
 - id: SWSR-512
   kind: swsr
-  text: "In the reference release build, request `0xdc` shall accept only SILENT, NOOUTPUT, ELM327 and TOYOTA with parameter 73 (no flag bits); once TOYOTA is active only NOOUTPUT or SILENT shall be accepted; any other request shall be rejected and reported."
+  text: "In the reference release build, request `0xdc` shall accept only SILENT, NOOUTPUT, ELM327 and TOYOTA with parameter 73 (no flag bits); once TOYOTA is active only NOOUTPUT or SILENT shall be accepted; any other request shall be rejected and reported. A rejected request is ignored: it shall not change the actuation state and does not by itself end actuation authority (register DQ-082 B)."
   asil: "B‡"
   parents: [TSR-512]
   parent_text: "TSR-512"
@@ -1189,7 +1189,7 @@
 
 - id: SWSR-513
   kind: swsr
-  text: "In the reference release build (`RELEASE=1 LIONDRIVER_REFERENCE=1`), requests `0xc5`, `0xe5`, `0xde`, `0xf9`, `0xfc`, `0xe8`, `0xdb`, `0xe6`, `0xe7`, `0xf1`, `0xd8` and `0xdf` shall be rejected while a car safety mode is active (`0xd1` param 1: SWSR-511a)."
+  text: "In the reference release build (`RELEASE=1 LIONDRIVER_REFERENCE=1`), requests `0xc5`, `0xe5`, `0xde`, `0xf9`, `0xfc`, `0xe8`, `0xdb`, `0xe6`, `0xe7`, `0xf1`, `0xd8` and `0xdf` shall be rejected while a car safety mode is active (`0xd1` param 1: SWSR-511a). A rejected request is ignored: it shall not change the actuation state and does not by itself end actuation authority (register DQ-082 B)."
   asil: "B‡"
   parents: [TSR-513]
   parent_text: "TSR-513"

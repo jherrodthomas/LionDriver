@@ -32,7 +32,7 @@ class TestEmergencyBrakePrototype(unittest.TestCase):
 
   @parameterized.expand(S.VISIBLE_FROM_RANGE + S.SLOW_VEHICLE + ORDINARY_LEAD_BRAKING, ids=name)
   def test_no_trigger_when_normal_authority_suffices(self, scenario):
-    """Nuisance check: it stays off when -3.5 m/s² is enough (HZ-006)."""
+    """Nuisance check: it stays off when -3.5 m/s² is enough (FHZ-006)."""
     result = run(scenario, EMERGENCY)
     self.assertFalse(result.emergency_triggered)
     self.assertFalse(result.collided)
@@ -55,7 +55,7 @@ class TestEmergencyBrakePrototype(unittest.TestCase):
 class TestCurrentAuthority(unittest.TestCase):
   @unittest.expectedFailure
   def test_lead_hard_braking_at_highway_speed(self):
-    """Known gap (CA-004 finding, HZ-008): at the standard following distance, a lead braking at 4 m/s² or more
+    """Known gap (CA-004 finding, FHZ-008): at the standard following distance, a lead braking at 4 m/s² or more
     from highway speed is hit, because the lead out-brakes the -3.5 m/s² limit.
 
     Expected to fail until a corrective action closes it. Then remove expectedFailure and update CA-004.

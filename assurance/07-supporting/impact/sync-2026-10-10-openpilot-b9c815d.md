@@ -38,7 +38,7 @@
 
 | Commit | Subject | Highest class | Safety-relevant files | FuSa | SOTIF | AI | CS | Hazards / findings affected | WPs affected | Decision |
 |---|---|---|---|---|---|---|---|---|---|---|
-| `263e8d1966` | longitudinal planner: set A_CRUISE_MIN to -0.5 (#39060) | SR-Q | `openpilot/selfdrive/controls/lib/longitudinal_planner.py` | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+| `263e8d1966` | longitudinal planner: set A_CRUISE_MIN to -0.5 (#39060) | SR-Q | `openpilot/selfdrive/controls/lib/longitudinal_planner.py` | TBD | TBD | TBD | TBD | TBD | TBD | **Rejected** by the lead 2026-10-14 (register DQ-116 C): not taken in this or a later sync; `A_CRUISE_MIN` stays −1.2 m/s² (`longitudinal_planner.py:22`) |
 | `b9c815d56a` | tools: use log migration in cpp tools (#38571) | SR-T | `openpilot/selfdrive/test/process_replay/migration.py`, `openpilot/selfdrive/test/process_replay/process_replay.py` | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
 
 ## Verification to re-run
