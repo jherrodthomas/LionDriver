@@ -35,13 +35,18 @@ AP_TABLE = {
   (1, 1): ("LLLL", "LLLL", "LLLL", "LLLL", "LLLL"),
 }
 
-# FMEA-MSR (rating-tables.md section 7). PROVISIONAL: the AIAG-VDA MSR action priority table is not transcribed yet
-# (the handbook is not in the repository). Until it is, the table above is applied with frequency in place of occurrence
-# and monitoring in place of detection, and every MSR rating is provisional (rating-tables.md section 7.4).
+# FMEA-MSR action priority (rating-tables.md section 7.4, RT-3). S 9 and S 10 are the AIAG-VDA FMEA-MSR handbook table,
+# transcribed cell by cell (decision register DQ-207 A, 2026-10-19): severity -> frequency -> AP for M = 1..10.
+AP_MSR_HANDBOOK = {
+  10: {**{f: "H" * 10 for f in range(5, 11)}, 4: "M" + "H" * 9, 3: "LMM" + "H" * 7, 2: "LLL" + "M" * 7, 1: "L" * 10},
+  9: {**{f: "H" * 10 for f in range(4, 11)}, 3: "L" + "H" * 9, 2: "L" + "H" * 9, 1: "L" * 10},
+}
+# S 1-8 is still PROVISIONAL until those handbook pages are transcribed: the AP table above with frequency in place of
+# occurrence and monitoring in place of detection.
 F_BANDS = O_BANDS
 M_BANDS = D_BANDS
 AP_MSR_TABLE = AP_TABLE
-AP_MSR_PROVISIONAL = True
+AP_MSR_PROVISIONAL = True  # some severities (S 1-8) still use the stand-in; see msr_ap_provisional()
 MSR_TYPES = ("system_fmea", "dfmea")  # msr-plan.md section 3
 WP_S04 = Path("assurance/03-system/WP-S-04-timing-ftti-budget.md")
 # Closed-loop simulation results (plant model): citable as MSR evidence, never as a timing measurement (msr-plan 4.2)
@@ -69,12 +74,19 @@ def compute_ap(s: int, o: int, d: int) -> str:
   return AP_TABLE[S_BANDS[_band(s, S_BANDS)]][_band(o, O_BANDS)][_band(d, D_BANDS)]
 
 
+def msr_ap_provisional(s: int) -> bool:
+  """True where the MSR AP for severity s still comes from the provisional stand-in (S 1-8)."""
+  return s not in AP_MSR_HANDBOOK
+
+
 def compute_ap_msr(s: int, s_after: int, f: int, m: int) -> str:
-  """MSR action priority. With monitoring 1 (diagnosis and response always effective) the severity after the system
-  response is rated instead of the original severity (AIAG-VDA MSR logic)."""
+  """MSR action priority. S 9-10: the handbook table, whose M 1 column is given explicitly, so the original severity is
+  rated. S 1-8 (provisional stand-in): with monitoring 1 the severity after the system response is rated instead."""
   for v in (s, s_after, f, m):
     if not 1 <= v <= 10:
       raise ValueError(f"rating out of range: {v}")
+  if s in AP_MSR_HANDBOOK:
+    return AP_MSR_HANDBOOK[s][f][m - 1]
   rated = s_after if m == 1 else s
   return AP_MSR_TABLE[S_BANDS[_band(rated, S_BANDS)]][_band(f, F_BANDS)][_band(m, M_BANDS)]
 
@@ -127,10 +139,17 @@ def rating_tables_version(root: Path) -> str | None:
 
 def sod_unchanged_since(root: Path) -> str | None:
   """Oldest rating-tables version whose S/O/D and AP tables equal the current ones; a file rated against it needs no
-  re-rating unless it uses tables added later (FMEA-MSR from RT-2)."""
+  re-rating unless it uses tables added later (FMEA-MSR from RT-2, its handbook AP table from RT-3)."""
   text = (root / SAFETY_DIR / "rating-tables.md").read_text()
   m = re.search(r"\*\*S/O/D unchanged since:\*\*\s*(RT-\d+)", text)
   return m.group(1) if m else None
+
+
+def rt_version_between(v: str, lo: str | None, hi: str | None) -> bool:
+  """True when rating-tables version v lies between lo and hi inclusive (RT-n compared by n)."""
+  num = lambda x: int(x.split("-")[1]) if x and re.fullmatch(r"RT-\d+", x) else None
+  n, a, b = num(v), num(lo), num(hi)
+  return None not in (n, a, b) and a <= n <= b
 
 
 def empty_submodules(root: Path) -> list[str]:
@@ -410,6 +429,8 @@ def check_msr_cause(doc, fm, c, cwhere, actions, referenced_actions, ctx, res: R
   if ap != expected:
     res.error(cwhere, f"msr ap is {ap}, table gives {expected} for S{s} (after response S{sa}) F{f} M{m}")
   ctx.msr_counts[expected] += 1
+  if msr_ap_provisional(s):
+    ctx.msr_counts["provisional"] += 1
   if expected == "H" and not msr.get("actions") and not msr.get("rationale"):
     res.error(cwhere, "MSR AP=H requires an msr action or rationale")
   elif expected == "M" and not msr.get("actions") and not msr.get("rationale"):
@@ -1236,7 +1257,7 @@ class Context:
     self.fsc: dict | None = None
     self.ap_counts = {"H": 0, "M": 0, "L": 0}
     self.baseline_order: list[str] = []  # baseline ids in baseline.yaml order (oldest first)
-    self.msr_counts = {"in_scope": 0, "exempt": 0, "H": 0, "M": 0, "L": 0}
+    self.msr_counts = {"in_scope": 0, "exempt": 0, "H": 0, "M": 0, "L": 0, "provisional": 0}
     self.fmeda_dc: dict[str, float | None] = {}  # "<fmeda file stem>/<failure mode id>" -> dc_spf
     wp = root / WP_S04
     self.ftti_rows = parse_ftti_rows(wp.read_text()) if wp.exists() else None
@@ -1286,7 +1307,8 @@ def lint(root: Path = ROOT) -> Result:
     if kind not in ("hara", "fsc", "dfa") and hdr["rating_tables"] != rt:
       uses_msr = kind in FMEA_TYPES and (hdr.get("msr") in ("partial", "complete")
                                          or any(c.get("msr") for fm in doc["failure_modes"] for c in fm["causes"]))
-      if hdr["rating_tables"] != rt_sod or uses_msr:
+      # without MSR rows, any version from the S/O/D-unchanged one up to the current is still valid for S/O/D and AP
+      if uses_msr or not rt_version_between(hdr["rating_tables"], rt_sod, rt):
         res.error(name, f"rating_tables {hdr['rating_tables']} != current {rt}; re-rate against the current tables")
 
     # FMEA ids are global (cross-linked between files); FMEDA ids are per file (one FMEDA per safety goal).
@@ -1349,7 +1371,7 @@ def lint(root: Path = ROOT) -> Result:
   res.report.insert(0, f"rated causes by AP: H={ctx.ap_counts['H']} M={ctx.ap_counts['M']} L={ctx.ap_counts['L']}")
   mc = ctx.msr_counts
   rated = mc["H"] + mc["M"] + mc["L"]
-  provisional = " [provisional MSR AP table]" if AP_MSR_PROVISIONAL else ""
+  provisional = f" [{mc['provisional']} on the provisional S 1-8 MSR AP table]" if mc["provisional"] else ""
   res.report.insert(1, f"FMEA-MSR: {rated} of {mc['in_scope']} in-scope causes rated "
                     + f"(H={mc['H']} M={mc['M']} L={mc['L']}), {mc['exempt']} exempt{provisional}")
   return res
