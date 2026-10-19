@@ -149,6 +149,8 @@ jobs:
       run: |
         python3 tools/safety/fmea_diagrams.py --check
         python3 tools/safety/test_fmea_diagrams.py
+        python3 tools/safety/fmea_cards.py --check
+        python3 tools/safety/test_fmea_cards.py
     - name: Timing-budget and DFI-matrix figures match WP-S-04 and WP-A-03 (and their tests)
       run: |
         python3 assurance/03-system/figures/fig_s04_timing.py --check
