@@ -916,8 +916,9 @@
       title: "Decide when the first contract is actually needed"
       detail: "No effort now. Cost: test insurance (WP-M-03 OI-4) stays open and blocks G1 test sessions."
   sources: ["assurance/01-management/WP-M-04-organization-competence-safety-culture.md OI-5", "assurance/01-management/WP-M-03-project-plan.md OI-4"]
-  status: answered
+  status: applied
   answer: {choice: C, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: cc1b1446, record: "WP-M-04 OI-5; WP-M-03 OI-4", at: 2026-10-19}
 
 - id: DQ-041
   question: "Which closed course should you contact first for the vehicle tests?"
@@ -1718,8 +1719,9 @@
       title: "Engage external help for all three now"
       detail: "Fastest progress. Cost: the largest spend, before G1 has shown the approach works."
   sources: ["assurance/10-safety-case/gates/skeletons/G3-skeleton.md “HIL bench owner | TBD | G3”", "assurance/06-validation/WP-V-07-vehicle-test-operations.md OI-2, §5", "assurance/10-safety-case/gates/skeletons/G3-skeleton.md participants (hardware safety engineer TBD)"]
-  status: answered
+  status: applied
   answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: cc1b1446, record: "WP-M-03 §4.3", at: 2026-10-19}
 
 - id: DQ-077
   question: "When driver-monitoring confidence drops, should the wheel-touch reminders come faster at highway speed?"
