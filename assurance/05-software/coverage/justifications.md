@@ -6,7 +6,7 @@ MC/DC condition inside a function that ran, is listed here ([WP-W-06 §4.2.1](..
 decision's source line (whitespace-normalized; `*` names the whole function). It fails when a gap has no row, and when a
 row no longer matches a gap, so a test that closes a gap forces its row to be removed.
 
-Measured at opendbc `27f20db`, reference build (`LIONDRIVER_REFERENCE=1`), tests `test_toyota`, `test_defaults`,
+Measured at opendbc `e233362`, reference build (`LIONDRIVER_REFERENCE=1`), tests `test_toyota`, `test_defaults`,
 `test_elm327`. Status: drafted by the author (AI-assisted), not reviewed; an I1 review of every row is needed before the
 justifications count toward G3 (WP-P-05). CJ-16 and CJ-28 (reachable, test needed) were removed at the pin bump to `515b9a2`, which contains their tests (opendbc#16: `test_angle_meas_ignores_initializing_frames`, `test_tx_rate_rejected_count_saturates`); the IDs are not reused.
 

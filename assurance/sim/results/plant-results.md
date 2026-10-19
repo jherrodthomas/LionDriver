@@ -7,7 +7,7 @@ Times are seconds from fault onset. Deviation is the lateral offset from the off
 | Label (WP-V-02 §5.3.5) | Value |
 |---|---|
 | data_kind | synthetic |
-| simulator | LionDriver fault-injection plant model, fidelity L1 (`assurance/sim/plant`): CommonRoad vehicle models 3.0.2; panda safety code compiled from panda `bf8102a` and opendbc `27f20db` (reference build) |
+| simulator | LionDriver fault-injection plant model, fidelity L1 (`assurance/sim/plant`): CommonRoad vehicle models 3.0.2; panda safety code compiled from panda `bf8102a` and opendbc `e233362` (reference build) |
 | asset archive hash | none (nothing is rendered) |
 | scenario ID and family | F-07-KS01 and N-4 run on the road of scenario KS-01 (family SF-1); L-01…L-04 take the KS-08 time gap (SF-2). The other cases use generic highway roads, not WP-V-03 scenarios |
 | fidelity-case status | none |
@@ -157,4 +157,5 @@ The stock camera sends a PCS braking request at the fault onset. It reaches the 
 | driver_brake | 3 | a braking driver adds -3 m/s2, built up over 0.3 s. No source |
 | camera_lka | 0 | stock camera LKA is off: its STEERING_LKA frames carry STEER_REQUEST 0 and torque 0 |
 | a_pcs | 6 | stock PCS braking deceleration, assumption A-PCS-1 of WP-S-04 §3.6, to be measured (OI-4) |
+| whatif_siren_on_revoke | 0 | what-if, off (0) in every catalog case: when 1, the panda also sounds the siren at its next 8 Hz tick after it revokes steering authority. Not in the reference build; used by silent_stall.py (decision register DQ-404) |
 | speaker_phase | 0 | the 8 Hz tick starts at t = 3 ms; the siren can come up to 125 ms later at another phase |

@@ -1,0 +1,316 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="1286" viewBox="0 0 1320 1286" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">Figure 7-1. Cybersecurity goals: what each control stops (WP-C-10 §4-§7)</title>
+<desc id="d">Figure 7-1: one card per cybersecurity goal. CSG-01 (Lock the panda's safety configuration; CAL 3; TS-02 risk 5): Mode lock built (reference build, not verified); release key, RDP open. CSR-C-01 implemented, not verified. CSR-C-02 partial. CSG-02 (Only authorized firmware on the safety MCU; CAL 3; TS-03 risk 5, TS-05 risk 4): Softloader refused in a car mode; signing, RDP/WRP, recovery open. CSR-C-02 partial. CSR-C-03 not implemented. CSR-C-04 not implemented. CSR-C-05 not implemented. CSG-03 (Protect what the control software reads; CAL 2; TS-04 risk 5, TS-12 risk 4): No control yet: parameters and IPC are unauthenticated. CSR-C-06 not implemented. CSR-C-07 not implemented. CSG-04 (Load only verified, non-executable models; CAL 2; TS-09 risk 4): No control yet: the model loader runs code, no hash check. CSR-C-08 not implemented. CSG-05 (Protect the safety-relevant CAN messages; CAL 2 provisional; TS-01 risk 4, TS-14 risk 5): No control yet: no counter or CRC on received messages. CSR-C-09 not implemented. CSG-06 (Minimal, authenticated remote access; CAL 3; TS-07 risk 4, TS-08 risk 4, TS-13 risk 3): Onroad streaming blocked; RPCs and the SSH key path still open. CSR-C-10 not implemented. CSR-C-11 partial. CSG-07 (Install only verified updates; CAL 3; TS-06 risk 4, TS-10 risk 4): No control yet: git-branch updater, in-tree hashes only. CSR-C-12 not implemented. CSR-C-13 not implemented. CSG-08 (Keep personal data and device key private; CAL 2; TS-11 risk 5, TS-07 risk 4): No control confirmed: encryption at rest unverified, no wipe. CSR-C-14 not confirmed. CSR-C-15 not implemented.</desc>
+<defs></defs>
+<rect width="1320" height="1286" fill="#FFFFFF"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Cybersecurity goals · what each control stops, and how far it has got</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Threat → the goal's control at its element → what reaches the car. The barrier is drawn as built, from the §7 statuses.</text>
+<text x="1280" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-10 §4-§7 · WP-C-09 §8</text>
+<text x="1280" y="62" font-size="11" fill="#475569" text-anchor="end">Schematic scenes</text>
+<line x1="40" y1="82" x2="1280" y2="82" stroke="#E2E8F0"/>
+<rect x="40" y="92" width="94.5" height="18" rx="9" fill="#FEE2E2"/><text x="87.227" y="104.6" font-size="10" fill="#7F1D1D" font-weight="700" text-anchor="middle">Not implemented</text>
+<rect x="142.454" y="92" width="46.6" height="18" rx="9" fill="#FEF3C7"/><text x="165.778" y="104.6" font-size="10" fill="#78350F" font-weight="700" text-anchor="middle">Partial</text>
+<rect x="197.102" y="92" width="141.0" height="18" rx="9" fill="#E0F2FE"/><text x="267.596" y="104.6" font-size="10" fill="#075985" font-weight="700" text-anchor="middle">Implemented, not verified</text>
+<rect x="346.09" y="92" width="82.1" height="18" rx="9" fill="#F1F5F9"/><text x="387.116" y="104.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">Not confirmed</text>
+<rect x="436.142" y="92" width="52.5" height="18" rx="9" fill="#DCFCE7"/><text x="462.381" y="104.6" font-size="10" fill="#14532D" font-weight="700" text-anchor="middle">Verified</text>
+<text x="502.62" y="105" font-size="10.5" fill="#475569">Barrier: no barrier: not built · dashed amber: part built · dashed blue: built, not verified · solid green: verified</text>
+<g>
+<rect x="40" y="124" width="400" height="362" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+<title>CSG-01: Lock the panda's safety configuration</title>
+<text x="52" y="150" font-size="12" fill="#475569" font-weight="600">CSG-01</text>
+<text x="108" y="150" font-size="13.5" fill="#0F172A" font-weight="700">Lock the panda's safety configuration</text>
+<rect x="52" y="162" width="46.0" height="18" rx="9" fill="#0F172A"/><text x="75.006" y="174.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">CAL 3</text>
+<rect x="104.012" y="162" width="83.3" height="18" rx="9" fill="#DC2626"/><text x="145.674" y="174.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-02 · risk 5</text>
+<text x="52" y="194" font-size="9.5" fill="#475569">The integrity and authenticity of the panda safety configuration (safety mode and</text>
+<text x="52" y="206" font-size="9.5" fill="#475569">parameter) shall be protected so that no unauthenticated SoC-side command can</text>
+<text x="52" y="218" font-size="9.5" fill="#475569">place the envelope in an unsafe configuration</text>
+<rect x="52" y="238.0" width="376" height="92" rx="8" fill="#F8FAFC" stroke="#E2E8F0"/>
+<line x1="146.0" y1="278.0" x2="198.0" y2="278.0" stroke="#CBD5E1" stroke-width="2"/>
+<line x1="282.0" y1="278.0" x2="334.0" y2="278.0" stroke="#CBD5E1" stroke-width="2"/>
+<rect x="62.0" y="262.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#7C3AED" stroke-width="1.3"/>
+<text x="104" y="281.5" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">Root on the SoC</text>
+<rect x="198.0" y="262.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#334155" stroke-width="1.3"/>
+<text x="240" y="276" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">panda FW: mode</text>
+<text x="240" y="287" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">lock</text>
+<rect x="334.0" y="262.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#334155" stroke-width="1.3"/>
+<text x="376" y="276" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">Permissive</text>
+<text x="376" y="287" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">envelope</text>
+<rect x="184.0" y="254.0" width="8" height="48" rx="2" fill="#D97706" fill-opacity="0.18" stroke="#D97706" stroke-width="1.6" stroke-dasharray="4 3"/>
+<circle cx="178.0" cy="278.0" r="4" fill="#7C3AED" opacity="0.6"><animate attributeName="cx" values="104.0;104.0;178.0;178.0" keyTimes="0;0.1;0.45;1" dur="6s" repeatCount="indefinite"/></circle>
+<circle cx="327.0" cy="278.0" r="5" fill="#DC2626"><animate attributeName="cx" values="104.0;104.0;327.0;327.0" keyTimes="0;0.1;0.6;1" dur="6s" repeatCount="indefinite"/></circle>
+<rect x="334.0" y="262.0" width="84" height="32" rx="6" fill="#DC2626" fill-opacity="0.12" stroke="#DC2626" stroke-width="1.6"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6;0.62;1" dur="6s" repeatCount="indefinite"/></rect>
+<text x="62" y="321" font-size="9.5" fill="#DC2626" font-weight="600">Mode lock built (reference build, not verified); release key, RDP open</text>
+<text x="52" y="346" font-size="9.5" fill="#475569" font-weight="700">Requirements</text>
+<text x="428" y="346" font-size="9.5" fill="#475569" text-anchor="end">Allocated to panda FW</text>
+<rect x="301.711" y="354" width="128.3" height="16" rx="8" fill="#E0F2FE"/><text x="365.855" y="365.24" font-size="9" fill="#075985" font-weight="700" text-anchor="middle">Implemented, not verified</text>
+<text x="52" y="366" font-size="9.5" fill="#0F172A">CSR-C-01 Enforce the Toyota mode; reject</text>
+<text x="52" y="378" font-size="9.5" fill="#0F172A">unauthorized mode or parameter changes</text>
+<rect x="386.617" y="388" width="43.4" height="16" rx="8" fill="#FEF3C7"/><text x="408.308" y="399.24" font-size="9" fill="#78350F" font-weight="700" text-anchor="middle">Partial</text>
+<text x="52" y="400" font-size="9.5" fill="#0F172A">CSR-C-02 No debug key or debug-only capabilities in release firmware</text>
+<text x="52" y="420" font-size="9.5" fill="#475569">Gaps</text>
+<text x="112" y="420" font-size="9.5" fill="#0F172A">GAP-09, GAP-25</text>
+</g>
+<g>
+<rect x="460" y="124" width="400" height="362" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+<title>CSG-02: Only authorized firmware on the safety MCU</title>
+<text x="472" y="150" font-size="12" fill="#475569" font-weight="600">CSG-02</text>
+<text x="528" y="150" font-size="13.5" fill="#0F172A" font-weight="700">Only authorized firmware on the safety MCU</text>
+<rect x="472" y="162" width="46.0" height="18" rx="9" fill="#0F172A"/><text x="495.006" y="174.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">CAL 3</text>
+<rect x="524.012" y="162" width="83.3" height="18" rx="9" fill="#DC2626"/><text x="565.674" y="174.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-03 · risk 5</text>
+<rect x="613.336" y="162" width="83.3" height="18" rx="9" fill="#F97316"/><text x="654.998" y="174.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-05 · risk 4</text>
+<text x="472" y="194" font-size="9.5" fill="#475569">The integrity and authenticity of the panda firmware and its boot chain shall be</text>
+<text x="472" y="206" font-size="9.5" fill="#475569">protected so that only authorized firmware runs on the safety MCU</text>
+<rect x="472" y="226.0" width="376" height="92" rx="8" fill="#F8FAFC" stroke="#E2E8F0"/>
+<line x1="566.0" y1="266.0" x2="618.0" y2="266.0" stroke="#CBD5E1" stroke-width="2"/>
+<line x1="702.0" y1="266.0" x2="754.0" y2="266.0" stroke="#CBD5E1" stroke-width="2"/>
+<rect x="482.0" y="250.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#7C3AED" stroke-width="1.3"/>
+<text x="524" y="264" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">SoC boot pins /</text>
+<text x="524" y="275" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">dev bootstub</text>
+<rect x="618.0" y="250.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#334155" stroke-width="1.3"/>
+<text x="660" y="269.5" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">panda boot chain</text>
+<rect x="754.0" y="250.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#334155" stroke-width="1.3"/>
+<text x="796" y="264" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">Envelope</text>
+<text x="796" y="275" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">replaced</text>
+<rect x="604.0" y="242.0" width="8" height="48" rx="2" fill="#D97706" fill-opacity="0.18" stroke="#D97706" stroke-width="1.6" stroke-dasharray="4 3"/>
+<circle cx="598.0" cy="266.0" r="4" fill="#7C3AED" opacity="0.6"><animate attributeName="cx" values="524.0;524.0;598.0;598.0" keyTimes="0;0.1;0.45;1" dur="6s" repeatCount="indefinite"/></circle>
+<circle cx="747.0" cy="266.0" r="5" fill="#DC2626"><animate attributeName="cx" values="524.0;524.0;747.0;747.0" keyTimes="0;0.1;0.6;1" dur="6s" repeatCount="indefinite"/></circle>
+<rect x="754.0" y="250.0" width="84" height="32" rx="6" fill="#DC2626" fill-opacity="0.12" stroke="#DC2626" stroke-width="1.6"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6;0.62;1" dur="6s" repeatCount="indefinite"/></rect>
+<text x="482" y="309" font-size="9.5" fill="#DC2626" font-weight="600">Softloader refused in a car mode; signing, RDP/WRP, recovery open</text>
+<text x="472" y="334" font-size="9.5" fill="#475569" font-weight="700">Requirements</text>
+<text x="848" y="334" font-size="9.5" fill="#475569" text-anchor="end">Allocated to panda FW; SoC; user</text>
+<rect x="806.617" y="342" width="43.4" height="16" rx="8" fill="#FEF3C7"/><text x="828.308" y="353.24" font-size="9" fill="#78350F" font-weight="700" text-anchor="middle">Partial</text>
+<text x="472" y="354" font-size="9.5" fill="#0F172A">CSR-C-02 No debug key or debug-only capabilities in release firmware</text>
+<rect x="763.591" y="364" width="86.4" height="16" rx="8" fill="#FEE2E2"/><text x="806.796" y="375.24" font-size="9" fill="#7F1D1D" font-weight="700" text-anchor="middle">Not implemented</text>
+<text x="472" y="376" font-size="9.5" fill="#0F172A">CSR-C-03 Boot only firmware verified with a current algorithm</text>
+<rect x="763.591" y="386" width="86.4" height="16" rx="8" fill="#FEE2E2"/><text x="806.796" y="397.24" font-size="9" fill="#7F1D1D" font-weight="700" text-anchor="middle">Not implemented</text>
+<text x="472" y="398" font-size="9.5" fill="#0F172A">CSR-C-04 RDP/WRP set so the firmware cannot be replaced or</text>
+<text x="472" y="410" font-size="9.5" fill="#0F172A">read out</text>
+<rect x="763.591" y="420" width="86.4" height="16" rx="8" fill="#FEE2E2"/><text x="806.796" y="431.24" font-size="9" fill="#7F1D1D" font-weight="700" text-anchor="middle">Not implemented</text>
+<text x="472" y="432" font-size="9.5" fill="#0F172A">CSR-C-05 The recovery path does not flash unauthenticated</text>
+<text x="472" y="444" font-size="9.5" fill="#0F172A">firmware</text>
+<text x="472" y="464" font-size="9.5" fill="#475569">Gaps</text>
+<text x="532" y="464" font-size="9.5" fill="#0F172A">GAP-24, GAP-25, GAP-38</text>
+</g>
+<g>
+<rect x="880" y="124" width="400" height="362" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+<title>CSG-03: Protect what the control software reads</title>
+<text x="892" y="150" font-size="12" fill="#475569" font-weight="600">CSG-03</text>
+<text x="948" y="150" font-size="13.5" fill="#0F172A" font-weight="700">Protect what the control software reads</text>
+<rect x="892" y="162" width="46.0" height="18" rx="9" fill="#0F172A"/><text x="915.006" y="174.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">CAL 2</text>
+<rect x="944.012" y="162" width="83.3" height="18" rx="9" fill="#DC2626"/><text x="985.674" y="174.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-04 · risk 5</text>
+<rect x="1033.34" y="162" width="83.3" height="18" rx="9" fill="#F97316"/><text x="1075" y="174.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-12 · risk 4</text>
+<text x="892" y="194" font-size="9.5" fill="#475569">Safety-relevant parameters and inter-process messages shall not alter actuation,</text>
+<text x="892" y="206" font-size="9.5" fill="#475569">model output or driver-monitoring behaviour without integrity and authenticity</text>
+<text x="892" y="218" font-size="9.5" fill="#475569">protection</text>
+<rect x="892" y="238.0" width="376" height="92" rx="8" fill="#F8FAFC" stroke="#E2E8F0"/>
+<line x1="986.0" y1="278.0" x2="1038.0" y2="278.0" stroke="#CBD5E1" stroke-width="2"/>
+<line x1="1122.0" y1="278.0" x2="1174.0" y2="278.0" stroke="#CBD5E1" stroke-width="2"/>
+<rect x="902.0" y="262.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#7C3AED" stroke-width="1.3"/>
+<text x="944" y="276" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">Local access to</text>
+<text x="944" y="287" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">params / IPC</text>
+<rect x="1038.0" y="262.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#334155" stroke-width="1.3"/>
+<text x="1080" y="276" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">SoC params,</text>
+<text x="1080" y="287" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">msgq</text>
+<rect x="1174.0" y="262.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#334155" stroke-width="1.3"/>
+<text x="1216" y="276" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">Actuation or DM</text>
+<text x="1216" y="287" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">altered</text>
+<circle cx="1167.0" cy="278.0" r="5" fill="#DC2626"><animate attributeName="cx" values="944.0;944.0;1167.0;1167.0" keyTimes="0;0.1;0.6;1" dur="6s" repeatCount="indefinite"/></circle>
+<rect x="1174.0" y="262.0" width="84" height="32" rx="6" fill="#DC2626" fill-opacity="0.12" stroke="#DC2626" stroke-width="1.6"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6;0.62;1" dur="6s" repeatCount="indefinite"/></rect>
+<text x="902" y="321" font-size="9.5" fill="#DC2626" font-weight="600">No control yet: parameters and IPC are unauthenticated</text>
+<text x="892" y="346" font-size="9.5" fill="#475569" font-weight="700">Requirements</text>
+<text x="1268" y="346" font-size="9.5" fill="#475569" text-anchor="end">Allocated to SoC; panda FW</text>
+<rect x="1183.59" y="354" width="86.4" height="16" rx="8" fill="#FEE2E2"/><text x="1226.8" y="365.24" font-size="9" fill="#7F1D1D" font-weight="700" text-anchor="middle">Not implemented</text>
+<text x="892" y="366" font-size="9.5" fill="#0F172A">CSR-C-06 Params and IPC protected, or the envelope does</text>
+<text x="892" y="378" font-size="9.5" fill="#0F172A">not depend on them</text>
+<rect x="1183.59" y="388" width="86.4" height="16" rx="8" fill="#FEE2E2"/><text x="1226.8" y="399.24" font-size="9" fill="#7F1D1D" font-weight="700" text-anchor="middle">Not implemented</text>
+<text x="892" y="400" font-size="9.5" fill="#0F172A">CSR-C-07 No debug, maneuver or joystick modes in reference</text>
+<text x="892" y="412" font-size="9.5" fill="#0F172A">builds</text>
+<text x="892" y="432" font-size="9.5" fill="#475569">Gaps</text>
+<text x="952" y="432" font-size="9.5" fill="#0F172A">GAP-20</text>
+</g>
+<g>
+<rect x="40" y="506" width="400" height="336" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+<title>CSG-04: Load only verified, non-executable models</title>
+<text x="52" y="532" font-size="12" fill="#475569" font-weight="600">CSG-04</text>
+<text x="108" y="532" font-size="13.5" fill="#0F172A" font-weight="700">Load only verified, non-executable models</text>
+<rect x="52" y="544" width="46.0" height="18" rx="9" fill="#0F172A"/><text x="75.006" y="556.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">CAL 2</text>
+<rect x="104.012" y="544" width="83.3" height="18" rx="9" fill="#F97316"/><text x="145.674" y="556.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-09 · risk 4</text>
+<text x="52" y="576" font-size="9.5" fill="#475569">ML model artefacts shall be loaded only after their integrity and authenticity are</text>
+<text x="52" y="588" font-size="9.5" fill="#475569">verified, and loading shall not permit code execution from the artefact</text>
+<rect x="52" y="608.0" width="376" height="92" rx="8" fill="#F8FAFC" stroke="#E2E8F0"/>
+<line x1="146.0" y1="648.0" x2="198.0" y2="648.0" stroke="#CBD5E1" stroke-width="2"/>
+<line x1="282.0" y1="648.0" x2="334.0" y2="648.0" stroke="#CBD5E1" stroke-width="2"/>
+<rect x="62.0" y="632.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#7C3AED" stroke-width="1.3"/>
+<text x="104" y="646" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">Tampered model</text>
+<text x="104" y="657" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">file</text>
+<rect x="198.0" y="632.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#334155" stroke-width="1.3"/>
+<text x="240" y="646" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">modeld: model</text>
+<text x="240" y="657" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">load</text>
+<rect x="334.0" y="632.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#334155" stroke-width="1.3"/>
+<text x="376" y="646" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">Code runs on</text>
+<text x="376" y="657" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">the SoC</text>
+<circle cx="327.0" cy="648.0" r="5" fill="#DC2626"><animate attributeName="cx" values="104.0;104.0;327.0;327.0" keyTimes="0;0.1;0.6;1" dur="6s" repeatCount="indefinite"/></circle>
+<rect x="334.0" y="632.0" width="84" height="32" rx="6" fill="#DC2626" fill-opacity="0.12" stroke="#DC2626" stroke-width="1.6"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6;0.62;1" dur="6s" repeatCount="indefinite"/></rect>
+<text x="62" y="691" font-size="9.5" fill="#DC2626" font-weight="600">No control yet: the model loader runs code, no hash check</text>
+<text x="52" y="716" font-size="9.5" fill="#475569" font-weight="700">Requirements</text>
+<text x="428" y="716" font-size="9.5" fill="#475569" text-anchor="end">Allocated to SoC</text>
+<rect x="343.591" y="724" width="86.4" height="16" rx="8" fill="#FEE2E2"/><text x="386.796" y="735.24" font-size="9" fill="#7F1D1D" font-weight="700" text-anchor="middle">Not implemented</text>
+<text x="52" y="736" font-size="9.5" fill="#0F172A">CSR-C-08 Models load without running code from them, after a</text>
+<text x="52" y="748" font-size="9.5" fill="#0F172A">manifest check</text>
+<text x="52" y="768" font-size="9.5" fill="#475569">Gaps</text>
+<text x="112" y="768" font-size="9.5" fill="#0F172A">GAP-22</text>
+</g>
+<g>
+<rect x="460" y="506" width="400" height="336" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+<title>CSG-05: Protect the safety-relevant CAN messages</title>
+<text x="472" y="532" font-size="12" fill="#475569" font-weight="600">CSG-05</text>
+<text x="528" y="532" font-size="13.5" fill="#0F172A" font-weight="700">Protect the safety-relevant CAN messages</text>
+<rect x="472" y="544" width="189.7" height="18" rx="9" fill="#FFFFFF" stroke="#0F172A"/><text x="566.874" y="556.6" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">CAL 2 provisional (re-derive, OI-8)</text>
+<rect x="667.748" y="544" width="83.3" height="18" rx="9" fill="#F97316"/><text x="709.41" y="556.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-01 · risk 4</text>
+<rect x="757.072" y="544" width="83.3" height="18" rx="9" fill="#DC2626"/><text x="798.734" y="556.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-14 · risk 5</text>
+<text x="472" y="576" font-size="9.5" fill="#475569">The integrity and authenticity of safety-relevant vehicle-CAN messages (received</text>
+<text x="472" y="588" font-size="9.5" fill="#475569">plausibility inputs and transmitted actuation) shall be protected against injection</text>
+<text x="472" y="600" font-size="9.5" fill="#475569">consistent with the physical-access threat</text>
+<rect x="472" y="620.0" width="376" height="92" rx="8" fill="#F8FAFC" stroke="#E2E8F0"/>
+<line x1="566.0" y1="660.0" x2="618.0" y2="660.0" stroke="#CBD5E1" stroke-width="2"/>
+<line x1="702.0" y1="660.0" x2="754.0" y2="660.0" stroke="#CBD5E1" stroke-width="2"/>
+<rect x="482.0" y="644.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#7C3AED" stroke-width="1.3"/>
+<text x="524" y="658" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">Bus tap or</text>
+<text x="524" y="669" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">rooted SoC</text>
+<rect x="618.0" y="644.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#334155" stroke-width="1.3"/>
+<text x="660" y="658" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">panda: CAN</text>
+<text x="660" y="669" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">RX/TX checks</text>
+<rect x="754.0" y="644.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#334155" stroke-width="1.3"/>
+<text x="796" y="658" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">Spoofed inputs</text>
+<text x="796" y="669" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">or actuation</text>
+<circle cx="747.0" cy="660.0" r="5" fill="#DC2626"><animate attributeName="cx" values="524.0;524.0;747.0;747.0" keyTimes="0;0.1;0.6;1" dur="6s" repeatCount="indefinite"/></circle>
+<rect x="754.0" y="644.0" width="84" height="32" rx="6" fill="#DC2626" fill-opacity="0.12" stroke="#DC2626" stroke-width="1.6"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6;0.62;1" dur="6s" repeatCount="indefinite"/></rect>
+<text x="482" y="703" font-size="9.5" fill="#DC2626" font-weight="600">No control yet: no counter or CRC on received messages</text>
+<text x="472" y="728" font-size="9.5" fill="#475569" font-weight="700">Requirements</text>
+<text x="848" y="728" font-size="9.5" fill="#475569" text-anchor="end">Allocated to panda FW; back end; user</text>
+<rect x="763.591" y="736" width="86.4" height="16" rx="8" fill="#FEE2E2"/><text x="806.796" y="747.24" font-size="9" fill="#7F1D1D" font-weight="700" text-anchor="middle">Not implemented</text>
+<text x="472" y="748" font-size="9.5" fill="#0F172A">CSR-C-09 Counter and CRC on safety-relevant RX and TX</text>
+<text x="472" y="760" font-size="9.5" fill="#0F172A">messages</text>
+<text x="472" y="780" font-size="9.5" fill="#475569">Gaps</text>
+<text x="532" y="780" font-size="9.5" fill="#0F172A">GAP-01</text>
+<text x="472" y="798" font-size="9.5" fill="#475569">Claims</text>
+<text x="532" y="798" font-size="9.5" fill="#0F172A">CSC-01 (retain)</text>
+</g>
+<g>
+<rect x="880" y="506" width="400" height="336" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+<title>CSG-06: Minimal, authenticated remote access</title>
+<text x="892" y="532" font-size="12" fill="#475569" font-weight="600">CSG-06</text>
+<text x="948" y="532" font-size="13.5" fill="#0F172A" font-weight="700">Minimal, authenticated remote access</text>
+<rect x="892" y="544" width="46.0" height="18" rx="9" fill="#0F172A"/><text x="915.006" y="556.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">CAL 3</text>
+<rect x="944.012" y="544" width="83.3" height="18" rx="9" fill="#F97316"/><text x="985.674" y="556.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-07 · risk 4</text>
+<rect x="1033.34" y="544" width="83.3" height="18" rx="9" fill="#F97316"/><text x="1075" y="556.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-08 · risk 4</text>
+<rect x="1122.66" y="544" width="83.3" height="18" rx="9" fill="#FDE68A"/><text x="1164.32" y="556.6" font-size="10" fill="#78350F" font-weight="700" text-anchor="middle">TS-13 · risk 3</text>
+<text x="892" y="576" font-size="9.5" fill="#475569">Remote access and interactive access to the device shall be minimized and</text>
+<text x="892" y="588" font-size="9.5" fill="#475569">authenticated so that a compromised back end or network cannot reach safety</text>
+<text x="892" y="600" font-size="9.5" fill="#475569">functions or exfiltrate personal data</text>
+<rect x="892" y="620.0" width="376" height="92" rx="8" fill="#F8FAFC" stroke="#E2E8F0"/>
+<line x1="986.0" y1="660.0" x2="1038.0" y2="660.0" stroke="#CBD5E1" stroke-width="2"/>
+<line x1="1122.0" y1="660.0" x2="1174.0" y2="660.0" stroke="#CBD5E1" stroke-width="2"/>
+<rect x="902.0" y="644.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#7C3AED" stroke-width="1.3"/>
+<text x="944" y="658" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">Back end /</text>
+<text x="944" y="669" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">network</text>
+<rect x="1038.0" y="644.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#334155" stroke-width="1.3"/>
+<text x="1080" y="663.5" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">athenad, SSH</text>
+<rect x="1174.0" y="644.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#334155" stroke-width="1.3"/>
+<text x="1216" y="658" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">Root, personal</text>
+<text x="1216" y="669" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">data</text>
+<rect x="1024.0" y="636.0" width="8" height="48" rx="2" fill="#D97706" fill-opacity="0.18" stroke="#D97706" stroke-width="1.6" stroke-dasharray="4 3"/>
+<circle cx="1018.0" cy="660.0" r="4" fill="#7C3AED" opacity="0.6"><animate attributeName="cx" values="944.0;944.0;1018.0;1018.0" keyTimes="0;0.1;0.45;1" dur="6s" repeatCount="indefinite"/></circle>
+<circle cx="1167.0" cy="660.0" r="5" fill="#DC2626"><animate attributeName="cx" values="944.0;944.0;1167.0;1167.0" keyTimes="0;0.1;0.6;1" dur="6s" repeatCount="indefinite"/></circle>
+<rect x="1174.0" y="644.0" width="84" height="32" rx="6" fill="#DC2626" fill-opacity="0.12" stroke="#DC2626" stroke-width="1.6"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6;0.62;1" dur="6s" repeatCount="indefinite"/></rect>
+<text x="902" y="703" font-size="9.5" fill="#DC2626" font-weight="600">Onroad streaming blocked; RPCs and the SSH key path still open</text>
+<text x="892" y="728" font-size="9.5" fill="#475569" font-weight="700">Requirements</text>
+<text x="1268" y="728" font-size="9.5" fill="#475569" text-anchor="end">Allocated to SoC; user</text>
+<rect x="1183.59" y="736" width="86.4" height="16" rx="8" fill="#FEE2E2"/><text x="1226.8" y="747.24" font-size="9" fill="#7F1D1D" font-weight="700" text-anchor="middle">Not implemented</text>
+<text x="892" y="748" font-size="9.5" fill="#0F172A">CSR-C-10 SSH off by default, no embedded authorized key</text>
+<rect x="1226.62" y="758" width="43.4" height="16" rx="8" fill="#FEF3C7"/><text x="1248.31" y="769.24" font-size="9" fill="#78350F" font-weight="700" text-anchor="middle">Partial</text>
+<text x="892" y="770" font-size="9.5" fill="#0F172A">CSR-C-11 No arbitrary upload, SSH tunnel or key read over RPC; onroad</text>
+<text x="892" y="782" font-size="9.5" fill="#0F172A">streaming blocked</text>
+<text x="892" y="802" font-size="9.5" fill="#475569">Gaps</text>
+<text x="952" y="802" font-size="9.5" fill="#0F172A">GAP-27</text>
+<text x="892" y="820" font-size="9.5" fill="#475569">Claims</text>
+<text x="952" y="820" font-size="9.5" fill="#0F172A">CSC-02 (share)</text>
+</g>
+<g>
+<rect x="40" y="862" width="400" height="348" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+<title>CSG-07: Install only verified updates</title>
+<text x="52" y="888" font-size="12" fill="#475569" font-weight="600">CSG-07</text>
+<text x="108" y="888" font-size="13.5" fill="#0F172A" font-weight="700">Install only verified updates</text>
+<rect x="52" y="900" width="46.0" height="18" rx="9" fill="#0F172A"/><text x="75.006" y="912.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">CAL 3</text>
+<rect x="104.012" y="900" width="83.3" height="18" rx="9" fill="#F97316"/><text x="145.674" y="912.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-06 · risk 4</text>
+<rect x="193.336" y="900" width="83.3" height="18" rx="9" fill="#F97316"/><text x="234.998" y="912.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-10 · risk 4</text>
+<text x="52" y="932" font-size="9.5" fill="#475569">Software updates shall be installed only after their integrity and authenticity are</text>
+<text x="52" y="944" font-size="9.5" fill="#475569">verified end-to-end</text>
+<rect x="52" y="964.0" width="376" height="92" rx="8" fill="#F8FAFC" stroke="#E2E8F0"/>
+<line x1="146.0" y1="1004.0" x2="198.0" y2="1004.0" stroke="#CBD5E1" stroke-width="2"/>
+<line x1="282.0" y1="1004.0" x2="334.0" y2="1004.0" stroke="#CBD5E1" stroke-width="2"/>
+<rect x="62.0" y="988.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#7C3AED" stroke-width="1.3"/>
+<text x="104" y="1002" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">Update path /</text>
+<text x="104" y="1013" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">supply chain</text>
+<rect x="198.0" y="988.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#334155" stroke-width="1.3"/>
+<text x="240" y="1007.5" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">updated</text>
+<rect x="334.0" y="988.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#334155" stroke-width="1.3"/>
+<text x="376" y="1002" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">Unsigned code</text>
+<text x="376" y="1013" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">installed</text>
+<circle cx="327.0" cy="1004.0" r="5" fill="#DC2626"><animate attributeName="cx" values="104.0;104.0;327.0;327.0" keyTimes="0;0.1;0.6;1" dur="6s" repeatCount="indefinite"/></circle>
+<rect x="334.0" y="988.0" width="84" height="32" rx="6" fill="#DC2626" fill-opacity="0.12" stroke="#DC2626" stroke-width="1.6"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6;0.62;1" dur="6s" repeatCount="indefinite"/></rect>
+<text x="62" y="1047" font-size="9.5" fill="#DC2626" font-weight="600">No control yet: git-branch updater, in-tree hashes only</text>
+<text x="52" y="1072" font-size="9.5" fill="#475569" font-weight="700">Requirements</text>
+<text x="428" y="1072" font-size="9.5" fill="#475569" text-anchor="end">Allocated to SoC; back end; user</text>
+<rect x="343.591" y="1080" width="86.4" height="16" rx="8" fill="#FEE2E2"/><text x="386.796" y="1091.24" font-size="9" fill="#7F1D1D" font-weight="700" text-anchor="middle">Not implemented</text>
+<text x="52" y="1092" font-size="9.5" fill="#0F172A">CSR-C-12 Install updates only after end-to-end package</text>
+<text x="52" y="1104" font-size="9.5" fill="#0F172A">verification</text>
+<rect x="343.591" y="1114" width="86.4" height="16" rx="8" fill="#FEE2E2"/><text x="386.796" y="1125.24" font-size="9" fill="#7F1D1D" font-weight="700" text-anchor="middle">Not implemented</text>
+<text x="52" y="1126" font-size="9.5" fill="#0F172A">CSR-C-13 Safety components under LionDriver control,</text>
+<text x="52" y="1138" font-size="9.5" fill="#0F172A">commit-pinned, with SBOM and scanning</text>
+<text x="52" y="1158" font-size="9.5" fill="#475569">Gaps</text>
+<text x="112" y="1158" font-size="9.5" fill="#0F172A">GAP-26, GAP-29</text>
+</g>
+<g>
+<rect x="460" y="862" width="400" height="348" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+<title>CSG-08: Keep personal data and device key private</title>
+<text x="472" y="888" font-size="12" fill="#475569" font-weight="600">CSG-08</text>
+<text x="528" y="888" font-size="13.5" fill="#0F172A" font-weight="700">Keep personal data and device key private</text>
+<rect x="472" y="900" width="46.0" height="18" rx="9" fill="#0F172A"/><text x="495.006" y="912.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">CAL 2</text>
+<rect x="524.012" y="900" width="83.3" height="18" rx="9" fill="#DC2626"/><text x="565.674" y="912.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-11 · risk 5</text>
+<rect x="613.336" y="900" width="83.3" height="18" rx="9" fill="#F97316"/><text x="654.998" y="912.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-07 · risk 4</text>
+<text x="472" y="932" font-size="9.5" fill="#475569">Personal data (driver-facing video, cabin imagery, location/trajectory) and the</text>
+<text x="472" y="944" font-size="9.5" fill="#475569">device identity key shall be protected in confidentiality, in transit and at rest,</text>
+<text x="472" y="956" font-size="9.5" fill="#475569">including after loss or decommissioning</text>
+<rect x="472" y="976.0" width="376" height="92" rx="8" fill="#F8FAFC" stroke="#E2E8F0"/>
+<line x1="566.0" y1="1016.0" x2="618.0" y2="1016.0" stroke="#CBD5E1" stroke-width="2"/>
+<line x1="702.0" y1="1016.0" x2="754.0" y2="1016.0" stroke="#CBD5E1" stroke-width="2"/>
+<rect x="482.0" y="1000.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#7C3AED" stroke-width="1.3"/>
+<text x="524" y="1014" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">Lost or sold</text>
+<text x="524" y="1025" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">device</text>
+<rect x="618.0" y="1000.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#334155" stroke-width="1.3"/>
+<text x="660" y="1014" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">Data at rest,</text>
+<text x="660" y="1025" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">device key</text>
+<rect x="754.0" y="1000.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#334155" stroke-width="1.3"/>
+<text x="796" y="1014" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">Video, location,</text>
+<text x="796" y="1025" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">key leak</text>
+<circle cx="747.0" cy="1016.0" r="5" fill="#DC2626"><animate attributeName="cx" values="524.0;524.0;747.0;747.0" keyTimes="0;0.1;0.6;1" dur="6s" repeatCount="indefinite"/></circle>
+<rect x="754.0" y="1000.0" width="84" height="32" rx="6" fill="#DC2626" fill-opacity="0.12" stroke="#DC2626" stroke-width="1.6"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6;0.62;1" dur="6s" repeatCount="indefinite"/></rect>
+<text x="482" y="1059" font-size="9.5" fill="#DC2626" font-weight="600">No control confirmed: encryption at rest unverified, no wipe</text>
+<text x="472" y="1084" font-size="9.5" fill="#475569" font-weight="700">Requirements</text>
+<text x="848" y="1084" font-size="9.5" fill="#475569" text-anchor="end">Allocated to SoC; back end; user</text>
+<rect x="774.753" y="1092" width="75.2" height="16" rx="8" fill="#F1F5F9"/><text x="812.377" y="1103.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">Not confirmed</text>
+<text x="472" y="1104" font-size="9.5" fill="#0F172A">CSR-C-14 Personal data and the identity key confidential in</text>
+<text x="472" y="1116" font-size="9.5" fill="#0F172A">transit and at rest</text>
+<rect x="763.591" y="1126" width="86.4" height="16" rx="8" fill="#FEE2E2"/><text x="806.796" y="1137.24" font-size="9" fill="#7F1D1D" font-weight="700" text-anchor="middle">Not implemented</text>
+<text x="472" y="1138" font-size="9.5" fill="#0F172A">CSR-C-15 Decommissioning wipes personal data and retires</text>
+<text x="472" y="1150" font-size="9.5" fill="#0F172A">the identity key</text>
+<text x="472" y="1170" font-size="9.5" fill="#475569">Gaps</text>
+<text x="532" y="1170" font-size="9.5" fill="#0F172A">none named</text>
+<text x="472" y="1188" font-size="9.5" fill="#475569">Claims</text>
+<text x="532" y="1188" font-size="9.5" fill="#0F172A">CSC-03 (retain)</text>
+</g>
+<text x="40" y="1236" font-size="10.5" fill="#0F172A">CSR-C-16 supports every goal: A LionDriver vulnerability intake and incident-response process (not implemented).</text>
+<text x="40" y="1256" font-size="10.5" fill="#475569">Paraphrases quote their requirement, checked at build. Statuses, CALs, risks, allocations, gaps and claims from WP-C-10 §4-§7 and WP-C-09 §8. No exploitation detail.</text>
+<text x="1280" y="1274" font-size="10" fill="#475569" text-anchor="end">Generated by fig_c10_goals.py</text>
+</svg>

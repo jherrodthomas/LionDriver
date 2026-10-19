@@ -10,6 +10,7 @@ weather or lighting code it is rated for. Pictures only: synthetic (DSR-12), no 
 | [`conditions.yaml`](conditions.yaml) | W01 to W06 of the HARA and the TC-01 low-sun preset: exposure, ODD, what the HARA model changes, and the look | `export_scene.py`, `hazard_scene.py` |
 | [`traffic.yaml`](traffic.yaml) | Illustrative traffic presets placed relative to the ego | `export_scene.py` |
 | [`assets.yaml`](assets.yaml) | CC0 sky HDRIs, ground textures, scanned plants and street furniture (Poly Haven, ambientCG) with candidate IDs and a search fallback | `fetch_assets.py`, `hazard_scene.py` |
+| [`people/`](people/README.md) | Two CC0 pedestrian figures (Quaternius) with a walk cycle, built by `people/build_people.py` and committed | `hazard_scene.py` |
 | `assets.lock.json` | The asset IDs and SHA-256 sums `fetch_assets.py` chose; committed once it has run (section 4) | `fetch_assets.py --locked`, `hazard_scene.py` |
 
 ![Dashboard of scene HE-04.2 under condition W02: the orange ego Corolla braking in a left highway curve on wet, glossy asphalt with puddles under an overcast sky, its follower 22.5 m behind; panels around the 3D view give the hazardous event, ego state, plots and a filmstrip](../dashboards/he-04-2-wet-curve-braking.jpg)

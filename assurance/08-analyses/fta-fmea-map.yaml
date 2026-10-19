@@ -330,7 +330,10 @@ events:
     fmea: [SFM-036]
     note: >-
       SFM-036.C1: no item reaction to a stock PCS event on the longitudinal command (always true at the baseline; SFM-ACT-020).
-      DQ-300 A (2026-10-18): the item requests zero acceleration during a PCS event once implemented. The PCM side is UE-7.14 and SFM-036.C2 (AOU-04R). F-17 closed for the System FMEA, 2026-10-16
+      DQ-300 A (2026-10-18): the item requests zero acceleration during a PCS event; implemented by #292
+      (change-2026-10-19-stock-aeb-stand-down, unit-tested only), so SFM-036.C1 now means a defect in that stand-down or an
+      AEB event the car does not report. The PCM side is UE-7.14 and SFM-036.C2 (AOU-04R). F-17 closed for the System FMEA,
+      2026-10-16
   - id: UE-7.14
     class: external
     ref: AOU-04R

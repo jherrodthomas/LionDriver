@@ -526,7 +526,8 @@ def build(scene: dict, hes: dict[str, dict], lib: dict | None = None) -> dict:
     if a.get("yaw_deg") is not None:
       poses = [[x, y, h + math.radians(a["yaw_deg"])] for x, y, h in poses]
     actors.append({"name": a["name"], "kind": kind, "source": a.get("source", "kinematic"), "poses": poses,
-                   "paint": a.get("paint"), "critical": bool(a.get("critical")), "traffic": bool(a.get("traffic"))})
+                   "paint": a.get("paint"), "critical": bool(a.get("critical")), "traffic": bool(a.get("traffic")),
+                   **({"figure": a["figure"]} if a.get("figure") else {})})
 
   # props in road coordinates (s relative to the ego at t = 0)
   props = []

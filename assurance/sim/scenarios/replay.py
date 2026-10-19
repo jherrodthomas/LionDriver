@@ -31,8 +31,9 @@ from fetch_esmini import esmini_bin  # noqa: E402
 
 TABLE = HERE.parent / "results" / "scenario-replay.md"
 # scenario families of WP-V-02 §5.3.2; scenarios the section does not assign are marked so, not guessed
-FAMILY = {"KS-01": "SF-1", "KS-08": "SF-2", "KS-05": "SF-3", "KS-09": "SF-3", "KS-07": "SF-4", "KS-25": "SF-6"}
+FAMILY = {"KS-01": "SF-1", "KS-08": "SF-2", "KS-05": "SF-3", "KS-09": "SF-3", "KS-07": "SF-4", "KS-25": "SF-6", "KS-27": "SF-3"}
 DT = 0.05
+LANE_HALF = generate.LANE_W / 2
 
 
 def run(bin_dir: Path, sc_id: str, params: dict) -> dict[str, list[dict]]:
@@ -137,6 +138,23 @@ def check(sc_id: str, p: dict, R: dict[str, list[dict]]) -> list[tuple[str, bool
   if sc_id == "KS-25":
     cross = next((r["time"] for r in ego if r["speed"] > 120 / 3.6), None)
     return [("ego speed crosses 120 km/h", cross is not None, "" if cross is None else f"at {cross:.2f} s")]
+  if sc_id == "KS-27":
+    ld, r = R["lead"], generate.SCENARIOS_BY_ID["KS-27"].road
+    rp, rw = r["radius"] + LANE_HALF, r["radius"] - generate.WALL27_T
+    arc0 = r["straight"] + r["clothoid"]
+
+    def visible(e, l):
+      # both on the arc: the chord between the lane-centre points clears the wall circle (reference-line s)
+      th = (l["s"] - e["s"]) / r["radius"]
+      return rp * math.cos(th / 2) >= rw
+    pairs = [(e, at(ld, e["time"])) for e in ego if e["s"] >= arc0]
+    first = next(((e, l) for e, l in pairs if visible(e, l)), None)
+    gap = None if first is None else (first[1]["s"] - first[0]["s"]) / r["radius"] * rp
+    target = p["EgoSpeed"] + p["SetSpeedDelta"]
+    return [("lead hidden until a gap of 40–80 m along the lane", bool(pairs) and not visible(*pairs[0]) and gap is not None
+             and 40 <= gap <= 80, "never visible" if gap is None else f"{gap:.1f} m"),
+            ("ego reaches EgoSpeed + SetSpeedDelta", abs(ego[-1]["speed"] - target) < 0.01, f"{ego[-1]['speed']:.2f} m/s"),
+            ("lead keeps LeadSpeed in lane -1", all(abs(x["speed"] - p["LeadSpeed"]) < 1e-6 for x in ld) and lane_always(ld, -1), "")]
   raise ValueError(sc_id)
 
 
