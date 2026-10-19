@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-07 Functional modifications addressing SOTIF risk |
 | Standard reference | ISO 21448:2022 §8 (functional modifications addressing SOTIF-related risks); ASPICE 4.0 SYS.2 |
-| Version | 0.3 (FM-07 bound 110 km/h, decision register DQ-260; 2026-10-16). 0.2 (FM-07 and FM-08 follow the highway-only ODD, decision register DQ-023, and the 110 km/h controllability test, DQ-091; 2026-10-16). 0.1 |
+| Version | 0.3.1 (FM-01 status: part (a), the Chill default, is in the code since 2026-10-14, while the toggle stays and a stored "1" is honoured (DQ-001 A); OI-1 narrowed; 2026-10-19). 0.3 (FM-07 bound 110 km/h, decision register DQ-260; 2026-10-16). 0.2 (FM-07 and FM-08 follow the highway-only ODD, decision register DQ-023, and the 110 km/h controllability test, DQ-091; 2026-10-16). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF (some modifications also support FSRs in WP-C-04) |
 | Author | Assurance team (initial draft) |
@@ -42,12 +42,13 @@ Priority: **P1** = needed before any LionDriver on-road operation beyond WP-V-07
 
 | Attribute | Content |
 |---|---|
-| Change | In reference-configuration builds: default `ExperimentalMode` to `"0"`; disable the toggle in the UI; ignore a stored `"1"` (treat as Chill). Matches the recommendation in [WP-C-02 §6.4](WP-C-02-odd-and-intended-functionality.md) (maintainer decision pending, D-08) |
+| Change | In reference-configuration builds: default `ExperimentalMode` to `"0"`; disable the toggle in the UI; ignore a stored `"1"` (treat as Chill). Matches the recommendation in [WP-C-02 §6.4](WP-C-02-odd-and-intended-functionality.md) (D-08, decided 2026-10-10: Chill until Experimental Mode is validated) |
 | Rationale | Experimental Mode was made default upstream without hazard assessment; its UI text ("stopping for red lights … Mistakes should be expected") contradicts `docs/LIMITATIONS.md:35`; it raises cruise acceleration to 2.0 m/s² and adds false-stop behaviour (FI-05) |
 | Affected code | `openpilot/common/params_keys.h:43`; `openpilot/selfdrive/ui/layouts/settings/toggles.py:48-185`; consumer `openpilot/selfdrive/controls/lib/longitudinal_planner.py:135-145` |
 | Expected risk reduction | Removes SH-09 from scope and the e2e contribution to SH-03/SH-04 |
 | Verification | Unit test of default and lock; configuration review of release build; process replay shows `experimentalMode = false` |
 | Priority | P1 |
+| Status | (a) Default `"0"`: **implemented 2026-10-14** (`params_keys.h:45`, commit `38d3320`), the option the project lead chose (decision register DQ-001 option A; [change record](../07-supporting/impact/change-2026-10-14-chill-mode-default.md); WP-M-08 CM-1); not reviewed independently, not verified on the vehicle. (b) Toggle disabled: **not implemented**; under DQ-001 A the toggle stays and the owner can still turn Experimental Mode on (option C, the lock, was not chosen). (c) Stored `"1"` ignored: **not implemented**; a device that already stored `1` keeps it, and the release checklist step of the change record (its OI-1) covers reference vehicles. SH-09 therefore stays in scope for any vehicle on which the owner turns Experimental Mode on |
 
 ### FM-02 Exclude Chestnut; no diagnostic masking (GAP-17)
 
@@ -170,7 +171,7 @@ Priority: **P1** = needed before any LionDriver on-road operation beyond WP-V-07
 
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
-| OI-1 | Maintainer decision on FM-01 (linked to D-08) and FM-02 (WP-C-01 OI-4) | Maintainer | G1 |
+| OI-1 | FM-01: (a) done under DQ-001 A; whether to add (b) and (c), the lock, is open with D-08. FM-02: maintainer decision (WP-C-01 OI-4) | Maintainer | G1 |
 | OI-2 | Raise change requests for P1 FMs under WP-P-02 | SW lead | G1 |
 | OI-3 | Derive TSR-6xx requirements for FM-03, FM-04, FM-05, FM-06, FM-09 in WP-S-02 | Safety engineer | G2 |
 | OI-4 | Feasibility study for FM-08 | SW lead | G2 |
