@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-06 Functional insufficiencies and triggering conditions analysis |
 | Standard reference | ISO 21448:2022 §7 (identification and evaluation of functional insufficiencies and triggering conditions); ISO/PAS 8800:2024 (AI error causes, informative) |
-| Version | 0.4 (TC-20 at the 110 km/h ODD bound, decision register DQ-260; 2026-10-16). 0.3 (TC-12 resolution follows the highway-only ODD, decision register DQ-023; 2026-10-16). 0.2 (Figure 5-1 added: TC → FI → SH chain; 2026-10-13). 0.1 |
+| Version | 0.5 (FI-23 and TC-34 added, so SH-08 has an insufficiency and a triggering condition; the TC-33 row no longer names SH-03, because FI-10 leads to SH-06 only; §5.1 states how the SG-02 and SG-06 fault trees share the performance limits, DQ-361 A; 2026-10-18). 0.4 (TC-20 at the 110 km/h ODD bound, decision register DQ-260; 2026-10-16). 0.3 (TC-12 resolution follows the highway-only ODD, decision register DQ-023; 2026-10-16). 0.2 (Figure 5-1 added: TC → FI → SH chain; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -61,6 +61,7 @@ The driving model is a black box from LionDriver's point of view: training data 
 | FI-20 | S | Configuration | Behaviour-changing parameters without protection: Experimental default on, debug/maneuver modes, `IsDriverViewEnabled` DM demo mode | SH-09, SH-12, SH-13 | `params_keys.h:43, 59`; `process_config.py:34-47`; GAP-18, GAP-20 |
 | FI-21 | S | Override semantics | Gas overrides longitudinal but does not disengage; host steering override threshold 500 raw; the driver may misjudge the state | SH-05 | `params_keys.h:35`; `carcontroller.py:33, 83` |
 | FI-22 | P | Driving model | Temporal effects: model lag or frame drops degrade the plan; recurrent state reset after model switch | SH-01, SH-02 | `selfdrived.py:457` (`modeldLagging`); `modeld.py:411-419` |
+| FI-23 | S | Interface to the stock PCS | The specification does not state how the item's behaviour interacts with the stock pre-collision system. When LD-SDA sends its own `ACC_CONTROL`, the stock PCS sees the item's acceleration request in place of stock ACC's. Message interception may change what the PCS receives. A device alert may cover or distract from the PCS warning. Forwarding the PCS messages is intended but not verified | SH-08 | WP-C-01 §2 (AOU-04); `toyotacan.py:56`; `carstate.py:80, 154` (stock AEB and FCW read, not acted on) |
 
 ## 4. Triggering conditions
 
@@ -99,6 +100,7 @@ The driving model is a black box from LionDriver's point of view: training data 
 | TC-31 | Exit lane or lane split on a highway (path follows the wrong branch) | Infrastructure | domain |
 | TC-32 | Narrow lane (≤ 3.3 m) with an adjacent large vehicle or a concrete barrier close to the lane edge | Infrastructure / traffic | domain; proposed by [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md) KS-06 |
 | TC-33 | Lead vehicle braking harder than the item's deceleration bound (lead decel > 3.5 m/s²), incl. slow lead at highway speed | Traffic | `LIMITATIONS.md:38`; proposed by WP-V-03 KS-08 |
+| TC-34 | Imminent collision in which the stock PCS would warn or brake while LD-SDA is engaged with its own longitudinal control, or while a device alert is shown | Traffic / HMI | WP-C-05 SH-08 (OS-09); WP-V-03 KS-20 |
 
 ## 5. TC → FI → SH evaluation
 
@@ -134,11 +136,27 @@ The driving model is a black box from LionDriver's point of view: training data 
 | TC-30 | FI-17 | SH-05 | Event without reaction | Needs modification | FM-04 |
 | TC-31 | FI-01, FI-03 | SH-01 | None | Needs validation | WP-V-03 |
 | TC-32 | FI-01 | SH-01 | None specific; lateral offset toward the obstacle not bounded | Needs validation | WP-V-03 KS-06 |
-| TC-33 | FI-10 | SH-03, SH-06 | Decel ≤ 3.5 m/s²; FCW | Needs validation (driver responsibility; user info) | WP-V-03 KS-08; WP-O-03 |
+| TC-33 | FI-10 | SH-06 | Decel ≤ 3.5 m/s²; FCW | Needs validation (driver responsibility; user info) | WP-V-03 KS-08; WP-O-03 |
+| TC-34 | FI-23 | SH-08 | Stock PCS stays active and its messages are forwarded; its interaction with the item's commands and alerts is not characterised (AOU-04) | Needs validation | WP-V-03 KS-20 (VT-07, AC-06); WP-V-01 PCS tests |
 
-![Figure 5-1: three-column chain from triggering conditions TC-01 to TC-33, coloured by their §5 evaluation outcome, to functional insufficiencies FI-01 to FI-22, to the SOTIF hazards of WP-C-05; SH-08 has no insufficiency here](figures/fig-c06-5-1-tc-fi-sh-chain.svg)
+![Figure 5-1: three-column chain from triggering conditions TC-01 to TC-34, coloured by their §5 evaluation outcome, to functional insufficiencies FI-01 to FI-23, to the SOTIF hazards of WP-C-05](figures/fig-c06-5-1-tc-fi-sh-chain.svg)
 
 *Figure 5-1.* Triggering condition → functional insufficiency → hazardous behaviour. The TC → FI edges come from the table above and are coloured by that row's evaluation (needs modification, needs validation, acceptable with a condition). The FI → SH edges come from the Linked SH column of §3. The SH boxes carry the S and C of [WP-C-05](WP-C-05-sotif-hazard-identification.md) §3. Texts in the boxes are shortened. SH-08 (stock PCS degraded) has no insufficiency or triggering condition in this document, so it has no incoming edge. Source: [`figures/fig-c06-5-1-tc-fi-sh-chain.svg`](figures/fig-c06-5-1-tc-fi-sh-chain.svg), generated by [`sotif/sotif_figures.py`](sotif/sotif_figures.py) from §3–§5 and WP-C-05 §3. Change those tables and regenerate; do not edit the SVG.
+
+### 5.1 Performance limits in the SG-02 and SG-06 fault trees
+
+Two performance limits also appear as branches of the functional-safety fault trees ([WP-A-04](../08-analyses/WP-A-04-system-fta-fmea.md)):
+
+- **G2.8**, a curve too tight for the steering torque limit, under SG-02: TC-14, FI-09 and FI-11, leading to SH-02.
+- **G6.9**, a lead missed or seen too late, under SG-06: TC-08, TC-09, TC-17 and TC-33, through FI-04, FI-06 and FI-10, leading to SH-06.
+
+The project lead decided on 2026-10-18 that SG-02 and SG-06 keep these branches (decision register DQ-361, option A), as SG-04 keeps false braking.
+
+The split of work is as follows:
+
+- **Fault trees.** They show that the take-over warning has no independent path. The warning comes from the same SoC that fell short.
+- **SOTIF, this document and WP-V-02.** It evaluates how often the limits occur and whether they are controllable: VT-02 and VT-06, with the rows above.
+- **The SOTIF basic events** BE-2.23 and BE-6.09 take their rates from that evaluation. Neither analysis credits the other with a result it has not produced.
 
 ## 6. AI-specific error causes (ISO/PAS 8800 view, summary)
 

@@ -23,7 +23,7 @@
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 4 performed: CR-12, FSA-F, SR-03, SR-04@G5 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 68 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 66 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
@@ -31,11 +31,11 @@
 |---|---|---|---|---|
 | [WP-V-01](../../../06-validation/WP-V-01-safety-validation.md) Safety validation plan, specification and report | REL-01 | Draft | 5 | |
 | [WP-V-04](../../../06-validation/WP-V-04-sotif-unknown-scenarios.md) Evaluation of unknown hazardous scenarios | REL-02 | Draft | 4 | |
-| [WP-V-06](../../../06-validation/WP-V-06-cybersecurity-validation.md) Cybersecurity validation and penetration testing | REL-03 | Draft | 5 | |
+| [WP-V-06](../../../06-validation/WP-V-06-cybersecurity-validation.md) Cybersecurity validation and penetration testing | REL-03 | Draft | 4 | |
 | [WP-O-01](../../../09-production-operation/WP-O-01-installation-and-provisioning-control.md) Installation, provisioning and production control | REL-04 | Draft | 8 | |
 | [WP-O-03](../../../09-production-operation/WP-O-03-user-information-safety-warnings.md) User information and safety warnings | REL-05 | Draft | 7 | |
 | [WP-O-02](../../../09-production-operation/WP-O-02-operation-service-decommissioning.md) Operation, service (maintenance, repair) and decommissioning | REL-06 | Draft | 6 | |
-| [WP-K-02](../../../10-safety-case/WP-K-02-sotif-release-argument.md) SOTIF achievement evaluation and release recommendation | REL-07 | Skeleton | 3 | |
+| [WP-K-02](../../../10-safety-case/WP-K-02-sotif-release-argument.md) SOTIF achievement evaluation and release recommendation | REL-07 | Skeleton | 2 | |
 | [WP-K-03](../../../10-safety-case/WP-K-03-cybersecurity-case.md) Cybersecurity case | REL-08 | Draft | 5 | |
 | [WP-P-10](../../../07-supporting/WP-P-10-release-management.md) Release management and baseline procedure | REL-09 | Draft | 6 | |
 | [WP-K-01](../../../10-safety-case/WP-K-01-safety-case.md) Safety case (GSN, integrated FuSa, SOTIF and AI argument) (update) | REL-10 | Draft | 5 | |
@@ -61,7 +61,7 @@ From the [process model](../../../process/README.md). Each one is a condition on
 
 | Interface | Topic | Open item | Due | Closed? |
 |---|---|---|---|---|
-| IX-13 | The AI safety requirements carry (TBC) performance values that the SOTIF validation targets VT-01…VT-15 must confirm. WP-V-02 §4.1 traces each value: 8 confirmed or replaced (AIR-11 and AIR-14 through VT-14 and VT-15; AIR-01, AIR-03 and AIR-04 derived in §4.3); 6 come from other documents. The targets are not yet approved by the assessor | WP-V-02 OI-3 | G2 | |
+| IX-13 | The AI safety requirements carry (TBC) performance values that the SOTIF validation targets VT-01…VT-15 must confirm. WP-V-02 §4.1 traces each value: 8 confirmed or replaced (AIR-11 and AIR-14 through VT-14 and VT-15; AIR-01, AIR-03 and AIR-04 derived in §4.3); 6 come from other documents. The targets are not yet frozen: the project lead freezes them once the B1 crash data replaces the illustrative rates, with a later assessor review (DQ-096 B) | WP-V-02 OI-3 | G2 | |
 
 ### Roles WP-M-02 §3.1 needs by this gate that are not assigned
 

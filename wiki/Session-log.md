@@ -1,7 +1,8 @@
 # Session log
 
-Every pull request merged into `{{BRANCH}}`, newest first. The list is generated at each sync from the merge
-commits in the repository, so it is never typed by hand and never falls behind. Each line is the pull request's
+The most recent 120 pull requests merged into `{{BRANCH}}`, newest first. The list is generated at each sync from
+the merge commits in the repository, so it is never typed by hand and never falls behind; older merges are in the
+[commit history](https://github.com/jherrodthomas/LionDriver/commits/liondriver-dev). Each line is the pull request's
 title; the [glossary](Glossary.md) decodes the codes in them.
 
 What the log does not show: a change pushed to the branch without a pull request, and the state of a work

@@ -32,7 +32,7 @@
 | [WP-S-01](../../../03-system/WP-S-01-system-requirements.md) System requirements specification (functional, non-safety) | DES-01 | Draft | 4 | |
 | [WP-S-04](../../../03-system/WP-S-04-timing-ftti-budget.md) Timing analysis: FTTI, fault detection and reaction budget | DES-02 | Draft | 10 | |
 | [WP-S-02](../../../03-system/WP-S-02-technical-safety-requirements.md) Technical safety requirements specification | DES-03 | Draft | 6 | |
-| [WP-S-07](../../../03-system/WP-S-07-cybersecurity-requirements-architecture.md) Cybersecurity requirements and architectural design | DES-04 | Draft | 8 | |
+| [WP-S-07](../../../03-system/WP-S-07-cybersecurity-requirements-architecture.md) Cybersecurity requirements and architectural design | DES-04 | Draft | 9 | |
 | [WP-S-03](../../../03-system/WP-S-03-technical-safety-concept-architecture.md) Technical safety concept and system architectural design | DES-05 | Draft | 5 | |
 | [WP-S-05](../../../03-system/WP-S-05-hsi-specification.md) Hardware-software interface specification | DES-06 | Draft | 7 | |
 | [WP-A-02](../../../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) Coexistence of elements and freedom from interference | DES-07 | Draft | 5 | |
@@ -41,7 +41,7 @@
 | [WP-A-04](../../../08-analyses/WP-A-04-system-fta-fmea.md) System-level safety analyses (FTA, FMEA) | DES-10 | Draft | 6 | |
 | [WP-V-02](../../../06-validation/WP-V-02-sotif-vv-strategy.md) SOTIF verification and validation strategy, validation targets | DES-11 | Draft | 7 | |
 | [WP-S-06](../../../03-system/WP-S-06-requirements-production-operation.md) Requirements for production, operation, service and decommissioning | DES-12 | Draft | 4 | |
-| [WP-A-05](../../../08-analyses/WP-A-05-stpa.md) System-theoretic process analysis (STPA) | DES-13 | Draft | 11 | |
+| [WP-A-05](../../../08-analyses/WP-A-05-stpa.md) System-theoretic process analysis (STPA) | DES-13 | Draft | 10 | |
 | [WP-M-14](../../../01-management/WP-M-14-iso26262-6-implementation-specification.md) ISO 26262-6 software lifecycle implementation specification (future work; activation deferred, D-14) | DES-14 | Draft | 5 | |
 
 ### Confirmation measures
@@ -62,7 +62,7 @@ From the [process model](../../../process/README.md). Each one is a condition on
 
 | Interface | Topic | Open item | Due | Closed? |
 |---|---|---|---|---|
-| IX-13 | The AI safety requirements carry (TBC) performance values that the SOTIF validation targets VT-01…VT-15 must confirm. WP-V-02 §4.1 traces each value: 8 confirmed or replaced (AIR-11 and AIR-14 through VT-14 and VT-15; AIR-01, AIR-03 and AIR-04 derived in §4.3); 6 come from other documents. The targets are not yet approved by the assessor | WP-V-02 OI-3 | G2 | |
+| IX-13 | The AI safety requirements carry (TBC) performance values that the SOTIF validation targets VT-01…VT-15 must confirm. WP-V-02 §4.1 traces each value: 8 confirmed or replaced (AIR-11 and AIR-14 through VT-14 and VT-15; AIR-01, AIR-03 and AIR-04 derived in §4.3); 6 come from other documents. The targets are not yet frozen: the project lead freezes them once the B1 crash data replaces the illustrative rates, with a later assessor review (DQ-096 B) | WP-V-02 OI-3 | G2 | |
 
 ### Roles WP-M-02 §3.1 needs by this gate that are not assigned
 

@@ -1,5 +1,6 @@
 # HARA
 
+
 This folder holds the Cartesian HARA behind [WP-C-03](../WP-C-03-hara.md) §2.
 
 | File | What it is |
@@ -11,16 +12,82 @@ This folder holds the Cartesian HARA behind [WP-C-03](../WP-C-03-hara.md) §2.
 | [`hara-events.csv`](hara-events.csv) | Generated. All 3 264 hazardous-event rows of the reference workbook (tab 12), one per line, with S/E/C rationale, ASIL, ASIL if the ⚠ AoUs fail, and safety goal. **This is the file to review on GitHub**: it renders as a searchable table, and a PR diff shows exactly which rows a rule change moves |
 | [`hara-events_experimental.csv`](hara-events_experimental.csv) | Generated. The same for the Experimental Mode variant (3 468 rows) |
 | [`hara_figures.py`](hara_figures.py) | Figure generator. It draws WP-C-03 Figure 2-1 (rows per S × E × C cell, as rated and if every ⚠ AoU fails) from the model, and Figure 6-1 (hazards → hazardous events → safety goals) from WP-C-03 §4–§6 and the model. It fails if a goal's ASIL is not the highest ASIL of its source events, or if a rated event has no goal |
-| [`guideword_scenes.py`](guideword_scenes.py) | Draws the guide-word scenes: one card per SC guide word of a function, the function over time (required against performed) over a top-down road scene of what the malfunction does to the car. Words, hazards, subsumption and rationale come from `FM` in `hara_model.py`; goal and ASIL from WP-C-03 §6. The behaviour curves are schematic and live in this file; it fails if an SC guide word has no curve. F-01 so far. Run through `hara_figures.py` |
-| [`figures/`](figures/) | Generated SVGs `fig-c03-2-1-asil-heatmap.svg` and `fig-c03-6-1-hazard-sg-overview.svg`, embedded in WP-C-03, and `fig-c03-4-1-f01-guide-words.svg` (guide-word scenes, below). Do not edit by hand |
-| [`test_hara_figures.py`](test_hara_figures.py), [`test_guideword_scenes.py`](test_guideword_scenes.py) | Unit tests: the figures are current, the heat-map totals equal the model's ASIL counts, inconsistent goal tables are rejected, and every SC guide word has one card that agrees with `FM` and §6 |
+| [`guideword_scenes.py`](guideword_scenes.py) | Draws the guide-word scenes: one card per SC guide word of a function, the function over time (required against performed) over a top-down road scene of what the malfunction does to the car. Words, hazards, subsumption and rationale come from `FM` in `hara_model.py`; goal and ASIL from WP-C-03 §6. The behaviour models are schematic and live in this file; it fails if an SC guide word has no model. One sheet per function with SC guide words (F-07 and F-09 have none). Run through `hara_figures.py` |
+| [`figures/`](figures/) | Generated SVGs `fig-c03-2-1-asil-heatmap.svg` and `fig-c03-6-1-hazard-sg-overview.svg`, embedded in WP-C-03, and `fig-c03-4-1-…` to `fig-c03-4-8-…-guide-words.svg` (guide-word scenes, below). Do not edit by hand |
+| [`test_hara_figures.py`](test_hara_figures.py), [`test_guideword_scenes.py`](test_guideword_scenes.py) | Unit tests: the figures are current, the heat-map totals equal the model's ASIL counts, inconsistent goal tables are rejected, every function with SC guide words has a sheet, and every SC guide word has one card that agrees with `FM` and §6 and names the moment it matters |
 | [`hara-function-guideword.csv`](hara-function-guideword.csv) | Generated. The 140 function × guide-word pairs (tab 11, both variants) with class SC / NSC / NA, subsumption and the reason. This is the SC filter that decides which rows exist (RR-2026-003 F-01) |
 
 ## Guide-word scenes
 
+Sheets: [F-01](#f-01-lateral-control) · [F-02](#f-02-longitudinal-control-acc-chill-mode) · [F-02X](#f-02x-longitudinal-control-experimental-mode) · [F-03](#f-03-engagement-and-mode-management) · [F-04](#f-04-driver-monitoring) · [F-05](#f-05-driver-information-and-warnings) · [F-06](#f-06-forward-collision-warning) · [F-08](#f-08-safety-envelope-and-forwarding)
+
+One sheet per function with SC guide words (F-07 and F-09 have none). F-01 comes first, with how to read a card; the other sheets follow in the same layout.
+
+### F-01 Lateral control
+
+Sheets: **F-01** · [F-02](#f-02-longitudinal-control-acc-chill-mode) · [F-02X](#f-02x-longitudinal-control-experimental-mode) · [F-03](#f-03-engagement-and-mode-management) · [F-04](#f-04-driver-monitoring) · [F-05](#f-05-driver-information-and-warnings) · [F-06](#f-06-forward-collision-warning) · [F-08](#f-08-safety-envelope-and-forwarding)
+
 ![Fourteen looping cards, one per guide word M01 to M14 for F-01 lateral control. Each card shows the function (here the steering torque) over time, required as a dashed green line and performed as a red line, and below it a top-down two-lane left curve with the intended path, the actual path, where the fault starts and where the car crosses a line](figures/fig-c03-4-1-f01-guide-words.svg)
 
-*What each guide word does to F-01 lateral control.* Top of each card: the torque the function must deliver against what the malfunction delivers. Below: the car on a two-lane left curve, seen from above, with the moment it matters ringed. Each card loops in a browser: the cars drive, the red track draws in, and the fault and the callout appear when they happen (a viewer that shows the SVG as a still shows the last frame). The scenes are schematic, to explain each hazard; the measured cases are the plant runs in [assurance/sim §3.7](../../sim/README.md#37-the-asil-c-hazardous-events-in-the-loop). Generated by [`guideword_scenes.py`](guideword_scenes.py); other functions get a sheet when their behaviour curves are added there.
+*What each guide word does to F-01 lateral control.* Top of each card: the torque the function must deliver against what the malfunction delivers. Below: the car on a two-lane left curve, seen from above, with the moment it matters ringed. Each card loops in a browser: the cars drive, the red track draws in, and the fault and the callout appear when they happen (a viewer that shows the SVG as a still shows the last frame). The scenes are schematic, to explain each hazard; the measured cases are the plant runs in [assurance/sim §3.7](../../sim/README.md#37-the-asil-c-hazardous-events-in-the-loop). Generated by [`guideword_scenes.py`](guideword_scenes.py).
+
+#### All sheets
+
+The other functions have a sheet each, in the same layout:
+
+| Function | Sheet | Scene |
+|---|---|---|
+| F-02 Longitudinal control (ACC, Chill mode) | [13 cards](figures/fig-c03-4-2-f02-guide-words.svg) | Following a lead that slows; chart = commanded acceleration |
+| F-02X Longitudinal control, Experimental Mode | [11 cards](figures/fig-c03-4-3-f02x-guide-words.svg) | Approaching a red light; chart = commanded acceleration |
+| F-03 Engagement and mode management | [10 cards](figures/fig-c03-4-4-f03-guide-words.svg) | Driver brakes toward a stopped car, or engagement changes in the curve; chart = engaged state |
+| F-04 Driver monitoring | [9 cards](figures/fig-c03-4-5-f04-guide-words.svg) | Driver looks away, or is attentive; chart = escalation (warning → alert → forced deceleration) |
+| F-05 Driver information and warnings | [8 cards](figures/fig-c03-4-6-f05-guide-words.svg) | The system hands back in the curve; chart = take-over alert or displayed state |
+| F-06 Forward collision warning | [1 card](figures/fig-c03-4-7-f06-guide-words.svg) | A false warning and the driver's reflex braking |
+| F-08 Safety envelope and forwarding | [4 cards](figures/fig-c03-4-8-f08-guide-words.svg) | Stock AEB request blocked before a stopped car, or commands blocked in the curve |
+
+In the longitudinal scenes a small simulation runs the intended controller twice, as specified and with the guide word applied to its output, so the chart plots the commanded acceleration of both runs and the callout marks the first moment the faulty run is clearly worse (closes on the lead, follower closes in, past the stop line on red). Pills in the scene's corner give the state the card depends on (driver brakes, no alert, AEB request blocked). The cards list the safety goal of each hazard from `SG_MAP`: H-07 cards show both SG-02 and SG-06; H-10 (F-02X) shows that SG-09 exists only under D-08 option B.
+
+### F-02 Longitudinal control (ACC, Chill mode)
+
+Sheets: [F-01](#f-01-lateral-control) · **F-02** · [F-02X](#f-02x-longitudinal-control-experimental-mode) · [F-03](#f-03-engagement-and-mode-management) · [F-04](#f-04-driver-monitoring) · [F-05](#f-05-driver-information-and-warnings) · [F-06](#f-06-forward-collision-warning) · [F-08](#f-08-safety-envelope-and-forwarding)
+
+![F-02 Longitudinal control (ACC, Chill mode): 13 cards, one per guide word. Following a lead that slows; chart = commanded acceleration](figures/fig-c03-4-2-f02-guide-words.svg)
+
+### F-02X Longitudinal control, Experimental Mode
+
+Sheets: [F-01](#f-01-lateral-control) · [F-02](#f-02-longitudinal-control-acc-chill-mode) · **F-02X** · [F-03](#f-03-engagement-and-mode-management) · [F-04](#f-04-driver-monitoring) · [F-05](#f-05-driver-information-and-warnings) · [F-06](#f-06-forward-collision-warning) · [F-08](#f-08-safety-envelope-and-forwarding)
+
+![F-02X Longitudinal control, Experimental Mode: 11 cards, one per guide word. Approaching a red light; chart = commanded acceleration](figures/fig-c03-4-3-f02x-guide-words.svg)
+
+### F-03 Engagement and mode management
+
+Sheets: [F-01](#f-01-lateral-control) · [F-02](#f-02-longitudinal-control-acc-chill-mode) · [F-02X](#f-02x-longitudinal-control-experimental-mode) · **F-03** · [F-04](#f-04-driver-monitoring) · [F-05](#f-05-driver-information-and-warnings) · [F-06](#f-06-forward-collision-warning) · [F-08](#f-08-safety-envelope-and-forwarding)
+
+![F-03 Engagement and mode management: 10 cards, one per guide word. Driver brakes toward a stopped car, or engagement changes in the curve; chart = engaged state](figures/fig-c03-4-4-f03-guide-words.svg)
+
+### F-04 Driver monitoring
+
+Sheets: [F-01](#f-01-lateral-control) · [F-02](#f-02-longitudinal-control-acc-chill-mode) · [F-02X](#f-02x-longitudinal-control-experimental-mode) · [F-03](#f-03-engagement-and-mode-management) · **F-04** · [F-05](#f-05-driver-information-and-warnings) · [F-06](#f-06-forward-collision-warning) · [F-08](#f-08-safety-envelope-and-forwarding)
+
+![F-04 Driver monitoring: 9 cards, one per guide word. Driver looks away, or is attentive; chart = escalation (warning → alert → forced deceleration)](figures/fig-c03-4-5-f04-guide-words.svg)
+
+### F-05 Driver information and warnings
+
+Sheets: [F-01](#f-01-lateral-control) · [F-02](#f-02-longitudinal-control-acc-chill-mode) · [F-02X](#f-02x-longitudinal-control-experimental-mode) · [F-03](#f-03-engagement-and-mode-management) · [F-04](#f-04-driver-monitoring) · **F-05** · [F-06](#f-06-forward-collision-warning) · [F-08](#f-08-safety-envelope-and-forwarding)
+
+![F-05 Driver information and warnings: 8 cards, one per guide word. The system hands back in the curve; chart = take-over alert or displayed state](figures/fig-c03-4-6-f05-guide-words.svg)
+
+### F-06 Forward collision warning
+
+Sheets: [F-01](#f-01-lateral-control) · [F-02](#f-02-longitudinal-control-acc-chill-mode) · [F-02X](#f-02x-longitudinal-control-experimental-mode) · [F-03](#f-03-engagement-and-mode-management) · [F-04](#f-04-driver-monitoring) · [F-05](#f-05-driver-information-and-warnings) · **F-06** · [F-08](#f-08-safety-envelope-and-forwarding)
+
+![F-06 Forward collision warning: 1 card, one per guide word. A false warning and the driver's reflex braking](figures/fig-c03-4-7-f06-guide-words.svg)
+
+### F-08 Safety envelope and forwarding
+
+Sheets: [F-01](#f-01-lateral-control) · [F-02](#f-02-longitudinal-control-acc-chill-mode) · [F-02X](#f-02x-longitudinal-control-experimental-mode) · [F-03](#f-03-engagement-and-mode-management) · [F-04](#f-04-driver-monitoring) · [F-05](#f-05-driver-information-and-warnings) · [F-06](#f-06-forward-collision-warning) · **F-08**
+
+![F-08 Safety envelope and forwarding: 4 cards, one per guide word. Stock AEB request blocked before a stopped car, or commands blocked in the curve](figures/fig-c03-4-8-f08-guide-words.svg)
 
 ## Regenerating
 
@@ -58,4 +125,4 @@ This folder holds the Cartesian HARA behind [WP-C-03](../WP-C-03-hara.md) §2.
 - Changing a rating means changing a rule in `hara_model.py`. Regenerate, and the CSV diff shows every row the rule affects.
 - The CSVs and workbooks come from the same model; every ASIL in the CSVs equals the workbook's tab 12, row for row.
 
-The workbooks were generated with hara-builder `generate_hara.py` (sha256 `188f7e51df06aceae7668bb6563f009b8e28189754d3eedc87f93c05f2a91a33`, after removing trailing NUL padding from the synced copy). Every ASIL in both workbooks was checked against the independent computation in `hara_model.py`, and they agree: 3 264 and 3 468 rows, 0 mismatches (regenerated 2026-10-16 for WP-C-03 v0.4; at v0.3, 2 790 and 2 970 rows).
+The workbooks were generated with hara-builder `generate_hara.py` (sha256 `188f7e51df06aceae7668bb6563f009b8e28189754d3eedc87f93c05f2a91a33`, after removing trailing NUL padding from the synced copy). Every ASIL in both workbooks was checked against the independent computation in `hara_model.py`, and they agree: 3 264 and 3 468 rows, 0 mismatches (regenerated 2026-10-18 for WP-C-03 v0.5; at v0.4 the same row counts, at v0.3 2 790 and 2 970 rows).

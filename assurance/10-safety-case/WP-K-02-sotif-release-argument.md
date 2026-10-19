@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-K-02 SOTIF achievement evaluation and release recommendation |
 | Standard reference | ISO 21448:2022 §12 (evaluation of the achievement of the SOTIF, release); inputs from §6–§11, §13 |
-| Version | 0.2 (signatory for the SOTIF recommendation decided: the project lead signs after an external SOTIF review, DQ-025; 2026-10-17). 0.1 |
+| Version | 0.3 (R-08 confidence level decided: one-sided 95 % with the WP-V-02 §3 bounds per scenario class, DQ-057 A; OI-2 closed; 2026-10-19). 0.2 (signatory for the SOTIF recommendation decided: the project lead signs after an external SOTIF review, DQ-025; 2026-10-17). 0.1 |
 | Status | Skeleton — structure, criteria and evidence checklist only. **The evaluation has not been performed.** Results sections are templates marked "Not yet executed" |
 | ASIL / scope | SOTIF (G2 of [WP-K-01](WP-K-01-safety-case.md)); AI contribution (G3) |
 | Author | Assurance team (initial draft) |
@@ -58,7 +58,7 @@ G2   Hazards from functional insufficiencies and reasonably foreseeable misuse a
 | R-05 | Functional modifications implemented and verified, or the residual risk accepted with rationale | E-06 | 21448 §8; [WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md) |
 | R-06 | Known hazardous scenarios evaluated with results within acceptance criteria (AC-02, AC-03, AC-06) | E-07, E-08 | 21448 §10; [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md) |
 | R-07 | Validation targets derived and justified | E-09 | 21448 §9; [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) |
-| R-08 | Unknown-scenario evaluation meets the validation targets with stated confidence; exposure and conditions of the validation driving are representative of the ODD | E-10 | 21448 §11; [WP-V-04](../06-validation/WP-V-04-sotif-unknown-scenarios.md) |
+| R-08 | Unknown-scenario evaluation meets the validation targets at one-sided 95 % confidence, with the zero-failure or Clopper–Pearson bounds per scenario class of WP-V-02 §3 (DQ-057 A); exposure and conditions of the validation driving are representative of the ODD | E-10 | 21448 §11; [WP-V-04](../06-validation/WP-V-04-sotif-unknown-scenarios.md) |
 | R-09 | Misuse analysis complete; DM meets its performance targets (AC-05); user information reviewed and its effectiveness checked | E-11, E-12, E-13 | 21448 §6, Annex B; [WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md); [WP-O-03](../09-production-operation/WP-O-03-user-information-safety-warnings.md) |
 | R-10 | ML models identified by hash in the release; model-level evaluation done; model insufficiencies fed into R-04 | E-14, E-15 | PAS 8800; [WP-W-10](../05-software/WP-W-10-ml-engineering.md); [WP-C-11](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) |
 | R-11 | Field monitoring process, data path and field-action channel in place | E-16 | 21448 §13; [WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md) |
@@ -124,5 +124,5 @@ These are expected to block R-criteria unless closed (see defeaters in [WP-K-01 
 | ID | Item | Needed by |
 |---|---|---|
 | OI-1 | Confirm the evaluation aspects against the licensed text of ISO 21448 §12 and adjust R-01…R-12 | G2 |
-| OI-2 | Define the confidence level and statistical method for R-08 in WP-V-02 | G2 |
+| OI-2 | Closed 2026-10-19: one-sided 95 %, with the zero-failure or Clopper–Pearson bounds per scenario class of WP-V-02 §3 (decided 2026-10-19 by the project lead, decision register DQ-057 option A) | G2 |
 | OI-3 | Decided 2026-10-14 by the project lead (DQ-025 option B): the lead signs the SOTIF recommendation, with an external SOTIF review (§5.3). Open: engage the external SOTIF reviewer with the assessor (WP-M-06) | G5 |

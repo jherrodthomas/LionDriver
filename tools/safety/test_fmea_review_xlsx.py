@@ -78,8 +78,9 @@ class TestReviewWorkbook(unittest.TestCase):
             self.assertEqual(ws.cell(row, col["M"]).value, m["monitoring"], c["id"])
           else:
             self.assertTrue(ws.cell(row, col["Diagnostic"]).value.startswith("Exempt: "), c["id"])
-        if fmea_lint.AP_MSR_PROVISIONAL:
-          self.assertIn("provisional", ws.cell(1, 1).value)
+        stand_in = any(fmea_lint.msr_ap_provisional(fm["severity"]) for fm, c in in_scope if c.get("msr"))
+        self.assertEqual("provisional" in ws.cell(1, 1).value, stand_in)
+        self.assertIn("RT-3", ws.cell(1, 1).value)
 
   def test_committed_workbooks_current(self):
     self.assertEqual(rx.main(["--check"]), 0)

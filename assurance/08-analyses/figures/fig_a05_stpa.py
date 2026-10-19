@@ -3,10 +3,12 @@
 
 Sources of record: `../WP-A-05-stpa.md`, `../stpa-map.yaml` and the decision register
 (`../../01-management/decisions/register.yaml`). The data-driven figures (2-1, 4-1, 5-1, 5-2) are
-built from those files. The structure and block figures (3-1 … 3-7, 5-3 … 5-6) are laid out here
-by hand, because a layout is a drawing decision. Every ID they name (H-, SC-, CA-, FB-, UCA-, LS-,
+built from those files; so are the scene sheets 4-2 … 4-4, drawn by `stpa_scenes.py`. The structure
+and block figures (3-1 … 3-7, 5-3 … 5-6) are laid out here by hand, because a layout is a drawing
+decision. Every ID they name (H-, SC-, CA-, FB-, UCA-, LS-,
 DQ-) is checked against the sources, so a renamed or removed item fails the check.
-Nothing here is analysis content: change WP-A-05 and regenerate.
+Nothing here is analysis content: change WP-A-05 and regenerate. The scene cards' belief lines and road
+scenes illustrate §5 and are not themselves analysis.
 
     python3 fig_a05_stpa.py            # regenerate the SVGs
     python3 fig_a05_stpa.py --check    # fail if a committed SVG is stale or an ID is unknown
@@ -23,6 +25,9 @@ from pathlib import Path
 from xml.sax.saxutils import escape
 
 import yaml
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import stpa_scenes
 
 HERE = Path(__file__).resolve().parent
 SOURCE = HERE.parent / "WP-A-05-stpa.md"
@@ -979,7 +984,9 @@ FIGURES = {
 
 def build() -> dict[str, str]:
   S = load()
-  return {name: fn(S) for name, fn in FIGURES.items()}
+  out = {name: fn(S) for name, fn in FIGURES.items()}
+  out.update(stpa_scenes.sheets(S, sys.modules[__name__]))  # Figures 4-2 … 4-4, one scene sheet per controller
+  return out
 
 
 def main(argv: list[str]) -> int:

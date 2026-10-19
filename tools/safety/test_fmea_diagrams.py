@@ -196,15 +196,15 @@ class TestFigures(unittest.TestCase):
           self.assertIn(a, svg)
         if c["msr"]["monitoring"] <= 6:
           self.assertIn(c["id"], svg)
-    self.assertIn("provisional", svg)
+    self.assertIn("handbook", svg)
 
   def test_msr_ap_table_matches_lint(self):
     if fmea_lint is None:
       self.skipTest("fmea_lint not importable")
-    # the grid background uses compute_ap(10, F, M); the linter's MSR table must be the same table
+    # the grid background uses the S 10 handbook table; the linter's MSR table must be the same table
     for f in range(1, 11):
-      for m in range(2, 11):
-        self.assertEqual(fd.compute_ap(10, f, m), fmea_lint.compute_ap_msr(10, 10, f, m))
+      for m in range(1, 11):
+        self.assertEqual(fd.compute_ap_msr_s10(f, m), fmea_lint.compute_ap_msr(10, 10, f, m))
 
   def test_never_owns_hand_drawn_figures(self):
     for name in self.out:

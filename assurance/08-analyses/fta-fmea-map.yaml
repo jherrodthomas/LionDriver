@@ -329,8 +329,8 @@ events:
     class: systematic_sw
     fmea: [SFM-036]
     note: >-
-      SFM-036.C1: no item reaction to a stock PCS event on the longitudinal command (always true at the baseline; SFM-ACT-020,
-      DQ-300). The PCM side is UE-7.14 and SFM-036.C2 (AOU-04R). F-17 closed for the System FMEA, 2026-10-16
+      SFM-036.C1: no item reaction to a stock PCS event on the longitudinal command (always true at the baseline; SFM-ACT-020).
+      DQ-300 A (2026-10-18): the item requests zero acceleration during a PCS event once implemented. The PCM side is UE-7.14 and SFM-036.C2 (AOU-04R). F-17 closed for the System FMEA, 2026-10-16
   - id: UE-7.14
     class: external
     ref: AOU-04R
@@ -400,6 +400,7 @@ events:
   - id: BE-2.06
     class: random_hw
     fmea: [DFM-008, DFM-021, DFM-004, DFM-016, DFM-018, DFM-012, PFM-008, PFM-006, SWF-024, SWF-047, SFM-005, SFM-011]
+    fmeda: [fmeda-sg001:FMD-003, fmeda-sg001:FMD-017, fmeda-sg009:FMD-001]
     note: >-
       Car-side bus-off: DFM-008 (transceiver holds bus 0 dominant), DFM-021 (clamp diode short); MCU hang or not running:
       DFM-004, DFM-016 (bootloader, SFMEA-27), DFM-018 (over-temperature); CAN path lost at the harness: DFM-012.C1, PFM-008,
@@ -411,6 +412,7 @@ events:
   - id: BE-2.07
     class: random_hw
     fmea: [DFM-012, DFM-020, PFM-008]
+    fmeda: [fmeda-sg001:FMD-014, fmeda-sg009:FMD-030]
     note: >-
       DFM-012.C1 (harness disconnected: device power lost), DFM-020 (harness box supply lost, the device with it), PFM-008
       (connector not latched). SFM-015.C3 is the System FMEA view (gate G2.2 cites SFM-015)
@@ -502,6 +504,7 @@ events:
   - id: BE-6.02
     class: systematic_sw
     fmea: [SWF-021, SWF-027, SWF-019, DFM-009]
+    fmeda: [fmeda-sg001:FMD-018]
     note: >-
       As BE-2.02 for ACC_CONTROL: SWF-021.C1/C2 (heartbeat gap, 0.3 s revocation; its effects name ACC requests blocked while
       shown engaged), SWF-027.C1/C2 (pandad hang or restart), SWF-019.C1 (spurious MCU reset, panda back in SILENT);
@@ -577,7 +580,7 @@ events:
     fmeda: [fmeda-sg001:FMD-002, fmeda-sg001:FMD-010, fmeda-sg001:FMD-019]
     note: >-
       As BE-1.10 and BE-4.03 (same TX path). DFM-019 (frame altered between the TX check and the bus). The FMEDA rows are those
-      of SG-001; DQ-002 accepted them for SG-04 only, not yet for SG-03 (F-34)
+      of SG-001, reused for SG-03 since DQ-362 A (2026-10-18; DQ-002 for SG-04). F-22
   - id: UE-3.05
     class: external
     ref: AOU-05R
@@ -611,12 +614,14 @@ events:
     ref: AOU-05R
   - id: BE-3.13
     class: systematic_sw
-    fmea: [SFM-008, SWF-052, SWF-040, SFM-013, SWF-030, SFM-017, SWF-031]
+    fmea: [SFM-008, SWF-052, SWF-040, SFM-013, SWF-030, SFM-017, SWF-031, SWF-057]
     note: >-
       SFM-008 (positive acceleration requested when not engaged, local effect); SWF-052.C1 (CarController takes pcm_accel_cmd
       with no longActive gate; direction-neutral cause, but the mode is worded for negative acceleration and cites HZ-006 only);
       SWF-040.C1 (controlsd acts on a stale selfdriveState.enabled); SFM-013 and SWF-030 (host engaged without a driver
-      request, HZ-010); SFM-017 and SWF-031 (host does not disengage on brake, the "after driver brake" half of G3.3, HZ-008)
+      request, HZ-010); SFM-017 and SWF-031 (host does not disengage on brake, the "after driver brake" half of G3.3, HZ-008);
+      SWF-057.C1 (a carState field decoded wrong, e.g. a spurious cruise enable, feeds the host engagement state, as in
+      SG-01 BE-1.15; added in WP-A-04 v1.12 for HE-03.7, DQ-364 A)
 
   # ---- SG-05 tree (§6)
   - id: BE-5.01
@@ -947,6 +952,10 @@ not_in_fta:
     goal: SG-03
     kind: justified
     reason: "As for SG-01: an update to an unapproved release replaces the analysed item. Controlled by WP-P-10 and the update policy (DQ-075); the envelope part is BE-1.09."
+  - fm: SWF-054
+    goal: SG-03
+    kind: justified
+    reason: As for SG-01. A re-grant after a TX-rate revocation needs a driver cruise edge and the heartbeat engaged flag, so the driver has engaged the item; the host's frames stay under the envelope's TX-rate and acceleration checks (G3.1), so no path to acceleration while not engaged arises (SW FMEA rev 0.8, DQ-079).
   # ---- SG-05
   - fm: SWF-031
     goal: SG-05

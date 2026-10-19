@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.8 | draft | BL-005 | RT-2 | 2026-10-16 |
+| 0.10 | draft | BL-005 | RT-3 | 2026-10-16 |
 
 **Scope.** Safety-relevant hardware of AC-001 at BL-005 (hardware as at BL-002): comma 3X panda section (STM32H725, clock and watchdog, MCU supply, CAN transceivers), Toyota harness and relay box, SoC-MCU interface, siren path, enclosure and cooling. SoC, cameras and other QM hardware only where they couple into these (WP-A-03).
 
@@ -193,7 +193,7 @@ Effects:
 
 Safety mechanisms: (1) None after the FDCAN load (SPF-02). TSR-517 specifies a TX read-back of own frames; not implemented at BL-002
 
-[Monitoring and system response](#7-monitoring-and-system-response): `DFM-019.C1` mechanism 1: M 10 · F 4 · S after response 10 → 🔴 **H**<br>`DFM-019.C2` mechanism 1: M 10 · F 2 · S after response 10 → 🔴 **H**
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-019.C1` mechanism 1: M 10 · F 4 · S after response 10 → 🔴 **H**<br>`DFM-019.C2` mechanism 1: M 10 · F 2 · S after response 10 → 🟠 M
 
 <sub>Note: WP-A-04 BE-1.10 and BE-4.03 (SPF-02); FMEDA SG-001 FMD-002 and FMD-010. The same TX path carries 0x2E4 and 0x343, so the rates of the SG-001 rows apply to the longitudinal path; SG-04 has no FMEDA of its own yet.</sub>
 
@@ -339,7 +339,7 @@ Effects:
 
 Safety mechanisms: (1) None: no relay readback (GAP-12)
 
-[Monitoring and system response](#7-monitoring-and-system-response): `DFM-010.C1` mechanism 1: M 10 · F 6 · S after response 10 → 🔴 **H**<br>`DFM-010.C2` mechanism 1: M 10 · F 4 · S after response 10 → 🔴 **H**<br>`DFM-010.C3` mechanism 1: M 10 · F 2 · S after response 10 → 🔴 **H**<br>`DFM-010.C4` mechanism 1: M 10 · F 4 · S after response 10 → 🔴 **H**
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-010.C1` mechanism 1: M 10 · F 6 · S after response 10 → 🔴 **H**<br>`DFM-010.C2` mechanism 1: M 10 · F 4 · S after response 10 → 🔴 **H**<br>`DFM-010.C3` mechanism 1: M 10 · F 2 · S after response 10 → 🟠 M<br>`DFM-010.C4` mechanism 1: M 10 · F 4 · S after response 10 → 🔴 **H**
 
 <sub>Note: WP-H-03 FM-REL-02/04: a single-point path for the PCS goal that no firmware change can close. RR-2026-010 F-03: the release default rests on R2+R3 (HWSR-506e).</sub>
 
@@ -361,7 +361,7 @@ Effects:
 
 Safety mechanisms: (1) Relay malfunction detection: stock camera message on the car side after a 1 s grace blocks all TX (safety.h stock_ecu_check)
 
-[Monitoring and system response](#7-monitoring-and-system-response): `DFM-011.C1` mechanism 1: M 8 · F 6 · S after response 10 → 🔴 **H**<br>`DFM-011.C2` mechanism 1: M 8 · F 2 · S after response 10 → 🔴 **H**
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-011.C1` mechanism 1: M 8 · F 6 · S after response 10 → 🔴 **H**<br>`DFM-011.C2` mechanism 1: M 8 · F 2 · S after response 10 → 🟠 M
 
 <sub>Note: WP-H-03 FM-REL-01.</sub>
 
@@ -549,7 +549,7 @@ Effects:
 
 | ID | Kind | Action | Owner | Status | Causes | Revised S/O/D → AP |
 |---|---|---|---|---|---|---|
-| DFM-ACT-001 | prevention | Add a CPU self-test (vendor STL if available for STM32H7) at start-up and periodically, or argue the ASIL B target without CPU coverage (WP-H-03 finding 4) | Jherrod Thomas | open | DFM-001.C1 | — |
+| DFM-ACT-001 | prevention | Add a LionDriver CPU self-test at start-up and periodically (WP-H-03 finding 4). No vendor self-test library is licensed (decision DQ-069 option B, 2026-10-19), so CPU coverage is claimed only as low and the ASIL C SPFM target is likely missed (WP-H-04 OI-6, G2) | Jherrod Thomas | open | DFM-001.C1 | — |
 | DFM-ACT-002 | design_change | Integrate the G1 layer 1 MCU measures (RAMECC handling, redundant storage, code CRC, start-up RAM test, fault escalation) from panda branch liondriver/g1-layer1 after review and HIL evidence | Jherrod Thomas | open | DFM-002.C1, DFM-003.C1, DFM-003.C2 | — |
 | DFM-ACT-003 | detection | Run the watchdog HIL test (test_10_hw_watchdog) on the bench and confirm the relay releases on reset (HWSR-502, UK-06) (D-04). The lead deferred the HIL bench (DQ-049, 2026-10-14), so this waits for the bench | Jherrod Thomas | open | DFM-004.C1, DFM-006.C1 | — |
 | DFM-ACT-004 | design_change | Cross-check the HSE-derived time base against LSI or HSI and react on deviation (HWSR-504a) | Jherrod Thomas | open | DFM-005.C1 | — |
@@ -607,9 +607,6 @@ FMEA-MSR rates what happens in the car when a cause occurs: does a diagnostic ca
 
 **Coverage:** 23 of 23 in-scope causes rated, 0 rated elsewhere (`msr: complete`).
 
-> [!WARNING]
-> The MSR action priority uses a provisional table until the AIAG-VDA handbook table is transcribed (rating-tables §7.4). Read the M and F columns; the AP column will be re-rated.
-
 ![Frequency by monitoring](figures/dfmea-msr.svg)
 
 Sorted by monitoring, weakest first. Timing is detection + reaction time against the FTTI of the cited WP-S-04 row.
@@ -627,8 +624,8 @@ Sorted by monitoring, weakest first. Timing is detection + reaction time against
 | `DFM-019.C1` Soft error or permanent fault in the copy into FDCAN message RAM, the message RAM or the FDCAN core. The packet XOR is checked at the FDCAN load (fdcan.h:100) and covers only the software queue; the CAN CRC is computed after the fault | None after the FDCAN load: no TX read-back (TSR-517 not implemented) → None | unknown | 10 | 4 | **10** | 🔴 **H** | DFM-ACT-013 |
 | `DFM-003.C2` Wrong-address write by the SPI DMA (no MPU) | None at BL-002: no MPU and no redundant storage of the safety state → None | unknown | 10 | 3 | **10** | 🔴 **H** | DFM-ACT-002 |
 | `DFM-020.C2` Box VIN shorted to ground (TVS D4 short, connector or wiring) | None: the box supply is not supervised, and the device loses power with it → None | unknown | 10 | 3 | **10** | 🔴 **H** | DFM-ACT-014 |
-| `DFM-010.C3` Pull-down R2 or R3 open, so IN floats when the device stops driving SBU1 (reset, watchdog, hang, unplugged cable) | None: the open pull-down is latent while the device drives SBU1, and no readback exists (GAP-12) → None | unknown | 10 | 2 | **10** | 🔴 **H** | DFM-ACT-007, DFM-ACT-014 |
-| `DFM-019.C2` Transceiver fault that changes bits on TX without a CAN error (not credible for a single bit, which the CAN CRC and the bit monitoring of the transmitting controller detect; kept until the transceiver part is known, WP-H-02 UK-01) | None: no TX read-back (TSR-517 not implemented) → None | unknown | 10 | 2 | **10** | 🔴 **H** | DFM-ACT-013 |
+| `DFM-010.C3` Pull-down R2 or R3 open, so IN floats when the device stops driving SBU1 (reset, watchdog, hang, unplugged cable) | None: the open pull-down is latent while the device drives SBU1, and no readback exists (GAP-12) → None | unknown | 10 | 2 | **10** | 🟠 M | DFM-ACT-007, DFM-ACT-014 |
+| `DFM-019.C2` Transceiver fault that changes bits on TX without a CAN error (not credible for a single bit, which the CAN CRC and the bit monitoring of the transmitting controller detect; kept until the transceiver part is known, WP-H-02 UK-01) | None: no TX read-back (TSR-517 not implemented) → None | unknown | 10 | 2 | **10** | 🟠 M | DFM-ACT-013 |
 | `DFM-001.C1` Permanent fault in the Cortex-M7 core or bus matrix; single core, no lockstep, no CPU self-test | None in the MCU at BL-002. The host compares controls_allowed after about 2 s (QM); it does not check limits → None for a wrong limit result | unknown | 10 | 6 | **9** | 🔴 **H** | DFM-ACT-001 |
 | `DFM-012.C1` Connector not fully latched at installation, or vibration loosens it | RX timeouts and host canBusMissing cover a partial disconnect only; a full disconnect also removes the device supply, so nothing warns → Relay drops out with the supply; stock camera restored | unknown | 10 | 5 | **9** | 🔴 **H** | DFM-ACT-008 |
 | `DFM-002.C1` Multi-bit flash error or cell degradation; double-error ECC flag not handled; image signature checked at boot only | Bootstub signature check at power-up only; no periodic code CRC in the pinned firmware → None during the drive | unknown | 10 | 4 | **9** | 🔴 **H** | DFM-ACT-002 |
@@ -636,6 +633,6 @@ Sorted by monitoring, weakest first. Timing is detection + reaction time against
 | `DFM-011.C1` Analog switch U1 or U2 stuck in the pass-through (NC) position, or SBU1 drive lost or held low (driver open, R2/R3 short) | Relay malfunction: a stock camera frame on the car side after the 1 s grace blocks all TX (T-08, 1-2 s) → All TX blocked; host raises relayMalfunction (IMMEDIATE_DISABLE) | 2000 + 10 ms vs FTTI 500 ms ❌ (code-derived) | 10 | 6 | **8** | 🔴 **H** | DFM-ACT-007 |
 | `DFM-008.C1` XCVR1 TX driver fault or TXD stuck low | FDCAN error counters; core reset on bus-off. The transceiver dominant timeout is part dependent and unknown → A core reset does not release a transceiver that holds the bus dominant; no safe-state reaction | unknown | 10 | 5 | **8** | 🔴 **H** | DFM-ACT-006 |
 | `DFM-021.C1` Schottky clamp D2 or D3 (BAS40SDW) short or leaky | RX timeouts withdraw control and the host raises CAN errors; nothing restores the bus → Authority withdrawn and the driver warned; the stock camera path stays broken | unknown | 10 | 3 | **8** | 🔴 **H** | DFM-ACT-014 |
-| `DFM-011.C2` The 5 V SBU1 drive does not reach the DG419LE logic-high threshold with VL tied to VIN (about 14 V), so the switch does not change over or changes over only at some temperatures (RR-2026-010 F-05; thresholds at VL = VIN not confirmed) | Relay malfunction: a stock camera frame on the car side after the 1 s grace blocks all TX (T-08, 1-2 s) → All TX blocked; host raises relayMalfunction (IMMEDIATE_DISABLE) | 2000 + 10 ms vs FTTI 500 ms ❌ (code-derived) | 10 | 2 | **8** | 🔴 **H** | DFM-ACT-014, DFM-ACT-015 |
+| `DFM-011.C2` The 5 V SBU1 drive does not reach the DG419LE logic-high threshold with VL tied to VIN (about 14 V), so the switch does not change over or changes over only at some temperatures (RR-2026-010 F-05; thresholds at VL = VIN not confirmed) | Relay malfunction: a stock camera frame on the car side after the 1 s grace blocks all TX (T-08, 1-2 s) → All TX blocked; host raises relayMalfunction (IMMEDIATE_DISABLE) | 2000 + 10 ms vs FTTI 500 ms ❌ (code-derived) | 10 | 2 | **8** | 🟠 M | DFM-ACT-014, DFM-ACT-015 |
 | `DFM-004.C1` Hang in an ISR or main loop, unused vector to Default_Handler, or assert_fatal loop | IWDG expires about 90 ms after the last feed (T-09a); BL-005 reports a watchdog reset in health (panda#6). Timing fits on paper. On the box side, an undriven SBU1 is pulled to pass-through by R2+R3 (RR-2026-010 HB-02); the device-side driver state in reset is still unconfirmed (UK-06) and the LSI tolerance leaves no shown margin (OI-7), so the response is not credited → MCU reset; relay de-energised if the drive circuit is de-energise-to-safe; stock camera CAN restored | 90 + 100 ms vs FTTI 200 ms ✅ (code-derived) | 10 | 6 | **7** | 🔴 **H** | DFM-ACT-003 |
 | `DFM-009.C1` XCVR1 RX open or stuck recessive | RX timeout after 5 periods (rx_timeout_periods, safety.h rx_check_lagging; about 0.16 s) withdraws controls_allowed. BL-005: selfdrived raises controlsMismatch after 2 consecutive pandaStates samples, at most 0.5 s after the first mismatched frame (TSR-621, supervision.py). At BL-002 the host counter took about 2 s → Authority withdrawn at once; controlsMismatch IMMEDIATE_DISABLE with a take-over alert | 160 + 500 ms vs FTTI 1000 ms ✅ (code-derived) | 10 | 5 | **6** | 🔴 **H** | DFM-ACT-006 |

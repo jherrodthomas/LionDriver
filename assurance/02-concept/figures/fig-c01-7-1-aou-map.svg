@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1382" viewBox="0 0 1280 1382" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 7-1 · Assumptions of use by subject and status</title>
-<desc>Cards for the 16 assumptions of use of WP-C-01 §7, grouped as Vehicle ECUs: AOU-01, AOU-02, AOU-03, AOU-04, AOU-05, AOU-10, AOU-12, AOU-16; Installation and maintenance: AOU-08, AOU-09, AOU-13; Driver: AOU-06, AOU-07; Network and back end: AOU-11; Build configuration: AOU-14, AOU-15. Each card shows the ID, the first clause of the assumption, a status pill (AOU-01 Unverified; AOU-02 Unverified; AOU-03 Unverified; AOU-04 Unverified; AOU-05 Unverified; AOU-06 SOTIF-managed; AOU-07 Not started; AOU-08 Partially; AOU-09 Not started; AOU-10 Not started; AOU-11 Design constraint; AOU-12 Unverified; AOU-13 Unverified; AOU-14 Unverified; AOU-15 Unverified; AOU-16 Not started), where it is credited and the verification approach. None is verified.</desc>
+<desc>Cards for the 17 assumptions of use of WP-C-01 §7, grouped as Vehicle ECUs: AOU-01, AOU-02, AOU-03, AOU-04, AOU-05, AOU-10, AOU-12, AOU-16, AOU-17; Installation and maintenance: AOU-08, AOU-09, AOU-13; Driver: AOU-06, AOU-07; Network and back end: AOU-11; Build configuration: AOU-14, AOU-15. Each card shows the ID, the first clause of the assumption, a status pill (AOU-01 Unverified; AOU-02 Unverified; AOU-03 Unverified; AOU-04 Unverified; AOU-05 Unverified; AOU-06 SOTIF-managed; AOU-07 Not started; AOU-08 Partially; AOU-09 Not started; AOU-10 Not started; AOU-11 Design constraint; AOU-12 Unverified; AOU-13 Unverified; AOU-14 Unverified; AOU-15 Unverified; AOU-16 Not started; AOU-17 Unverified), where it is credited and the verification approach. None is verified.</desc>
 <defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D2553F"/></marker><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F172A"/></marker><pattern id="hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)"><rect width="8" height="8" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="8" stroke="#E2E8F0" stroke-width="2.5"/></pattern><pattern id="hatch-red" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)"><rect width="8" height="8" fill="#FEF2F2"/><line x1="0" y1="0" x2="0" y2="8" stroke="#F5B5A8" stroke-width="2"/></pattern></defs>
 <rect x="0" y="0" width="1280" height="1382" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 7-1 · Assumptions of use by subject and status</text>
-<text x="40" y="66" font-size="12.5" fill="#475569">The 16 assumptions of §7 grouped by what they assume. No assumption is verified; each needs evidence before it is credited.</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">The 17 assumptions of §7 grouped by what they assume. No assumption is verified; each needs evidence before it is credited.</text>
 <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-01 §7</text>
 <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
 <rect x="40" y="102" width="1200" height="557" rx="12" fill="#F8FAFC" stroke="none" stroke-width="1.2"/>
 <text x="54" y="130" font-size="13.5" fill="#0F172A" font-weight="700">Vehicle ECUs</text>
 <text x="54" y="148" font-size="10.5" fill="#475569">existing elements outside</text>
 <text x="54" y="162" font-size="10.5" fill="#475569">the item (§3.2)</text>
-<text x="54" y="182" font-size="10.5" fill="#475569" font-weight="700">8 AoU</text>
+<text x="54" y="182" font-size="10.5" fill="#475569" font-weight="700">9 AoU</text>
 <rect x="216" y="114" width="333.3" height="155" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
 <rect x="216" y="124" width="4" height="135" rx="2" fill="#D2553F" stroke="none" stroke-width="1.2"/>
 <text x="232" y="138" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-01</text>
@@ -110,6 +110,23 @@
 <text x="577.3" y="601" font-size="10.5" fill="#0F766E">(DQ-365 option A): forced stop under ACC on level</text>
 <text x="577.3" y="615" font-size="10.5" fill="#0F766E">ground and on a grade at the ODD bound (6 %), with</text>
 <text x="577.3" y="629" font-size="10.5" fill="#0F766E">the hold duration and any time-out measured</text>
+<rect x="906.7" y="434" width="333.3" height="213" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="906.7" y="444" width="4" height="193" rx="2" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="922.7" y="458" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-17</text>
+<text x="992.7" y="457" font-size="10.5" fill="#475569" font-weight="600">EPS · PCM</text>
+<rect x="1157" y="444" width="71" height="18" rx="9" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="1192.5" y="456.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Unverified</text>
+<text x="922.7" y="478" font-size="11.5" fill="#0F172A" font-weight="600">The EPS signals every drop of LKA assistance</text>
+<text x="922.7" y="493" font-size="11.5" fill="#0F172A" font-weight="600">and the PCM signals every non-execution of ACC</text>
+<text x="922.7" y="508" font-size="11.5" fill="#0F172A" font-weight="600">requests, so that neither stops acting on the</text>
+<text x="922.7" y="523" font-size="11.5" fill="#0F172A" font-weight="600">item's requests without a fault the item can</text>
+<text x="922.7" y="538" font-size="11.5" fill="#0F172A" font-weight="600">see</text>
+<text x="922.7" y="559" font-size="10.5" fill="#475569">Credited in: WP-C-04 §11 (DQ-360 A); FSR-02.01,</text>
+<text x="922.7" y="573" font-size="10.5" fill="#475569">FSR-06.03; WP-S-02 TSR-626</text>
+<text x="922.7" y="587" font-size="10.5" fill="#0F766E">Verification: Vehicle tests with forced faults</text>
+<text x="922.7" y="601" font-size="10.5" fill="#0F766E">(WP-V-07). If a test finds a silent drop, a</text>
+<text x="922.7" y="615" font-size="10.5" fill="#0F766E">response-versus-command check is added (TSR-626 (b),</text>
+<text x="922.7" y="629" font-size="10.5" fill="#0F766E">(c) extended to that case; DQ-360 option B)</text>
 <rect x="40" y="673" width="1200" height="165" rx="12" fill="#F8FAFC" stroke="none" stroke-width="1.2"/>
 <text x="54" y="701" font-size="13.5" fill="#0F172A" font-weight="700">Installation and</text>
 <text x="54" y="718" font-size="13.5" fill="#0F172A" font-weight="700">maintenance</text>

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-04 Evaluation of unknown hazardous scenarios (method, residual risk estimation, results) |
 | Standard reference | ISO 21448:2022 §11 (evaluation of unknown hazardous scenarios), §13 (interface to operation); ISO/PAS 8800:2024 (AI V&V, operation-phase monitoring); ASPICE 4.0 VAL.1 |
-| Version | 0.3 (U-4 status and synthetic-data labelling per WP-V-02 §5.3; 2026-10-16). 0.2 (exploration blocks follow the highway-only ODD, decision register DQ-023, and the 105 km/h public-road cap, DQ-046; block Bn after every model change, DQ-038; log store without uploads to comma, DQ-084; 2026-10-16). 0.1 |
+| Version | 0.5 (R3 stop rule: a numeric Good–Turing threshold plus the three-block trend rule, DQ-108 A; value proposed in §5.4 and queued for the lead as DQ-262; OI-2; 2026-10-19). 0.4 (§5.2: confidence level C = 95 % one-sided, DQ-057 A; 2026-10-19). 0.3 (U-4 status and synthetic-data labelling per WP-V-02 §5.3; 2026-10-16). 0.2 (exploration blocks follow the highway-only ODD, decision register DQ-023, and the 105 km/h public-road cap, DQ-046; block Bn after every model change, DQ-038; log store without uploads to comma, DQ-084; 2026-10-16). 0.1 |
 | Status | Draft (method). Results section is a template: **Not yet executed** |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -102,7 +102,7 @@ Block sizes are planning values; they are set against WP-V-02 targets and achiev
 
 ### 5.2 Methods
 
-1. **Rate bound from exploration mileage.** With r_HB events in D km, the one-sided upper bound at confidence C is `λ_UB = χ²(C; 2·r_HB + 2) / (2·D)`. With zero events, `λ_UB = −ln(1 − C) / D` (≈ 3 / D at 95 %). This bounds the rate of **all** hazardous behaviour in the explored ODD, known and unknown, but only weakly: 10⁴ km with zero events bounds the rate at ≈ 3 × 10⁻⁴ /km, far above the targets of WP-V-02. It is reported as is.
+1. **Rate bound from exploration mileage.** With r_HB events in D km, the one-sided upper bound at confidence C is `λ_UB = χ²(C; 2·r_HB + 2) / (2·D)`. With zero events, `λ_UB = −ln(1 − C) / D` (≈ 3 / D at 95 %). C = 95 %, one-sided, as for every SOTIF target (WP-V-02 §3 step 3; decided 2026-10-19 by the project lead, decision register DQ-057 option A). This bounds the rate of **all** hazardous behaviour in the explored ODD, known and unknown, but only weakly: 10⁴ km with zero events bounds the rate at ≈ 3 × 10⁻⁴ /km, far above the targets of WP-V-02. It is reported as is.
 2. **Discovery-rate trend.** Plot cumulative new scenario classes against cumulative engaged distance. A flattening curve indicates that the frequent unknowns have been found. Fit a species-richness estimator (e.g., Good–Turing: the probability that the next event belongs to an unseen class ≈ f₁ / N, where f₁ is the number of classes seen exactly once and N the number of classified events). Report the estimate and its uncertainty; it is evidence of trend, not a guarantee.
 3. **Surrogate scaling.** Use near-miss signatures (§2.1) as leading indicators; estimate the ratio between surrogate events and hazardous events from triage data, then bound the hazardous rate from the more frequent surrogates. The ratio must be argued per signature (WP-V-02 OI-5).
 4. **Simulation contribution.** Failures found in simulation are not counted into λ but are used to direct U-6 reproduction; a simulation family with an approved fidelity case may contribute a per-scenario p_s estimate to the decomposition of WP-V-02 §3 step 5.
@@ -115,10 +115,30 @@ The SOTIF release argument (WP-K-02) may claim acceptable residual risk from unk
 |---|---|
 | R1 | All planned exploration blocks for the claimed ODD are complete |
 | R2 | No open class U event with S2/S3 potential |
-| R3 | Discovery trend non-increasing over the last three blocks; Good–Turing unseen-class probability reported (target value to be agreed, OI-2) |
+| R3 | Discovery trend non-increasing over the last three blocks, **and** the Good–Turing unseen-class probability at or below the threshold of §5.4 (DQ-108 A; value approved by the project lead before the blocks start, OI-2) |
 | R4 | λ_UB from §5.2 (1) and the surrogate bound from §5.2 (3) reported with their assumptions |
 | R5 | Field-monitoring triggers in WP-O-04 are defined so that a new scenario class found after release leads to restriction or withdrawal |
 | R6 | The argument states explicitly that the bound is weaker than the WP-V-02 rate targets and that acceptance rests on the envelope, controllability evidence and known-scenario evidence |
+
+### 5.4 Proposed R3 threshold
+
+The project lead decided on 2026-10-19 that the search for unknown hazardous scenarios stops on a numeric threshold plus the three-block trend rule (decision register DQ-108, option A). The value below is Claude's proposal. The lead approves it before block B1 starts (DQ-262, queued).
+
+**Estimator.** `P̂₀ = f₁ / N`, computed over the real-world blocks (simulation and replay findings are not counted, §5.2 (4)).
+
+- **N** is the number of classified hazardous-scenario events: r_HB of §5.1, classes K and U. N and F events are excluded, because they are not insufficiencies.
+- **f₁** is the number of scenario classes met exactly once. A class is a KS-nn of WP-V-03 or a new class U.
+
+The expected rate of events from classes not yet seen is then `P̂₀ · N / D = f₁ / D` per engaged km.
+
+**Proposed threshold: P̂₀ ≤ 0.10, with N ≥ 30.**
+
+1. **Why 0.10.** WP-V-02 §3 step 1 sets the targets on 90 % of each group's harm budget and holds back 10 % for scenarios not yet known. Assume an event from an unseen class is no more harmful than one from a seen class; R2 checks the severity of every class U event found. Then events from unseen classes stay inside that reserve when at most 10 % of events are expected to come from unseen classes.
+2. **Why N ≥ 30.** With fewer events, one more single-occurrence class moves P̂₀ by more than 0.03, and the estimate says little. At N = 30 the threshold allows at most three classes seen once.
+3. **When the count is not reached.** If the planned blocks (B1–B3) end with N < 30, R3 is not met by count. The SOTIF lead reports this with λ_UB (R4). Choosing between more blocks and a release that states the shortfall is then a new decision for the lead.
+4. **What it does not show.** The estimate assumes events are independent and the classes are stable over the blocks. It says nothing about classes that the ODD, routes and seasons of the blocks never reach. R1 and the stratified route pool (OI-4) cover that.
+
+The value is fixed before the blocks start, so the result cannot be fitted to it. A change after the blocks start needs a new dated decision.
 
 ## 6. Results
 
@@ -155,6 +175,6 @@ The SOTIF release argument (WP-K-02) may claim acceptable residual risk from unk
 | ID | Item |
 |---|---|
 | OI-1 | Build the LionDriver log store and query tooling for U-3 (shared with WP-M-08 OI-4, WP-O-04) |
-| OI-2 | Agree the R3 discovery-trend criterion and target with the assessor |
+| OI-2 | R3 rule decided 2026-10-19 (DQ-108 option A): numeric Good–Turing threshold plus the three-block trend rule. Value proposed in §5.4 (P̂₀ ≤ 0.10 with N ≥ 30); the project lead approves it before B1 starts (DQ-262). An assessor reviews it later |
 | OI-3 | Extend the MetaDrive bridge for U-4 (traffic, scenario scripting, randomised maps). In progress by the simulation session (WP-V-02 §5.3.1): traffic and pedestrian models and headless rendering work; scenario scripting and randomised maps are not built |
 | OI-4 | Define the stratified route pool for U-1 once the ODD (WP-C-02) is fixed |

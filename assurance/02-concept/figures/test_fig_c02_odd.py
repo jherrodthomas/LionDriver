@@ -61,7 +61,7 @@ class TestOddFigures(unittest.TestCase):
   def test_taxonomy_has_every_row_and_flags(self):
     svg = self.out["fig-c02-3-1-odd-taxonomy.svg"]
     rows = fo.taxonomy(self.md)
-    self.assertEqual(len(rows), 24)
+    self.assertEqual(len(rows), 25)
     for r in rows:
       self.assertIn(f">{r['cat']}<".replace("&", "&amp;"), svg)
     for _kind, tag, _src in fo.FLAGS.values():

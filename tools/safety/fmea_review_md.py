@@ -168,7 +168,7 @@ def msr_svg(name: str, doc: dict) -> str:
   cell_w, cell_h, x0, y0 = 58, 26, 92, 74
   w, h = x0 + 10 * cell_w + 196, y0 + 10 * cell_h + 66
   b = text(24, 32, f"{SHORT[name]}: {len(rows)} monitoring and system response ratings by frequency and monitoring", "ink", 15, 600)
-  b += text(24, 52, "Cell colour: MSR action priority at S 9–10 (provisional table). Number: causes rated in that cell.", "mut", 12)
+  b += text(24, 52, "Cell colour: MSR action priority at S 10 (handbook table, RT-3). Number: causes rated in that cell.", "mut", 12)
   grid: dict = {}
   for _fm, cz in rows:
     m = cz["msr"]
@@ -194,7 +194,7 @@ def msr_svg(name: str, doc: dict) -> str:
     b += text((xa + xb) / 2, yb + 16, lab, "mut", 11, anchor="middle")
   lx = x0 + 10 * cell_w + 22
   b += text(lx, y0 + 12, "Reads left to right:", "ink", 12, 600)
-  b += lines_at(lx, y0 + 32, wrap("better monitoring moves a cause left; only M 1 rates the severity after the response.", 26, 4),
+  b += lines_at(lx, y0 + 32, wrap("better monitoring moves a cause left; at S 10 only F 1–4 can leave H.", 26, 4),
                 "mut", 11)
   for i, (k, lab) in enumerate((("H", "priority H"), ("M", "priority M"), ("L", "priority L"))):
     yy = y0 + 112 + i * 24
@@ -618,9 +618,9 @@ def page(name: str, doc: dict, dg: dict | None, c: dict) -> str:
           "[WP-S-04 §3.7](../../../../03-system/WP-S-04-timing-ftti-budget.md#37-summary-of-fttis-and-budgets).", "",
           f"**Coverage:** {mc['rated']} of {mc['in_scope']} in-scope causes rated, {mc['exempt']} rated elsewhere " +
           f"(`msr: {doc['analysis'].get('msr', 'none')}`).", ""]
-    if fmea_lint.AP_MSR_PROVISIONAL:
-      L += ["> [!WARNING]", "> The MSR action priority uses a provisional table until the AIAG-VDA handbook table is " +
-            "transcribed (rating-tables §7.4). Read the M and F columns; the AP column will be re-rated.", ""]
+    if any(fmea_lint.msr_ap_provisional(fm["severity"]) for fm, cz in msr_rows(doc)):
+      L += ["> [!WARNING]", "> Rows with S 1–8 use a provisional MSR AP stand-in until those AIAG-VDA handbook pages are " +
+            "transcribed (rating-tables §7.4); their AP will be re-rated. S 9–10 use the handbook table.", ""]
     rated = msr_rows(doc)
     if rated:
       L += [f"![Frequency by monitoring](figures/{name}-msr.svg)", "",

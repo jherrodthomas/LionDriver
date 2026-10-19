@@ -43,7 +43,7 @@ class TestRealSources(unittest.TestCase):
 
   def test_every_figure_is_referenced_in_wp_a05(self):
     doc = fs.SOURCE.read_text(encoding="utf-8")
-    for name in fs.FIGURES:
+    for name in self.out:
       self.assertIn(f"figures/{name}", doc, name)
 
   def test_figure_numbers_match_file_names(self):

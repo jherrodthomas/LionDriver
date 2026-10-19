@@ -500,6 +500,13 @@ package LionDriverRequirements {
         :>> asil = "B";
         :>> verifMethod = "T-HIL, FI";
     }
+    requirement <'FSR-07.07'> fsr_07_07 : FunctionalSafetyRequirement {
+        doc /* While the stock system reports an AEB event, the item shall request zero acceleration from the PCM (no added drive), so that stock AEB braking does not depend on PCM arbitration alone. FSR-07.04 and its AOU-04R test still apply. (Decided 2026-10-18, DQ-300 A; System FMEA SFM-036, SFM-ACT-020; FTA MCS-07.10.) */
+        :>> workProduct = "WP-C-04";
+        :>> allocText = "E-01";
+        :>> asil = "QM (no ASIL claim; FSR-07.04 stays the measure)";
+        :>> verifMethod = "T-SIL, T-VEH";
+    }
     requirement <'FSR-08.01'> fsr_08_01 : FunctionalSafetyRequirement {
         doc /* While engaged, the item shall give the first driver alert within 6 s of the loss of attention, measured end to end from the driver's change of state to the alert (including camera frame time, DM model latency and policy timers), and shall reach the no-response reaction of FSR-02.09 within the time set in WP-S-04 (assurance/03-system/WP-S-04-timing-ftti-budget.md). */
         :>> workProduct = "WP-C-04";
@@ -1003,7 +1010,7 @@ package LionDriverRequirements {
         :>> verifMethod = "R, T-HIL";
     }
     requirement <'TSR-513'> tsr_513 : TechnicalSafetyRequirement {
-        doc /* In release builds, control requests that can change actuation, relay, CAN configuration or comms state shall be rejected while a car safety mode is active: at least 0xc5 (relay drive), 0xe5 (CAN loopback), 0xde/0xf9/0xfc/0xe8 (bit rate and CAN-FD configuration), 0xdb (OBD multiplexing), 0xe6 (clock source), 0xe7 (power save; in car mode it stops camera-side forwarding with the relay energised, SG-07, WP-A-04 SPF-08), 0xf1 (queue clear), 0xd1 param 1 (softloader entry, see also TSR-511), 0xd8 (MCU reset without fault reporting), 0xdf (alternative experience, see TSR-512). Also 0xc0 (comms reset), 0xb0/0xb1 and 0xf6 (to be confirmed per WP-W-02 OI-5). */
+        doc /* In release builds, control requests that can change actuation, relay, CAN configuration or comms state shall be rejected while a car safety mode is active: at least 0xc5 (relay drive), 0xe5 (CAN loopback), 0xde/0xf9/0xfc/0xe8 (bit rate and CAN-FD configuration), 0xdb (OBD multiplexing), 0xe6 (clock source), 0xe7 (power save; in car mode it stops camera-side forwarding with the relay energised, SG-07, WP-A-04 SPF-08), 0xf1 (queue clear), 0xd1 param 1 (softloader entry, see also TSR-511), 0xd8 (MCU reset without fault reporting), 0xdf (alternative experience, see TSR-512). Also 0xc0 (comms reset), 0xb0/0xb1 and 0xf6 (to be confirmed per WP-W-02 OI-5). A refused request is ignored: it shall not change the actuation state, and it does not by itself end actuation authority (decided 2026-10-19, DQ-082 B; the alternative, withdrawing authority and reporting it as RR-2026-009 F-36 and CSR-012 propose, was not chosen, so CSR-012's intent stays an open item of the cybersecurity case, WP-S-07 (assurance/03-system/WP-S-07-cybersecurity-requirements-architecture.md)). */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
         :>> asil = "C";
@@ -1291,7 +1298,7 @@ package LionDriverRequirements {
         :>> verifMethod = "T-SIL, LOG";
     }
     requirement <'TSR-626'> tsr_626 : TechnicalSafetyRequirement {
-        doc /* While engaged, the SoC shall detect that the envelope does not actuate from evidence other than the envelope's own status report: (a) pandaStates older than 2 nominal periods (0.2 s) is treated as a controls mismatch (TSR-621); (b) with lateral control active, the EPS-applied torque (STEER_TORQUE_EPS in 0x260) not following a commanded torque above a threshold for longer than t_blk; (c) with longitudinal control active, the measured acceleration not following the requested acceleration beyond a tolerance for longer than t_blk. (d) with lateral control active, EPS_STATUS (0x262) LKA_STATE not reporting LKA active, or with longitudinal control active, the PCM not reporting ACC in control, for longer than t_blk; (e) the transmitted-frame count of TSR-632 not advancing for a commanded actuation ID. Each leads to immediate disable with a take-over request, so that the warning falls within the SG-02/SG-06 1 s budget (SFM-ACT-018). Threshold, tolerance and t_blk (≤ 0.5 s) shall be set from fork-owned drive logs so that no false detection occurs in the reference log set. */
+        doc /* While engaged, the SoC shall detect that the envelope does not actuate from evidence other than the envelope's own status report: (a) pandaStates older than 2 nominal periods (0.2 s) is treated as a controls mismatch (TSR-621); (b) with lateral control active, the EPS-applied torque (STEER_TORQUE_EPS in 0x260) not following a commanded torque above a threshold for longer than t_blk; (c) with longitudinal control active, the measured acceleration not following the requested acceleration beyond a tolerance for longer than t_blk. (d) with lateral control active, EPS_STATUS (0x262) LKA_STATE not reporting LKA active, or with longitudinal control active, the PCM not reporting ACC in control, for longer than t_blk; (e) the transmitted-frame count of TSR-632 not advancing for a commanded actuation ID. Each leads to immediate disable with a take-over request, so that the warning falls within the SG-02/SG-06 1 s budget (SFM-ACT-018). Threshold, tolerance and t_blk (≤ 0.5 s) shall be set from fork-owned drive logs so that no false detection occurs in the reference log set. (b) and (c) target envelope blocking; an EPS or PCM that silently stops acting on the item's requests is covered by AOU-17 instead, verified with forced faults (decided 2026-10-18, DQ-360 A); if that test finds a silent drop, (b) and (c) are extended to it. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
         :>> asil = "QM (C-sup: TSR-516)";
@@ -1478,6 +1485,15 @@ package LionDriverRequirements {
         :>> mechanism = "PLB, FR, WRN";
         :>> timing = "detect ≤ 0.3 s (TSR-506) / warn ≤ 1 s";
         :>> verifMethod = "T-HIL, FI";
+    }
+    requirement <'TSR-713'> tsr_713 : TechnicalSafetyRequirement {
+        doc /* While the stock system reports an AEB event (stockAeb), the SoC shall request zero acceleration in ACC_CONTROL 0x343 (no positive acceleration), keep that request for as long as the event is reported, and then return to normal control; the alert of TSR-709 is unchanged. Stock AEB braking keeps its priority in the PCM (TSR-708, AOU-04R), which is still tested. (Decided 2026-10-18, DQ-300 A; SFM-ACT-020.) */
+        :>> workProduct = "WP-S-02";
+        :>> allocText = "SoC";
+        :>> asil = "QM (no ASIL claim; TSR-708 stays the measure)";
+        :>> mechanism = "FR";
+        :>> timing = "from the first frame that reports the event";
+        :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'TSR-801'> tsr_801 : TechnicalSafetyRequirement {
         doc /* Only a released LionDriver baseline shall be installed: the installed openpilot commit, AGNOS version and model artefact hashes shall equal the release record, and the build shall not be dirty. */
@@ -1786,7 +1802,7 @@ package LionDriverRequirements {
         :>> verifMethod = "R, T-SIL";
     }
     requirement <'SYS-040'> sys_040 : SystemRequirement {
-        doc /* Engagement shall be possible only through the stock cruise controls and only when no no-entry condition is present. */
+        doc /* Engagement shall be possible only through the stock cruise controls and only when no no-entry condition is present. In the reference configuration a setting outside the assured values (assured_config.py: following distance other than relaxed, CA-011; Experimental Mode on; alpha longitudinal; a debug or maneuver mode) is a no-entry condition, with a no-entry alert that names the setting (decided 2026-10-18, DQ-221 A; SWF-067, SWF-ACT-063). */
         :>> workProduct = "WP-S-01";
         :>> allocText = "host.selfdrived";
         :>> functionId = "F-03";
@@ -1795,13 +1811,13 @@ package LionDriverRequirements {
         :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'SYS-041'> sys_041 : SystemRequirement {
-        doc /* The system shall engage from standstill up to the ODD speed bound. */
+        doc /* The system shall refuse engagement, with a no-entry alert, below the highway speed floor v_floor, and shall engage from v_floor up to the ODD speed bound. This is the entry check for the highways-only ODD (DQ-023) until road-type data exists (WP-C-07 FM-08). Once engaged, slowing below v_floor (traffic, stop-and-go) does not disengage. (Decided 2026-10-18, DQ-280 A; STPA LS-13.) */
         :>> workProduct = "WP-S-01";
         :>> allocText = "host.card";
         :>> functionId = "F-03";
         :>> reqType = "F";
-        :>> target = "as stated";
-        :>> verifMethod = "T-VEH";
+        :>> target = "v_floor = TBD (proposed 60 km/h)";
+        :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'SYS-042'> sys_042 : SystemRequirement {
         doc /* A brake press or cancel shall disengage; the accelerator shall override longitudinal control without disengaging (reference setting). */
@@ -2899,6 +2915,10 @@ package LionDriverRequirements {
         end #derive ::> fsr_07_06;
     }
     #derivation connection {
+        end #original ::> sg_07;
+        end #derive ::> fsr_07_07;
+    }
+    #derivation connection {
         end #original ::> sg_08;
         end #derive ::> fsr_08_01;
     }
@@ -3489,6 +3509,10 @@ package LionDriverRequirements {
     #derivation connection {
         end #original ::> fsr_07_06;
         end #derive ::> tsr_712;
+    }
+    #derivation connection {
+        end #original ::> fsr_07_07;
+        end #derive ::> tsr_713;
     }
     #derivation connection {
         end #original ::> sg_01;

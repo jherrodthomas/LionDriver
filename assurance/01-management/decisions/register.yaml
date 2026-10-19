@@ -456,7 +456,9 @@
       title: "Leave them informative"
       detail: "No new commitment. Cost: cybersecurity and machine-learning data have no process target, which an assessor may count as a gap."
   sources: ["assurance/01-management/WP-M-13-aspice-capability-baseline.md §3, OI-2", "assurance/01-management/WP-M-01-assurance-strategy.md T-12", "assurance/01-management/WP-M-05-quality-assurance-plan.md QO-5"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#248", record: "assurance/01-management/WP-M-13-aspice-capability-baseline.md §3, §6 (OI-2 closed); WP-M-01 T-12; WP-M-05 QO-5", at: 2026-10-19}
 
 - id: DQ-020
   question: "Which remote features are switched off in the reference car?"
@@ -550,6 +552,7 @@
   reversibility: revisit
   blocks: "WP-C-09 G1 assessment; CAL agreement; WP-S-07 crediting principle (OI-8)"
   gate: G1
+  asked: 2026-10-19
   after: [DQ-009]
   options:
     - key: A
@@ -560,7 +563,8 @@
       title: "Defer and continue with internal review"
       detail: "No cost now; G1 cybersecurity assessment cannot complete."
   sources: ["assurance/02-concept/WP-C-10-cybersecurity-goals-and-concept.md OI-4", "assurance/01-management/WP-M-06-confirmation-measures-plan.md OI-4", "assurance/10-safety-case/WP-K-03-cybersecurity-case.md OI-1", "assurance/06-validation/WP-V-06-cybersecurity-validation.md OI-1"]
-  status: queued
+  status: withdrawn
+  note: "Withdrawn before it was asked: answered by DQ-009 C (no assessor for now). Re-ask if DQ-009 is revisited."
 
 - id: DQ-025
   question: "Who signs the SOTIF release recommendation?"
@@ -760,22 +764,25 @@
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-034
-  question: "Who agrees the controllability test pass criteria and sample sizes, and is the external assessor engaged to do it?"
-  context: "Controllability claims CA-01…CA-07 (e.g. that 99 % of drivers control envelope-bounded faults) need pass criteria and sample sizes agreed with the external assessor. The assessor engagement (WP-M-01 D-06) has no recorded status; without it, these criteria, the HARA I3 review and target approvals cannot close."
+  question: "Who sets the pass criteria and number of test subjects for the controllability tests, now that there is no assessor?"
+  context: "Controllability claims CA-01…CA-07 (for example, that 99 % of drivers control a fault the envelope bounds) need a pass criterion and a number of test subjects **before** any test runs. The plan was to agree them with the assessor, but you chose no assessor for now (DQ-009 C). Setting them after seeing results would look like fitting the criteria to the data."
   reversibility: revisit
   blocks: "Controllability tests (WP-C-08 §8); FSC option (c) evidence; HARA I3 review (WP-C-03 OI-6); WP-V-02 OI-3 target approval"
   gate: G1
-  after: [DQ-009]
+  decider: lead
+  asked: 2026-10-19
+  batch: 11
   options:
     - key: A
       recommended: true
-      title: "Engage the FuSa assessor now and agree criteria"
-      detail: "Assessor cost (WP-M-03 lists 10–20 assessor-days for G0–G4 confirmation reviews); unblocks G1."
+      title: "Set them now and freeze them; an assessor checks them later"
+      detail: "Claude drafts the criteria from the published code of practice (20 subjects, none failing, shows 85 % controllability at 95 % confidence); you approve them in a dated record. Cost: rework if a later assessor disagrees."
     - key: B
-      title: "Set criteria internally and seek assessor agreement later"
-      detail: "Faster start, but rework risk if the assessor disagrees at G1."
+      title: "Wait for an assessor before setting them"
+      detail: "No rework risk. Cost: no controllability tests until an assessor is engaged, so the HARA I3 review and G1 stay blocked."
   sources: ["assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md OI-3"]
-  status: queued
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-035
   question: "Should the threat analysis's financial-damage ratings stay at their conservative placeholders?"
@@ -841,13 +848,14 @@
       title: "Move to a platform with per-vehicle checks"
       detail: "Scales. Cost: rewrite the scope and a larger worst-case HARA."
   sources: ["assurance/00-assessment/docs-safety-reconciliation.md OI-4"]
-  status: answered
+  status: applied
   answer:
     choice: B
     via: inbox
     at: 2026-10-14
     by: u_DgEswP8TFzpISXlzh3BD1g
   note: "Before applying, two follow-on questions for the lead: the hazard rating approach (DQ-369) and the G1 claim (DQ-370)."
+  applied: {ref: "jherrodthomas/LionDriver#248, jherrodthomas/LionDriver#252", record: "WP-M-01 §3.1 and §8 D-15; WP-M-07 §5; WP-C-01 §1.1; WP-C-03 §1.1", at: 2026-10-19}
 
 - id: DQ-038
   question: "Should the model update policy be made official: pin model weights per release and re-test on any model change?"
@@ -891,22 +899,29 @@
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-040
-  question: "Will LionDriver create a legal entity (or other structure) to sign contracts for the assessor, pen test and insurance?"
-  context: "There is no legal entity or contract structure; external assessor, pen-test and insurance contracts need a counterparty."
+  question: "Should LionDriver set up a legal entity, or should you sign contracts and insurance as an individual?"
+  context: "There is no assessor for now (DQ-009 C), but road and closed-course testing still needs insurance cover for test use (WP-M-03 OI-4), and any later pen test, assessor or parts supplier needs a counterparty. Signing as an individual is quick but puts any liability on you personally. This is hard to undo once contracts and policies are in a name."
   reversibility: hard
-  blocks: "D-06 contracts, insurance (OI-4 WP-M-03)"
+  blocks: "Test-use insurance (WP-M-03 OI-4); future contracts (D-06); WP-M-04 OI-5"
   gate: G1
   after: [DQ-009]
+  asked: 2026-10-19
+  batch: 10
   options:
     - key: A
       recommended: true
-      title: "Contract as the individual maintainer"
-      detail: "Fast; personal liability."
+      title: "Sign as an individual now; set up an entity before public release"
+      detail: "Ask your insurer about cover for closed-course test use in your own name. Revisit before any public release or paid contract. Cost: personal liability during development; an entity later."
     - key: B
-      title: "Create a legal entity"
-      detail: "Limits liability; setup cost and time."
-  sources: ["assurance/01-management/WP-M-04-organization-competence-safety-culture.md OI-5"]
-  status: queued
+      title: "Set up a legal entity now (e.g. an LLC)"
+      detail: "Limits personal liability from the start and gives contracts a clear counterparty. Cost: setup fees, yearly filings and admin time."
+    - key: C
+      title: "Decide when the first contract is actually needed"
+      detail: "No effort now. Cost: test insurance (WP-M-03 OI-4) stays open and blocks G1 test sessions."
+  sources: ["assurance/01-management/WP-M-04-organization-competence-safety-culture.md OI-5", "assurance/01-management/WP-M-03-project-plan.md OI-4"]
+  status: applied
+  answer: {choice: C, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: cc1b1446, record: "WP-M-04 OI-5; WP-M-03 OI-4", at: 2026-10-19}
 
 - id: DQ-041
   question: "Which closed course should you contact first for the vehicle tests?"
@@ -976,20 +991,19 @@
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-044
-  question: "Engage an external reviewer with vehicle-test / SAE J3018 experience to review the test procedure before the first public-road engaged testing (L5)?"
-  context: "The maintainer currently holds test manager and safety manager roles; an external review before public-road engaged testing provides the independence the procedure itself calls for, and the same reviewer is expected to confirm the (TBC) values and sign the maintainer's own qualification."
+  question: "Before engaged public-road testing (L5), should an outside reviewer with vehicle-test experience check the test procedure?"
+  context: "You hold the test manager and safety manager roles (DQ-076 B) and there is no assessor (DQ-009 C), so the procedure has no independent check. L5 is not possible yet anyway: it needs a second safety driver, which DQ-076 B leaves open. The same reviewer would confirm the (TBC) values and sign off your own driver qualification."
   reversibility: revisit
   blocks: "WP-V-07 approval for L5; OI-6 TBC values; L3 deviations"
   gate: G1
-  after: [DQ-009]
   options:
     - key: A
       recommended: true
-      title: "Engage an external reviewer now"
-      detail: "Unblocks L5 and the TBC values; cost and search effort."
+      title: "Engage a reviewer once a second safety driver is in view"
+      detail: "No cost until L5 is possible. Cost: the (TBC) values in WP-V-07 stay open until then."
     - key: B
-      title: "Defer until just before L5"
-      detail: "Saves early cost; risks delaying L5."
+      title: "Engage a reviewer now"
+      detail: "The (TBC) values can be settled early. Cost: search effort and fees before L5 is possible."
   sources: ["assurance/06-validation/WP-V-07-vehicle-test-operations.md OI-1"]
   status: queued
 
@@ -1264,21 +1278,28 @@
   applied: {ref: ebc9fea, record: "WP-C-04 FSR-02.12; WP-S-02 TSR-629 (WP-O-02 OPS-01 and implementation open)", at: 2026-10-16}
 
 - id: DQ-057
-  question: "What confidence level and statistical method define 'meets the validation targets with stated confidence' for unknown-scenario evaluation (R-08)?"
-  context: "R-08 is a SOTIF release criterion. The confidence level determines how much driving or evaluation is needed and how much residual risk is accepted at release."
+  question: "How sure must we be, statistically, that the system meets its SOTIF targets in unknown scenarios before release?"
+  context: "Release criterion R-08 says unknown-scenario evaluation must meet the validation targets \"with stated confidence\", but no confidence level is set. The level fixes how much validation driving and simulation is needed: at 95 % a zero-failure demonstration needs about 3/p trials, at 99 % about 4.6/p. WP-V-02 already uses one-sided 95 % bounds for controllability and exposure."
   reversibility: revisit
-  blocks: "R-08, WP-V-02, SOTIF release"
+  blocks: "R-08 (WP-K-02 OI-2), WP-V-02, WP-V-04, SOTIF release"
   gate: G2
+  asked: 2026-10-19
+  batch: 10
   options:
     - key: A
       recommended: true
-      title: "Set in WP-V-02 (e.g. one-sided 95 % bound as used elsewhere)"
-      detail: "Consistent with WP-V-02 §3.3 method; fixes data needs."
+      title: "One-sided 95 %, the method WP-V-02 already uses"
+      detail: "Zero-failure (or Clopper–Pearson) bounds per scenario class, as in WP-V-02 §3.3. Consistent across the case. Cost: about 3/p trials per target."
     - key: B
-      title: "Leave to assessor"
-      detail: "Delays planning of validation driving."
-  sources: ["assurance/10-safety-case/WP-K-02-sotif-release-argument.md OI-2"]
-  status: queued
+      title: "99 % for ASIL C-related hazards, 95 % for the rest"
+      detail: "Stronger claim where severity is highest. Cost: about 50 % more validation exposure for those hazards."
+    - key: C
+      title: "Leave it until an assessor is engaged"
+      detail: "No decision now. Cost: validation driving and simulation cannot be sized, and with no assessor planned (DQ-009 C) it stays open."
+  sources: ["assurance/10-safety-case/WP-K-02-sotif-release-argument.md OI-2, R-08", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md §3.3"]
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: ffc22dd, record: "WP-V-02 v0.10 §3; WP-V-04 §5.2; WP-K-02 R-08; WP-M-08 §5.2 (#255)", at: 2026-10-19}
 
 - id: DQ-058
   question: "Does PAS 8800 need an AI architecture view at G2?"
@@ -1286,6 +1307,7 @@
   reversibility: easy
   blocks: "WP-M-10 tailoring"
   gate: G2
+  decider: claude
   options:
     - key: A
       recommended: true
@@ -1459,24 +1481,28 @@
   applied: {ref: df2c0ed, record: "WP-H-02 v0.8 OI-1; WP-H-01 OI-3; WP-H-04 plan step 2; WP-H-05 plan step 2; WP-H-07 OI-5", at: 2026-10-16}
 
 - id: DQ-066
-  question: "Does the safety manager approve PMHF (overall failure probability) as the main random-hardware-failure method, with a per-cause check of the biggest contributors?"
-  context: "ISO 26262-5 §9 allows either one overall probability figure (PMHF, method 1) or a per-fault evaluation (EEC, method 2). The proposal is PMHF plus an EEC-style check of the MCU core, SRAM and the stuck relay, so a good overall number cannot hide one uncovered part. The doc says this needs safety-manager approval before calculation starts."
+  question: "Which method should be used for the random hardware failure target: one overall probability, a per-fault check, or both?"
+  context: "ISO 26262-5 §9 allows one overall failure probability (PMHF, method 1) or a per-fault evaluation (EEC, method 2). The proposal is PMHF plus an EEC-style check of the biggest contributors (MCU core, SRAM, harness switch), so a good total cannot hide one uncovered part. As safety manager, you approve the method before the calculation starts; the ASIL C single-point miss stays open for G2 (DQ-362 A)."
   reversibility: easy
-  blocks: "WP-H-05 calculation; G2 method record"
+  blocks: "WP-H-05 calculation (OI-1); G2 method record"
   gate: G2
+  asked: 2026-10-19
+  batch: 10
   options:
     - key: A
       recommended: true
-      title: "PMHF + per-cause check of dominant contributors"
-      detail: "One comparable figure plus visibility of the relay/MCU; moderate effort."
+      title: "PMHF plus a per-cause check of the biggest contributors"
+      detail: "One figure to compare with the ASIL C target, and no single weak part hidden in it. Cost: moderate effort."
     - key: B
-      title: "EEC (method 2) only"
-      detail: "Per-part visibility, but higher effort and harder to communicate."
+      title: "Per-fault evaluation (EEC) only"
+      detail: "Every part seen on its own. Cost: more work and harder to summarise for the safety case."
     - key: C
       title: "PMHF only"
-      detail: "Least effort; a single weak part could be hidden in the total."
-  sources: ["assurance/04-hardware/WP-H-05-random-hardware-failures-pmhf.md OI-1"]
-  status: queued
+      detail: "Least effort. Cost: one weak part, such as the MCU core, could be hidden in a good total."
+  sources: ["assurance/04-hardware/WP-H-05-random-hardware-failures-pmhf.md OI-1, §2"]
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: 3965a9e, record: "WP-H-05 v0.6 §2, OI-1 (#256)", at: 2026-10-19}
 
 - id: DQ-067
   question: "What lifetime, operating hours and temperatures should the hardware failure calculations assume for the device?"
@@ -1499,78 +1525,88 @@
       title: "Wait for measured cabin temperatures and usage data"
       detail: "The most defensible values. Cost: the hardware metrics stay provisional until a logging campaign is done; G2 slips or passes with a condition."
   sources: ["assurance/04-hardware/WP-H-05-random-hardware-failures-pmhf.md §3, OI-2", "assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md §2.4"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#248", record: "assurance/04-hardware/WP-H-05-random-hardware-failures-pmhf.md §3 (OI-2 closed, OI-6); WP-H-03 §2.4", at: 2026-10-19}
 
 - id: DQ-068
-  question: "Does the safety manager confirm the proposed failure-rate sources (SN 29500 for parts, ST data or an IEC TR 62380-type model for the MCU)?"
-  context: "The FMEDA needs one failure-rate handbook per part class. The proposal is SN 29500 with IEC 61709 for conversions, supplier FIT data for the STM32H7 if ST provides it, otherwise a die/package model as referenced in ISO 26262-11 (IEC TR 62380 is no longer maintained — status to verify). The doc asks the safety manager to confirm before numbers are filled in."
+  question: "Which failure-rate handbooks should the hardware calculations use?"
+  context: "Every number in the hardware analysis (FMEDA) comes from a failure-rate source. The proposal: **SN 29500** for discrete parts and ICs, **IEC 61709** to convert to the approved mission profile (DQ-067 A), ST's own FIT data for the STM32H7 if ST provides it, otherwise an ISO 26262-11 die/package model. The current first estimate (FMEDA rev 0.4) already uses SN 29500, so changing source now means redoing it."
   reversibility: easy
-  blocks: "FMEDA §6, WP-H-04/05 numbers"
+  blocks: "FMEDA §6 (WP-H-03 OI-2); WP-H-04/05 numbers"
   gate: G2
+  asked: 2026-10-19
+  batch: 10
   options:
     - key: A
       recommended: true
-      title: "Confirm the proposal in §2.3"
-      detail: "Calculation can start with generic data now and part-specific later."
+      title: "Approve the proposed set (WP-H-03 §2.3)"
+      detail: "Widely used in automotive FMEDAs and already in the first estimate. Generic now, part-specific when ST data arrives. Cost: buying the SN 29500 series if not already held."
     - key: B
-      title: "Choose a different handbook set"
-      detail: "Rework of the first estimate (§6.3); may need purchase of another handbook."
-  sources: ["assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md OI-2"]
-  status: queued
+      title: "Use a different handbook set"
+      detail: "For example a different industry standard. Cost: the first estimate (§6.3) is redone, and another handbook may need buying."
+  sources: ["assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md OI-2, §2.3"]
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: 3965a9e, record: "WP-H-03 v0.7 §2.3, OI-2 (#256)", at: 2026-10-19}
 
 - id: DQ-069
-  question: "If ST's FIT data and safety package for the STM32H7 are unavailable or need a licence, does the project pay for them or write its own CPU/RAM self-tests with only 'low' coverage?"
-  context: "Without ST's safety package (QE-03), LionDriver must write its own start-up and periodic CPU/RAM tests and may claim only low diagnostic coverage for the CPU, which may make the ASIL B single-point fault metric fail (WP-H-04 §5.1). WP-H-07 §5 says this fallback needs a safety-manager decision; the next step is to ask ST about availability and licence terms."
+  question: "If ST's safety data for the panda's microcontroller isn't freely available, do we pay for it, or write our own self-tests?"
+  context: "Without ST's safety package for the STM32H7 (safety manual, FMEDA, self-test library), LionDriver writes its own CPU/RAM start-up and periodic tests and can claim only **low** coverage for the CPU. That makes the single-point metric, already 0.16 points short of ASIL C (DQ-362 A), harder to reach. The first step is to ask ST about availability and licence terms (WP-H-07 OI-2)."
   reversibility: revisit
-  blocks: "WP-H-03 OI-3 / OI-10 part-specific rates; SPFM for SG-01"
+  blocks: "WP-H-03 OI-3/OI-10 part-specific rates; SPFM for SG-01, SG-02, SG-03, SG-06"
   gate: G2
+  asked: 2026-10-19
+  batch: 10
   options:
     - key: A
       recommended: true
-      title: "Obtain ST package/FIT data (licence if needed)"
-      detail: "Best coverage argument; possible licence cost and terms."
+      title: "Ask ST now; pay a licence if the cost is reasonable"
+      detail: "Best coverage argument for the ASIL C metric. Cost: a possible licence fee and its terms of use, which become assumptions on the firmware."
     - key: B
-      title: "Own self-tests, low CPU coverage"
-      detail: "No licence; higher risk of missing the SPFM target."
+      title: "Write our own self-tests and accept low CPU coverage"
+      detail: "No licence. Cost: the ASIL C single-point target is likely missed, and the gap moves to G2."
     - key: C
-      title: "Hardware adapter (DC-02) or lower claim"
-      detail: "Moves coverage to LionDriver hardware or restricts the ASIL claim."
-  sources: ["assurance/04-hardware/WP-H-07-hardware-component-qualification.md OI-2"]
-  status: queued
+      title: "Add a hardware supervisor (adapter DC-02) or lower the claim"
+      detail: "Moves coverage to LionDriver hardware, or restricts the ASIL claim. Cost: new hardware design, or a weaker safety case."
+  sources: ["assurance/04-hardware/WP-H-07-hardware-component-qualification.md OI-2, QE-03, §5"]
+  status: applied
+  answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: 3965a9e, record: "WP-H-03 §2.3, OI-3, §6.4; WP-H-04 OI-6; WP-H-07 QE-03, §5; DFMEA DFM-ACT-001 (#256)", at: 2026-10-19}
 
 - id: DQ-070
-  question: "Should the project confirm with the external assessor that mechanisms on the QM main computer (SoC) get no diagnostic-coverage credit?"
-  context: "The hardware metrics rule (§3.3) credits only mechanisms on the safety MCU, because the SoC is developed only to QM. This is conservative, but the assessor should agree it before G2, which presumes an assessor is engaged."
+  question: "Should mechanisms on the QM main computer (SoC) get no diagnostic-coverage credit in the hardware metrics?"
+  context: "The hardware metrics rule (WP-H-04 §3.3) credits only mechanisms on the safety MCU, because the SoC is developed only to QM. This is conservative. Assessor agreement was planned before G2; with no assessor (DQ-009 C) the rule stands as an internal method choice, flagged for confirmation when one is engaged."
   reversibility: easy
   blocks: "WP-H-04 metric method, G2"
   gate: G2
-  after: [DQ-009]
+  decider: claude
   options:
     - key: A
       recommended: true
-      title: "Keep exclusion and get assessor agreement"
-      detail: "Conservative; no SoC rework; needs assessor contact."
+      title: "Keep the exclusion"
+      detail: "Conservative; no SoC rework. Confirmation waits for an assessor."
     - key: B
       title: "Seek credit for SoC mechanisms"
-      detail: "Better metrics but needs SoC parts developed to the ASIL — major effort."
+      detail: "Better metrics, but needs SoC parts developed to the ASIL: major effort."
   sources: ["assurance/04-hardware/WP-H-04-hardware-metrics.md OI-3"]
   status: queued
 
 - id: DQ-071
-  question: "Should the project agree with the external assessor to use vehicle-side protections (EPS torque limit, PCM clamp, PCS priority) in the hardware effect analysis?"
-  context: "Faults that only stop transmission become 'safe' for SG-01 if the EPS really limits and times out LKA torque. These vehicle measures are outside the item and unverified (AoUs). The doc uses them only in the effect analysis, never as diagnostic coverage, and reports PMHF with and without them."
+  question: "Should vehicle-side protections (EPS torque limit, PCM clamp, PCS priority) be used in the hardware effect analysis?"
+  context: "Faults that only stop transmission become 'safe' for SG-01 if the EPS really limits and times out LKA torque. These vehicle measures are outside the item and unverified (AoUs). The analysis uses them only for effects, never as diagnostic coverage, and reports PMHF with and without them. With no assessor (DQ-009 C) this is an internal method choice, flagged for confirmation later."
   reversibility: easy
   blocks: "PMHF calculation; AOU-01R/04R/05R verification (vehicle tests)"
   gate: G2
-  after: [DQ-009]
+  decider: claude
   options:
     - key: A
       recommended: true
-      title: "Use in effect analysis only, report both variants"
-      detail: "Realistic figures, still conservative; needs assessor agreement and vehicle characterization."
+      title: "Use them for effects only; report both variants"
+      detail: "Realistic figures, still conservative. Cost: vehicle characterization, and assessor confirmation once one is engaged."
     - key: B
       title: "Do not use them"
-      detail: "All such faults count as single-point; worse PMHF and possibly forces DC-02/DC-03."
+      detail: "All such faults count as single-point: worse PMHF, and DC-02/DC-03 may become necessary."
   sources: ["assurance/04-hardware/WP-H-05-random-hardware-failures-pmhf.md OI-3"]
   status: queued
 
@@ -1671,21 +1707,28 @@
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-076
-  question: "Who fills the test/safety driver (G1), hardware safety engineer (G2, likely external) and HIL bench owner (G3) roles?"
-  context: "These roles are TBD. The HIL bench (decision D-04) does not exist and no parts are bought; the G4 phase cannot start without it, and a late bench slips G3."
+  question: "Who will be the second safety driver, the hardware safety engineer and the test-bench (HIL) owner?"
+  context: "Today you hold every role. Closed-course sessions (DQ-104 B) at level L5 need a two-person crew, so a second qualified safety driver is needed for G1 road tests (WP-V-07 OI-2). The hardware metrics (G2) are planned with an external hardware safety engineer, and the HIL bench (decision D-04), owned by nobody and not bought, gates G3 and G4. With about 10 hours a week (DQ-208 A), these are the roles most likely to slip the schedule."
   reversibility: revisit
-  blocks: "G1 road tests, WP-H-03, HIL bench (D-04), G3/G4"
-  gate: G3
+  blocks: "G1 road tests (WP-V-07 OI-2), WP-H-03/04 review, HIL bench (D-04), G3/G4"
+  gate: G1
+  asked: 2026-10-19
+  batch: 10
   options:
     - key: A
       recommended: true
-      title: "Assign now, engage external HW safety engineer"
-      detail: "Unblocks G2-G4 work; cost for external help and bench parts."
+      title: "Recruit a second safety driver now; you own the HIL bench; hardware engineer at G2"
+      detail: "A trusted second driver (trained per WP-V-07 §5) unblocks two-person sessions. You own the bench and buy parts when G2 nears. An external hardware safety engineer is engaged only for the G2 metric review. Cost: one volunteer to train now, external hours at G2."
     - key: B
-      title: "Defer"
-      detail: "Each gate passes only with conditions."
-  sources: ["assurance/10-safety-case/gates/skeletons/G3-skeleton.md “HIL bench owner | TBD | G3”", "assurance/06-validation/WP-V-07-vehicle-test-operations.md OI-2"]
-  status: queued
+      title: "Hold all three roles yourself for now"
+      detail: "No cost now. Cost: only L0–L4 sessions are possible, the hardware review is not independent, and each gate passes only with conditions."
+    - key: C
+      title: "Engage external help for all three now"
+      detail: "Fastest progress. Cost: the largest spend, before G1 has shown the approach works."
+  sources: ["assurance/10-safety-case/gates/skeletons/G3-skeleton.md “HIL bench owner | TBD | G3”", "assurance/06-validation/WP-V-07-vehicle-test-operations.md OI-2, §5", "assurance/10-safety-case/gates/skeletons/G3-skeleton.md participants (hardware safety engineer TBD)"]
+  status: applied
+  answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: cc1b1446, record: "WP-M-03 §4.3", at: 2026-10-19}
 
 - id: DQ-077
   question: "When driver-monitoring confidence drops, should the wheel-touch reminders come faster at highway speed?"
@@ -1717,21 +1760,29 @@
   note: "Speed table and bound set in WP-C-08 v0.5 §5.4 (jherrodthomas/LionDriver#214). policy.py change done 2026-10-17: alert k at 5/15/25 s or 150/240/395 m, whichever comes first; SWSR-634 (WP-W-02 v0.32), unit tests only. Open: vehicle validation, WP-V-02 §4.4 (b)-(d)."
 
 - id: DQ-078
-  question: "Does the safety authority accept the residual risks listed for missing supplier evidence (no EMC/environment tests, teardown instead of schematic, handbook failure rates)?"
-  context: "comma.ai and ST evidence may never arrive. WP-H-07 §5 proposes accepting most gaps with conditions (incoming inspection per batch, sensitivity margin, relay readback), but EMC and environmental robustness have no LionDriver test and 'must be recorded as residual risk' for the assessor; the relay gap is high risk unless DC-03 is added."
+  question: "Do you accept the residual risks from supplier evidence we can't get (no EMC or environmental tests, handbook failure rates)?"
+  context: "comma.ai and ST may never supply test reports or schematics; you chose to ask and wait, without a teardown (DQ-065 B). WP-H-07 §5 proposes accepting most gaps with conditions (incoming inspection of each batch, margins on failure rates). EMC and environmental robustness have no LionDriver test at all and would stand as recorded residual risks in the safety case. As safety authority, accepting them is your call."
   reversibility: revisit
-  blocks: "Safety case WP-K-01 residual-risk section; risk register WP-M-07"
+  blocks: "Safety case WP-K-01 residual-risk section; risk register WP-M-07; WP-H-07 OI-6"
   gate: G3
+  asked: 2026-10-19
+  batch: 10
   options:
     - key: A
       recommended: true
-      title: "Accept with the stated conditions; record EMC/environment for the assessor"
-      detail: "Lets the safety case proceed; residual risks visible in WP-K-01 and WP-M-07."
+      title: "Accept with the stated conditions; record EMC and environment as residual risks"
+      detail: "The safety case can proceed and the gaps stay visible in WP-K-01 and WP-M-07. Cost: these are limits a reviewer will see, and the claim rests on handbook data."
     - key: B
-      title: "Do not accept; add DC-02/DC-03 adapter or restrict the claim"
-      detail: "More hardware or a lower ASIL claim (FSC option c)."
-  sources: ["assurance/04-hardware/WP-H-07-hardware-component-qualification.md OI-6"]
-  status: queued
+      title: "Don't accept; pay for EMC and environmental tests"
+      detail: "Closes the biggest gaps with evidence. Cost: lab fees and devices used up in testing."
+    - key: C
+      title: "Don't accept; add the hardware adapter (DC-02/DC-03) or lower the claim"
+      detail: "Moves coverage to LionDriver hardware, or restricts the ASIL claim. Cost: new hardware design, or a weaker safety case."
+  sources: ["assurance/04-hardware/WP-H-07-hardware-component-qualification.md OI-6, §5"]
+  note: "WP-H-07 still describes the harness as having a relay (QC-04, QE-05); the reference harness box v3 uses two analog switches (RR-2026-010). The residual-risk list should be updated when WP-H-07 is next revised."
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: 3965a9e, record: "WP-H-07 §5, OI-6 (#256); WP-M-07 R-30; WP-K-01 DF-42", at: 2026-10-19}
 
 - id: DQ-079
   question: "After the envelope revokes authority for a too-high transmit rate, should re-engagement stay blocked until the rate has been within budget for a full 250 ms window?"
@@ -1797,41 +1848,49 @@
       title: "Wait for the vehicle characterisation, then set them once"
       detail: "One set of measured values. Cost: the seven requirements stay unimplemented until the test car and a closed course are ready (DQ-104: closed courses only)."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-4", "assurance/03-system/WP-S-02-technical-safety-requirements.md OI-3, OI-5"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-082
-  question: "When the host sends a refused request while steering authority is granted, should the envelope also withdraw authority (treat the host as possibly compromised)?"
-  context: "In the reference build a refused host request is ignored. Review finding F-36 proposes that it also clears controls_allowed and is reported, matching cybersecurity requirement CSR-012 ('suspected compromised host → no actuation'). This trades availability (a spurious request disengages) for security."
+  question: "If the main computer sends a request the panda refuses while steering is engaged, should the panda also take away steering authority?"
+  context: "Today a refused request is mapped to nothing and ignored (panda `main_comms.h`). Review finding F-36 proposes that it also ends authority (clears `controls_allowed`) and reports it, matching cybersecurity requirement CSR-012: a host that sends forbidden requests may be compromised, so stop actuating. The trade is safety and security against availability: a stray request would disengage the system, with the take-over alert."
   reversibility: easy
-  blocks: "SWSR-512/513, CSR-012"
+  blocks: "SWSR-512/513, CSR-012 (WP-W-03 ATC-21)"
   gate: G3
+  asked: 2026-10-19
+  batch: 10
   options:
     - key: A
       recommended: true
-      title: "Withdraw authority and report"
-      detail: "Implements CSR-012 intent; possible unexpected disengagements if the host sends a stray request."
+      title: "Withdraw authority and report it"
+      detail: "Meets CSR-012; a misbehaving host can no longer steer. Cost: a small panda change plus tests, and a rare unexpected disengagement if the host ever sends a stray request."
     - key: B
       title: "Keep ignoring the request"
-      detail: "No behaviour change; CSR-012 intent not met."
-  sources: ["assurance/05-software/WP-W-03-software-architecture.md ATC-21"]
-  status: queued
+      detail: "No change, no extra disengagements. Cost: CSR-012's intent is not met; it stays an open item in the cybersecurity case."
+  sources: ["assurance/05-software/WP-W-03-software-architecture.md ATC-21", "assurance/05-software/reviews/RR-2026-009.md F-36"]
+  status: answered
+  answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-083
-  question: "Who approves the MISRA deviation records, and should 'RATIONALE TBD' suppressions be justified or removed by code changes?"
-  context: "The deviation register has entries without rationale; the procedure requires approval of global suppressions by the safety function. Without approved records the MISRA compliance claim for the envelope is incomplete (UV-G6)."
+  question: "Will you approve each MISRA deviation as safety manager, and should the unjustified ones be fixed in code instead?"
+  context: "The panda's MISRA deviation register has entries marked 'RATIONALE TBD'. Each global suppression needs approval by the safety function, which you hold (DQ-076 B). Without approved records the MISRA compliance claim for the envelope (UV-G6) is incomplete."
   reversibility: easy
   blocks: "MISRA compliance summary (OI-3), UV-G6"
   gate: G3
+  decider: lead
+  asked: 2026-10-19
+  batch: 11
   options:
     - key: A
       recommended: true
-      title: "Write rationales and have the safety manager approve"
-      detail: "Compliance claim can be made; approval effort per entry."
+      title: "Claude writes the rationales; you approve them"
+      detail: "The compliance claim can be made. Cost: a short review per entry; the approval is not independent while you hold every role."
     - key: B
-      title: "Remove suppressions by code changes where feasible"
-      detail: "Fewer deviations; code churn in safety code (see OI-9)."
+      title: "Remove the suppressions by changing the code where possible"
+      detail: "Fewer deviations. Cost: churn in safety code (WP-W-01 OI-9); each change needs its own review and tests."
   sources: ["assurance/05-software/WP-W-01-software-development-environment-guidelines.md OI-2"]
-  status: queued
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-084
   question: "May LionDriver test drives upload logs to comma's servers?"
@@ -1855,21 +1914,26 @@
   applied: {ref: aae16af, record: "WP-C-11 DSR-05; WP-M-10 OI-5; WP-M-08 §7", at: 2026-10-16}
 
 - id: DQ-085
-  question: "May the SPI-overflow fault test (VS-FI-07) run on the reference device, or only on a spare?"
-  context: "VS-FI-07 deliberately overflows the SPI link between the main processor and the safety MCU; it could damage or corrupt the reference device that all vehicle evidence is tied to. Running it on a spare protects the reference unit but means buying one."
+  question: "May we buy spare units for the two tests that can break hardware, instead of running them on the reference unit?"
+  context: "Two planned tests can damage hardware. The SPI-overflow fault test (VS-FI-07) floods the link between the main computer and the panda; the readout-protection test (TC-05) changes the panda's option bytes and can **permanently brick** it. All vehicle evidence is tied to the reference device and panda, so losing or altering them means redoing that evidence."
   reversibility: easy
-  blocks: "VS-FI-07; G4 fault-injection evidence"
+  blocks: "VS-FI-07; TC-05; G4 fault-injection evidence"
   gate: G4
+  decider: lead
+  asked: 2026-10-19
+  batch: 11
   options:
     - key: A
       recommended: true
-      title: "Spare unit only"
-      detail: "Protects the reference configuration; cost of a spare device."
+      title: "Buy spares: one device and one or two pandas"
+      detail: "Both tests run on spares and the reference unit stays untouched. The same spares can be the closed-course test units. Cost: the price of the spare hardware."
     - key: B
-      title: "Reference device, with a recovery/reflash check afterwards"
-      detail: "No purchase; risk of losing or altering the reference unit."
-  sources: ["assurance/06-validation/WP-V-05-fault-injection.md OI-5"]
-  status: queued
+      title: "Use the reference device for VS-FI-07; skip TC-05's destructive steps"
+      detail: "No purchase; reflash and recheck the reference unit afterwards, and record why TC-05 was cut short. Cost: risk of altering the reference unit, and weaker evidence for boot protection."
+  sources: ["assurance/06-validation/WP-V-05-fault-injection.md OI-5", "assurance/06-validation/WP-V-06-cybersecurity-validation.md OI-3"]
+  status: applied
+  answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "#269", record: "WP-V-05 §5.2, OI-5; WP-V-06 TC-05, OI-3", at: 2026-10-19}
 
 - id: DQ-086
   question: "How should the release signing key be stored?"
@@ -1926,56 +1990,70 @@
     by: u_DgEswP8TFzpISXlzh3BD1g
 
 - id: DQ-088
-  question: "What delivery format do user information and acceptance take: printed booklet plus on-device acceptance replacing comma.ai's terms and training flow?"
-  context: "The inherited onboarding shows comma.ai's terms and training. LionDriver must decide how users receive and accept its own warnings, which is a user-facing commitment."
+  question: "How should users get LionDriver's safety warnings and confirm they accept them, in place of comma.ai's terms and training screens?"
+  context: "The inherited onboarding shows comma.ai's terms and training. A LionDriver release must give users its own warnings and limits, and the assumption that drivers know them (AOU-06) is only credible if acceptance is recorded. This is a user-facing commitment at release."
   reversibility: revisit
-  blocks: "User information, AOU-06 effectiveness"
+  blocks: "User information (WP-O-03); AOU-06 effectiveness; release"
   gate: G5
+  asked: 2026-10-19
+  batch: 12
   options:
     - key: A
       recommended: true
-      title: "Printed booklet + on-device acceptance"
-      detail: "Replaces comma flow; software change and print material."
+      title: "On-device acceptance plus a printed or PDF booklet"
+      detail: "Acceptance is logged on the device, so AOU-06 has evidence. Cost: a software change to the onboarding flow and writing the booklet."
     - key: B
-      title: "Online document + signed briefing only"
-      detail: "Less work; no on-device record of acceptance."
+      title: "Online document and a signed briefing only"
+      detail: "Less work. Cost: no on-device record of acceptance, so AOU-06 rests on paperwork."
+    - key: C
+      title: "Keep comma.ai's flow and add a LionDriver page"
+      detail: "Least work. Cost: users see warnings that don't match LionDriver's limits; a reviewer will flag it."
   sources: ["assurance/09-production-operation/WP-O-03-user-information-safety-warnings.md OI-7"]
-  status: queued
+  status: open
 
 - id: DQ-089
-  question: "After release, is field data collected manually at service intervals or through a LionDriver upload endpoint?"
-  context: "Option (b) needs a compatible API host, re-implemented device authentication, a cybersecurity assessment and user consent; option (a) is cheap but slow and sparse."
+  question: "After release, should field data be collected by hand at service visits, or uploaded to a LionDriver server?"
+  context: "Field monitoring feeds the safety KPIs and the field-incident process. An upload server needs hosting, device authentication, a TARA update and user consent, and someone to run it; there is no legal entity yet to sign for hosting (DQ-040 C) and you rely on the TARA privacy rating for now (DQ-095 A). Manual retrieval is cheap but slow and sparse."
   reversibility: revisit
-  blocks: "Field monitoring KPIs, WP-O-03 UI-39/43, R-11"
+  blocks: "Field-monitoring KPIs (WP-O-04); WP-O-03 UI-39/43; R-11"
   gate: G5
+  asked: 2026-10-19
+  batch: 12
   options:
     - key: A
       recommended: true
-      title: "Manual retrieval plus driver reports"
-      detail: "No infrastructure; low data volume for KPIs."
+      title: "Manual retrieval plus driver reports, for now"
+      detail: "No infrastructure, no new privacy exposure. Cost: low data volume, so the KPIs are slow to show trends."
     - key: B
-      title: "LionDriver upload endpoint"
-      detail: "Better monitoring; hosting cost, TARA update and consent required."
+      title: "A LionDriver upload server"
+      detail: "Much better monitoring. Cost: hosting money, a TARA and privacy update, consent flow, and running it at 20 h/week."
+    - key: C
+      title: "Decide at G4 when the user count is known"
+      detail: "No commitment yet. Cost: WP-O-04 stays open until then."
   sources: ["assurance/09-production-operation/WP-O-04-field-monitoring.md OI-2"]
-  status: queued
+  status: open
 
 - id: DQ-090
-  question: "Does the safety manager accept the proposed treatments of cybersecurity residual risks RR-01…RR-04 (retain/share)?"
-  context: "RR-01 physical CAN injection via OBD port (retain), RR-02 back-end security (share), RR-03 non-repudiation per-device key (retain), RR-04 unverified off-the-shelf binaries (share) are all 'proposed'; the conditions for RR-01, RR-02 and RR-04 are not met yet."
+  question: "Do you accept the four remaining cybersecurity risks as proposed, once their conditions are met?"
+  context: "RR-01 CAN injection through the OBD port (retain), RR-02 back-end security (share with the server operator), RR-03 non-repudiation with a per-device key (retain) and RR-04 unverified off-the-shelf binaries (share with their supplier). The conditions for RR-01, RR-02 and RR-04 are not met yet. Accepting them is yours as safety manager (DQ-076 B); there is no assessor to confirm (DQ-009 C)."
   reversibility: revisit
-  blocks: "CG4 residual risk, release"
+  blocks: "Cybersecurity case CG4; release"
   gate: G5
-  after: [DQ-009]
+  asked: 2026-10-19
+  batch: 12
   options:
     - key: A
       recommended: true
-      title: "Accept once conditions are met"
-      detail: "Conditional acceptance recorded; conditions tracked."
+      title: "Accept each once its condition is met"
+      detail: "Conditional acceptance recorded now; the conditions are tracked in WP-K-03 and checked at G5. Cost: none now."
     - key: B
-      title: "Reject and require further controls"
-      detail: "More security work before release."
+      title: "Reject and ask for further controls"
+      detail: "Stronger security case. Cost: more security work before release, for example authentication on the OBD path."
+    - key: C
+      title: "Decide at G5 with the evidence in hand"
+      detail: "Nothing recorded now. Cost: the cybersecurity case shows these as open until G5."
   sources: ["assurance/10-safety-case/WP-K-03-cybersecurity-case.md RR-01"]
-  status: queued
+  status: open
 
 - id: DQ-091
   question: "Now that it's highways only: should testing go above 90 km/h, or should the ODD stop at the tested speed?"
@@ -2000,38 +2078,48 @@
   note: "SOTIF part applied in aae16af (WP-V-02 §3.3; DQ-260 queued for the ODD bound). Left: the 110 km/h risk review and VS-VAL-10 plan in WP-V-01 (validation session)."
 
 - id: DQ-092
-  question: "Should LionDriver commission a formal ASPICE assessment by a certified assessor, and when?"
-  context: "Current ratings are a self-assessment and cannot be quoted; any external capability claim needs a formal assessment."
+  question: "Should LionDriver ever pay for a formal ASPICE assessment, and if so when?"
+  context: "The capability ratings in WP-M-13 are a self-assessment; they can't be quoted outside the project. A formal assessment costs money and an assessor's time. With no assessor engaged (DQ-009 C), the default is to make no external capability claim."
   reversibility: easy
-  blocks: "External ASPICE claims"
+  blocks: "Any external ASPICE claim"
   gate: G5
+  asked: 2026-10-19
+  batch: 12
   options:
     - key: A
       recommended: true
-      title: "Not before G5 / only if a claim is made"
-      detail: "No cost now."
+      title: "Not before G5, and only if an external claim is wanted"
+      detail: "No cost now; the self-assessment keeps guiding process work. Cost: no quotable rating."
     - key: B
-      title: "Commission at an earlier gate"
-      detail: "Early feedback; cost."
+      title: "Commission one at an earlier gate"
+      detail: "Early outside feedback on the process. Cost: assessment fees and preparation time out of the 20 h/week."
+    - key: C
+      title: "Never; state the ratings are self-assessed"
+      detail: "No cost ever. Cost: rules out any external capability claim."
   sources: ["assurance/01-management/WP-M-13-aspice-capability-baseline.md OI-1"]
-  status: queued
+  status: open
 
 - id: DQ-093
-  question: "Where is the release evidence package stored outside GitHub Actions, and how is it backed up?"
-  context: "GitHub Actions artifacts expire, so release evidence (CI results, manifests, review exports) must live in LionDriver-controlled storage plus an offline copy, potentially for decades (WP-P-04 retention). This is a storage/service and cost choice."
+  question: "Where should release evidence be kept for the long term, and who pays for it?"
+  context: "GitHub Actions artifacts expire, but release evidence (CI results, manifests, review exports) may have to be kept for decades (WP-P-04 retention). It needs storage LionDriver controls, plus an offline copy. With no legal entity yet (DQ-040 C), any account would be in your name."
   reversibility: revisit
   blocks: "Release baseline / evidence package; WP-P-01 OI-6"
   gate: G5
+  decider: lead
+  asked: 2026-10-19
+  batch: 11
   options:
     - key: A
       recommended: true
-      title: "Cloud object storage with versioning plus offline encrypted copy"
-      detail: "Durable and cheap per GB; recurring cost and account ownership."
+      title: "Cloud storage with versioning, plus an encrypted offline copy"
+      detail: "Durable and cheap per gigabyte. Cost: a small recurring bill and an account you own."
     - key: B
-      title: "Signed GitHub release assets plus offline copy"
-      detail: "No new service; depends on GitHub availability and size limits."
+      title: "Signed GitHub release assets, plus an offline copy"
+      detail: "No new service. Cost: depends on GitHub staying available and on its file-size limits."
   sources: ["assurance/07-supporting/WP-P-10-release-management.md OI-2"]
-  status: queued
+  status: applied
+  answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: adbf0143, record: "WP-P-10 v0.5 OI-2", at: 2026-10-19}
 
 - id: DQ-094
   question: "Do we lock the panda bootloader with write protection plus readout protection level 1 (WRP+RDP1), or leave ROM DFU open and accept the residual risk?"
@@ -2053,37 +2141,50 @@
   note: "Already decided as D-10 (2026-10-10): WRP + RDP1 after verification on a sacrificial unit; recorded in WP-M-07 §5."
 
 - id: DQ-095
-  question: "Does driver-camera and location data need a separate privacy impact assessment beyond the TARA's privacy category?"
-  context: "The TARA rates privacy damage for persisted video, location and identity data (DS-08/DS-12) within its own privacy category. A separate privacy assessment is a policy/legal commitment."
+  question: "Does the driver-camera video and location data need its own privacy impact assessment?"
+  context: "The device records the driver's face, the cabin and where the car went. The cybersecurity threat analysis (TARA) already rates privacy damage for this data (DS-08, DS-12) in its own privacy category. A separate privacy impact assessment is a policy and legal commitment; with no legal entity yet (DQ-040 C) it would be made by you personally."
   reversibility: easy
   blocks: "Privacy part of the cybersecurity case"
+  gate: G1
+  decider: lead
+  asked: 2026-10-19
+  batch: 11
   options:
     - key: A
       recommended: true
-      title: "Rely on the TARA privacy category for now"
-      detail: "No extra effort; revisit if the encryption-at-rest check (OI-3) shows exposure."
+      title: "Rely on the TARA privacy rating for now"
+      detail: "No extra work. Revisit if the encryption-at-rest check (WP-C-09 OI-3) shows the data is exposed. Cost: a reviewer may expect a formal assessment."
     - key: B
-      title: "Commission a separate privacy impact assessment"
-      detail: "More effort and possibly external expertise."
+      title: "Do a separate privacy impact assessment"
+      detail: "A stronger record of how personal data is handled. Cost: extra effort, possibly outside legal advice."
   sources: ["assurance/02-concept/WP-C-09-tara.md OI-7", "assurance/01-management/WP-M-09-cybersecurity-plan.md OI-8"]
-  status: queued
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: adbf0143, record: "WP-C-09 v0.5 OI-7; WP-M-09 v0.4 OI-8", at: 2026-10-19}
 
 - id: DQ-096
-  question: "Approve the numeric SOTIF validation targets VT-01..VT-15 (and their derivations) with the assessor before collecting evidence?"
-  context: "ISO 21448 sequencing in WP-M-08 says targets must be fixed and approved before evidence is collected, otherwise the evidence can be accused of being fitted to the targets. The targets set how many km and how many test subjects are needed (e.g. 20 subjects bound P(not controlled) at 0.14, 29 for 0.1); several derivations explicitly leave judgements (e.g. whether a never-braking follower is credible) to the assessor."
+  question: "Who approves the SOTIF validation targets before evidence is collected, now that there is no assessor?"
+  context: "Targets VT-01…VT-15 set how many kilometres and test subjects are needed (for example, 20 subjects with no failures bound the chance of losing control at 0.14). ISO 21448 wants them fixed **before** evidence is collected, or the evidence can look fitted to them. The plan was assessor approval; with none (DQ-009 C), only you can freeze them. Some rates are illustrative until the crash baseline (B1) is chosen."
   reversibility: hard
   blocks: "All WP-V-03/WP-V-04 campaigns; WP-V-03 (TBC) thresholds; WP-C-11 (TBC) values"
-  after: [DQ-009]
+  gate: G2
+  decider: lead
+  asked: 2026-10-19
+  batch: 11
   options:
     - key: B
       recommended: true
-      title: "Wait for B1 data (OI-2/OI-8) to replace illustrative rates, then submit"
-      detail: "Fewer revision rounds, but delays all SOTIF evidence collection."
+      title: "You approve them once B1 crash data replaces the illustrative rates"
+      detail: "Claude updates the derivations, you freeze the targets in a dated record, and an assessor reviews them later. Cost: SOTIF test campaigns wait for the B1 data; a later assessor may still ask for changes."
     - key: A
-      title: "Submit the current proposals and §4.2/§4.3 derivations to the assessor now"
-      detail: "Starts the approval clock; campaigns can begin as soon as approved; requires an assessor engagement."
+      title: "You approve the current proposals now"
+      detail: "Campaigns can start at once. Cost: targets built on illustrative rates will likely change, and evidence collected before a change may not count."
+    - key: C
+      title: "Wait for an assessor to approve them"
+      detail: "Strongest independence. Cost: no SOTIF evidence until an assessor is engaged."
   sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md OI-3", "assurance/09-production-operation/WP-O-04-field-monitoring.md OI-5"]
-  status: queued
+  status: answered
+  answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-097
   question: "Should the panda refuse to enable controls when the car's VIN does not match the vehicle lock record?"
@@ -2150,6 +2251,8 @@
   context: "The platform-level HARA approach is not confirmed. Parameters P2, P3, P5, P7, P8 drive severity, exposure and controllability, so variant ratings (and possibly ASILs) may differ from the reference Corolla."
   reversibility: revisit
   blocks: "PL-001, HARA scope"
+  gate: G1
+  asked: 2026-10-19
   options:
     - key: A
       recommended: true
@@ -2159,56 +2262,74 @@
       title: "Assess reference vehicle only"
       detail: "Restrict claims to the Corolla; other vehicles stay not assessed."
   sources: ["assurance/08-analyses/fmea/item-definition.md IOI-004"]
-  status: queued
+  status: withdrawn
+  note: "Withdrawn before it was asked: superseded by DQ-369 A (2026-10-18): hazards are rated per vehicle family and vehicle assumptions become entry criteria."
 
 - id: DQ-101
-  question: "Who is the named deputy for the cybersecurity manager / vulnerability management roles, with documented access to repository and keys?"
-  context: "Only the maintainer can respond to incidents today. A deputy is required before supporting any installation beyond the maintainer's own."
+  question: "Until someone else can step in on security incidents, should LionDriver support only your own installation?"
+  context: "Only you can respond to a security incident today. WP-O-05 requires a named deputy with documented access to the repository and keys before supporting any installation beyond yours. You hold every role for now (DQ-076 B), so there is no one to name yet."
   reversibility: revisit
-  blocks: "Supporting other installations"
+  blocks: "Supporting other installations; WP-O-05 OI-1; release to other users"
+  gate: G5
+  asked: 2026-10-19
+  batch: 12
   options:
     - key: A
       recommended: true
-      title: "Name a deputy with access instructions"
-      detail: "Continuity for incident response; shares key access."
+      title: "Your installation only, until a deputy is named"
+      detail: "No key sharing and no new person needed. Cost: no other users can be supported; revisit before release."
     - key: B
-      title: "Restrict to maintainer's own installation"
-      detail: "No deputy needed, but no other users can be supported."
+      title: "Name a deputy now with access instructions"
+      detail: "Continuity if you are unavailable. Cost: finding someone trusted and sharing key access with them."
+    - key: C
+      title: "Support others without a deputy"
+      detail: "Wider use sooner. Cost: incident response stops whenever you are away; WP-O-05 would need changing and the risk recording."
   sources: ["assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md OI-1"]
-  status: queued
+  status: open
 
 - id: DQ-102
-  question: "Are the incident-response timelines and the support period (next release + 90 days) agreed with the assessor and safety manager?"
-  context: "The document proposes response timelines and supports each release until the next release plus 90 days. These are public commitments to users."
+  question: "Can you commit to the proposed incident-response times and support period?"
+  context: "Proposed: acknowledge a report within 3 working days, assess within 5 (2 if safety-relevant), fix High findings within 30 days, publish an advisory with the fix or by 90 days, and support each release until the next one plus 90 days. These are public promises to users, and with about 20 h/week (DQ-208) and no deputy you alone must meet them."
   reversibility: revisit
-  blocks: "WP-O-05 §4.3, §5.3, §7"
-  after: [DQ-009]
+  blocks: "WP-O-05 §4.3, §5.3, §7; SECURITY.md wording"
+  gate: G5
+  asked: 2026-10-19
+  batch: 12
   options:
     - key: A
       recommended: true
       title: "Agree as proposed"
-      detail: "Commitments fixed; must be staffed."
+      detail: "Matches common open-source practice. Cost: you must be able to keep these times on 20 h/week."
     - key: B
-      title: "Shorten/lengthen"
-      detail: "Adjust to available capacity."
+      title: "Loosen them to fit 20 h/week"
+      detail: "For example 7 working days to acknowledge and 60 days for High fixes. Cost: users wait longer; a reviewer may question the 60 days."
+    - key: C
+      title: "Decide at G5 with the release plan in hand"
+      detail: "No promise yet. Cost: SECURITY.md keeps its current best-effort wording until then."
   sources: ["assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md OI-4"]
-  status: queued
+  status: open
 
 - id: DQ-103
-  question: "Should confirmation measures be added where the plan has none (six G1 products, G4 test results, operation documents, G6 processes, CS between G1 and G5)?"
-  context: "The process model shows WP-M-06 plans no independent confirmation for several work products, including the user warnings (a SOTIF misuse measure) and field monitoring. Adding measures means more assessor time; leaving them means only verification review."
+  question: "Should the confirmation plan add independent checks where it has none, even though there is no assessor yet?"
+  context: "The confirmation plan (WP-M-06) has no independent check for six G1 products, the G4 test results, the user warnings (a SOTIF misuse measure), the G6 processes, and cybersecurity between G1 and G5. With no assessor (DQ-009 C) and you holding every role (DQ-076 B), nothing can be checked independently yet; this decides what the plan asks for once someone is engaged."
   reversibility: revisit
   blocks: "WP-M-06 confirmation plan"
+  gate: G1
+  decider: lead
+  asked: 2026-10-19
+  batch: 11
   options:
     - key: A
       recommended: true
-      title: "Add targeted measures (G4 results, user warnings, G6)"
-      detail: "Better independence; assessor cost."
+      title: "Add targeted checks: G4 results, user warnings, G6"
+      detail: "They show in the plan as open until an assessor is engaged. Cost: more assessor days later."
     - key: B
-      title: "Keep plan, rely on verification review"
-      detail: "Allowed by the standard; weaker case."
+      title: "Keep the plan; rely on verification reviews"
+      detail: "The standard allows it. Cost: a weaker case for misuse and field monitoring."
   sources: ["assurance/process/README.md “3. **Operation has no independent check.** WP-M-06 plans no”"]
-  status: queued
+  status: applied
+  answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: adbf0143, record: "WP-M-06 v0.4 OI-7; process README §6.6", at: 2026-10-19}
 
 - id: DQ-104
   question: "Is it legal to test a modified driver-assistance system on public roads where you'll test?"
@@ -2237,37 +2358,45 @@
     by: u_DgEswP8TFzpISXlzh3BD1g
 
 - id: DQ-105
-  question: "How are closed-course test builds (with widened limits or fault triggers) controlled so they never reach public-road use?"
-  context: "Several vehicle tests (VS-SQ-02, -03, -05, -12, -13) need host/panda builds with envelope bounds temporarily widened or fault triggers. These must be configuration items with a control preventing public-road use; this has to be settled before the first closed-course session."
+  question: "How do we make sure a closed-course test build (wider limits, fault triggers) is never driven on a public road?"
+  context: "Some vehicle tests (VS-SQ-02, -03, -05, -12, -13) need builds with the steering or braking limits widened, or with a fault trigger built in. On a public road such a build could act harder than the safety case allows. A control must be in place **before the first closed-course session**."
   reversibility: easy
   blocks: "First closed-course session; VS-SQ-02/03/05/12/13"
+  gate: G1
+  decider: lead
+  asked: 2026-10-19
+  batch: 11
   options:
     - key: A
       recommended: true
-      title: "Install test builds only on designated development units outside the safety claims (as D-12 separates them), registered as CIs"
-      detail: "Strong separation; needs dedicated test units."
+      title: "Test builds only on separate test units"
+      detail: "A designated device and panda, registered as configuration items and never used on public roads (the split decision D-12 already makes). Cost: a second device and panda; the spares in the destructive-test question can serve."
     - key: B
-      title: "Procedural control only (logbook, reflash to release after each session)"
-      detail: "Cheaper; relies on discipline."
+      title: "Procedure only: reflash and log after each session"
+      detail: "Reflash the release build after every session and record it in the logbook. Cost: no hardware, but it rests on discipline; one slip puts a test build on the road."
   sources: ["assurance/03-system/WP-S-09-system-verification.md OI-2"]
-  status: queued
+  status: applied
+  answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: ec883085, record: "WP-S-09 v0.4 OI-2", at: 2026-10-19}
 
 - id: DQ-106
-  question: "Will the assessor accept verifying SoC-side defence-in-depth requirements CSR-016 and CSR-053 at CAL 2 rigour instead of their inherited CAL 3?"
-  context: "Both are detection measures on the SoC that are not credited as the protection for cybersecurity goals CSG-01/CSG-02, so the doc proposes CAL 2 testing and review rigour. Lowering rigour below the parent's CAL needs assessor agreement."
+  question: "May two detection checks on the main computer (CSR-016, CSR-053) be tested with lighter rigour (CAL 2) than their parent goals (CAL 3)?"
+  context: "Both checks only detect attacks; neither is credited as the protection for cybersecurity goals CSG-01/CSG-02, so the analysis proposes CAL 2. CAL 3 would add boundary tests, fuzzing and second-person reviews on those code paths, and a second person does not exist while you hold every role (DQ-076 B). Lowering rigour normally needs assessor agreement; with no assessor (DQ-009 C) it is your call, recorded for a later assessor."
   reversibility: easy
   blocks: "VS-CS-016, VS-CS-053"
-  after: [DQ-009]
+  gate: G3
+  asked: 2026-10-19
+  batch: 12
   options:
     - key: A
       recommended: true
-      title: "Ask assessor to accept CAL 2"
-      detail: "Less test/review effort on SoC code; depends on agreement."
+      title: "CAL 2, recorded for a later assessor"
+      detail: "Less test and review effort on main-computer code. Cost: a later assessor may ask for CAL 3 and the work to be redone."
     - key: B
-      title: "Verify at CAL 3"
-      detail: "No agreement needed; boundary tests, fuzzing and second-person reviews on those paths."
+      title: "Keep CAL 3"
+      detail: "No agreement needed later. Cost: boundary tests and fuzzing now, and the second-person reviews stay blocked until a second person joins."
   sources: ["assurance/05-software/WP-W-11-cybersecurity-implementation-verification.md OI-7"]
-  status: queued
+  status: open
 
 - id: DQ-107
   question: "Which simulation scenario families, if any, may count as validation credit?"
@@ -2289,26 +2418,33 @@
   note: "Duplicate of DQ-139, which asks the same question for the lead at G2 (WP-M-08 OI-3). Withdrawn 2026-10-16: DQ-139 was answered (option A)."
 
 - id: DQ-108
-  question: "What discovery-trend criterion and target (R3) must unknown-scenario exploration meet before release?"
-  context: "R3 says the rate of finding new hazardous scenario classes must be non-increasing over the last three blocks, with a Good-Turing 'unseen class' probability reported, but the target value is not set. This is effectively the stop criterion for residual-risk acceptance of unknown scenarios and must be agreed with the assessor."
+  question: "What stop rule must the search for unknown hazardous scenarios meet before release?"
+  context: "Rule R3 says the rate of finding new kinds of hazardous scenario must stop rising over the last three test blocks, and the chance of a still-unseen kind (a Good–Turing estimate) is reported. **No target value is set.** In effect this is your acceptance of the risk from unknown scenarios; with no assessor (DQ-009 C) it is yours to set."
   reversibility: revisit
   blocks: "WP-V-04 residual-risk exit; release"
+  gate: G5
+  decider: lead
+  asked: 2026-10-19
+  batch: 11
   options:
     - key: A
       recommended: true
-      title: "Propose a numeric Good-Turing threshold plus the 3-block trend rule to the assessor"
-      detail: "Gives a clear exit criterion; needs assessor engagement."
+      title: "A numeric threshold plus the three-block trend rule"
+      detail: "Claude proposes a value with its derivation, and you approve it before the blocks start. Cost: more drive blocks may be needed to meet it."
     - key: B
-      title: "Use the trend rule only, report the probability without a threshold"
-      detail: "Easier to meet, weaker argument; assessor may reject."
+      title: "Trend rule only; report the probability without a threshold"
+      detail: "Easier to meet. Cost: a weaker argument that a later assessor may reject."
   sources: ["assurance/06-validation/WP-V-04-sotif-unknown-scenarios.md OI-2"]
-  status: queued
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-109
   question: "How many sacrificial devices may be spent on the option-byte / readout-protection test (TC-05)?"
   context: "TC-05 manipulates the safety MCU's option bytes and readout protection, which can permanently brick a unit. A budget for destroyable units must be set before the test."
   reversibility: easy
   blocks: "TC-05"
+  gate: G4
+  asked: 2026-10-19
   options:
     - key: A
       recommended: true
@@ -2318,23 +2454,30 @@
       title: "Skip destructive steps, document rationale"
       detail: "No cost; weaker evidence for CSR on boot protection."
   sources: ["assurance/06-validation/WP-V-06-cybersecurity-validation.md OI-3"]
-  status: queued
+  status: withdrawn
+  note: "Withdrawn before it was asked: merged into DQ-085, one question on buying spare units for the two destructive tests."
 
 - id: DQ-110
-  question: "Approve closed-course procedure additions for the vehicle cybersecurity test TC-09 in WP-V-07?"
-  context: "TC-09 needs vehicle running on a closed course; the vehicle test procedure may only be changed or deviated from with safety manager approval."
+  question: "Do you approve adding closed-course rules for the CAN-injection test (TC-09) to the vehicle test procedure?"
+  context: "TC-09 injects, replays and floods CAN frames on the running car to show the envelope holds against physical-access attacks (CSG-05). The bench part comes first; the vehicle part needs a closed course. The vehicle test procedure (WP-V-07) can only be changed with your approval as safety manager. Your answer that test builds are kept off the road by procedure only (DQ-105 B) applies to this build too."
   reversibility: easy
-  blocks: "TC-09; WP-V-07"
+  blocks: "TC-09 vehicle stage; WP-V-07 §8.1; CSG-05 evidence"
+  gate: G4
+  asked: 2026-10-19
+  batch: 12
   options:
     - key: A
       recommended: true
-      title: "Add TC-09 specific rules to WP-V-07 §8.1 and approve"
-      detail: "Test can run under the normal procedure."
+      title: "Add TC-09 rules to WP-V-07 §8.1 and approve them"
+      detail: "TC-09 then runs under the normal procedure, with the reflash-and-log rule of DQ-105. Cost: one review of the added rules."
     - key: B
       title: "Run TC-09 under a one-off written deviation"
-      detail: "Faster; needs external agreement while maintainer holds both roles (WP-V-07 §13)."
+      detail: "No change to the procedure. Cost: WP-V-07 §13 asks for an outside agreement on deviations while you hold both roles, which you don't have."
+    - key: C
+      title: "Bench only; skip the vehicle stage"
+      detail: "No closed course needed. Cost: weaker evidence for CSG-05; the residual risk RR-01 stays harder to argue."
   sources: ["assurance/06-validation/WP-V-06-cybersecurity-validation.md OI-5"]
-  status: queued
+  status: open
 
 - id: DQ-111
   question: "Should LionDriver get its own GitHub organization?"
@@ -2366,6 +2509,8 @@
   context: "Problem reports need the drive logs as evidence, but comma's useradmin routes are not under LionDriver control and logs contain personal data (video, location). A LionDriver-controlled store with privacy rules has cost and privacy-commitment implications."
   reversibility: revisit
   blocks: "Problem record evidence; WP-V-04 log store"
+  gate: G1
+  asked: 2026-10-19
   options:
     - key: A
       recommended: true
@@ -2375,7 +2520,8 @@
       title: "Keep using comma routes and reference them"
       detail: "No cost; evidence can disappear and is outside project control."
   sources: ["assurance/07-supporting/WP-P-03-problem-resolution.md OI-4"]
-  status: queued
+  status: withdrawn
+  note: "Withdrawn before it was asked: settled by DQ-084 A (no uploads; LionDriver keeps its own logs). Logs that problem reports cite go to that LionDriver-controlled store under WP-V-07 §11; choosing the store is a task in WP-P-03 OI-4."
 
 - id: DQ-113
   question: "How long should safety records be kept?"
@@ -2482,6 +2628,7 @@
   context: "msgq is the shared-memory messaging between all host processes, classed SR-Q; the drafted sync is unassessed (all TBD) and WP-P-08 lists 'decide the drafted sync' as a maintainer action. The submodule is not even initialized in the checkout yet (WP-P-08 OI-1)."
   reversibility: easy
   blocks: "WP-P-08 SC-08 SCQ record"
+  decider: claude
   options:
     - key: A
       recommended: true
@@ -2935,7 +3082,7 @@
   status: queued
 
 - id: DQ-142
-  question: "What latent-fault interval is assumed for the harness relay until start-up tests exist?"
+  question: "What latent-fault interval is assumed for the harness intercept switch (box v3 analog switches, no relay) until start-up tests exist?"
   context: "PM-03 assumes the relay is checked every 6 months; WP-H-04 must use the same assumption until TSR-515 start-up tests replace it."
   reversibility: easy
   blocks: "WP-H-04 latent-fault metrics"
@@ -3046,22 +3193,26 @@
   status: queued
 
 - id: DQ-148
-  question: "How should the envelope get zero torque to the steering rack when it rejects a frame: send its own substitute 0x2E4 frames, or withhold frames?"
-  context: "TSR-109 allows (a) the envelope transmitting zero-torque frames with a continued counter and valid checksum, or (b) withholding frames, only if vehicle tests (WP-S-04 M-02) show the EPS ramps torque to zero within 0.1 s. Option (a) needs the counter/checksum layout and must not clash with SoC frames."
+  question: "When the panda refuses a steering frame from the main computer, should it send its own zero-torque frame in its place, or send nothing?"
+  context: "This is how the car behaves at the moment the envelope steps in. A substitute frame (TSR-109 option a) keeps the steering rack fed with a valid zero-torque command, so the hand-back is smooth and does not rely on how the EPS reacts to missing frames. Sending nothing (option b) is simpler code, but is allowed only if a vehicle test (WP-S-04 M-02) shows the EPS ramps torque to zero within 0.1 s, which nobody has measured yet."
   reversibility: revisit
-  blocks: "SWSR-109/109a, GAP-46"
+  blocks: "SWSR-109/109a; GAP-46; the envelope's reject path in the panda firmware"
   gate: G3
-  decider: claude
+  asked: 2026-10-19
+  batch: 12
   options:
     - key: A
       recommended: true
-      title: "Envelope-generated substitute frames"
-      detail: "Recommended design in TSR-109; needs frame-ownership rules and DBC layout."
+      title: "Send its own zero-torque frame (recommended in TSR-109)"
+      detail: "Predictable hand-back that does not depend on the EPS. Cost: the panda must own the frame counter and checksum without clashing with the main computer's frames, plus tests for that."
     - key: B
-      title: "Withhold frames"
-      detail: "Simpler code, but valid only after vehicle characterization M-02."
+      title: "Send nothing, once the vehicle test confirms the EPS ramps to zero"
+      detail: "Less firmware. Cost: waits for measurement M-02 on the car; if the EPS holds torque or faults, this has to be redone."
+    - key: C
+      title: "Send nothing now, and measure later"
+      detail: "Fastest. Cost: the envelope's safe reaction rests on unmeasured EPS behaviour until M-02 runs; not recommended."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-3"]
-  status: queued
+  status: open
 
 - id: DQ-149
   question: "Should starting the hardware watchdog in the bootstub (before the application runs) stay a target for SWSR-501b?"
@@ -3417,6 +3568,7 @@
   reversibility: revisit
   blocks: "GAP-24, GAP-25, WBS 4.4, R-15"
   gate: G3
+  asked: 2026-10-19
   decider: claude
   options:
     - key: A
@@ -3427,7 +3579,8 @@
       title: "RSA-3072 / SHA-256"
       detail: "Closest to current code; larger keys and slower verify."
   sources: ["assurance/01-management/WP-M-09-cybersecurity-plan.md OI-1"]
-  status: queued
+  status: withdrawn
+  note: "Merged into DQ-191 (batch 12), which asks the same signing-scheme question and is hard to undo, so it goes to the lead."
 
 - id: DQ-169
   question: "Which SBOM and vulnerability-scanning tooling should be used, and how is it classified under WP-P-07?"
@@ -3817,21 +3970,26 @@
   status: queued
 
 - id: DQ-191
-  question: "Which signature scheme and implementation does the panda bootstub use, and what format does the update manifest take?"
-  context: "CSR-031 requires ≥ 128-bit security and SHA-256 or stronger (today RSA-1024/SHA-1). D-09 already fixed key holder (offline, maintainer) and the move off RSA-1024; D-10/D-12 fixed flash protection and LionDriver-only devices. What remains is the algorithm/implementation and manifest format; WP-S-07 says a CCB decision is required."
+  question: "Which signature scheme should LionDriver panda firmware be signed with, replacing today's RSA-1024/SHA-1?"
+  context: "Every LionDriver device will trust exactly one firmware signing key, burned in with flash protection (D-09, D-10, D-12 already decided). Once devices are in the field, changing the scheme means reflashing the bootstub on each one, so this is hard to undo. CSR-031 needs at least 128-bit security and SHA-256. The update manifest format is written with it. This question also absorbs DQ-168, which asked the same thing."
   reversibility: hard
-  blocks: "CSR-031; CSR-121; TSR-511; GAP-24/25"
-  decider: claude
+  blocks: "CSR-031, CSR-121, TSR-511; GAP-24/25; WBS 4.4; R-15; the update manifest (WP-O-05 OI-7)"
+  gate: G3
+  asked: 2026-10-19
+  batch: 12
   options:
     - key: A
       recommended: true
-      title: "Choose a scheme meeting CSR-031 that fits the bootstub size, record in CCB"
-      detail: "Closes GAP-24 design."
+      title: "ECDSA P-256 with SHA-256 in the bootstub"
+      detail: "Widely supported, small signatures, fits the MCU's flash and verify time. Cost: new verification code in the bootstub and its tests."
     - key: B
-      title: "Keep RSA but larger key with SHA-256"
-      detail: "Smaller code change; larger signatures."
-  sources: ["assurance/03-system/WP-S-07-cybersecurity-requirements-architecture.md OI-4"]
-  status: queued
+      title: "RSA-3072 with SHA-256"
+      detail: "Closest to the current code, so the smallest change. Cost: larger keys and signatures and slower verification at every boot."
+    - key: C
+      title: "Ed25519"
+      detail: "Simple, modern and fast. Cost: less hardware support on the STM32 and fewer qualified libraries, so more own verification work."
+  sources: ["assurance/03-system/WP-S-07-cybersecurity-requirements-architecture.md OI-4", "assurance/01-management/WP-M-09-cybersecurity-plan.md OI-1"]
+  status: open
 
 - id: DQ-192
   question: "Which SAST, SBOM and dependency-scanning tools should be selected and qualified?"
@@ -4080,11 +4238,13 @@
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 - id: DQ-206
   question: "When a diagnostic catches a hazardous fault and the car reaches a safe state in time, may that count as accepting the remaining risk?"
-  context: "The new monitoring-and-response rating (FMEA-MSR) scores how well each in-car diagnostic catches a fault and how fast the system reacts. 194 of 201 failure causes are rated high priority today because diagnostics get no credit. The question is whether a good monitoring score can **close** a hazard-linked cause, or only rank which ones to work on first."
+  context: "The monitoring-and-response rating (FMEA-MSR) scores how well each in-car diagnostic catches a fault and how fast the system reacts. 194 of 201 failure causes are rated high priority today because diagnostics get no credit: a panda hang caught by the watchdog in about 90 ms, inside a 0.5 s fault-tolerant time, ranks the same as a cause nobody monitors. The question is whether a good monitoring score can **close** a hazard-linked cause, or only rank which ones to work on first."
   reversibility: revisit
   blocks: "FMEA-MSR step M2; residual-risk argument in the safety case"
   gate: G3
   decider: lead
+  asked: 2026-10-19
+  batch: 10
   options:
     - key: A
       recommended: true
@@ -4095,9 +4255,11 @@
       detail: "Every high-priority cause still needs its own action or a rationale you sign. Safest, but the list of 194 stays open until the actions are done."
     - key: C
       title: "It can close a cause with calculated timing"
-      detail: "Fastest. Timing derived from the code is accepted without measurement. An assessor is likely to challenge it."
+      detail: "Fastest. Timing derived from the code is accepted without measurement. Cost: a reviewer is likely to challenge it."
   sources: ["assurance/08-analyses/fmea/msr-plan.md", "assurance/03-system/WP-S-04-timing-ftti-budget.md", "assurance/08-analyses/fmea/rating-tables.md"]
-  status: queued
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: 8d520f9, record: "WP-S-04 v0.15 §6 (#254); rating-tables.md §7.4, msr-plan.md v0.10 §4.6 (#258)", at: 2026-10-19}
 
 - id: DQ-207
   question: "Can you get the official AIAG-VDA priority table for monitoring-and-response ratings into the project?"
@@ -4106,6 +4268,8 @@
   blocks: "FMEA-MSR ratings becoming final (rating tables RT-3)"
   gate: G3
   decider: lead
+  asked: 2026-10-19
+  batch: 11
   options:
     - key: A
       recommended: true
@@ -4115,10 +4279,11 @@
       title: "Buy the AIAG-VDA FMEA Handbook (2019)"
       detail: "Gives the table and the official wording of every rating scale. Cost: the handbook licence."
     - key: C
-      title: "Keep the stand-in table until the assessor review"
-      detail: "No cost now. The MSR results stay provisional, and an assessor will ask for the official table."
+      title: "Keep the stand-in table for now"
+      detail: "No cost now. The monitoring-and-response results stay provisional, and any later assessor will ask for the official table."
   sources: ["assurance/08-analyses/fmea/rating-tables.md", "assurance/08-analyses/fmea/msr-plan.md"]
-  status: queued
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g, note: "The inbox answer was C (02:14Z); the lead then sent pictures of the FMEA-MSR AP matrix for S 9 and S 10 in chat, which is option A. S 1-8 pages still to come."}
 
 - id: DQ-208
   question: "How much of your time goes to LionDriver, and from what date should the schedule count?"
@@ -4141,7 +4306,10 @@
       title: "Keep relative months until a second person joins"
       detail: "No commitment now. Cost: no gate dates, so slippage cannot be seen."
   sources: ["assurance/01-management/WP-M-03-project-plan.md OI-1", "assurance/01-management/WP-M-03-project-plan.md §4.3, §5"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#248", record: "assurance/01-management/WP-M-03-project-plan.md §5, §6, Figure 5-2 (OI-1 closed)", at: 2026-10-19}
+  note: "On 2026-10-19 the lead set the figure to about 20 h/week (chat). WP-M-03 §5 is dated at 20 h/week: G1 Nov 2027–May 2028, G5 Jul 2031–Mar 2034."
 
 - id: DQ-209
   question: "The stock emergency-braking path runs through powered electronics in comma's harness box. Accept that and test it, or build our own adapter with a passive fail-safe relay?"
@@ -4264,23 +4432,30 @@
   applied: {ref: "jherrodthomas/LionDriver#154", record: "WP-C-03 v0.4.1 §6.1 observation 7, OI-9 (SG-06 ASIL C, set in v0.4)", at: 2026-10-16}
 
 - id: DQ-211
-  question: "What harness letter and harness-box revision are printed on the reference car's harness, and which device units (comma 3X, comma four) will be used?"
-  context: "comma's documentation lists the Toyota A harness for the 2020-22 Corolla, and the hardware analyses use the published box v3 drawing. The Toyota A and B harnesses differ in connectors (RR-2026-010 F-13). **Only the physical unit can confirm it.** These are facts to read off the parts, not a choice."
+  question: "Which harness and device units are actually on the reference Corolla?"
+  context: "The analyses assume comma's Toyota **A** harness with the published harness box **v3** (two analog switches, no relay). The Toyota A and B harnesses use different connectors, so the hardware analysis of the harness (WP-H-06) and the item definition can only be closed from the parts themselves. This is a fact to read, not a choice: the letter is printed on the harness connector/label, the box revision on the harness box label, and the device board and serial in the device's Settings → Device screen."
   reversibility: easy
   blocks: "WP-C-01 OI-2; WP-H-06 harness unit; RR-2026-010 F-10, F-13"
   gate: G1
   decider: lead
+  asked: 2026-10-19
+  batch: 10
   options:
     - key: A
       recommended: true
-      title: "Read the labels and reply with letter, box revision and device serials"
-      detail: "Photos of the harness box label and the device's about screen are enough. Cost: a few minutes at the car."
+      title: "I'll read the labels and enter them in the note"
+      detail: "Write the harness letter (A or B), the box revision, and for each device: comma 3X or comma four, plus the serial. Photos are fine. Cost: a few minutes at the car; closes WP-C-01 OI-2 and RR-2026-010 F-13."
     - key: B
-      title: "Assume Toyota A and box v3 until a harness is bought"
-      detail: "The analyses stay on comma's drawing. Cost: if the unit differs, the hardware analyses are re-checked."
-  sources: ["assurance/02-concept/WP-C-01-item-definition.md OI-2", "assurance/04-hardware/reviews/RR-2026-010.md F-13"]
-  note: "The lead answered on 2026-10-16 that the labels will be read later; stays queued until then."
-  status: queued
+      title: "It is Toyota A, box v3, as documented"
+      detail: "Confirms what the analyses already assume, without device serials. Cost: the device units stay unrecorded until you add them."
+    - key: C
+      title: "Keep assuming Toyota A and box v3 for now"
+      detail: "Nothing changes yet. Cost: G1 cannot close the harness item; if the part differs, the harness analysis is redone."
+  sources: ["assurance/02-concept/WP-C-01-item-definition.md OI-2 (Device and Harness rows, §2)", "assurance/04-hardware/reviews/RR-2026-010.md F-10, F-13"]
+  note: "The lead answered on 2026-10-16 that the labels will be read later; reopened in batch 10."
+  status: applied
+  answer: {choice: C, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: 3965a9e, record: "WP-H-07 QC-04, §4.3; RR-2026-010 F-13 (#256); WP-C-01 OI-2", at: 2026-10-19}
 
 - id: DQ-212
   question: "With both the comma 3X and the comma four in scope, how many devices should be bought for the bench and the car?"
@@ -4355,7 +4530,8 @@
     - assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-067
     - openpilot/selfdrive/selfdrived/assured_config.py
     - openpilot/selfdrive/selfdrived/selfdrived.py:502-506, 607-626
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-260
   question: "Should the highway ODD stop at 110 km/h, the highest speed at which the driver's control of a steering fault will be tested?"
@@ -4407,6 +4583,28 @@
   answer: {choice: A, via: chat, at: 2026-10-16}
   applied: {ref: 98f5e9966, record: "WP-V-02 §5.4; WP-M-08 OI-3", at: 2026-10-16}
 
+- id: DQ-262
+  question: "Should the search for unknown hazardous scenarios stop once at most 1 in 10 hazardous events is expected to be of a kind not yet seen (with at least 30 events counted)?"
+  context: "You decided the search stops on a number plus the three-block trend rule (DQ-108 A). The number is a Good–Turing estimate: the share of hazardous events whose kind was seen only once. **The proposal ties it to a 10 % reserve held back from every SOTIF harm budget for unknown scenarios.** Below 30 events the estimate says little, so the rule needs at least 30. It must be fixed before road block B1 starts, so the result cannot be fitted to it."
+  reversibility: revisit
+  blocks: "WP-V-04 R3 and the start of exploration block B1; the 10 % reserve in the WP-V-02 target derivation"
+  gate: G1
+  decider: lead
+  after: [DQ-108]
+  options:
+    - key: A
+      recommended: true
+      title: "Up to 1 in 10 (0.10), at least 30 events"
+      detail: "Matches the 10 % reserve in the targets. Cost: if the blocks see fewer than 30 hazardous events, the rule is not met by count and you decide again."
+    - key: B
+      title: "Up to 1 in 20 (0.05), at least 60 events"
+      detail: "Stronger claim, with a 5 % reserve and targets on 95 % of each budget. Cost: about twice the events, so likely more drive blocks before release."
+    - key: C
+      title: "Up to 1 in 5 (0.20), at least 20 events"
+      detail: "Reachable with fewer drives. Cost: a 20 % reserve takes budget from the known-scenario targets, which then get stricter, and the unknown part of the argument is weaker."
+  sources: ["assurance/06-validation/WP-V-04-sotif-unknown-scenarios.md §5.3 R3, §5.4, OI-2", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md §3 step 1"]
+  status: queued
+
 - id: DQ-300
   question: "When the car's own emergency braking (stock AEB) fires, should LionDriver stop asking for acceleration, or keep driving as now?"
   context: "Today the car's AEB event only shows a \"BRAKE!\" alert on the comma screen; LionDriver keeps sending its speed-control request. Whether the car's braking wins then depends on the engine computer giving AEB priority, which nobody has checked on the reference car (AOU-04R). The fault tree marks this as a path where that assumption alone protects the driver (SFM-036, FTA BE-7.13)."
@@ -4431,7 +4629,8 @@
   - assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-036, SFM-ACT-020
   - assurance/08-analyses/WP-A-04-system-fta-fmea.md MCS-07.10
   - assurance/02-concept/WP-C-04-functional-safety-concept.md AOU-04R
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-360
   question: "If the steering (EPS) or the engine controller (PCM) silently stops obeying LionDriver, without sending a fault, do we rely on a tested assumption about the car, or add a check that compares the car's response with the command?"
@@ -4454,7 +4653,8 @@
       title: "Do both"
       detail: "Tested assumption now, response check before release. Cost: the sum of A and B."
   sources: ["assurance/08-analyses/fta-fmea-mapping.md F-32", "assurance/08-analyses/WP-A-04-system-fta-fmea.md MCS-02.10, MCS-06.11"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-361
   question: "Do the two \"take-over warning\" goals (SG-02 steering, SG-06 braking) also cover the system being too weak by design, such as a curve too tight for the torque limit or a lead car seen too late, or only faults?"
@@ -4474,7 +4674,9 @@
       title: "Faults only; performance limits go to SOTIF alone"
       detail: "Remove G2.8 and G6.9 and justify the three FMEA modes as SOTIF. Cost: the goals' wording should be narrowed to match, and the SOTIF case carries these hazards without the fault-tree view."
   sources: ["assurance/08-analyses/fta-fmea-mapping.md F-33", "assurance/08-analyses/WP-A-04-system-fta-fmea.md G2.8, G6.9"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: 17631fa, record: "WP-A-04 v1.11 MCS-02.12, MCS-06.10 (#259)", at: 2026-10-19}
 
 - id: DQ-362
   question: "SG-02, SG-03 and SG-06 are now ASIL C, and the hardware analysis they share misses the ASIL C single-point target by 0.16 points. Do we reuse it and close the gap at the hardware gate, or build a separate analysis for each goal?"
@@ -4498,7 +4700,9 @@
       title: "Accept 96.84 % now with a written rationale"
       detail: "Close the item without a design change. Cost: an assessor may not accept a missed ASIL C target."
   sources: ["assurance/08-analyses/fta-fmea-mapping.md F-22", "assurance/08-analyses/fmea/analyses/fmeda-sg001.yaml", "assurance/02-concept/WP-C-03-hara.md SG-02, SG-03, SG-06"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#249", record: "assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md §6.4; WP-H-04 OI-6", at: 2026-10-19}
 
 - id: DQ-363
   question: "When the driver presses the accelerator while LionDriver is braking, and the accelerator signal is stuck at \"not pressed\", which goal owns it: braking (SG-04) or release on driver action (SG-05)?"
@@ -4544,7 +4748,10 @@
       title: "Narrow the SG-03 top event to while engaged"
       detail: "The not-engaged branch then rests on SG-01's authority checks only. Cost: the acceleration case of a false engagement has no rated hazard."
   sources: ["assurance/08-analyses/fta-fmea-mapping.md F-34", "assurance/08-analyses/fmea/hara-mapping.yaml HZ-010"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#252", record: "assurance/02-concept/WP-C-03-hara.md HE-03.7 (v0.5); fmea/hara-mapping.yaml HZ-010", at: 2026-10-19}
+  note: "FTA G3.3 and the tree gaps SWF-055/057/089 follow in the FTA session's next PR."
 
 - id: DQ-365
   question: "When the driver does not respond to the last driver-monitoring alert, what should LionDriver do: stop in the lane and stay stopped, or stop and then hand back control?"
@@ -4644,7 +4851,8 @@
       title: "Allow engagement anywhere, show a warning off-highway, and rely on the driver and user information"
       detail: "Most useful in daily driving. Cost: the ODD limit rests on the driver; LS-13 stays a known gap, and an assessor may ask why an ODD boundary has no technical check."
   sources: ["assurance/08-analyses/WP-A-05-stpa.md LS-13, OI-15", "assurance/01-management/decisions/register.yaml DQ-023", "assurance/02-concept/WP-C-07-sotif-functional-modifications.md FM-08"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-367
   question: "With an EPS fault and a host that keeps asking for torque, authority now drops after 50 ms and the panda's EPS-fault siren no longer sounds. Restore the siren, accept losing it, or keep the old rule?"
@@ -4725,7 +4933,9 @@
       title: "One worst case for the whole platform"
       detail: "Rate every vehicle as if no EPS or PCM limit helps: SG-01 and SG-03 become ASIL D for all, the Corolla included. Cost: ASIL D methods for the panda and the analyses, much more work before G1."
   sources: ["assurance/02-concept/WP-C-03-hara.md §6 SG-01, SG-03", "assurance/02-concept/WP-C-01-item-definition.md AOU-01…AOU-05", "assurance/08-analyses/fmea/item-definition.md §A.10 P1–P11, IOI-004", "assurance/08-analyses/fmea/item/vehicle-catalog.md"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#252", record: "assurance/02-concept/WP-C-03-hara.md §1.1; WP-C-01 §1.1 (v0.16); WP-M-01 §3.1 (#248)", at: 2026-10-19}
 
 - id: DQ-370
   question: "With the move to a platform (DQ-037 B), what should the G1 gate claim?"
@@ -4745,7 +4955,9 @@
       title: "The whole Corolla E210 family (VF-001)"
       detail: "G1 also covers the hatchback and the hybrids. Cost: their checks (IOI-002) must be done first, which delays G1."
   sources: ["assurance/01-management/WP-M-01-assurance-strategy.md §3.1", "assurance/01-management/WP-M-12-impact-analysis.md M-1", "assurance/08-analyses/fmea/item-definition.md §1, IOI-002", "docs/liondriver/vehicles/vehicles.yaml VF-001"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#248", record: "assurance/01-management/WP-M-01-assurance-strategy.md §3.1, §3.2, §7, D-15; WP-M-07 §5 D-15; WP-M-12 M-1", at: 2026-10-19}
 
 - id: DQ-400
   question: "The closed-loop driving simulation cannot run in real time on GitHub's free 4-core runners. Should it run on your own computer as a self-hosted runner, on a paid larger GitHub runner, or stay off CI for now?"

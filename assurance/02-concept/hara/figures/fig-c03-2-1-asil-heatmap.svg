@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="774" viewBox="0 0 1280 774" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
 <title id="t">Figure 2-1. Hazardous-event rows per S x E x C cell (WP-C-03 §2.1)</title>
-<desc id="d">Two ISO 26262-3 Table 4 matrices (severity S1-S3 by exposure E1-E4 rows, controllability C1-C3 columns), coloured by ASIL, give the number of hazardous-event rows of the reference-scope Cartesian HARA in each cell. As rated: QM 869, A 713, B 606, C 62, D 0. If every AoU-credited controllability rating is raised by one class: QM 628, A 594, B 807, C 192, D 29. 1014 rows rated S0 are not shown.</desc>
+<desc id="d">Two ISO 26262-3 Table 4 matrices (severity S1-S3 by exposure E1-E4 rows, controllability C1-C3 columns), coloured by ASIL, give the number of hazardous-event rows of the reference-scope Cartesian HARA in each cell. As rated: QM 871, A 716, B 607, C 62, D 0. If every AoU-credited controllability rating is raised by one class: QM 629, A 596, B 809, C 193, D 29. 1008 rows rated S0 are not shown.</desc>
 <defs><marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker></defs>
 <rect width="1280" height="774" fill="#FFFFFF"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 2-1 · Hazardous-event rows per S × E × C cell</text>
@@ -64,7 +64,7 @@
 <text x="276" y="361" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">61</text>
 <rect x="289" y="337" width="146" height="36" rx="5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
 <text x="297" y="351" font-size="9.5" fill="#0F172A" font-weight="600" opacity=".85">QM</text>
-<text x="424" y="361" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">19</text>
+<text x="424" y="361" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">20</text>
 <rect x="437" y="337" width="146" height="36" rx="5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
 <text x="445" y="351" font-size="9.5" fill="#0F172A" font-weight="600" opacity=".85">QM</text>
 <text x="572" y="361" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">33</text>
@@ -74,17 +74,17 @@
 <text x="276" y="399" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">86</text>
 <rect x="289" y="375" width="146" height="36" rx="5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
 <text x="297" y="389" font-size="9.5" fill="#0F172A" font-weight="600" opacity=".85">QM</text>
-<text x="424" y="399" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">68</text>
+<text x="424" y="399" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">69</text>
 <rect x="437" y="375" width="146" height="36" rx="5" fill="#FED7AA" stroke="#FDBA74" stroke-width="1"/>
 <text x="445" y="389" font-size="9.5" fill="#0F172A" font-weight="600" opacity=".85">ASIL A</text>
-<text x="572" y="399" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">44</text>
+<text x="572" y="399" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">45</text>
 <text x="108" y="435" font-size="11.5" fill="#0F172A" font-weight="600" text-anchor="middle">E3</text>
 <rect x="141" y="413" width="146" height="36" rx="5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
 <text x="149" y="427" font-size="9.5" fill="#0F172A" font-weight="600" opacity=".85">QM</text>
 <text x="276" y="437" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">52</text>
 <rect x="289" y="413" width="146" height="36" rx="5" fill="#FED7AA" stroke="#FDBA74" stroke-width="1"/>
 <text x="297" y="427" font-size="9.5" fill="#0F172A" font-weight="600" opacity=".85">ASIL A</text>
-<text x="424" y="437" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">50</text>
+<text x="424" y="437" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">52</text>
 <rect x="437" y="413" width="146" height="36" rx="5" fill="#FB923C" stroke="#EA580C" stroke-width="1"/>
 <text x="445" y="427" font-size="9.5" fill="#0F172A" font-weight="600" opacity=".85">ASIL B</text>
 <text x="572" y="436" font-size="13" fill="#0F172A" text-anchor="end" opacity=".6">–</text>
@@ -94,7 +94,7 @@
 <text x="276" y="475" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">10</text>
 <rect x="289" y="451" width="146" height="36" rx="5" fill="#FB923C" stroke="#EA580C" stroke-width="1"/>
 <text x="297" y="465" font-size="9.5" fill="#0F172A" font-weight="600" opacity=".85">ASIL B</text>
-<text x="424" y="475" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">19</text>
+<text x="424" y="475" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">20</text>
 <rect x="437" y="451" width="146" height="36" rx="5" fill="#C2410C" stroke="#9A3412" stroke-width="1"/>
 <text x="445" y="465" font-size="9.5" fill="#FFFFFF" font-weight="600" opacity=".85">ASIL C</text>
 <text x="572" y="474" font-size="13" fill="#FFFFFF" text-anchor="end" opacity=".6">–</text>
@@ -144,7 +144,7 @@
 <rect x="44" y="490" width="38" height="148" rx="6" fill="#F1F5F9" stroke="#CBD5E1"/>
 <text x="63" y="569" font-size="13" fill="#0F172A" font-weight="700" text-anchor="middle">S3</text>
 <text x="40" y="662" font-size="11" fill="#475569" font-weight="600">Rows per class:</text>
-<text x="132" y="662" font-size="11" fill="#0F172A" font-weight="600">QM 869 · A 713 · B 606 · C 62 · D 0</text>
+<text x="132" y="662" font-size="11" fill="#0F172A" font-weight="600">QM 871 · A 716 · B 607 · C 62 · D 0</text>
 <text x="680" y="118" font-size="13.5" fill="#0F172A" font-weight="700">If every ⚠ AoU fails</text>
 <text x="680" y="135" font-size="11" fill="#475569">C+1 on every row whose C rating credits an unverified AoU</text>
 <text x="703" y="172" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">S</text>
@@ -204,7 +204,7 @@
 <text x="1064" y="361" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">59</text>
 <rect x="1077" y="337" width="146" height="36" rx="5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
 <text x="1085" y="351" font-size="9.5" fill="#0F172A" font-weight="600" opacity=".85">QM</text>
-<text x="1212" y="361" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">50</text>
+<text x="1212" y="361" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">51</text>
 <text x="748" y="397" font-size="11.5" fill="#0F172A" font-weight="600" text-anchor="middle">E2</text>
 <rect x="781" y="375" width="146" height="36" rx="5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
 <text x="789" y="389" font-size="9.5" fill="#0F172A" font-weight="600" opacity=".85">QM</text>
@@ -214,7 +214,7 @@
 <text x="1064" y="399" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">108</text>
 <rect x="1077" y="375" width="146" height="36" rx="5" fill="#FED7AA" stroke="#FDBA74" stroke-width="1"/>
 <text x="1085" y="389" font-size="9.5" fill="#0F172A" font-weight="600" opacity=".85">ASIL A</text>
-<text x="1212" y="399" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">86</text>
+<text x="1212" y="399" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">88</text>
 <text x="748" y="435" font-size="11.5" fill="#0F172A" font-weight="600" text-anchor="middle">E3</text>
 <rect x="781" y="413" width="146" height="36" rx="5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
 <text x="789" y="427" font-size="9.5" fill="#0F172A" font-weight="600" opacity=".85">QM</text>
@@ -224,7 +224,7 @@
 <text x="1064" y="437" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">55</text>
 <rect x="1077" y="413" width="146" height="36" rx="5" fill="#FB923C" stroke="#EA580C" stroke-width="1"/>
 <text x="1085" y="427" font-size="9.5" fill="#0F172A" font-weight="600" opacity=".85">ASIL B</text>
-<text x="1212" y="437" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">38</text>
+<text x="1212" y="437" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">40</text>
 <text x="748" y="473" font-size="11.5" fill="#0F172A" font-weight="600" text-anchor="middle">E4</text>
 <rect x="781" y="451" width="146" height="36" rx="5" fill="#FED7AA" stroke="#FDBA74" stroke-width="1"/>
 <text x="789" y="465" font-size="9.5" fill="#0F172A" font-weight="600" opacity=".85">ASIL A</text>
@@ -234,7 +234,7 @@
 <text x="1064" y="475" font-size="16" fill="#0F172A" font-weight="700" text-anchor="end">13</text>
 <rect x="1077" y="451" width="146" height="36" rx="5" fill="#C2410C" stroke="#9A3412" stroke-width="1"/>
 <text x="1085" y="465" font-size="9.5" fill="#FFFFFF" font-weight="600" opacity=".85">ASIL C</text>
-<text x="1212" y="475" font-size="16" fill="#FFFFFF" font-weight="700" text-anchor="end">13</text>
+<text x="1212" y="475" font-size="16" fill="#FFFFFF" font-weight="700" text-anchor="end">14</text>
 <rect x="684" y="338" width="38" height="148" rx="6" fill="#F1F5F9" stroke="#CBD5E1"/>
 <text x="703" y="417" font-size="13" fill="#0F172A" font-weight="700" text-anchor="middle">S2</text>
 <line x1="680" y1="488.5" x2="1224" y2="488.5" stroke="#94A3B8" stroke-width="1"/>
@@ -281,11 +281,11 @@
 <rect x="684" y="490" width="38" height="148" rx="6" fill="#F1F5F9" stroke="#CBD5E1"/>
 <text x="703" y="569" font-size="13" fill="#0F172A" font-weight="700" text-anchor="middle">S3</text>
 <text x="680" y="662" font-size="11" fill="#475569" font-weight="600">Rows per class:</text>
-<text x="772" y="662" font-size="11" fill="#0F172A" font-weight="600">QM 628 · A 594 · B 807 · C 192 · D 29</text>
+<text x="772" y="662" font-size="11" fill="#0F172A" font-weight="600">QM 629 · A 596 · B 809 · C 193 · D 29</text>
 <path d="M598 330 H664" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#aG)"/>
 <text x="631" y="320" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">C+1</text>
 <text x="631" y="346" font-size="9.5" fill="#475569" text-anchor="middle">on ⚠ rows</text>
-<text x="40" y="684" font-size="11" fill="#475569">Not shown: 1014 rows rated S0 (malfunction not hazardous in that situation; the reason is recorded per row in hara-events.csv). No row is rated E0 or C0.</text>
+<text x="40" y="684" font-size="11" fill="#475569">Not shown: 1008 rows rated S0 (malfunction not hazardous in that situation; the reason is recorded per row in hara-events.csv). No row is rated E0 or C0.</text>
 <text x="40" y="702" font-size="11" fill="#475569">Each number counts rows (function × guide word × situation × condition). The same (function, guide word, situation) appears up to six times, once per weather/surface condition.</text>
 <line x1="40" y1="726" x2="1240" y2="726" stroke="#E2E8F0"/>
 <rect x="40" y="739" width="28" height="16" rx="4" fill="#F8FAFC" stroke="#CBD5E1"/>

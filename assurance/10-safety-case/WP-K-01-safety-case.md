@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-K-01 Safety case (integrated functional safety, SOTIF and AI argument; links to the cybersecurity case) |
 | Standard reference | ISO 26262-2:2018 §6 (safety case); ISO 21448:2022 §12 (via [WP-K-02](WP-K-02-sotif-release-argument.md)); ISO/PAS 8800:2024 (AI assurance argument); ISO/SAE 21434:2021 §6 (cybersecurity case, via [WP-K-03](WP-K-03-cybersecurity-case.md)); UL 4600 (informative only, see §8); GSN Community Standard (notation) |
-| Version | 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status at BL-002 `bf6ce8c` after the firmware changes integrated 2026-10-12: defeaters DF-01…03, 05, 12, 30, 32…34, 39, 40 restated (all still open); evidence Sn-02, 03, 10, 12, 13 updated (WP-S-02 v0.14, WP-W-02 v0.14), Sn-15 added; AOU-14 added; 2026-10-12). 0.1: initial draft |
+| Version | 0.5 (DF-42 added: no supplier EMC or environmental evidence, accepted as residual risk, DQ-078 A, 2026-10-19). 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status at BL-002 `bf6ce8c` after the firmware changes integrated 2026-10-12: defeaters DF-01…03, 05, 12, 30, 32…34, 39, 40 restated (all still open); evidence Sn-02, 03, 10, 12, 13 updated (WP-S-02 v0.14, WP-W-02 v0.14), Sn-15 added; AOU-14 added; 2026-10-12). 0.1: initial draft |
 | Status | Draft — **living document. At this baseline the argument structure is defined; almost all evidence is missing or partial. This safety case does not support any release or public-road claim** |
 | ASIL / scope | Item LD-SDA, reference configuration; up to ASIL C (SG-01) |
 | Author | Assurance team (initial draft) |
@@ -376,6 +376,7 @@ Each defeater is a known fact that, while it stands, defeats the claim it is att
 | DF-39 | Configuration commands gated in car mode in the reference build (TSR-513); `0xc0`/`0xb0`/`0xb1`/`0xf6` unconfirmed; `0xe7` HIL confirmation pending | GAP-49 | G1.7, G1.8 | TSR-513 |
 | DF-40 | Explicit equal priorities and critical sections (panda `52cad44`, TSR-519 partial); safety logic still in ISR context; no scheme adopted; WCET/latency unmeasured | GAP-50 | G1.1.4, G1.8 | TSR-519 |
 | DF-41 | Fuzz testing excludes the safety-relevant host processes; simulator runs a Honda and bypasses the panda | GAP-51 | G1.2, G1.6, G2.2 | WP-V-02, WP-W-08 |
+| DF-42 | No supplier EMC or environmental test evidence for the comma device and harness; random hardware failure rates from handbooks only. Accepted as residual risk by the lead (DQ-078 A, 2026-10-19; WP-M-07 R-30) | — | G1.1.4, G1.9 | WP-H-07 §5 conditions; part-specific data or own EMC/environment tests if obtained |
 
 ## 8. UL 4600 principles used (informative)
 

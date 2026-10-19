@@ -1,11 +1,11 @@
 # LionDriver — FMEA Rating Tables
 
-**Version:** RT-2 (referenced by `rating_tables` in every analysis file). RT-2 adds §7 (FMEA-MSR); §1–§6 are unchanged from RT-1.
+**Version:** RT-3 (referenced by `rating_tables` in every analysis file). RT-3 (2026-10-19) replaces the provisional §7.4 MSR action priority for S 9–10 with the AIAG-VDA handbook table (DQ-207 A). RT-2 added §7 (FMEA-MSR); §1–§6 are unchanged from RT-1.
 **S/O/D unchanged since:** RT-1
 **Basis:** AIAG & VDA FMEA Handbook (2019), tailored. Criteria are paraphrased; consult the handbook for the normative wording.
 **Applies to:** System FMEA, DFMEA, SW FMEA, PFMEA. FMEDA uses §6. FMEA-MSR (§7) applies to the System FMEA and DFMEA only.
 
-Any change to these tables increments the version (RT-3, …) and triggers re-rating of affected rows. A file rated against the version named in "S/O/D unchanged since" needs no re-rating until it adds rows from a later section; a file with FMEA-MSR rows must name RT-2 or later (checked by the linter).
+Any change to these tables increments the version (RT-3, …) and triggers re-rating of affected rows. A file rated against the version named in "S/O/D unchanged since" needs no re-rating until it adds rows from a later section; a file with FMEA-MSR rows must name the current version (checked by the linter).
 
 ---
 
@@ -243,7 +243,7 @@ Rated with the §1 table on the effect that remains **after** the mechanism has 
 
 - It never exceeds the failure mode's severity.
 - It may drop below 10 only if the FSC safe state is reached without driver action, or with a driver action that the HARA rates C0–C2 within the warning time.
-- It enters the MSR AP only at M 1 (§7.4).
+- It enters the MSR AP only at M 1 and only for S 1–8, which still use the provisional stand-in (§7.4); the S 9–10 handbook table rates the original severity in every column, M 1 included.
 
 ### 7.2 Frequency (F)
 
@@ -283,9 +283,25 @@ How well the diagnostic detects the cause in operation **and** the system respon
 
 ### 7.4 MSR Action Priority
 
-> **Provisional.** The AIAG-VDA FMEA-MSR action priority table is not yet transcribed into this repository. Until it is, the §5 table is applied with **F in place of O** and **M in place of D**. With M 1, the severity after the system response (§7.1) replaces the original severity. Transcribing the handbook table makes RT-3 and re-rates every MSR row. Until then, every MSR AP is marked provisional in the linter report.
+**S 9 and S 10: AIAG-VDA FMEA-MSR handbook table (RT-3).** Source: AIAG & VDA FMEA Handbook (2019), Supplemental FMEA-MSR, action priority table for FMEA-MSR, transcribed cell by cell from the lead's copy of the S 9 and S 10 pages (decision register DQ-207, option A, 2026-10-19). The handbook pages are not stored in the repository. Rows are frequency F, columns monitoring M; the original severity is rated in every column, M 1 included.
 
-The executable copy is `tools/safety/fmea_lint.py` (`AP_MSR_TABLE`, `compute_ap_msr`); its unit tests pin it to §5.
+| S | F | M 1 | M 2 | M 3 | M 4 | M 5 | M 6 | M 7 | M 8 | M 9 | M 10 |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| 10 | 5–10 | H | H | H | H | H | H | H | H | H | H |
+| 10 | 4 | M | H | H | H | H | H | H | H | H | H |
+| 10 | 3 | L | M | M | H | H | H | H | H | H | H |
+| 10 | 2 | L | L | L | M | M | M | M | M | M | M |
+| 10 | 1 | L | L | L | L | L | L | L | L | L | L |
+| 9 | 4–10 | H | H | H | H | H | H | H | H | H | H |
+| 9 | 3 | L | H | H | H | H | H | H | H | H | H |
+| 9 | 2 | L | H | H | H | H | H | H | H | H | H |
+| 9 | 1 | L | L | L | L | L | L | L | L | L | L |
+
+S 9 is stricter than S 10 at F 2 and F 3. That is how the handbook pages read; it is transcribed as is, not corrected.
+
+> **S 1–8: provisional.** Those handbook pages are not transcribed yet. Until they are, the §5 table is applied with **F in place of O** and **M in place of D**, and with M 1 the severity after the system response (§7.1) replaces the original severity. Transcribing them makes RT-4. The linter reports how many rows use this stand-in. Every MSR row at RT-3 has S 10, so none does.
+
+The executable copy is `tools/safety/fmea_lint.py`: `AP_MSR_HANDBOOK` for S 9–10 and `AP_MSR_TABLE` (the stand-in) for S 1–8, both through `compute_ap_msr`. Its unit tests pin every S 9–10 cell to the table above and the stand-in to §5.
 
 **Rules (enforced by the linter):**
 - The stored `msr.ap` must equal the value from this table.
@@ -293,5 +309,6 @@ The executable copy is `tools/safety/fmea_lint.py` (`AP_MSR_TABLE`, `compute_ap_
 - **MSR AP = M:** action or rationale recommended.
 - Every mechanism an MSR row rates must cite a `ref` or `test` on the failure mode.
 - `ftti_ms` must equal the FTTI of the cited WP-S-04 row.
-- MSR AP never closes a hazard-linked cause by itself. Whether it may count toward accepting residual risk is a lead decision (decision register).
+- **Closing a cause (lead decision DQ-206, option A, 2026-10-19; [WP-S-04 §6](../../03-system/WP-S-04-timing-ftti-budget.md#6-measurement-plan)).** A diagnostic followed by a safe state closes a hazard-linked cause only when its fault-injection timing has been **measured** (WP-S-04 §6, e.g. M-04, M-05, M-06, M-10) and lies inside the FTTI of WP-S-04 §3.7: the row has `basis: measured` with a `ref` to the measurement (so M ≤ 4) and an MSR AP of L or M. Until that measurement passes, the cause stays open whatever its MSR AP.
+- Code-derived timing (WP-S-04 §4, M 5–6) and simulated timing (WP-S-04 §3.9, evidence only, msr-plan §4.2) **rank** the work; they never close a cause.
 
