@@ -2184,8 +2184,9 @@
       title: "Wait for an assessor to approve them"
       detail: "Strongest independence. Cost: no SOTIF evidence until an assessor is engaged."
   sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md OI-3", "assurance/09-production-operation/WP-O-04-field-monitoring.md OI-5"]
-  status: answered
+  status: applied
   answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: 6e3828c, record: "WP-V-02 v0.11 OI-3, §4; WP-O-04 v0.2 OI-5 (#266)", at: 2026-10-19}
 
 - id: DQ-097
   question: "Should the panda refuse to enable controls when the car's VIN does not match the vehicle lock record?"
@@ -2436,8 +2437,9 @@
       title: "Trend rule only; report the probability without a threshold"
       detail: "Easier to meet. Cost: a weaker argument that a later assessor may reject."
   sources: ["assurance/06-validation/WP-V-04-sotif-unknown-scenarios.md OI-2"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: 6e3828c, record: "WP-V-04 v0.5 R3, §5.4; threshold for approval as DQ-262 (#266)", at: 2026-10-19}
 
 - id: DQ-109
   question: "How many sacrificial devices may be spent on the option-byte / readout-protection test (TC-05)?"
