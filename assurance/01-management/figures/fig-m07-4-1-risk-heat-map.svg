@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="757" viewBox="0 0 1280 757" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 4-1 · Risk heat map (WP-M-07)</title>
-<desc>Probability by impact grid of the 29 WP-M-07 risks. Open: High 10 (R-01 E25, R-02 E20, R-06 E20, R-07 E20, R-26 E20, R-03 E16, R-04 E16, R-08 E15, R-09 E15, R-20 E15), Medium 17, Low 1; closed: R-05.</desc>
+<desc>Probability by impact grid of the 30 WP-M-07 risks. Open: High 10 (R-01 E25, R-02 E20, R-06 E20, R-07 E20, R-26 E20, R-03 E16, R-04 E16, R-08 E15, R-09 E15, R-20 E15), Medium 18, Low 1; closed: R-05.</desc>
 <defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
 <rect x="0" y="0" width="1280" height="757" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 4-1 · Risk heat map</text>
-<text x="40" y="66" font-size="12.5" fill="#475569">29 project risks of the §4 register on the probability × impact grid of §2.2; 28 open, 1 closed</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">30 project risks of the §4 register on the probability × impact grid of §2.2; 29 open, 1 closed</text>
 <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-M-07 §2.2, §4, §4.1</text>
 <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
 <text x="202" y="168" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">5 · Almost certain</text>
@@ -87,8 +87,10 @@
 <text x="542" y="379.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-19</text>
 <rect x="565" y="367" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.2"/>
 <text x="585" y="379.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-24</text>
-<rect x="522" y="390" width="40" height="18" rx="4" fill="none" stroke="#94A3B8" stroke-width="1" stroke-dasharray="2 2"/>
-<text x="542" y="402.5" font-size="10" fill="#94A3B8" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-11</text>
+<rect x="522" y="390" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.2"/>
+<text x="542" y="402.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-30</text>
+<rect x="565" y="390" width="40" height="18" rx="4" fill="none" stroke="#94A3B8" stroke-width="1" stroke-dasharray="2 2"/>
+<text x="585" y="402.5" font-size="10" fill="#94A3B8" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-11</text>
 <rect x="616" y="322" width="96" height="96" rx="6" fill="#FDE3DE" stroke="#F3B7AB" stroke-width="1"/>
 <text x="704" y="336" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">E 15</text>
 <rect x="622" y="344" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
@@ -202,7 +204,7 @@
 <text x="862" y="589" font-size="10.5" fill="#475569">P3 × I5</text>
 <text x="1232" y="589" font-size="10.5" fill="#475569" text-anchor="end">Mitigate · PM · due G0</text>
 <text x="826" y="606" font-size="10.5" fill="#0F172A">Funding for external assessor, pen test and HIL hardware not available</text>
-<text x="40" y="684" font-size="10.5" fill="#475569">Open by band: High 10 · Medium 17 · Low 1 · closed 1 (R-05). Re-scored: R-10 P4 I4 E16 → P2 I4 E8, R-11 P3 I4 E12 → P2 I4 E8 (dotted chip = previous cell).</text>
+<text x="40" y="684" font-size="10.5" fill="#475569">Open by band: High 10 · Medium 18 · Low 1 · closed 1 (R-05). Re-scored: R-10 P4 I4 E16 → P2 I4 E8, R-11 P3 I4 E12 → P2 I4 E8 (dotted chip = previous cell).</text>
 <text x="40" y="701" font-size="10.5" fill="#475569">Scores are single-author engineering judgement (§2.2, OI-2). Label = the cause clause of the risk text, before the arrow. Treatment strategy = first word of the Treatment column.</text>
 <line x1="40" y1="717" x2="1240" y2="717" stroke="#E2E8F0" stroke-width="1"/>
 <rect x="40" y="729" width="14" height="12" rx="3" fill="#FDE3DE" stroke="#F3B7AB" stroke-width="1.2"/>
