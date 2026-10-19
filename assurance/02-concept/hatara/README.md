@@ -21,9 +21,9 @@ Each interaction has a type after Kriaa et al.: conditional dependency, mutual r
 
 ## Figure 1: where a threat reaches a hazard
 
-![HATARA Figure 1: the nine WP-C-03 hazards against the fourteen WP-C-09 threat scenarios; filled cells are the links WP-C-09 §3 carries, dashed cells are links an interaction names but no damage scenario carries (H-07 and H-09 against TS-04; H-09 is reached by no threat)](figures/fig-hatara-1-matrix.svg)
+![HATARA Figure 1: the nine WP-C-03 hazards against the fourteen WP-C-09 threat scenarios; filled cells are the links WP-C-09 §3 carries, dashed cells would be links an interaction names but no damage scenario carries (none since WP-C-09 v0.8)](figures/fig-hatara-1-matrix.svg)
 
-*Every hazard against every threat scenario. Filled cells are links WP-C-09 §3 carries. Dashed cells are links an interaction names but the TARA does not carry. TS-04 can alter driver monitoring, yet none of its damage scenarios reaches H-07 (mode confusion) or H-09 (unsupervised driver). H-07 is reached only through the fleet-wide DS-11, and H-09 by no threat at all: interaction IX-11.*
+*Every hazard against every threat scenario. Filled cells are links WP-C-09 §3 carries. Dashed cells are links an interaction names but the TARA does not carry. Interaction IX-11 found one: TS-04 can alter driver monitoring, yet until WP-C-09 v0.8 none of its damage scenarios reached H-07 (mode confusion) or H-09 (unsupervised driver). DS-13 and DS-14 now carry both links, so IX-11 reads Closed and no cell is dashed.*
 
 ## Figure 2: where one side's measure changes the other's risk
 
