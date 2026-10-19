@@ -2342,8 +2342,9 @@
       title: "Procedure only: reflash and log after each session"
       detail: "Reflash the release build after every session and record it in the logbook. Cost: no hardware, but it rests on discipline; one slip puts a test build on the road."
   sources: ["assurance/03-system/WP-S-09-system-verification.md OI-2"]
-  status: answered
+  status: applied
   answer: {choice: B, via: inbox, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: ec883085, record: "WP-S-09 v0.4 OI-2", at: 2026-10-19}
 
 - id: DQ-106
   question: "Should the SoC-side detection requirements CSR-016 and CSR-053 be verified at CAL 2 rigour instead of their inherited CAL 3?"
