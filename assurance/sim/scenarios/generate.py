@@ -225,6 +225,8 @@ def kmh(v):
   return round(v / 3.6, 3)
 
 
+ODD_SPEED = 110 / 3.6   # ODD-H speed bound, m/s (WP-C-02 §3, decision register DQ-260 A)
+SWEEP_MAX = 120 / 3.6   # highest WP-V-03 sweep speed (KS-05 and KS-07 go to 120 km/h "by simulation only")
 R01 = 300.0
 # KS-27 ramp: the smallest radius of TC-35 (shortest sight distance); a 2 m wall 0.3 m inside the lane's left edge.
 # The sight line from the lane centre clears the wall up to a gap of 2·sqrt(2·Rp·m) along the lane, Rp = R + w/2 and
@@ -269,9 +271,9 @@ SCENARIOS = [
            {"StandTime": (5.0, [3.0, 5.0], "s", "time the lead stands before it leaves")},
            ks23, ["lead leaves at 1.5 m/s² after StandTime; ego starts at standstill"], 15.0),
   Scenario("KS-25", "Speed above the ODD bound", {"length": 2500.0},
-           {"StartSpeed": (kmh(115), [kmh(115)], "m/s", "start speed"),
-            "EndSpeed": (kmh(130), [kmh(130)], "m/s", "end speed; crosses the 120 km/h ODD-H bound")},
-           ks25, ["ego speed crosses 120 km/h"], 25.0),
+           {"StartSpeed": (kmh(105), [kmh(105)], "m/s", "start speed, below the bound"),
+            "EndSpeed": (kmh(120), [kmh(120)], "m/s", "end speed; crosses the 110 km/h ODD-H bound (DQ-260 A)")},
+           ks25, ["ego speed crosses 110 km/h, the ODD-H bound"], 25.0),
   Scenario("KS-27", "Lead hidden in a ramp curve while accelerating to the set speed",
            {"straight": 100.0, "clothoid": 60.0, "radius": R27, "arc": 700.0, "lanes": 1,
             "wall": {"t": WALL27_T, "height": 2.0}, "reveal": (40.0, 80.0)},
