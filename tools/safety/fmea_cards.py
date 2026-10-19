@@ -12,7 +12,10 @@ One card per failure mode SFM-nnn. Each card shows:
   cause), amber for M 5–7 (targets the cause, FTTI met on code-derived timing only, or untimed), red for M 8–10 (late, not
   designed for this cause, or none), grey where the cause has no MSR rating; then its AP and its MSR AP;
 - the actions of its causes, with their status. A completed action with a predicted (`revised`) rating that none of its
-  linked causes has reached yet reads "completed, not yet credited": its effect waits for the next baseline's re-rating.
+  linked causes has reached yet reads "completed, not yet credited": its effect waits for the next baseline's re-rating;
+- where it sits in the fault trees of WP-A-04: per goal, the basic events (red if a single point) and gates whose FMEA
+  backing it is in fta-fmea-map.yaml, or that the map lists it outside the tree (justified, or a tree gap). Read through
+  assurance/08-analyses/figures/fta_fmea_figures.backlinks(), so a tree or map change asks for a regeneration here too.
 
 Everything on a card is read from the YAML except the scene, which is chosen per failure mode below. The build fails if
 a failure mode has no scene or sheet, a scene or sheet names one that is not in the YAML, a hazard is not mapped or an
@@ -35,6 +38,7 @@ sys.path.insert(0, str(HERE))
 for p in ("assurance/08-analyses/figures", "assurance/02-concept/sotif", "assurance/02-concept/hara"):
   sys.path.insert(0, str(ROOT / p))
 import fmea_diagrams as fd  # the FMEA's own stdlib YAML loader
+import fta_fmea_figures as ff  # FMEA failure mode -> fault-tree events, from fta-fmea-map.yaml
 import stpa_ls_scenes as ls  # road scenes, shared with the STPA loss scenario cards
 from hara_figures import HAIR, INK, MUTED, header, pill, svg_doc, t, text_w, wrap  # noqa: E402
 
@@ -108,7 +112,8 @@ def load():
   return doc, mapping
 
 
-def cards(doc, mapping):
+def cards(doc, mapping, links=None):
+  links = ff.backlinks() if links is None else links
   fms = {f["id"]: f for f in doc["failure_modes"]}
   acts = {a["id"]: a["status"] for a in doc["actions"]}
   linked = {}  # action -> [(occurrence, detection)] of every cause that names it
@@ -158,7 +163,7 @@ def cards(doc, mapping):
         if a not in a_ids:
           a_ids.append(a)
     out[fid] = dict(id=fid, title=f["failure_mode"], s=f["severity"], gw=f["guideword"], hz=hz, chain=chain, causes=causes,
-                    actions=[(a, acts[a]) for a in sorted(a_ids)], scene=SCENE[fid])
+                    actions=[(a, acts[a]) for a in sorted(a_ids)], scene=SCENE[fid], trees=links.get(fid, []))
   return out
 
 
@@ -235,6 +240,26 @@ def card(x, y, c):
       cx, yy = px + 56, yy + 21
     b.append(pill(cx, yy - 7, s, bg, fg, 17, 9)[0])
     cx += w + 6
+  yy += 24
+  b.append(t(px, yy + 6, "Fault trees", 9.5, MUTED))
+  cx = px + 70
+  chips = []
+  for goal, ids, kind in c["trees"]:
+    if kind:
+      chips.append((f"{goal} {'outside the tree, justified' if kind == 'justified' else 'tree gap'}",
+                    ("#F1F5F9", "#334155", None) if kind == "justified" else ("#FEE2E2", "#B91C1C", None), 10))
+      continue
+    chips.append((goal, ("#0F172A", "#FFFFFF", None), 4))
+    chips += [(i, ("#FFFFFF", "#DC2626", "#DC2626") if sp else ("#FFFFFF", "#1D4ED8", "#2563EB"), 4) for i, sp in ids]
+    chips[-1] = chips[-1][:2] + (10,)
+  if not chips:
+    b.append(t(cx, yy + 6, "in no fault tree", 9.5, MUTED))
+  for s, (bg, fg, st), after in chips:
+    w = text_w(s, 9, True) + 14
+    if cx + w > px + PW:
+      cx, yy = px + 70, yy + 21
+    b.append(pill(cx, yy - 7, s, bg, fg, 17, 9, st)[0])
+    cx += w + after
   return b, yy + 22 - y
 
 
@@ -275,12 +300,14 @@ def sheet(name, cs):
     " / ".join(" ; ".join(es) for _, _, es in cs[i]["chain"]) + ". Causes: " +
     "; ".join(f"{k['id']} {k['text']} (O {k['o']}, D {k['d']}, M {k['m'] if k['m'] is not None else '-'}, AP {k['ap']}"
               f"{', MSR AP ' + k['msr_ap'] if k['msr_ap'] else ''})" for k in cs[i]["causes"]) +
-    ". Actions: " + (", ".join(f"{a} {s}" for a, s in cs[i]["actions"]) or "none") + "." for i in ids)
+    ". Actions: " + (", ".join(f"{a} {s}" for a, s in cs[i]["actions"]) or "none") + ". Fault trees: " +
+    ("; ".join(f"{g} {kind.replace('_', ' ')}" if kind else f"{g} " + ", ".join(e + (" (single point)" if sp else "") for e, sp in ev)
+               for g, ev, kind in cs[i]["trees"]) or "none") + "." for i in ids)
   return svg_doc(w, int(y + 38), f"Figure {num}. System FMEA failure modes: {title}", desc, body)
 
 
 def build() -> dict[str, str]:
-  cs = cards(*load())
+  cs = cards(*load(), ff.backlinks())
   return {name: sheet(name, cs) for name in SHEETS}
 
 
@@ -288,7 +315,7 @@ def main(argv: list[str]) -> int:
   check = "--check" in argv
   try:
     out = build()
-  except (CardError, fd.FigError) as e:
+  except (CardError, fd.FigError, ff.FigureError) as e:
     print(f"fmea_cards: {e}", file=sys.stderr)
     return 1
   stale = []

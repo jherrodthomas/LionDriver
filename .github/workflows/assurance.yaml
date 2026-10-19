@@ -165,11 +165,13 @@ jobs:
         python3 assurance/08-analyses/fta/fta_diagrams.py --check
         python3 assurance/08-analyses/fta/test_fta_diagrams.py
         python3 assurance/08-analyses/fta/fta_cutsets.py --check
-    - name: FMEA data lint, HARA mapping onto WP-C-03 (and the linter's tests)
+    - name: FMEA data lint, HARA mapping onto WP-C-03, FTA-FMEA hand-off figures (and their tests)
       run: |
         python3 -m pip install --quiet --user --break-system-packages pyyaml jsonschema openpyxl
         python3 tools/safety/fmea_lint.py --report
         python3 -m unittest discover -s tools/safety -p 'test_fmea_lint.py'
+        python3 assurance/08-analyses/figures/fta_fmea_figures.py --check
+        python3 assurance/08-analyses/figures/test_fta_fmea_figures.py
         python3 tools/safety/fmea_review_xlsx.py --check
         python3 tools/safety/test_fmea_review_xlsx.py
     - name: STPA figures match WP-A-05, stpa-map.yaml and the decision register (and their tests)
