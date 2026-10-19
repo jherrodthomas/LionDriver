@@ -13,7 +13,7 @@ Row results: *match* = a computed cut set; *effective* = omits only latent event
 | SG-01 | 36 | 6 | 11 | 9 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-02 | 100 | 5 | 12 | 1 | 11 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-03 | 23 | 6 | 12 | 12 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| SG-04 | 22 | 7 | 13 | 13 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| SG-04 | 23 | 7 | 13 | 13 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-05 | 11 | 10 | 10 | 9 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
 | SG-06 | 85 | 7 | 11 | 1 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-07 | 17 | 14 | 16 | 15 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -257,7 +257,7 @@ Top event TE-03. 23 minimal cut sets.
 
 ## SG-04: deceleration beyond what following traffic and the driver can control
 
-Top event TE-04. 22 minimal cut sets.
+Top event TE-04. 23 minimal cut sets.
 
 ### Computed cut sets
 
@@ -266,25 +266,26 @@ Top event TE-04. 22 minimal cut sets.
 | 1 | 2 BE + 0 UE | 2 | {BE-1.12, BE-4.13} |  | MCS-04.7 |
 | 2 | 2 BE + 0 UE | 2 | {BE-1.13, BE-4.13} | C | MCS-04.7 |
 | 3 | 2 BE + 0 UE | 2 | {BE-1.14, BE-4.13} |  | MCS-04.7 |
-| 4 | 2 BE + 0 UE | 2 | {BE-2.12, BE-4.09} | C | MCS-04.5 |
-| 5 | 2 BE + 0 UE | 2 | {BE-2.13, BE-4.09} |  | MCS-04.5 |
-| 6 | 2 BE + 0 UE | 2 | {BE-3.10, BE-4.13} |  | MCS-04.10 |
-| 7 | 1 BE + 1 UE | 1 | {BE-4.01, UE-4.04} | C | MCS-04.1 |
-| 8 | 1 BE + 1 UE | 1 | {BE-4.03, UE-4.04} |  | MCS-04.2 |
-| 9 | 2 BE + 0 UE | 2 | {BE-4.09, BE-4.10} |  | MCS-04.5 |
-| 10 | 1 BE + 1 UE | 1 | {BE-4.11, UE-4.12} | S | MCS-04.6 |
-| 11 | 1 BE + 1 UE | 1 | {BE-4.14, UE-4.15} |  | MCS-04.8 |
-| 12 | 2 BE + 0 UE | 2 | {BE-4.19, BE-4.21} |  | MCS-04.11 |
-| 13 | 2 BE + 0 UE | 2 | {BE-4.20, BE-4.21} |  | MCS-04.11 |
-| 14 | 2 BE + 0 UE | 2 | {BE-4.22, BE-4.23} |  | MCS-04.12 |
-| 15 | 1 BE + 1 UE | 1 | {BE-4.24, UE-4.25} |  | MCS-04.13 |
-| 16 | 2 BE + 1 UE | 2 | {BE-1.07, BE-4.02, UE-4.04} | S | MCS-04.9 |
-| 17 | 2 BE + 1 UE | 2 | {BE-1.08, BE-4.02, UE-4.04} | C S | MCS-04.9 |
-| 18 | 2 BE + 1 UE | 2 | {BE-1.09, BE-4.02, UE-4.04} | C S | MCS-04.9 |
-| 19 | 2 BE + 1 UE | 2 | {BE-4.02, BE-4.16, UE-4.04} | S | MCS-04.9 |
-| 20 | 2 BE + 1 UE | 2 | {BE-4.05, BE-4.17, UE-4.04} |  | MCS-04.3 |
-| 21 | 2 BE + 1 UE | 1 | {BE-4.06, BE-4.07, UE-4.08} | L S | MCS-04.4 |
-| 22 | 2 BE + 1 UE | 1 | {BE-4.07, BE-4.18, UE-4.08} | L | MCS-04.4 |
+| 4 | 2 BE + 0 UE | 2 | {BE-1.25, BE-4.13} |  | MCS-04.7 |
+| 5 | 2 BE + 0 UE | 2 | {BE-2.12, BE-4.09} | C | MCS-04.5 |
+| 6 | 2 BE + 0 UE | 2 | {BE-2.13, BE-4.09} |  | MCS-04.5 |
+| 7 | 2 BE + 0 UE | 2 | {BE-3.10, BE-4.13} |  | MCS-04.10 |
+| 8 | 1 BE + 1 UE | 1 | {BE-4.01, UE-4.04} | C | MCS-04.1 |
+| 9 | 1 BE + 1 UE | 1 | {BE-4.03, UE-4.04} |  | MCS-04.2 |
+| 10 | 2 BE + 0 UE | 2 | {BE-4.09, BE-4.10} |  | MCS-04.5 |
+| 11 | 1 BE + 1 UE | 1 | {BE-4.11, UE-4.12} | S | MCS-04.6 |
+| 12 | 1 BE + 1 UE | 1 | {BE-4.14, UE-4.15} |  | MCS-04.8 |
+| 13 | 2 BE + 0 UE | 2 | {BE-4.19, BE-4.21} |  | MCS-04.11 |
+| 14 | 2 BE + 0 UE | 2 | {BE-4.20, BE-4.21} |  | MCS-04.11 |
+| 15 | 2 BE + 0 UE | 2 | {BE-4.22, BE-4.23} |  | MCS-04.12 |
+| 16 | 1 BE + 1 UE | 1 | {BE-4.24, UE-4.25} |  | MCS-04.13 |
+| 17 | 2 BE + 1 UE | 2 | {BE-1.07, BE-4.02, UE-4.04} | S | MCS-04.9 |
+| 18 | 2 BE + 1 UE | 2 | {BE-1.08, BE-4.02, UE-4.04} | C S | MCS-04.9 |
+| 19 | 2 BE + 1 UE | 2 | {BE-1.09, BE-4.02, UE-4.04} | C S | MCS-04.9 |
+| 20 | 2 BE + 1 UE | 2 | {BE-4.02, BE-4.16, UE-4.04} | S | MCS-04.9 |
+| 21 | 2 BE + 1 UE | 2 | {BE-4.05, BE-4.17, UE-4.04} |  | MCS-04.3 |
+| 22 | 2 BE + 1 UE | 1 | {BE-4.06, BE-4.07, UE-4.08} | L S | MCS-04.4 |
+| 23 | 2 BE + 1 UE | 1 | {BE-4.07, BE-4.18, UE-4.08} | L | MCS-04.4 |
 
 ### Table rows of WP-A-04
 
@@ -296,7 +297,7 @@ Top event TE-04. 22 minimal cut sets.
 | MCS-04.4 | 2 + traffic | {BE-4.06 or BE-4.18, BE-4.07, UE-4.08} | match | — |
 | MCS-04.5 | 2 | {BE-4.09, BE-4.10 or BE-2.12/2.13} | match | — |
 | MCS-04.6 | 1 + driver | {BE-4.11, UE-4.12} | match | — |
-| MCS-04.7 | 2 | {BE-1.12 or BE-1.13 or BE-1.14, BE-4.13} | match | — |
+| MCS-04.7 | 2 | {BE-1.12 or BE-1.13 or BE-1.14 or BE-1.25, BE-4.13} | match | — |
 | MCS-04.8 | 1 + ext. | {BE-4.14, UE-4.15} | match | — |
 | MCS-04.9 | 2 + ext. | {BE-4.02, BE-4.16 or BE-1.07 or BE-1.08 or BE-1.09, UE-4.04} | match | — |
 | MCS-04.10 | 2 | {BE-3.10, BE-4.13} | match | — |
