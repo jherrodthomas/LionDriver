@@ -88,6 +88,8 @@ jobs:
         python3 assurance/02-concept/figures/test_fig_c02_odd.py
         python3 assurance/02-concept/figures/fig_c09_scenes.py --check
         python3 assurance/02-concept/figures/test_fig_c09_scenes.py
+        python3 assurance/02-concept/figures/fig_c10_goals.py --check
+        python3 assurance/02-concept/figures/test_fig_c10_goals.py
         python3 assurance/02-concept/figures/fig_c01_interfaces.py --check
         python3 assurance/02-concept/figures/test_fig_c01_interfaces.py
         python3 assurance/02-concept/figures/fig_c01_modes.py --check
