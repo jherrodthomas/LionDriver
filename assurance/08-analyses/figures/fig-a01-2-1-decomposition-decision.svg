@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="706" viewBox="0 0 1280 706" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
-  <title id="t">Figure 2-1. ASIL decomposition decision for SG-01 and the four candidate schemes DEC-01 to DEC-04 (WP-A-01 §2, §4.1, §7)</title>
-  <desc id="d">SG-01 is ASIL C (D if AOU-01/02 fail). If controllability tests show C1 at a useful torque level, SG-01 is re-rated to ASIL B and the envelope E-03 is hardened to ASIL B as one element with no decomposition; this is the primary strategy, option (c). If not, and the envelope can be argued at ASIL C (option (a)), there is still no decomposition. Only if neither holds is the fallback DEC-01 used: C(C) = B(C) on the E-03 envelope plus A(C) on a new independent actuation monitor E-07; it is proposed, not applied. DEC-02 (second channel on the same MCU) and DEC-04 (SoC monitor) are rejected, DEC-03 (Toyota EPS) is not recommended; all three are withdrawn.</desc>
+  <title id="t">Figure 2-1. ASIL decomposition decision and the four candidate schemes DEC-01 to DEC-04 (WP-A-01 §2, §3, §4.1, §7)</title>
+  <desc id="d">Since 2026-10-16 (DQ-341, option A) the safety envelope E-03 is hardened to ASIL C as one non-decomposed element, because SG-02, SG-03 and SG-06 are ASIL C outright (HARA v0.4) and SG-01 is ASIL C (D if AOU-01/02 fail) until it is re-rated. If the ASIL C hardware metrics are met on the panda STM32H7 (WP-H-04), there is no decomposition; this is the primary strategy, not yet achieved. The controllability tests of option (c) still run: they lower the SG-01 requirements to B once re-rated and keep SG-01 from ASIL D, but no longer change the envelope target or decide DEC-01. Only if the ASIL C metrics fail is the fallback DEC-01 used: C(C) = B(C) on the E-03 envelope plus A(C) on a new independent actuation monitor E-07, for SG-01 and extended to the SG-02, SG-03 and SG-06 paths; it is proposed, not applied. SG-04, SG-05 and SG-07 (ASIL B) are carried by the envelope alone; SG-08 (ASIL A) stays on the QM SoC with no decomposition proposed. DEC-02 (second channel on the same MCU) and DEC-04 (SoC monitor) are rejected, DEC-03 (Toyota EPS) is not recommended; all three are withdrawn.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
@@ -19,7 +19,7 @@
 
   <!-- header -->
   <text x="40" y="44" class="t b" font-size="20">Figure 2-1 · Decomposition decision and candidate schemes</text>
-  <text x="40" y="66" class="m" font-size="12.5">Primary strategy uses no decomposition · DEC-01 is a documented fallback only · no hardware for it exists</text>
+  <text x="40" y="66" class="m" font-size="12.5">Primary strategy: envelope hardened to ASIL C, no decomposition (DQ-341 A) · DEC-01 is a documented fallback only · no hardware for it exists</text>
   <text x="1240" y="44" class="m s" text-anchor="end">WP-A-01 §2, §4.1</text>
   <text x="1240" y="62" class="m s" text-anchor="end">need per SG §3 · records §7</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
@@ -28,58 +28,54 @@
   <text x="660" y="106" class="m b" font-size="10" letter-spacing=".06em">CANDIDATE SCHEMES (§4.1) · RECORD STATUS (§7)</text>
 
   <!-- ===== left: decision flow ===== -->
-  <!-- A: SG-01 -->
+  <!-- A: envelope target -->
   <rect x="40" y="120" width="560" height="64" rx="10" class="asil"/>
-  <text x="58" y="144" class="t b" font-size="13.5">SG-01 · ASIL C ⚠</text>
-  <text x="196" y="144" class="m s">D if AOU-01/02 fail</text>
-  <text x="58" y="164" class="t xs">SG-01-derived FSRs carry ASIL C until the HARA is re-rated on controllability evidence;</text>
-  <text x="58" y="177" class="t xs">all other envelope FSRs carry ASIL B</text>
+  <text x="58" y="144" class="t b" font-size="13.5">Envelope E-03 · ASIL C</text>
+  <text x="226" y="144" class="m s">decided 2026-10-16 (DQ-341 A)</text>
+  <text x="58" y="164" class="t xs">SG-02, SG-03 and SG-06 are ASIL C outright (HARA v0.4); SG-01 is C ⚠ (D if AOU-01/02 fail)</text>
+  <text x="58" y="177" class="t xs">until re-rated. Each FSR keeps the ASIL of its goal (WP-C-04 §5)</text>
 
-  <!-- D1 -->
+  <!-- B: hardware metrics -->
   <path d="M62 212H578L600 241L578 270H62L40 241Z" class="dec"/>
-  <text x="320" y="236" class="t sb" font-size="12" text-anchor="middle">Controllability tests show C1 at a torque level that keeps the function useful?</text>
-  <text x="320" y="253" class="m xs" text-anchor="middle">WP-C-04 OI-2 · WP-C-08 §8 · WP-A-01 OI-2</text>
+  <text x="320" y="236" class="t sb" font-size="12" text-anchor="middle">ASIL C hardware metrics met by the panda STM32H7?</text>
+  <text x="320" y="253" class="m xs" text-anchor="middle">WP-H-04 · COTS single-channel MCU with shared PCB and power (§3; WP-M-01 §9)</text>
   <path d="M320 184V210" stroke="#475569" stroke-width="1.4" fill="none" marker-end="url(#aG)"/>
 
-  <!-- P: primary -->
+  <!-- C: primary -->
   <rect x="40" y="306" width="262" height="150" rx="10" class="asil"/>
   <rect x="54" y="318" width="234" height="20" rx="10" fill="#C2410C"/>
-  <text x="171" y="332" fill="#FFFFFF" font-size="10.5" font-weight="700" text-anchor="middle" letter-spacing=".04em">PRIMARY · OPTION (c)</text>
-  <text x="56" y="358" class="t xs">• no decomposition · SG-01 re-rated C → B</text>
-  <text x="56" y="374" class="t xs">• lateral authority reduced until C1 shown</text>
-  <text x="56" y="390" class="t xs">• E-03 envelope hardened to ASIL B as one</text>
-  <text x="64" y="404" class="t xs">non-decomposed element</text>
-  <text x="56" y="426" font-size="10.5" font-weight="700" fill="#D97706">Not yet achieved: awaits OI-1 (maintainer)</text>
-  <text x="56" y="441" font-size="10.5" font-weight="700" fill="#D97706">and the controllability tests</text>
+  <text x="171" y="332" fill="#FFFFFF" font-size="10.5" font-weight="700" text-anchor="middle" letter-spacing=".04em">PRIMARY · DQ-341 A</text>
+  <text x="56" y="358" class="t xs">• no decomposition</text>
+  <text x="56" y="374" class="t xs">• E-03 envelope hardened to ASIL C as one</text>
+  <text x="64" y="388" class="t xs">non-decomposed element</text>
+  <text x="56" y="404" class="t xs">• ASIL C metrics are final targets (WP-H-04)</text>
+  <text x="56" y="426" font-size="10.5" font-weight="700" fill="#D97706">Not yet achieved: hardware metrics</text>
+  <text x="56" y="441" font-size="10.5" font-weight="700" fill="#D97706">and ASIL C software process open</text>
   <path d="M171 270V304" stroke="#475569" stroke-width="1.4" fill="none" marker-end="url(#aG)"/>
   <text x="180" y="292" class="t b" font-size="11">yes</text>
 
-  <!-- D2 -->
-  <path d="M352 306H578L600 334L578 362H352L330 334Z" class="dec"/>
-  <text x="465" y="330" class="t sb" font-size="12" text-anchor="middle">Envelope argued at ASIL C?</text>
-  <text x="465" y="347" class="m xs" text-anchor="middle">option (a)</text>
-  <path d="M465 270V304" stroke="#475569" stroke-width="1.4" fill="none" marker-end="url(#aG)"/>
-  <text x="474" y="292" class="t b" font-size="11">no</text>
+  <!-- D: controllability tests -->
+  <rect x="330" y="306" width="270" height="150" rx="10" fill="#F8FAFC" stroke="#CBD5E1"/>
+  <text x="346" y="328" class="t sb" font-size="12">Controllability tests still run</text>
+  <text x="346" y="344" class="m xs">option (c), DQ-007 · WP-C-04 OI-2 · WP-C-08 §8</text>
+  <text x="346" y="366" class="t xs">• lateral authority reduced until C1 shown</text>
+  <text x="346" y="382" class="t xs">• SG-01 requirements C → B once re-rated</text>
+  <text x="346" y="398" class="t xs">• keep SG-01 from ASIL D if AOU-01/02 fail</text>
+  <text x="346" y="420" class="m xs">They no longer change the envelope target,</text>
+  <text x="346" y="435" class="m xs">and no longer decide DEC-01 (OI-2, OI-3)</text>
 
-  <!-- Ca: option (a) -->
-  <rect x="330" y="396" width="270" height="60" rx="10" class="asil"/>
-  <text x="346" y="416" class="t sb" font-size="12">E-03 at ASIL C · no decomposition</text>
-  <text x="346" y="432" class="m xs">unlikely on a COTS single-channel MCU</text>
-  <text x="346" y="446" class="m xs">with shared PCB/power (§3; WP-M-01 §9)</text>
-  <path d="M465 362V394" stroke="#475569" stroke-width="1.4" fill="none" marker-end="url(#aG)"/>
-  <text x="474" y="383" class="t b" font-size="11">yes</text>
+  <!-- E: fallback -->
+  <path d="M600 241H628V176H658" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#aR)"/>
+  <text x="608" y="262" fill="#C2410C" font-size="11" font-weight="700">no</text>
 
-  <!-- D2 no -> DEC-01 -->
-  <path d="M600 334H628V176H658" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#aR)"/>
-  <text x="610" y="326" fill="#C2410C" font-size="11" font-weight="700">no</text>
-
-  <!-- notes on other goals -->
+  <!-- F: other goals -->
   <rect x="40" y="482" width="560" height="128" rx="10" fill="#F8FAFC" stroke="#CBD5E1"/>
-  <text x="56" y="503" class="t b" font-size="12">Other goals (§3)</text>
-  <text x="56" y="522" class="t xs">• SG-02, SG-06, SG-07 (ASIL B): E-03 carries the ASIL alone after hardening; no decomposition</text>
-  <text x="56" y="539" class="t xs">• SG-03, SG-04 (C if AOU-05 fails) and SG-05 (C if AOU-01/02/03 fail): ASIL B ⚠; if an AoU fails,</text>
-  <text x="64" y="554" class="t xs">the same fallback applies and DEC-01 scope is extended (OI-3)</text>
-  <text x="56" y="574" class="t xs">• The QM SoC (E-01) and the Toyota EPS are never credited as a decomposition partner (§2)</text>
+  <text x="56" y="503" class="t b" font-size="12">Per goal (§3)</text>
+  <text x="56" y="522" class="t xs">• SG-01, SG-02, SG-03, SG-06 (ASIL C): carried by the envelope at C; DEC-01 covers SG-01 and is</text>
+  <text x="64" y="537" class="t xs">extended to the SG-02, SG-03 and SG-06 paths only if the ASIL C metrics fail (OI-3)</text>
+  <text x="56" y="555" class="t xs">• SG-04, SG-05 (ASIL B ⚠) and SG-07 (ASIL B): E-03 carries the ASIL alone; no decomposition</text>
+  <text x="56" y="573" class="t xs">• SG-08 (ASIL A): driver monitoring on the QM SoC; no decomposition proposed (WP-C-04 OI-11)</text>
+  <text x="56" y="591" class="t xs">• The QM SoC (E-01) and the Toyota EPS are never credited as a decomposition partner (§2)</text>
 
   <!-- ===== right: candidate cards ===== -->
   <!-- DEC-01 -->
@@ -95,7 +91,7 @@
   <rect x="964" y="156" width="262" height="40" rx="7" class="concept"/>
   <text x="976" y="173" class="t sb" font-size="11.5">E-07 independent actuation monitor</text>
   <text x="976" y="188" class="m" font-size="10">A(C) · new element, concept only (§4.2)</text>
-  <text x="676" y="214" class="t xs">Decomposed: FSR-01.01, -01.03, -01.04, -01.05 · independence IR-01…IR-10 (§4.3, Figure 4-1)</text>
+  <text x="676" y="214" class="t xs">Decomposed: FSR-01.01, -01.03, -01.04, -01.05 (+ SG-02/03/06 paths, OI-3) · IR-01…IR-10 (§4.3)</text>
   <text x="676" y="229" class="m xs">Both halves under LionDriver control; E-07 safe state = relay de-energised (needs AOU-13, OI-5)</text>
 
   <!-- DEC-02 -->
