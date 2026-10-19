@@ -247,6 +247,7 @@ Host requirements are QM, with one open exception: SWSR-625 carries a provisiona
 | TSR-801…818 | Production/operation ([WP-S-06](../03-system/WP-S-06-requirements-production-operation.md)); software support via SWSR-514, 514h |
 | TSR-628, 629, 712 | Not yet refined: added in WP-S-02 v0.21 (2026-10-16) from the lead decisions DQ-053, DQ-056 and DQ-064. SWSRs to be written by the WP-W-02 owner; this row is removed when they exist |
 | TSR-630…633 | Not yet refined: added in WP-S-02 v0.22 (2026-10-16) from the System FMEA monitoring actions SFM-ACT-005, 013, 015, 018. SWSRs to be written by the WP-W-02 owner; this row is removed when they exist |
+| TSR-713 | Not yet refined: added in WP-S-02 v0.35 (2026-10-18) from the lead decision DQ-300 (stock-AEB stand-down). SWSR to be written by the WP-W-02 owner; this row is removed when it exists |
 
 ## 11. Software-hardware interface requirements
 

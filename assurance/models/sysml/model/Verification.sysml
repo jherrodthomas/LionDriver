@@ -933,6 +933,7 @@ package LionDriverVerification {
             verify LionDriverRequirements::fsr_07_04;
             verify LionDriverRequirements::fsr_07_05;
             verify LionDriverRequirements::fsr_07_06;
+            verify LionDriverRequirements::fsr_07_07;
             verify LionDriverRequirements::tsr_101;
             verify LionDriverRequirements::tsr_102;
             verify LionDriverRequirements::tsr_103;
@@ -1290,6 +1291,7 @@ package LionDriverVerification {
             verify LionDriverRequirements::fsr_07_04;
             verify LionDriverRequirements::fsr_07_05;
             verify LionDriverRequirements::fsr_07_06;
+            verify LionDriverRequirements::fsr_07_07;
             verify LionDriverRequirements::tsr_101;
             verify LionDriverRequirements::tsr_102;
             verify LionDriverRequirements::tsr_103;

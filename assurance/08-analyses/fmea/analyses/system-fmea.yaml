@@ -111,6 +111,8 @@
 # SFM-038.C1 links SW FMEA SWF-088 (#187), still rated at BL-005 there.
 # Rev 0.28 (2026-10-17): SFM-034 latch mechanism cites SW FMEA SWF-090 (#196). SWF-088 now O 5 D 8 at BL-006 (#196), matching
 # SFM-038.C1, so the inherited-rating warnings clear. No rating change.
+# Rev 0.29 (2026-10-18): DQ-300 answered (A, stand down during stock AEB): SFM-ACT-020 moves from decision_pending to open with
+# the decided behaviour (zero acceleration request while stockAeb is set). Not implemented at BL-006, so SFM-036 keeps its ratings.
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -119,7 +121,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.28"
+  revision: "0.29"
   status: draft
   baseline: BL-006
   rating_tables: RT-2
@@ -3703,8 +3705,8 @@ failure_modes:
           - SFM-ACT-020
     notes: >-
       Backs FTA BE-7.13 (WP-A-04 SG-07, F-17); the PCM side is UE-7.14 (AOU-04R). Cut set MCS-07.10 = {BE-7.13, UE-7.14}: at the
-      baseline BE-7.13 is always true (C1), so the PCM assumption carries the goal alone. Whether the item should stand down on a stock
-      PCS event is a vehicle behaviour question for the lead (decision register DQ-300).
+      baseline BE-7.13 is always true (C1), so the PCM assumption carries the goal alone. The lead decided the item stands down on a stock
+      PCS event (DQ-300 A, 2026-10-18: zero acceleration request while stockAeb is set); SFM-ACT-020 carries the change.
 
   # ----- F2 Longitudinal command frozen (FTA SG-03 BE-1.19, map note "no System FMEA mode for a frozen longitudinal request") -----
   - id: SFM-037
@@ -4041,10 +4043,10 @@ actions:
       only the host disengages (pandaTxBlocked)'
   - id: SFM-ACT-020
     kind: design_change
-    status: decision_pending
-    description: 'React to a stock PCS event on the longitudinal command (for example a neutral or zero acceleration request, or a
-      longitudinal disable, while stockAeb is set), so stock AEB does not depend on PCM arbitration alone (AOU-04R); or keep today''s
-      behaviour and rely on the AOU-04R vehicle test. Lead decision DQ-300'
+    status: open
+    description: 'Stand down during stock AEB: while the car reports a stock PCS/AEB event (stockAeb), LionDriver requests zero
+      acceleration, so stock AEB does not depend on PCM arbitration alone (AOU-04R). Lead decision DQ-300, option A (2026-10-18); the
+      AOU-04R vehicle test still runs. Code change with the implementation-spec session; not in BL-006, so SFM-036 keeps its ratings'
   - id: SFM-ACT-021
     kind: monitoring
     status: open

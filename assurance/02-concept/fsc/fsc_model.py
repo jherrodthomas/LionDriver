@@ -139,7 +139,7 @@ COVERAGE: dict[str, dict[str, tuple[list[str], str] | None]] = {
   "N18": {"SG-01": (["FSR-01.04", "FSR-01.12", "FSR-01.13"], "Zero torque on revocation; EPS ends torque on message loss (AOU-01R)"),
           "SG-02": (["FSR-02.04"], "Bounded ramp on fault"), "SG-03": (["FSR-03.02", "FSR-03.05", "FSR-03.06"], "Inactive value and cancel"),
           "SG-04": (["FSR-04.03"], "No deceleration step on the safe-state transition"), "SG-05": (["FSR-05.01", "FSR-05.07"], "Release reaches the actuators (GAP-46, TSR-109)"),
-          "SG-06": (["FSR-06.02"], "ACC cancel on loss"), "SG-07": (["FSR-07.02", "FSR-07.04"], "No PCS message originated; PCS priority in the PCM (AOU-04R)"), "SG-08": NA},
+          "SG-06": (["FSR-06.02"], "ACC cancel on loss"), "SG-07": (["FSR-07.02", "FSR-07.04", "FSR-07.07"], "No PCS message originated; PCS priority in the PCM (AOU-04R); zero acceleration request during stock AEB"), "SG-08": NA},
   "N19": {"SG-01": NA, "SG-02": (["FSR-02.03", "FSR-02.11"], "Take-over request; HMI path failure detected (H-07)"), "SG-03": NA,
           "SG-04": (["FSR-04.05"], "Alert before item-initiated deceleration"), "SG-05": (["FSR-05.06"], "Mismatch warning"),
           "SG-06": (["FSR-06.02", "FSR-02.11"], "As SG-02"), "SG-07": NA,
