@@ -5008,6 +5008,51 @@
       detail: "Merge nothing red until the store recovers. Safest, but all merging stops for an unknown time."
   sources: [".lfsconfig", "tools/op.sh (git lfs pull)", "PR #280", "actions run 39194260416"]
   asked: 2026-10-19
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "#276", record: "merge commits of #276 and #281-#285 (\"Merged under DQ-401 A\")", at: 2026-10-19}
   note: "Scope, as the lead confirmed to the STPA session on 2026-10-19: covers document PRs and PRs that change assurance/ tooling (figure and generator scripts, checkers). Vehicle code (openpilot, panda, opendbc, pins) still waits for green. The merge commit says \"Merged under DQ-401 A\"."
+
+- id: DQ-402
+  question: "Once engaged, should LionDriver hand back to the driver when the car slows below 60 km/h, for example in highway stop-and-go traffic?"
+  context: "You chose to refuse engagement below 60 km/h (DQ-280 A). As built in #287 that check only refuses entry, so an engaged item keeps driving through a highway jam down to a stop. **Handing back below the floor keeps use inside the speed limit you set, at the cost of a takeover every time traffic slows.**"
+  reversibility: easy
+  blocks: "Change record change-2026-10-19-reference-entry-checks OI-2; the ODD exit requirement; user information (WP-O-03)"
+  gate: G1
+  decider: lead
+  after: [DQ-280]
+  options:
+    - key: A
+      recommended: true
+      title: "Keep driving below 60 km/h once engaged; refuse only new engagement"
+      detail: "What #287 does. Stop-and-go on a highway stays assisted. Cost: the speed floor limits where it starts, not where it runs, so the ODD argument has to cover low-speed highway traffic."
+    - key: B
+      title: "Hand back with a warning below 60 km/h"
+      detail: "The item never runs below the floor. Cost: a takeover request in every jam, and a new disengage path with its own alert and tests."
+    - key: C
+      title: "Hand back below a lower floor (for example 30 km/h)"
+      detail: "Allows slowing traffic but not crawling. Cost: a second number to justify, and still a takeover in a full stop."
+  sources: ["PR #287 (Open: OI-2)", "DQ-280"]
+  status: queued
+
+- id: DQ-403
+  question: "If the driver changes an assured setting from the menu while engaged (for example turns Experimental Mode on), should LionDriver disengage, or let it take effect and only refuse the next engagement?"
+  context: "You chose to refuse engagement outside the assured settings (DQ-221 A). In #287 that check only covers entry, so a setting changed mid-drive takes effect at once and the item keeps running outside its assured configuration until the next engagement. **A disengage closes that gap; the cost is a sudden takeover caused by a menu tap.**"
+  reversibility: easy
+  blocks: "Change record change-2026-10-19-reference-entry-checks OI-3; DQ-221 implementation"
+  gate: G1
+  decider: lead
+  after: [DQ-221]
+  options:
+    - key: A
+      recommended: true
+      title: "Hold the change until the next engagement"
+      detail: "The new setting is stored but only used after the driver disengages, and the next engagement is still refused. No mid-drive takeover. Cost: a small code change and tests."
+    - key: B
+      title: "Disengage with a warning"
+      detail: "Never runs outside the assured settings. Cost: a takeover request triggered by the driver's own menu tap."
+    - key: C
+      title: "Leave as built: takes effect at once"
+      detail: "No change. Cost: the item can run outside its assured settings until it is next engaged, which the safety case must argue away."
+  sources: ["PR #287 (Open: OI-3)", "DQ-221"]
+  status: queued
