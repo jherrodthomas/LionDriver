@@ -89,11 +89,11 @@ INTERACTIONS = [
        security="Safety-mode integrity (CSG-01) and firmware authenticity (CSG-02) protect that firmware",
        follows="Until both are met, SG-01 to SG-07 do not hold against an attacker on the SoC. SG-08 needs CSG-03 instead (IX-11).",
        ties=["CSG-01", "CSG-02", "SG-01", "SG-07", "SG-08", "CSG-03", "TS-02", "TS-03"], status="Recorded in WP-C-10 §8"),
-  dict(id="IX-11", title="Screen and DM attacks: no damage", kind="dep", dir="security → safety", gap=True,
+  dict(id="IX-11", title="Screen and DM attacks reach H-07, H-09", kind="dep", dir="security → safety", gap=True,
        safety="WP-C-03 names spoofed HMI state for mode confusion (H-07); missed inattention is H-09",
-       security="TS-04 can alter DM behaviour, yet none of its damage scenarios reaches H-07 or H-09",
-       follows="Link TS-04 to H-07 and H-09 through damage scenarios, or record why not. H-09 has none from any threat.",
-       ties=["TS-04", "H-07", "H-09", "CSG-03"]),
+       security="TS-04 can alter DM behaviour; WP-C-09 v0.8 adds DS-13 and DS-14 so it reaches H-07 and H-09",
+       follows="Found by this analysis, closed in WP-C-09 v0.8. The derived status reopens it if a link is dropped.",
+       ties=["TS-04", "H-07", "H-09", "CSG-03", "DS-13", "DS-14"]),
 ]
 
 
