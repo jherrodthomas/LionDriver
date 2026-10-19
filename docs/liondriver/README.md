@@ -2,6 +2,12 @@
 
 LionDriver is openpilot plus an open engineering assurance framework. This page is the entry point for the LionDriver-specific documentation. The inherited openpilot documentation stays where upstream keeps it, in the rest of [`docs/`](../).
 
+<p align="center">
+  <img src="../assets/liondriver/architecture.svg" width="100%" alt="LionDriver platform architecture: core driving platform, safety envelope, vehicle integration and supported vehicle ecosystem as stacked layers, with a cross-cutting safety and assurance column. A legend separates implemented, drafted and proposed elements.">
+</p>
+
+*The platform in four layers; details on the [Architecture](architecture.md) page.*
+
 ## Start here
 
 | If you want to | Read |
@@ -17,6 +23,12 @@ LionDriver is openpilot plus an open engineering assurance framework. This page 
 ## Engineering areas
 
 All engineering work products are drafts under review. Each one states its own status in its document-control header.
+
+<p align="center">
+  <img src="../assets/liondriver/standards.svg" width="100%" alt="The five standards the engineering framework draws on, each with the question it answers: ISO 26262, what if something breaks; ISO 21448 SOTIF, what if nothing breaks but it still gets it wrong; ISO/SAE 21434, what if someone attacks it; ISO/PAS 8800, how far a learned component can be trusted; UL 4600, whether the whole argument is convincing. Aligned practices, not a claim of compliance.">
+</p>
+
+*One question per standard; the table below links each area's main work products.*
 
 | Area | Main work products |
 |---|---|
