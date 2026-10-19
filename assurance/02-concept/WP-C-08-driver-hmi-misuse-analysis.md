@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-08 Driver interaction, HMI and reasonably foreseeable misuse analysis |
 | Standard reference | ISO 26262-3:2018 §6 (controllability basis); ISO 21448:2022 §6 and Annex B (misuse, informative); UNECE R79 and R171 (informative benchmarks, WP-M-01 T-13); RESPONSE 3 Code of Practice for ADAS (informative) |
-| Version | 0.7 (§7.1 controllability pass criteria and sample size drafted from the RESPONSE 3 Code of Practice, for the lead's dated approval (DQ-034 A); CA-01 statistics corrected; OI-3 narrowed; 2026-10-19). 0.6 (§5.4 and OI-8: the rule is implemented in `policy.py`, SWSR-634; validation still open; 2026-10-17). 0.5 (§5.4 added: supervision bound and speed table for the wheel-touch fallback, required by TSR-634 (DQ-077 A); DMP-05; OI-8; 2026-10-17). 0.4 (OI-7, the duplicate OI-4: gas override behaviour kept, DQ-022 A; MC-08 updated; 2026-10-16). 0.3 (§6.1 HARA side recorded: WP-C-03 v0.4 rates H-STPA-1 as OS-17/OS-18 and adds H-09 with SG-08, ASIL A, decision register DQ-003, DQ-205; OI-4 narrowed to the FSC follow-up; 2026-10-16). 0.2 (§6.1: H-STPA-1 treated as reasonably foreseeable misuse in both SOTIF and the HARA, decision register DQ-003; HARA side open; MC-09 updated for the Chill mode default; 2026-10-14). 0.1 |
+| Version | 0.7 (§7.1 controllability pass criteria and sample size drafted from the RESPONSE 3 Code of Practice (DQ-034 A) and approved by the lead as proposed on 2026-10-19, now frozen; CA-01 statistics corrected; OI-3 narrowed to the assessor check; 2026-10-19). 0.6 (§5.4 and OI-8: the rule is implemented in `policy.py`, SWSR-634; validation still open; 2026-10-17). 0.5 (§5.4 added: supervision bound and speed table for the wheel-touch fallback, required by TSR-634 (DQ-077 A); DMP-05; OI-8; 2026-10-17). 0.4 (OI-7, the duplicate OI-4: gas override behaviour kept, DQ-022 A; MC-08 updated; 2026-10-16). 0.3 (§6.1 HARA side recorded: WP-C-03 v0.4 rates H-STPA-1 as OS-17/OS-18 and adds H-09 with SG-08, ASIL A, decision register DQ-003, DQ-205; OI-4 narrowed to the FSC follow-up; 2026-10-16). 0.2 (§6.1: H-STPA-1 treated as reasonably foreseeable misuse in both SOTIF and the HARA, decision register DQ-003; HARA side open; MC-09 updated for the Chill mode default; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF; backs the HARA C2 ratings (SG-01…SG-08) |
 | Author | Assurance team (initial draft) |
@@ -186,9 +186,9 @@ These assumptions underlie the C2 (and target C1) ratings in the HARA and the FS
 | CA-06 | A driver who is hands-off but eyes-on responds within the times assumed in CA-01/CA-02 | MC-01, HE-02.1 ("hands off foreseeable") | Repeat CA-01/CA-02 with hands-off posture |
 | CA-07 | Take-over requests (soft and immediate disable) are perceived and understood within 1 s | SG-02, SG-06 | HMI clinic: detection and correct response |
 
-### 7.1 Pass criteria and sample size (drafted 2026-10-19, frozen when the lead approves them)
+### 7.1 Pass criteria and sample size (approved by the lead 2026-10-19; frozen)
 
-The lead chose to set the criteria now, before any test runs, and to have an assessor check them later (decision register DQ-034, option A; no assessor is engaged yet, DQ-009 C). Claude drafted them from the RESPONSE 3 Code of Practice for the validation of ADAS, the established practice for controllability evidence under ISO 26262-3. **They take effect when the lead approves them in a dated record.** After that they are frozen. Any change needs a new dated approval made before the affected test runs, never after its results are seen.
+The lead chose to set the criteria now, before any test runs, and to have an assessor check them later (decision register DQ-034, option A; no assessor is engaged yet, DQ-009 C). Claude drafted them from the RESPONSE 3 Code of Practice for the validation of ADAS, the established practice for controllability evidence under ISO 26262-3. **The lead approved them as proposed on 2026-10-19** (in the chat with Claude, recorded here), before any controllability test has run. They are now frozen. Any change needs a new dated approval made before the affected test runs, never after its results are seen.
 
 **Rules common to all CA tests**
 
@@ -210,7 +210,7 @@ The lead chose to set the criteria now, before any test runs, and to have an ass
 
    Which route each C1 rating takes is recorded with the result.
 
-**Outcome criterion per CA** (values proposed for the lead's approval)
+**Outcome criterion per CA** (approved as proposed, 2026-10-19)
 
 | CA | Scenario (closed course) | Outcome criterion, met by every valid subject |
 |---|---|---|
@@ -241,7 +241,7 @@ Method notes (RESPONSE 3 Code of Practice, informative): use naive subjects repr
 |---|---|---|---|
 | OI-1 | Confirm benchmark values (R79, R171, EU 2025/1899) against licensed texts and finalise §5.2 | HF specialist | G1 |
 | OI-2 | Closed (2026-10-12): the numeric DM performance targets for DMP-01/02 were confirmed by the SOTIF lead and AI/ML safety lead (acting, one person) as proposed in WP-C-11 AIR-07/AIR-08, with the end-to-end alert time set at ≤ 6 s. Validation is VT-08 in WP-V-02. Assessor approval of the numeric validation targets is still WP-V-02 OI-3 | SOTIF lead | G2 |
-| OI-3 | Controllability pass criteria and sample size (CA-01…CA-07): drafted 2026-10-19 in §7.1 (decision register DQ-034, A). Open: the lead's dated approval, which freezes them before any test, and the later check by an assessor (none engaged yet, DQ-009 C) | Safety manager | G1 |
+| OI-3 | Controllability pass criteria and sample size (CA-01…CA-07): set in §7.1 (decision register DQ-034, A) and approved by the lead as proposed on 2026-10-19, before any test; now frozen. Open: the later check by an assessor (none engaged yet, DQ-009 C) | Safety manager | G1 |
 | OI-4 | HARA side done 2026-10-16: H-STPA-1 is rated in WP-C-03 v0.4 (OS-17, OS-18, H-09, SG-08 ASIL A; DQ-003, DQ-205). Left: revise WP-C-04 §7 (driver monitoring QM) for SG-08, and confirm the C2 of HE-09.1 with the DM clinic (§8 V-5) | Safety engineer | G1 |
 | OI-7 | Closed 2026-10-14 (listed as a second OI-4 until v0.3): the lead kept today's behaviour, gas pauses speed control only and `DisengageOnAccelerator` stays `0` (decision register DQ-022, A). The confusion of MC-08 is covered by the override alert, which the HMI clinic (§8 V-2) must show is understood | Maintainer | — |
 | OI-5 | Check whether alert volume can be reduced below an audible floor (MC-12) | SW lead | G2 |
