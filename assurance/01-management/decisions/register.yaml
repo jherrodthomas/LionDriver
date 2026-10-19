@@ -4583,6 +4583,28 @@
   answer: {choice: A, via: chat, at: 2026-10-16}
   applied: {ref: 98f5e9966, record: "WP-V-02 §5.4; WP-M-08 OI-3", at: 2026-10-16}
 
+- id: DQ-262
+  question: "Should the search for unknown hazardous scenarios stop once at most 1 in 10 hazardous events is expected to be of a kind not yet seen (with at least 30 events counted)?"
+  context: "You decided the search stops on a number plus the three-block trend rule (DQ-108 A). The number is a Good–Turing estimate: the share of hazardous events whose kind was seen only once. **The proposal ties it to a 10 % reserve held back from every SOTIF harm budget for unknown scenarios.** Below 30 events the estimate says little, so the rule needs at least 30. It must be fixed before road block B1 starts, so the result cannot be fitted to it."
+  reversibility: revisit
+  blocks: "WP-V-04 R3 and the start of exploration block B1; the 10 % reserve in the WP-V-02 target derivation"
+  gate: G1
+  decider: lead
+  after: [DQ-108]
+  options:
+    - key: A
+      recommended: true
+      title: "Up to 1 in 10 (0.10), at least 30 events"
+      detail: "Matches the 10 % reserve in the targets. Cost: if the blocks see fewer than 30 hazardous events, the rule is not met by count and you decide again."
+    - key: B
+      title: "Up to 1 in 20 (0.05), at least 60 events"
+      detail: "Stronger claim, with a 5 % reserve and targets on 95 % of each budget. Cost: about twice the events, so likely more drive blocks before release."
+    - key: C
+      title: "Up to 1 in 5 (0.20), at least 20 events"
+      detail: "Reachable with fewer drives. Cost: a 20 % reserve takes budget from the known-scenario targets, which then get stricter, and the unknown part of the argument is weaker."
+  sources: ["assurance/06-validation/WP-V-04-sotif-unknown-scenarios.md §5.3 R3, §5.4, OI-2", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md §3 step 1"]
+  status: queued
+
 - id: DQ-300
   question: "When the car's own emergency braking (stock AEB) fires, should LionDriver stop asking for acceleration, or keep driving as now?"
   context: "Today the car's AEB event only shows a \"BRAKE!\" alert on the comma screen; LionDriver keeps sending its speed-control request. Whether the car's braking wins then depends on the engine computer giving AEB priority, which nobody has checked on the reference car (AOU-04R). The fault tree marks this as a path where that assumption alone protects the driver (SFM-036, FTA BE-7.13)."

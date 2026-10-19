@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="964" viewBox="0 0 1280 964" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 4-1 · Validation targets on a log scale</title>
-<desc>Two log-scale panels with one row per validation target VT-01 to VT-15. Left: driving exposure in km (hours at 64 km/h); VT-01 rate-level needs about 6 × 10^5 mi (case D), VT-04 and VT-15(b) need about 3 × 10^3 km and 3 h. The public-road band of 10^4 to 2 × 10^4 km per year is below case D and far below cases A to C. Right: counts per scenario, from 14 to 299, inside or near the closed-course band (tens to low hundreds) and below the simulation band (10^3 to 10^5 runs, no credit yet). VT-07 to VT-11 have no exposure figure. All values are placeholders until assessor approval.</desc>
+<desc>Two log-scale panels with one row per validation target VT-01 to VT-15. Left: driving exposure in km (hours at 64 km/h); VT-01 rate-level needs about 6 × 10^5 mi (case D), VT-04 and VT-15(b) need about 3 × 10^3 km and 3 h. The public-road band of 10^4 to 2 × 10^4 km per year is below case D and far below cases A to C. Right: counts per scenario, from 14 to 299, inside or near the closed-course band (tens to low hundreds) and below the simulation band (10^3 to 10^5 runs, no credit yet). VT-07 to VT-11 have no exposure figure. All values are placeholders until the project lead freezes them (OI-3).</desc>
 <rect x="0" y="0" width="1280" height="964" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 4-1 · Validation targets on a log scale</text>
 <text x="40" y="66" font-size="12.5" fill="#475569">Exposure each of the 15 proposed targets VT-xx needs, against what §3.2 says LionDriver can achieve in a year. Placeholders until the assessor approves them (OI-3).</text>
@@ -236,5 +236,5 @@
 <text x="350" y="922" font-size="10.5" fill="#475569">simulation capacity (no credit until §5.3)</text>
 <line x1="590" y1="918" x2="604" y2="918" stroke="#0F766E" stroke-width="1" stroke-dasharray="2 3"/>
 <text x="610" y="922" font-size="10.5" fill="#475569">band edge read from words ("tens to low hundreds")</text>
-<text x="40" y="942" font-size="10.5" fill="#475569">All marks are dashed: §4 calls every numeric target a placeholder until the assessor approves it (OI-3); none is demonstrated. Replay and field monitoring have no number in §3.2 and are not drawn.</text>
+<text x="40" y="942" font-size="10.5" fill="#475569">All marks are dashed: §4 calls every numeric target a placeholder until the project lead freezes it (OI-3); none is demonstrated. Replay and field monitoring have no number in §3.2 and are not drawn.</text>
 </svg>
