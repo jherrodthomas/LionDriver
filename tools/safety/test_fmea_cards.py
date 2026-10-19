@@ -62,9 +62,11 @@ class TestCards(unittest.TestCase):
     self.assertEqual([fc.monitoring(m)[0] for m in (4, 5, 7, 8, 10)], ["#16A34A", "#D97706", "#D97706", "#DC2626", "#DC2626"])
     self.assertEqual(fc.monitoring(None)[1], "no MSR rating")
 
-  def test_completed_action_on_a_cause_still_rated_h_is_not_credited(self):
+  def test_completed_action_is_credited_once_a_cause_reaches_its_revised_rating(self):
     cs = fc.cards(self.doc, self.mapping)
-    self.assertIn(("SFM-ACT-020", "completed, not yet credited"), cs["SFM-036"]["actions"])
+    self.assertIn(("SFM-ACT-020", "completed, not yet credited"), cs["SFM-036"]["actions"])  # revised O5 D8, cause still O8 D10
+    self.assertIn(("SFM-ACT-023", "completed"), cs["SFM-038"]["actions"])  # SFM-038.C1 is at its revised O5 D8
+    self.assertIn(("SFM-ACT-017", "completed"), cs["SFM-004"]["actions"])  # no revised rating: plain completed
     svg = "".join(self.out.values())
     self.assertIn("MSR H", svg)
 

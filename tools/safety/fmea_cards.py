@@ -11,8 +11,8 @@ One card per failure mode SFM-nnn. Each card shows:
   rating-tables §7.3 and DQ-206 A: green for M 1–4 (within the FTTI on measured timing, the only band that can close a
   cause), amber for M 5–7 (targets the cause, FTTI met on code-derived timing only, or untimed), red for M 8–10 (late, not
   designed for this cause, or none), grey where the cause has no MSR rating; then its AP and its MSR AP;
-- the actions of its causes, with their status. A completed action on a failure mode whose causes are still rated AP H
-  reads "completed, not yet credited": its effect waits for the next baseline's re-rating.
+- the actions of its causes, with their status. A completed action with a predicted (`revised`) rating that none of its
+  linked causes has reached yet reads "completed, not yet credited": its effect waits for the next baseline's re-rating.
 
 Everything on a card is read from the YAML except the scene, which is chosen per failure mode below. The build fails if
 a failure mode has no scene or sheet, a scene or sheet names one that is not in the YAML, a hazard is not mapped or an
@@ -111,6 +111,15 @@ def load():
 def cards(doc, mapping):
   fms = {f["id"]: f for f in doc["failure_modes"]}
   acts = {a["id"]: a["status"] for a in doc["actions"]}
+  linked = {}  # action -> [(occurrence, detection)] of every cause that names it
+  for f in doc["failure_modes"]:
+    for c in f["causes"]:
+      for a in (c.get("actions") or []) + ((c.get("msr") or {}).get("actions") or []):
+        linked.setdefault(a, []).append((c["occurrence"], c["detection"]))
+  for a in doc["actions"]:
+    rv = a.get("revised")
+    if a["status"] == "completed" and rv and (rv["occurrence"], rv["detection"]) not in linked.get(a["id"], []):
+      acts[a["id"]] = "completed, not yet credited"
   placed = [s for _, _, ids in SHEETS.values() for s in ids]
   if dupes := sorted({s for s in placed if placed.count(s) > 1}):
     raise CardError(f"on two sheets: {', '.join(dupes)}")
@@ -148,10 +157,8 @@ def cards(doc, mapping):
           raise CardError(f"{c['id']}: action {a} is not in the System FMEA actions")
         if a not in a_ids:
           a_ids.append(a)
-    still_h = any("H" in (k["ap"], k["msr_ap"]) for k in causes)
-    status = {a: ("completed, not yet credited" if acts[a] == "completed" and still_h else acts[a]) for a in a_ids}
     out[fid] = dict(id=fid, title=f["failure_mode"], s=f["severity"], gw=f["guideword"], hz=hz, chain=chain, causes=causes,
-                    actions=[(a, status[a]) for a in sorted(a_ids)], scene=SCENE[fid])
+                    actions=[(a, acts[a]) for a in sorted(a_ids)], scene=SCENE[fid])
   return out
 
 
