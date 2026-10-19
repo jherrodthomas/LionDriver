@@ -94,7 +94,7 @@ Each System FMEA failure mode from its causes to the road. Every card gives the 
 
 ![Figure 3-17c: System FMEA failure-mode cards for limits, configuration and the stock functions, SFM-029 to SFM-036](figures/cards/fig-3-17-sfm-cards-3.svg)
 
-*Figure 3-17.* System FMEA failure-mode cards, drawn by [`tools/safety/fmea_cards.py`](../../../tools/safety/fmea_cards.py) (CI fails if stale; after a change to `system-fmea.yaml`, `hara-mapping.yaml`, a WP-A-04 tree or `fta-fmea-map.yaml`, run it). Scenes are drawings, not data. The *Fault trees* line names, per goal, the basic events (red if a single point) and gates this failure mode backs, or says the map lists it outside that goal's tree; the tree side is in [fta-fmea-mapping.md](../fta-fmea-mapping.md) §5.
+*Figure 3-17.* System FMEA failure-mode cards, drawn by [`tools/safety/fmea_cards.py`](../../../tools/safety/fmea_cards.py) (CI fails if stale; after a change to `system-fmea.yaml`, `hara-mapping.yaml`, a WP-A-04 tree or `fta-fmea-map.yaml`, run it). Scenes are drawings, not data. The *Fault trees* line names, per goal, the basic events (red if a single point: one item event that reaches the top event with the events outside the item assumed to occur, as BE-7.13 with UE-7.14) and gates this failure mode backs, or says the map lists it outside that goal's tree; the tree side is in [fta-fmea-mapping.md](../fta-fmea-mapping.md) §5.
 
 ### 3.2 DFMEA (hardware)
 Structure tree:
