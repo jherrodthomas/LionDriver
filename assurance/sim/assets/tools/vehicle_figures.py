@@ -202,8 +202,21 @@ def frame(title, desc):
           _t(30, 66, title, "th")]
 
 
+FOOT_CHARS = 170   # about 1000 px of 11 px text, inside the W - 60 px between the margins
+
+
 def footer(out, text):
-  out.append(_t(30, H - 18, text, "t2"))
+  """The footer, wrapped at word boundaries to fit the width; the last line sits where a one-line footer did."""
+  lines, cur = [], ""
+  for w in text.split():
+    if cur and len(cur) + 1 + len(w) > FOOT_CHARS:
+      lines.append(cur)
+      cur = w
+    else:
+      cur = f"{cur} {w}" if cur else w
+  lines.append(cur)
+  for i, ln in enumerate(lines):
+    out.append(_t(30, H - 18 - 14 * (len(lines) - 1 - i), ln, "t2"))
   out.append("</svg>")
   return "\n".join(out) + "\n"
 
