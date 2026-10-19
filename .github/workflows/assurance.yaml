@@ -137,6 +137,7 @@ jobs:
         python3 assurance/02-concept/sotif/sotif_figures.py --check
         python3 assurance/02-concept/sotif/test_sotif_figures.py
         python3 assurance/02-concept/sotif/test_sotif_scenes.py
+        python3 assurance/02-concept/sotif/test_fm_scenes.py
     - name: FMEA, FMEDA and DFA figures match the YAML analyses (and their tests)
       run: |
         python3 tools/safety/fmea_diagrams.py --check
