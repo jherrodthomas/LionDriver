@@ -117,4 +117,5 @@ The whole scene with the dashboard running, 24 fps (`hazard_scene.py --video`, `
 - [he-02-1-eps-loss-curve](clips/he-02-1-eps-loss-curve.mp4)
 - [he-03-3-accel-toward-slower-lead](clips/he-03-3-accel-toward-slower-lead.mp4)
 - [he-06-1-stationary-decel-lost](clips/he-06-1-stationary-decel-lost.mp4)
+- [he-07-1-mode-confusion-curve](clips/he-07-1-mode-confusion-curve.mp4)
 - [sh-11-pedestrian-occluded](clips/sh-11-pedestrian-occluded.mp4)
