@@ -4061,7 +4061,8 @@ actions:
       openpilot/**/test_*.py and prints no test names, so the four tests are shown to have run by collection, not by name; the file
       has no skip. Second layer, opendbc e233362 (#311, SWSR-713h): the Toyota controller caps the 0x343 command at 0 from the first
       frame of the event, after its rate limit, PID and pitch compensation (impact OI-2 done); its 6 test_carcontroller.py cases ran
-      locally only (opendbc_repo tests are not in the openpilot runner). Impact records
+      locally (pin record). The openpilot runner does not run opendbc_repo tests; the fork's tests.yml triggers on pull requests, but
+      a CI run on jherrodthomas/opendbc#20 is not confirmed here (the pin record says none). Impact records
       assurance/07-supporting/impact/change-2026-10-19-stock-aeb-stand-down.md and change-2026-10-19-pin-e233362.md. TSR-713 and
       FSR-07.07 implemented (#313). Not verified on the vehicle (OI-3, the AOU-04R test, also checks that stockAeb is reported
       during a PCS event) and not reviewed independently. Not in BL-006, so SFM-036.C1 keeps O 8 D 10 until the next baseline; the
