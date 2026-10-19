@@ -4987,3 +4987,26 @@
   answer: {choice: A, via: chat, at: 2026-10-18}
   applied: {ref: "#124", record: "assurance/sim/README.md §3.8; .github/workflows/tests.yaml (simulator_driving)", at: 2026-10-18}
   note: "The job runs once the lead registers the runner (label liondriver-sim) and sets the repository variable LIONDRIVER_SIM_RUNNER to true (README §3.8)."
+
+- id: DQ-401
+  question: "Comma removed 26 openpilot model files from its file storage this morning. Every test that compiles openpilot now fails on every PR until they come back, so document-only PRs cannot go green. What should we do?"
+  context: "Since 2026-10-19 03:27–03:35Z the Hugging Face LFS store in .lfsconfig (commaai/openpilot-lfs) returns 404 for 26 of its 262 objects, among them driving_supercombo.onnx and dmonitoring_model.onnx. Upstream master still references them and the old GitLab store lacks them, so switching the endpoint does not help. The jobs that run scons (unit tests, build macOS, build release, Create UI Report, process replay) fail in setup on every PR. #280 stops the non-compiling jobs (static analysis, build docs) from pulling LFS."
+  reversibility: "easy"
+  blocks: "Merging any PR while the 26 objects are missing (#274, #276 and later document PRs)"
+  gate: "G0"
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Merge document-only PRs when the only red checks are the compile jobs failing on the missing files"
+      detail: "Their own checks (documents, figures, register, trace) must pass, and each merge notes the reason. PRs that change code still wait. Easy to undo once the files are back."
+    - key: B
+      title: "Host the 26 files ourselves"
+      detail: "From a pre-2026-10-19 openpilot checkout or a device, upload them to our own LFS store and point .lfsconfig at it. Fully green again, but it uses GitHub LFS quota and needs a copy of the files."
+    - key: C
+      title: "Wait for comma"
+      detail: "Merge nothing red until the store recovers. Safest, but all merging stops for an unknown time."
+  sources: [".lfsconfig", "tools/op.sh (git lfs pull)", "PR #280", "actions run 39194260416"]
+  asked: 2026-10-19
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-19, by: u_DgEswP8TFzpISXlzh3BD1g}
