@@ -6,7 +6,8 @@ Short answers with a link to the record that holds the long one.
 
 No. It is research and development software. It makes no claim of ISO 26262 compliance or ASIL capability and
 is not approved for unsupervised operation. The safety case is being built in public precisely so that this
-stays checkable. See [Reading the Living Safety Case](Reading-the-Living-Safety-Case.md).
+stays checkable. See [Reading the Living Safety Case](Reading-the-Living-Safety-Case.md). No independent
+assessment has taken place; [For the assessor](For-the-assessor.md) says what one would involve.
 
 ## Is it safer than openpilot?
 

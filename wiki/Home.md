@@ -28,6 +28,7 @@ built, with the evidence for each claim and the known counter-evidence against i
 | Decode `WP-C-03`, `BL-002`, `DQ-052`, `SWF-090` | [Glossary](Glossary.md) |
 | Review the safety argument | [Reading the Living Safety Case](Reading-the-Living-Safety-Case.md) |
 | See which standards apply and how they are tailored | [Standards at a glance](Standards-at-a-glance.md) |
+| Review, audit or assess it independently | [For the assessor](For-the-assessor.md) |
 | Know which car the analysis is about | [Reference vehicle](Reference-vehicle.md) |
 | Set up, branch, and open a pull request | [Contributor guide](Contributor-guide.md) |
 | Report a vulnerability, an incident or a hazard | [Reporting a safety concern](Reporting-a-safety-concern.md) |
