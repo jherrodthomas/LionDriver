@@ -9,7 +9,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Change requests | This LionDriver PR |
 | Reference configuration affected | Yes: every car with openpilot longitudinal control that reports `carState.stockAeb`. On the reference Corolla TSS2 it comes from `PRE_COLLISION` on the camera bus (`PRECOLLISION_ACTIVE` with a braking force), which is read whenever alpha longitudinal is off, as in the assured configuration |
 | Decision | DQ-300 A |
-| Requirements | Parent TSR and SWSR to be written by their owners (safety-concept session, WP-W-02); SFM-ACT-020 status by the System FMEA owner |
+| Requirements | TSR-713 (WP-S-02 v0.35); SWSR-713h (WP-W-02 v0.34); SFM-ACT-020 status by the System FMEA owner |
 | Author / reviewer (independence) | Claude (AI-assisted draft) / TBD; an AI draft is not a review (WP-M-06) |
 
 ## 1. Change
@@ -35,5 +35,5 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | ID | Item | Needed by |
 |---|---|---|
 | OI-1 | Parent TSR and SWSR; SFM-ACT-020 status | Their owners |
-| OI-2 | Whether the opendbc Toyota controller should also skip its rate limit and positive terms during stock AEB, so the engine-computer command itself is ≤ 0 at once | Technical choice, after AOU-04R |
+| OI-2 | **Done 2026-10-19** (requested by the project maintainer): the opendbc Toyota controller caps the `0x343` command at 0 from the first frame of the event, after its rate limit, PID and pitch compensation (opendbc `e233362`, SWSR-713h; [change-2026-10-19-pin-e233362](change-2026-10-19-pin-e233362.md)). ~~Whether the opendbc Toyota controller should also skip its rate limit and positive terms during stock AEB, so the engine-computer command itself is ≤ 0 at once~~ | Technical choice, after AOU-04R |
 | OI-3 | AOU-04R vehicle test, and a check on the car that `stockAeb` is reported during a real or staged PCS event | Vehicle test |
