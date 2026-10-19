@@ -7,7 +7,7 @@ from openpilot.common.params import Params
 from openpilot.common.parameterized import parameterized
 from openpilot.common.test import OpenpilotTestCase
 from openpilot.selfdrive.selfdrived import assured_config, selfdrived
-from openpilot.selfdrive.selfdrived.events import ET, EVENTS, Events
+from openpilot.selfdrive.selfdrived.events import ET, EVENTS, Events, below_highway_speed_alert
 
 # CA-008 verification (FI-2026-001 RC-05, HZ-005); DQ-221 and DQ-280 entry checks
 
@@ -161,7 +161,7 @@ class TestReferenceEntry(OpenpilotTestCase):
 
   def test_alerts(self):
     assert ET.NO_ENTRY in EVENTS[EventName.settingNotAssured]
-    alert = EVENTS[EventName.belowHighwaySpeed][ET.NO_ENTRY]
+    assert EVENTS[EventName.belowHighwaySpeed][ET.NO_ENTRY] is below_highway_speed_alert
     for metric, shown in ((True, "60 km/h"), (False, "37 mph")):
-      a = alert(None, None, None, metric, 0, None)
+      a = below_highway_speed_alert(mock.Mock(), mock.Mock(), mock.Mock(), metric, 0, None)
       assert shown in a.alert_text_1 + a.alert_text_2
