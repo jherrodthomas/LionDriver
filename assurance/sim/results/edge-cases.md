@@ -8,10 +8,10 @@ What the plant cannot show: it has **no tyre friction limit** (a linear tyre: a 
 
 ## Top findings
 
-- 26 of 27 rows leave the lane; 0 of them leave it without the fault as well (the curve at or near R_ODD is beyond the item's lateral authority, plant case N-3), so the road decides those, not the fault.
+- 26 of 27 rows leave the lane. In every one the fault decides: where the curve departs by itself as well (at R_ODD), the fault adds more than 0.5 m.
 - Soonest at the lane line among the rows the fault decides: EC-26 (F-01b hard-over (right), combo-hardover-narrow) after 0.89 s; EC-01 (F-07 EPS fault, curve-assist-loss) after 1.03 s; EC-09 (F-07 EPS fault, fault-timing-refault) after 1.12 s. The driver's reaction time alone is 0.75–1.5 s after the cue.
 - An assumption decides EC-10, EC-12, EC-16, EC-24, EC-25: one probe turns the outcome round (Decides column).
-- EC-11 matches no HARA hazardous event (an assisted lane change that does not stop at the target lane, EC-N1); EC-12 matches no HARA hazardous event (an assisted lane change that does not stop at the target lane, EC-N1); EC-13 matches no HARA hazardous event (an assisted lane change that does not stop at the target lane, EC-N1).
+- EC-11, EC-12, EC-13 match no HARA hazardous event: an assisted lane change that does not stop at the target lane (EC-N1, queued as DQ-405).
 
 ## Catalogue
 

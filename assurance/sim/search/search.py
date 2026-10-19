@@ -574,9 +574,11 @@ def catalogue_page(rows: list[dict]) -> str:
     "",
     "## Top findings",
     "",
-    f"- {len(dep)} of {len(rows)} rows leave the lane; {len(road)} of them leave it without the fault as well (the "
-    "curve at or near R_ODD is beyond the item's lateral authority, plant case N-3), so the road decides those, "
-    "not the fault.",
+    f"- {len(dep)} of {len(rows)} rows leave the lane. "
+    + (f"{len(road)} of them leave it by nearly as much without the fault (the curve at or near R_ODD is beyond the "
+       "item's lateral authority, plant case N-3), so the road decides those, not the fault." if road else
+       "In every one the fault decides: where the curve departs by itself as well (at R_ODD), the fault adds more "
+       "than 0.5 m."),
   ]
   if fastest:
     out.append("- Soonest at the lane line among the rows the fault decides: " + "; ".join(
@@ -585,9 +587,10 @@ def catalogue_page(rows: list[dict]) -> str:
   if flipped:
     out.append("- An assumption decides " + ", ".join(r["id"] for r in flipped) + ": one probe turns the outcome "
                "round (Decides column).")
-  if new:
-    out.append("- " + "; ".join(f"{r['id']} matches no HARA hazardous event ({findings[r['hara']['new']]['title']}, "
-                                 f"{r['hara']['new']})" for r in new) + ".")
+  for fid in sorted({r["hara"]["new"] for r in new}):
+    ids = [r["id"] for r in new if r["hara"]["new"] == fid]
+    out.append(f"- {', '.join(ids)} match{'es' if len(ids) == 1 else ''} no HARA hazardous event: "
+               f"{findings[fid]['title']} ({fid}, queued as {findings[fid]['dq']}).")
   out += ["", "## Catalogue", "",
           "| Row | Family | Fault | Parameters | rho (m) | Line crossed (s) | Side | rho without the fault (m) | "
           "Decides | HARA / SOTIF | Scene |",
