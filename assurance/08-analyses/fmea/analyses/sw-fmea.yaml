@@ -2992,7 +2992,7 @@ failure_modes:
     prevention_controls:
     - description: 'controlsd requests ACC cancel while PCM cruise is on and the item is not enabled (EL-03); cruiseMismatch alert after 1 s. New LionDriver code,
         reviewed by its author only, ruff and ty'
-      ref: openpilot/selfdrive/controls/controlsd.py:194
+      ref: openpilot/selfdrive/controls/controlsd.py:195
     detection_controls:
     - description: test_events_defined only checks that the event exists; no test drives the 1 s timer or the alert, and the vehicle check is open (SWF-ACT-049)
       test: openpilot/selfdrive/selfdrived/tests/test_alerts.py
@@ -3297,7 +3297,7 @@ failure_modes:
   effects:
   - level: local
     description: 'At BL-004 self.desired_curvature and the torque PID integrator became NaN and stayed NaN, the sanitiser replaced the outputs with 0 and only
-      logged. At BL-005 the step with a non-finite input runs with latActive or longActive false and the controllers reset (controlsd.py:122-131, 141-144, 154-159);
+      logged. At BL-005 the step with a non-finite input runs with latActive or longActive false and the controllers reset (controlsd.py:122-131, 141-144, 155-160);
       the output is zero for as long as the input stays non-finite, without an event'
   - level: next_higher
     description: Zero torque (and, for aTarget, zero acceleration) commanded with latActive/longActive true and no event; the HMI and cluster
@@ -3319,7 +3319,7 @@ failure_modes:
   - id: SWF-045.C1
     description: 'A NaN desired curvature (modelV2 or lateralManeuverPlan) or roll. At BL-004 it latched self.desired_curvature and the PID integrator for the
       drive (reproduced with the BL-004 clip_curvature and PIDController in isolation, scratch probe). Since #51 (BL-005) the step runs with latActive false, the
-      controller is reset and desired_curvature is reset if non-finite (controlsd.py:122-128, 141-142, 154-155), so the latch is gone. Remaining: a persistent
+      controller is reset and desired_curvature is reset if non-finite (controlsd.py:122-128, 141-142, 155-156), so the latch is gone. Remaining: a persistent
       non-finite input silently zeroes lateral output while the item shows engaged, with no event or alert (TSR-604 asks an immediate disable; IA
       host-supervision OI-4); other inputs (vEgo, curvature from carState, vehicleParameters) are not guarded'
     element: SWF-SE-041
@@ -3338,7 +3338,7 @@ failure_modes:
     - SWF-ACT-044
   - id: SWF-045.C2
     description: 'A NaN aTarget made the LongControl PID integrator NaN even with ki=0 (0·NaN), so accel stayed NaN, sanitised to 0, until the state machine left
-      pid (longcontrol.py:56-71). Since #51 (BL-005) a non-finite aTarget sets longActive false and 0 is passed instead, and LongControl is reset
+      pid (longcontrol.py:65-80). Since #51 (BL-005) a non-finite aTarget sets longActive false and 0 is passed instead, and LongControl is reset
       (controlsd.py:129-131, 143-144). Remaining: zero acceleration request, no event, while the input stays non-finite'
     element: SWF-SE-043
     prevention_controls:
@@ -3380,7 +3380,7 @@ failure_modes:
   - id: SWF-046.C1
     description: The 4 m/s³ windup/winddown limit is applied before the pitch compensation and the PID (carcontroller.py:197-238), so the sent
       command has no rate limit; pitch comes from CC.orientationNED, which controlsd fills from deviceMotion with no validity check
-      (controlsd.py:69-71, 157-159)
+      (controlsd.py:69-71, 158-160)
     element: SWF-SE-045
     prevention_controls:
     - description: Pitch compensation clipped to ±1.5 m/s² and high-pass filtered; final clip to the panda range (carcontroller.py:231-232, 250).
@@ -3430,7 +3430,7 @@ failure_modes:
   causes:
   - id: SWF-047.C1
     description: 'controlsd raises on input it does not guard and exits; the 100 Hz loop has no exception handling. The example of BL-004, int(NaN) when
-      lateralDelay is not finite (latcontrol_torque.py:100), is guarded since #51 (falls back to steerActuatorDelay, controlsd.py:157-159); other inputs are not'
+      lateralDelay is not finite (latcontrol_torque.py:100), is guarded since #51 (falls back to steerActuatorDelay, controlsd.py:158-160); other inputs are not'
     element: SWF-SE-041
     prevention_controls:
     - description: Upstream review, ruff, ty; excluded from fuzzing (test_fuzzy.py:13)
@@ -3443,7 +3443,7 @@ failure_modes:
     - SWF-ACT-041
     - SWF-ACT-044
   - id: SWF-047.C2
-    description: Loop overrun or scheduling delay (Python, CTRL_HIGH on core 4, controlsd.py:237); Ratekeeper only monitors (228-233) and the loop
+    description: Loop overrun or scheduling delay (Python, CTRL_HIGH on core 4, controlsd.py:238); Ratekeeper only monitors (228-233) and the loop
       is paced by selfdriveState; card actuates the latest carControl each CAN cycle as long as it is alive within 10 periods (card.py:234;
       cereal/messaging/__init__.py:265)
     element: SWF-SE-046
@@ -3509,7 +3509,7 @@ failure_modes:
   severity: 10
   causes:
   - id: SWF-048.C1
-    description: 'cancel = CS.cruiseState.enabled and not CC.enabled (controlsd.py:162), where CC.enabled is the unchecked selfdriveState
+    description: 'cancel = CS.cruiseState.enabled and not CC.enabled (controlsd.py:163), where CC.enabled is the unchecked selfdriveState
       (SWF-040.C1), and it is sent only inside the 33 Hz ACC_CONTROL frame (carcontroller.py:187, 253) while card is actuating. The
       selfdrived backstop does nothing: cruiseMismatch fires after 6 s (selfdrived.py:425-428) but has no alert or disable type
       (events.py:458-460, commented out)'
@@ -3574,7 +3574,7 @@ failure_modes:
   guideword: omission
   effects:
   - level: local
-    description: forceDecel set in the same cycle as softDisabling or noResponseForceDecel (controlsd.py:235-236); the planner sets the
+    description: forceDecel set in the same cycle as softDisabling or noResponseForceDecel (controlsd.py:236-237); the planner sets the
       cruise target to 0 at once (longitudinal_planner.py:84-85)
   - level: next_higher
     description: Vehicle slows toward standstill; the soft-disable alert and the deceleration begin together
@@ -3654,7 +3654,7 @@ failure_modes:
   causes:
   - id: SWF-052.C1
     description: The Toyota CarController takes pcm_accel_cmd from actuators.accel with no longActive gate (carcontroller.py:197-250); the
-      inactive value relies on LongControl returning 0 in its off state (longcontrol.py:56-58), so a defect or stale carControl upstream
+      inactive value relies on LongControl returning 0 in its off state (longcontrol.py:65-67), so a defect or stale carControl upstream
       passes through
     element: SWF-SE-045
     prevention_controls:
@@ -4070,7 +4070,7 @@ failure_modes:
   causes:
   - id: SWF-060.C1
     description: 'Unhandled exception: the loop has no exception handling (card.py:277-284). A non-finite torque or acceleration raises in the CarController (int(round(nan)),
-      carcontroller.py:105; math.floor in packer.py:24); controlsd sanitises its actuators (controlsd.py:171-180), so the path needs a value made non-finite inside card (CarState
+      carcontroller.py:105; math.floor in packer.py:24); controlsd sanitises its actuators (controlsd.py:172-181), so the path needs a value made non-finite inside card (CarState
       or pitch compensation)'
     element: SWF-SE-054
     prevention_controls:
@@ -4165,7 +4165,7 @@ failure_modes:
     severity: 10
   severity: 10
   safety_mechanisms:
-  - description: Forced deceleration to standstill after 5 s at the terminal level (policy.py:418-419, 437; controlsd.py:235; longitudinal_planner.py:84-85); lockout (NO_ENTRY)
+  - description: Forced deceleration to standstill after 5 s at the terminal level (policy.py:418-419, 437; controlsd.py:236; longitudinal_planner.py:84-85); lockout (NO_ENTRY)
       after 2 terminal events or 1 no-response
     ref: openpilot/selfdrive/monitoring/policy.py
     layer: host
@@ -5232,7 +5232,7 @@ failure_modes:
   causes:
   - id: SWF-086.C1
     description: 'The request crosses three processes with no freshness check on the flag: controlsd reads driverMonitoringState.noResponseForceDecel without an alive or
-      valid check (controlsd.py:49-51, 235), and plannerd reads controlsState.forceDecel the same way (longitudinal_planner.py:84); its own valid flag is not read by
+      valid check (controlsd.py:49-51, 236), and plannerd reads controlsState.forceDecel the same way (longitudinal_planner.py:84); its own valid flag is not read by
       controlsd (SWF-065.C1). A stopped dmonitoringd leaves the last value in place until selfdrived soft-disables (SWF-064)'
     element: SWF-SE-041
     prevention_controls:

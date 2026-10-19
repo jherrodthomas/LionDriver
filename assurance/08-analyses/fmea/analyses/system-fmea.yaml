@@ -1224,7 +1224,7 @@ failure_modes:
             no field-exposure evidence for this configuration, so none is credited (RT-1 §2.2)
           ref: scripts/lint/lint.sh
         - description: Real-time scheduling priority and CPU affinity set by the control processes (config_realtime_process)
-          ref: openpilot/selfdrive/controls/controlsd.py:237
+          ref: openpilot/selfdrive/controls/controlsd.py:238
         detection_controls:
         - description: No pre-release test targets this cause
         occurrence: 5
