@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="857" viewBox="0 0 1280 857" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 4-1. Action Priority overview of the four FMEAs</title>
-  <desc id="d">Action Priority overview: System FMEA SFM rev 0.32 H 90, M 1, L 1; DFMEA DFM rev 0.10 H 30, M 0, L 0; SW FMEA SWF rev 1.5 H 130, M 1, L 10; PFMEA PFM rev 0.3 H 16, M 0, L 1. For each FMEA an occurrence by detection grid of the severity 9–10 causes over the AP table, the causes at other severities, and how the AP H causes are treated (action status or rationale).</desc>
+  <desc id="d">Action Priority overview: System FMEA SFM rev 0.32 H 90, M 1, L 1; DFMEA DFM rev 0.10 H 30, M 0, L 0; SW FMEA SWF rev 1.6 H 130, M 1, L 10; PFMEA PFM rev 0.3 H 16, M 0, L 1. For each FMEA an occurrence by detection grid of the severity 9–10 causes over the AP table, the causes at other severities, and how the AP H causes are treated (action status or rationale).</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -354,7 +354,7 @@
   <rect x="345" y="552" width="16.5" height="16" fill="#F1F5F9" stroke="#64748B" stroke-width="1" rx="2"/>
   <text x="367.5" y="564" font-size="10" fill="#0F172A">3  not implemented</text>
   <text x="650" y="114" font-size="15" fill="#0F172A" font-weight="700">SW FMEA</text>
-  <text x="650" y="131" font-size="10.5" fill="#475569">SWF rev 1.5 · BL-006 · draft</text>
+  <text x="650" y="131" font-size="10.5" fill="#475569">SWF rev 1.6 · BL-006 · draft</text>
   <text x="650" y="146" font-size="10.5" fill="#475569">141 rated causes</text>
   <rect x="650" y="158" width="262.8" height="22" fill="#D2553F"/>
   <text x="781.4" y="173" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">H 130</text>
@@ -447,10 +447,10 @@
   <rect x="812" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="834" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <circle cx="845" cy="345" r="9.5" fill="#D2553F"/>
-  <text x="845" y="348.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">9</text>
+  <text x="845" y="348.6" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">10</text>
   <rect x="856" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <circle cx="867" cy="345" r="9.5" fill="#D2553F"/>
-  <text x="867" y="348.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">7</text>
+  <text x="867" y="348.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
   <rect x="878" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <circle cx="889" cy="345" r="9.5" fill="#D2553F"/>
   <text x="889" y="348.6" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">10</text>
@@ -548,10 +548,10 @@
   <text x="650" y="618" font-size="10" fill="#0F766E" font-weight="600">SWF-013.C2, SWF-014.C1, SWF-014.C2, SWF-054.C1,</text>
   <text x="650" y="631" font-size="10" fill="#0F766E" font-weight="600">SWF-055.C1, SWF-089.C1, SWF-090.C1</text>
   <text x="650" y="657" font-size="10" fill="#475569" font-weight="700">AP H causes (130) by treatment</text>
-  <rect x="650" y="671" width="4" height="16" fill="#2E9E6A" rx="2"/>
-  <text x="660" y="683" font-size="10" fill="#0F172A">3  action completed</text>
-  <rect x="650" y="693" width="30.5" height="16" fill="#D97706" rx="2"/>
-  <text x="686.5" y="705" font-size="10" fill="#0F172A">24  action in progress</text>
+  <rect x="650" y="671" width="5.1" height="16" fill="#2E9E6A" rx="2"/>
+  <text x="661.1" y="683" font-size="10" fill="#0F172A">4  action completed</text>
+  <rect x="650" y="693" width="29.2" height="16" fill="#D97706" rx="2"/>
+  <text x="685.2" y="705" font-size="10" fill="#0F172A">23  action in progress</text>
   <rect x="650" y="715" width="4" height="16" fill="#FDEFD8" stroke="#D97706" stroke-width="1" rx="2"/>
   <text x="660" y="727" font-size="10" fill="#0F172A">1  decision pending</text>
   <rect x="650" y="737" width="129.5" height="16" fill="#FBE4DF" stroke="#D2553F" stroke-width="1" rx="2"/>
