@@ -650,8 +650,9 @@ HEAT = ["#FFFFFF", "#FFEDD5", "#FED7AA", "#FDBA74", "#FB923C", "#EA580C", "#C241
 
 
 def fig5(d: Data) -> str:
-  W = 1280
   gs = goals(d)
+  x0, cw, ch = 500, 84, 34
+  W = max(1280, x0 + len(gs) * cw + 160)  # room for the "TSRs" and "no goal" columns
   ancestors: dict[str, set[str]] = defaultdict(set)
   for g in gs:
     for t in descendants(d, g):
@@ -663,7 +664,6 @@ def fig5(d: Data) -> str:
   out = header(W, 5, "Where each safety goal lands: TSR blocks × goals",
                "Cell = TSRs in the block that trace up to the goal through their parents. A TSR serving several goals " +
                "counts in each column.", "WP-T-01 §6 · WP-S-02")
-  x0, cw, ch = 500, 84, 34
   for j, g in enumerate(gs):
     out.append(text(x0 + j * cw + cw / 2 - 4, 116, g, size=11, weight=700, fill=MUTED, anchor="middle"))
   out.append(text(x0 + len(gs) * cw + 40, 116, "TSRs", size=11, weight=700, fill=MUTED, anchor="middle"))
