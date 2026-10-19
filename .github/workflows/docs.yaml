@@ -29,6 +29,10 @@ jobs:
       (github.event.pull_request.head.repo.full_name == 'commaai/openpilot'))
       && fromJSON('["namespace-profile-amd64-8x16"]')
       || fromJSON('["ubuntu-24.04"]') }}
+    # LionDriver: the build check reads no LFS content (docs/assets SVGs are copied as-is, and the deploy below
+    # only runs on commaai/openpilot), so it must not depend on the upstream LFS store being reachable
+    env:
+      OP_SKIP_LFS: 1
     steps:
     - uses: commaai/timeout@v1
     - uses: actions/checkout@v7
