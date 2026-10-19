@@ -22,7 +22,7 @@ Generated from the YAML analyses in [`analyses/`](../../analyses/) by `tools/saf
 | 3-15 | SW FMEA: reaction time of the timed safety mechanisms by defence layer (code-derived, not measured) | `analyses/sw-fmea.yaml` | [fig-3-15-swf-reaction-layers.svg](fig-3-15-swf-reaction-layers.svg) |
 | 3-16 | SW FMEA: per element, the causes rated here and the performance part left to SOTIF | `analyses/sw-fmea.yaml` | [fig-3-16-swf-sotif-boundary.svg](fig-3-16-swf-sotif-boundary.svg) |
 | 4-1 | Action Priority overview of the four FMEAs | `analyses/*fmea.yaml` | [fig-4-1-action-priority-overview.svg](fig-4-1-action-priority-overview.svg) |
-| 4-2 | FMEA-MSR overview of the System FMEA and DFMEA (provisional MSR AP table) | `analyses/system-fmea.yaml, dfmea.yaml` | [fig-4-2-msr-overview.svg](fig-4-2-msr-overview.svg) |
+| 4-2 | FMEA-MSR overview of the System FMEA and DFMEA (handbook MSR AP table, RT-3) | `analyses/system-fmea.yaml, dfmea.yaml` | [fig-4-2-msr-overview.svg](fig-4-2-msr-overview.svg) |
 
 Conventions: Action Priority H / M / L in red / amber / teal as rated in the YAML; predicted ratings of open actions are hatched and dashed and never shown as achieved. FMEDA metrics are drawn from generic failure-rate estimates and are marked as not verified; a target met on the estimate is amber, never green. In the DFA, green marks only measures recorded as `existing` (verified); `existing_unverified` is amber.
 

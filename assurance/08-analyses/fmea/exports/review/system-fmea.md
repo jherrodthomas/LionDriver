@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.29 | draft | BL-006 | RT-2 | 2026-10-16 |
+| 0.30 | draft | BL-006 | RT-3 | 2026-10-16 |
 
 **Scope.** LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda, software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005), while the vehicle is driven by a licensed driver inside the ODD: limited-access highways only since WP-C-02 / WP-C-03 v0.4 (DQ-023), up to 110 km/h (DQ-260). Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are preserved), added because the harness intercepts the stock ADAS camera.
 
@@ -411,7 +411,7 @@ Effects:
 
 Safety mechanisms: (1) Panda heartbeat carries engaged = selfdriveState alive, valid and enabled; panda removes controls_allowed on heartbeat loss (firmware, to verify)
 
-[Monitoring and system response](#7-monitoring-and-system-response): `SFM-014.C1` mechanism 1: M 10 · F 8 · S after response 10 → 🔴 **H**<br>`SFM-014.C2` mechanism 1: M 10 · F 8 · S after response 10 → 🔴 **H**<br>`SFM-014.C3` mechanism 1: M 10 · F 2 · S after response 10 → 🔴 **H**
+[Monitoring and system response](#7-monitoring-and-system-response): `SFM-014.C1` mechanism 1: M 10 · F 8 · S after response 10 → 🔴 **H**<br>`SFM-014.C2` mechanism 1: M 10 · F 8 · S after response 10 → 🔴 **H**<br>`SFM-014.C3` mechanism 1: M 10 · F 2 · S after response 10 → 🟠 M
 
 <sub>Note: HARA input: continued actuation after fault detection.</sub>
 
@@ -707,7 +707,7 @@ Effects:
 
 Safety mechanisms: (1) controlsMismatch (IMMEDIATE_DISABLE) if panda safety model/param differ from CarParams, or safety RX checks invalid; from BL-006 a wrong-length frame of an RX-checked message is an RX fault in the reference build (opendbc#18, ATC-25, SWSR-402) · (2) BL-005 (reference build by default): the panda accepts only TOYOTA with parameter 73, SILENT, NOOUTPUT and ELM327, and once TOYOTA is active only NOOUTPUT or SILENT (reference_lock.h, TSR-512/513); pandad configures a car mode only on a panda that reports a reference build, and selfdrived names a non-reference panda (pandaNotReferenceBuild, TSR-514/619)
 
-[Monitoring and system response](#7-monitoring-and-system-response): `SFM-029.C1` mechanism 1, 2: M 7 · F 3 · S after response 8 → 🔴 **H**<br>`SFM-029.C2` mechanism 1: M 10 · F 6 · S after response 10 → 🔴 **H**<br>`SFM-029.C3` not rated here: Hardware cause; rated once in the DFMEA (DFM-001.C1)<br>`SFM-029.C4` mechanism 1: M 10 · F 2 · S after response 10 → 🔴 **H**
+[Monitoring and system response](#7-monitoring-and-system-response): `SFM-029.C1` mechanism 1, 2: M 7 · F 3 · S after response 8 → 🔴 **H**<br>`SFM-029.C2` mechanism 1: M 10 · F 6 · S after response 10 → 🔴 **H**<br>`SFM-029.C3` not rated here: Hardware cause; rated once in the DFMEA (DFM-001.C1)<br>`SFM-029.C4` mechanism 1: M 10 · F 2 · S after response 10 → 🟠 M
 
 <sub>Note: Latent-fault candidate: an unenforced limit has no effect until a second fault occurs. Key input for FMEDA LFM.</sub>
 
@@ -1020,9 +1020,6 @@ FMEA-MSR rates what happens in the car when a cause occurs: does a diagnostic ca
 
 **Coverage:** 67 of 75 in-scope causes rated, 8 rated elsewhere (`msr: complete`).
 
-> [!WARNING]
-> The MSR action priority uses a provisional table until the AIAG-VDA handbook table is transcribed (rating-tables §7.4). Read the M and F columns; the AP column will be re-rated.
-
 ![Frequency by monitoring](figures/system-fmea-msr.svg)
 
 Sorted by monitoring, weakest first. Timing is detection + reaction time against the FTTI of the cited WP-S-04 row.
@@ -1050,8 +1047,8 @@ Sorted by monitoring, weakest first. Timing is detection + reaction time against
 | `SFM-005.C1` EPS stops accepting requests without a fault signal on CAN | None: steerUnavailable needs an EPS fault signal, which this cause does not produce → None | unknown | 10 | 3 | **10** | 🔴 **H** | SFM-ACT-018 |
 | `SFM-011.C1` Powertrain ignores requests without fault signal | None: accFaulted needs a PCM fault signal, which this cause does not produce → None | unknown | 10 | 3 | **10** | 🔴 **H** | SFM-ACT-018 |
 | `SFM-036.C2` The PCM does not give stock PCS braking priority over the item's ACC_CONTROL request (AOU-04R not met) | None: the item cannot see how the PCM arbitrates → None | unknown | 10 | 3 | **10** | 🔴 **H** | SFM-ACT-020 |
-| `SFM-014.C3` Catch-all commIssue suppressed by the no_system_errors logic while another event is active | None: the catch-all is itself suppressed → None | unknown | 10 | 2 | **10** | 🔴 **H** | <sub>Masking of the catch-all is a design property rated in the SW FMEA; no in-field monitor can see it. F 2</sub> |
-| `SFM-029.C4` Harness allows the device to reach a bus without passing the panda filter | None: controlsMismatch cannot see a path that bypasses the panda → None | unknown | 10 | 2 | **10** | 🔴 **H** | <sub>Only the harness design keeps the device behind the panda; no in-field monitor can see a bypass. The barrier is checked at installation (PFMEA, WP-O-01). Kept as a known gap with F 2</sub> |
+| `SFM-014.C3` Catch-all commIssue suppressed by the no_system_errors logic while another event is active | None: the catch-all is itself suppressed → None | unknown | 10 | 2 | **10** | 🟠 M | <sub>Masking of the catch-all is a design property rated in the SW FMEA; no in-field monitor can see it. F 2</sub> |
+| `SFM-029.C4` Harness allows the device to reach a bus without passing the panda filter | None: controlsMismatch cannot see a path that bypasses the panda → None | unknown | 10 | 2 | **10** | 🟠 M | <sub>Only the harness design keeps the device behind the panda; no in-field monitor can see a bypass. The barrier is checked at installation (PFMEA, WP-O-01). Kept as a known gap with F 2</sub> |
 | `SFM-008.C1` Planner targets higher speed (missed lead, wrong set speed) | The panda bounds the acceleration request to the Toyota maximum but cannot tell a wrong target inside it; the driver's brake press revokes control → Panda revokes control on a brake press | unknown | 10 | 7 | **9** | 🔴 **H** | SFM-ACT-001, SFM-ACT-002 |
 | `SFM-009.C1` False lead (radar ghost, model false positive) or FCW false trigger | The panda bounds deceleration to the Toyota minimum but cannot tell a false lead; the panda blocks acceleration requests while the driver presses the gas → Driver overrides with the gas | unknown | 10 | 7 | **9** | 🔴 **H** | SFM-ACT-009 |
 | `SFM-010.C1` Lead missed due to radar/vision fusion fault | FCW comes from the same planner and model that missed the lead, so it is not designed to catch this cause → None | unknown | 10 | 7 | **9** | 🔴 **H** | SFM-ACT-009 |

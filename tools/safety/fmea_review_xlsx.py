@@ -11,8 +11,8 @@ Each workbook has four sheets:
   Structure  the structure tree and the functions
   MSR        only where the analysis has FMEA-MSR rows (System FMEA, DFMEA; msr-plan.md): one row per in-scope cause with
              the MSR columns (diagnostic, system response, effect after the response, S after, F, M, MSR AP, timing against
-             the FTTI, monitoring actions) or the reason it is exempt, and the two reviewer columns. The MSR AP table is
-             provisional until the handbook table is transcribed (fmea_lint.AP_MSR_PROVISIONAL), and the sheet says so
+             the FTTI, monitoring actions) or the reason it is exempt, and the two reviewer columns. The MSR AP is the
+             handbook table for S 9-10 (RT-3); a sheet with a row on the provisional S 1-8 stand-in says so
 
 The YAML stays the source of truth: regenerate, never edit the generated sheets. Action priority is recomputed with the
 AIAG-VDA table of rating-tables.md (fmea_lint.compute_ap) and must equal the YAML value; fmea_lint enforces that.
@@ -210,9 +210,10 @@ def msr_timing(t: dict) -> str:
 def msr_sheet(ws, doc, actions):
   ws.sheet_view.showGridLines = False
   ws.sheet_view.zoomScale = 90
-  note = ("FMEA-MSR (monitoring and system response, msr-plan.md): S, F, M and MSR AP per rating-tables.md §7 (RT-2). "
-          + ("The MSR AP table is provisional until the handbook table is transcribed (decision register DQ-207). "
-             if fmea_lint.AP_MSR_PROVISIONAL else "")
+  stand_in = any(fmea_lint.msr_ap_provisional(fm["severity"]) for fm, c in msr_causes(doc) if c.get("msr"))
+  note = ("FMEA-MSR (monitoring and system response, msr-plan.md): S, F, M and MSR AP per rating-tables.md §7 (RT-3, "
+          "handbook MSR AP table for S 9–10). "
+          + ("Rows with S 1–8 use the provisional stand-in until those handbook pages are transcribed. " if stand_in else "")
           + "Exempt causes are rated in the FMEA named in the reason.")
   ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=len(MSR_COLUMNS))
   c = ws.cell(1, 1, note)
@@ -326,7 +327,8 @@ def cover(ws, doc, name):
     bands = [sum(1 for m in rated if lo <= m["monitoring"] <= hi) for lo, hi in ((1, 4), (5, 6), (7, 8), (9, 10))]
     summary += [("FMEA-MSR (msr: " + str(hdr.get("msr", "")) + ")", f"{len(rated)} rated, {len(msr) - len(rated)} exempt; "
                  f"MSR AP H {aps['H']}, M {aps['M']}, L {aps['L']}"
-                 + (" (provisional table)" if fmea_lint.AP_MSR_PROVISIONAL else "")),
+                 + (" (some rows on the provisional S 1–8 table)"
+                    if any(fmea_lint.msr_ap_provisional(fm["severity"]) for fm, c in msr_causes(doc) if c.get("msr")) else "")),
                 ("Monitoring M", f"1–4: {bands[0]} · 5–6: {bands[1]} · 7–8: {bands[2]} · 9–10: {bands[3]} (see sheet MSR)")]
   for k, v in summary:
     ws.cell(r, 2, k).font = font(10, True, MUTED)
