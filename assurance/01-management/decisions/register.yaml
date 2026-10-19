@@ -4655,8 +4655,9 @@
       title: "Up to 1 in 5 (0.20), at least 20 events"
       detail: "Reachable with fewer drives. Cost: a 20 % reserve takes budget from the known-scenario targets, which then get stricter, and the unknown part of the argument is weaker."
   sources: ["assurance/06-validation/WP-V-04-sotif-unknown-scenarios.md §5.3 R3, §5.4, OI-2", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md §3 step 1"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all five (the recommended option of each)"}
+  applied: {ref: "jherrodthomas/LionDriver#340", record: "WP-V-04 v0.6 §5.3 R3, §5.4, OI-2 closed; WP-V-02 v0.14 §3 step 1", at: 2026-10-19}
 
 - id: DQ-300
   question: "When the car's own emergency braking (stock AEB) fires, should LionDriver stop asking for acceleration, or keep driving as now?"
