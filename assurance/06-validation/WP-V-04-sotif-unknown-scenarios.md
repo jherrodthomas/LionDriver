@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-04 Evaluation of unknown hazardous scenarios (method, residual risk estimation, results) |
 | Standard reference | ISO 21448:2022 §11 (evaluation of unknown hazardous scenarios), §13 (interface to operation); ISO/PAS 8800:2024 (AI V&V, operation-phase monitoring); ASPICE 4.0 VAL.1 |
-| Version | 0.3 (U-4 status and synthetic-data labelling per WP-V-02 §5.3; 2026-10-16). 0.2 (exploration blocks follow the highway-only ODD, decision register DQ-023, and the 105 km/h public-road cap, DQ-046; block Bn after every model change, DQ-038; log store without uploads to comma, DQ-084; 2026-10-16). 0.1 |
+| Version | 0.4 (§5.2: confidence level C = 95 % one-sided, DQ-057 A; 2026-10-19). 0.3 (U-4 status and synthetic-data labelling per WP-V-02 §5.3; 2026-10-16). 0.2 (exploration blocks follow the highway-only ODD, decision register DQ-023, and the 105 km/h public-road cap, DQ-046; block Bn after every model change, DQ-038; log store without uploads to comma, DQ-084; 2026-10-16). 0.1 |
 | Status | Draft (method). Results section is a template: **Not yet executed** |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -102,7 +102,7 @@ Block sizes are planning values; they are set against WP-V-02 targets and achiev
 
 ### 5.2 Methods
 
-1. **Rate bound from exploration mileage.** With r_HB events in D km, the one-sided upper bound at confidence C is `λ_UB = χ²(C; 2·r_HB + 2) / (2·D)`. With zero events, `λ_UB = −ln(1 − C) / D` (≈ 3 / D at 95 %). This bounds the rate of **all** hazardous behaviour in the explored ODD, known and unknown, but only weakly: 10⁴ km with zero events bounds the rate at ≈ 3 × 10⁻⁴ /km, far above the targets of WP-V-02. It is reported as is.
+1. **Rate bound from exploration mileage.** With r_HB events in D km, the one-sided upper bound at confidence C is `λ_UB = χ²(C; 2·r_HB + 2) / (2·D)`. With zero events, `λ_UB = −ln(1 − C) / D` (≈ 3 / D at 95 %). C = 95 %, one-sided, as for every SOTIF target (WP-V-02 §3 step 3; decided 2026-10-19 by the project lead, decision register DQ-057 option A). This bounds the rate of **all** hazardous behaviour in the explored ODD, known and unknown, but only weakly: 10⁴ km with zero events bounds the rate at ≈ 3 × 10⁻⁴ /km, far above the targets of WP-V-02. It is reported as is.
 2. **Discovery-rate trend.** Plot cumulative new scenario classes against cumulative engaged distance. A flattening curve indicates that the frequent unknowns have been found. Fit a species-richness estimator (e.g., Good–Turing: the probability that the next event belongs to an unseen class ≈ f₁ / N, where f₁ is the number of classes seen exactly once and N the number of classified events). Report the estimate and its uncertainty; it is evidence of trend, not a guarantee.
 3. **Surrogate scaling.** Use near-miss signatures (§2.1) as leading indicators; estimate the ratio between surrogate events and hazardous events from triage data, then bound the hazardous rate from the more frequent surrogates. The ratio must be argued per signature (WP-V-02 OI-5).
 4. **Simulation contribution.** Failures found in simulation are not counted into λ but are used to direct U-6 reproduction; a simulation family with an approved fidelity case may contribute a per-scenario p_s estimate to the decomposition of WP-V-02 §3 step 5.
