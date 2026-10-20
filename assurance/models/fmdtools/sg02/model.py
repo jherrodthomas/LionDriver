@@ -18,6 +18,7 @@ Synthetic (DSR-12): no evidence credit. Vehicle physics stays in assurance/sim/p
     python3 model.py BE-2.01 BE-2.14       # one joint-fault run
 """
 
+import math
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -34,7 +35,8 @@ HERE = Path(__file__).resolve().parent
 EVENTS = yaml.safe_load((HERE / "events.yaml").read_text(encoding="utf-8"))
 TICK = EVENTS["tick_s"]
 BUDGET = round(EVENTS["budget_s"] / TICK)
-T = {k: round(v["s"] / TICK) for k, v in EVENTS["timing"].items()}
+# Delays round up to whole ticks, so a cue is never earlier in the model than in its source.
+T = {k: math.ceil(round(v["s"] / TICK, 6)) for k, v in EVENTS["timing"].items()}
 FAULT_TICK = 25            # cause injected 0.5 s into the run
 # A run ends once the budget has passed for the latest possible loss: a cue after that cannot prevent TE-02.
 END_TICK = FAULT_TICK + T["control_stop_after_selfdrived_stop"] + BUDGET + 2
@@ -160,11 +162,16 @@ class Envelope(Function):
     if self.m.has_fault("block"):
       lat.t_block = _first(lat.t_block, now)
     lat.reset_request = lat.diag_request and self.m.has_fault("diag_pass")
-    # Siren triggers of the reference build: heartbeat loss with authority granted, and an EPS fault that persists.
+    # The siren sounds on every revocation that is not a driver action (TSR-516(b), panda 8a69ccf): a heartbeat loss,
+    # a reported EPS fault, and the engaged mismatch after a selfdrived stop. BE-2.02 gets none: the event includes
+    # blocking without a revocation (SWF-047.C3), so the model takes the case with no siren.
     if lat.t_soc_down != NONE:
       cue.t_siren_request = _first(cue.t_siren_request, lat.t_soc_down + T["siren_after_heartbeat_loss"])
     if lat.t_eps != NONE and lat.eps_reported:
       cue.t_siren_request = _first(cue.t_siren_request, lat.t_eps + T["siren_after_eps_fault"])
+    if not self.soc.s.selfdrived:
+      revoke = self.soc.s.t_selfdrived_stop + T["revoke_after_engaged_mismatch"]
+      cue.t_siren_request = _first(cue.t_siren_request, revoke + T["siren_after_revocation"])
 
 
 class Eps(Function):

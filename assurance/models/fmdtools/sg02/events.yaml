@@ -21,9 +21,13 @@ timing:
   host_alert_saturation: {s: 0.5, source: "Assumed: SFM-ACT-017 has the timing to analyse (BE-2.24)"}
   ui_unresponsive_after_selfdrived_stop: {s: 5.0, source: "WP-A-04 §4 BE-2.21: ui/soundd show System Unresponsive only after 5 s"}
   control_stop_after_selfdrived_stop: {s: 0.1, source: "WP-A-04 §4 BE-2.21: controlsd and card stop within about 0.1 s"}
-  siren_after_eps_fault: {s: 0.96, source: "WP-A-04 §4 BE-2.14: 0.7 s persistence, siren at most 0.96 s after onset (panda bf8102a, WP-S-04 T-28)"}
-  siren_after_heartbeat_loss: {s: 0.56, source: "WP-A-04 §4 BE-2.14: siren about 0.56 s after the last heartbeat (panda c33343b, WP-S-04 T-07a)"}
-  revoke_after_engaged_mismatch: {s: 3.0, source: "WP-A-04 §4.1 MCS-02.9: the panda revokes authority after about 3 s on the engaged mismatch"}
+  # The siren sounds on every envelope revocation that is not a driver action (TSR-516(b), DQ-404 A, panda 8a69ccf).
+  # The plant (assurance/sim, real panda safety code at bf8102a) measures it from fault onset; the older paths are
+  # later upper bounds (EPS-fault persistence 0.96 s, WP-S-04 T-28; heartbeat 0.56 s, T-07a) and are not used.
+  siren_after_eps_fault: {s: 0.25, source: "Plant F-07: EPS fault, revoked 0.053 s, siren 0.25 s (sim/results/plant-results.md)"}
+  siren_after_heartbeat_loss: {s: 0.25, source: "Plant F-04a/F-04b: heartbeat lost, revoked 0.193/0.043 s, siren 0.25 s (plant-results.md; silent-stall.md 0.25-0.29 s)"}
+  revoke_after_engaged_mismatch: {s: 3.0, source: "WP-A-04 §4.1 MCS-02.9: the panda revokes authority after about 3 s on the engaged mismatch (not measured in the plant)"}
+  siren_after_revocation: {s: 0.21, source: "Plant: siren 0.06 s (F-04a), 0.20 s (F-07) and 0.21 s (F-04b) after the revocation; the largest is used"}
 
 # Tree events the model holds as already present at the baseline, not as failure modes. A latent event of the tree
 # that the reference build has partly fixed stays a mode instead (BE-2.14: the siren now fires on an EPS fault and on

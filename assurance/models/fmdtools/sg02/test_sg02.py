@@ -4,8 +4,8 @@
 Mapping: every event of the WP-A-04 SG-02 tree has a model mode or a latent entry, every mode names a tree event, and
 every event is in the FTA <-> FMEA map. Behaviour: the nominal run is clean, every mode runs, and reference cases
 taken from the WP-A-04 §4.1 cut-set table give the expected result. Two cases where the model and the table differ
-are pinned as such: they are the kind of finding step P3 reports (the siren now covers EPS faults, so the latent tag
-on BE-2.14 is out of date for them).
+are pinned as such: they are the kind of finding step P3 reports (the revocation siren covers EPS faults, so the
+latent tag on BE-2.14 is out of date for them).
 """
 
 import sys
@@ -80,16 +80,17 @@ class TestBehaviour(unittest.TestCase):
 
   def test_single_causes_that_are_covered(self):
     self.assertTop(("BE-2.01",), False, "alert at 0.1 s")
-    self.assertTop(("BE-2.05",), False, "heartbeat siren at 0.56 s")
+    self.assertTop(("BE-2.05",), False, "revocation siren at 0.26 s")
     self.assertTop(("BE-2.07",), False, "driver feels the end of LKA torque")
     self.assertTop(("BE-2.05", "BE-2.22"), True, "MCS-02.5 as dual: heartbeat siren path failed")
 
   def test_where_the_model_differs_from_the_table(self):
-    # MCS-02.1 and MCS-02.11 hold BE-2.14 latent. The model's siren fires 0.96 s after an EPS fault (panda bf8102a), so
-    # the warning failure alone is not enough: a siren failure is needed too. Finding for step P3, not an error here.
-    self.assertTop(("BE-2.01", "BE-2.08"), False, "siren at 0.96 s, inside the 1 s budget")
+    # MCS-02.1 and MCS-02.11 hold BE-2.14 latent. The siren sounds about 0.25 s after an EPS fault (revocation siren,
+    # TSR-516(b), panda 8a69ccf; plant F-07), so the warning failure alone is not enough: a siren failure is needed too.
+    # Finding for step P3, not an error here.
+    self.assertTop(("BE-2.01", "BE-2.08"), False, "revocation siren, inside the 1 s budget")
     self.assertTop(("BE-2.01", "BE-2.08", "BE-2.14"), True)
-    self.assertTop(("BE-2.20", "BE-7.20", "BE-2.12"), False, "EPS reset is an EPS fault: siren at 0.96 s")
+    self.assertTop(("BE-2.20", "BE-7.20", "BE-2.12"), False, "EPS reset is an EPS fault: revocation siren")
     self.assertTop(("BE-2.20", "BE-7.20", "BE-2.12", "BE-2.22"), True)
 
 
