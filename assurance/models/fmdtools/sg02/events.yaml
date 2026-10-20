@@ -21,13 +21,15 @@ timing:
   host_alert_saturation: {s: 0.5, source: "Assumed: SFM-ACT-017 has the timing to analyse (BE-2.24)"}
   ui_unresponsive_after_selfdrived_stop: {s: 5.0, source: "WP-A-04 §4 BE-2.21: ui/soundd show System Unresponsive only after 5 s"}
   control_stop_after_selfdrived_stop: {s: 0.1, source: "WP-A-04 §4 BE-2.21: controlsd and card stop within about 0.1 s"}
-  # The siren sounds on every envelope revocation that is not a driver action (TSR-516(b), DQ-404 A, panda 8a69ccf).
+  # The siren sounds on the revocations of the TX-arrival check (T-34), a heartbeat loss and an EPS fault (TSR-516(b),
+  # DQ-404 A, panda 8a69ccf). Not after a selfdrived stop: card keeps sending frames without a torque request, so the
+  # arrival check does not revoke, and the 1 Hz engaged-mismatch revocation (2.25-3.16 s) sounds no siren; the heartbeat
+  # "not engaged" trigger of TSR-307(a) is not implemented (assurance/sim/results/engaged-mismatch.md: control lost at
+  # 0.1 s, host_stale_s; revoked 2.25-3.16 s; no siren; openpilot alert at 5.0 s).
   # The plant (assurance/sim, real panda safety code at the current pin 8a69ccf) measures it from fault onset; the older paths are
   # later upper bounds (EPS-fault persistence 0.96 s, WP-S-04 T-28; heartbeat 0.56 s, T-07a) and are not used.
   siren_after_eps_fault: {s: 0.25, source: "Plant F-07: EPS fault, revoked 0.053 s, siren 0.25 s (sim/results/plant-results.md)"}
   siren_after_heartbeat_loss: {s: 0.25, source: "Plant F-04a/F-04b: heartbeat lost, revoked 0.193/0.043 s, siren 0.25 s (plant-results.md; silent-stall.md 0.25-0.29 s)"}
-  revoke_after_engaged_mismatch: {s: 3.0, source: "WP-A-04 §4.1 MCS-02.9: the panda revokes authority after about 3 s on the engaged mismatch (not measured in the plant)"}
-  siren_after_revocation: {s: 0.21, source: "Plant: siren 0.06 s (F-04a), 0.20 s (F-07) and 0.21 s (F-04b) after the revocation; the largest is used"}
 
 # Where on the road a run takes place (TE-02 step P2). The model has no geometry: a phase only says whether the item
 # is asked for curvature and whether the end of LKA torque is something the driver can feel. Curve entry and mid-curve
@@ -36,7 +38,7 @@ phases:
   - id: straight
     curve: false
     torque_felt: false
-    source: "Assumed: on a straight the LKA torque is near zero, so its end gives the driver little to feel. AOU-01R and AOU-12 do not state the road; the plant could measure the drift (search-curve-assist-loss starts at a_y 0)"
+    source: "Assumed: on a straight the LKA torque is near zero, so its end gives the driver little to feel. AOU-01R and AOU-12 do not state the road. The plant shows it matters: with a crown or crosswind push of 0.1 m/s² or more the 3.0 m lane line is crossed before the driver corrects ([straight-drift](../../../sim/results/straight-drift.md))"
   - id: curve_entry
     curve: true
     torque_felt: true

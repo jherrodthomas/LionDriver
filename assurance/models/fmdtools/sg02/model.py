@@ -61,6 +61,10 @@ def _first(old: float, now: float) -> float:
   return now if old == NONE else old
 
 
+def _earliest(old: float, t: float) -> float:
+  return t if old == NONE else min(old, t)
+
+
 # ---------------------------------------------------------------------------------------------------------- flows
 
 class PowerS(State):
@@ -173,16 +177,13 @@ class Envelope(Function):
     if self.m.has_fault("block"):
       lat.t_block = _first(lat.t_block, now)
     lat.reset_request = lat.diag_request and self.m.has_fault("diag_pass")
-    # The siren sounds on every revocation that is not a driver action (TSR-516(b), panda 8a69ccf): a heartbeat loss,
-    # a reported EPS fault, and the engaged mismatch after a selfdrived stop. BE-2.02 gets none: the event includes
+    # The siren sounds on a heartbeat loss and a reported EPS fault (TSR-516(b), panda 8a69ccf). None after a selfdrived
+    # stop: no revocation sounds it there (events.yaml, plant case MCS-02.9). BE-2.02 gets none: the event includes
     # blocking without a revocation (SWF-047.C3), so the model takes the case with no siren.
     if lat.t_soc_down != NONE:
-      cue.t_siren_request = _first(cue.t_siren_request, lat.t_soc_down + T["siren_after_heartbeat_loss"])
+      cue.t_siren_request = _earliest(cue.t_siren_request, lat.t_soc_down + T["siren_after_heartbeat_loss"])
     if lat.t_eps != NONE and lat.eps_reported:
-      cue.t_siren_request = _first(cue.t_siren_request, lat.t_eps + T["siren_after_eps_fault"])
-    if not self.soc.s.selfdrived:
-      revoke = self.soc.s.t_selfdrived_stop + T["revoke_after_engaged_mismatch"]
-      cue.t_siren_request = _first(cue.t_siren_request, revoke + T["siren_after_revocation"])
+      cue.t_siren_request = _earliest(cue.t_siren_request, lat.t_eps + T["siren_after_eps_fault"])
 
 
 class Eps(Function):
