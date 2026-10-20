@@ -122,4 +122,6 @@ The whole scene with the dashboard running, 24 fps (`hazard_scene.py --video`, `
 - [sh-01-ghost-line](clips/sh-01-ghost-line.mp4)
 - [sh-02-curve-beyond-capability](clips/sh-02-curve-beyond-capability.mp4)
 - [sh-03-lead-lost-accel](clips/sh-03-lead-lost-accel.mp4)
+- [sh-06-stationary-not-lead](clips/sh-06-stationary-not-lead.mp4)
+- [sh-09-red-light](clips/sh-09-red-light.mp4)
 - [sh-11-pedestrian-occluded](clips/sh-11-pedestrian-occluded.mp4)
