@@ -28,7 +28,6 @@ Standard clauses: 26262-4, SYS.1–5.
 
 | Folder | What it holds |
 |---|---|
-| [`fault-sim/`](fault-sim/) | — |
 | [`requirements/`](requirements/README.md) | Requirements at a glance |
 | [`reviews/`](reviews/) | — |
 
