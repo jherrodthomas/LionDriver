@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for the SG-02 fault-propagation model (TE-02, step P1).
+"""Tests for the SG-02 fault-propagation model (TE-02, steps P1 and P2).
 
 Mapping: every event of the WP-A-04 SG-02 tree has a model mode or a latent entry, every mode names a tree event, and
 every event is in the FTA <-> FMEA map. Behaviour: the nominal run is clean, every mode runs, and reference cases
@@ -92,6 +92,21 @@ class TestBehaviour(unittest.TestCase):
     self.assertTop(("BE-2.01", "BE-2.08", "BE-2.14"), True)
     self.assertTop(("BE-2.20", "BE-7.20", "BE-2.12"), False, "EPS reset is an EPS fault: revocation siren")
     self.assertTop(("BE-2.20", "BE-7.20", "BE-2.12", "BE-2.22"), True)
+
+
+class TestPhases(unittest.TestCase):
+  def test_phases_are_the_three_of_the_plan(self):
+    self.assertEqual(list(m.PHASES), ["straight", "curve_entry", "mid_curve"])
+    self.assertEqual(m.DEFAULT_PHASE, "mid_curve")
+
+  def test_no_curvature_asked_on_a_straight(self):
+    self.assertIsNone(m.run(("BE-2.23",), phase="straight").t_lost)
+    self.assertTrue(m.run(("BE-2.23", "BE-2.24"), phase="curve_entry").top_event)
+
+  def test_supply_loss_on_a_straight_gives_no_cue(self):
+    # Finding of step P2 (assumption in events.yaml phases): MCS-02.7 relies on the driver feeling the end of LKA torque
+    self.assertTrue(m.run(("BE-2.07",), phase="straight").top_event)
+    self.assertFalse(m.run(("BE-2.07",), phase="curve_entry").top_event)
 
 
 if __name__ == "__main__":

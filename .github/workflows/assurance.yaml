@@ -329,6 +329,8 @@ jobs:
       run: python3 -m pip install --quiet --user --break-system-packages -r assurance/models/fmdtools/requirements.txt
     - name: SG-02 model maps the WP-A-04 tree and reproduces the reference cut sets
       run: python3 assurance/models/fmdtools/sg02/test_sg02.py
+    - name: SG-02 single-fault page is current (step P2)
+      run: python3 assurance/models/fmdtools/sg02/sweep.py --check
 
   sim-plant:
     name: simulation plant model

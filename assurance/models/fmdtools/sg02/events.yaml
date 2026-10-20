@@ -29,6 +29,23 @@ timing:
   revoke_after_engaged_mismatch: {s: 3.0, source: "WP-A-04 §4.1 MCS-02.9: the panda revokes authority after about 3 s on the engaged mismatch (not measured in the plant)"}
   siren_after_revocation: {s: 0.21, source: "Plant: siren 0.06 s (F-04a), 0.20 s (F-07) and 0.21 s (F-04b) after the revocation; the largest is used"}
 
+# Where on the road a run takes place (TE-02 step P2). The model has no geometry: a phase only says whether the item
+# is asked for curvature and whether the end of LKA torque is something the driver can feel. Curve entry and mid-curve
+# give the same result here; where the fault falls along a curve is the plant's family fault-timing-curve.
+phases:
+  - id: straight
+    curve: false
+    torque_felt: false
+    source: "Assumed: on a straight the LKA torque is near zero, so its end gives the driver little to feel. AOU-01R and AOU-12 do not state the road; the plant could measure the drift (search-curve-assist-loss starts at a_y 0)"
+  - id: curve_entry
+    curve: true
+    torque_felt: true
+    source: "AOU-01R: the EPS ends LKA torque and the driver feels it while the item holds a curve"
+  - id: mid_curve
+    curve: true
+    torque_felt: true
+    source: "AOU-01R, as curve_entry. The default phase of a run: the tree's case, a loss while the item holds a curve"
+
 # Tree events the model holds as already present at the baseline, not as failure modes. A latent event of the tree
 # that the reference build has partly fixed stays a mode instead (BE-2.14: the siren now fires on an EPS fault and on
 # heartbeat loss), so the model can show where the latent tag is out of date.
