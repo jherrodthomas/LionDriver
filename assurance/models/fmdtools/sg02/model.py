@@ -27,6 +27,7 @@ import yaml
 from fmdtools.define.architecture.function import FunctionArchitecture
 from fmdtools.define.block.function import Function
 from fmdtools.define.container.mode import Mode
+from fmdtools.define.container.parameter import Parameter
 from fmdtools.define.container.state import State
 from fmdtools.define.flow.base import Flow
 import fmdtools.sim.propagate as propagate
@@ -41,6 +42,9 @@ FAULT_TICK = 25            # cause injected 0.5 s into the run
 # A run ends once the budget has passed for the latest possible loss: a cue after that cannot prevent TE-02.
 END_TICK = FAULT_TICK + T["control_stop_after_selfdrived_stop"] + BUDGET + 2
 NONE = -1.0                # time not reached
+
+PHASES = {p["id"]: p for p in EVENTS["phases"]}
+DEFAULT_PHASE = "mid_curve"
 
 MODE_OF = {m["event"]: (m["function"], m["mode"]) for m in EVENTS["modes"]}
 EVENT_OF = {v: k for k, v in MODE_OF.items()}
@@ -63,6 +67,12 @@ class PowerS(State):
   on: bool = True
 class Power(Flow):
   container_s = PowerS
+
+class RoadS(State):
+  curve: bool = True             # the item is asked for curvature
+  torque_felt: bool = True       # the driver can feel the end of LKA torque
+class Road(Flow):
+  container_s = RoadS
 
 class SocS(State):
   alive: bool = True             # whole SoC running
@@ -120,6 +130,7 @@ class SocFn(Function):
   flow_power = Power
   flow_soc = Soc
   flow_lateral = Lateral
+  flow_road = Road
 
   def static_behavior(self):
     now, lat = self.t.time, self.lateral.s
@@ -140,7 +151,7 @@ class SocFn(Function):
       lat.t_nonfinite = _first(lat.t_nonfinite, now)
     if self.m.has_fault("frames_stop"):
       lat.t_frames = _first(lat.t_frames, now)
-    if self.m.has_fault("insufficient"):
+    if self.m.has_fault("insufficient") and self.road.s.curve:   # no curvature asked for on a straight
       lat.t_insufficient = _first(lat.t_insufficient, now)
     if self.m.has_fault("diag_request"):
       lat.diag_request = True
@@ -259,30 +270,38 @@ class Driver(Function):
   container_m = _modes("driver")
   flow_lateral = Lateral
   flow_cue = Cue
+  flow_road = Road
 
   def static_behavior(self):
     lat = self.lateral.s
-    if lat.t_supply != NONE and not self.m.has_fault("unaware"):
+    if lat.t_supply != NONE and self.road.s.torque_felt and not self.m.has_fault("unaware"):
       self.cue.s.t_feel = _first(self.cue.s.t_feel, lat.t_supply)
+
+
+class Sg02Param(Parameter):
+  phase: str = DEFAULT_PHASE     # a row of events.yaml phases
 
 
 class Sg02(FunctionArchitecture):
   """SG-02 chain: one function per element, flows between them."""
 
+  container_p = Sg02Param
   default_sp = dict(end_time=float(END_TICK), dt=1.0)
   default_track = {"flows": {"lateral": "all", "cue": "all"}}
 
   def init_architecture(self, **kwargs):
     for name, flow in (("power", Power), ("soc", Soc), ("lateral", Lateral), ("cue", Cue)):
       self.add_flow(name, flow)
+    phase = PHASES[self.p.phase]
+    self.add_flow("road", Road, s={"curve": phase["curve"], "torque_felt": phase["torque_felt"]})
     self.add_fxn("supply", Supply, "power", "lateral")
-    self.add_fxn("soc", SocFn, "power", "soc", "lateral")
+    self.add_fxn("soc", SocFn, "power", "soc", "lateral", "road")
     self.add_fxn("envelope", Envelope, "power", "soc", "lateral", "cue")
     self.add_fxn("eps", Eps, "lateral")
     self.add_fxn("monitor", Monitor, "power", "soc", "lateral", "cue")
     self.add_fxn("hmi", Hmi, "power", "soc", "cue")
     self.add_fxn("siren", Siren, "power", "cue")
-    self.add_fxn("driver", Driver, "lateral", "cue")
+    self.add_fxn("driver", Driver, "lateral", "cue", "road")
 
 
 # ------------------------------------------------------------------------------------------------------- results
@@ -306,14 +325,14 @@ class Outcome:
             f"{(self.cue or ''):6}  {'TE-02' if self.top_event else 'ok'}")
 
 
-def run(events: tuple[str, ...] | list[str] = (), tick: int = FAULT_TICK) -> Outcome:
-  """Inject the failure modes of `events` together at `tick` and read TE-02 from the history."""
+def run(events: tuple[str, ...] | list[str] = (), tick: int = FAULT_TICK, phase: str = DEFAULT_PHASE) -> Outcome:
+  """Inject the failure modes of `events` together at `tick` in road `phase` and read TE-02 from the history."""
   events = tuple(sorted(events))
   seq: dict[str, list[str]] = {}
   for e in events:
     fxn, mode = MODE_OF[e]
     seq.setdefault(fxn, []).append(mode)
-  mdl = Sg02()
+  mdl = Sg02(p={"phase": phase})
   if seq:
     _, hist = propagate.sequence(mdl, faultseq={float(tick): seq}, include_nominal=False, showprogress=False)
   else:
