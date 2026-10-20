@@ -15,7 +15,7 @@ lead's choice in [DQ-211](../../01-management/decisions/register.yaml), option C
 | Drawing | Source | Shows | Embedded in |
 |---|---|---|---|
 | `TA` | [`e05-toyota-a-harness.yaml`](e05-toyota-a-harness.yaml) | Toyota A harness: camera connector X1, car connector X2, box plug X3; pins, wire colours, gauge | WP-H-02 §3.6 |
-| `HB` | [`e05-harness-box.yaml`](e05-harness-box.yaml) | Harness box v3: header J1, intercept switches U1/U2 (HE-08), release pull-down R2+R3, ignition sense Q6 (HE-10), supply diode D1, OBD-C receptacle J3, comma power J2 | WP-H-02 §3.6 |
+| `HB` | [`e05-harness-box.yaml`](e05-harness-box.yaml) | Harness box v3: header J1, intercept switches U1/U2 (HE-08), release pull-down R2/R3, ignition sense Q6 (HE-10), supply diode D1, OBD-C receptacle J3, comma power J2 | WP-H-02 §3.6 |
 | `OC` | [`e05-obdc-device.yaml`](e05-obdc-device.yaml) | OBD-C cable from J3 to the comma device port (HE-09), device side inferred from firmware | WP-H-02 §3.6 |
 | `BB` | [`bench-box-vs-hw-22-24.yaml`](bench-box-vs-hw-22-24.yaml) | Bench for VS-HW-22…24: box tested alone, CAN interface, lab supply, SBU1 source, scope, fault-injection points FI-1…FI-4 | WP-H-06 §3.1 |
 | `HIL` | [`bench-hil.yaml`](bench-hil.yaml) | HIL bench of WP-H-06 Figure 2-1 at instrument level (deferred, DQ-049) | WP-H-06 §2.1 |
@@ -25,9 +25,9 @@ lead's choice in [DQ-211](../../01-management/decisions/register.yaml), option C
 *Drawing TA.* Toyota A harness, read from comma's `Toyota_A_Harness.pdf` and `open_pinout.pdf`. Colour codes are
 IEC 60757 (OG orange, GN green, PK pink, BU blue, BN brown, BK black, VT violet, GY grey, WH white, YE yellow).
 
-![Harness box v3 nets: the camera CAN_H from header pin 16 enters switch U1 at COM, the car CAN_H from pin 4 sits on U1 NC; the car CAN_L from pin 6 enters U2 at COM, the camera CAN_L from pin 18 sits on U2 NC; both switch inputs IN and the pull-down R2+R3 are on SBU1 at receptacle pin A8; ignition IGN_12 from pin 2 drives Q6, which pulls SBU2 at B8, and feeds box VIN through D1 to A4; comma power J2 also feeds VIN](e05-harness-box.svg)
+![Harness box v3 nets: the camera CAN_H from header pin 16 enters switch U1 at COM, the car CAN_H from pin 4 sits on U1 NC; the car CAN_L from pin 6 enters U2 at COM, the camera CAN_L from pin 18 sits on U2 NC; both switch inputs IN and the pull-down R2/R3 are on SBU1 at receptacle pin A8; ignition IGN_12 from pin 2 drives Q6, which pulls SBU2 at B8, and feeds box VIN through D1 to A4; comma power J2 also feeds VIN](e05-harness-box.svg)
 
-*Drawing HB.* Harness box v3, drawn in the undriven state: SBU1 is held low by R2+R3, both switches sit on NC, and
+*Drawing HB.* Harness box v3, drawn in the undriven state: SBU1 is held low by R2/R3, both switches sit on NC, and
 the camera bus joins the car bus (stock path). SBU1 at 5 V moves both switches to NO, which puts each side on a
 terminated stub and leaves the device as the only link between them (intercept). Lines are board nets, not wires.
 
@@ -56,7 +56,7 @@ no relay coil (RR-2026-010), unlike the probes Figure 2-1 still names (OI-W-7).
 [`wire-ends.tsv`](wire-ends.tsv) lists every wire of a cable and every line drawn between two pins, with both ends,
 the signal, colour and gauge. The ID is `<drawing>.<cable>.<wire>` for a wire (for example `TA.W1.1`, the orange
 camera CAN2_H wire from X1:5 to X3:16) and `<drawing>.<A>.<pin>-<B>.<pin>` for a line (for example
-`HB.R23.1-J3.A8`, the SBU1 pull-down). WP-H-03 FMEDA rows can cite these IDs. The FMEDA itself is not changed here; it
+`HB.R2/R3.1-J3.A8`, the SBU1 pull-down). WP-H-03 FMEDA rows can cite these IDs. The FMEDA itself is not changed here; it
 belongs to its owner.
 
 IDs follow the source: renumbering a cable or moving a line changes them, so cite them only from a drawing that has
@@ -64,7 +64,7 @@ been reviewed and keep the drawing stable after that.
 
 ## 3. Box parts not drawn as nodes
 
-The box drawing keeps to the switched and sensed nets. These parts sit on the same nets and come from the same v3
+The box drawing keeps to the switched and sensed nets. Part names (SBU1, R2/R3, D1, D4, D2/D3, U1/U2) are the test-point names of WP-H-06 §3.1 and the [bench checklist](../bench/VS-HW-22-24-checklist.md); keep them. These parts sit on the same nets and come from the same v3
 drawing ([RR-2026-010](../reviews/RR-2026-010.md) HB-03…HB-05):
 
 | Part | Value | Connection | Note |
@@ -76,7 +76,7 @@ drawing ([RR-2026-010](../reviews/RR-2026-010.md) HB-03…HB-05):
 | R7 | 120 Ω | CAN2_L to CAN2_H′ (U1 NO) | Camera-side termination in intercept |
 | R8 | 120 Ω | CAN2_L″ (J1 P15) to CAN2_H′ | Second camera-side termination when the plug loops P13 to P15; Toyota A does, so the camera side sees 60 Ω in intercept |
 | R1, R4, R5 | 1 kΩ each | Q6 drain to SBU2; IGN_12 divider to the Q6 gate | Ignition sense (HB-06) |
-| U1, U2 supply | V+ = VL = VIN, V− = GND = GND | — | The stock path needs box power (F-01, F-02) |
+| U1, U2 supply | V+ = VL = VIN, V− = GND = GND | — | The stock path needs box power (F-01, F-02). DG419LE ratings against VIN are **unconfirmed** (DFM-ACT-015, [RR-2026-010](../reviews/RR-2026-010.md) §6.1) |
 
 ## 4. Regenerating and checking
 

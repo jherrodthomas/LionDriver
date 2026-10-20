@@ -85,7 +85,7 @@ graph {
  </td></tr>
  <tr><td>
   <table border="0" cellspacing="0" cellpadding="3" cellborder="1"><tr>
-   <td balign="left">X1, X2 and the box are joined by the Toyota A harness as drawn in e05-toyota-a-harness.</td>
+   <td balign="left">Harness type assumed Toyota A with box v3 (DQ-211 C). X1, X2 and the box are joined by the Toyota A harness as drawn in e05-toyota-a-harness.</td>
   </tr></table>
  </td></tr>
 </table>
@@ -377,7 +377,7 @@ graph {
  </td></tr>
  <tr><td>
   <table border="0" cellspacing="0" cellpadding="3" cellborder="1"><tr>
-   <td balign="left">FI-3: R2 lifted at one end</td>
+   <td balign="left">FI-3: R2/R3 open (R2 lifted at one end)</td>
    <td balign="left">VS-HW-23 steps 2-5 (box modified, reversible)</td>
    <td balign="left">1-pin</td>
   </tr></table>
@@ -385,7 +385,7 @@ graph {
  <tr><td>
   <table border="0" cellspacing="0" cellpadding="3" cellborder="1">
    <tr>
-    <td>SBU1 pull-down</td>
+    <td>SBU1 pull-down R2/R3</td>
     <td port="p1r">1</td>
    </tr>
   </table>
@@ -401,7 +401,7 @@ graph {
  </td></tr>
  <tr><td>
   <table border="0" cellspacing="0" cellpadding="3" cellborder="1"><tr>
-   <td balign="left">FI-4: D2 then D3 bridged</td>
+   <td balign="left">FI-4: D2/D3 bridged (D2, then D3)</td>
    <td balign="left">VS-HW-24 (d), CAN0_H then CAN2 to GND (box modified, reversible)</td>
    <td balign="left">1-pin</td>
   </tr></table>

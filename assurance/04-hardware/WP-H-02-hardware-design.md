@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-02 Hardware architectural and detailed design (device, panda MCU, harness, relay) |
 | Standard reference | ISO 26262-5:2018 §7 (hardware design: architectural and detailed design, safety-related HW elements); ISO 26262-8:2018 §13; ASPICE 4.0 HWE.2 |
-| Version | 0.9 (OI-4: DC-03 not pursued, DQ-209 option A; 2026-10-16). 0.8 (OI-1 route set by DQ-065, ask comma and wait; OI-3 both boards kept, DQ-011; 2026-10-16). 0.7 (harness box from the published v3 drawing: the intercept "relay" is two DG419LE analog switches powered from the box supply; HE-08, §3.1, §3.4, UK-03 updated; [RR-2026-010](reviews/RR-2026-010.md); 2026-10-15). 0.6 (§3.2 element hierarchy added as Figure 3-2; power-path diagram renumbered Figure 3-3; 2026-10-13). 0.5 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.4 (§3.1 and §3.4 diagrams redrawn as Figures 3-1 and 3-2; text versions kept; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: IWDG1 now used, started at the first relay drive and fed from the 100 Hz safety task, panda `9f60e17`; 0.3 s heartbeat revocation, panda `c2e5d93`; `0xc5` refused in a car mode in the reference build; DC-01, DC-09 status. Not verified on hardware). 0.1: initial draft |
+| Version | 0.10 (§3.6 harness wiring added: Figures 3-4 to 3-6 drawn from comma's published v3 harness drawings with WireViz, [`wiring/`](wiring/README.md); not measured; 2026-10-20). 0.9 (OI-4: DC-03 not pursued, DQ-209 option A; 2026-10-16). 0.8 (OI-1 route set by DQ-065, ask comma and wait; OI-3 both boards kept, DQ-011; 2026-10-16). 0.7 (harness box from the published v3 drawing: the intercept "relay" is two DG419LE analog switches powered from the box supply; HE-08, §3.1, §3.4, UK-03 updated; [RR-2026-010](reviews/RR-2026-010.md); 2026-10-15). 0.6 (§3.2 element hierarchy added as Figure 3-2; power-path diagram renumbered Figure 3-3; 2026-10-13). 0.5 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.4 (§3.1 and §3.4 diagrams redrawn as Figures 3-1 and 3-2; text versions kept; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: IWDG1 now used, started at the first relay drive and fed from the 100 Hz safety task, panda `9f60e17`; 0.3 s heartbeat revocation, panda `c2e5d93`; `0xc5` refused in a car mode in the reference build; DC-01, DC-09 status. Not verified on hardware). 0.1: initial draft |
 | Status | Draft |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-07) |
 | Author | Assurance team (initial draft) |
@@ -177,6 +177,37 @@ blocks the camera→car path (SG-07) and keeps the panda in the middle of the bu
 has stopped. The EPS times out on missing `0x2E4` (AOU-01), so SG-01 is protected by the vehicle,
 but stock PCS messages from the camera no longer reach the car until power cycle. This is the
 main motivation for HWSR-501 (IWDG) and HWSR-506a.
+
+### 3.6 Harness wiring (E-05)
+
+The E-05 harness as wiring: pins, wire colours and parts of the Toyota A harness, the harness box v3 and the OBD-C
+link to the device. The values are transcribed from comma's published v3 drawings ([RR-2026-010](reviews/RR-2026-010.md)
+§2), **not measured**; the reference unit is assumed to be Toyota A with box v3 ([DQ-211](../01-management/decisions/register.yaml),
+option C), and VS-HW-02 in [WP-H-06](WP-H-06-hardware-integration-verification.md) checks one unit against them. Every
+wire and drawn net has an ID in [`wiring/wire-ends.tsv`](wiring/wire-ends.tsv) (for example `TA.W1.1`,
+`HB.R2/R3.1-J3.A8`) that a WP-H-03 row can cite. Sources, the box parts not drawn as nodes (D2/D3, D4, R6–R8) and the
+open items OI-W-1…7 are in the [wiring README](wiring/README.md).
+
+![Figure 3-4: Toyota A harness wiring: camera connector X1 (TE 1318774-1) and car connector X2 (TE 1565894-1) with CAN on pins 5 and 11, radar CAN1 on 6 and 12, IGN on 7 and GND on 10; six-wire branches from each to the 18-pin box plug X3 (Molex 501646-1800); four pass-through wires PT1 to PT4 from X1 to X2; loopback 13 to 15 on X3; UL1007 26 AWG](wiring/e05-toyota-a-harness.svg)
+
+*Figure 3-4.* Toyota A harness (drawing TA). The harness sits in line between the car and the forward camera: both TE
+connectors use the same pin positions, with the camera bus CAN2 where the car side has CAN0. Source:
+[`wiring/e05-toyota-a-harness.yaml`](wiring/e05-toyota-a-harness.yaml), drawn by `wiring/make_wiring.py`.
+
+![Figure 3-5: harness box v3 nets: camera CAN_H on U1 COM and car CAN_H on U1 NC; car CAN_L on U2 COM and camera CAN_L on U2 NC; both switch inputs and the pull-down R2/R3 on SBU1 at the OBD-C receptacle pin A8; IGN_12 drives the ignition sense Q6 to SBU2 at B8 and feeds box VIN through D1; comma power J2 also feeds VIN](wiring/e05-harness-box.svg)
+
+*Figure 3-5.* Harness box v3 (drawing HB), HE-08 and HE-10, drawn undriven: R2/R3 hold SBU1 low, U1/U2 sit on NC
+and the camera bus joins the car bus (stock path). SBU1 at 5 V moves both to NO (intercept). U1/U2 run from box VIN;
+their DG419LE ratings against VIN are unconfirmed (DFM-ACT-015). Source:
+[`wiring/e05-harness-box.yaml`](wiring/e05-harness-box.yaml).
+
+![Figure 3-6: OBD-C cable from the box receptacle J3 to the device port with the USB-C full-featured crossover: car CAN0 arrives at device B11/B10 as bus 0, camera CAN2 at A11/A10 as bus 2, radar CAN1 at B2/B3 as bus 1, box SBU1 at device SBU2 (relay drive) and box SBU2 at device SBU1 (ignition sense)](wiring/e05-obdc-device.svg)
+
+*Figure 3-6.* OBD-C link (drawing OC), HE-09, in the orientation the firmware calls NORMAL. The device side is
+inferred from the firmware, not from a schematic (UK-01): a plug read as FLIPPED makes the firmware drive the relay
+on its SBU1 and swap logical bus 0 and bus 2 (`panda/board/drivers/harness.h`, `panda/board/drivers/can_common.h:130`),
+so a wrong orientation reading would exchange the car and camera buses (HWSR-701, VS-HW-13). Source:
+[`wiring/e05-obdc-device.yaml`](wiring/e05-obdc-device.yaml).
 
 ## 4. Detailed design notes relevant to safety mechanisms
 

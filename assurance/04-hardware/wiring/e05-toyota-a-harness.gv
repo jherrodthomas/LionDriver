@@ -156,7 +156,7 @@ graph {
  </td></tr>
  <tr><td>
   <table border="0" cellspacing="0" cellpadding="3" cellborder="1"><tr>
-   <td balign="left">Loopback 13-15 (grey, 40 mm) selects 60 ohm on bus 2; 3-5 open, no extra bus 0 termination. Crimp terminal 501648-1000 per the harness drawing, 501647-1000 per open_pinout (to resolve, OI-W-3).</td>
+   <td balign="left">Harness type assumed Toyota A with box v3, not read off the parts (DQ-211 C). Loopback 13-15 (grey, 40 mm) selects 60 ohm on bus 2; 3-5 open, no extra bus 0 termination. Crimp terminal 501648-1000 per the harness drawing, 501647-1000 per open_pinout (to resolve, OI-W-3).</td>
   </tr></table>
  </td></tr>
 </table>

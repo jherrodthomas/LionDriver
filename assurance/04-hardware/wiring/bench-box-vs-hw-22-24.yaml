@@ -30,7 +30,7 @@ connectors:
   X1:
     type: Toyota A camera connector X1
     subtype: TE 1318774-1; bench mating plug to choose
-    notes: X1, X2 and the box are joined by the Toyota A harness as drawn in e05-toyota-a-harness.
+    notes: Harness type assumed Toyota A with box v3 (DQ-211 C). X1, X2 and the box are joined by the Toyota A harness as drawn in e05-toyota-a-harness.
     pins: [5, 11, 10]
     pinlabels: [CAN2_H camera, CAN2_L camera, GND]
   X2:
@@ -66,11 +66,11 @@ connectors:
     subtype: VS-HW-22 step 3 (models a D4 short)
     pinlabels: [VIN]
   FI3:
-    type: "FI-3: R2 lifted at one end"
+    type: "FI-3: R2/R3 open (R2 lifted at one end)"
     subtype: VS-HW-23 steps 2-5 (box modified, reversible)
-    pinlabels: [SBU1 pull-down]
+    pinlabels: [SBU1 pull-down R2/R3]
   FI4:
-    type: "FI-4: D2 then D3 bridged"
+    type: "FI-4: D2/D3 bridged (D2, then D3)"
     subtype: VS-HW-24 (d), CAN0_H then CAN2 to GND (box modified, reversible)
     pinlabels: [clamp diode]
 

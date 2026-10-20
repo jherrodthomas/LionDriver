@@ -28,7 +28,7 @@ connectors:
   X3:
     type: Molex 501646-1800
     subtype: to harness box header J1 (Molex 501876-1840); wire side
-    notes: Loopback 13-15 (grey, 40 mm) selects 60 ohm on bus 2; 3-5 open, no extra bus 0 termination. Crimp terminal 501648-1000 per the harness drawing, 501647-1000 per open_pinout (to resolve, OI-W-3).
+    notes: Harness type assumed Toyota A with box v3, not read off the parts (DQ-211 C). Loopback 13-15 (grey, 40 mm) selects 60 ohm on bus 2; 3-5 open, no extra bus 0 termination. Crimp terminal 501648-1000 per the harness drawing, 501647-1000 per open_pinout (to resolve, OI-W-3).
     pinlabels: [GND, IGN (car), CAN0_H term. select, CAN0_H car, CAN0_H'' term., CAN0_L car, CAN1_L (car), CAN1_H (car), CAN1_H (camera), 12VIN (not wired), CAN1_L (camera), 12VIN (not wired), CAN2_L term. select, IGN (camera), CAN2_L'' term., CAN2_H camera, GND, CAN2_L camera]
     loops:
       - [13, 15]

@@ -8,8 +8,8 @@ Id	Description	Qty	Unit	Designators
 7	Connector, CAN interface, 2 channels, 500 kbit/s; model recorded on the checklist, 6 pins	1		CAN
 8	Connector, FI-1: IGN_12 open, VS-HW-22 steps 2 and 4, 1 pins	1		FI1
 9	Connector, FI-2: VIN to GND, 1 ohm, VS-HW-22 step 3 (models a D4 short), 1 pins	1		FI2
-10	Connector, FI-3: R2 lifted at one end, VS-HW-23 steps 2-5 (box modified, reversible), 1 pins	1		FI3
-11	Connector, FI-4: D2 then D3 bridged, VS-HW-24 (d), CAN0_H then CAN2 to GND (box modified, reversible), 1 pins	1		FI4
+10	Connector, FI-3: R2/R3 open (R2 lifted at one end), VS-HW-23 steps 2-5 (box modified, reversible), 1 pins	1		FI3
+11	Connector, FI-4: D2/D3 bridged (D2, then D3), VS-HW-24 (d), CAN0_H then CAN2 to GND (box modified, reversible), 1 pins	1		FI4
 12	Connector, Lab source 0-5 V, 1 kohm in series (device driver unknown, UK-06), 2 pins	1		SRC
 13	Connector, Lab supply, 0-20 V, current limit 0.5 A, 2 pins	1		PSU
 14	Connector, Scope, 4 channels, differential probe on ch 1, 4 pins	1		SCOPE

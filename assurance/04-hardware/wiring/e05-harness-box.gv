@@ -96,7 +96,7 @@ graph {
  </td></tr>
  <tr><td>
   <table border="0" cellspacing="0" cellpadding="3" cellborder="1"><tr>
-   <td balign="left">Lines show the switched and sensed nets only; pins marked 'to J3' are plain PCB nets. A loopback in the plug adds R6 (3-5) or R8 (13-15).</td>
+   <td balign="left">Harness type assumed Toyota A with box v3, not read off the parts (DQ-211 C). Lines show the switched and sensed nets only; pins marked 'to J3' are plain PCB nets. A loopback in the plug adds R6 (3-5) or R8 (13-15).</td>
   </tr></table>
  </td></tr>
 </table>
@@ -161,7 +161,7 @@ graph {
  </td></tr>
  <tr><td>
   <table border="0" cellspacing="0" cellpadding="3" cellborder="1"><tr>
-   <td balign="left">IN low = COM to NC (stock path). IN high = COM to NO (camera to terminated stub).</td>
+   <td balign="left">IN low = COM to NC (stock path). IN high = COM to NO (camera to terminated stub). Ratings unconfirmed (DFM-ACT-015).</td>
   </tr></table>
  </td></tr>
 </table>
@@ -294,21 +294,21 @@ graph {
  </td></tr>
  <tr><td>
   <table border="0" cellspacing="0" cellpadding="3" cellborder="1"><tr>
-   <td balign="left">IN low = COM to NC (stock path). IN high = COM to NO (car to terminated stub).</td>
+   <td balign="left">IN low = COM to NC (stock path). IN high = COM to NO (car to terminated stub). Ratings unconfirmed (DFM-ACT-015).</td>
   </tr></table>
  </td></tr>
 </table>
 > fillcolor="#FFFFFF" shape=box style=filled]
-	R23 [label=<
+	"R2/R3" [label=<
 <table border="0" cellspacing="0" cellpadding="0">
  <tr><td>
   <table border="0" cellspacing="0" cellpadding="3" cellborder="1"><tr>
-   <td balign="left">R23</td>
+   <td balign="left">R2/R3</td>
   </tr></table>
  </td></tr>
  <tr><td>
   <table border="0" cellspacing="0" cellpadding="3" cellborder="1"><tr>
-   <td balign="left">R2 + R3</td>
+   <td balign="left">R2/R3</td>
    <td balign="left">2 x 120 ohm in series, SBU1 to GND</td>
    <td balign="left">2-pin</td>
   </tr></table>
@@ -459,7 +459,7 @@ graph {
 	edge [color="#000000" dir=none style=dashed]
 	U2:p4r:e -- J3:p5l:w
 	edge [color="#000000" dir=none style=dashed]
-	R23:p1r:e -- J3:p5l:w
+	"R2/R3":p1r:e -- J3:p5l:w
 	edge [color="#000000" dir=none style=dashed]
 	J1:p2r:e -- Q6:p1l:w
 	edge [color="#000000" dir=none style=dashed]
