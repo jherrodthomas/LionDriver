@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Draw the figures of docs/liondriver/speed-planning.md (pipeline, follow distance, limits, lead prediction, FCW timing).
+"""Draw the figures of docs/liondriver/speed-planning.md (pipeline, follow distance, limits, lead prediction, FCW timing,
+MPC algorithm).
 
 Sources of record:
   - The MPC, planner and radard constants are read from the openpilot code with regular expressions
@@ -33,7 +34,7 @@ from fig_driving import (AMBER, AMBER_BG, CHIP, GREY_BG, HAIR, INK, LINE, MONO, 
 
 OUT_DIR = REPO / "docs" / "assets" / "liondriver"
 OUTS = {"pipeline": "speed-1-pipeline.svg", "follow": "speed-2-follow-distance.svg", "limits": "speed-3-limits.svg",
-        "lead": "speed-4-lead-prediction.svg", "fcw": "speed-5-fcw-timing.svg"}
+        "lead": "speed-4-lead-prediction.svg", "fcw": "speed-5-fcw-timing.svg", "mpc": "speed-6-mpc-algorithm.svg"}
 OP = REPO / "openpilot" / "selfdrive"
 CODE = {
   "mpc": OP / "controls" / "lib" / "longitudinal_mpc_lib" / "long_mpc.py",
@@ -472,6 +473,99 @@ def build_fcw(f: dict) -> str:
   return svg(W, int(y2 + 156), "Figure 5. Forward collision warning: how late is too late", desc, body)
 
 
+# ---------------------------------------------------------------- Figure 6: how the MPC solves one plan
+
+def mpc_facts(f: dict) -> dict:
+  src = CODE["mpc"].read_text(encoding="utf-8")
+
+  def need(pattern: str, what: str) -> re.Match:
+    m = re.search(pattern, src, re.M)
+    if not m:
+      raise SourceError(f"long_mpc.py: {what} changed form; update fig_speed.py")
+    return m
+  g = dict(f)
+  for k, n in [("w_obst", "X_EGO_OBSTACLE_COST"), ("w_jerk", "J_EGO_COST"), ("w_achange", "A_CHANGE_COST"),
+               ("w_danger", "DANGER_ZONE_COST"), ("w_limit", "LIMIT_COST")]:
+    g[k] = float(need(rf"^{n} = ([\d.e+-]+)", n).group(1))
+  g["solver"] = need(r"^ACADOS_SOLVER_TYPE = '(\w+)'", "solver type").group(1)
+  g["qp"] = need(r"qp_solver = '(\w+)'", "QP solver").group(1)
+  g["qp_iter"] = int(need(r"qp_solver_iter_max = (\d+)", "QP iterations").group(1))
+  for p, what in [(r"f_expl = vertcat\(v_ego, a_ego, j_ego\)", "dynamics"),
+                  (r"lead_0_obstacle = lead_xv_0\[:,0\] \+ get_stopped_equivalence_factor\(lead_xv_0\[:,1\]\)", "obstacle"),
+                  (r"self\.params\[:,2\] = np\.min\(x_obstacles, axis=1\)", "min obstacle"),
+                  (r"np\.interp\(T_IDXS\[i\], \[0\.0, 1\.0, 2\.0\], \[1\.0, 1\.0, 0\.0\]\)", "a-change fade"),
+                  (r"x_lead = 50\.0", "phantom lead"),
+                  (r"self\.solver\.constraints_set\(0, \"lbx\", self\.x0\)", "initial state")]:
+    need(p, what)
+  hs = CODE["helpers"].read_text(encoding="utf-8")
+  if not re.search(r"a_target = 2 \* \(v_target - v_now\) / \(action_t\) - a_now", hs):
+    raise SourceError("drive_helpers.py: get_accel_from_plan changed form; update fig_speed.py")
+  return g
+
+
+def build_mpc(g: dict) -> str:
+  W = 1320
+  body = header(W, "6", "How the MPC solves one plan",
+                "Every 20 Hz plan: predict the leads, build one obstacle per step, solve a small optimal-control problem, "
+                "read off one acceleration.", "long_mpc.py LongitudinalMpc.update, run · drive_helpers.get_accel_from_plan")
+  steps = [
+    ("1  Leads", ["leadOne and leadTwo from radard", "extrapolated on the 13 steps", "(Figure 4); none → phantom", "lead 50 m ahead, 10 m/s faster"]),
+    ("2  Obstacles", ["each lead + its own stopping", f"distance v²/(2·{g['comfort']:g}): a stopped", "car further on; the nearer", "of the two per step"]),
+    ("3  Problem", ["state: position, speed, accel", "input: jerk", "start: today's v and a", f"{int(g['n'])} steps to {g['max_t']:g} s, dense near"]),
+    ("4  Solve", [f"acados {g['solver']}: one Gauss-", "Newton step per plan;",
+                  f"QP by {g['qp'].split('_')[-1]}, ≤ {g['qp_iter']} iterations;", "warm start from the last plan"]),
+    ("5  Read off", ["speed and accel plan →", "accel at the actuator delay", "+ 0.05 s: the MPC's candidate", "for min() (Figure 1)"]),
+  ]
+  x, y, w, h, gap = 40, 108, 230, 118, 17
+  for i, (t_, ls) in enumerate(steps):
+    xx = x + i * (w + gap)
+    body.append(rect(xx, y, w, h, fill="#FFFFFF" if i != 3 else SW_BG, stroke=SW, sw=1.4))
+    body.append(text(xx + 12, y + 22, t_, size=13, weight=700))
+    for k, s in enumerate(ls):
+      body.append(text(xx + 12, y + 42 + k * 16, s, size=10.5, fill=MUTED))
+    if i < len(steps) - 1:
+      body += arrow(xx + w + 2, y + h / 2, xx + w + gap - 2, y + h / 2)
+  # The problem in detail.
+  y2 = y + h + 34
+  body.append(text(40, y2, "WHAT IT MINIMISES, AT EVERY STEP", size=12, weight=700, fill=SW))
+  rows = [
+    (f"{g['w_obst']:g}", "gap error", "((obstacle − x) − desired distance) / (v + 10)", "the main pull: sit at the follow distance of Figure 2"),
+    (f"{g['w_jerk']:g} × jf", "jerk", "j", "smooth; jf = 0.5 for the aggressive personality, else 1"),
+    (f"{g['w_achange']:g} × jf", "change of plan", "a − a of the last plan", "fades to 0 between 1 s and 2 s ahead: stick to what was promised"),
+  ]
+  for i, (wt, name, expr, why) in enumerate(rows):
+    yy = y2 + 26 + i * 26
+    body.append(text(40, yy, wt, size=11.5, weight=700, family=MONO, fill=SW))
+    body.append(text(130, yy, name, size=11.5, weight=700))
+    body.append(text(270, yy, expr, size=11, family=MONO))
+    body.append(text(720, yy, why, size=11, fill=MUTED))
+  y3 = y2 + 26 + 3 * 26 + 14
+  body.append(text(40, y3, "SUBJECT TO (SOFT, HEAVILY WEIGHTED)", size=12, weight=700, fill=SAFETY))
+  cons = [
+    (f"{g['w_limit']:.0e}".replace("e+0", "e"), "v ≥ 0;  ACCEL_MIN ≤ a ≤ ACCEL_MAX", "never reverse; stay inside −3.5 … +2.0 m/s² (Figure 3)"),
+    (f"{g['w_danger']:g}", f"(obstacle − x) ≥ {g['danger']:g} × desired distance", "the danger zone: much costlier than the gap error"),
+  ]
+  for i, (wt, expr, why) in enumerate(cons):
+    yy = y3 + 26 + i * 26
+    body.append(text(40, yy, wt, size=11.5, weight=700, family=MONO, fill=SAFETY))
+    body.append(text(130, yy, expr, size=11, family=MONO))
+    body.append(text(720, yy, why, size=11, fill=MUTED))
+  y4 = y3 + 26 + 2 * 26 + 18
+  body.append(rect(30, y4 - 18, W - 60, 46, fill=CHIP, stroke="none", rx=6))
+  body.append(text(40, y4, f"Then the FCW check: if the plan comes within {g['crash']:g} m of leadOne within "
+                   f"{g['fcw_t']:g} s and its probability is above {g['fcw_prob']:g}, a counter rises; more than "
+                   f"{g['fcw_cnt']} in a row raises FCW (Figure 5).", size=11, fill=INK))
+  body.append(text(40, y4 + 17, "Constraints are soft: a plan that breaks one is still returned, at a cost; the panda's "
+                   "bounds are the hard limit.", size=11, fill=MUTED))
+  desc = ("Five steps per plan: extrapolate leadOne and leadTwo on 13 time steps (a phantom lead if none); turn each into "
+          "an obstacle by adding its stopping distance and keep the nearer; set up the problem with position, speed and "
+          f"acceleration as state and jerk as input from today's values; solve with acados {g['solver']}, one Gauss-Newton "
+          f"step, {g['qp']}, at most {g['qp_iter']} QP iterations, warm-started; read off the acceleration at the actuator "
+          f"delay. Costs: gap error {g['w_obst']:g}, jerk {g['w_jerk']:g}, change of plan {g['w_achange']:g}; soft "
+          f"constraints: limits {g['w_limit']:g}, danger zone {g['w_danger']:g} at {g['danger']:g} of the desired distance.")
+  return svg(W, int(y4 + 40), "Figure 6. How the MPC solves one plan", desc, body)
+
+
 # ---------------------------------------------------------------- main
 
 def build_all() -> dict[str, str]:
@@ -480,7 +574,7 @@ def build_all() -> dict[str, str]:
     raise SourceError("speed figure sources changed:\n" + "\n".join(gone) + "\nreview fig_speed.py")
   f = facts()
   return {OUTS["pipeline"]: build_pipeline(f), OUTS["follow"]: build_follow(f), OUTS["limits"]: build_limits(f),
-          OUTS["lead"]: build_lead(f), OUTS["fcw"]: build_fcw(f)}
+          OUTS["lead"]: build_lead(f), OUTS["fcw"]: build_fcw(f), OUTS["mpc"]: build_mpc(mpc_facts(f))}
 
 
 def main(argv: list[str]) -> int:

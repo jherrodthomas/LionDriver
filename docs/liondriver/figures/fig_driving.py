@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Draw the figures of docs/liondriver/driving-and-planning.md (pipeline, two control paths, authority funnel,
-model output overlay, timing strip).
+model output overlay, timing strip,
+steering controller, emergency reactions).
 
 Sources of record:
   - Figure 1, the camera-to-CAN pipeline: the process boxes are drawn here, and each box lists the functional
@@ -15,6 +16,10 @@ Sources of record:
   - Figure 4, the model output overlay: a synthetic road-camera view. The sample grids (X_IDXS, T_IDXS), the road
     camera, the camera height and the UI's drawing rules (widths, colours, draw distance) are read from the openpilot
     code, and the steering action's formula from `modeld.py`. The road and the probabilities are illustrative.
+  - Figure 6, the steering controller: constants and the structure of LatControlTorque.update are read from
+    `latcontrol_torque.py`.
+  - Figure 7, emergency and degraded reactions: hand-listed in EMERG_ROWS; each claim's source text is in
+    EMERG_SOURCES and `--check` fails when one is gone.
   - Figure 5, the timing strip: the budgets and times are hand-listed in TIMING_ROWS from WP-S-04, WP-S-02 and the
     trace items; each carries the exact text it was read from (TIMING_SOURCES), and `--check` fails when one is gone.
 
@@ -45,7 +50,8 @@ WP_C01 = REPO / "assurance" / "02-concept" / "WP-C-01-item-definition.md"
 DRIVE_HELPERS = REPO / "openpilot" / "selfdrive" / "controls" / "lib" / "drive_helpers.py"
 LONG_PLANNER = REPO / "openpilot" / "selfdrive" / "controls" / "lib" / "longitudinal_planner.py"
 OUTS = {"pipeline": "driving-1-pipeline.svg", "paths": "driving-2-paths.svg", "funnel": "driving-3-funnel.svg",
-        "overlay": "driving-4-overlay.svg", "timing": "driving-5-timing.svg"}
+        "overlay": "driving-4-overlay.svg", "timing": "driving-5-timing.svg", "torque": "driving-6-torque-controller.svg",
+        "emergency": "driving-7-emergency.svg"}
 REF = "docs/liondriver/driving-and-planning.md"
 
 PRIORITY = {"P1": (RED, "#FFFFFF"), "P2": (AMBER, "#FFFFFF"), "P3": (GREY_BG, MUTED)}
@@ -784,6 +790,190 @@ def build_timing() -> str:
   return svg(W, H, "Figure 5. Timing: one model cycle, and how fast a stop is caught", desc, body)
 
 
+# ---------------------------------------------------------------- Figure 6: steering controller
+
+LATCTRL = REPO / "openpilot" / "selfdrive" / "controls" / "lib" / "latcontrol_torque.py"
+
+
+def torque_facts() -> dict:
+  src = LATCTRL.read_text(encoding="utf-8")
+
+  def need(pattern: str, what: str) -> re.Match:
+    m = re.search(pattern, src, re.M)
+    if not m:
+      raise SourceError(f"latcontrol_torque.py: {what} changed form; update fig_driving.py")
+    return m
+  f = {k: float(need(rf"^{n} = ([\d.]+)", n).group(1)) for k, n in
+       [("kp", "KP"), ("ki", "KI"), ("lp_hz", "LP_FILTER_CUTOFF_HZ"), ("lookahead", "JERK_LOOKAHEAD_SECONDS"),
+        ("jerk_gain", "JERK_GAIN"), ("buffer", "LAT_ACCEL_REQUEST_BUFFER_SECONDS")]}
+  f["speeds"] = [float(v) for v in need(r"^INTERP_SPEEDS = \[([^\]]+)\]", "INTERP_SPEEDS").group(1).split(",")]
+  f["kp_interp"] = need(r"^KP_INTERP = \[([^\]]+)\]", "KP_INTERP").group(1).replace(" ", "").split(",")
+  for p, what in [(r"measurement = measured_curvature \* CS\.vEgo \*\* 2", "measurement"),
+                  (r"expected_lateral_accel = self\.lat_accel_request_buffer\[-delay_frames\]", "delayed setpoint"),
+                  (r"ff = gravity_adjusted_future_lateral_accel", "feedforward"),
+                  (r"ff -= self\.torque_params\.latAccelOffset", "offset"),
+                  (r"ff \+= get_friction\(error \+ JERK_GAIN \* desired_lateral_jerk", "friction"),
+                  (r"freeze_integrator = steer_limited_by_safety or CS\.steeringPressed or CS\.vEgo < (\d+)", "integrator freeze"),
+                  (r"output_torque = self\.torque_from_lateral_accel\(output_lataccel, self\.torque_params\)", "torque map")]:
+    need(p, what)
+  f["freeze_v"] = int(need(r"CS\.vEgo < (\d+)\n", "freeze speed").group(1))
+  return f
+
+
+def build_torque(f: dict) -> str:
+  W = 1320
+  body = header(W, "6", "From curvature to torque: the steering controller",
+                "latcontrol_torque.py, 100 times a second. It works in lateral acceleration and converts to torque only "
+                "at the end.", "latcontrol_torque.py · LatControlTorque.update")
+  FL = {"in": (GREY_BG, INK), "sw": ("#FFFFFF", SW), "out": (SAFETY_BG, SAFETY), "note": (CHIP, LINE)}
+
+  def blk(x, y, w, h, title, lines_, kind="sw"):
+    fill, stroke = FL[kind]
+    out = [rect(x, y, w, h, fill=fill, stroke=stroke, sw=1.4)]
+    out.append(text(x + 10, y + 19, title, size=12, weight=700))
+    for i, s in enumerate(lines_):
+      out.append(text(x + 10, y + 35 + i * 14, fit(s, w - 18, 10.5), size=10.5, fill=MUTED,
+                      family=MONO if any(c in s for c in "=×·²") else ""))
+    return out
+
+  def arr(x1, y1, x2, y2, label="", lx=None, ly=None):
+    out = [line(x1, y1, x2, y2, stroke=MUTED, sw=1.5)]
+    import math
+    a = math.atan2(y2 - y1, x2 - x1)
+    pts = [(x2, y2), (x2 - 8 * math.cos(a - 0.4), y2 - 8 * math.sin(a - 0.4)), (x2 - 8 * math.cos(a + 0.4), y2 - 8 * math.sin(a + 0.4))]
+    out.append(path("M" + " L".join(f"{p[0]:.1f},{p[1]:.1f}" for p in pts) + " Z", stroke=MUTED, sw=1, fill=MUTED))
+    if label:
+      out.append(text(lx if lx is not None else (x1 + x2) / 2, ly if ly is not None else min(y1, y2) - 6, label,
+                      size=9.5, fill=INK, anchor="middle", family=MONO))
+    return out
+
+  y1, y2, y3 = 112, 250, 392
+  body += blk(40, y1, 210, 78, "Desired curvature", ["action.desiredCurvature", "from the driving model"], "in")
+  body += blk(300, y1, 250, 78, "Request buffer", [f"κ × v² = lateral accel", f"last {f['buffer']:g} s kept, 100 Hz"])
+  body += blk(600, y1, 290, 78, "Setpoint", ["the request from lat_delay ago", "(learned actuator delay)"])
+  body += blk(40, y2, 210, 78, "Steering angle", ["carState.steeringAngleDeg", "and roll, from the car"], "in")
+  body += blk(300, y2, 250, 78, "Measurement", ["vehicle model curvature", "× v² = lateral accel now"])
+  body += blk(600, y2, 290, 78, "Error = setpoint − measurement", ["in m/s², not in torque"])
+  body += blk(300, y3, 590, 92, "Feedforward", ["future request − roll · g − latAccelOffset",
+                                                f"+ friction(error + {f['jerk_gain']:g} · jerk), jerk filtered at "
+                                                f"{f['lp_hz']:g} Hz, {f['lookahead']:g} s ahead",
+                                                "(latAccelFactor, latAccelOffset, friction learned per car)"])
+  kp0, kp1 = f["kp_interp"][0], f["kp_interp"][-1]
+  body += blk(940, y2 - 40, 340, 128, "PID in lateral acceleration",
+              [f"Kp by speed: {kp0} at {f['speeds'][0]:g} m/s … {f['kp']:g} at {f['speeds'][-1]:g} m/s",
+               f"Ki = {f['ki']:g}", "integrator frozen when the panda limits the",
+               f"torque, the driver steers, or v < {f['freeze_v']} m/s", "output = PID + feedforward"])
+  body += blk(940, y3 + 6, 340, 80, "To torque", ["torque_from_lateral_accel (per car)", "→ clip → STEERING_LKA 0x2E4"],
+              "out")
+  body += arr(252, y1 + 39, 298, y1 + 39)
+  body += arr(552, y1 + 39, 598, y1 + 39)
+  body += arr(252, y2 + 39, 298, y2 + 39)
+  body += arr(552, y2 + 39, 598, y2 + 39)
+  body += arr(745, y1 + 80, 745, y2 - 2)
+  body += arr(892, y2 + 39, 938, y2 + 39)
+  body.append(path(f"M300,{y1 + 64} L276,{y1 + 64} L276,{y3 + 46} L292,{y3 + 46}", stroke=MUTED, sw=1.5))
+  body += arr(290, y3 + 46, 298, y3 + 46)
+  body.append(text(270, y3 - 8, "future request", size=9.5, fill=INK, anchor="end", family=MONO))
+  body.append(path(f"M892,{y3 + 30} L916,{y3 + 30} L916,{y2 + 70} L930,{y2 + 70}", stroke=MUTED, sw=1.5))
+  body += arr(928, y2 + 70, 938, y2 + 70)
+  body += arr(1110, y2 + 90, 1110, y3 + 4)
+  ny = y3 + 120
+  body.append(text(40, ny, "There is no path search in steering: the learned model chooses the curvature, and this "
+                   "controller only tracks it. The panda then limits the torque (Figure 3).", size=11.5, fill=MUTED))
+  lg, _ = legend(40, ny + 26, [(GREY_BG, INK, "input"), ("#FFFFFF", SW, "computation"), (SAFETY_BG, SAFETY, "to the car")])
+  body += lg
+  desc = ("The torque controller: desired curvature times speed squared is buffered; the setpoint is the request from "
+          "the learned actuator delay ago; the measurement is the vehicle model's curvature from the steering angle "
+          f"times speed squared; the error goes to a PID with speed-scheduled Kp ({kp0} to {f['kp']:g}) and Ki "
+          f"{f['ki']:g}; the feedforward is the future request less roll and offset plus friction; the sum is converted "
+          "to torque per car and clipped.")
+  return svg(W, int(ny + 44), "Figure 6. From curvature to torque: the steering controller", desc, body)
+
+
+# ---------------------------------------------------------------- Figure 7: emergency and degraded reactions
+
+EMERG_SOURCES = [
+  (REPO / "assurance" / "02-concept" / "WP-C-01-item-definition.md", "Does not brake. The stock Toyota PCS stays in charge of AEB"),
+  (REPO / "assurance" / "02-concept" / "WP-C-02-odd-and-intended-functionality.md", "turning at intersections, evasive steering, steering at standstill |"),
+  (REPO / "assurance" / "03-system" / "WP-S-02-technical-safety-requirements.md", "| TSR-713 | While the stock system reports an AEB event (`stockAeb`), the SoC shall request zero acceleration"),
+  (REPO / "assurance" / "03-system" / "WP-S-02-technical-safety-requirements.md", "**Implemented and unit-tested, not verified on the vehicle**: host side in `c045874` (#292)"),
+  (REPO / "assurance" / "03-system" / "WP-S-02-technical-safety-requirements.md", "the item shall keep the lane and decelerate in lane to a standstill"),
+  (REPO / "assurance" / "03-system" / "WP-S-02-technical-safety-requirements.md", "Not met: forced deceleration without disengagement or standstill (TSR-611)"),
+  (REPO / "assurance" / "03-system" / "WP-S-02-technical-safety-requirements.md", "| TSR-621 | While engaged, `selfdrived` shall raise an immediate disable"),
+  (REPO / "assurance" / "03-system" / "WP-S-04-timing-ftti-budget.md", "| model `hardBrakePredicted` or planner FCW | not derived; measure (M-12) |"),
+  (REPO / "assurance" / "02-concept" / "WP-C-01-item-definition.md", "| AOU-04 | The stock PCS/AEB keeps full function"),
+  (REPO / "openpilot" / "selfdrive" / "selfdrived" / "state.py", "SOFT_DISABLE_TIME = 3"),
+  (REPO / "openpilot" / "selfdrive" / "controls" / "lib" / "longcontrol.py", "def stock_aeb_stand_down"),
+  (REPO / "openpilot" / "selfdrive" / "monitoring" / "policy.py", "self._NO_RESPONSE_TIMEOUT = 5."),
+]
+EMERG_ROWS = [  # situation, what the item does, who finishes it, status, status class
+  ("Lead brakes hard", "MPC brakes up to −3.5 m/s²; FCW warns (planner or model)", "driver brakes harder",
+   "implemented; FCW onset not derived (T-31)", "amber"),
+  ("Car's own AEB fires", "stands down: no drive requested while stockAeb is set (TSR-713)", "stock PCS brakes",
+   "implemented, not verified (AOU-04)", "amber"),
+  ("Input stale or failed", "stops steering on stale input; soft disable, 3 s of alerts", "driver takes over",
+   "partly met (TSR-602 10 periods, FM-03)", "amber"),
+  ("Panda and host disagree", "immediate disable with take-over request (TSR-621, TSR-615)", "driver takes over",
+   "implemented, not verified", "amber"),
+  ("Main computer stalls", "panda revokes authority ≤ 0.06 s, siren (T-34)", "driver takes over",
+   "implemented, not verified (M-05)", "amber"),
+  ("Driver does not respond", "alerts at 5, 8, 13 s, then slows the car toward a stop, still steering; required "
+   "as well: hold at standstill, disengage, lock out (TSR-633, DQ-365 A)", "should be the item: minimum-risk manoeuvre",
+   "NOT MET: no hold, disengage or lockout", "red"),
+  ("Obstacle needs a swerve", "nothing: evasive steering is not provided (WP-C-02)", "driver steers",
+   "by design (Level 2)", "grey"),
+]
+
+
+def emerg_problems() -> list[str]:
+  out, cache = [], {}
+  for p, s in EMERG_SOURCES:
+    cache.setdefault(p, p.read_text(encoding="utf-8"))
+    if s not in cache[p]:
+      out.append(f"{p.relative_to(REPO)}: text gone: {s}")
+  return out
+
+
+def build_emergency() -> str:
+  W = 1320
+  body = header(W, "7", "When something goes wrong: who reacts, and how",
+                "The item's own reactions, from warning to standstill. In Level 2 the driver is the fallback, except "
+                "where the driver is the problem.", "WP-S-02 TSR-602, 615, 621, 633, 713 · WP-C-01 F-06 · WP-C-02")
+  cols = [(40, "SITUATION", 200), (250, "WHAT THE ITEM DOES", 520), (780, "WHO FINISHES IT", 210), (1000, "STATUS", 280)]
+  y = 108
+  for x, t_, _ in cols:
+    body.append(text(x, y, t_, size=10.5, weight=700, fill=MUTED))
+  y += 12
+  rh = 52
+  fills = {"amber": ("#FFF7E6", AMBER), "red": ("#FDE2E2", RED), "grey": (GREY_BG, MUTED)}
+  for i, (sit, does, who, status, cls) in enumerate(EMERG_ROWS):
+    yy = y + i * rh
+    fill, col = fills[cls]
+    body.append(rect(30, yy, W - 60, rh - 6, fill=fill if cls == "red" else ("#FFFFFF" if i % 2 else CHIP), stroke=col if cls == "red" else "none", rx=6))
+    body.append(text(40, yy + 20, sit, size=12, weight=700))
+    words, rows_, cur = does.split(), [], ""
+    for w_ in words:
+      if text_w(cur + " " + w_, 10.5) > 510:
+        rows_.append(cur)
+        cur = w_
+      else:
+        cur = (cur + " " + w_).strip()
+    rows_.append(cur)
+    for k, r in enumerate(rows_[:2]):
+      body.append(text(250, yy + 18 + k * 15, r, size=10.5, fill=INK if k == 0 else MUTED))
+    body.append(text(780, yy + 20, fit(who, 210, 10.5), size=10.5, fill=INK, weight=600 if cls == "red" else ""))
+    p, _ = pill(1000, yy + 10, status, col, size=9.5, h=18)
+    body += p
+  ny = y + len(EMERG_ROWS) * rh + 18
+  body.append(text(40, ny, "The one emergency behaviour the requirements ask for and the code only half has is the stop for "
+                   "an unresponsive driver: the car slows (18 s, vision policy) but is not held, disengaged or locked out.",
+                   size=11.5, fill=INK))
+  body.append(text(40, ny + 18, "Emergency braking beyond −3.5 m/s² is the stock PCS's job, and evasive steering is the "
+                   "driver's; neither is in the item's scope.", size=11.5, fill=MUTED))
+  desc = "Emergency and degraded reactions: " + "; ".join(f"{s}: {d}; {w}; {st}" for s, d, w, st, _ in EMERG_ROWS) + "."
+  return svg(W, int(ny + 36), "Figure 7. When something goes wrong: who reacts, and how", desc, body)
+
+
 # ---------------------------------------------------------------- main
 
 def build_all() -> dict[str, str]:
@@ -792,13 +982,14 @@ def build_all() -> dict[str, str]:
   if missing:
     raise SourceError("WP-C-07 modifications on no Figure 1 box: " + ", ".join(missing) +
                       "; add the file to BOXES in fig_driving.py")
-  gone = timing_problems()
+  gone = timing_problems() + emerg_problems()
   if gone:
     raise SourceError("Figure 5 sources changed:\n" + "\n".join(gone) + "\nreview TIMING_ROWS in fig_driving.py")
   facts = code_facts()
   env = c01.envelope(WP_C01.read_text(encoding="utf-8"))
   return {OUTS["pipeline"]: build_pipeline(fms), OUTS["paths"]: build_paths(facts), OUTS["funnel"]: build_funnel(env, facts),
-          OUTS["overlay"]: build_overlay(overlay_facts()), OUTS["timing"]: build_timing()}
+          OUTS["overlay"]: build_overlay(overlay_facts()), OUTS["timing"]: build_timing(),
+          OUTS["torque"]: build_torque(torque_facts()), OUTS["emergency"]: build_emergency()}
 
 
 def main(argv: list[str]) -> int:
