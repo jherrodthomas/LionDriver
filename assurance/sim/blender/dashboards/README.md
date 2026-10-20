@@ -105,6 +105,15 @@ Variants re-render a scene under another weather or lighting code it is rated fo
 | [sh-09-red-light--w02](sh-09-red-light--w02.jpg) | W02: Wet road or light rain | H-04 in a curve (OS-02, OS-14, OS-16): S3, C1 ⚠ (instability under unexpected braking, HE-04.2) |
 | [sh-13-construction-zone--w03](sh-13-construction-zone--w03.jpg) | W03: Night, dry, headlights | No change to S or C; exposure E3 |
 | [sh-13-construction-zone--w02](sh-13-construction-zone--w02.jpg) | W02: Wet road or light rain | H-04 in a curve (OS-02, OS-14, OS-16): S3, C1 ⚠ (instability under unexpected braking, HE-04.2) |
+| [ec-11-lane-change-frozen-overshoot--w06](ec-11-lane-change-frozen-overshoot--w06.jpg) | W06: Fog, visibility below the ODD bound (outside the ODD, foreseeable) | H-06 and H-10: C+1 (reduced visibility delays the driver's detection) |
+| [ec-12-lane-change-stall-exit--w04](ec-12-lane-change-stall-exit--w04.jpg) | W04: Moderate or heavy rain (outside the ODD, foreseeable) | H-04 in a curve: S3, C1 ⚠; H-06 and H-10: C+1 (reduced visibility delays the driver's detection) |
+| [ec-03-frozen-curve-exit--w06](ec-03-frozen-curve-exit--w06.jpg) | W06: Fog, visibility below the ODD bound (outside the ODD, foreseeable) | H-06 and H-10: C+1 (reduced visibility delays the driver's detection) |
+| [ec-04-stall-curve-tunnel--w04](ec-04-stall-curve-tunnel--w04.jpg) | W04: Moderate or heavy rain (outside the ODD, foreseeable) | H-04 in a curve: S3, C1 ⚠; H-06 and H-10: C+1 (reduced visibility delays the driver's detection) |
+| [ec-18-wrong-direction-correction--w06](ec-18-wrong-direction-correction--w06.jpg) | W06: Fog, visibility below the ODD bound (outside the ODD, foreseeable) | H-06 and H-10: C+1 (reduced visibility delays the driver's detection) |
+| [ec-20-brakes-instead-of-steering--w04](ec-20-brakes-instead-of-steering--w04.jpg) | W04: Moderate or heavy rain (outside the ODD, foreseeable) | H-04 in a curve: S3, C1 ⚠; H-06 and H-10: C+1 (reduced visibility delays the driver's detection) |
+| [ec-24-silent-stall-r-odd--w06](ec-24-silent-stall-r-odd--w06.jpg) | W06: Fog, visibility below the ODD bound (outside the ODD, foreseeable) | H-06 and H-10: C+1 (reduced visibility delays the driver's detection) |
+| [ec-26-narrow-lane-truck-hardover--w04](ec-26-narrow-lane-truck-hardover--w04.jpg) | W04: Moderate or heavy rain (outside the ODD, foreseeable) | H-04 in a curve: S3, C1 ⚠; H-06 and H-10: C+1 (reduced visibility delays the driver's detection) |
+| [ec-27-crosswind-hardover-left--w06](ec-27-crosswind-hardover-left--w06.jpg) | W06: Fog, visibility below the ODD bound (outside the ODD, foreseeable) | H-06 and H-10: C+1 (reduced visibility delays the driver's detection) |
 
 ## Edge cases from the search
 
