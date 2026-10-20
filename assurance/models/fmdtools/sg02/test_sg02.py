@@ -125,5 +125,17 @@ class TestJointSweep(unittest.TestCase):
     self.assertEqual(sweep.tree_gaps(model_sets, broken, solver.latent), [frozenset({"BE-2.04"})])
 
 
+class TestTiming(unittest.TestCase):
+  """Step P4: cues after the budget are still seen when the run is long enough."""
+
+  def test_late_cues_are_timed(self):
+    o = m.run(("BE-2.21",), horizon_s=6.0)
+    self.assertTrue(o.top_event)
+    self.assertAlmostEqual(o.t_cue - o.t_lost, 4.9, places=6)
+    o = m.run(("BE-2.01", "BE-2.08", "BE-2.14"), horizon_s=6.0)
+    self.assertEqual((o.cue, round(o.t_cue, 2)), ("alert", 1.5))
+    self.assertTrue(o.top_event)
+
+
 if __name__ == "__main__":
   unittest.main()

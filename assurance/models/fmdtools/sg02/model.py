@@ -326,14 +326,17 @@ class Outcome:
             f"{(self.cue or ''):6}  {'TE-02' if self.top_event else 'ok'}")
 
 
-def run(events: tuple[str, ...] | list[str] = (), tick: int = FAULT_TICK, phase: str = DEFAULT_PHASE) -> Outcome:
-  """Inject the failure modes of `events` together at `tick` in road `phase` and read TE-02 from the history."""
+def run(events: tuple[str, ...] | list[str] = (), tick: int = FAULT_TICK, phase: str = DEFAULT_PHASE,
+        horizon_s: float | None = None) -> Outcome:
+  """Inject the failure modes of `events` together at `tick` in road `phase` and read TE-02 from the history.
+  `horizon_s` runs on that long after the injection, to see cues that come after the budget (step P4)."""
   events = tuple(sorted(events))
   seq: dict[str, list[str]] = {}
   for e in events:
     fxn, mode = MODE_OF[e]
     seq.setdefault(fxn, []).append(mode)
-  mdl = Sg02(p={"phase": phase})
+  sp = None if horizon_s is None else dict(end_time=float(tick + math.ceil(horizon_s / TICK)), dt=1.0)
+  mdl = Sg02(p={"phase": phase}) if sp is None else Sg02(p={"phase": phase}, sp=sp)
   if seq:
     _, hist = propagate.sequence(mdl, faultseq={float(tick): seq}, include_nominal=False, showprogress=False)
   else:
