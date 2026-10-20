@@ -1141,7 +1141,7 @@
 
 - id: SWSR-511
   kind: swsr
-  text: "The bootstub shall execute the application only after verifying its signature with a current algorithm and key length against the release key; release bootstubs shall not accept the debug key."
+  text: "The bootstub shall execute the application only after verifying its ECDSA signature over P-256 with a SHA-256 digest (decided 2026-10-19, DQ-191 A) against the release key; release bootstubs shall not accept the debug key."
   asil: "B‡ (+ CS)"
   parents: [TSR-511]
   parent_text: "TSR-511"
@@ -1151,7 +1151,7 @@
   acceptance: "Tampered image or debug-signed image not executed"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: RSA-1024/SHA-1 (`bootstub.c:47-72`); debug key only with `ALLOW_DEBUG` (`:67-72`) (GAP-24)"
+  baseline_impl: "Partial: RSA-1024/SHA-1 (`bootstub.c:47-72`), not the required ECDSA P-256 / SHA-256 (DQ-191 A, not implemented); debug key only with `ALLOW_DEBUG` (`:67-72`) (GAP-24)"
   status: proposed
   source: WP-W-02
 
