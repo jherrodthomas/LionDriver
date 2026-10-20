@@ -188,7 +188,7 @@
 <text x="1068" y="724.5" class="an">selfdrived waits for all checks</text>
 <text x="1068" y="735.5" class="an">or 6 s; checks panda mode/param</text>
 <text x="1068" y="746.5" class="an">after 10 s</text>
-<text x="1068" y="757.5" class="ar">selfdrived.py:476-477, :338</text>
+<text x="1068" y="757.5" class="ar">selfdrived.py:479-480, :338</text>
 <text x="48" y="742" font-size="10" font-weight="700" fill="#94A3B8">11</text>
 <circle cx="1052" cy="821" r="9" fill="#0F172A"/>
 <text x="1052" y="825" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">12</text>
