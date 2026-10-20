@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="694" viewBox="0 0 1320 694" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 5. Timing: one model cycle, and how fast a stop is caught</title>
+<desc>Upper strip: in 100 ms the road camera gives two frames, the driving model runs once per frame, and controlsd, the 0x2E4 steering frame and the panda safety task run every 10 ms, so each model output steers five control steps. Lower strip, against the SG-01 FTTI of 0.5 s: the panda catches missing commands in ≤ 0.06 s (required 0.05 s) and a lost heartbeat in ≤ 0.31 s (required 0.3 s); controlsd stops steering on a stale model output after 0.5 s (required 0.1 s, accepted for now); a frozen model output is not detected.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1320" height="694" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 5 · Timing: one model cycle, and how fast a stop is caught</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Above, 100 ms of normal running. Below, how long each kind of stop takes to detect, against the SG-01 budget.</text>
+<text x="1280" y="44" font-size="11" fill="#475569" text-anchor="end">WP-S-04 §3.7, §4, §5 · WP-S-02 TSR-408, 602, 631</text>
+<line x1="40" y1="82" x2="1280" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<text x="40" y="112" font-size="12" fill="#0F766E" font-weight="700">NORMAL RUNNING · 0–100 ms</text>
+<text x="40" y="150" font-size="12" fill="#0F172A" font-weight="700">Road camera</text>
+<text x="40" y="165" font-size="10" fill="#475569">20 Hz frames</text>
+<line x1="290" y1="154" x2="1280" y2="154" stroke="#E2E8F0" stroke-width="1"/>
+<text x="40" y="190" font-size="12" fill="#0F172A" font-weight="700">Driving model</text>
+<text x="40" y="205" font-size="10" fill="#475569">modeld, AIR-17: ≤ 50 ms per frame</text>
+<line x1="290" y1="194" x2="1280" y2="194" stroke="#E2E8F0" stroke-width="1"/>
+<text x="40" y="230" font-size="12" fill="#0F172A" font-weight="700">Controls</text>
+<text x="40" y="245" font-size="10" fill="#475569">controlsd, 100 Hz</text>
+<line x1="290" y1="234" x2="1280" y2="234" stroke="#E2E8F0" stroke-width="1"/>
+<text x="40" y="270" font-size="12" fill="#0F172A" font-weight="700">Steering frame 0x2E4</text>
+<text x="40" y="285" font-size="10" fill="#475569">card → panda → EPS, 100 Hz</text>
+<line x1="290" y1="274" x2="1280" y2="274" stroke="#E2E8F0" stroke-width="1"/>
+<text x="40" y="310" font-size="12" fill="#0F172A" font-weight="700">Panda safety task</text>
+<text x="40" y="325" font-size="10" fill="#475569">checks arrival, 100 Hz</text>
+<line x1="290" y1="314" x2="1280" y2="314" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="290" y1="130" x2="290" y2="328" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="290" y="344" font-size="9.5" fill="#475569" text-anchor="middle">0 ms</text>
+<line x1="389" y1="130" x2="389" y2="328" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="389" y="344" font-size="9.5" fill="#475569" text-anchor="middle">10 ms</text>
+<line x1="488" y1="130" x2="488" y2="328" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="488" y="344" font-size="9.5" fill="#475569" text-anchor="middle">20 ms</text>
+<line x1="587" y1="130" x2="587" y2="328" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="587" y="344" font-size="9.5" fill="#475569" text-anchor="middle">30 ms</text>
+<line x1="686" y1="130" x2="686" y2="328" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="686" y="344" font-size="9.5" fill="#475569" text-anchor="middle">40 ms</text>
+<line x1="785" y1="130" x2="785" y2="328" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="785" y="344" font-size="9.5" fill="#475569" text-anchor="middle">50 ms</text>
+<line x1="884" y1="130" x2="884" y2="328" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="884" y="344" font-size="9.5" fill="#475569" text-anchor="middle">60 ms</text>
+<line x1="983" y1="130" x2="983" y2="328" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="983" y="344" font-size="9.5" fill="#475569" text-anchor="middle">70 ms</text>
+<line x1="1082" y1="130" x2="1082" y2="328" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="1082" y="344" font-size="9.5" fill="#475569" text-anchor="middle">80 ms</text>
+<line x1="1181" y1="130" x2="1181" y2="328" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="1181" y="344" font-size="9.5" fill="#475569" text-anchor="middle">90 ms</text>
+<line x1="1280" y1="130" x2="1280" y2="328" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="1280" y="344" font-size="9.5" fill="#475569" text-anchor="middle">100 ms</text>
+<rect x="287" y="140" width="6" height="22" rx="2" fill="#0F172A" stroke="none" stroke-width="1.2"/>
+<rect x="294" y="180" width="487" height="26" rx="4" fill="url(#hatch)" stroke="#475569" stroke-width="1"/>
+<text x="302" y="197" font-size="10" fill="#0F172A">inference + parse; time not measured yet (M-09)</text>
+<rect x="782" y="140" width="6" height="22" rx="2" fill="#0F172A" stroke="none" stroke-width="1.2"/>
+<rect x="789" y="180" width="487" height="26" rx="4" fill="url(#hatch)" stroke="#475569" stroke-width="1"/>
+<text x="797" y="197" font-size="10" fill="#0F172A">inference + parse; time not measured yet (M-09)</text>
+<rect x="292" y="222" width="95" height="20" rx="3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/>
+<text x="339.5" y="236" font-size="9.5" fill="#0F766E" font-weight="600" text-anchor="middle">κ A</text>
+<rect x="292" y="264" width="5" height="16" rx="1" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<circle cx="294.5" cy="313" r="3.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4"/>
+<rect x="391" y="222" width="95" height="20" rx="3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/>
+<text x="438.5" y="236" font-size="9.5" fill="#0F766E" font-weight="600" text-anchor="middle">κ A</text>
+<rect x="391" y="264" width="5" height="16" rx="1" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<circle cx="393.5" cy="313" r="3.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4"/>
+<rect x="490" y="222" width="95" height="20" rx="3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/>
+<text x="537.5" y="236" font-size="9.5" fill="#0F766E" font-weight="600" text-anchor="middle">κ A</text>
+<rect x="490" y="264" width="5" height="16" rx="1" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<circle cx="492.5" cy="313" r="3.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4"/>
+<rect x="589" y="222" width="95" height="20" rx="3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/>
+<text x="636.5" y="236" font-size="9.5" fill="#0F766E" font-weight="600" text-anchor="middle">κ A</text>
+<rect x="589" y="264" width="5" height="16" rx="1" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<circle cx="591.5" cy="313" r="3.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4"/>
+<rect x="688" y="222" width="95" height="20" rx="3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/>
+<text x="735.5" y="236" font-size="9.5" fill="#0F766E" font-weight="600" text-anchor="middle">κ A</text>
+<rect x="688" y="264" width="5" height="16" rx="1" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<circle cx="690.5" cy="313" r="3.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4"/>
+<rect x="787" y="222" width="95" height="20" rx="3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/>
+<text x="834.5" y="236" font-size="9.5" fill="#0F766E" font-weight="600" text-anchor="middle">κ B</text>
+<rect x="787" y="264" width="5" height="16" rx="1" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<circle cx="789.5" cy="313" r="3.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4"/>
+<rect x="886" y="222" width="95" height="20" rx="3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/>
+<text x="933.5" y="236" font-size="9.5" fill="#0F766E" font-weight="600" text-anchor="middle">κ B</text>
+<rect x="886" y="264" width="5" height="16" rx="1" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<circle cx="888.5" cy="313" r="3.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4"/>
+<rect x="985" y="222" width="95" height="20" rx="3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/>
+<text x="1032.5" y="236" font-size="9.5" fill="#0F766E" font-weight="600" text-anchor="middle">κ B</text>
+<rect x="985" y="264" width="5" height="16" rx="1" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<circle cx="987.5" cy="313" r="3.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4"/>
+<rect x="1084" y="222" width="95" height="20" rx="3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/>
+<text x="1131.5" y="236" font-size="9.5" fill="#0F766E" font-weight="600" text-anchor="middle">κ B</text>
+<rect x="1084" y="264" width="5" height="16" rx="1" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<circle cx="1086.5" cy="313" r="3.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4"/>
+<rect x="1183" y="222" width="95" height="20" rx="3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/>
+<text x="1230.5" y="236" font-size="9.5" fill="#0F766E" font-weight="600" text-anchor="middle">κ B</text>
+<rect x="1183" y="264" width="5" height="16" rx="1" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<circle cx="1185.5" cy="313" r="3.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4"/>
+<text x="1280" y="112" font-size="10.5" fill="#475569" text-anchor="end">κ A, κ B: one model output's desiredCurvature, used for five control steps</text>
+<text x="40" y="382" font-size="12" fill="#0F766E" font-weight="700">WHEN SOMETHING STOPS · 0–600 ms</text>
+<text x="40" y="422" font-size="12" fill="#0F172A" font-weight="700">SoC stops sending commands</text>
+<text x="40" y="437" font-size="10" fill="#475569">panda: 0x2E4 arrival (T-34)</text>
+<rect x="290" y="410" width="82.5" height="12" rx="2" fill="#F1F5F9" stroke="#475569" stroke-width="1"/>
+<rect x="372.5" y="410" width="165" height="12" rx="2" fill="#FFFFFF" stroke="#475569" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="543.5" y="420" font-size="9.5" fill="#475569">required ≤ 0.05 s + reaction ≤ 0.1 s</text>
+<rect x="290" y="426" width="99" height="12" rx="2" fill="#D97706" stroke="none" stroke-width="1.2"/>
+<text x="395" y="436" font-size="10" fill="#0F172A">≤ 0.06 s (simulated 0.043 s) · one 10 ms task period over the FDTI; not verified (M-05)</text>
+<text x="40" y="476" font-size="12" fill="#0F172A" font-weight="700">SoC heartbeat lost</text>
+<text x="40" y="491" font-size="10" fill="#475569">panda: heartbeat (T-06a)</text>
+<rect x="290" y="464" width="495" height="12" rx="2" fill="#F1F5F9" stroke="#475569" stroke-width="1"/>
+<rect x="785" y="464" width="165" height="12" rx="2" fill="#FFFFFF" stroke="#475569" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="956" y="474" font-size="9.5" fill="#475569">required ≤ 0.3 s + reaction ≤ 0.1 s</text>
+<rect x="290" y="480" width="511.5" height="12" rx="2" fill="#D97706" stroke="none" stroke-width="1.2"/>
+<text x="807.5" y="490" font-size="10" fill="#0F172A">≤ 0.31 s · 0.3 s + one task period; not verified (M-05)</text>
+<text x="40" y="530" font-size="12" fill="#0F172A" font-weight="700">Model output stops</text>
+<text x="40" y="545" font-size="10" fill="#475569">controlsd: input freshness (TSR-602)</text>
+<rect x="290" y="518" width="165" height="12" rx="2" fill="#F1F5F9" stroke="#475569" stroke-width="1"/>
+<text x="461" y="528" font-size="9.5" fill="#475569">required ≤ 0.1 s</text>
+<rect x="290" y="534" width="825" height="12" rx="2" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="298" y="544" font-size="10" fill="#FFFFFF" font-weight="600">0.5 s (10 periods at 20 Hz) · TSR-602 asks 2 periods; 10 accepted for now, until logs show the jitter</text>
+<text x="40" y="584" font-size="12" fill="#0F172A" font-weight="700">Model output frozen</text>
+<text x="40" y="599" font-size="10" fill="#475569">controlsd: frame ID / source age (TSR-631)</text>
+<rect x="290" y="572" width="165" height="12" rx="2" fill="#F1F5F9" stroke="#475569" stroke-width="1"/>
+<text x="461" y="582" font-size="9.5" fill="#475569">required ≤ 0.1 s</text>
+<rect x="290" y="586" width="88.9" height="16" rx="8.0" fill="#D2553F" stroke="none" stroke-width="1"/>
+<text x="334.4" y="597.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">NOT DETECTED</text>
+<text x="382" y="598" font-size="10" fill="#0F172A">messages keep arriving, so the age check passes</text>
+<line x1="1115" y1="396" x2="1115" y2="610" stroke="#D2553F" stroke-width="1.6" stroke-dasharray="5 3"/>
+<text x="1109" y="394" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="end">SG-01 FTTI 0.5 s</text>
+<text x="290" y="626" font-size="9.5" fill="#475569" text-anchor="middle">0 ms</text>
+<text x="455" y="626" font-size="9.5" fill="#475569" text-anchor="middle">100 ms</text>
+<text x="620" y="626" font-size="9.5" fill="#475569" text-anchor="middle">200 ms</text>
+<text x="785" y="626" font-size="9.5" fill="#475569" text-anchor="middle">300 ms</text>
+<text x="950" y="626" font-size="9.5" fill="#475569" text-anchor="middle">400 ms</text>
+<text x="1115" y="626" font-size="9.5" fill="#475569" text-anchor="middle">500 ms</text>
+<text x="1280" y="626" font-size="9.5" fill="#475569" text-anchor="middle">600 ms</text>
+<rect x="40" y="644" width="14" height="12" rx="3" fill="#F1F5F9" stroke="#475569" stroke-width="1.2"/>
+<text x="60" y="654" font-size="11" fill="#475569">detection required (FDTI)</text>
+<rect x="209.2" y="644" width="14" height="12" rx="3" fill="#FFFFFF" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="229.2" y="654" font-size="11" fill="#475569">reaction required (FRTI)</text>
+<rect x="372.3" y="644" width="14" height="12" rx="3" fill="#D97706" stroke="none" stroke-width="1.2"/>
+<text x="392.3" y="654" font-size="11" fill="#475569">code: just over</text>
+<rect x="483.7" y="644" width="14" height="12" rx="3" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="503.7" y="654" font-size="11" fill="#475569">code: well over, or missing</text>
+<text x="40" y="676" font-size="11" fill="#475569">Times are code-derived or simulated, not measured on the car. The model's own run time is unmeasured (M-09), so the strip shows the period it must fit, not how long it takes.</text>
+</svg>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="460" viewBox="0 0 1320 460" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 2. Picking the lead: radar track or the model's guess</title>
+<desc>Top-down sketch: the model's lead at 40 m with its uncertainty, a radar track inside it (matched), one in the next lane and a stationary return far ahead. Decision steps from radard.py: the model must report lead_prob &gt; 0.5; the best track maximises the product of three Laplace likelihoods; it must be within max(25 %, 5 m) and speed-sane; otherwise a vision-only lead if the model is still sure, else no lead; a low-speed override below 4 m/s; the probability filter.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1320" height="460" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 2 · Picking the lead: radar track or the model's guess</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">radard runs once per model output. The leads the MPC brakes for come from here.</text>
+<text x="1280" y="44" font-size="11" fill="#475569" text-anchor="end">radard.py get_lead, match_vision_to_track</text>
+<line x1="40" y1="82" x2="1280" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="60" y="105.7" width="580" height="288.6" rx="0" fill="#E9EBE7" stroke="none" stroke-width="1.2"/>
+<line x1="60" y1="105.7" x2="640" y2="105.7" stroke="#0F172A" stroke-width="1.4"/>
+<line x1="60" y1="394.3" x2="640" y2="394.3" stroke="#0F172A" stroke-width="1.4"/>
+<line x1="60" y1="201.9" x2="640" y2="201.9" stroke="#475569" stroke-width="1.2" stroke-dasharray="10 12"/>
+<line x1="60" y1="298.1" x2="640" y2="298.1" stroke="#475569" stroke-width="1.2" stroke-dasharray="10 12"/>
+<rect x="58" y="226.6" width="30" height="46.8" rx="4" fill="#0F172A" stroke="none" stroke-width="1.2"/>
+<text x="73" y="220.6" font-size="10" fill="#0F172A" text-anchor="middle">ego</text>
+<rect x="306.5" y="218.8" width="87" height="62.4" rx="4" fill="#FFF7E6" stroke="#D97706" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="350" y="210.8" font-size="10" fill="#D97706" font-weight="600" text-anchor="middle">model lead: x = 40 m ± std, prob 0.9</text>
+<circle cx="343.3" cy="255.2" r="6" fill="#0F766E"/>
+<text x="353.3" y="273.2" font-size="10" fill="#0F766E" font-weight="600">matched track</text>
+<circle cx="437" cy="153.8" r="6" fill="#475569"/>
+<text x="447" y="143.8" font-size="10" fill="#475569" font-weight="600">track in the next lane</text>
+<circle cx="582" cy="250" r="6" fill="#475569"/>
+<text x="582" y="268" font-size="10" fill="#475569" font-weight="600" text-anchor="middle">stationary return (a bridge?)</text>
+<text x="60" y="424.3" font-size="10.5" fill="#475569">Radar distances are measured from the radar, 1.52 m ahead of the camera, so the model's x is shifted before matching.</text>
+<text x="60" y="95.7" font-size="9.5" fill="#475569" text-anchor="middle">0 m</text>
+<text x="205" y="95.7" font-size="9.5" fill="#475569" text-anchor="middle">20 m</text>
+<text x="350" y="95.7" font-size="9.5" fill="#475569" text-anchor="middle">40 m</text>
+<text x="495" y="95.7" font-size="9.5" fill="#475569" text-anchor="middle">60 m</text>
+<text x="640" y="95.7" font-size="9.5" fill="#475569" text-anchor="middle">80 m</text>
+<text x="700" y="112" font-size="12" fill="#0F172A" font-weight="700">1  Model sure enough?</text>
+<text x="700" y="128" font-size="10.5" fill="#475569">lead_prob &gt; 0.5 and radar tracks exist</text>
+<text x="700" y="152" font-size="12" fill="#0F172A" font-weight="700">2  Best track</text>
+<text x="700" y="168" font-size="10.5" fill="#475569">max of p(d) · p(y) · p(v), each a Laplace curve around the model's value, width = its std</text>
+<text x="700" y="192" font-size="12" fill="#0F172A" font-weight="700">3  Sane?</text>
+<text x="700" y="208" font-size="10.5" fill="#475569">|Δd| &lt; max(25 % of d, 5 m), and speed within 10 m/s or the track moving &gt; 3 m/s</text>
+<text x="700" y="232" font-size="12" fill="#0F766E" font-weight="700">→  yes: radar lead</text>
+<text x="700" y="248" font-size="10.5" fill="#475569">distance and speed from the radar, filtered; radar = True</text>
+<text x="700" y="272" font-size="12" fill="#D97706" font-weight="700">→  no track, prob still high: vision-only lead</text>
+<text x="700" y="288" font-size="10.5" fill="#475569">the model's own x, v, a; radar = False, tau 0.3</text>
+<text x="700" y="312" font-size="12" fill="#475569" font-weight="700">→  otherwise: no lead</text>
+<text x="700" y="328" font-size="10.5" fill="#475569">the MPC follows the cruise target</text>
+<text x="700" y="352" font-size="12" fill="#0F172A" font-weight="700">Below 4 m/s</text>
+<text x="700" y="368" font-size="10.5" fill="#475569">the closest radar track with |y| &lt; 1 m and 0.75 &lt; d &lt; 25 m replaces leadOne if it is closer</text>
+<text x="700" y="392" font-size="12" fill="#0F172A" font-weight="700">Holding on</text>
+<text x="700" y="408" font-size="10.5" fill="#475569">the lead probability rises at once and decays with a 0.2 s filter</text>
+<text x="40" y="440" font-size="11" fill="#475569">Two of the SOTIF insufficiencies sit right here: a false or misassociated radar target (FI-06) and a lead kept or dropped wrongly when the model is unsure (FI-07).</text>
+</svg>

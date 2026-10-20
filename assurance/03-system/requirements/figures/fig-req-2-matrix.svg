@@ -1,0 +1,673 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1254" viewBox="0 0 1280 1254" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">FSR × TSR traceability matrix</title>
+<desc id="d">Parent links. FSR-01.01: TSR-101, TSR-102; FSR-01.02: TSR-103; FSR-01.03: TSR-104; FSR-01.04: TSR-105, TSR-106, TSR-107; FSR-01.05: TSR-301, TSR-306, TSR-311, TSR-630; FSR-01.06: TSR-306, TSR-401, TSR-402, TSR-403, TSR-404, TSR-405, TSR-406; FSR-01.07: TSR-307, TSR-407, TSR-408, TSR-409, TSR-519; FSR-01.08: TSR-410, TSR-411, TSR-412, TSR-413, TSR-518, TSR-614; FSR-01.09: TSR-501, TSR-502, TSR-503, TSR-504, TSR-505, TSR-507, TSR-508, TSR-509, TSR-515, TSR-517, TSR-519; FSR-01.10: TSR-412, TSR-507, TSR-511, TSR-512, TSR-513, TSR-514, TSR-619, TSR-620, TSR-802, TSR-804, TSR-810; FSR-01.11: TSR-506, TSR-515, TSR-710; FSR-01.12: TSR-108, TSR-109, TSR-406, TSR-508, TSR-518, TSR-615; FSR-01.13: TSR-109, TSR-111; FSR-01.14: TSR-605, TSR-613, TSR-617; FSR-02.01: TSR-110, TSR-607; FSR-02.02: TSR-601, TSR-602, TSR-603, TSR-616, TSR-631; FSR-02.03: TSR-303, TSR-606, TSR-615, TSR-627; FSR-02.04: TSR-109, TSR-601; FSR-02.05: TSR-515, TSR-516; FSR-02.06: TSR-608, TSR-634; FSR-02.07: TSR-609, TSR-612; FSR-02.08: TSR-610, TSR-613, TSR-806; FSR-02.09: TSR-611, TSR-633; FSR-02.10: TSR-621, TSR-626, TSR-630, TSR-632; FSR-02.11: TSR-622, TSR-623, TSR-627; FSR-02.12: TSR-629; FSR-03.01: TSR-201; FSR-03.02: TSR-203, TSR-207; FSR-03.03: TSR-204; FSR-03.04: none; FSR-03.05: TSR-206, TSR-207, TSR-303; FSR-03.06: TSR-208; FSR-04.01: TSR-202; FSR-04.02: TSR-205; FSR-04.03: TSR-206, TSR-208; FSR-04.04: TSR-203, TSR-305; FSR-04.05: TSR-624; FSR-04.06: TSR-625; FSR-05.01: TSR-109, TSR-302, TSR-405; FSR-05.02: TSR-301; FSR-05.03: TSR-304, TSR-628; FSR-05.04: TSR-203, TSR-305; FSR-05.05: TSR-309; FSR-05.06: TSR-307, TSR-308; FSR-05.07: TSR-310; FSR-06.01: TSR-602, TSR-603, TSR-616, TSR-631; FSR-06.02: TSR-303, TSR-601, TSR-606; FSR-06.03: TSR-618; FSR-06.04: TSR-604, TSR-617; FSR-06.05: TSR-516; FSR-07.01: TSR-704, TSR-707, TSR-711, TSR-805; FSR-07.02: TSR-705; FSR-07.03: TSR-502, TSR-506, TSR-510, TSR-701, TSR-702, TSR-703, TSR-706, TSR-711, TSR-805; FSR-07.04: TSR-708; FSR-07.05: TSR-709; FSR-07.06: TSR-712; FSR-07.07: TSR-713; FSR-08.01: TSR-635.</desc>
+<rect width="1280" height="1254" fill="#FFFFFF"/>
+<rect x="249.0" y="132" width="85.1" height="1020" fill="#F8FAFC"/>
+<rect x="396.0" y="132" width="85.1" height="1020" fill="#F8FAFC"/>
+<rect x="581.6" y="132" width="147.0" height="1020" fill="#F8FAFC"/>
+<rect x="999.2" y="132" width="100.5" height="1020" fill="#F8FAFC"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">FSR × TSR traceability matrix</text>
+<text x="40" y="66" font-size="12" fill="#475569">58 FSRs (rows, by safety goal) × 128 TSRs (columns, by WP-S-02 block) · a cell is a parent link (WP-S-02 §12.1), coloured by the TSR's status</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">generated from trace/items</text>
+<text x="40" y="146" font-size="10" fill="#475569" font-weight="700">FSR</text>
+<text x="138" y="146" font-size="10" fill="#475569" font-weight="700">ASIL</text>
+<text x="238" y="146" font-size="10" fill="#475569" font-weight="700" text-anchor="end">TSRs</text>
+<text x="40" y="172" font-size="9" fill="#475569">TSR status ▸</text>
+<text x="40" y="192" font-size="10.5" fill="#475569" font-weight="700">SG-01 · ASIL C</text>
+<line x1="40" y1="196" x2="1240" y2="196" stroke="#E2E8F0"/>
+<text x="40" y="398" font-size="10.5" fill="#475569" font-weight="700">SG-02 · ASIL C</text>
+<line x1="40" y1="402" x2="1240" y2="402" stroke="#E2E8F0"/>
+<text x="40" y="578" font-size="10.5" fill="#475569" font-weight="700">SG-03 · ASIL C</text>
+<line x1="40" y1="582" x2="1240" y2="582" stroke="#E2E8F0"/>
+<text x="40" y="680" font-size="10.5" fill="#475569" font-weight="700">SG-04 · ASIL B</text>
+<line x1="40" y1="684" x2="1240" y2="684" stroke="#E2E8F0"/>
+<text x="40" y="782" font-size="10.5" fill="#475569" font-weight="700">SG-05 · ASIL B</text>
+<line x1="40" y1="786" x2="1240" y2="786" stroke="#E2E8F0"/>
+<text x="40" y="897" font-size="10.5" fill="#475569" font-weight="700">SG-06 · ASIL C</text>
+<line x1="40" y1="901" x2="1240" y2="901" stroke="#E2E8F0"/>
+<text x="40" y="986" font-size="10.5" fill="#475569" font-weight="700">SG-07 · ASIL B</text>
+<line x1="40" y1="990" x2="1240" y2="990" stroke="#E2E8F0"/>
+<text x="40" y="1101" font-size="10.5" fill="#475569" font-weight="700">SG-08 · ASIL A</text>
+<line x1="40" y1="1105" x2="1240" y2="1105" stroke="#E2E8F0"/>
+<text x="291.5" y="146" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">1xx</text>
+<text x="291.5" y="159" font-size="9" fill="#475569" text-anchor="middle">Lateral</text>
+<text x="365.0" y="146" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">2xx</text>
+<text x="365.0" y="159" font-size="9" fill="#475569" text-anchor="middle">Longit.</text>
+<text x="438.5" y="146" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">3xx</text>
+<text x="438.5" y="159" font-size="9" fill="#475569" text-anchor="middle">Engagement</text>
+<text x="531.3" y="146" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">4xx</text>
+<text x="531.3" y="159" font-size="9" fill="#475569" text-anchor="middle">Comms</text>
+<text x="655.1" y="146" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">5xx</text>
+<text x="655.1" y="159" font-size="9" fill="#475569" text-anchor="middle">MCU platform</text>
+<text x="863.9" y="146" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">6xx</text>
+<text x="863.9" y="159" font-size="9" fill="#475569" text-anchor="middle">Host / SoC</text>
+<text x="1049.5" y="146" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">7xx</text>
+<text x="1049.5" y="159" font-size="9" fill="#475569" text-anchor="middle">PCS, harness</text>
+<text x="1169.4" y="146" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">8xx</text>
+<text x="1169.4" y="159" font-size="9" fill="#475569" text-anchor="middle">Operation</text>
+<rect x="250.8" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="258.5" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="266.3" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="274.0" y="168" width="6.1" height="5" fill="#1D4ED8"/>
+<rect x="281.7" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="289.5" y="168" width="6.1" height="5" fill="#1D4ED8"/>
+<rect x="297.2" y="168" width="6.1" height="5" fill="#1D4ED8"/>
+<rect x="304.9" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="312.7" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="320.4" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="328.1" y="168" width="6.1" height="5" fill="#94A3B8"/>
+<rect x="335.9" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="343.6" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="351.3" y="168" width="6.1" height="5" fill="#1D4ED8"/>
+<rect x="359.1" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="366.8" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="374.6" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="382.3" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="390.0" y="168" width="6.1" height="5" fill="#94A3B8"/>
+<rect x="397.8" y="168" width="6.1" height="5" fill="#1D4ED8"/>
+<rect x="405.5" y="168" width="6.1" height="5" fill="#1D4ED8"/>
+<rect x="413.2" y="168" width="6.1" height="5" fill="#1D4ED8"/>
+<rect x="421.0" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="428.7" y="168" width="6.1" height="5" fill="#1D4ED8"/>
+<rect x="436.4" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="444.2" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="451.9" y="168" width="6.1" height="5" fill="#1D4ED8"/>
+<rect x="459.6" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="467.4" y="168" width="6.1" height="5" fill="#94A3B8"/>
+<rect x="475.1" y="168" width="6.1" height="5" fill="#1D4ED8"/>
+<rect x="482.8" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="490.6" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="498.3" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="506.0" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="513.8" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="521.5" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="529.2" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="537.0" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="544.7" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="552.4" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="560.2" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="567.9" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="575.6" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="583.4" y="168" width="6.1" height="5" fill="#1D4ED8"/>
+<rect x="591.1" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="598.8" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="606.6" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="614.3" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="622.0" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="629.8" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="637.5" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="645.3" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="653.0" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="660.7" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="668.5" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="676.2" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="683.9" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="691.7" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="699.4" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="707.1" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="714.9" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="722.6" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="730.3" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="738.1" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="745.8" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="753.5" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="761.3" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="769.0" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="776.7" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="784.5" y="168" width="6.1" height="5" fill="#1D4ED8"/>
+<rect x="792.2" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="799.9" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="807.7" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="815.4" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="823.1" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="830.9" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="838.6" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="846.3" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="854.1" y="168" width="6.1" height="5" fill="#1D4ED8"/>
+<rect x="861.8" y="168" width="6.1" height="5" fill="#1D4ED8"/>
+<rect x="869.5" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="877.3" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="885.0" y="168" width="6.1" height="5" fill="#1D4ED8"/>
+<rect x="892.8" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="900.5" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="908.2" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="916.0" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="923.7" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="931.4" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="939.2" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="946.9" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="954.6" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="962.4" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="970.1" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="977.8" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="985.6" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="993.3" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="1001.0" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="1008.8" y="168" width="6.1" height="5" fill="#94A3B8"/>
+<rect x="1016.5" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="1024.2" y="168" width="6.1" height="5" fill="#1D4ED8"/>
+<rect x="1032.0" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="1039.7" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="1047.4" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="1055.2" y="168" width="6.1" height="5" fill="#94A3B8"/>
+<rect x="1062.9" y="168" width="6.1" height="5" fill="#1D4ED8"/>
+<rect x="1070.6" y="168" width="6.1" height="5" fill="#1D4ED8"/>
+<rect x="1078.4" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="1086.1" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="1093.8" y="168" width="6.1" height="5" fill="#1D4ED8"/>
+<rect x="1101.6" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="1109.3" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="1117.0" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="1124.8" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="1132.5" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="1140.3" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="1148.0" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="1155.7" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="1163.5" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="1171.2" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="1178.9" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="1186.7" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="1194.4" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="1202.1" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="1209.9" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="1217.6" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="1225.3" y="168" width="6.1" height="5" fill="#D97706"/>
+<rect x="1233.1" y="168" width="6.1" height="5" fill="#D97706"/>
+<text x="253.9" y="182" font-size="7.5" fill="#475569" text-anchor="middle">101</text>
+<text x="292.5" y="182" font-size="7.5" fill="#475569" text-anchor="middle">106</text>
+<text x="331.2" y="182" font-size="7.5" fill="#475569" text-anchor="middle">111</text>
+<text x="369.9" y="182" font-size="7.5" fill="#475569" text-anchor="middle">205</text>
+<text x="408.6" y="182" font-size="7.5" fill="#475569" text-anchor="middle">302</text>
+<text x="447.2" y="182" font-size="7.5" fill="#475569" text-anchor="middle">307</text>
+<text x="485.9" y="182" font-size="7.5" fill="#475569" text-anchor="middle">401</text>
+<text x="524.6" y="182" font-size="7.5" fill="#475569" text-anchor="middle">406</text>
+<text x="563.2" y="182" font-size="7.5" fill="#475569" text-anchor="middle">411</text>
+<text x="601.9" y="182" font-size="7.5" fill="#475569" text-anchor="middle">503</text>
+<text x="640.6" y="182" font-size="7.5" fill="#475569" text-anchor="middle">508</text>
+<text x="679.3" y="182" font-size="7.5" fill="#475569" text-anchor="middle">513</text>
+<text x="717.9" y="182" font-size="7.5" fill="#475569" text-anchor="middle">518</text>
+<text x="756.6" y="182" font-size="7.5" fill="#475569" text-anchor="middle">604</text>
+<text x="795.3" y="182" font-size="7.5" fill="#475569" text-anchor="middle">609</text>
+<text x="833.9" y="182" font-size="7.5" fill="#475569" text-anchor="middle">614</text>
+<text x="872.6" y="182" font-size="7.5" fill="#475569" text-anchor="middle">619</text>
+<text x="911.3" y="182" font-size="7.5" fill="#475569" text-anchor="middle">624</text>
+<text x="950.0" y="182" font-size="7.5" fill="#475569" text-anchor="middle">629</text>
+<text x="988.6" y="182" font-size="7.5" fill="#475569" text-anchor="middle">634</text>
+<text x="1027.3" y="182" font-size="7.5" fill="#475569" text-anchor="middle">704</text>
+<text x="1066.0" y="182" font-size="7.5" fill="#475569" text-anchor="middle">709</text>
+<text x="1104.6" y="182" font-size="7.5" fill="#475569" text-anchor="middle">801</text>
+<text x="1143.3" y="182" font-size="7.5" fill="#475569" text-anchor="middle">806</text>
+<text x="1182.0" y="182" font-size="7.5" fill="#475569" text-anchor="middle">811</text>
+<text x="1220.7" y="182" font-size="7.5" fill="#475569" text-anchor="middle">816</text>
+<line x1="248" y1="209" x2="1240" y2="209" stroke="#F1F5F9"/>
+<circle cx="46" cy="209" r="3.5" fill="#D97706"/>
+<text x="56" y="213" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-01.01</text>
+<text x="138" y="213" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="213" font-size="9.5" fill="#475569" text-anchor="end">2</text>
+<rect x="250.6" y="204" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="258.3" y="204" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<line x1="248" y1="222" x2="1240" y2="222" stroke="#F1F5F9"/>
+<circle cx="46" cy="222" r="3.5" fill="#D97706"/>
+<text x="56" y="226" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-01.02</text>
+<text x="138" y="226" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="226" font-size="9.5" fill="#475569" text-anchor="end">1</text>
+<rect x="266.1" y="217" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="235" x2="1240" y2="235" stroke="#F1F5F9"/>
+<circle cx="46" cy="235" r="3.5" fill="#1D4ED8"/>
+<text x="56" y="239" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-01.03</text>
+<text x="138" y="239" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="239" font-size="9.5" fill="#475569" text-anchor="end">1</text>
+<rect x="273.8" y="230" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<line x1="248" y1="248" x2="1240" y2="248" stroke="#F1F5F9"/>
+<circle cx="46" cy="248" r="3.5" fill="#1D4ED8"/>
+<text x="56" y="252" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-01.04</text>
+<text x="138" y="252" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="252" font-size="9.5" fill="#475569" text-anchor="end">3</text>
+<rect x="281.5" y="243" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="289.3" y="243" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<rect x="297.0" y="243" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<line x1="248" y1="261" x2="1240" y2="261" stroke="#F1F5F9"/>
+<circle cx="46" cy="261" r="3.5" fill="#1D4ED8"/>
+<text x="56" y="265" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-01.05</text>
+<text x="138" y="265" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="265" font-size="9.5" fill="#475569" text-anchor="end">4</text>
+<rect x="397.6" y="256" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<rect x="436.2" y="256" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="474.9" y="256" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<rect x="954.4" y="256" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<line x1="248" y1="274" x2="1240" y2="274" stroke="#F1F5F9"/>
+<circle cx="46" cy="274" r="3.5" fill="#D97706"/>
+<text x="56" y="278" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-01.06</text>
+<text x="138" y="278" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="278" font-size="9.5" fill="#475569" text-anchor="end">7</text>
+<rect x="436.2" y="269" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="482.6" y="269" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="490.4" y="269" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="498.1" y="269" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="505.8" y="269" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="513.6" y="269" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="521.3" y="269" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="287" x2="1240" y2="287" stroke="#F1F5F9"/>
+<circle cx="46" cy="287" r="3.5" fill="#D97706"/>
+<text x="56" y="291" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-01.07</text>
+<text x="138" y="291" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="291" font-size="9.5" fill="#475569" text-anchor="end">5</text>
+<rect x="444.0" y="282" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="529.0" y="282" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="536.8" y="282" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="544.5" y="282" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="722.4" y="282" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="300" x2="1240" y2="300" stroke="#F1F5F9"/>
+<circle cx="46" cy="300" r="3.5" fill="#D97706"/>
+<text x="56" y="304" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-01.08</text>
+<text x="138" y="304" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="304" font-size="9.5" fill="#475569" text-anchor="end">6</text>
+<rect x="552.2" y="295" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="560.0" y="295" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="567.7" y="295" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="575.4" y="295" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="714.7" y="295" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="830.7" y="295" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<line x1="248" y1="313" x2="1240" y2="313" stroke="#F1F5F9"/>
+<circle cx="46" cy="313" r="3.5" fill="#D2553F"/>
+<text x="56" y="317" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-01.09</text>
+<text x="138" y="317" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="317" font-size="9.5" fill="#475569" text-anchor="end">11</text>
+<rect x="583.2" y="308" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<rect x="590.9" y="308" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="598.6" y="308" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="606.4" y="308" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="614.1" y="308" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="629.6" y="308" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="637.3" y="308" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="645.1" y="308" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="691.5" y="308" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="706.9" y="308" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="722.4" y="308" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="326" x2="1240" y2="326" stroke="#F1F5F9"/>
+<circle cx="46" cy="326" r="3.5" fill="#D2553F"/>
+<text x="56" y="330" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-01.10</text>
+<text x="138" y="330" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="330" font-size="9.5" fill="#475569" text-anchor="end">11</text>
+<rect x="567.7" y="321" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="629.6" y="321" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="660.5" y="321" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="668.3" y="321" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="676.0" y="321" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="683.7" y="321" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="869.4" y="321" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="877.1" y="321" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="1109.1" y="321" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="1124.6" y="321" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="1171.0" y="321" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="339" x2="1240" y2="339" stroke="#F1F5F9"/>
+<circle cx="46" cy="339" r="3.5" fill="#1D4ED8"/>
+<text x="56" y="343" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-01.11</text>
+<text x="138" y="343" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="343" font-size="9.5" fill="#475569" text-anchor="end">3</text>
+<rect x="621.9" y="334" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="691.5" y="334" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="1070.4" y="334" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<line x1="248" y1="352" x2="1240" y2="352" stroke="#F1F5F9"/>
+<circle cx="46" cy="352" r="3.5" fill="#D97706"/>
+<text x="56" y="356" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-01.12</text>
+<text x="138" y="356" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="356" font-size="9.5" fill="#475569" text-anchor="end">6</text>
+<rect x="304.7" y="347" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="312.5" y="347" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="521.3" y="347" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="637.3" y="347" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="714.7" y="347" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="838.4" y="347" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="365" x2="1240" y2="365" stroke="#F1F5F9"/>
+<circle cx="46" cy="365" r="3.5" fill="#94A3B8"/>
+<text x="56" y="369" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-01.13</text>
+<text x="138" y="369" font-size="9.5" fill="#475569" font-weight="700">ext</text>
+<text x="238" y="369" font-size="9.5" fill="#475569" text-anchor="end">2</text>
+<rect x="312.5" y="360" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="327.9" y="360" width="6.5" height="10" rx="1.5" fill="#94A3B8"/>
+<line x1="248" y1="378" x2="1240" y2="378" stroke="#F1F5F9"/>
+<circle cx="46" cy="378" r="3.5" fill="#D97706"/>
+<text x="56" y="382" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-01.14</text>
+<text x="138" y="382" font-size="9.5" fill="#475569" font-weight="700">QM</text>
+<text x="238" y="382" font-size="9.5" fill="#475569" text-anchor="end">3</text>
+<rect x="761.1" y="373" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="822.9" y="373" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="853.9" y="373" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<line x1="248" y1="415" x2="1240" y2="415" stroke="#F1F5F9"/>
+<circle cx="46" cy="415" r="3.5" fill="#D97706"/>
+<text x="56" y="419" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-02.01</text>
+<text x="138" y="419" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="419" font-size="9.5" fill="#475569" text-anchor="end">2</text>
+<rect x="320.2" y="410" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="776.5" y="410" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="428" x2="1240" y2="428" stroke="#F1F5F9"/>
+<circle cx="46" cy="428" r="3.5" fill="#D2553F"/>
+<text x="56" y="432" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-02.02</text>
+<text x="138" y="432" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="432" font-size="9.5" fill="#475569" text-anchor="end">5</text>
+<rect x="730.1" y="423" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="737.9" y="423" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="745.6" y="423" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="846.1" y="423" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="962.2" y="423" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<line x1="248" y1="441" x2="1240" y2="441" stroke="#F1F5F9"/>
+<circle cx="46" cy="441" r="3.5" fill="#D97706"/>
+<text x="56" y="445" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-02.03</text>
+<text x="138" y="445" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="445" font-size="9.5" fill="#475569" text-anchor="end">4</text>
+<rect x="413.0" y="436" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<rect x="768.8" y="436" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="838.4" y="436" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="931.2" y="436" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<line x1="248" y1="454" x2="1240" y2="454" stroke="#F1F5F9"/>
+<circle cx="46" cy="454" r="3.5" fill="#D97706"/>
+<text x="56" y="458" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-02.04</text>
+<text x="138" y="458" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="458" font-size="9.5" fill="#475569" text-anchor="end">2</text>
+<rect x="312.5" y="449" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="730.1" y="449" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<line x1="248" y1="467" x2="1240" y2="467" stroke="#F1F5F9"/>
+<circle cx="46" cy="467" r="3.5" fill="#D97706"/>
+<text x="56" y="471" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-02.05</text>
+<text x="138" y="471" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="471" font-size="9.5" fill="#475569" text-anchor="end">2</text>
+<rect x="691.5" y="462" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="699.2" y="462" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="480" x2="1240" y2="480" stroke="#F1F5F9"/>
+<circle cx="46" cy="480" r="3.5" fill="#1D4ED8"/>
+<text x="56" y="484" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-02.06</text>
+<text x="138" y="484" font-size="9.5" fill="#475569" font-weight="700">A</text>
+<text x="238" y="484" font-size="9.5" fill="#475569" text-anchor="end">2</text>
+<rect x="784.3" y="475" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<rect x="985.4" y="475" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="493" x2="1240" y2="493" stroke="#F1F5F9"/>
+<circle cx="46" cy="493" r="3.5" fill="#D97706"/>
+<text x="56" y="497" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-02.07</text>
+<text x="138" y="497" font-size="9.5" fill="#475569" font-weight="700">A</text>
+<text x="238" y="497" font-size="9.5" fill="#475569" text-anchor="end">2</text>
+<rect x="792.0" y="488" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="815.2" y="488" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<line x1="248" y1="506" x2="1240" y2="506" stroke="#F1F5F9"/>
+<circle cx="46" cy="506" r="3.5" fill="#D2553F"/>
+<text x="56" y="510" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-02.08</text>
+<text x="138" y="510" font-size="9.5" fill="#475569" font-weight="700">A</text>
+<text x="238" y="510" font-size="9.5" fill="#475569" text-anchor="end">3</text>
+<rect x="799.7" y="501" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="822.9" y="501" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="1140.1" y="501" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="519" x2="1240" y2="519" stroke="#F1F5F9"/>
+<circle cx="46" cy="519" r="3.5" fill="#D97706"/>
+<text x="56" y="523" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-02.09</text>
+<text x="138" y="523" font-size="9.5" fill="#475569" font-weight="700">A</text>
+<text x="238" y="523" font-size="9.5" fill="#475569" text-anchor="end">2</text>
+<rect x="807.5" y="514" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="977.6" y="514" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<line x1="248" y1="532" x2="1240" y2="532" stroke="#F1F5F9"/>
+<circle cx="46" cy="532" r="3.5" fill="#D97706"/>
+<text x="56" y="536" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-02.10</text>
+<text x="138" y="536" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="536" font-size="9.5" fill="#475569" text-anchor="end">4</text>
+<rect x="884.8" y="527" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<rect x="923.5" y="527" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="954.4" y="527" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="969.9" y="527" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="545" x2="1240" y2="545" stroke="#F1F5F9"/>
+<circle cx="46" cy="545" r="3.5" fill="#D97706"/>
+<text x="56" y="549" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-02.11</text>
+<text x="138" y="549" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="549" font-size="9.5" fill="#475569" text-anchor="end">3</text>
+<rect x="892.6" y="540" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="900.3" y="540" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="931.2" y="540" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<line x1="248" y1="558" x2="1240" y2="558" stroke="#F1F5F9"/>
+<circle cx="46" cy="558" r="3.5" fill="#D2553F"/>
+<text x="56" y="562" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-02.12</text>
+<text x="138" y="562" font-size="9.5" fill="#475569" font-weight="700">QM</text>
+<text x="238" y="562" font-size="9.5" fill="#475569" text-anchor="end">1</text>
+<rect x="946.7" y="553" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<line x1="248" y1="595" x2="1240" y2="595" stroke="#F1F5F9"/>
+<circle cx="46" cy="595" r="3.5" fill="#D97706"/>
+<text x="56" y="599" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-03.01</text>
+<text x="138" y="599" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="599" font-size="9.5" fill="#475569" text-anchor="end">1</text>
+<rect x="335.7" y="590" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="608" x2="1240" y2="608" stroke="#F1F5F9"/>
+<circle cx="46" cy="608" r="3.5" fill="#1D4ED8"/>
+<text x="56" y="612" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-03.02</text>
+<text x="138" y="612" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="612" font-size="9.5" fill="#475569" text-anchor="end">2</text>
+<rect x="351.1" y="603" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<rect x="382.1" y="603" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="621" x2="1240" y2="621" stroke="#F1F5F9"/>
+<circle cx="46" cy="621" r="3.5" fill="#D2553F"/>
+<text x="56" y="625" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-03.03</text>
+<text x="138" y="625" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="625" font-size="9.5" fill="#475569" text-anchor="end">1</text>
+<rect x="358.9" y="616" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<line x1="248" y1="634" x2="1240" y2="634" stroke="#F1F5F9"/>
+<circle cx="46" cy="634" r="3.5" fill="#D97706"/>
+<text x="56" y="638" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-03.04</text>
+<text x="138" y="638" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="638" font-size="9.5" fill="#475569" font-weight="700" text-anchor="end">by ref.</text>
+<line x1="248" y1="647" x2="1240" y2="647" stroke="#F1F5F9"/>
+<circle cx="46" cy="647" r="3.5" fill="#D97706"/>
+<text x="56" y="651" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-03.05</text>
+<text x="138" y="651" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="651" font-size="9.5" fill="#475569" text-anchor="end">3</text>
+<rect x="374.4" y="642" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="382.1" y="642" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="413.0" y="642" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<line x1="248" y1="660" x2="1240" y2="660" stroke="#F1F5F9"/>
+<circle cx="46" cy="660" r="3.5" fill="#94A3B8"/>
+<text x="56" y="664" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-03.06</text>
+<text x="138" y="664" font-size="9.5" fill="#475569" font-weight="700">ext</text>
+<text x="238" y="664" font-size="9.5" fill="#475569" text-anchor="end">1</text>
+<rect x="389.8" y="655" width="6.5" height="10" rx="1.5" fill="#94A3B8"/>
+<line x1="248" y1="697" x2="1240" y2="697" stroke="#F1F5F9"/>
+<circle cx="46" cy="697" r="3.5" fill="#D97706"/>
+<text x="56" y="701" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-04.01</text>
+<text x="138" y="701" font-size="9.5" fill="#475569" font-weight="700">B</text>
+<text x="238" y="701" font-size="9.5" fill="#475569" text-anchor="end">1</text>
+<rect x="343.4" y="692" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="710" x2="1240" y2="710" stroke="#F1F5F9"/>
+<circle cx="46" cy="710" r="3.5" fill="#D2553F"/>
+<text x="56" y="714" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-04.02</text>
+<text x="138" y="714" font-size="9.5" fill="#475569" font-weight="700">B</text>
+<text x="238" y="714" font-size="9.5" fill="#475569" text-anchor="end">1</text>
+<rect x="366.6" y="705" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<line x1="248" y1="723" x2="1240" y2="723" stroke="#F1F5F9"/>
+<circle cx="46" cy="723" r="3.5" fill="#D2553F"/>
+<text x="56" y="727" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-04.03</text>
+<text x="138" y="727" font-size="9.5" fill="#475569" font-weight="700">B</text>
+<text x="238" y="727" font-size="9.5" fill="#475569" text-anchor="end">2</text>
+<rect x="374.4" y="718" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="389.8" y="718" width="6.5" height="10" rx="1.5" fill="#94A3B8"/>
+<line x1="248" y1="736" x2="1240" y2="736" stroke="#F1F5F9"/>
+<circle cx="46" cy="736" r="3.5" fill="#94A3B8"/>
+<text x="56" y="740" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-04.04</text>
+<text x="138" y="740" font-size="9.5" fill="#475569" font-weight="700">B</text>
+<text x="238" y="740" font-size="9.5" fill="#475569" text-anchor="end">2</text>
+<rect x="351.1" y="731" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<rect x="428.5" y="731" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<line x1="248" y1="749" x2="1240" y2="749" stroke="#F1F5F9"/>
+<circle cx="46" cy="749" r="3.5" fill="#D97706"/>
+<text x="56" y="753" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-04.05</text>
+<text x="138" y="753" font-size="9.5" fill="#475569" font-weight="700">B</text>
+<text x="238" y="753" font-size="9.5" fill="#475569" text-anchor="end">1</text>
+<rect x="908.0" y="744" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="762" x2="1240" y2="762" stroke="#F1F5F9"/>
+<circle cx="46" cy="762" r="3.5" fill="#D97706"/>
+<text x="56" y="766" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-04.06</text>
+<text x="138" y="766" font-size="9.5" fill="#475569" font-weight="700">A</text>
+<text x="238" y="766" font-size="9.5" fill="#475569" text-anchor="end">1</text>
+<rect x="915.8" y="757" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="799" x2="1240" y2="799" stroke="#F1F5F9"/>
+<circle cx="46" cy="799" r="3.5" fill="#1D4ED8"/>
+<text x="56" y="803" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-05.01</text>
+<text x="138" y="803" font-size="9.5" fill="#475569" font-weight="700">B</text>
+<text x="238" y="803" font-size="9.5" fill="#475569" text-anchor="end">3</text>
+<rect x="312.5" y="794" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="405.3" y="794" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<rect x="513.6" y="794" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="812" x2="1240" y2="812" stroke="#F1F5F9"/>
+<circle cx="46" cy="812" r="3.5" fill="#1D4ED8"/>
+<text x="56" y="816" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-05.02</text>
+<text x="138" y="816" font-size="9.5" fill="#475569" font-weight="700">B</text>
+<text x="238" y="816" font-size="9.5" fill="#475569" text-anchor="end">1</text>
+<rect x="397.6" y="807" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<line x1="248" y1="825" x2="1240" y2="825" stroke="#F1F5F9"/>
+<circle cx="46" cy="825" r="3.5" fill="#D2553F"/>
+<text x="56" y="829" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-05.03</text>
+<text x="138" y="829" font-size="9.5" fill="#475569" font-weight="700">B</text>
+<text x="238" y="829" font-size="9.5" fill="#475569" text-anchor="end">2</text>
+<rect x="420.8" y="820" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="939.0" y="820" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<line x1="248" y1="838" x2="1240" y2="838" stroke="#F1F5F9"/>
+<circle cx="46" cy="838" r="3.5" fill="#1D4ED8"/>
+<text x="56" y="842" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-05.04</text>
+<text x="138" y="842" font-size="9.5" fill="#475569" font-weight="700">B</text>
+<text x="238" y="842" font-size="9.5" fill="#475569" text-anchor="end">2</text>
+<rect x="351.1" y="833" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<rect x="428.5" y="833" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<line x1="248" y1="851" x2="1240" y2="851" stroke="#F1F5F9"/>
+<circle cx="46" cy="851" r="3.5" fill="#94A3B8"/>
+<text x="56" y="855" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-05.05</text>
+<text x="138" y="855" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="855" font-size="9.5" fill="#475569" text-anchor="end">1</text>
+<rect x="459.4" y="846" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="864" x2="1240" y2="864" stroke="#F1F5F9"/>
+<circle cx="46" cy="864" r="3.5" fill="#1D4ED8"/>
+<text x="56" y="868" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-05.06</text>
+<text x="138" y="868" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="868" font-size="9.5" fill="#475569" text-anchor="end">2</text>
+<rect x="444.0" y="859" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="451.7" y="859" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<line x1="248" y1="877" x2="1240" y2="877" stroke="#F1F5F9"/>
+<circle cx="46" cy="877" r="3.5" fill="#94A3B8"/>
+<text x="56" y="881" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-05.07</text>
+<text x="138" y="881" font-size="9.5" fill="#475569" font-weight="700">ext</text>
+<text x="238" y="881" font-size="9.5" fill="#475569" text-anchor="end">1</text>
+<rect x="467.2" y="872" width="6.5" height="10" rx="1.5" fill="#94A3B8"/>
+<line x1="248" y1="914" x2="1240" y2="914" stroke="#F1F5F9"/>
+<circle cx="46" cy="914" r="3.5" fill="#D97706"/>
+<text x="56" y="918" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-06.01</text>
+<text x="138" y="918" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="918" font-size="9.5" fill="#475569" text-anchor="end">4</text>
+<rect x="737.9" y="909" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="745.6" y="909" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="846.1" y="909" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="962.2" y="909" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<line x1="248" y1="927" x2="1240" y2="927" stroke="#F1F5F9"/>
+<circle cx="46" cy="927" r="3.5" fill="#D97706"/>
+<text x="56" y="931" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-06.02</text>
+<text x="138" y="931" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="931" font-size="9.5" fill="#475569" text-anchor="end">3</text>
+<rect x="413.0" y="922" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<rect x="730.1" y="922" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="768.8" y="922" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="940" x2="1240" y2="940" stroke="#F1F5F9"/>
+<circle cx="46" cy="940" r="3.5" fill="#1D4ED8"/>
+<text x="56" y="944" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-06.03</text>
+<text x="138" y="944" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="944" font-size="9.5" fill="#475569" text-anchor="end">1</text>
+<rect x="861.6" y="935" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<line x1="248" y1="953" x2="1240" y2="953" stroke="#F1F5F9"/>
+<circle cx="46" cy="953" r="3.5" fill="#D2553F"/>
+<text x="56" y="957" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-06.04</text>
+<text x="138" y="957" font-size="9.5" fill="#475569" font-weight="700">C</text>
+<text x="238" y="957" font-size="9.5" fill="#475569" text-anchor="end">2</text>
+<rect x="753.3" y="948" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="853.9" y="948" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<line x1="248" y1="966" x2="1240" y2="966" stroke="#F1F5F9"/>
+<circle cx="46" cy="966" r="3.5" fill="#D97706"/>
+<text x="56" y="970" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-06.05</text>
+<text x="138" y="970" font-size="9.5" fill="#475569" font-weight="700">ref</text>
+<text x="238" y="970" font-size="9.5" fill="#475569" text-anchor="end">1</text>
+<rect x="699.2" y="961" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="1003" x2="1240" y2="1003" stroke="#F1F5F9"/>
+<circle cx="46" cy="1003" r="3.5" fill="#1D4ED8"/>
+<text x="56" y="1007" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-07.01</text>
+<text x="138" y="1007" font-size="9.5" fill="#475569" font-weight="700">B</text>
+<text x="238" y="1007" font-size="9.5" fill="#475569" text-anchor="end">4</text>
+<rect x="1024.0" y="998" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<rect x="1047.2" y="998" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="1078.2" y="998" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="1132.3" y="998" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="1016" x2="1240" y2="1016" stroke="#F1F5F9"/>
+<circle cx="46" cy="1016" r="3.5" fill="#D2553F"/>
+<text x="56" y="1020" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-07.02</text>
+<text x="138" y="1020" font-size="9.5" fill="#475569" font-weight="700">B</text>
+<text x="238" y="1020" font-size="9.5" fill="#475569" text-anchor="end">1</text>
+<rect x="1031.8" y="1011" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="1029" x2="1240" y2="1029" stroke="#F1F5F9"/>
+<circle cx="46" cy="1029" r="3.5" fill="#D97706"/>
+<text x="56" y="1033" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-07.03</text>
+<text x="138" y="1033" font-size="9.5" fill="#475569" font-weight="700">B</text>
+<text x="238" y="1033" font-size="9.5" fill="#475569" text-anchor="end">9</text>
+<rect x="590.9" y="1024" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="621.9" y="1024" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="652.8" y="1024" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="1000.8" y="1024" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="1008.6" y="1024" width="6.5" height="10" rx="1.5" fill="#94A3B8"/>
+<rect x="1016.3" y="1024" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="1039.5" y="1024" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<rect x="1078.2" y="1024" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="1132.3" y="1024" width="6.5" height="10" rx="1.5" fill="#D97706"/>
+<line x1="248" y1="1042" x2="1240" y2="1042" stroke="#F1F5F9"/>
+<circle cx="46" cy="1042" r="3.5" fill="#94A3B8"/>
+<text x="56" y="1046" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-07.04</text>
+<text x="138" y="1046" font-size="9.5" fill="#475569" font-weight="700">ext</text>
+<text x="238" y="1046" font-size="9.5" fill="#475569" text-anchor="end">1</text>
+<rect x="1055.0" y="1037" width="6.5" height="10" rx="1.5" fill="#94A3B8"/>
+<line x1="248" y1="1055" x2="1240" y2="1055" stroke="#F1F5F9"/>
+<circle cx="46" cy="1055" r="3.5" fill="#1D4ED8"/>
+<text x="56" y="1059" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-07.05</text>
+<text x="138" y="1059" font-size="9.5" fill="#475569" font-weight="700">QM</text>
+<text x="238" y="1059" font-size="9.5" fill="#475569" text-anchor="end">1</text>
+<rect x="1062.7" y="1050" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<line x1="248" y1="1068" x2="1240" y2="1068" stroke="#F1F5F9"/>
+<circle cx="46" cy="1068" r="3.5" fill="#D2553F"/>
+<text x="56" y="1072" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-07.06</text>
+<text x="138" y="1072" font-size="9.5" fill="#475569" font-weight="700">B</text>
+<text x="238" y="1072" font-size="9.5" fill="#475569" text-anchor="end">1</text>
+<rect x="1085.9" y="1063" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<line x1="248" y1="1081" x2="1240" y2="1081" stroke="#F1F5F9"/>
+<circle cx="46" cy="1081" r="3.5" fill="#1D4ED8"/>
+<text x="56" y="1085" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-07.07</text>
+<text x="138" y="1085" font-size="9.5" fill="#475569" font-weight="700">QM</text>
+<text x="238" y="1085" font-size="9.5" fill="#475569" text-anchor="end">1</text>
+<rect x="1093.6" y="1076" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
+<line x1="248" y1="1118" x2="1240" y2="1118" stroke="#F1F5F9"/>
+<circle cx="46" cy="1118" r="3.5" fill="#D97706"/>
+<text x="56" y="1122" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-08.01</text>
+<text x="138" y="1122" font-size="9.5" fill="#475569" font-weight="700">A</text>
+<text x="238" y="1122" font-size="9.5" fill="#475569" text-anchor="end">1</text>
+<rect x="993.1" y="1113" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<text x="56" y="1144" font-size="10" fill="#475569" font-weight="600">no FSR parent</text>
+<text x="238" y="1144" font-size="9.5" fill="#475569" text-anchor="end">13</text>
+<rect x="1101.4" y="1135" width="6.5" height="10" rx="1.5" fill="none" stroke="#D97706" stroke-width="1.2"/>
+<rect x="1116.8" y="1135" width="6.5" height="10" rx="1.5" fill="none" stroke="#D97706" stroke-width="1.2"/>
+<rect x="1147.8" y="1135" width="6.5" height="10" rx="1.5" fill="none" stroke="#D97706" stroke-width="1.2"/>
+<rect x="1155.5" y="1135" width="6.5" height="10" rx="1.5" fill="none" stroke="#D97706" stroke-width="1.2"/>
+<rect x="1163.3" y="1135" width="6.5" height="10" rx="1.5" fill="none" stroke="#D97706" stroke-width="1.2"/>
+<rect x="1178.7" y="1135" width="6.5" height="10" rx="1.5" fill="none" stroke="#D97706" stroke-width="1.2"/>
+<rect x="1186.5" y="1135" width="6.5" height="10" rx="1.5" fill="none" stroke="#D97706" stroke-width="1.2"/>
+<rect x="1194.2" y="1135" width="6.5" height="10" rx="1.5" fill="none" stroke="#D97706" stroke-width="1.2"/>
+<rect x="1201.9" y="1135" width="6.5" height="10" rx="1.5" fill="none" stroke="#D97706" stroke-width="1.2"/>
+<rect x="1209.7" y="1135" width="6.5" height="10" rx="1.5" fill="none" stroke="#D97706" stroke-width="1.2"/>
+<rect x="1217.4" y="1135" width="6.5" height="10" rx="1.5" fill="none" stroke="#D97706" stroke-width="1.2"/>
+<rect x="1225.1" y="1135" width="6.5" height="10" rx="1.5" fill="none" stroke="#D97706" stroke-width="1.2"/>
+<rect x="1232.9" y="1135" width="6.5" height="10" rx="1.5" fill="none" stroke="#D97706" stroke-width="1.2"/>
+<line x1="40" y1="1172" x2="1240" y2="1172" stroke="#E2E8F0"/>
+<rect x="40" y="1184" width="22" height="13" rx="3" fill="#EFF6FF" stroke="#1D4ED8"/>
+<text x="70" y="1194" font-size="10.5" fill="#0F172A">implemented</text>
+<rect x="230" y="1184" width="22" height="13" rx="3" fill="#FFFBEB" stroke="#D97706"/>
+<text x="260" y="1194" font-size="10.5" fill="#0F172A">partly</text>
+<rect x="420" y="1184" width="22" height="13" rx="3" fill="#FEF2F2" stroke="#D2553F"/>
+<text x="450" y="1194" font-size="10.5" fill="#0F172A">not implemented</text>
+<rect x="610" y="1184" width="22" height="13" rx="3" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="640" y="1194" font-size="10.5" fill="#0F172A">assumed (EXT / AoU)</text>
+<text x="40" y="1218" font-size="9.5" fill="#475569">Status from each requirement's Impl column by the rule of WP-S-03 Figure 6-1 (a qualified “Implemented” counts as partly). Nothing is verified on hardware yet, so implemented is blue, never green.</text>
+<text x="40" y="1234" font-size="9.5" fill="#475569">Row dot: the FSR's own status. “by ref.”: the FSR applies the TSRs of the FSRs it names. Bottom row: TSRs whose parent is a goal or another requirement, not an FSR (outlined).</text>
+</svg>

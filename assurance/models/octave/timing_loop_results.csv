@@ -1,0 +1,10 @@
+id,label,sg,build,ftti_s,fdti_budget_s,frti_budget_s,warn_budget_s,fdti_min_s,fdti_max_s,fhti_max_s,warn_min_s,warn_max_s,fdti_ok,ftti_ok,warn_ok,samples,rule
+rx-1d2-ref,"RX loss 0x1D2 (33 Hz)",SG-01,"reference",0.5000,0.2000,0.1000,,0.1520,0.1615,0.2615,,,1,1,,20,"threshold 5 x 30.3 ms, strict >, checked by the 100 Hz safety task"
+rx-262-ref,"RX loss 0x262 (25 Hz)",SG-01,"reference",0.5000,0.2000,0.1000,,0.2005,0.2100,0.3100,,,0,1,,20,"threshold 5 x 40.0 ms, strict >, checked by the 100 Hz safety task"
+rx-260-base,"RX loss 0x260 (50 Hz), baseline",SG-01,"baseline 8b8c6ae",0.5000,0.2000,0.1000,,1.0050,2.0000,2.1000,,,0,0,,200,"threshold max(10 periods, 1 s), checked once per second"
+hb-ref,"SoC heartbeat loss",SG-01,"reference",0.5000,0.3000,0.1000,1.0000,0.2905,0.3000,0.4000,0.2950,0.5500,1,1,1,1000,"revoked at the 30th safety-task run; siren on the next odd 8 Hz tick"
+hb-base,"SoC heartbeat loss, baseline",SG-01,"baseline 8b8c6ae",0.5000,0.3000,0.1000,,4.0050,5.0000,5.1000,,,0,0,,200,"SILENT when the 1 Hz counter reaches 5"
+stall-ref,"SoC command stall (0x2E4)",SG-01,"reference",0.5000,0.0500,0.1000,1.0000,0.0505,0.0600,0.1600,0.0550,0.3100,0,1,1,1000,"0x2E4 older than 50 ms; the revocation sounds the siren (DQ-404 A)"
+iwdg-nom,"MCU hang, IWDG (nominal)",SG-07,"reference",0.2000,0.1000,0.1000,,0.0900,0.0900,0.1900,,,1,1,,1,"4 x (719 + 1) / 32.0 kHz, hang right after a feed"
+iwdg-slow,"MCU hang, IWDG (LSI 10 % slow)",SG-07,"reference",0.2000,0.1000,0.1000,,0.1000,0.1000,0.2000,,,1,1,,1,"4 x (719 + 1) / 28.8 kHz, hang right after a feed"
+eps-ref,"EPS fault -> siren",SG-02,"reference",1.0000,0.5000,0.5000,1.0000,0.0000,0.0000,0.5000,0.6950,0.9500,1,1,1,1000,"refused on the first fault frame; siren after 70 task runs, next odd tick"

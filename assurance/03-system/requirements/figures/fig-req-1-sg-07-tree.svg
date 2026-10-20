@@ -1,0 +1,200 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="906" viewBox="0 0 1280 906" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">SG-07 requirement tree: FSRs and TSRs</title>
+<desc id="d">SG-07 (ASIL B): FSR-01.09 (not implemented) → TSR-501 (implemented), TSR-502 (not implemented), TSR-503 (partly), TSR-504 (partly), TSR-505 (not implemented), TSR-507 (not implemented), TSR-508 (partly), TSR-509 (partly), TSR-515 (not implemented), TSR-517 (not implemented), TSR-519 (partly); FSR-01.10 (not implemented) → TSR-412 (not implemented), TSR-507 (not implemented), TSR-511 (not implemented), TSR-512 (partly), TSR-513 (partly), TSR-514 (not implemented), TSR-619 (not implemented), TSR-620 (not implemented), TSR-802 (not implemented), TSR-804 (partly), TSR-810 (partly); FSR-01.11 (implemented) → TSR-506 (partly), TSR-515 (not implemented), TSR-710 (implemented); FSR-07.01 (implemented) → TSR-704 (implemented), TSR-707 (not implemented), TSR-711 (not implemented), TSR-805 (partly); FSR-07.02 (not implemented) → TSR-705 (partly); FSR-07.03 (partly) → TSR-502 (not implemented), TSR-506 (partly), TSR-510 (partly), TSR-701 (partly), TSR-702 (assumed (EXT / AoU)), TSR-703 (not implemented), TSR-706 (partly), TSR-711 (not implemented), TSR-805 (partly); FSR-07.04 (assumed (EXT / AoU)) → TSR-708 (assumed (EXT / AoU)); FSR-07.05 (implemented) → TSR-709 (implemented); FSR-07.06 (not implemented) → TSR-712 (not implemented); FSR-07.07 (implemented) → TSR-713 (implemented).</desc>
+<rect width="1280" height="906" fill="#FFFFFF"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">SG-07 requirement tree</text>
+<text x="40" y="66" font-size="12" fill="#475569">SG-07 → 10 FSRs (WP-C-04 §5, §9) → 37 TSRs (WP-S-02 §12.1) · coloured by status</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">generated from trace/items</text>
+<rect x="40" y="378.0" width="230" height="150" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.8"/>
+<text x="56" y="404.0" font-size="16" fill="#0F172A" font-weight="700">SG-07</text>
+<rect x="190" y="390.0" width="66" height="20" rx="10" fill="#C2410C"/>
+<text x="223" y="404.0" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">ASIL B</text>
+<text x="56" y="426.0" font-size="11" fill="#0F172A">The item shall not suppress, delay</text>
+<text x="56" y="441.0" font-size="11" fill="#0F172A">or alter the vehicle's stock</text>
+<text x="56" y="456.0" font-size="11" fill="#0F172A">pre-collision (PCS/AEB) function</text>
+<line x1="270" y1="453.0" x2="300" y2="453.0" stroke="#475569" stroke-width="1.4"/>
+<line x1="300" y1="135.0" x2="300" y2="777.0" stroke="#475569" stroke-width="1.4"/>
+<line x1="300" y1="135.0" x2="300" y2="135.0" stroke="#475569" stroke-width="1.4"/>
+<rect x="300" y="100" width="380" height="70" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.5"/>
+<rect x="300" y="100" width="5" height="70" rx="2" fill="#D2553F"/>
+<text x="314" y="118" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-01.09</text>
+<text x="400" y="118" font-size="10" fill="#475569" font-weight="700">ASIL C</text>
+<text x="670" y="118" font-size="9.5" fill="#7C3AED" font-weight="600" text-anchor="end">also SG-01, 02, 03, 04, 05, 06</text>
+<text x="314" y="135" font-size="10" fill="#475569">The safety MCU shall detect its own execution faults (program-flow</text>
+<text x="314" y="148" font-size="10" fill="#475569">hang, clock failure, memory corruption, register corruption) and</text>
+<text x="314" y="161" font-size="10" fill="#475569">enter the safe …</text>
+<line x1="680" y1="135.0" x2="706" y2="135.0" stroke="#CBD5E1" stroke-width="1.4"/>
+<rect x="712" y="112.0" width="82" height="20" rx="5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.1"/>
+<text x="753.0" y="126.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-501</text>
+<rect x="800" y="112.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1" stroke-dasharray="3 2"/>
+<text x="841.0" y="126.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-502</text>
+<rect x="888" y="112.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="929.0" y="126.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-503</text>
+<rect x="976" y="112.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="1017.0" y="126.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-504</text>
+<rect x="1064" y="112.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="1105.0" y="126.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-505</text>
+<rect x="1152" y="112.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1" stroke-dasharray="3 2"/>
+<text x="1193.0" y="126.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-507</text>
+<rect x="712" y="138.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1" stroke-dasharray="3 2"/>
+<text x="753.0" y="152.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-508</text>
+<rect x="800" y="138.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="841.0" y="152.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-509</text>
+<rect x="888" y="138.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1" stroke-dasharray="3 2"/>
+<text x="929.0" y="152.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-515</text>
+<rect x="976" y="138.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="1017.0" y="152.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-517</text>
+<rect x="1064" y="138.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1" stroke-dasharray="3 2"/>
+<text x="1105.0" y="152.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-519</text>
+<line x1="300" y1="215.0" x2="300" y2="215.0" stroke="#475569" stroke-width="1.4"/>
+<rect x="300" y="180" width="380" height="70" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.5"/>
+<rect x="300" y="180" width="5" height="70" rx="2" fill="#D2553F"/>
+<text x="314" y="198" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-01.10</text>
+<text x="400" y="198" font-size="10" fill="#475569" font-weight="700">ASIL C</text>
+<text x="670" y="198" font-size="9.5" fill="#7C3AED" font-weight="600" text-anchor="end">also SG-01, 03, 04, 05</text>
+<text x="314" y="215" font-size="10" fill="#475569">The safety mode and safety parameter for the reference</text>
+<text x="314" y="228" font-size="10" fill="#475569">configuration shall be fixed in the envelope and shall not be</text>
+<text x="314" y="241" font-size="10" fill="#475569">changeable by the SoC while a …</text>
+<line x1="680" y1="215.0" x2="706" y2="215.0" stroke="#CBD5E1" stroke-width="1.4"/>
+<rect x="712" y="192.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1" stroke-dasharray="3 2"/>
+<text x="753.0" y="206.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-412</text>
+<rect x="800" y="192.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1" stroke-dasharray="3 2"/>
+<text x="841.0" y="206.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-507</text>
+<rect x="888" y="192.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="929.0" y="206.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-511</text>
+<rect x="976" y="192.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="1017.0" y="206.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-512</text>
+<rect x="1064" y="192.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="1105.0" y="206.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-513</text>
+<rect x="1152" y="192.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="1193.0" y="206.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-514</text>
+<rect x="712" y="218.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="753.0" y="232.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-619</text>
+<rect x="800" y="218.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="841.0" y="232.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-620</text>
+<rect x="888" y="218.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="929.0" y="232.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-802</text>
+<rect x="976" y="218.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="1017.0" y="232.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-804</text>
+<rect x="1064" y="218.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="1105.0" y="232.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-810</text>
+<line x1="300" y1="289.0" x2="300" y2="289.0" stroke="#475569" stroke-width="1.4"/>
+<rect x="300" y="260" width="380" height="58" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<rect x="300" y="260" width="5" height="58" rx="2" fill="#1D4ED8"/>
+<text x="314" y="278" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-01.11</text>
+<text x="400" y="278" font-size="10" fill="#475569" font-weight="700">ASIL C</text>
+<text x="670" y="278" font-size="9.5" fill="#7C3AED" font-weight="600" text-anchor="end">also SG-01, SG-03</text>
+<text x="314" y="295" font-size="10" fill="#475569">The envelope shall detect a harness relay malfunction (camera</text>
+<text x="314" y="308" font-size="10" fill="#475569">control messages seen on the car side) and inhibit all actuation …</text>
+<line x1="680" y1="289.0" x2="706" y2="289.0" stroke="#CBD5E1" stroke-width="1.4"/>
+<rect x="712" y="279.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1" stroke-dasharray="3 2"/>
+<text x="753.0" y="293.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-506</text>
+<rect x="800" y="279.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1" stroke-dasharray="3 2"/>
+<text x="841.0" y="293.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-515</text>
+<rect x="888" y="279.0" width="82" height="20" rx="5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.1"/>
+<text x="929.0" y="293.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-710</text>
+<line x1="300" y1="357.0" x2="300" y2="357.0" stroke="#475569" stroke-width="1.4"/>
+<rect x="300" y="328" width="380" height="58" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<rect x="300" y="328" width="5" height="58" rx="2" fill="#1D4ED8"/>
+<text x="314" y="346" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-07.01</text>
+<text x="400" y="346" font-size="10" fill="#475569" font-weight="700">ASIL B</text>
+<text x="314" y="363" font-size="10" fill="#475569">The item shall forward all camera-side messages to the car side</text>
+<text x="314" y="376" font-size="10" fill="#475569">unchanged, except the defined set of intercepted control messages</text>
+<line x1="680" y1="357.0" x2="706" y2="357.0" stroke="#CBD5E1" stroke-width="1.4"/>
+<rect x="712" y="347.0" width="82" height="20" rx="5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.1"/>
+<text x="753.0" y="361.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-704</text>
+<rect x="800" y="347.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="841.0" y="361.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-707</text>
+<rect x="888" y="347.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1" stroke-dasharray="3 2"/>
+<text x="929.0" y="361.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-711</text>
+<rect x="976" y="347.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1" stroke-dasharray="3 2"/>
+<text x="1017.0" y="361.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-805</text>
+<line x1="300" y1="425.0" x2="300" y2="425.0" stroke="#475569" stroke-width="1.4"/>
+<rect x="300" y="396" width="380" height="58" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.5"/>
+<rect x="300" y="396" width="5" height="58" rx="2" fill="#D2553F"/>
+<text x="314" y="414" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-07.02</text>
+<text x="400" y="414" font-size="10" fill="#475569" font-weight="700">ASIL B</text>
+<text x="314" y="431" font-size="10" fill="#475569">The item shall not originate any message that the stock PCS</text>
+<text x="314" y="444" font-size="10" fill="#475569">function uses (e.g</text>
+<line x1="680" y1="425.0" x2="706" y2="425.0" stroke="#CBD5E1" stroke-width="1.4"/>
+<rect x="712" y="415.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="753.0" y="429.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-705</text>
+<line x1="300" y1="499.0" x2="300" y2="499.0" stroke="#475569" stroke-width="1.4"/>
+<rect x="300" y="464" width="380" height="70" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
+<rect x="300" y="464" width="5" height="70" rx="2" fill="#D97706"/>
+<text x="314" y="482" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-07.03</text>
+<text x="400" y="482" font-size="10" fill="#475569" font-weight="700">ASIL B</text>
+<text x="314" y="499" font-size="10" fill="#475569">On safety-MCU fault, loss of device power, or harness fault, the</text>
+<text x="314" y="512" font-size="10" fill="#475569">relay shall return to the stock camera-to-vehicle connection</text>
+<line x1="680" y1="499.0" x2="706" y2="499.0" stroke="#CBD5E1" stroke-width="1.4"/>
+<rect x="712" y="476.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1" stroke-dasharray="3 2"/>
+<text x="753.0" y="490.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-502</text>
+<rect x="800" y="476.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1" stroke-dasharray="3 2"/>
+<text x="841.0" y="490.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-506</text>
+<rect x="888" y="476.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="929.0" y="490.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-510</text>
+<rect x="976" y="476.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="1017.0" y="490.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-701</text>
+<rect x="1064" y="476.0" width="82" height="20" rx="5" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="1105.0" y="490.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-702</text>
+<rect x="1152" y="476.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="1193.0" y="490.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-703</text>
+<rect x="712" y="502.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="753.0" y="516.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-706</text>
+<rect x="800" y="502.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1" stroke-dasharray="3 2"/>
+<text x="841.0" y="516.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-711</text>
+<rect x="888" y="502.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1" stroke-dasharray="3 2"/>
+<text x="929.0" y="516.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-805</text>
+<line x1="300" y1="573.0" x2="300" y2="573.0" stroke="#475569" stroke-width="1.4"/>
+<rect x="300" y="544" width="380" height="58" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.5"/>
+<rect x="300" y="544" width="5" height="58" rx="2" fill="#94A3B8"/>
+<text x="314" y="562" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-07.04</text>
+<text x="400" y="562" font-size="10" fill="#475569" font-weight="700">ASIL ext</text>
+<text x="314" y="579" font-size="10" fill="#475569">openpilot longitudinal commands shall not prevent PCS braking from</text>
+<text x="314" y="592" font-size="10" fill="#475569">taking priority in the PCM. (External measure, AOU-04R)</text>
+<line x1="680" y1="573.0" x2="706" y2="573.0" stroke="#CBD5E1" stroke-width="1.4"/>
+<rect x="712" y="563.0" width="82" height="20" rx="5" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="753.0" y="577.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-708</text>
+<line x1="300" y1="641.0" x2="300" y2="641.0" stroke="#475569" stroke-width="1.4"/>
+<rect x="300" y="612" width="380" height="58" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<rect x="300" y="612" width="5" height="58" rx="2" fill="#1D4ED8"/>
+<text x="314" y="630" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-07.05</text>
+<text x="400" y="630" font-size="10" fill="#475569" font-weight="700">ASIL QM</text>
+<text x="314" y="647" font-size="10" fill="#475569">The item shall inform the driver when the stock system reports an</text>
+<text x="314" y="660" font-size="10" fill="#475569">AEB or FCW event</text>
+<line x1="680" y1="641.0" x2="706" y2="641.0" stroke="#CBD5E1" stroke-width="1.4"/>
+<rect x="712" y="631.0" width="82" height="20" rx="5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.1"/>
+<text x="753.0" y="645.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-709</text>
+<line x1="300" y1="709.0" x2="300" y2="709.0" stroke="#475569" stroke-width="1.4"/>
+<rect x="300" y="680" width="380" height="58" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.5"/>
+<rect x="300" y="680" width="5" height="58" rx="2" fill="#D2553F"/>
+<text x="314" y="698" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-07.06</text>
+<text x="400" y="698" font-size="10" fill="#475569" font-weight="700">ASIL B</text>
+<text x="314" y="715" font-size="10" fill="#475569">If the harness cannot return to the stock camera-to-vehicle</text>
+<text x="314" y="728" font-size="10" fill="#475569">connection (switch or relay stuck in intercept, detected by stat …</text>
+<line x1="680" y1="709.0" x2="706" y2="709.0" stroke="#CBD5E1" stroke-width="1.4"/>
+<rect x="712" y="699.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="753.0" y="713.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-712</text>
+<line x1="300" y1="777.0" x2="300" y2="777.0" stroke="#475569" stroke-width="1.4"/>
+<rect x="300" y="748" width="380" height="58" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<rect x="300" y="748" width="5" height="58" rx="2" fill="#1D4ED8"/>
+<text x="314" y="766" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-07.07</text>
+<text x="400" y="766" font-size="10" fill="#475569" font-weight="700">ASIL QM</text>
+<text x="314" y="783" font-size="10" fill="#475569">While the stock system reports an AEB event, the item shall</text>
+<text x="314" y="796" font-size="10" fill="#475569">request zero acceleration from the PCM (no added drive), so that …</text>
+<line x1="680" y1="777.0" x2="706" y2="777.0" stroke="#CBD5E1" stroke-width="1.4"/>
+<rect x="712" y="767.0" width="82" height="20" rx="5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.1"/>
+<text x="753.0" y="781.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-713</text>
+<line x1="40" y1="824" x2="1240" y2="824" stroke="#E2E8F0"/>
+<rect x="40" y="836" width="22" height="13" rx="3" fill="#EFF6FF" stroke="#1D4ED8"/>
+<text x="70" y="846" font-size="10.5" fill="#0F172A">implemented</text>
+<rect x="230" y="836" width="22" height="13" rx="3" fill="#FFFBEB" stroke="#D97706"/>
+<text x="260" y="846" font-size="10.5" fill="#0F172A">partly</text>
+<rect x="420" y="836" width="22" height="13" rx="3" fill="#FEF2F2" stroke="#D2553F"/>
+<text x="450" y="846" font-size="10.5" fill="#0F172A">not implemented</text>
+<rect x="610" y="836" width="22" height="13" rx="3" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="640" y="846" font-size="10.5" fill="#0F172A">assumed (EXT / AoU)</text>
+<rect x="800" y="836" width="22" height="13" rx="3" fill="#FFFFFF" stroke="#475569" stroke-dasharray="3 2"/>
+<text x="830" y="846" font-size="10.5" fill="#0F172A">TSR shared with another FSR (drawn under each)</text>
+<text x="40" y="870" font-size="9.5" fill="#475569">Status from each requirement's Impl column by the rule of WP-S-03 Figure 6-1 (a qualified “Implemented” counts as partly). Nothing is verified on hardware yet, so implemented is blue, never green.</text>
+</svg>

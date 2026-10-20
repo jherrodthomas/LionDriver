@@ -29,8 +29,24 @@ class TestTimingFigures(unittest.TestCase):
   def test_budgets_fit_ftti(self):
     for g in ft.GROUPS:
       for r in g["rows"]:
-        total = r["fdti"] + (r["frti"] or 0)
-        self.assertLessEqual(total, g["ftti"] + 1e-9, r["title"])
+        total = (r["fdti"] or 0) + (r["frti"] or 0)
+        self.assertLessEqual(total, r.get("ftti", g["ftti"]) + 1e-9, r["title"])
+
+  def test_fhti_is_fdti_plus_frti(self):
+    rx = ft.GROUPS[0]["rows"][0]
+    self.assertAlmostEqual(ft.fhti(rx), 0.3)
+    for g in ft.GROUPS:
+      for r in g["rows"]:
+        h = ft.fhti(r)
+        if h is not None:
+          self.assertLessEqual(h, r.get("ftti", g["ftti"]) + 1e-9, r["title"])
+        if r.get("tbd") or r["fdti"] is None or r["frti"] is None:
+          self.assertIsNone(h, r["title"])
+
+  def test_every_group_or_row_has_an_ftti(self):
+    for g in ft.GROUPS:
+      for r in g["rows"]:
+        self.assertIsNotNone(r.get("ftti", g["ftti"]), r["title"])
 
   def test_eps_fault_chain_matches_t28(self):
     t = ft.T28

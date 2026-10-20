@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="540" viewBox="0 0 1320 540" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 3. Acceleration limits by speed</title>
+<desc>Acceleration against speed: the panda envelope and planner clip at -3.5 and +2 m/s²; inside them the cruise limits, a maximum falling from 1.6 to 0.6 m/s² with speed and a minimum of -1.2 m/s². Notes give the turn limit and the 4.5 m/s³ final rate.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1320" height="540" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3 · Acceleration limits by speed</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Each layer can only narrow the one outside it. The cruise limits apply when no lead is closer; the MPC uses the outer clip.</text>
+<text x="1280" y="44" font-size="11" fill="#475569" text-anchor="end">longitudinal_planner.py · WP-C-01 §8 · FMEA PF-03</text>
+<line x1="40" y1="82" x2="1280" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="110" y="104" width="820" height="340" rx="0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<line x1="110" y1="104" x2="110" y2="444" stroke="#E2E8F0" stroke-width="1"/>
+<text x="110" y="459" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
+<line x1="212.5" y1="104" x2="212.5" y2="444" stroke="#E2E8F0" stroke-width="1"/>
+<text x="212.5" y="459" font-size="9.5" fill="#475569" text-anchor="middle">5</text>
+<line x1="315" y1="104" x2="315" y2="444" stroke="#E2E8F0" stroke-width="1"/>
+<text x="315" y="459" font-size="9.5" fill="#475569" text-anchor="middle">10</text>
+<line x1="417.5" y1="104" x2="417.5" y2="444" stroke="#E2E8F0" stroke-width="1"/>
+<text x="417.5" y="459" font-size="9.5" fill="#475569" text-anchor="middle">15</text>
+<line x1="520" y1="104" x2="520" y2="444" stroke="#E2E8F0" stroke-width="1"/>
+<text x="520" y="459" font-size="9.5" fill="#475569" text-anchor="middle">20</text>
+<line x1="622.5" y1="104" x2="622.5" y2="444" stroke="#E2E8F0" stroke-width="1"/>
+<text x="622.5" y="459" font-size="9.5" fill="#475569" text-anchor="middle">25</text>
+<line x1="725" y1="104" x2="725" y2="444" stroke="#E2E8F0" stroke-width="1"/>
+<text x="725" y="459" font-size="9.5" fill="#475569" text-anchor="middle">30</text>
+<line x1="827.5" y1="104" x2="827.5" y2="444" stroke="#E2E8F0" stroke-width="1"/>
+<text x="827.5" y="459" font-size="9.5" fill="#475569" text-anchor="middle">35</text>
+<line x1="930" y1="104" x2="930" y2="444" stroke="#E2E8F0" stroke-width="1"/>
+<text x="930" y="459" font-size="9.5" fill="#475569" text-anchor="middle">40</text>
+<line x1="110" y1="444" x2="930" y2="444" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="447.5" font-size="9.5" fill="#475569" text-anchor="end">-4</text>
+<line x1="110" y1="419.7" x2="930" y2="419.7" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="423.2" font-size="9.5" fill="#475569" text-anchor="end">-3.5</text>
+<line x1="110" y1="395.4" x2="930" y2="395.4" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="398.9" font-size="9.5" fill="#475569" text-anchor="end">-3</text>
+<line x1="110" y1="371.1" x2="930" y2="371.1" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="374.6" font-size="9.5" fill="#475569" text-anchor="end">-2.5</text>
+<line x1="110" y1="346.9" x2="930" y2="346.9" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="350.4" font-size="9.5" fill="#475569" text-anchor="end">-2</text>
+<line x1="110" y1="322.6" x2="930" y2="322.6" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="326.1" font-size="9.5" fill="#475569" text-anchor="end">-1.5</text>
+<line x1="110" y1="298.3" x2="930" y2="298.3" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="301.8" font-size="9.5" fill="#475569" text-anchor="end">-1</text>
+<line x1="110" y1="274" x2="930" y2="274" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="277.5" font-size="9.5" fill="#475569" text-anchor="end">-0.5</text>
+<line x1="110" y1="249.7" x2="930" y2="249.7" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="253.2" font-size="9.5" fill="#475569" text-anchor="end">+0</text>
+<line x1="110" y1="225.4" x2="930" y2="225.4" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="228.9" font-size="9.5" fill="#475569" text-anchor="end">+0.5</text>
+<line x1="110" y1="201.1" x2="930" y2="201.1" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="204.6" font-size="9.5" fill="#475569" text-anchor="end">+1</text>
+<line x1="110" y1="176.9" x2="930" y2="176.9" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="180.4" font-size="9.5" fill="#475569" text-anchor="end">+1.5</text>
+<line x1="110" y1="152.6" x2="930" y2="152.6" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="156.1" font-size="9.5" fill="#475569" text-anchor="end">+2</text>
+<line x1="110" y1="128.3" x2="930" y2="128.3" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="131.8" font-size="9.5" fill="#475569" text-anchor="end">+2.5</text>
+<line x1="110" y1="104" x2="930" y2="104" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="107.5" font-size="9.5" fill="#475569" text-anchor="end">+3</text>
+<text x="520" y="476" font-size="10.5" fill="#475569" text-anchor="middle">speed (m/s)</text>
+<text x="70" y="274" font-size="10.5" fill="#475569" text-anchor="middle" transform="rotate(-90 70 274)">acceleration (m/s²)</text>
+<rect x="110" y="152.6" width="820" height="267.1" rx="0" fill="#FFF7ED" stroke="none" stroke-width="1.2" opacity="0.6"/>
+<line x1="110" y1="249.7" x2="930" y2="249.7" stroke="#0F172A" stroke-width="1"/>
+<line x1="110" y1="152.6" x2="930" y2="152.6" stroke="#C2410C" stroke-width="2"/>
+<text x="924" y="146.6" font-size="10.5" fill="#C2410C" font-weight="600" text-anchor="end">panda and planner clip +2</text>
+<line x1="110" y1="419.7" x2="930" y2="419.7" stroke="#C2410C" stroke-width="2"/>
+<text x="924" y="435.7" font-size="10.5" fill="#C2410C" font-weight="600" text-anchor="end">panda and planner clip -3.5</text>
+<path d="M110.0,172.0 L120.2,173.0 L130.5,173.9 L140.8,174.9 L151.0,175.9 L161.2,176.9 L171.5,177.8 L181.8,178.8 L192.0,179.8 L202.2,180.7 L212.5,181.7 L222.8,182.7 L233.0,183.7 L243.2,184.6 L253.5,185.6 L263.8,186.6 L274.0,187.5 L284.2,188.5 L294.5,189.5 L304.8,190.5 L315.0,191.4 L325.2,192.1 L335.5,192.7 L345.8,193.4 L356.0,194.0 L366.2,194.7 L376.5,195.3 L386.8,196.0 L397.0,196.6 L407.2,197.3 L417.5,197.9 L427.8,198.6 L438.0,199.2 L448.2,199.8 L458.5,200.5 L468.8,201.1 L479.0,201.8 L489.2,202.4 L499.5,203.1 L509.8,203.7 L520.0,204.4 L530.2,205.0 L540.5,205.7 L550.8,206.3 L561.0,207.0 L571.2,207.6 L581.5,208.3 L591.8,208.9 L602.0,209.6 L612.2,210.2 L622.5,210.9 L632.8,211.2 L643.0,211.5 L653.2,211.8 L663.5,212.2 L673.8,212.5 L684.0,212.8 L694.2,213.1 L704.5,213.4 L714.8,213.8 L725.0,214.1 L735.2,214.4 L745.5,214.7 L755.8,215.1 L766.0,215.4 L776.2,215.7 L786.5,216.0 L796.8,216.4 L807.0,216.7 L817.2,217.0 L827.5,217.3 L837.8,217.7 L848.0,218.0 L858.2,218.3 L868.5,218.6 L878.8,219.0 L889.0,219.3 L899.2,219.6 L909.5,219.9 L919.8,220.2 L930.0,220.6" stroke="#0F766E" stroke-width="2.4" fill="none" stroke-linejoin="round"/>
+<text x="171.5" y="164" font-size="10.5" fill="#0F766E" font-weight="600">cruise acceleration max</text>
+<line x1="110" y1="308" x2="930" y2="308" stroke="#0F766E" stroke-width="2.4"/>
+<text x="171.5" y="324" font-size="10.5" fill="#0F766E" font-weight="600">cruise deceleration max -1.2 (no lead)</text>
+<text x="980" y="112" font-size="12" fill="#0F172A" font-weight="700">Panda envelope</text>
+<text x="980" y="128" font-size="10.5" fill="#475569">-3.5 … +2 m/s², every frame, only while engaged (WP-C-01</text>
+<text x="980" y="142" font-size="10.5" fill="#475569">§8)</text>
+<text x="980" y="170" font-size="12" fill="#0F172A" font-weight="700">Planner clip</text>
+<text x="980" y="186" font-size="10.5" fill="#475569">ACCEL_MIN … ACCEL_MAX, the same values on the</text>
+<text x="980" y="200" font-size="10.5" fill="#475569">reference car (FMEA PF-03)</text>
+<text x="980" y="228" font-size="12" fill="#0F172A" font-weight="700">Cruise target</text>
+<text x="980" y="244" font-size="10.5" fill="#475569">to set speed: 1.6, 1.2, 0.8, 0.6 m/s² at 0, 10, 25, 40 m/s;</text>
+<text x="980" y="258" font-size="10.5" fill="#475569">down to -1.2</text>
+<text x="980" y="286" font-size="12" fill="#0F172A" font-weight="700">In a turn</text>
+<text x="980" y="302" font-size="10.5" fill="#475569">total acceleration ≤ 1.7…3.2 m/s² (20…40 m/s), so less</text>
+<text x="980" y="316" font-size="10.5" fill="#475569">forward pull while cornering</text>
+<text x="980" y="344" font-size="12" fill="#0F172A" font-weight="700">Final rate</text>
+<text x="980" y="360" font-size="10.5" fill="#475569">≤ 4.5 m/s³ on the 0x343 command (carcontroller)</text>
+<text x="40" y="496" font-size="11" fill="#475569">A lead needing more than 3.5 m/s² of braking is beyond what the item can do (SH-06); that is what the stock AEB (AOU-04) and the FCW (Figure 5) are for.</text>
+<rect x="40" y="512" width="14" height="12" rx="3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="60" y="522" font-size="11" fill="#475569">envelope and clip</text>
+<rect x="163.8" y="512" width="14" height="12" rx="3" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.2"/>
+<text x="183.8" y="522" font-size="11" fill="#475569">cruise target limits</text>
+</svg>
