@@ -316,6 +316,20 @@ jobs:
         python3 assurance/04-hardware/wiring/make_wiring.py --check
         python3 assurance/04-hardware/wiring/test_make_wiring.py
 
+  fmdtools:
+    name: fmdtools fault-propagation models
+    # NASA fmdtools models of the fault trees (TE-02; assurance/models/fmdtools). Synthetic: no evidence credit.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Install the pinned fmdtools packages
+      run: python3 -m pip install --quiet --user --break-system-packages -r assurance/models/fmdtools/requirements.txt
+    - name: SG-02 model maps the WP-A-04 tree and reproduces the reference cut sets
+      run: python3 assurance/models/fmdtools/sg02/test_sg02.py
+
   sim-plant:
     name: simulation plant model
     # Fault-injection plant model (assurance/sim, layer 1): the real panda safety code in a closed loop with

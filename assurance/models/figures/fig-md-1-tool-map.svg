@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="730" viewBox="0 0 640 730" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="834" viewBox="0 0 640 834" role="img" aria-labelledby="t d">
 <title id="t">Modelling plan: tools, what they model, and what the output may be used for</title>
-<desc id="d">Tool map of the modelling plan. Python → SM-SELFDRIVED record (Exists) → TL-28 TCL2: Envelope design description | Python → Back-to-back test (Exists) → TL-29 TCL1: Envelope verification (no credit) | Python, OpenModelica → HIL plant model (In progress) → TL-30 TCL1 / TCL2: Envelope verification on the bench | Octave → Envelope calculations and plots (Exists) → TL-25 TCL1: None (design support) | SysML v2, Python → Architecture model (Draft) → TL-26 TCL1: None (design description); TL-27 TCL1: None (consistency support and figures). Rule: No model output is verification evidence until the tool that produced it is classified at the confidence level the evidence needs (WP-P-07 §5) and the result has been reviewed.</desc>
+<desc id="d">Tool map of the modelling plan. Python → SM-SELFDRIVED record (Exists) → TL-28 TCL2: Envelope design description | Python → Back-to-back test (Exists) → TL-29 TCL1: Envelope verification (no credit) | Python, OpenModelica → HIL plant model (In progress) → TL-30 TCL1 / TCL2: Envelope verification on the bench | Octave → Envelope calculations and plots (Exists) → TL-25 TCL1: None (design support) | SysML v2, Python → Architecture model (Draft) → TL-26 TCL1: None (design description); TL-27 TCL1: None (consistency support and figures) | Python → Fault-propagation model of the SG-02 tree (In progress) → TL-49 TCL1: Analysis support for WP-A-04; no item element. Rule: No model output is verification evidence until the tool that produced it is classified at the confidence level the evidence needs (WP-P-07 §5) and the result has been reviewed.</desc>
 <style>
 svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
       --py:#2a78d6; --py-bg:#e9f1fb; --om:#6250d6; --om-bg:#efedfb; --oc:#0f8a6e; --oc-bg:#e3f5ef;
@@ -32,7 +32,7 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 .arr { stroke:var(--ink2); stroke-width:1.6; fill:none; }
 </style>
 <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-ink2"/></marker></defs>
-<rect class="bg" width="640" height="730"/>
+<rect class="bg" width="640" height="834"/>
 <text x="24" y="34" class="h">Modelling: tool → what it models → use</text>
 <text x="24" y="56" class="t2">From §2 of this page and the WP-P-07 §3 tool inventory</text>
 <line x1="24" y1="70" x2="616" y2="70" class="hair"/>
@@ -40,7 +40,7 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 <text x="160" y="96" class="t2b">Models (§2 item)</text>
 <text x="410" y="96" class="ta" text-anchor="middle">WP-P-07</text>
 <text x="462" y="96" class="t2b">Output may be used for</text>
-<rect x="372" y="106" width="76" height="514" rx="6" class="gate"/>
+<rect x="372" y="106" width="76" height="618" rx="6" class="gate"/>
 <rect x="160" y="110" width="196" height="74" rx="8" class="card"/>
 <rect x="462" y="110" width="154" height="74" rx="8" class="card"/>
 <rect x="24" y="120" width="57.8" height="20" rx="10" class="f-py"/>
@@ -121,8 +121,24 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 <path d="M138 511 H158" class="arr" marker-end="url(#a)"/>
 <path d="M358 511 H370" class="arr" marker-end="url(#a)"/>
 <path d="M450 511 H460" class="arr" marker-end="url(#a)"/>
-<rect x="24" y="632" width="592" height="86" rx="8" class="gate"/>
-<text x="40" y="654" class="t">No model output is verification evidence until the tool that produced</text>
-<text x="40" y="674" class="t">it is classified at the confidence level the evidence needs (WP-P-07</text>
-<text x="40" y="694" class="t">§5) and the result has been reviewed.</text>
+<rect x="160" y="626" width="196" height="94" rx="8" class="card"/>
+<rect x="462" y="626" width="154" height="94" rx="8" class="card"/>
+<rect x="24" y="636" width="57.8" height="20" rx="10" class="f-py"/>
+<text x="52.9" y="650" class="chip" text-anchor="middle">Python</text>
+<text x="170" y="648" class="tb">Fault-propagation</text>
+<text x="170" y="668" class="tb">model of the SG-02</text>
+<text x="170" y="688" class="tb">tree</text>
+<text x="170" y="708" class="t2">#6 · In progress</text>
+<text x="472" y="646" class="t2">Analysis support</text>
+<text x="472" y="664" class="t2">for WP-A-04; no</text>
+<text x="472" y="682" class="t2">item element</text>
+<text x="410" y="648" class="t2b" text-anchor="middle">TL-49</text>
+<text x="410" y="664" class="t2" text-anchor="middle">TCL1</text>
+<path d="M138 647 H158" class="arr" marker-end="url(#a)"/>
+<path d="M358 647 H370" class="arr" marker-end="url(#a)"/>
+<path d="M450 647 H460" class="arr" marker-end="url(#a)"/>
+<rect x="24" y="736" width="592" height="86" rx="8" class="gate"/>
+<text x="40" y="758" class="t">No model output is verification evidence until the tool that produced</text>
+<text x="40" y="778" class="t">it is classified at the confidence level the evidence needs (WP-P-07</text>
+<text x="40" y="798" class="t">§5) and the result has been reviewed.</text>
 </svg>
