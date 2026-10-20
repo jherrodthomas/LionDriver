@@ -52,11 +52,22 @@ ASSUMPTIONS = {
 }
 
 
+# Driver-model options for the edge-case search (../search) and its scenes: every one is off by default, so no catalog
+# case uses them and plant-results.md does not list them. Set them per run like an assumption (simulate overrides).
+DRIVER_OPTIONS = {
+  "driver_wrong_s": (0.0, "what-if, off (0): the driver's first correction goes the wrong way for this long, then reverses. No source"),
+  "driver_zeta": (1.0, "damping ratio of the driver's return-to-centre loop: 1 is the critically damped loop of driver_ay_max; below 1 the driver over-corrects past the lane centre. No source"),
+  "driver_eps_lag_s": (0.0, "the driver feels a change of the item's steering torque this late (first-order lag); 0 at once. No source"),
+  "driver_brakes_only": (0.0, "what-if, off (0): when 1 the driver of a lateral case brakes (driver_brake) instead of steering. No source"),
+}
+
 _OVERRIDES: dict[str, float] = {}   # per-run assumption values (the search varies e.g. the driver reaction time)
 
 
 def A(key: str) -> float:
-  return _OVERRIDES.get(key, ASSUMPTIONS[key][0])
+  if key in _OVERRIDES:
+    return _OVERRIDES[key]
+  return ASSUMPTIONS[key][0] if key in ASSUMPTIONS else DRIVER_OPTIONS[key][0]
 
 
 ODD_KPH = 110.0        # ODD-H speed bound (decision register DQ-260)
@@ -83,6 +94,15 @@ class Case:
   note: str = ""
   tsr: str = ""
   pcs: bool = False           # SG-07 case: the stock camera requests PCS braking at the fault onset
+  # edge-case search (../search) and its scenes only; no catalog case sets them
+  fault_clear: float | None = None   # s after the onset at which the fault clears
+  clear_after_correction: float | None = None  # s after the driver's correction starts at which the fault clears
+  fault2: str = ""                   # a second fault of this kind, fault2_gap s after the first clears
+  fault2_gap: float = 0.5
+  lane_change: float | None = None   # s at which the SoC starts an assisted lane change to the left
+  lane_change_s: float = 4.0         # duration of that lane change (cosine profile)
+  ay_disturbance: float = 0.0        # m/s², a steady lateral push to the left (crosswind or bank, TC-15), built up over
+                                     # 2-4 s and added as the driver's input is (an L1 stand-in: no aerodynamics, no roll)
 
 
 @dataclass
@@ -124,6 +144,14 @@ def make_road(kind: str, v: float, lane_width: float = 3.7) -> Road:
     return Road("straight highway", lane_width, straight=3000.0, length=1200.0)
   # "curve@<a_y>": a left curve whose steady lateral acceleration at speed v is a_y; "rcurve@<a_y>": the same to the
   # right (scenes of ../blender only; no catalog case uses it)
+  # "arc@<a_y>:<L>" / "rarc@<a_y>:<L>": the same left / right curve with an exit: L m of arc, then a 100 m clothoid back
+  # to a straight, after a 200 m straight approach (edge-case search only)
+  if kind.startswith(("arc@", "rarc@")):
+    a_y, arc = (float(x) for x in kind.split("@")[1].split(":"))
+    k = (1 if kind.startswith("arc@") else -1) * a_y / (v * v)
+    return Road(f"{'left' if k > 0 else 'right'} curve with exit, R = v²/{a_y:g} m/s², {arc:g} m of arc", lane_width,
+                straight=0.0, length=1500.0, segments=[(200.0, 0.0, 0.0), (100.0, 0.0, k), (arc, k, k), (100.0, k, 0.0),
+                                                       (2000.0, 0.0, 0.0)])
   if kind.startswith("rcurve@"):
     a_y = float(kind.split("@")[1])
     return Road(f"right curve, R = v²/{a_y:g} m/s²", lane_width, straight=60.0, radius=-v * v / a_y, length=1200.0)
@@ -145,13 +173,15 @@ class SoC:
     self.heartbeat_ok = True
     self.stalled = False
 
-  def steer_frame(self, engaged, v, kappa, e_y, e_psi, eps_torque):
+  def steer_frame(self, engaged, v, kappa, e_y, e_psi, eps_torque, a_ff=None):
     if self.frozen is not None:
       return self.frozen
     if self.override_torque is not None:
       torque, req = self.override_torque, 1
     else:
       a_des = v * v * kappa - 1.0 * e_y - 1.6 * v * math.sin(e_psi)
+      if a_ff is not None:           # lane change: feed-forward of the planned path
+        a_des += a_ff
       actuator = a_des / self.d["lat_accel_factor"]
       if self.hardover:
         actuator = self.hardover
@@ -174,8 +204,8 @@ class LIMITS:   # opendbc toyota CarControllerParams with torque lateral tuning 
 
 
 def simulate(case: Case, overrides: dict[str, float] | None = None) -> Result:
-  """Run one case. overrides: assumption values for this run only (keys of ASSUMPTIONS)."""
-  unknown = set(overrides or {}) - set(ASSUMPTIONS)
+  """Run one case. overrides: assumption values for this run only (keys of ASSUMPTIONS or DRIVER_OPTIONS)."""
+  unknown = set(overrides or {}) - set(ASSUMPTIONS) - set(DRIVER_OPTIONS)
   if unknown:
     raise KeyError(f"not an assumption: {sorted(unknown)}")
   _OVERRIDES.clear()
@@ -205,6 +235,8 @@ def _simulate(case: Case) -> Result:
 
   t_fault = case.t_fault if case.t_fault is not None else None
   fault_on = False
+  t_clear = None
+  eps_seen = 0.0           # the item's lateral acceleration as the driver feels it (driver_eps_lag_s)
   stuck_pass = stuck_intercept = False
   rx_stop: set[str] = set()
   lka_state = 5
@@ -227,6 +259,95 @@ def _simulate(case: Case) -> Result:
   n_steps = int(t_end * 1e6 / DT_US)
   torque0 = None
 
+  def inject(f, on, v, kappa, e_y, e_psi):
+    """Start (on) or clear a fault of kind f. Clearing is defined for the kinds the edge-case search uses."""
+    nonlocal stuck_pass, stuck_intercept, lka_state
+    if not on:
+      if f in ("hardover", "hardover_left"):
+        soc.hardover = 0.0
+      elif f in ("frozen", "heartbeat_frozen"):
+        soc.frozen = None
+        soc.heartbeat_ok = True
+      elif f in ("heartbeat", "soc_stall"):
+        soc.stalled = False
+        soc.heartbeat_ok = True
+      elif f == "eps_fault":
+        plant.set_eps_fault(False)
+        lka_state = 5
+      elif f == "rx_loss":
+        rx_stop.discard("STEER_TORQUE_SENSOR")
+      elif f == "overlimit":
+        soc.override_torque = None
+      else:
+        raise ValueError(f"{f}: clearing not modelled")
+      return
+    if f == "overlimit":
+      soc.override_torque = -3000
+    elif f == "hardover":
+      soc.hardover = -1.0
+    elif f == "hardover_left":             # mirror of hardover (scenes of ../blender only; no catalog case uses it)
+      soc.hardover = 1.0
+    elif f == "not_engaged":
+      soc.override_torque = -STEER_MAX
+    elif f in ("frozen", "heartbeat_frozen"):
+      soc.frozen = soc.steer_frame(True, v, kappa, *soc_errors(t, e_y, e_psi), eps.torque, a_ff(t))
+      if f == "heartbeat_frozen":
+        soc.heartbeat_ok = False
+    elif f == "heartbeat":
+      soc.heartbeat_ok = False
+    elif f == "soc_stall":
+      soc.stalled = True
+      soc.heartbeat_ok = False
+    elif f in ("mcu_hang", "mcu_hang_stuck_intercept", "pcs_mcu_hang", "pcs_stuck_intercept"):
+      panda.hung = True
+      stuck_intercept = f in ("mcu_hang_stuck_intercept", "pcs_stuck_intercept")
+    elif f == "pcs_stock":
+      pass
+    elif f == "switch_pass":
+      stuck_pass = True
+    elif f == "eps_fault":
+      plant.set_eps_fault(True)
+      lka_state = 9
+    elif f == "rx_loss":
+      rx_stop.add("STEER_TORQUE_SENSOR")
+    elif f == "accel_max":
+      soc.accel_cmd = 2.0
+    elif f == "accel_overlimit":
+      soc.accel_cmd = 4.0
+    elif f == "decel_min":
+      soc.accel_cmd = -3.5
+    elif f == "decel_overlimit":
+      soc.accel_cmd = -6.0
+    elif f == "none":
+      pass
+    else:
+      raise ValueError(f)
+
+  # assisted lane change to the left (edge-case search): the SoC follows a cosine profile from the lane centre to the
+  # next lane's; its errors are taken to that planned path
+  def lc_ref(t):
+    if case.lane_change is None or t < case.lane_change:
+      return 0.0, 0.0, 0.0
+    T = case.lane_change_s
+    u = min((t - case.lane_change) / T, 1.0)
+    lw = road.lane_width
+    if u >= 1.0:
+      return lw, 0.0, 0.0
+    return (lw * (1 - math.cos(math.pi * u)) / 2, lw * math.pi / (2 * T) * math.sin(math.pi * u),
+            lw * math.pi ** 2 / (2 * T * T) * math.cos(math.pi * u))
+
+  def soc_errors(t, e_y, e_psi):
+    if case.lane_change is None:
+      return e_y, e_psi
+    y, dy, _ = lc_ref(t)
+    return e_y - y, e_psi - math.atan2(dy, max(plant.speed, 1.0))
+
+  def a_ff(t):
+    return None if case.lane_change is None else lc_ref(t)[2]
+
+  def lc_drift(t):            # planned lateral motion since the fault (lane change); 0 otherwise
+    return 0.0 if case.lane_change is None else lc_ref(t)[0] - lc_ref(res.t0)[0]
+
   def state_on_road():
     x = plant.x
     s, lat, hr = road.project(x[0], x[1])
@@ -245,49 +366,19 @@ def _simulate(case: Case) -> Result:
     if not fault_on and ((t_fault is not None and t >= t_fault) or (t_fault is None and s >= road.curve_start)):
       fault_on = True
       res.t0, res.e0 = t, e_y
-      f = case.fault
-      if f == "overlimit":
-        soc.override_torque = -3000
-      elif f == "hardover":
-        soc.hardover = -1.0
-      elif f == "hardover_left":             # mirror of hardover (scenes of ../blender only; no catalog case uses it)
-        soc.hardover = 1.0
-      elif f == "not_engaged":
-        soc.override_torque = -STEER_MAX
-      elif f in ("frozen", "heartbeat_frozen"):
-        soc.frozen = soc.steer_frame(True, v, kappa, e_y, e_psi, eps.torque)
-        if f == "heartbeat_frozen":
-          soc.heartbeat_ok = False
-      elif f == "heartbeat":
-        soc.heartbeat_ok = False
-      elif f == "soc_stall":
-        soc.stalled = True
-        soc.heartbeat_ok = False
-      elif f in ("mcu_hang", "mcu_hang_stuck_intercept", "pcs_mcu_hang", "pcs_stuck_intercept"):
-        panda.hung = True
-        stuck_intercept = f in ("mcu_hang_stuck_intercept", "pcs_stuck_intercept")
-      elif f == "pcs_stock":
-        pass
-      elif f == "switch_pass":
-        stuck_pass = True
-      elif f == "eps_fault":
-        plant.set_eps_fault(True)
-        lka_state = 9
-      elif f == "rx_loss":
-        rx_stop.add("STEER_TORQUE_SENSOR")
-      elif f == "accel_max":
-        soc.accel_cmd = 2.0
-      elif f == "accel_overlimit":
-        soc.accel_cmd = 4.0
-      elif f == "decel_min":
-        soc.accel_cmd = -3.5
-      elif f == "decel_overlimit":
-        soc.accel_cmd = -6.0
-      elif f == "none":
-        pass
-      else:
-        raise ValueError(f)
+      inject(case.fault, True, v, kappa, e_y, e_psi)
       res.event("fault", t)
+    # a transient fault clears (edge-case search), and a second one follows
+    if fault_on and t_clear is None and (
+        (case.fault_clear is not None and t >= res.t0 + case.fault_clear) or
+        (case.clear_after_correction is not None and driver_t_react is not None
+         and t >= driver_t_react + case.clear_after_correction)):
+      t_clear = t
+      inject(case.fault, False, v, kappa, e_y, e_psi)
+      res.event("fault clears", t)
+    if t_clear is not None and case.fault2 and "second fault" not in res.events and t >= t_clear + case.fault2_gap:
+      inject(case.fault2, True, v, kappa, e_y, e_psi)
+      res.event("second fault", t)
 
     engaged_soc = case.engaged and t >= t_engage and not soc.stalled
     intercept = (panda.relay_driven and not stuck_pass) or stuck_intercept
@@ -318,7 +409,10 @@ def _simulate(case: Case) -> Result:
       frame = k // 10
       # the panda's car-side transceiver is on the car bus whatever the switch position; the switch only decides
       # whether the stock camera reaches the car directly
-      addr, dat, bus = soc.steer_frame(engaged_soc, v, kappa, e_y, e_psi, eps.torque)
+      if case.lane_change is None:
+        addr, dat, bus = soc.steer_frame(engaged_soc, v, kappa, e_y, e_psi, eps.torque)
+      else:
+        addr, dat, bus = soc.steer_frame(engaged_soc, v, kappa, *soc_errors(t, e_y, e_psi), eps.torque, a_ff(t))
       torque, req = _decode_steer(panda, dat)
       if panda.hung:
         if fault_on:
@@ -370,7 +464,7 @@ def _simulate(case: Case) -> Result:
     if fault_on and driver_cue is None:
       if "panda siren" in res.events:
         driver_cue = ("siren", res.events["panda siren"])
-      elif not case.longitudinal and abs(e_y - res.e0) > A("driver_lat_cue_m"):
+      elif not case.longitudinal and abs(e_y - res.e0 - lc_drift(t)) > A("driver_lat_cue_m"):
         driver_cue = ("drift", t)
       elif case.longitudinal and abs(ax_meas - 0.0) > A("driver_long_cue"):
         driver_cue = ("acceleration", t)
@@ -387,15 +481,29 @@ def _simulate(case: Case) -> Result:
         else:
           driver_gas = True
           d_acc = 0.0
+      elif A("driver_brakes_only"):   # driver-model option: brakes instead of steering
+        driver_brake = True
+        d_acc = -A("driver_brake") * min((t - driver_t_react) / 0.3, 1.0)
       else:
-        a_need = v * v * road.curvature(s) - DRIVER_KE * e_y - DRIVER_KV * v * math.sin(e_psi)
-        a_drv = max(-A("driver_ay_max"), min(A("driver_ay_max"), a_need - eps.lat_accel()))
+        zeta = A("driver_zeta")
+        kv = DRIVER_KV if zeta == 1.0 else 2 * zeta * 1.5
+        target = road.lane_width if case.lane_change is not None and t >= case.lane_change else 0.0  # completes it
+        a_need = v * v * road.curvature(s) - DRIVER_KE * (e_y - target) - kv * v * math.sin(e_psi)
+        a_item = eps.lat_accel() if not A("driver_eps_lag_s") else eps_seen
+        a_drv = max(-A("driver_ay_max"), min(A("driver_ay_max"), a_need - a_item))
+        if t < driver_t_react + A("driver_wrong_s"):
+          a_drv = -a_drv                # driver-model option: the first correction goes the wrong way
         d_steer = ramp * a_drv
+    if A("driver_eps_lag_s"):
+      eps_seen += (eps.lat_accel() - eps_seen) * min(DT_US / 1e6 / A("driver_eps_lag_s"), 1.0)
 
     # ------------------------------------------------ dynamics
     if k % DYN_EVERY == 0:
       dt = DYN_EVERY * DT_US / 1e6
-      plant.step(t, dt, d_steer, d_acc)
+      if case.ay_disturbance:            # builds up over 2-4 s, after the item has engaged
+        plant.step(t, dt, d_steer + case.ay_disturbance * min(max((t - 2.0) / 2.0, 0.0), 1.0), d_acc)
+      else:
+        plant.step(t, dt, d_steer, d_acc)
       if fault_on and torque0 is None:
         torque0 = eps.torque
       if fault_on and "EPS LKA torque below 5 %" not in res.events and abs(eps.torque) < 0.05 * STEER_MAX \

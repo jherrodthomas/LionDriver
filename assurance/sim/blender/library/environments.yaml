@@ -16,7 +16,9 @@
 #                d; lit at night), sign (a panel at ds_m, d: style warning, guide, works, speed), gantry (an overhead
 #                sign at ds_m, text), barrels (drums at d every every_m from from_ds to to_ds), overpass,
 #                intersection, traffic_light, cones (a contact obstacle), seam (a dark line the camera may
-#                follow)
+#                follow), tunnel (walls, roof, portal and luminaires from from_ds to to_ds), gore (chevron hatching where
+#                a lane splits off at d, widening to width on side right or left from from_ds to to_ds), windsock (a
+#                sock on a mast at ds_m, d, blown toward left or right)
 #   env          adjustments to the condition's look for this environment (sun_elevation_min: buildings hide a lower
 #                sun)
 #   traffic      the default traffic preset (library/traffic.yaml)
@@ -155,3 +157,60 @@ environments:
       - {kind: traffic_light, ds_m: 52, d: 5.6, state: red}
     env: {sun_elevation_min: 12}
     traffic: none
+
+  # --------------------------------------------------------------------- SOTIF triggering conditions (WP-C-06)
+  highway-narrow-truck:
+    title: Narrow highway lane with a concrete barrier close beside it and a truck in the next lane (TC-32)
+    os: [OS-01, OS-02]
+    odd: in
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    road: {type: highway, lanes_left: 1, lanes_right: 1, lane_width: 3.1, shoulder_m: 0.6, barrier: true,
+           scenery: trees, geometry: straight}
+    geometry: any
+    props:
+      - {kind: posts, d: 4.4, every_m: 50}
+      - {kind: sign, ds_m: 60, d: -6.5, style: warning, text: NARROW}
+    traffic: adjacent-truck
+
+  highway-crosswind:
+    title: Exposed highway on an embankment with windsocks and side-wind signs (TC-15, crosswind or bank)
+    os: [OS-01, OS-02]
+    odd: in
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    road: {type: highway, lanes_left: 1, lanes_right: 1, lane_width: 3.7, shoulder_m: 3.0, barrier: true,
+           scenery: open, geometry: straight}
+    geometry: any
+    props:
+      - {kind: sign, ds_m: 20, d: -10.0, style: warning, text: WIND}
+      - {kind: windsock, ds_m: 45, d: -10.5, toward: left}
+      - {kind: windsock, ds_m: 190, d: -10.5, toward: left}
+      - {kind: posts, d: 7.0, every_m: 50}
+    traffic: none
+
+  highway-tunnel:
+    title: Highway entering a lit tunnel (TC-18, lighting change at the portal)
+    os: [OS-01, OS-02]
+    odd: in
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    road: {type: highway, lanes_left: 1, lanes_right: 1, lane_width: 3.7, shoulder_m: 1.0, barrier: true,
+           scenery: trees, geometry: straight}
+    geometry: any
+    props:
+      - {kind: tunnel, from_ds: 35, to_ds: 400}
+      - {kind: sign, ds_m: 5, d: -8.0, style: guide, text: TUNNEL}
+    traffic: none
+
+  highway-exit-split:
+    title: Highway where the right lane splits off as an exit (TC-31, the path may follow the wrong branch)
+    os: [OS-01]
+    odd: in
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    road: {type: highway, lanes_left: 1, lanes_right: 1, lane_width: 3.7, shoulder_m: 3.0, barrier: true,
+           scenery: open, geometry: straight}
+    geometry: any
+    props:
+      - {kind: gantry, ds_m: 25, text: EXIT 24}
+      - {kind: gore, from_ds: 40, to_ds: 160, d: -1.85, width: 3.0, side: right}
+      - {kind: posts, d: 7.0, every_m: 50}
+    traffic: none
+
