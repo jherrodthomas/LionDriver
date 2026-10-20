@@ -1289,7 +1289,7 @@
   mechanism: "WRN"
   timing: "alert ≥ 1 s before decel onset (proposed)"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Partial: DM escalation alerts precede the no-response deceleration (`selfdrive/monitoring/policy.py`); soft-disable force deceleration is announced at its start (`selfdrive/controls/lib/longitudinal_planner.py:84-85`); jerk not bounded (GAP-04)"
+  baseline_impl: "Partial: the driver-monitoring no-response deceleration is announced 5 s ahead: the terminal alert counts down \"Car Stops in N s\" (`policy.py:459`, `events.py:239`), and the maneuver alert \"TAKE CONTROL: CAR STOPPING\", then \"CAR STOPPED\", sounds through the stop and the hold (`events.py:256`, `selfdrived.py:257`); the ramp stays within a_min and j_down on the host: the final command is rate-limited to 4.5 m/s³ (`ACCEL_FINAL_RATE_LIMIT`, opendbc `carcontroller.py:27, 256`, below j_down = 5 m/s³ of WP-W-02 §2.5) and clipped at ACCEL_MIN; the envelope's own jerk check is still missing (GAP-04, TSR-205); the fault soft-disable deceleration still starts with its alert, with no lead time (register DQ-407, queued). Not verified on the vehicle"
   status: proposed
   source: WP-S-02
 

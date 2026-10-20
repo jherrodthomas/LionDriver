@@ -252,15 +252,15 @@ class SelfdriveD:
         self.events.add(EventName.tooDistracted)
       # Alerts
       vision_dm = self.sm['driverMonitoringState'].activePolicy == MonitoringPolicy.vision
-      if self.sm['driverMonitoringState'].alertLevel == AlertLevel.one:
+      if self.mrm.active:
+        # TSR-633, TSR-624: the maneuver's own alert sounds through the stop and the hold, even if DM no longer reports
+        self.events.add(EventName.minimumRiskManeuver)
+      elif self.sm['driverMonitoringState'].alertLevel == AlertLevel.one:
         self.events.add(EventName.driverDistracted1 if vision_dm else EventName.driverUnresponsive1)
       elif self.sm['driverMonitoringState'].alertLevel == AlertLevel.two:
         self.events.add(EventName.driverDistracted2 if vision_dm else EventName.driverUnresponsive2)
       elif self.sm['driverMonitoringState'].alertLevel == AlertLevel.three:
         self.events.add(EventName.driverDistracted3 if vision_dm else EventName.driverUnresponsive3)
-      elif self.mrm.active:
-        # TSR-633: the terminal alert keeps sounding through the stop and the hold, even if DM no longer reports it
-        self.events.add(EventName.driverUnresponsive3)
       # Warn consistent DM uncertainty
       if self.sm['driverMonitoringState'].visionPolicyState.uncertainOffroadAlertPercent >= 100 and not self.dm_uncertain_alerted:
         set_offroad_alert("Offroad_DriverMonitoringUncertain", True)

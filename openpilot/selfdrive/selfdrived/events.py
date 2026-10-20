@@ -236,6 +236,38 @@ def user_soft_disable_alert(alert_text_2: str) -> AlertCallbackType:
     return UserSoftDisableAlert(alert_text_2)
   return func
 
+def dm_terminal_alert(alert_text_2: str) -> AlertCallbackType:
+  """LionDriver TSR-624: the terminal DM alert announces the no-response stop (TSR-633) before it starts."""
+  def func(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int, personality) -> Alert:
+    decel_in = sm['driverMonitoringState'].noResponseDecelIn
+    text_2 = alert_text_2
+    if decel_in > 0:
+      text_2 = f"{alert_text_2} - Car Stops in {math.ceil(decel_in)} s"
+    elif decel_in == 0:
+      text_2 = f"{alert_text_2} - Car Is Stopping"
+    return Alert(
+      "DISENGAGE IMMEDIATELY",
+      text_2,
+      AlertStatus.critical, AlertSize.full,
+      Priority.HIGH, VisualAlert.steerRequired, AudibleAlert.warningImmediate, .1)
+  return func
+
+
+def minimum_risk_maneuver_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int, personality) -> Alert:
+  """LionDriver TSR-633, TSR-624: the item is stopping in lane, or holds the car, until the driver takes over."""
+  if CS.standstill:
+    return Alert(
+      "TAKE CONTROL: CAR STOPPED",
+      "Held Until You Take Over",
+      AlertStatus.critical, AlertSize.full,
+      Priority.HIGH, VisualAlert.steerRequired, AudibleAlert.warningImmediate, .1)
+  return Alert(
+    "TAKE CONTROL: CAR STOPPING",
+    "Driver Unresponsive",
+    AlertStatus.critical, AlertSize.full,
+    Priority.HIGH, VisualAlert.steerRequired, AudibleAlert.warningImmediate, .1)
+
+
 def startup_master_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int, personality) -> Alert:
   branch = get_short_branch()  # Ensure get_short_branch is cached to avoid lags on startup
   if "REPLAY" in os.environ:
@@ -543,11 +575,7 @@ EVENTS: dict[int, dict[str, Alert | AlertCallbackType]] = {
   },
 
   EventName.driverDistracted3: {
-    ET.PERMANENT: Alert(
-      "DISENGAGE IMMEDIATELY",
-      "Driver Distracted",
-      AlertStatus.critical, AlertSize.full,
-      Priority.HIGH, VisualAlert.steerRequired, AudibleAlert.warningImmediate, .1),
+    ET.PERMANENT: dm_terminal_alert("Driver Distracted"),
   },
 
   EventName.driverUnresponsive1: {
@@ -567,11 +595,7 @@ EVENTS: dict[int, dict[str, Alert | AlertCallbackType]] = {
   },
 
   EventName.driverUnresponsive3: {
-    ET.PERMANENT: Alert(
-      "DISENGAGE IMMEDIATELY",
-      "Driver Unresponsive",
-      AlertStatus.critical, AlertSize.full,
-      Priority.HIGH, VisualAlert.steerRequired, AudibleAlert.warningImmediate, .1),
+    ET.PERMANENT: dm_terminal_alert("Driver Unresponsive"),
   },
 
   EventName.manualRestart: {
@@ -1018,6 +1042,11 @@ EVENTS: dict[int, dict[str, Alert | AlertCallbackType]] = {
   # LionDriver (DQ-280, ODD entry): on the reference platform the item engages only at highway speed
   EventName.belowHighwaySpeed: {
     ET.NO_ENTRY: below_highway_speed_alert,
+  },
+
+  # LionDriver TSR-633, TSR-624: stopping in lane, then held, until the driver takes over
+  EventName.minimumRiskManeuver: {
+    ET.PERMANENT: minimum_risk_maneuver_alert,
   },
 
   EventName.relayMalfunction: {

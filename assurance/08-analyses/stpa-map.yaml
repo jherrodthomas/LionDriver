@@ -334,7 +334,7 @@ scenarios:
     requirements: [TSR-624, TSR-633]
     actions: [SFM-ACT-005]
     decisions: [DQ-205, DQ-365]
-    open_because: "Reaction decided (DQ-365, TSR-633) and implemented in software, not verified on the vehicle: 5 s after the last alert the car stops in the lane, the stop is latched until the driver takes over, it cannot resume, and the lockout runs from the takeover; there is still no announcement before it starts (TSR-624), the hold rests on the untested AOU-16 (UE-8.11), and the forced stop is a single point in the SG-08 tree (MCS-08.7)"
+    open_because: "Reaction decided (DQ-365, TSR-633) and implemented in software, not verified on the vehicle: 5 s after the last alert the car stops in the lane, the stop is latched until the driver takes over, it cannot resume, and the lockout runs from the takeover; the last alert counts down to the stop and the maneuver alert sounds through it (TSR-624), the hold rests on the untested AOU-16 (UE-8.11), and the forced stop is a single point in the SG-08 tree (MCS-08.7)"
   - id: LS-36
     ucas: [UCA-07]
     hazards: [H-07, H-03, H-04]
