@@ -1,0 +1,64 @@
+# SG-02 fault-propagation model (TE-02, step P1): which fault tree event each model failure mode realises, and the
+# timing the model's nominal behaviour uses. Read by model.py; checked by test_sg02.py against the WP-A-04 tree and
+# assurance/08-analyses/fta-fmea-map.yaml (every SG-02 tree event has a mode or a latent entry, every mode names a
+# tree event, and every event is in the FTA <-> FMEA map).
+#
+# Synthetic model (DSR-12): behaviour and timing are taken from WP-A-04 §4 and the documents it cites, not measured.
+# Results rank risks and point reviewers at possible gaps in the tree; they earn no evidence credit.
+schema_version: 1
+goal: SG-02
+top_event: TE-02
+budget_s: 1.0          # SG-02: take-over warning within 1 s (WP-C-04 §3)
+tick_s: 0.02           # one model step; fmdtools needs an integer step, so times below are converted to ticks
+
+# Times after the onset of a cause, in seconds, for the reference build after BL-005 (WP-A-04 §4 and §4.1).
+timing:
+  host_alert_eps_fault: {s: 0.1, source: "WP-A-04 §4 BE-2.08: take-over alert on an EPS fault without a recent override"}
+  host_alert_eps_fault_after_override: {s: 1.5, source: "WP-A-04 §4 BE-2.08: low-priority prompt for 1.5 s, then the take-over request (TSR-607 (b))"}
+  host_alert_envelope_block: {s: 0.5, source: "WP-A-04 §4 BE-2.09: controlsMismatch after 2 samples, at most 0.5 s (TSR-621)"}
+  host_alert_input_loss: {s: 0.1, source: "Assumed: an immediate critical alert when the soft disable of BE-2.10 is not the reaction"}
+  host_alert_frames_lost: {s: 0.5, source: "Assumed: WP-A-04 OI-10 has the timing to confirm (BE-2.17)"}
+  host_alert_saturation: {s: 0.5, source: "Assumed: SFM-ACT-017 has the timing to analyse (BE-2.24)"}
+  ui_unresponsive_after_selfdrived_stop: {s: 5.0, source: "WP-A-04 §4 BE-2.21: ui/soundd show System Unresponsive only after 5 s"}
+  control_stop_after_selfdrived_stop: {s: 0.1, source: "WP-A-04 §4 BE-2.21: controlsd and card stop within about 0.1 s"}
+  siren_after_eps_fault: {s: 0.96, source: "WP-A-04 §4 BE-2.14: 0.7 s persistence, siren at most 0.96 s after onset (panda bf8102a, WP-S-04 T-28)"}
+  siren_after_heartbeat_loss: {s: 0.56, source: "WP-A-04 §4 BE-2.14: siren about 0.56 s after the last heartbeat (panda c33343b, WP-S-04 T-07a)"}
+  revoke_after_engaged_mismatch: {s: 3.0, source: "WP-A-04 §4.1 MCS-02.9: the panda revokes authority after about 3 s on the engaged mismatch"}
+
+# Tree events the model holds as already present at the baseline, not as failure modes. A latent event of the tree
+# that the reference build has partly fixed stays a mode instead (BE-2.14: the siren now fires on an EPS fault and on
+# heartbeat loss), so the model can show where the latent tag is out of date.
+latent_in_model:
+  - id: BE-2.11
+    why: "Baseline design: a non-finite command is logged only, never warned (GAP-19)"
+  - id: BE-2.16
+    why: "Baseline design: no ACC cancel on a lateral fault, so the cluster cruise indicator never changes (TSR-303 not implemented)"
+
+# One failure mode per tree event. function: the model function that carries it; kind: cause (lateral control is
+# lost), detection (the SoC warning is missing or late), cue (an SoC-independent cue is missing), or driver.
+modes:
+  - {event: BE-2.01, function: eps, mode: lka_drop, kind: cause, text: "EPS drops LKA assistance and reports it in 0x262"}
+  - {event: UE-2.19, function: eps, mode: silent_drop, kind: detection, text: "EPS does not report a drop in 0x262 (SFM-005.C1)"}
+  - {event: BE-2.20, function: soc, mode: diag_request, kind: cause, text: "SoC sends a diagnostic request that resets the EPS while engaged"}
+  - {event: BE-7.20, function: envelope, mode: diag_pass, kind: cause, text: "Diagnostic TX hook passes any ISO 15765 frame"}
+  - {event: BE-2.02, function: envelope, mode: block, kind: cause, text: "Envelope blocks or revokes authority while the SoC shows engaged"}
+  - {event: BE-2.03, function: soc, mode: input_stale, kind: cause, text: "Input of the lateral control law lost or stale, control continues"}
+  - {event: BE-2.04, function: soc, mode: nonfinite, kind: cause, text: "Non-finite command clamped to 0 without a fault"}
+  - {event: BE-2.05, function: soc, mode: crash, kind: cause, text: "Whole SoC crash or hang"}
+  - {event: BE-2.21, function: soc, mode: selfdrived_stop, kind: cause, text: "selfdrived crash or hang, pandad keeps the heartbeat"}
+  - {event: BE-2.06, function: soc, mode: frames_stop, kind: cause, text: "Actuation frames stop reaching the bus"}
+  - {event: BE-2.07, function: supply, mode: loss, kind: cause, text: "Loss of the 12 V supply to the device"}
+  - {event: BE-2.23, function: soc, mode: insufficient, kind: cause, text: "Achieved curvature below the desired (SOTIF)"}
+  - {event: BE-2.08, function: monitor, mode: eps_prompt_only, kind: detection, text: "EPS fault warned by a low-priority prompt for 1.5 s after an override"}
+  - {event: BE-2.09, function: monitor, mode: block_undetected, kind: detection, text: "Envelope blocking not detected (stale pandaStates with authority shown)"}
+  - {event: BE-2.10, function: monitor, mode: soft_disable, kind: detection, text: "Input loss handled as a soft disable, no adequate warning"}
+  - {event: BE-1.20, function: monitor, mode: diag_masked, kind: detection, text: "Diagnostics masked during the big-model fallback"}
+  - {event: BE-2.17, function: monitor, mode: frames_unreported, kind: detection, text: "Loss of the actuation frames not reported in time"}
+  - {event: BE-2.24, function: monitor, mode: saturation_late, kind: detection, text: "steerSaturated warning late or missing"}
+  - {event: BE-2.12, function: hmi, mode: hang, kind: detection, text: "HMI render loop or audio stream stalled"}
+  - {event: BE-2.13, function: hmi, mode: inaudible, kind: detection, text: "Alert volume not audible"}
+  - {event: BE-2.25, function: hmi, mode: masked, kind: detection, text: "Take-over alert masked by a higher-priority, lower-urgency alert"}
+  - {event: BE-2.14, function: siren, mode: not_triggered, kind: cue, text: "Siren not triggered"}
+  - {event: BE-2.15, function: siren, mode: silenced, kind: cue, text: "Siren silenced with the SoC audio"}
+  - {event: BE-2.22, function: siren, mode: path_fault, kind: cue, text: "Siren path fault (driver, amplifier or speaker)"}
+  - {event: UE-2.18, function: driver, mode: unaware, kind: driver, text: "Driver does not notice the end of LKA torque or the cluster cruise indicator"}

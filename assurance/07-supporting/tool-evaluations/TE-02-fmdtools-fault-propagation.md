@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Purpose | Decide whether NASA fmdtools should run, headless and in CI, as an executable cross-check of the fault trees and FMEAs, and plan a pilot on SG-02 |
-| Status | Draft plan, **not started**. Waiting for the lead's "go". AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Draft. Started on the lead's go (2026-10-20): P0 and P1 done ([`assurance/models/fmdtools/`](../../models/fmdtools/README.md)); P2 to P5 open. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Standard reference | ISO 26262-8:2018 §11 (tool classification), applied as in [WP-P-07](../WP-P-07-tool-classification-qualification.md) §2; ISO 26262-9:2018 §8 (safety analyses) |
 | Date | 2026-10-20 |
 | Baseline | `liondriver-dev` at `13ba1f4` (after #370) |
@@ -55,7 +55,9 @@ SG-02: no loss or degradation of lateral control without an adequate take-over w
 
 **Flows:** the lateral command, the torque request frames, EPS status (`0x262`), the alerts, and power.
 
-**Failure modes:** one Mode for each basic event BE-2.01 … BE-2.25, named by its BE ID. The undeveloped events UE-2.18 (driver does not notice) and UE-2.19 (EPS silently stops accepting requests) become driver and EPS modes too. A mapping file links each Mode to its BE and, through `fta-fmea-map.yaml`, to its FMEA cause. A check fails CI if a BE has no Mode or a Mode has no BE.
+**Failure modes:** one Mode for each event of the tree, named by its ID: the basic events BE-2.01 … BE-2.25 and the borrowed BE-1.20 and BE-7.20. The undeveloped events UE-2.18 (driver does not notice) and UE-2.19 (EPS silently stops accepting requests) become driver and EPS modes too. A mapping file links each Mode to its event and, through `fta-fmea-map.yaml`, to its FMEA cause. A check fails CI if an event has no Mode or a Mode has no event.
+
+P1 decision: two latent events are held as baseline design, not as modes. BE-2.11 (a non-finite command is never warned) and BE-2.16 (the cluster never changes) give 25 modes plus 2 latent entries. BE-2.14 (siren not triggered) stays a mode, because the reference build now sounds the siren on heartbeat loss and on a persisting EPS fault.
 
 **Top event in the model:** lateral control is lost or degraded while engaged, and no perceivable take-over cue (UI alert, audio, siren or cluster change) reaches the driver within 1.0 s. It is evaluated from each run's history.
 
@@ -68,7 +70,7 @@ SG-02: no loss or degradation of lateral control without an adequate take-over w
 | P0 Setup | Pin fmdtools 2.5.6 (plus `ipython`) in `assurance/models/fmdtools/requirements.txt`; add a CI job; enter the tool in WP-P-07 as TL-49 | Requirements file, CI job, TL-49 row | CI installs the library and runs an empty model |
 | P1 Model | The SG-02 function architecture of §3, with one Mode per BE/UE and the mapping file | `assurance/models/fmdtools/sg02/` with model, mapping and tests | The nominal run raises no top event; each mode changes only its own function; the mapping check passes |
 | P2 Single faults | Inject every mode alone, at 3 times (straight, curve entry, mid-curve) | A table of which single faults cause TE-02, and with what time to warning | Compared with the tree's order-1 effective sets (MCS-02.7 needs UE-2.18 too) |
-| P3 Joint faults | Every combination of 2 to 4 of the 27 modes: 20,826 sets, about 62,000 runs at the 3 times. A scheduled job runs the full sweep; the pull-request job runs order 2 only | The minimal fault sets that cause TE-02 in the model | A diff against the 100 computed cut sets. Each difference is written up as a finding for the FTA owner, in the style of F-1…F-36 in `fta-fmea-mapping.md` |
+| P3 Joint faults | Combinations of 2 to 4 of the 25 modes (15,250 sets). One run takes about 0.19 s, so the sweep skips sets with no cause and supersets of sets already found. A scheduled job runs the full sweep; the pull-request job runs order 2 only | The minimal fault sets that cause TE-02 in the model | A diff against the 100 computed cut sets. Each difference is written up as a finding for the FTA owner, in the style of F-1…F-36 in `fta-fmea-mapping.md` |
 | P4 Timing | Time to warning for every set that the model and the tree both list | A table and figure of the time to warning against 1.0 s, and against WP-S-04 | Every set over 1.0 s is named, with its cut-set row |
 | P5 Report and CI | Generated report page, figure and `--check` (like the other generators); results marked synthetic | The pilot report, a decision note on extending to SG-01, SG-03 and SG-06, and the TL-49 class confirmed | CI fails if the report is stale or the model and tree drift apart |
 
@@ -99,7 +101,7 @@ If results are ever credited, for example "the model confirms the tree is comple
 
 | ID | Item |
 |---|---|
-| OI-1 | Lead's "go" to start P0 |
+| OI-1 | ~~Lead's "go" to start P0~~ **Closed** 2026-10-20 (go given) |
 | OI-2 | Report the undeclared IPython import upstream (nasa/fmdtools), or keep `ipython` in our pin |
 | OI-3 | Confirm `recordclass == 0.24` builds on the CI runner image |
 | OI-4 | After P5: extend to SG-01 (hard-over), SG-03 and SG-06, or stop. Decided on what the SG-02 diff finds |
