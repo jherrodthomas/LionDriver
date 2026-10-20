@@ -52,7 +52,7 @@ Step P1 already shows one difference from the table, pinned in the tests: {BE-2.
 A run takes place on a straight, at curve entry or mid-curve (`events.yaml` phases). The model has no geometry: a phase says only whether curvature is asked and whether the end of LKA torque can be felt, so curve entry and mid-curve agree; timing along a curve is the plant's. [`p2-single-faults.md`](sg02/p2-single-faults.md) has the table. Two differences from the tree:
 
 - **BE-2.05 SoC crash**: TE-02 alone in the tree, not in the model, where the heartbeat siren sounds at 0.26 s. Same cause as the P1 finding: the tree's latent tag on BE-2.14.
-- **BE-2.07 supply loss on a straight**: TE-02 alone in the model. MCS-02.7 needs the driver to miss the end of LKA torque (UE-2.18); on a straight that torque is near zero, so the model gives no cue. This rests on an assumption; the plant can measure the drift and say whether it matters within the run.
+- **BE-2.07 supply loss on a straight**: TE-02 alone in the model. MCS-02.7 needs the driver to miss the end of LKA torque (UE-2.18); on a straight that torque is near zero, so the model gives no cue. The plant confirms it matters: with a road-crown or crosswind push of 0.1 m/s² or more, a 3.0 m lane line is crossed before the driver corrects ([straight-drift](../../sim/results/straight-drift.md)). The FTA owner takes it as an AOU-01R validation gap.
 
 ## Joint faults (step P3)
 

@@ -8,7 +8,7 @@ Each of the 25 failure modes is injected alone, 0.5 s into a run, in each road p
 
 | Phase | Curvature asked | End of LKA torque felt | Source |
 |---|---|---|---|
-| straight | no | no | Assumed: on a straight the LKA torque is near zero, so its end gives the driver little to feel. AOU-01R and AOU-12 do not state the road; the plant could measure the drift (search-curve-assist-loss starts at a_y 0) |
+| straight | no | no | Assumed: on a straight the LKA torque is near zero, so its end gives the driver little to feel. AOU-01R and AOU-12 do not state the road. The plant shows it matters: with a crown or crosswind push of 0.1 m/s² or more the 3.0 m lane line is crossed before the driver corrects ([straight-drift](../../../sim/results/straight-drift.md)) |
 | curve_entry | yes | yes | AOU-01R: the EPS ends LKA torque and the driver feels it while the item holds a curve |
 | mid_curve | yes | yes | AOU-01R, as curve_entry. The default phase of a run: the tree's case, a loss while the item holds a curve |
 
