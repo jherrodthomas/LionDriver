@@ -39,6 +39,13 @@ class TestRefs(unittest.TestCase):
     known = {"HE-01.1", "HE-01.2", "HE-02.1"}
     self.assertEqual(tm.refs_in("sets the C-class for HE-01.x", None, known), {"HE-01.1", "HE-01.2"})
 
+  def test_ids_inside_longer_names_are_not_references(self):
+    # "WP-H-06" is a work product and "VS-FI-08" a test case, not hazard H-06 or insufficiency FI-08
+    self.assertEqual(tm.refs_in("see WP-H-06 VS-HW-03; [§4](WP-H-03-hardware-safety-analysis.md)", None, self.KNOWN), set())
+    self.assertEqual(tm.refs_in("VS-FI-08 (frozen command), VS-FI-14", None, self.KNOWN), set())
+    self.assertEqual(tm.refs_in("WP-TSR-101…103", None, self.KNOWN), set())
+    self.assertEqual(tm.refs_in("H-06; (H-02), FI-08", None, self.KNOWN), {"H-06", "H-02", "FI-08"})
+
   def test_header_kind(self):
     self.assertEqual(tm.header_kind("SWSRs"), "SWSR")
     self.assertIsNone(tm.header_kind("Parent TSR (WP-S-02) / FSR"))  # prefixed IDs there; bare numbers not read
