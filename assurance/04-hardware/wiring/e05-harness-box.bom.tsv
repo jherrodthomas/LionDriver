@@ -1,0 +1,9 @@
+Id	Description	Qty	Unit	Designators
+1	Connector, D1 STPS2H100ZFY, Schottky, IGN_12 to box VIN, 2 pins	1		D1
+2	Connector, Hirose DX07S024XJ1R1100, OBD-C receptacle (USB-C), box side; CC1 CC2 and D+ D- not connected, 12 pins	1		J3
+3	Connector, Molex 212528-0400, comma power (optional accessory; use in the reference configuration not recorded, OI-W-5), 4 pins	1		J2
+4	Connector, Molex 501876-1840, box header, mates with Toyota A plug X3, 18 pins	1		J1
+5	Connector, Q6 DMN3200U-7 with R1, R4, R5, ignition sense HE-10, 2 pins	1		Q6
+6	Connector, R2 + R3, 2 x 120 ohm in series, SBU1 to GND, 2 pins	1		R23
+7	Connector, Vishay DG419LEDY-T1-GE4, SPDT analog switch on CAN_H; V+ = VL = VIN, 8 pins	1		U1
+8	Connector, Vishay DG419LEDY-T1-GE4, SPDT analog switch on CAN_L; V+ = VL = VIN, 8 pins	1		U2
