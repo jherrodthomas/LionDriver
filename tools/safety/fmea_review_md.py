@@ -650,6 +650,13 @@ def index(all_counts: dict, docs: dict) -> str:
     c, a = all_counts[n], docs[n]["analysis"]
     L.append(f"| [{SHORT[n]}]({n}.md) | {a.get('revision', '')} ({a.get('status', '')}) | {c['fm']} | {c['causes']} | {c['ap']['H']} | " +
              f"{c['h_open']} | {c['open']}/{c['actions']} | {c['msr']} | [xlsx]({n}-review.xlsx) |")
+  L += ["", "## Hardware metrics (FMEDA)", "",
+        "Written by `tools/safety/fmeda_review_md.py` and `tools/safety/export_fmeda_xlsx.py --all`.", "",
+        "| FMEDA | Revision | Goals and ASIL targets | Workbook |", "|---|---|---|---|"]
+  for n in ("fmeda-sg001", "fmeda-sg009"):
+    a = fmea_lint.load_yaml((ANALYSES / f"{n}.yaml").read_text())["analysis"]
+    goals = ", ".join(f"{t['goal']} {t['asil']}" for t in a.get("targets", [])) or f"{a['safety_goal']} {a['asil_target']}"
+    L.append(f"| [{a['title'].split(',')[0]}]({n}.md) | {a['revision']} ({a['status']}) | {goals} | [xlsx]({n}-review.xlsx) |")
   L += ["", "Ratings and the action-priority table: [rating-tables.md](../../rating-tables.md). The plan and method: " +
         "[fmea-plan.md](../../fmea-plan.md).", ""]
   return "\n".join(L)
