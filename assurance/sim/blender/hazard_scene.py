@@ -402,7 +402,7 @@ def build_props(sc: dict, coll, env: dict | None = None):
       wall = A.material("tunnel_wall", (0.62, 0.61, 0.58), rough=0.7)
       lamp = A.material("tunnel_lamp", (1.0, 0.86, 0.6), rough=0.3, emit=30.0)
       lo, hi = (r["barrier"] if r.get("barrier") is not None else right) - 0.5, left + 0.5
-      height = p.get("height", 6.5)
+      height = p.get("height", 8.0)                 # above the chase camera (street_layout.chase_rig: 6.5 m)
       n = max(int((p["to_s"] - p["from_s"]) / 2.0), 1)
       ss = [p["from_s"] + (p["to_s"] - p["from_s"]) * i / n for i in range(n + 1)]
       earth = A.material("tunnel_earth", (0.28, 0.4, 0.15), rough=0.95)
