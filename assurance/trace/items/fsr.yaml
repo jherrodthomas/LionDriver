@@ -417,7 +417,7 @@
   parents: [SG-04]
   allocated_to: "E-01"
   verification: "T-SIL, validation (WP-V-02)"
-  baseline_impl: "Partial: FCW from model hard-brake prediction or planner (`selfdrive/selfdrived/selfdrived.py:445-450`); no false-rate target. **ASIL A on a QM element (E-01):** decided 2026-10-14, DQ-052 A: SOTIF validation shows that a false FCW is not dangerous, then HE-04.5 is re-rated (OI-9); ASIL A applies until then. New in v0.2 (HE-04.5)"
+  baseline_impl: "Partial: FCW from model hard-brake prediction or planner (`selfdrive/selfdrived/selfdrived.py:488-493`); no false-rate target. **ASIL A on a QM element (E-01):** decided 2026-10-14, DQ-052 A: SOTIF validation shows that a false FCW is not dangerous, then HE-04.5 is re-rated (OI-9); ASIL A applies until then. New in v0.2 (HE-04.5)"
   status: proposed
   source: WP-C-04
 

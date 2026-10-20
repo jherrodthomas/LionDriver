@@ -1304,7 +1304,7 @@
   mechanism: "PLB"
   timing: "≤ 2 periods"
   verification: "T-SIL, LOG"
-  baseline_impl: "Partial: model FCW from `hardBrakePredicted` and planner FCW (`selfdrive/selfdrived/selfdrived.py:445-450`); no explicit freshness gate on FCW inputs; no false-rate target"
+  baseline_impl: "Partial: model FCW from `hardBrakePredicted` and planner FCW (`selfdrive/selfdrived/selfdrived.py:488-493`); no explicit freshness gate on FCW inputs; no false-rate target"
   status: proposed
   source: WP-S-02
 

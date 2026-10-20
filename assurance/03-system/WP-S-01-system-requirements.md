@@ -86,7 +86,7 @@ Paths are under `openpilot/` unless prefixed.
 
 | ID | Requirement | Type | Target / criterion | Verif | Current implementation | Rationale for TBD |
 |---|---|---|---|---|---|---|
-| SYS-100 | FCW shall alert when the model predicts hard braking or the planner predicts a collision. | F | as stated | T-SIL | `selfdrived.py:446-450`; `selfdrive/modeld/fill_model_msg.py:142-147` | — |
+| SYS-100 | FCW shall alert when the model predicts hard braking or the planner predicts a collision. | F | as stated | T-SIL | `selfdrived.py:489-493`; `selfdrive/modeld/fill_model_msg.py:142-147` | — |
 | SYS-101 | FCW false alert rate shall be ≤ **TBD** per 1000 km. | P | TBD | LOG | — | Needs field data |
 | SYS-102 | LDW shall warn when not laterally engaged, above 31 mph, with no turn signal in the last 5 s, when the vehicle drifts toward a visible lane line. | F | as stated | T-SIL | `selfdrive/controls/lib/ldw.py:7-35` | — |
 

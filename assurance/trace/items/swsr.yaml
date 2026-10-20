@@ -1791,7 +1791,7 @@
   acceptance: "No FCW from a stale or invalid input; rate measurable from logs"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: no freshness gate (`selfdrived.py:445-450`)"
+  baseline_impl: "Partial: no freshness gate (`selfdrived.py:488-493`)"
   status: proposed
   source: WP-W-02
 
