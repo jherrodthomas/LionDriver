@@ -917,8 +917,9 @@ EMERG_ROWS = [  # situation, what the item does, who finishes it, status, status
    "implemented, not verified", "amber"),
   ("Main computer stalls", "panda revokes authority ≤ 0.06 s, siren (T-34)", "driver takes over",
    "implemented, not verified (M-05)", "amber"),
-  ("Driver does not respond", "alerts at 5, 8, 13 s, then slows the car; required: keep the lane, stop, hold "
-   "and lock out (TSR-633, DQ-365 A)", "should be the item: minimum-risk manoeuvre", "NOT MET: slows but never stops", "red"),
+  ("Driver does not respond", "alerts at 5, 8, 13 s, then slows the car toward a stop, still steering; required "
+   "as well: hold at standstill, disengage, lock out (TSR-633, DQ-365 A)", "should be the item: minimum-risk manoeuvre",
+   "NOT MET: no hold, disengage or lockout", "red"),
   ("Obstacle needs a swerve", "nothing: evasive steering is not provided (WP-C-02)", "driver steers",
    "by design (Level 2)", "grey"),
 ]
@@ -964,8 +965,9 @@ def build_emergency() -> str:
     p, _ = pill(1000, yy + 10, status, col, size=9.5, h=18)
     body += p
   ny = y + len(EMERG_ROWS) * rh + 18
-  body.append(text(40, ny, "The one emergency behaviour the requirements ask for and the code lacks is the stop for an "
-                   "unresponsive driver: with the vision policy the car slows after 18 s of inattention but keeps going.", size=11.5, fill=INK))
+  body.append(text(40, ny, "The one emergency behaviour the requirements ask for and the code only half has is the stop for "
+                   "an unresponsive driver: the car slows (18 s, vision policy) but is not held, disengaged or locked out.",
+                   size=11.5, fill=INK))
   body.append(text(40, ny + 18, "Emergency braking beyond −3.5 m/s² is the stock PCS's job, and evasive steering is the "
                    "driver's; neither is in the item's scope.", size=11.5, fill=MUTED))
   desc = "Emergency and degraded reactions: " + "; ".join(f"{s}: {d}; {w}; {st}" for s, d, w, st, _ in EMERG_ROWS) + "."
