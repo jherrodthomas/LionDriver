@@ -4526,7 +4526,7 @@
   sources:
     - assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-062
     - assurance/08-analyses/fmea/analyses/fsc.yaml FSR-040
-    - openpilot/selfdrive/monitoring/policy.py:379-400
+    - openpilot/selfdrive/monitoring/policy.py:394-417
   asked: 2026-10-16
   status: withdrawn
   note: "Same question as DQ-365 (reaction to an unresponsive driver at the last alert); merged into DQ-365, which now lists FSR-040, SWF-062 and SWF-ACT-059 in its blocks."
@@ -4828,7 +4828,7 @@
     - key: C
       title: "Disengage at the last alert without stopping"
       detail: "Simplest. Cost: an incapacitated driver gets an uncontrolled vehicle at highway speed; not recommended."
-  sources: ["assurance/08-analyses/WP-A-05-stpa.md LS-35, UCA-21, CC-17", "assurance/08-analyses/fta-fmea-mapping.md F-38", "assurance/08-analyses/WP-A-04-system-fta-fmea.md §13", "assurance/02-concept/WP-C-03-hara.md OI-10", "assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-025, SFM-ACT-005", "assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-062", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633", "assurance/02-concept/WP-C-04-functional-safety-concept.md FSR-02.09, §7", "openpilot/selfdrive/monitoring/policy.py:379-400"]
+  sources: ["assurance/08-analyses/WP-A-05-stpa.md LS-35, UCA-21, CC-17", "assurance/08-analyses/fta-fmea-mapping.md F-38", "assurance/08-analyses/WP-A-04-system-fta-fmea.md §13", "assurance/02-concept/WP-C-03-hara.md OI-10", "assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-025, SFM-ACT-005", "assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-062", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633", "assurance/02-concept/WP-C-04-functional-safety-concept.md FSR-02.09, §7", "openpilot/selfdrive/monitoring/policy.py:394-417"]
   note: "Also asked as DQ-220 (SW FMEA), DQ-281 (STPA) and DQ-340 (safety concept); merged here so the lead answers once."
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-16, note: "Stay stopped, held. The lead first answered the merged DQ-340 with its option A (keep the lane and stop); asked again in chat, chose DQ-365 A."}

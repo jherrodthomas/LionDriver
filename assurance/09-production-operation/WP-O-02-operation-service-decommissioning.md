@@ -50,7 +50,7 @@ The driver performs these. The ones the item can check itself are noted; the oth
 | OPS-02 | VSC is on (not switched off with the VSC OFF button) | Yes: `espDisabled` event (`openpilot/selfdrive/car/car_events.py:116-117`) | Turn VSC on |
 | OPS-03 | Windscreen area in front of both cameras is clean and clear of ice, stickers or objects | Partial: camera health and model checks; no specific obstruction detector | Clean before driving |
 | OPS-04 | Device is firmly in its mount, not tilted; display shows no calibration alert | Yes: `calibrationInvalid` / `calibrationRecalibrating` events (`events.py:816-832`), engagement blocked until `calibrated` (`selfdrived.py:298-309`) | Re-seat; if remounted, follow §4.2 |
-| OPS-05 | Driver-facing camera can see the driver's face; no hat brim, mask or object in the way | Partial: DM falls back to wheel-touch timers on model uncertainty (`selfdrive/monitoring/policy.py:82-83, 333-334`) | Remove obstruction |
+| OPS-05 | Driver-facing camera can see the driver's face; no hat brim, mask or object in the way | Partial: DM falls back to wheel-touch timers on model uncertainty (`selfdrive/monitoring/policy.py:82-83, 337-338`) | Remove obstruction |
 | OPS-06 | No offroad alerts on the device home screen (for example `Offroad_ExcessiveActuation`, `Offroad_Recalibration`, update failure) | Yes: offroad alerts | Follow §3.3 |
 | OPS-07 | The driver is briefed and fit to drive (licensed, not impaired, not fatigued) | No | Do not use the item |
 

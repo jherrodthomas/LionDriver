@@ -57,7 +57,7 @@ The driving model is a black box from LionDriver's point of view: training data 
 | FI-16 | S | System supervision | `speedTooHigh` warns but does not disengage; no ODD monitor for speed below 149 km/h | SH-13 | `events.py:989-996`; GAP-19 |
 | FI-17 | S | System supervision | `cruiseMismatch` raised with no reaction; `canError` shows misleading text; non-finite commands silently clamped | SH-05, SH-02 | `events.py:458-460, 928-936`; `controlsd.py:140-147`; GAP-19 |
 | FI-18 | P | DM model | Reduced detection with sunglasses, low light, glare, face partly out of view, obstructions; model high-uncertainty fallback to wheel touch | SH-12 | `LIMITATIONS.md:53-56`; `policy.py:82-83` |
-| FI-19 | S | DM policy | Wheel-touch fallback resets awareness on any steering or gas input; source validity hard-coded `True`; alerts only above 2.8 m/s | SH-12 | `policy.py:29, 360-361`; `dmonitoringmodeld.py:99`; GAP-21 |
+| FI-19 | S | DM policy | Wheel-touch fallback resets awareness on any steering or gas input; source validity hard-coded `True`; alerts only above 2.8 m/s | SH-12 | `policy.py:29, 375-376`; `dmonitoringmodeld.py:99`; GAP-21 |
 | FI-20 | S | Configuration | Behaviour-changing parameters without protection: Experimental default on, debug/maneuver modes, `IsDriverViewEnabled` DM demo mode | SH-09, SH-12, SH-13 | `params_keys.h:43, 59`; `process_config.py:34-47`; GAP-18, GAP-20 |
 | FI-21 | S | Override semantics | Gas overrides longitudinal but does not disengage; host steering override threshold 500 raw; the driver may misjudge the state | SH-05 | `params_keys.h:35`; `carcontroller.py:33, 83` |
 | FI-22 | P | Driving model | Temporal effects: model lag or frame drops degrade the plan; recurrent state reset after model switch | SH-01, SH-02 | `selfdrived.py:505-506` (`modeldLagging`); `modeld.py:411-419` |
@@ -91,7 +91,7 @@ The driving model is a black box from LionDriver's point of view: training data 
 | TC-22 | Big model load/fail event (eGPU disconnected, timeout) | System (Chestnut) | `modeld.py:234-235, 266-283, 411-419` |
 | TC-23 | Inter-process message delays or drops within the 10× "alive" window; process restart | System | `cereal/messaging/__init__.py:152-153`; GAP-16 |
 | TC-24 | Driver wears sunglasses, low cabin light, face partly out of view, camera covered | Driver / DM | `LIMITATIONS.md:53-56` |
-| TC-25 | Driver makes small periodic steering or gas inputs while not watching the road (incl. defeat devices) | Driver misuse | `policy.py:360-361` |
+| TC-25 | Driver makes small periodic steering or gas inputs while not watching the road (incl. defeat devices) | Driver misuse | `policy.py:375-376` |
 | TC-26 | Debug parameter set: `IsDriverViewEnabled`, maneuver or joystick modes | Configuration | `params_keys.h:59`; `process_config.py:34-47` |
 | TC-27 | Lead moves off from standstill while a pedestrian crosses between ego and lead | Traffic / VRU | FI-12 |
 | TC-28 | Driver nudges for a lane change with a vehicle in the blind spot | Driver / traffic | `LIMITATIONS.md:6` |

@@ -1567,7 +1567,7 @@
   acceptance: "Small inputs do not reset"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met (`policy.py:360-361`) (GAP-21)"
+  baseline_impl: "Not met (`policy.py:375-376`) (GAP-21)"
   status: proposed
   source: WP-W-02
 
@@ -1839,7 +1839,7 @@
   acceptance: "Constant 30…120 km/h in 10 km/h steps (and 0, 50, 57 km/h) and ±1.5 m/s² ramps between 40 and 100 km/h: each alert within one DM step (50 ms) of the first time T*k* or D*k* is reached, and the distance at each alert ≤ D*k* plus one step; an interaction resets the distance; vision recovery restarts it; no alert below 10 km/h"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `selfdrive/monitoring/policy.py:37-41, 176-184, 193-204, 368-369, 385-389, 402-408`; 6 tests in `selfdrive/monitoring/test_monitoring.py`. Not verified in the vehicle (WP-V-02 §4.4)"
+  baseline_impl: "Impl: `selfdrive/monitoring/policy.py:37-41, 179-189, 198-209, 383-384, 400-404, 419-425`; 6 tests in `selfdrive/monitoring/test_monitoring.py`. Not verified in the vehicle (WP-V-02 §4.4)"
   status: proposed
   source: WP-W-02
 
@@ -1855,7 +1855,7 @@
   acceptance: "Each budget part met separately: detection ≤ 0.5 s and output ≤ 0.3 s, measured from logs by matching `driverCameraState.timestampSof` to `driverStateV2` on `frameId`, then to `driverMonitoringState`, `selfdriveState` and the audio output (IT on the device, VT in the vehicle); the end-to-end time ≤ 6.0 s for a staged look-away in the vehicle (VT, WP-V-02 VT-08)"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met, not measured: inside the policy alone the first vision alert comes 5.30 s after the first distracted model output, because the countdown waits for the distraction filter (τ = 0.25 s at 20 Hz) to pass 0.63, about 0.30 s (`selfdrive/monitoring/policy.py:84, 394`); that is within the 5.0 s + 0.5 s part only if frame readout and model execution together take ≤ 0.2 s, which is not measured. With the model's pose output uncertain, the first alert comes after 15.0 s (SWSR-635b). Wheel-touch: 5.0 s from the last interaction (or 150 m, SWSR-634). Alert output not measured (WP-S-04 OI-11)"
+  baseline_impl: "Partly met, not measured end to end: policy part implemented, the first vision alert 5.30 s after the first distracted model output (5.0 s timer and the distraction filter crossing 0.63 after about 0.30 s, `selfdrive/monitoring/policy.py:84, 409`), 5.05 s with an uncertain pose and 5.0 s with the face lost (SWSR-635b), at any DM frame rate within two frame periods (SWSR-635a). Frame readout and model execution (≤ 0.2 s left in the detection part) and the alert output (≤ 0.3 s) are not measured (WP-S-04 OI-11). Wheel-touch: 5.0 s from the last interaction (or 150 m, SWSR-634)"
   status: proposed
   source: WP-W-02
 
@@ -1868,10 +1868,10 @@
   other_parents: false
   allocated_to: "`host.dm`"
   verification: "UT, IT"
-  acceptance: "With DM output at 20, 10 and 5 Hz (frames skipped), alert 1 within one frame period of 5.0 s of distraction in each case"
+  acceptance: "With DM output at 20, 10 and 5 Hz (frames skipped), alert 1 within two frame periods of the 20 Hz time in each case (the filter crossing and the countdown each land on a frame)"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met: `dmonitoringd` steps the policy once per `driverStateV2` (`selfdrive/monitoring/dmonitoringd.py:13`), and each step counts a fixed 0.05 s (`DT_DMON`, `policy.py:209, 224`); `dmonitoringmodeld` reads the cabin stream with conflation, so frames it cannot keep up with are skipped (`selfdrive/modeld/dmonitoringmodeld.py:115`). At 10 Hz the 5 s timer would take 10 s"
+  baseline_impl: "Impl: the countdown step and the distraction filter follow the elapsed time from the cabin frame index, so frames the DM model skipped count; the gap is capped at 2 s, the SWSR-609 window (`selfdrive/monitoring/policy.py:87, 344-351, 357, 384, 508-510`). Unit tests `TestFirstAlertTime` in `selfdrive/monitoring/test_monitoring.py`: at 20, 10 and 5 Hz alert 1 within two frame periods of the 20 Hz time (one each for the filter crossing and the countdown), against 10.6 s and 21.2 s before. Not verified on the device"
   status: proposed
   source: WP-W-02
 
@@ -1884,10 +1884,10 @@
   other_parents: false
   allocated_to: "`host.dm`"
   verification: "UT"
-  acceptance: "A driver who becomes distracted with an uncertain pose gets alert 1 ≤ 5.3 s after the first such output (the SWSR-635 policy part), as for a certain pose; an attentive driver with a certain pose still recovers"
+  acceptance: "A driver who becomes distracted with an uncertain pose gets alert 1 ≤ 5.3 s after the first such output (the SWSR-635 policy part), as for a certain pose; past orange the terminal alert still comes at the vision time when the face is lost or the pose turns uncertain; an attentive driver with a certain pose still recovers"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met: with the face detected and the pose uncertain, the driver is not classed as distracted (`policy.py:312`, which needs a certain pose) and awareness does not recover either (`policy.py:378`); the countdown only starts once the model has been uncertain for 10 s and the policy falls back to wheel-touch (`policy.py:83, 333, 336, 395`). Probe of the policy code: first alert 15.0 s after a distracted, uncertain output, against 5.30 s with a certain one"
+  baseline_impl: "Impl: a detected face with an uncertain pose counts as not attentive, so the countdown runs from the first such output (`policy.py:412`); past orange the vision countdown keeps running when the face is lost or the pose turns uncertain, instead of stopping at orange (`policy.py:213-216`). Unit tests: alert 1 at 5.05 s for a distracted driver with an uncertain pose (15.0 s before); terminal alert at the vision time after orange with the face lost or the pose uncertain (none before); an attentive driver with a certain pose still recovers; `test_somehow_indecisive_model` now expects the vision timers 5 / 8 / 13 s. Not verified on the device; the rate of uncertain output while attentive is OI-17"
   status: proposed
   source: WP-W-02
 
