@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Draw the figures of docs/liondriver/driving-and-planning.md (pipeline, two control paths, authority funnel,
-model output overlay).
+model output overlay, timing strip).
 
 Sources of record:
   - Figure 1, the camera-to-CAN pipeline: the process boxes are drawn here, and each box lists the functional
@@ -15,6 +15,8 @@ Sources of record:
   - Figure 4, the model output overlay: a synthetic road-camera view. The sample grids (X_IDXS, T_IDXS), the road
     camera, the camera height and the UI's drawing rules (widths, colours, draw distance) are read from the openpilot
     code, and the steering action's formula from `modeld.py`. The road and the probabilities are illustrative.
+  - Figure 5, the timing strip: the budgets and times are hand-listed in TIMING_ROWS from WP-S-04, WP-S-02 and the
+    trace items; each carries the exact text it was read from (TIMING_SOURCES), and `--check` fails when one is gone.
 
     python3 fig_driving.py            # write the SVGs into docs/assets/liondriver/
     python3 fig_driving.py --check    # fail if an FM is unplaced, a source changed form, or an SVG is stale
@@ -43,7 +45,7 @@ WP_C01 = REPO / "assurance" / "02-concept" / "WP-C-01-item-definition.md"
 DRIVE_HELPERS = REPO / "openpilot" / "selfdrive" / "controls" / "lib" / "drive_helpers.py"
 LONG_PLANNER = REPO / "openpilot" / "selfdrive" / "controls" / "lib" / "longitudinal_planner.py"
 OUTS = {"pipeline": "driving-1-pipeline.svg", "paths": "driving-2-paths.svg", "funnel": "driving-3-funnel.svg",
-        "overlay": "driving-4-overlay.svg"}
+        "overlay": "driving-4-overlay.svg", "timing": "driving-5-timing.svg"}
 REF = "docs/liondriver/driving-and-planning.md"
 
 PRIORITY = {"P1": (RED, "#FFFFFF"), "P2": (AMBER, "#FFFFFF"), "P3": (GREY_BG, MUTED)}
@@ -641,6 +643,147 @@ def fmt_(v: float) -> str:
   return f"{v:.1f}".rstrip("0").rstrip(".")
 
 
+# ---------------------------------------------------------------- Figure 5: timing strip
+
+AS = REPO / "assurance"
+# Each number of Figure 5 with the exact text it is read from; `--check` fails when a text is gone, so a changed
+# budget or time forces the figure to be reviewed (the convention of WP-S-04's own fig_s04_timing.py).
+TIMING_SOURCES = [
+  (AS / "03-system" / "WP-S-04-timing-ftti-budget.md", "| SG-01 SoC command stall | 0.5 s | ≤ 0.05 s (TSR-408) | ≤ 0.1 s | ≥ 0.35 s |"),
+  (AS / "03-system" / "WP-S-04-timing-ftti-budget.md", "| SG-01 SoC heartbeat loss | 0.5 s | ≤ 0.3 s (TSR-407) | ≤ 0.1 s | ≥ 0.1 s |"),
+  (AS / "03-system" / "WP-S-04-timing-ftti-budget.md", "the reference build revokes within ≤ 0.06 s for `0x2E4` (T-34, simulated 0.043 s)"),
+  (AS / "03-system" / "WP-S-04-timing-ftti-budget.md", "**≤ 0.31 s** (0.3 s + one task period)"),
+  (AS / "03-system" / "WP-S-04-timing-ftti-budget.md", "Model inference ≤ 50 ms per frame; output older than 100 ms not used for actuation"),
+  (AS / "03-system" / "WP-S-04-timing-ftti-budget.md", "Inference time to be measured (§6, M-09)"),
+  (AS / "03-system" / "WP-S-02-technical-safety-requirements.md", "if no frame arrives for > 50 ms (5 frames)"),
+  (AS / "03-system" / "WP-S-02-technical-safety-requirements.md", "before use (≤ 2 nominal periods) and shall set `latActive`/`longActive` false"),
+  (AS / "trace" / "items" / "tsr.yaml", "but after 10 nominal periods, not 2"),
+  (AS / "trace" / "items" / "tsr.yaml", "Not implemented: `input_freshness.py` (TSR-602) checks message age at arrival, not frame ID or source timestamp."),
+  (AS / "07-supporting" / "impact" / "change-2026-10-13-host-supervision.md", "**Accepted for now** by the lead"),
+  (REPO / "openpilot" / "selfdrive" / "controls" / "lib" / "input_freshness.py", "STALE_PERIODS = 10."),
+  (REPO / "openpilot" / "cereal" / "services.py", '"modelV2": (True, 20.'),
+  (REPO / "openpilot" / "cereal" / "services.py", '"carControl": (True, 100.'),
+]
+FTTI_SG01 = 0.5
+# Rows of the lower panel (seconds): budget (FDTI, FRTI) and what the code does, with the status read from the sources.
+TIMING_ROWS = [
+  {"title": "SoC stops sending commands", "who": "panda: 0x2E4 arrival (T-34)", "fdti": 0.05, "frti": 0.1, "impl": 0.06,
+   "impl_text": "≤ 0.06 s (simulated 0.043 s)", "status": "over", "note": "one 10 ms task period over the FDTI; not verified (M-05)"},
+  {"title": "SoC heartbeat lost", "who": "panda: heartbeat (T-06a)", "fdti": 0.3, "frti": 0.1, "impl": 0.31,
+   "impl_text": "≤ 0.31 s", "status": "over", "note": "0.3 s + one task period; not verified (M-05)"},
+  {"title": "Model output stops", "who": "controlsd: input freshness (TSR-602)", "fdti": 0.1, "frti": None, "impl": 0.5,
+   "impl_text": "0.5 s (10 periods at 20 Hz)", "status": "gap",
+   "note": "TSR-602 asks 2 periods; 10 accepted for now, until logs show the jitter"},
+  {"title": "Model output frozen", "who": "controlsd: frame ID / source age (TSR-631)", "fdti": 0.1, "frti": None,
+   "impl": None, "impl_text": "not detected", "status": "none", "note": "messages keep arriving, so the age check passes"},
+]
+
+
+def timing_problems() -> list[str]:
+  out, cache = [], {}
+  for p, s in TIMING_SOURCES:
+    cache.setdefault(p, p.read_text(encoding="utf-8"))
+    if s not in cache[p]:
+      out.append(f"{p.relative_to(REPO)}: text gone: {s}")
+  return out
+
+
+def build_timing() -> str:
+  W, L = 1320, 250                                     # page width; label column
+  body = header(W, "5", "Timing: one model cycle, and how fast a stop is caught",
+                "Above, 100 ms of normal running. Below, how long each kind of stop takes to detect, against the "
+                "SG-01 budget.", "WP-S-04 §3.7, §4, §5 · WP-S-02 TSR-408, 602, 631")
+  x0, x1 = 40 + L, W - 40
+
+  # Panel A: 0–100 ms.
+  def ta(ms: float) -> float:
+    return x0 + (x1 - x0) * ms / 100.0
+
+  y = 112
+  body.append(text(40, y, "NORMAL RUNNING · 0–100 ms", size=12, weight=700, fill=SW))
+  lanes = [("Road camera", "20 Hz frames"), ("Driving model", "modeld, AIR-17: ≤ 50 ms per frame"),
+           ("Controls", "controlsd, 100 Hz"), ("Steering frame 0x2E4", "card → panda → EPS, 100 Hz"),
+           ("Panda safety task", "checks arrival, 100 Hz")]
+  ly = [y + 34 + i * 40 for i in range(len(lanes))]
+  for (t_, s_), yy in zip(lanes, ly):
+    body.append(text(40, yy + 4, t_, size=12, weight=700))
+    body.append(text(40, yy + 19, s_, size=10, fill=MUTED))
+    body.append(line(x0, yy + 8, x1, yy + 8, stroke=HAIR, sw=1))
+  for ms in range(0, 101, 10):
+    body.append(line(ta(ms), y + 18, ta(ms), ly[-1] + 22, stroke=HAIR, sw=1, dash="2 3"))
+    body.append(text(ta(ms), ly[-1] + 38, f"{ms} ms", size=9.5, fill=MUTED, anchor="middle"))
+  for ms in (0, 50):                                   # camera frames
+    body.append(rect(ta(ms) - 3, ly[0] - 6, 6, 22, fill=INK, stroke="none", rx=2))
+    body.append(rect(ta(ms) + 4, ly[1] - 6, ta(ms + 50) - ta(ms) - 8, 26, fill="url(#hatch)", stroke=MUTED, rx=4,
+                     sw=1))
+    body.append(text(ta(ms) + 12, ly[1] + 11, "inference + parse; time not measured yet (M-09)", size=10, fill=INK))
+  for ms in range(0, 100, 10):
+    held = "A" if ms < 50 else "B"
+    body.append(rect(ta(ms) + 2, ly[2] - 4, ta(10) - ta(0) - 4, 20, fill=SW_BG, stroke=SW, rx=3, sw=1))
+    body.append(text(ta(ms + 5), ly[2] + 10, f"κ {held}", size=9.5, fill=SW, anchor="middle", weight=600))
+    body.append(rect(ta(ms) + 2, ly[3] - 2, 5, 16, fill=SAFETY, stroke="none", rx=1))
+    body.append(el("circle", None, cx=fmt_(ta(ms) + 4.5), cy=fmt_(ly[4] + 7), r=3.5, fill="#FFFFFF", stroke=SAFETY,
+                   stroke_width=1.4))
+  body.append(text(x1, y, "κ A, κ B: one model output's desiredCurvature, used for five control steps", size=10.5,
+                   fill=MUTED, anchor="end"))
+
+  # Panel B: 0–600 ms.
+  y2 = ly[-1] + 76
+  span = 0.6
+
+  def tb(s: float) -> float:
+    return x0 + (x1 - x0) * s / span
+
+  body.append(text(40, y2, "WHEN SOMETHING STOPS · 0–600 ms", size=12, weight=700, fill=SW))
+  ry = [y2 + 36 + i * 54 for i in range(len(TIMING_ROWS))]
+  for r, yy in zip(TIMING_ROWS, ry):
+    body.append(text(40, yy + 4, r["title"], size=12, weight=700))
+    body.append(text(40, yy + 19, r["who"], size=10, fill=MUTED))
+    # Budget: FDTI then FRTI, outlined.
+    body.append(rect(tb(0), yy - 8, tb(r["fdti"]) - tb(0), 12, fill=GREY_BG, stroke=MUTED, rx=2, sw=1))
+    lab = f"required ≤ {r['fdti']:g} s"
+    if r["frti"]:
+      body.append(rect(tb(r["fdti"]), yy - 8, tb(r["fdti"] + r["frti"]) - tb(r["fdti"]), 12, fill="#FFFFFF",
+                       stroke=MUTED, rx=2, sw=1, dash="3 2"))
+      lab += f" + reaction ≤ {r['frti']:g} s"
+    body.append(text(tb(r["fdti"] + (r["frti"] or 0)) + 6, yy + 2, lab, size=9.5, fill=MUTED))
+    # What the code does.
+    col = {"over": AMBER, "gap": RED, "none": RED}[r["status"]]
+    if r["impl"] is not None:
+      body.append(rect(tb(0), yy + 8, tb(r["impl"]) - tb(0), 12, fill=col, stroke="none", rx=2))
+      msg = f"{r['impl_text']} · {r['note']}"
+      if tb(r["impl"]) + 6 + text_w(msg, 10) > x1:       # no room after the bar: write it inside, in white
+        body.append(text(tb(0) + 8, yy + 18, msg, size=10, fill="#FFFFFF", weight=600))
+      else:
+        body.append(text(tb(r["impl"]) + 6, yy + 18, msg, size=10, fill=INK))
+    else:
+      p, _ = pill(tb(0), yy + 6, r["impl_text"].upper(), RED, size=9, h=16)
+      body += p
+      body.append(text(tb(0) + 92, yy + 18, r["note"], size=10, fill=INK))
+  bottom = ry[-1] + 30
+  body.append(line(tb(FTTI_SG01), y2 + 14, tb(FTTI_SG01), bottom, stroke=RED, sw=1.6, dash="5 3"))
+  body.append(text(tb(FTTI_SG01) - 6, y2 + 12, f"SG-01 FTTI {FTTI_SG01:g} s", size=10.5, fill=RED, weight=700,
+                   anchor="end"))
+  for ms in range(0, 601, 100):
+    body.append(text(tb(ms / 1000), bottom + 16, f"{ms} ms", size=9.5, fill=MUTED, anchor="middle"))
+
+  ny = bottom + 44
+  lg, _ = legend(40, ny, [(GREY_BG, MUTED, "detection required (FDTI)"), ("#FFFFFF", MUTED + " dashed",
+                          "reaction required (FRTI)"), (AMBER, "none", "code: just over"),
+                          (RED, "none", "code: well over, or missing")])
+  body += lg
+  body.append(text(40, ny + 22, "Times are code-derived or simulated, not measured on the car. The model's own run "
+                   "time is unmeasured (M-09), so the strip shows the period it must fit, not how long it takes.",
+                   size=11, fill=MUTED))
+  H = int(ny + 40)
+  desc = ("Upper strip: in 100 ms the road camera gives two frames, the driving model runs once per frame, and "
+          "controlsd, the 0x2E4 steering frame and the panda safety task run every 10 ms, so each model output steers "
+          "five control steps. Lower strip, against the SG-01 FTTI of 0.5 s: the panda catches missing commands in "
+          "≤ 0.06 s (required 0.05 s) and a lost heartbeat in ≤ 0.31 s (required 0.3 s); controlsd stops steering on a "
+          "stale model output after 0.5 s (required 0.1 s, accepted for now); a frozen model output is not detected.")
+  return svg(W, H, "Figure 5. Timing: one model cycle, and how fast a stop is caught", desc, body)
+
+
 # ---------------------------------------------------------------- main
 
 def build_all() -> dict[str, str]:
@@ -649,10 +792,13 @@ def build_all() -> dict[str, str]:
   if missing:
     raise SourceError("WP-C-07 modifications on no Figure 1 box: " + ", ".join(missing) +
                       "; add the file to BOXES in fig_driving.py")
+  gone = timing_problems()
+  if gone:
+    raise SourceError("Figure 5 sources changed:\n" + "\n".join(gone) + "\nreview TIMING_ROWS in fig_driving.py")
   facts = code_facts()
   env = c01.envelope(WP_C01.read_text(encoding="utf-8"))
   return {OUTS["pipeline"]: build_pipeline(fms), OUTS["paths"]: build_paths(facts), OUTS["funnel"]: build_funnel(env, facts),
-          OUTS["overlay"]: build_overlay(overlay_facts())}
+          OUTS["overlay"]: build_overlay(overlay_facts()), OUTS["timing"]: build_timing()}
 
 
 def main(argv: list[str]) -> int:

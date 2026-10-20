@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Tests for fig_driving.py: committed SVGs current, every WP-C-07 modification placed, sources parsed."""
 
+import re
 import sys
 import unittest
 import xml.etree.ElementTree as ET
@@ -79,6 +80,20 @@ class TestDrivingFigures(unittest.TestCase):
     finally:
       fd.OVERLAY_SOURCES["ui"] = real
       tmp.unlink(missing_ok=True)
+
+  def test_timing_sources_present(self):
+    self.assertEqual(fd.timing_problems(), [])
+
+  def test_timing_rows_match_code(self):
+    rows = {r["title"]: r for r in fd.TIMING_ROWS}
+    src = (fd.REPO / "openpilot" / "selfdrive" / "controls" / "lib" / "input_freshness.py").read_text(encoding="utf-8")
+    periods = float(re.search(r"^STALE_PERIODS = ([\d.]+)", src, re.M).group(1))
+    self.assertAlmostEqual(rows["Model output stops"]["impl"], periods / 20.0)
+
+  def test_timing_states_ftti_and_gaps(self):
+    s = fd.build_timing()
+    self.assertIn(f"SG-01 FTTI {fd.FTTI_SG01:g} s", s)
+    self.assertIn("NOT DETECTED", s)
 
 
 if __name__ == "__main__":
