@@ -70,8 +70,8 @@ Paths are under `openpilot/` unless prefixed.
 |---|---|---|---|---|---|---|
 | SYS-060 | Above 10 km/h, DM shall warn a visually distracted driver with escalating alerts at 5, 8 and 13 s (vision policy) or 5, 15 and 25 s (wheel-touch policy). | H | as stated | T-SIL, T-VEH | `selfdrive/monitoring/policy.py:29-36` | — |
 | SYS-061 | DM classification performance shall meet AIR-07/AIR-08 of WP-C-11. | P | recall ≥ 95 % gaze-off > 2 s; false distraction ≤ 1/h (confirmed, WP-C-08 OI-2) | LOG | Model + policy thresholds `policy.py:54-77` | Needs labelled LionDriver data |
-| SYS-062 | DM shall work in the ODD lighting conditions (day, dusk, night with IR) and with sunglasses, or fall back to the wheel-touch policy. | P | fallback triggered when uncertain; coverage **TBD** | T-VEH, LOG | `policy.py:82-83, 333-334` | Data |
-| SYS-063 | On no response to the highest alert, the system shall slow the vehicle, disengage and lock out re-engagement (1/5/15/30 min). | F | as stated | T-SIL, T-VEH | `policy.py:44-49, 437`; `controlsd.py:204-205` | — |
+| SYS-062 | DM shall work in the ODD lighting conditions (day, dusk, night with IR) and with sunglasses, or fall back to the wheel-touch policy. | P | fallback triggered when uncertain; coverage **TBD** | T-VEH, LOG | `policy.py:82-83, 337-338` | Data |
+| SYS-063 | On no response to the highest alert, the system shall slow the vehicle, disengage and lock out re-engagement (1/5/15/30 min). | F | as stated | T-SIL, T-VEH | `policy.py:44-49, 454`; `controlsd.py:204-205` | — |
 
 ## 6. F-05 Driver information and warnings (HMI)
 

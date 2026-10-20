@@ -82,6 +82,9 @@ class DRIVER_MONITOR_SETTINGS:
     self._HI_STD_THRESHOLD = 0.3
     self._HI_STD_FALLBACK_TIME = int(10  / DT_DMON)  # fall back to wheel touch if model is uncertain for 10s
     self._DISTRACTED_FILTER_TS = 0.25  # 0.6Hz
+    # LionDriver SWSR-635a: the elapsed time between evaluated cabin frames is taken from the frame index, capped at
+    # the SWSR-609 invalid-output window (beyond it the DM output counts as missing, not as elapsed attention time)
+    self._MAX_FRAME_GAP_TIME = 2.
 
     self._POSE_CALIB_MIN_SPEED = 13  # 30 mph
     self._POSE_OFFSET_MIN_COUNT = int(60 / DT_DMON)  # valid data counts before calibration completes, 1min cumulative
@@ -175,6 +178,8 @@ class DriverMonitoring:
     self.dcam_reset_cnt = 0
     self.wheeltouch_distance = 0.
     self.wheeltouch_time_awareness = 1.
+    self.dt = DT_DMON  # time since the previous evaluated cabin frame (SWSR-635a)
+    self.last_frame_id = None
 
     # wheel-touch awareness at each distance bound: 1 at the last interaction, the alert k threshold at D_k
     s = self.settings
@@ -205,11 +210,10 @@ class DriverMonitoring:
 
   def _set_policy(self, target_policy):
     if self.active_policy == MonitoringPolicy.vision and self.awareness <= self.threshold_alert_2:
-      if target_policy == MonitoringPolicy.vision:
-        self.step_change = DT_DMON / self.settings._VISION_POLICY_ALERT_3_TIMEOUT
-      else:
-        self.step_change = 0.
-      return  # no exploit after orange alert
+      # no exploit after orange alert: the policy stays vision. LionDriver SWSR-635b: and the vision countdown keeps
+      # running when the face is lost or the model is uncertain, so the escalation does not stop at orange
+      self.step_change = DT_DMON / self.settings._VISION_POLICY_ALERT_3_TIMEOUT
+      return
     elif self.awareness <= 0.:
       return
 
@@ -337,9 +341,20 @@ class DriverMonitoring:
     elif self.face_detected and self.pose.low_std:
       self.hi_stds = 0
 
+  def _frame_dt(self, frame_id):
+    # LionDriver SWSR-635a: elapsed time since the previous evaluated cabin frame; frames the DM model skipped count
+    if self.last_frame_id is None or frame_id <= self.last_frame_id:
+      dt = DT_DMON
+    else:
+      dt = min((frame_id - self.last_frame_id) * DT_DMON, self.settings._MAX_FRAME_GAP_TIME)
+    self.last_frame_id = frame_id
+    return dt
+
   def _update_events(self, driver_engaged, op_engaged, lowspeed, wrong_gear, car_speed=0.):
     self.alert_level = AlertLevel.none
     self.driver_interacting = driver_engaged
+    # LionDriver SWSR-635a: awareness moves by the elapsed time, not by one fixed step per evaluated frame
+    step = self.step_change * self.dt / DT_DMON
 
     if self.alert_3_cnt >= self.settings._MAX_ALERT_3 or self.no_response_cnt >= self.settings._MAX_NO_RESPONSE:
       if not self.lockout_active:
@@ -366,11 +381,11 @@ class DriverMonitoring:
       return
 
     if self.active_policy == MonitoringPolicy.wheeltouch and op_engaged:
-      self.wheeltouch_distance += car_speed * DT_DMON
+      self.wheeltouch_distance += car_speed * self.dt
 
     awareness_prev = self.awareness
-    _reaching_alert_1 = self.awareness - self.step_change <= self.threshold_alert_1
-    _reaching_alert_3 = self.awareness - self.step_change <= 0
+    _reaching_alert_1 = self.awareness - step <= self.threshold_alert_1
+    _reaching_alert_3 = self.awareness - step <= 0
     lowspeed_exemption = lowspeed and _reaching_alert_1
     always_on_exemption = always_on_valid and not op_engaged and _reaching_alert_3
 
@@ -381,27 +396,29 @@ class DriverMonitoring:
         return
       # only restore awareness when paying attention and alert is not red
       self.awareness = min(self.awareness + ((self.settings._TIMEOUT_RECOVERY_FACTOR_MAX-self.settings._TIMEOUT_RECOVERY_FACTOR_MIN)*
-                                             (1.-self.awareness)+self.settings._TIMEOUT_RECOVERY_FACTOR_MIN)*self.step_change, 1.)
+                                             (1.-self.awareness)+self.settings._TIMEOUT_RECOVERY_FACTOR_MIN)*step, 1.)
       if self.active_policy == MonitoringPolicy.wheeltouch:
         self._restore_wheeltouch_bounds(self.awareness)
       elif self.awareness == 1.:
-        self.last_wheeltouch_awareness = min(self.last_wheeltouch_awareness + self.step_change, 1.)
+        self.last_wheeltouch_awareness = min(self.last_wheeltouch_awareness + step, 1.)
         self._restore_wheeltouch_bounds(self.last_wheeltouch_awareness)
       # don't display alert banner when awareness is recovering and has cleared orange
       if self.awareness > self.threshold_alert_2:
         return
 
     certainly_distracted = self.driver_distraction_filter.x > 0.63 and self.driver_distracted and self.face_detected
-    maybe_distracted = self.is_model_uncertain or not self.face_detected
+    # LionDriver SWSR-635b: a face with an uncertain pose is not an attentive driver, so the countdown runs (before,
+    # it stood still until the 10 s fallback to the wheel-touch policy)
+    maybe_distracted = self.is_model_uncertain or not self.face_detected or not self.pose.low_std
 
     if certainly_distracted or maybe_distracted:
       # should always be counting if distracted unless at low speed and reaching green
       # also will not be reaching 0 if DM is active when not engaged
       if not (lowspeed_exemption or always_on_exemption):
-        self.awareness = max(self.awareness - self.step_change, -0.1)
+        self.awareness = max(self.awareness - step, -0.1)
         # TSR-634: wheel-touch alert k at T_k or D_k, whichever comes first
         if self.active_policy == MonitoringPolicy.wheeltouch:
-          self.wheeltouch_time_awareness = max(self.wheeltouch_time_awareness - self.step_change, -0.1)
+          self.wheeltouch_time_awareness = max(self.wheeltouch_time_awareness - step, -0.1)
           distance_awareness = self._distance_awareness(self.wheeltouch_distance)
           if lowspeed:  # no alert from distance below the alert speed, as for the timers
             distance_awareness = max(distance_awareness, self.threshold_alert_1 + 1e-6)
@@ -486,6 +503,11 @@ class DriverMonitoring:
       brake_disengage_prob = sm['modelV2'].meta.disengagePredictions.brakeDisengageProbs[0] # brake disengage prob in next 2s
       steering_angle_deg = sm['carState'].steeringAngleDeg
       rpyCalib = sm['extrinsicsCalibration'].rpyCalib
+
+    # LionDriver SWSR-635a: the countdown and the distraction filter follow the time between evaluated frames
+    self.dt = self._frame_dt(sm['driverStateV2'].frameId)
+    self.driver_distraction_filter.dt = self.dt
+    self.driver_distraction_filter.update_alpha(self.settings._DISTRACTED_FILTER_TS)
 
     self._set_pose_strictness(
       brake_disengage_prob=brake_disengage_prob,

@@ -203,7 +203,7 @@
   <text x="885" y="891.6" font-size="12" fill="#0F172A" font-weight="700">SWF-064.C1</text>
   <rect x="1194.5" y="880.6" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="891.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
   <text x="885" y="906.1" font-size="10.5" fill="#0F172A">Unhandled exception: brakeDisengageProbs[0] is read without a</text>
-  <text x="885" y="920.2" font-size="10.5" fill="#0F172A">length check (policy.py:486); model and warp loading have no error</text>
+  <text x="885" y="920.2" font-size="10.5" fill="#0F172A">length check (policy.py:503); model and warp loading have no error</text>
   <text x="885" y="934.3" font-size="10.5" fill="#0F172A">handling (dmonitoringmodeld.py:22-48); no try/except in either loop</text>
   <text x="885" y="947.4" font-size="9.8" fill="#475569" font-weight="600">O5 · D9 · in SWF-SE-060</text>
   <rect x="885" y="953.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="964.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-058 open</text>
@@ -269,7 +269,7 @@
   <rect x="1194.5" y="1357.9" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1368.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
   <text x="885" y="1383.5" font-size="10.5" fill="#0F172A">Empty face arrays make _update_states return early, so</text>
   <text x="885" y="1397.6" font-size="10.5" fill="#0F172A">face_detected and the last pose stay as they were while the event</text>
-  <text x="885" y="1411.6" font-size="10.5" fill="#0F172A">logic runs (policy.py:290-292)</text>
+  <text x="885" y="1411.6" font-size="10.5" fill="#0F172A">logic runs (policy.py:294-296)</text>
   <text x="885" y="1424.8" font-size="9.8" fill="#475569" font-weight="600">O4 · D10 · in SWF-SE-062</text>
   <rect x="885" y="1430.8" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1441.7" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-058 open</text>
   <line x1="40" y1="1481.8" x2="1240" y2="1481.8" stroke="#E2E8F0" stroke-width="1"/>
