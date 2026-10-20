@@ -6,8 +6,8 @@
 //   - the panda board drivers that the 100 Hz safety task runs: heartbeat monitor (TSR-407), heartbeat-loss siren
 //     and EPS-fault siren (TSR-516(b)) and the IWDG feed (TSR-501).
 // Only the glue of panda/board/main.c is restated below (is_car_safety_mode, the body of safety_task_handler, the
-// siren condition of tick_handler, the 0xf3 heartbeat handler of main_comms.h). test_plant.py fails when those source
-// lines change, so this copy cannot drift silently. The IWDG peripheral is a plain register block; panda_loop.py
+// siren condition of tick_handler and its 1 Hz engaged-mismatch check, the 0xf3 heartbeat handler of main_comms.h).
+// test_plant.py fails when those source lines change, so this copy cannot drift silently. The IWDG peripheral is a plain register block; panda_loop.py
 // models the hardware counter from the values the firmware writes into it.
 
 #include "opendbc/safety/tests/libsafety/safety.c"
@@ -53,6 +53,22 @@ void sim_safety_task(void) {
     hw_watchdog_tick();
 }
 
+// panda/board/main.c tick_handler, 1 Hz part: the engaged-mismatch check (WP-A-04 MCS-02.9). Authority that the
+// heartbeat reports as not engaged on three 1 Hz ticks in a row is revoked; nothing else in this check sounds a siren.
+// The counter is declared in opendbc safety.h
+
+void sim_tick_1hz(void) {
+  // exit controls allowed if unused by openpilot for a few seconds
+  if (controls_allowed && !heartbeat_engaged) {
+    heartbeat_engaged_mismatches += 1U;
+    if (heartbeat_engaged_mismatches >= 3U) {
+      controls_allowed = false;
+    }
+  } else {
+    heartbeat_engaged_mismatches = 0U;
+  }
+}
+
 // panda/board/main_comms.h 0xf3 handler, the parts the safety code reads
 void sim_heartbeat(bool engaged) {
   heartbeat_monitor_reset();
@@ -79,6 +95,7 @@ void sim_board_reset(void) {
   heartbeat_monitor_reset();
   heartbeat_siren_reset();
   eps_fault_siren_reset();
+  heartbeat_engaged_mismatches = 0U;
   heartbeat_siren_active = false;
   eps_fault_siren_active = false;
   hw_watchdog_running = false;

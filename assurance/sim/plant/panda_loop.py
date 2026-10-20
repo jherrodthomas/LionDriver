@@ -31,6 +31,7 @@ ffi = libsafety_py.ffi
 ffi.cdef("""
 void sim_safety_task(void);
 void sim_heartbeat(bool engaged);
+void sim_tick_1hz(void);
 bool sim_siren_on(uint8_t loop_counter);
 void sim_relay_driven(void);
 void sim_main_loop_alive(void);
@@ -129,6 +130,10 @@ class Panda:
   def heartbeat(self, engaged: bool):
     if not self.hung and self.relay_driven:
       self.lib.sim_heartbeat(engaged)
+
+  def tick_1hz(self):
+    if not self.hung and self.relay_driven:
+      self.lib.sim_tick_1hz()
 
   def main_loop(self):
     if not self.hung:
