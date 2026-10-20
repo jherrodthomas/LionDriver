@@ -389,7 +389,7 @@
   mechanism: "PLB"
   timing: "(a) ≤ 0.3 s / same tick; (b) ≤ 0.3 s"
   verification: "T-HIL, FI"
-  baseline_impl: "(a) 3 consecutive 1 Hz ticks ≈ 2–3 s (`main.c:181-189`). (b) 200 cycles at 100 Hz = 2 s (`selfdrive/selfdrived/selfdrived.py:343, 510-535`) (GAP-06)"
+  baseline_impl: "(a) 3 consecutive 1 Hz ticks ≈ 2–3 s (`main.c:181-189`). (b) Partial, not verified on the vehicle: `controlsMismatch` after 2 consecutive mismatched `pandaStates` samples (10 Hz, about 0.1–0.2 s) and at most 0.5 s after the first mismatched frame (`selfdrive/selfdrived/selfdrived.py:361-366, 566-574`, `supervision.py`; TSR-621, LionDriver #51); above the 0.3 s of (b) in the worst case, and samples in the first 0.3 s after engaging are not counted (TSR-301). Before #51: 200 cumulative cycles, about 2 s (GAP-06)"
   status: proposed
   source: WP-S-02
 

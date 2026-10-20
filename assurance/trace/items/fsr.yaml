@@ -263,7 +263,7 @@
   parents: [SG-02, SG-06]
   allocated_to: "E-01 (detection, alert), E-03 (reports authority state)"
   verification: "T-SIL, FI"
-  baseline_impl: "Partial: `controlsMismatch` raised after 200 frames ≈ 2 s (`selfdrive/selfdrived/selfdrived.py:343, 533-535`), longer than the ≤ 1 s budget. New in v0.2 (HE-02.4)"
+  baseline_impl: "Partial: an authority mismatch is detected within the ≤ 1 s budget, `controlsMismatch` after 2 consecutive mismatched `pandaStates` samples (10 Hz, about 0.1–0.2 s) and at most 0.5 s after the first mismatched frame (`selfdrive/selfdrived/selfdrived.py:361-366, 566-574`, `supervision.py`; TSR-621, LionDriver #51); not verified on the vehicle. Blocking that the envelope does not report in `controlsAllowed` is not detected (WP-A-03 DFI-24; TSR-626). Before #51: 200 frames, about 2 s. New in v0.2 (HE-02.4)"
   status: proposed
   source: WP-C-04
 
@@ -483,7 +483,7 @@
   parents: [SG-02, SG-05, SG-06]
   allocated_to: "E-01, E-03"
   verification: "T-SIL"
-  baseline_impl: "Not met: `cruiseMismatch` raised after 6 s with no reaction (`selfdrive/selfdrived/selfdrived.py:426`, `events.py:458-460`) (GAP-19)"
+  baseline_impl: "Implemented, not verified on the vehicle: `cruiseMismatch` after 1 s (`CRUISE_MISMATCH_TIME`, `selfdrive/selfdrived/selfdrived.py:57, 464-468`) with a repeating prompt (`events.py:464-470`); `controlsd` keeps requesting the cancel (TSR-308, LionDriver #51; GAP-19 closed in code). Before #51: after 6 s, no reaction"
   status: proposed
   source: WP-C-04
 
