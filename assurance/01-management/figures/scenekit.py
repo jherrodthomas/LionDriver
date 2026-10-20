@@ -7,6 +7,8 @@ does happen solid red, the gap between them shaded; an amber marker where the fa
 label at the moment it matters; status pills in the top-left corner. Scenes loop (SMIL, no script, DUR s) and a viewer
 that does not animate shows the last frame, so every animated element's static pose is its end state.
 
+What each element means and which size to use: scene-style.md, next to this file.
+
 What lives here is drawing only: palette, road builders, the car, the marks, the pills and the SMIL helpers. What a
 scene shows (paths, timings, the behaviour models) stays with the figure that draws it.
 

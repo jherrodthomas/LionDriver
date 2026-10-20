@@ -6,6 +6,7 @@
  *   strip       SK.W x SK.STRIP_H (280 x 80)    the same road cropped to its lanes; stripRoad()
  *   large scene SK.LARGE_W x SK.LARGE_H         the full scene scaled by SK.LARGE_K (the STPA, TARA and FSC cards); largeRoad()
  * Text and pills keep their reading size; they are not scaled with the large scene.
+ * What the elements mean and which size to use: scene-style.md, next to this file.
  *
  * The constants block below is written by `python3 scenekit.py --js` and checked in CI (test_scenekit.py), so the
  * palette and geometry cannot drift from the SVG kit. The drawing functions are a hand port of scenekit.py; change

@@ -34,6 +34,7 @@ What can and cannot change a review state:
 - A passing CI run, a passing test or an existing file does not accept anything. It can be evidence that a reviewer accepts.
 - An AI-generated review is not a substitute for the required independent confirmation.
 - Never edit `status.json`, the generated SVGs or the README dashboard block by hand; change the records and regenerate.
+- Draw a car on a road with the shared scene kit, not a copy of its colours: see the [top-down scene style](../../assurance/01-management/figures/scene-style.md).
 
 ## Upstream code
 
