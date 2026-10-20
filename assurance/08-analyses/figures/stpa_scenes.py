@@ -20,15 +20,22 @@ names a UCA that is not there, or a card cites an ID (LS-, CA-, FB-, DQ-) that t
 
 Called from `fig_a05_stpa.py` (`build()`), which writes and checks the sheets with the other WP-A-05 figures and passes itself in,
 so this module never imports it.
-Its road scenes and text helpers also draw the WP-C-09 threat scene cards (`assurance/02-concept/figures/fig_c09_scenes.py`), whose
-`--check` therefore also catches a change here.
+Its road scenes and text helpers also draw the WP-C-09 threat scene cards (`assurance/02-concept/figures/fig_c09_scenes.py`)
+and the WP-C-04 FTTI scene cards (`assurance/02-concept/fsc/fsc_scenes.py`), whose `--check` therefore also catches a change
+here. The road, cars, paths and pills come from the shared scene kit (`assurance/01-management/figures/scenekit.py`),
+scaled to these 460 x 250 scenes (scenekit.LARGE_*); the scene coordinates below are in that large scene.
 """
 
 from __future__ import annotations
 
 import math
 import re
+import sys
+from pathlib import Path
 from xml.sax.saxutils import escape
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "01-management" / "figures"))
+import scenekit as sk  # noqa: E402  (road, car, path and pill style)
 
 FONT = "Inter, 'Segoe UI', Helvetica, Arial, sans-serif"
 MONO = "'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace"
@@ -154,14 +161,15 @@ def pose_at(sm, frac):
   return sm[-1], 0.0
 
 
-def car_shape(body="#DC2626", edge="#450A0A", arrows=()):
+def car_shape(body=sk.EGO, arrows=(), brake=False):
+  """The kit's car at the large scene's scale; arrows: who pushes the steering (driver up, openpilot down)."""
   a = ""
   if "drv" in arrows:
-    a += '<line x1="-3" y1="-10" x2="-3" y2="-22" stroke="#93C5FD" stroke-width="2.6" marker-end="url(#ah-b)"/>'
+    a += '<line x1="-3" y1="-11" x2="-3" y2="-24" stroke="#93C5FD" stroke-width="2.6" marker-end="url(#ah-b)"/>'
   if "op" in arrows:
-    a += '<line x1="3" y1="10" x2="3" y2="27" stroke="#FCA5A5" stroke-width="3" marker-end="url(#ah-r)"/>'
-  return (a + f'<rect x="-12" y="-9" width="24" height="18" rx="4" fill="{body}" stroke="{edge}"/>'
-          '<rect x="3" y="-7" width="4.5" height="14" rx="1" fill="#1F2937" opacity="0.75"/>')
+    a += '<line x1="3" y1="11" x2="3" y2="28" stroke="#FCA5A5" stroke-width="3" marker-end="url(#ah-r)"/>'
+  inner = {sk.EGO: sk.ego_body(brake), sk.STOPPED: sk.other_body(stopped=True)}.get(body) or sk.other_body()
+  return f'<g transform="scale({sk.LARGE_K})">{inner}</g>' + a
 
 
 def follow(pts, still, inner, start=0.0, end=0.92):
@@ -199,19 +207,14 @@ def slide(keys, y, still, inner):
 
 
 # ============================================================================ road scenes (460 x 250)
-GRASS, VERGE, ASPHALT, PAINT = "#C9DDBA", "#B9C7A6", "#565E69", "#F8FAFC"
+GRASS, VERGE, ASPHALT, PAINT = sk.GRASS, sk.VERGE, sk.ASPHALT, sk.PAINT
+KS = sk.LARGE_K
 CURVE = [(-10, 70), (100, 70), (190, 70), (260, 74), (320, 98), (370, 140), (405, 185), (430, 235), (440, 262)]
 CURVE_D = "M-10 70 L190 70 C260 70 320 90 370 140 C400 170 420 200 440 260"
 
 
 def pills(items):
-  out = []
-  for num, text, kind, at, y in items:
-    w = 34 + tw(text, 11)
-    out.append(f'<g>{appear(at)}<rect x="8" y="{y}" width="{w:.0f}" height="18" rx="9" fill="{PILL[kind]}"/>'
-               f'<circle cx="18" cy="{y + 9}" r="6" fill="#FFFFFF"/>' + M(18, y + 13, str(num), 10.5, PILL[kind], "middle") +
-               T(30, y + 13, text, 11, "#FFFFFF", 600) + "</g>")
-  return out
+  return [f"<g>{appear(at)}" + sk.pill(8, y, text, kind, 11, 18, num, 600, FONT) + "</g>" for num, text, kind, at, y in items]
 
 
 def _obstacle(kind, x, y):
@@ -235,36 +238,22 @@ def _obstacle(kind, x, y):
 
 
 def scene_lat(sc):
-  o = [f'<rect width="460" height="250" fill="{GRASS}"/>', f'<rect y="56" width="460" height="138" fill="{VERGE}"/>',
-       f'<rect y="60" width="460" height="130" fill="{ASPHALT}"/>']
-  op = 0.35 if sc.get("faded") else 1
-  o += [f'<line x1="0" y1="62" x2="460" y2="62" stroke="{PAINT}" stroke-width="1.5" opacity="{op}"/>',
-        f'<line x1="0" y1="125" x2="460" y2="125" stroke="{PAINT}" stroke-width="1.3" stroke-dasharray="12 10" opacity="{op}"/>',
-        f'<line x1="0" y1="188" x2="460" y2="188" stroke="{PAINT}" stroke-width="1.5" opacity="{op}"/>',
-        '<g transform="translate(30 93)" opacity="0.5"><path d="M-6 -2 L2 -2 L2 -4.5 L8 0 L2 4.5 L2 2 L-6 2 Z" fill="#E5E7EB"/></g>']
+  o = sk.large_road(faded=bool(sc.get("faded")))
   if sc.get("old_lines"):
     o.append(f'<path d="{smooth(sc["old_lines"])}" fill="none" stroke="#FDE68A" stroke-width="1.6" stroke-dasharray="10 8"/>')
   return o + _scene_common(sc)
 
 
 def scene_curve(sc):
-  o = [f'<rect width="460" height="250" fill="{GRASS}"/>',
-       f'<path d="{CURVE_D}" fill="none" stroke="{VERGE}" stroke-width="80"/>',
-       f'<path d="{CURVE_D}" fill="none" stroke="{PAINT}" stroke-width="68"/>',
-       f'<path d="{CURVE_D}" fill="none" stroke="{ASPHALT}" stroke-width="64"/>',
-       '<g transform="translate(30 70)" opacity="0.5"><path d="M-6 -2 L2 -2 L2 -4.5 L8 0 L2 4.5 L2 2 L-6 2 Z" fill="#E5E7EB"/></g>']
+  o = [f'<rect width="460" height="250" fill="{GRASS}"/>', *sk.single_lane_road(CURVE_D, KS),
+       sk.direction_arrow(f"translate(30 70) scale({KS})")]
   return o + _scene_common(sc)
 
 
 def scene_lon(sc):
-  o = [f'<rect width="460" height="250" fill="{GRASS}"/>', f'<rect y="56" width="460" height="138" fill="{VERGE}"/>',
-       f'<rect y="60" width="460" height="130" fill="{ASPHALT}"/>',
-       f'<line x1="0" y1="62" x2="460" y2="62" stroke="{PAINT}" stroke-width="1.5"/>',
-       f'<line x1="0" y1="125" x2="460" y2="125" stroke="{PAINT}" stroke-width="1.3" stroke-dasharray="12 10"/>',
-       f'<line x1="0" y1="188" x2="460" y2="188" stroke="{PAINT}" stroke-width="1.5"/>',
-       '<g transform="translate(30 93)" opacity="0.5"><path d="M-6 -2 L2 -2 L2 -4.5 L8 0 L2 4.5 L2 2 L-6 2 Z" fill="#E5E7EB"/></g>']
+  o = sk.large_road()
   if "stop_x" in sc:
-    o.append(f'<line x1="{sc["stop_x"]}" y1="127" x2="{sc["stop_x"]}" y2="187" stroke="{PAINT}" stroke-width="3"/>')
+    o.append(f'<line x1="{sc["stop_x"]}" y1="127" x2="{sc["stop_x"]}" y2="187" stroke="{PAINT}" stroke-width="{3 * KS:.1f}"/>')
   return o + _scene_common(sc)
 
 
@@ -272,24 +261,23 @@ def _scene_common(sc):
   o = []
   for kind, x, y in sc.get("objects", ()):
     o.append(_obstacle(kind, x, y))
-  if sc.get("want"):
-    o.append(f'<path d="{smooth(sc["want"])}" fill="none" stroke="#4ADE80" stroke-width="2" stroke-dasharray="6 5"/>')
+  if sc.get("want"):   # the kit's intended path, at the large scene's scale
+    o.append(f'<path d="{smooth(sc["want"])}" fill="none" stroke="{sk.REQ_S}" stroke-width="{2.2 * KS:.1f}" '
+             f'stroke-dasharray="{5 * KS:.1f} {3 * KS:.1f}" stroke-linecap="round"/>')
   if sc.get("ghost"):
-    o.append(f'<path d="{smooth(sc["ghost"])}" fill="none" stroke="#E5E7EB" stroke-width="2" stroke-dasharray="4 4"/>')
+    o.append(f'<path d="{smooth(sc["ghost"])}" fill="none" stroke="{sk.ARROW}" stroke-width="{2.2 * KS:.1f}" '
+             f'stroke-dasharray="{4 * KS:.1f} {4 * KS:.1f}"/>')
   for x0, y0, x1, y1 in sc.get("marks", ()):
     o.append(f'<line x1="{x0}" y1="{y0}" x2="{x1}" y2="{y1}" stroke="#F87171" stroke-width="7" stroke-linecap="round"/>')
   for x, y0, y1, c in sc.get("dims", ()):
     o.append(f'<line x1="{x}" y1="{y0}" x2="{x}" y2="{y1}" stroke="{c}" stroke-width="1.6"/>'
              f'<line x1="{x - 5}" y1="{y0}" x2="{x + 5}" y2="{y0}" stroke="{c}" stroke-width="1.6"/>')
   if sc.get("act"):
-    o.append(draw_on(smooth(sc["act"]), "#F87171"))
+    o.append(draw_on(smooth(sc["act"]), sk.PERF_S, f"{2.6 * KS:.1f}"))
   for x, y, text, fill, *rest in sc.get("labels", ()):
     o.append(T(x, y, text, 11, fill, 600 if rest and rest[0] == "b" else 400, rest[1] if len(rest) > 1 else "start"))
   for a in sc.get("actors", ()):
-    body = a.get("body", "#9CA3AF")
-    inner = car_shape(body, "#4B5563" if body != "#DC2626" else "#450A0A", a.get("arrows", ()))
-    if a.get("brake"):
-      inner += '<rect x="-14" y="-6" width="2.4" height="3" fill="#F87171"/><rect x="-14" y="3" width="2.4" height="3" fill="#F87171"/>'
+    inner = car_shape(a.get("body", sk.OTHER), a.get("arrows", ()), a.get("brake", False))
     o.append(follow(a["path"], sc["still"], inner) if "path" in a else slide(a["keys"], a["y"], sc["still"], inner))
   if sc.get("act"):
     o.append(follow(sc["act"], sc["still"], car_shape(arrows=sc.get("arrows", ())), sc.get("start", 0.0)))
@@ -627,7 +615,7 @@ DRIFT = [(-10, 70), (100, 70), (190, 70), (250, 72), (310, 84), (360, 108), (400
 STALE_SCENE = dict(kind="curve", act=CURVE, still=0.36, marks=[(190, 70, 214, 70)], ghost=[(214, 70), (330, 72), (460, 76)],
                    labels=[(250, 16, "without the arrival check: heartbeat still", "#334155"),
                            (250, 29, "arrives, so the stale command runs on", "#334155"),
-                           (176, 112, "0.16 s ≈ 4.8 m at 108 km/h", INK, "b", "end"), (176, 126, "stale command, then revoked", "#334155", "", "end")],
+                           (176, 128, "0.16 s ≈ 4.8 m at 108 km/h", INK, "b", "end"), (176, 142, "stale command, then revoked", "#334155", "", "end")],
                    pills=P((1, "controlsd stalls at the curve entry", "bad", 0.34, 150), (2, "Frames stop: arrival check revokes", "ok", 0.41, 174),
                            (3, "SoC alert; the driver steers the curve", "drv", 0.52, 198)),
                    foot="No panda siren for this case: the alert comes from the SoC")
@@ -764,8 +752,8 @@ MODEL.update({
     true="Gas only pauses speed control. On release it brakes or accelerates towards the set speed or the lead. The override shows a "
          "grey border with no text or sound.",
     scene=dict(kind="lon", still=0.7,
-               actors=[dict(y=157, keys=[(0, 230), (0.92, 400)]), dict(y=157, body="#DC2626", brake=True, keys=[(0, 40), (0.4, 180), (0.6, 225), (0.92, 280)]),
-                       dict(y=157, keys=[(0, -30), (0.4, 110), (0.6, 180), (0.92, 232)])],
+               actors=[dict(y=157, keys=[(0, 252), (0.92, 422)]), dict(y=157, body="#DC2626", brake=True, keys=[(0, 40), (0.4, 180), (0.6, 225), (0.92, 280)]),
+                       dict(y=157, keys=[(0, -52), (0.4, 88), (0.6, 158), (0.92, 210)])],
                pills=P((1, "Driver presses the gas: grey border", "drv", 0.15, 6), (2, "Releases, thinks it is off", "drv", 0.4, 28),
                        (3, "Speed control resumes: brakes for the lead", "bad", 0.55, 228))),
     chart=dict(kind="signal", caption="what the driver expects after release", t=(0, 4), y=(-2.2, 2.2, "acceleration, m/s²"),
@@ -846,7 +834,7 @@ MODEL.update({
     true="In Chill mode the model can miss a stopped or slower lead. The planner asks for acceleration, and the panda passes up to "
          "+2.0 m/s² because it knows nothing of leads.",
     scene=dict(kind="lon", still=0.8, want=[(20, 157), (330, 157)], labels=[(200, 140, "where it should stop", "#BBF7D0")],
-               actors=[dict(y=157, body="#94A3B8", keys=[(0, 380)]), dict(y=157, body="#DC2626", keys=[(0, 20), (0.5, 200), (0.8, 330), (0.92, 352)])],
+               actors=[dict(y=157, body=sk.STOPPED, keys=[(0, 402)]), dict(y=157, body="#DC2626", keys=[(0, 20), (0.5, 200), (0.8, 330), (0.92, 352)])],
                pills=P((1, "Stopped car ahead; the model misses it", "bad", 0.2, 6), (2, "Plans acceleration", "bad", 0.35, 28),
                        (3, "Panda passes up to +2.0 m/s²", "bad", 0.55, 228))),
     chart=dict(kind="signal", caption="when braking is needed", t=(0, 4), y=(-3.5, 2.5, "acceleration, m/s²"),
@@ -882,7 +870,7 @@ MODEL.update({
          "before pitch compensation and the PID.",
     scene=dict(kind="lon", still=0.7, labels=[(330, 150, "nothing there", "#F8FAFC")],
                actors=[dict(y=157, body="#DC2626", brake=True, keys=[(0, 40), (0.4, 200), (0.7, 250), (0.92, 262)]),
-                       dict(y=157, keys=[(0, -30), (0.4, 130), (0.7, 212), (0.92, 232)])],
+                       dict(y=157, keys=[(0, -52), (0.4, 108), (0.7, 190), (0.92, 210)])],
                pills=P((1, "The model sees a lead that isn't there", "bad", 0.3, 6), (2, "Hard braking; no jerk limit in the panda", "bad", 0.42, 28),
                        (3, "The follower closes in", "bad", 0.65, 228))),
     chart=dict(kind="signal", caption="when braking is wanted", t=(0, 4), y=(-4.2, 1, "acceleration, m/s²"),
@@ -975,7 +963,7 @@ MODEL.update({
          "and a lockout until the driver responds (DQ-365, TSR-633).",
     scene=dict(kind="lon", still=0.75,
                actors=[dict(y=157, body="#DC2626", brake=True, keys=[(0, 40), (0.3, 200), (0.7, 300), (0.8, 310)]),
-                       dict(y=157, keys=[(0, -40), (0.5, 170), (0.85, 258), (0.92, 268)])],
+                       dict(y=157, keys=[(0, -62), (0.5, 148), (0.85, 236), (0.92, 246)])],
                pills=P((1, "Driver unresponsive: alert 3", "bad", 0.1, 6), (2, "5 s later the car brakes to a stop", "info", 0.3, 28),
                        (3, "No announcement, no hazard lights, hold not proven", "bad", 0.7, 228))),
     chart=dict(kind="signal", caption="what the reaction must include", t=(0, 40), y=(0, 130, "speed, km/h"),
@@ -1013,7 +1001,7 @@ MODEL.update({
     true="The brake frame 0x226 has no checksum or counter, so a stuck “not pressed” value with live timing passes. The panda keeps "
          "authority while the driver brakes (GAP-01).",
     scene=dict(kind="lon", still=0.7,
-               actors=[dict(y=157, body="#94A3B8", keys=[(0, 360)]),
+               actors=[dict(y=157, body=sk.STOPPED, keys=[(0, 382)]),
                        dict(y=157, body="#DC2626", brake=True, keys=[(0, 40), (0.4, 240), (0.7, 310), (0.92, 320)])],
                pills=P((1, "Driver brakes for traffic", "drv", 0.2, 6), (2, "Brake frame stuck at “not pressed”", "bad", 0.3, 28),
                        (3, "Panda keeps authority while braking", "bad", 0.5, 228))),
@@ -1040,7 +1028,7 @@ MODEL.update({
     true="A watchdog reset releases the switches only through the pull-down. With R2 or R3 open they may stay in intercept: stock "
          "PCS frames are neither passed nor forwarded, and nothing in the item can tell.",
     scene=dict(kind="lon", still=0.85, want=[(20, 157), (320, 157)], labels=[(180, 140, "with PCS: stops here", "#BBF7D0")],
-               actors=[dict(y=157, body="#94A3B8", keys=[(0, 370)]), dict(y=157, body="#DC2626", keys=[(0, 20), (0.92, 345)])],
+               actors=[dict(y=157, body=sk.STOPPED, keys=[(0, 392)]), dict(y=157, body="#DC2626", keys=[(0, 20), (0.92, 345)])],
                pills=P((1, "Panda resets; switches should release", "info", 0.15, 6), (2, "Pull-down open: stays in intercept", "bad", 0.3, 28),
                        (3, "Stock PCS frames lost: no AEB", "bad", 0.6, 228))),
     chart=dict(kind="lanes", caption="when stock PCS must reach the car", t=(-0.05, 0.25), xt=[(0, "0 s"), (0.1, "0.1"), (0.2, "0.2 s")],
@@ -1096,7 +1084,7 @@ MODEL.update({
     true="If the box loses its supply, its switches are undefined and the clamp diodes load both buses. The PCS frames may stop, "
          "whether the panda intercepts or not. Nothing in the item sees the stock path.",
     scene=dict(kind="lon", still=0.85, want=[(20, 157), (320, 157)], labels=[(180, 140, "with PCS: stops here", "#BBF7D0")],
-               actors=[dict(y=157, body="#94A3B8", keys=[(0, 370)]), dict(y=157, body="#DC2626", keys=[(0, 20), (0.92, 345)])],
+               actors=[dict(y=157, body=sk.STOPPED, keys=[(0, 392)]), dict(y=157, body="#DC2626", keys=[(0, 20), (0.92, 345)])],
                pills=P((1, "The harness box loses its supply", "bad", 0.15, 6), (2, "Stock PCS path cut; nothing sees it", "bad", 0.3, 28),
                        (3, "The item stays engaged; no AEB", "bad", 0.6, 228))),
     chart=dict(kind="lanes", caption="when the item may stay engageable", t=(-0.5, 2), xt=[(0, "0 s"), (1, "1"), (2, "2 s")],

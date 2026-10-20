@@ -12,7 +12,7 @@ sys.path.insert(0, str(HERE))
 import scenekit as sk
 
 # figures that still draw the road from their own copy; remove a file here when it moves onto the kit
-PENDING = {"assurance/08-analyses/figures/stpa_scenes.py"}   # also draws for fig_c09_scenes.py and fsc_scenes.py
+PENDING: set[str] = set()
 ROAD = re.compile(r"#565E69|#C9DDBA|#B9C7A6", re.I)   # asphalt, grass, verge
 
 
@@ -32,6 +32,14 @@ class TestScenekit(unittest.TestCase):
     self.assertEqual((sk.STRIP_TOP, sk.STRIP_CENTRE, sk.STRIP_BOTTOM, sk.STRIP_OTHER, sk.STRIP_EGO), (10, 40, 70, 25, 55))
     self.assertLess(sk.STRIP_BOTTOM, sk.STRIP_H)
     self.assertNotIn("stroke-dasharray", "".join(sk.strip_road(markings=False)))
+
+  def test_large_scene_lines_match_the_stpa_lanes(self):
+    """The scaled road puts its lines where the STPA, TARA and FSC scene coordinates expect them."""
+    lines = [round(y * sk.LARGE_K + sk.LARGE_DY) for y in (sk.TOP_EDGE, sk.CENTRE_LINE, sk.BOTTOM_EDGE)]
+    self.assertEqual(lines, [62, 125, 188])
+    road = "".join(sk.large_road())
+    self.assertIn(f'translate(0 {sk.LARGE_DY}) scale({sk.LARGE_K})', road)
+    self.assertIn(f'x2="{round(sk.LARGE_W / sk.LARGE_K, 2):g}"', road)                  # spans the full 460
 
   def test_curved_road_follows_its_edge_function(self):
     edge = lambda k: [(x, 80 + k) for x in (0, 140, 280)]          # noqa: E731  a straight centre line

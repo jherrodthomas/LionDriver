@@ -10,13 +10,14 @@ that does not animate shows the last frame, so every animated element's static p
 What lives here is drawing only: palette, road builders, the car, the marks, the pills and the SMIL helpers. What a
 scene shows (paths, timings, the behaviour models) stays with the figure that draws it.
 
-Two scene sizes: the full scene (W x H) and the strip (W x STRIP_H, the same road cropped to its two lanes) for cards
-that show two scenes, today and with a modification.
+Three scene sizes, one look: the full scene (W x H); the strip (W x STRIP_H, the same road cropped to its two lanes) for
+cards that show two scenes; and the large scene (LARGE_W x LARGE_H), the full scene scaled by LARGE_K so its lanes match
+the STPA cards' hand-placed coordinates. Text and pills are not scaled: they are sized for reading at the card's size.
 
 Drawn with it: 02-concept/hara/guideword_scenes.py and hazlog_cards.py; 02-concept/sotif/sotif_scenes.py and
-fm_scenes.py; 08-analyses/figures/stpa_ls_scenes.py (through fm_scenes). Still on its own copy, to move here next:
-08-analyses/figures/stpa_scenes.py, which also draws for 02-concept/figures/fig_c09_scenes.py and 02-concept/fsc/
-fsc_scenes.py (test_scenekit.PENDING; the guard test fails if a new figure draws the road outside this kit).
+fm_scenes.py; 08-analyses/figures/stpa_ls_scenes.py and tools/safety/fmea_cards.py (strip, through fm_scenes);
+08-analyses/figures/stpa_scenes.py, 02-concept/figures/fig_c09_scenes.py and 02-concept/fsc/fsc_scenes.py (large).
+test_scenekit fails if a new figure draws the road from its own copy of the palette.
 
 Standard library only; every function is deterministic.
 """
@@ -40,7 +41,7 @@ REQ, PERF = "#16A34A", "#DC2626"           # required (dashed) and performed (so
 REQ_S, PERF_S = "#4ADE80", "#F87171"       # the same on the dark road surface
 FAULT, CALLOUT = "#FBBF24", "#FEF08A"      # fault starts; the moment it matters
 BADGE = {"bad": ("#7F1D1D", "#FEE2E2", "#FCA5A5"), "ok": ("#14532D", "#DCFCE7", "#4ADE80"),
-         "info": ("#1E293B", "#E2E8F0", "#94A3B8")}   # status pill: fill, text, stroke
+         "info": ("#1E293B", "#E2E8F0", "#94A3B8"), "drv": ("#1E3A8A", "#DBEAFE", "#93C5FD")}   # status pill: fill, text, stroke
 
 # ---------------------------------------------------------------- geometry (scene units; lane = 30, about 3.6 m)
 
@@ -53,6 +54,9 @@ CAR_L = 22                                 # car length
 STRIP_H, STRIP_DY = 80, -29
 STRIP_TOP, STRIP_CENTRE, STRIP_BOTTOM = TOP_EDGE + STRIP_DY, CENTRE_LINE + STRIP_DY, BOTTOM_EDGE + STRIP_DY   # 10, 40, 70
 STRIP_OTHER, STRIP_EGO = OTHER_LANE + STRIP_DY, EGO_LANE + STRIP_DY                                       # 25, 55
+# large scene: the STPA, TARA and FSC cards draw in 460 x 250 with 63-unit lanes; the kit's scene scaled by LARGE_K and
+# moved up by LARGE_DY puts the lane lines at 62 / 125 / 188, so their road, cars and marks keep the kit's proportions
+LARGE_W, LARGE_H, LARGE_K, LARGE_DY = 460, 250, 2.1, -20
 
 # ---------------------------------------------------------------- animation (SMIL, no script; a still viewer shows the last frame)
 
@@ -177,19 +181,35 @@ def direction_arrow(transform):
           f'fill="{ARROW}"/></g>')
 
 
-def straight_road(arrow_y=OTHER_LANE, edge_right=True, under="", markings=True):
+def straight_road(arrow_y=OTHER_LANE, edge_right=True, under="", markings=True, width=W, faded=False):
   """A straight two-lane road across the scene. under: drawn on the asphalt below the paint (a seam, an exit, a
-  crossing road); edge_right=False leaves the ego lane's edge line to the caller; markings=False is an unmarked road."""
-  b = [f'<rect width="{W}" height="{H}" fill="{GRASS}"/>', f'<rect x="0" y="32" width="{W}" height="74" fill="{VERGE}"/>',
-       f'<rect x="0" y="35" width="{W}" height="68" fill="{ASPHALT}"/>']
+  crossing road); edge_right=False leaves the ego lane's edge line to the caller; markings=False is an unmarked road;
+  faded: worn paint."""
+  wd = f"{width:g}"
+  op = ' opacity="0.35"' if faded else ""
+  b = [f'<rect width="{wd}" height="{H}" fill="{GRASS}"/>', f'<rect x="0" y="32" width="{wd}" height="74" fill="{VERGE}"/>',
+       f'<rect x="0" y="35" width="{wd}" height="68" fill="{ASPHALT}"/>']
   if under:
     b.append(under)
   if markings:
     if edge_right:
-      b.append(f'<line x1="0" y1="{BOTTOM_EDGE}" x2="{W}" y2="{BOTTOM_EDGE}" stroke="{PAINT}" stroke-width="1.5"/>')
-    b += [f'<line x1="0" y1="{TOP_EDGE}" x2="{W}" y2="{TOP_EDGE}" stroke="{PAINT}" stroke-width="1.5"/>',
-          f'<line x1="0" y1="{CENTRE_LINE}" x2="{W}" y2="{CENTRE_LINE}" stroke="{PAINT}" stroke-width="1.3" stroke-dasharray="9 9"/>']
+      b.append(f'<line x1="0" y1="{BOTTOM_EDGE}" x2="{wd}" y2="{BOTTOM_EDGE}" stroke="{PAINT}" stroke-width="1.5"{op}/>')
+    b += [f'<line x1="0" y1="{TOP_EDGE}" x2="{wd}" y2="{TOP_EDGE}" stroke="{PAINT}" stroke-width="1.5"{op}/>',
+          f'<line x1="0" y1="{CENTRE_LINE}" x2="{wd}" y2="{CENTRE_LINE}" stroke="{PAINT}" stroke-width="1.3" stroke-dasharray="9 9"{op}/>']
   return b + [direction_arrow(f"translate(26 {arrow_y})")]
+
+
+def large_road(**kw):
+  """straight_road() for the large scene (LARGE_W x LARGE_H)."""
+  return [f'<rect width="{LARGE_W}" height="{LARGE_H}" fill="{GRASS}"/>', f'<g transform="translate(0 {LARGE_DY}) scale({LARGE_K})">',
+          *straight_road(width=round(LARGE_W / LARGE_K, 2), **kw), "</g>"]
+
+
+def single_lane_road(path_d, k=1.0):
+  """One lane with edge lines on both sides along any path (a slip road, a curve); k scales it like the scene."""
+  hl = HALF_LANE
+  return [f'<path d="{path_d}" fill="none" stroke="{c}" stroke-width="{2 * r * k:.1f}"/>'
+          for c, r in ((VERGE, hl + 7.5), (ASPHALT, hl + 4), (PAINT, hl + 0.75), (ASPHALT, hl - 0.75))]
 
 
 def strip_road(markings=True):
@@ -229,8 +249,12 @@ def car_body(body, stroke=INK):
           f'<rect x="10" y="-4.2" width="1.2" height="2" fill="{LAMP}"/><rect x="10" y="2.2" width="1.2" height="2" fill="{LAMP}"/>')
 
 
-def ego_body():
-  return car_body(EGO, EGO_EDGE)
+def brake_lights():
+  return f'<rect x="-12" y="-4.4" width="1.6" height="2.4" fill="{PERF_S}"/><rect x="-12" y="2" width="1.6" height="2.4" fill="{PERF_S}"/>'
+
+
+def ego_body(brake=False):
+  return car_body(EGO, EGO_EDGE) + (brake_lights() if brake else "")
 
 
 def other_body(stopped=False):
@@ -302,18 +326,29 @@ def callout(x, y, r, label, label_y, k):
           road_label(fit_x(x, label), label_y, label, CALLOUT, 8, halo=True) + "</g>")
 
 
+def pill(x, y, text, style, size=7.5, h=13, num=None, weight=700, font=None):
+  """One status pill; with num, a numbered disc first (the number keys it to a mark on the card's chart). font: for a
+  sheet whose root sets none."""
+  fill, fg, stroke = BADGE[style]
+  lead = h + 3 if num is not None else 6
+  w = text_w(text, size, True) + lead + 6
+  b = f'<rect x="{x:g}" y="{y:g}" width="{w:.1f}" height="{h:g}" rx="{h / 2:g}" fill="{fill}" stroke="{stroke}" stroke-width="1"/>'
+  if num is not None:
+    b += (f'<circle cx="{x + h / 2 + 1:g}" cy="{y + h / 2:g}" r="{h / 2 - 3:g}" fill="{fg}"/>' +
+          t(x + h / 2 + 1, round(y + h / 2 + size * 0.36, 1), str(num), size * 0.95, fill, 700, "middle"))
+  b += t(x + lead, round(y + h / 2 + size * 0.374, 1), text, size, fg, weight)
+  return f'<g font-family="{escape(font, {chr(34): "&quot;"})}">{b}</g>' if font else b
+
+
 def badges(items, key):
   """Status pills in the scene's top-left corner: (text, from, to or None, style), times mapped by key()."""
   out, y = [], 6
   for text, t0, t1, style in items:
-    fill, fg, stroke = BADGE[style]
-    w = text_w(text, 7.5, True) + 12
     if t1 is None:
       a = appear(key(t0)) if t0 > 0 else ""
     else:
       a = window(key(t0), key(t1))
-    out.append(f'<g>{a}<rect x="6" y="{y}" width="{w:.1f}" height="13" rx="6.5" fill="{fill}" stroke="{stroke}" stroke-width="1"/>' +
-               t(12, y + 9.3, text, 7.5, fg, 700) + "</g>")
+    out.append(f"<g>{a}" + pill(6, y, text, style) + "</g>")
     y += 16
   return out
 

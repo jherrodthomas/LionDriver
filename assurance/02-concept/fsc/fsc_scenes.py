@@ -346,7 +346,7 @@ STOPPED = dict(
   still=0.85,
   want=[(20, 157), (320, 157)],
   labels=[(180, 140, "where it should stop", "#BBF7D0")],
-  actors=[dict(y=157, body="#94A3B8", keys=[(0, 370)]), dict(y=157, body="#DC2626", keys=[(0, 20), (0.92, 345)])],
+  actors=[dict(y=157, body=ss.sk.STOPPED, keys=[(0, 392)]), dict(y=157, body="#DC2626", keys=[(0, 20), (0.92, 345)])],
 )
 
 MODEL: dict[str, dict] = {
@@ -511,7 +511,7 @@ MODEL: dict[str, dict] = {
       still=0.7,
       actors=[
         dict(y=157, body="#DC2626", brake=True, keys=[(0, 40), (0.4, 200), (0.7, 250), (0.92, 262)]),
-        dict(y=157, keys=[(0, -30), (0.4, 130), (0.7, 212), (0.92, 232)]),
+        dict(y=157, keys=[(0, -52), (0.4, 108), (0.7, 190), (0.92, 210)]),
       ],
       pills=P(
         (1, "A wrong input reads as a lead braking", "bad", 0.15, 6),
