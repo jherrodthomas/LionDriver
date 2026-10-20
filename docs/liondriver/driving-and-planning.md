@@ -151,7 +151,9 @@ braking or cancelling: the planner's set speed stays at zero, so the car slows t
 car controller keeps requesting standstill hold and never resumes, and the alert keeps sounding even if driver
 monitoring restarts. The lockout of re-engagement runs from the driver's takeover. It is implemented and unit-tested,
 not yet verified on the car; how long the PCM holds the car at standstill is an assumption (AOU-16) that needs a
-vehicle test, and there is no announcement before the manoeuvre starts (TSR-624).
+vehicle test. The manoeuvre is announced: for its last 5 s the terminal alert counts down to the stop ("Car Stops in
+N s"), and its own alert, "TAKE CONTROL: CAR STOPPING" and then "CAR STOPPED", sounds until the driver takes over
+(TSR-624).
 
 ## 7. Changing the planner for safety and SOTIF
 

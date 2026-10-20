@@ -104,6 +104,24 @@ class TestMonitoring(OpenpilotTestCase):
     assert d_status.lockout_time_elapsed == int(30 / DT_DMON)    # only the 30 s since the takeover count
     assert d_status.lockout_time_elapsed < d_status.lockout_duration
 
+  # TSR-624: the terminal alert counts down to the no-response deceleration, which it announces before it starts
+  def test_no_response_countdown(self):
+    DM = DriverMonitoring()
+    countdown, decel = [], []
+    for _ in range(int((DISTRACTED_SECONDS_TO_RED + dm_settings._NO_RESPONSE_TIMEOUT + 2) / DT_DMON)):
+      DM._update_states(msg_DISTRACTED, [0, 0, 0], 0, True, False)
+      DM._update_events(False, True, False, 0)
+      dm = DM.get_state_packet().driverMonitoringState
+      countdown.append(dm.noResponseDecelIn)
+      decel.append(dm.noResponseForceDecel)
+    assert countdown[0] == -1.                                   # no terminal alert yet
+    red = next(i for i, c in enumerate(countdown) if c >= 0)
+    onset = decel.index(True)
+    assert countdown[red] > dm_settings._NO_RESPONSE_TIMEOUT - 0.2   # announced about 5 s ahead
+    assert (onset - red) * DT_DMON >= 1.                         # at least 1 s before the deceleration (TSR-624)
+    assert all(a >= b for a, b in zip(countdown[red:onset], countdown[red + 1:onset + 1], strict=True))
+    assert countdown[onset] == 0. and all(c == 0. for c in countdown[onset:])
+
   # no face -> wheeltouch red, sustained past the no-response timeout -> unavailability response + lockout
   def test_invisible_lockout(self):
     _, d_status = self._run_seq(always_no_face, always_false, always_true, always_false)

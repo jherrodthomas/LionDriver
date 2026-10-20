@@ -1775,7 +1775,7 @@
   acceptance: "Alert-to-onset ≥ 1 s; jerk ≤ j_down in replay"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: soft-disable force deceleration starts with its alert (`longitudinal_planner.py:84-85`); no jerk bound"
+  baseline_impl: "Partial: the driver-monitoring no-response deceleration is announced 5 s ahead: the terminal alert counts down \"Car Stops in N s\" (`policy.py:459`, `events.py:239`), and the maneuver alert \"TAKE CONTROL: CAR STOPPING\", then \"CAR STOPPED\", sounds through the stop and the hold (`events.py:256`, `selfdrived.py:257`); the host rate is ≤ 4.5 m/s³ (`ACCEL_FINAL_RATE_LIMIT`), below j_down; the fault soft-disable deceleration still starts with its alert, with no lead time (register DQ-407, queued)"
   status: proposed
   source: WP-W-02
 

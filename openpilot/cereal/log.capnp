@@ -154,6 +154,8 @@ struct OnroadEvent @0xc4fa6047f024e718 {
     settingNotAssured @110;
     # LionDriver: below the highway speed floor, so the item does not engage (DQ-280, ODD entry)
     belowHighwaySpeed @111;
+    # LionDriver: the minimum-risk maneuver after an unresponsive driver is under way: stopping, or stopped and held (TSR-633, TSR-624)
+    minimumRiskManeuver @112;
   }
 }
 
@@ -2229,6 +2231,9 @@ struct DriverMonitoringState {
   alert3Count @12 :Int8;
   noResponseCount @13 :Int8;
   noResponseForceDecel @14 :Bool;
+  # LionDriver TSR-624: seconds until the no-response deceleration starts while the terminal alert counts down; 0 once
+  # it has started; -1 when the terminal alert is not active
+  noResponseDecelIn @16 :Float32 = -1;
 
   alwaysOn @3 :Bool;
   alwaysOnLockout @4 :Bool;

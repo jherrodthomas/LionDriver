@@ -455,6 +455,9 @@ class DriverMonitoring:
     dm.alert3Count = self.alert_3_cnt
     dm.noResponseCount = self.no_response_cnt
     dm.noResponseForceDecel = self.alert_level == AlertLevel.three and self.cnt_since_alert_3 >= self.no_response_timeout
+    # LionDriver TSR-624: the terminal alert announces the stop, so it needs the time left before it starts
+    dm.noResponseDecelIn = max(0., (self.no_response_timeout - self.cnt_since_alert_3) * DT_DMON) \
+      if self.alert_level == AlertLevel.three else -1.
     dm.alwaysOn = self.always_on
     dm.alwaysOnLockout = self.always_on and self.awareness <= self.threshold_alert_2
     dm.alertLevel = self.alert_level
