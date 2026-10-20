@@ -120,6 +120,8 @@ jobs:
         python3 assurance/sim/figures/test_fig_sim_guide.py
         python3 assurance/models/figures/fig_models.py --check
         python3 assurance/models/figures/test_fig_models.py
+        python3 assurance/models/figures/fig_timing_anim.py --check
+        python3 assurance/models/figures/test_fig_timing_anim.py
         python3 docs/liondriver/figures/fig_driving.py --check
         python3 docs/liondriver/figures/test_fig_driving.py
         python3 docs/liondriver/figures/fig_speed.py --check
@@ -261,16 +263,19 @@ jobs:
 
   octave-models:
     name: Octave envelope models
-    # Models of envelope logic (assurance/models/octave, WP-P-07 TL-25). Not verification of the C code:
-    # the job checks that the models still follow the pinned opendbc constants and pass their own checks.
+    # Models of envelope logic and of the panda timing loops (assurance/models/octave, WP-P-07 TL-25). Not
+    # verification of the C code: the job checks that the models still follow the pinned opendbc and panda
+    # constants, reproduce the WP-S-04 code-derived times, pass their own checks, and that the committed
+    # timing_loop_results.csv (drawn by assurance/models/figures/fig_timing_anim.py) is current.
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
     - uses: actions/checkout@v7
       with:
         persist-credentials: false
-    - name: Checkout opendbc submodule
-      run: git submodule update --init --depth 1 opendbc_repo
+    - name: Checkout opendbc and panda submodules
+      # panda: the timing-loop model reads the safety-task, tick, heartbeat, watchdog and siren constants
+      run: git submodule update --init --depth 1 opendbc_repo panda
     - name: Install GNU Octave and gnuplot
       run: |
         sudo apt-get update -q
