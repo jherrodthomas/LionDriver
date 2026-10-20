@@ -8,32 +8,32 @@ What the plant cannot show: it has **no tyre friction limit** (a linear tyre: a 
 
 ## Top findings
 
-- 26 of 27 rows leave the lane. In every one the fault decides: where the curve departs by itself as well (at R_ODD), the fault adds more than 0.5 m.
-- Soonest at the lane line among the rows the fault decides: EC-26 (F-01b hard-over (right), combo-hardover-narrow) after 0.89 s; EC-01 (F-07 EPS fault, curve-assist-loss) after 1.03 s; EC-09 (F-07 EPS fault, fault-timing-refault) after 1.12 s. The driver's reaction time alone is 0.75–1.5 s after the cue.
-- An assumption decides EC-10, EC-12, EC-16, EC-24, EC-25: one probe turns the outcome round (Decides column).
-- Low visibility, as a drift noticed at 0.4 m instead of 0.2 m (the plant has no perception, so fog acts only through the driver): 24 rows depart further, by up to 5.3 m; it turns none round. Rows the siren cues are unchanged (EC-01, EC-16, EC-25): a silent fault is where poor visibility costs the driver.
-- EC-11, EC-12, EC-13 match no HARA hazardous event: an assisted lane change that does not stop at the target lane (EC-N1, queued as DQ-405).
+- 24 of 27 rows leave the lane. 2 of them leave it by nearly as much without the fault (the curve at or near R_ODD is beyond the item's lateral authority, plant case N-3), so the road decides those, not the fault.
+- Soonest at the lane line among the rows the fault decides: EC-26 (F-01b hard-over (right), combo-hardover-narrow) after 0.89 s; EC-01 (F-07 EPS fault, curve-assist-loss) after 1.03 s; EC-13 (F-07 EPS fault, fault-timing-lane-change) after 1.19 s. The driver's reaction time alone is 0.75–1.5 s after the cue.
+- An assumption decides EC-04, EC-08, EC-10, EC-12, EC-16, EC-24, EC-25: one probe turns the outcome round (Decides column).
+- Low visibility, as a drift noticed at 0.4 m instead of 0.2 m (the plant has no perception, so fog acts only through the driver): 17 rows depart further, by up to 5.3 m; it turns none round. Rows the siren cues are unchanged (EC-01, EC-04, EC-05, EC-08, EC-09, EC-12, EC-13, EC-16, EC-24, EC-25): a silent fault is where poor visibility costs the driver.
+- EC-11, EC-13 match no HARA hazardous event: an assisted lane change that does not stop at the target lane (EC-N1, queued as DQ-406).
 
 ## Catalogue
 
 | Row | Family | Fault | Parameters | rho (m) | Line crossed (s) | Side | rho without the fault (m) | Decides | HARA / SOTIF | Scene |
 |---|---|---|---|---|---|---|---|---|---|---|
-| EC-01 | [curve-assist-loss](search-curve-assist-loss.md) | F-07 EPS fault | speed_kph 80.0 km/h, a_y 1.80 m/s², lane_width 3.01 m, t_r 1.48 s, cue 0.30 m | -7.31 | 1.03 | right | 0.55 | no probe flips it; driver reacts after 0.75 s moves rho most (+4.28 m) | HE-02.1, SH-02 | — |
-| EC-02 | [fault-timing-curve](search-fault-timing-curve.md) | F-01b hard-over (right) | a_y 1.56 m/s², arc_m 202.8 m, x_inj 0.32, speed_kph 91.2 km/h, t_r 1.29 s | -27.52 | 1.53 | right | 0.91 | no probe flips it; driver corrects with up to 6 m/s² moves rho most (+16.75 m) | HE-01.2 | — |
+| EC-01 | [curve-assist-loss](search-curve-assist-loss.md) | F-07 EPS fault | speed_kph 80.0 km/h, a_y 1.80 m/s², lane_width 3.01 m, t_r 1.48 s, cue 0.30 m | -4.21 | 1.03 | right | 0.55 | no probe flips it; panda siren muted (as before DQ-404) moves rho most (-3.50 m) | HE-02.1, SH-02 | — |
+| EC-02 | [fault-timing-curve](search-fault-timing-curve.md) | F-01b hard-over (right) | a_y 1.58 m/s², arc_m 169.3 m, x_inj 0.33, speed_kph 95.0 km/h, t_r 1.29 s | -27.63 | 1.53 | right | 0.88 | no probe flips it; driver corrects with up to 6 m/s² moves rho most (+16.51 m) | HE-01.2 | — |
 | EC-03 | [fault-timing-curve](search-fault-timing-curve.md) | F-03 frozen command | a_y 1.46 m/s², arc_m 144.4 m, x_inj 0.55, speed_kph 92.1 km/h, t_r 1.47 s | -1.83 | 4.65 | left | 0.89 | no probe flips it; driver reacts after 0.75 s moves rho most (+1.62 m) | HE-02.3 | [ec-03-frozen-curve-exit](../blender/dashboards/ec-03-frozen-curve-exit.jpg) |
-| EC-04 | [fault-timing-curve](search-fault-timing-curve.md) | F-04b SoC stall | a_y 1.61 m/s², arc_m 240.4 m, x_inj 0.18, speed_kph 97.4 km/h, t_r 1.36 s | -5.07 | 1.39 | right | 0.87 | no probe flips it; siren when the panda revokes (DQ-404 what-if) moves rho most (+3.51 m) | HE-02.4 | [ec-04-stall-curve-tunnel](../blender/dashboards/ec-04-stall-curve-tunnel.jpg) |
-| EC-05 | [fault-timing-curve](search-fault-timing-curve.md) | F-07 EPS fault | a_y 1.76 m/s², arc_m 225.5 m, x_inj 0.29, speed_kph 109.7 km/h, t_r 1.29 s | -5.85 | 1.39 | right | 0.85 | no probe flips it; siren when the panda revokes (DQ-404 what-if) moves rho most (+3.86 m) | HE-02.1, SH-02 | — |
+| EC-04 | [fault-timing-curve](search-fault-timing-curve.md) | F-04b SoC stall | a_y 1.80 m/s², arc_m 283.3 m, x_inj 0.75, speed_kph 91.5 km/h, t_r 1.49 s | -2.28 | 1.35 | right | 0.87 | **EPS-hold (keeps its last torque 2 s)** turns it to in-lane (rho 0.83 m) | HE-02.4 | [ec-04-stall-curve-tunnel](../blender/dashboards/ec-04-stall-curve-tunnel.jpg) |
+| EC-05 | [fault-timing-curve](search-fault-timing-curve.md) | F-07 EPS fault | a_y 1.76 m/s², arc_m 225.5 m, x_inj 0.29, speed_kph 109.7 km/h, t_r 1.29 s | -2.00 | 1.39 | right | 0.85 | no probe flips it; panda siren muted (as before DQ-404) moves rho most (-3.86 m) | HE-02.1, SH-02 | — |
 | EC-06 | [fault-timing-refault](search-fault-timing-refault.md) | F-01b hard-over (right) | clear_s 1.05 s, gap_s 0.05 s, a_y 2.00 m/s², speed_kph 92.6 km/h, t_r 1.39 s | -35.49 | 1.35 | right | 0.42 | no probe flips it; driver corrects with up to 6 m/s² moves rho most (+21.87 m) | HE-01.2 | — |
 | EC-07 | [fault-timing-refault](search-fault-timing-refault.md) | F-03 frozen command | clear_s 1.42 s, gap_s 0.51 s, a_y 2.00 m/s², speed_kph 93.6 km/h, t_r 0.75 s | 0.47 | — | right | 0.47 | no probe flips it; drift noticed late, 0.4 m (fog or heavy rain; no source) moves rho most (-0.21 m) | — (in lane) | — |
-| EC-08 | [fault-timing-refault](search-fault-timing-refault.md) | F-04b SoC stall | clear_s 1.12 s, gap_s 0.65 s, a_y 1.70 m/s², speed_kph 85.5 km/h, t_r 1.16 s | -4.12 | 1.36 | right | 0.96 | no probe flips it; siren when the panda revokes (DQ-404 what-if) moves rho most (+2.78 m) | HE-02.4 | — |
-| EC-09 | [fault-timing-refault](search-fault-timing-refault.md) | F-07 EPS fault | clear_s 0.53 s, gap_s 0.28 s, a_y 2.00 m/s², speed_kph 100.0 km/h, t_r 0.75 s | -3.35 | 1.12 | right | 0.44 | no probe flips it; siren when the panda revokes (DQ-404 what-if) moves rho most (+2.54 m) | HE-02.1, SH-02 | — |
+| EC-08 | [fault-timing-refault](search-fault-timing-refault.md) | F-04b SoC stall | clear_s 1.12 s, gap_s 0.65 s, a_y 1.70 m/s², speed_kph 85.5 km/h, t_r 1.16 s | -1.82 | 1.36 | right | 0.96 | **EPS-hold (keeps its last torque 2 s)** turns it to in-lane (rho 0.96 m) | HE-02.4 | — |
+| EC-09 | [fault-timing-refault](search-fault-timing-refault.md) | F-07 EPS fault | clear_s 0.77 s, gap_s 0.79 s, a_y 1.50 m/s², speed_kph 86.1 km/h, t_r 1.11 s | -1.38 | 1.41 | right | 0.96 | no probe flips it; panda siren muted (as before DQ-404) moves rho most (-1.75 m) | HE-02.1, SH-02 | — |
 | EC-10 | [fault-timing-lane-change](search-fault-timing-lane-change.md) | F-01b hard-over (right) | phase 0.76, lc_s 4.42 s, a_y 0.99 m/s², speed_kph 104.7 km/h, t_r 1.01 s | -12.94 | 2.68 | right | 0.79 | **drift cue 0.1 m** turns it to in-lane (rho 0.88 m) | HE-01.2 | — |
 | EC-11 | [fault-timing-lane-change](search-fault-timing-lane-change.md) | F-03 frozen command | phase 0.27, lc_s 3.96 s, a_y 0.00 m/s², speed_kph 80.0 km/h, t_r 1.50 s | -11.91 | 1.88 | left | 0.80 | no probe flips it; driver reacts after 0.75 s moves rho most (+7.06 m) | **none: new** (EC-N1); nearest HE-02.5 | [ec-11-lane-change-frozen-overshoot](../blender/dashboards/ec-11-lane-change-frozen-overshoot.jpg) |
-| EC-12 | [fault-timing-lane-change](search-fault-timing-lane-change.md) | F-04b SoC stall | phase 0.71, lc_s 3.00 s, a_y 0.49 m/s², speed_kph 110.0 km/h, t_r 0.75 s | -0.17 | 1.50 | left | 0.19 | **siren when the panda revokes (DQ-404 what-if)** turns it to in-lane (rho 0.06 m) | **none: new** (EC-N1); nearest HE-02.5 | [ec-12-lane-change-stall-exit](../blender/dashboards/ec-12-lane-change-stall-exit.jpg) |
-| EC-13 | [fault-timing-lane-change](search-fault-timing-lane-change.md) | F-07 EPS fault | phase 0.67, lc_s 3.83 s, a_y 0.16 m/s², speed_kph 108.1 km/h, t_r 0.99 s | -0.86 | 1.19 | left | 0.60 | no probe flips it; driver reacts after 0.75 s moves rho most (+0.36 m) | **none: new** (EC-N1); nearest HE-02.5 | — |
+| EC-12 | [fault-timing-lane-change](search-fault-timing-lane-change.md) | F-04b SoC stall | phase 0.71, lc_s 3.00 s, a_y 0.49 m/s², speed_kph 110.0 km/h, t_r 0.75 s | 0.06 | — | left | 0.19 | **EPS-hold (keeps its last torque 2 s)** turns it into a departure (rho -0.68 m) | — (in lane) | [ec-12-lane-change-stall-exit](../blender/dashboards/ec-12-lane-change-stall-exit.jpg) |
+| EC-13 | [fault-timing-lane-change](search-fault-timing-lane-change.md) | F-07 EPS fault | phase 0.67, lc_s 3.83 s, a_y 0.16 m/s², speed_kph 108.1 km/h, t_r 0.99 s | -0.73 | 1.19 | left | 0.60 | no probe flips it; driver reacts after 0.75 s moves rho most (+0.37 m) | **none: new** (EC-N1); nearest HE-02.5 | — |
 | EC-14 | [fault-timing-correction](search-fault-timing-correction.md) | F-01b hard-over (right) | clear_s 1.00 s, lag_s 0.29 s, a_y 2.00 m/s², speed_kph 98.6 km/h, t_r 1.50 s | -17.96 | 1.56 | right | 0.70 | no probe flips it; driver reacts after 0.75 s moves rho most (+11.04 m) | HE-01.2 | — |
 | EC-15 | [fault-timing-correction](search-fault-timing-correction.md) | F-03 frozen command | clear_s 1.00 s, lag_s 0.29 s, a_y 1.97 m/s², speed_kph 110.0 km/h, t_r 1.50 s | -3.78 | 2.23 | right | 0.80 | no probe flips it; driver reacts after 0.75 s moves rho most (+3.01 m) | HE-02.3 | — |
-| EC-16 | [fault-timing-correction](search-fault-timing-correction.md) | F-07 EPS fault | clear_s 0.46 s, lag_s 0.33 s, a_y 1.99 m/s², speed_kph 103.0 km/h, t_r 1.34 s | -1.30 | 2.17 | right | 0.77 | **siren when the panda revokes (DQ-404 what-if)** turns it to in-lane (rho 0.31 m) | HE-02.1, SH-02 | — |
+| EC-16 | [fault-timing-correction](search-fault-timing-correction.md) | F-07 EPS fault | clear_s 0.46 s, lag_s 0.33 s, a_y 1.99 m/s², speed_kph 103.0 km/h, t_r 1.34 s | 0.31 | — | right | 0.77 | **panda siren muted (as before DQ-404)** turns it into a departure (rho -2.85 m) | — (in lane) | — |
 | EC-17 | [driver-edge](search-driver-edge.md) | F-01b hard-over (right) | behaviour nominal, k 0.00, a_y 1.29 m/s², speed_kph 95.3 km/h, t_r 1.08 s | -18.27 | 1.55 | right | 0.91 | no probe flips it; driver corrects with up to 6 m/s² moves rho most (+11.18 m) | HE-01.2 | — |
 | EC-18 | [driver-edge](search-driver-edge.md) | F-01b hard-over (right) | behaviour wrong-direction, k 0.33, a_y 1.98 m/s², speed_kph 83.3 km/h, t_r 1.12 s | -46.85 | 1.44 | right | 0.88 | no probe flips it; driver corrects with up to 6 m/s² moves rho most (+30.67 m) | HE-01.2 | [ec-18-wrong-direction-correction](../blender/dashboards/ec-18-wrong-direction-correction.jpg) |
 | EC-19 | [driver-edge](search-driver-edge.md) | F-01b hard-over (right) | behaviour over-correction, k 0.11, a_y 1.95 m/s², speed_kph 107.2 km/h, t_r 1.49 s | -51.88 | 1.54 | right | 0.85 | no probe flips it; driver corrects with up to 6 m/s² moves rho most (+33.63 m) | HE-01.2 | — |
@@ -41,44 +41,44 @@ What the plant cannot show: it has **no tyre friction limit** (a linear tyre: a 
 | EC-21 | [combo-odd-bound](search-combo-odd-bound.md) | F-01b hard-over (right) | speed_kph 107.0 km/h, lane_width 3.61 m, t_r 1.50 s | -41.19 | 1.50 | right | -0.15 | the curve departs by itself (rho -0.15 m without the fault); no probe flips it; driver corrects with up to 6 m/s² moves rho most (+23.84 m) | HE-01.2, SH-02 | — |
 | EC-22 | [combo-odd-bound](search-combo-odd-bound.md) | F-01b mirrored (left) | speed_kph 101.7 km/h, lane_width 3.15 m, t_r 1.17 s | -1.58 | 1.95 | left | 0.12 | no probe flips it; driver reacts after 0.75 s moves rho most (+0.69 m) | HE-02.1, SH-02 | — |
 | EC-23 | [combo-odd-bound](search-combo-odd-bound.md) | F-03 frozen command | speed_kph 110.0 km/h, lane_width 3.48 m, t_r 1.34 s | -4.70 | 1.97 | right | -0.12 | the curve departs by itself (rho -0.12 m without the fault); no probe flips it; driver reacts after 0.75 s moves rho most (+3.32 m) | HE-02.3, SH-02 | — |
-| EC-24 | [combo-odd-bound](search-combo-odd-bound.md) | F-04b SoC stall | speed_kph 107.9 km/h, lane_width 3.54 m, t_r 1.31 s | -4.28 | 1.96 | right | -0.06 | the curve departs by itself (rho -0.06 m without the fault); **siren when the panda revokes (DQ-404 what-if)** turns it to in-lane (rho 0.06 m) | HE-07.1 | [ec-24-silent-stall-r-odd](../blender/dashboards/ec-24-silent-stall-r-odd.jpg) |
-| EC-25 | [combo-odd-bound](search-combo-odd-bound.md) | F-07 EPS fault | speed_kph 103.5 km/h, lane_width 3.81 m, t_r 1.48 s | -2.40 | 2.13 | right | 0.19 | **siren when the panda revokes (DQ-404 what-if)** turns it to in-lane (rho 0.00 m) | HE-02.1, SH-02 | — |
+| EC-24 | [combo-odd-bound](search-combo-odd-bound.md) | F-04b SoC stall | speed_kph 107.9 km/h, lane_width 3.54 m, t_r 1.31 s | -0.18 | 2.01 | right | -0.06 | the road: departs without the fault too (rho -0.06 m) | HE-07.1 | [ec-24-silent-stall-r-odd](../blender/dashboards/ec-24-silent-stall-r-odd.jpg) |
+| EC-25 | [combo-odd-bound](search-combo-odd-bound.md) | F-07 EPS fault | speed_kph 106.0 km/h, lane_width 3.25 m, t_r 1.33 s | -0.21 | 1.91 | right | -0.16 | the road: departs without the fault too (rho -0.16 m) | HE-02.1, SH-02 | — |
 | EC-26 | [combo-hardover-narrow](search-combo-hardover-narrow.md) | F-01b hard-over (right) | lane_width 3.18 m, a_y 1.35 m/s², speed_kph 82.3 km/h, t_r 1.25 s, cue 0.20 m, wind_ay -0.50 m/s² | -32.10 | 0.89 | right | 0.15 | no probe flips it; driver corrects with up to 6 m/s² moves rho most (+20.31 m) | HE-01.2, SH-01 | [ec-26-narrow-lane-truck-hardover](../blender/dashboards/ec-26-narrow-lane-truck-hardover.jpg) |
 | EC-27 | [combo-hardover-narrow](search-combo-hardover-narrow.md) | F-01b mirrored (left) | lane_width 3.22 m, a_y 0.09 m/s², speed_kph 87.7 km/h, t_r 1.47 s, cue 0.17 m, wind_ay 0.22 m/s² | -8.28 | 1.38 | left | 0.50 | no probe flips it; driver reacts after 0.75 s moves rho most (+5.21 m) | HE-01.2, SH-01 | [ec-27-crosswind-hardover-left](../blender/dashboards/ec-27-crosswind-hardover-left.jpg) |
 
-How each row maps: EC-01: loss of assist in a highway curve; the HE names a curve near R_ODD, this one is milder. EC-02: hard-over within the envelope on a highway; in or near a curve. EC-03: frozen command while the road changes; at the curve exit the bias steers into the old curve. EC-04: silent loss; the HE names a straight or gentle curve, this one is in a curve. EC-05: announced loss of assist in a curve. EC-06: two hard-overs; the second starts while the car is already off centre. EC-08: authority latched off after the first stall; the second changes nothing. EC-09: authority latched off after the first EPS fault; the second changes nothing. EC-10: hard-over during a lane change (OS-12); HE-01.2 names OS-01/OS-02. EC-11: the fault leaves the car moving sideways (a frozen command keeps pushing it; a lost one leaves its lateral speed), so it crosses the target lane's far line; HE-02.5 has the car stop and straddle the lanes. EC-12: the fault leaves the car moving sideways (a frozen command keeps pushing it; a lost one leaves its lateral speed), so it crosses the target lane's far line; HE-02.5 has the car stop and straddle the lanes. EC-13: the fault leaves the car moving sideways (a frozen command keeps pushing it; a lost one leaves its lateral speed), so it crosses the target lane's far line; HE-02.5 has the car stop and straddle the lanes. EC-14: hard-over at curve entry, ended during the correction. EC-15: frozen command at curve entry. EC-16: EPS fault at curve entry; the authority stays off. EC-17: hard-over; the HE's C rating assumes a steering correction. EC-18: hard-over; the HE's C rating assumes a steering correction. EC-19: hard-over; the HE's C rating assumes a steering correction. EC-20: hard-over; the HE's C rating assumes a steering correction. EC-21: outward hard-over in a curve at R_ODD; the curve alone already exceeds the item's authority. EC-22: the inward hard-over asks for the full left torque the item already commands at R_ODD, so it changes nothing: the curve decides (HE-02.1 / SH-02 situation). EC-23: frozen at curve entry, before the torque has built up for the curve. EC-24: silent loss in a curve near R_ODD (the HE-07.1 situation: no take-over alert). EC-25: the HE's own situation. EC-26: hard-over toward an adjacent vehicle or barrier; TC-32 (named for SH-01) makes the margin 0.61–0.76 m. EC-27: hard-over toward an adjacent vehicle or barrier; TC-32 (named for SH-01) makes the margin 0.61–0.76 m.
+How each row maps: EC-01: loss of assist in a highway curve; the HE names a curve near R_ODD, this one is milder. EC-02: hard-over within the envelope on a highway; in or near a curve. EC-03: frozen command while the road changes; at the curve exit the bias steers into the old curve. EC-04: silent loss; the HE names a straight or gentle curve, this one is in a curve. EC-05: announced loss of assist in a curve. EC-06: two hard-overs; the second starts while the car is already off centre. EC-08: authority latched off after the first stall; the second changes nothing. EC-09: authority latched off after the first EPS fault; the second changes nothing. EC-10: hard-over during a lane change (OS-12); HE-01.2 names OS-01/OS-02. EC-11: the fault leaves the car moving sideways (a frozen command keeps pushing it; a lost one leaves its lateral speed), so it crosses the target lane's far line; HE-02.5 has the car stop and straddle the lanes. EC-13: the fault leaves the car moving sideways (a frozen command keeps pushing it; a lost one leaves its lateral speed), so it crosses the target lane's far line; HE-02.5 has the car stop and straddle the lanes. EC-14: hard-over at curve entry, ended during the correction. EC-15: frozen command at curve entry. EC-17: hard-over; the HE's C rating assumes a steering correction. EC-18: hard-over; the HE's C rating assumes a steering correction. EC-19: hard-over; the HE's C rating assumes a steering correction. EC-20: hard-over; the HE's C rating assumes a steering correction. EC-21: outward hard-over in a curve at R_ODD; the curve alone already exceeds the item's authority. EC-22: the inward hard-over asks for the full left torque the item already commands at R_ODD, so it changes nothing: the curve decides (HE-02.1 / SH-02 situation). EC-23: frozen at curve entry, before the torque has built up for the curve. EC-24: silent loss in a curve near R_ODD (the HE-07.1 situation: no take-over alert). EC-25: the HE's own situation. EC-26: hard-over toward an adjacent vehicle or barrier; TC-32 (named for SH-01) makes the margin 0.61–0.76 m. EC-27: hard-over toward an adjacent vehicle or barrier; TC-32 (named for SH-01) makes the margin 0.61–0.76 m.
 
 ## New-hazard findings
 
-- Low visibility, as a drift noticed at 0.4 m instead of 0.2 m (the plant has no perception, so fog acts only through the driver): 24 rows depart further, by up to 5.3 m; it turns none round. Rows the siren cues are unchanged (EC-01, EC-16, EC-25): a silent fault is where poor visibility costs the driver.
+- Low visibility, as a drift noticed at 0.4 m instead of 0.2 m (the plant has no perception, so fog acts only through the driver): 17 rows depart further, by up to 5.3 m; it turns none round. Rows the siren cues are unchanged (EC-01, EC-04, EC-05, EC-08, EC-09, EC-12, EC-13, EC-16, EC-24, EC-25): a silent fault is where poor visibility costs the driver.
 ### EC-N1: an assisted lane change that does not stop at the target lane
 
-HE-02.5 rates a loss of lateral control during an assisted lane change as the car stopping partway and straddling the two lanes. The search finds the opposite effect. A frozen command (F-03) is passed by the panda and keeps the lateral acceleration of the moment it froze, so the car keeps moving sideways through the target lane toward the one beyond it. A loss late in the change (a SoC stall, F-04b, or an EPS fault, F-07) leaves the car with its lateral speed and nothing to stop it at the target lane's centre, so it runs over the far line. Either way the departure is into a lane the driver did not check before the change. No hazardous event of the HARA names that effect.
+HE-02.5 rates a loss of lateral control during an assisted lane change as the car stopping partway and straddling the two lanes. The search finds the opposite effect. A frozen command (F-03) is passed by the panda and keeps the lateral acceleration of the moment it froze, so the car keeps moving sideways through the target lane toward the one beyond it. An EPS fault late in the change (F-07) leaves the car with its lateral speed and no assist to stop it at the target lane's centre, so it runs over the far line even with the siren. (A SoC stall late in a change, F-04b, did the same before the siren on revocation, DQ-404; it now stays just inside.) Either way the departure is into a lane the driver did not check before the change. No hazardous event of the HARA names that effect.
 
-Rows: EC-11, EC-12, EC-13. Queued for the project lead as DQ-405 in the decision register.
+Rows: EC-11, EC-13. Queued for the project lead as DQ-406 in the decision register.
 
 ## Assumption probes
 
 Each row re-run with one assumption changed (rho in metres; the row's own rho first):
 
-| Row | rho | driver reacts after 0.75 s | drift cue 0.1 m | drift noticed late, 0.4 m (fog or heavy rain; no source) | EPS-hold (keeps its last torque 2 s) | driver corrects with up to 6 m/s² | siren when the panda revokes (DQ-404 what-if) | Family probe |
+| Row | rho | driver reacts after 0.75 s | drift cue 0.1 m | drift noticed late, 0.4 m (fog or heavy rain; no source) | EPS-hold (keeps its last torque 2 s) | driver corrects with up to 6 m/s² | panda siren muted (as before DQ-404) | Family probe |
 |---|---|---|---|---|---|---|---|---|
-| EC-01 | -7.31 | -3.03 | -5.90 | -7.31 | -7.31 | -5.65 | -3.55 | — |
-| EC-02 | -27.52 | -15.91 | -24.53 | -31.40 | -27.52 | -10.78 | -27.52 | — |
+| EC-01 | -4.21 | -1.03 | -4.21 | -4.21 | -4.21 | -3.17 | -7.71 | — |
+| EC-02 | -27.63 | -15.97 | -24.63 | -31.53 | -27.63 | -11.12 | -27.63 | — |
 | EC-03 | -1.83 | -0.21 | -1.04 | -3.14 | -1.83 | -1.48 | -1.83 | — |
-| EC-04 | -5.07 | -2.14 | -4.16 | -6.39 | -2.41 | -3.94 | -1.56 | — |
-| EC-05 | -5.85 | -2.82 | -4.92 | -6.03 | -5.85 | -4.41 | -2.00 | — |
+| EC-04 | -2.28 | -0.07 | -2.28 | -2.28 | 0.83 | -1.78 | -4.69 | — |
+| EC-05 | -2.00 | -0.15 | -2.00 | -2.00 | -2.00 | -1.34 | -5.85 | — |
 | EC-06 | -35.49 | -22.01 | -31.78 | -39.62 | -35.49 | -13.63 | -35.49 | — |
 | EC-07 | 0.47 | 0.47 | 0.58 | 0.26 | 0.47 | 0.47 | 0.47 | — |
-| EC-08 | -4.12 | -2.14 | -3.29 | -5.37 | -4.13 | -3.09 | -1.34 | — |
-| EC-09 | -3.35 | -3.35 | -2.50 | -4.61 | -2.26 | -2.30 | -0.81 | — |
+| EC-08 | -1.82 | -0.41 | -1.82 | -1.82 | 0.96 | -1.24 | -4.12 | — |
+| EC-09 | -1.38 | -0.32 | -1.38 | -1.38 | -0.37 | -0.95 | -3.13 | — |
 | EC-10 | -12.94 | -8.15 | 0.88 | -15.79 | -12.94 | -4.23 | -12.94 | — |
 | EC-11 | -11.91 | -4.86 | -10.76 | -13.84 | -11.91 | -8.14 | -11.91 | — |
-| EC-12 | -0.17 | -0.17 | 0.02 | -0.44 | -1.03 | -0.02 | 0.06 | — |
-| EC-13 | -0.86 | -0.49 | -0.65 | -1.21 | -0.86 | -0.73 | -0.54 | — |
+| EC-12 | 0.06 | 0.06 | 0.06 | 0.06 | -0.68 | 0.19 | -0.17 | — |
+| EC-13 | -0.73 | -0.37 | -0.65 | -0.73 | -0.73 | -0.60 | -0.86 | — |
 | EC-14 | -17.96 | -6.92 | -15.07 | -21.83 | -17.96 | -11.71 | -17.96 | driver feels the torque at once: -17.96 |
 | EC-15 | -3.78 | -0.78 | -2.51 | -5.70 | -3.78 | -2.83 | -3.78 | driver feels the torque at once: -3.78 |
-| EC-16 | -1.30 | 0.09 | -1.30 | -1.30 | -1.30 | -0.91 | 0.31 | driver feels the torque at once: -1.30 |
+| EC-16 | 0.31 | 0.73 | 0.31 | 0.31 | 0.31 | 0.32 | -2.85 | driver feels the torque at once: 0.31 |
 | EC-17 | -18.27 | -10.96 | -14.75 | -23.57 | -18.27 | -7.09 | -18.27 | nominal driver: -18.27 |
 | EC-18 | -46.85 | -37.26 | -42.65 | -51.78 | -46.85 | -16.18 | -46.85 | nominal driver: -38.20 |
 | EC-19 | -51.88 | -31.77 | -48.26 | -56.52 | -51.88 | -18.24 | -51.88 | nominal driver: -51.88 |
@@ -86,8 +86,8 @@ Each row re-run with one assumption changed (rho in metres; the row's own rho fi
 | EC-21 | -41.19 | -25.86 | -37.83 | -45.05 | -41.19 | -17.35 | -41.19 | — |
 | EC-22 | -1.58 | -0.89 | -1.23 | -2.04 | -1.58 | -1.43 | -1.58 | — |
 | EC-23 | -4.70 | -1.38 | -3.08 | -7.22 | -4.70 | -3.13 | -4.70 | — |
-| EC-24 | -4.28 | -1.29 | -2.78 | -6.69 | -4.19 | -2.86 | 0.06 | — |
-| EC-25 | -2.40 | -0.04 | -2.40 | -2.40 | -2.40 | -1.65 | 0.00 | — |
+| EC-24 | -0.18 | 0.52 | -0.18 | -0.18 | -0.01 | -0.03 | -4.28 | — |
+| EC-25 | -0.21 | 0.42 | -0.21 | -0.21 | -0.21 | -0.11 | -4.12 | — |
 | EC-26 | -32.10 | -21.26 | -28.75 | -36.21 | -32.10 | -11.79 | -32.10 | — |
 | EC-27 | -8.28 | -3.08 | -7.09 | -10.93 | -8.28 | -5.86 | -8.28 | — |
 
@@ -96,14 +96,14 @@ Each row re-run with one assumption changed (rho in metres; the row's own rho fi
 The fields a plant scene of [`blender/scenes.yaml`](../blender/scenes.yaml) needs to reproduce each row (its `case`, `case_overrides` and `assumptions`); `test_search.py` checks that every scene naming a row reproduces its rho.
 
 - **EC-01** `case: F-07`, `case_overrides: {road: curve@1.800000, speed_kph: 80.0, lane_width: 3.01}`, `assumptions: {driver_t_r_s: 1.48, driver_lat_cue_m: 0.3}`
-- **EC-02** `case: F-01b`, `case_overrides: {road: 'arc@1.560000:202.800', speed_kph: 91.2, t_fault: 12.983, duration: 8.0}`, `assumptions: {driver_t_r_s: 1.29}`
+- **EC-02** `case: F-01b`, `case_overrides: {road: 'arc@1.580000:169.300', speed_kph: 95.0, t_fault: 12.197, duration: 8.0}`, `assumptions: {driver_t_r_s: 1.29}`
 - **EC-03** `case: F-03`, `case_overrides: {road: 'arc@1.460000:144.400', speed_kph: 92.1, t_fault: 15.222, duration: 8.0}`, `assumptions: {driver_t_r_s: 1.47}`
-- **EC-04** `case: F-04b`, `case_overrides: {road: 'arc@1.610000:240.400', speed_kph: 97.4, t_fault: 10.322, duration: 8.0}`, `assumptions: {driver_t_r_s: 1.36}`
+- **EC-04** `case: F-04b`, `case_overrides: {road: 'arc@1.800000:283.300', speed_kph: 91.5, t_fault: 22.13, duration: 8.0}`, `assumptions: {driver_t_r_s: 1.49}`
 - **EC-05** `case: F-07`, `case_overrides: {road: 'arc@1.760000:225.500', speed_kph: 109.7, t_fault: 10.613, duration: 8.0}`, `assumptions: {driver_t_r_s: 1.29}`
 - **EC-06** `case: F-01b`, `case_overrides: {road: curve@2.000000, speed_kph: 92.6, t_fault: 10.22, duration: 8.0, fault_clear: 1.05, fault2: hardover, fault2_gap: 0.05}`, `assumptions: {driver_t_r_s: 1.39}`
 - **EC-07** `case: F-03`, `case_overrides: {road: curve@2.000000, speed_kph: 93.6, t_fault: 10.154, duration: 8.0, fault_clear: 1.42, fault2: frozen, fault2_gap: 0.51}`, `assumptions: {driver_t_r_s: 0.75}`
 - **EC-08** `case: F-04b`, `case_overrides: {road: curve@1.700000, speed_kph: 85.5, t_fault: 10.737, duration: 8.0, fault_clear: 1.12, fault2: soc_stall, fault2_gap: 0.65}`, `assumptions: {driver_t_r_s: 1.16}`
-- **EC-09** `case: F-07`, `case_overrides: {road: curve@2.000000, speed_kph: 100.0, t_fault: 9.76, duration: 8.0, fault_clear: 0.53, fault2: eps_fault, fault2_gap: 0.28}`, `assumptions: {driver_t_r_s: 0.75}`
+- **EC-09** `case: F-07`, `case_overrides: {road: curve@1.500000, speed_kph: 86.1, t_fault: 10.69, duration: 8.0, fault_clear: 0.77, fault2: eps_fault, fault2_gap: 0.79}`, `assumptions: {driver_t_r_s: 1.11}`
 - **EC-10** `case: F-01b`, `case_overrides: {road: curve@0.990000, speed_kph: 104.7, t_fault: 9.359, duration: 8.0, lane_change: 6.0, lane_change_s: 4.42}`, `assumptions: {driver_t_r_s: 1.01}`
 - **EC-11** `case: F-03`, `case_overrides: {road: straight, speed_kph: 80.0, t_fault: 7.069, duration: 8.0, lane_change: 6.0, lane_change_s: 3.96}`
 - **EC-12** `case: F-04b`, `case_overrides: {road: curve@0.490000, t_fault: 8.13, duration: 8.0, lane_change: 6.0, lane_change_s: 3.0}`, `assumptions: {driver_t_r_s: 0.75}`
@@ -119,7 +119,7 @@ The fields a plant scene of [`blender/scenes.yaml`](../blender/scenes.yaml) need
 - **EC-22** `case: F-01b`, `case_overrides: {fault: hardover_left, road: curve@2.136961, speed_kph: 101.7, lane_width: 3.15, t_fault: null, duration: 8.0}`, `assumptions: {driver_t_r_s: 1.17}`
 - **EC-23** `case: F-03`, `case_overrides: {road: curve@2.500000, lane_width: 3.48, duration: 8.0}`, `assumptions: {driver_t_r_s: 1.34}`
 - **EC-24** `case: F-04b`, `case_overrides: {road: curve@2.405457, speed_kph: 107.9, lane_width: 3.54, t_fault: null, duration: 8.0}`, `assumptions: {driver_t_r_s: 1.31}`
-- **EC-25** `case: F-07`, `case_overrides: {road: curve@2.213275, speed_kph: 103.5, lane_width: 3.81, t_fault: null, duration: 8.0}`, `assumptions: {driver_t_r_s: 1.48}`
+- **EC-25** `case: F-07`, `case_overrides: {road: curve@2.321488, speed_kph: 106.0, lane_width: 3.25, t_fault: null, duration: 8.0}`, `assumptions: {driver_t_r_s: 1.33}`
 - **EC-26** `case: F-01b`, `case_overrides: {road: curve@1.350000, speed_kph: 82.3, lane_width: 3.18, t_fault: 7.0, duration: 8.0, ay_disturbance: -0.5}`, `assumptions: {driver_t_r_s: 1.25}`
 - **EC-27** `case: F-01b`, `case_overrides: {fault: hardover_left, road: curve@0.090000, speed_kph: 87.7, lane_width: 3.22, t_fault: 7.0, duration: 8.0, ay_disturbance: 0.22}`, `assumptions: {driver_t_r_s: 1.47, driver_lat_cue_m: 0.17}`
 
@@ -134,22 +134,22 @@ The fields a plant scene of [`blender/scenes.yaml`](../blender/scenes.yaml) need
 - [A fault in a curve at R_ODD at a speed near the ODD bound](search-combo-odd-bound.md)
 - [Hard-over in a narrow lane (TC-32), with crosswind or bank (TC-15)](search-combo-hardover-narrow.md)
 
-<!-- edge-case EC-01 family=curve-assist-loss rho=-7.3108 -->
-<!-- edge-case EC-02 family=fault-timing-curve rho=-27.5233 -->
+<!-- edge-case EC-01 family=curve-assist-loss rho=-4.2104 -->
+<!-- edge-case EC-02 family=fault-timing-curve rho=-27.6302 -->
 <!-- edge-case EC-03 family=fault-timing-curve rho=-1.8340 -->
-<!-- edge-case EC-04 family=fault-timing-curve rho=-5.0686 -->
-<!-- edge-case EC-05 family=fault-timing-curve rho=-5.8518 -->
+<!-- edge-case EC-04 family=fault-timing-curve rho=-2.2844 -->
+<!-- edge-case EC-05 family=fault-timing-curve rho=-1.9952 -->
 <!-- edge-case EC-06 family=fault-timing-refault rho=-35.4933 -->
 <!-- edge-case EC-07 family=fault-timing-refault rho=0.4691 -->
-<!-- edge-case EC-08 family=fault-timing-refault rho=-4.1213 -->
-<!-- edge-case EC-09 family=fault-timing-refault rho=-3.3509 -->
+<!-- edge-case EC-08 family=fault-timing-refault rho=-1.8232 -->
+<!-- edge-case EC-09 family=fault-timing-refault rho=-1.3764 -->
 <!-- edge-case EC-10 family=fault-timing-lane-change rho=-12.9450 -->
 <!-- edge-case EC-11 family=fault-timing-lane-change rho=-11.9140 -->
-<!-- edge-case EC-12 family=fault-timing-lane-change rho=-0.1664 -->
-<!-- edge-case EC-13 family=fault-timing-lane-change rho=-0.8557 -->
+<!-- edge-case EC-12 family=fault-timing-lane-change rho=0.0556 -->
+<!-- edge-case EC-13 family=fault-timing-lane-change rho=-0.7321 -->
 <!-- edge-case EC-14 family=fault-timing-correction rho=-17.9600 -->
 <!-- edge-case EC-15 family=fault-timing-correction rho=-3.7819 -->
-<!-- edge-case EC-16 family=fault-timing-correction rho=-1.3040 -->
+<!-- edge-case EC-16 family=fault-timing-correction rho=0.3130 -->
 <!-- edge-case EC-17 family=driver-edge rho=-18.2691 -->
 <!-- edge-case EC-18 family=driver-edge rho=-46.8509 -->
 <!-- edge-case EC-19 family=driver-edge rho=-51.8775 -->
@@ -157,7 +157,7 @@ The fields a plant scene of [`blender/scenes.yaml`](../blender/scenes.yaml) need
 <!-- edge-case EC-21 family=combo-odd-bound rho=-41.1888 -->
 <!-- edge-case EC-22 family=combo-odd-bound rho=-1.5846 -->
 <!-- edge-case EC-23 family=combo-odd-bound rho=-4.6989 -->
-<!-- edge-case EC-24 family=combo-odd-bound rho=-4.2797 -->
-<!-- edge-case EC-25 family=combo-odd-bound rho=-2.3958 -->
+<!-- edge-case EC-24 family=combo-odd-bound rho=-0.1821 -->
+<!-- edge-case EC-25 family=combo-odd-bound rho=-0.2064 -->
 <!-- edge-case EC-26 family=combo-hardover-narrow rho=-32.0970 -->
 <!-- edge-case EC-27 family=combo-hardover-narrow rho=-8.2838 -->

@@ -113,12 +113,12 @@ The worst cases the failure search found ([edge-case catalogue](../../results/ed
 | Scene | Catalogue row | Entry | Environment, condition | Motion | Outcome in the scene |
 |---|---|---|---|---|---|
 | [ec-11-lane-change-frozen-overshoot](ec-11-lane-change-frozen-overshoot.jpg) | [EC-11](../../results/edge-cases.md#catalogue) | HE-02.5 (ASIL B) | highway-free-flow, W01 (E4) | plant F-03* | no contact; minimum gap 7.6 m |
-| [ec-12-lane-change-stall-exit](ec-12-lane-change-stall-exit.jpg) | [EC-12](../../results/edge-cases.md#catalogue) | HE-02.5 (ASIL B) | highway-exit-split, W01 (E4) | plant F-04b* | body at the lane line at -0.29 s; peak offset 4.83 m |
+| [ec-12-lane-change-stall-exit](ec-12-lane-change-stall-exit.jpg) | [EC-12](../../results/edge-cases.md#catalogue) | HE-02.5 (ASIL B) | highway-exit-split, W01 (E4) | plant F-04b* | body at the lane line at -0.29 s; peak offset 4.60 m |
 | [ec-03-frozen-curve-exit](ec-03-frozen-curve-exit.jpg) | [EC-03](../../results/edge-cases.md#catalogue) | HE-02.3 (ASIL B) | highway-curve, W01 (E4) | plant F-03* | body at the lane line at +4.67 s; peak offset 2.79 m |
-| [ec-04-stall-curve-tunnel](ec-04-stall-curve-tunnel.jpg) | [EC-04](../../results/edge-cases.md#catalogue) | HE-02.4 (ASIL B) | highway-tunnel, W01 (E4) | plant F-04b* | **contact** with the barrier at +3.29 s, 97 km/h |
+| [ec-04-stall-curve-tunnel](ec-04-stall-curve-tunnel.jpg) | [EC-04](../../results/edge-cases.md#catalogue) | HE-02.4 (ASIL B) | highway-tunnel, W01 (E4) | plant F-04b* | body at the lane line at +1.38 s; peak offset 3.24 m |
 | [ec-18-wrong-direction-correction](ec-18-wrong-direction-correction.jpg) | [EC-18](../../results/edge-cases.md#catalogue) | HE-01.2 (ASIL C) | highway-curve, W01 (E4) | plant F-01b* | **contact** with the barrier at +2.83 s, 83 km/h |
 | [ec-20-brakes-instead-of-steering](ec-20-brakes-instead-of-steering.jpg) | [EC-20](../../results/edge-cases.md#catalogue) | HE-01.2 (ASIL C) | highway-curve, W01 (E4) | plant F-01b* | **contact** with the barrier at +2.96 s, 104 km/h |
-| [ec-24-silent-stall-r-odd](ec-24-silent-stall-r-odd.jpg) | [EC-24](../../results/edge-cases.md#catalogue) | HE-07.1 (ASIL C) | highway-curve, W03 (E3) | plant F-04b* | body at the lane line at +1.96 s; peak offset 5.16 m |
+| [ec-24-silent-stall-r-odd](ec-24-silent-stall-r-odd.jpg) | [EC-24](../../results/edge-cases.md#catalogue) | HE-07.1 (ASIL C) | highway-curve, W03 (E3) | plant F-04b* | body at the lane line at +2.04 s; peak offset 1.06 m |
 | [ec-26-narrow-lane-truck-hardover](ec-26-narrow-lane-truck-hardover.jpg) | [EC-26](../../results/edge-cases.md#catalogue) | HE-01.2 (ASIL C) | highway-narrow-truck, W01 (E4) | plant F-01b* | **contact** with the truck at +1.17 s, 6 km/h |
 | [ec-27-crosswind-hardover-left](ec-27-crosswind-hardover-left.jpg) | [EC-27](../../results/edge-cases.md#catalogue) | HE-01.2 (ASIL C) | highway-crosswind, W01 (E4) | plant F-01b* | body at the lane line at +1.42 s; peak offset 9.00 m |
 

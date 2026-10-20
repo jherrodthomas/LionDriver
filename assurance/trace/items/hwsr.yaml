@@ -335,7 +335,7 @@
   allocated_to: "Firmware"
   hw_kind: "CFG"
   verification: "T-HIL"
-  baseline_impl: "**Implemented.** `relay_malfunction` blocks TX (`safety.h:252`) and forwarding (`safety.h:268`); reported as `FAULT_RELAY_MALFUNCTION` (`main.c:122-129`); host immediate-disable (`openpilot/selfdrive/selfdrived/selfdrived.py:343`). Cleared on any safety-mode change (`safety.h:427, 459`), not latched to a power cycle"
+  baseline_impl: "**Implemented.** `relay_malfunction` blocks TX (`safety.h:252`) and forwarding (`safety.h:268`); reported as `FAULT_RELAY_MALFUNCTION` (`main.c:122-129`); host immediate-disable (`openpilot/selfdrive/selfdrived/selfdrived.py:346`). Cleared on any safety-mode change (`safety.h:427, 459`), not latched to a power cycle"
   status: proposed
   source: WP-H-01
 
@@ -503,7 +503,7 @@
   allocated_to: "Fan tachometer"
   hw_kind: "HW + CFG"
   verification: "T-HIL"
-  baseline_impl: "Tach measured (`drivers/fan.h:23-43`); host raises a fault when fan < 500 rpm for > 15 s (onboard review, `selfdrived.py:270-273`)"
+  baseline_impl: "Tach measured (`drivers/fan.h:23-43`); host raises a fault when fan < 500 rpm for > 15 s (onboard review, `selfdrived.py:273-276`)"
   status: proposed
   source: WP-H-01
 
@@ -531,7 +531,7 @@
   allocated_to: "SBU ADC sense, harness"
   hw_kind: "HW + CFG"
   verification: "T-HIL"
-  baseline_impl: "**Implemented.** ADC of SBU1/SBU2 against `avdd_mV/2` (`drivers/harness.h:54-90`); relay/ignition pin swap by orientation (`drivers/harness.h:22-28`); CAN pin mux by orientation (`boards/tres.h:58-98`). Detection is skipped while the relay is driven (`drivers/harness.h:59`)"
+  baseline_impl: "**Implemented.** ADC of SBU1/SBU2 against `avdd_mV/2` (`drivers/harness.h:54-90`); relay/ignition pin swap by orientation (`drivers/harness.h:22-28`); CAN pin mux by orientation (`boards/tres.h:58-98`). A flipped reading also swaps logical CAN buses 0 and 2 (`drivers/can_common.h:130-135`, applied on a change of reading with a CAN and safety-mode re-init, `main.c:191-199`), so the safety model's bus numbers (car side = bus 0, camera side = bus 2) are correct only if the reading is. Detection is skipped while the relay is driven (`drivers/harness.h:59`), so a misread happens before engagement; its effect is analysed in WP-H-03 FM-HAR-02 (panda `bf8102a`)"
   status: proposed
   source: WP-H-01
 

@@ -971,15 +971,15 @@ scenes:
     case_overrides: {road: "curve@0.490000", t_fault: 8.13, duration: 8.0, lane_change: 6.0, lane_change_s: 3.0}
     assumptions: {driver_t_r_s: 0.75}
     case_title: "SoC stall late in a fast lane change away from an exit (F-04b), 110 km/h"
-    trigger_label: SoC stall (no alert)
+    trigger_label: SoC stall
     window: [-2.5, 5.0]
     environment: highway-exit-split
     tc: [TC-31]
     caption: >-
-      Catalogue row EC-12 (EC-N1): the SoC stalls 71 % into a 3 s lane change to the left, away from the exit lane.
-      The panda revokes at once but sounds no siren, so the car keeps its lateral speed past the target lane's far
-      line before the driver, cued by the drift, catches it. With a siren at revocation (the DQ-404 what-if) it stays
-      in the lanes. The exit split is drawn, not simulated.
+      Catalogue row EC-12: the SoC stalls 71 % into a 3 s lane change to the left, away from the exit lane. The panda
+      revokes and sounds the siren (DQ-404), so the driver catches the car just inside the target lane's far line
+      (0.06 m to spare). With the siren muted, as before DQ-404, the car ran over that line (EC-N1); with the EPS
+      holding its last torque it would too. The exit split is drawn, not simulated.
 
   - id: ec-03-frozen-curve-exit
     he: HE-02.3
@@ -1003,16 +1003,17 @@ scenes:
     variants: [{conditions: W04, traffic: dense}]
     edge_case: EC-04
     case: F-04b
-    case_overrides: {road: "arc@1.610000:240.400", speed_kph: 97.4, t_fault: 10.322, duration: 8.0}
-    assumptions: {driver_t_r_s: 1.36}
-    case_title: "SoC stall in the entry of a 1.61 m/s² curve at a tunnel portal (F-04b), 97 km/h"
-    trigger_label: SoC stall (no alert)
+    case_overrides: {road: "arc@1.800000:283.300", speed_kph: 91.5, t_fault: 22.13, duration: 8.0}
+    assumptions: {driver_t_r_s: 1.49}
+    case_title: "SoC stall late in a 1.8 m/s² curve, approaching a tunnel portal (F-04b), 92 km/h"
+    trigger_label: SoC stall
     window: [-1.5, 6.0]
     environment: highway-tunnel
     tc: [TC-18]
     caption: >-
-      Catalogue row EC-04: the SoC stalls as the curve tightens, at the tunnel portal. The panda revokes without a
-      siren; the driver's only cue is the drift, and the car runs wide toward the tunnel wall. The tunnel and its
+      Catalogue row EC-04: the SoC stalls in a curve near the item's limit, just before a tunnel. The panda revokes
+      and sounds the siren (DQ-404), but with the EPS releasing at once the car still runs wide before a driver who
+      reacts after 1.5 s; if the EPS held its last torque for 2 s (EPS-hold) it would stay in lane. The tunnel and its
       lighting change are drawn, not simulated (the plant has no perception).
 
   - id: ec-18-wrong-direction-correction
@@ -1056,14 +1057,15 @@ scenes:
     case_overrides: {road: "curve@2.405457", speed_kph: 107.9, lane_width: 3.54, t_fault: null, duration: 8.0}
     assumptions: {driver_t_r_s: 1.31}
     case_title: "SoC stall at the entry of a curve at R_ODD at 108 km/h (F-04b)"
-    trigger_label: SoC stall (no alert)
+    trigger_label: SoC stall
     window: [-1.5, 6.0]
     environment: highway-curve
     conditions: W03
     caption: >-
       Catalogue row EC-24: at night, the SoC stalls as the car enters a curve at R_ODD. Even without the fault the
-      item would touch the line (it cannot give the 2.4 m/s² the curve needs); the silent stall adds about 4 m more
-      before the drift cues the driver. HE-07.1: no take-over alert.
+      item would touch the line (it cannot give the 2.4 m/s² the curve needs). The panda revokes and sounds the siren
+      (DQ-404), so the stall adds only about 0.1 m; with the siren muted, as before DQ-404, it added about 4 m.
+      HE-07.1 (the take-over alert missing) is the event the siren now answers.
 
   - id: ec-26-narrow-lane-truck-hardover
     he: HE-01.2

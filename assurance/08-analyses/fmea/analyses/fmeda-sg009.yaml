@@ -11,12 +11,14 @@
 # Rev 0.5 (2026-10-18, decision DQ-362 option A): the rows that stop the item's actuation (MCU hang with the relay driven, harness and
 # box supply loss) also stand for assurance SG-02 and SG-06 (ASIL C, loss without warning), next to the SG-001 FMEDA. No rate,
 # classification or metric changes; the rows are classified for SG-009. Per-goal notes in WP-H-03 §6.4.
+# Rev 0.6 (2026-10-20): harness-box and harness components carry the wire-end IDs of the WireViz drawings (wire ends in assurance/04-hardware/wiring/wire-ends.tsv, transcribed from
+# comma's v3 drawing, not measured; wiring OI-W-1) in ref_des. No rate, classification or metric changes.
 schema_version: 1
 analysis:
   id: FMD
   type: fmeda
   title: FMEDA — SG-009 stock AEB availability (relay and forwarding path), generic failure rates
-  revision: '0.5'
+  revision: '0.6'
   status: draft
   baseline: BL-002
   rating_tables: RT-1
@@ -37,7 +39,7 @@ analysis:
   - assurance/08-analyses/fmea/analyses/dfmea.yaml
   - assurance/08-analyses/fmea/rating-tables.md
   - ISO 26262-5:2018 §8-9 and Annex D; ISO 26262-11:2018 §4.6 (semiconductors)
-  updated: '2026-10-18'
+  updated: '2026-10-20'
 safety_mechanisms:
 - id: FMD-SM-001
   description: Flash ECC (single-error correction in silicon; corrected reads are transparent)
@@ -246,7 +248,7 @@ components:
     violates_sg_directly: false
     mpf_potential: false
 - id: FMD-C-007
-  ref_des: U1, U2 (harness box)
+  ref_des: 'U1, U2 (harness box); wire ends in assurance/04-hardware/wiring/wire-ends.tsv: HB.U1.6-J3.A8, HB.U2.6-J3.A8 (IN = SBU1), HB.J1.4-U1.2, HB.J1.6-U2.1, HB.J1.16-U1.1, HB.J1.18-U2.2'
   part: 'Intercept switch: 2 × DG419LE CMOS analog SPDT (harness box)'
   dfmea_element: DFM-SE-006
   failure_rate_fit: 50
@@ -275,7 +277,7 @@ components:
     dfmea_ref: DFM-013
     notes: Installation check only (DFM-ACT-008); no in-field detection of the stock path
 - id: FMD-C-010
-  ref_des: Device side (unknown, UK-06)
+  ref_des: 'Device side (unknown, UK-06); wire ends in assurance/04-hardware/wiring/wire-ends.tsv: OC.W1.11 (SBU1 link)'
   part: SBU1 drive circuit in the comma device
   dfmea_element: DFM-SE-006
   failure_rate_fit: 5
@@ -297,7 +299,7 @@ components:
     dfmea_ref: DFM-011
     notes: 'Pull-down selects pass-through: safe for SG-009'
 - id: FMD-C-011
-  ref_des: R2, R3 (harness box)
+  ref_des: 'R2, R3 (harness box); wire ends in assurance/04-hardware/wiring/wire-ends.tsv: HB.R2/R3.1-J3.A8'
   part: 'SBU1 pull-down: 2 × 120 Ω thick-film resistor in series'
   dfmea_element: DFM-SE-006
   failure_rate_fit: 0.4
@@ -319,7 +321,7 @@ components:
     dfmea_ref: DFM-011
     notes: 'Pass-through: safe for SG-009'
 - id: FMD-C-012
-  ref_des: D1, D4 (harness box)
+  ref_des: 'D1, D4 (harness box); wire ends in assurance/04-hardware/wiring/wire-ends.tsv: HB.J1.2-D1.A, HB.D1.K-J3.A4, HB.J2.4-J3.A4'
   part: 'Box supply: D1 Schottky STPS2H100ZFY from ignition, D4 TVS SMF16A'
   dfmea_element: DFM-SE-006
   failure_rate_fit: 3
@@ -349,7 +351,7 @@ components:
     dfmea_ref: DFM-020
     notes: Latent loss of reverse or transient protection
 - id: FMD-C-013
-  ref_des: D2, D3 (harness box)
+  ref_des: 'D2, D3 (harness box); clamp wiring not drawn in wire-ends.tsv'
   part: 'Bus clamps: 2 × BAS40SDW Schottky pairs on CAN0 and CAN2'
   dfmea_element: DFM-SE-006
   failure_rate_fit: 2
@@ -372,6 +374,7 @@ components:
     notes: Latent loss of bus protection
 - id: FMD-C-008
   part: Harness connector and harness-box wiring in the stock path
+  ref_des: 'Wire ends in assurance/04-hardware/wiring/wire-ends.tsv: Toyota A harness TA.W1.1, TA.W1.2 (camera CAN2), TA.W2.1, TA.W2.2 (car CAN0); box lines HB.J1.4-U1.2, HB.J1.6-U2.1, HB.J1.16-U1.1, HB.J1.18-U2.2; device link OC.W1.1…OC.W1.12'
   dfmea_element: DFM-SE-007
   failure_rate_fit: 10
   failure_rate_source: Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not

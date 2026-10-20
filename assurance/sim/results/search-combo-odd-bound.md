@@ -31,21 +31,21 @@ Monte Carlo: 40 uniform samples. Cross-entropy: 3 rounds of 16, elite share 0.25
 
 ## Monte Carlo: where departures happen
 
-40 of 40 samples depart (100%).
+24 of 40 samples depart (60%).
 
 | `fault` | Samples | Departures | Share | Smallest rho (m) | Median time to the line (s) |
 |---|---|---|---|---|---|
 | hardover | 11 | 11 | 100% | -41.16 | 1.47 |
 | hardover_left | 8 | 8 | 100% | -1.59 | 2.27 |
 | frozen | 2 | 2 | 100% | -3.91 | 2.16 |
-| soc_stall | 9 | 9 | 100% | -4.29 | 2.01 |
-| eps_fault | 10 | 10 | 100% | -2.38 | 1.99 |
+| soc_stall | 9 | 1 | 11% | -0.19 | 2.01 |
+| eps_fault | 10 | 2 | 20% | -0.22 | 2.05 |
 
 | `lane_width` | Samples | Departures | Share | Smallest margin rho (m) |
 |---|---|---|---|---|
-| 3–3.3 | 9 | 9 | 100% | -38.14 |
-| 3.3–3.6 | 16 | 16 | 100% | -37.64 |
-| 3.6–3.9 | 15 | 15 | 100% | -41.16 |
+| 3–3.3 | 9 | 6 | 67% | -38.14 |
+| 3.3–3.6 | 16 | 10 | 62% | -37.64 |
+| 3.6–3.9 | 15 | 8 | 53% | -41.16 |
 
 ## Cross-entropy falsification: worst cases found
 

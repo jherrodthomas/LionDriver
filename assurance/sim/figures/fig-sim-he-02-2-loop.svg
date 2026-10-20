@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="974" viewBox="0 0 640 974" role="img" aria-labelledby="t d">
 <title id="t">HE-02.2 in the layer-1 loop: plant run F-07</title>
-<desc id="d">Synthetic (DSR-12), no evidence credit. HE-02.2 (ASIL C), Departure into the oncoming lane. The layer-1 loop with plant run F-07 (rural right curve (2.0 m/s²) at 80 km/h, outside the ODD, fault at curve entry): fault EPS fault: LKA_STATE 9, assist lost. SoC: keeps commanding; its frames are refused. Host: packs the frames. Panda: reads LKA_STATE 9: refuses LKA 0.025 s, revokes 0.068 s, siren 0.80 s. Switch: intercept. EPS: fault: steering assist lost. Vehicle: runs out of lane: body on the 3.7 m lane line at 2.28 s; largest offset 1.55 m at 3.08 s. Driver: cue: siren at 0.80 s; corrects from 2.30 s. The panda warns at 0.80 s; the driver stops it from 2.30 s.</desc>
+<desc id="d">Synthetic (DSR-12), no evidence credit. HE-02.2 (ASIL C), Departure into the oncoming lane. The layer-1 loop with plant run F-07 (rural right curve (2.0 m/s²) at 80 km/h, outside the ODD, fault at curve entry): fault EPS fault: LKA_STATE 9, assist lost. SoC: keeps commanding; its frames are refused. Host: packs the frames. Panda: reads LKA_STATE 9: refuses LKA 0.025 s, revokes 0.068 s, siren 0.30 s. Switch: intercept. EPS: fault: steering assist lost. Vehicle: stays in lane: largest offset 0.73 m. Driver: cue: siren at 0.30 s; corrects from 1.80 s. The panda warns at 0.30 s; the driver corrects from 1.80 s and the car stays in its lane.</desc>
 <style>
 svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
       --real:#2a78d6; --real-bg:#e9f1fb; --amb:#c98500; --amb-bg:#fdf4dc; --bad:#e34948; --bad-bg:#fdecec;
@@ -63,7 +63,7 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 <text x="110" y="374" class="tl">Panda safety code</text>
 <text x="110" y="392" class="t2b">REAL CODE · reference build</text>
 <text x="110" y="414" class="t">reads LKA_STATE 9: refuses LKA 0.025 s, revokes</text>
-<text x="110" y="434" class="t">0.068 s, siren 0.80 s</text>
+<text x="110" y="434" class="t">0.068 s, siren 0.30 s</text>
 <rect x="483.2" y="360" width="50.8" height="20" rx="10" class="f-real"/>
 <text x="508.6" y="374" class="chip" text-anchor="middle">WARNS</text>
 <path d="M320.0,442 V468" class="arrd" marker-end="url(#a)"/>
@@ -80,27 +80,27 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 <text x="110" y="638" class="t">fault: steering assist lost</text>
 <rect x="434.5" y="584" width="99.5" height="20" rx="10" class="f-flt"/>
 <text x="484.2" y="598" class="chip" text-anchor="middle">FAULT ENTERS</text>
-<path d="M320.0,646 V672" class="arr" marker-end="url(#a)"/>
-<rect x="96" y="676" width="448" height="92" rx="8" class="model"/>
+<path d="M320.0,646 V672" class="arrd" marker-end="url(#a)"/>
+<rect x="96" y="676" width="448" height="72" rx="8" class="plan"/>
 <text x="110" y="700" class="tl">Vehicle</text>
 <text x="110" y="718" class="t2b">MODEL · single-track Corolla</text>
-<text x="110" y="740" class="t">runs out of lane: body on the 3.7 m lane line at</text>
-<text x="110" y="760" class="t">2.28 s; largest offset 1.55 m at 3.08 s</text>
-<rect x="434.5" y="686" width="99.5" height="20" rx="10" class="f-bad"/>
-<text x="484.2" y="700" class="chip" text-anchor="middle">PASSES IT ON</text>
-<path d="M320.0,768 V794" class="arr" marker-end="url(#a)"/>
-<rect x="96" y="798" width="448" height="72" rx="8" class="amb"/>
-<text x="110" y="822" class="tl">Driver</text>
-<text x="110" y="840" class="t2b">ASSUMED · reacts 1.5 s after the cue</text>
-<text x="110" y="862" class="t">cue: siren at 0.80 s; corrects from 2.30 s</text>
-<rect x="462.3" y="808" width="71.7" height="20" rx="10" class="f-real"/>
-<text x="498.2" y="822" class="chip" text-anchor="middle">STOPS IT</text>
+<text x="110" y="740" class="t">stays in lane: largest offset 0.73 m</text>
+<rect x="434.5" y="686" width="99.5" height="20" rx="10" class="f-model"/>
+<text x="484.2" y="700" class="chip" text-anchor="middle">NOT INVOLVED</text>
+<path d="M320.0,748 V774" class="arrd" marker-end="url(#a)"/>
+<rect x="96" y="778" width="448" height="72" rx="8" class="amb"/>
+<text x="110" y="802" class="tl">Driver</text>
+<text x="110" y="820" class="t2b">ASSUMED · reacts 1.5 s after the cue</text>
+<text x="110" y="842" class="t">cue: siren at 0.30 s; corrects from 1.80 s</text>
+<rect x="462.3" y="788" width="71.7" height="20" rx="10" class="f-real"/>
+<text x="498.2" y="802" class="chip" text-anchor="middle">STOPS IT</text>
 <path d="M96,706 H52 V176 H94" class="arrd" marker-end="url(#a)"/>
 <text x="44" y="426" class="t2" text-anchor="middle" transform="rotate(-90 44 426)">perfect perception</text>
 <path d="M544,604 H588 V380 H546" class="arr" marker-end="url(#a)"/>
 <text x="600" y="477" class="t2" text-anchor="middle" transform="rotate(90 600 477)">EPS state on the car bus (RX)</text>
-<rect x="24" y="888" width="592" height="42" rx="8" class="badbox"/>
-<text x="38" y="912" class="tb">The panda warns at 0.80 s; the driver stops it from 2.30 s.</text>
+<rect x="24" y="868" width="592" height="62" rx="8" class="badbox"/>
+<text x="38" y="892" class="tb">The panda warns at 0.30 s; the driver corrects from 1.80 s and</text>
+<text x="38" y="912" class="tb">the car stays in its lane.</text>
 <rect x="24" y="941" width="18" height="14" rx="3" class="f-flt"/>
 <text x="48" y="952" class="t2">fault enters</text>
 <rect x="150.7" y="941" width="18" height="14" rx="3" class="f-bad"/>

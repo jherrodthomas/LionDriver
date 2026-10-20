@@ -1,0 +1,104 @@
+# HIL bench wiring for WP-H-06 section 2.1 (Figure 2-1), at instrument level. The bench is deferred by the lead
+# (DQ-049, option B): nothing here is bought or built. Device, harness and box pins as in the e05-* drawings.
+# The harness box has no relay coil (RR-2026-010): the probes sit on SBU1 and the U1/U2 switch pins instead of the
+# "contact state" and "coil current" probes that Figure 2-1 still shows (OI-W-7).
+# Instrument models and interface types not named in WP-H-06 are left open.
+
+metadata:
+  title: HIL bench for WP-H-06 (deferred, DQ-049; not built)
+  drawing: HIL
+
+options:
+  fontname: arial
+  bgcolor: WH
+
+connectors:
+  PC:
+    type: Bench PC (Linux)
+    subtype: pytest runner, log capture, Corolla log replay, fault-injection control
+    pinlabels: [USB to CAN interface, USB or GPIO to supply, USB to reference device, USB to scope]
+  JNG:
+    type: Panda jungle or 3-channel CAN interface
+    subtype: orientation and ignition simulation (panda/tests/hitl/test_9_harness.py)
+    pinlabels: [USB, car bus CAN_H, car bus CAN_L, camera bus CAN_H, camera bus CAN_L, OBD / radar bus CAN_H, OBD / radar bus CAN_L, GND]
+  PSU:
+    type: Programmable supply
+    subtype: 0-20 V, slew, dropouts (VS-HW-09, VS-HW-10)
+    pinlabels: [control, +, -]
+  X2:
+    type: Toyota A car connector X2
+    subtype: TE 1565894-1; bench mating plug to choose
+    pins: [5, 11, 6, 12, 7, 10]
+    pinlabels: [CAN0_H car, CAN0_L car, CAN1_H radar, CAN1_L radar, IGN, GND]
+  X1:
+    type: Toyota A camera connector X1
+    subtype: TE 1318774-1; to the jungle, or to a real forward camera (optional)
+    pins: [5, 11, 10]
+    pinlabels: [CAN2_H camera, CAN2_L camera, GND]
+  DEV:
+    type: Reference comma device (E-04)
+    subtype: fixed revision (WP-C-01), LionDriver panda firmware and openpilot; spare for destructive tests
+    notes: On the box J3 through the OBD-C cable as in e05-obdc-device. NRST and BOOT0 need SoC-side access or test pads.
+    pinlabels: [USB, OBD-C port, NRST probe point, BOOT0 probe point, SWD (debug build only)]
+  BOX:
+    type: Harness box v3 (instrumented)
+    subtype: on the Toyota A harness; probe points
+    pinlabels: [J3 OBD-C receptacle, SBU1, U1 COM / NC, U2 COM / NC]
+  SCOPE:
+    type: Scope or logic analyser
+    subtype: 4 channels or more
+    pinlabels: [USB, SBU1, U1 or U2 switch pins, CAN at X2, NRST or BOOT0]
+
+cables:
+  WCAR:
+    type: car bus lead
+    wirecount: 5
+    wirelabels: [CAN0_H, CAN0_L, CAN1_H, CAN1_L, GND]
+  WCAM:
+    type: camera bus lead
+    wirecount: 3
+    wirelabels: [CAN2_H, CAN2_L, GND]
+  WPWR:
+    type: supply lead (ignition)
+    wirecount: 2
+    wirelabels: [IGN, GND]
+  WOBDC:
+    type: OBD-C cable
+    notes: see e05-obdc-device
+    wirecount: 1
+    wirelabels: [12 used lines]
+
+connections:
+  - - PC: [1]
+    - ==
+    - JNG: [1]
+  - - PC: [2]
+    - --
+    - PSU: [1]
+  - - PC: [3]
+    - --
+    - DEV: [1]
+  - - PC: [4]
+    - --
+    - SCOPE: [1]
+  - - JNG: [2, 3, 6, 7, 8]
+    - WCAR: [1-5]
+    - X2: [5, 11, 6, 12, 10]
+  - - JNG: [4, 5, 8]
+    - WCAM: [1-3]
+    - X1: [5, 11, 10]
+  - - PSU: [2, 3]
+    - WPWR: [1-2]
+    - X2: [7, 10]
+  - - DEV: [2]
+    - WOBDC: [1]
+    - BOX: [1]
+  - - SCOPE: [2, 3]
+    - --
+    - BOX: [2, 3]
+  - - SCOPE: [4]
+    - --
+    - X2: [5]
+  - - SCOPE: [5]
+    - --
+    - DEV: [3]

@@ -39,8 +39,8 @@ Monte Carlo: 40 uniform samples. Cross-entropy: 3 rounds of 16, elite share 0.25
 |---|---|---|---|---|---|
 | hardover | 14 | 11 | 79% | -13.03 | 2.70 |
 | frozen | 13 | 4 | 31% | -2.06 | 2.43 |
-| soc_stall | 6 | 0 | 0% | 0.01 | — |
-| eps_fault | 7 | 2 | 29% | -0.84 | 1.41 |
+| soc_stall | 6 | 0 | 0% | 0.44 | — |
+| eps_fault | 7 | 2 | 29% | -0.71 | 1.51 |
 
 | `phase` | Samples | Departures | Share | Smallest margin rho (m) |
 |---|---|---|---|---|

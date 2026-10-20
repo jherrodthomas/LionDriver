@@ -7,7 +7,7 @@ Times are seconds from fault onset. Deviation is the lateral offset from the off
 | Label (WP-V-02 §5.3.5) | Value |
 |---|---|
 | data_kind | synthetic |
-| simulator | LionDriver fault-injection plant model, fidelity L1 (`assurance/sim/plant`): CommonRoad vehicle models 3.0.2; panda safety code compiled from panda `bf8102a` and opendbc `e233362` (reference build) |
+| simulator | LionDriver fault-injection plant model, fidelity L1 (`assurance/sim/plant`): CommonRoad vehicle models 3.0.2; panda safety code compiled from panda `8a69ccf` and opendbc `4d1a056` (reference build) |
 | asset archive hash | none (nothing is rendered) |
 | scenario ID and family | F-07-KS01 and N-4 run on the road of scenario KS-01 (family SF-1); L-01…L-04 take the KS-08 time gap (SF-2). The other cases use generic highway roads, not WP-V-03 scenarios |
 | fidelity-case status | none |
@@ -22,31 +22,31 @@ Times are seconds from fault onset. Deviation is the lateral offset from the off
 | N-2 | No fault, curve inside the ODD (1.5 m/s²) (—; —) | curve | release | none | — | — | none | -0.01 | — / — | — | -0.12 |
 | N-3 | No fault, curve at the ODD bound R_ODD (2.5 m/s²) (SFM-004; —) | curve-odd-bound | release | none | — | — | drift 2.84 → 4.34 | -0.01 | 4.09 / 4.57 | — | -1.13 |
 | N-4 | No fault, KS-01 road (R = 300 m) at 2.0 m/s² (88.2 km/h) (—; —) | KS-01 | release | none | — | — | none | 0.00 | — / — | — | -0.09 |
-| F-01a | Torque above the envelope limit (3000 > 1500) (SFM-002, SFM-029, SWF-001; VS-FI-14) | curve | release | revoked 0.043; frames refused 0.000 | 0.33 | — | drift 0.90 → 2.40 | -0.02 | 1.28 / 1.52 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -6.42 |
-| F-01a-H | Torque above the envelope limit (3000 > 1500) (SFM-002, SFM-029, SWF-001; VS-FI-14) | curve | hold | revoked 0.043; frames refused 0.000 | 2.30 | — | drift 2.75 → 4.25 | 0.02 | 3.14 / 3.39 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -6.20 |
+| F-01a | Torque above the envelope limit (3000 > 1500) (SFM-002, SFM-029, SWF-001; VS-FI-14) | curve | release | revoked 0.043; frames refused 0.000 | 0.33 | 0.25 | siren 0.25 → 1.75 | -0.02 | 1.28 / 1.52 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -3.34 |
+| F-01a-H | Torque above the envelope limit (3000 > 1500) (SFM-002, SFM-029, SWF-001; VS-FI-14) | curve | hold | revoked 0.043; frames refused 0.000 | 2.30 | 0.25 | siren 0.25 → 1.75 | 0.02 | — / — | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | 0.03 |
 | F-01b | Hard-over within the envelope (torque ramped at 15/frame to 1500) (SFM-002, SWF-042; VS-FI-14, VS-FI-27) | straight | release | none | — | — | drift 1.14 → 2.64 | -0.01 | 1.55 / 1.77 | §3.1 1 s ramp at 1.99 m/s²: 1.23 / 1.44 s | -9.04 |
 | F-02 | Torque request while not engaged (SFM-001, SWF-002, SWF-041; VS-FI-14) | straight | release | frames refused 0.000 | — | — | none | 0.00 | — / — | — | 0.00 |
 | F-03 | Command frozen at curve entry (heartbeat alive) (SFM-006, SWF-043, SWF-020; VS-FI-08) | curve | release | none | — | — | drift 1.47 → 2.96 | -0.01 | 2.09 / 2.42 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -3.51 |
 | F-04a | SoC heartbeat loss, commands continue (SWF-014, SWF-021; VS-FI-10(a)) | curve | release | revoked 0.193; frames refused 0.200 | 0.54 | 0.25 | siren 0.25 → 1.75 | 0.01 | 1.47 / 1.71 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -2.60 |
 | F-04a-H | SoC heartbeat loss, commands continue (SWF-014, SWF-021; VS-FI-10(a)) | curve | hold | revoked 0.193; frames refused 0.200 | 2.51 | 0.25 | siren 0.25 → 1.75 | 0.02 | — / — | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | 0.03 |
-| F-04b | SoC stall: heartbeat and commands stop (SWF-014, SWF-024, SWF-027; VS-FI-09) | curve | release | revoked 0.043 | 0.33 | — | drift 0.90 → 2.40 | -0.02 | 1.28 / 1.52 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -6.42 |
-| F-04b-H | SoC stall: heartbeat and commands stop (SWF-014, SWF-024, SWF-027; VS-FI-09) | curve | hold | revoked 0.043 | 2.30 | — | drift 2.75 → 4.25 | 0.02 | 3.14 / 3.39 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -6.20 |
+| F-04b | SoC stall: heartbeat and commands stop (SWF-014, SWF-024, SWF-027; VS-FI-09) | curve | release | revoked 0.043 | 0.33 | 0.25 | siren 0.25 → 1.75 | -0.02 | 1.28 / 1.52 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -3.34 |
+| F-04b-H | SoC stall: heartbeat and commands stop (SWF-014, SWF-024, SWF-027; VS-FI-09) | curve | hold | revoked 0.043 | 2.30 | 0.25 | siren 0.25 → 1.75 | 0.02 | — / — | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | 0.03 |
 | F-05 | MCU hang (all execution stops) until the IWDG reset (DFM-004, DFM-006, SWF-018; VS-FI-17) | curve | release | no frames (hang) 0.000; IWDG reset 0.083 | 0.33 | — | drift 0.90 → 2.40 | -0.02 | 1.28 / 1.52 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -6.42 |
 | F-05-H | MCU hang (all execution stops) until the IWDG reset (DFM-004, DFM-006, SWF-018; VS-FI-17) | curve | hold | no frames (hang) 0.000; IWDG reset 0.083 | 0.39 | — | drift 0.96 → 2.46 | 0.00 | 1.34 / 1.57 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -6.44 |
-| F-06a | Harness switch drops to pass-through while driven (DFM-011, SFM-034; VS-FI-21) | curve | release | relay malfunction 0.005; revoked 0.053; frames refused 0.010 | 0.32 | — | drift 0.88 → 2.38 | -0.02 | 1.26 / 1.50 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -6.42 |
+| F-06a | Harness switch drops to pass-through while driven (DFM-011, SFM-034; VS-FI-21) | curve | release | relay malfunction 0.005; revoked 0.053; frames refused 0.010 | 0.32 | 0.25 | siren 0.25 → 1.75 | -0.02 | 1.26 / 1.50 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -3.41 |
 | F-06b | Harness switch stuck in intercept, revealed by an MCU hang and reset (DFM-010, SFM-034, DFM-004; VS-FI-21, VS-FI-17) | curve | release | no frames (hang) 0.000; IWDG reset 0.083 | 0.33 | — | drift 0.90 → 2.40 | -0.02 | 1.28 / 1.52 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -6.42 |
 | F-06b-H | Harness switch stuck in intercept, revealed by an MCU hang and reset (DFM-010, SFM-034, DFM-004; VS-FI-21, VS-FI-17) | curve | hold | no frames (hang) 0.000; IWDG reset 0.083 | 2.30 | — | drift 2.75 → 4.25 | 0.02 | 3.14 / 3.39 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -6.20 |
-| F-07 | EPS fault (LKA_STATE 9) with loss of EPS assist (SFM-005; VS-FI-31) | curve | release | revoked 0.053; frames refused 0.010 | 0.31 | 0.75 | siren 0.75 → 2.25 | -0.02 | 1.25 / 1.49 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -5.76 |
+| F-07 | EPS fault (LKA_STATE 9) with loss of EPS assist (SFM-005; VS-FI-31) | curve | release | revoked 0.053; frames refused 0.010 | 0.31 | 0.25 | siren 0.25 → 1.75 | -0.02 | 1.25 / 1.49 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -3.43 |
 | F-08 | RX loss: STEER_TORQUE_SENSOR (0x260) stops (SWF-006; VS-FI-04) | curve | release | revoked 0.083; frames refused 0.090 | 0.42 | — | drift 0.99 → 2.48 | 0.00 | 1.36 / 1.60 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -6.44 |
 | F-08-H | RX loss: STEER_TORQUE_SENSOR (0x260) stops (SWF-006; VS-FI-04) | curve | hold | revoked 0.083; frames refused 0.090 | 2.39 | — | drift 2.83 → 4.33 | 0.02 | 3.23 / 3.48 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -6.16 |
-| F-07-KS01 | EPS fault in the KS-01 curve (R = 300 m, 2.0 m/s²) (SFM-005; VS-FI-31) | KS-01 | release | revoked 0.053; frames refused 0.010 | 0.35 | 0.75 | drift 0.71 → 2.21 | -0.07 | 1.01 / 1.23 | §3.1 step at 1.96 m/s²: 0.79 / 0.99 s | -8.95 |
-| F-01a-OS | Torque above the envelope limit (3000 > 1500) (SFM-002, SFM-029, SWF-001; VS-FI-14) | curve | release | revoked 0.043; frames refused 0.000 | 0.33 | — | drift 0.90 → 2.40 | -0.02 | 1.30 / 1.54 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -6.51 |
+| F-07-KS01 | EPS fault in the KS-01 curve (R = 300 m, 2.0 m/s²) (SFM-005; VS-FI-31) | KS-01 | release | revoked 0.053; frames refused 0.010 | 0.35 | 0.25 | siren 0.25 → 1.75 | -0.07 | 1.01 / 1.23 | §3.1 step at 1.96 m/s²: 0.79 / 0.99 s | -5.65 |
+| F-01a-OS | Torque above the envelope limit (3000 > 1500) (SFM-002, SFM-029, SWF-001; VS-FI-14) | curve | release | revoked 0.043; frames refused 0.000 | 0.33 | 0.25 | siren 0.25 → 1.75 | -0.02 | 1.30 / 1.54 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -3.39 |
 | F-02-OS | Torque request while not engaged (SFM-001, SWF-002, SWF-041; VS-FI-14) | straight | release | frames refused 0.000 | — | — | none | 0.00 | — / — | — | 0.00 |
 | F-03-OS | Command frozen at curve entry (heartbeat alive) (SFM-006, SWF-043, SWF-020; VS-FI-08) | curve | release | none | — | — | drift 1.42 → 2.92 | -0.01 | 2.04 / 2.36 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -3.83 |
 | F-04a-OS | SoC heartbeat loss, commands continue (SWF-014, SWF-021; VS-FI-10(a)) | curve | release | revoked 0.193; frames refused 0.200 | 0.54 | 0.25 | siren 0.25 → 1.75 | 0.01 | 1.49 / 1.73 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -2.65 |
 | F-05-OS | MCU hang (all execution stops) until the IWDG reset (DFM-004, DFM-006, SWF-018; VS-FI-17) | curve | release | no frames (hang) 0.000; IWDG reset 0.083 | 0.33 | — | drift 0.90 → 2.40 | -0.02 | 1.30 / 1.54 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -6.51 |
-| F-06a-OS | Harness switch drops to pass-through while driven (DFM-011, SFM-034; VS-FI-21) | curve | release | relay malfunction 0.005; revoked 0.053; frames refused 0.010 | 0.32 | — | drift 0.88 → 2.38 | -0.03 | 1.28 / 1.52 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -6.51 |
-| F-07-OS | EPS fault (LKA_STATE 9) with loss of EPS assist (SFM-005; VS-FI-31) | curve | release | revoked 0.053; frames refused 0.010 | 0.31 | 0.75 | siren 0.75 → 2.25 | -0.03 | 1.27 / 1.51 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -5.84 |
+| F-06a-OS | Harness switch drops to pass-through while driven (DFM-011, SFM-034; VS-FI-21) | curve | release | relay malfunction 0.005; revoked 0.053; frames refused 0.010 | 0.32 | 0.25 | siren 0.25 → 1.75 | -0.03 | 1.28 / 1.52 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -3.47 |
+| F-07-OS | EPS fault (LKA_STATE 9) with loss of EPS assist (SFM-005; VS-FI-31) | curve | release | revoked 0.053; frames refused 0.010 | 0.31 | 0.25 | siren 0.25 → 1.75 | -0.03 | 1.27 / 1.51 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -3.49 |
 | F-08-OS | RX loss: STEER_TORQUE_SENSOR (0x260) stops (SWF-006; VS-FI-04) | curve | release | revoked 0.083; frames refused 0.090 | 0.42 | — | drift 0.99 → 2.48 | -0.01 | 1.38 / 1.62 | §3.1 step at 1.5 m/s²: 0.90 / 1.13 s | -6.52 |
 
 ## Longitudinal cases (SG-03, SG-04)
@@ -56,13 +56,13 @@ Straight road, 110 km/h (rows ending -OS: 120 km/h); lead at a 1.5 s gap (KS-08)
 | Case | Fault (FMEA; WP-V-05) | Panda reaction (s) | Driver cue → correction (s) | Gap to lead: onset / min / lost in 1 s (m) | Gap to follower: onset / min (m) | WP-S-04 estimate |
 |---|---|---|---|---|---|---|
 | L-01 | Acceleration request at the envelope maximum (+2.0 m/s²) (SFM-008, SWF-046; VS-FI-14) | revoked 1.607; frames refused 1.620 | acceleration 0.10 → 1.60 | 41.4 / 36.9 / 0.75 | 25.8 / 25.8 | §3.3: 1.00 m gap loss in 1 s at 2.0 m/s² |
-| L-02 | Acceleration request above the envelope (+4.0 m/s²) (SFM-008, SFM-029, SWF-003; VS-FI-14) | revoked 0.073; frames refused 0.000 | none | 41.4 / 41.4 / 0.00 | 25.8 / 25.8 | — |
+| L-02 | Acceleration request above the envelope (+4.0 m/s²) (SFM-008, SFM-029, SWF-003; VS-FI-14) | revoked 0.073; frames refused 0.000 | siren 0.25 → 1.75 | 41.4 / 41.4 / 0.00 | 25.8 / 13.0 | — |
 | L-03 | Deceleration request at the envelope minimum (-3.5 m/s², step) (SFM-009, SWF-004; VS-FI-14) | revoked 1.633; frames refused 1.560 | acceleration 0.05 → 1.55 | 41.4 / 41.4 / -1.32 | 25.8 / 17.8 | §3.4: collision if follower t_r ≥ time gap with equal deceleration |
-| L-04 | Deceleration request above the envelope (-6.0 m/s²) (SFM-009, SFM-029, SWF-003; VS-FI-14) | revoked 0.073; frames refused 0.000 | none | 41.4 / 41.4 / 0.00 | 25.8 / 25.8 | — |
+| L-04 | Deceleration request above the envelope (-6.0 m/s²) (SFM-009, SFM-029, SWF-003; VS-FI-14) | revoked 0.073; frames refused 0.000 | siren 0.25 → 1.75 | 41.4 / 41.4 / 0.00 | 25.8 / 25.8 | — |
 | L-01-OS | Acceleration request at the envelope maximum (+2.0 m/s²) (SFM-008, SWF-046; VS-FI-14) | revoked 1.607; frames refused 1.620 | acceleration 0.10 → 1.60 | 45.6 / 41.1 / 0.75 | 28.6 / 28.6 | §3.3: 1.00 m gap loss in 1 s at 2.0 m/s² |
-| L-02-OS | Acceleration request above the envelope (+4.0 m/s²) (SFM-008, SFM-029, SWF-003; VS-FI-14) | revoked 0.073; frames refused 0.000 | none | 45.6 / 45.6 / 0.00 | 28.6 / 28.6 | — |
+| L-02-OS | Acceleration request above the envelope (+4.0 m/s²) (SFM-008, SFM-029, SWF-003; VS-FI-14) | revoked 0.073; frames refused 0.000 | siren 0.25 → 1.75 | 45.6 / 45.6 / 0.00 | 28.6 / 15.7 | — |
 | L-03-OS | Deceleration request at the envelope minimum (-3.5 m/s², step) (SFM-009, SWF-004; VS-FI-14) | revoked 1.633; frames refused 1.560 | acceleration 0.05 → 1.55 | 45.6 / 45.6 / -1.32 | 28.6 / 20.6 | §3.4: collision if follower t_r ≥ time gap with equal deceleration |
-| L-04-OS | Deceleration request above the envelope (-6.0 m/s²) (SFM-009, SFM-029, SWF-003; VS-FI-14) | revoked 0.073; frames refused 0.000 | none | 45.6 / 45.6 / 0.00 | 28.6 / 28.6 | — |
+| L-04-OS | Deceleration request above the envelope (-6.0 m/s²) (SFM-009, SFM-029, SWF-003; VS-FI-14) | revoked 0.073; frames refused 0.000 | siren 0.25 → 1.75 | 45.6 / 45.6 / 0.00 | 28.6 / 28.6 | — |
 
 ## Stock PCS path (SG-07)
 
@@ -85,43 +85,43 @@ The stock camera sends a PCS braking request at the fault onset. It reaches the 
 | N-2 | fault 0.000 |
 | N-3 | fault 0.000; driver cue (drift) 2.845; driver correction 4.345 |
 | N-4 | fault 0.000 |
-| F-01a | fault 0.000; panda refuses STEERING_LKA 0.000; authority revoked 0.043; EPS LKA torque below 5 % 0.335; driver cue (drift) 0.900; driver correction 2.400 |
-| F-01a-H | fault 0.000; panda refuses STEERING_LKA 0.000; authority revoked 0.043; EPS LKA torque below 5 % 2.305; driver cue (drift) 2.750; driver correction 4.250 |
+| F-01a | fault 0.000; panda refuses STEERING_LKA 0.000; authority revoked 0.043; panda siren 0.253; driver cue (siren) 0.253; EPS LKA torque below 5 % 0.335; driver correction 1.753 |
+| F-01a-H | fault 0.000; panda refuses STEERING_LKA 0.000; authority revoked 0.043; panda siren 0.253; driver cue (siren) 0.253; driver correction 1.753; EPS LKA torque below 5 % 2.305 |
 | F-01b | fault 0.000; driver cue (drift) 1.140; driver correction 2.640 |
 | F-02 | fault 0.000; panda refuses STEERING_LKA 0.000 |
 | F-03 | fault 0.000; driver cue (drift) 1.465; driver correction 2.965 |
 | F-04a | fault 0.000; authority revoked 0.193; panda refuses STEERING_LKA 0.200; panda siren 0.253; driver cue (siren) 0.253; EPS LKA torque below 5 % 0.535; driver correction 1.753 |
 | F-04a-H | fault 0.000; authority revoked 0.193; panda refuses STEERING_LKA 0.200; panda siren 0.253; driver cue (siren) 0.253; driver correction 1.753; EPS LKA torque below 5 % 2.505 |
-| F-04b | fault 0.000; authority revoked 0.043; EPS LKA torque below 5 % 0.335; driver cue (drift) 0.900; driver correction 2.400 |
-| F-04b-H | fault 0.000; authority revoked 0.043; EPS LKA torque below 5 % 2.305; driver cue (drift) 2.750; driver correction 4.250 |
+| F-04b | fault 0.000; authority revoked 0.043; panda siren 0.253; driver cue (siren) 0.253; EPS LKA torque below 5 % 0.335; driver correction 1.753 |
+| F-04b-H | fault 0.000; authority revoked 0.043; panda siren 0.253; driver cue (siren) 0.253; driver correction 1.753; EPS LKA torque below 5 % 2.305 |
 | F-05 | fault 0.000; MCU hung: no frame reaches the car 0.000; IWDG reset, switch to pass-through 0.083; EPS LKA torque below 5 % 0.335; driver cue (drift) 0.900; driver correction 2.400 |
 | F-05-H | fault 0.000; MCU hung: no frame reaches the car 0.000; IWDG reset, switch to pass-through 0.083; EPS LKA torque below 5 % 0.395; driver cue (drift) 0.960; driver correction 2.460 |
-| F-06a | fault 0.000; relay malfunction detected 0.005; panda refuses STEERING_LKA 0.010; authority revoked 0.053; EPS LKA torque below 5 % 0.315; driver cue (drift) 0.880; driver correction 2.380 |
+| F-06a | fault 0.000; relay malfunction detected 0.005; panda refuses STEERING_LKA 0.010; authority revoked 0.053; panda siren 0.253; driver cue (siren) 0.253; EPS LKA torque below 5 % 0.315; driver correction 1.753 |
 | F-06b | fault 0.000; MCU hung: no frame reaches the car 0.000; IWDG reset, switch stays in intercept 0.083; EPS LKA torque below 5 % 0.335; driver cue (drift) 0.900; driver correction 2.400 |
 | F-06b-H | fault 0.000; MCU hung: no frame reaches the car 0.000; IWDG reset, switch stays in intercept 0.083; EPS LKA torque below 5 % 2.305; driver cue (drift) 2.750; driver correction 4.250 |
-| F-07 | fault 0.000; panda refuses STEERING_LKA 0.010; authority revoked 0.053; EPS LKA torque below 5 % 0.310; panda siren 0.753; driver cue (siren) 0.753; driver correction 2.253 |
+| F-07 | fault 0.000; panda refuses STEERING_LKA 0.010; authority revoked 0.053; panda siren 0.253; driver cue (siren) 0.253; EPS LKA torque below 5 % 0.310; driver correction 1.753 |
 | F-08 | fault 0.000; authority revoked 0.083; panda refuses STEERING_LKA 0.090; EPS LKA torque below 5 % 0.420; driver cue (drift) 0.985; driver correction 2.485 |
 | F-08-H | fault 0.000; authority revoked 0.083; panda refuses STEERING_LKA 0.090; EPS LKA torque below 5 % 2.395; driver cue (drift) 2.830; driver correction 4.330 |
 | L-01 | fault 0.000; driver cue (acceleration) 0.101; driver correction 1.601; authority revoked 1.607; panda refuses ACC_CONTROL 1.620 |
-| L-02 | fault 0.000; panda refuses ACC_CONTROL 0.000; authority revoked 0.073 |
-| L-03 | fault 0.000; driver cue (acceleration) 0.046; driver correction 1.546; panda refuses ACC_CONTROL 1.560; authority revoked 1.633 |
-| L-04 | fault 0.000; panda refuses ACC_CONTROL 0.000; authority revoked 0.073 |
+| L-02 | fault 0.000; panda refuses ACC_CONTROL 0.000; authority revoked 0.073; panda siren 0.253; driver cue (siren) 0.253; driver correction 1.753 |
+| L-03 | fault 0.000; driver cue (acceleration) 0.046; driver correction 1.546; panda refuses ACC_CONTROL 1.560; authority revoked 1.633; panda siren 1.753 |
+| L-04 | fault 0.000; panda refuses ACC_CONTROL 0.000; authority revoked 0.073; panda siren 0.253; driver cue (siren) 0.253; driver correction 1.753 |
 | P-01 | fault 0.000; PCS request reaches the car 0.000 |
 | P-02 | fault 0.000; MCU hung: no frame reaches the car 0.000; IWDG reset, switch to pass-through 0.083; PCS request reaches the car 0.084 |
 | P-03 | fault 0.000; MCU hung: no frame reaches the car 0.000; IWDG reset, switch stays in intercept 0.083 |
-| F-07-KS01 | fault 0.000; panda refuses STEERING_LKA 0.010; authority revoked 0.053; EPS LKA torque below 5 % 0.350; driver cue (drift) 0.710; panda siren 0.753; driver correction 2.210 |
-| F-01a-OS | fault 0.000; panda refuses STEERING_LKA 0.000; authority revoked 0.043; EPS LKA torque below 5 % 0.335; driver cue (drift) 0.900; driver correction 2.400 |
+| F-07-KS01 | fault 0.000; panda refuses STEERING_LKA 0.010; authority revoked 0.053; panda siren 0.253; driver cue (siren) 0.253; EPS LKA torque below 5 % 0.350; driver correction 1.753 |
+| F-01a-OS | fault 0.000; panda refuses STEERING_LKA 0.000; authority revoked 0.043; panda siren 0.253; driver cue (siren) 0.253; EPS LKA torque below 5 % 0.335; driver correction 1.753 |
 | F-02-OS | fault 0.000; panda refuses STEERING_LKA 0.000 |
 | F-03-OS | fault 0.000; driver cue (drift) 1.415; driver correction 2.915 |
 | F-04a-OS | fault 0.000; authority revoked 0.193; panda refuses STEERING_LKA 0.200; panda siren 0.253; driver cue (siren) 0.253; EPS LKA torque below 5 % 0.535; driver correction 1.753 |
 | F-05-OS | fault 0.000; MCU hung: no frame reaches the car 0.000; IWDG reset, switch to pass-through 0.083; EPS LKA torque below 5 % 0.335; driver cue (drift) 0.900; driver correction 2.400 |
-| F-06a-OS | fault 0.000; relay malfunction detected 0.005; panda refuses STEERING_LKA 0.010; authority revoked 0.053; EPS LKA torque below 5 % 0.315; driver cue (drift) 0.880; driver correction 2.380 |
-| F-07-OS | fault 0.000; panda refuses STEERING_LKA 0.010; authority revoked 0.053; EPS LKA torque below 5 % 0.310; panda siren 0.753; driver cue (siren) 0.753; driver correction 2.253 |
+| F-06a-OS | fault 0.000; relay malfunction detected 0.005; panda refuses STEERING_LKA 0.010; authority revoked 0.053; panda siren 0.253; driver cue (siren) 0.253; EPS LKA torque below 5 % 0.315; driver correction 1.753 |
+| F-07-OS | fault 0.000; panda refuses STEERING_LKA 0.010; authority revoked 0.053; panda siren 0.253; driver cue (siren) 0.253; EPS LKA torque below 5 % 0.310; driver correction 1.753 |
 | F-08-OS | fault 0.000; authority revoked 0.083; panda refuses STEERING_LKA 0.090; EPS LKA torque below 5 % 0.420; driver cue (drift) 0.985; driver correction 2.485 |
 | L-01-OS | fault 0.000; driver cue (acceleration) 0.101; driver correction 1.601; authority revoked 1.607; panda refuses ACC_CONTROL 1.620 |
-| L-02-OS | fault 0.000; panda refuses ACC_CONTROL 0.000; authority revoked 0.073 |
-| L-03-OS | fault 0.000; driver cue (acceleration) 0.046; driver correction 1.546; panda refuses ACC_CONTROL 1.560; authority revoked 1.633 |
-| L-04-OS | fault 0.000; panda refuses ACC_CONTROL 0.000; authority revoked 0.073 |
+| L-02-OS | fault 0.000; panda refuses ACC_CONTROL 0.000; authority revoked 0.073; panda siren 0.253; driver cue (siren) 0.253; driver correction 1.753 |
+| L-03-OS | fault 0.000; driver cue (acceleration) 0.046; driver correction 1.546; panda refuses ACC_CONTROL 1.560; authority revoked 1.633; panda siren 1.753 |
+| L-04-OS | fault 0.000; panda refuses ACC_CONTROL 0.000; authority revoked 0.073; panda siren 0.253; driver cue (siren) 0.253; driver correction 1.753 |
 | P-01-OS | fault 0.000; PCS request reaches the car 0.000 |
 | P-02-OS | fault 0.000; MCU hung: no frame reaches the car 0.000; IWDG reset, switch to pass-through 0.083; PCS request reaches the car 0.084 |
 | P-03-OS | fault 0.000; MCU hung: no frame reaches the car 0.000; IWDG reset, switch stays in intercept 0.083 |
@@ -157,5 +157,5 @@ The stock camera sends a PCS braking request at the fault onset. It reaches the 
 | driver_brake | 3 | a braking driver adds -3 m/s2, built up over 0.3 s. No source |
 | camera_lka | 0 | stock camera LKA is off: its STEERING_LKA frames carry STEER_REQUEST 0 and torque 0 |
 | a_pcs | 6 | stock PCS braking deceleration, assumption A-PCS-1 of WP-S-04 §3.6, to be measured (OI-4) |
-| whatif_siren_on_revoke | 0 | what-if, off (0) in every catalog case: when 1, the panda also sounds the siren at its next 8 Hz tick after it revokes steering authority. Not in the reference build; used by silent_stall.py (decision register DQ-404) |
+| whatif_silent_panda | 0 | what-if, off (0) in every catalog case: when 1, the panda siren is muted, which in a SoC stall (F-04b) reproduces the panda before DQ-404 (`bf8102a`: no siren on the TX-arrival revocation, WP-S-04 T-34). Used by silent_stall.py to compare against the build with the siren (decision register DQ-404) |
 | speaker_phase | 0 | the 8 Hz tick starts at t = 3 ms; the siren can come up to 125 ms later at another phase |

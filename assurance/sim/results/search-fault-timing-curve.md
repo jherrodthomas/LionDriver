@@ -33,32 +33,32 @@ Monte Carlo: 40 uniform samples. Cross-entropy: 3 rounds of 16, elite share 0.25
 
 ## Monte Carlo: where departures happen
 
-29 of 40 samples depart (72%).
+23 of 40 samples depart (57%).
 
 | `fault` | Samples | Departures | Share | Smallest rho (m) | Median time to the line (s) |
 |---|---|---|---|---|---|
 | hardover | 9 | 9 | 100% | -27.52 | 1.67 |
 | frozen | 12 | 8 | 67% | -1.85 | 4.65 |
-| soc_stall | 6 | 5 | 83% | -4.68 | 1.83 |
-| eps_fault | 13 | 7 | 54% | -5.83 | 1.79 |
+| soc_stall | 6 | 2 | 33% | -2.28 | 1.66 |
+| eps_fault | 13 | 4 | 31% | -2.21 | 1.68 |
 
 | `x_inj` | Samples | Departures | Share | Smallest margin rho (m) |
 |---|---|---|---|---|
-| -0.2–0 | 5 | 3 | 60% | -1.43 |
-| 0–0.3 | 7 | 6 | 86% | -23.31 |
-| 0.3–0.7 | 12 | 10 | 83% | -27.52 |
-| 0.7–1 | 10 | 7 | 70% | -5.55 |
+| -0.2–0 | 5 | 2 | 40% | -1.43 |
+| 0–0.3 | 7 | 5 | 71% | -23.31 |
+| 0.3–0.7 | 12 | 8 | 67% | -27.52 |
+| 0.7–1 | 10 | 5 | 50% | -5.55 |
 | 1–1.2 | 6 | 3 | 50% | -7.48 |
 
 ## Cross-entropy falsification: worst cases found
 
 | Round | `fault` | `a_y` | `arc_m` | `x_inj` | `speed_kph` | `t_r` | rho (m) | Line crossed (s) | Side |
 |---|---|---|---|---|---|---|---|---|---|
-| 3 | hardover | 1.56 | 202.8 | 0.32 | 91.2 | 1.29 | -27.62 | 1.52 | right |
-| 3 | hardover | 1.55 | 253.1 | 0.27 | 89.2 | 1.27 | -26.72 | 1.51 | right |
+| 3 | hardover | 1.58 | 169.3 | 0.33 | 95.0 | 1.29 | -27.64 | 1.54 | right |
 | 1 | hardover | 1.80 | 304.6 | 0.19 | 80.0 | 1.06 | -25.49 | 1.46 | right |
-| 3 | hardover | 1.44 | 171.3 | 0.15 | 98.0 | 1.20 | -23.26 | 1.48 | right |
+| 3 | hardover | 1.43 | 253.1 | 0.47 | 91.8 | 1.32 | -24.09 | 1.53 | right |
 | 2 | hardover | 1.45 | 185.2 | 0.27 | 86.7 | 1.24 | -23.22 | 1.50 | right |
+| 2 | hardover | 1.46 | 124.3 | 0.11 | 87.6 | 1.28 | -22.88 | 1.49 | right |
 
 The worst case of each fault (or behaviour), re-run with rounded parameters, without the fault and under assumption probes, is in the [edge-case catalogue](edge-cases.md).
 

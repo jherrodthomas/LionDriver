@@ -47,7 +47,7 @@ ASSUMPTIONS = {
   "driver_brake": (3.0, "a braking driver adds -3 m/s2, built up over 0.3 s. No source"),
   "camera_lka": (0.0, "stock camera LKA is off: its STEERING_LKA frames carry STEER_REQUEST 0 and torque 0"),
   "a_pcs": (6.0, "stock PCS braking deceleration, assumption A-PCS-1 of WP-S-04 §3.6, to be measured (OI-4)"),
-  "whatif_siren_on_revoke": (0.0, "what-if, off (0) in every catalog case: when 1, the panda also sounds the siren at its next 8 Hz tick after it revokes steering authority. Not in the reference build; used by silent_stall.py (decision register DQ-404)"),
+  "whatif_silent_panda": (0.0, "what-if, off (0) in every catalog case: when 1, the panda siren is muted, which in a SoC stall (F-04b) reproduces the panda before DQ-404 (`bf8102a`: no siren on the TX-arrival revocation, WP-S-04 T-34). Used by silent_stall.py to compare against the build with the siren (decision register DQ-404)"),
   "speaker_phase": (0.0, "the 8 Hz tick starts at t = 3 ms; the siren can come up to 125 ms later at another phase"),
 }
 
@@ -452,8 +452,7 @@ def _simulate(case: Case) -> Result:
       panda.iwdg_step(0.0)
     if k % 125 == 3:
       loop_counter = (loop_counter + 1) % 8
-      what_if = A("whatif_siren_on_revoke") and "authority revoked" in res.events
-      if (panda.siren(loop_counter) or what_if) and fault_on:
+      if panda.siren(loop_counter) and not A("whatif_silent_panda") and fault_on:
         res.event("panda siren", t)
     if fault_on and not panda.controls_allowed and case.engaged and "authority revoked" not in res.events and not panda.hung:
       if panda.relay_driven:

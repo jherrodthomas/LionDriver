@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1590" viewBox="0 0 1280 1590" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-6. SW FMEA failure chains — sheet 12 of 13 (SWF)</title>
-  <desc id="d">SW FMEA failure chains, sheet 12 of 13 (SWF rev 1.6): failure modes SWF-072 to SWF-081 (7 failure modes, 11 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <desc id="d">SW FMEA failure chains, sheet 12 of 13 (SWF rev 1.7): failure modes SWF-072 to SWF-081 (7 failure modes, 11 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,7 +9,7 @@
   </defs>
   <rect width="1280" height="1590" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-6 · SW FMEA failure chains — sheet 12 of 13</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.6 · BL-006 · draft · SWF-072 … SWF-081 · 11 causes on this sheet</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.7 · BL-006 · draft · SWF-072 … SWF-081 · 11 causes on this sheet</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -115,7 +115,7 @@
   <rect x="1194.5" y="489.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="500.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
   <text x="885" y="515.1" font-size="10.5" fill="#0F172A">selfdrived ignores accelerometer and gyro in its alive/valid checks</text>
   <text x="885" y="529.2" font-size="10.5" fill="#0F172A">and raises sensorDataInvalid only after 10 s without data</text>
-  <text x="885" y="543.2" font-size="10.5" fill="#0F172A">(selfdrived.py:103, 456-458); deviceMotion.sensorsOK is not…</text>
+  <text x="885" y="543.2" font-size="10.5" fill="#0F172A">(selfdrived.py:103, 459-461); deviceMotion.sensorsOK is not…</text>
   <text x="885" y="556.4" font-size="9.8" fill="#475569" font-weight="600">O6 · D9 · in SWF-SE-101</text>
   <rect x="885" y="562.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="573.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-067 open</text>
   <rect x="40" y="627.2" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
@@ -209,7 +209,7 @@
   <rect x="1194.5" y="1004.9" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1015.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
   <text x="885" y="1030.5" font-size="10.5" fill="#0F172A">If the narrow or wide road stream is absent when selfdrived</text>
   <text x="885" y="1044.5" font-size="10.5" fill="#0F172A">initialises, it is put on the ignore_alive and ignore_valid lists for the</text>
-  <text x="885" y="1058.6" font-size="10.5" fill="#0F172A">whole drive (selfdrived.py:539-545), so a camera that is not up at…</text>
+  <text x="885" y="1058.6" font-size="10.5" fill="#0F172A">whole drive (selfdrived.py:543-549), so a camera that is not up at…</text>
   <text x="885" y="1071.7" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in SWF-SE-110</text>
   <rect x="885" y="1077.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1088.7" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-068 open</text>
   <rect x="876" y="1108.7" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>

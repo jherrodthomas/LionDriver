@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-04 Evaluation of unknown hazardous scenarios (method, residual risk estimation, results) |
 | Standard reference | ISO 21448:2022 §11 (evaluation of unknown hazardous scenarios), §13 (interface to operation); ISO/PAS 8800:2024 (AI V&V, operation-phase monitoring); ASPICE 4.0 VAL.1 |
-| Version | 0.6 (§6: the U-4 prototype over the layer-1 plant now searches eight lateral families and writes an edge-case catalogue mapped to the HARA; its one new-hazard finding is queued as DQ-405; synthetic, no credit; 2026-10-19). 0.5 (R3 stop rule: a numeric Good–Turing threshold plus the three-block trend rule, DQ-108 A; value proposed in §5.4 and queued for the lead as DQ-262; OI-2; 2026-10-19). 0.4 (§5.2: confidence level C = 95 % one-sided, DQ-057 A; 2026-10-19). 0.3 (U-4 status and synthetic-data labelling per WP-V-02 §5.3; 2026-10-16). 0.2 (exploration blocks follow the highway-only ODD, decision register DQ-023, and the 105 km/h public-road cap, DQ-046; block Bn after every model change, DQ-038; log store without uploads to comma, DQ-084; 2026-10-16). 0.1 |
+| Version | 0.7 (§6: the U-4 prototype over the layer-1 plant now searches eight lateral families and writes an edge-case catalogue mapped to the HARA; its one new-hazard finding is queued as DQ-406; synthetic, no credit; 2026-10-20). 0.6 (R3 threshold approved by the project lead: P̂₀ ≤ 0.10 with N ≥ 30, DQ-262 A; §5.4 retitled; OI-2 closed; 2026-10-19). 0.5 (R3 stop rule: a numeric Good–Turing threshold plus the three-block trend rule, DQ-108 A; value proposed in §5.4 and queued for the lead as DQ-262; OI-2; 2026-10-19). 0.4 (§5.2: confidence level C = 95 % one-sided, DQ-057 A; 2026-10-19). 0.3 (U-4 status and synthetic-data labelling per WP-V-02 §5.3; 2026-10-16). 0.2 (exploration blocks follow the highway-only ODD, decision register DQ-023, and the 105 km/h public-road cap, DQ-046; block Bn after every model change, DQ-038; log store without uploads to comma, DQ-084; 2026-10-16). 0.1 |
 | Status | Draft (method). Results section is a template: **Not yet executed** |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -115,14 +115,14 @@ The SOTIF release argument (WP-K-02) may claim acceptable residual risk from unk
 |---|---|
 | R1 | All planned exploration blocks for the claimed ODD are complete |
 | R2 | No open class U event with S2/S3 potential |
-| R3 | Discovery trend non-increasing over the last three blocks, **and** the Good–Turing unseen-class probability at or below the threshold of §5.4 (DQ-108 A; value approved by the project lead before the blocks start, OI-2) |
+| R3 | Discovery trend non-increasing over the last three blocks, **and** the Good–Turing unseen-class probability at or below 0.10 with at least 30 classified events (§5.4; DQ-108 A, value DQ-262 A) |
 | R4 | λ_UB from §5.2 (1) and the surrogate bound from §5.2 (3) reported with their assumptions |
 | R5 | Field-monitoring triggers in WP-O-04 are defined so that a new scenario class found after release leads to restriction or withdrawal |
 | R6 | The argument states explicitly that the bound is weaker than the WP-V-02 rate targets and that acceptance rests on the envelope, controllability evidence and known-scenario evidence |
 
-### 5.4 Proposed R3 threshold
+### 5.4 R3 threshold
 
-The project lead decided on 2026-10-19 that the search for unknown hazardous scenarios stops on a numeric threshold plus the three-block trend rule (decision register DQ-108, option A). The value below is Claude's proposal. The lead approves it before block B1 starts (DQ-262, queued).
+The project lead decided on 2026-10-19 that the search for unknown hazardous scenarios stops on a numeric threshold plus the three-block trend rule (decision register DQ-108, option A). On the same day, before block B1, the lead approved the value below as proposed (DQ-262, option A). It is fixed before any block data exists, so the result cannot be fitted to it.
 
 **Estimator.** `P̂₀ = f₁ / N`, computed over the real-world blocks (simulation and replay findings are not counted, §5.2 (4)).
 
@@ -131,11 +131,11 @@ The project lead decided on 2026-10-19 that the search for unknown hazardous sce
 
 The expected rate of events from classes not yet seen is then `P̂₀ · N / D = f₁ / D` per engaged km.
 
-**Proposed threshold: P̂₀ ≤ 0.10, with N ≥ 30.**
+**Threshold: P̂₀ ≤ 0.10, with N ≥ 30** (DQ-262 A).
 
 1. **Why 0.10.** WP-V-02 §3 step 1 sets the targets on 90 % of each group's harm budget and holds back 10 % for scenarios not yet known. Assume an event from an unseen class is no more harmful than one from a seen class; R2 checks the severity of every class U event found. Then events from unseen classes stay inside that reserve when at most 10 % of events are expected to come from unseen classes.
 2. **Why N ≥ 30.** With fewer events, one more single-occurrence class moves P̂₀ by more than 0.03, and the estimate says little. At N = 30 the threshold allows at most three classes seen once.
-3. **When the count is not reached.** If the planned blocks (B1–B3) end with N < 30, R3 is not met by count. The SOTIF lead reports this with λ_UB (R4). Choosing between more blocks and a release that states the shortfall is then a new decision for the lead.
+3. **When the count is not reached.** If the planned blocks (B1–B3) end with N < 30, R3 is not met by count. The SOTIF lead reports this with λ_UB (R4). Choosing between more blocks and a release that states the shortfall is then a new decision for the lead (the cost named in DQ-262 A).
 4. **What it does not show.** The estimate assumes events are independent and the classes are stable over the blocks. It says nothing about classes that the ODD, routes and seasons of the blocks never reach. R1 and the stratified route pool (OI-4) cover that.
 
 The value is fixed before the blocks start, so the result cannot be fitted to it. A change after the blocks start needs a new dated decision.
@@ -149,9 +149,9 @@ over the layer-1 fault-injection plant ([`sim/search/`](../sim/search/families.y
 assist in a curve; fault timing at curve entry, mid-curve and exit, during an assisted lane change and after the
 driver's correction starts, and a fault that clears and returns; driver edge cases; a fault in a curve at R_ODD near
 the ODD speed bound; a hard-over in a narrow lane with crosswind). Its [edge-case catalogue](../sim/results/edge-cases.md)
-lists the worst case of each, which stated assumption decides it, and the HARA hazardous event it falls under. One
-row matches no hazardous event (EC-N1, an assisted lane change that does not stop at the target lane); it is a finding
-for the HARA, queued for the project lead as DQ-405 rather than counted here. These are hypotheses for U-6, not
+lists the worst case of each, which stated assumption decides it, and the HARA hazardous event it falls under. Two
+rows match no hazardous event (EC-N1, an assisted lane change that does not stop at the target lane); it is a finding
+for the HARA, queued for the project lead as DQ-406 rather than counted here. These are hypotheses for U-6, not
 exploration-block results: the plant has no tyre friction limit and no perception.
 
 ### 6.1 Block summary template
@@ -185,6 +185,6 @@ exploration-block results: the plant has no tyre friction limit and no perceptio
 | ID | Item |
 |---|---|
 | OI-1 | Build the LionDriver log store and query tooling for U-3 (shared with WP-M-08 OI-4, WP-O-04) |
-| OI-2 | R3 rule decided 2026-10-19 (DQ-108 option A): numeric Good–Turing threshold plus the three-block trend rule. Value proposed in §5.4 (P̂₀ ≤ 0.10 with N ≥ 30); the project lead approves it before B1 starts (DQ-262). An assessor reviews it later |
+| OI-2 | **Closed 2026-10-19.** R3 rule decided by the project lead (DQ-108 option A): numeric Good–Turing threshold plus the three-block trend rule. Value P̂₀ ≤ 0.10 with N ≥ 30 approved before B1 (DQ-262 option A, §5.4). An assessor reviews it later (I1) |
 | OI-3 | Extend the MetaDrive bridge for U-4 (traffic, scenario scripting, randomised maps). In progress by the simulation session (WP-V-02 §5.3.1): traffic and pedestrian models and headless rendering work; scenario scripting and randomised maps are not built |
 | OI-4 | Define the stratified route pool for U-1 once the ODD (WP-C-02) is fixed |

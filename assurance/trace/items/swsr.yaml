@@ -527,7 +527,7 @@
   acceptance: "Event within 30 frames"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met: 200 frames (`selfdrive/selfdrived/selfdrived.py:340, 507-531`)"
+  baseline_impl: "Not met: 200 frames (`selfdrive/selfdrived/selfdrived.py:343, 510-535`)"
   status: proposed
   source: WP-W-02
 
@@ -1317,7 +1317,7 @@
 
 - id: SWSR-516
   kind: swsr
-  text: "The firmware shall activate its siren within 0.5 s, without SoC involvement, when (a) the heartbeat is lost (SWSR-407) while authority was granted within the last 5 s; (b) authority is cleared while granted for any reason other than a brake press (SWSR-302) or PCM cruise inactive (SWSR-301): RX fault (SWSR-406), EPS fault (SWSR-110), rejected command (SWSR-108), TX failure or bus-off (SWSR-508), platform fault (SWSR-502) or heartbeat \"not engaged\" (SWSR-307); (c) SWSR-516b fires."
+  text: "The firmware shall activate its siren within 0.5 s, without SoC involvement, when (a) the heartbeat is lost (SWSR-407) while authority was granted within the last 5 s; (b) authority is cleared while granted for any reason other than a brake press (SWSR-302) or PCM cruise inactive (SWSR-301): missing SoC command frames (SWSR-408), RX fault (SWSR-406), EPS fault (SWSR-110), rejected command (SWSR-108), TX failure or bus-off (SWSR-508), platform fault (SWSR-502) or heartbeat \"not engaged\" (SWSR-307); (c) SWSR-516b fires."
   asil: "B"
   parents: [TSR-516]
   parent_text: "TSR-516"
@@ -1327,7 +1327,7 @@
   acceptance: "Siren ≤ 0.5 s for each trigger; no siren on a brake press or PCM cancel alone"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: heartbeat loss (SWSR-407) revoking authority that was granted → 3 s siren at once, ≈ 0.56 s after the last heartbeat (0.3 s + 10 ms + 2 × 125 ms speaker tick), all builds (panda `c33343b`, `drivers/heartbeat_siren.h`, host test `tests/heartbeat_siren`, HIL `tests/hitl/test_15_heartbeat_siren.py` not run); 1 Hz path unchanged: 3 s siren after 4–5 s heartbeat loss (`main.c:169-171, 198-201`), the only siren when authority ended within the 5 s before the loss; EPS fault (SWSR-110) persisting 0.7 s (DQ-048, panda `bf8102a`; 1 s before) while authority is granted → siren ≥ 3 s, ≤ 0.96 s after the fault onset (panda `b790fca`, `drivers/eps_fault_siren.h`, host test `tests/eps_fault_siren`; HIL not run); since panda `3ee2796` (register DQ-367) the fault counts once it has been seen while authority was granted, so the siren also sounds when SWSR-408 revokes authority during the fault. Other (b) triggers and (c) not impl"
+  baseline_impl: "Partial: heartbeat loss (SWSR-407) revoking authority that was granted → 3 s siren at once, ≈ 0.56 s after the last heartbeat (0.3 s + 10 ms + 2 × 125 ms speaker tick), all builds (panda `c33343b`, `drivers/heartbeat_siren.h`, host test `tests/heartbeat_siren`, HIL `tests/hitl/test_15_heartbeat_siren.py` not run); 1 Hz path unchanged: 3 s siren after 4–5 s heartbeat loss (`main.c:169-171, 198-201`), the only siren when authority ended within the 5 s before the loss; EPS fault (SWSR-110) persisting 0.7 s (DQ-048, panda `bf8102a`; 1 s before) while authority is granted → siren ≥ 3 s, ≤ 0.96 s after the fault onset (panda `b790fca`, `drivers/eps_fault_siren.h`, host test `tests/eps_fault_siren`; HIL not run); since panda `3ee2796` (register DQ-367) the fault counts once it has been seen while authority was granted, so the siren also sounds when SWSR-408 revokes authority during the fault. Missing command frames (SWSR-408, TSR-516(b), DQ-404 A): since panda `8a69ccf` with opendbc `4d1a056` (reference build) the 3 s heartbeat siren also starts in the safety task in which SWSR-408 revokes granted authority (`safety_tx_arrival_revoked`), so a full SoC stall is no longer silent; a brake press, PCM cancel or RX fault does not set the flag (opendbc `test_tx_arrival_revoked_only_by_arrival_check`, host test `tests/heartbeat_siren`, HIL `test_soc_stall_revokes_on_missing_frames` not run). Other (b) triggers and (c) not impl"
   status: proposed
   source: WP-W-02
 
@@ -1407,7 +1407,7 @@
   acceptance: "No suppression path reachable while engaged"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met: `selfdrived.py:384-386, 405, 459`; `modeld.py:411-419` (GAP-17)"
+  baseline_impl: "Not met: `selfdrived.py:387-389, 408, 462`; `modeld.py:411-419` (GAP-17)"
   status: proposed
   source: WP-W-02
 
@@ -1647,7 +1647,7 @@
   acceptance: "Latch"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `selfdrived/helpers.py:12, 30, 41`; `selfdrived.py:307-312`"
+  baseline_impl: "Impl: `selfdrived/helpers.py:12, 30, 41`; `selfdrived.py:310-315`"
   status: proposed
   source: WP-W-02
 
@@ -1679,7 +1679,7 @@
   acceptance: "Mismatch → no engagement ≤ 1 s"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not impl (`selfdrive/pandad/panda_safety.cc:56-69`); host check vs CarParams only (`selfdrived.py:332-341`)"
+  baseline_impl: "Not impl (`selfdrive/pandad/panda_safety.cc:56-69`); host check vs CarParams only (`selfdrived.py:335-344`)"
   status: proposed
   source: WP-W-02
 
@@ -1727,7 +1727,7 @@
   acceptance: "Disable ≤ 1.2 s after a render or audio stall (SIGSTOP of the process)"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not impl: only `processNotRunning` on a crash (`selfdrived.py:353-359`)"
+  baseline_impl: "Not impl: only `processNotRunning` on a crash (`selfdrived.py:356-362`)"
   status: proposed
   source: WP-W-02
 
@@ -1791,7 +1791,7 @@
   acceptance: "No FCW from a stale or invalid input; rate measurable from logs"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: no freshness gate (`selfdrived.py:442-447`)"
+  baseline_impl: "Partial: no freshness gate (`selfdrived.py:445-450`)"
   status: proposed
   source: WP-W-02
 

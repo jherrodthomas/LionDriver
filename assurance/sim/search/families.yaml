@@ -38,7 +38,7 @@ probes_default:
   - {label: "drift noticed late, 0.4 m (fog or heavy rain; no source)", assume: {driver_lat_cue_m: 0.4}}
   - {label: "EPS-hold (keeps its last torque 2 s)", case: {eps: hold}}
   - {label: "driver corrects with up to 6 m/s²", assume: {driver_ay_max: 6.0}}
-  - {label: "siren when the panda revokes (DQ-404 what-if)", assume: {whatif_siren_on_revoke: 1.0}}
+  - {label: "panda siren muted (as before DQ-404)", assume: {whatif_silent_panda: 1.0}}
 
 families:
   - id: curve-assist-loss
@@ -288,12 +288,13 @@ families:
 findings:
   EC-N1:
     title: an assisted lane change that does not stop at the target lane
-    dq: DQ-405
+    dq: DQ-406
     text: >-
       HE-02.5 rates a loss of lateral control during an assisted lane change as the car stopping partway and
       straddling the two lanes. The search finds the opposite effect. A frozen command (F-03) is passed by the panda
       and keeps the lateral acceleration of the moment it froze, so the car keeps moving sideways through the target
-      lane toward the one beyond it. A loss late in the change (a SoC stall, F-04b, or an EPS fault, F-07) leaves the
-      car with its lateral speed and nothing to stop it at the target lane's centre, so it runs over the far line.
-      Either way the departure is into a lane the driver did not check before the change. No hazardous event of the
-      HARA names that effect.
+      lane toward the one beyond it. An EPS fault late in the change (F-07) leaves the car with its lateral speed and
+      no assist to stop it at the target lane's centre, so it runs over the far line even with the siren. (A SoC stall
+      late in a change, F-04b, did the same before the siren on revocation, DQ-404; it now stays just inside.) Either
+      way the departure is into a lane the driver did not check before the change. No hazardous event of the HARA
+      names that effect.

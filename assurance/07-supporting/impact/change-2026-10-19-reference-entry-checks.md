@@ -30,8 +30,8 @@ On the reference car, pressing the cruise button below 60 km/h, or with a non-as
 | ID | Item | Needed by |
 |---|---|---|
 | OI-1 | Parent TSRs (safety-concept session) and the SWSRs that refine them in WP-W-02 | G3 |
-| OI-2 | An engaged item keeps going below 60 km/h, for example into highway stop-and-go traffic. DQ-280 says "refuse to engage"; whether it should also hand back below the floor is not decided. Asked as register DQ-402 | Lead (behaviour default) |
-| OI-3 | A setting changed in the settings menu while engaged (following distance, Experimental Mode) takes effect at once; only the next engagement is refused. Locking the settings while engaged is not decided. Asked as register DQ-403 | Lead (behaviour default) |
+| OI-2 | An engaged item keeps going below 60 km/h, for example into highway stop-and-go traffic. **Decided 2026-10-19** (register DQ-402 A): the item keeps driving below 60 km/h once engaged; only new engagement is refused, as built. The ODD argument (WP-C-02) has to cover low-speed highway traffic. ~~DQ-280 says "refuse to engage"; whether it should also hand back below the floor is not decided~~ | ODD owner (WP-C-02) |
+| OI-3 | A setting changed in the settings menu while engaged (following distance, Experimental Mode) takes effect at once; only the next engagement is refused. **Decided 2026-10-19** (register DQ-403 A) and implemented in [change-2026-10-20-settings-held-while-engaged](change-2026-10-20-settings-held-while-engaged.md): the change is stored but used only after the driver disengages. ~~Locking the settings while engaged is not decided~~ | Done |
 | OI-4 | User information (WP-O-03): the 60 km/h floor, the fixed relaxed distance and Experimental Mode off on the reference car | WP-O-03 owner |
 | OI-5 | Vehicle check: the no-entry alert and the stock-cruise cancel below 60 km/h on the reference car | Vehicle test |
 | OI-6 | Process replay: if a reference segment is on the reference platform, its `selfdrived` events change; CI on this PR shows it | This PR |
