@@ -1378,6 +1378,15 @@ package LionDriverRequirements {
         :>> timing = "alert k at T_k = 5/15/25 s or D_k = 150/240/395 m since the last driver input, whichever comes first (WP-C-08 §5.4)";
         :>> verifMethod = "T-SIL, T-VEH";
     }
+    requirement <'TSR-635'> tsr_635 : TechnicalSafetyRequirement {
+        doc /* The time from the driver's change of state (eyes off the road, or hands off under the wheel-touch policy) to the first driver alert shall be ≤ 6 s end to end, including camera frame time, DM model latency and policy evaluation, so the first-alert timer of TSR-608 and TSR-634 shall leave a stated budget for that latency; the no-response reaction of TSR-611 shall start within the time set in WP-S-04 (assurance/03-system/WP-S-04-timing-ftti-budget.md). */
+        :>> workProduct = "WP-S-02";
+        :>> allocText = "SoC";
+        :>> asil = "A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11)";
+        :>> mechanism = "WRN";
+        :>> timing = "first alert ≤ 6 s end to end";
+        :>> verifMethod = "T-SIL, T-VEH";
+    }
     requirement <'TSR-701'> tsr_701 : TechnicalSafetyRequirement {
         doc /* The harness orientation (normal, flipped, not connected) shall be detected before the relay is driven, and CAN routing and relay/ignition pin assignment shall follow it; loss or change of orientation while the relay is driven shall lead to SS-S. */
         :>> workProduct = "WP-S-02";
@@ -3457,6 +3466,10 @@ package LionDriverRequirements {
     #derivation connection {
         end #original ::> fsr_02_06;
         end #derive ::> tsr_634;
+    }
+    #derivation connection {
+        end #original ::> fsr_08_01;
+        end #derive ::> tsr_635;
     }
     #derivation connection {
         end #original ::> fsr_07_03;

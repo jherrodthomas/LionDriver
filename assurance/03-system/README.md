@@ -28,6 +28,8 @@ Standard clauses: 26262-4, SYS.1–5.
 
 | Folder | What it holds |
 |---|---|
+| [`fault-sim/`](fault-sim/) | — |
+| [`requirements/`](requirements/README.md) | Requirements at a glance |
 | [`reviews/`](reviews/) | — |
 
 GitHub lists this folder's files above this page; each work product's document embeds its own figures.
