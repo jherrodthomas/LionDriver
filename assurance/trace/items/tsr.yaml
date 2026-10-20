@@ -800,7 +800,7 @@
 
 - id: TSR-511
   kind: tsr
-  text: "Only release-signed LionDriver firmware shall execute on the safety MCU: the signature scheme shall use a current algorithm and key length, flash read-out and write protection shall be set, the SoC's control of `STM_BOOT0`/`STM_RST_N` shall not allow non-release code to drive the relay, release builds of `pandad` shall not flash a development bootstub, and softloader entry (`0xd1` param 1) shall be refused in a car safety mode and while the ignition is on (CSR-024)."
+  text: "Only release-signed LionDriver firmware shall execute on the safety MCU: the bootstub shall verify an ECDSA signature over P-256 with SHA-256 (decided 2026-10-19, DQ-191 A; replaces RSA-1024/SHA-1), flash read-out and write protection shall be set, the SoC's control of `STM_BOOT0`/`STM_RST_N` shall not allow non-release code to drive the relay, release builds of `pandad` shall not flash a development bootstub, and softloader entry (`0xd1` param 1) shall be refused in a car safety mode and while the ignition is on (CSR-024)."
   asil: "C (+ CS)"
   parents: [FSR-01.10]
   parent_text: "FSR-01.10"

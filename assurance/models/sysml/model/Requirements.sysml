@@ -992,7 +992,7 @@ package LionDriverRequirements {
         :>> verifMethod = "A, T-HIL";
     }
     requirement <'TSR-511'> tsr_511 : TechnicalSafetyRequirement {
-        doc /* Only release-signed LionDriver firmware shall execute on the safety MCU: the signature scheme shall use a current algorithm and key length, flash read-out and write protection shall be set, the SoC's control of STM_BOOT0/STM_RST_N shall not allow non-release code to drive the relay, release builds of pandad shall not flash a development bootstub, and softloader entry (0xd1 param 1) shall be refused in a car safety mode and while the ignition is on (CSR-024). */
+        doc /* Only release-signed LionDriver firmware shall execute on the safety MCU: the bootstub shall verify an ECDSA signature over P-256 with SHA-256 (decided 2026-10-19, DQ-191 A; replaces RSA-1024/SHA-1), flash read-out and write protection shall be set, the SoC's control of STM_BOOT0/STM_RST_N shall not allow non-release code to drive the relay, release builds of pandad shall not flash a development bootstub, and softloader entry (0xd1 param 1) shall be refused in a car safety mode and while the ignition is on (CSR-024). */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW, P-HW (option bytes), SoC";
         :>> asil = "C (+ CS)";
