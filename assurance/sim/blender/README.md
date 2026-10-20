@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Scope | A 3D scene and a review dashboard for every HARA hazardous event (38 HE-, WP-C-03) and every SOTIF hazard (12 SH-, WP-C-05, with its triggering conditions from WP-C-06 and known scenarios from WP-V-03) |
-| Version | 0.6 (2026-10-19): gallery re-rendered (all 90 dashboards) with the purchased Corolla mesh, the Quaternius pedestrians and five look fixes: soft snowflakes and no rain or snow within 3 m of a camera, tall street furniture kept out of the chase camera's view of the ego, road-user callouts in rows, a wetter W02 road. 0.5 (2026-10-19): JPEG quality 75 for the gallery; a dashboard without contact shows the driver's response rather than an earlier item or lead braking. 0.4 (2026-10-18): scanned CC0 plants (Poly Haven trees, shrubs and verge grass, with snow under W05) in place of the procedural trees when fetched; dry patches and mowing rows in the fields; urban streets with fewer, kerbside street trees, 8 m lamp columns, bus shelters and scanned bins, benches, hydrants and street cabinets, kept clear of every pedestrian, cyclist and junction. 0.3 (2026-10-18): scene library (environments, HARA weather codes and low sun, traffic presets, CC0 assets with a procedural fallback); 40 condition variants; richer procedural road, grass, trees and road furniture. 0.2 (2026-10-18): all HEs and SOTIF hazards, kinematic scenes, the purchased Corolla mesh on every car, rural and urban roads, props, night and wet road. 0.1 (2026-10-18): three plant scenes |
+| Version | 0.7 (2026-10-20): nine edge-case scenes from the failure search, each reproducing a row of the [edge-case catalogue](../results/edge-cases.md) (`edge_case:`), rendered with the purchased Corolla mesh; four library environments for SOTIF triggering conditions (TC-15 crosswind, TC-18 tunnel, TC-31 exit split, TC-32 narrow lane beside a truck) with tunnel, gore and windsock props; the gallery keeps a committed dashboard whose render is not in `out/`. 0.6 (2026-10-19): gallery re-rendered (all 90 dashboards) with the purchased Corolla mesh, the Quaternius pedestrians and five look fixes: soft snowflakes and no rain or snow within 3 m of a camera, tall street furniture kept out of the chase camera's view of the ego, road-user callouts in rows, a wetter W02 road. 0.5 (2026-10-19): JPEG quality 75 for the gallery; a dashboard without contact shows the driver's response rather than an earlier item or lead braking. 0.4 (2026-10-18): scanned CC0 plants (Poly Haven trees, shrubs and verge grass, with snow under W05) in place of the procedural trees when fetched; dry patches and mowing rows in the fields; urban streets with fewer, kerbside street trees, 8 m lamp columns, bus shelters and scanned bins, benches, hydrants and street cabinets, kept clear of every pedestrian, cyclist and junction. 0.3 (2026-10-18): scene library (environments, HARA weather codes and low sun, traffic presets, CC0 assets with a procedural fallback); 40 condition variants; richer procedural road, grass, trees and road furniture. 0.2 (2026-10-18): all HEs and SOTIF hazards, kinematic scenes, the purchased Corolla mesh on every car, rural and urban roads, props, night and wet road. 0.1 (2026-10-18): three plant scenes |
 | Status | Draft. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed. Synthetic (DSR-12): **pictures only, no evidence credit** |
 | Feeds | Review of the HARA, the SOTIF analysis and the WP-V-03 scenarios; figures. Nothing in the safety case |
 
@@ -69,7 +69,13 @@ with it may be published; a `scene.blend` made with it holds the licensed mesh a
 Two additions to [`../plant/`](../plant/), used only by these scenes (no catalog case uses them, and
 `report.py --check` is unchanged): the fault kind `hardover_left` (the mirror of `hardover`, for a departure toward
 oncoming traffic, HE-01.1) and the road `rcurve@<a_y>` (a right curve, for going straight on toward the oncoming lane,
-HE-02.2).
+HE-02.2). The failure search ([`../search/`](../search/families.yaml)) added more, all off by default and used by the
+edge-case scenes through `case_overrides` and `assumptions`: the road `arc@<a_y>:<L>` (a curve with an exit); the case
+fields `fault_clear`, `clear_after_correction`, `fault2` and `fault2_gap` (a fault that clears, and a second one),
+`lane_change` and `lane_change_s` (an assisted lane change to the left) and `ay_disturbance` (a steady crosswind or
+bank, TC-15); and the driver-model options of `simulate.DRIVER_OPTIONS` (a wrong-direction first correction,
+over-correction, a lag in feeling the item's torque, braking instead of steering). An edge-case scene names its
+catalogue row with `edge_case:`, and `search/test_search.py` checks that it reproduces the row's rho.
 
 ## 5. Adding a scene
 

@@ -6,7 +6,7 @@ weather or lighting code it is rated for. Pictures only: synthetic (DSR-12), no 
 
 | File | Holds | Used by |
 |---|---|---|
-| [`environments.yaml`](environments.yaml) | 10 static worlds: cross-section, geometry, scenery, road furniture, the operational situations (OS-) they represent, the conditions each allows | `export_scene.py` |
+| [`environments.yaml`](environments.yaml) | 14 static worlds: cross-section, geometry, scenery, road furniture, the operational situations (OS-) they represent, the conditions each allows | `export_scene.py` |
 | [`conditions.yaml`](conditions.yaml) | W01 to W06 of the HARA and the TC-01 low-sun preset: exposure, ODD, what the HARA model changes, and the look | `export_scene.py`, `hazard_scene.py` |
 | [`traffic.yaml`](traffic.yaml) | Illustrative traffic presets placed relative to the ego | `export_scene.py` |
 | [`assets.yaml`](assets.yaml) | CC0 sky HDRIs, ground textures, scanned plants and street furniture (Poly Haven, ambientCG) with candidate IDs and a search fallback | `fetch_assets.py`, `hazard_scene.py` |
@@ -73,6 +73,14 @@ stated visibility).
 | `rural-curve` | OS-16 | all |
 | `urban-arterial` | OS-04, OS-06 | all |
 | `urban-intersection` | OS-15 | all |
+| `highway-narrow-truck` | OS-01, OS-02 with TC-32 (a 3.1 m lane, a barrier 0.6 m beyond the shoulder line, a truck alongside) | all |
+| `highway-crosswind` | OS-01, OS-02 with TC-15 (open embankment, windsocks, a wind sign) | all |
+| `highway-tunnel` | OS-01, OS-02 with TC-18 (a lit tunnel under a hill; its roof is hidden from the top camera) | all |
+| `highway-exit-split` | OS-01 with TC-31 (the right lane splits off as an exit: gantry and chevron gore) | all |
+
+Triggering conditions are drawn, not simulated, except the crosswind or bank of TC-15, which the plant can add as a
+steady lateral push (`ay_disturbance`). TC-17 (a crest hiding a lead) is not pictured: the roads are flat, and a
+vertical profile would need the road, the cars and the cameras to follow it.
 
 Traffic presets: `none`, `free-flow`, `dense`, `adjacent-truck`, `close-follower`, `cut-in`, `oncoming`, `parked`.
 A variant moves each preset road user by up to the preset's `jitter_m` along the road (seeded by the variant's ID),

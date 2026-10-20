@@ -255,7 +255,7 @@ def frame(sc: dict, screen: dict, keys: list[dict], views: dict[str, Path], i: i
   y = wrap(d, (24, y + 4), "Effect: " + cd["effect"], F["s"], TEXT2, 330, 3)
   extra = []
   if cd["kind"] == "HARA" and (cd.get("tc") or cd.get("ks")):
-    extra = [["Triggering condition", ", ".join(cd["tc"]) or "—"], ["Known scenario", ", ".join(cd["ks"]) or "—"]]
+    extra = [r for r in (["Triggering condition", ", ".join(cd["tc"])], ["Known scenario", ", ".join(cd["ks"])]) if r[1]]
   rows = cd["rows"] + extra
   y = max(y + 8, hb[3] - 30 - 20 * len(rows))
   for k, v in rows:

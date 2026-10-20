@@ -5177,3 +5177,36 @@
   sources: ["assurance/04-hardware/wiring/README.md OI-W-1", "assurance/04-hardware/reviews/RR-2026-010.md §2", "DQ-209", "DQ-211"]
   status: assumed
   answer: {choice: A, via: assumed, at: 2026-10-20, note: "Agreed with the coordinator; no lead question needed, since measuring is already in VS-HW-02 (DQ-209 A)"}
+
+- id: DQ-406
+  question: "Should the HARA add a hazardous event for an assisted lane change that does not stop in the target lane?"
+  context: >-
+    The HARA rates a loss of steering during an assisted lane change (HE-02.5) as the car stopping partway and
+    straddling the two lanes. The edge-case search found the opposite. **A frozen command keeps the car moving
+    sideways through the target lane toward the next one (row EC-11, 80 km/h: well into the lane beyond). An EPS fault
+    late in the change leaves it with enough sideways speed to cross the target lane's far line, siren or not
+    (EC-13).** That lane is one the driver did not check before the change, and no hazardous event names it. (Your
+    siren on revocation, DQ-404, now keeps a SoC stall late in a change just inside, EC-12.) Synthetic plant runs with
+    the real panda code; no evidence credit.
+  reversibility: revisit
+  blocks: "WP-C-03 HE-02.5 and its rating; WP-V-04 U-4 feedback of finding EC-N1 (assurance/sim/results/edge-cases.md); a WP-V-05 fault-injection case for a fault during a lane change"
+  gate: G1
+  decider: lead
+  figure: figures/dq-406.svg
+  caption: >-
+    Plant runs of rows EC-11 and EC-13 against the planned lane change (dotted) and against HE-02.5 as rated (blue):
+    both cross the target lane's far line instead of stopping between the lanes. The driver, EPS and road are the
+    plant's assumptions.
+  options:
+    - key: A
+      recommended: true
+      title: "Add a new hazardous event under H-01 for the lane change that overshoots"
+      detail: "Rate it on its own (OS-12, into an unchecked lane). Cost: a HARA revision, an S/E/C rating and possibly an ASIL that touches SG-01, plus a WP-V-05 test case."
+    - key: B
+      title: "Widen HE-02.5 to cover both stopping and overshooting"
+      detail: "One entry, rated for the worse of the two effects. Cost: one rating then covers two effects with different controllability, which a reviewer may challenge."
+    - key: C
+      title: "No change: argue that HE-01.2 already covers it"
+      detail: "HE-01.2 is a departure into an adjacent vehicle at highway speed. Cost: HE-01.2 names OS-01/OS-02, not a lane change, so the safety case has to argue the gap."
+  sources: ["assurance/sim/results/edge-cases.md (EC-N1, rows EC-11 and EC-13)", "assurance/sim/results/search-fault-timing-lane-change.md", "WP-C-03 HE-02.5", "WP-V-04 U-4"]
+  status: queued
