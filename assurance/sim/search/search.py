@@ -5,7 +5,8 @@
     python3 assurance/sim/search/search.py --check    # fail if the committed outputs differ from a fresh run
 
 Family searched: loss of lateral assistance in a highway curve, injected as the EPS fault of case F-07 (the panda
-refuses LKA at once and sounds its siren after 0.7 s, DQ-048). The parameters are the road (speed, curve lateral acceleration,
+refuses LKA at once; the modelled host keeps commanding, so the arrival check revokes after 50 ms and the siren sounds
+about 0.25 s after the fault, TSR-516(b), DQ-404 A; the 0.7 s EPS-fault persistence, DQ-048, comes later). The parameters are the road (speed, curve lateral acceleration,
 lane width) and the driver assumptions (reaction time, drift cue). Robustness is the margin from the body edge to the
 lane line, rho = (lane width - vehicle width) / 2 - max |lateral offset|; rho < 0 is a departure from the lane.
 
@@ -127,7 +128,9 @@ def table(mc: list[dict], ce: list[dict]) -> str:
     "| camera frame rate | not applicable (no camera) |",
     "",
     "Fault: EPS fault with loss of assist (LKA_STATE 9) in the steady part of a left curve; the panda refuses LKA from "
-    "the first fault frame and sounds its siren after 0.7 s (T-28, DQ-048). The driver reacts t_r after the first cue (the "
+    "the first fault frame. The modelled host keeps commanding, so its frames are refused and the arrival check revokes "
+    "authority after 50 ms; that revocation sounds the siren about 0.25 s after the fault (T-34, TSR-516(b), DQ-404 A), "
+    "before the 0.7 s EPS-fault persistence would (T-28, DQ-048). The driver reacts t_r after the first cue (the "
     "siren or a drift of `cue` metres) and corrects with up to 4 m/s². Robustness rho = (lane width − 1.781 m) / 2 − "
     "max |lateral offset| from the fault to the end of the run (6 s); rho < 0 means the body edge crossed the lane "
     "line. Beyond about −2 m the car is in the next lane and the magnitude means little; the sign and the time to the "
