@@ -9,7 +9,7 @@ analysis:
   type: fsc
   doc_id: LD-FSC-001
   title: "Functional Safety Concept — LionDriver L2 ACC/ALC on Corolla E210 · ZRE212 · US (CFG-001)"
-  revision: "0.4"
+  revision: "0.5"
   status: draft
   baseline: BL-001
   hara_revision: "0.4"
@@ -32,12 +32,13 @@ analysis:
     - assurance/08-analyses/fmea/analyses/system-fmea.yaml
     - docs/SAFETY.md
     - ISO 26262-3:2018 clause 7, ISO 26262-9:2018 clauses 5 and 7
-  updated: 2026-10-10
+  updated: 2026-10-20
   history:
     - {revision: "0.1", date: 2026-10-10, author: Claude (AI-assisted draft), change: Initial draft from HARA rev 0.2}
     - {revision: "0.2", date: 2026-10-10, author: Claude (AI-assisted draft), change: "Re-based on HARA rev 0.3 (item definition LD-ITEM-001, scope AC-001); FOI-008 heartbeat finding; no FSR changes"}
     - {revision: "0.3", date: 2026-10-13, author: Claude (AI-assisted draft), change: "Re-based on HARA rev 0.4 (HZ-006 back-link to SFM-026 only); no FSR changes"}
     - {revision: "0.4", date: 2026-10-16, author: Claude (AI-assisted draft), change: "Lead decisions of 2026-10-14 noted where they touch this concept: override backs off with a cue (DQ-053, FSR-031); harness stuck in intercept warns and refuses engagement (DQ-064, FSR-038). Statements, ASILs and allocations unchanged; the requirement text is in WP-C-04 v0.6 and WP-S-02 v0.21"}
+    - {revision: "0.5", date: 2026-10-20, author: Claude (AI-assisted draft), change: "FSR-007 fhti_ms 400 (FDTI 0.3 s + FRTI 0.1 s, TSR-407, WP-S-04 v0.19 §3.7); implementation note updated: the 0.3 s revocation is implemented, not verified"}
 
 # ---------------------------------------------------------------------------
 # Preliminary architecture
@@ -296,8 +297,8 @@ fsrs:
     statement: The panda shall withdraw controls-allowed when the SoC heartbeat is missing, stale or reports not engaged, within a timeout shorter than the SG-001 FTTI.
     allocated_to: [EL-07]
     safe_state: No item messages to the vehicle.
-    fhti_ms: null
-    implementation: {status: existing_unverified, ref: "panda firmware heartbeat handling; openpilot/selfdrive/pandad/pandad.cc", note: "Timeout value not established (FOI-008)."}
+    fhti_ms: 400
+    implementation: {status: existing_unverified, ref: "panda firmware heartbeat handling; openpilot/selfdrive/pandad/pandad.cc", note: "Revocation 0.3 s after the last heartbeat since panda c2e5d93 (TSR-407); FHTI 400 ms = FDTI 0.3 s + FRTI 0.1 s (WP-S-04 §3.7, SG-01 SoC heartbeat loss); not verified on hardware (WP-S-04 M-05). FOI-008 recorded the timeout as not established."}
     verification:
       - {method: fault_injection, planned: "Stop pandad / SoC while engaged on HIL; measure time to no output"}
   - id: FSR-008
