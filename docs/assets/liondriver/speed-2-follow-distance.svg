@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="512" viewBox="0 0 1320 512" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 2. How far back the MPC wants to be</title>
+<desc>Left: the gap the MPC steers toward when following a lead at the same speed, T_follow × v + 6 m, for relaxed (1.75 s), standard (1.45 s) and aggressive (1.25 s), and the soft danger-zone limit. Right: approaching a stopped car, the distance the MPC plans with, v²/(2·2.5) + 1.45·v + 6, against the distance to stop at -3.5 m/s².</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1320" height="512" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 2 · How far back the MPC wants to be</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">From long_mpc.py: the gap it steers toward when following, and the distance it plans with when the lead is stopped.</text>
+<text x="1280" y="44" font-size="11" fill="#475569" text-anchor="end">long_mpc.py get_safe_obstacle_distance, get_T_FOLLOW</text>
+<line x1="40" y1="82" x2="1280" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="110" y="110" width="520" height="300" rx="0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<line x1="110" y1="110" x2="110" y2="410" stroke="#E2E8F0" stroke-width="1"/>
+<text x="110" y="425" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
+<line x1="175" y1="110" x2="175" y2="410" stroke="#E2E8F0" stroke-width="1"/>
+<text x="175" y="425" font-size="9.5" fill="#475569" text-anchor="middle">5</text>
+<line x1="240" y1="110" x2="240" y2="410" stroke="#E2E8F0" stroke-width="1"/>
+<text x="240" y="425" font-size="9.5" fill="#475569" text-anchor="middle">10</text>
+<line x1="305" y1="110" x2="305" y2="410" stroke="#E2E8F0" stroke-width="1"/>
+<text x="305" y="425" font-size="9.5" fill="#475569" text-anchor="middle">15</text>
+<line x1="370" y1="110" x2="370" y2="410" stroke="#E2E8F0" stroke-width="1"/>
+<text x="370" y="425" font-size="9.5" fill="#475569" text-anchor="middle">20</text>
+<line x1="435" y1="110" x2="435" y2="410" stroke="#E2E8F0" stroke-width="1"/>
+<text x="435" y="425" font-size="9.5" fill="#475569" text-anchor="middle">25</text>
+<line x1="500" y1="110" x2="500" y2="410" stroke="#E2E8F0" stroke-width="1"/>
+<text x="500" y="425" font-size="9.5" fill="#475569" text-anchor="middle">30</text>
+<line x1="565" y1="110" x2="565" y2="410" stroke="#E2E8F0" stroke-width="1"/>
+<text x="565" y="425" font-size="9.5" fill="#475569" text-anchor="middle">35</text>
+<line x1="630" y1="110" x2="630" y2="410" stroke="#E2E8F0" stroke-width="1"/>
+<text x="630" y="425" font-size="9.5" fill="#475569" text-anchor="middle">40</text>
+<line x1="110" y1="410" x2="630" y2="410" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="413.5" font-size="9.5" fill="#475569" text-anchor="end">0</text>
+<line x1="110" y1="372.5" x2="630" y2="372.5" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="376" font-size="9.5" fill="#475569" text-anchor="end">10</text>
+<line x1="110" y1="335" x2="630" y2="335" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="338.5" font-size="9.5" fill="#475569" text-anchor="end">20</text>
+<line x1="110" y1="297.5" x2="630" y2="297.5" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="301" font-size="9.5" fill="#475569" text-anchor="end">30</text>
+<line x1="110" y1="260" x2="630" y2="260" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="263.5" font-size="9.5" fill="#475569" text-anchor="end">40</text>
+<line x1="110" y1="222.5" x2="630" y2="222.5" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="226" font-size="9.5" fill="#475569" text-anchor="end">50</text>
+<line x1="110" y1="185" x2="630" y2="185" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="188.5" font-size="9.5" fill="#475569" text-anchor="end">60</text>
+<line x1="110" y1="147.5" x2="630" y2="147.5" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="151" font-size="9.5" fill="#475569" text-anchor="end">70</text>
+<line x1="110" y1="110" x2="630" y2="110" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="113.5" font-size="9.5" fill="#475569" text-anchor="end">80</text>
+<text x="370" y="442" font-size="10.5" fill="#475569" text-anchor="middle">ego speed = lead speed (m/s)</text>
+<text x="70" y="260" font-size="10.5" fill="#475569" text-anchor="middle" transform="rotate(-90 70 260)">gap to lead (m)</text>
+<text x="110" y="100" font-size="13" fill="#0F172A" font-weight="700">Following a lead at the same speed</text>
+<path d="M110.0,387.5 L123.0,380.9 L136.0,374.4 L149.0,367.8 L162.0,361.2 L175.0,354.7 L188.0,348.1 L201.0,341.6 L214.0,335.0 L227.0,328.4 L240.0,321.9 L253.0,315.3 L266.0,308.8 L279.0,302.2 L292.0,295.6 L305.0,289.1 L318.0,282.5 L331.0,275.9 L344.0,269.4 L357.0,262.8 L370.0,256.2 L383.0,249.7 L396.0,243.1 L409.0,236.6 L422.0,230.0 L435.0,223.4 L448.0,216.9 L461.0,210.3 L474.0,203.8 L487.0,197.2 L500.0,190.6 L513.0,184.1 L526.0,177.5 L539.0,170.9 L552.0,164.4 L565.0,157.8 L578.0,151.2 L591.0,144.7 L604.0,138.1 L617.0,131.6 L630.0,125.0" stroke="#D97706" stroke-width="2.0" fill="none" stroke-linejoin="round"/>
+<text x="636" y="129" font-size="10" fill="#D97706" font-weight="600">relaxed 1.75 s</text>
+<path d="M110.0,387.5 L123.0,382.1 L136.0,376.6 L149.0,371.2 L162.0,365.8 L175.0,360.3 L188.0,354.9 L201.0,349.4 L214.0,344.0 L227.0,338.6 L240.0,333.1 L253.0,327.7 L266.0,322.2 L279.0,316.8 L292.0,311.4 L305.0,305.9 L318.0,300.5 L331.0,295.1 L344.0,289.6 L357.0,284.2 L370.0,278.8 L383.0,273.3 L396.0,267.9 L409.0,262.4 L422.0,257.0 L435.0,251.6 L448.0,246.1 L461.0,240.7 L474.0,235.2 L487.0,229.8 L500.0,224.4 L513.0,218.9 L526.0,213.5 L539.0,208.1 L552.0,202.6 L565.0,197.2 L578.0,191.8 L591.0,186.3 L604.0,180.9 L617.0,175.4 L630.0,170.0" stroke="#0F766E" stroke-width="2.0" fill="none" stroke-linejoin="round"/>
+<text x="636" y="174" font-size="10" fill="#0F766E" font-weight="600">standard 1.45 s</text>
+<path d="M110.0,387.5 L123.0,382.8 L136.0,378.1 L149.0,373.4 L162.0,368.8 L175.0,364.1 L188.0,359.4 L201.0,354.7 L214.0,350.0 L227.0,345.3 L240.0,340.6 L253.0,335.9 L266.0,331.2 L279.0,326.6 L292.0,321.9 L305.0,317.2 L318.0,312.5 L331.0,307.8 L344.0,303.1 L357.0,298.4 L370.0,293.8 L383.0,289.1 L396.0,284.4 L409.0,279.7 L422.0,275.0 L435.0,270.3 L448.0,265.6 L461.0,260.9 L474.0,256.2 L487.0,251.6 L500.0,246.9 L513.0,242.2 L526.0,237.5 L539.0,232.8 L552.0,228.1 L565.0,223.4 L578.0,218.8 L591.0,214.1 L604.0,209.4 L617.0,204.7 L630.0,200.0" stroke="#D2553F" stroke-width="2.0" fill="none" stroke-linejoin="round"/>
+<text x="636" y="204" font-size="10" fill="#D2553F" font-weight="600">aggressive 1.25 s</text>
+<text x="110" y="466" font-size="11" fill="#0F172A">gap = T_follow · v + 6 m. At 30 m/s (108 km/h), standard: 49.5 m.</text>
+<rect x="760" y="110" width="520" height="300" rx="0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<line x1="760" y1="110" x2="760" y2="410" stroke="#E2E8F0" stroke-width="1"/>
+<text x="760" y="425" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
+<line x1="825" y1="110" x2="825" y2="410" stroke="#E2E8F0" stroke-width="1"/>
+<text x="825" y="425" font-size="9.5" fill="#475569" text-anchor="middle">5</text>
+<line x1="890" y1="110" x2="890" y2="410" stroke="#E2E8F0" stroke-width="1"/>
+<text x="890" y="425" font-size="9.5" fill="#475569" text-anchor="middle">10</text>
+<line x1="955" y1="110" x2="955" y2="410" stroke="#E2E8F0" stroke-width="1"/>
+<text x="955" y="425" font-size="9.5" fill="#475569" text-anchor="middle">15</text>
+<line x1="1020" y1="110" x2="1020" y2="410" stroke="#E2E8F0" stroke-width="1"/>
+<text x="1020" y="425" font-size="9.5" fill="#475569" text-anchor="middle">20</text>
+<line x1="1085" y1="110" x2="1085" y2="410" stroke="#E2E8F0" stroke-width="1"/>
+<text x="1085" y="425" font-size="9.5" fill="#475569" text-anchor="middle">25</text>
+<line x1="1150" y1="110" x2="1150" y2="410" stroke="#E2E8F0" stroke-width="1"/>
+<text x="1150" y="425" font-size="9.5" fill="#475569" text-anchor="middle">30</text>
+<line x1="1215" y1="110" x2="1215" y2="410" stroke="#E2E8F0" stroke-width="1"/>
+<text x="1215" y="425" font-size="9.5" fill="#475569" text-anchor="middle">35</text>
+<line x1="1280" y1="110" x2="1280" y2="410" stroke="#E2E8F0" stroke-width="1"/>
+<text x="1280" y="425" font-size="9.5" fill="#475569" text-anchor="middle">40</text>
+<line x1="760" y1="410" x2="1280" y2="410" stroke="#E2E8F0" stroke-width="1"/>
+<text x="754" y="413.5" font-size="9.5" fill="#475569" text-anchor="end">0</text>
+<line x1="760" y1="372.5" x2="1280" y2="372.5" stroke="#E2E8F0" stroke-width="1"/>
+<text x="754" y="376" font-size="9.5" fill="#475569" text-anchor="end">50</text>
+<line x1="760" y1="335" x2="1280" y2="335" stroke="#E2E8F0" stroke-width="1"/>
+<text x="754" y="338.5" font-size="9.5" fill="#475569" text-anchor="end">100</text>
+<line x1="760" y1="297.5" x2="1280" y2="297.5" stroke="#E2E8F0" stroke-width="1"/>
+<text x="754" y="301" font-size="9.5" fill="#475569" text-anchor="end">150</text>
+<line x1="760" y1="260" x2="1280" y2="260" stroke="#E2E8F0" stroke-width="1"/>
+<text x="754" y="263.5" font-size="9.5" fill="#475569" text-anchor="end">200</text>
+<line x1="760" y1="222.5" x2="1280" y2="222.5" stroke="#E2E8F0" stroke-width="1"/>
+<text x="754" y="226" font-size="9.5" fill="#475569" text-anchor="end">250</text>
+<line x1="760" y1="185" x2="1280" y2="185" stroke="#E2E8F0" stroke-width="1"/>
+<text x="754" y="188.5" font-size="9.5" fill="#475569" text-anchor="end">300</text>
+<line x1="760" y1="147.5" x2="1280" y2="147.5" stroke="#E2E8F0" stroke-width="1"/>
+<text x="754" y="151" font-size="9.5" fill="#475569" text-anchor="end">350</text>
+<line x1="760" y1="110" x2="1280" y2="110" stroke="#E2E8F0" stroke-width="1"/>
+<text x="754" y="113.5" font-size="9.5" fill="#475569" text-anchor="end">400</text>
+<text x="1020" y="442" font-size="10.5" fill="#475569" text-anchor="middle">ego speed (m/s), lead stopped</text>
+<text x="720" y="260" font-size="10.5" fill="#475569" text-anchor="middle" transform="rotate(-90 720 260)">distance it plans with (m)</text>
+<text x="760" y="100" font-size="13" fill="#0F172A" font-weight="700">Approaching a stopped car</text>
+<path d="M760.0,405.5 L773.0,404.3 L786.0,402.7 L799.0,400.9 L812.0,398.8 L825.0,396.3 L838.0,393.6 L851.0,390.5 L864.0,387.2 L877.0,383.6 L890.0,379.6 L903.0,375.4 L916.0,370.9 L929.0,366.0 L942.0,360.9 L955.0,355.4 L968.0,349.7 L981.0,343.7 L994.0,337.3 L1007.0,330.7 L1020.0,323.8 L1033.0,316.5 L1046.0,309.0 L1059.0,301.1 L1072.0,293.0 L1085.0,284.6 L1098.0,275.8 L1111.0,266.8 L1124.0,257.4 L1137.0,247.8 L1150.0,237.9 L1163.0,227.6 L1176.0,217.1 L1189.0,206.3 L1202.0,195.1 L1215.0,183.7 L1228.0,171.9 L1241.0,159.9 L1254.0,147.6 L1267.0,134.9 L1280.0,122.0" stroke="#0F766E" stroke-width="2.0" fill="none" stroke-linejoin="round"/>
+<text x="981" y="162.5" font-size="10.5" fill="#0F766E" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">v²/(2·2.5) + 1.45·v + 6</text>
+<path d="M760.0,410.0 L773.0,409.9 L786.0,409.6 L799.0,409.0 L812.0,408.3 L825.0,407.3 L838.0,406.1 L851.0,404.8 L864.0,403.1 L877.0,401.3 L890.0,399.3 L903.0,397.0 L916.0,394.6 L929.0,391.9 L942.0,389.0 L955.0,385.9 L968.0,382.6 L981.0,379.0 L994.0,375.3 L1007.0,371.3 L1020.0,367.1 L1033.0,362.8 L1046.0,358.1 L1059.0,353.3 L1072.0,348.3 L1085.0,343.0 L1098.0,337.6 L1111.0,331.9 L1124.0,326.0 L1137.0,319.9 L1150.0,313.6 L1163.0,307.0 L1176.0,300.3 L1189.0,293.3 L1202.0,286.1 L1215.0,278.8 L1228.0,271.1 L1241.0,263.3 L1254.0,255.3 L1267.0,247.0 L1280.0,238.6" stroke="#D2553F" stroke-width="2.0" fill="none" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<text x="1072" y="380" font-size="10.5" fill="#D2553F">stopping at the -3.5 m/s² bound</text>
+<text x="760" y="466" font-size="11" fill="#0F172A">At 30 m/s it plans with 230 m; the hardest stop the envelope allows takes 129 m.</text>
+<text x="40" y="494" font-size="11" fill="#475569">Comfort brake 2.5 m/s², stop 6 m short. The cost is soft: the MPC can end up closer than the line (a soft limit at 0.75 × the distance is weighted more), and the item can never brake harder than the envelope.</text>
+</svg>

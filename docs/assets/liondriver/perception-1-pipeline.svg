@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="644" viewBox="0 0 1320 644" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 1. Perception: what the two models see and what they output</title>
+<desc>Road cameras feed the driving model AI-1 and the cabin camera feeds the driver-monitoring model AI-3. AI-1's outputs: the steering action (direct lateral command), leads (longitudinal via the MPC), the model's own acceleration (Experimental only), meta including hardBrakePredicted (warning), plan, lane lines and road edges (indirect) and camera odometry (indirect). AI-3 outputs driverStateV2 (alerts, force-decel, lockout). Each carries chips for its WP-C-11 AI requirements, coloured by status: AIR-01 grey; AIR-18 red; AIR-03 grey; AIR-04 grey; AIR-05 grey; AIR-11 grey; AIR-29 red; AIR-06 grey; AIR-13 grey; AIR-07 grey; AIR-08 grey; AIR-15 red.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1320" height="644" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 1 · Perception: what the two models see and what they output</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Cameras, the driving model (AI-1) and the driver-monitoring model (AI-3), each output and who uses it. Chips are the WP-C-11 AI requirements on that output.</text>
+<text x="1280" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-11 §2.1, §2.4, §6</text>
+<line x1="40" y1="82" x2="1280" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="40" y="112" width="200" height="92" rx="8" fill="#F1F5F9" stroke="#0F172A" stroke-width="1.4"/>
+<text x="50" y="132" font-size="12.5" fill="#0F172A" font-weight="700">Road cameras</text>
+<text x="50" y="149" font-size="10.5" fill="#475569">narrow and wide, 20 Hz</text>
+<text x="50" y="163.5" font-size="10.5" fill="#475569">two frames each, warped to 512×256</text>
+<rect x="40" y="492" width="200" height="76" rx="8" fill="#F1F5F9" stroke="#0F172A" stroke-width="1.4"/>
+<text x="50" y="512" font-size="12.5" fill="#0F172A" font-weight="700">Cabin camera</text>
+<text x="50" y="529" font-size="10.5" fill="#475569">20 Hz</text>
+<text x="50" y="543.5" font-size="10.5" fill="#475569">warped to 1440×960</text>
+<rect x="290" y="112" width="210" height="92" rx="8" fill="#F1F5F9" stroke="#0F172A" stroke-width="1.4"/>
+<text x="300" y="132" font-size="12.5" fill="#0F172A" font-weight="700">AI-1 driving model</text>
+<text x="300" y="149" font-size="10.5" fill="#475569">"supercombo", recurrent</text>
+<text x="300" y="163.5" font-size="10.5" fill="#475569">modeld, GPU, 20 Hz</text>
+<rect x="300" y="180" width="48.1" height="16" rx="8.0" fill="#D97706" stroke="none" stroke-width="1"/>
+<text x="324" y="191.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">AIR-16</text>
+<rect x="353.1" y="180" width="48.1" height="16" rx="8.0" fill="#D97706" stroke="none" stroke-width="1"/>
+<text x="377.1" y="191.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">AIR-17</text>
+<rect x="290" y="492" width="210" height="76" rx="8" fill="#F1F5F9" stroke="#0F172A" stroke-width="1.4"/>
+<text x="300" y="512" font-size="12.5" fill="#0F172A" font-weight="700">AI-3 DM model</text>
+<text x="300" y="529" font-size="10.5" fill="#475569">dmonitoringmodeld, GPU</text>
+<text x="300" y="543.5" font-size="10.5" fill="#475569">valid hard-coded True</text>
+<line x1="242" y1="158" x2="288" y2="158" stroke="#475569" stroke-width="1.5"/>
+<path d="M288.0,158.0 L280.6,161.1 L280.6,154.9 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<line x1="242" y1="530" x2="288" y2="530" stroke="#475569" stroke-width="1.5"/>
+<path d="M288.0,530.0 L280.6,533.1 L280.6,526.9 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="560" y="112" width="720" height="50" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3"/>
+<text x="572" y="132" font-size="12" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">action.desiredCurvature</text>
+<text x="572" y="149" font-size="10.5" fill="#475569">Direct lateral command · controlsd → steering</text>
+<rect x="1219.9" y="129" width="48.1" height="16" rx="8.0" fill="#D2553F" stroke="none" stroke-width="1"/>
+<text x="1244" y="140.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">AIR-18</text>
+<rect x="1166.9" y="129" width="48.1" height="16" rx="8.0" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="1190.9" y="140.4" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">AIR-01</text>
+<line x1="502" y1="158" x2="558" y2="137" stroke="#475569" stroke-width="1.5"/>
+<path d="M558.0,137.0 L552.2,142.5 L550.0,136.7 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="560" y="171" width="720" height="50" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3"/>
+<text x="572" y="191" font-size="12" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">leadsV3[0..2], lead_prob</text>
+<text x="572" y="208" font-size="10.5" fill="#475569">Longitudinal, via the MPC lead · radard → plannerd</text>
+<rect x="1219.9" y="188" width="48.1" height="16" rx="8.0" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="1244" y="199.4" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">AIR-11</text>
+<rect x="1166.9" y="188" width="48.1" height="16" rx="8.0" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="1190.9" y="199.4" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">AIR-05</text>
+<rect x="1113.8" y="188" width="48.1" height="16" rx="8.0" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="1137.9" y="199.4" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">AIR-04</text>
+<rect x="1060.8" y="188" width="48.1" height="16" rx="8.0" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="1084.8" y="199.4" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">AIR-03</text>
+<line x1="502" y1="158" x2="558" y2="196" stroke="#475569" stroke-width="1.5"/>
+<path d="M558.0,196.0 L550.2,194.4 L553.7,189.3 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="560" y="230" width="720" height="50" rx="8" fill="#F8FAFC" stroke="#475569" stroke-width="1.3" stroke-dasharray="5 4"/>
+<text x="572" y="250" font-size="12" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">action.desiredAcceleration</text>
+<text x="572" y="267" font-size="10.5" fill="#475569">Longitudinal, Experimental only · plannerd min()</text>
+<rect x="1219.9" y="247" width="48.1" height="16" rx="8.0" fill="#D2553F" stroke="none" stroke-width="1"/>
+<text x="1244" y="258.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">AIR-29</text>
+<line x1="502" y1="158" x2="558" y2="255" stroke="#475569" stroke-width="1.5"/>
+<path d="M558.0,255.0 L551.6,250.2 L557.0,247.1 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="560" y="289" width="720" height="50" rx="8" fill="#FFF7E6" stroke="#D97706" stroke-width="1.3"/>
+<text x="572" y="309" font-size="12" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">meta.hardBrakePredicted …</text>
+<text x="572" y="326" font-size="10.5" fill="#475569">Warning (FCW); DM sensitivity · selfdrived, policy</text>
+<rect x="1219.9" y="306" width="48.1" height="16" rx="8.0" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="1244" y="317.4" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">AIR-06</text>
+<line x1="502" y1="158" x2="558" y2="314" stroke="#475569" stroke-width="1.5"/>
+<path d="M558.0,314.0 L552.6,308.1 L558.4,306.0 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="560" y="348" width="720" height="50" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="572" y="368" font-size="12" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">plan, laneLines, roadEdges</text>
+<text x="572" y="385" font-size="10.5" fill="#475569">Indirect · UI, logs, drivingModelData</text>
+<rect x="1219.9" y="365" width="48.1" height="16" rx="8.0" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="1244" y="376.4" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">AIR-13</text>
+<line x1="502" y1="158" x2="558" y2="373" stroke="#475569" stroke-width="1.5"/>
+<path d="M558.0,373.0 L553.1,366.7 L559.2,365.1 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="560" y="407" width="720" height="50" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="572" y="427" font-size="12" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">cameraOdometry</text>
+<text x="572" y="444" font-size="10.5" fill="#475569">Indirect (state estimation) · locationd, calibrationd</text>
+<line x1="502" y1="158" x2="558" y2="432" stroke="#475569" stroke-width="1.5"/>
+<path d="M558.0,432.0 L553.5,425.4 L559.6,424.2 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="560" y="505" width="720" height="50" rx="8" fill="#FFF7E6" stroke="#D97706" stroke-width="1.3"/>
+<text x="572" y="525" font-size="12" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">driverStateV2</text>
+<text x="572" y="542" font-size="10.5" fill="#475569">Alerts, force-decel, lockout · dmonitoringd → policy</text>
+<rect x="1219.9" y="522" width="48.1" height="16" rx="8.0" fill="#D2553F" stroke="none" stroke-width="1"/>
+<text x="1244" y="533.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">AIR-15</text>
+<rect x="1166.9" y="522" width="48.1" height="16" rx="8.0" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="1190.9" y="533.4" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">AIR-08</text>
+<rect x="1113.8" y="522" width="48.1" height="16" rx="8.0" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="1137.9" y="533.4" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">AIR-07</text>
+<line x1="502" y1="530" x2="558" y2="530" stroke="#475569" stroke-width="1.5"/>
+<path d="M558.0,530.0 L550.6,533.1 L550.6,526.9 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<text x="40" y="598" font-size="11.5" fill="#475569">Only two outputs command the car: the steering action and the leads. Everything else warns, informs or is drawn on screen. No output of AI-1 or AI-3 is checked for non-finite values.</text>
+<rect x="40" y="616" width="14" height="12" rx="3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="60" y="626" font-size="11" fill="#475569">commands the car</text>
+<rect x="165.7" y="616" width="14" height="12" rx="3" fill="#FFF7E6" stroke="#D97706" stroke-width="1.2"/>
+<text x="185.7" y="626" font-size="11" fill="#475569">warns or alerts</text>
+<rect x="276.6" y="616" width="14" height="12" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="296.6" y="626" font-size="11" fill="#475569">indirect</text>
+<rect x="348.9" y="616" width="14" height="12" rx="3" fill="#F8FAFC" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="368.9" y="626" font-size="11" fill="#475569">off in the reference build</text>
+<rect x="510.4" y="616" width="14" height="12" rx="3" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="530.4" y="626" font-size="11" fill="#475569">AIR not met</text>
+<rect x="609.2" y="616" width="14" height="12" rx="3" fill="#D97706" stroke="none" stroke-width="1.2"/>
+<text x="629.2" y="626" font-size="11" fill="#475569">AIR partly met</text>
+<rect x="721.1" y="616" width="14" height="12" rx="3" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="741.1" y="626" font-size="11" fill="#475569">AIR not yet verified</text>
+</svg>
