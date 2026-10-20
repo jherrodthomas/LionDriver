@@ -179,7 +179,7 @@ def create_maneuvers(kwargs):
       **kwargs,
     ))
   else:
-    # LionDriver TSR-633: under the minimum-risk manoeuvre the car stays stopped and held, even when the lead drives off
+    # LionDriver TSR-633: under the minimum-risk maneuver the car stays stopped and held, even when the lead drives off
     maneuvers.append(Maneuver(
       "stay stopped under forced deceleration while the lead drives off",
       duration=60.,

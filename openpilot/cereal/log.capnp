@@ -853,7 +853,7 @@ struct SelfdriveState {
   experimentalMode @10 :Bool;
   personality @11 :LongitudinalPersonality;
 
-  # LionDriver: the minimum-risk manoeuvre after an unresponsive driver (TSR-633, DQ-365 A): latched from the no-response
+  # LionDriver: the minimum-risk maneuver after an unresponsive driver (TSR-633, DQ-365 A): latched from the no-response
   # deceleration until the item disengages; the car stops in lane, stays held and cannot resume while it is set
   minimumRiskManeuver @14 :Bool;
 
