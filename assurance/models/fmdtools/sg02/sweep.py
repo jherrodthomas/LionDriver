@@ -2,6 +2,8 @@
 """SG-02 fault sweeps (TE-02), compared with the WP-A-04 tree.
 
 Step P2: every failure mode alone, in each road phase; writes p2-single-faults.md.
+Step P4: the time from the loss to the first cue for every set of the P3 diff, against the 1 s budget; writes
+p4-timing.md and p4-timing.svg.
 Step P3: the minimal fault sets of up to 4 modes that give TE-02 (mid-curve); writes p3-minimal-sets.json and
 p3-joint-faults.md. The full sweep takes a few minutes on 4 cores, so `--check --order 2` checks the sets of order 1
 and 2 against the JSON (the pull-request job) and the full check runs on a schedule.
@@ -10,6 +12,7 @@ and 2 against the JSON (the pull-request job) and the full check runs on a sched
     python3 sweep.py --check                # fail if the P2 page differs from a fresh run
     python3 sweep.py joint                  # P3: full sweep, JSON and page
     python3 sweep.py joint --check --order 2
+    python3 sweep.py timing                 # P4: time to the first cue for every set of P3; page and figure
 """
 
 import itertools
@@ -26,6 +29,9 @@ OUT = HERE / "p2-single-faults.md"
 P3_JSON = HERE / "p3-minimal-sets.json"
 P3_OUT = HERE / "p3-joint-faults.md"
 MAX_ORDER = 4
+P4_OUT = HERE / "p4-timing.md"
+P4_SVG = HERE / "p4-timing.svg"
+HORIZON_S = 6.0
 sys.path.insert(0, str(ROOT / "assurance/08-analyses/fta"))
 import fta_cutsets as fc  # noqa: E402
 import fta_diagrams as fd  # noqa: E402
@@ -271,9 +277,154 @@ def joint(argv: list[str]) -> int:
   return 0
 
 
+# ------------------------------------------------------------------------------------------------- step P4
+
+def _timed(events: tuple[str, ...]) -> m.Outcome:
+  return m.run(events, horizon_s=HORIZON_S)
+
+
+def mcs_rows(goal: str, solver, latent) -> list[tuple[str, frozenset[str]]]:
+  """(row ID, effective set) for every machine-readable row of the WP-A-04 cut-set table of the goal."""
+  rows = fc.parse_tables(fd.SOURCE.read_text(encoding="utf-8"), solver).get(goal, [])
+  return [(r.ident, frozenset(c - latent)) for r in rows for c in (r.candidates or [])]
+
+
+def timing_sets() -> tuple[list[frozenset[str]], dict, set]:
+  solver, cut_sets = solve(m.EVENTS["goal"])
+  latent = solver.latent
+  data = json.loads(P3_JSON.read_text(encoding="utf-8"))
+  model = [frozenset(c) for c in data["sets"]]
+  tree = [c for c in fc.minimise([frozenset(c - latent) for c in cut_sets]) if len(c) <= data["order"]]
+  sets = sorted(set(tree) | set(model), key=lambda c: (len(c), sorted(c)))
+  rows = mcs_rows(m.EVENTS["goal"], solver, latent)
+  sirens = {e for e, (fxn, _) in m.MODE_OF.items() if fxn == "siren"}
+  label = {}
+  for c in sets:
+    ids = sorted({r for r, e in rows if e == c or e == c - sirens}, key=lambda x: float(x.split(".")[1]))
+    label[c] = ", ".join(ids) or "–"
+  return sets, label, set(tree)
+
+
+def figure(results: list[tuple[frozenset[str], m.Outcome]]) -> str:
+  rows = sorted(results, key=lambda r: (r[1].t_cue is None, (r[1].t_cue or 0) - (r[1].t_lost or 0)))
+  W, L, rh, T = 760, 250, 15, 30
+  H = T + rh * len(rows) + 40
+  X = lambda v: L + v / HORIZON_S * (W - L - 70)
+  out = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" font-family="system-ui,sans-serif" font-size="10">',
+         f'<rect width="{W}" height="{H}" fill="#fcfcfb"/>',
+         f'<rect x="{X(0)}" y="{T - 8}" width="{X(1) - X(0):.1f}" height="{rh * len(rows) + 8}" fill="#0ca30c" opacity="0.07"/>',
+         f'<text x="{X(0) + 4}" y="{T - 12}" fill="#006300" font-weight="600">1.0 s budget (SG-02)</text>']
+  for v in range(int(HORIZON_S) + 1):
+    out.append(f'<line x1="{X(v):.1f}" x2="{X(v):.1f}" y1="{T - 8}" y2="{H - 30}" stroke="#e1e0d9"/>')
+    out.append(f'<text x="{X(v):.1f}" y="{H - 16}" fill="#898781" text-anchor="middle">{v} s</text>')
+  colour = {"alert": "#2a78d6", "siren": "#6250d6", "feel": "#1baf7a"}
+  for i, (c, o) in enumerate(rows):
+    y = T + i * rh + rh / 2
+    out.append(f'<text x="{L - 8}" y="{y + 3.5}" fill="#0b0b0b" text-anchor="end" font-family="ui-monospace,monospace" '
+               f'font-size="9">{"+".join(sorted(c))}</text>')
+    if o.t_cue is None:
+      out.append(f'<text x="{X(HORIZON_S) + 6:.1f}" y="{y + 3.5}" fill="#d03b3b" font-weight="600">no cue</text>')
+      out.append(f'<line x1="{X(0)}" x2="{X(HORIZON_S):.1f}" y1="{y}" y2="{y}" stroke="#d03b3b" stroke-dasharray="2 3"/>')
+      continue
+    dt = o.t_cue - (o.t_lost or 0)
+    out.append(f'<line x1="{X(0)}" x2="{X(dt):.1f}" y1="{y}" y2="{y}" stroke="#c3c2b7"/>')
+    out.append(f'<circle cx="{X(dt):.1f}" cy="{y}" r="4" fill="{colour[o.cue]}" stroke="#fcfcfb" stroke-width="2"/>')
+    out.append(f'<text x="{X(dt) + 8:.1f}" y="{y + 3.5}" fill="#52514e">{dt:.2f} s {o.cue}</text>')
+  lx = L
+  for k, col in colour.items():
+    out.append(f'<circle cx="{lx}" cy="{H - 4}" r="4" fill="{col}"/><text x="{lx + 8}" y="{H - 1}" fill="#52514e">{k}</text>')
+    lx += 60
+  out.append("</svg>")
+  return "\n".join(out) + "\n"
+
+
+def build_timing(results, label, tree) -> str:
+  budget = m.EVENTS["budget_s"]
+  def gap(o):
+    return None if o.t_cue is None else o.t_cue - (o.t_lost or 0)
+  within = [r for r in results if gap(r[1]) is not None and gap(r[1]) <= budget]
+  late = [r for r in results if gap(r[1]) is not None and gap(r[1]) > budget]
+  none = [r for r in results if gap(r[1]) is None]
+  out = [
+    "# SG-02 time to the first cue (TE-02 step P4)",
+    "",
+    "> **Synthetic (DSR-12).** Generated by [`sweep.py`](sweep.py) `timing` from the fmdtools model; do not edit by hand. "
+    "No evidence credit: the times are the model's inputs ([`events.yaml`](events.yaml)) combined, not measurements.",
+    "",
+    f"Every set of the [P3](p3-joint-faults.md) diff ({len(results)} sets: the tree's effective sets and the model's "
+    f"minimal sets), injected mid-curve and run for {HORIZON_S:.0f} s after the injection. The time is from the loss "
+    f"of lateral control to the first perceivable cue; the SG-02 budget is {budget:.1f} s (WP-C-04 §3).",
+    "",
+    "| Result | Sets |",
+    "|---|---|",
+    f"| Cue within the budget | {len(within)} |",
+    f"| **Cue after the budget** | **{len(late)}** |",
+    f"| **No cue within {HORIZON_S:.0f} s** | **{len(none)}** |",
+    "",
+    "![Time from the loss to the first cue](p4-timing.svg)",
+    "",
+    "## Sets with a late cue or none",
+    "",
+    "| Set | WP-A-04 row | Tree | Lost (after the fault) | First cue (after the fault) | Over the budget by |",
+    "|---|---|---|---|---|---|",
+  ]
+  for c, o in sorted(late + none, key=lambda r: (gap(r[1]) is None, -(gap(r[1]) or 0))):
+    g = gap(o)
+    cue = "none" if o.t_cue is None else f"{o.t_cue:.2f} s {o.cue}"
+    over = f"> {HORIZON_S - budget:.1f} s" if g is None else f"{g - budget:.2f} s"
+    out.append(f"| {fset(c)} | {label[c]} | {'yes' if c in tree else 'siren failure added'} | "
+               f"{o.t_lost:.2f} s | {cue} | {over} |")
+  out += [
+    "",
+    "## Sets warned within the budget",
+    "",
+    "These are tree sets that the model covers with a cue in time: the siren since panda `8a69ccf` (P3).",
+    "",
+    "| Set | WP-A-04 row | Lost (after the fault) | First cue (after the fault) | Margin |",
+    "|---|---|---|---|---|",
+  ]
+  for c, o in sorted(within, key=lambda r: gap(r[1])):
+    out.append(f"| {fset(c)} | {label[c]} | {o.t_lost:.2f} s | {o.t_cue:.2f} s {o.cue} | {budget - gap(o):.2f} s |")
+  out += [
+    "",
+    "## The times the model uses, against WP-S-04",
+    "",
+    "Each late cue above comes from one of these inputs; the source names the WP-A-04 or WP-S-04 basis or the plant "
+    "result. Two cue inputs exceed the budget: the 1.5 s escalation after an override (TSR-607 (b)) and the 5 s "
+    "System Unresponsive alert after a selfdrived stop (MCS-02.9, a gap against TSR-516(b) / TSR-307(a)).",
+    "",
+    "| Input | Seconds | ≤ 1 s | Source |",
+    "|---|---|---|---|",
+  ]
+  for k, v in m.EVENTS["timing"].items():
+    out.append(f"| `{k}` | {v['s']:g} | {'yes' if v['s'] <= budget else '**no**'} | {v['source']} |")
+  out.append("")
+  return "\n".join(out)
+
+
+def timing(argv: list[str]) -> int:
+  sets, label, tree = timing_sets()
+  with Pool() as pool:
+    outcomes = pool.map(_timed, [tuple(sorted(c)) for c in sets], chunksize=4)
+  results = list(zip(sets, outcomes))
+  page, svg = build_timing(results, label, tree), figure(results)
+  rel = lambda p: p.relative_to(ROOT)
+  if "--check" in argv:
+    if not P4_OUT.exists() or P4_OUT.read_text(encoding="utf-8") != page or P4_SVG.read_text(encoding="utf-8") != svg:
+      print(f"{rel(P4_OUT)} is stale: run python3 {rel(Path(__file__))} timing", file=sys.stderr)
+      return 1
+    return 0
+  P4_OUT.write_text(page, encoding="utf-8")
+  P4_SVG.write_text(svg, encoding="utf-8")
+  print(f"wrote {rel(P4_OUT)} and {rel(P4_SVG)}")
+  return 0
+
+
 def main(argv: list[str]) -> int:
   if argv[:1] == ["joint"]:
     return joint(argv[1:])
+  if argv[:1] == ["timing"]:
+    return timing(argv[1:])
   text = build()
   if "--check" in argv:
     if not OUT.exists() or OUT.read_text(encoding="utf-8") != text:

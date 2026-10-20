@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Purpose | Decide whether NASA fmdtools should run, headless and in CI, as an executable cross-check of the fault trees and FMEAs, and plan a pilot on SG-02 |
-| Status | Draft. Started on the lead's go (2026-10-20): P0 to P3 done ([`assurance/models/fmdtools/`](../../models/fmdtools/README.md)); P4 and P5 open. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Draft. Started on the lead's go (2026-10-20): P0 to P4 done ([`assurance/models/fmdtools/`](../../models/fmdtools/README.md)); P5 open. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Standard reference | ISO 26262-8:2018 §11 (tool classification), applied as in [WP-P-07](../WP-P-07-tool-classification-qualification.md) §2; ISO 26262-9:2018 §8 (safety analyses) |
 | Date | 2026-10-20 |
 | Baseline | `liondriver-dev` at `13ba1f4` (after #370) |
@@ -77,6 +77,8 @@ P1 decision: two latent events are held as baseline design, not as modes. BE-2.1
 P2 result (2026-10-20, [`p2-single-faults.md`](../../models/fmdtools/sg02/p2-single-faults.md)): the model agrees with the tree's single faults except BE-2.05 (the heartbeat siren covers it; BE-2.14 latent tag) and BE-2.07 on a straight (no torque to feel; an assumption for the plant to test). Both go to the FTA owner. A plant run with a steady lateral push (road crown or crosswind, 0.1–0.5 m/s²) crosses a 3.0 m lane line before the driver corrects, so the straight case is benign only with no push at all; the FTA owner takes it as an AOU-01R validation gap.
 
 P3 result (2026-10-20, [`p3-joint-faults.md`](../../models/fmdtools/sg02/p3-joint-faults.md)): 5,260 runs, 49 minimal sets. None of them is missing from the tree. In 9 of the tree's 31 effective sets the model needs a siren failure too, all for the BE-2.14 latent tag (the siren covers EPS faults and heartbeat loss since panda `8a69ccf`). The diff caught a tree error injected on purpose (validation, §6). MCS-02.9 (selfdrived stop) stays a single point: the plant shows no revocation that sounds the siren ([engaged-mismatch](../../sim/results/engaged-mismatch.md)), so the latent tag holds for that cause.
+
+P4 result (2026-10-20, [`p4-timing.md`](../../models/fmdtools/sg02/p4-timing.md)): of the 58 sets, 9 are warned within 1 s (siren 0.26 s), 7 late and 42 not within 6 s. The late ones are MCS-02.9 (alert 4.9 s after the loss; gap against TSR-516(b) / TSR-307(a)) and MCS-02.1 and MCS-02.11 with a siren failure (escalated take-over 1.5 s, TSR-607 (b)). Every set over 1.0 s is named with its cut-set row.
 
 Effort: about one working session each for P0 and P2, and two for P1. P3 to P5 together take two to three sessions.
 

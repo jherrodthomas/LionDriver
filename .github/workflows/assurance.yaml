@@ -333,6 +333,8 @@ jobs:
       run: python3 assurance/models/fmdtools/sg02/sweep.py --check
     - name: SG-02 joint-fault sets of order 1 and 2 are current (step P3; the full sweep runs weekly)
       run: python3 assurance/models/fmdtools/sg02/sweep.py joint --check --order 2
+    - name: SG-02 time-to-cue page is current (step P4)
+      run: python3 assurance/models/fmdtools/sg02/sweep.py timing --check
 
   sim-plant:
     name: simulation plant model
