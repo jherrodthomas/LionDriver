@@ -5151,3 +5151,29 @@
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all five (the recommended option of each)"}
   applied: {ref: "jherrodthomas/LionDriver#339", record: "WP-S-02 v0.41 TSR-516(b); WP-S-04 v0.17 §5 (T-34); WP-C-04 v0.18 FSR-02.05 status; panda code change follows from the implementation session", at: 2026-10-19}
+
+- id: DQ-405
+  question: "Where should the E-05 harness wiring drawings take their pins, wire colours and part numbers from until the reference harness is measured?"
+  context: >-
+    The new wiring drawings (assurance/04-hardware/wiring, WP-H-02 §3.6) need a pinout. comma publishes the v3 harness
+    drawings, which RR-2026-010 already read; the reference unit is assumed to be Toyota A with box v3 (DQ-211 C) and is
+    inspected in VS-HW-02 (DQ-209 A). **Transcribing now gives usable drawings today; measuring first would leave
+    them as placeholders until the bench run.**
+  reversibility: easy
+  blocks: "WP-H-02 §3.6 Figures 3-4 to 3-6; FMEDA row references to wire IDs (wiring/wire-ends.tsv)"
+  gate: G3
+  decider: claude
+  after: [DQ-209, DQ-211]
+  asked: 2026-10-20
+  proceed_after: 2026-10-20
+  options:
+    - key: A
+      recommended: true
+      title: "Transcribe comma's published v3 drawings now, marked unverified"
+      detail: "Real pins, colours and parts in the drawings now, each marked as from comma's drawing and not measured; VS-HW-02 plus a continuity check of the spare harness against wire-ends.tsv closes it (OI-W-1). Cost: a wrong drawing or a different unit stays possible until then."
+    - key: B
+      title: "Placeholders until measured"
+      detail: "Positions only, no colours or parts, until the spare harness is measured on the bench. Cost: drawings and FMEDA references stay unusable until the bench run."
+  sources: ["assurance/04-hardware/wiring/README.md OI-W-1", "assurance/04-hardware/reviews/RR-2026-010.md §2", "DQ-209", "DQ-211"]
+  status: assumed
+  answer: {choice: A, via: assumed, at: 2026-10-20, note: "Agreed with the coordinator; no lead question needed, since measuring is already in VS-HW-02 (DQ-209 A)"}

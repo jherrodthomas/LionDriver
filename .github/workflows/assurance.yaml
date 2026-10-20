@@ -279,6 +279,27 @@ jobs:
         name: octave-models
         path: build/octave-models/
 
+  wiring:
+    name: harness and bench wiring drawings
+    # WireViz drawings of the E-05 harness and the hardware benches (assurance/04-hardware/wiring). The SVGs are
+    # compared byte for byte only with the pinned Graphviz; make_wiring.py prints which comparison ran.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Install Graphviz and the pinned WireViz packages
+      run: |
+        sudo apt-get update -q
+        sudo apt-get install -y -q --no-install-recommends graphviz
+        dot -V
+        python3 -m pip install --quiet --user --break-system-packages -r assurance/04-hardware/wiring/requirements.txt
+    - name: Wiring drawings, BOMs and wire-end list current, and their tests
+      run: |
+        python3 assurance/04-hardware/wiring/make_wiring.py --check
+        python3 assurance/04-hardware/wiring/test_make_wiring.py
+
   sim-plant:
     name: simulation plant model
     # Fault-injection plant model (assurance/sim, layer 1): the real panda safety code in a closed loop with

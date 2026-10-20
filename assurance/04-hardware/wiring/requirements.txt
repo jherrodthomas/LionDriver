@@ -1,0 +1,7 @@
+# Wiring drawings of 04-hardware (make_wiring.py). Exact pins; licences checked 2026-10-20 (README section 5).
+# Graphviz itself comes from Ubuntu 24.04: apt-get install graphviz (2.42.2-9ubuntu0.1, dot reports 2.43.0; EPL-1.0).
+wireviz==0.4.1     # GPL-3.0-only; run as a tool, its output (SVG, BOM) is not linked into the item
+graphviz==0.21     # MIT; Python binding WireViz uses to call dot
+pillow==12.3.0     # MIT-CMU; WireViz dependency
+click==8.5.0       # BSD-3-Clause; WireViz dependency
+PyYAML==6.0.3      # MIT; WireViz dependency and source reader
