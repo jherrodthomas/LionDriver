@@ -13,12 +13,14 @@
 # The SG-001 figures (SPFM 96.84 %, LFM 88.94 %) are carried for the shared path and miss the ASIL C SPFM target (97 %) by 0.16
 # points: an open hardware item for G2 (WP-H-04 OI-6), closed with supplier rates or the TSR-517 transmit read-back, or back to the
 # lead. Rows the FTA cites for those goals carry a note naming the goal.
+# Rev 0.6 (2026-10-20): harness-box and harness components carry the wire-end IDs of the WireViz drawings (wire ends in assurance/04-hardware/wiring/wire-ends.tsv, transcribed from
+# comma's v3 drawing, not measured; wiring OI-W-1) in ref_des. No rate, classification or metric changes.
 schema_version: 1
 analysis:
   id: FMD
   type: fmeda
   title: FMEDA — SG-001 lateral (panda safety path), generic failure rates
-  revision: '0.5'
+  revision: '0.6'
   status: draft
   baseline: BL-002
   rating_tables: RT-1
@@ -40,7 +42,7 @@ analysis:
   - assurance/08-analyses/fmea/analyses/dfmea.yaml
   - assurance/08-analyses/fmea/rating-tables.md
   - ISO 26262-5:2018 §8-9 and Annex D; ISO 26262-11:2018 §4.6 (semiconductors)
-  updated: '2026-10-18'
+  updated: '2026-10-20'
 safety_mechanisms:
 - id: FMD-SM-001
   description: Flash ECC (single-error correction in silicon; corrected reads are transparent)
@@ -274,7 +276,7 @@ components:
     dc_lf: 0.99
     notes: CAN CRC. Also stands for SG-03 (FTA BE-3.04, DQ-362)
 - id: FMD-C-007
-  ref_des: U1, U2 (harness box)
+  ref_des: 'U1, U2 (harness box); wire ends in assurance/04-hardware/wiring/wire-ends.tsv: HB.U1.6-J3.A8, HB.U2.6-J3.A8 (IN = SBU1), HB.J1.4-U1.2, HB.J1.6-U2.1, HB.J1.16-U1.1, HB.J1.18-U2.2'
   part: 'Intercept switch: 2 × DG419LE CMOS analog SPDT (harness box)'
   dfmea_element: DFM-SE-006
   failure_rate_fit: 50
@@ -307,7 +309,7 @@ components:
     dc_lf: 0.9
     notes: RX timeouts and CAN errors
 - id: FMD-C-008
-  ref_des: R2, R3 (harness box)
+  ref_des: 'R2, R3 (harness box); wire ends in assurance/04-hardware/wiring/wire-ends.tsv: HB.R2/R3.1-J3.A8'
   part: 'SBU1 pull-down: 2 × 120 Ω thick-film resistor in series'
   dfmea_element: DFM-SE-006
   failure_rate_fit: 0.4

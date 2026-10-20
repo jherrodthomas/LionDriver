@@ -102,6 +102,10 @@ jobs:
         python3 assurance/02-concept/figures/test_fig_c01_modes.py
         python3 assurance/03-system/figures/fig_s03_defence_in_depth.py --check
         python3 assurance/03-system/figures/test_fig_s03_defence_in_depth.py
+        python3 assurance/03-system/figures/fig_s03_hierarchy.py --check
+        python3 assurance/03-system/figures/test_fig_s03_hierarchy.py
+        python3 assurance/03-system/figures/fig_s05_hsi.py --check
+        python3 assurance/03-system/figures/test_fig_s05_hsi.py
         python3 assurance/06-validation/figures/fig_v02_validation_targets.py --check
         python3 assurance/06-validation/figures/test_fig_v02_validation_targets.py
         python3 assurance/07-supporting/figures/fig_p_process.py --check
@@ -154,22 +158,26 @@ jobs:
         python3 tools/safety/test_fmea_diagrams.py
         python3 tools/safety/fmea_cards.py --check
         python3 tools/safety/test_fmea_cards.py
-    - name: Timing-budget and DFI-matrix figures match WP-S-04 and WP-A-03 (and their tests)
+    - name: Timing-budget, DFI-matrix and FFI-map figures match WP-S-04, WP-A-03 and WP-A-02 (and their tests)
       run: |
         python3 assurance/03-system/figures/fig_s04_timing.py --check
         python3 assurance/03-system/figures/test_fig_s04_timing.py
         python3 assurance/08-analyses/figures/fig_a03_dfi_matrix.py --check
         python3 assurance/08-analyses/figures/test_fig_a03_dfi_matrix.py
+        python3 assurance/08-analyses/figures/fig_a02_interference_map.py --check
+        python3 assurance/08-analyses/figures/test_fig_a02_interference_map.py
     - name: Fault tree diagrams and cut sets match WP-A-04 (and their tests)
       run: |
         python3 assurance/08-analyses/fta/fta_diagrams.py --check
         python3 assurance/08-analyses/fta/test_fta_diagrams.py
         python3 assurance/08-analyses/fta/fta_cutsets.py --check
-    - name: FMEA data lint, HARA mapping onto WP-C-03 (and the linter's tests)
+    - name: FMEA data lint, HARA mapping onto WP-C-03, FTA-FMEA hand-off figures (and their tests)
       run: |
         python3 -m pip install --quiet --user --break-system-packages pyyaml jsonschema openpyxl
         python3 tools/safety/fmea_lint.py --report
         python3 -m unittest discover -s tools/safety -p 'test_fmea_lint.py'
+        python3 assurance/08-analyses/figures/fta_fmea_figures.py --check
+        python3 assurance/08-analyses/figures/test_fta_fmea_figures.py
         python3 tools/safety/fmea_review_xlsx.py --check
         python3 tools/safety/test_fmea_review_xlsx.py
     - name: STPA figures match WP-A-05, stpa-map.yaml and the decision register (and their tests)
@@ -186,6 +194,10 @@ jobs:
       run: |
         python3 tools/safety/fmea_review_md.py --check
         python3 tools/safety/test_fmea_review_md.py
+    - name: Workbook viewer page rebuilt for the committed workbooks (and its tests)
+      run: |
+        python3 tools/xlsx_viewer.py --check
+        python3 tools/test_xlsx_viewer.py
     - name: Sync report tool unit tests
       run: python3 -m unittest tools.sync.test_sync_report -v
     - name: CAN gap scan unit tests
@@ -267,13 +279,35 @@ jobs:
         name: octave-models
         path: build/octave-models/
 
+  wiring:
+    name: harness and bench wiring drawings
+    # WireViz drawings of the E-05 harness and the hardware benches (assurance/04-hardware/wiring). The SVGs are
+    # compared byte for byte only with the pinned Graphviz; make_wiring.py prints which comparison ran.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Install Graphviz and the pinned WireViz packages
+      run: |
+        sudo apt-get update -q
+        sudo apt-get install -y -q --no-install-recommends graphviz
+        dot -V
+        python3 -m pip install --quiet --user --break-system-packages -r assurance/04-hardware/wiring/requirements.txt
+    - name: Wiring drawings, BOMs and wire-end list current, and their tests
+      run: |
+        python3 assurance/04-hardware/wiring/make_wiring.py --check
+        python3 assurance/04-hardware/wiring/test_make_wiring.py
+
   sim-plant:
     name: simulation plant model
     # Fault-injection plant model (assurance/sim, layer 1): the real panda safety code in a closed loop with
     # stated vehicle, EPS, PCM and driver models. Synthetic data (DSR-12), no evidence credit. The job checks that the
-    # committed results and figures equal a fresh run, and runs the model's tests (CPU only, about 20 s).
+    # committed results and figures equal a fresh run, and runs the model's tests (CPU only). The failure search
+    # (eight families and the edge-case catalogue, about 7 CPU-minutes) uses every core of the runner.
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
     - uses: actions/checkout@v7
       with:

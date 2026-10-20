@@ -1,0 +1,336 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1344" height="1688" viewBox="0 0 1344 1688" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">Figure 3-SG-07-1. SG-07: from the fault tree to the FMEA</title>
+<desc id="d">Figure 3-SG-07-1. SG-07: 21 events (backed 15, by design 1, external 1, unbacked 4); 19 FMEA modes reach SG-07 (in the tree 17, justified 2, tree gaps 0). Single points: BE-7.01: DFM-004, DFM-006, SWF-018, 3 causes, D 7–8, not detected; BE-7.02: no FMEA row yet; No SW FMEA mode for the power-save command 0xe7 accepted in a car mode (FFI-CM-08, TSR-513). F-17; BE-7.03: no FMEA row yet; No SW FMEA mode for the bus configuration commands 0xe5, 0xde, 0xf1 accepted in a car mode (FFI-CM-09, TSR-513). F-17; BE-7.04: no FMEA row yet; No SW FMEA mode for forwarding queue overflow or latency under worst-case load (TSR-707; can_common.h:165). F-17; BE-7.05: SWF-011, 1 causes, D 3, every cause D ≤ 4: tree and FMEA disagree; BE-7.06: FMEDA rows, no FMEA cause; FMEDA fmeda-sg009:FMD-017, fmeda-sg009:FMD-011; BE-7.11: PFM-008, PFM-006, PFM-014, 3 causes, D 8–9, not detected; BE-7.12: DFM-013, 1 causes, D 10, not detected; BE-7.17: DFM-020, 2 causes, D 10, not detected; BE-7.18: DFM-021, 1 causes, D 10, not detected; BE-7.19: DFM-008, 1 causes, D 10, not detected; BE-7.13: SFM-036, 2 causes, D 10, not detected. BE-7.01 (MCU hang with the relay energised (no IWDG; GAP-07, GAP-43) 2026-10-12: IWDG reset ≤ ≈ 90 ms nominal (TSR-501); residual: hang-to-reset plus relay drop-out against the 0.2 s FTTI) → DFM-004, DFM-006, SWF-018: MCU execution stops with the relay energised; worst cause DFM-004.C1 (Hang in an ISR or main loop, unused vector to Default_Handler, or assert_fatal loop; O 3, D 8, AP H); detection: Watchdog HIL test with injected hangs (FAULT_INJECTION build); targeted, not yet run (no HIL bench, D-04) BE-7.02 (Power-save command 0xe7 in car mode stops the camera-side bus (FFI-CM-08)): No FMEA row yet; No SW FMEA mode for the power-save command 0xe7 accepted in a car mode (FFI-CM-08, TSR-513). F-17 BE-7.03 (Other SoC configuration commands disturb bus 2 (0xe5, 0xde, 0xf1; FFI-CM-09)): No FMEA row yet; No SW FMEA mode for the bus configuration commands 0xe5, 0xde, 0xf1 accepted in a car mode (FFI-CM-09, TSR-513). F-17 BE-7.04 (Forwarding queue overflow or latency under worst-case load (TSR-707 not verified; overflow counted only, can_common.h:165)): No FMEA row yet; No SW FMEA mode for forwarding queue overflow or latency under worst-case load (TSR-707; can_common.h:165). F-17 BE-7.05 (Block list wrongly includes a PCS message (systematic; static list safety.h:270-281)) → SWF-011: Stock pre-collision (AEB) messages blocked; worst cause SWF-011.C1 (TX table change marks 0x283/0x344 check_relay, or a forwarding defect; at BL-001 both are check_relay=false and forwarded (toyota.h:22-23); O 5, D 3, AP H); detection: opendbc safety suite with 100% line coverage and mutation tests, run by fork CI on every change (.github/workflows/safety.yaml, CR-CI-05). At BL-002 the Toyota tests pass locally (287, 34 skipped); mutation was last run locally at BL-001 (2705/2705 killed). Tests are derived from the implementation, not from requirements BE-7.06 (Camera-side FDCAN or transceiver fault (random HW)): FMEDA rows, no FMEA failure mode; fmeda-sg009:FMD-017, fmeda-sg009:FMD-011 BE-7.07 (0x344, 0x411 and DSU IDs in the TX whitelist without a content check (modes/toyota.h:19-32; GAP-42) 2026-10-12: removed in the reference build (TSR-705; 0x411 kept in other builds)): No FMEA row yet; No SW FMEA mode for 0x344, 0x411 or DSU IDs in the TX whitelist without a content check (GAP-42, TSR-705; removed in the reference build). SFMEA-05 of WP-A-04 §10 is the only row. F-17 BE-7.08 (SoC sends such a frame (QM fault or compromise)) → SFM-035: Item sends a frame that alters the stock pre-collision function; worst cause SFM-035.C1 (Host code (car interface, pandad) emits a PCS-relevant ID or a non-zero PRE_COLLISION payload (QM fault); O 6, D 9, AP H); detection: process_replay over the CI route corpus compares sendcan with the reference commit; a regression check, not designed or proven for this cause BE-7.09 (Analog switch U1 or U2 stuck in intercept, or its IN input damaged high; no switch-position feedback, readback not pursued (GAP-12; RR-2026-010 F-06; DQ-209 A)) → DFM-010, SFM-034: Intercept switch stays in intercept when released; worst cause DFM-010.C4 (U1/U2 overstressed or latched up by box supply transients above the DG419LE absolute maximum (V+ = VL = VIN with no regulator; the SMF16A clamp D4 only starts to conduct above its 16 V stand-off). Damage can leave the switch in either position or open a channel (also DFM-011, DFM-013); O 4, D 10, AP H); detection: No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) BE-7.15 (SBU1 drive stuck high (device-side driver or MCU pin, UK-06)) → DFM-010: Intercept switch stays in intercept when released; worst cause DFM-010.C4 (U1/U2 overstressed or latched up by box supply transients above the DG419LE absolute maximum (V+ = VL = VIN with no regulator; the SMF16A clamp D4 only starts to conduct above its 16 V stand-off). Damage can leave the switch in either position or open a channel (also DFM-011, DFM-013); O 4, D 10, AP H); detection: No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) BE-7.16 (Pull-down R2 or R3 open: IN floats when SBU1 is undriven, so the switches may stay in intercept (RR-2026-010 F-03; bench test VS-HW-23)) → DFM-010: Intercept switch stays in intercept when released; worst cause DFM-010.C4 (U1/U2 overstressed or latched up by box supply transients above the DG419LE absolute maximum (V+ = VL = VIN with no regulator; the SMF16A clamp D4 only starts to conduct above its 16 V stand-off). Damage can leave the switch in either position or open a channel (also DFM-011, DFM-013); O 4, D 10, AP H); detection: No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) BE-7.10 (Forwarding not running (device off, MCU in reset or bootloader)) → DFM-004, DFM-016: MCU execution stops with the relay energised; worst cause DFM-016.C1 (SoC drives STM_BOOT0/STM_RST_N (fault or compromise); no RDP/WRP; pandad recovery flashes a development bootstub; O 4, D 10, AP H); detection: No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) BE-7.11 (Connector intermittent or partly seated (SFMEA-30; DFI-05, DFI-20)) → PFM-008, PFM-006, PFM-014: Harness connector not fully latched; worst cause PFM-014.C1 (Log review of forwarded and intercepted messages is manual and needs tools the installer may not have; O 8, D 9, AP H); detection: relayMalfunction alert covers only the relay-not-intercepting case BE-7.12 (Stock camera path open inside the harness box (U1/U2 channel open, solder joint, contact; the path is not passive, accepted with comma's box, DQ-209 A; RR-2026-010 F-01)) → DFM-013: Stock camera path open inside the harness box; worst cause DFM-013.C1 (Open in the harness box stock path (U1/U2 channel open, solder joint, connector contact); O 3, D 10, AP H); detection: No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) BE-7.17 (Harness box loses its supply while the car is on: U1/U2 unpowered, pass-through not guaranteed, D2/D3 clamp CAN0/CAN2 to the dead rail (derived from the v3 drawing; bench test VS-HW-22, DQ-209 A; RR-2026-010 F-02)) → DFM-020: Harness box loses its supply while the car is on; worst cause DFM-020.C1 (Ignition branch to the box open (crimp, connector) or D1 open, without comma power installed; O 5, D 10, AP H); detection: No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) BE-7.18 (Clamp diode D2 or D3 short or leaky: loads or grounds a vehicle bus in either switch state (RR-2026-010 F-07)) → DFM-021: Clamp diode short loads or grounds a vehicle bus in the harness box; worst cause DFM-021.C1 (Schottky clamp D2 or D3 (BAS40SDW) short or leaky; O 3, D 10, AP H); detection: No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) BE-7.19 (Car-side transceiver holds bus 0 dominant (TXD stuck low)) → DFM-008: Car-side transceiver holds the bus dominant; worst cause DFM-008.C1 (XCVR1 TX driver fault or TXD stuck low; O 3, D 10, AP H); detection: No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04)</desc>
+<defs><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2563EB"/></marker><marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker><marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker></defs>
+<rect width="1344" height="1688" fill="#FFFFFF"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">SG-07: from the fault tree to the FMEA (1 of 2)</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Suppression, delay or alteration of the stock PCS/AEB</text>
+<text x="1304" y="44" font-size="11" fill="#475569" text-anchor="end">WP-A-04 · fta-fmea-map.yaml</text>
+<text x="1304" y="62" font-size="11" fill="#475569" text-anchor="end">Figure 3-SG-07-1</text>
+<line x1="40" y1="82" x2="1304" y2="82" stroke="#E2E8F0"/>
+<text x="40" y="122" font-size="12" fill="#DC2626" font-weight="700">Single points: one event in the item reaches the top event (events outside the item assumed)</text>
+<rect x="40" y="134" width="307" height="60" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.6"/>
+<text x="50" y="152" font-size="11" fill="#DC2626" font-weight="700">BE-7.01</text>
+<text x="50" y="168" font-size="10" fill="#C2410C" font-weight="700">DFM-004, DFM-006, SWF-018 · 3 causes · D 7–8</text>
+<rect x="50" y="174" width="66.6" height="15" rx="7.5" fill="#FEE2E2"/><text x="83.3092" y="184.56" font-size="8.5" fill="#DC2626" font-weight="700" text-anchor="middle">not detected</text>
+<rect x="359" y="134" width="307" height="60" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.6"/>
+<text x="369" y="152" font-size="11" fill="#DC2626" font-weight="700">BE-7.02</text>
+<text x="369" y="168" font-size="10" fill="#475569">No SW FMEA mode for the power-save command 0xe7 …</text>
+<rect x="369" y="174" width="86.5" height="15" rx="7.5" fill="#DC2626"/><text x="412.265" y="184.56" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">no FMEA row yet</text>
+<rect x="678" y="134" width="307" height="60" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.6"/>
+<text x="688" y="152" font-size="11" fill="#DC2626" font-weight="700">BE-7.03</text>
+<text x="688" y="168" font-size="10" fill="#475569">No SW FMEA mode for the bus configuration commands 0xe5, …</text>
+<rect x="688" y="174" width="86.5" height="15" rx="7.5" fill="#DC2626"/><text x="731.265" y="184.56" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">no FMEA row yet</text>
+<rect x="997" y="134" width="307" height="60" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.6"/>
+<text x="1007" y="152" font-size="11" fill="#DC2626" font-weight="700">BE-7.04</text>
+<text x="1007" y="168" font-size="10" fill="#475569">No SW FMEA mode for forwarding queue overflow or latency …</text>
+<rect x="1007" y="174" width="86.5" height="15" rx="7.5" fill="#DC2626"/><text x="1050.27" y="184.56" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">no FMEA row yet</text>
+<rect x="40" y="204" width="307" height="60" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.6"/>
+<text x="50" y="222" font-size="11" fill="#DC2626" font-weight="700">BE-7.05</text>
+<text x="50" y="238" font-size="10" fill="#C2410C" font-weight="700">SWF-011 · 1 cause · D 3</text>
+<rect x="50" y="244" width="200.0" height="15" rx="7.5" fill="#DC2626"/><text x="149.983" y="254.56" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">every cause D ≤ 4: tree and FMEA disagree</text>
+<rect x="359" y="204" width="307" height="60" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.6"/>
+<text x="369" y="222" font-size="11" fill="#DC2626" font-weight="700">BE-7.06</text>
+<text x="369" y="238" font-size="10" fill="#475569">FMEDA fmeda-sg009:FMD-017, fmeda-sg009:FMD-011</text>
+<rect x="369" y="244" width="140.4" height="15" rx="7.5" fill="#DCFCE7"/><text x="439.205" y="254.56" font-size="8.5" fill="#14532D" font-weight="700" text-anchor="middle">FMEDA rows, no FMEA cause</text>
+<rect x="678" y="204" width="307" height="60" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.6"/>
+<text x="688" y="222" font-size="11" fill="#DC2626" font-weight="700">BE-7.11</text>
+<text x="688" y="238" font-size="10" fill="#C2410C" font-weight="700">PFM-008, PFM-006, PFM-014 · 3 causes · D 8–9</text>
+<rect x="688" y="244" width="66.6" height="15" rx="7.5" fill="#FEE2E2"/><text x="721.309" y="254.56" font-size="8.5" fill="#DC2626" font-weight="700" text-anchor="middle">not detected</text>
+<rect x="997" y="204" width="307" height="60" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.6"/>
+<text x="1007" y="222" font-size="11" fill="#DC2626" font-weight="700">BE-7.12</text>
+<text x="1007" y="238" font-size="10" fill="#C2410C" font-weight="700">DFM-013 · 1 cause · D 10</text>
+<rect x="1007" y="244" width="66.6" height="15" rx="7.5" fill="#FEE2E2"/><text x="1040.31" y="254.56" font-size="8.5" fill="#DC2626" font-weight="700" text-anchor="middle">not detected</text>
+<rect x="40" y="274" width="307" height="60" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.6"/>
+<text x="50" y="292" font-size="11" fill="#DC2626" font-weight="700">BE-7.17</text>
+<text x="50" y="308" font-size="10" fill="#C2410C" font-weight="700">DFM-020 · 2 causes · D 10</text>
+<rect x="50" y="314" width="66.6" height="15" rx="7.5" fill="#FEE2E2"/><text x="83.3092" y="324.56" font-size="8.5" fill="#DC2626" font-weight="700" text-anchor="middle">not detected</text>
+<rect x="359" y="274" width="307" height="60" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.6"/>
+<text x="369" y="292" font-size="11" fill="#DC2626" font-weight="700">BE-7.18</text>
+<text x="369" y="308" font-size="10" fill="#C2410C" font-weight="700">DFM-021 · 1 cause · D 10</text>
+<rect x="369" y="314" width="66.6" height="15" rx="7.5" fill="#FEE2E2"/><text x="402.309" y="324.56" font-size="8.5" fill="#DC2626" font-weight="700" text-anchor="middle">not detected</text>
+<rect x="678" y="274" width="307" height="60" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.6"/>
+<text x="688" y="292" font-size="11" fill="#DC2626" font-weight="700">BE-7.19</text>
+<text x="688" y="308" font-size="10" fill="#C2410C" font-weight="700">DFM-008 · 1 cause · D 10</text>
+<rect x="688" y="314" width="66.6" height="15" rx="7.5" fill="#FEE2E2"/><text x="721.309" y="324.56" font-size="8.5" fill="#DC2626" font-weight="700" text-anchor="middle">not detected</text>
+<rect x="997" y="274" width="307" height="60" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.6"/>
+<text x="1007" y="292" font-size="11" fill="#DC2626" font-weight="700">BE-7.13</text>
+<text x="1007" y="308" font-size="10" fill="#C2410C" font-weight="700">SFM-036 · 2 causes · D 10</text>
+<rect x="1007" y="314" width="66.6" height="15" rx="7.5" fill="#FEE2E2"/><text x="1040.31" y="324.56" font-size="8.5" fill="#DC2626" font-weight="700" text-anchor="middle">not detected</text>
+<text x="40" y="358" font-size="10.5" fill="#475569" font-weight="700">Event (fault tree)</text>
+<text x="400" y="358" font-size="10.5" fill="#475569" font-weight="700">FMEA failure mode it hands off to</text>
+<text x="720" y="358" font-size="10.5" fill="#475569" font-weight="700">Worst cause and its ratings</text>
+<text x="1060" y="358" font-size="10.5" fill="#475569" font-weight="700">Detection that cause credits</text>
+<rect x="40" y="372" width="1264" height="28" rx="6" fill="#FEF2F2"/>
+<text x="52" y="390" font-size="10.5" fill="#DC2626" font-weight="700">TE-07 › G7.1 (OR gate)</text>
+<text x="187.543" y="390" font-size="10.5" fill="#0F172A">Camera-side PCS frames not forwarded while the relay intercepts</text>
+<rect x="40" y="406" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.8"/>
+<text x="50" y="423" font-size="10.5" fill="#DC2626" font-weight="700">● BE-7.01  single point</text>
+<text x="50" y="437" font-size="9.5" fill="#0F172A">MCU hang with the relay energised (no IWDG; GAP-07, GAP-43)</text>
+<text x="50" y="449" font-size="9.5" fill="#0F172A">2026-10-12: IWDG reset ≤ ≈ 90 ms nominal (TSR-501); residual: …</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.08;0.14;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 433 H396" stroke="#DC2626" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="406" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="423" font-size="10.5" fill="#C2410C" font-weight="700">DFM-004 · DFMEA  + 2 more</text>
+<text x="410" y="437" font-size="9.5" fill="#0F172A">MCU execution stops with the relay energised</text>
+<text x="720" y="420" font-size="9.5" fill="#0F172A">DFM-004.C1: Hang in an ISR or main loop, unused vector to</text>
+<text x="720" y="432" font-size="9.5" fill="#0F172A">Default_Handler, or assert_fatal loop</text>
+<rect x="720" y="442" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="453.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 3</text>
+<rect x="754.455" y="442" width="29.5" height="16" rx="8" fill="#FEE2E2"/><text x="769.182" y="453.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 8</text>
+<rect x="788.91" y="442" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="807.644" y="453.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="420" font-size="9.5" fill="#475569">Watchdog HIL test with injected hangs</text>
+<text x="1060" y="432" font-size="9.5" fill="#475569">(FAULT_INJECTION build); targeted, not yet run (no</text>
+<text x="1060" y="444" font-size="9.5" fill="#475569">HIL bench, D-04)</text>
+</g>
+<rect x="40" y="468" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.8"/>
+<text x="50" y="485" font-size="10.5" fill="#DC2626" font-weight="700">● BE-7.02  single point</text>
+<text x="50" y="499" font-size="9.5" fill="#0F172A">Power-save command 0xe7 in car mode stops the camera-side</text>
+<text x="50" y="511" font-size="9.5" fill="#0F172A">bus (FFI-CM-08)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.20;0.26;1" dur="6s" repeatCount="indefinite"/>
+<rect x="400" y="468" width="904" height="54" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-dasharray="5 4"/>
+<text x="410" y="486" font-size="10.5" fill="#DC2626" font-weight="700">No FMEA row yet</text>
+<text x="410" y="501" font-size="9.5" fill="#475569">No SW FMEA mode for the power-save command 0xe7 accepted in a car mode (FFI-CM-08, TSR-513). F-17</text>
+</g>
+<rect x="40" y="530" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.8"/>
+<text x="50" y="547" font-size="10.5" fill="#DC2626" font-weight="700">● BE-7.03  single point</text>
+<text x="50" y="561" font-size="9.5" fill="#0F172A">Other SoC configuration commands disturb bus 2 (0xe5, 0xde,</text>
+<text x="50" y="573" font-size="9.5" fill="#0F172A">0xf1; FFI-CM-09)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.32;0.38;1" dur="6s" repeatCount="indefinite"/>
+<rect x="400" y="530" width="904" height="54" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-dasharray="5 4"/>
+<text x="410" y="548" font-size="10.5" fill="#DC2626" font-weight="700">No FMEA row yet</text>
+<text x="410" y="563" font-size="9.5" fill="#475569">No SW FMEA mode for the bus configuration commands 0xe5, 0xde, 0xf1 accepted in a car mode (FFI-CM-09, TSR-513). F-17</text>
+</g>
+<rect x="40" y="592" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.8"/>
+<text x="50" y="609" font-size="10.5" fill="#DC2626" font-weight="700">● BE-7.04  single point</text>
+<text x="50" y="623" font-size="9.5" fill="#0F172A">Forwarding queue overflow or latency under worst-case load</text>
+<text x="50" y="635" font-size="9.5" fill="#0F172A">(TSR-707 not verified; overflow counted only, …</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.44;0.50;1" dur="6s" repeatCount="indefinite"/>
+<rect x="400" y="592" width="904" height="54" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-dasharray="5 4"/>
+<text x="410" y="610" font-size="10.5" fill="#DC2626" font-weight="700">No FMEA row yet</text>
+<text x="410" y="625" font-size="9.5" fill="#475569">No SW FMEA mode for forwarding queue overflow or latency under worst-case load (TSR-707; can_common.h:165). F-17</text>
+</g>
+<rect x="40" y="654" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.8"/>
+<text x="50" y="671" font-size="10.5" fill="#DC2626" font-weight="700">● BE-7.05  single point</text>
+<text x="50" y="685" font-size="9.5" fill="#0F172A">Block list wrongly includes a PCS message (systematic; static</text>
+<text x="50" y="697" font-size="9.5" fill="#0F172A">list safety.h:270-281)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.56;0.62;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 681 H396" stroke="#DC2626" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="654" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="671" font-size="10.5" fill="#C2410C" font-weight="700">SWF-011 · SW FMEA</text>
+<text x="410" y="685" font-size="9.5" fill="#0F172A">Stock pre-collision (AEB) messages blocked</text>
+<text x="720" y="668" font-size="9.5" fill="#0F172A">SWF-011.C1: TX table change marks 0x283/0x344 check_relay, or a</text>
+<text x="720" y="680" font-size="9.5" fill="#0F172A">forwarding defect; at BL-001 both are check_relay=false and forwarded …</text>
+<rect x="720" y="690" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="701.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 5</text>
+<rect x="754.455" y="690" width="29.5" height="16" rx="8" fill="#DCFCE7"/><text x="769.182" y="701.24" font-size="9" fill="#14532D" font-weight="700" text-anchor="middle">D 3</text>
+<rect x="788.91" y="690" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="807.644" y="701.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="668" font-size="9.5" fill="#475569">opendbc safety suite with 100% line coverage and</text>
+<text x="1060" y="680" font-size="9.5" fill="#475569">mutation tests, run by fork CI on every change</text>
+<text x="1060" y="692" font-size="9.5" fill="#475569">(.github/workflows/safety.yaml, CR-CI-05). At BL-002 …</text>
+</g>
+<rect x="40" y="716" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.8"/>
+<text x="50" y="733" font-size="10.5" fill="#DC2626" font-weight="700">● BE-7.06  single point</text>
+<text x="50" y="747" font-size="9.5" fill="#0F172A">Camera-side FDCAN or transceiver fault (random HW)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.68;0.74;1" dur="6s" repeatCount="indefinite"/>
+<rect x="400" y="716" width="904" height="54" rx="8" fill="#F0FDF4" stroke="#16A34A" stroke-dasharray="0"/>
+<text x="410" y="734" font-size="10.5" fill="#16A34A" font-weight="700">FMEDA rows, no FMEA failure mode</text>
+<text x="410" y="749" font-size="9.5" fill="#475569">fmeda-sg009:FMD-017, fmeda-sg009:FMD-011</text>
+</g>
+<rect x="40" y="784" width="1264" height="28" rx="6" fill="#F1F5F9"/>
+<text x="52" y="802" font-size="10.5" fill="#334155" font-weight="700">TE-07 › G7.2 (AND gate)</text>
+<text x="195.334" y="802" font-size="10.5" fill="#0F172A">Item originates or alters PCS-relevant frames</text>
+<rect x="40" y="818" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="835" font-size="10.5" fill="#334155" font-weight="700">● BE-7.07</text>
+<text x="50" y="849" font-size="9.5" fill="#0F172A">0x344, 0x411 and DSU IDs in the TX whitelist without a content</text>
+<text x="50" y="861" font-size="9.5" fill="#0F172A">check (modes/toyota.h:19-32; GAP-42) 2026-10-12: removed in …</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.08;0.14;1" dur="6s" repeatCount="indefinite"/>
+<rect x="400" y="818" width="904" height="54" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-dasharray="5 4"/>
+<text x="410" y="836" font-size="10.5" fill="#DC2626" font-weight="700">No FMEA row yet</text>
+<text x="410" y="851" font-size="9.5" fill="#475569">No SW FMEA mode for 0x344, 0x411 or DSU IDs in the TX whitelist without a content check (GAP-42, TSR-705; removed in the reference build). SFMEA-05 of WP-A-04 §10 is the only row. F-17</text>
+</g>
+<rect x="40" y="880" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="897" font-size="10.5" fill="#334155" font-weight="700">● BE-7.08</text>
+<text x="50" y="911" font-size="9.5" fill="#0F172A">SoC sends such a frame (QM fault or compromise)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.20;0.26;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 907 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="880" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="897" font-size="10.5" fill="#C2410C" font-weight="700">SFM-035 · System FMEA</text>
+<text x="410" y="911" font-size="9.5" fill="#0F172A">Item sends a frame that alters the stock pre-collision function</text>
+<text x="720" y="894" font-size="9.5" fill="#0F172A">SFM-035.C1: Host code (car interface, pandad) emits a PCS-relevant</text>
+<text x="720" y="906" font-size="9.5" fill="#0F172A">ID or a non-zero PRE_COLLISION payload (QM fault)</text>
+<rect x="720" y="916" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="927.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 6</text>
+<rect x="754.455" y="916" width="29.5" height="16" rx="8" fill="#FEE2E2"/><text x="769.182" y="927.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 9</text>
+<rect x="788.91" y="916" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="807.644" y="927.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="894" font-size="9.5" fill="#475569">process_replay over the CI route corpus compares</text>
+<text x="1060" y="906" font-size="9.5" fill="#475569">sendcan with the reference commit; a regression</text>
+<text x="1060" y="918" font-size="9.5" fill="#475569">check, not designed or proven for this cause</text>
+</g>
+<rect x="40" y="948" width="1264" height="28" rx="6" fill="#F1F5F9"/>
+<text x="52" y="966" font-size="10.5" fill="#334155" font-weight="700">TE-07 › G7.3 › G7.3.1 (OR gate)</text>
+<text x="234.4" y="966" font-size="10.5" fill="#0F172A">U1/U2 stay in intercept when the device stops driving SBU1</text>
+<rect x="40" y="982" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="999" font-size="10.5" fill="#334155" font-weight="700">● BE-7.09</text>
+<text x="50" y="1013" font-size="9.5" fill="#0F172A">Analog switch U1 or U2 stuck in intercept, or its IN input</text>
+<text x="50" y="1025" font-size="9.5" fill="#0F172A">damaged high; no switch-position feedback, readback not …</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.32;0.38;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 1009 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="982" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="999" font-size="10.5" fill="#C2410C" font-weight="700">DFM-010 · DFMEA  + 1 more</text>
+<text x="410" y="1013" font-size="9.5" fill="#0F172A">Intercept switch stays in intercept when released</text>
+<text x="720" y="996" font-size="9.5" fill="#0F172A">DFM-010.C4: U1/U2 overstressed or latched up by box supply</text>
+<text x="720" y="1008" font-size="9.5" fill="#0F172A">transients above the DG419LE absolute maximum (V+ = VL = VIN with …</text>
+<rect x="720" y="1018" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="1029.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 4</text>
+<rect x="754.455" y="1018" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="1029.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="1018" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="1029.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="996" font-size="9.5" fill="#475569">No LionDriver hardware verification or qualification</text>
+<text x="1060" y="1008" font-size="9.5" fill="#475569">test exists for this cause (WP-H-06/WP-H-07 not</text>
+<text x="1060" y="1020" font-size="9.5" fill="#475569">started; no HIL bench, D-04)</text>
+</g>
+<rect x="40" y="1044" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="1061" font-size="10.5" fill="#334155" font-weight="700">● BE-7.15</text>
+<text x="50" y="1075" font-size="9.5" fill="#0F172A">SBU1 drive stuck high (device-side driver or MCU pin, UK-06)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.44;0.50;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 1071 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="1044" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="1061" font-size="10.5" fill="#C2410C" font-weight="700">DFM-010 · DFMEA</text>
+<text x="410" y="1075" font-size="9.5" fill="#0F172A">Intercept switch stays in intercept when released</text>
+<text x="720" y="1058" font-size="9.5" fill="#0F172A">DFM-010.C4: U1/U2 overstressed or latched up by box supply</text>
+<text x="720" y="1070" font-size="9.5" fill="#0F172A">transients above the DG419LE absolute maximum (V+ = VL = VIN with …</text>
+<rect x="720" y="1080" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="1091.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 4</text>
+<rect x="754.455" y="1080" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="1091.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="1080" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="1091.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="1058" font-size="9.5" fill="#475569">No LionDriver hardware verification or qualification</text>
+<text x="1060" y="1070" font-size="9.5" fill="#475569">test exists for this cause (WP-H-06/WP-H-07 not</text>
+<text x="1060" y="1082" font-size="9.5" fill="#475569">started; no HIL bench, D-04)</text>
+</g>
+<rect x="40" y="1106" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="1123" font-size="10.5" fill="#334155" font-weight="700">● BE-7.16</text>
+<text x="50" y="1137" font-size="9.5" fill="#0F172A">Pull-down R2 or R3 open: IN floats when SBU1 is undriven, so</text>
+<text x="50" y="1149" font-size="9.5" fill="#0F172A">the switches may stay in intercept (RR-2026-010 F-03; bench …</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.56;0.62;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 1133 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="1106" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="1123" font-size="10.5" fill="#C2410C" font-weight="700">DFM-010 · DFMEA</text>
+<text x="410" y="1137" font-size="9.5" fill="#0F172A">Intercept switch stays in intercept when released</text>
+<text x="720" y="1120" font-size="9.5" fill="#0F172A">DFM-010.C4: U1/U2 overstressed or latched up by box supply</text>
+<text x="720" y="1132" font-size="9.5" fill="#0F172A">transients above the DG419LE absolute maximum (V+ = VL = VIN with …</text>
+<rect x="720" y="1142" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="1153.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 4</text>
+<rect x="754.455" y="1142" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="1153.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="1142" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="1153.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="1120" font-size="9.5" fill="#475569">No LionDriver hardware verification or qualification</text>
+<text x="1060" y="1132" font-size="9.5" fill="#475569">test exists for this cause (WP-H-06/WP-H-07 not</text>
+<text x="1060" y="1144" font-size="9.5" fill="#475569">started; no HIL bench, D-04)</text>
+</g>
+<rect x="40" y="1174" width="1264" height="28" rx="6" fill="#F1F5F9"/>
+<text x="52" y="1192" font-size="10.5" fill="#334155" font-weight="700">TE-07 › G7.3 (AND gate)</text>
+<text x="195.334" y="1192" font-size="10.5" fill="#0F172A">Intercept switches held in intercept while forwarding is not running</text>
+<rect x="40" y="1208" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/>
+<text x="50" y="1225" font-size="10.5" fill="#334155" font-weight="700">● BE-7.10</text>
+<text x="50" y="1239" font-size="9.5" fill="#0F172A">Forwarding not running (device off, MCU in reset or bootloader)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.68;0.74;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 1235 H396" stroke="#334155" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="1208" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="1225" font-size="10.5" fill="#C2410C" font-weight="700">DFM-004 · DFMEA  + 1 more</text>
+<text x="410" y="1239" font-size="9.5" fill="#0F172A">MCU execution stops with the relay energised</text>
+<text x="720" y="1222" font-size="9.5" fill="#0F172A">DFM-016.C1: SoC drives STM_BOOT0/STM_RST_N (fault or</text>
+<text x="720" y="1234" font-size="9.5" fill="#0F172A">compromise); no RDP/WRP; pandad recovery flashes a development …</text>
+<rect x="720" y="1244" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="1255.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 4</text>
+<rect x="754.455" y="1244" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="1255.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="1244" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="1255.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="1222" font-size="9.5" fill="#475569">No LionDriver hardware verification or qualification</text>
+<text x="1060" y="1234" font-size="9.5" fill="#475569">test exists for this cause (WP-H-06/WP-H-07 not</text>
+<text x="1060" y="1246" font-size="9.5" fill="#475569">started; no HIL bench, D-04)</text>
+</g>
+<rect x="40" y="1276" width="1264" height="28" rx="6" fill="#FEF2F2"/>
+<text x="52" y="1294" font-size="10.5" fill="#DC2626" font-weight="700">TE-07 › G7.4 (OR gate)</text>
+<text x="187.543" y="1294" font-size="10.5" fill="#0F172A">Stock path cut or a vehicle bus blocked in the harness or at the car side</text>
+<rect x="40" y="1310" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.8"/>
+<text x="50" y="1327" font-size="10.5" fill="#DC2626" font-weight="700">● BE-7.11  single point</text>
+<text x="50" y="1341" font-size="9.5" fill="#0F172A">Connector intermittent or partly seated (SFMEA-30; DFI-05,</text>
+<text x="50" y="1353" font-size="9.5" fill="#0F172A">DFI-20)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.08;0.14;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 1337 H396" stroke="#DC2626" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="1310" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="1327" font-size="10.5" fill="#C2410C" font-weight="700">PFM-008 · PFMEA  + 2 more</text>
+<text x="410" y="1341" font-size="9.5" fill="#0F172A">Harness connector not fully latched</text>
+<text x="720" y="1324" font-size="9.5" fill="#0F172A">PFM-014.C1: Log review of forwarded and intercepted messages is</text>
+<text x="720" y="1336" font-size="9.5" fill="#0F172A">manual and needs tools the installer may not have</text>
+<rect x="720" y="1346" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="1357.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 8</text>
+<rect x="754.455" y="1346" width="29.5" height="16" rx="8" fill="#FEE2E2"/><text x="769.182" y="1357.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 9</text>
+<rect x="788.91" y="1346" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="807.644" y="1357.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="1324" font-size="9.5" fill="#475569">relayMalfunction alert covers only the</text>
+<text x="1060" y="1336" font-size="9.5" fill="#475569">relay-not-intercepting case</text>
+</g>
+<rect x="40" y="1372" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.8"/>
+<text x="50" y="1389" font-size="10.5" fill="#DC2626" font-weight="700">● BE-7.12  single point</text>
+<text x="50" y="1403" font-size="9.5" fill="#0F172A">Stock camera path open inside the harness box (U1/U2 channel</text>
+<text x="50" y="1415" font-size="9.5" fill="#0F172A">open, solder joint, contact; the path is not passive, accepted …</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.20;0.26;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 1399 H396" stroke="#DC2626" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="1372" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="1389" font-size="10.5" fill="#C2410C" font-weight="700">DFM-013 · DFMEA</text>
+<text x="410" y="1403" font-size="9.5" fill="#0F172A">Stock camera path open inside the harness box</text>
+<text x="720" y="1386" font-size="9.5" fill="#0F172A">DFM-013.C1: Open in the harness box stock path (U1/U2 channel open,</text>
+<text x="720" y="1398" font-size="9.5" fill="#0F172A">solder joint, connector contact)</text>
+<rect x="720" y="1408" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="1419.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 3</text>
+<rect x="754.455" y="1408" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="1419.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="1408" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="1419.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="1386" font-size="9.5" fill="#475569">No LionDriver hardware verification or qualification</text>
+<text x="1060" y="1398" font-size="9.5" fill="#475569">test exists for this cause (WP-H-06/WP-H-07 not</text>
+<text x="1060" y="1410" font-size="9.5" fill="#475569">started; no HIL bench, D-04)</text>
+</g>
+<rect x="40" y="1434" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.8"/>
+<text x="50" y="1451" font-size="10.5" fill="#DC2626" font-weight="700">● BE-7.17  single point</text>
+<text x="50" y="1465" font-size="9.5" fill="#0F172A">Harness box loses its supply while the car is on: U1/U2</text>
+<text x="50" y="1477" font-size="9.5" fill="#0F172A">unpowered, pass-through not guaranteed, D2/D3 clamp …</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.32;0.38;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 1461 H396" stroke="#DC2626" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="1434" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="1451" font-size="10.5" fill="#C2410C" font-weight="700">DFM-020 · DFMEA</text>
+<text x="410" y="1465" font-size="9.5" fill="#0F172A">Harness box loses its supply while the car is on</text>
+<text x="720" y="1448" font-size="9.5" fill="#0F172A">DFM-020.C1: Ignition branch to the box open (crimp, connector) or D1</text>
+<text x="720" y="1460" font-size="9.5" fill="#0F172A">open, without comma power installed</text>
+<rect x="720" y="1470" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="1481.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 5</text>
+<rect x="754.455" y="1470" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="1481.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="1470" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="1481.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="1448" font-size="9.5" fill="#475569">No LionDriver hardware verification or qualification</text>
+<text x="1060" y="1460" font-size="9.5" fill="#475569">test exists for this cause (WP-H-06/WP-H-07 not</text>
+<text x="1060" y="1472" font-size="9.5" fill="#475569">started; no HIL bench, D-04)</text>
+</g>
+<rect x="40" y="1496" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.8"/>
+<text x="50" y="1513" font-size="10.5" fill="#DC2626" font-weight="700">● BE-7.18  single point</text>
+<text x="50" y="1527" font-size="9.5" fill="#0F172A">Clamp diode D2 or D3 short or leaky: loads or grounds a vehicle</text>
+<text x="50" y="1539" font-size="9.5" fill="#0F172A">bus in either switch state (RR-2026-010 F-07)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.44;0.50;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 1523 H396" stroke="#DC2626" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="1496" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="1513" font-size="10.5" fill="#C2410C" font-weight="700">DFM-021 · DFMEA</text>
+<text x="410" y="1527" font-size="9.5" fill="#0F172A">Clamp diode short loads or grounds a vehicle bus in the harness</text>
+<text x="410" y="1539" font-size="9.5" fill="#0F172A">box</text>
+<text x="720" y="1510" font-size="9.5" fill="#0F172A">DFM-021.C1: Schottky clamp D2 or D3 (BAS40SDW) short or leaky</text>
+<rect x="720" y="1532" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="1543.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 3</text>
+<rect x="754.455" y="1532" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="1543.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="1532" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="1543.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="1510" font-size="9.5" fill="#475569">No LionDriver hardware verification or qualification</text>
+<text x="1060" y="1522" font-size="9.5" fill="#475569">test exists for this cause (WP-H-06/WP-H-07 not</text>
+<text x="1060" y="1534" font-size="9.5" fill="#475569">started; no HIL bench, D-04)</text>
+</g>
+<rect x="40" y="1558" width="310" height="54" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.8"/>
+<text x="50" y="1575" font-size="10.5" fill="#DC2626" font-weight="700">● BE-7.19  single point</text>
+<text x="50" y="1589" font-size="9.5" fill="#0F172A">Car-side transceiver holds bus 0 dominant (TXD stuck low)</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.56;0.62;1" dur="6s" repeatCount="indefinite"/>
+<path d="M352 1585 H396" stroke="#DC2626" stroke-width="1.6" marker-end="url(#ag)"/>
+<rect x="400" y="1558" width="306" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="410" y="1575" font-size="10.5" fill="#C2410C" font-weight="700">DFM-008 · DFMEA</text>
+<text x="410" y="1589" font-size="9.5" fill="#0F172A">Car-side transceiver holds the bus dominant</text>
+<text x="720" y="1572" font-size="9.5" fill="#0F172A">DFM-008.C1: XCVR1 TX driver fault or TXD stuck low</text>
+<rect x="720" y="1594" width="29.5" height="16" rx="8" fill="#F1F5F9"/><text x="734.727" y="1605.24" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">O 3</text>
+<rect x="754.455" y="1594" width="34.8" height="16" rx="8" fill="#FEE2E2"/><text x="771.853" y="1605.24" font-size="9" fill="#DC2626" font-weight="700" text-anchor="middle">D 10</text>
+<rect x="794.252" y="1594" width="37.5" height="16" rx="8" fill="#DC2626"/><text x="812.986" y="1605.24" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">AP H</text>
+<text x="1060" y="1572" font-size="9.5" fill="#475569">No LionDriver hardware verification or qualification</text>
+<text x="1060" y="1584" font-size="9.5" fill="#475569">test exists for this cause (WP-H-06/WP-H-07 not</text>
+<text x="1060" y="1596" font-size="9.5" fill="#475569">started; no HIL bench, D-04)</text>
+</g>
+<text x="40" y="1636" font-size="10.5" fill="#475569">SG-07: 21 events (backed 15, by design 1, external 1, unbacked 4); 19 FMEA modes reach SG-07 (in the tree 17, justified 2, tree gaps 0)</text>
+<text x="40" y="1654" font-size="10.5" fill="#475569">Worst cause: highest AP, then highest D. Red: single-point path from the gate logic. Text cut with … is given in full in the figure description.</text>
+<text x="1304" y="1672" font-size="10" fill="#475569" text-anchor="end">Generated by fta_fmea_figures.py</text>
+</svg>

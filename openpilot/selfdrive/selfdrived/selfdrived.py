@@ -147,6 +147,9 @@ class SelfdriveD:
     self.experimental_mode = False
     self.personality = ASSURED_PERSONALITY
     self.set_personality(self.params.get("LongitudinalPersonality", return_default=True))
+    # the stored settings; on the reference platform applied only while disengaged (DQ-403)
+    self.experimental_mode_setting = self.experimental_mode
+    self.personality_setting = self.personality
     self.recalibrating_seen = False
     self.dm_lockout_set = False
     self.dm_uncertain_alerted = False
@@ -523,6 +526,7 @@ class SelfdriveD:
       cloudlog.event("distance button ignored: assured configuration")
       return
     self.set_personality((self.personality - 1) % 3)
+    self.personality_setting = self.personality
     self.params.put('LongitudinalPersonality', self.personality)
     self.events.add(EventName.personalityChanged)
 
@@ -619,11 +623,22 @@ class SelfdriveD:
     self.update_events(CS)
     if not self.CP.passive and self.initialized:
       self.enabled, self.active = self.state_machine.update(self.events)
+    self.apply_settings()
     self.update_alerts(CS)
 
     self.publish_selfdriveState(CS)
 
     self.CS_prev = CS
+
+  def apply_settings(self):
+    # LionDriver (DQ-403, A): on the reference platform a setting changed in the menu while engaged is stored, but the
+    # item keeps the setting it engaged with until the driver disengages; the next engagement is still refused while
+    # the stored setting is outside the assured configuration (DQ-221)
+    if self.reference_platform and self.enabled:
+      return
+    self.experimental_mode = self.experimental_mode_setting
+    if self.personality_setting != self.personality:
+      self.set_personality(self.personality_setting)
 
   def set_personality(self, personality):
     if personality != self.personality and personality != ASSURED_PERSONALITY:
@@ -644,8 +659,8 @@ class SelfdriveD:
       self.is_metric = self.params.get_bool("IsMetric")
       self.is_ldw_enabled = self.params.get_bool("IsLdwEnabled")
       self.disengage_on_accelerator = self.params.get_bool("DisengageOnAccelerator")
-      self.experimental_mode = self.params.get_bool("ExperimentalMode") and self.CP.openpilotLongitudinalControl
-      self.set_personality(self.params.get("LongitudinalPersonality", return_default=True))
+      self.experimental_mode_setting = self.params.get_bool("ExperimentalMode") and self.CP.openpilotLongitudinalControl
+      self.personality_setting = self.params.get("LongitudinalPersonality", return_default=True)
       self.update_assured_config()
       time.sleep(0.1)
 

@@ -1,0 +1,41 @@
+# E-05 harness, device link: OBD-C cable from the harness box receptacle J3 to the E-04 device (HE-09).
+# Box side: comma.ai OBD-C.sch.pdf and Harness_Box.pdf, commaai/hardware at 530b7da (RR-2026-010 HB-01, HB-07).
+# Cable: comma's harness README says the OBD-C cable is a USB-C cable with all lines connected (USB 3.1/3.2 Gen 2);
+# the conductor crossover below is the USB Type-C full-featured cable wiring (A2-B11, A8-B8 and so on).
+# Device side: the comma device schematic is not published (WP-H-02 UK-01). The transceiver and pin names come
+# from the panda firmware: harness.h (orientation, relay and ignition pins) and can_common.h:130 (bus swap).
+# Drawn with both plugs in the orientation the firmware calls NORMAL. A plug turned over swaps the A and B rows:
+# the firmware then reads FLIPPED, drives the relay on its SBU1 and swaps logical bus 0 and bus 2.
+
+metadata:
+  title: E-05 OBD-C link, harness box to comma device (device side inferred from firmware)
+  drawing: OC
+
+options:
+  fontname: arial
+  bgcolor: WH
+
+connectors:
+  J3:
+    type: Hirose DX07S024XJ1R1100
+    subtype: harness box OBD-C receptacle
+    pins: [A4, A1, A2, A3, B2, B3, A11, A10, B11, B10, A8, B8]
+    pinlabels: [VIN, GND, CAN0_H car, CAN0_L car, CAN2_H camera, CAN2_L camera, CAN1_H radar, CAN1_L radar, CAN3_H comma power, CAN3_L comma power, SBU1 switch drive, SBU2 ignition]
+  P1:
+    type: E-04 comma device OBD-C port
+    subtype: device side, NORMAL orientation; physical routing not published (UK-01)
+    notes: Inferred from firmware, not from a schematic. FLIPPED swaps the A and B rows, bus 0 and bus 2, and the two SBU roles.
+    pins: [A4, A1, B11, B10, A11, A10, B2, B3, A2, A3, B8, A8]
+    pinlabels: [VBUS device input, GND, bus 0 CAN_H car (FDCAN1 / XCVR1), bus 0 CAN_L car (FDCAN1 / XCVR1), bus 2 CAN_H camera (FDCAN3 / XCVR3), bus 2 CAN_L camera (FDCAN3 / XCVR3), bus 1 CAN_H radar (FDCAN2 / XCVR2 or XCVR4), bus 1 CAN_L radar (FDCAN2 / XCVR2 or XCVR4), CAN3_H comma power (routing unknown), CAN3_L comma power (routing unknown), SBU2 relay drive (open drain; 5 V driver unknown UK-06), SBU1 ignition sense (ADC and input)]
+
+cables:
+  W1:
+    type: OBD-C cable (USB-C full-featured)
+    notes: Colours and gauge not published; short and long versions sold (OI-W-6).
+    wirecount: 12
+    wirelabels: [VBUS, GND, TX1+ to RX1+, TX1- to RX1-, TX2+ to RX2+, TX2- to RX2-, RX2+ to TX2+, RX2- to TX2-, RX1+ to TX1+, RX1- to TX1-, SBU1 to SBU2, SBU2 to SBU1]
+
+connections:
+  - - J3: [A4, A1, A2, A3, B2, B3, A11, A10, B11, B10, A8, B8]
+    - W1: [1-12]
+    - P1: [A4, A1, B11, B10, A11, A10, B2, B3, A2, A3, B8, A8]

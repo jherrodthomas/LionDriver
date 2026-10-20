@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1344" height="706" viewBox="0 0 1344 706" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">Figure 1. How the fault trees and the FMEAs meet</title>
+<desc id="d">Figure 1. The fault tree and the FMEA as two ladders on shared levels. Worked chain: TE-04 (Uncontrollable deceleration) of SG-04, gate G4.1.1 (0x343 accel below the controllable bound on bus 0), basic event BE-4.03 (Frame corrupted after the TX hook (as BE-1.10; TSR-517)), a single point; FMEA DFM-019 (Approved CAN frame altered between the TX check and the bus), next-higher effect: Out-of-envelope steering or acceleration frame reaches the vehicle with a valid CAN CRC; end effect on HZ-006: Contributes to HZ-006 (deceleration below the bound); worst cause DFM-019.C1 (Soft error or permanent fault in the copy into FDCAN message RAM, the message RAM or the FDCAN core. The packet XOR is checked at the FDCAN load (fdcan.h:100) and covers only the software queue; the CAN CRC is computed after the fault; O 3, D 10, AP H). Pairing: Top event: End effect: its hazard maps to the goal's hazardous events (hara-mapping.yaml); Gate: System FMEA failure mode, optional (gates in the map); Basic event: software / SOTIF: SW FMEA or System FMEA failure mode; Basic event: hardware: DFMEA failure mode or FMEDA row; Basic event: installation: PFMEA failure mode; Undeveloped event, by design: No FMEA: an assumption of use or a reason.</desc>
+<defs><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2563EB"/></marker><marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker><marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker></defs>
+<rect width="1344" height="706" fill="#FFFFFF"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">How the fault trees and the FMEAs meet</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">The tree climbs down from the goal, the FMEA climbs up from the cause. The rungs are where fmea_lint.py checks that they agree.</text>
+<text x="1304" y="44" font-size="11" fill="#475569" text-anchor="end">fta-fmea-map.yaml · ISO 26262-9 §8</text>
+<text x="1304" y="62" font-size="11" fill="#475569" text-anchor="end">Figure 1</text>
+<line x1="40" y1="82" x2="1304" y2="82" stroke="#E2E8F0"/>
+<rect x="40" y="106" width="1264" height="106" rx="10" fill="#F8FAFC"/>
+<text x="56" y="138" font-size="13" fill="#0F172A" font-weight="700">Vehicle</text>
+<text x="56" y="156" font-size="10.5" fill="#475569">the hazard</text>
+<rect x="40" y="224" width="1264" height="106" rx="10" fill="#FFFFFF"/>
+<text x="56" y="256" font-size="13" fill="#0F172A" font-weight="700">System</text>
+<text x="56" y="274" font-size="10.5" fill="#475569">how faults combine</text>
+<rect x="40" y="342" width="1264" height="106" rx="10" fill="#F8FAFC"/>
+<text x="56" y="374" font-size="13" fill="#0F172A" font-weight="700">Element</text>
+<text x="56" y="392" font-size="10.5" fill="#475569">where they meet</text>
+<rect x="40" y="460" width="1264" height="106" rx="10" fill="#FFFFFF"/>
+<text x="56" y="492" font-size="13" fill="#0F172A" font-weight="700">Cause</text>
+<text x="56" y="510" font-size="10.5" fill="#475569">why it fails</text>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.08;0.14;1" dur="6s" repeatCount="indefinite"/><rect x="210" y="116" width="320" height="70" rx="8" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.4"/><text x="220" y="134" font-size="11" fill="#2563EB" font-weight="700">TE-04 top event · SG-04</text><text x="220" y="149" font-size="10" fill="#0F172A">Uncontrollable deceleration</text></g>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.92;0.98;1" dur="6s" repeatCount="indefinite"/><rect x="900" y="116" width="320" height="70" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/><text x="910" y="134" font-size="11" fill="#C2410C" font-weight="700">End effect · HZ-006 → H-04</text><text x="910" y="149" font-size="10" fill="#0F172A">Contributes to HZ-006 (deceleration below the bound)</text></g>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.20;0.26;1" dur="6s" repeatCount="indefinite"/><rect x="210" y="234" width="320" height="70" rx="8" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.4"/><text x="220" y="252" font-size="11" fill="#2563EB" font-weight="700">G4.1.1 OR gate</text><text x="220" y="267" font-size="10" fill="#0F172A">0x343 accel below the controllable bound on bus 0</text></g>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.80;0.86;1" dur="6s" repeatCount="indefinite"/><rect x="900" y="234" width="320" height="70" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/><text x="910" y="252" font-size="11" fill="#C2410C" font-weight="700">Next-higher effect</text><text x="910" y="267" font-size="10" fill="#0F172A">Out-of-envelope steering or acceleration frame reaches the</text><text x="910" y="279.5" font-size="10" fill="#0F172A">vehicle with a valid CAN CRC</text></g>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.32;0.38;1" dur="6s" repeatCount="indefinite"/><rect x="210" y="352" width="320" height="70" rx="8" fill="#EFF6FF" stroke="#DC2626" stroke-width="1.4"/><text x="220" y="370" font-size="11" fill="#DC2626" font-weight="700">BE-4.03 basic event · single point</text><text x="220" y="385" font-size="10" fill="#0F172A">Frame corrupted after the TX hook (as BE-1.10; TSR-517)</text></g>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.68;0.74;1" dur="6s" repeatCount="indefinite"/><rect x="900" y="352" width="320" height="70" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/><text x="910" y="370" font-size="11" fill="#C2410C" font-weight="700">DFM-019 failure mode · DFMEA</text><text x="910" y="385" font-size="10" fill="#0F172A">Approved CAN frame altered between the TX check and the bus</text></g>
+<g><animate attributeName="opacity" values="0.2;0.2;1;1" keyTimes="0;0.56;0.62;1" dur="6s" repeatCount="indefinite"/><rect x="900" y="470" width="320" height="70" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/><text x="910" y="488" font-size="11" fill="#C2410C" font-weight="700">DFM-019.C1 · O 3 · D 10 · AP H</text><text x="910" y="503" font-size="10" fill="#0F172A">Soft error or permanent fault in the copy into FDCAN message</text><text x="910" y="515.5" font-size="10" fill="#0F172A">RAM, the message RAM or the FDCAN core. The packet XOR is …</text></g>
+<path d="M190 122 V414" stroke="#2563EB" stroke-width="3" marker-end="url(#ab)"/>
+<text x="182" y="444" font-size="11" fill="#2563EB" font-weight="700" text-anchor="end">Fault tree: top down</text>
+<path d="M1240 534 V122" stroke="#C2410C" stroke-width="3" marker-end="url(#ao)"/>
+<text x="1234" y="562" font-size="11" fill="#C2410C" font-weight="700" text-anchor="end">FMEA: bottom up</text>
+<line x1="530" y1="151" x2="900" y2="151" stroke="#475569" stroke-width="2.2"/>
+<rect x="611.547" y="129" width="206.906" height="16" fill="#FFFFFF"/>
+<text x="715" y="141" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">checked: HZ-006 is a hazard of SG-04</text>
+<line x1="530" y1="269" x2="900" y2="269" stroke="#475569" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="590.188" y="247" width="249.624" height="16" fill="#FFFFFF"/>
+<text x="715" y="259" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">optional: a gate may cite a System FMEA mode</text>
+<line x1="530" y1="387" x2="900" y2="387" stroke="#475569" stroke-width="2.2"/>
+<rect x="578.634" y="365" width="272.732" height="16" fill="#FFFFFF"/>
+<text x="715" y="377" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">checked: BE-4.03 is backed, DFM-019 is in the tree</text>
+<text x="210" y="510" font-size="10.5" fill="#475569">The tree stops at the basic event; the causes live only in the FMEA.</text>
+<text x="40" y="594" font-size="11.5" fill="#0F172A" font-weight="700">The same pairing for every event</text>
+<text x="40" y="616" font-size="10.5" fill="#2563EB" font-weight="700">Top event</text>
+<text x="240" y="616" font-size="10.5" fill="#0F172A">End effect: its hazard maps to the goal's hazardous events (hara-mapping.yaml)</text>
+<text x="680" y="616" font-size="10.5" fill="#2563EB" font-weight="700">Gate</text>
+<text x="880" y="616" font-size="10.5" fill="#0F172A">System FMEA failure mode, optional (gates in the map)</text>
+<text x="40" y="636" font-size="10.5" fill="#2563EB" font-weight="700">Basic event: software / SOTIF</text>
+<text x="240" y="636" font-size="10.5" fill="#0F172A">SW FMEA or System FMEA failure mode</text>
+<text x="680" y="636" font-size="10.5" fill="#2563EB" font-weight="700">Basic event: hardware</text>
+<text x="880" y="636" font-size="10.5" fill="#0F172A">DFMEA failure mode or FMEDA row</text>
+<text x="40" y="656" font-size="10.5" fill="#2563EB" font-weight="700">Basic event: installation</text>
+<text x="240" y="656" font-size="10.5" fill="#0F172A">PFMEA failure mode</text>
+<text x="680" y="656" font-size="10.5" fill="#2563EB" font-weight="700">Undeveloped event, by design</text>
+<text x="880" y="656" font-size="10.5" fill="#0F172A">No FMEA: an assumption of use or a reason</text>
+<text x="1304" y="684" font-size="10" fill="#475569" text-anchor="end">Generated by fta_fmea_figures.py</text>
+</svg>

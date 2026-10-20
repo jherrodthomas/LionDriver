@@ -84,7 +84,7 @@ faults:
     causes: [SWF-014, SWF-024, SWF-027]
     tsr: [TSR-408, TSR-407, TSR-516]
     injection: {point: SoC heartbeat and all frames, trigger: steady curve, duration: until the end of the run}
-    expected: TX-arrival supervision revokes within 50 ms (TSR-408), before the heartbeat check, so the fast siren does not sound
+    expected: TX-arrival supervision revokes within 50 ms (TSR-408), before the heartbeat check, and the revocation sounds the siren (TSR-516(b), DQ-404 A; silent before panda 8a69ccf)
     wp_v_05: VS-FI-09
     road: curve
     t_fault: 7.0

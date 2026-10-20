@@ -1,0 +1,65 @@
+# E-05 harness, cable part: the Toyota A harness between the car, the forward camera and the harness box.
+# Source: comma.ai Toyota_A_Harness.pdf (7 Mar 2025) and open_pinout.pdf, commaai/hardware at 530b7da
+# (RR-2026-010 HB-08). Pin numbers, colours, gauge and part numbers are read from that drawing, not measured.
+# The reference unit is assumed to be Toyota A with box v3 (DQ-211, option C); VS-HW-02 checks it.
+# Wire IDs: <drawing>.<cable>.<wire>, e.g. TA.W1.1; make_wiring.py lists every wire end in wire-ends.tsv.
+# Do not use < or > in notes (Graphviz HTML labels); quote any label with a comma.
+
+metadata:
+  title: E-05 Toyota A harness (comma v3 drawing, not verified on the reference unit)
+  drawing: TA
+
+options:
+  fontname: arial
+  bgcolor: WH
+  color_mode: SHORT
+
+connectors:
+  X1:
+    type: TE 1318774-1
+    subtype: to forward camera; pins TE 1123343-1; back view
+    hide_disconnected_pins: true
+    pinlabels: [PT4, PT1, PT3, unused, CAN2_H camera, CAN1_H radar, IGN, PT2, unused, GND, CAN2_L camera, CAN1_L radar]
+  X2:
+    type: TE 1565894-1
+    subtype: to vehicle harness (car side); pins TE 1376109-1; back view
+    hide_disconnected_pins: true
+    pinlabels: [PT4, PT1, PT3, unused, CAN0_H car, CAN1_H radar, IGN, PT2, unused, GND, CAN0_L car, CAN1_L radar]
+  X3:
+    type: Molex 501646-1800
+    subtype: to harness box header J1 (Molex 501876-1840); wire side
+    notes: Harness type assumed Toyota A with box v3, not read off the parts (DQ-211 C). Loopback 13-15 (grey, 40 mm) selects 60 ohm on bus 2; 3-5 open, no extra bus 0 termination. Crimp terminal 501648-1000 per the harness drawing, 501647-1000 per open_pinout (to resolve, OI-W-3).
+    pinlabels: [GND, IGN (car), CAN0_H term. select, CAN0_H car, CAN0_H'' term., CAN0_L car, CAN1_L (car), CAN1_H (car), CAN1_H (camera), 12VIN (not wired), CAN1_L (camera), 12VIN (not wired), CAN2_L term. select, IGN (camera), CAN2_L'' term., CAN2_H camera, GND, CAN2_L camera]
+    loops:
+      - [13, 15]
+
+cables:
+  W1:
+    type: camera branch
+    gauge: 26 AWG
+    notes: UL1007
+    colors: [OG, GN, PK, BU, BN, BK]
+    wirelabels: [CAN2_H, CAN2_L, CAN1_H, CAN1_L, IGN, GND]
+  W2:
+    type: car branch
+    gauge: 26 AWG
+    notes: UL1007
+    colors: [OG, GN, PK, BU, BN, BK]
+    wirelabels: [CAN0_H, CAN0_L, CAN1_H, CAN1_L, IGN, GND]
+  W3:
+    type: pass-through PT1-PT4, camera to car, not through the box
+    gauge: 26 AWG
+    notes: UL1007; signal names not given on the drawing (OI-W-4)
+    colors: [VT, GY, WH, YE]
+    wirelabels: [PT4, PT1, PT2, PT3]
+
+connections:
+  - - X1: [5, 11, 6, 12, 7, 10]
+    - W1: [1-6]
+    - X3: [16, 18, 9, 11, 14, 17]
+  - - X2: [5, 11, 6, 12, 7, 10]
+    - W2: [1-6]
+    - X3: [4, 6, 8, 7, 2, 1]
+  - - X1: [1, 2, 8, 3]
+    - W3: [1-4]
+    - X2: [1, 2, 8, 3]

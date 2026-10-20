@@ -1,0 +1,13 @@
+Id	Description	Qty	Unit	Designators
+1	Cable, OBD-C cable, 1 wires	0	m	WOBDC
+2	Cable, camera bus lead, 3 wires	0	m	WCAM
+3	Cable, car bus lead, 5 wires	0	m	WCAR
+4	Cable, supply lead (ignition), 2 wires	0	m	WPWR
+5	Connector, Bench PC (Linux), pytest runner, log capture, Corolla log replay, fault-injection control, 4 pins	1		PC
+6	Connector, Harness box v3 (instrumented), on the Toyota A harness; probe points, 4 pins	1		BOX
+7	Connector, Panda jungle or 3-channel CAN interface, orientation and ignition simulation (panda/tests/hitl/test_9_harness.py), 8 pins	1		JNG
+8	Connector, Programmable supply, 0-20 V, slew, dropouts (VS-HW-09, VS-HW-10), 3 pins	1		PSU
+9	Connector, Reference comma device (E-04), fixed revision (WP-C-01), LionDriver panda firmware and openpilot; spare for destructive tests, 5 pins	1		DEV
+10	Connector, Scope or logic analyser, 4 channels or more, 5 pins	1		SCOPE
+11	Connector, Toyota A camera connector X1, TE 1318774-1; to the jungle, or to a real forward camera (optional), 3 pins	1		X1
+12	Connector, Toyota A car connector X2, TE 1565894-1; bench mating plug to choose, 6 pins	1		X2

@@ -70,6 +70,15 @@ class TestCards(unittest.TestCase):
     svg = "".join(self.out.values())
     self.assertIn("MSR H", svg)
 
+  def test_fault_tree_strip_reads_the_map(self):
+    cs = fc.cards(self.doc, self.mapping)
+    sg04 = {g: ids for g, ids, kind in cs["SFM-009"]["trees"] if not kind}["SG-04"]
+    self.assertEqual(sg04, [("BE-4.02", False), ("BE-4.06", False), ("BE-4.11", True), ("G4.1", False), ("G4.3", False)])
+    self.assertIn(("SG-04", [], "justified"), cs["SFM-014"]["trees"])  # listed in not_in_fta for SG-04
+    links = {"SFM-001": [("SG-01", [("BE-9.99", True)], None)]}
+    self.assertEqual(fc.cards(self.doc, self.mapping, links)["SFM-001"]["trees"], [("SG-01", [("BE-9.99", True)], None)])
+    self.assertEqual(fc.cards(self.doc, self.mapping, links)["SFM-002"]["trees"], [])
+
   def test_committed_sheets_current_and_embedded(self):
     plan = (fc.fd.FMEA_DIR / "fmea-plan.md").read_text(encoding="utf-8")
     for name, svg in self.out.items():

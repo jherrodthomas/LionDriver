@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="994" viewBox="0 0 640 994" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="974" viewBox="0 0 640 974" role="img" aria-labelledby="t d">
 <title id="t">HE-07.1 in the layer-1 loop: plant run F-04b</title>
-<desc id="d">Synthetic (DSR-12), no evidence credit. HE-07.1 (ASIL C), The driver believes the system steers; departure in the curve. The layer-1 loop with plant run F-04b (left curve at R_ODD, fault at curve entry): fault SoC stall: heartbeat and commands stop. SoC: stalls: heartbeat and commands stop. Host: sends nothing. Panda: heartbeat lost: revokes at 0.048 s; no siren in this run. Switch: intercept. EPS: no LKA torque: the car stops steering. Vehicle: runs out of lane: body on the 3.7 m lane line at 1.97 s; largest offset 7.28 m at 5.27 s. Driver: cue: 0.2 m drift at 1.18 s; corrects from 2.68 s. No warning: the driver notices the drift and corrects from 2.68 s.</desc>
+<desc id="d">Synthetic (DSR-12), no evidence credit. HE-07.1 (ASIL C), The driver believes the system steers; departure in the curve. The layer-1 loop with plant run F-04b (left curve at R_ODD, fault at curve entry): fault SoC stall: heartbeat and commands stop. SoC: stalls: heartbeat and commands stop. Host: sends nothing. Panda: commands lost: revokes at 0.048 s, siren 0.29 s (DQ-404 A). Switch: intercept. EPS: no LKA torque: the car stops steering. Vehicle: runs out of lane: body on the 3.7 m lane line at 1.97 s; largest offset 1.84 m at 3.00 s. Driver: cue: siren at 0.29 s; corrects from 1.79 s. The panda warns at 0.29 s; the driver corrects from 1.79 s.</desc>
 <style>
 svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
       --real:#2a78d6; --real-bg:#e9f1fb; --amb:#c98500; --amb-bg:#fdf4dc; --bad:#e34948; --bad-bg:#fdecec;
@@ -38,7 +38,7 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 .strike { stroke:var(--bad); stroke-width:1.6; }
 </style>
 <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-ink2"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-bad"/></marker></defs>
-<rect class="bg" width="640" height="994"/>
+<rect class="bg" width="640" height="974"/>
 <text x="24" y="34" class="h">HE-07.1 · ASIL C</text>
 <text x="24" y="58" class="t2">The driver believes the system steers; departure in the curve</text>
 <text x="24" y="80" class="tbad">Synthetic (DSR-12) · no evidence credit</text>
@@ -62,10 +62,10 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 <rect x="96" y="350" width="448" height="92" rx="8" class="real"/>
 <text x="110" y="374" class="tl">Panda safety code</text>
 <text x="110" y="392" class="t2b">REAL CODE · reference build</text>
-<text x="110" y="414" class="t">heartbeat lost: revokes at 0.048 s; no siren in this</text>
-<text x="110" y="434" class="t">run</text>
-<rect x="448.4" y="360" width="85.6" height="20" rx="10" class="f-bad"/>
-<text x="491.2" y="374" class="chip" text-anchor="middle">NO WARNING</text>
+<text x="110" y="414" class="t">commands lost: revokes at 0.048 s, siren 0.29 s</text>
+<text x="110" y="434" class="t">(DQ-404 A)</text>
+<rect x="483.2" y="360" width="50.8" height="20" rx="10" class="f-real"/>
+<text x="508.6" y="374" class="chip" text-anchor="middle">WARNS</text>
 <path d="M320.0,442 V468" class="arrd" marker-end="url(#a)"/>
 <rect x="96" y="472" width="448" height="72" rx="8" class="plan"/>
 <text x="110" y="496" class="tl">Harness switch</text>
@@ -85,29 +85,28 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 <text x="110" y="700" class="tl">Vehicle</text>
 <text x="110" y="718" class="t2b">MODEL · single-track Corolla</text>
 <text x="110" y="740" class="t">runs out of lane: body on the 3.7 m lane line at</text>
-<text x="110" y="760" class="t">1.97 s; largest offset 7.28 m at 5.27 s</text>
+<text x="110" y="760" class="t">1.97 s; largest offset 1.84 m at 3.00 s</text>
 <rect x="434.5" y="686" width="99.5" height="20" rx="10" class="f-bad"/>
 <text x="484.2" y="700" class="chip" text-anchor="middle">PASSES IT ON</text>
 <path d="M320.0,768 V794" class="arr" marker-end="url(#a)"/>
 <rect x="96" y="798" width="448" height="72" rx="8" class="amb"/>
 <text x="110" y="822" class="tl">Driver</text>
 <text x="110" y="840" class="t2b">ASSUMED · reacts 1.5 s after the cue</text>
-<text x="110" y="862" class="t">cue: 0.2 m drift at 1.18 s; corrects from 2.68 s</text>
+<text x="110" y="862" class="t">cue: siren at 0.29 s; corrects from 1.79 s</text>
 <rect x="462.3" y="808" width="71.7" height="20" rx="10" class="f-real"/>
 <text x="498.2" y="822" class="chip" text-anchor="middle">STOPS IT</text>
 <path d="M96,706 H52 V176 H94" class="arrd" marker-end="url(#a)"/>
 <text x="44" y="426" class="t2" text-anchor="middle" transform="rotate(-90 44 426)">perfect perception</text>
 <path d="M544,604 H588 V380 H546" class="arrd" marker-end="url(#a)"/>
 <text x="600" y="477" class="t2" text-anchor="middle" transform="rotate(90 600 477)">EPS state on the car bus (RX)</text>
-<rect x="24" y="888" width="592" height="62" rx="8" class="badbox"/>
-<text x="38" y="912" class="tb">No warning: the driver notices the drift and corrects from</text>
-<text x="38" y="932" class="tb">2.68 s.</text>
-<rect x="24" y="961" width="18" height="14" rx="3" class="f-flt"/>
-<text x="48" y="972" class="t2">fault enters</text>
-<rect x="150.7" y="961" width="18" height="14" rx="3" class="f-bad"/>
-<text x="174.7" y="972" class="t2">passes it on</text>
-<rect x="277.4" y="961" width="18" height="14" rx="3" class="f-real"/>
-<text x="301.4" y="972" class="t2">stops or warns</text>
-<rect x="417.8" y="961" width="18" height="14" rx="3" class="plan"/>
-<text x="441.8" y="972" class="t2">not involved</text>
+<rect x="24" y="888" width="592" height="42" rx="8" class="badbox"/>
+<text x="38" y="912" class="tb">The panda warns at 0.29 s; the driver corrects from 1.79 s.</text>
+<rect x="24" y="941" width="18" height="14" rx="3" class="f-flt"/>
+<text x="48" y="952" class="t2">fault enters</text>
+<rect x="150.7" y="941" width="18" height="14" rx="3" class="f-bad"/>
+<text x="174.7" y="952" class="t2">passes it on</text>
+<rect x="277.4" y="941" width="18" height="14" rx="3" class="f-real"/>
+<text x="301.4" y="952" class="t2">stops or warns</text>
+<rect x="417.8" y="941" width="18" height="14" rx="3" class="plan"/>
+<text x="441.8" y="952" class="t2">not involved</text>
 </svg>

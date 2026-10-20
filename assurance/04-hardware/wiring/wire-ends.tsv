@@ -1,0 +1,87 @@
+id	drawing	kind	signal	colour	gauge	end A	end A label	end B	end B label
+BB.WA.1	BB	wire	CAN_H			CAN:1	A CAN_H	X1:5	CAN2_H camera
+BB.WA.2	BB	wire	CAN_L			CAN:2	A CAN_L	X1:11	CAN2_L camera
+BB.WA.3	BB	wire	GND			CAN:3	A GND	X1:10	GND
+BB.WB.1	BB	wire	CAN_H			CAN:4	B CAN_H	X2:5	CAN0_H car
+BB.WB.2	BB	wire	CAN_L			CAN:5	B CAN_L	X2:11	CAN0_L car
+BB.WB.3	BB	wire	GND			CAN:6	B GND	X2:10	GND
+BB.TA.1-X1.5	BB	line	CAN_H			TA:1	CAN_H	X1:5	CAN2_H camera
+BB.TA.2-X1.11	BB	line	CAN_L			TA:2	CAN_L	X1:11	CAN2_L camera
+BB.TB.1-X2.5	BB	line	CAN_H			TB:1	CAN_H	X2:5	CAN0_H car
+BB.TB.2-X2.11	BB	line	CAN_L			TB:2	CAN_L	X2:11	CAN0_L car
+BB.WP.1	BB	wire	IGN_12			PSU:1	+	X2:7	IGN (box IGN_12)
+BB.WP.2	BB	wire	GND			PSU:2	-	X2:10	GND
+BB.WS.1	BB	wire	SBU1			SRC:1	out	BO:A8	SBU1 switch drive
+BB.WS.2	BB	wire	GND			SRC:2	0 V	BO:A1	GND
+BB.SCOPE.1-X2.5	BB	line	ch 1 CAN_H-CAN_L at X2			SCOPE:1	ch 1 CAN_H-CAN_L at X2	X2:5	CAN0_H car
+BB.SCOPE.2-BO.A4	BB	line	ch 2 VIN			SCOPE:2	ch 2 VIN	BO:A4	VIN (scope ch 2)
+BB.SCOPE.3-BO.A8	BB	line	ch 3 SBU1			SCOPE:3	ch 3 SBU1	BO:A8	SBU1 switch drive
+BB.FI1.1-X2.7	BB	line	PSU + lead			FI1:1	PSU + lead	X2:7	IGN (box IGN_12)
+BB.FI2.1-BO.A4	BB	line	VIN			FI2:1	VIN	BO:A4	VIN (scope ch 2)
+BB.FI3.1-BO.A8	BB	line	SBU1 pull-down R2/R3			FI3:1	SBU1 pull-down R2/R3	BO:A8	SBU1 switch drive
+BB.FI4.1-X2.5	BB	line	clamp diode			FI4:1	clamp diode	X2:5	CAN0_H car
+HIL.PC.1-JNG.1	HIL	link	USB to CAN interface			PC:1	USB to CAN interface	JNG:1	USB
+HIL.PC.2-PSU.1	HIL	line	USB or GPIO to supply			PC:2	USB or GPIO to supply	PSU:1	control
+HIL.PC.3-DEV.1	HIL	line	USB to reference device			PC:3	USB to reference device	DEV:1	USB
+HIL.PC.4-SCOPE.1	HIL	line	USB to scope			PC:4	USB to scope	SCOPE:1	USB
+HIL.WCAR.1	HIL	wire	CAN0_H			JNG:2	car bus CAN_H	X2:5	CAN0_H car
+HIL.WCAR.2	HIL	wire	CAN0_L			JNG:3	car bus CAN_L	X2:11	CAN0_L car
+HIL.WCAR.3	HIL	wire	CAN1_H			JNG:6	OBD / radar bus CAN_H	X2:6	CAN1_H radar
+HIL.WCAR.4	HIL	wire	CAN1_L			JNG:7	OBD / radar bus CAN_L	X2:12	CAN1_L radar
+HIL.WCAR.5	HIL	wire	GND			JNG:8	GND	X2:10	GND
+HIL.WCAM.1	HIL	wire	CAN2_H			JNG:4	camera bus CAN_H	X1:5	CAN2_H camera
+HIL.WCAM.2	HIL	wire	CAN2_L			JNG:5	camera bus CAN_L	X1:11	CAN2_L camera
+HIL.WCAM.3	HIL	wire	GND			JNG:8	GND	X1:10	GND
+HIL.WPWR.1	HIL	wire	IGN			PSU:2	+	X2:7	IGN
+HIL.WPWR.2	HIL	wire	GND			PSU:3	-	X2:10	GND
+HIL.WOBDC.1	HIL	wire	12 used lines			DEV:2	OBD-C port	BOX:1	J3 OBD-C receptacle
+HIL.SCOPE.2-BOX.2	HIL	line	SBU1			SCOPE:2	SBU1	BOX:2	SBU1
+HIL.SCOPE.3-BOX.3	HIL	line	U1 or U2 switch pins			SCOPE:3	U1 or U2 switch pins	BOX:3	U1 COM / NC
+HIL.SCOPE.4-X2.5	HIL	line	CAN at X2			SCOPE:4	CAN at X2	X2:5	CAN0_H car
+HIL.SCOPE.5-DEV.3	HIL	line	NRST or BOOT0			SCOPE:5	NRST or BOOT0	DEV:3	NRST probe point
+HB.J1.16-U1.1	HB	line	CAN2_H camera			J1:16	CAN2_H camera	U1:1	COM = CAN2_H camera
+HB.U1.1-J3.B2	HB	line	COM = CAN2_H camera			U1:1	COM = CAN2_H camera	J3:B2	CAN2_H camera
+HB.J1.4-U1.2	HB	line	CAN0_H car			J1:4	CAN0_H car	U1:2	NC = CAN0_H car
+HB.U1.2-J3.A2	HB	line	NC = CAN0_H car			U1:2	NC = CAN0_H car	J3:A2	CAN0_H car
+HB.J1.6-U2.1	HB	line	CAN0_L car			J1:6	CAN0_L car	U2:1	COM = CAN0_L car
+HB.U2.1-J3.A3	HB	line	COM = CAN0_L car			U2:1	COM = CAN0_L car	J3:A3	CAN0_L car
+HB.J1.18-U2.2	HB	line	CAN2_L camera			J1:18	CAN2_L camera	U2:2	NC = CAN2_L camera
+HB.U2.2-J3.B3	HB	line	NC = CAN2_L camera			U2:2	NC = CAN2_L camera	J3:B3	CAN2_L camera
+HB.U1.6-J3.A8	HB	line	IN = SBU1			U1:6	IN = SBU1	J3:A8	SBU1 switch drive
+HB.U2.6-J3.A8	HB	line	IN = SBU1			U2:6	IN = SBU1	J3:A8	SBU1 switch drive
+HB.R2/R3.1-J3.A8	HB	line	SBU1			R2/R3:1	SBU1	J3:A8	SBU1 switch drive
+HB.J1.2-Q6.G	HB	line	IGN_12 (car)			J1:2	IGN_12 (car)	Q6:G	gate = IGN_12
+HB.Q6.D-J3.B8	HB	line	drain = SBU2 via R1			Q6:D	drain = SBU2 via R1	J3:B8	SBU2 ignition
+HB.J1.2-D1.A	HB	line	IGN_12 (car)			J1:2	IGN_12 (car)	D1:A	anode = IGN_12
+HB.D1.K-J3.A4	HB	line	cathode = VIN			D1:K	cathode = VIN	J3:A4	VIN (also A9 B4 B9)
+HB.J1.3-U1.2	HB	line	CAN0_H term. select			J1:3	CAN0_H term. select	U1:2	NC = CAN0_H car
+HB.J1.13-U2.2	HB	line	CAN2_L term. select			J1:13	CAN2_L term. select	U2:2	NC = CAN2_L camera
+HB.J2.4-J3.A4	HB	line	VIN (to J3 A4)			J2:4	VIN (to J3 A4)	J3:A4	VIN (also A9 B4 B9)
+OC.W1.1	OC	wire	VBUS			J3:A4	VIN	P1:A4	VBUS device input
+OC.W1.2	OC	wire	GND			J3:A1	GND	P1:A1	GND
+OC.W1.3	OC	wire	TX1+ to RX1+			J3:A2	CAN0_H car	P1:B11	bus 0 CAN_H car (FDCAN1 / XCVR1)
+OC.W1.4	OC	wire	TX1- to RX1-			J3:A3	CAN0_L car	P1:B10	bus 0 CAN_L car (FDCAN1 / XCVR1)
+OC.W1.5	OC	wire	TX2+ to RX2+			J3:B2	CAN2_H camera	P1:A11	bus 2 CAN_H camera (FDCAN3 / XCVR3)
+OC.W1.6	OC	wire	TX2- to RX2-			J3:B3	CAN2_L camera	P1:A10	bus 2 CAN_L camera (FDCAN3 / XCVR3)
+OC.W1.7	OC	wire	RX2+ to TX2+			J3:A11	CAN1_H radar	P1:B2	bus 1 CAN_H radar (FDCAN2 / XCVR2 or XCVR4)
+OC.W1.8	OC	wire	RX2- to TX2-			J3:A10	CAN1_L radar	P1:B3	bus 1 CAN_L radar (FDCAN2 / XCVR2 or XCVR4)
+OC.W1.9	OC	wire	RX1+ to TX1+			J3:B11	CAN3_H comma power	P1:A2	CAN3_H comma power (routing unknown)
+OC.W1.10	OC	wire	RX1- to TX1-			J3:B10	CAN3_L comma power	P1:A3	CAN3_L comma power (routing unknown)
+OC.W1.11	OC	wire	SBU1 to SBU2			J3:A8	SBU1 switch drive	P1:B8	SBU2 relay drive (open drain; 5 V driver unknown UK-06)
+OC.W1.12	OC	wire	SBU2 to SBU1			J3:B8	SBU2 ignition	P1:A8	SBU1 ignition sense (ADC and input)
+TA.W1.1	TA	wire	CAN2_H	OG	26 AWG	X1:5	CAN2_H camera	X3:16	CAN2_H camera
+TA.W1.2	TA	wire	CAN2_L	GN	26 AWG	X1:11	CAN2_L camera	X3:18	CAN2_L camera
+TA.W1.3	TA	wire	CAN1_H	PK	26 AWG	X1:6	CAN1_H radar	X3:9	CAN1_H (camera)
+TA.W1.4	TA	wire	CAN1_L	BU	26 AWG	X1:12	CAN1_L radar	X3:11	CAN1_L (camera)
+TA.W1.5	TA	wire	IGN	BN	26 AWG	X1:7	IGN	X3:14	IGN (camera)
+TA.W1.6	TA	wire	GND	BK	26 AWG	X1:10	GND	X3:17	GND
+TA.W2.1	TA	wire	CAN0_H	OG	26 AWG	X2:5	CAN0_H car	X3:4	CAN0_H car
+TA.W2.2	TA	wire	CAN0_L	GN	26 AWG	X2:11	CAN0_L car	X3:6	CAN0_L car
+TA.W2.3	TA	wire	CAN1_H	PK	26 AWG	X2:6	CAN1_H radar	X3:8	CAN1_H (car)
+TA.W2.4	TA	wire	CAN1_L	BU	26 AWG	X2:12	CAN1_L radar	X3:7	CAN1_L (car)
+TA.W2.5	TA	wire	IGN	BN	26 AWG	X2:7	IGN	X3:2	IGN (car)
+TA.W2.6	TA	wire	GND	BK	26 AWG	X2:10	GND	X3:1	GND
+TA.W3.1	TA	wire	PT4	VT	26 AWG	X1:1	PT4	X2:1	PT4
+TA.W3.2	TA	wire	PT1	GY	26 AWG	X1:2	PT1	X2:2	PT1
+TA.W3.3	TA	wire	PT2	WH	26 AWG	X1:8	PT2	X2:8	PT2
+TA.W3.4	TA	wire	PT3	YE	26 AWG	X1:3	PT3	X2:3	PT3

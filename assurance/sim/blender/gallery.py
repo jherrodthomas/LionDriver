@@ -1,7 +1,8 @@
 """Gallery of the hazardous-event dashboards (assurance/sim/blender).
 
 Copies each scene's decisive dashboard (out/<scene>/dashboard.png from compose.py) to dashboards/<scene>.jpg at
-1600 px and writes dashboards/README.md: one row per scene with the entry it pictures, the motion source, the
+1600 px (a scene not rendered here keeps its committed dashboard; its row is built from out/<scene>/scene.json, so run
+export_scene.py first) and writes dashboards/README.md: one row per scene with the entry it pictures, the motion source, the
 outcome and the image. Renders of the purchased mesh may be published (assets/README.md); the .blend files may not
 and stay in out/.
 
@@ -37,16 +38,20 @@ def outcome(sc: dict) -> str:
 
 def main() -> int:
   GAL.mkdir(exist_ok=True)
-  rows, variants, missing = [], [], []
+  rows, variants, edge, missing = [], [], [], []
   for s in export_scene.load_scenes():
     sid = s["id"]
     src = OUT / sid / "dashboard.png"
-    if not src.exists():
+    if not src.exists() and not (GAL / f"{sid}.jpg").exists():
+      missing.append(sid)
+      continue
+    if not (OUT / sid / "scene.json").exists():      # a committed dashboard keeps its row (export_scene.py first)
       missing.append(sid)
       continue
     sc = json.loads((OUT / sid / "scene.json").read_text())
-    im = Image.open(src).convert("RGB")
-    im.resize((1600, 900), Image.LANCZOS).save(GAL / f"{sid}.jpg", quality=75, optimize=True)
+    if src.exists():                                  # a new render replaces the committed dashboard
+      im = Image.open(src).convert("RGB")
+      im.resize((1600, 900), Image.LANCZOS).save(GAL / f"{sid}.jpg", quality=75, optimize=True)
     cd = sc["card"]
     entry = f"{cd['id']} ({'ASIL ' + cd['badge'].split('ASIL ')[1] if 'ASIL' in cd['badge'] else 'SOTIF'})"
     motion = f"plant {sc['case']['id']}" if sc["motion"] == "plant" else "kinematic"
@@ -56,6 +61,10 @@ def main() -> int:
       variants.append(f"| [{sid}]({sid}.jpg) | {c['code']}: {c['title']} | {c['hara']} |")
       continue
     where = (sc.get("environment") or {}).get("id", sc["road"]["type"])
+    if s.get("edge_case"):
+      edge.append(f"| [{sid}]({sid}.jpg) | [{s['edge_case']}](../../results/edge-cases.md#catalogue) | {entry} | "
+                  f"{where}, {cond} | {motion} | {outcome(sc)} |")
+      continue
     rows.append(f"| [{sid}]({sid}.jpg) | {entry} | {cd['effect']} | {where}, {cond} | {motion} | {outcome(sc)} |")
   HERO = ("![Three hazardous-event scenes rendered in Blender, cropped to their 3D view: the orange ego Corolla "
           "touching a car in the adjacent highway lane after a steering hard-over; the ego going straight on in a "
@@ -78,6 +87,12 @@ def main() -> int:
   if clips:
     tail = ("\n## Clips\n\nThe whole scene with the dashboard running, 24 fps (`hazard_scene.py --video`, "
             "`compose.py --video`):\n\n" + "\n".join(f"- [{c.stem}](clips/{c.name})" for c in clips) + "\n")
+  if edge:
+    tail = ("\n## Edge cases from the search\n\nThe worst cases the failure search found ([edge-case catalogue]"
+            "(../../results/edge-cases.md), WP-V-04 U-4), each a plant scene that reproduces its catalogue row with "
+            "the row's parameters. The entry is the hazardous event the row falls under, or the nearest one where the "
+            "row is a new-hazard finding.\n\n| Scene | Catalogue row | Entry | Environment, condition | Motion | "
+            "Outcome in the scene |\n|---|---|---|---|---|---|\n" + "\n".join(edge) + "\n" + tail)
   if variants:
     tail = ("\n## The same events under other conditions\n\nVariants re-render a scene under another weather or "
             "lighting code it is rated for (`variants:` in scenes.yaml). The motion and the outcome are the base "

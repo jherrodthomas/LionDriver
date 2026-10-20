@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-03 Technical safety concept and system architectural design |
 | Standard reference | ISO 26262-4:2018 §6 (technical safety concept, system architectural design, safety mechanisms, FFI/independence by reference to ISO 26262-9 §6–§7); ISO 21448:2022 §8 (architecture-level functional modifications, by reference); ASPICE 4.0 SYS.3 |
-| Version | 0.12 (OI-6 done: envelope elements E-03a, E-03b, E-04a and the interfaces they serve changed from B‡ to ASIL C in §3.1, §3.3, §5, Figures 3-1 and 3-2 and the SysML model; E-05 C (blocking) / B (PCS restore); OI-6 closed; 2026-10-16). 0.11 (DQ-341 applied: envelope elements ASIL C; OI-6 now to be done; 2026-10-16). 0.10 (scope line: SG-02, SG-03 and SG-06 ASIL C, SG-08 ASIL A, per WP-C-03 v0.4 and WP-S-02 v0.24; 2026-10-16). 0.9 (lead decisions of 2026-10-14 recorded: override backs off (DQ-053, SM-05), EPS-fault siren persistence ≤ 0.7 s (DQ-048), relay stuck in intercept warns and blocks engagement (DQ-064, SM-20), fallback limiter decided after the tests (DQ-050, OI-3); 2026-10-16). 0.8 (Figure 6-1 added, generated from the trace data of §5 and §6; 2026-10-13). 0.7 (§3.1 element hierarchy added as Figure 3-1; 2026-10-13). 0.6 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.5 (§3.2, §4.1 and §4.4 diagrams redrawn as Figures 3-2, 4-1 and 4-4; text versions kept; 2026-10-13). History: 0.4 (status update 2026-10-12: reference-build column in §4.3, status of SM-06, -09, -11, -12, -15, -22, -23, -36, -39 and of FFI-2, -5, -6 at `bf6ce8c`; OI-4 trigger reached; nothing verified on hardware or reviewed independently); 0.3 (SM-43; SM-23, -30, -31, -35 extended for WP-S-02 v0.3; watchdog ≤ 0.1 s; 2026-10-12) |
+| Version | 0.13 (§5: TSR-517, 518, 519, 711 (envelope) and 634, 713 (SoC) allocated, they were missing; Figure 3-1 lists generated from §5 and §6 by `fig_s03_hierarchy.py`, which fails CI on an unallocated TSR; Figures 4-1 and 4-4 relabelled ASIL C (OI-6 had left them at B‡); Figure 4-4 and §4.4 show the TSR-408 command-arrival check of the reference build (opendbc `273f44e`); 2026-10-19). 0.12 (OI-6 done: envelope elements E-03a, E-03b, E-04a and the interfaces they serve changed from B‡ to ASIL C in §3.1, §3.3, §5, Figures 3-1 and 3-2 and the SysML model; E-05 C (blocking) / B (PCS restore); OI-6 closed; 2026-10-16). 0.11 (DQ-341 applied: envelope elements ASIL C; OI-6 now to be done; 2026-10-16). 0.10 (scope line: SG-02, SG-03 and SG-06 ASIL C, SG-08 ASIL A, per WP-C-03 v0.4 and WP-S-02 v0.24; 2026-10-16). 0.9 (lead decisions of 2026-10-14 recorded: override backs off (DQ-053, SM-05), EPS-fault siren persistence ≤ 0.7 s (DQ-048), relay stuck in intercept warns and blocks engagement (DQ-064, SM-20), fallback limiter decided after the tests (DQ-050, OI-3); 2026-10-16). 0.8 (Figure 6-1 added, generated from the trace data of §5 and §6; 2026-10-13). 0.7 (§3.1 element hierarchy added as Figure 3-1; 2026-10-13). 0.6 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.5 (§3.2, §4.1 and §4.4 diagrams redrawn as Figures 3-2, 4-1 and 4-4; text versions kept; 2026-10-13). History: 0.4 (status update 2026-10-12: reference-build column in §4.3, status of SM-06, -09, -11, -12, -15, -22, -23, -36, -39 and of FFI-2, -5, -6 at `bf6ce8c`; OI-4 trigger reached; nothing verified on hardware or reviewed independently); 0.3 (SM-43; SM-23, -30, -31, -35 extended for WP-S-02 v0.3; watchdog ≤ 0.1 s; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (SG-02, SG-03, SG-06 since WP-C-03 v0.4; SG-01 until re-rated); ASIL A for SG-08. The envelope is hardened to ASIL C (WP-C-04 §4, decided DQ-341) |
 | Author | Assurance team (initial draft) |
@@ -54,7 +54,7 @@ It describes the architecture **as inherited at the baseline** and marks where t
 
 ![Figure 3-1: system element hierarchy: the LD-SDA system (the system node of WP-C-01 Figure 3-1) consists of E-01, E-02 and E-04b in the QM partition, E-03a, E-03b and E-04a in the ASIL C safety envelope, and E-05; each element carries its §5 TSRs and §6 safety mechanisms and consists of the parts and units of §3.1 and the openpilot processes of §8; EXT-EPS, EXT-PCM and EXT-CLU are outside the item](figures/fig-s03-3-1-system-element-hierarchy.svg)
 
-*Figure 3-1.* The elements of this table on the ISO 26262-1 hierarchy (3.39 element), below the system node of [WP-C-01](../02-concept/WP-C-01-item-definition.md) Figure 3-1: E-03a/E-03b refine E-03 and E-04a/E-04b refine E-04 of WP-C-01. Integrity tags are those of this table; TSR tags are the §5 allocation as written there (TSR-xxx, ranges as given; E-02 and E-04b have none, OPS 801–818 no element); SM tags are the §6 mechanisms whose Element column names that element alone, the twelve that name two elements are listed separately. E-01 is decomposed into the processes of §8 with their §8 role and TSRs. No implementation or verification status is shown. Source: [`figures/fig-s03-3-1-system-element-hierarchy.svg`](figures/fig-s03-3-1-system-element-hierarchy.svg); change it together with §3.1, §5, §6 and §8.
+*Figure 3-1.* The elements of this table on the ISO 26262-1 hierarchy (3.39 element), below the system node of [WP-C-01](../02-concept/WP-C-01-item-definition.md) Figure 3-1: E-03a/E-03b refine E-03 and E-04a/E-04b refine E-04 of WP-C-01. Integrity tags are those of this table; TSR tags are the §5 allocation as written there (TSR-xxx, ranges as given; E-02 and E-04b have none, OPS 801–818 no element); SM tags are the §6 mechanisms whose Element column names that element alone, the twelve that name two elements are listed separately. E-01 is decomposed into the processes of §8 with their §8 role and TSRs. No implementation or verification status is shown. The TSR and SM lists are generated from §5 and §6 by [`figures/fig_s03_hierarchy.py`](figures/fig_s03_hierarchy.py), which also fails CI when a TSR of WP-S-02 or WP-S-06 is not allocated in §5; the layout and the §3.1 and §8 content are hand-drawn in [`figures/fig_s03_hierarchy_template.svg`](figures/fig_s03_hierarchy_template.svg), so change that together with §3.1 and §8. Output: [`figures/fig-s03-3-1-system-element-hierarchy.svg`](figures/fig-s03-3-1-system-element-hierarchy.svg).
 
 ### 3.2 Block diagram
 
@@ -122,7 +122,7 @@ Ignition on
   │ card: fingerprint → CarParams → pandad sets TOYOTA, param 73 via 0xdc (panda_safety.cc:56-69)
   │ MCU: set_safety_hooks(): authority false, limiter state reset; relay driven (main.c:70-76, safety.h:391-462)
   │ [TSR-512: MCU accepts only TOYOTA/73; afterwards only de-escalation — implemented in the reference build 2026-10-12]
-  │ selfdrived: waits for all checks or 6 s (selfdrived.py:476-477), checks panda mode/param after 10 s (:338)
+  │ selfdrived: waits for all checks or 6 s (selfdrived.py:479-480), checks panda mode/param after 10 s (:338)
   │ Driver presses SET → PCM CRUISE_ACTIVE 0→1 on 0x1D2
   │ MCU: pcm_cruise_check rising edge → controls_allowed = true (safety.h:518-527)
   │       [TSR-306: only if all RX checks valid]
@@ -164,7 +164,7 @@ After revocation the envelope rejects further actuation frames. Under TSR-109 it
 
 ### 4.4 Heartbeat and timeout chain
 
-![Figure 4-4: heartbeat and timeout chain: command path controlsd, card, pandad, MCU safety_tx_hook with freshness limits 0.1 s, 1 s and none, heartbeat path selfdrived, pandad 0xf3 at 10 Hz, MCU heartbeat counter at 1 Hz, and timing of heartbeat loss (revoke 0.3 s in the reference build, siren ≤ 0.56 s if engaged since panda c33343b, SILENT after 4–5 s) and engaged mismatch (revoke after 2–3 s) against the required limits](figures/fig-4-4-heartbeat-timeout-chain.svg)
+![Figure 4-4: heartbeat and timeout chain: command path controlsd, card, pandad, MCU safety_tx_hook with freshness limits 0.1 s, 1 s and none at the baseline (> 50 ms in the reference build), heartbeat path selfdrived, pandad 0xf3 at 10 Hz, MCU heartbeat counter at 1 Hz, and timing of heartbeat loss (revoke 0.3 s in the reference build, siren ≤ 0.56 s if engaged since panda c33343b, SILENT after 4–5 s) and engaged mismatch (revoke after 2–3 s) against the required limits](figures/fig-4-4-heartbeat-timeout-chain.svg)
 
 *Figure 4-4.* Part A shows both paths with the freshness limit at each stage and the required changes in red. Part B puts heartbeat loss and engaged mismatch on one time axis; the 1 Hz tick phase is arbitrary, so the baseline times are ranges (4–5 s, 2–3 s, as in WP-S-04 T-05/T-06), and the dashed red lines are the required limits of TSR-407, TSR-510 and TSR-307. Source: [`figures/fig-4-4-heartbeat-timeout-chain.svg`](figures/fig-4-4-heartbeat-timeout-chain.svg); change it together with §4.3, §4.4 and [WP-S-04](WP-S-04-timing-ftti-budget.md) §4–§5.
 
@@ -184,17 +184,17 @@ selfdrived 100 Hz ─selfdriveState─▶ pandad main 10 Hz ─0xf3 engaged─�
 
 Required changes (WP-S-04 §5): heartbeat evaluated at ≥ 10 Hz with a 0.3 s timeout and control-loop evidence (TSR-407, 409); command-frame freshness in the MCU (TSR-408); `sendcan` age ≤ 20 ms (TSR-614).
 
-Status 2026-10-12 (`bf6ce8c`, not verified on hardware): the MCU's 100 Hz safety task revokes authority 0.3 s after the last `0xf3` in a car mode (`drivers/heartbeat_monitor.h`, panda `c2e5d93`); the 1 Hz mismatch and 5 s SILENT paths are unchanged. *2026-10-13:* the same task sounds the siren at that revocation when authority was granted, ≈ 0.56 s after the last heartbeat, in all builds (`drivers/heartbeat_siren.h`, panda `c33343b`; WP-S-04 T-07a; not verified on hardware). TSR-408, TSR-409 and TSR-614 are open.
+Status 2026-10-12 (`bf6ce8c`, not verified on hardware): the MCU's 100 Hz safety task revokes authority 0.3 s after the last `0xf3` in a car mode (`drivers/heartbeat_monitor.h`, panda `c2e5d93`); the 1 Hz mismatch and 5 s SILENT paths are unchanged. *2026-10-13:* the same task sounds the siren at that revocation when authority was granted, ≈ 0.56 s after the last heartbeat, in all builds (`drivers/heartbeat_siren.h`, panda `c33343b`; WP-S-04 T-07a; not verified on hardware). *2026-10-16:* the same task revokes authority when `0x2E4` has not reached the TX hook for > 50 ms, or `0x343` for > 100 ms with openpilot longitudinal (TSR-408, `safety.h` `tx_arrival_ok`, opendbc `273f44e`; WP-S-04 T-34; not verified on hardware). TSR-409 and TSR-614 are open.
 
 ## 5. Allocation of TSRs to elements
 
 | Element | TSRs | Highest ASIL |
 |---|---|---|
-| E-03a safety layer | 101–110, 201–207, 301, 302, 304–307(a), 309, 311, 401–406, 408, 704, 705, 710 | C |
-| E-03b panda firmware | 407, 409 (check), 410–413, 501–503, 506 (logic), 507, 508, 510–516, 701, 706, 707, 712 (detection, latch), 632 | C |
-| E-04a MCU hardware (configured by E-03b) | 501, 503–505, 507–509, 511 (option bytes), 515 | C |
+| E-03a safety layer | 101–110, 201–207, 301, 302, 304–307(a), 309, 311, 401–406, 408, 518, 704, 705, 710 | C |
+| E-03b panda firmware | 407, 409 (check), 410–413, 501–503, 506 (logic), 507, 508, 510–516, 517 (detection), 519, 632, 701, 706, 707, 711, 712 (detection, latch) | C |
+| E-04a MCU hardware (configured by E-03b) | 501, 503–505, 507–509, 511 (option bytes), 515, 517 (readback path), 519 (interrupt configuration) | C |
 | E-05 harness | 506 (relay), 701–703, 706, 712 (readback) | C/B |
-| E-01 SoC (QM) | 303, 307(b), 308, 409 (content), 410/411 (sender side), 601–631, 633, 709, 712 (warning) | QM (B-sup) |
+| E-01 SoC (QM) | 303, 307(b), 308, 409 (content), 410/411 (sender side), 601–631, 633, 634, 709, 712 (warning), 713 | QM (B-sup) |
 | EXT | 111, 208, 310, 708 | AoU |
 | OPS | 801–818 | — |
 

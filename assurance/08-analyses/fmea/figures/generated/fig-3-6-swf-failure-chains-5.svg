@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1662" viewBox="0 0 1280 1662" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-6. SW FMEA failure chains — sheet 5 of 13 (SWF)</title>
-  <desc id="d">SW FMEA failure chains, sheet 5 of 13 (SWF rev 1.6): failure modes SWF-028 to SWF-034 (6 failure modes, 12 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <desc id="d">SW FMEA failure chains, sheet 5 of 13 (SWF rev 1.7): failure modes SWF-028 to SWF-034 (6 failure modes, 12 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,7 +9,7 @@
   </defs>
   <rect width="1280" height="1662" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-6 · SW FMEA failure chains — sheet 5 of 13</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.6 · BL-006 · draft · SWF-028 … SWF-034 · 12 causes on this sheet</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.7 · BL-006 · draft · SWF-028 … SWF-034 · 12 causes on this sheet</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -113,7 +113,7 @@
   <rect x="1194.5" y="489.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="500.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
   <text x="885" y="515.1" font-size="10.5" fill="#0F172A">Test-only environment flags reach the vehicle: REPLAY sets the</text>
   <text x="885" y="529.2" font-size="10.5" fill="#0F172A">state to enabled when a panda reports controlsAllowed, bypassing</text>
-  <text x="885" y="543.2" font-size="10.5" fill="#0F172A">ENABLE/NO_ENTRY (selfdrived.py:493-494); SIMULATION ignores…</text>
+  <text x="885" y="543.2" font-size="10.5" fill="#0F172A">ENABLE/NO_ENTRY (selfdrived.py:496-497); SIMULATION ignores…</text>
   <text x="885" y="556.4" font-size="9.8" fill="#475569" font-weight="600">O2 · D10 · in SWF-SE-032</text>
   <rect x="885" y="562.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="573.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-031 open</text>
   <rect x="250" y="650.1" width="240" height="125.3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
@@ -148,7 +148,7 @@
   <rect x="1194.5" y="724.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="735.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
   <text x="885" y="749.8" font-size="10.5" fill="#0F172A">Every timer counts loop iterations, not time: soft_disable_timer</text>
   <text x="885" y="763.9" font-size="10.5" fill="#0F172A">(state.py:20, 40), mismatch_counter, cruise_mismatch_counter and</text>
-  <text x="885" y="777.9" font-size="10.5" fill="#0F172A">the sm.frame gates (selfdrived.py:340, 420, 427). The loop is pace…</text>
+  <text x="885" y="777.9" font-size="10.5" fill="#0F172A">the sm.frame gates (selfdrived.py:343, 423, 430). The loop is pace…</text>
   <text x="885" y="791.1" font-size="9.8" fill="#475569" font-weight="600">O6 · D10 · in SWF-SE-032</text>
   <rect x="885" y="797.1" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="808" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-035 open</text>
   <rect x="250" y="851.7" width="240" height="79.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
@@ -206,14 +206,14 @@
   <rect x="1194.5" y="980.9" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="991.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
   <text x="885" y="1006.5" font-size="10.5" fill="#0F172A">carState is read from its own socket with a 20 ms timeout and the</text>
   <text x="885" y="1020.5" font-size="10.5" fill="#0F172A">previous carState is reused when nothing arrives (selfdrived.py:85,</text>
-  <text x="885" y="1034.6" font-size="10.5" fill="#0F172A">474-475); carState is not in the SubMaster, so it has no alive/freq…</text>
+  <text x="885" y="1034.6" font-size="10.5" fill="#0F172A">477-478); carState is not in the SubMaster, so it has no alive/freq…</text>
   <text x="885" y="1047.7" font-size="9.8" fill="#475569" font-weight="600">O6 · D10 · in SWF-SE-032</text>
   <rect x="885" y="1053.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1064.7" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-032 open</text>
   <rect x="876" y="1084.7" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
   <text x="885" y="1104.2" font-size="12" fill="#0F172A" font-weight="700">SWF-031.C2</text>
   <rect x="1194.5" y="1093.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1104.2" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="1118.8" font-size="10.5" fill="#0F172A">Defect in the brake/gas rising-edge logic (selfdrived.py:255-258), in</text>
-  <text x="885" y="1132.9" font-size="10.5" fill="#0F172A">the canValid gate on car events (selfdrived.py:244-246), or in the</text>
+  <text x="885" y="1118.8" font-size="10.5" fill="#0F172A">Defect in the brake/gas rising-edge logic (selfdrived.py:258-261), in</text>
+  <text x="885" y="1132.9" font-size="10.5" fill="#0F172A">the canValid gate on car events (selfdrived.py:247-249), or in the</text>
   <text x="885" y="1146.9" font-size="10.5" fill="#0F172A">USER_DISABLE priority of the state machine (state.py:31-33)</text>
   <text x="885" y="1160.1" font-size="9.8" fill="#475569" font-weight="600">O7 · D8 · in SWF-SE-032</text>
   <rect x="885" y="1166.1" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1177" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-030 open</text>
@@ -256,7 +256,7 @@
   <rect x="1194.5" y="1345.9" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1356.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
   <text x="885" y="1371.5" font-size="10.5" fill="#0F172A">Safety model, parameter and alternative-experience mismatch is</text>
   <text x="885" y="1385.6" font-size="10.5" fill="#0F172A">ignored for the first 10 s after selfdrived starts</text>
-  <text x="885" y="1399.6" font-size="10.5" fill="#0F172A">(sm.frame*DT_CTRL &gt; 10, selfdrived.py:340), so an engagement i…</text>
+  <text x="885" y="1399.6" font-size="10.5" fill="#0F172A">(sm.frame*DT_CTRL &gt; 10, selfdrived.py:343), so an engagement i…</text>
   <text x="885" y="1412.8" font-size="9.8" fill="#475569" font-weight="600">O4 · D10 · in SWF-SE-032 · → SWF-013</text>
   <rect x="885" y="1418.8" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="1429.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-033 in progress</text>
   <rect x="876" y="1449.8" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
