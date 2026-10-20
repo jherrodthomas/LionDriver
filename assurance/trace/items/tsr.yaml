@@ -974,7 +974,7 @@
   mechanism: "DES"
   timing: "—"
   verification: "R, T-SIL"
-  baseline_impl: "Not met: masking during big-model load + 5 s (`selfdrive/selfdrived/selfdrived.py:387-389, 408, 462`); hot switch `selfdrive/modeld/modeld.py:411-419` (GAP-17). AIR-25, AIR-30 (WP-C-11 (assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md))"
+  baseline_impl: "Not met: masking during big-model load + 5 s (`selfdrive/selfdrived/selfdrived.py:428-430, 449, 505`); hot switch `selfdrive/modeld/modeld.py:411-419` (GAP-17). AIR-25, AIR-30 (WP-C-11 (assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md))"
   status: proposed
   source: WP-S-02
 
@@ -1184,7 +1184,7 @@
   mechanism: "PLB"
   timing: "0.25 s"
   verification: "T-SIL"
-  baseline_impl: "Implemented: `selfdrive/selfdrived/helpers.py:12, 30, 41`; latch `selfdrive/selfdrived/selfdrived.py:310-315`"
+  baseline_impl: "Implemented: `selfdrive/selfdrived/helpers.py:12, 30, 41`; latch `selfdrive/selfdrived/selfdrived.py:326-333`"
   status: proposed
   source: WP-S-02
 
@@ -1259,7 +1259,7 @@
   mechanism: "TMO"
   timing: "≤ 1 s / ≤ 0.2 s"
   verification: "T-SIL, FI"
-  baseline_impl: "Partial: a crashed `ui`/`soundd` raises `processNotRunning` (`selfdrive/selfdrived/selfdrived.py:356-362`); a hung render loop or stalled audio stream is not detected"
+  baseline_impl: "Partial: a crashed `ui`/`soundd` raises `processNotRunning` (`selfdrive/selfdrived/selfdrived.py:398-404`); a hung render loop or stalled audio stream is not detected"
   status: proposed
   source: WP-S-02
 
@@ -1589,7 +1589,7 @@
   mechanism: "PLB, FR"
   timing: "detect: first offending frame after ≤ 1–2 s window / same frame"
   verification: "T-SIL, T-HIL"
-  baseline_impl: "Implemented: `safety.h:211-220, 252, 268, 372-380`; reported `main.c:122-129`; host immediate disable `selfdrive/selfdrived/selfdrived.py:346-347`. Latching and readback per TSR-506"
+  baseline_impl: "Implemented: `safety.h:211-220, 252, 268, 372-380`; reported `main.c:122-129`; host immediate disable `selfdrive/selfdrived/selfdrived.py:377-378`. Latching and readback per TSR-506"
   status: proposed
   source: WP-S-02
 

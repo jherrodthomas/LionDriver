@@ -53,14 +53,14 @@ The driving model is a black box from LionDriver's point of view: training data 
 | FI-12 | S | Planner | Auto-resume from standstill when the lead moves, without checking for objects between ego and lead (VRU crossing) | SH-03, SH-11 | `toyota/interface.py:107`; `carcontroller.py:175-185` |
 | FI-13 | S | Lane change assist | No blind-spot or rear sensing; lane change starts on driver nudge | SH-10 | `LIMITATIONS.md:6`; `desire_helper.py:48-55` |
 | FI-14 | S | System supervision | Soft disable keeps actuating for 3 s on the failed inputs; inputs considered alive up to 10× period | SH-02, SH-06 | `state.py:7-8`; `cereal/messaging/__init__.py:152-153`; GAP-16 |
-| FI-15 | S | System supervision | Diagnostics (commIssue, posenet, locationd, modeldLagging) masked during big-model ("Chestnut") load and for 5 s after; cold small-model hot-switch while actuating | SH-01, SH-02, SH-04 | `selfdrived.py:387-389, 408, 462`; `modeld.py:411-419`; GAP-17 |
+| FI-15 | S | System supervision | Diagnostics (commIssue, posenet, locationd, modeldLagging) masked during big-model ("Chestnut") load and for 5 s after; cold small-model hot-switch while actuating | SH-01, SH-02, SH-04 | `selfdrived.py:428-430, 449, 505`; `modeld.py:411-419`; GAP-17 |
 | FI-16 | S | System supervision | `speedTooHigh` warns but does not disengage; no ODD monitor for speed below 149 km/h | SH-13 | `events.py:989-996`; GAP-19 |
 | FI-17 | S | System supervision | `cruiseMismatch` raised with no reaction; `canError` shows misleading text; non-finite commands silently clamped | SH-05, SH-02 | `events.py:458-460, 928-936`; `controlsd.py:140-147`; GAP-19 |
 | FI-18 | P | DM model | Reduced detection with sunglasses, low light, glare, face partly out of view, obstructions; model high-uncertainty fallback to wheel touch | SH-12 | `LIMITATIONS.md:53-56`; `policy.py:82-83` |
 | FI-19 | S | DM policy | Wheel-touch fallback resets awareness on any steering or gas input; source validity hard-coded `True`; alerts only above 2.8 m/s | SH-12 | `policy.py:29, 360-361`; `dmonitoringmodeld.py:99`; GAP-21 |
 | FI-20 | S | Configuration | Behaviour-changing parameters without protection: Experimental default on, debug/maneuver modes, `IsDriverViewEnabled` DM demo mode | SH-09, SH-12, SH-13 | `params_keys.h:43, 59`; `process_config.py:34-47`; GAP-18, GAP-20 |
 | FI-21 | S | Override semantics | Gas overrides longitudinal but does not disengage; host steering override threshold 500 raw; the driver may misjudge the state | SH-05 | `params_keys.h:35`; `carcontroller.py:33, 83` |
-| FI-22 | P | Driving model | Temporal effects: model lag or frame drops degrade the plan; recurrent state reset after model switch | SH-01, SH-02 | `selfdrived.py:462` (`modeldLagging`); `modeld.py:411-419` |
+| FI-22 | P | Driving model | Temporal effects: model lag or frame drops degrade the plan; recurrent state reset after model switch | SH-01, SH-02 | `selfdrived.py:505-506` (`modeldLagging`); `modeld.py:411-419` |
 | FI-23 | S | Interface to the stock PCS | The specification does not state how the item's behaviour interacts with the stock pre-collision system. When LD-SDA sends its own `ACC_CONTROL`, the stock PCS sees the item's acceleration request in place of stock ACC's. Message interception may change what the PCS receives. A device alert may cover or distract from the PCS warning. Forwarding the PCS messages is intended but not verified | SH-08 | WP-C-01 §2 (AOU-04); `toyotacan.py:56`; `carstate.py:80, 154` (stock AEB and FCW read, not acted on) |
 
 ## 4. Triggering conditions
@@ -96,7 +96,7 @@ The driving model is a black box from LionDriver's point of view: training data 
 | TC-27 | Lead moves off from standstill while a pedestrian crosses between ego and lead | Traffic / VRU | FI-12 |
 | TC-28 | Driver nudges for a lane change with a vehicle in the blind spot | Driver / traffic | `LIMITATIONS.md:6` |
 | TC-29 | Driver presses gas to override and believes the system disengaged | Driver / HMI | `params_keys.h:35` |
-| TC-30 | PCM cruise remains active after an item disengagement (cancel not effective) | Vehicle / system | `selfdrived.py:426`; GAP-19 |
+| TC-30 | PCM cruise remains active after an item disengagement (cancel not effective) | Vehicle / system | `selfdrived.py:468`; GAP-19 |
 | TC-31 | Exit lane or lane split on a highway (path follows the wrong branch) | Infrastructure | domain |
 | TC-32 | Narrow lane (≤ 3.3 m) with an adjacent large vehicle or a concrete barrier close to the lane edge | Infrastructure / traffic | domain; proposed by [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md) KS-06 |
 | TC-33 | Lead vehicle braking harder than the item's deceleration bound (lead decel > 3.5 m/s²), incl. slow lead at highway speed | Traffic | `LIMITATIONS.md:38`; proposed by WP-V-03 KS-08 |
