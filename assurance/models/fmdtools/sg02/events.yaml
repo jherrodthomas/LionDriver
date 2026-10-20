@@ -26,6 +26,7 @@ timing:
   # later upper bounds (EPS-fault persistence 0.96 s, WP-S-04 T-28; heartbeat 0.56 s, T-07a) and are not used.
   siren_after_eps_fault: {s: 0.25, source: "Plant F-07: EPS fault, revoked 0.053 s, siren 0.25 s (sim/results/plant-results.md)"}
   siren_after_heartbeat_loss: {s: 0.25, source: "Plant F-04a/F-04b: heartbeat lost, revoked 0.193/0.043 s, siren 0.25 s (plant-results.md; silent-stall.md 0.25-0.29 s)"}
+  revoke_after_frames_stop: {s: 0.05, source: "change-2026-10-12-opendbc-toyota-tx-arrival §2: when card stops sending, the command-arrival check revokes authority within 50 ms of the last 0x2E4 (WP-S-04 T-34)"}
   revoke_after_engaged_mismatch: {s: 3.0, source: "WP-A-04 §4.1 MCS-02.9: the panda revokes authority after about 3 s on the engaged mismatch (not measured in the plant)"}
   siren_after_revocation: {s: 0.21, source: "Plant: siren 0.06 s (F-04a), 0.20 s (F-07) and 0.21 s (F-04b) after the revocation; the largest is used"}
 
