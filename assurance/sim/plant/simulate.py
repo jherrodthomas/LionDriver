@@ -48,6 +48,7 @@ ASSUMPTIONS = {
   "camera_lka": (0.0, "stock camera LKA is off: its STEERING_LKA frames carry STEER_REQUEST 0 and torque 0"),
   "a_pcs": (6.0, "stock PCS braking deceleration, assumption A-PCS-1 of WP-S-04 §3.6, to be measured (OI-4)"),
   "whatif_silent_panda": (0.0, "what-if, off (0) in every catalog case: when 1, the panda siren is muted, which in a SoC stall (F-04b) reproduces the panda before DQ-404 (`bf8102a`: no siren on the TX-arrival revocation, WP-S-04 T-34). Used by silent_stall.py to compare against the build with the siren (decision register DQ-404)"),
+  "host_stale_s": (0.1, "openpilot on the SoC treats selfdriveState as stale 0.1 s after its last message (10 nominal periods at 100 Hz): controlsd then drops latActive and longActive (TSR-602, controlsd.py inputs_fresh) and pandad's heartbeat reports not engaged (pandad.cc allAliveAndValid, socketmaster.cc). The host is modelled; read from the code, not measured"),
   "speaker_phase": (0.0, "the 8 Hz tick starts at t = 3 ms; the siren can come up to 125 ms later at another phase"),
 }
 
@@ -127,6 +128,9 @@ class Result:
 
 
 SCENARIOS = Path(__file__).resolve().parents[1] / "scenarios"
+# openpilot soundd: the "TAKE CONTROL IMMEDIATELY" alert once selfdriveState has been missing this long (real code)
+SELFDRIVE_STATE_TIMEOUT = float(re.search(r"^SELFDRIVE_STATE_TIMEOUT = (\d+(?:\.\d+)?)", (
+  ROOT / "openpilot" / "selfdrive" / "ui" / "soundd.py").read_text(encoding="utf-8"), re.M).group(1))
 
 
 def scenario_param(ks: str, name: str) -> float:
@@ -172,6 +176,7 @@ class SoC:
     self.accel_cmd = 0.0
     self.heartbeat_ok = True
     self.stalled = False
+    self.selfdrived_stop = None    # fault: time at which selfdrived stopped publishing (controlsd and pandad run on)
 
   def steer_frame(self, engaged, v, kappa, e_y, e_psi, eps_torque, a_ff=None):
     if self.frozen is not None:
@@ -298,6 +303,8 @@ def _simulate(case: Case) -> Result:
     elif f == "soc_stall":
       soc.stalled = True
       soc.heartbeat_ok = False
+    elif f == "selfdrived_stop":
+      soc.selfdrived_stop = t
     elif f in ("mcu_hang", "mcu_hang_stuck_intercept", "pcs_mcu_hang", "pcs_stuck_intercept"):
       panda.hung = True
       stuck_intercept = f in ("mcu_hang_stuck_intercept", "pcs_stuck_intercept")
@@ -380,7 +387,8 @@ def _simulate(case: Case) -> Result:
       inject(case.fault2, True, v, kappa, e_y, e_psi)
       res.event("second fault", t)
 
-    engaged_soc = case.engaged and t >= t_engage and not soc.stalled
+    engaged_soc = case.engaged and t >= t_engage and not soc.stalled and not (
+      soc.selfdrived_stop is not None and t >= soc.selfdrived_stop + A("host_stale_s"))
     intercept = (panda.relay_driven and not stuck_pass) or stuck_intercept
 
     # ------------------------------------------------ car bus -> panda (RX)
@@ -452,6 +460,8 @@ def _simulate(case: Case) -> Result:
       panda.iwdg_step(0.0)
     if k % 125 == 3:
       loop_counter = (loop_counter + 1) % 8
+      if loop_counter == 0:
+        panda.tick_1hz()
       if panda.siren(loop_counter) and not A("whatif_silent_panda") and fault_on:
         res.event("panda siren", t)
     if fault_on and not panda.controls_allowed and case.engaged and "authority revoked" not in res.events and not panda.hung:
@@ -460,10 +470,17 @@ def _simulate(case: Case) -> Result:
     if fault_on and panda.relay_malfunction:
       res.event("relay malfunction detected", t)
 
+    # openpilot's own alert when selfdrived stops: soundd and the UI warn once selfdriveState has been missing for
+    # SELFDRIVE_STATE_TIMEOUT and its last message said enabled (soundd.py check_selfdrive_timeout_alert)
+    if soc.selfdrived_stop is not None and t >= soc.selfdrived_stop + SELFDRIVE_STATE_TIMEOUT:
+      res.event("openpilot alert (selfdrive timeout)", soc.selfdrived_stop + SELFDRIVE_STATE_TIMEOUT)
+
     # ------------------------------------------------ driver
     if fault_on and driver_cue is None:
       if "panda siren" in res.events:
         driver_cue = ("siren", res.events["panda siren"])
+      elif "openpilot alert (selfdrive timeout)" in res.events:
+        driver_cue = ("alert", res.events["openpilot alert (selfdrive timeout)"])
       elif not case.longitudinal and abs(e_y - res.e0 - lc_drift(t)) > A("driver_lat_cue_m"):
         driver_cue = ("drift", t)
       elif case.longitudinal and abs(ax_meas - 0.0) > A("driver_long_cue"):

@@ -158,4 +158,5 @@ The stock camera sends a PCS braking request at the fault onset. It reaches the 
 | camera_lka | 0 | stock camera LKA is off: its STEERING_LKA frames carry STEER_REQUEST 0 and torque 0 |
 | a_pcs | 6 | stock PCS braking deceleration, assumption A-PCS-1 of WP-S-04 §3.6, to be measured (OI-4) |
 | whatif_silent_panda | 0 | what-if, off (0) in every catalog case: when 1, the panda siren is muted, which in a SoC stall (F-04b) reproduces the panda before DQ-404 (`bf8102a`: no siren on the TX-arrival revocation, WP-S-04 T-34). Used by silent_stall.py to compare against the build with the siren (decision register DQ-404) |
+| host_stale_s | 0.1 | openpilot on the SoC treats selfdriveState as stale 0.1 s after its last message (10 nominal periods at 100 Hz): controlsd then drops latActive and longActive (TSR-602, controlsd.py inputs_fresh) and pandad's heartbeat reports not engaged (pandad.cc allAliveAndValid, socketmaster.cc). The host is modelled; read from the code, not measured |
 | speaker_phase | 0 | the 8 Hz tick starts at t = 3 ms; the siren can come up to 125 ms later at another phase |
