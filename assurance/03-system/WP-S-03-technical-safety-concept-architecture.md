@@ -122,7 +122,7 @@ Ignition on
   │ card: fingerprint → CarParams → pandad sets TOYOTA, param 73 via 0xdc (panda_safety.cc:56-69)
   │ MCU: set_safety_hooks(): authority false, limiter state reset; relay driven (main.c:70-76, safety.h:391-462)
   │ [TSR-512: MCU accepts only TOYOTA/73; afterwards only de-escalation — implemented in the reference build 2026-10-12]
-  │ selfdrived: waits for all checks or 6 s (selfdrived.py:476-477), checks panda mode/param after 10 s (:338)
+  │ selfdrived: waits for all checks or 6 s (selfdrived.py:479-480), checks panda mode/param after 10 s (:338)
   │ Driver presses SET → PCM CRUISE_ACTIVE 0→1 on 0x1D2
   │ MCU: pcm_cruise_check rising edge → controls_allowed = true (safety.h:518-527)
   │       [TSR-306: only if all RX checks valid]

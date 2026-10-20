@@ -178,7 +178,7 @@ The item cannot brake harder than a_min = −3.5 m/s² (TSR-202), so a lead that
 | 20 m/s | 1.68 s | 3.77 s |
 | 30 m/s | 1.61 s | 3.20 s |
 
-With t_r = 1.0 s the FCW must sound within about 0.6 s of the lead's braking onset at a 1.0 s gap, and within 2.2 s at 1.5 s. The FCW onset of the planner and model triggers (`selfdrive/selfdrived/selfdrived.py:442-447`) is not derived from the code here (T-31); it is to be measured (M-12).
+With t_r = 1.0 s the FCW must sound within about 0.6 s of the lead's braking onset at a 1.0 s gap, and within 2.2 s at 1.5 s. The FCW onset of the planner and model triggers (`selfdrive/selfdrived/selfdrived.py:445-450`) is not derived from the code here (T-31); it is to be measured (M-12).
 
 #### 3.8.3 Unintended engagement (System FMEA SG-008; SFM-013.C1, C2)
 
@@ -242,12 +242,12 @@ Faults that the envelope does not report, so no warning comes from the item (§5
 | T-14 | Inter-process alive | `openpilot/cereal/messaging/__init__.py:265` | 10 × period | 0.1 s (100 Hz), 0.5 s (20 Hz: `modelV2`, `longitudinalPlan`, `radarState`, DM) |
 | T-15 | Frequency check | `cereal/messaging/__init__.py:152-153` | average rate outside 0.8–1.2 × nominal over moving windows of 1–10 s | ≈ 1–10 s |
 | T-16 | Soft disable | `openpilot/selfdrive/selfdrived/state.py:7` | actuation continues during countdown | **3 s** (+ up to 0.5 s alive window = 3.5 s) |
-| T-17 | `controlsMismatch` (panda vs host authority) | `selfdrived.py:340, 507-531` | 200 cycles at 100 Hz | 2 s |
-| T-18 | Safety mode/param mismatch | `selfdrived.py:333-341` | only after 10 s from start | 10 s after start |
-| T-19 | `cruiseMismatch` | `selfdrived.py:422-424`; `events.py:458-460` | 6 s; no reaction | not reacted |
+| T-17 | `controlsMismatch` (panda vs host authority) | `selfdrived.py:343, 510-535` | 200 cycles at 100 Hz | 2 s |
+| T-18 | Safety mode/param mismatch | `selfdrived.py:336-344` | only after 10 s from start | 10 s after start |
+| T-19 | `cruiseMismatch` | `selfdrived.py:425-427`; `events.py:458-460` | 6 s; no reaction | not reacted |
 | T-20 | `selfdrivedLagging` / Ratekeeper | `openpilot/common/realtime.py:72-74`; `selfdrived.py:136` | average dt over 100 samples > period/0.9 | ≈ 1 s averaging |
 | T-21 | Excessive actuation | `selfdrive/selfdrived/helpers.py:12` | 0.25 s persistence | 0.25 s |
-| T-22 | Big-model diagnostic masking | `selfdrived.py:384-386` | masked during load + 5 s | up to 5 s blind (GAP-17) |
+| T-22 | Big-model diagnostic masking | `selfdrived.py:387-389` | masked during load + 5 s | up to 5 s blind (GAP-17) |
 | T-23 | EPS drop-out handling (vehicle) | comment `opendbc_repo/opendbc/car/toyota/carstate.py:15-16` | LKA_STATE 9 → 11 over ≈ 2 s, then 3 | ≈ 2 s (unverified, AOU-01R) |
 | T-24 | DM escalation | `selfdrive/monitoring/policy.py:31-36, 44` | vision 5/8/13 s; wheel-touch 5/15/25 s; +5 s at alert 3 → force decel | per policy |
 | T-25 | Host steering fault hysteresis | `selfdrive/car/car_events.py` (onboard review) | 1.5 s | 1.5 s |
@@ -255,7 +255,7 @@ Faults that the envelope does not report, so no warning comes from the item (§5
 | T-27 | TX rate supervision (reference build, added 2026-10-12) | `opendbc_repo/opendbc/safety/safety.h` `tx_rate_check` (opendbc `951b459`) | per-ID sliding 250 ms window; 3 rejections while controls are allowed revoke | revoke ≤ 0.1 s after the first rejected frame (≤ 0.2 s from onset at 2× the rate; unit tests) (TSR-518). Not verified on hardware |
 | T-28 | EPS fault (reference build, added 2026-10-12) | `modes/toyota.h` (opendbc `338f5fc`); `panda/board/drivers/eps_fault_siren.h` (panda `6a7f2fb`) | LKA_STATE fault codes on `0x262`: STEERING_LKA with torque refused from the receipt of the fault frame; siren once the fault has persisted 0.7 s (70 ticks) after it was seen while `controls_allowed` (panda `bf8102a`, DQ-048; counted on after a revocation since `3ee2796`, DQ-367), driven by the 8 Hz speaker tick on every other tick | LKA refused on receipt of the fault frame (TSR-110); siren ≤ 0.7 s + 10 ms + 2 × 125 ms ≈ **0.96 s** after fault onset worst case (TSR-516(b)); within the SG-02 1 s warning row. With the 1 s persistence before panda `bf8102a`: ≤ 1.26 s, over the row (OI-8). Not verified on hardware |
 | T-30 | Controller saturation warning `steerSaturated` (added 2026-10-16) | `openpilot/selfdrive/controls/lib/latcontrol.py:8, 22-29`; `opendbc_repo/opendbc/car/toyota/interface.py:50` | saturation time accumulates to `steerLimitTimer` = 0.4 s (LKA torque cars) | 0.4 s + 1 frame |
-| T-31 | Forward collision warning (added 2026-10-16) | `selfdrive/selfdrived/selfdrived.py:442-447` | model `hardBrakePredicted` or planner FCW | not derived; measure (M-12) |
+| T-31 | Forward collision warning (added 2026-10-16) | `selfdrive/selfdrived/selfdrived.py:445-450` | model `hardBrakePredicted` or planner FCW | not derived; measure (M-12) |
 | T-32 | Host check of panda authority while disengaged (added 2026-10-16) | — | not implemented (TSR-630) | not detected |
 | T-33 | Terminal DM reaction (added 2026-10-16) | `selfdrive/monitoring/policy.py:44, 437`; `selfdrive/controls/controlsd.py:236` | forced deceleration 5 s after the terminal alert; no disengagement | 5 s to deceleration; no safe state (TSR-633) |
 | T-34 | SoC command arrival (TSR-408; reference build, added 2026-10-16) | `opendbc_repo/opendbc/safety/safety.h` `tx_arrival_ok`, `modes/toyota.h` (opendbc `273f44e`) | while authority is granted, the 100 Hz safety task revokes it when `0x2E4` has not reached the TX hook for > 50 ms or, with openpilot longitudinal, `0x343` for > 100 ms | ≤ 0.06 s for `0x2E4`, ≤ 0.11 s for `0x343` (one task period added). Runs in the safety task **before** the heartbeat check (`main.c` `safety_task_handler`), so in a full SoC stall it revokes first and T-07a does not sound. Simulated 0.043 s (§3.9). Not verified on hardware |
