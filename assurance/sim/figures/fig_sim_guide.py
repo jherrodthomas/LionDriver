@@ -23,7 +23,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 SIM = HERE.parent
 SOURCE = SIM / "blender" / "dashboards" / "he-02-1-eps-loss-curve.jpg"
-SOURCE_SHA256 = "d1705cf4d363940844ad2854d45c3b6539a790ef3ba2e6df9e6e11109f02aea6"
+SOURCE_SHA256 = "300778f1b44cfe6e8d7c01c2c38e6b421c130c4555ec684d0134fd2d8988d2af"
 sys.path.insert(0, str(HERE))
 
 # panel number -> (name, box x0, y0, x1, y1 in the 1600 x 900 dashboard)
