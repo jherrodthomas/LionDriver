@@ -586,8 +586,10 @@ scenes:
     variants: [W03, W05]
     trigger_label: steering stops; display still shows engaged
     caption: >-
-      The item has stopped steering but still shows engaged: the driver, believing the system steers, notices only
-      the drift (the plant's 0.2 m cue) and corrects after the reaction time.
+      The item has stopped steering (the SoC stalled) but its display still shows engaged. Since DQ-404 the panda
+      revokes and sounds its siren 0.3 s later, so the driver, believing the system steers, is cued by the siren
+      rather than the drift and corrects after the reaction time; at R_ODD the body still reaches the line. Before
+      DQ-404 there was no siren and only the drift (the plant's 0.2 m cue) told the driver.
 
   - id: he-07-2-mode-confusion-gentle
     he: HE-07.2
@@ -599,7 +601,8 @@ scenes:
     traffic: free-flow
     trigger_label: steering stops; display still shows engaged
     caption: >-
-      As HE-07.1 on a straight or gentle curve: a slow drift, noticed late.
+      As HE-07.1 on a straight or gentle curve. Since DQ-404 the panda's siren cues the driver 0.25 s after the stall,
+      so the slow drift is caught before the body reaches the lane line.
 
   - id: he-07-3-believes-acc-active
     he: HE-07.3
