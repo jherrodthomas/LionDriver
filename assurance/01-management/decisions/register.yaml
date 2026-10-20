@@ -4011,8 +4011,9 @@
       title: "Ed25519"
       detail: "Simple, modern and fast. Cost: less hardware support on the STM32 and fewer qualified libraries, so more own verification work."
   sources: ["assurance/03-system/WP-S-07-cybersecurity-requirements-architecture.md OI-4", "assurance/01-management/WP-M-09-cybersecurity-plan.md OI-1"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all ten (the recommended option of each)"}
+  applied: {ref: "jherrodthomas/LionDriver#364, jherrodthomas/LionDriver#367", record: "ECDSA P-256 with SHA-256 named in TSR-511 (WP-S-02 v0.47), SWSR-511/511a (WP-W-02 v0.40) and CSR-031 (WP-S-07 v0.6); CSR-121 and WP-S-07 §3.6 sign the update manifest with the same scheme under the offline update key; WP-S-07 OI-4 updated. The bootstub ECDSA implementation follows: GAP-24/25, R-15, WBS 4.4 and WP-O-05 OI-7 stay open until it lands", at: 2026-10-20}
 
 - id: DQ-192
   question: "Which SAST, SBOM and dependency-scanning tools should be selected and qualified?"
