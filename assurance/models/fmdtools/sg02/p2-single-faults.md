@@ -28,7 +28,7 @@ Tree alone: the event gives TE-02 in the tree once its latent events (BE-2.11, B
 | BE-2.03 | soc.input_stale | 0.00 / 0.10 alert | 0.00 / 0.10 alert | 0.00 / 0.10 alert | no | no | yes |
 | BE-2.04 | soc.nonfinite | 0.00 / none | 0.00 / none | 0.00 / none | **yes** | yes | yes |
 | BE-2.05 | soc.crash | 0.00 / 0.26 siren | 0.00 / 0.26 siren | 0.00 / 0.26 siren | no | yes | **no** |
-| BE-2.21 | soc.selfdrived_stop | 0.10 / 0.38 siren | 0.10 / 0.38 siren | 0.10 / 0.38 siren | no | yes | **no** |
+| BE-2.21 | soc.selfdrived_stop | 0.10 / none | 0.10 / none | 0.10 / none | **yes** | yes | yes |
 | BE-2.06 | soc.frames_stop | 0.00 / 0.50 alert | 0.00 / 0.50 alert | 0.00 / 0.50 alert | no | no | yes |
 | BE-2.07 | supply.loss | 0.00 / none | 0.00 / 0.00 feel | 0.00 / 0.00 feel | **straight** | with UE-2.18 | **no** |
 | BE-2.23 | soc.insufficient | not lost | 0.00 / 0.50 alert | 0.00 / 0.50 alert | no | no | yes |
@@ -49,7 +49,6 @@ Tree alone: the event gives TE-02 in the tree once its latent events (BE-2.11, B
 ## Differences from the tree
 
 - **BE-2.05** gives TE-02 alone in the tree, not in the model: the model's cue is siren within the budget. The tree holds BE-2.14 (siren not triggered) latent; the model's siren follows the plant times of events.yaml.
-- **BE-2.21** gives TE-02 alone in the tree, not in the model: the model's cue is siren within the budget. The tree holds BE-2.14 (siren not triggered) latent; the model's siren follows the plant times of events.yaml.
 - **BE-2.07** gives TE-02 alone in the model (straight); the tree needs UE-2.18 too. The model takes no cue from the driver there: see the phase's source.
 
 Each difference goes to the FTA owner as a finding; step P3 does the same for joint faults.

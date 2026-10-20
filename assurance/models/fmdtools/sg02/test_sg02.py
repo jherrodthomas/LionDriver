@@ -69,6 +69,8 @@ class TestBehaviour(unittest.TestCase):
 
   def test_cut_sets_the_model_reproduces(self):
     self.assertTop(("BE-2.04",), True, "MCS-02.4: silent loss, BE-2.11 latent")
+    # plant case MCS-02.9: frames keep arriving without a torque request, the 1 Hz mismatch revocation sounds no siren
+    self.assertTop(("BE-2.21",), True, "MCS-02.9: UI only after 5 s, no siren")
     self.assertTop(("BE-2.02", "BE-2.09"), True, "MCS-02.2")
     self.assertTop(("BE-2.01", "UE-2.19"), True, "MCS-02.10: silent EPS drop")
     self.assertTop(("BE-2.06", "BE-2.17"), True, "MCS-02.8")
@@ -83,9 +85,7 @@ class TestBehaviour(unittest.TestCase):
     self.assertTop(("BE-2.05",), False, "revocation siren at 0.26 s")
     self.assertTop(("BE-2.07",), False, "driver feels the end of LKA torque")
     self.assertTop(("BE-2.05", "BE-2.22"), True, "MCS-02.5 as dual: heartbeat siren path failed")
-    # card stops sending after a selfdrived stop, so the command-arrival check revokes and the siren sounds (T-34)
-    self.assertTop(("BE-2.21",), False, "MCS-02.9: revocation siren at 0.38 s, before the 5 s UI")
-    self.assertTop(("BE-2.21", "BE-2.22"), True, "MCS-02.9 as dual: siren path failed")
+
 
   def test_where_the_model_differs_from_the_table(self):
     # MCS-02.1 and MCS-02.11 hold BE-2.14 latent. The siren sounds about 0.25 s after an EPS fault (revocation siren,
