@@ -335,7 +335,7 @@
   allocated_to: "Firmware"
   hw_kind: "CFG"
   verification: "T-HIL"
-  baseline_impl: "**Implemented.** `relay_malfunction` blocks TX (`safety.h:252`) and forwarding (`safety.h:268`); reported as `FAULT_RELAY_MALFUNCTION` (`main.c:122-129`); host immediate-disable (`openpilot/selfdrive/selfdrived/selfdrived.py:343`). Cleared on any safety-mode change (`safety.h:427, 459`), not latched to a power cycle"
+  baseline_impl: "**Implemented.** `relay_malfunction` blocks TX (`safety.h:252`) and forwarding (`safety.h:268`); reported as `FAULT_RELAY_MALFUNCTION` (`main.c:122-129`); host immediate-disable (`openpilot/selfdrive/selfdrived/selfdrived.py:346`). Cleared on any safety-mode change (`safety.h:427, 459`), not latched to a power cycle"
   status: proposed
   source: WP-H-01
 
@@ -503,7 +503,7 @@
   allocated_to: "Fan tachometer"
   hw_kind: "HW + CFG"
   verification: "T-HIL"
-  baseline_impl: "Tach measured (`drivers/fan.h:23-43`); host raises a fault when fan < 500 rpm for > 15 s (onboard review, `selfdrived.py:270-273`)"
+  baseline_impl: "Tach measured (`drivers/fan.h:23-43`); host raises a fault when fan < 500 rpm for > 15 s (onboard review, `selfdrived.py:273-276`)"
   status: proposed
   source: WP-H-01
 

@@ -95,7 +95,7 @@ block_diagram:
       type: data
       label: "modelV2 (alive check)"
       both_ways: false
-      ref: "openpilot/selfdrive/selfdrived/selfdrived.py:100, 181"
+      ref: "openpilot/selfdrive/selfdrived/selfdrived.py:100, 184"
     - id: I03
       from: B02
       to: B05
@@ -158,14 +158,14 @@ block_diagram:
       type: data
       label: "carState (events)"
       both_ways: false
-      ref: "assurance/05-software/WP-W-03-software-architecture.md §4.2; openpilot/selfdrive/selfdrived/selfdrived.py:163"
+      ref: "assurance/05-software/WP-W-03-software-architecture.md §4.2; openpilot/selfdrive/selfdrived/selfdrived.py:166"
     - id: I12
       from: B07
       to: B04
       type: data
       label: "pandaStates (10 Hz)"
       both_ways: false
-      ref: "openpilot/selfdrive/pandad/pandad.cc:285; openpilot/selfdrive/selfdrived/selfdrived.py:341-353, 558"
+      ref: "openpilot/selfdrive/pandad/pandad.cc:285; openpilot/selfdrive/selfdrived/selfdrived.py:344-356, 562"
     - id: I13
       from: B07
       to: B08
@@ -275,7 +275,7 @@ p_diagram:
     - text: "controls_allowed gated on PCM rising edge"
       ref: "opendbc_repo/opendbc/safety/safety.h:683-711 (pcm_cruise_check), 500-520 (generic_rx_checks)"
     - text: "ControlsMismatch 2 samples, 0.5 s, grace"
-      ref: "openpilot/selfdrive/selfdrived/selfdrived.py:53-56, 138, 561-570; openpilot/selfdrive/selfdrived/supervision.py:4 (TSR-621)"
+      ref: "openpilot/selfdrive/selfdrived/selfdrived.py:53-56, 138, 565-574; openpilot/selfdrive/selfdrived/supervision.py:4 (TSR-621)"
     - text: "Stale-input checks (inputs_fresh, age < 1 s)"
       ref: "openpilot/selfdrive/controls/controlsd.py:34-36, 119-120; openpilot/selfdrive/pandad/pandad.cc:79; openpilot/selfdrive/car/card.py:234"
     - text: "TX arrival 50/100 ms, TX rate budget"

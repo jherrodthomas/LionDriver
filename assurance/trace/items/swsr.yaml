@@ -527,7 +527,7 @@
   acceptance: "Event within 30 frames"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met: 200 frames (`selfdrive/selfdrived/selfdrived.py:340, 507-531`)"
+  baseline_impl: "Not met: 200 frames (`selfdrive/selfdrived/selfdrived.py:343, 510-535`)"
   status: proposed
   source: WP-W-02
 
@@ -1407,7 +1407,7 @@
   acceptance: "No suppression path reachable while engaged"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met: `selfdrived.py:384-386, 405, 459`; `modeld.py:411-419` (GAP-17)"
+  baseline_impl: "Not met: `selfdrived.py:387-389, 408, 462`; `modeld.py:411-419` (GAP-17)"
   status: proposed
   source: WP-W-02
 
@@ -1647,7 +1647,7 @@
   acceptance: "Latch"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `selfdrived/helpers.py:12, 30, 41`; `selfdrived.py:307-312`"
+  baseline_impl: "Impl: `selfdrived/helpers.py:12, 30, 41`; `selfdrived.py:310-315`"
   status: proposed
   source: WP-W-02
 
@@ -1679,7 +1679,7 @@
   acceptance: "Mismatch → no engagement ≤ 1 s"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not impl (`selfdrive/pandad/panda_safety.cc:56-69`); host check vs CarParams only (`selfdrived.py:332-341`)"
+  baseline_impl: "Not impl (`selfdrive/pandad/panda_safety.cc:56-69`); host check vs CarParams only (`selfdrived.py:335-344`)"
   status: proposed
   source: WP-W-02
 
@@ -1727,7 +1727,7 @@
   acceptance: "Disable ≤ 1.2 s after a render or audio stall (SIGSTOP of the process)"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not impl: only `processNotRunning` on a crash (`selfdrived.py:353-359`)"
+  baseline_impl: "Not impl: only `processNotRunning` on a crash (`selfdrived.py:356-362`)"
   status: proposed
   source: WP-W-02
 
@@ -1791,7 +1791,7 @@
   acceptance: "No FCW from a stale or invalid input; rate measurable from logs"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: no freshness gate (`selfdrived.py:442-447`)"
+  baseline_impl: "Partial: no freshness gate (`selfdrived.py:445-450`)"
   status: proposed
   source: WP-W-02
 
