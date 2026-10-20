@@ -1454,7 +1454,7 @@
   mechanism: "WRN"
   timing: "first alert ≤ 6 s end to end"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Not met: not measured; the policy timer alone is 5 s to the first alert (`selfdrive/monitoring/policy.py:31-36`, TSR-608), and the camera, model and policy latency on top of it is neither budgeted nor measured (WP-C-08 OI-2). Added v0.45: FSR-08.01 had no TSR"
+  baseline_impl: "Not met: (1) an uncertain DM output stops the countdown, so a distracted driver gets the first alert after 15.0 s instead of 5.30 s, measured on the real policy code (SWSR-635b, WP-W-02 OI-17); (2) the camera, model and policy latency on top of the 5 s timer is neither budgeted in code nor measured (SWSR-635, WP-C-08 OI-2). Refined in WP-W-02 v0.38 (SWSR-635, 635a, 635b). Added v0.45: FSR-08.01 had no TSR"
   status: proposed
   source: WP-S-02
 

@@ -1843,6 +1843,54 @@
   status: proposed
   source: WP-W-02
 
+- id: SWSR-635
+  kind: swsr
+  text: "While engaged above the DM alert speed (10 km/h), with the driver attentive before the change, the first DM alert (alert level one shown by `ui` and its sound started by `soundd`) shall come no later than 6.0 s after the driver's change of state: for the vision policy, the start of exposure (`timestampSof`) of the first cabin frame in which the eyes are off the road; for the wheel-touch policy, the last driver interaction. The 6.0 s is allocated as: the alert-1 timer of SWSR-608 / SWSR-634, 5.0 s; detection, from that frame's start of exposure until the awareness countdown runs (frame readout, `dmonitoringmodeld` execution and the distraction filter), ≤ 0.5 s; alert output, from the `driverMonitoringState` that first carries alert level one until the alert is shown and its sound starts (`selfdrived`, `ui`, `soundd`), ≤ 0.3 s; margin, 0.2 s. Alert output is shared with SWSR-606, and `soundd` priority with SWSR-627."
+  asil: "A (TSR-635; allocated to the QM SoC, open: WP-C-04 OI-11)"
+  parents: [TSR-635]
+  parent_text: "TSR-635"
+  other_parents: false
+  allocated_to: "`host.dm`, `host.modeld`, `host.selfdrived`, `host.hmi`"
+  verification: "UT, IT, VT, LOG"
+  acceptance: "Each budget part met separately: detection ≤ 0.5 s and output ≤ 0.3 s, measured from logs by matching `driverCameraState.timestampSof` to `driverStateV2` on `frameId`, then to `driverMonitoringState`, `selfdriveState` and the audio output (IT on the device, VT in the vehicle); the end-to-end time ≤ 6.0 s for a staged look-away in the vehicle (VT, WP-V-02 VT-08)"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Not met, not measured: inside the policy alone the first vision alert comes 5.30 s after the first distracted model output, because the countdown waits for the distraction filter (τ = 0.25 s at 20 Hz) to pass 0.63, about 0.30 s (`selfdrive/monitoring/policy.py:84, 394`); that is within the 5.0 s + 0.5 s part only if frame readout and model execution together take ≤ 0.2 s, which is not measured. With the model's pose output uncertain, the first alert comes after 15.0 s (SWSR-635b). Wheel-touch: 5.0 s from the last interaction (or 150 m, SWSR-634). Alert output not measured (WP-S-04 OI-11)"
+  status: proposed
+  source: WP-W-02
+
+- id: SWSR-635a
+  kind: swsr
+  text: "The DM awareness countdown shall advance by the time elapsed between the cabin frames it evaluates (from `timestampSof`, or the receive time where a frame has none), not by a fixed step per evaluated frame, so that frames the DM model skips or drops do not lengthen the SWSR-635 timer in real time."
+  asil: "A (TSR-635; allocated to the QM SoC, open: WP-C-04 OI-11)"
+  parents: [TSR-635]
+  parent_text: "TSR-635"
+  other_parents: false
+  allocated_to: "`host.dm`"
+  verification: "UT, IT"
+  acceptance: "With DM output at 20, 10 and 5 Hz (frames skipped), alert 1 within one frame period of 5.0 s of distraction in each case"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Not met: `dmonitoringd` steps the policy once per `driverStateV2` (`selfdrive/monitoring/dmonitoringd.py:13`), and each step counts a fixed 0.05 s (`DT_DMON`, `policy.py:209, 224`); `dmonitoringmodeld` reads the cabin stream with conflation, so frames it cannot keep up with are skipped (`selfdrive/modeld/dmonitoringmodeld.py:115`). At 10 Hz the 5 s timer would take 10 s"
+  status: proposed
+  source: WP-W-02
+
+- id: SWSR-635b
+  kind: swsr
+  text: "While engaged, a DM output that does not show an attentive driver shall not stop the SWSR-635 timer: when the face is detected but the pose output is uncertain (orientation std ≥ the high-std threshold), the awareness countdown shall keep running as for a distracted driver, and awareness shall recover only on an attentive classification with a certain pose, or on a driver interaction under the wheel-touch policy. The fallback to the wheel-touch policy shall not add time to the first alert."
+  asil: "A (TSR-635; allocated to the QM SoC, open: WP-C-04 OI-11)"
+  parents: [TSR-635]
+  parent_text: "TSR-635"
+  other_parents: false
+  allocated_to: "`host.dm`"
+  verification: "UT"
+  acceptance: "A driver who becomes distracted with an uncertain pose gets alert 1 ≤ 5.3 s after the first such output (the SWSR-635 policy part), as for a certain pose; an attentive driver with a certain pose still recovers"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Not met: with the face detected and the pose uncertain, the driver is not classed as distracted (`policy.py:312`, which needs a certain pose) and awareness does not recover either (`policy.py:378`); the countdown only starts once the model has been uncertain for 10 s and the policy falls back to wheel-touch (`policy.py:83, 333, 336, 395`). Probe of the policy code: first alert 15.0 s after a distracted, uncertain output, against 5.30 s with a certain one"
+  status: proposed
+  source: WP-W-02
+
 - id: SWSR-701
   kind: swsr
   text: "The firmware shall detect harness orientation before the first relay drive, route CAN accordingly, and enter SS-S if orientation is lost or changes while the relay is driven."
