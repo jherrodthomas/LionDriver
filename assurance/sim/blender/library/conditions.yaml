@@ -21,6 +21,11 @@
 #                 ice            glossy patches on the road
 #                 visibility_m   haze or fog: meteorological visibility (extinction 3 / V per metre)
 #                 glare          bloom round the sun, lamps and bright reflections
+#                 haze_km        aerial perspective on a clear day: a thin blue haze for this visibility (km), drawn
+#                                with an environment's horizon
+#                 cloud_shadows  soft cloud shadows drifting over the ground (clear or partly cloudy skies; an
+#                                environment may switch them off)
+#                 spray          0..1: a plume of spray behind the wheels of every moving car and truck
 schema_version: 1
 conditions:
   W01:
@@ -28,14 +33,15 @@ conditions:
     exposure: E4
     odd: in
     hara: The reference condition of most hazardous events
-    env: {sky: clear, sun: behind, sun_elevation: 30, wet: 0.0}
+    env: {sky: clear, sun: behind, sun_elevation: 30, wet: 0.0, haze_km: 22, cloud_shadows: true}
 
   W02:
     title: Wet road or light rain
     exposure: E3
     odd: in
     hara: "H-04 in a curve (OS-02, OS-14, OS-16): S3, C1 ⚠ (instability under unexpected braking, HE-04.2)"
-    env: {sky: overcast, sun: behind, sun_elevation: 30, sun_strength: 0.5, sky_strength: 0.8, wet: 0.75, rain: 0.25, visibility_m: 1500}
+    env: {sky: overcast, sun: behind, sun_elevation: 30, sun_strength: 0.5, sky_strength: 0.8, wet: 0.75, rain: 0.25, visibility_m: 1500,
+          spray: 0.45}
 
   W03:
     title: Night, dry, headlights
@@ -49,7 +55,8 @@ conditions:
     exposure: E2
     odd: outside
     hara: "H-04 in a curve: S3, C1 ⚠; H-06 and H-10: C+1 (reduced visibility delays the driver's detection)"
-    env: {sky: overcast, sun: behind, sun_elevation: 25, sun_strength: 0.3, sky_strength: 0.7, wet: 1.0, rain: 1.0, visibility_m: 350}
+    env: {sky: overcast, sun: behind, sun_elevation: 25, sun_strength: 0.3, sky_strength: 0.7, wet: 1.0, rain: 1.0, visibility_m: 350,
+          spray: 1.0}
 
   W05:
     title: Snow or ice (outside the ODD, foreseeable)
@@ -71,4 +78,4 @@ conditions:
     exposure: null
     odd: in
     hara: Not a HARA condition; drawn for SOTIF hazards (SH-06, SH-11) whose triggering condition it is
-    env: {sky: clear, sun: ahead, sun_elevation: 5, wet: 0.0, glare: true}
+    env: {sky: clear, sun: ahead, sun_elevation: 5, wet: 0.0, glare: true, haze_km: 22}
