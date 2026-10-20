@@ -11,9 +11,11 @@
 #   env         what hazard_scene.py draws:
 #                 sky            clear, partly, overcast, night (picks the HDRI slot of library/assets.yaml when present)
 #                 sun            behind, ahead (in the driver's eyes), side; sun_elevation in degrees;
-#                                sun_strength: the sun lamp relative to a clear day's (overcast default 0.35)
+#                                sun_strength: the sun lamp relative to a clear day's (overcast default 0.35);
+#                                sky_strength: an overcast sky's brightness relative to the default (below 1: moodier)
 #                 night          no sun; headlights on every car, street lights where the environment has them
-#                 wet            0..1: darker, glossier asphalt; puddles in its low spots above 0.5
+#                 wet            0..1: darker, glossier asphalt; puddles in its low spots above 0.5; from 0.75 a
+#                                water film with streaky reflections along the road
 #                 rain           0..1: falling streaks around the ego (1 = heavy)
 #                 snow           0..1: snow on the verges and shoulders, slush beside the wheel tracks; snowfall
 #                 ice            glossy patches on the road
@@ -33,7 +35,7 @@ conditions:
     exposure: E3
     odd: in
     hara: "H-04 in a curve (OS-02, OS-14, OS-16): S3, C1 ⚠ (instability under unexpected braking, HE-04.2)"
-    env: {sky: overcast, sun: behind, sun_elevation: 30, sun_strength: 0.5, wet: 0.75, rain: 0.25, visibility_m: 1500}
+    env: {sky: overcast, sun: behind, sun_elevation: 30, sun_strength: 0.5, sky_strength: 0.8, wet: 0.75, rain: 0.25, visibility_m: 1500}
 
   W03:
     title: Night, dry, headlights
@@ -47,7 +49,7 @@ conditions:
     exposure: E2
     odd: outside
     hara: "H-04 in a curve: S3, C1 ⚠; H-06 and H-10: C+1 (reduced visibility delays the driver's detection)"
-    env: {sky: overcast, sun: behind, sun_elevation: 25, sun_strength: 0.3, wet: 1.0, rain: 1.0, visibility_m: 350}
+    env: {sky: overcast, sun: behind, sun_elevation: 25, sun_strength: 0.3, sky_strength: 0.7, wet: 1.0, rain: 1.0, visibility_m: 350}
 
   W05:
     title: Snow or ice (outside the ODD, foreseeable)
@@ -62,7 +64,7 @@ conditions:
     exposure: E1
     odd: outside
     hara: "H-06 and H-10: C+1 (reduced visibility delays the driver's detection)"
-    env: {sky: overcast, sun: behind, sun_elevation: 30, sun_strength: 0.35, wet: 0.3, visibility_m: 120}
+    env: {sky: overcast, sun: behind, sun_elevation: 30, sun_strength: 0.35, sky_strength: 0.85, wet: 0.3, visibility_m: 120}
 
   TC-01:
     title: Low sun in the camera field of view (SOTIF triggering condition, WP-C-06)
