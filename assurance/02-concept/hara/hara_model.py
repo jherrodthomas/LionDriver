@@ -432,7 +432,7 @@ FUNCTION_RULES = {
     "OS-05": ("S2", "C1", "S2: driver reflex-brakes on a false warning in dense traffic; rear impact by a follower.", "C1: the warning does not actuate; most drivers glance at the scene and brake moderately or not at all (≥ 99 %)."),
     "OS-08": ("S2", "C1", "S2: driver reflex-brakes with a close follower; rear impact.", "C1: as OS-05."),
     "OS-12": ("S2", "C1", "S2: driver reflex-brakes during a lane change in front of target-lane traffic.", "C1: as OS-05."),
-    "OS-13": ("S2", "C1", "S2: model FCW also fires when not engaged (selfdrived.py:444); reflex braking with a follower.", "C1: as OS-05."),
+    "OS-13": ("S2", "C1", "S2: model FCW also fires when not engaged (selfdrived.py:447); reflex braking with a follower.", "C1: as OS-05."),
   },
 }
 FUNCTION_NOT_HAZARDOUS = {"F-06": "Not hazardous here: a false warning without a close follower leads at most to a startle or a moderate driver brake (S1, QM in the draft §5.8)."}

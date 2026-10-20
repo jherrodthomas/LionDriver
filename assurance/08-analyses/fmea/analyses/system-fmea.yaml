@@ -1997,8 +1997,8 @@ failure_modes:
         linked_failure_mode: SWF-032
         description: Event missing for the fault (no detection)
         prevention_controls:
-        - description: Only relayMalfunction, safety model/param and controlsAllowed are checked (selfdrived.py:330-348)
-          ref: openpilot/selfdrive/selfdrived/selfdrived.py:330-348
+        - description: Only relayMalfunction, safety model/param and controlsAllowed are checked (selfdrived.py:333-351)
+          ref: openpilot/selfdrive/selfdrived/selfdrived.py:333-351
         detection_controls:
         - description: No test targets this cause
         occurrence: 8
@@ -2058,13 +2058,13 @@ failure_modes:
           ref: scripts/lint/lint.sh
         - description: The catch-all commIssue is suppressed only while a NO_ENTRY and a SOFT_DISABLE or IMMEDIATE_DISABLE event are already present, so a disable
             reaction is raised either way
-          ref: openpilot/selfdrive/selfdrived/selfdrived.py:386-390
+          ref: openpilot/selfdrive/selfdrived/selfdrived.py:389-393
         detection_controls:
         - description: No pre-release test targets this cause
         occurrence: 2
         detection: 10
         ap: H
-        rationale: Code review at BL-004 (selfdrived.py:386-390) shows the suppression cannot remove the disable reaction, so the cause does not lead to the failure
+        rationale: Code review at BL-004 (selfdrived.py:389-393) shows the suppression cannot remove the disable reaction, so the cause does not lead to the failure
           mode; no action. The big-model suppression of commIssue is a different cause (SWF-032.C2)
         msr:
           mechanisms:
@@ -3908,7 +3908,7 @@ failure_modes:
       - id: SFM-038.C3
         element: SFM-SE-014
         description: 'steerSaturated needs the controller saturated, a desired lateral acceleration above 1.0 m/s², an undershoot above
-          1.2x and no steering input for 2 s (selfdrived.py:467-481), and the controller reports saturation only after 0.4 s
+          1.2x and no steering input for 2 s (selfdrived.py:470-484), and the controller reports saturation only after 0.4 s
           (latcontrol.py, T-30); a gradual deficit therefore warns late or not at all (WP-S-04 §3.8.1)'
         prevention_controls:
         - description: Upstream openpilot code with upstream review; ruff and type checks in CI (static analysis job)

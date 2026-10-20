@@ -49,7 +49,7 @@ The driver performs these. The ones the item can check itself are noted; the oth
 | OPS-01 | No vehicle warning lamps for EPS, brake, ABS/VSC, engine, PCS/TSS | Partial: the item raises events for some car faults (`openpilot/selfdrive/car/car_events.py:116-180` ESP disabled, steering faults; `openpilot/selfdrive/selfdrived/events.py`). Not all DTCs are visible to it | Do not engage. Get the vehicle checked (AOU-09/10) |
 | OPS-02 | VSC is on (not switched off with the VSC OFF button) | Yes: `espDisabled` event (`openpilot/selfdrive/car/car_events.py:116-117`) | Turn VSC on |
 | OPS-03 | Windscreen area in front of both cameras is clean and clear of ice, stickers or objects | Partial: camera health and model checks; no specific obstruction detector | Clean before driving |
-| OPS-04 | Device is firmly in its mount, not tilted; display shows no calibration alert | Yes: `calibrationInvalid` / `calibrationRecalibrating` events (`events.py:816-832`), engagement blocked until `calibrated` (`selfdrived.py:277-288`) | Re-seat; if remounted, follow §4.2 |
+| OPS-04 | Device is firmly in its mount, not tilted; display shows no calibration alert | Yes: `calibrationInvalid` / `calibrationRecalibrating` events (`events.py:816-832`), engagement blocked until `calibrated` (`selfdrived.py:280-291`) | Re-seat; if remounted, follow §4.2 |
 | OPS-05 | Driver-facing camera can see the driver's face; no hat brim, mask or object in the way | Partial: DM falls back to wheel-touch timers on model uncertainty (`selfdrive/monitoring/policy.py:82-83, 333-334`) | Remove obstruction |
 | OPS-06 | No offroad alerts on the device home screen (for example `Offroad_ExcessiveActuation`, `Offroad_Recalibration`, update failure) | Yes: offroad alerts | Follow §3.3 |
 | OPS-07 | The driver is briefed and fit to drive (licensed, not impaired, not fatigued) | No | Do not use the item |
@@ -70,7 +70,7 @@ The driver supervises at all times. Operating rules for the driver (ODD, when to
 
 | Indication | Meaning | Action |
 |---|---|---|
-| `Offroad_ExcessiveActuation` (latched by `selfdrived.py:307-312`; criteria in `selfdrive/selfdrived/helpers.py`) | The item measured longitudinal or lateral acceleration beyond twice the design limits while engaged | Stop use. Report as a potential safety goal violation (S-1 in [WP-P-03](../07-supporting/WP-P-03-problem-resolution.md)). The alert must be cleared only by the maintainer after analysis |
+| `Offroad_ExcessiveActuation` (latched by `selfdrived.py:310-315`; criteria in `selfdrive/selfdrived/helpers.py`) | The item measured longitudinal or lateral acceleration beyond twice the design limits while engaged | Stop use. Report as a potential safety goal violation (S-1 in [WP-P-03](../07-supporting/WP-P-03-problem-resolution.md)). The alert must be cleared only by the maintainer after analysis |
 | `relayMalfunction` (permanent alert "Harness Relay Malfunction") | Intercepted messages seen on the car side; all TX blocked by the panda | Stop use. Service the harness (§5) |
 | `canBusMissing`, `canError` | CAN not received or wrong rates; often wiring | Check harness connectors (§5). Note the text "Unknown Vehicle Variant" for `canError` is misleading (GAP-19) |
 | `controlsMismatch` | Panda safety state differs from the host's expectation | Stop use; report (S-1 or S-2) |
