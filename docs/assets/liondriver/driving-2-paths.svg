@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="650" viewBox="0 0 1320 650" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 2. Two paths: steering is direct, speed is planned</title>
+<desc>Steering: the driving model's desiredCurvature passes LionDriver's freshness and finiteness checks, a curvature clip (|curvature| ≤ 0.2 per metre, lateral acceleration ≤ 3.0 m/s² plus roll, jerk ≤ 5.0 m/s³) and the torque controller to the panda and EPS. Speed: the MPC, the cruise target and, in Experimental Mode only, the model's own acceleration go into min(); the result is clipped, checked and sent through the panda to the PCM.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1320" height="650" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 2 · Two paths: steering is direct, speed is planned</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">What controlsd and plannerd do with the model's output, read from the pinned openpilot code.</text>
+<text x="1280" y="44" font-size="11" fill="#475569" text-anchor="end">controlsd.py · drive_helpers.py · longitudinal_planner.py</text>
+<line x1="40" y1="82" x2="1280" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<text x="40" y="120" font-size="12" fill="#0F766E" font-weight="700">STEERING (lateral)</text>
+<text x="40" y="330" font-size="12" fill="#0F766E" font-weight="700">SPEED (longitudinal)</text>
+<rect x="40" y="134" width="220" height="104" rx="8" fill="#F1F5F9" stroke="#0F172A" stroke-width="1.4"/>
+<text x="50" y="154" font-size="12.5" fill="#0F172A" font-weight="700">Driving model action</text>
+<text x="50" y="172" font-size="10.5" fill="#475569">action.desiredCurvature</text>
+<text x="50" y="187" font-size="10.5" fill="#475569">20 Hz, no lateral smoothing</text>
+<text x="50" y="202" font-size="10.5" fill="#475569">(plan[33] is for UI and logs)</text>
+<rect x="290" y="134" width="220" height="104" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4"/>
+<text x="300" y="154" font-size="12.5" fill="#0F172A" font-weight="700">LionDriver input checks</text>
+<text x="300" y="172" font-size="10.5" fill="#475569">inputs fresh (TSR-602)</text>
+<text x="300" y="187" font-size="10.5" fill="#475569">curvature finite (SWF-045)</text>
+<text x="300" y="202" font-size="10.5" fill="#475569">else latActive = False</text>
+<rect x="540" y="134" width="220" height="104" rx="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4"/>
+<text x="550" y="154" font-size="12.5" fill="#0F172A" font-weight="700">Curvature clip</text>
+<text x="550" y="172" font-size="10.5" fill="#475569">|κ| ≤ 0.2 1/m</text>
+<text x="550" y="187" font-size="10.5" fill="#475569">|a_lat| ≤ 3.0 m/s² + roll</text>
+<text x="550" y="202" font-size="10.5" fill="#475569">jerk ≤ 5.0 m/s³</text>
+<rect x="790" y="134" width="240" height="104" rx="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4"/>
+<text x="800" y="154" font-size="12.5" fill="#0F172A" font-weight="700">Torque controller</text>
+<text x="800" y="172" font-size="10.5" fill="#475569">latcontrol_torque</text>
+<text x="800" y="187" font-size="10.5" fill="#475569">curvature → steer torque</text>
+<text x="800" y="202" font-size="10.5" fill="#475569">100 Hz</text>
+<rect x="1060" y="134" width="220" height="104" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="1070" y="154" font-size="12.5" fill="#0F172A" font-weight="700">Panda + EPS</text>
+<text x="1070" y="172" font-size="10.5" fill="#475569">STEERING_LKA 0x2E4</text>
+<text x="1070" y="187" font-size="10.5" fill="#475569">torque and rate limits</text>
+<text x="1070" y="202" font-size="10.5" fill="#475569">(Figure 3)</text>
+<line x1="262" y1="186" x2="282" y2="186" stroke="#475569" stroke-width="1.6"/>
+<path d="M288,186.0 L280,181.5 L280,190.5 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<line x1="512" y1="186" x2="532" y2="186" stroke="#475569" stroke-width="1.6"/>
+<path d="M538,186.0 L530,181.5 L530,190.5 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<line x1="762" y1="186" x2="782" y2="186" stroke="#475569" stroke-width="1.6"/>
+<path d="M788,186.0 L780,181.5 L780,190.5 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<line x1="1032" y1="186" x2="1052" y2="186" stroke="#475569" stroke-width="1.6"/>
+<path d="M1058,186.0 L1050,181.5 L1050,190.5 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<text x="290" y="264" font-size="11" fill="#475569">No planner between the model and the controller: the network's action is the steering command. A lane change is a desire pulse from DesireHelper into the model, not a plan.</text>
+<rect x="40" y="344" width="250" height="74" rx="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4"/>
+<text x="50" y="364" font-size="12.5" fill="#0F172A" font-weight="700">MPC (acados)</text>
+<text x="50" y="382" font-size="10.5" fill="#475569">follows leads from radard</text>
+<text x="50" y="397" font-size="10.5" fill="#475569">radar + vision</text>
+<rect x="40" y="430" width="250" height="74" rx="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4"/>
+<text x="50" y="450" font-size="12.5" fill="#0F172A" font-weight="700">Cruise</text>
+<text x="50" y="468" font-size="10.5" fill="#475569">toward set speed, a ≥ -1.2 m/s²</text>
+<text x="50" y="483" font-size="10.5" fill="#475569">a ≤ 1.6…0.6 m/s² by speed</text>
+<rect x="40" y="516" width="250" height="74" rx="8" fill="#F8FAFC" stroke="#475569" stroke-width="1.4" stroke-dasharray="5 4"/>
+<text x="50" y="536" font-size="12.5" fill="#475569" font-weight="700">Model's own acceleration</text>
+<text x="50" y="554" font-size="10.5" fill="#475569">Experimental Mode only</text>
+<text x="50" y="569" font-size="10.5" fill="#475569">off by default (FM-01 a)</text>
+<rect x="360" y="424" width="150" height="86" rx="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4"/>
+<text x="370" y="444" font-size="12.5" fill="#0F172A" font-weight="700">min()</text>
+<text x="370" y="462" font-size="10.5" fill="#475569">lowest acceleration</text>
+<text x="370" y="477" font-size="10.5" fill="#475569">wins</text>
+<line x1="292" y1="381" x2="352" y2="467" stroke="#475569" stroke-width="1.6"/>
+<path d="M358,467.0 L350,462.5 L350,471.5 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<line x1="292" y1="467" x2="352" y2="467" stroke="#475569" stroke-width="1.6"/>
+<path d="M358,467.0 L350,462.5 L350,471.5 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<line x1="292" y1="553" x2="352" y2="467" stroke="#475569" stroke-width="1.6" stroke-dasharray="5 4"/>
+<path d="M358,467.0 L350,462.5 L350,471.5 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="560" y="424" width="200" height="86" rx="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4"/>
+<text x="570" y="444" font-size="12.5" fill="#0F172A" font-weight="700">Clip and publish</text>
+<text x="570" y="462" font-size="10.5" fill="#475569">ACCEL_MIN … ACCEL_MAX</text>
+<text x="570" y="477" font-size="10.5" fill="#475569">longitudinalPlan.aTarget</text>
+<rect x="790" y="424" width="240" height="86" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4"/>
+<text x="800" y="444" font-size="12.5" fill="#0F172A" font-weight="700">Checks + controller</text>
+<text x="800" y="462" font-size="10.5" fill="#475569">fresh and finite (TSR-602)</text>
+<text x="800" y="477" font-size="10.5" fill="#475569">longcontrol, 100 Hz</text>
+<rect x="1060" y="424" width="220" height="86" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="1070" y="444" font-size="12.5" fill="#0F172A" font-weight="700">Panda + PCM</text>
+<text x="1070" y="462" font-size="10.5" fill="#475569">ACC_CONTROL 0x343</text>
+<text x="1070" y="477" font-size="10.5" fill="#475569">accel bounds (Figure 3)</text>
+<line x1="512" y1="467" x2="552" y2="467" stroke="#475569" stroke-width="1.6"/>
+<path d="M558,467.0 L550,462.5 L550,471.5 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<line x1="762" y1="467" x2="782" y2="467" stroke="#475569" stroke-width="1.6"/>
+<path d="M788,467.0 L780,462.5 L780,471.5 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<line x1="1032" y1="467" x2="1052" y2="467" stroke="#475569" stroke-width="1.6"/>
+<path d="M1058,467.0 L1050,462.5 L1050,471.5 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="40" y="614" width="14" height="12" rx="3" fill="#F1F5F9" stroke="#0F172A" stroke-width="1.2"/>
+<text x="60" y="624" font-size="11" fill="#475569">learned model</text>
+<rect x="144.2" y="614" width="14" height="12" rx="3" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.2"/>
+<text x="164.2" y="624" font-size="11" fill="#475569">inherited openpilot code</text>
+<rect x="301.1" y="614" width="14" height="12" rx="3" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.2"/>
+<text x="321.1" y="624" font-size="11" fill="#475569">LionDriver change already in the code</text>
+<rect x="531.5" y="614" width="14" height="12" rx="3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="551.5" y="624" font-size="11" fill="#475569">safety envelope</text>
+<rect x="647" y="614" width="14" height="12" rx="3" fill="#F8FAFC" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="667" y="624" font-size="11" fill="#475569">off in the reference build</text>
+</svg>
