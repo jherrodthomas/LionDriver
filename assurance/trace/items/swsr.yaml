@@ -1142,7 +1142,7 @@
 - id: SWSR-511
   kind: swsr
   text: "The bootstub shall execute the application only after verifying its ECDSA signature over P-256 with a SHA-256 digest (decided 2026-10-19, DQ-191 A) against the release key; release bootstubs shall not accept the debug key."
-  asil: "B‡ (+ CS)"
+  asil: "C (+ CS)"
   parents: [TSR-511]
   parent_text: "TSR-511"
   other_parents: false
@@ -1158,7 +1158,7 @@
 - id: SWSR-511a
   kind: swsr
   text: "Request `0xd1` param 1 (softloader entry) shall be rejected while a car safety mode is active or the ignition is on; `0xd1` param 0 shall stay debug-only."
-  asil: "B‡ (+ CS)"
+  asil: "C (+ CS)"
   parents: [TSR-511]
   parent_text: "TSR-511"
   other_parents: false

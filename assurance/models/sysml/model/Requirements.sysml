@@ -2102,7 +2102,7 @@ package LionDriverRequirements {
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-03";
-        :>> safetyRelation = "TSR-511, B‡";
+        :>> safetyRelation = "TSR-511, C";
         :>> verifMethod = "R, HIL";
     }
     requirement <'CSR-032'> csr_032 : CybersecurityRequirement {
