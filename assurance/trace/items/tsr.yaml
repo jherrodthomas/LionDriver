@@ -1094,7 +1094,7 @@
   mechanism: "FR"
   timing: "per policy"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Partial: after 5 s at the terminal alert the policy requests a forced deceleration (`noResponseForceDecel`, `selfdrive/monitoring/policy.py:44-49, 454`; `selfdrive/controls/controlsd.py:236`), but nothing disengages the item, so the lockout (`policy.py:359-372`) acts only after a later disengagement (System FMEA SFM-025.C1, corrected 2026-10-16). The terminal reaction is refined in TSR-633"
+  baseline_impl: "Partial: after 5 s at the terminal alert the policy requests a forced deceleration (`noResponseForceDecel`, `selfdrive/monitoring/policy.py:44-49, 454`; `selfdrive/controls/controlsd.py:236`), but nothing disengages the item, so the lockout (`policy.py:359-372`) acts only after a later disengagement (System FMEA SFM-025.C1, corrected 2026-10-16). The terminal reaction is refined in TSR-633: the item stays engaged, stopped and held until the driver takes over, and since v0.49 the lockout timer runs from that takeover (`policy.py:368-369`)"
   status: proposed
   source: WP-S-02
 
@@ -1424,7 +1424,7 @@
   mechanism: "FR, WRN"
   timing: "reaction starts ≤ 5 s after the terminal alert (WP-S-04 §3.8)"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Not met: forced deceleration without disengagement or standstill (TSR-611). System FMEA SFM-025.C1, SFM-ACT-005. Added v0.22"
+  baseline_impl: "Implemented in software and unit-tested, not verified on the vehicle: `selfdrived` latches the manoeuvre from the first no-response request until the item disengages (`selfdrive/selfdrived/minimum_risk.py`, published as `selfdriveState.minimumRiskManeuver`), and `controlsd` keeps `forceDecel` on while it is set (`controlsd.py:237-239`), so a dropped DM request (restart, awareness reset) no longer sends the planner back to the set speed; the planner keeps the stop request on and the Toyota controller keeps requesting standstill hold and never resumes (`carcontroller.py:184-189`); the terminal alert is re-raised while latched; the lockout of re-engagement runs from the driver's takeover (`policy.py:368-369`). Open: the PCM standstill hold over time (AOU-16, T-VEH), the deceleration against a_min and j_down and the reaction time (T-33) not measured. System FMEA SFM-025.C1, SFM-ACT-005. Added v0.22"
   status: proposed
   source: WP-S-02
 

@@ -68,7 +68,7 @@ use the logged `radarState`.
 ## 5. Driver monitoring timing
 
 <p align="center">
-  <img src="../assets/liondriver/perception-5-dm-timing.svg" width="100%" alt="Figure 5: two timelines from loss of attention: vision policy alerts at 5, 8 and 13 s and forced deceleration 5 s after the terminal alert; wheel-touch policy at 5, 15 and 25 s. The SG-08 budget is a first alert within 6 s. Below: latency not measured, DM output never invalid, no safe stop, lockout.">
+  <img src="../assets/liondriver/perception-5-dm-timing.svg" width="100%" alt="Figure 5: two timelines from loss of attention: vision policy alerts at 5, 8 and 13 s and forced deceleration 5 s after the terminal alert; wheel-touch policy at 5, 15 and 25 s. The SG-08 budget is a first alert within 6 s. Below: latency not measured, DM output never invalid, safe stop not verified on the car, lockout.">
 </p>
 
 *Figure 5.* Timers and thresholds from `policy.py`; the SG-08 budget from WP-S-04 §3.7; statuses from the trace items.
@@ -76,7 +76,9 @@ use the logged `radarState`.
 The first vision alert comes 5 s after the eyes leave the road, inside the preliminary 6 s budget of SG-08, with a
 margin that depends on the camera and model latency, which is not measured. When the model is unsure for 10 s, the
 policy falls back to wheel touch, whose alerts come later. The gaps are recorded: the driver-monitoring output is never
-invalid (TSR-609), and after the terminal alert the item slows the car but does not bring it to a safe stop (TSR-633).
+invalid (TSR-609), and the safe stop after the terminal alert (TSR-633: stop in lane, stay held, no resumption until
+the driver takes over) is implemented but not yet verified on the car, where the PCM's standstill hold is still an
+assumption (AOU-16).
 
 ## 6. How the models are tested
 

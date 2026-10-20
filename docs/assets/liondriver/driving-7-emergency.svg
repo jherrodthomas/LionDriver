@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1320" height="538" viewBox="0 0 1320 538" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 7. When something goes wrong: who reacts, and how</title>
-<desc>Emergency and degraded reactions: Lead brakes hard: MPC brakes up to −3.5 m/s²; FCW warns (planner or model); driver brakes harder; implemented; FCW onset not derived (T-31); Car's own AEB fires: stands down: no drive requested while stockAeb is set (TSR-713); stock PCS brakes; implemented, not verified (AOU-04); Input stale or failed: stops steering on stale input; soft disable, 3 s of alerts; driver takes over; partly met (TSR-602 10 periods, FM-03); Panda and host disagree: immediate disable with take-over request (TSR-621, TSR-615); driver takes over; implemented, not verified; Main computer stalls: panda revokes authority ≤ 0.06 s, siren (T-34); driver takes over; implemented, not verified (M-05); Driver does not respond: alerts at 5, 8, 13 s, then slows the car toward a stop, still steering; required as well: hold at standstill, disengage, lock out (TSR-633, DQ-365 A); should be the item: minimum-risk manoeuvre; NOT MET: no hold, disengage or lockout; Obstacle needs a swerve: nothing: evasive steering is not provided (WP-C-02); driver steers; by design (Level 2).</desc>
+<desc>Emergency and degraded reactions: Lead brakes hard: MPC brakes up to −3.5 m/s²; FCW warns (planner or model); driver brakes harder; implemented; FCW onset not derived (T-31); Car's own AEB fires: stands down: no drive requested while stockAeb is set (TSR-713); stock PCS brakes; implemented, not verified (AOU-04); Input stale or failed: stops steering on stale input; soft disable, 3 s of alerts; driver takes over; partly met (TSR-602 10 periods, FM-03); Panda and host disagree: immediate disable with take-over request (TSR-621, TSR-615); driver takes over; implemented, not verified; Main computer stalls: panda revokes authority ≤ 0.06 s, siren (T-34); driver takes over; implemented, not verified (M-05); Driver does not respond: alerts at 5, 8, 13 s, then the minimum-risk manoeuvre: stops in lane, still steering, stays held and cannot resume until the driver takes over (TSR-633, DQ-365 A); the item: minimum-risk manoeuvre; implemented, not verified; PCM hold assumed (AOU-16); Obstacle needs a swerve: nothing: evasive steering is not provided (WP-C-02); driver steers; by design (Level 2).</desc>
 <defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
 <rect x="0" y="0" width="1320" height="538" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 7 · When something goes wrong: who reacts, and how</text>
@@ -41,13 +41,13 @@
 <text x="780" y="348" font-size="10.5" fill="#0F172A">driver takes over</text>
 <rect x="1000" y="338" width="161.2" height="18" rx="9.0" fill="#D97706" stroke="none" stroke-width="1"/>
 <text x="1080.6" y="350.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">implemented, not verified (M-05)</text>
-<rect x="30" y="380" width="1260" height="46" rx="6" fill="#FDE2E2" stroke="#D2553F" stroke-width="1.2"/>
+<rect x="30" y="380" width="1260" height="46" rx="6" fill="#FFFFFF" stroke="none" stroke-width="1.2"/>
 <text x="40" y="400" font-size="12" fill="#0F172A" font-weight="700">Driver does not respond</text>
-<text x="250" y="398" font-size="10.5" fill="#0F172A">alerts at 5, 8, 13 s, then slows the car toward a stop, still steering; required as well: hold at standstill,</text>
-<text x="250" y="413" font-size="10.5" fill="#475569">disengage, lock out (TSR-633, DQ-365 A)</text>
-<text x="780" y="400" font-size="10.5" fill="#0F172A" font-weight="600">should be the item: minimum-risk …</text>
-<rect x="1000" y="390" width="202.6" height="18" rx="9.0" fill="#D2553F" stroke="none" stroke-width="1"/>
-<text x="1101.3" y="402.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">NOT MET: no hold, disengage or lockout</text>
+<text x="250" y="398" font-size="10.5" fill="#0F172A">alerts at 5, 8, 13 s, then the minimum-risk manoeuvre: stops in lane, still steering, stays held and</text>
+<text x="250" y="413" font-size="10.5" fill="#475569">cannot resume until the driver takes over (TSR-633, DQ-365 A)</text>
+<text x="780" y="400" font-size="10.5" fill="#0F172A">the item: minimum-risk manoeuvre</text>
+<rect x="1000" y="390" width="269.9" height="18" rx="9.0" fill="#D97706" stroke="none" stroke-width="1"/>
+<text x="1134.9" y="402.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">implemented, not verified; PCM hold assumed (AOU-16)</text>
 <rect x="30" y="432" width="1260" height="46" rx="6" fill="#F8FAFC" stroke="none" stroke-width="1.2"/>
 <text x="40" y="452" font-size="12" fill="#0F172A" font-weight="700">Obstacle needs a swerve</text>
 <text x="250" y="450" font-size="10.5" fill="#0F172A">nothing: evasive steering is not provided (WP-C-02)</text>

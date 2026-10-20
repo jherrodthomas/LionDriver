@@ -86,12 +86,23 @@ class TestMonitoring(OpenpilotTestCase):
     assert isinstance(d_status.awareness, float)
 
   # engaged, distracted past red and beyond the no-response window -> unavailability response + lockout
+  # (TSR-633: the item stays engaged, stopped and held, so the lockout timer holds until the driver takes over)
   def test_distracted_lockout(self):
     alert_lvls, d_status = self._run_seq(always_distracted, always_false, always_true, always_false)
     assert alert_lvls[int(DISTRACTED_SECONDS_TO_RED / DT_DMON)] == 3
     assert d_status.lockout_active
-    assert d_status.lockout_time_elapsed > 0
+    assert d_status.lockout_time_elapsed == 0
     assert d_status.lockout_count >= 1
+
+  # TSR-633: a long hold after no response does not use up the lockout; it runs from the takeover
+  def test_lockout_runs_from_the_takeover(self):
+    held = int(DISTRACTED_SECONDS_TO_RED / DT_DMON) + int(dm_settings._NO_RESPONSE_TIMEOUT / DT_DMON) + int(90 / DT_DMON)
+    engaged = [True] * held + [False] * int(30 / DT_DMON)
+    msgs = [msg_DISTRACTED] * len(engaged)
+    _, d_status = self._run_seq(msgs, [False] * len(engaged), engaged, [False] * len(engaged))
+    assert d_status.lockout_active                               # first lockout is 1 min; 30 s have run
+    assert d_status.lockout_time_elapsed == int(30 / DT_DMON)    # only the 30 s since the takeover count
+    assert d_status.lockout_time_elapsed < d_status.lockout_duration
 
   # no face -> wheeltouch red, sustained past the no-response timeout -> unavailability response + lockout
   def test_invisible_lockout(self):
