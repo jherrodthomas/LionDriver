@@ -587,6 +587,16 @@ def catalogue_page(rows: list[dict]) -> str:
   if flipped:
     out.append("- An assumption decides " + ", ".join(r["id"] for r in flipped) + ": one probe turns the outcome "
                "round (Decides column).")
+  late = [(r, next(q for q in r["probes"] if q["label"].startswith("drift noticed late"))) for r in rows]
+  worse = [(r, q) for r, q in late if q["delta"] < -0.05]
+  same = [r for r, q in late if abs(q["delta"]) <= 0.05 and r["cue_kind"] == "siren"]
+  late_flips = [r for r, q in late if (q["rho"] < 0) != (r["rho"] < 0)]
+  out.append(f"- Low visibility, as a drift noticed at 0.4 m instead of 0.2 m (the plant has no perception, so fog acts "
+             f"only through the driver): {len(worse)} rows depart further, by up to "
+             f"{max((-q['delta'] for _, q in worse), default=0):.1f} m; "
+             + (f"it turns {', '.join(r['id'] for r in late_flips)} round. " if late_flips else "it turns none round. ")
+             + (f"Rows the siren cues are unchanged ({', '.join(r['id'] for r in same)}): a silent fault is where poor "
+                "visibility costs the driver." if same else ""))
   for fid in sorted({r["hara"]["new"] for r in new}):
     ids = [r["id"] for r in new if r["hara"]["new"] == fid]
     out.append(f"- {', '.join(ids)} match{'es' if len(ids) == 1 else ''} no HARA hazardous event: "
@@ -613,6 +623,16 @@ def catalogue_page(rows: list[dict]) -> str:
   out += ["## New-hazard findings", ""]
   if not new:
     out += ["None: every departing row falls under a HARA hazardous event.", ""]
+  late = [(r, next(q for q in r["probes"] if q["label"].startswith("drift noticed late"))) for r in rows]
+  worse = [(r, q) for r, q in late if q["delta"] < -0.05]
+  same = [r for r, q in late if abs(q["delta"]) <= 0.05 and r["cue_kind"] == "siren"]
+  late_flips = [r for r, q in late if (q["rho"] < 0) != (r["rho"] < 0)]
+  out.append(f"- Low visibility, as a drift noticed at 0.4 m instead of 0.2 m (the plant has no perception, so fog acts "
+             f"only through the driver): {len(worse)} rows depart further, by up to "
+             f"{max((-q['delta'] for _, q in worse), default=0):.1f} m; "
+             + (f"it turns {', '.join(r['id'] for r in late_flips)} round. " if late_flips else "it turns none round. ")
+             + (f"Rows the siren cues are unchanged ({', '.join(r['id'] for r in same)}): a silent fault is where poor "
+                "visibility costs the driver." if same else ""))
   for fid in sorted({r["hara"]["new"] for r in new}):
     fd = findings[fid]
     ids = ", ".join(r["id"] for r in new if r["hara"]["new"] == fid)

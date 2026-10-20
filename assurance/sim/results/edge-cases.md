@@ -11,6 +11,7 @@ What the plant cannot show: it has **no tyre friction limit** (a linear tyre: a 
 - 26 of 27 rows leave the lane. In every one the fault decides: where the curve departs by itself as well (at R_ODD), the fault adds more than 0.5 m.
 - Soonest at the lane line among the rows the fault decides: EC-26 (F-01b hard-over (right), combo-hardover-narrow) after 0.89 s; EC-01 (F-07 EPS fault, curve-assist-loss) after 1.03 s; EC-09 (F-07 EPS fault, fault-timing-refault) after 1.12 s. The driver's reaction time alone is 0.75–1.5 s after the cue.
 - An assumption decides EC-10, EC-12, EC-16, EC-24, EC-25: one probe turns the outcome round (Decides column).
+- Low visibility, as a drift noticed at 0.4 m instead of 0.2 m (the plant has no perception, so fog acts only through the driver): 24 rows depart further, by up to 5.3 m; it turns none round. Rows the siren cues are unchanged (EC-01, EC-16, EC-25): a silent fault is where poor visibility costs the driver.
 - EC-11, EC-12, EC-13 match no HARA hazardous event: an assisted lane change that does not stop at the target lane (EC-N1, queued as DQ-405).
 
 ## Catalogue
@@ -49,6 +50,7 @@ How each row maps: EC-01: loss of assist in a highway curve; the HE names a curv
 
 ## New-hazard findings
 
+- Low visibility, as a drift noticed at 0.4 m instead of 0.2 m (the plant has no perception, so fog acts only through the driver): 24 rows depart further, by up to 5.3 m; it turns none round. Rows the siren cues are unchanged (EC-01, EC-16, EC-25): a silent fault is where poor visibility costs the driver.
 ### EC-N1: an assisted lane change that does not stop at the target lane
 
 HE-02.5 rates a loss of lateral control during an assisted lane change as the car stopping partway and straddling the two lanes. The search finds the opposite effect. A frozen command (F-03) is passed by the panda and keeps the lateral acceleration of the moment it froze, so the car keeps moving sideways through the target lane toward the one beyond it. A loss late in the change (a SoC stall, F-04b, or an EPS fault, F-07) leaves the car with its lateral speed and nothing to stop it at the target lane's centre, so it runs over the far line. Either way the departure is into a lane the driver did not check before the change. No hazardous event of the HARA names that effect.
