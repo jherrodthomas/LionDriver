@@ -121,6 +121,41 @@ GROUPS = [
        "ref": {"kind": ("value", 0.09), "text": "MCU hang ≈ 90 ms (T-09a); TSR-711: no time", "src": []}},
     ],
   },
+  {
+    # each row has its own FTTI (group "ftti" None): the budget is the time to the warning, then the driver acts
+    "title": "Warning paths · §3.8", "sub": "no fault reaction: budget to the warning, the driver avoids the hazard",
+    "ftti": None, "src": ["### 3.8 Warning paths without a fault reaction"],
+    "rows": [
+      {"title": "SG-02 insufficient lateral control", "sub": "§3.8.1 · Δa_y 1 m/s² · driver t_r not met",
+       "ftti": 1.1, "fdti": 0.4, "frti": 0.1, "limit": 0.4,
+       "budget_text": "FTTI 1.1 s · FDTI ≤ 0.4 s + FRTI ≤ 0.1 s",
+       "src": ["| SG-02 insufficient lateral control (warning path, §3.8.1) | 1.1 s to 0.6 m at a 1 m/s² deficit;",
+               "| ≤ 0.4 s (steerSaturated, T-30) | ≤ 0.1 s to alert |"],
+       "single": {"kind": ("value", 0.4), "text": "steerSaturated at 0.4 s + 1 frame (T-30)",
+                  "src": ["`steerLimitTimer` = 0.4 s (LKA torque cars) | 0.4 s + 1 frame |"]}},
+      {"title": "SG-06 late braking warning (FCW)", "sub": "§3.8.2 · 1.0 s gap · FCW needed ≤ 0.6 s",
+       "ftti": 1.6, "fdti": None, "frti": 0.1, "limit": 0.6, "tbd": True,
+       "budget_text": "FTTI 1.6 s (off scale) · FCW onset TBD",
+       "src": ["| SG-06 late or insufficient braking warning (FCW, §3.8.2) | 1.6 s at 1.0 s time gap;",
+               "| FCW onset after the lead brakes (T-31, not derived) | ≤ 0.1 s to alert |"],
+       "single": {"kind": ("blank",), "text": "not derived; to be measured (T-31, M-12)",
+                  "src": ["| not derived; measure (M-12) |"]}},
+      {"title": "Unintended engagement (latent gate fault)", "sub": "§3.8.3 · TSR-630 · margin ≥ 0.1 s",
+       "ftti": 0.5, "fdti": 0.3, "frti": 0.1, "limit": 0.3,
+       "budget_text": "FTTI 0.5 s · FDTI ≤ 0.3 s + FRTI ≤ 0.1 s",
+       "src": ["| SG-01 / SG-03 unintended engagement (System FMEA SG-008, §3.8.3) | 0.5 s (as SG-01) |",
+               "latent panda authority while disengaged ≤ 0.3 s (TSR-630, T-32) | ≤ 0.1 s | ≥ 0.1 s |"],
+       "single": {"kind": ("none",), "text": "not implemented (TSR-630, T-32)",
+                  "src": ["| not implemented (TSR-630) | not detected |"]}},
+      {"title": "SG-08 driver not supervising", "sub": "§3.8.4 · first alert · OI-11",
+       "ftti": 6.0, "fdti": 5.0, "frti": None, "limit": 5.0, "tbd": True,
+       "budget_text": "FTTI 6 s (off scale) · alert at 5 s + DM latency",
+       "src": ["| SG-08 driver not supervising (§3.8.4) | ≤ 6 s from loss of attention to the first alert",
+               "first vision alert at 5 s of distraction (policy timer, T-24)"],
+       "single": {"kind": ("value", 5.0), "text": "first vision alert at 5 s (T-24); latency not measured",
+                  "src": ["vision 5/8/13 s"]}},
+    ],
+  },
 ]
 
 # Figure 5-2: EPS-fault warning chain (T-28)
@@ -201,6 +236,13 @@ def X(v):
   return X0 + (X1 - X0) * min(v, TMAX) / TMAX
 
 
+def fhti(r):
+  """FHTI = FDTI + FRTI when both budgets are numbers, else None (ISO 26262-1:2018 definition)."""
+  if r["fdti"] is None or r["frti"] is None or r.get("tbd"):
+    return None
+  return round(r["fdti"] + r["frti"], 3)
+
+
 def code_lane(out, y, lane, limit, solid, light):
   """Draw one code-derived lane; y = lane top. Returns nothing."""
   kind = lane["kind"]
@@ -246,7 +288,7 @@ def figure_5_1() -> str:
   H = legend_y + 92
   out.append(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W1}" height="{H}" viewBox="0 0 {W1} {H}" font-family="{FONT}" role="img" aria-labelledby="t d">')
   out.append('<title id="t">Figure 5-1. FTTI, detection and reaction budgets per safety goal against code-derived times (WP-S-04 §3.7, §4, §5)</title>')
-  out.append('<desc id="d">For each fault class of §3.7 the budget bar shows the fault detection time interval, the fault reaction time interval and the margin up to the fault tolerant time interval, on a linear time axis from 0 to 1.2 s. Below it the code-derived times of §4 are drawn to the same scale for the original baseline 8b8c6ae (grey) and for the reference build bf6ce8c (amber, implemented but not verified on hardware). Red marks the part of a time beyond its budget. The EPS-fault siren of the reference build at up to 1.26 s worst case exceeds the SG-02 1 s warning budget (OI-8). Since panda c33343b (all builds) the siren after SoC heartbeat loss sounds about 0.56 s after the last heartbeat when authority was granted, within the budget; the 1 Hz path at 4 to 5 s is unchanged. No time has been measured.</desc>')
+  out.append('<desc id="d">For each fault class of §3.7 the budget bar shows the fault detection time interval, the fault reaction time interval and the margin up to the fault tolerant time interval, on a linear time axis from 0 to 1.2 s. Below it the code-derived times of §4 are drawn to the same scale for the original baseline 8b8c6ae (grey) and for the reference build bf6ce8c (amber, implemented but not verified on hardware). Red marks the part of a time beyond its budget. The right column gives the fault handling time interval FHTI = FDTI + FRTI where both budgets are numbers. The EPS-fault siren of the reference build sounds at up to 0.96 s worst case since panda bf8102a, within the SG-02 1 s warning budget (DQ-048). Since panda c33343b (all builds) the siren after SoC heartbeat loss sounds about 0.56 s after the last heartbeat when authority was granted, within the budget; the 1 Hz path at 4 to 5 s is unchanged. The last group draws the warning paths of §3.8, each against its own FTTI; the FCW and driver-monitoring FTTIs lie beyond the 1.2 s axis. No time has been measured.</desc>')
   out.append(DEFS)
   header(out, W1, "Figure 5-1 · Timing budgets per safety goal vs code-derived times",
          "Fault onset at t = 0 · budgets from §3.7 · code-derived times from §4 (T-xx) · drawn to scale · nothing measured yet (§6)",
@@ -283,17 +325,22 @@ def figure_5_1() -> str:
         out.append(t(338, y + i * LANE + 12.5, lab, 9.5, col, 600, "end"))
       # budget lane
       by, bh = y + 3, 12
-      fdti, frti, ftti = r["fdti"], r["frti"], g["ftti"]
-      out.append(rect(X0, by, X(fdti) - X0, bh, "#CCFBF1", TEAL, 1))
-      end = fdti
-      if frti is not None and not (r.get("tbd") and frti is None):
-        out.append(rect(X(fdti), by, X(fdti + frti) - X(fdti), bh, "#FFEDD5", ORANGE, 1))
-        end = fdti + frti
+      fdti, frti, ftti = r["fdti"], r["frti"], r.get("ftti", g["ftti"])
+      end = 0
+      if fdti is not None:
+        out.append(rect(X0, by, X(fdti) - X0, bh, "#CCFBF1", TEAL, 1))
+        end = fdti
+        if frti is not None:
+          out.append(rect(X(fdti), by, X(fdti + frti) - X(fdti), bh, "#FFEDD5", ORANGE, 1))
+          end = fdti + frti
       if r.get("tbd"):
         out.append(rect(X(end), by, X(ftti) - X(end), bh, "url(#tbd)", GREY, 1, dash="3 2"))
       elif ftti - end > 1e-9:
         out.append(rect(X(end), by, X(ftti) - X(end), bh, "#FFFFFF", GREY, 1, dash="3 2"))
-      out.append(t(VX, y + 12.5, r["budget_text"], 10.5, MUTED))
+      h = fhti(r)
+      out.append(t(VX, y + 12.5, r["budget_text"] + (f" · FHTI ≤ {h:g} s" if h is not None else ""), 10.5, MUTED))
+      if g["ftti"] is None:  # per-row FTTI, drawn at the axis end when off scale
+        out.append(line(X(ftti), y, X(ftti), y + rh - 6, INK, 1.6, "4 2" if ftti > TMAX else None))
       # FDTI guide through the code lanes (detection rows only)
       if r["limit"] < ftti - 1e-9:
         out.append(line(X(r["limit"]), y + LANE, X(r["limit"]), y + LANE * nl, TEAL, 1, "2 2"))
@@ -303,6 +350,8 @@ def figure_5_1() -> str:
         code_lane(out, y + LANE, r["base"], r["limit"], BASE_FILL, BASE_LIGHT)
         code_lane(out, y + 2 * LANE, r["ref"], r["limit"], REF_FILL, REF_LIGHT)
       y += rh
+    if g["ftti"] is None:
+      continue
     # FTTI line for the group, with label pill in the group header
     fx = X(g["ftti"])
     out.append(line(fx, gstart - 4, fx, y - 6, INK, 1.6))
@@ -337,7 +386,7 @@ def figure_5_1() -> str:
   item(f'<path d="M0 6H22" stroke="{RED}" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#aR)"/>', "Not detected", 120)
   item(f'<path d="M0 1L7 6L0 11z" fill="{MUTED}"/>' + line(-2, 6, 0, 6, MUTED), "Off scale (> 1.2 s, value in the right column)", 320)
   item(line(13, -2, 13, 14, INK, 1.4), "Second value on the same bar", 220)
-  L.append(t(W1 - 40, ly + 9, "Per-frame rows of §3.7 (SG-01 limits, SG-07 content) have no detection budget and are not drawn.", 10, MUTED, anchor="end"))
+  L.append(t(W1 - 40, ly + 9, "FHTI = FDTI + FRTI. Per-frame rows of §3.7 (SG-01 limits, SG-07 content) have no detection budget and are not drawn.", 10, MUTED, anchor="end"))
   out.extend(L)
   out.append("</svg>")
   return "\n".join(out) + "\n"
