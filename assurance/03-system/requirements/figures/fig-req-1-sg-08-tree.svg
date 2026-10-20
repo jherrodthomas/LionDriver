@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="530" viewBox="0 0 1280 530" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">SG-08 requirement tree: FSRs and TSRs</title>
+<desc id="d">SG-08 (ASIL A): FSR-02.06 (implemented) → TSR-608 (implemented), TSR-634 (partly); FSR-02.07 (partly) → TSR-609 (not implemented), TSR-612 (not implemented); FSR-02.08 (not implemented) → TSR-610 (not implemented), TSR-613 (not implemented), TSR-806 (partly); FSR-02.09 (partly) → TSR-611 (partly), TSR-633 (not implemented); FSR-08.01 (partly) → TSR-635 (not implemented).</desc>
+<rect width="1280" height="530" fill="#FFFFFF"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">SG-08 requirement tree</text>
+<text x="40" y="66" font-size="12" fill="#475569">SG-08 → 5 FSRs (WP-C-04 §5, §9) → 10 TSRs (WP-S-02 §12.1) · coloured by status</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">generated from trace/items</text>
+<rect x="40" y="190.0" width="230" height="150" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.8"/>
+<text x="56" y="216.0" font-size="16" fill="#0F172A" font-weight="700">SG-08</text>
+<rect x="190" y="202.0" width="66" height="20" rx="10" fill="#C2410C"/>
+<text x="223" y="216.0" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">ASIL A</text>
+<text x="56" y="238.0" font-size="11" fill="#0F172A">The item shall not continue</text>
+<text x="56" y="253.0" font-size="11" fill="#0F172A">automated control while the driver</text>
+<text x="56" y="268.0" font-size="11" fill="#0F172A">is not supervising or not responding</text>
+<text x="56" y="283.0" font-size="11" fill="#0F172A">without escalating to a minimal-risk</text>
+<text x="56" y="298.0" font-size="11" fill="#0F172A">reaction</text>
+<line x1="270" y1="265.0" x2="300" y2="265.0" stroke="#475569" stroke-width="1.4"/>
+<line x1="300" y1="129.0" x2="300" y2="401.0" stroke="#475569" stroke-width="1.4"/>
+<line x1="300" y1="129.0" x2="300" y2="129.0" stroke="#475569" stroke-width="1.4"/>
+<rect x="300" y="100" width="380" height="58" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<rect x="300" y="100" width="5" height="58" rx="2" fill="#1D4ED8"/>
+<text x="314" y="118" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-02.06</text>
+<text x="400" y="118" font-size="10" fill="#475569" font-weight="700">ASIL A</text>
+<text x="670" y="118" font-size="9.5" fill="#7C3AED" font-weight="600" text-anchor="end">also SG-02, SG-06</text>
+<text x="314" y="135" font-size="10" fill="#475569">Driver monitoring shall detect an inattentive or unresponsive</text>
+<text x="314" y="148" font-size="10" fill="#475569">driver while engaged and escalate warnings within the timing set …</text>
+<line x1="680" y1="129.0" x2="706" y2="129.0" stroke="#CBD5E1" stroke-width="1.4"/>
+<rect x="712" y="119.0" width="82" height="20" rx="5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.1"/>
+<text x="753.0" y="133.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-608</text>
+<rect x="800" y="119.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="841.0" y="133.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-634</text>
+<line x1="300" y1="197.0" x2="300" y2="197.0" stroke="#475569" stroke-width="1.4"/>
+<rect x="300" y="168" width="380" height="58" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
+<rect x="300" y="168" width="5" height="58" rx="2" fill="#D97706"/>
+<text x="314" y="186" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-02.07</text>
+<text x="400" y="186" font-size="10" fill="#475569" font-weight="700">ASIL A</text>
+<text x="670" y="186" font-size="9.5" fill="#7C3AED" font-weight="600" text-anchor="end">also SG-02, SG-06</text>
+<text x="314" y="203" font-size="10" fill="#475569">Driver monitoring shall detect its own invalidity (no driver</text>
+<text x="314" y="216" font-size="10" fill="#475569">image, camera blocked, model output missing or not credible) and …</text>
+<line x1="680" y1="197.0" x2="706" y2="197.0" stroke="#CBD5E1" stroke-width="1.4"/>
+<rect x="712" y="187.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="753.0" y="201.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-609</text>
+<rect x="800" y="187.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="841.0" y="201.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-612</text>
+<line x1="300" y1="265.0" x2="300" y2="265.0" stroke="#475569" stroke-width="1.4"/>
+<rect x="300" y="236" width="380" height="58" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.5"/>
+<rect x="300" y="236" width="5" height="58" rx="2" fill="#D2553F"/>
+<text x="314" y="254" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-02.08</text>
+<text x="400" y="254" font-size="10" fill="#475569" font-weight="700">ASIL A</text>
+<text x="670" y="254" font-size="9.5" fill="#7C3AED" font-weight="600" text-anchor="end">also SG-02, SG-06</text>
+<text x="314" y="271" font-size="10" fill="#475569">Driver monitoring shall not be disabled, put into demo mode or</text>
+<text x="314" y="284" font-size="10" fill="#475569">replaced by synthetic inputs while the item can engage</text>
+<line x1="680" y1="265.0" x2="706" y2="265.0" stroke="#CBD5E1" stroke-width="1.4"/>
+<rect x="712" y="255.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="753.0" y="269.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-610</text>
+<rect x="800" y="255.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1" stroke-dasharray="3 2"/>
+<text x="841.0" y="269.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-613</text>
+<rect x="888" y="255.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="929.0" y="269.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-806</text>
+<line x1="300" y1="333.0" x2="300" y2="333.0" stroke="#475569" stroke-width="1.4"/>
+<rect x="300" y="304" width="380" height="58" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
+<rect x="300" y="304" width="5" height="58" rx="2" fill="#D97706"/>
+<text x="314" y="322" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-02.09</text>
+<text x="400" y="322" font-size="10" fill="#475569" font-weight="700">ASIL A</text>
+<text x="670" y="322" font-size="9.5" fill="#7C3AED" font-weight="600" text-anchor="end">also SG-02, SG-04, SG-06</text>
+<text x="314" y="339" font-size="10" fill="#475569">If the driver does not respond to the highest DM warning, the item</text>
+<text x="314" y="352" font-size="10" fill="#475569">shall decelerate the vehicle in a controlled way in its lane to …</text>
+<line x1="680" y1="333.0" x2="706" y2="333.0" stroke="#CBD5E1" stroke-width="1.4"/>
+<rect x="712" y="323.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="753.0" y="337.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-611</text>
+<rect x="800" y="323.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="841.0" y="337.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-633</text>
+<line x1="300" y1="401.0" x2="300" y2="401.0" stroke="#475569" stroke-width="1.4"/>
+<rect x="300" y="372" width="380" height="58" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
+<rect x="300" y="372" width="5" height="58" rx="2" fill="#D97706"/>
+<text x="314" y="390" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-08.01</text>
+<text x="400" y="390" font-size="10" fill="#475569" font-weight="700">ASIL A</text>
+<text x="314" y="407" font-size="10" fill="#475569">While engaged, the item shall give the first driver alert within 6</text>
+<text x="314" y="420" font-size="10" fill="#475569">s of the loss of attention, measured end to end from the driver' …</text>
+<line x1="680" y1="401.0" x2="706" y2="401.0" stroke="#CBD5E1" stroke-width="1.4"/>
+<rect x="712" y="391.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="753.0" y="405.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-635</text>
+<line x1="40" y1="448" x2="1240" y2="448" stroke="#E2E8F0"/>
+<rect x="40" y="460" width="22" height="13" rx="3" fill="#EFF6FF" stroke="#1D4ED8"/>
+<text x="70" y="470" font-size="10.5" fill="#0F172A">implemented</text>
+<rect x="230" y="460" width="22" height="13" rx="3" fill="#FFFBEB" stroke="#D97706"/>
+<text x="260" y="470" font-size="10.5" fill="#0F172A">partly</text>
+<rect x="420" y="460" width="22" height="13" rx="3" fill="#FEF2F2" stroke="#D2553F"/>
+<text x="450" y="470" font-size="10.5" fill="#0F172A">not implemented</text>
+<rect x="610" y="460" width="22" height="13" rx="3" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="640" y="470" font-size="10.5" fill="#0F172A">assumed (EXT / AoU)</text>
+<rect x="800" y="460" width="22" height="13" rx="3" fill="#FFFFFF" stroke="#475569" stroke-dasharray="3 2"/>
+<text x="830" y="470" font-size="10.5" fill="#0F172A">TSR shared with another FSR (drawn under each)</text>
+<text x="40" y="494" font-size="9.5" fill="#475569">Status from each requirement's Impl column by the rule of WP-S-03 Figure 6-1 (a qualified “Implemented” counts as partly). Nothing is verified on hardware yet, so implemented is blue, never green.</text>
+</svg>
