@@ -113,4 +113,4 @@ quote any label that contains a comma.
 | OI-W-4 | Signal names of the four pass-through wires PT1…PT4 are not on the drawing; the wire lengths (dimensions 250 mm and 120 mm) are not attributed to a branch, so no lengths are given | Toyota connector pinout (service data) or measurement; lengths from the unit |
 | OI-W-5 | Whether the reference configuration uses comma power (J2) is not recorded; it changes what feeds box VIN when the ignition line opens (RR-2026-010 F-02) | WP-C-01 reference configuration |
 | OI-W-6 | OBD-C cable: conductor colours, gauge and which length is used not published; device-side routing to the transceivers inferred from firmware (UK-01) | comma data (WP-H-02 OI-1) or measurement |
-| OI-W-7 | WP-H-06 Figure 2-1 still names a contact-state probe and a coil-current probe for a relay box; the box has analog switches and no coil | WP-H-06 owner (raised in the PR) |
+| OI-W-7 | ~~WP-H-06 Figure 2-1 still names a contact-state probe and a coil-current probe for a relay box; the box has analog switches and no coil~~ | **Closed 2026-10-20:** WP-H-06 v0.10 redraws Figure 2-1 with probes on SBU1 and the U1/U2 switch pins |
