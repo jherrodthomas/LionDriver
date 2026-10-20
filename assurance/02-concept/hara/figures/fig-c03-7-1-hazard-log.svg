@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1320" height="1610" viewBox="0 0 1320 1610" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
 <title id="t">Figure 7-1. Hazard log: what reaches each hazard, and what holds it (WP-C-03 §7)</title>
-<desc id="d">9 cards, one per hazard of WP-C-03. H-01 Unintended or excessive lateral motion: goals SG-01; 14 FSRs, 5 implemented.  H-02 Unannounced loss or degradation of lateral control: goals SG-01, SG-02; 28 FSRs, 7 implemented.  H-03 Unintended acceleration: goals SG-03; 13 FSRs, 4 implemented.  H-04 Unintended or excessive deceleration: goals SG-04; 14 FSRs, 4 implemented.  H-05 Driver unable to override or disengage: goals SG-05; 12 FSRs, 5 implemented.  H-06 Unannounced loss of longitudinal deceleration: goals SG-06; 16 FSRs, 3 implemented.  H-07 Displayed system state differs from actual state (mode confusion): goals SG-02, SG-06; 21 FSRs, 3 implemented.  H-08 Suppression of the vehicle's stock pre-collision braking: goals SG-07; 10 FSRs, 4 implemented.  H-09 Automated control continues with a driver who is not supervising or not responding: goals SG-08; 5 FSRs, 1 implemented. </desc>
+<desc id="d">9 cards, one per hazard of WP-C-03. H-01 Unintended or excessive lateral motion: goals SG-01; 14 FSRs, 5 implemented.  H-02 Unannounced loss or degradation of lateral control: goals SG-01, SG-02; 28 FSRs, 8 implemented.  H-03 Unintended acceleration: goals SG-03; 13 FSRs, 4 implemented.  H-04 Unintended or excessive deceleration: goals SG-04; 14 FSRs, 4 implemented.  H-05 Driver unable to override or disengage: goals SG-05; 12 FSRs, 6 implemented.  H-06 Unannounced loss of longitudinal deceleration: goals SG-06; 16 FSRs, 4 implemented.  H-07 Displayed system state differs from actual state (mode confusion): goals SG-02, SG-06; 21 FSRs, 4 implemented.  H-08 Suppression of the vehicle's stock pre-collision braking: goals SG-07; 10 FSRs, 4 implemented.  H-09 Automated control continues with a driver who is not supervising or not responding: goals SG-08; 5 FSRs, 1 implemented. </desc>
 <defs><marker id="hl-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#64748B"/></marker></defs>
 <rect width="1320" height="1610" fill="#FFFFFF"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Hazard log · what reaches each hazard, and what holds it</text>
@@ -101,15 +101,15 @@
 <text x="472" y="487" font-size="9.5" fill="#475569">HE-02.1: Vehicle goes straight in the curve and departs the lane</text>
 <text x="472" y="505" font-size="9" fill="#475569" font-weight="700">WHAT HOLDS IT TODAY</text>
 <text x="472" y="522" font-size="9.5" fill="#475569">28 FSRs serve SG-01, SG-02 (WP-C-04 §9)</text>
-<rect x="472.0" y="527.0" width="94.0" height="12" fill="#16A34A"/>
-<text x="519" y="536.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">7</text>
-<rect x="566.0" y="527.0" width="174.6" height="12" fill="#F59E0B"/>
-<text x="653.3" y="536.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">13</text>
-<rect x="740.6" y="527.0" width="80.6" height="12" fill="#DC2626"/>
-<text x="780.9" y="536.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
+<rect x="472.0" y="527.0" width="107.4" height="12" fill="#16A34A"/>
+<text x="525.7" y="536.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">8</text>
+<rect x="579.4" y="527.0" width="174.6" height="12" fill="#F59E0B"/>
+<text x="666.7" y="536.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">13</text>
+<rect x="754.0" y="527.0" width="67.1" height="12" fill="#DC2626"/>
+<text x="787.6" y="536.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
 <rect x="821.1" y="527.0" width="13.4" height="12" fill="#64748B"/>
 <rect x="834.6" y="527.0" width="13.4" height="12" fill="#CBD5E1"/>
-<text x="472" y="551" font-size="8.5" fill="#475569">7 implemented · 13 partial · 6 not met · 1 unverified · 1 see §5</text>
+<text x="472" y="551" font-size="8.5" fill="#475569">8 implemented · 13 partial · 5 not met · 1 unverified · 1 see §5</text>
 <circle cx="476" cy="557.5" r="3.5" fill="#DC2626"/><text x="484" y="561" font-size="9.5" fill="#475569" font-weight="600">SOTIF</text>
 <text x="530" y="561" font-size="9.5" fill="#0F172A">FM-02, FM-03, FM-04, FM-10 (WP-C-07): open</text>
 <circle cx="476" cy="573.5" r="3.5" fill="#F59E0B"/><text x="484" y="577" font-size="9.5" fill="#475569" font-weight="600">TARA</text>
@@ -237,15 +237,15 @@
 <text x="472" y="933" font-size="9.5" fill="#475569">HE-05.1: Longer stopping distance; collision</text>
 <text x="472" y="951" font-size="9" fill="#475569" font-weight="700">WHAT HOLDS IT TODAY</text>
 <text x="472" y="968" font-size="9.5" fill="#475569">12 FSRs serve SG-05 (WP-C-04 §9)</text>
-<rect x="472.0" y="973.0" width="156.7" height="12" fill="#16A34A"/>
-<text x="550.3" y="982.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
-<rect x="628.7" y="973.0" width="31.3" height="12" fill="#F59E0B"/>
-<text x="644.3" y="982.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
-<rect x="660.0" y="973.0" width="125.3" height="12" fill="#DC2626"/>
-<text x="722.7" y="982.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<rect x="472.0" y="973.0" width="188.0" height="12" fill="#16A34A"/>
+<text x="566" y="982.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
+<rect x="660.0" y="973.0" width="31.3" height="12" fill="#F59E0B"/>
+<text x="675.7" y="982.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<rect x="691.3" y="973.0" width="94.0" height="12" fill="#DC2626"/>
+<text x="738.3" y="982.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
 <rect x="785.3" y="973.0" width="62.7" height="12" fill="#64748B"/>
 <text x="816.7" y="982.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-<text x="472" y="997" font-size="8.5" fill="#475569">5 implemented · 1 partial · 4 not met · 2 unverified</text>
+<text x="472" y="997" font-size="8.5" fill="#475569">6 implemented · 1 partial · 3 not met · 2 unverified</text>
 <circle cx="476" cy="1003.5" r="3.5" fill="#DC2626"/><text x="484" y="1007" font-size="9.5" fill="#475569" font-weight="600">SOTIF</text>
 <text x="530" y="1007" font-size="9.5" fill="#0F172A">FM-04 (WP-C-07): open</text>
 <circle cx="476" cy="1019.5" r="3.5" fill="#F59E0B"/><text x="484" y="1023" font-size="9.5" fill="#475569" font-weight="600">TARA</text>
@@ -284,15 +284,15 @@
 <text x="892" y="941" font-size="9.5" fill="#475569">HE-06.1: High-speed rear-end collision</text>
 <text x="892" y="959" font-size="9" fill="#475569" font-weight="700">WHAT HOLDS IT TODAY</text>
 <text x="892" y="976" font-size="9.5" fill="#475569">16 FSRs serve SG-06 (WP-C-04 §9)</text>
-<rect x="892.0" y="981.0" width="70.5" height="12" fill="#16A34A"/>
-<text x="927.2" y="990.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
-<rect x="962.5" y="981.0" width="164.5" height="12" fill="#F59E0B"/>
-<text x="1044.8" y="990.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">7</text>
-<rect x="1127.0" y="981.0" width="117.5" height="12" fill="#DC2626"/>
-<text x="1185.8" y="990.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<rect x="892.0" y="981.0" width="94.0" height="12" fill="#16A34A"/>
+<text x="939" y="990.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<rect x="986.0" y="981.0" width="164.5" height="12" fill="#F59E0B"/>
+<text x="1068.2" y="990.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">7</text>
+<rect x="1150.5" y="981.0" width="94.0" height="12" fill="#DC2626"/>
+<text x="1197.5" y="990.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
 <rect x="1244.5" y="981.0" width="23.5" height="12" fill="#CBD5E1"/>
 <text x="1256.2" y="990.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
-<text x="892" y="1005" font-size="8.5" fill="#475569">3 implemented · 7 partial · 5 not met · 1 see §5</text>
+<text x="892" y="1005" font-size="8.5" fill="#475569">4 implemented · 7 partial · 4 not met · 1 see §5</text>
 <circle cx="896" cy="1011.5" r="3.5" fill="#DC2626"/><text x="904" y="1015" font-size="9.5" fill="#475569" font-weight="600">SOTIF</text>
 <text x="950" y="1015" font-size="9.5" fill="#0F172A">FM-03, FM-09 (WP-C-07): open</text>
 <circle cx="896" cy="1027.5" r="3.5" fill="#F59E0B"/><text x="904" y="1031" font-size="9.5" fill="#475569" font-weight="600">TARA</text>
@@ -333,15 +333,15 @@
 <text x="52" y="1456" font-size="9.5" fill="#475569">HE-07.1: The driver believes the system steers; departure in the curve</text>
 <text x="52" y="1474" font-size="9" fill="#475569" font-weight="700">WHAT HOLDS IT TODAY</text>
 <text x="52" y="1491" font-size="9.5" fill="#475569">21 FSRs serve SG-02, SG-06 (WP-C-04 §9)</text>
-<rect x="52.0" y="1496.0" width="53.7" height="12" fill="#16A34A"/>
-<text x="78.9" y="1505.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
-<rect x="105.7" y="1496.0" width="179.0" height="12" fill="#F59E0B"/>
-<text x="195.2" y="1505.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">10</text>
-<rect x="284.8" y="1496.0" width="107.4" height="12" fill="#DC2626"/>
-<text x="338.5" y="1505.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
+<rect x="52.0" y="1496.0" width="71.6" height="12" fill="#16A34A"/>
+<text x="87.8" y="1505.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<rect x="123.6" y="1496.0" width="179.0" height="12" fill="#F59E0B"/>
+<text x="213.1" y="1505.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">10</text>
+<rect x="302.7" y="1496.0" width="89.5" height="12" fill="#DC2626"/>
+<text x="347.4" y="1505.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
 <rect x="392.2" y="1496.0" width="35.8" height="12" fill="#CBD5E1"/>
 <text x="410.1" y="1505.5" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-<text x="52" y="1520" font-size="8.5" fill="#475569">3 implemented · 10 partial · 6 not met · 2 see §5</text>
+<text x="52" y="1520" font-size="8.5" fill="#475569">4 implemented · 10 partial · 5 not met · 2 see §5</text>
 <circle cx="56" cy="1526.5" r="3.5" fill="#F59E0B"/><text x="64" y="1530" font-size="9.5" fill="#475569" font-weight="600">TARA</text>
 <text x="110" y="1530" font-size="9.5" fill="#0F172A">TS-04 at risk 5: Reduce</text>
 <rect x="460" y="1097.0" width="400" height="457" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/>
