@@ -175,7 +175,7 @@
   parents: [SG-02]
   allocated_to: "E-01 (QM, see note), E-03 (FSR-01.07 as backstop)"
   verification: "T-SIL, FI"
-  baseline_impl: "Not met: soft disable keeps actuating for 3 s on failed inputs (`selfdrive/selfdrived/state.py:7-8`); controlsd does not check freshness (`selfdrive/controls/controlsd.py:66, 122-127`) (GAP-16); diagnostics masked during big-model fallback (`selfdrive/selfdrived/selfdrived.py:387-389, 408, 462`) (GAP-17)"
+  baseline_impl: "Not met: soft disable keeps actuating for 3 s on failed inputs (`selfdrive/selfdrived/state.py:7-8`); controlsd does not check freshness (`selfdrive/controls/controlsd.py:66, 122-127`) (GAP-16); diagnostics masked during big-model fallback (`selfdrive/selfdrived/selfdrived.py:428-430, 449, 505`) (GAP-17)"
   status: proposed
   source: WP-C-04
 
@@ -274,7 +274,7 @@
   parents: [SG-02, SG-06]
   allocated_to: "E-01/HMI, E-03"
   verification: "T-SIL, FI"
-  baseline_impl: "Partial: a crashed `ui`/`soundd` raises `processNotRunning` (`selfdrive/selfdrived/selfdrived.py:356-362`); a hung but running UI, a frozen indication or muted audio is not detected. New in v0.2 (H-07, HE-07.x)"
+  baseline_impl: "Partial: a crashed `ui`/`soundd` raises `processNotRunning` (`selfdrive/selfdrived/selfdrived.py:398-404`); a hung but running UI, a frozen indication or muted audio is not detected. New in v0.2 (H-07, HE-07.x)"
   status: proposed
   source: WP-C-04
 
@@ -417,7 +417,7 @@
   parents: [SG-04]
   allocated_to: "E-01"
   verification: "T-SIL, validation (WP-V-02)"
-  baseline_impl: "Partial: FCW from model hard-brake prediction or planner (`selfdrive/selfdrived/selfdrived.py:445-450`); no false-rate target. **ASIL A on a QM element (E-01):** decided 2026-10-14, DQ-052 A: SOTIF validation shows that a false FCW is not dangerous, then HE-04.5 is re-rated (OI-9); ASIL A applies until then. New in v0.2 (HE-04.5)"
+  baseline_impl: "Partial: FCW from model hard-brake prediction or planner (`selfdrive/selfdrived/selfdrived.py:488-493`); no false-rate target. **ASIL A on a QM element (E-01):** decided 2026-10-14, DQ-052 A: SOTIF validation shows that a false FCW is not dangerous, then HE-04.5 is re-rated (OI-9); ASIL A applies until then. New in v0.2 (HE-04.5)"
   status: proposed
   source: WP-C-04
 
@@ -505,7 +505,7 @@
   parents: [SG-06]
   allocated_to: "E-01 (QM), E-03 backstop via FSR-01.07"
   verification: "T-SIL, FI"
-  baseline_impl: "Partial: `commIssue`, `radarFault`, `processNotRunning` (`selfdrived.py:357-395`); masking during big-model settling (GAP-17); controlsd no freshness check (GAP-16)"
+  baseline_impl: "Partial: `commIssue`, `radarFault`, `processNotRunning` (`selfdrived.py:390-437`); masking during big-model settling (GAP-17); controlsd no freshness check (GAP-16)"
   status: proposed
   source: WP-C-04
 

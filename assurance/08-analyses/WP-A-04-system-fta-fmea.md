@@ -370,7 +370,7 @@ TE-04 Uncontrollable deceleration                                               
 │       └── BE-2.12 / BE-2.13 (HMI hang or mute)                      [CCF → DFI-25]
 ├── G4.5 False FCW causes reflex braking (HE-04.5)                                     [AND]
 │   ├── BE-4.11 FCW raised from stale or invalid input, or from a false lead
-│   │          (no freshness gate, selfdrived.py:445-450)             [SOTIF]/QM
+│   │          (no freshness gate, selfdrived.py:488-493)             [SOTIF]/QM
 │   ├── UE-4.12 Driver brakes hard with a close follower
 │   └── (CCF → DFI-26: the same false lead also makes the planner brake, BE-4.06)
 ├── G4.6 Braking while not engaged (HE-04.4)                                           [AND]
@@ -773,10 +773,10 @@ Severity of the vehicle effect is expressed by the affected SG. Detection = mech
 | SFMEA-31 | EXT-EPS | Misreports motor torque | Measured-tracking check misled | SG-01 | None | Magnitude/rate limits still apply | DFI-11; TSR-101, TSR-103, TSR-110 |
 | SFMEA-32 | EXT-PCM | Ignores cancel / inactive value | Accel continues | SG-03, SG-05 | `accFaulted` (host) | — | AOU-05R vehicle test (WP-S-09) |
 | SFMEA-33 | E-01 selfdrived | Envelope blocking detected late or not at all (`controlsMismatch` after 200 samples; stale `pandaStates`) | Control lost while the SoC shows engaged | SG-02, SG-06 | `controlsMismatch` ≈2 s (`selfdrived.py:343, 533-535`); `pandaStates` alive 1 s | Immediate disable after detection | TSR-621; vehicle-response check (WP-A-03 DFI-24, OI-8) |
-| SFMEA-34 | E-01 HMI (ui) | Render loop hung, process alive | Take-over request and engagement state not shown | SG-02, SG-06, SG-05 (mode confusion) | None (`processNotRunning` on crash only, `selfdrived.py:356-362`) | — | TSR-622; WP-A-03 DFI-25 |
+| SFMEA-34 | E-01 HMI (ui) | Render loop hung, process alive | Take-over request and engagement state not shown | SG-02, SG-06, SG-05 (mode confusion) | None (`processNotRunning` on crash only, `selfdrived.py:398-404`) | — | TSR-622; WP-A-03 DFI-25 |
 | SFMEA-35 | E-01 HMI (soundd) | Audio stream stalled, or volume below audible | Alert not heard | SG-02, SG-06 | None | Critical alerts ramp to maximum over 4 s (`soundd.py:21`) | TSR-622, TSR-623; WP-A-02 FFI-CM-17, -18 |
 | SFMEA-36 | E-01 DM and planner | No-response or soft-disable deceleration | Braking announced only at its start; jerk not bounded | SG-04 | DM escalation alerts precede the no-response deceleration | Envelope decel bound | TSR-624, TSR-205; GAP-04 |
-| SFMEA-37 | E-01 selfdrived (FCW) | FCW from stale input or a false lead | False FCW → reflex braking with a close follower | SG-04 | None (no freshness gate, `selfdrived.py:445-450`) | — | TSR-625 (ASIL A on QM, WP-C-04 OI-9); WP-A-03 DFI-26 |
+| SFMEA-37 | E-01 selfdrived (FCW) | FCW from stale input or a false lead | False FCW → reflex braking with a close follower | SG-04 | None (no freshness gate, `selfdrived.py:488-493`) | — | TSR-625 (ASIL A on QM, WP-C-04 OI-9); WP-A-03 DFI-26 |
 | SFMEA-38 | E-03 TX path | Actuation frames sent faster than nominal (in-limit burst) | Rate limits applied per frame, not per time | SG-01, SG-03, SG-04 | None. 2026-10-12, reference build: per-ID count over a 250 ms window (TSR-518) | Per-frame limits. 2026-10-12, reference build: frames beyond the budget rejected; 3 rejections revoke authority, reported as `txRateExceeded`; budgets to be confirmed on logs | TSR-518 |
 | SFMEA-39 | E-04 camera-side FDCAN / transceiver | Stuck or error-passive; camera-side RX stops | PCS frames not forwarded while the relay intercepts | SG-07 | Error counters, bus-off recovery (`fdcan.h:76-84`) | None that releases the relay | Forwarding supervision with relay release (TSR-707, TSR-706); SPF-13 |
 | SFMEA-40 | E-03 forwarding block list | Wrong entry (a PCS message blocked) | Stock PCS frame not delivered | SG-07 | Design review only | — | T-HIL of the full forwarding set (TSR-704) |
