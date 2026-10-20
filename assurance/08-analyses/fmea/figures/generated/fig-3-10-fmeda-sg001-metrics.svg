@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1242" viewBox="0 0 1280 1242" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-10. FMEDA SG-001 metrics against ASIL D (estimate)</title>
-  <desc id="d">FMEDA for SG-001 (ASIL D target, FMD rev 0.5, BL-002, draft) with generic estimated failure rates: SPFM 96.84 % against ≥ 99 % (missed), LFM 88.94 % against ≥ 90 % (missed), λSPF+λRF 8.07 FIT against PMHF &lt; 10 FIT (below, partial PMHF only, not verified); failure-rate split per component and failure mode, and the safety mechanisms with the failure modes they are credited on.</desc>
+  <desc id="d">FMEDA for SG-001 (ASIL D target, FMD rev 0.6, BL-002, draft) with generic estimated failure rates: SPFM 96.84 % against ≥ 99 % (missed), LFM 88.94 % against ≥ 90 % (missed), λSPF+λRF 8.07 FIT against PMHF &lt; 10 FIT (below, partial PMHF only, not verified); failure-rate split per component and failure mode, and the safety mechanisms with the failure modes they are credited on.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,7 +9,7 @@
   </defs>
   <rect width="1280" height="1242" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-10 · FMEDA SG-001 — metrics against the ASIL D target</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">FMD rev 0.5 · BL-002 · draft · FMEDA — SG-001 lateral (panda safety path), generic failure rates</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">FMD rev 0.6 · BL-002 · draft · FMEDA — SG-001 lateral (panda safety path), generic failure rates</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.5</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/fmeda-sg001.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -173,7 +173,7 @@
   <text x="116.4" y="869" font-size="11" fill="#475569" font-weight="600">λ = 50 FIT</text>
   <text x="40" y="883" font-size="10" fill="#475569">Intercept switch: 2 × DG419LE CMOS analog SPDT (harness</text>
   <text x="40" y="895" font-size="10" fill="#475569">box)</text>
-  <text x="40" y="907" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-006 · U1, U2 (harness box)</text>
+  <text x="40" y="907" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-006 · U1, U2 (harness box); wire ends in assurance/04-hardware/wiring/wire-ends.tsv: HB.U1.6-J3.A8, HB.U2.6-J3.A8 (IN = SBU1), HB.J1.4-U1.2, HB.J1.6-U2.1, HB.J1.16-U1.1, HB.J1.18-U2.2</text>
   <rect x="360" y="859" width="320" height="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
   <rect x="360" y="859" width="11.2" height="14" fill="#C2410C"/>
   <rect x="371.2" y="859" width="100.8" height="14" fill="#FDBA74"/>
@@ -188,7 +188,7 @@
   <text x="40" y="947" font-size="11.5" fill="#0F172A" font-weight="700">FMD-C-008</text>
   <text x="116.4" y="947" font-size="11" fill="#475569" font-weight="600">λ = 0.4 FIT</text>
   <text x="40" y="961" font-size="10" fill="#475569">SBU1 pull-down: 2 × 120 Ω thick-film resistor in series</text>
-  <text x="40" y="973" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-006 · R2, R3 (harness box)</text>
+  <text x="40" y="973" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-006 · R2, R3 (harness box); wire ends in assurance/04-hardware/wiring/wire-ends.tsv: HB.R2/R3.1-J3.A8</text>
   <rect x="360" y="937" width="2.6" height="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
   <rect x="360" y="937" width="0.1" height="14" fill="#C2410C"/>
   <rect x="360.1" y="937" width="0.9" height="14" fill="#FDBA74"/>

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-06 Hardware integration and verification specification and report |
 | Standard reference | ISO 26262-5:2018 §10 (hardware integration and verification); ISO 26262-8:2018 §9 (verification), §13 (qualification tests of HW components); ASPICE 4.0 HWE.3, HWE.4 |
-| Version | 0.9 (bench wiring drawn: Figure 2-2 HIL bench and Figure 3-1 harness box bench, WireViz, [`wiring/`](wiring/README.md); 2026-10-20). 0.8 (bench checklist and result sheet for VS-HW-02, VS-HW-22…24 linked; one reversibly modified box suffices; 2026-10-16). 0.7 (DQ-209 option A: VS-HW-02 and VS-HW-22…24 are the decided route for the harness box; 2026-10-16). 0.6 (HIL bench deferred by the lead, DQ-049: T-HIL and FI cases blocked; 2026-10-16). 0.5 (§3.1 bench procedures for VS-HW-22…24; VS-HW-24 adds the logic-threshold check and waits for the DG419LE ratings, DFM-ACT-015; RR-2026-010 F-05; 2026-10-16). 0.4 (harness box v3 drawing: VS-HW-02 re-scoped, VS-HW-22…24 added for the analog-switch failure behaviour; [RR-2026-010](reviews/RR-2026-010.md); 2026-10-15). 0.3 (§2.1 diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
+| Version | 0.10 (Figure 2-1 and §2.2 re-based from a relay box to the harness box v3 switches, closing wiring OI-W-7; VS-HW-13 checks logical bus 0 = car side in both orientations and a forced wrong reading; 2026-10-20). 0.9 (bench wiring drawn: Figure 2-2 HIL bench and Figure 3-1 harness box bench, WireViz, [`wiring/`](wiring/README.md); 2026-10-20). 0.8 (bench checklist and result sheet for VS-HW-02, VS-HW-22…24 linked; one reversibly modified box suffices; 2026-10-16). 0.7 (DQ-209 option A: VS-HW-02 and VS-HW-22…24 are the decided route for the harness box; 2026-10-16). 0.6 (HIL bench deferred by the lead, DQ-049: T-HIL and FI cases blocked; 2026-10-16). 0.5 (§3.1 bench procedures for VS-HW-22…24; VS-HW-24 adds the logic-threshold check and waits for the DG419LE ratings, DFM-ACT-015; RR-2026-010 F-05; 2026-10-16). 0.4 (harness box v3 drawing: VS-HW-02 re-scoped, VS-HW-22…24 added for the analog-switch failure behaviour; [RR-2026-010](reviews/RR-2026-010.md); 2026-10-15). 0.3 (§2.1 diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (specification); results section is a template — **Not yet executed** |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
@@ -38,9 +38,9 @@ is implemented and has not been run (bench not built, GAP-30; [HIL bench plan](.
 
 ### 2.1 Configuration
 
-![Figure 2-1: HW integration test configuration with the Linux bench PC, panda jungle or 3-bus CAN interface, programmable power supply, reference comma device, Toyota TSS2 harness with instrumented relay box, optional forward camera and additional instruments](figures/fig-h06-2-1-hil-configuration.svg)
+![Figure 2-1: HW integration test configuration with the Linux bench PC, panda jungle or 3-bus CAN interface, programmable power supply, reference comma device, Toyota TSS2 harness with instrumented harness box v3, optional forward camera and additional instruments](figures/fig-h06-2-1-hil-configuration.svg)
 
-*Figure 2-1.* The HIL bench for hardware integration: the bench PC controls the CAN interface, the supply and the reference device; the harness and relay box are instrumented with contact state and coil current probes. Dashed elements are optional. Source: [`figures/fig-h06-2-1-hil-configuration.svg`](figures/fig-h06-2-1-hil-configuration.svg); change it together with the table below and §2.2.
+*Figure 2-1.* The HIL bench for hardware integration: the bench PC controls the CAN interface, the supply and the reference device; the harness and harness box are instrumented with probes on the SBU1 drive and on the U1/U2 switch pins (the box has analog switches and no relay coil, [RR-2026-010](reviews/RR-2026-010.md) F-04; Figure 2-2 draws the same probes). Dashed elements are optional. Source: [`figures/fig-h06-2-1-hil-configuration.svg`](figures/fig-h06-2-1-hil-configuration.svg); change it together with the table below and §2.2.
 
 <details><summary>Text version of Figure 2-1</summary>
 
@@ -59,11 +59,11 @@ is implemented and has not been run (bench not built, GAP-30; [HIL bench plan](.
  │  car, cam,│ └──────┬────────┘        │ harness connector
  │  OBD)     │        │ 12 V           ┌┴─────────────────────────┐
  └──┬────────┘        └────────────────┤ Toyota TSS2 harness +    │
-    │ CAN pairs (car side / camera side)│ relay box (instrumented: │
-    └───────────────────────────────────┤ contact state probe,     │
-                                        │ coil current probe)      │
+    │ CAN pairs (car side / camera side)│ harness box v3 (probes:  │
+    └───────────────────────────────────┤ SBU1 drive, U1/U2 switch │
+                                        │ pins; no relay coil)     │
                                         └──────────────────────────┘
-  Additional instruments: oscilloscope / logic analyser on relay coil, CAN lines,
+  Additional instruments: oscilloscope / logic analyser on SBU1, U1/U2, CAN lines,
   NRST and BOOT0; thermal chamber or heat gun + thermocouple; SWD probe (debug build
   only, for fault injection); optional: real forward camera on the camera-side bus.
 ```
@@ -93,7 +93,7 @@ is implemented and has not been run (bench not built, GAP-30; [HIL bench plan](.
 | Firmware fault-injection build (forced hang, forced exception, corrupted variable, stopped service of the watchdog) | IWDG, exception paths, fault reactions | Changes the software under test; must be argued representative |
 | SWD debugger writes (halt core, flip RAM/register bits) | Hang, data corruption, register divergence | Halting the core also stops some peripherals; debug must be enabled |
 | Hardware: hold NRST, assert BOOT0 | Reset safe state, bootloader state | Needs access to the SoC-side GPIO or test pads |
-| Hardware: relay coil open/short (in the harness box), contact bridging | Relay failure detection | Destructive on the harness unit |
+| Hardware: SBU1 drive forced or opened, R2/R3 lifted, D2/D3 bridged, box VIN removed (harness box v3, §3.1) | Intercept switch failure behaviour (VS-HW-22…24) | Reversible on the spare box if done as in §3.1; destructive otherwise |
 | Hardware: CAN line short (CAN-H to CAN-L, to GND), open, termination removal | Transceiver/bus faults | Must not damage vehicle-representative nodes |
 | Power: dropouts, slow ramps, brown-out plateau, over-voltage within safe limits | Supply monitoring | Device input rating unknown (WP-H-02 UK-08) |
 | Clock: HSE disturbance (only if a test pad exists) | CSS | Probably not accessible on COTS PCB — fall back to analysis |
@@ -120,7 +120,7 @@ safe state on the scope/CAN log.
 | VS-HW-10 | Supply over-voltage (non-destructive) | HWSR-505b | — | Raise input within the rated range (rating from UK-08) | Reported; safe state above threshold (after DC-10) | T-HIL | DC-10 |
 | VS-HW-11 | CAN bus-off and error-passive (car side) | HWSR-508, -508b, -508c | Car mode, engaged | (a) Short CAN-H/CAN-L on car side; (b) remove termination; (c) inject error frames until bus-off; (d) RX open on XCVR1 | Bus-off detected; actuation safe state; driver warning via SoC; recovery behaviour per spec; (d) RX timeout within FTTI budget | T-HIL, FI | TSR-4xx timeouts |
 | VS-HW-12 | Transceiver fault does not disturb stock path | HWSR-508a | SILENT, relay released | Force panda XCVR3/XCVR1 dominant (fault-injection build or transceiver TXD forced) | Stock camera↔car traffic continues (or the fault is shown impossible by analysis of the topology, WP-H-02 OI-6) | T-HIL, A | — |
-| VS-HW-13 | Harness reversed / orientation | HWSR-701, -701a | — | Connect harness normal, flipped and disconnected, with and without ignition (reuse `panda/tests/hitl/test_9_harness.py` logic); disconnect harness while relay driven | Orientation detected correctly in all cases; CAN routing correct; relay pin follows orientation; disconnection while driving leads to safe state and warning | T-HIL | — |
+| VS-HW-13 | Harness reversed / orientation | HWSR-701, -701a | — | Connect harness normal, flipped and disconnected, with and without ignition (reuse `panda/tests/hitl/test_9_harness.py` logic); in each orientation send a frame on logical bus 0 and on bus 2 and see where it arrives; force a wrong orientation reading (SBU sense forced, debug build) with the stock camera running; disconnect harness while relay driven | Orientation detected correctly in all cases; logical bus 0 is the car side and bus 2 the camera side in both orientations (a flipped reading swaps them, `drivers/can_common.h:130-135`); the intercept drive and ignition sense follow orientation; with a forced wrong reading the switch stays in pass-through and the relay-malfunction check blocks TX (WP-H-03 FM-HAR-02); disconnection while driving leads to safe state and warning | T-HIL | — |
 | VS-HW-14 | Ignition loss and ignition-line faults | HWSR-510, -510a | Car mode, engaged | (a) Ignition line low while driving; (b) line open; (c) line shorted to the "on" level with engine off | (a)/(b): heartbeat timeout switches to the 2 s value; no actuation outside envelope; (c): behaviour documented, including power drain; matches WP-H-03 FM-IGN rows | T-HIL | — |
 | VS-HW-15 | Thermal | HWSR-509, -509a | Thermal chamber or controlled heating | Raise ambient to the device rating; stall fan | DTS reported correctly vs thermocouple; safe state above the MCU threshold (after DC-10); host thermal policy acts; no actuation anomaly | T-HIL | DC-10 |
 | VS-HW-16 | Clock failure (analysis + test where accessible) | HWSR-504, -504a | — | If a test pad exists, stop HSE; otherwise analyse CSS path from RM0468 and code (`panda/board/stm32h7/clock.h:119`, `panda/board/early_init.h:73-76`) | NMI → reset → safe state; documented hang in `clock_init` is with relay released | T-HIL or A | — |

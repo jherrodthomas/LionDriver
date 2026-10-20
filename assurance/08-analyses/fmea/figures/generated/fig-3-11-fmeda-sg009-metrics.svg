@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1550" viewBox="0 0 1280 1550" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-11. FMEDA SG-009 metrics against ASIL B (estimate)</title>
-  <desc id="d">FMEDA for SG-009 (ASIL B target, FMD rev 0.5, BL-002, draft) with generic estimated failure rates: SPFM 78.11 % against ≥ 90 % (missed), LFM 97.71 % against ≥ 60 % (met on the estimate, not verified), λSPF+λRF 62.9 FIT against PMHF &lt; 100 FIT (below, partial PMHF only, not verified); failure-rate split per component and failure mode, and the safety mechanisms with the failure modes they are credited on.</desc>
+  <desc id="d">FMEDA for SG-009 (ASIL B target, FMD rev 0.6, BL-002, draft) with generic estimated failure rates: SPFM 78.11 % against ≥ 90 % (missed), LFM 97.71 % against ≥ 60 % (met on the estimate, not verified), λSPF+λRF 62.9 FIT against PMHF &lt; 100 FIT (below, partial PMHF only, not verified); failure-rate split per component and failure mode, and the safety mechanisms with the failure modes they are credited on.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,7 +9,7 @@
   </defs>
   <rect width="1280" height="1550" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-11 · FMEDA SG-009 — metrics against the ASIL B target</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">FMD rev 0.5 · BL-002 · draft · FMEDA — SG-009 stock AEB availability (relay and forwarding path), generic failure rates</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">FMD rev 0.6 · BL-002 · draft · FMEDA — SG-009 stock AEB availability (relay and forwarding path), generic failure rates</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.5</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/fmeda-sg009.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -173,7 +173,7 @@
   <text x="116.4" y="857" font-size="11" fill="#475569" font-weight="600">λ = 50 FIT</text>
   <text x="40" y="871" font-size="10" fill="#475569">Intercept switch: 2 × DG419LE CMOS analog SPDT (harness</text>
   <text x="40" y="883" font-size="10" fill="#475569">box)</text>
-  <text x="40" y="895" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-006 · U1, U2 (harness box)</text>
+  <text x="40" y="895" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-006 · U1, U2 (harness box); wire ends in assurance/04-hardware/wiring/wire-ends.tsv: HB.U1.6-J3.A8, HB.U2.6-J3.A8 (IN = SBU1), HB.J1.4-U1.2, HB.J1.6-U2.1, HB.J1.16-U1.1, HB.J1.18-U2.2</text>
   <rect x="360" y="847" width="320" height="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
   <rect x="360" y="847" width="224" height="14" fill="#D2553F"/>
   <rect x="584" y="847" width="96" height="14" fill="#E2E8F0"/>
@@ -185,7 +185,7 @@
   <text x="40" y="935" font-size="11.5" fill="#0F172A" font-weight="700">FMD-C-010</text>
   <text x="116.4" y="935" font-size="11" fill="#475569" font-weight="600">λ = 5 FIT</text>
   <text x="40" y="949" font-size="10" fill="#475569">SBU1 drive circuit in the comma device</text>
-  <text x="40" y="961" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-006 · Device side (unknown, UK-06)</text>
+  <text x="40" y="961" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-006 · Device side (unknown, UK-06); wire ends in assurance/04-hardware/wiring/wire-ends.tsv: OC.W1.11 (SBU1 link)</text>
   <rect x="360" y="925" width="32" height="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
   <rect x="360" y="925" width="16" height="14" fill="#D2553F"/>
   <rect x="376" y="925" width="16" height="14" fill="#E2E8F0"/>
@@ -196,7 +196,7 @@
   <text x="40" y="1001" font-size="11.5" fill="#0F172A" font-weight="700">FMD-C-011</text>
   <text x="116.4" y="1001" font-size="11" fill="#475569" font-weight="600">λ = 0.4 FIT</text>
   <text x="40" y="1015" font-size="10" fill="#475569">SBU1 pull-down: 2 × 120 Ω thick-film resistor in series</text>
-  <text x="40" y="1027" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-006 · R2, R3 (harness box)</text>
+  <text x="40" y="1027" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-006 · R2, R3 (harness box); wire ends in assurance/04-hardware/wiring/wire-ends.tsv: HB.R2/R3.1-J3.A8</text>
   <rect x="360" y="991" width="2.6" height="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
   <rect x="360" y="991" width="1.5" height="14" fill="#D97706"/>
   <rect x="361.5" y="991" width="1" height="14" fill="#E2E8F0"/>
@@ -208,7 +208,7 @@
   <text x="116.4" y="1067" font-size="11" fill="#475569" font-weight="600">λ = 3 FIT</text>
   <text x="40" y="1081" font-size="10" fill="#475569">Box supply: D1 Schottky STPS2H100ZFY from ignition, D4</text>
   <text x="40" y="1093" font-size="10" fill="#475569">TVS SMF16A</text>
-  <text x="40" y="1105" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-006 · D1, D4 (harness box)</text>
+  <text x="40" y="1105" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-006 · D1, D4 (harness box); wire ends in assurance/04-hardware/wiring/wire-ends.tsv: HB.J1.2-D1.A, HB.D1.K-J3.A4, HB.J2.4-J3.A4</text>
   <rect x="360" y="1057" width="19.2" height="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
   <rect x="360" y="1057" width="11.5" height="14" fill="#D2553F"/>
   <rect x="371.5" y="1057" width="7.7" height="14" fill="#D97706"/>
@@ -221,7 +221,7 @@
   <text x="116.4" y="1145" font-size="11" fill="#475569" font-weight="600">λ = 2 FIT</text>
   <text x="40" y="1159" font-size="10" fill="#475569">Bus clamps: 2 × BAS40SDW Schottky pairs on CAN0 and</text>
   <text x="40" y="1171" font-size="10" fill="#475569">CAN2</text>
-  <text x="40" y="1183" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-006 · D2, D3 (harness box)</text>
+  <text x="40" y="1183" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-006 · D2, D3 (harness box); clamp wiring not drawn in wire-ends.tsv</text>
   <rect x="360" y="1135" width="12.8" height="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
   <rect x="360" y="1135" width="3.8" height="14" fill="#D2553F"/>
   <rect x="363.8" y="1135" width="9" height="14" fill="#D97706"/>
@@ -232,7 +232,7 @@
   <text x="40" y="1223" font-size="11.5" fill="#0F172A" font-weight="700">FMD-C-008</text>
   <text x="116.4" y="1223" font-size="11" fill="#475569" font-weight="600">λ = 10 FIT</text>
   <text x="40" y="1237" font-size="10" fill="#475569">Harness connector and harness-box wiring in the stock path</text>
-  <text x="40" y="1249" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-007</text>
+  <text x="40" y="1249" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-007 · Wire ends in assurance/04-hardware/wiring/wire-ends.tsv: Toyota A harness TA.W1.1, TA.W1.2 (camera CAN2), TA.W2.1, TA.W2.2 (car CAN0); box lines HB.J1.4-U1.2, HB.J1.6-U2.1, HB.J1.16-U1.1, HB.J1.18-U2.2; device link OC.W1.1…OC.W1.12</text>
   <rect x="360" y="1213" width="64" height="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
   <rect x="360" y="1213" width="19.2" height="14" fill="#D2553F"/>
   <rect x="379.2" y="1213" width="44.8" height="14" fill="#E2E8F0"/>
