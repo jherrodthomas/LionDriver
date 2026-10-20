@@ -60,6 +60,12 @@ class TestFirmwareGlue(unittest.TestCase):
     self.assertIn("current_board->set_siren((loop_counter & 1U) && (siren_enabled || (siren_countdown > 0U) || "
                   "eps_fault_siren_active || heartbeat_siren_active));", self.main)
 
+  def test_engaged_mismatch_matches_tick_handler(self):
+    sim = self.body(self.harness, "void sim_tick_1hz(void)")
+    fw = statements(self.main)
+    i = fw.index(sim[0])
+    self.assertEqual(fw[i:i + len(sim)], sim)
+
   def test_heartbeat_handler(self):
     comms = (ROOT / "panda" / "board" / "main_comms.h").read_text(encoding="utf-8")
     self.assertRegex(comms, r"heartbeat_monitor_reset\(\);\s*heartbeat_lost = false;\s*heartbeat_disabled = false;\s*"
