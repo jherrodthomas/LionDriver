@@ -4,7 +4,7 @@
 |---|---|
 | Plan | [TE-02](../../07-supporting/tool-evaluations/TE-02-fmdtools-fault-propagation.md) (pilot on SG-02) |
 | Tool | [NASA fmdtools](https://github.com/nasa/fmdtools) 2.5.6, Apache-2.0, pinned in [`requirements.txt`](requirements.txt); [WP-P-07](../../07-supporting/WP-P-07-tool-classification-qualification.md) TL-49 |
-| Status | Steps P0 (setup), P1 (SG-02 model) and P2 (single faults) done; P3 to P5 open. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Steps P0 (setup), P1 (SG-02 model), P2 (single faults) and P3 (joint faults) done; P4 and P5 open. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Evidence | **None.** Synthetic (DSR-12): behaviour and timing come from WP-A-04 §4, not measurement. Results point reviewers at possible gaps in the fault trees; a tree changes only after a person reviews the finding |
 
 ## What is here
@@ -14,7 +14,7 @@
 | [`sg02/events.yaml`](sg02/events.yaml) | One failure mode per event of the SG-02 tree (25 modes, 2 events held latent), and the timing the model uses, each with its source |
 | [`sg02/model.py`](sg02/model.py) | The SG-02 chain as fmdtools functions and flows: supply, SoC, envelope, EPS, the host's alert logic, HMI, siren, driver. `run(events)` injects modes together and reads TE-02 from the history |
 | [`sg02/test_sg02.py`](sg02/test_sg02.py) | Mapping against the WP-A-04 tree and `fta-fmea-map.yaml`; nominal run; reference cases from the §4.1 cut-set table; road phases |
-| [`sg02/sweep.py`](sg02/sweep.py) | Step P2: every mode alone in each road phase, compared with the tree; writes [`sg02/p2-single-faults.md`](sg02/p2-single-faults.md); `--check` in CI |
+| [`sg02/sweep.py`](sg02/sweep.py) | Step P2: every mode alone in each road phase, compared with the tree; writes [`sg02/p2-single-faults.md`](sg02/p2-single-faults.md). Step P3 (`joint`): the minimal sets of up to 4 modes; writes [`sg02/p3-minimal-sets.json`](sg02/p3-minimal-sets.json) and [`sg02/p3-joint-faults.md`](sg02/p3-joint-faults.md). `--check` in CI (P3: orders 1 and 2 on pull requests, the full sweep weekly in `fmdtools-sweep.yaml`) |
 
 ## How it works
 
@@ -33,6 +33,7 @@ BE-2.14 (siren not triggered) stays a mode. Since panda `8a69ccf` the siren soun
     python3 assurance/models/fmdtools/sg02/model.py BE-2.01 BE-2.08    # one joint-fault run
     python3 assurance/models/fmdtools/sg02/test_sg02.py
     python3 assurance/models/fmdtools/sg02/sweep.py                    # step P2 page (--check: fail if stale)
+    python3 assurance/models/fmdtools/sg02/sweep.py joint              # step P3, about 4.5 min on 4 cores
 
 ## First results (single modes, step P1)
 
@@ -53,4 +54,11 @@ A run takes place on a straight, at curve entry or mid-curve (`events.yaml` phas
 - **BE-2.05 SoC crash**: TE-02 alone in the tree, not in the model, where the heartbeat siren sounds at 0.26 s. Same cause as the P1 finding: the tree's latent tag on BE-2.14.
 - **BE-2.07 supply loss on a straight**: TE-02 alone in the model. MCS-02.7 needs the driver to miss the end of LKA torque (UE-2.18); on a straight that torque is near zero, so the model gives no cue. This rests on an assumption; the plant can measure the drift and say whether it matters within the run.
 
-One run takes about 0.19 s. Step P3 therefore skips sets that contain no cause and supersets of sets already found, rather than running all 15,250 combinations of 2 to 4 modes.
+## Joint faults (step P3)
+
+One run takes about 0.19 s. Step P3 therefore skips sets that contain no cause and supersets of sets already found: 5,260 runs instead of all 15,275 sets of 1 to 4 modes. Mid-curve, against the tree's 31 effective sets of up to 4 events (its latent events taken as present):
+
+- **No set in the model that the tree does not predict.** A test drops the MCS-02.4 cut sets from the tree and checks that the diff then reports {BE-2.04}.
+- 22 sets agree. In 9 tree sets, the model needs one more event, a siren failure (BE-2.14, BE-2.15 or BE-2.22): {BE-2.05}, the four {BE-2.01, warning or HMI failure} sets of MCS-02.1 and MCS-02.6, and the four {BE-2.20, BE-7.20, warning or HMI failure} sets of MCS-02.11. All 9 are the same finding: since panda `8a69ccf`, the siren covers EPS faults and heartbeat loss, so the tree's latent tag on BE-2.14 holds only for the other causes.
+
+[`p3-joint-faults.md`](sg02/p3-joint-faults.md) lists all 49 minimal sets.

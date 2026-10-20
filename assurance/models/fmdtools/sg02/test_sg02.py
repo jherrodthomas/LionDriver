@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for the SG-02 fault-propagation model (TE-02, steps P1 and P2).
+"""Tests for the SG-02 fault-propagation model (TE-02, steps P1 to P3).
 
 Mapping: every event of the WP-A-04 SG-02 tree has a model mode or a latent entry, every mode names a tree event, and
 every event is in the FTA <-> FMEA map. Behaviour: the nominal run is clean, every mode runs, and reference cases
@@ -8,6 +8,7 @@ are pinned as such: they are the kind of finding step P3 reports (the revocation
 latent tag on BE-2.14 is out of date for them).
 """
 
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -107,6 +108,19 @@ class TestPhases(unittest.TestCase):
     # Finding of step P2 (assumption in events.yaml phases): MCS-02.7 relies on the driver feeling the end of LKA torque
     self.assertTrue(m.run(("BE-2.07",), phase="straight").top_event)
     self.assertFalse(m.run(("BE-2.07",), phase="curve_entry").top_event)
+
+
+class TestJointSweep(unittest.TestCase):
+  """Step P3. The sets themselves are checked by `sweep.py joint --check`; here the diff must catch a tree error."""
+
+  def test_an_injected_tree_error_is_caught(self):
+    import sweep
+    solver, cut_sets = sweep.solve(m.EVENTS["goal"])
+    model_sets = [frozenset(c) for c in json.loads(sweep.P3_JSON.read_text(encoding="utf-8"))["sets"]]
+    self.assertEqual(sweep.tree_gaps(model_sets, cut_sets, solver.latent), [])
+    # drop the cut sets of MCS-02.4 (non-finite command clamped): the diff must report the model's {BE-2.04}
+    broken = [c for c in cut_sets if "BE-2.04" not in c]
+    self.assertEqual(sweep.tree_gaps(model_sets, broken, solver.latent), [frozenset({"BE-2.04"})])
 
 
 if __name__ == "__main__":

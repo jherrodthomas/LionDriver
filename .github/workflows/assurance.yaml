@@ -331,6 +331,8 @@ jobs:
       run: python3 assurance/models/fmdtools/sg02/test_sg02.py
     - name: SG-02 single-fault page is current (step P2)
       run: python3 assurance/models/fmdtools/sg02/sweep.py --check
+    - name: SG-02 joint-fault sets of order 1 and 2 are current (step P3; the full sweep runs weekly)
+      run: python3 assurance/models/fmdtools/sg02/sweep.py joint --check --order 2
 
   sim-plant:
     name: simulation plant model
