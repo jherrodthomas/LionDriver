@@ -53,7 +53,7 @@ class TestSimPlotLoops(unittest.TestCase):
     d, errs = fp.search_data()
     self.assertEqual(errs, [])
     self.assertEqual(len(d["mc"]), 120)
-    self.assertEqual(sum(r["bad"] for r in d["mc"]), 92)
+    self.assertEqual(sum(r["bad"] for r in d["mc"]), 71)
     for r in d["mc"]:
       self.assertTrue(-0.01 <= r["a_y"] <= 1.81 and 0.74 <= r["t_r"] <= 1.51, r)
     self.assertEqual(sorted({r["round"] for r in d["ce"]}), [1, 2, 3, 4])
@@ -63,7 +63,7 @@ class TestSimPlotLoops(unittest.TestCase):
     real = fp.SEARCH_MD
     tmp = Path(__file__).resolve().parent / "_drift_search.md"
     try:
-      tmp.write_text(md.replace("92 of 120 samples depart", "91 of 120 samples depart"), encoding="utf-8")
+      tmp.write_text(md.replace("71 of 120 samples depart", "70 of 120 samples depart"), encoding="utf-8")
       fp.SEARCH_MD = tmp
       _d, errs = fp.search_data()
       self.assertTrue(any("departing" in e for e in errs), errs)

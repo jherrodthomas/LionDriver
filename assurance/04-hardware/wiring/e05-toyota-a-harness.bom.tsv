@@ -1,0 +1,7 @@
+Id	Description	Qty	Unit	Designators
+1	Cable, camera branch, 6 x 26 AWG	0	m	W1
+2	Cable, car branch, 6 x 26 AWG	0	m	W2
+3	Cable, pass-through PT1-PT4, camera to car, not through the box, 4 x 26 AWG	0	m	W3
+4	Connector, Molex 501646-1800, to harness box header J1 (Molex 501876-1840); wire side, 18 pins	1		X3
+5	Connector, TE 1318774-1, to forward camera; pins TE 1123343-1; back view, 12 pins	1		X1
+6	Connector, TE 1565894-1, to vehicle harness (car side); pins TE 1376109-1; back view, 12 pins	1		X2

@@ -4,7 +4,7 @@
 |---|---|
 | Record type | Test checklist and result sheet for [WP-H-06](../WP-H-06-hardware-integration-verification.md) §3.1 |
 | Covers | VS-HW-02 (inspection, prerequisite), VS-HW-22 (box unpowered), VS-HW-23 (pull-down open), VS-HW-24 (supply stress, logic threshold, signal integrity, clamp short) |
-| Version | 0.1 (first issue; 2026-10-16) |
+| Version | 0.2 (§A: box-plug crimp part number field, wiring OI-W-3; 2026-10-20). 0.1 (first issue; 2026-10-16) |
 | Status | Draft. **Not yet executed** |
 | Author | Claude Code (AI-drafted from WP-H-06 §3.1; to be reviewed before first use) |
 | Decision | Route chosen by the lead: keep comma's box and bench-test it ([DQ-209](../../01-management/decisions/register.yaml)). The SG-07 SPFM deviation ([DQ-320](../../01-management/decisions/register.yaml), [WP-H-04](../WP-H-04-hardware-metrics.md) §5.3) holds only if these tests pass |
@@ -25,6 +25,7 @@
 | Tester | |
 | Box serial / marking | |
 | Harness letter and revision (RR-2026-010 F-13) | |
+| Box-plug crimp terminal part number, read off the part ([wiring](../wiring/README.md) OI-W-3: comma's drawings say 501648-1000 or 501647-1000) | |
 | Reference device and serial (VS-HW-23 step 3 only) | |
 | Panda firmware commit (if the device is used) | |
 | CAN interface, model and serial | |

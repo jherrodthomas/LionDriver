@@ -89,6 +89,9 @@
 #   DQ-403 (new action SWF-ACT-079). SWF-ACT-063 in progress. Totals: 90 failure modes, 141 causes (130 H, 1 M, 10 L).
 # rev 1.6 at BL-006: the CI unit_tests job runs again (LFS mirror back) and is green with test_assured_config.py (tests run 39296172878, 6126485).
 #   SWF-067.C1 D 9 -> 8 (still AP H: targeted, not proven by mutation); SWF-ACT-063 completed. Totals unchanged.
+# rev 1.7 at BL-006, lead answer DQ-403 A applied: #342 (5d4ba6e, after BL-006) holds a menu change of Experimental Mode or the following distance until
+#   disengagement on the reference platform. SWF-067.C2 rewritten to a defect in that hold, O8 D10 -> O5 D8 (still AP H; tests in CI, not proven by mutation);
+#   new safety mechanism on SWF-067; SWF-ACT-079 completed. Totals unchanged: 90 failure modes, 141 causes (130 H, 1 M, 10 L).
 # Post rev 1.4, FTA WP-A-04 v1.12 (BE-1.25 in the SG-04 tree), ratings unchanged: SWF-055 and SWF-089 gain HZ-006 end effects (an authority
 #   grant covers longitudinal commands, as SWF-007). SWF-002 stays steering-only (HZ-001); its note says why HZ-006 and HZ-010 do not apply.
 #
@@ -138,7 +141,7 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.6"
+  revision: "1.7"
   status: draft
   baseline: BL-006
   rating_tables: RT-2
@@ -4416,6 +4419,10 @@ failure_modes:
       (AssuredConfigStatus.settings_in_scope, re-read every 0.1 s by params_thread); the distance button no longer changes the following distance. Entry check only:
       an engaged item is not disengaged'
     ref: openpilot/selfdrive/selfdrived/selfdrived.py
+  - description: 'Reference platform only (DQ-403 A, #342): a menu change of ExperimentalMode or LongitudinalPersonality while engaged is stored
+      (experimental_mode_setting, personality_setting) and applied by apply_settings only after disengagement; the entry gate then refuses the next engagement
+      while the stored setting is outside the assured configuration'
+    ref: openpilot/selfdrive/selfdrived/selfdrived.py
   causes:
   - id: SWF-067.C1
     description: 'Defect in the reference entry gate (DQ-221 A, #287): settings_in_scope computed wrongly in assured_config.evaluate, settingNotAssured not raised in
@@ -4436,22 +4443,28 @@ failure_modes:
     actions:
     - SWF-ACT-063
   - id: SWF-067.C2
-    description: 'A setting changed in the settings menu while engaged (following distance, Experimental Mode) takes effect at once; the gate refuses only the next
-      engagement (change record OI-3). What the item should do then is queued for the lead (DQ-403)'
+    description: 'Defect in the hold of settings changed while engaged (DQ-403 A, #342): apply_settings applies the stored ExperimentalMode or following distance while
+      the item is engaged on the reference platform (enabled or reference_platform read wrongly, or a path that writes experimental_mode or personality directly), so
+      a menu change takes the engaged item outside the assured configuration'
     element: SWF-SE-071
     prevention_controls:
-    - description: Defaults set to the assured values; the deviation is logged with a configuration hash
-      ref: openpilot/selfdrive/selfdrived/assured_config.py
+    - description: 'Lead decision DQ-403 A implemented in #342 (18b15cd, merged 5d4ba6e, after BL-006); change record change-2026-10-20-settings-held-while-engaged;
+        upstream review, ruff + ty. No SWSR yet (change record OI-3)'
+      ref: assurance/07-supporting/impact/change-2026-10-20-settings-held-while-engaged.md
     detection_controls:
-    - description: No check while engaged; test_assured_config.py checks that the gate is entry-only, which is this behaviour
+    - description: 'test_assured_config.py TestSettingsHeldWhileEngaged (5 tests: held while engaged, applied after disengagement, next engagement refused, applied at
+        once while disengaged, other platforms unchanged; 4 fail on the code before #342). Run by the CI unit_tests job (tests run 39348218534 at 18b15cd: 1583 passed,
+        0 failed); not proven by mutation, so D 8, D 4 with mutation'
       test: openpilot/selfdrive/selfdrived/tests/test_assured_config.py
-    occurrence: 8
-    detection: 10
+    occurrence: 5
+    detection: 8
     ap: H
     actions:
     - SWF-ACT-079
   notes: 'Rated O6 D9 (AP H) as a single cause up to rev 1.4, when the distance button and the settings menu could both leave the assured configuration while driving.
-    Re-rated in rev 1.5 after #287; D 8 in rev 1.6, once CI ran the tests. Other platforms stay outside the assured scope, allowed and logged (CA-008). The 60 km/h entry floor of the same change (DQ-280 A,
+    Re-rated in rev 1.5 after #287; D 8 in rev 1.6, once CI ran the tests. C2 was O8 D10 (setting changed while engaged took effect at once) until #342 (rev 1.7).
+    The other ASSURED_PARAMS settings cannot change while engaged from the menu: the debug-mode toggles are enabled only offroad (ui developer.py:61, 134-136) and
+    those params clear on the offroad transition; AlphaLongitudinalEnabled is read once when card starts (change record OI-2, by code reading). Other platforms stay outside the assured scope, allowed and logged (CA-008). The 60 km/h entry floor of the same change (DQ-280 A,
     belowHighwaySpeed) is an ODD entry check analysed in the STPA (CC-18, LS-13), not here.'
 - id: SWF-068
   element: SWF-SE-070
@@ -6013,4 +6026,13 @@ actions:
   description: 'Apply the lead''s decision on setting changes while engaged (DQ-403): hold a menu change of an assured setting until the next engagement, disengage with
     a warning, or keep today''s entry-only check; with a test'
   owner: Jherrod Thomas
-  status: decision_pending
+  status: completed
+  evidence: 'DQ-403 A implemented in #342 (18b15cd, merged 5d4ba6e): selfdrived.py apply_settings and the stored settings; 5 tests in test_assured_config.py
+    TestSettingsHeldWhileEngaged, green in the CI unit_tests job (tests run 39348218534: 1583 passed, 0 failed); change record
+    assurance/07-supporting/impact/change-2026-10-20-settings-held-while-engaged.md. Unit-tested, not proven by mutation and not verified in the vehicle (change record
+    OI-4). Achieved: O5 D8 (rev 1.7)'
+  revised:
+    severity: 10
+    occurrence: 5
+    detection: 8
+    ap: H
