@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="504" viewBox="0 0 1320 504" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 4. What the MPC assumes the lead will do</title>
+<desc>Predicted speed of a lead at 25 m/s braking at 3 m/s², over the MPC's 13 time steps to 10 s: with tau 1.5 (radar, braking just seen) most of the braking fades; with the vision-only tau 0.3 less fades; after 1 s of radar braking tau is about 0.18 and the prediction approaches constant braking, also shown.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1320" height="504" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 4 · What the MPC assumes the lead will do</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">A lead at 25 m/s braking at 3 m/s² now: the MPC lets that braking fade, at a rate radard sets (tau).</text>
+<text x="1280" y="44" font-size="11" fill="#475569" text-anchor="end">long_mpc.py extrapolate_lead · radard.py</text>
+<line x1="40" y1="82" x2="1280" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="110" y="104" width="820" height="330" rx="0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<line x1="110" y1="104" x2="110" y2="434" stroke="#E2E8F0" stroke-width="1"/>
+<text x="110" y="449" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
+<line x1="192" y1="104" x2="192" y2="434" stroke="#E2E8F0" stroke-width="1"/>
+<text x="192" y="449" font-size="9.5" fill="#475569" text-anchor="middle">1</text>
+<line x1="274" y1="104" x2="274" y2="434" stroke="#E2E8F0" stroke-width="1"/>
+<text x="274" y="449" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
+<line x1="356" y1="104" x2="356" y2="434" stroke="#E2E8F0" stroke-width="1"/>
+<text x="356" y="449" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
+<line x1="438" y1="104" x2="438" y2="434" stroke="#E2E8F0" stroke-width="1"/>
+<text x="438" y="449" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
+<line x1="520" y1="104" x2="520" y2="434" stroke="#E2E8F0" stroke-width="1"/>
+<text x="520" y="449" font-size="9.5" fill="#475569" text-anchor="middle">5</text>
+<line x1="602" y1="104" x2="602" y2="434" stroke="#E2E8F0" stroke-width="1"/>
+<text x="602" y="449" font-size="9.5" fill="#475569" text-anchor="middle">6</text>
+<line x1="684" y1="104" x2="684" y2="434" stroke="#E2E8F0" stroke-width="1"/>
+<text x="684" y="449" font-size="9.5" fill="#475569" text-anchor="middle">7</text>
+<line x1="766" y1="104" x2="766" y2="434" stroke="#E2E8F0" stroke-width="1"/>
+<text x="766" y="449" font-size="9.5" fill="#475569" text-anchor="middle">8</text>
+<line x1="848" y1="104" x2="848" y2="434" stroke="#E2E8F0" stroke-width="1"/>
+<text x="848" y="449" font-size="9.5" fill="#475569" text-anchor="middle">9</text>
+<line x1="930" y1="104" x2="930" y2="434" stroke="#E2E8F0" stroke-width="1"/>
+<text x="930" y="449" font-size="9.5" fill="#475569" text-anchor="middle">10</text>
+<line x1="110" y1="434" x2="930" y2="434" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="437.5" font-size="9.5" fill="#475569" text-anchor="end">0</text>
+<line x1="110" y1="379" x2="930" y2="379" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="382.5" font-size="9.5" fill="#475569" text-anchor="end">5</text>
+<line x1="110" y1="324" x2="930" y2="324" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="327.5" font-size="9.5" fill="#475569" text-anchor="end">10</text>
+<line x1="110" y1="269" x2="930" y2="269" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="272.5" font-size="9.5" fill="#475569" text-anchor="end">15</text>
+<line x1="110" y1="214" x2="930" y2="214" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="217.5" font-size="9.5" fill="#475569" text-anchor="end">20</text>
+<line x1="110" y1="159" x2="930" y2="159" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="162.5" font-size="9.5" fill="#475569" text-anchor="end">25</text>
+<line x1="110" y1="104" x2="930" y2="104" stroke="#E2E8F0" stroke-width="1"/>
+<text x="104" y="107.5" font-size="9.5" fill="#475569" text-anchor="end">30</text>
+<text x="520" y="466" font-size="10.5" fill="#475569" text-anchor="middle">time ahead (s)</text>
+<text x="70" y="269" font-size="10.5" fill="#475569" text-anchor="middle" transform="rotate(-90 70 269)">predicted lead speed (m/s)</text>
+<path d="M110.0,159.0 L115.7,161.3 L132.8,167.8 L161.2,176.3 L201.1,182.7 L252.4,184.8 L315.0,185.1 L389.0,185.1 L474.4,185.1 L571.2,185.1 L679.4,185.1 L799.0,185.1 L930.0,185.1" stroke="#0F766E" stroke-width="2.0" fill="none" stroke-linejoin="round"/>
+<circle cx="110" cy="159" r="2.6" fill="#0F766E"/>
+<circle cx="115.7" cy="161.3" r="2.6" fill="#0F766E"/>
+<circle cx="132.8" cy="167.8" r="2.6" fill="#0F766E"/>
+<circle cx="161.2" cy="176.3" r="2.6" fill="#0F766E"/>
+<circle cx="201.1" cy="182.7" r="2.6" fill="#0F766E"/>
+<circle cx="252.4" cy="184.8" r="2.6" fill="#0F766E"/>
+<circle cx="315" cy="185.1" r="2.6" fill="#0F766E"/>
+<circle cx="389" cy="185.1" r="2.6" fill="#0F766E"/>
+<circle cx="474.4" cy="185.1" r="2.6" fill="#0F766E"/>
+<circle cx="571.2" cy="185.1" r="2.6" fill="#0F766E"/>
+<circle cx="679.4" cy="185.1" r="2.6" fill="#0F766E"/>
+<circle cx="799" cy="185.1" r="2.6" fill="#0F766E"/>
+<circle cx="930" cy="185.1" r="2.6" fill="#0F766E"/>
+<text x="922" y="177.1" font-size="10.5" fill="#0F766E" font-weight="600" text-anchor="end">radar, braking just seen (tau 1.5): 22.6 m/s at 10 s</text>
+<path d="M110.0,159.0 L115.7,161.3 L132.8,168.1 L161.2,178.9 L201.1,192.2 L252.4,205.3 L315.0,215.2 L389.0,220.5 L474.4,222.2 L571.2,222.6 L679.4,222.6 L799.0,222.6 L930.0,222.6" stroke="#D97706" stroke-width="2.0" fill="none" stroke-linejoin="round"/>
+<circle cx="110" cy="159" r="2.6" fill="#D97706"/>
+<circle cx="115.7" cy="161.3" r="2.6" fill="#D97706"/>
+<circle cx="132.8" cy="168.1" r="2.6" fill="#D97706"/>
+<circle cx="161.2" cy="178.9" r="2.6" fill="#D97706"/>
+<circle cx="201.1" cy="192.2" r="2.6" fill="#D97706"/>
+<circle cx="252.4" cy="205.3" r="2.6" fill="#D97706"/>
+<circle cx="315" cy="215.2" r="2.6" fill="#D97706"/>
+<circle cx="389" cy="220.5" r="2.6" fill="#D97706"/>
+<circle cx="474.4" cy="222.2" r="2.6" fill="#D97706"/>
+<circle cx="571.2" cy="222.6" r="2.6" fill="#D97706"/>
+<circle cx="679.4" cy="222.6" r="2.6" fill="#D97706"/>
+<circle cx="799" cy="222.6" r="2.6" fill="#D97706"/>
+<circle cx="930" cy="222.6" r="2.6" fill="#D97706"/>
+<text x="922" y="214.6" font-size="10.5" fill="#D97706" font-weight="600" text-anchor="end">vision-only (tau 0.3): 19.2 m/s at 10 s</text>
+<path d="M110.0,159.0 L115.7,161.3 L132.8,168.1 L161.2,179.2 L201.1,193.5 L252.4,209.2 L315.0,223.4 L389.0,233.8 L474.4,239.5 L571.2,241.7 L679.4,242.2 L799.0,242.3 L930.0,242.3" stroke="#D2553F" stroke-width="2.0" fill="none" stroke-linejoin="round"/>
+<circle cx="110" cy="159" r="2.6" fill="#D2553F"/>
+<circle cx="115.7" cy="161.3" r="2.6" fill="#D2553F"/>
+<circle cx="132.8" cy="168.1" r="2.6" fill="#D2553F"/>
+<circle cx="161.2" cy="179.2" r="2.6" fill="#D2553F"/>
+<circle cx="201.1" cy="193.5" r="2.6" fill="#D2553F"/>
+<circle cx="252.4" cy="209.2" r="2.6" fill="#D2553F"/>
+<circle cx="315" cy="223.4" r="2.6" fill="#D2553F"/>
+<circle cx="389" cy="233.8" r="2.6" fill="#D2553F"/>
+<circle cx="474.4" cy="239.5" r="2.6" fill="#D2553F"/>
+<circle cx="571.2" cy="241.7" r="2.6" fill="#D2553F"/>
+<circle cx="679.4" cy="242.2" r="2.6" fill="#D2553F"/>
+<circle cx="799" cy="242.3" r="2.6" fill="#D2553F"/>
+<circle cx="930" cy="242.3" r="2.6" fill="#D2553F"/>
+<text x="922" y="234.3" font-size="10.5" fill="#D2553F" font-weight="600" text-anchor="end">radar, after 1 s of braking (tau 0.18): 17.4 m/s at 10 s</text>
+<path d="M110.0,159.0 L115.7,161.3 L132.8,168.2 L161.2,179.6 L201.1,195.7 L252.4,216.3 L315.0,241.5 L389.0,271.3 L474.4,305.7 L571.2,344.6 L679.4,388.2 L799.0,434.0 L930.0,434.0" stroke="#475569" stroke-width="2.0" fill="none" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<circle cx="110" cy="159" r="2.6" fill="#475569"/>
+<circle cx="115.7" cy="161.3" r="2.6" fill="#475569"/>
+<circle cx="132.8" cy="168.2" r="2.6" fill="#475569"/>
+<circle cx="161.2" cy="179.6" r="2.6" fill="#475569"/>
+<circle cx="201.1" cy="195.7" r="2.6" fill="#475569"/>
+<circle cx="252.4" cy="216.3" r="2.6" fill="#475569"/>
+<circle cx="315" cy="241.5" r="2.6" fill="#475569"/>
+<circle cx="389" cy="271.3" r="2.6" fill="#475569"/>
+<circle cx="474.4" cy="305.7" r="2.6" fill="#475569"/>
+<circle cx="571.2" cy="344.6" r="2.6" fill="#475569"/>
+<circle cx="679.4" cy="388.2" r="2.6" fill="#475569"/>
+<circle cx="799" cy="434" r="2.6" fill="#475569"/>
+<circle cx="930" cy="434" r="2.6" fill="#475569"/>
+<text x="536.4" y="291" font-size="10.5" fill="#475569" font-weight="600">constant braking</text>
+<text x="980" y="112" font-size="12" fill="#0F172A" font-weight="700">The formula</text>
+<text x="980" y="128" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">a(t) = a₀ · exp(−tau · t² / 2)</text>
+<text x="980" y="150" font-size="10.5" fill="#475569">speed and position summed over the steps</text>
+<text x="980" y="172" font-size="12" fill="#0F172A" font-weight="700">The steps</text>
+<text x="980" y="188" font-size="10.5" fill="#475569">13 points at 10·(i/12)² s</text>
+<text x="980" y="210" font-size="12" fill="#0F172A" font-weight="700">Radar track</text>
+<text x="980" y="226" font-size="10.5" fill="#475569">tau = 1.5 while |a| &lt; 0.5 m/s²;</text>
+<text x="980" y="248" font-size="10.5" fill="#475569">braking harder, tau falls toward 0 (0.45 s filter):</text>
+<text x="980" y="270" font-size="10.5" fill="#475569">the longer it brakes, the longer it is assumed to</text>
+<text x="980" y="292" font-size="12" fill="#0F172A" font-weight="700">Vision-only</text>
+<text x="980" y="308" font-size="10.5" fill="#475569">tau fixed at 0.3</text>
+<text x="980" y="330" font-size="12" fill="#0F172A" font-weight="700">No lead</text>
+<text x="980" y="346" font-size="10.5" fill="#475569">a phantom lead 50 m ahead, 10 m/s faster</text>
+<text x="40" y="486" font-size="11" fill="#475569">Just after a radar lead starts braking, the MPC expects most of it to fade; each new plan, 20 times a second, sees the new measurement and a smaller tau.</text>
+</svg>

@@ -14,6 +14,8 @@ LionDriver is openpilot plus an open engineering assurance framework. This page 
 |---|---|
 | Understand how the platform is structured | [Architecture](architecture.md) |
 | See how the stack steers and plans speed, and where the safety changes land | [Driving and path planning](driving-and-planning.md) |
+| See how the speed planner keeps its distance and when it warns | [Speed planning](speed-planning.md) |
+| See what the learned models see and output, and what can go wrong | [Perception models](perception-models.md) |
 | See which vehicles are supported, and what that does and does not mean | [Vehicle compatibility](compatibility.md) |
 | Look up the exact vehicles a configuration covers (model years, model code, firmware) | [Vehicle register](vehicles/README.md) |
 | See the current assurance state and how it is computed | [Living Safety Case](../../assurance/case/README.md) |

@@ -6,7 +6,8 @@ analyses it summarises are in [WP-C-01](../../assurance/02-concept/WP-C-01-item-
 envelope), [WP-C-11](../../assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) (the driving
 model and its outputs), [WP-S-04](../../assurance/03-system/WP-S-04-timing-ftti-budget.md) (timing) and
 [WP-C-07](../../assurance/02-concept/WP-C-07-sotif-functional-modifications.md) (functional modifications). Where this
-page and those documents disagree, they are right and this page is stale.
+page and those documents disagree, they are right and this page is stale. Two companion pages go deeper: [speed planning](speed-planning.md)
+and [perception models](perception-models.md).
 
 ## 1. The pipeline at a glance
 
@@ -76,7 +77,7 @@ a cruise target toward the set speed. The lower of the two accelerations wins. I
 acceleration joins as a third candidate; since 2026-10-14 the reference build defaults to Chill, so it is off unless the
 owner turns it on (FM-01 (a), decision DQ-001). Whether Experimental Mode is in the ODD is open (WP-C-01 OI-8). The
 result is clipped to `ACCEL_MIN … ACCEL_MAX`, checked for freshness and finiteness in `controlsd`, and sent as
-`ACC_CONTROL`.
+`ACC_CONTROL`. The [speed planning](speed-planning.md) page covers the MPC in detail.
 
 ## 4. Who limits what reaches the car
 

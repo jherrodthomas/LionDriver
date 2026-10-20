@@ -122,6 +122,10 @@ jobs:
         python3 assurance/models/figures/test_fig_models.py
         python3 docs/liondriver/figures/fig_driving.py --check
         python3 docs/liondriver/figures/test_fig_driving.py
+        python3 docs/liondriver/figures/fig_speed.py --check
+        python3 docs/liondriver/figures/test_fig_speed.py
+        python3 docs/liondriver/figures/fig_perception.py --check
+        python3 docs/liondriver/figures/test_fig_perception.py
     - name: Traceability figures of WP-T-01 match the data (and their tests)
       run: |
         python3 assurance/trace/tools/trace_figures.py --check
