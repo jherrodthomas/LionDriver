@@ -24,7 +24,8 @@ timing:
   # The siren sounds on the revocations of the TX-arrival check (T-34), a heartbeat loss and an EPS fault (TSR-516(b),
   # DQ-404 A, panda 8a69ccf). Not after a selfdrived stop: card keeps sending frames without a torque request, so the
   # arrival check does not revoke, and the 1 Hz engaged-mismatch revocation (2.25-3.16 s) sounds no siren; the heartbeat
-  # "not engaged" trigger of TSR-307(a) is not implemented (plant case MCS-02.9, sim PR #378).
+  # "not engaged" trigger of TSR-307(a) is not implemented (assurance/sim/results/engaged-mismatch.md: control lost at
+  # 0.1 s, host_stale_s; revoked 2.25-3.16 s; no siren; openpilot alert at 5.0 s).
   # The plant (assurance/sim, real panda safety code at the current pin 8a69ccf) measures it from fault onset; the older paths are
   # later upper bounds (EPS-fault persistence 0.96 s, WP-S-04 T-28; heartbeat 0.56 s, T-07a) and are not used.
   siren_after_eps_fault: {s: 0.25, source: "Plant F-07: EPS fault, revoked 0.053 s, siren 0.25 s (sim/results/plant-results.md)"}

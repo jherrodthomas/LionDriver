@@ -63,4 +63,4 @@ One run takes about 0.19 s. Step P3 therefore skips sets that contain no cause a
 
 [`p3-joint-faults.md`](sg02/p3-joint-faults.md) lists all 49 minimal sets.
 
-MCS-02.9 (selfdrived stop) was checked against the plant (sim PR #378): card keeps sending frames without a torque request, so the TX-arrival check does not revoke, and the 1 Hz engaged-mismatch revocation (2.25–3.16 s) sounds no siren. The tree's single point holds, and the BE-2.14 latent tag is right for this cause. The missing siren is an implementation gap against TSR-516(b) / TSR-307(a), for the panda owner.
+MCS-02.9 (selfdrived stop) was checked against the plant ([engaged-mismatch](../../sim/results/engaged-mismatch.md)): card keeps sending frames without a torque request, so the TX-arrival check does not revoke, and the 1 Hz engaged-mismatch revocation (2.25–3.16 s) sounds no siren. The tree's single point holds, and the BE-2.14 latent tag is right for this cause. The missing siren is an implementation gap against TSR-516(b) / TSR-307(a), for the panda owner.
