@@ -76,10 +76,10 @@
 <path d="M937 204L941 190M942 204L946 190" stroke="#FFFFFF" stroke-width="2.4"/>
 <path d="M950 191L957 197L950 203z" fill="#D2553F"/>
 <text x="966" y="200.5" font-size="10.5" fill="#0F172A">1–2 s (T-01)</text>
-<rect x="350" y="210" width="80" height="10" fill="#D97706"/>
+<rect x="350" y="210" width="81" height="10" fill="#D97706"/>
 <rect x="450" y="210" width="5" height="10" fill="#D2553F" fill-opacity="0.9"/>
 <line x1="455" y1="207" x2="455" y2="223" stroke="#0F172A" stroke-width="1.4"/>
-<text x="966" y="218.5" font-size="10.5" fill="#0F172A">≤ 0.16 s; 0x262 ≈ 0.21 s (T-01)</text>
+<text x="966" y="218.5" font-size="10.5" fill="#0F172A">≤ 0.162 s; 0x262 ≈ 0.21 s (T-01)</text>
 <text x="40" y="249" font-size="12" fill="#0F172A" font-weight="600">SoC heartbeat loss</text>
 <text x="40" y="264" font-size="10" fill="#475569">TSR-407 · margin ≥ 0.1 s</text>
 <text x="338" y="248.5" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">budget</text>

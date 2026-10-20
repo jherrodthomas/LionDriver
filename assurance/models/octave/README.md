@@ -63,7 +63,7 @@ These are model outputs, not measurements.
 
 | Case | Worst FDTI | Budget | Model vs WP-S-04 §4 |
 |---|---|---|---|
-| RX loss `0x1D2` (33 Hz), reference | 161.5 ms | 200 ms | T-01 states ≤ 0.16 s; the model gives 1.5 ms more (5 × 30.3 ms + one task period) |
+| RX loss `0x1D2` (33 Hz), reference | 161.5 ms | 200 ms | T-01: ≤ 0.162 s since WP-S-04 v0.21 (was ≤ 0.16 s; 5 × 30.3 ms + one task period) |
 | RX loss `0x262` (25 Hz), reference | 210 ms | 200 ms | T-01: ≈ 0.21 s, over TSR-401's 0.2 s if the real rate is 25 Hz; the FHTI (310 ms) is within the 0.5 s FTTI |
 | RX loss `0x260`, original baseline | 1.0–2.0 s | 200 ms | T-01: 1–2 s; FTTI exceeded |
 | Heartbeat loss, reference | 300 ms; siren ≤ 550 ms | 300 ms; warning 1 s | T-06a ≤ 0.31 s and T-07a ≈ 0.56 s add one task period the code does not need |
