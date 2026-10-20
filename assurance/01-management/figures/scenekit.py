@@ -24,7 +24,11 @@ Standard library only; every function is deterministic.
 
 from __future__ import annotations
 
+import json
 import math
+import re
+import sys
+from pathlib import Path
 from xml.sax.saxutils import escape
 
 from figkit import INK, text_w
@@ -370,3 +374,52 @@ def legend_swatch(kind, x, y):
   if kind == "other":
     return car(f"translate({x + 11} {y - 4}) scale(0.9)", OTHER, 1, OTHER_EDGE), 26
   raise ValueError(kind)
+
+
+# ---------------------------------------------------------------- the browser kit (scenekit.js) shares these constants
+
+JS = Path(__file__).resolve().parent / "scenekit.js"
+JS_BEGIN, JS_END = "/* constants: written by scenekit.py --js; do not edit */", "/* end constants */"
+
+
+def constants() -> dict:
+  """Everything scenekit.js must agree on with this module: palette, geometry, scene sizes, loop timing."""
+  return dict(INK=INK, GRASS=GRASS, VERGE=VERGE, ASPHALT=ASPHALT, PAINT=PAINT, ARROW=ARROW, EGO=EGO, EGO_EDGE=EGO_EDGE,
+              OTHER=OTHER, OTHER_EDGE=OTHER_EDGE, STOPPED=STOPPED, HAZARD_LAMP=HAZARD_LAMP, GLASS=GLASS, WHEEL=WHEEL, LAMP=LAMP,
+              REQ=REQ, PERF=PERF, REQ_S=REQ_S, PERF_S=PERF_S, FAULT=FAULT, CALLOUT=CALLOUT, BADGE=BADGE,
+              W=W, H=H, HALF_LANE=HALF_LANE, TOP_EDGE=TOP_EDGE, CENTRE_LINE=CENTRE_LINE, BOTTOM_EDGE=BOTTOM_EDGE,
+              OTHER_LANE=OTHER_LANE, EGO_LANE=EGO_LANE, CAR_L=CAR_L, STRIP_H=STRIP_H, STRIP_DY=STRIP_DY,
+              LARGE_W=LARGE_W, LARGE_H=LARGE_H, LARGE_K=LARGE_K, LARGE_DY=LARGE_DY, DUR=DUR, DRIVE=DRIVE)
+
+
+def js_block() -> str:
+  return f"{JS_BEGIN}\nconst SK = {json.dumps(constants(), indent=2)};\n{JS_END}"
+
+
+def _js_with_block(src: str) -> str:
+  pat = re.compile(re.escape(JS_BEGIN) + r".*?" + re.escape(JS_END), re.S)
+  if not pat.search(src):
+    raise SystemExit(f"{JS.name}: no constants block")
+  return pat.sub(lambda m: js_block(), src)
+
+
+def main(argv: list[str]) -> int:
+  """--js writes the constants block into scenekit.js; --check fails if it is stale."""
+  src = JS.read_text(encoding="utf-8")
+  new = _js_with_block(src)
+  if "--check" in argv:
+    if new != src:
+      print(f"scenekit: {JS.name} constants are stale; run python3 scenekit.py --js")
+      return 1
+    print(f"scenekit: {JS.name} constants current")
+    return 0
+  if "--js" in argv:
+    JS.write_text(new, encoding="utf-8")
+    print(f"scenekit: wrote the constants block of {JS.name}")
+    return 0
+  print(main.__doc__)
+  return 2
+
+
+if __name__ == "__main__":
+  sys.exit(main(sys.argv[1:]))

@@ -72,6 +72,15 @@ class TestScenekit(unittest.TestCase):
     self.assertGreater(sk.fit_x(2, "into the next lane"), 30)
     self.assertLess(sk.fit_x(278, "into the next lane"), sk.W - 30)
 
+  def test_browser_kit_shares_the_constants(self):
+    """scenekit.js carries the constants block scenekit.py writes, and uses no constant the block lacks."""
+    src = sk.JS.read_text(encoding="utf-8")
+    self.assertEqual(sk._js_with_block(src), src, "run python3 scenekit.py --js")
+    used = set(re.findall(r"\bSK\.([A-Z_]+)", src))
+    self.assertLessEqual(used, set(sk.constants()))
+    self.assertGreater(len(used), 25)
+    self.assertNotIn("</script", src.lower())                            # pages inline it
+
   def test_new_scene_figures_use_the_kit(self):
     """No generator draws the road from its own palette copy, except the ones still to migrate."""
     found = set()
