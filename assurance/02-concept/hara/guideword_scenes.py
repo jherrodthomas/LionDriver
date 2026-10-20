@@ -187,7 +187,7 @@ def scene(intended, actual, gw, callouts, fallback, badges=()):
          sk.car(sk.pose([(199, cy(199) - 2 * H), (201, cy(201) - 2 * H)], 1), sk.OTHER, 1, sk.OTHER_EDGE),
          *sk.gap_band(band, gw, X0, XE),
          sk.intended_path(pr),
-         sk.performed_path(sk.d(pp), sk.draw_on(pp, _key)),
+         sk.performed_path(sk.d(pp), sk.draw_on(pp, [_key(x) for x, _ in pp])),
          sk.start_marker(sk.pose(pp, 1)),
          sk.driving(pr[:next((i for i, (x, _) in enumerate(pr) if x >= pp[-1][0]), len(pr) - 1) + 1], sk.ghost_body(), _key),
          sk.driving(pp, sk.ego_body(), _key)]

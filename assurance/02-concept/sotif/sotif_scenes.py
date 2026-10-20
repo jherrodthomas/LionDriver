@@ -38,13 +38,15 @@ sys.path.insert(0, str(HERE.parent / "hara"))
 sys.path.insert(0, str(HERE.parents[1] / "01-management" / "figures"))
 import hara_figures as hf  # noqa: E402
 import sotif_figures as sf  # noqa: E402
-from scenekit import DRIVE, DUR, anim as _anim, car_body as _car_body, d as _d  # noqa: E402
+import scenekit as sk  # noqa: E402  (road, car, marks, SMIL helpers)
+from scenekit import DRIVE, anim as _anim, car_body as _car_body, d as _d  # noqa: E402
 from hara_figures import HAIR, INK, MUTED, pill, svg_doc, t, wrap  # noqa: E402
 
 NAME = "fig-c06-5-2-sotif-scenes.svg"
-GREEN, RED, BLUE, FAULT, CALL = "#4ADE80", "#F87171", "#60A5FA", "#FBBF24", "#FEF08A"
-CG, CR, CB, CL = "#16A34A", "#DC2626", "#2563EB", "#475569"
-EGO, EGO_S, GREY, GREY_S = "#DC2626", "#450A0A", "#9CA3AF", "#4B5563"
+GREEN, RED, FAULT, CALL = sk.REQ_S, sk.PERF_S, sk.FAULT, sk.CALLOUT
+CG, CR = sk.REQ, sk.PERF
+EGO, EGO_S, GREY, GREY_S = sk.EGO, sk.EGO_EDGE, sk.OTHER, sk.OTHER_EDGE
+BLUE, CB, CL = "#60A5FA", "#2563EB", "#475569"   # what the camera or radar believes (on the road, in the chart); a limit
 EV_CHIP = {"val": ("#FEF3C7", "#78350F", "Needs validation"), "mod": ("#FEE2E2", "#7F1D1D", "Needs modification"),
            "acc": ("#DCFCE7", "#14532D", "Acceptable"), "none": ("#E2E8F0", "#334155", "Not in WP-C-06")}
 CLASS_CHIP = {"P": ("#DBEAFE", "#1E3A8A", "P · it sees it wrong"), "S": ("#EDE9FE", "#4C1D95", "S · not enough as specified"),
@@ -83,100 +85,61 @@ def load() -> Docs:
   return Docs(data, h, rows, measures)
 
 
-# ---------------------------------------------------------------- animation helpers (time-based; f in [0, 1] of the drive)
+# ---------------------------------------------------------------- scene helpers over the scene kit (time-based; f in [0, 1] of the drive)
 
 def kt(f):
   return DRIVE * f
 
 
 def drive(samples, inner):
-  """A group moving through samples [(f, x, y)]; its static pose is the last sample (the still frame)."""
-  keys = [0] + [kt(f) for f, _, _ in samples[1:]] + [1]
-  heads, last = [], 0.0
-  for i in range(len(samples)):
-    j = max(1, i)
-    (_, x0, y0), (_, x1, y1) = samples[j - 1], samples[j]
-    if (x1, y1) != (x0, y0):
-      last = math.degrees(math.atan2(y1 - y0, x1 - x0))
-    heads.append(last)
-  tr = [f"{x:.1f},{y:.1f}" for _, x, y in samples] + [f"{samples[-1][1]:.1f},{samples[-1][2]:.1f}"]
-  rot = [f"{a:.1f}" for a in heads] + [f"{heads[-1]:.1f}"]
-  _, xe, ye = samples[-1]
-  return (f'<g transform="translate({xe:.1f} {ye:.1f})">{_anim("transform", "translate", tr, keys)}'
-          f'<g transform="rotate({heads[-1]:.1f})">{_anim("transform", "rotate", rot, keys)}{inner}</g></g>')
+  return sk.drive_turning(samples, inner)
 
 
 def appear(f):
-  return (f'<animate attributeName="opacity" values="0;1" keyTimes="0;{max(kt(f), 0.001):.4f}" calcMode="discrete" '
-          f'dur="{DUR}s" repeatCount="indefinite"/>')
+  return sk.appear(kt(f))
 
 
 def window(f0, f1):
   """Shown between f0 and f1 of the drive; the still frame (last frame) hides it."""
-  return (f'<animate attributeName="opacity" values="0;1;0;0" keyTimes="0;{kt(f0):.4f};{kt(f1):.4f};1" calcMode="discrete" '
-          f'dur="{DUR}s" repeatCount="indefinite"/>')
-
-
-def draw_on(samples):
-  seg = [math.dist(a[1:], b[1:]) for a, b in zip(samples, samples[1:])]
-  tot, run, vals = sum(seg) or 1, 0.0, ["1"]
-  for s in seg:
-    run += s
-    vals.append(f"{1 - run / tot:.4f}")
-  return _anim("stroke-dashoffset", None, vals + ["0"], [0] + [kt(f) for f, _, _ in samples[1:]] + [1])
+  return sk.window(kt(f0), kt(f1))
 
 
 def trail(samples, col=RED, w=2.6):
-  return (f'<path d="{_d([(x, y) for _, x, y in samples])}" fill="none" stroke="{col}" stroke-width="{w}" pathLength="1" '
-          f'stroke-dasharray="1 1" stroke-linecap="round" stroke-linejoin="round">{draw_on(samples)}</path>')
+  return sk.track(samples, col, w)
 
 
 def car(x, y, a, body, stroke=INK, op=1.0):
-  return f'<g transform="translate({x:.1f} {y:.1f}) rotate({a:.1f})" opacity="{op:g}">{_car_body(body, stroke)}</g>'
+  return sk.car_at(x, y, body, stroke, op, a)
 
 
 def ghost(stroke=GREEN):
-  return f'<rect x="-11" y="-5" width="22" height="10" rx="3.5" fill="none" stroke="{stroke}" stroke-width="1.3" stroke-dasharray="3 2"/>'
+  return sk.ghost_body(stroke)
 
 
 def label(x, y, s, col="#334155", size=7, anchor="middle", halo=False, weight=600):
-  extra = f' stroke="{INK}" stroke-width="2.4" paint-order="stroke"' if halo else ""
-  return t(round(x, 1), round(y, 1), s, size, col, weight, anchor, extra)
+  return sk.road_label(x, y, s, col, size, weight, anchor, halo)
 
 
 def ring(x, y, text, f, above=True):
-  ty = y - 11 if above else y + 16
-  ty = min(124, max(10, ty))
-  w = hf.text_w(text, 8, True) / 2 + 4
-  return (f'<g>{appear(f)}<circle cx="{x:.1f}" cy="{y:.1f}" r="6.5" fill="none" stroke="{CALL}" stroke-width="1.6"/>' +
-          label(min(280 - w, max(w, x)), ty, text, CALL, 8, "middle", True) + "</g>")
+  return sk.callout(x, y, 6.5, text, min(124, max(10, y - 11 if above else y + 16)), kt(f))
 
 
 def marker(x, y, f):
-  return (f'<g transform="translate({x:.1f} {y:.1f})">{appear(f)}<circle r="4.2" fill="{FAULT}" stroke="{INK}" stroke-width="0.9"/>'
-          f'<path d="M0.6 -2.8 L-1.6 0.4 L0 0.4 L-0.6 2.8 L1.6 -0.4 L0 -0.4 Z" fill="{INK}"/></g>')
+  return sk.fault_marker(x, y, kt(f))
 
 
 def walker(samples):
-  body = (f'<circle r="3.2" fill="#F59E0B" stroke="{INK}" stroke-width="0.8"/>'
-          f'<circle cx="0" cy="-0.5" r="1.4" fill="#7C2D12"/>')
-  _, xe, ye = samples[-1]
-  keys = [0] + [kt(f) for f, _, _ in samples[1:]] + [1]
-  tr = [f"{x:.1f},{y:.1f}" for _, x, y in samples] + [f"{xe:.1f},{ye:.1f}"]
-  return f'<g transform="translate({xe:.1f} {ye:.1f})">{_anim("transform", "translate", tr, keys)}{body}</g>'
+  return sk.pedestrian(samples)
 
 
 def straight(edge_right=True, extra=""):
   """Two-lane carriageway: ego lane centre y = 84 (edges 99 / 69), next lane above (69 / 39)."""
-  b = ['<rect width="280" height="130" fill="#C9DDBA"/>',
-       '<rect x="0" y="32" width="280" height="74" fill="#B9C7A6"/>',
-       '<rect x="0" y="35" width="280" height="68" fill="#565E69"/>', extra]
-  if edge_right:
-    b.append('<line x1="0" y1="99" x2="280" y2="99" stroke="#F8FAFC" stroke-width="1.5"/>')
-  b += ['<line x1="0" y1="39" x2="280" y2="39" stroke="#F8FAFC" stroke-width="1.5"/>',
-        '<line x1="0" y1="69" x2="280" y2="69" stroke="#F8FAFC" stroke-width="1.3" stroke-dasharray="9 9"/>',
-        '<g transform="translate(26 84)" opacity="0.55"><path d="M-6 -2 L2 -2 L2 -4.5 L8 0 L2 4.5 L2 2 L-6 2 Z" fill="#E5E7EB"/></g>']
-  return b
+  return sk.straight_road(sk.EGO_LANE, edge_right, extra)
+
+
+def start(x, y):
+  """The ego car's start, faded."""
+  return sk.start_marker(f"translate({x:.1f} {y:.1f}) rotate(0.0)")
 
 
 def sample(fn, n=80):
@@ -253,14 +216,14 @@ def sh01():
   dep = next(p for p in path if p[2] - 5 < 69)
   f92 = (92 - 14) / 248
   sc = straight(False, '<path d="M70 99.6 L262 72" stroke="#1F242B" stroke-width="2.6" stroke-linecap="round"/>')
-  sc += ['<line x1="0" y1="99" x2="70" y2="99" stroke="#F8FAFC" stroke-width="1.5"/>',
-         '<line x1="70" y1="99" x2="280" y2="99" stroke="#F8FAFC" stroke-width="1.5" opacity="0.3"/>',
+  sc += [f'<line x1="0" y1="99" x2="70" y2="99" stroke="{sk.PAINT}" stroke-width="1.5"/>',
+         f'<line x1="70" y1="99" x2="280" y2="99" stroke="{sk.PAINT}" stroke-width="1.5" opacity="0.3"/>',
          label(250, 117, "edge line faded"), label(118, 109, "tar seam"),
          f'<path d="M92 {seam(92):.1f} L262 72" fill="none" stroke="{BLUE}" stroke-width="1.6" stroke-dasharray="4 3"/>',
          f'<path d="M92 {(69 + seam(92)) / 2:.1f} L262 70.5" fill="none" stroke="{BLUE}" stroke-width="1.2" stroke-dasharray="2 3"/>',
          label(150, 62, "camera: lane edge", BLUE, 7, "middle", True),
          f'<path d="M14 84 L262 84" fill="none" stroke="{GREEN}" stroke-width="2.2" stroke-dasharray="5 3"/>',
-         car(215, 54, 0, GREY, GREY_S), trail(path), car(20, 84, 0, "#F8FAFC", INK, .45),
+         car(215, 54, 0, GREY, GREY_S), trail(path), start(20, 84),
          drive(path, _car_body(EGO, EGO_S)), marker(92, path[int(f92 * n)][2], f92),
          ring(dep[1], dep[2], "into the next lane", dep[0])]
   zero, ln = 58, 28
@@ -292,14 +255,10 @@ def sh02():
   path = [p for p in path if p[2] < 124]
   edge = lambda k: [(x, y + k) for x, y in road]
   dep = next(p for i, p in enumerate(path) if p[2] - road[i][1] > 10)
-  sc = ['<rect width="280" height="130" fill="#C9DDBA"/>',
-        *[f'<path d="{_d(edge(k))}" fill="none" stroke="#B9C7A6" stroke-width="7"/>' for k in (19, -49)],
-        f'<path d="{_d(edge(19) + edge(-49)[::-1])} Z" fill="#565E69"/>',
-        *[f'<path d="{_d(edge(k))}" fill="none" stroke="#F8FAFC" stroke-width="1.5"/>' for k in (15, -45)],
-        f'<path d="{_d(edge(-15))}" fill="none" stroke="#F8FAFC" stroke-width="1.3" stroke-dasharray="9 9"/>',
+  sc = [*sk.curved_road(edge, arrow=False),
         label(276, 125, "curve tighter than R_ODD at the travel speed", anchor="end"),
         f'<path d="{_d(road)}" fill="none" stroke="{GREEN}" stroke-width="2.2" stroke-dasharray="5 3"/>',
-        trail(path), car(20, 108, 0, "#F8FAFC", INK, .45), drive(path, _car_body(EGO, EGO_S)),
+        trail(path), start(20, 108), drive(path, _car_body(EGO, EGO_S)),
         marker(path[sat][1], path[sat][2], path[sat][0]), ring(dep[1], dep[2], "crosses edge line", dep[0], above=False)]
   cap_y = 96 - cap / k_max * 78
   need = [(i / n, 96 - kap(x) / k_max * 78) for i, x in enumerate(xs)]
@@ -320,7 +279,7 @@ def sh03():
   near = next(i for i, p in enumerate(ego) if p[1] + 11 >= 135)
   sc = straight(extra='<line x1="0" y1="114" x2="280" y2="114" stroke="#94A3B8" stroke-width="0.6"/>')
   sc += [label(138, 124, "pedestrian crosses between the cars"),
-         car(110, 84, 0, "#FFFFFF", GREEN, 1).replace(_car_body("#FFFFFF", GREEN), ghost()),
+         f'<g transform="translate(110.0 84.0) rotate(0.0)">{ghost()}</g>',
          drive(lead, _car_body(GREY, GREY_S)), walker(ped), trail(ego), drive(ego, _car_body(EGO, EGO_S)),
          marker(150 + 13, 72, .15), label(163, 26, "lead moves off"),
          ring(ego[near][1] + 11, 84, "resumes toward the pedestrian", ego[near][0])]
@@ -362,12 +321,12 @@ def sh04():
 
 def sh05():
   """TC-29 / FI-21: gas pressed to override; the driver believes the system is off and steers for the exit."""
-  exit_road = ('<path d="M120 99 L280 99 L280 130 L205 130 Z" fill="#565E69"/>'
-               '<path d="M118 101 L205 130" stroke="#F8FAFC" stroke-width="1.5"/>')
+  exit_road = (f'<path d="M120 99 L280 99 L280 130 L205 130 Z" fill="{sk.ASPHALT}"/>'
+               f'<path d="M118 101 L205 130" stroke="{sk.PAINT}" stroke-width="1.5"/>')
   sc = straight(False, exit_road)
-  sc += ['<line x1="0" y1="99" x2="130" y2="99" stroke="#F8FAFC" stroke-width="1.5"/>',
-         '<line x1="130" y1="99" x2="280" y2="99" stroke="#F8FAFC" stroke-width="1.5" stroke-dasharray="4 4"/>',
-         label(250, 125, "exit lane", "#E5E7EB")]
+  sc += [f'<line x1="0" y1="99" x2="130" y2="99" stroke="{sk.PAINT}" stroke-width="1.5"/>',
+         f'<line x1="130" y1="99" x2="280" y2="99" stroke="{sk.PAINT}" stroke-width="1.5" stroke-dasharray="4 4"/>',
+         label(250, 125, "exit lane", sk.ARROW)]
   want = sample(lambda f: (14 + 248 * f, 84 + 32 * max(0, min(1, (f - .35) / .45)) ** 1.5))
   got = sample(lambda f: (14 + 248 * f, 84 + 9 * math.sin(math.pi * max(0, min(1, (f - .35) / .4)))))
   sc += [f'<path d="{_d([(x, y) for _, x, y in want])}" fill="none" stroke="{GREEN}" stroke-width="2.2" stroke-dasharray="5 3"/>',
@@ -429,10 +388,10 @@ def sh08():
 
 def sh09():
   """TC-13 / FI-05: Experimental Mode misses a red light."""
-  cross = ('<rect x="176" y="0" width="30" height="130" fill="#565E69"/>'
-           '<line x1="191" y1="0" x2="191" y2="32" stroke="#F8FAFC" stroke-width="1" stroke-dasharray="6 6"/>'
-           '<line x1="191" y1="106" x2="191" y2="130" stroke="#F8FAFC" stroke-width="1" stroke-dasharray="6 6"/>'
-           '<line x1="172" y1="69" x2="172" y2="99" stroke="#F8FAFC" stroke-width="2.4"/>'
+  cross = (f'<rect x="176" y="0" width="30" height="130" fill="{sk.ASPHALT}"/>'
+           f'<line x1="191" y1="0" x2="191" y2="32" stroke="{sk.PAINT}" stroke-width="1" stroke-dasharray="6 6"/>'
+           f'<line x1="191" y1="106" x2="191" y2="130" stroke="{sk.PAINT}" stroke-width="1" stroke-dasharray="6 6"/>'
+           f'<line x1="172" y1="69" x2="172" y2="99" stroke="{sk.PAINT}" stroke-width="2.4"/>'
            '<rect x="160" y="103" width="8" height="18" rx="2" fill="#1F2937"/><circle cx="164" cy="108" r="2.6" fill="#EF4444"/>'
            '<circle cx="164" cy="115" r="2.6" fill="#374151"/>')
   sc = straight(extra=cross)
@@ -661,13 +620,11 @@ def card_svg(x, y, c):
 
 
 def legend(y):
-  items = [(f'<line x1="0" y1="-4" x2="26" y2="-4" stroke="{CG}" stroke-width="2.4" stroke-dasharray="6 3"/>', 32, "What the situation needs"),
-           (f'<line x1="0" y1="-4" x2="26" y2="-4" stroke="{CR}" stroke-width="2.8"/>', 32, "What the car does"),
+  items = [(*sk.legend_swatch("req", 0, 0), "What the situation needs"), (*sk.legend_swatch("perf", 0, 0), "What the car does"),
            (f'<line x1="0" y1="-4" x2="26" y2="-4" stroke="{CB}" stroke-width="2" stroke-dasharray="3 3"/>', 32, "What the system believes (P)"),
            (f'<line x1="0" y1="-4" x2="26" y2="-4" stroke="{CL}" stroke-width="1.6" stroke-dasharray="3 3"/>', 32, "Specified limit (S)"),
-           (f'<rect x="0" y="-10" width="20" height="12" fill="{RED}" opacity="0.35"/>', 26, "Gap"),
-           (f'<circle cx="6" cy="-4" r="5" fill="{FAULT}" stroke="{INK}" stroke-width="0.9"/>', 16, "Triggering condition acts"),
-           (f'<circle cx="6" cy="-4" r="6" fill="#565E69" stroke="{CALL}" stroke-width="1.8"/>', 16, "The moment it matters")]
+           (*sk.legend_swatch("band", 0, 0), "Gap"), (*sk.legend_swatch("fault", 0, 0), "Triggering condition acts"),
+           (*sk.legend_swatch("ring", 0, 0), "The moment it matters")]
   b, x = [], M
   for g, w, s in items:
     b.append(f'<g transform="translate({x} {y})">{g}</g>')

@@ -33,7 +33,8 @@ sys.path.insert(0, str(HERE.parent / "hara"))
 import hara_figures as hf  # noqa: E402
 import sotif_figures as sf  # noqa: E402
 import sotif_scenes as ss  # noqa: E402
-from scenekit import car_body as _car_body  # noqa: E402  (on the path through sotif_scenes)
+import scenekit as sk  # noqa: E402  (on the path through sotif_scenes)
+from scenekit import car_body as _car_body  # noqa: E402
 from hara_figures import HAIR, INK, MUTED, pill, svg_doc, t, wrap  # noqa: E402
 from sotif_scenes import CG, CR, EGO, EGO_S, GREY, GREY_S, appear, drive, frame, line, marker, sample, trail, xt  # noqa: E402
 
@@ -97,40 +98,27 @@ def quoted(docs: dict, fm: str, src) -> None:
       raise sf.FigureError(f"{fm}: {where} no longer says {passage!r}; redraw the card from the current text")
 
 
-# ---------------------------------------------------------------- scene strip (280 x 70): ego lane centre y 51, next lane above
+# ---------------------------------------------------------------- scene strip: the kit's straight road cropped to 280 x STRIP_H
 
-LANE, NEXT, X0, X1 = 51, 28, 14, 262
+LANE, NEXT, X0, X1 = sk.STRIP_EGO, sk.STRIP_OTHER, 14, 262
+ABOVE, BELOW = 36, 77                     # label baselines: in the next lane, and on the verge below the ego lane
 
 
 def road(markings=True):
-  b = ['<rect width="280" height="70" fill="#C9DDBA"/>', '<rect x="0" y="12" width="280" height="56" fill="#B9C7A6"/>',
-       '<rect x="0" y="14" width="280" height="52" fill="#565E69"/>']
-  if markings:
-    b += ['<line x1="0" y1="16" x2="280" y2="16" stroke="#F8FAFC" stroke-width="1.5"/>',
-          '<line x1="0" y1="64" x2="280" y2="64" stroke="#F8FAFC" stroke-width="1.5"/>',
-          '<line x1="0" y1="39.5" x2="280" y2="39.5" stroke="#F8FAFC" stroke-width="1.3" stroke-dasharray="9 9"/>']
-  return b
+  return sk.strip_road(markings)
 
 
 def badge(s, col):
-  w = hf.text_w(s, 7, True) + 10
-  return f'<rect x="3" y="1.5" width="{w:.1f}" height="10" rx="3" fill="{col}"/>' + t(8, 9, s, 7, "#FFFFFF", 700)
+  """TODAY / WITH FM-xx pill in the strip's top-left corner."""
+  return "".join(sk.badges([(s, 0, None, "bad" if col == CR else "ok")], lambda tt: tt))
 
 
 def tag(f, x, y, s, col, anchor="middle"):
   """A label that appears at f of the drive; light text on a dark halo, kept inside the strip."""
-  w = hf.text_w(s, 7.5, True)
-  if anchor == "middle":
-    x = min(276 - w / 2, max(4 + w / 2, x))
-  elif anchor == "start":
-    x = min(276 - w, max(4, x))
-  else:
-    x = min(276, max(4 + w, x))
-  return (f"<g>{appear(f)}" + t(round(x, 1), y, s, 7.5, col, 700, anchor,
-                                ' stroke="#1F242B" stroke-width="2.6" paint-order="stroke"') + "</g>")
+  return sk.road_label(sk.fit_x(x, s, 7.5, anchor, 4), y, s, col, 7.5, 700, anchor, halo=True, k=sk.DRIVE * f)
 
 
-def ego(path, col=CR):
+def ego(path, col=sk.PERF_S):
   return [trail(path, col, 2.2), drive(path, _car_body(EGO, EGO_S))]
 
 
@@ -182,11 +170,11 @@ def fm01():
   ch = chart("speed", [(24, "cruise"), (96, "0")], [(0, 24), (stop, 24), (stop + 0.12, 70), (1, 74)], [(0, 24), (1, 24)],
              [(stop + 0.14, 62, "Experimental on (owner): false stop", CR, "start"), (0.5, 20, "Chill: cruise held", CG, "middle")])
   sc_today = road() + [other(follow)] + ego(today) + [marker(xs(stop), LANE, stop), badge("TODAY", CR),
-                                                     tag(stop, xs(stop), 34, "Experimental on: phantom stop", BAD),
-                                                     tag(0.8, 140, 66, "follower closes in", NOTE)]
+                                                     tag(stop, xs(stop), ABOVE, "Experimental on: phantom stop", BAD),
+                                                     tag(0.8, 140, BELOW, "follower closes in", NOTE)]
   fm_path = straight_path()
-  sc_fm = road() + [other(sample(lambda f: (X0 - 30 + 248 * f, LANE)))] + ego(fm_path, CG) + [
-    badge("WITH FM-01", CG), tag(stop, 120, 34, "Chill locked: no end-to-end stop", GOOD)]
+  sc_fm = road() + [other(sample(lambda f: (X0 - 30 + 248 * f, LANE)))] + ego(fm_path, sk.REQ_S) + [
+    badge("WITH FM-01", CG), tag(stop, 120, ABOVE, "Chill locked: no end-to-end stop", GOOD)]
   return ch, sc_today, sc_fm
 
 
@@ -197,10 +185,10 @@ def fm02():
              [(0, 24), (1, 24)],
              [(f0 + 0.03, 84, "masked while the model loads, + 5 s", CR, "start"),
               (0.62, 20, "failure: take-over request", CG, "middle")])
-  sc_today = road() + ego(drifting(f0, -11)) + [marker(X0 + 248 * f0, LANE, f0), badge("TODAY", CR),
-                                                tag(f0, X0 + 248 * f0, 66, "model fails: cold model, no alert", BAD)]
-  sc_fm = road() + ego(straight_path(until=1.0), CG) + [marker(X0 + 248 * f0, LANE, f0), badge("WITH FM-02", CG),
-                                                        tag(f0 + 0.05, 160, 34, "take over now (no hot switch)", GOOD)]
+  sc_today = road() + ego(drifting(f0, -14)) + [marker(X0 + 248 * f0, LANE, f0), badge("TODAY", CR),
+                                                tag(f0, X0 + 248 * f0, BELOW, "model fails: cold model, no alert", BAD)]
+  sc_fm = road() + ego(straight_path(until=1.0), sk.REQ_S) + [marker(X0 + 248 * f0, LANE, f0), badge("WITH FM-02", CG),
+                                                        tag(f0 + 0.05, 160, ABOVE, "take over now (no hot switch)", GOOD)]
   return ch, sc_today, sc_fm
 
 
@@ -214,13 +202,13 @@ def fm03():
               (s(0.5), 60, "freshness bound from the FTTI", CG, "start")],
              [t(xt(s(3.5)), 105, "3.5 s", 7, MUTED, None, "middle")])
   f0 = 0.25
-  sc_today = road() + ego(drifting(f0, 8)) + [marker(X0 + 248 * f0, LANE, f0), badge("TODAY", CR),
-                                              tag(f0, X0 + 248 * f0, 34, "input stale", NOTE),
-                                               tag(0.85, 200, 34, "still steering, ≈100 m", BAD)]
+  sc_today = road() + ego(drifting(f0, 10)) + [marker(X0 + 248 * f0, LANE, f0), badge("TODAY", CR),
+                                              tag(f0, X0 + 248 * f0, ABOVE, "input stale", NOTE),
+                                               tag(0.85, 200, ABOVE, "still steering, ≈100 m", BAD)]
   stop = sample(lambda f: (X0 + 248 * (f if f < f0 else f0 + (f - f0) * 0.45), LANE))
-  sc_fm = road() + ego(stop, CG) + [marker(X0 + 248 * f0, LANE, f0), badge("WITH FM-03", CG),
-                                    tag(f0, X0 + 248 * f0, 34, "input stale", NOTE),
-                                    tag(f0 + 0.05, 190, 34, "take over · torque to 0", GOOD)]
+  sc_fm = road() + ego(stop, sk.REQ_S) + [marker(X0 + 248 * f0, LANE, f0), badge("WITH FM-03", CG),
+                                    tag(f0, X0 + 248 * f0, ABOVE, "input stale", NOTE),
+                                    tag(f0 + 0.05, 190, ABOVE, "take over · torque to 0", GOOD)]
   return ch, sc_today, sc_fm
 
 
@@ -231,12 +219,12 @@ def fm04():
              [(0, 96), (f0, 96), (f0 + .001, 24), (0.62, 24), (0.62 + .001, 96), (1, 96)],
              [(0.95, 20, "no reaction", CR, "end"), (0.64, 90, "cancel repeated, then disable", CG, "start")])
   sc_today = road() + ego(straight_path()) + [marker(X0 + 248 * f0, LANE, f0), badge("TODAY", CR),
-                                              tag(f0, X0 + 248 * f0, 34, "cruiseMismatch", NOTE),
-                                              tag(0.7, 200, 34, "event raised, nothing happens", BAD)]
+                                              tag(f0, X0 + 248 * f0, ABOVE, "cruiseMismatch", NOTE),
+                                              tag(0.7, 200, ABOVE, "event raised, nothing happens", BAD)]
   slow = sample(lambda f: (X0 + 248 * (f if f < 0.62 else 0.62 + (f - 0.62) * 0.5), LANE))
-  sc_fm = road() + ego(slow, CG) + [marker(X0 + 248 * f0, LANE, f0), badge("WITH FM-04", CG),
-                                    tag(f0, X0 + 248 * f0, 34, "cruiseMismatch", NOTE),
-                                    tag(0.62, 200, 34, "PCM cancel · disable alert", GOOD)]
+  sc_fm = road() + ego(slow, sk.REQ_S) + [marker(X0 + 248 * f0, LANE, f0), badge("WITH FM-04", CG),
+                                    tag(f0, X0 + 248 * f0, ABOVE, "cruiseMismatch", NOTE),
+                                    tag(0.62, 200, ABOVE, "PCM cancel · disable alert", GOOD)]
   return ch, sc_today, sc_fm
 
 
@@ -256,9 +244,9 @@ def fm05():
              [(0.98, 20, "reset by small inputs", CR, "end"), (0.98, 91, "no reset: alert, then take over", CG, "end")],
              [lim(78, "alert")])
   sc_today = road() + ego(straight_path()) + [badge("TODAY", CR)] + [
-    tag(n, X0 + 248 * n, 34, "small nudge: reset", BAD) for n in nudges[:1]] + [tag(0.8, 190, 66, "eyes off, still engaged", BAD)]
-  sc_fm = road() + ego(straight_path(), CG) + [badge("WITH FM-05", CG), tag(0.3, X0 + 248 * 0.3, 34, "small nudge: ignored", NOTE),
-                                               tag(0.62, 190, 66, "DM alert: take over", GOOD)]
+    tag(n, X0 + 248 * n, ABOVE, "small nudge: reset", BAD) for n in nudges[:1]] + [tag(0.8, 190, BELOW, "eyes off, still engaged", BAD)]
+  sc_fm = road() + ego(straight_path(), sk.REQ_S) + [badge("WITH FM-05", CG), tag(0.3, X0 + 248 * 0.3, ABOVE, "small nudge: ignored", NOTE),
+                                               tag(0.62, 190, BELOW, "DM alert: take over", GOOD)]
   return ch, sc_today, sc_fm
 
 
@@ -270,11 +258,11 @@ def fm06():
              [(f0 + 0.03, 90, "demo mode: synthetic inputs, no alert", CR, "start"),
               (0.62, 20, "ignored onroad: DM keeps watching", CG, "middle")])
   sc_today = road() + ego(straight_path()) + [marker(X0 + 248 * f0, LANE, f0), badge("TODAY", CR),
-                                              tag(f0, X0 + 248 * f0, 34, "IsDriverViewEnabled set", NOTE),
-                                              tag(0.7, 200, 66, "eyes off, no DM alert", BAD)]
-  sc_fm = road() + ego(straight_path(), CG) + [marker(X0 + 248 * f0, LANE, f0), badge("WITH FM-06", CG),
-                                               tag(f0, X0 + 248 * f0, 34, "IsDriverViewEnabled set", NOTE),
-                                               tag(0.6, 200, 66, "ignored onroad: DM alerts", GOOD)]
+                                              tag(f0, X0 + 248 * f0, ABOVE, "IsDriverViewEnabled set", NOTE),
+                                              tag(0.7, 200, BELOW, "eyes off, no DM alert", BAD)]
+  sc_fm = road() + ego(straight_path(), sk.REQ_S) + [marker(X0 + 248 * f0, LANE, f0), badge("WITH FM-06", CG),
+                                               tag(f0, X0 + 248 * f0, ABOVE, "IsDriverViewEnabled set", NOTE),
+                                               tag(0.6, 200, BELOW, "ignored onroad: DM alerts", GOOD)]
   return ch, sc_today, sc_fm
 
 
@@ -285,11 +273,11 @@ def fm07():
              [(0, v(90)), (0.27, v(110)), (0.45, v(116)), (0.68, v(106)), (1, v(102))],
              [(0.98, v(165) - 4, "warning only at 149", CR, "end"), (0.5, v(98), "warn at 110, soft disable", CG, "middle")],
              [lim(v(110), ""), lim(v(149), "")])
-  sc_today = road() + ego(straight_path()) + [badge("TODAY", CR), tag(0.27, X0 + 248 * 0.27, 34, "110: nothing", BAD),
-                                              tag(0.85, 210, 34, "149: warning only", BAD)]
+  sc_today = road() + ego(straight_path()) + [badge("TODAY", CR), tag(0.27, X0 + 248 * 0.27, ABOVE, "110: nothing", BAD),
+                                              tag(0.85, 210, ABOVE, "149: warning only", BAD)]
   slow = sample(lambda f: (X0 + 248 * (f if f < 0.5 else 0.5 + (f - 0.5) * 0.7), LANE))
-  sc_fm = road() + ego(slow, CG) + [badge("WITH FM-07", CG), tag(0.27, X0 + 248 * 0.27, 34, "110: slow down", NOTE),
-                                    tag(0.6, 200, 34, "not slowed: soft disable", GOOD)]
+  sc_fm = road() + ego(slow, sk.REQ_S) + [badge("WITH FM-07", CG), tag(0.27, X0 + 248 * 0.27, ABOVE, "110: slow down", NOTE),
+                                    tag(0.6, 200, ABOVE, "not slowed: soft disable", GOOD)]
   return ch, sc_today, sc_fm
 
 
@@ -297,11 +285,11 @@ def fm08():
   """Off the highway: no ODD monitor, so the item engages; with FM-08 (DQ-280 A) it refuses below a speed floor."""
   ch = chart("engaged", [(24, "on"), (96, "off")], [(0, 96), (0.2, 96), (0.2 + .001, 24), (1, 24)], [(0, 96), (1, 96)],
              [(0.6, 20, "engages off the highway", CR, "middle"), (0.6, 90, "below the floor: no entry", CG, "middle")])
-  unmarked = road(False) + ['<line x1="0" y1="16" x2="280" y2="16" stroke="#F8FAFC" stroke-width="1" opacity="0.35"/>']
-  slow = sample(lambda f: (X0 + 150 * f, 40))
-  sc_today = unmarked + ego(slow) + [badge("TODAY", CR), tag(0.2, 70, 64, "no markings, 40 km/h: engaged", BAD)]
+  unmarked = road(False) + [f'<line x1="0" y1="{sk.STRIP_TOP}" x2="280" y2="{sk.STRIP_TOP}" stroke="{sk.PAINT}" stroke-width="1" opacity="0.35"/>']
+  slow = sample(lambda f: (X0 + 150 * f, sk.STRIP_CENTRE))
+  sc_today = unmarked + ego(slow) + [badge("TODAY", CR), tag(0.2, 70, BELOW, "no markings, 40 km/h: engaged", BAD)]
   sc_fm = unmarked + [trail(slow, "#94A3B8", 2.2), drive(slow, _car_body(EGO, EGO_S))] + [
-    badge("WITH FM-08", CG), tag(0.2, 70, 64, "below the floor: no entry, driver drives", GOOD)]
+    badge("WITH FM-08", CG), tag(0.2, 70, BELOW, "below the floor: no entry, driver drives", GOOD)]
   return ch, sc_today, sc_fm
 
 
@@ -314,11 +302,11 @@ def fm09():
              [(0.96, 92, "acted on, unchecked", CR, "end"), (f1 + 0.02, 20, "sustained: take over", CG, "start"),
               (f0 - 0.02, 50, "uncertainty", "#64748B", "end")],
              [line(unc, "#94A3B8", 1.4, "2 2"), lim(60, "threshold")])
-  path = drifting(f0, 8, k=1.4)
-  sc_today = road() + ego(path) + [badge("TODAY", CR), tag(f0, X0 + 248 * f0, 34, "plan jumps", NOTE),
-                                   tag(0.85, 210, 34, "no confidence check", BAD)]
-  sc_fm = road() + ego(path, CG) + [badge("WITH FM-09", CG), tag(f0, X0 + 248 * f0, 34, "monitor: implausible, warn", NOTE),
-                                    tag(f1, 210, 34, "take over", GOOD)]
+  path = drifting(f0, 10, k=1.4)
+  sc_today = road() + ego(path) + [badge("TODAY", CR), tag(f0, X0 + 248 * f0, ABOVE, "plan jumps", NOTE),
+                                   tag(0.85, 210, ABOVE, "no confidence check", BAD)]
+  sc_fm = road() + ego(path, sk.REQ_S) + [badge("WITH FM-09", CG), tag(f0, X0 + 248 * f0, ABOVE, "monitor: implausible, warn", NOTE),
+                                    tag(f1, 210, ABOVE, "take over", GOOD)]
   return ch, sc_today, sc_fm
 
 
@@ -330,26 +318,26 @@ def fm10():
   ch = chart("lateral offset", [(60, "0"), (24, "line")], big, small,
              [(0.95, 16, "today: torque not speed-dependent", CR, "end"), (0.95, 56, "speed-dependent limit", CG, "end")],
              [lim(24, "")])
-  sc_today = road() + ego(drifting(f0, -21, k=1.5)) + [marker(X0 + 248 * f0, LANE, f0), badge("TODAY", CR),
-                                                       tag(f0, X0 + 248 * f0, 66, "wrong command", NOTE),
-                                                       tag(0.85, 210, 66, "into the next lane", BAD)]
-  sc_fm = road() + ego(drifting(f0, -7, k=1.5), CG) + [marker(X0 + 248 * f0, LANE, f0), badge("WITH FM-10", CG),
-                                                       tag(f0, X0 + 248 * f0, 66, "wrong command", NOTE),
-                                                       tag(0.85, 200, 66, "stays in lane: time to correct", GOOD)]
+  sc_today = road() + ego(drifting(f0, -26, k=1.5)) + [marker(X0 + 248 * f0, LANE, f0), badge("TODAY", CR),
+                                                       tag(f0, X0 + 248 * f0, BELOW, "wrong command", NOTE),
+                                                       tag(0.85, 210, BELOW, "into the next lane", BAD)]
+  sc_fm = road() + ego(drifting(f0, -9, k=1.5), sk.REQ_S) + [marker(X0 + 248 * f0, LANE, f0), badge("WITH FM-10", CG),
+                                                       tag(f0, X0 + 248 * f0, BELOW, "wrong command", NOTE),
+                                                       tag(0.85, 200, BELOW, "stays in lane: time to correct", GOOD)]
   return ch, sc_today, sc_fm
 
 
 def fm11():
   """Stopped behind a lead: today auto-resume when it moves off; with FM-11, the driver resumes."""
   lead = sample(lambda f: (150 if f < 0.3 else 150 + (f - 0.3) * 160, LANE))
-  walk = [(0, 118, 6), (0.3, 118, 6), (0.75, 118, 60), (1, 118, 60)]
+  walk = [(0, 118, 4), (0.3, 118, 4), (0.75, 118, 64), (1, 118, 64)]
   ch = chart("acceleration", [(30, "go"), (90, "0")], [(0, 90), (0.32, 90), (0.32 + .001, 30), (1, 30)], [(0, 90), (1, 90)],
              [(0.36, 24, "auto-resume, as specified", CR, "start"), (0.6, 84, "held until the driver resumes", CG, "middle")])
   resume = sample(lambda f: (80 if f < 0.32 else 80 + min(1, (f - 0.32) / 0.4) * 28, LANE))
   sc_today = road() + [other(lead), ss.walker(walk)] + ego(resume) + [
-    badge("TODAY", CR), tag(0.3, 220, 34, "lead moves off", NOTE), tag(0.6, 70, 34, "auto-resumes", BAD)]
+    badge("TODAY", CR), tag(0.3, 220, ABOVE, "lead moves off", NOTE), tag(0.6, 70, ABOVE, "auto-resumes", BAD)]
   sc_fm = road() + [other(lead), ss.walker(walk), ss.car(80, LANE, 0, EGO, EGO_S)] + [
-    badge("WITH FM-11", CG), tag(0.3, 220, 34, "lead moves off", NOTE), tag(0.5, 70, 34, "holds: press resume", GOOD)]
+    badge("WITH FM-11", CG), tag(0.3, 220, ABOVE, "lead moves off", NOTE), tag(0.5, 70, ABOVE, "holds: press resume", GOOD)]
   return ch, sc_today, sc_fm
 
 
@@ -453,7 +441,7 @@ def cards(docs: dict | None = None, models: dict | None = None):
 
 COLS, CW, GAP, M = 3, 400, 20, 40
 PW = CW - 24
-CH_H, ST_H = PW * 110 / 280, PW * 70 / 280
+CH_H, ST_H = PW * 110 / 280, PW * sk.STRIP_H / 280
 LW, FS = 72, 10
 
 
@@ -491,8 +479,8 @@ def card_svg(x, y, c):
   yy += CH_H + 6
   for k, scene in (("t", c["scene_today"]), ("f", c["scene_fm"])):
     cid = f"m{c['fm']}{k}"
-    b.append(f'<svg x="{px}" y="{yy:.1f}" width="{PW}" height="{ST_H:.1f}" viewBox="0 0 280 70">'
-             f'<clipPath id="{cid}"><rect width="280" height="70" rx="5"/></clipPath>'
+    b.append(f'<svg x="{px}" y="{yy:.1f}" width="{PW}" height="{ST_H:.1f}" viewBox="0 0 280 {sk.STRIP_H}">'
+             f'<clipPath id="{cid}"><rect width="280" height="{sk.STRIP_H}" rx="5"/></clipPath>'
              f'<g clip-path="url(#{cid})">' + "".join(scene) + "</g></svg>")
     yy += ST_H + 4
   for k, v, n in _rows(c):

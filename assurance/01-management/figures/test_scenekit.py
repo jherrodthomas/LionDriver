@@ -12,8 +12,7 @@ sys.path.insert(0, str(HERE))
 import scenekit as sk
 
 # figures that still draw the road from their own copy; remove a file here when it moves onto the kit
-PENDING = {"assurance/02-concept/sotif/sotif_scenes.py", "assurance/02-concept/sotif/fm_scenes.py",
-           "assurance/08-analyses/figures/stpa_scenes.py"}
+PENDING = {"assurance/08-analyses/figures/stpa_scenes.py"}   # also draws for fig_c09_scenes.py and fsc_scenes.py
 ROAD = re.compile(r"#565E69|#C9DDBA|#B9C7A6", re.I)   # asphalt, grass, verge
 
 
@@ -25,6 +24,14 @@ class TestScenekit(unittest.TestCase):
       self.assertIn(f'y1="{y}" x2="{sk.W}" y2="{y}"', road)
     self.assertEqual(road.count('stroke-dasharray="9 9"'), 1)          # one dashed centre line
     self.assertEqual(sk.EGO_LANE - sk.OTHER_LANE, 2 * sk.HALF_LANE)
+
+  def test_strip_is_the_same_road_cropped(self):
+    strip = "".join(sk.strip_road())
+    self.assertTrue(strip.startswith(f'<g transform="translate(0 {sk.STRIP_DY})">'))
+    self.assertIn("".join(sk.straight_road()), strip)
+    self.assertEqual((sk.STRIP_TOP, sk.STRIP_CENTRE, sk.STRIP_BOTTOM, sk.STRIP_OTHER, sk.STRIP_EGO), (10, 40, 70, 25, 55))
+    self.assertLess(sk.STRIP_BOTTOM, sk.STRIP_H)
+    self.assertNotIn("stroke-dasharray", "".join(sk.strip_road(markings=False)))
 
   def test_curved_road_follows_its_edge_function(self):
     edge = lambda k: [(x, 80 + k) for x in (0, 140, 280)]          # noqa: E731  a straight centre line
@@ -71,6 +78,13 @@ class TestScenekit(unittest.TestCase):
         found.add(p.relative_to(REPO).as_posix())
     self.assertEqual(found - PENDING, set(), "draw top-down scenes with scenekit.py instead of a palette copy")
     self.assertEqual(PENDING - found, set(), "migrated: remove it from PENDING")
+
+  def test_strip_cards_take_their_size_from_the_kit(self):
+    """Cards that embed the strip (FM, hazard log, loss scenarios, FMEA) size it from STRIP_H, not a fixed 70."""
+    old = re.compile(r'viewBox="0 0 280 70"|PW \* 70 / 280')
+    hits = [p.relative_to(REPO).as_posix() for d in ("assurance", "tools") for p in (REPO / d).rglob("*.py")
+            if not p.name.startswith("test_") and old.search(p.read_text(encoding="utf-8"))]
+    self.assertEqual(hits, [])
 
 
 if __name__ == "__main__":

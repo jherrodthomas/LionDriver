@@ -10,9 +10,13 @@ that does not animate shows the last frame, so every animated element's static p
 What lives here is drawing only: palette, road builders, the car, the marks, the pills and the SMIL helpers. What a
 scene shows (paths, timings, the behaviour models) stays with the figure that draws it.
 
-Migrated: 02-concept/hara/guideword_scenes.py. Still on their own copies, to move here next: 02-concept/sotif/
-sotif_scenes.py and fm_scenes.py, 08-analyses/figures/stpa_scenes.py (test_scenekit.PENDING lists them; the guard test
-fails if a new figure draws the road outside this kit).
+Two scene sizes: the full scene (W x H) and the strip (W x STRIP_H, the same road cropped to its two lanes) for cards
+that show two scenes, today and with a modification.
+
+Drawn with it: 02-concept/hara/guideword_scenes.py and hazlog_cards.py; 02-concept/sotif/sotif_scenes.py and
+fm_scenes.py; 08-analyses/figures/stpa_ls_scenes.py (through fm_scenes). Still on its own copy, to move here next:
+08-analyses/figures/stpa_scenes.py, which also draws for 02-concept/figures/fig_c09_scenes.py and 02-concept/fsc/
+fsc_scenes.py (test_scenekit.PENDING; the guard test fails if a new figure draws the road outside this kit).
 
 Standard library only; every function is deterministic.
 """
@@ -45,6 +49,10 @@ HALF_LANE = 15
 TOP_EDGE, CENTRE_LINE, BOTTOM_EDGE = 39, 69, 99   # straight road: edge line, dashed centre line, edge line
 OTHER_LANE, EGO_LANE = 54, 84              # straight road: lane centres
 CAR_L = 22                                 # car length
+# strip: the straight road cropped to 280 x 80 (for cards with two scenes); the same lanes, moved up by STRIP_DY
+STRIP_H, STRIP_DY = 80, -29
+STRIP_TOP, STRIP_CENTRE, STRIP_BOTTOM = TOP_EDGE + STRIP_DY, CENTRE_LINE + STRIP_DY, BOTTOM_EDGE + STRIP_DY   # 10, 40, 70
+STRIP_OTHER, STRIP_EGO = OTHER_LANE + STRIP_DY, EGO_LANE + STRIP_DY                                       # 25, 55
 
 # ---------------------------------------------------------------- animation (SMIL, no script; a still viewer shows the last frame)
 
@@ -96,25 +104,44 @@ def driving(p, inner, key):
           f'<g transform="rotate({heading(p, len(p) - 1):.1f})">{anim("transform", "rotate", rot, keys)}{inner}</g></g>')
 
 
-def drive_t(samples, inner):
-  """Time-keyed driving group on a straight road (heading 0): samples are (loop share 0..1, x, y); static pose = last."""
+def drive_t(samples, inner, thin=True):
+  """Time-keyed group that slides without turning: samples are (drive share 0..1, x, y); static pose = last."""
   keys = [DRIVE * f for f, _, _ in samples] + [1]
   vals = [f"{x:.1f},{y:.1f}" for _, x, y in samples] + [f"{samples[-1][1]:.1f},{samples[-1][2]:.1f}"]
-  # thin the keyframes: SMIL handles linear interpolation between them
-  keep = sorted({0, len(samples) - 1, *range(0, len(samples), 4)})
-  keys = [keys[i] for i in keep] + [1]
-  vals = [vals[i] for i in keep] + [vals[-1]]
+  keys[0] = 0
+  if thin:   # SMIL interpolates linearly between the kept keyframes; enough for a straight road
+    keep = sorted({0, len(samples) - 1, *range(0, len(samples), 4)})
+    keys = [keys[i] for i in keep] + [1]
+    vals = [vals[i] for i in keep] + [vals[-1]]
   return f'<g transform="translate({samples[-1][1]:.1f} {samples[-1][2]:.1f})">{anim("transform", "translate", vals, keys)}{inner}</g>'
 
 
-def draw_on(p, key):
-  """Reveal a path from its start in step with the car (stroke-dashoffset over pathLength 1)."""
+def drive_turning(samples, inner):
+  """Time-keyed group that turns with its path: samples are (drive share 0..1, x, y); static pose = last.
+  A sample that does not move keeps the heading it had."""
+  keys = [0] + [DRIVE * f for f, _, _ in samples[1:]] + [1]
+  heads, last = [], 0.0
+  for i in range(len(samples)):
+    j = max(1, i)
+    (_, x0, y0), (_, x1, y1) = samples[j - 1], samples[j]
+    if (x1, y1) != (x0, y0):
+      last = math.degrees(math.atan2(y1 - y0, x1 - x0))
+    heads.append(last)
+  tr = [f"{x:.1f},{y:.1f}" for _, x, y in samples] + [f"{samples[-1][1]:.1f},{samples[-1][2]:.1f}"]
+  rot = [f"{a:.1f}" for a in heads] + [f"{heads[-1]:.1f}"]
+  _, xe, ye = samples[-1]
+  return (f'<g transform="translate({xe:.1f} {ye:.1f})">{anim("transform", "translate", tr, keys)}'
+          f'<g transform="rotate({heads[-1]:.1f})">{anim("transform", "rotate", rot, keys)}{inner}</g></g>')
+
+
+def draw_on(p, keys):
+  """Reveal path p from its start in step with the car: keys[i] is the loop time the car reaches p[i]."""
   seg = [math.dist(a, b) for a, b in zip(p, p[1:])]
   total, run, vals = sum(seg) or 1, 0.0, ["1"]
   for s in seg:
     run += s
     vals.append(f"{1 - run / total:.4f}")
-  return anim("stroke-dashoffset", None, vals + ["0"], [0] + [key(x) for x, _ in p[1:]] + [1])
+  return anim("stroke-dashoffset", None, vals + ["0"], [0] + list(keys[1:]) + [1])
 
 
 # ---------------------------------------------------------------- text
@@ -125,10 +152,22 @@ def t(x, y, s, size=11, fill=INK, weight=None, anchor=None, extra=""):
   return f'<text x="{x:g}" y="{y:g}" font-size="{size:g}" fill="{fill}"{w}{a}{extra}>{escape(s)}</text>'
 
 
-def fit_x(x, label, size=8):
-  """Keep a centred label inside the scene width."""
-  half = text_w(label, size, True) / 2 + 5
-  return round(min(W - half, max(half, x)), 1)
+def fit_x(x, label, size=8, anchor="middle", pad=5):
+  """Keep a label inside the scene width."""
+  w = text_w(label, size, True)
+  if anchor == "start":
+    return round(min(W - pad - w, max(pad, x)), 1)
+  if anchor == "end":
+    return round(min(W - pad, max(pad + w, x)), 1)
+  return round(min(W - w / 2 - pad, max(w / 2 + pad, x)), 1)
+
+
+def road_label(x, y, s, fill="#334155", size=7, weight=600, anchor="middle", halo=False, k=None):
+  """A label in the scene: dark text on the verge or grass, or light text with a dark halo on the asphalt (halo=True);
+  shown from loop time k when k is given."""
+  extra = f' stroke="{INK}" stroke-width="2.4" paint-order="stroke"' if halo else ""
+  lab = t(round(x, 1), round(y, 1), s, size, fill, weight, anchor, extra)
+  return lab if k is None else f"<g>{appear(k)}{lab}</g>"
 
 
 # ---------------------------------------------------------------- road
@@ -138,17 +177,27 @@ def direction_arrow(transform):
           f'fill="{ARROW}"/></g>')
 
 
-def straight_road(arrow_y=OTHER_LANE):
-  """A straight two-lane road across the scene."""
-  return [f'<rect width="{W}" height="{H}" fill="{GRASS}"/>', f'<rect x="0" y="32" width="{W}" height="74" fill="{VERGE}"/>',
-          f'<rect x="0" y="35" width="{W}" height="68" fill="{ASPHALT}"/>',
-          f'<line x1="0" y1="{BOTTOM_EDGE}" x2="{W}" y2="{BOTTOM_EDGE}" stroke="{PAINT}" stroke-width="1.5"/>',
-          f'<line x1="0" y1="{TOP_EDGE}" x2="{W}" y2="{TOP_EDGE}" stroke="{PAINT}" stroke-width="1.5"/>',
-          f'<line x1="0" y1="{CENTRE_LINE}" x2="{W}" y2="{CENTRE_LINE}" stroke="{PAINT}" stroke-width="1.3" stroke-dasharray="9 9"/>',
-          direction_arrow(f"translate(26 {arrow_y})")]
+def straight_road(arrow_y=OTHER_LANE, edge_right=True, under="", markings=True):
+  """A straight two-lane road across the scene. under: drawn on the asphalt below the paint (a seam, an exit, a
+  crossing road); edge_right=False leaves the ego lane's edge line to the caller; markings=False is an unmarked road."""
+  b = [f'<rect width="{W}" height="{H}" fill="{GRASS}"/>', f'<rect x="0" y="32" width="{W}" height="74" fill="{VERGE}"/>',
+       f'<rect x="0" y="35" width="{W}" height="68" fill="{ASPHALT}"/>']
+  if under:
+    b.append(under)
+  if markings:
+    if edge_right:
+      b.append(f'<line x1="0" y1="{BOTTOM_EDGE}" x2="{W}" y2="{BOTTOM_EDGE}" stroke="{PAINT}" stroke-width="1.5"/>')
+    b += [f'<line x1="0" y1="{TOP_EDGE}" x2="{W}" y2="{TOP_EDGE}" stroke="{PAINT}" stroke-width="1.5"/>',
+          f'<line x1="0" y1="{CENTRE_LINE}" x2="{W}" y2="{CENTRE_LINE}" stroke="{PAINT}" stroke-width="1.3" stroke-dasharray="9 9"/>']
+  return b + [direction_arrow(f"translate(26 {arrow_y})")]
 
 
-def curved_road(edge):
+def strip_road(markings=True):
+  """The straight road cropped to a 280 x STRIP_H strip; draw on it with the STRIP_* coordinates."""
+  return [f'<g transform="translate(0 {STRIP_DY})">', *straight_road(markings=markings), "</g>"]
+
+
+def curved_road(edge, arrow=True):
   """A two-lane road along any centre line; edge(k) gives the points offset k from the ego lane centre (+ is right)."""
   hl = HALF_LANE
   asphalt = d(edge(hl + 4) + edge(-3 * hl - 4)[::-1]) + " Z"
@@ -157,7 +206,7 @@ def curved_road(edge):
           f'<path d="{asphalt}" fill="{ASPHALT}"/>',
           *[f'<path d="{d(edge(k))}" fill="none" stroke="{PAINT}" stroke-width="1.5"/>' for k in (hl, -3 * hl)],
           f'<path d="{d(edge(-hl))}" fill="none" stroke="{PAINT}" stroke-width="1.3" stroke-dasharray="9 9"/>',
-          direction_arrow(pose(edge(0), 6))]
+          *([direction_arrow(pose(edge(0), 6))] if arrow else [])]
 
 
 def traffic_light(stopx, green_at=None):
@@ -192,13 +241,24 @@ def other_body(stopped=False):
                                           f'<rect x="-12" y="3.5" width="2" height="2" fill="{HAZARD_LAMP}"/>')
 
 
-def ghost_body():
-  """Where the car should be: a dashed green outline."""
-  return f'<rect x="-11" y="-5" width="22" height="10" rx="3.5" fill="none" stroke="{REQ_S}" stroke-width="1.3" stroke-dasharray="3 2"/>'
+def ghost_body(stroke=REQ_S):
+  """Where the car should be: a dashed green outline (another stroke for what a sensor believes)."""
+  return f'<rect x="-11" y="-5" width="22" height="10" rx="3.5" fill="none" stroke="{stroke}" stroke-width="1.3" stroke-dasharray="3 2"/>'
 
 
 def car(transform, body, opacity=1.0, stroke=INK):
   return f'<g transform="{transform}" opacity="{opacity:g}">{car_body(body, stroke)}</g>'
+
+
+def car_at(x, y, body, stroke=INK, opacity=1.0, angle=0):
+  """A parked or stopped car at (x, y)."""
+  return car(f"translate({x:.1f} {y:.1f}) rotate({angle:.1f})", body, opacity, stroke)
+
+
+def pedestrian(samples):
+  """A pedestrian seen from above, walking through samples (drive share, x, y)."""
+  return drive_t(samples, f'<circle r="3.2" fill="{HAZARD_LAMP}" stroke="{INK}" stroke-width="0.8"/>'
+                          f'<circle cx="0" cy="-0.5" r="1.4" fill="#7C2D12"/>', thin=False)
 
 
 def start_marker(transform):
@@ -212,10 +272,16 @@ def intended_path(p):
   return f'<path d="{d(p)}" fill="none" stroke="{REQ_S}" stroke-width="2.2" stroke-dasharray="5 3" stroke-linecap="round"/>'
 
 
-def performed_path(path_d, reveal):
+def performed_path(path_d, reveal, color=PERF_S, width=2.6):
   """The car's actual track, drawn in by reveal (an animate on stroke-dashoffset)."""
-  return (f'<path d="{path_d}" fill="none" stroke="{PERF_S}" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" '
+  return (f'<path d="{path_d}" fill="none" stroke="{color}" stroke-width="{width:g}" stroke-linejoin="round" stroke-linecap="round" '
           f'pathLength="1" stroke-dasharray="1 1">{reveal}</path>')
+
+
+def track(samples, color=PERF_S, width=2.6):
+  """performed_path for time-keyed samples (drive share, x, y)."""
+  p = [(x, y) for _, x, y in samples]
+  return performed_path(d(p), draw_on(p, [DRIVE * f for f, _, _ in samples]), color, width)
 
 
 def gap_band(band_d, uid, x0, x1):
@@ -233,7 +299,7 @@ def fault_marker(x, y, k):
 def callout(x, y, r, label, label_y, k):
   """Yellow ring at the moment it matters and its label, shown from loop time k."""
   return (f'<g>{appear(k)}<circle cx="{x:.1f}" cy="{y:.1f}" r="{r:g}" fill="none" stroke="{CALLOUT}" stroke-width="1.6"/>' +
-          t(fit_x(x, label), label_y, label, 8, CALLOUT, 600, "middle", f' stroke="{INK}" stroke-width="2.4" paint-order="stroke"') + "</g>")
+          road_label(fit_x(x, label), label_y, label, CALLOUT, 8, halo=True) + "</g>")
 
 
 def badges(items, key):
