@@ -2098,11 +2098,11 @@ package LionDriverRequirements {
         :>> verifMethod = "UT, HIL";
     }
     requirement <'CSR-031'> csr_031 : CybersecurityRequirement {
-        doc /* The bootstub shall verify the application image with a signature scheme of at least 128-bit security strength and a SHA-256-or-stronger digest before transferring control. */
+        doc /* The bootstub shall verify the application image with an ECDSA signature over P-256 and a SHA-256 digest (128-bit security strength; decided 2026-10-19, DQ-191 A) before transferring control. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-03";
-        :>> safetyRelation = "TSR-511, B‡";
+        :>> safetyRelation = "TSR-511, C";
         :>> verifMethod = "R, HIL";
     }
     requirement <'CSR-032'> csr_032 : CybersecurityRequirement {
@@ -2378,7 +2378,7 @@ package LionDriverRequirements {
         :>> verifMethod = "HIL (network off)";
     }
     requirement <'CSR-121'> csr_121 : CybersecurityRequirement {
-        doc /* The updater shall stage an update only after verifying a LionDriver-signed release manifest (§3.6) and every artefact against it. */
+        doc /* The updater shall stage an update only after verifying a LionDriver-signed release manifest (§3.6) and every artefact against it; the manifest signature uses the firmware scheme, ECDSA over P-256 with SHA-256 (DQ-191 A), with the offline update key. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC; ENV";
         :>> group = "CSR-C-12";
