@@ -22,7 +22,7 @@ timing:
   ui_unresponsive_after_selfdrived_stop: {s: 5.0, source: "WP-A-04 §4 BE-2.21: ui/soundd show System Unresponsive only after 5 s"}
   control_stop_after_selfdrived_stop: {s: 0.1, source: "WP-A-04 §4 BE-2.21: controlsd and card stop within about 0.1 s"}
   # The siren sounds on every envelope revocation that is not a driver action (TSR-516(b), DQ-404 A, panda 8a69ccf).
-  # The plant (assurance/sim, real panda safety code at bf8102a) measures it from fault onset; the older paths are
+  # The plant (assurance/sim, real panda safety code at the current pin 8a69ccf) measures it from fault onset; the older paths are
   # later upper bounds (EPS-fault persistence 0.96 s, WP-S-04 T-28; heartbeat 0.56 s, T-07a) and are not used.
   siren_after_eps_fault: {s: 0.25, source: "Plant F-07: EPS fault, revoked 0.053 s, siren 0.25 s (sim/results/plant-results.md)"}
   siren_after_heartbeat_loss: {s: 0.25, source: "Plant F-04a/F-04b: heartbeat lost, revoked 0.193/0.043 s, siren 0.25 s (plant-results.md; silent-stall.md 0.25-0.29 s)"}
