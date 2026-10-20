@@ -49,15 +49,32 @@ gallery say so.
 | Code | Condition | Exposure | ODD | Drawn as |
 |---|---|---|---|---|
 | W01 | Dry, daylight | E4 | in | Clear sky, sun at 30° behind |
-| W02 | Wet road or light rain | E3 | in | Overcast, wet glossy asphalt with puddles, light rain, haze (1.5 km) |
+| W02 | Wet road or light rain | E3 | in | A darker overcast, a water film on the asphalt with streaky reflections along the road, puddles, light rain, haze (1.5 km) |
 | W03 | Night, dry, headlights | E3 | in | Moonlit sky, headlights and tail lamps, street and road lighting where the environment has it, glare |
-| W04 | Moderate or heavy rain | E2 | outside | Dark overcast, standing water, heavy rain, visibility 350 m, lights on |
+| W04 | Moderate or heavy rain | E2 | outside | The darkest overcast, standing water with longer streaks and mirror-smooth wheel tracks, a rain ripple, heavy rain, visibility 350 m, lights on |
 | W05 | Snow or ice | E2 | outside | Overcast, snow on verges and trees, slush between the wheel tracks, icy tracks, snowfall, visibility 600 m |
-| W06 | Fog below the ODD bound | E1 | outside | Fog at 120 m visibility (the ODD bound is 200 m, WP-C-02 §3), lights on |
+| W06 | Fog below the ODD bound | E1 | outside | A slightly darker overcast, fog at 120 m visibility (the ODD bound is 200 m, WP-C-02 §3), lights on |
 | TC-01 | Low sun in the camera's view | — (SOTIF) | in | Sun 5° above the horizon ahead (12° where buildings would hide it), bloom |
 
 Fog and haze are a volume over the scene with extinction 3 / visibility per metre (Koschmieder: 5 % contrast at the
 stated visibility).
+
+From wet 0.75 on (W02, W04) the asphalt is a water film (`scene_assets._wet_sheen`): its roughness is anisotropic
+with the tangent along the road (the road UV's v), so the lamps, lights and sky reflect as long streaks; the wheel
+tracks get a lower roughness floor (0.07 at W02, 0.03 at W04; puddles 0.02) and rain adds a fine ripple to the
+normal. W04 stretches further and is smoother than W02. Below 0.75 (W01 dry, W05, W06) the road is drawn as before.
+`sky_strength` in a condition's `env` dims the overcast sky (W02 0.8, W04 0.7, W06 0.85); W01 keeps its clear sky.
+
+The road edges follow the "City Road Builder" look the lead preferred, built from our own cross-section
+(`scene_assets.edge_features`, visual only): a raised concrete kerb, 15 cm high and 25 cm wide with a chamfered top,
+along the highway's left verge and on the right at the shoulder's outer edge, or just behind the barrier's posts where
+the barrier stands on that edge; a kerb stone at the road edge of every urban sidewalk; and, where an environment sets
+`walkway_m` (`highway-interchange`), a paved walkway of concrete flags behind the right kerb. The kerbs and walkway
+use the `concrete` slot (the walkway with joints cut every 0.6 m), or the procedural concrete without it. Highway
+street lights (`lamps` props: `highway-free-flow`, `highway-curve`, `highway-interchange`) are a row of 10 m tapered
+poles every 45 m beyond the barrier, the arm curving 2.6 m out over the road to a slim luminaire, lit at night; a post
+that would stand near the chase camera or on its line of sight to the ego is left out (`street_layout.lamp_row`,
+checked by `test_scenes.py`).
 
 ## 3. Environments and traffic
 
@@ -166,6 +183,6 @@ hide.
 | `hydrant` | Poly Haven [`fire_hydrant`](https://polyhaven.com/a/fire_hydrant) | At the kerb |
 | `utility_box` | Poly Haven [`utility_box_01`](https://polyhaven.com/a/utility_box_01) | Against the buildings |
 
-The lamp columns (8 m, with a 1.6 m arm over the carriageway and a point light at night) and the glass bus shelters
+The lamp columns (10 m tapered poles whose 2 m arm curves over the carriageway, with a point light at night) and the glass bus shelters
 (with a bench, a lit advert and the stop sign) are procedural. Poly Haven has only 3.9 m heritage lamp posts and no
 shelter. The furniture models are small (4,000 to 75,000 triangles), so render time and memory do not change.

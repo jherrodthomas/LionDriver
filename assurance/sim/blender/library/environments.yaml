@@ -12,15 +12,17 @@
 #                scenes: straight, curve@a_y, rcurve@a_y; a plant scene takes its geometry from its plant case)
 #   geometry     what a plant case on this environment must drive: straight, curve (left or right) or any
 #   props        road furniture and fixed features, in road coordinates (ds_m ahead of the ego at t = 0; d left of the
-#                ego lane's centre): posts (delineators every every_m at d), lamps (lighting columns every every_m at
-#                d; lit at night), sign (a panel at ds_m, d: style warning, guide, works, speed), gantry (an overhead
+#                ego lane's centre): posts (delineators every every_m at d), lamps (10 m street lights every every_m
+#                at d, the arm curving reach_m over the road; lit at night; kept out of the chase camera's view of
+#                the ego, test_scenes.py), sign (a panel at ds_m, d: style warning, guide, works, speed), gantry (an overhead
 #                sign at ds_m, text), barrels (drums at d every every_m from from_ds to to_ds), overpass,
 #                intersection, traffic_light, cones (a contact obstacle), seam (a dark line the camera may
 #                follow), tunnel (walls, roof, portal and luminaires from from_ds to to_ds), gore (chevron hatching where
 #                a lane splits off at d, widening to width on side right or left from from_ds to to_ds), windsock (a
 #                sock on a mast at ds_m, d, blown toward left or right)
 #   env          adjustments to the condition's look for this environment (sun_elevation_min: buildings hide a lower
-#                sun)
+#                sun; walkway_m: a paved walkway that wide behind the right kerb of a highway). Visual only: the
+#                road's cross-section, and so every contact and event, is the same with or without it
 #   traffic      the default traffic preset (library/traffic.yaml)
 schema_version: 1
 environments:
@@ -34,6 +36,7 @@ environments:
     geometry: any
     props:
       - {kind: posts, d: 7.0, every_m: 50}
+      - {kind: lamps, d: -9.6, every_m: 45}
       - {kind: sign, ds_m: 140, d: -10.0, style: speed, text: "65"}
     traffic: none
 
@@ -47,6 +50,7 @@ environments:
     geometry: curve
     props:
       - {kind: posts, d: 7.0, every_m: 25}
+      - {kind: lamps, d: -9.6, every_m: 45}
       - {kind: sign, ds_m: 30, d: -10.0, style: warning, text: curve}
     traffic: none
 
@@ -63,6 +67,7 @@ environments:
       - {kind: gantry, ds_m: 95, text: EXIT 24}
       - {kind: lamps, d: -9.6, every_m: 45}
       - {kind: posts, d: 7.0, every_m: 50}
+    env: {walkway_m: 1.3}
     traffic: none
 
   highway-queue:

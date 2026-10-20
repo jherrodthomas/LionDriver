@@ -142,6 +142,22 @@ class TestScenes(unittest.TestCase):
         for cs in sc["road"].get("crosswalks") or []:
           self.assertGreater(abs(it["s"] - cs), street_layout.CLEAR_CROSSWALK_M, (sc["id"], it))
 
+  def test_lamp_rows_keep_clear(self):
+    """Every post of a `lamps` row stands outside the carriageway and beyond the barrier line, and never near the
+    chase camera or on its line of sight to the ego."""
+    rows = [(sc, p) for sc in self.built.values() for p in sc["props"] if p["kind"] == "lamps"]
+    self.assertTrue({sc["environment"]["id"] for sc, _ in rows} >= {"highway-free-flow", "highway-curve"})
+    for sc, p in rows:
+      left, right = sc["road"]["carriageway"]
+      b = sc["road"]["barrier"]
+      self.assertFalse(right <= p["d"] <= left, sc["id"])
+      if b is not None and p["d"] < 0:
+        self.assertLess(p["d"], b, sc["id"])
+      lines = street_layout.sight_lines(sc)
+      for q in street_layout.lamp_row(sc, p):
+        self.assertFalse(street_layout.in_view(lines, q["x"], q["y"], street_layout.PLACE["lamp"][1]),
+                         (sc["id"], q))
+
   def test_pedestrian_figures(self):
     """The committed CC0 figures carry the walk, the rig and the clothes slots hazard_scene.py recolours."""
     import json
