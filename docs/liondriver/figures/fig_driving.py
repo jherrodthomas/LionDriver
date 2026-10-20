@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Draw the figures of docs/liondriver/driving-and-planning.md (pipeline, two control paths, authority funnel).
+"""Draw the figures of docs/liondriver/driving-and-planning.md (pipeline, two control paths, authority funnel,
+model output overlay).
 
 Sources of record:
   - Figure 1, the camera-to-CAN pipeline: the process boxes are drawn here, and each box lists the functional
@@ -11,6 +12,9 @@ Sources of record:
   - Figure 3, the authority funnel: the panda and controller limits come from the WP-C-01 §8 table, parsed by
     `fig_c01_interfaces.envelope` (the parser that draws WP-C-01 Figure 8-1), and the curvature bound from
     `drive_helpers.py`.
+  - Figure 4, the model output overlay: a synthetic road-camera view. The sample grids (X_IDXS, T_IDXS), the road
+    camera, the camera height and the UI's drawing rules (widths, colours, draw distance) are read from the openpilot
+    code, and the steering action's formula from `modeld.py`. The road and the probabilities are illustrative.
 
     python3 fig_driving.py            # write the SVGs into docs/assets/liondriver/
     python3 fig_driving.py --check    # fail if an FM is unplaced, a source changed form, or an SVG is stale
@@ -38,7 +42,8 @@ WP_C07 = REPO / "assurance" / "02-concept" / "WP-C-07-sotif-functional-modificat
 WP_C01 = REPO / "assurance" / "02-concept" / "WP-C-01-item-definition.md"
 DRIVE_HELPERS = REPO / "openpilot" / "selfdrive" / "controls" / "lib" / "drive_helpers.py"
 LONG_PLANNER = REPO / "openpilot" / "selfdrive" / "controls" / "lib" / "longitudinal_planner.py"
-OUTS = {"pipeline": "driving-1-pipeline.svg", "paths": "driving-2-paths.svg", "funnel": "driving-3-funnel.svg"}
+OUTS = {"pipeline": "driving-1-pipeline.svg", "paths": "driving-2-paths.svg", "funnel": "driving-3-funnel.svg",
+        "overlay": "driving-4-overlay.svg"}
 REF = "docs/liondriver/driving-and-planning.md"
 
 PRIORITY = {"P1": (RED, "#FFFFFF"), "P2": (AMBER, "#FFFFFF"), "P3": (GREY_BG, MUTED)}
@@ -418,6 +423,224 @@ def build_funnel(env: dict, f: dict) -> str:
   return svg(W, H, "Figure 3. Who limits what reaches the car", desc, body)
 
 
+# ---------------------------------------------------------------- Figure 4: model output overlay
+
+OP = REPO / "openpilot"
+OVERLAY_SOURCES = {
+  "constants": OP / "selfdrive" / "modeld" / "constants.py",
+  "camera": OP / "common" / "transformations" / "camera.py",
+  "calib": OP / "selfdrive" / "locationd" / "calibrationd.py",
+  "ui": OP / "selfdrive" / "ui" / "onroad" / "model_renderer.py",
+  "modeld": OP / "selfdrive" / "modeld" / "modeld.py",
+  "fill": OP / "selfdrive" / "modeld" / "fill_model_msg.py",
+}
+# The illustrative scene: a highway curve to the left inside the ODD (1.5 m/s² at 100 km/h, the plant's "curve inside
+# the ODD", assurance/sim/plant/simulate.py), ego in the middle of three 3.7 m lanes.
+SCENE = {"v_kmh": 100, "a_lat": 1.5, "lane": 3.7, "probs": [0.55, 0.95, 0.95, 0.75], "edge_stds": [0.25, 0.45],
+         "left_shoulder": 1.0, "right_shoulder": 3.0}
+
+
+def overlay_facts() -> dict:
+  src = {k: p.read_text(encoding="utf-8") for k, p in OVERLAY_SOURCES.items()}
+
+  def need(key: str, pattern: str, what: str) -> re.Match:
+    m = re.search(pattern, src[key], re.M)
+    if not m:
+      raise SourceError(f"{OVERLAY_SOURCES[key].relative_to(REPO)}: {what} changed form; update fig_driving.py")
+    return m
+
+  f = {
+    "idx_n": int(need("constants", r"^\s*IDX_N = (\d+)$", "IDX_N").group(1)),
+    "t_max": float(need("constants", r"T_IDXS = \[index_function\(idx, max_val=([\d.]+)\)", "T_IDXS").group(1)),
+    "x_max": float(need("constants", r"X_IDXS = \[index_function\(idx, max_val=([\d.]+)\)", "X_IDXS").group(1)),
+    "height": float(need("calib", r"^HEIGHT_INIT = np\.array\(\[([\d.]+)\]\)", "HEIGHT_INIT").group(1)),
+    "max_draw": float(need("ui", r"^MAX_DRAW_DISTANCE = ([\d.]+)", "MAX_DRAW_DISTANCE").group(1)),
+    "line_w": float(need("ui", r"lane_line\.raw_points, ([\d.]+) \* self\._lane_line_probs\[i\]", "lane line width").group(1)),
+    "edge_w": float(need("ui", r"road_edge\.raw_points, ([\d.]+), 0\.0", "road edge width").group(1)),
+    "path_w": float(need("ui", r"self\._path\.raw_points, ([\d.]+), self\._path_offset_z", "path width").group(1)),
+    "line_alpha_max": float(need("ui", r"np\.clip\(self\._lane_line_probs\[i\], 0\.0, ([\d.]+)\)", "lane alpha").group(1)),
+  }
+  need("constants", r"^def index_function\(idx, max_val=192, max_idx=32\):\n\s*return \(max_val\) \* \(\(idx/max_idx\)\*\*2\)",
+       "index_function")
+  cam = need("camera", r"^_ar_ox_config = DeviceCameraConfig\(CameraConfig\((\d+), (\d+), ([\d.]+)\)", "_ar_ox_config")
+  f["cam_w"], f["cam_h"], f["focal"] = int(cam.group(1)), int(cam.group(2)), float(cam.group(3))
+  need("modeld", r"desired_curvature = model_output\['action'\]\[0,0\] / \(max\(1\.0, v_ego\)\)\*\*2", "action formula")
+  need("modeld", r"if 'action' not in model_output:", "plan fallback")
+  need("fill", r"fill_xyzt\(modelV2\.position, ModelConstants\.T_IDXS", "plan on T_IDXS")
+  need("fill", r"fill_xyzt\(lane_line, LINE_T_IDXS, np\.array\(ModelConstants\.X_IDXS\)", "lane lines on X_IDXS")
+  n = f["idx_n"] - 1
+  f["x_idxs"] = [f["x_max"] * (i / n) ** 2 for i in range(f["idx_n"])]
+  f["t_idxs"] = [f["t_max"] * (i / n) ** 2 for i in range(f["idx_n"])]
+  return f
+
+
+def build_overlay(f: dict) -> str:
+  W, S, WIDEN = 1320, 0.4, 3                          # page width; image scale (camera pixels to figure units);
+  #                                                      model strips drawn this many times the UI width to be seen
+  IX, IY = 40, 104                                     # image origin
+  iw, ih = f["cam_w"] * S, f["cam_h"] * S
+  v = SCENE["v_kmh"] / 3.6
+  radius = v * v / SCENE["a_lat"]
+  curv = SCENE["a_lat"] / max(1.0, v) ** 2
+  h, lane = f["height"], SCENE["lane"]
+  body = header(W, "4", "What the model draws, and what steers",
+                "The road camera with the model's lane lines, road edges and plan drawn the way the onroad UI draws "
+                "them. None of it is the steering command.", "WP-C-11 §2.4 · modeld.py · model_renderer.py")
+
+  def proj(x: float, y: float) -> tuple[float, float]:
+    """Ground point (x forward, y right, metres) to figure coordinates; level calibration, camera at height h."""
+    return IX + S * (f["focal"] * y / x + f["cam_w"] / 2), IY + S * (f["focal"] * h / x + f["cam_h"] / 2)
+
+  def centre(x: float) -> float:
+    return -x * x / (2 * radius)                       # curve to the left: y decreases
+
+  def xs(a: float, b: float, n: int = 48) -> list[float]:
+    return [a * (b / a) ** (i / (n - 1)) for i in range(n)]
+
+  def strip(d: float, half: float, a: float, b: float) -> str:
+    left = [proj(x, centre(x) + d - half) for x in xs(a, b)]
+    right = [proj(x, centre(x) + d + half) for x in reversed(xs(a, b))]
+    return "M" + " L".join(f"{px:.1f},{py:.1f}" for px, py in left + right) + " Z"
+
+  def band(d0: float, d1: float, a: float, b: float) -> str:
+    left = [proj(x, centre(x) + d0) for x in xs(a, b)]
+    right = [proj(x, centre(x) + d1) for x in reversed(xs(a, b))]
+    return "M" + " L".join(f"{px:.1f},{py:.1f}" for px, py in left + right) + " Z"
+
+  lines = [-1.5 * lane, -0.5 * lane, 0.5 * lane, 1.5 * lane]
+  edges = [lines[0] - SCENE["left_shoulder"], lines[3] + SCENE["right_shoulder"]]
+  near, far, horizon = 5.0, 1500.0, IY + ih / 2
+  _, path_bottom = proj(near, 0)
+  _, path_top = proj(f["max_draw"], 0)
+  body.append("<defs>" +
+              f'<clipPath id="cam"><rect x="{IX}" y="{IY}" width="{fmt_(iw)}" height="{fmt_(ih)}" rx="8"/></clipPath>' +
+              f'<linearGradient id="sky" x1="0" y1="{IY}" x2="0" y2="{fmt_(horizon)}" gradientUnits="userSpaceOnUse">'
+              '<stop offset="0" stop-color="#9FB9D3"/><stop offset="1" stop-color="#DCE5EC"/></linearGradient>' +
+              f'<linearGradient id="path" x1="0" y1="{fmt_(path_bottom)}" x2="0" y2="{fmt_(path_top)}" '
+              'gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0DF87A" stop-opacity="0.4"/>'
+              '<stop offset="0.5" stop-color="#72FF5C" stop-opacity="0.35"/>'
+              '<stop offset="1" stop-color="#72FF5C" stop-opacity="0"/></linearGradient></defs>')
+  scene = [rect(IX, IY, iw, ih / 2 + 1, fill="url(#sky)", stroke="none", rx=0),
+           rect(IX, horizon, iw, ih / 2, fill="#8E9A7C", stroke="none", rx=0),
+           path(band(edges[0] - 0.4, edges[1] + 0.4, near, far), stroke="none", fill="#9A9C92"),
+           path(band(lines[0] - 0.1, lines[3] + 0.1, near, far), stroke="none", fill="#5E6266")]
+  # Painted markings: solid outer lines, 3 m dashes with 9 m gaps between lanes (the road, not the model).
+  for d in (lines[0], lines[3]):
+    scene.append(path(strip(d, 0.075, near, far), stroke="none", fill="#E9E9E2"))
+  for d in (lines[1], lines[2]):
+    x = near
+    while x < 400:
+      scene.append(path(strip(d, 0.075, x, x + 3.0), stroke="none", fill="#E9E9E2"))
+      x += 12.0
+  # The model's output, drawn with the UI's rules.
+  lim = f["max_draw"]
+  scene.append(path(strip(0.0, f["path_w"], near, lim), stroke="none", fill="url(#path)"))
+  for d, p in zip(lines, SCENE["probs"]):
+    a = min(max(p, 0.0), f["line_alpha_max"])
+    scene.append(el("path", None, d=strip(d, f["line_w"] * p * WIDEN, near, lim), fill="#FFFFFF", fill_opacity=fmt_(a)))
+  for d, sd in zip(edges, SCENE["edge_stds"]):
+    scene.append(el("path", None, d=strip(d, f["edge_w"] * WIDEN, near, lim), fill="#FF0000",
+                    fill_opacity=fmt_(min(max(1 - sd, 0.0), 1.0))))
+  body.append(f'<g clip-path="url(#cam)">' + "".join(scene) + "</g>")
+  body.append(rect(IX, IY, iw, ih, fill="none", stroke=INK, sw=1.2))
+
+  # Stamp and callouts.
+  sp, sw_ = pill(IX + 14, IY + 14, "FOR DISPLAY, NOT FOR STEERING", INK, size=11, h=22)
+  body += sp
+
+  def callout(x_m: float, d: float, tx: float, ty: float, title: str, sub: str, color=INK):
+    px, py = proj(x_m, centre(x_m) + d)
+    out = [line(px, py, tx, ty + 4, stroke=INK, sw=1), el("circle", None, cx=fmt_(px), cy=fmt_(py), r=3, fill=INK)]
+    tw = max(text_w(title, 11.5, True), text_w(sub, 10)) + 16
+    bx = tx - tw / 2
+    out.append(rect(bx, ty - 30, tw, 36, fill="#FFFFFF", stroke=LINE, rx=6, opacity="0.94"))
+    out.append(text(tx, ty - 15, title, size=11.5, weight=700, anchor="middle", fill=color))
+    out.append(text(tx, ty - 1, sub, size=10, anchor="middle", fill=MUTED))
+    return out
+
+  body += callout(28, lines[1], IX + 150, IY + 96, "laneLines[1]", f"prob {SCENE['probs'][1]}: alpha = prob, max "
+                  f"{f['line_alpha_max']}")
+  body += callout(45, edges[1], IX + iw - 120, IY + 150, "roadEdges[1]", f"std {SCENE['edge_stds'][1]}: red, alpha = 1 − std",
+                  color=RED)
+  body += callout(22, 0.0, IX + iw / 2 + 40, IY + 70, "plan.position",
+                  f"± {f['path_w']} m, drawn to {fmt_(lim)} m", color=SW)
+  body += callout(60, lines[0], IX + 120, IY + 186, "laneLines[0]",
+                  f"prob {SCENE['probs'][0]}: fainter, less sure")
+
+  cy = IY + ih + 22
+  for i, s_ in enumerate([
+      f"Road camera of the comma 3X ({f['cam_w']}×{f['cam_h']}, f = {fmt_(f['focal'])} px), level calibration, {h:g} m "
+      "above the road.",
+      f"Curve to the left, R = {radius:.0f} m at {SCENE['v_kmh']} km/h ({SCENE['a_lat']} m/s², inside the ODD), three "
+      f"{lane:g} m lanes. Beyond {fmt_(f['max_draw'])} m only the paint shows.",
+      "Synthetic drawing: the geometry a perfect model would report, with illustrative probabilities and stds; lane "
+      f"lines and edges drawn {WIDEN}× the UI width."]):
+    body.append(text(IX, cy + i * 16, s_, size=11, fill=MUTED))
+  body.append(text(IX, cy + 50, "data_kind: synthetic · credit: none (WP-V-02 §5.3.5, DSR-12)", size=11, fill=MUTED,
+                   family=MONO))
+
+  # Right column: what steers.
+  RX, RW = IX + iw + 36, W - 40 - (IX + iw + 36)
+  y = IY
+  body.append(rect(RX, y, RW, 214, fill=SAFETY_BG, stroke=SAFETY, sw=1.4))
+  body.append(text(RX + 14, y + 24, "What steers the car", size=14, weight=700, fill=SAFETY))
+  rows = [("network output", "action[0, 0]", f"= {SCENE['a_lat']} m/s²  (lateral acceleration)"),
+          ("modeld divides", f"÷ max(1, v)²", f"v = {v:.1f} m/s"),
+          ("modelV2", "action.desiredCurvature", f"= {curv:.5f} 1/m  (1 / {1 / curv:.0f} m)")]
+  for i, (k, code, val) in enumerate(rows):
+    yy = y + 52 + i * 46
+    body.append(text(RX + 14, yy, k, size=10.5, fill=MUTED))
+    body.append(text(RX + 14, yy + 17, code, size=12.5, weight=700, family=MONO))
+    body.append(text(RX + 14 + text_w(code, 12.5, True) * 1.12 + 10, yy + 17, val, size=11, fill=INK))
+  body.append(text(RX + 14, y + 196, "One number, 20 times a second, to controlsd (Figure 2).", size=11, fill=INK))
+
+  y2 = y + 232
+  body.append(rect(RX, y2, RW, 120, fill="#FFFFFF", stroke=LINE, sw=1.2))
+  body.append(text(RX + 14, y2 + 24, "What the picture shows", size=14, weight=700))
+  for i, s_ in enumerate(["plan, laneLines, roadEdges, leads: to the UI, the logs",
+                          "and drivingModelData. They steer only if the network",
+                          "has no action head: then modeld derives the curvature",
+                          "from the plan (modeld.py, WP-C-11 §2.4)."]):
+    body.append(text(RX + 14, y2 + 46 + i * 16, s_, size=11, fill=MUTED))
+
+  # Sample grids, top-down.
+  y3 = y2 + 140
+  body.append(text(RX, y3 + 12, "Where the 33 points fall", size=13, weight=700))
+  ax0, ax1, top = RX + 8, RX + RW - 8, y3 + 46
+  span = max(f["x_max"], v * f["t_max"])
+  span = 50 * -(-span // 50)
+
+  def ax(m: float) -> float:
+    return ax0 + (ax1 - ax0) * m / span
+
+  body.append(rect(ax(0), top - 16, ax(lim) - ax(0), 84, fill=GREY_BG, stroke="none", rx=4))
+  body.append(text(ax(lim) + 6, top - 4, f"← drawn on screen, ≤ {fmt_(lim)} m", size=9.5, fill=MUTED))
+  for label_, pts, yy, col in [("laneLines, roadEdges: X_IDXS", f["x_idxs"], top + 16, INK),
+                               (f"plan: T_IDXS × v (0–{fmt_(f['t_max'])} s)", [v * t for t in f["t_idxs"]], top + 54, SW)]:
+    body.append(text(ax(0) + 4, yy - 7, label_, size=10, fill=col, weight=600))
+    body.append(line(ax(0), yy, ax1, yy, stroke=LINE, sw=1))
+    for m in pts:
+      body.append(el("circle", None, cx=fmt_(ax(m)), cy=fmt_(yy), r=2.2, fill=col))
+  for m in range(0, int(span) + 1, 50):
+    body.append(text(ax(m), top + 84, f"{m} m", size=9.5, fill=MUTED, anchor="middle"))
+  gap0, gap1 = f["x_idxs"][1] - f["x_idxs"][0], f["x_idxs"][-1] - f["x_idxs"][-2]
+  body.append(text(RX, top + 104, f"Spacing grows with distance: {gap0:.2f} m apart at first, {gap1:.1f} m at "
+                   f"{fmt_(f['x_max'])} m.", size=10.5, fill=MUTED))
+
+  H = int(max(cy + 72, top + 124))
+  desc = (f"A synthetic view from the comma 3X road camera of a highway curve to the left (R = {radius:.0f} m at "
+          f"{SCENE['v_kmh']} km/h) with the model's four lane lines, two road edges and the plan drawn as the onroad UI "
+          f"draws them, stamped for display, not for steering. Beside it: the steering command is one number, "
+          f"action[0,0] = {SCENE['a_lat']} m/s² divided by v² to desiredCurvature = {curv:.5f} per metre. Lane lines and "
+          f"road edges are sampled at {f['idx_n']} distances up to {fmt_(f['x_max'])} m, the plan at {f['idx_n']} times "
+          f"up to {fmt_(f['t_max'])} s; the UI draws them to {fmt_(lim)} m.")
+  return svg(W, H, "Figure 4. What the model draws, and what steers", desc, body)
+
+
+def fmt_(v: float) -> str:
+  return f"{v:.1f}".rstrip("0").rstrip(".")
+
+
 # ---------------------------------------------------------------- main
 
 def build_all() -> dict[str, str]:
@@ -428,7 +651,8 @@ def build_all() -> dict[str, str]:
                       "; add the file to BOXES in fig_driving.py")
   facts = code_facts()
   env = c01.envelope(WP_C01.read_text(encoding="utf-8"))
-  return {OUTS["pipeline"]: build_pipeline(fms), OUTS["paths"]: build_paths(facts), OUTS["funnel"]: build_funnel(env, facts)}
+  return {OUTS["pipeline"]: build_pipeline(fms), OUTS["paths"]: build_paths(facts), OUTS["funnel"]: build_funnel(env, facts),
+          OUTS["overlay"]: build_overlay(overlay_facts())}
 
 
 def main(argv: list[str]) -> int:

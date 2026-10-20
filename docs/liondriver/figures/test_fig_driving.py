@@ -52,6 +52,34 @@ class TestDrivingFigures(unittest.TestCase):
     for k in ("max_curv", "lat_accel", "lat_jerk", "cruise_min"):
       self.assertIn(f[k], s, k)
 
+  def test_overlay_grids_match_model_constants(self):
+    f = fd.overlay_facts()
+    self.assertEqual(len(f["x_idxs"]), f["idx_n"])
+    self.assertAlmostEqual(f["x_idxs"][-1], f["x_max"])
+    self.assertAlmostEqual(f["t_idxs"][-1], f["t_max"])
+    self.assertAlmostEqual(f["x_idxs"][1], f["x_max"] / (f["idx_n"] - 1) ** 2)
+
+  def test_overlay_states_command_and_label(self):
+    f = fd.overlay_facts()
+    s = fd.build_overlay(f)
+    v = fd.SCENE["v_kmh"] / 3.6
+    self.assertIn(f"{fd.SCENE['a_lat'] / v ** 2:.5f}", s)
+    self.assertIn("FOR DISPLAY, NOT FOR STEERING", s)
+    self.assertIn("data_kind: synthetic", s)
+    self.assertIn(f"{f['cam_w']}×{f['cam_h']}", s)
+
+  def test_overlay_source_change_detected(self):
+    real = fd.OVERLAY_SOURCES["ui"]
+    tmp = Path(__file__).resolve().parent / "_ui_probe.py"
+    try:
+      tmp.write_text(real.read_text(encoding="utf-8").replace("MAX_DRAW_DISTANCE = ", "MAX_DRAW = "), encoding="utf-8")
+      fd.OVERLAY_SOURCES["ui"] = tmp
+      with self.assertRaises(SystemExit):
+        fd.overlay_facts()
+    finally:
+      fd.OVERLAY_SOURCES["ui"] = real
+      tmp.unlink(missing_ok=True)
+
 
 if __name__ == "__main__":
   unittest.main()
