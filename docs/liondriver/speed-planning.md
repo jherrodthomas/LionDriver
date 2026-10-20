@@ -24,7 +24,23 @@ lead `radard` reports; a cruise target toward the set speed; and, in Experimenta
 acceleration. The lowest wins, is clipped to the platform bounds, and goes to `controlsd`, whose `longcontrol` turns it
 into the `ACC_CONTROL` command. The panda checks every frame against its envelope, and the PCM applies its own.
 
-## 2. How far back the MPC wants to be
+## 2. How the MPC solves a plan
+
+<p align="center">
+  <img src="../assets/liondriver/speed-6-mpc-algorithm.svg" width="100%" alt="Figure 6: five steps per plan: extrapolate leadOne and leadTwo, turn each into an obstacle by adding its stopping distance, set up the problem with position, speed and acceleration as state and jerk as input, solve with acados SQP_RTI warm-started from the last plan, and read off the acceleration at the actuator delay. Below, the costs (gap error, jerk, change of plan) and the soft constraints (limits, danger zone), and the FCW check.">
+</p>
+
+*Figure 6.* The algorithm of `LongitudinalMpc.update` and `run`. Weights, solver settings and the structure are read
+from `long_mpc.py` and `drive_helpers.py`.
+
+The speed planner is a model-predictive controller: every 50 ms it plans the next 10 s and uses only the first part.
+It predicts both leads, turns each into an equivalent stopped obstacle further ahead, and solves a small
+optimal-control problem from the car's present speed and acceleration, with jerk as the control. The cost pulls the
+gap toward the follow distance of Figure 2 and keeps the ride smooth and the plan consistent with the last one; the
+constraints are soft but heavily weighted. The solver does one real-time iteration per plan, warm-started from the
+previous one, so the plan improves over successive cycles rather than being solved from scratch each time.
+
+## 3. How far back the MPC wants to be
 
 <p align="center">
   <img src="../assets/liondriver/speed-2-follow-distance.svg" width="100%" alt="Figure 2: left, the gap the MPC steers toward when following a lead at the same speed, T_follow times v plus 6 m, for relaxed 1.75 s, standard 1.45 s and aggressive 1.25 s; right, approaching a stopped car, the distance it plans with, v²/(2·2.5) + 1.45·v + 6, against the distance to stop at −3.5 m/s².">
@@ -37,7 +53,7 @@ the ego's comfortable stopping distance (2.5 m/s²) plus a time gap set by the d
 lead's own stopping distance. Following a lead at the same speed, the two stopping distances cancel and the gap is the
 time gap times speed plus 6 m. The cost is soft; a second, heavier soft limit sits at 0.75 of the desired distance.
 
-## 3. Acceleration limits
+## 4. Acceleration limits
 
 <p align="center">
   <img src="../assets/liondriver/speed-3-limits.svg" width="100%" alt="Figure 3: acceleration against speed: the panda envelope and planner clip at −3.5 and +2.0 m/s²; inside them the cruise limits, a maximum falling from 1.6 to 0.6 m/s² with speed and a minimum of −1.2 m/s².">
@@ -50,7 +66,7 @@ The cruise target is gentle: at most 1.6 m/s² from a standstill, falling with s
 when there is no lead. Following a lead, the MPC may use the full clip. A lead that needs more than 3.5 m/s² of braking
 is beyond what the item can do (SH-06); the stock AEB (AOU-04) and the forward collision warning are what remain.
 
-## 4. What the MPC assumes the lead will do
+## 5. What the MPC assumes the lead will do
 
 <p align="center">
   <img src="../assets/liondriver/speed-4-lead-prediction.svg" width="100%" alt="Figure 4: predicted speed of a lead at 25 m/s braking at 3 m/s² over the MPC's 13 time steps: with tau 1.5 most of the braking fades, with the vision-only tau 0.3 less fades, after 1 s of radar braking tau is about 0.18 and the prediction approaches constant braking, also shown.">
@@ -64,7 +80,7 @@ radar track, tau is 1.5 while the lead's acceleration is small and falls toward 
 0.5 m/s², so the longer a lead brakes, the longer the MPC expects it to. A vision-only lead has a fixed tau of 0.3.
 Right after a lead starts braking, the plan is optimistic; it catches up over the next plans.
 
-## 5. Forward collision warning
+## 6. Forward collision warning
 
 <p align="center">
   <img src="../assets/liondriver/speed-5-fcw-timing.svg" width="100%" alt="Figure 5: time from a lead's braking at 6 m/s² to contact: 1.68 s at 20 m/s and 1.61 s at 30 m/s with a 1.0 s gap, 3.77 s and 3.20 s with a 1.5 s gap; the warning must sound within about 0.6 s and 2.2 s. Below, the planner FCW and model FCW paths and their status.">
@@ -78,7 +94,7 @@ the lead within 5 s while the model is more than 90 % sure of it. The model rais
 `hardBrakePredicted` output. How long after the lead's braking either fires is not derived yet (T-31) and is to be
 measured (M-12). At a 1.0 s gap, the warning has to come within about 0.6 s to be useful.
 
-## 6. Changing the speed planner for safety and SOTIF
+## 7. Changing the speed planner for safety and SOTIF
 
 | Hazard (WP-C-05) | Where it arises | Planned (WP-C-07) |
 |---|---|---|
@@ -92,7 +108,7 @@ Most of these are perception problems: the MPC brakes correctly for the lead it 
 [perception page](perception-models.md) covers where the leads come from and what can go wrong there. Each change goes
 through a change request and an impact analysis, like any other.
 
-## 7. How the speed planner is tested
+## 8. How the speed planner is tested
 
 | Method | Tool | Shows |
 |---|---|---|
