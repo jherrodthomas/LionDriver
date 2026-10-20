@@ -33,7 +33,7 @@ sys.path.insert(0, str(HERE.parent / "hara"))
 import hara_figures as hf  # noqa: E402
 import sotif_figures as sf  # noqa: E402
 import sotif_scenes as ss  # noqa: E402
-from guideword_scenes import _car_body  # noqa: E402
+from scenekit import car_body as _car_body  # noqa: E402  (on the path through sotif_scenes)
 from hara_figures import HAIR, INK, MUTED, pill, svg_doc, t, wrap  # noqa: E402
 from sotif_scenes import CG, CR, EGO, EGO_S, GREY, GREY_S, appear, drive, frame, line, marker, sample, trail, xt  # noqa: E402
 

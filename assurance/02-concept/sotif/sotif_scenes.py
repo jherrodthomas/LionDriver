@@ -35,9 +35,10 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent / "hara"))
+sys.path.insert(0, str(HERE.parents[1] / "01-management" / "figures"))
 import hara_figures as hf  # noqa: E402
 import sotif_figures as sf  # noqa: E402
-from guideword_scenes import _anim, _car_body, _d, DUR, DRIVE  # noqa: E402
+from scenekit import DRIVE, DUR, anim as _anim, car_body as _car_body, d as _d  # noqa: E402
 from hara_figures import HAIR, INK, MUTED, pill, svg_doc, t, wrap  # noqa: E402
 
 NAME = "fig-c06-5-2-sotif-scenes.svg"
