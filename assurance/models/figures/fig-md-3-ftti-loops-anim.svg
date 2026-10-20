@@ -1,0 +1,181 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1136" viewBox="0 0 1280 1136" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">FTTI timing loops, animated: detection and reaction against the fault tolerant time interval</title>
+<desc id="d">One looping timeline per fault class, from the Octave timing-loop model of the panda code. Each starts in normal operation; a fault occurs at t = 0; the detection time grows against the 100 Hz safety-task runs and the 8 Hz ticks until the task run that detects the fault flashes; the reaction (the WP-S-04 §3.7 FRTI budget) follows and the safe state is reached; a siren is shown where the path warns the driver, on an odd 8 Hz tick. A blue arrow marks the FTTI. Rows: RX loss in the reference build, within the FTTI; the same fault in the original baseline, which exceeds the FTTI; SoC heartbeat loss; SoC command stall, 10 ms over its detection budget but within the FTTI; MCU hang with a 10 % slow watchdog clock, exactly at its budget; and the EPS-fault warning. Worst case over all loop phases. A model of the code, not a measurement.</desc>
+<defs><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2F80ED"/></marker></defs>
+<rect width="1280" height="1136" fill="#FFFFFF"/>
+<text x="40" y="44" font-size="21" fill="#0F172A" font-weight="700">FTTI timing loops · worst case over every loop phase</text>
+<text x="40" y="68" font-size="12" fill="#475569">Octave model of the panda loops (octave/timing_loop_results.csv) · reaction = §3.7 FRTI budget, EPS response not modelled (M-02) · not a measurement (WP-S-04 §6)</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-S-04 §3.7, §4</text>
+<line x1="40" y1="84" x2="1240" y2="84" stroke="#E2E8F0"/>
+<text x="40" y="138" font-size="14" fill="#0F172A" font-weight="700">RX loss 0x1D2 (33 Hz)</text>
+<text x="40" y="156" font-size="11.5" fill="#475569">SG-01 · reference build</text>
+<text x="40" y="172" font-size="11.5" fill="#475569">FDTI ≤ 162 ms (budget 200 ms)</text>
+<rect x="310" y="142" width="68" height="16" rx="3" fill="#22A06B"/>
+<text x="344" y="172" font-size="10.5" fill="#475569" text-anchor="middle">normal</text>
+<rect x="380" y="142" width="0" height="16" rx="3" fill="#F5B700"><animate attributeName="width" values="0;186.14;186.14" keyTimes="0;0.1971;1" dur="9.0s" repeatCount="indefinite"/></rect>
+<rect x="566.14" y="142" width="0" height="16" rx="3" fill="#E8761B"><animate attributeName="width" values="0;0;115.25;115.25" keyTimes="0;0.1971;0.3191;1" dur="9.0s" repeatCount="indefinite"/></rect>
+<rect x="681.39" y="142" width="0" height="16" rx="3" fill="#22A06B"><animate attributeName="width" values="0;0;408.61;408.61" keyTimes="0;0.3191;0.74;1" dur="9.0s" repeatCount="indefinite"/></rect>
+<path d="M382 112l-9 15h7l-6 13 14-17h-7l6-11z" fill="#D2453A"/>
+<text x="392" y="124" font-size="11" fill="#D2453A" font-weight="700">fault</text>
+<line x1="380" y1="138" x2="380" y2="192" stroke="#0F172A" stroke-dasharray="2 3"/>
+<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.1971;0.1981;1" dur="9.0s" repeatCount="indefinite"/><line x1="566.14" y1="134" x2="566.14" y2="166" stroke="#0F172A" stroke-width="2"/><text x="570.14" y="132" font-size="11" fill="#0F172A" font-weight="600">fault detected</text></g>
+<text x="473.07" y="172" font-size="10.5" fill="#B7791F" font-weight="600" text-anchor="middle">FDTI (detection)</text>
+<text x="623.76" y="172" font-size="10.5" fill="#E8761B" font-weight="600" text-anchor="middle">FRTI budget</text>
+<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.3191;0.3201;1" dur="9.0s" repeatCount="indefinite"/><text x="687.39" y="154" font-size="11" fill="#FFFFFF" font-weight="700">safe state</text></g>
+<path d="M391.53 180v4M403.05 180v4M414.58 180v4M426.1 180v4M437.63 180v4M449.15 180v4M460.68 180v4M472.2 180v4M483.73 180v4M495.25 180v4M506.78 180v4M518.31 180v4M529.83 180v4M541.36 180v4M552.88 180v4M564.41 180v4M575.93 180v4M587.46 180v4M598.98 180v4M610.51 180v4M622.03 180v4M633.56 180v4M645.08 180v4M656.61 180v4M668.14 180v4M679.66 180v4M691.19 180v4M702.71 180v4M714.24 180v4M725.76 180v4M737.29 180v4M748.81 180v4M760.34 180v4M771.86 180v4M783.39 180v4M794.92 180v4M806.44 180v4M817.97 180v4M829.49 180v4M841.02 180v4M852.54 180v4M864.07 180v4M875.59 180v4M887.12 180v4M898.64 180v4M910.17 180v4M921.69 180v4M933.22 180v4M944.75 180v4M956.27 180v4M967.8 180v4M979.32 180v4M990.85 180v4M1002.37 180v4M1013.9 180v4M1025.42 180v4M1036.95 180v4M1048.47 180v4" stroke="#94A3B8" stroke-width="1"/>
+<path d="M524.07 186v8M668.14 186v5M812.2 186v8M956.27 186v5" stroke="#2F80ED" stroke-width="1.6"/>
+<text x="1068" y="185" font-size="9.5" fill="#475569">100 Hz task</text>
+<text x="1068" y="195" font-size="9.5" fill="#2F80ED">8 Hz tick · tall = speaker</text>
+<circle cx="566.14" cy="182" r="0" fill="none" stroke="#0F172A" stroke-width="1.6"><animate attributeName="r" values="0;0;9;0;0" keyTimes="0;0.1971;0.2271;0.2571;1" dur="9.0s" repeatCount="indefinite"/></circle>
+<line x1="382" y1="210" x2="954.27" y2="210" stroke="#2F80ED" stroke-width="3" marker-start="url(#ab)" marker-end="url(#ab)"/>
+<line x1="956.27" y1="136" x2="956.27" y2="214" stroke="#2F80ED" stroke-dasharray="2 3"/>
+<text x="668.14" y="225" font-size="11.5" fill="#2F80ED" font-weight="700" text-anchor="middle">FTTI 500 ms</text>
+<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.73;0.731;1" dur="9.0s" repeatCount="indefinite"/><rect x="881.37" y="232" width="149.8" height="22" rx="11" fill="#22A06B"/><text x="956.27" y="247" font-size="11.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">safe state within FTTI</text></g>
+<line x1="380" y1="132" x2="380" y2="196" stroke="#0F172A" stroke-width="1.2" opacity=".55"><animateTransform attributeName="transform" type="translate" values="0 0;680 0;680 0" keyTimes="0;0.72;1" dur="9.0s" repeatCount="indefinite"/></line>
+<text x="1068" y="214" font-size="9.5" fill="#475569">axis 0 – 0.59 s</text>
+<line x1="40" y1="260" x2="1240" y2="260" stroke="#E2E8F0"/>
+<text x="40" y="294" font-size="14" fill="#0F172A" font-weight="700">RX loss 0x260 (50 Hz)</text>
+<text x="40" y="312" font-size="11.5" fill="#475569">SG-01 · original baseline 8b8c6ae</text>
+<text x="40" y="328" font-size="11.5" fill="#475569">FDTI ≤ 2.00 s (budget 200 ms)</text>
+<rect x="310" y="298" width="68" height="16" rx="3" fill="#22A06B"/>
+<text x="344" y="328" font-size="10.5" fill="#475569" text-anchor="middle">normal</text>
+<rect x="380" y="298" width="0" height="16" rx="3" fill="#F5B700"><animate attributeName="width" values="0;548.83;548.83" keyTimes="0;0.5811;1" dur="9.0s" repeatCount="indefinite"/></rect>
+<rect x="928.83" y="298" width="0" height="16" rx="3" fill="#E8761B"><animate attributeName="width" values="0;0;27.44;27.44" keyTimes="0;0.5811;0.6102;1" dur="9.0s" repeatCount="indefinite"/></rect>
+<rect x="956.27" y="298" width="0" height="16" rx="3" fill="#22A06B"><animate attributeName="width" values="0;0;133.73;133.73" keyTimes="0;0.6102;0.74;1" dur="9.0s" repeatCount="indefinite"/></rect>
+<path d="M382 268l-9 15h7l-6 13 14-17h-7l6-11z" fill="#D2453A"/>
+<text x="392" y="280" font-size="11" fill="#D2453A" font-weight="700">fault</text>
+<line x1="380" y1="294" x2="380" y2="348" stroke="#0F172A" stroke-dasharray="2 3"/>
+<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.5811;0.5821;1" dur="9.0s" repeatCount="indefinite"/><line x1="928.83" y1="290" x2="928.83" y2="322" stroke="#0F172A" stroke-width="2"/><text x="932.83" y="288" font-size="11" fill="#0F172A" font-weight="600">fault detected</text></g>
+<text x="654.41" y="328" font-size="10.5" fill="#B7791F" font-weight="600" text-anchor="middle">FDTI (detection)</text>
+<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6102;0.6112;1" dur="9.0s" repeatCount="indefinite"/><text x="962.27" y="310" font-size="11" fill="#FFFFFF" font-weight="700">safe state</text></g>
+<path d="M414.3 336v4M448.6 336v4M482.91 336v4M517.21 336v4M551.51 336v4M585.81 336v4M620.11 336v4M654.41 336v4M688.72 336v4M723.02 336v4M757.32 336v4M791.62 336v4M825.92 336v4M860.23 336v4M894.53 336v4M928.83 336v4M963.13 336v4M997.43 336v4M1031.74 336v4" stroke="#94A3B8" stroke-width="1"/>
+<path d="M414.3 342v8M448.6 342v5M482.91 342v8M517.21 342v5M551.51 342v8M585.81 342v5M620.11 342v8M654.41 342v5M688.72 342v8M723.02 342v5M757.32 342v8M791.62 342v5M825.92 342v8M860.23 342v5M894.53 342v8M928.83 342v5M963.13 342v8M997.43 342v5M1031.74 342v8" stroke="#2F80ED" stroke-width="1.6"/>
+<text x="1068" y="341" font-size="9.5" fill="#475569">task (thinned)</text>
+<text x="1068" y="351" font-size="9.5" fill="#2F80ED">8 Hz tick · tall = speaker</text>
+<circle cx="928.83" cy="338" r="0" fill="none" stroke="#0F172A" stroke-width="1.6"><animate attributeName="r" values="0;0;9;0;0" keyTimes="0;0.5811;0.6111;0.6411;1" dur="9.0s" repeatCount="indefinite"/></circle>
+<line x1="382" y1="366" x2="515.21" y2="366" stroke="#2F80ED" stroke-width="3" marker-start="url(#ab)" marker-end="url(#ab)"/>
+<line x1="517.21" y1="292" x2="517.21" y2="370" stroke="#2F80ED" stroke-dasharray="2 3"/>
+<text x="448.6" y="381" font-size="11.5" fill="#2F80ED" font-weight="700" text-anchor="middle">FTTI 500 ms</text>
+<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.73;0.731;1" dur="9.0s" repeatCount="indefinite"/><rect x="743.8" y="388" width="316.2" height="22" rx="11" fill="#D2453A"/><text x="901.9" y="403" font-size="11.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">FTTI exceeded: safe state at 2.10 s, FTTI 500 ms</text></g>
+<line x1="380" y1="288" x2="380" y2="352" stroke="#0F172A" stroke-width="1.2" opacity=".55"><animateTransform attributeName="transform" type="translate" values="0 0;680 0;680 0" keyTimes="0;0.72;1" dur="9.0s" repeatCount="indefinite"/></line>
+<text x="1068" y="370" font-size="9.5" fill="#475569">axis 0 – 2.48 s</text>
+<line x1="40" y1="416" x2="1240" y2="416" stroke="#E2E8F0"/>
+<text x="40" y="450" font-size="14" fill="#0F172A" font-weight="700">SoC heartbeat loss</text>
+<text x="40" y="468" font-size="11.5" fill="#475569">SG-01 · reference build</text>
+<text x="40" y="484" font-size="11.5" fill="#475569">FDTI ≤ 300 ms (budget 300 ms)</text>
+<text x="40" y="500" font-size="11.5" fill="#475569">warning ≤ 550 ms (budget 1.00 s)</text>
+<rect x="310" y="454" width="68" height="16" rx="3" fill="#22A06B"/>
+<text x="344" y="484" font-size="10.5" fill="#475569" text-anchor="middle">normal</text>
+<rect x="380" y="454" width="0" height="16" rx="3" fill="#F5B700"><animate attributeName="width" values="0;314.33;314.33" keyTimes="0;0.3328;1" dur="9.0s" repeatCount="indefinite"/></rect>
+<rect x="694.33" y="454" width="0" height="16" rx="3" fill="#E8761B"><animate attributeName="width" values="0;0;104.78;104.78" keyTimes="0;0.3328;0.4438;1" dur="9.0s" repeatCount="indefinite"/></rect>
+<rect x="799.11" y="454" width="0" height="16" rx="3" fill="#22A06B"><animate attributeName="width" values="0;0;290.89;290.89" keyTimes="0;0.4438;0.74;1" dur="9.0s" repeatCount="indefinite"/></rect>
+<path d="M382 424l-9 15h7l-6 13 14-17h-7l6-11z" fill="#D2453A"/>
+<text x="392" y="436" font-size="11" fill="#D2453A" font-weight="700">fault</text>
+<line x1="380" y1="450" x2="380" y2="504" stroke="#0F172A" stroke-dasharray="2 3"/>
+<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.3328;0.3338;1" dur="9.0s" repeatCount="indefinite"/><line x1="694.33" y1="446" x2="694.33" y2="478" stroke="#0F172A" stroke-width="2"/><text x="698.33" y="444" font-size="11" fill="#0F172A" font-weight="600">fault detected</text></g>
+<text x="537.16" y="484" font-size="10.5" fill="#B7791F" font-weight="600" text-anchor="middle">FDTI (detection)</text>
+<text x="746.72" y="484" font-size="10.5" fill="#E8761B" font-weight="600" text-anchor="middle">FRTI budget</text>
+<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.4438;0.4448;1" dur="9.0s" repeatCount="indefinite"/><text x="805.11" y="466" font-size="11" fill="#FFFFFF" font-weight="700">safe state</text></g>
+<path d="M390.48 492v4M400.96 492v4M411.43 492v4M421.91 492v4M432.39 492v4M442.87 492v4M453.34 492v4M463.82 492v4M474.3 492v4M484.78 492v4M495.25 492v4M505.73 492v4M516.21 492v4M526.69 492v4M537.16 492v4M547.64 492v4M558.12 492v4M568.6 492v4M579.08 492v4M589.55 492v4M600.03 492v4M610.51 492v4M620.99 492v4M631.46 492v4M641.94 492v4M652.42 492v4M662.9 492v4M673.37 492v4M683.85 492v4M694.33 492v4M704.81 492v4M715.29 492v4M725.76 492v4M736.24 492v4M746.72 492v4M757.2 492v4M767.67 492v4M778.15 492v4M788.63 492v4M799.11 492v4M809.58 492v4M820.06 492v4M830.54 492v4M841.02 492v4M851.49 492v4M861.97 492v4M872.45 492v4M882.93 492v4M893.41 492v4M903.88 492v4M914.36 492v4M924.84 492v4M935.32 492v4M945.79 492v4M956.27 492v4M966.75 492v4M977.23 492v4M987.7 492v4M998.18 492v4M1008.66 492v4M1019.14 492v4M1029.61 492v4M1040.09 492v4M1050.57 492v4" stroke="#94A3B8" stroke-width="1"/>
+<path d="M510.97 498v8M641.94 498v5M772.91 498v8M903.88 498v5M1034.85 498v8" stroke="#2F80ED" stroke-width="1.6"/>
+<text x="1068" y="497" font-size="9.5" fill="#475569">100 Hz task</text>
+<text x="1068" y="507" font-size="9.5" fill="#2F80ED">8 Hz tick · tall = speaker</text>
+<circle cx="694.33" cy="494" r="0" fill="none" stroke="#0F172A" stroke-width="1.6"><animate attributeName="r" values="0;0;9;0;0" keyTimes="0;0.3328;0.3628;0.3928;1" dur="9.0s" repeatCount="indefinite"/></circle>
+<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6102;0.6112;1" dur="9.0s" repeatCount="indefinite"/><path d="M949.27 420h5l7-6v20l-7-6h-5z" fill="#D2453A"/><path d="M964.27 423q4 4 0 8" stroke="#D2453A" fill="none" stroke-width="1.6"/><text x="970.27" y="432" font-size="11" fill="#D2453A" font-weight="700">siren 550 ms</text><line x1="956.27" y1="438" x2="956.27" y2="506" stroke="#D2453A" stroke-dasharray="3 2"/></g>
+<line x1="382" y1="522" x2="901.88" y2="522" stroke="#2F80ED" stroke-width="3" marker-start="url(#ab)" marker-end="url(#ab)"/>
+<line x1="903.88" y1="448" x2="903.88" y2="526" stroke="#2F80ED" stroke-dasharray="2 3"/>
+<text x="641.94" y="537" font-size="11.5" fill="#2F80ED" font-weight="700" text-anchor="middle">FTTI 500 ms</text>
+<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.73;0.731;1" dur="9.0s" repeatCount="indefinite"/><rect x="743.8" y="544" width="316.2" height="22" rx="11" fill="#22A06B"/><text x="901.9" y="559" font-size="11.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">safe state within FTTI · siren within its budget</text></g>
+<line x1="380" y1="444" x2="380" y2="508" stroke="#0F172A" stroke-width="1.2" opacity=".55"><animateTransform attributeName="transform" type="translate" values="0 0;680 0;680 0" keyTimes="0;0.72;1" dur="9.0s" repeatCount="indefinite"/></line>
+<text x="1068" y="526" font-size="9.5" fill="#475569">axis 0 – 0.65 s</text>
+<line x1="40" y1="572" x2="1240" y2="572" stroke="#E2E8F0"/>
+<text x="40" y="606" font-size="14" fill="#0F172A" font-weight="700">SoC command stall (0x2E4)</text>
+<text x="40" y="624" font-size="11.5" fill="#475569">SG-01 · reference build</text>
+<text x="40" y="640" font-size="11.5" fill="#475569">FDTI ≤ 60 ms (budget 50 ms)</text>
+<text x="40" y="656" font-size="11.5" fill="#475569">warning ≤ 310 ms (budget 1.00 s)</text>
+<rect x="310" y="610" width="68" height="16" rx="3" fill="#22A06B"/>
+<text x="344" y="640" font-size="10.5" fill="#475569" text-anchor="middle">normal</text>
+<rect x="380" y="610" width="0" height="16" rx="3" fill="#F5B700"><animate attributeName="width" values="0;69.15;69.15" keyTimes="0;0.0732;1" dur="9.0s" repeatCount="indefinite"/></rect>
+<rect x="449.15" y="610" width="0" height="16" rx="3" fill="#E8761B"><animate attributeName="width" values="0;0;115.25;115.25" keyTimes="0;0.0732;0.1953;1" dur="9.0s" repeatCount="indefinite"/></rect>
+<rect x="564.41" y="610" width="0" height="16" rx="3" fill="#22A06B"><animate attributeName="width" values="0;0;525.59;525.59" keyTimes="0;0.1953;0.74;1" dur="9.0s" repeatCount="indefinite"/></rect>
+<path d="M382 580l-9 15h7l-6 13 14-17h-7l6-11z" fill="#D2453A"/>
+<text x="392" y="592" font-size="11" fill="#D2453A" font-weight="700">fault</text>
+<line x1="380" y1="606" x2="380" y2="660" stroke="#0F172A" stroke-dasharray="2 3"/>
+<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.0732;0.0742;1" dur="9.0s" repeatCount="indefinite"/><line x1="449.15" y1="602" x2="449.15" y2="634" stroke="#0F172A" stroke-width="2"/><text x="453.15" y="600" font-size="11" fill="#0F172A" font-weight="600">fault detected</text></g>
+<text x="506.78" y="640" font-size="10.5" fill="#E8761B" font-weight="600" text-anchor="middle">FRTI budget</text>
+<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.1953;0.1963;1" dur="9.0s" repeatCount="indefinite"/><text x="570.41" y="622" font-size="11" fill="#FFFFFF" font-weight="700">safe state</text></g>
+<path d="M391.53 648v4M403.05 648v4M414.58 648v4M426.1 648v4M437.63 648v4M449.15 648v4M460.68 648v4M472.2 648v4M483.73 648v4M495.25 648v4M506.78 648v4M518.31 648v4M529.83 648v4M541.36 648v4M552.88 648v4M564.41 648v4M575.93 648v4M587.46 648v4M598.98 648v4M610.51 648v4M622.03 648v4M633.56 648v4M645.08 648v4M656.61 648v4M668.14 648v4M679.66 648v4M691.19 648v4M702.71 648v4M714.24 648v4M725.76 648v4M737.29 648v4M748.81 648v4M760.34 648v4M771.86 648v4M783.39 648v4M794.92 648v4M806.44 648v4M817.97 648v4M829.49 648v4M841.02 648v4M852.54 648v4M864.07 648v4M875.59 648v4M887.12 648v4M898.64 648v4M910.17 648v4M921.69 648v4M933.22 648v4M944.75 648v4M956.27 648v4M967.8 648v4M979.32 648v4M990.85 648v4M1002.37 648v4M1013.9 648v4M1025.42 648v4M1036.95 648v4M1048.47 648v4" stroke="#94A3B8" stroke-width="1"/>
+<path d="M524.07 654v8M668.14 654v5M812.2 654v8M956.27 654v5" stroke="#2F80ED" stroke-width="1.6"/>
+<text x="1068" y="653" font-size="9.5" fill="#475569">100 Hz task</text>
+<text x="1068" y="663" font-size="9.5" fill="#2F80ED">8 Hz tick · tall = speaker</text>
+<circle cx="449.15" cy="650" r="0" fill="none" stroke="#0F172A" stroke-width="1.6"><animate attributeName="r" values="0;0;9;0;0" keyTimes="0;0.0732;0.1032;0.13319999999999999;1" dur="9.0s" repeatCount="indefinite"/></circle>
+<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.3783;0.3793;1" dur="9.0s" repeatCount="indefinite"/><path d="M730.29 576h5l7-6v20l-7-6h-5z" fill="#D2453A"/><path d="M745.29 579q4 4 0 8" stroke="#D2453A" fill="none" stroke-width="1.6"/><text x="751.29" y="588" font-size="11" fill="#D2453A" font-weight="700">siren 310 ms</text><line x1="737.29" y1="594" x2="737.29" y2="662" stroke="#D2453A" stroke-dasharray="3 2"/></g>
+<line x1="382" y1="678" x2="954.27" y2="678" stroke="#2F80ED" stroke-width="3" marker-start="url(#ab)" marker-end="url(#ab)"/>
+<line x1="956.27" y1="604" x2="956.27" y2="682" stroke="#2F80ED" stroke-dasharray="2 3"/>
+<text x="668.14" y="693" font-size="11.5" fill="#2F80ED" font-weight="700" text-anchor="middle">FTTI 500 ms</text>
+<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.73;0.731;1" dur="9.0s" repeatCount="indefinite"/><rect x="686.2" y="700" width="373.8" height="22" rx="11" fill="#B7791F"/><text x="873.1" y="715" font-size="11.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">safe state within FTTI · FDTI 10 ms over its 50 ms budget</text></g>
+<line x1="380" y1="600" x2="380" y2="664" stroke="#0F172A" stroke-width="1.2" opacity=".55"><animateTransform attributeName="transform" type="translate" values="0 0;680 0;680 0" keyTimes="0;0.72;1" dur="9.0s" repeatCount="indefinite"/></line>
+<text x="1068" y="682" font-size="9.5" fill="#475569">axis 0 – 0.59 s</text>
+<line x1="40" y1="728" x2="1240" y2="728" stroke="#E2E8F0"/>
+<text x="40" y="762" font-size="14" fill="#0F172A" font-weight="700">MCU hang, IWDG (LSI 10 % slow)</text>
+<text x="40" y="780" font-size="11.5" fill="#475569">SG-07 · reference build</text>
+<text x="40" y="796" font-size="11.5" fill="#475569">FDTI ≤ 100 ms (budget 100 ms)</text>
+<rect x="310" y="766" width="68" height="16" rx="3" fill="#22A06B"/>
+<text x="344" y="796" font-size="10.5" fill="#475569" text-anchor="middle">normal</text>
+<rect x="380" y="766" width="0" height="16" rx="3" fill="#F5B700"><animate attributeName="width" values="0;288.14;288.14" keyTimes="0;0.3051;1" dur="9.0s" repeatCount="indefinite"/></rect>
+<rect x="668.14" y="766" width="0" height="16" rx="3" fill="#E8761B"><animate attributeName="width" values="0;0;288.14;288.14" keyTimes="0;0.3051;0.6102;1" dur="9.0s" repeatCount="indefinite"/></rect>
+<rect x="956.27" y="766" width="0" height="16" rx="3" fill="#22A06B"><animate attributeName="width" values="0;0;133.73;133.73" keyTimes="0;0.6102;0.74;1" dur="9.0s" repeatCount="indefinite"/></rect>
+<path d="M382 736l-9 15h7l-6 13 14-17h-7l6-11z" fill="#D2453A"/>
+<text x="392" y="748" font-size="11" fill="#D2453A" font-weight="700">fault</text>
+<line x1="380" y1="762" x2="380" y2="816" stroke="#0F172A" stroke-dasharray="2 3"/>
+<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.3051;0.3061;1" dur="9.0s" repeatCount="indefinite"/><line x1="668.14" y1="758" x2="668.14" y2="790" stroke="#0F172A" stroke-width="2"/><text x="672.14" y="756" font-size="11" fill="#0F172A" font-weight="600">fault detected</text></g>
+<text x="524.07" y="796" font-size="10.5" fill="#B7791F" font-weight="600" text-anchor="middle">FDTI (detection)</text>
+<text x="812.2" y="796" font-size="10.5" fill="#E8761B" font-weight="600" text-anchor="middle">FRTI budget</text>
+<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6102;0.6112;1" dur="9.0s" repeatCount="indefinite"/><text x="962.27" y="778" font-size="11" fill="#FFFFFF" font-weight="700">safe state</text></g>
+<path d="M408.81 804v4M437.63 804v4M466.44 804v4M495.25 804v4M524.07 804v4M552.88 804v4M581.69 804v4M610.51 804v4M639.32 804v4M668.14 804v4M696.95 804v4M725.76 804v4M754.58 804v4M783.39 804v4M812.2 804v4M841.02 804v4M869.83 804v4M898.64 804v4M927.46 804v4M956.27 804v4M985.08 804v4M1013.9 804v4M1042.71 804v4" stroke="#94A3B8" stroke-width="1"/>
+<path d="M740.17 810v8" stroke="#2F80ED" stroke-width="1.6"/>
+<text x="1068" y="809" font-size="9.5" fill="#475569">100 Hz task</text>
+<text x="1068" y="819" font-size="9.5" fill="#2F80ED">8 Hz tick · tall = speaker</text>
+<circle cx="668.14" cy="806" r="0" fill="none" stroke="#0F172A" stroke-width="1.6"><animate attributeName="r" values="0;0;9;0;0" keyTimes="0;0.3051;0.33509999999999995;0.3651;1" dur="9.0s" repeatCount="indefinite"/></circle>
+<line x1="382" y1="834" x2="954.27" y2="834" stroke="#2F80ED" stroke-width="3" marker-start="url(#ab)" marker-end="url(#ab)"/>
+<line x1="956.27" y1="760" x2="956.27" y2="838" stroke="#2F80ED" stroke-dasharray="2 3"/>
+<text x="668.14" y="849" font-size="11.5" fill="#2F80ED" font-weight="700" text-anchor="middle">FTTI 200 ms</text>
+<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.73;0.731;1" dur="9.0s" repeatCount="indefinite"/><rect x="881.37" y="856" width="149.8" height="22" rx="11" fill="#22A06B"/><text x="956.27" y="871" font-size="11.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">safe state within FTTI</text></g>
+<line x1="380" y1="756" x2="380" y2="820" stroke="#0F172A" stroke-width="1.2" opacity=".55"><animateTransform attributeName="transform" type="translate" values="0 0;680 0;680 0" keyTimes="0;0.72;1" dur="9.0s" repeatCount="indefinite"/></line>
+<text x="1068" y="838" font-size="9.5" fill="#475569">axis 0 – 0.24 s</text>
+<line x1="40" y1="884" x2="1240" y2="884" stroke="#E2E8F0"/>
+<text x="40" y="918" font-size="14" fill="#0F172A" font-weight="700">EPS fault -&gt; siren</text>
+<text x="40" y="936" font-size="11.5" fill="#475569">SG-02 · reference build</text>
+<text x="40" y="952" font-size="11.5" fill="#475569">FDTI ≤ 0 ms (budget 500 ms)</text>
+<text x="40" y="968" font-size="11.5" fill="#475569">warning ≤ 950 ms (budget 1.00 s)</text>
+<rect x="310" y="922" width="68" height="16" rx="3" fill="#22A06B"/>
+<text x="344" y="952" font-size="10.5" fill="#475569" text-anchor="middle">normal</text>
+<rect x="380" y="922" width="0" height="16" rx="3" fill="#22A06B"><animate attributeName="width" values="0;710;710" keyTimes="0;0.74;1" dur="9.0s" repeatCount="indefinite"/></rect>
+<path d="M382 892l-9 15h7l-6 13 14-17h-7l6-11z" fill="#D2453A"/>
+<text x="392" y="904" font-size="11" fill="#D2453A" font-weight="700">fault</text>
+<line x1="380" y1="918" x2="380" y2="972" stroke="#0F172A" stroke-dasharray="2 3"/>
+<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.001;0.002;1" dur="9.0s" repeatCount="indefinite"/><text x="386" y="934" font-size="11" fill="#FFFFFF" font-weight="700">safe state: LKA refused on the first fault frame</text></g>
+<path d="M385.76 960v4M391.53 960v4M397.29 960v4M403.05 960v4M408.81 960v4M414.58 960v4M420.34 960v4M426.1 960v4M431.86 960v4M437.63 960v4M443.39 960v4M449.15 960v4M454.92 960v4M460.68 960v4M466.44 960v4M472.2 960v4M477.97 960v4M483.73 960v4M489.49 960v4M495.25 960v4M501.02 960v4M506.78 960v4M512.54 960v4M518.31 960v4M524.07 960v4M529.83 960v4M535.59 960v4M541.36 960v4M547.12 960v4M552.88 960v4M558.64 960v4M564.41 960v4M570.17 960v4M575.93 960v4M581.69 960v4M587.46 960v4M593.22 960v4M598.98 960v4M604.75 960v4M610.51 960v4M616.27 960v4M622.03 960v4M627.8 960v4M633.56 960v4M639.32 960v4M645.08 960v4M650.85 960v4M656.61 960v4M662.37 960v4M668.14 960v4M673.9 960v4M679.66 960v4M685.42 960v4M691.19 960v4M696.95 960v4M702.71 960v4M708.47 960v4M714.24 960v4M720 960v4M725.76 960v4M731.53 960v4M737.29 960v4M743.05 960v4M748.81 960v4M754.58 960v4M760.34 960v4M766.1 960v4M771.86 960v4M777.63 960v4M783.39 960v4M789.15 960v4M794.92 960v4M800.68 960v4M806.44 960v4M812.2 960v4M817.97 960v4M823.73 960v4M829.49 960v4M835.25 960v4M841.02 960v4M846.78 960v4M852.54 960v4M858.31 960v4M864.07 960v4M869.83 960v4M875.59 960v4M881.36 960v4M887.12 960v4M892.88 960v4M898.64 960v4M904.41 960v4M910.17 960v4M915.93 960v4M921.69 960v4M927.46 960v4M933.22 960v4M938.98 960v4M944.75 960v4M950.51 960v4M956.27 960v4M962.03 960v4M967.8 960v4M973.56 960v4M979.32 960v4M985.08 960v4M990.85 960v4M996.61 960v4M1002.37 960v4M1008.14 960v4M1013.9 960v4M1019.66 960v4M1025.42 960v4M1031.19 960v4M1036.95 960v4M1042.71 960v4M1048.47 960v4M1054.24 960v4" stroke="#94A3B8" stroke-width="1"/>
+<path d="M452.03 966v8M524.07 966v5M596.1 966v8M668.14 966v5M740.17 966v8M812.2 966v5M884.24 966v8M956.27 966v5M1028.31 966v8" stroke="#2F80ED" stroke-width="1.6"/>
+<text x="1068" y="965" font-size="9.5" fill="#475569">100 Hz task</text>
+<text x="1068" y="975" font-size="9.5" fill="#2F80ED">8 Hz tick · tall = speaker</text>
+<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.5797;0.5807;1" dur="9.0s" repeatCount="indefinite"/><path d="M920.46 888h5l7-6v20l-7-6h-5z" fill="#D2453A"/><path d="M935.46 891q4 4 0 8" stroke="#D2453A" fill="none" stroke-width="1.6"/><text x="941.46" y="900" font-size="11" fill="#D2453A" font-weight="700">siren 950 ms</text><line x1="927.46" y1="906" x2="927.46" y2="974" stroke="#D2453A" stroke-dasharray="3 2"/></g>
+<line x1="382" y1="990" x2="954.27" y2="990" stroke="#2F80ED" stroke-width="3" marker-start="url(#ab)" marker-end="url(#ab)"/>
+<line x1="956.27" y1="916" x2="956.27" y2="994" stroke="#2F80ED" stroke-dasharray="2 3"/>
+<text x="668.14" y="1005" font-size="11.5" fill="#2F80ED" font-weight="700" text-anchor="middle">FTTI 1.00 s</text>
+<g opacity="0"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.73;0.731;1" dur="9.0s" repeatCount="indefinite"/><rect x="743.8" y="1012" width="316.2" height="22" rx="11" fill="#22A06B"/><text x="901.9" y="1027" font-size="11.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">safe state within FTTI · siren within its budget</text></g>
+<line x1="380" y1="912" x2="380" y2="976" stroke="#0F172A" stroke-width="1.2" opacity=".55"><animateTransform attributeName="transform" type="translate" values="0 0;680 0;680 0" keyTimes="0;0.72;1" dur="9.0s" repeatCount="indefinite"/></line>
+<text x="1068" y="994" font-size="9.5" fill="#475569">axis 0 – 1.18 s</text>
+<line x1="40" y1="1040" x2="1240" y2="1040" stroke="#E2E8F0"/>
+<rect x="40" y="1066" width="22" height="10" rx="2" fill="#22A06B"/>
+<text x="70" y="1075" font-size="11.5" fill="#0F172A">normal operation / safe state</text>
+<rect x="271.4" y="1066" width="22" height="10" rx="2" fill="#F5B700"/>
+<text x="301.4" y="1075" font-size="11.5" fill="#0F172A">FDTI: fault to detection</text>
+<rect x="469.79999999999995" y="1066" width="22" height="10" rx="2" fill="#E8761B"/>
+<text x="499.8" y="1075" font-size="11.5" fill="#0F172A">FRTI budget: detection to safe state</text>
+<rect x="747.4" y="1066" width="22" height="10" rx="2" fill="#2F80ED"/>
+<text x="777.4" y="1075" font-size="11.5" fill="#0F172A">FTTI</text>
+<rect x="813.8" y="1066" width="22" height="10" rx="2" fill="#D2453A"/>
+<text x="843.8" y="1075" font-size="11.5" fill="#0F172A">fault, siren, FTTI exceeded</text>
+<text x="40" y="1100" font-size="11.5" fill="#475569">FHTI = FDTI + FRTI must fit inside the FTTI. Emergency operation (EOTI) is a planned phase after the FHTI, not a fallback for a missed FTTI: here only the SG-08 no-response reaction uses one (WP-S-04 §2, §3.8.4).</text>
+</svg>
