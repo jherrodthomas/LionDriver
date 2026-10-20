@@ -87,6 +87,9 @@ jobs:
         python3 assurance/01-management/figures/test_fig_m_management.py
         python3 assurance/01-management/figures/folder_index.py --check
         python3 assurance/01-management/figures/test_folder_index.py
+        python3 assurance/01-management/figures/scenekit.py --check
+        python3 assurance/01-management/figures/fig_scenekit.py --check
+        python3 assurance/01-management/figures/test_scenekit.py
         python3 assurance/02-concept/figures/fig_c02_odd.py --check
         python3 assurance/02-concept/figures/test_fig_c02_odd.py
         python3 assurance/02-concept/figures/fig_c09_scenes.py --check
