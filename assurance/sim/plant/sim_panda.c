@@ -45,7 +45,7 @@ bool is_car_safety_mode(uint16_t mode) {
 void sim_safety_task(void) {
     safety_tick();
     const bool heartbeat_revoke = heartbeat_monitor_tick() && is_car_safety_mode(current_safety_mode);
-    heartbeat_siren_active = heartbeat_siren_tick(heartbeat_revoke, controls_allowed);
+    heartbeat_siren_active = heartbeat_siren_tick(heartbeat_revoke, controls_allowed, safety_tx_arrival_revoked);
     if (heartbeat_revoke) {
       controls_allowed = false;
     }
