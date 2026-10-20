@@ -356,6 +356,8 @@ jobs:
         python3 assurance/sim/plant/test_plant.py
         python3 assurance/sim/plant/silent_stall.py --check
         python3 assurance/sim/plant/test_silent_stall.py
+        python3 assurance/sim/plant/straight_drift.py --check
+        python3 assurance/sim/plant/test_straight_drift.py
     - name: Failure search (Monte Carlo and cross-entropy over the plant model) current, and its tests
       run: |
         python3 assurance/sim/search/search.py --check
