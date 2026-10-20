@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Purpose | Decide whether NASA fmdtools should run, headless and in CI, as an executable cross-check of the fault trees and FMEAs, and plan a pilot on SG-02 |
-| Status | Draft. Started on the lead's go (2026-10-20): P0 and P1 done ([`assurance/models/fmdtools/`](../../models/fmdtools/README.md)); P2 to P5 open. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Draft. Started on the lead's go (2026-10-20): P0, P1 and P2 done ([`assurance/models/fmdtools/`](../../models/fmdtools/README.md)); P3 to P5 open. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Standard reference | ISO 26262-8:2018 §11 (tool classification), applied as in [WP-P-07](../WP-P-07-tool-classification-qualification.md) §2; ISO 26262-9:2018 §8 (safety analyses) |
 | Date | 2026-10-20 |
 | Baseline | `liondriver-dev` at `13ba1f4` (after #370) |
@@ -73,6 +73,8 @@ P1 decision: two latent events are held as baseline design, not as modes. BE-2.1
 | P3 Joint faults | Combinations of 2 to 4 of the 25 modes (15,250 sets). One run takes about 0.19 s, so the sweep skips sets with no cause and supersets of sets already found. A scheduled job runs the full sweep; the pull-request job runs order 2 only | The minimal fault sets that cause TE-02 in the model | A diff against the 100 computed cut sets. Each difference is written up as a finding for the FTA owner, in the style of F-1…F-36 in `fta-fmea-mapping.md` |
 | P4 Timing | Time to warning for every set that the model and the tree both list | A table and figure of the time to warning against 1.0 s, and against WP-S-04 | Every set over 1.0 s is named, with its cut-set row |
 | P5 Report and CI | Generated report page, figure and `--check` (like the other generators); results marked synthetic | The pilot report, a decision note on extending to SG-01, SG-03 and SG-06, and the TL-49 class confirmed | CI fails if the report is stale or the model and tree drift apart |
+
+P2 result (2026-10-20, [`p2-single-faults.md`](../../models/fmdtools/sg02/p2-single-faults.md)): the model agrees with the tree's single faults except BE-2.05 (the heartbeat siren covers it; BE-2.14 latent tag) and BE-2.07 on a straight (no torque to feel; an assumption for the plant to test). Both go to the FTA owner.
 
 Effort: about one working session each for P0 and P2, and two for P1. P3 to P5 together take two to three sessions.
 
