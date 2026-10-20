@@ -5087,8 +5087,9 @@
       title: "Hand back below a lower floor (for example 30 km/h)"
       detail: "Allows slowing traffic but not crawling. Cost: a second number to justify, and still a takeover in a full stop."
   sources: ["PR #287 (Open: OI-2)", "DQ-280"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all five (the recommended option of each)"}
+  applied: {ref: "jherrodthomas/LionDriver#342", record: "No code change: entry below 60 km/h stays refused (DQ-280) and an engaged item is not disengaged by the speed floor; recorded in change-2026-10-19-reference-entry-checks OI-2, ODD owner WP-C-02", at: 2026-10-20}
 
 - id: DQ-403
   question: "If the driver changes an assured setting from the menu while engaged (for example turns Experimental Mode on), should LionDriver disengage, or let it take effect and only refuse the next engagement?"
@@ -5112,8 +5113,9 @@
       title: "Leave as built: takes effect at once"
       detail: "No change. Cost: the item can run outside its assured settings until it is next engaged, which the safety case must argue away."
   sources: ["PR #287 (Open: OI-3)", "DQ-221"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all five (the recommended option of each)"}
+  applied: {ref: "jherrodthomas/LionDriver#342", record: "selfdrived.apply_settings holds ExperimentalMode and LongitudinalPersonality changes while engaged on the reference platform until disengagement; tests in test_assured_config.py; change-2026-10-20-settings-held-while-engaged", at: 2026-10-20}
 
 - id: DQ-404
   question: "When the panda takes steering away because the openpilot computer has frozen, should it also sound the alarm?"
