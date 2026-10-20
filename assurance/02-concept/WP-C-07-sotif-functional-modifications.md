@@ -105,7 +105,7 @@ Sheets: [P1](#modification-scenes-p1) · **P2 and P3**
 |---|---|
 | Change | (a) Set `driverStateV2.valid` from real checks (frame age, model execution success, non-finite outputs) instead of `True`. (b) In wheel-touch fallback, restore awareness only on a deliberate input (steering torque above a threshold for a minimum time, not any gas or tiny torque), and cap how often wheel-touch can restore awareness within a window. (c) Add tests for DM data loss and for fallback abuse |
 | Rationale | FI-19; TC-25 (defeat devices, small periodic inputs) |
-| Affected code | `openpilot/selfdrive/modeld/dmonitoringmodeld.py:99`; `openpilot/selfdrive/monitoring/policy.py:82-83, 333-334, 360-361`; `openpilot/selfdrive/monitoring/test_monitoring.py` |
+| Affected code | `openpilot/selfdrive/modeld/dmonitoringmodeld.py:99`; `openpilot/selfdrive/monitoring/policy.py:82-83, 337-338, 375-376`; `openpilot/selfdrive/monitoring/test_monitoring.py` |
 | Expected risk reduction | Reduces SH-12 duration; supports FSR-02.07 |
 | Verification | Unit tests; DM clinic (WP-C-08 §8) with defeat-attempt scenarios |
 | Priority | P1 |
@@ -116,7 +116,7 @@ Sheets: [P1](#modification-scenes-p1) · **P2 and P3**
 |---|---|
 | Change | In reference builds: ignore `JoystickDebugMode`, `LongitudinalManeuverMode`, `LateralManeuverMode`; do not subscribe `controlsd` to `lateralManeuverPlan`; `IsDriverViewEnabled` must not put DM into demo mode while onroad (only allowed offroad, and forces no-entry) |
 | Rationale | One local parameter can replace control processes or neutralise DM (FI-20) |
-| Affected code | `openpilot/system/manager/process_config.py:34-47, 95-109`; `controlsd.py:123-124`; `openpilot/selfdrive/monitoring/dmonitoringd.py:26-27`; `policy.py:467-476`; `common/params_keys.h:59` |
+| Affected code | `openpilot/system/manager/process_config.py:34-47, 95-109`; `controlsd.py:123-124`; `openpilot/selfdrive/monitoring/dmonitoringd.py:26-27`; `policy.py:484-493`; `common/params_keys.h:59` |
 | Expected risk reduction | Removes TC-26; supports FSR-02.08 |
 | Verification | Configuration review; test setting each parameter onroad shows no effect / no-entry |
 | Priority | P1 |

@@ -1094,7 +1094,7 @@
   mechanism: "FR"
   timing: "per policy"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Partial: after 5 s at the terminal alert the policy requests a forced deceleration (`noResponseForceDecel`, `selfdrive/monitoring/policy.py:44-49, 437`; `selfdrive/controls/controlsd.py:236`), but nothing disengages the item, so the lockout (`policy.py:344-357`) acts only after a later disengagement (System FMEA SFM-025.C1, corrected 2026-10-16). The terminal reaction is refined in TSR-633"
+  baseline_impl: "Partial: after 5 s at the terminal alert the policy requests a forced deceleration (`noResponseForceDecel`, `selfdrive/monitoring/policy.py:44-49, 454`; `selfdrive/controls/controlsd.py:236`), but nothing disengages the item, so the lockout (`policy.py:359-372`) acts only after a later disengagement (System FMEA SFM-025.C1, corrected 2026-10-16). The terminal reaction is refined in TSR-633"
   status: proposed
   source: WP-S-02
 
@@ -1109,7 +1109,7 @@
   mechanism: "PLB"
   timing: "—"
   verification: "T-SIL"
-  baseline_impl: "Not met: any steer/gas input resets (`selfdrive/monitoring/policy.py:360-361`) (GAP-21)"
+  baseline_impl: "Not met: any steer/gas input resets (`selfdrive/monitoring/policy.py:375-376`) (GAP-21)"
   status: proposed
   source: WP-S-02
 
@@ -1439,7 +1439,7 @@
   mechanism: "WRN"
   timing: "alert k at T_k = 5/15/25 s or D_k = 150/240/395 m since the last driver input, whichever comes first (WP-C-08 §5.4)"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Impl (SIL): alert k at T_k or D_k, whichever comes first, `selfdrive/monitoring/policy.py:37-41, 402-408` (SWSR-634); unit tests only, vehicle validation open (WP-V-02 §4.4). WP-A-05 LS-09, OI-6. Added v0.31"
+  baseline_impl: "Impl (SIL): alert k at T_k or D_k, whichever comes first, `selfdrive/monitoring/policy.py:37-41, 419-425` (SWSR-634); unit tests only, vehicle validation open (WP-V-02 §4.4). WP-A-05 LS-09, OI-6. Added v0.31"
   status: proposed
   source: WP-S-02
 
@@ -1454,7 +1454,7 @@
   mechanism: "WRN"
   timing: "first alert ≤ 6 s end to end"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Not met: (1) an uncertain DM output stops the countdown, so a distracted driver gets the first alert after 15.0 s instead of 5.30 s, measured on the real policy code (SWSR-635b, WP-W-02 OI-17); (2) the camera, model and policy latency on top of the 5 s timer is neither budgeted in code nor measured (SWSR-635, WP-C-08 OI-2). Refined in WP-W-02 v0.38 (SWSR-635, 635a, 635b). Added v0.45: FSR-08.01 had no TSR"
+  baseline_impl: "Not met, not measured: the policy part is implemented (SWSR-635a: the countdown follows elapsed time at any DM frame rate; SWSR-635b: an uncertain DM output no longer stops it, first alert 5.05 s instead of 15.0 s; `selfdrive/monitoring/policy.py`, unit tests, IA (assurance/07-supporting/impact/change-2026-10-20-dm-first-alert-time.md)), but the camera, model and alert-output latency on top of the 5 s timer is not measured (SWSR-635, WP-C-08 OI-2, WP-S-04 OI-11). Refined in WP-W-02 v0.38 (SWSR-635, 635a, 635b). Added v0.45: FSR-08.01 had no TSR"
   status: proposed
   source: WP-S-02
 
