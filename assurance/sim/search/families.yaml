@@ -24,7 +24,9 @@
 #   bands        Monte Carlo departure tables on its results page: parameter: [edges]
 #   catalogue    rows for edge-cases.md: the worst sample of each value of `by` (or the worst `per` samples), at most
 #                `max`
-#   probes       assumption probes for the catalogue (which assumption decides the outcome), added to probes_default
+#   probes       assumption probes for the catalogue (which assumption decides the outcome), added to probes_default.
+#                The late drift cue stands for low visibility (W04, W06): the plant has no perception, so fog or rain can
+#                only act through the driver; 0.4 m (twice the 0.2 m cue) has no source
 #   hara         first matching rule maps a catalogue row to a HARA hazardous event (HE-) or SOTIF hazard (SH-);
 #                `when` is an expression over the row (its parameters, fault, side, t_line, rho, rho_nofault); a rule
 #                with `new` is a finding for the HARA: listed in the catalogue and queued in the decision register
@@ -33,6 +35,7 @@ schema_version: 1
 probes_default:
   - {label: "driver reacts after 0.75 s", assume: {driver_t_r_s: 0.75}}
   - {label: "drift cue 0.1 m", assume: {driver_lat_cue_m: 0.1}}
+  - {label: "drift noticed late, 0.4 m (fog or heavy rain; no source)", assume: {driver_lat_cue_m: 0.4}}
   - {label: "EPS-hold (keeps its last torque 2 s)", case: {eps: hold}}
   - {label: "driver corrects with up to 6 m/s²", assume: {driver_ay_max: 6.0}}
   - {label: "siren when the panda revokes (DQ-404 what-if)", assume: {whatif_siren_on_revoke: 1.0}}

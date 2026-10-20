@@ -23,7 +23,7 @@ What the plant cannot show: it has **no tyre friction limit** (a linear tyre: a 
 | EC-04 | [fault-timing-curve](search-fault-timing-curve.md) | F-04b SoC stall | a_y 1.61 m/s², arc_m 240.4 m, x_inj 0.18, speed_kph 97.4 km/h, t_r 1.36 s | -5.07 | 1.39 | right | 0.87 | no probe flips it; siren when the panda revokes (DQ-404 what-if) moves rho most (+3.51 m) | HE-02.4 | [ec-04-stall-curve-tunnel](../blender/dashboards/ec-04-stall-curve-tunnel.jpg) |
 | EC-05 | [fault-timing-curve](search-fault-timing-curve.md) | F-07 EPS fault | a_y 1.76 m/s², arc_m 225.5 m, x_inj 0.29, speed_kph 109.7 km/h, t_r 1.29 s | -5.85 | 1.39 | right | 0.85 | no probe flips it; siren when the panda revokes (DQ-404 what-if) moves rho most (+3.86 m) | HE-02.1, SH-02 | — |
 | EC-06 | [fault-timing-refault](search-fault-timing-refault.md) | F-01b hard-over (right) | clear_s 1.05 s, gap_s 0.05 s, a_y 2.00 m/s², speed_kph 92.6 km/h, t_r 1.39 s | -35.49 | 1.35 | right | 0.42 | no probe flips it; driver corrects with up to 6 m/s² moves rho most (+21.87 m) | HE-01.2 | — |
-| EC-07 | [fault-timing-refault](search-fault-timing-refault.md) | F-03 frozen command | clear_s 1.42 s, gap_s 0.51 s, a_y 2.00 m/s², speed_kph 93.6 km/h, t_r 0.75 s | 0.47 | — | right | 0.47 | no probe flips it; drift cue 0.1 m moves rho most (+0.11 m) | — (in lane) | — |
+| EC-07 | [fault-timing-refault](search-fault-timing-refault.md) | F-03 frozen command | clear_s 1.42 s, gap_s 0.51 s, a_y 2.00 m/s², speed_kph 93.6 km/h, t_r 0.75 s | 0.47 | — | right | 0.47 | no probe flips it; drift noticed late, 0.4 m (fog or heavy rain; no source) moves rho most (-0.21 m) | — (in lane) | — |
 | EC-08 | [fault-timing-refault](search-fault-timing-refault.md) | F-04b SoC stall | clear_s 1.12 s, gap_s 0.65 s, a_y 1.70 m/s², speed_kph 85.5 km/h, t_r 1.16 s | -4.12 | 1.36 | right | 0.96 | no probe flips it; siren when the panda revokes (DQ-404 what-if) moves rho most (+2.78 m) | HE-02.4 | — |
 | EC-09 | [fault-timing-refault](search-fault-timing-refault.md) | F-07 EPS fault | clear_s 0.53 s, gap_s 0.28 s, a_y 2.00 m/s², speed_kph 100.0 km/h, t_r 0.75 s | -3.35 | 1.12 | right | 0.44 | no probe flips it; siren when the panda revokes (DQ-404 what-if) moves rho most (+2.54 m) | HE-02.1, SH-02 | — |
 | EC-10 | [fault-timing-lane-change](search-fault-timing-lane-change.md) | F-01b hard-over (right) | phase 0.76, lc_s 4.42 s, a_y 0.99 m/s², speed_kph 104.7 km/h, t_r 1.01 s | -12.94 | 2.68 | right | 0.79 | **drift cue 0.1 m** turns it to in-lane (rho 0.88 m) | HE-01.2 | — |
@@ -59,35 +59,35 @@ Rows: EC-11, EC-12, EC-13. Queued for the project lead as DQ-405 in the decision
 
 Each row re-run with one assumption changed (rho in metres; the row's own rho first):
 
-| Row | rho | driver reacts after 0.75 s | drift cue 0.1 m | EPS-hold (keeps its last torque 2 s) | driver corrects with up to 6 m/s² | siren when the panda revokes (DQ-404 what-if) | Family probe |
-|---|---|---|---|---|---|---|---|
-| EC-01 | -7.31 | -3.03 | -5.90 | -7.31 | -5.65 | -3.55 | — |
-| EC-02 | -27.52 | -15.91 | -24.53 | -27.52 | -10.78 | -27.52 | — |
-| EC-03 | -1.83 | -0.21 | -1.04 | -1.83 | -1.48 | -1.83 | — |
-| EC-04 | -5.07 | -2.14 | -4.16 | -2.41 | -3.94 | -1.56 | — |
-| EC-05 | -5.85 | -2.82 | -4.92 | -5.85 | -4.41 | -2.00 | — |
-| EC-06 | -35.49 | -22.01 | -31.78 | -35.49 | -13.63 | -35.49 | — |
-| EC-07 | 0.47 | 0.47 | 0.58 | 0.47 | 0.47 | 0.47 | — |
-| EC-08 | -4.12 | -2.14 | -3.29 | -4.13 | -3.09 | -1.34 | — |
-| EC-09 | -3.35 | -3.35 | -2.50 | -2.26 | -2.30 | -0.81 | — |
-| EC-10 | -12.94 | -8.15 | 0.88 | -12.94 | -4.23 | -12.94 | — |
-| EC-11 | -11.91 | -4.86 | -10.76 | -11.91 | -8.14 | -11.91 | — |
-| EC-12 | -0.17 | -0.17 | 0.02 | -1.03 | -0.02 | 0.06 | — |
-| EC-13 | -0.86 | -0.49 | -0.65 | -0.86 | -0.73 | -0.54 | — |
-| EC-14 | -17.96 | -6.92 | -15.07 | -17.96 | -11.71 | -17.96 | driver feels the torque at once: -17.96 |
-| EC-15 | -3.78 | -0.78 | -2.51 | -3.78 | -2.83 | -3.78 | driver feels the torque at once: -3.78 |
-| EC-16 | -1.30 | 0.09 | -1.30 | -1.30 | -0.91 | 0.31 | driver feels the torque at once: -1.30 |
-| EC-17 | -18.27 | -10.96 | -14.75 | -18.27 | -7.09 | -18.27 | nominal driver: -18.27 |
-| EC-18 | -46.85 | -37.26 | -42.65 | -46.85 | -16.18 | -46.85 | nominal driver: -38.20 |
-| EC-19 | -51.88 | -31.77 | -48.26 | -51.88 | -18.24 | -51.88 | nominal driver: -51.88 |
-| EC-20 | -50.88 | -43.20 | -48.57 | -71.11 | -50.88 | -50.88 | nominal driver: -42.71 |
-| EC-21 | -41.19 | -25.86 | -37.83 | -41.19 | -17.35 | -41.19 | — |
-| EC-22 | -1.58 | -0.89 | -1.23 | -1.58 | -1.43 | -1.58 | — |
-| EC-23 | -4.70 | -1.38 | -3.08 | -4.70 | -3.13 | -4.70 | — |
-| EC-24 | -4.28 | -1.29 | -2.78 | -4.19 | -2.86 | 0.06 | — |
-| EC-25 | -2.40 | -0.04 | -2.40 | -2.40 | -1.65 | 0.00 | — |
-| EC-26 | -32.10 | -21.26 | -28.75 | -32.10 | -11.79 | -32.10 | — |
-| EC-27 | -8.28 | -3.08 | -7.09 | -8.28 | -5.86 | -8.28 | — |
+| Row | rho | driver reacts after 0.75 s | drift cue 0.1 m | drift noticed late, 0.4 m (fog or heavy rain; no source) | EPS-hold (keeps its last torque 2 s) | driver corrects with up to 6 m/s² | siren when the panda revokes (DQ-404 what-if) | Family probe |
+|---|---|---|---|---|---|---|---|---|
+| EC-01 | -7.31 | -3.03 | -5.90 | -7.31 | -7.31 | -5.65 | -3.55 | — |
+| EC-02 | -27.52 | -15.91 | -24.53 | -31.40 | -27.52 | -10.78 | -27.52 | — |
+| EC-03 | -1.83 | -0.21 | -1.04 | -3.14 | -1.83 | -1.48 | -1.83 | — |
+| EC-04 | -5.07 | -2.14 | -4.16 | -6.39 | -2.41 | -3.94 | -1.56 | — |
+| EC-05 | -5.85 | -2.82 | -4.92 | -6.03 | -5.85 | -4.41 | -2.00 | — |
+| EC-06 | -35.49 | -22.01 | -31.78 | -39.62 | -35.49 | -13.63 | -35.49 | — |
+| EC-07 | 0.47 | 0.47 | 0.58 | 0.26 | 0.47 | 0.47 | 0.47 | — |
+| EC-08 | -4.12 | -2.14 | -3.29 | -5.37 | -4.13 | -3.09 | -1.34 | — |
+| EC-09 | -3.35 | -3.35 | -2.50 | -4.61 | -2.26 | -2.30 | -0.81 | — |
+| EC-10 | -12.94 | -8.15 | 0.88 | -15.79 | -12.94 | -4.23 | -12.94 | — |
+| EC-11 | -11.91 | -4.86 | -10.76 | -13.84 | -11.91 | -8.14 | -11.91 | — |
+| EC-12 | -0.17 | -0.17 | 0.02 | -0.44 | -1.03 | -0.02 | 0.06 | — |
+| EC-13 | -0.86 | -0.49 | -0.65 | -1.21 | -0.86 | -0.73 | -0.54 | — |
+| EC-14 | -17.96 | -6.92 | -15.07 | -21.83 | -17.96 | -11.71 | -17.96 | driver feels the torque at once: -17.96 |
+| EC-15 | -3.78 | -0.78 | -2.51 | -5.70 | -3.78 | -2.83 | -3.78 | driver feels the torque at once: -3.78 |
+| EC-16 | -1.30 | 0.09 | -1.30 | -1.30 | -1.30 | -0.91 | 0.31 | driver feels the torque at once: -1.30 |
+| EC-17 | -18.27 | -10.96 | -14.75 | -23.57 | -18.27 | -7.09 | -18.27 | nominal driver: -18.27 |
+| EC-18 | -46.85 | -37.26 | -42.65 | -51.78 | -46.85 | -16.18 | -46.85 | nominal driver: -38.20 |
+| EC-19 | -51.88 | -31.77 | -48.26 | -56.52 | -51.88 | -18.24 | -51.88 | nominal driver: -51.88 |
+| EC-20 | -50.88 | -43.20 | -48.57 | -54.47 | -71.11 | -50.88 | -50.88 | nominal driver: -42.71 |
+| EC-21 | -41.19 | -25.86 | -37.83 | -45.05 | -41.19 | -17.35 | -41.19 | — |
+| EC-22 | -1.58 | -0.89 | -1.23 | -2.04 | -1.58 | -1.43 | -1.58 | — |
+| EC-23 | -4.70 | -1.38 | -3.08 | -7.22 | -4.70 | -3.13 | -4.70 | — |
+| EC-24 | -4.28 | -1.29 | -2.78 | -6.69 | -4.19 | -2.86 | 0.06 | — |
+| EC-25 | -2.40 | -0.04 | -2.40 | -2.40 | -2.40 | -1.65 | 0.00 | — |
+| EC-26 | -32.10 | -21.26 | -28.75 | -36.21 | -32.10 | -11.79 | -32.10 | — |
+| EC-27 | -8.28 | -3.08 | -7.09 | -10.93 | -8.28 | -5.86 | -8.28 | — |
 
 ## Reproducing a row
 
