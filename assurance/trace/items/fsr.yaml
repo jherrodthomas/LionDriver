@@ -208,7 +208,7 @@
   parents: [SG-02]
   allocated_to: "E-03 (panda buzzer)"
   verification: "T-HIL"
-  baseline_impl: "Partial: siren 3 s after heartbeat loss (`panda/board/main.c:193-205`); depends on 5 s detection (GAP-06). 2026-10-13: siren also at the 0.3 s heartbeat revocation (TSR-407) when authority was granted, ≈ 0.56 s after the last heartbeat, all builds (panda `c33343b`, TSR-516; WP-S-04 T-07a); not verified on hardware. Since opendbc `273f44e` a full SoC stall is revoked first by the command-arrival check (TSR-408, WP-S-04 T-34), and that revocation sounds no siren; the siren on it is required since DQ-404 A (TSR-516(b), 2026-10-19), not implemented"
+  baseline_impl: "Partial: siren 3 s after heartbeat loss (`panda/board/main.c:193-205`); depends on 5 s detection (GAP-06). 2026-10-13: siren also at the 0.3 s heartbeat revocation (TSR-407) when authority was granted, ≈ 0.56 s after the last heartbeat, all builds (panda `c33343b`, TSR-516; WP-S-04 T-07a); not verified on hardware. Since opendbc `273f44e` a full SoC stall is revoked first by the command-arrival check (TSR-408, WP-S-04 T-34), which sounded no siren until panda `8a69ccf` / opendbc `4d1a056`: since then that revocation sounds the same 3 s siren, ≤ 0.31 s after the last `0x2E4` (TSR-516(b), DQ-404 A; host-tested, not verified on hardware)"
   status: proposed
   source: WP-C-04
 
