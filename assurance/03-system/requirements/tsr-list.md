@@ -4,7 +4,7 @@
 
 All 128 technical safety requirements of [WP-S-02 §3–§10](../WP-S-02-technical-safety-requirements.md) and [WP-S-06](../WP-S-06-requirements-production-operation.md), one line each. The work product holds the full text and is the source of truth; the ID links to its section.
 
-Status: 19 implemented · 60 partly · 44 not implemented · 5 assumed (EXT / AoU). The rule is that of WP-S-03 Figure 6-1; nothing is verified on hardware yet.
+Status: 20 implemented · 60 partly · 43 not implemented · 5 assumed (EXT / AoU). The rule is that of WP-S-03 Figure 6-1; nothing is verified on hardware yet.
 
 | ID | Parents | ASIL | Allocated to | Status | Requirement (first sentence) |
 |---|---|---|---|---|---|
@@ -102,7 +102,7 @@ Status: 19 implemented · 60 partly · 44 not implemented · 5 assumed (EXT / Ao
 | [TSR-630](../WP-S-02-technical-safety-requirements.md#8-tsr-6xx-host-side-soc-monitoring-dm-and-hmi) | FSR-01.05, FSR-02.10 | QM | SoC | not implemented | While a car safety mode is active and the item is not engaged, the SoC shall check that every panda reports controlsAllowed false |
 | [TSR-631](../WP-S-02-technical-safety-requirements.md#8-tsr-6xx-host-side-soc-monitoring-dm-and-hmi) | FSR-02.02, FSR-06.01 | QM | SoC | not implemented | controlsd shall treat the driving-model output as stale, with the TSR-602 reaction, when (a) its frame ID does not advance for more than 2 nominal periods … |
 | [TSR-632](../WP-S-02-technical-safety-requirements.md#8-tsr-6xx-host-side-soc-monitoring-dm-and-hmi) | FSR-02.10 | C | P-SW | partly | The safety MCU shall report to the SoC, for each supervised actuation ID (0x2E4, 0x343), the count of frames accepted by the envelope and transmitted on the … |
-| [TSR-633](../WP-S-02-technical-safety-requirements.md#8-tsr-6xx-host-side-soc-monitoring-dm-and-hmi) | FSR-02.09 | A | SoC | not implemented | When driver awareness has reached zero (terminal DM alert) and the driver has not responded for 5 s, the item shall keep the lane and decelerate in lane to a … |
+| [TSR-633](../WP-S-02-technical-safety-requirements.md#8-tsr-6xx-host-side-soc-monitoring-dm-and-hmi) | FSR-02.09 | A | SoC | implemented | When driver awareness has reached zero (terminal DM alert) and the driver has not responded for 5 s, the item shall keep the lane and decelerate in lane to a … |
 | [TSR-634](../WP-S-02-technical-safety-requirements.md#8-tsr-6xx-host-side-soc-monitoring-dm-and-hmi) | FSR-02.06 | A | SoC | partly | When driver monitoring has fallen back to the wheel-touch policy (camera confidence too low), the escalation times of TSR-608 shall shorten as vehicle speed … |
 | [TSR-635](../WP-S-02-technical-safety-requirements.md#8-tsr-6xx-host-side-soc-monitoring-dm-and-hmi) | FSR-08.01 | A | SoC | not implemented | The time from the driver's change of state (eyes off the road, or hands off under the wheel-touch policy) to the first driver alert shall be ≤ 6 s end to end, … |
 | [TSR-701](../WP-S-02-technical-safety-requirements.md#9-tsr-7xx-stock-pcs-preservation-and-harness-sg-07-sg-01) | FSR-07.03 | B | P-HW, HAR, P-SW | partly | The harness orientation (normal, flipped, not connected) shall be detected before the relay is driven, and CAN routing and relay/ignition pin assignment shall … |

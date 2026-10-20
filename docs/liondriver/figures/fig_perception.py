@@ -68,7 +68,7 @@ TEXTS = [
   (S04, "reaction ≤ 5 s after the terminal alert (TSR-633, T-33)"),
   (S04, "DM invalid → take-over request ≤ 2 s (TSR-609)"),
   (TSR, "Not met: `driverStateV2` always `valid=True` at source"),
-  (TSR, "Not met: forced deceleration without disengagement or standstill (TSR-611)."),
+  (TSR, "Implemented in software and unit-tested, not verified on the vehicle: `selfdrived` latches the manoeuvre"),
 ]
 
 
@@ -519,16 +519,17 @@ def build_dm(f: dict) -> str:
             "measured; the 1 s margin to the 6 s budget is TBD (OI-11)"),
            ("DM output never invalid", "driverStateV2 is always valid=True, so the TSR-609 take-over request on an invalid "
             "DM output (≤ 2 s) cannot happen"),
-           ("No safe stop", "after the terminal alert the item slows the car but does not disengage or reach a standstill "
-            "(TSR-633, not met)"),
-           ("Lockout", f"repeated terminal alerts lock out engagement for {', '.join(map(str, f['lockout']))} min")]
+           ("Safe stop not verified", "after the terminal alert the item stops in lane and stays held until the driver "
+            "takes over (TSR-633); not verified on the car, and the PCM hold is assumed (AOU-16)"),
+           ("Lockout", f"repeated terminal alerts lock out engagement for {', '.join(map(str, f['lockout']))} min, "
+            "counted from the takeover")]
   for i, (t_, s_) in enumerate(items):
     body.append(text(40, y2 + 24 + i * 34, t_, size=11.5, weight=700))
     body.append(text(250, y2 + 24 + i * 34, fit(s_, W - 290, 10.5), size=10.5, fill=MUTED))
   desc = (f"Two timelines from loss of attention: vision policy alerts at {', '.join(f'{a:g}' for a in f['vision'])} s and "
           f"forced deceleration {f['no_resp']:g} s after the terminal alert; wheel-touch policy at "
           f"{', '.join(f'{a:g}' for a in f['wheel'])} s. The SG-08 budget is a first alert within {ftti:g} s. Below: latency "
-          "not measured, DM output never invalid (TSR-609), no safe stop (TSR-633), lockout.")
+          "not measured, DM output never invalid (TSR-609), safe stop not verified on the car (TSR-633, AOU-16), lockout.")
   return svg(W, int(y2 + 24 + len(items) * 34), "Figure 5. Driver monitoring: from eyes off the road to the car slowing",
              desc, body)
 

@@ -363,7 +363,10 @@ class DriverMonitoring:
         Params().put("DriverLockoutCount", self.lockout_count)
       self.lockout_active = True
 
-    if self.lockout_active:
+    # LionDriver TSR-633 (DQ-365 A): after no response the item stays engaged, stopped and held until the driver takes
+    # over, so the lockout of re-engagement runs from that takeover: its timer holds while still engaged
+    lockout_held = op_engaged and self.no_response_cnt >= self.settings._MAX_NO_RESPONSE
+    if self.lockout_active and not lockout_held:
       self.lockout_time_elapsed += 1
       if self.lockout_time_elapsed > self.lockout_duration:
         self.lockout_active = False

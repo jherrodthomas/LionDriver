@@ -252,7 +252,7 @@
   parents: [SG-02, SG-04, SG-06, SG-08]
   allocated_to: "E-01/DM"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Partial: no-response force decel after 5 s at the terminal alert (`policy.py:44-49, 454`; `selfdrive/controls/controlsd.py:236`), but no disengagement, so the lockout of 1/5/15/30 min acts only after a later disengagement (System FMEA SFM-025.C1; corrected 2026-10-16). Refined by TSR-633; reaction decided (DQ-365, A); standstill hold and the lockout while stopped not implemented"
+  baseline_impl: "Implemented in software, not verified on the vehicle (TSR-633): after 5 s at the terminal alert the no-response deceleration is latched in `selfdrived` until the driver takes over (`selfdrive/selfdrived/minimum_risk.py`), so the vehicle stops in lane and stays stopped with the standstill hold requested, cannot resume, and the alert keeps sounding; the lockout of 1/5/15/30 min runs from the takeover (`policy.py:368-369`). Open: the PCM standstill hold over time (AOU-16) and the vehicle test (T-VEH). Reaction decided (DQ-365, A)"
   status: proposed
   source: WP-C-04
 

@@ -898,7 +898,9 @@ EMERG_SOURCES = [
   (REPO / "assurance" / "03-system" / "WP-S-02-technical-safety-requirements.md", "| TSR-713 | While the stock system reports an AEB event (`stockAeb`), the SoC shall request zero acceleration"),
   (REPO / "assurance" / "03-system" / "WP-S-02-technical-safety-requirements.md", "**Implemented and unit-tested, not verified on the vehicle**: host side in `c045874` (#292)"),
   (REPO / "assurance" / "03-system" / "WP-S-02-technical-safety-requirements.md", "the item shall keep the lane and decelerate in lane to a standstill"),
-  (REPO / "assurance" / "03-system" / "WP-S-02-technical-safety-requirements.md", "Not met: forced deceleration without disengagement or standstill (TSR-611)"),
+  (REPO / "assurance" / "03-system" / "WP-S-02-technical-safety-requirements.md", "Implemented in software and unit-tested, not verified on the vehicle: `selfdrived` latches the manoeuvre"),
+  (REPO / "openpilot" / "selfdrive" / "selfdrived" / "minimum_risk.py", "class MinimumRiskManeuver"),
+  (REPO / "assurance" / "02-concept" / "WP-C-01-item-definition.md", "| AOU-16 |"),
   (REPO / "assurance" / "03-system" / "WP-S-02-technical-safety-requirements.md", "| TSR-621 | While engaged, `selfdrived` shall raise an immediate disable"),
   (REPO / "assurance" / "03-system" / "WP-S-04-timing-ftti-budget.md", "| model `hardBrakePredicted` or planner FCW | not derived; measure (M-12) |"),
   (REPO / "assurance" / "02-concept" / "WP-C-01-item-definition.md", "| AOU-04 | The stock PCS/AEB keeps full function"),
@@ -917,9 +919,9 @@ EMERG_ROWS = [  # situation, what the item does, who finishes it, status, status
    "implemented, not verified", "amber"),
   ("Main computer stalls", "panda revokes authority ≤ 0.06 s, siren (T-34)", "driver takes over",
    "implemented, not verified (M-05)", "amber"),
-  ("Driver does not respond", "alerts at 5, 8, 13 s, then slows the car toward a stop, still steering; required "
-   "as well: hold at standstill, disengage, lock out (TSR-633, DQ-365 A)", "should be the item: minimum-risk manoeuvre",
-   "NOT MET: no hold, disengage or lockout", "red"),
+  ("Driver does not respond", "alerts at 5, 8, 13 s, then the minimum-risk manoeuvre: stops in lane, still steering, "
+   "stays held and cannot resume until the driver takes over (TSR-633, DQ-365 A)", "the item: minimum-risk manoeuvre",
+   "implemented, not verified; PCM hold assumed (AOU-16)", "amber"),
   ("Obstacle needs a swerve", "nothing: evasive steering is not provided (WP-C-02)", "driver steers",
    "by design (Level 2)", "grey"),
 ]

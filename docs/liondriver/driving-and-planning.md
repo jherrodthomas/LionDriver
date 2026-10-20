@@ -132,7 +132,7 @@ them is a change to `controlsd` and needs no new middleware.
 ## 6. When something goes wrong
 
 <p align="center">
-  <img src="../assets/liondriver/driving-7-emergency.svg" width="100%" alt="Figure 7: the item's reactions by situation: a hard-braking lead (MPC braking to −3.5 m/s² and FCW), the car's own AEB (stand-down), stale or failed inputs (stop steering, soft disable), panda and host disagreeing (immediate disable), a main-computer stall (panda revocation and siren), an unresponsive driver (alerts and slowing; the required hold, disengagement and lockout are missing), and an obstacle needing a swerve (not provided).">
+  <img src="../assets/liondriver/driving-7-emergency.svg" width="100%" alt="Figure 7: the item's reactions by situation: a hard-braking lead (MPC braking to −3.5 m/s² and FCW), the car's own AEB (stand-down), stale or failed inputs (stop steering, soft disable), panda and host disagreeing (immediate disable), a main-computer stall (panda revocation and siren), an unresponsive driver (alerts, then the minimum-risk manoeuvre: stop in lane, stay held, no resumption until the driver takes over; not verified on the car), and an obstacle needing a swerve (not provided).">
 </p>
 
 *Figure 7.* Each row cites its requirement or work product; the source texts are checked by
@@ -145,10 +145,13 @@ pre-collision system, which LionDriver preserves and stands down for (TSR-713), 
 
 The exception is a driver who does not respond. Then nobody else can finish the reaction, so the item has to bring
 the car to a safe stop on its own: keep the lane, slow to a standstill within the envelope, hold it there and lock out
-re-engagement. That minimum-risk manoeuvre is required (TSR-633; the lead's decision DQ-365 A, 2026-10-16) and only
-half there. Today, 5 s after the terminal alert, the planner's set speed drops to zero, so the car slows toward a stop
-while still keeping its lane. Nothing then holds it at standstill (the PCM is assumed to, AOU-16, not verified),
-disengages the item or locks out re-engagement. It is the one emergency behaviour the stack still lacks.
+re-engagement. That minimum-risk manoeuvre is required (TSR-633; the lead's decision DQ-365 A, 2026-10-16). 5 s after
+the terminal alert, `selfdrived` latches it (`selfdrive/selfdrived/minimum_risk.py`) until the driver takes over by
+braking or cancelling: the planner's set speed stays at zero, so the car slows to a stop while keeping its lane, the
+car controller keeps requesting standstill hold and never resumes, and the alert keeps sounding even if driver
+monitoring restarts. The lockout of re-engagement runs from the driver's takeover. It is implemented and unit-tested,
+not yet verified on the car; how long the PCM holds the car at standstill is an assumption (AOU-16) that needs a
+vehicle test, and there is no announcement before the manoeuvre starts (TSR-624).
 
 ## 7. Changing the planner for safety and SOTIF
 

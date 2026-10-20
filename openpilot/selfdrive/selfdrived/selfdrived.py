@@ -20,6 +20,7 @@ from openpilot.selfdrive.car.car_events import CarEvents
 from openpilot.selfdrive.locationd.helpers import PoseCalibrator, Pose
 from openpilot.selfdrive.selfdrived.supervision import ControlsMismatch, TxBlockedMonitor
 from openpilot.selfdrive.selfdrived.events import Events, ET
+from openpilot.selfdrive.selfdrived.minimum_risk import MinimumRiskManeuver
 from openpilot.selfdrive.selfdrived.helpers import ExcessiveActuationCheck
 from openpilot.selfdrive.selfdrived.state import StateMachine
 from openpilot.selfdrive.selfdrived.alertmanager import AlertManager, set_offroad_alert
@@ -153,6 +154,7 @@ class SelfdriveD:
     self.recalibrating_seen = False
     self.dm_lockout_set = False
     self.dm_uncertain_alerted = False
+    self.mrm = MinimumRiskManeuver()  # TSR-633: latched stop and hold after an unresponsive driver
     self.state_machine = StateMachine()
     self.rk = Ratekeeper(100, print_delay_threshold=None)
 
@@ -256,6 +258,9 @@ class SelfdriveD:
         self.events.add(EventName.driverDistracted2 if vision_dm else EventName.driverUnresponsive2)
       elif self.sm['driverMonitoringState'].alertLevel == AlertLevel.three:
         self.events.add(EventName.driverDistracted3 if vision_dm else EventName.driverUnresponsive3)
+      elif self.mrm.active:
+        # TSR-633: the terminal alert keeps sounding through the stop and the hold, even if DM no longer reports it
+        self.events.add(EventName.driverUnresponsive3)
       # Warn consistent DM uncertainty
       if self.sm['driverMonitoringState'].visionPolicyState.uncertainOffroadAlertPercent >= 100 and not self.dm_uncertain_alerted:
         set_offroad_alert("Offroad_DriverMonitoringUncertain", True)
@@ -599,6 +604,7 @@ class SelfdriveD:
     ss.engageable = not self.events.contains(ET.NO_ENTRY)
     ss.experimentalMode = self.experimental_mode
     ss.personality = self.personality
+    ss.minimumRiskManeuver = self.mrm.active
 
     ss.alertText1 = self.AM.current_alert.alert_text_1
     ss.alertText2 = self.AM.current_alert.alert_text_2
@@ -623,6 +629,7 @@ class SelfdriveD:
     self.update_events(CS)
     if not self.CP.passive and self.initialized:
       self.enabled, self.active = self.state_machine.update(self.events)
+    self.mrm.update(self.enabled, self.sm['driverMonitoringState'].noResponseForceDecel)
     self.apply_settings()
     self.update_alerts(CS)
 
