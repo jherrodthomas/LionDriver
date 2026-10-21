@@ -12,8 +12,9 @@ everything else. This tool turns that folder into what the GitHub wiki repositor
   * `{{MERGE_LOG}}` becomes the list of pull requests merged into the synced branch, newest first,
     read from the merge commits in the checkout (the Session log page);
   * the infographics of infographics.py are rendered from the records and written next to the pages, so a
-    page embeds one as `![alt](decision-register.svg)`; the animations of animations.py likewise, from the
-    requirement texts (a drawn phrase that is no longer in its source is a build problem);
+    page embeds one as `![alt](decision-register.svg)`; the animations of animations.py (from the requirement
+    texts) and the fault tree figures of fta_animations.py (from WP-A-04) likewise: a drawn phrase that is no
+    longer in its source is a build problem;
   * wiki/README.md, which describes the folder, is not published.
 
 It also checks the pages: every page is reachable from _Sidebar.md, every page link names a page that
@@ -35,6 +36,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import animations
+import fta_animations
 import infographics
 
 ROOT = HERE.parents[1]
@@ -123,7 +125,7 @@ def rewrite(text: str, page: Path, src: Path, root: Path, values: dict[str, str]
       if path not in names:
         problems.append(f"{page.name}: page link target does not exist: {path}")
       return f"{before}{path[:-3]}{anchor}{after}"
-    if path in infographics.NAMES or path in animations.NAMES:
+    if path in infographics.NAMES or path in animations.NAMES or path in fta_animations.NAMES:
       return m.group(0)  # a generated figure, written next to the pages by build()
     problems.append(f"{page.name}: link is neither a page (Name.md), a repository path (../path), a generated figure nor a URL: {target}")
     return m.group(0)
@@ -156,6 +158,8 @@ def build(src: Path = SRC, out: Path | None = None, root: Path = ROOT, *, repo: 
   check_sidebar(src, problems)
   if (root / animations.TSC).exists():
     problems += animations.problems(root)
+  if (root / fta_animations.FTA).exists():
+    problems += fta_animations.problems(root)
   built: dict[str, str] = {}
   for page in pages(src):
     built[page.name] = rewrite(page.read_text(encoding="utf-8"), page, src, root, values, problems)
@@ -167,6 +171,8 @@ def build(src: Path = SRC, out: Path | None = None, root: Path = ROOT, *, repo: 
       infographics.write_all(out, root)
     if (root / animations.TSC).exists():
       animations.write_all(out, root)
+    if (root / fta_animations.FTA).exists():
+      fta_animations.write_all(out, root)
   return problems
 
 

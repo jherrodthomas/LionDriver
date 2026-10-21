@@ -36,6 +36,9 @@ that the chain is complete and derives nothing.
 
 The [requirement-routes page](../assurance/02-concept/fsc/requirement-routes.md) walks each route in full, with one generated figure per route and every record it cites quoted from its file.
 
+New to fault trees? [Building a fault tree](Building-a-fault-tree.md) walks route 1 from the item diagram, with the
+traps to avoid.
+
 | # | Route | Shape | Strongest at | Watch out for | In this repository |
 |---|---|---|---|---|---|
 | 1 | Fault tree (FTA) | Top-down from the violated goal | Finding combinations of faults; quantifying | Gives logic, not behaviour | [WP-A-04](../assurance/08-analyses/WP-A-04-system-fta-fmea.md), [cut sets](../assurance/08-analyses/fta/cut-sets.md) |
