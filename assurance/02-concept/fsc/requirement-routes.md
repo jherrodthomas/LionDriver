@@ -113,8 +113,7 @@ These records are behind the requirement. Each is with its owner, through the co
 | WP-A-05 LS-20, LS-05 | Say the siren covers only heartbeat loss and an EPS fault; no loss scenario for (c) | STPA |
 | WP-A-04 BE-2.14; fta-fmea-map BE-2.14 note | Event text lists the baseline triggers; the map says (b)/(c) are not implemented | FTA |
 | System FMEA F-04b entries (SFM-005.C2, SFM-006.C1) | Described a silent SoC stall; fixed in PR #398 (siren at 0.25 s) | System FMEA |
-| SW FMEA `sw-fmea.yaml` SWF-036, SWF-039 | Said a 3 s engaged mismatch and no (c) siren; fixed in PR #399 (rev 1.8), re-rating open | SW FMEA |
-| WP-W-04 SWF-39 status row | Credits only the heartbeat case | software safety analysis |
+| SW FMEA: `sw-fmea.yaml` SWF-036, SWF-039; WP-W-04 SWF-39 status | Said a 3 s engaged mismatch and credited only the heartbeat siren; fixed in PR #399 (rev 1.8, WP-W-04 v1.3), re-rating open | SW FMEA |
 | WP-V-05 VS-FI-31, VS-FI-10 | VS-FI-31 said 1 s persistence; no case targeted TSR-516(c). Fixed in PR #396 (WP-V-05 v0.7: 0.7 s; VS-FI-10 (b) and (b2)); a HIL case is still open | verification |
 | fmdtools README | Said 58 sets where p4-timing.md and TE-02 say 61; fixed in PR #396 | fmdtools |
 
