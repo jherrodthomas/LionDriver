@@ -75,12 +75,12 @@ P2 result (2026-10-21): FRET parses and formalises all 11 sentences, and gives t
 | FTA session (drafting) | Runs P1 to P3; keeps this plan current |
 | WP-S-02 owner | Receives FF-01 to FF-06; owns any TSR change |
 | Simulation session | Supplies plant traces for P4 |
-| Coordinator | Keeps TL-50 in WP-P-07 current; merges on full green |
+| Coordinator | Keeps TL-51 in WP-P-07 current; merges on full green |
 
 ## 9. Open items
 
 | ID | Item |
 |---|---|
 | OI-1 | ~~Run FRET (CLI, commit `cf0f913`)~~ **Closed** 2026-10-21: the lead approved the install; FRET runs in CI (P2) |
-| OI-2 | ~~Classify FRET and `check_fretish.py` in WP-P-07~~ **Closed** 2026-10-21: TL-50, TCL1 |
+| OI-2 | ~~Classify FRET and `check_fretish.py` in WP-P-07~~ **Closed** 2026-10-21: TL-51, TCL1 |
 | OI-3 | Settle the licence of Ogma's generated monitor code before P4 output goes near the firmware |
