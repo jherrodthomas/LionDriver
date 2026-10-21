@@ -5295,8 +5295,9 @@
       title: "Not now"
       detail: "P5 delivers only the written report and the CI check. Cost: no single view of a run for reviewers."
   sources: ["assurance/07-supporting/tool-evaluations/TE-02-fmdtools-fault-propagation.md", "assurance/models/fmdtools/README.md", "assurance/sim/results/plant-results.md"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-21, note: "Lead in chat with the coordinator: \"1\" (build it as shown)"}
+  applied: {ref: "jherrodthomas/LionDriver#417", record: "assurance/models/fmdtools/sg02/fault_lab.py writes fault-lab.html (F-07 replay, P3/P4 figures, pair matrix, findings; synthetic, DSR-12); CI runs test_fault_lab.py and fault_lab.py --check; fmdtools README and TE-02 updated. Open in P5: TE-02 OI-4 extension note, TL-49 confirmation", at: 2026-10-21}
 
 - id: DQ-410
   question: "Should LionDriver build a heat model of the comma device behind the windshield, to propose the ODD's hot-weather limit?"
