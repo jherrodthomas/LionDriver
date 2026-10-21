@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Purpose | Decide whether LionDriver needs a physics field model (heat, stress or diffusion over a geometry, shown as a 2D or 3D picture), which problem it should answer first, and which open-source solver it should use |
-| Status | Draft for discussion. **Scoping only: no tool code until the lead agrees** (DQ-409 to DQ-412). AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Draft. The lead's go on 2026-10-21: the device heat model F1 (DQ-409 A), a cabin-air logger of about US$100 for validation (DQ-411 A), and a design aid with no credit sought, credit revisited at G2 (DQ-412 A). Solver per DQ-410 (Claude's choice, open to objection until 2026-10-28). Pilot steps T1–T5 open. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Standard reference | ISO 26262-8:2018 §11 (confidence in the use of software tools), applied as in [WP-P-07](../WP-P-07-tool-classification-qualification.md) §2; ISO 21448 for the ODD use |
 | Date | 2026-10-21 |
 | Baseline | `liondriver-dev` at `561f5c1` |
@@ -99,6 +99,6 @@ ever rests on the model alone (DQ-412).
 
 | ID | Item |
 |---|---|
-| OI-1 | The lead's go or no-go on F1 (DQ-409), the logger (DQ-411) and the credit aim (DQ-412); the tool choice is Claude's, open to objection (DQ-410) |
+| OI-1 | ~~The lead's go or no-go~~ **Closed** 2026-10-21: go on F1 (DQ-409 A), logger approved, not yet bought (DQ-411 A), design aid, TCL1 (DQ-412 A); the tool choice is Claude's, open to objection until 2026-10-28 (DQ-410) |
 | OI-2 | Confirm in a spike that PyVista renders off-screen in the CI container (OSMesa or EGL VTK build), before T2 |
 | OI-3 | Task for the WP-V-01 owner: a heat-soaked repeat of VS-VAL-01 to see whether the EPS derates (F2) |

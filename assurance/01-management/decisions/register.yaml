@@ -5299,7 +5299,8 @@
       title: "No-go for now"
       detail: "Set OI-3 from comma's device data alone, as WP-C-02 plans. Cost: DFI-04 stays rated P with no number behind it."
   sources: ["assurance/07-supporting/tool-evaluations/TE-04-physics-field-model.md §2, §4", "WP-C-02 §3.1, OI-3", "WP-C-06 TC-21", "WP-A-03 DFI-04", "WP-S-02 TSR-509", "openpilot/system/hardware/hardwared.py:93-103"]
-  status: open
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-21, note: "Lead in chat: \"go\""}
 
 - id: DQ-410
   question: "Which solver should the device heat model use?"
@@ -5356,7 +5357,8 @@
       title: "No measurement"
       detail: "The model stays illustrative. Cost: its bound cannot be offered for OI-3."
   sources: ["TE-04 §5 T4", "WP-V-02 §5.3 (fidelity case)", "DQ-084"]
-  status: open
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-21, note: "Lead in chat: \"yes\""}
 
 - id: DQ-412
   question: "Should the device heat model aim to earn evidence credit for the ODD temperature bound, or stay a design aid?"
@@ -5383,4 +5385,5 @@
       title: "Never credit it"
       detail: "The bound comes from comma's data and measurement only. Cost: none now; closes the door on using the model to extend the bound."
   sources: ["TE-04 §5, §6", "WP-V-02 §5.3, DQ-139", "WP-P-07 §2"]
-  status: open
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-21, note: "Lead in chat: \"design aid\""}
