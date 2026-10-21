@@ -30,21 +30,21 @@ The same structured requirements are the input to Ogma, which generates Copilot 
 
 ## 3. Pilot scope: the panda TSRs
 
-The panda (safety MCU) TSRs were chosen because they are the ASIL C mechanisms, they have precise timing (100 Hz task), and their code is small enough to map every variable to a signal. The first set, P1, restates 6 TSRs as 11 FRETish requirements: TSR-101, TSR-103 (three parts), TSR-110, TSR-307(a), TSR-407 and TSR-516 ((a) in two parts, (b), (c)). Time is in ticks of the safety task, 1 tick = 10 ms.
+The panda (safety MCU) TSRs were chosen because they are the ASIL C mechanisms, they have precise timing (100 Hz task), and their code is small enough to map every variable to a signal. The first set, P1, restates 6 TSRs as 13 FRETish requirements: TSR-101, TSR-103 (three parts), TSR-110, TSR-307(a), TSR-407 and TSR-516 ((a) in two parts, (b), (b) on an EPS fault, (c) and the siren duration). Time is in ticks of the safety task, 1 tick = 10 ms.
 
 ## 4. Steps
 
 | Step | Work | Output | Done when |
 |---|---|---|---|
-| P1 Restate | Write the FRETish, a glossary mapping every variable to the code, and the findings; a checker for grammar shape, glossary and source drift, in CI | [`tsr-fretish.yaml`](../../models/fret/tsr-fretish.yaml), [`check_fretish.py`](../../models/fret/check_fretish.py) and its page | **Done** 2026-10-21: 11 requirements, 6 findings (§5) |
-| P2 Formalise | Run FRET `formalize` on every sentence; store the past-time and future-time formulas next to the FRETish; CI checks that each stored formula belongs to the current sentence | [`fretish-formalizations.json`](../../models/fret/fretish-formalizations.json), FRET commit pinned | **Done** 2026-10-21: FRET parses all 11; CI reruns FRET and compares. The formulas are AI-reviewed against the TSR text, not yet by a person |
+| P1 Restate | Write the FRETish, a glossary mapping every variable to the code, and the findings; a checker for grammar shape, glossary and source drift, in CI | [`tsr-fretish.yaml`](../../models/fret/tsr-fretish.yaml), [`check_fretish.py`](../../models/fret/check_fretish.py) and its page | **Done** 2026-10-21: 13 requirements (11 at first, 2 added for the v0.53 wording), 7 findings (§5) |
+| P2 Formalise | Run FRET `formalize` on every sentence; store the past-time and future-time formulas next to the FRETish; CI checks that each stored formula belongs to the current sentence | [`fretish-formalizations.json`](../../models/fret/fretish-formalizations.json), FRET commit pinned | **Done** 2026-10-21: FRET parses all 13; CI reruns FRET and compares. The formulas are AI-reviewed against the TSR text, not yet by a person |
 | P3 Realizability | Check the set with Kind 2 or JKind through the FRET CLI | A realizability report | Every conflict is named, or the set is realizable |
 | P4 Monitor | One TSR (TSR-307(a) proposed) through Ogma to a Copilot C99 monitor, run first against the plant model's traces | A monitor and its trace verdicts | The monitor agrees with the plant on the engaged-mismatch runs; the licence of the generated code is settled before it goes near the firmware |
 | P5 Decide | Extend to the SoC TSRs and the FSRs, or stop | A decision note | The lead has the result |
 
 ## 5. P1 result
 
-Writing the 11 sentences found 6 points to route to the WP-S-02 owner ([page](../../models/fret/fretish-requirements.md)):
+Writing the sentences found 7 points, routed to the WP-S-02 owner ([page](../../models/fret/fretish-requirements.md)). The owner confirmed all 7 against the code and fixed the text in WP-S-02 v0.53 (#391), with no change to the code; FF-07 came from formalising the first rewording, before it merged. The CI check then failed on the five reworded entries, as designed, and the FRETish now restates v0.53:
 
 | ID | TSR | Finding |
 |---|---|---|
@@ -54,10 +54,11 @@ Writing the 11 sentences found 6 points to route to the WP-S-02 owner ([page](..
 | FF-04 | TSR-516 | The general ≤ 0.5 s after detection conflicts with the EPS-fault clause (detection at the first fault frame, persistence up to 0.7 s); read literally, the reference build violates it |
 | FF-05 | TSR-516 | No minimum siren duration or loudness: a 10 ms pulse meets the text |
 | FF-06 | TSR-516(c) | The code fires at 0.49 s, the text's guard is "more than 0.5 s"; errs toward warning |
+| FF-07 | TSR-103 | The first rewording still differed: both checks are sign-aware in the code, allowing [min(r, 0) − Δ, max(r, 0) + Δ] |
 
-None asks the lead for a decision: each is a rewording, or a code change, inside an intent already decided (FF-04: DQ-048).
+None asked the lead for a decision: each was a rewording inside an intent already decided (FF-04: DQ-048). The audibility level of TSR-516 is not formalised: it is set by measurement (WP-S-04 M-05).
 
-P2 result (2026-10-21): FRET parses and formalises all 11 sentences, and gives the same formulas on every run. One limit for P3: in the future-time formulas FRET leaves the past-time predicates (`persisted`, `occurred`, `preBool`) as named macros, so FR-407, FR-516a1 and FR-516a2 need them expanded, or restated without them, before a realizability check.
+P2 result (2026-10-21): FRET parses and formalises all 13 sentences, and gives the same formulas on every run. One limit for P3: in the future-time formulas FRET leaves the past-time predicates (`persisted`, `occurred`, `preBool`) as named macros, so FR-307a, FR-407, FR-516a1, FR-516a2 and FR-516b-eps need them expanded, or restated without them, before a realizability check. FRET's bounds are inclusive (`persisted(n, p)` and "for n ticks" cover n + 1 samples), so durations are written one tick short; the YAML header states the convention.
 
 ## 6. What the pilot is not
 
@@ -73,7 +74,7 @@ P2 result (2026-10-21): FRET parses and formalises all 11 sentences, and gives t
 | Who | Role |
 |---|---|
 | FTA session (drafting) | Runs P1 to P3; keeps this plan current |
-| WP-S-02 owner | Receives FF-01 to FF-06; owns any TSR change |
+| WP-S-02 owner | Received FF-01 to FF-07 and fixed them in v0.53; owns any TSR change |
 | Simulation session | Supplies plant traces for P4 |
 | Coordinator | Keeps TL-51 in WP-P-07 current; merges on full green |
 

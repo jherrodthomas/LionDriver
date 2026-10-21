@@ -4,7 +4,7 @@
 |---|---|
 | Plan | [TE-03](../../07-supporting/tool-evaluations/TE-03-fret-requirements.md) (pilot on the panda TSRs) |
 | Tool | [NASA FRET](https://github.com/NASA-SW-VnV/fret) v3.1 (source `cf0f913`), Apache-2.0; its CLI runs in CI |
-| Status | Steps P1 and P2 done: 11 FRETish requirements for 6 TSRs, formalised by FRET; 6 findings. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Steps P1 and P2 done: 13 FRETish requirements for 6 TSRs, formalised by FRET; 7 findings, all fixed in WP-S-02 v0.53. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Evidence | **None.** WP-S-02 stays the source of record |
 
 ## What is here
@@ -34,4 +34,4 @@ When a TSR in WP-S-02 is reworded, the check fails on its entry: review the FRET
 
 ## Findings
 
-[`fretish-requirements.md`](fretish-requirements.md) lists the six findings with their evidence. In short: TSR-103's down-rate rule and window differ from the code (FF-01, FF-02); TSR-307(a) does not say the "not engaged" report must persist (FF-03); TSR-516's 0.5 s bound contradicts its own EPS-fault clause (FF-04), it sets no siren duration (FF-05), and its (c) guard is 10 ms longer than the code's (FF-06). They go to the WP-S-02 owner.
+[`fretish-requirements.md`](fretish-requirements.md) lists the seven findings with their evidence. TSR-103's rate and window rules differed from the code (FF-01, FF-02, FF-07); TSR-307(a) did not say the "not engaged" report must persist (FF-03); TSR-516's 0.5 s bound contradicted its own EPS-fault clause (FF-04), it set no siren duration (FF-05), and its (c) guard was 10 ms longer than the code's (FF-06). The WP-S-02 owner fixed all seven in v0.53 (#391), with no change to the code.

@@ -258,7 +258,8 @@ def build(data: dict, formulas: dict) -> str:
     "",
     f"{len(reqs)} FRETish requirements restate {len(tsrs)} TSRs of [WP-S-02](../../03-system/WP-S-02-technical-safety-requirements.md) "
     f"({', '.join(tsrs)}). Time is in ticks of the panda safety task (1 tick = 10 ms). "
-    f"Writing them found {len(findings)} points where a TSR differs from the code, contradicts itself or cannot be checked as written.",
+    f"Writing them found {len(findings)} points where a TSR differed from the code, contradicted itself or could not be checked as written; "
+    f"{sum(1 for f in findings if str(f.get('status', '')).startswith('fixed'))} are fixed.",
     "",
     "## Requirements",
     "",
@@ -267,9 +268,10 @@ def build(data: dict, formulas: dict) -> str:
   ]
   for r in reqs:
     lines.append(f"| {r['id']} | {r['tsr']} | {cell(r['source'])} | `{cell(r['fretish'])}` | {', '.join(r.get('findings', [])) or '—'} |")
-  lines += ["", "## Findings", "", "| ID | TSR | Kind | Finding | Evidence | For |", "|---|---|---|---|---|---|"]
+  lines += ["", "## Findings", "", "| ID | TSR | Kind | Finding | Evidence | For | Status |", "|---|---|---|---|---|---|---|"]
   for f in findings:
-    lines.append(f"| {f['id']} | {f['tsr']} | {cell(f['kind'])} | {cell(f['summary'])} | {cell(f['evidence'])} | {cell(f['route'])} |")
+    lines.append(f"| {f['id']} | {f['tsr']} | {cell(f['kind'])} | {cell(f['summary'])} | {cell(f['evidence'])} | {cell(f['route'])} "
+                 f"| {cell(f.get('status', 'open'))} |")
   lines += ["", "## Formal meaning (FRET)", "",
             "FRET's future-time formula (infinite trace) for each requirement: `G` always, `F[a,b]` within a to b ticks, "
             "`X` next tick, `V` release. The past-time formulas, the ones a runtime monitor uses, are in "

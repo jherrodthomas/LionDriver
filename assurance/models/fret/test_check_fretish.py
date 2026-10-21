@@ -43,7 +43,7 @@ class TestRealFile(unittest.TestCase):
     self.assertTrue(any("FR-307a" in e and "fret_formalize" in e for e in cf.check_formulas(data, self.formulas)))
 
   def test_reworded_tsr_fails(self):
-    wp = self.wp.replace("within ≤ 0.3 s. (b) The SoC", "within ≤ 0.2 s. (b) The SoC", 1)
+    wp = self.wp.replace("continuously for 0.3 s while authority is granted", "continuously for 0.2 s while authority is granted", 1)
     self.assertTrue(any("FR-307a" in e and "no longer" in e for e in self.errors(wp=wp)))
 
   def test_unknown_variable_fails(self):

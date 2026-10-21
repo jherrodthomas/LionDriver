@@ -7,19 +7,19 @@
       "ft": "(G ((lka_frame_rx & (absReal(steer_torque_cmd) > tau_max)) -> lka_frame_rejected))"
     },
     "FR-103a": {
-      "fretish": "whenever lka_frame_rx & absReal(steer_torque_cmd) - absReal(torque_last_accepted) > delta_up the envelope shall immediately satisfy lka_frame_rejected",
-      "pt": "(H ((lka_frame_rx & ((absReal(steer_torque_cmd) - absReal(torque_last_accepted)) > delta_up)) -> lka_frame_rejected))",
-      "ft": "(G ((lka_frame_rx & ((absReal(steer_torque_cmd) - absReal(torque_last_accepted)) > delta_up)) -> lka_frame_rejected))"
+      "fretish": "whenever lka_frame_rx & (steer_torque_cmd > maxReal(torque_reference, 0) + delta_up | steer_torque_cmd < minReal(torque_reference, 0) - delta_up) the envelope shall immediately satisfy lka_frame_rejected",
+      "pt": "(H ((lka_frame_rx & ((steer_torque_cmd > (maxReal(torque_reference,0) + delta_up)) | (steer_torque_cmd < (minReal(torque_reference,0) - delta_up)))) -> lka_frame_rejected))",
+      "ft": "(G ((lka_frame_rx & ((steer_torque_cmd > (maxReal(torque_reference,0) + delta_up)) | (steer_torque_cmd < (minReal(torque_reference,0) - delta_up)))) -> lka_frame_rejected))"
     },
     "FR-103b": {
-      "fretish": "whenever lka_frame_rx & absReal(torque_last_accepted) - absReal(steer_torque_cmd) > delta_down the envelope shall immediately satisfy lka_frame_rejected",
-      "pt": "(H ((lka_frame_rx & ((absReal(torque_last_accepted) - absReal(steer_torque_cmd)) > delta_down)) -> lka_frame_rejected))",
-      "ft": "(G ((lka_frame_rx & ((absReal(torque_last_accepted) - absReal(steer_torque_cmd)) > delta_down)) -> lka_frame_rejected))"
+      "fretish": "whenever lka_frame_rx & ((steer_torque_cmd > maxReal(torque_meas_max, 0) + delta_meas & steer_torque_cmd > torque_reference - delta_down) | (steer_torque_cmd < minReal(torque_meas_min, 0) - delta_meas & steer_torque_cmd < torque_reference + delta_down)) the envelope shall immediately satisfy lka_frame_rejected",
+      "pt": "(H ((lka_frame_rx & (((steer_torque_cmd > (maxReal(torque_meas_max,0) + delta_meas)) & (steer_torque_cmd > (torque_reference - delta_down))) | ((steer_torque_cmd < (minReal(torque_meas_min,0) - delta_meas)) & (steer_torque_cmd < (torque_reference + delta_down))))) -> lka_frame_rejected))",
+      "ft": "(G ((lka_frame_rx & (((steer_torque_cmd > (maxReal(torque_meas_max,0) + delta_meas)) & (steer_torque_cmd > (torque_reference - delta_down))) | ((steer_torque_cmd < (minReal(torque_meas_min,0) - delta_meas)) & (steer_torque_cmd < (torque_reference + delta_down))))) -> lka_frame_rejected))"
     },
     "FR-103c": {
-      "fretish": "whenever lka_frame_rx & absReal(steer_torque_cmd - torque_rt_reference) > delta_rt the envelope shall immediately satisfy lka_frame_rejected",
-      "pt": "(H ((lka_frame_rx & (absReal((steer_torque_cmd - torque_rt_reference)) > delta_rt)) -> lka_frame_rejected))",
-      "ft": "(G ((lka_frame_rx & (absReal((steer_torque_cmd - torque_rt_reference)) > delta_rt)) -> lka_frame_rejected))"
+      "fretish": "whenever lka_frame_rx & (steer_torque_cmd > maxReal(torque_rt_reference, 0) + delta_rt | steer_torque_cmd < minReal(torque_rt_reference, 0) - delta_rt) the envelope shall immediately satisfy lka_frame_rejected",
+      "pt": "(H ((lka_frame_rx & ((steer_torque_cmd > (maxReal(torque_rt_reference,0) + delta_rt)) | (steer_torque_cmd < (minReal(torque_rt_reference,0) - delta_rt)))) -> lka_frame_rejected))",
+      "ft": "(G ((lka_frame_rx & ((steer_torque_cmd > (maxReal(torque_rt_reference,0) + delta_rt)) | (steer_torque_cmd < (minReal(torque_rt_reference,0) - delta_rt)))) -> lka_frame_rejected))"
     },
     "FR-110": {
       "fretish": "whenever lat_authority & (eps_lka_fault | eps_status_timeout) the envelope shall within 10 ticks satisfy !lat_authority & cause_reported",
@@ -27,14 +27,14 @@
       "ft": "(G ((lat_authority & (eps_lka_fault | eps_status_timeout)) -> (F[0,10] ((! lat_authority) & cause_reported))))"
     },
     "FR-307a": {
-      "fretish": "upon authority_granted & !hb_engaged the envelope shall within 30 ticks satisfy !authority_granted",
-      "pt": "(H ((O[30,30] (((authority_granted & (! hb_engaged)) & (Z (! (authority_granted & (! hb_engaged))))) & authority_granted)) -> (O[0,29] ((Z FALSE) | (! authority_granted)))))",
-      "ft": "((G (((! (authority_granted & (! hb_engaged))) & (X (authority_granted & (! hb_engaged)))) -> (X (F[0,30] (! authority_granted))))) & ((authority_granted & (! hb_engaged)) -> (F[0,30] (! authority_granted))))"
+      "fretish": "whenever preBool(false, authority_granted) & persisted(29, !hb_engaged) the envelope shall immediately satisfy !authority_granted",
+      "pt": "(H (((Y authority_granted) & ((H[0,29] (! hb_engaged)) & (H[0,28] (Y TRUE)))) -> (! authority_granted)))",
+      "ft": "(G ((preBool(FALSE,authority_granted) & persisted(29,(! hb_engaged))) -> (! authority_granted)))"
     },
     "FR-407": {
-      "fretish": "in car_safety_mode mode, whenever persisted(31, !heartbeat_rx) the envelope shall within 10 ticks satisfy !authority_any",
-      "pt": "((H (((! car_safety_mode) & (Y car_safety_mode)) -> (Y (((O[10,10] (((H[0,31] (! heartbeat_rx)) & (H[0,30] (! (car_safety_mode & (Z (! car_safety_mode)))))) & authority_any)) -> (O[0,9] ((car_safety_mode & (Z (! car_safety_mode))) | (! authority_any)))) S (((O[10,10] (((H[0,31] (! heartbeat_rx)) & (H[0,30] (! (car_safety_mode & (Z (! car_safety_mode)))))) & authority_any)) -> (O[0,9] ((car_safety_mode & (Z (! car_safety_mode))) | (! authority_any)))) & (car_safety_mode & (Z (! car_safety_mode)))))))) & (((! ((! car_safety_mode) & (Y car_safety_mode))) S ((! ((! car_safety_mode) & (Y car_safety_mode))) & (car_safety_mode & (Z (! car_safety_mode))))) -> (((O[10,10] (((H[0,31] (! heartbeat_rx)) & (H[0,30] (! (car_safety_mode & (Z (! car_safety_mode)))))) & authority_any)) -> (O[0,9] ((car_safety_mode & (Z (! car_safety_mode))) | (! authority_any)))) S (((O[10,10] (((H[0,31] (! heartbeat_rx)) & (H[0,30] (! (car_safety_mode & (Z (! car_safety_mode)))))) & authority_any)) -> (O[0,9] ((car_safety_mode & (Z (! car_safety_mode))) | (! authority_any)))) & (car_safety_mode & (Z (! car_safety_mode)))))))",
-      "ft": "((G ((! ((! car_safety_mode) & (X car_safety_mode))) | (X ((car_safety_mode & (X (! car_safety_mode))) V (persisted(31,(! heartbeat_rx)) -> ((F[0,10] (! authority_any)) | (F[0,9] (car_safety_mode & (X (! car_safety_mode)))))))))) & (car_safety_mode -> ((car_safety_mode & (X (! car_safety_mode))) V (persisted(31,(! heartbeat_rx)) -> ((F[0,10] (! authority_any)) | (F[0,9] (car_safety_mode & (X (! car_safety_mode)))))))))"
+      "fretish": "in car_safety_mode mode, whenever persisted(30, !heartbeat_rx) the envelope shall within 10 ticks satisfy !authority_any",
+      "pt": "((H (((! car_safety_mode) & (Y car_safety_mode)) -> (Y (((O[10,10] (((H[0,30] (! heartbeat_rx)) & (H[0,29] (! (car_safety_mode & (Z (! car_safety_mode)))))) & authority_any)) -> (O[0,9] ((car_safety_mode & (Z (! car_safety_mode))) | (! authority_any)))) S (((O[10,10] (((H[0,30] (! heartbeat_rx)) & (H[0,29] (! (car_safety_mode & (Z (! car_safety_mode)))))) & authority_any)) -> (O[0,9] ((car_safety_mode & (Z (! car_safety_mode))) | (! authority_any)))) & (car_safety_mode & (Z (! car_safety_mode)))))))) & (((! ((! car_safety_mode) & (Y car_safety_mode))) S ((! ((! car_safety_mode) & (Y car_safety_mode))) & (car_safety_mode & (Z (! car_safety_mode))))) -> (((O[10,10] (((H[0,30] (! heartbeat_rx)) & (H[0,29] (! (car_safety_mode & (Z (! car_safety_mode)))))) & authority_any)) -> (O[0,9] ((car_safety_mode & (Z (! car_safety_mode))) | (! authority_any)))) S (((O[10,10] (((H[0,30] (! heartbeat_rx)) & (H[0,29] (! (car_safety_mode & (Z (! car_safety_mode)))))) & authority_any)) -> (O[0,9] ((car_safety_mode & (Z (! car_safety_mode))) | (! authority_any)))) & (car_safety_mode & (Z (! car_safety_mode)))))))",
+      "ft": "((G ((! ((! car_safety_mode) & (X car_safety_mode))) | (X ((car_safety_mode & (X (! car_safety_mode))) V (persisted(30,(! heartbeat_rx)) -> ((F[0,10] (! authority_any)) | (F[0,9] (car_safety_mode & (X (! car_safety_mode)))))))))) & (car_safety_mode -> ((car_safety_mode & (X (! car_safety_mode))) V (persisted(30,(! heartbeat_rx)) -> ((F[0,10] (! authority_any)) | (F[0,9] (car_safety_mode & (X (! car_safety_mode)))))))))"
     },
     "FR-516a1": {
       "fretish": "upon hb_loss_detected & preBool(false, authority_granted) the envelope shall within 50 ticks satisfy siren_on",
@@ -51,10 +51,20 @@
       "pt": "(H ((O[50,50] (((envelope_revoked & revoke_cause_listed) & (Z (! (envelope_revoked & revoke_cause_listed)))) & (! siren_on))) -> (O[0,49] ((Z FALSE) | siren_on))))",
       "ft": "((G (((! (envelope_revoked & revoke_cause_listed)) & (X (envelope_revoked & revoke_cause_listed))) -> (X (F[0,50] siren_on)))) & ((envelope_revoked & revoke_cause_listed) -> (F[0,50] siren_on)))"
     },
+    "FR-516b-eps": {
+      "fretish": "upon persisted(69, eps_lka_fault) & occurred(69, lat_authority) the envelope shall within 30 ticks satisfy siren_on",
+      "pt": "(H ((O[30,30] (((((H[0,69] eps_lka_fault) & (H[0,68] (Y TRUE))) & ((O lat_authority) & (O[0,69] lat_authority))) & (Z (! (((H[0,69] eps_lka_fault) & (H[0,68] (Y TRUE))) & ((O lat_authority) & (O[0,69] lat_authority)))))) & (! siren_on))) -> (O[0,29] ((Z FALSE) | siren_on))))",
+      "ft": "((G (((! (persisted(69,eps_lka_fault) & occurred(69,lat_authority))) & (X (persisted(69,eps_lka_fault) & occurred(69,lat_authority)))) -> (X (F[0,30] siren_on)))) & ((persisted(69,eps_lka_fault) & occurred(69,lat_authority)) -> (F[0,30] siren_on)))"
+    },
     "FR-516c": {
-      "fretish": "upon not_engaged_ticks > 50 & pcm_cruise_active the envelope shall within 50 ticks satisfy siren_on",
-      "pt": "(H ((O[50,50] ((((not_engaged_ticks > 50) & pcm_cruise_active) & (Z (! ((not_engaged_ticks > 50) & pcm_cruise_active)))) & (! siren_on))) -> (O[0,49] ((Z FALSE) | siren_on))))",
-      "ft": "((G (((! ((not_engaged_ticks > 50) & pcm_cruise_active)) & (X ((not_engaged_ticks > 50) & pcm_cruise_active))) -> (X (F[0,50] siren_on)))) & (((not_engaged_ticks > 50) & pcm_cruise_active) -> (F[0,50] siren_on)))"
+      "fretish": "upon not_engaged_ticks >= 50 & pcm_cruise_active the envelope shall within 50 ticks satisfy siren_on",
+      "pt": "(H ((O[50,50] ((((not_engaged_ticks >= 50) & pcm_cruise_active) & (Z (! ((not_engaged_ticks >= 50) & pcm_cruise_active)))) & (! siren_on))) -> (O[0,49] ((Z FALSE) | siren_on))))",
+      "ft": "((G (((! ((not_engaged_ticks >= 50) & pcm_cruise_active)) & (X ((not_engaged_ticks >= 50) & pcm_cruise_active))) -> (X (F[0,50] siren_on)))) & (((not_engaged_ticks >= 50) & pcm_cruise_active) -> (F[0,50] siren_on)))"
+    },
+    "FR-516-duration": {
+      "fretish": "upon siren_on the envelope shall for 299 ticks satisfy siren_on",
+      "pt": "(H ((O[0,299] (siren_on & (Z (! siren_on)))) -> ((H (! siren_on)) | siren_on)))",
+      "ft": "((G (((! siren_on) & (X siren_on)) -> (X ((G[0,299] siren_on) | (G siren_on))))) & (siren_on -> ((G[0,299] siren_on) | (G siren_on))))"
     }
   }
 }
