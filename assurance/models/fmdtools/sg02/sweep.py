@@ -378,7 +378,7 @@ def build_timing(results, label, tree) -> str:
     "",
     "## Sets warned within the budget",
     "",
-    "These are tree sets that the model covers with a cue in time: the siren since panda `8a69ccf` (P3).",
+    "These are tree sets that the model covers with a cue in time: the siren, since panda `8a69ccf` for EPS faults and heartbeat loss and since `f4803c5` for a selfdrived stop (P3).",
     "",
     "| Set | WP-A-04 row | Lost (after the fault) | First cue (after the fault) | Margin |",
     "|---|---|---|---|---|",
@@ -391,7 +391,8 @@ def build_timing(results, label, tree) -> str:
     "",
     "Each late cue above comes from one of these inputs; the source names the WP-A-04 or WP-S-04 basis or the plant "
     "result. Two cue inputs exceed the budget: the 1.5 s escalation after an override (TSR-607 (b)) and the 5 s "
-    "System Unresponsive alert after a selfdrived stop (MCS-02.9, a gap against TSR-516(b) / TSR-307(a)).",
+    "System Unresponsive alert after a selfdrived stop, which is the first cue there only when the siren fails too "
+    "(MCS-02.9; the siren covers it since panda `f4803c5`, TSR-307(a), TSR-516(c)).",
     "",
     "| Input | Seconds | ≤ 1 s | Source |",
     "|---|---|---|---|",

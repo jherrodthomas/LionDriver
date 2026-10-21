@@ -69,8 +69,9 @@ class TestBehaviour(unittest.TestCase):
 
   def test_cut_sets_the_model_reproduces(self):
     self.assertTop(("BE-2.04",), True, "MCS-02.4: silent loss, BE-2.11 latent")
-    # plant case MCS-02.9: frames keep arriving without a torque request, the 1 Hz mismatch revocation sounds no siren
-    self.assertTop(("BE-2.21",), True, "MCS-02.9: UI only after 5 s, no siren")
+    # plant case MCS-02.9 at panda f4803c5: the engaged-mismatch revocation sounds the siren (TSR-307(a), TSR-516(c))
+    self.assertTop(("BE-2.21",), False, "MCS-02.9: siren 0.78 s after the loss, inside the budget")
+    self.assertTop(("BE-2.21", "BE-2.22"), True, "MCS-02.9 as dual: siren path failed, UI only after 5 s")
     self.assertTop(("BE-2.02", "BE-2.09"), True, "MCS-02.2")
     self.assertTop(("BE-2.01", "UE-2.19"), True, "MCS-02.10: silent EPS drop")
     self.assertTop(("BE-2.06", "BE-2.17"), True, "MCS-02.8")
@@ -129,7 +130,7 @@ class TestTiming(unittest.TestCase):
   """Step P4: cues after the budget are still seen when the run is long enough."""
 
   def test_late_cues_are_timed(self):
-    o = m.run(("BE-2.21",), horizon_s=6.0)
+    o = m.run(("BE-2.21", "BE-2.22"), horizon_s=6.0)
     self.assertTrue(o.top_event)
     self.assertAlmostEqual(o.t_cue - o.t_lost, 4.9, places=6)
     o = m.run(("BE-2.01", "BE-2.08", "BE-2.14"), horizon_s=6.0)
