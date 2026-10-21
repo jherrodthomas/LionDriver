@@ -195,6 +195,10 @@ jobs:
         python3 assurance/08-analyses/figures/test_fta_fmea_figures.py
         python3 tools/safety/fmea_review_xlsx.py --check
         python3 tools/safety/test_fmea_review_xlsx.py
+    - name: Fault tree AND gates against the WP-A-03 claims and shared resources (and its tests)
+      run: |
+        python3 assurance/08-analyses/dfa/dfa_gates.py --check
+        python3 assurance/08-analyses/dfa/test_dfa_gates.py
     - name: STPA figures match WP-A-05, stpa-map.yaml and the decision register (and their tests)
       run: |
         python3 assurance/08-analyses/figures/fig_a05_stpa.py --check
@@ -350,6 +354,10 @@ jobs:
       run: python3 assurance/models/fmdtools/sg02/sweep.py joint --check --order 2
     - name: SG-02 time-to-cue page is current (step P4)
       run: python3 assurance/models/fmdtools/sg02/sweep.py timing --check
+    - name: SG-02 Fault Lab page is current, and its tests (step P5; DQ-409)
+      run: |
+        python3 assurance/models/fmdtools/sg02/test_fault_lab.py
+        python3 assurance/models/fmdtools/sg02/fault_lab.py --check
 
   fret:
     name: FRETish restatements of the panda TSRs
@@ -509,7 +517,7 @@ jobs:
     name: simulation device heat model
     # Device heat model (assurance/sim/thermal, TE-04 pilot, tool TL-53): FEniCSx 0.10.0 solves the comma device
     # behind a sun-loaded windshield; FiPy 4.0.3 is the independent cross-check. The environment comes from an explicit
-    # conda-forge lock (every package by URL and md5) and is cached on the lock's hash. Design aid (DQ-412):
+    # conda-forge lock (every package by URL and md5) and is cached on the lock's hash. Design aid (DQ-413):
     # synthetic data (DSR-12), no evidence credit; every input is an estimate until step T1.
     runs-on: ubuntu-24.04
     timeout-minutes: 30

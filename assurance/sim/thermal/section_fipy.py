@@ -4,7 +4,7 @@
 
 Each Robin edge is a sink on its boundary cells, with the half-cell conduction in series with h:
 h' = 1 / (1/h + d/k), d the distance from the cell centre to the face. Shares no code with heat.py.
-Synthetic (DSR-12), design aid, no evidence credit (DQ-412).
+Synthetic (DSR-12), design aid, no evidence credit (DQ-413).
 """
 
 from __future__ import annotations

@@ -1,7 +1,7 @@
 # Device heat model (TE-04 pilot): every input with its source and status.
 # status: estimate = a placeholder until step T1 replaces it; code = read from the openpilot source at the baseline;
 # measured = from a caliper, a device log or the logger (none yet).
-# Units: SI (m, W, K or °C, s). Synthetic (DSR-12), design aid, no evidence credit (DQ-412).
+# Units: SI (m, W, K or °C, s). Synthetic (DSR-12), design aid, no evidence credit (DQ-413).
 
 device:
   name: comma 3X

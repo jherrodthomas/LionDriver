@@ -279,7 +279,7 @@ def _cabin_series(r, path):
     ax.grid(axis="y", color=GRID); ax.spines[["top", "right"]].set_visible(False)
     ax.set_title(title, loc="left", fontsize=14, color=INK)
   fig.text(0.05, 0.055, "A lumped model (air, windshield, dashboard, interior, shell) with estimated inputs; checked\n"
-           "against measured parked cars (McLaren et al. 2005). The logger at the mount (DQ-411) checks it.",
+           "against measured parked cars (McLaren et al. 2005). The logger at the mount (DQ-412) checks it.",
            fontsize=11.5, color=INK2)
   _stamp(fig)
   _save(fig, path)

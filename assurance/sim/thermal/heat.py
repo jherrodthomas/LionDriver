@@ -4,7 +4,7 @@
     -k dT/dn   = h (T - T_ref)         on each tagged face
 
 One function for 1D, 2D and 3D, so the checks in `test_thermal.py` exercise the same code as the device model.
-Backward Euler in time. Serial only. Synthetic (DSR-12), design aid, no evidence credit (DQ-412).
+Backward Euler in time. Serial only. Synthetic (DSR-12), design aid, no evidence credit (DQ-413).
 """
 
 from __future__ import annotations

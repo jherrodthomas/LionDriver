@@ -9,7 +9,7 @@ V5  Mesh study: the hottest SoC point changes by less than the tolerance between
 V6  Limits: the overheat bands are read from hardwared.py, and the pilot reports the comma 3X one.
 V7  The cabin-driven runner (phases, time-varying references) equals the pilot's runner when nothing varies.
 
-Runs in the environment of `thermal-linux-64.lock`. Synthetic (DSR-12), design aid, no evidence credit (DQ-412).
+Runs in the environment of `thermal-linux-64.lock`. Synthetic (DSR-12), design aid, no evidence credit (DQ-413).
 """
 
 from __future__ import annotations

@@ -98,7 +98,7 @@
 <text x="151.1" y="190" font-size="11.5" fill="#0F172A">R ≥ R_ODD, lateral acceleration ≤ 2.5 m/s²</text>
 <text x="151.1" y="206" font-size="11" fill="#475569">(and speed within the ODD-H bound)</text>
 <text x="411.2" y="284" font-size="13" fill="#D97706" font-weight="700">Margin 0.5 m/s²: R_ctrl ≤ R &lt; R_ODD</text>
-<text x="411.2" y="301" font-size="11.5" fill="#0F172A">for controller error, road crown and wind</text>
+<text x="411.2" y="301" font-size="11.5" fill="#0F172A">for controller error and road crown (wind: DQ-415)</text>
 <text x="411.2" y="317" font-size="11" fill="#475569">outside the proposed ODD: driver task</text>
 <line x1="451.2" y1="326" x2="545.2" y2="506.3" stroke="#D97706" stroke-width="1.4" marker-end="url(#amber)"/>
 <text x="735.2" y="487.3" font-size="12.5" fill="#D2553F" font-weight="700">Beyond controller</text>

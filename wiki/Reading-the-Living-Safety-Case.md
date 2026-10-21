@@ -1,7 +1,7 @@
 # Reading the Living Safety Case
 
 The safety argument is published while it is being built. This page explains the figures on the dashboard and
-what they do and do not promise. The dashboard itself, with every value also given as text, is in the
+what they do and do not promise. New to safety cases? Start with [What is a safety case?](What-is-a-safety-case.md). The dashboard itself, with every value also given as text, is in the
 [README](../README.md#living-safety-case) and in [`assurance/README.md`](../assurance/README.md#living-safety-case).
 
 ## The headline, figure by figure

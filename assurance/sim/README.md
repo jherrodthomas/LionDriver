@@ -552,7 +552,7 @@ measurements of WP-S-04 M-01 and M-02 replace the spec's values, and the spec's 
 A field model beside the layers, not in them: FEniCSx (tool TL-53) solves the heat in the comma device behind a
 sun-loaded windshield over a drive, and FiPy solves a 2D section of it as an independent check. It proposes a candidate
 for the ODD's ambient bound (WP-C-02 OI-3) and an MCU temperature for DFI-04. The lead's decisions of 2026-10-21: go
-(DQ-409 A), a logger for validation (DQ-411 A), design aid with no credit (DQ-412 A). Every input is an estimate until
+(DQ-410 A), a logger for validation (DQ-412 A), design aid with no credit (DQ-413 A). Every input is an estimate until
 the device is measured and its own logs are read (step T1), so the first result (96 °C at about 43–50 °C cabin air) is
 the model's, not the device's. Method, checks and figures: [`thermal/README.md`](thermal/README.md); scope and tool
 choice: [TE-04](../07-supporting/tool-evaluations/TE-04-physics-field-model.md).
@@ -565,7 +565,7 @@ Four small studies for SOTIF triggering conditions, beside the layers.
   Its calendar schedules the KS-12 drives.
 - **Hydroplaning** (FHWA/NCHRP film model and NASA TN D-2056): rain alone brings the hydroplaning speed down to
   110 km/h only in heavy rain, which the ODD excludes. Standing water deeper than the tread gives about 98 km/h,
-  below the bound (DQ-413 A).
+  below the bound (DQ-414 A).
 - **Cabin heat soak** (lumped, glass measured on the Corolla's 3D model, checked against measured parked cars): on a
   hot July day the air at the device mount reaches 62 °C after two hours parked. With the AC on it falls below the
   device model's bound within minutes; with it off it takes 44 min. On those temperatures the device model's SoC
@@ -573,7 +573,7 @@ Four small studies for SOTIF triggering conditions, beside the layers.
 
 - **Crosswind** (textbook models on the side elevation measured on the 3D model, through the plant's Corolla): a
   30 km/h crosswind at 110 km/h needs a steering-equivalent push of 0.9–1.8 m/s², beyond the 0.5 m/s² margin the
-  ODD's curve bound keeps for wind (DQ-414).
+  ODD's curve bound keeps for wind (DQ-415).
 
 Method, checks and figures: [`weather/README.md`](weather/README.md).
 

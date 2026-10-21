@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Purpose | Decide whether LionDriver needs a physics field model (heat, stress or diffusion over a geometry, shown as a 2D or 3D picture), which problem it should answer first, and which open-source solver it should use |
-| Status | Draft. The lead's go on 2026-10-21: the device heat model F1 (DQ-409 A), a cabin-air logger of about US$100 for validation (DQ-411 A), and a design aid with no credit sought, credit revisited at G2 (DQ-412 A). Solver per DQ-410 (Claude's choice, open to objection until 2026-10-28). Pilot started 2026-10-21: T2 and T3 done on estimated inputs ([`assurance/sim/thermal/`](../../sim/thermal/README.md), tool TL-53); T1, T4 and T5 open. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Draft. The lead's go on 2026-10-21: the device heat model F1 (DQ-410 A), a cabin-air logger of about US$100 for validation (DQ-412 A), and a design aid with no credit sought, credit revisited at G2 (DQ-413 A). Solver per DQ-411 (Claude's choice, open to objection until 2026-10-28). Pilot started 2026-10-21: T2 and T3 done on estimated inputs ([`assurance/sim/thermal/`](../../sim/thermal/README.md), tool TL-53); T1, T4 and T5 open. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Standard reference | ISO 26262-8:2018 §11 (confidence in the use of software tools), applied as in [WP-P-07](../WP-P-07-tool-classification-qualification.md) §2; ISO 21448 for the ODD use |
 | Date | 2026-10-21 |
 | Baseline | `liondriver-dev` at `561f5c1` |
@@ -38,7 +38,7 @@ safety question. §2 lists the candidates against the work products.
 | Fit for F1 | Good: 3D conduction with convection and a sun-flux boundary; a linearised radiation term is easy to write | Good on a 2D cross-section, weak on the full 3D shell | Very good physically (radiation between surfaces built in), but a second language and file format in the repo | Poor: no maintenance and no modern build | Good for the time series, cannot show *where* it is hot |
 | Evidence view (ISO 26262-8 §11) | Weak-form code is short and reviewable; verification by manufactured solutions and the analytic slab case | Independent method and code base from FEniCSx, which makes it a useful cross-check | Mature code, but its input files are less readable to a reviewer | A NASA pedigree does not help an unmaintained build | Hand-checkable; the natural sanity check |
 
-**Recommendation (decider: Claude, reversible; recorded with DQ-410):** FEniCSx for the 3D model, rendered with
+**Recommendation (decider: Claude, reversible; recorded with DQ-411):** FEniCSx for the 3D model, rendered with
 PyVista, with two independent checks: FiPy on a 2D cross-section of the same device, and a lumped RC network in numpy.
 If the three agree within a stated tolerance, a solver or mesh error is unlikely to pass unnoticed (tool error
 detection TD2 without measurement, TD1 once logged drives back it, §5). In the pilot the lumped network became two
@@ -83,12 +83,12 @@ are invented; only the 96 °C and 88 °C band edges are the code's (comma 3X, `h
 | T1 Inputs | Measure the device and mount; pull SoC, PMIC and fan logs from a few drives already on the car (local logs only, no uploads, DQ-084) for board power | A parameter file with a source for every number | Open. [`params.yaml`](../../sim/thermal/params.yaml) holds estimates, each with its source; the device logs `powerDrawW`, `somPowerDrawW`, `intakeTempC` and `exhaustTempC`, so most inputs can come from local logs |
 | T2 Model | FEniCSx 3D conduction with convection and sun-flux boundaries on a hexahedral box mesh (no Gmsh needed for a box); PyVista off-screen render | A CI job builds the figures of §4 from the model, stamped synthetic | **Done** 2026-10-21 on estimated inputs: [`thermal-pilot.md`](../../sim/results/thermal-pilot.md); CI job 'simulation device heat model' |
 | T3 Verify | Analytic slab; lumped transient; energy balance; mesh convergence; FiPy 2D section agrees within the stated tolerance | The checks fail the job on disagreement | **Done** 2026-10-21: checks V1–V6 ([sim/thermal README §3](../../sim/thermal/README.md#3-checks)) |
-| T4 Validate | Cabin-air logger at the mount on hot drives (DQ-411); compare predicted with logged SoC temperature | A comparison table; the uncertainty band of Figure 4-3 is set from it | Open: waits on the logger (DQ-411) and T1 |
+| T4 Validate | Cabin-air logger at the mount on hot drives (DQ-412); compare predicted with logged SoC temperature | A comparison table; the uncertainty band of Figure 4-3 is set from it | Open: waits on the logger (DQ-412) and T1 |
 | T5 Hand over | The candidate bound and its band go to the WP-C-02 owner for OI-3 and to WP-A-03 for DFI-04 | The owners have it, labelled synthetic | Open: after T1 and T4 |
 
 Classification: FEniCSx, FiPy and PyVista are TL-53 in WP-P-07, **TI1 / TCL1** while the bound is only a candidate
 that a measurement must confirm; **TI2 / TCL2** with a qualification plan if the ODD bound ever rests on the model
-alone (DQ-412, revisit at G2).
+alone (DQ-413, revisit at G2).
 
 **First result on estimated inputs** (not a device result): the hottest SoC point reaches the comma 3X's 96 °C at
 about 50 °C cabin air on the nominal line, and at about 43 °C on the worst edge of the band. The conductivity of the
@@ -97,7 +97,7 @@ spreader and the SoC power move it most. T1 replaces the estimates; T4 sets the 
 **On a hot day's own temperatures** (cabin heat soak, [`sim/weather`](../../sim/weather/README.md#3-cabin-heat-soak-oi-3-tc-21)):
 parked two hours in July sun, the mount air reaches 62 °C and the device, switched off, 66 °C. Driving afterwards,
 the SoC peaks at 79 °C with the AC on and 84 °C with it off, below the 96 °C limit, on estimated inputs
-([`cabin-device.md`](../../sim/results/cabin-device.md)). The logger (DQ-411) measures exactly this curve.
+([`cabin-device.md`](../../sim/results/cabin-device.md)). The logger (DQ-412) measures exactly this curve.
 
 ## 6. What this is not
 
@@ -110,7 +110,7 @@ the SoC peaks at 79 °C with the AC on and 84 °C with it off, below the 96 °C 
 
 | ID | Item |
 |---|---|
-| OI-1 | ~~The lead's go or no-go~~ **Closed** 2026-10-21: go on F1 (DQ-409 A), logger approved, not yet bought (DQ-411 A), design aid, TCL1 (DQ-412 A); the tool choice is Claude's, open to objection until 2026-10-28 (DQ-410) |
+| OI-1 | ~~The lead's go or no-go~~ **Closed** 2026-10-21: go on F1 (DQ-410 A), logger approved, not yet bought (DQ-412 A), design aid, TCL1 (DQ-413 A); the tool choice is Claude's, open to objection until 2026-10-28 (DQ-411) |
 | OI-2 | ~~Confirm that PyVista renders off-screen~~ **Closed** 2026-10-21: VTK 9.7 renders through Mesa's software EGL (surfaceless), no screen or GPU; conda-forge Mesa 26 no longer ships OSMesa |
 | OI-3 | Task for the WP-V-01 owner: a heat-soaked repeat of VS-VAL-01 to see whether the EPS derates (F2) |
 | OI-4 | Licence: conda-forge's PETSc build links ParMETIS, whose licence allows non-commercial use only without permission. The serial runs here use PETSc's own LU, not ParMETIS. Before LionDriver is used commercially, settle it: a PETSc build without ParMETIS, or the authors' permission (coordinator) |

@@ -1,13 +1,13 @@
 # Device heat model (TE-04 pilot)
 
-> **Synthetic data (DSR-12). Design aid, no evidence credit (DQ-412).** Every input in
+> **Synthetic data (DSR-12). Design aid, no evidence credit (DQ-413).** Every input in
 > [`params.yaml`](params.yaml) is an **estimate until step T1** (the device measured, its power and temperatures read
 > from its own logs). The numbers show what the model does, not what the device does.
 
 Does the comma device overheat behind a sun-loaded windshield before the drive ends, and at what cabin temperature? The
 model proposes a candidate for the ODD's ambient bound (WP-C-02 OI-3, still TBD) and a number for the common cause
-DFI-04 (SoC heat warming the panda MCU, WP-A-03). The lead decided on 2026-10-21: go (DQ-409 A), a cabin-air logger for
-validation (DQ-411 A), design aid with credit revisited at G2 (DQ-412 A). Scope and tool choice:
+DFI-04 (SoC heat warming the panda MCU, WP-A-03). The lead decided on 2026-10-21: go (DQ-410 A), a cabin-air logger for
+validation (DQ-412 A), design aid with credit revisited at G2 (DQ-413 A). Scope and tool choice:
 [TE-04](../../07-supporting/tool-evaluations/TE-04-physics-field-model.md).
 
 ![The comma device box model after a 60 minute drive at 45 °C cabin air, rendered in 3D from the screen side with the windshield above: warmest around the SoC, cooler toward the fan side; below, the same box cut through the SoC plane; colour bar with the 96 °C overheat limit marked](figures/fig-th-1-field.webp)
@@ -105,7 +105,7 @@ WebP because PNG and GIF go to the repository's read-only LFS store.
 | Step | Work | Needs |
 |---|---|---|
 | T1 Inputs | Measure the device and mount; read `powerDrawW`, `somPowerDrawW`, the SoC and PMIC temperatures, `intakeTempC`, `exhaustTempC` and the fan from local logs of drives already on the car (no uploads, DQ-084); replace the estimates | Calipers and a few local logs from the lead |
-| T4 Validate | Logger at the mount on hot drives; compare the predicted SoC temperature with the logged one; set the band from the misfit | The logger (DQ-411) |
+| T4 Validate | Logger at the mount on hot drives; compare the predicted SoC temperature with the logged one; set the band from the misfit | The logger (DQ-412) |
 | T5 Hand over | Candidate bound and band to the WP-C-02 owner (OI-3), MCU temperature to WP-A-03 (DFI-04), labelled synthetic | T1 and T4 |
 
 ## 6. Files

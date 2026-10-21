@@ -2,7 +2,7 @@
 
 Called by `thermal_pilot.py --figures`. Writes lossless or near-lossless WebP into `figures/` (PNG and GIF go to the
 read-only LFS store in this repository). Rendering differs slightly between machines, so CI checks the numbers,
-not the pixels. Every figure is stamped synthetic (DSR-12), design aid, no evidence credit (DQ-412).
+not the pixels. Every figure is stamped synthetic (DSR-12), design aid, no evidence credit (DQ-413).
 """
 
 from __future__ import annotations

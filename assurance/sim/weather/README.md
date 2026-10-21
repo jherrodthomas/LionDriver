@@ -96,7 +96,7 @@ windshield, dashboard, interior (seats and trim) and shell (roof, doors and the 
 - **Driving:** it then drives southwest on I-85 at 100 km/h for an hour, with the AC on recirculation or the AC off
   (fan on fresh air).
 - **Mount air:** the air at the mount is the cabin air plus 0.4 of the windshield's difference from it. That share is
-  an assumption, and the logger at the mount (DQ-411) sets it.
+  an assumption, and the logger at the mount (DQ-412) sets it.
 - **Glass and roof:** areas and rakes are measured on the purchased Corolla mesh
   ([`figures/corolla-e210-geometry.json`](../figures/corolla-e210-geometry.json), written by
   [`assets/tools/vehicle_geometry.py`](../assets/tools/vehicle_geometry.py)): windshield 1.15 m² at 25.8° from

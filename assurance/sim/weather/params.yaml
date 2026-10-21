@@ -31,7 +31,7 @@ water:
 
 cabin:
   # Lumped heat model of the Corolla's cabin (cabin_soak.py). Every value an estimate unless marked; the logger
-  # at the mount (DQ-411) is what checks it. Areas in m², heat capacities in J/K, conductances from h in W/m²K.
+  # at the mount (DQ-412) is what checks it. Areas in m², heat capacities in J/K, conductances from h in W/m²K.
   air_volume_m3: {value: 2.5, status: published, source: "Corolla sedan passenger volume about 88 ft³ (2.49 m³)"}
   # Areas and rakes: mesh-derived, from figures/corolla-e210-geometry.json (assets/tools/vehicle_geometry.py); the
   # reference car's measurement wins where they differ. test_weather.py C4 keeps these equal to the JSON.
@@ -56,7 +56,7 @@ cabin:
        source: "compact-car air conditioning on recirculation, automatic climate control"}
   fan_only_fresh_kg_s: {value: 0.05, status: estimate, source: "AC off, fan on fresh air, windows closed"}
   mount_mix: {value: 0.4, status: assumed,
-              source: "air at the mount = cabin air + 0.4 (glass − cabin air): the warm layer under the windshield; the logger (DQ-411) sets it"}
+              source: "air at the mount = cabin air + 0.4 (glass − cabin air): the warm layer under the windshield; the logger (DQ-412) sets it"}
   scenarios:
     hot_july: {date: "2027-07-15", t_min: 23.0, t_max: 35.0, park: ["12:00", "14:00"], park_facing: 180.0,
                drive: ["14:00", "15:00"], drive_heading: 243.0, speed_kph: 100.0, ac: true}
