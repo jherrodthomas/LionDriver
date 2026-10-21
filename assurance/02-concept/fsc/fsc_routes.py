@@ -100,7 +100,7 @@ TSR_SHORT = dict(TRIGGER="PCM cruise still active 0.5 s after the first \"not en
                  MODAL="shall", ACTION="sound", OBJECT="its own siren, not via the SoC",
                  CONSTRAINT="≤ 0.5 s; ≥ 3 s; audible (M-05)")
 FRET = A / "models" / "fret" / "fretish-requirements.md"
-FRETISH = [("upon not_engaged_ticks >= 50 & pcm_cruise_active", "TRIGGER"), ("the envelope", "AGENT"), ("shall", "MODAL"),
+FRETISH = [("upon not_engaged_ticks = 50 & persisted(49, pcm_cruise_active)", "TRIGGER"), ("the envelope", "AGENT"), ("shall", "MODAL"),
            ("within 50 ticks", "CONSTRAINT"), ("satisfy siren_on", "ACTION")]
 
 # ============================================================================ the six routes

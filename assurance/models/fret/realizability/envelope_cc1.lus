@@ -2055,9 +2055,9 @@ var FR_516b : bool = H((OT(50, 50, (((envelope_revoked and revoke_cause_listed) 
 var FR_516b_eps : bool = H((OT(30, 30, ((((HT(69, 0, eps_lka_fault) and HT(68, 0, YtoPre(true))) and (O(lat_authority) and OT(69, 0, lat_authority))) and ZtoPre(not (((HT(69, 0, eps_lka_fault) and HT(68, 0, YtoPre(true))) and (O(lat_authority) and OT(69, 0, lat_authority)))))) and not (siren_on))) => OT(29, 0, (ZtoPre(false) or siren_on))));  
 
  
-(* upon not_engaged_ticks >= 50 & pcm_cruise_active the envelope shall within 50 ticks satisfy siren_on  *)
+(* upon not_engaged_ticks = 50 & persisted(49, pcm_cruise_active) the envelope shall within 50 ticks satisfy siren_on  *)
 
-var FR_516c : bool = H((OT(50, 50, ((((not_engaged_ticks >= 50) and pcm_cruise_active) and ZtoPre(not (((not_engaged_ticks >= 50) and pcm_cruise_active)))) and not (siren_on))) => OT(49, 0, (ZtoPre(false) or siren_on))));  
+var FR_516c : bool = H((OT(50, 50, ((((not_engaged_ticks = 50) and (HT(49, 0, pcm_cruise_active) and HT(48, 0, YtoPre(true)))) and ZtoPre(not (((not_engaged_ticks = 50) and (HT(49, 0, pcm_cruise_active) and HT(48, 0, YtoPre(true))))))) and not (siren_on))) => OT(49, 0, (ZtoPre(false) or siren_on))));  
 
  
 (* upon siren_on the envelope shall for 299 ticks satisfy siren_on  *)

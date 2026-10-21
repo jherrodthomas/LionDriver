@@ -385,6 +385,35 @@ jobs:
         FRET_DIR="$RUNNER_TEMP/fret/fret-electron" python3 assurance/models/fret/test_fret_realizability.py
         FRET_DIR="$RUNNER_TEMP/fret/fret-electron" python3 assurance/models/fret/fret_realizability.py --check
 
+  fret-monitor:
+    name: Copilot monitors from the FRETish requirements, run against the panda code
+    # TE-03 step P4 (assurance/models/fret/monitor): NASA Ogma turns FRET's formulas into a Copilot monitor in C99,
+    # and a harness runs the pinned panda engaged-mismatch and siren code under it, with mutants that the monitor must
+    # catch. The generated monitor stays on the runner. Building Ogma and Copilot takes about 25 minutes, so the cabal
+    # store is cached against install_ogma.sh. No evidence credit.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Checkout the panda submodule
+      run: git submodule update --init --depth 1 panda
+    - name: Install the pinned checker packages
+      run: python3 -m pip install --quiet --user --break-system-packages -r assurance/models/fret/requirements.txt
+    - name: Cache the Ogma and Copilot build
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cabal/store
+          ~/.cabal/bin
+          ~/.cabal/packages
+        key: ogma-${{ runner.os }}-${{ hashFiles('assurance/models/fret/install_ogma.sh') }}
+    - name: Install GHC, Ogma 1.16.0 and Copilot 4.8.1 (pinned index state)
+      run: assurance/models/fret/install_ogma.sh
+    - name: Monitor spec and results are current (step P4)
+      run: OGMA="$HOME/.cabal/bin/ogma" python3 assurance/models/fret/monitor/run_monitor.py --check
+
   sim-plant:
     name: simulation plant model
     # Fault-injection plant model (assurance/sim, layer 1): the real panda safety code in a closed loop with

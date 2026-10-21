@@ -4,7 +4,7 @@
 |---|---|
 | Plan | [TE-03](../../07-supporting/tool-evaluations/TE-03-fret-requirements.md) (pilot on the panda TSRs) |
 | Tool | [NASA FRET](https://github.com/NASA-SW-VnV/fret) v3.1 (source `cf0f913`), Apache-2.0; its CLI runs in CI |
-| Status | Steps P1 to P3 done: 19 FRETish requirements (15 for 7 TSRs and 4 assumptions), formalised by FRET and checked for realizability with Kind 2; 8 findings, 7 fixed in WP-S-02 v0.53, FF-08 open. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Steps P1 to P4 done: 19 FRETish requirements (15 for 7 TSRs and 4 assumptions), formalised by FRET, checked for realizability with Kind 2, and three of them turned into Copilot monitors by Ogma and run against the panda code; 8 findings, 7 fixed in WP-S-02 v0.53, FF-08 open. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Evidence | **None.** WP-S-02 stays the source of record |
 
 ## What is here
@@ -19,6 +19,8 @@
 | [`install_solvers.sh`](install_solvers.sh) | Fetches Kind 2 v2.2.0 and Z3 4.14.1, checked by SHA-256 |
 | [`fret_realizability.py`](fret_realizability.py), [`render_contract.js`](render_contract.js) | Step P3: one Kind 2 contract per connected component, rendered from FRET's own template; writes [`fret-realizability.md`](fret-realizability.md) and the contracts in [`realizability/`](realizability/), with every minimal conflicting set; `--check` in CI |
 | [`test_fret_realizability.py`](test_fret_realizability.py) | Grouping; Kind 2 on a single rule, the known conflict and an injected conflict |
+| [`install_ogma.sh`](install_ogma.sh) | Builds Ogma 1.16.0 and Copilot 4.8.1 from Hackage at a fixed index state (GHC 9.4.7 from Ubuntu) |
+| [`monitor/`](monitor/) | Step P4: [`run_monitor.py`](monitor/run_monitor.py) generates a C99 monitor for FR-307a, FR-516c and FR-516-duration with Ogma and Copilot, and runs it over the panda's own code in [`harness.c`](monitor/harness.c), with three mutants; results in [`monitor-results.md`](monitor/monitor-results.md) |
 
 ## How to read a requirement
 
@@ -34,6 +36,8 @@
     FRET_DIR=.fret/fret-electron python3 assurance/models/fret/fret_formalize.py          # store FRET's formulas
     assurance/models/fret/install_solvers.sh .fret/solvers                               # Kind 2 and Z3
     PATH=.fret/solvers:.fret/solvers/z3-4.14.1/bin:$PATH FRET_DIR=.fret/fret-electron python3 assurance/models/fret/fret_realizability.py
+    assurance/models/fret/install_ogma.sh                                                # Ogma and Copilot (~25 min)
+    OGMA=~/.cabal/bin/ogma python3 assurance/models/fret/monitor/run_monitor.py           # P4 monitor run
 
 When a TSR in WP-S-02 is reworded, the check fails on its entry: review the FRETish against the new text, then update the quote. When a sentence changes, rerun `fret_formalize.py`.
 

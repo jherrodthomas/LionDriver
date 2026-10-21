@@ -1,0 +1,47 @@
+{
+  "RTSASpec": {
+    "Internal_variables": [],
+    "Other_variables": [
+      {
+        "name": "authority_granted",
+        "type": "bool"
+      },
+      {
+        "name": "hb_engaged",
+        "type": "bool"
+      },
+      {
+        "name": "siren_on",
+        "type": "bool"
+      },
+      {
+        "name": "not_engaged_ticks",
+        "type": "integer"
+      },
+      {
+        "name": "pcm_cruise_active",
+        "type": "bool"
+      }
+    ],
+    "Requirements": [
+      {
+        "name": "FR_307a",
+        "fretish": "whenever preBool(false, authority_granted) & persisted(29, !hb_engaged) the envelope shall immediately satisfy !authority_granted",
+        "CoCoSpecCode": "H(((YtoPre(authority_granted) and (HT(29, 0, not (hb_engaged)) and HT(28, 0, YtoPre(true)))) => not (authority_granted)))",
+        "ptLTL": "(H (((Y authority_granted) & ((H[0,29] (! hb_engaged)) & (H[0,28] (Y TRUE)))) -> (! authority_granted)))"
+      },
+      {
+        "name": "FR_516c",
+        "fretish": "upon not_engaged_ticks = 50 & persisted(49, pcm_cruise_active) the envelope shall within 50 ticks satisfy siren_on",
+        "CoCoSpecCode": "H((OT(50, 50, ((((not_engaged_ticks = 50) and (HT(49, 0, pcm_cruise_active) and HT(48, 0, YtoPre(true)))) and ZtoPre(not (((not_engaged_ticks = 50) and (HT(49, 0, pcm_cruise_active) and HT(48, 0, YtoPre(true))))))) and not (siren_on))) => OT(49, 0, (ZtoPre(false) or siren_on))))",
+        "ptLTL": "(H ((O[50,50] ((((not_engaged_ticks = 50) & ((H[0,49] pcm_cruise_active) & (H[0,48] (Y TRUE)))) & (Z (! ((not_engaged_ticks = 50) & ((H[0,49] pcm_cruise_active) & (H[0,48] (Y TRUE))))))) & (! siren_on))) -> (O[0,49] ((Z FALSE) | siren_on))))"
+      },
+      {
+        "name": "FR_516_duration",
+        "fretish": "upon siren_on the envelope shall for 299 ticks satisfy siren_on",
+        "CoCoSpecCode": "H((OT(299, 0, (siren_on and ZtoPre(not (siren_on)))) => (H(not (siren_on)) or siren_on)))",
+        "ptLTL": "(H ((O[0,299] (siren_on & (Z (! siren_on)))) -> ((H (! siren_on)) | siren_on)))"
+      }
+    ]
+  }
+}

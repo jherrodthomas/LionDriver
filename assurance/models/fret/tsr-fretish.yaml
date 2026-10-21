@@ -109,7 +109,7 @@ requirements:
   - id: FR-516c
     tsr: TSR-516
     source: "(c) PCM cruise is still active 0.5 s (within one 10 ms task period) after the SoC heartbeat first reported \"not engaged\""
-    fretish: "upon not_engaged_ticks >= 50 & pcm_cruise_active the envelope shall within 50 ticks satisfy siren_on"
+    fretish: "upon not_engaged_ticks = 50 & persisted(49, pcm_cruise_active) the envelope shall within 50 ticks satisfy siren_on"
     findings: [FF-06]
   - id: FR-516-duration
     tsr: TSR-516
