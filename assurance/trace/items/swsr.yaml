@@ -511,7 +511,7 @@
   acceptance: "Clear within 0.3 s + one task period"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met: 3 consecutive 1 Hz ticks (`main.c:181-189`) (GAP-06)"
+  baseline_impl: "Implemented in the reference build (panda `f4803c5`): the 100 Hz safety task counts the ticks since the first \"not engaged\" heartbeat while authority is granted and clears authority at 30 ticks, 0.3 s (`drivers/engaged_mismatch.h`, `main.c` `safety_task_handler`; host test `tests/engaged_mismatch`, HIL `test_not_engaged_heartbeat_revokes_within_0_3_s` not run). Plant run (selfdrived stops, pandad keeps the heartbeat): revoked 0.39–0.48 s after the stop, that is 0.3 s after the first stale heartbeat (engaged-mismatch.md (assurance/sim/results/engaged-mismatch.md), synthetic). Other builds: 3 consecutive 1 Hz ticks (`main.c` `tick_handler`), unchanged (GAP-06)"
   status: proposed
   source: WP-W-02
 
@@ -607,7 +607,7 @@
   acceptance: "Measured period ≤ 20 ms, jitter recorded"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial (panda `9f60e17`): TIM4 100 Hz safety task runs `safety_tick()` (RX timeout), the heartbeat monitor (SWSR-407) and feeds the IWDG; the checks of SWSR-307, 403, 404, 405, 408, 413 and 506 do not run in it (`main.c` `safety_task_handler`), rate fault at 110 Hz. Period and jitter not yet measured (IA watchdog (assurance/07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) §7)"
+  baseline_impl: "Partial (panda `9f60e17`): TIM4 100 Hz safety task runs `safety_tick()` (RX timeout), the heartbeat monitor (SWSR-407) and feeds the IWDG; since panda `f4803c5` the reference build also runs the SWSR-307 check in it (`drivers/engaged_mismatch.h`); the checks of SWSR-403, 404, 405, 408, 413 and 506 do not run in it (`main.c` `safety_task_handler`), rate fault at 110 Hz. Period and jitter not yet measured (IA watchdog (assurance/07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) §7)"
   status: proposed
   source: WP-W-02
 
@@ -1327,7 +1327,7 @@
   acceptance: "Siren ≤ 0.5 s for each trigger; no siren on a brake press or PCM cancel alone"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: heartbeat loss (SWSR-407) revoking authority that was granted → 3 s siren at once, ≈ 0.56 s after the last heartbeat (0.3 s + 10 ms + 2 × 125 ms speaker tick), all builds (panda `c33343b`, `drivers/heartbeat_siren.h`, host test `tests/heartbeat_siren`, HIL `tests/hitl/test_15_heartbeat_siren.py` not run); 1 Hz path unchanged: 3 s siren after 4–5 s heartbeat loss (`main.c:169-171, 198-201`), the only siren when authority ended within the 5 s before the loss; EPS fault (SWSR-110) persisting 0.7 s (DQ-048, panda `bf8102a`; 1 s before) while authority is granted → siren ≥ 3 s, ≤ 0.96 s after the fault onset (panda `b790fca`, `drivers/eps_fault_siren.h`, host test `tests/eps_fault_siren`; HIL not run); since panda `3ee2796` (register DQ-367) the fault counts once it has been seen while authority was granted, so the siren also sounds when SWSR-408 revokes authority during the fault. Missing command frames (SWSR-408, TSR-516(b), DQ-404 A): since panda `8a69ccf` with opendbc `4d1a056` (reference build) the 3 s heartbeat siren also starts in the safety task in which SWSR-408 revokes granted authority (`safety_tx_arrival_revoked`), so a full SoC stall is no longer silent; a brake press, PCM cancel or RX fault does not set the flag (opendbc `test_tx_arrival_revoked_only_by_arrival_check`, host test `tests/heartbeat_siren`, HIL `test_soc_stall_revokes_on_missing_frames` not run). Other (b) triggers and (c) not impl"
+  baseline_impl: "Partial: heartbeat loss (SWSR-407) revoking authority that was granted → 3 s siren at once, ≈ 0.56 s after the last heartbeat (0.3 s + 10 ms + 2 × 125 ms speaker tick), all builds (panda `c33343b`, `drivers/heartbeat_siren.h`, host test `tests/heartbeat_siren`, HIL `tests/hitl/test_15_heartbeat_siren.py` not run); 1 Hz path unchanged: 3 s siren after 4–5 s heartbeat loss (`main.c:169-171, 198-201`), the only siren when authority ended within the 5 s before the loss; EPS fault (SWSR-110) persisting 0.7 s (DQ-048, panda `bf8102a`; 1 s before) while authority is granted → siren ≥ 3 s, ≤ 0.96 s after the fault onset (panda `b790fca`, `drivers/eps_fault_siren.h`, host test `tests/eps_fault_siren`; HIL not run); since panda `3ee2796` (register DQ-367) the fault counts once it has been seen while authority was granted, so the siren also sounds when SWSR-408 revokes authority during the fault. Missing command frames (SWSR-408, TSR-516(b), DQ-404 A): since panda `8a69ccf` with opendbc `4d1a056` (reference build) the 3 s heartbeat siren also starts in the safety task in which SWSR-408 revokes granted authority (`safety_tx_arrival_revoked`), so a full SoC stall is no longer silent; a brake press, PCM cancel or RX fault does not set the flag (opendbc `test_tx_arrival_revoked_only_by_arrival_check`, host test `tests/heartbeat_siren`, HIL `test_soc_stall_revokes_on_missing_frames` not run). Heartbeat \"not engaged\" (SWSR-307) and (c): since panda `f4803c5` (reference build) the same 3 s siren starts when SWSR-516b fires, 0.5 s after the first \"not engaged\" heartbeat, that is 0.2 s after the SWSR-307 revocation; a SWSR-307 revocation followed by a PCM cruise drop within that 0.5 s stays silent, so the siren for that (b) trigger is the (c) siren (host test `tests/engaged_mismatch`; plant run: siren 0.63–0.88 s after selfdrived stops; HIL not run). Other (b) triggers not impl"
   status: proposed
   source: WP-W-02
 
@@ -1343,7 +1343,7 @@
   acceptance: "Flag at 0.5 s ± one RX period; not set when cruise drops within 0.5 s"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not impl"
+  baseline_impl: "Implemented in the reference build in the panda safety task, not in U-SAF-CORE (panda `f4803c5`, `drivers/engaged_mismatch.h`): an episode starts at the first \"not engaged\" heartbeat while authority is granted; at 50 ticks (0.5 s) with PCM cruise still active (`cruise_engaged_prev`) it starts the SWSR-516 siren once; a cruise drop after the revocation, or an \"engaged\" heartbeat, ends it (host test `tests/engaged_mismatch`, 10 tests; HIL not run). Whether every disengagement openpilot makes on its own drops PCM cruise within 0.5 s (the cancel lag) is not yet measured (OI-18)"
   status: proposed
   source: WP-W-02
 

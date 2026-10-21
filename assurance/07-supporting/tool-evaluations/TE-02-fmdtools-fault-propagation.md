@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Purpose | Decide whether NASA fmdtools should run, headless and in CI, as an executable cross-check of the fault trees and FMEAs, and plan a pilot on SG-02 |
-| Status | Draft. Started on the lead's go (2026-10-20): P0, P1 and P2 done ([`assurance/models/fmdtools/`](../../models/fmdtools/README.md)); P3 to P5 open. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Draft. Started on the lead's go (2026-10-20): P0 to P4 done ([`assurance/models/fmdtools/`](../../models/fmdtools/README.md)); P5 open. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Standard reference | ISO 26262-8:2018 §11 (tool classification), applied as in [WP-P-07](../WP-P-07-tool-classification-qualification.md) §2; ISO 26262-9:2018 §8 (safety analyses) |
 | Date | 2026-10-20 |
 | Baseline | `liondriver-dev` at `13ba1f4` (after #370) |
@@ -70,11 +70,15 @@ P1 decision: two latent events are held as baseline design, not as modes. BE-2.1
 | P0 Setup | Pin fmdtools 2.5.6 (plus `ipython`) in `assurance/models/fmdtools/requirements.txt`; add a CI job; enter the tool in WP-P-07 as TL-49 | Requirements file, CI job, TL-49 row | CI installs the library and runs an empty model |
 | P1 Model | The SG-02 function architecture of §3, with one Mode per BE/UE and the mapping file | `assurance/models/fmdtools/sg02/` with model, mapping and tests | The nominal run raises no top event; each mode changes only its own function; the mapping check passes |
 | P2 Single faults | Inject every mode alone, at 3 times (straight, curve entry, mid-curve) | A table of which single faults cause TE-02, and with what time to warning | Compared with the tree's order-1 effective sets (MCS-02.7 needs UE-2.18 too) |
-| P3 Joint faults | Combinations of 2 to 4 of the 25 modes (15,250 sets). One run takes about 0.19 s, so the sweep skips sets with no cause and supersets of sets already found. A scheduled job runs the full sweep; the pull-request job runs order 2 only | The minimal fault sets that cause TE-02 in the model | A diff against the 100 computed cut sets. Each difference is written up as a finding for the FTA owner, in the style of F-1…F-36 in `fta-fmea-mapping.md` |
+| P3 Joint faults | Combinations of 2 to 4 of the 25 modes (15,250 sets; 5,260 run after pruning). One run takes about 0.19 s, so the sweep skips sets with no cause and supersets of sets already found. A scheduled job runs the full sweep; the pull-request job runs order 2 only | The minimal fault sets that cause TE-02 in the model | A diff against the 100 computed cut sets. Each difference is written up as a finding for the FTA owner, in the style of F-1…F-36 in `fta-fmea-mapping.md` |
 | P4 Timing | Time to warning for every set that the model and the tree both list | A table and figure of the time to warning against 1.0 s, and against WP-S-04 | Every set over 1.0 s is named, with its cut-set row |
 | P5 Report and CI | Generated report page, figure and `--check` (like the other generators); results marked synthetic | The pilot report, a decision note on extending to SG-01, SG-03 and SG-06, and the TL-49 class confirmed | CI fails if the report is stale or the model and tree drift apart |
 
-P2 result (2026-10-20, [`p2-single-faults.md`](../../models/fmdtools/sg02/p2-single-faults.md)): the model agrees with the tree's single faults except BE-2.05 (the heartbeat siren covers it; BE-2.14 latent tag) and BE-2.07 on a straight (no torque to feel; an assumption for the plant to test). Both go to the FTA owner.
+P2 result (2026-10-20, [`p2-single-faults.md`](../../models/fmdtools/sg02/p2-single-faults.md)): the model agrees with the tree's single faults except BE-2.05 (the heartbeat siren covers it; BE-2.14 latent tag) and BE-2.07 on a straight (no torque to feel; an assumption for the plant to test). Both go to the FTA owner. A plant run with a steady lateral push (road crown or crosswind, 0.1–0.5 m/s²) crosses a 3.0 m lane line before the driver corrects, so the straight case is benign only with no push at all; the FTA owner takes it as an AOU-01R validation gap.
+
+P3 result (2026-10-20, [`p3-joint-faults.md`](../../models/fmdtools/sg02/p3-joint-faults.md)): 5,260 runs, 49 minimal sets. None of them is missing from the tree. In 9 of the tree's 31 effective sets the model needs a siren failure too, all for the BE-2.14 latent tag (the siren covers EPS faults and heartbeat loss since panda `8a69ccf`). The diff caught a tree error injected on purpose (validation, §6). MCS-02.9 (selfdrived stop) stays a single point: the plant shows no revocation that sounds the siren ([engaged-mismatch](../../sim/results/engaged-mismatch.md)), so the latent tag holds for that cause.
+
+P4 result (2026-10-20, [`p4-timing.md`](../../models/fmdtools/sg02/p4-timing.md)): of the 58 sets, 9 are warned within 1 s (siren 0.26 s), 7 late and 42 not within 6 s. The late ones are MCS-02.9 (alert 4.9 s after the loss; gap against TSR-516(b) / TSR-307(a)) and MCS-02.1 and MCS-02.11 with a siren failure (escalated take-over 1.5 s, TSR-607 (b)). Every set over 1.0 s is named with its cut-set row.
 
 Effort: about one working session each for P0 and P2, and two for P1. P3 to P5 together take two to three sessions.
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for the SG-02 fault-propagation model (TE-02, steps P1 and P2).
+"""Tests for the SG-02 fault-propagation model (TE-02, steps P1 to P3).
 
 Mapping: every event of the WP-A-04 SG-02 tree has a model mode or a latent entry, every mode names a tree event, and
 every event is in the FTA <-> FMEA map. Behaviour: the nominal run is clean, every mode runs, and reference cases
@@ -8,6 +8,7 @@ are pinned as such: they are the kind of finding step P3 reports (the revocation
 latent tag on BE-2.14 is out of date for them).
 """
 
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -68,7 +69,8 @@ class TestBehaviour(unittest.TestCase):
 
   def test_cut_sets_the_model_reproduces(self):
     self.assertTop(("BE-2.04",), True, "MCS-02.4: silent loss, BE-2.11 latent")
-    self.assertTop(("BE-2.21",), True, "MCS-02.9: UI only after 5 s, no heartbeat siren")
+    # plant case MCS-02.9: frames keep arriving without a torque request, the 1 Hz mismatch revocation sounds no siren
+    self.assertTop(("BE-2.21",), True, "MCS-02.9: UI only after 5 s, no siren")
     self.assertTop(("BE-2.02", "BE-2.09"), True, "MCS-02.2")
     self.assertTop(("BE-2.01", "UE-2.19"), True, "MCS-02.10: silent EPS drop")
     self.assertTop(("BE-2.06", "BE-2.17"), True, "MCS-02.8")
@@ -83,6 +85,7 @@ class TestBehaviour(unittest.TestCase):
     self.assertTop(("BE-2.05",), False, "revocation siren at 0.26 s")
     self.assertTop(("BE-2.07",), False, "driver feels the end of LKA torque")
     self.assertTop(("BE-2.05", "BE-2.22"), True, "MCS-02.5 as dual: heartbeat siren path failed")
+
 
   def test_where_the_model_differs_from_the_table(self):
     # MCS-02.1 and MCS-02.11 hold BE-2.14 latent. The siren sounds about 0.25 s after an EPS fault (revocation siren,
@@ -107,6 +110,31 @@ class TestPhases(unittest.TestCase):
     # Finding of step P2 (assumption in events.yaml phases): MCS-02.7 relies on the driver feeling the end of LKA torque
     self.assertTrue(m.run(("BE-2.07",), phase="straight").top_event)
     self.assertFalse(m.run(("BE-2.07",), phase="curve_entry").top_event)
+
+
+class TestJointSweep(unittest.TestCase):
+  """Step P3. The sets themselves are checked by `sweep.py joint --check`; here the diff must catch a tree error."""
+
+  def test_an_injected_tree_error_is_caught(self):
+    import sweep
+    solver, cut_sets = sweep.solve(m.EVENTS["goal"])
+    model_sets = [frozenset(c) for c in json.loads(sweep.P3_JSON.read_text(encoding="utf-8"))["sets"]]
+    self.assertEqual(sweep.tree_gaps(model_sets, cut_sets, solver.latent), [])
+    # drop the cut sets of MCS-02.4 (non-finite command clamped): the diff must report the model's {BE-2.04}
+    broken = [c for c in cut_sets if "BE-2.04" not in c]
+    self.assertEqual(sweep.tree_gaps(model_sets, broken, solver.latent), [frozenset({"BE-2.04"})])
+
+
+class TestTiming(unittest.TestCase):
+  """Step P4: cues after the budget are still seen when the run is long enough."""
+
+  def test_late_cues_are_timed(self):
+    o = m.run(("BE-2.21",), horizon_s=6.0)
+    self.assertTrue(o.top_event)
+    self.assertAlmostEqual(o.t_cue - o.t_lost, 4.9, places=6)
+    o = m.run(("BE-2.01", "BE-2.08", "BE-2.14"), horizon_s=6.0)
+    self.assertEqual((o.cue, round(o.t_cue, 2)), ("alert", 1.5))
+    self.assertTrue(o.top_event)
 
 
 if __name__ == "__main__":

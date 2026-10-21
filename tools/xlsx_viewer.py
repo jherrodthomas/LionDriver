@@ -38,6 +38,8 @@ TITLES = {
   "assurance/08-analyses/fmea/exports/review/pfmea-review.xlsx": "PFMEA review workbook",
   "assurance/08-analyses/fmea/exports/review/sw-fmea-review.xlsx": "SW FMEA review workbook",
   "assurance/08-analyses/fmea/exports/review/system-fmea-review.xlsx": "System FMEA review workbook",
+  "assurance/08-analyses/fmea/exports/review/fmeda-sg001-review.xlsx": "FMEDA SG-001 (SG-01…06) review workbook",
+  "assurance/08-analyses/fmea/exports/review/fmeda-sg009-review.xlsx": "FMEDA SG-009 (SG-07) review workbook",
 }
 FIRST = "assurance/02-concept/hara/WP-C-03-hara-cartesian.xlsx"   # opens first
 # Columns offered as filter chips when a sheet has them, in this order (a column with 2-24 values only).

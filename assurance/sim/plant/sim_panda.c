@@ -4,7 +4,8 @@
 // firmware's own source, included unchanged:
 //   - opendbc libsafety (the safety hooks of every mode, Toyota included, and the test helpers), and
 //   - the panda board drivers that the 100 Hz safety task runs: heartbeat monitor (TSR-407), heartbeat-loss siren
-//     and EPS-fault siren (TSR-516(b)) and the IWDG feed (TSR-501).
+//     and EPS-fault siren (TSR-516(b)), the engaged-mismatch check of the reference build (TSR-307(a), TSR-516(c))
+//     and the IWDG feed (TSR-501).
 // Only the glue of panda/board/main.c is restated below (is_car_safety_mode, the body of safety_task_handler, the
 // siren condition of tick_handler and its 1 Hz engaged-mismatch check, the 0xf3 heartbeat handler of main_comms.h).
 // test_plant.py fails when those source lines change, so this copy cannot drift silently. The IWDG peripheral is a plain register block; panda_loop.py
@@ -15,6 +16,9 @@
 #include "board/drivers/heartbeat_monitor.h"
 #include "board/drivers/heartbeat_siren.h"
 #include "board/drivers/eps_fault_siren.h"
+#ifdef LIONDRIVER_REFERENCE
+#include "board/drivers/engaged_mismatch.h"
+#endif
 
 typedef struct {
   uint32_t KR;
@@ -45,10 +49,21 @@ bool is_car_safety_mode(uint16_t mode) {
 void sim_safety_task(void) {
     safety_tick();
     const bool heartbeat_revoke = heartbeat_monitor_tick() && is_car_safety_mode(current_safety_mode);
-    heartbeat_siren_active = heartbeat_siren_tick(heartbeat_revoke, controls_allowed, safety_tx_arrival_revoked);
+    bool engaged_mismatch_siren = false;
+    #ifdef LIONDRIVER_REFERENCE
+    const bool engaged_mismatch_revoke = engaged_mismatch_tick(controls_allowed, heartbeat_engaged, cruise_engaged_prev,
+                                                               &engaged_mismatch_siren);
+    #endif
+    heartbeat_siren_active = heartbeat_siren_tick(heartbeat_revoke, controls_allowed,
+                                                  safety_tx_arrival_revoked || engaged_mismatch_siren);
     if (heartbeat_revoke) {
       controls_allowed = false;
     }
+    #ifdef LIONDRIVER_REFERENCE
+    if (engaged_mismatch_revoke) {
+      controls_allowed = false;
+    }
+    #endif
     eps_fault_siren_active = eps_fault_siren_tick(safety_eps_fault, controls_allowed);
     hw_watchdog_tick();
 }
@@ -95,6 +110,9 @@ void sim_board_reset(void) {
   heartbeat_monitor_reset();
   heartbeat_siren_reset();
   eps_fault_siren_reset();
+#ifdef LIONDRIVER_REFERENCE
+  engaged_mismatch_reset();
+#endif
   heartbeat_engaged_mismatches = 0U;
   heartbeat_siren_active = false;
   eps_fault_siren_active = false;

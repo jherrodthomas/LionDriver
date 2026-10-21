@@ -44,7 +44,7 @@ class TestFirmwareGlue(unittest.TestCase):
     raise AssertionError(signature)
 
   def test_safety_task_matches_main(self):
-    sim = self.body(self.harness, "void sim_safety_task(void)")
+    sim = [s for s in self.body(self.harness, "void sim_safety_task(void)") if s != "#endif"]
     fw = self.body(self.main, "static void safety_task_handler(void)")
     fw = [s for s in fw if "SAFETY_TASK_TIMER" not in s and "LIONDRIVER_FAULT_INJECTION" not in s
           and "fault_injection_safety_task" not in s and s != "#endif"]
