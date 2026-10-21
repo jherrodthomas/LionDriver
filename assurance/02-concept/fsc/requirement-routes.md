@@ -112,7 +112,8 @@ These records are behind the requirement. Each is with its owner, through the co
 | SWSR-516, SWSR-516b (WP-W-02) | ASIL B under ASIL C; SWSR-516(b) listed the heartbeat "not engaged" case, which TSR-516 moved to (c). Both fixed in PR #392, with eight more SWSRs raised to C | software requirements |
 | WP-A-05 LS-20, LS-05 | Say the siren covers only heartbeat loss and an EPS fault; no loss scenario for (c) | STPA |
 | WP-A-04 BE-2.14; fta-fmea-map BE-2.14 note | Event text lists the baseline triggers; the map says (b)/(c) are not implemented | FTA |
-| System FMEA F-04b entries; SW FMEA SWF-036, SWF-39 | Describe a silent SoC stall and a 3 s engaged mismatch; SWF-39 credits only the heartbeat case | FMEA |
+| System FMEA F-04b entries (SFM-005.C2, SFM-006.C1) | Described a silent SoC stall; fixed in PR #398 (siren at 0.25 s) | System FMEA |
+| SW FMEA SWF-036, SWF-39 | SWF-036 says a 3 s engaged mismatch; SWF-39 credits only the heartbeat case | SW FMEA |
 | WP-V-05 VS-FI-31, VS-FI-10 | VS-FI-31 said 1 s persistence; no case targeted TSR-516(c). Fixed in PR #396 (WP-V-05 v0.7: 0.7 s; VS-FI-10 (b) and (b2)); a HIL case is still open | verification |
 | fmdtools README | Said 58 sets where p4-timing.md and TE-02 say 61; fixed in PR #396 | fmdtools |
 
