@@ -16,7 +16,7 @@
 
 - id: FSR-01.02
   kind: fsr
-  text: "The envelope shall limit the rate of change of the commanded LKA torque (rise, fall and real-time window) to bounds derived from controllability."
+  text: "The envelope shall limit the rate of change of the commanded LKA torque (rise per frame and over a real-time window) to bounds derived from controllability. A fall toward zero is not limited, as it is the safe direction for SG-01; a bounded ramp of torque withdrawn on a fault is FSR-02.04."
   asil: "C"
   parents: [SG-01]
   allocated_to: "E-03"

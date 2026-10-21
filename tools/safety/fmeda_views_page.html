@@ -1,0 +1,254 @@
+<title>FMEDA Worksheet</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+Condensed:wght@600&display=swap">
+<style>
+/* Layout: the project's workbook-viewer look. A control band (file, goal, metrics, filters) over one scrolling grid with
+   a frozen header and ID column; a row's full record opens in a drawer. Colour is spent on the fault classes only. */
+:root{
+  --bg:#f2f4f6; --panel:#ffffff; --ink:#16202b; --muted:#5b6876; --line:#d5dbe2; --head:#e8ecf1; --grp:#f6f8fa;
+  --accent:#1f5fa8; --accent-soft:#e2ecf8; --sel:#fff6d6; --track:#e3e8ed;
+  --spf:#a3201a; --spf-bg:#f9d0cd; --rf:#9a3d00; --rf-bg:#fbdcc4; --mpf:#7a5600; --mpf-bg:#fbf0c2; --safe:#14633a; --safe-bg:#d8efdf;
+  --f-ui:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
+  --f-head:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f141a; --panel:#161d25; --ink:#e4eaf0; --muted:#94a2b1; --line:#2a3440; --head:#1c252f; --grp:#1a222b;
+  --accent:#7fb0ec; --accent-soft:#1d2c40; --sel:#3a3318; --track:#26313c;
+  --spf:#ff8f86; --spf-bg:#431b19; --rf:#f7a467; --rf-bg:#40260f; --mpf:#f0cf6a; --mpf-bg:#3a3214; --safe:#79d6a0; --safe-bg:#173527;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f141a; --panel:#161d25; --ink:#e4eaf0; --muted:#94a2b1; --line:#2a3440; --head:#1c252f; --grp:#1a222b;
+  --accent:#7fb0ec; --accent-soft:#1d2c40; --sel:#3a3318; --track:#26313c;
+  --spf:#ff8f86; --spf-bg:#431b19; --rf:#f7a467; --rf-bg:#40260f; --mpf:#f0cf6a; --mpf-bg:#3a3214; --safe:#79d6a0; --safe-bg:#173527;
+  color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.45 var(--f-ui);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px 24px}
+header,main{display:flex;flex-direction:column;gap:10px;min-width:0;max-width:1180px;margin:0 auto}
+main{margin-top:10px}
+.top{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:baseline;justify-content:space-between}
+.top>*{min-width:0;max-width:100%}
+h1{font:600 22px/1.15 var(--f-head);margin:0;letter-spacing:.01em;text-wrap:balance}
+.src{font:400 12px var(--f-mono);color:var(--muted);overflow-wrap:anywhere;min-width:0;max-width:100%}
+label.src{display:flex;gap:6px;align-items:center}
+#file{flex:1 1 auto;max-width:100%;text-overflow:ellipsis}
+select,input[type=search]{font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:7px 10px;min-width:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.warn{font-size:13.5px;border:1px dashed var(--rf);background:var(--rf-bg);border-radius:8px;padding:8px 10px}
+.row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.lbl{font:600 11.5px var(--f-head);text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-right:4px}
+.chip{font:400 13.5px var(--f-ui);border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:4px 11px;cursor:pointer;min-height:32px}
+.chip small{font:400 11px var(--f-mono);color:var(--muted);margin-left:4px}
+.chip[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:700}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px}
+.met .n{font:600 13px var(--f-head);letter-spacing:.03em;color:var(--muted);display:flex;justify-content:space-between}
+.met .v{font:600 20px var(--f-mono);font-variant-numeric:tabular-nums}
+.bar{position:relative;height:10px;background:var(--track);border-radius:5px;margin:8px 0 18px}
+.bar i{position:absolute;inset:0 auto 0 0;border-radius:5px}
+.bar b{position:absolute;top:-4px;bottom:-4px;border-left:2px solid var(--ink)}
+.bar b.lo{border-left-style:dashed;border-color:var(--muted)}
+.bar span{position:absolute;top:13px;transform:translateX(-50%);font:400 10.5px var(--f-mono);color:var(--muted);white-space:nowrap}
+.pills{grid-column:1/-1;display:flex;gap:6px;flex-wrap:wrap}
+.pill{font:700 12.5px var(--f-ui);border-radius:999px;padding:3px 10px}
+.pill.ok{background:var(--safe-bg);color:var(--safe)} .pill.bad{background:var(--spf-bg);color:var(--spf)}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tools input{flex:1 1 200px}
+.count{font:400 12.5px var(--f-mono);color:var(--muted)}
+.grid{overflow:auto;max-height:70vh;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+table{border-collapse:separate;border-spacing:0;font-size:13.5px;min-width:100%}
+th,td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+th{position:sticky;top:0;z-index:2;background:var(--head);font:600 12.5px var(--f-head);letter-spacing:.02em;white-space:nowrap}
+td:first-child,th:first-child{position:sticky;left:0;z-index:1;background:var(--panel);font:400 12.5px var(--f-mono);white-space:nowrap}
+th:first-child{z-index:3;background:var(--head)}
+td.num{text-align:right;font:400 12.5px var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.mode{min-width:240px;max-width:380px}
+tr.grp td{background:var(--grp);font-weight:700;cursor:default}
+tr.grp td:first-child{background:var(--grp)}
+tbody tr.fm{cursor:pointer}
+tbody tr.fm:hover td{background:var(--accent-soft)}
+tbody tr.on td{background:var(--sel)}
+tfoot td{position:sticky;bottom:0;background:var(--head);font-weight:700;z-index:1}
+tfoot td:first-child{z-index:2;background:var(--head)}
+.c{display:inline-block;min-width:44px;text-align:center;border-radius:4px;padding:1px 6px;font:600 12px var(--f-mono)}
+.c.SPF{background:var(--spf-bg);color:var(--spf)} .c.RF{background:var(--rf-bg);color:var(--rf)}
+.c.MPF{background:var(--mpf-bg);color:var(--mpf)} .c.safe{background:var(--safe-bg);color:var(--safe)}
+.cs{color:var(--spf)} .cr{color:var(--rf)} .cl{color:var(--mpf)}
+.star{color:var(--accent);font-weight:700}
+.legend{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font-size:12.5px;color:var(--muted)}
+.drawer{position:fixed;z-index:20;background:var(--panel);border:1px solid var(--line);box-shadow:0 10px 40px rgb(0 0 0 / .18);
+  display:flex;flex-direction:column;inset:auto 0 0 0;max-height:78%;border-radius:12px 12px 0 0;
+  padding:14px max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+@media (min-width:900px){.drawer{inset:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 16px auto;width:440px;max-height:none;border-radius:10px}}
+.dhead{display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid var(--line);padding-bottom:8px}
+.dhead h2{font:600 18px var(--f-head);margin:0}
+.dhead button{font:700 14px var(--f-ui);border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:6px;padding:5px 12px;cursor:pointer}
+.dbody{overflow:auto;padding-top:8px;display:flex;flex-direction:column;gap:10px}
+.field{display:flex;flex-direction:column;gap:2px}
+.field .l{font:600 11.5px var(--f-head);text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.field .v{font-size:14.5px;overflow-wrap:anywhere}
+.note{font-size:12.5px;color:var(--muted);max-width:90ch}
+@media (prefers-reduced-motion:no-preference){.drawer{animation:up .16s ease-out}@keyframes up{from{transform:translateY(12px);opacity:.6}}}
+</style>
+<header>
+  <div class="top">
+    <div><h1 id="title">FMEDA Worksheet</h1><div class="src" id="src"></div></div>
+    <label class="src">Analysis <select id="file" aria-label="FMEDA file"></select></label>
+  </div>
+  <div class="warn" id="warn"></div>
+  <div class="row" id="goals" role="group" aria-label="Safety goal"></div>
+  <section class="metrics" id="metrics" aria-live="polite"></section>
+  <div class="tools">
+    <input type="search" id="q" placeholder="Search ID, mode, mechanism or note" aria-label="Search">
+    <span class="count" id="count"></span>
+  </div>
+  <div class="row" id="classes" role="group" aria-label="Fault class"></div>
+</header>
+<main>
+  <div class="grid" id="grid"></div>
+  <div class="legend"><span class="c SPF">SPF</span> single-point <span class="c RF">RF</span> residual after a mechanism
+    <span class="c MPF">MPF</span> multiple-point (λlat its latent part) <span class="c safe">safe</span>
+    <span><span class="star">◆</span> classified for this goal by a per-goal entry</span></div>
+  <p class="note">Tap a row for its notes, mechanism and rate source. The arithmetic is <code>tools/safety/fmea_lint.py</code>'s
+    (rating-tables §6.1); λSPF + λRF is the single-point and residual part of PMHF only. This page is a snapshot built by
+    <code>tools/safety/fmeda_views.py</code>; edits go in the YAML. To try other rates or DCs, use the what-if page.</p>
+</main>
+<aside class="drawer" id="drawer" hidden aria-label="Row detail"><div class="dhead"><h2 id="dtitle"></h2><button id="dclose" type="button">Close</button></div><div class="dbody" id="dbody"></div></aside>
+<script id="data" type="application/json">__DATA__</script>
+<script>
+const D = JSON.parse(document.getElementById("data").textContent);
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const files = Object.keys(D.files);
+let st = {file: files[0], goal: null, cls: "all", q: "", sel: null};
+try { const s = JSON.parse(localStorage.getItem("fmeda-sheet") || "null"); if (s && D.files[s.file]) st = {...st, file: s.file, goal: s.goal}; } catch (e) {}
+const h = (location.hash || "").slice(1);
+if (h && D.files["fmeda-" + h]) st.file = "fmeda-" + h, st.goal = null;
+const save = () => { try { localStorage.setItem("fmeda-sheet", JSON.stringify({file: st.file, goal: st.goal})); } catch (e) {} };
+
+function classified(row, goal) {
+  const p = (row.pg || []).find(x => x.goal === goal);
+  if (!p) return [row, false];
+  const o = {...row};
+  for (const [k, kk] of [["violates_sg_directly", "vd"], ["mpf_potential", "mpf"], ["safety_mechanism_spf", "smS"],
+                         ["dc_spf", "dcS"], ["safety_mechanism_lf", "smL"], ["dc_lf", "dcL"]]) if (k in p) o[kk] = p[k];
+  return [o, true];
+}
+// one row as classified for the goal: the same rules as fmea_lint.fmeda_metrics
+function split(c, row, goal) {
+  const [r, other] = classified(row, goal), l = c.lam * r.dist;
+  const e = {r: row, other, lam: l, sm: "", dc: null, spf: 0, rf: 0, lat: 0, cls: "safe"};
+  if (r.vd) {
+    const dc = r.smS ? r.dcS : 0;
+    e.sm = r.smS || ""; e.dc = r.smS ? dc : null;
+    if (dc === 0) { e.cls = "SPF"; e.spf = l; } else { e.cls = "RF"; e.rf = l * (1 - dc); }
+  } else if (r.mpf) {
+    const dc = r.smL ? r.dcL : 0;
+    e.sm = r.smL || ""; e.dc = r.smL ? dc : null; e.cls = "MPF"; e.lat = l * (1 - dc);
+  }
+  return e;
+}
+function all(f, goal) {
+  const out = [];
+  for (const c of f.components) if (c.sr) for (const row of c.rows) out.push({c, ...split(c, row, goal)});
+  return out;
+}
+function metrics(rows) {
+  const t = rows.reduce((a, r) => (a.total += r.lam, a.spf += r.spf, a.rf += r.rf, a.lat += r.lat, a), {total: 0, spf: 0, rf: 0, lat: 0});
+  const rem = t.total - t.spf - t.rf;
+  return {...t, spfm: 1 - (t.spf + t.rf) / t.total, lfm: rem > 0 ? 1 - t.lat / rem : 1, pm: t.spf + t.rf};
+}
+const pct = v => (v * 100).toFixed(2) + " %";
+const n2 = v => v ? v.toFixed(2) : "";
+const tgt = f => f.targets.find(t => t.goal === st.goal) || f.targets[0];
+
+function init() {
+  $("file").innerHTML = files.map(n => `<option value="${n}">${esc(n)}: ${esc(D.files[n].title)}</option>`).join("");
+  $("file").onchange = e => { st.file = e.target.value; st.goal = null; st.sel = null; save(); render(); };
+  $("q").oninput = e => { st.q = e.target.value.trim().toLowerCase(); grid(); };
+  $("dclose").onclick = close;
+  document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
+  render();
+}
+function render() {
+  const f = D.files[st.file];
+  if (!st.goal || !f.targets.some(t => t.goal === st.goal)) st.goal = f.targets[0].goal;
+  $("file").value = st.file;
+  $("src").textContent = `${st.file}.yaml · rev ${f.revision} · ${f.baseline} · ${f.status} · updated ${f.updated}`;
+  $("warn").textContent = `Estimate: ${f.generic} of ${f.components.length} failure rates are generic order-of-magnitude values. The metrics show where the design falls short; they are not evidence that a target is met.`;
+  $("goals").innerHTML = `<span class="lbl">Goal</span>` + f.targets.map(t =>
+    `<button class="chip" type="button" aria-pressed="${t.goal === st.goal}" data-g="${esc(t.goal)}">${esc(t.goal)}<small>ASIL ${[t.asil, ...t.also].join("/")}</small></button>`).join("");
+  $("goals").querySelectorAll("button").forEach(b => b.onclick = () => { st.goal = b.dataset.g; save(); render(); });
+  const m = metrics(all(f, st.goal)), t = tgt(f), asils = [t.asil, ...t.also];
+  const meter = (name, v, i, lo) => {
+    lo = Math.min(lo, Math.floor(v * 10) / 10);
+    const P = x => Math.max(0, Math.min(100, (x - lo) / (1 - lo) * 100));
+    const ok = asils.every(a => v >= D.targets[a][i]);
+    const col = ok ? "var(--safe)" : (asils.some(a => v >= D.targets[a][i]) ? "var(--mpf)" : "var(--spf)");
+    return `<div class="met"><div class="n"><span>${name}</span></div><div class="v" style="color:${col}">${pct(v)}</div>
+      <div class="bar"><i style="width:${P(v)}%;background:${col}"></i>${asils.map((a, k) =>
+        `<b class="${k ? "lo" : ""}" style="left:${P(D.targets[a][i])}%"></b><span style="left:${P(D.targets[a][i])}%">${a} ${(D.targets[a][i] * 100).toFixed(0)}</span>`).join("")}</div></div>`;
+  };
+  const pills = asils.map(a => {
+    const [s, l, p] = D.targets[a], miss = [];
+    if (m.spfm < s) miss.push("SPFM"); if (m.lfm < l) miss.push("LFM"); if (m.pm >= p) miss.push("λSPF+λRF");
+    return `<span class="pill ${miss.length ? "bad" : "ok"}">ASIL ${a}: ${miss.length ? "missed on " + miss.join(", ") : "met on this estimate"}</span>`;
+  }).join("");
+  $("metrics").innerHTML = `<div class="pills">${pills}</div>` + meter("SPFM", m.spfm, 0, 0.8) + meter("LFM", m.lfm, 1, 0.5) +
+    `<div class="met"><div class="n"><span>λSPF + λRF</span><span>of ${m.total.toFixed(1)} FIT</span></div><div class="v">${m.pm.toFixed(2)} FIT</div>
+     <div class="note">ASIL ${t.asil} needs &lt; ${D.targets[t.asil][2]} FIT · latent ${m.lat.toFixed(2)} FIT</div></div>`;
+  grid();
+}
+function grid() {
+  const f = D.files[st.file], rows = all(f, st.goal);
+  const counts = {all: rows.length};
+  for (const r of rows) counts[r.cls] = (counts[r.cls] || 0) + 1;
+  $("classes").innerHTML = `<span class="lbl">Class</span>` + ["all", "SPF", "RF", "MPF", "safe"].map(k =>
+    `<button class="chip" type="button" aria-pressed="${st.cls === k}" data-k="${k}">${k === "all" ? "All" : k}<small>${counts[k] || 0}</small></button>`).join("");
+  $("classes").querySelectorAll("button").forEach(b => b.onclick = () => { st.cls = b.dataset.k; grid(); });
+  const q = st.q, match = r => (st.cls === "all" || r.cls === st.cls) && (!q ||
+    [r.r.id, r.r.mode, r.sm, f.sms[r.sm] || "", r.r.notes, r.c.id, r.c.part].join(" ").toLowerCase().includes(q));
+  const shown = rows.filter(match);
+  $("count").textContent = `${shown.length} of ${rows.length} failure modes · classified for ${st.goal}`;
+  let body = "", cur = null;
+  for (const r of shown) {
+    if (r.c !== cur) {
+      cur = r.c;
+      body += `<tr class="grp"><td>${esc(r.c.id)}</td><td colspan="2">${esc(r.c.part)}</td><td class="num">${r.c.lam}</td><td colspan="7" class="note">${esc(r.c.kind)} rate</td></tr>`;
+    }
+    const i = rows.indexOf(r);
+    body += `<tr class="fm${st.sel === i ? " on" : ""}" data-i="${i}" tabindex="0"><td>${esc(r.r.id)}${r.other ? ' <span class="star" title="classified for this goal by a per-goal entry">◆</span>' : ""}</td>
+      <td class="mode">${esc(r.r.mode)}</td><td><span class="c ${r.cls}">${r.cls}</span></td><td class="num">${r.lam.toFixed(2)}</td>
+      <td class="num">${r.r.dist}</td><td>${esc(r.sm.replace("FMD-", ""))}</td><td class="num">${r.dc === null ? "" : (r.dc * 100).toFixed(0) + "%"}</td>
+      <td class="num cs">${n2(r.spf)}</td><td class="num cr">${n2(r.rf)}</td><td class="num cl">${n2(r.lat)}</td><td>${esc(r.r.dfmea)}</td></tr>`;
+  }
+  const m = metrics(rows);
+  $("grid").innerHTML = shown.length ? `<table><thead><tr><th>ID</th><th>Failure mode</th><th>Class</th><th>λ FIT</th><th>Dist</th><th>SM</th><th>DC</th><th>λSPF</th><th>λRF</th><th>λlat</th><th>DFMEA</th></tr></thead>
+    <tbody>${body}</tbody><tfoot><tr><td>Σ</td><td>All safety-related rows (filters do not change the totals)</td><td></td><td class="num">${m.total.toFixed(1)}</td><td></td><td></td><td></td>
+    <td class="num cs">${m.spf.toFixed(2)}</td><td class="num cr">${m.rf.toFixed(2)}</td><td class="num cl">${m.lat.toFixed(2)}</td><td></td></tr></tfoot></table>`
+    : `<p class="note" style="padding:16px">No failure mode matches. Clear the search or pick another class.</p>`;
+  $("grid").querySelectorAll("tr.fm").forEach(tr => {
+    tr.onclick = () => open(+tr.dataset.i);
+    tr.onkeydown = e => { if (e.key === "Enter") open(+tr.dataset.i); };
+  });
+}
+function open(i) {
+  const f = D.files[st.file], r = all(f, st.goal)[i];
+  st.sel = i;
+  document.querySelectorAll("tr.fm").forEach(tr => tr.classList.toggle("on", +tr.dataset.i === i));
+  const pg = (r.r.pg || []).map(p => `${p.goal}: ${p.violates_sg_directly ? "single-point" : "not single-point"}${p.reason ? " (" + p.reason + ")" : ""}`).join("\n");
+  const F = (l, v) => v ? `<div class="field"><span class="l">${l}</span><span class="v">${v}</span></div>` : "";
+  $("dtitle").textContent = r.r.id;
+  $("dbody").innerHTML = F("Failure mode", esc(r.r.mode)) +
+    F(`Class for ${esc(st.goal)}`, `<span class="c ${r.cls}">${r.cls}</span>${r.other ? " · set by a per-goal entry" : ""}`) +
+    F("λ of this mode", `${r.lam.toFixed(3)} FIT = ${r.c.lam} FIT × ${r.r.dist}`) +
+    F("Safety mechanism", r.sm ? `${esc(r.sm)}: ${esc(f.sms[r.sm] || "")} · DC ${(r.dc * 100).toFixed(0)} %` : "none credited") +
+    F("Split", `λSPF ${r.spf.toFixed(3)} · λRF ${r.rf.toFixed(3)} · λlat ${r.lat.toFixed(3)} FIT`) +
+    F("Other goals", esc(pg)) + F("Notes", esc(r.r.notes)) + F("DFMEA", esc(r.r.dfmea)) +
+    F("Component", `${esc(r.c.id)} · ${esc(r.c.part)}`) + F("Rate source", `${esc(r.c.kind)}: ${esc(r.c.source)}`);
+  $("drawer").hidden = false; $("dclose").focus();
+}
+function close() { $("drawer").hidden = true; st.sel = null; document.querySelectorAll("tr.on").forEach(t => t.classList.remove("on")); }
+init();
+</script>
