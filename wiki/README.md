@@ -44,6 +44,9 @@ in [`assurance/`](../assurance/README.md) that owns it.
 - The figures of "Building a fault tree" (`fta-symbols.svg`, `fta-item-to-tree.svg`, `fta-and-or.svg`,
   `fta-traps.svg`) are rendered by [`tools/wiki/fta_animations.py`](../tools/wiki/fta_animations.py), checked the same
   way against WP-A-04, the item definition and the TSC.
+- The figures of "What is a safety case?" (`case-what-is-it.svg`, `case-claim-tree.svg`, `case-evidence.svg`,
+  `case-defeaters.svg`) are rendered by [`tools/wiki/case_animations.py`](../tools/wiki/case_animations.py) from the
+  records in `assurance/case/`, with the same checks.
 - Standard GitHub Markdown, including alerts (`> [!IMPORTANT]`) and tables.
 
 Check locally before opening a pull request:
