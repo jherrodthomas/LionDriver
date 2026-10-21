@@ -235,7 +235,7 @@ package LionDriverRequirements {
         :>> verifMethod = "A, T-SIL";
     }
     requirement <'FSR-02.05'> fsr_02_05 : FunctionalSafetyRequirement {
-        doc /* On loss of communication with the SoC while engaged, and on a reset of the safety MCU (watchdog or fault reset) that interrupts granted actuation authority, the safety MCU shall give an acoustic warning that does not depend on the SoC. The reset case was added 2026-10-14 (DQ-054: the engaged state is kept across the reset; TSR-516(d)). */
+        doc /* When granted actuation authority ends for a reason other than a driver action that the safety MCU itself observes, the safety MCU shall give an acoustic warning that does not depend on the SoC. This covers the loss of communication with the SoC or of its commands, a fault the safety MCU detects, a disengagement reported by the SoC whose cruise cancel had no effect, and a reset of the safety MCU (watchdog or fault reset) that interrupts granted authority. The reset case was added 2026-10-14 (DQ-054: the engaged state is kept across the reset; TSR-516(d)); the trigger was widened 2026-10-21 to match TSR-516(b)/(c) (DQ-404 A; cancel-lag guard, lead 2026-10-21). */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-03 (panda buzzer)";
         :>> asil = "C";
