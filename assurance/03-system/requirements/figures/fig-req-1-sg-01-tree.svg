@@ -34,7 +34,7 @@
 <text x="314" y="186" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-01.02</text>
 <text x="400" y="186" font-size="10" fill="#475569" font-weight="700">ASIL C</text>
 <text x="314" y="203" font-size="10" fill="#475569">The envelope shall limit the rate of change of the commanded LKA</text>
-<text x="314" y="216" font-size="10" fill="#475569">torque (rise, fall and real-time window) to bounds derived from …</text>
+<text x="314" y="216" font-size="10" fill="#475569">torque (rise per frame and over a real-time window) to bounds …</text>
 <line x1="680" y1="197.0" x2="706" y2="197.0" stroke="#CBD5E1" stroke-width="1.4"/>
 <rect x="712" y="187.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
 <text x="753.0" y="201.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-103</text>
