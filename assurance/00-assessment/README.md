@@ -11,5 +11,6 @@ Standard clauses: n/a.
 | Folder | What it holds |
 |---|---|
 | [`iso26262-2018/`](iso26262-2018/README.md) | ARA-26262-2018-001 ISO 26262 documentary audit package |
+| [`iso26262-followup/`](iso26262-followup/README.md) | ISO 26262 assessment follow-up — hardware change and verification readiness |
 
 GitHub lists this folder's files above this page; each work product's document embeds its own figures.
