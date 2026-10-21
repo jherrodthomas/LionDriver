@@ -92,6 +92,11 @@
 # rev 1.7 at BL-006, lead answer DQ-403 A applied: #342 (5d4ba6e, after BL-006) holds a menu change of Experimental Mode or the following distance until
 #   disengagement on the reference platform. SWF-067.C2 rewritten to a defect in that hold, O8 D10 -> O5 D8 (still AP H; tests in CI, not proven by mutation);
 #   new safety mechanism on SWF-067; SWF-ACT-079 completed. Totals unchanged: 90 failure modes, 141 causes (130 H, 1 M, 10 L).
+# rev 1.8 (2026-10-21, FSC/TSC routes walk #395, text only, ratings unchanged): the engaged-mismatch path is 0.3 s with a siren while
+#   PCM cruise stays on since panda f4803c5 (reference build, after BL-006; TSR-307(a), TSR-516(c)), and the panda siren also sounds on a
+#   TX-arrival revocation since 8a69ccf (DQ-404 A, TSR-516(b)). SWF-014, -020, -030, -036, -039, -040 and -048 say so beside the BL-006
+#   'about 3 s'; SWF-014, -036, -039, -040 and -048 carry an open note that their re-rating is pending against the next baseline.
+#   Plant numbers from assurance/sim/results/engaged-mismatch.md (synthetic, no rating credit).
 # Post rev 1.4, FTA WP-A-04 v1.12 (BE-1.25 in the SG-04 tree), ratings unchanged: SWF-055 and SWF-089 gain HZ-006 end effects (an authority
 #   grant covers longitudinal commands, as SWF-007). SWF-002 stays steering-only (HZ-001); its note says why HZ-006 and HZ-010 do not apply.
 #
@@ -141,7 +146,7 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.7"
+  revision: "1.8"
   status: draft
   baseline: BL-006
   rating_tables: RT-2
@@ -1668,7 +1673,8 @@ failure_modes:
     element: SWF-SE-011
     prevention_controls:
     - description: 'TX arrival supervision in the 100 Hz safety task, started at the grant (safety.h tx_arrival_checks, toyota.h:599-606); timeouts from TSR-408,
-        not yet confirmed on reference drive logs (IA tx-arrival OI-1). The engaged-mismatch path (about 3 s) is unchanged'
+        not yet confirmed on reference drive logs (IA tx-arrival OI-1). The engaged-mismatch path (about 3 s at BL-006) revokes 0.3 s after the
+        first not-engaged heartbeat since panda f4803c5, reference build, after BL-006 (TSR-307(a))'
       ref: opendbc_repo/opendbc/safety/modes/toyota.h
     detection_controls:
     - description: 'Reference-variant safety tests test_tx_arrival_supervision (at the timeout allowed, 1 us later revoked), test_tx_arrival_starts_at_grant and
@@ -1683,8 +1689,13 @@ failure_modes:
     - SWF-ACT-007
   safety_mechanisms:
   - description: 'Heartbeat loss: authority revoked after 0.3 s (TSR-407); SILENT after 5 s; engaged mismatch after about 3 s; siren for 3 s when the 0.3 s
-      revocation removes granted authority (panda c33343b, all builds, BL-005); TX arrival revocation in 50/100 ms (TSR-408, reference build)'
+      revocation removes granted authority (panda c33343b, all builds, BL-005); TX arrival revocation in 50/100 ms (TSR-408, reference build).
+      After BL-006, reference build: the siren also sounds when the TX arrival check revokes (panda 8a69ccf, DQ-404 A, TSR-516(b)), and the
+      engaged mismatch revokes 0.3 s after the first not-engaged heartbeat, with the siren 0.5 s after that heartbeat while PCM cruise
+      stays on (panda f4803c5, TSR-307(a), TSR-516(c)); plant model 0.39-0.48 s revocation and 0.63-0.88 s siren after selfdrived stops
+      (assurance/sim/results/engaged-mismatch.md, synthetic, no rating credit)'
     ref: panda/board/main.c
+  notes: 'Open, 2026-10-21. The engaged-mismatch revoke is 0.3 s with a siren since panda f4803c5 (after BL-006); whether that lowers a rating or the AP of this row is pending a re-rating against the next baseline.'
 - id: SWF-015
   element: SWF-SE-012
   function: SWF-FN-011
@@ -1905,7 +1916,7 @@ failure_modes:
       do not detect an in-limit stale value (WP-A-04 SPF-14)
     ref: opendbc_repo/opendbc/safety/modes/toyota.h:270-274
   - description: selfdrived commIssue/processNotRunning (SOFT_DISABLE, QM) drops enabled. pandad then sends engaged=0, and the panda withdraws authority after 3 mismatches
-      at 1 Hz, about 3 s (SWF-014.C2)
+      at 1 Hz, about 3 s (SWF-014.C2); since panda f4803c5, reference build, after BL-006, 0.3 s after the first not-engaged heartbeat (TSR-307(a))
     ref: panda/board/main.c:226-233
   - description: 'BL-005, reference build: when no STEERING_LKA arrives for 50 ms (ACC_CONTROL 100 ms) the panda revokes authority whatever the heartbeat says
       (TSR-408, SWF-014.C2). It covers the "none arrive" branch only; frames that keep arriving with a stale value are not detected'
@@ -2512,7 +2523,7 @@ failure_modes:
   safety_mechanisms:
   - description: Panda grants controls only on a PCM cruise rising edge with all RX checks valid (SWF-007, FSR-035); TX blocked otherwise
     ref: opendbc_repo/opendbc/safety/safety.h
-  - description: Panda withdraws controls on heartbeat engaged mismatch (about 3 s, SWF-014)
+  - description: Panda withdraws controls on heartbeat engaged mismatch (about 3 s at BL-006, SWF-014; 0.3 s since panda f4803c5, reference build, after BL-006, TSR-307(a))
     ref: panda/board/main.c
   notes: 'test_state_machine covers the state machine only; the generation of NO_ENTRY events is not unit tested (see SWF-032, SWF-034). REPLAY still needs the
     panda to have granted controls, so the PCM rising edge remains required.'
@@ -2875,7 +2886,10 @@ failure_modes:
     actions:
     - SWF-ACT-037
   safety_mechanisms:
-  - description: Panda withdraws controls on engaged mismatch (about 3 s) and heartbeat loss (0.3 s) (SWF-014)
+  - description: Panda withdraws controls on engaged mismatch (about 3 s at BL-006) and heartbeat loss (0.3 s) (SWF-014). Since panda f4803c5, reference build, after BL-006, the
+      engaged mismatch revokes 0.3 s after the first not-engaged heartbeat (TSR-307(a)) and the panda siren sounds 0.5 s after it while PCM
+      cruise stays on (TSR-516(c)); plant model, selfdrived stopped with the heartbeat going on, 0.39-0.48 s revocation and 0.63-0.88 s
+      siren (assurance/sim/results/engaged-mismatch.md, synthetic, no rating credit)
     ref: panda/board/main.c
   - description: UI and soundd critical alert after 5 s without selfdriveState (EL-05, QM)
     ref: openpilot/selfdrive/ui/soundd.py
@@ -2884,6 +2898,7 @@ failure_modes:
     timing_basis: code_derived
     timing_ref: 'openpilot/selfdrive/ui/soundd.py:23 (SELFDRIVE_STATE_TIMEOUT)'
   - description: Cluster indication from stock ECUs when item frames stop (XM-04, unverified)
+  notes: 'Open, 2026-10-21. The engaged-mismatch revoke is 0.3 s with a siren since panda f4803c5 (after BL-006); whether that lowers a rating or the AP of this row is pending a re-rating against the next baseline.'
 - id: SWF-037
   element: SWF-SE-035
   function: SWF-FN-035
@@ -3012,11 +3027,14 @@ failure_modes:
     - SWF-ACT-034
     - SWF-ACT-049
   safety_mechanisms:
-  - description: Panda engaged-mismatch counter revokes controls after about 3 s when the heartbeat says not engaged (SWF-014)
+  - description: Panda engaged-mismatch counter revokes controls after about 3 s when the heartbeat says not engaged (SWF-014; BL-006). Since panda f4803c5, reference build, after BL-006,
+      it revokes 0.3 s after the first not-engaged heartbeat (TSR-307(a)) and sounds the panda siren 0.5 s after that heartbeat while PCM
+      cruise stays on (TSR-516(c)), so cruise left on after the item disengages is announced by the panda independently of the SoC;
+      an ordinary disengagement stays silent when PCM cruise drops within 0.5 s (change-2026-10-21-panda-engaged-mismatch)
     ref: panda/board/main.c
   notes: 'Vehicle behaviour with PCM cruise on and the item not sending a valid ACC command is not characterised for the Corolla (uncertain). BL-005: in the reference
     build the panda grants on a PCM edge only with the heartbeat engaged flag (TSR-301), so a stock cruise engagement the host does not take no longer grants
-    authority for up to 3 s.'
+    authority for up to 3 s. Open, 2026-10-21. The engaged-mismatch revoke is 0.3 s with a siren since panda f4803c5 (after BL-006); whether that lowers a rating or the AP of this row is pending a re-rating against the next baseline.'
 - id: SWF-040
   element: SWF-SE-041
   function: SWF-FN-040
@@ -3028,7 +3046,7 @@ failure_modes:
       true and carControl keeps being published
   - level: next_higher
     description: Steering and acceleration continue with no supervision of model, localizer or comm faults; pandad drops heartbeat engaged
-      after 0.1 s (pandad.cc:424) but the panda withdraws only after the engaged-mismatch count, about 3 s (panda main.c:226-232, SWF-014.C2)
+      after 0.1 s (pandad.cc:424) but the panda withdraws only after the engaged-mismatch count, about 3 s (panda main.c:226-232, SWF-014.C2); 0.3 s since panda f4803c5, reference build, after BL-006 (TSR-307(a))
   - level: end
     description: About 3 s of unsupervised lateral control at BL-004; at BL-005 actuation stops 0.1 s after the last selfdriveState (latActive false), and the panda
       revokes 50 ms after frames stop
@@ -3061,16 +3079,17 @@ failure_modes:
     - SWF-ACT-047
   safety_mechanisms:
   - description: pandad sends heartbeat engaged=false 0.1 s after selfdriveState stops; panda withdraws controls after 3 mismatches at 1 Hz
-      (about 3 s); panda withdraws on brake and PCM cruise off independently (SWF-008, SWF-009)
+      (about 3 s at BL-006; since panda f4803c5, reference build, after BL-006, 0.3 s after the first not-engaged heartbeat with the siren 0.5 s after it while cruise
+      stays on, TSR-307(a), TSR-516(c)); panda withdraws on brake and PCM cruise off independently (SWF-008, SWF-009)
     ref: openpilot/selfdrive/pandad/pandad.cc; panda/board/main.c
   - description: 'BL-005: controlsd gates latActive/longActive on fresh selfdriveState (TSR-602); the panda revokes when STEERING_LKA or ACC_CONTROL stop arriving
       (TSR-408, reference build)'
     ref: openpilot/selfdrive/controls/controlsd.py:118-120
   - description: Torque magnitude/rate and acceleration range limits in the panda and CarController bound the actuation (SWF-001, SWF-003)
   notes: Host counterpart of SWF-014.C2. If selfdrived dies, selfdrived's own commIssue/processNotRunning cannot be raised, so no device
-    alert is given either (manager does not alert). The 3 s figure is the panda mismatch path at BL-004; TSR-307a (0.3 s) is not implemented. BL-005 bounds the
+    alert is given either (manager does not alert). The 3 s figure is the panda mismatch path at BL-004; TSR-307a (0.3 s) is not implemented at BL-006 and is implemented in the reference build since panda f4803c5. BL-005 bounds the
     actuation, not the missing alert; the driver sees "Controls Mismatch" only if selfdrived is alive, so after a selfdrived crash the panda revocation is silent
-    apart from the siren rules (SWF-036, SWF-ACT-037).
+    apart from the siren rules (SWF-036, SWF-ACT-037); since panda f4803c5 those rules sound the siren 0.5 s after the first not-engaged heartbeat while PCM cruise stays on (TSR-516(c)). Open, 2026-10-21. The engaged-mismatch revoke is 0.3 s with a siren since panda f4803c5 (after BL-006); whether that lowers a rating or the AP of this row is pending a re-rating against the next baseline.
 - id: SWF-041
   element: SWF-SE-045
   function: SWF-FN-045
@@ -3506,7 +3525,8 @@ failure_modes:
   - level: local
     description: CANCEL_REQ not set while CS.cruiseState.enabled and the item is disengaged
   - level: next_higher
-    description: PCM cruise stays engaged; the panda keeps controls allowed until the heartbeat-mismatch revoke (about 3 s)
+    description: PCM cruise stays engaged; the panda keeps controls allowed until the heartbeat-mismatch revoke (about 3 s at BL-006; since panda f4803c5, reference build, after BL-006, 0.3 s after the
+      first not-engaged heartbeat, with the panda siren 0.5 s after it while cruise stays on, TSR-307(a), TSR-516(c))
   - level: end
     description: Stock/PCM cruise active while the driver believes the item is off
     hazard: HZ-012
@@ -3538,6 +3558,7 @@ failure_modes:
   safety_mechanisms:
   - description: PCM cancels on brake (XM-03, external); panda withdraws controls on brake and PCM cruise off, and on heartbeat mismatch
       after about 3 s
+  notes: 'Open, 2026-10-21. The engaged-mismatch revoke is 0.3 s with a siren since panda f4803c5 (after BL-006); whether that lowers a rating or the AP of this row is pending a re-rating against the next baseline.'
 - id: SWF-049
   element: SWF-SE-041
   function: SWF-FN-041
