@@ -8,57 +8,69 @@
 # "Within n ticks" is a distance between samples and is written as is.
 # The FRETish is AI-drafted; `check_fretish.py` checks it against the grammar, the glossary and the source quotes,
 # and `fret_formalize.py` stores FRET's formulas for it.
+# Realizability (TE-03 P3): `role` says who sets a variable (input: the car, the SoC or the envelope's own state;
+# output: what the envelope decides). Requirements whose id contains "assumption" constrain the inputs (FRET's rule).
 
 glossary:
-  - {name: lka_frame_rx, type: bool, meaning: "a STEERING_LKA (0x2E4) frame from the SoC is in the TX hook this tick", code: "opendbc safety/modes/toyota.h tx hook, 0x2E4 branch"}
-  - {name: steer_torque_cmd, type: int, unit: raw, meaning: "STEER_TORQUE_CMD of that frame", code: "desired_torque, toyota.h"}
-  - {name: tau_max, type: int, unit: raw, meaning: "torque bound of TSR-102; baseline 1500", code: "TOYOTA_TORQUE_STEERING_LIMITS.max_torque"}
-  - {name: lka_frame_rejected, type: bool, meaning: "the envelope does not forward the frame (tx = false)", code: "toyota.h tx hook"}
-  - {name: torque_reference, type: int, unit: raw, meaning: "r of TSR-103's frame rate check: the previous frame's torque; 0 after a rejected frame or while authority is not granted", code: "desired_torque_last, safety/lateral.h"}
-  - {name: delta_up, type: int, unit: raw, meaning: "TSR-103 Δ_up; baseline 15 per frame", code: "max_rate_up"}
-  - {name: delta_down, type: int, unit: raw, meaning: "TSR-103 Δ_down: least fall per frame while the command exceeds the measured torque by more than Δ_meas; baseline 25", code: "max_rate_down"}
-  - {name: torque_meas_max, type: int, unit: raw, meaning: "largest measured EPS torque of the last 6 samples, scaled, widened by 1 (TSR-104)", code: "torque_meas.max"}
-  - {name: torque_meas_min, type: int, unit: raw, meaning: "smallest measured EPS torque of the last 6 samples, scaled, widened by 1 (TSR-104)", code: "torque_meas.min"}
-  - {name: delta_meas, type: int, unit: raw, meaning: "TSR-104 Δ_meas; baseline 350", code: "max_torque_error"}
-  - {name: torque_rt_reference, type: int, unit: raw, meaning: "r of TSR-103's window check: the torque at the start of the current real-time window, which restarts with the first frame more than 250 ms after its start", code: "rt_torque_last, lateral.h"}
-  - {name: delta_rt, type: int, unit: raw, meaning: "TSR-103 window bound; baseline 450 per 250 ms", code: "max_rt_delta"}
-  - {name: lat_authority, type: bool, meaning: "lateral authority granted", code: "controls_allowed"}
-  - {name: eps_lka_fault, type: bool, meaning: "LKA_STATE of EPS_STATUS (0x262) is in the fault set", code: "safety_eps_fault, toyota.h"}
-  - {name: eps_status_timeout, type: bool, meaning: "0x262 missing beyond its RX timeout (TSR-401)", code: "RX check of 0x262"}
-  - {name: cause_reported, type: bool, meaning: "the revocation cause is reported to the SoC", code: "pandaState fields"}
-  - {name: car_safety_mode, type: mode, meaning: "the envelope runs a car safety mode (not SILENT, not NO_OUTPUT)", code: "current_safety_mode"}
-  - {name: heartbeat_rx, type: bool, meaning: "a SoC heartbeat (0xf3) arrives this tick", code: "heartbeat_monitor.h"}
-  - {name: authority_any, type: bool, meaning: "any actuation authority granted (lateral or longitudinal)", code: "controls_allowed"}
-  - {name: authority_granted, type: bool, meaning: "actuation authority granted", code: "controls_allowed"}
-  - {name: hb_engaged, type: bool, meaning: "the engaged flag of the last SoC heartbeat received", code: "heartbeat_engaged, main.c"}
-  - {name: hb_loss_detected, type: bool, meaning: "the TSR-407 heartbeat monitor detects the loss this tick", code: "heartbeat_revoke, main.c"}
-  - {name: siren_on, type: bool, meaning: "the panda siren is sounding: a siren request is active (the output itself toggles on every other 8 Hz tick as the tone pattern)", code: "siren_enabled, siren_countdown, eps_fault_siren_active, heartbeat_siren_active; main.c"}
-  - {name: envelope_revoked, type: bool, meaning: "the envelope ends granted authority this tick", code: "controls_allowed true -> false"}
-  - {name: revoke_cause_listed, type: bool, meaning: "the cause is one listed in TSR-516(b) other than an EPS fault state (FR-516b-eps): missing command frames, RX fault, rejected command, TX failure or bus-off, platform fault", code: "safety_tx_arrival_revoked, RX checks, tx violations, bus-off, fault_status"}
-  - {name: not_engaged_ticks, type: int, unit: tick, meaning: "safety-task ticks, the first counted as 1, in which the heartbeat has reported not engaged since it first did while authority was granted; 0 when it reports engaged", code: "engaged_mismatch_ticks, drivers/engaged_mismatch.h"}
-  - {name: pcm_cruise_active, type: bool, meaning: "PCM cruise state reports active", code: "cruise_engaged_prev"}
+  - {name: lka_frame_rx, type: bool, role: input, meaning: "a STEERING_LKA (0x2E4) frame from the SoC is in the TX hook this tick", code: "opendbc safety/modes/toyota.h tx hook, 0x2E4 branch"}
+  - {name: steer_torque_cmd, type: int, role: input, unit: raw, meaning: "STEER_TORQUE_CMD of that frame", code: "desired_torque, toyota.h"}
+  - {name: tau_max, type: int, role: input, unit: raw, meaning: "torque bound of TSR-102; baseline 1500", code: "TOYOTA_TORQUE_STEERING_LIMITS.max_torque"}
+  - {name: lka_frame_rejected, type: bool, role: output, meaning: "the envelope does not forward the frame (tx = false)", code: "toyota.h tx hook"}
+  - {name: torque_reference, type: int, role: input, unit: raw, meaning: "r of TSR-103's frame rate check: the previous frame's torque; 0 after a rejected frame or while authority is not granted", code: "desired_torque_last, safety/lateral.h"}
+  - {name: delta_up, type: int, role: input, unit: raw, meaning: "TSR-103 Δ_up; baseline 15 per frame", code: "max_rate_up"}
+  - {name: delta_down, type: int, role: input, unit: raw, meaning: "TSR-103 Δ_down: least fall per frame while the command exceeds the measured torque by more than Δ_meas; baseline 25", code: "max_rate_down"}
+  - {name: torque_meas_max, type: int, role: input, unit: raw, meaning: "largest measured EPS torque of the last 6 samples, scaled, widened by 1 (TSR-104)", code: "torque_meas.max"}
+  - {name: torque_meas_min, type: int, role: input, unit: raw, meaning: "smallest measured EPS torque of the last 6 samples, scaled, widened by 1 (TSR-104)", code: "torque_meas.min"}
+  - {name: delta_meas, type: int, role: input, unit: raw, meaning: "TSR-104 Δ_meas; baseline 350", code: "max_torque_error"}
+  - {name: torque_rt_reference, type: int, role: input, unit: raw, meaning: "r of TSR-103's window check: the torque at the start of the current real-time window, which restarts with the first frame more than 250 ms after its start", code: "rt_torque_last, lateral.h"}
+  - {name: delta_rt, type: int, role: input, unit: raw, meaning: "TSR-103 window bound; baseline 450 per 250 ms", code: "max_rt_delta"}
+  - {name: lat_authority, type: bool, role: output, meaning: "lateral authority granted", code: "controls_allowed"}
+  - {name: eps_lka_fault, type: bool, role: input, meaning: "LKA_STATE of EPS_STATUS (0x262) is in the fault set", code: "safety_eps_fault, toyota.h"}
+  - {name: eps_status_timeout, type: bool, role: input, meaning: "0x262 missing beyond its RX timeout (TSR-401)", code: "RX check of 0x262"}
+  - {name: cause_reported, type: bool, role: output, meaning: "the revocation cause is reported to the SoC", code: "pandaState fields"}
+  - {name: car_safety_mode, type: mode, role: input, meaning: "the envelope runs a car safety mode (not SILENT, not NO_OUTPUT)", code: "current_safety_mode"}
+  - {name: heartbeat_rx, type: bool, role: input, meaning: "a SoC heartbeat (0xf3) arrives this tick", code: "heartbeat_monitor.h"}
+  - {name: authority_any, type: bool, role: output, meaning: "any actuation authority granted (lateral or longitudinal)", code: "controls_allowed"}
+  - {name: authority_granted, type: bool, role: output, meaning: "actuation authority granted", code: "controls_allowed"}
+  - {name: hb_engaged, type: bool, role: input, meaning: "the engaged flag of the last SoC heartbeat received", code: "heartbeat_engaged, main.c"}
+  - {name: hb_loss_detected, type: bool, role: input, meaning: "the TSR-407 heartbeat monitor detects the loss this tick", code: "heartbeat_revoke, main.c"}
+  - {name: siren_on, type: bool, role: output, meaning: "the panda siren is sounding: a siren request is active (the output itself toggles on every other 8 Hz tick as the tone pattern)", code: "siren_enabled, siren_countdown, eps_fault_siren_active, heartbeat_siren_active; main.c"}
+  - {name: envelope_revoked, type: bool, role: output, meaning: "the envelope ends granted authority this tick", code: "controls_allowed true -> false"}
+  - {name: revoke_cause_listed, type: bool, role: input, meaning: "the cause is one listed in TSR-516(b) other than an EPS fault state (FR-516b-eps): missing command frames, RX fault, rejected command, TX failure or bus-off, platform fault", code: "safety_tx_arrival_revoked, RX checks, tx violations, bus-off, fault_status"}
+  - {name: not_engaged_ticks, type: int, role: input, unit: tick, meaning: "safety-task ticks, the first counted as 1, in which the heartbeat has reported not engaged since it first did while authority was granted; 0 when it reports engaged", code: "engaged_mismatch_ticks, drivers/engaged_mismatch.h"}
+  - {name: pcm_cruise_active, type: bool, role: input, meaning: "PCM cruise state reports active", code: "cruise_engaged_prev"}
 
 requirements:
   - id: FR-101
     tsr: TSR-101
     source: "The envelope shall reject every STEERING_LKA (`0x2E4`) frame whose STEER_TORQUE_CMD magnitude exceeds the torque bound τ_max(v) of TSR-102."
-    fretish: "whenever lka_frame_rx & absReal(steer_torque_cmd) > tau_max the envelope shall immediately satisfy lka_frame_rejected"
+    fretish: "whenever lka_frame_rx & absInt(steer_torque_cmd) > tau_max the envelope shall immediately satisfy lka_frame_rejected"
     findings: []
   - id: FR-103a
     tsr: TSR-103
     source: "The envelope shall reject a `0x2E4` frame whose torque lies outside [min(r, 0) − Δ, max(r, 0) + Δ], where r is the previous frame's torque and Δ = Δ_up for the frame rate check"
-    fretish: "whenever lka_frame_rx & (steer_torque_cmd > maxReal(torque_reference, 0) + delta_up | steer_torque_cmd < minReal(torque_reference, 0) - delta_up) the envelope shall immediately satisfy lka_frame_rejected"
+    fretish: "whenever lka_frame_rx & (steer_torque_cmd > maxInt(torque_reference, 0) + delta_up | steer_torque_cmd < minInt(torque_reference, 0) - delta_up) the envelope shall immediately satisfy lka_frame_rejected"
     findings: [FF-01, FF-07]
   - id: FR-103b
     tsr: TSR-103
     source: "While the command exceeds the measured EPS torque by more than Δ_meas, it shall fall by at least Δ_down per frame (TSR-104)."
-    fretish: "whenever lka_frame_rx & ((steer_torque_cmd > maxReal(torque_meas_max, 0) + delta_meas & steer_torque_cmd > torque_reference - delta_down) | (steer_torque_cmd < minReal(torque_meas_min, 0) - delta_meas & steer_torque_cmd < torque_reference + delta_down)) the envelope shall immediately satisfy lka_frame_rejected"
-    findings: [FF-01]
+    fretish: "whenever lka_frame_rx & ((steer_torque_cmd > maxInt(torque_meas_max, 0) + delta_meas & steer_torque_cmd > torque_reference - delta_down) | (steer_torque_cmd < minInt(torque_meas_min, 0) - delta_meas & steer_torque_cmd < torque_reference + delta_down)) the envelope shall immediately satisfy lka_frame_rejected"
+    findings: [FF-01, FF-08]
   - id: FR-103c
     tsr: TSR-103
     source: "or r is the torque at the start of the current real-time window and Δ = Δ_rt for the window check; the window restarts with the first frame more than 250 ms after its start"
-    fretish: "whenever lka_frame_rx & (steer_torque_cmd > maxReal(torque_rt_reference, 0) + delta_rt | steer_torque_cmd < minReal(torque_rt_reference, 0) - delta_rt) the envelope shall immediately satisfy lka_frame_rejected"
+    fretish: "whenever lka_frame_rx & (steer_torque_cmd > maxInt(torque_rt_reference, 0) + delta_rt | steer_torque_cmd < minInt(torque_rt_reference, 0) - delta_rt) the envelope shall immediately satisfy lka_frame_rejected"
     findings: [FF-02, FF-07]
+  - id: FR-103d
+    tsr: TSR-103
+    source: "and any change toward zero is accepted"
+    fretish: "whenever lka_frame_rx & ((torque_reference >= 0 & steer_torque_cmd >= 0 & steer_torque_cmd <= torque_reference) | (torque_reference <= 0 & steer_torque_cmd <= 0 & steer_torque_cmd >= torque_reference)) the envelope shall immediately satisfy !lka_frame_rejected"
+    findings: [FF-08]
+  - id: FR-104
+    tsr: TSR-104
+    source: "The envelope shall reject `0x2E4` frames whose torque exceeds the measured EPS motor torque (`0x260` STEER_TORQUE_EPS scaled by the EPS factor of the safety parameter) by more than Δ_meas"
+    fretish: "whenever lka_frame_rx & (steer_torque_cmd > maxInt(torque_meas_max, 0) + delta_meas | steer_torque_cmd < minInt(torque_meas_min, 0) - delta_meas) the envelope shall immediately satisfy lka_frame_rejected"
+    findings: [FF-08]
   - id: FR-110
     tsr: TSR-110
     source: "while lateral authority is granted, shall revoke lateral authority and report the cause when LKA_STATE indicates an EPS fault or LKA unavailability, or when EPS_STATUS is missing beyond its timeout (TSR-401)"
@@ -104,6 +116,26 @@ requirements:
     source: "for at least 3 s or for as long as its condition holds if longer"
     fretish: "upon siren_on the envelope shall for 299 ticks satisfy siren_on"
     findings: [FF-05]
+  - id: FA-101-assumption
+    tsr: TSR-101
+    source: "Until TSR-102 is implemented, τ_max is the baseline 1500 raw."
+    fretish: "the envelope shall always satisfy tau_max = 1500"
+    findings: []
+  - id: FA-103-assumption
+    tsr: TSR-103
+    source: "the baseline values are Δ_up 15 and Δ_down 25 raw per frame and Δ_rt 450 raw per 250 ms"
+    fretish: "the envelope shall always satisfy delta_up = 15 & delta_down = 25 & delta_rt = 450"
+    findings: []
+  - id: FA-104-assumption
+    tsr: TSR-104
+    source: "Baseline Δ_meas = 350 raw."
+    fretish: "the envelope shall always satisfy delta_meas = 350 & torque_meas_min <= torque_meas_max"
+    findings: []
+  - id: FA-103r-assumption
+    tsr: TSR-103
+    source: "After a rejected frame, or while authority is not granted, the reference for these checks is 0."
+    fretish: "the envelope shall always satisfy absInt(torque_reference) <= tau_max & torque_reference <= maxInt(torque_rt_reference, 0) + delta_rt & torque_reference >= minInt(torque_rt_reference, 0) - delta_rt"
+    findings: []
 
 findings:
   - id: FF-01
@@ -184,3 +216,18 @@ findings:
     evidence: "lateral.h dist_to_meas_check and rt_torque_rate_limit_check"
     route: WP-S-02 owner
     status: 'fixed in WP-S-02 v0.53 (#391) before merge: the interval rule'
+  - id: FF-08
+    tsr: TSR-103
+    kind: requirements contradict each other (realizability)
+    summary: >-
+      Found by the P3 realizability check (fret-realizability.md: minimal conflicting sets {FR-103b, FR-103d} and
+      {FR-103d, FR-104}). TSR-103 v0.53 says "any change toward zero is accepted", but also that while the command
+      exceeds the measured EPS torque by more than Δ_meas it shall fall by at least Δ_down per frame, and TSR-104
+      rejects every frame that exceeds the measured torque by more than Δ_meas. A frame above that bound that moves
+      toward zero must then be both accepted and rejected. The code does neither text: dist_to_meas_check allows up to
+      max(r - Δ_down, max(meas, 0) + Δ_meas), so above the bound a fall of at least Δ_down is accepted (against
+      TSR-104) and a smaller fall toward zero is rejected (against "any change toward zero"). One rule matching the
+      code: a frame more than Δ_meas beyond the measured torque (from 0) is rejected unless it falls toward zero by
+      at least Δ_down from r.
+    evidence: "fret-realizability.md, realizability/envelope_cc0.lus; opendbc safety/lateral.h dist_to_meas_check"
+    route: WP-S-02 owner (TSR-103 and TSR-104 wording)

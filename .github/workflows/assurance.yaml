@@ -354,9 +354,10 @@ jobs:
   fret:
     name: FRETish restatements of the panda TSRs
     # NASA FRET pilot (TE-03; assurance/models/fret). Checks grammar shape, glossary and the quoted WP-S-02 text,
-    # then installs the FRET CLI at the pinned commit and checks the stored formulas against it. No evidence credit.
+    # then installs the FRET CLI at the pinned commit and checks the stored formulas against it, then installs Kind 2 and
+    # Z3 and checks the realizability page and contracts (P3). No evidence credit.
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
     - uses: actions/checkout@v7
       with:
@@ -374,6 +375,15 @@ jobs:
       run: assurance/models/fret/install_fret.sh "$RUNNER_TEMP/fret"
     - name: Stored FRET formulas match what FRET produces for the current sentences (step P2)
       run: FRET_DIR="$RUNNER_TEMP/fret/fret-electron" python3 assurance/models/fret/fret_formalize.py --check
+    - name: Install Kind 2 v2.2.0 and Z3 4.14.1 (pinned by SHA-256)
+      run: |
+        assurance/models/fret/install_solvers.sh "$RUNNER_TEMP/solvers"
+        echo "$RUNNER_TEMP/solvers" >> "$GITHUB_PATH"
+        echo "$RUNNER_TEMP/solvers/z3-4.14.1/bin" >> "$GITHUB_PATH"
+    - name: Realizability page and contracts are current, and its tests (step P3)
+      run: |
+        FRET_DIR="$RUNNER_TEMP/fret/fret-electron" python3 assurance/models/fret/test_fret_realizability.py
+        FRET_DIR="$RUNNER_TEMP/fret/fret-electron" python3 assurance/models/fret/fret_realizability.py --check
 
   sim-plant:
     name: simulation plant model
