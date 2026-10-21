@@ -11,6 +11,7 @@
 - [From hazard to test](From-hazard-to-test.md)
 - [Deriving and writing safety requirements](Deriving-and-writing-safety-requirements.md)
 - [Building a fault tree](Building-a-fault-tree.md)
+- [Hardware safety and interference](Hardware-safety-and-interference.md)
 - [For the assessor](For-the-assessor.md)
 - [Reference vehicle](Reference-vehicle.md)
 - [Contributor guide](Contributor-guide.md)

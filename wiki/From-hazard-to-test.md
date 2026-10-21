@@ -57,7 +57,8 @@ element, which signal, how fast. Change the design and the TSRs change; the FSR 
 Each TSR is allocated to an element of the architecture and broken down into **software** requirements
 ([WP-W-02](../assurance/05-software/WP-W-02-software-safety-requirements.md)) and **hardware** requirements
 ([WP-H-01](../assurance/04-hardware/WP-H-01-hardware-safety-requirements.md)). Here the software owns the check, and
-the hardware owns the guarantee that the check keeps running.
+the hardware owns the guarantee that the check keeps running. How hardware failures are counted, and how the QM parts are kept from disturbing the
+safety parts, is in [Hardware safety and interference](Hardware-safety-and-interference.md).
 
 ## 3. How the engineers meet them
 
