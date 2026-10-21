@@ -262,7 +262,7 @@
 - id: SWSR-201
   kind: swsr
   text: "The Toyota TX hook shall reject every ACC_CONTROL (`0x343`, bus 0) frame whose ACCEL_CMD exceeds a_max = 2000 raw (+2.0 m/s²)."
-  asil: "B"
+  asil: "C"
   parents: [TSR-201]
   parent_text: "TSR-201"
   other_parents: false
@@ -278,7 +278,7 @@
 - id: SWSR-201a
   kind: swsr
   text: "The Toyota TX hook shall decode ACCEL_CMD as signed 16-bit from data bytes 0–1 (big-endian, 0.001 m/s² per raw)."
-  asil: "B"
+  asil: "C"
   parents: [TSR-201, TSR-202]
   parent_text: "TSR-201, TSR-202"
   other_parents: false
@@ -310,7 +310,7 @@
 - id: SWSR-203
   kind: swsr
   text: "While longitudinal authority is not granted (not engaged, or gas pressed in the previous RX frame), the TX hook shall accept `0x343` only with ACCEL_CMD equal to the inactive value 0, defined as a named constant."
-  asil: "B"
+  asil: "C"
   parents: [TSR-203]
   parent_text: "TSR-203"
   other_parents: false
@@ -326,7 +326,7 @@
 - id: SWSR-204
   kind: swsr
   text: "The TX hook shall reject a `0x343` frame whose ACCEL_CMD increases relative to the last accepted value faster than j_up (raw per frame; 0 m/s² taken as last value at engagement)."
-  asil: "B"
+  asil: "C"
   parents: [TSR-204]
   parent_text: "TSR-204"
   other_parents: false
@@ -358,7 +358,7 @@
 - id: SWSR-206
   kind: swsr
   text: "If vehicle characterisation does not show a bounded PCM response to a step to the inactive value, the TX hook shall, for at most 1 s after revocation, accept `0x343` values that move monotonically towards 0 at no more than j_down/j_up."
-  asil: "B"
+  asil: "C"
   parents: [TSR-206]
   parent_text: "TSR-206"
   other_parents: false
@@ -374,7 +374,7 @@
 - id: SWSR-207
   kind: swsr
   text: "The TX hook shall check PERMIT_BRAKING, CANCEL_REQ, RELEASE_STANDSTILL and ACCEL_CMD_ALT of `0x343` against the values allowed in the current authority state; without authority, only frames that request no acceleration, no braking and no standstill release shall pass."
-  asil: "B"
+  asil: "C"
   parents: [TSR-207]
   parent_text: "TSR-207"
   other_parents: false
@@ -550,7 +550,7 @@
 - id: SWSR-309
   kind: swsr
   text: "`controls_allowed` shall be set true only by the PCM rising-edge logic of SWSR-301; no comms handler, heartbeat or mode-setting path shall set it true."
-  asil: "B"
+  asil: "C"
   parents: [TSR-309]
   parent_text: "TSR-309"
   other_parents: false
@@ -1110,7 +1110,7 @@
 - id: SWSR-509
   kind: swsr
   text: "MCU die temperature outside the specified range shall be a fault under SWSR-502."
-  asil: "B"
+  asil: "C"
   parents: [TSR-509]
   parent_text: "TSR-509"
   other_parents: false
@@ -1318,7 +1318,7 @@
 - id: SWSR-516
   kind: swsr
   text: "The firmware shall activate its siren within 0.5 s, without SoC involvement, for at least 3 s or for as long as the condition holds if longer, at the level set by WP-S-04 M-05, when (a) the heartbeat is lost (SWSR-407) while authority was granted within the last 5 s; (b) authority is cleared while granted for any reason other than a brake press (SWSR-302) or PCM cruise inactive (SWSR-301): missing SoC command frames (SWSR-408), RX fault (SWSR-406), EPS fault (SWSR-110), rejected command (SWSR-108), TX failure or bus-off (SWSR-508), or platform fault (SWSR-502); (c) SWSR-516b fires (a heartbeat \"not engaged\", SWSR-307, whose cruise cancel had no effect)."
-  asil: "B"
+  asil: "C"
   parents: [TSR-516]
   parent_text: "TSR-516"
   other_parents: false
@@ -1334,7 +1334,7 @@
 - id: SWSR-516b
   kind: swsr
   text: "The envelope shall record the time at which the heartbeat first reports \"not engaged\" and shall flag a failed cancel when PCM_CRUISE CRUISE_ACTIVE is still 1 more than 0.5 s later."
-  asil: "B"
+  asil: "C"
   parents: [TSR-516]
   parent_text: "TSR-516"
   other_parents: false
