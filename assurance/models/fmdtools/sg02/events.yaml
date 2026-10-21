@@ -22,13 +22,12 @@ timing:
   ui_unresponsive_after_selfdrived_stop: {s: 5.0, source: "WP-A-04 §4 BE-2.21: ui/soundd show System Unresponsive only after 5 s"}
   control_stop_after_selfdrived_stop: {s: 0.1, source: "WP-A-04 §4 BE-2.21; plant engaged-mismatch.md: controlsd drops latActive once selfdriveState is 0.1 s stale (TSR-602); card keeps sending frames without a torque request"}
   # The siren sounds on the revocations of the TX-arrival check (T-34), a heartbeat loss and an EPS fault (TSR-516(b),
-  # DQ-404 A, panda 8a69ccf). Not after a selfdrived stop: card keeps sending frames without a torque request, so the
-  # arrival check does not revoke, and the 1 Hz engaged-mismatch revocation (2.25-3.16 s) sounds no siren; the heartbeat
-  # "not engaged" trigger of TSR-307(a) is not implemented (assurance/sim/results/engaged-mismatch.md: control lost at
-  # 0.1 s, host_stale_s; revoked 2.25-3.16 s; no siren; openpilot alert at 5.0 s).
-  # The plant (assurance/sim, real panda safety code at the current pin 8a69ccf) measures it from fault onset; the older paths are
-  # later upper bounds (EPS-fault persistence 0.96 s, WP-S-04 T-28; heartbeat 0.56 s, T-07a) and are not used.
+  # DQ-404 A, panda 8a69ccf), and since panda f4803c5 on the engaged-mismatch revocation after a selfdrived stop
+  # (TSR-307(a), TSR-516(c)). The plant (assurance/sim, real panda safety code at the current pin) measures each from
+  # fault onset; the older paths are later upper bounds (EPS-fault persistence 0.96 s, WP-S-04 T-28; heartbeat 0.56 s,
+  # T-07a) and are not used.
   siren_after_eps_fault: {s: 0.25, source: "Plant F-07: EPS fault, revoked 0.053 s, siren 0.25 s (sim/results/plant-results.md)"}
+  siren_after_selfdrived_stop: {s: 0.88, source: "Plant engaged-mismatch.md: card keeps sending frames without a torque request; pandad reports not engaged, the panda revokes at 0.39-0.48 s and the siren sounds at 0.63-0.88 s after the stop (TSR-307(a), TSR-516(c), panda f4803c5); the latest is used"}
   siren_after_heartbeat_loss: {s: 0.25, source: "Plant F-04a/F-04b: heartbeat lost, revoked 0.193/0.043 s, siren 0.25 s (plant-results.md; silent-stall.md 0.25-0.29 s)"}
 
 # Where on the road a run takes place (TE-02 step P2). The model has no geometry: a phase only says whether the item
