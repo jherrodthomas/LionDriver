@@ -1107,3 +1107,83 @@ scenes:
       Catalogue row EC-27: the mirrored hard-over in a narrow lane, with the wind pushing the same way. The car crosses
       into the left lane after 1.4 s. The windsocks show the wind; the plant adds it as a steady lateral push.
 
+
+  # longitudinal and hand-over rows of the search: the plant's own lead and follower are drawn
+  - id: ec-28-lead-brakes-decel-lost
+    he: HE-06.3
+    variants: [{conditions: W04, traffic: dense}]
+    edge_case: EC-28
+    case: L-03
+    case_overrides: {fault: decel_lost, speed_kph: 104.1, duration: 10.0, acc_follow: true, lead_gap_s: 2.5, lead_brake: 4.95, lead_brake_t: 6.0}
+    assumptions: {driver_ttc_cue_s: 2.21}
+    case_title: "The lead brakes at 4.95 m/s² and the item's deceleration is silently lost at once, 104 km/h"
+    critical: lead
+    trigger_label: lead brakes; deceleration silently lost
+    window: [-1.5, 8.0]
+    environment: highway-free-flow
+    traffic: free-flow
+    tc: [TC-33]
+    ks: [KS-08]
+    caption: >-
+      Catalogue row EC-28: following at a 2.5 s gap, the lead brakes hard and the item's request stays at zero (a
+      stale plan; the panda passes the frames, so there is no siren). The driver notices the missing deceleration and
+      brakes after 1.5 s, but only at 3 m/s², and runs into the lead at about 45 km/h. Braking at 8 m/s², which a dry
+      road gives, avoids it; the plant has no tyre friction limit, so on a wet road it would not.
+
+  - id: ec-29-lead-brakes-soc-stall
+    he: HE-06.3
+    variants: [{conditions: W06, traffic: dense}]
+    edge_case: EC-29
+    case: L-03
+    case_overrides: {fault: soc_stall, speed_kph: 107.8, t_fault: 7.87, duration: 10.0, acc_follow: true, lead_gap_s: 1.21, lead_brake: 5.0, lead_brake_t: 6.0}
+    assumptions: {driver_t_r_s: 1.44, driver_brake: 3.05, driver_ttc_cue_s: 2.31}
+    case_title: "SoC stall 1.9 s into the lead's 5 m/s² braking, at a 1.2 s gap, 108 km/h (F-04b)"
+    critical: lead
+    trigger_label: SoC stall while the lead brakes
+    window: [-3.0, 6.0]
+    environment: highway-free-flow
+    traffic: free-flow
+    tc: [TC-33]
+    ks: [KS-08]
+    caption: >-
+      Catalogue row EC-29: the SoC stalls while the ACC brakes for a lead at a short gap. The panda revokes and sounds
+      its siren, the PCM takes the missing frames as zero, and the driver brakes 1.4 s later at about 3 m/s²: contact at
+      about 55 km/h. Even without the stall the ACC's −3.5 m/s² would have touched the lead (by 0.8 m); a driver
+      braking at 8 m/s² avoids both. HE-06.3 rates the silent loss; this one is announced.
+
+  - id: ec-34-step-decel-close-follower
+    he: HE-04.1
+    variants: [{conditions: W04, traffic: dense}]
+    edge_case: EC-34
+    case: L-03
+    case_overrides: {speed_kph: 50.0, duration: 8.0, follow_gap_s: 0.51}
+    assumptions: {driver_t_r_s: 1.38, driver_long_cue: 1.1, follower_t_r_s: 1.95, follower_brake: 5.92}
+    case_title: "Deceleration step −3.5 m/s² at 50 km/h with a follower 0.5 s behind (L-03)"
+    critical: follower
+    trigger_label: deceleration step -3.5 m/s²
+    window: [-1.5, 5.0]
+    environment: highway-free-flow
+    traffic: dense
+    caption: >-
+      Catalogue row EC-34: the envelope passes a step to −3.5 m/s² (its onset limit, TSR-205, is not implemented).
+      The follower, 0.5 s behind, reacts to the brake lights after 2 s and is into the ego's rear 1.3 s after the step,
+      at about 15 km/h, before the ego driver's accelerator press ends it. Lead and follower are the plant's own.
+
+  - id: ec-36-soft-disable-close-follower
+    he: HE-04.1
+    variants: [{conditions: W06, traffic: dense}]
+    edge_case: EC-36
+    case: L-03
+    case_overrides: {fault: soft_disable, speed_kph: 66.2, t_fault: 5.0, duration: 12.0, acc_follow: true, lead_gap_s: 2.0, follow_gap_s: 0.52}
+    assumptions: {driver_t_r_s: 1.44, follower_t_r_s: 1.82, driver_ignores_alert: 1.0}
+    case_title: "Fault soft disable as built (alert and slow-down together), a follower 0.5 s behind, 66 km/h"
+    critical: follower
+    trigger_label: soft disable; alert and slow-down start together
+    window: [-1.5, 9.0]
+    environment: highway-free-flow
+    traffic: free-flow
+    caption: >-
+      Catalogue row EC-36, the closest hand-over row: a fault soft disable slows the car at up to −1.2 m/s² from the
+      first frame of its alert (register DQ-407 option A) and hands back after 3 s; the driver ignores the alert. The
+      follower, 0.5 s behind, answers the brake lights and stops 1.1 m short. With a 1 s lead time before the slow-down
+      (DQ-407 B or C) the gap changes by less than 1 m. No contact.

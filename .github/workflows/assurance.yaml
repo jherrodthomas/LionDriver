@@ -343,7 +343,7 @@ jobs:
     # Fault-injection plant model (assurance/sim, layer 1): the real panda safety code in a closed loop with
     # stated vehicle, EPS, PCM and driver models. Synthetic data (DSR-12), no evidence credit. The job checks that the
     # committed results and figures equal a fresh run, and runs the model's tests (CPU only). The failure search
-    # (eight families and the edge-case catalogue, about 7 CPU-minutes) uses every core of the runner.
+    # (fourteen families and the edge-case catalogue, about 10 CPU-minutes) uses every core of the runner.
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:

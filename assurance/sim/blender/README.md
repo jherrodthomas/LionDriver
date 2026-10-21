@@ -82,7 +82,10 @@ edge-case scenes through `case_overrides` and `assumptions`: the road `arc@<a_y>
 fields `fault_clear`, `clear_after_correction`, `fault2` and `fault2_gap` (a fault that clears, and a second one),
 `lane_change` and `lane_change_s` (an assisted lane change to the left) and `ay_disturbance` (a steady crosswind or
 bank, TC-15); and the driver-model options of `simulate.DRIVER_OPTIONS` (a wrong-direction first correction,
-over-correction, a lag in feeling the item's torque, braking instead of steering). An edge-case scene names its
+over-correction, a lag in feeling the item's torque, braking instead of steering). The longitudinal families added
+the fault kinds `decel_lost`, `soft_disable` and `dm_stop`, and the case fields `acc_follow`, `lead_gap_s`,
+`lead_kph`, `lead_brake`, `lead_brake_t`, `acc_gap_s`, `follow_gap_s`, `alert_lead_s` and `soft_disable_s` (an ACC
+following a braking, slower or stopped lead; the follower's gap; the order of alert and slow-down). An edge-case scene names its
 catalogue row with `edge_case:`, and `search/test_search.py` checks that it reproduces the row's rho.
 
 ## 5. Adding a scene

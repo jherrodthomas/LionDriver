@@ -13,7 +13,8 @@ siren sounds about 0.25 s after the fault, TSR-516(b), DQ-404 A; the 0.7 s EPS-f
 over the road (speed, curve lateral acceleration, lane width) and the driver assumptions (reaction time, drift cue);
 its page and figure are the ones this script wrote before families were data. Robustness is the margin from the body
 edge to the lane line, rho = (lane width - vehicle width) / 2 - max |lateral offset|; rho < 0 is a departure from the
-lane.
+lane. The longitudinal and hand-over families measure the smallest bumper gap to the lead or the follower instead;
+rho < 0 is contact.
 
 Two methods, both seeded and deterministic:
   - Monte Carlo: uniform samples over the box, to map where departures happen;
@@ -64,7 +65,18 @@ WIDTH = corolla.as_dict()["width"]
 CATALOG_CASE = {"hardover": "F-01b", "hardover_left": "F-01b", "frozen": "F-03", "soc_stall": "F-04b",
                 "eps_fault": "F-07", "none": "N-1"}
 FAULT_TEXT = {"hardover": "F-01b hard-over (right)", "hardover_left": "F-01b mirrored (left)",
-              "frozen": "F-03 frozen command", "soc_stall": "F-04b SoC stall", "eps_fault": "F-07 EPS fault"}
+              "frozen": "F-03 frozen command", "soc_stall": "F-04b SoC stall", "eps_fault": "F-07 EPS fault",
+              "decel_lost": "deceleration silently lost (F-02 M01)", "accel_max": "L-01 acceleration +2.0 m/s²",
+              "accel_overlimit": "L-02 acceleration +4.0 m/s²", "decel_min": "L-03 deceleration step −3.5 m/s²",
+              "decel_overlimit": "L-04 deceleration −6.0 m/s²", "soft_disable": "fault soft disable",
+              "dm_stop": "DM no-response stop"}
+# a longitudinal family's scene starts from the L case of its fault kind (else L-03, the follower case)
+CATALOG_CASE_LONG = {"accel_max": "L-01", "accel_overlimit": "L-02", "decel_min": "L-03", "decel_overlimit": "L-04"}
+LATERAL, LONGITUDINAL = ("lane", "corridor"), ("lead", "follower", "gaps")
+
+
+def longitudinal(fam: dict) -> bool:
+  return fam["robustness"] in LONGITUDINAL
 
 
 # ------------------------------------------------------------------------------------------------ families
@@ -111,6 +123,8 @@ def make_case(fam: dict, p: dict, case_over: dict | None = None) -> tuple[Case, 
   fields = {k: value(v, p) for k, v in fam.get("case", {}).items()}
   if isinstance(fields.get("t_fault"), float):     # a derived onset to the millisecond, as a scene writes it
     fields["t_fault"] = round(fields["t_fault"], 3)
+  if longitudinal(fam):                            # and every derived longitudinal field to three places
+    fields = {k: round(v, 3) if isinstance(v, float) else v for k, v in fields.items()}
   fields.update(case_over or {})
   fault = fields.pop("fault", fault)
   case = Case("S", "search", fault, value(fam["road"], p), "", "", **fields)
@@ -133,17 +147,37 @@ def robustness(fam: dict, case: Case, r) -> dict:
     hi = lw + thr - max(e for _, e in after)
     rho, side = (lo, "right") if lo < hi else (hi, "left")
     t_edge = next((t for t, e in after if e <= -thr or e >= lw + thr), None)
+  elif fam["robustness"] in LONGITUDINAL:     # bumper gaps to the lead and the follower
+    rho, side, t_edge, impact = math.inf, None, None, None
+    for k, name in enumerate(("lead", "follower")):
+      if fam["robustness"] not in (name, "gaps"):
+        continue
+      g = [(t - r.t0, gg[k]) for t, gg in zip(r.t, r.gap) if t >= r.t0]
+      m = min(x for _, x in g)
+      if m < rho:
+        rho, side = m, name
+        i = next((i for i, (_, x) in enumerate(g) if x <= 0), None)
+        t_edge = g[i][0] if i is not None else None
+        impact = 3.6 * (g[i - 1][1] - g[i][1]) / (g[i][0] - g[i - 1][0]) if i else None
   else:
     raise ValueError(fam["robustness"])
   ev = r.metrics["events"]
-  return {"rho": rho, "t_edge": t_edge, "side": side, "cue_kind": next((k[12:-1] for k in ev if k.startswith("driver cue")), None),
-          "t_correction": ev.get("driver correction"), "revoked": "authority revoked" in ev}
+  out = {"rho": rho, "t_edge": t_edge, "side": side, "cue_kind": next((k[12:-1] for k in ev if k.startswith("driver cue")), None),
+         "t_correction": ev.get("driver correction"), "revoked": "authority revoked" in ev}
+  if fam["robustness"] in LONGITUDINAL:
+    out["impact_kph"] = impact
+  return out
 
 
 def run(fam: dict, p: dict, assume_over: dict | None = None, case_over: dict | None = None) -> dict:
   case, assume = make_case(fam, p, case_over)
   r = simulate(case, {**assume, **(assume_over or {})})
   return robustness(fam, case, r)
+
+
+def _run_job(job) -> dict:
+  fid, p, assume_over, case_over = job
+  return run(FAMILIES[fid], p, assume_over, case_over)
 
 
 def _evaluate(job) -> dict:
@@ -215,8 +249,9 @@ def f(v, nd=2):
   return "—" if v is None else f"{v:.{nd}f}".replace("-0.00", "0.00")
 
 
-def band_table(mc: list[dict], key: str, edges: list[float], label: str) -> list[str]:
-  rows = [f"| {label} | Samples | Departures | Share | Smallest margin rho (m) |", "|---|---|---|---|---|"]
+def band_table(mc: list[dict], key: str, edges: list[float], label: str, what: str = "Departures",
+               rho: str = "Smallest margin rho (m)") -> list[str]:
+  rows = [f"| {label} | Samples | {what} | Share | {rho} |", "|---|---|---|---|---|"]
   for lo, hi in zip(edges, edges[1:]):
     sel = [r for r in mc if lo <= r[key] < hi or (hi == edges[-1] and r[key] == hi)]
     dep = [r for r in sel if r["rho"] < 0]
@@ -356,6 +391,15 @@ BANNER = ("> **Synthetic data (DSR-12).** Generated by [`search/search.py`](../s
           "(plant-results.md), Model inputs). **No evidence credit.** The share of departing samples is a property of "
           "the uniform box below, not a probability of anything on the road.")
 
+LIMITS_LONG = ("What the plant cannot show: it has **no tyre friction limit** (the driver's braking of up to 8 m/s² and "
+               "the lead's are taken as given on any road; on a wet road (W02) about 5 m/s² is what the tyres give, so a "
+               "row that needs more is worse there) and **no perception** (the ACC sees its lead at once, exactly and at "
+               "any range, so a lead detected late, a stopped vehicle not taken as a lead (SH-06) or a cut-in is not "
+               "searched; low visibility acts only through the driver). The ACC is a model, not openpilot's MPC; the "
+               "lead brakes at a constant rate; the following driver brakes after a reaction time to the ego's brake "
+               "lights (on above 1 m/s²) at a set deceleration until no faster than the ego, and does not steer round "
+               "it. The driver is a model with stated cues and reactions; the PCM response is assumed (M-03).")
+
 LIMITS = ("What the plant cannot show: it has **no tyre friction limit** (a linear tyre: a wet or icy road, a "
           "braking driver in a curve and a correction of 4 m/s² all behave as on a dry road, so nothing here says "
           "whether the car would slide) and **no perception** (the lane-keeping controller sees its lane exactly, so "
@@ -379,6 +423,8 @@ def page_name(fam: dict) -> str:
 def generic_page(fam: dict, mc: list[dict], ce: list[dict]) -> str:
   ns = names(fam)
   dep = [r for r in mc if r["rho"] < 0]
+  lng = longitudinal(fam)
+  what = "Contacts" if lng else "Departures"
   kinds = sorted({FAULT_TEXT.get(r[fam["fault_param"]], r[fam["fault_param"]]) for r in mc}) if "fault_param" in fam \
     else [fam["fault"]]
   out = [
@@ -391,7 +437,8 @@ def generic_page(fam: dict, mc: list[dict], ce: list[dict]) -> str:
     "| data_kind | synthetic |",
     f"| simulator | LionDriver fault-injection plant model, fidelity L1 (`assurance/sim/plant`), family `{fam['id']}` |",
     "| asset archive hash | none (nothing is rendered) |",
-    "| scenario ID and family | generic highway; lateral family of the [edge-case catalogue](edge-cases.md) |",
+    f"| scenario ID and family | generic highway; {'longitudinal' if lng else 'lateral'} family of the [edge-case "
+    "catalogue](edge-cases.md) |",
     "| fidelity-case status | none |",
     "| credit | none |",
     "| camera frame rate | not applicable (no camera) |",
@@ -399,14 +446,20 @@ def generic_page(fam: dict, mc: list[dict], ce: list[dict]) -> str:
     " ".join(fam["about"].split()),
     "",
     f"Faults: {', '.join(kinds)}. Robustness: "
-    + ("rho = (lane width − 1.781 m) / 2 − max |lateral offset| after the fault; rho < 0 means the body edge crossed "
-       "a lane line." if fam["robustness"] == "lane" else
-       "rho is the margin of the body edge to the outer lines of the ego lane and the lane to its left after the "
-       "fault; rho < 0 means it crossed one.")
-    + " Beyond about −2 m the car is in the next lane and the magnitude means little; the sign and the time to the "
-      "line are what count.",
+    + ({"lane": "rho = (lane width − 1.781 m) / 2 − max |lateral offset| after the fault; rho < 0 means the body edge "
+                "crossed a lane line.",
+        "corridor": "rho is the margin of the body edge to the outer lines of the ego lane and the lane to its left "
+                    "after the fault; rho < 0 means it crossed one.",
+        "lead": "rho = the smallest bumper gap to the lead after the fault; rho < 0 means contact.",
+        "follower": "rho = the smallest bumper gap to the following vehicle after the fault; rho < 0 means contact.",
+        "gaps": "rho = the smaller of the smallest bumper gaps to the lead and to the follower after the fault; rho < 0 "
+                "means contact (Side says with which)."}[fam["robustness"]])
+    + (" Past contact the plant lets the vehicles overlap, so a negative magnitude means little; the sign, the time "
+       "to contact and the closing speed at contact are what count." if lng else
+       " Beyond about −2 m the car is in the next lane and the magnitude means little; the sign and the time to the "
+       "line are what count."),
     "",
-    LIMITS,
+    LIMITS_LONG if lng else LIMITS,
     "",
     "## Search space",
     "",
@@ -421,13 +474,14 @@ def generic_page(fam: dict, mc: list[dict], ce: list[dict]) -> str:
       out.append(f"| `{n}` | {spec[0]:g}–{spec[1]:g}{'' if spec[2] == '—' else ' ' + spec[2]} | {spec[3]} |")
   out += ["", f"Monte Carlo: {fam['mc']} uniform samples. Cross-entropy: {fam['ce']['rounds']} rounds of "
           f"{fam['ce']['per_round']}, elite share {fam['ce']['elite']:g}. Seed {fam['seed']}.", "",
-          "## Monte Carlo: where departures happen", "",
-          f"{len(dep)} of {len(mc)} samples depart ({len(dep) / len(mc):.0%}).", ""]
+          f"## Monte Carlo: where {what.lower()} happen", "",
+          f"{len(dep)} of {len(mc)} samples {'end in contact' if lng else 'depart'} ({len(dep) / len(mc):.0%}).", ""]
   for n in ns:
     spec = fam["space"][n]
     if not isinstance(spec, dict):
       continue
-    out += [f"| `{n}` | Samples | Departures | Share | Smallest rho (m) | Median time to the line (s) |",
+    out += [f"| `{n}` | Samples | {what} | Share | Smallest rho (m) | Median time to "
+            f"{'contact' if lng else 'the line'} (s) |",
             "|---|---|---|---|---|---|"]
     for c in spec["choice"]:
       sel = [r for r in mc if r[n] == c]
@@ -437,19 +491,23 @@ def generic_page(fam: dict, mc: list[dict], ce: list[dict]) -> str:
                  f"{f(min((r['rho'] for r in sel), default=None))} | {f(tl[len(tl) // 2] if tl else None)} |")
     out.append("")
   for n, edges in fam.get("bands", {}).items():
-    out += band_table(mc, n, edges, f"`{n}`") + [""]
+    out += band_table(mc, n, edges, f"`{n}`", what, "Smallest gap rho (m)" if lng else "Smallest margin rho (m)") + [""]
   worst = sorted(ce, key=lambda r: r["rho"])[:5]
   out += ["## Cross-entropy falsification: worst cases found", "",
-          "| Round | " + " | ".join(f"`{n}`" for n in ns) + " | rho (m) | Line crossed (s) | Side |",
-          "|---|" + "---|" * len(ns) + "---|---|---|"]
+          "| Round | " + " | ".join(f"`{n}`" for n in ns) + " | rho (m) | "
+          + ("Contact (s) | Closing at contact (km/h) | With |" if lng else "Line crossed (s) | Side |"),
+          "|---|" + "---|" * len(ns) + "---|---|---|" + ("---|" if lng else "")]
   for r in worst:
     out.append(f"| {r['round']} | " + " | ".join(fmt_param(fam, n, r[n]) for n in ns)
-               + f" | {f(r['rho'])} | {f(r['t_edge'])} | {r['side']} |")
+               + f" | {f(r['rho'])} | {f(r['t_edge'])} | " + (f"{f(r['impact_kph'], 1)} | " if lng else "")
+               + f"{r['side']} |")
   out += ["", "The worst case of each fault (or behaviour), re-run with rounded parameters, without the fault and under "
           "assumption probes, is in the [edge-case catalogue](edge-cases.md).", "",
           "Use: these points rank where a closed-course or bench test should look first (WP-V-04 U-4, WP-V-05). They do "
-          "not show that the item departs on the road: the EPS response to the fault, the driver and the steering "
-          "authority are assumptions until measured (M-01, M-02, WP-C-08)."]
+          + ("not show that the item collides on the road: the PCM response, the ACC, the drivers of the ego and of "
+             "the following vehicle are assumptions until measured (M-03, WP-C-08)." if lng else
+             "not show that the item departs on the road: the EPS response to the fault, the driver and the steering "
+             "authority are assumptions until measured (M-01, M-02, WP-C-08).")]
   return "\n".join(out) + "\n"
 
 
@@ -466,7 +524,7 @@ def rounded(fam: dict, p: dict) -> dict:
 def reproduce(fam: dict, p: dict) -> dict:
   """The scene fields that reproduce a row: catalog case, case_overrides and assumptions (blender/scenes.yaml)."""
   case, assume = make_case(fam, p)
-  base_id = CATALOG_CASE[case.fault]
+  base_id = CATALOG_CASE_LONG.get(case.fault, "L-03") if longitudinal(fam) else CATALOG_CASE[case.fault]
   base = {c.id: c for c in cases.all_cases()}[base_id]
   ov = {k: getattr(case, k) for k in DYNAMIC_FIELDS if getattr(case, k) != getattr(base, k)}
   defaults = {k: v[0] for k, v in {**plant_sim.ASSUMPTIONS, **plant_sim.DRIVER_OPTIONS}.items()}
@@ -475,9 +533,9 @@ def reproduce(fam: dict, p: dict) -> dict:
 
 def classify(fam: dict, row: dict) -> dict:
   if row["rho"] >= 0:
-    return {"he": None, "fit": "stays in the lane"}
+    return {"he": None, "fit": "no contact" if longitudinal(fam) else "stays in the lane"}
   env = {**row["p"], "fault": row["fault"], "side": row["side"], "t_line": row["t_edge"], "rho": row["rho"],
-         "rho_nofault": row["rho_nofault"]}
+         "rho_nofault": row["rho_nofault"], "impact_kph": row.get("impact_kph")}
   for rule in fam["hara"]:
     if eval(rule["when"], {"__builtins__": {}}, env):
       return rule
@@ -493,16 +551,17 @@ def catalogue_rows(fam: dict, mc: list[dict], ce: list[dict], start: int) -> lis
   else:
     picks = pool[:spec.get("per", 1)]
   picks = picks[:spec.get("max", len(picks))]
+  prs = SPEC["probes_longitudinal" if longitudinal(fam) else "probes_default"] + fam.get("probes", [])
+  nf = {"fault": "none", "fault2": "", "fault_clear": None, "clear_after_correction": None}
+  ps = [rounded(fam, pick) for pick in picks]
+  jobs = [(fam["id"], p, a, c) for p in ps for a, c in [(None, None), (None, nf)] + [(pr.get("assume"), pr.get("case"))
+                                                                                     for pr in prs]]
+  outs = _POOL.map(_run_job, jobs, chunksize=1) if _POOL is not None else [_run_job(j) for j in jobs]
   rows = []
-  for i, pick in enumerate(picks):
-    p = rounded(fam, pick)
+  for i, p in enumerate(ps):
     case, _ = make_case(fam, p)
-    base = run(fam, p)
-    nofault = run(fam, p, case_over={"fault": "none", "fault2": "", "fault_clear": None, "clear_after_correction": None})
-    probes = []
-    for pr in SPEC["probes_default"] + fam.get("probes", []):
-      o = run(fam, p, assume_over=pr.get("assume"), case_over=pr.get("case"))
-      probes.append({"label": pr["label"], "rho": o["rho"], "delta": o["rho"] - base["rho"]})
+    base, nofault, *po = outs[i * (len(prs) + 2):(i + 1) * (len(prs) + 2)]
+    probes = [{"label": pr["label"], "rho": o["rho"], "delta": o["rho"] - base["rho"]} for pr, o in zip(prs, po)]
     row = {"id": f"EC-{start + i:02d}", "family": fam["id"], "fault": case.fault, "p": p, **base,
            "rho_nofault": nofault["rho"], "probes": probes, "reproduce": reproduce(fam, p)}
     row["hara"] = classify(fam, row)
@@ -511,15 +570,20 @@ def catalogue_rows(fam: dict, mc: list[dict], ce: list[dict], start: int) -> lis
 
 
 def decides(row: dict) -> str:
+  lng = longitudinal(FAMILIES[row["family"]])
   top = max(row["probes"], key=lambda q: abs(q["delta"]))
   flips = [q for q in row["probes"] if (q["rho"] < 0) != (row["rho"] < 0)]
-  road = (f"the curve departs by itself (rho {f(row['rho_nofault'])} m without the fault); "
+  road = ((f"the traffic ends in contact by itself (rho {f(row['rho_nofault'])} m without the fault); " if lng else
+           f"the curve departs by itself (rho {f(row['rho_nofault'])} m without the fault); ")
           if row["rho"] < 0 and row["rho_nofault"] < 0 else "")
   if road and row["rho_nofault"] - row["rho"] < 0.5:
-    return f"the road: departs without the fault too (rho {f(row['rho_nofault'])} m)"
+    return (f"the traffic: contact without the fault too (rho {f(row['rho_nofault'])} m)" if lng else
+            f"the road: departs without the fault too (rho {f(row['rho_nofault'])} m)")
   if flips:
     q = max(flips, key=lambda q: abs(q["delta"]))
-    lead = f"**{q['label']}** turns it {'into a departure' if q['rho'] < 0 else 'to in-lane'} (rho {f(q['rho'])} m)"
+    lead = (f"**{q['label']}** turns it "
+            + (('into contact' if q['rho'] < 0 else 'to no contact') if lng else
+               ('into a departure' if q['rho'] < 0 else 'to in-lane')) + f" (rho {f(q['rho'])} m)")
   elif abs(top["delta"]) >= 0.05:
     lead = f"no probe flips it; {top['label']} moves rho most ({top['delta']:+.2f} m)"
   else:
@@ -550,40 +614,34 @@ def flow(d: dict) -> str:
   return yaml.safe_dump(d, default_flow_style=True, sort_keys=False, width=10_000).strip()
 
 
-def catalogue_page(rows: list[dict]) -> str:
-  scenes = scenes_by_row()
-  findings = SPEC.get("findings", {})
+def hz_text(r: dict) -> str:
+  h = r["hara"]
+  if h.get("he") is None:
+    return "— (no contact)" if longitudinal(FAMILIES[r["family"]]) else "— (in lane)"
+  if h.get("new"):
+    return f"**none: new** ({h['new']}); nearest {h['he']}"
+  return h["he"] + (f", {h['sh']}" if h.get("sh") else "")
+
+
+def by_road(rows: list[dict]) -> list[dict]:
+  """Rows that the road or the traffic decides: they leave or touch by nearly as much without the fault."""
+  return [r for r in rows if r["rho"] < 0 and r["rho_nofault"] < 0 and r["rho_nofault"] - r["rho"] < 0.5]
+
+
+def probe(r: dict, prefix: str) -> dict:
+  return next(q for q in r["probes"] if q["label"].startswith(prefix))
+
+
+def lateral_findings(rows: list[dict]) -> list[str]:
   dep = [r for r in rows if r["rho"] < 0]
-  new = [r for r in dep if r["hara"].get("new")]
-  road = [r for r in dep if r["rho_nofault"] < 0 and r["rho_nofault"] - r["rho"] < 0.5]
+  road = by_road(rows)
   flipped = [r for r in rows if any((q["rho"] < 0) != (r["rho"] < 0) for q in r["probes"])]
   fastest = sorted((r for r in dep if r["t_edge"] is not None and r not in road), key=lambda r: r["t_edge"])[:3]
-  out = [
-    "# Edge-case catalogue: lateral departures",
-    "",
-    BANNER.replace("The share of departing samples is a property of the uniform box below, not a probability of "
-                   "anything on the road.", "A row is the worst case a seeded search found in its box, not a likely "
-                   "event: nothing here is an exposure or a probability."),
-    "",
-    "The worst cases of every search family of [`families.yaml`](../search/families.yaml) (WP-V-04 U-4), each re-run "
-    "with its parameters rounded as a scene writes them, without its fault (is it the fault or the road?), and under "
-    "assumption probes (which stated assumption decides the outcome). Each row is mapped to the HARA hazardous event "
-    "(HE-, [WP-C-03](../../02-concept/WP-C-03-hara.md)) or SOTIF hazard (SH-, "
-    "[WP-C-05](../../02-concept/WP-C-05-sotif-hazard-identification.md)) it falls under. A departure that matches no "
-    "hazardous event is a finding for the HARA: it is listed under [New-hazard findings](#new-hazard-findings) and "
-    "queued in the [decision register](../../01-management/decisions/register.yaml); the HARA itself is not edited "
-    "here.",
-    "",
-    LIMITS,
-    "",
-    "## Top findings",
-    "",
-    f"- {len(dep)} of {len(rows)} rows leave the lane. "
-    + (f"{len(road)} of them leave it by nearly as much without the fault (the curve at or near R_ODD is beyond the "
-       "item's lateral authority, plant case N-3), so the road decides those, not the fault." if road else
-       "In every one the fault decides: where the curve departs by itself as well (at R_ODD), the fault adds more "
-       "than 0.5 m."),
-  ]
+  out = [f"- {len(dep)} of {len(rows)} lateral rows leave the lane. "
+         + (f"{len(road)} of them leave it by nearly as much without the fault (the curve at or near R_ODD is beyond "
+            "the item's lateral authority, plant case N-3), so the road decides those, not the fault." if road else
+            "In every one the fault decides: where the curve departs by itself as well (at R_ODD), the fault adds more "
+            "than 0.5 m.")]
   if fastest:
     out.append("- Soonest at the lane line among the rows the fault decides: " + "; ".join(
       f"{r['id']} ({FAULT_TEXT.get(r['fault'], r['fault'])}, {r['family']}) after {r['t_edge']:.2f} s" for r in fastest)
@@ -591,66 +649,159 @@ def catalogue_page(rows: list[dict]) -> str:
   if flipped:
     out.append("- An assumption decides " + ", ".join(r["id"] for r in flipped) + ": one probe turns the outcome "
                "round (Decides column).")
-  late = [(r, next(q for q in r["probes"] if q["label"].startswith("drift noticed late"))) for r in rows]
+  return out + [low_visibility(rows)]
+
+
+def low_visibility(rows: list[dict]) -> str:
+  late = [(r, probe(r, "drift noticed late")) for r in rows]
   worse = [(r, q) for r, q in late if q["delta"] < -0.05]
   same = [r for r, q in late if abs(q["delta"]) <= 0.05 and r["cue_kind"] == "siren"]
   late_flips = [r for r, q in late if (q["rho"] < 0) != (r["rho"] < 0)]
-  out.append(f"- Low visibility, as a drift noticed at 0.4 m instead of 0.2 m (the plant has no perception, so fog acts "
-             f"only through the driver): {len(worse)} rows depart further, by up to "
-             f"{max((-q['delta'] for _, q in worse), default=0):.1f} m; "
-             + (f"it turns {', '.join(r['id'] for r in late_flips)} round. " if late_flips else "it turns none round. ")
-             + (f"Rows the siren cues are unchanged ({', '.join(r['id'] for r in same)}): a silent fault is where poor "
-                "visibility costs the driver." if same else ""))
+  return (f"- Low visibility, as a drift noticed at 0.4 m instead of 0.2 m (the plant has no perception, so fog acts "
+          f"only through the driver): {len(worse)} rows depart further, by up to "
+          f"{max((-q['delta'] for _, q in worse), default=0):.1f} m; "
+          + (f"it turns {', '.join(r['id'] for r in late_flips)} round. " if late_flips else "it turns none round. ")
+          + (f"Rows the siren cues are unchanged ({', '.join(r['id'] for r in same)}): a silent fault is where poor "
+             "visibility costs the driver." if same else ""))
+
+
+def longitudinal_findings(rows: list[dict]) -> list[str]:
+  dep = [r for r in rows if r["rho"] < 0]
+  road = by_road(rows)
+  out = [f"- {len(dep)} of {len(rows)} longitudinal and hand-over rows end in contact"
+         + (": " + "; ".join(f"{r['id']} ({FAULT_TEXT.get(r['fault'], r['fault'])}, with the {r['side']}, at "
+                             f"{f(r['impact_kph'], 0)} km/h closing speed)" for r in dep) if dep else "")
+         + ". " + (f"{', '.join(r['id'] for r in road)} end in contact by nearly as much without the fault (the "
+                   "traffic is beyond what the ACC's −3.5 m/s² and the driver give), so the traffic decides those."
+                   if road else "The fault decides each of them: without it there is no contact, or much less.")]
+  for prefix, what in (("driver brakes with 8", "Braking hard"), ("driver brakes with 3", "Braking at the plant's "
+                                                                  "default 3 m/s²")):
+    flips = [r for r in rows if (probe(r, prefix)["rho"] < 0) != (r["rho"] < 0)]
+    if flips:
+      out.append(f"- {what} turns {', '.join(r['id'] for r in flips)} round: there the driver's braking decides, "
+                 "and the plant does not limit it by tyre friction. On a wet road (W02) about 5 m/s² is what the tyres "
+                 "give.")
+  late = [(r, probe(r, "closing noticed late")) for r in rows]
+  worse = [(r, q) for r, q in late if q["delta"] < -0.05]
+  late_flips = [r for r, q in late if (q["rho"] < 0) != (r["rho"] < 0)]
+  out.append("- Low visibility, as a closing noticed only at a time to collision of 1.5 s (the ACC still sees the lead: "
+             "the plant has no perception): "
+             + (f"{len(worse)} rows end closer, by up to {max(-q['delta'] for _, q in worse):.1f} m; " if worse else
+                "no row ends closer: the change of acceleration or the siren cues the driver first.")
+             + (f"it turns {', '.join(r['id'] for r in late_flips)} into contact." if late_flips else
+                "it turns none round." if worse else ""))
+  blind = [(r, probe(r, "change of acceleration not noticed")) for r in rows]
+  blind_flips = [r for r, q in blind if (q["rho"] < 0) != (r["rho"] < 0)]
+  if blind_flips:
+    out.append(f"- A driver who does not notice the change of acceleration, and is cued only by the closing at a time "
+               f"to collision of 2 s, turns {', '.join(r['id'] for r in blind_flips)} into contact: the 1 m/s² cue "
+               "(driver_long_cue, no source; WP-C-08 to replace) is what keeps those rows clear.")
+  mute = [(r, probe(r, "panda siren muted")) for r in rows]
+  mute_flips = [r for r, q in mute if (q["rho"] < 0) != (r["rho"] < 0)]
+  if mute_flips:
+    out.append(f"- With the panda siren muted (as before DQ-404) {', '.join(r['id'] for r in mute_flips)} end in "
+               "contact: there the siren is the driver's cue.")
+  ho = [r for r in rows if r["family"].startswith("handover")]
+  if ho:
+    timed = [(r, q) for r in ho for q in r["probes"] if q["label"].startswith(("as built", "DQ-407"))]
+    sd = [(r, q) for r, q in timed if r["fault"] == "soft_disable"]
+    spread = max(max(q["rho"] for rr, q in sd if rr is r) - min(q["rho"] for rr, q in sd if rr is r)
+                 for r in {id(r): r for r, _ in sd}.values()) if sd else 0.0
+    contact = [r for r in ho if r["rho"] < 0] + [r for r, q in timed if q["rho"] < 0]
+    out.append("- Hand-over timing (register DQ-407): "
+               + ("no hand-over row ends in contact under any order of alert and slow-down. " if not contact else
+                  f"{', '.join(sorted({r['id'] for r in contact}))} end in contact under at least one order. ")
+               + f"Re-run as built, as DQ-407 B and as DQ-407 C, each soft-disable row's smallest gap changes by at "
+               f"most {spread:.1f} m (probe table): the slow-down is −1.2 m/s² at most, the ACC keeps braking for the "
+               "lead until the hand-back, and a following driver answers the brake lights. Within this box the order "
+               "of alert and slow-down does not decide the outcome.")
+  return out
+
+
+CATALOGUE_HEAD = "| Row | Family | Fault | Parameters | rho (m) | {} | rho without the fault (m) | Decides | HARA / SOTIF | Scene |"
+
+
+def catalogue_page(rows: list[dict]) -> str:
+  scenes = scenes_by_row()
+  findings = SPEC.get("findings", {})
+  lat = [r for r in rows if not longitudinal(FAMILIES[r["family"]])]
+  lon = [r for r in rows if longitudinal(FAMILIES[r["family"]])]
+  new = [r for r in rows if r["rho"] < 0 and r["hara"].get("new")]
+
+  def scene_cell(r):                 # a scene without a rendered dashboard yet is named, not linked
+    return ", ".join(f"[{s}](../blender/dashboards/{s}.jpg)" if (SIM / "blender" / "dashboards" / f"{s}.jpg").exists()
+                     else f"{s} (not rendered)" for s in scenes.get(r["id"], [])) or "—"
+
+  out = [
+    "# Edge-case catalogue: lateral departures and longitudinal contacts",
+    "",
+    BANNER.replace("The share of departing samples is a property of the uniform box below, not a probability of "
+                   "anything on the road.", "A row is the worst case a seeded search found in its box, not a likely "
+                   "event: nothing here is an exposure or a probability."),
+    "",
+    "The worst cases of every search family of [`families.yaml`](../search/families.yaml) (WP-V-04 U-4), each re-run "
+    "with its parameters rounded as a scene writes them, without its fault (is it the fault or the road and the "
+    "traffic?), and under assumption probes (which stated assumption decides the outcome). Each row is mapped to the "
+    "HARA hazardous event (HE-, [WP-C-03](../../02-concept/WP-C-03-hara.md)) or SOTIF hazard (SH-, "
+    "[WP-C-05](../../02-concept/WP-C-05-sotif-hazard-identification.md)) it falls under. A departure or contact that "
+    "matches no hazardous event is a finding for the HARA: it is listed under [New-hazard findings]"
+    "(#new-hazard-findings) and queued in the [decision register](../../01-management/decisions/register.yaml); the "
+    "HARA itself is not edited here.",
+    "",
+    "Lateral families: rho is the margin of the body edge to the lane line (rho < 0: a departure). Longitudinal and "
+    "hand-over families: rho is the smallest bumper gap to the lead or the follower (rho < 0: contact).",
+    "",
+    LIMITS,
+    "",
+    LIMITS_LONG,
+    "",
+    "## Top findings",
+    "",
+    *lateral_findings(lat),
+    *longitudinal_findings(lon),
+  ]
   for fid in sorted({r["hara"]["new"] for r in new}):
     ids = [r["id"] for r in new if r["hara"]["new"] == fid]
     out.append(f"- {', '.join(ids)} match{'es' if len(ids) == 1 else ''} no HARA hazardous event: "
                f"{findings[fid]['title']} ({fid}, queued as {findings[fid]['dq']}).")
-  out += ["", "## Catalogue", "",
-          "| Row | Family | Fault | Parameters | rho (m) | Line crossed (s) | Side | rho without the fault (m) | "
-          "Decides | HARA / SOTIF | Scene |",
+  out += ["", "## Catalogue: lateral", "", CATALOGUE_HEAD.format("Line crossed (s) | Side"),
           "|---|---|---|---|---|---|---|---|---|---|---|"]
-  for r in rows:
+  for r in lat:
     fam = FAMILIES[r["family"]]
-    h = r["hara"]
-    if h.get("he") is None:
-      hz = "— (in lane)"
-    elif h.get("new"):
-      hz = f"**none: new** ({h['new']}); nearest {h['he']}"
-    else:
-      hz = h["he"] + (f", {h['sh']}" if h.get("sh") else "")
-    sc = ", ".join(f"[{s}](../blender/dashboards/{s}.jpg)" for s in scenes.get(r["id"], [])) or "—"
     out.append(f"| {r['id']} | [{r['family']}]({page_name(fam)}) | {FAULT_TEXT.get(r['fault'], r['fault'])} | "
                f"{params_text(fam, r)} | {f(r['rho'])} | {f(r['t_edge'])} | {r['side']} | {f(r['rho_nofault'])} | "
-               f"{decides(r)} | {hz} | {sc} |")
+               f"{decides(r)} | {hz_text(r)} | {scene_cell(r)} |")
+  out += ["", "## Catalogue: longitudinal and hand-over", "",
+          CATALOGUE_HEAD.format("Contact (s) | Closing at contact (km/h) | With"),
+          "|---|---|---|---|---|---|---|---|---|---|---|---|"]
+  for r in lon:
+    fam = FAMILIES[r["family"]]
+    out.append(f"| {r['id']} | [{r['family']}]({page_name(fam)}) | {FAULT_TEXT.get(r['fault'], r['fault'])} | "
+               f"{params_text(fam, r)} | {f(r['rho'])} | {f(r['t_edge'])} | {f(r['impact_kph'], 1)} | {r['side']} | "
+               f"{f(r['rho_nofault'])} | {decides(r)} | {hz_text(r)} | {scene_cell(r)} |")
   out += ["", "How each row maps: " + " ".join(
     f"{r['id']}: {r['hara']['fit']}." for r in rows if r["hara"].get("he")), ""]
   out += ["## New-hazard findings", ""]
   if not new:
-    out += ["None: every departing row falls under a HARA hazardous event.", ""]
-  late = [(r, next(q for q in r["probes"] if q["label"].startswith("drift noticed late"))) for r in rows]
-  worse = [(r, q) for r, q in late if q["delta"] < -0.05]
-  same = [r for r, q in late if abs(q["delta"]) <= 0.05 and r["cue_kind"] == "siren"]
-  late_flips = [r for r, q in late if (q["rho"] < 0) != (r["rho"] < 0)]
-  out.append(f"- Low visibility, as a drift noticed at 0.4 m instead of 0.2 m (the plant has no perception, so fog acts "
-             f"only through the driver): {len(worse)} rows depart further, by up to "
-             f"{max((-q['delta'] for _, q in worse), default=0):.1f} m; "
-             + (f"it turns {', '.join(r['id'] for r in late_flips)} round. " if late_flips else "it turns none round. ")
-             + (f"Rows the siren cues are unchanged ({', '.join(r['id'] for r in same)}): a silent fault is where poor "
-                "visibility costs the driver." if same else ""))
+    out += ["None: every departing or contact row falls under a HARA hazardous event.", ""]
   for fid in sorted({r["hara"]["new"] for r in new}):
     fd = findings[fid]
     ids = ", ".join(r["id"] for r in new if r["hara"]["new"] == fid)
     out += [f"### {fid}: {fd['title']}", "", " ".join(fd["text"].split()), "",
             f"Rows: {ids}. Queued for the project lead as {fd['dq']} in the decision register.", ""]
   out += ["## Assumption probes", "",
-          "Each row re-run with one assumption changed (rho in metres; the row's own rho first):", "",
-          "| Row | rho | " + " | ".join(q["label"] for q in rows[0]["probes"][:len(SPEC["probes_default"])])
-          + " | Family probe |", "|---|---|" + "---|" * (len(SPEC["probes_default"]) + 1)]
-  for r in rows:
-    q = r["probes"]
-    extra = q[len(SPEC["probes_default"]):]
-    out.append(f"| {r['id']} | {f(r['rho'])} | " + " | ".join(f(x["rho"]) for x in q[:len(SPEC["probes_default"])])
-               + " | " + ("; ".join(f"{x['label']}: {f(x['rho'])}" for x in extra) or "—") + " |")
+          "Each row re-run with one assumption changed (rho in metres; the row's own rho first). Lateral rows:", ""]
+  for group, key in ((lat, "probes_default"), (lon, "probes_longitudinal")):
+    if group is lon:
+      out += ["", "Longitudinal and hand-over rows:", ""]
+    n = len(SPEC[key])
+    out += ["| Row | rho | " + " | ".join(q["label"] for q in group[0]["probes"][:n]) + " | Family probe |",
+            "|---|---|" + "---|" * (n + 1)]
+    for r in group:
+      q = r["probes"]
+      extra = q[n:]
+      out.append(f"| {r['id']} | {f(r['rho'])} | " + " | ".join(f(x["rho"]) for x in q[:n])
+                 + " | " + ("; ".join(f"{x['label']}: {f(x['rho'])}" for x in extra) or "—") + " |")
   out += ["", "## Reproducing a row", "",
           "The fields a plant scene of [`blender/scenes.yaml`](../blender/scenes.yaml) needs to reproduce each row "
           "(its `case`, `case_overrides` and `assumptions`); `test_search.py` checks that every scene naming a row "

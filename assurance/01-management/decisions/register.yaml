@@ -5220,7 +5220,10 @@
     proposed). The driver-monitoring stop now meets that: the last alert counts down 5 s before the car slows. **A fault
     soft disable does not: the car starts slowing on the same frame as its alert.** That slow-down is gentle, at most
     −1.2 m/s² over the 3 s before control is handed back (about 13 km/h at most), and the alert sounds from its first
-    frame. Waiting 1 s means driving on for that second with the fault still active.
+    frame. Waiting 1 s means driving on for that second with the fault still active. The failure search over the
+    plant model (synthetic, no evidence credit) tried all three orders with a follower as close as 0.5 s and with a
+    slower lead ahead: none ended in contact, and the order moved the smallest gap by about 1 m at most to the follower and
+    by at most about 7 m to the lead.
   reversibility: revisit
   blocks: "TSR-624, SWSR-624 and FSR-04.05 for the fault soft disable; SW FMEA SWF-050.C1, SWF-ACT-050; WP-A-04 SFMEA-36"
   gate: G3
@@ -5236,7 +5239,7 @@
     - key: C
       title: "Make the soft disable 4 s: 1 s of alert, then 3 s of slowing"
       detail: "Meets TSR-624 and keeps today's slowing. Cost: the item keeps steering and braking for one more second on a faulty input, against the stale-input finding FM-03 (WP-C-07) and the timing budgets that assume 3 s."
-  sources: ["assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-624", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-624", "assurance/02-concept/WP-C-04-functional-safety-concept.md FSR-04.05", "assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-050.C1, SWF-ACT-050", "assurance/08-analyses/WP-A-04-system-fta-fmea.md SFMEA-36", "openpilot/selfdrive/selfdrived/state.py SOFT_DISABLE_TIME", "openpilot/selfdrive/controls/lib/longitudinal_planner.py A_CRUISE_MIN"]
+  sources: ["assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-624", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-624", "assurance/02-concept/WP-C-04-functional-safety-concept.md FSR-04.05", "assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-050.C1, SWF-ACT-050", "assurance/08-analyses/WP-A-04-system-fta-fmea.md SFMEA-36", "openpilot/selfdrive/selfdrived/state.py SOFT_DISABLE_TIME", "openpilot/selfdrive/controls/lib/longitudinal_planner.py A_CRUISE_MIN", "assurance/sim/results/edge-cases.md hand-over rows (handover-follower, handover-slower-lead)"]
   status: queued
 
 - id: DQ-408
