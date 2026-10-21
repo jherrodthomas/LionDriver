@@ -354,6 +354,10 @@ jobs:
       run: python3 assurance/models/fmdtools/sg02/sweep.py joint --check --order 2
     - name: SG-02 time-to-cue page is current (step P4)
       run: python3 assurance/models/fmdtools/sg02/sweep.py timing --check
+    - name: SG-02 Fault Lab page is current, and its tests (step P5; DQ-409)
+      run: |
+        python3 assurance/models/fmdtools/sg02/test_fault_lab.py
+        python3 assurance/models/fmdtools/sg02/fault_lab.py --check
 
   fret:
     name: FRETish restatements of the panda TSRs
