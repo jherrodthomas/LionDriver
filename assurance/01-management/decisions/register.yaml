@@ -5475,5 +5475,6 @@
       title: "Widen the margin: curve bound R ≥ v²/2.0"
       detail: "1.0 m/s² of margin covers the lower edge of the band at 110 km/h. Cost: more curves fall outside the ODD (at 110 km/h the minimum radius grows from 373 m to 467 m)."
   sources: ["assurance/sim/results/crosswind.md", "assurance/sim/weather/README.md §4", "WP-C-02 §3.1 (wind), §3.2 (R_ODD)", "WP-V-03 KS-02", "openpilot/selfdrive/controls/lib/drive_helpers.py MAX_LATERAL_ACCEL_NO_ROLL", "SAE 2016-01-1620"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-21, note: "Lead in chat: \"go with your recomm\""}
+  applied: {ref: 43e71e8, record: "WP-C-02 v0.9 §3.1 wind row, §3.2 margin, OI-10", at: 2026-10-21}
