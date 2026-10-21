@@ -5390,3 +5390,31 @@
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-21, note: "Lead in chat: \"design aid\""}
   applied: {ref: 72db4de, record: "TE-04 Status and OI-1", at: 2026-10-21}
+
+- id: DQ-413
+  question: "Should the ODD put a number on “light rain” and exclude standing water on the road?"
+  context: >-
+    The ODD includes light rain and excludes heavier rain, but gives no number (WP-C-02 §3.1). The hydroplaning study
+    (synthetic, no credit) finds that rain alone lowers the Corolla's hydroplaning speed to 110 km/h only from about
+    25 mm/h, ten times the usual top of light rain. **Standing water deeper than the tread (ruts, puddles, a worn
+    tyre) gives about 98 km/h at 35 psi, below the 110 km/h bound,** and it can lie on the road after the rain has
+    stopped. The item cannot detect either, so like the other weather limits this is an operating rule for the driver.
+  reversibility: revisit
+  blocks: "WP-C-02 §3.1 precipitation row; WP-C-06 TC-03; WP-V-03 KS-15 pass criteria"
+  gate: G1
+  decider: lead
+  batch: 14
+  asked: 2026-10-21
+  options:
+    - key: A
+      recommended: true
+      title: "Light rain is below 2.5 mm/h (US NWS); standing water on the road is outside the ODD"
+      detail: "Two lines in the WP-C-02 table and the user guidance: the driver does not engage, or takes over, on standing water. Cost: one more limit the driver must judge, with no item detection behind it."
+    - key: B
+      title: "Put a number on light rain only"
+      detail: "Defines the ODD edge for KS-15. Cost: standing water stays inside the ODD, where the models say the car can hydroplane below 110 km/h."
+    - key: C
+      title: "Also cap the speed at 90 km/h whenever the wipers run"
+      detail: "Keeps the car below NASA's 98 km/h on standing water. Cost: the item must read the wiper state from CAN (not in the reference build) and enforce a second speed bound; a change to the software requirements."
+  sources: ["assurance/sim/results/hydroplaning.md", "assurance/sim/weather/README.md §2", "WP-C-02 §3.1 (precipitation, speed DQ-260)", "WP-C-06 TC-03", "WP-V-03 KS-15", "NASA TN D-2056", "FHWA-RD-79-31"]
+  status: open

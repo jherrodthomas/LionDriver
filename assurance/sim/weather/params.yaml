@@ -1,0 +1,30 @@
+# Weather physics: inputs with their source and status (code, published, assumed).
+# Synthetic (DSR-12), design aid, no evidence credit (DQ-139).
+
+sun:
+  # Corridor of the test sites (assurance/06-validation/test-sites/README.md): I-85 Atlanta GA – Greenville SC – Charlotte NC
+  site: {lat: 34.85, lon: -82.40, tz: America/New_York, status: published,
+         source: "Greenville SC, the corridor's middle (test-sites README, Region)"}
+  corridor:
+    northbound: {heading: 63.0, source: "great-circle bearing Atlanta (33.749, -84.388) to Charlotte (35.227, -80.843)"}
+    southbound: {heading: 243.0, source: "the reverse"}
+  year: 2027
+  step_min: 5
+  # The road camera's field of view comes from openpilot/common/transformations/camera.py (status: code)
+  camera_pitch_deg: {value: 0.0, status: assumed, source: "calibrated level; the device's calibration sets the real pitch"}
+  flare_margin_deg: {value: 10.0, status: assumed,
+                     source: "sun just outside the frame still flares the lens and the windshield; to confirm on logged drives"}
+  ks12_elevation_deg: {value: 15.0, status: published, source: "WP-V-03 KS-12: sun elevation < 15° ahead"}
+
+water:
+  odd_speed_kph: {value: 110.0, status: published, source: "WP-C-02 §3.1 Speed, DQ-260 A"}
+  tyre_pressure_psi: {value: 35.0, low: 30.0, high: 38.0, status: assumed,
+                      source: "Corolla E210 door placard, typical 35 psi; the reference car's placard decides"}
+  cross_slope_pct: {value: 2.0, low: 1.5, high: 2.5, status: published, source: "AASHTO normal crown 1.5–2.5 %"}
+  lane_width_m: {value: 3.66, status: published, source: "12 ft Interstate lane"}
+  texture_depth_mm: {value: 0.8, low: 0.5, high: 1.2, status: assumed, source: "mean texture depth of dense asphalt"}
+  grade_pct: [0.0, 2.0, 4.0]
+  lanes_drained: [1, 2, 3]
+  # US NWS / AMS rain-rate classes (light < 2.5 mm/h, moderate 2.5–7.6, heavy > 7.6)
+  rain_classes_mm_h: {light: 2.5, moderate: 7.6}
+  rain_mm_h: [1, 2.5, 5, 7.6, 10, 15, 20, 30, 40, 50, 60, 75, 100]
