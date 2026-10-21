@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="540" viewBox="0 0 640 540" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="644" viewBox="0 0 640 644" role="img" aria-labelledby="t d">
 <title id="t">Modelling plan: work items and their state</title>
-<desc id="d">Work items of the modelling plan: 1 Tool comparison: Done; 2 SM-SELFDRIVED record: Exists; 3 Back-to-back test: Exists; 4 HIL plant model: In progress; unnumbered Envelope calculations and plots: Exists; 5 Architecture model: Draft; 6 Fault-propagation model of the SG-02 tree: In progress</desc>
+<desc id="d">Work items of the modelling plan: 1 Tool comparison: Done; 2 SM-SELFDRIVED record: Exists; 3 Back-to-back test: Exists; 4 HIL plant model: In progress; unnumbered Envelope calculations and plots: Exists; 5 Architecture model: Draft; 6 Fault-propagation model of the SG-02 tree: In progress; 7 Panda TSRs restated as structured requirements with a temporal meaning; checked against WP-S-02 and the code: In progress</desc>
 <style>
 svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
       --py:#2a78d6; --py-bg:#e9f1fb; --om:#6250d6; --om-bg:#efedfb; --oc:#0f8a6e; --oc-bg:#e3f5ef;
@@ -32,7 +32,7 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 .arr { stroke:var(--ink2); stroke-width:1.6; fill:none; }
 </style>
 <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-ink2"/></marker></defs>
-<rect class="bg" width="640" height="540"/>
+<rect class="bg" width="640" height="644"/>
 <text x="24" y="34" class="h">Modelling work items: state</text>
 <text x="24" y="56" class="t2">From the §2 table of this page</text>
 <line x1="24" y1="70" x2="616" y2="70" class="hair"/>
@@ -78,4 +78,12 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 <text x="98.3" y="490" class="chip" text-anchor="middle">In progress</text>
 <text x="168" y="490" class="tb">Fault-propagation model of the SG-02 tree</text>
 <text x="168" y="510" class="t2">Python with NASA fmdtools (TL-49)</text>
+<rect x="16" y="530" width="608" height="98" rx="8" class="card"/>
+<text x="24" y="557" class="tb">7</text>
+<rect x="52" y="540" width="92.6" height="20" rx="10" class="s-prog"/>
+<text x="98.3" y="554" class="chip" text-anchor="middle">In progress</text>
+<text x="168" y="554" class="tb">Panda TSRs restated as structured requirements</text>
+<text x="168" y="574" class="tb">with a temporal meaning; checked against WP-S-02</text>
+<text x="168" y="594" class="tb">and the code</text>
+<text x="168" y="614" class="t2">NASA FRET, with an in-house Python checker</text>
 </svg>
