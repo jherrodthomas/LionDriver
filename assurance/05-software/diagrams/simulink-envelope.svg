@@ -89,7 +89,7 @@ svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:
 <text x="725.0" y="304.0" class="tm" text-anchor="middle">T5, T10b*</text>
 <path class="edge" d="M650.0,400.0 L800.0,400.0"/>
 <path class="arrow" d="M800.0,400.0 L793.0,403.1 L793.0,396.9 Z"/>
-<text x="725.0" y="394.0" class="tm" text-anchor="middle">T6, T10a</text>
+<text x="725.0" y="394.0" class="tm" text-anchor="middle">T6a*, T10a</text>
 <path class="edge" d="M650.0,485.0 L800.0,485.0"/>
 <path class="arrow" d="M800.0,485.0 L793.0,488.1 L793.0,481.9 Z"/>
 <text x="725.0" y="479.0" class="tm" text-anchor="middle">reset: T7</text>

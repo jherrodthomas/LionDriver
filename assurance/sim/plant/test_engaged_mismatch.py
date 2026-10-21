@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Tests for engaged_mismatch.py: the 1 Hz check revokes within two to three ticks, silently, after the steering ends."""
+"""Tests for engaged_mismatch.py: the safety task revokes 0.3 s after the first "not engaged" heartbeat, and the siren
+starts 0.5 s after it because no cruise cancel reaches the PCM (panda `drivers/engaged_mismatch.h`)."""
 
 import sys
 import unittest
@@ -9,28 +10,34 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import engaged_mismatch as em
 import simulate
 
+TASK = 0.01       # s, safety task period
+HEARTBEAT = 0.1   # s, pandad heartbeat period
+SPEAKER = 0.25    # s, the speaker sounds on every other 8 Hz tick
+
 
 class TestEngagedMismatch(unittest.TestCase):
   @classmethod
   def setUpClass(cls):
     cls.rs = em.runs()
 
-  def test_revoked_on_the_third_1hz_tick(self):
-    # heartbeat not engaged from host_stale_s (plus up to one 100 ms heartbeat), then three 1 Hz ticks: the first
-    # within 1 s, the third 2 s later
+  def test_revoked_0_3_s_after_the_first_not_engaged_heartbeat(self):
+    # heartbeat not engaged from host_stale_s (to within one task period, plus up to one heartbeat), then 30 ticks
     stale = simulate.ASSUMPTIONS["host_stale_s"][0]
     for r in self.rs:
-      self.assertTrue(stale + 2.0 < r["revoke"] <= stale + 0.1 + 3.0 + 0.01, (r["road"], r["phase"], r["revoke"]))
+      self.assertTrue(stale - TASK + 0.3 - TASK <= r["revoke"] <= stale + HEARTBEAT + 0.3 + 2 * TASK,
+                      (r["road"], r["phase"], r["revoke"]))
 
-  def test_phases_cover_the_1hz_tick(self):
+  def test_phases_cover_the_heartbeat_period(self):
     for road in {r["road_key"] for r in self.rs}:
       rev = [r["revoke"] for r in self.rs if r["road_key"] == road]
-      self.assertGreater(max(rev) - min(rev), 0.75, road)
+      self.assertGreater(max(rev) - min(rev), HEARTBEAT / 2, road)
 
-  def test_no_siren_and_the_alert_at_the_soundd_timeout(self):
+  def test_siren_0_2_s_after_the_revocation_and_before_the_alert(self):
     for r in self.rs:
-      self.assertIsNone(r["siren"])
+      self.assertIsNotNone(r["siren"], (r["road"], r["phase"]))
+      self.assertTrue(0.2 - TASK <= r["siren"] - r["revoke"] <= 0.2 + SPEAKER + 2 * TASK, (r["road"], r["phase"]))
       self.assertAlmostEqual(r["alert"], simulate.SELFDRIVE_STATE_TIMEOUT)
+      self.assertEqual(r["cue_kind"], "siren")
 
   def test_steering_ends_before_the_revocation(self):
     for r in self.rs:

@@ -470,7 +470,8 @@ Generated from [`state-machines/sm-toy-auth.yaml`](state-machines/sm-toy-auth.ya
 | T3 | ALLOWED | any RX | brake rising, or pressed while moving | clear | NOT_ALLOWED | all | 302 | Implemented | opendbc 98d3be1 safety.h:533-539 (generic_rx_checks) |
 | T4 | ALLOWED | RX of checked message | checksum, quality flag or counter invalid; reference build: or a frame of another length (ATC-25), the entry then invalid until a frame of the right length | clear | NOT_ALLOWED | all | 402, 406 | Partial | opendbc 62b89a3 safety.h:114-129 (is_msg_valid), :178-197 (rx_length_check, reference build, modes with rx_timeout_periods), :236-241; upstream build: a frame of another length matches no entry and is ignored |
 | T5 | ALLOWED | safety_tick (100 Hz safety task) | any RX check lagging (5 periods), below 10 Hz, or invalid | clear | NOT_ALLOWED | all | 401, 401a, 406 | Partial | opendbc 98d3be1 safety.h:497-509 (safety_tick); panda main.c:133 (safety_task_handler) |
-| T6 | ALLOWED | 1 Hz tick | heartbeat engaged=0 for 3 consecutive ticks | clear | NOT_ALLOWED | all | 307 | Not implemented | panda main.c:225-229 |
+| T6 | ALLOWED | 1 Hz tick | heartbeat engaged=0 for 3 consecutive ticks | clear | NOT_ALLOWED | all | gap | Not assessed | panda f4803c5 main.c:261-269 (tick_handler) |
+| T6a | ALLOWED | safety task: engaged-mismatch check | heartbeat engaged=0 for 30 safety tasks (0.3 s) since the first such heartbeat while authority was granted | clear; siren 3 s when PCM cruise is still active 0.5 s after that heartbeat (SWSR-516b) | NOT_ALLOWED | reference | 307, 516b | Implemented | panda f4803c5 main.c:152-168 (safety_task_handler), drivers/engaged_mismatch.h |
 | T7 | any | safety mode set (0xdc, heartbeat loss, harness change) | — | clear | NOT_ALLOWED | all | 311 | Implemented | opendbc 98d3be1 safety.h:574, 641-648 (set_safety_hooks; also clears the window, the TX-rate block and the cruise edge memory) |
 | T9 | ALLOWED | TX frame rejected by a content check | — | clear, reason | NOT_ALLOWED | all | 108 | Not implemented | not implemented: the frame is dropped, authority kept (opendbc safety.h safety_tx_hook) |
 | T10a | ALLOWED | safety task: heartbeat check | no SoC heartbeat for > 0.3 s in a car mode | clear; siren 3 s when authority was granted (panda c33343b) | NOT_ALLOWED | all | 407, 516 | Partial | panda main.c:135-137 (heartbeat_monitor_tick); heartbeat_siren.h at panda c33343b |
@@ -483,6 +484,12 @@ Generated from [`state-machines/sm-toy-auth.yaml`](state-machines/sm-toy-auth.ya
 | T13 | ALLOWED | SPI error | more than N_spi errors within 100 ms | clear, report | NOT_ALLOWED | all | 413 | Partial | not implemented: errors are counted only (panda drivers/spi.h) |
 | T14 | ALLOWED | car-side CAN bus-off or persistent TX failure | — | clear, report | NOT_ALLOWED | all | 508 | Partial | not implemented: counted only (panda drivers/fdcan.h) |
 | T15 | ALLOWED | safety task: forwarding supervision | relay driven and no camera-side frame for > t_fwd, or camera-side bus-off | clear all, release relay | NOT_ALLOWED | all | 711 | Not implemented | not implemented |
+
+Transitions without an SWSR (requirement gaps, checker finding S7):
+
+| # | Gap |
+|---|---|
+| T6 | upstream backstop, 2-3 s: does not meet the 0.3 s of SWSR-307; in the reference build T6a revokes first |
 
 Reactions that do **not** change the state:
 
