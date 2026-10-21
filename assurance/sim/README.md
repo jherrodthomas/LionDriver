@@ -52,6 +52,7 @@ some, a clip. They are for review and earn no credit.
 | [`plant/straight_drift.py`](plant/straight_drift.py), [`results/straight-drift.md`](results/straight-drift.md) | Silent assist loss (F-04b, F-07, siren muted) on a straight with a steady lateral push for a crown, bank or crosswind (TC-15): time from the drift to the lane line (generated) |
 | [`plant/engaged_mismatch.py`](plant/engaged_mismatch.py), [`results/engaged-mismatch.md`](results/engaged-mismatch.md) | Engaged mismatch (MCS-02.9): selfdrived stops while controlsd and pandad run on; time to the panda's revocation on its 1 Hz engaged-mismatch check, siren and openpilot alert (generated) |
 | [`chrono/`](chrono/chrono_pilot.py), [`results/chrono-pilot.md`](results/chrono-pilot.md) | Project Chrono pilot (§3.9): the silent assist loss on a straight with a cross slope and at curve entry, on Chrono::Vehicle's generic sedan, against the L1 plant (generated) |
+| [`thermal/`](thermal/README.md), [`results/thermal-pilot.md`](results/thermal-pilot.md) | Device heat model (§3.10, TE-04): the comma device behind a sun-loaded windshield in FEniCSx, cross-checked with FiPy; a candidate for the ODD ambient bound (generated) |
 | [`search/`](search/search.py) | Layer 4: failure search (Monte Carlo and cross-entropy) over the plant model |
 | [`search/families.yaml`](search/families.yaml) | Layer 4: the search families as data (fault, road, box, robustness, HARA mapping) |
 | [`results/search-curve-assist-loss.md`](results/search-curve-assist-loss.md) | Layer 4 search results of the first family (generated); one page per family beside it |
@@ -523,6 +524,16 @@ LD_LIBRARY_PATH=<prefix>/chrono/lib PYTHONPATH=<prefix>/chrono/share/chrono/pyth
 python3 assurance/sim/chrono/compare_l1.py --check            # plant Python, no Chrono needed
 ```
 
+### 3.10 Device heat model: the comma device behind the windshield
+
+A field model beside the layers, not in them: FEniCSx (tool TL-53) solves the heat in the comma device behind a
+sun-loaded windshield over a drive, and FiPy solves a 2D section of it as an independent check. It proposes a candidate
+for the ODD's ambient bound (WP-C-02 OI-3) and an MCU temperature for DFI-04. The lead's decisions of 2026-10-21: go
+(DQ-409 A), a logger for validation (DQ-411 A), design aid with no credit (DQ-412 A). Every input is an estimate until
+the device is measured and its own logs are read (step T1), so the first result (96 °C at about 43–50 °C cabin air) is
+the model's, not the device's. Method, checks and figures: [`thermal/README.md`](thermal/README.md); scope and tool
+choice: [TE-04](../07-supporting/tool-evaluations/TE-04-physics-field-model.md).
+
 ## 4. Credit and hand-back
 
 ![Evidence gate: a result from layers 1 to 4 counts only if a WP-V-02 §5.3 fidelity case is approved for its scenario family (DQ-139); today no family has one, so results rank risks and guide bench and car tests; results are handed back to the safety-concept, SOTIF and System FMEA sessions](figures/fig-sim-r5-credit.svg)
@@ -558,7 +569,8 @@ Until then the results only rank risks and guide which tests to run on the bench
 | OpenModelica (`omc`, conda-forge) | 1.27.1, build `hf6fb681_0`; explicit lock `plant/modelica/omc-linux-64.lock` | OSMC-PL 1.8, used under its AGPL-3 option; the simulation runtime compiled into the FMU is BSD-new (or AGPL-3/OSMC-PL), its solver SUNDIALS CVODE BSD-3 | exporting the L2 column FMU (TL-44) |
 | Project Chrono (core, Chrono::Vehicle, PyChrono) | 9.0.1, git tag at commit `2617649`, built from source by `chrono/build_chrono.sh` | BSD-3-Clause | the multibody vehicle of the Chrono pilot (§3.9) |
 | Chrono build tools (conda-forge) | explicit lock `chrono/chrono-build-linux-64.lock`: Python 3.13.12, numpy 2.4.6, SWIG 4.2.1, Eigen 3.4.0, CMake 3.31.8, Ninja 1.13 | Python-2.0, BSD-3-Clause, GPL-3.0-or-later (SWIG, a build tool; its generated wrappers are not covered), MPL-2.0, BSD-3-Clause, Apache-2.0; the rest of the lock is open source: permissive, LGPL, GPL-3 with the GCC runtime exception (libgcc, libstdc++), or GPL-3 build-time tools (readline, the linker); checked from the package metadata on 2026-10-21 | building Chrono in CI; not redistributed |
-| micromamba | 2.3.2-0, SHA-256 pinned in `assurance.yaml` | BSD-3-Clause | creating the OpenModelica and Chrono build environments from their locks in CI |
+| FEniCSx (DOLFINx, Basix, UFL, FFCx), PETSc, FiPy, PyVista with VTK, Mesa (conda-forge) | explicit lock `thermal/thermal-linux-64.lock`: DOLFINx 0.10.0, FiPy 4.0.3, PyVista 0.49.1, VTK 9.7.0, PETSc 3.25.6, Mesa 26.2.5 | LGPL-3.0-or-later (DOLFINx, UFL, FFCx), MIT (Basix, PyVista, Mesa), NIST public domain (FiPy), BSD-3 (VTK), BSD-2 (PETSc); the PETSc build links ParMETIS (non-commercial without permission; not used by the serial runs, TE-04 OI-4) | the device heat model (§3.10) |
+| micromamba | 2.3.2-0, SHA-256 pinned in `assurance.yaml` | BSD-3-Clause | creating the OpenModelica, Chrono build and heat-model environments from their locks in CI |
 
 ![Packages grouped by use and coloured by licence: layer 1 plant and its FMU on permissive licences; OpenModelica for the L2 column under its AGPL-3 option; scenariogeneration and esmini for layer 2 under MPL-2.0; Scenic and VerifAI not used because rv-ltl has no licence](figures/fig-sim-r6-deps.svg)
 

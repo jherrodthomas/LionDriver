@@ -503,6 +503,55 @@ jobs:
         LD_LIBRARY_PATH="$CHRONO_PREFIX/chrono/lib" PYTHONPATH="$CHRONO_PREFIX/chrono/share/chrono/python" \
           "$CHRONO_PREFIX/env/bin/python" assurance/sim/chrono/chrono_pilot.py --check
 
+  sim-thermal:
+    name: simulation device heat model
+    # Device heat model (assurance/sim/thermal, TE-04 pilot, tool TL-53): FEniCSx 0.10.0 solves the comma device
+    # behind a sun-loaded windshield; FiPy 4.0.3 is the independent cross-check. The environment comes from an explicit
+    # conda-forge lock (every package by URL and md5) and is cached on the lock's hash. Design aid (DQ-412):
+    # synthetic data (DSR-12), no evidence credit; every input is an estimate until step T1.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      MICROMAMBA_URL: https://github.com/mamba-org/micromamba-releases/releases/download/2.3.2-0/micromamba-linux-64
+      MICROMAMBA_SHA256: ffc3cb8d52d4d6b354bdbb979c407719c485392b74e462cbd50811aa88e58f85
+      THERMAL_ENV: ${{ github.workspace }}/../thermal-env
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Cache the heat-model environment (keyed on the lock)
+      id: thermal-cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.THERMAL_ENV }}
+        key: thermal-env-${{ hashFiles('assurance/sim/thermal/thermal-linux-64.lock') }}
+    - name: Create the heat-model environment from the explicit lock
+      if: steps.thermal-cache.outputs.cache-hit != 'true'
+      run: |
+        curl -sSL -o "$RUNNER_TEMP/micromamba" "$MICROMAMBA_URL"
+        echo "$MICROMAMBA_SHA256  $RUNNER_TEMP/micromamba" | sha256sum -c -
+        chmod +x "$RUNNER_TEMP/micromamba"
+        MAMBA_ROOT_PREFIX="$RUNNER_TEMP/mamba" "$RUNNER_TEMP/micromamba" create -y -q -p "$THERMAL_ENV" \
+          --file assurance/sim/thermal/thermal-linux-64.lock
+    - name: Checks (analytic slab, lumped transient, FiPy cross-check, energy balance, mesh study, limits from the code)
+      run: '"$THERMAL_ENV/bin/python" assurance/sim/thermal/test_thermal.py'
+    - name: Pilot results within 0.05 K of the committed JSON, results page current
+      run: '"$THERMAL_ENV/bin/python" assurance/sim/thermal/thermal_pilot.py --check'
+    - name: Figures render off-screen (Mesa software EGL; pixels are not compared)
+      env:
+        CONDA_PREFIX: ${{ env.THERMAL_ENV }}
+      run: |
+        "$THERMAL_ENV/bin/python" - <<'PY'
+        import json, sys, tempfile, yaml
+        from pathlib import Path
+        sys.path.insert(0, "assurance/sim/thermal")
+        import figures
+        out = Path(tempfile.mkdtemp())
+        figures.render(yaml.safe_load(open("assurance/sim/thermal/params.yaml")),
+                       json.load(open("assurance/sim/results/thermal-pilot.json")), out)
+        assert len(list(out.glob("*.webp"))) == 4
+        PY
+
   sim-scenarios:
     name: simulation known scenarios
     # WP-V-03 known scenarios as OpenSCENARIO/OpenDRIVE files (assurance/sim/scenarios, layer 2): the committed files
