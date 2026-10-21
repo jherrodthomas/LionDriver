@@ -680,6 +680,8 @@ def main(argv: list[str]) -> int:
   ap.add_argument("--stills", action="store_true", help="render the key-event frames from the three cameras")
   ap.add_argument("--video", action="store_true", help="render every frame from the three cameras")
   ap.add_argument("--res", default="1280x720", help="chase still resolution, WxH (side views at half)")
+  ap.add_argument("--resume", action="store_true", help="with --video, keep the clip frames already rendered (a run "
+                  "stopped part way, e.g. out of memory, carries on)")
   ap.add_argument("--video-res", default="960x540", help="chase clip resolution, WxH (side views at half)")
   ap.add_argument("--samples", type=int, default=16, help="Cycles samples for stills (clip: half)")
   ap.add_argument("--no-blend", action="store_true", help="do not save scene.blend")
@@ -721,7 +723,8 @@ def main(argv: list[str]) -> int:
     for name, cam in built["cams"].items():
       sized(name, w, h)
       for f in range(1, len(sc["t"]) + 1):
-        render_frame(cam, f, out / "frames" / name / f"{f:04d}.png")
+        if not (args.resume and (out / "frames" / name / f"{f:04d}.png").exists()):
+          render_frame(cam, f, out / "frames" / name / f"{f:04d}.png")
       manifest["video"][name] = f"frames/{name}/%04d.png"
   (out / "render.json").write_text(json.dumps(manifest, indent=1))
   print(f"{sc['id']}: {len(manifest['stills'])} stills ({manifest['vehicle']}); clip cameras {list(manifest['video'])}")
