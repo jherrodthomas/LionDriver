@@ -2,6 +2,7 @@
 """Tests for check_fretish.py: the real file passes, the page is current, and each check catches its drift."""
 
 import copy
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -17,6 +18,7 @@ class TestRealFile(unittest.TestCase):
   def setUpClass(cls):
     cls.data = yaml.safe_load(cf.SOURCE.read_text(encoding="utf-8"))
     cls.wp = cf.WP_S_02.read_text(encoding="utf-8")
+    cls.formulas = json.loads(cf.FORMULAS.read_text(encoding="utf-8"))
 
   def errors(self, data=None, wp=None):
     return cf.check(data if data is not None else self.data, wp if wp is not None else self.wp)
@@ -31,7 +33,14 @@ class TestRealFile(unittest.TestCase):
     self.assertEqual(self.errors(), [])
 
   def test_committed_page_current(self):
-    self.assertEqual(cf.OUTPUT.read_text(encoding="utf-8"), cf.build(self.data), "stale; run check_fretish.py")
+    self.assertEqual(cf.OUTPUT.read_text(encoding="utf-8"), cf.build(self.data, self.formulas), "stale; run check_fretish.py")
+
+  def test_formulas_current(self):
+    self.assertEqual(cf.check_formulas(self.data, self.formulas), [])
+
+  def test_changed_sentence_needs_new_formula(self):
+    data = self.mutated("FR-307a", fretish="upon authority_granted & !hb_engaged the envelope shall within 20 ticks satisfy !authority_granted")
+    self.assertTrue(any("FR-307a" in e and "fret_formalize" in e for e in cf.check_formulas(data, self.formulas)))
 
   def test_reworded_tsr_fails(self):
     wp = self.wp.replace("within ≤ 0.3 s. (b) The SoC", "within ≤ 0.2 s. (b) The SoC", 1)

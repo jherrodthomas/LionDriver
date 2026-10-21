@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Purpose | Decide whether NASA FRET should restate the TSRs as structured requirements with a formal meaning, check them for conflicts, and feed runtime monitors (Ogma, Copilot); pilot on the panda TSRs |
-| Status | Draft. Started on the lead's go (2026-10-21): P1 drafted ([`assurance/models/fret/`](../../models/fret/README.md)); FRET itself not yet run (OI-1). AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Draft. Started on the lead's go (2026-10-21): P1 and P2 done ([`assurance/models/fret/`](../../models/fret/README.md)); P3 to P5 open. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Standard reference | ISO 26262-8:2018 §6 (specification of safety requirements: unambiguous, verifiable, consistent) and §11 (tool classification), applied as in [WP-P-07](../WP-P-07-tool-classification-qualification.md) §2 |
 | Date | 2026-10-21 |
 | Baseline | `liondriver-dev` with panda `f4803c5` and opendbc `4d1a056` |
@@ -25,8 +25,8 @@ The same structured requirements are the input to Ogma, which generates Copilot 
 |---|---|
 | What | [NASA-SW-VnV/fret](https://github.com/NASA-SW-VnV/fret): requirements in "FRETish" (restricted English: scope, condition, component, shall, timing, response), formalised into past- and future-time metric temporal logic, with diagrams, realizability checks and test generation |
 | Version and licence | v3.1 (README badge); the source used here is commit `cf0f913` (2026-04-10). Apache-2.0 (`LICENSE.pdf`; the grammar header says the same). Used as a tool; no FRET code enters the repository |
-| Runs headless | A command-line interface exists (`npm run start-cli`: `formalize`, `realizability`, `list`), besides the Electron desktop application. **Not yet run**: installing and running FRET's npm dependency tree was not permitted in the drafting session (OI-1) |
-| Other dependencies | Node.js (the repository's Electron build); Kind 2 or JKind for realizability; none for `formalize` |
+| Runs headless | Yes, through its command-line interface (`formalize`, `realizability`, `list`); checked 2026-10-21 with Node.js 22.22.0. [`install_fret.sh`](../../models/fret/install_fret.sh) fetches the pinned commit, installs the npm packages without install scripts and without Electron, and builds the CLI in about 40 s. Two quirks: npm 10 rejects FRET's old-style `devEngines` field (dropped in the local copy), and the CLI keeps a database under `$HOME/Documents` (a temporary home is used) |
+| Other dependencies | Node.js 22 (pinned in CI) and FRET's npm tree (about 3,700 packages, locked by FRET's own lockfiles); Kind 2 or JKind for realizability; none for `formalize` |
 
 ## 3. Pilot scope: the panda TSRs
 
@@ -37,7 +37,7 @@ The panda (safety MCU) TSRs were chosen because they are the ASIL C mechanisms, 
 | Step | Work | Output | Done when |
 |---|---|---|---|
 | P1 Restate | Write the FRETish, a glossary mapping every variable to the code, and the findings; a checker for grammar shape, glossary and source drift, in CI | [`tsr-fretish.yaml`](../../models/fret/tsr-fretish.yaml), [`check_fretish.py`](../../models/fret/check_fretish.py) and its page | **Done** 2026-10-21: 11 requirements, 6 findings (§5) |
-| P2 Formalise | Run FRET `formalize` on every sentence; store the past-time and future-time formulas next to the FRETish; CI checks that each stored formula belongs to the current sentence | Formulas in the YAML, FRET commit pinned | FRET parses all 11 and the formulas are reviewed against the TSR text |
+| P2 Formalise | Run FRET `formalize` on every sentence; store the past-time and future-time formulas next to the FRETish; CI checks that each stored formula belongs to the current sentence | [`fretish-formalizations.json`](../../models/fret/fretish-formalizations.json), FRET commit pinned | **Done** 2026-10-21: FRET parses all 11; CI reruns FRET and compares. The formulas are AI-reviewed against the TSR text, not yet by a person |
 | P3 Realizability | Check the set with Kind 2 or JKind through the FRET CLI | A realizability report | Every conflict is named, or the set is realizable |
 | P4 Monitor | One TSR (TSR-307(a) proposed) through Ogma to a Copilot C99 monitor, run first against the plant model's traces | A monitor and its trace verdicts | The monitor agrees with the plant on the engaged-mismatch runs; the licence of the generated code is settled before it goes near the firmware |
 | P5 Decide | Extend to the SoC TSRs and the FSRs, or stop | A decision note | The lead has the result |
@@ -57,10 +57,12 @@ Writing the 11 sentences found 6 points to route to the WP-S-02 owner ([page](..
 
 None asks the lead for a decision: each is a rewording, or a code change, inside an intent already decided (FF-04: DQ-048).
 
+P2 result (2026-10-21): FRET parses and formalises all 11 sentences, and gives the same formulas on every run. One limit for P3: in the future-time formulas FRET leaves the past-time predicates (`persisted`, `occurred`, `preBool`) as named macros, so FR-407, FR-516a1 and FR-516a2 need them expanded, or restated without them, before a realizability check.
+
 ## 6. What the pilot is not
 
 - **Not evidence.** The FRETish restates the TSRs; WP-S-02 stays the source of record. A finding changes a TSR only after its owner reviews it.
-- **Not yet formal.** Until P2, the checker checks shape, not meaning. The formal meaning is FRET's, and FRET has not run.
+- **Not a proof about the code.** The formulas give each TSR a precise meaning. Whether the code meets them is P4's question (monitors on plant traces).
 
 ## 7. Tool classification (proposed, for WP-P-07)
 
@@ -79,6 +81,6 @@ None asks the lead for a decision: each is a rewording, or a code change, inside
 
 | ID | Item |
 |---|---|
-| OI-1 | Run FRET (CLI, commit `cf0f913`): permission to install and run its npm dependencies, here or on the CI runner (P2) |
+| OI-1 | ~~Run FRET (CLI, commit `cf0f913`)~~ **Closed** 2026-10-21: the lead approved the install; FRET runs in CI (P2) |
 | OI-2 | ~~Classify FRET and `check_fretish.py` in WP-P-07~~ **Closed** 2026-10-21: TL-50, TCL1 |
 | OI-3 | Settle the licence of Ogma's generated monitor code before P4 output goes near the firmware |
