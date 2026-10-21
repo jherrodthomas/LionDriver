@@ -161,6 +161,8 @@ jobs:
         python3 assurance/02-concept/hara/test_hara_figures.py
         python3 assurance/02-concept/fsc/fsc_figures.py --check
         python3 assurance/02-concept/fsc/test_fsc_figures.py
+        python3 assurance/02-concept/fsc/fsc_routes.py --check
+        python3 assurance/02-concept/fsc/test_fsc_routes.py
         python3 assurance/02-concept/sotif/sotif_figures.py --check
         python3 assurance/02-concept/sotif/test_sotif_figures.py
         python3 assurance/02-concept/sotif/test_sotif_scenes.py

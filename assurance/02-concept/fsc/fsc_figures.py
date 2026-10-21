@@ -292,7 +292,7 @@ def main(argv: list[str]) -> int:
   except (FigureError, hf.FigureError, ValueError) as e:
     print(f"fsc_figures: {e}", file=sys.stderr)
     return 1
-  existing = {p.name for p in OUT_DIR.glob("fig-c04-*.svg")}
+  existing = {p.name for p in OUT_DIR.glob("fig-c04-[0-9]*.svg")}  # fig-c04-r*: fsc_routes.py
   if check:
     stale = [n for n, c in outputs.items() if not (OUT_DIR / n).exists() or (OUT_DIR / n).read_text(encoding="utf-8") != c]
     extra = sorted(existing - set(outputs))

@@ -59,6 +59,10 @@ Every parent link of WP-S-02 §12.1 as a cell: rows are FSRs by safety goal, col
 - [FSR list](fsr-list.md): all 58 FSRs, one line each.
 - [TSR list](tsr-list.md): all 128 TSRs, one line each.
 
+## One requirement, six routes
+
+[TSR-516, the SoC-independent siren](../../02-concept/fsc/requirement-routes.md), reached by six analysis methods (fault tree, FMEA, STPA, guide words, plant scenario, trace) and split into the six slots of a requirement's anatomy: TRIGGER, AGENT, MODAL, ACTION, OBJECT, CONSTRAINT.
+
 ## Regenerating
 
 ```bash
