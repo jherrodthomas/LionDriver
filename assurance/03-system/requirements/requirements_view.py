@@ -400,6 +400,10 @@ def readme(fs: list[dict], ts: list[dict], goals: dict[str, dict], kids: dict[st
           "", "## Lists", "",
           f"- [FSR list](fsr-list.md): all {len(fs)} FSRs, one line each.",
           f"- [TSR list](tsr-list.md): all {len(ts)} TSRs, one line each.", "",
+          "## One requirement, six routes", "",
+          "[TSR-516, the SoC-independent siren](../../02-concept/fsc/requirement-routes.md), reached by six analysis "
+          "methods (fault tree, FMEA, STPA, guide words, plant scenario, trace) and split into the six slots of a "
+          "requirement's anatomy: TRIGGER, AGENT, MODAL, ACTION, OBJECT, CONSTRAINT.", "",
           "## Regenerating", "",
           "```bash", "python3 assurance/03-system/requirements/requirements_view.py", "```", "",
           "CI runs it with `--check` after `sync_requirements.py`, so the view follows every change to WP-C-04 §5, §9 and "
