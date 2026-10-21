@@ -32,6 +32,10 @@ No single analysis finds every requirement. LionDriver runs several on the same 
 produce, and only then trusts the result. Five routes **derive** requirements; the sixth, traceability, **confirms**
 that the chain is complete and derives nothing.
 
+![Six route cards for one requirement: fault tree, FMEA, STPA, guidewords, scenario and trace, each showing which parts of the requirement it pins down, all ending on TSR-516](../assurance/02-concept/fsc/figures/fig-c04-r2-routes.svg)
+
+The [requirement-routes page](../assurance/02-concept/fsc/requirement-routes.md) walks each route in full, with one generated figure per route and every record it cites quoted from its file.
+
 | # | Route | Shape | Strongest at | Watch out for | In this repository |
 |---|---|---|---|---|---|
 | 1 | Fault tree (FTA) | Top-down from the violated goal | Finding combinations of faults; quantifying | Gives logic, not behaviour | [WP-A-04](../assurance/08-analyses/WP-A-04-system-fta-fmea.md), [cut sets](../assurance/08-analyses/fta/cut-sets.md) |
@@ -76,6 +80,8 @@ the SG-02 tree within the 1 s budget. FRET found that the text set no minimum le
 A well-formed safety requirement has six parts. Each maps to a field of FRET's structured language, so the same
 breakdown serves a reviewer, a tester and the formal check.
 
+![The anatomy strip on FSR-02.05: six slots TRIGGER, AGENT, MODAL, ACTION, OBJECT and CONSTRAINT, each with its FRET field, and the attribute chips ASIL, parent, allocation and verification](../assurance/02-concept/fsc/figures/fig-c04-r1-anatomy.svg)
+
 | Part | Asks | FRET field | TSR-307(a) |
 |---|---|---|---|
 | **Trigger** | When does it apply? | scope and condition | when the SoC heartbeat has reported "not engaged" continuously for 0.3 s while authority is granted |
@@ -105,6 +111,8 @@ The [TSC table](../assurance/03-system/WP-S-02-technical-safety-requirements.md)
 
 The FRET pilot rewrote six panda requirements and compared each with the code. The fixes were text-only, made by the
 requirements owner (WP-S-02 v0.53):
+
+![TSR-516(c) before (v0.52) and after (v0.53), with findings FF-05 and FF-06 marked on the old text, and the FRETish sentence coloured by slot](../assurance/02-concept/fsc/figures/fig-c04-r4-tsr516c.svg)
 
 | Rule | Before | After |
 |---|---|---|
