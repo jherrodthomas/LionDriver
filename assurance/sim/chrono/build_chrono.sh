@@ -8,7 +8,7 @@
 #
 #   build_chrono.sh <micromamba> <prefix>    # creates <prefix>/env (build tools) and <prefix>/chrono (install)
 #
-# Then run the pilot with:  <prefix>/env/bin/python chrono_pilot.py   and PYTHONPATH as printed at the end.
+# It prints the command that runs the pilot on the build. About 80 min of CPU on 4 cores.
 set -euo pipefail
 
 MM="$1"
@@ -21,6 +21,11 @@ mkdir -p "$PREFIX"
 MAMBA_ROOT_PREFIX="$PREFIX/mamba" "$MM" create -y -q -p "$PREFIX/env" --file "$HERE/chrono-build-linux-64.lock"
 git clone -q --depth 1 --branch "$TAG" https://github.com/projectchrono/chrono.git "$PREFIX/src"
 test "$(git -C "$PREFIX/src" rev-parse HEAD)" = "$COMMIT"
+# Without the Irrlicht module SWIG takes ChVehicleVisualSystem for a concrete class and wraps a constructor the C++
+# compiler then refuses (the class is abstract); the pilot never constructs one, so the constructor is not wrapped
+I="$PREFIX/src/src/chrono_swig/interface/vehicle/ChModuleVehicle.i"
+sed -i 's|^%shared_ptr(chrono::vehicle::ChVehicleVisualSystem)$|&\n%ignore chrono::vehicle::ChVehicleVisualSystem::ChVehicleVisualSystem;|' "$I"
+grep -q '^%ignore chrono::vehicle::ChVehicleVisualSystem::ChVehicleVisualSystem;$' "$I"
 E="$PREFIX/env"
 cmake -G Ninja -S "$PREFIX/src" -B "$PREFIX/build" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$PREFIX/chrono" \
   -DUSE_SIMD=OFF -DBUILD_DEMOS=OFF -DBUILD_TESTING=OFF -DBUILD_BENCHMARKING=OFF \
@@ -29,5 +34,8 @@ cmake -G Ninja -S "$PREFIX/src" -B "$PREFIX/build" -DCMAKE_BUILD_TYPE=Release -D
   -DPYTHON_EXECUTABLE="$E/bin/python3.13" -DPYTHON_LIBRARY="$E/lib/libpython3.13.so" \
   -DPYTHON_INCLUDE_DIR="$E/include/python3.13" > "$PREFIX/configure.log"
 ninja -C "$PREFIX/build" install > "$PREFIX/build.log"
+# the install puts the extension modules beside the pychrono package; its modules import them from inside it
+PY="$PREFIX/chrono/share/chrono/python"
+mv "$PY"/_*.so "$PY/pychrono/"
 rm -rf "$PREFIX/src" "$PREFIX/build" "$PREFIX/mamba"
-echo "PYTHONPATH=$(dirname "$(find "$PREFIX/chrono" -name __init__.py -path '*pychrono/__init__.py' | head -1)")/.."
+echo "run with: LD_LIBRARY_PATH=$PREFIX/chrono/lib PYTHONPATH=$PY $PREFIX/env/bin/python chrono_pilot.py"
