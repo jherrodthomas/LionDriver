@@ -437,7 +437,25 @@ def check_msr_cause(doc, fm, c, cwhere, actions, referenced_actions, ctx, res: R
     res.warn(cwhere, "MSR AP=M: action or rationale recommended")
 
 
-def fmeda_metrics(doc):
+def fmeda_mode(fm, goal=None):
+  """The failure mode as classified for `goal`: the row itself, with its per_goal entry for that goal applied."""
+  if goal is None:
+    return fm
+  for pg in fm.get("per_goal", []):
+    if pg["goal"] == goal:
+      return {**fm, **{k: v for k, v in pg.items() if k not in ("goal", "reason")}}
+  return fm
+
+
+def fmeda_targets(doc):
+  """[(goal, asil, also_show)] to judge the metrics against: analysis.targets, else the file's own goal and ASIL."""
+  a = doc["analysis"]
+  if a.get("targets"):
+    return [(t["goal"], t["asil"], t.get("also_show", [])) for t in a["targets"]]
+  return [(a.get("safety_goal"), a["asil_target"], [])] if a.get("asil_target") else []
+
+
+def fmeda_metrics(doc, goal=None):
   total = spf = rf = mpf_latent = 0.0
   for comp in doc["components"]:
     lam = comp["failure_rate_fit"]
@@ -446,7 +464,8 @@ def fmeda_metrics(doc):
     if lam is None:
       return None
     total += lam
-    for fm in comp["failure_modes"]:
+    for row in comp["failure_modes"]:
+      fm = fmeda_mode(row, goal)
       l_fm = lam * fm["distribution"]
       if fm["violates_sg_directly"]:
         dc = fm.get("dc_spf", 0.0) if fm.get("safety_mechanism_spf") else 0.0
@@ -486,14 +505,36 @@ def check_fmeda(name, doc, ctx, res: Result):
       if fm.get("dfmea_ref") and fm["dfmea_ref"] not in ctx.failure_modes:
         res.error(fwhere, f"dfmea_ref {fm['dfmea_ref']} not found")
 
-  m = fmeda_metrics(doc)
-  asil = doc["analysis"]["asil_target"]
-  if m is None:
+  goals = [t[0] for t in fmeda_targets(doc)]
+  if len(set(goals)) != len(goals):
+    res.error(name, "analysis.targets names a goal twice")
+  for comp in doc["components"]:
+    for fm in comp["failure_modes"]:
+      seen = set()
+      for pg in fm.get("per_goal", []):
+        fwhere = f"{name} {fm['id']}"
+        if pg["goal"] not in goals:
+          res.error(fwhere, f"per_goal {pg['goal']} is not in analysis.targets")
+        if pg["goal"] in seen:
+          res.error(fwhere, f"per_goal {pg['goal']} given twice")
+        seen.add(pg["goal"])
+        eff = fmeda_mode(fm, pg["goal"])
+        for key, dc in (("safety_mechanism_spf", "dc_spf"), ("safety_mechanism_lf", "dc_lf")):
+          if eff.get(key) and eff[key] not in mechanisms:
+            res.error(fwhere, f"per_goal {pg['goal']}: {key} {eff[key]} not found")
+          if eff.get(key) and dc not in eff:
+            res.error(fwhere, f"per_goal {pg['goal']}: {key} set without {dc}")
+
+  if fmeda_metrics(doc) is None:
     res.report.append(f"{name}: metrics not computable (no safety-related components or missing failure rates)")
     return
-  res.report.append(f"{name}: λ={m['total_fit']:.3f} FIT  SPFM={m['spfm']:.2%}  LFM={m['lfm']:.2%}  "
-                    + f"λSPF+λRF={m['pmhf_spf_rf_fit']:.3f} FIT (dual-point PMHF term not included)")
-  if asil:
+  for goal, asil, also in fmeda_targets(doc) or [(None, None, [])]:
+    m = fmeda_metrics(doc, goal)
+    label = f"{name} {goal}" if doc["analysis"].get("targets") else name
+    res.report.append(f"{label}: λ={m['total_fit']:.3f} FIT  SPFM={m['spfm']:.2%}  LFM={m['lfm']:.2%}  "
+                      + f"λSPF+λRF={m['pmhf_spf_rf_fit']:.3f} FIT (dual-point PMHF term not included)")
+    if not asil:
+      continue
     spfm_t, lfm_t, pmhf_t = FMEDA_TARGETS[asil]
     misses = []
     if m["spfm"] < spfm_t:
@@ -503,7 +544,7 @@ def check_fmeda(name, doc, ctx, res: Result):
     if m["pmhf_spf_rf_fit"] >= pmhf_t:
       misses.append(f"λSPF+λRF {m['pmhf_spf_rf_fit']:.3f} FIT >= {pmhf_t} FIT")
     for miss in misses:
-      (res.error if doc["analysis"]["status"] == "released" else res.warn)(name, f"ASIL {asil} target missed: {miss}")
+      (res.error if doc["analysis"]["status"] == "released" else res.warn)(label, f"ASIL {asil} target missed: {miss}")
 
 
 def check_hara(name, doc, ctx, res: Result):

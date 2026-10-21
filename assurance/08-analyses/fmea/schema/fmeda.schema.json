@@ -22,7 +22,37 @@
         "rating_tables": {"type": "string", "pattern": "^RT-[0-9]+$"},
         "scope": {"type": "string", "minLength": 1},
         "safety_goal": {"type": ["string", "null"], "pattern": "^SG-[0-9]{3,}$"},
-        "asil_target": {"enum": ["B", "C", "D", null]},
+        "asil_target": {"enum": ["B", "C", "D", null], "description": "ASIL of safety_goal in LD-HARA-001; informational when targets is given."},
+        "targets": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Goals the metrics are judged against (assurance WP-C-03 IDs) and the ASIL used for each (WP-H-04 §4). When given, it replaces asil_target for the metric checks.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["goal", "asil", "basis"],
+            "properties": {
+              "goal": {"type": "string", "pattern": "^SG-[0-9]{2}$"},
+              "asil": {"enum": ["B", "C", "D"]},
+              "also_show": {"type": "array", "items": {"enum": ["B", "C", "D"]}, "description": "Further targets reported alongside, e.g. B for SG-01 (DQ-063)."},
+              "basis": {"type": "string", "minLength": 1, "description": "HARA version and decision IDs that set this goal and target."}
+            }
+          }
+        },
+        "history": {
+          "type": "array",
+          "description": "Revision history, oldest first.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["revision", "date", "change"],
+            "properties": {
+              "revision": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+              "date": {"type": "string", "format": "date"},
+              "change": {"type": "string", "minLength": 1}
+            }
+          }
+        },
         "mission_profile": {"type": "string", "description": "Temperature/operating profile used for failure rates."},
         "out_of_scope": {"type": "array", "items": {"type": "string"}},
         "references": {"type": "array", "items": {"type": "string"}},
@@ -57,6 +87,11 @@
           "dfmea_element": {"type": "string", "pattern": "^DFM-SE-[0-9]{3,}$"},
           "failure_rate_fit": {"type": ["number", "null"], "minimum": 0},
           "failure_rate_source": {"type": "string", "description": "e.g. SN 29500-2, IEC 61709, IEC TR 62380, ISO 26262-11, supplier data"},
+          "rate_kind": {"enum": ["generic", "handbook", "supplier"], "description": "generic: order-of-magnitude estimate; handbook: a value of the approved set (WP-H-03 §2.3), also when quoted second-hand; supplier: manufacturer data."},
+          "handbook_ref": {"type": "string", "description": "Handbook part and table or class, e.g. SN 29500-2 Table 5."},
+          "reference_temp_c": {"type": "number", "description": "Reference temperature of the rate in °C (e.g. the SN 29500 virtual junction temperature)."},
+          "stress_converted": {"type": "boolean", "description": "True when the rate is converted to the mission profile (IEC 61709); false when used at reference conditions."},
+          "wire_ends": {"type": "array", "items": {"type": "string"}, "description": "Wire-end IDs from assurance/04-hardware/wiring/wire-ends.tsv covered by this component."},
           "safety_related": {"type": "boolean"},
           "failure_modes": {
             "type": "array",
@@ -75,7 +110,26 @@
                 "dc_spf": {"type": "number", "minimum": 0, "maximum": 1},
                 "safety_mechanism_lf": {"type": "string", "pattern": "^FMD-SM-[0-9]{3,}$"},
                 "dc_lf": {"type": "number", "minimum": 0, "maximum": 1},
-                "notes": {"type": "string"}
+                "notes": {"type": "string"},
+                "per_goal": {
+                  "type": "array",
+                  "description": "Classification for another goal of analysis.targets where it differs from this row's own (DQ-362). Fields left out keep the row's values.",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["goal", "reason"],
+                    "properties": {
+                      "goal": {"type": "string", "pattern": "^SG-[0-9]{2}$"},
+                      "violates_sg_directly": {"type": "boolean"},
+                      "mpf_potential": {"type": "boolean"},
+                      "safety_mechanism_spf": {"type": ["string", "null"], "pattern": "^FMD-SM-[0-9]{3,}$"},
+                      "dc_spf": {"type": "number", "minimum": 0, "maximum": 1},
+                      "safety_mechanism_lf": {"type": ["string", "null"], "pattern": "^FMD-SM-[0-9]{3,}$"},
+                      "dc_lf": {"type": "number", "minimum": 0, "maximum": 1},
+                      "reason": {"type": "string", "minLength": 1}
+                    }
+                  }
+                }
               }
             }
           }

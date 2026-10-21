@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-04 Hardware architectural metrics (SPFM, LFM) |
 | Standard reference | ISO 26262-5:2018 §8 (evaluation of the hardware architectural metrics), Annex C (metric definitions, informative), Annex D (diagnostic coverage, informative); ISO 26262-11:2018 (semiconductors, informative) |
-| Version | 0.8 (OI-6: no ST licence and low CPU coverage, DQ-069 option B, the ASIL C SPFM target likely missed; 2026-10-19). 0.7 (SG-02, SG-03 and SG-06 at ASIL C since WP-C-03 v0.4: §4 targets updated; §5.2 carries the SG-01 estimate for them, decision DQ-362 option A; new OI-6, the 0.16-point ASIL C SPFM miss, for G2; Figure 5-1 updated; 2026-10-18). 0.6 (§5.3 SG-07 SPFM deviation accepted by the lead, DQ-320 option A, conditional on the harness box bench tests; 2026-10-16). 0.5 (§5.2 generic-rate estimate from FMEDA rev 0.4 with SG-01 shown against C and B; Figure 5-1 marks the estimates; 2026-10-16). 0.4 (decisions applied: SG-01 target C with B alongside, DQ-063; route to the BOM, DQ-065; added hardware allowed in principle, DQ-051; HIL bench deferred, DQ-049; IWDG credit conditional, DQ-114; 2026-10-16). 0.3 (§5 status and §4 targets drawn as Figure 5-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12: DC-01 implemented, not verified, no DC credit; §5.1, §6 step 4). 0.1: initial draft |
+| Version | 0.9 (§5.2: SG-05 estimate, SPFM 90.38 %, from the FMEDA rev 0.7 per-goal classification; 2026-10-20). 0.8 (OI-6: no ST licence and low CPU coverage, DQ-069 option B, the ASIL C SPFM target likely missed; 2026-10-19). 0.7 (SG-02, SG-03 and SG-06 at ASIL C since WP-C-03 v0.4: §4 targets updated; §5.2 carries the SG-01 estimate for them, decision DQ-362 option A; new OI-6, the 0.16-point ASIL C SPFM miss, for G2; Figure 5-1 updated; 2026-10-18). 0.6 (§5.3 SG-07 SPFM deviation accepted by the lead, DQ-320 option A, conditional on the harness box bench tests; 2026-10-16). 0.5 (§5.2 generic-rate estimate from FMEDA rev 0.4 with SG-01 shown against C and B; Figure 5-1 marks the estimates; 2026-10-16). 0.4 (decisions applied: SG-01 target C with B alongside, DQ-063; route to the BOM, DQ-065; added hardware allowed in principle, DQ-051; HIL bench deferred, DQ-049; IWDG credit conditional, DQ-114; 2026-10-16). 0.3 (§5 status and §4 targets drawn as Figure 5-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12: DC-01 implemented, not verified, no DC credit; §5.1, §6 step 4). 0.1: initial draft |
 | Status | Draft (method and plan; no metric computed) |
 | ASIL / scope | ASIL C (SG-01 provisional; SG-02, SG-03, SG-06 since WP-C-03 v0.4) / ASIL B (SG-04, SG-05, SG-07) |
 | Author | Assurance team (initial draft) |
@@ -152,13 +152,14 @@ channel. This supports the FSC recommendation of option (c).
 |---|---|---|---|---|---|
 | SG-01 | 255 | 96.8 % | 88.9 % | C: misses SPFM (97 %) by 0.2 points; LFM met | B: both met |
 | SG-02, SG-03, SG-06 | SG-01 rows reused (DQ-362) | 96.8 % | 88.9 % | C: misses SPFM (97 %) by 0.16 points (96.84 %); LFM met. Open for G2 (OI-6) | — |
+| SG-05 | SG-01 rows, FMD-001 and FMD-009 single-point (DQ-362, FMEDA rev 0.7) | 90.4 % | 95.3 % | B: met by 0.38 points on this estimate | — |
 | SG-07 | 287 | 78.1 % | 97.7 % | B: misses SPFM (90 %); accepted as a recorded deviation (§5.3, DQ-320) | — |
 
 With the planned measures and the DC assumptions stated in WP-H-03 §6.3, the estimates are:
 - SG-01: 99.1 % / 95.4 %.
 - SG-07: 94.6 %. This needs switch readback, the transceiver release and a stock-path continuity check; position readback alone gives 83.6 %.
 
-The lead decided to reuse the SG-01 and SG-07 rows for SG-02, SG-03, SG-05 and SG-06, with a note per goal in WP-H-03 §6.4, rather than a separate FMEDA per goal ([DQ-362](../01-management/decisions/register.yaml), option A, 2026-10-18). The rows stay classified for SG-01, so the SG-02/SG-03/SG-06 line above is the shared-path estimate, not a goal-specific one. No SG-05 estimate is given: two of its rows are multiple-point for SG-01 but single-point for SG-05 (WP-H-03 §6.4).
+The lead decided to reuse the SG-01 and SG-07 rows for SG-02, SG-03, SG-05 and SG-06, with a note per goal in WP-H-03 §6.4, rather than a separate FMEDA per goal ([DQ-362](../01-management/decisions/register.yaml), option A, 2026-10-18). The rows stay classified for SG-01, so the SG-02/SG-03/SG-06 line above is the shared-path estimate, not a goal-specific one. SG-05 has its own estimate since FMEDA rev 0.7: two of its rows are multiple-point for SG-01 but single-point for SG-05, recorded as `per_goal` entries (WP-H-03 §6.4). It meets B by only 0.38 points, so a small change to the CPU or SRAM rates can tip it.
 
 ### 5.3 Deviation: SG-07 SPFM with comma's harness box
 
