@@ -5417,6 +5417,7 @@
       title: "Also cap the speed at 90 km/h whenever the wipers run"
       detail: "Keeps the car below NASA's 98 km/h on standing water. Cost: the item must read the wiper state from CAN (not in the reference build) and enforce a second speed bound; a change to the software requirements."
   sources: ["assurance/sim/results/hydroplaning.md", "assurance/sim/weather/README.md §2", "WP-C-02 §3.1 (precipitation, speed DQ-260)", "WP-C-06 TC-03", "WP-V-03 KS-15", "NASA TN D-2056", "FHWA-RD-79-31"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-21, note: "Lead in chat: \"A\""}
+  applied: {ref: d3e22f9, record: "WP-C-02 v0.8 §3.1 (precipitation and road-surface rows)", at: 2026-10-21}
   note: "Correction on applying: WP-C-02 §3.1 already listed standing water among the road-surface exclusions, so option A adds the rain-rate number and gives that exclusion its reason (after the rain, about 98 km/h); the context's \"standing water stays inside the ODD\" under B was wrong."
