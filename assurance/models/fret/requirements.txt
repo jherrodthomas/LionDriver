@@ -1,0 +1,2 @@
+# TE-03 FRETish checker. FRET itself is not a Python package; see TE-03 OI-1.
+PyYAML==6.0.3        # MIT; reads tsr-fretish.yaml
