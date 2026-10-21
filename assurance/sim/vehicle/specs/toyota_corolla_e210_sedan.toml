@@ -1,0 +1,187 @@
+# Toyota Corolla E210 sedan (US, 2020-22, front-wheel drive, 205/55R16): the reference platform of opendbc
+# TOYOTA_COROLLA_TSS2 ("Toyota Corolla 2020-22"). Read by ../vehicle_spec.py.
+#
+# Every entry: value, low, high (the plausible range the sweeps use), unit, status and source.
+#   published  read from a public page; source gives the page, what it says and when it was read
+#   fleet      from opendbc, the values openpilot drives the car with (partly fitted to comma's fleet data)
+#   derived    computed from other entries by the physics in vehicle_spec.py; source names the formula
+#   assumed    a typical value with no source for this car; the range is wide on purpose
+# Nothing here is measured on the LionDriver reference car; WP-S-04 M-01 and M-02 replace these values.
+# Synthetic (DSR-12), no evidence credit.
+
+[vehicle]
+name = "Toyota Corolla E210 sedan, US 2020-22, FWD, 205/55R16"
+opendbc_platform = "TOYOTA_COROLLA_TSS2"
+template = "chrono-sedan"   # the Chrono::Vehicle Sedan JSON set the builder starts from
+
+[param.wheelbase]
+value = 2.700
+low = 2.670
+high = 2.700
+unit = "m"
+status = "published"
+source = "toyota.com/corolla/features 'Wheelbase 106.3' in (MY2027 page, read 2026-10-21); dimensions.com/element/toyota-corolla-e210 '8 ft 10.3 in (270 cm)' (2020, read 2026-10-21). low: opendbc CarSpecs wheelbase 2.67"
+
+[param.track_front]
+value = 1.532
+low = 1.530
+high = 1.532
+unit = "m"
+status = "published"
+source = "toyota.com/corolla/features 'Tread (front/rear) 60.3/61.0' in (MY2027, read 2026-10-21); low: 2020 spec listings give 1530 mm (search results, not opened)"
+
+[param.track_rear]
+value = 1.549
+low = 1.535
+high = 1.549
+unit = "m"
+status = "published"
+source = "toyota.com/corolla/features 'Tread (front/rear) 60.3/61.0' in (MY2027, read 2026-10-21); low: 2020 spec listings give 1535 mm (search results, not opened)"
+
+[param.curb_mass]
+value = 1340.0
+low = 1293.0
+high = 1474.0
+unit = "kg"
+status = "published"
+source = "dimensions.com/element/toyota-corolla-e210 'curb weight of 2,955 lb (1,340 kg)' (2020, read 2026-10-21); range: toyota.com/corolla/features curb weights 2,850 to 3,250 lb across grades (MY2027, read 2026-10-21)"
+
+[param.load_mass]
+value = 136.0
+low = 75.0
+high = 200.0
+unit = "kg"
+status = "fleet"
+source = "opendbc STD_CARGO_KG (car/__init__.py), added to the curb mass as openpilot's CarParams.mass does; low: driver only, high: driver, passenger and luggage (assumed)"
+
+[param.height]
+value = 1.435
+low = 1.435
+high = 1.435
+unit = "m"
+status = "published"
+source = "toyota.com/corolla/features 'Overall height 56.5' in (MY2027, read 2026-10-21); dimensions.com 144 cm (2020)"
+
+[param.turning_circle]
+value = 10.85
+low = 10.61
+high = 10.85
+unit = "m"
+status = "published"
+source = "toyota.com/corolla/features 'Turning circle diameter, curb to curb (ft.) 35.6' (MY2027, read 2026-10-21); low: 34.8 ft in 2020 spec listings (search results, not opened)"
+
+[param.front_weight_fraction]
+value = 0.60
+low = 0.56
+high = 0.64
+unit = "-"
+status = "assumed"
+source = "no published axle loads found; typical front-engine FWD compact sedan. low: opendbc centerToFront = 0.44 x wheelbase, a generic Toyota default (car/toyota/interface.py)"
+
+[param.cg_height]
+value = 0.55
+low = 0.50
+high = 0.58
+unit = "m"
+status = "assumed"
+source = "about 0.38 x overall height for a passenger sedan (rule of thumb, no source for this car); NHTSA measures it (SAE 1999-01-1336) but the listing has no Corolla E210"
+
+[param.yaw_inertia_factor]
+value = 1.0
+low = 0.9
+high = 1.1
+unit = "-"
+status = "assumed"
+source = "I_zz = k m a b: the approximation of Garrott et al., 'Vehicle inertial parameters - measured values and approximations' (SAE 881767), fitted to NHTSA's measured cars; k about 1, range assumed"
+
+[param.roll_gyration_radius]
+value = 0.58
+low = 0.52
+high = 0.64
+unit = "m"
+status = "assumed"
+source = "sprung-mass roll radius of gyration of a compact sedan (typical, no source for this car); enters only through roll"
+
+[param.pitch_inertia_ratio]
+value = 0.95
+low = 0.85
+high = 1.0
+unit = "-"
+status = "assumed"
+source = "I_yy / I_zz of a compact sedan (typical, no source for this car); enters only through pitch"
+
+[param.tire_width]
+value = 0.205
+low = 0.205
+high = 0.205
+unit = "m"
+status = "published"
+source = "toyota.com/corolla/features 'P205/55R16 tires' on the 16-in. wheels (MY2027, read 2026-10-21); opendbc lists the car as 'Toyota Corolla 2020-22'"
+
+[param.tire_aspect]
+value = 0.55
+low = 0.55
+high = 0.55
+unit = "-"
+status = "published"
+source = "205/55R16, as tire_width"
+
+[param.rim_diameter]
+value = 0.4064
+low = 0.4064
+high = 0.4064
+unit = "m"
+status = "published"
+source = "205/55R16: 16 in, as tire_width"
+
+[param.tire_load_index]
+value = 89.0
+low = 85.0
+high = 95.0
+unit = "-"
+status = "assumed"
+source = "P205/55R16 standard load is 89 (fitment listings, search results, not opened); the door placard of the reference car decides. Chrono's TMeasy derives the tyre's stiffness from it (GuessPassCar70Par), so the wide range stands for the tyre's unknown cornering stiffness"
+
+[param.tire_mass]
+value = 9.0
+low = 8.0
+high = 10.5
+unit = "kg"
+status = "assumed"
+source = "typical 205/55R16 passenger tyre (no source for this tyre)"
+
+[param.friction]
+value = 0.9
+low = 0.8
+high = 1.0
+unit = "-"
+status = "assumed"
+source = "dry asphalt peak friction coefficient (typical)"
+
+[param.spring_scale]
+value = 1.0
+low = 0.8
+high = 1.2
+unit = "-"
+status = "assumed"
+source = "spring and damper rates: the Chrono sedan's, scaled with the corner load so the ride frequency, ride height and damping ratio stay the sedan's; the range stands for the Corolla's unknown rates"
+
+[param.steer_ratio]
+value = 13.9
+low = 13.9
+high = 17.8
+unit = "-"
+status = "fleet"
+source = "opendbc CarSpecs steerRatio 13.9 (car/toyota/values.py), the effective ratio openpilot uses; high: 17.8:1 overall ratio in one spec listing (search result, not opened). Not used by Chrono, whose input is the wheel angle"
+
+[param.tire_stiffness_factor]
+value = 0.444
+low = 0.444
+high = 0.444
+unit = "-"
+status = "fleet"
+source = "opendbc CarSpecs tireStiffnessFactor (car/toyota/values.py), with scale_tire_stiffness (car/__init__.py): openpilot's axle cornering stiffness, the cross-check of the tyre model"
+
+[note]
+front_suspension = "MacPherson strut (toyota.com/corolla/features, read 2026-10-21). The builder keeps the Chrono sedan's double-wishbone kinematics scaled to the track: no MacPherson geometry is public"
+rear_suspension = "multi-link on all grades until MY2023, when the LE moved to a torsion beam (Wikipedia 'Toyota Corolla (E210)', citing toyota.com, read 2026-10-21). The builder uses the Chrono sedan's multi-link scaled to the track"
