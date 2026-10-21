@@ -182,3 +182,5 @@ commit its SVGs:
 The standards are copyrighted and are not reproduced here. Clause references point to the
 editions named above. Check each work-product clause number against your licensed copy
 before an audit.
+
+Assessment continuation: [hardware-change and verification-readiness follow-up](00-assessment/iso26262-followup/README.md) (Draft I0; normative assessment pending).

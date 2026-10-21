@@ -1,0 +1,139 @@
+{
+ "chrono": "9.0.1",
+ "vehicle": "Chrono::Vehicle Sedan, TMeasy tyres",
+ "step_s": 0.001,
+ "cases": [
+  {
+   "road": "straight",
+   "push": 0.0,
+   "kph": 80.0,
+   "t_line30": null,
+   "t_line37": null,
+   "max_dev": 0.352,
+   "cue": 5.142,
+   "corr": 6.642,
+   "e0": -0.003
+  },
+  {
+   "road": "straight",
+   "push": 0.0,
+   "kph": 110.0,
+   "t_line30": null,
+   "t_line37": null,
+   "max_dev": 0.392,
+   "cue": 4.08,
+   "corr": 5.58,
+   "e0": -0.011
+  },
+  {
+   "road": "straight",
+   "push": 0.1,
+   "kph": 80.0,
+   "t_line30": null,
+   "t_line37": null,
+   "max_dev": 0.398,
+   "cue": 4.694,
+   "corr": 6.194,
+   "e0": -0.001
+  },
+  {
+   "road": "straight",
+   "push": 0.1,
+   "kph": 110.0,
+   "t_line30": null,
+   "t_line37": null,
+   "max_dev": 0.462,
+   "cue": 4.272,
+   "corr": 5.772,
+   "e0": -0.005
+  },
+  {
+   "road": "straight",
+   "push": 0.2,
+   "kph": 80.0,
+   "t_line30": null,
+   "t_line37": null,
+   "max_dev": 0.576,
+   "cue": 2.881,
+   "corr": 4.381,
+   "e0": 0.0
+  },
+  {
+   "road": "straight",
+   "push": 0.2,
+   "kph": 110.0,
+   "t_line30": 4.202,
+   "t_line37": null,
+   "max_dev": 0.697,
+   "cue": 2.632,
+   "corr": 4.132,
+   "e0": 0.002
+  },
+  {
+   "road": "straight",
+   "push": 0.4,
+   "kph": 80.0,
+   "t_line30": 3.164,
+   "t_line37": null,
+   "max_dev": 0.877,
+   "cue": 1.957,
+   "corr": 3.457,
+   "e0": 0.003
+  },
+  {
+   "road": "straight",
+   "push": 0.4,
+   "kph": 110.0,
+   "t_line30": 2.842,
+   "t_line37": 3.458,
+   "max_dev": 1.1,
+   "cue": 1.798,
+   "corr": 3.298,
+   "e0": 0.012
+  },
+  {
+   "road": "straight",
+   "push": 0.6,
+   "kph": 80.0,
+   "t_line30": 2.632,
+   "t_line37": 3.21,
+   "max_dev": 1.12,
+   "cue": 1.652,
+   "corr": 3.152,
+   "e0": 0.006
+  },
+  {
+   "road": "straight",
+   "push": 0.6,
+   "kph": 110.0,
+   "t_line30": 2.351,
+   "t_line37": 2.831,
+   "max_dev": 1.503,
+   "cue": 1.505,
+   "corr": 3.005,
+   "e0": 0.024
+  },
+  {
+   "road": "curve",
+   "a_y": 1.5,
+   "kph": 110.0,
+   "t_line30": 2.025,
+   "t_line37": 2.348,
+   "max_dev": 4.698,
+   "cue": 1.434,
+   "corr": 2.934,
+   "e0": -0.011
+  },
+  {
+   "road": "curve",
+   "a_y": 2.5,
+   "kph": 110.0,
+   "t_line30": 1.697,
+   "t_line37": 1.969,
+   "max_dev": 18.059,
+   "cue": 1.197,
+   "corr": 2.697,
+   "e0": -0.011
+  }
+ ]
+}
