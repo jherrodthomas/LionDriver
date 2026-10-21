@@ -1,0 +1,257 @@
+# Every AND gate of the WP-A-04 fault trees, classified for the dependent failure analysis (WP-A-03).
+#
+# An AND gate claims that its inputs do not fail together. dfa_gates.py lists the AND gates of the trees and checks
+# that each one is here, with one `inputs` entry per input of the gate as the tree has it (event or gate ID; an
+# implicit "Any of …" input by that text), giving the elements the input lies in (shared-resources.yaml).
+#
+#   kind: independence   the inputs lie in different elements; `claim` names the WP-A-03 independence claim (IC-xx)
+#                        that covers them (a list when different pairs of inputs need different claims), or is
+#                        null with a `note` saying what is missing
+#         same_element   all inputs lie in one element: a common cause is the element's own (WP-A-02, WP-W-04 or
+#                        the on-die analysis of WP-H-03), not a cross-element DFI
+#         common_cause   the gate already draws one cause and what it removes together: the dependence is in the
+#                        tree, nothing to add
+#         condition      an item fault AND a driving situation (traffic): exposure, not independence
+#
+# dfa_gates.py derives the shared resources of each independence gate from the map and writes dfa-gates.md.
+# Draft, AI-assisted; each classification needs review.
+schema_version: 1
+
+gates:
+  # ---- SG-01
+  G1.1:
+    kind: independence
+    claim: IC-02
+    inputs: {G1.1.1: [E-01, E-03], UE-1.11: [EXT-EPS]}
+  G1.1.1.a:
+    kind: independence
+    claim: IC-01
+    inputs: {G-SoC: [E-01, E-02], G-ENV: [E-03]}
+  G1.2.1:
+    kind: independence
+    claim: IC-01
+    inputs: {G1.2.1.a: [E-03], BE-1.15: [E-01]}
+  G1.2.2:
+    kind: independence
+    claim: IC-01
+    inputs: {G1.2.2.a: [E-03], BE-1.15: [E-01]}
+  G1.3:
+    kind: independence
+    claim: IC-01
+    inputs: {G1.3.1: [E-01], G1.3.2: [E-03]}
+  G1.3.2:
+    kind: same_element
+    inputs: {BE-1.22: [E-03], BE-1.23: [E-03]}
+    note: two envelope design gaps (BE-1.23 by design)
+  G1.4:
+    kind: independence
+    claim: IC-05
+    inputs: {G1.4.1: [E-05, EXT-CAM], BE-4.21: [E-03]}
+  # ---- SG-02
+  G2.1:
+    kind: independence
+    claim: IC-06
+    inputs: {G2.1.0: [EXT-EPS, E-01], G2.1.1: [E-01], G-LATCUE: [E-03, E-04, EXT-CLU]}
+  G2.1.2:
+    kind: independence
+    claim: IC-01
+    inputs: {BE-7.20: [E-03], BE-2.20: [E-01]}
+    note: the envelope is to stop a SoC diagnostic frame; cascading over IF-04 is also WP-A-02 FFI-CM-09
+  G-LATCUE:
+    kind: independence
+    claim: IC-04
+    inputs: {G-SIREN: [E-03, E-04], BE-2.16: [EXT-CLU, EXT-PCM]}
+  G2.2:
+    kind: independence
+    claim: IC-06
+    inputs: {BE-2.02: [E-03], G2.2.1: [E-01], G-LATCUE: [E-03, E-04, EXT-CLU]}
+  G2.3:
+    kind: independence
+    claim: IC-06
+    inputs: {BE-2.03: [E-01, E-02], G2.3.1: [E-01], G-LATCUE: [E-03, E-04, EXT-CLU]}
+  G2.4:
+    kind: independence
+    claim: IC-06
+    inputs: {BE-2.04: [E-01], G2.4.1: [E-01], G-LATCUE: [E-03, E-04, EXT-CLU]}
+  G2.5:
+    kind: independence
+    claim: IC-06
+    inputs: {G2.5.1: [E-01], G-LATCUE: [E-03, E-04, EXT-CLU]}
+    note: the SoC fault that removes control and the SoC warning together is drawn as one event (DFI-14)
+  G2.6:
+    kind: independence
+    claim: IC-06
+    inputs: {BE-2.06: [E-01, E-03], G2.6.1: [E-01], G-LATCUE: [E-03, E-04, EXT-CLU]}
+  G2.7:
+    kind: common_cause
+    inputs: {BE-2.07: [E-04], UE-2.18: [DRIVER]}
+    note: the 12 V loss removes the SoC warning and the siren together; drawn as one event (DFI-01, DFI-06)
+  G2.8:
+    kind: independence
+    claim: IC-06
+    inputs: {BE-2.23: [E-01, E-03], G2.8.1: [E-01], G-LATCUE: [E-03, E-04, EXT-CLU]}
+  # ---- SG-03
+  G3.1:
+    kind: independence
+    claim: null
+    inputs: {G3.1.1: [E-01, E-03], UE-3.05: [EXT-PCM]}
+    note: the PCM's own acceleration bound (AOU-05R) has no independence claim; IC-02 covers the EPS only
+  G3.1.1.a:
+    kind: independence
+    claim: IC-01
+    inputs: {G3.1.1.b: [E-01, E-02], G-LENV: [E-03]}
+  G3.6:
+    kind: independence
+    claim: IC-01
+    inputs: {BE-4.17: [E-01], BE-3.03: [E-03], UE-3.05: [EXT-PCM]}
+    note: the PCM input has no claim, as G3.1
+  G3.2:
+    kind: independence
+    claim: [IC-01, IC-03]
+    inputs: {BE-3.06: [E-01, E-02], BE-3.07: [E-03], UE-3.08: [DRIVER]}
+  G3.3:
+    kind: independence
+    claim: IC-01
+    inputs: {G3.3.1: [E-03], BE-3.13: [E-01]}
+  G3.4:
+    kind: independence
+    claim: null
+    inputs: {BE-3.11: [EXT-PCM, E-03], UE-3.12: [EXT-PCM]}
+    note: a stuck PCM gas signal and the PCM's pedal arbitration; no claim covers the PCM
+  G3.5:
+    kind: independence
+    claim: IC-01
+    inputs: {"Any of BE-1.19, BE-1.21": [E-01], BE-1.22: [E-03]}
+  G3.7:
+    kind: independence
+    claim: IC-05
+    inputs: {G3.7.1: [E-05, EXT-CAM], BE-4.21: [E-03]}
+  # ---- SG-04
+  G4.1:
+    kind: independence
+    claim: null
+    inputs: {G4.1.1: [E-01, E-03], UE-4.04: [EXT-PCM]}
+    note: as G3.1, for deceleration
+  G4.1.1.a:
+    kind: independence
+    claim: IC-01
+    inputs: {BE-4.02: [E-01, E-02], G-LENV: [E-03]}
+  G4.2:
+    kind: independence
+    claim: IC-01
+    inputs: {BE-4.17: [E-01], BE-4.05: [E-03], UE-4.04: [EXT-PCM]}
+    note: the PCM input has no claim, as G3.1
+  G4.3:
+    kind: condition
+    inputs: {G4.3.1: [E-01, E-02], BE-4.07: [E-03], UE-4.08: [TRAFFIC]}
+    note: SoC and envelope inputs as IC-01; following traffic is exposure
+  G4.4:
+    kind: same_element
+    inputs: {BE-4.09: [E-01], G4.4.1: [E-01]}
+    note: an intended DM deceleration and its announcement, both host software
+  G4.5:
+    kind: condition
+    inputs: {BE-4.11: [E-01, E-02], UE-4.12: [TRAFFIC]}
+  G4.6:
+    kind: independence
+    claim: IC-01
+    inputs: {G4.6.1: [E-03], BE-4.13: [E-01]}
+  G4.7:
+    kind: independence
+    claim: null
+    inputs: {BE-4.14: [E-03], UE-4.15: [EXT-PCM]}
+    note: as G3.1
+  G4.8:
+    kind: independence
+    claim: IC-05
+    inputs: {G4.8.1: [E-05, EXT-CAM], BE-4.21: [E-03]}
+  G4.9.1:
+    kind: independence
+    claim: IC-01
+    inputs: {BE-4.22: [E-01], BE-4.23: [E-03]}
+  G4.9.2:
+    kind: common_cause
+    inputs: {BE-4.24: [EXT-PCM], UE-4.25: [EXT-PCM]}
+    note: one stuck gas signal defeats the host and the envelope checks; drawn as one event (DFI-10)
+  # ---- SG-05
+  G5.1:
+    kind: same_element
+    inputs: {G5.1.1: [E-03], G5.1.2: [E-03]}
+  G5.2.1:
+    kind: independence
+    claim: null
+    inputs: {UE-5.13: [EXT-PCM], BE-5.12: [E-03]}
+    note: as G3.1
+  G5.3:
+    kind: independence
+    claim: [IC-01, IC-02]
+    inputs: {BE-5.05: [E-03], BE-5.06: [E-01], UE-5.07: [EXT-EPS]}
+  G5.5:
+    kind: independence
+    claim: IC-04
+    inputs: {BE-5.10: [E-01], BE-5.11: [EXT-CLU]}
+  # ---- SG-06
+  G6.1:
+    kind: independence
+    claim: IC-06
+    inputs: {BE-6.01: [E-01, E-02], G6.1.1: [E-01], G-LONCUE: [E-03, E-04, EXT-CLU]}
+  G-LONCUE:
+    kind: independence
+    claim: IC-04
+    inputs: {G-SIREN: [E-03, E-04], BE-6.06: [EXT-CLU, EXT-PCM]}
+  G6.2:
+    kind: independence
+    claim: IC-06
+    inputs: {BE-6.02: [E-03], G6.2.1: [E-01], G-LONCUE: [E-03, E-04, EXT-CLU]}
+  G6.3:
+    kind: independence
+    claim: IC-06
+    inputs: {BE-6.03: [EXT-PCM], G6.3.1: [E-01], G-LONCUE: [E-03, E-04, EXT-CLU]}
+  G6.4:
+    kind: independence
+    claim: IC-06
+    inputs: {BE-6.04: [E-01], G6.4.1: [E-01], G-LONCUE: [E-03, E-04, EXT-CLU]}
+  G6.5:
+    kind: independence
+    claim: [IC-01, IC-06]
+    inputs: {BE-6.05: [E-01], BE-1.22: [E-03], G-LONCUE: [E-03, E-04, EXT-CLU]}
+  G6.6:
+    kind: independence
+    claim: IC-06
+    inputs: {G6.6.1: [E-01], G-LONCUE: [E-03, E-04, EXT-CLU]}
+    note: as G2.5 (DFI-14)
+  G6.7:
+    kind: independence
+    claim: IC-06
+    inputs: {BE-2.06: [E-01, E-03], G6.7.1: [E-01], G-LONCUE: [E-03, E-04, EXT-CLU]}
+  G6.8:
+    kind: common_cause
+    inputs: {BE-2.07: [E-04], UE-6.07: [DRIVER]}
+    note: as G2.7
+  G6.9:
+    kind: independence
+    claim: IC-06
+    inputs: {BE-6.09: [E-01, E-02], G6.9.1: [E-01], G-LONCUE: [E-03, E-04, EXT-CLU]}
+  # ---- SG-07
+  G7.2:
+    kind: independence
+    claim: IC-01
+    inputs: {BE-7.07: [E-03], BE-7.08: [E-01]}
+  G7.3:
+    kind: independence
+    claim: IC-05
+    inputs: {G7.3.1: [E-05], BE-7.10: [E-03, E-04]}
+  G7.6:
+    kind: independence
+    claim: IC-01
+    inputs: {BE-7.20: [E-03], BE-7.21: [E-01]}
+  G7.5:
+    kind: independence
+    claim: IC-05
+    inputs: {BE-7.13: [E-01, E-03], UE-7.14: [EXT-PCM]}
+  # ---- SG-08
+  G8.1.1:
+    kind: independence
+    claim: null
+    inputs: {BE-8.03: [E-04, E-02], G8.1.2: [E-01]}
+    note: WP-A-03 covers SG-01…SG-07; no claim for the driver-monitoring chain of SG-08 (DFI-21 is related)

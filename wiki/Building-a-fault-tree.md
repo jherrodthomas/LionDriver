@@ -87,6 +87,8 @@ software can fail together, and then the AND is really an OR. That is the first 
   {SoC stalls, SoC alert fails, siren fails} looks like order 3; it is in fact {SoC stalls, siren fails}, order 2.
   Use the same event ID wherever the same failure appears (the tools treat it as one variable) and tag shared causes
   for the [dependent failure analysis](../assurance/08-analyses/WP-A-03-dependent-failure-analysis.md).
+  [`dfa-gates.md`](../assurance/08-analyses/dfa/dfa-gates.md) checks every AND gate of the trees this way: which
+  elements its inputs lie in, which independence claim covers it, and which resources those elements share.
 - **A latent failure.** A failure that is already present and that nothing reveals does not count as a second
   failure. At the baseline the panda sounded the siren for a SoC stall only after 5 s, past the 1 s budget, so the
   siren branch was already failed and the cut set was effectively order 1. WP-A-04 tags such events latent and gives

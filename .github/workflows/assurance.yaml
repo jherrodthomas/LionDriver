@@ -195,6 +195,10 @@ jobs:
         python3 assurance/08-analyses/figures/test_fta_fmea_figures.py
         python3 tools/safety/fmea_review_xlsx.py --check
         python3 tools/safety/test_fmea_review_xlsx.py
+    - name: Fault tree AND gates against the WP-A-03 claims and shared resources (and its tests)
+      run: |
+        python3 assurance/08-analyses/dfa/dfa_gates.py --check
+        python3 assurance/08-analyses/dfa/test_dfa_gates.py
     - name: STPA figures match WP-A-05, stpa-map.yaml and the decision register (and their tests)
       run: |
         python3 assurance/08-analyses/figures/fig_a05_stpa.py --check
