@@ -48,6 +48,13 @@ class RenderTests(unittest.TestCase):
     for slot in ("TRIGGER", "AGENT", "MODAL", "ACTION", "OBJECT", "CONSTRAINT"):
       self.assertIn(f'<tspan fill="{animations.SLOT[slot]}">', text)
 
+  def test_all_nine_incose_characteristics_are_drawn_once(self):
+    names = animations.INCOSE_SHOWN + animations.INCOSE_REVIEW
+    self.assertEqual(len(set(names)), 9)
+    text = animations.render()["req-vague-to-verifiable.svg"]
+    for n in names:
+      self.assertIn(f">{'✓ ' if n in animations.INCOSE_SHOWN else ''}{n}</text>", text)
+
   def test_the_wiki_build_writes_both_and_accepts_the_embeds(self):
     with tempfile.TemporaryDirectory() as d:
       out = Path(d) / "wiki"

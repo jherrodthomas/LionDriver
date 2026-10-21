@@ -118,6 +118,10 @@ The [TSC table](../assurance/03-system/WP-S-02-technical-safety-requirements.md)
 (trigger blue, agent violet, modal teal, action orange, object amber, constraint magenta). Rendered at each sync by
 [`tools/wiki/animations.py`](../tools/wiki/animations.py), which fails the build if a drawn clause leaves the TSC.*
 
+The pills at the end are the nine characteristics of a single requirement in the INCOSE *Guide to Writing
+Requirements* (C1–C9). Rewording can make a requirement Unambiguous, Complete, Singular, Verifiable and Conforming.
+It cannot make it Necessary, Appropriate, Feasible or Correct: those come from the trace to its parent and from review.
+
 ### Before and after: what formalising TSR-103, TSR-307 and TSR-516 found
 
 The FRET pilot rewrote six panda requirements and compared each with the code. The fixes were text-only, made by the

@@ -71,6 +71,10 @@ VERIFIABLE = [
   ("CONSTRAINT", ["at a level audible over the cabin noise,"], "How loud?"),
   ("CONSTRAINT", ["without depending on SoC software."], "Independent of the SoC?"),
 ]
+# INCOSE Guide to Writing Requirements, characteristics C1-C9 of one requirement: the wording shows these ...
+INCOSE_SHOWN = ["Unambiguous", "Complete", "Singular", "Verifiable", "Conforming"]
+# ... and these need the trace and a review, which no rewording can show
+INCOSE_REVIEW = ["Necessary", "Appropriate", "Feasible", "Correct"]
 PARTS = {"The safety MCU shall sound its own acoustic warning":
          [("AGENT", "The safety MCU"), ("MODAL", "shall"), ("ACTION", "sound"), ("OBJECT", "its own acoustic warning")]}
 
@@ -94,7 +98,7 @@ def sources() -> list[tuple[Path, str, str]]:
     elif slot in ("AGENT", "CONSTRAINT"):
       out.append((PAGE, "", " ".join(lines)))    # the wiki's anatomy table words these two parts
   out += [(TSC, "TSR-307", "shall revoke authority"), (PAGE, "", ANATOMY_MISSING), (PAGE, "", ANATOMY_RULE)]
-  out += [(PAGE, "", a) for a in ATTRIBUTES]
+  out += [(PAGE, "", a) for a in ATTRIBUTES + INCOSE_SHOWN + INCOSE_REVIEW]
   out += [(TSC, "TSR-516", quoted(line)) for _slot, lines, _q in VERIFIABLE for line in lines]
   return out
 
@@ -162,6 +166,21 @@ def legend(x, y, slots) -> list[str]:
             t(x + w / 2, y, slot, 11.5, "#fff", 700, "middle")]
     x += w + 6
   return out
+
+
+def pills(x0, y, x1, names, filled, prefix="") -> tuple[list[str], int]:
+  """Pills wrapped between x0 and x1 from baseline y; returns the items and the baseline after the last row."""
+  out, x = [], x0
+  for n in names:
+    label = prefix + n
+    w = len(label) * 7.6 + 24
+    if x + w > x1:
+      x, y = x0, y + 30
+    fill, stroke, ink = (GRN, GRN, "#fff") if filled else ("#fff", MID, MID)
+    out += [f'<rect x="{x:.0f}" y="{y - 17}" width="{w:.0f}" height="24" rx="12" fill="{fill}" stroke="{stroke}" stroke-width="1.5"/>',
+            t(round(x + w / 2), y, label, 12.5, ink, 700, "middle")]
+    x += w + 6
+  return out, y
 
 
 def stick(x, y, pose="point") -> str:
@@ -233,7 +252,7 @@ def anatomy() -> str:
 
 
 def vague_to_verifiable() -> str:
-  tl, h = Timeline(16.0), 620
+  tl, h = Timeline(18.0), 620
   b = [t(24, 38, "From vague to verifiable", 24, NAVY, 700), t(24, 62, "One question at a time · TSR-516", 15, MID)]
   k = tl.show(0.3, 2.6)
   b.append(g(f"{k} tr", [f'<rect x="24" y="86" width="{W - 48}" height="64" rx="10" fill="{RED_BG}" stroke="{RED}"/>',
@@ -269,14 +288,21 @@ def vague_to_verifiable() -> str:
   b.append(g(f"{k} fin", [f'<g stroke="{NAVY}" stroke-width="2.5" fill="none"><path d="M{W - 110},{h - 40} h80 l-10,-20 h-46 z"/>',
                           f'<circle cx="{W - 92}" cy="{h - 36}" r="7" fill="{BG}"/><circle cx="{W - 46}" cy="{h - 36}" r="7" fill="{BG}"/>',
                           f'<path d="M{W - 20},{h - 80} q10,12 0,24 M{W - 12},{h - 86} q16,18 0,36" stroke="{SLOT["CONSTRAINT"]}"/></g>']))
+  # INCOSE C1-C9: what the rewrite shows, and what still needs the trace and a review
+  px, py = 336, 86 + box_h + 34
   k = tl.show(starts[-1] + 1.0)
-  b.append(g(f"{k} fin", [f'<rect x="{W - 200}" y="{h - 190}" width="150" height="34" rx="17" fill="{GRN}"/>',
-                          t(W - 125, h - 167, "testable ✓", 16, "#fff", 700, "middle")]))
+  shown, end = pills(px, py + 26, W - 24, INCOSE_SHOWN, True, "✓ ")
+  b.append(g(f"{k} fin", [t(px, py, "INCOSE C1–C9 · shown by the wording", 13, GRN, 700)] + shown))
+  k = tl.show(starts[-1] + 2.0)
+  ry = end + 34
+  review, _ = pills(px, ry + 26, W - 24, INCOSE_REVIEW, False)
+  b.append(g(f"{k} fin", [t(px, ry, "needs the trace and a review", 13, MID, 700)] + review))
   full = " ".join(line for _, lines, _ in VERIFIABLE for line in lines)
   return svg(h, "From vague to verifiable (animated)",
              f"The vague sentence '{VAGUE}' with the questions {', '.join(VAGUE_QUESTIONS)}; then TSR-516 grows one "
              f"clause at a time, each part in its own colour (trigger, agent, modal, action, object, constraint), and a "
-             f"checklist is ticked: {full}", tl, b)
+             f"checklist is ticked: {full}. The INCOSE characteristics the wording shows are ticked: "
+             f"{', '.join(INCOSE_SHOWN)}; {', '.join(INCOSE_REVIEW)} need the trace and a review.", tl, b)
 
 
 def render() -> dict[str, str]:
