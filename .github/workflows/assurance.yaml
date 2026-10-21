@@ -440,6 +440,7 @@ jobs:
         python3 assurance/sim/plant/test_straight_drift.py
         python3 assurance/sim/plant/engaged_mismatch.py --check
         python3 assurance/sim/plant/test_engaged_mismatch.py
+        python3 assurance/sim/vehicle/vehicle_spec.py assurance/sim/vehicle/specs/toyota_corolla_e210_sedan.toml
         python3 assurance/sim/chrono/compare_l1.py --check
     - name: Failure search (Monte Carlo and cross-entropy over the plant model) current, and its tests
       run: |
@@ -513,9 +514,10 @@ jobs:
     # Project Chrono pilot (assurance/sim README §3.9, tool TL-52): Chrono 9.0.1 (BSD-3) built from source with the
     # vehicle module and PyChrono, open-source parts only (the conda package links MKL and CUDA, which are not open
     # source). The build tools come from an explicit conda-forge lock; the build is cached on the lock and the build
-    # script, so it runs (about 25 min) only when either changes. Synthetic data (DSR-12), no evidence credit.
+    # script, so it runs (about 25 min) only when either changes. The pilot itself takes about 30 min (the vehicle spec's
+    # sweep). Synthetic data (DSR-12), no evidence credit.
     runs-on: ubuntu-24.04
-    timeout-minutes: 90
+    timeout-minutes: 120
     env:
       MICROMAMBA_URL: https://github.com/mamba-org/micromamba-releases/releases/download/2.3.2-0/micromamba-linux-64
       MICROMAMBA_SHA256: ffc3cb8d52d4d6b354bdbb979c407719c485392b74e462cbd50811aa88e58f85
@@ -537,7 +539,7 @@ jobs:
         echo "$MICROMAMBA_SHA256  $RUNNER_TEMP/micromamba" | sha256sum -c -
         chmod +x "$RUNNER_TEMP/micromamba"
         bash assurance/sim/chrono/build_chrono.sh "$RUNNER_TEMP/micromamba" "$CHRONO_PREFIX"
-    - name: Chrono pilot results within tolerance of the committed JSON
+    - name: Chrono pilot results (generic Sedan, and the Corolla vehicle spec with its sweep) within tolerance of the committed JSON
       run: |
         LD_LIBRARY_PATH="$CHRONO_PREFIX/chrono/lib" PYTHONPATH="$CHRONO_PREFIX/chrono/share/chrono/python" \
           "$CHRONO_PREFIX/env/bin/python" assurance/sim/chrono/chrono_pilot.py --check
