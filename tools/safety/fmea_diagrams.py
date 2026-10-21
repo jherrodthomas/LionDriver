@@ -404,12 +404,29 @@ def compute_ap_msr_s10(f: int, m: int) -> str:
   return AP_MSR_S10[f][m - 1]
 
 
-def fmeda_rows(doc) -> list[dict]:
+def fmeda_mode(fm: dict, goal: str | None) -> dict:
+  """The row as classified for `goal` (its per_goal entry applied), as fmea_lint.fmeda_mode."""
+  for pg in fm.get("per_goal", []) if goal else []:
+    if pg["goal"] == goal:
+      return {**fm, **{k: v for k, v in pg.items() if k not in ("goal", "reason")}}
+  return fm
+
+
+def fmeda_targets(doc) -> list[tuple[str | None, str, list[str]]]:
+  """[(goal, ASIL, also_show)] as fmea_lint.fmeda_targets."""
+  a = doc["analysis"]
+  if a.get("targets"):
+    return [(t["goal"], t["asil"], t.get("also_show", [])) for t in a["targets"]]
+  return [(a.get("safety_goal"), a["asil_target"], [])] if a.get("asil_target") else []
+
+
+def fmeda_rows(doc, goal: str | None = None) -> list[dict]:
   """Classify every failure mode per rating-tables §6.1 (same arithmetic as fmea_lint.fmeda_metrics)."""
   rows = []
   for comp in doc["components"]:
     lam = comp["failure_rate_fit"]
-    for fm in comp["failure_modes"]:
+    for row in comp["failure_modes"]:
+      fm = fmeda_mode(row, goal)
       r = {"comp": comp["id"], "id": fm["id"], "mode": fm["mode"], "spf": 0.0, "rf": 0.0, "det": 0.0,
            "latent": 0.0, "mpf_det": 0.0, "safe": 0.0, "sm": None, "dc": None, "counted": comp["safety_related"]}
       if not comp["safety_related"] or lam is None:
@@ -440,8 +457,8 @@ def fmeda_rows(doc) -> list[dict]:
   return rows
 
 
-def fmeda_metrics(doc):
-  rows = [r for r in fmeda_rows(doc) if r["counted"]]
+def fmeda_metrics(doc, goal: str | None = None):
+  rows = [r for r in fmeda_rows(doc, goal) if r["counted"]]
   total = sum(c["failure_rate_fit"] for c in doc["components"] if c["safety_related"])
   if total == 0 or any(c["failure_rate_fit"] is None for c in doc["components"] if c["safety_related"]):
     return None
@@ -2334,77 +2351,95 @@ def pct(v: float) -> str:
 
 def render_fmeda(key: str, doc: dict, fig: str) -> str:
   a = doc["analysis"]
-  asil = a.get("asil_target")
+  targets = fmeda_targets(doc)
   m = fmeda_metrics(doc)
-  if m is None or asil not in FMEDA_TARGETS:
+  if m is None or not targets:
     raise FigError(f"{key}: metrics not computable or no ASIL target")
-  spfm_t, lfm_t, pmhf_t = FMEDA_TARGETS[asil]
   rows = fmeda_rows(doc)
   sms = {s["id"]: s for s in doc["safety_mechanisms"]}
-  generic = [c["id"] for c in doc["components"] if str(c.get("failure_rate_source", "")).lower().startswith("generic")]
+  if any("rate_kind" in c for c in doc["components"]):
+    generic = [c["id"] for c in doc["components"] if c.get("rate_kind") == "generic"]
+  else:
+    generic = [c["id"] for c in doc["components"] if str(c.get("failure_rate_source", "")).lower().startswith("generic")]
+  converted = sum(1 for c in doc["components"] if c.get("stress_converted"))
   body: list[str] = []
   y = 98
   # estimate banner
   banner = (f"ESTIMATE · {a['status'].upper()} — {len(generic)} of {len(doc['components'])} failure rates are generic "
-            "estimates (failure_rate_source: no BOM or supplier data). The metrics below are not verified and are "
-            "not evidence that the target is met.")
+            f"estimates and {converted} are converted to the mission profile. The metrics below are not verified and are "
+            "not evidence that a target is met.")
   bl = wrap(banner, 1160, 11, 600)
   body.append(rect(40, y, 1200, 14 + 15 * len(bl), "#FFFBEB", AMBER, 1.4, 8, ' stroke-dasharray="6 4"'))
   for k, ln in enumerate(bl):
     body.append(txt(56, y + 19 + 15 * k, ln, 11, "#92400E", 600))
   y += 14 + 15 * len(bl) + 26
 
-  body.append(txt(40, y, f"HARDWARE ARCHITECTURAL METRICS AGAINST THE ASIL {asil} TARGET (rating-tables §6.3)", 9.5, MUTED, 700,
+  body.append(txt(40, y, "HARDWARE ARCHITECTURAL METRICS PER SAFETY GOAL (WP-H-04 §4; rating-tables §6.3)", 9.5, MUTED, 700,
                   extra=' letter-spacing=".06em"'))
+  y += 10
+  # goals with identical metrics share one row; each row carries the ASIL targets of its goals
+  groups: list[dict] = []
+  for goal, asil, also in targets:
+    gm = fmeda_metrics(doc, goal)
+    key3 = (round(gm["spfm"], 9), round(gm["lfm"], 9), round(gm["pmhf_spf_rf_fit"], 9))
+    g = next((g for g in groups if g["key"] == key3), None)
+    if g is None:
+      g = {"key": key3, "m": gm, "goals": [], "asils": []}
+      groups.append(g)
+    g["goals"].append(f"{goal} {asil}")
+    for x in [asil] + list(also):
+      if x not in g["asils"]:
+        g["asils"].append(x)
+  cols = [("SPFM", "spfm", 0, 250, 0.5, 1.0), ("LFM", "lfm", 1, 250, 0.5, 1.0), ("λSPF + λRF (FIT)", "pmhf_spf_rf_fit", 2, 170, 0.0, None)]
+  x0 = {"SPFM": 330, "LFM": 666, "λSPF + λRF (FIT)": 1002}
+  y += 18
+  for name, _, _, w, _, _ in cols:
+    body.append(txt(x0[name], y, name, 11, INK, 700))
+  y += 8
+  for g in groups:
+    y += 30
+    body.append(line(40, y - 22, 1240, y - 22, "#E2E8F0"))
+    for k, ln in enumerate(wrap(" · ".join(g["goals"]), 270, 12.5, 700, max_lines=3)):
+      body.append(txt(40, y + 15 * k, ln, 12.5, INK, 700))
+    verdicts = []
+    for asil in sorted(g["asils"], key="BCD".index, reverse=True):
+      st, lt, pt = FMEDA_TARGETS[asil]
+      ok = g["m"]["spfm"] >= st and g["m"]["lfm"] >= lt and g["m"]["pmhf_spf_rf_fit"] < pt
+      verdicts.append((asil, ok))
+    vx = 40
+    for asil, ok in verdicts:
+      lab = f"ASIL {asil} {'met on this estimate' if ok else 'missed'}"
+      p, pw = pill(vx, y + 22, lab, "#FFFFFF" if ok else RED, AMBER if ok else "#FFFFFF", AMBER if ok else None, size=9)
+      body.append(p)
+      vx += pw + 6
+    for name, k, idx, w, lo, hi in cols:
+      v = g["m"][k]
+      bx = x0[name]
+      if hi is None:
+        pmax = max(FMEDA_TARGETS[x][2] for x in g["asils"])
+        hi = max(pmax * 1.1, v * 1.15)
+      body.append(rect(bx, y - 6, w, 18, "#F1F5F9", None, 0, 4))
+      worst_ok = all((v >= FMEDA_TARGETS[x][idx]) if idx < 2 else (v < FMEDA_TARGETS[x][idx]) for x in g["asils"])
+      col = AMBER if worst_ok else RED
+      vw = w * (min(max(v, lo), hi) - lo) / (hi - lo)
+      body.append(rect(bx, y - 6, max(vw, 2), 18, col, None, 0, 4))
+      by_t: dict[float, list[str]] = {}
+      for asil in sorted(g["asils"], key="BCD".index):
+        by_t.setdefault(FMEDA_TARGETS[asil][idx], []).append(asil)
+      for t, names in by_t.items():
+        if not lo <= t <= hi:
+          continue
+        tx = bx + w * (t - lo) / (hi - lo)
+        body.append(line(tx, y - 10, tx, y + 16, INK, 1.4, ' stroke-dasharray="3 2"'))
+        lab = f"{'/'.join(names)} {t * 100:.0f} %" if idx < 2 else f"{'/'.join(names)} < {t:g}"
+        body.append(txt(tx, y + 27, lab, 9, INK, 700, anchor="middle"))
+      vtxt = pct(v) if idx < 2 else fit_fmt(v)
+      body.append(txt(bx + w + 6 if idx < 2 else bx + w + 6, y + 8, vtxt, 12, col, 700))
+    y += 34
   y += 16
-  bx, bw = 290, 600
-
-  def metric_row(y, name, sub, value, lo, hi, target, fmt_v, fmt_t, ok, unit_note, ticks):
-    out = [txt(40, y + 16, name, 15, INK, 700)]
-    for k, ln in enumerate(wrap(sub, 230, 10)):
-      out.append(txt(40, y + 31 + 12 * k, ln, 10, MUTED))
-    out.append(rect(bx, y + 4, bw, 24, "#F1F5F9", None, 0, 4))
-    vx = bx + bw * (min(max(value, lo), hi) - lo) / (hi - lo)
-    col = AMBER if ok else RED
-    out.append(rect(bx, y + 4, max(vx - bx, 2), 24, col, None, 0, 4))
-    tx = bx + bw * (target - lo) / (hi - lo)
-    out.append(line(tx, y - 2, tx, y + 34, INK, 1.6, ' stroke-dasharray="4 3"'))
-    out.append(txt(tx, y - 5, fmt_t, 10, INK, 700, anchor="middle"))
-    for t in ticks:
-      xx = bx + bw * (t - lo) / (hi - lo)
-      out.append(line(xx, y + 28, xx, y + 32, "#94A3B8"))
-      out.append(txt(xx, y + 43, unit_note(t), 9, MUTED, anchor="middle"))
-    vx_label = fmt_v
-    lx = 910
-    out.append(txt(lx, y + 15, vx_label, 15, col, 700))
-    status = ("meets the target on this estimate · not verified" if ok else "target missed")
-    p, w = pill(lx, y + 21, status.upper() if not ok else status, "#FFFFFF" if ok else RED,
-                AMBER if ok else "#FFFFFF", AMBER if ok else None, size=9)
-    out.append(p)
-    return out
-
-  spfm_ok = m["spfm"] >= spfm_t
-  lfm_ok = m["lfm"] >= lfm_t
-  pm_ok = m["pmhf_spf_rf_fit"] < pmhf_t
-  body += metric_row(y, "SPFM", "single-point fault metric = 1 − (λSPF + λRF) / λ", m["spfm"], 0.5, 1.0, spfm_t,
-                     pct(m["spfm"]), f"ASIL {asil} ≥ {spfm_t * 100:.0f} %", spfm_ok, lambda t: f"{t * 100:.0f} %",
-                     [0.5, 0.6, 0.7, 0.8, 0.9, 1.0])
-  y += 66
-  body += metric_row(y, "LFM", "latent fault metric = 1 − λMPF,latent / (λ − λSPF − λRF)", m["lfm"], 0.5, 1.0, lfm_t,
-                     pct(m["lfm"]), f"ASIL {asil} ≥ {lfm_t * 100:.0f} %", lfm_ok, lambda t: f"{t * 100:.0f} %",
-                     [0.5, 0.6, 0.7, 0.8, 0.9, 1.0])
-  y += 66
-  hi = pmhf_t * 1.5 if m["pmhf_spf_rf_fit"] < pmhf_t * 1.4 else m["pmhf_spf_rf_fit"] * 1.15
-  step = pmhf_t / 5 if hi <= pmhf_t * 1.5 else pmhf_t / 2
-  ticks = []
-  t = 0.0
-  while t <= hi + 1e-9:
-    ticks.append(round(t, 6))
-    t += step
-  body += metric_row(y, "λSPF + λRF", "single-point + residual part of PMHF only; the dual-point term is not computed "
-                     "(rating-tables §6.3), so this is not a full PMHF", m["pmhf_spf_rf_fit"], 0.0, hi, pmhf_t,
-                     f"{fit_fmt(m['pmhf_spf_rf_fit'])} FIT", f"PMHF < {pmhf_t:g} FIT", pm_ok, lambda t: f"{t:g}", ticks)
-  y += 78
+  body.append(txt(40, y, "Dashed ticks: ASIL targets of the goals in the row (B shown alongside C for SG-01, DQ-063). λSPF + λRF is the "
+                  "single-point and residual part of PMHF only; the dual-point term is not computed (rating-tables §6.3).", 10, MUTED))
+  y += 22
 
   # per-component split
   body.append(line(40, y, 1240, y))
@@ -2505,14 +2540,19 @@ def render_fmeda(key: str, doc: dict, fig: str) -> str:
   body += footer(y, 1280, f"analyses/{key}.yaml")
   height = y + 20
 
-  desc = (f"FMEDA for {a['safety_goal']} (ASIL {asil} target, {a['id']} rev {a['revision']}, {a['baseline']}, {a['status']}) with "
-          f"generic estimated failure rates: SPFM {pct(m['spfm'])} against ≥ {spfm_t * 100:.0f} % "
-          f"({'met on the estimate, not verified' if spfm_ok else 'missed'}), LFM {pct(m['lfm'])} against ≥ {lfm_t * 100:.0f} % "
-          f"({'met on the estimate, not verified' if lfm_ok else 'missed'}), λSPF+λRF {fit_fmt(m['pmhf_spf_rf_fit'])} FIT against "
-          f"PMHF < {pmhf_t:g} FIT ({'below, partial PMHF only, not verified' if pm_ok else 'exceeded'}); failure-rate split per "
-          f"component and failure mode, and the safety mechanisms with the failure modes they are credited on.")
-  return svg_doc(1280, height, f"Figure {fig}. FMEDA {a['safety_goal']} metrics against ASIL {asil} (estimate)", desc, fig,
-                 f"FMEDA {a['safety_goal']} — metrics against the ASIL {asil} target",
+  parts = []
+  for g in groups:
+    ver = ", ".join(f"ASIL {x} {'met on the estimate, not verified' if all([g['m']['spfm'] >= FMEDA_TARGETS[x][0], g['m']['lfm'] >= FMEDA_TARGETS[x][1], g['m']['pmhf_spf_rf_fit'] < FMEDA_TARGETS[x][2]]) else 'missed'}"
+                    for x in g["asils"])
+    parts.append(f"{', '.join(g['goals'])}: SPFM {pct(g['m']['spfm'])}, LFM {pct(g['m']['lfm'])}, "
+                 f"λSPF+λRF {fit_fmt(g['m']['pmhf_spf_rf_fit'])} FIT ({ver})")
+  goal_list = ", ".join(t[0] for t in targets)
+  desc = (f"FMEDA {a['id']} rev {a['revision']} ({a['baseline']}, {a['status']}) for {goal_list}, with {len(generic)} of "
+          f"{len(doc['components'])} failure rates generic estimates. Metrics per goal: " + "; ".join(parts) +
+          ". Below: failure-rate split per component and failure mode, and the safety mechanisms with the failure modes they are "
+          "credited on.")
+  return svg_doc(1280, height, f"Figure {fig}. FMEDA {a['safety_goal']} metrics per goal (estimate)", desc, fig,
+                 f"FMEDA {a['safety_goal']} — metrics per goal: {goal_list}",
                  f"{a['id']} rev {a['revision']} · {a['baseline']} · {a['status']} · {fit(a['title'], 640, 12.5)}",
                  "fmea-plan.md §3.5", f"analyses/{key}.yaml", body)
 

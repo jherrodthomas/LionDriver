@@ -64,7 +64,7 @@ python3 assurance/trace/tools/trace_figures.py --check # the figures in this REA
 
 These checks and generators run in CI (`.github/workflows/assurance.yaml`, §6) on pull requests that touch `assurance/` and on pushes to `liondriver-dev`. Any one failing fails the job.
 
-Result at this baseline: `trace: 7 files, 439 items aou=17, fsr=58, hazard=9, hazardous-event=38, hwsr=46, safety-goal=8, swsr=136, tsr=127` — `OK: all implemented checks passed`. The checker needs only the Python standard library. It uses PyYAML when available; PyYAML is **not** a direct dependency of LionDriver (`uv.lock` lists `pyyaml` only as an optional `autogen` extra of tinygrad), so a built-in parser for the YAML subset in §4.1 is used otherwise. Both paths were run and give the same result.
+Result at this baseline: `trace: 7 files, 443 items aou=17, fsr=58, hazard=9, hazardous-event=38, hwsr=46, safety-goal=8, swsr=139, tsr=128` — `OK: all implemented checks passed`. The checker needs only the Python standard library. It uses PyYAML when available; PyYAML is **not** a direct dependency of LionDriver (`uv.lock` lists `pyyaml` only as an optional `autogen` extra of tinygrad), so a built-in parser for the YAML subset in §4.1 is used otherwise. Both paths were run and give the same result.
 
 ### 2.1 Derivation and depth
 

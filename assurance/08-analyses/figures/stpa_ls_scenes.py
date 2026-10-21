@@ -71,23 +71,23 @@ def kind(type_cell):
   return h, c
 
 
-# ---------------------------------------------------------------- scenes (280 x 70, fm_scenes vocabulary)
+# ---------------------------------------------------------------- scenes (the scene kit's strip, fm_scenes vocabulary)
 
 def go(x0, x1, y=LANE, f1=1.0):
   return sample(lambda f: (x0 + (x1 - x0) * min(1, f / f1), y))
 
 
-def tags(t1, t2, y1=34, y2=66):
+def tags(t1, t2, y1=fm.ABOVE, y2=fm.BELOW):
   return [tag(0.3, 90, y1, t1, NOTE), tag(0.75, 190, y2, t2, BAD)]
 
 
 def sc_drift(dy, f0=0.3, k=1.6, extra=()):
   def draw(t1, t2):
-    return road() + list(extra) + ego(fm.drifting(f0, dy, k=k)) + tags(t1, t2, 34 if dy > 0 else 66, 66 if dy > 0 else 34)
+    return road() + list(extra) + ego(fm.drifting(f0, dy, k=k)) + tags(t1, t2, fm.ABOVE if dy > 0 else fm.BELOW, fm.BELOW if dy > 0 else fm.ABOVE)
   return draw
 
 
-def sc_fault(dy=8):
+def sc_fault(dy=10):
   def draw(t1, t2):
     f0 = 0.3
     return road() + ego(fm.drifting(f0, dy, k=1.4)) + [fm.marker(X0 + 248 * f0, LANE, f0)] + tags(t1, t2)
@@ -115,7 +115,7 @@ def sc_light(t1, t2):
 
 
 def sc_unmarked(t1, t2):
-  return road(False) + ['<line x1="0" y1="16" x2="280" y2="16" stroke="#F8FAFC" stroke-width="1" opacity="0.35"/>'] + \
+  return road(False) + [f'<line x1="0" y1="{fm.sk.STRIP_TOP}" x2="280" y2="{fm.sk.STRIP_TOP}" stroke="{fm.sk.PAINT}" stroke-width="1" opacity="0.35"/>'] + \
       ego(go(X0, 220)) + tags(t1, t2)
 
 
@@ -132,7 +132,7 @@ def sc_resume(t1, t2):
       tags(t1, t2)
 
 
-SCENES = {"steer": sc_drift(-12, k=1.4), "lane": sc_drift(-21), "curve": sc_drift(9, k=1.4), "fault": sc_fault(),
+SCENES = {"steer": sc_drift(-15, k=1.4), "lane": sc_drift(-26), "curve": sc_drift(11, k=1.4), "fault": sc_fault(),
           "accel": sc_lead(213, accel=True), "late": sc_lead(212), "pcs": sc_lead(217, f1=0.8), "phantom": sc_phantom,
           "light": sc_light, "unmarked": sc_unmarked, "straight": sc_straight, "stop": sc_slow_stop, "resume": sc_resume}
 
@@ -385,7 +385,7 @@ def cards(S, models=None):
 
 COLS, CW, GAP, M = 3, 400, 20, 40
 PW = CW - 24
-ST_H = PW * 70 / 280
+ST_H = PW * fm.sk.STRIP_H / 280
 
 
 def step(x, y, w, h, n, head, body, col, begin):
@@ -430,8 +430,8 @@ def card_svg(x, y, c):
   yy += sh + 8
   cid = f"ls{c['ls']}"
   hz = " · ".join(c["hazards"][:3])
-  b.append(f'<svg x="{px}" y="{yy:.1f}" width="{PW}" height="{ST_H:.1f}" viewBox="0 0 280 70">'
-           f'<clipPath id="{cid}"><rect width="280" height="70" rx="5"/></clipPath><g clip-path="url(#{cid})">' +
+  b.append(f'<svg x="{px}" y="{yy:.1f}" width="{PW}" height="{ST_H:.1f}" viewBox="0 0 280 {fm.sk.STRIP_H}">'
+           f'<clipPath id="{cid}"><rect width="280" height="{fm.sk.STRIP_H}" rx="5"/></clipPath><g clip-path="url(#{cid})">' +
            "".join(SCENES[c["scene"]](*c["stags"]) + ([badge(hz, "#DC2626")] if hz else [])) + "</g></svg>")
   yy += ST_H + 16
   for k, v, n in (("Covered by", c["cov"], 2), ("Open because" if c["status"] != "covered" else "Status", c["why"], 3)):

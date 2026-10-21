@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="578" viewBox="0 0 1320 578" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 3. Who limits what reaches the car</title>
+<desc>Steering: the model asks for any curvature; controlsd clips it to 0.2 per metre, 3.0 m/s² and 5 m/s³; the panda allows at most 1500 raw torque, +15/−25 raw per 10 ms and 450 raw per 250 ms; the EPS applies its own limits (GAP-04). FM-10 proposes a speed-dependent torque limit. Speed: the planner's min() is clipped to ACCEL_MIN…ACCEL_MAX, the panda allows −3.5 to +2.0 m/s², and the PCM applies its own envelope.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1320" height="578" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3 · Who limits what reaches the car</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Each stage can only narrow what the stage before it asked for. All limits are inherited and not yet verified.</text>
+<text x="1280" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-01 §8 · WP-C-04 §4.2 · WP-C-07 FM-10</text>
+<line x1="40" y1="82" x2="1280" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<text x="40" y="116" font-size="12" fill="#0F766E" font-weight="700">STEERING</text>
+<rect x="40" y="130" width="236.8" height="150" rx="8" fill="#F1F5F9" stroke="#0F172A" stroke-width="1.4"/>
+<text x="50" y="150" font-size="12.5" fill="#0F172A" font-weight="700">Model asks</text>
+<text x="50" y="168" font-size="10.5" fill="#475569">any curvature</text>
+<text x="50" y="183" font-size="10.5" fill="#475569">(a learned output)</text>
+<path d="M279.8,198.0 L287.8,205.0 L279.8,212.0" stroke="#475569" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+<rect x="290.8" y="137.2" width="236.8" height="135.5" rx="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4"/>
+<text x="300.8" y="157.2" font-size="12.5" fill="#0F172A" font-weight="700">controlsd clips</text>
+<text x="300.8" y="175.2" font-size="10.5" fill="#475569">|κ| ≤ 0.2 1/m</text>
+<text x="300.8" y="190.2" font-size="10.5" fill="#475569">a_lat ≤ 3.0 m/s² + roll</text>
+<text x="300.8" y="205.2" font-size="10.5" fill="#475569">jerk ≤ 5 m/s³</text>
+<path d="M530.6,198.0 L538.6,205.0 L530.6,212.0" stroke="#475569" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+<rect x="541.6" y="144.5" width="236.8" height="121" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="551.6" y="164.5" font-size="12.5" fill="#0F172A" font-weight="700">Panda allows</text>
+<text x="551.6" y="182.5" font-size="10.5" fill="#475569">torque ≤ 1500 raw</text>
+<text x="551.6" y="197.5" font-size="10.5" fill="#475569">+15 / −25 raw per 10 ms</text>
+<text x="551.6" y="212.5" font-size="10.5" fill="#475569">≤ 450 raw per 250 ms</text>
+<text x="551.6" y="227.5" font-size="10.5" fill="#475569">only while engaged</text>
+<path d="M781.4000000000001,198.0 L789.4000000000001,205.0 L781.4000000000001,212.0" stroke="#475569" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+<rect x="792.4" y="151.8" width="236.8" height="106.5" rx="8" fill="#F1F5F9" stroke="#0F172A" stroke-width="1.4"/>
+<text x="802.4" y="171.8" font-size="12.5" fill="#0F172A" font-weight="700">EPS delivers</text>
+<text x="802.4" y="189.8" font-size="10.5" fill="#475569">its own limits</text>
+<text x="802.4" y="204.8" font-size="10.5" fill="#475569">physical torque: GAP-04</text>
+<text x="802.4" y="219.8" font-size="10.5" fill="#475569">driver can overpower (AOU)</text>
+<path d="M1032.2,198.0 L1040.2,205.0 L1032.2,212.0" stroke="#475569" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+<rect x="1043.2" y="159" width="236.8" height="92" rx="8" fill="#F8FAFC" stroke="#475569" stroke-width="1.4" stroke-dasharray="5 4"/>
+<text x="1053.2" y="179" font-size="12.5" fill="#0F172A" font-weight="700">FM-10 would add</text>
+<text x="1053.2" y="197" font-size="10.5" fill="#475569">speed-dependent torque</text>
+<text x="1053.2" y="212" font-size="10.5" fill="#475569">limit in the panda</text>
+<text x="1053.2" y="227" font-size="10.5" fill="#475569">(proposed, P2)</text>
+<text x="40" y="330" font-size="12" fill="#0F766E" font-weight="700">SPEED</text>
+<rect x="40" y="344" width="299.5" height="150" rx="8" fill="#F1F5F9" stroke="#0F172A" stroke-width="1.4"/>
+<text x="50" y="364" font-size="12.5" fill="#0F172A" font-weight="700">Planner picks</text>
+<text x="50" y="382" font-size="10.5" fill="#475569">min(MPC, cruise</text>
+<text x="50" y="397" font-size="10.5" fill="#475569">[, model in Experimental])</text>
+<path d="M342.5,412.0 L350.5,419.0 L342.5,426.0" stroke="#475569" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+<rect x="353.5" y="353.7" width="299.5" height="130.7" rx="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4"/>
+<text x="363.5" y="373.7" font-size="12.5" fill="#0F172A" font-weight="700">plannerd clips</text>
+<text x="363.5" y="391.7" font-size="10.5" fill="#475569">ACCEL_MIN … ACCEL_MAX</text>
+<path d="M656.0,412.0 L664.0,419.0 L656.0,426.0" stroke="#475569" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+<rect x="667" y="363.3" width="299.5" height="111.3" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="677" y="383.3" font-size="12.5" fill="#0F172A" font-weight="700">Panda allows</text>
+<text x="677" y="401.3" font-size="10.5" fill="#475569">−3.5 … +2.0 m/s²</text>
+<text x="677" y="416.3" font-size="10.5" fill="#475569">only while engaged</text>
+<text x="677" y="431.3" font-size="10.5" fill="#475569">gas press blocks it</text>
+<path d="M969.5,412.0 L977.5,419.0 L969.5,426.0" stroke="#475569" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+<rect x="980.5" y="373" width="299.5" height="92" rx="8" fill="#F1F5F9" stroke="#0F172A" stroke-width="1.4"/>
+<text x="990.5" y="393" font-size="12.5" fill="#0F172A" font-weight="700">PCM delivers</text>
+<text x="990.5" y="411" font-size="10.5" fill="#475569">its own ACC envelope</text>
+<text x="990.5" y="426" font-size="10.5" fill="#475569">(AOU-05)</text>
+<text x="990.5" y="441" font-size="10.5" fill="#475569">stock AEB kept (AOU-04)</text>
+<text x="40" y="528" font-size="11.5" fill="#475569">The panda limits are the safety argument: whatever the main computer computes, nothing outside them is sent. Changing the planner does not move them.</text>
+<rect x="40" y="546" width="14" height="12" rx="3" fill="#F1F5F9" stroke="#0F172A" stroke-width="1.2"/>
+<text x="60" y="556" font-size="11" fill="#475569">request or vehicle</text>
+<rect x="166.5" y="546" width="14" height="12" rx="3" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.2"/>
+<text x="186.5" y="556" font-size="11" fill="#475569">main computer (QM)</text>
+<rect x="300.5" y="546" width="14" height="12" rx="3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="320.5" y="556" font-size="11" fill="#475569">panda safety envelope</text>
+<rect x="450.2" y="546" width="14" height="12" rx="3" fill="#F8FAFC" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="470.2" y="556" font-size="11" fill="#475569">proposed</text>
+</svg>

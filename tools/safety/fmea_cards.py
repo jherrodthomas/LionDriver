@@ -206,10 +206,10 @@ def card(x, y, c):
     if i < 2:
       b.append(f'<path d="M{sx + sw + 3:.1f} {yy + sh / 2 - 6} L{sx + sw + 11:.1f} {yy + sh / 2} L{sx + sw + 3:.1f} {yy + sh / 2 + 6} Z" fill="#94A3B8"/>')
   yy += sh + 8
-  sth = PW * 70 / 280
+  sth = PW * ls.fm.sk.STRIP_H / 280
   kind, t1, t2 = c["scene"]
   cid = f"c{c['id']}"
-  b.append(f'<svg x="{px}" y="{yy:.1f}" width="{PW}" height="{sth:.1f}" viewBox="0 0 280 70"><clipPath id="{cid}"><rect width="280" height="70" rx="5"/>'
+  b.append(f'<svg x="{px}" y="{yy:.1f}" width="{PW}" height="{sth:.1f}" viewBox="0 0 280 {ls.fm.sk.STRIP_H}"><clipPath id="{cid}"><rect width="280" height="{ls.fm.sk.STRIP_H}" rx="5"/>'
            f'</clipPath><g clip-path="url(#{cid})">' + "".join(ls.SCENES[kind](t1, t2) + ([ls.badge(" · ".join(c["hz"][:3]), "#DC2626")] if c["hz"] else []))
            + "</g></svg>")
   yy += sth + 16

@@ -1,3 +1,6 @@
+from types import SimpleNamespace
+
+from opendbc.car.structs import car
 from openpilot.common.test import OpenpilotTestCase
 from openpilot.cereal import log
 from openpilot.common.realtime import DT_DMON
@@ -83,12 +86,41 @@ class TestMonitoring(OpenpilotTestCase):
     assert isinstance(d_status.awareness, float)
 
   # engaged, distracted past red and beyond the no-response window -> unavailability response + lockout
+  # (TSR-633: the item stays engaged, stopped and held, so the lockout timer holds until the driver takes over)
   def test_distracted_lockout(self):
     alert_lvls, d_status = self._run_seq(always_distracted, always_false, always_true, always_false)
     assert alert_lvls[int(DISTRACTED_SECONDS_TO_RED / DT_DMON)] == 3
     assert d_status.lockout_active
-    assert d_status.lockout_time_elapsed > 0
+    assert d_status.lockout_time_elapsed == 0
     assert d_status.lockout_count >= 1
+
+  # TSR-633: a long hold after no response does not use up the lockout; it runs from the takeover
+  def test_lockout_runs_from_the_takeover(self):
+    held = int(DISTRACTED_SECONDS_TO_RED / DT_DMON) + int(dm_settings._NO_RESPONSE_TIMEOUT / DT_DMON) + int(90 / DT_DMON)
+    engaged = [True] * held + [False] * int(30 / DT_DMON)
+    msgs = [msg_DISTRACTED] * len(engaged)
+    _, d_status = self._run_seq(msgs, [False] * len(engaged), engaged, [False] * len(engaged))
+    assert d_status.lockout_active                               # first lockout is 1 min; 30 s have run
+    assert d_status.lockout_time_elapsed == int(30 / DT_DMON)    # only the 30 s since the takeover count
+    assert d_status.lockout_time_elapsed < d_status.lockout_duration
+
+  # TSR-624: the terminal alert counts down to the no-response deceleration, which it announces before it starts
+  def test_no_response_countdown(self):
+    DM = DriverMonitoring()
+    countdown, decel = [], []
+    for _ in range(int((DISTRACTED_SECONDS_TO_RED + dm_settings._NO_RESPONSE_TIMEOUT + 2) / DT_DMON)):
+      DM._update_states(msg_DISTRACTED, [0, 0, 0], 0, True, False)
+      DM._update_events(False, True, False, 0)
+      dm = DM.get_state_packet().driverMonitoringState
+      countdown.append(dm.noResponseDecelIn)
+      decel.append(dm.noResponseForceDecel)
+    assert countdown[0] == -1.                                   # no terminal alert yet
+    red = next(i for i, c in enumerate(countdown) if c >= 0)
+    onset = decel.index(True)
+    assert countdown[red] > dm_settings._NO_RESPONSE_TIMEOUT - 0.2   # announced about 5 s ahead
+    assert (onset - red) * DT_DMON >= 1.                         # at least 1 s before the deceleration (TSR-624)
+    assert all(a >= b for a, b in zip(countdown[red:onset], countdown[red + 1:onset + 1], strict=True))
+    assert countdown[onset] == 0. and all(c == 0. for c in countdown[onset:])
 
   # no face -> wheeltouch red, sustained past the no-response timeout -> unavailability response + lockout
   def test_invisible_lockout(self):
@@ -224,9 +256,12 @@ class TestMonitoring(OpenpilotTestCase):
     interaction_vector = always_false[:]
     alert_lvls, d_status = self._run_seq(ds_vector, interaction_vector, always_true, always_false)
     s = d_status.settings
-    assert alert_lvls[int((INVISIBLE_SECONDS_TO_ORANGE-1+DT_DMON*s._HI_STD_FALLBACK_TIME-0.1)/DT_DMON)] == 1
-    assert alert_lvls[int((INVISIBLE_SECONDS_TO_ORANGE-1+DT_DMON*s._HI_STD_FALLBACK_TIME+0.1)/DT_DMON)] == 2
-    assert alert_lvls[int((INVISIBLE_SECONDS_TO_RED-1+DT_DMON*s._HI_STD_FALLBACK_TIME+0.1)/DT_DMON)] == 3
+    # LionDriver SWSR-635b: an uncertain pose counts as not attentive from the first output, so the vision timers run
+    # at once and through the 10 s fallback (before: no countdown for 10 s, then the wheel-touch timers)
+    assert alert_lvls[int((s._VISION_POLICY_ALERT_1_TIMEOUT - 0.1) / DT_DMON)] == 0
+    assert alert_lvls[int((s._VISION_POLICY_ALERT_1_TIMEOUT + 0.1) / DT_DMON)] == 1
+    assert alert_lvls[int((s._VISION_POLICY_ALERT_2_TIMEOUT + 0.1) / DT_DMON)] == 2
+    assert alert_lvls[int((s._VISION_POLICY_ALERT_3_TIMEOUT + 0.1) / DT_DMON)] == 3
 
   # LionDriver TSR-634 (WP-C-08 §5.4): wheel-touch alert k at T_k seconds or D_k m since the last interaction,
   # whichever comes first
@@ -324,3 +359,76 @@ class TestMonitoring(OpenpilotTestCase):
       DM._update_events(False, True, lowspeed, 0, car_speed=speed)
       alert_lvls.append(DM.alert_level)
     assert all(a == 0 for a in alert_lvls)
+
+
+# LionDriver TSR-635 / SWSR-635a, 635b: the first alert comes at the policy times in real time, whatever the DM frame
+# rate or the model's certainty
+def sm_for(ds, frame_id, speed=25.):
+  """Just the messages DriverMonitoring.run_step reads, with the cabin frame index set"""
+  ds.frameId = frame_id
+  drive = car.CarState.GearShifter.drive
+  return {"driverStateV2": ds,
+          "carState": SimpleNamespace(vEgo=speed, gearShifter=drive, steeringPressed=False, gasPressed=False,
+                                      steeringAngleDeg=0.),
+          "selfdriveState": SimpleNamespace(enabled=True),
+          "modelV2": SimpleNamespace(meta=SimpleNamespace(disengagePredictions=SimpleNamespace(brakeDisengageProbs=[0.]))),
+          "extrinsicsCalibration": SimpleNamespace(rpyCalib=[0., 0., 0.])}
+
+
+class TestFirstAlertTime(OpenpilotTestCase):
+  def _first_alert(self, msg, frames_per_step, seconds=30.):
+    DM = DriverMonitoring()
+    frame_id = 0
+    for _ in range(int(seconds / (frames_per_step * DT_DMON))):
+      frame_id += frames_per_step
+      DM.run_step(sm_for(msg, frame_id))
+      if DM.alert_level >= 1:
+        return frame_id * DT_DMON
+    return None
+
+  def test_alert_1_in_real_time_at_any_dm_rate(self):
+    # SWSR-635a: with the DM model at 20, 10 and 5 Hz (frames skipped), alert 1 comes at the same elapsed time, within
+    # two frame periods: the filter crossing and the countdown each land on a frame (before: 5.3 / 10.6 / 21.2 s)
+    at_20hz = self._first_alert(msg_DISTRACTED, 1)
+    assert at_20hz is not None and at_20hz <= dm_settings._VISION_POLICY_ALERT_1_TIMEOUT + 0.5
+    for frames_per_step in (2, 4):
+      t = self._first_alert(msg_DISTRACTED, frames_per_step)
+      assert t is not None and abs(t - at_20hz) <= 2 * frames_per_step * DT_DMON + 1e-6, (frames_per_step, t, at_20hz)
+
+  def test_frame_gap_capped(self):
+    DM = DriverMonitoring()
+    assert DM._frame_dt(100) == DT_DMON  # first frame
+    assert DM._frame_dt(101) == DT_DMON
+    assert DM._frame_dt(103) == 2 * DT_DMON
+    assert DM._frame_dt(10_000) == dm_settings._MAX_FRAME_GAP_TIME
+    assert DM._frame_dt(5) == DT_DMON  # frame index restarted
+
+  def test_uncertain_pose_alert_1_without_fallback_delay(self):
+    # SWSR-635b: distracted with an uncertain pose, alert 1 at the vision time (before: 15.0 s, after the fallback)
+    t = self._first_alert(msg_DISTRACTED_BUT_SOMEHOW_UNCERTAIN, 1)
+    assert t is not None and t <= dm_settings._VISION_POLICY_ALERT_1_TIMEOUT + 0.5, t
+
+  def test_attentive_certain_driver_still_recovers(self):
+    DM = DriverMonitoring()
+    for i in range(int(4 / DT_DMON)):
+      DM.run_step(sm_for(msg_DISTRACTED_BUT_SOMEHOW_UNCERTAIN, i + 1))
+    awareness_low = DM.awareness
+    for i in range(int(4 / DT_DMON), int(30 / DT_DMON)):
+      DM.run_step(sm_for(msg_ATTENTIVE, i + 1))
+    assert awareness_low < 1. and DM.awareness == 1. and DM.alert_level == 0
+
+  def test_escalation_does_not_stop_at_orange(self):
+    # SWSR-635b: past orange the vision countdown keeps running when the face is lost or the pose turns uncertain,
+    # so the terminal alert comes at the vision time (before: orange for good, no terminal alert)
+    for after in (msg_NO_FACE_DETECTED, msg_DISTRACTED_BUT_SOMEHOW_UNCERTAIN):
+      seq = [msg_DISTRACTED] * int(9 / DT_DMON) + [after] * int(20 / DT_DMON)
+      DM = DriverMonitoring()
+      red = None
+      for i, m in enumerate(seq):
+        DM._update_states(m, [0, 0, 0], 25., True, False)
+        DM._update_events(False, True, False, 0, 25.)
+        if DM.alert_level == 3:
+          red = (i + 1) * DT_DMON
+          break
+      assert red is not None and red <= dm_settings._VISION_POLICY_ALERT_3_TIMEOUT + 0.5, (after, red)
+

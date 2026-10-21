@@ -54,6 +54,50 @@ for i = 1:rows(ev)
 end
 ts = 0:0.01:8; ca = zeros(size(ts)); ca(ts >= 1.0 & ts < 3.0) = 1; ca(ts >= 4.0 & ts < 6.3) = 1;
 
+%% 4. Timing loops (WP-S-04 §3.7, §4): detection and warning times swept over the loop phases
+printf('\n4. Timing loops\n');
+kt = ld_timing_constants(repo);
+tc = timing_loop_model(kt);
+for x = tc
+  printf('  %-34s FDTI %.4f-%.4f s (budget %.2f)  FHTI <= %.4f s (FTTI %.1f)', x.label, x.fdti_min, x.fdti_max, ...
+         x.fdti_budget, x.fhti_max, x.ftti);
+  if !isnan(x.warn_max), printf('  warning %.4f-%.4f s (budget %.1f)', x.warn_min, x.warn_max, x.warn_budget); end
+  printf('\n');
+end
+% the model must reproduce the code-derived times of WP-S-04 §4 (within 10 ms; the document rounds up to one task
+% period or tick). A disagreement means the model, the code or the document has moved.
+doc = {'rx-1d2-ref', 'fdti_max', 0.162, 'T-01 0x1D2 <= 0.162 s'; 'rx-262-ref', 'fdti_max', 0.21, 'T-01 0x262 ~0.21 s'; ...
+       'rx-260-base', 'fdti_max', 2.0, 'T-01 baseline 1-2 s (upper)'; 'rx-260-base', 'fdti_min', 1.0, 'T-01 baseline 1-2 s (lower)'; ...
+       'hb-ref', 'fdti_max', 0.31, 'T-06a <= 0.31 s'; 'hb-ref', 'warn_max', 0.56, 'T-07a siren ~0.56 s'; ...
+       'hb-base', 'fdti_max', 5.0, 'T-06 4-5 s (upper)'; 'hb-base', 'fdti_min', 4.0, 'T-06 4-5 s (lower)'; ...
+       'stall-ref', 'fdti_max', 0.06, 'T-34 <= 0.06 s'; 'stall-ref', 'warn_max', 0.31, 'T-34 siren <= 0.31 s'; ...
+       'iwdg-nom', 'fdti_max', 0.09, 'T-09a ~90 ms nominal'; 'eps-ref', 'warn_max', 0.96, 'T-28 siren <= 0.96 s'};
+for i = 1:rows(doc)
+  x = tc(strcmp({tc.id}, doc{i, 1}));
+  v = x.(doc{i, 2});
+  fails = check(fails, abs(v - doc{i, 3}) <= 0.0101, sprintf('model %s %s = %.4f s agrees with WP-S-04 %s', ...
+                doc{i, 1}, doc{i, 2}, v, doc{i, 4}));
+end
+% the reference-build FDTI overruns are exactly the documented ones: 0x262 at 25 Hz (T-01), the command stall up to one
+% task period over 50 ms (T-34), and the IWDG only if the LSI is slower than 10 % (T-09a, OI-2). A new overrun, or one
+% that is fixed, fails here so the document is updated
+ref = tc(strcmp({tc.build}, 'reference'));
+over = sort({ref(arrayfun(@(x) x.fdti_max > x.fdti_budget + 1e-9, ref)).id});
+fails = check(fails, isequal(over, sort({'rx-262-ref', 'stall-ref'})), ...
+              sprintf('reference-build FDTI overruns are the documented ones (0x262 T-01, stall T-34): %s', strjoin(over, ', ')));
+fails = check(fails, abs(tc(strcmp({tc.id}, 'iwdg-slow')).fdti_max - 0.1) <= 1e-6, ...
+              'IWDG reaches the 0.1 s budget exactly at a 10 % slow LSI (T-09a, watchdog impact record OI-2)');
+fails = check(fails, all(arrayfun(@(x) x.fhti_max <= x.ftti + 1e-9, ref)), 'reference build: every FHTI within its FTTI');
+% committed results, read by assurance/models/figures/fig_timing_anim.py
+csv = timing_csv(tc);
+committed = fullfile(here, 'timing_loop_results.csv');
+fid = fopen(fullfile(out_dir, 'timing_loop_results.csv'), 'w'); fputs(fid, csv); fclose(fid);
+if strcmp(getenv('LD_TIMING_UPDATE'), '1')
+  fid = fopen(committed, 'w'); fputs(fid, csv); fclose(fid); printf('  wrote %s\n', committed);
+end
+fails = check(fails, exist(committed, 'file') && strcmp(fileread(committed), csv), ...
+              'timing_loop_results.csv is current (else: LD_TIMING_UPDATE=1 octave-cli ... run_models.m)');
+
 %% Plots
 graphics_toolkit('gnuplot');
 set(0, 'defaulttextinterpreter', 'none'); set(0, 'defaultaxesticklabelinterpreter', 'none');
@@ -78,6 +122,36 @@ set(gca, 'ytick', [0 1], 'yticklabel', {'NOT ALLOWED', 'ALLOWED'}); ylim([-0.1 1
 title('Authority state machine SM-TOY-AUTH: scripted scenario', 'color', gold); xlabel('time (s)');
 png = fullfile(out_dir, 'liondriver-octave-models.png'); print(h, '-dpng', '-r110', png);
 printf('\nwrote %s\n', png);
+
+% timing ladder: per case the swept FDTI (every phase as a dot), the FRTI budget after the worst FDTI, the warning
+% range and the FTTI, on 0..1.2 s; later times are clipped and printed
+teal = [0.06 0.46 0.43]; orange = [0.76 0.25 0.05]; xmax = 1.2;
+h2 = figure('visible', 'off', 'position', [0 0 1500 900]); hold on;
+n = numel(tc);
+for i = 1:n
+  x = tc(i); y = n + 1 - i;
+  d = min(x.fdti_samples, xmax);
+  plot([0 min(x.fdti_max, xmax)], [y y], '-', 'color', teal, 'linewidth', 9);
+  plot(d, y + 0 * d, 'o', 'color', ink, 'markersize', 2);
+  if x.fdti_max < xmax && isnan(x.warn_max) || (x.fdti_max > 0 && x.fdti_max < xmax)
+    plot([x.fdti_max min(x.fhti_max, xmax)], [y y], '-', 'color', orange, 'linewidth', 9);
+  end
+  if !isnan(x.warn_max)
+    plot([min(x.warn_min, xmax) min(x.warn_max, xmax)], [y - 0.28 y - 0.28], '-', 'color', red, 'linewidth', 4);
+  end
+  plot([x.ftti x.ftti], [y - 0.42 y + 0.42], '-', 'color', ink, 'linewidth', 2.5);
+  plot([x.fdti_budget x.fdti_budget], [y - 0.42 y + 0.42], ':', 'color', teal, 'linewidth', 1.5);
+  verdict = 'safe state within FTTI'; col = teal;
+  if x.fhti_max > x.ftti + 1e-9, verdict = 'FTTI exceeded'; col = red; end
+  if x.fdti_max > x.fdti_budget + 1e-9 && x.fhti_max <= x.ftti + 1e-9, verdict = 'FDTI over budget, FTTI met'; col = gold; end
+  text(-0.02, y, sprintf('%s · %s', x.label, x.sg), 'horizontalalignment', 'right', 'color', ink);
+  text(1.21, y, sprintf('FDTI <= %.3f s · %s', x.fdti_max, verdict), 'color', col);
+end
+set(gca, 'ytick', [], 'position', [0.25 0.08 0.48 0.84]); xlim([0 xmax]); ylim([0.3 n + 0.7]); xlabel('time from the last valid event (s) · model of the code, not a measurement (WP-S-04 6) · times after 1.2 s clipped');
+title('Timing loops: FDTI over all loop phases (dots), FRTI budget (orange), warning (red), FDTI budget (dotted), FTTI (black)', 'color', gold);
+
+png2 = fullfile(out_dir, 'liondriver-timing-loops.png'); print(h2, '-dpng', '-r110', png2);
+printf('wrote %s\n', png2);
 
 if isempty(fails)
   printf('OK: all model checks passed (models only; not verification of the C code)\n');

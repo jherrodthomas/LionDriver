@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="476" viewBox="0 0 640 476" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="540" viewBox="0 0 640 540" role="img" aria-labelledby="t d">
 <title id="t">Modelling plan: work items and their state</title>
-<desc id="d">Work items of the modelling plan: 1 Tool comparison: Done; 2 SM-SELFDRIVED record: Exists; 3 Back-to-back test: Exists; 4 HIL plant model: In progress; unnumbered Envelope calculations and plots: Exists; 5 Architecture model: Draft</desc>
+<desc id="d">Work items of the modelling plan: 1 Tool comparison: Done; 2 SM-SELFDRIVED record: Exists; 3 Back-to-back test: Exists; 4 HIL plant model: In progress; unnumbered Envelope calculations and plots: Exists; 5 Architecture model: Draft; 6 Fault-propagation model of the SG-02 tree: In progress</desc>
 <style>
 svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
       --py:#2a78d6; --py-bg:#e9f1fb; --om:#6250d6; --om-bg:#efedfb; --oc:#0f8a6e; --oc-bg:#e3f5ef;
@@ -32,7 +32,7 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 .arr { stroke:var(--ink2); stroke-width:1.6; fill:none; }
 </style>
 <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-ink2"/></marker></defs>
-<rect class="bg" width="640" height="476"/>
+<rect class="bg" width="640" height="540"/>
 <text x="24" y="34" class="h">Modelling work items: state</text>
 <text x="24" y="56" class="t2">From the §2 table of this page</text>
 <line x1="24" y1="70" x2="616" y2="70" class="hair"/>
@@ -72,4 +72,10 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 <text x="77.4" y="426" class="chipo" text-anchor="middle">Draft</text>
 <text x="168" y="426" class="tb">Architecture model</text>
 <text x="168" y="446" class="t2">SysML v2 textual notation; OMG pilot implementation 0.62.0 for …</text>
+<rect x="16" y="466" width="608" height="58" rx="8" class="card"/>
+<text x="24" y="493" class="tb">6</text>
+<rect x="52" y="476" width="92.6" height="20" rx="10" class="s-prog"/>
+<text x="98.3" y="490" class="chip" text-anchor="middle">In progress</text>
+<text x="168" y="490" class="tb">Fault-propagation model of the SG-02 tree</text>
+<text x="168" y="510" class="t2">Python with NASA fmdtools (TL-49)</text>
 </svg>

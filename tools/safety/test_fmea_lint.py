@@ -617,6 +617,29 @@ class TestFmeda(LintFixture):
   def test_fmeda_ids_are_per_file(self):
     self.assertEqual(self.lint(fmd1=FMEDA, fmd2=FMEDA).errors, [])
 
+  def test_targets_replace_asil_target(self):
+    doc = copy.deepcopy(FMEDA)
+    doc["analysis"]["asil_target"] = "D"
+    doc["analysis"]["targets"] = [{"goal": "SG-01", "asil": "B", "basis": "test"}]
+    res = self.lint(fmd=doc)
+    self.assertFalse(any("ASIL D" in w for w in res.warnings))
+    self.assertTrue(any("fmd.yaml SG-01: λ=" in r for r in res.report), res.report)
+
+  def test_per_goal_classification(self):
+    doc = copy.deepcopy(FMEDA)
+    doc["analysis"]["targets"] = [{"goal": "SG-01", "asil": "B", "basis": "t"}, {"goal": "SG-05", "asil": "B", "basis": "t"}]
+    doc["components"][0]["failure_modes"][1]["per_goal"] = [{"goal": "SG-05", "violates_sg_directly": True, "reason": "t"}]
+    self.assertAlmostEqual(fmea_lint.fmeda_metrics(doc, "SG-01")["spf_fit"], 0.0)
+    m = fmea_lint.fmeda_metrics(doc, "SG-05")
+    self.assertAlmostEqual(m["spf_fit"], 30.0)  # FMD-002 counts as single-point for SG-05, its lf mechanism ignored
+    self.assertAlmostEqual(m["spfm"], 1 - 30.5 / 100)
+    self.assertEqual(self.lint(fmd=doc).errors, [])
+
+  def test_per_goal_must_name_a_target(self):
+    doc = copy.deepcopy(FMEDA)
+    doc["components"][0]["failure_modes"][1]["per_goal"] = [{"goal": "SG-05", "violates_sg_directly": True, "reason": "t"}]
+    self.assertError(self.lint(fmd=doc), "per_goal SG-05 is not in analysis.targets")
+
 
 class TestHaraExport(unittest.TestCase):
   def test_export_matches_yaml(self):
@@ -762,6 +785,32 @@ class TestFmedaExport(unittest.TestCase):
     self.assertAlmostEqual(sum(dist), 100 * len(doc["components"]))
     headers = [ws.cell(1, c).value.lower() for c in range(1, ws.max_column + 1)]
     self.assertLess(headers.index("lambda s"), headers.index("lambda spf"))  # reviewer partial-match order
+
+  def test_workbook_has_one_metric_row_per_target(self):
+    import export_fmeda_xlsx
+    doc = fmea_lint.load_yaml((REPO / "assurance/08-analyses/fmea/analyses/fmeda-sg001.yaml").read_text())
+    wb = export_fmeda_xlsx.build(doc, "x.yaml")
+    goals = [r[0] for r in wb["07_SPFM_Calculation"].iter_rows(min_row=2, values_only=True)]
+    self.assertEqual(goals, [g for g, _, _ in export_fmeda_xlsx.target_rows(doc)])
+    self.assertNotIn("ASIL D", " ".join(str(r) for r in wb["07_SPFM_Calculation"].iter_rows(values_only=True)))
+    history = [r[0] for r in wb["01_Document_Control"].iter_rows(min_row=2, values_only=True)]
+    self.assertEqual(history, [h["revision"] for h in doc["analysis"]["history"]])
+
+  def test_whatif_scenarios_reproduce_wp_h_03(self):
+    import fmeda_whatif
+    docs = {n: fmea_lint.load_yaml((REPO / f"assurance/08-analyses/fmea/analyses/{n}.yaml").read_text()) for n in fmeda_whatif.SOURCES}
+    sets = {}
+    for sc in fmeda_whatif.SCENARIOS:
+      sets.setdefault(sc["file"], {}).update(sc["sets"])
+    m = fmea_lint.fmeda_metrics(fmeda_whatif.scenario_doc(docs["fmeda-sg001"], sets["fmeda-sg001"]), "SG-01")
+    self.assertAlmostEqual(m["spfm"], 0.991, places=3)  # WP-H-03 §6.3: 99.1 %, LFM 95.4 %
+    self.assertAlmostEqual(m["lfm"], 0.954, places=3)
+    m = fmea_lint.fmeda_metrics(fmeda_whatif.scenario_doc(docs["fmeda-sg009"], sets["fmeda-sg009"]), "SG-07")
+    self.assertAlmostEqual(m["spfm"], 0.946, places=3)  # WP-H-03 §6.3: 94.6 %
+
+  def test_committed_review_workbooks_current(self):
+    import export_fmeda_xlsx
+    self.assertEqual(export_fmeda_xlsx.main(["--check", "--root", str(REPO)]), 0)
 
 
 

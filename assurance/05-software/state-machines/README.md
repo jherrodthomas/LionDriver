@@ -14,7 +14,7 @@ Each YAML file here is one state machine: its states, and every transition with 
 |---|---|---|---|---|---|---|---|---|---|
 | [SM-SAFETY-MODE](sm-safety-mode.yaml): Panda safety mode | U-PND-MAIN, U-PND-COMMS | 5 | 8 | 0 | 0 | 0 | all, reference, upstream | [WP-W-05 §5.1](../WP-W-05-software-unit-design.md) | [sm-safety-mode-reference](../diagrams/stateflow-sm-safety-mode-reference.svg), [sm-safety-mode-upstream](../diagrams/stateflow-sm-safety-mode-upstream.svg) |
 | [SM-SELFDRIVED](sm-selfdrived.yaml): selfdrived engagement state (OpenpilotState) | host.selfdrived | 5 | 13 | 0 | 4: X2, E2, P1, O2 | 5: SD1, N1, D1, D2, D3 | all | [WP-W-05 §5.3](../WP-W-05-software-unit-design.md) | [sm-selfdrived](../diagrams/stateflow-sm-selfdrived.svg) |
-| [SM-TOY-AUTH](sm-toy-auth.yaml): Toyota authority (controls_allowed) | U-SAF-CORE, U-SAF-TOY, U-PND-MAIN | 3 | 22 | 7: T9, T10d, T10e, T12, T13, T14, T15 | 0 | 1: T6 | all, reference | [WP-W-05 §5.2](../WP-W-05-software-unit-design.md) | [sm-toy-auth](../diagrams/stateflow-sm-toy-auth.svg) |
+| [SM-TOY-AUTH](sm-toy-auth.yaml): Toyota authority (controls_allowed) | U-SAF-CORE, U-SAF-TOY, U-PND-MAIN | 3 | 23 | 7: T9, T10d, T10e, T12, T13, T14, T15 | 1: T6 | 0 | all, reference | [WP-W-05 §5.2](../WP-W-05-software-unit-design.md) | [sm-toy-auth](../diagrams/stateflow-sm-toy-auth.svg) |
 
 How the three machines couple at engagement (WP-W-05 §5.4):
 

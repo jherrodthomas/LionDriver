@@ -141,7 +141,7 @@ Limits of this derivation:
 
 - It caps exposure; it does not show that drivers respond. Whether drivers in the fallback respond to the faster alerts, and whether the extra alerts become a nuisance that drivers defeat (FM-05, DMP-04), is validated under [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) §4.4.
 - Anchoring on the vision-policy times is a technical choice. A different anchor, such as a fixed time to the strongest alert at highway speed, would change only D*k*. The anchor is revisited if the §4.4 nuisance or response results fail.
-- Implemented 2026-10-17 in `selfdrive/monitoring/policy.py:37-41, 402-408` ([WP-W-02](../05-software/WP-W-02-software-safety-requirements.md) SWSR-634). Unit tests reproduce the speed table within one 50 ms DM step; the vehicle validation of WP-V-02 §4.4 is still open.
+- Implemented 2026-10-17 in `selfdrive/monitoring/policy.py:37-41, 419-425` ([WP-W-02](../05-software/WP-W-02-software-safety-requirements.md) SWSR-634). Unit tests reproduce the speed table within one 50 ms DM step; the vehicle validation of WP-V-02 §4.4 is still open.
 
 ## 6. Reasonably foreseeable misuse
 

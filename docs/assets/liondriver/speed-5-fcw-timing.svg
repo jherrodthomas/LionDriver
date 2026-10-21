@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="520" viewBox="0 0 1320 520" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 5. Forward collision warning: how late is too late</title>
+<desc>Time from a lead's braking at 6 m/s² to contact, from WP-S-04 §3.8.2: 1.68 s at 20 m/s and 1.61 s at 30 m/s with a 1.0 s gap, 3.77 s and 3.20 s with a 1.5 s gap; the warning must sound within about 0.6 s and 2.2 s. The planner FCW fires after more than 2 consecutive plans predicting contact within 5 s; the model FCW is the learned hardBrakePredicted. The onset time is not derived (T-31).</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1320" height="520" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 5 · Forward collision warning: how late is too late</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">A lead brakes at 6 m/s²; the item can brake at 3.5 m/s². WP-S-04 §3.8.2 gives the time to contact and when the warning must sound.</text>
+<text x="1280" y="44" font-size="11" fill="#475569" text-anchor="end">WP-S-04 §3.8.2, T-31 · long_mpc.py · longitudinal_planner.py</text>
+<line x1="40" y1="82" x2="1280" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<text x="40" y="132" font-size="12" fill="#0F172A" font-weight="700">20 m/s, 1 s gap</text>
+<text x="40" y="147" font-size="10" fill="#475569">WP-S-04 §3.8.2</text>
+<rect x="300" y="120" width="411.6" height="14" rx="3" fill="#F1F5F9" stroke="#475569" stroke-width="1"/>
+<line x1="711.6" y1="114" x2="711.6" y2="140" stroke="#D2553F" stroke-width="2"/>
+<text x="717.6" y="131" font-size="10.5" fill="#D2553F" font-weight="600">contact at 1.68 s</text>
+<text x="40" y="182" font-size="12" fill="#0F172A" font-weight="700">30 m/s, 1 s gap</text>
+<text x="40" y="197" font-size="10" fill="#475569">WP-S-04 §3.8.2</text>
+<rect x="300" y="170" width="394.5" height="14" rx="3" fill="#F1F5F9" stroke="#475569" stroke-width="1"/>
+<line x1="694.5" y1="164" x2="694.5" y2="190" stroke="#D2553F" stroke-width="2"/>
+<text x="700.5" y="181" font-size="10.5" fill="#D2553F" font-weight="600">contact at 1.61 s</text>
+<line x1="447" y1="164" x2="447" y2="190" stroke="#D97706" stroke-width="2"/>
+<text x="441" y="202" font-size="10" fill="#D97706" font-weight="600" text-anchor="end">warning needed by ≈ 0.6 s</text>
+<text x="40" y="232" font-size="12" fill="#0F172A" font-weight="700">20 m/s, 1.5 s gap</text>
+<text x="40" y="247" font-size="10" fill="#475569">WP-S-04 §3.8.2</text>
+<rect x="300" y="220" width="923.7" height="14" rx="3" fill="#F1F5F9" stroke="#475569" stroke-width="1"/>
+<line x1="1223.7" y1="214" x2="1223.7" y2="240" stroke="#D2553F" stroke-width="2"/>
+<text x="1229.7" y="231" font-size="10.5" fill="#D2553F" font-weight="600">contact at 3.77 s</text>
+<text x="40" y="282" font-size="12" fill="#0F172A" font-weight="700">30 m/s, 1.5 s gap</text>
+<text x="40" y="297" font-size="10" fill="#475569">WP-S-04 §3.8.2</text>
+<rect x="300" y="270" width="784" height="14" rx="3" fill="#F1F5F9" stroke="#475569" stroke-width="1"/>
+<line x1="1084" y1="264" x2="1084" y2="290" stroke="#D2553F" stroke-width="2"/>
+<text x="1090" y="281" font-size="10.5" fill="#D2553F" font-weight="600">contact at 3.2 s</text>
+<line x1="839" y1="264" x2="839" y2="290" stroke="#D97706" stroke-width="2"/>
+<text x="833" y="302" font-size="10" fill="#D97706" font-weight="600" text-anchor="end">warning needed by ≈ 2.2 s</text>
+<text x="300" y="328" font-size="9.5" fill="#475569" text-anchor="middle">0 s</text>
+<line x1="300" y1="108" x2="300" y2="314" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="545" y="328" font-size="9.5" fill="#475569" text-anchor="middle">1 s</text>
+<line x1="545" y1="108" x2="545" y2="314" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="790" y="328" font-size="9.5" fill="#475569" text-anchor="middle">2 s</text>
+<line x1="790" y1="108" x2="790" y2="314" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="1035" y="328" font-size="9.5" fill="#475569" text-anchor="middle">3 s</text>
+<line x1="1035" y1="108" x2="1035" y2="314" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="1280" y="328" font-size="9.5" fill="#475569" text-anchor="middle">4 s</text>
+<line x1="1280" y1="108" x2="1280" y2="314" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="300" y="102" font-size="10" fill="#475569">lead starts braking</text>
+<text x="40" y="364" font-size="12" fill="#0F766E" font-weight="700">WHERE THE WARNING COMES FROM</text>
+<rect x="40" y="378" width="400" height="92" rx="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4"/>
+<text x="50" y="398" font-size="12.5" fill="#0F172A" font-weight="700">Planner FCW</text>
+<text x="50" y="415" font-size="10.5" fill="#475569">the MPC's plan meets the lead (gap &lt; 0.25 m)</text>
+<text x="50" y="429.5" font-size="10.5" fill="#475569">within 5 s, lead prob &gt; 0.9, on more than</text>
+<text x="50" y="444" font-size="10.5" fill="#475569">2 plans in a row: ≥ 0.15 s at 20 Hz</text>
+<rect x="470" y="378" width="400" height="92" rx="8" fill="#F1F5F9" stroke="#0F172A" stroke-width="1.4"/>
+<text x="480" y="398" font-size="12.5" fill="#0F172A" font-weight="700">Model FCW</text>
+<text x="480" y="415" font-size="10.5" fill="#475569">the driving model's hardBrakePredicted</text>
+<text x="480" y="429.5" font-size="10.5" fill="#475569">(meta output, a learned guess</text>
+<text x="480" y="444" font-size="10.5" fill="#475569">that hard braking is coming)</text>
+<rect x="900" y="378" width="380" height="92" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4"/>
+<text x="910" y="398" font-size="12.5" fill="#0F172A" font-weight="700">Status</text>
+<text x="910" y="415" font-size="10.5" fill="#475569">onset after the lead brakes: not derived</text>
+<text x="910" y="429.5" font-size="10.5" fill="#475569">(T-31); to be measured (M-12)</text>
+<text x="910" y="444" font-size="10.5" fill="#475569">neither path is verified</text>
+<text x="40" y="500" font-size="11" fill="#475569">At a 1.0 s gap the driver gets well under a second; the earliest the planner path can fire is a few plans after the MPC first sees the problem.</text>
+</svg>

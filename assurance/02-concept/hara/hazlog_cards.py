@@ -178,7 +178,7 @@ def card_data(h, D):
               lanes=lanes, fsr_n=len(fsrs), counts=counts, holds=holds)
 
 
-# ---------------------------------------------------------------- scenes (280 x 70, from fm_scenes), one per hazard
+# ---------------------------------------------------------------- scenes (the scene kit's strip, from fm_scenes), one per hazard
 
 def go(x0, x1, y=LANE, f1=1.0):
   return sample(lambda f: (x0 + (x1 - x0) * min(1, f / f1), y))
@@ -189,43 +189,43 @@ def drift(f0, dy, x0=X0, x1=X1, k=2.0):
 
 
 def h01():
-  return road() + [still(200, NEXT)] + ego(drift(0.3, -23, k=1.6)) + [tag(0.8, 140, 66, "steers into the next lane", BAD)]
+  return road() + [still(200, NEXT)] + ego(drift(0.3, -29, k=1.6)) + [tag(0.8, 140, fm.BELOW, "steers into the next lane", BAD)]
 
 
 def h02():
-  return road() + ego(drift(0.25, 9, k=1.4)) + [tag(0.3, 110, 34, "steering fades, no warning", BAD)]
+  return road() + ego(drift(0.25, 11, k=1.4)) + [tag(0.3, 110, fm.ABOVE, "steering fades, no warning", BAD)]
 
 
 def h03():
-  return road() + [still(240, LANE)] + ego(sample(lambda f: (X0 + 203 * f ** 1.6, LANE))) + [tag(0.7, 130, 34, "accelerates into the lead", BAD)]
+  return road() + [still(240, LANE)] + ego(sample(lambda f: (X0 + 203 * f ** 1.6, LANE))) + [tag(0.7, 130, fm.ABOVE, "accelerates into the lead", BAD)]
 
 
 def h04():
   stop = 0.4
   xs = lambda f: X0 + 248 * (f if f < stop else stop + (f - stop) * 0.15)
   return road() + [other(sample(lambda f: (min(xs(f) - 26, X0 - 40 + 248 * 0.75 * f), LANE)))] + ego(sample(lambda f: (xs(f), LANE))) + [
-    tag(stop, xs(stop) + 40, 34, "hard braking, follower too close", BAD)]
+    tag(stop, xs(stop) + 40, fm.ABOVE, "hard braking, follower too close", BAD)]
 
 
 def h05():
-  return road() + [still(250, LANE)] + ego(go(X0, 222)) + [tag(0.35, 90, 34, "driver brakes: it keeps driving", BAD)]
+  return road() + [still(250, LANE)] + ego(go(X0, 222)) + [tag(0.35, 90, fm.ABOVE, "driver brakes: it keeps driving", BAD)]
 
 
 def h06():
-  return road() + [still(250, LANE), still(226, LANE)] + ego(go(X0, 203, f1=0.85)) + [tag(0.6, 120, 34, "no braking, no warning", BAD)]
+  return road() + [still(250, LANE), still(226, LANE)] + ego(go(X0, 203, f1=0.85)) + [tag(0.6, 120, fm.ABOVE, "no braking, no warning", BAD)]
 
 
 def h07():
-  return road() + ego(drift(0.3, 9, k=1.4)) + [tag(0.15, 70, 34, "driver believes: it steers", NOTE),
-                                               tag(0.65, 180, 34, "it has disengaged: departs", BAD)]
+  return road() + ego(drift(0.3, 11, k=1.4)) + [tag(0.15, 70, fm.ABOVE, "driver believes: it steers", NOTE),
+                                               tag(0.65, 180, fm.ABOVE, "it has disengaged: departs", BAD)]
 
 
 def h08():
-  return road() + [still(240, LANE)] + ego(go(X0, 217, f1=0.8)) + [tag(0.6, 150, 34, "stock PCS frame dropped: no AEB", BAD)]
+  return road() + [still(240, LANE)] + ego(go(X0, 217, f1=0.8)) + [tag(0.6, 150, fm.ABOVE, "stock PCS frame dropped: no AEB", BAD)]
 
 
 def h09():
-  return road() + ego(go(X0, X1)) + [tag(0.2, 80, 34, "eyes off the road", NOTE), tag(0.7, 190, 34, "no escalation", BAD)]
+  return road() + ego(go(X0, X1)) + [tag(0.2, 80, fm.ABOVE, "eyes off the road", NOTE), tag(0.7, 190, fm.ABOVE, "no escalation", BAD)]
 
 
 SCENES = dict(zip([f"H-0{i}" for i in range(1, 10)], [h01, h02, h03, h04, h05, h06, h07, h08, h09]))
@@ -236,7 +236,7 @@ SCENES = dict(zip([f"H-0{i}" for i in range(1, 10)], [h01, h02, h03, h04, h05, h
 COLS, CW, GAP, M = 3, 400, 20, 40
 PW = CW - 24
 LH = 30                                         # lane height
-ST_H = PW * 70 / 280
+ST_H = PW * fm.sk.STRIP_H / 280
 
 
 def converge(px, y, c):
@@ -304,8 +304,8 @@ def card_svg(x, y, c):
   b += conv
   yy += h + 6
   cid = f"hl{c['h']}"
-  b.append(f'<svg x="{px}" y="{yy:.1f}" width="{PW}" height="{ST_H:.1f}" viewBox="0 0 280 70">'
-           f'<clipPath id="{cid}"><rect width="280" height="70" rx="5"/></clipPath><g clip-path="url(#{cid})">' +
+  b.append(f'<svg x="{px}" y="{yy:.1f}" width="{PW}" height="{ST_H:.1f}" viewBox="0 0 280 {fm.sk.STRIP_H}">'
+           f'<clipPath id="{cid}"><rect width="280" height="{fm.sk.STRIP_H}" rx="5"/></clipPath><g clip-path="url(#{cid})">' +
            "".join(SCENES[c["h"]]() + [badge(f"{rep['id']} {rep['os'][0] if rep['os'] else ''}".strip(), "#DC2626")]) + "</g></svg>")
   yy += ST_H + 4
   eff = wrap(f"{rep['id']}: {rep['effect']}", PW - 10, 9.5)

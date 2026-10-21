@@ -4011,8 +4011,9 @@
       title: "Ed25519"
       detail: "Simple, modern and fast. Cost: less hardware support on the STM32 and fewer qualified libraries, so more own verification work."
   sources: ["assurance/03-system/WP-S-07-cybersecurity-requirements-architecture.md OI-4", "assurance/01-management/WP-M-09-cybersecurity-plan.md OI-1"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all ten (the recommended option of each)"}
+  applied: {ref: "jherrodthomas/LionDriver#364, jherrodthomas/LionDriver#367", record: "ECDSA P-256 with SHA-256 named in TSR-511 (WP-S-02 v0.47), SWSR-511/511a (WP-W-02 v0.40) and CSR-031 (WP-S-07 v0.6); CSR-121 and WP-S-07 §3.6 sign the update manifest with the same scheme under the offline update key; WP-S-07 OI-4 updated. The bootstub ECDSA implementation follows: GAP-24/25, R-15, WBS 4.4 and WP-O-05 OI-7 stay open until it lands", at: 2026-10-20}
 
 - id: DQ-192
   question: "Which SAST, SBOM and dependency-scanning tools should be selected and qualified?"
@@ -4526,7 +4527,7 @@
   sources:
     - assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-062
     - assurance/08-analyses/fmea/analyses/fsc.yaml FSR-040
-    - openpilot/selfdrive/monitoring/policy.py:379-400
+    - openpilot/selfdrive/monitoring/policy.py:394-417
   asked: 2026-10-16
   status: withdrawn
   note: "Same question as DQ-365 (reaction to an unresponsive driver at the last alert); merged into DQ-365, which now lists FSR-040, SWF-062 and SWF-ACT-059 in its blocks."
@@ -4708,8 +4709,9 @@
       title: "Do both"
       detail: "Tested assumption now, response check before release. Cost: the sum of A and B."
   sources: ["assurance/08-analyses/fta-fmea-mapping.md F-32", "assurance/08-analyses/WP-A-04-system-fta-fmea.md MCS-02.10, MCS-06.11"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "WP-C-04 v0.12, WP-C-01 v0.16", record: "AOU-17 (WP-C-04 §11, WP-C-01 AOU set) relies on a tested assumption that EPS and PCM signal a stop; TSR-626 note in WP-S-02; WP-A-04 MCS-02.10 and MCS-06.11 credit it as the external measure; WP-A-03 OI-8 closed by TSR-626", at: 2026-10-20}
 
 - id: DQ-361
   question: "Do the two \"take-over warning\" goals (SG-02 steering, SG-06 braking) also cover the system being too weak by design, such as a curve too tight for the torque limit or a lead car seen too late, or only faults?"
@@ -4828,7 +4830,7 @@
     - key: C
       title: "Disengage at the last alert without stopping"
       detail: "Simplest. Cost: an incapacitated driver gets an uncontrolled vehicle at highway speed; not recommended."
-  sources: ["assurance/08-analyses/WP-A-05-stpa.md LS-35, UCA-21, CC-17", "assurance/08-analyses/fta-fmea-mapping.md F-38", "assurance/08-analyses/WP-A-04-system-fta-fmea.md §13", "assurance/02-concept/WP-C-03-hara.md OI-10", "assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-025, SFM-ACT-005", "assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-062", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633", "assurance/02-concept/WP-C-04-functional-safety-concept.md FSR-02.09, §7", "openpilot/selfdrive/monitoring/policy.py:379-400"]
+  sources: ["assurance/08-analyses/WP-A-05-stpa.md LS-35, UCA-21, CC-17", "assurance/08-analyses/fta-fmea-mapping.md F-38", "assurance/08-analyses/WP-A-04-system-fta-fmea.md §13", "assurance/02-concept/WP-C-03-hara.md OI-10", "assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-025, SFM-ACT-005", "assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-062", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633", "assurance/02-concept/WP-C-04-functional-safety-concept.md FSR-02.09, §7", "openpilot/selfdrive/monitoring/policy.py:394-417"]
   note: "Also asked as DQ-220 (SW FMEA), DQ-281 (STPA) and DQ-340 (safety concept); merged here so the lead answers once."
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-16, note: "Stay stopped, held. The lead first answered the merged DQ-340 with its option A (keep the lane and stop); asked again in chat, chose DQ-365 A."}
@@ -5210,3 +5212,59 @@
       detail: "HE-01.2 is a departure into an adjacent vehicle at highway speed. Cost: HE-01.2 names OS-01/OS-02, not a lane change, so the safety case has to argue the gap."
   sources: ["assurance/sim/results/edge-cases.md (EC-N1, rows EC-11 and EC-13)", "assurance/sim/results/search-fault-timing-lane-change.md", "WP-C-03 HE-02.5", "WP-V-04 U-4"]
   status: queued
+
+- id: DQ-407
+  question: "When a fault makes LionDriver hand back control, may the gentle slow-down start together with its alert, or must it wait 1 s after the alert?"
+  context: >-
+    TSR-624 asks that braking not caused by traffic be announced at least 1 s before it starts (the 1 s is marked
+    proposed). The driver-monitoring stop now meets that: the last alert counts down 5 s before the car slows. **A fault
+    soft disable does not: the car starts slowing on the same frame as its alert.** That slow-down is gentle, at most
+    −1.2 m/s² over the 3 s before control is handed back (about 13 km/h at most), and the alert sounds from its first
+    frame. Waiting 1 s means driving on for that second with the fault still active.
+  reversibility: revisit
+  blocks: "TSR-624, SWSR-624 and FSR-04.05 for the fault soft disable; SW FMEA SWF-050.C1, SWF-ACT-050; WP-A-04 SFMEA-36"
+  gate: G3
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Keep it: slow down from the first frame of the alert, and write that exception into TSR-624"
+      detail: "No behaviour change. TSR-624, SWSR-624 and FSR-04.05 say the 1 s lead time applies to the driver-monitoring stop, not to a fault soft disable, with this rationale. Cost: a reviewer has to accept a mild slow-down that is announced as it starts rather than before."
+    - key: B
+      title: "Wait 1 s after the alert, then slow down for the remaining 2 s"
+      detail: "Meets TSR-624 as written, and the soft disable still lasts 3 s. Cost: one more second at speed with the fault active, and only 2 s of slowing (about 9 km/h at most) before control is handed back."
+    - key: C
+      title: "Make the soft disable 4 s: 1 s of alert, then 3 s of slowing"
+      detail: "Meets TSR-624 and keeps today's slowing. Cost: the item keeps steering and braking for one more second on a faulty input, against the stale-input finding FM-03 (WP-C-07) and the timing budgets that assume 3 s."
+  sources: ["assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-624", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-624", "assurance/02-concept/WP-C-04-functional-safety-concept.md FSR-04.05", "assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-050.C1, SWF-ACT-050", "assurance/08-analyses/WP-A-04-system-fta-fmea.md SFMEA-36", "openpilot/selfdrive/selfdrived/state.py SOFT_DISABLE_TIME", "openpilot/selfdrive/controls/lib/longitudinal_planner.py A_CRUISE_MIN"]
+  status: queued
+
+- id: DQ-408
+  question: "When openpilot's selfdrived stops but the heartbeat goes on, should the panda revoke steering within 0.3 s and sound the alarm?"
+  context: >-
+    If selfdrived crashes, openpilot stops steering at about 0.1 s but keeps sending frames, so the panda's arrival
+    check does not fire; its 1 Hz engaged-mismatch check revoked only after 2.25–3.16 s and **sounded no siren**. The
+    first warning was openpilot's own alert at 5 s; the driver's first cue was the drift. TSR-307(a) (≤ 0.3 s) and the
+    TSR-516 siren were already required but not implemented. A siren on every "not engaged" heartbeat would also sound
+    on ordinary disengagements, unless the PCM drops cruise first (the cancel-lag guard). Plant runs with the real panda
+    code; synthetic, no evidence credit.
+  reversibility: revisit
+  blocks: "TSR-307(a), TSR-516(c), SWSR-307, SWSR-516b; WP-A-04 MCS-02.9 and MCS-06.5; fmdtools SG-02 BE-2.21"
+  gate: G1
+  decider: lead
+  asked: 2026-10-21
+  options:
+    - key: A
+      recommended: true
+      title: "Revoke within 0.3 s, and sound the siren if PCM cruise is still on 0.5 s after the first \"not engaged\" heartbeat"
+      detail: "Meets TSR-307(a) and TSR-516(c); ordinary disengagements stay silent when the PCM drops cruise within 0.5 s. Cost: a panda change in the reference build, tests and a HIL case; the PCM cancel lag must be measured (WP-W-02 OI-18)."
+    - key: B
+      title: "Revoke within 0.3 s, no siren"
+      detail: "Meets TSR-307(a) only. Cost: the driver still gets no warning before openpilot's 5 s alert; TSR-516 stays unmet for this cause."
+    - key: C
+      title: "Keep the 1 Hz check"
+      detail: "No change. Cost: revocation at 2–3 s with no siren; MCS-02.9 stays an unwarned single point."
+  sources: ["assurance/sim/results/engaged-mismatch.md", "assurance/07-supporting/impact/change-2026-10-21-panda-engaged-mismatch.md", "WP-S-02 TSR-307(a), TSR-516", "WP-W-02 SWSR-307, SWSR-516b, OI-18", "WP-A-04 MCS-02.9"]
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-21, note: "Lead in chat with the panda session: \"Yes, with a cancel-lag guard\", then \"Merge now\" for panda#21. Recorded after the fact by the coordinator; the options are those of the change record"}
+  applied: {ref: "jherrodthomas/LionDriver#382, jherrodthomas/LionDriver#384, jherrodthomas/LionDriver#383", record: "panda f4803c5 (panda#21): revoke 0.3 s after the first \"not engaged\" heartbeat, siren at 0.5 s if PCM cruise is still on (#382, change-2026-10-21-panda-engaged-mismatch); WP-S-02 v0.52, WP-S-04 v0.24, WP-C-04 v0.24 (#384); fmdtools SG-02 model (#383). Open: PCM cancel lag (WP-W-02 OI-18, change record OI-1); if over 0.5 s, the threshold returns to the lead. HIL not run (OI-2)", at: 2026-10-21}

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="514" viewBox="0 0 1320 514" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 6. How the MPC solves one plan</title>
+<desc>Five steps per plan: extrapolate leadOne and leadTwo on 13 time steps (a phantom lead if none); turn each into an obstacle by adding its stopping distance and keep the nearer; set up the problem with position, speed and acceleration as state and jerk as input from today's values; solve with acados SQP_RTI, one Gauss-Newton step, PARTIAL_CONDENSING_HPIPM, at most 10 QP iterations, warm-started; read off the acceleration at the actuator delay. Costs: gap error 3, jerk 5, change of plan 200; soft constraints: limits 1e+06, danger zone 100 at 0.75 of the desired distance.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1320" height="514" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 6 · How the MPC solves one plan</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Every 20 Hz plan: predict the leads, build one obstacle per step, solve a small optimal-control problem, read off one acceleration.</text>
+<text x="1280" y="44" font-size="11" fill="#475569" text-anchor="end">long_mpc.py LongitudinalMpc.update, run · drive_helpers.get_accel_from_plan</text>
+<line x1="40" y1="82" x2="1280" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="40" y="108" width="230" height="118" rx="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4"/>
+<text x="52" y="130" font-size="13" fill="#0F172A" font-weight="700">1  Leads</text>
+<text x="52" y="150" font-size="10.5" fill="#475569">leadOne and leadTwo from radard</text>
+<text x="52" y="166" font-size="10.5" fill="#475569">extrapolated on the 13 steps</text>
+<text x="52" y="182" font-size="10.5" fill="#475569">(Figure 4); none → phantom</text>
+<text x="52" y="198" font-size="10.5" fill="#475569">lead 50 m ahead, 10 m/s faster</text>
+<line x1="272" y1="167" x2="285" y2="167" stroke="#475569" stroke-width="1.5"/>
+<path d="M285.0,167.0 L277.6,170.1 L277.6,163.9 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="287" y="108" width="230" height="118" rx="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4"/>
+<text x="299" y="130" font-size="13" fill="#0F172A" font-weight="700">2  Obstacles</text>
+<text x="299" y="150" font-size="10.5" fill="#475569">each lead + its own stopping</text>
+<text x="299" y="166" font-size="10.5" fill="#475569">distance v²/(2·2.5): a stopped</text>
+<text x="299" y="182" font-size="10.5" fill="#475569">car further on; the nearer</text>
+<text x="299" y="198" font-size="10.5" fill="#475569">of the two per step</text>
+<line x1="519" y1="167" x2="532" y2="167" stroke="#475569" stroke-width="1.5"/>
+<path d="M532.0,167.0 L524.6,170.1 L524.6,163.9 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="534" y="108" width="230" height="118" rx="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4"/>
+<text x="546" y="130" font-size="13" fill="#0F172A" font-weight="700">3  Problem</text>
+<text x="546" y="150" font-size="10.5" fill="#475569">state: position, speed, accel</text>
+<text x="546" y="166" font-size="10.5" fill="#475569">input: jerk</text>
+<text x="546" y="182" font-size="10.5" fill="#475569">start: today's v and a</text>
+<text x="546" y="198" font-size="10.5" fill="#475569">12 steps to 10 s, dense near</text>
+<line x1="766" y1="167" x2="779" y2="167" stroke="#475569" stroke-width="1.5"/>
+<path d="M779.0,167.0 L771.6,170.1 L771.6,163.9 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="781" y="108" width="230" height="118" rx="8" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="793" y="130" font-size="13" fill="#0F172A" font-weight="700">4  Solve</text>
+<text x="793" y="150" font-size="10.5" fill="#475569">acados SQP_RTI: one Gauss-</text>
+<text x="793" y="166" font-size="10.5" fill="#475569">Newton step per plan;</text>
+<text x="793" y="182" font-size="10.5" fill="#475569">QP by HPIPM, ≤ 10 iterations;</text>
+<text x="793" y="198" font-size="10.5" fill="#475569">warm start from the last plan</text>
+<line x1="1013" y1="167" x2="1026" y2="167" stroke="#475569" stroke-width="1.5"/>
+<path d="M1026.0,167.0 L1018.6,170.1 L1018.6,163.9 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="1028" y="108" width="230" height="118" rx="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4"/>
+<text x="1040" y="130" font-size="13" fill="#0F172A" font-weight="700">5  Read off</text>
+<text x="1040" y="150" font-size="10.5" fill="#475569">speed and accel plan →</text>
+<text x="1040" y="166" font-size="10.5" fill="#475569">accel at the actuator delay</text>
+<text x="1040" y="182" font-size="10.5" fill="#475569">+ 0.05 s: the MPC's candidate</text>
+<text x="1040" y="198" font-size="10.5" fill="#475569">for min() (Figure 1)</text>
+<text x="40" y="260" font-size="12" fill="#0F766E" font-weight="700">WHAT IT MINIMISES, AT EVERY STEP</text>
+<text x="40" y="286" font-size="11.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">3</text>
+<text x="130" y="286" font-size="11.5" fill="#0F172A" font-weight="700">gap error</text>
+<text x="270" y="286" font-size="11" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">((obstacle − x) − desired distance) / (v + 10)</text>
+<text x="720" y="286" font-size="11" fill="#475569">the main pull: sit at the follow distance of Figure 2</text>
+<text x="40" y="312" font-size="11.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">5 × jf</text>
+<text x="130" y="312" font-size="11.5" fill="#0F172A" font-weight="700">jerk</text>
+<text x="270" y="312" font-size="11" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">j</text>
+<text x="720" y="312" font-size="11" fill="#475569">smooth; jf = 0.5 for the aggressive personality, else 1</text>
+<text x="40" y="338" font-size="11.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">200 × jf</text>
+<text x="130" y="338" font-size="11.5" fill="#0F172A" font-weight="700">change of plan</text>
+<text x="270" y="338" font-size="11" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">a − a of the last plan</text>
+<text x="720" y="338" font-size="11" fill="#475569">fades to 0 between 1 s and 2 s ahead: stick to what was promised</text>
+<text x="40" y="378" font-size="12" fill="#C2410C" font-weight="700">SUBJECT TO (SOFT, HEAVILY WEIGHTED)</text>
+<text x="40" y="404" font-size="11.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">1e6</text>
+<text x="130" y="404" font-size="11" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">v ≥ 0;  ACCEL_MIN ≤ a ≤ ACCEL_MAX</text>
+<text x="720" y="404" font-size="11" fill="#475569">never reverse; stay inside −3.5 … +2.0 m/s² (Figure 3)</text>
+<text x="40" y="430" font-size="11.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">100</text>
+<text x="130" y="430" font-size="11" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">(obstacle − x) ≥ 0.75 × desired distance</text>
+<text x="720" y="430" font-size="11" fill="#475569">the danger zone: much costlier than the gap error</text>
+<rect x="30" y="456" width="1260" height="46" rx="6" fill="#F8FAFC" stroke="none" stroke-width="1.2"/>
+<text x="40" y="474" font-size="11" fill="#0F172A">Then the FCW check: if the plan comes within 0.25 m of leadOne within 5 s and its probability is above 0.9, a counter rises; more than 2 in a row raises FCW (Figure 5).</text>
+<text x="40" y="491" font-size="11" fill="#475569">Constraints are soft: a plan that breaks one is still returned, at a cost; the panda's bounds are the hard limit.</text>
+</svg>

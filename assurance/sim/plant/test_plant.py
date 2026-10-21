@@ -44,7 +44,7 @@ class TestFirmwareGlue(unittest.TestCase):
     raise AssertionError(signature)
 
   def test_safety_task_matches_main(self):
-    sim = self.body(self.harness, "void sim_safety_task(void)")
+    sim = [s for s in self.body(self.harness, "void sim_safety_task(void)") if s != "#endif"]
     fw = self.body(self.main, "static void safety_task_handler(void)")
     fw = [s for s in fw if "SAFETY_TASK_TIMER" not in s and "LIONDRIVER_FAULT_INJECTION" not in s
           and "fault_injection_safety_task" not in s and s != "#endif"]
@@ -59,6 +59,12 @@ class TestFirmwareGlue(unittest.TestCase):
   def test_siren_condition_matches_tick_handler(self):
     self.assertIn("current_board->set_siren((loop_counter & 1U) && (siren_enabled || (siren_countdown > 0U) || "
                   "eps_fault_siren_active || heartbeat_siren_active));", self.main)
+
+  def test_engaged_mismatch_matches_tick_handler(self):
+    sim = self.body(self.harness, "void sim_tick_1hz(void)")
+    fw = statements(self.main)
+    i = fw.index(sim[0])
+    self.assertEqual(fw[i:i + len(sim)], sim)
 
   def test_heartbeat_handler(self):
     comms = (ROOT / "panda" / "board" / "main_comms.h").read_text(encoding="utf-8")

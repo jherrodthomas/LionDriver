@@ -72,7 +72,7 @@ Sheets: [P1](#modification-scenes-p1) · **P2 and P3**
 |---|---|
 | Change | (a) Exclude the big-model / eGPU path from reference builds (model selection forced to the on-device model; WP-C-01 OI-4). (b) Independently of (a), remove the masking of `commIssue`, `posenetInvalid`, `locationdTemporaryError` and `modeldLagging` during model load: instead, prevent engagement (no-entry) while loading. (c) A model failure while engaged leads to immediate take-over request, not a hot switch to a cold model while actuating |
 | Rationale | Diagnostics are masked while the system may be engaged; the hot-switch runs a model with zero recurrent state (FI-15, FI-22) |
-| Affected code | `openpilot/selfdrive/selfdrived/selfdrived.py:174-181, 354-355, 385-389, 408, 462`; `openpilot/selfdrive/modeld/modeld.py:49, 234-235, 266-283, 411-419`; `openpilot/selfdrive/modeld/helpers.py:11-44` |
+| Affected code | `openpilot/selfdrive/selfdrived/selfdrived.py:197-204, 395-396, 427-431, 449, 505`; `openpilot/selfdrive/modeld/modeld.py:49, 234-235, 266-283, 411-419`; `openpilot/selfdrive/modeld/helpers.py:11-44` |
 | Expected risk reduction | Removes TC-22 as a trigger; restores fault detection coverage for SH-01/SH-02 |
 | Verification | Code review; fault-injection test (kill model, delay model output) in process replay; check that no diagnostic is masked while `enabled` |
 | Priority | P1 |
@@ -83,7 +83,7 @@ Sheets: [P1](#modification-scenes-p1) · **P2 and P3**
 |---|---|
 | Change | Split soft-disable causes into (i) *degradation* causes, where control inputs remain valid (thermal, disk, memory), which keep the 3 s warning period, and (ii) *input-loss* causes (commIssue on modelV2/longitudinalPlan/carState, processNotRunning of a control-path process, posenet/locationd invalid), which lead to immediate take-over request with torque ramp-down and ACC cancel. Add a freshness check in `controlsd` on `modelV2` and `longitudinalPlan` with a bound derived from the FTTI (WP-S-04), independent of the 10× alive window |
 | Rationale | Today the system keeps actuating up to ≈3.5 s on the inputs that failed (FI-14); at 30 m/s about 100 m |
-| Affected code | `openpilot/selfdrive/selfdrived/state.py:7-8, 38-51`; `selfdrived.py:389-395`; `openpilot/selfdrive/controls/controlsd.py:66, 122-127`; `cereal/messaging/__init__.py:152-153` (no change; reference) |
+| Affected code | `openpilot/selfdrive/selfdrived/state.py:7-8, 38-51`; `selfdrived.py:430-436`; `openpilot/selfdrive/controls/controlsd.py:66, 122-127`; `cereal/messaging/__init__.py:152-153` (no change; reference) |
 | Expected risk reduction | Bounds actuation on invalid inputs to the freshness bound; supports FSR-02.02, FSR-06.02 |
 | Verification | Process-replay fault injection (drop/stall each input); HIL test of take-over timing; FTTI analysis |
 | Priority | P1 |
@@ -94,7 +94,7 @@ Sheets: [P1](#modification-scenes-p1) · **P2 and P3**
 |---|---|
 | Change | (a) `cruiseMismatch`: on persistence, warn and repeat PCM cancel; if it persists, immediate-disable alert and lockout until restart. Reduce the 6 s delay to a value justified by analysis. (b) `canError`: alert text describing a CAN communication fault. (c) Non-finite actuator values: raise an immediate-disable event (keep the clamp to 0 as the substitute value) |
 | Rationale | FI-17; supports FSR-05.06, FSR-06.04 |
-| Affected code | `openpilot/selfdrive/selfdrived/selfdrived.py:422-426`; `events.py:458-460, 928-936`; `controlsd.py:140-147` |
+| Affected code | `openpilot/selfdrive/selfdrived/selfdrived.py:464-468`; `events.py:458-460, 928-936`; `controlsd.py:140-147` |
 | Expected risk reduction | Removes TC-30 as unhandled; correct driver information on CAN faults |
 | Verification | Unit tests on event mapping; replay with injected PCM mismatch and NaN |
 | Priority | P1 |
@@ -105,7 +105,7 @@ Sheets: [P1](#modification-scenes-p1) · **P2 and P3**
 |---|---|
 | Change | (a) Set `driverStateV2.valid` from real checks (frame age, model execution success, non-finite outputs) instead of `True`. (b) In wheel-touch fallback, restore awareness only on a deliberate input (steering torque above a threshold for a minimum time, not any gas or tiny torque), and cap how often wheel-touch can restore awareness within a window. (c) Add tests for DM data loss and for fallback abuse |
 | Rationale | FI-19; TC-25 (defeat devices, small periodic inputs) |
-| Affected code | `openpilot/selfdrive/modeld/dmonitoringmodeld.py:99`; `openpilot/selfdrive/monitoring/policy.py:82-83, 333-334, 360-361`; `openpilot/selfdrive/monitoring/test_monitoring.py` |
+| Affected code | `openpilot/selfdrive/modeld/dmonitoringmodeld.py:99`; `openpilot/selfdrive/monitoring/policy.py:82-83, 337-338, 375-376`; `openpilot/selfdrive/monitoring/test_monitoring.py` |
 | Expected risk reduction | Reduces SH-12 duration; supports FSR-02.07 |
 | Verification | Unit tests; DM clinic (WP-C-08 §8) with defeat-attempt scenarios |
 | Priority | P1 |
@@ -116,7 +116,7 @@ Sheets: [P1](#modification-scenes-p1) · **P2 and P3**
 |---|---|
 | Change | In reference builds: ignore `JoystickDebugMode`, `LongitudinalManeuverMode`, `LateralManeuverMode`; do not subscribe `controlsd` to `lateralManeuverPlan`; `IsDriverViewEnabled` must not put DM into demo mode while onroad (only allowed offroad, and forces no-entry) |
 | Rationale | One local parameter can replace control processes or neutralise DM (FI-20) |
-| Affected code | `openpilot/system/manager/process_config.py:34-47, 95-109`; `controlsd.py:123-124`; `openpilot/selfdrive/monitoring/dmonitoringd.py:26-27`; `policy.py:467-476`; `common/params_keys.h:59` |
+| Affected code | `openpilot/system/manager/process_config.py:34-47, 95-109`; `controlsd.py:123-124`; `openpilot/selfdrive/monitoring/dmonitoringd.py:26-27`; `policy.py:484-493`; `common/params_keys.h:59` |
 | Expected risk reduction | Removes TC-26; supports FSR-02.08 |
 | Verification | Configuration review; test setting each parameter onroad shows no effect / no-entry |
 | Priority | P1 |

@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1112" viewBox="0 0 1280 1112" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1334" viewBox="0 0 1280 1334" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
 <title id="t">Figure 5-1. FTTI, detection and reaction budgets per safety goal against code-derived times (WP-S-04 §3.7, §4, §5)</title>
-<desc id="d">For each fault class of §3.7 the budget bar shows the fault detection time interval, the fault reaction time interval and the margin up to the fault tolerant time interval, on a linear time axis from 0 to 1.2 s. Below it the code-derived times of §4 are drawn to the same scale for the original baseline 8b8c6ae (grey) and for the reference build bf6ce8c (amber, implemented but not verified on hardware). Red marks the part of a time beyond its budget. The EPS-fault siren of the reference build at up to 1.26 s worst case exceeds the SG-02 1 s warning budget (OI-8). Since panda c33343b (all builds) the siren after SoC heartbeat loss sounds about 0.56 s after the last heartbeat when authority was granted, within the budget; the 1 Hz path at 4 to 5 s is unchanged. No time has been measured.</desc>
+<desc id="d">For each fault class of §3.7 the budget bar shows the fault detection time interval, the fault reaction time interval and the margin up to the fault tolerant time interval, on a linear time axis from 0 to 1.2 s. Below it the code-derived times of §4 are drawn to the same scale for the original baseline 8b8c6ae (grey) and for the reference build bf6ce8c (amber, implemented but not verified on hardware). Red marks the part of a time beyond its budget. The right column gives the fault handling time interval FHTI = FDTI + FRTI where both budgets are numbers. The EPS-fault siren of the reference build sounds at up to 0.96 s worst case since panda bf8102a, within the SG-02 1 s warning budget (DQ-048). Since panda c33343b (all builds) the siren after SoC heartbeat loss sounds about 0.56 s after the last heartbeat when authority was granted, within the budget; the 1 Hz path at 4 to 5 s is unchanged. The last group draws the warning paths of §3.8, each against its own FTTI; the FCW and driver-monitoring FTTIs lie beyond the 1.2 s axis. No time has been measured.</desc>
 <defs>
   <pattern id="tbd" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern>
   <marker id="aI" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F172A"/></marker>
@@ -16,43 +16,43 @@
 <text x="40" y="104" font-size="10" fill="#475569" font-weight="700" letter-spacing=".06em">FAULT CLASS · REQUIREMENT</text>
 <text x="650" y="104" font-size="10" fill="#475569" font-weight="700" text-anchor="middle" letter-spacing=".06em">TIME FROM FAULT ONSET (s)</text>
 <text x="966" y="104" font-size="10" fill="#475569" font-weight="700" letter-spacing=".06em">CODE-DERIVED TIME (§4)</text>
-<line x1="350" y1="130" x2="350" y2="998" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="350" y1="130" x2="350" y2="1220" stroke="#E2E8F0" stroke-width="1"/>
 <line x1="350" y1="126" x2="350" y2="130" stroke="#475569" stroke-width="1"/>
 <text x="350" y="122" font-size="10" fill="#475569" text-anchor="middle">0</text>
-<line x1="400" y1="130" x2="400" y2="998" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="400" y1="130" x2="400" y2="1220" stroke="#F1F5F9" stroke-width="1"/>
 <line x1="400" y1="126" x2="400" y2="130" stroke="#475569" stroke-width="1"/>
 <text x="400" y="122" font-size="10" fill="#475569" text-anchor="middle">0.1</text>
-<line x1="450" y1="130" x2="450" y2="998" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="450" y1="130" x2="450" y2="1220" stroke="#F1F5F9" stroke-width="1"/>
 <line x1="450" y1="126" x2="450" y2="130" stroke="#475569" stroke-width="1"/>
 <text x="450" y="122" font-size="10" fill="#475569" text-anchor="middle">0.2</text>
-<line x1="500" y1="130" x2="500" y2="998" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="500" y1="130" x2="500" y2="1220" stroke="#F1F5F9" stroke-width="1"/>
 <line x1="500" y1="126" x2="500" y2="130" stroke="#475569" stroke-width="1"/>
 <text x="500" y="122" font-size="10" fill="#475569" text-anchor="middle">0.3</text>
-<line x1="550" y1="130" x2="550" y2="998" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="550" y1="130" x2="550" y2="1220" stroke="#F1F5F9" stroke-width="1"/>
 <line x1="550" y1="126" x2="550" y2="130" stroke="#475569" stroke-width="1"/>
 <text x="550" y="122" font-size="10" fill="#475569" text-anchor="middle">0.4</text>
-<line x1="600" y1="130" x2="600" y2="998" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="600" y1="130" x2="600" y2="1220" stroke="#E2E8F0" stroke-width="1"/>
 <line x1="600" y1="126" x2="600" y2="130" stroke="#475569" stroke-width="1"/>
 <text x="600" y="122" font-size="10" fill="#475569" text-anchor="middle">0.5</text>
-<line x1="650" y1="130" x2="650" y2="998" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="650" y1="130" x2="650" y2="1220" stroke="#F1F5F9" stroke-width="1"/>
 <line x1="650" y1="126" x2="650" y2="130" stroke="#475569" stroke-width="1"/>
 <text x="650" y="122" font-size="10" fill="#475569" text-anchor="middle">0.6</text>
-<line x1="700" y1="130" x2="700" y2="998" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="700" y1="130" x2="700" y2="1220" stroke="#F1F5F9" stroke-width="1"/>
 <line x1="700" y1="126" x2="700" y2="130" stroke="#475569" stroke-width="1"/>
 <text x="700" y="122" font-size="10" fill="#475569" text-anchor="middle">0.7</text>
-<line x1="750" y1="130" x2="750" y2="998" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="750" y1="130" x2="750" y2="1220" stroke="#F1F5F9" stroke-width="1"/>
 <line x1="750" y1="126" x2="750" y2="130" stroke="#475569" stroke-width="1"/>
 <text x="750" y="122" font-size="10" fill="#475569" text-anchor="middle">0.8</text>
-<line x1="800" y1="130" x2="800" y2="998" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="800" y1="130" x2="800" y2="1220" stroke="#F1F5F9" stroke-width="1"/>
 <line x1="800" y1="126" x2="800" y2="130" stroke="#475569" stroke-width="1"/>
 <text x="800" y="122" font-size="10" fill="#475569" text-anchor="middle">0.9</text>
-<line x1="850" y1="130" x2="850" y2="998" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="850" y1="130" x2="850" y2="1220" stroke="#E2E8F0" stroke-width="1"/>
 <line x1="850" y1="126" x2="850" y2="130" stroke="#475569" stroke-width="1"/>
 <text x="850" y="122" font-size="10" fill="#475569" text-anchor="middle">1.0</text>
-<line x1="900" y1="130" x2="900" y2="998" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="900" y1="130" x2="900" y2="1220" stroke="#F1F5F9" stroke-width="1"/>
 <line x1="900" y1="126" x2="900" y2="130" stroke="#475569" stroke-width="1"/>
 <text x="900" y="122" font-size="10" fill="#475569" text-anchor="middle">1.1</text>
-<line x1="950" y1="130" x2="950" y2="998" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="950" y1="130" x2="950" y2="1220" stroke="#F1F5F9" stroke-width="1"/>
 <line x1="950" y1="126" x2="950" y2="130" stroke="#475569" stroke-width="1"/>
 <text x="950" y="122" font-size="10" fill="#475569" text-anchor="middle">1.2</text>
 <line x1="350" y1="130" x2="950" y2="130" stroke="#475569" stroke-width="1"/>
@@ -67,7 +67,7 @@
 <rect x="350" y="173" width="100" height="12" fill="#CCFBF1" stroke="#0F766E" stroke-width="1"/>
 <rect x="450" y="173" width="50" height="12" fill="#FFEDD5" stroke="#C2410C" stroke-width="1"/>
 <rect x="500" y="173" width="100" height="12" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
-<text x="966" y="182.5" font-size="10.5" fill="#475569">FDTI ≤ 0.2 s + FRTI ≤ 0.1 s</text>
+<text x="966" y="182.5" font-size="10.5" fill="#475569">FDTI ≤ 0.2 s + FRTI ≤ 0.1 s · FHTI ≤ 0.3 s</text>
 <line x1="450" y1="188" x2="450" y2="224" stroke="#0F766E" stroke-width="1" stroke-dasharray="2 2"/>
 <rect x="350" y="192" width="500" height="10" fill="#64748B"/>
 <rect x="850" y="192" width="100" height="10" fill="#CBD5E1"/>
@@ -76,10 +76,10 @@
 <path d="M937 204L941 190M942 204L946 190" stroke="#FFFFFF" stroke-width="2.4"/>
 <path d="M950 191L957 197L950 203z" fill="#D2553F"/>
 <text x="966" y="200.5" font-size="10.5" fill="#0F172A">1–2 s (T-01)</text>
-<rect x="350" y="210" width="80" height="10" fill="#D97706"/>
+<rect x="350" y="210" width="81" height="10" fill="#D97706"/>
 <rect x="450" y="210" width="5" height="10" fill="#D2553F" fill-opacity="0.9"/>
 <line x1="455" y1="207" x2="455" y2="223" stroke="#0F172A" stroke-width="1.4"/>
-<text x="966" y="218.5" font-size="10.5" fill="#0F172A">≤ 0.16 s; 0x262 ≈ 0.21 s (T-01)</text>
+<text x="966" y="218.5" font-size="10.5" fill="#0F172A">≤ 0.162 s; 0x262 ≈ 0.21 s (T-01)</text>
 <text x="40" y="249" font-size="12" fill="#0F172A" font-weight="600">SoC heartbeat loss</text>
 <text x="40" y="264" font-size="10" fill="#475569">TSR-407 · margin ≥ 0.1 s</text>
 <text x="338" y="248.5" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">budget</text>
@@ -88,7 +88,7 @@
 <rect x="350" y="239" width="150" height="12" fill="#CCFBF1" stroke="#0F766E" stroke-width="1"/>
 <rect x="500" y="239" width="50" height="12" fill="#FFEDD5" stroke="#C2410C" stroke-width="1"/>
 <rect x="550" y="239" width="50" height="12" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
-<text x="966" y="248.5" font-size="10.5" fill="#475569">FDTI ≤ 0.3 s + FRTI ≤ 0.1 s</text>
+<text x="966" y="248.5" font-size="10.5" fill="#475569">FDTI ≤ 0.3 s + FRTI ≤ 0.1 s · FHTI ≤ 0.4 s</text>
 <line x1="500" y1="254" x2="500" y2="290" stroke="#0F766E" stroke-width="1" stroke-dasharray="2 2"/>
 <rect x="350" y="258" width="600" height="10" fill="#64748B"/>
 <rect x="950" y="258" width="0" height="10" fill="#CBD5E1"/>
@@ -108,7 +108,7 @@
 <rect x="350" y="305" width="25" height="12" fill="#CCFBF1" stroke="#0F766E" stroke-width="1"/>
 <rect x="375" y="305" width="50" height="12" fill="#FFEDD5" stroke="#C2410C" stroke-width="1"/>
 <rect x="425" y="305" width="175" height="12" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
-<text x="966" y="314.5" font-size="10.5" fill="#475569">FDTI ≤ 0.05 s + FRTI ≤ 0.1 s</text>
+<text x="966" y="314.5" font-size="10.5" fill="#475569">FDTI ≤ 0.05 s + FRTI ≤ 0.1 s · FHTI ≤ 0.15 s</text>
 <line x1="375" y1="320" x2="375" y2="356" stroke="#0F766E" stroke-width="1" stroke-dasharray="2 2"/>
 <rect x="350" y="324" width="50" height="10" fill="#64748B"/>
 <rect x="400" y="324" width="550" height="10" fill="#CBD5E1"/>
@@ -127,7 +127,7 @@
 <rect x="350" y="371" width="50" height="12" fill="#CCFBF1" stroke="#0F766E" stroke-width="1"/>
 <rect x="400" y="371" width="50" height="12" fill="#FFEDD5" stroke="#C2410C" stroke-width="1"/>
 <rect x="450" y="371" width="150" height="12" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
-<text x="966" y="380.5" font-size="10.5" fill="#475569">FDTI ≤ 0.1 s + FRTI ≤ 0.1 s</text>
+<text x="966" y="380.5" font-size="10.5" fill="#475569">FDTI ≤ 0.1 s + FRTI ≤ 0.1 s · FHTI ≤ 0.2 s</text>
 <line x1="400" y1="386" x2="400" y2="422" stroke="#0F766E" stroke-width="1" stroke-dasharray="2 2"/>
 <path d="M350 395H956" stroke="#D2553F" stroke-width="1.8" stroke-dasharray="6 4" fill="none" marker-end="url(#aR)"/>
 <text x="966" y="398.5" font-size="10.5" fill="#0F172A">not detected (T-09)</text>
@@ -141,7 +141,7 @@
 <rect x="350" y="437" width="150" height="12" fill="#CCFBF1" stroke="#0F766E" stroke-width="1"/>
 <rect x="500" y="437" width="50" height="12" fill="#FFEDD5" stroke="#C2410C" stroke-width="1"/>
 <rect x="550" y="437" width="50" height="12" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
-<text x="966" y="446.5" font-size="10.5" fill="#475569">FDTI ≤ 0.3 s + FRTI ≤ 0.1 s</text>
+<text x="966" y="446.5" font-size="10.5" fill="#475569">FDTI ≤ 0.3 s + FRTI ≤ 0.1 s · FHTI ≤ 0.4 s</text>
 <line x1="500" y1="452" x2="500" y2="488" stroke="#0F766E" stroke-width="1" stroke-dasharray="2 2"/>
 <rect x="350" y="456" width="500" height="10" fill="#64748B"/>
 <rect x="850" y="456" width="100" height="10" fill="#CBD5E1"/>
@@ -165,7 +165,7 @@
 <text x="338" y="578.5" font-size="9.5" fill="#D97706" font-weight="600" text-anchor="end">bf6ce8c</text>
 <rect x="350" y="533" width="250" height="12" fill="#CCFBF1" stroke="#0F766E" stroke-width="1"/>
 <rect x="600" y="533" width="250" height="12" fill="#FFEDD5" stroke="#C2410C" stroke-width="1"/>
-<text x="966" y="542.5" font-size="10.5" fill="#475569">detect ≤ 0.5 s + warn ≤ 0.5 s</text>
+<text x="966" y="542.5" font-size="10.5" fill="#475569">detect ≤ 0.5 s + warn ≤ 0.5 s · FHTI ≤ 1 s</text>
 <line x1="350" y1="557" x2="364" y2="557" stroke="#CBD5E1" stroke-width="1.2"/>
 <text x="966" y="560.5" font-size="10.5" fill="#475569" font-style="italic">no time at 8b8c6ae (T-28 added 2026-10-12)</text>
 <rect x="350" y="570" width="480" height="10" fill="#D97706"/>
@@ -177,7 +177,7 @@
 <text x="338" y="644.5" font-size="9.5" fill="#D97706" font-weight="600" text-anchor="end">bf6ce8c</text>
 <rect x="350" y="599" width="250" height="12" fill="#CCFBF1" stroke="#0F766E" stroke-width="1"/>
 <rect x="600" y="599" width="250" height="12" fill="#FFEDD5" stroke="#C2410C" stroke-width="1"/>
-<text x="966" y="608.5" font-size="10.5" fill="#475569">detect ≤ 0.5 s + warn ≤ 0.5 s</text>
+<text x="966" y="608.5" font-size="10.5" fill="#475569">detect ≤ 0.5 s + warn ≤ 0.5 s · FHTI ≤ 1 s</text>
 <rect x="350" y="618" width="600" height="10" fill="#64748B"/>
 <rect x="950" y="618" width="0" height="10" fill="#CBD5E1"/>
 <rect x="850" y="618" width="100" height="10" fill="#D2553F" fill-opacity="0.9"/>
@@ -200,7 +200,7 @@
 <rect x="350" y="695" width="250" height="12" fill="#CCFBF1" stroke="#0F766E" stroke-width="1"/>
 <rect x="600" y="695" width="150" height="12" fill="#FFEDD5" stroke="#C2410C" stroke-width="1"/>
 <rect x="750" y="695" width="100" height="12" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
-<text x="966" y="704.5" font-size="10.5" fill="#475569">FDTI ≤ 0.5 s + FRTI ≤ 0.3 s</text>
+<text x="966" y="704.5" font-size="10.5" fill="#475569">FDTI ≤ 0.5 s + FRTI ≤ 0.3 s · FHTI ≤ 0.8 s</text>
 <line x1="600" y1="710" x2="600" y2="728" stroke="#0F766E" stroke-width="1" stroke-dasharray="2 2"/>
 <line x1="350" y1="719" x2="364" y2="719" stroke="#CBD5E1" stroke-width="1.2"/>
 <text x="966" y="722.5" font-size="10.5" fill="#475569" font-style="italic">no §4 row is mapped to this class</text>
@@ -251,7 +251,7 @@
 <text x="338" y="980.5" font-size="9.5" fill="#D97706" font-weight="600" text-anchor="end">bf6ce8c</text>
 <rect x="350" y="935" width="50" height="12" fill="#CCFBF1" stroke="#0F766E" stroke-width="1"/>
 <rect x="400" y="935" width="50" height="12" fill="#FFEDD5" stroke="#C2410C" stroke-width="1"/>
-<text x="966" y="944.5" font-size="10.5" fill="#475569">FDTI ≤ 0.1 s + FRTI ≤ 0.1 s</text>
+<text x="966" y="944.5" font-size="10.5" fill="#475569">FDTI ≤ 0.1 s + FRTI ≤ 0.1 s · FHTI ≤ 0.2 s</text>
 <line x1="400" y1="950" x2="400" y2="986" stroke="#0F766E" stroke-width="1" stroke-dasharray="2 2"/>
 <path d="M350 959H956" stroke="#D2553F" stroke-width="1.8" stroke-dasharray="6 4" fill="none" marker-end="url(#aR)"/>
 <text x="966" y="962.5" font-size="10.5" fill="#0F172A">MCU hang not detected (T-09)</text>
@@ -260,19 +260,69 @@
 <line x1="450" y1="928" x2="450" y2="992" stroke="#0F172A" stroke-width="1.6"/>
 <rect x="412" y="905" width="76" height="18" fill="#0F172A" rx="9"/>
 <text x="450" y="917.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">FTTI 0.2 s</text>
-<line x1="40" y1="1010" x2="1240" y2="1010" stroke="#E2E8F0" stroke-width="1"/>
-<g transform="translate(40,1020)"><rect x="0" y="0" width="26" height="12" fill="#CCFBF1" stroke="#0F766E" stroke-width="1"/><text x="34" y="9" font-size="10.5" fill="#0F172A">FDTI budget</text></g>
-<g transform="translate(160,1020)"><rect x="0" y="0" width="26" height="12" fill="#FFEDD5" stroke="#C2410C" stroke-width="1"/><text x="34" y="9" font-size="10.5" fill="#0F172A">FRTI budget</text></g>
-<g transform="translate(280,1020)"><rect x="0" y="0" width="26" height="12" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/><text x="34" y="9" font-size="10.5" fill="#0F172A">Margin to FTTI</text></g>
-<g transform="translate(420,1020)"><rect x="0" y="0" width="26" height="12" fill="url(#tbd)" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/><text x="34" y="9" font-size="10.5" fill="#0F172A">Not quantified (TBD)</text></g>
-<g transform="translate(590,1020)"><line x1="13" y1="-3" x2="13" y2="15" stroke="#0F172A" stroke-width="1.6"/><text x="34" y="9" font-size="10.5" fill="#0F172A">FTTI / warning budget</text></g>
-<g transform="translate(765,1020)"><line x1="13" y1="-3" x2="13" y2="15" stroke="#0F766E" stroke-width="1" stroke-dasharray="2 2"/><text x="34" y="9" font-size="10.5" fill="#0F172A">FDTI budget, compared with the times below</text></g>
-<g transform="translate(40,1046)"><rect x="0" y="1" width="26" height="10" fill="#64748B"/><text x="34" y="9" font-size="10.5" fill="#0F172A">Baseline 8b8c6ae, code-derived</text></g>
-<g transform="translate(265,1046)"><rect x="0" y="1" width="26" height="10" fill="#D97706"/><text x="34" y="9" font-size="10.5" fill="#0F172A">Reference build bf6ce8c: implemented, not verified on hardware</text></g>
-<g transform="translate(675,1046)"><rect x="0" y="1" width="13" height="10" fill="#64748B"/><rect x="13" y="1" width="13" height="10" fill="#CBD5E1"/><text x="34" y="9" font-size="10.5" fill="#0F172A">Range (lower – upper)</text></g>
-<g transform="translate(850,1046)"><rect x="0" y="1" width="26" height="10" fill="#D2553F" fill-opacity="0.9"/><text x="34" y="9" font-size="10.5" fill="#0F172A">Beyond its budget</text></g>
-<g transform="translate(40,1072)"><path d="M0 6H22" stroke="#D2553F" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#aR)"/><text x="34" y="9" font-size="10.5" fill="#0F172A">Not detected</text></g>
-<g transform="translate(160,1072)"><path d="M0 1L7 6L0 11z" fill="#475569"/><line x1="-2" y1="6" x2="0" y2="6" stroke="#475569" stroke-width="1"/><text x="34" y="9" font-size="10.5" fill="#0F172A">Off scale (&gt; 1.2 s, value in the right column)</text></g>
-<g transform="translate(480,1072)"><line x1="13" y1="-2" x2="13" y2="14" stroke="#0F172A" stroke-width="1.4"/><text x="34" y="9" font-size="10.5" fill="#0F172A">Second value on the same bar</text></g>
-<text x="1240" y="1081" font-size="10" fill="#475569" text-anchor="end">Per-frame rows of §3.7 (SG-01 limits, SG-07 content) have no detection budget and are not drawn.</text>
+<rect x="40" y="998" width="1200" height="24" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1" rx="4"/>
+<text x="50" y="1014" font-size="12.5" fill="#0F172A" font-weight="700">Warning paths · §3.8</text>
+<text x="206" y="1014" font-size="10.5" fill="#475569">no fault reaction: budget to the warning, the driver avoids the hazard</text>
+<text x="40" y="1041" font-size="12" fill="#0F172A" font-weight="600">SG-02 insufficient lateral control</text>
+<text x="40" y="1056" font-size="10" fill="#475569">§3.8.1 · Δa_y 1 m/s² · driver t_r not met</text>
+<text x="338" y="1040.5" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">budget</text>
+<text x="338" y="1058.5" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">§4</text>
+<rect x="350" y="1031" width="200" height="12" fill="#CCFBF1" stroke="#0F766E" stroke-width="1"/>
+<rect x="550" y="1031" width="50" height="12" fill="#FFEDD5" stroke="#C2410C" stroke-width="1"/>
+<rect x="600" y="1031" width="300" height="12" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="966" y="1040.5" font-size="10.5" fill="#475569">FTTI 1.1 s · FDTI ≤ 0.4 s + FRTI ≤ 0.1 s · FHTI ≤ 0.5 s</text>
+<line x1="900" y1="1028" x2="900" y2="1070" stroke="#0F172A" stroke-width="1.6"/>
+<line x1="550" y1="1046" x2="550" y2="1064" stroke="#0F766E" stroke-width="1" stroke-dasharray="2 2"/>
+<rect x="350" y="1050" width="200" height="10" fill="#64748B"/>
+<text x="966" y="1058.5" font-size="10.5" fill="#0F172A">steerSaturated at 0.4 s + 1 frame (T-30)</text>
+<text x="40" y="1089" font-size="12" fill="#0F172A" font-weight="600">SG-06 late braking warning (FCW)</text>
+<text x="40" y="1104" font-size="10" fill="#475569">§3.8.2 · 1.0 s gap · FCW needed ≤ 0.6 s</text>
+<text x="338" y="1088.5" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">budget</text>
+<text x="338" y="1106.5" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">§4</text>
+<rect x="350" y="1079" width="600" height="12" fill="url(#tbd)" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="966" y="1088.5" font-size="10.5" fill="#475569">FTTI 1.6 s (off scale) · FCW onset TBD</text>
+<line x1="950" y1="1076" x2="950" y2="1118" stroke="#0F172A" stroke-width="1.6" stroke-dasharray="4 2"/>
+<line x1="650" y1="1094" x2="650" y2="1112" stroke="#0F766E" stroke-width="1" stroke-dasharray="2 2"/>
+<line x1="350" y1="1103" x2="364" y2="1103" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="966" y="1106.5" font-size="10.5" fill="#475569" font-style="italic">not derived; to be measured (T-31, M-12)</text>
+<text x="40" y="1137" font-size="12" fill="#0F172A" font-weight="600">Unintended engagement (latent gate fault)</text>
+<text x="40" y="1152" font-size="10" fill="#475569">§3.8.3 · TSR-630 · margin ≥ 0.1 s</text>
+<text x="338" y="1136.5" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">budget</text>
+<text x="338" y="1154.5" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">§4</text>
+<rect x="350" y="1127" width="150" height="12" fill="#CCFBF1" stroke="#0F766E" stroke-width="1"/>
+<rect x="500" y="1127" width="50" height="12" fill="#FFEDD5" stroke="#C2410C" stroke-width="1"/>
+<rect x="550" y="1127" width="50" height="12" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="966" y="1136.5" font-size="10.5" fill="#475569">FTTI 0.5 s · FDTI ≤ 0.3 s + FRTI ≤ 0.1 s · FHTI ≤ 0.4 s</text>
+<line x1="600" y1="1124" x2="600" y2="1166" stroke="#0F172A" stroke-width="1.6"/>
+<line x1="500" y1="1142" x2="500" y2="1160" stroke="#0F766E" stroke-width="1" stroke-dasharray="2 2"/>
+<path d="M350 1151H956" stroke="#D2553F" stroke-width="1.8" stroke-dasharray="6 4" fill="none" marker-end="url(#aR)"/>
+<text x="966" y="1154.5" font-size="10.5" fill="#0F172A">not implemented (TSR-630, T-32)</text>
+<text x="40" y="1185" font-size="12" fill="#0F172A" font-weight="600">SG-08 driver not supervising</text>
+<text x="40" y="1200" font-size="10" fill="#475569">§3.8.4 · first alert · OI-11</text>
+<text x="338" y="1184.5" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">budget</text>
+<text x="338" y="1202.5" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">§4</text>
+<rect x="350" y="1175" width="600" height="12" fill="#CCFBF1" stroke="#0F766E" stroke-width="1"/>
+<rect x="950" y="1175" width="0" height="12" fill="url(#tbd)" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="966" y="1184.5" font-size="10.5" fill="#475569">FTTI 6 s (off scale) · alert at 5 s + DM latency</text>
+<line x1="950" y1="1172" x2="950" y2="1214" stroke="#0F172A" stroke-width="1.6" stroke-dasharray="4 2"/>
+<line x1="950" y1="1190" x2="950" y2="1208" stroke="#0F766E" stroke-width="1" stroke-dasharray="2 2"/>
+<rect x="350" y="1194" width="600" height="10" fill="#64748B"/>
+<path d="M937 1206L941 1192M942 1206L946 1192" stroke="#FFFFFF" stroke-width="2.4"/>
+<path d="M950 1193L957 1199L950 1205z" fill="#64748B"/>
+<text x="966" y="1202.5" font-size="10.5" fill="#0F172A">first vision alert at 5 s (T-24); latency not measured</text>
+<line x1="40" y1="1232" x2="1240" y2="1232" stroke="#E2E8F0" stroke-width="1"/>
+<g transform="translate(40,1242)"><rect x="0" y="0" width="26" height="12" fill="#CCFBF1" stroke="#0F766E" stroke-width="1"/><text x="34" y="9" font-size="10.5" fill="#0F172A">FDTI budget</text></g>
+<g transform="translate(160,1242)"><rect x="0" y="0" width="26" height="12" fill="#FFEDD5" stroke="#C2410C" stroke-width="1"/><text x="34" y="9" font-size="10.5" fill="#0F172A">FRTI budget</text></g>
+<g transform="translate(280,1242)"><rect x="0" y="0" width="26" height="12" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/><text x="34" y="9" font-size="10.5" fill="#0F172A">Margin to FTTI</text></g>
+<g transform="translate(420,1242)"><rect x="0" y="0" width="26" height="12" fill="url(#tbd)" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/><text x="34" y="9" font-size="10.5" fill="#0F172A">Not quantified (TBD)</text></g>
+<g transform="translate(590,1242)"><line x1="13" y1="-3" x2="13" y2="15" stroke="#0F172A" stroke-width="1.6"/><text x="34" y="9" font-size="10.5" fill="#0F172A">FTTI / warning budget</text></g>
+<g transform="translate(765,1242)"><line x1="13" y1="-3" x2="13" y2="15" stroke="#0F766E" stroke-width="1" stroke-dasharray="2 2"/><text x="34" y="9" font-size="10.5" fill="#0F172A">FDTI budget, compared with the times below</text></g>
+<g transform="translate(40,1268)"><rect x="0" y="1" width="26" height="10" fill="#64748B"/><text x="34" y="9" font-size="10.5" fill="#0F172A">Baseline 8b8c6ae, code-derived</text></g>
+<g transform="translate(265,1268)"><rect x="0" y="1" width="26" height="10" fill="#D97706"/><text x="34" y="9" font-size="10.5" fill="#0F172A">Reference build bf6ce8c: implemented, not verified on hardware</text></g>
+<g transform="translate(675,1268)"><rect x="0" y="1" width="13" height="10" fill="#64748B"/><rect x="13" y="1" width="13" height="10" fill="#CBD5E1"/><text x="34" y="9" font-size="10.5" fill="#0F172A">Range (lower – upper)</text></g>
+<g transform="translate(850,1268)"><rect x="0" y="1" width="26" height="10" fill="#D2553F" fill-opacity="0.9"/><text x="34" y="9" font-size="10.5" fill="#0F172A">Beyond its budget</text></g>
+<g transform="translate(40,1294)"><path d="M0 6H22" stroke="#D2553F" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#aR)"/><text x="34" y="9" font-size="10.5" fill="#0F172A">Not detected</text></g>
+<g transform="translate(160,1294)"><path d="M0 1L7 6L0 11z" fill="#475569"/><line x1="-2" y1="6" x2="0" y2="6" stroke="#475569" stroke-width="1"/><text x="34" y="9" font-size="10.5" fill="#0F172A">Off scale (&gt; 1.2 s, value in the right column)</text></g>
+<g transform="translate(480,1294)"><line x1="13" y1="-2" x2="13" y2="14" stroke="#0F172A" stroke-width="1.4"/><text x="34" y="9" font-size="10.5" fill="#0F172A">Second value on the same bar</text></g>
+<text x="1240" y="1303" font-size="10" fill="#475569" text-anchor="end">FHTI = FDTI + FRTI. Per-frame rows of §3.7 (SG-01 limits, SG-07 content) have no detection budget and are not drawn.</text>
 </svg>
