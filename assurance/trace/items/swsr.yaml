@@ -69,14 +69,14 @@
 
 - id: SWSR-103
   kind: swsr
-  text: "The lateral check shall reject a `0x2E4` frame whose torque lies outside [min(r, 0) − Δ_up, max(r, 0) + Δ_up], with r the reference torque and Δ_up = 15 raw: a change toward zero is accepted, and a change across zero only up to Δ_up on the other side (+10 → −20 is rejected). While the reference exceeds the measured EPS torque by more than Δ_meas (SWSR-104), the frame shall be rejected unless its torque magnitude is at least Δ_down = 25 raw below the reference. The reference torque is the torque of the previous frame, or 0 after a rejected frame or while authority is not granted."
+  text: "The lateral check shall reject a `0x2E4` frame whose torque lies outside [min(r, 0) − Δ_up, max(r, 0) + Δ_up], with r the reference torque and Δ_up = 15 raw: this check accepts any change toward zero, and a change across zero only up to Δ_up on the other side (+10 → −20 is rejected); SWSR-104 can still reject a fall toward zero. The reference torque is the torque of the previous frame, or 0 after a rejected frame or while authority is not granted."
   asil: "B‡"
   parents: [TSR-103]
   parent_text: "TSR-103"
   other_parents: false
   allocated_to: "U-SAF-LAT"
   verification: "UT, HIL, IT"
-  acceptance: "Both signs: increase of Δ_up accepted, Δ_up + 1 rejected; a step to zero accepted; a step across zero to Δ_up beyond zero accepted, to Δ_up + 1 rejected; above measured + Δ_meas, a descent of Δ_down accepted and Δ_down − 1 rejected; after a rejected frame an increase is limited from 0"
+  acceptance: "Both signs: increase of Δ_up accepted, Δ_up + 1 rejected; a step to zero accepted; a step across zero to Δ_up beyond zero accepted, to Δ_up + 1 rejected; after a rejected frame an increase is limited from 0"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `modes/toyota.h:174-176`; `lateral.h:10-23` (`dist_to_meas_check`), `:140-146` (reference reset); upstream tests `test_non_realtime_limit_up`, `test_non_realtime_limit_down` (`safety/tests/common.py`). Values without rationale (GAP-04)"
@@ -101,14 +101,14 @@
 
 - id: SWSR-104
   kind: swsr
-  text: "The lateral check shall reject a `0x2E4` frame whose torque exceeds the maximum (or is below the minimum) of the last 6 scaled EPS motor-torque samples widened by 1 raw by more than Δ_meas = 350 raw, with the downward-rate exception of the baseline algorithm."
+  text: "The lateral check shall reject a `0x2E4` frame whose torque exceeds max(m_max, 0) + Δ_meas (or is below min(m_min, 0) − Δ_meas), with m_max and m_min the maximum and minimum of the last 6 scaled EPS motor-torque samples widened by 1 raw and Δ_meas = 350 raw, unless the torque is at least Δ_down = 25 raw nearer zero than the SWSR-103 reference torque (r − Δ_down or below for a positive r, r + Δ_down or above for a negative r). A frame beyond the bound after a smaller fall is rejected; a smaller fall that ends within the bound is accepted."
   asil: "B‡"
   parents: [TSR-104]
   parent_text: "TSR-104"
   other_parents: false
   allocated_to: "U-SAF-LAT, U-SAF-TOY"
   verification: "UT, HIL, IT"
-  acceptance: "Rejection at meas.max + 1 + 351 raw; window of exactly 6 samples"
+  acceptance: "Both signs: rejection at max(m_max, 0) + 351 raw with r within the bound; with r beyond the bound, a fall of Δ_down accepted, Δ_down − 1 rejected while still beyond the bound, accepted when it ends within it (r 860, measured 500: 850 accepted, 855 rejected); window of exactly 6 samples"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `modes/toyota.h:98-111, 176`; `lateral.h:10-23, 82-83`; `MAX_SAMPLE_VALS` `declarations.h:68`"
