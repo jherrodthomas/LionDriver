@@ -69,17 +69,17 @@
 
 - id: SWSR-103
   kind: swsr
-  text: "The lateral check shall reject a `0x2E4` frame whose torque magnitude increases by more than Δ_up = 15 raw, or decreases by more than Δ_down = 25 raw, relative to the last accepted torque."
+  text: "The lateral check shall reject a `0x2E4` frame whose torque magnitude increases by more than Δ_up = 15 raw relative to the reference torque. A change toward zero, or across zero by at most Δ_up, shall be accepted. While the reference exceeds the measured EPS torque by more than Δ_meas (SWSR-104), the frame shall be rejected unless its torque magnitude is at least Δ_down = 25 raw below the reference. The reference torque is the torque of the previous frame, or 0 after a rejected frame or while authority is not granted."
   asil: "B‡"
   parents: [TSR-103]
   parent_text: "TSR-103"
   other_parents: false
   allocated_to: "U-SAF-LAT"
   verification: "UT, HIL, IT"
-  acceptance: "Violation exactly at Δ + 1 raw for up and down, both signs"
+  acceptance: "Both signs: increase of Δ_up accepted, Δ_up + 1 rejected; a step to zero and across zero by Δ_up accepted, by Δ_up + 1 rejected; above measured + Δ_meas, a descent of Δ_down accepted and Δ_down − 1 rejected; after a rejected frame an increase is limited from 0"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `modes/toyota.h:174-175`; `lateral.h:14-19` (inside `dist_to_meas_check`). Values without rationale (GAP-04)"
+  baseline_impl: "Impl: `modes/toyota.h:174-176`; `lateral.h:10-23` (`dist_to_meas_check`), `:140-146` (reference reset); upstream tests `test_non_realtime_limit_up`, `test_non_realtime_limit_down` (`safety/tests/common.py`). Values without rationale (GAP-04)"
   status: proposed
   source: WP-W-02
 
@@ -501,7 +501,7 @@
 
 - id: SWSR-307
   kind: swsr
-  text: "When authority is granted and the SoC heartbeat reports \"not engaged\" for > 0.3 s, the envelope shall clear authority."
+  text: "When authority is granted and the SoC heartbeat has reported \"not engaged\" continuously for 0.3 s, the envelope shall clear authority; an \"engaged\" heartbeat restarts the count."
   asil: "B‡"
   parents: [TSR-307]
   parent_text: "TSR-307(a)"
@@ -1317,7 +1317,7 @@
 
 - id: SWSR-516
   kind: swsr
-  text: "The firmware shall activate its siren within 0.5 s, without SoC involvement, when (a) the heartbeat is lost (SWSR-407) while authority was granted within the last 5 s; (b) authority is cleared while granted for any reason other than a brake press (SWSR-302) or PCM cruise inactive (SWSR-301): missing SoC command frames (SWSR-408), RX fault (SWSR-406), EPS fault (SWSR-110), rejected command (SWSR-108), TX failure or bus-off (SWSR-508), platform fault (SWSR-502) or heartbeat \"not engaged\" (SWSR-307); (c) SWSR-516b fires."
+  text: "The firmware shall activate its siren within 0.5 s, without SoC involvement, for at least 3 s or for as long as the condition holds if longer, at the level set by WP-S-04 M-05, when (a) the heartbeat is lost (SWSR-407) while authority was granted within the last 5 s; (b) authority is cleared while granted for any reason other than a brake press (SWSR-302) or PCM cruise inactive (SWSR-301): missing SoC command frames (SWSR-408), RX fault (SWSR-406), EPS fault (SWSR-110), rejected command (SWSR-108), TX failure or bus-off (SWSR-508), or platform fault (SWSR-502); (c) SWSR-516b fires (a heartbeat \"not engaged\", SWSR-307, whose cruise cancel had no effect)."
   asil: "B"
   parents: [TSR-516]
   parent_text: "TSR-516"
