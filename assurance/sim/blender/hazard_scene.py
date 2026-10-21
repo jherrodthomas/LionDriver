@@ -5,7 +5,9 @@ cross-section, scenery and props, the sky and sun (or night), every road user ke
 translucent ego "ghost" left at each event, the ego's path drawn on the road as it goes, and three cameras that follow
 the ego (chase, forward, orthographic top). Saves scene.blend (open it in Blender to scrub, re-light or re-frame),
 writes where each road user appears in the chase view (screen.json, for the dashboard tags), then renders the
-key-event stills and, if asked, the frames of a clip. compose.py adds the dashboard.
+key-event stills and, if asked, the frames of a clip. compose.py adds the dashboard. Around the road it draws what the
+environment and condition ask (scene_assets.build_surroundings): far hills and haze, rolling ground, 3D verge
+plants, distant pylons, billboard, farm and flyover, cloud shadows, wheel spray, road wear and a camera look.
 
 Every car is the purchased Corolla E210 mesh when the GLB is present (assets/1450755-gltf-extended.glb, or --vehicle,
 or LIONDRIVER_VEHICLE_GLB), instanced and repainted per road user; otherwise a stand-in lofted from the committed
@@ -614,6 +616,7 @@ def build(sc: dict, vehicle: Path | None, front: str | None) -> dict:
   build_path(sc, frames)
   cams = build_cameras(sc)
   scene.camera = cams["chase"]
+  A.build_surroundings(sc, env, cams["chase"], obs[0], frames, sc["fps"], street_layout.rear_view(sc))
   A.build_weather(env, obs[0], sc["road"]["centre"], frames, sc["fps"], cams=(cams["chase"], cams["driver"]))
   return {"keys": keys, "cams": cams}
 
@@ -661,6 +664,7 @@ def render_frame(cam, frame: int, path: Path):
   weather = bpy.data.collections.get("weather")
   if weather:                                   # weather reads from the road; from above it hides the layout
     weather.hide_render = cam.name == "cam_top"
+  A.surroundings_for(cam.name)                  # no vignette, grain or spray from above
   s.frame_set(frame)
   s.render.filepath = str(path)
   bpy.ops.render.render(write_still=True)

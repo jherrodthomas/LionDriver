@@ -76,6 +76,26 @@ poles every 45 m beyond the barrier, the arm curving 2.6 m out over the road to 
 that would stand near the chase camera or on its line of sight to the ego is left out (`street_layout.lamp_row`,
 checked by `test_scenes.py`).
 
+Around the road, `scene_assets.build_surroundings` draws what the environment and the condition switch on (all on
+where they fit, from the lead's choice of the environment-realism mockup). Each is a key of an `env` block:
+
+| Key | Set in | What it draws | Where it is on |
+|---|---|---|---|
+| `horizon` | environment | Patchwork far fields to 2 km, a tree line about 1 to 1.6 km out, hills 2 to 5.6 km out, round the chase camera | every highway and rural environment |
+| `haze_km` | condition | With `horizon`, a thin blue haze for that visibility, 160 m deep so the sky above stays clear | W01, TC-01 (22 km) |
+| `terrain` | environment | `rolling`: ground rolling from 15 m past the verge; `ditch`: and a shallow drainage ditch 7 to 10 m past the verge; `embankment`: the road on a 3 m bank on the left, in a 4.5 m cutting on the right. Trees, lamps and posts stand on it | `embankment`: free-flow, crosswind; `ditch`: rural; `rolling`: the other highways but the tunnel |
+| `verge_plants` | environment | 3D grass blades, weeds and wildflowers on both verges within 40 m of the road along the stretch the chase camera sees, thinning into the ground texture (none under snow) | every highway and rural environment |
+| `distant` | environment | `pylons` (a line of lattice pylons with sagging wires), `billboard` (22 m past the verge), `farm` (barn, house and silo 150 m out), `flyover` (about 380 m ahead, past the modelled road) | highway and rural, as `environments.yaml` lists |
+| `cloud_shadows` | condition (an environment may set `false`) | Soft cloud shadows from a shadow-only layer 450 m up, drifting at 6 m/s | W01; not in the urban environments |
+| `spray` | condition | 0 to 1: a plume of spray behind the wheels of every moving car and truck | W02 (0.45), W04 (1.0) |
+| `road_wear` | environment | Repair patches, cracks, sealed joints, faint skid marks, road studs on the lines (manhole covers in town), flat under the markings | every environment |
+| `camera_feel` | environment | A vignette and film grain in the compositor (not on the top view) and mild depth of field on the chase camera, focused on the ego | every environment |
+
+Like the kerbs, these are visual only: the ground changes height only from 7 m past the verge start, the objects stand
+at least 20 m past the verge or beyond the modelled road, the wear is flat texture on the asphalt, and `export_scene.py`
+never reads them. `test_scenes.py` exports every scene with all of these keys removed and checks that the motion,
+events, contact, gap, TTC, poses, cross-section and props are the same.
+
 ## 3. Environments and traffic
 
 | Environment | Situations | Conditions |

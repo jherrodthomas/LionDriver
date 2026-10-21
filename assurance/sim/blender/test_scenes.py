@@ -4,7 +4,7 @@ scene. Every scene is built from the library (environment, condition, traffic) w
 allows, a plant case drives the geometry its environment has, the library's codes match the HARA, and a variant
 shows its base scene's motion and outcome under another condition. The street furniture of an urban scene stays on
 its pavement and clear of every pedestrian and cyclist, intersection, traffic light and crosswalk. The committed
-pedestrian figures carry their walk and clothes slots."""
+pedestrian figures carry their walk and clothes slots. The look of the surroundings never changes the analysis."""
 
 from __future__ import annotations
 
@@ -175,6 +175,31 @@ class TestScenes(unittest.TestCase):
       for a in s.get("actors", []):
         if "figure" in a:
           self.assertIn(a["figure"], ("male", "female"), s["id"])
+
+  def test_surroundings_never_reach_the_analysis(self):
+    """The look keys of the surroundings (scene_assets.build_surroundings) take valid values, and every scene exports
+    the same motion, events, contact, gap, TTC, poses, cross-section and props with all of them removed."""
+    look = {"horizon", "haze_km", "terrain", "verge_plants", "distant", "cloud_shadows", "spray", "road_wear",
+            "camera_feel"}
+    for kind in ("environments", "conditions"):
+      for name, e in self.lib[kind].items():
+        env = e.get("env", {})
+        self.assertIn(env.get("terrain", "rolling"), ("rolling", "ditch", "embankment"), name)
+        self.assertLessEqual(set(env.get("distant", [])), {"pylons", "billboard", "farm", "flyover"}, name)
+        self.assertTrue(0.0 <= env.get("spray", 0.0) <= 1.0, name)
+        self.assertGreater(env.get("haze_km", 1.0), 0.0, name)
+    bare = copy.deepcopy(self.lib)
+    for kind in ("environments", "conditions"):
+      for e in bare[kind].values():
+        e["env"] = {k: v for k, v in e.get("env", {}).items() if k not in look}
+    keys = ("t", "speed", "lateral", "lane_threshold", "ax", "ay", "eps_torque", "events", "contact", "gap", "ttc",
+            "critical", "road", "props", "actors")
+    self.assertTrue(any(self.built[s["id"]]["env"].get("horizon") for s in self.scenes))
+    for s in (export_scene.resolve(v, bare) for r in self.raw for v in export_scene.expand(r)):
+      self.assertFalse(look & set(s["env"]), s["id"])
+      plain = export_scene.build(s, self.hes, bare)
+      for k in keys:
+        self.assertEqual(plain[k], self.built[s["id"]][k], f"{s['id']}: {k}")
 
   def test_kinematic_values_resolve(self):
     self.assertEqual(export_scene.value("t_r"), 1.5)
