@@ -51,6 +51,9 @@ in [`assurance/`](../assurance/README.md) that owns it.
   `h2t-engineers.svg`, `h2t-mechanism.svg`, `h2t-testing.svg`) are rendered by
   [`tools/wiki/h2t_animations.py`](../tools/wiki/h2t_animations.py), with the same checks against the concept,
   system, software and hardware work products, the case records and (when checked out) the opendbc and panda code.
+- The figures of "Hardware safety and interference" (`hw-numbers.svg`, `hw-ffi.svg`) are rendered by
+  [`tools/wiki/hw_animations.py`](../tools/wiki/hw_animations.py): the metrics are computed from the FMEDA records and
+  the FFI verdicts read from WP-A-02 §8.
 - Standard GitHub Markdown, including alerts (`> [!IMPORTANT]`) and tables.
 
 Check locally before opening a pull request:

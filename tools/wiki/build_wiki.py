@@ -14,9 +14,9 @@ everything else. This tool turns that folder into what the GitHub wiki repositor
   * the infographics of infographics.py are rendered from the records and written next to the pages, so a
     page embeds one as `![alt](decision-register.svg)`; the animations of animations.py (from the requirement
     texts), the fault tree figures of fta_animations.py (from WP-A-04), the safety-case explainers of
-    case_animations.py (from assurance/case) and the hazard-to-test explainers of h2t_animations.py (from the
-    concept, system, software and hardware work products) likewise: a drawn phrase that is no longer in its
-    source is a build problem;
+    case_animations.py (from assurance/case), the hazard-to-test explainers of h2t_animations.py (from the
+    concept, system, software and hardware work products) and the hardware figures of hw_animations.py (from
+    the FMEDA and WP-A-02) likewise: a drawn phrase that is no longer in its source is a build problem;
   * wiki/README.md, which describes the folder, is not published.
 
 It also checks the pages: every page is reachable from _Sidebar.md, every page link names a page that
@@ -41,6 +41,7 @@ import animations
 import case_animations
 import fta_animations
 import h2t_animations
+import hw_animations
 import infographics
 
 ROOT = HERE.parents[1]
@@ -129,7 +130,7 @@ def rewrite(text: str, page: Path, src: Path, root: Path, values: dict[str, str]
       if path not in names:
         problems.append(f"{page.name}: page link target does not exist: {path}")
       return f"{before}{path[:-3]}{anchor}{after}"
-    if path in infographics.NAMES or path in animations.NAMES or path in fta_animations.NAMES or path in case_animations.NAMES or path in h2t_animations.NAMES:
+    if path in infographics.NAMES or path in animations.NAMES or path in fta_animations.NAMES or path in case_animations.NAMES or path in h2t_animations.NAMES or path in hw_animations.NAMES:
       return m.group(0)  # a generated figure, written next to the pages by build()
     problems.append(f"{page.name}: link is neither a page (Name.md), a repository path (../path), a generated figure nor a URL: {target}")
     return m.group(0)
@@ -168,6 +169,8 @@ def build(src: Path = SRC, out: Path | None = None, root: Path = ROOT, *, repo: 
     problems += case_animations.problems(root)
   if (root / h2t_animations.C03).exists():
     problems += h2t_animations.problems(root)
+  if (root / hw_animations.FMEDA).exists():
+    problems += hw_animations.problems(root)
   built: dict[str, str] = {}
   for page in pages(src):
     built[page.name] = rewrite(page.read_text(encoding="utf-8"), page, src, root, values, problems)
@@ -185,6 +188,8 @@ def build(src: Path = SRC, out: Path | None = None, root: Path = ROOT, *, repo: 
       case_animations.write_all(out, root)
     if (root / h2t_animations.C03).exists():
       h2t_animations.write_all(out, root)
+    if (root / hw_animations.FMEDA).exists():
+      hw_animations.write_all(out, root)
   return problems
 
 
