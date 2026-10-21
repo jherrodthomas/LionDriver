@@ -114,6 +114,10 @@ Variants re-render a scene under another weather or lighting code it is rated fo
 | [ec-24-silent-stall-r-odd--w06](ec-24-silent-stall-r-odd--w06.jpg) | W06: Fog, visibility below the ODD bound (outside the ODD, foreseeable) | H-06 and H-10: C+1 (reduced visibility delays the driver's detection) |
 | [ec-26-narrow-lane-truck-hardover--w04](ec-26-narrow-lane-truck-hardover--w04.jpg) | W04: Moderate or heavy rain (outside the ODD, foreseeable) | H-04 in a curve: S3, C1 ⚠; H-06 and H-10: C+1 (reduced visibility delays the driver's detection) |
 | [ec-27-crosswind-hardover-left--w06](ec-27-crosswind-hardover-left--w06.jpg) | W06: Fog, visibility below the ODD bound (outside the ODD, foreseeable) | H-06 and H-10: C+1 (reduced visibility delays the driver's detection) |
+| [ec-28-lead-brakes-decel-lost--w04](ec-28-lead-brakes-decel-lost--w04.jpg) | W04: Moderate or heavy rain (outside the ODD, foreseeable) | H-04 in a curve: S3, C1 ⚠; H-06 and H-10: C+1 (reduced visibility delays the driver's detection) |
+| [ec-29-lead-brakes-soc-stall--w06](ec-29-lead-brakes-soc-stall--w06.jpg) | W06: Fog, visibility below the ODD bound (outside the ODD, foreseeable) | H-06 and H-10: C+1 (reduced visibility delays the driver's detection) |
+| [ec-34-step-decel-close-follower--w04](ec-34-step-decel-close-follower--w04.jpg) | W04: Moderate or heavy rain (outside the ODD, foreseeable) | H-04 in a curve: S3, C1 ⚠; H-06 and H-10: C+1 (reduced visibility delays the driver's detection) |
+| [ec-36-soft-disable-close-follower--w06](ec-36-soft-disable-close-follower--w06.jpg) | W06: Fog, visibility below the ODD bound (outside the ODD, foreseeable) | H-06 and H-10: C+1 (reduced visibility delays the driver's detection) |
 
 ## Edge cases from the search
 
@@ -130,6 +134,10 @@ The worst cases the failure search found ([edge-case catalogue](../../results/ed
 | [ec-24-silent-stall-r-odd](ec-24-silent-stall-r-odd.jpg) | [EC-24](../../results/edge-cases.md#catalogue) | HE-07.1 (ASIL C) | highway-curve, W03 (E3) | plant F-04b* | body at the lane line at +2.04 s; peak offset 1.06 m |
 | [ec-26-narrow-lane-truck-hardover](ec-26-narrow-lane-truck-hardover.jpg) | [EC-26](../../results/edge-cases.md#catalogue) | HE-01.2 (ASIL C) | highway-narrow-truck, W01 (E4) | plant F-01b* | **contact** with the truck at +1.17 s, 6 km/h |
 | [ec-27-crosswind-hardover-left](ec-27-crosswind-hardover-left.jpg) | [EC-27](../../results/edge-cases.md#catalogue) | HE-01.2 (ASIL C) | highway-crosswind, W01 (E4) | plant F-01b* | body at the lane line at +1.42 s; peak offset 9.00 m |
+| [ec-28-lead-brakes-decel-lost](ec-28-lead-brakes-decel-lost.jpg) | [EC-28](../../results/edge-cases.md#catalogue) | HE-06.3 (ASIL B) | highway-free-flow, W01 (E4) | plant L-03* | **contact** with the lead at +7.17 s, 45 km/h |
+| [ec-29-lead-brakes-soc-stall](ec-29-lead-brakes-soc-stall.jpg) | [EC-29](../../results/edge-cases.md#catalogue) | HE-06.3 (ASIL B) | highway-free-flow, W01 (E4) | plant L-03* | **contact** with the lead at +3.75 s, 54 km/h |
+| [ec-34-step-decel-close-follower](ec-34-step-decel-close-follower.jpg) | [EC-34](../../results/edge-cases.md#catalogue) | HE-04.1 (ASIL B) | highway-free-flow, W01 (E4) | plant L-03* | **contact** with the follower at +1.33 s, 15 km/h |
+| [ec-36-soft-disable-close-follower](ec-36-soft-disable-close-follower.jpg) | [EC-36](../../results/edge-cases.md#catalogue) | HE-04.1 (ASIL B) | highway-free-flow, W01 (E4) | plant L-03* | no contact; minimum gap 1.2 m, minimum TTC 0.84 s |
 
 ## Clips
 

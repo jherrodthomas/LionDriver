@@ -351,6 +351,30 @@ jobs:
     - name: SG-02 time-to-cue page is current (step P4)
       run: python3 assurance/models/fmdtools/sg02/sweep.py timing --check
 
+  fret:
+    name: FRETish restatements of the panda TSRs
+    # NASA FRET pilot (TE-03; assurance/models/fret). Checks grammar shape, glossary and the quoted WP-S-02 text,
+    # then installs the FRET CLI at the pinned commit and checks the stored formulas against it. No evidence credit.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Install the pinned checker packages
+      run: python3 -m pip install --quiet --user --break-system-packages -r assurance/models/fret/requirements.txt
+    - name: FRETish requirements match WP-S-02 and their page is current (and its tests)
+      run: |
+        python3 assurance/models/fret/check_fretish.py --check
+        python3 assurance/models/fret/test_check_fretish.py
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '22.22.0'
+    - name: Install the FRET CLI at the pinned commit
+      run: assurance/models/fret/install_fret.sh "$RUNNER_TEMP/fret"
+    - name: Stored FRET formulas match what FRET produces for the current sentences (step P2)
+      run: FRET_DIR="$RUNNER_TEMP/fret/fret-electron" python3 assurance/models/fret/fret_formalize.py --check
+
   sim-plant:
     name: simulation plant model
     # Fault-injection plant model (assurance/sim, layer 1): the real panda safety code in a closed loop with

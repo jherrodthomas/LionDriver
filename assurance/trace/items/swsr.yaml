@@ -69,30 +69,30 @@
 
 - id: SWSR-103
   kind: swsr
-  text: "The lateral check shall reject a `0x2E4` frame whose torque magnitude increases by more than Δ_up = 15 raw, or decreases by more than Δ_down = 25 raw, relative to the last accepted torque."
+  text: "The lateral check shall reject a `0x2E4` frame whose torque lies outside [min(r, 0) − Δ_up, max(r, 0) + Δ_up], with r the reference torque and Δ_up = 15 raw: a change toward zero is accepted, and a change across zero only up to Δ_up on the other side (+10 → −20 is rejected). While the reference exceeds the measured EPS torque by more than Δ_meas (SWSR-104), the frame shall be rejected unless its torque magnitude is at least Δ_down = 25 raw below the reference. The reference torque is the torque of the previous frame, or 0 after a rejected frame or while authority is not granted."
   asil: "B‡"
   parents: [TSR-103]
   parent_text: "TSR-103"
   other_parents: false
   allocated_to: "U-SAF-LAT"
   verification: "UT, HIL, IT"
-  acceptance: "Violation exactly at Δ + 1 raw for up and down, both signs"
+  acceptance: "Both signs: increase of Δ_up accepted, Δ_up + 1 rejected; a step to zero accepted; a step across zero to Δ_up beyond zero accepted, to Δ_up + 1 rejected; above measured + Δ_meas, a descent of Δ_down accepted and Δ_down − 1 rejected; after a rejected frame an increase is limited from 0"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `modes/toyota.h:174-175`; `lateral.h:14-19` (inside `dist_to_meas_check`). Values without rationale (GAP-04)"
+  baseline_impl: "Impl: `modes/toyota.h:174-176`; `lateral.h:10-23` (`dist_to_meas_check`), `:140-146` (reference reset); upstream tests `test_non_realtime_limit_up`, `test_non_realtime_limit_down` (`safety/tests/common.py`). Values without rationale (GAP-04)"
   status: proposed
   source: WP-W-02
 
 - id: SWSR-103a
   kind: swsr
-  text: "The lateral check shall reject a `0x2E4` frame whose torque differs by more than 450 raw from the reference torque stored at the start of the current 250 ms window, and shall restart the window after 250 ms."
+  text: "The lateral check shall reject a `0x2E4` frame whose torque lies outside [min(w, 0) − Δ_rt, max(w, 0) + Δ_rt], with w the torque stored at the start of the current 250 ms window and Δ_rt = 450 raw (+400 at the window start → −100 is accepted), and shall restart the window with the first frame more than 250 ms after its start; after a rejected frame, or while authority is not granted, w is 0."
   asil: "B‡"
   parents: [TSR-103]
   parent_text: "TSR-103"
   other_parents: false
   allocated_to: "U-SAF-LAT"
   verification: "UT, HIL, IT"
-  acceptance: "Rejection at 451 raw; window restart at 250 ms with timer resolution 1 µs"
+  acceptance: "Both signs: rejection at max(w, 0) + 451 and at min(w, 0) − 451, acceptance at 450; a crossing from w > 0 to −450 accepted, to −451 rejected; window restart at 250 ms with timer resolution 1 µs"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `modes/toyota.h:177`; `lateral.h:49-57, 87-95`; `MAX_RT_INTERVAL` `declarations.h:71`"
@@ -262,7 +262,7 @@
 - id: SWSR-201
   kind: swsr
   text: "The Toyota TX hook shall reject every ACC_CONTROL (`0x343`, bus 0) frame whose ACCEL_CMD exceeds a_max = 2000 raw (+2.0 m/s²)."
-  asil: "B"
+  asil: "C"
   parents: [TSR-201]
   parent_text: "TSR-201"
   other_parents: false
@@ -278,7 +278,7 @@
 - id: SWSR-201a
   kind: swsr
   text: "The Toyota TX hook shall decode ACCEL_CMD as signed 16-bit from data bytes 0–1 (big-endian, 0.001 m/s² per raw)."
-  asil: "B"
+  asil: "C"
   parents: [TSR-201, TSR-202]
   parent_text: "TSR-201, TSR-202"
   other_parents: false
@@ -310,7 +310,7 @@
 - id: SWSR-203
   kind: swsr
   text: "While longitudinal authority is not granted (not engaged, or gas pressed in the previous RX frame), the TX hook shall accept `0x343` only with ACCEL_CMD equal to the inactive value 0, defined as a named constant."
-  asil: "B"
+  asil: "C"
   parents: [TSR-203]
   parent_text: "TSR-203"
   other_parents: false
@@ -326,7 +326,7 @@
 - id: SWSR-204
   kind: swsr
   text: "The TX hook shall reject a `0x343` frame whose ACCEL_CMD increases relative to the last accepted value faster than j_up (raw per frame; 0 m/s² taken as last value at engagement)."
-  asil: "B"
+  asil: "C"
   parents: [TSR-204]
   parent_text: "TSR-204"
   other_parents: false
@@ -358,7 +358,7 @@
 - id: SWSR-206
   kind: swsr
   text: "If vehicle characterisation does not show a bounded PCM response to a step to the inactive value, the TX hook shall, for at most 1 s after revocation, accept `0x343` values that move monotonically towards 0 at no more than j_down/j_up."
-  asil: "B"
+  asil: "C"
   parents: [TSR-206]
   parent_text: "TSR-206"
   other_parents: false
@@ -374,7 +374,7 @@
 - id: SWSR-207
   kind: swsr
   text: "The TX hook shall check PERMIT_BRAKING, CANCEL_REQ, RELEASE_STANDSTILL and ACCEL_CMD_ALT of `0x343` against the values allowed in the current authority state; without authority, only frames that request no acceleration, no braking and no standstill release shall pass."
-  asil: "B"
+  asil: "C"
   parents: [TSR-207]
   parent_text: "TSR-207"
   other_parents: false
@@ -501,7 +501,7 @@
 
 - id: SWSR-307
   kind: swsr
-  text: "When authority is granted and the SoC heartbeat reports \"not engaged\" for > 0.3 s, the envelope shall clear authority."
+  text: "When authority is granted and the SoC heartbeat has reported \"not engaged\" continuously for 0.3 s, the envelope shall clear authority; an \"engaged\" heartbeat restarts the count."
   asil: "B‡"
   parents: [TSR-307]
   parent_text: "TSR-307(a)"
@@ -550,7 +550,7 @@
 - id: SWSR-309
   kind: swsr
   text: "`controls_allowed` shall be set true only by the PCM rising-edge logic of SWSR-301; no comms handler, heartbeat or mode-setting path shall set it true."
-  asil: "B"
+  asil: "C"
   parents: [TSR-309]
   parent_text: "TSR-309"
   other_parents: false
@@ -1110,7 +1110,7 @@
 - id: SWSR-509
   kind: swsr
   text: "MCU die temperature outside the specified range shall be a fault under SWSR-502."
-  asil: "B"
+  asil: "C"
   parents: [TSR-509]
   parent_text: "TSR-509"
   other_parents: false
@@ -1317,8 +1317,8 @@
 
 - id: SWSR-516
   kind: swsr
-  text: "The firmware shall activate its siren within 0.5 s, without SoC involvement, when (a) the heartbeat is lost (SWSR-407) while authority was granted within the last 5 s; (b) authority is cleared while granted for any reason other than a brake press (SWSR-302) or PCM cruise inactive (SWSR-301): missing SoC command frames (SWSR-408), RX fault (SWSR-406), EPS fault (SWSR-110), rejected command (SWSR-108), TX failure or bus-off (SWSR-508), platform fault (SWSR-502) or heartbeat \"not engaged\" (SWSR-307); (c) SWSR-516b fires."
-  asil: "B"
+  text: "The firmware shall activate its siren within 0.5 s, without SoC involvement, for at least 3 s or for as long as the condition holds if longer, at the level set by WP-S-04 M-05, when (a) the heartbeat is lost (SWSR-407) while authority was granted within the last 5 s; (b) authority is cleared while granted for any reason other than a brake press (SWSR-302) or PCM cruise inactive (SWSR-301): missing SoC command frames (SWSR-408), RX fault (SWSR-406), EPS fault (SWSR-110), rejected command (SWSR-108), TX failure or bus-off (SWSR-508), or platform fault (SWSR-502); (c) SWSR-516b fires (a heartbeat \"not engaged\", SWSR-307, whose cruise cancel had no effect)."
+  asil: "C"
   parents: [TSR-516]
   parent_text: "TSR-516"
   other_parents: false
@@ -1334,7 +1334,7 @@
 - id: SWSR-516b
   kind: swsr
   text: "The envelope shall record the time at which the heartbeat first reports \"not engaged\" and shall flag a failed cancel when PCM_CRUISE CRUISE_ACTIVE is still 1 more than 0.5 s later."
-  asil: "B"
+  asil: "C"
   parents: [TSR-516]
   parent_text: "TSR-516"
   other_parents: false
