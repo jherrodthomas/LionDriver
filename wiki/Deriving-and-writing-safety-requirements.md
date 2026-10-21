@@ -4,6 +4,8 @@ How a safety requirement gets from a hazard to a test in LionDriver, and how to 
 and a formal tool all read the same way. This page explains and links. The requirements themselves, their ASILs and
 their status live in the records it points to; nothing here is a requirement.
 
+New to all of this? [From hazard to test](From-hazard-to-test.md) follows one requirement chain from the item to the tests, with animations.
+
 ## 1. Where a requirement sits
 
 Every safety requirement has a parent above it and a test below it. A requirement without either is an orphan,
