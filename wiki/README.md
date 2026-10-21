@@ -41,6 +41,9 @@ in [`assurance/`](../assurance/README.md) that owns it.
 - Two animated requirement explainers, `req-anatomy.svg` and `req-vague-to-verifiable.svg`, are rendered the same way by
   [`tools/wiki/animations.py`](../tools/wiki/animations.py). Every clause they draw is quoted from the TSC or the
   page, and the build fails when a quote is no longer there.
+- The figures of "Building a fault tree" (`fta-symbols.svg`, `fta-item-to-tree.svg`, `fta-and-or.svg`,
+  `fta-traps.svg`) are rendered by [`tools/wiki/fta_animations.py`](../tools/wiki/fta_animations.py), checked the same
+  way against WP-A-04, the item definition and the TSC.
 - Standard GitHub Markdown, including alerts (`> [!IMPORTANT]`) and tables.
 
 Check locally before opening a pull request:
