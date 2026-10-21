@@ -61,7 +61,7 @@ Sources (quoted, checked at build): F-04b curve, as built in [`silent-stall.md`]
 
 ![Route 6, Trace: SG-02 → FSR-02.05 → TSR-516 → SWSR-516, SWSR-516b → tests](figures/fig-c04-r3-6-trace.svg)
 
-Sources (quoted, checked at build): TSR-516 parents in [`tsr.yaml`](../../trace/items/tsr.yaml); SWSR-516b in [`swsr.yaml`](../../trace/items/swsr.yaml); WP-W-02 SWSR-516b in [`WP-W-02-software-safety-requirements.md`](../../05-software/WP-W-02-software-safety-requirements.md); SWSR-516/516b at ASIL B in [`swsr.yaml`](../../trace/items/swsr.yaml).
+Sources (quoted, checked at build): TSR-516 parents in [`tsr.yaml`](../../trace/items/tsr.yaml); SWSR-516b in [`swsr.yaml`](../../trace/items/swsr.yaml); WP-W-02 SWSR-516b in [`WP-W-02-software-safety-requirements.md`](../../05-software/WP-W-02-software-safety-requirements.md).
 
 ## Two cross-checks
 
@@ -98,7 +98,7 @@ Applied to TSR-516(c) as it stands in WP-S-02 v0.53.
 | 5 | ACTION and OBJECT are visible at the item's boundary | Yes: the siren output |
 | 6 | CONSTRAINT has a reference point, a bound, a duration and a level | Yes since v0.53 (FF-05, FF-06) |
 | 7 | The bound fits the parent's budget | Yes by design: 0.63–0.88 s in the plant against 1 s; not verified on hardware |
-| 8 | ASIL matches the parent's, or a decomposition is stated | TSR yes (C); **no** for SWSR-516 and SWSR-516b (B) |
+| 8 | ASIL matches the parent's, or a decomposition is stated | TSR yes (C); SWSR-516 and SWSR-516b were B, raised to C in PR #392 |
 | 9 | A verification case exists for the method named | **No**: T-HIL is named, but no HIL or VS case targets (c) |
 | 10 | Every route's record states the current behaviour | **No**: see below |
 
@@ -109,12 +109,12 @@ These records are behind the requirement. Each is with its owner, through the co
 | Record | What is out of date | Owner |
 |---|---|---|
 | FSR-02.05 (WP-C-04 §5) | Trigger names only SoC communication loss and an MCU reset; TSR-516(b)/(c) cover any non-driver revocation and a failed cancel | FSC |
-| SWSR-516, SWSR-516b (WP-W-02) | ASIL B under ASIL C, no decomposition stated; SWSR-516(b) still lists the heartbeat "not engaged" case, which TSR-516 moved to (c) | software requirements |
+| SWSR-516, SWSR-516b (WP-W-02) | ASIL B under ASIL C; SWSR-516(b) listed the heartbeat "not engaged" case, which TSR-516 moved to (c). Both fixed in PR #392, with eight more SWSRs raised to C | software requirements |
 | WP-A-05 LS-20, LS-05 | Say the siren covers only heartbeat loss and an EPS fault; no loss scenario for (c) | STPA |
 | WP-A-04 BE-2.14; fta-fmea-map BE-2.14 note | Event text lists the baseline triggers; the map says (b)/(c) are not implemented | FTA |
 | System FMEA F-04b entries; SW FMEA SWF-036, SWF-39 | Describe a silent SoC stall and a 3 s engaged mismatch; SWF-39 credits only the heartbeat case | FMEA |
 | WP-V-05 VS-FI-31; no case for (c) | VS-FI-31 still says 1 s persistence; no HIL or VS case targets TSR-516(c) | verification |
-| fmdtools README | Says 58 sets where p4-timing.md and TE-02 say 61 | fmdtools |
+| fmdtools README | Said 58 sets where p4-timing.md and TE-02 say 61; fixed in PR #396 | fmdtools |
 
 ## Regenerating
 

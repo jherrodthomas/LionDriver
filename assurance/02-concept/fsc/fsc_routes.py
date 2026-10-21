@@ -170,11 +170,10 @@ ROUTES = [
     records="SG-02 → FSR-02.05 → TSR-516 → SWSR-516, SWSR-516b → tests",
     src=[("trace/items/tsr.yaml", "parents: [FSR-02.05, FSR-06.05]", "TSR-516 parents"),
          ("trace/items/swsr.yaml", "The envelope shall record the time at which the heartbeat first reports", "SWSR-516b"),
-         ("05-software/WP-W-02-software-safety-requirements.md", "| SWSR-516b |", "WP-W-02 SWSR-516b"),
-         ("trace/items/swsr.yaml", 'asil: "B" parents: [TSR-516]', "SWSR-516/516b at ASIL B")],
+         ("05-software/WP-W-02-software-safety-requirements.md", "| SWSR-516b |", "WP-W-02 SWSR-516b")],
     fixed=[],
     gave="Confirms the chain rather than deriving anything. It checks the attributes: TSR-516 is ASIL C like its parent, "
-         "verification T-HIL. It finds SWSR-516 and SWSR-516b at ASIL B, and no HIL or VS case for (c).",
+         "verification T-HIL. It found SWSR-516 and SWSR-516b at ASIL B (raised to C in PR #392, with eight more), and no HIL or VS case for (c).",
     watch="A complete trace says nothing about whether the text is right: every FRET finding (FF-01…FF-07) passed the trace.",
   ),
 ]
@@ -471,13 +470,13 @@ def mini_scenario(y):
 
 
 def mini_trace(y):
-  chain = [("SG-02", "C", "goal"), ("FSR-02.05", "C", "functional"), ("TSR-516", "C", "technical"), ("SWSR-516 / 516b", "B", "software"),
+  chain = [("SG-02", "C", "goal"), ("FSR-02.05", "C", "functional"), ("TSR-516", "C", "technical"), ("SWSR-516 / 516b", "B → C", "software"),
            ("tests", "", "host · HIL not run")]
   o, n = [], len(chain)
   bw = (W - 2 * M - (n - 1) * 22) / n
   for i, (ident, asil, kind) in enumerate(chain):
     x = M + i * (bw + 22)
-    bad = asil == "B"
+    bad = asil.startswith("B")
     o += [f'<rect x="{x:.1f}" y="{y}" width="{bw:.1f}" height="74" rx="8" fill="{BAD_BG if bad else PANEL}" stroke="{BAD if bad else FAINT}" stroke-width="1.4"/>',
           *[T(x + bw / 2, y + 22 + 15 * j, ln, 12.5, INK, 700, "middle") for j, ln in enumerate(wrap_px(ident, bw - 12, 12.5, True))],
           T(x + bw / 2, y + 52, kind, 11, MUTED, 400, "middle")]
@@ -485,7 +484,7 @@ def mini_trace(y):
       o.append(T(x + bw / 2, y + 67, f"ASIL {asil}", 11, BAD if bad else MUTED, 700, "middle", mono=True))
     if i:
       o.append(f'<path d="M{x - 18:.1f} {y + 37} h12 m-5 -5 l5 5 l-5 5" fill="none" stroke="{MUTED}" stroke-width="1.6"/>')
-  o.append(T(M, y + 100, "SWSR-516 and SWSR-516b are ASIL B under an ASIL C TSR, with no decomposition stated.", 12.5, BAD, 600))
+  o.append(T(M, y + 100, "Found: SWSR-516 and SWSR-516b at ASIL B under an ASIL C TSR. Raised to C in PR #392.", 12.5, BAD, 600))
   return o, y + 110
 
 
@@ -596,19 +595,19 @@ def page():
         "| 5 | ACTION and OBJECT are visible at the item's boundary | Yes: the siren output |",
         "| 6 | CONSTRAINT has a reference point, a bound, a duration and a level | Yes since v0.53 (FF-05, FF-06) |",
         "| 7 | The bound fits the parent's budget | Yes by design: 0.63–0.88 s in the plant against 1 s; not verified on hardware |",
-        "| 8 | ASIL matches the parent's, or a decomposition is stated | TSR yes (C); **no** for SWSR-516 and SWSR-516b (B) |",
+        "| 8 | ASIL matches the parent's, or a decomposition is stated | TSR yes (C); SWSR-516 and SWSR-516b were B, raised to C in PR #392 |",
         "| 9 | A verification case exists for the method named | **No**: T-HIL is named, but no HIL or VS case targets (c) |",
         "| 10 | Every route's record states the current behaviour | **No**: see below |", "",
         "## What the walk found", "",
         "These records are behind the requirement. Each is with its owner, through the coordinator.", "",
         "| Record | What is out of date | Owner |", "|---|---|---|",
         "| FSR-02.05 (WP-C-04 §5) | Trigger names only SoC communication loss and an MCU reset; TSR-516(b)/(c) cover any non-driver revocation and a failed cancel | FSC |",
-        "| SWSR-516, SWSR-516b (WP-W-02) | ASIL B under ASIL C, no decomposition stated; SWSR-516(b) still lists the heartbeat \"not engaged\" case, which TSR-516 moved to (c) | software requirements |",
+        "| SWSR-516, SWSR-516b (WP-W-02) | ASIL B under ASIL C; SWSR-516(b) listed the heartbeat \"not engaged\" case, which TSR-516 moved to (c). Both fixed in PR #392, with eight more SWSRs raised to C | software requirements |",
         "| WP-A-05 LS-20, LS-05 | Say the siren covers only heartbeat loss and an EPS fault; no loss scenario for (c) | STPA |",
         "| WP-A-04 BE-2.14; fta-fmea-map BE-2.14 note | Event text lists the baseline triggers; the map says (b)/(c) are not implemented | FTA |",
         "| System FMEA F-04b entries; SW FMEA SWF-036, SWF-39 | Describe a silent SoC stall and a 3 s engaged mismatch; SWF-39 credits only the heartbeat case | FMEA |",
         "| WP-V-05 VS-FI-31; no case for (c) | VS-FI-31 still says 1 s persistence; no HIL or VS case targets TSR-516(c) | verification |",
-        "| fmdtools README | Says 58 sets where p4-timing.md and TE-02 say 61 | fmdtools |", "",
+        "| fmdtools README | Said 58 sets where p4-timing.md and TE-02 say 61; fixed in PR #396 | fmdtools |", "",
         "## Regenerating", "",
         "```bash", "python3 fsc_routes.py          # write this page and its figures", "python3 fsc_routes.py --check  # CI: fail if stale or a quote is gone", "```", ""]
   return "\n".join(L)
