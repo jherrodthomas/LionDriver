@@ -5238,3 +5238,33 @@
       detail: "Meets TSR-624 and keeps today's slowing. Cost: the item keeps steering and braking for one more second on a faulty input, against the stale-input finding FM-03 (WP-C-07) and the timing budgets that assume 3 s."
   sources: ["assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-624", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-624", "assurance/02-concept/WP-C-04-functional-safety-concept.md FSR-04.05", "assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-050.C1, SWF-ACT-050", "assurance/08-analyses/WP-A-04-system-fta-fmea.md SFMEA-36", "openpilot/selfdrive/selfdrived/state.py SOFT_DISABLE_TIME", "openpilot/selfdrive/controls/lib/longitudinal_planner.py A_CRUISE_MIN"]
   status: queued
+
+- id: DQ-408
+  question: "When openpilot's selfdrived stops but the heartbeat goes on, should the panda revoke steering within 0.3 s and sound the alarm?"
+  context: >-
+    If selfdrived crashes, openpilot stops steering at about 0.1 s but keeps sending frames, so the panda's arrival
+    check does not fire; its 1 Hz engaged-mismatch check revoked only after 2.25–3.16 s and **sounded no siren**. The
+    first warning was openpilot's own alert at 5 s; the driver's first cue was the drift. TSR-307(a) (≤ 0.3 s) and the
+    TSR-516 siren were already required but not implemented. A siren on every "not engaged" heartbeat would also sound
+    on ordinary disengagements, unless the PCM drops cruise first (the cancel-lag guard). Plant runs with the real panda
+    code; synthetic, no evidence credit.
+  reversibility: revisit
+  blocks: "TSR-307(a), TSR-516(c), SWSR-307, SWSR-516b; WP-A-04 MCS-02.9 and MCS-06.5; fmdtools SG-02 BE-2.21"
+  gate: G1
+  decider: lead
+  asked: 2026-10-21
+  options:
+    - key: A
+      recommended: true
+      title: "Revoke within 0.3 s, and sound the siren if PCM cruise is still on 0.5 s after the first \"not engaged\" heartbeat"
+      detail: "Meets TSR-307(a) and TSR-516(c); ordinary disengagements stay silent when the PCM drops cruise within 0.5 s. Cost: a panda change in the reference build, tests and a HIL case; the PCM cancel lag must be measured (WP-W-02 OI-18)."
+    - key: B
+      title: "Revoke within 0.3 s, no siren"
+      detail: "Meets TSR-307(a) only. Cost: the driver still gets no warning before openpilot's 5 s alert; TSR-516 stays unmet for this cause."
+    - key: C
+      title: "Keep the 1 Hz check"
+      detail: "No change. Cost: revocation at 2–3 s with no siren; MCS-02.9 stays an unwarned single point."
+  sources: ["assurance/sim/results/engaged-mismatch.md", "assurance/07-supporting/impact/change-2026-10-21-panda-engaged-mismatch.md", "WP-S-02 TSR-307(a), TSR-516", "WP-W-02 SWSR-307, SWSR-516b, OI-18", "WP-A-04 MCS-02.9"]
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-21, note: "Lead in chat with the panda session: \"Yes, with a cancel-lag guard\", then \"Merge now\" for panda#21. Recorded after the fact by the coordinator; the options are those of the change record"}
+  applied: {ref: "jherrodthomas/LionDriver#382, jherrodthomas/LionDriver#384, jherrodthomas/LionDriver#383", record: "panda f4803c5 (panda#21): revoke 0.3 s after the first \"not engaged\" heartbeat, siren at 0.5 s if PCM cruise is still on (#382, change-2026-10-21-panda-engaged-mismatch); WP-S-02 v0.52, WP-S-04 v0.24, WP-C-04 v0.24 (#384); fmdtools SG-02 model (#383). Open: PCM cancel lag (WP-W-02 OI-18, change record OI-1); if over 0.5 s, the threshold returns to the lead. HIL not run (OI-2)", at: 2026-10-21}
