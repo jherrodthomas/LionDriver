@@ -12,6 +12,14 @@
 
 ![Metrics per goal and failure-rate split](../../figures/generated/fig-3-11-fmeda-sg009-metrics.svg)
 
+### At a glance
+
+![Metrics per goal as cards: SPFM and LFM against the ASIL targets of each goal group, the λ totals, and the failure modes that cost SPFM points, largest first](fmeda-views/fmeda-sg009-cards.svg)
+
+![The worksheet as a spreadsheet: a group row per component, a row per failure mode with its class, mechanism, DC and λ split, and the totals with SPFM and LFM](fmeda-views/fmeda-sg009-sheet.svg)
+
+Both drawn by `tools/safety/fmeda_views.py`. The [live worksheet](https://claude.ai/artifact/PCbGoJH1mrjZGDmEzegu7N) (private link) has every row for every goal, with filters, search and each row's notes.
+
 ## How to review
 
 Start with the metrics per goal, then the failure modes that drive them (SPF and latent rows). Comment on this page's lines in a pull request, or open an issue naming the row ID (FMD-…). For a rate or DC, say which value you would use and its source. To try values before asking for a change, use the [what-if page](https://claude.ai/artifact/6btZjojvGtcyZdYrhzsR8Z) (private link; it holds a snapshot of this revision). The same data as a workbook with live formulas: [`fmeda-sg009-review.xlsx`](fmeda-sg009-review.xlsx).
