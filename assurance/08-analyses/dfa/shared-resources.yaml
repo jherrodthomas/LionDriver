@@ -1,0 +1,115 @@
+# Shared-resource map of the item (input to WP-A-03, ISO 26262-9:2018 §7).
+#
+# One entry per resource that more than one element depends on, by the coupling categories of WP-A-03 §3, with the
+# elements that depend on it (`elements`), those whose dependence is not known yet (`unknown`), and the dependent
+# failure initiators of WP-A-03 §4 that already analyse it (`dfis`). DFI numbers are those of WP-A-03; the DFIs of
+# fmea/analyses/dfa.yaml are a separate list (decomposition level) and are cited there as "dfa.yaml DFI-nn".
+#
+# dfa_gates.py reads this map with the AND gates of WP-A-04 (and-gates.yaml) and writes dfa-gates.md.
+# Elements: WP-C-01 §3.1 (E-01…E-05) and the external elements of WP-A-03 (EXT-*, DRIVER, TRAFFIC).
+# Draft, AI-assisted; each entry needs review.
+schema_version: 1
+
+elements:
+  E-01: SoC software (openpilot)
+  E-02: ML models (driving, driver monitoring)
+  E-03: Safety MCU firmware (panda, envelope, siren)
+  E-04: Device hardware (SoC, MCU, cameras, speaker, supply)
+  E-05: Harness and harness box
+  EXT-EPS: EPS (vehicle)
+  EXT-PCM: PCM, ACC execution (vehicle)
+  EXT-CLU: Cluster and cruise indicator (vehicle)
+  EXT-CAM: Stock forward camera and PCS (vehicle)
+  DRIVER: Driver
+  TRAFFIC: Other road users
+
+categories: [power, clock, physical, shared part, information, cascading, configuration, systematic, installation, environment]
+
+resources:
+  - id: R-01
+    name: Vehicle 12 V supply
+    category: power
+    elements: [E-04, E-05, EXT-EPS, EXT-PCM, EXT-CLU]
+    dfis: [DFI-01, DFI-06]
+  - id: R-02
+    name: Device input stage and regulators
+    category: power
+    elements: [E-01, E-02, E-03, E-04]
+    dfis: [DFI-01]
+  - id: R-03
+    name: Harness-box supply and switch release default
+    category: power
+    elements: [E-04, E-05, EXT-CAM]
+    dfis: [DFI-27, DFI-28]
+  - id: R-04
+    name: MCU clock (HSE)
+    category: clock
+    elements: [E-03]
+    unknown: [E-01]
+    dfis: [DFI-02]
+  - id: R-05
+    name: PCB, enclosure and heat
+    category: physical
+    elements: [E-01, E-02, E-03, E-04]
+    dfis: [DFI-03, DFI-04]
+  - id: R-06
+    name: Harness connector and CAN wiring (EMC)
+    category: physical
+    elements: [E-03, E-05, EXT-EPS, EXT-PCM]
+    dfis: [DFI-05, DFI-07]
+  - id: R-07
+    name: Speaker and audio codec
+    category: shared part
+    elements: [E-01, E-04]
+    unknown: [E-03]
+    dfis: [DFI-23]
+  - id: R-08
+    name: SoC compute, OS and IPC
+    category: shared part
+    elements: [E-01, E-02]
+    dfis: [DFI-14, DFI-25, DFI-29, DFI-31, DFI-32]
+  - id: R-09
+    name: Vehicle signals read by host and envelope (torque, cruise, brake, gas, speed)
+    category: information
+    elements: [E-01, E-03, EXT-CLU, EXT-EPS, EXT-PCM]
+    dfis: [DFI-10, DFI-11, DFI-15]
+  - id: R-10
+    name: Command path to the EPS and PCM (bus 0)
+    category: information
+    elements: [E-03, EXT-EPS, EXT-PCM]
+    dfis: [DFI-12]
+  - id: R-11
+    name: SoC to MCU link and commands (IF-04, mode, reset, flash)
+    category: cascading
+    elements: [E-01, E-03]
+    dfis: [DFI-13, DFI-24]
+  - id: R-12
+    name: CarParams, safety mode and parameter
+    category: configuration
+    elements: [E-01, E-03]
+    dfis: [DFI-09]
+  - id: R-13
+    name: Limits and constants of controller and envelope
+    category: configuration
+    elements: [E-01, E-03]
+    dfis: [DFI-08]
+  - id: R-14
+    name: Model output and lead input
+    category: information
+    elements: [E-01, E-02]
+    dfis: [DFI-26, DFI-30]
+  - id: R-15
+    name: Source, authors, toolchain and test oracle
+    category: systematic
+    elements: [E-01, E-03]
+    dfis: [DFI-16, DFI-17, DFI-18, DFI-19]
+  - id: R-16
+    name: Installation and vehicle service
+    category: installation
+    elements: [E-04, E-05, EXT-EPS, EXT-PCM, EXT-CAM]
+    dfis: [DFI-20, DFI-22]
+  - id: R-17
+    name: Driver state (fatigue, glare)
+    category: environment
+    elements: [E-02, DRIVER]
+    dfis: [DFI-21]

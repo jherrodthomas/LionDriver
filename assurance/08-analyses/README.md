@@ -24,6 +24,7 @@ Standard clauses: 26262-9, AIAG-VDA FMEA 2019.
 
 | Folder | What it holds |
 |---|---|
+| [`dfa/`](dfa/README.md) | Fault tree AND gates against the dependent failure analysis |
 | [`fmea/`](fmea/) | — |
 | [`fta/`](fta/README.md) | Fault tree diagrams |
 
