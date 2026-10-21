@@ -652,6 +652,9 @@ def render_setup(res: tuple[int, int], samples: int):
   s.render.film_transparent = False
 
 
+MORE_FRAMES = 75                                # exit code of a --max-frames run that left clip frames to render
+
+
 def render_frame(cam, frame: int, path: Path):
   s = bpy.context.scene
   s.camera = cam
@@ -680,8 +683,10 @@ def main(argv: list[str]) -> int:
   ap.add_argument("--stills", action="store_true", help="render the key-event frames from the three cameras")
   ap.add_argument("--video", action="store_true", help="render every frame from the three cameras")
   ap.add_argument("--res", default="1280x720", help="chase still resolution, WxH (side views at half)")
-  ap.add_argument("--resume", action="store_true", help="with --video, keep the clip frames already rendered (a run "
+  ap.add_argument("--resume", action="store_true", help="keep the stills and clip frames already rendered (a run "
                   "stopped part way, e.g. out of memory, carries on)")
+  ap.add_argument("--max-frames", type=int, default=0, help="with --video --resume, stop after this many new clip "
+                  f"frames and exit {MORE_FRAMES}: a long clip in several runs keeps Blender's memory bounded")
   ap.add_argument("--video-res", default="960x540", help="chase clip resolution, WxH (side views at half)")
   ap.add_argument("--samples", type=int, default=16, help="Cycles samples for stills (clip: half)")
   ap.add_argument("--no-blend", action="store_true", help="do not save scene.blend")
@@ -715,16 +720,23 @@ def main(argv: list[str]) -> int:
       for name, cam in built["cams"].items():
         sized(name, w, h)
         p = out / "stills" / f"f{k['frame']:04d}_{name}.png"
-        render_frame(cam, k["frame"], p)
+        if not (args.resume and p.exists()):
+          render_frame(cam, k["frame"], p)
         manifest["stills"].append({**k, "camera": name, "file": str(p.relative_to(out))})
   if args.video:
     w, h = (int(v) for v in args.video_res.split("x"))
     render_setup((w, h), max(4, args.samples // 2))
+    rendered = 0
     for name, cam in built["cams"].items():
       sized(name, w, h)
       for f in range(1, len(sc["t"]) + 1):
-        if not (args.resume and (out / "frames" / name / f"{f:04d}.png").exists()):
-          render_frame(cam, f, out / "frames" / name / f"{f:04d}.png")
+        if args.resume and (out / "frames" / name / f"{f:04d}.png").exists():
+          continue
+        if args.max_frames and rendered >= args.max_frames:
+          print(f"{sc['id']}: stopped after {rendered} clip frames (--max-frames); run again with --resume")
+          return MORE_FRAMES
+        render_frame(cam, f, out / "frames" / name / f"{f:04d}.png")
+        rendered += 1
       manifest["video"][name] = f"frames/{name}/%04d.png"
   (out / "render.json").write_text(json.dumps(manifest, indent=1))
   print(f"{sc['id']}: {len(manifest['stills'])} stills ({manifest['vehicle']}); clip cameras {list(manifest['video'])}")
