@@ -86,4 +86,6 @@ injects faults to check that the mechanisms react in time
 the controllability ratings hold ([WP-C-08](../assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md)). The fault
 tree ([Building a fault tree](Building-a-fault-tree.md)) says which faults are worth injecting. The results become
 evidence for the safety case, and count only once they are reviewed:
-[What is a safety case?](What-is-a-safety-case.md)
+[What is a safety case?](What-is-a-safety-case.md).
+
+What keeps the item safe once it is installed and in use is on [After release](After-release.md).

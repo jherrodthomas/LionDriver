@@ -54,6 +54,9 @@ in [`assurance/`](../assurance/README.md) that owns it.
 - The figures of "Hardware safety and interference" (`hw-numbers.svg`, `hw-ffi.svg`) are rendered by
   [`tools/wiki/hw_animations.py`](../tools/wiki/hw_animations.py): the metrics are computed from the FMEDA records and
   the FFI verdicts read from WP-A-02 §8.
+- The figures of "After release" (`p7-general.svg`, `p7-ours.svg`) are rendered by
+  [`tools/wiki/p7_animations.py`](../tools/wiki/p7_animations.py); each LionDriver step is checked against the WP-O
+  record it names. The general figure quotes nothing from the standard.
 - Standard GitHub Markdown, including alerts (`> [!IMPORTANT]`) and tables.
 
 Check locally before opening a pull request:
