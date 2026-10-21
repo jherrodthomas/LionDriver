@@ -367,7 +367,7 @@ html, body {{ margin: 0; height: 100%; background: var(--bg); color: var(--fg); 
 header {{ padding: 12px 16px; border-bottom: 1px solid var(--line); }}
 header h1 {{ margin: 0 0 4px; font-size: 18px; }}
 header p {{ margin: 0; color: var(--muted); max-width: 72ch; }}
-#plan {{ height: calc(100vh - 92px); min-height: 480px; }}
+#plan {{ height: calc(100vh - 92px); min-height: 480px; max-width: 100vw; overflow: auto; }}
 </style>
 </head>
 <body>
@@ -379,7 +379,9 @@ header p {{ margin: 0; color: var(--muted); max-width: 72ch; }}
 {script}
 <script>
 const plan = {data};
-Jantt.mount("#plan", plan, {{ readOnly: true, autoCascade: false }});
+const pref = document.documentElement.dataset.theme;
+const dark = pref ? pref === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+Jantt.mount("#plan", plan, {{ readOnly: true, autoCascade: false, themeClassName: dark ? "jantt-theme-dark" : "jantt-theme-light" }});
 </script>
 </body>
 </html>
