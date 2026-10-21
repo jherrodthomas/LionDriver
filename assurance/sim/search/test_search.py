@@ -44,7 +44,8 @@ class TestSearch(unittest.TestCase):
 
 class TestFamilies(unittest.TestCase):
   def test_families_are_well_formed(self):
-    kinds = {"hardover", "hardover_left", "frozen", "soc_stall", "eps_fault"}
+    kinds = {"hardover", "hardover_left", "frozen", "soc_stall", "eps_fault", "decel_lost", "accel_max",
+             "accel_overlimit", "decel_min", "decel_overlimit", "soft_disable", "dm_stop"}
     for fam in search.SPEC["families"]:
       lo, hi = search.bounds(fam)
       self.assertTrue((lo < hi).all(), fam["id"])
@@ -52,7 +53,8 @@ class TestFamilies(unittest.TestCase):
       case, assume = search.make_case(fam, p)
       self.assertIn(case.fault, kinds, fam["id"])
       self.assertLessEqual(set(assume), set(simulate.ASSUMPTIONS) | set(simulate.DRIVER_OPTIONS), fam["id"])
-      self.assertIn(fam["robustness"], ("lane", "corridor"), fam["id"])
+      self.assertIn(fam["robustness"], search.LATERAL + search.LONGITUDINAL, fam["id"])
+      self.assertEqual(case.longitudinal, search.longitudinal(fam), fam["id"])
       if "speed_kph" in fam["space"]:
         self.assertLessEqual(fam["space"]["speed_kph"][1], simulate.ODD_KPH, fam["id"])
       for rule in fam["hara"]:
@@ -72,9 +74,13 @@ class TestFamilies(unittest.TestCase):
     self.assertEqual(simulate.DRIVER_OPTIONS["driver_eps_lag_s"][0], 0.0)
     self.assertEqual(simulate.DRIVER_OPTIONS["driver_brakes_only"][0], 0.0)
     self.assertFalse(set(simulate.DRIVER_OPTIONS) & set(simulate.ASSUMPTIONS))   # plant-results.md lists ASSUMPTIONS
+    for k in ("driver_ttc_cue_s", "driver_ignores_alert", "follower_t_r_s"):
+      self.assertEqual(simulate.DRIVER_OPTIONS[k][0], 0.0, k)
     c = simulate.Case("x", "x", "none", "straight", "", "")
     self.assertEqual((c.fault_clear, c.clear_after_correction, c.fault2, c.lane_change, c.ay_disturbance),
                      (None, None, "", None, 0.0))
+    self.assertEqual((c.acc_follow, c.lead_gap_s, c.lead_kph, c.lead_brake, c.lead_brake_t, c.acc_gap_s,
+                      c.follow_gap_s, c.alert_lead_s), (False, None, None, 0.0, None, None, 1.0, 0.0))
 
   def test_braking_driver_ends_a_hardover(self):
     """The brake press revokes the panda's authority: the real safety code ends the hard-over."""
@@ -85,6 +91,35 @@ class TestFamilies(unittest.TestCase):
     ev = r.metrics["events"]
     self.assertIn("authority revoked", ev)
     self.assertAlmostEqual(ev["authority revoked"], ev["driver correction"], delta=0.05)
+
+  def test_openpilot_values_read_from_the_code(self):
+    self.assertEqual((simulate.SOFT_DISABLE_TIME, simulate.A_CRUISE_MIN, simulate.NO_RESPONSE_TIMEOUT,
+                      simulate.STOP_DISTANCE), (3.0, -1.2, 5.0, 6.0))
+
+  def test_lead_gap_measure(self):
+    """The ACC alone follows a lead braking at 4 m/s²; a silent loss of deceleration at its onset ends in contact."""
+    fam = search.FAMILIES["decel-loss-braking-lead"]
+    p = {"fault": "decel_lost", "speed_kph": 100.0, "gap_s": 1.5, "lead_decel": 4.0, "dt_fault": 0.0, "t_r": 1.5,
+         "brake": 3.0, "ttc_cue": 1.5}
+    nofault = search.run(fam, p, case_over={"fault": "none"})
+    lost = search.run(fam, p)
+    self.assertGreater(nofault["rho"], 0)
+    self.assertLess(lost["rho"], 0)
+    self.assertEqual(lost["side"], "lead")
+    self.assertGreater(lost["impact_kph"], 10.0)
+
+  def test_soft_disable_timing(self):
+    """Alert at the onset, slow-down alert_lead_s later, control handed back soft_disable_s after the alert."""
+    fam = search.FAMILIES["handover-follower"]
+    for timing, lead, back in (("sd-as-built", 0.0, 3.0), ("sd-dq407-b", 1.0, 3.0), ("sd-dq407-c", 1.0, 4.0)):
+      p = {"timing": timing, "respond": "ignores-alert", "speed_kph": 100.0, "follow_gap": 1.0, "f_t_r": 1.0,
+           "t_r": 1.0}
+      case, assume = search.make_case(fam, p)
+      ev = simulate.simulate(case, assume).metrics["events"]
+      self.assertEqual(ev["openpilot alert (soft disable)"], 0.0, timing)
+      self.assertAlmostEqual(ev["slow-down starts"], lead, delta=0.031, msg=timing)
+      self.assertAlmostEqual(ev["soft disable ends: control handed back"], back, delta=0.002, msg=timing)
+      self.assertNotIn("driver cue (alert)", ev, timing)
 
   def test_lane_change_corridor(self):
     """A lane change without a fault stays inside the two lanes; the plain lane measure would call it a departure."""

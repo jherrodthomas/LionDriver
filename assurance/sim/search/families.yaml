@@ -3,7 +3,8 @@
 # Carlo, then cross-entropy falsification), runs the layer-1 plant with the real panda safety code for every sample,
 # writes one results page per family and the edge-case catalogue (../results/edge-cases.md).
 #
-# Synthetic data (DSR-12): no evidence credit. The plant has no tyre friction limit and no perception.
+# Synthetic data (DSR-12): no evidence credit. The plant has no tyre friction limit and no perception: a braking
+# driver or lead decelerates as asked on any road, and the ACC sees its lead at once, exactly, at any range.
 #
 #   id           family ID (results page search-<id>.md unless `page` is given)
 #   title        what the family searches
@@ -18,13 +19,20 @@
 #   assumptions  plant assumptions and driver-model options for the run (simulate.ASSUMPTIONS, DRIVER_OPTIONS)
 #                A value starting with "=" is a Python expression over the sampled parameters (and math); any other
 #                value is taken as written.
-#   robustness   lane: rho = (lane width - car width) / 2 - max |lateral offset| after the fault;
-#                corridor: the same margin to the outer lines of the ego lane and the lane to its left (an assisted
-#                lane change to the left)
+#   robustness   lateral (rho in m; rho < 0: the body edge crossed a line, a departure):
+#                  lane: rho = (lane width - car width) / 2 - max |lateral offset| after the fault;
+#                  corridor: the same margin to the outer lines of the ego lane and the lane to its left (an assisted
+#                  lane change to the left)
+#                longitudinal (rho in m; rho < 0: contact, bumper to bumper):
+#                  lead: rho = the smallest bumper gap to the lead after the fault;
+#                  follower: the same to the following vehicle;
+#                  gaps: the smaller of the two (side says which).
+#                A row also gives the time from the fault to the contact and the closing speed at contact
 #   bands        Monte Carlo departure tables on its results page: parameter: [edges]
 #   catalogue    rows for edge-cases.md: the worst sample of each value of `by` (or the worst `per` samples), at most
 #                `max`
-#   probes       assumption probes for the catalogue (which assumption decides the outcome), added to probes_default.
+#   probes       assumption probes for the catalogue (which assumption decides the outcome), added to probes_default
+#                (lateral families) or probes_longitudinal (longitudinal families).
 #                The late drift cue stands for low visibility (W04, W06): the plant has no perception, so fog or rain can
 #                only act through the driver; 0.4 m (twice the 0.2 m cue) has no source
 #   hara         first matching rule maps a catalogue row to a HARA hazardous event (HE-) or SOTIF hazard (SH-);
@@ -39,6 +47,17 @@ probes_default:
   - {label: "EPS-hold (keeps its last torque 2 s)", case: {eps: hold}}
   - {label: "driver corrects with up to 6 m/s²", assume: {driver_ay_max: 6.0}}
   - {label: "panda siren muted (as before DQ-404)", assume: {whatif_silent_panda: 1.0}}
+
+# longitudinal families. The low-visibility stand-in is a closing on the lead noticed late, at a time to collision of
+# 1.5 s (no source): the ACC itself is not affected, the plant having no perception
+probes_longitudinal:
+  - {label: "driver reacts after 0.75 s", assume: {driver_t_r_s: 0.75}}
+  - {label: "driver brakes with 3 m/s² (the plant's default)", assume: {driver_brake: 3.0}}
+  - {label: "driver brakes with 8 m/s² (dry road; no friction limit)", assume: {driver_brake: 8.0}}
+  - {label: "closing noticed late, TTC 1.5 s (fog or heavy rain; no source)", assume: {driver_ttc_cue_s: 1.5}}
+  - {label: "follower reacts after 2 s", assume: {follower_t_r_s: 2.0}}
+  - {label: "panda siren muted (as before DQ-404)", assume: {whatif_silent_panda: 1.0}}
+  - {label: "change of acceleration not noticed: only the closing (TTC 2 s) cues", assume: {driver_long_cue: 99.0, driver_ttc_cue_s: 2.0}}
 
 families:
   - id: curve-assist-loss
@@ -282,6 +301,220 @@ families:
     catalogue: {by: fault, max: 2}
     hara:
       - {when: "True", he: HE-01.2, sh: SH-01, fit: "hard-over toward an adjacent vehicle or barrier; TC-32 (named for SH-01) makes the margin 0.61–0.76 m"}
+
+  # ------------------------------------------------------------------------------------------------ longitudinal
+  - id: decel-loss-braking-lead
+    title: "Loss of deceleration while the lead brakes"
+    about: >-
+      The ego follows a lead with its ACC at the gap `gap_s`; at 6 s the lead brakes at `lead_decel` to a stop, and
+      `dt_fault` later the item's deceleration is lost: silently (a stale plan holds zero acceleration, F-02 M01; the
+      frames go on and the panda passes them) or by a SoC stall (F-04b: the panda revokes and sounds its siren, the PCM
+      takes the missing frames as zero). The driver is cued by the missing deceleration (an acceleration 1 m/s² away
+      from what a working ACC would give), the siren or the closing (`ttc_cue`), and brakes at `brake` after the
+      reaction time, at least as hard as the car already does. A lead braking harder than the envelope's −3.5 m/s²
+      can be too much for the ACC alone: the run without the fault says so.
+    seed: 20261101
+    mc: 32
+    ce: {rounds: 3, per_round: 12, elite: 0.25}
+    space:
+      fault: {choice: [decel_lost, soc_stall], meaning: "deceleration silently held at zero (F-02 M01, HE-06.3), SoC stall (F-04b, announced)"}
+      speed_kph: [60.0, 110.0, km/h, "ego and lead speed"]
+      gap_s: [1.0, 2.5, s, "time gap the ACC keeps (bumper gap 6 m + gap_s × speed; openpilot's standard is 1.45 s)"]
+      lead_decel: [2.0, 5.0, m/s², "the lead's braking, up to the KS-08 default 5 m/s²"]
+      dt_fault: [0.0, 3.0, s, "the deceleration is lost this long after the lead starts braking"]
+      t_r: [0.75, 1.5, s, "driver reaction time from the first cue"]
+      brake: [3.0, 8.0, m/s², "the driver's braking (8 m/s² needs a dry road; the plant has no friction limit)"]
+      ttc_cue: [1.5, 3.0, s, "time to collision at which the driver notices the closing (no source)"]
+    fault_param: fault
+    road: straight
+    case: {longitudinal: true, acc_follow: true, lead_gap_s: =gap_s, lead_brake: =lead_decel, lead_brake_t: 6.0,
+           t_fault: "=6.0 + dt_fault", duration: 10.0, speed_kph: =speed_kph}
+    assumptions: {driver_t_r_s: =t_r, driver_brake: =brake, driver_ttc_cue_s: =ttc_cue}
+    robustness: lead
+    bands: {dt_fault: [0.0, 1.0, 2.0, 3.0], lead_decel: [2.0, 3.0, 4.0, 5.0]}
+    catalogue: {by: fault, max: 2}
+    hara:
+      - {when: "fault == 'decel_lost'", he: HE-06.3, fit: "the lead brakes and the deceleration is silently lost: the HE's own situation"}
+      - {when: "True", he: HE-06.3, fit: "the HE's situation, but announced: the panda revokes and sounds its siren, so the driver is cued at once; HE-06.3 rates the silent loss"}
+
+  - id: decel-loss-stopped-lead
+    title: "Loss of deceleration while approaching a stopped vehicle"
+    about: >-
+      A stopped vehicle is in the ego lane `ttc0` seconds ahead at t = 0 (6 m + ttc0 × speed); the ACC sees it at once
+      and brakes to stop 6 m behind it. At the share `x_fault` of that stop the deceleration is lost, silently (F-02
+      M01) or by a SoC stall (F-04b, announced). A gentle stop (a long `ttc0`) brakes at less than the 1 m/s² cue, so
+      only the closing (`ttc_cue`) tells the driver about a silent loss. The ACC's perfect perception at any range is
+      the plant's, not the item's: a stopped vehicle seen late or not at all (SH-06) is not searched.
+    seed: 20261102
+    mc: 32
+    ce: {rounds: 3, per_round: 12, elite: 0.25}
+    space:
+      fault: {choice: [decel_lost, soc_stall], meaning: "deceleration silently held at zero (F-02 M01), SoC stall (F-04b, announced)"}
+      speed_kph: [40.0, 110.0, km/h, "ego speed (below about 60 km/h: a slow queue, HE-06.2)"]
+      ttc0: [6.0, 12.0, s, "time to reach the stopped vehicle at t = 0, at the ego's speed (below about 6 s the ACC's −3.5 m/s² cannot stop the car at 110 km/h)"]
+      x_fault: [0.0, 0.8, "—", "onset as a share of the ACC's stop (0: at t = 1 s, 0.8: late in the stop)"]
+      t_r: [0.75, 1.5, s, "driver reaction time from the first cue"]
+      brake: [3.0, 8.0, m/s², "the driver's braking (8 m/s² needs a dry road)"]
+      ttc_cue: [1.5, 3.0, s, "time to collision at which the driver notices the closing (no source)"]
+    fault_param: fault
+    road: straight
+    case: {longitudinal: true, acc_follow: true, lead_kph: 0.0, lead_gap_s: =ttc0, t_fault: "=1.0 + x_fault * 2.0 * ttc0",
+           duration: 14.0, speed_kph: =speed_kph}
+    assumptions: {driver_t_r_s: =t_r, driver_brake: =brake, driver_ttc_cue_s: =ttc_cue}
+    robustness: lead
+    bands: {x_fault: [0.0, 0.2, 0.4, 0.6, 0.8], speed_kph: [40.0, 60.0, 80.0, 110.0]}
+    catalogue: {by: fault, max: 2}
+    hara:
+      - {when: "speed_kph < 60", he: HE-06.2, fit: "deceleration lost in a slow queue (the HE rates it QM)"}
+      - {when: "fault == 'decel_lost'", he: HE-06.1, fit: "approaching stationary traffic at highway speed, the deceleration silently lost: the HE's own situation"}
+      - {when: "True", he: HE-06.1, fit: "the HE's situation, but announced by the panda siren; HE-06.1 rates the silent loss"}
+
+  - id: accel-toward-slower-lead
+    title: "Unintended acceleration while approaching a slower lead"
+    about: >-
+      A slower lead (`dv_kph` slower) is ahead at the time gap `gap_s` at t = 0 (6 m + gap_s × speed); the ACC brakes
+      to follow it at openpilot's 1.45 s gap. At `t_fault` the request is forced to the envelope maximum, +2.0 m/s² (F-02 M04,
+      L-01: the panda passes it), or to +4.0 m/s² (L-02: the panda refuses every frame, so the PCM takes zero). The
+      driver is cued by the acceleration (`cue` m/s² away from what a working ACC would give) or the closing, and
+      brakes after the reaction time.
+    seed: 20261103
+    mc: 32
+    ce: {rounds: 3, per_round: 12, elite: 0.25}
+    space:
+      fault: {choice: [accel_max, accel_overlimit], meaning: "+2.0 m/s² within the envelope (L-01), +4.0 m/s² above it (L-02)"}
+      speed_kph: [70.0, 110.0, km/h, "ego speed"]
+      dv_kph: [10.0, 35.0, km/h, "the lead is this much slower"]
+      gap_s: [1.5, 4.0, s, "time gap to the lead at t = 0 (closer and faster closing is a cut-in, which the ACC alone cannot always handle: the item engages only at t = 1 s)"]
+      t_fault: [1.0, 8.0, s, "fault onset (the item engages at t = 1 s)"]
+      t_r: [0.75, 1.5, s, "driver reaction time from the first cue"]
+      cue: [0.5, 1.5, m/s², "acceleration change the driver notices (driver_long_cue, no source)"]
+      brake: [3.0, 8.0, m/s², "the driver's braking"]
+    fault_param: fault
+    road: straight
+    case: {longitudinal: true, acc_follow: true, lead_kph: "=speed_kph - dv_kph", acc_gap_s: 1.45,
+           lead_gap_s: =gap_s, t_fault: =t_fault, duration: 10.0, speed_kph: =speed_kph}
+    assumptions: {driver_t_r_s: =t_r, driver_long_cue: =cue, driver_brake: =brake, driver_ttc_cue_s: 2.0}
+    robustness: lead
+    bands: {dv_kph: [10.0, 20.0, 30.0, 35.0], t_fault: [1.0, 3.0, 5.0, 8.0]}
+    catalogue: {by: fault, max: 2}
+    hara:
+      - {when: "fault == 'accel_overlimit'", he: HE-06.1, fit: "the panda refuses the over-limit request, so the PCM takes zero and the ACC's braking for the slower lead is lost: a loss of deceleration (HE-06.1's effect), not an acceleration"}
+      - {when: "dv_kph >= 20", he: HE-03.3, fit: "acceleration toward a slower lead instead of deceleration: the HE's own situation"}
+      - {when: "True", he: HE-03.1, fit: "a lead only a little slower, at a following gap: moderate speed difference"}
+
+  - id: step-decel-follower
+    title: "Unwanted step deceleration with a close follower"
+    about: >-
+      The request steps to the envelope minimum, −3.5 m/s² (F-02, L-03: the panda passes it, the onset limit TSR-205
+      is not implemented), or to −6.0 m/s² (L-04: refused), with a vehicle following at `follow_gap` seconds. The
+      ego driver, cued by the deceleration, overrides with the accelerator after the reaction time; the following
+      driver brakes at `f_brake` after `f_t_r` from the ego's brake lights (on above 1 m/s²), until no faster than
+      the ego.
+    seed: 20261104
+    mc: 32
+    ce: {rounds: 3, per_round: 12, elite: 0.25}
+    space:
+      fault: {choice: [decel_min, decel_overlimit], meaning: "−3.5 m/s² step within the envelope (L-03), −6.0 m/s² above it (L-04)"}
+      speed_kph: [50.0, 110.0, km/h, "ego and follower speed (HE-04.1: 50–110 km/h)"]
+      follow_gap: [0.5, 1.5, s, "time gap of the follower (WP-S-04 §3.4: 1.0 s)"]
+      f_t_r: [0.75, 2.0, s, "the following driver's reaction time from the ego's brake lights"]
+      f_brake: [3.5, 7.0, m/s², "the following driver's braking"]
+      t_r: [0.75, 1.5, s, "ego driver reaction time from the cue"]
+      cue: [0.5, 1.5, m/s², "deceleration the ego driver notices (driver_long_cue)"]
+    fault_param: fault
+    road: straight
+    case: {longitudinal: true, follow_gap_s: =follow_gap, t_fault: 6.0, duration: 8.0, speed_kph: =speed_kph}
+    assumptions: {driver_t_r_s: =t_r, driver_long_cue: =cue, follower_t_r_s: =f_t_r, follower_brake: =f_brake}
+    robustness: follower
+    bands: {follow_gap: [0.5, 0.75, 1.0, 1.25, 1.5], f_t_r: [0.75, 1.0, 1.5, 2.0]}
+    catalogue: {by: fault, max: 2}
+    probes:
+      - {label: "follower brakes at 3.5 m/s²", assume: {follower_brake: 3.5}}
+    hara:
+      - {when: "True", he: HE-04.1, fit: "the HE's own situation: an unwanted deceleration with a close follower"}
+
+  # ------------------------------------------------------------------------------------------------ hand-over (HMI)
+  - id: handover-follower
+    title: "Hand-over timing with a close follower: the fault soft disable and the driver-monitoring stop"
+    about: >-
+      A fault soft disable (openpilot's `softDisabling`, SOFT_DISABLE_TIME 3 s) or the driver-monitoring no-response
+      stop (`noResponseForceDecel`, after the 5 s "Car Stops in N s" countdown), following a lead at the same speed
+      2 s ahead, with a close follower. Both set the cruise target to zero, so the request ramps to A_CRUISE_MIN,
+      −1.2 m/s², at the planner's jerk limit; the soft disable then hands control back (the item stops steering and
+      braking). `timing` is the order of alert and slow-down: as built (both at once, 3 s; register DQ-407 option A),
+      DQ-407 B (alert, 1 s, then 2 s of slowing), DQ-407 C (alert, 1 s, then 3 s), or the DM stop (5 s countdown, then
+      slowing to a stop). The driver either takes over at the alert (after the reaction time, with the accelerator) or
+      ignores it, as one who takes it for a false alarm would; then only the deceleration itself and the siren cue
+      them.
+    seed: 20261105
+    mc: 32
+    ce: {rounds: 3, per_round: 12, elite: 0.25}
+    space:
+      timing: {choice: [sd-as-built, sd-dq407-b, sd-dq407-c, dm-stop], meaning: "alert and slow-down: together for 3 s (as built), 1 s then 2 s, 1 s then 3 s, 5 s countdown then a stop"}
+      respond: {choice: [takes-over, ignores-alert], meaning: "what the driver does with the openpilot alert"}
+      speed_kph: [60.0, 110.0, km/h, "ego, lead and follower speed"]
+      follow_gap: [0.5, 1.5, s, "time gap of the follower"]
+      f_t_r: [0.75, 2.0, s, "the following driver's reaction time from the ego's brake lights"]
+      t_r: [0.75, 1.5, s, "ego driver reaction time from the first cue"]
+    road: straight
+    fault: "='dm_stop' if timing == 'dm-stop' else 'soft_disable'"
+    case: {longitudinal: true, acc_follow: true, lead_gap_s: 2.0, follow_gap_s: =follow_gap, t_fault: 5.0, duration: 12.0,
+           speed_kph: =speed_kph,
+           alert_lead_s: "={'sd-as-built': 0.0, 'sd-dq407-b': 1.0, 'sd-dq407-c': 1.0, 'dm-stop': 5.0}[timing]",
+           soft_disable_s: "={'sd-as-built': 3.0, 'sd-dq407-b': 3.0, 'sd-dq407-c': 4.0, 'dm-stop': 3.0}[timing]"}
+    assumptions: {driver_t_r_s: =t_r, follower_t_r_s: =f_t_r, driver_ignores_alert: "=1.0 if respond == 'ignores-alert' else 0.0"}
+    robustness: follower
+    bands: {follow_gap: [0.5, 0.75, 1.0, 1.5], f_t_r: [0.75, 1.0, 1.5, 2.0]}
+    catalogue: {by: timing, max: 4}
+    probes:
+      - {label: "driver takes over at the alert", assume: {driver_ignores_alert: 0.0}}
+      - {label: "as built: alert and slow-down together, 3 s", case: {fault: soft_disable, alert_lead_s: 0.0, soft_disable_s: 3.0}}
+      - {label: "DQ-407 B: alert, 1 s, 2 s of slowing", case: {fault: soft_disable, alert_lead_s: 1.0, soft_disable_s: 3.0}}
+      - {label: "DQ-407 C: alert, 1 s, 3 s of slowing", case: {fault: soft_disable, alert_lead_s: 1.0, soft_disable_s: 4.0}}
+      - {label: "follower brakes at 6 m/s²", assume: {follower_brake: 6.0}}
+    hara:
+      - {when: "timing == 'dm-stop'", he: HE-04.3, fit: "the DM stop with a close follower; HE-04.3 names a DM false positive with an attentive driver"}
+      - {when: "True", he: HE-04.1, fit: "the soft-disable slow-down with a close follower; HE-04.1 rates an unwanted deceleration, this one is the item's reaction to a fault"}
+
+  - id: handover-slower-lead
+    title: "Hand-over timing while closing on a slower lead: control handed back during the ACC's braking"
+    about: >-
+      The ego closes on a lead `dv_kph` slower, ahead at the time gap `gap_s` at t = 0, when a fault soft disable or
+      the DM stop starts at `t_fault` (alert and slow-down as in handover-follower). The soft disable hands control back
+      after 3 s (4 s in DQ-407 C) whatever the ACC was doing, so the braking for the lead ends there; the DM stop keeps
+      braking to a stop. A driver who ignores the alert (believing ACC still active, HE-07.3) is cued only by the
+      missing deceleration, the siren and the closing (TTC 2 s); one who takes over brakes after the reaction time.
+    seed: 20261106
+    mc: 32
+    ce: {rounds: 3, per_round: 12, elite: 0.25}
+    space:
+      timing: {choice: [sd-as-built, sd-dq407-b, sd-dq407-c, dm-stop], meaning: "as in handover-follower"}
+      respond: {choice: [takes-over, ignores-alert], meaning: "what the driver does with the openpilot alert"}
+      speed_kph: [70.0, 110.0, km/h, "ego speed"]
+      dv_kph: [10.0, 40.0, km/h, "the lead is this much slower"]
+      gap_s: [2.0, 6.0, s, "time gap to the lead at t = 0; the ACC starts braking once the gap is about 6 m + 1.45 s × speed + 6 s × the closing speed, so far enough ahead the hand-back comes first"]
+      t_fault: [1.5, 6.0, s, "the alert (the item engages at t = 1 s)"]
+      t_r: [0.75, 1.5, s, "ego driver reaction time from the first cue"]
+      brake: [3.0, 8.0, m/s², "the driver's braking"]
+    road: straight
+    fault: "='dm_stop' if timing == 'dm-stop' else 'soft_disable'"
+    case: {longitudinal: true, acc_follow: true, lead_kph: "=speed_kph - dv_kph", acc_gap_s: 1.45,
+           lead_gap_s: =gap_s, t_fault: =t_fault, duration: 20.0, speed_kph: =speed_kph,
+           alert_lead_s: "={'sd-as-built': 0.0, 'sd-dq407-b': 1.0, 'sd-dq407-c': 1.0, 'dm-stop': 5.0}[timing]",
+           soft_disable_s: "={'sd-as-built': 3.0, 'sd-dq407-b': 3.0, 'sd-dq407-c': 4.0, 'dm-stop': 3.0}[timing]"}
+    assumptions: {driver_t_r_s: =t_r, driver_brake: =brake, driver_ttc_cue_s: 2.0,
+                  driver_ignores_alert: "=1.0 if respond == 'ignores-alert' else 0.0"}
+    robustness: lead
+    bands: {dv_kph: [10.0, 20.0, 30.0, 40.0], gap_s: [2.0, 3.0, 4.0, 6.0]}
+    catalogue: {by: timing, max: 4}
+    probes:
+      - {label: "driver takes over at the alert", assume: {driver_ignores_alert: 0.0}}
+      - {label: "as built: alert and slow-down together, 3 s", case: {fault: soft_disable, alert_lead_s: 0.0, soft_disable_s: 3.0}}
+      - {label: "DQ-407 B: alert, 1 s, 2 s of slowing", case: {fault: soft_disable, alert_lead_s: 1.0, soft_disable_s: 3.0}}
+      - {label: "DQ-407 C: alert, 1 s, 3 s of slowing", case: {fault: soft_disable, alert_lead_s: 1.0, soft_disable_s: 4.0}}
+    hara:
+      - {when: "respond == 'ignores-alert'", he: HE-07.3, fit: "control handed back while closing on a slower lead; the driver, who took the alert for a false alarm, expects the car to slow"}
+      - {when: "True", he: HE-06.3, fit: "the ACC's braking ends at the hand-back while the lead is still slower"}
 
 # Departures that match no HARA hazardous event (rules with `new` above): findings for the HARA, queued for the
 # project lead in the decision register (01-management/decisions/register.yaml). The HARA is not edited here.

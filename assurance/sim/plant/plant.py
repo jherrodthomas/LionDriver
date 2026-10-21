@@ -91,6 +91,8 @@ class CorollaPlant:
     delta_t = corolla.steer_for_lat_accel(self.eps.lat_accel() + driver_ay, v, self.d)
     self.ax = self.pcm.accel + driver_ax
     self.x = rk4(self.x, [(delta_t - self.x[2]) / STEER_TRACK_S, self.ax], self.p, dt)
+    if self.x[3] < 0.0:      # braking holds the car at standstill; it does not reverse
+      self.x[3] = 0.0
 
   # outputs (INTERFACE.md §2)
   @property

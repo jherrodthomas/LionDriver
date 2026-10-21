@@ -20,6 +20,8 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
+import numpy as np
+
 import corolla
 from corolla import ROOT
 from panda_loop import Panda
@@ -60,6 +62,11 @@ DRIVER_OPTIONS = {
   "driver_zeta": (1.0, "damping ratio of the driver's return-to-centre loop: 1 is the critically damped loop of driver_ay_max; below 1 the driver over-corrects past the lane centre. No source"),
   "driver_eps_lag_s": (0.0, "the driver feels a change of the item's steering torque this late (first-order lag); 0 at once. No source"),
   "driver_brakes_only": (0.0, "what-if, off (0): when 1 the driver of a lateral case brakes (driver_brake) instead of steering. No source"),
+  "driver_ttc_cue_s": (0.0, "the driver of a longitudinal case also notices the closing on the lead once the time to collision falls below this; 0 off. No source"),
+  "driver_ignores_alert": (0.0, "what-if, off (0): when 1 an openpilot alert (soft disable, DM countdown) does not cue the driver, who takes it for a false alarm or believes ACC still active (HE-07.3); the siren and the other cues still do. No source"),
+  "follower_t_r_s": (0.0, "reaction time of the following driver from the ego's brake lights; 0: the ego driver's driver_t_r_s, as in every catalog case. No source"),
+  "follower_ttc_cue_s": (4.0, "the following driver also reacts once its time to collision with the ego falls below this, without brake lights. No source"),
+  "follower_brake": (3.5, "the following driver brakes at this deceleration (m/s2) until no faster than the ego; 3.5 is the envelope minimum (WP-S-04 §3.4). No source"),
 }
 
 _OVERRIDES: dict[str, float] = {}   # per-run assumption values (the search varies e.g. the driver reaction time)
@@ -73,6 +80,22 @@ def A(key: str) -> float:
 
 ODD_KPH = 110.0        # ODD-H speed bound (decision register DQ-260)
 OVERSPEED_KPH = 120.0  # margin cases outside the ODD (rows ending -OS)
+
+OP = ROOT / "openpilot" / "selfdrive"
+
+
+def _code_value(path: Path, name: str) -> float:
+  """A constant read from the real openpilot code (name = number at the start of a line, possibly indented)."""
+  return float(re.search(rf"^\s*{name} = (-?\d+(?:\.\d+)?)", path.read_text(encoding="utf-8"), re.M).group(1))
+
+
+# openpilot values used by the longitudinal edge-case search (real code, read at import)
+SOFT_DISABLE_TIME = _code_value(OP / "selfdrived" / "state.py", "SOFT_DISABLE_TIME")            # 3 s
+A_CRUISE_MIN = _code_value(OP / "controls" / "lib" / "longitudinal_planner.py", "A_CRUISE_MIN")  # -1.2 m/s² (forceDecel)
+NO_RESPONSE_TIMEOUT = _code_value(OP / "monitoring" / "policy.py", "self._NO_RESPONSE_TIMEOUT")  # 5 s countdown
+STOP_DISTANCE = _code_value(OP / "controls" / "lib" / "longitudinal_mpc_lib" / "long_mpc.py", "STOP_DISTANCE")  # 6 m
+J_CRUISE_BP, J_CRUISE_V = [0., 10.0, 25., 40.], [1.6, 1.2, 0.8, 0.6]   # longitudinal_planner.py A_CRUISE_MAX_BP, J_CRUISE_VALS
+ACCEL_MIN, ACCEL_MAX = -3.5, 2.0   # opendbc car/interfaces.py; the panda's Toyota limits (toyota.h min_accel, max_accel)
 
 
 @dataclass
@@ -104,6 +127,17 @@ class Case:
   lane_change_s: float = 4.0         # duration of that lane change (cosine profile)
   ay_disturbance: float = 0.0        # m/s², a steady lateral push to the left (crosswind or bank, TC-15), built up over
                                      # 2-4 s and added as the driver's input is (an L1 stand-in: no aerodynamics, no roll)
+  # longitudinal edge-case search and its scenes only; no catalog case sets them
+  acc_follow: bool = False           # the SoC's ACC follows the lead (SoC.acc_request); off: it holds its speed
+  lead_gap_s: float | None = None    # bumper gap to the lead at t = 0 is STOP_DISTANCE + lead_gap_s x ego speed
+                                     # (None: the KS-08 time gap, centre to centre, as every catalog case)
+  lead_kph: float | None = None      # the lead's speed at t = 0 (None: the ego's; 0: a stopped vehicle ahead)
+  lead_brake: float = 0.0            # m/s², the lead brakes at this deceleration from lead_brake_t until it stops
+  lead_brake_t: float | None = None
+  acc_gap_s: float | None = None     # time gap the ACC keeps (None: lead_gap_s, the gap it starts with)
+  follow_gap_s: float = 1.0          # s, time gap of the following vehicle (WP-S-04 §3.4)
+  alert_lead_s: float = 0.0          # soft_disable, dm_stop: the slow-down starts this long after the alert
+  soft_disable_s: float = SOFT_DISABLE_TIME  # soft_disable: the SoC disengages this long after the alert
 
 
 @dataclass
@@ -174,6 +208,8 @@ class SoC:
     self.override_torque = None    # fault: a host build that skips the host limits (VS-FI-14)
     self.hardover = 0.0            # fault: actuators.torque forced to this value, through the host limits
     self.accel_cmd = 0.0
+    self.accel_forced = False      # fault: the acceleration request is accel_cmd whatever the ACC wants
+    self.acc_request = None        # ACC request of this frame (Case.acc_follow); None: hold the speed (accel_cmd)
     self.heartbeat_ok = True
     self.stalled = False
     self.selfdrived_stop = None    # fault: time at which selfdrived stopped publishing (controlsd and pandad run on)
@@ -197,8 +233,24 @@ class SoC:
     return toyotacan.create_steer_command(self.packer, torque, req)
 
   def accel_frame(self, engaged):
-    accel = self.accel_cmd if engaged else 0.0
+    req = self.accel_cmd if self.accel_forced or self.acc_request is None else self.acc_request
+    accel = req if engaged else 0.0
     return toyotacan.create_accel_command(self.packer, accel, 0, 1, 0, 1, 1, 0, 0)
+
+
+def acc_request(v, v_set, gap, lead_v, lead_a, t_gap):
+  """ACC of the SoC stand-in (Case.acc_follow), a model and not openpilot's MPC: hold the time gap t_gap behind the
+  lead with STOP_DISTANCE at standstill, never faster than the set speed, and brake at least as hard as stopping (or
+  matching the lead's speed) with STOP_DISTANCE to spare needs; within ACCEL_MIN and ACCEL_MAX. No jerk limit: the
+  PCM lag (tau_pcm) smooths it. Perception is perfect: the lead is seen at once, at any range."""
+  a = 0.1 * (gap - STOP_DISTANCE - t_gap * v) + 0.6 * (lead_v - v)
+  room = max(gap - STOP_DISTANCE, 0.5)
+  if lead_a < -0.1:                         # the lead brakes: stop behind where it will stop
+    a = min(a, -v * v / (2 * max(room + lead_v * lead_v / (2 * -lead_a), 0.5)))
+  elif v > lead_v:                          # closing: match its speed in the room left
+    a = min(a, -(v - lead_v) ** 2 / (2 * room))
+  a = min(a, 0.4 * (v_set - v))
+  return max(ACCEL_MIN, min(ACCEL_MAX, a))
 
 
 class LIMITS:   # opendbc toyota CarControllerParams with torque lateral tuning (values.py:20-21, 46-47)
@@ -232,9 +284,21 @@ def _simulate(case: Case) -> Result:
   eps = plant.eps
   res = Result(case)
 
-  # lead at the KS-08 time gap (read from the scenario file), follower at a 1.0 s gap (WP-S-04 §3.4)
-  lead_s, follow_s = scenario_param("KS-08", "TimeGap") * v0, -1.0 * v0
+  # lead at the KS-08 time gap (read from the scenario file), follower at a 1.0 s gap (WP-S-04 §3.4; follow_gap_s)
+  lead_s, follow_s = scenario_param("KS-08", "TimeGap") * v0, -case.follow_gap_s * v0
   lead_v = follow_v = v0
+  if case.lead_gap_s is not None:          # edge-case search: a bumper gap, as an ACC keeps it
+    lead_s = 4.6 + STOP_DISTANCE + case.lead_gap_s * v0
+  if case.lead_kph is not None:
+    lead_v = case.lead_kph / 3.6
+  lead_a = 0.0
+  t_gap = case.acc_gap_s if case.acc_gap_s is not None else (lead_s - 4.6 - STOP_DISTANCE) / v0   # the gap it starts with
+  a_exp = 0.0              # the acceleration the driver expects: a working ACC's, through the PCM lag (0 without ACC);
+                           # the longitudinal cue is a change from it
+  driver_long = None       # the longitudinal driver's action and braking, chosen when the correction starts
+  brake_mag = A("driver_brake")
+  alert_t = decel_t = None  # soft_disable, dm_stop: alert, start of the slow-down
+  fd_a = 0.0               # forced deceleration request (jerk-limited toward A_CRUISE_MIN)
   follow_brake_t = None
   thr = lane_line_threshold(road.lane_width, d["width"])
 
@@ -286,6 +350,8 @@ def _simulate(case: Case) -> Result:
       else:
         raise ValueError(f"{f}: clearing not modelled")
       return
+    if f in ("accel_max", "accel_overlimit", "decel_min", "decel_overlimit", "decel_lost"):
+      soc.accel_forced = True
     if f == "overlimit":
       soc.override_torque = -3000
     elif f == "hardover":
@@ -325,6 +391,10 @@ def _simulate(case: Case) -> Result:
       soc.accel_cmd = -3.5
     elif f == "decel_overlimit":
       soc.accel_cmd = -6.0
+    elif f == "decel_lost":                # a stale plan holds zero acceleration; frames go on (HE-06.1)
+      soc.accel_cmd = 0.0
+    elif f in ("soft_disable", "dm_stop"):  # alert now, slow-down alert_lead_s later (see the loop)
+      pass
     elif f == "none":
       pass
     else:
@@ -375,6 +445,11 @@ def _simulate(case: Case) -> Result:
       res.t0, res.e0 = t, e_y
       inject(case.fault, True, v, kappa, e_y, e_psi)
       res.event("fault", t)
+      if case.fault in ("soft_disable", "dm_stop"):
+        alert_t, decel_t = t, t + case.alert_lead_s
+        fd_a = soc.acc_request if soc.acc_request is not None else soc.accel_cmd
+        res.event("openpilot alert (soft disable)" if case.fault == "soft_disable" else
+                  f"openpilot alert (DM: car stops in {NO_RESPONSE_TIMEOUT:g} s)", t)
     # a transient fault clears (edge-case search), and a second one follows
     if fault_on and t_clear is None and (
         (case.fault_clear is not None and t >= res.t0 + case.fault_clear) or
@@ -387,13 +462,18 @@ def _simulate(case: Case) -> Result:
       inject(case.fault2, True, v, kappa, e_y, e_psi)
       res.event("second fault", t)
 
+    handed_back = case.fault == "soft_disable" and alert_t is not None and t >= alert_t + case.soft_disable_s
     engaged_soc = case.engaged and t >= t_engage and not soc.stalled and not (
-      soc.selfdrived_stop is not None and t >= soc.selfdrived_stop + A("host_stale_s"))
+      soc.selfdrived_stop is not None and t >= soc.selfdrived_stop + A("host_stale_s")) and not handed_back
+    if handed_back:
+      res.event("soft disable ends: control handed back", alert_t + case.soft_disable_s)
     intercept = (panda.relay_driven and not stuck_pass) or stuck_intercept
 
     # ------------------------------------------------ car bus -> panda (RX)
     if case.engaged and t >= t_engage:
       cruise_active = True
+    if handed_back:          # the host cancels PCM cruise once disengaged (controlsd.py CC.cruiseControl.cancel)
+      cruise_active = False
     if driver_brake or driver_gas:
       cruise_active = cruise_active and not driver_brake
     for name, per in periods.items():
@@ -413,6 +493,13 @@ def _simulate(case: Case) -> Result:
         panda.rx(name, vals)
 
     # ------------------------------------------------ SoC -> panda -> car bus (TX), 100 Hz
+    if k % 30 == 0 and (case.acc_follow or decel_t is not None):
+      req = acc_request(v, v0, lead_s - s - 4.6, lead_v, lead_a, t_gap) if case.acc_follow else soc.accel_cmd
+      if decel_t is not None and t >= decel_t:   # forceDecel: cruise target 0, A_CRUISE_MIN at the J_CRUISE rate
+        fd_a = max(A_CRUISE_MIN, fd_a - float(np.interp(v, J_CRUISE_BP, J_CRUISE_V)) * 0.03)
+        req = min(req, fd_a)
+        res.event("slow-down starts", decel_t)
+      soc.acc_request = req
     if k % 10 == 0 and not soc.stalled:
       frame = k // 10
       # the panda's car-side transceiver is on the car bus whatever the switch position; the switch only decides
@@ -479,12 +566,15 @@ def _simulate(case: Case) -> Result:
     if fault_on and driver_cue is None:
       if "panda siren" in res.events:
         driver_cue = ("siren", res.events["panda siren"])
-      elif "openpilot alert (selfdrive timeout)" in res.events:
-        driver_cue = ("alert", res.events["openpilot alert (selfdrive timeout)"])
+      elif any(e.startswith("openpilot alert") for e in res.events) and not A("driver_ignores_alert"):
+        driver_cue = ("alert", next(v_ for e, v_ in res.events.items() if e.startswith("openpilot alert")))
       elif not case.longitudinal and abs(e_y - res.e0 - lc_drift(t)) > A("driver_lat_cue_m"):
         driver_cue = ("drift", t)
-      elif case.longitudinal and abs(ax_meas - 0.0) > A("driver_long_cue"):
+      elif case.longitudinal and abs(ax_meas - a_exp) > A("driver_long_cue"):
         driver_cue = ("acceleration", t)
+      elif case.longitudinal and A("driver_ttc_cue_s") and v > lead_v and \
+          (lead_s - s - 4.6) / (v - lead_v) < A("driver_ttc_cue_s"):
+        driver_cue = ("closing", t)
       if driver_cue:
         driver_t_react = driver_cue[1] + A("driver_t_r_s")
         res.event(f"driver cue ({driver_cue[0]})", driver_cue[1])
@@ -492,9 +582,12 @@ def _simulate(case: Case) -> Result:
       res.event("driver correction", driver_t_react)
       ramp = min((t - driver_t_react) / 0.2, 1.0)
       if case.longitudinal:
-        if soc.accel_cmd > 0:
+        if driver_long is None:            # brake for an acceleration or a lead it closes on, else override with gas;
+          driver_long = "brake" if soc.accel_cmd > 0 or v - lead_v > 0.5 else "gas"   # at least as hard as the car
+          brake_mag = max(A("driver_brake"), -ax_meas)                                  # already brakes
+        if driver_long == "brake":
           driver_brake = True
-          d_acc = -A("driver_brake") * min((t - driver_t_react) / 0.3, 1.0)
+          d_acc = -brake_mag * min((t - driver_t_react) / 0.3, 1.0)
         else:
           driver_gas = True
           d_acc = 0.0
@@ -528,14 +621,24 @@ def _simulate(case: Case) -> Result:
         res.event("EPS LKA torque below 5 %", t)
       ay_meas = v * plant.x[5]
       ax_meas = plant.ax
+      if case.acc_follow:
+        a_exp += (acc_request(plant.speed, v0, lead_s - s - 4.6, lead_v, lead_a, t_gap) - a_exp) * min(dt / d["tau_pcm"], 1.0)
       # lead and follower vehicles (longitudinal cases)
+      if case.lead_brake and case.lead_brake_t is not None and t >= case.lead_brake_t and lead_v > 0:
+        res.event("lead brakes", case.lead_brake_t)
+        lead_a = -case.lead_brake
+        lead_v = max(0.0, lead_v - case.lead_brake * dt)
+      elif lead_a and lead_v <= 0:
+        lead_a = 0.0
       lead_s += lead_v * dt
       if case.longitudinal:
-        if follow_brake_t is None and ax_meas < -1.0:
-          follow_brake_t = t + A("driver_t_r_s")
+        # the following driver reacts to the ego's brake lights (on above 1 m/s²) or to closing on it
+        if follow_brake_t is None and (ax_meas < -1.0 or follow_v > plant.speed and
+                                       (s - follow_s - 4.6) / (follow_v - plant.speed) < A("follower_ttc_cue_s")):
+          follow_brake_t = t + (A("follower_t_r_s") or A("driver_t_r_s"))
         # the follower brakes at -3.5 m/s2 (equal to the envelope minimum, WP-S-04 §3.4) until it is no faster
         if follow_brake_t is not None and t >= follow_brake_t and follow_v > plant.speed:
-          follow_v = max(plant.speed, follow_v - 3.5 * dt)
+          follow_v = max(plant.speed, follow_v - A("follower_brake") * dt)
         follow_s += follow_v * dt
       if k % 10 == 0:
         res.t.append(t)
