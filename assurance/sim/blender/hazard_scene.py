@@ -343,30 +343,11 @@ def build_props(sc: dict, coll, env: dict | None = None):
         A.part("delineator", post, root, coll, (x, y, 0), (0, 0, cc[2]))
         A.part("reflector", cap, root, coll, (x, y, 0), (0, 0, cc[2]))
         s += p.get("every_m", 50)
-    elif kind == "lamps":                       # lighting columns with an arm over the road, lit at night
-      grey = A.material("pole", (0.2, 0.2, 0.22), rough=0.5, metal=0.6)
-      head = A.material("luminaire", (1.0, 0.85, 0.6), rough=0.3, emit=40.0 if night else 0.0)
-      column = A.cyl_mesh(f"col{k}", 0.11, 10.0, mat=grey, r2=0.07)
-      arm = A.box_mesh(f"arm{k}", 0.08, 2.4, 0.08, 0.0, grey)
-      lum = A.box_mesh(f"lum{k}", 0.6, 0.3, 0.12, -0.12, head)
-      inward = -1 if p["d"] > 0 else 1
+    elif kind == "lamps":                       # a row of street lights curving over the road, lit at night
       root = A.empty("lighting_columns", coll)
-      s = c[0][3] + 5.0
-      while s < c[-1][3]:
-        cc = centre_at(c, s)
-        x, y, _ = A.offset(cc, p["d"])
-        A.part("column", column, root, coll, (x, y, 5.0))
-        ax, ay, _ = A.offset(cc, p["d"] + inward * 1.2)
-        A.part("arm", arm, root, coll, (ax, ay, 9.9), (0, 0, cc[2]))
-        lx, ly, _ = A.offset(cc, p["d"] + inward * 2.3)
-        A.part("luminaire", lum, root, coll, (lx, ly, 9.9), (0, 0, cc[2]))
-        if night:
-          lt = bpy.data.objects.new("road_light", bpy.data.lights.new("road_light", "SPOT"))
-          lt.data.energy, lt.data.color, lt.data.spot_size = 9000, (1.0, 0.8, 0.55), math.radians(120)
-          lt.data.shadow_soft_size = 0.3
-          lt.location = (lx, ly, 9.7)
-          coll.objects.link(lt)
-        s += p.get("every_m", 45)
+      for j, q in enumerate(street_layout.lamp_row(sc, p)):
+        A.lamp_post(f"road_lamp_{k}_{j}", coll, root, (q["x"], q["y"], 0.0), q["yaw"], night, height=10.0,
+                    reach=p.get("reach_m", 2.6), light="SPOT", energy=9000.0)
     elif kind == "sign":
       build_sign(p, c, coll, k)
     elif kind == "gantry":                      # an overhead guide sign on two posts across the carriageway

@@ -7,7 +7,8 @@ Ground materials, skies and plants use the CC0 assets of library/assets.yaml whe
 disk (library/assets.lock.json names the files), and a procedural look otherwise: noise-varied asphalt with grain,
 stones, bump and polished wheel tracks; varied grass with dry patches; gravel; concrete slabs; Nishita or overcast
 skies; lumpy-crowned trees and stacked-cone conifers, and no verge grass. Every condition (wet, puddles, snow, slush,
-ice) is layered on either.
+ice) is layered on either. The kerbs, walkways and street lights at the road edges are visual only (edge_features):
+they stand outside the carriageway and beyond the barrier line, so they never change a contact or an event.
 
 Imported by hazard_scene.py; runs in Blender (bpy). Units are metres; a road user's origin is on the ground under
 its body centre, forward +X. Road surfaces carry a UV map "road" in metres: u is the lateral offset from the ego
@@ -259,6 +260,35 @@ def _weather_layer(g: Graph, col, rough, normal, env: dict, tracks=None, puddles
   return col, rough, normal
 
 
+WET_SHEEN = 0.75     # from this wetness on, the road is a water film: streaky, mirror-like reflections
+
+
+def _wet_sheen(g: Graph, rough, normal, env: dict, tracks=None):
+  """A standing water film (wet >= WET_SHEEN, W02 and W04): the reflections of lamps, lights and sky stretch along
+  the road, as on a real wet carriageway. Anisotropic roughness with its tangent along the road (the road UV's v),
+  a lower roughness floor in the wheel tracks, where the water is smoothest, and a fine ripple of the normal under
+  rain. Wetter roads (W04) get more stretch and a lower floor; dry and damp roads are unchanged."""
+  w = float(env.get("wet", 0.0) or 0.0)
+  if w < WET_SHEEN:
+    return rough, normal
+  f = (w - WET_SHEEN) / (1.0 - WET_SHEEN)          # 0 at W02, 1 at W04
+  b = g.bsdf
+  if "Anisotropic" in b.inputs:                  # with the road UV's tangent, the highlights stretch along v
+    b.inputs["Anisotropic"].default_value = 0.8 + 0.15 * f
+    b.inputs["Anisotropic Rotation"].default_value = 0.0
+    g.set(b.inputs["Tangent"], g.node("ShaderNodeTangent", direction_type="UV_MAP", uv_map="road").outputs[0])
+  rough = g.math("MINIMUM", rough, 0.13 - 0.05 * f)
+  if tracks is not None:
+    floor = 0.07 - 0.04 * f
+    rough = g.node("ShaderNodeMix", {0: g.math("MULTIPLY", tracks, 0.85), 2: rough, 3: floor},
+                   data_type="FLOAT").outputs[0]
+  rain = float(env.get("rain", 0.0) or 0.0)
+  if rain > 0 and normal is not None:
+    ripple = g.noise(g.node("ShaderNodeMapping", {"Vector": g.uv(), "Scale": (1.0, 0.35, 1.0)}).outputs[0], 9.0, 3)
+    normal = g.bump(ripple.outputs[0], 0.04 + 0.05 * rain, 0.002, normal)
+  return rough, normal
+
+
 def _tracks(g: Graph, lane_width: float):
   """1 on the wheel tracks of every lane (0.8 m either side of its centre), 0 between them."""
   u = g.node("ShaderNodeSeparateXYZ", {0: g.uv()}).outputs[0]
@@ -298,6 +328,7 @@ def asphalt_material(name: str, env: dict, assets: Assets, lane_width: float = 3
     col = g.mix(g.math("MULTIPLY", tr, 0.45), col, g.mix(1.0, col, (0.68, 0.68, 0.68), "MULTIPLY"))
     rough = g.math("SUBTRACT", rough, g.math("MULTIPLY", tr, 0.12))
   col, rough, normal = _weather_layer(g, col, rough, normal, env, tr)
+  rough, normal = _wet_sheen(g, rough, normal, env, tr)
   g.finish(col, rough, normal)
   m.diffuse_color = (0.05, 0.05, 0.055, 1)
   return m
@@ -373,7 +404,9 @@ def gravel_material(name: str, env: dict, assets: Assets):
   return m
 
 
-def concrete_material(name: str, env: dict, assets: Assets, slab: float = 1.5):
+def concrete_material(name: str, env: dict, assets: Assets, slab: float = 1.5, tint: float = 1.0, joints: float = 0.0):
+  """Concrete: the fetched scan, or procedural slabs `slab` metres square; tint scales its albedo, and joints > 0
+  cuts paving joints every `slab` metres into the scan too (a walkway of flags)."""
   m = bpy.data.materials.get(name)
   if m:
     return m
@@ -384,6 +417,12 @@ def concrete_material(name: str, env: dict, assets: Assets, slab: float = 1.5):
   slot = assets.get("concrete")
   if slot:
     col, rough, normal = _pbr(g, slot, assets)
+    if joints:
+      jt = g.node("ShaderNodeTexBrick", {"Vector": uv, "Scale": 1.0 / slab, "Mortar Size": 0.01, "Brick Width": 1.0,
+                                          "Row Height": 1.0, "Color1": (1, 1, 1), "Color2": (1, 1, 1),
+                                          "Mortar": (0, 0, 0)}, offset=0.5)
+      col = g.mix(1.0, col, g.remap(jt.outputs[1], 0.0, 1.0, 1.0, 1.0 - joints), "MULTIPLY")
+      normal = g.bump(g.math("SUBTRACT", 1.0, jt.outputs[1]), 0.4, 0.004, normal)
   else:
     br = g.node("ShaderNodeTexBrick", {"Vector": uv, "Scale": 1.0 / slab, "Mortar Size": 0.012,
                                         "Brick Width": 1.0, "Row Height": 1.0, "Color1": (0.44, 0.43, 0.41),
@@ -392,6 +431,8 @@ def concrete_material(name: str, env: dict, assets: Assets, slab: float = 1.5):
     col = g.mix(1.0, br.outputs[0], g.remap(n, 0.3, 0.7, 0.85, 1.12), "MULTIPLY")
     rough = 0.88
     normal = g.bump(g.math("ADD", g.math("MULTIPLY", br.outputs[1], -0.6), g.math("MULTIPLY", n, 0.2)), 0.3, 0.01)
+  if tint != 1.0:
+    col = g.mix(1.0, col, (tint,) * 3, "MULTIPLY")
   col, rough, normal = _weather_layer(g, col, rough, normal, env, None, puddles=False)
   g.finish(col, rough, normal)
   m.diffuse_color = (0.42, 0.41, 0.39, 1)
@@ -530,6 +571,71 @@ def wall(name, centre, d: float, z0: float, z1: float, mat, coll, thick: float =
   return mesh_object(name, verts, faces, mat, coll)
 
 
+KERB_W, KERB_H, KERB_BEVEL = 0.25, 0.15, 0.04   # concrete kerb: width, height above the road, top chamfer (m)
+
+
+def sweep(name, centre, profile, mat, coll, s_ranges=None):
+  """A cross-section [(d, z), ...] swept along the centre line, with UVs in metres (u along the profile, v along the
+  road); s_ranges limits it to stretches of the road."""
+  plen = [0.0]
+  for (d0, z0), (d1, z1) in zip(profile, profile[1:]):
+    plen.append(plen[-1] + math.hypot(d1 - d0, z1 - z0))
+  verts, faces, uvs = [], [], []
+  m = len(profile)
+  prev = None
+  for i, p in enumerate(centre):
+    if s_ranges is not None and not any(lo <= p[3] <= hi for lo, hi in s_ranges):
+      prev = None
+      continue
+    k = len(verts)
+    verts += [offset(p, d, z) for d, z in profile]
+    uvs += [(u, p[3]) for u in plen]
+    if prev is not None:
+      faces += [(prev + j, prev + j + 1, k + j + 1, k + j) for j in range(m - 1)]
+    prev = k
+  return mesh_object(name, verts, faces, mat, coll, uvs=uvs)
+
+
+def kerb_profile(d_face: float, side: int, z0: float = -0.05, top: float = KERB_H, width: float = KERB_W,
+                 bevel: float = KERB_BEVEL):
+  """A kerb's cross-section: its face toward the road at d_face, its back `width` further out (side +1 left, -1
+  right), the road-side top edge chamfered in two steps."""
+  b = bevel
+  return [(d_face, z0), (d_face, top - b), (d_face + side * 0.3 * b, top - 0.3 * b), (d_face + side * b, top),
+          (d_face + side * width, top), (d_face + side * width, z0)]
+
+
+def edge_features(r: dict, env: dict) -> dict:
+  """The kerbs and walkways the render adds at the road edges, and how far past the road's outer edge the verge
+  starts on each side. Visual only: export_scene.py's cross-section (carriageway, barrier, outer edges) is unchanged,
+  and everything here lies outside the carriageway and beyond the barrier line.
+
+  Highway: a kerb at the left verge (the outer edge of the paved strip) and on the right at the shoulder's outer
+  edge, or, where the barrier stands on that edge, just behind the barrier's posts; with env walkway_m, a paved
+  walkway that width behind the right kerb (where the lamp row stands). Urban: a kerb stone at the road edge of each
+  sidewalk. Rural roads keep their gravel shoulders."""
+  out = {"kerbs": [], "walkways": [], "verge": [0.0, 0.0]}
+  left_out, right_out = r["outer"]
+  if r["type"] == "highway":
+    out["kerbs"].append((left_out, 1, -0.05))
+    out["verge"][0] = KERB_W
+    b = r.get("barrier")
+    face = right_out if b is None else b - 0.25          # posts stand from b - 0.09 to b - 0.21
+    out["kerbs"].append((face, -1, -0.05))
+    back = face - KERB_W
+    w = float(env.get("walkway_m", 0.0) or 0.0)
+    if w:
+      out["walkways"].append((back, back - w))
+      back -= w
+    out["verge"][1] = right_out - back
+  elif r["type"] == "urban":
+    for sfc in r["surfaces"]:
+      if sfc["kind"] == "sidewalk":
+        side = 1 if sfc["d0"] + sfc["d1"] > 0 else -1
+        out["kerbs"].append((min(sfc["d0"], sfc["d1"], key=abs), side, -0.02))
+  return out
+
+
 def dash_ranges(c, dash: float, gap: float):
   s0, s1 = c[0][3], c[-1][3]
   return [(s, s + dash) for s in [s0 + (dash + gap) * i for i in range(int((s1 - s0) / (dash + gap)) + 1)]]
@@ -555,14 +661,20 @@ def build_road(r: dict, env: dict, assets: Assets | None = None):
   white = marking_material("paint_white", (0.85, 0.85, 0.82), env)
   yellow = marking_material("paint_yellow", (0.85, 0.6, 0.05), env)
   worn = marking_material("paint_worn", (0.3, 0.3, 0.29), env, rough=0.8)
-  kerb = material("kerb", (0.55, 0.55, 0.52), rough=0.8)
+  kerb = concrete_material("kerb_stone", env, assets, slab=1.0, tint=1.18)
+  walkway = concrete_material("walkway", env, assets, slab=0.6, joints=0.6)
   steel = material("barrier", (0.55, 0.57, 0.6), rough=0.35, metal=0.8)
 
   for k, sfc in enumerate(r["surfaces"]):
     z = sfc.get("z", 0.0)
     strip(f"{sfc['kind']}_{k}", c, sfc["d0"], sfc["d1"], z, mats[sfc["kind"]], coll)
-    if sfc["kind"] == "sidewalk":                # kerb face toward the road
-      wall(f"kerb_{k}", c, min(sfc["d0"], sfc["d1"], key=abs), 0.0, z, kerb, coll)
+  edges = edge_features(r, env)
+  for k, (d, side, z0) in enumerate(edges["kerbs"]):
+    top = KERB_H + (0.004 if r["type"] == "urban" else 0.0)   # just proud of the sidewalk beside it
+    sweep(f"kerb_{k}", c, kerb_profile(d, side, z0, top), kerb, coll)
+  for k, (d0, d1) in enumerate(edges["walkways"]):
+    strip(f"walkway_{k}", c, d0, d1, KERB_H - 0.01, walkway, coll)
+    sweep(f"walkway_edge_{k}", c, [(d1, KERB_H - 0.01), (d1, -0.05)], kerb, coll)
   for k, mk in enumerate(r["markings"]):
     col = {"white": white, "yellow": yellow}[mk["colour"]]
     if mk.get("worn"):
@@ -714,10 +826,11 @@ def _random_value(ng, typ: str, lo, hi):
   return next(x for x in n.outputs if x.name == "Value" and x.type == t)
 
 
-def verge_grass(r: dict, plants: dict, coll):
-  """Grass clumps beside both road edges, scattered by geometry nodes over a ribbon per band (only the instances
-  render), each clump picked, turned and scaled at random."""
-  left_out, right_out = r["outer"]
+def verge_grass(r: dict, plants: dict, coll, env: dict | None = None):
+  """Grass clumps beside both road edges (past the kerbs and walkways of edge_features), scattered by geometry nodes
+  over a ribbon per band (only the instances render), each clump picked, turned and scaled at random."""
+  margin = edge_features(r, env or {})["verge"]
+  left_out, right_out = r["outer"][0] + margin[0], r["outer"][1] - margin[1]
   templates = {}
   for k, (role, a, b, density, f) in enumerate(VERGE_BANDS):
     if not plants.get(role):
@@ -753,31 +866,82 @@ def verge_grass(r: dict, plants: dict, coll):
       ob.modifiers.new("verge", "NODES").node_group = ng
 
 
-def lamp_column(name: str, coll, parent, loc, yaw: float, night: bool):
-  """An 8 m street-lighting column with a 1.6 m arm over the carriageway (toward -Y) and a flat luminaire; at night a
-  point light under the luminaire. Procedural: Poly Haven has only short heritage posts."""
-  steel = material("lamp_column", (0.32, 0.33, 0.35), rough=0.45, metal=0.7)
-  glow = material("luminaire_on" if night else "luminaire", (1.0, 0.86, 0.65) if night else (0.75, 0.75, 0.72),
-                  rough=0.3, emit=30.0 if night else 0.0)
+def lamp_mesh(name: str, height: float, reach: float, mat, bend: float = 1.3, r0: float = 0.12, r1: float = 0.055):
+  """A tapered pole that bends out over the road: up the local Z axis, then a curve of radius `bend` into an arm that
+  reaches `reach` metres toward -Y at `height`, rising a little toward its tip. One mesh, swept as rings along that
+  path (the radius tapers from r0 at the foot to r1 at the tip)."""
+  me = bpy.data.meshes.get(name)
+  if me:
+    return me
+  path = [(0.0, 0.0, z) for z in [i * (height - bend) / 12 for i in range(13)]]
+  for k in range(1, 9):                          # the bend: a quarter circle from vertical into the arm
+    a = k / 8 * math.pi / 2
+    path.append((0.0, -bend * (1 - math.cos(a)), height - bend + bend * math.sin(a)))
+  arm = reach - bend
+  for k in range(1, 7):                          # the arm, with a 3 degree upsweep
+    path.append((0.0, -bend - arm * k / 6, height + math.tan(math.radians(3.0)) * arm * k / 6))
+  segs = 10
+  lengths = [0.0]
+  for a, b in zip(path, path[1:]):
+    lengths.append(lengths[-1] + math.dist(a, b))
+  verts, faces = [], []
+  for i, pt in enumerate(path):
+    a, b = path[max(i - 1, 0)], path[min(i + 1, len(path) - 1)]
+    t = Vector(b) - Vector(a)
+    t.normalize()
+    x = Vector((1.0, 0.0, 0.0))                  # the path lies in the YZ plane: X is normal to it throughout
+    bi = t.cross(x)
+    r = r0 + (r1 - r0) * lengths[i] / lengths[-1]
+    for j in range(segs):
+      q = 2 * math.pi * j / segs
+      verts.append(Vector(pt) + r * (math.cos(q) * x + math.sin(q) * bi))
+    if i:
+      k0, k1 = (i - 1) * segs, i * segs
+      faces += [(k0 + j, k0 + (j + 1) % segs, k1 + (j + 1) % segs, k1 + j) for j in range(segs)]
+  n = len(path) - 1
+  faces += [tuple(range(segs))[::-1], tuple(n * segs + j for j in range(segs))]
+  me = bpy.data.meshes.new(name)
+  me.from_pydata([tuple(v) for v in verts], [], faces)
+  for p in me.polygons:
+    p.use_smooth = True
+  me.materials.append(mat)
+  return me
+
+
+def lamp_post(name: str, coll, parent, loc, yaw: float, night: bool, height: float = 10.0, reach: float = 2.4,
+              light: str = "POINT", energy: float = 2000.0):
+  """A street light: a tapered pole about `height` tall whose arm curves out over the carriageway (toward -Y in its
+  own frame) to a slim luminaire; at night a lamp under the luminaire (a point light for streets, a downward spot for
+  highways) and the luminaire's lens glowing. Procedural: Poly Haven has only short heritage posts."""
+  steel = material("lamp_steel", (0.36, 0.37, 0.39), rough=0.4, metal=0.75)
+  lens = material("luminaire_on" if night else "luminaire", (1.0, 0.86, 0.65) if night else (0.72, 0.73, 0.72),
+                  rough=0.25, emit=35.0 if night else 0.0)
+  tip_z = height + math.tan(math.radians(3.0)) * (reach - 1.3)
+  meshes = bpy.data.meshes                       # one mesh of each part for every post of that size
+  key = f"{height:.1f}_{reach:.1f}"
+  parts = ((lamp_mesh(f"lamp_post_{key}", height, reach, steel), (0, 0, 0), 0.0),
+           (meshes.get("lamp_head") or box_mesh("lamp_head", 0.26, 0.78, 0.07, 0.0, steel), (0, -reach + 0.12,
+                                                                                               tip_z - 0.07), 0.05),
+           (meshes.get(lens.name) or box_mesh(lens.name, 0.2, 0.62, 0.012, 0.0, lens), (0, -reach + 0.12,
+                                                                                       tip_z - 0.08), 0.05))
   m0 = Matrix.Translation(loc) @ Matrix.Rotation(yaw, 4, "Z")
-  meshes = bpy.data.meshes                       # one mesh of each part for every column
-  parts = ((meshes.get("lamp_column_pole") or cyl_mesh("lamp_column_pole", 0.09, 8.0, mat=steel, r2=0.06), (0, 0, 4.0)),
-           (meshes.get("lamp_column_arm") or cyl_mesh("lamp_column_arm", 0.04, 1.6, axis="Y", mat=steel),
-            (0, -0.8, 7.95)),
-           (meshes.get("lamp_column_head") or box_mesh("lamp_column_head", 0.28, 0.6, 0.1, 0.0, steel),
-            (0, -1.55, 7.86)),
-           (meshes.get(glow.name) or box_mesh(glow.name, 0.24, 0.5, 0.02, 0.0, glow), (0, -1.55, 7.84)))
-  for k, (me, xyz) in enumerate(parts):
-    m = Matrix.Translation(xyz)
+  for k, (me, xyz, tilt) in enumerate(parts):
     ob = bpy.data.objects.new(f"{name}.{k}", me)
     ob.parent = parent
-    ob.matrix_basis = m0 @ m
+    ob.matrix_basis = m0 @ Matrix.Translation(xyz) @ Matrix.Rotation(tilt, 4, "X")
     coll.objects.link(ob)
   if night:
-    lt = bpy.data.objects.new("street_light", bpy.data.lights.new("street_light", "POINT"))
-    lt.data.energy, lt.data.color, lt.data.shadow_soft_size = 1500, (1.0, 0.82, 0.6), 0.3
-    lt.location = m0 @ Vector((0, -1.55, 7.6))
+    lt = bpy.data.objects.new(f"{name}_light", bpy.data.lights.new(f"{name}_light", light))
+    lt.data.energy, lt.data.color, lt.data.shadow_soft_size = energy, (1.0, 0.82, 0.6), 0.3
+    if light == "SPOT":
+      lt.data.spot_size = math.radians(120)
+    lt.location = m0 @ Vector((0, -reach + 0.12, tip_z - 0.25))
     coll.objects.link(lt)
+
+
+def lamp_column(name: str, coll, parent, loc, yaw: float, night: bool):
+  """An urban street light: a 10 m tapered pole with a 2 m curved arm over the carriageway (toward -Y)."""
+  lamp_post(name, coll, parent, loc, yaw, night, height=10.0, reach=2.0, light="POINT", energy=2200.0)
 
 
 def bus_shelter(name: str, coll, parent, loc, yaw: float, night: bool):
@@ -898,7 +1062,7 @@ def build_scenery(r: dict, env: dict, assets: Assets | None = None, seed: int = 
           prnd.choice(plants["shrub"]).place(prnd, "shrub", coll, root, (sx, sy, 0.0))
         s += step * rnd.uniform(0.6, 1.4)
     if verge:
-      verge_grass(r, plants, coll)
+      verge_grass(r, plants, coll, env)
   if kind == "urban":
     night = env.get("night", False)
     walls = [(0.55, 0.5, 0.45), (0.45, 0.42, 0.4), (0.62, 0.58, 0.5), (0.35, 0.33, 0.33), (0.5, 0.38, 0.3)]
@@ -932,7 +1096,8 @@ def sun_colour(elev_deg: float):
 
 def build_environment(env: dict, heading: float, assets: Assets | None = None):
   """Sky and sun. env (library/conditions.yaml): sky (clear, partly, overcast, night), sun ('behind', 'ahead': low sun
-  in the driver's eyes, 'side'), sun_elevation (degrees, raised to sun_elevation_min), sun_strength, night.
+  in the driver's eyes, 'side'), sun_elevation (degrees, raised to sun_elevation_min), sun_strength, night,
+  sky_strength (an overcast sky's brightness relative to the default: below 1 for a heavier, moodier sky).
   heading: road heading at the ego's start."""
   assets = assets or no_assets()
   scene = bpy.context.scene
@@ -993,6 +1158,7 @@ def build_environment(env: dict, heading: float, assets: Assets | None = None):
       links.new(ramp.outputs[0], bg.inputs["Color"])
       bg.inputs["Strength"].default_value = 2.8 if env.get("urban") else 2.4
       nodes.remove(grad)
+    bg.inputs["Strength"].default_value *= env.get("sky_strength", 1.0)   # a heavier, moodier overcast
     sun.data.energy = 3.0 * env.get("sun_strength", 0.35)
     sun.data.angle = math.radians(25.0)
     sun.data.color = (0.95, 0.96, 1.0)

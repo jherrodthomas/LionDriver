@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="410" viewBox="0 0 1280 410" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 8 · Allocation resolution</title>
-<desc>Of 367 allocated_to values 313 resolve to SysML model elements: TSR 127 of 127, FSR 57 of 58, SWSR 126 of 136, HWSR 3 of 46.</desc>
+<desc>Of 371 allocated_to values 317 resolve to SysML model elements: TSR 128 of 128, FSR 57 of 58, SWSR 129 of 139, HWSR 3 of 46.</desc>
 <defs><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F172A"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="faint" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><marker id="sw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F766E"/></marker><marker id="hw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker><marker id="aou" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D97706"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D2553F"/></marker></defs>
 <rect x="0" y="0" width="1280" height="410" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 8 · Allocation: do requirements land on real architecture elements?</text>
@@ -8,31 +8,31 @@
 <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-T-01 §3.2 · SysML report</text>
 <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
 <text x="48" y="123" font-size="13" fill="#0F172A" font-weight="700">TSR</text>
-<rect x="130" y="108" width="297.6" height="22" rx="4" fill="#0F766E" stroke="none" stroke-width="0"/>
-<text x="278.8" y="123" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">127</text>
-<text x="439.6" y="123" font-size="12" fill="#0F172A">127 / 127 · 100 %</text>
+<rect x="130" y="108" width="296.7" height="22" rx="4" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="278.4" y="123" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">128</text>
+<text x="438.7" y="123" font-size="12" fill="#0F172A">128 / 128 · 100 %</text>
 <text x="48" y="159" font-size="13" fill="#0F172A" font-weight="700">FSR</text>
-<rect x="130" y="144" width="133.6" height="22" rx="4" fill="#0F766E" stroke="none" stroke-width="0"/>
-<text x="196.8" y="159" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">57</text>
-<rect x="263.6" y="144" width="2.3" height="22" rx="4" fill="#D2553F" stroke="none" stroke-width="0"/>
-<text x="277.9" y="159" font-size="12" fill="#0F172A">57 / 58 · 98 %</text>
+<rect x="130" y="144" width="132.1" height="22" rx="4" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="196.1" y="159" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">57</text>
+<rect x="262.1" y="144" width="2.3" height="22" rx="4" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="276.4" y="159" font-size="12" fill="#0F172A">57 / 58 · 98 %</text>
 <text x="48" y="195" font-size="13" fill="#0F172A" font-weight="700">SWSR</text>
-<rect x="130" y="180" width="295.3" height="22" rx="4" fill="#0F766E" stroke="none" stroke-width="0"/>
-<text x="277.6" y="195" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">126</text>
-<rect x="425.3" y="180" width="23.4" height="22" rx="4" fill="#D2553F" stroke="none" stroke-width="0"/>
-<text x="460.7" y="195" font-size="12" fill="#0F172A">126 / 136 · 93 %</text>
+<rect x="130" y="180" width="299" height="22" rx="4" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="279.5" y="195" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">129</text>
+<rect x="429" y="180" width="23.2" height="22" rx="4" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="464.2" y="195" font-size="12" fill="#0F172A">129 / 139 · 93 %</text>
 <text x="48" y="231" font-size="13" fill="#0F172A" font-weight="700">HWSR</text>
 <rect x="130" y="216" width="7" height="22" rx="4" fill="#0F766E" stroke="none" stroke-width="0"/>
-<rect x="137" y="216" width="100.8" height="22" rx="4" fill="#D2553F" stroke="none" stroke-width="0"/>
-<text x="187.4" y="231" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">43</text>
-<text x="249.8" y="231" font-size="12" fill="#0F172A">3 / 46 · 7 %</text>
+<rect x="137" y="216" width="99.7" height="22" rx="4" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="186.8" y="231" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">43</text>
+<text x="248.6" y="231" font-size="12" fill="#0F172A">3 / 46 · 7 %</text>
 <line x1="40" y1="242" x2="1240" y2="242" stroke="#E2E8F0" stroke-width="1"/>
 <text x="48" y="271" font-size="13" fill="#0F172A" font-weight="700">All</text>
-<rect x="130" y="256" width="733.5" height="22" rx="4" fill="#0F766E" stroke="none" stroke-width="0"/>
-<text x="496.7" y="271" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">313</text>
-<rect x="863.5" y="256" width="126.5" height="22" rx="4" fill="#D2553F" stroke="none" stroke-width="0"/>
-<text x="926.7" y="271" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">54</text>
-<text x="1002" y="271" font-size="12" fill="#0F172A" font-weight="700">313 / 367 · 85 %</text>
+<rect x="130" y="256" width="734.8" height="22" rx="4" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="497.4" y="271" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">317</text>
+<rect x="864.8" y="256" width="125.2" height="22" rx="4" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="927.4" y="271" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">54</text>
+<text x="1002" y="271" font-size="12" fill="#0F172A" font-weight="700">317 / 371 · 85 %</text>
 <text x="40" y="304" font-size="11.5" fill="#0F172A" font-weight="700">Most common unresolved values (51 distinct, by number of requirements):</text>
 <rect x="40" y="316" width="82.9" height="20" rx="10" fill="#FEF2F2" stroke="#F5B5A8" stroke-width="1"/>
 <text x="49" y="330" font-size="10.5" fill="#D2553F">Firmware ×3</text>

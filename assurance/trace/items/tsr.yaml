@@ -389,7 +389,7 @@
   mechanism: "PLB"
   timing: "(a) ≤ 0.3 s / same tick; (b) ≤ 0.3 s"
   verification: "T-HIL, FI"
-  baseline_impl: "(a) 3 consecutive 1 Hz ticks ≈ 2–3 s (`main.c:181-189`). (b) 200 cycles at 100 Hz = 2 s (`selfdrive/selfdrived/selfdrived.py:343, 510-535`) (GAP-06)"
+  baseline_impl: "(a) 3 consecutive 1 Hz ticks ≈ 2–3 s (`main.c:181-189`). Plant run with the real panda code (selfdrived stops, pandad keeps the heartbeat, MCS-02.9): revoked 2.25–3.16 s after the stop with no siren, while the item stopped steering at ≈ 0.1 s, so the hazard is the silent drift before the revocation (TSR-516(b); engaged-mismatch.md (assurance/sim/results/engaged-mismatch.md), synthetic, no evidence credit). (b) Partial, not verified on the vehicle: `controlsMismatch` after 2 consecutive mismatched `pandaStates` samples (10 Hz, about 0.1–0.2 s) and at most 0.5 s after the first mismatched frame (`selfdrive/selfdrived/selfdrived.py:361-366, 566-574`, `supervision.py`; TSR-621, LionDriver #51); above the 0.3 s of (b) in the worst case, and samples in the first 0.3 s after engaging are not counted (TSR-301). Before #51: 200 cumulative cycles, about 2 s (GAP-06)"
   status: proposed
   source: WP-S-02
 
@@ -800,7 +800,7 @@
 
 - id: TSR-511
   kind: tsr
-  text: "Only release-signed LionDriver firmware shall execute on the safety MCU: the signature scheme shall use a current algorithm and key length, flash read-out and write protection shall be set, the SoC's control of `STM_BOOT0`/`STM_RST_N` shall not allow non-release code to drive the relay, release builds of `pandad` shall not flash a development bootstub, and softloader entry (`0xd1` param 1) shall be refused in a car safety mode and while the ignition is on (CSR-024)."
+  text: "Only release-signed LionDriver firmware shall execute on the safety MCU: the bootstub shall verify an ECDSA signature over P-256 with SHA-256 (decided 2026-10-19, DQ-191 A; replaces RSA-1024/SHA-1), flash read-out and write protection shall be set, the SoC's control of `STM_BOOT0`/`STM_RST_N` shall not allow non-release code to drive the relay, release builds of `pandad` shall not flash a development bootstub, and softloader entry (`0xd1` param 1) shall be refused in a car safety mode and while the ignition is on (CSR-024)."
   asil: "C (+ CS)"
   parents: [FSR-01.10]
   parent_text: "FSR-01.10"
@@ -884,7 +884,7 @@
   mechanism: "WRN"
   timing: "≤ 0.5 s after detection"
   verification: "T-HIL"
-  baseline_impl: "Partial: (a) heartbeat loss: siren for 3 s at once when the 0.3 s heartbeat monitor (TSR-407) revokes authority that was granted, ≤ 0.3 s + 10 ms + 250 ms ≈ 0.56 s after the last heartbeat, in all builds (panda `c33343b`, `drivers/heartbeat_siren.h`, IA fast heartbeat (assurance/07-supporting/impact/change-2026-10-12-panda-fast-heartbeat.md) §5; not verified on hardware); the 1 Hz path (siren for 3 s after 4–5 s heartbeat loss if authority within the last 5 s, `main.c:169-171, 198-201`) unchanged, and alone covers authority that ended within the 5 s before the loss, which meets the ≤ 5 s of the reworded (a) (DQ-061 A); (b) for the EPS fault (TSR-110): siren once the fault has persisted 0.7 s (DQ-048, panda `bf8102a`; 1 s before) while authority is granted (since panda `3ee2796`, register DQ-367: counted from when the fault is first seen with authority granted, also after the TSR-408 arrival check revokes authority during the fault), ≥ 3 s, ≤ 0.26 s after that detection (worst case: the speaker sounds only on every other 8 Hz tick) (panda `b790fca`, `drivers/eps_fault_siren.h`, IA EPS fault (assurance/07-supporting/impact/change-2026-10-12-opendbc-toyota-eps-fault.md) §7; detection defined as 1 s persistence by maintainer decision 2026-10-12, to be confirmed against fault durations in reference logs); **the 1 s persistence exceeds the ≤ 0.7 s now required (DQ-048); firmware change open**; (b) for missing SoC command frames (TSR-408, DQ-404 A): since panda `8a69ccf` with opendbc `4d1a056` (reference build), the same 3 s siren starts in the safety task in which the command-arrival check revokes granted authority (opendbc `safety_tx_arrival_revoked`, `drivers/heartbeat_siren.h`), so a full SoC stall, where TSR-408 revokes before the heartbeat check (WP-S-04 T-34), sounds it ≤ 0.06 s + 2 × 125 ms ≈ 0.31 s after the last `0x2E4`; a driver brake press or PCM cruise drop and an RX fault do not set the flag; because the arrival check counts only accepted frames, a host that keeps sending refused frames (TSR-108 content, an EPS fault, a switch fallen to pass-through) also gets the siren once its frames have been refused for 50 ms (IA siren on TX-arrival revocation (assurance/07-supporting/impact/change-2026-10-20-panda-tx-arrival-siren.md); host tests and plant runs F-04b: siren 0.25–0.29 s after the stall, the driver corrects at 1.79 s instead of 2.68 s at the ODD curve bound, silent-stall.md (assurance/sim/results/silent-stall.md), synthetic, no evidence credit; not verified on hardware); other (b) triggers (RX fault TSR-406, TX failure TSR-508, platform fault TSR-502, heartbeat \"not engaged\" TSR-307(a)), (c) and (d) not implemented ((d): a bench test of the reset behaviour comes first, WP-S-04 M-06; retained memory is a hardware choice, WP-H-01); siren path via codec over I2C on some boards, malfunction reported only (`drivers/fake_siren.h:38-52`); shared speaker with SoC audio to be analysed in DFA (WP-A-03 (assurance/08-analyses/WP-A-03-dependent-failure-analysis.md))"
+  baseline_impl: "Partial: (a) heartbeat loss: siren for 3 s at once when the 0.3 s heartbeat monitor (TSR-407) revokes authority that was granted, ≤ 0.3 s + 10 ms + 250 ms ≈ 0.56 s after the last heartbeat, in all builds (panda `c33343b`, `drivers/heartbeat_siren.h`, IA fast heartbeat (assurance/07-supporting/impact/change-2026-10-12-panda-fast-heartbeat.md) §5; not verified on hardware); the 1 Hz path (siren for 3 s after 4–5 s heartbeat loss if authority within the last 5 s, `main.c:169-171, 198-201`) unchanged, and alone covers authority that ended within the 5 s before the loss, which meets the ≤ 5 s of the reworded (a) (DQ-061 A); (b) for the EPS fault (TSR-110): siren once the fault has persisted 0.7 s (DQ-048, panda `bf8102a`; 1 s before) while authority is granted (since panda `3ee2796`, register DQ-367: counted from when the fault is first seen with authority granted, also after the TSR-408 arrival check revokes authority during the fault), ≥ 3 s, ≤ 0.26 s after that detection (worst case: the speaker sounds only on every other 8 Hz tick) (panda `b790fca`, `drivers/eps_fault_siren.h`, IA EPS fault (assurance/07-supporting/impact/change-2026-10-12-opendbc-toyota-eps-fault.md) §7; detection defined as 1 s persistence by maintainer decision 2026-10-12, to be confirmed against fault durations in reference logs); persistence shortened from 1 s to the ≤ 0.7 s required by DQ-048 at panda `bf8102a` (WP-S-04 T-28, siren ≤ 0.96 s from onset); (b) for missing SoC command frames (TSR-408, DQ-404 A): since panda `8a69ccf` with opendbc `4d1a056` (reference build), the same 3 s siren starts in the safety task in which the command-arrival check revokes granted authority (opendbc `safety_tx_arrival_revoked`, `drivers/heartbeat_siren.h`), so a full SoC stall, where TSR-408 revokes before the heartbeat check (WP-S-04 T-34), sounds it ≤ 0.06 s + 2 × 125 ms ≈ 0.31 s after the last `0x2E4`; a driver brake press or PCM cruise drop and an RX fault do not set the flag; because the arrival check counts only accepted frames, a host that keeps sending refused frames (TSR-108 content, an EPS fault, a switch fallen to pass-through) also gets the siren once its frames have been refused for 50 ms (IA siren on TX-arrival revocation (assurance/07-supporting/impact/change-2026-10-20-panda-tx-arrival-siren.md); host tests and plant runs F-04b: siren 0.25–0.29 s after the stall, the driver corrects at 1.79 s instead of 2.68 s at the ODD curve bound, silent-stall.md (assurance/sim/results/silent-stall.md), synthetic, no evidence credit; not verified on hardware); other (b) triggers (RX fault TSR-406, TX failure TSR-508, platform fault TSR-502, heartbeat \"not engaged\" TSR-307(a)), (c) and (d) not implemented. The heartbeat \"not engaged\" gap is a second silent stall: when selfdrived stops and pandad keeps the heartbeat, `card` keeps sending `0x2E4` without a torque request, so TSR-408 does not revoke and its siren does not sound; the 1 Hz mismatch check revokes at 2.25–3.16 s with no siren, the first warning is soundd's own alert at 5.0 s, and the drift reaches the driver first, at 0.8–1.9 s (plant run, engaged-mismatch.md (assurance/sim/results/engaged-mismatch.md), synthetic). Closing it needs TSR-307(a) at ≤ 0.3 s and the siren on that revocation ((d): a bench test of the reset behaviour comes first, WP-S-04 M-06; retained memory is a hardware choice, WP-H-01); siren path via codec over I2C on some boards, malfunction reported only (`drivers/fake_siren.h:38-52`); shared speaker with SoC audio to be analysed in DFA (WP-A-03 (assurance/08-analyses/WP-A-03-dependent-failure-analysis.md))"
   status: proposed
   source: WP-S-02
 
@@ -974,7 +974,7 @@
   mechanism: "DES"
   timing: "—"
   verification: "R, T-SIL"
-  baseline_impl: "Not met: masking during big-model load + 5 s (`selfdrive/selfdrived/selfdrived.py:387-389, 408, 462`); hot switch `selfdrive/modeld/modeld.py:411-419` (GAP-17). AIR-25, AIR-30 (WP-C-11 (assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md))"
+  baseline_impl: "Not met: masking during big-model load + 5 s (`selfdrive/selfdrived/selfdrived.py:428-430, 449, 505`); hot switch `selfdrive/modeld/modeld.py:411-419` (GAP-17). AIR-25, AIR-30 (WP-C-11 (assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md))"
   status: proposed
   source: WP-S-02
 
@@ -1094,7 +1094,7 @@
   mechanism: "FR"
   timing: "per policy"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Partial: after 5 s at the terminal alert the policy requests a forced deceleration (`noResponseForceDecel`, `selfdrive/monitoring/policy.py:44-49, 437`; `selfdrive/controls/controlsd.py:236`), but nothing disengages the item, so the lockout (`policy.py:344-357`) acts only after a later disengagement (System FMEA SFM-025.C1, corrected 2026-10-16). The terminal reaction is refined in TSR-633"
+  baseline_impl: "Partial: after 5 s at the terminal alert the policy requests a forced deceleration (`noResponseForceDecel`, `selfdrive/monitoring/policy.py:44-49, 454`; `selfdrive/controls/controlsd.py:236`), but nothing disengages the item, so the lockout (`policy.py:359-372`) acts only after a later disengagement (System FMEA SFM-025.C1, corrected 2026-10-16). The terminal reaction is refined in TSR-633: the item stays engaged, stopped and held until the driver takes over, and since v0.49 the lockout timer runs from that takeover (`policy.py:368-369`)"
   status: proposed
   source: WP-S-02
 
@@ -1109,7 +1109,7 @@
   mechanism: "PLB"
   timing: "—"
   verification: "T-SIL"
-  baseline_impl: "Not met: any steer/gas input resets (`selfdrive/monitoring/policy.py:360-361`) (GAP-21)"
+  baseline_impl: "Not met: any steer/gas input resets (`selfdrive/monitoring/policy.py:375-376`) (GAP-21)"
   status: proposed
   source: WP-S-02
 
@@ -1184,7 +1184,7 @@
   mechanism: "PLB"
   timing: "0.25 s"
   verification: "T-SIL"
-  baseline_impl: "Implemented: `selfdrive/selfdrived/helpers.py:12, 30, 41`; latch `selfdrive/selfdrived/selfdrived.py:310-315`"
+  baseline_impl: "Implemented: `selfdrive/selfdrived/helpers.py:12, 30, 41`; latch `selfdrive/selfdrived/selfdrived.py:326-333`"
   status: proposed
   source: WP-S-02
 
@@ -1259,7 +1259,7 @@
   mechanism: "TMO"
   timing: "≤ 1 s / ≤ 0.2 s"
   verification: "T-SIL, FI"
-  baseline_impl: "Partial: a crashed `ui`/`soundd` raises `processNotRunning` (`selfdrive/selfdrived/selfdrived.py:356-362`); a hung render loop or stalled audio stream is not detected"
+  baseline_impl: "Partial: a crashed `ui`/`soundd` raises `processNotRunning` (`selfdrive/selfdrived/selfdrived.py:398-404`); a hung render loop or stalled audio stream is not detected"
   status: proposed
   source: WP-S-02
 
@@ -1289,7 +1289,7 @@
   mechanism: "WRN"
   timing: "alert ≥ 1 s before decel onset (proposed)"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Partial: DM escalation alerts precede the no-response deceleration (`selfdrive/monitoring/policy.py`); soft-disable force deceleration is announced at its start (`selfdrive/controls/lib/longitudinal_planner.py:84-85`); jerk not bounded (GAP-04)"
+  baseline_impl: "Partial: the driver-monitoring no-response deceleration is announced 5 s ahead: the terminal alert counts down \"Car Stops in N s\" (`policy.py:459`, `events.py:239`), and the maneuver alert \"TAKE CONTROL: CAR STOPPING\", then \"CAR STOPPED\", sounds through the stop and the hold (`events.py:256`, `selfdrived.py:257`); the ramp stays within a_min and j_down on the host: the final command is rate-limited to 4.5 m/s³ (`ACCEL_FINAL_RATE_LIMIT`, opendbc `carcontroller.py:27, 256`, below j_down = 5 m/s³ of WP-W-02 §2.5) and clipped at ACCEL_MIN; the envelope's own jerk check is still missing (GAP-04, TSR-205); the fault soft-disable deceleration still starts with its alert, with no lead time (register DQ-407, queued). Not verified on the vehicle"
   status: proposed
   source: WP-S-02
 
@@ -1304,7 +1304,7 @@
   mechanism: "PLB"
   timing: "≤ 2 periods"
   verification: "T-SIL, LOG"
-  baseline_impl: "Partial: model FCW from `hardBrakePredicted` and planner FCW (`selfdrive/selfdrived/selfdrived.py:445-450`); no explicit freshness gate on FCW inputs; no false-rate target"
+  baseline_impl: "Partial: model FCW from `hardBrakePredicted` and planner FCW (`selfdrive/selfdrived/selfdrived.py:488-493`); no explicit freshness gate on FCW inputs; no false-rate target"
   status: proposed
   source: WP-S-02
 
@@ -1424,7 +1424,7 @@
   mechanism: "FR, WRN"
   timing: "reaction starts ≤ 5 s after the terminal alert (WP-S-04 §3.8)"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Not met: forced deceleration without disengagement or standstill (TSR-611). System FMEA SFM-025.C1, SFM-ACT-005. Added v0.22"
+  baseline_impl: "Implemented in software and unit-tested, not verified on the vehicle: `selfdrived` latches the manoeuvre from the first no-response request until the item disengages (`selfdrive/selfdrived/minimum_risk.py`, published as `selfdriveState.minimumRiskManeuver`), and `controlsd` keeps `forceDecel` on while it is set (`controlsd.py:237-239`), so a dropped DM request (restart, awareness reset) no longer sends the planner back to the set speed; the planner keeps the stop request on and the Toyota controller keeps requesting standstill hold and never resumes (`carcontroller.py:184-189`); the terminal alert is re-raised while latched; the lockout of re-engagement runs from the driver's takeover (`policy.py:368-369`). Open: the PCM standstill hold over time (AOU-16, T-VEH), the deceleration against a_min and j_down and the reaction time (T-33) not measured. System FMEA SFM-025.C1, SFM-ACT-005. Added v0.22"
   status: proposed
   source: WP-S-02
 
@@ -1439,7 +1439,22 @@
   mechanism: "WRN"
   timing: "alert k at T_k = 5/15/25 s or D_k = 150/240/395 m since the last driver input, whichever comes first (WP-C-08 §5.4)"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Impl (SIL): alert k at T_k or D_k, whichever comes first, `selfdrive/monitoring/policy.py:37-41, 402-408` (SWSR-634); unit tests only, vehicle validation open (WP-V-02 §4.4). WP-A-05 LS-09, OI-6. Added v0.31"
+  baseline_impl: "Impl (SIL): alert k at T_k or D_k, whichever comes first, `selfdrive/monitoring/policy.py:37-41, 419-425` (SWSR-634); unit tests only, vehicle validation open (WP-V-02 §4.4). WP-A-05 LS-09, OI-6. Added v0.31"
+  status: proposed
+  source: WP-S-02
+
+- id: TSR-635
+  kind: tsr
+  text: "The time from the driver's change of state (eyes off the road, or hands off under the wheel-touch policy) to the first driver alert shall be ≤ 6 s end to end, including camera frame time, DM model latency and policy evaluation, so the first-alert timer of TSR-608 and TSR-634 shall leave a stated budget for that latency; the no-response reaction of TSR-611 shall start within the time set in WP-S-04 (assurance/03-system/WP-S-04-timing-ftti-budget.md)."
+  asil: "A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11)"
+  parents: [FSR-08.01]
+  parent_text: "FSR-08.01"
+  other_parents: false
+  allocated_to: "SoC"
+  mechanism: "WRN"
+  timing: "first alert ≤ 6 s end to end"
+  verification: "T-SIL, T-VEH"
+  baseline_impl: "Not met, not measured: the policy part is implemented (SWSR-635a: the countdown follows elapsed time at any DM frame rate; SWSR-635b: an uncertain DM output no longer stops it, first alert 5.05 s instead of 15.0 s; `selfdrive/monitoring/policy.py`, unit tests, IA (assurance/07-supporting/impact/change-2026-10-20-dm-first-alert-time.md)), but the camera, model and alert-output latency on top of the 5 s timer is not measured (SWSR-635, WP-C-08 OI-2, WP-S-04 OI-11). Refined in WP-W-02 v0.38 (SWSR-635, 635a, 635b). Added v0.45: FSR-08.01 had no TSR"
   status: proposed
   source: WP-S-02
 
@@ -1589,7 +1604,7 @@
   mechanism: "PLB, FR"
   timing: "detect: first offending frame after ≤ 1–2 s window / same frame"
   verification: "T-SIL, T-HIL"
-  baseline_impl: "Implemented: `safety.h:211-220, 252, 268, 372-380`; reported `main.c:122-129`; host immediate disable `selfdrive/selfdrived/selfdrived.py:346-347`. Latching and readback per TSR-506"
+  baseline_impl: "Implemented: `safety.h:211-220, 252, 268, 372-380`; reported `main.c:122-129`; host immediate disable `selfdrive/selfdrived/selfdrived.py:377-378`. Latching and readback per TSR-506"
   status: proposed
   source: WP-S-02
 

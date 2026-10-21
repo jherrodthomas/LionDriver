@@ -345,7 +345,7 @@ SWERVE = dict(kind="lat", still=0.62, want=[(20, 157), (440, 157)], act=[(20, 15
               actors=[dict(y=93, keys=[(0, 180), (0.92, 420)])])
 DRIFT_LAT = dict(kind="lat", still=0.75, want=[(20, 157), (440, 157)], act=[(20, 157), (200, 157), (300, 170), (380, 186), (440, 196)])
 PHANTOM = dict(kind="lon", still=0.7, actors=[dict(y=157, body="#DC2626", brake=True, keys=[(0, 40), (0.4, 200), (0.7, 250), (0.92, 262)]),
-                                              dict(y=157, keys=[(0, -30), (0.4, 130), (0.7, 212), (0.92, 232)])])
+                                              dict(y=157, keys=[(0, -52), (0.4, 108), (0.7, 190), (0.92, 210)])])
 CURVE_DRIFT = dict(kind="curve", still=0.8, want=ss.CURVE, act=[(-10, 70), (100, 70), (190, 70), (250, 72), (310, 84), (360, 108), (400, 138), (430, 172)])
 SOC = "Code execution on the SoC (QM user space)"
 

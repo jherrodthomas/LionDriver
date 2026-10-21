@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1798" viewBox="0 0 1280 1798" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 2-1. DFA initiators against the ASIL decompositions</title>
-  <desc id="d">Dependent failure analysis LD-DFA-001 rev 0.15 against FSC rev 0.4: 21 dependent failure initiators in 13 categories mapped onto 11 ASIL decompositions. Initiators: 4 insufficient, 14 open, 3 safe by design. Decompositions: 10 not accepted, 1 not assessable. 25 measures with their status (10 required) and the DFA open items.</desc>
+  <desc id="d">Dependent failure analysis LD-DFA-001 rev 0.15 against FSC rev 0.5: 21 dependent failure initiators in 13 categories mapped onto 11 ASIL decompositions. Initiators: 4 insufficient, 14 open, 3 safe by design. Decompositions: 10 not accepted, 1 not assessable. 25 measures with their status (10 required) and the DFA open items.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,7 +9,7 @@
   </defs>
   <rect width="1280" height="1798" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 2-1 · Dependent failure initiators × ASIL decompositions</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">LD-DFA-001 rev 0.15 · FSC rev 0.4 · BL-004 · draft · cell = the initiator affects that decomposition, coloured by the initiator's assessment</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">LD-DFA-001 rev 0.15 · FSC rev 0.5 · BL-004 · draft · cell = the initiator affects that decomposition, coloured by the initiator's assessment</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §2</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/dfa.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>

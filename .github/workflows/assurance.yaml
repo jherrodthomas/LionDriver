@@ -87,6 +87,9 @@ jobs:
         python3 assurance/01-management/figures/test_fig_m_management.py
         python3 assurance/01-management/figures/folder_index.py --check
         python3 assurance/01-management/figures/test_folder_index.py
+        python3 assurance/01-management/figures/scenekit.py --check
+        python3 assurance/01-management/figures/fig_scenekit.py --check
+        python3 assurance/01-management/figures/test_scenekit.py
         python3 assurance/02-concept/figures/fig_c02_odd.py --check
         python3 assurance/02-concept/figures/test_fig_c02_odd.py
         python3 assurance/02-concept/figures/fig_c09_scenes.py --check
@@ -106,6 +109,8 @@ jobs:
         python3 assurance/03-system/figures/test_fig_s03_hierarchy.py
         python3 assurance/03-system/figures/fig_s05_hsi.py --check
         python3 assurance/03-system/figures/test_fig_s05_hsi.py
+        python3 assurance/03-system/requirements/requirements_view.py --check
+        python3 assurance/03-system/requirements/test_requirements_view.py
         python3 assurance/06-validation/figures/fig_v02_validation_targets.py --check
         python3 assurance/06-validation/figures/test_fig_v02_validation_targets.py
         python3 assurance/07-supporting/figures/fig_p_process.py --check
@@ -120,6 +125,14 @@ jobs:
         python3 assurance/sim/figures/test_fig_sim_guide.py
         python3 assurance/models/figures/fig_models.py --check
         python3 assurance/models/figures/test_fig_models.py
+        python3 assurance/models/figures/fig_timing_anim.py --check
+        python3 assurance/models/figures/test_fig_timing_anim.py
+        python3 docs/liondriver/figures/fig_driving.py --check
+        python3 docs/liondriver/figures/test_fig_driving.py
+        python3 docs/liondriver/figures/fig_speed.py --check
+        python3 docs/liondriver/figures/test_fig_speed.py
+        python3 docs/liondriver/figures/fig_perception.py --check
+        python3 docs/liondriver/figures/test_fig_perception.py
     - name: Traceability figures of WP-T-01 match the data (and their tests)
       run: |
         python3 assurance/trace/tools/trace_figures.py --check
@@ -194,6 +207,8 @@ jobs:
       run: |
         python3 tools/safety/fmea_review_md.py --check
         python3 tools/safety/test_fmea_review_md.py
+        python3 tools/safety/fmeda_review_md.py --check
+        python3 tools/safety/export_fmeda_xlsx.py --check
     - name: Workbook viewer page rebuilt for the committed workbooks (and its tests)
       run: |
         python3 tools/xlsx_viewer.py --check
@@ -255,16 +270,19 @@ jobs:
 
   octave-models:
     name: Octave envelope models
-    # Models of envelope logic (assurance/models/octave, WP-P-07 TL-25). Not verification of the C code:
-    # the job checks that the models still follow the pinned opendbc constants and pass their own checks.
+    # Models of envelope logic and of the panda timing loops (assurance/models/octave, WP-P-07 TL-25). Not
+    # verification of the C code: the job checks that the models still follow the pinned opendbc and panda
+    # constants, reproduce the WP-S-04 code-derived times, pass their own checks, and that the committed
+    # timing_loop_results.csv (drawn by assurance/models/figures/fig_timing_anim.py) is current.
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
     - uses: actions/checkout@v7
       with:
         persist-credentials: false
-    - name: Checkout opendbc submodule
-      run: git submodule update --init --depth 1 opendbc_repo
+    - name: Checkout opendbc and panda submodules
+      # panda: the timing-loop model reads the safety-task, tick, heartbeat, watchdog and siren constants
+      run: git submodule update --init --depth 1 opendbc_repo panda
     - name: Install GNU Octave and gnuplot
       run: |
         sudo apt-get update -q
@@ -300,6 +318,26 @@ jobs:
         python3 assurance/04-hardware/wiring/make_wiring.py --check
         python3 assurance/04-hardware/wiring/test_make_wiring.py
 
+  fmdtools:
+    name: fmdtools fault-propagation models
+    # NASA fmdtools models of the fault trees (TE-02; assurance/models/fmdtools). Synthetic: no evidence credit.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Install the pinned fmdtools packages
+      run: python3 -m pip install --quiet --user --break-system-packages -r assurance/models/fmdtools/requirements.txt
+    - name: SG-02 model maps the WP-A-04 tree and reproduces the reference cut sets
+      run: python3 assurance/models/fmdtools/sg02/test_sg02.py
+    - name: SG-02 single-fault page is current (step P2)
+      run: python3 assurance/models/fmdtools/sg02/sweep.py --check
+    - name: SG-02 joint-fault sets of order 1 and 2 are current (step P3; the full sweep runs weekly)
+      run: python3 assurance/models/fmdtools/sg02/sweep.py joint --check --order 2
+    - name: SG-02 time-to-cue page is current (step P4)
+      run: python3 assurance/models/fmdtools/sg02/sweep.py timing --check
+
   sim-plant:
     name: simulation plant model
     # Fault-injection plant model (assurance/sim, layer 1): the real panda safety code in a closed loop with
@@ -322,6 +360,10 @@ jobs:
         python3 assurance/sim/plant/test_plant.py
         python3 assurance/sim/plant/silent_stall.py --check
         python3 assurance/sim/plant/test_silent_stall.py
+        python3 assurance/sim/plant/straight_drift.py --check
+        python3 assurance/sim/plant/test_straight_drift.py
+        python3 assurance/sim/plant/engaged_mismatch.py --check
+        python3 assurance/sim/plant/test_engaged_mismatch.py
     - name: Failure search (Monte Carlo and cross-entropy over the plant model) current, and its tests
       run: |
         python3 assurance/sim/search/search.py --check

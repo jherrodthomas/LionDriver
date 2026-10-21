@@ -20,6 +20,7 @@ class Maneuver:
     self.only_radar = kwargs.get("only_radar", False)
     self.ensure_start = kwargs.get("ensure_start", False)
     self.ensure_slowdown = kwargs.get("ensure_slowdown", False)
+    self.ensure_stays_stopped = kwargs.get("ensure_stays_stopped", False)
     self.enabled = kwargs.get("enabled", True)
     self.e2e = kwargs.get("e2e", False)
     self.personality = kwargs.get("personality", 0)
@@ -76,6 +77,10 @@ class Maneuver:
           valid = False
       else:
         not_starting_t = 0.0
+
+      if self.ensure_stays_stopped and log['speed'] > 1e-2:
+        print('Moved off while it had to stay stopped')
+        valid = False
 
     if self.ensure_slowdown and log['speed'] > 5.5:
       print('LongitudinalPlanner not slowing down!')

@@ -11655,7 +11655,7 @@
       ],
       "allocated_to": "E-01/DM",
       "verification": "T-SIL, FI",
-      "baseline_impl": "Partial: high-uncertainty \u2192 wheel-touch fallback (`policy.py:77-78`); source validity hard-coded `True` (`selfdrive/modeld/dmonitoringmodeld.py:99`); wheel-touch awareness reset by any steer/gas input (`policy.py:334-335`) (GAP-21)",
+      "baseline_impl": "Partial: high-uncertainty \u2192 wheel-touch fallback (`policy.py:77-78`); source validity hard-coded `True` (`selfdrive/modeld/dmonitoringmodeld.py:99`); wheel-touch awareness reset by any steer/gas input (`policy.py:338-339`) (GAP-21)",
       "status": "proposed",
       "source": "WP-C-04",
       "path": "assurance/trace/items/fsr.yaml"
@@ -11671,7 +11671,7 @@
       ],
       "allocated_to": "E-01/DM",
       "verification": "R, T-SIL",
-      "baseline_impl": "Not met: `IsDriverViewEnabled` demo mode (`selfdrive/monitoring/dmonitoringd.py:26-27`, `policy.py:428-437`) (GAP-20)",
+      "baseline_impl": "Not met: `IsDriverViewEnabled` demo mode (`selfdrive/monitoring/dmonitoringd.py:26-27`, `policy.py:445-454`) (GAP-20)",
       "status": "proposed",
       "source": "WP-C-04",
       "path": "assurance/trace/items/fsr.yaml"
@@ -11688,7 +11688,7 @@
       ],
       "allocated_to": "E-01/DM",
       "verification": "T-SIL, T-VEH",
-      "baseline_impl": "Implemented: no-response force decel and lockout 1/5/15/30 min (`policy.py:39-44, 398`; `selfdrive/controls/controlsd.py:203-204`)",
+      "baseline_impl": "Implemented: no-response force decel and lockout 1/5/15/30 min (`policy.py:39-44, 415`; `selfdrive/controls/controlsd.py:203-204`)",
       "status": "proposed",
       "source": "WP-C-04",
       "path": "assurance/trace/items/fsr.yaml"
@@ -14986,7 +14986,7 @@
       "acceptance": "Small inputs do not reset",
       "applies_to": "CFG-001",
       "proposed_by": "ai-assisted (Claude), not reviewed",
-      "baseline_impl": "Not met (`policy.py:334-335`) (GAP-21)",
+      "baseline_impl": "Not met (`policy.py:338-339`) (GAP-21)",
       "status": "proposed",
       "source": "WP-W-02",
       "path": "assurance/trace/items/swsr.yaml"
@@ -17143,7 +17143,7 @@
       "mechanism": "PLB",
       "timing": "\u2014",
       "verification": "T-SIL",
-      "baseline_impl": "Not met: any steer/gas input resets (`selfdrive/monitoring/policy.py:334-335`) (GAP-21)",
+      "baseline_impl": "Not met: any steer/gas input resets (`selfdrive/monitoring/policy.py:338-339`) (GAP-21)",
       "status": "proposed",
       "source": "WP-S-02",
       "path": "assurance/trace/items/tsr.yaml"

@@ -1,0 +1,16 @@
+# fmdtools fault-propagation pilot (TE-02). Exact pins, resolved 2026-10-20 on Python 3.13; CI runs Python 3.12.
+fmdtools==2.5.6      # Apache-2.0, NASA; run as a tool, not part of the item
+ipython==9.17.1      # BSD-3-Clause; fmdtools imports it without declaring it (TE-02 OI-2)
+recordclass==0.24    # MIT; exact pin required by fmdtools
+numpy==2.5.4         # BSD-3-Clause
+scipy==1.18.1        # BSD-3-Clause
+pandas==3.0.6        # BSD-3-Clause
+matplotlib==3.11.2   # PSF-based (matplotlib licence)
+networkx==3.7        # BSD-3-Clause
+ordered-set==4.1.0   # MIT
+dill==0.4.1          # BSD-3-Clause
+tqdm==4.70.1         # MPL-2.0 and MIT
+graphviz==0.21       # MIT; Python binding only, not used by the pilot
+shapely==2.2.0       # BSD-3-Clause
+pytest==9.1.1        # MIT; fmdtools declares it as a runtime dependency
+PyYAML==6.0.3        # MIT; reads events.yaml

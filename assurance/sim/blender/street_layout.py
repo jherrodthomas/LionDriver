@@ -5,7 +5,8 @@ urban scene (test_scenes.py); scene_assets.py builds what it lists.
 Nothing goes in the clear zone: within CLEAR_M of any pose of a pedestrian or cyclist, or across an intersection, a
 traffic light or a crosswalk. Furniture must not hide a road user the scene does not already hide: in
 SH-11 the parked truck is the occluder, and a bench or bus shelter beside it would change what the scene shows.
-Nor may a tall item (a street tree, a bus shelter) stand near the chase camera or on its line of sight to the ego:
+Nor may a tall item (a street tree, a bus shelter, a post of a highway lamp row) stand near the chase camera or on its
+line of sight to the ego:
 chase_rig() is where hazard_scene.py puts that camera, so the layout keeps the dashboard's main view open.
 
 Road coordinates as in export_scene.py: s along the centre line (one point a metre), d lateral (left positive). An
@@ -115,6 +116,22 @@ def pavements(road: dict) -> list[tuple[int, float, float]]:
       side = 1 if sfc["d0"] + sfc["d1"] > 0 else -1
       lo, hi = sorted((sfc["d0"], sfc["d1"]), key=abs)
       out.append((side, lo, hi))
+  return out
+
+
+def lamp_row(sc: dict, p: dict) -> list[dict]:
+  """The posts of a `lamps` prop: [{s, d, x, y, yaw}] every every_m (default 45) from 5 m into the road, at the prop's
+  d, each turned so its arm (-Y in its own frame) reaches over the carriageway. A post that would stand near the
+  chase camera or on its line of sight to the ego (in_view) is left out, so the row keeps the main view open."""
+  centre = sc["road"]["centre"]
+  lines = sight_lines(sc)
+  out, s = [], centre[0][3] + 5.0
+  while s < centre[-1][3]:
+    c = at(centre, s)
+    x, y = offset(c, p["d"])
+    if not in_view(lines, x, y, PLACE["lamp"][1]):
+      out.append({"s": s, "d": p["d"], "x": x, "y": y, "yaw": c[2] + (0.0 if p["d"] > 0 else math.pi)})
+    s += p.get("every_m", 45)
   return out
 
 

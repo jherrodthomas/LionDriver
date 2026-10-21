@@ -56,10 +56,10 @@ LAYOUT = {
     # in exactly one group, so a new revocation forces a layout. Names are short view labels; the table is normative
     "panel": {"edge": ("ALLOWED", "NOT_ALLOWED"), "y": 330,
               "groups": [("Driver", ["T2", "T3", "T10e", "T12"]), ("Car bus", ["T4", "T5", "T10c", "T14"]),
-                         ("Host", ["T6", "T10a", "T10b", "T11", "T9", "T13"]), ("Platform", ["T7", "T10d", "T15"])],
+                         ("Host", ["T6", "T6a", "T10a", "T10b", "T11", "T9", "T13"]), ("Platform", ["T7", "T10d", "T15"])],
               "names": {"T2": "cruise off", "T3": "brake", "T10e": "steering override", "T12": "driver torque",
                         "T4": "checksum, quality, counter", "T5": "RX check lagging", "T10c": "cruise, main off",
-                        "T14": "bus-off", "T6": "heartbeat not engaged", "T10a": "heartbeat lost",
+                        "T14": "bus-off", "T6": "not engaged, 1 Hz", "T6a": "not engaged, 0.3 s", "T10a": "heartbeat lost",
                         "T10b": "command not fresh", "T11": "TX rate exceeded", "T9": "TX content rejected",
                         "T13": "SPI errors", "T7": "safety mode set", "T10d": "platform fault", "T15": "forwarding"}}},
   "SM-SAFETY-MODE": {
@@ -487,7 +487,7 @@ LINES = [
   ([(668, 124), (668, 175), (425, 175), (425, 220), (440, 220)], ("brake, moving", 546, 169, "middle")),
   ([(650, 220), (800, 220)], ("brake: T3", 725, 214, "middle")),
   ([(650, 310), (800, 310)], ("T5, T10b*", 725, 304, "middle")),
-  ([(650, 400), (800, 400)], ("T6, T10a", 725, 394, "middle")),
+  ([(650, 400), (800, 400)], ("T6a*, T10a", 725, 394, "middle")),
   ([(650, 485), (800, 485)], ("reset: T7", 725, 479, "middle")),
   ([(124, 593), (175, 593)], ("frame", 150, 587, "middle")),
   ([(375, 593), (440, 593)], ("allowed", 407, 587, "middle")),

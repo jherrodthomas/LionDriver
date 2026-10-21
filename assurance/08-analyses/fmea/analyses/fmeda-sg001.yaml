@@ -15,12 +15,17 @@
 # lead. Rows the FTA cites for those goals carry a note naming the goal.
 # Rev 0.6 (2026-10-20): harness-box and harness components carry the wire-end IDs of the WireViz drawings (wire ends in assurance/04-hardware/wiring/wire-ends.tsv, transcribed from
 # comma's v3 drawing, not measured; wiring OI-W-1) in ref_des. No rate, classification or metric changes.
+# Rev 0.7 (2026-10-20, FMEDA format review): the goals and ASIL targets of WP-H-04 §4 are data (analysis.targets): SG-01 at C with B
+# alongside (DQ-063), SG-02/03/06 at C and SG-04/05 at B on the shared rows (DQ-002, DQ-362). LD-HARA-001's ASIL D for SG-001 stays as
+# asil_target for reference only. FMD-001 and FMD-009 carry their SG-05 classification (single-point, FTA BE-5.02) as per_goal entries,
+# so SG-05 gets its own estimate. Rate kind, handbook reference and wire ends are separate fields; history is data. SG-01 rates and
+# classifications are unchanged.
 schema_version: 1
 analysis:
   id: FMD
   type: fmeda
   title: FMEDA — SG-001 lateral (panda safety path), generic failure rates
-  revision: '0.6'
+  revision: '0.7'
   status: draft
   baseline: BL-002
   rating_tables: RT-1
@@ -29,6 +34,26 @@ analysis:
     (ASIL C) and SG-05 (ASIL B), classified for SG-001; per-goal notes in WP-H-03 §6.4
   safety_goal: SG-001
   asil_target: D
+  targets:
+  - goal: SG-01
+    asil: C
+    also_show: [B]
+    basis: 'WP-C-03 SG-01 at ASIL C until the HARA re-rates it, with the ASIL B result shown alongside (DQ-063). LD-HARA-001 SG-001 is rated D'
+  - goal: SG-02
+    asil: C
+    basis: 'WP-C-03 v0.4; the shared rows are reused with the SG-01 classification (DQ-362 option A, WP-H-03 §6.4)'
+  - goal: SG-03
+    asil: C
+    basis: 'WP-C-03 v0.4; 0x343 leaves through the same TX path, rows reused with the SG-01 classification (DQ-362 option A)'
+  - goal: SG-04
+    asil: B
+    basis: 'WP-C-03 v0.4; rows reused with the SG-01 classification (DQ-002)'
+  - goal: SG-05
+    asil: B
+    basis: 'WP-C-03 v0.4; rows reused (DQ-362 option A), with FMD-001 and FMD-009 single-point for this goal (FTA BE-5.02)'
+  - goal: SG-06
+    asil: C
+    basis: 'WP-C-03 v0.4; the shared rows are reused with the SG-01 classification (DQ-362 option A, WP-H-03 §6.4)'
   mission_profile: 'Passenger car, windscreen-mounted device: ambient up to +85 °C in the sun-loaded enclosure, Tj up to about +105 °C; about 500 operating h/year
     for 15 years (7,500 h). Failure rates in FIT (1e-9/h); transient (soft-error) rates included where noted. PMHF here is only λSPF + λRF; the dual-point term is
     not computed (rating-tables §6.3)'
@@ -43,6 +68,28 @@ analysis:
   - assurance/08-analyses/fmea/rating-tables.md
   - ISO 26262-5:2018 §8-9 and Annex D; ISO 26262-11:2018 §4.6 (semiconductors)
   updated: '2026-10-20'
+  history:
+  - revision: '0.1'
+    date: '2026-10-10'
+    change: 'Stub without components'
+  - revision: '0.2'
+    date: '2026-10-12'
+    change: 'First quantitative FMEDA at BL-002 with generic failure rates'
+  - revision: '0.3'
+    date: '2026-10-15'
+    change: 'Relay re-based to the harness box v3 analog switches U1/U2 and its pull-down, supply and clamps (RR-2026-010)'
+  - revision: '0.4'
+    date: '2026-10-16'
+    change: 'U1/U2 at the SN 29500-2 reference value, 2 × 25 FIT (secondary quote); box discretes keep generic rates with their SN 29500 class named'
+  - revision: '0.5'
+    date: '2026-10-18'
+    change: 'Rows reused for SG-02, SG-03, SG-05 and SG-06 (DQ-362 A), a note per goal; no rate, classification or metric change'
+  - revision: '0.6'
+    date: '2026-10-20'
+    change: 'Wire-end IDs of the WireViz drawings added; no rate, classification or metric change'
+  - revision: '0.7'
+    date: '2026-10-20'
+    change: 'Format review: targets per goal (C with B alongside for SG-01), SG-05 classification of FMD-001 and FMD-009, rate kind and wire ends as fields; SG-01 metrics unchanged'
 safety_mechanisms:
 - id: FMD-SM-001
   description: Flash ECC (single-error correction in silicon; corrected reads are transparent)
@@ -95,6 +142,10 @@ components:
     notes: 'Needs a SoC command outside the envelope as second fault. No CPU self-test, so fully latent. Also stands for SG-05 (FTA BE-5.02,
       DQ-362): a wrong authority check that keeps authority after the brake or cancel needs no second fault there, so for SG-05 it is
       effectively single-point; the classification here is for SG-001 only'
+    per_goal:
+    - goal: SG-05
+      violates_sg_directly: true
+      reason: 'Authority wrongly kept after the brake or cancel needs no second fault (FTA BE-5.02, WP-H-03 §6.4)'
   - id: FMD-002
     mode: Frame content altered after the TX check (data-path fault)
     distribution: 0.05
@@ -120,7 +171,11 @@ components:
     violates_sg_directly: false
     mpf_potential: false
   ref_des: U (STM32H725)
+  rate_kind: generic
+  stress_converted: false
 - id: FMD-C-002
+  rate_kind: generic
+  stress_converted: false
   part: Embedded flash 1 MB (code and limit constants)
   dfmea_element: DFM-SE-002
   failure_rate_fit: 20
@@ -153,6 +208,8 @@ components:
     mpf_potential: false
     dfmea_ref: DFM-002
 - id: FMD-C-003
+  rate_kind: generic
+  stress_converted: false
   part: SRAM regions holding safety state, limits copy and CAN queues (about 64 KB of 564 KB; soft errors dominate)
   dfmea_element: DFM-SE-002
   failure_rate_fit: 100
@@ -178,6 +235,10 @@ components:
     notes: 'Needs a SoC command outside the envelope or while not engaged; double-error flag not handled (latent). Also stands for
       SG-05 (FTA BE-5.02, DQ-362): a corrupted controls_allowed that stays true after the brake is effectively single-point there;
       the classification here is for SG-001 only'
+    per_goal:
+    - goal: SG-05
+      violates_sg_directly: true
+      reason: 'A corrupted controls_allowed that stays true after the brake needs no second fault (FTA BE-5.02, WP-H-03 §6.4)'
   - id: FMD-010
     mode: Multi-bit upset in the TX queue after the check
     distribution: 0.02
@@ -194,6 +255,8 @@ components:
     mpf_potential: false
     dfmea_ref: DFM-003
 - id: FMD-C-004
+  rate_kind: generic
+  stress_converted: false
   part: 'Clock: 25 MHz HSE crystal and PLL'
   dfmea_element: DFM-SE-003
   failure_rate_fit: 10
@@ -218,6 +281,8 @@ components:
     dfmea_ref: DFM-005
     notes: Rate limits are per frame and the EPS has its own limits; violation needs a second fault. No cross-check (TSR-504)
 - id: FMD-C-005
+  rate_kind: generic
+  stress_converted: false
   part: 'MCU supply: board regulator and STM32H7 internal SMPS/LDO'
   dfmea_element: DFM-SE-004
   failure_rate_fit: 15
@@ -246,6 +311,8 @@ components:
     mpf_potential: true
     dfmea_ref: DFM-007
 - id: FMD-C-006
+  rate_kind: generic
+  stress_converted: false
   part: Car-side CAN transceiver XCVR1
   dfmea_element: DFM-SE-005
   failure_rate_fit: 10
@@ -276,7 +343,12 @@ components:
     dc_lf: 0.99
     notes: CAN CRC. Also stands for SG-03 (FTA BE-3.04, DQ-362)
 - id: FMD-C-007
-  ref_des: 'U1, U2 (harness box); wire ends in assurance/04-hardware/wiring/wire-ends.tsv: HB.U1.6-J3.A8, HB.U2.6-J3.A8 (IN = SBU1), HB.J1.4-U1.2, HB.J1.6-U2.1, HB.J1.16-U1.1, HB.J1.18-U2.2'
+  ref_des: U1, U2 (harness box)
+  wire_ends: [HB.U1.6-J3.A8, HB.U2.6-J3.A8, HB.J1.4-U1.2, HB.J1.6-U2.1, HB.J1.16-U1.1, HB.J1.18-U2.2]
+  rate_kind: handbook
+  handbook_ref: SN 29500-2 Table 5, CMOS/BiCMOS analog and mixed-signal ICs (quoted from TI functional-safety reports; standard not read)
+  reference_temp_c: 55
+  stress_converted: false
   part: 'Intercept switch: 2 × DG419LE CMOS analog SPDT (harness box)'
   dfmea_element: DFM-SE-006
   failure_rate_fit: 50
@@ -309,7 +381,10 @@ components:
     dc_lf: 0.9
     notes: RX timeouts and CAN errors
 - id: FMD-C-008
-  ref_des: 'R2, R3 (harness box); wire ends in assurance/04-hardware/wiring/wire-ends.tsv: HB.R2/R3.1-J3.A8'
+  ref_des: R2, R3 (harness box)
+  wire_ends: [HB.R2/R3.1-J3.A8]
+  rate_kind: generic
+  stress_converted: false
   part: 'SBU1 pull-down: 2 × 120 Ω thick-film resistor in series'
   dfmea_element: DFM-SE-006
   failure_rate_fit: 0.4

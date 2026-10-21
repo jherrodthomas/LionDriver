@@ -13,12 +13,14 @@
 # classification or metric changes; the rows are classified for SG-009. Per-goal notes in WP-H-03 §6.4.
 # Rev 0.6 (2026-10-20): harness-box and harness components carry the wire-end IDs of the WireViz drawings (wire ends in assurance/04-hardware/wiring/wire-ends.tsv, transcribed from
 # comma's v3 drawing, not measured; wiring OI-W-1) in ref_des. No rate, classification or metric changes.
+# Rev 0.7 (2026-10-20, FMEDA format review): target as data (analysis.targets: SG-07 at B, WP-C-03 numbering); rate kind, handbook
+# reference and wire ends are separate fields; history is data. No rate, classification or metric changes.
 schema_version: 1
 analysis:
   id: FMD
   type: fmeda
   title: FMEDA — SG-009 stock AEB availability (relay and forwarding path), generic failure rates
-  revision: '0.6'
+  revision: '0.7'
   status: draft
   baseline: BL-002
   rating_tables: RT-1
@@ -26,6 +28,10 @@ analysis:
     assurance WP-C-03 SG-07, ASIL B). Reference device at BL-002
   safety_goal: SG-009
   asil_target: B
+  targets:
+  - goal: SG-07
+    asil: B
+    basis: 'WP-C-03 SG-07 (LD-HARA-001 SG-009); the SPFM shortfall is a recorded deviation, conditional on the harness box bench tests (DQ-320, WP-H-04 §5.3)'
   mission_profile: 'Passenger car, windscreen-mounted device: ambient up to +85 °C in the sun-loaded enclosure, Tj up to about +105 °C; about 500 operating h/year
     for 15 years (7,500 h). Failure rates in FIT (1e-9/h); transient (soft-error) rates included where noted. PMHF here is only λSPF + λRF; the dual-point term is
     not computed (rating-tables §6.3)'
@@ -40,6 +46,28 @@ analysis:
   - assurance/08-analyses/fmea/rating-tables.md
   - ISO 26262-5:2018 §8-9 and Annex D; ISO 26262-11:2018 §4.6 (semiconductors)
   updated: '2026-10-20'
+  history:
+  - revision: '0.1'
+    date: '2026-10-10'
+    change: 'Stub without components'
+  - revision: '0.2'
+    date: '2026-10-12'
+    change: 'First quantitative FMEDA at BL-002 with generic failure rates'
+  - revision: '0.3'
+    date: '2026-10-15'
+    change: 'Relay re-based to the harness box v3 analog switches U1/U2 and its pull-down, supply and clamps (RR-2026-010)'
+  - revision: '0.4'
+    date: '2026-10-16'
+    change: 'U1/U2 at the SN 29500-2 reference value, 2 × 25 FIT (secondary quote); box discretes keep generic rates with their SN 29500 class named'
+  - revision: '0.5'
+    date: '2026-10-18'
+    change: 'Rows that stop actuation noted for SG-02 and SG-06 (DQ-362 A); their metric is the shared SG-01 estimate; no metric change'
+  - revision: '0.6'
+    date: '2026-10-20'
+    change: 'Wire-end IDs of the WireViz drawings added; no rate, classification or metric change'
+  - revision: '0.7'
+    date: '2026-10-20'
+    change: 'Format review: target as data, rate kind and wire ends as fields; no rate, classification or metric change'
 safety_mechanisms:
 - id: FMD-SM-001
   description: Flash ECC (single-error correction in silicon; corrected reads are transparent)
@@ -68,6 +96,8 @@ safety_mechanisms:
   requirement: TSR-501
 components:
 - id: FMD-C-001
+  rate_kind: generic
+  stress_converted: false
   part: STM32H725 CPU core, bus matrix, interrupt controller and peripherals
   dfmea_element: DFM-SE-002
   failure_rate_fit: 50
@@ -98,6 +128,8 @@ components:
     violates_sg_directly: false
     mpf_potential: false
 - id: FMD-C-002
+  rate_kind: generic
+  stress_converted: false
   part: Embedded flash 1 MB
   dfmea_element: DFM-SE-002
   failure_rate_fit: 20
@@ -131,6 +163,8 @@ components:
     dc_lf: 0.9
     notes: Wrong blocking of a PCS message; boot signature finds permanent faults at the next power-up
 - id: FMD-C-003
+  rate_kind: generic
+  stress_converted: false
   part: SRAM regions holding forwarding state and CAN queues (about 64 KB)
   dfmea_element: DFM-SE-002
   failure_rate_fit: 100
@@ -162,6 +196,8 @@ components:
     dfmea_ref: DFM-003
     notes: PCS messages repeat; one lost frame is tolerated
 - id: FMD-C-004
+  rate_kind: generic
+  stress_converted: false
   part: 'Clock: 25 MHz HSE crystal and PLL'
   dfmea_element: DFM-SE-003
   failure_rate_fit: 10
@@ -191,6 +227,8 @@ components:
     mpf_potential: false
     dfmea_ref: DFM-005
 - id: FMD-C-005
+  rate_kind: generic
+  stress_converted: false
   part: MCU supply
   dfmea_element: DFM-SE-004
   failure_rate_fit: 15
@@ -221,6 +259,8 @@ components:
     mpf_potential: false
     dfmea_ref: DFM-007
 - id: FMD-C-006
+  rate_kind: generic
+  stress_converted: false
   part: Camera-side and car-side CAN transceivers (XCVR3, XCVR1)
   dfmea_element: DFM-SE-005
   failure_rate_fit: 20
@@ -248,7 +288,12 @@ components:
     violates_sg_directly: false
     mpf_potential: false
 - id: FMD-C-007
-  ref_des: 'U1, U2 (harness box); wire ends in assurance/04-hardware/wiring/wire-ends.tsv: HB.U1.6-J3.A8, HB.U2.6-J3.A8 (IN = SBU1), HB.J1.4-U1.2, HB.J1.6-U2.1, HB.J1.16-U1.1, HB.J1.18-U2.2'
+  ref_des: U1, U2 (harness box)
+  wire_ends: [HB.U1.6-J3.A8, HB.U2.6-J3.A8, HB.J1.4-U1.2, HB.J1.6-U2.1, HB.J1.16-U1.1, HB.J1.18-U2.2]
+  rate_kind: handbook
+  handbook_ref: SN 29500-2 Table 5, CMOS/BiCMOS analog and mixed-signal ICs (quoted from TI functional-safety reports; standard not read)
+  reference_temp_c: 55
+  stress_converted: false
   part: 'Intercept switch: 2 × DG419LE CMOS analog SPDT (harness box)'
   dfmea_element: DFM-SE-006
   failure_rate_fit: 50
@@ -277,7 +322,10 @@ components:
     dfmea_ref: DFM-013
     notes: Installation check only (DFM-ACT-008); no in-field detection of the stock path
 - id: FMD-C-010
-  ref_des: 'Device side (unknown, UK-06); wire ends in assurance/04-hardware/wiring/wire-ends.tsv: OC.W1.11 (SBU1 link)'
+  ref_des: Device side (unknown, UK-06)
+  wire_ends: [OC.W1.11]
+  rate_kind: generic
+  stress_converted: false
   part: SBU1 drive circuit in the comma device
   dfmea_element: DFM-SE-006
   failure_rate_fit: 5
@@ -299,7 +347,10 @@ components:
     dfmea_ref: DFM-011
     notes: 'Pull-down selects pass-through: safe for SG-009'
 - id: FMD-C-011
-  ref_des: 'R2, R3 (harness box); wire ends in assurance/04-hardware/wiring/wire-ends.tsv: HB.R2/R3.1-J3.A8'
+  ref_des: R2, R3 (harness box)
+  wire_ends: [HB.R2/R3.1-J3.A8]
+  rate_kind: generic
+  stress_converted: false
   part: 'SBU1 pull-down: 2 × 120 Ω thick-film resistor in series'
   dfmea_element: DFM-SE-006
   failure_rate_fit: 0.4
@@ -321,7 +372,10 @@ components:
     dfmea_ref: DFM-011
     notes: 'Pass-through: safe for SG-009'
 - id: FMD-C-012
-  ref_des: 'D1, D4 (harness box); wire ends in assurance/04-hardware/wiring/wire-ends.tsv: HB.J1.2-D1.A, HB.D1.K-J3.A4, HB.J2.4-J3.A4'
+  ref_des: D1, D4 (harness box)
+  wire_ends: [HB.J1.2-D1.A, HB.D1.K-J3.A4, HB.J2.4-J3.A4]
+  rate_kind: generic
+  stress_converted: false
   part: 'Box supply: D1 Schottky STPS2H100ZFY from ignition, D4 TVS SMF16A'
   dfmea_element: DFM-SE-006
   failure_rate_fit: 3
@@ -351,7 +405,9 @@ components:
     dfmea_ref: DFM-020
     notes: Latent loss of reverse or transient protection
 - id: FMD-C-013
-  ref_des: 'D2, D3 (harness box); clamp wiring not drawn in wire-ends.tsv'
+  ref_des: D2, D3 (harness box)
+  rate_kind: generic
+  stress_converted: false
   part: 'Bus clamps: 2 × BAS40SDW Schottky pairs on CAN0 and CAN2'
   dfmea_element: DFM-SE-006
   failure_rate_fit: 2
@@ -374,7 +430,10 @@ components:
     notes: Latent loss of bus protection
 - id: FMD-C-008
   part: Harness connector and harness-box wiring in the stock path
-  ref_des: 'Wire ends in assurance/04-hardware/wiring/wire-ends.tsv: Toyota A harness TA.W1.1, TA.W1.2 (camera CAN2), TA.W2.1, TA.W2.2 (car CAN0); box lines HB.J1.4-U1.2, HB.J1.6-U2.1, HB.J1.16-U1.1, HB.J1.18-U2.2; device link OC.W1.1…OC.W1.12'
+  ref_des: Harness and box wiring
+  wire_ends: [TA.W1.1, TA.W1.2, TA.W2.1, TA.W2.2, HB.J1.4-U1.2, HB.J1.6-U2.1, HB.J1.16-U1.1, HB.J1.18-U2.2, OC.W1.1, OC.W1.2, OC.W1.3, OC.W1.4, OC.W1.5, OC.W1.6, OC.W1.7, OC.W1.8, OC.W1.9, OC.W1.10, OC.W1.11, OC.W1.12]
+  rate_kind: generic
+  stress_converted: false
   dfmea_element: DFM-SE-007
   failure_rate_fit: 10
   failure_rate_source: Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not
@@ -396,6 +455,8 @@ components:
     dfmea_ref: DFM-012
     notes: SBU1 undriven, the pull-down selects pass-through and the stock path is restored, if the box stays powered
 - id: FMD-C-009
+  rate_kind: generic
+  stress_converted: false
   part: 'Independent watchdog: LSI oscillator and IWDG'
   dfmea_element: DFM-SE-003
   failure_rate_fit: 2

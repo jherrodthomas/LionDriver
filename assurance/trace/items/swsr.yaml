@@ -511,7 +511,7 @@
   acceptance: "Clear within 0.3 s + one task period"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met: 3 consecutive 1 Hz ticks (`main.c:181-189`) (GAP-06)"
+  baseline_impl: "Implemented in the reference build (panda `f4803c5`): the 100 Hz safety task counts the ticks since the first \"not engaged\" heartbeat while authority is granted and clears authority at 30 ticks, 0.3 s (`drivers/engaged_mismatch.h`, `main.c` `safety_task_handler`; host test `tests/engaged_mismatch`, HIL `test_not_engaged_heartbeat_revokes_within_0_3_s` not run). Plant run (selfdrived stops, pandad keeps the heartbeat): revoked 0.39–0.48 s after the stop, that is 0.3 s after the first stale heartbeat (engaged-mismatch.md (assurance/sim/results/engaged-mismatch.md), synthetic). Other builds: 3 consecutive 1 Hz ticks (`main.c` `tick_handler`), unchanged (GAP-06)"
   status: proposed
   source: WP-W-02
 
@@ -527,7 +527,7 @@
   acceptance: "Event within 30 frames"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met: 200 frames (`selfdrive/selfdrived/selfdrived.py:343, 510-535`)"
+  baseline_impl: "Partial: `controlsMismatch` after 2 consecutive mismatched `pandaStates` samples (10 Hz, about 0.1–0.2 s) and at most 0.5 s after the first mismatched frame (`selfdrive/selfdrived/selfdrived.py:361-366, 566-574`, `supervision.py`; TSR-621, LionDriver #51); typically within 30 frames, but the 0.5 s bound is 50 frames. Before #51: 200 frames"
   status: proposed
   source: WP-W-02
 
@@ -607,7 +607,7 @@
   acceptance: "Measured period ≤ 20 ms, jitter recorded"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial (panda `9f60e17`): TIM4 100 Hz safety task runs `safety_tick()` (RX timeout), the heartbeat monitor (SWSR-407) and feeds the IWDG; the checks of SWSR-307, 403, 404, 405, 408, 413 and 506 do not run in it (`main.c` `safety_task_handler`), rate fault at 110 Hz. Period and jitter not yet measured (IA watchdog (assurance/07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) §7)"
+  baseline_impl: "Partial (panda `9f60e17`): TIM4 100 Hz safety task runs `safety_tick()` (RX timeout), the heartbeat monitor (SWSR-407) and feeds the IWDG; since panda `f4803c5` the reference build also runs the SWSR-307 check in it (`drivers/engaged_mismatch.h`); the checks of SWSR-403, 404, 405, 408, 413 and 506 do not run in it (`main.c` `safety_task_handler`), rate fault at 110 Hz. Period and jitter not yet measured (IA watchdog (assurance/07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) §7)"
   status: proposed
   source: WP-W-02
 
@@ -1141,8 +1141,8 @@
 
 - id: SWSR-511
   kind: swsr
-  text: "The bootstub shall execute the application only after verifying its signature with a current algorithm and key length against the release key; release bootstubs shall not accept the debug key."
-  asil: "B‡ (+ CS)"
+  text: "The bootstub shall execute the application only after verifying its ECDSA signature over P-256 with a SHA-256 digest (decided 2026-10-19, DQ-191 A) against the release key; release bootstubs shall not accept the debug key."
+  asil: "C (+ CS)"
   parents: [TSR-511]
   parent_text: "TSR-511"
   other_parents: false
@@ -1151,14 +1151,14 @@
   acceptance: "Tampered image or debug-signed image not executed"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: RSA-1024/SHA-1 (`bootstub.c:47-72`); debug key only with `ALLOW_DEBUG` (`:67-72`) (GAP-24)"
+  baseline_impl: "Partial: RSA-1024/SHA-1 (`bootstub.c:47-72`), not the required ECDSA P-256 / SHA-256 (DQ-191 A, not implemented); debug key only with `ALLOW_DEBUG` (`:67-72`) (GAP-24)"
   status: proposed
   source: WP-W-02
 
 - id: SWSR-511a
   kind: swsr
   text: "Request `0xd1` param 1 (softloader entry) shall be rejected while a car safety mode is active or the ignition is on; `0xd1` param 0 shall stay debug-only."
-  asil: "B‡ (+ CS)"
+  asil: "C (+ CS)"
   parents: [TSR-511]
   parent_text: "TSR-511"
   other_parents: false
@@ -1327,7 +1327,7 @@
   acceptance: "Siren ≤ 0.5 s for each trigger; no siren on a brake press or PCM cancel alone"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: heartbeat loss (SWSR-407) revoking authority that was granted → 3 s siren at once, ≈ 0.56 s after the last heartbeat (0.3 s + 10 ms + 2 × 125 ms speaker tick), all builds (panda `c33343b`, `drivers/heartbeat_siren.h`, host test `tests/heartbeat_siren`, HIL `tests/hitl/test_15_heartbeat_siren.py` not run); 1 Hz path unchanged: 3 s siren after 4–5 s heartbeat loss (`main.c:169-171, 198-201`), the only siren when authority ended within the 5 s before the loss; EPS fault (SWSR-110) persisting 0.7 s (DQ-048, panda `bf8102a`; 1 s before) while authority is granted → siren ≥ 3 s, ≤ 0.96 s after the fault onset (panda `b790fca`, `drivers/eps_fault_siren.h`, host test `tests/eps_fault_siren`; HIL not run); since panda `3ee2796` (register DQ-367) the fault counts once it has been seen while authority was granted, so the siren also sounds when SWSR-408 revokes authority during the fault. Missing command frames (SWSR-408, TSR-516(b), DQ-404 A): since panda `8a69ccf` with opendbc `4d1a056` (reference build) the 3 s heartbeat siren also starts in the safety task in which SWSR-408 revokes granted authority (`safety_tx_arrival_revoked`), so a full SoC stall is no longer silent; a brake press, PCM cancel or RX fault does not set the flag (opendbc `test_tx_arrival_revoked_only_by_arrival_check`, host test `tests/heartbeat_siren`, HIL `test_soc_stall_revokes_on_missing_frames` not run). Other (b) triggers and (c) not impl"
+  baseline_impl: "Partial: heartbeat loss (SWSR-407) revoking authority that was granted → 3 s siren at once, ≈ 0.56 s after the last heartbeat (0.3 s + 10 ms + 2 × 125 ms speaker tick), all builds (panda `c33343b`, `drivers/heartbeat_siren.h`, host test `tests/heartbeat_siren`, HIL `tests/hitl/test_15_heartbeat_siren.py` not run); 1 Hz path unchanged: 3 s siren after 4–5 s heartbeat loss (`main.c:169-171, 198-201`), the only siren when authority ended within the 5 s before the loss; EPS fault (SWSR-110) persisting 0.7 s (DQ-048, panda `bf8102a`; 1 s before) while authority is granted → siren ≥ 3 s, ≤ 0.96 s after the fault onset (panda `b790fca`, `drivers/eps_fault_siren.h`, host test `tests/eps_fault_siren`; HIL not run); since panda `3ee2796` (register DQ-367) the fault counts once it has been seen while authority was granted, so the siren also sounds when SWSR-408 revokes authority during the fault. Missing command frames (SWSR-408, TSR-516(b), DQ-404 A): since panda `8a69ccf` with opendbc `4d1a056` (reference build) the 3 s heartbeat siren also starts in the safety task in which SWSR-408 revokes granted authority (`safety_tx_arrival_revoked`), so a full SoC stall is no longer silent; a brake press, PCM cancel or RX fault does not set the flag (opendbc `test_tx_arrival_revoked_only_by_arrival_check`, host test `tests/heartbeat_siren`, HIL `test_soc_stall_revokes_on_missing_frames` not run). Heartbeat \"not engaged\" (SWSR-307) and (c): since panda `f4803c5` (reference build) the same 3 s siren starts when SWSR-516b fires, 0.5 s after the first \"not engaged\" heartbeat, that is 0.2 s after the SWSR-307 revocation; a SWSR-307 revocation followed by a PCM cruise drop within that 0.5 s stays silent, so the siren for that (b) trigger is the (c) siren (host test `tests/engaged_mismatch`; plant run: siren 0.63–0.88 s after selfdrived stops; HIL not run). Other (b) triggers not impl"
   status: proposed
   source: WP-W-02
 
@@ -1343,7 +1343,7 @@
   acceptance: "Flag at 0.5 s ± one RX period; not set when cruise drops within 0.5 s"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not impl"
+  baseline_impl: "Implemented in the reference build in the panda safety task, not in U-SAF-CORE (panda `f4803c5`, `drivers/engaged_mismatch.h`): an episode starts at the first \"not engaged\" heartbeat while authority is granted; at 50 ticks (0.5 s) with PCM cruise still active (`cruise_engaged_prev`) it starts the SWSR-516 siren once; a cruise drop after the revocation, or an \"engaged\" heartbeat, ends it (host test `tests/engaged_mismatch`, 10 tests; HIL not run). Whether every disengagement openpilot makes on its own drops PCM cruise within 0.5 s (the cancel lag) is not yet measured (OI-18)"
   status: proposed
   source: WP-W-02
 
@@ -1407,7 +1407,7 @@
   acceptance: "No suppression path reachable while engaged"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met: `selfdrived.py:387-389, 408, 462`; `modeld.py:411-419` (GAP-17)"
+  baseline_impl: "Not met: `selfdrived.py:428-430, 449, 505`; `modeld.py:411-419` (GAP-17)"
   status: proposed
   source: WP-W-02
 
@@ -1567,7 +1567,7 @@
   acceptance: "Small inputs do not reset"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met (`policy.py:360-361`) (GAP-21)"
+  baseline_impl: "Not met (`policy.py:375-376`) (GAP-21)"
   status: proposed
   source: WP-W-02
 
@@ -1647,7 +1647,7 @@
   acceptance: "Latch"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `selfdrived/helpers.py:12, 30, 41`; `selfdrived.py:310-315`"
+  baseline_impl: "Impl: `selfdrived/helpers.py:12, 30, 41`; `selfdrived.py:326-333`"
   status: proposed
   source: WP-W-02
 
@@ -1679,7 +1679,7 @@
   acceptance: "Mismatch → no engagement ≤ 1 s"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not impl (`selfdrive/pandad/panda_safety.cc:56-69`); host check vs CarParams only (`selfdrived.py:335-344`)"
+  baseline_impl: "Not impl (`selfdrive/pandad/panda_safety.cc:56-69`); host check vs CarParams only (`selfdrived.py:351-366`)"
   status: proposed
   source: WP-W-02
 
@@ -1727,7 +1727,7 @@
   acceptance: "Disable ≤ 1.2 s after a render or audio stall (SIGSTOP of the process)"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not impl: only `processNotRunning` on a crash (`selfdrived.py:356-362`)"
+  baseline_impl: "Not impl: only `processNotRunning` on a crash (`selfdrived.py:398-404`)"
   status: proposed
   source: WP-W-02
 
@@ -1775,7 +1775,7 @@
   acceptance: "Alert-to-onset ≥ 1 s; jerk ≤ j_down in replay"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: soft-disable force deceleration starts with its alert (`longitudinal_planner.py:84-85`); no jerk bound"
+  baseline_impl: "Partial: the driver-monitoring no-response deceleration is announced 5 s ahead: the terminal alert counts down \"Car Stops in N s\" (`policy.py:459`, `events.py:239`), and the maneuver alert \"TAKE CONTROL: CAR STOPPING\", then \"CAR STOPPED\", sounds through the stop and the hold (`events.py:256`, `selfdrived.py:257`); the host rate is ≤ 4.5 m/s³ (`ACCEL_FINAL_RATE_LIMIT`), below j_down; the fault soft-disable deceleration still starts with its alert, with no lead time (register DQ-407, queued)"
   status: proposed
   source: WP-W-02
 
@@ -1791,7 +1791,7 @@
   acceptance: "No FCW from a stale or invalid input; rate measurable from logs"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: no freshness gate (`selfdrived.py:445-450`)"
+  baseline_impl: "Partial: no freshness gate (`selfdrived.py:488-493`)"
   status: proposed
   source: WP-W-02
 
@@ -1839,7 +1839,55 @@
   acceptance: "Constant 30…120 km/h in 10 km/h steps (and 0, 50, 57 km/h) and ±1.5 m/s² ramps between 40 and 100 km/h: each alert within one DM step (50 ms) of the first time T*k* or D*k* is reached, and the distance at each alert ≤ D*k* plus one step; an interaction resets the distance; vision recovery restarts it; no alert below 10 km/h"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `selfdrive/monitoring/policy.py:37-41, 176-184, 193-204, 368-369, 385-389, 402-408`; 6 tests in `selfdrive/monitoring/test_monitoring.py`. Not verified in the vehicle (WP-V-02 §4.4)"
+  baseline_impl: "Impl: `selfdrive/monitoring/policy.py:37-41, 179-189, 198-209, 383-384, 400-404, 419-425`; 6 tests in `selfdrive/monitoring/test_monitoring.py`. Not verified in the vehicle (WP-V-02 §4.4)"
+  status: proposed
+  source: WP-W-02
+
+- id: SWSR-635
+  kind: swsr
+  text: "While engaged above the DM alert speed (10 km/h), with the driver attentive before the change, the first DM alert (alert level one shown by `ui` and its sound started by `soundd`) shall come no later than 6.0 s after the driver's change of state: for the vision policy, the start of exposure (`timestampSof`) of the first cabin frame in which the eyes are off the road; for the wheel-touch policy, the last driver interaction. The 6.0 s is allocated as: the alert-1 timer of SWSR-608 / SWSR-634, 5.0 s; detection, from that frame's start of exposure until the awareness countdown runs (frame readout, `dmonitoringmodeld` execution and the distraction filter), ≤ 0.5 s; alert output, from the `driverMonitoringState` that first carries alert level one until the alert is shown and its sound starts (`selfdrived`, `ui`, `soundd`), ≤ 0.3 s; margin, 0.2 s. Alert output is shared with SWSR-606, and `soundd` priority with SWSR-627."
+  asil: "A (TSR-635; allocated to the QM SoC, open: WP-C-04 OI-11)"
+  parents: [TSR-635]
+  parent_text: "TSR-635"
+  other_parents: false
+  allocated_to: "`host.dm`, `host.modeld`, `host.selfdrived`, `host.hmi`"
+  verification: "UT, IT, VT, LOG"
+  acceptance: "Each budget part met separately: detection ≤ 0.5 s and output ≤ 0.3 s, measured from logs by matching `driverCameraState.timestampSof` to `driverStateV2` on `frameId`, then to `driverMonitoringState`, `selfdriveState` and the audio output (IT on the device, VT in the vehicle); the end-to-end time ≤ 6.0 s for a staged look-away in the vehicle (VT, WP-V-02 VT-08)"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Partly met, not measured end to end: policy part implemented, the first vision alert 5.30 s after the first distracted model output (5.0 s timer and the distraction filter crossing 0.63 after about 0.30 s, `selfdrive/monitoring/policy.py:84, 409`), 5.05 s with an uncertain pose and 5.0 s with the face lost (SWSR-635b), at any DM frame rate within two frame periods (SWSR-635a). Frame readout and model execution (≤ 0.2 s left in the detection part) and the alert output (≤ 0.3 s) are not measured (WP-S-04 OI-11). Wheel-touch: 5.0 s from the last interaction (or 150 m, SWSR-634)"
+  status: proposed
+  source: WP-W-02
+
+- id: SWSR-635a
+  kind: swsr
+  text: "The DM awareness countdown shall advance by the time elapsed between the cabin frames it evaluates (from `timestampSof`, or the receive time where a frame has none), not by a fixed step per evaluated frame, so that frames the DM model skips or drops do not lengthen the SWSR-635 timer in real time."
+  asil: "A (TSR-635; allocated to the QM SoC, open: WP-C-04 OI-11)"
+  parents: [TSR-635]
+  parent_text: "TSR-635"
+  other_parents: false
+  allocated_to: "`host.dm`"
+  verification: "UT, IT"
+  acceptance: "With DM output at 20, 10 and 5 Hz (frames skipped), alert 1 within two frame periods of the 20 Hz time in each case (the filter crossing and the countdown each land on a frame)"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Impl: the countdown step and the distraction filter follow the elapsed time from the cabin frame index, so frames the DM model skipped count; the gap is capped at 2 s, the SWSR-609 window (`selfdrive/monitoring/policy.py:87, 344-351, 357, 384, 508-510`). Unit tests `TestFirstAlertTime` in `selfdrive/monitoring/test_monitoring.py`: at 20, 10 and 5 Hz alert 1 within two frame periods of the 20 Hz time (one each for the filter crossing and the countdown), against 10.6 s and 21.2 s before. Not verified on the device"
+  status: proposed
+  source: WP-W-02
+
+- id: SWSR-635b
+  kind: swsr
+  text: "While engaged, a DM output that does not show an attentive driver shall not stop the SWSR-635 timer: when the face is detected but the pose output is uncertain (orientation std ≥ the high-std threshold), the awareness countdown shall keep running as for a distracted driver, and awareness shall recover only on an attentive classification with a certain pose, or on a driver interaction under the wheel-touch policy. The fallback to the wheel-touch policy shall not add time to the first alert."
+  asil: "A (TSR-635; allocated to the QM SoC, open: WP-C-04 OI-11)"
+  parents: [TSR-635]
+  parent_text: "TSR-635"
+  other_parents: false
+  allocated_to: "`host.dm`"
+  verification: "UT"
+  acceptance: "A driver who becomes distracted with an uncertain pose gets alert 1 ≤ 5.3 s after the first such output (the SWSR-635 policy part), as for a certain pose; past orange the terminal alert still comes at the vision time when the face is lost or the pose turns uncertain; an attentive driver with a certain pose still recovers"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Impl: a detected face with an uncertain pose counts as not attentive, so the countdown runs from the first such output (`policy.py:412`); past orange the vision countdown keeps running when the face is lost or the pose turns uncertain, instead of stopping at orange (`policy.py:213-216`). Unit tests: alert 1 at 5.05 s for a distracted driver with an uncertain pose (15.0 s before); terminal alert at the vision time after orange with the face lost or the pose uncertain (none before); an attentive driver with a certain pose still recovers; `test_somehow_indecisive_model` now expects the vision timers 5 / 8 / 13 s. Not verified on the device; the rate of uncertain output while attentive is OI-17"
   status: proposed
   source: WP-W-02
 

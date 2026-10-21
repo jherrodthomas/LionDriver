@@ -25,6 +25,9 @@ plant runs are in assurance/sim §3.7).
 The build fails if a function with SC guide words has no sheet, or a sheet lacks a model for one of its SC guide words
 or has one for a guide word that is not SC. Regenerate with `python3 hara_figures.py`.
 
+The road, cars, marks, pills and SMIL helpers come from the shared scene kit (01-management/figures/scenekit.py),
+whose reference style these cards are; this module keeps the scene geometry and the behaviour models.
+
 Standard library only.
 """
 
@@ -37,13 +40,12 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+sys.path.insert(0, str(HERE.parents[1] / "01-management" / "figures"))
 import hara_figures as hf  # noqa: E402
 import hara_model as hm  # noqa: E402
+import scenekit as sk  # noqa: E402  (road, car, marks, pills, SMIL helpers)
 from hara_figures import HAIR, INK, MUTED, FigureError, pill, svg_doc, t, wrap  # noqa: E402
-
-REQ, PERF = "#16A34A", "#DC2626"          # required (dashed) and performed (solid) in the chart
-REQ_S, PERF_S = "#4ADE80", "#F87171"      # the same on the dark road surface
-FAULT, CALLOUT = "#FBBF24", "#FEF08A"
+from scenekit import DRIVE, PERF, REQ  # noqa: E402
 
 SUB = {"M01": "fails to occur", "M02": "stops mid-execution", "M03": "when not commanded", "M04": "stuck at one value",
        "M05": "above the intended", "M06": "below the intended", "M07": "before the command", "M08": "after the command",
@@ -147,77 +149,13 @@ def _pts(f, n=90):
   return out
 
 
-def _d(p):
-  return "M" + " L".join(f"{x:.1f} {y:.1f}" for x, y in p)
-
-
 def _edge(k):
   return [(x, cy(x) + k) for x in [W * i / 60 for i in range(61)]]
 
 
-def _pose(p, i):
-  i = max(1, min(len(p) - 1, i))
-  (x0, y0), (x1, y1) = p[i - 1], p[i]
-  return f"translate({x1:.1f} {y1:.1f}) rotate({math.degrees(math.atan2(y1 - y0, x1 - x0)):.1f})"
-
-
-def _car_body(body, stroke=INK):
-  wheels = "".join(f'<rect x="{x}" y="{y}" width="4.5" height="2.4" rx="1" fill="#111827"/>' for x in (-8.5, 4.5) for y in (-6, 3.6))
-  return (f'{wheels}<rect x="-11" y="-5" width="22" height="10" rx="3.5" fill="{body}" stroke="{stroke}" stroke-width="0.9"/>'
-          '<path d="M2.5 -4 L6.5 -3.2 L6.5 3.2 L2.5 4 Z" fill="#1F2937" opacity="0.75"/>'
-          '<path d="M-6.5 -3.6 L-8.5 -3 L-8.5 3 L-6.5 3.6 Z" fill="#1F2937" opacity="0.6"/>'
-          '<rect x="10" y="-4.2" width="1.2" height="2" fill="#FDE68A"/><rect x="10" y="2.2" width="1.2" height="2" fill="#FDE68A"/>')
-
-
-def _car(pose, body, opacity=1.0, stroke=INK):
-  return f'<g transform="{pose}" opacity="{opacity:g}">{_car_body(body, stroke)}</g>'
-
-
-# ---------------------------------------------------------------- animation (SMIL, no script; a still viewer shows the last frame)
-
-DUR, DRIVE = 6, 0.8                       # loop length in s; share of the loop spent driving, the rest holds the end
-
-
 def _key(x):
+  """Loop time at which the car passes x."""
   return DRIVE * (x - X0) / (XE - X0)
-
-
-def _heading(p, i):
-  i = max(1, min(len(p) - 1, i))
-  (x0, y0), (x1, y1) = p[i - 1], p[i]
-  return math.degrees(math.atan2(y1 - y0, x1 - x0))
-
-
-def _anim(attr, kind, values, keys):
-  kt = ";".join(f"{k:.4f}" for k in keys)
-  tag = "animateTransform" if kind else "animate"
-  ty = f' type="{kind}"' if kind else ""
-  return f'<{tag} attributeName="{attr}"{ty} values="{";".join(values)}" keyTimes="{kt}" dur="{DUR}s" repeatCount="indefinite"/>'
-
-
-def _driving(p, inner):
-  """A group that drives along p and holds at its end; its static pose is the end (the still frame)."""
-  keys = [_key(x) for x, _ in p] + [1]
-  tr = [f"{x:.1f},{y:.1f}" for x, y in p] + [f"{p[-1][0]:.1f},{p[-1][1]:.1f}"]
-  rot = [f"{_heading(p, i):.1f}" for i in range(len(p))] + [f"{_heading(p, len(p) - 1):.1f}"]
-  keys[0] = 0
-  return (f'<g transform="translate({p[-1][0]:.1f} {p[-1][1]:.1f})">{_anim("transform", "translate", tr, keys)}'
-          f'<g transform="rotate({_heading(p, len(p) - 1):.1f})">{_anim("transform", "rotate", rot, keys)}{inner}</g></g>')
-
-
-def _appear(k):
-  """Hidden until loop time k, then shown to the end of the loop."""
-  return f'<animate attributeName="opacity" values="0;1" keyTimes="0;{max(k, 0.001):.4f}" calcMode="discrete" dur="{DUR}s" repeatCount="indefinite"/>'
-
-
-def _draw_on(p):
-  """Reveal a path from its start in step with the car (stroke-dashoffset over pathLength 1)."""
-  seg = [math.dist(a, b) for a, b in zip(p, p[1:])]
-  total, run, vals = sum(seg) or 1, 0.0, ["1"]
-  for d in seg:
-    run += d
-    vals.append(f"{1 - run / total:.4f}")
-  return _anim("stroke-dashoffset", None, vals + ["0"], [0] + [_key(x) for x, _ in p[1:]] + [1])
 
 
 def departure(intended, actual):
@@ -236,7 +174,7 @@ def departure(intended, actual):
 def scene(intended, actual, gw, callouts, fallback, badges=()):
   pr, pp = _pts(intended), _pts(actual)
   m = min(len(pr), len(pp))
-  band = _d(pr[:m] + pp[:m][::-1]) + " Z"
+  band = sk.d(pr[:m] + pp[:m][::-1]) + " Z"
   dep = departure(intended, pp)
   if gw == "M10":
     dep = (next((i for i, (x, y) in enumerate(pp) if y - cy(x) < -3 * H + 5), dep[0] if dep else None), "")
@@ -244,62 +182,22 @@ def scene(intended, actual, gw, callouts, fallback, badges=()):
   if dep is None and fallback:
     dep, label = (max(range(m), key=lambda i: abs(pp[i][1] - pr[i][1])), ""), fallback
   fi = next((i for i in range(m) if abs(pp[i][1] - pr[i][1]) > 1.2), None)
-  asphalt = _d(_edge(H + 4) + _edge(-3 * H - 4)[::-1]) + " Z"
   kf = _key(pp[fi][0]) if fi is not None else 0
-  out = ['<rect width="280" height="130" fill="#C9DDBA"/>',
-         *[f'<path d="{_d(_edge(k))}" fill="none" stroke="#B9C7A6" stroke-width="7"/>' for k in (H + 4, -3 * H - 4)],
-         f'<path d="{asphalt}" fill="#565E69"/>',
-         *[f'<path d="{_d(_edge(k))}" fill="none" stroke="#F8FAFC" stroke-width="1.5"/>' for k in (H, -3 * H)],
-         f'<path d="{_d(_edge(-H))}" fill="none" stroke="#F8FAFC" stroke-width="1.3" stroke-dasharray="9 9"/>',
-         f'<g transform="{_pose(_edge(0), 6)}" opacity="0.55"><path d="M-6 -2 L2 -2 L2 -4.5 L8 0 L2 4.5 L2 2 L-6 2 Z" fill="#E5E7EB"/></g>',
-         _car(_pose([(199, cy(199) - 2 * H), (201, cy(201) - 2 * H)], 1), "#9CA3AF", 1, "#4B5563"),
-         # the gap fills in behind the car: clipped to the distance driven so far
-         f'<clipPath id="r{gw}"><rect width="280" height="130">{_anim("width", None, [str(X0), str(XE), "280"], [0, DRIVE, 1])}</rect></clipPath>',
-         f'<path d="{band}" fill="{PERF_S}" opacity="0.22" clip-path="url(#r{gw})"/>',
-         f'<path d="{_d(pr)}" fill="none" stroke="{REQ_S}" stroke-width="2.2" stroke-dasharray="5 3" stroke-linecap="round"/>',
-         f'<path d="{_d(pp)}" fill="none" stroke="{PERF_S}" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" '
-         f'pathLength="1" stroke-dasharray="1 1">{_draw_on(pp)}</path>',
-         _car(_pose(pp, 1), "#F8FAFC", 0.45),
-         _driving(pr[:next((i for i, (x, _) in enumerate(pr) if x >= pp[-1][0]), len(pr) - 1) + 1],
-                  f'<rect x="-11" y="-5" width="22" height="10" rx="3.5" fill="none" stroke="{REQ_S}" stroke-width="1.3" stroke-dasharray="3 2"/>'),
-         _driving(pp, _car_body("#DC2626", "#450A0A"))]
+  out = [*sk.curved_road(_edge),
+         sk.car(sk.pose([(199, cy(199) - 2 * H), (201, cy(201) - 2 * H)], 1), sk.OTHER, 1, sk.OTHER_EDGE),
+         *sk.gap_band(band, gw, X0, XE),
+         sk.intended_path(pr),
+         sk.performed_path(sk.d(pp), sk.draw_on(pp, [_key(x) for x, _ in pp])),
+         sk.start_marker(sk.pose(pp, 1)),
+         sk.driving(pr[:next((i for i, (x, _) in enumerate(pr) if x >= pp[-1][0]), len(pr) - 1) + 1], sk.ghost_body(), _key),
+         sk.driving(pp, sk.ego_body(), _key)]
   if fi is not None:
-    x, y = pp[fi]
-    out.append(f'<g transform="translate({x:.1f} {y:.1f})">{_appear(kf)}<circle r="4.2" fill="{FAULT}" stroke="{INK}" stroke-width="0.9"/>'
-               f'<path d="M0.6 -2.8 L-1.6 0.4 L0 0.4 L-0.6 2.8 L1.6 -0.4 L0 -0.4 Z" fill="{INK}"/></g>')
+    out.append(sk.fault_marker(*pp[fi], kf))
   if dep is not None and dep[0] is not None:
     x, y = pp[dep[0]]
-    out.append(f'<g>{_appear(_key(x))}<circle cx="{x:.1f}" cy="{y:.1f}" r="6" fill="none" stroke="{CALLOUT}" stroke-width="1.6"/>' +
-               t(_lx(x, label), round(y - 11 if y > 30 else y + 16, 1), label, 8, CALLOUT, 600, "middle",
-                 f' stroke="{INK}" stroke-width="2.4" paint-order="stroke"') + "</g>")
-  out += _badges(badges, lambda tt: DRIVE * tt)
+    out.append(sk.callout(x, y, 6, label, round(y - 11 if y > 30 else y + 16, 1), _key(x)))
+  out += sk.badges(badges, lambda tt: DRIVE * tt)
   return out, label
-
-
-def _lx(x, label, size=8):
-  """Keep a centred callout inside the 280-wide scene."""
-  half = hf.text_w(label, size, True) / 2 + 5
-  return round(min(280 - half, max(half, x)), 1)
-
-
-def _badges(badges, key):
-  """Status pills in the scene's top-left corner: (text, from, to or None, style), times as loop fractions 0..1."""
-  out, y = [], 6
-  for text, t0, t1, style in badges:
-    fill, fg, stroke = BADGE[style]
-    w = hf.text_w(text, 7.5, True) + 12
-    if t1 is None:
-      anim = _appear(key(t0)) if t0 > 0 else ""
-    else:
-      anim = (f'<animate attributeName="opacity" values="0;1;0;0" keyTimes="0;{max(key(t0), .001):.4f};{key(t1):.4f};1" '
-              f'calcMode="discrete" dur="{DUR}s" repeatCount="indefinite"/>')
-    out.append(f'<g>{anim}<rect x="6" y="{y}" width="{w:.1f}" height="13" rx="6.5" fill="{fill}" stroke="{stroke}" stroke-width="1"/>' +
-               t(12, y + 9.3, text, 7.5, fg, 700) + "</g>")
-    y += 16
-  return out
-
-
-BADGE = {"bad": ("#7F1D1D", "#FEE2E2", "#FCA5A5"), "ok": ("#14532D", "#DCFCE7", "#4ADE80"), "info": ("#1E293B", "#E2E8F0", "#94A3B8")}
 
 
 def chart(req, perf, axis_y, ylabel):
@@ -315,12 +213,12 @@ def chart(req, perf, axis_y, ylabel):
           f'<path d="{perf}" fill="none" stroke="{PERF}" stroke-width="2.6" stroke-linejoin="round"/>',
           # time cursor in step with the car below; the still frame leaves it at the end of the axis
           f'<line x1="{CX1}" y1="{CY0}" x2="{CX1}" y2="{CY1}" stroke="{INK}" stroke-width="0.8" opacity="0.45">'
-          f'{_anim("x1", None, [str(CX0), str(CX1), str(CX1)], [0, DRIVE, 1])}{_anim("x2", None, [str(CX0), str(CX1), str(CX1)], [0, DRIVE, 1])}</line>']
+          f'{sk.anim("x1", None, [str(CX0), str(CX1), str(CX1)], [0, DRIVE, 1])}{sk.anim("x2", None, [str(CX0), str(CX1), str(CX1)], [0, DRIVE, 1])}</line>']
 
 
 # ---------------------------------------------------------------- longitudinal scene: a straight two-lane road, 280 x 130
 
-LANE_Y, CAR_L = 84, 22                    # ego lane centre; car length (scene units)
+LANE_Y, CAR_L = sk.EGO_LANE, sk.CAR_L     # ego lane centre; car length (scene units)
 AMAX_A, AMAX_B = 160, 240                 # full-scale acceleration and braking (scene units per loop time squared)
 V0, VSET, NT = 175, 175, 200              # start speed, set speed, simulation steps over the drive
 
@@ -389,17 +287,6 @@ def simulate(sc, law):
   return ego, ld, fl, acc
 
 
-def _drive_t(samples, inner):
-  """Time-based driving group (straight road, heading 0); its static pose is the last sample."""
-  keys = [DRIVE * f for f, _, _ in samples] + [1]
-  vals = [f"{x:.1f},{y:.1f}" for _, x, y in samples] + [f"{samples[-1][1]:.1f},{samples[-1][2]:.1f}"]
-  # thin the keyframes: SMIL handles linear interpolation between them
-  keep = sorted({0, len(samples) - 1, *range(0, len(samples), 4)})
-  keys = [keys[i] for i in keep] + [1]
-  vals = [vals[i] for i in keep] + [vals[-1]]
-  return (f'<g transform="translate({samples[-1][1]:.1f} {samples[-1][2]:.1f})">{_anim("transform", "translate", vals, keys)}{inner}</g>')
-
-
 def _events(sc, run, ref):
   """First moment that matters in the actual run, judged against the intended run: (index, label) or None."""
   (ego, ld, fl), (ego_r, ld_r, fl_r) = run, ref
@@ -419,39 +306,25 @@ def lon_scene(spec):
   ego, ld, fl, acc_p = simulate(sc, spec["perf"])
   ego_r, ld_r, fl_r, acc_r = simulate(sc, spec["req"])
   stopx, green = sc.get("stopx"), sc.get("green_at")
-  out = ['<rect width="280" height="130" fill="#C9DDBA"/>', '<rect x="0" y="32" width="280" height="74" fill="#B9C7A6"/>',
-         '<rect x="0" y="35" width="280" height="68" fill="#565E69"/>',
-         '<line x1="0" y1="99" x2="280" y2="99" stroke="#F8FAFC" stroke-width="1.5"/>',
-         '<line x1="0" y1="39" x2="280" y2="39" stroke="#F8FAFC" stroke-width="1.5"/>',
-         '<line x1="0" y1="69" x2="280" y2="69" stroke="#F8FAFC" stroke-width="1.3" stroke-dasharray="9 9"/>',
-         '<g transform="translate(26 54)" opacity="0.55"><path d="M-6 -2 L2 -2 L2 -4.5 L8 0 L2 4.5 L2 2 L-6 2 Z" fill="#E5E7EB"/></g>']
+  out = sk.straight_road()
   if stopx is not None:
-    head = (f'<circle cx="{stopx + 6}" cy="118" r="3.4" fill="#DC2626">' +
-            (_anim("fill", None, ["#DC2626", "#22C55E", "#22C55E"], [0, DRIVE * green, 1]).replace("<animate ", '<animate calcMode="discrete" ')
-             if green is not None else "") + "</circle>")
-    out += [f'<line x1="{stopx}" y1="70" x2="{stopx}" y2="98" stroke="#F8FAFC" stroke-width="3"/>',
-            f'<rect x="{stopx + 2}" y="112" width="8" height="12" rx="2" fill="#1F2937"/>', head]
+    out += sk.traffic_light(stopx, green)
   for x, y, txt in sc.get("labels", ()):
-    out.append(t(_lx(x, txt, 7), y, txt, 7, "#334155", 600, "middle"))
+    out.append(t(sk.fit_x(x, txt, 7), y, txt, 7, "#334155", 600, "middle"))
   # gap kept by the intended run, as a ghost outline
-  out.append(_drive_t(ego_r, f'<rect x="-11" y="-5" width="22" height="10" rx="3.5" fill="none" stroke="{REQ_S}" stroke-width="1.3" stroke-dasharray="3 2"/>'))
+  out.append(sk.drive_t(ego_r, sk.ghost_body()))
   track = [(x, y) for _, x, y in ego]
-  out.append(f'<path d="M{track[0][0]:.1f} {LANE_Y} L{track[-1][0]:.1f} {LANE_Y}" fill="none" stroke="{PERF_S}" stroke-width="2.6" '
-             f'stroke-linecap="round" pathLength="1" stroke-dasharray="1 1">' +
-             _anim("stroke-dashoffset", None, ["1", "0", "0"], [0, DRIVE, 1]) + "</path>")
+  out.append(sk.performed_path(f"M{track[0][0]:.1f} {LANE_Y} L{track[-1][0]:.1f} {LANE_Y}",
+                               sk.anim("stroke-dashoffset", None, ["1", "0", "0"], [0, DRIVE, 1])))
   if ld:
-    body = "#9CA3AF" if not sc.get("stopped") else "#94A3B8"
-    out.append(_drive_t(ld, _car_body(body, "#4B5563") + ('<rect x="-12" y="-5.5" width="2" height="2" fill="#F59E0B"/><rect x="-12" y="3.5" width="2" height="2" fill="#F59E0B"/>'
-                                                          if sc.get("stopped") else "")))
-  out.append(_drive_t(fl, _car_body("#9CA3AF", "#4B5563")))
-  out.append(_drive_t(ego, _car_body("#DC2626", "#450A0A")))
+    out.append(sk.drive_t(ld, sk.other_body(sc.get("stopped", False))))
+  out.append(sk.drive_t(fl, sk.other_body()))
+  out.append(sk.drive_t(ego, sk.ego_body()))
   fi = next((i for i, ((_, a), (_, b)) in enumerate(zip(acc_p, acc_r)) if abs(a - b) > 6), None)
   if spec.get("fault_t") is not None:
     fi = int(spec["fault_t"] * NT)
   if fi is not None:
-    x = ego[fi][1]
-    out.append(f'<g transform="translate({x:.1f} {LANE_Y - 11})">{_appear(DRIVE * ego[fi][0])}<circle r="4.2" fill="{FAULT}" stroke="{INK}" stroke-width="0.9"/>'
-               f'<path d="M0.6 -2.8 L-1.6 0.4 L0 0.4 L-0.6 2.8 L1.6 -0.4 L0 -0.4 Z" fill="{INK}"/></g>')
+    out.append(sk.fault_marker(ego[fi][1], LANE_Y - 11, DRIVE * ego[fi][0]))
   ev = _events(sc, (ego, ld, fl), (ego_r, ld_r, fl_r))
   label = ev[1] if ev else spec.get("fallback", "")
   idx = ev[0] if ev else spec.get("fallback_i")
@@ -461,10 +334,8 @@ def lon_scene(spec):
       x = (x + fl[idx][1]) / 2
     elif ld and label == sc.get("lead_label", "closes on the lead"):
       x = x + CAR_L / 2 + 1
-    out.append(f'<g>{_appear(DRIVE * tt)}<circle cx="{x:.1f}" cy="{LANE_Y}" r="7" fill="none" stroke="{CALLOUT}" stroke-width="1.6"/>' +
-               t(_lx(x, label), LANE_Y + 21, label, 8, CALLOUT, 600, "middle",
-                 f' stroke="{INK}" stroke-width="2.4" paint-order="stroke"') + "</g>")
-  out += _badges(spec.get("badges", ()), lambda tt: DRIVE * tt)
+    out.append(sk.callout(x, LANE_Y, 7, label, LANE_Y + 21, DRIVE * tt))
+  out += sk.badges(spec.get("badges", ()), lambda tt: DRIVE * tt)
   return out, label, acc_r, acc_p
 
 
@@ -779,24 +650,9 @@ def legend(y):
   items = [("req", "Required (intended)"), ("perf", "Performed (malfunction)"), ("fault", "Fault starts"),
            ("ring", "The moment it matters"), ("band", "Gap between intended and actual"), ("other", "Other traffic")]
   for kind, label in items:
-    if kind == "req":
-      b.append(f'<line x1="{x}" y1="{y - 4}" x2="{x + 26}" y2="{y - 4}" stroke="{REQ}" stroke-width="2.4" stroke-dasharray="6 3"/>')
-      x += 32
-    elif kind == "perf":
-      b.append(f'<line x1="{x}" y1="{y - 4}" x2="{x + 26}" y2="{y - 4}" stroke="{PERF}" stroke-width="2.8"/>')
-      x += 32
-    elif kind == "fault":
-      b.append(f'<circle cx="{x + 6}" cy="{y - 4}" r="5" fill="{FAULT}" stroke="{INK}" stroke-width="0.9"/>')
-      x += 16
-    elif kind == "ring":
-      b.append(f'<circle cx="{x + 6}" cy="{y - 4}" r="6" fill="#565E69" stroke="{CALLOUT}" stroke-width="1.8"/>')
-      x += 16
-    elif kind == "band":
-      b.append(f'<rect x="{x}" y="{y - 10}" width="20" height="12" fill="{PERF_S}" opacity="0.35"/>')
-      x += 26
-    else:
-      b.append(_car(f"translate({x + 11} {y - 4}) scale(0.9)", "#9CA3AF", 1, "#4B5563"))
-      x += 26
+    mark, used = sk.legend_swatch(kind, x, y)
+    b.append(mark)
+    x += used
     b.append(t(x, y, label, 11, INK))
     x += hf.text_w(label, 11) + 22
   return b

@@ -22,6 +22,8 @@
 # Rev 0.10 applies lead decision DQ-209 option A (keep comma's harness box, bench-test it) to DFI-20, DFI-21 and DOI-008.
 # 2026-10-16: fsc_revision 0.3 -> 0.4. FSC rev 0.4 only adds notes on two lead decisions (DQ-053, DQ-064) to
 # FSR-031 and FSR-038; no statement, ASIL, allocation or decomposition changed, so no DFI changes.
+# 2026-10-20: fsc_revision 0.4 -> 0.5. FSC rev 0.5 only sets FSR-007 fhti_ms 400 (WP-S-04 v0.19 §3.7) and updates its
+# implementation note; no statement, ASIL, allocation or decomposition changed, so no DFI changes.
 schema_version: 1
 analysis:
   id: DFA
@@ -31,7 +33,7 @@ analysis:
   revision: "0.15"
   status: draft
   baseline: BL-004
-  fsc_revision: "0.4"
+  fsc_revision: "0.5"
   approver: Jherrod Thomas (pending)
   scope: >-
     The 11 ASIL decompositions of LD-FSC-001 rev 0.3 (assured configuration AC-001), each splitting a requirement between the panda safety

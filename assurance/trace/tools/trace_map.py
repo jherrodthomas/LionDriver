@@ -131,10 +131,10 @@ STATUS_FILL = {"full": "#EFF6FF", "partial": "#FFFBEB", "none": "#FEF2F2", "untr
 STATUS_STROKE = {"full": "#2563EB", "partial": "#D97706", "none": "#D2553F", "untraced": "#94A3B8"}
 STATUS_WORD = {"full": "complete", "partial": "partial", "none": "missing", "untraced": "not in trace data"}
 
-ID_RE = re.compile(r"\b(SG|FSR|TSR|SWSR|HWSR|SYS|AIR|DSR|MLR|SH|TC|FI|FM|CSR|CSG|TS|AOU|HE|H)-(\d{2,3}(?:\.\d{1,2})?)([a-z]?)\b(?!\.x)")
+ID_RE = re.compile(r"(?<![\w-])(SG|FSR|TSR|SWSR|HWSR|SYS|AIR|DSR|MLR|SH|TC|FI|FM|CSR|CSG|TS|AOU|HE|H)-(\d{2,3}(?:\.\d{1,2})?)([a-z]?)\b(?!\.x)")
 # "FSR-01.xx…07.xx": every FSR of goals 01…07; "HE-01.x": every hazardous event of hazard H-01
-WILD_RE = re.compile(r"\b(FSR|HE)-(\d{2})\.xx?(?:\s*…\s*(?:\1-)?(\d{2})\.xx?)?")
-RANGE_RE = re.compile(r"\b(TSR|SWSR|HWSR|SYS|AIR|DSR|CSR)-(\d{3}|\d{2})\s*[…–-]\s*(?:\1-)?(\d{3}|\d{2})\b")
+WILD_RE = re.compile(r"(?<![\w-])(FSR|HE)-(\d{2})\.xx?(?:\s*…\s*(?:\1-)?(\d{2})\.xx?)?")
+RANGE_RE = re.compile(r"(?<![\w-])(TSR|SWSR|HWSR|SYS|AIR|DSR|CSR)-(\d{3}|\d{2})\s*[…–-]\s*(?:\1-)?(\d{3}|\d{2})\b")
 BARE_RE = re.compile(r"(?<![\w.-])(\d{3})([a-z]?)(?:\s*[–…]\s*(\d{3}))?(?![\w.])")
 ROW_ID_RE = re.compile(r"^\|\s*\*{0,2}([A-Z]{1,4}-\d{2,3}(?:\.\d{1,2})?[a-z]?)\*{0,2}\s*\|")
 TEST_ROW_RE = re.compile(r"^\|\s*\*{0,2}(VS-[A-Z]+-\d{2,3}[a-z]?)\*{0,2}\s*\|")

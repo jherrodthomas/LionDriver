@@ -233,7 +233,9 @@ class Controls:
     cs.upAccelCmd = float(self.LoC.pid.p)
     cs.uiAccelCmd = float(self.LoC.pid.i)
     cs.ufAccelCmd = float(self.LoC.pid.f)
+    # TSR-633: selfdrived latches the minimum-risk maneuver, so the stop and hold do not end if the DM request drops
     cs.forceDecel = bool(self.sm['driverMonitoringState'].noResponseForceDecel or
+                         self.sm['selfdriveState'].minimumRiskManeuver or
                          (self.sm['selfdriveState'].state == State.softDisabling))
 
     # trigger the car's stock driver monitoring escalation

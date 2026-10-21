@@ -176,7 +176,7 @@ package LionDriverVerification {
         doc /* Power dips and brown-out */
         :>> spec = "WP-V-05 §5.4";
         :>> level = "VS-FI";
-        :>> names = "H-06";
+        :>> names = "";
         objective {
             verify LionDriverRequirements::tsr_505;
             verify LionDriverRequirements::tsr_706;
@@ -186,7 +186,7 @@ package LionDriverVerification {
         doc /* Panda reset during engagement */
         :>> spec = "WP-V-05 §5.4";
         :>> level = "VS-FI";
-        :>> names = "AOU-13, H-06";
+        :>> names = "AOU-13";
         objective {
             verify LionDriverRequirements::tsr_311;
             verify LionDriverRequirements::tsr_501;
@@ -197,7 +197,7 @@ package LionDriverVerification {
         doc /* Panda hang */
         :>> spec = "WP-V-05 §5.4";
         :>> level = "VS-FI";
-        :>> names = "H-06, SWSR-501, SWSR-501b";
+        :>> names = "SWSR-501, SWSR-501b";
         objective {
             verify LionDriverRequirements::tsr_501;
             verify LionDriverRequirements::tsr_502;
@@ -208,7 +208,7 @@ package LionDriverVerification {
         doc /* Memory corruption */
         :>> spec = "WP-V-05 §5.4";
         :>> level = "VS-FI";
-        :>> names = "H-06";
+        :>> names = "";
         objective {
             verify LionDriverRequirements::tsr_502;
             verify LionDriverRequirements::tsr_503;
@@ -229,7 +229,7 @@ package LionDriverVerification {
         doc /* Clock fault */
         :>> spec = "WP-V-05 §5.4";
         :>> level = "VS-FI";
-        :>> names = "H-06";
+        :>> names = "";
         objective {
             verify LionDriverRequirements::tsr_504;
         }
@@ -238,7 +238,7 @@ package LionDriverVerification {
         doc /* Relay faults */
         :>> spec = "WP-V-05 §5.4";
         :>> level = "VS-FI";
-        :>> names = "H-06";
+        :>> names = "";
         objective {
             verify LionDriverRequirements::tsr_506;
             verify LionDriverRequirements::tsr_710;
@@ -248,7 +248,7 @@ package LionDriverVerification {
         doc /* Car-side bus-off, CAN-H/L short, error frames */
         :>> spec = "WP-V-05 §5.1";
         :>> level = "VS-FI";
-        :>> names = "H-06, HWSR-508b";
+        :>> names = "HWSR-508b";
         objective {
             verify LionDriverRequirements::sg_01;
             verify LionDriverRequirements::tsr_508;
@@ -289,7 +289,7 @@ package LionDriverVerification {
         doc /* Over-temperature */
         :>> spec = "WP-V-05 §5.4";
         :>> level = "VS-FI";
-        :>> names = "H-06";
+        :>> names = "";
         objective {
             verify LionDriverRequirements::tsr_509;
         }
@@ -298,13 +298,13 @@ package LionDriverVerification {
         doc /* Selected faults while driving */
         :>> spec = "WP-V-05 §5.6";
         :>> level = "VS-FI";
-        :>> names = "FI-08, FI-09, FI-14";
+        :>> names = "";
     }
     verification <'VS-FI-28'> vs_fi_28 : VerificationCase {
         doc /* Harness disconnect / orientation change while relay driven */
         :>> spec = "WP-V-05 §5.4";
         :>> level = "VS-FI";
-        :>> names = "H-06";
+        :>> names = "";
         objective {
             verify LionDriverRequirements::tsr_701;
         }
@@ -418,7 +418,7 @@ package LionDriverVerification {
         doc /* Transceiver fault does not disturb stock path */
         :>> spec = "WP-H-06 §3";
         :>> level = "VS-HW";
-        :>> names = "H-02, HWSR-508a";
+        :>> names = "HWSR-508a";
     }
     verification <'VS-HW-13'> vs_hw_13 : VerificationCase {
         doc /* Harness reversed / orientation */
@@ -430,7 +430,7 @@ package LionDriverVerification {
         doc /* Ignition loss and ignition-line faults */
         :>> spec = "WP-H-06 §3";
         :>> level = "VS-HW";
-        :>> names = "H-03, HWSR-510";
+        :>> names = "HWSR-510";
     }
     verification <'VS-HW-15'> vs_hw_15 : VerificationCase {
         doc /* Thermal */
@@ -472,7 +472,7 @@ package LionDriverVerification {
         doc /* SoC-independent warning (siren) */
         :>> spec = "WP-H-06 §3";
         :>> level = "VS-HW";
-        :>> names = "H-02";
+        :>> names = "";
         objective {
             verify LionDriverRequirements::fsr_02_05;
         }
@@ -663,7 +663,7 @@ package LionDriverVerification {
         doc /* SPI corruption */
         :>> spec = "WP-S-08 §6.2";
         :>> level = "VS-SI";
-        :>> names = "FI-06";
+        :>> names = "";
         objective {
             verify LionDriverRequirements::fsr_01_08;
             verify LionDriverRequirements::tsr_410;
@@ -792,7 +792,7 @@ package LionDriverVerification {
         doc /* Relay malfunction detection */
         :>> spec = "WP-S-08 §6.5";
         :>> level = "VS-SI";
-        :>> names = "H-06";
+        :>> names = "";
         objective {
             verify LionDriverRequirements::fsr_01_11;
             verify LionDriverRequirements::tsr_506;
@@ -838,7 +838,7 @@ package LionDriverVerification {
         doc /* SoC process kill / hang */
         :>> spec = "WP-S-08 §6.6";
         :>> level = "VS-SI";
-        :>> names = "FI-09";
+        :>> names = "";
         objective {
             verify LionDriverRequirements::fsr_01_07;
             verify LionDriverRequirements::fsr_02_05;
