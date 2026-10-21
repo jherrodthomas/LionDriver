@@ -55,6 +55,19 @@ conductivity ±30 %, sun ±30 %. Because the model is linear, each variation shi
 
 *Figure 4. The 55 °C drive as a loop (animated WebP).*
 
+### 2.1 On the cabin's own temperatures
+
+The sweep holds the mount air at one temperature for an hour. [`cabin_drive.py`](cabin_drive.py) runs the same device
+on the cabin heat soak's mount air and windshield temperatures minute by minute
+([`../weather/cabin_soak.py`](../weather/README.md#3-cabin-heat-soak-oi-3-tc-21)): two hours parked in the sun with
+the board off and the fan still, then an hour's drive with the board on. On a hot July day the SoC reaches 64 °C
+parked. While driving it peaks at 77 °C with the AC on and 82 °C with it off, below the 96 °C limit in both. Results:
+[`results/cabin-device.md`](../results/cabin-device.md).
+
+![The SoC through a hot day: rising to 64 °C while parked with the device off, then jumping when the board starts at 14:00 and peaking at 77 °C with the AC on, 82 °C with it off and 67 °C on a mild April day, all below the 96 °C limit](figures/fig-th-5-cabin-drive.webp)
+
+*Figure 5. The device on the cabin's own temperatures.*
+
 ## 3. Checks
 
 [`test_thermal.py`](test_thermal.py) runs in CI. Each check is meant to catch a different error:
@@ -67,6 +80,7 @@ conductivity ±30 %, sun ±30 %. Because the model is linear, each variation shi
 | V4 Energy balance on the device model | lost or doubled heat | closes to 3e-12 of the heat in (the check fails above 1e-8) |
 | V5 Mesh study (48×24×10, 72×36×15, 96×48×20 hexahedra) | a mesh too coarse for the hot spot | 90.97, 91.38, 91.18 °C steady at 45 °C: the pilot's mesh within 0.4 K of the finest |
 | V6 Limits from the code | a moved band in `hardwared.py` | 96/88 °C (comma 3X), 100/92 °C (comma four) |
+| V7 The cabin-driven runner (phases, references changing every step) against the pilot's runner when nothing changes | an error in the time-varying path | equal to 1e-9 K |
 
 The pilot's own `--check` reruns every drive and fails if any number moves by more than 0.05 K from the committed
 JSON. Figures render in CI, but their pixels are not compared, because software rendering differs slightly between
@@ -80,6 +94,7 @@ micromamba create -p <env> --file assurance/sim/thermal/thermal-linux-64.lock
 <env>/bin/python assurance/sim/thermal/test_thermal.py              # checks V1–V6, about 2 min
 <env>/bin/python assurance/sim/thermal/thermal_pilot.py --figures   # results and figures, about 4 min
 <env>/bin/python assurance/sim/thermal/thermal_pilot.py --check     # CI: a fresh run against the committed JSON
+<env>/bin/python assurance/sim/thermal/cabin_drive.py --check      # the device on the cabin model's temperatures
 ```
 
 Figures render with no screen and no GPU through Mesa's software EGL (`figures.py` sets it up, TE-04 OI-2). They are
@@ -101,6 +116,7 @@ WebP because PNG and GIF go to the repository's read-only LFS store.
 | [`heat.py`](heat.py) | Solver core (FEniCSx): 1D, 2D or 3D heat conduction with Robin faces, steady and transient |
 | [`section_fipy.py`](section_fipy.py) | The independent FiPy solver for the cross-check |
 | [`thermal_pilot.py`](thermal_pilot.py) | The device model, drives, sweep and bound; writes the results |
-| [`figures.py`](figures.py) | The four figures (PyVista off-screen, matplotlib) |
+| [`cabin_drive.py`](cabin_drive.py) | The device on the cabin heat soak's temperatures (§2.1) |
+| [`figures.py`](figures.py) | The five figures (PyVista off-screen, matplotlib) |
 | [`test_thermal.py`](test_thermal.py) | Checks V1–V6 |
 | [`thermal-linux-64.lock`](thermal-linux-64.lock) | The environment, every package by URL and md5 |

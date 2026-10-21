@@ -149,6 +149,46 @@ class Model:
     ksp.destroy(); A.destroy()
     return np.array(times), np.array(out), snaps
 
+  def transient_phases(self, phases, dt: float, T0: float, probes):
+    """Run phases in turn from a uniform T0. Each phase: duration (s), refs(t) -> {name: °C} for t in s from the
+    phase start, q_scale (board power on 1 / off 0), flux_scale (sun on the device), h (face name -> h override).
+    The reference temperatures change every step; the matrix only between phases."""
+    times, out, snaps, t0 = [0.0], [], [], 0.0
+    self.T.x.array[:] = T0
+    out.append([p(self.T.x.array) for p in probes])
+    snaps.append(self.T.x.array.copy())
+    for ph in phases:
+      faces = self.box.faces
+      saved = [(f.h, f.flux) for f in faces]
+      for f in faces:
+        f.h = ph.get("h", {}).get(f.name, f.h)
+        f.flux = f.flux * ph.get("flux_scale", 1.0)
+      refc = {k: self._c(v) for k, v in ph["refs"](0.0).items()}
+      u, v = ufl.TrialFunction(self.V), ufl.TestFunction(self.V)
+      c = self._c
+      a = c(self.box.k) * ufl.inner(ufl.grad(u), ufl.grad(v)) * self.dx + c(self.box.rho_c / dt) * u * v * self.dx
+      self.T_old = fem.Function(self.V)
+      L = c(ph.get("q_scale", 1.0)) * self.q * v * self.dx + c(self.box.rho_c / dt) * self.T_old * v * self.dx
+      for tag, f in enumerate(faces, start=1):
+        a += c(f.h) * u * v * self.ds(tag)
+        L += (c(f.h) * refc[f.ref] + c(f.flux)) * v * self.ds(tag)
+      for f, (h, fl) in zip(faces, saved, strict=True):
+        f.h, f.flux = h, fl
+      ksp, A = self._solver(fem.form(a))
+      Lf = fem.form(L)
+      n = int(round(ph["duration"] / dt))
+      for i in range(1, n + 1):
+        for k, val in ph["refs"](i * dt).items():
+          refc[k].value = val
+        self.T_old.x.array[:] = self.T.x.array
+        self._solve(ksp, Lf)
+        times.append(t0 + i * dt)
+        out.append([p(self.T.x.array) for p in probes])
+        snaps.append(self.T.x.array.copy())
+      ksp.destroy(); A.destroy()
+      t0 += n * dt
+    return np.array(times), np.array(out), snaps
+
   def boundary_loss(self, refs: dict) -> float:
     """Heat leaving through all faces at the current T, minus the imposed flux (W): the energy balance."""
     total = 0.0

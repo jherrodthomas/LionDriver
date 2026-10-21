@@ -94,6 +94,11 @@ alone (DQ-412, revisit at G2).
 about 50 °C cabin air on the nominal line, and at about 43 °C on the worst edge of the band. The conductivity of the
 spreader and the SoC power move it most. T1 replaces the estimates; T4 sets the band from measured drives.
 
+**On a hot day's own temperatures** (cabin heat soak, [`sim/weather`](../../sim/weather/README.md#3-cabin-heat-soak-oi-3-tc-21)):
+parked two hours in July sun, the mount air reaches 59 °C and the device, switched off, 64 °C. Driving afterwards,
+the SoC peaks at 77 °C with the AC on and 82 °C with it off, below the 96 °C limit, on estimated inputs
+([`cabin-device.md`](../../sim/results/cabin-device.md)). The logger (DQ-411) measures exactly this curve.
+
 ## 6. What this is not
 
 - **Not evidence.** Nothing here earns credit until a fidelity case is approved (WP-V-02 §5.3, DQ-139).

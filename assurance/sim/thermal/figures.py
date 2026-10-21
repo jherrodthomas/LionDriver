@@ -231,3 +231,35 @@ def render(p: dict, res: dict, out: Path):
   _bound(res, out / "fig-th-3-bound.webp")
   for f in sorted(out.glob("*.webp")):
     print(f"wrote {f.name} ({f.stat().st_size // 1024} KB)")
+
+
+def cabin_figure(r: dict, path: Path):
+  """The device's SoC through a hot day, on the cabin model's mount air and glass (cabin_drive.py)."""
+  lim = r["limit_used"]
+  names = {"hot_july": ("Hot July, AC on", "#2a78d6", "-"), "hot_july_ac_off": ("Hot July, AC off", "#104281", "-"),
+           "mild_april": ("Mild April, AC on", "#86b6ef", "-")}
+  fig, ax = plt.subplots(figsize=(9, 9.5), dpi=100)
+  fig.subplots_adjust(left=0.12, right=0.78, top=0.84, bottom=0.2)
+  fig.text(0.05, 0.95, "The device through a hot day", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.92, "comma 3X box model on the cabin model's mount air and glass · hottest SoC point", fontsize=12.5,
+           color=INK2)
+  first = next(iter(r["scenarios"].values()))
+  t_drive = first["drive_starts_min"] / 60 + 12
+  ax.axvspan(12, t_drive, color="#fbf3dc")
+  ax.text(12.05, 113, "parked, device off", fontsize=11, color=INK2)
+  ax.text(t_drive + 0.05, 113, "driving, device on", fontsize=11, color=INK2)
+  ax.axhspan(lim, 120, color="#fdecec"); ax.axhline(lim, color=CRIT, lw=2)
+  ax.text(12.05, lim + 1.5, f"{lim:.0f} °C overheat limit", color=CRIT, fontsize=12, weight="bold")
+  for k, d in r["scenarios"].items():
+    lab, col, ls = names.get(k, (k, INK2, "-"))
+    t = np.array(d["t_min"]) / 60 + 12
+    ax.plot(t, d["soc"], color=col, lw=2.4, ls=ls)
+    ax.text(15.03, d["soc"][-1], lab, color=INK, fontsize=11.5, va="center")
+  ax.set_xlim(12, 15); ax.set_ylim(20, 120); ax.set_xticks([12, 13, 14, 15])
+  ax.set_xticklabels(["12:00", "13:00", "14:00", "15:00"]); ax.set_ylabel("°C")
+  ax.grid(axis="y", color=GRID); ax.spines[["top", "right"]].set_visible(False)
+  fig.text(0.05, 0.085, "Parked: the board is off and the fan still, the sun heats the device through the glass. "
+           "Driving:\nthe board runs, the fan is at 100 % and the AC (or fresh air) cools the cabin.", fontsize=11.5,
+           color=INK2)
+  _stamp(fig)
+  _save(fig, path)

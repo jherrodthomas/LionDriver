@@ -31,6 +31,7 @@ import yaml
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import hydroplaning as hp  # noqa: E402
+import cabin_soak as cs  # noqa: E402
 import sun_glare as sg  # noqa: E402
 
 P = yaml.safe_load((HERE / "params.yaml").read_text(encoding="utf-8"))
@@ -132,6 +133,40 @@ class Water(unittest.TestCase):
   def test_w5_odd_bound_from_wp_c02(self):
     m = re.search(r"\| Speed \| Ego speed \| 0 – (\d+) km/h", WPC02.read_text(encoding="utf-8"))
     self.assertEqual(float(m.group(1)), P["water"]["odd_speed_kph"]["value"])
+
+
+class Cabin(unittest.TestCase):
+  def test_c1_mclaren(self):
+    m = P["cabin"]["mclaren"]
+    rises = []
+    for amb in m["ambient_c"]:
+      r60, r30 = cs.mclaren(P, amb)
+      self.assertLess(abs(r60 - m["rise_60min_k"]), m["tolerance_k"], (amb, r60))
+      # measured: 80 % in the first 30 min; the model heats more slowly early (about 65 %), stated in the README
+      self.assertGreater(r30 / r60, 0.6, (amb, r30 / r60))
+      rises.append(r60)
+    self.assertLess(abs(rises[0] - rises[1]), 2.0)   # independent of ambient, as measured
+
+  def test_c2_no_heat_from_nowhere(self):
+    p = yaml.safe_load((HERE / "params.yaml").read_text(encoding="utf-8"))
+    c = p["cabin"]
+    c["windshield"]["transmittance"] = c["windshield"]["absorptance"] = c["roof"]["absorptance"] = 0.0
+    c["side_windows"]["transmittance"] = c["side_windows"]["absorptance"] = 0.0
+    c["h_sky_rad"]["sky_below_air"] = 0.0
+    df = cs.simulate(p, [("12:00", "13:00", "park", 180.0, 0.0, False)], "2027-06-21", 30.0, 30.0, start_temp=30.0)
+    for n in ("air", "glass", "dash", "interior", "shell"):
+      self.assertLess(abs(float(df[n].iloc[-1]) - 30.0), 1e-9, n)
+    c["h_sky_rad"]["sky_below_air"] = 10.0                            # a clear night sky cools it, not below the sky
+    night = cs.simulate(p, [("01:00", "02:00", "park", 180.0, 0.0, False)], "2027-06-21", 30.0, 30.0, start_temp=30.0)
+    self.assertTrue(20.0 < float(night["air"].iloc[-1]) < 30.0)
+
+  def test_c3_outside_curve(self):
+    h = np.arange(0, 24, 0.25)
+    t = cs.outside(h, 20.0, 30.0)
+    self.assertAlmostEqual(float(h[np.argmin(t)]), 6.0)
+    self.assertAlmostEqual(float(h[np.argmax(t)]), 15.0)
+    self.assertAlmostEqual(float(t.min()), 20.0)
+    self.assertAlmostEqual(float(t.max()), 30.0)
 
 
 if __name__ == "__main__":

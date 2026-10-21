@@ -28,3 +28,37 @@ water:
   # US NWS / AMS rain-rate classes (light < 2.5 mm/h, moderate 2.5–7.6, heavy > 7.6)
   rain_classes_mm_h: {light: 2.5, moderate: 7.6}
   rain_mm_h: [1, 2.5, 5, 7.6, 10, 15, 20, 30, 40, 50, 60, 75, 100]
+
+cabin:
+  # Lumped heat model of the Corolla's cabin (cabin_soak.py). Every value an estimate unless marked; the logger
+  # at the mount (DQ-411) is what checks it. Areas in m², heat capacities in J/K, conductances from h in W/m²K.
+  air_volume_m3: {value: 2.5, status: published, source: "Corolla sedan passenger volume about 88 ft³ (2.49 m³)"}
+  windshield: {area: 1.1, tilt_deg: 30.0, heat_capacity: 11000.0, absorptance: 0.25, transmittance: 0.5, status: estimate,
+               source: "laminated 4.8 mm glass raked about 60° from vertical; solar transmittance as the device heat model"}
+  roof: {area: 1.6, absorptance: 0.6, status: estimate, source: "mid-grey paint"}
+  side_windows: {area_each: 0.9, transmittance: 0.6, absorptance: 0.1, status: estimate,
+                 source: "front and rear side glass of one side; the absorbed share heats the shell node (rear window too)"}
+  rear_window: {area: 0.7, tilt_deg: 30.0, transmittance: 0.6, status: estimate, source: "backlight raked like the windshield"}
+  dash: {area: 0.7, heat_capacity: 8000.0, share_of_windshield_sun: 0.6, h_rad_cabin: 6.0, status: estimate,
+         source: "dark dashboard skin and substrate under the windshield; the rest of the windshield's sun lands on the wheel and seats; long-wave exchange with the interior and shell"}
+  interior: {area: 4.0, heat_capacity: 60000.0, status: estimate, source: "seats, carpet and trim"}
+  shell: {area: 6.0, heat_capacity: 40000.0, status: estimate, source: "roof, doors and the other glass as one node"}
+  h_inside: {parked: 4.0, blower: 12.0, status: estimate, source: "natural convection; blower on high"}
+  h_sky_rad: {value: 5.0, sky_below_air: 10.0, status: estimate, source: "linearised long-wave exchange with a clear sky"}
+  wind_parked_m_s: 2.0
+  infiltration_ach: {value: 1.0, status: estimate, source: "closed car, air changes per hour"}
+  ac: {capacity_w: 4500.0, airflow_kg_s: 0.09, coil_c: 6.0, setpoint_c: 22.0, status: estimate,
+       source: "compact-car air conditioning on recirculation, automatic climate control"}
+  fan_only_fresh_kg_s: {value: 0.05, status: estimate, source: "AC off, fan on fresh air, windows closed"}
+  mount_mix: {value: 0.4, status: assumed,
+              source: "air at the mount = cabin air + 0.4 (glass − cabin air): the warm layer under the windshield; the logger (DQ-411) sets it"}
+  scenarios:
+    hot_july: {date: "2027-07-15", t_min: 23.0, t_max: 35.0, park: ["12:00", "14:00"], park_facing: 180.0,
+               drive: ["14:00", "15:00"], drive_heading: 243.0, speed_kph: 100.0, ac: true}
+    hot_july_ac_off: {date: "2027-07-15", t_min: 23.0, t_max: 35.0, park: ["12:00", "14:00"], park_facing: 180.0,
+                      drive: ["14:00", "15:00"], drive_heading: 243.0, speed_kph: 100.0, ac: false}
+    mild_april: {date: "2027-04-15", t_min: 10.0, t_max: 24.0, park: ["12:00", "14:00"], park_facing: 180.0,
+                 drive: ["14:00", "15:00"], drive_heading: 243.0, speed_kph: 100.0, ac: true}
+  outside_source: "Greenville SC: July normal high about 32 °C; 35 °C is a hot day; April normal high about 24 °C"
+  mclaren: {rise_60min_k: 22.0, tolerance_k: 5.0, share_30min: 0.8, ambient_c: [22.0, 36.0], status: published,
+            source: "McLaren, Null, Quinn 2005, Pediatrics 116(1) e109: dark sedan, clear days, 22–36 °C ambient, about 40 °F (22 K) rise in 60 min, 80 % of it in the first 30 min, rate independent of ambient"}

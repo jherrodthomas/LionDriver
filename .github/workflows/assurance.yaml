@@ -535,10 +535,12 @@ jobs:
         chmod +x "$RUNNER_TEMP/micromamba"
         MAMBA_ROOT_PREFIX="$RUNNER_TEMP/mamba" "$RUNNER_TEMP/micromamba" create -y -q -p "$THERMAL_ENV" \
           --file assurance/sim/thermal/thermal-linux-64.lock
-    - name: Checks (analytic slab, lumped transient, FiPy cross-check, energy balance, mesh study, limits from the code)
+    - name: Checks (analytic slab, lumped transient, FiPy cross-check, energy balance, mesh study, limits from the code, cabin-driven runner)
       run: '"$THERMAL_ENV/bin/python" assurance/sim/thermal/test_thermal.py'
     - name: Pilot results within 0.05 K of the committed JSON, results page current
       run: '"$THERMAL_ENV/bin/python" assurance/sim/thermal/thermal_pilot.py --check'
+    - name: The device on the cabin heat soak's temperatures (cabin_drive.py) within 0.05 K of the committed JSON
+      run: '"$THERMAL_ENV/bin/python" assurance/sim/thermal/cabin_drive.py --check'
     - name: Figures render off-screen (Mesa software EGL; pixels are not compared)
       env:
         CONDA_PREFIX: ${{ env.THERMAL_ENV }}
@@ -556,8 +558,8 @@ jobs:
 
   sim-weather:
     name: simulation weather physics
-    # Sun in the road camera (TC-01, KS-12) with pvlib's NREL SPA (tool TL-54) and hydroplaning (TC-03) from the
-    # published FHWA/NCHRP and NASA models (assurance/sim/weather). Design aid: synthetic data (DSR-12), no credit.
+    # Sun in the road camera (TC-01, KS-12) with pvlib's NREL SPA (tool TL-54), hydroplaning (TC-03) from the
+    # published FHWA/NCHRP and NASA models, and the cabin heat soak (assurance/sim/weather). Design aid: synthetic data (DSR-12), no credit.
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -566,12 +568,13 @@ jobs:
         persist-credentials: false
     - name: Install the pinned packages of the weather physics
       run: python3 -m pip install --quiet --user --break-system-packages -r assurance/sim/weather/requirements.txt
-    - name: Checks (NREL reference, NOAA cross-check, camera frame, unit conversion, model branches, ODD bound)
+    - name: Checks (NREL reference, NOAA cross-check, camera frame, unit conversion, model branches, ODD bound, cabin against McLaren 2005)
       run: python3 assurance/sim/weather/test_weather.py
     - name: Results within 0.05 of the committed JSON, results pages current
       run: |
         python3 assurance/sim/weather/sun_glare.py --check
         python3 assurance/sim/weather/hydroplaning.py --check
+        python3 assurance/sim/weather/cabin_soak.py --check
 
   sim-scenarios:
     name: simulation known scenarios

@@ -1,4 +1,4 @@
-# Weather physics: sun in the road camera, and hydroplaning
+# Weather physics: sun in the road camera, hydroplaning and the cabin heat soak
 
 > **Synthetic data (DSR-12). Design aid, no evidence credit (DQ-139).** Two small physics studies for the SOTIF
 > triggering conditions of low sun (TC-01) and rain (TC-03). They answer *when* and *how fast*, not whether the item
@@ -81,7 +81,52 @@ measurement.*
 - Tread depth enters only through NASA's condition (water deeper than the tread). A worn tyre lowers the water depth
   at which that condition is met.
 
-## 3. Checks
+## 3. Cabin heat soak (OI-3, TC-21)
+
+**Question.** How hot does the air at the device mount get when the car is parked in the sun, and how fast does it
+fall once the car drives? The device heat model ([`../thermal`](../thermal/README.md)) held the cabin at one
+temperature for a whole drive. A real hot day starts hot and cools under the AC.
+
+**Method.** [`cabin_soak.py`](cabin_soak.py) is a lumped heat model of the Corolla's cabin with five nodes: air,
+windshield, dashboard, interior (seats and trim) and shell (roof, doors and the other glass).
+- **Sun:** the sun on each glazed and opaque surface comes from pvlib's clear-sky model (Ineichen) on the tilted
+  planes.
+- **Outside:** the outside air follows a daily curve, coolest at 06:00 and warmest at 15:00.
+- **Parked:** the car parks facing south at noon for two hours.
+- **Driving:** it then drives southwest on I-85 at 100 km/h for an hour, with the AC on recirculation or the AC off
+  (fan on fresh air).
+- **Mount air:** the air at the mount is the cabin air plus 0.4 of the windshield's difference from it. That share is
+  an assumption, and the logger at the mount (DQ-411) sets it.
+
+Every cabin input is an estimate ([`params.yaml`](params.yaml), `cabin:`). Results:
+[`results/cabin-soak.md`](../results/cabin-soak.md).
+
+**Check against measured cars.** McLaren, Null and Quinn (2005, *Pediatrics* 116(1) e109) measured a dark sedan on
+16 clear days at 22–36 °C ambient: the cabin air rose about 22 K in 60 min, at the same rate whatever the ambient.
+The model gives 22.1 K at both 22 and 36 °C, with no tuning. It is slower early: 65 % of the rise in the first
+30 min, against the 80 % measured. The model's interior holds more heat than a real car's, which the logger will
+show.
+
+**Result (hot 15 July, 35 °C afternoon, estimated inputs).**
+- **Parked:** after two hours the cabin air is at 64 °C, the dashboard at 88 °C and the mount air at 59 °C.
+- **Driving with the AC:** the mount air falls below the device model's worst-edge bound (43 °C) within 2 min and
+  ends at 30 °C.
+- **Driving without the AC:** it stays above that bound for 26 min and ends at 41 °C.
+
+Fed into the device model ([`../thermal/cabin_drive.py`](../thermal/cabin_drive.py),
+[`results/cabin-device.md`](../results/cabin-device.md)): parked with the device off, the SoC reaches 64 °C. While
+driving it peaks at 77 °C with the AC on and 82 °C with it off, below the 96 °C limit in both. That comes from the
+estimated inputs; T1 and the logger decide it.
+
+![Two charts of a hot July day: parked in the sun from 12:00 to 14:00, the cabin air rises to 64 °C, the dashboard to 88 °C and the mount air to 59 °C, above the device model's 43–50 °C bound; then driving, with the AC on the mount air drops below the bound within minutes and ends at 30 °C, with the AC off it ends at 41 °C](figures/fig-wx-6-cabin.webp)
+
+*Figure 6. The cabin through a hot day, with the AC on and off.*
+
+![Animation, looping: a side view of the Corolla whose cabin, windshield and dashboard change colour with their temperatures from 12:00 to 15:00; parked in the sun the cabin turns orange and the mount air rises to 59 °C; from 14:00, driving with the AC on, it turns pale and the mount air falls to 30 °C; a chart below draws the mount-air curve against the device model's bound](figures/fig-wx-7-cabin-anim.webp)
+
+*Figure 7. The same day as a loop.*
+
+## 4. Checks
 
 [`test_weather.py`](test_weather.py) runs in CI:
 
@@ -96,12 +141,16 @@ measurement.*
 | W3 NASA formula (10.35 √p) | a wrong pressure or unit |
 | W4 More rain, a longer path or a flatter slope never raises the speed | a sign or branch error |
 | W5 The ODD bound read from WP-C-02 | a moved bound |
+| C1 Cabin air rises 22 ± 5 K in 60 min of clear sun, the same at 22 and 36 °C ambient (McLaren et al. 2005) | a model far off measured cars |
+| C2 No sun, no AC, constant outside: every node stays at the outside temperature; a clear night sky cools, not below the sky | heat from nowhere, a sign error |
+| C3 Outside curve: minimum 06:00, maximum 15:00 | a wrong daily curve |
 
-Both scripts' `--check` rerun the study and fail if any number moves by more than 0.05 from the committed JSON.
+All three scripts' `--check` rerun the study and fail if any number moves by more than 0.05 from the committed JSON.
 
 ```sh
 python3 -m pip install -r assurance/sim/weather/requirements.txt
 python3 assurance/sim/weather/test_weather.py
 python3 assurance/sim/weather/sun_glare.py --figures       # about 2 s, figures about 30 s
 python3 assurance/sim/weather/hydroplaning.py --figures
+python3 assurance/sim/weather/cabin_soak.py --figures      # reads results/thermal-pilot.json for the bound
 ```

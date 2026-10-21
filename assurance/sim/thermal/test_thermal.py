@@ -7,6 +7,7 @@ V3  Cross-check: FEniCSx and FiPy on the same 2D section of the device; two meth
 V4  Energy balance: on the device model the heat in equals the heat out at steady state.
 V5  Mesh study: the hottest SoC point changes by less than the tolerance between the two finest meshes.
 V6  Limits: the overheat bands are read from hardwared.py, and the pilot reports the comma 3X one.
+V7  The cabin-driven runner (phases, time-varying references) equals the pilot's runner when nothing varies.
 
 Runs in the environment of `thermal-linux-64.lock`. Synthetic (DSR-12), design aid, no evidence credit (DQ-412).
 """
@@ -88,6 +89,16 @@ class Checks(unittest.TestCase):
       peaks.append(float(T[m.region["soc"]].max()))
     self.assertLess(abs(peaks[2] - peaks[1]), 1.0, peaks)   # K, against a 96 °C limit read to the degree
     self.assertLess(abs(peaks[0] - peaks[2]), 2.0, peaks)   # the pilot's mesh is within 2 K of the finest
+
+  def test_v7_phases_match_transient(self):
+    # The cabin-driven runner (time-varying references, phases) gives the pilot's result when nothing varies
+    m = tp.build(P, cells=(24, 12, 5))
+    r = tp.refs(P, 40.0)
+    probes = [m.region_max("soc")]
+    _, y1, _ = m.transient(r, 1800.0, 60.0, 50.0, probes)
+    _, y2, _ = m.transient_phases([{"duration": 900.0, "refs": lambda t: r}, {"duration": 900.0, "refs": lambda t: r}],
+                                  60.0, 50.0, probes)
+    self.assertLess(float(np.abs(y1[:, 0] - y2[:, 0]).max()), 1e-9)
 
   def test_v6_limits_from_the_code(self):
     b = tp.bands()
