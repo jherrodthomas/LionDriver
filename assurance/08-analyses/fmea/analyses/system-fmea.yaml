@@ -119,6 +119,8 @@
 # change is not in BL-006, so SFM-036.C1 keeps O 8 D 10 until the next baseline. No S/O/D change.
 # Rev 0.32 (2026-10-19): SFM-ACT-020 evidence cites the CI run of test_stock_aeb.py (tests run 39296172878, LFS mirror back) and the
 # opendbc e233362 cap (#311, impact OI-2 done). No S/O/D change.
+# Rev 0.33 (2026-10-21, FSC/TSC routes walk #395): SFM-005.C2 and SFM-006.C1 record the panda siren on a TX-arrival revocation
+# (panda 8a69ccf, DQ-404 A; plant F-04b at panda f4803c5: siren 0.25 s). After BL-006, so no rating change.
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -127,7 +129,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.32"
+  revision: "0.33"
   status: draft
   baseline: BL-006
   rating_tables: RT-3
@@ -1006,7 +1008,9 @@ failure_modes:
           diagnostic: 'BL-005: when no STEERING_LKA frame reaches the panda for 50 ms while authority is granted, the 100 Hz safety task
             clears controls_allowed (tx_arrival_ok, safety.h; TSR-408). pandad keeps publishing pandaStates, so selfdrived sees
             controlsAllowed false on the next sample and raises controlsMismatch after 2 consecutive samples, at most 0.5 s after the
-            first mismatched frame (TSR-621). At BL-004 only the EPS drop-out path existed (about 3.5 s)'
+            first mismatched frame (TSR-621). At BL-004 only the EPS drop-out path existed (about 3.5 s). After BL-006 (panda 8a69ccf,
+            DQ-404 A; kept in f4803c5) the panda also sounds its own siren on this revocation, independent of the SoC (TSR-516(b)); not
+            in BL-006, so the rating below does not credit it'
           system_response: controlsMismatch IMMEDIATE_DISABLE with a take-over alert; the EPS drops LKA once frames stop
           effect_after_response: Lateral control lost with a take-over alert within about 0.56 s of the last frame; controlled handback
           severity_after: 8
@@ -1026,8 +1030,8 @@ failure_modes:
             ref: .github/workflows/safety.yaml
           - description: controlsMismatch sample and time bounds unit-tested (tests.yaml unit_tests); not mutation-tested
             test: openpilot/selfdrive/selfdrived/tests/test_supervision.py
-          - description: 'Plant model F-04b: SoC stall: the real panda code revokes authority 0.043 s after the last frame (TSR-408); the host alert path is not in the model. Simulation cross-check, no rating credit (msr-plan §4.2); EPS and PCM behaviour are model assumptions'
-            ref: assurance/sim/results/plant-results.md F-04b (plant 776239d)
+          - description: 'Plant model F-04b: SoC stall: the real panda code (panda f4803c5) revokes authority 0.043 s after the last frame (TSR-408) and sounds its siren at 0.25 s (TSR-516(b), DQ-404), so the stall is no longer silent; the host alert path is not in the model. Simulation cross-check, no rating credit (msr-plan §4.2); EPS and PCM behaviour are model assumptions'
+            ref: assurance/sim/results/plant-results.md F-04b (plant 6332733)
           rationale: M 6, not 5. The panda half is mutation-tested; the host half that raises the alert is only unit-tested, and
             nothing is measured (SFM-ACT-012). The 0.5 s FRTI is the TSR-621 bound; two 10 Hz samples give about 0.2 s nominally
           actions:
@@ -1107,7 +1111,8 @@ failure_modes:
           system_response: controlsMismatch IMMEDIATE_DISABLE with alert (and commIssue SOFT_DISABLE); no frame is sent after the
             stall, so the torque ends only when the EPS drops LKA, about 2 s later (T-23); there is no active zero frame (TSR-109)
           effect_after_response: Last torque command held about 0.1 s, then LKA frames stop and assist decays over about 2 s. The driver
-            is now warned within about 0.66 s, but the actuation reaction is still beyond the 0.5 s FTTI
+            is now warned within about 0.66 s (after BL-006 the panda siren comes first, about 0.25 s after the last frame, DQ-404), but
+            the actuation reaction is still beyond the 0.5 s FTTI
           severity_after: 10
           frequency: 6
           monitoring: 8
@@ -1119,8 +1124,8 @@ failure_modes:
             frti_ms: 2000
             basis: code_derived
           evidence:
-          - description: 'Plant model F-04b, F-04b-H: SoC stall: authority revoked at 0.043 s (TSR-408); EPS torque below 5 % at 0.33 s if the EPS releases, 2.3 s if it holds (assumption, M-02), which is why this row stays M 8. Simulation cross-check, no rating credit (msr-plan §4.2); EPS and PCM behaviour are model assumptions'
-            ref: assurance/sim/results/plant-results.md F-04b, F-04b-H (plant 776239d)
+          - description: 'Plant model F-04b, F-04b-H (panda f4803c5): SoC stall: authority revoked at 0.043 s (TSR-408) and the panda siren at 0.25 s (TSR-516(b), DQ-404, after BL-006); EPS torque below 5 % at 0.33 s if the EPS releases, 2.3 s if it holds (assumption, M-02), which is why this row stays M 8: the siren warns the driver but does not end the torque. Simulation cross-check, no rating credit (msr-plan §4.2); EPS and PCM behaviour are model assumptions'
+            ref: assurance/sim/results/plant-results.md F-04b, F-04b-H (plant 6332733)
           actions:
           - SFM-ACT-015
       - id: SFM-006.C2

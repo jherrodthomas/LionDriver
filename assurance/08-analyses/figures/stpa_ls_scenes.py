@@ -160,7 +160,7 @@ MODELS = {
     ("Steering and braking stop at once; the panda's own siren cannot sound.", "Withdraws authority abruptly while engaged")]),
   "LS-05": ("controlsd stalls, the last command repeats", "fault", ("controlsd stalls", "≈0.16 s on stale data"), [
     ("controlsd stalls while pandad keeps sending heartbeats.", "controlsd stalls while pandad keeps sending heartbeats"),
-    ("About 0.1 s of a repeated in-limit command (by design); the arrival check revokes at about 0.16 s, no siren.",
+    ("About 0.1 s of a repeated in-limit command (by design); the arrival check revokes at about 0.16 s, with the siren.",
      "about 0.1 s of a repeated in-limit command"),
     ("Authority is kept briefly on stale data.", "Keeps authority too long after SoC loss or stale vehicle data")]),
   "LS-06": ("Cruise on, openpilot off", "straight", ("PCM engages, openpilot not", "cancel, alert at 1 s"), [
@@ -236,7 +236,7 @@ MODELS = {
     ("Hard deceleration without a real obstacle.", "Hard deceleration commanded without a real obstacle")]),
   "LS-20": ("A take-over request nobody hears", "fault", ("HMI hung", "no alert reaches the driver"), [
     ("A take-over request is not perceived.", "A take-over request is not perceived"),
-    ("Every alert goes through ui and soundd, so a hung HMI mutes them; the panda siren covers heartbeat loss and EPS faults only.",
+    ("Every alert goes through ui and soundd, so a hung HMI mutes them; the panda siren does not cover a hung HMI.",
      "a hung HMI mutes them all"),
     ("The take-over alert is not given when control is lost.", "Take-over alert not given")]),
   "LS-21": ("A stuck brake frame", "resume", ("0x226 stuck 'not pressed'", "keeps authority while braking"), [
@@ -314,6 +314,11 @@ MODELS = {
     ("The driver presses the accelerator to pass.", "The driver presses the accelerator to pass"),
     ("The driver sees the grey border and no text, and takes the item to be off.", "takes the item to be off"),
     ("On release the car brakes or accelerates back, unexpected.", "the car brakes or accelerates without the driver expecting it")]),
+  "LS-37": ("selfdrived stops, the heartbeat goes on", "fault", ("selfdrived stops", "revoke 0.3 s, siren 0.5 s"), [
+    ("selfdrived stops while controlsd, card and pandad run on.", "stops (crash or hang) while `controlsd`, `card` and `pandad` run on"),
+    ("Frames keep arriving, so only the engaged=0 heartbeat tells the panda; it revokes at 0.3 s and sounds the siren if cruise stays on.",
+     "the panda revokes 0.3 s after the first not-engaged heartbeat"),
+    ("The take-over alert would come only at 5 s.", "Take-over alert not given")]),
 }
 
 
@@ -332,6 +337,7 @@ RESIDUAL = {  # covered with a residual: the card's status line carries it (text
   "LS-31": ("Covered: default off since 2026-10-14. Residual: devices set up before keep a stored 1, logged but not shown to the driver.",
             "devices set up before the change keep a stored 1"),
   "LS-24": ("Covered (#51); not verified on the vehicle.", "not verified on the vehicle"),
+  "LS-37": ("Covered in the reference build (panda f4803c5); not verified on hardware, HIL case open.", "not verified on hardware"),
   "LS-34": ("Covered: unit-tested, not verified on a vehicle; applies to every non-reference platform.", "not verified on a vehicle"),
 }
 RESIDUAL_WORDS = re.compile(r"known gap|residual|open test|not verified", re.I)
