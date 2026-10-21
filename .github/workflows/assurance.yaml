@@ -517,6 +517,9 @@ jobs:
       MICROMAMBA_URL: https://github.com/mamba-org/micromamba-releases/releases/download/2.3.2-0/micromamba-linux-64
       MICROMAMBA_SHA256: ffc3cb8d52d4d6b354bdbb979c407719c485392b74e462cbd50811aa88e58f85
       THERMAL_ENV: ${{ github.workspace }}/../thermal-env
+      # One MPI process: keep the conda MPICH's UCX on shared memory and self. Some runners have an Azure MANA NIC whose
+      # verbs device UCX probes and fails on, which aborts MPI_Init before any test runs (2026-10-21, job 119391925384).
+      UCX_TLS: self,sm
     steps:
     - uses: actions/checkout@v7
       with:
