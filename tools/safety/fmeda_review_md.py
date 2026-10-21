@@ -28,6 +28,8 @@ SOURCES = export_fmeda_xlsx.SOURCES
 FIGURE = {"fmeda-sg001": "fig-3-10-fmeda-sg001-metrics.svg", "fmeda-sg009": "fig-3-11-fmeda-sg009-metrics.svg"}
 # the what-if page is a private claude.ai artifact of the project lead; it embeds a snapshot of these YAML files
 WHAT_IF = "https://claude.ai/artifact/6btZjojvGtcyZdYrhzsR8Z"
+# the live worksheet is a private claude.ai page of the project lead, built by fmeda_views.py
+WORKSHEET = "https://claude.ai/artifact/PCbGoJH1mrjZGDmEzegu7N"
 
 
 def one(s) -> str:
@@ -77,6 +79,13 @@ def page(name: str, doc: dict) -> str:
        f"{sum(1 for c in comps if c.get('stress_converted'))} are converted to the mission profile. The metrics show where the "
        "design falls short. They are not evidence that a target is met.", "",
        f"![Metrics per goal and failure-rate split](../../figures/generated/{FIGURE[name]})", "",
+       "### At a glance", "",
+       f"![Metrics per goal as cards: SPFM and LFM against the ASIL targets of each goal group, the λ totals, and the failure "
+       f"modes that cost SPFM points, largest first](fmeda-views/{name}-cards.svg)", "",
+       f"![The worksheet as a spreadsheet: a group row per component, a row per failure mode with its class, mechanism, DC "
+       f"and λ split, and the totals with SPFM and LFM](fmeda-views/{name}-sheet.svg)", "",
+       f"Both drawn by `tools/safety/fmeda_views.py`. The [live worksheet]({WORKSHEET}) (private link) has every row for "
+       "every goal, with filters, search and each row's notes.", "",
        "## How to review", "",
        "Start with the metrics per goal, then the failure modes that drive them (SPF and latent rows). Comment on this page's "
        "lines in a pull request, or open an issue naming the row ID (FMD-…). For a rate or DC, say which value you would use "

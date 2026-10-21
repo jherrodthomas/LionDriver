@@ -209,6 +209,8 @@ jobs:
         python3 tools/safety/test_fmea_review_md.py
         python3 tools/safety/fmeda_review_md.py --check
         python3 tools/safety/export_fmeda_xlsx.py --check
+        python3 tools/safety/fmeda_views.py --check
+        python3 tools/safety/test_fmeda_views.py
     - name: Workbook viewer page rebuilt for the committed workbooks (and its tests)
       run: |
         python3 tools/xlsx_viewer.py --check
