@@ -99,7 +99,7 @@ Applied to TSR-516(c) as it stands in WP-S-02 v0.53.
 | 6 | CONSTRAINT has a reference point, a bound, a duration and a level | Yes since v0.53 (FF-05, FF-06) |
 | 7 | The bound fits the parent's budget | Yes by design: 0.63–0.88 s in the plant against 1 s; not verified on hardware |
 | 8 | ASIL matches the parent's, or a decomposition is stated | TSR yes (C); SWSR-516 and SWSR-516b were B, raised to C in PR #392 |
-| 9 | A verification case exists for the method named | **No**: T-HIL is named, but no HIL or VS case targets (c) |
+| 9 | A verification case exists for the method named | **Partly**: VS-FI-10 (b) targets (c) since PR #396, not run; no HIL case yet |
 | 10 | Every route's record states the current behaviour | **No**: see below |
 
 ## What the walk found
@@ -113,7 +113,7 @@ These records are behind the requirement. Each is with its owner, through the co
 | WP-A-05 LS-20, LS-05 | Say the siren covers only heartbeat loss and an EPS fault; no loss scenario for (c) | STPA |
 | WP-A-04 BE-2.14; fta-fmea-map BE-2.14 note | Event text lists the baseline triggers; the map says (b)/(c) are not implemented | FTA |
 | System FMEA F-04b entries; SW FMEA SWF-036, SWF-39 | Describe a silent SoC stall and a 3 s engaged mismatch; SWF-39 credits only the heartbeat case | FMEA |
-| WP-V-05 VS-FI-31; no case for (c) | VS-FI-31 still says 1 s persistence; no HIL or VS case targets TSR-516(c) | verification |
+| WP-V-05 VS-FI-31, VS-FI-10 | VS-FI-31 said 1 s persistence; no case targeted TSR-516(c). Fixed in PR #396 (WP-V-05 v0.7: 0.7 s; VS-FI-10 (b) and (b2)); a HIL case is still open | verification |
 | fmdtools README | Said 58 sets where p4-timing.md and TE-02 say 61; fixed in PR #396 | fmdtools |
 
 ## Regenerating
