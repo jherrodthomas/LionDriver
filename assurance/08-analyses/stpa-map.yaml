@@ -76,8 +76,9 @@ scenarios:
     status: covered
     fta: [BE-1.19, BE-1.21, BE-1.22, BE-2.17]
     fmea: [SFM-006, SWF-020, SWF-023, SWF-040, SWF-043, SWF-047]
-    requirements: [TSR-407, TSR-408, TSR-602]
+    requirements: [TSR-407, TSR-408, TSR-516, TSR-602]
     actions: [SFM-ACT-015]
+    decisions: [DQ-404]
   - id: LS-06
     ucas: [UCA-19]
     hazards: [H-01, H-03, H-04, H-07]
@@ -344,3 +345,11 @@ scenarios:
     actions: [PFM-ACT-010]
     decisions: [DQ-022]
     open_because: "On-screen override alert and HMI clinic do not exist"
+  - id: LS-37
+    ucas: [UCA-17, UCA-13]
+    hazards: [H-02, H-06, H-07]
+    status: covered
+    fta: [BE-2.14, BE-2.21]
+    fmea: [SWF-036, SWF-039]
+    requirements: [TSR-307, TSR-516]
+    decisions: [DQ-408]
