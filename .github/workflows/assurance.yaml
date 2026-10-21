@@ -199,6 +199,15 @@ jobs:
         python3 assurance/08-analyses/figures/test_fig_a05_stpa.py
         python3 assurance/08-analyses/figures/test_stpa_scenes.py
         python3 assurance/08-analyses/figures/test_stpa_ls_scenes.py
+    - name: Plan view builds (Jantt rules hold, bundle matches its pin; WP-P-11 §7, WP-P-07 TL-50) (and its tests)
+      run: |
+        python3 assurance/process/tools/jantt_plan.py --out build/plan
+        python3 assurance/process/tools/test_jantt_plan.py
+    - name: Keep the plan view (open index.html from the downloaded artifact)
+      uses: actions/upload-artifact@v7
+      with:
+        name: plan
+        path: build/plan
     - name: Vehicle register page current, citing documents agree with it (and its tests)
       run: |
         python3 tools/vehicles/vehicle_register.py --check
