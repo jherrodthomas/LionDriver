@@ -566,15 +566,18 @@ jobs:
     - uses: actions/checkout@v7
       with:
         persist-credentials: false
+    - name: Checkout the opendbc submodule (the plant's Corolla parameters, for the crosswind push)
+      run: git submodule update --init --depth 1 opendbc_repo
     - name: Install the pinned packages of the weather physics
       run: python3 -m pip install --quiet --user --break-system-packages -r assurance/sim/weather/requirements.txt
-    - name: Checks (NREL reference, NOAA cross-check, camera frame, unit conversion, model branches, ODD bound, cabin against McLaren 2005)
+    - name: Checks (NREL reference, NOAA cross-check, camera frame, unit conversion, model branches, ODD bound, cabin against McLaren 2005, crosswind against the single-track algebra)
       run: python3 assurance/sim/weather/test_weather.py
     - name: Results within 0.05 of the committed JSON, results pages current
       run: |
         python3 assurance/sim/weather/sun_glare.py --check
         python3 assurance/sim/weather/hydroplaning.py --check
         python3 assurance/sim/weather/cabin_soak.py --check
+        python3 assurance/sim/weather/crosswind.py --check
         python3 assurance/sim/assets/tools/vehicle_geometry.py --check
 
   sim-scenarios:

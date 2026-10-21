@@ -136,6 +136,11 @@ def build(parts: dict) -> dict:
     "side_front": outline([left(parts["window_3"])], x0, y0, nx, ny)[:1],
     "side_rear": outline([left(parts["window_4"])], x0, y0, nx, ny)[:1],
   }
+  # front elevation (z, y): everything outside the cabin; the frontal area includes the mirrors, as published data do
+  front = [t[:, :, [2, 1, 0]] for name, t in parts.items() if not any(k in name for k in ("interier", "felt", "steering"))]
+  zlo, zhi = float(lo[2]) - 0.05, float(hi[2]) + 0.05
+  front_poly = outline(front, zlo, y0, int((zhi - zlo) / RES), ny)[:1]
+  frontal = abs(_area(np.array(front_poly[0]))) if front_poly else 0.0
   b = parts["body"]
   n = np.cross(b[:, 1] - b[:, 0], b[:, 2] - b[:, 0])
   a = 0.5 * np.linalg.norm(n, axis=1)
@@ -152,6 +157,7 @@ def build(parts: dict) -> dict:
     "glass": glass,
     "glass_note": "Areas are one face of each part (the mesh models both). The mesh has a glass roof panel; the reference car may not.",
     "roof_metal_up_m2": round(float(a[roof].sum()), 3),
+    "frontal_area_m2": round(float(frontal), 3),
     "side_projected_area_m2": round(abs(_area(body_px)), 3),
     "side_centroid_m": [round(float(v), 3) for v in _centroid(body_px)],
     "side_elevation": side,

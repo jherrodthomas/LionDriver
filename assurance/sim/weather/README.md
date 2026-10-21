@@ -1,4 +1,4 @@
-# Weather physics: sun in the road camera, hydroplaning and the cabin heat soak
+# Weather physics: sun in the road camera, hydroplaning, cabin heat soak and crosswind
 
 > **Synthetic data (DSR-12). Design aid, no evidence credit (DQ-139).** Two small physics studies for the SOTIF
 > triggering conditions of low sun (TC-01) and rain (TC-03). They answer *when* and *how fast*, not whether the item
@@ -131,7 +131,62 @@ estimated inputs; T1 and the logger decide it.
 
 *Figure 7. The same day as a loop.*
 
-## 4. Checks
+## 4. Crosswind (TC-15, KS-02)
+
+**Question.** How hard does a side wind push the Corolla, against the 0.5 m/s² margin the ODD's curve bound keeps
+for controller error, road crown and wind (WP-C-02 §3.2), and against the controller's 3.0 m/s² limit
+(`drive_helpers.py`, read by the script)?
+
+**Method.** [`crosswind.py`](crosswind.py) takes the car's side elevation measured on the 3D model
+([`corolla-e210-geometry.json`](../figures/corolla-e210-geometry.json)) and applies two textbook models along its
+height profile h(x):
+- **Slender-body force:** the car and its mirror image in the road act as a slender wing of span 2h(x). That gives
+  side force where the height grows from the nose, and none where it falls (rear window and boot), where the flow is
+  separated. Howell and Panigrahi (SAE 2016-01-1620) find notchbacks below slender-wing theory, so the band takes
+  0.5–1.0 of it.
+- **Crossflow drag** on the side area, with a coefficient of 0.7–1.1.
+
+The force and yaw moment go into the plant's single-track Corolla (opendbc mass and axles, neutral steer). That gives
+the **steering-equivalent push**: the lateral acceleration the controller must add to hold a straight line, which is
+what the plant's straight-drift study adds. A side force at the centre of gravity alone needs no steering, because the
+car crabs into the wind. The push comes from the yaw moment: the centre of pressure sits 0.77 m ahead of the centre
+of gravity, near the front axle.
+
+**Checks on the mesh.** Its wheelbase is 2.709 m against opendbc's 2.67 m (1.5 %). Its frontal area is 2.17 m²,
+against a published value of about 2.2 m². In the per-degree form that wind-tunnel data use, the nominal model gives
+C_Y 0.063 and C_N 0.021. The band's lower edge halves the slender-body part.
+
+**Result (steady wind square to the road).**
+- **110 km/h in the KS-02 wind (30 km/h):** the push is **0.86–1.76 m/s²**, beyond the ODD's 0.5 m/s² margin even at
+  the band's lower edge.
+- **80 km/h in the same wind:** 0.34–0.69 m/s².
+- **The margin:** at 110 km/h the upper estimate uses the whole margin from about 8 km/h of wind.
+- **The controller limit:** reached at about 49 km/h of wind.
+- **In a curve at the ODD's bound:** the curve takes 2.5 m/s² and a 30 km/h wind adds 0.9–1.8 m/s², which together
+  exceed the controller's 3.0 m/s².
+
+**Limits.**
+- These are textbook models on an artist's mesh, so the result is a band, not a measurement.
+- Gusts, which are stronger than the steady wind and arrive within a second, are not modelled. The next step is a
+  gust profile through the plant.
+- A windy-day log (steering torque on a straight, with the wind from a weather station) would set the real value.
+
+Results: [`results/crosswind.md`](../results/crosswind.md).
+
+![Side elevation of the Corolla measured on its 3D model; below it the side force along the car from a 30 km/h crosswind at 110 km/h, concentrated at the nose and over the bonnet and windshield, with the centre of pressure ahead of the centre of gravity; a top view with the force arrows on the windward side and the resultant near the front axle, turning the nose away from the wind](figures/fig-wx-8-crosswind-car.webp)
+
+*Figure 8. Where the wind pushes: the side force along the car, and its resultant ahead of the centre of gravity.*
+
+![Steering-equivalent push against crosswind speed for 80 and 110 km/h, as bands; at 110 km/h the band crosses the ODD's 0.5 m/s² margin below 10 km/h of wind and reaches the controller's 3.0 m/s² limit near 50 km/h; a line marks the KS-02 30 km/h wind](figures/fig-wx-9-crosswind-push.webp)
+
+*Figure 9. The push against the ODD's margin and the controller's limit.*
+
+![Animation, looping: a top view of the Corolla in its lane at 110 km/h with wind arrows from the left; after a silent assist loss it drifts right and crosses the lane line after about 1.2 s, drawn as a simple ½·a·t² sketch without the driver](figures/fig-wx-10-crosswind-anim.webp)
+
+*Figure 10. Assist lost in a 30 km/h crosswind: a kinematic sketch. The plant's straight-drift study gives the times
+with the driver.*
+
+## 5. Checks
 
 [`test_weather.py`](test_weather.py) runs in CI:
 
@@ -150,8 +205,11 @@ estimated inputs; T1 and the logger decide it.
 | C2 No sun, no AC, constant outside: every node stays at the outside temperature; a clear night sky cools, not below the sky | heat from nowhere, a sign error |
 | C3 Outside curve: minimum 06:00, maximum 15:00 | a wrong daily curve |
 | C4 Glass and roof areas and rakes equal the mesh measurement in `corolla-e210-geometry.json` | estimates drifting from the measured shape |
+| X1 Mesh against published data: wheelbase within 2 % of opendbc, frontal area 2.0–2.4 m² | a mis-scaled or mis-oriented mesh |
+| X2 Push mapping against the single-track algebra by hand: force at the CoG needs no steering; a moment N needs v² N (1/Cf + 1/Cr) / L² | an error in the force-to-push step |
+| X3 No wind, no push; more wind, more push; band ordered | a sign or branch error |
 
-All three scripts' `--check` rerun the study and fail if any number moves by more than 0.05 from the committed JSON.
+All four scripts' `--check` rerun the study and fail if any number moves by more than 0.05 from the committed JSON.
 
 ```sh
 python3 -m pip install -r assurance/sim/weather/requirements.txt
@@ -159,4 +217,5 @@ python3 assurance/sim/weather/test_weather.py
 python3 assurance/sim/weather/sun_glare.py --figures       # about 2 s, figures about 30 s
 python3 assurance/sim/weather/hydroplaning.py --figures
 python3 assurance/sim/weather/cabin_soak.py --figures      # reads results/thermal-pilot.json for the bound
+python3 assurance/sim/weather/crosswind.py --figures       # needs the opendbc submodule (the plant's Corolla)
 ```

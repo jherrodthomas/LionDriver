@@ -96,6 +96,7 @@
  },
  "glass_note": "Areas are one face of each part (the mesh models both). The mesh has a glass roof panel; the reference car may not.",
  "roof_metal_up_m2": 1.413,
+ "frontal_area_m2": 2.173,
  "side_projected_area_m2": 4.65,
  "side_centroid_m": [
   -0.131,

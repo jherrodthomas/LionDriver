@@ -67,3 +67,17 @@ cabin:
   outside_source: "Greenville SC: July normal high about 32 °C; 35 °C is a hot day; April normal high about 24 °C"
   mclaren: {rise_60min_k: 22.0, tolerance_k: 5.0, share_30min: 0.8, ambient_c: [22.0, 36.0], status: published,
             source: "McLaren, Null, Quinn 2005, Pediatrics 116(1) e109: dark sedan, clear days, 22–36 °C ambient, about 40 °F (22 K) rise in 60 min, 80 % of it in the first 30 min, rate independent of ambient"}
+
+crosswind:
+  # Crosswind on the Corolla (crosswind.py): side force and yaw moment from the side elevation measured on the mesh
+  # (figures/corolla-e210-geometry.json), turned into the steering-equivalent lateral push the plant uses.
+  air_density: {value: 1.2, status: published, source: "sea-level air at about 20 °C"}
+  crossflow_cd: {value: 0.9, low: 0.7, high: 1.1, status: estimate,
+                 source: "drag coefficient of the side profile in pure crossflow (bluff body broadside)"}
+  potential_factor: {value: 1.0, low: 0.5, high: 1.0, status: estimate,
+                     source: "slender-body force times this; Howell and Panigrahi (SAE 2016-01-1620): notchback and fastback cars fall below slender-wing theory"}
+  speeds_kph: [80.0, 110.0]
+  wind_m_s: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 25]
+  ks02_wind_kph: {value: 30.0, status: published, source: "WP-V-03 KS-02: crosswind ≥ 30 km/h"}
+  odd_margin_m_s2: {value: 0.5, status: published, source: "WP-C-02 §3.2: R_ODD = v²/2.5 against the controller's v²/3.0, a 0.5 m/s² margin for controller error, road crown and wind"}
+  beaufort: {"6 strong breeze": 10.8, "7 near gale": 13.9, "8 gale": 17.2}

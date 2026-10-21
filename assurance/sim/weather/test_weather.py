@@ -33,6 +33,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import hydroplaning as hp  # noqa: E402
 import cabin_soak as cs  # noqa: E402
+import crosswind as cw  # noqa: E402
 import sun_glare as sg  # noqa: E402
 
 P = yaml.safe_load((HERE / "params.yaml").read_text(encoding="utf-8"))
@@ -178,6 +179,29 @@ class Cabin(unittest.TestCase):
     self.assertAlmostEqual(c["rear_window"]["tilt_deg"], g["rear_window"]["tilt_from_horizontal_deg"], places=1)
     self.assertAlmostEqual(c["side_windows"]["area_each"],
                            g["side_front_each"]["area_m2"] + g["side_rear_each"]["area_m2"], places=3)
+
+
+class Crosswind(unittest.TestCase):
+  def test_x1_mesh_against_published(self):
+    r = cw.run(P)
+    self.assertLess(abs(r["wheelbase_mesh_m"] - r["wheelbase_opendbc_m"]) / r["wheelbase_opendbc_m"], 0.02)
+    self.assertTrue(2.0 < r["coefficients_per_deg"]["frontal_area_m2"] < 2.4)
+
+  def test_x2_push_algebra(self):
+    c = cw.corolla()
+    v = 30.0
+    self.assertLess(cw.push(1000.0, 0.0, v, c), 1e-9)
+    m, L, a, b, cs_ = c["m"], c["L"], c["a"], c["b"], c["C_S"]
+    Cf, Cr = cs_ * m * cw.G * b / L, cs_ * m * cw.G * a / L
+    N = 500.0
+    self.assertAlmostEqual(cw.push(0.0, N, v, c), v ** 2 * N * (1 / Cf + 1 / Cr) / L ** 2, places=9)
+
+  def test_x3_monotone_and_ordered(self):
+    r = cw.run(P)
+    for d in r["speeds"].values():
+      self.assertEqual(d["upper"][0], 0.0)
+      self.assertTrue(all(np.diff(d["upper"]) > 0) and all(np.diff(d["lower"]) > 0))
+      self.assertTrue(all(lo <= hi for lo, hi in zip(d["lower"], d["upper"], strict=True)))
 
 
 if __name__ == "__main__":

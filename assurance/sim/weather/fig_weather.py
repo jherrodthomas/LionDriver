@@ -6,6 +6,7 @@ Every figure is stamped synthetic (DSR-12), design aid, no evidence credit.
 from __future__ import annotations
 
 import io
+import math
 from pathlib import Path
 
 import matplotlib
@@ -354,3 +355,149 @@ def cabin_figures(p, r, out: Path):
   _cabin_series(r, out / "fig-wx-6-cabin.webp")
   _cabin_anim(r, out / "fig-wx-7-cabin-anim.webp")
   _report(out, "fig-wx-6", "fig-wx-7")
+
+
+# ------------------------------------------------------------------------------------------------ crosswind
+
+SILHOUETTE = Path(__file__).resolve().parents[1] / "figures" / "corolla-e210-silhouette.json"
+
+
+def _top_outline():
+  """Top view from the committed silhouette: x forward (the file's car faces -y), y to the left."""
+  import json
+  t = json.loads(SILHOUETTE.read_text(encoding="utf-8"))["top_outline_body"]
+  pts = [(-a, s) for a, s in t["left"]] + [(-a, s) for a, s in reversed(t["right"])]
+  return np.array(pts)
+
+
+def _crosswind_car(r, path):
+  import json
+  geom = json.loads(GEOMETRY.read_text(encoding="utf-8"))
+  side = geom["side_elevation"]
+  d = r["distribution_110_ks02"]
+  x, dy = np.array(d["x"]), np.array(d["dY"])
+  edges = np.arange(-2.4, 2.45, 0.1)                       # 10 cm bins for display: mean force per metre in each
+  idx = np.digitize(x, edges)
+  xb = np.array([x[idx == i].mean() for i in range(1, len(edges)) if (idx == i).any()])
+  yb = np.array([dy[idx == i].mean() for i in range(1, len(edges)) if (idx == i).any()])
+  fig = plt.figure(figsize=(9, 11), dpi=100)
+  fig.text(0.05, 0.965, "Where a crosswind pushes the Corolla", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.94, "110 km/h, 30 km/h wind square to the road (KS-02) · outline measured on the 3D model",
+           fontsize=12.5, color=INK2)
+  ax = fig.add_axes([0.06, 0.62, 0.9, 0.27]); ax.set_xlim(-2.5, 2.5); ax.set_ylim(-0.05, 1.65); ax.set_aspect("equal")
+  ax.axis("off")
+  ax.add_patch(Polygon(side["body"][0], color="#d9d7d1", zorder=1))
+  for k in ("windshield", "rear_window", "side_front", "side_rear"):
+    ax.add_patch(Polygon(side[k][0], color="#bcd6f2", zorder=2))
+  for wpoly in side["wheels"]:
+    ax.add_patch(Polygon(wpoly, color="#2b2a28", zorder=3))
+  ax.text(2.4, 1.5, "front →", ha="right", fontsize=11, color=INK2)
+  a2 = fig.add_axes([0.06, 0.47, 0.9, 0.13])               # same x span as the elevation above
+  a2.bar(xb, yb, width=0.09, color="#eb6834")
+  dy = yb
+  a2.axvline(r["x_cg_m"], color=INK, lw=1.4); a2.axvline(r["cp_m"], color=CRIT, lw=1.6, ls=(0, (4, 3)))
+  a2.text(r["x_cg_m"] - 0.05, dy.max() * 0.9, "centre of\ngravity", ha="right", fontsize=10.5, color=INK)
+  a2.text(r["cp_m"] + 0.05, dy.max() * 0.9, "centre of\npressure", ha="left", fontsize=10.5, color=CRIT)
+  a2.set_xlim(-2.5, 2.5); a2.set_yticks([])
+  a2.text(-2.45, dy.max() * 0.95, "side force along the car\n(N per m)", fontsize=10.5, color=INK2, va="top")
+  a2.spines[["top", "right"]].set_visible(False); a2.tick_params(labelbottom=False)
+  a3 = fig.add_axes([0.06, 0.13, 0.9, 0.3]); a3.set_xlim(-2.5, 2.5); a3.set_ylim(-1.6, 1.4); a3.set_aspect("equal")
+  a3.axis("off")
+  top = _top_outline()
+  a3.add_patch(Polygon(top, color="#d9d7d1", ec=INK2, lw=0.8))
+  scale = 0.9 / max(dy.max(), 1e-9)
+  for xi, f in zip(xb, yb, strict=True):
+    if f > dy.max() * 0.04:
+      a3.annotate("", (xi, 0.95), (xi, 0.95 + f * scale * 0.45), arrowprops=dict(arrowstyle="->", color="#eb6834", lw=1.4))
+  a3.plot(r["x_cg_m"], 0, "o", ms=9, mfc="white", mec=INK, mew=1.5)
+  a3.annotate("", (r["cp_m"] + 0.25, -0.15), (r["cp_m"] + 0.25, 0.55),
+              arrowprops=dict(arrowstyle="-|>", color=CRIT, lw=2.4, mutation_scale=18))
+  a3.text(r["cp_m"] + 0.35, 0.2, "resultant", fontsize=11, color=CRIT)
+  a3.text(-2.45, 1.25, "wind ↓ from this side", fontsize=11.5, color="#1c5cab")
+  a3.annotate("nose turned away from the wind", (2.3, -0.3), (0.6, -1.35), fontsize=11, color=INK2,
+              arrowprops=dict(arrowstyle="->", color=INK2, connectionstyle="arc3,rad=-0.3"))
+  c = r["coefficients_per_deg"]
+  fig.text(0.05, 0.065, f"Slender-body force where the height grows, separated where it falls, plus crossflow drag. "
+           f"Nominal C_Y {c['C_Y']:.3f}\nand C_N {c['C_N']:.3f} per degree (frontal area {c['frontal_area_m2']:.2f} m², "
+           "wheelbase); the band takes half the slender-body force.", fontsize=11, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def _crosswind_push(r, path):
+  fig, ax = plt.subplots(figsize=(9, 10), dpi=100)
+  fig.subplots_adjust(left=0.12, right=0.95, top=0.84, bottom=0.2)
+  fig.text(0.05, 0.95, "Crosswind push against the steering margin", fontsize=18, weight="bold", color=INK)
+  fig.text(0.05, 0.92, "steering-equivalent lateral push to hold a straight line · Corolla, steady wind square to the road",
+           fontsize=12, color=INK2)
+  cols = {"80.0": "#86b6ef", "110.0": "#104281"}
+  for k, d in r["speeds"].items():
+    w = np.array(d["wind"]) * 3.6
+    ax.fill_between(w, d["lower"], d["upper"], color=cols.get(k, INK2), alpha=0.35, lw=0)
+    ax.plot(w, d["upper"], color=cols.get(k, INK2), lw=2.2)
+    ax.text(w[-1] + 1, d["upper"][-1], f"{float(k):.0f} km/h", fontsize=12, color=INK, va="center")
+  ax.axhline(r["odd_margin_m_s2"], color=CRIT, lw=1.6, ls=(0, (4, 3)))
+  ax.text(2, r["odd_margin_m_s2"] + 0.12, f"ODD margin {r['odd_margin_m_s2']} m/s² (WP-C-02)", color=CRIT, fontsize=11.5)
+  ax.axhline(r["controller_limit_m_s2"], color=CRIT, lw=2)
+  ax.text(2, r["controller_limit_m_s2"] + 0.12, f"controller limit {r['controller_limit_m_s2']} m/s²", color=CRIT,
+          fontsize=11.5, weight="bold")
+  ax.axvline(30, color=INK2, lw=1.2)
+  ax.text(31, 5.6, "KS-02:\n30 km/h wind", fontsize=11, color=INK2)
+  ax.set_xlim(0, 100); ax.set_ylim(0, 6.5)
+  ax.set_xlabel("crosswind, km/h"); ax.set_ylabel("push, m/s²")
+  ax.grid(axis="y", color=GRID); ax.spines[["top", "right"]].set_visible(False)
+  fig.text(0.05, 0.08, "Line: the upper estimate; band down to half the slender-body force. Textbook models on the\n"
+           "mesh's outline, not a wind-tunnel test: a windy-day measurement sets the real value.", fontsize=11.5,
+           color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def _crosswind_anim(r, path):
+  d = r["speeds"]["110.0"]
+  a = float(np.mean(d["push_at_ks02"]))
+  v = 110 / 3.6
+  lane = 3.7
+  half = 1.781 / 2
+  t_line = math.sqrt(2 * (lane / 2 - half) / a)
+  ts = np.linspace(0, min(t_line + 0.6, 4.0), 36)
+  top = _top_outline()
+  frames = []
+  for t in ts:
+    y = 0.5 * a * t * t
+    fig = plt.figure(figsize=(7.2, 9), dpi=80)
+    fig.text(0.05, 0.955, "Assist lost in a crosswind", fontsize=19, weight="bold", color=INK)
+    fig.text(0.05, 0.925, f"110 km/h · 30 km/h wind from the left · push {a:.1f} m/s² (middle of the band)", fontsize=12,
+             color=INK2)
+    fig.text(0.95, 0.955, f"t = {t:3.1f} s", ha="right", fontsize=16, color=INK, family="DejaVu Sans Mono")
+    ax = fig.add_axes([0.05, 0.18, 0.9, 0.7]); ax.set_xlim(-4, 4); ax.set_ylim(-4, 26); ax.set_aspect("equal")
+    ax.axis("off")
+    ax.add_patch(Rectangle((-4, -4), 8, 30, color="#d6d4cc"))
+    for xl, st in ((-lane / 2 - lane, "-"), (-lane / 2, (0, (6, 6))), (lane / 2, (0, (6, 6))), (lane / 2 + lane, "-")):
+      ax.plot([xl, xl], [-4, 26], color="white", lw=2.5, ls=st)
+    off = (v * t) % 12
+    for k in range(-1, 4):
+      for xw in (-3.6, -3.0):
+        yy = 22 - ((k * 8 + off * 0.6) % 30)
+        ax.annotate("", (xw + 1.4, yy), (xw, yy), arrowprops=dict(arrowstyle="->", color="#1c5cab", lw=1.5))
+    car = np.c_[-top[:, 1] + y, top[:, 0] + 2]
+    over = y + half > lane / 2
+    ax.add_patch(Polygon(car, color="#c84b2f" if over else "#6d6b64", ec=INK, lw=1))
+    ax.plot([0, 0], [-4, 26], color="#86b6ef", lw=1, ls=":")
+    ax.text(0.15, 24.5, "lane centre", fontsize=10, color="#1c5cab")
+    if over:
+      ax.text(0, 13, "Over the lane line", ha="center", fontsize=15, weight="bold", color="white",
+              bbox=dict(boxstyle="round,pad=0.4", fc=CRIT, ec=CRIT))
+    fig.text(0.05, 0.1, f"Drift {y:.2f} m. A sketch: ½·a·t², no driver, no tyre self-alignment\n(an upper bound). The "
+             "plant's straight-drift study gives the times with the driver.", fontsize=10.5, color=INK2)
+    _stamp(fig, "SYNTHETIC (DSR-12) · design aid, no credit · textbook models")
+    frames.append(_png(fig))
+  _anim(frames, [140] * (len(frames) - 1) + [2500], path)
+
+
+def crosswind_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _crosswind_car(r, out / "fig-wx-8-crosswind-car.webp")
+  _crosswind_push(r, out / "fig-wx-9-crosswind-push.webp")
+  _crosswind_anim(r, out / "fig-wx-10-crosswind-anim.webp")
+  _report(out, "fig-wx-8", "fig-wx-9", "fig-wx-10")

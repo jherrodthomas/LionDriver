@@ -5421,3 +5421,32 @@
   answer: {choice: A, via: chat, at: 2026-10-21, note: "Lead in chat: \"A\""}
   applied: {ref: d3e22f9, record: "WP-C-02 v0.8 §3.1 (precipitation and road-surface rows)", at: 2026-10-21}
   note: "Correction on applying: WP-C-02 §3.1 already listed standing water among the road-surface exclusions, so option A adds the rain-rate number and gives that exclusion its reason (after the rain, about 98 km/h); the context's \"standing water stays inside the ODD\" under B was wrong."
+
+- id: DQ-414
+  question: "Does the ODD's curve margin need to cover crosswind, and if so, how?"
+  context: >-
+    The ODD's curve bound (R ≥ v²/2.5) keeps 0.5 m/s² of the controller's 3.0 m/s² for controller error, road crown and
+    wind. The crosswind study (textbook models on the Corolla's measured outline, synthetic, no credit) finds that a
+    30 km/h side wind at 110 km/h already needs **0.9–1.8 m/s² of steering, beyond the whole margin**; in a curve at the
+    bound the two together exceed what the controller can command. The ODD excludes only "strong cross-wind (warnings
+    issued or gusts noticeable)", with no number, while the KS-02 test treats ≥ 30 km/h wind as inside. The model's
+    band is about a factor of two wide.
+  reversibility: revisit
+  blocks: "WP-C-02 §3.1 wind row and §3.2 margin; WP-V-03 KS-02 pass criteria"
+  gate: G1
+  decider: lead
+  batch: 14
+  asked: 2026-10-21
+  options:
+    - key: A
+      recommended: true
+      title: "Measure first: a windy-day log, then decide; meanwhile say the margin is not shown to cover wind"
+      detail: "Log steering torque on a straight on a windy day (local logs, wind from a weather station) to set the real push; WP-C-02 §3.2 states the margin covers controller error and crown only until then. Cost: a drive in wind, and the ODD stays open on wind for now."
+    - key: B
+      title: "Put a number on the wind limit now: sustained crosswind above 30 km/h is outside the ODD"
+      detail: "A driver operating rule like the rain limit; KS-02 then tests just inside it. Cost: by the model even 30 km/h wind uses more than the margin at 110 km/h, so the curve bound would still not cover it."
+    - key: C
+      title: "Widen the margin: curve bound R ≥ v²/2.0"
+      detail: "1.0 m/s² of margin covers the lower edge of the band at 110 km/h. Cost: more curves fall outside the ODD (at 110 km/h the minimum radius grows from 373 m to 467 m)."
+  sources: ["assurance/sim/results/crosswind.md", "assurance/sim/weather/README.md §4", "WP-C-02 §3.1 (wind), §3.2 (R_ODD)", "WP-V-03 KS-02", "openpilot/selfdrive/controls/lib/drive_helpers.py MAX_LATERAL_ACCEL_NO_ROLL", "SAE 2016-01-1620"]
+  status: open
