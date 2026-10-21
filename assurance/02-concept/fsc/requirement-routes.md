@@ -65,7 +65,7 @@ Sources (quoted, checked at build): TSR-516 parents in [`tsr.yaml`](../../trace/
 
 ## Two cross-checks
 
-**FRET** (pilot on branch `claude/fret-tsr-pilot`, not yet on liondriver-dev) restated six TSRs in structured English and checked them against the code. It found seven places where the text and the code disagreed (FF-01…FF-07). Three of them, FF-04, FF-05 and FF-06, are in TSR-516 and are exactly anatomy defects: the CONSTRAINT slot had no duration and no level, and the TRIGGER was off by one task tick. All seven are fixed in WP-S-02 v0.53.
+**FRET** (pilot, [`fretish-requirements.md`](../../models/fret/fretish-requirements.md), no evidence credit) restated six TSRs in structured English and checked them against the code. It found seven places where the text and the code disagreed (FF-01…FF-07). Three of them, FF-04, FF-05 and FF-06, are in TSR-516 and are exactly anatomy defects: the CONSTRAINT slot had no duration and no level, and the TRIGGER was off by one task tick. All seven are fixed in WP-S-02 v0.53.
 
 ![TSR-516(c) split into slots for v0.52 and v0.53, FF-05 and FF-06 marked on the old text, and the FRETish sentence](figures/fig-c04-r4-tsr516c.svg)
 
@@ -77,7 +77,7 @@ Sources (quoted, checked at build): TSR-516 parents in [`tsr.yaml`](../../trace/
 |---|---|---|---|
 | Fault tree | Showing that one cause removes both steering and the SoC's warning, so the warning needs an independent agent | Credit only as current as its event texts | AGENT, TRIGGER |
 | FMEA | Naming the control, then giving the control its own failure mode | Rows age with the code | ACTION, OBJECT |
-| STPA | Perception: an alert the driver does not notice is not given | Loss scenarios age; misses cases no one modelled, like (c) | CONSTRAINT, TRIGGER |
+| STPA | Perception: an alert the driver does not notice is not given | Loss scenarios age; it missed (c) until LS-37 was added | CONSTRAINT, TRIGGER |
 | Guide words | Systematic: LATE, DELAYED and TOO SHORT are each 'same as missing' | Generic: names the alert, not who sounds it | MODAL, CONSTRAINT |
 | Scenario | Numbers in seconds and metres the driver lives with | Synthetic; the plant's driver and road are assumptions | CONSTRAINT values |
 | Trace | Completeness: every parent, ASIL and test is there | Confirms, does not derive; a complete trace can carry wrong text | attributes |
@@ -92,14 +92,14 @@ Applied to TSR-516(c) as it stands in WP-S-02 v0.53.
 | # | Check | TSR-516(c) |
 |---|---|---|
 | 1 | TRIGGER is observable by the AGENT and names the requirement that detects it | Yes: the heartbeat flag (TSR-307(a)) and PCM_CRUISE |
-| 2 | TRIGGER is no narrower than the parent's, and the parent covers it | **No**: FSR-02.05 names only SoC communication loss and an MCU reset; (b) and (c) go beyond it |
+| 2 | TRIGGER is no narrower than the parent's, and the parent covers it | Yes since WP-C-04 v0.26: FSR-02.05 covers any end of authority that is not an observed driver action. Before, it named only SoC communication loss and an MCU reset |
 | 3 | AGENT does not fail with the fault it must catch | Yes: the safety MCU, not SoC software |
 | 4 | One MODAL per testable clause | Yes: (a)–(d) share one *shall* but each has its own trigger and bound |
 | 5 | ACTION and OBJECT are visible at the item's boundary | Yes: the siren output |
 | 6 | CONSTRAINT has a reference point, a bound, a duration and a level | Yes since v0.53 (FF-05, FF-06) |
 | 7 | The bound fits the parent's budget | Yes by design: 0.63–0.88 s in the plant against 1 s; not verified on hardware |
 | 8 | ASIL matches the parent's, or a decomposition is stated | TSR yes (C); SWSR-516 and SWSR-516b were B, raised to C in PR #392 |
-| 9 | A verification case exists for the method named | **Partly**: VS-FI-10 (b) targets (c) since PR #396, not run; no HIL case yet |
+| 9 | A verification case exists for the method named | **Partly**: VS-FI-10 (b) targets (c) since PR #396; HIL test `test_16_engaged_mismatch_siren.py` proposed (panda PR #22, PR #402); neither has run on hardware |
 | 10 | Every route's record states the current behaviour | **No**: see below |
 
 ## What the walk found
@@ -108,13 +108,13 @@ These records are behind the requirement. Each is with its owner, through the co
 
 | Record | What is out of date | Owner |
 |---|---|---|
-| FSR-02.05 (WP-C-04 §5) | Trigger names only SoC communication loss and an MCU reset; TSR-516(b)/(c) cover any non-driver revocation and a failed cancel | FSC |
+| FSR-02.05 (WP-C-04 §5) | Trigger named only SoC communication loss and an MCU reset; TSR-516(b)/(c) cover any non-driver revocation and a failed cancel. Widened in WP-C-04 v0.26 | FSC |
 | SWSR-516, SWSR-516b (WP-W-02) | ASIL B under ASIL C; SWSR-516(b) listed the heartbeat "not engaged" case, which TSR-516 moved to (c). Both fixed in PR #392, with eight more SWSRs raised to C | software requirements |
-| WP-A-05 LS-20, LS-05 | Say the siren covers only heartbeat loss and an EPS fault; no loss scenario for (c) | STPA |
-| WP-A-04 BE-2.14; fta-fmea-map BE-2.14 note | Event text lists the baseline triggers; the map says (b)/(c) are not implemented | FTA |
+| WP-A-05 LS-20, LS-05 | Said the siren covers only heartbeat loss and an EPS fault; no loss scenario for (c). Fixed in PR #401 (v0.15, new LS-37) | STPA |
+| WP-A-04 BE-2.14; fta-fmea-map BE-2.14 note | Event text listed the baseline triggers; the map said (b)/(c) were not implemented. Fixed in PR #400 | FTA |
 | System FMEA F-04b entries (SFM-005.C2, SFM-006.C1) | Described a silent SoC stall; fixed in PR #398 (siren at 0.25 s) | System FMEA |
 | SW FMEA: `sw-fmea.yaml` SWF-036, SWF-039; WP-W-04 SWF-39 status | Said a 3 s engaged mismatch and credited only the heartbeat siren; fixed in PR #399 (rev 1.8, WP-W-04 v1.3), re-rating open | SW FMEA |
-| WP-V-05 VS-FI-31, VS-FI-10 | VS-FI-31 said 1 s persistence; no case targeted TSR-516(c). Fixed in PR #396 (WP-V-05 v0.7: 0.7 s; VS-FI-10 (b) and (b2)); a HIL case is still open | verification |
+| WP-V-05 VS-FI-31, VS-FI-10 | VS-FI-31 said 1 s persistence; no case targeted TSR-516(c). Fixed in PR #396 (WP-V-05 v0.7: 0.7 s; VS-FI-10 (b) and (b2)); HIL test proposed in panda PR #22 and PR #402, not run on hardware | verification |
 | fmdtools README | Said 58 sets where p4-timing.md and TE-02 say 61; fixed in PR #396 | fmdtools |
 
 ## Regenerating

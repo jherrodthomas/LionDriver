@@ -75,7 +75,7 @@ WP_S02 = A / "03-system" / "WP-S-02-technical-safety-requirements.md"
 # FSR-02.05 and TSR-516(c) split into slots. Each text is a quote of the current document (checked), except where
 # `None` marks a slot the requirement leaves empty and `derived` a slot it states only through another clause.
 FSR = dict(
-  TRIGGER="On loss of communication with the SoC while engaged, and on a reset of the safety MCU (watchdog or fault reset) that interrupts granted actuation authority",
+  TRIGGER="When granted actuation authority ends for a reason other than a driver action that the safety MCU itself observes",
   AGENT="the safety MCU",
   MODAL="shall",
   ACTION="give",
@@ -99,7 +99,8 @@ OLD_MARKS = {"TRIGGER": "FF-06 · one tick off", "CONSTRAINT": "FF-05 · how lon
 TSR_SHORT = dict(TRIGGER="PCM cruise still active 0.5 s after the first \"not engaged\" heartbeat", AGENT="The safety MCU",
                  MODAL="shall", ACTION="sound", OBJECT="its own siren, not via the SoC",
                  CONSTRAINT="≤ 0.5 s; ≥ 3 s; audible (M-05)")
-FRETISH = [("upon not_engaged_ticks > 50 & pcm_cruise_active", "TRIGGER"), ("the envelope", "AGENT"), ("shall", "MODAL"),
+FRET = A / "models" / "fret" / "fretish-requirements.md"
+FRETISH = [("upon not_engaged_ticks >= 50 & pcm_cruise_active", "TRIGGER"), ("the envelope", "AGENT"), ("shall", "MODAL"),
            ("within 50 ticks", "CONSTRAINT"), ("satisfy siren_on", "ACTION")]
 
 # ============================================================================ the six routes
@@ -114,8 +115,8 @@ ROUTES = [
     fixed=["AGENT", "TRIGGER"],
     gave="A single SoC fault both removes steering and silences the SoC's own alert (cut sets of order 1). The warning "
          "must come from an element that survives the SoC: the safety MCU. The cut sets list the causes the trigger must cover.",
-    watch="Credit is by design only: the order stays 1 until the siren timing is verified on hardware (OI-11). BE-2.14 still "
-          "describes the baseline triggers.",
+    watch="Credit is by design only: the order stays 1 until the siren timing is verified on hardware (OI-11). BE-2.14 "
+          "described only the baseline triggers until PR #400.",
   ),
   dict(
     key="fmea", name="FMEA", short="FMEA", asks="How does each element fail, and what control catches it?",
@@ -136,8 +137,8 @@ ROUTES = [
     fixed=["CONSTRAINT", "TRIGGER"],
     gave="The unsafe action is 'not given, or given after the driver can react': the constraint is relative to the driver. "
          "The loss scenario says why: an alert the driver does not perceive is not given. That is the audible-level clause.",
-    watch="LS-20 predates DQ-404 and panda f4803c5: it still says the siren covers only heartbeat loss and an EPS fault. "
-          "No loss scenario covers the failed-cancel case (c).",
+    watch="Loss scenarios age: until PR #401, LS-20 said the siren covers only heartbeat loss and an EPS fault, and no "
+          "loss scenario covered the failed-cancel case (c); LS-37 now does.",
   ),
   dict(
     key="guidewords", name="Guide words", short="HAZOP", asks="What if the warning function does NO, LATE, TOO SHORT …?",
@@ -173,7 +174,7 @@ ROUTES = [
          ("05-software/WP-W-02-software-safety-requirements.md", "| SWSR-516b |", "WP-W-02 SWSR-516b")],
     fixed=[],
     gave="Confirms the chain rather than deriving anything. It checks the attributes: TSR-516 is ASIL C like its parent, "
-         "verification T-HIL. It found SWSR-516 and SWSR-516b at ASIL B (raised to C in PR #392, with eight more), and no HIL or VS case for (c) (VS-FI-10 (b) added in PR #396).",
+         "verification T-HIL. It found SWSR-516 and SWSR-516b at ASIL B (raised to C in PR #392, with eight more), and no HIL or VS case for (c) (VS-FI-10 (b) added in PR #396, a HIL test proposed in PR #402).",
     watch="A complete trace says nothing about whether the text is right: every FRET finding (FF-01…FF-07) passed the trace.",
   ),
 ]
@@ -204,6 +205,7 @@ def check_sources():
     for part in v.removeprefix("(c) ").split(" … "):
       if norm(part) not in norm(tsr):
         fail(f"TSR-516 {k} slot no longer in WP-S-02: {part[:60]}")
+  quote_in(FRET, "`" + " ".join(p for p, _ in FRETISH[:4]) + " " + FRETISH[4][0] + "`", "FR-516c FRETish")
   return fsr, tsr
 
 
@@ -565,7 +567,7 @@ def page():
     L += [f"### {i}. {r['name']}", "", f"![Route {i}, {r['name']}: {r['records']}](figures/fig-c04-r3-{i}-{r['key']}.svg)", "",
           "Sources (quoted, checked at build): " + "; ".join(f"{label} in {link(p)}" for p, _, label in r["src"]) + ".", ""]
   L += ["## Two cross-checks", "",
-        "**FRET** (pilot on branch `claude/fret-tsr-pilot`, not yet on liondriver-dev) restated six TSRs in structured English and checked "
+        f"**FRET** (pilot, {link('models/fret/fretish-requirements.md')}, no evidence credit) restated six TSRs in structured English and checked "
         "them against the code. It found seven places where the text and the code disagreed (FF-01…FF-07). Three of them, "
         "FF-04, FF-05 and FF-06, are in TSR-516 and are exactly anatomy defects: the CONSTRAINT slot had no duration and no "
         "level, and the TRIGGER was off by one task tick. All seven are fixed in WP-S-02 v0.53.", "",
@@ -578,7 +580,7 @@ def page():
         "| Method | Shines at | Watch for | Fixed here |", "|---|---|---|---|",
         "| Fault tree | Showing that one cause removes both steering and the SoC's warning, so the warning needs an independent agent | Credit only as current as its event texts | AGENT, TRIGGER |",
         "| FMEA | Naming the control, then giving the control its own failure mode | Rows age with the code | ACTION, OBJECT |",
-        "| STPA | Perception: an alert the driver does not notice is not given | Loss scenarios age; misses cases no one modelled, like (c) | CONSTRAINT, TRIGGER |",
+        "| STPA | Perception: an alert the driver does not notice is not given | Loss scenarios age; it missed (c) until LS-37 was added | CONSTRAINT, TRIGGER |",
         "| Guide words | Systematic: LATE, DELAYED and TOO SHORT are each 'same as missing' | Generic: names the alert, not who sounds it | MODAL, CONSTRAINT |",
         "| Scenario | Numbers in seconds and metres the driver lives with | Synthetic; the plant's driver and road are assumptions | CONSTRAINT values |",
         "| Trace | Completeness: every parent, ASIL and test is there | Confirms, does not derive; a complete trace can carry wrong text | attributes |",
@@ -589,25 +591,25 @@ def page():
         "Applied to TSR-516(c) as it stands in WP-S-02 v0.53.", "",
         "| # | Check | TSR-516(c) |", "|---|---|---|",
         "| 1 | TRIGGER is observable by the AGENT and names the requirement that detects it | Yes: the heartbeat flag (TSR-307(a)) and PCM_CRUISE |",
-        "| 2 | TRIGGER is no narrower than the parent's, and the parent covers it | **No**: FSR-02.05 names only SoC communication loss and an MCU reset; (b) and (c) go beyond it |",
+        "| 2 | TRIGGER is no narrower than the parent's, and the parent covers it | Yes since WP-C-04 v0.26: FSR-02.05 covers any end of authority that is not an observed driver action. Before, it named only SoC communication loss and an MCU reset |",
         "| 3 | AGENT does not fail with the fault it must catch | Yes: the safety MCU, not SoC software |",
         "| 4 | One MODAL per testable clause | Yes: (a)–(d) share one *shall* but each has its own trigger and bound |",
         "| 5 | ACTION and OBJECT are visible at the item's boundary | Yes: the siren output |",
         "| 6 | CONSTRAINT has a reference point, a bound, a duration and a level | Yes since v0.53 (FF-05, FF-06) |",
         "| 7 | The bound fits the parent's budget | Yes by design: 0.63–0.88 s in the plant against 1 s; not verified on hardware |",
         "| 8 | ASIL matches the parent's, or a decomposition is stated | TSR yes (C); SWSR-516 and SWSR-516b were B, raised to C in PR #392 |",
-        "| 9 | A verification case exists for the method named | **Partly**: VS-FI-10 (b) targets (c) since PR #396, not run; no HIL case yet |",
+        "| 9 | A verification case exists for the method named | **Partly**: VS-FI-10 (b) targets (c) since PR #396; HIL test `test_16_engaged_mismatch_siren.py` proposed (panda PR #22, PR #402); neither has run on hardware |",
         "| 10 | Every route's record states the current behaviour | **No**: see below |", "",
         "## What the walk found", "",
         "These records are behind the requirement. Each is with its owner, through the coordinator.", "",
         "| Record | What is out of date | Owner |", "|---|---|---|",
-        "| FSR-02.05 (WP-C-04 §5) | Trigger names only SoC communication loss and an MCU reset; TSR-516(b)/(c) cover any non-driver revocation and a failed cancel | FSC |",
+        "| FSR-02.05 (WP-C-04 §5) | Trigger named only SoC communication loss and an MCU reset; TSR-516(b)/(c) cover any non-driver revocation and a failed cancel. Widened in WP-C-04 v0.26 | FSC |",
         "| SWSR-516, SWSR-516b (WP-W-02) | ASIL B under ASIL C; SWSR-516(b) listed the heartbeat \"not engaged\" case, which TSR-516 moved to (c). Both fixed in PR #392, with eight more SWSRs raised to C | software requirements |",
-        "| WP-A-05 LS-20, LS-05 | Say the siren covers only heartbeat loss and an EPS fault; no loss scenario for (c) | STPA |",
-        "| WP-A-04 BE-2.14; fta-fmea-map BE-2.14 note | Event text lists the baseline triggers; the map says (b)/(c) are not implemented | FTA |",
+        "| WP-A-05 LS-20, LS-05 | Said the siren covers only heartbeat loss and an EPS fault; no loss scenario for (c). Fixed in PR #401 (v0.15, new LS-37) | STPA |",
+        "| WP-A-04 BE-2.14; fta-fmea-map BE-2.14 note | Event text listed the baseline triggers; the map said (b)/(c) were not implemented. Fixed in PR #400 | FTA |",
         "| System FMEA F-04b entries (SFM-005.C2, SFM-006.C1) | Described a silent SoC stall; fixed in PR #398 (siren at 0.25 s) | System FMEA |",
         "| SW FMEA: `sw-fmea.yaml` SWF-036, SWF-039; WP-W-04 SWF-39 status | Said a 3 s engaged mismatch and credited only the heartbeat siren; fixed in PR #399 (rev 1.8, WP-W-04 v1.3), re-rating open | SW FMEA |",
-        "| WP-V-05 VS-FI-31, VS-FI-10 | VS-FI-31 said 1 s persistence; no case targeted TSR-516(c). Fixed in PR #396 (WP-V-05 v0.7: 0.7 s; VS-FI-10 (b) and (b2)); a HIL case is still open | verification |",
+        "| WP-V-05 VS-FI-31, VS-FI-10 | VS-FI-31 said 1 s persistence; no case targeted TSR-516(c). Fixed in PR #396 (WP-V-05 v0.7: 0.7 s; VS-FI-10 (b) and (b2)); HIL test proposed in panda PR #22 and PR #402, not run on hardware | verification |",
         "| fmdtools README | Said 58 sets where p4-timing.md and TE-02 say 61; fixed in PR #396 | fmdtools |", "",
         "## Regenerating", "",
         "```bash", "python3 fsc_routes.py          # write this page and its figures", "python3 fsc_routes.py --check  # CI: fail if stale or a quote is gone", "```", ""]
