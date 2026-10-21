@@ -61,15 +61,10 @@ requirements:
     source: "or r is the torque at the start of the current real-time window and Δ = Δ_rt for the window check; the window restarts with the first frame more than 250 ms after its start"
     fretish: "whenever lka_frame_rx & (steer_torque_cmd > maxInt(torque_rt_reference, 0) + delta_rt | steer_torque_cmd < minInt(torque_rt_reference, 0) - delta_rt) the envelope shall immediately satisfy lka_frame_rejected"
     findings: [FF-02, FF-07]
-  - id: FR-103d
-    tsr: TSR-103
-    source: "and any change toward zero is accepted"
-    fretish: "whenever lka_frame_rx & ((torque_reference >= 0 & steer_torque_cmd >= 0 & steer_torque_cmd <= torque_reference) | (torque_reference <= 0 & steer_torque_cmd <= 0 & steer_torque_cmd >= torque_reference)) the envelope shall immediately satisfy !lka_frame_rejected"
-    findings: [FF-08]
   - id: FR-104
     tsr: TSR-104
-    source: "The envelope shall reject `0x2E4` frames whose torque exceeds the measured EPS motor torque (`0x260` STEER_TORQUE_EPS scaled by the EPS factor of the safety parameter) by more than Δ_meas"
-    fretish: "whenever lka_frame_rx & (steer_torque_cmd > maxInt(torque_meas_max, 0) + delta_meas | steer_torque_cmd < minInt(torque_meas_min, 0) - delta_meas) the envelope shall immediately satisfy lka_frame_rejected"
+    source: "by more than Δ_meas (measured from 0 when the measured torque is of the opposite sign), using the minimum/maximum of the last 6 samples widened by 1 raw, unless the frame falls toward zero by at least Δ_down from the previous frame (TSR-103)."
+    fretish: "whenever lka_frame_rx & ((steer_torque_cmd > maxInt(torque_meas_max, 0) + delta_meas & steer_torque_cmd > torque_reference - delta_down) | (steer_torque_cmd < minInt(torque_meas_min, 0) - delta_meas & steer_torque_cmd < torque_reference + delta_down)) the envelope shall immediately satisfy lka_frame_rejected"
     findings: [FF-08]
   - id: FR-110
     tsr: TSR-110
@@ -220,8 +215,8 @@ findings:
     tsr: TSR-103
     kind: requirements contradict each other (realizability)
     summary: >-
-      Found by the P3 realizability check (fret-realizability.md: minimal conflicting sets {FR-103b, FR-103d} and
-      {FR-103d, FR-104}). TSR-103 v0.53 says "any change toward zero is accepted", but also that while the command
+      Found by the P3 realizability check (minimal conflicting sets {FR-103b, FR-103d} and {FR-103d, FR-104}, where
+      FR-103d restated v0.53's "and any change toward zero is accepted"; FR-103d was dropped with v0.54). TSR-103 v0.53 says "any change toward zero is accepted", but also that while the command
       exceeds the measured EPS torque by more than Δ_meas it shall fall by at least Δ_down per frame, and TSR-104
       rejects every frame that exceeds the measured torque by more than Δ_meas. A frame above that bound that moves
       toward zero must then be both accepted and rejected. The code does neither text: dist_to_meas_check allows up to
@@ -229,5 +224,6 @@ findings:
       TSR-104) and a smaller fall toward zero is rejected (against "any change toward zero"). One rule matching the
       code: a frame more than Δ_meas beyond the measured torque (from 0) is rejected unless it falls toward zero by
       at least Δ_down from r.
-    evidence: "fret-realizability.md, realizability/envelope_cc0.lus; opendbc safety/lateral.h dist_to_meas_check"
+    evidence: "Kind 2 on WP-S-02 v0.53 (TE-03 §5, P3 result); opendbc safety/lateral.h dist_to_meas_check"
     route: WP-S-02 owner (TSR-103 and TSR-104 wording)
+    status: 'fixed in WP-S-02 v0.54 (#411): the toward-zero acceptance is limited to the two interval checks, and TSR-103 and TSR-104 state the code''s rule; the torque component is now realizable'

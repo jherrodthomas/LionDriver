@@ -177,14 +177,9 @@ var FR_103b : bool = H(((lka_frame_rx and (((steer_torque_cmd > (maxInt(torque_m
 var FR_103c : bool = H(((lka_frame_rx and ((steer_torque_cmd > (maxInt(torque_rt_reference,0) + delta_rt)) or (steer_torque_cmd < (minInt(torque_rt_reference,0) - delta_rt)))) => lka_frame_rejected));  
 
  
-(* whenever lka_frame_rx & ((torque_reference >= 0 & steer_torque_cmd >= 0 & steer_torque_cmd <= torque_reference) | (torque_reference <= 0 & steer_torque_cmd <= 0 & steer_torque_cmd >= torque_reference)) the envelope shall immediately satisfy !lka_frame_rejected  *)
+(* whenever lka_frame_rx & ((steer_torque_cmd > maxInt(torque_meas_max, 0) + delta_meas & steer_torque_cmd > torque_reference - delta_down) | (steer_torque_cmd < minInt(torque_meas_min, 0) - delta_meas & steer_torque_cmd < torque_reference + delta_down)) the envelope shall immediately satisfy lka_frame_rejected  *)
 
-var FR_103d : bool = H(((lka_frame_rx and ((((torque_reference >= 0) and (steer_torque_cmd >= 0)) and (steer_torque_cmd <= torque_reference)) or (((torque_reference <= 0) and (steer_torque_cmd <= 0)) and (steer_torque_cmd >= torque_reference)))) => not (lka_frame_rejected)));  
-
- 
-(* whenever lka_frame_rx & (steer_torque_cmd > maxInt(torque_meas_max, 0) + delta_meas | steer_torque_cmd < minInt(torque_meas_min, 0) - delta_meas) the envelope shall immediately satisfy lka_frame_rejected  *)
-
-var FR_104 : bool = H(((lka_frame_rx and ((steer_torque_cmd > (maxInt(torque_meas_max,0) + delta_meas)) or (steer_torque_cmd < (minInt(torque_meas_min,0) - delta_meas)))) => lka_frame_rejected));  
+var FR_104 : bool = H(((lka_frame_rx and (((steer_torque_cmd > (maxInt(torque_meas_max,0) + delta_meas)) and (steer_torque_cmd > (torque_reference - delta_down))) or ((steer_torque_cmd < (minInt(torque_meas_min,0) - delta_meas)) and (steer_torque_cmd < (torque_reference + delta_down))))) => lka_frame_rejected));  
 
  
 (* the envelope shall always satisfy tau_max = 1500  *)
@@ -216,8 +211,6 @@ var FR_104 : bool = H(((lka_frame_rx and ((steer_torque_cmd > (maxInt(torque_mea
  guarantee FR_103b;  
 
  guarantee FR_103c;  
-
- guarantee FR_103d;  
 
  guarantee FR_104;  
 

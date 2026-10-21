@@ -51,7 +51,7 @@ class TestGrouping(unittest.TestCase, Fixture):
   def test_torque_rules_share_a_component(self):
     groups = fr.components(self.data["requirements"], self.uses, self.outputs)
     torque = next(g for g in groups if any(r["id"] == "FR-101" for r in g))
-    self.assertTrue({"FR-103a", "FR-103d", "FR-104", "FA-101-assumption"} <= {r["id"] for r in torque})
+    self.assertTrue({"FR-103a", "FR-103b", "FR-104", "FA-101-assumption"} <= {r["id"] for r in torque})
 
   def test_every_variable_has_a_role(self):
     self.assertTrue(all(g.get("role") in ("input", "output") for g in self.glossary.values()))
@@ -62,8 +62,19 @@ class TestKind2(unittest.TestCase, Fixture):
   def test_single_rule_realizable(self):
     self.assertEqual(self.result(["FR-101", "FA-101-assumption"]), "realizable")
 
-  def test_known_conflict_unrealizable(self):
-    self.assertEqual(self.result(["FR-103d", "FR-104", "FA-104-assumption"]), "unrealizable")
+  def test_v053_conflict_still_found(self):
+    # WP-S-02 v0.53's "any change toward zero is accepted" (FF-08) against today's TSR-104: must stay unrealizable.
+    toward_zero = {"id": "FR-v053-toward-zero", "fretish": "(v0.53 TSR-103, removed in v0.54)",
+                   "lustre": "H(((lka_frame_rx and ((((torque_reference >= 0) and (steer_torque_cmd >= 0)) and "
+                             "(steer_torque_cmd <= torque_reference)) or (((torque_reference <= 0) and "
+                             "(steer_torque_cmd <= 0)) and (steer_torque_cmd >= torque_reference)))) => "
+                             "not (lka_frame_rejected)))"}
+    self.assertEqual(self.result(["FR-104", "FA-103-assumption", "FA-104-assumption"], toward_zero), "unrealizable")
+
+  def test_torque_rules_realizable_together(self):
+    ids = ["FR-101", "FR-103a", "FR-103b", "FR-103c", "FR-104", "FA-101-assumption", "FA-103-assumption",
+           "FA-104-assumption", "FA-103r-assumption"]
+    self.assertEqual(self.result(ids), "realizable")
 
   def test_injected_conflict_caught(self):
     # A requirement that never rejects contradicts TSR-101 for any frame above tau_max.

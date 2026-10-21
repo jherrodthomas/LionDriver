@@ -25,17 +25,11 @@
       "ft": "(G ((lka_frame_rx & ((steer_torque_cmd > (maxInt(torque_rt_reference,0) + delta_rt)) | (steer_torque_cmd < (minInt(torque_rt_reference,0) - delta_rt)))) -> lka_frame_rejected))",
       "lustre": "H(((lka_frame_rx and ((steer_torque_cmd > (maxInt(torque_rt_reference,0) + delta_rt)) or (steer_torque_cmd < (minInt(torque_rt_reference,0) - delta_rt)))) => lka_frame_rejected))"
     },
-    "FR-103d": {
-      "fretish": "whenever lka_frame_rx & ((torque_reference >= 0 & steer_torque_cmd >= 0 & steer_torque_cmd <= torque_reference) | (torque_reference <= 0 & steer_torque_cmd <= 0 & steer_torque_cmd >= torque_reference)) the envelope shall immediately satisfy !lka_frame_rejected",
-      "pt": "(H ((lka_frame_rx & ((((torque_reference >= 0) & (steer_torque_cmd >= 0)) & (steer_torque_cmd <= torque_reference)) | (((torque_reference <= 0) & (steer_torque_cmd <= 0)) & (steer_torque_cmd >= torque_reference)))) -> (! lka_frame_rejected)))",
-      "ft": "(G ((lka_frame_rx & ((((torque_reference >= 0) & (steer_torque_cmd >= 0)) & (steer_torque_cmd <= torque_reference)) | (((torque_reference <= 0) & (steer_torque_cmd <= 0)) & (steer_torque_cmd >= torque_reference)))) -> (! lka_frame_rejected)))",
-      "lustre": "H(((lka_frame_rx and ((((torque_reference >= 0) and (steer_torque_cmd >= 0)) and (steer_torque_cmd <= torque_reference)) or (((torque_reference <= 0) and (steer_torque_cmd <= 0)) and (steer_torque_cmd >= torque_reference)))) => not (lka_frame_rejected)))"
-    },
     "FR-104": {
-      "fretish": "whenever lka_frame_rx & (steer_torque_cmd > maxInt(torque_meas_max, 0) + delta_meas | steer_torque_cmd < minInt(torque_meas_min, 0) - delta_meas) the envelope shall immediately satisfy lka_frame_rejected",
-      "pt": "(H ((lka_frame_rx & ((steer_torque_cmd > (maxInt(torque_meas_max,0) + delta_meas)) | (steer_torque_cmd < (minInt(torque_meas_min,0) - delta_meas)))) -> lka_frame_rejected))",
-      "ft": "(G ((lka_frame_rx & ((steer_torque_cmd > (maxInt(torque_meas_max,0) + delta_meas)) | (steer_torque_cmd < (minInt(torque_meas_min,0) - delta_meas)))) -> lka_frame_rejected))",
-      "lustre": "H(((lka_frame_rx and ((steer_torque_cmd > (maxInt(torque_meas_max,0) + delta_meas)) or (steer_torque_cmd < (minInt(torque_meas_min,0) - delta_meas)))) => lka_frame_rejected))"
+      "fretish": "whenever lka_frame_rx & ((steer_torque_cmd > maxInt(torque_meas_max, 0) + delta_meas & steer_torque_cmd > torque_reference - delta_down) | (steer_torque_cmd < minInt(torque_meas_min, 0) - delta_meas & steer_torque_cmd < torque_reference + delta_down)) the envelope shall immediately satisfy lka_frame_rejected",
+      "pt": "(H ((lka_frame_rx & (((steer_torque_cmd > (maxInt(torque_meas_max,0) + delta_meas)) & (steer_torque_cmd > (torque_reference - delta_down))) | ((steer_torque_cmd < (minInt(torque_meas_min,0) - delta_meas)) & (steer_torque_cmd < (torque_reference + delta_down))))) -> lka_frame_rejected))",
+      "ft": "(G ((lka_frame_rx & (((steer_torque_cmd > (maxInt(torque_meas_max,0) + delta_meas)) & (steer_torque_cmd > (torque_reference - delta_down))) | ((steer_torque_cmd < (minInt(torque_meas_min,0) - delta_meas)) & (steer_torque_cmd < (torque_reference + delta_down))))) -> lka_frame_rejected))",
+      "lustre": "H(((lka_frame_rx and (((steer_torque_cmd > (maxInt(torque_meas_max,0) + delta_meas)) and (steer_torque_cmd > (torque_reference - delta_down))) or ((steer_torque_cmd < (minInt(torque_meas_min,0) - delta_meas)) and (steer_torque_cmd < (torque_reference + delta_down))))) => lka_frame_rejected))"
     },
     "FR-110": {
       "fretish": "whenever lat_authority & (eps_lka_fault | eps_status_timeout) the envelope shall within 10 ticks satisfy !lat_authority & cause_reported",
