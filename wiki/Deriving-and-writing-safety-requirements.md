@@ -91,6 +91,11 @@ breakdown serves a reviewer, a tester and the formal check.
 | **Object** | To what? | response | authority |
 | **Constraint** | How fast, how much, how long? | timing | within the same safety-task tick once the 0.3 s is reached |
 
+![Animated: TSR-307(a) built one part at a time, trigger, agent, modal, action, object and constraint; then the clause "continuously for 0.3 s" is struck out as missing in v0.52, which is rule 4](req-anatomy.svg)
+
+*The same six parts, built one at a time on TSR-307(a), and the clause the FRET pilot found missing. Rendered at each
+sync by [`tools/wiki/animations.py`](../tools/wiki/animations.py) from the TSC row and this page.*
+
 Every requirement also carries attributes that are not part of the sentence: its **ASIL**, its **parent** (FSR or
 safety goal), its **allocation** (software, hardware, or both, and which element), and its **verification method**.
 The [TSC table](../assurance/03-system/WP-S-02-technical-safety-requirements.md) has a column for each.
@@ -106,6 +111,12 @@ The [TSC table](../assurance/03-system/WP-S-02-technical-safety-requirements.md)
 5. **Bound the output too.** A warning needs a minimum duration and a level, not only a start time.
 6. **Write what the safe direction allows.** If moving toward zero is safe, do not forbid it.
 7. **One reading only.** If two engineers could implement it differently and both pass, it is not finished.
+
+![Animated: the vague sentence "The system should warn the driver promptly" draws six questions; then TSR-516 grows one clause at a time, each in the colour of its part, while a checklist is ticked](req-vague-to-verifiable.svg)
+
+*The rules applied: a vague warning grows into TSR-516 one question at a time. Colours match the anatomy above
+(trigger blue, agent violet, modal teal, action orange, object amber, constraint magenta). Rendered at each sync by
+[`tools/wiki/animations.py`](../tools/wiki/animations.py), which fails the build if a drawn clause leaves the TSC.*
 
 ### Before and after: what formalising TSR-103, TSR-307 and TSR-516 found
 
