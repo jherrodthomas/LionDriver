@@ -5271,3 +5271,116 @@
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-21, note: "Lead in chat with the panda session: \"Yes, with a cancel-lag guard\", then \"Merge now\" for panda#21. Recorded after the fact by the coordinator; the options are those of the change record"}
   applied: {ref: "jherrodthomas/LionDriver#382, jherrodthomas/LionDriver#384, jherrodthomas/LionDriver#383", record: "panda f4803c5 (panda#21): revoke 0.3 s after the first \"not engaged\" heartbeat, siren at 0.5 s if PCM cruise is still on (#382, change-2026-10-21-panda-engaged-mismatch); WP-S-02 v0.52, WP-S-04 v0.24, WP-C-04 v0.24 (#384); fmdtools SG-02 model (#383). Open: PCM cancel lag (WP-W-02 OI-18, change record OI-1); if over 0.5 s, the threshold returns to the lead. HIL not run (OI-2)", at: 2026-10-21}
+
+- id: DQ-409
+  question: "Should LionDriver build a heat model of the comma device behind the windshield, to propose the ODD's hot-weather limit?"
+  context: >-
+    The ODD's ambient temperature bound is still TBD (WP-C-02 OI-3, due at G1). On a hot day the device's SoC can reach
+    its overheat band (96 °C on the comma 3X), which soft-disables LionDriver mid-drive, and the same heat warms the
+    panda MCU (common cause DFI-04). **A field model would show where the device gets hot and at what cabin
+    temperature it crosses the limit, as a candidate bound with its uncertainty.** EPS heat derating and tyre contact
+    were also looked at: the first is a vehicle measurement, not a model, and the second is too heavy for what it would
+    add. Mock-ups (synthetic, no credit): TE-04 §4. Scoping only; nothing is built until you say go.
+  reversibility: easy
+  blocks: "TE-04 pilot steps T1–T5; a candidate number for WP-C-02 OI-3 and for WP-A-03 DFI-04"
+  gate: G1
+  decider: lead
+  batch: 14
+  asked: 2026-10-21
+  options:
+    - key: A
+      recommended: true
+      title: "Go: device heat model first"
+      detail: "About a week of Claude work over steps T1–T5, no money beyond the logger question. Gives OI-3 a candidate bound and DFI-04 a number. Cost: one more tool to classify (TCL1) and keep in CI."
+    - key: B
+      title: "Measure only, no model"
+      detail: "Log cabin air and device temperatures on hot drives and set the bound from the data. Cost: no picture of where it is hot, and the bound covers only the days you happened to drive."
+    - key: C
+      title: "No-go for now"
+      detail: "Set OI-3 from comma's device data alone, as WP-C-02 plans. Cost: DFI-04 stays rated P with no number behind it."
+  sources: ["assurance/07-supporting/tool-evaluations/TE-04-physics-field-model.md §2, §4", "WP-C-02 §3.1, OI-3", "WP-C-06 TC-21", "WP-A-03 DFI-04", "WP-S-02 TSR-509", "openpilot/system/hardware/hardwared.py:93-103"]
+  status: open
+
+- id: DQ-410
+  question: "Which solver should the device heat model use?"
+  context: >-
+    A reversible technical choice, so Claude goes with the recommendation unless you object. FEniCSx (finite elements,
+    LGPL-3.0, active) solves the 3D shape and renders through PyVista. **Two independent checks catch a solver or mesh
+    error:** FiPy (NIST finite volumes) on a 2D cross-section and a small lumped heat network in numpy. Elmer FEM is the
+    fallback if radiation inside the mount turns out to matter. No NASA tool fits: NASA's open heat code (NASTRAN-95)
+    is unmaintained.
+  reversibility: easy
+  blocks: "TE-04 step T2; a new WP-P-07 tool row"
+  gate: G1
+  decider: claude
+  batch: 14
+  asked: 2026-10-21
+  proceed_after: 2026-10-28
+  after: [DQ-409]
+  options:
+    - key: A
+      recommended: true
+      title: "FEniCSx, checked by FiPy and a lumped network"
+      detail: "Python throughout, pinned by an explicit conda lock like OpenModelica. Cost: three things to keep in agreement."
+    - key: B
+      title: "Elmer FEM alone"
+      detail: "Mature, with radiation built in. Cost: a second language and file format in the repo, and no independent check."
+    - key: C
+      title: "FiPy alone, 2D only"
+      detail: "Simplest install. Cost: a cross-section, not the 3D device, and no independent check."
+  sources: ["TE-04 §3", "WP-P-07 §2 (TL-44 pinning pattern)"]
+  status: open
+
+- id: DQ-411
+  question: "May we buy a temperature logger (about US$100) to measure cabin air at the device mount on hot drives?"
+  context: >-
+    The model is only as good as its check against reality. The device already logs its own SoC temperatures and fan
+    speed, so the one missing measurement is the air around the mount. **Without it, the model's bound stays an
+    unchecked estimate.** Logs stay on the car (no uploads, DQ-084).
+  reversibility: easy
+  blocks: "TE-04 step T4 (validation) and the uncertainty band of the candidate bound"
+  gate: G1
+  decider: lead
+  batch: 14
+  asked: 2026-10-21
+  after: [DQ-409]
+  options:
+    - key: A
+      recommended: true
+      title: "Buy a small 2–4 channel thermocouple logger"
+      detail: "About US$100, taped at the mount and in the cabin on ordinary hot drives. Cost: the money and fitting it on a few drives."
+    - key: B
+      title: "Use a weather-station temperature instead"
+      detail: "No purchase. Cost: outside air is not cabin air behind sun-loaded glass, so the band stays wide."
+    - key: C
+      title: "No measurement"
+      detail: "The model stays illustrative. Cost: its bound cannot be offered for OI-3."
+  sources: ["TE-04 §5 T4", "WP-V-02 §5.3 (fidelity case)", "DQ-084"]
+  status: open
+
+- id: DQ-412
+  question: "Should the device heat model aim to earn evidence credit for the ODD temperature bound, or stay a design aid?"
+  context: >-
+    Simulation earns no credit until a fidelity case is approved (WP-V-02 §5.3, DQ-139). As a design aid the tool is
+    TCL1 and a measured drive confirms the bound. **To let the bound rest on the model alone, the tool becomes TCL2 and
+    needs a qualification plan and a fidelity case.**
+  reversibility: revisit
+  blocks: "The TE-04 tool classification (TL row in WP-P-07) and whether a fidelity case is written for it"
+  gate: G2
+  decider: lead
+  batch: 14
+  asked: 2026-10-21
+  after: [DQ-409]
+  options:
+    - key: A
+      recommended: true
+      title: "Design aid now; revisit credit at G2 once logged drives exist"
+      detail: "TCL1, no qualification. The bound in WP-C-02 rests on measurement, the model says where margin is thin. Cost: a hot-day drive is still needed to set the bound."
+    - key: B
+      title: "Aim for credit from the start"
+      detail: "TCL2 with a qualification plan and a fidelity case. Cost: more work now, and an assessor must accept a thermal model of a device whose internals we do not have."
+    - key: C
+      title: "Never credit it"
+      detail: "The bound comes from comma's data and measurement only. Cost: none now; closes the door on using the model to extend the bound."
+  sources: ["TE-04 §5, §6", "WP-V-02 §5.3, DQ-139", "WP-P-07 §2"]
+  status: open
