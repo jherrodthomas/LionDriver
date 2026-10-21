@@ -4,7 +4,7 @@
 |---|---|
 | Plan | [TE-02](../../07-supporting/tool-evaluations/TE-02-fmdtools-fault-propagation.md) (pilot on SG-02) |
 | Tool | [NASA fmdtools](https://github.com/nasa/fmdtools) 2.5.6, Apache-2.0, pinned in [`requirements.txt`](requirements.txt); [WP-P-07](../../07-supporting/WP-P-07-tool-classification-qualification.md) TL-49 |
-| Status | Steps P0 (setup), P1 (SG-02 model), P2 (single faults), P3 (joint faults) and P4 (timing) done; P5 open. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Steps P0 (setup), P1 (SG-02 model), P2 (single faults), P3 (joint faults) and P4 (timing) done; P5 (report and CI): the Fault Lab page is done, the extension note (TE-02 OI-4) and the TL-49 confirmation remain. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Evidence | **None.** Synthetic (DSR-12): behaviour and timing come from WP-A-04 §4, not measurement. Results point reviewers at possible gaps in the fault trees; a tree changes only after a person reviews the finding |
 
 ## What is here
@@ -15,6 +15,8 @@
 | [`sg02/model.py`](sg02/model.py) | The SG-02 chain as fmdtools functions and flows: supply, SoC, envelope, EPS, the host's alert logic, HMI, siren, driver. `run(events)` injects modes together and reads TE-02 from the history |
 | [`sg02/test_sg02.py`](sg02/test_sg02.py) | Mapping against the WP-A-04 tree and `fta-fmea-map.yaml`; nominal run; reference cases from the §4.1 cut-set table; road phases |
 | [`sg02/sweep.py`](sg02/sweep.py) | Step P2: every mode alone in each road phase, compared with the tree; writes [`sg02/p2-single-faults.md`](sg02/p2-single-faults.md). Step P3 (`joint`): the minimal sets of up to 4 modes; writes [`sg02/p3-minimal-sets.json`](sg02/p3-minimal-sets.json) and [`sg02/p3-joint-faults.md`](sg02/p3-joint-faults.md). Step P4 (`timing`): the time to the first cue for every set of the P3 diff; writes [`sg02/p4-timing.md`](sg02/p4-timing.md) and its figure. `--check` in CI (P3: orders 1 and 2 on pull requests, the full sweep weekly in `fmdtools-sweep.yaml`) |
+| [`sg02/fault_lab.py`](sg02/fault_lab.py) | Step P5: writes [`sg02/fault-lab.html`](sg02/fault-lab.html), the Fault Lab page: a still replay of plant case F-07 (EPS fault) with its event timeline, the P3 and P4 numbers, the pair matrix (model sets against tree sets) and the findings for review. Built from the P3 JSON, a fresh P4 run and [plant-results](../../sim/results/plant-results.md); `--check` in CI (DQ-409) |
+| [`sg02/test_fault_lab.py`](sg02/test_fault_lab.py) | The plant parser, the drawings and the page build (sweep stubbed) |
 
 ## How it works
 
@@ -35,6 +37,7 @@ BE-2.14 (siren not triggered) stays a mode. Since panda `8a69ccf` the siren soun
     python3 assurance/models/fmdtools/sg02/sweep.py                    # step P2 page (--check: fail if stale)
     python3 assurance/models/fmdtools/sg02/sweep.py joint              # step P3, about 4.5 min on 4 cores
     python3 assurance/models/fmdtools/sg02/sweep.py timing             # step P4, about 15 s
+    python3 assurance/models/fmdtools/sg02/fault_lab.py                # step P5 page, about 20 s (--check: fail if stale)
 
 ## First results (single modes, step P1)
 
@@ -76,3 +79,7 @@ Each of the 61 sets of the P3 diff is run for 6 s, to time cues that come after 
 - **42 with no cue within 6 s:** the warning failures of the tree, as expected.
 
 Two inputs exceed the budget on their own: the 1.5 s escalation after an override, and the 5 s alert after a selfdrived stop. The second is now the first cue only when the siren fails too.
+
+## Fault Lab page (step P5)
+
+[`fault-lab.html`](sg02/fault-lab.html) puts the results on one page for review (lead's choice, DQ-409). Every number on it comes from a record: the replay and timeline from plant case F-07 (torque below 5 % at 0.31 s, siren at 0.25 s, lane line at 1.25 s, driver correction at 1.75 s), the sweep figures from the P3 JSON and a P4 run. The page is still (no animation), works at phone width, and is marked synthetic (DSR-12), with no evidence credit. CI fails if it is stale.
