@@ -1,0 +1,336 @@
+From 8926da3e3e7315b2535034682b6cbd8a6c7402b6 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 20 Oct 2026 22:30:12 +0000
+Subject: [PATCH] safety: Toyota ACC_CONTROL jerk check in the LionDriver
+ reference build (TSR-204, TSR-205)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The reference build's TX hook now rejects an ACC_CONTROL (0x343) frame whose
+ACCEL_CMD rises faster than j_up, or falls below 0 faster than j_down, relative
+to the last accepted command (SWSR-204, SWSR-205; LionDriver GAP-04). Both are
+150 raw per frame (5 m/s^3 at 33 Hz), the provisional values of WP-W-02 §2.5
+(register DQ-081 A); the host stays below them at 4.5 m/s^3.
+
+- Only deceleration onset is bounded downwards, as TSR-205 words it: the fall
+  counts from min(last, 0), so the stock-AEB stand-down (TSR-713) can drop a
+  positive request to 0 at once (WP-W-02 OI-16).
+- The inactive value stays exempt, as it is from the accel limits: stepping to
+  it is how the host hands back control (disengage, cancel, gas override), and
+  that step is TSR-206's subject, open on the vehicle test of AOU-05R.
+- A new engagement starts from 0, since only the inactive value passes while
+  authority is not granted; a rejected frame does not move the reference.
+- Non-reference builds keep upstream behaviour.
+
+desired_accel_last is a safety global like desired_torque_last, reset at init,
+with test setters in libsafety.
+
+Tests: six jerk tests per Toyota longitudinal class (limits at 150 vs 151 raw,
+ramps to the limits, the positive drop, the inactive value, a rejected frame,
+engagement from 0), the accel-limit test isolated from the jerk check, and a
+back-to-back test that drives the real CarController (Corolla TSS2) through the
+reference TX hook (steps, pitch, stock AEB, engage/disengage, gas override, a
+30 000-step random drive): no frame is rejected. With the limits lowered to 130
+raw that test fails, so it detects a host over the limit. Mutation testing of the
+new check: all 7 mutants killed. Full safety suite: 2904 / 3009 passed (default /
+reference build).
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01GYedFk9XV8drnfPPL9W69E
+---
+ opendbc/safety/declarations.h           |   2 +
+ opendbc/safety/modes/toyota.h           |  26 ++++
+ opendbc/safety/safety.h                 |   2 +
+ opendbc/safety/tests/libsafety/safety.c |   9 ++
+ opendbc/safety/tests/test_toyota.py     | 170 ++++++++++++++++++++++++
+ 5 files changed, 209 insertions(+)
+
+diff --git a/opendbc/safety/declarations.h b/opendbc/safety/declarations.h
+index 7effee4..0f56f17 100644
+--- a/opendbc/safety/declarations.h
++++ b/opendbc/safety/declarations.h
+@@ -333,6 +333,8 @@ extern bool safety_tx_arrival_revoked;
+ 
+ // for safety modes with torque steering control
+ extern int desired_torque_last;       // last desired steer torque
++// LionDriver TSR-204 / TSR-205: last accepted longitudinal acceleration command (raw), for the jerk check
++extern int desired_accel_last;
+ extern int rt_torque_last;            // last desired torque for real time check
+ extern int valid_steer_req_count;     // counter for steer request bit matching non-zero torque
+ extern int invalid_steer_req_count;   // counter to allow multiple frames of mismatching torque request bit
+diff --git a/opendbc/safety/modes/toyota.h b/opendbc/safety/modes/toyota.h
+index 2915b08..8c65188 100644
+--- a/opendbc/safety/modes/toyota.h
++++ b/opendbc/safety/modes/toyota.h
+@@ -336,6 +336,13 @@ static bool toyota_tx_hook(const CANPacket_t *msg) {
+     .max_accel = 2000,   // 2.0 m/s2
+     .min_accel = -3500,  // -3.5 m/s2
+   };
++#ifdef LIONDRIVER_REFERENCE
++  // LionDriver TSR-204 / TSR-205 (SWSR-204, SWSR-205): jerk limits on ACC_CONTROL, raw ACCEL_CMD change per frame
++  // (0.001 m/s^2 per raw, 0x343 at 33 Hz). Provisional values j_up = j_down = 5 m/s^3 = 150 raw per frame (WP-W-02
++  // section 2.5, register DQ-081 A); the host stays below them at 4.5 m/s^3 (ACCEL_FINAL_RATE_LIMIT, DQ-055)
++  const int TOYOTA_ACCEL_RATE_UP = 150;
++  const int TOYOTA_ACCEL_RATE_DOWN = 150;
++#endif
+ 
+   bool tx = true;
+ 
+@@ -352,6 +359,23 @@ static bool toyota_tx_hook(const CANPacket_t *msg) {
+     }
+     violation |= longitudinal_accel_checks(desired_accel, TOYOTA_LONG_LIMITS);
+ 
++#ifdef LIONDRIVER_REFERENCE
++    // LionDriver TSR-204 / TSR-205: relative to the last accepted command (0 at engagement, since only the inactive
++    // value passes while authority is not granted), ACCEL_CMD may not rise faster than j_up, nor fall below 0 faster
++    // than j_down. Only deceleration onset is bounded downwards, as TSR-205 words it (WP-W-02 OI-16): the fall counts
++    // from 0 at most, so the stock-AEB stand-down can drop a positive request at once (TSR-713), and a value of 0 or
++    // more never trips it. The inactive value stays exempt, as it is from the limits: stepping to it is how the host
++    // hands back control (disengage, cancel, override), which TSR-206 covers
++    if (desired_accel != TOYOTA_LONG_LIMITS.inactive_accel) {
++      if (desired_accel > (desired_accel_last + TOYOTA_ACCEL_RATE_UP)) {
++        violation = true;
++      }
++      if (desired_accel < (SAFETY_MIN(desired_accel_last, 0) - TOYOTA_ACCEL_RATE_DOWN)) {
++        violation = true;
++      }
++    }
++#endif
++
+     // only ACC messages that cancel are allowed when openpilot is not controlling longitudinal
+     if (toyota_stock_longitudinal) {
+       bool cancel_req = GET_BIT(msg, 24U);
+@@ -365,6 +389,8 @@ static bool toyota_tx_hook(const CANPacket_t *msg) {
+ 
+     if (violation) {
+       tx = false;
++    } else {
++      desired_accel_last = desired_accel;
+     }
+   }
+ 
+diff --git a/opendbc/safety/safety.h b/opendbc/safety/safety.h
+index f17796c..37ecb11 100644
+--- a/opendbc/safety/safety.h
++++ b/opendbc/safety/safety.h
+@@ -77,6 +77,7 @@ bool safety_tx_arrival_revoked = false;
+ 
+ // for safety modes with torque steering control
+ int desired_torque_last = 0;       // last desired steer torque
++int desired_accel_last = 0;        // LionDriver TSR-204 / TSR-205: last accepted acceleration command (raw)
+ int rt_torque_last = 0;            // last desired torque for real time check
+ int valid_steer_req_count = 0;     // counter for steer request bit matching non-zero torque
+ int invalid_steer_req_count = 0;   // counter to allow multiple frames of mismatching torque request bit
+@@ -669,6 +670,7 @@ int set_safety_hooks(uint16_t mode, uint16_t param) {
+   acc_main_on = false;
+   cruise_button_prev = 0;
+   desired_torque_last = 0;
++  desired_accel_last = 0;
+   rt_torque_last = 0;
+   rt_angle_msgs = 0;
+   ts_angle_check_last = 0;
+diff --git a/opendbc/safety/tests/libsafety/safety.c b/opendbc/safety/tests/libsafety/safety.c
+index 62a43f0..594781f 100644
+--- a/opendbc/safety/tests/libsafety/safety.c
++++ b/opendbc/safety/tests/libsafety/safety.c
+@@ -179,6 +179,15 @@ void set_desired_torque_last(int t){
+   desired_torque_last = t;
+ }
+ 
++// LionDriver TSR-204 / TSR-205: the jerk check's last accepted acceleration command
++void set_desired_accel_last(int t){
++  desired_accel_last = t;
++}
++
++int get_desired_accel_last(void){
++  return desired_accel_last;
++}
++
+ void set_desired_angle_last(int t){
+   desired_angle_last = t;
+ }
+diff --git a/opendbc/safety/tests/test_toyota.py b/opendbc/safety/tests/test_toyota.py
+index d691a6b..15090dd 100755
+--- a/opendbc/safety/tests/test_toyota.py
++++ b/opendbc/safety/tests/test_toyota.py
+@@ -1019,6 +1019,176 @@ class TestToyotaSafetyBase(common.CarSafetyTest, common.LongitudinalAccelSafetyT
+     self._common_measurement_test(self._speed_msg, 0, 259 / 3.6, 1,
+                                   self.safety.get_vehicle_speed_min, self.safety.get_vehicle_speed_max)
+ 
++  # LionDriver TSR-204 / TSR-205 (SWSR-204, SWSR-205): jerk limits on ACC_CONTROL, 150 raw (0.15 m/s^2) per frame
++  ACCEL_RATE_UP = 0.15
++  ACCEL_RATE_DOWN = 0.15
++
++  def test_accel_actuation_limits(self):
++    # OVERRIDDEN for the reference build: this test covers the accel limits only, so every frame starts from its own
++    # value and the jerk check (tested below) does not reject the jumps between values
++    accel_msg = self._accel_msg
++
++    def from_same_value(accel, *args, **kwargs):
++      self.safety.set_desired_accel_last(round(accel * 1000))
++      return accel_msg(accel, *args, **kwargs)
++
++    self._accel_msg = from_same_value
++    try:
++      super().test_accel_actuation_limits()
++    finally:
++      del self._accel_msg
++
++  def _jerk_check_applies(self):
++    if not LIONDRIVER_REFERENCE or not self.LONGITUDINAL or self.SAFETY_PARAM & ToyotaSafetyFlags.SECOC:
++      raise unittest.SkipTest("jerk check: reference build, openpilot longitudinal, non-SecOC")
++    self.safety.set_controls_allowed(True)
++
++  def _accel_tx(self, accel):
++    return self._tx(self._accel_msg_343(accel))
++
++  def test_accel_rate_up(self):
++    # SWSR-204: from the last accepted value (0 at engagement), a rise of j_up passes, one raw more is rejected
++    self._jerk_check_applies()
++    self.assertEqual(self.safety.get_desired_accel_last(), 0)
++    self.assertFalse(self._accel_tx(self.ACCEL_RATE_UP + 0.001))
++    self.assertTrue(self._accel_tx(self.ACCEL_RATE_UP))
++    for accel in [*np.arange(2 * self.ACCEL_RATE_UP, self.MAX_ACCEL, self.ACCEL_RATE_UP), self.MAX_ACCEL]:
++      self.assertTrue(self._accel_tx(round(accel, 3)))     # a ramp at j_up reaches the limit
++    self.assertEqual(self.safety.get_desired_accel_last(), round(self.MAX_ACCEL * 1000))
++    self.safety.set_desired_accel_last(-2000)
++    self.assertFalse(self._accel_tx(-2.0 + self.ACCEL_RATE_UP + 0.001))  # releasing braking is a rise as well
++    self.assertTrue(self._accel_tx(-2.0 + self.ACCEL_RATE_UP))
++
++  def test_accel_rate_down(self):
++    # SWSR-205: below 0, a fall of j_down passes, one raw more is rejected
++    self._jerk_check_applies()
++    self.assertFalse(self._accel_tx(-self.ACCEL_RATE_DOWN - 0.001))
++    self.assertTrue(self._accel_tx(-self.ACCEL_RATE_DOWN))
++    for accel in [*np.arange(-2 * self.ACCEL_RATE_DOWN, self.MIN_ACCEL, -self.ACCEL_RATE_DOWN), self.MIN_ACCEL]:
++      self.assertTrue(self._accel_tx(round(accel, 3)))     # a ramp at j_down reaches the limit
++    self.assertEqual(self.safety.get_desired_accel_last(), round(self.MIN_ACCEL * 1000))
++    self.safety.set_desired_accel_last(-1000)
++    self.assertFalse(self._accel_tx(-1.151))
++    self.assertTrue(self._accel_tx(-1.15))
++
++  def test_accel_positive_drop_allowed(self):
++    # WP-W-02 OI-16: only deceleration onset is bounded, so the stock-AEB stand-down (TSR-713) can drop a positive
++    # request at once; below 0 the fall counts from 0
++    self._jerk_check_applies()
++    self.safety.set_desired_accel_last(2000)
++    self.assertTrue(self._accel_tx(0.1))
++    self.safety.set_desired_accel_last(2000)
++    self.assertTrue(self._accel_tx(-self.ACCEL_RATE_DOWN))
++    self.safety.set_desired_accel_last(2000)
++    self.assertFalse(self._accel_tx(-self.ACCEL_RATE_DOWN - 0.001))
++
++  def test_accel_inactive_always_allowed(self):
++    # stepping to the inactive value is how the host hands back control (TSR-206 covers that step), engaged or not
++    self._jerk_check_applies()
++    for controls_allowed in (True, False):
++      self.safety.set_controls_allowed(controls_allowed)
++      for last in (-3500, 2000):
++        self.safety.set_desired_accel_last(last)
++        self.assertTrue(self._accel_tx(self.INACTIVE_ACCEL))
++        self.assertEqual(self.safety.get_desired_accel_last(), 0)
++
++  def test_accel_rejected_frame_keeps_last(self):
++    # a rejected frame does not move the reference, so the next frame is judged against the last one that went out
++    self._jerk_check_applies()
++    self.safety.set_desired_accel_last(-1000)
++    self.assertFalse(self._accel_tx(-2.0))
++    self.assertEqual(self.safety.get_desired_accel_last(), -1000)
++    self.assertTrue(self._accel_tx(-1.1))
++
++  def test_accel_engagement_starts_from_zero(self):
++    # while authority is not granted only the inactive value passes, so a new engagement starts from 0
++    self._jerk_check_applies()
++    self.safety.set_desired_accel_last(-1500)
++    self.safety.set_controls_allowed(False)
++    self.assertTrue(self._accel_tx(self.INACTIVE_ACCEL))
++    self.safety.set_controls_allowed(True)
++    self.assertFalse(self._accel_tx(-1.4))
++    self.assertTrue(self._accel_tx(-self.ACCEL_RATE_DOWN))
++
++  def test_accel_jerk_check_reference_only(self):
++    # outside the reference build the envelope keeps upstream behavior: any step within the limits passes
++    if LIONDRIVER_REFERENCE or not self.LONGITUDINAL or self.SAFETY_PARAM & ToyotaSafetyFlags.SECOC:
++      raise unittest.SkipTest("non-reference build, openpilot longitudinal, non-SecOC")
++    self.safety.set_controls_allowed(True)
++    self.assertTrue(self._accel_tx(self.MIN_ACCEL))
++    self.assertTrue(self._accel_tx(self.MAX_ACCEL))
++
++
++class TestToyotaHostWithinJerkLimits(unittest.TestCase):
++  """LionDriver TSR-204 / TSR-205, DQ-055: the real Toyota car controller never trips the envelope's jerk check.
++
++  The host's ACC_CONTROL frames, built by CarController for the reference car, go through the reference build's TX hook;
++  a rejected frame would count as not arrived (TSR-408) and three in a row revoke authority with the siren."""
++
++  def setUp(self):
++    if not LIONDRIVER_REFERENCE:
++      raise unittest.SkipTest("jerk check: reference build only")
++    from opendbc.car import DT_CTRL, structs
++    from opendbc.car.car_helpers import interfaces
++    from opendbc.car.toyota.values import CAR
++    self.DT_CTRL, self.structs = DT_CTRL, structs
++    CarInterface = interfaces[CAR.TOYOTA_COROLLA_TSS2]
++    self.CP = CarInterface.get_non_essential_params(CAR.TOYOTA_COROLLA_TSS2)
++    self.CI = CarInterface(self.CP)
++    self.CI.CS.out = structs.CarState(vEgo=25., aEgo=0.)
++    self.safety = libsafety_py.libsafety
++    self.safety.set_safety_hooks(CarParams.SafetyModel.toyota, self.CP.safetyConfigs[0].safetyParam)
++    self.safety.init_tests()
++
++  def drive(self, steps, accel, enabled=lambda f: True, override=lambda f: False, aeb=lambda f: False,
++            pitch=lambda f: 0., a_ego=lambda f: 0.):
++    """Steps the controller at 100 Hz; every ACC_CONTROL frame must pass the envelope. Returns the commands sent."""
++    LongCtrlState = self.structs.CarControl.Actuators.LongControlState
++    sent = []
++    for frame in range(steps):
++      self.safety.set_timer(frame * 10000)
++      self.CI.CS.out.aEgo = a_ego(frame)
++      self.CI.CS.out.stockAeb = aeb(frame)
++      long_active = enabled(frame) and not override(frame)
++      CC = self.structs.CarControl.new_message(enabled=enabled(frame), longActive=long_active,
++                                               orientationNED=[0., pitch(frame), 0.])
++      CC.actuators.accel = accel(frame) if long_active else 0.
++      CC.actuators.longControlState = LongCtrlState.pid if long_active else LongCtrlState.off
++      _, can_sends = self.CI.apply(CC.as_reader(), frame * int(self.DT_CTRL * 1e9))
++      self.safety.set_controls_allowed(enabled(frame))
++      self.safety.set_gas_pressed_prev(override(frame))
++      for address, dat, bus in can_sends:
++        if address == 0x343:
++          raw = int.from_bytes(dat[0:2], "big", signed=True)
++          self.assertTrue(self.safety.safety_tx_hook(libsafety_py.make_CANPacket(0x343, bus, dat)),
++                          f"step {frame}: ACCEL_CMD {raw} rejected after {self.safety.get_desired_accel_last()}")
++          sent.append(raw)
++    return sent
++
++  def test_step_requests(self):
++    sent = self.drive(900, lambda f: (2.0, -3.5, 1.0, -1.0)[f // 225])
++    self.assertEqual(min(sent), -3500)
++    self.assertEqual(max(sent), 2000)
++
++  def test_pitch_step(self):
++    self.drive(600, lambda f: 0.5, pitch=lambda f: 0.05 if f >= 200 else 0.)
++
++  def test_stock_aeb_onset_and_recovery(self):
++    # the stand-down drops +1.5 m/s^2 to 0 at once (WP-W-02 OI-16), then control resumes from 0
++    sent = self.drive(700, lambda f: 1.5, aeb=lambda f: 300 <= f < 400)
++    self.assertTrue(0 in sent)
++
++  def test_engage_disengage_and_override(self):
++    # braking hard, then disengaged (inactive value), engaged again into braking; a gas override mid-braking
++    self.drive(1500, lambda f: -3.0, enabled=lambda f: not (400 <= f < 600), override=lambda f: 900 <= f < 1000)
++
++  def test_random_drive(self):
++    rng = random.Random(624)
++    events = [(rng.uniform(-3.5, 2.0), rng.random() < 0.08, rng.random() < 0.05, rng.random() < 0.05,
++               rng.uniform(-0.06, 0.06)) for _ in range(300)]
++    seg = lambda f: events[f // 100]  # noqa: E731
++    self.drive(30000, lambda f: seg(f)[0], enabled=lambda f: not seg(f)[1], override=lambda f: seg(f)[2],
++               aeb=lambda f: seg(f)[3], pitch=lambda f: seg(f)[4], a_ego=lambda f: seg(f)[0] * 0.8)
+ 
+ class TestToyotaSafetyTorque(TestToyotaSafetyBase, common.MotorTorqueSteeringSafetyTest, common.SteerRequestCutSafetyTest):
+ 
+-- 
+2.43.0
+
