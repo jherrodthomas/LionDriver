@@ -6,9 +6,9 @@ Each day: parked in the sun facing south 12:00–14:00, then driving southwest o
 
 | Day | Outside at 14:00 | At the end of parking: cabin air / glass / dash / mount | Mount air while driving: highest, after 60 min | Minutes of the drive above the worst-edge bound |
 |---|---|---|---|---|
-| Hot July day, AC on | 35 °C | 64 / 50 / 88 / 59 °C | 59 °C, 30 °C | 2 |
-| Hot July day, AC off (fan, fresh air) | 35 °C | 64 / 50 / 88 / 59 °C | 59 °C, 41 °C | 26 |
-| Mild April day, AC on | 24 °C | 52 / 40 / 77 / 47 °C | 47 °C, 24 °C | 2 |
+| Hot July day, AC on | 35 °C | 69 / 52 / 93 / 62 °C | 62 °C, 31 °C | 2 |
+| Hot July day, AC off (fan, fresh air) | 35 °C | 69 / 52 / 93 / 62 °C | 62 °C, 42 °C | 44 |
+| Mild April day, AC on | 24 °C | 56 / 41 / 82 / 50 °C | 50 °C, 24 °C | 2 |
 
 ## Check against measured parked cars (McLaren et al. 2005)
 
@@ -16,12 +16,12 @@ Measured: about 22 K rise of cabin air in 60 min on clear days, the same at any 
 
 | Ambient | Model rise in 60 min | Share in the first 30 min |
 |---|---|---|
-| 22 °C | 22.1 K | 65 % |
-| 36 °C | 22.1 K | 65 % |
+| 22 °C | 25.0 K | 63 % |
+| 36 °C | 25.0 K | 63 % |
 
 ## What this shows (generated)
 
-- Parked on a hot day, the mount air reaches 59 °C, above the worst-edge bound (43.4 °C), and the glass 50 °C: the device starts its drive hot.
-- With the AC on, the mount air is above the worst-edge bound for 2 min of the drive and ends at 30 °C.
-- With the AC off it is above it for 26 min and ends at 41 °C, below the bound.
+- Parked on a hot day, the mount air reaches 62 °C, above the worst-edge bound (43.4 °C), and the glass 52 °C: the device starts its drive hot.
+- With the AC on, the mount air is above the worst-edge bound for 2 min of the drive and ends at 31 °C.
+- With the AC off it is above it for 44 min and ends at 42 °C, below the bound.
 - The heat model assumes a constant cabin temperature; this curve (a hot start that the AC pulls down) is the input it should take instead. The logger at the mount (DQ-411) checks both.

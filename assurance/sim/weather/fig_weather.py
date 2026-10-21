@@ -284,43 +284,55 @@ def _cabin_series(r, path):
   _save(fig, path)
 
 
+GEOMETRY = Path(__file__).resolve().parents[1] / "figures" / "corolla-e210-geometry.json"
+
+
 def _cabin_anim(r, path):
+  """The hot day on the Corolla's side elevation, measured on the purchased mesh (corolla-e210-geometry.json)."""
+  import json
+  side = json.loads(GEOMETRY.read_text(encoding="utf-8"))["side_elevation"]
   d = r["scenarios"]["hot_july"]
   b = r["heat_model_bound"]
   t = np.array(d["t_min"])
   heat = LinearSegmentedColormap.from_list("heat", ["#cde2fb", "#fdeee5", "#f6b48f", "#eb6834", "#b8401a", "#6b220b"])
-  norm = plt.Normalize(20, 90)
-  body = [(0.5, 1.0), (1.2, 1.9), (3.0, 2.15), (4.4, 3.35), (6.6, 3.45), (8.2, 2.3), (9.6, 2.1), (9.7, 1.0)]
-  cabin = [(3.15, 2.1), (4.5, 3.2), (6.5, 3.28), (7.9, 2.15), (7.9, 1.3), (3.15, 1.3)]
+  norm = plt.Normalize(20, 95)
+  ws = np.array(side["windshield"][0])
+  top = ws[np.argmax(ws[:, 1])]                     # the windshield's top edge, where the device hangs
+  device = (top[0] + 0.07, top[1] - 0.07)
+  dash = [(top[0] + 0.25, 0.86), (top[0] + 0.62, 0.9), (top[0] + 0.62, 0.95), (top[0] + 0.25, 0.97)]
   frames = []
   for i in range(0, len(t), 2):
     driving = t[i] >= d["drive_starts_min"]
     fig = plt.figure(figsize=(7.2, 9), dpi=80)
     fig.text(0.05, 0.955, "A hot day in the cabin", fontsize=19, weight="bold", color=INK)
-    fig.text(0.05, 0.925, "Corolla, clear 15 July · AC on when driving", fontsize=12.5, color=INK2)
+    fig.text(0.05, 0.925, "Corolla E210 (outline from the 3D model) · clear 15 July · AC on when driving", fontsize=12,
+             color=INK2)
     clock = 12 + t[i] / 60
     fig.text(0.95, 0.955, f"{int(clock):02d}:{int(round((clock % 1) * 60)) % 60:02d}", ha="right", fontsize=18,
              color=INK, family="DejaVu Sans Mono")
-    ax = fig.add_axes([0.03, 0.47, 0.94, 0.42]); ax.set_xlim(0, 10.2); ax.set_ylim(0.2, 4.6); ax.set_aspect("equal")
-    ax.axis("off")
-    ax.add_patch(Polygon(body, color="#c9c7bf"))
-    ax.add_patch(Polygon(cabin, color=heat(norm(d["air"][i]))))
-    ax.plot([7.9, 6.5], [2.15, 3.28], color=heat(norm(d["glass"][i])), lw=7, solid_capstyle="round")
-    ax.add_patch(Polygon([(7.0, 1.95), (7.85, 2.12), (7.85, 1.75), (7.0, 1.7)], color=heat(norm(d["dash"][i]))))
-    for x in (2.0, 8.0):
-      ax.add_patch(Circle((x, 1.0), 0.55, color="#2b2a28")); ax.add_patch(Circle((x, 1.0), 0.25, color="#8a8984"))
-    ax.add_patch(Circle((6.62, 3.0), 0.14, color="white", ec=INK, lw=1.5, zorder=5))
-    ax.text(5.4, 3.75, f"mount air {d['mount'][i]:.0f} °C", fontsize=13, weight="bold", color=INK)
-    ax.text(4.0, 1.6, f"cabin {d['air'][i]:.0f} °C", fontsize=12, color=INK)
-    ax.text(7.85, 1.42, f"dash {d['dash'][i]:.0f} °C", fontsize=11, color=INK, ha="right")
+    ax = fig.add_axes([0.02, 0.5, 0.96, 0.38]); ax.set_xlim(-2.45, 2.45); ax.set_ylim(-0.1, 2.0)
+    ax.set_aspect("equal"); ax.axis("off")
+    ax.add_patch(Polygon(side["body"][0], color="#c9c7bf", zorder=1))
+    for k in ("side_front", "side_rear"):                     # the cabin, seen through the side glass
+      ax.add_patch(Polygon(side[k][0], color=heat(norm(d["air"][i])), ec="#52514e", lw=0.6, zorder=2))
+    for k in ("windshield", "rear_window"):
+      ax.add_patch(Polygon(side[k][0], color=heat(norm(d["glass"][i])), ec="#52514e", lw=0.6, zorder=3))
+    ax.add_patch(Polygon(dash, color=heat(norm(d["dash"][i])), zorder=3))
+    for wpoly in side["wheels"]:
+      ax.add_patch(Polygon(wpoly, color="#2b2a28", zorder=4))
+    ax.add_patch(Circle(device, 0.05, color="white", ec=INK, lw=1.5, zorder=6))
+    ax.annotate(f"mount air {d['mount'][i]:.0f} °C", device, (device[0] - 0.4, 1.75), fontsize=13, weight="bold",
+                color=INK, ha="center", arrowprops=dict(arrowstyle="-", color=INK, lw=1))
+    ax.text(-0.35, 1.05, f"cabin {d['air'][i]:.0f} °C", fontsize=12, color=INK, ha="center", zorder=7)
+    ax.text(top[0] + 0.62, 0.72, f"dash {d['dash'][i]:.0f} °C", fontsize=11, color=INK, ha="right", zorder=7)
     if not driving:
-      ax.add_patch(Circle((9.2, 4.1), 0.32, color="#f2a900"))
-      ax.text(0.4, 4.1, "Parked in the sun", fontsize=13, weight="bold", color="#b8401a")
+      ax.add_patch(Circle((2.05, 1.75), 0.14, color="#f2a900"))
+      ax.text(-2.35, 1.75, "Parked in the sun", fontsize=13, weight="bold", color="#b8401a")
     else:
-      ax.text(0.4, 4.1, "Driving, AC on", fontsize=13, weight="bold", color="#1c5cab")
-      for y in (1.6, 2.1, 2.6):
-        ax.annotate("", (0.2, y), (-0.6 + 0.4 * (i % 3), y), arrowprops=dict(arrowstyle="-", color=MUTED, lw=1.5))
-    a2 = fig.add_axes([0.13, 0.13, 0.82, 0.28])
+      ax.text(-2.35, 1.75, "Driving, AC on", fontsize=13, weight="bold", color="#1c5cab")
+      for y in (0.45, 0.75, 1.05):
+        ax.plot([-2.45, -2.45 + 0.15 + 0.1 * (i % 3)], [y, y], color=MUTED, lw=1.5)
+    a2 = fig.add_axes([0.13, 0.13, 0.82, 0.3])
     a2.axhspan(b["worst_edge"], b["nominal"], color="#fdecec")
     a2.axhline(b["worst_edge"], color=CRIT, lw=1.5, ls=(0, (4, 3)))
     a2.text(178, b["worst_edge"] + 1.5, f"device model's bound {b['worst_edge']:.0f} °C", color=CRIT, ha="right",

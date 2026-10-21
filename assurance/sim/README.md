@@ -566,10 +566,10 @@ Three small studies for SOTIF triggering conditions, beside the layers.
 - **Hydroplaning** (FHWA/NCHRP film model and NASA TN D-2056): rain alone brings the hydroplaning speed down to
   110 km/h only in heavy rain, which the ODD excludes. Standing water deeper than the tread gives about 98 km/h,
   below the bound (DQ-413 A).
-- **Cabin heat soak** (lumped, checked against measured parked cars): on a hot July day the air at the device mount
-  reaches 59 °C after two hours parked. With the AC on it falls below the device model's bound within minutes; with
-  it off it takes 26 min. On those temperatures the device model's SoC peaks at 77–82 °C, below its 96 °C limit,
-  on estimated inputs.
+- **Cabin heat soak** (lumped, glass measured on the Corolla's 3D model, checked against measured parked cars): on a
+  hot July day the air at the device mount reaches 62 °C after two hours parked. With the AC on it falls below the
+  device model's bound within minutes; with it off it takes 44 min. On those temperatures the device model's SoC
+  peaks at 79–84 °C, below its 96 °C limit, on estimated inputs.
 
 Method, checks and figures: [`weather/README.md`](weather/README.md).
 

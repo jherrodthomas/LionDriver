@@ -33,12 +33,17 @@ cabin:
   # Lumped heat model of the Corolla's cabin (cabin_soak.py). Every value an estimate unless marked; the logger
   # at the mount (DQ-411) is what checks it. Areas in m², heat capacities in J/K, conductances from h in W/m²K.
   air_volume_m3: {value: 2.5, status: published, source: "Corolla sedan passenger volume about 88 ft³ (2.49 m³)"}
-  windshield: {area: 1.1, tilt_deg: 30.0, heat_capacity: 11000.0, absorptance: 0.25, transmittance: 0.5, status: estimate,
-               source: "laminated 4.8 mm glass raked about 60° from vertical; solar transmittance as the device heat model"}
-  roof: {area: 1.6, absorptance: 0.6, status: estimate, source: "mid-grey paint"}
-  side_windows: {area_each: 0.9, transmittance: 0.6, absorptance: 0.1, status: estimate,
+  # Areas and rakes: mesh-derived, from figures/corolla-e210-geometry.json (assets/tools/vehicle_geometry.py); the
+  # reference car's measurement wins where they differ. test_weather.py C4 keeps these equal to the JSON.
+  windshield: {area: 1.151, tilt_deg: 25.8, heat_capacity: 11000.0, absorptance: 0.25, transmittance: 0.5,
+               status: "mesh-derived (area, rake); estimate (the rest)",
+               source: "laminated 4.8 mm glass; solar transmittance as the device heat model"}
+  roof: {area: 1.413, absorptance: 0.6, status: "mesh-derived (area); estimate (paint)",
+         source: "metal roof only; the mesh's 0.75 m² glass roof panel is left out until the reference car's trim is confirmed"}
+  side_windows: {area_each: 0.853, transmittance: 0.6, absorptance: 0.1, status: "mesh-derived (area); estimate (the rest)",
                  source: "front and rear side glass of one side; the absorbed share heats the shell node (rear window too)"}
-  rear_window: {area: 0.7, tilt_deg: 30.0, transmittance: 0.6, status: estimate, source: "backlight raked like the windshield"}
+  rear_window: {area: 1.039, tilt_deg: 22.3, transmittance: 0.6, status: "mesh-derived (area, rake); estimate (the rest)",
+                source: "backlight"}
   dash: {area: 0.7, heat_capacity: 8000.0, share_of_windshield_sun: 0.6, h_rad_cabin: 6.0, status: estimate,
          source: "dark dashboard skin and substrate under the windshield; the rest of the windshield's sun lands on the wheel and seats; long-wave exchange with the interior and shell"}
   interior: {area: 4.0, heat_capacity: 60000.0, status: estimate, source: "seats, carpet and trim"}

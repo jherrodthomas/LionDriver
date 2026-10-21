@@ -575,6 +575,7 @@ jobs:
         python3 assurance/sim/weather/sun_glare.py --check
         python3 assurance/sim/weather/hydroplaning.py --check
         python3 assurance/sim/weather/cabin_soak.py --check
+        python3 assurance/sim/assets/tools/vehicle_geometry.py --check
 
   sim-scenarios:
     name: simulation known scenarios

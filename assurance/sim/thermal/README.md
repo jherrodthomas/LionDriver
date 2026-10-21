@@ -60,11 +60,11 @@ conductivity ±30 %, sun ±30 %. Because the model is linear, each variation shi
 The sweep holds the mount air at one temperature for an hour. [`cabin_drive.py`](cabin_drive.py) runs the same device
 on the cabin heat soak's mount air and windshield temperatures minute by minute
 ([`../weather/cabin_soak.py`](../weather/README.md#3-cabin-heat-soak-oi-3-tc-21)): two hours parked in the sun with
-the board off and the fan still, then an hour's drive with the board on. On a hot July day the SoC reaches 64 °C
-parked. While driving it peaks at 77 °C with the AC on and 82 °C with it off, below the 96 °C limit in both. Results:
+the board off and the fan still, then an hour's drive with the board on. On a hot July day the SoC reaches 66 °C
+parked. While driving it peaks at 79 °C with the AC on and 84 °C with it off, below the 96 °C limit in both. Results:
 [`results/cabin-device.md`](../results/cabin-device.md).
 
-![The SoC through a hot day: rising to 64 °C while parked with the device off, then jumping when the board starts at 14:00 and peaking at 77 °C with the AC on, 82 °C with it off and 67 °C on a mild April day, all below the 96 °C limit](figures/fig-th-5-cabin-drive.webp)
+![The SoC through a hot day: rising to 66 °C while parked with the device off, then jumping when the board starts at 14:00 and peaking at 79 °C with the AC on, 84 °C with it off and 68 °C on a mild April day, all below the 96 °C limit](figures/fig-th-5-cabin-drive.webp)
 
 *Figure 5. The device on the cabin's own temperatures.*
 

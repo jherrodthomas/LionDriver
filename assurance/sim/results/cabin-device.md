@@ -6,12 +6,12 @@ Parked 12:00–14:00 with the board off and the fan still, then driving 14:00–
 
 | Day | SoC when the drive starts | SoC peak while driving | Minutes above the limit | First overheat | panda MCU peak |
 |---|---|---|---|---|---|
-| Hot July day, AC on | 64 °C | 77 °C | 0 | — | 65 °C |
-| Hot July day, AC off (fan, fresh air) | 64 °C | 82 °C | 0 | — | 66 °C |
-| Mild April day, AC on | 53 °C | 67 °C | 0 | — | 54 °C |
+| Hot July day, AC on | 66 °C | 79 °C | 0 | — | 67 °C |
+| Hot July day, AC off (fan, fresh air) | 66 °C | 84 °C | 0 | — | 68 °C |
+| Mild April day, AC on | 55 °C | 68 °C | 0 | — | 56 °C |
 
 ## What this shows (generated)
 
-- On a hot July day with the AC on, the device stays below the limit: the SoC peaks at 77 °C while driving.
-- With the AC off, it stays below the limit; the SoC peaks at 82 °C.
+- On a hot July day with the AC on, the device stays below the limit: the SoC peaks at 79 °C while driving.
+- With the AC off, it stays below the limit; the SoC peaks at 84 °C.
 - The pilot holds the mount air at one temperature for the whole hour; here it starts hot from the parking and falls with the AC, or slowly without it. Both rest on estimates until T1 and the logger.

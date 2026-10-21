@@ -43,8 +43,8 @@ def run(p: dict) -> dict:
     tm = np.array(d["t_min"]) * 60.0
     t_drive = d["drive_starts_min"] * 60.0
     series = {"air": np.array(d["mount"]), "glass": np.array(d["glass"])}
-    def refs_from(offset):
-      return lambda t: {k: float(np.interp(offset + t, tm, v)) for k, v in series.items()}
+    def refs_from(offset, tm=tm, series=series):
+      return lambda dt_s: {k: float(np.interp(offset + dt_s, tm, v)) for k, v in series.items()}
     m = build(p)
     fan = next(f for f in m.box.faces if f.name == "fan")
     still = p["boundaries"]["rear"]["h"]

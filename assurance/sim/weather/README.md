@@ -97,32 +97,37 @@ windshield, dashboard, interior (seats and trim) and shell (roof, doors and the 
   (fan on fresh air).
 - **Mount air:** the air at the mount is the cabin air plus 0.4 of the windshield's difference from it. That share is
   an assumption, and the logger at the mount (DQ-411) sets it.
+- **Glass and roof:** areas and rakes are measured on the purchased Corolla mesh
+  ([`figures/corolla-e210-geometry.json`](../figures/corolla-e210-geometry.json), written by
+  [`assets/tools/vehicle_geometry.py`](../assets/tools/vehicle_geometry.py)): windshield 1.15 m² at 25.8° from
+  horizontal, rear window 1.04 m² at 22.3°, side glass 0.85 m² a side, metal roof 1.41 m². They are labelled
+  mesh-derived; the mesh also has a 0.75 m² glass roof, which is left out until the reference car's trim is confirmed.
 
 Every cabin input is an estimate ([`params.yaml`](params.yaml), `cabin:`). Results:
 [`results/cabin-soak.md`](../results/cabin-soak.md).
 
 **Check against measured cars.** McLaren, Null and Quinn (2005, *Pediatrics* 116(1) e109) measured a dark sedan on
 16 clear days at 22–36 °C ambient: the cabin air rose about 22 K in 60 min, at the same rate whatever the ambient.
-The model gives 22.1 K at both 22 and 36 °C, with no tuning. It is slower early: 65 % of the rise in the first
-30 min, against the 80 % measured. The model's interior holds more heat than a real car's, which the logger will
+The model gives 25.0 K at both 22 and 36 °C, with no tuning (22.1 K with the estimated glass before the mesh was
+measured). It is slower early: 63 % of the rise in the first 30 min, against the 80 % measured. The model's interior holds more heat than a real car's, which the logger will
 show.
 
 **Result (hot 15 July, 35 °C afternoon, estimated inputs).**
-- **Parked:** after two hours the cabin air is at 64 °C, the dashboard at 88 °C and the mount air at 59 °C.
+- **Parked:** after two hours the cabin air is at 69 °C, the dashboard at 93 °C and the mount air at 62 °C.
 - **Driving with the AC:** the mount air falls below the device model's worst-edge bound (43 °C) within 2 min and
-  ends at 30 °C.
-- **Driving without the AC:** it stays above that bound for 26 min and ends at 41 °C.
+  ends at 31 °C.
+- **Driving without the AC:** it stays above that bound for 44 min and ends at 43 °C.
 
 Fed into the device model ([`../thermal/cabin_drive.py`](../thermal/cabin_drive.py),
-[`results/cabin-device.md`](../results/cabin-device.md)): parked with the device off, the SoC reaches 64 °C. While
-driving it peaks at 77 °C with the AC on and 82 °C with it off, below the 96 °C limit in both. That comes from the
+[`results/cabin-device.md`](../results/cabin-device.md)): parked with the device off, the SoC reaches 66 °C. While
+driving it peaks at 79 °C with the AC on and 84 °C with it off, below the 96 °C limit in both. That comes from the
 estimated inputs; T1 and the logger decide it.
 
-![Two charts of a hot July day: parked in the sun from 12:00 to 14:00, the cabin air rises to 64 °C, the dashboard to 88 °C and the mount air to 59 °C, above the device model's 43–50 °C bound; then driving, with the AC on the mount air drops below the bound within minutes and ends at 30 °C, with the AC off it ends at 41 °C](figures/fig-wx-6-cabin.webp)
+![Two charts of a hot July day: parked in the sun from 12:00 to 14:00, the cabin air rises to 69 °C, the dashboard to 93 °C and the mount air to 62 °C, above the device model's 43–50 °C bound; then driving, with the AC on the mount air drops below the bound within minutes and ends at 31 °C, with the AC off it ends at 43 °C](figures/fig-wx-6-cabin.webp)
 
 *Figure 6. The cabin through a hot day, with the AC on and off.*
 
-![Animation, looping: a side view of the Corolla whose cabin, windshield and dashboard change colour with their temperatures from 12:00 to 15:00; parked in the sun the cabin turns orange and the mount air rises to 59 °C; from 14:00, driving with the AC on, it turns pale and the mount air falls to 30 °C; a chart below draws the mount-air curve against the device model's bound](figures/fig-wx-7-cabin-anim.webp)
+![Animation, looping: the Corolla's side elevation, measured on its 3D model, whose side windows (the cabin), windshield and dashboard change colour with their temperatures from 12:00 to 15:00; parked in the sun the cabin turns orange and the mount air rises to 62 °C; from 14:00, driving with the AC on, it turns pale and the mount air falls to 31 °C; a chart below draws the mount-air curve against the device model's bound](figures/fig-wx-7-cabin-anim.webp)
 
 *Figure 7. The same day as a loop.*
 
@@ -144,6 +149,7 @@ estimated inputs; T1 and the logger decide it.
 | C1 Cabin air rises 22 ± 5 K in 60 min of clear sun, the same at 22 and 36 °C ambient (McLaren et al. 2005) | a model far off measured cars |
 | C2 No sun, no AC, constant outside: every node stays at the outside temperature; a clear night sky cools, not below the sky | heat from nowhere, a sign error |
 | C3 Outside curve: minimum 06:00, maximum 15:00 | a wrong daily curve |
+| C4 Glass and roof areas and rakes equal the mesh measurement in `corolla-e210-geometry.json` | estimates drifting from the measured shape |
 
 All three scripts' `--check` rerun the study and fail if any number moves by more than 0.05 from the committed JSON.
 

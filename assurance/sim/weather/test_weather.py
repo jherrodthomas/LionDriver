@@ -18,6 +18,7 @@ Synthetic (DSR-12), design aid, no evidence credit.
 
 from __future__ import annotations
 
+import json
 import re
 import sys
 import unittest
@@ -167,6 +168,16 @@ class Cabin(unittest.TestCase):
     self.assertAlmostEqual(float(h[np.argmax(t)]), 15.0)
     self.assertAlmostEqual(float(t.min()), 20.0)
     self.assertAlmostEqual(float(t.max()), 30.0)
+
+  def test_c4_geometry_from_the_mesh(self):
+    g = json.loads((HERE.parent / "figures" / "corolla-e210-geometry.json").read_text(encoding="utf-8"))["glass"]
+    c = P["cabin"]
+    self.assertAlmostEqual(c["windshield"]["area"], g["windshield"]["area_m2"], places=3)
+    self.assertAlmostEqual(c["windshield"]["tilt_deg"], g["windshield"]["tilt_from_horizontal_deg"], places=1)
+    self.assertAlmostEqual(c["rear_window"]["area"], g["rear_window"]["area_m2"], places=3)
+    self.assertAlmostEqual(c["rear_window"]["tilt_deg"], g["rear_window"]["tilt_from_horizontal_deg"], places=1)
+    self.assertAlmostEqual(c["side_windows"]["area_each"],
+                           g["side_front_each"]["area_m2"] + g["side_rear_each"]["area_m2"], places=3)
 
 
 if __name__ == "__main__":
