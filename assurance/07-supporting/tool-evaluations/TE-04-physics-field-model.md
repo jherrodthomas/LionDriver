@@ -51,7 +51,7 @@ the future HIL bench, IKOS for static analysis of the panda C code, and FRET →
 
 ## 4. What it would show (mock-ups)
 
-All four figures are **mock-ups: illustrative, synthetic (DSR-12), no evidence credit**. Geometry, power and sun load
+All five figures are **mock-ups: illustrative, synthetic (DSR-12), no evidence credit**. Geometry, power and sun load
 are invented; only the 96 °C and 88 °C band edges are the code's (comma 3X, `hardwared.py:99-103`).
 
 ![Mock-up: the comma device drawn in 3D under the windshield with a temperature field on its rear, top and fan-side faces, hottest at the SoC (95 °C) and warm at the panda MCU (52 °C); below it the rear face flattened with isotherms at 60, 70, 80 and 88 °C and a colour bar marking 96 °C](figures/te04-mock-1-field.webp)
@@ -69,6 +69,10 @@ are invented; only the 96 °C and 88 °C band edges are the code's (comma 3X, `h
 ![Mock-up: a phone-sized README page for the thermal model with a synthetic-data banner, a one-paragraph purpose, the rear-face field, a table of peak SoC temperature for 35, 45 and 55 °C cabin air with the 55 °C row marked overheat, and the solver, cross-check and validation status](figures/te04-mock-4-readme.webp)
 
 *Figure 4-4. How the result would sit on a README page.*
+
+![Animated mock-up, looping: the device rear face heats up over a 60 minute drive at 55 °C cabin air while the SoC temperature line below draws itself; at about 14 minutes it crosses 96 °C and a "System Overheated → soft disable" banner appears](figures/te04-mock-5-anim.webp)
+
+*Figure 4-5. The same result animated (looping WebP; GIF is not used because the repository sends `*.gif` to the read-only LFS store). A real run would write one such loop per cabin temperature, next to the still figures.*
 
 ## 5. Pilot plan if the lead says go
 
