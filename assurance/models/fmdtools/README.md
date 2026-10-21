@@ -61,7 +61,7 @@ A run takes place on a straight, at curve entry or mid-curve (`events.yaml` phas
 One run takes about 0.19 s. Step P3 therefore skips sets that contain no cause and supersets of sets already found: 6,297 runs instead of all 15,275 sets of 1 to 4 modes. Mid-curve, against the tree's 31 effective sets of up to 4 events (its latent events taken as present):
 
 - **No set in the model that the tree does not predict.** A test drops the MCS-02.4 cut sets from the tree and checks that the diff then reports {BE-2.04}.
-- 21 sets agree. In 10 tree sets, the model needs one more event, a siren failure (BE-2.14, BE-2.15 or BE-2.22): {BE-2.05}, {BE-2.21}, the four {BE-2.01, warning or HMI failure} sets of MCS-02.1 and MCS-02.6, and the four {BE-2.20, BE-7.20, warning or HMI failure} sets of MCS-02.11. All 9 are the same finding: since panda `8a69ccf`, the siren covers EPS faults and heartbeat loss, so the tree's latent tag on BE-2.14 holds only for the other causes.
+- 21 sets agree. In 10 tree sets, the model needs one more event, a siren failure (BE-2.14, BE-2.15 or BE-2.22): {BE-2.05}, {BE-2.21}, the four {BE-2.01, warning or HMI failure} sets of MCS-02.1 and MCS-02.6, and the four {BE-2.20, BE-7.20, warning or HMI failure} sets of MCS-02.11. All 10 are the same finding: since panda `8a69ccf`, the siren covers EPS faults and heartbeat loss, so the tree's latent tag on BE-2.14 holds only for the other causes.
 
 [`p3-joint-faults.md`](sg02/p3-joint-faults.md) lists all 51 minimal sets.
 
@@ -69,7 +69,7 @@ MCS-02.9 (selfdrived stop) was checked against the plant ([engaged-mismatch](../
 
 ## Time to the first cue (step P4)
 
-Each of the 58 sets of the P3 diff is run for 6 s, to time cues that come after the budget ([`p4-timing.md`](sg02/p4-timing.md)):
+Each of the 61 sets of the P3 diff is run for 6 s, to time cues that come after the budget ([`p4-timing.md`](sg02/p4-timing.md)):
 
 - **10 within the budget:** by the siren, at 0.26 s, or 0.78 s after the loss for {BE-2.21} (margin 0.22 s), which is the P3 finding.
 - **9 late:** the three {BE-2.21 + siren failure} sets (MCS-02.9) get the System Unresponsive alert 4.9 s after the loss. The six {BE-2.08 + EPS fault + siren failure} sets (MCS-02.1, MCS-02.11) get the escalated take-over request at 1.5 s (TSR-607 (b)), 0.5 s over.
