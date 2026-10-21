@@ -3,7 +3,8 @@
 # Describes the code at opendbc 7993399 / panda 8aa8671 (superproject 682f184); T10a (siren) and T10b were updated
 # at the merge with the base to panda c33343b / opendbc 273f44e. T1, T1a-T1c, T2-T5, T7, T8 and T11 were updated to
 # opendbc 515b9a2 at the pin bump of 2026-10-16 (engagement window LS-06, ATC-20, ATC-26), and to opendbc 98d3be1 on
-# 2026-10-17 (SM-F1 fixed: a refusal for MAIN_ON = 0 closes the window, jherrodthomas/opendbc#17). Every transition cites the
+# 2026-10-17 (SM-F1 fixed: a refusal for MAIN_ON = 0 closes the window, jherrodthomas/opendbc#17). T6 and the new T6a
+# follow panda f4803c5 (2026-10-21, engaged-mismatch check in the safety task, jherrodthomas/panda#21). Every transition cites the
 # code that implements it; "swsr" lists the requirements it realises or is meant to realise. Implementation
 # state is NOT stored here: the checker reads it from the WP-W-02 Baseline column (trace/items/swsr.yaml).
 # build: all = every build; reference = only with LIONDRIVER_REFERENCE=1.
@@ -26,7 +27,8 @@ transitions:
   - {id: T3, from: ALLOWED, event: "any RX", guard: "brake rising, or pressed while moving", action: clear, to: NOT_ALLOWED, build: all, swsr: [SWSR-302], code: "opendbc 98d3be1 safety.h:533-539 (generic_rx_checks)"}
   - {id: T4, from: ALLOWED, event: "RX of checked message", guard: "checksum, quality flag or counter invalid; reference build: or a frame of another length (ATC-25), the entry then invalid until a frame of the right length", action: clear, to: NOT_ALLOWED, build: all, swsr: [SWSR-402, SWSR-406], code: "opendbc 62b89a3 safety.h:114-129 (is_msg_valid), :178-197 (rx_length_check, reference build, modes with rx_timeout_periods), :236-241; upstream build: a frame of another length matches no entry and is ignored"}
   - {id: T5, from: ALLOWED, event: "safety_tick (100 Hz safety task)", guard: "any RX check lagging (5 periods), below 10 Hz, or invalid", action: clear, to: NOT_ALLOWED, build: all, swsr: [SWSR-401, SWSR-401a, SWSR-406], code: "opendbc 98d3be1 safety.h:497-509 (safety_tick); panda main.c:133 (safety_task_handler)"}
-  - {id: T6, from: ALLOWED, event: "1 Hz tick", guard: "heartbeat engaged=0 for 3 consecutive ticks", action: clear, to: NOT_ALLOWED, build: all, swsr: [SWSR-307], code: "panda main.c:225-229"}
+  - {id: T6, from: ALLOWED, event: "1 Hz tick", guard: "heartbeat engaged=0 for 3 consecutive ticks", action: clear, to: NOT_ALLOWED, build: all, gap: "upstream backstop, 2-3 s: does not meet the 0.3 s of SWSR-307; in the reference build T6a revokes first", code: "panda f4803c5 main.c:261-269 (tick_handler)"}
+  - {id: T6a, from: ALLOWED, event: "safety task: engaged-mismatch check", guard: "heartbeat engaged=0 for 30 safety tasks (0.3 s) since the first such heartbeat while authority was granted", action: "clear; siren 3 s when PCM cruise is still active 0.5 s after that heartbeat (SWSR-516b)", to: NOT_ALLOWED, build: reference, swsr: [SWSR-307, SWSR-516b], code: "panda f4803c5 main.c:152-168 (safety_task_handler), drivers/engaged_mismatch.h"}
   - {id: T7, from: any, event: "safety mode set (0xdc, heartbeat loss, harness change)", guard: "", action: clear, to: NOT_ALLOWED, build: all, swsr: [SWSR-311], code: "opendbc 98d3be1 safety.h:574, 641-648 (set_safety_hooks; also clears the window, the TX-rate block and the cruise edge memory)"}
   - {id: T9, from: ALLOWED, event: "TX frame rejected by a content check", guard: "", action: "clear, reason", to: NOT_ALLOWED, build: all, swsr: [SWSR-108], code: "not implemented: the frame is dropped, authority kept (opendbc safety.h safety_tx_hook)"}
   - {id: T10a, from: ALLOWED, event: "safety task: heartbeat check", guard: "no SoC heartbeat for > 0.3 s in a car mode", action: "clear; siren 3 s when authority was granted (panda c33343b)", to: NOT_ALLOWED, build: all, swsr: [SWSR-407, SWSR-516], code: "panda main.c:135-137 (heartbeat_monitor_tick); heartbeat_siren.h at panda c33343b"}

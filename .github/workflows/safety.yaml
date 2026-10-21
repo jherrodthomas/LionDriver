@@ -184,7 +184,7 @@ jobs:
     - name: Run host tests
       working-directory: panda
       run: |
-        for suite in hw_watchdog heartbeat_monitor heartbeat_siren reference_lock irq_priorities eps_fault_siren; do
+        for suite in hw_watchdog heartbeat_monitor heartbeat_siren reference_lock irq_priorities eps_fault_siren engaged_mismatch; do
           echo "::group::$suite"
           python3 -m unittest discover -v -s "tests/$suite" -t .
           echo "::endgroup::"
