@@ -263,3 +263,45 @@ def cabin_figure(r: dict, path: Path):
            color=INK2)
   _stamp(fig)
   _save(fig, path)
+
+
+def mcu_figure(p: dict, r: dict, out: Path):
+  """The MCU's junction against the cabin air, as built and with the fan stalled, against its limit (mcu_heat.py)."""
+  air = np.array(r["air"])
+  jr = r["junction_rise_k"]
+  tj = p["mcu"]["tj_max"]["industrial"]
+  trip = r["tsr509"]["grades"]["industrial"]["trip_at_most"]
+  fig, ax = plt.subplots(figsize=(9, 10), dpi=100)
+  fig.subplots_adjust(left=0.12, right=0.74, top=0.84, bottom=0.2)
+  fig.text(0.05, 0.95, "The safety MCU next to the SoC", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.92, "STM32H725 junction in the comma 3X box model, steady drive · band: package unknown",
+           fontsize=12.5, color=INK2)
+  ax.axhspan(tj, 150, color="#fdecec"); ax.axhline(tj, color=CRIT, lw=2)
+  ax.text(air[0] + 0.5, tj + 2, f"{tj:.0f} °C junction limit (industrial part)", color=CRIT, fontsize=11.5,
+          weight="bold")
+  ax.axhline(trip, color=CRIT, lw=1.5, ls=(0, (5, 3)))
+  ax.text(air[-1] - 0.5, trip - 5, f"candidate TSR-509 trip,\nDTS reading {trip:.0f} °C", color=CRIT, fontsize=11,
+          ha="right", va="top")
+  styles = {"as_built": ("as built, fan at 100 %", "#2a78d6"), "soc_off": ("SoC's heat taken away", "#86b6ef"),
+            "fan_stalled": ("fan stalled", "#104281")}
+  for s, (lab, col) in styles.items():
+    blk = np.array(r["setups"][s]["mcu_block"])
+    ax.fill_between(air, blk + jr["low"], blk + jr["high"], color=col, alpha=0.25, lw=0)
+    ax.plot(air, blk + jr["nominal"], color=col, lw=2.4)
+    ax.text(air[-1] + 0.8, blk[-1] + jr["nominal"], lab, color=INK, fontsize=11.5, va="center")
+    if s in r["at_soc_limit"]:
+      d = r["at_soc_limit"][s]
+      y = (d["tj_low"] + d["tj_high"]) / 2
+      ax.plot([d["air_at_soc_limit"]], [y], "o", ms=10, mfc="white", mec=col, mew=2.4)
+      ax.annotate("SoC reaches 96 °C:\nthe host stops", (d["air_at_soc_limit"], y), (d["air_at_soc_limit"] + 3, y - 22),
+                  fontsize=10.5, color=INK2, ha="left", arrowprops=dict(arrowstyle="-", color=INK2, lw=1))
+  ax.set_xlim(air[0], air[-1]); ax.set_ylim(30, 150)
+  ax.set_xlabel("cabin air at the device, °C"); ax.set_ylabel("MCU junction, °C")
+  ax.grid(axis="y", color=GRID); ax.spines[["top", "right"]].set_visible(False)
+  fig.text(0.05, 0.085, "Windshield 15 K above the cabin air, sun on the device. While the host runs, the SoC limit\n"
+           "comes first; the trip line is for when it does not (TSR-509).", fontsize=11.5, color=INK2)
+  _stamp(fig)
+  out.mkdir(exist_ok=True)
+  path = out / "fig-th-6-mcu.webp"
+  _save(fig, path)
+  print(f"wrote {path.name} ({path.stat().st_size // 1024} KB)")

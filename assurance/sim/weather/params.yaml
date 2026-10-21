@@ -81,3 +81,65 @@ crosswind:
   ks02_wind_kph: {value: 30.0, status: published, source: "WP-V-03 KS-02: crosswind ≥ 30 km/h"}
   odd_margin_m_s2: {value: 0.5, status: published, source: "WP-C-02 §3.2: R_ODD = v²/2.5 against the controller's v²/3.0, a 0.5 m/s² margin for controller error, road crown and wind"}
   beaufort: {"6 strong breeze": 10.8, "7 near gale": 13.9, "8 gale": 17.2}
+
+fog:
+  # Fog, dew and frost on the windshield (windshield_fog.py): the glass's surface temperatures against the dew point
+  # of the air on each side, on the corridor's climate (climate-gsp.csv, NOAA 1991–2020 hourly normals).
+  pressure_kpa: {value: 97.9, status: published, source: "standard atmosphere at the station's 287 m"}
+  glass: {thickness_m: 0.0048, k: 1.0, pvb_m: 0.00076, k_pvb: 0.2, emissivity: 0.84, status: published,
+          source: "laminated windshield: two 2.0–2.4 mm soda-lime plies (k about 1.0 W/mK) and a 0.76 mm PVB interlayer (k about 0.2); glass emissivity 0.84 (Incropera, Table A.11)"}
+  sky:
+    cloud_factor: {value: 0.8, low: 0.6, high: 1.0, status: estimate,
+                   source: "share of the gap to a black sky that a full cloud deck closes; Martin and Berdahl 1984 give about 0.9 for low cloud and less for high cloud"}
+    cover_okta: {clr: 0.0, few: 1.5, sct: 3.5, bkn: 6.0, ovc: 8.0}
+  convection:
+    calm_wind_m_s: {value: 0.5, status: assumed, source: "NOAA counts an hour calm below about 1.5 kn; half a metre per second in it"}
+    source: "outside, parked: Watmuff et al. h = 2.8 + 3.0 v (convection only, Duffie and Beckman eq. 3.15.2); driving: turbulent flat plate Nu = 0.037 Re^0.8 Pr^(1/3) over the glass length (Incropera eq. 7.36)"
+  h_inside_rad: {value: 4.6, status: published, source: "linearised long-wave exchange of glass (ε 0.84) with the cabin surfaces near 20 °C"}
+  occupants: {value: 1, low: 1, high: 4, status: assumed, source: "the driver alone; up to four"}
+  breath_g_h: {value: 45.0, status: published, source: "moisture of a seated adult, about 30 W latent (ASHRAE Fundamentals ch. 9)"}
+  cabin_setpoint_c: 22.0
+  recirc_ach: {value: 3.0, low: 1.0, high: 6.0, status: estimate,
+               source: "air changes per hour through the body's leaks on recirculation at highway speed (the parked car's 1.0 is the low edge)"}
+  heater_below_c: {value: 18.0, status: assumed, source: "recirculation without air conditioning is a heater case: below this outside temperature"}
+  ac_lockout_c: {value: 4.0, status: estimate, source: "compressors are locked out near freezing; below it the air conditioning cannot dry the air"}
+  drive_speed_kph: 110.0
+  defrost:
+    jet_h: {value: 40.0, low: 25.0, high: 60.0, status: estimate, source: "heat transfer of the defroster jet where it meets the glass, at the vents"}
+    decay_m: {value: 0.35, low: 0.25, high: 0.5, status: estimate, source: "distance up the glass over which the jet's heat transfer falls to 1/e"}
+    outlet_c: {value: 55.0, status: estimate, source: "heater outlet with a warm engine"}
+    warmup_k_min: {value: 3.0, low: 1.5, high: 6.0, status: estimate, source: "rise of the heater outlet after a cold start, engine idling in winter (K/min) until it reaches the outlet temperature: the coolant warms slowly at idle"}
+    camera_zone: {value: [0.80, 0.92], status: estimate,
+                  source: "share of the glass's slant length, from the bottom, that the road camera looks through: just below the mount, under the top black band"}
+    morning: {month: 1, night: [20, 7], status: published, source: "January's normal clear, calm night on the corridor (climate-gsp.csv), frost from 20:00 to 07:00 LST"}
+    humid_night_depression_k: {value: 1.0, status: assumed, source: "a heavy-frost night: the same temperatures with the dew point 1 K below the air"}
+  lewis_number: {value: 0.85, status: published, source: "water vapour in air; mass transfer from the heat transfer by the Chilton–Colburn analogy"}
+
+crown:
+  # Road crown and bank while engaged (road_crown.py): the push left over after openpilot's roll compensation.
+  speed_kph: 110.0
+  bank_pct: {low: 2.0, high: 6.0, status: published, source: "WP-V-03 KS-02: banked road 2–6 %"}
+  roll_gradient_deg_g: {value: 5.0, low: 3.0, high: 7.0, status: published,
+                        source: "body roll per g of lateral acceleration, passenger cars about 3–7 °/g (Gillespie, Fundamentals of Vehicle Dynamics, ch. 9)"}
+  gradient_mismatch: {value: 0.3, status: assumed,
+                      source: "how far this car's roll gradient may sit from the one the fitted torque gain carries (fleet or online fit), as a share"}
+  localizer_roll_std_deg: {value: 0.3, low: 0.1, high: 1.0, status: "estimate (1.0 is the code's value when the localizer gives none)",
+                           source: "standard deviation of the localizer's roll; paramsd doubles it for the filter (paramsd.py:88); local logs give it"}
+  crown_change_s: {value: 1.5, status: estimate,
+                   source: "time for the car to cross a crown line in a lane change: track width over the lateral speed"}
+  mount_roll_deg: {value: 1.0, low: 0.0, high: 2.0, status: assumed,
+                   source: "the device's roll on the windshield against the car's, mounted by eye; calibration takes it as zero (calibrationd.py:5); a level on the car measures it (T1)"}
+
+braking:
+  # Stopping on a wet road (wet_braking.py): peak tyre-road friction against what the item and a full stop need.
+  friction_table:
+    status: published
+    source: "Robert Bosch GmbH, Automotive Handbook, 4th ed. 1996, p. 335: coefficient of static (peak) friction of car tyres; read from a reproduction (hpwizard.com, tire friction coefficient), to confirm against the book"
+    speeds_kph: [50.0, 90.0, 130.0]
+    water_mm: [0.0, 0.2, 1.0, 2.0]          # dry; wet; heavy rain; puddles
+    new: [[0.85, 0.65, 0.55, 0.50], [0.80, 0.60, 0.30, 0.05], [0.75, 0.55, 0.20, 0.00]]
+    worn_1_6mm: [[1.00, 0.50, 0.40, 0.25], [0.95, 0.20, 0.10, 0.05], [0.90, 0.20, 0.10, 0.00]]
+  wet_floor_mm: {value: 0.2, status: assumed, source: "a wet road in any rain is at least the table's 'wet' column; deeper where the rain's water film (Gallaway, hydroplaning.py) is deeper"}
+  grade_pct: {value: 4.0, status: assumed, source: "a steep downhill on an Interstate (the hydroplaning study's steepest grade)"}
+  reaction_s: {value: 0.5, status: assumed, source: "from the planner's decision to the brakes at the item's rate, a round half second"}
+  rain_mm_h: [2.5, 7.6, 15.0, 30.0]

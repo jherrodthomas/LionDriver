@@ -1,8 +1,9 @@
-# Weather physics: sun in the road camera, hydroplaning, cabin heat soak and crosswind
+# Weather physics: sun, rain, heat, wind, fog, road crown and wet braking
 
-> **Synthetic data (DSR-12). Design aid, no evidence credit (DQ-139).** Two small physics studies for the SOTIF
-> triggering conditions of low sun (TC-01) and rain (TC-03). They answer *when* and *how fast*, not whether the item
-> copes: that is for the logged drives and the known-scenario tests (KS-12, KS-15).
+> **Synthetic data (DSR-12). Design aid, no evidence credit (DQ-139).** Small physics studies for the SOTIF
+> triggering conditions of low sun (TC-01), rain (TC-03), crown and wind (TC-15), the windshield in front of the
+> camera (TC-19) and heat (TC-21). They answer *when*, *how much* and *how fast*, not whether the item copes: that is
+> for the logged drives and the known-scenario tests (KS-02, KS-12, KS-15, KS-16).
 
 ## 1. Sun in the road camera (TC-01, KS-12)
 
@@ -186,7 +187,124 @@ Results: [`results/crosswind.md`](../results/crosswind.md).
 *Figure 10. Assist lost in a 30 km/h crosswind: a kinematic sketch. The plant's straight-drift study gives the times
 with the driver.*
 
-## 5. Checks
+## 5. Fog, dew and frost on the windshield (TC-19, KS-16)
+
+**Question.** How often is there water on the glass in front of the road camera, and how long does the defroster
+take to clear it? The camera looks through the top of the windshield, under the mount.
+
+**Method.** [`windshield_fog.py`](windshield_fog.py) solves the glass's outer and inner face temperatures in steady
+state: outside convection and long-wave exchange with the sky, conduction through the laminated glass, and inside
+convection and long-wave exchange with the cabin. Water forms on a face that is colder than the dew point of the air
+touching it (over ice below 0 °C; Magnus, Alduchov and Eskridge 1996).
+- **The climate** is NOAA's 1991–2020 hourly normals for Greenville-Spartanburg airport, reduced to month × hour in
+  [`climate-gsp.csv`](climate-gsp.csv) by [`climate.py`](climate.py). It gives temperature, dew point, the shares
+  of the five sky-cover classes, and wind and calm. Each cell mixes the sky classes and calm against windy hours by
+  their shares.
+- **The sky** is Berdahl and Martin's clear-sky emissivity from the dew point, raised by cloud. The windshield's rake
+  (25.8°, measured on the mesh) sets how much of the sky it sees.
+- **Inside**, the cabin's dew point is the outside air's plus the occupants' breath (45 g/h each, ASHRAE) in the
+  air flow. The ventilation is fresh air, recirculation (only the body's leaks exchange air), or automatic climate
+  control (the air conditioning dries the air above 4 °C).
+- **The defroster** heats each strip of the glass up from the vents. Its jet weakens with height, the heater warms up
+  from a cold engine, and the frost on a strip melts once the strip reaches 0 °C. The frost itself is laid down
+  overnight by mass transfer (Chilton–Colburn), on January's normal clear, calm night or on a humid one.
+
+**Result (normal year; car inputs estimated).**
+- **Parked outside:** dew forms for about **680 hours a year**, mostly on humid summer and autumn nights. The wipers
+  clear it. Frost forms for about **71 hours**, in winter, and needs the defroster.
+- **The camera's view clears last.** On a humid January night about 200 g/m² of frost forms. Half the glass is clear
+  after about 6 min and the camera's view after about 8 min. After a normal night (8 g/m²) the camera's view is
+  clear in 3–6 min.
+- **Driving at 110 km/h:** the outside air holds the glass close to its own temperature. With fresh air or automatic
+  climate control the inside does not fog.
+- **Recirculation without air conditioning** fogs the inside of the glass within the hour for about **3350 hours of
+  the year**, from October to May. The count rests on how leaky the body is (65–4850 h).
+
+**Limits.**
+- A normal year understates frost, because the frosty nights are the clear, calm, colder ones.
+- The sun on the glass, which only dries it, is left out.
+- The defroster's jet and its warm-up are estimates.
+
+Results: [`results/windshield-fog.md`](../results/windshield-fog.md).
+
+![Two month-by-hour maps for the I-85 corridor: parked in the open, dew or frost outside on summer and autumn nights before dawn and frost in winter; driving at 110 km/h on recirculation without air conditioning, fog inside in the cold months at almost every hour except the warmer afternoons](figures/fig-wx-11-fog-map.webp)
+
+*Figure 11. Water on the windshield by month and hour, normal year.*
+
+![Animation, looping: the windshield seen from inside, frosted after a humid January night; the defroster clears it from the vents up over about 8 minutes, and the camera's view at the top, below the mount, clears last](figures/fig-wx-12-defrost-anim.webp)
+
+*Figure 12. Defrosting a frosted windshield: the camera's view at the top clears last.*
+
+## 6. Road crown and bank while engaged (TC-15, KS-02)
+
+**Question.** A cross slope pushes the car downhill by g·sin θ; openpilot subtracts its roll estimate times g from
+what it commands (`latcontrol_torque.py`). What is left, against the 0.5 m/s² curve margin of WP-C-02 §3.2?
+
+**Method.** [`road_crown.py`](road_crown.py) reads the roll path from the code: paramsd's Kalman filter
+(`paramsd.py`, `car_kf.py`: 20 Hz, process noise 1°/√s, the localizer's roll noise doubled, zero roll with 10° noise
+when the localizer is invalid), and calibration's zero roll (`calibrationd.py`). It derives the filter's time
+constant from the steady-state gain and follows a lane change across a crown line. It adds four more terms:
+- the device's mount roll, which calibration takes as zero;
+- body roll, which the fitted torque gain absorbs because torqued fits on the same roll (`torqued.py`), leaving only
+  this car's difference from the fit;
+- the fallback when the roll estimate is invalid;
+- for comparison, the crosswind study's push.
+
+**Result (110 km/h).**
+- **Crown and bank:** a 1.5–2.5 % crown pushes 0.15–0.24 m/s², and a 2–6 % bank 0.20–0.59 m/s². With a valid roll
+  estimate the compensation removes it.
+- **The filter's lag** is small: a time constant of 0.05–0.45 s and a peak error of up to 0.11 m/s² at a crown
+  change.
+- **Body roll** left over is under 0.02 m/s².
+- **The device's mount roll is the largest term:** 0.17 m/s² per degree of tilt, a third of the margin at 1°, until
+  torqued learns `latAccelOffset`. It starts from its default after a fresh install or a reset.
+- **When the roll estimate is invalid**, the estimate decays to zero within about 7 s and the whole push returns:
+  0.59 m/s² on a 6 % bank, more than the margin.
+
+**What follows (tasks).**
+- Measure the device's roll at installation with a level (T1, an INS check).
+- Count from local logs how often roll is invalid on the highway.
+- WP-C-02 OI-5 already asks for the 6 % banking bound to be confirmed by test.
+
+Results: [`results/road-crown.md`](../results/road-crown.md).
+
+![Horizontal bars against the 0.5 m/s² margin: crown and bank pushes that compensation removes; the small leftovers from filter lag and body roll; the device's mount roll up to 0.34 m/s² before torqued learns it; the whole bank push when roll is invalid, up to 0.59; and the crosswind push of 0.86–1.76 for comparison](figures/fig-wx-13-crown-budget.webp)
+
+*Figure 13. What is left of the road's cross slope after roll compensation.*
+
+## 7. Stopping on a wet road (TC-03, TC-33)
+
+**Question.** Does a wet road give the friction that the item's braking bound (−3.5 m/s², opendbc `ACCEL_MIN`)
+needs? That is 0.36 on a level road and 0.40 on a 4 % downhill.
+
+**Method.** [`wet_braking.py`](wet_braking.py) interpolates the Bosch Automotive Handbook's table of peak tyre-road
+friction (4th ed., p. 335; read from a reproduction, to confirm against the book). The table covers 50, 90 and
+130 km/h, water depths of 0, 0.2, 1 and 2 mm, and new tyres and tyres worn to 1.6 mm. The water depth in rain comes
+from the hydroplaning study's Gallaway film on its worst drainage row, and is at least the table's 0.2 mm "wet".
+
+**Result (110 km/h).**
+- **New tyres:** about 5.6 m/s² in light rain, above the item's 3.5.
+- **Tyres worn to the legal minimum:** about **2.0 m/s²** on any wet road. A stop at the item's rate from 110 km/h
+  takes about 253 m instead of 149 m, and the item asks for more than the tyres hold. This is put to the lead as
+  "Should the ODD ask for more tyre tread than the legal minimum?" in the register.
+- **Heavier rain:** friction falls quickly with deeper water. At 2 mm the handbook meets NASA's hydroplaning speed.
+- **TC-33:** with good tyres the rain does not close the gap of a lead braking harder than the item.
+
+**Limits.**
+- A handbook table of typical tyres, not this car's tyres.
+- The mapping from the rain's water film to the table's water depth is an assumption.
+
+Results: [`results/wet-braking.md`](../results/wet-braking.md).
+
+![Peak friction against speed from 50 to 130 km/h for new and worn tyres, dry, in light rain at the ODD bound and in heavy rain, with the 0.36 the item's −3.5 m/s² needs; new tyres stay above it in light rain, worn tyres fall to 0.2 above 90 km/h](figures/fig-wx-14-braking-friction.webp)
+
+*Figure 14. Peak friction against what the item's braking needs.*
+
+![Animation, looping: two cars braking from 110 km/h in light rain side by side, new tyres stopping at 149 m and worn tyres at 253 m](figures/fig-wx-15-braking-anim.webp)
+
+*Figure 15. Braking from 110 km/h in light rain, new and worn tyres.*
+
+## 8. Checks
 
 [`test_weather.py`](test_weather.py) runs in CI:
 
@@ -208,8 +326,22 @@ with the driver.*
 | X1 Mesh against published data: wheelbase within 2 % of opendbc, frontal area 2.0–2.4 m² | a mis-scaled or mis-oriented mesh |
 | X2 Push mapping against the single-track algebra by hand: force at the CoG needs no steering; a moment N needs v² N (1/Cf + 1/Cr) / L² | an error in the force-to-push step |
 | X3 No wind, no push; more wind, more push; band ordered | a sign or branch error |
+| F1 Magnus over water and ice against the ASHRAE saturation table, within 0.5 % | a wrong humidity formula |
+| F2 Frost at 2 °C air on a clear, calm night (NWS: frost at 33–36 °F), none under overcast; no sky or cabin difference, no glass difference | a sky or sign error |
+| F3 Recirculation: the closed-form time to fog against a time-stepped moisture balance | an algebra error |
+| F4 Defroster energy balance within 0.1 %; the glass clears from the vents up | heat from nowhere |
+| F5 Climate table: 288 rows, sky shares add to 100 %, monthly means within 1 K of NOAA's separate monthly normals | a wrong reduction or unit |
+| F6 Two convection correlations agree within 10 % at 110 km/h | a wrong outside heat transfer |
+| B1 Friction table equals the handbook at its nodes; interpolation stays between nodes | a mistyped table |
+| B2 The item's bound read from opendbc (−3.5 m/s²) equals WP-C-02 F-02 | a moved bound |
+| B3 At 2 mm of water above NASA's hydroplaning speed the handbook gives at most 0.05 | the two sources disagreeing |
+| B4 Stopping distance algebra (133 m from 110 km/h at 3.5 m/s²) | an algebra error |
+| R1 The roll path read from openpilot equals the reviewed one (compensation, zero calibration roll, filter constants) | a code change that moves the result |
+| R2 The steady Kalman gain solves the scalar Riccati equation; more noise, a slower filter | a filter error |
+| R3 Uncompensated push equals g × slope; no mount roll, no mount error; a near-perfect localizer leaves almost nothing | a sign or unit error |
 
-All four scripts' `--check` rerun the study and fail if any number moves by more than 0.05 from the committed JSON.
+Each study's `--check` reruns it and fails if any number moves by more than 0.05 from the committed JSON. The crown
+study reads openpilot's code, so a change there shows up as a failed R1 or `--check` the next time this job runs.
 
 ```sh
 python3 -m pip install -r assurance/sim/weather/requirements.txt
@@ -218,4 +350,7 @@ python3 assurance/sim/weather/sun_glare.py --figures       # about 2 s, figures 
 python3 assurance/sim/weather/hydroplaning.py --figures
 python3 assurance/sim/weather/cabin_soak.py --figures      # reads results/thermal-pilot.json for the bound
 python3 assurance/sim/weather/crosswind.py --figures       # needs the opendbc submodule (the plant's Corolla)
+python3 assurance/sim/weather/windshield_fog.py --figures  # reads climate-gsp.csv
+python3 assurance/sim/weather/road_crown.py --figures      # reads the openpilot source and results/crosswind.json
+python3 assurance/sim/weather/wet_braking.py --figures     # needs the opendbc submodule (ACCEL_MIN)
 ```

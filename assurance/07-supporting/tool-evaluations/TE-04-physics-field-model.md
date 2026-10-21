@@ -99,6 +99,11 @@ parked two hours in July sun, the mount air reaches 62 °C and the device, switc
 the SoC peaks at 79 °C with the AC on and 84 °C with it off, below the 96 °C limit, on estimated inputs
 ([`cabin-device.md`](../../sim/results/cabin-device.md)). The logger (DQ-412) measures exactly this curve.
 
+**The safety MCU** (DFI-04, TSR-509; [`mcu-heat.md`](../../sim/results/mcu-heat.md)): the same model puts the SoC's
+share of the panda MCU's warmth at about 12 K. It puts the MCU's junction at 79–97 °C when the SoC reaches its limit,
+below the STM32H725's 125 °C. A TSR-509 trip at a DTS reading of 117 °C or below would act before the junction leaves
+its range. T1 adds the MCU's marking and package to its list.
+
 ## 6. What this is not
 
 - **Not evidence.** Nothing here earns credit until a fidelity case is approved (WP-V-02 §5.3, DQ-139).

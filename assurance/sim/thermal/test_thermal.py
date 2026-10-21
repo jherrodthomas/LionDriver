@@ -8,6 +8,9 @@ V4  Energy balance: on the device model the heat in equals the heat out at stead
 V5  Mesh study: the hottest SoC point changes by less than the tolerance between the two finest meshes.
 V6  Limits: the overheat bands are read from hardwared.py, and the pilot reports the comma 3X one.
 V7  The cabin-driven runner (phases, time-varying references) equals the pilot's runner when nothing varies.
+V8  MCU study: steady conduction is linear in the cabin air (so the crossings are exact); taking the SoC's heat
+    away cools the MCU but leaves it above the air; a stalled fan heats it; the MCU part is the one the panda
+    build names, and the trip arithmetic follows the datasheet's DTS error.
 
 Runs in the environment of `thermal-linux-64.lock`. Synthetic (DSR-12), design aid, no evidence credit (DQ-413).
 """
@@ -24,6 +27,7 @@ import yaml
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import section_fipy  # noqa: E402
+import mcu_heat  # noqa: E402
 import thermal_pilot as tp  # noqa: E402
 from heat import Box, Face, Model  # noqa: E402
 
@@ -104,6 +108,19 @@ class Checks(unittest.TestCase):
     b = tp.bands()
     self.assertEqual(b["comma 3X"], {"overheated_above": 96.0, "ok_again_below": 88.0})
     self.assertEqual(b["comma four"], {"overheated_above": 100.0, "ok_again_below": 92.0})
+
+  def test_v8_mcu_study(self):
+    q = dict(P, mcu=dict(P["mcu"], air=[30.0, 45.0, 60.0]))
+    b, off, st = (mcu_heat.sweep(q, s)["mcu_block"] for s in ("as_built", "soc_off", "fan_stalled"))
+    self.assertLess(abs(b[0] - 2 * b[1] + b[2]), 1e-6)            # linear in the air
+    for i, a in enumerate(q["mcu"]["air"]):
+      self.assertTrue(a < off[i] < b[i] < st[i], (a, off[i], b[i], st[i]))
+    sconscript = (tp.ROOT / "panda" / "SConscript")
+    if sconscript.exists():                                      # the submodule is checked out
+      self.assertIn("-DSTM32H725xx", sconscript.read_text(encoding="utf-8"))
+    r = mcu_heat.run(q)
+    e = P["mcu"]["dts_error_k"]
+    self.assertEqual(r["tsr509"]["grades"]["industrial"]["trip_at_most"], 125.0 + e["low"] - e["supply"])
 
 
 if __name__ == "__main__":

@@ -5478,3 +5478,31 @@
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-21, note: "Lead in chat: \"go with your recomm\""}
   applied: {ref: 43e71e8, record: "WP-C-02 v0.9 §3.1 wind row, §3.2 margin, OI-10", at: 2026-10-21}
+
+- id: DQ-416
+  question: "Should the ODD ask for more tyre tread than the legal minimum, because worn tyres cannot brake as hard as the item asks on a wet road?"
+  context: >-
+    The item brakes at up to 3.5 m/s², which needs a tyre-road friction of 0.36. The wet-braking study (a handbook
+    table of typical tyres, synthetic, no credit) gives new tyres 5.6 m/s² on a wet road at 110 km/h, but tyres worn to
+    the legal minimum (1.6 mm, 2/32 in) only **about 2.0 m/s²**: a stop from 110 km/h in light rain takes about 253 m
+    instead of 149 m, and the item asks for more braking than the tyres hold. The ODD's vehicle-state row says only
+    "maintained", which legal-minimum tyres meet.
+  reversibility: easy
+  blocks: "WP-C-02 §3.1 vehicle-state row; the user information; an installation check in WP-O-01"
+  gate: G1
+  decider: lead
+  batch: 14
+  asked: 2026-10-21
+  options:
+    - key: A
+      recommended: true
+      title: "Add a tread condition: at least 3 mm (4/32 in) on all four tyres"
+      detail: "The ODD's vehicle state gains the condition, the user information says to check it and replace at 3 mm, and the installation checks record it. Cost: one more condition the driver keeps, which the system cannot see."
+    - key: B
+      title: "User information only: advise 3 mm, leave the ODD as it is"
+      detail: "The driver is told; the ODD claim still includes worn tyres that the study says cannot give the item's braking in rain. Cost: none now; the gap stays in the claim."
+    - key: C
+      title: "No change until real-tyre data"
+      detail: "\"Maintained\" stands; revisit when the reference car's own wet braking is measured. Cost: nothing is written about tyres meanwhile."
+  sources: ["assurance/sim/results/wet-braking.md", "assurance/sim/weather/README.md §7", "WP-C-02 §3.1 (vehicle state, road surface)", "opendbc/car/interfaces.py ACCEL_MIN", "Bosch Automotive Handbook, 4th ed., p. 335"]
+  status: open

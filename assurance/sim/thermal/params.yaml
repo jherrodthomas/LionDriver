@@ -53,3 +53,16 @@ uncertainty:
 sweep:
   air: [25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0]
   plot: [35.0, 45.0, 55.0]
+
+# The panda's safety MCU against its own limits (mcu_heat.py; WP-A-03 DFI-04, TSR-509, HWSR-509)
+mcu:
+  part: {value: STM32H725, status: code, source: "panda/SConscript: -DSTM32H725xx; direct SMPS supply and voltage scale VOS1 (panda/board/stm32h7/clock.h)"}
+  tj_max: {industrial: 125.0, extended: 140.0, status: published,
+           source: "DS13311 (STM32H725xE/G) Table 12: maximum junction temperature 125 °C (range 6) and 140 °C (range 3); Table 14 allows 140 °C at VOS1 with the SMPS, so the part's range decides. The fitted part's suffix is read off its marking (T1)"}
+  dts_error_k: {low: -7.0, high: 2.0, supply: 1.0, status: published,
+                source: "DS13311 Table 94: DTS offset −7 to +2 °C from 30 °C to TJmax, ±1 °C more for supply variation at VOS0, VOS1, VOS3"}
+  theta_jb: {low: 5.6, high: 29.1, status: published,
+             source: "DS13311 Table 136: junction to board, 5.6 °C/W (VFQFPN68) to 29.1 °C/W (LQFP176); the 3X's package to confirm (T1)"}
+  die_power: {value: 0.3, low: 0.2, high: 0.4, status: estimate,
+              source: "the MCU's own share of the 0.4 W source (the rest is the CAN transceivers); the junction sits P·ΘJB above the board"}
+  air: [25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0]

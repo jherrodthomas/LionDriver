@@ -68,6 +68,34 @@ parked. While driving it peaks at 79 °C with the AC on and 84 °C with it off, 
 
 *Figure 5. The device on the cabin's own temperatures.*
 
+### 2.2 The safety MCU next to the SoC (DFI-04, TSR-509)
+
+WP-A-03 DFI-04 names a dependent failure: SoC heat in the sun-loaded enclosure raises the panda MCU's temperature, so
+both could leave their range together. [`mcu_heat.py`](mcu_heat.py) runs the device model steady against the cabin
+air in three set-ups: as built, with the SoC's heat taken away, and with the fan stalled. The MCU's junction is its
+block in the model plus its own power through the package to the board. The part is an STM32H725 (`panda/SConscript`);
+its limits come from datasheet DS13311:
+- junction 125 °C (industrial grade) or 140 °C (extended grade);
+- the DTS reads −7 to +2 K off, and ±1 K more for the supply;
+- junction to board 5.6–29.1 °C/W, depending on the package.
+
+Results on estimated inputs ([`results/mcu-heat.md`](../results/mcu-heat.md)):
+- **The SoC's heat** lifts the MCU by about 12 K, 44 % of its rise above the cabin air.
+- **When the SoC reaches 96 °C**, where the host stops, the MCU's junction is at 79–90 °C as built and 86–97 °C with
+  the fan stalled. While the host runs its thermal policy, the MCU is still in range.
+- **Without the host's policy** (a hung host still drawing power), the MCU would reach 125 °C only at about 85 °C
+  cabin air as built. With the fan stalled it would reach it at 61 °C, close to the 62 °C mount air of a parked hot
+  July day. That takes two faults together, but it is the case TSR-509 is for.
+- **A TSR-509 trip** at a DTS reading of at most 117 °C (industrial part) acts before the junction leaves its range.
+  It keeps 35 K from the hottest reading a drive inside the ODD could give.
+
+This is a candidate for the HWSR-509 owner. The part's suffix and package (T1) and the device's own `temperature_pkt`
+logs settle it.
+
+![MCU junction against cabin air from 25 to 70 °C for three set-ups, as built, with the SoC's heat taken away and with the fan stalled, each as a band for the unknown package; markers where the SoC reaches 96 °C; the 125 °C junction limit and a dashed candidate trip at a DTS reading of 117 °C](figures/fig-th-6-mcu.webp)
+
+*Figure 6. The safety MCU's junction against the cabin air.*
+
 ## 3. Checks
 
 [`test_thermal.py`](test_thermal.py) runs in CI. Each check is meant to catch a different error:
@@ -81,6 +109,7 @@ parked. While driving it peaks at 79 °C with the AC on and 84 °C with it off, 
 | V5 Mesh study (48×24×10, 72×36×15, 96×48×20 hexahedra) | a mesh too coarse for the hot spot | 90.97, 91.38, 91.18 °C steady at 45 °C: the pilot's mesh within 0.4 K of the finest |
 | V6 Limits from the code | a moved band in `hardwared.py` | 96/88 °C (comma 3X), 100/92 °C (comma four) |
 | V7 The cabin-driven runner (phases, references changing every step) against the pilot's runner when nothing changes | an error in the time-varying path | equal to 1e-9 K |
+| V8 MCU study: linear in the cabin air; taking the SoC's heat away cools the MCU, a stalled fan heats it; the part is the panda build's; the trip follows the DTS error | a set-up or arithmetic error in the MCU study | the second difference is under 1e-6 K |
 
 The pilot's own `--check` reruns every drive and fails if any number moves by more than 0.05 K from the committed
 JSON. Figures render in CI, but their pixels are not compared, because software rendering differs slightly between
@@ -91,10 +120,11 @@ machines.
 ```sh
 # environment: FEniCSx 0.10.0, FiPy 4.0.3, PyVista 0.49.1, VTK 9.7.0, Mesa 26.2.5 (explicit lock, every package by md5)
 micromamba create -p <env> --file assurance/sim/thermal/thermal-linux-64.lock
-<env>/bin/python assurance/sim/thermal/test_thermal.py              # checks V1–V6, about 2 min
+<env>/bin/python assurance/sim/thermal/test_thermal.py              # checks V1–V8, about 2 min
 <env>/bin/python assurance/sim/thermal/thermal_pilot.py --figures   # results and figures, about 4 min
 <env>/bin/python assurance/sim/thermal/thermal_pilot.py --check     # CI: a fresh run against the committed JSON
 <env>/bin/python assurance/sim/thermal/cabin_drive.py --check      # the device on the cabin model's temperatures
+<env>/bin/python assurance/sim/thermal/mcu_heat.py --figures        # the safety MCU (§2.2), about 30 s
 ```
 
 Figures render with no screen and no GPU through Mesa's software EGL (`figures.py` sets it up, TE-04 OI-2). They are
@@ -106,7 +136,7 @@ WebP because PNG and GIF go to the repository's read-only LFS store.
 |---|---|---|
 | T1 Inputs | Measure the device and mount; read `powerDrawW`, `somPowerDrawW`, the SoC and PMIC temperatures, `intakeTempC`, `exhaustTempC` and the fan from local logs of drives already on the car (no uploads, DQ-084); replace the estimates | Calipers and a few local logs from the lead |
 | T4 Validate | Logger at the mount on hot drives; compare the predicted SoC temperature with the logged one; set the band from the misfit | The logger (DQ-412) |
-| T5 Hand over | Candidate bound and band to the WP-C-02 owner (OI-3), MCU temperature to WP-A-03 (DFI-04), labelled synthetic | T1 and T4 |
+| T5 Hand over | Candidate bound and band to the WP-C-02 owner (OI-3); the MCU study (§2.2) to WP-A-03 (DFI-04) and a candidate trip point to the HWSR-509 owner, labelled synthetic | T1 (also the MCU's suffix and package) and T4 |
 
 ## 6. Files
 
@@ -117,6 +147,7 @@ WebP because PNG and GIF go to the repository's read-only LFS store.
 | [`section_fipy.py`](section_fipy.py) | The independent FiPy solver for the cross-check |
 | [`thermal_pilot.py`](thermal_pilot.py) | The device model, drives, sweep and bound; writes the results |
 | [`cabin_drive.py`](cabin_drive.py) | The device on the cabin heat soak's temperatures (§2.1) |
-| [`figures.py`](figures.py) | The five figures (PyVista off-screen, matplotlib) |
-| [`test_thermal.py`](test_thermal.py) | Checks V1–V6 |
+| [`mcu_heat.py`](mcu_heat.py) | The safety MCU next to the SoC (§2.2) |
+| [`figures.py`](figures.py) | The six figures (PyVista off-screen, matplotlib) |
+| [`test_thermal.py`](test_thermal.py) | Checks V1–V8 |
 | [`thermal-linux-64.lock`](thermal-linux-64.lock) | The environment, every package by URL and md5 |

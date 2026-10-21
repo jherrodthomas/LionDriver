@@ -3,9 +3,9 @@
 | Field | Value |
 |---|---|
 | Purpose | Plan ten physics studies that follow the four already built (sun, hydroplaning, cabin heat soak, crosswind; [weather README](weather/README.md)): what each one answers, how, with which inputs, checks and picture, and in what order |
-| Status | Plan, 2026-10-21. Nothing built yet. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Phase A built 2026-10-21 (studies 1, 3, 4, 5; §2); phases B and C planned. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Credit | None. Every study is a design aid, synthetic (DSR-12), with no evidence credit (DQ-413, WP-V-02 §5.3, DQ-139). A result that would move an ODD limit goes to the lead as a register question; the study itself does not move it |
-| Lead decisions needed | **None to start.** The one new tool (ngspice, study 8) is a reversible technical choice: Claude decides and logs it in the register when phase C starts. Measurements on the car are tasks for T1 ([TE-04](../07-supporting/tool-evaluations/TE-04-physics-field-model.md) §5), not decisions |
+| Lead decisions needed | **None to start.** Phase A raised one: whether the ODD should ask for more tyre tread than the legal minimum (register, from study 3). The one new tool (ngspice, study 8) is a reversible technical choice: Claude decides and logs it in the register when phase C starts. Measurements on the car are tasks for T1 ([TE-04](../07-supporting/tool-evaluations/TE-04-physics-field-model.md) §5), not decisions |
 
 ## 1. The ten at a glance
 
@@ -27,6 +27,20 @@
 measurements of the device and mount. Each phase ends with its CI checks green and a results page.
 
 ## 2. Phase A: reuse what is built
+
+**Built 2026-10-21.** Results, synthetic and on estimated inputs:
+
+| # | Study | Finding | Results |
+|---|---|---|---|
+| 1 | Fog on the windshield | Dew about 680 h and frost about 71 h a year on a car parked outside. The camera's view clears last under the defroster, about 8 min after a humid night. Recirculation without air conditioning fogs the inside in the cold months | [`windshield-fog.md`](results/windshield-fog.md), [weather §5](weather/README.md#5-fog-dew-and-frost-on-the-windshield-tc-19-ks-16) |
+| 4 | MCU next to the SoC | The SoC's heat lifts the MCU about 12 K. When the SoC reaches its limit, the MCU's junction is at 79–97 °C, below 125 °C. Candidate TSR-509 trip: a DTS reading of 117 °C or below, 35 K from the hottest ODD drive | [`mcu-heat.md`](results/mcu-heat.md), [thermal §2.2](thermal/README.md#22-the-safety-mcu-next-to-the-soc-dfi-04-tsr-509) |
+| 5 | Road crown | Compensated while the roll estimate is valid. The device's mount roll costs 0.17 m/s² per degree until torqued learns it. With roll invalid, a 6 % bank's 0.59 m/s² comes back | [`road-crown.md`](results/road-crown.md), [weather §6](weather/README.md#6-road-crown-and-bank-while-engaged-tc-15-ks-02) |
+| 3 | Wet braking | New tyres give 5.6 m/s² on a wet road at 110 km/h; tyres at the legal minimum give about 2.0, below the item's 3.5 (put to the lead) | [`wet-braking.md`](results/wet-braking.md), [weather §7](weather/README.md#7-stopping-on-a-wet-road-tc-03-tc-33) |
+
+Changes from the plan below:
+- **Study 1** answers TC-19 and KS-16. TC-04 is weather fog, outside the ODD.
+- **Study 3** uses a handbook friction table, not NASA and PIARC curves.
+- **Study 5** found the mount roll term, which the plan did not foresee.
 
 ### 1. Fog and dew on the windshield (TC-19, KS-16)
 
@@ -179,4 +193,7 @@ One visit with a tape measure and a phone covers all of these:
 | Glass roof, yes or no | 6, 1 |
 | Windshield rake angle | 1, 6 (the mesh gives 25.8° today) |
 | Engine stop-start, yes or no | 8 |
+| The device's roll on the windshield, with a level against the car (calibration takes it as zero) | 5 |
+| The panda MCU's marking (temperature grade suffix) and package | 4 |
+| Tyre tread depth on all four tyres | 3 |
 | A few local drive logs with roll and exposure (`liveParameters`, camera exposure; no uploads, DQ-084) | 5, 10 |

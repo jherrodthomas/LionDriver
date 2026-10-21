@@ -501,3 +501,222 @@ def crosswind_figures(p, r, out: Path):
   _crosswind_push(r, out / "fig-wx-9-crosswind-push.webp")
   _crosswind_anim(r, out / "fig-wx-10-crosswind-anim.webp")
   _report(out, "fig-wx-8", "fig-wx-9", "fig-wx-10")
+
+
+# ------------------------------------------------------------------------------------------------ fog
+
+FOG = LinearSegmentedColormap.from_list("fog", ["#fcfcfb", "#cde2fb", "#86b6ef", "#2a78d6", "#104281"])
+
+
+def _fog_map(r, path):
+  g = r["grid"]
+  month, hour = np.array(g["month"]), np.array(g["hour"])
+  fig = plt.figure(figsize=(9, 12.5), dpi=100)
+  fig.text(0.05, 0.965, "Water on the windshield, by month and hour", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.94, "I-85 corridor, normal year (NOAA 1991–2020 hourly normals, GSP airport),\nlocal "
+           "standard time. Shade: share of the normal hour.", fontsize=12, color=INK2, va="top")
+  panels = (("parked", "Parked in the open: dew or frost outside", "wipers clear dew; frost needs the defroster"),
+            ("drive_recirc", "Driving 110 km/h on recirculation, no AC, heater on",
+             "fog inside, in front of the camera, within the hour"))
+  for k, (key, title, sub) in enumerate(panels):
+    z = np.zeros((24, 12))
+    z[hour, month - 1] = g[key]
+    ax = fig.add_axes([0.1, 0.53 - k * 0.38, 0.84, 0.26])
+    im = ax.imshow(z, origin="lower", aspect="auto", cmap=FOG, vmin=0, vmax=1, extent=(0.5, 12.5, -0.5, 23.5))
+    for x in np.arange(1.5, 12.5):
+      ax.axvline(x, color=SURF, lw=2)
+    ax.set_xticks(range(1, 13)); ax.set_xticklabels(MONTHS)
+    ax.set_yticks([0, 6, 12, 18, 23]); ax.set_yticklabels(["0 h", "6 h", "12 h", "18 h", "23 h"])
+    hy = r["hours_per_year"][key]
+    ax.text(0, 1.11, title, transform=ax.transAxes, fontsize=14, color=INK, va="bottom", weight="bold")
+    ax.text(0, 1.03, f"{hy:.0f} h a year · {sub}", transform=ax.transAxes, fontsize=11, color=INK2, va="bottom")
+    for sp in ax.spines.values():
+      sp.set_visible(False)
+  cax = fig.add_axes([0.1, 0.875, 0.5, 0.015])
+  cb = fig.colorbar(im, cax=cax, orientation="horizontal")
+  cb.set_ticks([0, 0.5, 1]); cb.set_ticklabels(["never", "half", "always"])
+  cb.outline.set_visible(False)
+  fig.text(0.05, 0.055, "Each cell mixes NOAA's sky-cover classes and calm against windy hours at the hour's normal\n"
+           "temperature and dew point. Fresh air or automatic climate control: no fog while driving.",
+           fontsize=11.5, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def _fog_anim(p, r, path):
+  """The humid January morning: the defroster clears the frost from the vents up; the camera looks through the top."""
+  case = r["defrost"]["cases"]["heavy_frost"]
+  clear = np.array([np.inf if c is None else c for c in case["clear_min"]])
+  n = len(clear)
+  zone = r["defrost"]["camera_zone"]
+  slant, width = r["geometry"]["slant"], r["geometry"]["width"]
+  t_end = float(np.nanmax(clear[np.isfinite(clear)])) + 1.0
+  ts = np.concatenate([np.linspace(0, t_end, 40)])
+  frames = []
+  for t in ts:
+    fig = plt.figure(figsize=(7.2, 9), dpi=80)
+    fig.text(0.05, 0.955, "Defrosting a frosted windshield", fontsize=19, weight="bold", color=INK)
+    fig.text(0.05, 0.925, f"Humid January night, {1000 * r['frost_night']['humid_kg_m2']:.0f} g/m² of frost · "
+             f"engine idling, defroster on", fontsize=12, color=INK2)
+    fig.text(0.95, 0.955, f"{t:4.1f} min", ha="right", fontsize=16, color=INK, family="DejaVu Sans Mono")
+    ax = fig.add_axes([0.08, 0.2, 0.84, 0.66]); ax.set_xlim(-0.8, 0.8); ax.set_ylim(-0.12, slant + 0.12)
+    ax.set_aspect("equal"); ax.axis("off")
+    top_w = width * 0.82
+    for i in range(n):
+      y0, y1 = i * slant / n, (i + 1) * slant / n
+      w0 = width - (width - top_w) * y0 / slant
+      w1 = width - (width - top_w) * y1 / slant
+      done = clear[i] <= t
+      col = "#4f6f8f" if done else "#e8ecf1"
+      ax.add_patch(Polygon([(-w0 / 2, y0), (w0 / 2, y0), (w1 / 2, y1), (-w1 / 2, y1)], color=col, ec=col, lw=0.5))
+    ax.add_patch(Polygon([(-width / 2, 0), (width / 2, 0), (top_w / 2, slant), (-top_w / 2, slant)], fill=False,
+                         ec=INK, lw=2))
+    ax.add_patch(Rectangle((-0.8, slant + 0.02), 1.6, 0.08, color="#fcfcfb"))
+    za, zb = zone[0] * slant, zone[1] * slant
+    cam_clear = bool(np.all(clear[int(zone[0] * n):int(math.ceil(zone[1] * n))] <= t))
+    ax.add_patch(Rectangle((0.02, za), 0.16, zb - za, fill=False, ec=CRIT if not cam_clear else "#86b6ef", lw=2.6,
+                           ls=(0, (4, 2))))
+    ax.add_patch(Rectangle((0.04, zb + 0.005), 0.12, slant - zb - 0.01, color="#3a3936"))
+    ax.text(0.21, (za + zb) / 2, "camera's view\n" + ("clear" if cam_clear else "frosted"), fontsize=12,
+            color="white" if cam_clear else CRIT, va="center", weight="bold")
+    for xv in (-0.45, -0.15, 0.15, 0.45):
+      ax.annotate("", (xv, 0.16), (xv, -0.08), arrowprops=dict(arrowstyle="->", color="#b8401a", lw=2))
+    ax.text(0, -0.11, "defroster vents", ha="center", fontsize=11, color="#b8401a")
+    fig.text(0.05, 0.1, "Pale: frost; dark: clear glass. A lumped glass layer per strip, the jet's heat\ntransfer falling "
+             "up the glass; estimated inputs, a band in windshield-fog.md.", fontsize=10.5, color=INK2)
+    _stamp(fig)
+    frames.append(_png(fig))
+  _anim(frames, [150] * (len(frames) - 1) + [2500], path)
+
+
+def fog_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _fog_map(r, out / "fig-wx-11-fog-map.webp")
+  _fog_anim(p, r, out / "fig-wx-12-defrost-anim.webp")
+  _report(out, "fig-wx-11", "fig-wx-12")
+
+
+# ------------------------------------------------------------------------------------------------ crown
+
+def _crown_budget(r, path):
+  res, m = r["residual"], r["margin_m_s2"]
+  crown, bank = r["slopes"][0]["uncompensated"], r["slopes"][1]["uncompensated"]
+  rows = [("Crown, not compensated", crown, MUTED),
+          ("Bank 2–6 %, not compensated", bank, MUTED),
+          ("Filter lag at a crown change (brief)", res["flip_peak"], "#86b6ef"),
+          ("Body roll against the fitted gain", [0.0, res["gradient_mismatch_bank"]], "#86b6ef"),
+          ("Device mount roll 0–2°, before torqued learns it", [res["mount"]["low"], res["mount"]["high"]], "#2a78d6"),
+          ("Roll invalid on a 2–6 % bank: all of it comes back", bank, "#104281"),
+          ("Crosswind 30 km/h (for comparison)", r["crosswind_ks02"], "#b8401a")]
+  fig = plt.figure(figsize=(9, 10), dpi=100)
+  fig.text(0.05, 0.955, "Road crown: what is left after roll compensation", fontsize=18, weight="bold", color=INK)
+  fig.text(0.05, 0.925, "110 km/h · lateral push or steering error, m/s², against the 0.5 m/s² curve margin",
+           fontsize=12, color=INK2)
+  ax = fig.add_axes([0.06, 0.2, 0.9, 0.66])
+  ax.set_axisbelow(True)
+  ax.axvspan(m, 2.0, color="#fdecec")
+  ax.axvline(m, color=CRIT, lw=2)
+  ax.text(m + 0.02, len(rows) - 0.35, f"{m} m/s² margin (WP-C-02 §3.2)", color=CRIT, fontsize=11, weight="bold")
+  for i, (lab, (lo, hi), col) in enumerate(rows):
+    y = len(rows) - 1 - i
+    w = max(hi - lo, 0.012)
+    ax.barh(y, w, left=lo, height=0.42, color=col)
+    ax.text(0.0, y + 0.33, lab, fontsize=11.5, color=INK, va="bottom")
+    ax.text(hi + 0.03, y, f"{lo:.2f}–{hi:.2f}" if hi - lo > 0.01 else f"{hi:.2f}", fontsize=11, color=INK2,
+            va="center")
+  ax.set_xlim(0, 2.0); ax.set_ylim(-0.6, len(rows) + 0.1); ax.set_yticks([])
+  ax.set_xlabel("m/s²"); ax.grid(axis="x", color=GRID); ax.spines[["top", "right", "left"]].set_visible(False)
+  fig.text(0.05, 0.075, "Grey: what compensation removes when the roll estimate is valid. Blue: what is left.\n"
+           "openpilot's roll path read from the code; car and localizer inputs estimated.", fontsize=11.5, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def crown_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _crown_budget(r, out / "fig-wx-13-crown-budget.webp")
+  _report(out, "fig-wx-13")
+
+
+# ------------------------------------------------------------------------------------------------ wet braking
+
+def _braking_mu(r, path):
+  sp = np.array(r["speeds_kph"])
+  conds = [("dry", "dry", MUTED, (0, (3, 2))), (f"{r['rain_mm_h'][0]:g}", f"rain {r['rain_mm_h'][0]:g} mm/h\n(ODD bound)",
+                                                "#2a78d6", "-"),
+           (f"{r['rain_mm_h'][-1]:g}", f"rain {r['rain_mm_h'][-1]:g} mm/h", "#104281", "-")]
+  fig = plt.figure(figsize=(9, 12), dpi=100)
+  fig.text(0.05, 0.965, "Friction for braking on a wet road", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.94, "Peak tyre-road friction (Bosch Automotive Handbook, typical tyres) against what the item needs",
+           fontsize=12, color=INK2)
+  for k, (tyre, title) in enumerate((("new", "New tyres"), ("worn_1_6mm", "Worn tyres, 1.6 mm tread"))):
+    ax = fig.add_axes([0.1, 0.57 - k * 0.42, 0.66, 0.31])
+    ax.axhspan(0, r["need_level"], color="#fdecec")
+    ax.axhline(r["need_level"], color=CRIT, lw=2)
+    ax.text(129, r["need_level"] + 0.02, f"item's −{r['item_decel']:.1f} m/s² needs {r['need_level']:.2f}", color=CRIT,
+            fontsize=11, weight="bold", ha="right")
+    ax.axvline(r["odd_speed_kph"], color=INK2, lw=1, ls=(0, (2, 2)))
+    ax.text(r["odd_speed_kph"] + 1, 0.95, "ODD speed", fontsize=10.5, color=INK2)
+    for key, lab, col, ls in conds:
+      y = r["curves"][tyre][key]
+      ax.plot(sp, y, color=col, lw=2.4, ls=ls)
+      ax.text(sp[-1] + 1.5, y[-1], lab, fontsize=11, color=INK, va="center")
+    ax.set_xlim(50, 130); ax.set_ylim(0, 1.05); ax.set_ylabel("peak friction")
+    ax.set_title(title, loc="left", fontsize=14, color=INK)
+    ax.grid(axis="y", color=GRID); ax.spines[["top", "right"]].set_visible(False)
+    if k == 1:
+      ax.set_xlabel("speed, km/h")
+  fig.text(0.05, 0.06, "Water depth from the hydroplaning study's worst drainage row, at least 0.2 mm (a wet road).\n"
+           "A handbook table of typical tyres, interpolated; not this car's tyres.", fontsize=11.5, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def _braking_anim(r, path):
+  odd = r["odd_speed_kph"]
+  key = f"{r['rain_mm_h'][0]:g}"
+  cars = [("New tyres", r["at_odd_speed"]["new"][key], "#2a78d6"),
+          ("Worn tyres, 1.6 mm", r["at_odd_speed"]["worn_1_6mm"][key], "#104281")]
+  v0 = odd / 3.6
+  t_react = 0.5
+  def pos(t, a):
+    if t < t_react:
+      return v0 * t, v0
+    tb = min(t - t_react, v0 / a)
+    return v0 * t_react + v0 * tb - 0.5 * a * tb * tb, max(v0 - a * (t - t_react), 0.0)
+  t_end = t_react + v0 / min(min(c[1]["a_max"], r["item_decel"]) for c in cars) + 1.0
+  frames = []
+  ts = np.linspace(0, t_end, 48)
+  far = max(c[1]["stop_item_m"] for c in cars) * 1.05
+  for t in ts:
+    fig = plt.figure(figsize=(7.2, 9), dpi=80)
+    fig.text(0.05, 0.955, "Braking from 110 km/h, light rain", fontsize=18, weight="bold", color=INK)
+    fig.text(0.05, 0.925, f"the item asks for −{r['item_decel']:.1f} m/s²; the tyres give what they can", fontsize=12,
+             color=INK2)
+    fig.text(0.95, 0.885, f"t = {t:4.1f} s", ha="right", fontsize=15, color=INK, family="DejaVu Sans Mono")
+    ax = fig.add_axes([0.05, 0.2, 0.9, 0.66]); ax.set_xlim(-6, 6); ax.set_ylim(-10, far + 10); ax.axis("off")
+    ax.add_patch(Rectangle((-6, -10), 12, far + 20, color="#a9a7a0"))
+    ax.plot([0, 0], [-10, far + 10], color="white", lw=2, ls=(0, (8, 8)))
+    for yy in range(0, int(far) + 1, 50):
+      ax.text(5.8, yy, f"{yy} m", fontsize=10, color="white", ha="right", va="center")
+    for i, (lab, d, col) in enumerate(cars):
+      a = min(d["a_max"], r["item_decel"])
+      y, v = pos(t, a)
+      x = -3 if i == 0 else 3
+      ax.add_patch(Rectangle((x - 0.9, y - 12), 1.8, 12, color=col, ec=INK, lw=1))
+      ax.plot([x - 1.3, x + 1.3], [d["stop_item_m"], d["stop_item_m"]], color=CRIT if i else "#1c5cab", lw=2)
+      ax.text(x, -8, f"{lab}\n{v * 3.6:3.0f} km/h", ha="center", fontsize=11.5, color=INK, weight="bold",
+              bbox=dict(boxstyle="round,pad=0.3", fc=SURF, ec=col))
+    fig.text(0.05, 0.1, f"Stops at {cars[0][1]['stop_item_m']:.0f} m and {cars[1][1]['stop_item_m']:.0f} m, "
+             f"0.5 s to brake. Worn tyres give {cars[1][1]['a_max']:.1f} m/s² on a\nwet road (handbook table): "
+             "less than the item asks for. Cars not to scale.", fontsize=11, color=INK2)
+    _stamp(fig)
+    frames.append(_png(fig))
+  _anim(frames, [140] * (len(frames) - 1) + [2500], path)
+
+
+def braking_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _braking_mu(r, out / "fig-wx-14-braking-friction.webp")
+  _braking_anim(r, out / "fig-wx-15-braking-anim.webp")
+  _report(out, "fig-wx-14", "fig-wx-15")

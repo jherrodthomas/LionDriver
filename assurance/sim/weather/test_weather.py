@@ -12,6 +12,27 @@ Water
   W3  NASA's formula: 10.35 sqrt(p) mph; at 35 psi about 98.5 km/h.
   W4  Monotone: more rain, a longer path or a flatter slope never raises the hydroplaning speed.
   W5  The ODD speed bound is the one WP-C-02 states.
+Fog on the windshield
+  F1  Magnus over water and ice against the ASHRAE saturation table (Hyland and Wexler), within 0.5 %.
+  F2  Frost forms at an air temperature of 2 °C on a clear, calm night (NWS: frost at 33–36 °F) and not under
+      overcast; with the sky and cabin at air temperature the glass is at air temperature.
+  F3  Recirculation: the closed-form minutes to fog equal a time-stepped moisture balance.
+  F4  The defroster run's energy balance closes (heat in = heat out + stored + melting) within 0.1 %.
+  F5  The climate table: 288 rows, sky shares add to 100 %, and each month's mean of the hourly normals is within
+      1 K of NOAA's separate monthly normal (the two average different things: 24 hours against (max + min)/2).
+  F6  At 110 km/h the flat-plate convection over the glass agrees with Watmuff's within 10 %.
+Wet braking
+  B1  The friction table is the handbook's at its nodes, and interpolation stays between neighbouring nodes.
+  B2  The item's bound is read from opendbc (−3.5 m/s²) and equals WP-C-02 F-02; a level road needs 3.5/9.81.
+  B3  Two sources agree: at 2 mm of water and speeds above NASA's hydroplaning speed the handbook gives at most 0.05.
+  B4  Stopping distance: v·t + v²/2a, and the 110 km/h, 3.5 m/s² stop is 133 m plus the reaction distance.
+Road crown
+  R1  The roll path read from openpilot is the one reviewed: compensation by params.roll·g, calibration roll taken as
+      zero, 20 Hz, process noise 1°/√s, fallback noise 10°, validity limit 1.5°. A change in the code fails here.
+  R2  The steady Kalman gain solves the scalar Riccati equation in closed form, and a noisier localizer gives a slower
+      filter.
+  R3  The uncompensated push equals g × slope within 1 % (the plant's straight-drift convention); no mount roll gives
+      no mount error; a crown change with a near-perfect localizer leaves almost nothing.
 
 Synthetic (DSR-12), design aid, no evidence credit.
 """
@@ -31,7 +52,11 @@ import yaml
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+import climate  # noqa: E402
 import hydroplaning as hp  # noqa: E402
+import road_crown as rc  # noqa: E402
+import wet_braking as wb  # noqa: E402
+import windshield_fog as wf  # noqa: E402
 import cabin_soak as cs  # noqa: E402
 import crosswind as cw  # noqa: E402
 import sun_glare as sg  # noqa: E402
@@ -179,6 +204,118 @@ class Cabin(unittest.TestCase):
     self.assertAlmostEqual(c["rear_window"]["tilt_deg"], g["rear_window"]["tilt_from_horizontal_deg"], places=1)
     self.assertAlmostEqual(c["side_windows"]["area_each"],
                            g["side_front_each"]["area_m2"] + g["side_rear_each"]["area_m2"], places=3)
+
+
+class Fog(unittest.TestCase):
+  def test_f1_saturation_table(self):
+    # ASHRAE Handbook Fundamentals, ch. 1, Table 3 (kPa): over water at 0..40 °C, over ice at -10 and -20 °C
+    for t, e in ((0, 0.6112), (10, 1.2282), (20, 2.3392), (30, 4.2467), (40, 7.3844)):
+      self.assertLess(abs(float(wf.e_water(t)) / e - 1), 0.005, t)
+    for t, e in ((-10, 0.25987), (-20, 0.10326)):
+      self.assertLess(abs(float(wf.e_ice(t)) / e - 1), 0.005, t)
+    self.assertAlmostEqual(float(wf.dew_point(wf.e_water(12.3))), 12.3, places=9)
+
+  def test_f2_frost_above_freezing(self):
+    geo, fp = wf.setup(P), P["fog"]
+    g = fp["glass"]
+    h_in = P["cabin"]["h_inside"]["parked"] + fp["h_inside_rad"]["value"]
+    def glass(okta):
+      ts = wf.sky_temp(2.0, 0.0, okta, fp["sky"]["cloud_factor"]["value"])
+      return float(wf.faces(2.0, 2.0, ts, geo["f_sky"], wf.h_parked(0.5), h_in, wf.glass_r(g), g["emissivity"])[0])
+    clear, overcast = glass(0.0), glass(8.0)
+    self.assertTrue(wf.e_water(0.0) > wf.e_sat(clear) and clear < 0.0, clear)
+    self.assertTrue(wf.e_water(0.0) < wf.e_sat(overcast), overcast)
+    to, ti = wf.faces(5.0, 5.0, 5.0, geo["f_sky"], 10.0, 8.0, wf.glass_r(g), g["emissivity"])
+    self.assertAlmostEqual(float(to), 5.0, places=9)
+    self.assertAlmostEqual(float(ti), 5.0, places=9)
+
+  def test_f3_recirculation_closed_form(self):
+    fp, c = P["fog"], P["cabin"]
+    pr, vol, n = fp["pressure_kpa"]["value"], c["air_volume_m3"]["value"], 2
+    t_out, td_out, ti = 3.0, -2.0, 9.0
+    minutes = float(wf.recirc_minutes(P, t_out, td_out, ti, n))
+    m_inf = 1.2 * vol * fp["recirc_ach"]["value"] / 3600
+    g = n * fp["breath_g_h"]["value"] / 3.6e6
+    w_out = float(wf.ratio(wf.e_water(td_out), pr))
+    w, t, dt = w_out, 0.0, 0.5
+    while wf.vapour(w, pr) < wf.e_sat(ti):
+      w += dt * (g + m_inf * (w_out - w)) / (1.2 * vol)
+      t += dt
+    self.assertLess(abs(t / 60 - minutes), 0.05, (t / 60, minutes))
+
+  def test_f4_defrost_energy(self):
+    geo = wf.setup(P)
+    res = wf.defrost(P, climate.load(), geo, 0.1)
+    self.assertLess(abs(res["balance"]), 1e-3, res["balance"])
+    self.assertTrue(np.all(np.diff(res["clear_min"]) >= 0))     # clears from the vents up
+
+  def test_f5_climate_table(self):
+    c = climate.load()
+    self.assertEqual(len(c), 288)
+    self.assertEqual(sorted(set(c["month"])), list(range(1, 13)))
+    self.assertLess(float(np.abs(c[list(climate.SKY)].sum(axis=1) - 100).max()), 0.5)
+    m = c.groupby("month")[["t", "tavg_monthly"]].mean()
+    self.assertLess(float(np.abs(m["t"] - m["tavg_monthly"]).max()), 1.0)
+
+  def test_f6_convection_agrees(self):
+    v = 110 / 3.6
+    a, b = wf.h_driving(v, wf.setup(P)["slant"]), wf.h_parked(v)
+    self.assertLess(abs(a - b) / b, 0.1, (a, b))
+
+
+class Braking(unittest.TestCase):
+  def test_b1_table(self):
+    t = P["braking"]["friction_table"]
+    for tyre in wb.TYRES:
+      for i, v in enumerate(t["speeds_kph"]):
+        for j, w in enumerate(t["water_mm"]):
+          self.assertAlmostEqual(wb.mu(P, tyre, v, w), t[tyre][i][j], places=12)
+      m = wb.mu(P, tyre, 110.0, 0.6)
+      corners = [t[tyre][i][j] for i in (1, 2) for j in (1, 2)]
+      self.assertTrue(min(corners) - 1e-12 <= m <= max(corners) + 1e-12)
+    self.assertEqual(t["new"][0], [0.85, 0.65, 0.55, 0.50])          # the 50 km/h row as printed
+
+  def test_b2_item_bound(self):
+    self.assertEqual(wb.accel_min(), -3.5)
+    self.assertIn("acceleration −3.5…+2.0 m/s²", WPC02.read_text(encoding="utf-8"))
+    self.assertAlmostEqual(wb.need(3.5), 3.5 / 9.81, places=12)
+    self.assertGreater(wb.need(3.5, 4.0), wb.need(3.5))
+
+  def test_b3_handbook_meets_nasa(self):
+    v_hp = hp.nasa_mph(P["water"]["tyre_pressure_psi"]["value"]) * hp.MPH
+    for v in (v_hp + 5, 110.0, 130.0):
+      self.assertLessEqual(wb.mu(P, "new", v, 2.0), 0.05)
+
+  def test_b4_stopping(self):
+    v = 110 / 3.6
+    self.assertAlmostEqual(wb.stop_m(110.0, 3.5, 0.0), v * v / 7.0, places=9)
+    self.assertAlmostEqual(wb.stop_m(110.0, 3.5, 0.0), 133.4, places=1)
+    self.assertAlmostEqual(wb.stop_m(110.0, 3.5, 0.5) - wb.stop_m(110.0, 3.5, 0.0), v * 0.5, places=9)
+
+
+class Crown(unittest.TestCase):
+  def test_r1_code_constants(self):
+    c = rc.code()
+    self.assertTrue(c["compensates"] and c["calibration_roll_zero"])
+    self.assertEqual((c["dt"], c["q_roll_deg"], c["obs_std_factor"], c["invalid_std_deg"], c["roll_std_max_deg"], c["g"]),
+                     (0.05, 1.0, 2.0, 10.0, 1.5, 9.81))
+
+  def test_r2_riccati(self):
+    q, r, dt = np.radians(1.0) ** 2, np.radians(0.6) ** 2, 0.05
+    K = rc.kalman_gain(q, r, dt)
+    qd = q * dt
+    pm = (qd + np.sqrt(qd * qd + 4 * qd * r)) / 2
+    self.assertAlmostEqual(K, pm / (pm + r), places=9)
+    self.assertGreater(rc.tau(rc.kalman_gain(q, 4 * r, dt), dt), rc.tau(K, dt))
+
+  def test_r3_limits(self):
+    for pct in (1.5, 2.0, 6.0):
+      self.assertLess(abs(9.81 * np.sin(np.arctan(pct / 100)) / (9.81 * pct / 100) - 1), 0.01)
+    p = yaml.safe_load((HERE / "params.yaml").read_text(encoding="utf-8"))
+    p["crown"]["mount_roll_deg"]["low"] = 0.0
+    r = rc.run(p)
+    self.assertEqual(r["residual"]["mount"]["low"], 0.0)
+    self.assertLess(rc.crown_flip(rc.code(), p, 0.001)["peak"], 0.005)
 
 
 class Crosswind(unittest.TestCase):
