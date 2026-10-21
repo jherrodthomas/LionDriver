@@ -401,6 +401,7 @@ jobs:
         python3 assurance/sim/plant/test_straight_drift.py
         python3 assurance/sim/plant/engaged_mismatch.py --check
         python3 assurance/sim/plant/test_engaged_mismatch.py
+        python3 assurance/sim/vehicle/vehicle_spec.py assurance/sim/vehicle/specs/toyota_corolla_e210_sedan.toml
         python3 assurance/sim/chrono/compare_l1.py --check
     - name: Failure search (Monte Carlo and cross-entropy over the plant model) current, and its tests
       run: |

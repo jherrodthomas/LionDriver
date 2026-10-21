@@ -216,7 +216,7 @@ def main(argv: list[str]) -> int:
   print("derived:")
   for k, x in derive(values(spec)).items():
     print(f"  {k:24s} {x:>12.5g}")
-  print("swept:", ", ".join(swept(spec)))
+  print("with a range:", ", ".join(swept(spec)))
   return 0
 
 

@@ -242,13 +242,14 @@ def corolla(data: dict, sedan: dict) -> str:
     "",
     f"- Curve entry: over the whole sweep the 3.0 m lane line comes at {span(cl[1.5])} (1.5 m/s²) and "
     f"{span(cl[2.5])} (ODD bound), against {f(l1c[1.5])} and {f(l1c[2.5])} in the L1 plant: the plant's curve "
-    "results hold for any vehicle inside these ranges.",
+    "results hold at every end of the sweep (one parameter at a time; combinations are not run).",
     f"- Straight with a 0.2 m/s² cross slope: the driver notices the drift at {span(st)} over the sweep, against "
     f"{f(l1({'road': 'straight', 'push': 0.2, 'kph': 110.0})['cue'])} in the L1 plant, which stays the conservative one.",
     f"- Understeer: this spec gives {nom['understeer'] * deg:.3f} °/(m/s²) against openpilot's "
     f"{d['op_understeer'] * deg:.3f}; {len(inside)} of {len(data['sweep'])} sweep ends reach openpilot's value "
-    f"({', '.join(sorted({x['param'] + ' ' + x['end'] for x in inside})) or 'none'}). The difference is a measure of "
-    "what the estimated tyre and the generic suspension geometry miss; M-02 decides.",
+    f"({', '.join(sorted({x['param'] + ' ' + x['end'] for x in inside})) or 'none'}). Part of the gap is expected: "
+    "openpilot's figure is a lumped fit that also carries the steering's compliance. The rest measures what the "
+    "estimated tyre and the generic suspension geometry miss; M-02 decides.",
     "- To add a car: write a spec file with its sources and ranges; the builder, the runner and this page take it "
     "as it is.",
   ]
