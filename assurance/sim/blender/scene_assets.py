@@ -1349,6 +1349,1023 @@ def setup_glare(env: dict):
     print(f"glare not set up: {e}")
 
 
+# ------------------------------------------------------------------------------------------------- surroundings
+# What the picture adds around the road (environments.yaml and conditions.yaml env, library/README.md §5): far hills
+# and haze, rolling ground, 3D verge plants, distant objects, cloud shadows, wheel spray, road wear and a camera
+# look. Visual only, like edge_features: the ground and objects stand beyond the verges (the terrain changes height
+# only from 7 m past the verge start), the wear is flat texture on the asphalt under the markings, and nothing here
+# is read by export_scene.py, so every contact, event, gap and TTC is the same with or without it.
+
+TERRAINS = ("rolling", "ditch", "embankment")
+DISTANT = ("pylons", "billboard", "farm", "flyover")
+LOOK_FRAC = 0.4               # the far scenery is laid out around the chase camera at this fraction of the clip
+
+
+def _centre_at(centre, s: float):
+  i = min(max(int(round(s - centre[0][3])), 0), len(centre) - 1)
+  return centre[i]
+
+
+def _linear(ob):
+  ad = ob.animation_data
+  bags = []
+  try:
+    bags = list(ad.action.fcurves)
+  except AttributeError:                        # Blender 5: layered actions
+    bags = [fc for layer in ad.action.layers for st in layer.strips for bag in st.channelbags for fc in bag.fcurves]
+  for fc in bags:
+    for kp in fc.keyframe_points:
+      kp.interpolation = "LINEAR"
+
+
+def _smooth01(u: float) -> float:
+  u = min(max(u, 0.0), 1.0)
+  return u * u * (3 - 2 * u)
+
+
+class Frame:
+  """Road coordinates of a scene: (s, d) to the world and back, where each verge starts, and the ground height the
+  environment's `terrain` gives beyond it (0 on and beside the road)."""
+
+  def __init__(self, sc: dict, env: dict, rear: bool = False):
+    self.sc, self.r = sc, sc["road"]
+    self.rear = rear                            # the chase camera looks back past the ego (street_layout.rear_view)
+    self.c = self.r["centre"]
+    self.env = env
+    left_out, right_out = self.r["outer"]
+    m = edge_features(self.r, env)["verge"]
+    self.edge = {1: left_out + m[0], -1: right_out - m[1]}
+    self.grass_z = next((s.get("z", 0.0) for s in self.r["surfaces"] if s["kind"] == "grass"), -0.03)
+    self.kind = self.r["type"]
+    self.terrain = env.get("terrain") if env.get("terrain") in TERRAINS else None
+    self.seed = random.Random(sc.get("variant_of") or sc["id"]).random() * 100
+
+  def at(self, s):
+    return _centre_at(self.c, s)
+
+  def world(self, s, d, z=0.0):
+    return offset(self.at(s), d, z)
+
+  def sd(self, x, y):
+    p = min(self.c, key=lambda q: (q[0] - x) ** 2 + (q[1] - y) ** 2)
+    d = -(x - p[0]) * math.sin(p[2]) + (y - p[1]) * math.cos(p[2])
+    along = (x - p[0]) * math.cos(p[2]) + (y - p[1]) * math.sin(p[2])
+    return p[3] + along, d
+
+  def rel(self, d):
+    """(side, metres beyond that side's verge start) of a lateral offset; None on the road."""
+    if d >= self.edge[1]:
+      return 1, d - self.edge[1]
+    if d <= self.edge[-1]:
+      return -1, self.edge[-1] - d
+    return None
+
+  def near_profile(self, side, dr):
+    """Height change within 18 m of the verge start: a shallow drainage ditch (ditch), or an embankment on the left
+    with a ditch at its foot and a cutting on the right (embankment)."""
+    if self.terrain == "ditch":
+      return -0.5 * math.sin(math.pi * min(max((dr - 7.0) / 3.2, 0.0), 1.0)) ** 2
+    if self.terrain == "embankment":
+      if side == 1:
+        return -3.0 * _smooth01((dr - 7.5) / 7.5) - 0.35 * math.sin(math.pi * min(max((dr - 15.0) / 3.0, 0.0), 1.0)) ** 2
+      return 4.5 * _smooth01((dr - 9.0) / 8.0)
+    return 0.0
+
+  def hills(self, x, y, dr):
+    """Rolling ground from 15 m past the verge start, growing with the distance."""
+    if self.terrain is None or dr <= 15.0:
+      return 0.0
+    n = noise.fractal(Vector((x / 170.0 + self.seed, y / 170.0, 0.3)), 0.6, 2.1, 4)
+    return _smooth01((dr - 15.0) / 35.0) * (3.0 + 0.025 * dr) * n
+
+  def ground(self, x, y, d):
+    rd = self.rel(d)
+    if rd is None:
+      return 0.0
+    side, dr = rd
+    return self.near_profile(side, dr) + self.hills(x, y, dr)
+
+  def ego_s(self, frame):
+    x, y, _ = self.sc["actors"][0]["poses"][frame - 1]
+    return self.sd(x, y)[0]
+
+  def camera_span(self, behind: float, ahead: float):
+    """The stretch of road the chase camera sees over the clip: from `behind` metres before the ego's start to
+    `ahead` past its end (the other way round for a rear view)."""
+    a, b = self.ego_s(1), self.ego_s(len(self.sc["t"]))
+    return (min(a, b) - ahead, max(a, b) + behind) if self.rear else (min(a, b) - behind, max(a, b) + ahead)
+
+
+def grid(name, F: Frame, side, d_rel_list, s_step, zoff, mat, coll, s_range=None):
+  """A ribbon over the given offsets beyond one verge, following the ground height; road UVs in metres."""
+  c = F.c
+  s0, s1 = (c[0][3], c[-1][3]) if s_range is None else s_range
+  s0, s1 = max(s0, c[0][3]), min(s1, c[-1][3])
+  ss = [s0 + s_step * i for i in range(int((s1 - s0) / s_step) + 1)]
+  verts, faces, uvs = [], [], []
+  n = len(d_rel_list)
+  for i, s in enumerate(ss):
+    p = F.at(s)
+    for dr in d_rel_list:
+      d = F.edge[side] + side * dr
+      x, y, _ = offset(p, d)
+      verts.append((x, y, F.grass_z + zoff + F.near_profile(side, dr) + F.hills(x, y, dr)))
+      uvs.append((d, p[3]))
+    if i:
+      a, b = (i - 1) * n, i * n
+      for j in range(n - 1):
+        faces.append((a + j, a + j + 1, b + j + 1, b + j) if side == 1 else (a + j, b + j, b + j + 1, a + j + 1))
+  ob = mesh_object(name, verts, faces, mat, coll, uvs=uvs)
+  for poly in ob.data.polygons:
+    poly.use_smooth = True
+  return ob
+
+
+# ------------------------------------------------------------------------------------------------- materials
+def node_mat(name):
+  m = bpy.data.materials.new(name)
+  m.use_nodes = True
+  return m, Graph(m)
+
+
+def far_field_material(env: dict):
+  """Fields seen from afar: a patchwork of crop colours (Voronoi cells), hedges darker; white under snow."""
+  m, g = node_mat("far_fields")
+  tc = g.node("ShaderNodeTexCoord").outputs["Object"]
+  vor = g.node("ShaderNodeTexVoronoi", {"Vector": tc, "Scale": 0.006})
+  ramp = g.node("ShaderNodeValToRGB", {0: vor.outputs[2] if len(vor.outputs) > 2 else vor.outputs[1]})
+  els = ramp.color_ramp.elements
+  els[0].color, els[1].color = (0.04, 0.075, 0.02, 1), (0.11, 0.1, 0.045, 1)
+  e = els.new(0.45)
+  e.color = (0.06, 0.1, 0.028, 1)
+  e = els.new(0.75)
+  e.color = (0.075, 0.085, 0.03, 1)
+  edge = g.node("ShaderNodeTexVoronoi", {"Vector": tc, "Scale": 0.006}, feature="DISTANCE_TO_EDGE")
+  hedge = g.remap(edge.outputs[0], 0.0, 0.03, 1.0, 0.0)
+  col = g.mix(hedge, ramp.outputs[0], (0.025, 0.04, 0.02))
+  col = g.mix(1.0, col, g.remap(g.noise(tc, 0.02, 3).outputs[0], 0.3, 0.7, 0.8, 1.15), "MULTIPLY")
+  if env.get("snow"):
+    col = g.mix(0.85 * float(env["snow"]), col, SNOW_RGB)
+  g.finish(col, 0.9)
+  return m
+
+
+def far_tree_material():
+  """Woods seen from a kilometre or more: dark, slightly varied green."""
+  m, g = node_mat("far_trees")
+  tc = g.node("ShaderNodeTexCoord").outputs["Object"]
+  n = g.noise(tc, 0.08, 4).outputs[0]
+  col = g.mix(g.remap(n, 0.35, 0.65, 0.0, 1.0), (0.018, 0.032, 0.016), (0.04, 0.06, 0.025))
+  g.finish(col, 0.95)
+  return m
+
+
+def build_horizon(F: Frame, coll, cam_xy):
+  """env horizon: far fields to 2 km under the road's own ground, a tree line ringing the view at about 1 to 1.6 km
+  and hills from 2 to 5.6 km, centred on the chase camera."""
+  cx, cy = cam_xy
+  fields = far_field_material(F.env)
+  segs = 900
+  # far fields: a disk under everything (the road's grass covers it near by)
+  rings = [0, 350, 600, 1000, 1500, 2100]
+  verts, faces = [], []
+  for k, r in enumerate(rings):
+    for i in range(segs):
+      a = 2 * math.pi * i / segs
+      verts.append((cx + r * math.cos(a), cy + r * math.sin(a), -0.25 - (0 if r < 500 else 0.002 * (r - 500))))
+      if k:
+        faces.append(((k - 1) * segs + i, (k - 1) * segs + (i + 1) % segs, k * segs + (i + 1) % segs, k * segs + i))
+  mesh_object("far_fields", verts, faces, fields, coll)
+  # hills: an annulus, its height a smooth noise of the angle, rising with the distance
+  radial = [2000, 2400, 2900, 3500, 4200, 5000, 5600]
+  verts, faces = [], []
+  segs = 1440
+  for k, r in enumerate(radial):
+    rise = min((r - 2000) / 2200.0, 1.0)
+    for i in range(segs):
+      a = 2 * math.pi * i / segs
+      x, y = cx + r * math.cos(a), cy + r * math.sin(a)
+      h = 60 + 110 * (0.5 + 0.5 * noise.fractal(Vector((x / 1800.0, y / 1800.0, 1.7)), 0.55, 2.0, 4))
+      verts.append((x, y, -3.0 + h * rise ** 1.3))
+      if k:
+        faces.append(((k - 1) * segs + i, (k - 1) * segs + (i + 1) % segs, k * segs + (i + 1) % segs, k * segs + i))
+  ob = mesh_object("hills", verts, faces, fields, coll)
+  for p in ob.data.polygons:
+    p.use_smooth = True
+  # tree line: a vertical band, its top bumpy like crowns, its radius wandering
+  trees = far_tree_material()
+  verts, faces = [], []
+  segs = 3600
+  for i in range(segs):
+    a = 2 * math.pi * i / segs
+    rr = 1300 + 350 * noise.noise(Vector((math.cos(a) * 5.0, math.sin(a) * 5.0, 4.2)))
+    x, y = cx + rr * math.cos(a), cy + rr * math.sin(a)
+    top = 10 + 5 * noise.noise(Vector((x / 60.0, y / 60.0, 0.5))) + 4 * abs(noise.noise(Vector((x / 7.0, y / 7.0, 2.0))))
+    gap = noise.noise(Vector((x / 250.0, y / 250.0, 9.0)))
+    if gap < -0.15:                             # open stretches between woods
+      top = 0.5
+    verts += [(x, y, -2.0), (x, y, top)]
+    j = 2 * i
+    faces.append((j, (j + 2) % (2 * segs), (j + 3) % (2 * segs), j + 1))
+  mesh_object("tree_line", verts, faces, trees, coll)
+
+
+def build_haze(coll, cam_xy, km: float):
+  """env haze_km (with horizon): aerial perspective, a homogeneous slightly blue volume 160 m deep for a
+  meteorological visibility of km, so the distance fades bluish while the sky above stays clear."""
+  cx, cy = cam_xy
+  ob = bpy.data.objects.new("aerial_haze", box_mesh("aerial_haze_box", 12000.0, 12000.0, 160.0, -5.0))
+  ob.location = (cx, cy, 0.0)
+  coll.objects.link(ob)
+  m = bpy.data.materials.new("aerial_haze")
+  m.use_nodes = True
+  nt = m.node_tree
+  nt.nodes.remove(nt.nodes["Principled BSDF"])
+  vol = nt.nodes.new("ShaderNodeVolumePrincipled")
+  vol.inputs["Density"].default_value = 3.0 / (1000.0 * km)
+  vol.inputs["Color"].default_value = (0.7, 0.82, 1.0, 1.0)
+  vol.inputs["Anisotropy"].default_value = 0.5
+  nt.links.new(vol.outputs[0], nt.nodes["Material Output"].inputs["Volume"])
+  ob.data.materials.append(m)
+
+
+def build_terrain(F: Frame, coll):
+  """env terrain: the two flat 400 m grass strips of the cross-section give way to ground that follows F.ground (the
+  ditch, embankment or cutting near by, rolling from 15 m past the verge start), and the scenery stands on it."""
+  grass = bpy.data.materials.get("grass")
+  for ob in list(bpy.data.collections["road"].objects):
+    if ob.name.startswith("grass_") and max(abs(v.co.x) + abs(v.co.y) for v in ob.data.vertices) > 0:
+      dims = ob.dimensions
+      if max(dims.x, dims.y) > 300:
+        bpy.data.objects.remove(ob, do_unlink=True)
+  outer = {1: F.r["outer"][0], -1: F.r["outer"][1]}
+  drs = [x * 0.5 for x in range(0, 41)] + list(range(22, 60, 2)) + list(range(60, 401, 8))
+  for side in (1, -1):
+    start = side * (outer[side] - F.edge[side])           # the grass begins at the road's outer edge
+    grid(f"terrain_{side}", F, side, [start] + [d for d in drs if d > start], 2.0, 0.0, grass, coll)
+  snap_scenery(F)
+
+
+def snap_scenery(F: Frame):
+  """Stand trees, shrubs, lamps and posts on the new ground."""
+  moved = 0
+  for cname in ("scenery", "props"):
+    cl = bpy.data.collections.get(cname)
+    if not cl:
+      continue
+    for ob in cl.objects:
+      if ob.type not in ("MESH", "EMPTY") or ob.name.startswith(("verge_", "terrain", "far_", "hills", "tree_line")):
+        continue
+      if ob.parent is not None and ob.parent.parent is not None:
+        continue
+      if ob.type == "EMPTY" and ob.children:
+        continue
+      x, y = ob.matrix_world.translation[:2]
+      s, d = F.sd(x, y)
+      dz = F.ground(x, y, d)
+      if abs(dz) > 1e-4:
+        ob.location.z += dz
+        moved += 1
+  print(f"terrain: {F.terrain}, {moved} objects stood on the new ground")
+
+
+def blade_meshes():
+  """Clumps of grass blades, a weed rosette with a stalk, three wildflowers."""
+  rnd = random.Random(5)
+  out = {}
+
+  def clump(name, n, hmin, hmax, wid):
+    verts, faces = [], []
+    for b in range(n):
+      a = rnd.uniform(0, 2 * math.pi)
+      r0 = rnd.uniform(0, 0.05)
+      bx, by = r0 * math.cos(a), r0 * math.sin(a)
+      h = rnd.uniform(hmin, hmax)
+      lean = rnd.uniform(0.15, 0.6)
+      la = rnd.uniform(0, 2 * math.pi)
+      w = wid * rnd.uniform(0.7, 1.3)
+      seg = 4
+      k0 = len(verts)
+      for i in range(seg + 1):
+        t = i / seg
+        off = lean * h * t * t
+        cx, cy, cz = bx + off * math.cos(la), by + off * math.sin(la), h * t * (1 - 0.25 * lean * t)
+        ww = w * (1 - t) + 0.0005
+        px, py = -math.sin(la) * ww, math.cos(la) * ww
+        verts += [(cx - px, cy - py, cz), (cx + px, cy + py, cz)]
+        if i:
+          j = k0 + 2 * i
+          faces.append((j - 2, j - 1, j + 1, j))
+    return verts, faces
+
+  for k in range(3):
+    v, f = clump(f"blades{k}", 9, 0.12, 0.42 if k < 2 else 0.6, 0.006)
+    out[f"blades{k}"] = (v, f, "grass_blade")
+  # weed: a rosette of broad leaves and a seed stalk
+  verts, faces = [], []
+  for i in range(7):
+    a = 2 * math.pi * i / 7 + rnd.uniform(-0.2, 0.2)
+    L, W = rnd.uniform(0.12, 0.2), 0.03
+    ca, sa = math.cos(a), math.sin(a)
+    k0 = len(verts)
+    verts += [(0, 0, 0.01), (L * 0.5 * ca - W * sa, L * 0.5 * sa + W * ca, 0.04), (L * ca, L * sa, 0.05),
+              (L * 0.5 * ca + W * sa, L * 0.5 * sa - W * ca, 0.04)]
+    faces.append((k0, k0 + 1, k0 + 2, k0 + 3))
+  k0 = len(verts)
+  verts += [(-0.004, 0, 0), (0.004, 0, 0), (0.01, 0.004, 0.55), (0.0, 0.004, 0.55)]
+  faces.append((k0, k0 + 1, k0 + 2, k0 + 3))
+  out["weed"] = (verts, faces, "weed_leaf")
+  return out
+
+
+def flower_mesh(name, petal_mat, stem_mat):
+  """A thin stem with a flattened round flower head."""
+  me = bpy.data.meshes.new(name)
+  bm = bmesh.new()
+  stem = bmesh.ops.create_cone(bm, cap_ends=False, segments=4, radius1=0.003, radius2=0.002, depth=0.45)
+  bmesh.ops.translate(bm, vec=(0, 0, 0.225), verts=stem["verts"])
+  for f in bm.faces:
+    f.material_index = 1
+  head = bmesh.ops.create_icosphere(bm, subdivisions=1, radius=0.022)
+  bmesh.ops.scale(bm, vec=(1, 1, 0.45), verts=head["verts"])
+  bmesh.ops.translate(bm, vec=(0, 0, 0.46), verts=head["verts"])
+  bm.to_mesh(me)
+  bm.free()
+  me.materials.append(petal_mat)
+  me.materials.append(stem_mat)
+  return me
+
+
+def plant_material(name, rgb, var=0.35):
+  """Leaves and blades: a green that dries toward straw at random per instance, letting some light through."""
+  m, g = node_mat(name)
+  rnd = g.node("ShaderNodeObjectInfo").outputs["Random"]
+  dry = g.mix(g.remap(rnd, 0.0, 1.0, 0.0, var), rgb, (0.32, 0.27, 0.12))
+  b = g.bsdf
+  for k, v in (("Subsurface Weight", 0.0), ("Transmission Weight", 0.0)):
+    if k in b.inputs:
+      b.inputs[k].default_value = v
+  g.finish(dry, 0.6)
+  b.inputs["Specular IOR Level"].default_value = 0.3
+  # thin leaves: some light through (translucent mix)
+  out = m.node_tree.nodes["Material Output"]
+  tr = m.node_tree.nodes.new("ShaderNodeBsdfTranslucent")
+  g.set(tr.inputs["Color"], dry)
+  mix = m.node_tree.nodes.new("ShaderNodeMixShader")
+  mix.inputs[0].default_value = 0.3
+  m.node_tree.links.new(b.outputs[0], mix.inputs[1])
+  m.node_tree.links.new(tr.outputs[0], mix.inputs[2])
+  m.node_tree.links.new(mix.outputs[0], out.inputs["Surface"])
+  return m
+
+
+# (from, to metres past the verge start, clumps per m²): dense by the road, thinning into the ground texture by 40 m
+VERGE_PLANT_BANDS = ((0.0, 6.0, 80.0), (6.0, 12.0, 50.0), (12.0, 20.0, 24.0), (20.0, 30.0, 9.0), (30.0, 40.0, 3.0))
+
+
+def build_verge_plants(F: Frame, coll):
+  """env verge_plants: instanced grass blades, weeds and a few wildflowers over both verges, within 40 m of the road
+  edge along the stretch the chase camera sees (none under snow, like the scanned verge grass)."""
+  if F.kind == "urban" or F.env.get("snow"):
+    return
+  meshes = blade_meshes()
+  mats = {"grass_blade": plant_material("grass_blade", (0.07, 0.16, 0.035)),
+          "weed_leaf": plant_material("weed_leaf", (0.06, 0.13, 0.03), 0.2)}
+  tmpl = bpy.data.collections.new("grass_templates")
+  tmpl.use_fake_user = True
+  for name, (v, f, mat) in meshes.items():
+    mesh_object(name, v, f, mats[mat], tmpl)
+  stem = plant_material("flower_stem", (0.06, 0.14, 0.03), 0.1)
+  for k, rgb in enumerate(((0.9, 0.7, 0.05), (0.9, 0.9, 0.85), (0.45, 0.2, 0.6))):
+    me = flower_mesh(f"flower{k}", material(f"petal{k}", rgb, rough=0.5), stem)
+    ob = bpy.data.objects.new(f"flower{k}", me)
+    tmpl.objects.link(ob)
+  # pick weights: blades most, a few weeds and flowers (Pick Instance takes an index; repeat blades)
+  pick = bpy.data.collections.new("grass_pick")
+  pick.use_fake_user = True
+  order = ["blades0"] * 10 + ["blades1"] * 10 + ["blades2"] * 4 + ["weed"] * 2 + ["flower0", "flower1", "flower2"]
+  for j, n in enumerate(order):
+    src = bpy.data.objects[n]
+    ob = bpy.data.objects.new(f"pick{j:02d}_{n}", src.data)
+    pick.objects.link(ob)
+
+  ng = bpy.data.node_groups.new("verge_plants", "GeometryNodeTree")
+  ng.interface.new_socket("Geometry", in_out="INPUT", socket_type="NodeSocketGeometry")
+  ng.interface.new_socket("Density", in_out="INPUT", socket_type="NodeSocketFloat")
+  ng.interface.new_socket("Geometry", in_out="OUTPUT", socket_type="NodeSocketGeometry")
+  nodes, link = ng.nodes.new, ng.links.new
+  gi, go = nodes("NodeGroupInput"), nodes("NodeGroupOutput")
+  dist = nodes("GeometryNodeDistributePointsOnFaces")
+  info = nodes("GeometryNodeCollectionInfo")
+  info.inputs["Collection"].default_value = pick
+  info.inputs["Separate Children"].default_value = True
+  info.inputs["Reset Children"].default_value = True
+  inst = nodes("GeometryNodeInstanceOnPoints")
+  inst.inputs["Pick Instance"].default_value = True
+  rot = nodes("ShaderNodeCombineXYZ")
+  link(gi.outputs[0], dist.inputs["Mesh"])
+  link(gi.outputs[1], dist.inputs["Density"])
+  link(dist.outputs["Points"], inst.inputs["Points"])
+  link(info.outputs[0], inst.inputs["Instance"])
+  link(_random_value(ng, "FLOAT", 0.0, 6.283), rot.inputs["Z"])
+  link(rot.outputs[0], inst.inputs["Rotation"])
+  link(_random_value(ng, "FLOAT", 0.6, 1.4), inst.inputs["Scale"])
+  link(_random_value(ng, "INT", 0, len(order) - 1), inst.inputs["Instance Index"])
+  link(inst.outputs[0], go.inputs[0])
+
+  rng = F.camera_span(25.0, 130.0)
+  for k, (a, b, dens) in enumerate(VERGE_PLANT_BANDS):
+    n = max(int(b - a), 1)
+    drs = [a + (b - a) * i / n for i in range(n + 1)]
+    for side in (1, -1):
+      ob = grid(f"verge_plants_{k}_{side}", F, side, drs, 2.0, 0.005, None, coll, rng)
+      mod = ob.modifiers.new("grass", "NODES")
+      band = bpy.data.node_groups.get(f"verge_plants_{k}") or ng.copy()
+      band.name = f"verge_plants_{k}"
+      sock = next(i for i in band.interface.items_tree if getattr(i, "name", "") == "Density")
+      sock.default_value = dens
+      mod.node_group = band
+
+
+def lattice_pylon(name, coll, loc, yaw, h=32.0):
+  steel = material("pylon_steel", (0.42, 0.43, 0.45), rough=0.5, metal=0.6)
+  root = empty(name, coll)
+  root.location, root.rotation_euler = loc, (0, 0, yaw)
+  me = bpy.data.meshes.new(name)
+  bm = bmesh.new()
+
+  def beam(p, q, r=0.09):
+    p, q = Vector(p), Vector(q)
+    d = q - p
+    geo = bmesh.ops.create_cone(bm, cap_ends=False, segments=4, radius1=r, radius2=r, depth=d.length)
+    rot = d.normalized().to_track_quat("Z", "Y").to_matrix().to_4x4()
+    bmesh.ops.transform(bm, matrix=rot, verts=geo["verts"])
+    bmesh.ops.translate(bm, vec=(p + q) / 2, verts=geo["verts"])
+
+  base, top = 3.2, 0.9
+  lv = [0, 0.35 * h, 0.6 * h, 0.8 * h, h]
+  wid = [base + (top - base) * z / h for z in lv]
+  for sx in (-1, 1):
+    for sy in (-1, 1):
+      for z0, z1, w0, w1 in zip(lv, lv[1:], wid, wid[1:]):
+        beam((sx * w0, sy * w0, z0), (sx * w1, sy * w1, z1), 0.12)
+  for z0, z1, w0, w1 in zip(lv, lv[1:], wid, wid[1:]):          # cross bracing on the four faces
+    for a, b in (((-1, -1), (1, -1)), ((1, -1), (1, 1)), ((1, 1), (-1, 1)), ((-1, 1), (-1, -1))):
+      beam((a[0] * w0, a[1] * w0, z0), (b[0] * w1, b[1] * w1, z1), 0.05)
+      beam((b[0] * w0, b[1] * w0, z0), (a[0] * w1, a[1] * w1, z1), 0.05)
+  arms = (0.62 * h, 0.82 * h)
+  for z, span in zip(arms, (9.0, 7.0)):
+    beam((-span, 0, z), (span, 0, z), 0.14)
+    beam((-span, 0, z), (-1.2, 0, z + 2.0), 0.06)
+    beam((span, 0, z), (1.2, 0, z + 2.0), 0.06)
+  beam((0, 0, h), (0, 0, h + 3.0), 0.08)
+  bm.to_mesh(me)
+  bm.free()
+  me.materials.append(steel)
+  ob = bpy.data.objects.new(name + "_frame", me)
+  ob.parent = root
+  coll.objects.link(ob)
+  return root, [(x, 0.0, z - 1.6) for z, span in zip(arms, (9.0, 7.0)) for x in (-span + 0.4, span - 0.4)]
+
+
+def catenary(name, coll, p, q, sag, mat):
+  cu = bpy.data.curves.new(name, "CURVE")
+  cu.dimensions = "3D"
+  cu.bevel_depth = 0.035
+  sp = cu.splines.new("POLY")
+  n = 24
+  sp.points.add(n)
+  for i in range(n + 1):
+    t = i / n
+    x = p[0] + (q[0] - p[0]) * t
+    y = p[1] + (q[1] - p[1]) * t
+    z = p[2] + (q[2] - p[2]) * t - sag * 4 * t * (1 - t)
+    sp.points[i].co = (x, y, z, 1.0)
+  ob = bpy.data.objects.new(name, cu)
+  cu.materials.append(mat)
+  coll.objects.link(ob)
+
+
+def billboard(F: Frame, coll, s, d, facing):
+  x, y, _ = F.world(s, d)
+  z0 = F.ground(x, y, d)
+  h = F.at(s)[2]
+  root = empty("billboard", coll)
+  root.location, root.rotation_euler = (x, y, z0), (0, 0, h + facing)
+  grey = material("bb_steel", (0.35, 0.36, 0.38), rough=0.5, metal=0.6)
+  for yy in (-3.5, 3.5):
+    part("bb_post", cyl_mesh(f"bbpost{yy}", 0.25, 7.0, mat=grey), root, coll, (0, yy, 3.5))
+  part("bb_back", box_mesh("bbback", 0.3, 12.4, 4.4, 6.0, grey), root, coll, (0.2, 0, 0))
+  m, g = node_mat("bb_face")
+  gen = g.node("ShaderNodeTexCoord").outputs["Generated"]
+  sep = g.node("ShaderNodeSeparateXYZ", {0: gen})
+  col = g.mix(g.remap(sep.outputs[2], 0.45, 0.5, 0.0, 1.0), (0.55, 0.12, 0.04), (0.85, 0.8, 0.7))
+  g.finish(col, 0.45)
+  g.set(g.bsdf.inputs["Emission Color"], col)
+  g.bsdf.inputs["Emission Strength"].default_value = 0.1
+  part("bb_face", box_mesh("bbface", 0.05, 12.0, 4.0, 6.2, m), root, coll, (0.0, 0, 0))
+  white = material("bb_ink", (0.95, 0.95, 0.92), rough=0.5)
+  for text, z, size in (("DINER  ·  NEXT EXIT", 8.7, 0.95), ("OPEN 24 HOURS", 7.2, 0.7)):
+    cu = bpy.data.curves.new("bb_text", "FONT")
+    cu.body, cu.align_x, cu.align_y, cu.size, cu.extrude = text, "CENTER", "CENTER", size, 0.01
+    ob = bpy.data.objects.new("bb_text", cu)
+    ob.parent = root
+    ob.location = (-0.06, 0, z)
+    ob.rotation_euler = (math.pi / 2, 0, -math.pi / 2)
+    cu.materials.append(white)
+    coll.objects.link(ob)
+
+
+def farm_at(F: Frame, coll, x, y, z0, heading):
+  h = heading + 0.4
+  z0 -= 0.2
+  red = material("barn_red", (0.32, 0.05, 0.03), rough=0.8)
+  white = material("house_white", (0.75, 0.74, 0.7), rough=0.8)
+  roof = material("barn_roof", (0.12, 0.12, 0.13), rough=0.6, metal=0.3)
+  silo = material("silo", (0.6, 0.62, 0.64), rough=0.4, metal=0.5)
+
+  def gabled(name, L, W, wall_h, ridge, wmat, at):
+    me = bpy.data.meshes.new(name)
+    L2, W2 = L / 2, W / 2
+    v = [(-L2, -W2, 0), (L2, -W2, 0), (L2, W2, 0), (-L2, W2, 0), (-L2, -W2, wall_h), (L2, -W2, wall_h),
+         (L2, W2, wall_h), (-L2, W2, wall_h), (-L2, 0, ridge), (L2, 0, ridge)]
+    f = [(0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7), (4, 5, 9, 8), (6, 7, 8, 9), (0, 4, 8), (1, 9, 5),
+         (2, 6, 9), (3, 8, 7)]
+    me.from_pydata(v, [], f)
+    me.materials.append(wmat)
+    me.materials.append(roof)
+    for i, p in enumerate(me.polygons):
+      p.material_index = 1 if i in (4, 5) else 0
+    ob = bpy.data.objects.new(name, me)
+    ob.location = at
+    ob.rotation_euler = (0, 0, h)
+    coll.objects.link(ob)
+
+  ca, sa = math.cos(h), math.sin(h)
+  gabled("barn", 22, 12, 6.0, 11.0, red, (x, y, z0))
+  gabled("farmhouse", 12, 9, 6.0, 9.5, white, (x + 30 * ca - 20 * sa, y + 30 * sa + 20 * ca, z0))
+  part("silo", cyl_mesh("silo", 3.0, 16.0, mat=silo), None, coll, (x - 16 * ca, y - 16 * sa, z0 + 8.0))
+  part("silo_cap", sphere_mesh("silocap", 3.0, 2, silo), None, coll, (x - 16 * ca, y - 16 * sa, z0 + 16.0))
+  for k in range(5):
+    tx, ty = x + (-30 + 14 * k) * ca + 18 * sa, y + (-30 + 14 * k) * sa - 18 * ca
+    part("farm_tree", sphere_mesh(f"ftree{k}", 4.5, 2, leaves_material("farm_leaves", (0.035, 0.07, 0.025), {}),
+                                      0.25, k), None, coll, (tx, ty, z0 + 5.5))
+
+
+def far_overpass(F: Frame, coll, cam_xy, heading, dist):
+  """A concrete flyover crossing the view far ahead, past the end of the modelled road."""
+  conc = material("far_concrete", (0.3, 0.29, 0.27), rough=0.9)
+  cx, cy = cam_xy
+  x, y = cx + dist * math.cos(heading), cy + dist * math.sin(heading)
+  yaw = heading + math.pi / 2 + 0.25
+  root = empty("far_overpass", coll)
+  root.location, root.rotation_euler = (x, y, 0), (0, 0, yaw)
+  part("fo_deck", box_mesh("fodeck", 600.0, 14.0, 1.6, 7.0, conc), root, coll)
+  part("fo_parapet", box_mesh("fopar", 600.0, 0.4, 1.0, 8.6, conc), root, coll, (0, 6.8, 0))
+  part("fo_parapet", box_mesh("fopar2", 600.0, 0.4, 1.0, 8.6, conc), root, coll, (0, -6.8, 0))
+  for k in range(-6, 7):
+    part("fo_pier", box_mesh(f"fopier{k}", 1.6, 8.0, 7.5, -0.5, conc), root, coll, (k * 45.0, 0, 0))
+
+
+def build_distant(F: Frame, coll, cam_xy, heading, frame, kinds):
+  """env distant: objects laid out in the chase view at `frame` (forward and left of the camera's heading), each
+  checked to stand at least 20 m past the verge or beyond the modelled road: a line of pylons with sagging wires on
+  the outside of the view, a billboard 22 m past the verge, a farm 150 m out, a flyover about 380 m ahead (past the
+  modelled road's end)."""
+  s_cam = F.ego_s(frame)
+  ahead = 1 if math.cos(heading - F.at(s_cam)[2]) > 0 else -1     # -1: a rear view, looking back along the road
+  cx, cy = cam_xy
+  ch, sh = math.cos(heading), math.sin(heading)
+  view = lambda fw, lat: (cx + fw * ch - lat * sh, cy + fw * sh + lat * ch)
+  # which side of the view stays clear of the road: the outside of the curve ahead
+  far = F.at(min(max(s_cam + ahead * 250, F.c[0][3]), F.c[-1][3]))
+  lat_far = -(far[0] - cx) * sh + (far[1] - cy) * ch
+  out_side = -1 if lat_far > 0 else 1
+
+  def ground(x, y):
+    s, d = F.sd(x, y)
+    if s < F.c[0][3] or s > F.c[-1][3]:
+      return -0.25, s, d
+    return F.ground(x, y, d), s, d
+
+  def clear(x, y, m=20.0):
+    s, d = F.sd(x, y)
+    return not (F.c[0][3] <= s <= F.c[-1][3]) or d > F.edge[1] + m or d < F.edge[-1] - m
+
+  wire = material("wire", (0.08, 0.08, 0.08), rough=0.4, metal=0.8)
+  towers = []
+  for k in range(7 if "pylons" in kinds else 0):
+    fw = 260 + 230 * k
+    x, y = view(fw, out_side * (55 + 0.06 * fw))
+    if not clear(x, y):
+      continue
+    z = ground(x, y)[0]
+    root, att = lattice_pylon(f"pylon{k}", coll, (x, y, z - 0.3), heading + math.pi / 2 + out_side * 0.06)
+    bpy.context.view_layer.update()
+    towers.append([root.matrix_world @ Vector(a) for a in att])
+  for k, (a, b) in enumerate(zip(towers, towers[1:])):
+    for j, (p, q) in enumerate(zip(a, b)):
+      catenary(f"wire{k}_{j}", coll, p, q, 7.0, wire)
+  # billboard 22 m past the verge on the outside of the view, angled toward the traffic
+  sb = s_cam + ahead * 95
+  if "billboard" in kinds and F.c[0][3] < sb < F.c[-1][3]:
+    side = out_side * ahead                     # out_side is to the view's left or right; the road's side flips
+    billboard(F, coll, sb, F.edge[side] + side * 22.0, side * 0.45 + (0 if ahead > 0 else math.pi))
+  fx, fy = view(300, -out_side * 150)            # a farm on the other side, far out
+  if "farm" in kinds and clear(fx, fy, 60):
+    farm_at(F, coll, fx, fy, ground(fx, fy)[0], heading)
+  fo = view(380, 0)
+  if "flyover" in kinds and not F.c[0][3] - 20 <= F.sd(*fo)[0] <= F.c[-1][3] + 20:
+    far_overpass(F, coll, cam_xy, heading + 0.12, 380.0)
+
+
+def build_cloud_shadows(F: Frame, coll, env, sun, frames, fps):
+  """env cloud_shadows (clear or partly cloudy days): a shadow-only plane 450 m up, offset toward the sun, a soft
+  noise mask cutting cloud shapes out of it (about 40 % cover); it drifts at 6 m/s over the clip."""
+  if env.get("sky") in ("overcast", "night") or env.get("night"):
+    return
+  alt = 450.0
+  sdir = sun.matrix_world.to_quaternion() @ Vector((0, 0, 1))     # toward the sun
+  sdir.normalize()
+  mid = F.c[len(F.c) // 2]
+  k = alt / max(sdir.z, 0.05)
+  cx, cy = mid[0] + sdir.x * k, mid[1] + sdir.y * k
+  size = 8000.0
+  ob = mesh_object("cloud_shadows", [(-size / 2, -size / 2, 0), (size / 2, -size / 2, 0), (size / 2, size / 2, 0),
+                                       (-size / 2, size / 2, 0)], [(0, 1, 2, 3)], None, coll)
+  ob.location = (cx, cy, alt)
+  for attr in ("visible_camera", "visible_diffuse", "visible_glossy", "visible_transmission", "visible_volume_scatter"):
+    setattr(ob, attr, False)
+  ob.visible_shadow = True
+  m = bpy.data.materials.new("cloud_mask")
+  m.use_nodes = True
+  nt = m.node_tree
+  nt.nodes.remove(nt.nodes["Principled BSDF"])
+  tc = nt.nodes.new("ShaderNodeTexCoord")
+  mp = nt.nodes.new("ShaderNodeMapping")
+  mp.inputs["Scale"].default_value = (1 / 240.0, 1 / 170.0, 1.0)
+  nz = nt.nodes.new("ShaderNodeTexNoise")
+  nz.inputs["Scale"].default_value = 1.0
+  nz.inputs["Detail"].default_value = 5.0
+  nz.inputs["Roughness"].default_value = 0.55
+  rm = nt.nodes.new("ShaderNodeMapRange")
+  rm.inputs[1].default_value, rm.inputs[2].default_value = 0.49, 0.55      # coverage about 40 %, soft edges
+  rm.inputs[3].default_value, rm.inputs[4].default_value = 1.0, 0.15       # 1 = clear, 0.15 = 85 % of the sun blocked
+  tr = nt.nodes.new("ShaderNodeBsdfTransparent")
+  dif = nt.nodes.new("ShaderNodeBsdfDiffuse")
+  dif.inputs["Color"].default_value = (0, 0, 0, 1)
+  mix = nt.nodes.new("ShaderNodeMixShader")
+  nt.links.new(tc.outputs["Object"], mp.inputs["Vector"])
+  nt.links.new(mp.outputs[0], nz.inputs["Vector"])
+  nt.links.new(nz.outputs["Fac"], rm.inputs[0])
+  nt.links.new(rm.outputs[0], mix.inputs[0])
+  nt.links.new(dif.outputs[0], mix.inputs[1])
+  nt.links.new(tr.outputs[0], mix.inputs[2])
+  nt.links.new(mix.outputs[0], nt.nodes["Material Output"].inputs["Surface"])
+  ob.data.materials.append(m)
+  # drift with the wind, about 6 m/s, across the road
+  h = mid[2] + 0.9
+  for f in (1, frames):
+    t = (f - 1) / fps
+    ob.location = (cx + 6.0 * t * math.cos(h), cy + 6.0 * t * math.sin(h), alt)
+    ob.keyframe_insert("location", frame=f)
+  _linear(ob)
+
+
+def spray_material(name, strength):
+  """Spray: a lopsided soft ellipsoid of mist in the volume's box, broken up by noise; strength scales its density."""
+  m = bpy.data.materials.new(name)
+  m.use_nodes = True
+  nt = m.node_tree
+  nt.nodes.remove(nt.nodes["Principled BSDF"])
+  gen = nt.nodes.new("ShaderNodeTexCoord")
+  sep = nt.nodes.new("ShaderNodeSeparateXYZ")
+  nt.links.new(gen.outputs["Generated"], sep.inputs[0])
+
+  def math_node(op, a, b=None):
+    n = nt.nodes.new("ShaderNodeMath")
+    n.operation = op
+    for i, v in enumerate((a, b)):
+      if v is None:
+        continue
+      if isinstance(v, bpy.types.NodeSocket):
+        nt.links.new(v, n.inputs[i])
+      else:
+        n.inputs[i].default_value = v
+    return n.outputs[0]
+
+  # generated x: 0 at the far end of the plume, 1 at the wheels; z: 0 road, 1 top; y: 0..1 across. The density is a
+  # soft lopsided ellipsoid: thickest just behind the wheels, low over the road, thinning to nothing at every face
+  def half(v, c, lo, hi):
+    dv = math_node("SUBTRACT", v, c)
+    pos = math_node("GREATER_THAN", dv, 0.0)
+    a_ = math_node("DIVIDE", dv, lo)
+    b_ = math_node("DIVIDE", dv, hi)
+    return math_node("ADD", a_, math_node("MULTIPLY", pos, math_node("SUBTRACT", b_, a_)))
+
+  sx = half(sep.outputs[0], 0.8, 0.8, 0.2)
+  sy = half(sep.outputs[1], 0.5, 0.5, 0.5)
+  sz = half(sep.outputs[2], 0.18, 0.18, 0.82)
+  r2 = math_node("ADD", math_node("ADD", math_node("MULTIPLY", sx, sx), math_node("MULTIPLY", sy, sy)),
+                 math_node("MULTIPLY", sz, sz))
+  shell = math_node("MAXIMUM", math_node("SUBTRACT", 1.0, math_node("SQRT", r2)), 0.0)
+  shape = math_node("MULTIPLY", shell, shell)
+  nz = nt.nodes.new("ShaderNodeTexNoise")
+  nz.inputs["Scale"].default_value = 2.5
+  nz.inputs["Detail"].default_value = 4.0
+  objc = nt.nodes.new("ShaderNodeTexCoord")
+  nt.links.new(objc.outputs["Object"], nz.inputs["Vector"])
+  billow = nt.nodes.new("ShaderNodeMapRange")
+  billow.inputs[1].default_value, billow.inputs[2].default_value = 0.35, 0.7
+  nt.links.new(nz.outputs["Fac"], billow.inputs[0])
+  dens = math_node("MULTIPLY", shape, billow.outputs[0])
+  dens = math_node("MULTIPLY", dens, strength)
+  vol = nt.nodes.new("ShaderNodeVolumePrincipled")
+  vol.inputs["Color"].default_value = (0.82, 0.84, 0.87, 1.0)
+  vol.inputs["Anisotropy"].default_value = 0.4
+  nt.links.new(dens, vol.inputs["Density"])
+  nt.links.new(vol.outputs[0], nt.nodes["Material Output"].inputs["Volume"])
+  return m
+
+
+def build_spray(sc, env):
+  """env spray (0..1, with rain): a plume of mist thrown up behind the wheels of every moving car and truck, parented
+  to it; thinner behind the ego, which the chase camera looks past."""
+  amount = float(env.get("spray", 0) or 0)
+  if amount <= 0:
+    return 0
+  users = bpy.data.collections["road_users"]
+  n = 0
+  for a in sc["actors"]:
+    if a["kind"] not in ("ego", "car", "truck") or a["poses"][0] == a["poses"][-1]:
+      continue
+    root = bpy.data.objects.get(a["name"].replace(" ", "_"))
+    if root is None:
+      continue
+    truck = a["kind"] == "truck"
+    rear, L, W, Hh = (-4.75, 16.0, 3.0, 3.2) if truck else (-2.2, 9.0, 2.2, 1.5)
+    strength = amount * (9.0 if truck else (3.5 if a["kind"] == "ego" else 5.0))
+    me = box_mesh(f"spray_{n}", L, W, Hh, 0.04)   # clear of the road: no coplanar boundary
+    ob = bpy.data.objects.new(f"spray_{a['name']}", me)
+    ob.parent = root
+    ob.location = (rear - L / 2 + 0.6, 0.0, 0.0)
+    me.materials.append(spray_material(f"spray_mat_{n}", strength))
+    users.objects.link(ob)
+    n += 1
+  return n
+
+
+def decal_material(name, rgb, rough, alpha, edge=0.25, noise_scale=1.5):
+  """A flat decal: colour and roughness, its alpha softened at the rim and broken by noise."""
+  m, g = node_mat(name)
+  gen = g.node("ShaderNodeTexCoord").outputs["UV"]
+  sep = g.node("ShaderNodeSeparateXYZ", {0: gen})
+  fx = g.math("MINIMUM", sep.outputs[0], g.math("SUBTRACT", 1.0, sep.outputs[0]))
+  fy = g.math("MINIMUM", sep.outputs[1], g.math("SUBTRACT", 1.0, sep.outputs[1]))
+  rim = g.remap(g.math("MINIMUM", fx, fy), 0.0, edge, 0.0, 1.0)
+  objc = g.node("ShaderNodeTexCoord").outputs["Object"]
+  nz = g.noise(objc, noise_scale, 4).outputs[0]
+  a = g.math("MULTIPLY", rim, g.remap(nz, 0.3, 0.55, 0.4, 1.0))
+  g.finish(rgb, rough)
+  g.set(g.bsdf.inputs["Alpha"], g.math("MULTIPLY", a, alpha))
+  return m
+
+
+def quad(name, F: Frame, s0, s1, d0, d1, z, mat, coll, n=None):
+  """A decal on the road between s0..s1 and d0..d1, following the centre line; UV 0..1."""
+  n = n or max(int(abs(s1 - s0)), 1)
+  verts, faces, uvs = [], [], []
+  for i in range(n + 1):
+    s = s0 + (s1 - s0) * i / n
+    p = F.at(s)
+    verts += [offset(p, d0, z), offset(p, d1, z)]
+    uvs += [(0.0, i / n), (1.0, i / n)]
+    if i:
+      faces.append((2 * i - 2, 2 * i - 1, 2 * i + 1, 2 * i))
+  return mesh_object(name, verts, faces, mat, coll, uvs=uvs)
+
+
+def build_road_wear(F: Frame, coll, env):
+  """env road_wear: repair patches, cracks, a sealed transverse joint, faint skid marks in another lane and road studs
+  on the lines (cast-iron covers on an urban street) over the stretch the chase camera sees. Flat decals between 2.5
+  and 4.5 mm above the asphalt, under the markings (6 mm); the studs are 18 mm high on the lines."""
+  rnd = random.Random(23)
+  r = F.r
+  s_a, s_b = F.camera_span(10.0, 170.0)
+  lines = sorted(m["d"] for m in r["markings"])
+  lo, hi = r["carriageway"][1], r["carriageway"][0]
+  lanes = [(a + 0.25, b - 0.25) for a, b in zip([lo] + lines, lines + [hi]) if b - a > 1.5]
+  wet = float(env.get("wet", 0) or 0)
+  patch = decal_material("wear_patch", (0.05, 0.049, 0.05), 0.8 - 0.5 * wet, 0.75, 0.04, 3.0)
+  patch2 = decal_material("wear_patch2", (0.085, 0.082, 0.078), 0.85 - 0.5 * wet, 0.6, 0.05, 3.0)
+  crack = material("wear_crack", (0.012, 0.012, 0.013), rough=0.9)
+  sealant = material("wear_sealant", (0.02, 0.02, 0.022), rough=0.25)
+  skid = decal_material("wear_skid", (0.006, 0.006, 0.006), 0.5, 0.8, 0.12, 0.8)
+  # repair patches, mostly in the wheel tracks
+  s = s_a
+  while s < s_b:
+    a, b = rnd.choice(lanes)
+    w = rnd.uniform(1.0, min(2.8, b - a))
+    d0 = rnd.uniform(a, b - w)
+    ln = rnd.uniform(1.5, 6.0)
+    quad("patch", F, s, s + ln, d0 + w, d0, 0.0025, rnd.choice((patch, patch, patch2)), coll, max(int(ln), 1))
+    s += rnd.uniform(14, 38)
+  # cracks: thin wandering strips, longitudinal along the lane joints and a few across the lane
+  for k in range(int(0.15 * (s_b - s_a))):
+    s0 = rnd.uniform(s_a, s_b - 10)
+    a, b = rnd.choice(lanes)
+    d = rnd.uniform(a, b)
+    longit = rnd.random() < 0.6
+    verts, faces = [], []
+    n = rnd.randint(10, 30)
+    ang = 0.0 if longit else math.pi / 2
+    x_s, x_d = s0, d
+    for i in range(n + 1):
+      p = F.at(x_s)
+      w = 0.02 * (1 - abs(2 * i / n - 1)) + 0.008
+      ny = math.cos(ang)
+      verts += [offset(p, x_d + w * ny, 0.003), offset(p, x_d - w * ny, 0.003)]
+      if i:
+        faces.append((2 * i - 2, 2 * i - 1, 2 * i + 1, 2 * i))
+      ang += rnd.uniform(-0.5, 0.5)
+      if longit:
+        ang = max(min(ang, 0.6), -0.6)
+      step = rnd.uniform(0.15, 0.35)
+      x_s += step * math.cos(ang)
+      x_d = min(max(x_d + step * math.sin(ang), a), b)
+    mesh_object("crack", verts, faces, crack, coll)
+  # sealed transverse joints across the whole carriageway (under the lines, which stay on top), one every 120 m
+  sj = s_a + 42
+  while sj < s_b:
+    quad("sealed_joint", F, sj, sj + 0.14, hi, lo, 0.004, sealant, coll, 1)
+    sj += 120.0
+  # faint skid marks in the next lane, curving a little
+  other = lanes[0] if len(lanes) > 1 else lanes[-1]
+  dm = 0.5 * (other[0] + other[1])
+  s0 = min(F.ego_s(max(1, round(LOOK_FRAC * len(F.sc["t"])))) + 55, s_b - 30)
+  for off in (-0.78, 0.78):
+    verts, faces, uvs = [], [], []
+    n = 30
+    for i in range(n + 1):
+      s = s0 + 28 * i / n
+      dd = dm + off + 0.35 * (i / n) ** 2
+      p = F.at(s)
+      verts += [offset(p, dd + 0.11, 0.0045), offset(p, dd - 0.11, 0.0045)]
+      uvs += [(0.0, i / n), (1.0, i / n)]
+      if i:
+        faces.append((2 * i - 2, 2 * i - 1, 2 * i + 1, 2 * i))
+    mesh_object("skid", verts, faces, skid, coll, uvs=uvs)
+  # road studs on the lane lines (and the edge lines on the highway), every 18 m
+  stud_w = material("stud_white", (0.9, 0.9, 0.85), rough=0.2, emit=0.6 if env.get("night") else 0.0)
+  stud_r = material("stud_red", (0.8, 0.05, 0.03), rough=0.2, emit=0.6 if env.get("night") else 0.0)
+  stud_a = material("stud_amber", (0.95, 0.55, 0.05), rough=0.2, emit=0.6 if env.get("night") else 0.0)
+  me = bpy.data.meshes.new("stud")
+  bm = bmesh.new()
+  bmesh.ops.create_cube(bm, size=1.0)
+  bmesh.ops.scale(bm, vec=(0.1, 0.1, 0.018), verts=bm.verts)
+  bmesh.ops.translate(bm, vec=(0, 0, 0.009), verts=bm.verts)
+  bm.to_mesh(me)
+  bm.free()
+  for mk in r["markings"]:
+    if F.kind == "urban":
+      break
+    col = {"white": stud_w, "yellow": stud_a}[mk["colour"]]
+    if mk["style"] == "solid" and mk["colour"] == "white":
+      col = stud_r if mk["d"] < 0 else stud_a
+    m2 = me.copy()
+    m2.materials.append(col)
+    s = s_a
+    while s < s_b:
+      p = F.at(s)
+      x, y, _ = offset(p, mk["d"])
+      part("stud", m2, None, coll, (x, y, 0.0), (0, 0, p[2]))
+      s += 18.0
+  if F.kind == "urban":                          # a manhole cover and a gully grate instead
+    iron = material("cast_iron", (0.05, 0.05, 0.05), rough=0.4, metal=0.8)
+    s, k = s_a + 18, 0
+    while s < s_b:
+      x, y, _ = F.world(s, (0.2, -1.0, 2.8)[k % 3])
+      k += 1
+      part("manhole", cyl_mesh(f"manhole{s:.0f}", 0.32, 0.01, mat=iron, segs=24), None, coll, (x, y, 0.004))
+      s += 29.0
+
+
+def build_camera_feel(cam, ego_ob):
+  """env camera_feel: mild depth of field on the chase camera (f/2, focused on the ego), and a vignette and film grain
+  in the compositor (CPU), chained after the glare when there is one. Off for the top view (surroundings_for)."""
+  cam.data.dof.use_dof = True
+  cam.data.dof.focus_object = ego_ob
+  cam.data.dof.aperture_fstop = 2.0
+  scene = bpy.context.scene
+  scene.render.compositor_device = "CPU"
+  ng = scene.compositing_node_group
+  if ng is None:
+    ng = bpy.data.node_groups.new("look", "CompositorNodeTree")
+    ng.interface.new_socket("Image", in_out="OUTPUT", socket_type="NodeSocketColor")
+    scene.compositing_node_group = ng
+    rl, out = ng.nodes.new("CompositorNodeRLayers"), ng.nodes.new("NodeGroupOutput")
+    src = rl.outputs["Image"]
+  else:
+    out = next(n for n in ng.nodes if n.bl_idname == "NodeGroupOutput")
+    src = out.inputs[0].links[0].from_socket
+  ell = ng.nodes.new("CompositorNodeEllipseMask")
+  ell.inputs["Size"].default_value = (1.15, 1.15) if len(ell.inputs["Size"].default_value) == 2 else (1.15, 1.15, 0)
+  blur = ng.nodes.new("CompositorNodeBlur")
+  try:
+    blur.inputs["Size"].default_value = (260, 260) if len(blur.inputs["Size"].default_value) == 2 else (260, 260, 0)
+  except TypeError:
+    pass
+  ng.links.new(ell.outputs["Mask"], blur.inputs["Image"])
+  vig = ng.nodes.new("ShaderNodeMapRange")
+  vig.inputs[3].default_value, vig.inputs[4].default_value = 0.72, 1.0
+  ng.links.new(blur.outputs[0], vig.inputs[0])
+  mul = ng.nodes.new("ShaderNodeMix")
+  mul.name = "look_vignette"
+  mul.data_type, mul.blend_type = "RGBA", "MULTIPLY"
+  mul.inputs[0].default_value = 1.0
+  ng.links.new(src, mul.inputs[6])
+  ng.links.new(vig.outputs[0], mul.inputs[7])
+  # grain: per-pixel white noise, centred on 0, added in proportion to the brightness (overlay-like)
+  coords = ng.nodes.new("CompositorNodeImageCoordinates")
+  ng.links.new(src, coords.inputs[0])
+  wn = ng.nodes.new("ShaderNodeTexWhiteNoise")
+  wn.noise_dimensions = "2D"
+  ng.links.new(coords.outputs[1] if len(coords.outputs) > 1 else coords.outputs[0], wn.inputs["Vector"])
+  cen = ng.nodes.new("ShaderNodeMapRange")
+  cen.inputs[3].default_value, cen.inputs[4].default_value = 0.94, 1.06
+  ng.links.new(wn.outputs["Value"], cen.inputs[0])
+  gr = ng.nodes.new("ShaderNodeMix")
+  gr.name = "look_grain"
+  gr.data_type, gr.blend_type = "RGBA", "MULTIPLY"
+  gr.inputs[0].default_value = 1.0
+  ng.links.new(mul.outputs[2], gr.inputs[6])
+  ng.links.new(cen.outputs[0], gr.inputs[7])
+  ng.links.new(gr.outputs[2], out.inputs[0])
+
+
+def surroundings_for(cam_name: str):
+  """The vignette, grain and spray are for the views from the road: switch them off for the orthographic top view,
+  which shows the layout."""
+  for ob in bpy.data.objects:
+    if ob.name.startswith("spray_"):
+      ob.hide_render = cam_name == "cam_top"
+  ng = bpy.context.scene.compositing_node_group
+  if ng is None:
+    return
+  for k in ("look_vignette", "look_grain"):
+    n = ng.nodes.get(k)
+    if n is not None:
+      n.inputs[0].default_value = 0.0 if cam_name == "cam_top" else 1.0
+
+
+def build_surroundings(sc: dict, env: dict, cam, ego_ob, frames: int, fps: int, rear: bool = False):
+  """Everything env asks of the surroundings (see the section comment), in the order the parts depend on: the ground
+  first, so that plants and objects stand on it."""
+  coll = bpy.data.collections.new("surroundings")
+  bpy.context.scene.collection.children.link(coll)
+  F = Frame(sc, env, rear)
+  frame = max(1, round(LOOK_FRAC * frames))
+  bpy.context.scene.frame_set(frame)
+  cam_xy = tuple(cam.matrix_world.translation[:2])
+  look = cam.matrix_world.to_quaternion() @ Vector((0.0, 0.0, -1.0))
+  heading = math.atan2(look.y, look.x)
+  done = []
+  if F.terrain:
+    build_terrain(F, coll)
+    done.append(f"terrain {F.terrain}")
+  if env.get("horizon"):
+    build_horizon(F, coll, cam_xy)
+    done.append("horizon")
+    if env.get("haze_km") and not env.get("visibility_m") and not env.get("night"):
+      build_haze(coll, cam_xy, float(env["haze_km"]))
+      done.append("haze")
+  if env.get("verge_plants"):
+    build_verge_plants(F, coll)
+    done.append("verge plants")
+  kinds = [k for k in env.get("distant") or [] if k in DISTANT]
+  if kinds:
+    build_distant(F, coll, cam_xy, heading, frame, kinds)
+    done.append("distant " + "+".join(kinds))
+  if env.get("cloud_shadows"):
+    build_cloud_shadows(F, coll, env, bpy.data.objects["sun"], frames, fps)
+    done.append("cloud shadows")
+  if build_spray(sc, env):
+    done.append("spray")
+  if env.get("road_wear"):
+    build_road_wear(F, coll, env)
+    done.append("road wear")
+  if env.get("horizon") or kinds:
+    for ob in bpy.data.objects:
+      if ob.type == "CAMERA":
+        ob.data.clip_end = 9000.0
+  if env.get("camera_feel"):
+    build_camera_feel(cam, ego_ob)
+    done.append("camera feel")
+  bpy.context.scene.frame_set(1)
+  print("surroundings: " + (", ".join(done) or "none"))
+  return coll
+
+
 # ------------------------------------------------------------------------------------------------- road users
 class CarModel:
   """The purchased mesh, centred on the ground and facing +X, kept out of the scene as a template; each road user is
