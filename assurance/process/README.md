@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-11 Integrated process model (machine-readable) and generated process maps |
 | Standard reference | ISO 26262-2:2018 §6 (safety lifecycle, planning of activities); ISO 21448:2022 §4; ISO/SAE 21434:2021 §6 (cybersecurity activities and their tailoring); ISO/PAS 8800:2024 (AI safety lifecycle); ASPICE 4.0 MAN.3 (project lifecycle definition). Informative: Integrated Automotive Standards Handbook (ISH-2026-001) §3.3–3.4, Ch. 5, Ch. 13 |
-| Version | 0.1 |
+| Version | 0.2 (§7 plan view: the model, WP-M-03 §5 and the lead's pending decisions as one linked Jantt chart, built in CI; WP-P-07 TL-50; OI-5; 2026-10-21). 0.1 |
 | Status | Draft (all phases G0 governance to G6 operation modelled) |
 | ASIL / scope | Process (all disciplines) |
 | Author | Assurance team (initial draft) |
@@ -169,7 +169,27 @@ These findings come from the generated maps. They are observations for the safet
 4. **Every field finding re-opens a G1 work product.** All six feedback routes (FB-01…FB-06) end in the concept phase: HARA, item definition, SOTIF analyses, misuse analysis, AI requirements or the safety case. WP-M-06 §4 repeats a confirmation review when a confirmed work product changes in a safety-relevant way. So a single field finding can trigger I3 confirmation reviews again, and that needs the external assessor even after release.
 5. **One open interface is due by G6:** IX-13, from G2. IX-28 has been closed: WP-V-04 §2.1 now defines one signature set, AS-01…AS-11. Each signature maps to a WP-O-04 field event; MON-17 was added for the three that had none. Both documents share one extractor, frozen thresholds per signature-set version, and the same ODD denominator and discovery-rate definition. The numeric thresholds are still placeholders (WP-O-04 OI-5).
 
-## 7. Open items
+## 7. Plan view
+
+[`tools/jantt_plan.py`](tools/jantt_plan.py) draws the model as one linked chart in the [Jantt](https://github.com/AhmadHassan-BTed/Jantt) format. As with the maps, nothing is entered by hand:
+
+| In the chart | Read from |
+|---|---|
+| One bar per activity and confirmation measure, coloured by lane | `model/*.yaml` |
+| Arrows between activities of a phase: the latest earlier supplier of each input, transitive arrows removed (as the maps draw them) | `model/*.yaml` |
+| One milestone per gate, waiting on the phase's last activities; the first activities of the next phase wait on it | `model/*.yaml`, WP-M-00 §2 |
+| Gate dates: the first day of the month WP-M-03 §5 gives as the earliest; the latest is in the gate's notes | WP-M-03 §5, through [`fig_m_plans.py`](../01-management/figures/fig_m_plans.py) |
+| Progress: the WP-M-00 status of the least advanced output (Skeleton 0, Draft 0.5, In review 0.8, Approved or Baselined 1); a confirmation measure is done when its record exists | WP-M-00 §3, `10-safety-case/confirmation/` |
+| One milestone per decision the lead has still to make (open, queued) or Claude has still to apply (answered), blocking the activities that produce the work products it names | `01-management/decisions/register.yaml` |
+| The work-product list, with a link to each file | WP-M-00 §3 |
+
+**What the bars are not.** Activities have no durations of their own: WP-M-03 §4.2 estimates effort per phase. Each activity is placed inside its phase window in the column of its place in the input order, so a bar shows order and dependency, not an estimate. For the same reason the chart's critical-path overlay is off: with placed dates every bar has slack, and Jantt finds only the last gate critical. The phase-level critical path is in WP-M-03 §5. Per-activity effort would make both real (OI-5).
+
+**Where to see it.** The output is not committed: the decision register changes in most pull requests, and a committed chart would go stale with each of them. The `trace and link checks` job builds it on every run and keeps it as the `plan` workflow artifact: download it and open `index.html`, which works offline. `python3 assurance/process/tools/jantt_plan.py` builds the same files into `build/plan/`. `liondriver.jantt.json` also opens in Jantt's own editor (`jantt open`), but changes made there are not read back: edit the sources and rebuild.
+
+**Checks.** The build fails if the chart breaks a Jantt rule (unique IDs, valid dates, known categories, no unknown or circular dependency, no task starting before a task it waits on ends), which [`tools/test_jantt_plan.py`](tools/test_jantt_plan.py) shows on broken copies. It also fails if the vendored bundle differs from its pinned SHA-256 ([`tools/vendor/jantt-2fd3830/SOURCE.md`](tools/vendor/jantt-2fd3830/SOURCE.md)). The bundle has no network or storage calls, and the page mounts it read-only. Jantt's own validator, run once by hand at the vendored commit on 2026-10-21, also accepted the chart with no errors and no warnings.
+
+## 8. Open items
 
 | ID | Item | Owner | Gate |
 |---|---|---|---|
@@ -177,3 +197,4 @@ These findings come from the generated maps. They are observations for the safet
 | OI-2 | Add an "agreed" interface status set only through a recorded review, and decide whether cross-domain interfaces become requirement items (`IFR-nn`) in `trace/` | Safety manager | G2 |
 | OI-3 | Closed: gate review skeletons for G0–G6 are generated in `10-safety-case/gates/skeletons/` | Safety manager | — |
 | OI-4 | Derive pull-request checklists from the model: which activities and interfaces a change to a work product re-opens | Configuration and change manager | G2 |
+| OI-5 | The plan view (§7) places activities inside their phase window because only phase-level effort exists (WP-M-03 §4.2). An effort estimate per activity, with the re-plan of WP-M-03 OI-6, would give real activity dates and a critical path that means something | Project manager | G1 |
