@@ -37,6 +37,8 @@ s = re.sub(r"^\s*(-- )?key-threshold:.*$", "  key-threshold: 3", s, count=1, fla
 s = re.sub(r"^(-- )?http-transport:.*$", "http-transport: curl", s, count=1, flags=re.M)
 open(path, "w").write(s)
 PY
+# run cabal outside the checkout, so that it leaves no dist-newstyle/ folder behind
+cd "$(mktemp -d)"
 "$CABAL" update "hackage.haskell.org,$INDEX_STATE"
 "$CABAL" install -w "$GHC" --index-state="$INDEX_STATE" --lib copilot-4.8.1 copilot-core-4.8.1 copilot-c99-4.8.1 \
   copilot-language-4.8.1 copilot-theorem-4.8.1 copilot-libraries-4.8.1 copilot-interpreter-4.8.1 \
