@@ -188,6 +188,1065 @@
     }
    }
   },
+  "box_trailer": {
+   "source": "liondriver-assets",
+   "id": "sketchfab/truck-trailer-free.zip",
+   "page": "https://sketchfab.com/3d-models/575958a53e3d4e9f8bcfb1ee2cef67bf",
+   "licence": "CC-BY 4.0",
+   "kind": "kit",
+   "use": "A 53 ft box trailer behind the traffic trucks (trailers)",
+   "title": "Truck Trailer FREE",
+   "author": "NLM-Group",
+   "file": "source/Trailer.blend",
+   "pieces": {
+    "trailer": [
+     "all"
+    ]
+   },
+   "width_m": 2.59,
+   "archive": {
+    "sha256": "8e83cd20fdb78e38ee16d484ed240aa6a5d59cb3c17198496849b04d27b2f857"
+   },
+   "files": {
+    "source/Trailer.blend": {
+     "path": "box_trailer/source/Trailer.blend",
+     "sha256": "3abfc3f83f22b13f630f9772767772e7ef846cf4cbb27e26f1b718a23d57a5b6",
+     "url": "liondriver-assets:sketchfab/truck-trailer-free.zip"
+    },
+    "textures/TIRE.jpeg": {
+     "path": "box_trailer/textures/TIRE.jpeg",
+     "sha256": "ee8f21416b3f1160fa449005098814d6f25fa89c300110866f18c28fc54f1c63",
+     "url": "liondriver-assets:sketchfab/truck-trailer-free.zip"
+    },
+    "textures/1.jpg": {
+     "path": "box_trailer/textures/1.jpg",
+     "sha256": "4967adbdae96292abe920a94dc91897139b972137ca389cfec241558a1f98051",
+     "url": "liondriver-assets:sketchfab/truck-trailer-free.zip"
+    },
+    "textures/TIRE.jpg": {
+     "path": "box_trailer/textures/TIRE.jpg",
+     "sha256": "2366d5b618e4f6bd55e46302213a07fd003b6cb10c0358820ba4c3f4e2f1c0b1",
+     "url": "liondriver-assets:sketchfab/truck-trailer-free.zip"
+    }
+   }
+  },
+  "car_pack": {
+   "source": "liondriver-assets",
+   "id": "sketchfab/generic-passenger-car-pack.zip",
+   "page": "https://sketchfab.com/3d-models/20f9af9b8a404d5cb022ac6fe87f21f5",
+   "licence": "CC-BY 4.0",
+   "kind": "kit",
+   "use": "Traffic cars, parked and passing cars of several shapes (traffic_skins, street_life)",
+   "title": "Generic passenger car pack",
+   "author": "comrade1280",
+   "file": "source/fab.fbx",
+   "pieces": {
+    "cars": [
+     "Compact",
+     "Coupe",
+     "Hatchback",
+     "minivan",
+     "Offroad",
+     "Pickup",
+     "Sedan",
+     "SUV",
+     "Wagon"
+    ]
+   },
+   "archive": {
+    "sha256": "76398b2fd4e30668fcab5e91f8de619f09dd136f89a951531fe1fadc057faa69"
+   },
+   "files": {
+    "source/fab.fbx": {
+     "path": "car_pack/source/fab.fbx",
+     "sha256": "3b60a21399cde2723e6250f29f80f4487e932e937ca08d4e17d90b1d8e845ee6",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/wheel_B_Glossiness.png": {
+     "path": "car_pack/textures/wheel_B_Glossiness.png",
+     "sha256": "7e37810fccc65b87565b05ddfa0b585e6cb66ff3fdd692392730b0e0c4519097",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/Minivan_Metallic.png": {
+     "path": "car_pack/textures/Minivan_Metallic.png",
+     "sha256": "3358a9f85baea37085d8034d965d39c383990b7f1566b9e83145ff3a8b12df7f",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/Sedan_Metallic.png": {
+     "path": "car_pack/textures/Sedan_Metallic.png",
+     "sha256": "66fc232219da3f02d960cc1d69397c5808210f25ace2eafcff4d3e950913b407",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/wheel_1_Diffuse.png": {
+     "path": "car_pack/textures/wheel_1_Diffuse.png",
+     "sha256": "3580f5758bfc909279348bea151b4b6266ab45a1448bccb7c64b5a5cd99669a5",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/CompactBlue.png": {
+     "path": "car_pack/textures/CompactBlue.png",
+     "sha256": "419c4a9d506b2a4c6143fc6314d898e924d8a7cf4f43f91cd95ed5bf512ab6a0",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/wheel_H_Diffuse.png": {
+     "path": "car_pack/textures/wheel_H_Diffuse.png",
+     "sha256": "2c7263e5dc7a7296cdb1755ea2b4e758feb00c6dc8ac0448dc0bb7d61a75bdae",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/wheel_G_Glossiness.png": {
+     "path": "car_pack/textures/wheel_G_Glossiness.png",
+     "sha256": "0d34ac61f75d6848bea41a3b1eabc883f620e554b59970acf65a671b9e04bc4f",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/SUV_Glossiness.png": {
+     "path": "car_pack/textures/SUV_Glossiness.png",
+     "sha256": "12802c5739c8db83c480d40a77f007553f9b090f570e02fa1e8e2c0132201a29",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/MinivanRed.png": {
+     "path": "car_pack/textures/MinivanRed.png",
+     "sha256": "1c2db7a02f00fb0bf4526e3574c64460e34f5eb5cf43dc4ae60f7662796ba6d8",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/PickupGreen.png": {
+     "path": "car_pack/textures/PickupGreen.png",
+     "sha256": "a11feee30f839d730832e17a0dd5606d546617afd4c9276f59cadb0e72190e34",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/SUVBlack.png": {
+     "path": "car_pack/textures/SUVBlack.png",
+     "sha256": "ed91a54700e417f6ecae79e928a4651b29930e10b53c2d817d11d864b0a87a71",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/wheel_E_Metallic.png": {
+     "path": "car_pack/textures/wheel_E_Metallic.png",
+     "sha256": "df2c136a008db1ba70b27ed2d6801b868b5cfd8e5494d17d4b80bb89102c9e2e",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/Wagon_Glossiness.png": {
+     "path": "car_pack/textures/Wagon_Glossiness.png",
+     "sha256": "02a9cd98027c2fcdf456a3d70d1e3975ebc9c551b7e1a1c786305e0f80e1b584",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/Wheel_A_Glossiness.png": {
+     "path": "car_pack/textures/Wheel_A_Glossiness.png",
+     "sha256": "9be1e931ef12d133d6973f7d6bdec821f0d1b2ce69c972b768d245a86786997c",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/Offroad_Glossiness.png": {
+     "path": "car_pack/textures/Offroad_Glossiness.png",
+     "sha256": "0ad13db9d71e04783beeaba503bed45b3101db255e48685c52e82378b6002d22",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/wheel_D_Diffuse.png": {
+     "path": "car_pack/textures/wheel_D_Diffuse.png",
+     "sha256": "5eaa2d7f1d0af09561db453a9a78ada5ebc8f918ebbb83b84787f74a5cc9359c",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/Pickup_Metallic.png": {
+     "path": "car_pack/textures/Pickup_Metallic.png",
+     "sha256": "0551a25252bb8fd58b3e305dfe717984232dacfca61f473d958cb0c883ca9fdd",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/Compact_Metallic.png": {
+     "path": "car_pack/textures/Compact_Metallic.png",
+     "sha256": "b714078e8cc6d908012ce47dce5b1fb9cb1185bf33ccb8867da7544f8b85ac07",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/WagonBlue.png": {
+     "path": "car_pack/textures/WagonBlue.png",
+     "sha256": "7f13318de3a4f617ac4c70ba20b8c02db4f7b54c68662c6a0b04b846b602044e",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/Compact_Glossiness.png": {
+     "path": "car_pack/textures/Compact_Glossiness.png",
+     "sha256": "eeaa98b7dab7919bcbbfcd8f550ad8926cadc1412a37927227ebaa90c1909a6f",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/wheel_E_Glossiness.png": {
+     "path": "car_pack/textures/wheel_E_Glossiness.png",
+     "sha256": "253160f5b15bf670707fd15136e8f8547cb405afa03bf49cc1c2328a7930bcc2",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/Sport_Glossiness.png": {
+     "path": "car_pack/textures/Sport_Glossiness.png",
+     "sha256": "f78feee08010343ab208bf4eede72822b36a2faefd38205c671ce7f662abebdb",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/SedanYellow.png": {
+     "path": "car_pack/textures/SedanYellow.png",
+     "sha256": "0e5d03b212d1a68ba791dff72b3bfdd1e4746d609a88a67019b67100ce5f2583",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/wheel_B_Metallic.png": {
+     "path": "car_pack/textures/wheel_B_Metallic.png",
+     "sha256": "473b1abf4fd96cb117fb11bef9796ff13f162e5d921095116d31aaf155aa763c",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/wheel_H_Glossiness.png": {
+     "path": "car_pack/textures/wheel_H_Glossiness.png",
+     "sha256": "bc146ffee7bb4981d241c62906f6a201a713da8558d4e154afda8dac883360d8",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/wheel_G_Metallic.png": {
+     "path": "car_pack/textures/wheel_G_Metallic.png",
+     "sha256": "501d9c87ccad43495fba83971060353793e7179cdfbb60ec91080c6560517d9e",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/Coupe_Metallic.png": {
+     "path": "car_pack/textures/Coupe_Metallic.png",
+     "sha256": "ea9c252e877a9ddb88c23e9d48261b98a2b203f613c3384a9794ea421c21a959",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/wheel_H_Metallic.png": {
+     "path": "car_pack/textures/wheel_H_Metallic.png",
+     "sha256": "33c0994d5655c9db613332c80156043bb43a54d8dab5fedff4daafcc61a0db86",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/wheel_B_Diffuse.png": {
+     "path": "car_pack/textures/wheel_B_Diffuse.png",
+     "sha256": "0f5d2e48b441a8cc8693be767a30d8de330361c970a604a7f8d0cd5fcaca990d",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/wheel_C_Metallic.png": {
+     "path": "car_pack/textures/wheel_C_Metallic.png",
+     "sha256": "d93a99ff4a3591caa8ade537452c776c7dbd6533af0b7ff0adf8607e1501d338",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/HatchbackYellow.png": {
+     "path": "car_pack/textures/HatchbackYellow.png",
+     "sha256": "b5e693122290bec1eb313ed671f4f20c387c325ad15cee7ac4f5cc20f37c69be",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/lights.jpg": {
+     "path": "car_pack/textures/lights.jpg",
+     "sha256": "707a32a6cde0f25ca2ff426e3370c39fcfe4092bf25fafaacf1f7ea69f6d9375",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/DefaultMaterial_albedo.jpg": {
+     "path": "car_pack/textures/DefaultMaterial_albedo.jpg",
+     "sha256": "9260287447df50977b8ad9fe48aa129e2047ecaf579e0cd930fbb1324ce728f5",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/Wagon_Metallic.png": {
+     "path": "car_pack/textures/Wagon_Metallic.png",
+     "sha256": "20d66f7636f88a0ad87d4811402b8a20b828fa0809a7cfe4cc4646df2121e7d3",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/DefaultMaterial_AO.jpg": {
+     "path": "car_pack/textures/DefaultMaterial_AO.jpg",
+     "sha256": "2390bcf0171d88417794b2dc28118180dfd3f15fc942f431070657d6725569b8",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/OffroadGreen.png": {
+     "path": "car_pack/textures/OffroadGreen.png",
+     "sha256": "e89b10e526509467e936c6d76aec380604b192d605c1a62bd02d23b1dead78a8",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/Offroad_Metallic.png": {
+     "path": "car_pack/textures/Offroad_Metallic.png",
+     "sha256": "8882b014fb006bd05feecc43f3622bcd1152935d2cc6a4ce175fe7325854c88b",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/Hatchback_Metallic.png": {
+     "path": "car_pack/textures/Hatchback_Metallic.png",
+     "sha256": "3f56e7786730be3f771481fa91dbe418f761330f5df83889a2aaf386b960a567",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/Wheel_A_Metallic.png": {
+     "path": "car_pack/textures/Wheel_A_Metallic.png",
+     "sha256": "2423aaf4055ac502c0be97118396fbb6ab97e431c422cee4ab954627d0f8b861",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/SportRed.png": {
+     "path": "car_pack/textures/SportRed.png",
+     "sha256": "d508451e0fcf8ff3b430a95aed2b5498ec4e72bc742ea35380430a75ff1d2e74",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/Hatchback_Glossiness.png": {
+     "path": "car_pack/textures/Hatchback_Glossiness.png",
+     "sha256": "391ac7ad351c4ac70afda4fca77835ab183d2ab38413314f2f018cc8d3a7fc3a",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/Minivan_Glossiness.png": {
+     "path": "car_pack/textures/Minivan_Glossiness.png",
+     "sha256": "c4c55a5a6c0b9cc9a8fe5a9b381fe59d4b160aecdf36046cc3364b1a9c453f85",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/Pickup_Glossiness.png": {
+     "path": "car_pack/textures/Pickup_Glossiness.png",
+     "sha256": "c160b54e3b8b6b438ed639fc342e769ec6b431b84922b717dce4559441774925",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/wheel_1_Metallic.png": {
+     "path": "car_pack/textures/wheel_1_Metallic.png",
+     "sha256": "50c11f29fab31fb7f713f3ab667b61365ca99827afa04d99be38e37119d604bc",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/wheel_G_Diffuse.png": {
+     "path": "car_pack/textures/wheel_G_Diffuse.png",
+     "sha256": "9bd994ed0e96556fa77309c412f0e0d07648a73f618763d32f3d661f1fd1394a",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/wheel_C_Diffuse.png": {
+     "path": "car_pack/textures/wheel_C_Diffuse.png",
+     "sha256": "f1fa4be9a684eda26702216ae456bc8314440513b789c81fef56d21e7883803f",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/wheel_1_Glossiness.png": {
+     "path": "car_pack/textures/wheel_1_Glossiness.png",
+     "sha256": "843f618fd67c96e7f3d7a9a56cb51b7ad814e9d7a069e8188114c7a75ef6252c",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/SUV_Metallic.png": {
+     "path": "car_pack/textures/SUV_Metallic.png",
+     "sha256": "0793253b0864b2b6149a4587bd7f54a4088b861ed6d663409bd0df3b4b5a2cc3",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/Sedan_Glossiness.png": {
+     "path": "car_pack/textures/Sedan_Glossiness.png",
+     "sha256": "1590e6372f2d7697c63d11e08da66de884da4852c080a94aaddabb9347b7f6e7",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/wheel_D_Metallic.png": {
+     "path": "car_pack/textures/wheel_D_Metallic.png",
+     "sha256": "9fa1abb5c3cf87115c20ff8dbfe07c8f39a8e129d12a12656acabbde1dc0331e",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/Coupe_Glossiness.png": {
+     "path": "car_pack/textures/Coupe_Glossiness.png",
+     "sha256": "41f33e36405766c959745917ed5961ead36d394e5fa61aa510076056b9fd3678",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/Wheel_A_Diffuse.png": {
+     "path": "car_pack/textures/Wheel_A_Diffuse.png",
+     "sha256": "fbffb44f731bfebd1bbb17878b66d4ca5432a56c32dabf994989c17dfe9f1ea8",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/wheel_E_Diffuse.png": {
+     "path": "car_pack/textures/wheel_E_Diffuse.png",
+     "sha256": "307fb3d5a092f3ffd86fb07ac41280bfec794fd7d34e6d3640fbba10557352d9",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/wheel_C_Glossiness.png": {
+     "path": "car_pack/textures/wheel_C_Glossiness.png",
+     "sha256": "d7db37fd4861dc8e1ca03f4697231cc0d96f1841da691c06f982314e37f735c0",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/CoupeBlue.png": {
+     "path": "car_pack/textures/CoupeBlue.png",
+     "sha256": "467415b27d11008201314ae6ccba88ea0c392228701298dc14e14b2a6f162516",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/wheel_D_Glossiness.png": {
+     "path": "car_pack/textures/wheel_D_Glossiness.png",
+     "sha256": "27d58e06cc148e80c1b5c6f904d0766d4287c86606ac89bb90c3eaa53cba84fc",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    },
+    "textures/Sport_Metallic.png": {
+     "path": "car_pack/textures/Sport_Metallic.png",
+     "sha256": "fec705934a4f1fc7f87dd8f91417e518f9b3c1ebcd1e9e25923f9a08886905c2",
+     "url": "liondriver-assets:sketchfab/generic-passenger-car-pack.zip"
+    }
+   }
+  },
+  "city_brownstones": {
+   "source": "liondriver-assets",
+   "id": "sketchfab/brownstone-building-set-low-poly-model.zip",
+   "page": "https://sketchfab.com/3d-models/b15e6344acd844eabc823e1cc8332574",
+   "licence": "CC-BY 4.0",
+   "kind": "kit",
+   "use": "Brownstone rows on both sides of an urban street (city_blocks)",
+   "title": "Brownstone Building Set - Low poly model",
+   "author": "DanielZhabotinsky",
+   "file": "source/Brownstone_Building_Set.fbx",
+   "pieces": {
+    "city_block": [
+     "Brownstone_FlatFacade_1",
+     "Brownstone_FlatFacade_2",
+     "Brownstone_FlatFacade_3",
+     "Brownstone_FlatFacade_5",
+     "Brownstone_FlatFacade_6",
+     "Brownstone_FlatFacade_7",
+     "Brownstone_FlatFacade_9",
+     "Brownstone_FlatFacade_12",
+     "Brownstone_Commercial_1",
+     "Brownstone_Commercial_1_C",
+     "Brownstone_Classic_1",
+     "Brownstone_ClassicComplex_2",
+     "Brownstone_Harlem_1_B"
+    ]
+   },
+   "archive": {
+    "sha256": "9f17d91b9c2d7d7ec30c1cef2549330a95e71f28cc57ae3949e56c3a079aa61c"
+   },
+   "files": {
+    "source/Brownstone_Building_Set.fbx": {
+     "path": "city_brownstones/source/Brownstone_Building_Set.fbx",
+     "sha256": "0f4f4a38ac8c534755c17ec737abd69b580eabbeffcd14eaaf61a69c858a4594",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_5_dif.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_5_dif.jpeg",
+     "sha256": "94eda0deec97bd9978d1ff8c07c6177f3bedce0c2fcfc3a824c6478a5934c323",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_1_Rough.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_1_Rough.jpeg",
+     "sha256": "55536208217b51279ee87e3e3a0529cd85223e0bee31d56777e8020d851d4504",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Maskedstuff_1_Rough.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Maskedstuff_1_Rough.jpeg",
+     "sha256": "5f3f83caf6e2554237453de17e9099df8b0a812a821f5eb134d1ef0d138f9ba1",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_5_Spec.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_5_Spec.jpeg",
+     "sha256": "cf2f7b65ab3f86a28808c503f268a589776a641cefe41c63a1371742e6c258e7",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_3_Rough.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_3_Rough.jpeg",
+     "sha256": "d9c97852ffe346a51cb6af0cd9444adb85c17857e9f05309925a64fd1c28bf01",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Maskedstuff_1_Mask.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Maskedstuff_1_Mask.jpeg",
+     "sha256": "b19c3f0a30c2d6b48a914641c0e65639f573beccd575e8ee414997010d076252",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_2_Rough.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_2_Rough.jpeg",
+     "sha256": "ccdbf136b16fbc006330370305a3c98ccd1d5a4510dfd388dde63ed994d6f501",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_2_Dif.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_2_Dif.jpeg",
+     "sha256": "cbdda00fd300b21f9beae67b7ce3b45b06ff1dee6d746116e2b3f569eb61f113",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_2_Height.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_2_Height.jpeg",
+     "sha256": "2681ca207f5bdd210dc80ad39979ba9b1aa9e516952858648ab7c7aedaaca622",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_5_Height.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_5_Height.jpeg",
+     "sha256": "8c8db980c07657559e62ab6813e8f8e15b3d034486f43302e9fb968c653b7841",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_1_Height.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_1_Height.jpeg",
+     "sha256": "cc60ce336c999433dc24c591406401623a14902bacb245e995fedfaf10290f3c",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Wall_1_Height.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Wall_1_Height.jpeg",
+     "sha256": "6c3bb8b4edb654b3f853f51cf9ba1b81213864e954df3e6509ea95b33f79e060",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_4_Spec.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_4_Spec.jpeg",
+     "sha256": "916659f396a32f9ba9eafc9d05326f88c5ea8dec299ba3f95c33b6059f56d995",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Firstfloor_1_dif.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Firstfloor_1_dif.jpeg",
+     "sha256": "450a96154146d1218473307857eb2eda786308e1217f1c7026c9c451681a184d",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Firstfloor_1_Rough.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Firstfloor_1_Rough.jpeg",
+     "sha256": "6807e627b48bdeb1c412654a7c7e30498813e3385386c6e75441014cfe9104c1",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_6_Spec.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_6_Spec.jpeg",
+     "sha256": "fe32b18dda3a063284df9ec5a2df51909846c9b93efdd8521831194cfd8d61c9",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_6_dif.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_6_dif.jpeg",
+     "sha256": "a3013d910ac70ffad9dd736b3a5affa00a3ee3489cbd873ff2a5ed60c2e8139a",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_1_Spec.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_1_Spec.jpeg",
+     "sha256": "236377f465e2555b11b5e3bc8f5757d0df29647cc2a4d8cc4f9e281d42d50380",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Maskedstuff_1_Height.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Maskedstuff_1_Height.jpeg",
+     "sha256": "608a4f317437cb0ac0a76471a5f5910b1513a52628b89b83098e8b0a2570f9ae",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_2_Spec.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_2_Spec.jpeg",
+     "sha256": "a1b26236b32a49e2649cfa3049c49bbaa6e7b235e6166d68ace91c22536b7477",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_3_Height.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_3_Height.jpeg",
+     "sha256": "32d91542ae03d32136cff814d3269d18e603c1ecf890c3a40584ecda8faf554f",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_6_Height.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_6_Height.jpeg",
+     "sha256": "4ca6f44cd778708f16272ea0f4f3c6285f6f9a4242e5175079263e68347e8ca1",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Firstfloor_1_Spec.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Firstfloor_1_Spec.jpeg",
+     "sha256": "f6d169a82aa049d92264585874e236d9e82fc02d54771e10c1aa9395d1d14360",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_4_Rough.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_4_Rough.jpeg",
+     "sha256": "90cbd6d862e7109733a902e68a6f6aee20b7e9de6a1014227e070a0368a353ff",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_6_Rough.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_6_Rough.jpeg",
+     "sha256": "09f2b23196c6d90477d3e1934bc38bdf118d91073f58c96ff73313dd0727b4c3",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Firstfloor_1_Height.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Firstfloor_1_Height.jpeg",
+     "sha256": "e3bd9482a7dc660c97bfaa209677e1cff53ece4ca18711dc762e9860cf0da96f",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_5_Rough.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_5_Rough.jpeg",
+     "sha256": "d00ce66f24f63a72c437e0351fbbde1e5b7579dd25b7464aad6bbe2e4fafb8b7",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Wall_1_Dif.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Wall_1_Dif.jpeg",
+     "sha256": "559e43e2ce1fdc973120ec3cb133c2893accd3961e06ccf8b3617274ea3f75f3",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Maskedstuff_1_dif.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Maskedstuff_1_dif.jpeg",
+     "sha256": "81599e3f4452090ac51288f80f001caeb5446e1ed2f09acdcb3341c36ee2bed3",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_3_Spec.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_3_Spec.jpeg",
+     "sha256": "493d8d9fc414434ca4d08fe30f2256e377411aafb38115fabd4ea152b4a12a29",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_FLR_7_Spec.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_FLR_7_Spec.jpeg",
+     "sha256": "9c1c708395d21a07afc8cd6bda2d377472f9356f5d36d10de1cf25b4eb39f29b",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_FLR_7_Height.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_FLR_7_Height.jpeg",
+     "sha256": "14ed43cbba52236d613892dd8425564311fcdda46f843eba301ac57aac66c30d",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_4_Height.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_4_Height.jpeg",
+     "sha256": "020571f43afb8a21c2f1220b6d085409b10dd086015b2a1f5736837b193c2314",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_FLR_7_Dif.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_FLR_7_Dif.jpeg",
+     "sha256": "591a79671527656ba209dbaf28497183ad6ffd30da1ed1be29269cc554dcd169",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_4_dif.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_4_dif.jpeg",
+     "sha256": "4b81f2b68804971d24e30bb8abe2d48e9150d52bd6dd90486f276efa762069ae",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Maskedstuff_1_Spec.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Maskedstuff_1_Spec.jpeg",
+     "sha256": "ee0b902bf1e6045d4f95837e5f5af3c87a85676fd25cedc1e8075a7a5c0c47cc",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Wall_1_Rough.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Wall_1_Rough.jpeg",
+     "sha256": "68d0715477a6da1a18e1226be7e64290c270f805745e2c28a0348ec5a80fd9a4",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_3_Dif.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_3_Dif.jpeg",
+     "sha256": "337f68fe0f13e21027a05446712936ac72c34d4efafefca34db70b967465a23d",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Wall_1_Spec.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Wall_1_Spec.jpeg",
+     "sha256": "a1cab27a91d9d0082a42972bd5cdc27d67418261464b00d1429097acd2f88ad9",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_Flr_1_Dif.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_Flr_1_Dif.jpeg",
+     "sha256": "46b20f77ff70e3709855be503fc233ce15dbb37f2d1561784a3080879867142e",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    },
+    "textures/Brownstone_Facade_FLR_7_Rough.jpeg": {
+     "path": "city_brownstones/textures/Brownstone_Facade_FLR_7_Rough.jpeg",
+     "sha256": "77ce7463570683ebd4a884376c0b646c3b464f4376323a909b5d41cab1a1e70d",
+     "url": "liondriver-assets:sketchfab/brownstone-building-set-low-poly-model.zip"
+    }
+   }
+  },
+  "city_chicago": {
+   "source": "liondriver-assets",
+   "id": "sketchfab/realistic-chicago-buildings.zip",
+   "page": "https://sketchfab.com/3d-models/c4a3993ef1e84e6d9d5a15c78da88aae",
+   "licence": "CC-BY 4.0",
+   "kind": "kit",
+   "use": "A pair of Chicago commercial buildings (611 N Wells St) among the brownstones (city_blocks)",
+   "scale": 0.3,
+   "title": "Realistic chicago buildings",
+   "author": "99.Miles",
+   "file": "source/Chicago buildings/Asset/Source/Builds.blend",
+   "pieces": {
+    "city_block": [
+     "all"
+    ]
+   },
+   "skip": [
+    "Camera",
+    "Light",
+    "Sidewalks"
+   ],
+   "textures": "source/Chicago buildings/Asset/Textures",
+   "archive": {
+    "sha256": "d664e5532ad832496dcf06d9bac089d38f6056b8979c2621c0ef657f3c5325b5"
+   },
+   "files": {
+    "source/Chicago buildings/Asset/Source/Builds.blend": {
+     "path": "city_chicago/source/Chicago buildings/Asset/Source/Builds.blend",
+     "sha256": "6529a18d4461a8b35b55dfaeed339c7330b08928fb8aeb5e6495a032bb9eff42",
+     "url": "liondriver-assets:sketchfab/realistic-chicago-buildings.zip"
+    },
+    "source/Chicago buildings/Asset/Textures/black build roughness.jpg": {
+     "path": "city_chicago/source/Chicago buildings/Asset/Textures/black build roughness.jpg",
+     "sha256": "c5e69101f7deaa81fbf086812c97a3906953004a10cc5134eeeb7e98e65e3f69",
+     "url": "liondriver-assets:sketchfab/realistic-chicago-buildings.zip"
+    },
+    "source/Chicago buildings/Asset/Textures/black build.jpg": {
+     "path": "city_chicago/source/Chicago buildings/Asset/Textures/black build.jpg",
+     "sha256": "1bce8135a9f09a5eb422f6c2deef1d64a45dc5938bada2646b5e220fd83c9dd8",
+     "url": "liondriver-assets:sketchfab/realistic-chicago-buildings.zip"
+    },
+    "source/Chicago buildings/Asset/Textures/bricks.png": {
+     "path": "city_chicago/source/Chicago buildings/Asset/Textures/bricks.png",
+     "sha256": "6ee4d72843c246f3917271f8fb01c0c0a6b59d28ac7528319a65306b64b3ab84",
+     "url": "liondriver-assets:sketchfab/realistic-chicago-buildings.zip"
+    },
+    "source/Chicago buildings/Asset/Textures/bulbs.png": {
+     "path": "city_chicago/source/Chicago buildings/Asset/Textures/bulbs.png",
+     "sha256": "f88b7d9d2424971c6c86fdcb8de32adc29e06a9b3513a4f1800beb40d5d2273c",
+     "url": "liondriver-assets:sketchfab/realistic-chicago-buildings.zip"
+    },
+    "source/Chicago buildings/Asset/Textures/cool pair roughness.jpg": {
+     "path": "city_chicago/source/Chicago buildings/Asset/Textures/cool pair roughness.jpg",
+     "sha256": "3bff886531f81f46e7db57f411623dfbc443d7cd240e90e9098a99347013558b",
+     "url": "liondriver-assets:sketchfab/realistic-chicago-buildings.zip"
+    },
+    "source/Chicago buildings/Asset/Textures/cool pair..jpg": {
+     "path": "city_chicago/source/Chicago buildings/Asset/Textures/cool pair..jpg",
+     "sha256": "21f07cb7dcac1c9ed73ceed79e519743188df97aa63932afc2fa7c7d619b5203",
+     "url": "liondriver-assets:sketchfab/realistic-chicago-buildings.zip"
+    },
+    "source/Chicago buildings/Asset/Textures/Sidewalks roughness.jpg": {
+     "path": "city_chicago/source/Chicago buildings/Asset/Textures/Sidewalks roughness.jpg",
+     "sha256": "57be63b89a32eea6ac18d4e709a68f7c12dda170477467c09e4c54082199e2e5",
+     "url": "liondriver-assets:sketchfab/realistic-chicago-buildings.zip"
+    },
+    "source/Chicago buildings/Asset/Textures/Sidewalks.jpg": {
+     "path": "city_chicago/source/Chicago buildings/Asset/Textures/Sidewalks.jpg",
+     "sha256": "aa038221a7880eff31eccedbdc4ff795820fa07fea4afe3567ae6d6e66b26c65",
+     "url": "liondriver-assets:sketchfab/realistic-chicago-buildings.zip"
+    },
+    "textures/black build.jpeg": {
+     "path": "city_chicago/textures/black build.jpeg",
+     "sha256": "6b30546b53e6b3ed7796f7ea941507df4b51ea8ceee3dc941a34397985d5676f",
+     "url": "liondriver-assets:sketchfab/realistic-chicago-buildings.zip"
+    },
+    "textures/cool pair..jpeg": {
+     "path": "city_chicago/textures/cool pair..jpeg",
+     "sha256": "de22ba8e6ec2a265ec9b17c64e1525f43c87ccda562d7202c5bb307bf3f21c35",
+     "url": "liondriver-assets:sketchfab/realistic-chicago-buildings.zip"
+    },
+    "textures/Sidewalksroughness@channels=G.png": {
+     "path": "city_chicago/textures/Sidewalksroughness@channels=G.png",
+     "sha256": "41cee1eca293faafd74ea2092d5aa3884b8c0cf1e71de786c8b3a452447d08ab",
+     "url": "liondriver-assets:sketchfab/realistic-chicago-buildings.zip"
+    },
+    "textures/cool pair roughness.jpeg": {
+     "path": "city_chicago/textures/cool pair roughness.jpeg",
+     "sha256": "b5d4b3ce9bf8e0f84aca0f913f91d951780e8bd95ddec0aa77cd83e682841f0e",
+     "url": "liondriver-assets:sketchfab/realistic-chicago-buildings.zip"
+    },
+    "textures/black build roughness.jpeg": {
+     "path": "city_chicago/textures/black build roughness.jpeg",
+     "sha256": "5e9f7f31512cd1566c3f52141c8087b903b9fe90e093be3eb653aec53d7a366d",
+     "url": "liondriver-assets:sketchfab/realistic-chicago-buildings.zip"
+    },
+    "textures/bricks.png": {
+     "path": "city_chicago/textures/bricks.png",
+     "sha256": "48276b5fe3b499a7c50f26b0ff05afab44962b2b06d7a346db7c19329c85ae58",
+     "url": "liondriver-assets:sketchfab/realistic-chicago-buildings.zip"
+    },
+    "textures/internal_ground_ao_texture.jpeg": {
+     "path": "city_chicago/textures/internal_ground_ao_texture.jpeg",
+     "sha256": "bbe0c7d47e7bb4bb3a62d1b1746dad3f76d20aec762021d830bdb060fd44d972",
+     "url": "liondriver-assets:sketchfab/realistic-chicago-buildings.zip"
+    },
+    "textures/Sidewalks.jpeg": {
+     "path": "city_chicago/textures/Sidewalks.jpeg",
+     "sha256": "dcaedb927fb3fe0365a0c6959b1719977f738a0f47d0b8881172cbb7b22d6042",
+     "url": "liondriver-assets:sketchfab/realistic-chicago-buildings.zip"
+    },
+    "textures/bulbs.png": {
+     "path": "city_chicago/textures/bulbs.png",
+     "sha256": "ec0f797b3b61b4f49350fc6f6cf7d2e98d721fe0dab71b9b4a834a4947ebe076",
+     "url": "liondriver-assets:sketchfab/realistic-chicago-buildings.zip"
+    }
+   }
+  },
+  "city_downtown": {
+   "source": "liondriver-assets",
+   "id": "sketchfab/downtown-buildings-set-low-poly-model.zip",
+   "page": "https://sketchfab.com/3d-models/7378e7fb9c914c39880d9913a6f4e1d6",
+   "licence": "CC-BY 4.0",
+   "kind": "kit",
+   "use": "Office blocks on the street and towers beyond it (city_blocks)",
+   "title": "Downtown Buildings Set - Low Poly model",
+   "author": "DanielZhabotinsky",
+   "file": "source/Downtown_Buildings_Set.fbx",
+   "pieces": {
+    "city_block": [
+     "Downtown_BrownstoneOffice_1",
+     "Downtown_ClassicOffice_1",
+     "Downtown_ModernOffice_3"
+    ],
+    "skyline": [
+     "Downtown_ModernOffice_5",
+     "Downtown_ModernOffice_5_B",
+     "Downtown_Flatiron_1",
+     "Downtown_ArtDeco_1",
+     "Downtown_ModernOffice_4",
+     "Downtown_ModernOffice_1_B",
+     "Downtown_ClassicOffice_1"
+    ]
+   },
+   "archive": {
+    "sha256": "9335fb671afe2bf9a3fa45362988cac5f99530502921111050b26563d6917a54"
+   },
+   "files": {
+    "source/Downtown_Buildings_Set.fbx": {
+     "path": "city_downtown/source/Downtown_Buildings_Set.fbx",
+     "sha256": "270c40f2284bc9ee323c4da1efdea4497fc543d6a8c5c711b9fc6e87981da179",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Modern_Firstfloor_FLR_1_Height.jpeg": {
+     "path": "city_downtown/textures/Downtown_Modern_Firstfloor_FLR_1_Height.jpeg",
+     "sha256": "ccdf2a4019b7ea2fe12281daee93d43b91c2137b8b3a15045110fc2f1401d356",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_8_Spec.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_8_Spec.jpeg",
+     "sha256": "c25736f2b775f5b58d307846f319889d1bf0731f19851371291f8038496e2fe9",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_4_Rough.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_4_Rough.jpeg",
+     "sha256": "563fdae46e78a4a5e4f809034edad4df1c3855a492be3ccea9b740ee86bd6d92",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_3_Rough.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_3_Rough.jpeg",
+     "sha256": "bf38e3a16be0483adb74ff740b829dc7d5951975988cd6c1ffb871057a7d0d7a",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_1_Height.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_1_Height.jpeg",
+     "sha256": "4cc3fa1d6abac4ac8fe3226b950b4606767b4f8eb92df796022e65bb890aee8a",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_7_Height.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_7_Height.jpeg",
+     "sha256": "91adea39ede8474914dfffbab8afd8dda35c38abda3a7df9bed48090657b411d",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_8_Height.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_8_Height.jpeg",
+     "sha256": "e76260029a369d221e4da1040a612a03b8d6639c762dd36257a9b69d201ffeff",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Brownstone_Facade_Flr_2_Rough.jpeg": {
+     "path": "city_downtown/textures/Downtown_Brownstone_Facade_Flr_2_Rough.jpeg",
+     "sha256": "08ce8923889f6b07c038ece34cf4fe95914527974b5427985c89e4550d83439c",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Concrete_FLR_1_Spec.jpeg": {
+     "path": "city_downtown/textures/Downtown_Concrete_FLR_1_Spec.jpeg",
+     "sha256": "6bd41bf9bd0aed8c4a473e49a32a74c390f9a49c271fc15be2e80088aeb3b347",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Maskedstuff_1_Spec.jpeg": {
+     "path": "city_downtown/textures/Downtown_Maskedstuff_1_Spec.jpeg",
+     "sha256": "359d8f1f7ad58d4e729bc9a291b0be813f0c7730edeb31b81e4e876ad6c3fc87",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_2_Rough.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_2_Rough.jpeg",
+     "sha256": "82b0c7e64293a61dfb1fb56585dc89ad0baf7ea78fea8e2c3d70400d9ee6e15a",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Modern_Firstfloor_FLR_1_Spec.jpeg": {
+     "path": "city_downtown/textures/Downtown_Modern_Firstfloor_FLR_1_Spec.jpeg",
+     "sha256": "05bd5776310928c9babf6aadef048c839afa874ebcdd98b7ee531f82710c900d",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Brownstone_Firstfloor_1_Rough.jpeg": {
+     "path": "city_downtown/textures/Downtown_Brownstone_Firstfloor_1_Rough.jpeg",
+     "sha256": "488752ee159caee42b1c2ca7edb78d49831a134dd96997ff38a097a8dd075b31",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_4_Height.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_4_Height.jpeg",
+     "sha256": "fcf361ccaa8292abb968d13b4d267b16ccf7d3c43fee88169eee7c22261bbbca",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Maskedstuff_1_dif.jpeg": {
+     "path": "city_downtown/textures/Downtown_Maskedstuff_1_dif.jpeg",
+     "sha256": "1656a12207b25ed94730c7c07edf1a25a9691ccd33dca97f01738aa21a60f352",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_7_Dif.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_7_Dif.jpeg",
+     "sha256": "6960db6e41c46ccafba6bc760a7c1c3e501059cf3868886550f3dc1ab40d5eed",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Concrete_FLR_1_Dif.jpeg": {
+     "path": "city_downtown/textures/Downtown_Concrete_FLR_1_Dif.jpeg",
+     "sha256": "025c9b23c927e966b0cf848b7f90ad1a694ae5af270a1b72c50f35bf59ce4d26",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Brownstone_Facade_Flr_2_Dif.jpeg": {
+     "path": "city_downtown/textures/Downtown_Brownstone_Facade_Flr_2_Dif.jpeg",
+     "sha256": "e66f7ecff7f5d58a7c0e63ed6ab5e2e45809b611d740df2e35b387b5b10dbf8e",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_3_Height.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_3_Height.jpeg",
+     "sha256": "f0d1d71a54b0d2c720bd3d5915e2a076116ad841bcd7290a79e4d4e3b52cee34",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_4_Dif.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_4_Dif.jpeg",
+     "sha256": "ab990a72ce683975ae63b1e256a26b46f5ab49c863c996a0e3956c0f08197c3e",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_International_Side_1_Rough.jpeg": {
+     "path": "city_downtown/textures/Downtown_International_Side_1_Rough.jpeg",
+     "sha256": "f2e626d83dde4af169fe5f70465dc2335096c4eb1afb0aa5f0e45a883512f38c",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Firstfloor_FLR_2_dif.jpeg": {
+     "path": "city_downtown/textures/Downtown_Firstfloor_FLR_2_dif.jpeg",
+     "sha256": "88b2c39c11bc40509cc30dea7c861854ac9ca497bd8a0449515e192c5a1a4ba7",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_International_Side_1_Spec.jpeg": {
+     "path": "city_downtown/textures/Downtown_International_Side_1_Spec.jpeg",
+     "sha256": "a3b28add96ef428316445b5d3cb3facc972c4c1d4c58d29f834f043ba46ac7a0",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Firstfloortrim_FLR_1_Height.jpeg": {
+     "path": "city_downtown/textures/Downtown_Firstfloortrim_FLR_1_Height.jpeg",
+     "sha256": "cc17d787e37ea965f449a5b51048cc7691794aad397e2e2c6ba00e5cf7d619bf",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Firstfloor_FLR_2_Height.jpeg": {
+     "path": "city_downtown/textures/Downtown_Firstfloor_FLR_2_Height.jpeg",
+     "sha256": "2dc780eaa865cf3a055c17f1329d3c606de3d1ec92a1bfe56b81ae309ad6640f",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_6_Rough.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_6_Rough.jpeg",
+     "sha256": "6a75e8460b230e8b201f3e6c800fad355db029aea4922cfe0a87366c8ccca7da",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_2_Height.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_2_Height.jpeg",
+     "sha256": "3d78a1dbb92e0ed5b443cba69a3fff450c8f13196a263b43e22f628a6fbc67ee",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Firstfloortrim_FLR_1_dif.jpeg": {
+     "path": "city_downtown/textures/Downtown_Firstfloortrim_FLR_1_dif.jpeg",
+     "sha256": "1e7370675e2a26519feb4a20153bce4c0da6181ded77fc48c2789e9b6da8aed7",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Modern_Firstfloor_FLR_1_dif.jpeg": {
+     "path": "city_downtown/textures/Downtown_Modern_Firstfloor_FLR_1_dif.jpeg",
+     "sha256": "f6fb1e1a887779f02085d2b83d365fcc250afd39f7c20179d944eeaa90af5450",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_International_Side_1_Height.jpeg": {
+     "path": "city_downtown/textures/Downtown_International_Side_1_Height.jpeg",
+     "sha256": "f589087ec7c9345b111d550f71f2557f733716e8719b98c0e065019569de6698",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Firstfloortrim_FLR_1_Rough.jpeg": {
+     "path": "city_downtown/textures/Downtown_Firstfloortrim_FLR_1_Rough.jpeg",
+     "sha256": "1375a3bcf3f25fe3e6a662799883e44ca9a44c99fd782e701b918a5ca5d345b7",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_2_Dif.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_2_Dif.jpeg",
+     "sha256": "54cbfc863b75eea4f8f058343dd7bfe9d8a21b9081ab30f9217f7c73cff64160",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Brownstone_Firstfloor_1_dif.jpeg": {
+     "path": "city_downtown/textures/Downtown_Brownstone_Firstfloor_1_dif.jpeg",
+     "sha256": "6709beecbd57958e179dba2ce0915caa23d6c10b7db4b417c5a460045c351a4d",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Brownstone_Facade_Flr_2_Height.jpeg": {
+     "path": "city_downtown/textures/Downtown_Brownstone_Facade_Flr_2_Height.jpeg",
+     "sha256": "32293988f389388001ae1131b57da466c856e49622a96b83d21608233d390c82",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Brownstone_Firstfloor_1_Height.jpeg": {
+     "path": "city_downtown/textures/Downtown_Brownstone_Firstfloor_1_Height.jpeg",
+     "sha256": "2b9414d323ab66a1f4eaba7c0832fc246279c068dd327ebe2f30aba85b80fed8",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_3_Spec.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_3_Spec.jpeg",
+     "sha256": "214df559e785318c907f902342e70700623f489d4a3bae27c2a14024c58bd9ce",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_1_Spec.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_1_Spec.jpeg",
+     "sha256": "31dfca2c5c5961a36718b14a4310b67dcaa9f72def157205f978158f6b7ad137",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Firstfloor_FLR_2_Rough.jpeg": {
+     "path": "city_downtown/textures/Downtown_Firstfloor_FLR_2_Rough.jpeg",
+     "sha256": "ac383aeae5ba8068ea07bbbe6e7d1f68233184b00335fcd231ee021abeaa3fe7",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Maskedstuff_1_Rough.jpeg": {
+     "path": "city_downtown/textures/Downtown_Maskedstuff_1_Rough.jpeg",
+     "sha256": "adce562aa556f34653b9d18b915485490cfe4786c864fae03aed0f1141f282a6",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_6_Height.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_6_Height.jpeg",
+     "sha256": "b87b8cbecf035c919cf2d9ba5d3042f9424660491d0047be8553f80a8fcc7bea",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_2_Spec.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_2_Spec.jpeg",
+     "sha256": "cc1c104580b6b86e6d1c924140053e14ea3a2ded86c4f5a3dbd284f9a21908ae",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_6_Spec.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_6_Spec.jpeg",
+     "sha256": "ac1968e479d166ba8532613fc358f68d22cba5ac87060e88d325ed3e58fa3bb4",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Modern_Firstfloor_FLR_1_Rough.jpeg": {
+     "path": "city_downtown/textures/Downtown_Modern_Firstfloor_FLR_1_Rough.jpeg",
+     "sha256": "8ef5ec0ddaf4a90fa76023710139c4dfa7cd5cf26583959b26c03f7c28b850cb",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_7_Rough.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_7_Rough.jpeg",
+     "sha256": "5918e86b670e32d72de085dfa6304e4a0a8abca21dd9b051ef813238cca45b3b",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_1_Rough.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_1_Rough.jpeg",
+     "sha256": "24392ed890569560aea391bca7d445d4070f76cd07f55c96854218d517964175",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_7_Spec.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_7_Spec.jpeg",
+     "sha256": "3a7b3a6ee25cd25cffb490258b0c98c842fa0582fec28f95c56b9a1d1761586a",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Brownstone_Facade_Flr_2_Spec.jpeg": {
+     "path": "city_downtown/textures/Downtown_Brownstone_Facade_Flr_2_Spec.jpeg",
+     "sha256": "d09c58f01237b2fd3a0652a1e0897b3378dbe4a99ca7d6e12588dbeed68d928e",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_International_Side_1_Dif.jpeg": {
+     "path": "city_downtown/textures/Downtown_International_Side_1_Dif.jpeg",
+     "sha256": "71ea11691dd5a1bcc9ec170ce9b5acf56c6375001a2395034b6570866831576a",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Brownstone_Firstfloor_1_Spec.jpeg": {
+     "path": "city_downtown/textures/Downtown_Brownstone_Firstfloor_1_Spec.jpeg",
+     "sha256": "c9cbc601387dc161a0800740417e198d9c84389e65dbf8798e554c2b2f8b387c",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Firstfloortrim_FLR_1_Spec.jpeg": {
+     "path": "city_downtown/textures/Downtown_Firstfloortrim_FLR_1_Spec.jpeg",
+     "sha256": "ea0480509cc5b233647bc9d1214bcac85529db1415ec8499ec932cb26bdcd37b",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Firstfloor_FLR_2_Spec.jpeg": {
+     "path": "city_downtown/textures/Downtown_Firstfloor_FLR_2_Spec.jpeg",
+     "sha256": "7496ca3224f51d1ab033a3ff0c090ff793b7ee658f4c276df23c41d70960e27c",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_8_Dif.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_8_Dif.jpeg",
+     "sha256": "469b6cdff69bbed6a278d64eb6740048de0ad098397ca37093bbcb45eb842768",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_8_Rough.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_8_Rough.jpeg",
+     "sha256": "73a9c8107f777541b7f24908046fc0de149bf55e7c039595d020dbc911445733",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Maskedstuff_1_Height.jpeg": {
+     "path": "city_downtown/textures/Downtown_Maskedstuff_1_Height.jpeg",
+     "sha256": "406dd073e94f424d91e73efcca660d59f96affaaf8d87898bd4ca2ec8efb75e1",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Concrete_FLR_1_Height.jpeg": {
+     "path": "city_downtown/textures/Downtown_Concrete_FLR_1_Height.jpeg",
+     "sha256": "35dd580ae9b82ffbfae9ef97b9c98eed738f4808b09d27fea3c9269c4ed1127d",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_6_Dif.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_6_Dif.jpeg",
+     "sha256": "6f170b2716cf283fa742839f3adcf775bcf15af60f0e23785e307e09ac9c4c90",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_3_Dif.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_3_Dif.jpeg",
+     "sha256": "6f021c388f0b360d93e16b329a23dfde879db666932f8679bcd23ee27e95d477",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_1_Dif.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_1_Dif.jpeg",
+     "sha256": "8b367d9cdcccad893c5d24ce47c6bd1012391ba6fefd7c318d2658d686ff9f3c",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Maskedstuff_1_Mask.jpeg": {
+     "path": "city_downtown/textures/Downtown_Maskedstuff_1_Mask.jpeg",
+     "sha256": "82bc24dd059c3f7929b8a697db9cefb7b93793d0ea75dec9c5d5fb504da857b5",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    },
+    "textures/Downtown_Facade_FLR_4_Spec.jpeg": {
+     "path": "city_downtown/textures/Downtown_Facade_FLR_4_Spec.jpeg",
+     "sha256": "c05866892402dd071786540cd2050a12d6d4e48d85db4c33b207a916e8c865a2",
+     "url": "liondriver-assets:sketchfab/downtown-buildings-set-low-poly-model.zip"
+    }
+   }
+  },
   "concrete": {
    "source": "ambientcg",
    "id": "Concrete034",
@@ -217,6 +1276,43 @@
      "sha256": "a4a9e39857a19afd23a778e5abf44fcdf6bd7f93918f1cf6878b41933e553511",
      "url": "https://ambientcg.com/get?file=Concrete034_1K-JPG.zip",
      "member": "_Roughness"
+    }
+   }
+  },
+  "grain_bins": {
+   "source": "liondriver-assets",
+   "id": "sketchfab/panola-grain-bins.zip",
+   "page": "https://sketchfab.com/3d-models/342892c5b0ff4519a2327d05316e266c",
+   "licence": "CC-BY 4.0",
+   "kind": "kit",
+   "use": "A row of grain bins on the farmstead (farmstead)",
+   "scale": 6.0,
+   "title": "Panola Grain Bins",
+   "author": "frankmcmains",
+   "file": "source/model/model.fbx",
+   "pieces": {
+    "bins": [
+     "all"
+    ]
+   },
+   "archive": {
+    "sha256": "f535f6be2b2d0baf18c4fc96294cda01d78291fed2386a481c60c3fc9e8e5344"
+   },
+   "files": {
+    "source/model/model.jpg": {
+     "path": "grain_bins/source/model/model.jpg",
+     "sha256": "08f4c09ee367de00e991616633e5f4984dcd973a6601693336b0b315e7b1fb3a",
+     "url": "liondriver-assets:sketchfab/panola-grain-bins.zip"
+    },
+    "source/model/model.fbx": {
+     "path": "grain_bins/source/model/model.fbx",
+     "sha256": "de7edbb8b7c82b918a1c530a657309e16389f99dcd64957c72fb81e1aea741f6",
+     "url": "liondriver-assets:sketchfab/panola-grain-bins.zip"
+    },
+    "textures/model.jpeg": {
+     "path": "grain_bins/textures/model.jpeg",
+     "sha256": "08f4c09ee367de00e991616633e5f4984dcd973a6601693336b0b315e7b1fb3a",
+     "url": "liondriver-assets:sketchfab/panola-grain-bins.zip"
     }
    }
   },
@@ -398,6 +1494,227 @@
      "path": "hydrant/textures/fire_hydrant_nor_gl_1k.jpg",
      "sha256": "f6786775276c7b48f0582fdd7c43984b63b15b7a8e0ea0e2f2af8cdab98c06d7",
      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/fire_hydrant/fire_hydrant_nor_gl_1k.jpg"
+    }
+   }
+  },
+  "rural_buildings": {
+   "source": "liondriver-assets",
+   "id": "sketchfab/rural-buildings-set-low-poly-models.zip",
+   "page": "https://sketchfab.com/3d-models/51ab7e74bac347a89725f1d22b928edf",
+   "licence": "CC-BY 4.0",
+   "kind": "kit",
+   "use": "A farmstead and a roadside diner and stores beside rural roads (farmstead)",
+   "title": "Rural Buildings Set - Low Poly models",
+   "author": "DanielZhabotinsky",
+   "file": "source/Rural_Building_Set.fbx",
+   "pieces": {
+    "farm": [
+     "Rural_HouseOld_1",
+     "Rural_WoodenBuilding_1",
+     "Rural_WoodenBuilding_2",
+     "Rural_WoodenBuilding_4",
+     "Rural_WoodenBuilding_5",
+     "Rural_QuonsetHut_1",
+     "Rural_TrailerH_1",
+     "Rural_UnmobileHome_1"
+    ],
+    "roadside": [
+     "Rural_Diner_1",
+     "Rural_Diner_2",
+     "Rural_StoreSmall_1",
+     "Rural_StoreSmall_2",
+     "Rural_StoreSmall_4",
+     "Rural_StoreSmall_6"
+    ]
+   },
+   "archive": {
+    "sha256": "2951a944a7bad58a37200fca13e6f863fd24b299b6ac1a26a1d703c319abc880"
+   },
+   "files": {
+    "source/Rural_Building_Set.fbx": {
+     "path": "rural_buildings/source/Rural_Building_Set.fbx",
+     "sha256": "79d3dcd996783f2f9207c103668773fcd49ed84e71762a8af27ac410a131f790",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Industrial_Walls_FLR_1_Heigh.jpeg": {
+     "path": "rural_buildings/textures/Rural_Industrial_Walls_FLR_1_Heigh.jpeg",
+     "sha256": "a5338ee242df47b5f83cf09d207d15376c270f5cd35d5156d55cda7e661cbf6a",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Facade_FLR_2_Rough.jpeg": {
+     "path": "rural_buildings/textures/Rural_Facade_FLR_2_Rough.jpeg",
+     "sha256": "77ce7463570683ebd4a884376c0b646c3b464f4376323a909b5d41cab1a1e70d",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Brownstone_Facade_Flr_6_Spec.jpeg": {
+     "path": "rural_buildings/textures/Rural_Brownstone_Facade_Flr_6_Spec.jpeg",
+     "sha256": "fe32b18dda3a063284df9ec5a2df51909846c9b93efdd8521831194cfd8d61c9",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Midcity_Facade_FLR_2_Rough.jpeg": {
+     "path": "rural_buildings/textures/Rural_Midcity_Facade_FLR_2_Rough.jpeg",
+     "sha256": "624ef0bf83e582b6678e3a58e97af4b052ff294b278ec3d578c1de7ebea9ebd5",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Housetrim_1_Dif_Height.jpeg": {
+     "path": "rural_buildings/textures/Rural_Housetrim_1_Dif_Height.jpeg",
+     "sha256": "7f19a14989a480027a798d083fb74a3dd0ff3f1a62bad648de55eb3c212ed146",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Brownstone_Facade_Flr_6_Height.jpeg": {
+     "path": "rural_buildings/textures/Rural_Brownstone_Facade_Flr_6_Height.jpeg",
+     "sha256": "4ca6f44cd778708f16272ea0f4f3c6285f6f9a4242e5175079263e68347e8ca1",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Facade_FLR_1_Spec.jpeg": {
+     "path": "rural_buildings/textures/Rural_Facade_FLR_1_Spec.jpeg",
+     "sha256": "94d452e56e05494656b74cc1a79d82061f824c81201a2d1acea2a96f7178cec9",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Facade_FLR_2_Spec.jpeg": {
+     "path": "rural_buildings/textures/Rural_Facade_FLR_2_Spec.jpeg",
+     "sha256": "9c1c708395d21a07afc8cd6bda2d377472f9356f5d36d10de1cf25b4eb39f29b",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Housetrim_1_Dif.jpeg": {
+     "path": "rural_buildings/textures/Rural_Housetrim_1_Dif.jpeg",
+     "sha256": "0e7af412cd79ab56b38a42edb4c8385dcda2a50ba8738468936a2784ab0314df",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Midcity_Facade_FLR_2_Dif.jpeg": {
+     "path": "rural_buildings/textures/Rural_Midcity_Facade_FLR_2_Dif.jpeg",
+     "sha256": "c719bdcae9977dbdbeae4bd7b844be197c30bfdae574684bc82e79a76741fb76",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Housetrim_1_Dif_Spec.jpeg": {
+     "path": "rural_buildings/textures/Rural_Housetrim_1_Dif_Spec.jpeg",
+     "sha256": "4ecc010bf854cae4f430b839c490385c333c4975ac99043b6d6229d240b5cd38",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Facade_FLR_1_Height.jpeg": {
+     "path": "rural_buildings/textures/Rural_Facade_FLR_1_Height.jpeg",
+     "sha256": "ee761c1b1a93c02dc72a752db8c3aad199759598f1dab0765d03ede0a6c0d811",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Walltrim_1_Spec.jpeg": {
+     "path": "rural_buildings/textures/Rural_Walltrim_1_Spec.jpeg",
+     "sha256": "0324b1957ca21ddeaf3825e5224d440371252305b176cbd36c24929c00bc6a0f",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Facade_FLR_2_Dif.jpeg": {
+     "path": "rural_buildings/textures/Rural_Facade_FLR_2_Dif.jpeg",
+     "sha256": "591a79671527656ba209dbaf28497183ad6ffd30da1ed1be29269cc554dcd169",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Trailer_Stuff_1_Spec.jpeg": {
+     "path": "rural_buildings/textures/Rural_Trailer_Stuff_1_Spec.jpeg",
+     "sha256": "b426ac70cdfd42fae365adde2756b088fd153bc968348ae30834759511e9ff63",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Facade_FLR_2_Height.jpeg": {
+     "path": "rural_buildings/textures/Rural_Facade_FLR_2_Height.jpeg",
+     "sha256": "14ed43cbba52236d613892dd8425564311fcdda46f843eba301ac57aac66c30d",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Walltrim_1_Rough.jpeg": {
+     "path": "rural_buildings/textures/Rural_Walltrim_1_Rough.jpeg",
+     "sha256": "256114c3c278b2cb6af7997dfd34be5df056083ec4f3dca3fc332672bb5c0c3d",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Industrial_Walls_FLR_1_Rough.jpeg": {
+     "path": "rural_buildings/textures/Rural_Industrial_Walls_FLR_1_Rough.jpeg",
+     "sha256": "fefce7b86a35762b7b2f79ca030e359f0bbc443816ce0bb92615bca136a3a60e",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Trailer_Stuff_1_dif.jpeg": {
+     "path": "rural_buildings/textures/Rural_Trailer_Stuff_1_dif.jpeg",
+     "sha256": "f14ee1e038c331d1886fd802fe77ddf6d5ec44af6cc8a53d1a499a072c812b24",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Housetrim_1_Dif_Rough.jpeg": {
+     "path": "rural_buildings/textures/Rural_Housetrim_1_Dif_Rough.jpeg",
+     "sha256": "e4a924b5036d7c27ba2002dc4be3e610763d52713927577484d626d0f5ccda88",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Industrial_Walls_FLR_1_Spec.jpeg": {
+     "path": "rural_buildings/textures/Rural_Industrial_Walls_FLR_1_Spec.jpeg",
+     "sha256": "8e858918901f7ce85d882134b20bde97015a1930e65714a3785ccdca29228e91",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Midcity_Walls_FLR_1_Height.jpeg": {
+     "path": "rural_buildings/textures/Rural_Midcity_Walls_FLR_1_Height.jpeg",
+     "sha256": "3e5e1fd2a4b277af47815196a3ae2e7070dcb21f347e3a598875e6deaa7ff315",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Midcity_Facade_FLR_2_Height.jpeg": {
+     "path": "rural_buildings/textures/Rural_Midcity_Facade_FLR_2_Height.jpeg",
+     "sha256": "0aadf809a4de9a99424a6131199ac81c3a0ba9f403dadf7432304a764b8589df",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Walltrim_1_Dif.jpeg": {
+     "path": "rural_buildings/textures/Rural_Walltrim_1_Dif.jpeg",
+     "sha256": "852d1389b0fa14d0f3fac82a3cd720e8dd31d887dc90360896a44ad6c9b6b1e8",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Midcity_Walls_FLR_1_Rough.jpeg": {
+     "path": "rural_buildings/textures/Rural_Midcity_Walls_FLR_1_Rough.jpeg",
+     "sha256": "545a5cb27e36fd9d298f14160a00cb7db888b0f0d49f8c574fc4f338fcde7282",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Midcity_Facade_FLR_2_Spec.jpeg": {
+     "path": "rural_buildings/textures/Rural_Midcity_Facade_FLR_2_Spec.jpeg",
+     "sha256": "6c318e50b64479da5a9fe98aed9db8db7916e1b0b485ca53c25084b31b1148a4",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Midcity_Walls_FLR_1_Dif.jpeg": {
+     "path": "rural_buildings/textures/Rural_Midcity_Walls_FLR_1_Dif.jpeg",
+     "sha256": "d35bc1790f42d21445222c87b52b04dd93b4912ba6137772df0e9f0afd8c09b0",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Trailer_Stuff_1_Height.jpeg": {
+     "path": "rural_buildings/textures/Rural_Trailer_Stuff_1_Height.jpeg",
+     "sha256": "48efe117e9883fad9159b6f75468c494ecc77c786730bc5aa3d30b333eba09ad",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Walltrim_1_Height.jpeg": {
+     "path": "rural_buildings/textures/Rural_Walltrim_1_Height.jpeg",
+     "sha256": "17a23c46933f1432cb89c7bd201a3b512d28443915223e099cbd0129cbd1641f",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Brownstone_Facade_Flr_6_Rough.jpeg": {
+     "path": "rural_buildings/textures/Rural_Brownstone_Facade_Flr_6_Rough.jpeg",
+     "sha256": "09f2b23196c6d90477d3e1934bc38bdf118d91073f58c96ff73313dd0727b4c3",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Facade_FLR_1_Dif.jpeg": {
+     "path": "rural_buildings/textures/Rural_Facade_FLR_1_Dif.jpeg",
+     "sha256": "aa429adce5d60761529f222632d0b0af1db397c4d8cc449b16ed83258fe55085",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Midcity_Walls_FLR_1_Spec.jpeg": {
+     "path": "rural_buildings/textures/Rural_Midcity_Walls_FLR_1_Spec.jpeg",
+     "sha256": "5c80fd0ce281def491443da0498d3d91e0e2cb6e6576dfa1e2d0b25c99ee1345",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Trailer_Stuff_1_Rough.jpeg": {
+     "path": "rural_buildings/textures/Rural_Trailer_Stuff_1_Rough.jpeg",
+     "sha256": "4f21218600e19cf72413b8c85ac190364cedffcbeed3f15eae262ee0898969cb",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Facade_FLR_1_Rough.jpeg": {
+     "path": "rural_buildings/textures/Rural_Facade_FLR_1_Rough.jpeg",
+     "sha256": "9c3b6d1d00fc8771a6fc4190ea1da892076b8dd48cc99d7c1d60426e99caafbc",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Industrial_Walls_FLR_1_Dif.jpeg": {
+     "path": "rural_buildings/textures/Rural_Industrial_Walls_FLR_1_Dif.jpeg",
+     "sha256": "32498f56cdc73c79b9a12cc8528e55b10d5ebb69ff3a2c9630829120d4b76dcb",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
+    },
+    "textures/Rural_Brownstone_Facade_Flr_6_dif.jpeg": {
+     "path": "rural_buildings/textures/Rural_Brownstone_Facade_Flr_6_dif.jpeg",
+     "sha256": "a3013d910ac70ffad9dd736b3a5affa00a3ee3489cbd873ff2a5ed60c2e8139a",
+     "url": "liondriver-assets:sketchfab/rural-buildings-set-low-poly-models.zip"
     }
    }
   },
@@ -783,6 +2100,6 @@
    }
   }
  },
- "fetched": "2026-10-18",
- "licence": "CC0 1.0 Universal (public domain dedication); no attribution required"
+ "fetched": "2026-10-22",
+ "licence": "CC0 1.0 Universal (public domain dedication), no attribution required; kits CC-BY 4.0 (each slot's licence)"
 }

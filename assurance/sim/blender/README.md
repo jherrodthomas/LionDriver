@@ -31,9 +31,9 @@ occluding truck, an overpass, cones) is drawn in the scene, not simulated.
 
 | Step | Script | Runs in | Writes (under `out/<scene>/`, git-ignored) |
 |---|---|---|---|
-| 0 (optional) | [`fetch_assets.py`](fetch_assets.py) | Python; network access to Poly Haven and ambientCG | CC0 HDRIs, textures, scanned plants and street furniture under `assets/library/` (git-ignored); [`library/assets.lock.json`](library/README.md#4-cc0-assets) (committed). Without them the scenes use the procedural look |
+| 0 (optional) | [`fetch_assets.py`](fetch_assets.py) | Python; network access to Poly Haven and ambientCG; a clone of the private LionDriver-assets repository for the CC-BY kits | CC0 HDRIs, textures, scanned plants and street furniture, and the CC-BY building, car and trailer kits ([§5](library/README.md#5-cc-by-kits-and-render-only-extras)) under `assets/library/` (git-ignored); [`library/assets.lock.json`](library/README.md#4-cc0-assets) (committed). Without them the scenes use the procedural look |
 | 1 | [`export_scene.py`](export_scene.py) | the track's Python (the plant needs `opendbc_repo`, `panda`, [`../requirements.txt`](../requirements.txt)) | `scene.json`: the scene resolved through the [library](library/README.md) (road cross-section, props, condition, traffic), poses at 24 fps, signals, gap and TTC, events, the HARA or SOTIF entry |
-| 2 | [`hazard_scene.py`](hazard_scene.py) with [`scene_assets.py`](scene_assets.py) and [`street_layout.py`](street_layout.py) | Blender 4.2+ (`blender -b -P`) or Python 3.13 with `pip install bpy` | `scene.blend` (animated, three cameras), `screen.json`, `stills/`, `frames/` with `--video` |
+| 2 | [`hazard_scene.py`](hazard_scene.py) with [`scene_assets.py`](scene_assets.py), [`street_layout.py`](street_layout.py), [`street_life.py`](street_life.py) and [`scenery_kits.py`](scenery_kits.py) | Blender 4.2+ (`blender -b -P`) or Python 3.13 with `pip install bpy` | `scene.blend` (animated, three cameras), `screen.json`, `stills/`, `frames/` with `--video` |
 | 3 | [`compose.py`](compose.py) | Python with Pillow; ffmpeg for `--video` | `dashboard/`, `dashboard.png`, `<scene>.mp4` |
 | 4 | [`gallery.py`](gallery.py) | Python with Pillow | [`dashboards/`](dashboards/README.md) (committed) |
 
