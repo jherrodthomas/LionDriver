@@ -1,4 +1,5 @@
-"""Mockups of the risk-scene renderer as a Windows desktop app (for review; nothing here is the app).
+"""Mockups of Hazard Scene Studio, the risk-scene renderer as a Windows desktop app (for review; nothing here is
+the app).
 
 Writes one HTML page per screen and screenshots it with headless Chromium to <name>.png, 1600 x 1000. The rows,
 outcomes and pictures are the real ones of ../examples/demo.xlsx.
@@ -218,7 +219,7 @@ def detail_row(img: str) -> str:
 def main_window() -> str:
   inner = f"""{cmdbar()}<div class="body">{nav()}<div class="main">{sheetbar()}{table(0)}</div>
 {detail_row('img/thumb-demo.jpg')}</div>{statusbar('4 rows · 3 drawn · 1 cannot be drawn yet')}"""
-  return window("LionDriver Risk Scenes — demo.xlsx", inner)
+  return window("Hazard Scene Studio — demo.xlsx", inner)
 
 
 def add_from_hara() -> str:
@@ -246,7 +247,7 @@ and a motion preset that can draw them, and you can change those after.</div>
 <div class="df"><div class="btn">Cancel</div><div class="btn primary">Add 2 rows</div></div></div>"""
   inner = f"""{cmdbar()}<div class="body">{nav()}<div class="main">{sheetbar()}{table(0)}</div>
 {detail_row('img/thumb-demo.jpg')}</div>{statusbar()}"""
-  return window("LionDriver Risk Scenes — demo.xlsx", inner, dlg)
+  return window("Hazard Scene Studio — demo.xlsx", inner, dlg)
 
 
 def rendering() -> str:
@@ -265,7 +266,7 @@ def rendering() -> str:
 <div class="field"><label>Reused</label><div class="sel ro">F-01/M03/OS-01/W02 · picture already made</div></div></div></div>"""
   inner = f"""{cmdbar(True)}<div class="body">{nav()}<div class="main">{sheetbar()}{table(2, states)}</div>{panel}</div>
 {statusbar('Rendering 1 of 2 · the sheet stays editable · results are written back when each row finishes')}"""
-  return window("LionDriver Risk Scenes — demo.xlsx", inner)
+  return window("Hazard Scene Studio — demo.xlsx", inner)
 
 
 def viewer() -> str:
@@ -321,7 +322,7 @@ def settings() -> str:
      radio(False, 'Clip · 1 to 4 h a row', 'every frame, MP4; runs in the background'))}
 {sec('Where results go', path('beside the sheet: demo-dashboards\\', 'Change…'))}</div></div>
 {statusbar('Settings are saved for this PC')}"""
-  return window("LionDriver Risk Scenes — Settings", inner)
+  return window("Hazard Scene Studio — Settings", inner)
 
 
 SCREENS = {"01-main-window": main_window, "02-add-from-hara": add_from_hara, "03-rendering": rendering,

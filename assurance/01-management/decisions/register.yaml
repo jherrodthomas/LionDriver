@@ -5905,3 +5905,29 @@
       detail: "Widest reach. Cost: abuse handling, support and compliance checks."
   sources: ["assurance/sim/render-tool-plan.md §4, §8"]
   status: queued
+
+- id: DQ-425
+  question: "What is the risk-scene renderer called as a product?"
+  context: >-
+    LionDriver is the repository's name, not the tool's. The tool turns a row of any risk assessment into a scene
+    everyone can discuss, and will ship as a Windows desktop app. RiskFrame, RiskScape and HazView are taken by other
+    risk software.
+  reversibility: easy
+  blocks: "the app's window title, installer and documentation (assurance/sim/render-tool)"
+  gate: G1
+  decider: lead
+  asked: 2026-10-22
+  options:
+    - key: A
+      recommended: true
+      title: "SameScene"
+      detail: "Says why it exists: everyone discusses the same event. Not yet checked for trademarks."
+    - key: B
+      title: "Hazard Scene Studio"
+      detail: "Plain and descriptive, Windows-app style; long, but nobody misreads it."
+    - key: C
+      title: "Scenecard"
+      detail: "One card per risk, as on every dashboard; no product found by that name in a quick search."
+  sources: ["chat 2026-10-22", "assurance/sim/render-tool/README.md"]
+  status: answered
+  answer: {choice: B, via: chat, at: 2026-10-22, note: "\"We can do Hazard Scene Studio for now\": a working name, may change before release."}

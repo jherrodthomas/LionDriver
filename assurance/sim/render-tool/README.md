@@ -1,4 +1,4 @@
-# Risk-scene renderer
+# Hazard Scene Studio (risk-scene renderer)
 
 | Field | Value |
 |---|---|

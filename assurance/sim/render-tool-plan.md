@@ -1,4 +1,4 @@
-# Risk-scene renderer: the plan and the demo
+# Hazard Scene Studio: the plan and the demo
 
 | Field | Value |
 |---|---|

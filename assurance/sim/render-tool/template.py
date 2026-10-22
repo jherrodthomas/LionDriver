@@ -31,7 +31,7 @@ KIND_FILL = {"Row": "E7E9EE", "Scene": "FBE3C8", "Look": "D9F0DF", "Motion": "D8
              "Result": "E9DDF7"}
 STAMP = datetime.datetime(2026, 10, 22)
 README = [
-  "Risk-scene renderer: one row of a risk assessment in, a scene dashboard out (assurance/sim/render-tool).",
+  "Hazard Scene Studio: one row of a risk assessment in, a scene dashboard out (assurance/sim/render-tool).",
   "",
   "1. Pick the sheet of your method. Fill one row per event from row 4 down; Row ID must be unique.",
   "2. Scene and Look columns: pick from the dropdowns (the Lists sheet says what each value is).",
@@ -63,7 +63,7 @@ def build(ctx: rs.Context | None = None) -> Workbook:
   ctx = ctx or rs.Context.load()
   wb = Workbook()
   wb.properties.creator = "assurance/sim/render-tool/template.py"
-  wb.properties.title = "Risk-scene renderer template"
+  wb.properties.title = "Hazard Scene Studio template"
   wb.properties.created = wb.properties.modified = STAMP
   ws = wb.active
   ws.title = "Read me"
