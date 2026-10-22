@@ -32,7 +32,8 @@ standard is tailored to an open-source, supervised Level 2 system.
 ## How they fit together
 
 One shared **hazard log**, in the HARA with SOTIF and TARA cross-references, and one **requirements database**,
-in [`assurance/trace/`](../assurance/trace/README.md), hold the five standards together:
+in [`assurance/trace/`](../assurance/trace/README.md), hold the five standards together
+([Integrated standards: one system, not five](Integrated-standards.md) explains how):
 
 | Topic | Primary standard | Interface |
 |---|---|---|

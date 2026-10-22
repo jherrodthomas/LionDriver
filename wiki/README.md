@@ -74,6 +74,10 @@ in [`assurance/`](../assurance/README.md) that owns it.
   `aspice-baseline.svg`, `aspice-trace.svg`, `aspice-together.svg`, `aspice-plan.svg`) are rendered by
   [`tools/wiki/aspice_animations.py`](../tools/wiki/aspice_animations.py): levels, targets, improvement actions, trace
   coverage and the activity count are read from WP-M-13, the trace map and the process model.
+- The figures of "Integrated standards: one system, not five" (`integrated-silos.svg`, `integrated-joins.svg`,
+  `integrated-coverage.svg`, `integrated-log.svg`, `integrated-mechanism.svg`, `integrated-case.svg`) are rendered by
+  [`tools/wiki/integrated_animations.py`](../tools/wiki/integrated_animations.py): lanes, interfaces, register coverage,
+  the hazard log, trace lanes and case status are read from their records.
 - Standard GitHub Markdown, including alerts (`> [!IMPORTANT]`) and tables.
 
 Check locally before opening a pull request:
