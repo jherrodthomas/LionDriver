@@ -5762,3 +5762,142 @@
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
   note: "Applied in part (jherrodthomas/LionDriver#429): WP-C-03 v0.9 rates HE-01.6 S3 E3 C3, ASIL C, no AoU credit, so it leaves §5.12; trace hazards.yaml; HARA figures; sim README §3.7 loop diagram and animation of HE-01.6 (fig_sim_he.py). Left (WP-C-03 OI-11): re-rate the OS-12 rules of hara_model.py and regenerate both workbooks with the hara-builder generator, which this session does not have"
+
+- id: DQ-419
+  question: "Who uses the first version of the risk-scene renderer?"
+  context: >-
+    A tool that turns a risk-assessment row into the 3D scene picture the Blender pipeline draws, so anyone can
+    discuss the same event. Opening it to outside users needs hosting, accounts and abuse limits; the team alone does
+    not.
+  reversibility: easy
+  blocks: "assurance/sim/render-tool-plan.md demo scope"
+  gate: G1
+  decider: lead
+  asked: 2026-10-22
+  options:
+    - key: A
+      recommended: true
+      title: "The team and reviewers; finished pictures shareable with anyone"
+      detail: "No hosting or accounts for the first version. Cost: outsiders cannot submit their own rows yet."
+    - key: B
+      title: "Outsiders can submit rows too"
+      detail: "Anyone can use it from day one. Cost: hosting, accounts, usage limits and abuse handling before the demo."
+  sources: ["assurance/sim/render-tool-plan.md §2", "assurance/sim/blender/README.md"]
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-22, note: "Outside users later; their terms are DQ-424."}
+
+- id: DQ-420
+  question: "Where do the risk-scene renders run?"
+  context: >-
+    A dashboard takes 3 to 12 min of CPU and a clip 1 to 4 h. The purchased Corolla model must stay on a machine we
+    control and may only be rendered, never shared.
+  reversibility: easy
+  blocks: "assurance/sim/render-tool-plan.md demo and phase 6"
+  gate: G1
+  decider: lead
+  asked: 2026-10-22
+  options:
+    - key: A
+      recommended: true
+      title: "Our own machine for the demo"
+      detail: "No new cost; stills in minutes, clips in hours. Cost: one machine's capacity."
+    - key: B
+      title: "A paid cloud service"
+      detail: "Faster clips. Cost: a monthly bill and the licensed model stored there."
+    - key: C
+      title: "The user's own PC"
+      detail: "No cost to us. Cost: every user installs Blender, and the Corolla cannot go with it."
+  sources: ["assurance/sim/render-tool-plan.md §2, §6", "assurance/sim/blender/README.md"]
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-22, note: "Later a rented VPS (Namecheap considered); which and at what cost is DQ-423."}
+
+- id: DQ-421
+  question: "Which vehicle models does the risk-scene renderer use?"
+  context: >-
+    Our purchased Corolla cannot be given to users. Free CC0 vehicle kits look toy-like; free realistic ones are
+    mostly CC BY. AI services (Meshy, Tripo) make a model for about $0.20 to $0.40, but as one solid piece.
+  reversibility: easy
+  blocks: "assurance/sim/render-tool-plan.md phases 2 and 5"
+  gate: G1
+  decider: lead
+  asked: 2026-10-22
+  options:
+    - key: A
+      recommended: true
+      title: "A free starter library first; users' own or AI-made models later, at their expense"
+      detail: "Unbranded CC BY cars from Sketchfab, Kenney's CC0 kit as fallback, each scaled to the plant's vehicle size; the Corolla stays the default ego on our own renders. Cost: a credit line on each dashboard."
+    - key: B
+      title: "Only our Corolla and the CC0 kit"
+      detail: "No licences to track. Cost: toy-like other road users; users cannot bring their own."
+  sources: ["assurance/sim/render-tool-plan.md §2, §4, §6", "https://kenney.nl/assets/car-kit", "https://docs.meshy.ai/pricing"]
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-22}
+
+- id: DQ-422
+  question: "Is the risk-scene renderer only for the ISO 26262 HARA, or for risk assessment in general?"
+  context: >-
+    Every risk method ends in the same row (situation, condition, what goes wrong, who is around, how bad), with its
+    own rating columns: ISO 26262 S/E/C and ASIL, ISO 21448 triggering conditions, MIL-STD-882E severity and
+    probability. Vehicles other than a LionDriver car are drawn from stated assumptions, not the plant.
+  reversibility: easy
+  blocks: "assurance/sim/render-tool-plan.md template and phase 3"
+  gate: G1
+  decider: lead
+  asked: 2026-10-22
+  options:
+    - key: A
+      recommended: true
+      title: "General: a method-neutral template, a HARA row in the demo, SOTIF and 882E adapters next"
+      detail: "A new method is an adapter, not a redesign. Cost: a little more design up front."
+    - key: B
+      title: "Also put a SOTIF row through the demo"
+      detail: "Proves the neutral template on two methods. Cost: about 1 to 2 more days."
+    - key: C
+      title: "HARA only"
+      detail: "Simplest. Cost: a redesign for any other method."
+  sources: ["assurance/sim/render-tool-plan.md §2, §3"]
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-22}
+
+- id: DQ-423
+  question: "Which rented server renders the risk scenes once we leave our own machine, and at what monthly cost?"
+  context: >-
+    A frame takes about 27 s on 4 CPU cores and memory grows about 45 MB a frame, so a small server is fine for
+    stills but slow for clips. A GPU server is much faster and costs more. The Corolla licence must allow the model on
+    a rented server first.
+  reversibility: easy
+  blocks: "assurance/sim/render-tool-plan.md phase 6"
+  gate: null
+  decider: lead
+  after: [DQ-420]
+  options:
+    - key: A
+      recommended: true
+      title: "A CPU VPS with 8 or more cores and 16 GB or more, stills first"
+      detail: "Moderate monthly cost. Cost: clips stay slow."
+    - key: B
+      title: "A GPU server"
+      detail: "Clips in minutes. Cost: several times the monthly price."
+  sources: ["assurance/sim/render-tool-plan.md §6, §8"]
+  status: queued
+
+- id: DQ-424
+  question: "When do outside users get the risk-scene renderer, and on what terms?"
+  context: >-
+    Outside access needs accounts, usage limits and a way for users to pay for their own renders and AI models.
+    Military scenarios may fall under ITAR or EAR and must not go to a shared server.
+  reversibility: hard
+  blocks: "assurance/sim/render-tool-plan.md phases 4 to 6"
+  gate: null
+  decider: lead
+  after: [DQ-419]
+  options:
+    - key: A
+      recommended: true
+      title: "After phase 4, invited users only, private installs for export-controlled work"
+      detail: "Controlled growth. Cost: slower reach."
+    - key: B
+      title: "Open sign-up with usage limits"
+      detail: "Widest reach. Cost: abuse handling, support and compliance checks."
+  sources: ["assurance/sim/render-tool-plan.md §4, §8"]
+  status: queued
