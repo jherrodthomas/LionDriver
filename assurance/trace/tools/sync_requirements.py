@@ -10,8 +10,9 @@ Sources (the work products stay the reviewed documents; the YAML files are gener
         WP-C-06 §5 TC → FI → SH evaluation rows
   AI    WP-C-11 §6 (AIR) and §7 (DSR) requirement tables
   CS    WP-C-09 §4 and §8 (TS), WP-C-10 §4 and §8 (CSG), WP-S-07 §4 (CSR)
+  SYS   WP-S-01 §2-§9 requirement tables, §10 traceability, §10.1 allocation
 
-Outputs: assurance/trace/items/fsr.yaml, tsr.yaml, swsr.yaml, hwsr.yaml, sotif.yaml, ai.yaml, cs.yaml
+Outputs: assurance/trace/items/fsr.yaml, tsr.yaml, swsr.yaml, hwsr.yaml, sotif.yaml, ai.yaml, cs.yaml, sys.yaml
 
 Usage:
   python3 assurance/trace/tools/sync_requirements.py           # regenerate the YAML files
@@ -43,6 +44,7 @@ AI_MD = ASSURANCE_DIR / "02-concept" / "WP-C-11-ai-system-definition-and-safety-
 TARA_MD = ASSURANCE_DIR / "02-concept" / "WP-C-09-tara.md"
 CSG_MD = ASSURANCE_DIR / "02-concept" / "WP-C-10-cybersecurity-goals-and-concept.md"
 CSR_MD = ASSURANCE_DIR / "03-system" / "WP-S-07-cybersecurity-requirements-architecture.md"
+SYS_MD = ASSURANCE_DIR / "03-system" / "WP-S-01-system-requirements.md"
 
 ITEM_PREFIXES = {"FSR", "TSR", "SG", "AOU", "H", "HE", "GAP"}
 
@@ -271,7 +273,7 @@ def _section(text: str, start: str, end: str, md: Path) -> str:
 def _rows(text: str, prefix: str, ncols: int, md: Path) -> list[list[str]]:
   rows = []
   for line in text.splitlines():
-    if re.match(rf"^\| {prefix}-[0-9]{{2}} \|", line):
+    if re.match(rf"^\| {prefix}-[0-9]{{2,3}} \|", line):
       c = cells(line)
       if len(c) != ncols:
         raise ValueError(f"{md.name}: unexpected column count {len(c)} in {c[0]}")
@@ -455,6 +457,43 @@ def cs_items() -> list[dict]:
   return items
 
 
+# ---------------------------------------------------------------- SYS
+
+def sys_items() -> list[dict]:
+  text = SYS_MD.read_text(encoding="utf-8")
+  related: dict[str, str] = {}
+  for line in _section(text, "## 10. Traceability", "\n### 10.1", SYS_MD).splitlines():
+    m = re.match(r"^\| SYS-([0-9]{3})…([0-9]{3}) \|", line)
+    if m:
+      c = cells(line)
+      for n in range(int(m.group(1)), int(m.group(2)) + 1):
+        related[f"SYS-{n:03d}"] = c[2]
+  alloc = {c[0]: c[1] for c in _rows(_section(text, "### 10.1", "\n## 11.", SYS_MD), "SYS", 2, SYS_MD)}
+  items: list[dict] = []
+  functions = ""
+  for line in text.split("\n## 10. Traceability", 1)[0].splitlines():
+    m = re.match(r"^## [0-9]+\. (F-[0-9]{2}(?: / F-[0-9]{2})?) ", line)
+    if m:
+      functions = m.group(1)
+    if not re.match(r"^\| SYS-[0-9]{3} \|", line):
+      continue
+    c = cells(line)
+    if len(c) not in (6, 7):
+      raise ValueError(f"{SYS_MD.name}: unexpected column count {len(c)} in {c[0]}")
+    sid, req, typ, criterion, verif, impl = c[:6]
+    if sid not in related or sid not in alloc:
+      raise ValueError(f"{SYS_MD.name}: {sid} has no §10 traceability row or no §10.1 allocation")
+    rel = related[sid]
+    it = {"id": sid, "kind": "system-requirement", "text": req, "type": typ, "functions": re.findall(r"F-[0-9]{2}", functions),
+          "criterion": criterion, "verification": verif, "baseline_impl": impl, "allocated_to": alloc[sid],
+          "related_text": rel, "related_tsr": [r for r in expand_refs(rel)[0] if r.startswith("TSR-")],
+          "related_items": _ids(rel, "SH") + _ids(rel, "AIR"), "status": "proposed", "source": "WP-S-01"}
+    if len(c) == 7:
+      it["tbd_rationale"] = c[6]
+    items.append(it)
+  return items
+
+
 def not_refined(md: Path, heading: str) -> list[str]:
   """TSR IDs listed in a work product's 'TSRs not refined into ...' table (first column)."""
   text = md.read_text(encoding="utf-8")
@@ -471,16 +510,17 @@ def not_refined(md: Path, heading: str) -> list[str]:
 
 # ---------------------------------------------------------------- output
 
-FIELD_ORDER = ["id", "kind", "title", "text", "fi_type", "component", "category", "functions", "function_text", "s", "c",
+FIELD_ORDER = ["id", "kind", "title", "text", "type", "criterion", "fi_type", "component", "category", "functions", "function_text", "s", "c",
                "situations", "asil", "parents", "shares_event", "linked_text", "insufficiencies", "addresses", "evaluation",
                "gap_text", "priority", "stride", "assets", "violated_property",
                "damage_text", "risk", "treatment", "concept_requirement", "cal", "protects", "rationale", "safety_relation",
-               "related_tsr", "parent_text", "other_parents", "allocated_to", "mechanism",
+               "related_tsr", "related_text", "related_items", "tbd_rationale", "parent_text", "other_parents", "allocated_to", "mechanism",
                "timing", "hw_kind", "verification", "acceptance", "applies_to", "proposed_by", "baseline_impl", "status",
                "source"]
 SOURCE_MD = {"WP-C-04": FSC_MD, "WP-S-02": TSR_MD, "WP-S-06": TSR8_MD, "WP-W-02": SWSR_MD, "WP-H-01": HWSR_MD,
              "WP-C-05": SH_MD, "WP-C-06": FI_MD, "WP-C-07": FM_MD, "WP-C-11": AI_MD,
-             "WP-C-09": TARA_MD, "WP-C-10": CSG_MD, "WP-S-07": CSR_MD}
+             "WP-C-09": TARA_MD, "WP-C-10": CSG_MD, "WP-S-07": CSR_MD,
+             "WP-S-01": SYS_MD}
 REPO_ROOT = ASSURANCE_DIR.parent
 MD_LINK = re.compile(r"\[([^\]]*)\]\(([^)\s]+)\)")
 
@@ -571,6 +611,13 @@ CS_HEADER = """# Cybersecurity items: threat scenarios (WP-C-09 §4, risk and tr
 # Schema: see ../README.md §4.8."""
 
 
+SYS_HEADER = """# SYS items: system requirements from WP-S-01 §2-§9, with their related TSR / SOTIF / AI items from §10 and their
+# allocation to SysML elements from §10.1.
+# GENERATED by tools/sync_requirements.py from the work product, which stays the source of truth.
+# Do not edit by hand: change WP-S-01 and regenerate. CI fails if this file is out of date.
+# Schema: see ../README.md §4.9."""
+
+
 def expected_outputs() -> dict[str, str]:
   return {
     "fsr.yaml": render(fsr_items(), FSR_HEADER),
@@ -580,6 +627,7 @@ def expected_outputs() -> dict[str, str]:
     "sotif.yaml": render(sotif_items(), SOTIF_HEADER),
     "ai.yaml": render(ai_items(), AI_HEADER),
     "cs.yaml": render(cs_items(), CS_HEADER),
+    "sys.yaml": render(sys_items(), SYS_HEADER),
   }
 
 
@@ -597,7 +645,7 @@ def main(argv: list[str]) -> int:
       path.write_text(content, encoding="utf-8")
       print(f"wrote {path.relative_to(ASSURANCE_DIR.parent).as_posix()}")
   if stale:
-    print(f"FAIL: {', '.join(stale)} out of date with WP-C-04 / WP-S-02 / WP-S-06 / WP-W-02 / WP-H-01 / WP-C-05…07 / WP-C-11 / WP-C-09 / WP-C-10 / WP-S-07; run assurance/trace/tools/sync_requirements.py")
+    print(f"FAIL: {', '.join(stale)} out of date with WP-C-04 / WP-S-02 / WP-S-06 / WP-W-02 / WP-H-01 / WP-C-05…07 / WP-C-11 / WP-C-09 / WP-C-10 / WP-S-07 / WP-S-01; run assurance/trace/tools/sync_requirements.py")
     return 1
   print("OK: requirement items match the work products" if check else "OK: requirement items generated")
   return 0

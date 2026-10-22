@@ -305,7 +305,7 @@ def check_integrity_rules(m: sysml_lite.Model, rep: Report) -> None:
 # ---------------------------------------------------------------- M8 allocation resolution
 
 TOKEN_RES = [
-  re.compile(r"`([a-z][a-z0-9_.]+)`"),
+  re.compile(r"`([a-z][A-Za-z0-9_.]+)`"),
   re.compile(r"\b(E-0\d[ab]?|U-[A-Z]{3}-[A-Z]{2,6}|P-SW|P-HW|SoC|HAR|EXT|OPS|IWDG1|SPI4)\b"),
   re.compile(r"\b((?:host|panda)\.[a-z0-9_.]*[a-z0-9_])\b"),
 ]
@@ -335,6 +335,8 @@ def resolve_allocation(m: sysml_lite.Model, text: str, units: dict[str, list[str
       resolved.append((t, m.find(t).path))
     elif t in units:
       resolved.append((t, ", ".join(units[t])))
+    elif len(parts := [e for e in m.elements.values() if e.kind == "part" and e.name == t]) == 1:
+      resolved.append((t, parts[0].path))  # a uniquely named part, as R2 resolves WP-S-01 §10.1 names
     else:
       unresolved.append(t)
   return tokens, resolved, unresolved

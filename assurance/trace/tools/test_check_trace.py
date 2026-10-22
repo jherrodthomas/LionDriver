@@ -304,6 +304,30 @@ class TestCsChecks(unittest.TestCase):
     self.assertEqual(tags(run(self.items), "C1"), ["[C1] SG-01: protected by no cybersecurity goal (WP-C-10 §8)"])
 
 
+SYS = {"id": "SYS-001", "kind": "system-requirement", "text": "t", "type": "P", "functions": ["F-01"], "criterion": "x",
+       "verification": "LOG", "baseline_impl": "x", "allocated_to": "`host.controlsd`", "related_text": "TSR-603; SH-01",
+       "related_tsr": ["TSR-603"], "related_items": ["SH-01"], "status": "proposed", "source": "WP-S-01"}
+
+
+class TestSysChecks(unittest.TestCase):
+  def setUp(self):
+    self.items = copy.deepcopy(GOOD + SOTIF + [TSR, SYS])
+
+  def test_good_set_is_clean(self):
+    self.assertEqual(tags(run(self.items), "Q1") + tags(run(self.items), "K3"), [])
+
+  def test_k3_related_items_kind(self):
+    find(self.items, "SYS-001")["related_items"] = ["FM-01"]
+    self.assertIn("[K3] SYS-001: related_items FM-01 is a functional-modification, not one of "
+                  "['ai-requirement', 'sotif-hazard']", run(self.items))
+
+  def test_q1_missing_attributes(self):
+    it = find(self.items, "SYS-001")
+    it["functions"], it["allocated_to"] = [], ""
+    self.assertEqual(tags(run(self.items), "Q1"), ["[Q1] SYS-001: no function",
+                                                   "[Q1] SYS-001: no allocation (WP-S-01 §10.1)"])
+
+
 class TestRepository(unittest.TestCase):
   def test_main_passes_on_repository(self):
     out = io.StringIO()

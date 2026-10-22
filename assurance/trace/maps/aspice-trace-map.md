@@ -36,7 +36,7 @@ block-beta
   space
   VAL1["<b>VAL.1</b><br/>Validation<br/>VS-VAL: 31 cases"]
   space
-  SYS2["<b>SYS.2</b><br/>System requirements<br/>SYS 39* · FSR 58 · TSR 128<br/>TC 35 · FI 23 · FM 11<br/>CSG 8<br/><i>from SG: 8/8</i>"]
+  SYS2["<b>SYS.2</b><br/>System requirements<br/>SYS 39 · FSR 58 · TSR 128<br/>TC 35 · FI 23 · FM 11<br/>CSG 8<br/><i>from SG: 8/8</i>"]
   space
   space
   space
@@ -142,7 +142,7 @@ block-beta
   style HWE3 fill:#FFFBEB,stroke:#D97706,stroke-width:2px
   style SWE4 fill:#FFFBEB,stroke:#D97706,stroke-width:2px
   style SYS1 fill:#EFF6FF,stroke:#2563EB
-  style SYS2 fill:#FFFBEB,stroke:#D97706
+  style SYS2 fill:#EFF6FF,stroke:#2563EB
   style SYS3 fill:#EFF6FF,stroke:#2563EB
   style SWE1 fill:#EFF6FF,stroke:#2563EB
   style HWE1 fill:#EFF6FF,stroke:#2563EB
@@ -156,14 +156,14 @@ block-beta
 
 One colour rule for every V: blue when every item of the level is in the trace data, or every item of the paired level is named by a case (done in the design, not verified); amber when some are; red when none is; dashed grey when the level holds nothing yet. Green is kept for approved work products and passed verification; nothing here is either. The gate band shows the gate records of WP-M-00 §2 (none held yet).
 
-A named item is a **specified** link, not a passed test. 0 of 655 traced items carry status `verified`, and the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K6–K10 in the [README](../README.md) §6 are not implemented).
+A named item is a **specified** link, not a passed test. 0 of 694 traced items carry status `verified`, and the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K6–K10 in the [README](../README.md) §6 are not implemented).
 
 ## 2. Process to work product and items
 
 | Process | Name | Work products | Items or test cases |
 |---|---|---|---|
 | **SYS.1** | Requirements elicitation | WP-C-01, WP-C-02, WP-C-03, WP-C-05, WP-C-09 | AOU (17, trace data), H (9, trace data), HE (39, trace data), SG (8, trace data), SH (13, trace data), TS (14, trace data) |
-| **SYS.2** | System requirements analysis | WP-S-01, WP-C-04, WP-S-02, WP-C-07, WP-C-10 | SYS (39, document), FSR (58, trace data), TSR (128, trace data), TC (35, trace data), FI (23, trace data), FM (11, trace data), CSG (8, trace data) |
+| **SYS.2** | System requirements analysis | WP-S-01, WP-C-04, WP-S-02, WP-C-07, WP-C-10 | SYS (39, trace data), FSR (58, trace data), TSR (128, trace data), TC (35, trace data), FI (23, trace data), FM (11, trace data), CSG (8, trace data) |
 | **SYS.3** | System architectural design | WP-S-03, WP-S-05, WP-S-07 | CSR (64, trace data) |
 | **SWE.1** | SW requirements analysis | WP-W-02 | SWSR (139, trace data) |
 | **HWE.1** | HW requirements analysis | WP-H-01 | HWSR (46, trace data) |
@@ -222,7 +222,7 @@ flowchart LR
   style ISOSAE21434 fill:#FFFFFF,stroke:#CBD5E1
   subgraph ASPICE["ASPICE"]
     direction LR
-    kSYS["<b>SYS</b> 39<br/>system req."]:::doc
+    kSYS["<b>SYS</b> 39<br/>system req."]:::traced
   end
   style ASPICE fill:#FFFFFF,stroke:#CBD5E1
   kH -->|"9/9"| kHE
@@ -242,7 +242,7 @@ flowchart LR
   kTS -->|"14/14"| kCSG
   kCSG -->|"8/8"| kCSR
   kCSG --> kSG
-  kSYS -.-> kTSR
+  kSYS --> kTSR
   classDef traced fill:#DBEAFE,stroke:#2563EB,color:#0F172A
   classDef doc fill:#F1F5F9,stroke:#94A3B8,stroke-dasharray:4 3,color:#475569
 ```
@@ -253,7 +253,7 @@ flowchart LR
 | ISO 21448 | SH, TC, FI, FM | SH 13, TC 35, FI 23, FM 11 | — |
 | ISO/PAS 8800 | AIR, DSR | AIR 30, DSR 13 | — |
 | ISO/SAE 21434 | TS, CSG, CSR | TS 14, CSG 8, CSR 64 | — |
-| ASPICE | SYS | — | SYS 39 |
+| ASPICE | SYS | SYS 39 | — |
 
 ## 4. Derivation coverage (left side of the V)
 
@@ -300,6 +300,6 @@ None.
 
 ## 7. Not yet traced
 
-- **Kinds outside the trace data:** SYS (39). Their links (SYS → TSR) are dashed in §3 until they are added to `items/` (README §3.1).
+- **Kinds outside the trace data:** none; every kind of §3 is in `items/`.
 - **Allocation to elements** (SYS.3, SWE.2, HWE.2): `allocated_to` holds work-product cells; element IDs need `elements.yaml` (WP-P-06 OI-4).
 - **Code and test results:** no `@req` tags and no `links/verification.yaml` yet, so the SWE.3 → code link and every test → result link are absent (WP-P-06 §5.3, §6).

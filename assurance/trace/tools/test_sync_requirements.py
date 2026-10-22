@@ -144,6 +144,18 @@ class TestCs(unittest.TestCase):
     self.assertEqual(items["CSR-091"]["related_tsr"], ["TSR-401", "TSR-402", "TSR-403", "TSR-404", "TSR-405"])
 
 
+class TestSys(unittest.TestCase):
+  def test_items_from_the_work_product(self):
+    items = {i["id"]: i for i in sr.sys_items()}
+    self.assertEqual(items["SYS-001"]["functions"], ["F-01"])
+    self.assertEqual(items["SYS-001"]["related_tsr"], ["TSR-101", "TSR-102", "TSR-103", "TSR-104", "TSR-105", "TSR-605"])
+    self.assertEqual(items["SYS-001"]["related_items"], ["SH-01", "SH-02", "AIR-01", "AIR-11"])
+    self.assertEqual(items["SYS-100"]["functions"], ["F-06", "F-07"])
+    self.assertEqual(items["SYS-100"]["related_tsr"], [])  # QM (HARA §5.8)
+    self.assertIn("`", items["SYS-001"]["allocated_to"])  # kept verbatim for M8
+    self.assertTrue(all(i["text"] and i["type"] for i in items.values()))
+
+
 class TestDelink(unittest.TestCase):
   def test_relative_link_becomes_repo_path(self):
     out = sr.delink("see [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md#3-x)", sr.SWSR_MD)
