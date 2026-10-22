@@ -1610,7 +1610,7 @@
   sources: ["assurance/04-hardware/WP-H-04-hardware-metrics.md §3.3, OI-3", "DQ-009"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "WP-H-04 v0.11 §3.3 and OI-3: QM-SoC mechanisms stay out of the coverage, an internal method choice until an assessor confirms it", at: 2026-10-22}
+  applied: {ref: "jherrodthomas/LionDriver#429", record: "WP-H-04 v0.11 §3.3 and OI-3: QM-SoC mechanisms stay out of the coverage, an internal method choice until an assessor confirms it", at: 2026-10-22}
 
 - id: DQ-071
   question: "In the hardware analysis, may a fault that only makes the panda stop sending count as safe, because the car's own EPS, PCM and pre-collision system then limit the effect?"
@@ -1637,7 +1637,7 @@
   sources: ["assurance/04-hardware/WP-H-05-random-hardware-failures-pmhf.md §5, OI-3", "DQ-009"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "WP-H-05 v0.7 OI-3: vehicle measures for effects only, PMHF reported with and without them, an internal method choice until an assessor confirms it", at: 2026-10-22}
+  applied: {ref: "jherrodthomas/LionDriver#429", record: "WP-H-05 v0.7 OI-3: vehicle measures for effects only, PMHF reported with and without them, an internal method choice until an assessor confirms it", at: 2026-10-22}
 
 - id: DQ-072
   question: "During validation drives, should the car's self-learned values (steering ratio, torque, delay) be frozen?"
@@ -2713,7 +2713,7 @@
   sources: ["assurance/01-management/WP-M-01-assurance-strategy.md D-07", "assurance/01-management/WP-M-07-risk-management.md §5 D-07"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "WP-M-07 v0.8 §5 D-07 decided; WP-M-01 v0.10 §8 D-07", at: 2026-10-22}
+  applied: {ref: "jherrodthomas/LionDriver#429", record: "WP-M-07 v0.8 §5 D-07 decided; WP-M-01 v0.10 §8 D-07", at: 2026-10-22}
 
 - id: DQ-119
   question: "Should MAN.5 be added to the ASPICE target in T-12?"
@@ -2762,7 +2762,7 @@
   sources: ["assurance/01-management/WP-M-11-upstream-and-supplier-management.md §6, OI-3"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "01-management/upstream-watch-list.md (watch list and review log); WP-M-11 v0.3.8 §6, §8, OI-3 closed. The first monthly review is still to be recorded", at: 2026-10-22}
+  applied: {ref: "jherrodthomas/LionDriver#429", record: "01-management/upstream-watch-list.md (watch list and review log); WP-M-11 v0.3.8 §6, §8, OI-3 closed. The first monthly review is still to be recorded", at: 2026-10-22}
 
 - id: DQ-121
   question: "How should LionDriver make sure a device sends nothing to comma.ai and accepts no remote access: change the code, keep the device unregistered with comma, or only leave it unpaired?"
@@ -2794,7 +2794,7 @@
   sources: ["assurance/09-production-operation/WP-O-04-field-monitoring.md §3.2, §3.3, OI-1", "openpilot/system/manager/manager.py:108-109", "openpilot/system/athena/registration.py:36-47", "openpilot/system/manager/process_config.py:71, 115", "assurance/01-management/WP-M-09-cybersecurity-plan.md GAP-27", "DQ-084"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "openpilot system/manager/process_config.py: uploader and manage_athenad enabled=False, test system/manager/test/test_no_comma_upload.py; change-2026-10-22-no-comma-upload; WP-O-04 v0.3 §3.3 and OI-1; WP-M-09 v0.5 GAP-27; WP-S-07 v0.7 CSR-112. Open: registration still contacts comma with the device identifiers (change record OI-1); device check (OI-2)", at: 2026-10-22}
+  applied: {ref: "jherrodthomas/LionDriver#429", record: "openpilot system/manager/process_config.py: uploader and manage_athenad enabled=False, test system/manager/test/test_no_comma_upload.py; change-2026-10-22-no-comma-upload; WP-O-04 v0.3 §3.3 and OI-1; WP-M-09 v0.5 GAP-27; WP-S-07 v0.7 CSR-112. Open: registration still contacts comma with the device identifiers (change record OI-1); device check (OI-2)", at: 2026-10-22}
 
 - id: DQ-122
   question: "Should field monitoring (WP-O-04) have a first part due at G1, because it starts with the first public-road test drive, not at release?"
@@ -2823,7 +2823,7 @@
   sources: ["assurance/process/README.md (finding 1, field monitoring needed five gates before it is gated)", "assurance/01-management/WP-M-00-work-product-register.md WP-O-04", "assurance/09-production-operation/WP-O-04-field-monitoring.md §3.3", "assurance/06-validation/WP-V-07-vehicle-test-operations.md"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "WP-M-00 v0.4: WP-O-04 gated G1 (development slice) and G6; process model CON-14 produces it at G1, OPS-01 updates it at G6 (P9 check now accepts a feedback source updated in its phase); G1 and G6 skeletons regenerated; process README finding 1 addressed", at: 2026-10-22}
+  applied: {ref: "jherrodthomas/LionDriver#429", record: "WP-M-00 v0.4: WP-O-04 gated G1 (development slice) and G6; process model CON-14 produces it at G1, OPS-01 updates it at G6 (P9 check now accepts a feedback source updated in its phase); G1 and G6 skeletons regenerated; process README finding 1 addressed", at: 2026-10-22}
 
 - id: DQ-123
   question: "Should the trace data be checked against its schema with the standard jsonschema package (pinned), or with hand-written checks that need only the Python standard library?"
@@ -2850,7 +2850,7 @@
   sources: ["assurance/trace/README.md OI-3", "assurance/07-supporting/WP-P-06-requirements-management-traceability.md §5.1", "tools/safety/fmea_lint.py (uses jsonschema)", ".github/workflows/assurance.yaml (unpinned install)"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "assurance/trace/schema/item.schema.json; trace/tools/check_schema.py and test_check_schema.py; pinned assurance/trace/requirements.txt (also used by the FMEA lint), installed first in the trace job; WP-P-07 v0.9.17 TL-55; WP-P-06 v0.3 §5.1; trace README OI-3 closed", at: 2026-10-22}
+  applied: {ref: "jherrodthomas/LionDriver#429", record: "assurance/trace/schema/item.schema.json; trace/tools/check_schema.py and test_check_schema.py; pinned assurance/trace/requirements.txt (also used by the FMEA lint), installed first in the trace job; WP-P-07 v0.9.17 TL-55; WP-P-06 v0.3 §5.1; trace README OI-3 closed", at: 2026-10-22}
 
 - id: DQ-124
   question: "Should the older second set of concept documents (an item definition, HARA and FSC kept as YAML beside the FMEAs) be withdrawn, now that what kept them open is decided?"
@@ -2881,7 +2881,7 @@
   sources: ["assurance/00-assessment/docs-safety-reconciliation.md OI-4, OI-5, §8", "assurance/08-analyses/fmea/hara-mapping.yaml", "assurance/08-analyses/fmea/analyses/hara.yaml, fsc.yaml", "DQ-008", "DQ-036", "DQ-205", "DQ-369"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "08-analyses/fmea analyses/hara.yaml and fsc.yaml status withdrawn (schemas allow it), item/variants.yaml note, fmea-plan rows, hara-mapping.yaml header; docs-safety-reconciliation v0.5 OI-5 closed. Renaming the HZ-/SG-0nn IDs in the FMEA data is a later task", at: 2026-10-22}
+  applied: {ref: "jherrodthomas/LionDriver#429", record: "08-analyses/fmea analyses/hara.yaml and fsc.yaml status withdrawn (schemas allow it), item/variants.yaml note, fmea-plan rows, hara-mapping.yaml header; docs-safety-reconciliation v0.5 OI-5 closed. Renaming the HZ-/SG-0nn IDs in the FMEA data is a later task", at: 2026-10-22}
 
 - id: DQ-125
   question: "How should the special firmware builds for characterisation and fault-injection tests be kept from ever being driven on public roads?"
@@ -2908,7 +2908,7 @@
   sources: ["assurance/06-validation/WP-V-01-safety-validation.md VS-VAL-05, OI-4", "assurance/06-validation/WP-V-05-fault-injection.md OI-1", "assurance/07-supporting/WP-P-01-configuration-management-plan.md"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "WP-P-01 v0.6 §7.1 test-build rules T-1 to T-5 and OI-9 (implementation); WP-V-01 v0.9 OI-4; WP-V-05 v0.11 OI-1", at: 2026-10-22}
+  applied: {ref: "jherrodthomas/LionDriver#429", record: "WP-P-01 v0.6 §7.1 test-build rules T-1 to T-5 and OI-9 (implementation); WP-V-01 v0.9 OI-4; WP-V-05 v0.11 OI-1", at: 2026-10-22}
 
 - id: DQ-126
   question: "Should the panda's housekeeping code (fan, sound, LEDs, temperature, debug print) be kept QM and fenced off with the memory protection unit, or developed to the envelope's ASIL?"
@@ -5760,4 +5760,4 @@
   sources: ["assurance/02-concept/WP-C-03-hara.md HE-01.6, §5.12, OI-11", "assurance/sim/results/edge-cases.md (rows EC-11, EC-13 and their assumption probes)", "assurance/02-concept/hara/hara_model.py RULES H-01 OS-12", "assurance/06-validation/WP-V-05-fault-injection.md VS-FI-32", "DQ-406"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Applied in part (jherrodthomas/LionDriver#PRNUM): WP-C-03 v0.9 rates HE-01.6 S3 E3 C3, ASIL C, no AoU credit, so it leaves §5.12; trace hazards.yaml; HARA figures; sim README §3.7 loop diagram and animation of HE-01.6 (fig_sim_he.py). Left (WP-C-03 OI-11): re-rate the OS-12 rules of hara_model.py and regenerate both workbooks with the hara-builder generator, which this session does not have"
+  note: "Applied in part (jherrodthomas/LionDriver#429): WP-C-03 v0.9 rates HE-01.6 S3 E3 C3, ASIL C, no AoU credit, so it leaves §5.12; trace hazards.yaml; HARA figures; sim README §3.7 loop diagram and animation of HE-01.6 (fig_sim_he.py). Left (WP-C-03 OI-11): re-rate the OS-12 rules of hara_model.py and regenerate both workbooks with the hara-builder generator, which this session does not have"
