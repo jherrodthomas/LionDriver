@@ -384,9 +384,12 @@ def card(scene: dict, hes: dict) -> dict:
               if scene.get("variant_of") else ""),
             "tc": scene.get("tc", []), "ks": scene.get("ks", [])}
   sh = scene["sotif"]
-  return {"kind": "SOTIF", "id": sh["id"], "badge": f"{sh['id']}  SOTIF  S{sh['s']} C{sh['c']}",
+  rated = "s" in sh and "c" in sh               # a proposed hazard, not yet in WP-C-05, is not rated
+  sev, ctl = (f"S{sh['s']}", f"C{sh['c']}") if rated else ("not rated", "not rated")
+  return {"kind": "SOTIF", "id": sh["id"],
+          "badge": f"{sh['id']}  SOTIF  {sev} {ctl}" if rated else f"{sh['id']}  SOTIF  proposed",
           "title": sh["title"], "situation": sh["situation"], "effect": sh["effect"],
-          "rows": [["Severity", f"S{sh['s']}"], ["Controllability", f"C{sh['c']}"],
+          "rows": [["Severity", sev], ["Controllability", ctl],
                    ["Triggering condition", ", ".join(scene.get("tc", [])) or "—"],
                    ["Known scenario", ", ".join(scene.get("ks", [])) or "—"], ["Condition", condition_text(scene)]],
           "note": "WP-C-05 rates S and C only; triggering conditions WP-C-06, scenarios WP-V-03",
