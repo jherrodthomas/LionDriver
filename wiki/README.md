@@ -57,6 +57,10 @@ in [`assurance/`](../assurance/README.md) that owns it.
 - The figures of "After release" (`p7-general.svg`, `p7-ours.svg`) are rendered by
   [`tools/wiki/p7_animations.py`](../tools/wiki/p7_animations.py); each LionDriver step is checked against the WP-O
   record it names. The general figure quotes nothing from the standard.
+- The figures of "SOTIF and ISO 26262" (`sotif-two-questions.svg`, `sotif-who-owns.svg`, `sotif-triggering.svg`,
+  `sotif-four-areas.svg`, `sotif-how-much.svg`, `sotif-unknowns.svg`, `sotif-one-chain.svg`) are rendered by
+  [`tools/wiki/sotif_animations.py`](../tools/wiki/sotif_animations.py), checked against the SOTIF and validation work
+  products and the case records; the WP-C-05 and WP-C-06 counts come from the generator of WP-C-05 Figure 2-1.
 - Standard GitHub Markdown, including alerts (`> [!IMPORTANT]`) and tables.
 
 Check locally before opening a pull request:

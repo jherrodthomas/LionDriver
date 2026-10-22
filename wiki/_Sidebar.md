@@ -13,6 +13,7 @@
 - [Building a fault tree](Building-a-fault-tree.md)
 - [Hardware safety and interference](Hardware-safety-and-interference.md)
 - [After release (ISO 26262 Part 7)](After-release.md)
+- [SOTIF and ISO 26262](SOTIF-and-ISO-26262.md)
 - [For the assessor](For-the-assessor.md)
 - [Reference vehicle](Reference-vehicle.md)
 - [Contributor guide](Contributor-guide.md)
