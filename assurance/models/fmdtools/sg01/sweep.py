@@ -182,7 +182,12 @@ def build_joint(data: dict) -> str:
     "|---|---|",
   ]
   for c in tree_only:
-    out.append(f"| {td.fset(c)} | {why(c)} |")
+    smaller = [f for f in model if f < c]
+    if smaller:
+      out.append(f"| {td.fset(c)} | the model reaches {TOP} with less: "
+                 + " or ".join(td.fset(f) for f in smaller) + f"; {why(c)} |")
+    else:
+      out.append(f"| {td.fset(c)} | {why(c)} |")
   out += [
     "",
     "## All minimal sets of the model",

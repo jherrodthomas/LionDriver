@@ -101,8 +101,9 @@ def build() -> str:
   finds = []
   if d["gaps"]:
     finds.append(kit.finding("w", f"{len(d['gaps'])} sets the drawn tree does not predict",
-                             f"{sets(d['gaps'])}: {esc(sw.why(d['gaps'][0]))}. The cut-set table already counts them "
-                             "as single points (DFI-10); the drawn tree keeps BE-1.15 as a second event."))
+                             f"{sets(d['gaps'])}: the SoC reads the same stuck cruise frame as the envelope, so on a "
+                             "cancel it stays engaged and keeps commanding without a SoC fault (DFI-10). The cut-set "
+                             "table already calls them single points; the drawn tree keeps BE-1.15 as a second event."))
   else:
     finds.append(kit.finding("g", "No fault set missing from the tree",
                              f"Every one of the {len(d['model'])} minimal sets the model finds holds an effective "
@@ -118,9 +119,9 @@ def build() -> str:
                            "stale value in frames that keep arriving (TSR-409 open). TSR-602 drops a stale model input "
                            "only at 0.52 s, just over the 0.5 s FTTI."))
   finds.append(kit.finding("w", f"Plant case {p['case']}: nothing reacts",
-                           f"With the command frozen and the heartbeat alive, the panda does not react; the driver "
-                           f"sees the drift at {p['drift']:.2f} s, after the lane line at {p['cross']:.2f} s is "
-                           "already near."))
+                           f"With the command frozen and the heartbeat alive, the panda does not react. The driver "
+                           f"notices the drift at {p['drift']:.2f} s and steers at {p['correction']:.2f} s, after the "
+                           f"car crosses the lane line at {p['cross']:.2f} s."))
 
   return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
