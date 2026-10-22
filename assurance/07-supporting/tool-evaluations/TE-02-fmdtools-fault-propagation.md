@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Purpose | Decide whether NASA fmdtools should run, headless and in CI, as an executable cross-check of the fault trees and FMEAs, and plan a pilot on SG-02 |
-| Status | Draft. Started on the lead's go (2026-10-20): P0 to P4 done ([`assurance/models/fmdtools/`](../../models/fmdtools/README.md)); P5: the [Fault Lab page](../../models/fmdtools/sg02/fault-lab.html) and its CI check are done (DQ-409), the OI-4 note and the TL-49 confirmation remain. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Draft. Started on the lead's go (2026-10-20): P0 to P4 done ([`assurance/models/fmdtools/`](../../models/fmdtools/README.md)); P5: the [Fault Lab page](../../models/fmdtools/sg02/fault-lab.html) and its CI check are done (DQ-409), the TL-49 confirmation remains. OI-4 decided (DQ-417): SG-06 done (P1 to P4 and its Fault Lab page, [`sg06/`](../../models/fmdtools/sg06/)); SG-01 and SG-03 next. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Standard reference | ISO 26262-8:2018 §11 (tool classification), applied as in [WP-P-07](../WP-P-07-tool-classification-qualification.md) §2; ISO 26262-9:2018 §8 (safety analyses) |
 | Date | 2026-10-20 |
 | Baseline | `liondriver-dev` at `13ba1f4` (after #370) |
@@ -110,4 +110,4 @@ If results are ever credited, for example "the model confirms the tree is comple
 | OI-1 | ~~Lead's "go" to start P0~~ **Closed** 2026-10-20 (go given) |
 | OI-2 | Report the undeclared IPython import upstream (nasa/fmdtools), or keep `ipython` in our pin |
 | OI-3 | Confirm `recordclass == 0.24` builds on the CI runner image |
-| OI-4 | After P5: extend to SG-01 (hard-over), SG-03 and SG-06, or stop. Decided on what the SG-02 diff finds |
+| OI-4 | After P5: extend to SG-01 (hard-over), SG-03 and SG-06, or stop. Decided on what the SG-02 diff finds. **Decided (DQ-417, 2026-10-22): all three, in the order SG-06, SG-01, SG-03**, each with steps P1 to P4 and its own Fault Lab page |

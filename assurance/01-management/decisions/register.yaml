@@ -5507,3 +5507,30 @@
       detail: "\"Maintained\" stands; revisit when the reference car's own wet braking is measured. Cost: nothing is written about tyres meanwhile."
   sources: ["assurance/sim/results/wet-braking.md", "assurance/sim/weather/README.md §7", "WP-C-02 §3.1 (vehicle state, road surface)", "opendbc/car/interfaces.py ACCEL_MIN", "Bosch Automotive Handbook, 4th ed., p. 335"]
   status: open
+
+- id: DQ-417
+  question: "Which safety goals should get an fmdtools fault model, and a Fault Lab page, after SG-02?"
+  context: >-
+    TE-02 OI-4. The SG-02 pilot found three tree findings: the latent tag on BE-2.14 (the siren) is out of date for
+    EPS faults and heartbeat loss (10 sets), {BE-2.21} now needs a siren failure, and a supply loss on a straight gives
+    no cue (AOU-01R gap, taken by the FTA owner). The Fault Lab page is cheap to reuse; each new goal needs its own
+    model (steps P1 to P4). Synthetic (DSR-12), no evidence credit.
+  reversibility: easy
+  blocks: "TE-02 OI-4; fmdtools models for SG-01, SG-03, SG-06"
+  gate: G1
+  decider: lead
+  asked: 2026-10-21
+  options:
+    - key: A
+      recommended: true
+      title: "SG-06, then SG-01"
+      detail: "SG-06 (braking take-over warning) reuses the SG-02 warning chain, about 2 sessions; SG-01 (unwanted steering, ASIL C, D if AOU-01/02 fail) needs torque limits and hard-over, about 3 to 4 sessions."
+    - key: B
+      title: "All three, SG-03 included"
+      detail: "As A, plus SG-03 (unwanted acceleration, ASIL C) with a new longitudinal model. About 8 to 10 sessions in all."
+    - key: C
+      title: "Stop at SG-02"
+      detail: "No further cost; the other trees get no executable cross-check."
+  sources: ["assurance/07-supporting/tool-evaluations/TE-02-fmdtools-fault-propagation.md", "assurance/models/fmdtools/README.md", "assurance/08-analyses/WP-A-04-system-fta-fmea.md"]
+  status: answered
+  answer: {choice: B, via: chat, at: 2026-10-22, note: "Lead in chat with the coordinator: \"2\" (all three). Order: SG-06, SG-01, SG-03"}
