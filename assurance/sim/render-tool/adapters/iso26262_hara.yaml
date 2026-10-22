@@ -1,0 +1,47 @@
+# ISO 26262 HARA adapter of the risk-scene renderer (render-tool-plan.md §3). It names the rating columns of the
+# method's sheet in the template, how the dashboard's hazard card shows them, and how a row is pre-filled from the
+# project's own HARA rows (WP-C-03, hara-events.csv). The tool shows the rating; it never computes or changes it.
+#
+#   method     the method's name, also the template sheet's name
+#   heading    the card heading, with {Row ID} and any rating column in braces
+#   rating     the rating columns, in sheet order: column (header), source (hara-events.csv column for prefill),
+#              hint (shown under the header)
+#   card       the hazard card: title, situation, effect, badge, rows ([label, value]); values may name columns in
+#              braces. The condition row is added by the tool
+#   prefill    source (CSV, repository-relative) and key (its key column); situation: the column holding the
+#              operational situation code (OS-nn), condition: the column holding the condition code, hazard: the
+#              column whose first word is the hazard ID (H-nn), used to pick a motion preset
+schema_version: 1
+id: iso26262-hara
+method: ISO 26262 HARA
+heading: "HARA row {Row ID}"
+rating:
+  - {column: Hazard, source: Hazard, hint: "H-nn and title"}
+  - {column: Function, source: "Function name", hint: "item function"}
+  - {column: Guide word, source: "Guide word name", hint: "HAZOP guide word"}
+  - {column: Situation, source: "Situation", hint: "OS-nn"}
+  - {column: Situation name, source: "Situation name", hint: "as the HARA writes it"}
+  - {column: Condition code, source: "Condition", hint: "W01..W06"}
+  - {column: S, source: S, hint: "S0..S3"}
+  - {column: E, source: E, hint: "E0..E4"}
+  - {column: C, source: C, hint: "C0..C3"}
+  - {column: ASIL, source: ASIL, hint: "QM, A..D"}
+  - {column: Safety goal, source: "Safety goal", hint: "SG-nn"}
+card:
+  title: "{Hazard}"
+  situation: "{Situation}: {Situation name}"
+  effect: "{Function}, {Guide word}"
+  badge: "{Row ID}  ASIL {ASIL}"
+  rows:
+    - [Severity, "{S}"]
+    - [Exposure, "{E}"]
+    - [Controllability, "{C}"]
+    - [ASIL, "{ASIL}"]
+    - [Safety goal, "{Safety goal}"]
+  note: "Rating as the row writes it (WP-C-03 proposal); the tool draws it, never rates it"
+prefill:
+  source: assurance/02-concept/hara/hara-events.csv
+  key: Key
+  situation: Situation
+  condition: Condition
+  hazard: Hazard

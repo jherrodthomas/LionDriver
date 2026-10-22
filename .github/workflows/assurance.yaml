@@ -509,6 +509,11 @@ jobs:
       run: |
         python3 assurance/sim/blender/test_scenes.py
         python3 assurance/sim/blender/test_fetch_assets.py
+    - name: Risk-scene renderer, its template current and a HARA row to a scene with the gallery's motion (assurance/sim/render-tool; no Blender)
+      run: |
+        python3 -m pip install --quiet --user --break-system-packages openpyxl==3.1.5 Pillow==12.3.0
+        python3 assurance/sim/render-tool/template.py --check
+        python3 assurance/sim/render-tool/test_render_tool.py
 
   sim-column:
     name: simulation L2 column

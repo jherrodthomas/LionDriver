@@ -248,7 +248,8 @@ def frame(sc: dict, screen: dict, keys: list[dict], views: dict[str, Path], i: i
   # left: the HARA or SOTIF entry
   hb = (12, 64, 372, 412)
   panel(d, hb, edge=CRITICAL)
-  d.text((24, 74), ("Hazardous event " if cd["kind"] == "HARA" else "SOTIF hazard ") + cd["id"], font=F["h1"],
+  head = cd.get("heading") or ("Hazardous event " if cd["kind"] == "HARA" else "SOTIF hazard ") + cd["id"]
+  d.text((24, 74), head, font=F["h1"],
          fill=CRITICAL)
   y = wrap(d, (24, 102), cd["title"], F["bs"], TEXT, 330)
   y = wrap(d, (24, y + 6), "Situation: " + cd["situation"], F["s"], TEXT2, 330, 3)

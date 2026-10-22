@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Purpose | Let anyone turn a row of a risk assessment into the 3D scene picture the Blender pipeline draws today, so a team can discuss the same event: fill in a spreadsheet row, get back a dashboard and its outcome. Covers what the tool is, what the lead has decided, the guardrails, the demo and what follows it |
-| Status | Plan, 2026-10-22. Nothing built yet. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Plan, 2026-10-22. The demo (§5) is built: [`render-tool/`](render-tool/README.md). AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Credit | None. Every picture is synthetic (DSR-12) and earns no evidence credit, as for the [Blender scenes](blender/README.md). The tool draws a risk row; it never rates one |
 | Lead decisions | Four answered in chat on 2026-10-22, register DQ-419 to DQ-422 (§2). Two later ones queued, DQ-423 and DQ-424 (§8). None needed to build the demo |
 
@@ -41,15 +41,16 @@ the resolved scene, so a shared picture is rendered once.
 | DQ-421 | Which vehicle models? | A free starter library first (unbranded CC BY cars from Sketchfab, Kenney's CC0 kit as fallback); later users bring their own model or generate one with an AI service (Meshy, Tripo) at their own expense. Our purchased Corolla stays the default ego on our own renders only |
 | DQ-422 | Is it only for the ISO 26262 HARA? | No: risk assessment in general (ISO 26262, ISO 21448 SOTIF, MIL-STD-882E for military vehicles, others). The template is method-neutral from day one; the demo uses a HARA row; SOTIF and 882E adapters follow |
 
-## 3. The template: one row, three kinds of column
+## 3. The template: one row, kinds of column
 
 Every risk method ends in the same row: a situation, a condition, something goes wrong, who is around, how bad it
 is. Only the rating differs. The template keeps the shared part neutral and leaves the rating to an adapter.
 
 | Kind | Columns | Who fills it | Rule |
 |---|---|---|---|
-| **Look** | situation (environment), condition, traffic, cameras, variants, ego and actor models | anyone, from dropdowns | free to change: it never touches the outcome |
-| **Motion** | motion source (a plant case, or a kinematic template), speed, the critical actor (kind, lane, distance ahead, speed), window | anyone, from lists | picked from what the plant or the stated assumptions can run; never free-hand positions |
+| **Scene** | environment | anyone, from a dropdown | the road's cross-section (lanes, barrier), so it **can** change the outcome; a change from the motion preset's environment is noted |
+| **Look** | condition, traffic (later: cameras, ego and actor models) | anyone, from dropdowns | free to change: it never touches the outcome (tested) |
+| **Motion** | motion preset (a gallery scene whose plant case or kinematic motion the row borrows), speed (later: the critical road user, the window) | anyone, from lists | picked from what the plant or the stated assumptions can run; never free-hand positions |
 | **Rating** | the method's own columns, carried through to the dashboard's hazard card | the method's adapter | shown, never computed or changed by the tool |
 | **Result** | status, dashboard link, clip link, contact yes/no, smallest gap, smallest TTC, motion source, commit, rendered at | the pipeline | written back; a person never edits it |
 
@@ -102,7 +103,7 @@ reference to check against.
 
 | # | Piece | What it does |
 |---|---|---|
-| 1 | `render-tool/template.xlsx` and its generator | The neutral template with the four column kinds and dropdowns from the library and `faults.yaml`; regenerated, never hand-edited, and checked in CI for staleness |
+| 1 | `render-tool/template.xlsx` and its generator `template.py` | The neutral template with the four column kinds and dropdowns from the library and `faults.yaml`; regenerated, never hand-edited, and checked in CI for staleness |
 | 2 | `render-tool/adapters/iso26262_hara.yaml` | The HARA rating columns and its pre-fill rules (§3) |
 | 3 | `render-tool/prefill.py` | Fills template rows from `hara-events.csv` keys, so a user can start from a HARA row and only adjust |
 | 4 | `render-tool/row_to_scene.py` | Turns a row into a `scenes.yaml`-shaped entry, rejects values the library cannot draw, and hands it to the existing `export_scene.py`, `hazard_scene.py` and `compose.py` unchanged |
