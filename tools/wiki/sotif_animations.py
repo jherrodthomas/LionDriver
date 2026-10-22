@@ -82,7 +82,7 @@ SOURCES = [
   (V04, "| N | Nominal"), (V04, "| K | Instance of a known scenario"), (V04, "| U | New hazardous scenario"), (V04, "| F | Malfunction (E/E fault, software bug)"),
   (V04, "**Threshold: P̂₀ ≤ 0.10, with N ≥ 30** (DQ-262 A)"), (V04, "(decision register DQ-108, option A)"),
   (V04, "**Not yet executed.** No exploration block has been run. No LionDriver drive logs exist at the baseline."),
-  (V04, "Two lateral rows match no hazardous event"),
+  (V04, "Two lateral rows matched no hazardous event"), (V04, "the HARA rates it as HE-01.6"),
   (C04, "| FSR-01.01 | The envelope shall limit the commanded LKA torque magnitude to a speed-dependent bound derived from driver controllability"),
   (C04, "Partial: fixed 1500 raw"), (C04, "not speed-dependent, no physical rationale (GAP-04)"),
   (V01, "| VS-VAL-10 | Worst-case lateral disturbance inside the envelope"), (V01, "at 30, 50, 70, 90 km/h"), (V01, "≥ 20/20 subjects"),
@@ -532,10 +532,10 @@ def unknowns():
              t(rx + 14, gy + 132, "and no rise over the last three blocks", 11.5, MID, 400, "start", True)]))
   b.append(g(f"{tl.show(26.6)} fin", [f'<rect x="24" y="580" width="{W - 110}" height="62" rx="10" fill="#eef2f8" stroke="{NAVY}"/>',
              t(40, 602, "No block (B0–B3) has run and no LionDriver drive logs exist yet (WP-V-04 §6).", 12, NAVY, 600),
-             t(40, 622, "A simulation prototype, with no evidence credit, already found one case the HARA lacks.", 12, MID)]))
+             t(40, 622, "A simulation prototype, with no evidence credit, found a case the HARA lacked: now rated HE-01.6.", 12, MID)]))
   b.append(stick(W - 40, h - 18, "point"))
   return svg(h, "Hunting for what we do not know yet (animated)",
-             "Area 3 is searched with seven methods U-1 to U-7 of WP-V-04. Each odd event is triaged: N nominal, K a known scenario, U a new hazardous scenario, or F a part failed, which goes to ISO 26262. New kinds found flatten over the blocks B1 to B3; the search stops when f1 / N is at most 0.10 with N at least 30 and no rise over three blocks (DQ-108, DQ-262). No block has run and no LionDriver drive logs exist yet.", tl, b)
+             "Area 3 is searched with seven methods U-1 to U-7 of WP-V-04. Each odd event is triaged: N nominal, K a known scenario, U a new hazardous scenario, or F a part failed, which goes to ISO 26262. New kinds found flatten over the blocks B1 to B3; the search stops when f1 / N is at most 0.10 with N at least 30 and no rise over three blocks (DQ-108, DQ-262). No block has run and no LionDriver drive logs exist yet; a simulation prototype found a case the HARA lacked, now rated HE-01.6.", tl, b)
 
 
 # ------------------------------------------------------------------ 6 one chain, both standards
