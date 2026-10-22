@@ -456,7 +456,7 @@ jobs:
     - name: Install GHC, Ogma 1.16.0 and Copilot 4.8.1 (pinned index state)
       run: assurance/models/fret/install_ogma.sh
     - name: Monitor spec and results are current (step P4)
-      run: OGMA="$HOME/.cabal/bin/ogma" python3 assurance/models/fret/monitor/run_monitor.py --check
+      run: OGMA="$HOME/.cabal/bin/ogma" RUNGHC=/usr/bin/runghc python3 assurance/models/fret/monitor/run_monitor.py --check
 
   sim-plant:
     name: simulation plant model

@@ -15,7 +15,8 @@
     python3 assurance/models/fret/monitor/run_monitor.py           # write
     python3 assurance/models/fret/monitor/run_monitor.py --check   # compare
 
-Needs Ogma and GHC with the Copilot libraries (TE-03 P4 setup), gcc, PyYAML and the panda submodule.
+Needs Ogma and GHC with the Copilot libraries (install_ogma.sh; OGMA and RUNGHC name them), gcc, PyYAML and the
+panda submodule.
 """
 
 from __future__ import annotations
@@ -44,6 +45,7 @@ HEADERS = ["engaged_mismatch.h", "heartbeat_siren.h"]
 MONITORED = ["FR-307a", "FR-516c", "FR-516-duration"]
 FRET_TYPES = {"bool": "bool", "int": "integer", "mode": "bool"}
 OGMA = os.environ.get("OGMA", "ogma")
+RUNGHC = os.environ.get("RUNGHC", "runghc")   # the GHC the Copilot libraries were installed for (install_ogma.sh)
 
 # (label, header, constant, original value, mutated value, the requirement expected to catch it)
 MUTANTS = [
@@ -87,7 +89,7 @@ def generate_monitor(work: Path, spec_text: str) -> Path:
   run([OGMA, "standalone", "--input-file", "monitor-spec.json", "--input-format", "fcs", "--prop-format", "smv",
        "--target-dir", str(gen), "--target-file-name", "monitor"], work)
   copilot = next(gen.glob("*.hs"))
-  run(["runghc", copilot.name], gen)
+  run([RUNGHC, copilot.name], gen)
   if not (gen / "monitor.c").exists():
     raise RuntimeError(f"Copilot wrote no monitor.c in {gen}: {sorted(p.name for p in gen.iterdir())}")
   return gen

@@ -37,7 +37,7 @@
     assurance/models/fret/install_solvers.sh .fret/solvers                               # Kind 2 and Z3
     PATH=.fret/solvers:.fret/solvers/z3-4.14.1/bin:$PATH FRET_DIR=.fret/fret-electron python3 assurance/models/fret/fret_realizability.py
     assurance/models/fret/install_ogma.sh                                                # Ogma and Copilot (~25 min)
-    OGMA=~/.cabal/bin/ogma python3 assurance/models/fret/monitor/run_monitor.py           # P4 monitor run
+    OGMA=~/.cabal/bin/ogma RUNGHC=/usr/bin/runghc python3 assurance/models/fret/monitor/run_monitor.py   # P4
 
 When a TSR in WP-S-02 is reworded, the check fails on its entry: review the FRETish against the new text, then update the quote. When a sentence changes, rerun `fret_formalize.py`.
 
