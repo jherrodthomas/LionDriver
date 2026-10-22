@@ -1,0 +1,83 @@
+# SG-03 fault-propagation model (tool evaluation TE-02, extended by DQ-417; step P1): which fault tree event each
+# model failure mode realises, and the timing the model's nominal behaviour uses. Read by model.py; checked by
+# test_sg03.py against the WP-A-04 §3 tree and assurance/08-analyses/fta-fmea-map.yaml.
+#
+# SG-03 is the acceleration counterpart of SG-01, and the model is built like the SG-01 one (../sg01/): TE-03 is an
+# acceleration above the controllable bound that the PCM executes, an in-bound positive acceleration the driver does
+# not stop, an acceleration while not engaged or after the driver brakes, an acceleration added on top of the
+# driver's pedal, a stale positive acceleration held beyond the FTTI, or the stock ACC and the item on the car bus
+# together.
+#
+# Synthetic model (DSR-12): behaviour and timing are taken from WP-A-04 §3, the code it cites and the plant, not
+# measured. Results rank risks and point reviewers at possible gaps in the tree; they earn no evidence credit.
+schema_version: 1
+goal: SG-03
+top_event: TE-03
+budget_s: 1.0          # SG-03 FTTI (WP-C-04 §3): a stale acceleration, or the stock ACC with the item, held longer is TE-03
+release_s: 0.2         # acceleration after the driver disengages counts once it outlasts the SG-05 release time (WP-C-04 §3)
+tick_s: 0.02
+
+timing:
+  driver_action: {s: 0.1, source: "Model choice: the driver brakes, cancels or presses the accelerator 0.1 s after the fault, so a fault on the frames is already present"}
+  stale_model_removed: {s: 0.52, source: "TSR-602 as implemented: controlsd drops longActive once modelV2 is more than 10 periods (10 x 50 ms) old (selfdrive/controls/lib/input_freshness.py STALE_PERIODS, strictly greater), at the next 10 ms cycle, and the accel request goes to the inactive value in the next frame; WP-A-04 BE-1.19, GAP-16"}
+  relay_detect: {s: 0.005, source: "Plant F-06a: relay malfunction detected 0.005 s, frames refused 0.010 s, authority revoked 0.053 s (sim/results/plant-results.md)"}
+  relay_revoke: {s: 0.053, source: "Plant F-06a: authority revoked 0.053 s after the stock frames reach the car side"}
+  engaged_mismatch_revoke: {s: 0.3, source: "TSR-307(a), panda f4803c5: authority revoked 0.3 s after the first \"not engaged\" heartbeat while authority is granted"}
+
+phases:
+  - id: engaged
+    engaged: true
+    driver: none
+    source: "The item is engaged and the driver keeps it engaged (G3.1, G3.2, G3.5, G3.6, G3.7)"
+  - id: brake
+    engaged: true
+    driver: brake
+    source: "The driver brakes: the brake frame (0x226) shows the press and the PCM drops cruise (0x1D2) unless it does not cancel ACC on brake (BE-3.09) (G3.3)"
+  - id: cancel
+    engaged: true
+    driver: cancel
+    source: "The driver disengages with the cancel button: only the PCM cruise state (0x1D2) shows it (G3.3)"
+  - id: "off"
+    engaged: false
+    driver: none
+    source: "The item is not engaged and the driver does not engage it (G3.3)"
+  - id: gas
+    engaged: true
+    driver: gas
+    source: "The driver presses the accelerator: the envelope reads GAS_RELEASED = 0 and allows the inactive value only (TSR-305) (G3.4)"
+
+latent_in_model:
+  - id: BE-1.22
+    why: "Command-value freshness is not supervised (TSR-409 open): the heartbeat and frame-arrival checks do not see a stale value in frames that keep arriving"
+  - id: BE-3.07
+    why: "By design: the envelope passes any in-bound value while authority is granted"
+  - id: BE-3.03
+    why: "Baseline design: the envelope has no acceleration jerk limit (TSR-204 not implemented, GAP-04), so a step to the bound passes"
+
+modes:
+  - {event: BE-3.01, function: envelope, mode: limits_high, kind: cause, text: "Envelope accel upper bound above the controllable value (same bound in the controller)"}
+  - {event: BE-3.02, function: soc, mode: planner_fault, kind: cause, text: "Planner or controller fault, wrong lead or e2e accel: excessive acceleration"}
+  - {event: BE-1.05, function: soc, mode: wrong_params, kind: cause, text: "Wrong CarParams or fingerprint"}
+  - {event: BE-4.16, function: envelope, mode: long_defect, kind: barrier, text: "Envelope software defect in the longitudinal checks"}
+  - {event: BE-1.07, function: envelope, mode: mcu_fault, kind: barrier, text: "MCU execution fault corrupts a limit or check, not detected"}
+  - {event: BE-1.08, function: envelope, mode: mode_changed, kind: barrier, text: "Safety mode or parameter changed by the SoC"}
+  - {event: BE-1.09, function: envelope, mode: firmware_replaced, kind: barrier, text: "Envelope firmware replaced via boot pins or softloader"}
+  - {event: BE-3.04, function: txpath, mode: corrupt, kind: cause, text: "Frame corrupted after the TX hook"}
+  - {event: UE-3.05, function: pcm, mode: no_bound, kind: barrier, text: "PCM executes the request without its own bound (AOU-05R fails)"}
+  - {event: BE-4.17, function: soc, mode: step, kind: cause, text: "Host sends an acceleration step (jerk limit before pitch compensation and the PID)"}
+  - {event: BE-3.06, function: soc, mode: closing_accel, kind: cause, text: "SoC requests positive acceleration in a closing situation (SOTIF)"}
+  - {event: UE-3.08, function: driver, mode: no_brake, kind: barrier, text: "Driver does not brake in time (AOU-06R)"}
+  - {event: BE-1.12, function: rx, mode: false_edge, kind: cause, text: "Corrupted 0x1D2 creates a false cruise rising edge with a valid checksum"}
+  - {event: BE-1.13, function: rx, mode: stuck_path, kind: cause, text: "Panda RX path delivers a stale cruise frame to both envelope and SoC"}
+  - {event: BE-1.14, function: envelope, mode: allowed_set, kind: barrier, text: "MCU fault sets controls_allowed"}
+  - {event: BE-1.25, function: envelope, mode: not_allowed_defect, kind: barrier, text: "Envelope defect in the inactive-value check or the controls_allowed bookkeeping"}
+  - {event: BE-3.09, function: rx, mode: brake_unseen, kind: cause, text: "Brake 0x226 not detected and the PCM does not cancel ACC on brake (AOU-03R)"}
+  - {event: BE-3.10, function: envelope, mode: inactive_bypass, kind: barrier, text: "Inactive-value check bypassed by a mode or parameter change"}
+  - {event: BE-3.13, function: soc, mode: accel_ungated, kind: cause, text: "SoC sends a positive acceleration regardless of its engagement state"}
+  - {event: BE-3.11, function: rx, mode: gas_stuck_released, kind: cause, text: "Gas-pressed signal stuck \"released\" while the driver presses"}
+  - {event: UE-3.12, function: pcm, mode: adds_on_pedal, kind: barrier, text: "PCM adds the item's acceleration on top of the driver's pedal (AOU-05R)"}
+  - {event: BE-1.19, function: soc, mode: stale_model, kind: cause, text: "Stale modelV2 used while controlsd runs"}
+  - {event: BE-1.21, function: soc, mode: replay, kind: cause, text: "SoC replays an old command buffer"}
+  - {event: BE-4.19, function: relay, mode: released, kind: cause, text: "Harness relay stays released: stock ACC_CONTROL reaches the car side"}
+  - {event: BE-4.20, function: relay, mode: forwarded, kind: cause, text: "Stock 0x343 forwarded while the item transmits"}
+  - {event: BE-4.21, function: relay, mode: undetected, kind: barrier, text: "Relay malfunction not detected (or only after 1-2 s, or cleared by a mode change)"}

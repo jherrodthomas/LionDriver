@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1320" height="644" viewBox="0 0 1320 644" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 1. Perception: what the two models see and what they output</title>
-<desc>Road cameras feed the driving model AI-1 and the cabin camera feeds the driver-monitoring model AI-3. AI-1's outputs: the steering action (direct lateral command), leads (longitudinal via the MPC), the model's own acceleration (Experimental only), meta including hardBrakePredicted (warning), plan, lane lines and road edges (indirect) and camera odometry (indirect). AI-3 outputs driverStateV2 (alerts, force-decel, lockout). Each carries chips for its WP-C-11 AI requirements, coloured by status: AIR-01 grey; AIR-18 red; AIR-03 grey; AIR-04 grey; AIR-05 grey; AIR-11 grey; AIR-29 red; AIR-06 grey; AIR-13 grey; AIR-07 grey; AIR-08 grey; AIR-15 red.</desc>
+<desc>Road cameras feed the driving model AI-1 and the cabin camera feeds the driver-monitoring model AI-3. AI-1's outputs: the steering action (direct lateral command), leads (longitudinal via the MPC), the model's own acceleration (Experimental only), meta including hardBrakePredicted (warning), plan, lane lines and road edges (indirect) and camera odometry (indirect). AI-3 outputs driverStateV2 (alerts, force-decel, lockout). Each carries chips for its WP-C-11 AI requirements, coloured by status: AIR-01 grey; AIR-18 red; AIR-03 grey; AIR-04 grey; AIR-05 grey; AIR-11 grey; AIR-29 amber; AIR-06 grey; AIR-13 grey; AIR-07 grey; AIR-08 grey; AIR-15 red.</desc>
 <defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
 <rect x="0" y="0" width="1320" height="644" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 1 · Perception: what the two models see and what they output</text>
@@ -56,7 +56,7 @@
 <rect x="560" y="230" width="720" height="50" rx="8" fill="#F8FAFC" stroke="#475569" stroke-width="1.3" stroke-dasharray="5 4"/>
 <text x="572" y="250" font-size="12" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">action.desiredAcceleration</text>
 <text x="572" y="267" font-size="10.5" fill="#475569">Longitudinal, Experimental only · plannerd min()</text>
-<rect x="1219.9" y="247" width="48.1" height="16" rx="8.0" fill="#D2553F" stroke="none" stroke-width="1"/>
+<rect x="1219.9" y="247" width="48.1" height="16" rx="8.0" fill="#D97706" stroke="none" stroke-width="1"/>
 <text x="1244" y="258.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">AIR-29</text>
 <line x1="502" y1="158" x2="558" y2="255" stroke="#475569" stroke-width="1.5"/>
 <path d="M558.0,255.0 L551.6,250.2 L557.0,247.1 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>

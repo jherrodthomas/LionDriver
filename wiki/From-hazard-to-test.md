@@ -89,3 +89,6 @@ evidence for the safety case, and count only once they are reviewed:
 [What is a safety case?](What-is-a-safety-case.md).
 
 What keeps the item safe once it is installed and in use is on [After release](After-release.md).
+
+This chain follows a fault. What happens when nothing fails but the function still gets it wrong is on
+[SOTIF and ISO 26262](SOTIF-and-ISO-26262.md).

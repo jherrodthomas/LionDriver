@@ -1,0 +1,425 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jherrodthomas/LionDriver/assurance/trace/schema/item.schema.json",
+  "title": "LionDriver trace item (WP-P-06 §5.1, trace README §4)",
+  "description": "One item of assurance/trace/items/*.yaml. Required fields per kind follow check_trace.py REQUIRED; check_schema.py validates every item with the pinned jsonschema (DQ-123 A).",
+  "type": "object",
+  "required": [
+    "id",
+    "kind",
+    "status",
+    "source"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^((H|HE|HS|SG|FSR|TSR|SWSR|HWSR|SH|TC|FI|FM|SOTIF|AIR|DSR|MLR|MON|KS|DVR|DEV|TS|CSG|CSR|SYS|AOU)-[0-9]{2,3}(\\.[0-9]{1,2})?[a-z]?|VS-[A-Z]{2,4}-[0-9]{2,3}[a-z]?)$"
+    },
+    "kind": {
+      "enum": [
+        "aou",
+        "fsr",
+        "hazard",
+        "hazardous-event",
+        "hwsr",
+        "safety-goal",
+        "swsr",
+        "tsr"
+      ]
+    },
+    "status": {
+      "enum": [
+        "agreed",
+        "implemented",
+        "proposed",
+        "verified",
+        "withdrawn"
+      ]
+    },
+    "source": {
+      "type": "string",
+      "pattern": "^WP-[A-Z]-[0-9]{2}$"
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "situation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "effect": {
+      "type": "string",
+      "minLength": 1
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1
+    },
+    "type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "safe_state": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ftti_text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "credited_in": {
+      "type": "string",
+      "minLength": 1
+    },
+    "verification_approach": {
+      "type": "string",
+      "minLength": 1
+    },
+    "aou_status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "allocated_to": {
+      "type": "string",
+      "minLength": 1
+    },
+    "verification": {
+      "type": "string",
+      "minLength": 1
+    },
+    "baseline_impl": {
+      "type": "string",
+      "minLength": 1
+    },
+    "parent_text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "acceptance": {
+      "type": "string",
+      "minLength": 1
+    },
+    "applies_to": {
+      "type": "string",
+      "minLength": 1
+    },
+    "proposed_by": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mechanism": {
+      "type": "string",
+      "description": "May be empty: the WP-S-02 §10 table (TSR-8xx) has no such column"
+    },
+    "timing": {
+      "type": "string",
+      "description": "May be empty: the WP-S-02 §10 table (TSR-8xx) has no such column"
+    },
+    "hw_kind": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sg_exempt_reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "functions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^F-[0-9]{2}$"
+      }
+    },
+    "parents": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "aou_dependency": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "s": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 3
+    },
+    "e": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4
+    },
+    "c": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 3
+    },
+    "asil": {
+      "type": "string",
+      "minLength": 1
+    },
+    "asil_if_aou_fails": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "enum": [
+            "QM",
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        }
+      ]
+    },
+    "aou_flag": {
+      "type": "boolean"
+    },
+    "other_parents": {
+      "type": "boolean"
+    },
+    "ftti_ms": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "aou"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "credited_in",
+          "verification_approach",
+          "aou_status",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "fsr"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "asil",
+          "parents",
+          "allocated_to",
+          "verification",
+          "baseline_impl",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "hazard"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "title",
+          "functions",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "hazardous-event"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "parents",
+          "situation",
+          "effect",
+          "s",
+          "e",
+          "c",
+          "asil",
+          "aou_flag",
+          "aou_dependency",
+          "asil_if_aou_fails",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "hwsr"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "asil",
+          "parents",
+          "parent_text",
+          "other_parents",
+          "allocated_to",
+          "hw_kind",
+          "verification",
+          "baseline_impl",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "safety-goal"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "type",
+          "asil",
+          "asil_if_aou_fails",
+          "aou_dependency",
+          "parents",
+          "safe_state",
+          "ftti_ms",
+          "ftti_text",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "swsr"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "asil",
+          "parents",
+          "parent_text",
+          "other_parents",
+          "allocated_to",
+          "verification",
+          "acceptance",
+          "baseline_impl",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "tsr"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "asil",
+          "parents",
+          "parent_text",
+          "other_parents",
+          "allocated_to",
+          "verification",
+          "baseline_impl",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "enum": [
+              "hazardous-event",
+              "safety-goal"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "asil": {
+            "enum": [
+              "QM",
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

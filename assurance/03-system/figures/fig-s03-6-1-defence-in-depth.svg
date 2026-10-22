@@ -55,7 +55,7 @@
 <text x="678" y="217" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-01</text>
 <text x="678" y="231" font-size="10.5" fill="#475569">AoU unverified</text>
 <rect x="892" y="168" width="160" height="70" rx="8" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 4"/>
-<text x="902" y="186" font-size="12.5" fill="#0F172A" font-weight="700">C2 ×6 · C3 ×1</text>
+<text x="902" y="186" font-size="12.5" fill="#0F172A" font-weight="700">C2 ×5 · C3 ×2</text>
 <text x="902" y="202" font-size="10.5" fill="#475569">of 7 hazardous events</text>
 <text x="902" y="217" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-02</text>
 <text x="902" y="231" font-size="10.5" fill="#475569">AoU unverified</text>

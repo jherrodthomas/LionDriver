@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-05 Evaluation of safety goal violations due to random HW failures (PMHF) |
 | Standard reference | ISO 26262-5:2018 §9 (evaluation of safety goal violations due to random hardware failures: probabilistic metric and evaluation of each cause), Annex C; ISO 26262-10:2018 (PMHF explanations, informative); ISO 26262-11:2018 (informative) |
-| Version | 0.6 (method approved by the lead: PMHF plus a per-cause check of the biggest contributors, DQ-066 option A, 2026-10-19; OI-1 closed; §4 ASILs follow WP-C-03 v0.4; §6 and Figure 6-1 updated). 0.5 (§3 mission-profile working values approved by the lead 2026-10-18 (DQ-067, A); OI-2 closed, OI-6 for logged operating hours; 2026-10-19). 0.4 (§3 working mission-profile values shown as used by the generic FMEDA; §6 status and λSPF + λRF note from FMEDA rev 0.4; plan step 2 per DQ-065; 2026-10-16). 0.3 (§6 status and §8 template drawn as Figure 6-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12 in §6: DC-01 implemented, not verified, not credited). 0.1: initial draft |
+| Version | 0.7 (OI-3: external measures for effects only, PMHF with and without them, an internal method choice until an assessor confirms it (DQ-071 A); 2026-10-22). 0.6 (method approved by the lead: PMHF plus a per-cause check of the biggest contributors, DQ-066 option A, 2026-10-19; OI-1 closed; §4 ASILs follow WP-C-03 v0.4; §6 and Figure 6-1 updated). 0.5 (§3 mission-profile working values approved by the lead 2026-10-18 (DQ-067, A); OI-2 closed, OI-6 for logged operating hours; 2026-10-19). 0.4 (§3 working mission-profile values shown as used by the generic FMEDA; §6 status and λSPF + λRF note from FMEDA rev 0.4; plan step 2 per DQ-065; 2026-10-16). 0.3 (§6 status and §8 template drawn as Figure 6-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12 in §6: DC-01 implemented, not verified, not credited). 0.1: initial draft |
 | Status | Draft (method and plan; no value computed) |
 | ASIL / scope | ASIL C (SG-01 provisional; SG-02, SG-03, SG-06 since WP-C-03 v0.4) / ASIL B (SG-04, SG-05, SG-07) |
 | Author | Assurance team (initial draft) |
@@ -169,7 +169,7 @@ reported as "met" or "not met" until computed.
 |---|---|---|
 | OI-1 | ~~Safety manager to approve the method choice (§2)~~ **Decided** ([DQ-066](../01-management/decisions/register.yaml), option A, 2026-10-19): PMHF plus a per-cause check of the biggest contributors | G2 |
 | OI-2 | Closed 2026-10-19: the working values of §3 (15 years, 500 h/year, +85 °C sun-loaded cabin, one power cycle per drive) are approved by the lead (decision register DQ-067, A, 2026-10-18). They are already in the figures, so nothing is recalculated. Replacing the hours with logged data is OI-6 | G2 |
-| OI-3 | Confirm with the external assessor the use of vehicle external measures in the effect analysis (§5) | G2 |
+| OI-3 | Vehicle external measures used for effects only, never as DC, with PMHF reported with and without them (§5): kept as an internal method choice (DQ-071 A, 2026-10-22); confirm with the external assessor once one is engaged (none yet, DQ-009 C); verify AOU-01R, -04R, -05R on the vehicle | G2 |
 | OI-4 | Verify target values and PMHF approximations against licensed ISO 26262-5 and -10 | G2 |
 | OI-5 | Obtain data (plan steps 2 and 8) | G2/G3 |
 | OI-6 | Replace the operating-hours working value (500 h/year) with logged driving data once there is some (DQ-067, A); re-check the latent-fault exposure time and PMHF with it | G3 |

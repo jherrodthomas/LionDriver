@@ -4,7 +4,7 @@
 |---|---|
 | Work product | Reconciliation record (supporting document, not a registered work product) |
 | Standard reference | ISO 26262-8:2018 §7 (configuration management), §8 (change management) |
-| Version | 0.4 (§8: second-set HARA mapped onto WP-C-03, decisions RD-1…RD-3; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status of the layer-1 measures after the firmware changes integrated 2026-10-12: TSR-501 IWDG implemented, not verified; layer 2 and OI-3 re-scoped; TSR-306, TSR-405 added to ASM-V-03…05; 2026-10-12). 0.1: initial reconciliation |
+| Version | 0.5 (OI-5 closed: the second set is withdrawn, DQ-124 A; 2026-10-22). 0.4 (§8: second-set HARA mapped onto WP-C-03, decisions RD-1…RD-3; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status of the layer-1 measures after the firmware changes integrated 2026-10-12: TSR-501 IWDG implemented, not verified; layer 2 and OI-3 re-scoped; TSR-306, TSR-405 added to ASM-V-03…05; 2026-10-12). 0.1: initial reconciliation |
 | Status | Draft |
 | Author | Assurance team |
 | Reviewer(s) | TBD |
@@ -122,7 +122,7 @@ Like LD-HARA-001, the second-set HARA rates the lateral goal ASIL D (SG-001), wi
 
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
-| OI-5 | Decide whether the second-set HARA, FSC and item definition are withdrawn once WP-C-01/03/04 settle OI-1, OI-2 and OI-4. **Re-pointing done (§8):** every second-set hazard and goal is mapped onto WP-C-03 in [`hara-mapping.yaml`](../08-analyses/fmea/hara-mapping.yaml), checked in CI; withdrawal waits for RD-1…RD-3 | Safety engineer | G1 |
+| OI-5 | **Closed 2026-10-22 (DQ-124 A):** the second-set HARA and FSC (`analyses/hara.yaml`, `fsc.yaml`, status `withdrawn`) and the item definition LD-ITEM-001 are withdrawn; WP-C-01, WP-C-03 and WP-C-04 are of record. RD-1…RD-3 (DQ-008, DQ-036, DQ-205) and OI-4 (DQ-037, DQ-369, DQ-370) were decided first. The files stay in git; FMEA and FMEDA rows keep their HZ-/SG-0nn references through [`hara-mapping.yaml`](../08-analyses/fmea/hara-mapping.yaml), checked in CI. Renaming those IDs in the FMEA data is a later task | Safety engineer | G1 |
 
 ## 8. Second-set HARA mapped onto WP-C-03 (OI-5)
 

@@ -8,7 +8,8 @@
   phase: G6
   lane: joint
   name: "Field monitoring (safety, SOTIF, AI) and crash reporting"
-  produces: [WP-O-04]
+  produces: []
+  updates: [WP-O-04]
   inputs: [WP-P-03, WP-V-04, WP-O-01, WP-O-02, WP-O-03, WP-K-06]
   handbook_wp: [WP-8]
 - id: OPS-02

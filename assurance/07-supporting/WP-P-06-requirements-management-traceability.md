@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-06 Requirements management and traceability procedure |
 | Standard reference | ISO 26262-8:2018 §6; ISO 21448:2022 §5, §7–8 (requirements from SOTIF analyses); ISO/SAE 21434:2021 §9–10 (cybersecurity goals and requirements); ASPICE 4.0 SYS.2–5, SWE.1–6 traceability and consistency BPs |
-| Version | 0.2 (§4 trace model redrawn as Figure 4-1; text version kept; 2026-10-13). 0.1 |
+| Version | 0.3 (§5.1: `schema/item.schema.json` written and validated in CI with the pinned jsonschema, DQ-123 A; 2026-10-22). 0.2 (§4 trace model redrawn as Figure 4-1; text version kept; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | All |
 | Author | Assurance team (initial draft) |
@@ -116,6 +116,8 @@ assurance/trace/
   safety-relevant-files.txt # machine copy of WP-P-01 §4 (proposed)
   tools/check_trace.py      # consistency checker (§7)
 ```
+
+The schema was written on 2026-10-22 from the required fields of `check_trace.py`. `tools/check_schema.py` validates every item against it with the pinned jsonschema (DQ-123 A, [WP-P-07](WP-P-07-tool-classification-qualification.md) TL-55); `check_trace.py` stays standard-library only.
 
 Reports (trace matrix, coverage of requirements by tests) are generated in CI and archived with the evidence package; they are not committed.
 

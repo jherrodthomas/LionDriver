@@ -10,7 +10,7 @@ One box per discipline; green activities are joint work of all disciplines and s
 
 ```mermaid
 flowchart LR
-  OPS_01["OPS-01<br/>Field monitoring (safety, SOTIF, AI) and crash reporting<br/>WP-O-04"]
+  OPS_01["OPS-01<br/>Field monitoring (safety, SOTIF, AI) and crash reporting<br/>WP-O-04 (update)"]
   subgraph L_cs["Cybersecurity (ISO/SAE 21434)"]
     direction LR
     OPS_02["OPS-02<br/>Cybersecurity incident response, vulnerability management and updates<br/>WP-O-05"]
@@ -45,7 +45,7 @@ Clause references and status are read from the [register (WP-M-00)](../../01-man
 
 | Activity | Lane | Produces | Inputs | ISO 26262 | ISO 21448 | ISO/SAE 21434 | Other | ASPICE | Handbook WP | Status |
 |---|---|---|---|---|---|---|---|---|---|---|
-| OPS-01 Field monitoring (safety, SOTIF, AI) and crash reporting | Joint (all disciplines) | [WP-O-04](../../09-production-operation/WP-O-04-field-monitoring.md) | WP-P-03, WP-V-04, WP-O-01, WP-O-02, WP-O-03, WP-K-06 | 2 §7 | §13 | §8 | PAS 8800 (operation phase), NHTSA SGO (US) |  | WP-8 | Draft |
+| OPS-01 Field monitoring (safety, SOTIF, AI) and crash reporting | Joint (all disciplines) | [WP-O-04](../../09-production-operation/WP-O-04-field-monitoring.md) *update* | WP-P-03, WP-V-04, WP-O-01, WP-O-02, WP-O-03, WP-K-06 | 2 §7 | §13 | §8 | PAS 8800 (operation phase), NHTSA SGO (US) |  | WP-8 | Draft |
 | OPS-02 Cybersecurity incident response, vulnerability management and updates | Cybersecurity (ISO/SAE 21434) | [WP-O-05](../../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md) | WP-P-02, WP-P-03, WP-C-09, WP-S-07, WP-W-11, WP-V-06, WP-P-10, WP-O-04 |  |  | §8, §13 | UN R156 (informative) | SEC.* | WP-8 | Draft |
 
 ## 3. Cross-domain interfaces

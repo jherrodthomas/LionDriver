@@ -58,10 +58,14 @@ jobs:
       with:
         persist-credentials: false
         fetch-depth: 2  # the base revision HEAD^1 for check_pin_records.py
+    - name: Install the pinned checker packages (jsonschema, PyYAML, openpyxl; DQ-123 A, WP-P-07 TL-55)
+      run: python3 -m pip install --quiet --user --break-system-packages -r assurance/trace/requirements.txt
     - name: A moved opendbc or panda pin has a change record (WP-P-07 TL-47)
       run: python3 tools/ci/check_pin_records.py
     - name: Trace consistency
       run: python3 assurance/trace/tools/check_trace.py
+    - name: Trace items against their JSON schema (WP-P-06 §5.1, DQ-123 A)
+      run: python3 assurance/trace/tools/check_schema.py
     - name: State machines (WP-W-05 §5 generated from state-machines/*.yaml)
       run: python3 assurance/trace/tools/check_state_machines.py --check
     - name: Design diagrams (Stateflow-style charts, Simulink-style block diagram) current
@@ -94,6 +98,8 @@ jobs:
         python3 assurance/02-concept/figures/test_fig_c02_odd.py
         python3 assurance/02-concept/figures/fig_c09_scenes.py --check
         python3 assurance/02-concept/figures/test_fig_c09_scenes.py
+        python3 assurance/02-concept/figures/fig_c05_four_areas.py --check
+        python3 assurance/02-concept/figures/test_fig_c05_four_areas.py
         python3 assurance/02-concept/hatara/hatara_model.py --check
         python3 assurance/02-concept/hatara/hatara_figures.py --check
         python3 assurance/02-concept/hatara/test_hatara.py
@@ -188,7 +194,6 @@ jobs:
         python3 assurance/08-analyses/fta/fta_cutsets.py --check
     - name: FMEA data lint, HARA mapping onto WP-C-03, FTA-FMEA hand-off figures (and their tests)
       run: |
-        python3 -m pip install --quiet --user --break-system-packages pyyaml jsonschema openpyxl
         python3 tools/safety/fmea_lint.py --report
         python3 -m unittest discover -s tools/safety -p 'test_fmea_lint.py'
         python3 assurance/08-analyses/figures/fta_fmea_figures.py --check
@@ -339,7 +344,7 @@ jobs:
     name: fmdtools fault-propagation models
     # NASA fmdtools models of the fault trees (TE-02; assurance/models/fmdtools). Synthetic: no evidence credit.
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
     - uses: actions/checkout@v7
       with:
@@ -369,13 +374,34 @@ jobs:
       run: |
         python3 assurance/models/fmdtools/sg06/test_fault_lab.py
         python3 assurance/models/fmdtools/sg06/fault_lab.py --check
+    - name: SG-01 model maps the WP-A-04 tree and reproduces the reference cut sets (DQ-417)
+      run: python3 assurance/models/fmdtools/sg01/test_sg01.py
+    - name: SG-01 single-fault and joint-fault pages are current (order 1 and 2; the full sweep runs weekly)
+      run: |
+        python3 assurance/models/fmdtools/sg01/sweep.py --check
+        python3 assurance/models/fmdtools/sg01/sweep.py joint --check --order 2
+    - name: SG-01 Fault Lab page is current, and its tests
+      run: |
+        python3 assurance/models/fmdtools/sg01/test_fault_lab.py
+        python3 assurance/models/fmdtools/sg01/fault_lab.py --check
+    - name: SG-03 model maps the WP-A-04 tree and reproduces the reference cut sets (DQ-417)
+      run: python3 assurance/models/fmdtools/sg03/test_sg03.py
+    - name: SG-03 single-fault and joint-fault pages are current (order 1 and 2; the full sweep runs weekly)
+      run: |
+        python3 assurance/models/fmdtools/sg03/sweep.py --check
+        python3 assurance/models/fmdtools/sg03/sweep.py joint --check --order 2
+    - name: SG-03 Fault Lab page is current, and its tests
+      run: |
+        python3 assurance/models/fmdtools/sg03/test_fault_lab.py
+        python3 assurance/models/fmdtools/sg03/fault_lab.py --check
 
   fret:
     name: FRETish restatements of the panda TSRs
     # NASA FRET pilot (TE-03; assurance/models/fret). Checks grammar shape, glossary and the quoted WP-S-02 text,
-    # then installs the FRET CLI at the pinned commit and checks the stored formulas against it. No evidence credit.
+    # then installs the FRET CLI at the pinned commit and checks the stored formulas against it, then installs Kind 2 and
+    # Z3 and checks the realizability page and contracts (P3). No evidence credit.
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
     - uses: actions/checkout@v7
       with:
@@ -393,6 +419,44 @@ jobs:
       run: assurance/models/fret/install_fret.sh "$RUNNER_TEMP/fret"
     - name: Stored FRET formulas match what FRET produces for the current sentences (step P2)
       run: FRET_DIR="$RUNNER_TEMP/fret/fret-electron" python3 assurance/models/fret/fret_formalize.py --check
+    - name: Install Kind 2 v2.2.0 and Z3 4.14.1 (pinned by SHA-256)
+      run: |
+        assurance/models/fret/install_solvers.sh "$RUNNER_TEMP/solvers"
+        echo "$RUNNER_TEMP/solvers" >> "$GITHUB_PATH"
+        echo "$RUNNER_TEMP/solvers/z3-4.14.1/bin" >> "$GITHUB_PATH"
+    - name: Realizability page and contracts are current, and its tests (step P3)
+      run: |
+        FRET_DIR="$RUNNER_TEMP/fret/fret-electron" python3 assurance/models/fret/test_fret_realizability.py
+        FRET_DIR="$RUNNER_TEMP/fret/fret-electron" python3 assurance/models/fret/fret_realizability.py --check
+
+  fret-monitor:
+    name: Copilot monitors from the FRETish requirements, run against the panda code
+    # TE-03 step P4 (assurance/models/fret/monitor): NASA Ogma turns FRET's formulas into a Copilot monitor in C99,
+    # and a harness runs the pinned panda engaged-mismatch and siren code under it, with mutants that the monitor must
+    # catch. The generated monitor stays on the runner. Building Ogma and Copilot takes about 25 minutes, so the cabal
+    # store is cached against install_ogma.sh. No evidence credit.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Checkout the panda submodule
+      run: git submodule update --init --depth 1 panda
+    - name: Install the pinned checker packages
+      run: python3 -m pip install --quiet --user --break-system-packages -r assurance/models/fret/requirements.txt
+    - name: Cache the Ogma and Copilot build
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cabal/store
+          ~/.cabal/bin
+          ~/.cabal/packages
+        key: ogma-${{ runner.os }}-${{ hashFiles('assurance/models/fret/install_ogma.sh') }}
+    - name: Install GHC, Ogma 1.16.0 and Copilot 4.8.1 (pinned index state)
+      run: assurance/models/fret/install_ogma.sh
+    - name: Monitor spec and results are current (step P4)
+      run: OGMA="$HOME/.cabal/bin/ogma" RUNGHC=/usr/bin/runghc python3 assurance/models/fret/monitor/run_monitor.py --check
 
   sim-plant:
     name: simulation plant model

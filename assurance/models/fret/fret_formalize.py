@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """TE-03 step P2: formalise every FRETish requirement with the FRET CLI and store the formulas.
 
-Runs `fretcli formalize` (past-time and infinite-trace future-time metric temporal logic) on each sentence of
+Runs `fretcli formalize` (past-time and infinite-trace future-time metric temporal logic, and the past-time Lustre
+form, FRET's `CoCoSpecCode`, that its realizability check uses) on each sentence of
 `tsr-fretish.yaml` and writes `fretish-formalizations.json`, keyed by requirement and holding the sentence it came
 from. `check_fretish.py` checks without FRET that every stored formula belongs to the current sentence; this script
 with `--check` reruns FRET and fails if a stored formula differs.
@@ -28,16 +29,16 @@ HERE = Path(__file__).resolve().parent
 SOURCE = HERE / "tsr-fretish.yaml"
 OUTPUT = HERE / "fretish-formalizations.json"
 FRET_COMMIT = "cf0f913"
-LOGICS = {"pt": "pt", "ft": "ft-inf"}
+LOGICS = {"pt": ["-l", "pt"], "ft": ["-l", "ft-inf"], "lustre": ["-l", "pt", "-lang", "lustre"]}
 
 
-def formalize(fret_dir: Path, home: Path, sentence: str, logic: str) -> str:
+def formalize(fret_dir: Path, home: Path, sentence: str, logic: list[str]) -> str:
   env = dict(os.environ, HOME=str(home), NODE_ENV="production")
-  run = subprocess.run(["node", "app/cli/fretCLI.main.js", "formalize", "-l", logic, sentence], cwd=fret_dir,
+  run = subprocess.run(["node", "app/cli/fretCLI.main.js", "formalize", *logic, sentence], cwd=fret_dir,
                        env=env, capture_output=True, text=True, timeout=120)
   lines = [ln for ln in run.stdout.splitlines() if ln.strip() and not ln.startswith("Initialized project")]
   if run.returncode != 0 or len(lines) != 1:
-    raise RuntimeError(f"FRET could not formalise {sentence!r} ({logic}): {run.stderr.strip()[-300:] or run.stdout}")
+    raise RuntimeError(f"FRET could not formalise {sentence!r} ({' '.join(logic)}): {run.stderr.strip()[-300:] or run.stdout}")
   return lines[0].strip()
 
 
