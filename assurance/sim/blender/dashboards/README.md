@@ -101,8 +101,10 @@ Variants re-render a scene under another weather or lighting code it is rated fo
 | [sh-04-phantom-braking-overpass--w03](sh-04-phantom-braking-overpass--w03.jpg) | W03: Night, dry, headlights | No change to S or C; exposure E3 |
 | [sh-06-stationary-not-lead--w02](sh-06-stationary-not-lead--w02.jpg) | W02: Wet road or light rain | H-04 in a curve (OS-02, OS-14, OS-16): S3, C1 ⚠ (instability under unexpected braking, HE-04.2) |
 | [sh-06-stationary-not-lead--w04](sh-06-stationary-not-lead--w04.jpg) | W04: Moderate or heavy rain (outside the ODD, foreseeable) | H-04 in a curve: S3, C1 ⚠; H-06 and H-10: C+1 (reduced visibility delays the driver's detection) |
+| [sh-06-stationary-not-lead--tc-01-nb](sh-06-stationary-not-lead--tc-01-nb.jpg) | TC-01-NB: Low sun in the camera field of view, summer morning northbound (SOTIF triggering condition, WP-C-06) | Not a HARA condition; the other glare season of TC-01, drawn as a variant of SH-06 and SH-11 |
 | [sh-09-red-light--w03](sh-09-red-light--w03.jpg) | W03: Night, dry, headlights | No change to S or C; exposure E3 |
 | [sh-09-red-light--w02](sh-09-red-light--w02.jpg) | W02: Wet road or light rain | H-04 in a curve (OS-02, OS-14, OS-16): S3, C1 ⚠ (instability under unexpected braking, HE-04.2) |
+| [sh-11-pedestrian-occluded--tc-01-nb](sh-11-pedestrian-occluded--tc-01-nb.jpg) | TC-01-NB: Low sun in the camera field of view, summer morning northbound (SOTIF triggering condition, WP-C-06) | Not a HARA condition; the other glare season of TC-01, drawn as a variant of SH-06 and SH-11 |
 | [sh-13-construction-zone--w03](sh-13-construction-zone--w03.jpg) | W03: Night, dry, headlights | No change to S or C; exposure E3 |
 | [sh-13-construction-zone--w02](sh-13-construction-zone--w02.jpg) | W02: Wet road or light rain | H-04 in a curve (OS-02, OS-14, OS-16): S3, C1 ⚠ (instability under unexpected braking, HE-04.2) |
 | [ec-11-lane-change-frozen-overshoot--w06](ec-11-lane-change-frozen-overshoot--w06.jpg) | W06: Fog, visibility below the ODD bound (outside the ODD, foreseeable) | H-06 and H-10: C+1 (reduced visibility delays the driver's detection) |
