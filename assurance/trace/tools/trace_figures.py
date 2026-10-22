@@ -779,7 +779,7 @@ CHECK_SHORT = {
   "R1": "HE ASIL = S + E + C", "R2": "SG ASIL = max of HEs", "R3": "AoU-fail ASIL rule", "R4": "every H has an HE",
   "X1": "HARA = WP-C-03", "X2": "AoU = WP-C-01", "X3": "generated YAML fresh",
   "P1": "unverified AoU in WP-K-01", "P2": "IDs in the block ranges", "S1": "SH → FI, TC → FM complete",
-  "A1": "AIR rests on a parent · AIR ↔ TSR",
+  "A1": "AIR basis · AIR ↔ TSR",
 }
 CHECK_GROUPS = [("STRUCTURE AND DERIVATION (WP-P-06 §7)", ("K1", "K2", "K3", "K4", "K5", "K11", "K12")),
                 ("CODE AND TEST LINKS, AND PLANNED CHECKS", ("K6", "K7", "K8", "K9", "K10", "P1", "P2")),
