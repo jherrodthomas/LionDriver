@@ -48,7 +48,9 @@ python3 assurance/sim/blender/test_fetch_assets.py                              
 
 Rendering is Cycles on the CPU, so it runs headless without a GPU: with the CC0 assets, 2.5 to 12 minutes per
 scene for its key-event stills (mean about 6; three cameras, 16 samples, 4 cores; weather variants take longest),
-so the whole gallery takes about 9 hours; a clip (`--video`) takes about ten times as long. The surroundings of 0.9
+so the whole gallery takes about 9 hours; a clip (`--video`) takes about ten times as long.
+Blender's memory grows with every clip frame, so render a clip in parts: `--stills --video --resume --max-frames 60`
+exits with code 75 after 60 new frames, and the same command run again carries on (until it exits 0). The surroundings of 0.9
 about double a chase still on the open roads (1280×720, 16 samples: 41 s to 82 to 97 s; mostly the haze, the verge
 plants and the spray) and leave the urban streets unchanged; peak memory rises from about 4.4 to 5 GB.
 
