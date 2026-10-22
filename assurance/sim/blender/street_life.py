@@ -223,10 +223,16 @@ def walkers(sc: dict, density: str, furniture: list[dict] | None = None) -> list
 # ------------------------------------------------------------------------------------------------- traffic
 def skins(sc: dict) -> dict[str, float]:
   """{actor name: pick} of the traffic cars drawn with the car pack: every car but the ego and the critical road
-  user."""
+  user, each scaled by skin_scale so the picture keeps the outline the analysis uses."""
   rnd = _rng(sc, "skins")
   return {a["name"]: rnd.random() for a in sc["actors"][1:]
           if a["kind"] == "car" and a["name"] != sc.get("critical") and not a.get("critical")}
+
+
+def skin_scale(sc: dict, length: float) -> float:
+  """The uniform scale that gives a car-pack body (length m) the length of the car the analysis draws every road
+  user as (export_scene's car outline, which decides contact): a skin never reaches beyond its road user."""
+  return sc["car"]["length"] / length
 
 
 def trailers(sc: dict) -> list[str]:

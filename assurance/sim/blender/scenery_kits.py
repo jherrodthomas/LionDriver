@@ -2,8 +2,9 @@
 templates, and what the scene's env asks of them. city_blocks: brownstone, Chicago and office rows on the building
 lines of an urban street (in place of the procedural boxes) and towers beyond it; street_life: parked and passing
 cars and people on the pavements; farmstead: a farm with grain bins and a roadside diner beside a rural road;
-traffic_skins: the traffic cars drawn with the car pack; trailers: a box trailer behind each truck street_life.trailers
-allows. A kit that is not fetched is left out (the procedural look stays), so CI and offline runs need none of them.
+traffic_skins: the traffic cars drawn with the car pack, scaled to the analysis' car length (street_life.skin_scale);
+trailers: a box trailer behind each truck street_life.trailers allows. A kit that is not fetched is left out (the
+procedural look stays), so CI and offline runs need none of them.
 
 Pictures only: export_scene.py reads none of this, and the scene's road users keep their poses (a skin or a trailer
 is drawn on a road user's own animated root). Every kit is CC-BY 4.0: a published render credits it
@@ -332,7 +333,10 @@ def build(sc: dict, env: dict, assets, keyframe, walk, lamps=None, rear: bool = 
       for o in root.children_recursive:
         if o.type == "MESH":
           o.hide_render = True
-      place(pick(u), f"{root.name}_skin", coll, (0, 0, 0), parent=root)
+      car = pick(u)
+      skin = place(car, f"{root.name}_skin", coll, (0, 0, 0), parent=root)
+      k = street_life.skin_scale(sc, car["w"])
+      skin.scale = (k, k, k)
       n += 1
     done.append(f"{n} skins")
 

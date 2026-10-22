@@ -244,7 +244,7 @@ scene. [`../scenery_kits.py`](../scenery_kits.py) draws them in Blender. Each is
 | `city_blocks` | Brownstone, Chicago and office buildings shoulder to shoulder on both building lines, in place of the procedural boxes, breaking for every cross street and crosswalk; towers beyond the end of the street | urban |
 | `street_life` | `dense` or `light`: cars in the parking lanes, cars driving the oncoming lanes, and people walking the pavements both ways or waiting at the corners of a cross street | urban (`dense`) |
 | `farmstead` | A farm (house, barns, sheds, grain bins) about 30 m past the verge on one side, and a diner or stores with parked cars about 16 m past it, ahead of the chase camera, standing on the terrain | rural |
-| `traffic_skins` | The traffic cars drawn with the car pack, so a street is not all Corollas. The ego and the critical road user keep the Corolla | every environment |
+| `traffic_skins` | The traffic cars drawn with the car pack, so a street is not all Corollas, each scaled to the length of the car outline the analysis uses (4.63 m), so a skin never reaches past its road user. The ego and the critical road user keep the Corolla | every environment |
 | `trailers` | A box trailer behind each traffic truck, the truck's cab kept, where no road user follows closely enough to touch it | highway |
 
 **They never change the analysis.** `export_scene.py` never reads any of this, and a skin or a trailer is drawn on a
