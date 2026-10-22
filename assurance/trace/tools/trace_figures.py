@@ -162,6 +162,8 @@ class Data:
   children: dict[str, list[str]]        # item ID -> items that list it in `parents`
   links: Counter                        # (parent kind, child kind) -> number of parent links
   named: set[str]                       # item IDs named by at least one test-specification case
+  linked: dict[str, int]                # requirement ID -> number of tests links/verification.yaml links to it
+  n_links: int                          # entries of links/verification.yaml
   alloc: dict[str, str]                 # requirement ID -> resolved / partly resolved / not resolved
   alloc_values: dict[str, list[str]]    # unresolved allocated_to text -> requirement IDs
   checks: list[tuple[str, str, str]]    # (check ID, description, implemented: yes / partly / no)
@@ -235,10 +237,12 @@ def load() -> Data:
         links[(kind[p], kind[i])] += 1
   named = {r for cases in m.specs.values() for refs in cases.values() for r in refs} & set(m.items)
   alloc, values = allocation(m.items)
-  if VERIFICATION_LINKS.exists():
-    raise SystemExit(f"{VERIFICATION_LINKS.relative_to(REPO)} now exists: teach trace_figures.py (figures 1, 2, 4) " +
+  ver = tm.ct.load_yaml(VERIFICATION_LINKS) if VERIFICATION_LINKS.exists() else []
+  linked = Counter(r for ln in ver for r in ln.get("reqs") or [])
+  if any("result" in ln for ln in ver):
+    raise SystemExit(f"{VERIFICATION_LINKS.relative_to(REPO)} now records results: teach trace_figures.py (figures 1, 2, 4) " +
                      "to count its test results")
-  return Data(m, kind, dict(children), links, named, alloc, values, readme_checks(), block_titles(),
+  return Data(m, kind, dict(children), links, named, dict(linked), len(ver), alloc, values, readme_checks(), block_titles(),
               sum(len(c) for c in m.specs.values()), len(m.specs))
 
 
@@ -329,8 +333,10 @@ def fig1(d: Data) -> str:
   out.append(line(1138, 272, 1138, 298, marker="muted"))
   # trace data
   out += box(200, 390, 806, 62, f"items/*.yaml · {total} items", counts, fill=SW_BG, stroke=SW, title_fill=SW)
-  out += box(1040, 390, 196, 62, "links/verification.yaml", "not yet · 0 @req tags", dash="5 4", stroke=RED,
-             detail_fill=RED, mono=True, size=11)
+  out += box(1040, 390, 196, 62, "links/verification.yaml",
+             f"{d.n_links} test links · no results\n0 @req tags" if d.n_links else "not yet · 0 @req tags",
+             dash="" if d.n_links else "5 4", stroke=AMBER if d.n_links else RED, detail_fill=INK if d.n_links else RED,
+             mono=True, size=11)
   out.append(line(298, 362, 298, 388, marker="muted"))
   out.append(line(718, 362, 718, 388, marker="muted"))
   out.append(path("M1006,404 L1022,404 L1022,331 L1038,331", stroke=MUTED, sw=1.4, marker="muted"))
@@ -360,7 +366,8 @@ def fig1(d: Data) -> str:
   return svg(W, H, "Figure 1 · How the trace data works",
              "Swimlane from authors through work products, generators, the trace data and its checks to the " +
              f"consumers. The trace data holds {total} items ({counts}); requirement YAML is regenerated from the work " +
-             "product tables; no verification links or @req tags exist yet.", out)
+             (f"product tables; {d.n_links} test links come from WP-W-06, no results and no @req tags exist yet." if d.n_links
+              else "product tables; no verification links or @req tags exist yet."), out)
 
 
 # ---------------------------------------------------------------- Figure 2: trace data model
@@ -482,9 +489,10 @@ def fig2(d: Data) -> str:
   named = len(d.named)
   out.append(rect(650, 552, 590, 74, fill=RED_BG, stroke=RED, rx=10, dash="5 4"))
   out.append(text(668, 576, "Code and tests · @req tags, links/verification.yaml", size=12, weight=700, fill=RED))
-  out.append(text(668, 596, f"0 tags in code or tests. {named} of {len(d.m.items)} items are named by a " +
-                  "test-specification case:", size=11, fill=MUTED))
-  out.append(text(668, 614, "a specified link, not a passed test.", size=11, fill=MUTED))
+  out.append(text(668, 596, f"{d.n_links} test links to {len(d.linked)} requirements (from WP-W-06), 0 @req tags, " +
+                  "no results.", size=11, fill=MUTED))
+  out.append(text(668, 614, f"{named} of {len(d.m.items)} items are named by a test-specification case: specified, " +
+                  "not passed.", size=11, fill=MUTED))
   out += legend(40, 660, [(SW_BG, SW, "in items/, checked"), ("#FFFFFF", FAINT + " dashed", "only in its work product"),
                           ("#FFFFFF", AOU_C, "assumption link")])
   return svg(W, H, "Figure 2 · Trace data model",
@@ -607,7 +615,8 @@ def goal_row(d: Data, ids: set[str]) -> dict:
   reqs = [i for i in ids if d.kind[i] in REQ_KINDS]
   alloc = [i for i in reqs if d.alloc.get(i) == "resolved"]
   named = [i for i in reqs if i in d.named]
-  return {"by": by, "n": len(reqs), "alloc": len(alloc), "named": len(named)}
+  linked = [i for i in reqs if i in d.linked]
+  return {"by": by, "n": len(reqs), "alloc": len(alloc), "named": len(named), "linked": len(linked)}
 
 
 def fig4(d: Data) -> str:
@@ -615,9 +624,9 @@ def fig4(d: Data) -> str:
   gs = goals(d)
   out = header(W, 4, "Trace depth per safety goal",
                "How far each goal's chain reaches today, over the requirements it derives (FSR, TSR, SWSR, HWSR). " +
-               "Every chain stops before code.", "WP-T-01 §6")
+               "No chain reaches a recorded result.", "WP-T-01 §6")
   cols = [("DERIVED", "FSR · TSR", 210), ("REFINED", "SWSR · HWSR", 380), ("ALLOCATED", "to a model element", 550),
-          ("NAMED BY A", "test-spec case", 740), ("TAGGED", "in code (@req)", 930), ("TEST", "passed", 1090)]
+          ("NAMED BY A", "test-spec case", 740), ("LINKED", "to a test (K6)", 930), ("TEST", "passed", 1090)]
   cw = [150, 150, 170, 170, 140, 150]
   for (a, b, x), w in zip(cols, cw, strict=True):
     out.append(text(x + w / 2, 112, a, size=10.5, weight=700, fill=MUTED, anchor="middle"))
@@ -639,23 +648,24 @@ def fig4(d: Data) -> str:
     for (_, _, x), w, v in zip(cols[:2], cw[:2], vals, strict=True):
       out.append(rect(x, y + 4, w - 12, 32, fill="#EFF6FF", stroke="#93C5FD", rx=6))
       out.append(text(x + (w - 12) / 2, y + 25, v, size=12.5, weight=700, fill="#1D4ED8", anchor="middle"))
-    for (_, _, x), w, num in ((cols[2], cw[2], r["alloc"]), (cols[3], cw[3], r["named"])):
+    for (_, _, x), w, num in ((cols[2], cw[2], r["alloc"]), (cols[3], cw[3], r["named"]), (cols[4], cw[4], r["linked"])):
       p = pct(num, r["n"])
       full = num == r["n"]
-      fill, stroke = (GREEN_BG, GREEN) if full and x == cols[2][2] else (AMBER_BG, AMBER)
+      fill, stroke = ((GREEN_BG, GREEN) if full and x == cols[2][2] else (RED_BG, RED) if num == 0 else
+                      (AMBER_BG, AMBER))
       out.append(rect(x, y + 4, w - 12, 32, fill=fill, stroke=stroke, rx=6))
       out.append(text(x + (w - 12) / 2, y + 20, f"{p} %", size=12.5, weight=700, fill=INK, anchor="middle"))
       out.append(text(x + (w - 12) / 2, y + 32, f"{num} of {r['n']}", size=9.5, fill=MUTED, anchor="middle"))
-    for (_, _, x), w in ((cols[4], cw[4]), (cols[5], cw[5])):
+    for (_, _, x), w in ((cols[5], cw[5]),):
       out.append(rect(x, y + 4, w - 12, 32, fill=CHIP, stroke=LINE, rx=6, dash="4 3"))
       out.append(text(x + (w - 12) / 2, y + 25, "no data yet", size=11, fill=FAINT, anchor="middle"))
     y += 46
   y += 14
   out += legend(40, y, [("#EFF6FF", "#93C5FD", "count of derived items (proposed, not approved)"),
-                        (AMBER_BG, AMBER, "partial"), (GREEN_BG, GREEN, "complete"),
+                        (RED_BG, RED, "none"), (AMBER_BG, AMBER, "partial"), (GREEN_BG, GREEN, "complete"),
                         (CHIP, LINE + " dashed", "no data source yet")])
-  out.append(text(40, y + 24, "“Named” means a test-specification case cites the ID: a specified link, not a " +
-                  "passed test. Tagged and passed need @req tags and links/verification.yaml (checks K6–K10).",
+  out.append(text(40, y + 24, "“Named”: a test-specification case cites the ID. “Linked”: links/verification.yaml " +
+                  "links an existing test to it (WP-W-06 §4.1). Both are specified links, not a passed test (K7).",
                   size=11, fill=MUTED))
   out.append(text(40, y + 40, "Allocated: the requirement's allocated_to names elements of the SysML model " +
                   "(check M8). A requirement under several goals counts in each row.", size=11, fill=MUTED))
@@ -663,8 +673,8 @@ def fig4(d: Data) -> str:
   return svg(W, y + 58, "Figure 4 · Trace depth per safety goal",
              "For each safety goal: the derived and refined requirement counts, the share allocated to model elements " +
              f"and the share named by a test-specification case. Over all goals {allr['alloc']} of {allr['n']} " +
-             f"requirements are allocated and {allr['named']} named; none is tagged in code or verified by a passed " +
-             "test.", out)
+             f"requirements are allocated, {allr['named']} named and {allr['linked']} linked to an existing test; none is " +
+             "verified by a recorded passed test.", out)
 
 
 # ---------------------------------------------------------------- Figure 5: TSR blocks x goals

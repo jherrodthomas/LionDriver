@@ -5,6 +5,8 @@ Checks implemented so far (IDs per assurance/trace/README.md section 6):
   K1  item files parse and carry the mandatory keys for their kind
   K2  IDs are unique and match the ID pattern
   K3  every reference (parents, aou_dependency) resolves
+  K6  every requirement a test links to in links/verification.yaml exists, is a requirement and is not withdrawn
+      (the @req tags of the same check are not implemented)
   K12 every hazardous event is linked to a safety goal or has sg_exempt_reason
   R1  hazardous-event ASIL equals the risk-graph result of S, E, C
   R2  safety-goal ASIL equals the highest ASIL of its source hazardous events
@@ -40,6 +42,10 @@ from pathlib import Path
 TRACE_DIR = Path(__file__).resolve().parent.parent
 ASSURANCE_DIR = TRACE_DIR.parent
 ITEMS_DIR = TRACE_DIR / "items"
+LINKS = TRACE_DIR / "links" / "verification.yaml"
+# README §5: only requirements may be linked to a test, never a goal or a hazard
+LINKABLE = {"fsr", "tsr", "swsr", "hwsr", "cybersecurity-requirement", "ai-requirement", "system-requirement",
+            "functional-modification"}
 HARA_MD = ASSURANCE_DIR / "02-concept" / "WP-C-03-hara.md"
 ITEMDEF_MD = ASSURANCE_DIR / "02-concept" / "WP-C-01-item-definition.md"
 
@@ -357,6 +363,21 @@ def check_sys(by_id: dict[str, dict], rep: Report) -> None:
         rep.err("Q1", f"{iid}: no {what}")
 
 
+def check_verification_links(by_id: dict[str, dict], links: list[dict], rep: Report) -> None:
+  """K6 for links/verification.yaml: each linked ID is an existing, non-withdrawn requirement."""
+  for ln in links:
+    for ref in ln.get("reqs") or []:
+      it = by_id.get(ref)
+      if it is None:
+        rep.err("K6", f"{ln.get('test')}: links {ref}, which does not exist")
+      elif it["kind"] not in LINKABLE:
+        rep.err("K6", f"{ln.get('test')}: links {ref}, a {it['kind']}; only requirements may be linked (README §5)")
+      elif it.get("status") == "withdrawn":
+        rep.err("K6", f"{ln.get('test')}: links {ref}, which is withdrawn")
+    if not ln.get("reqs"):
+      rep.err("K6", f"{ln.get('test')}: links no requirement")
+
+
 def check_requirement_coverage(by_id: dict[str, dict], rep: Report) -> None:
   """K3/K4 for requirements: every SG has an FSR, every FSR has a TSR (directly, or through the FSRs it shares)."""
   fsrs = {i: x for i, x in by_id.items() if x["kind"] == "fsr"}
@@ -497,6 +518,8 @@ def main(argv: list[str]) -> int:
     items += data
   by_id = check_items(items, rep)
   check_links(by_id, rep)
+  if LINKS.exists():
+    check_verification_links(by_id, load_yaml(LINKS), rep)
   if "--no-source-compare" not in argv:
     check_against_hara(by_id, rep)
     check_against_itemdef(by_id, rep)

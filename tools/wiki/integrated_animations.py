@@ -420,11 +420,13 @@ def joins(d):
 # ------------------------------------------------------------------ 3 one hazard log, one V
 def one_log(d):
   tl, h = Timeline(30.0), 660
+  one = all(traced for _, _, items in d["trace"] for _, traced in items)
   b = [t(24, 38, "One hazard log, one trace", 22, NAVY, 700)]
   b += caps(tl, [(0.3, "Each vehicle-level hazard, with its SOTIF and security causes on one row (WP-C-03 §7)"),
                  (9.8, "The log is checked against the TARA: here they disagree" if any(r[3] for r in d["log"]) else "The log is checked against the TARA's damage scenarios: they agree"),
                  (14.6, "Below: the trace, one lane per standard (WP-T-01 §3)"),
-                 (22.0, "Solid boxes are in the trace data; dashed ones are linked in tables only")])
+                 (22.0, "Every lane is in the trace data and checked by CI" if one else
+                  "Solid boxes are in the trace data; dashed ones are linked in tables only")])
   rows = d["log"]
   hy = 104
   b.append(g(f"{tl.show(0.5)} fin", [t(40, hy + 14, "HARA", 11, FS, 800), t(120, hy + 14, "SOTIF", 11, SO, 800), t(210, hy + 14, "TARA damage scenarios that reach it (WP-C-09 §3)", 11, CS, 800)]))
@@ -450,8 +452,10 @@ def one_log(d):
         o.append(f'<line x1="{x - 12}" y1="{y + 17}" x2="{x}" y2="{y + 17}" stroke="{c}" stroke-width="1.8"{dash}/>')
     b.append(g(f"{tl.show(14.8 + i * 0.8)} fin", o))
   b.append(g(f"{tl.show(22.2)} fin", [f'<rect x="24" y="566" width="{W - 110}" height="72" rx="10" fill="#eef2f8" stroke="{NAVY}"/>',
-             t(40, 588, "Solid: in the trace data, checked by CI. Dashed: linked in the work-product", 12, NAVY),
-             t(40, 606, "tables only (WP-T-01 §7). Bringing them in is what makes the trace one.", 12, NAVY),
+             *([t(40, 588, "All five standards are in one trace, checked by CI on every change. Still open", 12, NAVY),
+                t(40, 606, "(WP-T-01 §7): tags in the code and recorded test results.", 12, NAVY)] if one else
+               [t(40, 588, "Solid: in the trace data, checked by CI. Dashed: linked in the work-product", 12, NAVY),
+                t(40, 606, "tables only (WP-T-01 §7). Bringing them in is what makes the trace one.", 12, NAVY)]),
              t(40, 626, "", 1)]))
   b.append(stick(W - 40, h - 20, "point"))
   return svg(h, "One hazard log, one trace (animated)",

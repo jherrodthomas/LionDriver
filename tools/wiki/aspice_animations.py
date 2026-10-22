@@ -52,7 +52,7 @@ SOURCES = [
   (M13, "The self-assessment is repeated at each gate (G0…G5)"), (M13, "a formal assessment by a certified assessor is required (OI-1)"),
   (M13, "Re-rating is an assessment; it is due at the next gate review, G0"),
   (MAP, "| SYS.2 ↔ SYS.5 | VS-SQ | FSR |"), (MAP, "## 6. Test cases naming unknown IDs"),
-  (MAP, "no `@req` tags and no `links/verification.yaml` yet"),
+  (MAP, "but no test → result link exists"), (MAP, "- **Kinds outside the trace data:** none"),
   (Path("assurance") / "02-concept" / "WP-C-03-hara.md", "| SG-01 |"),
   (Path("assurance") / "02-concept" / "WP-C-04-functional-safety-concept.md", "| FSR-01.04 |"),
   (Path("assurance") / "03-system" / "WP-S-02-technical-safety-requirements.md", "| TSR-105 |"),
@@ -385,9 +385,9 @@ def trace(d):
   b.append(g(f"{tl.show(17.4)} fin", [t(24, y0 + 7 * 30 + 14, "BACK", 10, MID, 800), t(84, y0 + 7 * 30 + 14, "test cases naming an ID that does not exist", 12, NAVY, 600),
                                       t(638, y0 + 7 * 30 + 15, "none ✓" if d["unknown_none"] else "some ✗", 12, GRN if d["unknown_none"] else RED, 700)]))
   b.append(g(f"{tl.show(23.6)} fin", [f'<rect x="24" y="552" width="{W - 110}" height="90" rx="10" fill="#eef2f8" stroke="{NAVY}"/>',
-             t(40, 574, "Not traced yet (WP-T-01 §7): no requirement tags in the code, no link", 12, NAVY),
-             t(40, 594, "from a test to its result, and SOTIF, AI and security items sit outside", 12, NAVY),
-             t(40, 614, "the trace data. A test that names a requirement is not yet a passed test.", 12, NAVY, 700),
+             t(40, 574, "Not traced yet (WP-T-01 §7): no requirement tags in the code, and tests are", 12, NAVY),
+             t(40, 594, "linked to requirements (links/verification.yaml) but no result is recorded.", 12, NAVY),
+             t(40, 614, "A test that names a requirement is not yet a passed test.", 12, NAVY, 700),
              t(40, 632, "", 1)]))
   b.append(stick(W - 40, h - 20, "point"))
   return svg(h, "Traceability: every link both ways (animated)",

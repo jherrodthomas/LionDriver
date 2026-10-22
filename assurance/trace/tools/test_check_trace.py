@@ -328,6 +328,27 @@ class TestSysChecks(unittest.TestCase):
                                                    "[Q1] SYS-001: no allocation (WP-S-01 §10.1)"])
 
 
+class TestVerificationLinks(unittest.TestCase):
+  def setUp(self):
+    self.items = copy.deepcopy(GOOD + SOTIF + [TSR])
+    self.by_id = ct.check_items(self.items, ct.Report())
+
+  def errors(self, links):
+    rep = ct.Report()
+    ct.check_verification_links(self.by_id, links, rep)
+    return rep.errors
+
+  def test_a_requirement_link_is_clean(self):
+    self.assertEqual(self.errors([{"test": "t.py::C::test_a", "reqs": ["TSR-603", "FM-01"]}]), [])
+
+  def test_k6_unknown_goal_withdrawn_and_empty(self):
+    find(self.items, "TSR-603")["status"] = "withdrawn"
+    errs = self.errors([{"test": "t", "reqs": ["TSR-999", "SG-01", "TSR-603"]}, {"test": "u", "reqs": []}])
+    self.assertEqual(errs, ["[K6] t: links TSR-999, which does not exist",
+                            "[K6] t: links SG-01, a safety-goal; only requirements may be linked (README §5)",
+                            "[K6] t: links TSR-603, which is withdrawn", "[K6] u: links no requirement"])
+
+
 class TestRepository(unittest.TestCase):
   def test_main_passes_on_repository(self):
     out = io.StringIO()
