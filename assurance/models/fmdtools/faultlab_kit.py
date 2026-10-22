@@ -91,12 +91,13 @@ def finding(kind: str, title: str, text: str) -> str:
           f'<div class="x">{text}</div></div></div>')
 
 
-def plant_table(text: str, first: str) -> dict[str, dict[str, str]]:
-  """Rows of the plant-results.md table whose header starts with `Case | <first>`, keyed by their first cell."""
+def plant_table(text: str, first: str, has: str = "") -> dict[str, dict[str, str]]:
+  """Rows of the plant-results.md table whose header starts with `Case | <first>` (and holds the column `has`, if
+  given), keyed by their first cell."""
   lines = text.splitlines()
   for i, line in enumerate(lines):
     cells = [c.strip() for c in line.strip().strip("|").split("|")]
-    if cells and cells[0] == "Case" and len(cells) > 1 and cells[1].startswith(first):
+    if cells and cells[0] == "Case" and len(cells) > 1 and cells[1].startswith(first) and (not has or has in cells):
       rows = {}
       for row in lines[i + 2:]:
         if not row.startswith("|"):
