@@ -33,7 +33,8 @@ A SOTIF hazard SH-0x has the same number as the HARA hazard H-0x with the same e
 severity and controllability ratings. Only ISO 26262 turns them into an ASIL; SOTIF records exposure only to set
 validation targets. Some causes belong to both: a performance limit that a safety goal's fault tree also carries,
 and the driver who stops watching, which is foreseeable misuse in SOTIF and a rated entry in the HARA. Attacks belong
-to ISO/SAE 21434 and its TARA ([WP-C-09](../assurance/02-concept/WP-C-09-tara.md)), in the same log.
+to ISO/SAE 21434 and its TARA ([WP-C-09](../assurance/02-concept/WP-C-09-tara.md)), in the same log; see
+[Cybersecurity and ISO/SAE 21434](Cybersecurity-and-ISO-21434.md).
 
 ## 2. How a working system still gets it wrong
 

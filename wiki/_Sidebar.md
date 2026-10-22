@@ -14,6 +14,7 @@
 - [Hardware safety and interference](Hardware-safety-and-interference.md)
 - [After release (ISO 26262 Part 7)](After-release.md)
 - [SOTIF and ISO 26262](SOTIF-and-ISO-26262.md)
+- [Cybersecurity and ISO/SAE 21434](Cybersecurity-and-ISO-21434.md)
 - [For the assessor](For-the-assessor.md)
 - [Reference vehicle](Reference-vehicle.md)
 - [Contributor guide](Contributor-guide.md)

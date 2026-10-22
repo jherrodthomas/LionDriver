@@ -61,6 +61,11 @@ in [`assurance/`](../assurance/README.md) that owns it.
   `sotif-four-areas.svg`, `sotif-how-much.svg`, `sotif-unknowns.svg`, `sotif-one-chain.svg`) are rendered by
   [`tools/wiki/sotif_animations.py`](../tools/wiki/sotif_animations.py), checked against the SOTIF and validation work
   products and the case records; the WP-C-05 and WP-C-06 counts come from the generator of WP-C-05 Figure 2-1.
+- The figures of "Cybersecurity and ISO/SAE 21434" (`cyber-third-question.svg`, `cyber-one-threat.svg`,
+  `cyber-more-than-safety.svg`, `cyber-how-hard.svg`, `cyber-risk-map.svg`, `cyber-goal-to-evidence.svg`, `cyber-meet.svg`,
+  `cyber-after-release.svg`) are rendered by [`tools/wiki/cyber_animations.py`](../tools/wiki/cyber_animations.py): the
+  risk map, attack-path factors and counts are read from WP-C-09, WP-C-10 and `hatara/`, and every other phrase is
+  checked against its record. No figure shows how to carry out an attack.
 - Standard GitHub Markdown, including alerts (`> [!IMPORTANT]`) and tables.
 
 Check locally before opening a pull request:
