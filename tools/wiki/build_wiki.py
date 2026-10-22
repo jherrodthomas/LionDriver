@@ -18,7 +18,8 @@ everything else. This tool turns that folder into what the GitHub wiki repositor
     concept, system, software and hardware work products), the hardware figures of hw_animations.py (from
     the FMEDA and WP-A-02), the after-release figures of p7_animations.py (from WP-O-01, WP-O-02, WP-O-04) and
     the SOTIF figures of sotif_animations.py (from WP-C-03…07, WP-V-01, WP-V-02, WP-V-04 and the case records) and
-    the cybersecurity figures of cyber_animations.py (from WP-C-09, WP-C-10, hatara/, WP-O-05 and WP-K-03)
+    the cybersecurity figures of cyber_animations.py (from WP-C-09, WP-C-10, hatara/, WP-O-05 and WP-K-03),
+    and the AI figures of ai_animations.py (from WP-C-11, WP-M-10 and WP-W-10)
     likewise: a drawn phrase that is no longer in its source is a build problem;
   * wiki/README.md, which describes the folder, is not published.
 
@@ -48,6 +49,7 @@ import hw_animations
 import p7_animations
 import sotif_animations
 import cyber_animations
+import ai_animations
 import infographics
 
 ROOT = HERE.parents[1]
@@ -136,7 +138,7 @@ def rewrite(text: str, page: Path, src: Path, root: Path, values: dict[str, str]
       if path not in names:
         problems.append(f"{page.name}: page link target does not exist: {path}")
       return f"{before}{path[:-3]}{anchor}{after}"
-    if path in infographics.NAMES or path in animations.NAMES or path in fta_animations.NAMES or path in case_animations.NAMES or path in h2t_animations.NAMES or path in hw_animations.NAMES or path in p7_animations.NAMES or path in sotif_animations.NAMES or path in cyber_animations.NAMES:
+    if path in infographics.NAMES or path in animations.NAMES or path in fta_animations.NAMES or path in case_animations.NAMES or path in h2t_animations.NAMES or path in hw_animations.NAMES or path in p7_animations.NAMES or path in sotif_animations.NAMES or path in cyber_animations.NAMES or path in ai_animations.NAMES:
       return m.group(0)  # a generated figure, written next to the pages by build()
     problems.append(f"{page.name}: link is neither a page (Name.md), a repository path (../path), a generated figure nor a URL: {target}")
     return m.group(0)
@@ -183,6 +185,8 @@ def build(src: Path = SRC, out: Path | None = None, root: Path = ROOT, *, repo: 
     problems += sotif_animations.problems(root)
   if (root / cyber_animations.C09).exists():
     problems += cyber_animations.problems(root)
+  if (root / ai_animations.C11).exists():
+    problems += ai_animations.problems(root)
   built: dict[str, str] = {}
   for page in pages(src):
     built[page.name] = rewrite(page.read_text(encoding="utf-8"), page, src, root, values, problems)
@@ -208,6 +212,8 @@ def build(src: Path = SRC, out: Path | None = None, root: Path = ROOT, *, repo: 
       sotif_animations.write_all(out, root)
     if (root / cyber_animations.C09).exists():
       cyber_animations.write_all(out, root)
+    if (root / ai_animations.C11).exists():
+      ai_animations.write_all(out, root)
   return problems
 
 

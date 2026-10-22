@@ -66,6 +66,10 @@ in [`assurance/`](../assurance/README.md) that owns it.
   `cyber-after-release.svg`) are rendered by [`tools/wiki/cyber_animations.py`](../tools/wiki/cyber_animations.py): the
   risk map, attack-path factors and counts are read from WP-C-09, WP-C-10 and `hatara/`, and every other phrase is
   checked against its record. No figure shows how to carry out an attack.
+- The figures of "AI safety and ISO/PAS 8800" (`ai-why.svg`, `ai-boundary.svg`, `ai-errors.svg`, `ai-input-space.svg`,
+  `ai-requirements.svg`, `ai-data.svg`, `ai-testing.svg`, `ai-layers.svg`) are rendered by
+  [`tools/wiki/ai_animations.py`](../tools/wiki/ai_animations.py): requirement statuses, input-space dimensions and counts
+  are read from WP-C-11 and WP-W-10, and every other phrase is checked against its record.
 - Standard GitHub Markdown, including alerts (`> [!IMPORTANT]`) and tables.
 
 Check locally before opening a pull request:
