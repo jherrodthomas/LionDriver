@@ -74,6 +74,32 @@ class TestExpandRefs(unittest.TestCase):
     self.assertEqual(sr._swsr_status("The envelope shall"), "proposed")
 
 
+class TestSotif(unittest.TestCase):
+  def test_ids(self):
+    self.assertEqual(sr._ids("SH-01, SH-04", "SH"), ["SH-01", "SH-04"])
+    self.assertEqual(sr._ids("Increases probability of SH-01…SH-03", "SH"), ["SH-01", "SH-02", "SH-03"])
+    self.assertEqual(sr._ids("TC-10, TC-11", "TC"), ["TC-10", "TC-11"])
+    self.assertEqual(sr._ids("SH-01", "H"), [])  # SH-01 is not H-01
+
+  def test_rating(self):
+    self.assertEqual(sr._rating("S3", "S"), 3)
+    self.assertIsNone(sr._rating("—", "S"))
+    self.assertIsNone(sr._rating("as linked SH", "C"))
+
+  def test_items_from_the_work_products(self):
+    items = {i["id"]: i for i in sr.sotif_items()}
+    self.assertEqual(items["SH-01"]["shares_event"], ["H-01"])
+    self.assertEqual(items["SH-09"]["shares_event"], [])  # a new hazard "with an effect like H-03/H-06"
+    self.assertEqual(items["SH-07"]["status"], "withdrawn")
+    self.assertNotIn("s", items["SH-12"])
+    self.assertEqual(items["FI-14"]["parents"], ["SH-02", "SH-06"])
+    self.assertEqual(items["TC-23"]["insufficiencies"], ["FI-14"])
+    self.assertIn("FI-14", items["FM-03"]["parents"])
+    self.assertEqual(items["FM-03"]["addresses"], ["SH-02", "SH-06"])
+    evaluated = {t for r in sr.evaluation_rows() for t in r["tc"]}
+    self.assertEqual({i for i in items if i.startswith("TC-")}, evaluated)  # every TC of §4 has a §5 row
+
+
 class TestDelink(unittest.TestCase):
   def test_relative_link_becomes_repo_path(self):
     out = sr.delink("see [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md#3-x)", sr.SWSR_MD)

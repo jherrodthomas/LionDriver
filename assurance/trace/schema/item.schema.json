@@ -19,11 +19,15 @@
       "enum": [
         "aou",
         "fsr",
+        "functional-insufficiency",
+        "functional-modification",
         "hazard",
         "hazardous-event",
         "hwsr",
         "safety-goal",
+        "sotif-hazard",
         "swsr",
+        "triggering-condition",
         "tsr"
       ]
     },
@@ -200,6 +204,69 @@
           "minimum": 0
         }
       ]
+    },
+    "function_text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "linked_text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "situations": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fi_type": {
+      "enum": [
+        "P",
+        "S"
+      ],
+      "description": "WP-C-06 §3: P performance limitation, S specification insufficiency"
+    },
+    "component": {
+      "type": "string",
+      "minLength": 1
+    },
+    "category": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evaluation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "gap_text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "priority": {
+      "enum": [
+        "P1",
+        "P2",
+        "P3"
+      ]
+    },
+    "shares_event": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "insufficiencies": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "addresses": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
     }
   },
   "allOf": [
@@ -242,6 +309,49 @@
           "allocated_to",
           "verification",
           "baseline_impl",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "functional-insufficiency"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "fi_type",
+          "component",
+          "parents",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "functional-modification"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "title",
+          "addresses",
+          "parents",
+          "gap_text",
+          "priority",
           "status",
           "source"
         ]
@@ -349,6 +459,29 @@
       "if": {
         "properties": {
           "kind": {
+            "const": "sotif-hazard"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "functions",
+          "function_text",
+          "situations",
+          "shares_event",
+          "linked_text",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
             "const": "swsr"
           }
         }
@@ -366,6 +499,28 @@
           "verification",
           "acceptance",
           "baseline_impl",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "triggering-condition"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "category",
+          "parents",
+          "insufficiencies",
+          "evaluation",
           "status",
           "source"
         ]

@@ -38,13 +38,10 @@ FIG = TRACE_DIR / "maps" / "fig-1-aspice-v-model.svg"
 
 # Kinds in the trace data, by ID prefix.
 YAML_KIND = {"hazard": "H", "hazardous-event": "HE", "safety-goal": "SG", "aou": "AOU", "fsr": "FSR",
-             "tsr": "TSR", "swsr": "SWSR", "hwsr": "HWSR"}
+             "tsr": "TSR", "swsr": "SWSR", "hwsr": "HWSR", "sotif-hazard": "SH", "triggering-condition": "TC",
+             "functional-insufficiency": "FI", "functional-modification": "FM"}
 # Kinds defined only in work-product tables so far: prefix -> defining work products.
 DOC_KINDS = {
-  "SH": ["02-concept/WP-C-05-sotif-hazard-identification.md"],
-  "TC": ["02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md"],
-  "FI": ["02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md"],
-  "FM": ["02-concept/WP-C-07-sotif-functional-modifications.md"],
   "AIR": ["02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md"],
   "DSR": ["02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md"],
   "TS": ["02-concept/WP-C-09-tara.md"],
@@ -124,6 +121,8 @@ DERIVATIONS = [
   ("FSR", "TSR", "FSR -> TSR", None),
   ("TSR", "SWSR", "TSR -> SWSR (SW-allocated TSRs)", ct.SW_ALLOC),
   ("TSR", "HWSR", "TSR -> HWSR (HW-allocated TSRs)", ct.HW_ALLOC),
+  ("SH", "FI", "SOTIF hazard -> functional insufficiency", None),
+  ("SH", "TC", "SOTIF hazard -> triggering condition", None),
 ]
 ALLOC = {(d[0], d[1]): d[3] for d in DERIVATIONS}
 # One colour rule with vmodel.py: a case naming an item is a specified link, never green (green is approved or passed).
@@ -252,7 +251,7 @@ def derivation(m: Model, parent: str, child: str, alloc: tuple[str, ...] | None)
   """Parents of kind `parent` that have >= 1 child of kind `child` in the trace data."""
   if parent not in m.in_trace or child not in m.in_trace:
     return 0, 0, []
-  pool = sorted(m.ids[parent])
+  pool = sorted(p for p in m.ids[parent] if m.items[p].get("status") != "withdrawn")
   if alloc:
     pool = [p for p in pool if any(t in m.items[p].get("allocated_to", "") for t in alloc)]
   if child == "SG":
@@ -409,7 +408,7 @@ def svg_v_model(m: Model) -> str:
 LANES = [  # standard, item kinds in the lane, links (parent -> child)
   ("ISO 26262", ["H", "HE", "SG", "FSR", "TSR", "SWSR", "HWSR", "AOU"],
    [("H", "HE"), ("HE", "SG"), ("SG", "FSR"), ("FSR", "TSR"), ("TSR", "SWSR"), ("TSR", "HWSR"), ("AOU", "SG")]),
-  ("ISO 21448", ["SH", "TC", "FI", "FM"], [("SH", "TC"), ("SH", "FI"), ("TC", "FM"), ("FI", "FM"), ("SH", "HE")]),
+  ("ISO 21448", ["SH", "TC", "FI", "FM"], [("SH", "TC"), ("SH", "FI"), ("TC", "FM"), ("FI", "FM"), ("SH", "H")]),
   ("ISO/PAS 8800", ["AIR", "DSR"], [("FI", "AIR"), ("AIR", "DSR")]),
   ("ISO/SAE 21434", ["TS", "CSG", "CSR"], [("TS", "CSG"), ("CSG", "CSR"), ("CSG", "SG")]),
   ("ASPICE", ["SYS"], [("SYS", "TSR")]),
@@ -438,6 +437,22 @@ def chains(m: Model) -> str:
   out.append("  classDef traced fill:#DBEAFE,stroke:#2563EB,color:#0F172A")
   out.append("  classDef doc fill:#F1F5F9,stroke:#94A3B8,stroke-dasharray:4 3,color:#475569")
   return "\n".join(out)
+
+
+def fm_scope(m: Model) -> list[str]:
+  """Modifications whose stated scope (WP-C-07 §2 'Addresses') differs from the SOTIF hazards of the WP-C-06 §5
+  rows that name them."""
+  out = []
+  for fid in sorted(m.ids.get("FM", ())):
+    fm = m.items[fid]
+    rows = {p for p in fm.get("parents") or [] if p.startswith("TC-")}
+    via = {sh for tc in rows for sh in m.items[tc].get("parents") or []}
+    stated = set(fm.get("addresses") or [])
+    if stated != via:
+      diff = [f"also {', '.join(sorted(stated - via))}" if stated - via else "",
+              f"not {', '.join(sorted(via - stated))}" if via - stated else ""]
+      out.append(f"{fid} ({'; '.join(x for x in diff if x)})")
+  return out
 
 
 def table(header: list[str], rows: list[list[str]]) -> list[str]:
@@ -532,6 +547,12 @@ def render(m: Model) -> str:
     done, total, missing = derivation(m, parent, child, alloc)
     rows.append([label, f"{done}/{total}", STATUS_WORD[status_of(done, total)], id_list(missing)])
   out += table(["Link", "Covered", "Status", "Without a child"], rows)
+  scope = fm_scope(m)
+  if scope:
+    out += ["", para("SOTIF modifications whose stated scope (WP-C-07 §2, *Addresses*) differs from the SOTIF hazards of",
+                     "the WP-C-06 §5 rows that name them, for review; a modification can address a hazard directly, so",
+                     f"this is not an error: {'; '.join(scope)}. *Also* lists hazards only WP-C-07 names, *not* those",
+                     "only the §5 rows give.")]
 
   out += ["", "## 5. Verification coverage (across the V)", "",
           para("Items named by at least one case of the paired test specification. A case names an item by its ID, by a",
@@ -555,9 +576,10 @@ def render(m: Model) -> str:
   else:
     out.append("None.")
   untraced = ", ".join(f"{k} ({len(m.ids.get(k, ()))})" for k in KIND_NAME if k not in m.in_trace)
+  dashed = ", ".join(f"{a} → {b}" for _, _, links in LANES for a, b in links if not (a in m.in_trace and b in m.in_trace))
   out += ["", "## 7. Not yet traced", "",
-          para(f"- **Kinds outside the trace data:** {untraced}. Their links (SH → TC/FI → FM, FI → AIR → DSR,",
-               "TS → CSG → CSR, CSG ↔ SG, SH ↔ HE, SYS → TSR) are dashed in §3 until they are added to `items/` (README §3.1)."),
+          para(f"- **Kinds outside the trace data:** {untraced}. Their links ({dashed}) are dashed in §3 until they",
+               "are added to `items/` (README §3.1)."),
           para("- **Allocation to elements** (SYS.3, SWE.2, HWE.2): `allocated_to` holds work-product cells; element IDs",
                "need `elements.yaml` (WP-P-06 OI-4)."),
           para("- **Code and test results:** no `@req` tags and no `links/verification.yaml` yet, so the SWE.3 → code link",

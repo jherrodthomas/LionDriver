@@ -194,7 +194,7 @@ def allocation(items: dict[str, dict]) -> tuple[dict[str, str], dict[str, list[s
   return status, dict(values)
 
 
-CHECK_ROW = re.compile(r"^\|\s*([KRXP]\d+)(?:\s+\*\*\[ext\]\*\*|\s+\(planned\))?\s*\|")
+CHECK_ROW = re.compile(r"^\|\s*([KRXPS]\d+)(?:\s+\*\*\[ext\]\*\*|\s+\(planned\))?\s*\|")
 
 
 def readme_checks() -> list[tuple[str, str, str]]:
@@ -381,7 +381,7 @@ def fig2(d: Data) -> str:
   W, H = 1280, 690
   out = header(W, 2, "Trace data model: what is in, what is missing",
                "One column per standard. Solid kinds are in items/ and checked; dashed kinds exist only in their work " +
-               "products. Edge labels are parent links counted in items/.", "WP-T-01 §3")
+               "products. Edge labels are links counted in items/.", "WP-T-01 §3")
   for name, x0, x1 in F2_COLUMNS:
     out.append(text((x0 + x1) / 2, 108, name, size=11, weight=700, fill=MUTED, anchor="middle"))
     if x0 > 40:
@@ -425,19 +425,33 @@ def fig2(d: Data) -> str:
                   marker="aou"))
   out.append(text(ax - NODE_W / 2, ay + 34, "credited by", size=10, fill=AOU_C))
   out.append(text(ax - NODE_W / 2, ay + 47, f"{he_c} HE · {sg_c} SG", size=10, fill=AOU_C))
-  # other standards (work-product kinds, dashed)
+  # other standards: solid with the link count once both kinds are in items/, dashed while either is in documents only
+  def traced(a: str, b: str) -> bool:
+    return a in d.m.in_trace and b in d.m.in_trace
+
   for a, b in (("SH", "TC"), ("SH", "FI"), ("TC", "FM"), ("FI", "FM"), ("AIR", "DSR"), ("TS", "CSG"), ("CSG", "CSR")):
     (ax2, ay2), (bx2, by2) = F2_POS[a], F2_POS[b]
-    out.append(line(ax2 + (bx2 - ax2) * 0.3, ay2 + NODE_H / 2, bx2 - (bx2 - ax2) * 0.1, by2 - NODE_H / 2 - 1,
-                    stroke=FAINT, sw=1.2, dash="5 4", marker="faint"))
+    x1, y1, x2, y2 = ax2 + (bx2 - ax2) * 0.3, ay2 + NODE_H / 2, bx2 - (bx2 - ax2) * 0.1, by2 - NODE_H / 2 - 1
+    on = traced(a, b)
+    out.append(line(x1, y1, x2, y2, stroke=SW if on else FAINT, sw=1.6 if on else 1.2, dash="" if on else "5 4",
+                    marker="sw" if on else "faint"))
+    if on:
+      right = x2 >= x1
+      out.append(text((x1 + x2) / 2 + (8 if right else -8), (y1 + y2) / 2 + 4, str(d.links[(a, b)]), size=11,
+                      weight=700, fill=SW, anchor="start" if right else "end"))
   fx, fy = F2_POS["FI"]
-  out.append(line(fx + NODE_W / 2, fy, F2_POS["AIR"][0] - NODE_W / 2 - 1, fy, stroke=FAINT, sw=1.2, dash="5 4",
-                  marker="faint"))
+  on = traced("FI", "AIR")
+  out.append(line(fx + NODE_W / 2, fy, F2_POS["AIR"][0] - NODE_W / 2 - 1, fy, stroke=SW if on else FAINT,
+                  sw=1.6 if on else 1.2, dash="" if on else "5 4", marker="sw" if on else "faint"))
   # cross-standard links
   sx, sy = F2_POS["SH"]
-  hx, hy = F2_POS["HE"]
-  out.append(line(sx - NODE_W / 2, sy, hx + NODE_W / 2 + 1, hy, stroke=FAINT, sw=1.2, dash="5 4", marker="faint"))
-  out.append(text(430, sy - 8, "shares event (SH → HE)", size=10.5, fill=MUTED, anchor="middle"))
+  hx, hy = F2_POS["H"]
+  shared = sum(len(it.get("shares_event") or []) for it in d.m.items.values())
+  on = traced("SH", "H") and shared > 0
+  out.append(line(sx - NODE_W / 2, sy, hx + NODE_W / 2 + 1, hy, stroke=SW if on else FAINT, sw=1.6 if on else 1.2,
+                  dash="" if on else "5 4", marker="sw" if on else "faint"))
+  out.append(text(400, 150, "shares hazard (SH → H)" + (f" · {shared}" if on else ""), size=10.5,
+                  fill=SW if on else MUTED, weight=700 if on else "", anchor="middle"))
   cx, cy = F2_POS["CSG"]
   gx, gy = F2_POS["SG"]
   out.append(path(f"M{cx - NODE_W / 2},{cy - 8} L{cx - NODE_W / 2 - 22},{cy - 8} L{cx - NODE_W / 2 - 22},{gy} " +
@@ -761,11 +775,12 @@ CHECK_SHORT = {
   "K10": "every SR-A file tagged", "K11": "WP tables = YAML", "K12": "every HE → SG or exempt",
   "R1": "HE ASIL = S + E + C", "R2": "SG ASIL = max of HEs", "R3": "AoU-fail ASIL rule", "R4": "every H has an HE",
   "X1": "HARA = WP-C-03", "X2": "AoU = WP-C-01", "X3": "generated YAML fresh",
-  "P1": "unverified AoU in WP-K-01", "P2": "IDs in the block ranges",
+  "P1": "unverified AoU in WP-K-01", "P2": "IDs in the block ranges", "S1": "SH → FI, TC → FM complete",
 }
 CHECK_GROUPS = [("STRUCTURE AND DERIVATION (WP-P-06 §7)", ("K1", "K2", "K3", "K4", "K5", "K11", "K12")),
                 ("CODE AND TEST LINKS, AND PLANNED CHECKS", ("K6", "K7", "K8", "K9", "K10", "P1", "P2")),
-                ("LIONDRIVER EXTENSIONS", ("R1", "R2", "R3", "R4", "X1", "X2", "X3"))]
+                ("LIONDRIVER EXTENSIONS", ("R1", "R2", "R3", "R4", "X1", "X2", "X3")),
+                ("CHAINS OF THE OTHER STANDARDS", ("S1",))]
 CHECK_STYLE = {"yes": (GREEN_BG, GREEN, ""), "partly": (AMBER_BG, AMBER, ""), "no": (CHIP, FAINT, "4 3")}
 
 

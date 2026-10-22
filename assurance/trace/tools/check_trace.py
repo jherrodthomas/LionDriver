@@ -10,8 +10,12 @@ Checks implemented so far (IDs per assurance/trace/README.md section 6):
   R2  safety-goal ASIL equals the highest ASIL of its source hazardous events
   R3  asil_if_aou_fails is not lower than asil and only appears with aou_dependency
   R4  every hazard has at least one hazardous event
+  S1  SOTIF: every SOTIF hazard in use has a functional insufficiency and a triggering condition; every
+      insufficiency is evaluated with a triggering condition; every SOTIF hazard of a triggering condition is
+      reached through its insufficiencies (WP-C-06 §5); every functional modification is named by an evaluation row
   X1  hazardous events and safety goals match the tables in WP-C-03
   X2  assumptions of use match the table in WP-C-01
+  X3  the generated requirement and SOTIF items equal a fresh extraction from their work products
 
 Usage: python3 assurance/trace/tools/check_trace.py [--no-source-compare]
 Exit code 0 when no errors, 1 otherwise.
@@ -54,10 +58,21 @@ REQUIRED = {
            "acceptance", "baseline_impl", "status", "source"],
   "hwsr": ["id", "kind", "text", "asil", "parents", "parent_text", "other_parents", "allocated_to", "hw_kind",
            "verification", "baseline_impl", "status", "source"],
+  "sotif-hazard": ["id", "kind", "text", "functions", "function_text", "situations", "shares_event", "linked_text",
+                   "status", "source"],
+  "functional-insufficiency": ["id", "kind", "text", "fi_type", "component", "parents", "status", "source"],
+  "triggering-condition": ["id", "kind", "text", "category", "parents", "insufficiencies", "evaluation", "status",
+                           "source"],
+  "functional-modification": ["id", "kind", "title", "addresses", "parents", "gap_text", "priority", "status", "source"],
 }
 GAP_MD = ASSURANCE_DIR / "00-assessment" / "gap-assessment.md"
 PARENT_KINDS = {"fsr": {"safety-goal"}, "tsr": {"fsr", "tsr", "safety-goal", "aou"}, "swsr": {"tsr"},
-                "hwsr": {"tsr", "fsr", "aou"}}
+                "hwsr": {"tsr", "fsr", "aou"}, "functional-insufficiency": {"sotif-hazard"},
+                "triggering-condition": {"sotif-hazard"},
+                "functional-modification": {"triggering-condition", "functional-insufficiency"}}
+# Other link keys: key -> kinds the reference must be (README §3.2)
+REF_KINDS = {"shares_event": {"hazard", "hazardous-event"}, "insufficiencies": {"functional-insufficiency"},
+             "addresses": {"sotif-hazard"}}
 SW_ALLOC = ("P-SW", "SoC")  # WP-S-02 allocation cells that put a TSR (also) on software
 HW_ALLOC = ("P-HW", "HAR")  # ... and (also) on hardware
 
@@ -188,6 +203,12 @@ def check_links(by_id: dict[str, dict], rep: Report) -> None:
           rep.err("K3", f"{iid}: parent {ref} is a {by_id[ref]['kind']}, not one of {sorted(PARENT_KINDS[it['kind']])}")
         elif key == "aou_dependency" and by_id[ref]["kind"] != "aou":
           rep.err("K3", f"{iid}: aou_dependency {ref} is not an AOU")
+    for key, kinds in REF_KINDS.items():
+      for ref in it.get(key) or []:
+        if ref not in by_id:
+          rep.err("K3", f"{iid}: {key} reference {ref} does not resolve")
+        elif by_id[ref]["kind"] not in kinds:
+          rep.err("K3", f"{iid}: {key} {ref} is a {by_id[ref]['kind']}, not one of {sorted(kinds)}")
     for f in it.get("functions") or []:
       if not FUNC_RE.match(str(f)):
         rep.err("K3", f"{iid}: bad function ID {f}")
@@ -221,6 +242,7 @@ def check_links(by_id: dict[str, dict], rep: Report) -> None:
 
   check_requirement_coverage(by_id, rep)
   check_sw_hw_coverage(by_id, rep)
+  check_sotif(by_id, rep)
 
   for iid, sg in sgs.items():
     parents = [p for p in sg.get("parents") or [] if p in hes]
@@ -230,6 +252,30 @@ def check_links(by_id: dict[str, dict], rep: Report) -> None:
     top = max((hes[p]["asil"] for p in parents), key=lambda a: ASIL_ORDER[a])
     if sg["asil"] != top:
       rep.err("R2", f"{iid}: asil {sg['asil']} but highest source HE ASIL is {top}")
+
+
+def check_sotif(by_id: dict[str, dict], rep: Report) -> None:
+  """S1: the SOTIF chain SH -> TC/FI -> FM is complete, and each TC's SOTIF hazards follow from its insufficiencies."""
+  def of(kind: str) -> dict[str, dict]:
+    return {i: x for i, x in by_id.items() if x["kind"] == kind and x.get("status") != "withdrawn"}
+  shs, fis, tcs, fms = (of(k) for k in ("sotif-hazard", "functional-insufficiency", "triggering-condition",
+                                        "functional-modification"))
+  if not shs:
+    return
+  for iid in shs:
+    for kind, children in (("functional insufficiency", fis), ("triggering condition", tcs)):
+      if not any(iid in (x.get("parents") or []) for x in children.values()):
+        rep.err("S1", f"{iid}: no {kind}")
+  evaluated = {f for x in tcs.values() for f in x.get("insufficiencies") or []}
+  for iid in sorted(set(fis) - evaluated):
+    rep.err("S1", f"{iid}: not evaluated with a triggering condition (WP-C-06 §5)")
+  for iid, tc in tcs.items():
+    reached = {p for f in tc.get("insufficiencies") or [] if f in fis for p in fis[f].get("parents") or []}
+    for sh in sorted(set(tc.get("parents") or []) - reached):
+      rep.err("S1", f"{iid}: {sh} is not a parent of any of its insufficiencies {tc.get('insufficiencies')}")
+  for iid, fm in fms.items():
+    if not fm.get("parents"):
+      rep.err("S1", f"{iid}: named by no evaluation row of WP-C-06 §5")
 
 
 def check_requirement_coverage(by_id: dict[str, dict], rep: Report) -> None:
@@ -288,7 +334,8 @@ def expand_fsr_refs(text: str) -> list[str]:
 
 
 def check_requirements_in_sync(rep: Report) -> None:
-  """X3: fsr/tsr/swsr/hwsr.yaml equal a fresh extraction from WP-C-04, WP-S-02, WP-S-06, WP-W-02 and WP-H-01."""
+  """X3: fsr/tsr/swsr/hwsr/sotif.yaml equal a fresh extraction from WP-C-04, WP-S-02, WP-S-06, WP-W-02, WP-H-01 and
+  WP-C-05…07."""
   import sync_requirements as sync
   for name, content in sync.expected_outputs().items():
     path = ITEMS_DIR / name

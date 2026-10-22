@@ -43,8 +43,8 @@ wherever it applies; an empty stretch shows where a standard has no work product
 
 The HARA keeps one row per vehicle-level hazard with the SOTIF hazards and the cyber attacks that lead to it. The
 figure checks that row against the TARA's own damage scenarios and flags any hazard the TARA reaches but the log
-does not name. Below it, the trace: ISO 26262 is in the trace data and checked by CI, the other standards are linked
-in their work-product tables only ([From hazard to test](From-hazard-to-test.md) follows one chain).
+does not name. Below it, the trace: a solid lane is in the trace data and checked by CI; a dashed one is linked in its work-product tables only ([From hazard to test](From-hazard-to-test.md) follows
+one chain).
 
 ## 4. One mechanism, five standards
 
