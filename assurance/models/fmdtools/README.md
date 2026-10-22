@@ -2,9 +2,9 @@
 
 | Field | Value |
 |---|---|
-| Plan | [TE-02](../../07-supporting/tool-evaluations/TE-02-fmdtools-fault-propagation.md) (pilot on SG-02; extended to SG-06, SG-01 and SG-03 by the lead, DQ-417) |
+| Plan | [TE-02](../../07-supporting/tool-evaluations/TE-02-fmdtools-fault-propagation.md) (pilot on SG-02; extended to SG-06, SG-01 and SG-03 by the lead, DQ-417, done) |
 | Tool | [NASA fmdtools](https://github.com/nasa/fmdtools) 2.5.6, Apache-2.0, pinned in [`requirements.txt`](requirements.txt); [WP-P-07](../../07-supporting/WP-P-07-tool-classification-qualification.md) TL-49 |
-| Status | SG-02: steps P0 (setup), P1 (model), P2 (single faults), P3 (joint faults), P4 (timing) and the P5 Fault Lab page done; the TL-49 confirmation remains. SG-06: P1 to P4 and its Fault Lab page done (DQ-417). SG-01: P1 to P3 and its Fault Lab page done (no P4: TE-01 is not a late cue). SG-03 next. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | SG-02: steps P0 (setup), P1 (model), P2 (single faults), P3 (joint faults), P4 (timing) and the P5 Fault Lab page done; the TL-49 confirmation remains. SG-06: P1 to P4 and its Fault Lab page done (DQ-417). SG-01 and SG-03: P1 to P3 and their Fault Lab pages done (no P4: their top events are not late cues). AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Evidence | **None.** Synthetic (DSR-12): behaviour and timing come from WP-A-04 §4, not measurement. Results point reviewers at possible gaps in the fault trees; a tree changes only after a person reviews the finding |
 
 ## What is here
@@ -19,6 +19,7 @@
 | [`sg02/test_fault_lab.py`](sg02/test_fault_lab.py) | The plant parser, the drawings and the page build (sweep stubbed) |
 | [`sg06/`](sg06/) | The SG-06 model (loss of deceleration without a take-over request, WP-A-04 §7), built like `sg02/`: [`events.yaml`](sg06/events.yaml), [`model.py`](sg06/model.py), [`test_sg06.py`](sg06/test_sg06.py), [`sweep.py`](sg06/sweep.py) (pages [P2](sg06/p2-single-faults.md), [P3](sg06/p3-joint-faults.md), [P4](sg06/p4-timing.md)) and the [Fault Lab page](sg06/fault-lab.html) ([`fault_lab.py`](sg06/fault_lab.py)). `--check` in CI as for SG-02 |
 | [`sg01/`](sg01/) | The SG-01 model (uncontrollable torque or torque while not engaged, WP-A-04 §2): [`events.yaml`](sg01/events.yaml), [`model.py`](sg01/model.py), [`test_sg01.py`](sg01/test_sg01.py), [`sweep.py`](sg01/sweep.py) (pages [P2](sg01/p2-single-faults.md), [P3](sg01/p3-joint-faults.md)) and the [Fault Lab page](sg01/fault-lab.html) ([`fault_lab.py`](sg01/fault_lab.py)). `--check` in CI as for SG-02 |
+| [`sg03/`](sg03/) | The SG-03 model (unintended acceleration, WP-A-04 §3), built like `sg01/`: [`events.yaml`](sg03/events.yaml), [`model.py`](sg03/model.py), [`test_sg03.py`](sg03/test_sg03.py), [`sweep.py`](sg03/sweep.py) (pages [P2](sg03/p2-single-faults.md), [P3](sg03/p3-joint-faults.md)) and the [Fault Lab page](sg03/fault-lab.html) ([`fault_lab.py`](sg03/fault_lab.py)). `--check` in CI as for SG-02 |
 | [`treediff.py`](treediff.py), [`faultlab_kit.py`](faultlab_kit.py) | Shared by the goals: the tree side of the sweeps (cut sets, effective sets, the diff), and the Fault Lab style, findings list and pair matrix |
 
 ## How it works
@@ -133,3 +134,25 @@ The [Fault Lab page](sg01/fault-lab.html) replays plant case F-03 (command froze
     python3 assurance/models/fmdtools/sg01/sweep.py                    # P2 (--check: fail if stale)
     python3 assurance/models/fmdtools/sg01/sweep.py joint              # P3, about 10 min on 4 cores
     python3 assurance/models/fmdtools/sg01/fault_lab.py                # Fault Lab page
+
+## SG-03: unintended acceleration
+
+The [SG-03 model](sg03/model.py) is the SG-01 model for acceleration. It runs in five phases: engaged, driver brakes, driver cancels, not engaged, and driver on the accelerator. Its branches follow the tree: G3.1 and G3.6 (above the bound, or a step to it, that the PCM executes), G3.2 (closing toward a lead), G3.3 (not engaged or after a brake), G3.4 (added on top of the pedal), G3.5 (stale) and G3.7 (stock ACC). The envelope has no acceleration jerk limit (TSR-204 not implemented), so the model holds BE-3.03 as present.
+
+Against the tree's 23 effective sets of up to 3 events ([P3](sg03/p3-joint-faults.md)):
+
+- 18 sets agree.
+- **6 sets are missing from the drawn tree, all about the inactive-value check.** The accelerator override is the same check as the one for not engaged (longitudinal allowed only while the accelerator is released, TSR-305). So a defect or bypass of that check (BE-1.08, BE-1.09, BE-1.25, BE-3.10), together with a PCM that adds the item's request to the pedal (UE-3.12), gives TE-03. G3.4 draws only the gas signal stuck (BE-3.11). G3.3.1 also lists BE-3.10 but not BE-1.08 or BE-1.09, which SG-01's G1.2.1 has.
+- **{BE-4.17, UE-3.05}:** a host step needs no envelope failure, because the jerk limit is missing.
+- **{BE-1.13} and {BE-3.09} are single points through DFI-10.** The table says so; the drawn tree keeps BE-3.13 as a second event.
+- **Tree sets the model does not reach:**
+  - {BE-1.19}: TSR-602 removes a stale model input at 0.52 s, inside the 1 s FTTI.
+  - {BE-1.12, BE-3.13}: the next genuine frame closes the engagement window.
+- **A replayed command buffer (BE-1.21) stays a single point** (TSR-409 open).
+
+The [Fault Lab page](sg03/fault-lab.html) replays plant case L-01 (+2.0 m/s² at the bound). The driver brakes at 1.60 s, and the gap to the lead closes from 41.4 m to 36.9 m.
+
+    python3 assurance/models/fmdtools/sg03/test_sg03.py
+    python3 assurance/models/fmdtools/sg03/sweep.py                    # P2 (--check: fail if stale)
+    python3 assurance/models/fmdtools/sg03/sweep.py joint              # P3, about 15 min on 4 cores
+    python3 assurance/models/fmdtools/sg03/fault_lab.py                # Fault Lab page

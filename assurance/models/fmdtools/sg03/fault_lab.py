@@ -97,20 +97,35 @@ def build() -> str:
   p, d = plant_case(), sweep_data()
   sets = lambda cs: ", ".join(f"<code>{esc(td.fset(c))}</code>" for c in cs[:4]) + (" and others" if len(cs) > 4 else "")
   finds = []
-  if d["gaps"]:
-    finds.append(kit.finding("w", f"{len(d['gaps'])} sets the drawn tree does not predict",
-                             f"{sets(d['gaps'])}: the SoC reads the same frames as the envelope, so it stays engaged and "
-                             "keeps requesting acceleration without a SoC fault (DFI-10). The cut-set table already "
-                             "notes this; the drawn tree keeps BE-3.13 as a second event."))
-  else:
+  ccf = [c for c in d["gaps"] if c & {"BE-1.13", "BE-3.09"}]
+  check = [c for c in d["gaps"] if c & {"BE-1.08", "BE-1.09", "BE-1.25", "BE-3.10"}]
+  step = [c for c in d["gaps"] if "BE-4.17" in c]
+  if not d["gaps"]:
     finds.append(kit.finding("g", "No fault set missing from the tree",
                              f"Every one of the {len(d['model'])} minimal sets the model finds holds an effective "
                              "WP-A-04 cut set."))
+  if check:
+    finds.append(kit.finding("c", f"{len(check)} sets missing from the tree: the inactive-value check",
+                             f"{sets(check)}. The accelerator override is the same check as the one for not engaged "
+                             "(longitudinal allowed only while the accelerator is released, TSR-305), so a defect or "
+                             "bypass of it lets the item's request through while the driver presses the pedal; G3.4 "
+                             "draws only the gas signal stuck (BE-3.11). G3.3.1 also lists BE-3.10 but not BE-1.08 or "
+                             "BE-1.09, which SG-01's G1.2.1 has."))
+  if step:
+    finds.append(kit.finding("w", "The step needs no envelope failure",
+                             f"{sets(step)}: the envelope has no acceleration jerk limit (TSR-204 not implemented, "
+                             "GAP-04), so BE-3.03 is present at the baseline and only the PCM's own bound (UE-3.05) "
+                             "stands behind a host step."))
+  if ccf:
+    finds.append(kit.finding("w", f"{len(ccf)} single points the table names, the drawn tree does not",
+                             f"{sets(ccf)}: the SoC reads the same frames as the envelope, so it stays engaged and "
+                             "keeps requesting acceleration without a SoC fault (DFI-10); the cut-set table says so, "
+                             "the drawn tree keeps BE-3.13 as a second event."))
   if d["tree_only"]:
-    finds.append(kit.finding("w", f"{len(d['tree_only'])} tree sets the model does not reach as drawn",
+    finds.append(kit.finding("g", f"{len(d['tree_only'])} tree sets the model does not reach as drawn",
                              f"{sets(d['tree_only'])}. " + " ".join(
-                               f"{esc(e)}: {esc(sw.WHY[e])}." for e in sorted({e for c in d['tree_only'] for e in c})
-                               if e in sw.WHY and e not in ("BE-1.13", "BE-3.09"))))
+                               f"{esc(e)}: {esc(sw.WHY[e])}." for e in ("BE-1.19", "BE-1.12")
+                               if any(e in c for c in d["tree_only"]))))
   finds.append(kit.finding("c", "A replayed command buffer stays a single point",
                            "BE-1.21 holds a stale acceleration past the 1 s FTTI: the replayed frames keep arriving, so "
                            "neither the heartbeat nor the frame-arrival check sees it (TSR-409 open)."))

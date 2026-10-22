@@ -381,8 +381,14 @@ jobs:
         python3 assurance/models/fmdtools/sg01/fault_lab.py --check
     - name: SG-03 model maps the WP-A-04 tree and reproduces the reference cut sets (DQ-417)
       run: python3 assurance/models/fmdtools/sg03/test_sg03.py
-    - name: SG-03 single-fault page is current
-      run: python3 assurance/models/fmdtools/sg03/sweep.py --check
+    - name: SG-03 single-fault and joint-fault pages are current (order 1 and 2; the full sweep runs weekly)
+      run: |
+        python3 assurance/models/fmdtools/sg03/sweep.py --check
+        python3 assurance/models/fmdtools/sg03/sweep.py joint --check --order 2
+    - name: SG-03 Fault Lab page is current, and its tests
+      run: |
+        python3 assurance/models/fmdtools/sg03/test_fault_lab.py
+        python3 assurance/models/fmdtools/sg03/fault_lab.py --check
 
   fret:
     name: FRETish restatements of the panda TSRs
