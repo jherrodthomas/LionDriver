@@ -143,6 +143,22 @@
   status: proposed
   source: WP-C-03
 
+- id: HE-01.6
+  kind: hazardous-event
+  parents: [H-01]
+  situation: "OS-12 driver-initiated assisted lane change, highway, 80–110 km/h; a fault late in the change: a frozen command (F-01 M04) keeps steering, or a loss of assist (F-01 M01/M02, EPS fault) leaves the car's lateral speed"
+  effect: "The car does not stop in the target lane: it crosses the target lane's far line into the lane beyond, which the driver did not check before the change"
+  s: 3
+  e: 3
+  c: 2
+  asil: B
+  aou_flag: true
+  aou_dependency: [AOU-01, AOU-02]
+  asil_if_aou_fails: C
+  notes: "Added in WP-C-03 v0.8 (decision register DQ-406 A) from the edge-case search finding EC-N1 (sim/results/edge-cases.md rows EC-11, EC-13); C2 or C3 queued for the lead as DQ-418"
+  status: proposed
+  source: WP-C-03
+
 - id: HE-02.1
   kind: hazardous-event
   parents: [H-02]
