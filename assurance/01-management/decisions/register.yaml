@@ -5292,7 +5292,7 @@
   batch: 14
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "WP-C-03 v0.8 §5.1 HE-01.6 (S3 E3 C2 ⚠ → ASIL B proposed, C if AOU-01/02 fail; §5.12, §6 SG-01 sources, §7.1, OI-11), trace hazards.yaml and goals.yaml; WP-V-04 v0.9 §6 (EC-N1 fed back; the search catalogue maps EC-11 and EC-13 to HE-01.6); WP-V-05 v0.10 VS-FI-32; plant scene he-01-6-lane-change-overshoot. Open: C2 or C3 for HE-01.6 (DQ-418); Cartesian OS-12 rows and workbooks (WP-C-03 OI-11); Blender render of the new scene", at: 2026-10-22}
+  applied: {ref: "jherrodthomas/LionDriver#426", record: "WP-C-03 v0.8 §5.1 HE-01.6 (S3 E3 C2 ⚠ → ASIL B proposed, C if AOU-01/02 fail; §5.12, §6 SG-01 sources, §7.1, OI-11), trace hazards.yaml and goals.yaml; WP-V-04 v0.9 §6 (EC-N1 fed back; the search catalogue maps EC-11 and EC-13 to HE-01.6); WP-V-05 v0.10 VS-FI-32; plant scene he-01-6-lane-change-overshoot. Open: C2 or C3 for HE-01.6 (DQ-418); Cartesian OS-12 rows and workbooks (WP-C-03 OI-11); Blender render of the new scene", at: 2026-10-22}
 
 - id: DQ-407
   question: "When a fault makes LionDriver hand back control, may the gentle slow-down start together with its alert, or must it wait 1 s after the alert?"
@@ -5330,7 +5330,7 @@
   sources: ["assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-624", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-624", "assurance/02-concept/WP-C-04-functional-safety-concept.md FSR-04.05", "assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-050.C1, SWF-ACT-050", "assurance/08-analyses/WP-A-04-system-fta-fmea.md SFMEA-36", "openpilot/selfdrive/selfdrived/state.py SOFT_DISABLE_TIME", "openpilot/selfdrive/controls/lib/longitudinal_planner.py A_CRUISE_MIN", "assurance/sim/results/edge-cases.md hand-over rows (handover-follower, handover-slower-lead)", "assurance/sim/results/search-handover-follower.md", "assurance/sim/results/search-handover-slower-lead.md"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "WP-S-02 v0.55 TSR-624 (exception and rationale), WP-W-02 v0.45 SWSR-624, WP-C-04 v0.28 FSR-04.05, trace tsr/swsr/fsr.yaml; SW FMEA SWF-050.C1 and SWF-ACT-050; WP-A-04 v1.18 SFMEA-36. No behaviour change", at: 2026-10-22}
+  applied: {ref: "jherrodthomas/LionDriver#426", record: "WP-S-02 v0.55 TSR-624 (exception and rationale), WP-W-02 v0.45 SWSR-624, WP-C-04 v0.28 FSR-04.05, trace tsr/swsr/fsr.yaml; SW FMEA SWF-050.C1 and SWF-ACT-050; WP-A-04 v1.18 SFMEA-36. No behaviour change", at: 2026-10-22}
 
 - id: DQ-408
   question: "When openpilot's selfdrived stops but the heartbeat goes on, should the panda revoke steering within 0.3 s and sound the alarm?"
@@ -5450,7 +5450,7 @@
   sources: ["TE-04 §3", "WP-P-07 §2 (TL-44 pinning pattern)"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "TE-04 Status, recommendation and OI-1; WP-P-07 v0.9.16 TL-53 (the row already existed; no classification change)", at: 2026-10-22}
+  applied: {ref: "jherrodthomas/LionDriver#426", record: "TE-04 Status, recommendation and OI-1; WP-P-07 v0.9.16 TL-53 (the row already existed; no classification change)", at: 2026-10-22}
 
 - id: DQ-412
   question: "May we buy a temperature logger (about US$100) to measure cabin air at the device mount on hot drives?"
@@ -5600,7 +5600,7 @@
   sources: ["assurance/sim/results/wet-braking.md", "assurance/sim/weather/README.md §7", "WP-C-02 §3.1 (vehicle state, road surface)", "opendbc/car/interfaces.py ACCEL_MIN", "Bosch Automotive Handbook, 4th ed., p. 335"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "WP-C-02 v0.10 §3.1 vehicle state (≥ 3 mm tread on all four tyres); WP-O-03 v0.3 UI-12 item 6 and §12; WP-O-01 v0.3 INS-07 and R-VEH", at: 2026-10-22}
+  applied: {ref: "jherrodthomas/LionDriver#426", record: "WP-C-02 v0.10 §3.1 vehicle state (≥ 3 mm tread on all four tyres); WP-O-03 v0.3 UI-12 item 6 and §12; WP-O-01 v0.3 INS-07 and R-VEH", at: 2026-10-22}
 
 - id: DQ-417
   question: "Which safety goals should get an fmdtools fault model, and a Fault Lab page, after SG-02?"
