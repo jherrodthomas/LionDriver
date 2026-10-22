@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-O-03 User information and safety warnings |
 | Standard reference | ISO 26262-7:2018 §6 (user manual / information for operation); ISO 21448:2022 §6 and Annex B (reasonably foreseeable misuse), §13 (information to users in operation); ISO 26262-3:2018 §6 (controllability assumptions) |
-| Version | 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
+| Version | 0.3 (UI-12: tyre tread of at least 3 mm (4/32 in) on all four tyres, replace at 3 mm, from the ODD's vehicle state (WP-C-02 v0.10, DQ-416 A); 2026-10-22). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | Controllability basis for SG-01…SG-06 (AOU-06, AOU-07); SOTIF misuse measures |
 | Author | Assurance team (initial draft) |
@@ -74,7 +74,8 @@ The on-device alert texts are inherited from upstream and say "openpilot". The u
 2. VSC (stability control) is on;
 3. the windscreen in front of the device and the Toyota camera is clean and clear (no ice, stickers, objects);
 4. the device sits firmly in its mount and the screen shows no calibration message;
-5. nothing blocks the device's view of your face (cap brim, mask, phone holder, sun visor).
+5. nothing blocks the device's view of your face (cap brim, mask, phone holder, sun visor);
+6. every tyre has at least 3 mm (4/32 in) of tread. Replace tyres when they reach 3 mm, before the legal minimum: worn tyres cannot brake as hard as LD-SDA may ask on a wet road. LD-SDA cannot see your tyres.
 
 If any check fails, drive without LD-SDA and fix the problem first.
 
@@ -217,7 +218,7 @@ Misuse-case IDs MC-01…MC-12 are those of [WP-C-08](../02-concept/WP-C-08-drive
 | UI-08 | H-01 | AOU-06 | MC-10: Lane change without checking | `docs/LIMITATIONS.md:6` |
 | UI-09, UI-10 | H-01, H-02, H-04, H-06 (SOTIF triggering conditions) | AOU-06 | MC-07: Use outside ODD | WP-C-02; `docs/LIMITATIONS.md:8-21, 27-43` |
 | UI-11 | H-03, H-04, H-06 | — | MC-09: Unvalidated end-to-end longitudinal | D-08; GAP-18 |
-| UI-12 | All | AOU-08, AOU-09, AOU-10 | Driving with faults or obstructed sensors | [WP-O-02](WP-O-02-operation-service-decommissioning.md) OPS-01…OPS-05 |
+| UI-12 | All | AOU-08, AOU-09, AOU-10 | Driving with faults or obstructed sensors; tyres worn below the ODD's 3 mm tread (DQ-416 A) | [WP-O-02](WP-O-02-operation-service-decommissioning.md) OPS-01…OPS-05; [WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md) §3.1 vehicle state; [`sim/results/wet-braking.md`](../sim/results/wet-braking.md) |
 | UI-13 | H-01, H-02 (SOTIF) | AOU-08 | Driving with stale calibration | `calibrationd.py:24-36` |
 | UI-14…UI-17 | H-05 / SG-05; mode confusion → H-02, H-06 | AOU-03 | MC-08: Mode confusion; belief that gas disengages | WP-C-03 §4 (F-03/F-05), HE-05.3; `longitudinal.h:3-5`; `params_keys.h:35` |
 | UI-18, UI-19 | H-02, H-06 / SG-02, SG-06 | AOU-06 | MC-12: Slow reaction to take-over request; waiting out soft disable | `events.py:161-182` (alert classes); GAP-16 |

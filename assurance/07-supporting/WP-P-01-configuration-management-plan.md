@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-01 Configuration management plan (incl. safety-relevant file list, baselines, submodules) |
 | Standard reference | ISO 26262-8:2018 §7; ISO 26262-2:2018 §6 (release, baselines); ISO/SAE 21434:2021 §5 (configuration management); ASPICE 4.0 SUP.8 |
-| Version | 0.5 (no GitHub organization: the repository and forks stay on the `jherrodthomas` account, decided by the lead 2026-10-14 (DQ-111, B); §6, §10, OI-1; 2026-10-18). 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: §2 marked historical, current pins, build variant in CI-6, OI-1/OI-2/OI-7 status; 2026-10-12). 0.1 |
+| Version | 0.6 (§7.1: test builds for characterisation and fault injection are named configuration items, built only by CI, closed course only, release reflashed before the car leaves, DQ-125 A; OI-9; 2026-10-22). 0.5 (no GitHub organization: the repository and forks stay on the `jherrodthomas` account, decided by the lead 2026-10-14 (DQ-111, B); §6, §10, OI-1; 2026-10-18). 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: §2 marked historical, current pins, build variant in CI-6, OI-1/OI-2/OI-7 status; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (highest: ASIL of the envelope as set by WP-C-03) |
 | Author | Assurance team (initial draft) |
@@ -181,6 +181,20 @@ All six steps are implemented as change requests under [WP-P-02](WP-P-02-change-
 
 Tags are annotated and signed (`git tag -s`). Tags are never moved or deleted; a wrong tag is superseded by the next PATCH.
 
+### 7.1 Test builds for characterisation and fault injection (DQ-125 A)
+
+Some validation tests need firmware or host software that goes past the release limits: the characterisation builds of [WP-V-01](../06-validation/WP-V-01-safety-validation.md) (VS-VAL-02, VS-VAL-05, §5.3; VS-VAL-05 requests up to +4 and −7 m/s²) and the fault-injection builds of [WP-V-05](../06-validation/WP-V-05-fault-injection.md). The lead decided on 2026-10-22 that each such build is a named configuration item (decision register DQ-125, option A):
+
+| Rule | What it means |
+|---|---|
+| T-1 Named item | Each test build has an ID `TB-<nn>`, a purpose, the test cases it serves and its source commit, recorded in a test-build list kept with the WP-V-07 test records |
+| T-2 Distinct identity | Its own version string (`LD-TEST-TB<nn>-<git8>` for the panda `BUILDER`, the same suffix on the host version) and a build flag, shown on the device and written into every log, so no log of a test build can be mistaken for a release log |
+| T-3 Built only by CI | Built by a dedicated CI job from a tagged commit, never on a workstation; the job records the binary hashes |
+| T-4 Closed course only | Flashed only for a session on the closed course of WP-V-07, and recorded per session (build ID, hashes, vehicle, start and end) |
+| T-5 Back to release | Before the vehicle leaves the closed course, the release build is reflashed and its identity checked against the installation record (WP-O-01 R-SW); the check is signed off in the session record |
+
+Until the CI job and the version flag exist (OI-9), no test build is made.
+
 ## 8. Baselines
 
 | Baseline | Content | Trigger | Record |
@@ -239,4 +253,5 @@ A baseline manifest (`baseline-manifest.yaml`, generated, stored with the tag's 
 | OI-5 | Write the baseline manifest generator and add it to the release procedure |
 | OI-6 | Confirm that GitHub Actions artifact retention settings and the evidence export (WP-P-10 §5) together meet the retention in WP-P-04 §10 |
 | OI-7 | LionDriver CI only runs `tools/test_runner.py` on `openpilot/` (`tools/op.sh test`). The opendbc safety suite, MISRA and mutation jobs live in `opendbc_repo/.github/workflows/tests.yml` and do not run in LionDriver CI. Add them to fork CI (D-03). Closed: `.github/workflows/safety.yaml` runs the safety suite (default and reference variants), opendbc and panda MISRA, and mutation tests (default variant) |
+| OI-9 | Implement §7.1 (DQ-125 A): the CI job that builds test builds from a tag, the `LD-TEST` version flag shown on the device and in logs, the test-build list and the per-session record with its release-reflash check |
 | OI-8 | `tests.yaml` triggers on `push` to `master` and on `pull_request`; pushes to `liondriver-dev` are not tested. Add `liondriver-dev` to the push trigger |

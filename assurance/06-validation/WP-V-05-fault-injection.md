@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-05 Fault injection test specification and report |
 | Standard reference | ISO 26262-4:2018 §7 (fault injection at system and vehicle level); ISO 26262-5:2018 §10 (hardware integration, fault injection for safety mechanisms); ISO 26262-6:2018 §10–§11 (fault injection at software integration and embedded software test); ASPICE 4.0 SYS.4, SWE.6 |
-| Version | 0.9 (VS-FI-10 (b): `test_16` in the pin since `3a8b7c2` (#405); AI-drafted; 2026-10-21). 0.8 (VS-FI-10 (b) test reference: `test_16_engaged_mismatch_siren.py`, panda PR #22; AI-drafted; 2026-10-21). 0.7 (VS-FI-10 (b) follows TSR-307(a) and TSR-516(c), panda `f4803c5`, with variant (b2); VS-FI-31 persistence 0.7 s (DQ-048); VS-FI-09 note on the selfdrived kill; requirement-routes walk of #395; 2026-10-21). 0.6 (OI-5 closed: VS-FI-07 on the reference device, reflashed and rechecked afterwards, DQ-085 B; 2026-10-19). 0.5 (Figure 6-1 added, generated from §5, §6 and §8; 2026-10-13). 0.4 (merge of PR #47 software alignment with the base; the base's baseline-expectation and asset updates and VS-FI-30, VS-FI-31 kept, PR #47's column "At `682f184`" kept; 2026-10-13). It carries PR #47's draft, numbered 0.2 there: RR-2026-009 F-26: current-pin column, ownership of software-level FI, HIL reference. History on the base: 0.3 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
+| Version | 0.11 (OI-1: fault-injection builds follow the test-build procedure of WP-P-01 §7.1, DQ-125 A; 2026-10-22). 0.10 (§5.6: VS-FI-32, a frozen command or an EPS fault late in an assisted lane change, for HE-01.6 (WP-C-03 v0.8, DQ-406 A); AI-drafted; 2026-10-22). 0.9 (VS-FI-10 (b): `test_16` in the pin since `3a8b7c2` (#405); AI-drafted; 2026-10-21). 0.8 (VS-FI-10 (b) test reference: `test_16_engaged_mismatch_siren.py`, panda PR #22; AI-drafted; 2026-10-21). 0.7 (VS-FI-10 (b) follows TSR-307(a) and TSR-516(c), panda `f4803c5`, with variant (b2); VS-FI-31 persistence 0.7 s (DQ-048); VS-FI-09 note on the selfdrived kill; requirement-routes walk of #395; 2026-10-21). 0.6 (OI-5 closed: VS-FI-07 on the reference device, reflashed and rechecked afterwards, DQ-085 B; 2026-10-19). 0.5 (Figure 6-1 added, generated from §5, §6 and §8; 2026-10-13). 0.4 (merge of PR #47 software alignment with the base; the base's baseline-expectation and asset updates and VS-FI-30, VS-FI-31 kept, PR #47's column "At `682f184`" kept; 2026-10-13). It carries PR #47's draft, numbered 0.2 there: RR-2026-009 F-26: current-pin column, ownership of software-level FI, HIL reference. History on the base: 0.3 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (specification). **Results: not yet executed** |
 | ASIL / scope | ASIL C (SG-01 until re-rated, WP-S-02 "B‡"), ASIL B (SG-02…SG-07); reference configuration |
 | Author | Assurance team (initial draft) |
@@ -132,6 +132,7 @@ Columns: **Lvl** = level(s); **Mechanism** = safety mechanism expected to act (T
 | ID | Fault | Target | Lvl | Mechanism | Expected reaction and time | Pass criteria | Baseline expectation | Asset | At `682f184` (from WP-W-02) |
 |---|---|---|---|---|---|---|---|---|---|
 | VS-FI-27 | Selected faults while driving | VS-FI-08 (frozen command), VS-FI-09 (pandad kill, SoC freeze), VS-FI-14 (bounded out-of-limit command) in a constant-radius curve and on a straight at 60 km/h | V | As in the referenced cases | As referenced, plus measured lateral deviation | Lateral deviation within the value used for the FTTI derivation (WP-S-04); safety driver not required to intervene beyond the expected take-over | Timing failures expected (GAP-06, GAP-16) | WP-S-09 VS-SQ-12, -13 | As at `8b8c6ae` |
+| VS-FI-32 | Fault late in an assisted lane change (HE-01.6, DQ-406 A) | (a) command stream frozen (as VS-FI-08) and (b) EPS fault (as VS-FI-31), each injected in the second half of a driver-initiated lane change to the left, straight road and gentle curve, 80–110 km/h | S, V | TSR-408, TSR-110, TSR-516(b) | (a) stale command detected and authority revoked ≤ 0.1 s after the 50 ms limit; (b) LKA refused while the fault lasts, siren once it has persisted 0.7 s | The car does not cross the target lane's far line; the safety driver is not required to intervene beyond the expected take-over | (a) Not detected (GAP-10): in the plant the frozen frame carries the car over the far line (edge-case row EC-11, about 12 m at 80 km/h); (b) siren as VS-FI-31, the car's lateral speed still carries it about 0.7 m over the far line (EC-13). Synthetic plant runs, no credit | S: plant scene `he-01-6-lane-change-overshoot` and search family `fault-timing-lane-change` ([`sim/search/families.yaml`](../sim/search/families.yaml)); V: new (closed course, with VS-FI-27) | As at `8b8c6ae` |
 
 ## 6. Coverage of safety analyses
 
@@ -154,7 +155,7 @@ Columns: **Lvl** = level(s); **Mechanism** = safety mechanism expected to act (T
 
 Every SFMEA row of WP-A-04 §10 up to SFMEA-32 with a named mechanism maps to at least one case above (SFMEA-33…-40, added in WP-A-04 v0.2, still need cases: OI-6); rows whose mechanism is "none" are run to confirm the baseline expectation and to record the gap.
 
-![Figure 6-1: matrix of the fault-injection cases VS-FI-01 to VS-FI-31 grouped by §5.1 to §5.6, against injection levels, TSR blocks 1xx to 8xx, safety goals SG-01 to SG-07, §6 coverage, WP-W-02 status and §8 result, with a strip of the §6 analysis items of WP-A-04, WP-A-02 and WP-A-03](figures/fig-v05-6-1-fault-coverage.svg)
+![Figure 6-1: matrix of the fault-injection cases VS-FI-01 to VS-FI-32 grouped by §5.1 to §5.6, against injection levels, TSR blocks 1xx to 8xx, safety goals SG-01 to SG-07, §6 coverage, WP-W-02 status and §8 result, with a strip of the §6 analysis items of WP-A-04, WP-A-02 and WP-A-03](figures/fig-v05-6-1-fault-coverage.svg)
 
 *Figure 6-1.* One row per §5 case: the TSR blocks its Mechanism column names (with the number of TSRs), the safety goals reached through those TSRs' parent FSRs in [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md), whether the table above names it, the "At `682f184`" status (implementation, not verification) and the §8 result. VS-FI-27 inherits the TSRs of the cases it repeats (hollow). The strip below shows the table above per analysis; nothing is green because no case has been executed. Drawn from the §5 tables, the table above and §8. Generated by [`figures/fig_v05_fault_coverage.py`](figures/fig_v05_fault_coverage.py); CI fails if it is stale.
 
@@ -209,6 +210,7 @@ Every SFMEA row of WP-A-04 §10 up to SFMEA-32 with a named mechanism maps to at
 | VS-FI-29 | — | — | — | — | — | — | — | — | **Not yet executed** | — | — |
 | VS-FI-30 | — | — | — | — | — | — | — | — | **Not yet executed** | — | — |
 | VS-FI-31 | — | — | — | — | — | — | — | — | **Not yet executed** | — | — |
+| VS-FI-32 | — | — | — | — | — | — | — | — | **Not yet executed** | — | — |
 
 Summary (to complete after execution): cases passed / failed / known GAP / blocked; mechanisms whose timing does not meet the FTTI; diagnostic coverage observations handed to [WP-H-04](../04-hardware/WP-H-04-hardware-metrics.md); open problem reports.
 
@@ -216,7 +218,7 @@ Summary (to complete after execution): cases passed / failed / known GAP / block
 
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
-| OI-1 | Build fault-injection support: bench CAN fault generator, fault-injection firmware build (documented configuration item), closed-course test host build | Test lead | G4 |
+| OI-1 | Build fault-injection support: bench CAN fault generator, fault-injection firmware build (documented configuration item), closed-course test host build. The fault-injection firmware build follows WP-P-01 §7.1 (DQ-125 A) | Test lead | G4 |
 | OI-2 | Run the opendbc safety tests in fork CI with release defines (GAP-39, GAP-41) so U-level cases produce LionDriver evidence. CI part done 2026-10-12 (`safety.yaml`); release defines open (GAP-41) | SW lead | G3 |
 | OI-3 | Extend `test_fuzzy.py` to the excluded safety-relevant processes, or document why each cannot be fuzzed | SW lead | G3 |
 | OI-4 | Confirm FTTI and budgets (WP-S-04) and update §4 | Safety engineer | G2 |

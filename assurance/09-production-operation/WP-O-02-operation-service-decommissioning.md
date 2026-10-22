@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-O-02 Operation, service (maintenance, repair) and decommissioning |
 | Standard reference | ISO 26262-7:2018 §6 (operation, service and decommissioning: planning, instructions, records); ISO 26262-4:2018 §6 (requirements for operation and service, by reference to WP-S-06); ISO/SAE 21434:2021 §14 (end of cybersecurity support and decommissioning) |
-| Version | 0.1 |
+| Version | 0.2 (§9 OI-7: rollback and post-update re-validation are not yet specified, found against the ISO 26262-7 operation themes while drafting the wiki page *After release*; 2026-10-21). 0.1 |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (actions that restore or preserve SG-01…SG-08 preconditions); SOTIF; CS |
 | Author | Assurance team (initial draft) |
@@ -195,3 +195,4 @@ A decommissioning record is added to the vehicle's installation record: date, pe
 | OI-4 | Test the inherited updater's connectivity-required lockout against a LionDriver update origin with automatic updates disabled | G4 |
 | OI-5 | Define the procedure and tool for removing `/persist/comma/` keys on decommissioning (DEC-08) without damaging the device | G5 |
 | OI-6 | Get Toyota service information for camera and radar aiming, and EPS/ECM software update practice, to refine SVC-02…SVC-05 | G2 |
+| OI-7 | Specify how an installed release is rolled back to the previous released baseline, and which checks are re-run after any update or rollback before the next engagement (at least INS-15…INS-19 and the TSR-620 firmware check). §6 UPD-01…UPD-08 cover what may be installed, not how to return or what to re-validate | G4 |

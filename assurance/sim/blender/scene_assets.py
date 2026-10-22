@@ -1096,7 +1096,8 @@ def sun_colour(elev_deg: float):
 
 def build_environment(env: dict, heading: float, assets: Assets | None = None):
   """Sky and sun. env (library/conditions.yaml): sky (clear, partly, overcast, night), sun ('behind', 'ahead': low sun
-  in the driver's eyes, 'side'), sun_elevation (degrees, raised to sun_elevation_min), sun_strength, night,
+  in the driver's eyes, 'side'), sun_offset (degrees from the direction of travel, negative = left; replaces the
+  preset's), sun_elevation (degrees, raised to sun_elevation_min), sun_strength, night,
   sky_strength (an overcast sky's brightness relative to the default: below 1 for a heavier, moodier sky).
   heading: road heading at the ego's start."""
   assets = assets or no_assets()
@@ -1112,6 +1113,8 @@ def build_environment(env: dict, heading: float, assets: Assets | None = None):
   elev_deg = max(env.get("sun_elevation", default_elev), env.get("sun_elevation_min", -90.0))
   elev = math.radians(elev_deg)
   az = heading + {"behind": math.radians(150), "ahead": math.radians(-6), "side": math.radians(80)}[where]
+  if "sun_offset" in env:                       # degrees from the direction of travel, negative = left (sun_glare.py)
+    az = heading - math.radians(env["sun_offset"])
   # the sun lamp points from the sun toward the scene: from direction (az, elev)
   sun = bpy.data.objects.new("sun", bpy.data.lights.new("sun", "SUN"))
   scene.collection.objects.link(sun)

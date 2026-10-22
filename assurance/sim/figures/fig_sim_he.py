@@ -43,6 +43,9 @@ from fig_sim_readme import P, R, T, chip, el, fmt, para, wrap, W  # noqa: E402
 RUNS = {
   "HE-01.2": ("F-01b", {}, "straight highway"),
   "HE-01.4": ("F-02", {}, "straight highway, not engaged"),
+  "HE-01.6": ("F-03", {"road": "straight", "speed_kph": 80.0, "t_fault": 7.069, "duration": 8.0, "lane_change": 6.0,
+                       "lane_change_s": 3.96},
+              "80 km/h, command frozen 27 % into a lane change to the left (EC-11)"),
   "HE-02.1": ("F-07", {"road": "curve-odd-bound", "t_fault": None}, "left curve at R_ODD, fault at curve entry"),
   "HE-02.2": ("F-07", {"speed_kph": 80, "road": "rcurve@2.0", "lane_width": 3.5, "t_fault": None},
               "rural right curve (2.0 m/s²) at 80 km/h, outside the ODD, fault at curve entry"),
@@ -78,6 +81,17 @@ SPEC = {
     "Vehicle": ("idle", "stays in lane: largest offset {maxdev:.2f} m"),
     "Driver": ("idle", "drives manually; nothing to correct"),
     "verdict": "The panda stops it at {refuse:.3f} s; nothing reaches the car.",
+  },
+  "HE-01.6": {
+    "fault": "command frozen mid lane change: the last frame repeats",
+    "SoC": ("fault", "repeats the frame of the moment it froze"),
+    "Host": ("passes", "packs the repeated frames"),
+    "Panda": ("passes", "passes every frame: a repeated frame is inside the envelope; no siren"),
+    "Switch": ("passes", "intercept: the frames reach the car"),
+    "EPS": ("passes", "keeps the lane-change torque"),
+    "Vehicle": ("passes", "keeps moving sideways past the target lane: largest offset {maxdev:.2f} m at {t_maxdev:.2f} s"),
+    "Driver": ("stops", "cue: drift at {cue:.2f} s; corrects from {corr:.2f} s, once past the target lane"),
+    "verdict": "Nothing in the item stops it; the driver's correction from {corr:.2f} s comes after the car has left the target lane.",
   },
   "HE-02.1": {
     "fault": "EPS fault: LKA_STATE 9, assist lost",
@@ -182,9 +196,13 @@ def check_run(he: str, t: dict) -> list[str]:
   return errs
 
 
+# the WP-C-03 effect where it does not fit on the header's one line
+EFFECT_SHORT = {"HE-01.6": "The car does not stop in the target lane and runs on into the lane beyond"}
+
+
 def head(he: str, h: dict, sub: str) -> list[str]:
   asil = f"ASIL {h['asil']}" + (f" (D if {h['aou']} fail)" if h["fallback"] == "D" else "")
-  return [T(24, 34, f"{he} · {asil}", "h"), *para(24, 58, h["effect"], W - 48, "t2", lh=17)[0],
+  return [T(24, 34, f"{he} · {asil}", "h"), *para(24, 58, EFFECT_SHORT.get(he, h["effect"]), W - 48, "t2", lh=17)[0],
           T(24, 80, "Synthetic (DSR-12) · no evidence credit", "tbad"), T(24, 99, sub, "t2b"),
           el("line", None, x1=24, y1=110, x2=W - 24, y2=110, class_="hair")]
 
@@ -284,11 +302,12 @@ def fig_anim(he: str, h: dict, t: dict, r) -> str:
   frames = [round(t0 + STEP * k, 3) for k in range(int(round(span / STEP)) + 1)]
   e_f = [at(f) for f in frames]
   e_min = min(min(e_f), -1.0)
+  e_max = max(e_f)                 # a run that leaves to the left (HE-01.6) needs room above the lane
   b = head(he, h, f"Plant run {cid}: {road}")
 
   # road panel
   lw = 3.7
-  top_e, bot_e = lw * 1.5, e_min - 2.5
+  top_e, bot_e = max(lw * 1.5, e_max + 2.5), e_min - 2.5
   ry = 122
   rh = (top_e - bot_e) * PX_M
   yc = ry + top_e * PX_M          # screen y of the lane centre (e = 0)
@@ -298,6 +317,10 @@ def fig_anim(he: str, h: dict, t: dict, r) -> str:
 
   b += [el("rect", None, x=24, y=fmt(ry), width=W - 48, height=fmt(rh), rx=8, class_="card")]
   lines = []
+  k = 1                            # lines above the one at +lw/2, for a run that leaves to the left
+  while lw / 2 + k * lw < top_e - 1.5:
+    lines.append(lw / 2 + k * lw)
+    k += 1
   k = 0
   while True:
     e_line = lw / 2 - k * lw
@@ -342,7 +365,7 @@ def fig_anim(he: str, h: dict, t: dict, r) -> str:
   def TX(tt):
     return px0 + (tt - t0) / span * (px1 - px0)
 
-  lo, hi = e_min - 0.5, 1.0
+  lo, hi = e_min - 0.5, (1.0 if e_max <= 1.0 else e_max + 0.5)
 
   def DY(e):
     return py + (hi - e) / (hi - lo) * ph
@@ -356,8 +379,9 @@ def fig_anim(he: str, h: dict, t: dict, r) -> str:
   for tg in range(int(math.ceil(t0)), int(math.floor(t_end)) + 1):
     b += [T(TX(tg), py + ph + 16, f"{tg}", "t2", "middle")]
   thr = r.metrics["lane_threshold"]
-  b += [el("line", None, x1=px0, y1=fmt(DY(-thr)), x2=px1, y2=fmt(DY(-thr)), class_="thr"),
-        T(px1, DY(-thr) - 4, f"body on the 3.7 m lane line ({thr:.2f} m)", "t2", "end")]
+  side = 1 if e_max > thr else -1  # the line the run crosses
+  b += [el("line", None, x1=px0, y1=fmt(DY(side * thr)), x2=px1, y2=fmt(DY(side * thr)), class_="thr"),
+        T(px1, DY(side * thr) - 4, f"body on the 3.7 m lane line ({thr:.2f} m)", "t2", "end")]
   path = "M" + " L".join(f"{fmt(TX(f))},{fmt(DY(e))}" for f, e in zip(frames, e_f))
   b += [el("path", None, d=path, class_="trace")]
   cur = ";".join(f"{fmt(TX(f) - px0)},0" for f in frames) + f";{fmt(TX(frames[-1]) - px0)},0"

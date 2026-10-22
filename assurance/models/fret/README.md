@@ -18,7 +18,7 @@
 | [`fret_formalize.py`](fret_formalize.py) | Runs FRET `formalize` on every sentence and writes [`fretish-formalizations.json`](fretish-formalizations.json) (past-time, future-time and Lustre formulas); `--check` in CI reruns FRET and compares |
 | [`install_solvers.sh`](install_solvers.sh) | Fetches Kind 2 v2.2.0 and Z3 4.14.1, checked by SHA-256 |
 | [`fret_realizability.py`](fret_realizability.py), [`render_contract.js`](render_contract.js) | Step P3: one Kind 2 contract per connected component, rendered from FRET's own template; writes [`fret-realizability.md`](fret-realizability.md) and the contracts in [`realizability/`](realizability/), with every minimal conflicting set; `--check` in CI |
-| [`test_fret_realizability.py`](test_fret_realizability.py) | Grouping; Kind 2 on a single rule, the known conflict and an injected conflict |
+| [`test_fret_realizability.py`](test_fret_realizability.py) | Grouping; Kind 2 on a single rule, the torque rules together, v0.53's conflict kept as a regression case, and an injected conflict |
 | [`install_ogma.sh`](install_ogma.sh) | Builds Ogma 1.16.0 and Copilot 4.8.1 from Hackage at a fixed index state (GHC 9.4.7 from Ubuntu) |
 | [`monitor/`](monitor/) | Step P4: [`run_monitor.py`](monitor/run_monitor.py) generates a C99 monitor for FR-307a, FR-516c and FR-516-duration with Ogma and Copilot, and runs it over the panda's own code in [`harness.c`](monitor/harness.c), with three mutants; results in [`monitor-results.md`](monitor/monitor-results.md) |
 

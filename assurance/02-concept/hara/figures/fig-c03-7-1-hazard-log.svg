@@ -23,7 +23,7 @@
 <text x="92" y="154" font-size="13.5" fill="#0F172A" font-weight="700">Unintended or excessive lateral motion</text>
 <rect x="52" y="164" width="164.7" height="18" rx="9" fill="#FEE2E2"/><text x="134.366" y="176.6" font-size="10" fill="#7F1D1D" font-weight="700" text-anchor="middle">worst HE-01.2 S3 E4 C2 ⚠ · C</text>
 <rect x="222.732" y="164" width="96.0" height="18" rx="9" fill="#FEE2E2"/><text x="270.754" y="176.6" font-size="10" fill="#7F1D1D" font-weight="700" text-anchor="middle">SG-01 · ASIL C</text>
-<rect x="52" y="186" width="111.0" height="18" rx="9" fill="#F1F5F9"/><text x="107.495" y="198.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">5 hazardous events</text>
+<rect x="52" y="186" width="111.0" height="18" rx="9" fill="#F1F5F9"/><text x="107.495" y="198.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">6 hazardous events</text>
 <text x="52" y="220" font-size="9" fill="#475569" font-weight="700">WHAT REACHES IT</text>
 <rect x="52" y="226.0" width="376" height="128" rx="8" fill="#F8FAFC"/>
 <rect x="58" y="233.0" width="284" height="24" rx="5" fill="#FFFFFF" stroke="#7C3AED" stroke-width="1.2"/>
@@ -54,13 +54,13 @@
 <text x="52" y="518.429" font-size="9.5" fill="#475569">14 FSRs serve SG-01 (WP-C-04 §9)</text>
 <rect x="52.0" y="523.4285714285714" width="134.3" height="12" fill="#16A34A"/>
 <text x="119.1" y="532.929" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
-<rect x="186.3" y="523.4285714285714" width="161.1" height="12" fill="#F59E0B"/>
-<text x="266.9" y="532.929" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
-<rect x="347.4" y="523.4285714285714" width="53.7" height="12" fill="#DC2626"/>
-<text x="374.3" y="532.929" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<rect x="186.3" y="523.4285714285714" width="188.0" height="12" fill="#F59E0B"/>
+<text x="280.3" y="532.929" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">7</text>
+<rect x="374.3" y="523.4285714285714" width="26.9" height="12" fill="#DC2626"/>
+<text x="387.7" y="532.929" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
 <rect x="401.1" y="523.4285714285714" width="26.9" height="12" fill="#64748B"/>
 <text x="414.6" y="532.929" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
-<text x="52" y="547.429" font-size="8.5" fill="#475569">5 implemented · 6 partial · 2 not met · 1 unverified</text>
+<text x="52" y="547.429" font-size="8.5" fill="#475569">5 implemented · 7 partial · 1 not met · 1 unverified</text>
 <circle cx="56" cy="553.9285714285714" r="3.5" fill="#DC2626"/><text x="64" y="557.429" font-size="9.5" fill="#475569" font-weight="600">SOTIF</text>
 <text x="110" y="557.429" font-size="9.5" fill="#0F172A">FM-02, FM-08, FM-09, FM-10 (WP-C-07): open</text>
 <circle cx="56" cy="569.9285714285714" r="3.5" fill="#F59E0B"/><text x="64" y="573.429" font-size="9.5" fill="#475569" font-weight="600">TARA</text>
@@ -103,13 +103,13 @@
 <text x="472" y="535.429" font-size="9.5" fill="#475569">28 FSRs serve SG-01, SG-02 (WP-C-04 §9)</text>
 <rect x="472.0" y="540.4285714285714" width="120.9" height="12" fill="#16A34A"/>
 <text x="532.4" y="549.929" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">9</text>
-<rect x="592.9" y="540.4285714285714" width="161.1" height="12" fill="#F59E0B"/>
-<text x="673.4" y="549.929" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">12</text>
-<rect x="754.0" y="540.4285714285714" width="67.1" height="12" fill="#DC2626"/>
-<text x="787.6" y="549.929" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<rect x="592.9" y="540.4285714285714" width="174.6" height="12" fill="#F59E0B"/>
+<text x="680.1" y="549.929" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">13</text>
+<rect x="767.4" y="540.4285714285714" width="53.7" height="12" fill="#DC2626"/>
+<text x="794.3" y="549.929" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
 <rect x="821.1" y="540.4285714285714" width="13.4" height="12" fill="#64748B"/>
 <rect x="834.6" y="540.4285714285714" width="13.4" height="12" fill="#CBD5E1"/>
-<text x="472" y="564.429" font-size="8.5" fill="#475569">9 implemented · 12 partial · 5 not met · 1 unverified · 1 see §5</text>
+<text x="472" y="564.429" font-size="8.5" fill="#475569">9 implemented · 13 partial · 4 not met · 1 unverified · 1 see §5</text>
 <circle cx="476" cy="570.9285714285714" r="3.5" fill="#DC2626"/><text x="484" y="574.429" font-size="9.5" fill="#475569" font-weight="600">SOTIF</text>
 <text x="530" y="574.429" font-size="9.5" fill="#0F172A">FM-02, FM-03, FM-04, FM-10 (WP-C-07): open</text>
 <circle cx="476" cy="586.9285714285714" r="3.5" fill="#F59E0B"/><text x="484" y="590.429" font-size="9.5" fill="#475569" font-weight="600">TARA</text>
@@ -150,15 +150,15 @@
 <text x="892" y="518.429" font-size="9.5" fill="#475569">13 FSRs serve SG-03 (WP-C-04 §9)</text>
 <rect x="892.0" y="523.4285714285714" width="115.7" height="12" fill="#16A34A"/>
 <text x="949.8" y="532.929" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
-<rect x="1007.7" y="523.4285714285714" width="115.7" height="12" fill="#F59E0B"/>
-<text x="1065.5" y="532.929" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
-<rect x="1123.4" y="523.4285714285714" width="86.8" height="12" fill="#DC2626"/>
-<text x="1166.8" y="532.929" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<rect x="1007.7" y="523.4285714285714" width="144.6" height="12" fill="#F59E0B"/>
+<text x="1080" y="532.929" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<rect x="1152.3" y="523.4285714285714" width="57.8" height="12" fill="#DC2626"/>
+<text x="1181.2" y="532.929" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
 <rect x="1210.2" y="523.4285714285714" width="28.9" height="12" fill="#64748B"/>
 <text x="1224.6" y="532.929" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
 <rect x="1239.1" y="523.4285714285714" width="28.9" height="12" fill="#CBD5E1"/>
 <text x="1253.5" y="532.929" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
-<text x="892" y="547.429" font-size="8.5" fill="#475569">4 implemented · 4 partial · 3 not met · 1 unverified · 1 see §5</text>
+<text x="892" y="547.429" font-size="8.5" fill="#475569">4 implemented · 5 partial · 2 not met · 1 unverified · 1 see §5</text>
 <circle cx="896" cy="553.9285714285714" r="3.5" fill="#F59E0B"/><text x="904" y="557.429" font-size="9.5" fill="#475569" font-weight="600">SOTIF</text>
 <text x="950" y="557.429" font-size="9.5" fill="#0F172A">FM-01, FM-11 (WP-C-07): partly implemented</text>
 <circle cx="896" cy="569.9285714285714" r="3.5" fill="#F59E0B"/><text x="904" y="573.429" font-size="9.5" fill="#475569" font-weight="600">TARA</text>
@@ -199,11 +199,11 @@
 <text x="52" y="1024.86" font-size="9.5" fill="#475569">14 FSRs serve SG-04 (WP-C-04 §9)</text>
 <rect x="52.0" y="1029.857142857143" width="134.3" height="12" fill="#16A34A"/>
 <text x="119.1" y="1039.36" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
-<rect x="186.3" y="1029.857142857143" width="134.3" height="12" fill="#F59E0B"/>
-<text x="253.4" y="1039.36" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
-<rect x="320.6" y="1029.857142857143" width="107.4" height="12" fill="#DC2626"/>
-<text x="374.3" y="1039.36" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
-<text x="52" y="1053.86" font-size="8.5" fill="#475569">5 implemented · 5 partial · 4 not met</text>
+<rect x="186.3" y="1029.857142857143" width="161.1" height="12" fill="#F59E0B"/>
+<text x="266.9" y="1039.36" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
+<rect x="347.4" y="1029.857142857143" width="80.6" height="12" fill="#DC2626"/>
+<text x="387.7" y="1039.36" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text x="52" y="1053.86" font-size="8.5" fill="#475569">5 implemented · 6 partial · 3 not met</text>
 <circle cx="56" cy="1060.357142857143" r="3.5" fill="#F59E0B"/><text x="64" y="1063.86" font-size="9.5" fill="#475569" font-weight="600">SOTIF</text>
 <text x="110" y="1063.86" font-size="9.5" fill="#0F172A">FM-01, FM-02, FM-09 (WP-C-07): partly implemented</text>
 <circle cx="56" cy="1076.357142857143" r="3.5" fill="#F59E0B"/><text x="64" y="1079.86" font-size="9.5" fill="#475569" font-weight="600">TARA</text>
@@ -239,13 +239,13 @@
 <text x="472" y="994.857" font-size="9.5" fill="#475569">12 FSRs serve SG-05 (WP-C-04 §9)</text>
 <rect x="472.0" y="999.8571428571429" width="188.0" height="12" fill="#16A34A"/>
 <text x="566" y="1009.36" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
-<rect x="660.0" y="999.8571428571429" width="31.3" height="12" fill="#F59E0B"/>
-<text x="675.7" y="1009.36" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
-<rect x="691.3" y="999.8571428571429" width="94.0" height="12" fill="#DC2626"/>
-<text x="738.3" y="1009.36" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<rect x="660.0" y="999.8571428571429" width="62.7" height="12" fill="#F59E0B"/>
+<text x="691.3" y="1009.36" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<rect x="722.7" y="999.8571428571429" width="62.7" height="12" fill="#DC2626"/>
+<text x="754" y="1009.36" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
 <rect x="785.3" y="999.8571428571429" width="62.7" height="12" fill="#64748B"/>
 <text x="816.7" y="1009.36" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-<text x="472" y="1023.86" font-size="8.5" fill="#475569">6 implemented · 1 partial · 3 not met · 2 unverified</text>
+<text x="472" y="1023.86" font-size="8.5" fill="#475569">6 implemented · 2 partial · 2 not met · 2 unverified</text>
 <circle cx="476" cy="1030.357142857143" r="3.5" fill="#DC2626"/><text x="484" y="1033.86" font-size="9.5" fill="#475569" font-weight="600">SOTIF</text>
 <text x="530" y="1033.86" font-size="9.5" fill="#0F172A">FM-04 (WP-C-07): open</text>
 <circle cx="476" cy="1046.357142857143" r="3.5" fill="#F59E0B"/><text x="484" y="1049.86" font-size="9.5" fill="#475569" font-weight="600">TARA</text>
@@ -286,13 +286,13 @@
 <text x="892" y="1002.86" font-size="9.5" fill="#475569">16 FSRs serve SG-06 (WP-C-04 §9)</text>
 <rect x="892.0" y="1007.8571428571429" width="117.5" height="12" fill="#16A34A"/>
 <text x="950.8" y="1017.36" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
-<rect x="1009.5" y="1007.8571428571429" width="141.0" height="12" fill="#F59E0B"/>
-<text x="1080" y="1017.36" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
-<rect x="1150.5" y="1007.8571428571429" width="94.0" height="12" fill="#DC2626"/>
-<text x="1197.5" y="1017.36" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<rect x="1009.5" y="1007.8571428571429" width="164.5" height="12" fill="#F59E0B"/>
+<text x="1091.8" y="1017.36" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">7</text>
+<rect x="1174.0" y="1007.8571428571429" width="70.5" height="12" fill="#DC2626"/>
+<text x="1209.2" y="1017.36" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
 <rect x="1244.5" y="1007.8571428571429" width="23.5" height="12" fill="#CBD5E1"/>
 <text x="1256.2" y="1017.36" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
-<text x="892" y="1031.86" font-size="8.5" fill="#475569">5 implemented · 6 partial · 4 not met · 1 see §5</text>
+<text x="892" y="1031.86" font-size="8.5" fill="#475569">5 implemented · 7 partial · 3 not met · 1 see §5</text>
 <circle cx="896" cy="1038.357142857143" r="3.5" fill="#DC2626"/><text x="904" y="1041.86" font-size="9.5" fill="#475569" font-weight="600">SOTIF</text>
 <text x="950" y="1041.86" font-size="9.5" fill="#0F172A">FM-03, FM-09 (WP-C-07): open</text>
 <circle cx="896" cy="1054.357142857143" r="3.5" fill="#F59E0B"/><text x="904" y="1057.86" font-size="9.5" fill="#475569" font-weight="600">TARA</text>
@@ -335,13 +335,13 @@
 <text x="52" y="1531.29" font-size="9.5" fill="#475569">21 FSRs serve SG-02, SG-06 (WP-C-04 §9)</text>
 <rect x="52.0" y="1536.2857142857142" width="89.5" height="12" fill="#16A34A"/>
 <text x="96.8" y="1545.79" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
-<rect x="141.5" y="1536.2857142857142" width="161.1" height="12" fill="#F59E0B"/>
-<text x="222.1" y="1545.79" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">9</text>
-<rect x="302.7" y="1536.2857142857142" width="89.5" height="12" fill="#DC2626"/>
-<text x="347.4" y="1545.79" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<rect x="141.5" y="1536.2857142857142" width="179.0" height="12" fill="#F59E0B"/>
+<text x="231" y="1545.79" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">10</text>
+<rect x="320.6" y="1536.2857142857142" width="71.6" height="12" fill="#DC2626"/>
+<text x="356.4" y="1545.79" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
 <rect x="392.2" y="1536.2857142857142" width="35.8" height="12" fill="#CBD5E1"/>
 <text x="410.1" y="1545.79" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-<text x="52" y="1560.29" font-size="8.5" fill="#475569">5 implemented · 9 partial · 5 not met · 2 see §5</text>
+<text x="52" y="1560.29" font-size="8.5" fill="#475569">5 implemented · 10 partial · 4 not met · 2 see §5</text>
 <circle cx="56" cy="1566.7857142857142" r="3.5" fill="#F59E0B"/><text x="64" y="1570.29" font-size="9.5" fill="#475569" font-weight="600">TARA</text>
 <text x="110" y="1570.29" font-size="9.5" fill="#0F172A">TS-04 at risk 5: Reduce</text>
 <rect x="460" y="1123.857142857143" width="400" height="470" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/>
@@ -376,13 +376,13 @@
 <text x="472" y="1479.29" font-size="9.5" fill="#475569">10 FSRs serve SG-07 (WP-C-04 §9)</text>
 <rect x="472.0" y="1484.2857142857142" width="150.4" height="12" fill="#16A34A"/>
 <text x="547.2" y="1493.79" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
-<rect x="622.4" y="1484.2857142857142" width="37.6" height="12" fill="#F59E0B"/>
-<text x="641.2" y="1493.79" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
-<rect x="660.0" y="1484.2857142857142" width="150.4" height="12" fill="#DC2626"/>
-<text x="735.2" y="1493.79" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<rect x="622.4" y="1484.2857142857142" width="75.2" height="12" fill="#F59E0B"/>
+<text x="660" y="1493.79" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<rect x="697.6" y="1484.2857142857142" width="112.8" height="12" fill="#DC2626"/>
+<text x="754" y="1493.79" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
 <rect x="810.4" y="1484.2857142857142" width="37.6" height="12" fill="#64748B"/>
 <text x="829.2" y="1493.79" font-size="8.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
-<text x="472" y="1508.29" font-size="8.5" fill="#475569">4 implemented · 1 partial · 4 not met · 1 unverified</text>
+<text x="472" y="1508.29" font-size="8.5" fill="#475569">4 implemented · 2 partial · 3 not met · 1 unverified</text>
 <circle cx="476" cy="1514.7857142857142" r="3.5" fill="#F59E0B"/><text x="484" y="1518.29" font-size="9.5" fill="#475569" font-weight="600">TARA</text>
 <text x="530" y="1518.29" font-size="9.5" fill="#0F172A">TS-02, TS-03, TS-14 at risk 5: Reduce</text>
 <rect x="880" y="1123.857142857143" width="400" height="470" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/>

@@ -147,6 +147,18 @@ class TestFamilies(unittest.TestCase):
       self.assertIn(fd["dq"], entries, fid)
       self.assertIn("assurance/sim/results/edge-cases.md", " ".join(entries[fd["dq"]]["sources"]), fid)
 
+  def test_rated_findings_point_to_their_event(self):
+    hes = {x["id"] for x in yaml.safe_load((search.SIM.parent / "trace" / "items" / "hazards.yaml").read_text())
+           if x["kind"] == "hazardous-event"}
+    for fid, fd in search.SPEC["findings"].items():
+      if not fd.get("rated_as"):
+        continue
+      self.assertIn(fd["rated_as"], hes, fid)
+      rules = [r for fam in search.SPEC["families"] for r in fam.get("hara", []) if r.get("new") == fid]
+      self.assertTrue(rules, fid)
+      for r in rules:
+        self.assertEqual(r["he"], fd["rated_as"], fid)
+
 
 if __name__ == "__main__":
   unittest.main()

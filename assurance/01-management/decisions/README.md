@@ -42,6 +42,9 @@ entry's `sources` lists them all.
 
 ## The inbox page
 
+Published at <https://claude.ai/artifact/3m2JQKLyS9f62fydjXa4gE> (private to the lead; republish to the same
+link after every change to this file).
+
 The page shows open questions first (hard, then revisit, then easy), then answers waiting to be
 applied, then what is done, with a link to each commit or PR.
 

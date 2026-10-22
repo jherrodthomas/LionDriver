@@ -18,21 +18,21 @@
 
 | Input | Status at this baseline | Link |
 |---|---|---|
-| WP-M-00 status of the gate's work products | 14 Draft of 14 (table below) | [WP-M-00](../../../01-management/WP-M-00-work-product-register.md) |
+| WP-M-00 status of the gate's work products | 15 Draft of 15 (table below) | [WP-M-00](../../../01-management/WP-M-00-work-product-register.md) |
 | Open anomalies (`safety-anomaly`), incl. any potential safety goal violation | | GitHub issues labelled `safety-anomaly` |
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 6 performed: CR-02, CR-03@G1, CR-04, FSA-I1, SR-01, CS-I1 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 84 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 92 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
 | Work product | Activity | Status in WP-M-00 | Open items | Verification review (WP-P-05) |
 |---|---|---|---|---|
 | [WP-C-01](../../../02-concept/WP-C-01-item-definition.md) Item definition | CON-01 | Draft | 8 | |
-| [WP-C-02](../../../02-concept/WP-C-02-odd-and-intended-functionality.md) ODD and intended functionality specification | CON-02 | Draft | 6 | |
+| [WP-C-02](../../../02-concept/WP-C-02-odd-and-intended-functionality.md) ODD and intended functionality specification | CON-02 | Draft | 7 | |
 | [WP-C-08](../../../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) Driver interaction, HMI and reasonably foreseeable misuse analysis | CON-03 | Draft | 6 | |
-| [WP-C-03](../../../02-concept/WP-C-03-hara.md) Hazard analysis and risk assessment, safety goals | CON-04 | Draft | 8 | |
+| [WP-C-03](../../../02-concept/WP-C-03-hara.md) Hazard analysis and risk assessment, safety goals | CON-04 | Draft | 9 | |
 | [WP-C-04](../../../02-concept/WP-C-04-functional-safety-concept.md) Functional safety concept (FSRs, allocation, AoUs) | CON-05 | Draft | 8 | |
 | [WP-C-05](../../../02-concept/WP-C-05-sotif-hazard-identification.md) SOTIF hazard identification and risk evaluation, acceptance criteria | CON-06 | Draft | 4 | |
 | [WP-C-06](../../../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) Functional insufficiencies and triggering conditions analysis | CON-07 | Draft | 4 | |
@@ -41,8 +41,9 @@
 | [WP-C-09](../../../02-concept/WP-C-09-tara.md) Threat analysis and risk assessment (TARA) | CON-10 | Draft | 6 | |
 | [WP-C-10](../../../02-concept/WP-C-10-cybersecurity-goals-and-concept.md) Cybersecurity goals, claims and concept | CON-11 | Draft | 7 | |
 | [WP-V-07](../../../06-validation/WP-V-07-vehicle-test-operations.md) Vehicle test operations and safety-driver procedures | CON-12 | Draft | 7 | |
-| [WP-T-01](../../../trace/README.md) Requirements and traceability data (machine-readable), consistency evidence | CON-13 | Draft | 4 | |
-| [WP-K-01](../../../10-safety-case/WP-K-01-safety-case.md) Safety case (GSN, integrated FuSa, SOTIF and AI argument) | CON-13 | Draft | 5 | |
+| [WP-T-01](../../../trace/README.md) Requirements and traceability data (machine-readable), consistency evidence | CON-13 | Draft | 3 | |
+| [WP-K-01](../../../10-safety-case/WP-K-01-safety-case.md) Safety case (GSN, integrated FuSa, SOTIF and AI argument) | CON-13 | Draft | 4 | |
+| [WP-O-04](../../../09-production-operation/WP-O-04-field-monitoring.md) Field monitoring (safety, SOTIF and AI) and crash reporting | CON-14 | Draft | 8 | |
 
 ### Confirmation measures
 

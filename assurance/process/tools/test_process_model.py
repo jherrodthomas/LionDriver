@@ -101,6 +101,10 @@ class ProcessModelTest(unittest.TestCase):
   def test_feedback_into_a_later_phase(self):
     self.assertFails("P9", lambda m: m.feedback["FB-01"].update(targets=["WP-O-05"]))
 
+  def test_feedback_source_neither_produced_nor_updated_in_its_phase(self):
+    # WP-O-04 is produced at G1 and updated at G6 (DQ-122 A); without the G6 update its G6 feedback has no source there
+    self.assertFails("P9", lambda m: m.activities["OPS-01"].update(updates=[]))
+
   def test_feedback_anchor_missing(self):
     self.assertFails("P9", lambda m: m.feedback["FB-03"].update(anchors=["WP-O-04:no such routing row"]))
 

@@ -58,10 +58,14 @@ jobs:
       with:
         persist-credentials: false
         fetch-depth: 2  # the base revision HEAD^1 for check_pin_records.py
+    - name: Install the pinned checker packages (jsonschema, PyYAML, openpyxl; DQ-123 A, WP-P-07 TL-55)
+      run: python3 -m pip install --quiet --user --break-system-packages -r assurance/trace/requirements.txt
     - name: A moved opendbc or panda pin has a change record (WP-P-07 TL-47)
       run: python3 tools/ci/check_pin_records.py
     - name: Trace consistency
       run: python3 assurance/trace/tools/check_trace.py
+    - name: Trace items against their JSON schema (WP-P-06 §5.1, DQ-123 A)
+      run: python3 assurance/trace/tools/check_schema.py
     - name: State machines (WP-W-05 §5 generated from state-machines/*.yaml)
       run: python3 assurance/trace/tools/check_state_machines.py --check
     - name: Design diagrams (Stateflow-style charts, Simulink-style block diagram) current
@@ -94,6 +98,8 @@ jobs:
         python3 assurance/02-concept/figures/test_fig_c02_odd.py
         python3 assurance/02-concept/figures/fig_c09_scenes.py --check
         python3 assurance/02-concept/figures/test_fig_c09_scenes.py
+        python3 assurance/02-concept/figures/fig_c05_four_areas.py --check
+        python3 assurance/02-concept/figures/test_fig_c05_four_areas.py
         python3 assurance/02-concept/hatara/hatara_model.py --check
         python3 assurance/02-concept/hatara/hatara_figures.py --check
         python3 assurance/02-concept/hatara/test_hatara.py
@@ -188,13 +194,16 @@ jobs:
         python3 assurance/08-analyses/fta/fta_cutsets.py --check
     - name: FMEA data lint, HARA mapping onto WP-C-03, FTA-FMEA hand-off figures (and their tests)
       run: |
-        python3 -m pip install --quiet --user --break-system-packages pyyaml jsonschema openpyxl
         python3 tools/safety/fmea_lint.py --report
         python3 -m unittest discover -s tools/safety -p 'test_fmea_lint.py'
         python3 assurance/08-analyses/figures/fta_fmea_figures.py --check
         python3 assurance/08-analyses/figures/test_fta_fmea_figures.py
         python3 tools/safety/fmea_review_xlsx.py --check
         python3 tools/safety/test_fmea_review_xlsx.py
+    - name: Fault tree AND gates against the WP-A-03 claims and shared resources (and its tests)
+      run: |
+        python3 assurance/08-analyses/dfa/dfa_gates.py --check
+        python3 assurance/08-analyses/dfa/test_dfa_gates.py
     - name: STPA figures match WP-A-05, stpa-map.yaml and the decision register (and their tests)
       run: |
         python3 assurance/08-analyses/figures/fig_a05_stpa.py --check
@@ -335,7 +344,7 @@ jobs:
     name: fmdtools fault-propagation models
     # NASA fmdtools models of the fault trees (TE-02; assurance/models/fmdtools). Synthetic: no evidence credit.
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
     - uses: actions/checkout@v7
       with:
@@ -350,6 +359,41 @@ jobs:
       run: python3 assurance/models/fmdtools/sg02/sweep.py joint --check --order 2
     - name: SG-02 time-to-cue page is current (step P4)
       run: python3 assurance/models/fmdtools/sg02/sweep.py timing --check
+    - name: SG-02 Fault Lab page is current, and its tests (step P5; DQ-409)
+      run: |
+        python3 assurance/models/fmdtools/sg02/test_fault_lab.py
+        python3 assurance/models/fmdtools/sg02/fault_lab.py --check
+    - name: SG-06 model maps the WP-A-04 tree and reproduces the reference cut sets (DQ-417)
+      run: python3 assurance/models/fmdtools/sg06/test_sg06.py
+    - name: SG-06 single-fault, joint-fault (order 1 and 2; the full sweep runs weekly) and time-to-cue pages are current
+      run: |
+        python3 assurance/models/fmdtools/sg06/sweep.py --check
+        python3 assurance/models/fmdtools/sg06/sweep.py joint --check --order 2
+        python3 assurance/models/fmdtools/sg06/sweep.py timing --check
+    - name: SG-06 Fault Lab page is current, and its tests
+      run: |
+        python3 assurance/models/fmdtools/sg06/test_fault_lab.py
+        python3 assurance/models/fmdtools/sg06/fault_lab.py --check
+    - name: SG-01 model maps the WP-A-04 tree and reproduces the reference cut sets (DQ-417)
+      run: python3 assurance/models/fmdtools/sg01/test_sg01.py
+    - name: SG-01 single-fault and joint-fault pages are current (order 1 and 2; the full sweep runs weekly)
+      run: |
+        python3 assurance/models/fmdtools/sg01/sweep.py --check
+        python3 assurance/models/fmdtools/sg01/sweep.py joint --check --order 2
+    - name: SG-01 Fault Lab page is current, and its tests
+      run: |
+        python3 assurance/models/fmdtools/sg01/test_fault_lab.py
+        python3 assurance/models/fmdtools/sg01/fault_lab.py --check
+    - name: SG-03 model maps the WP-A-04 tree and reproduces the reference cut sets (DQ-417)
+      run: python3 assurance/models/fmdtools/sg03/test_sg03.py
+    - name: SG-03 single-fault and joint-fault pages are current (order 1 and 2; the full sweep runs weekly)
+      run: |
+        python3 assurance/models/fmdtools/sg03/sweep.py --check
+        python3 assurance/models/fmdtools/sg03/sweep.py joint --check --order 2
+    - name: SG-03 Fault Lab page is current, and its tests
+      run: |
+        python3 assurance/models/fmdtools/sg03/test_fault_lab.py
+        python3 assurance/models/fmdtools/sg03/fault_lab.py --check
 
   fret:
     name: FRETish restatements of the panda TSRs
@@ -543,6 +587,92 @@ jobs:
       run: |
         LD_LIBRARY_PATH="$CHRONO_PREFIX/chrono/lib" PYTHONPATH="$CHRONO_PREFIX/chrono/share/chrono/python" \
           "$CHRONO_PREFIX/env/bin/python" assurance/sim/chrono/chrono_pilot.py --check
+
+  sim-thermal:
+    name: simulation device heat model
+    # Device heat model (assurance/sim/thermal, TE-04 pilot, tool TL-53): FEniCSx 0.10.0 solves the comma device
+    # behind a sun-loaded windshield; FiPy 4.0.3 is the independent cross-check. The environment comes from an explicit
+    # conda-forge lock (every package by URL and md5) and is cached on the lock's hash. Design aid (DQ-413):
+    # synthetic data (DSR-12), no evidence credit; every input is an estimate until step T1.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      MICROMAMBA_URL: https://github.com/mamba-org/micromamba-releases/releases/download/2.3.2-0/micromamba-linux-64
+      MICROMAMBA_SHA256: ffc3cb8d52d4d6b354bdbb979c407719c485392b74e462cbd50811aa88e58f85
+      THERMAL_ENV: ${{ github.workspace }}/../thermal-env
+      # One MPI process: keep the conda MPICH's UCX on shared memory and self. Some runners have an Azure MANA NIC whose
+      # verbs device UCX probes and fails on, which aborts MPI_Init before any test runs (2026-10-21, job 119391925384).
+      UCX_TLS: self,sm
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Cache the heat-model environment (keyed on the lock)
+      id: thermal-cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.THERMAL_ENV }}
+        key: thermal-env-${{ hashFiles('assurance/sim/thermal/thermal-linux-64.lock') }}
+    - name: Create the heat-model environment from the explicit lock
+      if: steps.thermal-cache.outputs.cache-hit != 'true'
+      run: |
+        curl -sSL -o "$RUNNER_TEMP/micromamba" "$MICROMAMBA_URL"
+        echo "$MICROMAMBA_SHA256  $RUNNER_TEMP/micromamba" | sha256sum -c -
+        chmod +x "$RUNNER_TEMP/micromamba"
+        MAMBA_ROOT_PREFIX="$RUNNER_TEMP/mamba" "$RUNNER_TEMP/micromamba" create -y -q -p "$THERMAL_ENV" \
+          --file assurance/sim/thermal/thermal-linux-64.lock
+    - name: Checks (analytic slab, lumped transient, FiPy cross-check, energy balance, mesh study, limits from the code, cabin-driven runner, MCU study)
+      run: '"$THERMAL_ENV/bin/python" assurance/sim/thermal/test_thermal.py'
+    - name: Pilot results within 0.05 K of the committed JSON, results page current
+      run: '"$THERMAL_ENV/bin/python" assurance/sim/thermal/thermal_pilot.py --check'
+    - name: The device on the cabin heat soak's temperatures (cabin_drive.py) within 0.05 K of the committed JSON
+      run: '"$THERMAL_ENV/bin/python" assurance/sim/thermal/cabin_drive.py --check'
+    - name: The safety MCU next to the SoC (mcu_heat.py, DFI-04, TSR-509) within 0.05 K of the committed JSON
+      run: '"$THERMAL_ENV/bin/python" assurance/sim/thermal/mcu_heat.py --check'
+    - name: Figures render off-screen (Mesa software EGL; pixels are not compared)
+      env:
+        CONDA_PREFIX: ${{ env.THERMAL_ENV }}
+      run: |
+        "$THERMAL_ENV/bin/python" - <<'PY'
+        import json, sys, tempfile, yaml
+        from pathlib import Path
+        sys.path.insert(0, "assurance/sim/thermal")
+        import figures
+        out = Path(tempfile.mkdtemp())
+        p = yaml.safe_load(open("assurance/sim/thermal/params.yaml"))
+        figures.render(p, json.load(open("assurance/sim/results/thermal-pilot.json")), out)
+        figures.mcu_figure(p, json.load(open("assurance/sim/results/mcu-heat.json")), out)
+        assert len(list(out.glob("*.webp"))) == 5
+        PY
+
+  sim-weather:
+    name: simulation weather physics
+    # Sun in the road camera (TC-01, KS-12) with pvlib's NREL SPA (tool TL-54), hydroplaning (TC-03) from the
+    # published FHWA/NCHRP and NASA models, the cabin heat soak, crosswind, fog on the windshield on NOAA climate
+    # normals, road crown against openpilot's roll path, and wet braking (assurance/sim/weather). Design aid:
+    # synthetic data (DSR-12), no credit.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Checkout the opendbc submodule (the plant's Corolla parameters, for the crosswind push)
+      run: git submodule update --init --depth 1 opendbc_repo
+    - name: Install the pinned packages of the weather physics
+      run: python3 -m pip install --quiet --user --break-system-packages -r assurance/sim/weather/requirements.txt
+    - name: Checks (NREL reference, NOAA cross-check, camera frame, unit conversion, model branches, ODD bound, cabin against McLaren 2005, crosswind against the single-track algebra, fog, wet braking, road crown)
+      run: python3 assurance/sim/weather/test_weather.py
+    - name: Results within 0.05 of the committed JSON, results pages current
+      run: |
+        python3 assurance/sim/weather/sun_glare.py --check
+        python3 assurance/sim/weather/hydroplaning.py --check
+        python3 assurance/sim/weather/cabin_soak.py --check
+        python3 assurance/sim/weather/crosswind.py --check
+        python3 assurance/sim/weather/windshield_fog.py --check
+        python3 assurance/sim/weather/road_crown.py --check
+        python3 assurance/sim/weather/wet_braking.py --check
+        python3 assurance/sim/assets/tools/vehicle_geometry.py --check
 
   sim-scenarios:
     name: simulation known scenarios

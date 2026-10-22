@@ -1,0 +1,137 @@
+{
+ "about": "Synthetic (DSR-12), design aid, no evidence credit (DQ-413). Estimated inputs until T1.",
+ "air": [
+  25.0,
+  30.0,
+  35.0,
+  40.0,
+  45.0,
+  50.0,
+  55.0,
+  60.0,
+  65.0,
+  70.0
+ ],
+ "soc_limit": 96.0,
+ "junction_rise_k": {
+  "low": 1.12,
+  "nominal": 5.21,
+  "high": 11.64
+ },
+ "setups": {
+  "as_built": {
+   "soc": [
+    70.97,
+    75.97,
+    80.97,
+    85.97,
+    90.97,
+    95.97,
+    100.97,
+    105.97,
+    110.97,
+    115.97
+   ],
+   "mcu_block": [
+    53.02,
+    58.02,
+    63.02,
+    68.02,
+    73.02,
+    78.02,
+    83.02,
+    88.02,
+    93.02,
+    98.02
+   ]
+  },
+  "soc_off": {
+   "soc": [
+    43.73,
+    48.73,
+    53.73,
+    58.73,
+    63.73,
+    68.73,
+    73.73,
+    78.73,
+    83.73,
+    88.73
+   ],
+   "mcu_block": [
+    40.69,
+    45.69,
+    50.69,
+    55.69,
+    60.69,
+    65.69,
+    70.69,
+    75.69,
+    80.69,
+    85.69
+   ]
+  },
+  "fan_stalled": {
+   "soc": [
+    88.67,
+    93.67,
+    98.67,
+    103.67,
+    108.67,
+    113.67,
+    118.67,
+    123.67,
+    128.67,
+    133.67
+   ],
+   "mcu_block": [
+    77.58,
+    82.58,
+    87.58,
+    92.58,
+    97.58,
+    102.58,
+    107.58,
+    112.58,
+    117.58,
+    122.58
+   ]
+  }
+ },
+ "soc_share_of_mcu_rise": 0.44,
+ "soc_adds_k": 12.33,
+ "at_soc_limit": {
+  "as_built": {
+   "air_at_soc_limit": 50.0,
+   "mcu_block": 78.1,
+   "tj_low": 79.2,
+   "tj_high": 89.7,
+   "air_at_mcu_limit": 85.3
+  },
+  "fan_stalled": {
+   "air_at_soc_limit": 32.3,
+   "mcu_block": 84.9,
+   "tj_low": 86.0,
+   "tj_high": 96.6,
+   "air_at_mcu_limit": 60.8
+  }
+ },
+ "tsr509": {
+  "hot_drive_mcu_block_peak": 67.7,
+  "grades": {
+   "industrial": {
+    "tj_max": 125.0,
+    "trip_at_most": 117.0,
+    "hot_day_highest_reading": 82.3,
+    "margin_k": 34.7
+   },
+   "extended": {
+    "tj_max": 140.0,
+    "trip_at_most": 132.0,
+    "hot_day_highest_reading": 82.3,
+    "margin_k": 49.7
+   }
+  }
+ },
+ "parked_mount_air_max": 62.0
+}

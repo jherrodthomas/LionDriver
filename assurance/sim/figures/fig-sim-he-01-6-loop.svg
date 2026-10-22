@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1014" viewBox="0 0 640 1014" role="img" aria-labelledby="t d">
+<title id="t">HE-01.6 in the layer-1 loop: plant run F-03</title>
+<desc id="d">Synthetic (DSR-12), no evidence credit. HE-01.6 (ASIL C), The car does not stop in the target lane: it crosses the target lane's far line into the lane beyond, which the driver did not check before the change. The layer-1 loop with plant run F-03 (80 km/h, command frozen 27 % into a lane change to the left (EC-11)): fault command frozen mid lane change: the last frame repeats. SoC: repeats the frame of the moment it froze. Host: packs the repeated frames. Panda: passes every frame: a repeated frame is inside the envelope; no siren. Switch: intercept: the frames reach the car. EPS: keeps the lane-change torque. Vehicle: keeps moving sideways past the target lane: largest offset 16.37 m at 5.44 s. Driver: cue: drift at 0.98 s; corrects from 2.48 s, once past the target lane. Nothing in the item stops it; the driver's correction from 2.48 s comes after the car has left the target lane.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
+      --real:#2a78d6; --real-bg:#e9f1fb; --amb:#c98500; --amb-bg:#fdf4dc; --bad:#e34948; --bad-bg:#fdecec;
+      --pic:#6250d6; --pic-bg:#efedfb; --flt:#eb6834; --cop:#eb6834; --cop-bg:#fde9df; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#1a1a19; --ink:#f0efec; --ink2:#c3c2b7; --ink3:#8d8c85; --grid:#33322f; --card:#232321;
+        --real:#3987e5; --real-bg:#16273c; --amb:#eda100; --amb-bg:#3a2f12; --bad:#e66767; --bad-bg:#3d1e1e;
+        --pic:#9085e9; --pic-bg:#26223f; --flt:#d95926; --cop:#d95926; --cop-bg:#3f2417; }
+}
+.bg { fill:var(--bg); }
+.h { font:600 21px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t { font:15px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.tb { font:600 15px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.tl { font:600 17px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.t2b { font:600 13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.chip { font:600 12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:#ffffff; }
+.tbad { font:600 13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--bad); }
+.hair { stroke:var(--grid); stroke-width:1; }
+.card { fill:var(--card); stroke:var(--grid); stroke-width:1.2; }
+.real { fill:var(--real-bg); stroke:var(--real); stroke-width:2.4; }
+.model { fill:var(--card); stroke:var(--ink3); stroke-width:1.4; }
+.amb { fill:var(--amb-bg); stroke:var(--amb); stroke-width:1.6; stroke-dasharray:6 4; }
+.plan { fill:var(--bg); stroke:var(--ink3); stroke-width:1.4; stroke-dasharray:6 4; }
+.pic { fill:var(--pic-bg); stroke:var(--pic); stroke-width:1.4; }
+.picbox { fill:var(--bg); stroke:var(--pic); stroke-width:1.2; }
+.badbox { fill:var(--bad-bg); stroke:var(--bad); stroke-width:1.4; }
+.copbox { fill:var(--cop-bg); stroke:var(--cop); stroke-width:1.4; }
+.f-real { fill:var(--real); } .f-model { fill:var(--ink3); } .f-amb { fill:var(--amb); } .f-bad { fill:var(--bad); }
+.f-pic { fill:var(--pic); } .f-flt { fill:var(--flt); } .f-cop { fill:var(--cop); } .f-ink2 { fill:var(--ink2); }
+.arr { stroke:var(--ink2); stroke-width:1.6; fill:none; }
+.arrd { stroke:var(--ink3); stroke-width:1.6; fill:none; stroke-dasharray:5 4; }
+.arrb { stroke:var(--bad); stroke-width:1.6; fill:none; stroke-dasharray:5 4; }
+.spring { stroke:var(--ink2); stroke-width:1.8; fill:none; stroke-linejoin:round; }
+.strike { stroke:var(--bad); stroke-width:1.6; }
+</style>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-ink2"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-bad"/></marker></defs>
+<rect class="bg" width="640" height="1014"/>
+<text x="24" y="34" class="h">HE-01.6 · ASIL C</text>
+<text x="24" y="58" class="t2">The car does not stop in the target lane and runs on into the lane beyond</text>
+<text x="24" y="80" class="tbad">Synthetic (DSR-12) · no evidence credit</text>
+<text x="24" y="99" class="t2b">Plant run F-03: 80 km/h, command frozen 27 % into a lane change to the left (EC-11)</text>
+<line x1="24" y1="110" x2="616" y2="110" class="hair"/>
+<text x="24" y="132" class="t2b">FAULT: COMMAND FROZEN MID LANE CHANGE: THE LAST FRAME REPEATS</text>
+<rect x="96" y="146" width="448" height="72" rx="8" class="model"/>
+<text x="110" y="170" class="tl">SoC stand-in</text>
+<text x="110" y="188" class="t2b">MODEL · not openpilot</text>
+<text x="110" y="210" class="t">repeats the frame of the moment it froze</text>
+<rect x="434.5" y="156" width="99.5" height="20" rx="10" class="f-flt"/>
+<text x="484.2" y="170" class="chip" text-anchor="middle">FAULT ENTERS</text>
+<path d="M320.0,218 V244" class="arr" marker-end="url(#a)"/>
+<rect x="96" y="248" width="448" height="72" rx="8" class="real"/>
+<text x="110" y="272" class="tl">Host frames</text>
+<text x="110" y="290" class="t2b">REAL CODE · opendbc toyotacan</text>
+<text x="110" y="312" class="t">packs the repeated frames</text>
+<rect x="434.5" y="258" width="99.5" height="20" rx="10" class="f-bad"/>
+<text x="484.2" y="272" class="chip" text-anchor="middle">PASSES IT ON</text>
+<path d="M320.0,320 V346" class="arr" marker-end="url(#a)"/>
+<rect x="96" y="350" width="448" height="92" rx="8" class="real"/>
+<text x="110" y="374" class="tl">Panda safety code</text>
+<text x="110" y="392" class="t2b">REAL CODE · reference build</text>
+<text x="110" y="414" class="t">passes every frame: a repeated frame is inside the</text>
+<text x="110" y="434" class="t">envelope; no siren</text>
+<rect x="434.5" y="360" width="99.5" height="20" rx="10" class="f-bad"/>
+<text x="484.2" y="374" class="chip" text-anchor="middle">PASSES IT ON</text>
+<path d="M320.0,442 V468" class="arr" marker-end="url(#a)"/>
+<rect x="96" y="472" width="448" height="72" rx="8" class="model"/>
+<text x="110" y="496" class="tl">Harness switch</text>
+<text x="110" y="514" class="t2b">MODEL</text>
+<text x="110" y="536" class="t">intercept: the frames reach the car</text>
+<rect x="434.5" y="482" width="99.5" height="20" rx="10" class="f-bad"/>
+<text x="484.2" y="496" class="chip" text-anchor="middle">PASSES IT ON</text>
+<path d="M320.0,544 V570" class="arr" marker-end="url(#a)"/>
+<rect x="96" y="574" width="448" height="72" rx="8" class="amb"/>
+<text x="110" y="598" class="tl">EPS</text>
+<text x="110" y="616" class="t2b">ASSUMED · release on lost frames</text>
+<text x="110" y="638" class="t">keeps the lane-change torque</text>
+<rect x="434.5" y="584" width="99.5" height="20" rx="10" class="f-bad"/>
+<text x="484.2" y="598" class="chip" text-anchor="middle">PASSES IT ON</text>
+<path d="M320.0,646 V672" class="arr" marker-end="url(#a)"/>
+<rect x="96" y="676" width="448" height="92" rx="8" class="model"/>
+<text x="110" y="700" class="tl">Vehicle</text>
+<text x="110" y="718" class="t2b">MODEL · single-track Corolla</text>
+<text x="110" y="740" class="t">keeps moving sideways past the target lane: largest</text>
+<text x="110" y="760" class="t">offset 16.37 m at 5.44 s</text>
+<rect x="434.5" y="686" width="99.5" height="20" rx="10" class="f-bad"/>
+<text x="484.2" y="700" class="chip" text-anchor="middle">PASSES IT ON</text>
+<path d="M320.0,768 V794" class="arr" marker-end="url(#a)"/>
+<rect x="96" y="798" width="448" height="92" rx="8" class="amb"/>
+<text x="110" y="822" class="tl">Driver</text>
+<text x="110" y="840" class="t2b">ASSUMED · reacts 1.5 s after the cue</text>
+<text x="110" y="862" class="t">cue: drift at 0.98 s; corrects from 2.48 s, once</text>
+<text x="110" y="882" class="t">past the target lane</text>
+<rect x="462.3" y="808" width="71.7" height="20" rx="10" class="f-real"/>
+<text x="498.2" y="822" class="chip" text-anchor="middle">STOPS IT</text>
+<path d="M96,706 H52 V176 H94" class="arrd" marker-end="url(#a)"/>
+<text x="44" y="426" class="t2" text-anchor="middle" transform="rotate(-90 44 426)">perfect perception</text>
+<path d="M544,604 H588 V380 H546" class="arrd" marker-end="url(#a)"/>
+<text x="600" y="477" class="t2" text-anchor="middle" transform="rotate(90 600 477)">EPS state on the car bus (RX)</text>
+<rect x="24" y="908" width="592" height="62" rx="8" class="badbox"/>
+<text x="38" y="932" class="tb">Nothing in the item stops it; the driver's correction from</text>
+<text x="38" y="952" class="tb">2.48 s comes after the car has left the target lane.</text>
+<rect x="24" y="981" width="18" height="14" rx="3" class="f-flt"/>
+<text x="48" y="992" class="t2">fault enters</text>
+<rect x="150.7" y="981" width="18" height="14" rx="3" class="f-bad"/>
+<text x="174.7" y="992" class="t2">passes it on</text>
+<rect x="277.4" y="981" width="18" height="14" rx="3" class="f-real"/>
+<text x="301.4" y="992" class="t2">stops or warns</text>
+<rect x="417.8" y="981" width="18" height="14" rx="3" class="plan"/>
+<text x="441.8" y="992" class="t2">not involved</text>
+</svg>

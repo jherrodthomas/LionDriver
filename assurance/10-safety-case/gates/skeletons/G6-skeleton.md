@@ -29,7 +29,7 @@
 
 | Work product | Activity | Status in WP-M-00 | Open items | Verification review (WP-P-05) |
 |---|---|---|---|---|
-| [WP-O-04](../../../09-production-operation/WP-O-04-field-monitoring.md) Field monitoring (safety, SOTIF and AI) and crash reporting | OPS-01 | Draft | 8 | |
+| [WP-O-04](../../../09-production-operation/WP-O-04-field-monitoring.md) Field monitoring (safety, SOTIF and AI) and crash reporting (update) | OPS-01 | Draft | 8 | |
 | [WP-O-05](../../../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md) Cybersecurity incident response, vulnerability management and software updates | OPS-02 | Draft | 6 | |
 
 ### Open cross-domain interfaces due by this gate

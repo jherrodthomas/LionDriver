@@ -52,7 +52,8 @@
           "enum": [
             "draft",
             "in_review",
-            "released"
+            "released",
+            "withdrawn"
           ]
         },
         "baseline": {

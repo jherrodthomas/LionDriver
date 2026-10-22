@@ -11,6 +11,8 @@
 #   env         what hazard_scene.py draws:
 #                 sky            clear, partly, overcast, night (picks the HDRI slot of library/assets.yaml when present)
 #                 sun            behind, ahead (in the driver's eyes), side; sun_elevation in degrees;
+#                                sun_offset: degrees from the direction of travel (negative = left), replacing the
+#                                preset's direction;
 #                                sun_strength: the sun lamp relative to a clear day's (overcast default 0.35);
 #                                sky_strength: an overcast sky's brightness relative to the default (below 1: moodier)
 #                 night          no sun; headlights on every car, street lights where the environment has them
@@ -78,4 +80,21 @@ conditions:
     exposure: null
     odd: in
     hara: Not a HARA condition; drawn for SOTIF hazards (SH-06, SH-11) whose triggering condition it is
-    env: {sky: clear, sun: ahead, sun_elevation: 5, wet: 0.0, glare: true, haze_km: 22}
+    # How often (no exposure class: WP-C-05 rates S and C only): on I-85 at Greenville SC the sun is in the road
+    # camera's frame about 203 h/year southbound (October-March evenings) and 158 h/year northbound (April-August
+    # mornings), assurance/sim/results/sun-glare.md (NREL SPA, sim/weather/sun_glare.py). Synthetic, model-derived
+    # (DSR-12): no evidence credit; an upper bound, terrain and trees are not modelled. WP-C-06 TC-01.
+    # The sun of a real corridor case: I-85 southbound (heading 243°) at Greenville SC, 15 Dec 16:40 EST, azimuth
+    # 236.0°, elevation 6.3° (NREL SPA via ../weather/sun_glare.py; ../results/sun-glare.md): 7.0° left of the
+    # direction of travel, inside the road camera's 40.0 x 25.7° frame.
+    env: {sky: clear, sun: ahead, sun_offset: -7.0, sun_elevation: 6.3, wet: 0.0, glare: true, haze_km: 22}
+
+  TC-01-NB:
+    title: Low sun in the camera field of view, summer morning northbound (SOTIF triggering condition, WP-C-06)
+    exposure: null
+    odd: in
+    hara: Not a HARA condition; the other glare season of TC-01, drawn as a variant of SH-06 and SH-11
+    # I-85 northbound (heading 63°) at Greenville SC, 21 Jun 07:00 EDT: azimuth 66.4°, elevation 7.3° (NREL SPA via
+    # ../weather/sun_glare.py; ../results/sun-glare.md), 3.4° right of the direction of travel. Northbound the sun is
+    # in the road camera's frame on April-August mornings, southbound (TC-01) on October-March evenings.
+    env: {sky: clear, sun: ahead, sun_offset: 3.4, sun_elevation: 7.3, wet: 0.0, glare: true, haze_km: 22}

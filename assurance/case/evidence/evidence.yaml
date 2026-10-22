@@ -126,7 +126,7 @@
 - id: Sn-08
   kind: evidence
   title: "Hardware architectural metrics"
-  description: "Method and plan only; no metric computed"
+  description: "Method and plan; generic-rate estimates only (SG-01, SG-05, SG-07); no part-level metric computed"
   evidence_status: partial
   lifecycle_area: technical-implementation
   location: "assurance/04-hardware/WP-H-04-hardware-metrics.md"

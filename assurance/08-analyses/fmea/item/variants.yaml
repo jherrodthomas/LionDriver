@@ -1,4 +1,6 @@
 # Variant structure of the LionDriver item (LD-ITEM-001).
+# LD-ITEM-001 is withdrawn as an item definition (DQ-124 A, 2026-10-22): WP-C-01 is of record. This file stays as
+# the variant data the FMEDA and the vehicle register read.
 # Vehicle facts and the CARS.md member strings live in the vehicle register (docs/liondriver/vehicles/vehicles.yaml).
 # assurance/08-analyses/fmea/item/vehicle-catalog.md is generated from this file and docs/CARS.md by
 # tools/safety/gen_vehicle_catalog.py; do not edit the catalog by hand.

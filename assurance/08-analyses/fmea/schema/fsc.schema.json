@@ -26,7 +26,7 @@
         "doc_id": {"type": "string"},
         "title": {"type": "string", "minLength": 1},
         "revision": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
-        "status": {"enum": ["draft", "in_review", "released"]},
+        "status": {"enum": ["draft", "in_review", "released", "withdrawn"]},
         "baseline": {"type": "string"},
         "hara_revision": {"type": "string", "description": "HARA revision the FSC was derived from; must equal the current HARA revision"},
         "scope": {"type": "string", "minLength": 1},

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-O-04 Field monitoring (safety, SOTIF and AI) and crash reporting |
 | Standard reference | ISO 26262-2:2018 §7 (safety management after release: field monitoring, anomaly handling); ISO 21448:2022 §13 (operation phase activities, field monitoring); ISO/SAE 21434:2021 §8 (cybersecurity monitoring, by reference to WP-O-05); ISO/PAS 8800:2024 (AI system operation and continuous assurance); NHTSA Standing General Order 2021-01 as amended (model, see §8); UL 4600 (informative: field feedback) |
-| Version | 0.2 (KPI thresholds are frozen with the WP-V-02 targets by the project lead, with a later assessor review, DQ-096 B; OI-5; 2026-10-19). 0.1 |
+| Version | 0.3 (§3.3 and OI-1: the uploader and athena are never started in LionDriver builds (DQ-121 A, change-2026-10-22-no-comma-upload); registration with comma remains, OI-1; 2026-10-22). 0.2 (KPI thresholds are frozen with the WP-V-02 targets by the project lead, with a later assessor review, DQ-096 B; OI-5; 2026-10-19). 0.1 |
 | Status | Draft |
 | ASIL / scope | All safety goals (SG-01…SG-08); SOTIF; AI; CS interface |
 | Author | Assurance team (initial draft) |
@@ -81,7 +81,7 @@ The inherited `uploader` sends `qlog`, `qcamera` and (on request) `rlog` and vid
 
 | Phase | Path | Controls |
 |---|---|---|
-| Development (now → G5) | **Manual retrieval.** After each test day, the maintainer copies the routes from the device (USB or local network SSH with LionDriver keys, offroad only) to LionDriver-controlled encrypted storage. comma upload disabled (device not paired, or upload disabled per OI-1) | Retrieval log per route; checksum of copied files; device storage checked for space before each test day |
+| Development (now → G5) | **Manual retrieval.** After each test day, the maintainer copies the routes from the device (USB or local network SSH with LionDriver keys, offroad only) to LionDriver-controlled encrypted storage. comma upload and athena never started in LionDriver builds (DQ-121 A, [change record](../07-supporting/impact/change-2026-10-22-no-comma-upload.md)) | Retrieval log per route; checksum of copied files; device storage checked for space before each test day |
 | After release (G6) | Either (a) continue manual retrieval at service intervals plus driver-triggered reports, or (b) a LionDriver upload endpoint. Option (b) needs a compatible API host (the uploader's host is overridable through `API_HOST`, `common/api.py:8`, but the upload-URL protocol and device authentication must be re-implemented), a cybersecurity assessment ([WP-C-09](../02-concept/WP-C-09-tara.md)) and user consent | Decision OI-2 |
 
 Minimum data set retrieved for every engaged route: `qlog` and `rlog` for all segments; video only for segments with a monitored event (§2.1) or a bookmark.
@@ -221,7 +221,7 @@ Every field action is recorded with: trigger, affected releases and installation
 
 | ID | Item | Needed by |
 |---|---|---|
-| OI-1 | Decide how comma upload and athena are disabled for LionDriver installations (unpaired device, configuration change, or code change) and verify no data leaves the device unintentionally | G1 (before LionDriver public-road testing) |
+| OI-1 | Decided 2026-10-22 (DQ-121 A): code change, the uploader and athena are never started ([change record](../07-supporting/impact/change-2026-10-22-no-comma-upload.md)). Left: device registration still contacts comma's API with the device identifiers (change record OI-1), and the check on the device that nothing else leaves it (OI-2) | G1 (before LionDriver public-road testing) |
 | OI-2 | Decide the post-release data path (manual vs. LionDriver endpoint) | G5 |
 | OI-3 | Privacy and consent review (data categories, consent text, retention) | G1 |
 | OI-4 | Event extraction: the script exists (`tools/field_monitoring/`, §4.1). Still open: run it on the first recorded development drives and check each MON class against a manual review of the same drives; then score AS-08 curvature divergence and AS-09 once WP-V-04 gives their thresholds (evaluation-set percentiles) | G1 (for development driving) |
