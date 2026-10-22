@@ -42,7 +42,7 @@ class TestHaraFigures(unittest.TestCase):
       hf.parse_hara(md)
 
   def test_unlisted_rated_event_rejected(self):
-    md = hf.SOURCE.read_text(encoding="utf-8").replace("HE-01.1–01.5, HE-02.3", "HE-01.1–01.5")
+    md = hf.SOURCE.read_text(encoding="utf-8").replace("HE-01.1–01.6, HE-02.3", "HE-01.1–01.6")
     with self.assertRaises(hf.FigureError):
       hf.parse_hara(md)
 

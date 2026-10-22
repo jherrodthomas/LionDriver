@@ -1765,17 +1765,17 @@
 
 - id: SWSR-624
   kind: swsr
-  text: "Deceleration that `controlsd` or the planner requests for a reason other than traffic (driver-monitoring no-response, fault soft disable) shall start only after the alert announcing it has been active for ≥ 1 s, and its rate shall not exceed j_down (TSR-205)."
+  text: "Deceleration that `controlsd` or the planner requests for a reason other than traffic shall start only after the alert announcing it is active: for the driver-monitoring no-response deceleration the alert shall have been active for ≥ 1 s; a fault soft-disable deceleration may start on the first frame of its alert (TSR-624, DQ-407 A). Its rate shall not exceed j_down (TSR-205)."
   asil: "QM (B-sup)"
   parents: [TSR-624]
   parent_text: "TSR-624"
   other_parents: false
   allocated_to: "`host.controlsd`, `host.plannerd`, `host.dm`"
   verification: "UT, VT"
-  acceptance: "Alert-to-onset ≥ 1 s; jerk ≤ j_down in replay"
+  acceptance: "Alert-to-onset ≥ 1 s for the driver-monitoring stop, alert active from the onset frame for a fault soft disable; jerk ≤ j_down in replay"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: the driver-monitoring no-response deceleration is announced 5 s ahead: the terminal alert counts down \"Car Stops in N s\" (`policy.py:459`, `events.py:239`), and the maneuver alert \"TAKE CONTROL: CAR STOPPING\", then \"CAR STOPPED\", sounds through the stop and the hold (`events.py:256`, `selfdrived.py:257`); the host rate is ≤ 4.5 m/s³ (`ACCEL_FINAL_RATE_LIMIT`), below j_down; the fault soft-disable deceleration still starts with its alert, with no lead time (register DQ-407, queued)"
+  baseline_impl: "Partial: the driver-monitoring no-response deceleration is announced 5 s ahead: the terminal alert counts down \"Car Stops in N s\" (`policy.py:459`, `events.py:239`), and the maneuver alert \"TAKE CONTROL: CAR STOPPING\", then \"CAR STOPPED\", sounds through the stop and the hold (`events.py:256`, `selfdrived.py:257`); the host rate is ≤ 4.5 m/s³ (`ACCEL_FINAL_RATE_LIMIT`), below j_down; the fault soft-disable deceleration starts with its alert, as TSR-624 allows (DQ-407 A)"
   status: proposed
   source: WP-W-02
 

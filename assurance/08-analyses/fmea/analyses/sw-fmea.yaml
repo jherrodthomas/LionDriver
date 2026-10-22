@@ -3615,12 +3615,16 @@ failure_modes:
   severity: 10
   causes:
   - id: SWF-050.C1
-    description: No lead time between the announcement and the onset of a fault soft-disable deceleration. Only the driver-monitoring
-      no-response deceleration is preceded by escalating alerts (driverUnresponsive1..3); TSR-624 is recorded as partial
+    description: No lead time between the announcement and the onset of a fault soft-disable deceleration, which TSR-624 allows since
+      DQ-407 A (the slow-down is at most -1.2 m/s² over the 3 s soft disable and its alert sounds from the first frame). Only the
+      driver-monitoring no-response deceleration is preceded by escalating alerts (driverUnresponsive1..3); TSR-624 is recorded as partial
     element: SWF-SE-041
     prevention_controls:
     - description: DM escalation alerts precede the no-response deceleration; nothing precedes a fault soft-disable deceleration
       ref: openpilot/selfdrive/monitoring/policy.py
+    - description: The fault soft-disable alert sounds from the first frame of its deceleration, which is bounded by A_CRUISE_MIN
+        (-1.2 m/s²) for SOFT_DISABLE_TIME (3 s); TSR-624 accepts this order (DQ-407 A)
+      ref: openpilot/selfdrive/selfdrived/state.py
     detection_controls:
     - description: No test targets this cause
     occurrence: 8
@@ -5836,8 +5840,8 @@ actions:
   status: open
 - id: SWF-ACT-050
   kind: design_change
-  description: 'Implement TSR-624: announce deceleration that traffic does not require at least 1 s before its onset, and ramp it within
-    a_min and j_down'
+  description: 'Implement TSR-624: announce the driver-monitoring no-response deceleration at least 1 s before its onset (a fault
+    soft-disable deceleration may start with its alert, DQ-407 A), and ramp both within a_min and j_down'
   owner: Jherrod Thomas
   status: open
 - id: SWF-ACT-051
