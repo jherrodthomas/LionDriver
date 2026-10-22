@@ -98,7 +98,7 @@
   parents: [SG-01, SG-02, SG-03, SG-04, SG-05, SG-06, SG-07]
   allocated_to: "E-03 (HW+SW)"
   verification: "A (FMEDA), FI"
-  baseline_impl: "Not implemented: IWDG never initialised (`panda/board/stm32h7/stm32h7_config.h:43`), software watchdog in same ISR (`main.c:301`), faults report-only, `PERMANENT_FAULTS = 0U` (`panda/board/sys/sys.h:50`) (GAP-07, GAP-08)"
+  baseline_impl: "Partial: an independent windowed watchdog (IWDG1, LSI clock) is started when the relay is first driven and fed from the 100 Hz safety task (`panda/board/drivers/hw_watchdog.h`; TSR-501, HWSR-501: implemented, not verified on hardware, DF-01); other execution faults are still report-only, `PERMANENT_FAULTS = 0U` (`panda/board/sys/sys.h:50`) (GAP-07, GAP-08)"
   status: proposed
   source: WP-C-04
 

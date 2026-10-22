@@ -192,7 +192,7 @@ def numbers(root: Path = ROOT) -> str:
     yy = cy + 20 + i * 22
     label = mode if len(mode) <= 62 else mode[:61].rstrip(" ,(") + "…"
     b.append(g(f"{tl.show(18.4 + i * 0.5)} fin", [f'<rect x="24" y="{yy - 12}" width="{max(v * 16, 4):.0f}" height="14" rx="3" fill="{ORANGE}"/>',
-               t(24 + max(v * 16, 4) + 8, yy, f"{v:.2g}  {label} ({kind})", 11.5, NAVY)]))
+               t(24 + max(v * 16, 4) + 8, yy, f"{v:g}  {label} ({kind})", 11.5, NAVY)]))
   b.append(g(f"{tl.show(21.8)} fin", [f'<rect x="24" y="626" width="{W - 110}" height="70" rx="10" fill="#eef2f8" stroke="{NAVY}"/>',
              t(40, 648, "PMHF target for ASIL C: fewer than 100 FIT that violate the goal. Not computed yet:", 12.5, NAVY, 700),
              t(40, 666, "the method is approved (DQ-066 A); it needs the real parts and their failure rates.", 12.5, NAVY),
@@ -202,7 +202,7 @@ def numbers(root: Path = ROOT) -> str:
              f"{GOAL} FMEDA with generic failure rates: {total:.1f} FIT in all, {safe:.1f} safe or detected, {lat:.1f} latent, "
              f"{spf_rf:.1f} single-point and residual. SPFM {m['spfm'] * 100:.1f} % ({verdict_against(m['spfm'], TARGETS['spfm'])[0]}); "
              f"LFM {m['lfm'] * 100:.1f} % ({verdict_against(m['lfm'], TARGETS['lfm'])[0]}). Largest contributors: "
-             + "; ".join(f"{mode} {v:.2g} FIT" for v, _, mode in m["top"]) + ". PMHF target for ASIL C below 100 FIT, not computed yet.", tl, b)
+             + "; ".join(f"{mode} {v:g} FIT" for v, _, mode in m["top"]) + ". PMHF target for ASIL C below 100 FIT, not computed yet.", tl, b)
 
 
 def ffi(root: Path = ROOT) -> str:

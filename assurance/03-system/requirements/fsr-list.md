@@ -4,7 +4,7 @@
 
 All 58 functional safety requirements of [WP-C-04 §5](../../02-concept/WP-C-04-functional-safety-concept.md), one line each. The work product holds the full text and is the source of truth; the ID links to its section.
 
-Status: 15 implemented · 25 partly · 12 not implemented · 6 assumed (EXT / AoU). The rule is that of WP-S-03 Figure 6-1; nothing is verified on hardware yet.
+Status: 15 implemented · 26 partly · 11 not implemented · 6 assumed (EXT / AoU). The rule is that of WP-S-03 Figure 6-1; nothing is verified on hardware yet.
 
 | ID | Parents | ASIL | Allocated to | Status | Requirement (first sentence) |
 |---|---|---|---|---|---|
@@ -16,7 +16,7 @@ Status: 15 implemented · 25 partly · 12 not implemented · 6 assumed (EXT / Ao
 | [FSR-01.06](../../02-concept/WP-C-04-functional-safety-concept.md#5-functional-safety-requirements) | SG-01, SG-03, SG-04, SG-05 | C | E-03 | partly | The envelope shall detect loss, corruption, repetition and staleness of each RX signal it uses for gating or limiting (PCM cruise state, brake, gas, driver/EPS … |
 | [FSR-01.07](../../02-concept/WP-C-04-functional-safety-concept.md#5-functional-safety-requirements) | SG-01, SG-02, SG-03, SG-04, SG-06 | C | E-03 | partly | The envelope shall detect missing or stale control commands from the SoC and remove actuation within the FTTI allocation of §8 |
 | [FSR-01.08](../../02-concept/WP-C-04-functional-safety-concept.md#5-functional-safety-requirements) | SG-01, SG-03, SG-04 | C | E-03 | partly | The envelope shall detect corruption, loss and reordering of command frames received from the SoC and discard affected frames |
-| [FSR-01.09](../../02-concept/WP-C-04-functional-safety-concept.md#5-functional-safety-requirements) | SG-01, SG-02, SG-03, SG-04, SG-05, SG-06, SG-07 | C | E-03 | not implemented | The safety MCU shall detect its own execution faults (program-flow hang, clock failure, memory corruption, register corruption) and enter the safe state (no … |
+| [FSR-01.09](../../02-concept/WP-C-04-functional-safety-concept.md#5-functional-safety-requirements) | SG-01, SG-02, SG-03, SG-04, SG-05, SG-06, SG-07 | C | E-03 | partly | The safety MCU shall detect its own execution faults (program-flow hang, clock failure, memory corruption, register corruption) and enter the safe state (no … |
 | [FSR-01.10](../../02-concept/WP-C-04-functional-safety-concept.md#5-functional-safety-requirements) | SG-01, SG-03, SG-04, SG-05, SG-07 | C | E-03 | not implemented | The safety mode and safety parameter for the reference configuration shall be fixed in the envelope and shall not be changeable by the SoC while a car safety … |
 | [FSR-01.11](../../02-concept/WP-C-04-functional-safety-concept.md#5-functional-safety-requirements) | SG-01, SG-03, SG-07 | C | E-03, E-05 | implemented | The envelope shall detect a harness relay malfunction (camera control messages seen on the car side) and inhibit all actuation TX |
 | [FSR-01.12](../../02-concept/WP-C-04-functional-safety-concept.md#5-functional-safety-requirements) | SG-01 | C | E-03 | partly | On any detected fault affecting lateral actuation, the envelope shall enter the lateral safe state (torque 0, steer request cleared) and keep it until a new … |

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="174" viewBox="0 0 1280 174" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
 <title id="t">Requirement status: FSRs and TSRs</title>
-<desc id="d">FSRs: 58, 15 implemented, 25 partly, 12 not implemented, 6 assumed (EXT / AoU); TSRs: 128, 20 implemented, 60 partly, 43 not implemented, 5 assumed (EXT / AoU)</desc>
+<desc id="d">FSRs: 58, 15 implemented, 26 partly, 11 not implemented, 6 assumed (EXT / AoU); TSRs: 128, 20 implemented, 60 partly, 43 not implemented, 5 assumed (EXT / AoU)</desc>
 <rect width="1280" height="174" fill="#FFFFFF"/>
 <text x="40" y="34" font-size="18" fill="#0F172A" font-weight="700">Requirement status</text>
 <text x="1240" y="34" font-size="11" fill="#475569" text-anchor="end">WP-C-04 §5 · WP-S-02 · WP-S-06</text>
@@ -9,10 +9,10 @@
 <text x="96" y="87" font-size="10" fill="#475569">functional safety requirements</text>
 <rect x="300.0" y="66" width="243.1" height="22" fill="#1D4ED8"/>
 <text x="421.6" y="81" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">15</text>
-<rect x="543.1" y="66" width="405.2" height="22" fill="#D97706"/>
-<text x="745.7" y="81" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">25</text>
-<rect x="948.3" y="66" width="194.5" height="22" fill="#D2553F"/>
-<text x="1045.5" y="81" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">12</text>
+<rect x="543.1" y="66" width="421.4" height="22" fill="#D97706"/>
+<text x="753.8" y="81" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">26</text>
+<rect x="964.5" y="66" width="178.3" height="22" fill="#D2553F"/>
+<text x="1053.6" y="81" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">11</text>
 <rect x="1142.8" y="66" width="97.2" height="22" fill="#94A3B8"/>
 <text x="1191.4" y="81" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
 <text x="40" y="125" font-size="22" fill="#0F172A" font-weight="700">128</text>
