@@ -1,0 +1,82 @@
+# SG-01 fault-propagation model (tool evaluation TE-02, extended by DQ-417; step P1): which fault tree event each
+# model failure mode realises, and the timing the model's nominal behaviour uses. Read by model.py; checked by
+# test_sg01.py against the WP-A-04 §2 tree and assurance/08-analyses/fta-fmea-map.yaml (every SG-01 tree event has a
+# mode or a latent entry, every mode names a tree event, and every event is in the FTA <-> FMEA map).
+#
+# SG-01 is not a warning goal: TE-01 is LKA torque the driver cannot control (excessive torque that the EPS does not
+# limit), torque while the item is not engaged, a stale torque held beyond the FTTI, or the stock LKA and the item on
+# the car bus together. The model therefore times torque at the wheel, not cues.
+#
+# Synthetic model (DSR-12): behaviour and timing are taken from WP-A-04 §2, the code it cites and the plant, not
+# measured. Results rank risks and point reviewers at possible gaps in the tree; they earn no evidence credit.
+schema_version: 1
+goal: SG-01
+top_event: TE-01
+budget_s: 0.5          # SG-01 FTTI (WP-C-04 §3): a stale torque, or the stock LKA with the item, held longer is TE-01
+release_s: 0.2         # torque after the driver disengages counts once it outlasts the SG-05 release time (WP-C-04 §3, TSR-304)
+tick_s: 0.02           # one model step; fmdtools needs an integer step, so times below are converted to ticks
+
+timing:
+  driver_action: {s: 0.1, source: "Model choice: the driver brakes or cancels 0.1 s after the fault, so a fault on the frames is already present when the driver disengages"}
+  stale_model_removed: {s: 0.52, source: "TSR-602 as implemented: controlsd drops latActive once modelV2 is more than 10 periods (10 x 50 ms) old (selfdrive/controls/lib/input_freshness.py STALE_PERIODS, strictly greater), at the next 10 ms cycle, and the steer request goes to 0 in the next frame; WP-A-04 BE-1.19, GAP-16"}
+  relay_detect: {s: 0.005, source: "Plant F-06a: relay malfunction detected 0.005 s, frames refused 0.010 s, authority revoked 0.053 s (sim/results/plant-results.md)"}
+  relay_revoke: {s: 0.053, source: "Plant F-06a: authority revoked 0.053 s after the stock frames reach the car side"}
+  engaged_mismatch_revoke: {s: 0.3, source: "TSR-307(a), panda f4803c5: authority revoked 0.3 s after the first \"not engaged\" heartbeat while authority is granted"}
+
+# Situations a run takes place in (step P2). TE-01 has four branches that need different situations: excessive or
+# stale torque while engaged, torque after the driver disengages, and torque while never engaged. A set gives TE-01 if
+# it does in any phase.
+phases:
+  - id: engaged
+    engaged: true
+    driver: none
+    source: "The item is engaged and the driver keeps it engaged (G1.1, G1.3, G1.4)"
+  - id: brake
+    engaged: true
+    driver: brake
+    source: "The driver disengages by braking: the brake frame (0x226) shows the press and the PCM drops cruise (0x1D2), so the envelope sees both (TSR-301, TSR-302) (G1.2.2)"
+  - id: cancel
+    engaged: true
+    driver: cancel
+    source: "The driver disengages with the cancel button: only the PCM cruise state (0x1D2) shows it (TSR-301) (G1.2.2)"
+  - id: "off"
+    engaged: false
+    driver: none
+    source: "The item is not engaged and the driver does not engage it (G1.2.1)"
+
+# Tree events the model holds as already present at the baseline, not as failure modes.
+latent_in_model:
+  - id: BE-1.22
+    why: "Command-value freshness is not supervised (TSR-409 open): the heartbeat (TSR-407) and frame-arrival (TSR-408) checks of the reference build do not see a stale value in frames that keep arriving, which is every stale cause of the tree"
+  - id: BE-1.23
+    why: "By design: the rate and real-time limits accept a constant in-limit value"
+
+# One failure mode per tree event. function: the model function that carries it; kind: cause (an unwanted or
+# excessive torque, or the stock LKA, can start from it) or barrier (a check, limit or detection that fails).
+modes:
+  - {event: BE-1.01, function: envelope, mode: limits_high, kind: cause, text: "Envelope torque limits set above the controllable bound (same limits in the controller)"}
+  - {event: BE-1.02, function: soc, mode: sw_fault, kind: cause, text: "controlsd or card software fault commands excessive torque"}
+  - {event: BE-1.03, function: soc, mode: wrong_curvature, kind: cause, text: "Wrong desired curvature from the model (SOTIF)"}
+  - {event: BE-1.04, function: soc, mode: debug_process, kind: cause, text: "Debug or maneuver process replaces the controller"}
+  - {event: BE-1.05, function: soc, mode: wrong_params, kind: cause, text: "Wrong CarParams or fingerprint"}
+  - {event: BE-1.24, function: soc, mode: spi_corrupt, kind: cause, text: "Command corrupted on the SoC-to-MCU SPI link and accepted"}
+  - {event: BE-1.06, function: envelope, mode: lateral_defect, kind: barrier, text: "Envelope software defect in the lateral checks"}
+  - {event: BE-1.07, function: envelope, mode: mcu_fault, kind: barrier, text: "MCU execution fault corrupts a limit or check, not detected"}
+  - {event: BE-1.08, function: envelope, mode: mode_changed, kind: barrier, text: "Safety mode or parameter changed by the SoC"}
+  - {event: BE-1.09, function: envelope, mode: firmware_replaced, kind: barrier, text: "Envelope firmware replaced via boot pins or softloader"}
+  - {event: BE-1.10, function: txpath, mode: corrupt, kind: cause, text: "Frame corrupted after the TX hook, beyond the software queue"}
+  - {event: UE-1.11, function: eps, mode: no_limit, kind: barrier, text: "EPS does not limit LKA torque to an overpowerable level (AOU-01R fails)"}
+  - {event: BE-1.12, function: rx, mode: false_edge, kind: cause, text: "Corrupted 0x1D2 creates a false cruise rising edge with a valid checksum"}
+  - {event: BE-1.13, function: rx, mode: stuck_path, kind: cause, text: "Panda RX path delivers a stale cruise frame to both envelope and SoC"}
+  - {event: BE-1.14, function: envelope, mode: allowed_set, kind: barrier, text: "MCU fault sets controls_allowed"}
+  - {event: BE-1.25, function: envelope, mode: not_allowed_defect, kind: barrier, text: "Envelope defect in the not-allowed torque check or the controls_allowed bookkeeping"}
+  - {event: BE-1.15, function: soc, mode: torque_ungated, kind: cause, text: "SoC commands non-zero torque regardless of its engagement state"}
+  - {event: BE-1.16, function: rx, mode: brake_stuck, kind: cause, text: "Brake frame 0x226 stuck \"not pressed\""}
+  - {event: BE-1.17, function: rx, mode: cruise_stuck, kind: cause, text: "0x1D2 stuck \"cruise active\" with a valid checksum"}
+  - {event: BE-1.18, function: envelope, mode: bypass, kind: barrier, text: "Envelope bypass: ALLOUTPUT or debug mode in a DEBUG build"}
+  - {event: BE-1.19, function: soc, mode: stale_model, kind: cause, text: "Stale modelV2 used while controlsd runs"}
+  - {event: BE-1.20, function: soc, mode: diag_masked, kind: cause, text: "Stale input during the big-model fallback, diagnostics masked"}
+  - {event: BE-1.21, function: soc, mode: replay, kind: cause, text: "SoC replays an old command buffer"}
+  - {event: BE-4.19, function: relay, mode: released, kind: cause, text: "Harness relay stays released: stock STEERING_LKA reaches the car side"}
+  - {event: BE-1.26, function: relay, mode: forwarded, kind: cause, text: "Stock 0x2E4 forwarded from the camera side while the item transmits"}
+  - {event: BE-4.21, function: relay, mode: undetected, kind: barrier, text: "Relay malfunction not detected (or only after 1-2 s, or cleared by a mode change)"}

@@ -5728,8 +5728,9 @@
       title: "Stop at SG-02"
       detail: "No further cost; the other trees get no executable cross-check."
   sources: ["assurance/07-supporting/tool-evaluations/TE-02-fmdtools-fault-propagation.md", "assurance/models/fmdtools/README.md", "assurance/08-analyses/WP-A-04-system-fta-fmea.md"]
-  status: answered
+  status: applied
   answer: {choice: B, via: chat, at: 2026-10-22, note: "Lead in chat with the coordinator: \"2\" (all three). Order: SG-06, SG-01, SG-03"}
+  applied: {ref: "jherrodthomas/LionDriver#423, jherrodthomas/LionDriver#427", record: "assurance/models/fmdtools/sg06, sg01, sg03: model, tests, sweep pages and a Fault Lab page each, checked in CI (orders 1 and 2 on pull requests, the full sweeps weekly); findings for the FTA owner in the fmdtools README (SG-06: siren and ACC cancel cover tree sets; SG-01: stuck cruise frame a single point, stale torque past the FTTI; SG-03: inactive-value check bypass with the accelerator pressed, missing jerk limit). Synthetic, no evidence credit", at: 2026-10-22}
 
 - id: DQ-418
   question: "Can a typical driver control the new lane-change overshoot (HE-01.6), so it is C2 and ASIL B, or not, so it is C3 and ASIL C?"
