@@ -31,7 +31,9 @@ OUT = HERE / "p2-single-faults.md"
 P3_JSON = HERE / "p3-minimal-sets.json"
 P3_OUT = HERE / "p3-joint-faults.md"
 MAX_ORDER = 3
-CAUSES = {x["event"] for x in m.EVENTS["modes"] if x["kind"] == "cause"}
+# No pruning by cause: with the driver on the accelerator, the item's ordinary request is the source, so two failed
+# barriers alone can give TE-03 (G3.4).
+CAUSES = set(m.MODE_OF)
 BRANCH = {"excess": "acceleration above the bound, or a step to it, executed by the PCM (G3.1, G3.6)",
           "closing": "in-bound acceleration toward a closing lead, not stopped by the driver (G3.2)",
           "unwanted": "acceleration the driver does not want (G3.3)",
@@ -50,6 +52,14 @@ WHY = {
              "revokes within one step; a replay that holds cruise active acts as BE-1.13",
   "BE-1.19": "TSR-602 drops longActive once the model input is 0.52 s stale, inside the 1 s SG-03 FTTI (for SG-01, with "
              "its 0.5 s FTTI, the same check is late)",
+  "BE-1.08": "a mode or parameter change removes the inactive-value check, as BE-3.10 does; G3.3.1 lists BE-3.10 "
+             "only, where SG-01's G1.2.1 lists BE-1.08",
+  "BE-1.09": "replaced envelope firmware removes the inactive-value check too; SG-01's G1.2.1 lists it, SG-03's G3.3.1 "
+             "does not",
+  "UE-3.12": "the accelerator override is the same inactive-value check (longitudinal allowed only while the "
+             "accelerator is released, longitudinal.h get_longitudinal_allowed, TSR-305), so a defect or bypass of that "
+             "check (BE-1.08, BE-1.09, BE-1.25, BE-3.10) passes the item's request while the driver presses the pedal; "
+             "G3.4 draws only BE-3.11, the gas signal stuck released",
   "BE-4.17": "the envelope has no acceleration jerk limit (TSR-204 not implemented, GAP-04), so the model holds BE-3.03 "
              "as present at the baseline and the step needs only the PCM without its own bound",
 }
