@@ -68,7 +68,7 @@ block-beta
     columns 1
     SWE1["<b>SWE.1</b><br/>SW requirements<br/>SWSR 139<br/><i>from TSR: 97/104</i>"]
     HWE1["<b>HWE.1</b><br/>HW requirements<br/>HWSR 46<br/><i>from TSR: 19/19</i>"]
-    MLE1["<b>MLE.1</b><br/>ML requirements<br/>AIR 30* · DSR 13*"]
+    MLE1["<b>MLE.1</b><br/>ML requirements<br/>AIR 30 · DSR 13"]
   end
   space
   space
@@ -146,7 +146,7 @@ block-beta
   style SYS3 fill:#F8FAFC,stroke:#94A3B8,stroke-dasharray:5 4
   style SWE1 fill:#EFF6FF,stroke:#2563EB
   style HWE1 fill:#EFF6FF,stroke:#2563EB
-  style MLE1 fill:#F8FAFC,stroke:#94A3B8,stroke-dasharray:5 4
+  style MLE1 fill:#EFF6FF,stroke:#2563EB
   style SWE2 fill:#F8FAFC,stroke:#94A3B8,stroke-dasharray:5 4
   style HWE2 fill:#F8FAFC,stroke:#94A3B8,stroke-dasharray:5 4
   style SWE3 fill:#F8FAFC,stroke:#94A3B8,stroke-dasharray:5 4
@@ -156,7 +156,7 @@ block-beta
 
 One colour rule for every V: blue when every item of the level is in the trace data, or every item of the paired level is named by a case (done in the design, not verified); amber when some are; red when none is; dashed grey when the level holds nothing yet. Green is kept for approved work products and passed verification; nothing here is either. The gate band shows the gate records of WP-M-00 §2 (none held yet).
 
-A named item is a **specified** link, not a passed test. 0 of 526 traced items carry status `verified`, and the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K6–K10 in the [README](../README.md) §6 are not implemented).
+A named item is a **specified** link, not a passed test. 0 of 569 traced items carry status `verified`, and the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K6–K10 in the [README](../README.md) §6 are not implemented).
 
 ## 2. Process to work product and items
 
@@ -167,7 +167,7 @@ A named item is a **specified** link, not a passed test. 0 of 526 traced items c
 | **SYS.3** | System architectural design | WP-S-03, WP-S-05, WP-S-07 | CSR (64, document) |
 | **SWE.1** | SW requirements analysis | WP-W-02 | SWSR (139, trace data) |
 | **HWE.1** | HW requirements analysis | WP-H-01 | HWSR (46, trace data) |
-| **MLE.1** | ML requirements analysis | WP-C-11 | AIR (30, document), DSR (13, document) |
+| **MLE.1** | ML requirements analysis | WP-C-11 | AIR (30, trace data), DSR (13, trace data) |
 | **SWE.2** | SW architectural design | WP-W-03 | — |
 | **HWE.2** | HW design | WP-H-02 | — |
 | **SWE.3** | SW detailed design and unit construction | WP-W-05 | — |
@@ -209,8 +209,8 @@ flowchart LR
   style ISO21448 fill:#FFFFFF,stroke:#CBD5E1
   subgraph ISOPAS8800["ISO/PAS 8800"]
     direction LR
-    kAIR["<b>AIR</b> 30<br/>AI safety req."]:::doc
-    kDSR["<b>DSR</b> 13<br/>dataset req."]:::doc
+    kAIR["<b>AIR</b> 30<br/>AI safety req."]:::traced
+    kDSR["<b>DSR</b> 13<br/>dataset req."]:::traced
   end
   style ISOPAS8800 fill:#FFFFFF,stroke:#CBD5E1
   subgraph ISOSAE21434["ISO/SAE 21434"]
@@ -237,8 +237,8 @@ flowchart LR
   kTC --> kFM
   kFI --> kFM
   kSH --> kH
-  kFI -.-> kAIR
-  kAIR -.-> kDSR
+  kFI --> kAIR
+  kAIR --> kDSR
   kTS -.-> kCSG
   kCSG -.-> kCSR
   kCSG -.-> kSG
@@ -251,7 +251,7 @@ flowchart LR
 |---|---|---|---|
 | ISO 26262 | H, HE, SG, AOU, FSR, TSR, SWSR, HWSR | H 9, HE 39, SG 8, AOU 17, FSR 58, TSR 128, SWSR 139, HWSR 46 | — |
 | ISO 21448 | SH, TC, FI, FM | SH 13, TC 35, FI 23, FM 11 | — |
-| ISO/PAS 8800 | AIR, DSR | — | AIR 30, DSR 13 |
+| ISO/PAS 8800 | AIR, DSR | AIR 30, DSR 13 | — |
 | ISO/SAE 21434 | TS, CSG, CSR | — | TS 14, CSG 8, CSR 64 |
 | ASPICE | SYS | — | SYS 39 |
 
@@ -298,6 +298,6 @@ None.
 
 ## 7. Not yet traced
 
-- **Kinds outside the trace data:** AIR (30), DSR (13), TS (14), CSG (8), CSR (64), SYS (39). Their links (FI → AIR, AIR → DSR, TS → CSG, CSG → CSR, CSG → SG, SYS → TSR) are dashed in §3 until they are added to `items/` (README §3.1).
+- **Kinds outside the trace data:** TS (14), CSG (8), CSR (64), SYS (39). Their links (TS → CSG, CSG → CSR, CSG → SG, SYS → TSR) are dashed in §3 until they are added to `items/` (README §3.1).
 - **Allocation to elements** (SYS.3, SWE.2, HWE.2): `allocated_to` holds work-product cells; element IDs need `elements.yaml` (WP-P-06 OI-4).
 - **Code and test results:** no `@req` tags and no `links/verification.yaml` yet, so the SWE.3 → code link and every test → result link are absent (WP-P-06 §5.3, §6).

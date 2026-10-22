@@ -100,6 +100,31 @@ class TestSotif(unittest.TestCase):
     self.assertEqual({i for i in items if i.startswith("TC-")}, evaluated)  # every TC of §4 has a §5 row
 
 
+class TestAi(unittest.TestCase):
+  def test_ai_refs(self):
+    cases = {
+      "SH-01, SH-02; FI-01": (["SH-01", "SH-02", "FI-01"], [], False),
+      "SH-01…SH-06": ([f"SH-0{n}" for n in range(1, 7)], [], False),
+      "SH-12; FSR-02.07; DMP-03; FM-05; refined by TSR-609; GAP-21": (["SH-12", "FSR-02.07", "FM-05", "GAP-21"],
+                                                                       ["TSR-609"], True),
+      "FM-04; refined by TSR-604, TSR-616 ([WP-S-02](../03-system/x.md))": (["FM-04"], ["TSR-604", "TSR-616"], False),
+      "SH-12; FSR-02.07, FSR-02.09; TSR-609, TSR-611": (["SH-12", "FSR-02.07", "FSR-02.09"], ["TSR-609", "TSR-611"],
+                                                         False),
+      "SH-06 (F-06, QM)": (["SH-06"], [], False),
+      "Enables AIR-14": ([], [], True),
+      "AIR-14, WP-C-06": (["AIR-14"], [], True),
+    }
+    for cell, want in cases.items():
+      self.assertEqual(sr.ai_refs(cell), want, cell)
+
+  def test_items_from_the_work_product(self):
+    items = {i["id"]: i for i in sr.ai_items()}
+    self.assertEqual(items["AIR-01"]["category"], "Performance")
+    self.assertEqual(items["AIR-30"]["related_tsr"], ["TSR-603"])
+    self.assertTrue(all(not p.startswith("TSR-") for i in items.values() for p in i["parents"]))
+    self.assertEqual(items["DSR-07"]["parents"], ["DSR-06"])
+
+
 class TestDelink(unittest.TestCase):
   def test_relative_link_becomes_repo_path(self):
     out = sr.delink("see [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md#3-x)", sr.SWSR_MD)

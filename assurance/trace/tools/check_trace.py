@@ -13,6 +13,8 @@ Checks implemented so far (IDs per assurance/trace/README.md section 6):
   S1  SOTIF: every SOTIF hazard in use has a functional insufficiency and a triggering condition; every
       insufficiency is evaluated with a triggering condition; every SOTIF hazard of a triggering condition is
       reached through its insufficiencies (WP-C-06 §5); every functional modification is named by an evaluation row
+  A1  AI: every AI safety and dataset requirement has a parent or names what it rests on; every TSR whose row names
+      an AI safety requirement is listed in that requirement's related_tsr (a TSR need not cite the AIRs it refines)
   X1  hazardous events and safety goals match the tables in WP-C-03
   X2  assumptions of use match the table in WP-C-01
   X3  the generated requirement and SOTIF items equal a fresh extraction from their work products
@@ -64,15 +66,22 @@ REQUIRED = {
   "triggering-condition": ["id", "kind", "text", "category", "parents", "insufficiencies", "evaluation", "status",
                            "source"],
   "functional-modification": ["id", "kind", "title", "addresses", "parents", "gap_text", "priority", "status", "source"],
+  "ai-requirement": ["id", "kind", "text", "category", "component", "parents", "parent_text", "other_parents",
+                     "related_tsr", "verification", "baseline_impl", "status", "source"],
+  "dataset-requirement": ["id", "kind", "text", "parents", "parent_text", "other_parents", "verification",
+                          "baseline_impl", "status", "source"],
 }
 GAP_MD = ASSURANCE_DIR / "00-assessment" / "gap-assessment.md"
 PARENT_KINDS = {"fsr": {"safety-goal"}, "tsr": {"fsr", "tsr", "safety-goal", "aou"}, "swsr": {"tsr"},
                 "hwsr": {"tsr", "fsr", "aou"}, "functional-insufficiency": {"sotif-hazard"},
                 "triggering-condition": {"sotif-hazard"},
-                "functional-modification": {"triggering-condition", "functional-insufficiency"}}
+                "functional-modification": {"triggering-condition", "functional-insufficiency"},
+                "ai-requirement": {"safety-goal", "fsr", "sotif-hazard", "triggering-condition",
+                                   "functional-insufficiency", "functional-modification", "ai-requirement"},
+                "dataset-requirement": {"ai-requirement", "dataset-requirement"}}
 # Other link keys: key -> kinds the reference must be (README §3.2)
 REF_KINDS = {"shares_event": {"hazard", "hazardous-event"}, "insufficiencies": {"functional-insufficiency"},
-             "addresses": {"sotif-hazard"}}
+             "addresses": {"sotif-hazard"}, "related_tsr": {"tsr"}}
 SW_ALLOC = ("P-SW", "SoC")  # WP-S-02 allocation cells that put a TSR (also) on software
 HW_ALLOC = ("P-HW", "HAR")  # ... and (also) on hardware
 
@@ -243,6 +252,7 @@ def check_links(by_id: dict[str, dict], rep: Report) -> None:
   check_requirement_coverage(by_id, rep)
   check_sw_hw_coverage(by_id, rep)
   check_sotif(by_id, rep)
+  check_ai(by_id, rep)
 
   for iid, sg in sgs.items():
     parents = [p for p in sg.get("parents") or [] if p in hes]
@@ -276,6 +286,24 @@ def check_sotif(by_id: dict[str, dict], rep: Report) -> None:
   for iid, fm in fms.items():
     if not fm.get("parents"):
       rep.err("S1", f"{iid}: named by no evaluation row of WP-C-06 §5")
+
+
+def check_ai(by_id: dict[str, dict], rep: Report) -> None:
+  """A1: AI requirements rest on something, and every TSR that names an AIR is named by it."""
+  ai = {i: x for i, x in by_id.items() if x["kind"] in ("ai-requirement", "dataset-requirement")}
+  if not ai:
+    return
+  for iid, it in ai.items():
+    if not it.get("parents") and not it.get("other_parents"):
+      rep.err("A1", f"{iid}: no parent and names nothing it rests on")
+  named = {(a, t) for a, x in ai.items() for t in x.get("related_tsr") or []}
+  for tid, t in by_id.items():
+    if t["kind"] != "tsr":
+      continue
+    cited = set(re.findall(r"\bAIR-[0-9]{2}\b", " ".join(str(t.get(k, "")) for k in ("text", "parent_text", "baseline_impl"))))
+    for a in sorted(cited):
+      if a in ai and (a, tid) not in named:
+        rep.err("A1", f"{tid} names {a}, but {a} does not list {tid} in related_tsr (WP-C-11 Parent column)")
 
 
 def check_requirement_coverage(by_id: dict[str, dict], rep: Report) -> None:

@@ -220,6 +220,45 @@ class TestSotifChecks(unittest.TestCase):
     self.assertEqual(tags(run(self.items), "S1"), ["[S1] FM-01: named by no evaluation row of WP-C-06 §5"])
 
 
+TSR = {"id": "TSR-603", "kind": "tsr", "text": "t", "asil": "QM", "parents": [], "parent_text": "x",
+       "other_parents": True, "allocated_to": "SoC", "verification": "x", "baseline_impl": "see AIR-30",
+       "status": "proposed", "source": "WP-S-02"}
+AI = [
+  {"id": "AIR-30", "kind": "ai-requirement", "text": "t", "category": "c", "component": "x", "parents": ["FM-01"],
+   "parent_text": "FM-01; refined by TSR-603", "other_parents": False, "related_tsr": ["TSR-603"], "verification": "x",
+   "baseline_impl": "x", "status": "proposed", "source": "WP-C-11"},
+  {"id": "DSR-01", "kind": "dataset-requirement", "text": "t", "parents": ["AIR-30"], "parent_text": "AIR-30",
+   "other_parents": False, "verification": "x", "baseline_impl": "x", "status": "proposed", "source": "WP-C-11"},
+]
+
+
+class TestAiChecks(unittest.TestCase):
+  def setUp(self):
+    self.items = copy.deepcopy(GOOD + SOTIF + [TSR] + AI)
+
+  def test_good_set_is_clean(self):
+    self.assertEqual(tags(run(self.items), "A1") + tags(run(self.items), "K3"), [])
+
+  def test_k3_ai_link_kinds(self):
+    find(self.items, "DSR-01")["parents"] = ["SH-01"]
+    self.assertIn("[K3] DSR-01: parent SH-01 is a sotif-hazard, not one of ['ai-requirement', 'dataset-requirement']",
+                  run(self.items))
+    self.items = copy.deepcopy(GOOD + SOTIF + [TSR] + AI)
+    find(self.items, "AIR-30")["related_tsr"] = ["FM-01"]
+    self.assertIn("[K3] AIR-30: related_tsr FM-01 is a functional-modification, not one of ['tsr']", run(self.items))
+
+  def test_a1_no_parent(self):
+    find(self.items, "DSR-01")["parents"] = []
+    self.assertEqual(tags(run(self.items), "A1"), ["[A1] DSR-01: no parent and names nothing it rests on"])
+    find(self.items, "DSR-01")["other_parents"] = True
+    self.assertEqual(tags(run(self.items), "A1"), [])
+
+  def test_a1_tsr_names_an_air_that_does_not_name_it(self):
+    find(self.items, "AIR-30")["related_tsr"] = []
+    self.assertEqual(tags(run(self.items), "A1"),
+                     ["[A1] TSR-603 names AIR-30, but AIR-30 does not list TSR-603 in related_tsr (WP-C-11 Parent column)"])
+
+
 class TestRepository(unittest.TestCase):
   def test_main_passes_on_repository(self):
     out = io.StringIO()
