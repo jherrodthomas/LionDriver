@@ -19,6 +19,8 @@
       "enum": [
         "ai-requirement",
         "aou",
+        "cybersecurity-goal",
+        "cybersecurity-requirement",
         "dataset-requirement",
         "fsr",
         "functional-insufficiency",
@@ -29,6 +31,7 @@
         "safety-goal",
         "sotif-hazard",
         "swsr",
+        "threat-scenario",
         "triggering-condition",
         "tsr"
       ]
@@ -276,6 +279,54 @@
         "type": "string",
         "pattern": "^TSR-[0-9]{3}[a-z]?$"
       }
+    },
+    "stride": {
+      "type": "string",
+      "minLength": 1
+    },
+    "assets": {
+      "type": "string",
+      "minLength": 1
+    },
+    "violated_property": {
+      "type": "string",
+      "minLength": 1
+    },
+    "damage_text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "treatment": {
+      "type": "string",
+      "minLength": 1
+    },
+    "concept_requirement": {
+      "type": "string",
+      "pattern": "^CSR-C-[0-9]{2}$"
+    },
+    "cal": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "safety_relation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "risk": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "protects": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^SG-[0-9]{2}$"
+      }
     }
   },
   "allOf": [
@@ -321,6 +372,56 @@
           "credited_in",
           "verification_approach",
           "aou_status",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "cybersecurity-goal"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "parents",
+          "parent_text",
+          "cal",
+          "protects",
+          "rationale",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "cybersecurity-requirement"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "parents",
+          "concept_requirement",
+          "cal",
+          "other_parents",
+          "allocated_to",
+          "safety_relation",
+          "related_tsr",
+          "verification",
+          "baseline_impl",
           "status",
           "source"
         ]
@@ -557,6 +658,31 @@
           "verification",
           "acceptance",
           "baseline_impl",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "threat-scenario"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "stride",
+          "assets",
+          "violated_property",
+          "damage_text",
+          "gap_text",
+          "risk",
+          "treatment",
           "status",
           "source"
         ]

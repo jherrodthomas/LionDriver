@@ -194,7 +194,7 @@ def allocation(items: dict[str, dict]) -> tuple[dict[str, str], dict[str, list[s
   return status, dict(values)
 
 
-CHECK_ROW = re.compile(r"^\|\s*([KRXPSA]\d+)(?:\s+\*\*\[ext\]\*\*|\s+\(planned\))?\s*\|")
+CHECK_ROW = re.compile(r"^\|\s*([KRXPSAC]\d+)(?:\s+\*\*\[ext\]\*\*|\s+\(planned\))?\s*\|")
 
 
 def readme_checks() -> list[tuple[str, str, str]]:
@@ -457,9 +457,13 @@ def fig2(d: Data) -> str:
                   fill=SW if on else MUTED, weight=700 if on else "", anchor="middle"))
   cx, cy = F2_POS["CSG"]
   gx, gy = F2_POS["SG"]
+  protects = sum(len(it.get("protects") or []) for it in d.m.items.values())
+  on = traced("CSG", "SG") and protects > 0
   out.append(path(f"M{cx - NODE_W / 2},{cy - 8} L{cx - NODE_W / 2 - 22},{cy - 8} L{cx - NODE_W / 2 - 22},{gy} " +
-                  f"L{gx + NODE_W / 2 + 1},{gy}", stroke=FAINT, sw=1.2, dash="5 4", marker="faint"))
-  out.append(text(430, gy - 8, "protects (CSG → SG)", size=10.5, fill=MUTED, anchor="middle"))
+                  f"L{gx + NODE_W / 2 + 1},{gy}", stroke=SW if on else FAINT, sw=1.6 if on else 1.2,
+                  dash="" if on else "5 4", marker="sw" if on else "faint"))
+  out.append(text(430, gy - 8, "protects (CSG → SG)" + (f" · {protects}" if on else ""), size=10.5,
+                  fill=SW if on else MUTED, weight=700 if on else "", anchor="middle"))
   sx2, sy2 = F2_POS["SYS"]
   out.append(text(sx2, sy2 + 34, "not linked yet", size=10, fill=MUTED, anchor="middle"))
   for k in F2_POS:
@@ -467,7 +471,7 @@ def fig2(d: Data) -> str:
   # footer: the two halves that are not item kinds
   res = Counter(d.alloc.values())
   per = {k: (sum(1 for i, s in d.alloc.items() if d.kind[i] == k and s == "resolved"),
-             sum(1 for i in d.alloc if d.kind[i] == k)) for k in REQ_KINDS}
+             sum(1 for i in d.alloc if d.kind[i] == k)) for k in REQ_KINDS + ("CSR",)}
   out.append(rect(40, 552, 590, 74, fill="#EFF6FF", stroke="#93C5FD", rx=10))
   out.append(text(58, 576, "Elements · SysML v2 model", size=12, weight=700))
   out.append(text(58, 596, f"allocated_to resolved: {res['resolved']} of {len(d.alloc)} · "
@@ -780,11 +784,12 @@ CHECK_SHORT = {
   "X1": "HARA = WP-C-03", "X2": "AoU = WP-C-01", "X3": "generated YAML fresh",
   "P1": "unverified AoU in WP-K-01", "P2": "IDs in the block ranges", "S1": "SH → FI, TC → FM complete",
   "A1": "AIR basis · AIR ↔ TSR",
+  "C1": "TS → CSG → CSR; SG → CSG",
 }
 CHECK_GROUPS = [("STRUCTURE AND DERIVATION (WP-P-06 §7)", ("K1", "K2", "K3", "K4", "K5", "K11", "K12")),
                 ("CODE AND TEST LINKS, AND PLANNED CHECKS", ("K6", "K7", "K8", "K9", "K10", "P1", "P2")),
                 ("LIONDRIVER EXTENSIONS", ("R1", "R2", "R3", "R4", "X1", "X2", "X3")),
-                ("CHAINS OF THE OTHER STANDARDS", ("S1", "A1"))]
+                ("CHAINS OF THE OTHER STANDARDS", ("S1", "A1", "C1"))]
 CHECK_STYLE = {"yes": (GREEN_BG, GREEN, ""), "partly": (AMBER_BG, AMBER, ""), "no": (CHIP, FAINT, "4 3")}
 
 
@@ -823,7 +828,7 @@ def fig7(d: Data) -> str:
 def fig8(d: Data) -> str:
   W = 1280
   rows = []
-  for k in ("TSR", "FSR", "SWSR", "HWSR"):
+  for k in ("TSR", "FSR", "SWSR", "HWSR", "CSR"):
     ids = [i for i in d.alloc if d.kind[i] == k]
     c = Counter(d.alloc[i] for i in ids)
     rows.append((k, len(ids), c))
