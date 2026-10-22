@@ -58,10 +58,14 @@ jobs:
       with:
         persist-credentials: false
         fetch-depth: 2  # the base revision HEAD^1 for check_pin_records.py
+    - name: Install the pinned checker packages (jsonschema, PyYAML, openpyxl; DQ-123 A, WP-P-07 TL-55)
+      run: python3 -m pip install --quiet --user --break-system-packages -r assurance/trace/requirements.txt
     - name: A moved opendbc or panda pin has a change record (WP-P-07 TL-47)
       run: python3 tools/ci/check_pin_records.py
     - name: Trace consistency
       run: python3 assurance/trace/tools/check_trace.py
+    - name: Trace items against their JSON schema (WP-P-06 §5.1, DQ-123 A)
+      run: python3 assurance/trace/tools/check_schema.py
     - name: State machines (WP-W-05 §5 generated from state-machines/*.yaml)
       run: python3 assurance/trace/tools/check_state_machines.py --check
     - name: Design diagrams (Stateflow-style charts, Simulink-style block diagram) current
@@ -188,7 +192,6 @@ jobs:
         python3 assurance/08-analyses/fta/fta_cutsets.py --check
     - name: FMEA data lint, HARA mapping onto WP-C-03, FTA-FMEA hand-off figures (and their tests)
       run: |
-        python3 -m pip install --quiet --user --break-system-packages pyyaml jsonschema openpyxl
         python3 tools/safety/fmea_lint.py --report
         python3 -m unittest discover -s tools/safety -p 'test_fmea_lint.py'
         python3 assurance/08-analyses/figures/fta_fmea_figures.py --check

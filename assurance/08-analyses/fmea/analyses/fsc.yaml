@@ -3,6 +3,10 @@
 # Functional Safety Concept (ISO 26262-3 clause 7), derived from HARA rev 0.2.
 # FSR ASIL is inherited from its safety goal, or decomposed per ISO 26262-9 clause 5 as X(Y).
 # tools/safety/fmea_lint.py checks inheritance, decomposition schemes, allocation and element capability.
+#
+# WITHDRAWN 2026-10-22 (decision register DQ-124, option A). This second-set FSC is not of record:
+# WP-C-03 (HARA) and WP-C-04 (FSC) are. The file stays because FMEA and FMEDA rows still cite its HZ-0nn and
+# SG-0nn IDs; hara-mapping.yaml carries them to WP-C-03 and fmea_lint checks it. Do not revise it further.
 schema_version: 1
 analysis:
   id: FSC
@@ -10,7 +14,7 @@ analysis:
   doc_id: LD-FSC-001
   title: "Functional Safety Concept — LionDriver L2 ACC/ALC on Corolla E210 · ZRE212 · US (CFG-001)"
   revision: "0.5"
-  status: draft
+  status: withdrawn
   baseline: BL-001
   hara_revision: "0.4"
   approver: Jherrod Thomas (pending)

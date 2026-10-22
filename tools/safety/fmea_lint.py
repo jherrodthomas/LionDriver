@@ -4,7 +4,7 @@
 Usage: tools/safety/fmea_lint.py [--root REPO_ROOT] [--report]
 
 Requires PyYAML and jsonschema (not openpilot runtime deps):
-  pip install pyyaml jsonschema
+  pip install -r assurance/trace/requirements.txt   (pinned, DQ-123 A)
 
 Rules are documented in assurance/08-analyses/fmea/rating-tables.md.
 """
