@@ -31,6 +31,7 @@
         "safety-goal",
         "sotif-hazard",
         "swsr",
+        "system-requirement",
         "threat-scenario",
         "triggering-condition",
         "tsr"
@@ -326,6 +327,25 @@
       "items": {
         "type": "string",
         "pattern": "^SG-[0-9]{2}$"
+      }
+    },
+    "criterion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "related_text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tbd_rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "related_items": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(SH|AIR)-[0-9]{2}$"
       }
     }
   },
@@ -658,6 +678,33 @@
           "verification",
           "acceptance",
           "baseline_impl",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "system-requirement"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "type",
+          "functions",
+          "criterion",
+          "verification",
+          "baseline_impl",
+          "allocated_to",
+          "related_text",
+          "related_tsr",
+          "related_items",
           "status",
           "source"
         ]

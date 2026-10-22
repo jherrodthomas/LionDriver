@@ -194,7 +194,7 @@ def allocation(items: dict[str, dict]) -> tuple[dict[str, str], dict[str, list[s
   return status, dict(values)
 
 
-CHECK_ROW = re.compile(r"^\|\s*([KRXPSAC]\d+)(?:\s+\*\*\[ext\]\*\*|\s+\(planned\))?\s*\|")
+CHECK_ROW = re.compile(r"^\|\s*([KRXPSACQ]\d+)(?:\s+\*\*\[ext\]\*\*|\s+\(planned\))?\s*\|")
 
 
 def readme_checks() -> list[tuple[str, str, str]]:
@@ -465,13 +465,15 @@ def fig2(d: Data) -> str:
   out.append(text(430, gy - 8, "protects (CSG → SG)" + (f" · {protects}" if on else ""), size=10.5,
                   fill=SW if on else MUTED, weight=700 if on else "", anchor="middle"))
   sx2, sy2 = F2_POS["SYS"]
-  out.append(text(sx2, sy2 + 34, "not linked yet", size=10, fill=MUTED, anchor="middle"))
+  related = sum(len(it.get("related_tsr") or []) for it in d.m.items.values() if d.kind.get(it["id"]) == "SYS")
+  out.append(text(sx2, sy2 + 34, f"related to TSRs: {related}" if traced("SYS", "TSR") else "not linked yet", size=10,
+                  fill=SW if traced("SYS", "TSR") else MUTED, anchor="middle"))
   for k in F2_POS:
     out += node_box(k)
   # footer: the two halves that are not item kinds
   res = Counter(d.alloc.values())
   per = {k: (sum(1 for i, s in d.alloc.items() if d.kind[i] == k and s == "resolved"),
-             sum(1 for i in d.alloc if d.kind[i] == k)) for k in REQ_KINDS + ("CSR",)}
+             sum(1 for i in d.alloc if d.kind[i] == k)) for k in REQ_KINDS + ("CSR", "SYS")}
   out.append(rect(40, 552, 590, 74, fill="#EFF6FF", stroke="#93C5FD", rx=10))
   out.append(text(58, 576, "Elements · SysML v2 model", size=12, weight=700))
   out.append(text(58, 596, f"allocated_to resolved: {res['resolved']} of {len(d.alloc)} · "
@@ -785,11 +787,12 @@ CHECK_SHORT = {
   "P1": "unverified AoU in WP-K-01", "P2": "IDs in the block ranges", "S1": "SH → FI, TC → FM complete",
   "A1": "AIR basis · AIR ↔ TSR",
   "C1": "TS → CSG → CSR; SG → CSG",
+  "Q1": "SYS: function, alloc, row",
 }
 CHECK_GROUPS = [("STRUCTURE AND DERIVATION (WP-P-06 §7)", ("K1", "K2", "K3", "K4", "K5", "K11", "K12")),
                 ("CODE AND TEST LINKS, AND PLANNED CHECKS", ("K6", "K7", "K8", "K9", "K10", "P1", "P2")),
                 ("LIONDRIVER EXTENSIONS", ("R1", "R2", "R3", "R4", "X1", "X2", "X3")),
-                ("CHAINS OF THE OTHER STANDARDS", ("S1", "A1", "C1"))]
+                ("CHAINS OF THE OTHER STANDARDS", ("S1", "A1", "C1", "Q1"))]
 CHECK_STYLE = {"yes": (GREEN_BG, GREEN, ""), "partly": (AMBER_BG, AMBER, ""), "no": (CHIP, FAINT, "4 3")}
 
 
@@ -828,7 +831,7 @@ def fig7(d: Data) -> str:
 def fig8(d: Data) -> str:
   W = 1280
   rows = []
-  for k in ("TSR", "FSR", "SWSR", "HWSR", "CSR"):
+  for k in ("TSR", "FSR", "SWSR", "HWSR", "CSR", "SYS"):
     ids = [i for i in d.alloc if d.kind[i] == k]
     c = Counter(d.alloc[i] for i in ids)
     rows.append((k, len(ids), c))

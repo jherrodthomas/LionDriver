@@ -122,6 +122,9 @@ class Checks(unittest.TestCase):
     self.assertEqual({t for t, _ in res}, {"panda.safety.lateral", "U-SAF-TOY"})
     _, res, unres = check_model.resolve_allocation(m, "Firmware + IWDG", units)
     self.assertEqual((res, unres), ([], []))
+    # a grouped part named in backticks resolves by its unique part name, as R2 resolves WP-S-01 §10.1
+    _, res, unres = check_model.resolve_allocation(m, "`remoteAndLogging`, `hardwared`", units)
+    self.assertEqual((sorted(t for t, _ in res), unres), (["hardwared", "remoteAndLogging"], []))
 
 
 class Rendering(unittest.TestCase):

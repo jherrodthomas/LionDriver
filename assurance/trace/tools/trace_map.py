@@ -41,11 +41,9 @@ YAML_KIND = {"hazard": "H", "hazardous-event": "HE", "safety-goal": "SG", "aou":
              "tsr": "TSR", "swsr": "SWSR", "hwsr": "HWSR", "sotif-hazard": "SH", "triggering-condition": "TC",
              "functional-insufficiency": "FI", "functional-modification": "FM", "ai-requirement": "AIR",
              "dataset-requirement": "DSR", "threat-scenario": "TS", "cybersecurity-goal": "CSG",
-             "cybersecurity-requirement": "CSR"}
+             "cybersecurity-requirement": "CSR", "system-requirement": "SYS"}
 # Kinds defined only in work-product tables so far: prefix -> defining work products.
-DOC_KINDS = {
-  "SYS": ["03-system/WP-S-01-system-requirements.md"],
-}
+DOC_KINDS: dict[str, list[str]] = {}  # every kind of KIND_NAME is in items/ now; a new kind starts here
 KIND_NAME = {
   "H": "hazards", "HE": "hazardous events", "SG": "safety goals", "AOU": "assumptions of use",
   "FSR": "functional safety req.", "TSR": "technical safety req.", "SWSR": "SW safety req.",
@@ -578,7 +576,8 @@ def render(m: Model) -> str:
   dashed = ", ".join(f"{a} → {b}" for _, _, links in LANES for a, b in links if not (a in m.in_trace and b in m.in_trace))
   out += ["", "## 7. Not yet traced", "",
           para(f"- **Kinds outside the trace data:** {untraced}. Their links ({dashed}) are dashed in §3 until they",
-               "are added to `items/` (README §3.1)."),
+               "are added to `items/` (README §3.1).") if untraced else
+          "- **Kinds outside the trace data:** none; every kind of §3 is in `items/`.",
           para("- **Allocation to elements** (SYS.3, SWE.2, HWE.2): `allocated_to` holds work-product cells; element IDs",
                "need `elements.yaml` (WP-P-06 OI-4)."),
           para("- **Code and test results:** no `@req` tags and no `links/verification.yaml` yet, so the SWE.3 → code link",

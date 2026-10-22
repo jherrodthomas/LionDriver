@@ -18,6 +18,7 @@ Checks implemented so far (IDs per assurance/trace/README.md section 6):
   C1  Cybersecurity: every threat scenario treated by reduction or avoidance has a cybersecurity goal; every goal has
       a cybersecurity requirement; every safety goal is protected by a cybersecurity goal; every cybersecurity
       requirement has a parent goal or says what it rests on
+  Q1  ASPICE system requirements: every one names its function, its allocation and its WP-S-01 §10 traceability row
   X1  hazardous events and safety goals match the tables in WP-C-03
   X2  assumptions of use match the table in WP-C-01
   X3  the generated requirement and SOTIF items equal a fresh extraction from their work products
@@ -80,6 +81,8 @@ REQUIRED = {
   "cybersecurity-requirement": ["id", "kind", "text", "parents", "concept_requirement", "cal", "other_parents",
                                 "allocated_to", "safety_relation", "related_tsr", "verification", "baseline_impl",
                                 "status", "source"],
+  "system-requirement": ["id", "kind", "text", "type", "functions", "criterion", "verification", "baseline_impl",
+                         "allocated_to", "related_text", "related_tsr", "related_items", "status", "source"],
 }
 GAP_MD = ASSURANCE_DIR / "00-assessment" / "gap-assessment.md"
 PARENT_KINDS = {"fsr": {"safety-goal"}, "tsr": {"fsr", "tsr", "safety-goal", "aou"}, "swsr": {"tsr"},
@@ -93,7 +96,7 @@ PARENT_KINDS = {"fsr": {"safety-goal"}, "tsr": {"fsr", "tsr", "safety-goal", "ao
 # Other link keys: key -> kinds the reference must be (README §3.2)
 REF_KINDS = {"shares_event": {"hazard", "hazardous-event"}, "insufficiencies": {"functional-insufficiency"},
              "addresses": {"sotif-hazard"}, "related_tsr": {"tsr"},
-             "protects": {"safety-goal"}}
+             "protects": {"safety-goal"}, "related_items": {"sotif-hazard", "ai-requirement"}}
 SW_ALLOC = ("P-SW", "SoC")  # WP-S-02 allocation cells that put a TSR (also) on software
 HW_ALLOC = ("P-HW", "HAR")  # ... and (also) on hardware
 
@@ -266,6 +269,7 @@ def check_links(by_id: dict[str, dict], rep: Report) -> None:
   check_sotif(by_id, rep)
   check_ai(by_id, rep)
   check_cs(by_id, rep)
+  check_sys(by_id, rep)
 
   for iid, sg in sgs.items():
     parents = [p for p in sg.get("parents") or [] if p in hes]
@@ -340,6 +344,17 @@ def check_cs(by_id: dict[str, dict], rep: Report) -> None:
   for iid, r in csrs.items():
     if not r.get("parents") and not r.get("other_parents"):
       rep.err("C1", f"{iid}: no parent goal and names nothing it rests on")
+
+
+def check_sys(by_id: dict[str, dict], rep: Report) -> None:
+  """Q1: every system requirement names its function, its allocation and its traceability row."""
+  for iid, it in by_id.items():
+    if it["kind"] != "system-requirement":
+      continue
+    for key, what in (("functions", "function"), ("allocated_to", "allocation (WP-S-01 §10.1)"),
+                      ("related_text", "traceability row (WP-S-01 §10)")):
+      if not it.get(key):
+        rep.err("Q1", f"{iid}: no {what}")
 
 
 def check_requirement_coverage(by_id: dict[str, dict], rep: Report) -> None:
