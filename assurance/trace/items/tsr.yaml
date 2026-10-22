@@ -1280,16 +1280,16 @@
 
 - id: TSR-624
   kind: tsr
-  text: "The SoC shall command deceleration that is not caused by traffic (driver-monitoring no-response, fault-induced force deceleration) only after a visual and acoustic alert announcing it has been given, and shall ramp the request within the envelope bounds a_min (TSR-202) and j_down (TSR-205)."
+  text: "The SoC shall command deceleration that is not caused by traffic (driver-monitoring no-response, fault-induced force deceleration) only after a visual and acoustic alert announcing it has been given, and shall ramp the request within the envelope bounds a_min (TSR-202) and j_down (TSR-205). The 1 s lead time applies to the driver-monitoring no-response deceleration; a fault soft-disable deceleration may start on the first frame of its alert (DQ-407 A). Rationale: that slow-down is gentle (at most −1.2 m/s² over the 3 s before control is handed back, about 13 km/h at most), its alert sounds from the first frame, and holding it back 1 s means driving on at speed with the fault still active; the plant search found no contact in any order of alert and slow-down (synthetic, no credit)."
   asil: "QM (B-sup: TSR-202, TSR-205)"
   parents: [FSR-04.05]
   parent_text: "FSR-04.05"
   other_parents: false
   allocated_to: "SoC"
   mechanism: "WRN"
-  timing: "alert ≥ 1 s before decel onset (proposed)"
+  timing: "Driver-monitoring stop: alert ≥ 1 s before decel onset (proposed); fault soft disable: alert from the first frame of the decel (DQ-407 A)"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Partial: the driver-monitoring no-response deceleration is announced 5 s ahead: the terminal alert counts down \"Car Stops in N s\" (`policy.py:459`, `events.py:239`), and the maneuver alert \"TAKE CONTROL: CAR STOPPING\", then \"CAR STOPPED\", sounds through the stop and the hold (`events.py:256`, `selfdrived.py:257`); the ramp stays within a_min and j_down on the host: the final command is rate-limited to 4.5 m/s³ (`ACCEL_FINAL_RATE_LIMIT`, opendbc `carcontroller.py:27, 256`, below j_down = 5 m/s³ of WP-W-02 §2.5) and clipped at ACCEL_MIN; the envelope's own jerk check is still missing (GAP-04, TSR-205); the fault soft-disable deceleration still starts with its alert, with no lead time (register DQ-407, queued). Not verified on the vehicle"
+  baseline_impl: "Partial: the driver-monitoring no-response deceleration is announced 5 s ahead: the terminal alert counts down \"Car Stops in N s\" (`policy.py:459`, `events.py:239`), and the maneuver alert \"TAKE CONTROL: CAR STOPPING\", then \"CAR STOPPED\", sounds through the stop and the hold (`events.py:256`, `selfdrived.py:257`); the ramp stays within a_min and j_down on the host: the final command is rate-limited to 4.5 m/s³ (`ACCEL_FINAL_RATE_LIMIT`, opendbc `carcontroller.py:27, 256`, below j_down = 5 m/s³ of WP-W-02 §2.5) and clipped at ACCEL_MIN; the envelope's own jerk check is still missing (GAP-04, TSR-205); the fault soft-disable deceleration starts with its alert, as the exception allows (DQ-407 A). Not verified on the vehicle"
   status: proposed
   source: WP-S-02
 

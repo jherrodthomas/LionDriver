@@ -401,12 +401,12 @@
 
 - id: FSR-04.05
   kind: fsr
-  text: "Deceleration that the item initiates for a reason other than following traffic (driver-monitoring no-response, fault soft disable) shall be preceded by a visual and acoustic alert and shall stay within the bounds of FSR-04.01/04.02."
+  text: "Deceleration that the item initiates for a reason other than following traffic shall be announced by a visual and acoustic alert, ahead of its onset for the driver-monitoring no-response and at the latest at its onset for a fault soft disable (DQ-407 A: that slow-down is mild, and holding it back keeps the fault active), and shall stay within the bounds of FSR-04.01/04.02."
   asil: "B"
   parents: [SG-04]
   allocated_to: "E-01 (alert), E-03 (bounds)"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Partial: the DM no-response deceleration is announced 5 s ahead by a countdown in the terminal alert, and its own alert sounds through the stop (TSR-624); the fault soft-disable deceleration starts with its alert (DQ-407, queued); bounds as FSR-04.01, the host ramp is ≤ 4.5 m/s³, the envelope jerk check is still missing (GAP-04). New in v0.2 (HE-04.3): DM is a source of H-04, and the deceleration path is bounded by the envelope, so DM itself stays QM (§7)"
+  baseline_impl: "Partial: the DM no-response deceleration is announced 5 s ahead by a countdown in the terminal alert, and its own alert sounds through the stop (TSR-624); the fault soft-disable deceleration starts with its alert, as the requirement allows (DQ-407 A); bounds as FSR-04.01, the host ramp is ≤ 4.5 m/s³, the envelope jerk check is still missing (GAP-04). New in v0.2 (HE-04.3): DM is a source of H-04, and the deceleration path is bounded by the envelope, so DM itself stays QM (§7)"
   status: proposed
   source: WP-C-04
 

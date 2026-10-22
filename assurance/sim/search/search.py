@@ -619,6 +619,9 @@ def hz_text(r: dict) -> str:
   if h.get("he") is None:
     return "— (no contact)" if longitudinal(FAMILIES[r["family"]]) else "— (in lane)"
   if h.get("new"):
+    fd = SPEC.get("findings", {}).get(h["new"], {})
+    if fd.get("rated_as"):
+      return f"{fd['rated_as']} (finding {h['new']}, {fd['dq']})"
     return f"**none: new** ({h['new']}); nearest {h['he']}"
   return h["he"] + (f", {h['sh']}" if h.get("sh") else "")
 
@@ -762,8 +765,13 @@ def catalogue_page(rows: list[dict]) -> str:
   ]
   for fid in sorted({r["hara"]["new"] for r in new}):
     ids = [r["id"] for r in new if r["hara"]["new"] == fid]
-    out.append(f"- {', '.join(ids)} match{'es' if len(ids) == 1 else ''} no HARA hazardous event: "
-               f"{findings[fid]['title']} ({fid}, queued as {findings[fid]['dq']}).")
+    fd = findings[fid]
+    if fd.get("rated_as"):
+      out.append(f"- {', '.join(ids)} matched no HARA hazardous event: {fd['title']} ({fid}, {fd['dq']}); the HARA "
+                 f"now rates it as {fd['rated_as']}.")
+    else:
+      out.append(f"- {', '.join(ids)} match{'es' if len(ids) == 1 else ''} no HARA hazardous event: "
+                 f"{fd['title']} ({fid}, queued as {fd['dq']}).")
   out += ["", "## Catalogue: lateral", "", CATALOGUE_HEAD.format("Line crossed (s) | Side"),
           "|---|---|---|---|---|---|---|---|---|---|---|"]
   for r in lat:
@@ -788,7 +796,9 @@ def catalogue_page(rows: list[dict]) -> str:
     fd = findings[fid]
     ids = ", ".join(r["id"] for r in new if r["hara"]["new"] == fid)
     out += [f"### {fid}: {fd['title']}", "", " ".join(fd["text"].split()), "",
-            f"Rows: {ids}. Queued for the project lead as {fd['dq']} in the decision register.", ""]
+            f"Rows: {ids}. Queued for the project lead as {fd['dq']} in the decision register"
+            + (f"; on the lead's answer the HARA rates it as {fd['rated_as']} "
+               f"([WP-C-03](../../02-concept/WP-C-03-hara.md) §5.1)." if fd.get("rated_as") else "."), ""]
   out += ["## Assumption probes", "",
           "Each row re-run with one assumption changed (rho in metres; the row's own rho first). Lateral rows:", ""]
   for group, key in ((lat, "probes_default"), (lon, "probes_longitudinal")):

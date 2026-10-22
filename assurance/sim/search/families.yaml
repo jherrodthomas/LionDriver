@@ -171,8 +171,8 @@ families:
     bands: {phase: [0.0, 0.25, 0.5, 0.75, 1.0]}
     catalogue: {by: fault, max: 4}
     hara:
-      - {when: "side == 'left'", new: EC-N1, he: HE-02.5,
-         fit: "the fault leaves the car moving sideways (a frozen command keeps pushing it; a lost one leaves its lateral speed), so it crosses the target lane's far line; HE-02.5 has the car stop and straddle the lanes"}
+      - {when: "side == 'left'", new: EC-N1, he: HE-01.6,
+         fit: "the fault leaves the car moving sideways (a frozen command keeps pushing it; a lost one leaves its lateral speed), so it crosses the target lane's far line into the lane beyond; HE-02.5 has the car stop and straddle the lanes, so the HARA rates this as HE-01.6 since finding EC-N1 (DQ-406 A)"}
       - {when: "fault == 'hardover'", he: HE-01.2, fit: "hard-over during a lane change (OS-12); HE-01.2 names OS-01/OS-02"}
       - {when: "True", he: HE-02.5, fit: "lateral control lost mid-manoeuvre"}
 
@@ -517,11 +517,13 @@ families:
       - {when: "True", he: HE-06.3, fit: "the ACC's braking ends at the hand-back while the lead is still slower"}
 
 # Departures that match no HARA hazardous event (rules with `new` above): findings for the HARA, queued for the
-# project lead in the decision register (01-management/decisions/register.yaml). The HARA is not edited here.
+# project lead in the decision register (01-management/decisions/register.yaml). The HARA is not edited here. Once the
+# lead's answer has added a hazardous event for a finding, `rated_as` names it and the rule's `he` points to it.
 findings:
   EC-N1:
     title: an assisted lane change that does not stop at the target lane
     dq: DQ-406
+    rated_as: HE-01.6
     text: >-
       HE-02.5 rates a loss of lateral control during an assisted lane change as the car stopping partway and
       straddling the two lanes. The search finds the opposite effect. A frozen command (F-03) is passed by the panda

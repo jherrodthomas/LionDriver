@@ -361,7 +361,7 @@ package LionDriverRequirements {
         :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'FSR-04.05'> fsr_04_05 : FunctionalSafetyRequirement {
-        doc /* Deceleration that the item initiates for a reason other than following traffic (driver-monitoring no-response, fault soft disable) shall be preceded by a visual and acoustic alert and shall stay within the bounds of FSR-04.01/04.02. */
+        doc /* Deceleration that the item initiates for a reason other than following traffic shall be announced by a visual and acoustic alert, ahead of its onset for the driver-monitoring no-response and at the latest at its onset for a fault soft disable (DQ-407 A: that slow-down is mild, and holding it back keeps the fault active), and shall stay within the bounds of FSR-04.01/04.02. */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-01 (alert), E-03 (bounds)";
         :>> asil = "B";
@@ -1280,12 +1280,12 @@ package LionDriverRequirements {
         :>> verifMethod = "R, T-SIL";
     }
     requirement <'TSR-624'> tsr_624 : TechnicalSafetyRequirement {
-        doc /* The SoC shall command deceleration that is not caused by traffic (driver-monitoring no-response, fault-induced force deceleration) only after a visual and acoustic alert announcing it has been given, and shall ramp the request within the envelope bounds a_min (TSR-202) and j_down (TSR-205). */
+        doc /* The SoC shall command deceleration that is not caused by traffic (driver-monitoring no-response, fault-induced force deceleration) only after a visual and acoustic alert announcing it has been given, and shall ramp the request within the envelope bounds a_min (TSR-202) and j_down (TSR-205). The 1 s lead time applies to the driver-monitoring no-response deceleration; a fault soft-disable deceleration may start on the first frame of its alert (DQ-407 A). Rationale: that slow-down is gentle (at most −1.2 m/s² over the 3 s before control is handed back, about 13 km/h at most), its alert sounds from the first frame, and holding it back 1 s means driving on at speed with the fault still active; the plant search found no contact in any order of alert and slow-down (synthetic, no credit). */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
         :>> asil = "QM (B-sup: TSR-202, TSR-205)";
         :>> mechanism = "WRN";
-        :>> timing = "alert ≥ 1 s before decel onset (proposed)";
+        :>> timing = "Driver-monitoring stop: alert ≥ 1 s before decel onset (proposed); fault soft disable: alert from the first frame of the decel (DQ-407 A)";
         :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'TSR-625'> tsr_625 : TechnicalSafetyRequirement {
