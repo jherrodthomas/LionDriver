@@ -46,7 +46,7 @@ EBF EBG EF EG EX F FAIRNESS FROZENVAR G H IN INIT INVAR INVARSPEC ISA IVAR JUSTI
 MIRROR MODULE NAME O PRED PREDICATES PSLSPEC PSLWFF S SIMPWFF SPEC T TRANS U V VAR X Y Z abs array bool boolean case
 count esac extend in init integer max min mod next of process real resize self signed sizeof swconst union unsigned
 uwconst word word1 xnor xor""".split())
-FUNCTIONS = {"absReal", "maxReal", "minReal", "preBool", "preInt", "preReal", "persisted", "occurred", "persists",
+FUNCTIONS = {"absReal", "maxReal", "minReal", "absInt", "maxInt", "minInt", "preBool", "preInt", "preReal", "persisted", "occurred", "persists",
              "occurs", "prevOcc", "nextOcc"}
 QUALIFIERS = ("upon", "whenever", "when", "where", "if", "unless")
 UNITS = r"(?:ticks?|millisec(?:ond)?s?|sec(?:ond)?s?)"
