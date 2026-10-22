@@ -16,7 +16,7 @@ This report is informational: it does not fail CI, but CI asks for it to be rege
 | System requirements (WP-S-01) | 39 | 39 | 0 | 0 | 25 | — |
 | Cybersecurity requirements (WP-S-07) | 64 | 50 | 14 | 0 | 0 | — |
 
-212 verification cases; 117 name at least one modelled requirement.
+213 verification cases; 118 name at least one modelled requirement.
 
 ## SG: not verified by any case (1)
 

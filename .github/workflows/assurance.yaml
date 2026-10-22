@@ -360,6 +360,17 @@ jobs:
       run: |
         python3 assurance/models/fmdtools/sg02/test_fault_lab.py
         python3 assurance/models/fmdtools/sg02/fault_lab.py --check
+    - name: SG-06 model maps the WP-A-04 tree and reproduces the reference cut sets (DQ-417)
+      run: python3 assurance/models/fmdtools/sg06/test_sg06.py
+    - name: SG-06 single-fault, joint-fault (order 1 and 2; the full sweep runs weekly) and time-to-cue pages are current
+      run: |
+        python3 assurance/models/fmdtools/sg06/sweep.py --check
+        python3 assurance/models/fmdtools/sg06/sweep.py joint --check --order 2
+        python3 assurance/models/fmdtools/sg06/sweep.py timing --check
+    - name: SG-06 Fault Lab page is current, and its tests
+      run: |
+        python3 assurance/models/fmdtools/sg06/test_fault_lab.py
+        python3 assurance/models/fmdtools/sg06/fault_lab.py --check
 
   fret:
     name: FRETish restatements of the panda TSRs

@@ -22,7 +22,7 @@ Specification on the left, verification on the right. Each verification process 
 ```mermaid
 block-beta
   columns 13
-  SYS1["<b>SYS.1</b><br/>Requirements elicitation<br/>AOU 17 · H 9 · HE 38<br/>SG 8 · SH 13* · TS 14*"]
+  SYS1["<b>SYS.1</b><br/>Requirements elicitation<br/>AOU 17 · H 9 · HE 39<br/>SG 8 · SH 13* · TS 14*"]
   space
   space
   space
@@ -58,7 +58,7 @@ block-beta
   space
   space
   space
-  SYS4["<b>SYS.4</b><br/>System integration test<br/>VS-SI: 27 cases<br/>VS-FI: 31 cases"]
+  SYS4["<b>SYS.4</b><br/>System integration test<br/>VS-SI: 27 cases<br/>VS-FI: 32 cases"]
   space
   space
   space
@@ -156,13 +156,13 @@ block-beta
 
 One colour rule for every V: blue when every item of the level is in the trace data, or every item of the paired level is named by a case (done in the design, not verified); amber when some are; red when none is; dashed grey when the level holds nothing yet. Green is kept for approved work products and passed verification; nothing here is either. The gate band shows the gate records of WP-M-00 §2 (none held yet).
 
-A named item is a **specified** link, not a passed test. 0 of 443 traced items carry status `verified`, and the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K6–K10 in the [README](../README.md) §6 are not implemented).
+A named item is a **specified** link, not a passed test. 0 of 444 traced items carry status `verified`, and the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K6–K10 in the [README](../README.md) §6 are not implemented).
 
 ## 2. Process to work product and items
 
 | Process | Name | Work products | Items or test cases |
 |---|---|---|---|
-| **SYS.1** | Requirements elicitation | WP-C-01, WP-C-02, WP-C-03, WP-C-05, WP-C-09 | AOU (17, trace data), H (9, trace data), HE (38, trace data), SG (8, trace data), SH (13, document), TS (14, document) |
+| **SYS.1** | Requirements elicitation | WP-C-01, WP-C-02, WP-C-03, WP-C-05, WP-C-09 | AOU (17, trace data), H (9, trace data), HE (39, trace data), SG (8, trace data), SH (13, document), TS (14, document) |
 | **SYS.2** | System requirements analysis | WP-S-01, WP-C-04, WP-S-02, WP-C-07, WP-C-10 | SYS (39, document), FSR (58, trace data), TSR (128, trace data), TC (35, document), FI (23, document), FM (11, document), CSG (8, document) |
 | **SYS.3** | System architectural design | WP-S-03, WP-S-05, WP-S-07 | CSR (64, document) |
 | **SWE.1** | SW requirements analysis | WP-W-02 | SWSR (139, trace data) |
@@ -173,7 +173,7 @@ A named item is a **specified** link, not a passed test. 0 of 443 traced items c
 | **SWE.3** | SW detailed design and unit construction | WP-W-05 | — |
 | **VAL.1** | Validation | WP-V-01 | VS-VAL (31 cases) |
 | **SYS.5** | System verification | WP-S-09 | VS-SQ (19 cases) |
-| **SYS.4** | System integration and integration verification | WP-S-08, WP-V-05 | VS-SI (27 cases), VS-FI (31 cases) |
+| **SYS.4** | System integration and integration verification | WP-S-08, WP-V-05 | VS-SI (27 cases), VS-FI (32 cases) |
 | **SWE.6** | SW verification | WP-W-08 | VS-SWQ (26 cases) |
 | **HWE.4** | Verification against HW requirements | WP-H-06 | VS-HW (24 cases) |
 | **MLE.4** | ML model testing | WP-W-10 | VS-ML (12 cases) |
@@ -190,7 +190,7 @@ flowchart LR
   subgraph ISO26262["ISO 26262"]
     direction LR
     kH["<b>H</b> 9<br/>hazards"]:::traced
-    kHE["<b>HE</b> 38<br/>hazardous events"]:::traced
+    kHE["<b>HE</b> 39<br/>hazardous events"]:::traced
     kSG["<b>SG</b> 8<br/>safety goals"]:::traced
     kFSR["<b>FSR</b> 58<br/>functional safety req."]:::traced
     kTSR["<b>TSR</b> 128<br/>technical safety req."]:::traced
@@ -226,7 +226,7 @@ flowchart LR
   end
   style ASPICE fill:#FFFFFF,stroke:#CBD5E1
   kH -->|"9/9"| kHE
-  kHE -->|"37/37"| kSG
+  kHE -->|"38/38"| kSG
   kSG -->|"8/8"| kFSR
   kFSR -->|"58/58"| kTSR
   kTSR -->|"97/104"| kSWSR
@@ -249,7 +249,7 @@ flowchart LR
 
 | Standard | Kinds | In trace data | Defined in documents only |
 |---|---|---|---|
-| ISO 26262 | H, HE, SG, AOU, FSR, TSR, SWSR, HWSR | H 9, HE 38, SG 8, AOU 17, FSR 58, TSR 128, SWSR 139, HWSR 46 | — |
+| ISO 26262 | H, HE, SG, AOU, FSR, TSR, SWSR, HWSR | H 9, HE 39, SG 8, AOU 17, FSR 58, TSR 128, SWSR 139, HWSR 46 | — |
 | ISO 21448 | SH, TC, FI, FM | — | SH 13, TC 35, FI 23, FM 11 |
 | ISO/PAS 8800 | AIR, DSR | — | AIR 30, DSR 13 |
 | ISO/SAE 21434 | TS, CSG, CSR | — | TS 14, CSG 8, CSR 64 |
@@ -262,7 +262,7 @@ Parents with at least one child in the trace data (WP-T-01 checks K4, K12).
 | Link | Covered | Status | Without a child |
 |---|---|---|---|
 | hazard -> hazardous event | 9/9 | complete | — |
-| hazardous event -> safety goal | 37/37 | complete | — |
+| hazardous event -> safety goal | 38/38 | complete | — |
 | safety goal -> FSR | 8/8 | complete | — |
 | FSR -> TSR | 58/58 | complete | — |
 | TSR -> SWSR (SW-allocated TSRs) | 97/104 | partial | TSR-628, TSR-629, TSR-630, TSR-631, TSR-632, TSR-633, TSR-712 |

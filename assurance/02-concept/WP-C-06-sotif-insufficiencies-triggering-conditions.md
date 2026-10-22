@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-06 Functional insufficiencies and triggering conditions analysis |
 | Standard reference | ISO 21448:2022 §7 (identification and evaluation of functional insufficiencies and triggering conditions); ISO/PAS 8800:2024 (AI error causes, informative) |
-| Version | 0.6.1 (§5.2 A-6: DQ-213 decided, option A: the ODD claim stays highways only and off-highway use is rated at E3 in WP-C-03 v0.6, so A-6 still gets no triggering condition; 2026-10-19). 0.6 (TC-35: a lead not detected in a curve while the item accelerates to the set speed, from RR-2026-011 F-6; §5.2 records its off-highway observation A-6, centre-line crossing on narrow roads; 2026-10-19). 0.5 (FI-23 and TC-34 added, so SH-08 has an insufficiency and a triggering condition; the TC-33 row no longer names SH-03, because FI-10 leads to SH-06 only; §5.1 states how the SG-02 and SG-06 fault trees share the performance limits, DQ-361 A; 2026-10-18). 0.4 (TC-20 at the 110 km/h ODD bound, decision register DQ-260; 2026-10-16). 0.3 (TC-12 resolution follows the highway-only ODD, decision register DQ-023; 2026-10-16). 0.2 (Figure 5-1 added: TC → FI → SH chain; 2026-10-13). 0.1 |
+| Version | 0.6.2 (TC-01 and OI-3 cite how often the sun is in the road camera's frame on the I-85 test corridor, from the synthetic sun-position model; support only, no evidence credit, no rating changed; 2026-10-22). 0.6.1 (§5.2 A-6: DQ-213 decided, option A: the ODD claim stays highways only and off-highway use is rated at E3 in WP-C-03 v0.6, so A-6 still gets no triggering condition; 2026-10-19). 0.6 (TC-35: a lead not detected in a curve while the item accelerates to the set speed, from RR-2026-011 F-6; §5.2 records its off-highway observation A-6, centre-line crossing on narrow roads; 2026-10-19). 0.5 (FI-23 and TC-34 added, so SH-08 has an insufficiency and a triggering condition; the TC-33 row no longer names SH-03, because FI-10 leads to SH-06 only; §5.1 states how the SG-02 and SG-06 fault trees share the performance limits, DQ-361 A; 2026-10-18). 0.4 (TC-20 at the 110 km/h ODD bound, decision register DQ-260; 2026-10-16). 0.3 (TC-12 resolution follows the highway-only ODD, decision register DQ-023; 2026-10-16). 0.2 (Figure 5-1 added: TC → FI → SH chain; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -67,7 +67,7 @@ The driving model is a black box from LionDriver's point of view: training data 
 
 | ID | Triggering condition | Category | Source |
 |---|---|---|---|
-| TC-01 | Low sun in the camera field of view; sun reflection on wet road | Environment / lighting | `LIMITATIONS.md:18, 42` |
+| TC-01 | Low sun in the camera field of view; sun reflection on wet road | Environment / lighting | `LIMITATIONS.md:18, 42`. How often, on I-85 at Greenville SC: the sun is in the road camera's frame about 203 h/year southbound (October–March evenings) and 158 h/year northbound (April–August mornings), [sun-glare.md](../sim/results/sun-glare.md) (NREL SPA, [`sun_glare.py`](../sim/weather/sun_glare.py)). Synthetic, model-derived (DSR-12): no evidence credit; an upper bound, as terrain, trees and buildings are not modelled |
 | TC-02 | Oncoming headlights at night, esp. on undivided roads | Environment / lighting | `LIMITATIONS.md:18` |
 | TC-03 | Rain, spray from trucks, wet road reflections | Weather | `LIMITATIONS.md:10, 29` |
 | TC-04 | Fog, snow, dust reducing visibility | Weather (outside ODD) | `LIMITATIONS.md:10` |
@@ -182,5 +182,5 @@ The split of work is as follows:
 |---|---|---|---|
 | OI-1 | Turn every "Needs validation" row into a scenario in WP-V-03 with pass criteria | SOTIF lead | G2 |
 | OI-2 | Verify `radard.py` lead-retention line references (onboard review cites `:234-239`) at the baseline | SW lead | G1 |
-| OI-3 | Collect fork-owned drive logs to estimate occurrence rates of TC-01, TC-05, TC-07, TC-10 in the ODD | SOTIF lead | G2 |
+| OI-3 | Collect fork-owned drive logs to estimate occurrence rates of TC-01, TC-05, TC-07, TC-10 in the ODD. TC-01 has a synthetic upper bound for the test corridor (§4); it supports, and does not replace, the logged rate | SOTIF lead | G2 |
 | OI-4 | Review TC list with the unknown-scenario exploration plan (WP-V-04) | SOTIF lead | G2 |

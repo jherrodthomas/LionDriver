@@ -78,4 +78,8 @@ conditions:
     exposure: null
     odd: in
     hara: Not a HARA condition; drawn for SOTIF hazards (SH-06, SH-11) whose triggering condition it is
+    # How often (no exposure class: WP-C-05 rates S and C only): on I-85 at Greenville SC the sun is in the road
+    # camera's frame about 203 h/year southbound (October-March evenings) and 158 h/year northbound (April-August
+    # mornings), assurance/sim/results/sun-glare.md (NREL SPA, sim/weather/sun_glare.py). Synthetic, model-derived
+    # (DSR-12): no evidence credit; an upper bound, terrain and trees are not modelled. WP-C-06 TC-01.
     env: {sky: clear, sun: ahead, sun_elevation: 5, wet: 0.0, glare: true, haze_km: 22}

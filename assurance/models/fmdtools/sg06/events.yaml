@@ -1,0 +1,84 @@
+# SG-06 fault-propagation model (TE-02 extension, DQ-417, step P1): which fault tree event each model failure mode
+# realises, and the timing the model's nominal behaviour uses. Read by model.py; checked by test_sg06.py against the
+# WP-A-04 §7 tree and assurance/08-analyses/fta-fmea-map.yaml (every SG-06 tree event has a mode or a latent entry,
+# every mode names a tree event, and every event is in the FTA <-> FMEA map).
+#
+# Synthetic model (DSR-12): behaviour and timing are taken from WP-A-04 §7 and the documents it cites, not measured.
+# Results rank risks and point reviewers at possible gaps in the tree; they earn no evidence credit.
+schema_version: 1
+goal: SG-06
+top_event: TE-06
+budget_s: 1.0          # SG-06: take-over request within 1 s (WP-A-04 §7, TE-06)
+tick_s: 0.02           # one model step; fmdtools needs an integer step, so times below are converted to ticks
+
+# Times after the onset of a cause, in seconds, for the reference build (WP-A-04 §7 and §7.1). The host and siren times
+# that SG-02 shares are taken from the SG-02 model (../sg02/events.yaml) with the same sources.
+timing:
+  host_alert_input_loss: {s: 0.1, source: "Assumed, as SG-02: an immediate critical alert when the soft disable of BE-2.10 is not the reaction"}
+  soft_disable: {s: 3.0, source: "BE-2.10, MCS-06.1: soft disable keeps the stale command for 3 s (selfdrive/selfdrived/state.py SOFT_DISABLE_TIME), then disengages"}
+  host_alert_envelope_block: {s: 0.5, source: "WP-A-04 §4 BE-2.09: controlsMismatch after 2 samples, at most 0.5 s (TSR-621)"}
+  host_alert_acc_fault: {s: 0.1, source: "Assumed: accFaulted is an immediate disable (selfdrive/selfdrived/events.py accFaulted; WP-A-04 §7 BE-6.03); one host cycle plus the carState update"}
+  host_alert_frames_lost: {s: 0.5, source: "Assumed, as SG-02: WP-A-04 OI-10 has the timing to confirm (BE-2.17)"}
+  ui_unresponsive_after_selfdrived_stop: {s: 5.0, source: "WP-A-04 §4 BE-2.21: ui/soundd show System Unresponsive only after 5 s"}
+  control_stop_after_selfdrived_stop: {s: 0.1, source: "WP-A-04 §4 BE-2.21; TSR-602: controlsd drops longActive once selfdriveState is 0.1 s stale"}
+  siren_after_heartbeat_loss: {s: 0.25, source: "Plant F-04a/F-04b: heartbeat lost, revoked 0.193/0.043 s, siren 0.25 s (plant-results.md; silent-stall.md 0.25-0.29 s)"}
+  siren_after_selfdrived_stop: {s: 0.88, source: "Plant engaged-mismatch.md: the siren sounds 0.63-0.88 s after the stop (TSR-307(a), TSR-516(c), panda f4803c5); the latest is used"}
+  # When selfdrived disengages on a fault with an immediate disable, CC.enabled goes false and controlsd sets the ACC
+  # cancel (TSR-303, openpilot/selfdrive/controls/controlsd.py CC.cruiseControl.cancel), so PCM cruise drops and the
+  # cluster cruise indicator changes (AOU-12). During a soft disable CC.enabled stays true, so no cancel is sent until it
+  # ends (SWF-048.C1). The PCM cancel lag is not measured (WP-W-02 OI-18); the panda's cancel-lag guard (TSR-516(c),
+  # SWSR-516b) sounds the siren if PCM cruise is still active 0.5 s after the first "not engaged" heartbeat. The model
+  # takes the cluster change at the latest time the guard allows, and the siren of the guard when the cancel has no
+  # effect (BE-6.06).
+  cluster_after_disengage: {s: 0.6, source: "TSR-303 cancel within 0.1 s of the disengagement, plus at most 0.5 s PCM cancel lag before TSR-516(c) counts the cancel as failed (SWSR-516b; lag not measured, WP-W-02 OI-18)"}
+  siren_after_failed_cancel: {s: 0.76, source: "TSR-516(c): siren 0.5 s after the first \"not engaged\" heartbeat while PCM cruise is still active (SWSR-516b), plus at most 0.26 s to the speaker (8 Hz siren ticks, TSR-516 Impl)"}
+
+# Where on the road a run takes place (step P2). The model has no geometry or speed: a phase only says whether the end
+# of ACC deceleration is something the driver can feel when the device loses power.
+phases:
+  - id: following
+    decel_felt: false
+    source: "Assumed: following a lead at a steady gap, ACC asks for little deceleration, so its end gives the driver little to feel. AOU-12 does not state the situation"
+  - id: approach
+    decel_felt: true
+    source: "UE-6.07, MCS-06.9: the driver notices the end of ACC deceleration while the item brakes for a slower lead or a stop. The default phase of a run: the tree's case, a loss when the situation needs deceleration"
+
+# Tree events the model holds as already present at the baseline, not as failure modes. BE-2.14 (siren not triggered)
+# and BE-6.06 (no ACC cancel, so the cluster does not change) are latent in the tree but stay modes: the siren now
+# sounds on a heartbeat loss and an engaged mismatch, and the cancel is sent on every immediate disable, so the model can
+# show where each latent tag is out of date.
+latent_in_model:
+  - id: BE-2.11
+    why: "Baseline design: a non-finite command is logged only, never warned (GAP-19)"
+  - id: BE-1.22
+    why: "Baseline design: no command-freshness supervision in the envelope (MCS-06.6, SPF-14)"
+  - id: BE-6.10
+    why: "By design: the FCW comes from the same planner and lead as the deceleration (fta-fmea-map.yaml)"
+
+# One failure mode per tree event. function: the model function that carries it; kind: cause (longitudinal
+# deceleration is lost), detection (the SoC warning is missing or late), cue (an SoC-independent cue is missing), or
+# driver.
+modes:
+  - {event: BE-6.01, function: soc, mode: input_stale, kind: cause, text: "Plan, lead or model input lost or stale (radarFault, commIssue)"}
+  - {event: BE-6.02, function: envelope, mode: block, kind: cause, text: "Envelope blocks longitudinal authority while the SoC shows engaged"}
+  - {event: BE-6.03, function: pcm, mode: acc_fault, kind: cause, text: "PCM does not execute ACC (ACC or cruise fault)"}
+  - {event: BE-6.04, function: soc, mode: nonfinite, kind: cause, text: "Non-finite accel clamped to 0 without a fault"}
+  - {event: BE-6.05, function: soc, mode: stale_accel, kind: cause, text: "Stale zero or positive accel held"}
+  - {event: BE-6.09, function: soc, mode: lead_missed, kind: cause, text: "Lead missed, detected late or tracked too slowly (SOTIF)"}
+  - {event: BE-2.05, function: soc, mode: crash, kind: cause, text: "Whole SoC crash or hang"}
+  - {event: BE-2.21, function: soc, mode: selfdrived_stop, kind: cause, text: "selfdrived crash or hang, pandad keeps the heartbeat"}
+  - {event: BE-2.06, function: soc, mode: frames_stop, kind: cause, text: "Actuation frames stop reaching the bus"}
+  - {event: BE-2.07, function: supply, mode: loss, kind: cause, text: "Loss of the 12 V supply to the device"}
+  - {event: BE-2.09, function: monitor, mode: block_undetected, kind: detection, text: "Envelope blocking not detected"}
+  - {event: BE-2.10, function: monitor, mode: soft_disable, kind: detection, text: "Input loss handled as a soft disable, no adequate warning"}
+  - {event: BE-1.20, function: monitor, mode: diag_masked, kind: detection, text: "Diagnostics masked during the big-model fallback"}
+  - {event: BE-2.17, function: monitor, mode: frames_unreported, kind: detection, text: "Loss of the actuation frames not reported in time"}
+  - {event: UE-6.08, function: pcm, mode: silent, kind: detection, text: "PCM does not signal the ACC non-execution (no accFaulted)"}
+  - {event: BE-2.12, function: hmi, mode: hang, kind: detection, text: "HMI render loop or audio stream stalled"}
+  - {event: BE-2.13, function: hmi, mode: inaudible, kind: detection, text: "Alert volume not audible"}
+  - {event: BE-2.25, function: hmi, mode: masked, kind: detection, text: "Take-over alert masked by a higher-priority, lower-urgency alert"}
+  - {event: BE-2.14, function: siren, mode: not_triggered, kind: cue, text: "Siren not triggered"}
+  - {event: BE-2.15, function: siren, mode: silenced, kind: cue, text: "Siren silenced with the SoC audio"}
+  - {event: BE-2.22, function: siren, mode: path_fault, kind: cue, text: "Siren path fault (driver, amplifier or speaker)"}
+  - {event: BE-6.06, function: pcm, mode: no_cancel, kind: cue, text: "ACC cancel not sent or without effect: PCM cruise stays active and the cluster shows no change"}
+  - {event: UE-6.07, function: driver, mode: unaware, kind: driver, text: "Driver does not notice the end of ACC deceleration or the cluster cruise change"}

@@ -22,7 +22,7 @@ class TestFaultCoverage(unittest.TestCase):
     self.assertEqual(ff.missing_sources(ff.SOURCE.read_text(encoding="utf-8")), [])
 
   def test_all_cases_and_sections(self):
-    self.assertEqual(sorted(self.by_id), [f"VS-FI-{i:02d}" for i in range(1, 32)])
+    self.assertEqual(sorted(self.by_id), [f"VS-FI-{i:02d}" for i in range(1, 33)])
     self.assertEqual(sorted(self.sections), [f"5.{i}" for i in range(1, 7)])
     self.assertEqual(len(self.items), 14)
 
