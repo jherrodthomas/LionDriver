@@ -110,4 +110,4 @@ If results are ever credited, for example "the model confirms the tree is comple
 | OI-1 | ~~Lead's "go" to start P0~~ **Closed** 2026-10-20 (go given) |
 | OI-2 | Report the undeclared IPython import upstream (nasa/fmdtools), or keep `ipython` in our pin |
 | OI-3 | Confirm `recordclass == 0.24` builds on the CI runner image |
-| OI-4 | After P5: extend to SG-01 (hard-over), SG-03 and SG-06, or stop. Decided on what the SG-02 diff finds |
+| OI-4 | After P5: extend to SG-01 (hard-over), SG-03 and SG-06, or stop. Decided on what the SG-02 diff finds. **Decided (DQ-417, 2026-10-22): all three, in the order SG-06, SG-01, SG-03**, each with steps P1 to P4 and its own Fault Lab page |
