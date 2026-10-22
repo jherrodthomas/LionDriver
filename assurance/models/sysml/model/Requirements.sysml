@@ -235,7 +235,7 @@ package LionDriverRequirements {
         :>> verifMethod = "A, T-SIL";
     }
     requirement <'FSR-02.05'> fsr_02_05 : FunctionalSafetyRequirement {
-        doc /* On loss of communication with the SoC while engaged, and on a reset of the safety MCU (watchdog or fault reset) that interrupts granted actuation authority, the safety MCU shall give an acoustic warning that does not depend on the SoC. The reset case was added 2026-10-14 (DQ-054: the engaged state is kept across the reset; TSR-516(d)). */
+        doc /* When granted actuation authority ends for a reason other than a driver action that the safety MCU itself observes, the safety MCU shall give an acoustic warning that does not depend on the SoC. This covers the loss of communication with the SoC or of its commands, a fault the safety MCU detects, a disengagement reported by the SoC whose cruise cancel had no effect, and a reset of the safety MCU (watchdog or fault reset) that interrupts granted authority. The reset case was added 2026-10-14 (DQ-054: the engaged state is kept across the reset; TSR-516(d)); the trigger was widened 2026-10-21 to match TSR-516(b)/(c) (DQ-404 A; cancel-lag guard, lead 2026-10-21). */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-03 (panda buzzer)";
         :>> asil = "C";
@@ -533,7 +533,7 @@ package LionDriverRequirements {
         :>> verifMethod = "A, T-SIL, T-VEH";
     }
     requirement <'TSR-103'> tsr_103 : TechnicalSafetyRequirement {
-        doc /* The envelope shall reject a 0x2E4 frame whose torque lies outside [min(r, 0) − Δ, max(r, 0) + Δ], where r is the previous frame's torque and Δ = Δ_up for the frame rate check, or r is the torque at the start of the current real-time window and Δ = Δ_rt for the window check; the window restarts with the first frame more than 250 ms after its start. So a rise in magnitude, or a crossing of zero, by more than Δ (from r or from 0) is rejected, and any change toward zero is accepted: a fall toward zero is the safe direction for SG-01, and a bounded ramp of torque withdrawn on a fault is FSR-02.04's. While the command exceeds the measured EPS torque by more than Δ_meas, it shall fall by at least Δ_down per frame (TSR-104). After a rejected frame, or while authority is not granted, the reference for these checks is 0. The values shall be derived from the onset rate accepted in the controllability tests; the baseline values are Δ_up 15 and Δ_down 25 raw per frame and Δ_rt 450 raw per 250 ms. */
+        doc /* The envelope shall reject a 0x2E4 frame whose torque lies outside [min(r, 0) − Δ, max(r, 0) + Δ], where r is the previous frame's torque and Δ = Δ_up for the frame rate check, or r is the torque at the start of the current real-time window and Δ = Δ_rt for the window check; the window restarts with the first frame more than 250 ms after its start. So a rise in magnitude, or a crossing of zero, by more than Δ (from r or from 0) is rejected, and these two checks accept any change toward zero: a fall toward zero is the safe direction for SG-01, and a bounded ramp of torque withdrawn on a fault is FSR-02.04's. While the command exceeds the measured EPS torque by more than Δ_meas, it shall fall by at least Δ_down per frame (TSR-104). A frame still beyond that bound after a smaller fall toward zero is rejected. After a rejected frame, or while authority is not granted, the reference for these checks is 0. The values shall be derived from the onset rate accepted in the controllability tests; the baseline values are Δ_up 15 and Δ_down 25 raw per frame and Δ_rt 450 raw per 250 ms. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
         :>> asil = "B‡";
@@ -542,7 +542,7 @@ package LionDriverRequirements {
         :>> verifMethod = "A, T-SIL";
     }
     requirement <'TSR-104'> tsr_104 : TechnicalSafetyRequirement {
-        doc /* The envelope shall reject 0x2E4 frames whose torque exceeds the measured EPS motor torque (0x260 STEER_TORQUE_EPS scaled by the EPS factor of the safety parameter) by more than Δ_meas, using the minimum/maximum of the last 6 samples widened by 1 raw. Baseline Δ_meas = 350 raw. */
+        doc /* The envelope shall reject 0x2E4 frames whose torque exceeds the measured EPS motor torque (0x260 STEER_TORQUE_EPS scaled by the EPS factor of the safety parameter) by more than Δ_meas (measured from 0 when the measured torque is of the opposite sign), using the minimum/maximum of the last 6 samples widened by 1 raw, unless the frame falls toward zero by at least Δ_down from the previous frame (TSR-103). Baseline Δ_meas = 350 raw. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
         :>> asil = "B‡";

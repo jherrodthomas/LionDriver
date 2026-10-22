@@ -5271,3 +5271,30 @@
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-21, note: "Lead in chat with the panda session: \"Yes, with a cancel-lag guard\", then \"Merge now\" for panda#21. Recorded after the fact by the coordinator; the options are those of the change record"}
   applied: {ref: "jherrodthomas/LionDriver#382, jherrodthomas/LionDriver#384, jherrodthomas/LionDriver#383", record: "panda f4803c5 (panda#21): revoke 0.3 s after the first \"not engaged\" heartbeat, siren at 0.5 s if PCM cruise is still on (#382, change-2026-10-21-panda-engaged-mismatch); WP-S-02 v0.52, WP-S-04 v0.24, WP-C-04 v0.24 (#384); fmdtools SG-02 model (#383). Open: PCM cancel lag (WP-W-02 OI-18, change record OI-1); if over 0.5 s, the threshold returns to the lead. HIL not run (OI-2)", at: 2026-10-21}
+- id: DQ-409
+  question: "Should the Fault Lab mockup become a real page, generated from the fmdtools sweep and the plant results?"
+  context: >-
+    TE-02 step P5 asks for a report. The mockup shows plant case F-07 replayed in a scene-kit top view, next to the
+    SG-02 sweep (P3 minimal sets against the WP-A-04 tree, P4 time to the first cue, a pair matrix and the findings).
+    Built for real, every number comes from a generated record, the page is rebuilt in CI and fails when stale, and it
+    is published as a private artifact. Synthetic (DSR-12), no evidence credit.
+  reversibility: easy
+  blocks: "TE-02 P5"
+  gate: G1
+  decider: lead
+  asked: 2026-10-21
+  options:
+    - key: A
+      recommended: true
+      title: "Build it as shown"
+      detail: "fault_lab.py writes fault-lab.html from p3-minimal-sets.json, a fresh P4 run and plant-results.md; CI runs --check. Cost: one generator and about 20 s of CI."
+    - key: B
+      title: "Build it with changes"
+      detail: "Same, with the lead's changes to the layout or content."
+    - key: C
+      title: "Not now"
+      detail: "P5 delivers only the written report and the CI check. Cost: no single view of a run for reviewers."
+  sources: ["assurance/07-supporting/tool-evaluations/TE-02-fmdtools-fault-propagation.md", "assurance/models/fmdtools/README.md", "assurance/sim/results/plant-results.md"]
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-21, note: "Lead in chat with the coordinator: \"1\" (build it as shown)"}
+  applied: {ref: "jherrodthomas/LionDriver#417", record: "assurance/models/fmdtools/sg02/fault_lab.py writes fault-lab.html (F-07 replay, P3/P4 figures, pair matrix, findings; synthetic, DSR-12); CI runs test_fault_lab.py and fault_lab.py --check; fmdtools README and TE-02 updated. Open in P5: TE-02 OI-4 extension note, TL-49 confirmation", at: 2026-10-21}

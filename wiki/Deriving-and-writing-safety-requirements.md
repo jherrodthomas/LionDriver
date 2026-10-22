@@ -4,6 +4,8 @@ How a safety requirement gets from a hazard to a test in LionDriver, and how to 
 and a formal tool all read the same way. This page explains and links. The requirements themselves, their ASILs and
 their status live in the records it points to; nothing here is a requirement.
 
+New to all of this? [From hazard to test](From-hazard-to-test.md) follows one requirement chain from the item to the tests, with animations.
+
 ## 1. Where a requirement sits
 
 Every safety requirement has a parent above it and a test below it. A requirement without either is an orphan,
@@ -31,6 +33,13 @@ flowchart LR
 No single analysis finds every requirement. LionDriver runs several on the same safety goal, compares what they
 produce, and only then trusts the result. Five routes **derive** requirements; the sixth, traceability, **confirms**
 that the chain is complete and derives nothing.
+
+![Six route cards for one requirement: fault tree, FMEA, STPA, guidewords, scenario and trace, each showing which parts of the requirement it pins down, all ending on TSR-516](../assurance/02-concept/fsc/figures/fig-c04-r2-routes.svg)
+
+The [requirement-routes page](../assurance/02-concept/fsc/requirement-routes.md) walks each route in full, with one generated figure per route and every record it cites quoted from its file.
+
+New to fault trees? [Building a fault tree](Building-a-fault-tree.md) walks route 1 from the item diagram, with the
+traps to avoid.
 
 | # | Route | Shape | Strongest at | Watch out for | In this repository |
 |---|---|---|---|---|---|
@@ -76,6 +85,8 @@ the SG-02 tree within the 1 s budget. FRET found that the text set no minimum le
 A well-formed safety requirement has six parts. Each maps to a field of FRET's structured language, so the same
 breakdown serves a reviewer, a tester and the formal check.
 
+![The anatomy strip on FSR-02.05: six slots TRIGGER, AGENT, MODAL, ACTION, OBJECT and CONSTRAINT, each with its FRET field, and the attribute chips ASIL, parent, allocation and verification](../assurance/02-concept/fsc/figures/fig-c04-r1-anatomy.svg)
+
 | Part | Asks | FRET field | TSR-307(a) |
 |---|---|---|---|
 | **Trigger** | When does it apply? | scope and condition | when the SoC heartbeat has reported "not engaged" continuously for 0.3 s while authority is granted |
@@ -84,6 +95,11 @@ breakdown serves a reviewer, a tester and the formal check.
 | **Action** | What does it do? | response | revoke |
 | **Object** | To what? | response | authority |
 | **Constraint** | How fast, how much, how long? | timing | within the same safety-task tick once the 0.3 s is reached |
+
+![Animated: TSR-307(a) built one part at a time, trigger, agent, modal, action, object and constraint; then the clause "continuously for 0.3 s" is struck out as missing in v0.52, which is rule 4](req-anatomy.svg)
+
+*The same six parts, built one at a time on TSR-307(a), and the clause the FRET pilot found missing. Rendered at each
+sync by [`tools/wiki/animations.py`](../tools/wiki/animations.py) from the TSC row and this page.*
 
 Every requirement also carries attributes that are not part of the sentence: its **ASIL**, its **parent** (FSR or
 safety goal), its **allocation** (software, hardware, or both, and which element), and its **verification method**.
@@ -101,10 +117,22 @@ The [TSC table](../assurance/03-system/WP-S-02-technical-safety-requirements.md)
 6. **Write what the safe direction allows.** If moving toward zero is safe, do not forbid it.
 7. **One reading only.** If two engineers could implement it differently and both pass, it is not finished.
 
+![Animated: the vague sentence "The system should warn the driver promptly" draws six questions; then TSR-516 grows one clause at a time, each in the colour of its part, while a checklist is ticked](req-vague-to-verifiable.svg)
+
+*The rules applied: a vague warning grows into TSR-516 one question at a time. Colours match the anatomy above
+(trigger blue, agent violet, modal teal, action orange, object amber, constraint magenta). Rendered at each sync by
+[`tools/wiki/animations.py`](../tools/wiki/animations.py), which fails the build if a drawn clause leaves the TSC.*
+
+The pills at the end are the nine characteristics of a single requirement in the INCOSE *Guide to Writing
+Requirements* (C1–C9). Rewording can make a requirement Unambiguous, Complete, Singular, Verifiable and Conforming.
+It cannot make it Necessary, Appropriate, Feasible or Correct: those come from the trace to its parent and from review.
+
 ### Before and after: what formalising TSR-103, TSR-307 and TSR-516 found
 
 The FRET pilot rewrote six panda requirements and compared each with the code. The fixes were text-only, made by the
 requirements owner (WP-S-02 v0.53):
+
+![TSR-516(c) before (v0.52) and after (v0.53), with findings FF-05 and FF-06 marked on the old text, and the FRETish sentence coloured by slot](../assurance/02-concept/fsc/figures/fig-c04-r4-tsr516c.svg)
 
 | Rule | Before | After |
 |---|---|---|

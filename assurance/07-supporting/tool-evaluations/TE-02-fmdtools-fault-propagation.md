@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Purpose | Decide whether NASA fmdtools should run, headless and in CI, as an executable cross-check of the fault trees and FMEAs, and plan a pilot on SG-02 |
-| Status | Draft. Started on the lead's go (2026-10-20): P0 to P4 done ([`assurance/models/fmdtools/`](../../models/fmdtools/README.md)); P5 open. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Draft. Started on the lead's go (2026-10-20): P0 to P4 done ([`assurance/models/fmdtools/`](../../models/fmdtools/README.md)); P5: the [Fault Lab page](../../models/fmdtools/sg02/fault-lab.html) and its CI check are done (DQ-409), the OI-4 note and the TL-49 confirmation remain. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Standard reference | ISO 26262-8:2018 §11 (tool classification), applied as in [WP-P-07](../WP-P-07-tool-classification-qualification.md) §2; ISO 26262-9:2018 §8 (safety analyses) |
 | Date | 2026-10-20 |
 | Baseline | `liondriver-dev` at `13ba1f4` (after #370) |

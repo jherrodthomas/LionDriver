@@ -38,6 +38,25 @@ in [`assurance/`](../assurance/README.md) that owns it.
 - Two infographics are rendered from the records at every sync by [`tools/wiki/infographics.py`](../tools/wiki/infographics.py)
   and published next to the pages, so nothing is committed and nothing goes stale: `decision-register.svg` and
   `change-path.svg`. A page embeds one as `![alt](decision-register.svg)`. Add an infographic there, never by hand.
+- Two animated requirement explainers, `req-anatomy.svg` and `req-vague-to-verifiable.svg`, are rendered the same way by
+  [`tools/wiki/animations.py`](../tools/wiki/animations.py). Every clause they draw is quoted from the TSC or the
+  page, and the build fails when a quote is no longer there.
+- The figures of "Building a fault tree" (`fta-symbols.svg`, `fta-item-to-tree.svg`, `fta-and-or.svg`,
+  `fta-traps.svg`) are rendered by [`tools/wiki/fta_animations.py`](../tools/wiki/fta_animations.py), checked the same
+  way against WP-A-04, the item definition and the TSC.
+- The figures of "What is a safety case?" (`case-what-is-it.svg`, `case-claim-tree.svg`, `case-evidence.svg`,
+  `case-defeaters.svg`) are rendered by [`tools/wiki/case_animations.py`](../tools/wiki/case_animations.py) from the
+  records in `assurance/case/`, with the same checks.
+- The figures of "From hazard to test" (`h2t-item.svg`, `h2t-hara.svg`, `h2t-what-how.svg`, `h2t-allocation.svg`,
+  `h2t-engineers.svg`, `h2t-mechanism.svg`, `h2t-testing.svg`) are rendered by
+  [`tools/wiki/h2t_animations.py`](../tools/wiki/h2t_animations.py), with the same checks against the concept,
+  system, software and hardware work products, the case records and (when checked out) the opendbc and panda code.
+- The figures of "Hardware safety and interference" (`hw-numbers.svg`, `hw-ffi.svg`) are rendered by
+  [`tools/wiki/hw_animations.py`](../tools/wiki/hw_animations.py): the metrics are computed from the FMEDA records and
+  the FFI verdicts read from WP-A-02 §8.
+- The figures of "After release" (`p7-general.svg`, `p7-ours.svg`) are rendered by
+  [`tools/wiki/p7_animations.py`](../tools/wiki/p7_animations.py); each LionDriver step is checked against the WP-O
+  record it names. The general figure quotes nothing from the standard.
 - Standard GitHub Markdown, including alerts (`> [!IMPORTANT]`) and tables.
 
 Check locally before opening a pull request:
