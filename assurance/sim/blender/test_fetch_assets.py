@@ -165,6 +165,57 @@ class TestFetchAssets(unittest.TestCase):
     with self.assertRaises(F.NotFound):                                                       # models: Poly Haven only
       F.ambientcg_files(TREE, "Tree001", web.json)
 
+  def test_kit_from_liondriver_assets(self):
+    """A kit zip is checked against its folder's SHA256SUMS and unpacked whole (a zip inside it into a folder of its
+    name); the lock holds the zip's and every file's SHA-256, --locked unpacks it again, and a changed zip fails."""
+    inner = _zip(["Model.fbx", "textures/Wall.png"])
+    b = io.BytesIO()
+    with zipfile.ZipFile(b, "w") as z:
+      z.writestr("source/Model.zip", inner)
+      z.writestr("textures/Wall.png", "pixels")
+      z.writestr("source/desktop.ini", "junk")
+    kit_zip = b.getvalue()
+    spec = {"licence": "test", "dest": "lib", "slots": {"houses": {
+      "kind": "kit", "use": "test houses", "licence": "CC-BY 4.0", "title": "Houses", "author": "someone",
+      "page": "https://sketchfab.com/3d-models/abc", "file": "source/Model/Model.fbx", "pieces": {"farm": ["all"]},
+      "candidates": [{"source": "liondriver-assets", "id": "sketchfab/houses.zip"}]}}}
+    with tempfile.TemporaryDirectory() as d:
+      repo, lock = Path(d) / "repo", Path(d) / "assets.lock.json"
+      (repo / "sketchfab").mkdir(parents=True)
+      (repo / "sketchfab" / "houses.zip").write_bytes(kit_zip)
+      (repo / "sketchfab" / "SHA256SUMS").write_text(f"{hashlib.sha256(kit_zip).hexdigest()} *houses.zip\n")
+      os.environ["LIONDRIVER_ASSET_LIBRARY"] = str(Path(d) / "lib")
+      os.environ["LIONDRIVER_ASSETS_REPO"] = str(repo)
+      real = F.load_slots
+      F.load_slots = lambda: spec
+      try:
+        web = FakeWeb()
+        self.assertEqual(F.fetch(["houses"], False, web.json, web.bytes, lock, "2026-10-22"), 0)
+        self.assertEqual(web.urls, [])                                                        # no network
+        entry = json.loads(lock.read_text())["slots"]["houses"]
+        self.assertEqual((entry["licence"], entry["author"], entry["page"]), ("CC-BY 4.0", "someone",
+                                                                             "https://sketchfab.com/3d-models/abc"))
+        self.assertEqual(entry["archive"]["sha256"], hashlib.sha256(kit_zip).hexdigest())
+        self.assertEqual(set(entry["files"]), {"source/Model/Model.fbx", "source/Model/textures/Wall.png",
+                                               "textures/Wall.png"})                          # no desktop.ini
+        self.assertTrue((Path(d) / "lib" / "houses" / "source" / "Model" / "Model.fbx").exists())
+        (Path(d) / "lib" / "houses" / "textures" / "Wall.png").unlink()
+        self.assertEqual(F.fetch(["houses"], True, web.json, web.bytes, lock), 0)              # --locked unpacks again
+        self.assertTrue((Path(d) / "lib" / "houses" / "textures" / "Wall.png").exists())
+        (repo / "sketchfab" / "houses.zip").write_bytes(kit_zip + b"x")                       # no longer SHA256SUMS'
+        (Path(d) / "lib" / "houses" / "textures" / "Wall.png").unlink()
+        self.assertEqual(F.fetch(["houses"], True, web.json, web.bytes, lock), 1)
+      finally:
+        F.load_slots = real
+        del os.environ["LIONDRIVER_ASSET_LIBRARY"], os.environ["LIONDRIVER_ASSETS_REPO"]
+
+  def test_kit_members_stay_inside(self):
+    b = io.BytesIO()
+    with zipfile.ZipFile(b, "w") as z:
+      z.writestr("../escape.txt", "x")
+    with tempfile.TemporaryDirectory() as d, self.assertRaises(ValueError):
+      F.unpack("kit", b.getvalue(), Path(d), "liondriver-assets:x.zip")
+
   def test_unsafe_names(self):
     self.assertEqual(F._safe_name("../../etc/x.jpg"), "x.jpg")
     with self.assertRaises(ValueError):
@@ -177,7 +228,15 @@ class TestFetchAssets(unittest.TestCase):
   def test_slots_are_complete(self):
     spec = F.load_slots()
     for name, slot in spec["slots"].items():
-      self.assertIn(slot["kind"], ("hdri", "pbr", "model"), name)
+      self.assertIn(slot["kind"], ("hdri", "pbr", "model", "kit"), name)
+      if slot["kind"] == "kit":                         # CC-BY kits: from LionDriver-assets, credited, no search
+        self.assertTrue(slot["candidates"] and all(c["source"] == "liondriver-assets" for c in slot["candidates"]),
+                        name)
+        self.assertTrue(slot["licence"].startswith("CC-BY") and slot["author"] and slot["title"], name)
+        self.assertTrue(slot["page"].startswith("https://sketchfab.com/3d-models/") and slot["file"], name)
+        self.assertLessEqual(set(slot["pieces"]), {"city_block", "skyline", "farm", "roadside", "bins", "cars",
+                                                    "trailer"}, name)
+        continue
       self.assertTrue(slot["candidates"] and slot.get("search"), name)
       if slot["kind"] == "pbr":
         self.assertIn("size_m", slot, name)

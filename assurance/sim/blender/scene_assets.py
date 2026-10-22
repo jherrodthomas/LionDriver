@@ -47,7 +47,7 @@ class Assets:
   def __init__(self, lock: Path | None = None, root: Path | None = None):
     lock = lock or Path(os.environ.get("LIONDRIVER_ASSET_LOCK") or ASSET_LOCK)
     root = root or Path(os.environ.get("LIONDRIVER_ASSET_LIBRARY") or ASSET_DIR)
-    self.slots = {}
+    self.slots, self.root = {}, root
     if lock.exists():
       for name, s in json.loads(lock.read_text()).get("slots", {}).items():
         files = {m: root / f["path"] for m, f in s["files"].items()}
@@ -992,12 +992,13 @@ def street_furniture(items: list, r: dict, env: dict, coll, models: dict, trunk,
       rnd.choice(models[kind]).place(rnd, kind, coll, root, loc, yaw=it["yaw"])
 
 
-def build_scenery(r: dict, env: dict, assets: Assets | None = None, seed: int = 7, furniture: list | None = None):
+def build_scenery(r: dict, env: dict, assets: Assets | None = None, seed: int = 7, furniture: list | None = None,
+                  buildings: bool = True):
   """Trees (broadleaf and conifer), shrubs, verge grass, buildings and street furniture beside the road, as the road's
   scenery asks: trees (a row either side, shrubs under them), open (sparse trees in fields), urban (buildings and the
   street furniture street_layout.layout lists); grass on rural and highway verges except under snow. Scanned plants
   and furniture where their model slots are fetched, procedural trees otherwise; the trees stand in the same places
-  either way."""
+  either way. buildings False leaves out the procedural boxes (scenery_kits.py draws the street's rows instead)."""
   assets = assets or no_assets()
   rnd = random.Random(seed)
   c = r["centre"]
@@ -1069,7 +1070,7 @@ def build_scenery(r: dict, env: dict, assets: Assets | None = None, seed: int = 
     facades = [facade_material(f"facade_{k}", w, lit=1.5 if night else 0.0) for k, w in enumerate(walls)]
     roof = material("roof", SNOW_RGB if env.get("snow") else (0.2, 0.2, 0.21), rough=0.8)
     root = empty("buildings", coll)
-    for side, d_face in ((1, left_out + 1.0), (-1, right_out - 1.0)):
+    for side, d_face in ((1, left_out + 1.0), (-1, right_out - 1.0)) if buildings else ():
       s = c[0][3]
       while s < c[-1][3]:
         wdt = rnd.uniform(14, 26)

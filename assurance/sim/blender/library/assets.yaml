@@ -1,11 +1,13 @@
-# CC0 asset slots of the hazardous-event scenes: sky HDRIs, PBR ground textures and scanned plant models from Poly
-# Haven (polyhaven.com, every asset CC0 1.0) and ambientCG (ambientcg.com, every asset CC0 1.0). fetch_assets.py downloads
+# Asset slots of the hazardous-event scenes: sky HDRIs, PBR ground textures and scanned plant models from Poly
+# Haven (polyhaven.com, every asset CC0 1.0) and ambientCG (ambientcg.com, every asset CC0 1.0), and CC-BY 4.0 model
+# kits (buildings, cars, a trailer) from Sketchfab kept in the private repository LionDriver-assets. fetch_assets.py downloads
 # each slot into dest (git-ignored, under assurance/sim/assets/library/) and writes the chosen asset IDs, file names
 # and SHA-256 sums to library/assets.lock.json, which is committed. hazard_scene.py uses a slot's files when they are
 # present and its procedural look when they are not, so CI and offline runs need none of them.
 #
-#   kind         hdri (an equirectangular sky), pbr (a tiling ground material) or model (a scanned plant or piece of
-#                street furniture, glTF; Poly Haven only)
+#   kind         hdri (an equirectangular sky), pbr (a tiling ground material), model (a scanned plant or piece of
+#                street furniture, glTF; Poly Haven only) or kit (a set of CC-BY models from LionDriver-assets, drawn
+#                by scenery_kits.py as street_life.py plans; render-only extras, never read by export_scene.py)
 #   use          what it is for
 #   size_m       pbr: the real-world size one texture tile covers ([x, y] for a non-square image), as the source publishes it for the first
 #                candidate (Poly Haven "dimensions", ambientCG dimensionX); a fallback asset is drawn at the same size
@@ -28,8 +30,18 @@
 #                query); the most downloaded match is used
 #   maps         pbr: the texture maps wanted (color, normal, roughness, displacement, ao)
 #   resolution   1k or 2k (Poly Haven) / 1K-JPG or 2K-JPG (ambientCG); models at 1k
+#   licence, title, author, page   kit: the licence and the credit a published render owes (library/README.md §5)
+#   file         kit: the model file inside the unpacked zip (.fbx, .blend or .gltf)
+#   pieces       kit: {use: [mesh names]}: which meshes stand in for what. city_block (a building on the building
+#                line, its facade toward -Y in the file), skyline (towers set back beyond the street), farm and
+#                roadside (rural buildings), bins (grain bins), cars (the car pack: each body with its wheels) and
+#                trailer (a box trailer, its kingpin end toward -Y); [all] takes every mesh as one piece
+#   scale        kit: metres per file unit, where the file is not in metres
+#   skip         kit: objects of a .blend left out (its camera, light, own pavement)
+#   textures     kit: the folder the model's images are in, where the file points elsewhere
+#   width_m      kit: the real width a piece is scaled to (a US box trailer is 2.59 m wide)
 schema_version: 1
-licence: CC0 1.0 Universal (public domain dedication); no attribution required
+licence: CC0 1.0 Universal (public domain dedication), no attribution required; kits CC-BY 4.0 (each slot's licence)
 dest: assurance/sim/assets/library
 slots:
   # ---------------------------------------------------------------------------------------------- skies
@@ -260,3 +272,108 @@ slots:
       - {source: polyhaven, id: utility_box_01}
       - {source: polyhaven, id: utility_box_02}
     search: {source: polyhaven, categories: [structures]}
+
+  # ---------------------------------------------------------------------------------------------- CC-BY kits
+  # Sketchfab models under CC-BY 4.0, each checked to be its author's own work (portfolio, no game rips), downloaded
+  # by the project lead on 2026-10-22 and kept in LionDriver-assets/sketchfab/ with SHA256SUMS (too big for this
+  # repository; GitHub caps a file at 100 MB). A render that shows one must credit it (library/README.md §5).
+  # Brooklyn Street Row (B0rn2D13) is in that folder but not used: its facades carry graffiti.
+  city_brownstones:
+    kind: kit
+    use: Brownstone rows on both sides of an urban street (city_blocks)
+    licence: CC-BY 4.0
+    title: Brownstone Building Set - Low poly model
+    author: DanielZhabotinsky
+    page: https://sketchfab.com/3d-models/b15e6344acd844eabc823e1cc8332574
+    file: source/Brownstone_Building_Set.fbx
+    pieces:
+      city_block: [Brownstone_FlatFacade_1, Brownstone_FlatFacade_2, Brownstone_FlatFacade_3, Brownstone_FlatFacade_5,
+                   Brownstone_FlatFacade_6, Brownstone_FlatFacade_7, Brownstone_FlatFacade_9, Brownstone_FlatFacade_12,
+                   Brownstone_Commercial_1, Brownstone_Commercial_1_C, Brownstone_Classic_1,
+                   Brownstone_ClassicComplex_2, Brownstone_Harlem_1_B]
+    candidates:
+      - {source: liondriver-assets, id: sketchfab/brownstone-building-set-low-poly-model.zip}
+
+  city_chicago:
+    kind: kit
+    use: A pair of Chicago commercial buildings (611 N Wells St) among the brownstones (city_blocks)
+    licence: CC-BY 4.0
+    title: Realistic chicago buildings
+    author: 99.Miles
+    page: https://sketchfab.com/3d-models/c4a3993ef1e84e6d9d5a15c78da88aae
+    file: source/Chicago buildings/Asset/Source/Builds.blend
+    textures: source/Chicago buildings/Asset/Textures
+    scale: 0.3                          # its own units: five storeys about 21 m at 0.3
+    skip: [Camera, Light, Sidewalks]
+    pieces: {city_block: [all]}
+    candidates:
+      - {source: liondriver-assets, id: sketchfab/realistic-chicago-buildings.zip}
+
+  city_downtown:
+    kind: kit
+    use: Office blocks on the street and towers beyond it (city_blocks)
+    licence: CC-BY 4.0
+    title: Downtown Buildings Set - Low Poly model
+    author: DanielZhabotinsky
+    page: https://sketchfab.com/3d-models/7378e7fb9c914c39880d9913a6f4e1d6
+    file: source/Downtown_Buildings_Set.fbx
+    pieces:
+      city_block: [Downtown_BrownstoneOffice_1, Downtown_ClassicOffice_1, Downtown_ModernOffice_3]
+      skyline: [Downtown_ModernOffice_5, Downtown_ModernOffice_5_B, Downtown_Flatiron_1, Downtown_ArtDeco_1,
+                Downtown_ModernOffice_4, Downtown_ModernOffice_1_B, Downtown_ClassicOffice_1]
+    candidates:
+      - {source: liondriver-assets, id: sketchfab/downtown-buildings-set-low-poly-model.zip}
+
+  rural_buildings:
+    kind: kit
+    use: A farmstead and a roadside diner and stores beside rural roads (farmstead)
+    licence: CC-BY 4.0
+    title: Rural Buildings Set - Low Poly models
+    author: DanielZhabotinsky
+    page: https://sketchfab.com/3d-models/51ab7e74bac347a89725f1d22b928edf
+    file: source/Rural_Building_Set.fbx
+    pieces:
+      farm: [Rural_HouseOld_1, Rural_WoodenBuilding_1, Rural_WoodenBuilding_2, Rural_WoodenBuilding_4,
+             Rural_WoodenBuilding_5, Rural_QuonsetHut_1, Rural_TrailerH_1, Rural_UnmobileHome_1]
+      roadside: [Rural_Diner_1, Rural_Diner_2, Rural_StoreSmall_1, Rural_StoreSmall_2, Rural_StoreSmall_4,
+                 Rural_StoreSmall_6]
+    candidates:
+      - {source: liondriver-assets, id: sketchfab/rural-buildings-set-low-poly-models.zip}
+
+  grain_bins:
+    kind: kit
+    use: A row of grain bins on the farmstead (farmstead)
+    licence: CC-BY 4.0
+    title: Panola Grain Bins
+    author: frankmcmains
+    page: https://sketchfab.com/3d-models/342892c5b0ff4519a2327d05316e266c
+    file: source/model/model.fbx
+    scale: 6.0                          # the scan is normalised to 8.4 units; four bins about 50 m long
+    pieces: {bins: [all]}
+    candidates:
+      - {source: liondriver-assets, id: sketchfab/panola-grain-bins.zip}
+
+  car_pack:
+    kind: kit
+    use: Traffic cars, parked and passing cars of several shapes (traffic_skins, street_life)
+    licence: CC-BY 4.0
+    title: Generic passenger car pack
+    author: comrade1280
+    page: https://sketchfab.com/3d-models/20f9af9b8a404d5cb022ac6fe87f21f5
+    file: source/fab.fbx
+    pieces: {cars: [Compact, Coupe, Hatchback, minivan, Offroad, Pickup, Sedan, SUV, Wagon]}   # Sport left out
+    candidates:
+      - {source: liondriver-assets, id: sketchfab/generic-passenger-car-pack.zip}
+
+  box_trailer:
+    kind: kit
+    use: A 53 ft box trailer behind the traffic trucks (trailers)
+    licence: CC-BY 4.0
+    title: Truck Trailer FREE
+    author: NLM-Group
+    page: https://sketchfab.com/3d-models/575958a53e3d4e9f8bcfb1ee2cef67bf
+    file: source/Trailer.blend
+    width_m: 2.59
+    pieces: {trailer: [all]}
+    candidates:
+      - {source: liondriver-assets, id: sketchfab/truck-trailer-free.zip}

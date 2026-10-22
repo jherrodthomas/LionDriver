@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fetch the CC0 sky HDRIs, ground textures and scanned plant models of the hazardous-event scenes
-(library/assets.yaml) from Poly Haven and ambientCG, and record what was fetched in library/assets.lock.json
-(committed).
+(library/assets.yaml) from Poly Haven and ambientCG, unpack the CC-BY model kits from the private repository
+LionDriver-assets, and record what was fetched in library/assets.lock.json (committed).
 
 Each slot tries its candidate asset IDs in order and, when none resolves, searches the source's API and takes the
 most downloaded match. Files go under assurance/sim/assets/library/<slot>/ (git-ignored; a model keeps the glTF's
@@ -9,6 +9,12 @@ own layout, textures/ beside the .gltf and .bin); the lock holds the asset ID, t
 every file. With --locked, exactly the locked files are fetched and each is checked against its SHA-256, so two
 machines render with the same pixels. Nothing in CI needs the files: hazard_scene.py falls back to its procedural
 look per slot.
+
+A kit slot (source liondriver-assets) names a zip under sketchfab/ in a local clone of jherrodthomas/LionDriver-assets
+(LIONDRIVER_ASSETS_REPO, else a liondriver-assets or LionDriver-assets folder beside this repository). The zip must
+match the SHA-256 in that folder's SHA256SUMS; it is unpacked whole (a zip inside it into a folder of its name) and
+the lock holds the SHA-256 of the zip and of every file unpacked. The kits are CC-BY 4.0: library/README.md §5
+credits them.
 
   python3 assurance/sim/blender/fetch_assets.py                 # resolve, fetch what is missing, write the lock
   python3 assurance/sim/blender/fetch_assets.py --locked        # fetch the locked files, check their SHA-256
@@ -41,6 +47,8 @@ HOSTS = {"polyhaven": ["api.polyhaven.com", "dl.polyhaven.org"], "ambientcg": ["
 POLYHAVEN_API = "https://api.polyhaven.com"
 AMBIENTCG_API = "https://ambientcg.com/api/v2/full_json"
 USER_AGENT = "LionDriver-assurance-fetch_assets/1 (+https://github.com/jherrodthomas/liondriver)"
+ASSETS_REPOS = ("liondriver-assets", "LionDriver-assets")   # the private repository's folder beside this one
+SKIP_MEMBERS = ("desktop.ini", "thumbs.db")                 # junk in some kits, never unpacked
 
 # The map names each source uses for the maps a slot asks for (Poly Haven file keys; ambientCG zip suffixes)
 POLYHAVEN_MAPS = {"color": ["Diffuse", "diff"], "normal": ["nor_gl"], "roughness": ["Rough", "rough"],
@@ -50,7 +58,8 @@ AMBIENTCG_MAPS = {"color": "_Color", "normal": "_NormalGL", "roughness": "_Rough
 
 
 # Slot fields copied into the lock, where hazard_scene.py reads them (Blender's Python has no YAML)
-TUNING = ("strength", "size_m", "tint", "roughness_min", "role", "height_m", "scale", "exclude", "groups")
+TUNING = ("strength", "size_m", "tint", "roughness_min", "role", "height_m", "scale", "exclude", "groups", "title",
+          "author", "file", "pieces", "skip", "textures", "width_m")
 
 
 class NotFound(Exception):
@@ -151,8 +160,70 @@ def ambientcg_search(slot: dict, search: dict, fetch_json=get_json) -> list[str]
   return [a["assetId"] for a in fetch_json(f"{AMBIENTCG_API}?{q}").get("foundAssets", [])]
 
 
+# ------------------------------------------------------------------------------------------------- LionDriver-assets
+def assets_repo() -> Path:
+  """The local clone of the private LionDriver-assets repository."""
+  if os.environ.get("LIONDRIVER_ASSETS_REPO"):
+    return Path(os.environ["LIONDRIVER_ASSETS_REPO"])
+  return next((ROOT.parent / n for n in ASSETS_REPOS if (ROOT.parent / n).exists()), ROOT.parent / ASSETS_REPOS[0])
+
+
+def checked_archive(asset_id: str, repo: Path | None = None) -> tuple[Path, str]:
+  """(path, SHA-256) of a zip in LionDriver-assets, after checking it against its folder's SHA256SUMS."""
+  repo = repo or assets_repo()
+  path = repo / _safe_relpath(asset_id)
+  if not path.is_file():
+    raise NotFound(f"liondriver-assets {asset_id}: not in {repo}")
+  sums_file = path.parent / "SHA256SUMS"
+  sums = {}
+  if sums_file.exists():
+    for line in sums_file.read_text().splitlines():
+      if line.strip():
+        digest, fname = line.split(None, 1)
+        sums[fname.lstrip("*").strip()] = digest.lower()
+  got = sha256(path.read_bytes())
+  if sums.get(path.name) != got:
+    raise RuntimeError(f"liondriver-assets {asset_id}: SHA-256 {got[:12]} is not the one in SHA256SUMS")
+  return path, got
+
+
+def private_files(slot: dict, asset_id: str, fetch_json=None) -> dict[str, dict]:
+  if slot["kind"] != "kit":
+    raise NotFound(f"liondriver-assets {asset_id}: holds kits only")
+  path, digest = checked_archive(asset_id)
+  return {"archive": {"url": f"liondriver-assets:{asset_id}", "archive": str(path), "sha256": digest}}
+
+
+def unpack(name: str, data: bytes, dest: Path, url: str, prefix: str = "") -> dict[str, dict]:
+  """Every member of a zip under dest/<slot>/ (a zip inside it into a folder of its name): {relative path: {path,
+  sha256, url}}."""
+  out = {}
+  with zipfile.ZipFile(io.BytesIO(data)) as z:
+    for info in z.infolist():
+      if info.is_dir() or Path(info.filename).name.lower() in SKIP_MEMBERS or info.filename.endswith(".blend1"):
+        continue
+      rel = _safe_relpath(prefix + info.filename.replace("\\", "/"))
+      body = z.read(info)
+      if rel.lower().endswith(".zip"):
+        out.update(unpack(name, body, dest, url, rel[:-4] + "/"))
+        continue
+      (dest / name / rel).parent.mkdir(parents=True, exist_ok=True)
+      (dest / name / rel).write_bytes(body)
+      out[rel] = {"path": f"{name}/{rel}", "sha256": sha256(body), "url": url}
+  return out
+
+
+def unpack_kit(name: str, asset_id: str, dest: Path, want: str | None = None) -> tuple[str, dict[str, dict]]:
+  """(zip SHA-256, files) of a kit unpacked from LionDriver-assets; want: the zip SHA-256 the lock expects."""
+  path, digest = checked_archive(asset_id)
+  if want and digest != want:
+    raise RuntimeError(f"{name}: {asset_id} differs from the zip in the lock")
+  return digest, unpack(name, path.read_bytes(), dest, f"liondriver-assets:{asset_id}")
+
+
 SOURCES = {"polyhaven": (polyhaven_files, polyhaven_search, "https://polyhaven.com/a/{id}"),
-           "ambientcg": (ambientcg_files, ambientcg_search, "https://ambientcg.com/view?id={id}")}
+           "ambientcg": (ambientcg_files, ambientcg_search, "https://ambientcg.com/view?id={id}"),
+           "liondriver-assets": (private_files, lambda *a, **k: [], "{page}")}
 
 
 # ------------------------------------------------------------------------------------------------- slots
@@ -256,6 +327,13 @@ def fetch(names: list[str], locked: bool, fetch_json=get_json, fetch_bytes=get_b
       if locked:
         if not entry:
           raise NotFound(f"{name}: not in {lock_path.name}")
+        if entry.get("archive"):
+          _, got = unpack_kit(name, entry["id"], dest, entry["archive"]["sha256"])
+          bad = sorted(k for k in entry["files"] if got.get(k, {}).get("sha256") != entry["files"][k]["sha256"])
+          if bad or set(got) != set(entry["files"]):
+            raise RuntimeError(f"{name}: unpacked files differ from the lock ({', '.join(bad[:3]) or 'file list'})")
+          print(f"{name}: {entry['source']} {entry['id']} unpacked, SHA-256 match")
+          continue
         got = download(name, {m: {"url": f["url"], "member": f.get("member"),
                                   "name": None if f.get("member") else f["path"].split("/", 1)[1]}
                               for m, f in entry["files"].items()}, dest, fetch_bytes)
@@ -265,14 +343,20 @@ def fetch(names: list[str], locked: bool, fetch_json=get_json, fetch_bytes=get_b
         print(f"{name}: {entry['source']} {entry['id']} fetched, SHA-256 match")
         continue
       source, asset_id, files = resolve(name, slot, fetch_json)
-      got = download(name, files, dest, fetch_bytes)
-      for m, f in files.items():
-        if f.get("member"):
-          got[m]["member"] = f["member"]
-      lock["slots"][name] = {"source": source, "id": asset_id, "page": SOURCES[source][2].format(id=asset_id),
-                             "licence": "CC0 1.0", "kind": slot["kind"], "use": slot["use"],
-                             **{k: slot[k] for k in TUNING if k in slot}, "files": got}
-      print(f"{name}: {source} {asset_id} ({', '.join(got)})")
+      extra = {}
+      if source == "liondriver-assets":
+        digest, got = unpack_kit(name, asset_id, dest)
+        extra = {"archive": {"sha256": digest}}
+      else:
+        got = download(name, files, dest, fetch_bytes)
+        for m, f in files.items():
+          if f.get("member"):
+            got[m]["member"] = f["member"]
+      lock["slots"][name] = {"source": source, "id": asset_id,
+                             "page": SOURCES[source][2].format(id=asset_id, page=slot.get("page", "")),
+                             "licence": slot.get("licence", "CC0 1.0"), "kind": slot["kind"], "use": slot["use"],
+                             **{k: slot[k] for k in TUNING if k in slot}, **extra, "files": got}
+      print(f"{name}: {source} {asset_id} ({len(got)} files)" if extra else f"{name}: {source} {asset_id} ({', '.join(got)})")
     except (NotFound, RuntimeError, urllib.error.URLError, OSError, zipfile.BadZipFile) as e:
       failed.append(name)
       print(f"{name}: FAILED: {e}", file=sys.stderr)

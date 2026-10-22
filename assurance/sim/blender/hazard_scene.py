@@ -36,6 +36,7 @@ import bpy
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import scene_assets as A  # noqa: E402
+import scenery_kits  # noqa: E402
 import street_layout  # noqa: E402
 
 SIM = HERE.parent
@@ -589,7 +590,7 @@ def build(sc: dict, vehicle: Path | None, front: str | None) -> dict:
   A.build_environment(env, sc["actors"][0]["poses"][0][2], assets)
   A.build_road(sc["road"], env, assets)
   furniture = street_layout.layout(sc) if sc["road"]["scenery"] == "urban" else None
-  A.build_scenery(sc["road"], env, assets, furniture=furniture)
+  A.build_scenery(sc["road"], env, assets, furniture=furniture, buildings=not scenery_kits.city_ready(env, assets))
   props = bpy.data.collections.new("props")
   scene.collection.children.link(props)
   build_props(sc, props, env)
@@ -617,6 +618,8 @@ def build(sc: dict, vehicle: Path | None, front: str | None) -> dict:
   cams = build_cameras(sc)
   scene.camera = cams["chase"]
   A.build_surroundings(sc, env, cams["chase"], obs[0], frames, sc["fps"], street_layout.rear_view(sc))
+  print("extras: " + scenery_kits.build(sc, env, assets, keyframe_poses, walk_rig, (headlights, taillights),
+                                                street_layout.rear_view(sc)))
   A.build_weather(env, obs[0], sc["road"]["centre"], frames, sc["fps"], cams=(cams["chase"], cams["driver"]))
   return {"keys": keys, "cams": cams}
 

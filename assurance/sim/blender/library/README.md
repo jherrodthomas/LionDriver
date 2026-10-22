@@ -9,7 +9,7 @@ weather or lighting code it is rated for. Pictures only: synthetic (DSR-12), no 
 | [`environments.yaml`](environments.yaml) | 14 static worlds: cross-section, geometry, scenery, road furniture, the operational situations (OS-) they represent, the conditions each allows | `export_scene.py` |
 | [`conditions.yaml`](conditions.yaml) | W01 to W06 of the HARA and the TC-01 / TC-01-NB low-sun presets: exposure, ODD, what the HARA model changes, and the look | `export_scene.py`, `hazard_scene.py` |
 | [`traffic.yaml`](traffic.yaml) | Illustrative traffic presets placed relative to the ego | `export_scene.py` |
-| [`assets.yaml`](assets.yaml) | CC0 sky HDRIs, ground textures, scanned plants and street furniture (Poly Haven, ambientCG) with candidate IDs and a search fallback | `fetch_assets.py`, `hazard_scene.py` |
+| [`assets.yaml`](assets.yaml) | CC0 sky HDRIs, ground textures, scanned plants and street furniture (Poly Haven, ambientCG) with candidate IDs and a search fallback; CC-BY 4.0 model kits (buildings, cars, a trailer) from the private LionDriver-assets repository (section 5) | `fetch_assets.py`, `hazard_scene.py`, `scenery_kits.py` |
 | [`people/`](people/README.md) | Two CC0 pedestrian figures (Quaternius) with a walk cycle, built by `people/build_people.py` and committed | `hazard_scene.py` |
 | `assets.lock.json` | The asset IDs and SHA-256 sums `fetch_assets.py` chose; committed once it has run (section 4) | `fetch_assets.py --locked`, `hazard_scene.py` |
 
@@ -207,3 +207,63 @@ hide.
 The lamp columns (10 m tapered poles whose 2 m arm curves over the carriageway, with a point light at night) and the glass bus shelters
 (with a bench, a lit advert and the stop sign) are procedural. Poly Haven has only 3.9 m heritage lamp posts and no
 shelter. The furniture models are small (4,000 to 75,000 triangles), so render time and memory do not change.
+
+## 5. CC-BY kits and render-only extras
+
+Busy streets, farmsteads and varied traffic come from seven Sketchfab model kits under **CC-BY 4.0**. Each was
+checked to be its author's own work (a portfolio of originals, no game rips). The project lead downloaded them on
+2026-10-22. They live in the private repository `jherrodthomas/LionDriver-assets` under `sketchfab/`, with a
+`SHA256SUMS` file, because some are bigger than this repository should hold.
+
+`fetch_assets.py` unpacks a kit slot from a local clone of that repository (`LIONDRIVER_ASSETS_REPO`, else a
+`liondriver-assets` folder beside this one). It first checks the zip against `SHA256SUMS`, then records the SHA-256 of
+the zip and of every unpacked file in `assets.lock.json`; `--locked` unpacks again and checks them. Without the
+clone the scenes keep the procedural look.
+
+**Credits.** A render that shows these models must credit them. The gallery and the dashboards carry this table.
+
+| Slot | Model (Sketchfab) | Author | Used for |
+|---|---|---|---|
+| `city_brownstones` | [Brownstone Building Set - Low poly model](https://sketchfab.com/3d-models/b15e6344acd844eabc823e1cc8332574) | DanielZhabotinsky | Brownstone rows on urban streets |
+| `city_chicago` | [Realistic chicago buildings](https://sketchfab.com/3d-models/c4a3993ef1e84e6d9d5a15c78da88aae) | 99.Miles | A pair of commercial buildings among them |
+| `city_downtown` | [Downtown Buildings Set - Low Poly model](https://sketchfab.com/3d-models/7378e7fb9c914c39880d9913a6f4e1d6) | DanielZhabotinsky | Office blocks on the street, towers beyond it |
+| `rural_buildings` | [Rural Buildings Set - Low Poly models](https://sketchfab.com/3d-models/51ab7e74bac347a89725f1d22b928edf) | DanielZhabotinsky | Farmstead, roadside diner and stores |
+| `grain_bins` | [Panola Grain Bins](https://sketchfab.com/3d-models/342892c5b0ff4519a2327d05316e266c) | frankmcmains | Grain bins on the farmstead |
+| `car_pack` | [Generic passenger car pack](https://sketchfab.com/3d-models/20f9af9b8a404d5cb022ac6fe87f21f5) | comrade1280 | Traffic, parked and passing cars (nine shapes, no real makes) |
+| `box_trailer` | [Truck Trailer FREE](https://sketchfab.com/3d-models/575958a53e3d4e9f8bcfb1ee2cef67bf) | NLM-Group | A 53 ft box trailer behind traffic trucks |
+
+All seven are [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/). The pedestrians are the CC0 Quaternius
+figures of `people/`. The Brooklyn street-row kit is in the private folder but not used, because its facades carry
+graffiti. The gas station and the overpass from the shortlist are not used yet: one came as a `.rar` inside its zip,
+the other is over GitHub's 100 MB file limit.
+
+**What the extras are.** [`../street_life.py`](../street_life.py) plans them, in plain Python so CI checks every
+scene. [`../scenery_kits.py`](../scenery_kits.py) draws them in Blender. Each is a key of an environment's `env`:
+
+| Key | What it draws | Where it is on |
+|---|---|---|
+| `city_blocks` | Brownstone, Chicago and office buildings shoulder to shoulder on both building lines, in place of the procedural boxes, breaking for every cross street and crosswalk; towers beyond the end of the street | urban |
+| `street_life` | `dense` or `light`: cars in the parking lanes, cars driving the oncoming lanes, and people walking the pavements both ways or waiting at the corners of a cross street | urban (`dense`) |
+| `farmstead` | A farm (house, barns, sheds, grain bins) about 30 m past the verge on one side, and a diner or stores with parked cars about 16 m past it, ahead of the chase camera, standing on the terrain | rural |
+| `traffic_skins` | The traffic cars drawn with the car pack, so a street is not all Corollas, each scaled to the length of the car outline the analysis uses (4.63 m), so a skin never reaches past its road user. The ego and the critical road user keep the Corolla | every environment |
+| `trailers` | A box trailer behind each traffic truck, the truck's cab kept, where no road user follows closely enough to touch it | highway |
+
+**They never change the analysis.** `export_scene.py` never reads any of this, and a skin or a trailer is drawn on a
+road user's own animated root, so its poses do not move. Nor may an extra change what a scene shows.
+`test_scenes.py` checks every scene's plan:
+
+- no extra stands near the chase camera or on its line of sight to the ego at any frame;
+- a passing car stays 8 m from every scene road user at the same frame;
+- a pedestrian stays 2.5 m from every road user at the same frame, 6 m from every pose of a scene pedestrian or
+  cyclist, and clear of the street furniture;
+- a parked car stays 6 m from every pose of every road user, and out of the cross streets;
+- a building row breaks for every intersection and crosswalk;
+- the ego and the critical road user are never skinned or given a trailer.
+
+The same test exports every scene with these keys removed and checks that the analysis is unchanged.
+
+Scans carry daylight in their colour maps, so at night they are dimmed; under snow their roofs get snow. People are
+cloned from the two figures, each with its own rig, walk and shirt colour. A 1280 × 720 chase still of
+`sh-09-red-light`, with 30 buildings, 36 parked and 5 passing cars and 57 people, builds in about 25 s and peaks at
+6.2 GB, against about 5 GB without the extras.
+

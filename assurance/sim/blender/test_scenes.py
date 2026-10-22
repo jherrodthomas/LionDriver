@@ -4,7 +4,9 @@ scene. Every scene is built from the library (environment, condition, traffic) w
 allows, a plant case drives the geometry its environment has, the library's codes match the HARA, and a variant
 shows its base scene's motion and outcome under another condition. The street furniture of an urban scene stays on
 its pavement and clear of every pedestrian and cyclist, intersection, traffic light and crosswalk. The committed
-pedestrian figures carry their walk and clothes slots. The look of the surroundings never changes the analysis."""
+pedestrian figures carry their walk and clothes slots. The look of the surroundings never changes the analysis, and
+the render-only extras (street_life.py: building rows, parked and passing cars, people, trailers) keep clear of every
+scene road user and of the chase camera's view of the ego."""
 
 from __future__ import annotations
 
@@ -15,6 +17,7 @@ import unittest
 
 import export_scene
 import street_layout
+import street_life
 
 sys.path.insert(0, str(export_scene.ASSURANCE / "02-concept" / "hara"))
 import hara_model  # noqa: E402
@@ -180,7 +183,7 @@ class TestScenes(unittest.TestCase):
     """The look keys of the surroundings (scene_assets.build_surroundings) take valid values, and every scene exports
     the same motion, events, contact, gap, TTC, poses, cross-section and props with all of them removed."""
     look = {"horizon", "haze_km", "terrain", "verge_plants", "distant", "cloud_shadows", "spray", "road_wear",
-            "camera_feel"}
+            "camera_feel", "city_blocks", "street_life", "farmstead", "traffic_skins", "trailers"}
     for kind in ("environments", "conditions"):
       for name, e in self.lib[kind].items():
         env = e.get("env", {})
@@ -188,6 +191,9 @@ class TestScenes(unittest.TestCase):
         self.assertLessEqual(set(env.get("distant", [])), {"pylons", "billboard", "farm", "flyover"}, name)
         self.assertTrue(0.0 <= env.get("spray", 0.0) <= 1.0, name)
         self.assertGreater(env.get("haze_km", 1.0), 0.0, name)
+        self.assertIn(env.get("street_life"), (None, *street_life.DENSITY), name)
+        for k in ("city_blocks", "farmstead", "traffic_skins", "trailers"):
+          self.assertIn(env.get(k, False), (True, False), name)
     bare = copy.deepcopy(self.lib)
     for kind in ("environments", "conditions"):
       for e in bare[kind].values():
@@ -200,6 +206,42 @@ class TestScenes(unittest.TestCase):
       plain = export_scene.build(s, self.hes, bare)
       for k in keys:
         self.assertEqual(plain[k], self.built[s["id"]][k], f"{s['id']}: {k}")
+
+  def test_extras_keep_clear(self):
+    """Every extra street_life.py plans stays clear of the scene's road users (at the same frame for what moves),
+    of its pedestrians and cyclists, of the chase camera's view of the ego, and of the cross streets; a building
+    row breaks for every intersection and crosswalk; the ego and the critical road user keep their Corolla."""
+    planned = 0
+    for sc in self.built.values():
+      p = street_life.plan(sc)
+      lines = street_life._lines_by_frame(sc)
+      gaps = street_life._gaps(sc)
+      frames = len(sc["t"])
+      for b in p["blocks"]:
+        self.assertFalse(any(a < b["s"] + b["w"] / 2 and b["s"] - b["w"] / 2 < z for a, z in street_life._gaps(sc, 3.0)),
+                         (sc["id"], b))
+      for c in p["parked"]:
+        xy = [(c["x"], c["y"])]
+        self.assertFalse(street_life._near_road_users(sc, xy, street_life.CLEAR_PARKED_M, same_frame=False), sc["id"])
+        self.assertFalse(street_life._hidden_by(lines, xy * frames, street_life.CAR_HALF_M), sc["id"])
+        self.assertFalse(street_life._in_gap(gaps, c["s"]), sc["id"])
+      for c in p["passing"]:
+        xy = [(x, y) for x, y, _ in c["path"]]
+        self.assertEqual(len(xy), frames, sc["id"])
+        self.assertFalse(street_life._near_road_users(sc, xy, street_life.CLEAR_ROAD_USER_M), sc["id"])
+        self.assertFalse(street_life._hidden_by(lines, xy, street_life.CAR_HALF_M), sc["id"])
+      for w in p["walkers"]:
+        xy = [(x, y) for x, y, _ in w["path"]]
+        self.assertEqual(len(xy), frames, sc["id"])
+        self.assertFalse(street_life._near_road_users(sc, xy, street_life.CLEAR_WALKER_M), sc["id"])
+        self.assertFalse(street_life._near_vulnerable(sc, xy), sc["id"])
+        self.assertFalse(street_life._hidden_by(lines, xy, street_life.WALKER_R_M), sc["id"])
+      kept = {sc["actors"][0]["name"], sc.get("critical")}
+      self.assertFalse(kept & (set(p["skins"]) | set(p["trailers"])), sc["id"])
+      planned += len(p["walkers"]) + len(p["parked"])
+      if sc["env"].get("street_life"):
+        self.assertTrue(p["blocks"] and p["walkers"], sc["id"])
+    self.assertGreater(planned, 500)
 
   def test_kinematic_values_resolve(self):
     self.assertEqual(export_scene.value("t_r"), 1.5)

@@ -29,6 +29,10 @@
 #                billboard, farm, flyover), road_wear (patches, cracks, joints, skid marks, studs), camera_feel
 #                (vignette, grain, mild depth of field), cloud_shadows: false (none, whatever the condition). Visual
 #                only: the road's cross-section, and so every contact and event, is the same with or without it
+#                Render-only extras from the CC-BY kits (street_life.py plans, scenery_kits.py draws; README §5):
+#                city_blocks (building rows from the kits instead of the procedural boxes), street_life (dense or
+#                light: parked and passing cars, pedestrians), farmstead (a farm and a roadside diner), traffic_skins
+#                (traffic cars from the car pack), trailers (a box trailer behind traffic trucks)
 #   traffic      the default traffic preset (library/traffic.yaml)
 schema_version: 1
 environments:
@@ -45,7 +49,7 @@ environments:
       - {kind: lamps, d: -9.6, every_m: 45}
       - {kind: sign, ds_m: 140, d: -10.0, style: speed, text: "65"}
     env: {horizon: true, terrain: embankment, verge_plants: true, distant: [pylons, billboard, farm, flyover],
-          road_wear: true, camera_feel: true}
+          road_wear: true, camera_feel: true, traffic_skins: true, trailers: true}
     traffic: none
 
   highway-curve:
@@ -61,7 +65,7 @@ environments:
       - {kind: lamps, d: -9.6, every_m: 45}
       - {kind: sign, ds_m: 30, d: -10.0, style: warning, text: curve}
     env: {horizon: true, terrain: rolling, verge_plants: true, distant: [pylons, billboard, farm, flyover],
-          road_wear: true, camera_feel: true}
+          road_wear: true, camera_feel: true, traffic_skins: true, trailers: true}
     traffic: none
 
   highway-interchange:
@@ -78,7 +82,7 @@ environments:
       - {kind: lamps, d: -9.6, every_m: 45}
       - {kind: posts, d: 7.0, every_m: 50}
     env: {walkway_m: 1.3, horizon: true, terrain: rolling, verge_plants: true, distant: [pylons, farm, flyover],
-          road_wear: true, camera_feel: true}
+          road_wear: true, camera_feel: true, traffic_skins: true, trailers: true}
     traffic: none
 
   highway-queue:
@@ -92,7 +96,7 @@ environments:
     props:
       - {kind: posts, d: 7.0, every_m: 50}
     env: {horizon: true, terrain: rolling, verge_plants: true, distant: [pylons, billboard, farm, flyover],
-          road_wear: true, camera_feel: true}
+          road_wear: true, camera_feel: true, traffic_skins: true, trailers: true}
     traffic: none
 
   highway-worn-markings:
@@ -106,7 +110,7 @@ environments:
     props:
       - {kind: posts, d: 7.0, every_m: 50}
     env: {horizon: true, terrain: rolling, verge_plants: true, distant: [pylons, billboard, farm, flyover],
-          road_wear: true, camera_feel: true}
+          road_wear: true, camera_feel: true, traffic_skins: true, trailers: true}
     traffic: none
 
   highway-construction:
@@ -124,7 +128,7 @@ environments:
                  [88, 1.11], [94, 1.48], [100, 1.85], [112, 1.85], [124, 1.85], [136, 1.85], [148, 1.85]]
       - {kind: barrels, d: -7.6, from_ds: 30, to_ds: 160, every_m: 12}
     env: {horizon: true, terrain: rolling, verge_plants: true, distant: [pylons, farm],
-          road_wear: true, camera_feel: true}
+          road_wear: true, camera_feel: true, traffic_skins: true, trailers: true}
     traffic: none
 
   rural-undivided:
@@ -139,7 +143,7 @@ environments:
       - {kind: posts, d: -3.0, every_m: 50}
       - {kind: posts, d: 6.5, every_m: 50}
     env: {horizon: true, terrain: ditch, verge_plants: true, distant: [pylons, billboard, farm],
-          road_wear: true, camera_feel: true}
+          road_wear: true, camera_feel: true, farmstead: true, traffic_skins: true}
     traffic: none
 
   rural-curve:
@@ -155,7 +159,7 @@ environments:
       - {kind: posts, d: 6.5, every_m: 25}
       - {kind: sign, ds_m: 25, d: -3.5, style: warning, text: curve}
     env: {horizon: true, terrain: ditch, verge_plants: true, distant: [pylons, farm],
-          road_wear: true, camera_feel: true}
+          road_wear: true, camera_feel: true, farmstead: true, traffic_skins: true}
     traffic: none
 
   urban-arterial:
@@ -167,7 +171,8 @@ environments:
     road: {type: urban, lanes_left: 1, lanes_right: 0, lane_width: 3.3, scenery: urban, geometry: straight}
     geometry: any
     props: []
-    env: {sun_elevation_min: 12, road_wear: true, camera_feel: true, cloud_shadows: false}
+    env: {sun_elevation_min: 12, road_wear: true, camera_feel: true, cloud_shadows: false, city_blocks: true,
+          street_life: dense, traffic_skins: true}
     traffic: none
 
   urban-intersection:
@@ -181,7 +186,8 @@ environments:
       - {kind: intersection, ds_m: 60, width: 14}
       - {kind: traffic_light, ds_m: 52, d: -3.9, state: red}
       - {kind: traffic_light, ds_m: 52, d: 5.6, state: red}
-    env: {sun_elevation_min: 12, road_wear: true, camera_feel: true, cloud_shadows: false}
+    env: {sun_elevation_min: 12, road_wear: true, camera_feel: true, cloud_shadows: false, city_blocks: true,
+          street_life: dense, traffic_skins: true}
     traffic: none
 
   # --------------------------------------------------------------------- SOTIF triggering conditions (WP-C-06)
@@ -197,7 +203,7 @@ environments:
       - {kind: posts, d: 4.4, every_m: 50}
       - {kind: sign, ds_m: 60, d: -6.5, style: warning, text: NARROW}
     env: {horizon: true, terrain: rolling, verge_plants: true, distant: [pylons, billboard, farm, flyover],
-          road_wear: true, camera_feel: true}
+          road_wear: true, camera_feel: true, traffic_skins: true, trailers: true}
     traffic: adjacent-truck
 
   highway-crosswind:
@@ -214,7 +220,7 @@ environments:
       - {kind: windsock, ds_m: 190, d: -10.5, toward: left}
       - {kind: posts, d: 7.0, every_m: 50}
     env: {horizon: true, terrain: embankment, verge_plants: true, distant: [pylons, farm, flyover],
-          road_wear: true, camera_feel: true}
+          road_wear: true, camera_feel: true, traffic_skins: true, trailers: true}
     traffic: none
 
   highway-tunnel:
@@ -228,7 +234,8 @@ environments:
     props:
       - {kind: tunnel, from_ds: 35, to_ds: 400}
       - {kind: sign, ds_m: 5, d: -8.0, style: guide, text: TUNNEL}
-    env: {horizon: true, verge_plants: true, distant: [pylons, farm], road_wear: true, camera_feel: true}
+    env: {horizon: true, verge_plants: true, distant: [pylons, farm], road_wear: true, camera_feel: true,
+          traffic_skins: true, trailers: true}
     traffic: none
 
   highway-exit-split:
@@ -244,6 +251,6 @@ environments:
       - {kind: gore, from_ds: 40, to_ds: 160, d: -1.85, width: 3.0, side: right}
       - {kind: posts, d: 7.0, every_m: 50}
     env: {horizon: true, terrain: rolling, verge_plants: true, distant: [pylons, billboard, farm, flyover],
-          road_wear: true, camera_feel: true}
+          road_wear: true, camera_feel: true, traffic_skins: true, trailers: true}
     traffic: none
 

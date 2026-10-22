@@ -177,3 +177,15 @@ The whole scene with the dashboard running, 24 fps (`hazard_scene.py --video`, `
 - [sh-10-lane-change-blind-spot](clips/sh-10-lane-change-blind-spot.mp4)
 - [sh-11-pedestrian-occluded](clips/sh-11-pedestrian-occluded.mp4)
 - [sh-13-construction-zone](clips/sh-13-construction-zone.mp4)
+
+## Credits
+
+The streets, farmsteads and traffic use these models from Sketchfab, each under [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/) ([`../library/`](../library/README.md) section 5). The pedestrians are CC0 (Quaternius); the ego is the purchased Corolla mesh.
+
+- [Truck Trailer FREE](https://sketchfab.com/3d-models/575958a53e3d4e9f8bcfb1ee2cef67bf) by NLM-Group, CC-BY 4.0
+- [Generic passenger car pack](https://sketchfab.com/3d-models/20f9af9b8a404d5cb022ac6fe87f21f5) by comrade1280, CC-BY 4.0
+- [Brownstone Building Set - Low poly model](https://sketchfab.com/3d-models/b15e6344acd844eabc823e1cc8332574) by DanielZhabotinsky, CC-BY 4.0
+- [Realistic chicago buildings](https://sketchfab.com/3d-models/c4a3993ef1e84e6d9d5a15c78da88aae) by 99.Miles, CC-BY 4.0
+- [Downtown Buildings Set - Low Poly model](https://sketchfab.com/3d-models/7378e7fb9c914c39880d9913a6f4e1d6) by DanielZhabotinsky, CC-BY 4.0
+- [Panola Grain Bins](https://sketchfab.com/3d-models/342892c5b0ff4519a2327d05316e266c) by frankmcmains, CC-BY 4.0
+- [Rural Buildings Set - Low Poly models](https://sketchfab.com/3d-models/51ab7e74bac347a89725f1d22b928edf) by DanielZhabotinsky, CC-BY 4.0

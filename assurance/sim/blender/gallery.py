@@ -4,7 +4,7 @@ Copies each scene's decisive dashboard (out/<scene>/dashboard.png from compose.p
 1600 px (a scene not rendered here keeps its committed dashboard; its row is built from out/<scene>/scene.json, so run
 export_scene.py first) and writes dashboards/README.md: one row per scene with the entry it pictures, the motion source, the
 outcome and the image. Renders of the purchased mesh may be published (assets/README.md); the .blend files may not
-and stay in out/.
+and stay in out/. The page ends with the credits the CC-BY kits of library/assets.lock.json ask for.
 
   python3 assurance/sim/blender/gallery.py
 """
@@ -22,6 +22,19 @@ import export_scene
 HERE = Path(__file__).resolve().parent
 OUT = HERE / "out"
 GAL = HERE / "dashboards"
+LOCK = HERE / "library" / "assets.lock.json"
+
+
+def credits() -> str:
+  """The credit section for the CC-BY model kits in the lock (library/README.md section 5), or nothing."""
+  slots = json.loads(LOCK.read_text()).get("slots", {}) if LOCK.exists() else {}
+  kits = [s for _, s in sorted(slots.items()) if s.get("kind") == "kit"]
+  if not kits:
+    return ""
+  return ("\n## Credits\n\nThe streets, farmsteads and traffic use these models from Sketchfab, each under "
+          "[CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/) ([`../library/`](../library/README.md) section 5). "
+          "The pedestrians are CC0 (Quaternius); the ego is the purchased Corolla mesh.\n\n"
+          + "\n".join(f"- [{k['title']}]({k['page']}) by {k['author']}, {k['licence']}" for k in kits) + "\n")
 
 
 def outcome(sc: dict) -> str:
@@ -100,7 +113,7 @@ def main() -> int:
             "accelerations, so a condition changes the picture, not the dynamics. The last column is what the HARA "
             "model changes for the condition.\n\n| Scene | Condition | HARA under this condition |\n|---|---|---|\n"
             + "\n".join(variants) + "\n" + tail)
-  (GAL / "README.md").write_text(head + "\n".join(rows) + "\n" + tail)
+  (GAL / "README.md").write_text(head + "\n".join(rows) + "\n" + tail + credits())
   print(f"{len(rows)} dashboards in {GAL}" + (f"; not rendered yet: {', '.join(missing)}" if missing else ""))
   return 0
 
