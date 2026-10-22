@@ -17,6 +17,7 @@
 - [Cybersecurity and ISO/SAE 21434](Cybersecurity-and-ISO-21434.md)
 - [AI safety and ISO/PAS 8800](AI-safety-and-ISO-PAS-8800.md)
 - [ASPICE: is the process capable?](ASPICE-process-capability.md)
+- [Integrated standards: one system, not five](Integrated-standards.md)
 - [For the assessor](For-the-assessor.md)
 - [Reference vehicle](Reference-vehicle.md)
 - [Contributor guide](Contributor-guide.md)
