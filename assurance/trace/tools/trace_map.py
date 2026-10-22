@@ -40,12 +40,10 @@ FIG = TRACE_DIR / "maps" / "fig-1-aspice-v-model.svg"
 YAML_KIND = {"hazard": "H", "hazardous-event": "HE", "safety-goal": "SG", "aou": "AOU", "fsr": "FSR",
              "tsr": "TSR", "swsr": "SWSR", "hwsr": "HWSR", "sotif-hazard": "SH", "triggering-condition": "TC",
              "functional-insufficiency": "FI", "functional-modification": "FM", "ai-requirement": "AIR",
-             "dataset-requirement": "DSR"}
+             "dataset-requirement": "DSR", "threat-scenario": "TS", "cybersecurity-goal": "CSG",
+             "cybersecurity-requirement": "CSR"}
 # Kinds defined only in work-product tables so far: prefix -> defining work products.
 DOC_KINDS = {
-  "TS": ["02-concept/WP-C-09-tara.md"],
-  "CSG": ["02-concept/WP-C-10-cybersecurity-goals-and-concept.md"],
-  "CSR": ["03-system/WP-S-07-cybersecurity-requirements-architecture.md"],
   "SYS": ["03-system/WP-S-01-system-requirements.md"],
 }
 KIND_NAME = {
@@ -122,6 +120,8 @@ DERIVATIONS = [
   ("TSR", "HWSR", "TSR -> HWSR (HW-allocated TSRs)", ct.HW_ALLOC),
   ("SH", "FI", "SOTIF hazard -> functional insufficiency", None),
   ("SH", "TC", "SOTIF hazard -> triggering condition", None),
+  ("TS", "CSG", "threat scenario -> cybersecurity goal", None),
+  ("CSG", "CSR", "cybersecurity goal -> cybersecurity requirement", None),
 ]
 ALLOC = {(d[0], d[1]): d[3] for d in DERIVATIONS}
 # One colour rule with vmodel.py: a case naming an item is a specified link, never green (green is approved or passed).

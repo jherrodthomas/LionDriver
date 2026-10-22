@@ -10,20 +10,27 @@ This report is informational: it does not fail CI. It changes, and CI asks for i
 
 | Requirement kind | Allocations | Resolved | Partly resolved | Not resolved |
 |---|---|---|---|---|
+| cybersecurity-requirement | 64 | 31 | 0 | 33 |
 | fsr | 58 | 57 | 0 | 1 |
 | hwsr | 46 | 3 | 0 | 43 |
 | swsr | 139 | 129 | 0 | 10 |
 | tsr | 128 | 128 | 0 | 0 |
-| **all** | **371** | **317** | **0** | **54** |
+| **all** | **435** | **348** | **0** | **87** |
 
-168 distinct `allocated_to` values.
+179 distinct `allocated_to` values.
 
-## Not resolved (51 values)
+## Not resolved (58 values)
 
 | `allocated_to` | Requirements | Identifiers not in the model |
 |---|---|---|
+| FW | CSR-011, CSR-012, CSR-013, CSR-014, CSR-015, CSR-022 and 9 more | no element identifier in the text |
+| ENV | CSR-073, CSR-126, CSR-131, CSR-132, CSR-133, CSR-134 and 1 more | no element identifier in the text |
+| USR | CSR-043, CSR-102, CSR-124, CSR-162 | no element identifier in the text |
 | Firmware | HWSR-506b, HWSR-506c, HWSR-701a | no element identifier in the text |
 | Cortex-M7 MPU | HWSR-507, SWSR-507a | no element identifier in the text |
+| FW; ENV | CSR-021, CSR-032 | no element identifier in the text |
+| FW; USR | CSR-041, CSR-042 | no element identifier in the text |
+| USR; ENV | CSR-152, CSR-161 | no element identifier in the text |
 | ADC on input divider | HWSR-505b | no element identifier in the text |
 | Analysis | HWSR-510a | no element identifier in the text |
 | Boot pins, option bytes (RDP/WRP), relay driver | HWSR-502c | no element identifier in the text |
@@ -33,6 +40,7 @@ This report is informational: it does not fail CI. It changes, and CI asks for i
 | Connectors | HWSR-703 | no element identifier in the text |
 | DAC/DMA and codec over I2C5 (tres) or SAI4 amplifier (cuatro); speaker | HWSR-516 | no element identifier in the text |
 | DAC/codec (board dependent) | SWSR-516a | no element identifier in the text |
+| ENV; USR | CSR-083 | no element identifier in the text |
 | Embedded flash ECC | HWSR-503b | no element identifier in the text |
 | Exception handlers | HWSR-502b | no element identifier in the text |
 | External | HWSR-501d | no element identifier in the text |

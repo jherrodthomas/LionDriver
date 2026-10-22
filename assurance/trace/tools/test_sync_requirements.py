@@ -125,6 +125,25 @@ class TestAi(unittest.TestCase):
     self.assertEqual(items["DSR-07"]["parents"], ["DSR-06"])
 
 
+class TestCs(unittest.TestCase):
+  def test_ids3(self):
+    self.assertEqual(sr._ids3("TSR-401…405, TSR-410", "TSR"), ["TSR-401", "TSR-402", "TSR-403", "TSR-404", "TSR-405",
+                                                                "TSR-410"])
+    self.assertEqual(sr._ids3("QM (B-sup: TSR-511); TSR-802 at installation", "TSR"), ["TSR-511", "TSR-802"])
+
+  def test_items_from_the_work_products(self):
+    items = {i["id"]: i for i in sr.cs_items()}
+    self.assertEqual(items["TS-02"]["risk"], 5)
+    self.assertEqual(items["TS-02"]["treatment"], "Reduce")
+    self.assertEqual(items["CSG-02"]["parents"], ["TS-03", "TS-05"])
+    self.assertIn("SG-08", items["CSG-03"]["protects"])
+    self.assertEqual(items["CSG-08"]["protects"], [])  # privacy only
+    self.assertEqual(items["CSR-021"]["parents"], ["CSG-01", "CSG-02"])  # heading 'CSG-01/CSG-02'
+    self.assertEqual(items["CSR-021"]["concept_requirement"], "CSR-C-02")
+    self.assertTrue(items["CSR-161"]["other_parents"])
+    self.assertEqual(items["CSR-091"]["related_tsr"], ["TSR-401", "TSR-402", "TSR-403", "TSR-404", "TSR-405"])
+
+
 class TestDelink(unittest.TestCase):
   def test_relative_link_becomes_repo_path(self):
     out = sr.delink("see [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md#3-x)", sr.SWSR_MD)

@@ -259,6 +259,51 @@ class TestAiChecks(unittest.TestCase):
                      ["[A1] TSR-603 names AIR-30, but AIR-30 does not list TSR-603 in related_tsr (WP-C-11 Parent column)"])
 
 
+CS = [
+  {"id": "TS-01", "kind": "threat-scenario", "text": "t", "stride": "S", "assets": "AS-01", "violated_property": "I",
+   "damage_text": "DS-01", "gap_text": "GAP-01", "risk": 4, "treatment": "Reduce", "status": "proposed",
+   "source": "WP-C-09"},
+  {"id": "TS-02", "kind": "threat-scenario", "text": "t", "stride": "S", "assets": "AS-01", "violated_property": "I",
+   "damage_text": "DS-01", "gap_text": "—", "risk": 2, "treatment": "Retain", "status": "proposed", "source": "WP-C-09"},
+  {"id": "CSG-01", "kind": "cybersecurity-goal", "text": "t", "parents": ["TS-01"], "parent_text": "TS-01 (4)",
+   "cal": "CAL 3", "protects": ["SG-01"], "rationale": "x", "status": "proposed", "source": "WP-C-10"},
+  {"id": "CSR-011", "kind": "cybersecurity-requirement", "text": "t", "parents": ["CSG-01"],
+   "concept_requirement": "CSR-C-01", "cal": "CAL 3", "other_parents": False, "allocated_to": "FW",
+   "safety_relation": "TSR-603", "related_tsr": ["TSR-603"], "verification": "UT", "baseline_impl": "x",
+   "status": "proposed", "source": "WP-S-07"},
+]
+
+
+class TestCsChecks(unittest.TestCase):
+  def setUp(self):
+    self.items = copy.deepcopy(GOOD + [TSR] + CS)
+
+  def test_good_set_is_clean(self):
+    self.assertEqual(tags(run(self.items), "C1") + tags(run(self.items), "K3"), [])
+
+  def test_k3_cs_link_kinds(self):
+    find(self.items, "CSG-01")["protects"] = ["HE-01.1"]
+    self.assertIn("[K3] CSG-01: protects HE-01.1 is a hazardous-event, not one of ['safety-goal']", run(self.items))
+    self.items = copy.deepcopy(GOOD + [TSR] + CS)
+    find(self.items, "CSR-011")["parents"] = ["TS-01"]
+    self.assertIn("[K3] CSR-011: parent TS-01 is a threat-scenario, not one of ['cybersecurity-goal']", run(self.items))
+
+  def test_c1_reduced_threat_without_goal(self):
+    find(self.items, "TS-02")["treatment"] = "Reduce / Retain"
+    self.assertEqual(tags(run(self.items), "C1"),
+                     ["[C1] TS-02: treated by 'Reduce / Retain' but no cybersecurity goal addresses it"])
+
+  def test_c1_goal_without_requirement(self):
+    find(self.items, "CSR-011")["parents"] = []
+    errs = tags(run(self.items), "C1")
+    self.assertIn("[C1] CSG-01: no cybersecurity requirement", errs)
+    self.assertIn("[C1] CSR-011: no parent goal and names nothing it rests on", errs)
+
+  def test_c1_unprotected_safety_goal(self):
+    find(self.items, "CSG-01")["protects"] = []
+    self.assertEqual(tags(run(self.items), "C1"), ["[C1] SG-01: protected by no cybersecurity goal (WP-C-10 §8)"])
+
+
 class TestRepository(unittest.TestCase):
   def test_main_passes_on_repository(self):
     out = io.StringIO()

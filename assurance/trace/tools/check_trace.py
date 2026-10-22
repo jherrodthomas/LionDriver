@@ -15,6 +15,9 @@ Checks implemented so far (IDs per assurance/trace/README.md section 6):
       reached through its insufficiencies (WP-C-06 §5); every functional modification is named by an evaluation row
   A1  AI: every AI safety and dataset requirement has a parent or names what it rests on; every TSR whose row names
       an AI safety requirement is listed in that requirement's related_tsr (a TSR need not cite the AIRs it refines)
+  C1  Cybersecurity: every threat scenario treated by reduction or avoidance has a cybersecurity goal; every goal has
+      a cybersecurity requirement; every safety goal is protected by a cybersecurity goal; every cybersecurity
+      requirement has a parent goal or says what it rests on
   X1  hazardous events and safety goals match the tables in WP-C-03
   X2  assumptions of use match the table in WP-C-01
   X3  the generated requirement and SOTIF items equal a fresh extraction from their work products
@@ -70,6 +73,13 @@ REQUIRED = {
                      "related_tsr", "verification", "baseline_impl", "status", "source"],
   "dataset-requirement": ["id", "kind", "text", "parents", "parent_text", "other_parents", "verification",
                           "baseline_impl", "status", "source"],
+  "threat-scenario": ["id", "kind", "text", "stride", "assets", "violated_property", "damage_text", "gap_text", "risk",
+                      "treatment", "status", "source"],
+  "cybersecurity-goal": ["id", "kind", "text", "parents", "parent_text", "cal", "protects", "rationale", "status",
+                         "source"],
+  "cybersecurity-requirement": ["id", "kind", "text", "parents", "concept_requirement", "cal", "other_parents",
+                                "allocated_to", "safety_relation", "related_tsr", "verification", "baseline_impl",
+                                "status", "source"],
 }
 GAP_MD = ASSURANCE_DIR / "00-assessment" / "gap-assessment.md"
 PARENT_KINDS = {"fsr": {"safety-goal"}, "tsr": {"fsr", "tsr", "safety-goal", "aou"}, "swsr": {"tsr"},
@@ -78,10 +88,12 @@ PARENT_KINDS = {"fsr": {"safety-goal"}, "tsr": {"fsr", "tsr", "safety-goal", "ao
                 "functional-modification": {"triggering-condition", "functional-insufficiency"},
                 "ai-requirement": {"safety-goal", "fsr", "sotif-hazard", "triggering-condition",
                                    "functional-insufficiency", "functional-modification", "ai-requirement"},
-                "dataset-requirement": {"ai-requirement", "dataset-requirement"}}
+                "dataset-requirement": {"ai-requirement", "dataset-requirement"},
+                "cybersecurity-goal": {"threat-scenario"}, "cybersecurity-requirement": {"cybersecurity-goal"}}
 # Other link keys: key -> kinds the reference must be (README §3.2)
 REF_KINDS = {"shares_event": {"hazard", "hazardous-event"}, "insufficiencies": {"functional-insufficiency"},
-             "addresses": {"sotif-hazard"}, "related_tsr": {"tsr"}}
+             "addresses": {"sotif-hazard"}, "related_tsr": {"tsr"},
+             "protects": {"safety-goal"}}
 SW_ALLOC = ("P-SW", "SoC")  # WP-S-02 allocation cells that put a TSR (also) on software
 HW_ALLOC = ("P-HW", "HAR")  # ... and (also) on hardware
 
@@ -253,6 +265,7 @@ def check_links(by_id: dict[str, dict], rep: Report) -> None:
   check_sw_hw_coverage(by_id, rep)
   check_sotif(by_id, rep)
   check_ai(by_id, rep)
+  check_cs(by_id, rep)
 
   for iid, sg in sgs.items():
     parents = [p for p in sg.get("parents") or [] if p in hes]
@@ -304,6 +317,29 @@ def check_ai(by_id: dict[str, dict], rep: Report) -> None:
     for a in sorted(cited):
       if a in ai and (a, tid) not in named:
         rep.err("A1", f"{tid} names {a}, but {a} does not list {tid} in related_tsr (WP-C-11 Parent column)")
+
+
+def check_cs(by_id: dict[str, dict], rep: Report) -> None:
+  """C1: the TS -> CSG -> CSR chain is complete and every safety goal is protected by a cybersecurity goal."""
+  def of(kind: str) -> dict[str, dict]:
+    return {i: x for i, x in by_id.items() if x["kind"] == kind and x.get("status") != "withdrawn"}
+  tss, csgs, csrs = of("threat-scenario"), of("cybersecurity-goal"), of("cybersecurity-requirement")
+  if not tss:
+    return
+  for iid, ts in tss.items():
+    if re.search(r"Reduce|Avoid", str(ts.get("treatment"))) and not any(iid in (g.get("parents") or [])
+                                                                         for g in csgs.values()):
+      rep.err("C1", f"{iid}: treated by {ts.get('treatment')!r} but no cybersecurity goal addresses it")
+  for iid in csgs:
+    if not any(iid in (r.get("parents") or []) for r in csrs.values()):
+      rep.err("C1", f"{iid}: no cybersecurity requirement")
+  protected = {sg for g in csgs.values() for sg in g.get("protects") or []}
+  for iid in sorted(i for i, x in by_id.items() if x["kind"] == "safety-goal"):
+    if iid not in protected:
+      rep.err("C1", f"{iid}: protected by no cybersecurity goal (WP-C-10 §8)")
+  for iid, r in csrs.items():
+    if not r.get("parents") and not r.get("other_parents"):
+      rep.err("C1", f"{iid}: no parent goal and names nothing it rests on")
 
 
 def check_requirement_coverage(by_id: dict[str, dict], rep: Report) -> None:
@@ -362,8 +398,7 @@ def expand_fsr_refs(text: str) -> list[str]:
 
 
 def check_requirements_in_sync(rep: Report) -> None:
-  """X3: fsr/tsr/swsr/hwsr/sotif.yaml equal a fresh extraction from WP-C-04, WP-S-02, WP-S-06, WP-W-02, WP-H-01 and
-  WP-C-05…07."""
+  """X3: the generated items/*.yaml equal a fresh extraction from their work products (sync_requirements.py)."""
   import sync_requirements as sync
   for name, content in sync.expected_outputs().items():
     path = ITEMS_DIR / name
