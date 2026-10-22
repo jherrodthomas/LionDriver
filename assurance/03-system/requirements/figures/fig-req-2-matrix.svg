@@ -269,7 +269,7 @@
 <rect x="714.7" y="295" width="6.5" height="10" rx="1.5" fill="#D97706"/>
 <rect x="830.7" y="295" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
 <line x1="248" y1="313" x2="1240" y2="313" stroke="#F1F5F9"/>
-<circle cx="46" cy="313" r="3.5" fill="#D2553F"/>
+<circle cx="46" cy="313" r="3.5" fill="#D97706"/>
 <text x="56" y="317" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-01.09</text>
 <text x="138" y="317" font-size="9.5" fill="#475569" font-weight="700">C</text>
 <text x="238" y="317" font-size="9.5" fill="#475569" text-anchor="end">11</text>

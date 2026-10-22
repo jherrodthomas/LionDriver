@@ -2,9 +2,9 @@
 
 | Field | Value |
 |---|---|
-| Plan | [TE-02](../../07-supporting/tool-evaluations/TE-02-fmdtools-fault-propagation.md) (pilot on SG-02) |
+| Plan | [TE-02](../../07-supporting/tool-evaluations/TE-02-fmdtools-fault-propagation.md) (pilot on SG-02; extended to SG-06, SG-01 and SG-03 by the lead, DQ-417) |
 | Tool | [NASA fmdtools](https://github.com/nasa/fmdtools) 2.5.6, Apache-2.0, pinned in [`requirements.txt`](requirements.txt); [WP-P-07](../../07-supporting/WP-P-07-tool-classification-qualification.md) TL-49 |
-| Status | Steps P0 (setup), P1 (SG-02 model), P2 (single faults), P3 (joint faults) and P4 (timing) done; P5 (report and CI): the Fault Lab page is done, the extension note (TE-02 OI-4) and the TL-49 confirmation remain. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | SG-02: steps P0 (setup), P1 (model), P2 (single faults), P3 (joint faults), P4 (timing) and the P5 Fault Lab page done; the TL-49 confirmation remains. SG-06: P1 to P4 and its Fault Lab page done (DQ-417). SG-01 and SG-03 next. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Evidence | **None.** Synthetic (DSR-12): behaviour and timing come from WP-A-04 §4, not measurement. Results point reviewers at possible gaps in the fault trees; a tree changes only after a person reviews the finding |
 
 ## What is here
@@ -17,6 +17,8 @@
 | [`sg02/sweep.py`](sg02/sweep.py) | Step P2: every mode alone in each road phase, compared with the tree; writes [`sg02/p2-single-faults.md`](sg02/p2-single-faults.md). Step P3 (`joint`): the minimal sets of up to 4 modes; writes [`sg02/p3-minimal-sets.json`](sg02/p3-minimal-sets.json) and [`sg02/p3-joint-faults.md`](sg02/p3-joint-faults.md). Step P4 (`timing`): the time to the first cue for every set of the P3 diff; writes [`sg02/p4-timing.md`](sg02/p4-timing.md) and its figure. `--check` in CI (P3: orders 1 and 2 on pull requests, the full sweep weekly in `fmdtools-sweep.yaml`) |
 | [`sg02/fault_lab.py`](sg02/fault_lab.py) | Step P5: writes [`sg02/fault-lab.html`](sg02/fault-lab.html), the Fault Lab page: a still replay of plant case F-07 (EPS fault) with its event timeline, the P3 and P4 numbers, the pair matrix (model sets against tree sets) and the findings for review. Built from the P3 JSON, a fresh P4 run and [plant-results](../../sim/results/plant-results.md); `--check` in CI (DQ-409) |
 | [`sg02/test_fault_lab.py`](sg02/test_fault_lab.py) | The plant parser, the drawings and the page build (sweep stubbed) |
+| [`sg06/`](sg06/) | The SG-06 model (loss of deceleration without a take-over request, WP-A-04 §7), built like `sg02/`: [`events.yaml`](sg06/events.yaml), [`model.py`](sg06/model.py), [`test_sg06.py`](sg06/test_sg06.py), [`sweep.py`](sg06/sweep.py) (pages [P2](sg06/p2-single-faults.md), [P3](sg06/p3-joint-faults.md), [P4](sg06/p4-timing.md)) and the [Fault Lab page](sg06/fault-lab.html) ([`fault_lab.py`](sg06/fault_lab.py)). `--check` in CI as for SG-02 |
+| [`treediff.py`](treediff.py), [`faultlab_kit.py`](faultlab_kit.py) | Shared by the goals: the tree side of the sweeps (cut sets, effective sets, the diff), and the Fault Lab style, findings list and pair matrix |
 
 ## How it works
 
@@ -83,3 +85,23 @@ Two inputs exceed the budget on their own: the 1.5 s escalation after an overrid
 ## Fault Lab page (step P5)
 
 [`fault-lab.html`](sg02/fault-lab.html) puts the results on one page for review (lead's choice, DQ-409). Every number on it comes from a record: the replay and timeline from plant case F-07 (torque below 5 % at 0.31 s, siren at 0.25 s, lane line at 1.25 s, driver correction at 1.75 s), the sweep figures from the P3 JSON and a P4 run. The page is still (no animation), works at phone width, and is marked synthetic (DSR-12), with no evidence credit. CI fails if it is stale.
+
+## SG-06: loss of deceleration without a take-over request
+
+The [SG-06 model](sg06/model.py) reuses the SG-02 warning chain and adds the PCM and one more cue. When `selfdrived` disengages with an immediate disable, the host sends the ACC cancel (TSR-303). PCM cruise then drops and the cluster cruise indicator changes (AOU-12). If the cancel has no effect, the panda's cancel-lag guard sounds the siren (TSR-516(c)). During a soft disable no cancel is sent until it ends, after 3 s (SWF-048.C1). The PCM cancel lag is not measured (WP-W-02 OI-18), so the model takes the latest time the guard allows (0.6 s after the disengagement).
+
+Approaching a lead, against the tree's 23 effective sets of up to 4 events ([P3](sg06/p3-joint-faults.md)):
+
+- **No set in the model that the tree does not predict.**
+- 18 sets agree.
+- **The siren covers 2 tree sets**, as in SG-02: {BE-2.05} (heartbeat loss, 0.26 s) and {BE-2.21} (engaged mismatch, 0.88 s). The tree's latent tag on BE-2.14 is out of date for them.
+- **The cancel covers 3 tree sets**: a lost plan input with an HMI failure ({BE-6.01} with BE-2.12, BE-2.13 or BE-2.25). The cluster changes 0.7 s after the fault, and a failed cancel gets the guard's siren at 0.86 s. The model needs both BE-6.06 and a siren failure for TE-06. The tree's latent tag on BE-6.06 holds only during a soft disable.
+- **Late cues** ([P4](sg06/p4-timing.md)): an envelope block with an HMI failure gets only the guard's siren, at 1.26 s (0.26 s over the budget), because the envelope blocks the cancel. A soft disable (BE-2.10) gets the cluster change only at 3.6 s.
+
+No plant case covers a loss of deceleration yet, so the [Fault Lab page](sg06/fault-lab.html) replays the model's own run.
+
+    python3 assurance/models/fmdtools/sg06/test_sg06.py
+    python3 assurance/models/fmdtools/sg06/sweep.py                    # P2 (--check: fail if stale)
+    python3 assurance/models/fmdtools/sg06/sweep.py joint              # P3, about 4 min on 4 cores
+    python3 assurance/models/fmdtools/sg06/sweep.py timing             # P4
+    python3 assurance/models/fmdtools/sg06/fault_lab.py                # Fault Lab page

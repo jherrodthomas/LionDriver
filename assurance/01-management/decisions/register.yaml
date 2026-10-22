@@ -5211,7 +5211,9 @@
       title: "No change: argue that HE-01.2 already covers it"
       detail: "HE-01.2 is a departure into an adjacent vehicle at highway speed. Cost: HE-01.2 names OS-01/OS-02, not a lane change, so the safety case has to argue the gap."
   sources: ["assurance/sim/results/edge-cases.md (EC-N1, rows EC-11 and EC-13)", "assurance/sim/results/search-fault-timing-lane-change.md", "WP-C-03 HE-02.5", "WP-V-04 U-4"]
-  status: queued
+  asked: 2026-10-22
+  batch: 14
+  status: open
 
 - id: DQ-407
   question: "When a fault makes LionDriver hand back control, may the gentle slow-down start together with its alert, or must it wait 1 s after the alert?"
@@ -5228,6 +5230,13 @@
   blocks: "TSR-624, SWSR-624 and FSR-04.05 for the fault soft disable; SW FMEA SWF-050.C1, SWF-ACT-050; WP-A-04 SFMEA-36"
   gate: G3
   decider: lead
+  asked: 2026-10-22
+  batch: 14
+  figure: figures/dq-407.svg
+  caption: >-
+    What each option does in the 3 to 4 s between the fault and the hand-back. B and C add a second at speed with
+    the fault still active; C also keeps the item in control a second longer. In the plant search none of the three
+    ended in contact.
   options:
     - key: A
       recommended: true
@@ -5239,8 +5248,8 @@
     - key: C
       title: "Make the soft disable 4 s: 1 s of alert, then 3 s of slowing"
       detail: "Meets TSR-624 and keeps today's slowing. Cost: the item keeps steering and braking for one more second on a faulty input, against the stale-input finding FM-03 (WP-C-07) and the timing budgets that assume 3 s."
-  sources: ["assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-624", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-624", "assurance/02-concept/WP-C-04-functional-safety-concept.md FSR-04.05", "assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-050.C1, SWF-ACT-050", "assurance/08-analyses/WP-A-04-system-fta-fmea.md SFMEA-36", "openpilot/selfdrive/selfdrived/state.py SOFT_DISABLE_TIME", "openpilot/selfdrive/controls/lib/longitudinal_planner.py A_CRUISE_MIN", "assurance/sim/results/edge-cases.md hand-over rows (handover-follower, handover-slower-lead)"]
-  status: queued
+  sources: ["assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-624", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-624", "assurance/02-concept/WP-C-04-functional-safety-concept.md FSR-04.05", "assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-050.C1, SWF-ACT-050", "assurance/08-analyses/WP-A-04-system-fta-fmea.md SFMEA-36", "openpilot/selfdrive/selfdrived/state.py SOFT_DISABLE_TIME", "openpilot/selfdrive/controls/lib/longitudinal_planner.py A_CRUISE_MIN", "assurance/sim/results/edge-cases.md hand-over rows (handover-follower, handover-slower-lead)", "assurance/sim/results/search-handover-follower.md", "assurance/sim/results/search-handover-slower-lead.md"]
+  status: open
 
 - id: DQ-408
   question: "When openpilot's selfdrived stops but the heartbeat goes on, should the panda revoke steering within 0.3 s and sound the alarm?"
@@ -5507,3 +5516,30 @@
       detail: "\"Maintained\" stands; revisit when the reference car's own wet braking is measured. Cost: nothing is written about tyres meanwhile."
   sources: ["assurance/sim/results/wet-braking.md", "assurance/sim/weather/README.md §7", "WP-C-02 §3.1 (vehicle state, road surface)", "opendbc/car/interfaces.py ACCEL_MIN", "Bosch Automotive Handbook, 4th ed., p. 335"]
   status: open
+
+- id: DQ-417
+  question: "Which safety goals should get an fmdtools fault model, and a Fault Lab page, after SG-02?"
+  context: >-
+    TE-02 OI-4. The SG-02 pilot found three tree findings: the latent tag on BE-2.14 (the siren) is out of date for
+    EPS faults and heartbeat loss (10 sets), {BE-2.21} now needs a siren failure, and a supply loss on a straight gives
+    no cue (AOU-01R gap, taken by the FTA owner). The Fault Lab page is cheap to reuse; each new goal needs its own
+    model (steps P1 to P4). Synthetic (DSR-12), no evidence credit.
+  reversibility: easy
+  blocks: "TE-02 OI-4; fmdtools models for SG-01, SG-03, SG-06"
+  gate: G1
+  decider: lead
+  asked: 2026-10-21
+  options:
+    - key: A
+      recommended: true
+      title: "SG-06, then SG-01"
+      detail: "SG-06 (braking take-over warning) reuses the SG-02 warning chain, about 2 sessions; SG-01 (unwanted steering, ASIL C, D if AOU-01/02 fail) needs torque limits and hard-over, about 3 to 4 sessions."
+    - key: B
+      title: "All three, SG-03 included"
+      detail: "As A, plus SG-03 (unwanted acceleration, ASIL C) with a new longitudinal model. About 8 to 10 sessions in all."
+    - key: C
+      title: "Stop at SG-02"
+      detail: "No further cost; the other trees get no executable cross-check."
+  sources: ["assurance/07-supporting/tool-evaluations/TE-02-fmdtools-fault-propagation.md", "assurance/models/fmdtools/README.md", "assurance/08-analyses/WP-A-04-system-fta-fmea.md"]
+  status: answered
+  answer: {choice: B, via: chat, at: 2026-10-22, note: "Lead in chat with the coordinator: \"2\" (all three). Order: SG-06, SG-01, SG-03"}

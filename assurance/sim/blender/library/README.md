@@ -7,7 +7,7 @@ weather or lighting code it is rated for. Pictures only: synthetic (DSR-12), no 
 | File | Holds | Used by |
 |---|---|---|
 | [`environments.yaml`](environments.yaml) | 14 static worlds: cross-section, geometry, scenery, road furniture, the operational situations (OS-) they represent, the conditions each allows | `export_scene.py` |
-| [`conditions.yaml`](conditions.yaml) | W01 to W06 of the HARA and the TC-01 low-sun preset: exposure, ODD, what the HARA model changes, and the look | `export_scene.py`, `hazard_scene.py` |
+| [`conditions.yaml`](conditions.yaml) | W01 to W06 of the HARA and the TC-01 / TC-01-NB low-sun presets: exposure, ODD, what the HARA model changes, and the look | `export_scene.py`, `hazard_scene.py` |
 | [`traffic.yaml`](traffic.yaml) | Illustrative traffic presets placed relative to the ego | `export_scene.py` |
 | [`assets.yaml`](assets.yaml) | CC0 sky HDRIs, ground textures, scanned plants and street furniture (Poly Haven, ambientCG) with candidate IDs and a search fallback | `fetch_assets.py`, `hazard_scene.py` |
 | [`people/`](people/README.md) | Two CC0 pedestrian figures (Quaternius) with a walk cycle, built by `people/build_people.py` and committed | `hazard_scene.py` |
@@ -54,7 +54,8 @@ gallery say so.
 | W04 | Moderate or heavy rain | E2 | outside | The darkest overcast, standing water with longer streaks and mirror-smooth wheel tracks, a rain ripple, heavy rain, visibility 350 m, lights on |
 | W05 | Snow or ice | E2 | outside | Overcast, snow on verges and trees, slush between the wheel tracks, icy tracks, snowfall, visibility 600 m |
 | W06 | Fog below the ODD bound | E1 | outside | A slightly darker overcast, fog at 120 m visibility (the ODD bound is 200 m, WP-C-02 §3), lights on |
-| TC-01 | Low sun in the camera's view | — (SOTIF) | in | Sun 5° above the horizon ahead (12° where buildings would hide it), bloom |
+| TC-01 | Low sun in the camera's view | — (SOTIF; no class. Sun in the frame on I-85 about 203 h/year southbound, 158 h/year northbound: [sun-glare.md](../../results/sun-glare.md), synthetic, no evidence credit) | in | Sun 6.3° up, 7.0° left of ahead: I-85 southbound, 15 Dec 16:40 (12° where buildings would hide it), bloom |
+| TC-01-NB | Low sun, summer morning northbound | — (SOTIF; the other glare season of TC-01) | in | Sun 7.3° up, 3.4° right of ahead: I-85 northbound, 21 Jun 07:00; bloom |
 
 Fog and haze are a volume over the scene with extinction 3 / visibility per metre (Koschmieder: 5 % contrast at the
 stated visibility).
