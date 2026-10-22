@@ -36,7 +36,7 @@ environments:
     title: Limited-access highway, three lanes, straight or gentle curve, barrier beyond the right shoulder
     os: [OS-01, OS-05, OS-07, OS-08, OS-09, OS-10, OS-12, OS-13, OS-17, OS-18]
     odd: in
-    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01, TC-01-NB]
     road: {type: highway, lanes_left: 1, lanes_right: 1, lane_width: 3.7, shoulder_m: 3.0, barrier: true,
            scenery: trees, geometry: straight}
     geometry: any
@@ -52,7 +52,7 @@ environments:
     title: Highway curve near R_ODD (2.5 m/s² at the travel speed), barrier on the outside
     os: [OS-02]
     odd: in
-    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01, TC-01-NB]
     road: {type: highway, lanes_left: 1, lanes_right: 1, lane_width: 3.7, shoulder_m: 3.0, barrier: true,
            scenery: trees, geometry: curve-odd-bound}
     geometry: curve
@@ -68,7 +68,7 @@ environments:
     title: Highway at an interchange, under an overpass, with an overhead guide sign
     os: [OS-01, OS-08]
     odd: in
-    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01, TC-01-NB]
     road: {type: highway, lanes_left: 1, lanes_right: 1, lane_width: 3.7, shoulder_m: 3.0, barrier: true,
            scenery: open, geometry: straight}
     geometry: straight
@@ -85,7 +85,7 @@ environments:
     title: Highway approaching stationary or slow traffic (end of a queue)
     os: [OS-06, OS-07]
     odd: in
-    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01, TC-01-NB]
     road: {type: highway, lanes_left: 1, lanes_right: 1, lane_width: 3.7, shoulder_m: 3.0, barrier: true,
            scenery: trees, geometry: straight}
     geometry: straight
@@ -131,7 +131,7 @@ environments:
     title: Undivided two-lane rural road, gravel shoulders, oncoming traffic; outside the ODD
     os: [OS-03]
     odd: outside
-    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01, TC-01-NB]
     road: {type: rural, lanes_left: 1, lanes_right: 0, lane_width: 3.5, shoulder_m: 1.0, scenery: trees,
            geometry: straight}
     geometry: any
@@ -146,7 +146,7 @@ environments:
     title: Rural curve with oncoming traffic; outside the ODD
     os: [OS-16]
     odd: outside
-    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01, TC-01-NB]
     road: {type: rural, lanes_left: 1, lanes_right: 0, lane_width: 3.5, shoulder_m: 1.0, scenery: trees,
            geometry: "rcurve@2.0"}
     geometry: curve
@@ -163,7 +163,7 @@ environments:
       the ODD
     os: [OS-04, OS-06]
     odd: outside
-    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01, TC-01-NB]
     road: {type: urban, lanes_left: 1, lanes_right: 0, lane_width: 3.3, scenery: urban, geometry: straight}
     geometry: any
     props: []
@@ -174,7 +174,7 @@ environments:
     title: Signalised urban intersection with cross traffic; outside the ODD
     os: [OS-15]
     odd: outside
-    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01, TC-01-NB]
     road: {type: urban, lanes_left: 1, lanes_right: 0, lane_width: 3.3, scenery: urban, geometry: straight}
     geometry: straight
     props:
@@ -189,7 +189,7 @@ environments:
     title: Narrow highway lane with a concrete barrier close beside it and a truck in the next lane (TC-32)
     os: [OS-01, OS-02]
     odd: in
-    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01, TC-01-NB]
     road: {type: highway, lanes_left: 1, lanes_right: 1, lane_width: 3.1, shoulder_m: 0.6, barrier: true,
            scenery: trees, geometry: straight}
     geometry: any
@@ -204,7 +204,7 @@ environments:
     title: Exposed highway on an embankment with windsocks and side-wind signs (TC-15, crosswind or bank)
     os: [OS-01, OS-02]
     odd: in
-    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01, TC-01-NB]
     road: {type: highway, lanes_left: 1, lanes_right: 1, lane_width: 3.7, shoulder_m: 3.0, barrier: true,
            scenery: open, geometry: straight}
     geometry: any
@@ -221,7 +221,7 @@ environments:
     title: Highway entering a lit tunnel (TC-18, lighting change at the portal)
     os: [OS-01, OS-02]
     odd: in
-    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01, TC-01-NB]
     road: {type: highway, lanes_left: 1, lanes_right: 1, lane_width: 3.7, shoulder_m: 1.0, barrier: true,
            scenery: trees, geometry: straight}
     geometry: any
@@ -235,7 +235,7 @@ environments:
     title: Highway where the right lane splits off as an exit (TC-31, the path may follow the wrong branch)
     os: [OS-01]
     odd: in
-    conditions: [W01, W02, W03, W04, W05, W06, TC-01]
+    conditions: [W01, W02, W03, W04, W05, W06, TC-01, TC-01-NB]
     road: {type: highway, lanes_left: 1, lanes_right: 1, lane_width: 3.7, shoulder_m: 3.0, barrier: true,
            scenery: open, geometry: straight}
     geometry: any
