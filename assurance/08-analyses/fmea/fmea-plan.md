@@ -51,9 +51,9 @@ PFMEA ─► Release / install control plan  (feeds "configuration as assured")
 
 | Prereq | Needed by | Status |
 |---|---|---|
-| Item definition & boundary (README roadmap item 2) | All | Draft LD-ITEM-001 rev 0.2 (`item-definition.md`): platform (334 vehicles), variant family VF-001 Corolla E210, assured configuration AC-001 |
-| HARA + safety goals | System FMEA severity, FMEDA | Draft rev 0.3 (`analyses/hara.yaml`): 13 hazards, 15 situations, 19 hazardous events, 10 safety goals (SG-001 ASIL D); guide-word matrix and situation coverage complete; pre-checks in `reviews/`; mapped onto WP-C-03, the HARA of record, in `hara-mapping.yaml` (checked by `fmea_lint.py`; [reconciliation §8](../../00-assessment/docs-safety-reconciliation.md#8-second-set-hara-mapped-onto-wp-c-03-oi-5)) |
-| Functional / technical safety concept | DFMEA, SW FMEA, FMEDA | FSC draft rev 0.2 (`analyses/fsc.yaml`): 40 FSRs, 12 elements, 11 panda/SoC decompositions; DFA rev 0.5 accepts none of them yet (`analyses/dfa.yaml`; 4 initiators insufficient; the configuration lock, diagnostic-mode gate and HUD check implemented, awaiting HIL); TSC not started |
+| Item definition & boundary (README roadmap item 2) | All | **Withdrawn** 2026-10-22 (DQ-124 A; WP-C-01 is of record). Was: draft LD-ITEM-001 rev 0.2 (`item-definition.md`): platform (334 vehicles), variant family VF-001 Corolla E210, assured configuration AC-001 |
+| HARA + safety goals | System FMEA severity, FMEDA | **Withdrawn** 2026-10-22 (DQ-124 A; WP-C-03 is of record, `hara-mapping.yaml` carries the IDs). Was: draft rev 0.3 (`analyses/hara.yaml`): 13 hazards, 15 situations, 19 hazardous events, 10 safety goals (SG-001 ASIL D); guide-word matrix and situation coverage complete; pre-checks in `reviews/`; mapped onto WP-C-03, the HARA of record, in `hara-mapping.yaml` (checked by `fmea_lint.py`; [reconciliation §8](../../00-assessment/docs-safety-reconciliation.md#8-second-set-hara-mapped-onto-wp-c-03-oi-5)) |
+| Functional / technical safety concept | DFMEA, SW FMEA, FMEDA | **Withdrawn** 2026-10-22 (DQ-124 A; WP-C-04 is of record). Was: FSC draft rev 0.2 (`analyses/fsc.yaml`): 40 FSRs, 12 elements, 11 panda/SoC decompositions; DFA rev 0.5 accepts none of them yet (`analyses/dfa.yaml`; 4 initiators insufficient; the configuration lock, diagnostic-mode gate and HUD check implemented, awaiting HIL); TSC not started |
 | HW/SW baseline frozen (commit SHA + submodule SHAs + AGNOS version) | All | BL-001 proposed in `baseline.yaml`; freeze at Phase 1 start |
 | Panda schematic + BOM (open hardware) | DFMEA, FMEDA | To collect |
 | comma 3X schematic / SoC failure data | DFMEA, FMEDA | Likely unavailable — see §7 |
@@ -304,7 +304,7 @@ Review workbooks come from the builder/reviewer skills in jherrodthomas/automoti
 - Each row links upward (`hazard`, `requirements`) and downward (`paths`, `test`, `linked_failure_mode`).
 - Every analysis names its `baseline` (from `baseline.yaml`) and the `rating_tables` version it was rated against.
 
-**Validation** (needs `pip install pyyaml jsonschema`; not added to openpilot runtime deps):
+**Validation** (needs the pinned packages of `assurance/trace/requirements.txt`, DQ-123 A; not added to openpilot runtime deps):
 
 ```
 tools/safety/fmea_lint.py --report            # validate all analyses

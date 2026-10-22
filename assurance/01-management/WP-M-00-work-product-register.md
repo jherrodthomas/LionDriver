@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-00 Work product register |
 | Standard reference | ISO 26262-2:2018 §6 (safety plan, work product list); ASPICE 4.0 MAN.3 (BP: define work products), SUP.8 (configuration items) |
-| Version | 0.3 (Figure 3-1 added, generated from §2 and §3; 2026-10-13). 0.2 (status update for the integrated envelope changes: design notes, change records, HIL plan, review records, confirmation folder; 2026-10-12). 0.1 |
+| Version | 0.4 (WP-O-04 gets a development slice due at G1, the §3.3 data path for the first road drives, the rest stays at G6, DQ-122 A; 2026-10-22). 0.3 (Figure 3-1 added, generated from §2 and §3; 2026-10-13). 0.2 (status update for the integrated envelope changes: design notes, change records, HIL plan, review records, confirmation folder; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All |
 | Author | Assurance team (initial draft) |
@@ -162,7 +162,7 @@ Legend for **ASPICE**: process IDs from ASPICE PAM 4.0, including the ML (MLE), 
 | [WP-O-01](../09-production-operation/WP-O-01-installation-and-provisioning-control.md) | Installation, provisioning and production control | 7 §5 | | §12 | | — | G5 | D |
 | [WP-O-02](../09-production-operation/WP-O-02-operation-service-decommissioning.md) | Operation, service (maintenance, repair) and decommissioning | 7 §6 | | §14 | | — | G5 | D |
 | [WP-O-03](../09-production-operation/WP-O-03-user-information-safety-warnings.md) | User information and safety warnings | 7 §6 | §6 (misuse), §13 | | | — | G5 | D |
-| [WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md) | Field monitoring (safety, SOTIF and AI) and crash reporting | 2 §7 | §13 | §8 | PAS 8800 (operation phase), NHTSA SGO (US) | — | G6 | D |
+| [WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md) | Field monitoring (safety, SOTIF and AI) and crash reporting | 2 §7 | §13 | §8 | PAS 8800 (operation phase), NHTSA SGO (US) | — | G1 (development slice: the §3.3 data path for the first road drives, DQ-122 A), G6 (the rest) | D |
 | [WP-O-05](../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md) | Cybersecurity incident response, vulnerability management and software updates | | | §8, §13 | UN R156 (informative) | SEC.* | G6 | D |
 
 ### 3.10 Assurance cases and release (`10-safety-case/`)

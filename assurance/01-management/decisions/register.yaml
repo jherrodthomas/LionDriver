@@ -1306,22 +1306,29 @@
   applied: {ref: ffc22dd, record: "WP-V-02 v0.10 §3; WP-V-04 §5.2; WP-K-02 R-08; WP-M-08 §5.2 (#255)", at: 2026-10-19}
 
 - id: DQ-058
-  question: "Does PAS 8800 need an AI architecture view at G2?"
-  context: "No AI-lane work product is gated at G2; whether one is needed is a planning decision for WP-M-10 (AI safety plan)."
+  question: "Does the AI safety plan need its own AI architecture view at G2, or do the SOTIF validation targets and the envelope analysis cover the AI parts well enough?"
+  context: >-
+    No AI work product is gated at G2. The driving and monitoring models reach the system design only through two
+    interfaces: validation targets for their performance (IX-13, WP-V-02) and the envelope that contains their outputs
+    (IX-14, WP-A-02). **ISO/PAS 8800 expects the AI elements and their data flows to be described in the
+    architecture; the process model left it to WP-M-10.**
   reversibility: easy
-  blocks: "WP-M-10 tailoring"
+  blocks: "WP-M-10 tailoring; process README finding 2"
   gate: G2
   decider: claude
+  asked: 2026-10-22
+  batch: 16
+  proceed_after: 2026-10-29
   options:
     - key: A
       recommended: true
-      title: "No, covered via IX-13/IX-14"
-      detail: "No new work product."
+      title: "No separate view: cover it through IX-13 and IX-14, recorded as tailoring in WP-M-10"
+      detail: "The models stay QM behind the envelope, so the architecture claim is the containment. Cost: an assessor may still ask for the AI elements drawn in WP-S-03."
     - key: B
-      title: "Yes, add AI architecture view"
-      detail: "Extra work product at G2."
-  sources: ["assurance/process/README.md “2. **No AI-lane work product is gated at G2.** AI concerns r”"]
-  status: queued
+      title: "Add an AI architecture view at G2"
+      detail: "The models, their inputs, outputs and monitors drawn in WP-S-03 or WP-C-11. Cost: one more G2 work product to write and keep with model updates."
+  sources: ["assurance/process/README.md (finding 2, no AI-lane work product gated at G2)", "assurance/01-management/WP-M-10-ai-safety-plan.md", "assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md"]
+  status: open
 
 - id: DQ-059
   question: "On the tightest curve allowed, the car would drift 0.6 m in 0.7 s if steering silently failed. Tighten the curve limit, or re-rate?"
@@ -1601,7 +1608,9 @@
       title: "Credit the SoC checks"
       detail: "Better metrics. Cost: those checks must then be developed to the ASIL, a major effort on code inherited from upstream."
   sources: ["assurance/04-hardware/WP-H-04-hardware-metrics.md §3.3, OI-3", "DQ-009"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "jherrodthomas/LionDriver#429", record: "WP-H-04 v0.11 §3.3 and OI-3: QM-SoC mechanisms stay out of the coverage, an internal method choice until an assessor confirms it", at: 2026-10-22}
 
 - id: DQ-071
   question: "In the hardware analysis, may a fault that only makes the panda stop sending count as safe, because the car's own EPS, PCM and pre-collision system then limit the effect?"
@@ -1626,7 +1635,9 @@
       title: "Do not use them"
       detail: "Every such fault counts as single-point. Cost: a worse PMHF, and the extra diagnostics DC-02 and DC-03 may become necessary."
   sources: ["assurance/04-hardware/WP-H-05-random-hardware-failures-pmhf.md §5, OI-3", "DQ-009"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "jherrodthomas/LionDriver#429", record: "WP-H-05 v0.7 OI-3: vehicle measures for effects only, PMHF reported with and without them, an internal method choice until an assessor confirms it", at: 2026-10-22}
 
 - id: DQ-072
   question: "During validation drives, should the car's self-learned values (steering ratio, torque, delay) be frozen?"
@@ -2700,7 +2711,9 @@
       title: "Leave D-07 open"
       detail: "Nothing changes. Cost: a G0 decision stays open while every document already depends on it."
   sources: ["assurance/01-management/WP-M-01-assurance-strategy.md D-07", "assurance/01-management/WP-M-07-risk-management.md §5 D-07"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "jherrodthomas/LionDriver#429", record: "WP-M-07 v0.8 §5 D-07 decided; WP-M-01 v0.10 §8 D-07", at: 2026-10-22}
 
 - id: DQ-119
   question: "Should MAN.5 be added to the ASPICE target in T-12?"
@@ -2747,7 +2760,9 @@
       title: "A YAML log under 01-management/, checked in CI"
       detail: "Like A, and CI can flag a month without a review. Cost: one more checker to write and keep."
   sources: ["assurance/01-management/WP-M-11-upstream-and-supplier-management.md §6, OI-3"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "jherrodthomas/LionDriver#429", record: "01-management/upstream-watch-list.md (watch list and review log); WP-M-11 v0.3.8 §6, §8, OI-3 closed. The first monthly review is still to be recorded", at: 2026-10-22}
 
 - id: DQ-121
   question: "How should LionDriver make sure a device sends nothing to comma.ai and accepts no remote access: change the code, keep the device unregistered with comma, or only leave it unpaired?"
@@ -2777,7 +2792,9 @@
       title: "Leave it unpaired only"
       detail: "No change at all. Cost: does not stop anything; a registered device uploads and keeps athena connected without a paired account."
   sources: ["assurance/09-production-operation/WP-O-04-field-monitoring.md §3.2, §3.3, OI-1", "openpilot/system/manager/manager.py:108-109", "openpilot/system/athena/registration.py:36-47", "openpilot/system/manager/process_config.py:71, 115", "assurance/01-management/WP-M-09-cybersecurity-plan.md GAP-27", "DQ-084"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "jherrodthomas/LionDriver#429", record: "openpilot system/manager/process_config.py: uploader and manage_athenad enabled=False, test system/manager/test/test_no_comma_upload.py; change-2026-10-22-no-comma-upload; WP-O-04 v0.3 §3.3 and OI-1; WP-M-09 v0.5 GAP-27; WP-S-07 v0.7 CSR-112. Open: registration still contacts comma with the device identifiers (change record OI-1); device check (OI-2)", at: 2026-10-22}
 
 - id: DQ-122
   question: "Should field monitoring (WP-O-04) have a first part due at G1, because it starts with the first public-road test drive, not at release?"
@@ -2804,7 +2821,9 @@
       title: "No change"
       detail: "Cost: the gap stays; the first road drives can start with no check that their data are kept."
   sources: ["assurance/process/README.md (finding 1, field monitoring needed five gates before it is gated)", "assurance/01-management/WP-M-00-work-product-register.md WP-O-04", "assurance/09-production-operation/WP-O-04-field-monitoring.md §3.3", "assurance/06-validation/WP-V-07-vehicle-test-operations.md"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "jherrodthomas/LionDriver#429", record: "WP-M-00 v0.4: WP-O-04 gated G1 (development slice) and G6; process model CON-14 produces it at G1, OPS-01 updates it at G6 (P9 check now accepts a feedback source updated in its phase); G1 and G6 skeletons regenerated; process README finding 1 addressed", at: 2026-10-22}
 
 - id: DQ-123
   question: "Should the trace data be checked against its schema with the standard jsonschema package (pinned), or with hand-written checks that need only the Python standard library?"
@@ -2829,7 +2848,9 @@
       title: "Standard library only"
       detail: "The schema is written as documentation and the hand-written checks stay. Cost: two descriptions of the format that must be kept in step by hand."
   sources: ["assurance/trace/README.md OI-3", "assurance/07-supporting/WP-P-06-requirements-management-traceability.md §5.1", "tools/safety/fmea_lint.py (uses jsonschema)", ".github/workflows/assurance.yaml (unpinned install)"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "jherrodthomas/LionDriver#429", record: "assurance/trace/schema/item.schema.json; trace/tools/check_schema.py and test_check_schema.py; pinned assurance/trace/requirements.txt (also used by the FMEA lint), installed first in the trace job; WP-P-07 v0.9.17 TL-55; WP-P-06 v0.3 §5.1; trace README OI-3 closed", at: 2026-10-22}
 
 - id: DQ-124
   question: "Should the older second set of concept documents (an item definition, HARA and FSC kept as YAML beside the FMEAs) be withdrawn, now that what kept them open is decided?"
@@ -2858,7 +2879,9 @@
       title: "Keep both sets as supporting data"
       detail: "Cost: two HARAs to keep consistent, and an assessor has to be told which one is of record."
   sources: ["assurance/00-assessment/docs-safety-reconciliation.md OI-4, OI-5, §8", "assurance/08-analyses/fmea/hara-mapping.yaml", "assurance/08-analyses/fmea/analyses/hara.yaml, fsc.yaml", "DQ-008", "DQ-036", "DQ-205", "DQ-369"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "jherrodthomas/LionDriver#429", record: "08-analyses/fmea analyses/hara.yaml and fsc.yaml status withdrawn (schemas allow it), item/variants.yaml note, fmea-plan rows, hara-mapping.yaml header; docs-safety-reconciliation v0.5 OI-5 closed. Renaming the HZ-/SG-0nn IDs in the FMEA data is a later task", at: 2026-10-22}
 
 - id: DQ-125
   question: "How should the special firmware builds for characterisation and fault-injection tests be kept from ever being driven on public roads?"
@@ -2883,43 +2906,57 @@
       title: "Handle it in each test plan"
       detail: "Less work up front. Cost: weaker evidence of what was tested, and nothing systematic stops a test build staying on the car."
   sources: ["assurance/06-validation/WP-V-01-safety-validation.md VS-VAL-05, OI-4", "assurance/06-validation/WP-V-05-fault-injection.md OI-1", "assurance/07-supporting/WP-P-01-configuration-management-plan.md"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "jherrodthomas/LionDriver#429", record: "WP-P-01 v0.6 §7.1 test-build rules T-1 to T-5 and OI-9 (implementation); WP-V-01 v0.9 OI-4; WP-V-05 v0.11 OI-1", at: 2026-10-22}
 
 - id: DQ-126
-  question: "Is the panda housekeeping code (fan, sound, LED, debug) developed to the envelope's ASIL, or kept QM and isolated by the MPU?"
-  context: "The panda firmware is one image without memory-protection partitioning, so non-safety housekeeping code shares memory and CPU with the safety envelope. ISO 26262-9 allows either developing it to the higher ASIL or showing freedom from interference. Without the MPU and §6 measures, all code in the image must be developed to ASIL (practically ASIL B after re-rating)."
+  question: "Should the panda's housekeeping code (fan, sound, LEDs, temperature, debug print) be kept QM and fenced off with the memory protection unit, or developed to the envelope's ASIL?"
+  context: >-
+    The panda firmware is one image with no memory partitioning (GAP-11), so the fan, sound and LED drivers share
+    memory and CPU with the safety envelope (SG-01, ASIL C). ISO 26262-9 allows either developing them to that ASIL
+    or showing they cannot interfere. **Without MPU regions and the WP-A-02 §6 measures, everything in the image has
+    to be developed and verified to ASIL C.**
   reversibility: revisit
-  blocks: "WP-W-03 architecture, GAP-11, FFI claims"
+  blocks: "WP-A-02 §2 and OI-2; WP-W-03 architecture; GAP-11; the FFI claims of the safety case"
   gate: G2
   decider: claude
+  asked: 2026-10-22
+  batch: 16
   options:
     - key: A
       recommended: true
-      title: "QM with FFI via MPU partitioning"
-      detail: "Implement MPU regions and §6 measures; housekeeping stays QM; firmware architecture work."
+      title: "Keep it QM and isolate it with the MPU"
+      detail: "MPU regions protect the safety data and stacks, and the timing measures of WP-A-02 §6 bound the housekeeping code's CPU use. Cost: a panda firmware change with HIL tests, kept at each sync."
     - key: B
-      title: "Develop everything to ASIL"
-      detail: "No partitioning work, but all housekeeping code needs ASIL-level development and verification."
-  sources: ["assurance/08-analyses/WP-A-02-coexistence-freedom-from-interference.md OI-2"]
-  status: queued
+      title: "Develop all of it to ASIL C"
+      detail: "No partitioning needed. Cost: the fan, sound, LED and debug code is reviewed, tested and covered to ASIL C, and every upstream change to it has to be too."
+  sources: ["assurance/08-analyses/WP-A-02-coexistence-freedom-from-interference.md §2, §6, OI-2", "assurance/00-assessment/gap-assessment.md GAP-11"]
+  status: open
 
 - id: DQ-127
-  question: "Should the SFMEA-01…39 table in WP-A-04 §10 be retired in favour of system-fmea.yaml as the single System FMEA?"
-  context: "Two System FMEAs exist: the markdown table in WP-A-04 §10 and the YAML file. The map can only point at one. Retiring the table removes duplicate maintenance."
+  question: "Should the System FMEA table in WP-A-04 §10 (SFMEA-01…40) be retired, so that system-fmea.yaml is the only System FMEA?"
+  context: >-
+    Two System FMEAs are kept by hand: the table in WP-A-04 §10 and the YAML file the FMEA tools check, draw and
+    export. The FTA–FMEA map can point at only one of them, and the two drift apart. **WP-V-05 §6 still maps its
+    fault-injection cases to the table's SFMEA IDs.**
   reversibility: easy
-  blocks: "FTA-FMEA mapping of further goals"
+  blocks: "FTA–FMEA mapping of further goals (fta-fmea-mapping.md step 5); WP-A-04 §10"
   gate: G2
   decider: claude
+  asked: 2026-10-22
+  batch: 16
+  proceed_after: 2026-10-29
   options:
     - key: A
       recommended: true
-      title: "Retire the table, point to YAML"
-      detail: "One source; WP-A-04 §10 becomes a link; references to SFMEA-nn must be re-mapped."
+      title: "Retire the table and point at the YAML"
+      detail: "WP-A-04 §10 links the generated System FMEA page instead; each SFMEA ID gets its SFM- equivalent once, so WP-V-05 and other citations keep working. Cost: one mapping pass and the citations updated."
     - key: B
       title: "Keep both"
-      detail: "No migration now; risk of the two drifting."
-  sources: ["assurance/08-analyses/fta-fmea-mapping.md “3. Retire the SFMEA-01…SFMEA-39 table of WP-A-04 §10 in favo”"]
-  status: queued
+      detail: "No change. Cost: two System FMEAs to keep in step, and the map stays tied to one of them."
+  sources: ["assurance/08-analyses/fta-fmea-mapping.md (step 5)", "assurance/08-analyses/WP-A-04-system-fta-fmea.md §10", "assurance/08-analyses/fmea/analyses/system-fmea.yaml", "assurance/06-validation/WP-V-05-fault-injection.md §6"]
+  status: open
 
 - id: DQ-128
   question: "Should the GSN diagrams be generated from YAML records? (A generator already exists, so can this item be closed?)?"
@@ -2937,25 +2974,36 @@
       title: "Keep open"
       detail: "Stale open item stays."
   sources: ["assurance/10-safety-case/WP-K-01-safety-case.md OI-4"]
-  status: queued
+  asked: 2026-10-22
+  status: withdrawn
+  note: "Withdrawn before it was asked: already done. The GSN sheets are generated from the case records by assurance/case/tools/gsn_diagrams.py and checked in CI (10-safety-case/gsn/README.md); WP-K-01 OI-4 closed."
 
 - id: DQ-129
-  question: "Should cross-domain interfaces get an 'agreed' status only through recorded review, and become requirement items (IFR-nn) in trace/?"
-  context: "The process model tracks interfaces; adding a reviewed status and IFR items would make them traceable like requirements."
+  question: "Should the interfaces between the safety, SOTIF, cybersecurity and AI work count as agreed only after a recorded review, and become requirement items (IFR-nn) in the trace data?"
+  context: >-
+    The process model lists 33 interfaces between the lanes (IX-nn), each open or closed by an edit to the model; no
+    record shows that both sides reviewed it, and an interface is not an item the trace checker follows. **An
+    interface marked closed may never have been looked at by both owners.**
   reversibility: easy
-  blocks: "trace/, process model"
+  blocks: "process README OI-2; trace/ (a new item kind); the interface sections of the gate skeletons"
   gate: G2
   decider: claude
+  asked: 2026-10-22
+  batch: 16
+  proceed_after: 2026-10-29
   options:
     - key: A
       recommended: true
-      title: "Add IFR items and reviewed status"
-      detail: "Interfaces traced and checked in CI."
+      title: "Agreed only through a recorded review, and IFR items in trace/"
+      detail: "Each interface becomes an IFR item with its two owners and a review reference, checked like requirements. Cost: a new item kind for check_trace.py and the schema, and 33 items to write."
     - key: B
-      title: "Keep in process model only"
-      detail: "Less work."
-  sources: ["assurance/process/README.md OI-2"]
-  status: queued
+      title: "Recorded review only, kept in the process model"
+      detail: "The status needs a review record, but no new items. Cost: interfaces stay outside the trace checks."
+    - key: C
+      title: "No change"
+      detail: "Cost: the agreed status means only that someone set it."
+  sources: ["assurance/process/README.md OI-2", "assurance/process/model/ (interfaces IX-nn)", "assurance/trace/README.md"]
+  status: open
 
 - id: DQ-130
   question: "Which human-driver crash data sources and road-class split are used to derive SOTIF validation targets?"
@@ -2973,43 +3021,58 @@
       title: "Also adjust for stock LKA/ACC/PCS vehicles (insurance/NHTSA studies)"
       detail: "Closer baseline where data exist; more research."
   sources: ["assurance/02-concept/WP-C-05-sotif-hazard-identification.md OI-3"]
-  status: queued
+  asked: 2026-10-22
+  status: withdrawn
+  note: "Withdrawn before it was asked: the same question as DQ-137 (the human-driver baseline data and road-class split); merged there, with WP-C-05 OI-3 in its sources."
 
 - id: DQ-131
-  question: "How are debug, maneuver and joystick modes disabled in reference-configuration builds?"
-  context: "FM-06 requires these modes locked out in the reference configuration; the mechanism (compile-time exclusion vs runtime refusal) is a technical choice."
+  question: "Is refusing to engage while a debug, maneuver or joystick mode is set enough, or should the reference build leave those modes out entirely?"
+  context: >-
+    FM-06 requires these modes to be locked out of the reference configuration. Today the item refuses to engage while
+    any of them is set (DQ-221, `assured_config.py`), but the modes stay in the build and the process manager still
+    starts their processes when the setting changes. **A setting changed over SSH or by a bug would then start a
+    process that can send commands.**
   reversibility: easy
-  blocks: "FM-06; TSR-806; CSG-03"
+  blocks: "WP-C-01 OI-5; FM-06; TSR-806; CSG-03"
   gate: G2
   decider: claude
+  asked: 2026-10-22
+  batch: 16
+  proceed_after: 2026-10-29
   options:
     - key: A
       recommended: true
-      title: "Exclude at build time under LIONDRIVER_REFERENCE"
-      detail: "Not reachable at all; matches the existing reference-build flag."
+      title: "Also leave them out of the reference build"
+      detail: "The release script builds the reference variant without the joystick and maneuver processes, and a test checks they are absent; the engagement refusal stays as a second barrier. Cost: a build variant to keep at each sync."
     - key: B
-      title: "Runtime refusal via params"
-      detail: "Simpler, but stored params could re-enable them."
-  sources: ["assurance/02-concept/WP-C-01-item-definition.md OI-5"]
-  status: queued
+      title: "Keep the engagement refusal only"
+      detail: "No build change. Cost: the debug processes can still start; safety then rests on the refusal and the panda's engagement check alone."
+  sources: ["assurance/02-concept/WP-C-01-item-definition.md OI-5", "openpilot/selfdrive/selfdrived/assured_config.py ASSURED_PARAMS", "openpilot/system/manager/process_config.py (joystick, maneuversd, lateral_maneuversd)", "assurance/07-supporting/impact/change-2026-10-19-reference-entry-checks.md", "DQ-221"]
+  status: open
 
 - id: DQ-132
-  question: "Which system-side checks can replace manual pre-drive checks (e.g. block engagement when EPS/VSC report a fault code)?"
-  context: "WP-O-02 relies on drivers doing manual checks; system checks are more reliable. Choosing which checks to automate is a technical design choice."
+  question: "Should LionDriver read the car's fault codes for steering and stability control at start-up and refuse to engage while one is active, instead of relying on the driver to check the warning lamps?"
+  context: >-
+    Before every drive the driver checks that no warning lamp for EPS, brakes, VSC, engine or Toyota Safety Sense is
+    lit (WP-O-02 OPS-01). The item already sees some faults on the bus (VSC off, EPS fault status) but not stored
+    fault codes. **A driver who misses a lamp engages on a car the ratings assume is healthy (AOU-09, AOU-10).**
   reversibility: easy
-  blocks: "WP-O-02 OI-2"
+  blocks: "WP-O-02 OI-2; WP-S-06 OI-4; OPS-01"
   gate: G2
   decider: claude
+  asked: 2026-10-22
+  batch: 16
+  proceed_after: 2026-10-29
   options:
     - key: A
       recommended: true
-      title: "Block engagement on EPS/VSC DTC status"
-      detail: "Removes a manual check; small availability cost."
+      title: "Read EPS and ABS/VSC fault codes at start-up and block engagement on an active one"
+      detail: "A diagnostic read at ignition, as openpilot already does for firmware versions, before engagement is allowed. Cost: new host code, a test on the car for each ECU, and care that the read never runs while driving."
     - key: B
-      title: "Keep manual checks only"
-      detail: "No code change; relies on users."
-  sources: ["assurance/03-system/WP-S-06-requirements-production-operation.md OI-4"]
-  status: queued
+      title: "Keep the bus checks and the driver's lamp check"
+      detail: "No change. Cost: stored faults without a bus signal are caught only by the driver."
+  sources: ["assurance/09-production-operation/WP-O-02-operation-service-decommissioning.md OPS-01, OPS-02, OI-2", "assurance/03-system/WP-S-06-requirements-production-operation.md OI-4", "assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md INS-06"]
+  status: open
 
 - id: DQ-133
   question: "Should the architecture be copied into docs/contributing/architecture.md or that empty file replaced by a pointer to WP-S-03?"
@@ -3030,22 +3093,32 @@
   status: queued
 
 - id: DQ-134
-  question: "Should the watchdog and forwarding-supervision times be shortened below 0.1 s to give SG-07 margin?"
-  context: "FDTI + FRTI equals the SG-07 FTTI exactly (zero margin); the IWDG is at 90 ms nominal and depends on LSI tolerance. Decide after PCS timing is measured."
+  question: "Should the panda's watchdog and forwarding checks be made faster than 0.1 s, so that the stock pre-collision braking (SG-07) keeps some margin?"
+  context: >-
+    If the panda hangs while it routes the camera's messages, the stock PCS request reaches the car only after the
+    watchdog reset (≤ 0.1 s) and the relay release (≤ 0.1 s), exactly the preliminary 0.2 s FTTI of SG-07: **zero
+    margin.** The watchdog is 90 ms nominal, and whether it stays under 0.1 s depends on its clock's tolerance. The
+    PCS timing itself has not been measured.
   reversibility: easy
-  blocks: "SG-07 budget; TSR-501/711"
+  blocks: "WP-S-04 OI-7 and the SG-07 budget; TSR-501, TSR-711"
   gate: G2
   decider: claude
+  asked: 2026-10-22
+  batch: 16
+  proceed_after: 2026-10-29
   options:
     - key: A
       recommended: true
-      title: "Shorten after PCS measurement if margin is needed"
-      detail: "Margin restored; risk of watchdog nuisance resets."
+      title: "Decide after measuring the PCS timing; shorten only if margin is needed"
+      detail: "Measure the PCS braking timing and the watchdog's clock spread on the bench first. Cost: the zero margin stays on record until then."
     - key: B
-      title: "Keep 0.1 s and show LSI tolerance holds"
-      detail: "No change; zero margin justified."
-  sources: ["assurance/03-system/WP-S-04-timing-ftti-budget.md OI-7"]
-  status: queued
+      title: "Keep 0.1 s and show the clock tolerance holds"
+      detail: "No firmware change. Cost: the margin stays zero, and only the tolerance argument stands behind it."
+    - key: C
+      title: "Shorten the watchdog now"
+      detail: "Gives margin at once. Cost: a shorter watchdog trips on longer legitimate tasks, so the task timings must be re-measured, without knowing yet whether the margin is needed."
+  sources: ["assurance/03-system/WP-S-04-timing-ftti-budget.md §3.6, §4 (SG-07 row), OI-7", "DQ-062"]
+  status: open
 
 - id: DQ-135
   question: "What latency bound is set for PCS message forwarding in integration test VS-SI-20?"
@@ -3084,40 +3157,57 @@
   status: queued
 
 - id: DQ-137
-  question: "Which US human-driver crash data set and ODD filtering form the B1 baseline for SOTIF validation targets?"
-  context: "The acceptance approach (no worse than manual driving) is fixed; the data set (e.g. NHTSA FARS/CRSS plus exposure) and filtering need selection and justification in WP-V-02, reviewed by the assessor."
+  question: "Which US crash data should set the human-driver baseline that LionDriver's SOTIF targets must beat, and how is it cut down to the ODD's roads?"
+  context: >-
+    The acceptance rule is fixed: no worse than human drivers on the same roads (B1, WP-M-08). The validation targets
+    VT-01…VT-15 in WP-V-02 still use illustrative rates, and you freeze them once real B1 data replace those rates
+    (DQ-096 B). **Until the data set and its filter are chosen, no target can be frozen.** The resulting numbers are
+    still reviewed by an assessor later.
   reversibility: easy
-  blocks: "WP-V-02 targets, WP-C-05"
+  blocks: "WP-M-08 OI-1; WP-C-05 §5.2 and OI-3; WP-V-02 OI-2 and the freeze of VT-01…VT-15 (OI-3)"
   gate: G2
   decider: claude
+  asked: 2026-10-22
+  batch: 16
+  proceed_after: 2026-10-29
   options:
     - key: A
       recommended: true
-      title: "FARS/CRSS filtered to ODD road types"
-      detail: "Public data; filtering assumptions documented."
+      title: "NHTSA FARS and CRSS crashes over FHWA travel data, split Interstate against other arterials"
+      detail: "Public, yearly and per road class, so the baseline matches the highway-only ODD; source, year and filter recorded in WP-V-02. Cost: police-reported crashes undercount minor ones, and the data do not say whether the human car had LKA or ACC."
     - key: B
-      title: "Other published naturalistic data"
-      detail: "Possibly better exposure data; access limits."
-  sources: ["assurance/01-management/WP-M-08-sotif-plan.md OI-1"]
-  status: queued
+      title: "As A, adjusted for cars that already have stock LKA, ACC and PCS"
+      detail: "Compares against the car LionDriver replaces, using insurance (IIHS/HLDI) or NHTSA studies of those features. Cost: those studies are per feature and small, so the adjustment adds a wide uncertainty."
+    - key: C
+      title: "A naturalistic driving study (for example SHRP 2) instead"
+      detail: "Includes near-crashes, so more events per mile. Cost: access terms, and a fleet and era that do not match US highways today."
+  sources: ["assurance/01-management/WP-M-08-sotif-plan.md §5 (B1), OI-1", "assurance/02-concept/WP-C-05-sotif-hazard-identification.md §5.2, OI-3", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md OI-2, OI-3", "DQ-096", "DQ-130 (merged here)", "DQ-194 (merged here)"]
+  status: open
 
 - id: DQ-138
-  question: "How is the B2 comparison against stock TSS2 run on the reference car (scenario list, test site, measurement)?"
-  context: "No per-feature stock rate exists, so the comparison is same-scenario testing, stock vs LionDriver."
+  question: "How should LionDriver be compared with Toyota's own lane tracing and radar cruise on the same Corolla?"
+  context: >-
+    B2 (WP-M-08) checks that LionDriver is not worse than the stock TSS2 functions in particular scenarios, such as a
+    stopped vehicle ahead or a cut-in, even if it meets the human-driver rate overall. No per-feature crash rate for
+    the stock system exists, **so the comparison has to be the same scenario driven twice, stock and LionDriver.**
+    The scenario list, site and measurement are not set.
   reversibility: easy
-  blocks: "WP-V-02, WP-V-03"
+  blocks: "WP-M-08 OI-2; the B2 comparison in WP-V-02 and the known scenarios of WP-V-03"
   gate: G2
   decider: claude
+  asked: 2026-10-22
+  batch: 16
+  proceed_after: 2026-10-29
   options:
     - key: A
       recommended: true
-      title: "Closed-course scenario pairs"
-      detail: "Repeatable; needs a site."
+      title: "Paired runs on a closed course, from the WP-V-03 known scenarios"
+      detail: "Each scenario run with stock TSS2 and with LionDriver, same speeds and targets, logged on the device. Repeatable and safe for the hard cases. Cost: a site, soft targets for stopped and cut-in vehicles, and several runs per pair."
     - key: B
-      title: "Matched public-road segments"
-      detail: "Realistic; less controlled, needs WP-V-07."
-  sources: ["assurance/01-management/WP-M-08-sotif-plan.md OI-2"]
-  status: queued
+      title: "Matched segments of public road"
+      detail: "The same route driven with each system. Cost: traffic differs run to run, so the hard scenarios hardly ever occur and cannot be set up."
+  sources: ["assurance/01-management/WP-M-08-sotif-plan.md §5 (B2), OI-2", "assurance/06-validation/WP-V-03-sotif-known-scenarios.md", "assurance/06-validation/WP-V-07-vehicle-test-operations.md"]
+  status: open
 
 - id: DQ-139
   question: "May simulation results count as validation evidence, and for which kinds of scenario?"
@@ -3144,22 +3234,31 @@
   applied: {ref: 98f5e9966, record: "WP-M-08 OI-3; WP-V-02 §5.3", at: 2026-10-16}
 
 - id: DQ-140
-  question: "Which surrogate measures (takeovers, disengagements, FCW, envelope hits, DM alerts) may stand in for harm events, and what argument links them?"
-  context: "Validation targets need leading indicators because harm events are too rare for one vehicle; the link to harm must be argued, not assumed."
+  question: "Which everyday events (take-overs, disengagements, forward collision warnings, envelope hits, driver-monitoring alerts) may stand in for crashes when LionDriver is validated, and how is each linked to harm?"
+  context: >-
+    One test car will not drive far enough to show a crash rate directly; WP-V-02 plans 10⁴–2 × 10⁴ km engaged.
+    Validation therefore needs events that happen often and rise when the risk rises. **Each such surrogate counts only
+    if an argument links it to harm; otherwise a low count proves nothing.**
   reversibility: easy
-  blocks: "WP-V-02"
+  blocks: "WP-M-08 OI-8; WP-V-02 surrogate rates and the field surrogates of WP-V-04 (AS-nn)"
   gate: G2
   decider: claude
+  asked: 2026-10-22
+  batch: 16
+  proceed_after: 2026-10-29
   options:
     - key: A
       recommended: true
-      title: "Small set with explicit argument per measure"
-      detail: "Defensible; assessor review."
+      title: "A small set, each with its own argument"
+      detail: "For example unrequested lane departures, envelope limit hits and take-overs with a short time to the line, each with why it precedes harm and how often it does. Cost: each argument has to be written and checked against logs."
     - key: B
+      title: "Count every take-over and disengagement"
+      detail: "Simple to collect. Cost: most disengagements are routine, so the rate mixes noise with risk and its link to harm is weak."
+    - key: C
       title: "No surrogates"
-      detail: "Targets likely unreachable."
-  sources: ["assurance/01-management/WP-M-08-sotif-plan.md OI-8"]
-  status: queued
+      detail: "Only crashes count. Cost: no rate can be shown with one car, so the rate-level targets stay unmet."
+  sources: ["assurance/01-management/WP-M-08-sotif-plan.md OI-8", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md §2 (public-road row), VT-01…VT-15", "assurance/06-validation/WP-V-04-sotif-unknown-scenarios.md (AS-08)"]
+  status: open
 
 - id: DQ-141
   question: "Is a soft real-time 100 Hz loop on the bench PC acceptable for the HIL plant model at bench stage B3?"
@@ -4141,7 +4240,10 @@
       title: "Use a published naturalistic-driving baseline"
       detail: "Better exposure data, but less aligned with the existing severity tooling."
   sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md OI-2"]
-  status: queued
+  gate: G2
+  asked: 2026-10-22
+  status: withdrawn
+  note: "Withdrawn before it was asked: the same question as DQ-137 (the B1 crash and exposure data); merged there."
 
 - id: DQ-195
   question: "How is the surrogate-to-harm argument for VT-04 and takeover-based surrogates constructed?"
@@ -5656,4 +5758,6 @@
       title: "Keep C2 until measured on the closed course, then re-rate"
       detail: "A driver-in-the-loop run of the overshoot decides it. Cost: HE-01.6 stays at B until that test, which needs the car, a closed course and test drivers."
   sources: ["assurance/02-concept/WP-C-03-hara.md HE-01.6, §5.12, OI-11", "assurance/sim/results/edge-cases.md (rows EC-11, EC-13 and their assumption probes)", "assurance/02-concept/hara/hara_model.py RULES H-01 OS-12", "assurance/06-validation/WP-V-05-fault-injection.md VS-FI-32", "DQ-406"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Applied in part (jherrodthomas/LionDriver#429): WP-C-03 v0.9 rates HE-01.6 S3 E3 C3, ASIL C, no AoU credit, so it leaves §5.12; trace hazards.yaml; HARA figures; sim README §3.7 loop diagram and animation of HE-01.6 (fig_sim_he.py). Left (WP-C-03 OI-11): re-rate the OS-12 rules of hara_model.py and regenerate both workbooks with the hara-builder generator, which this session does not have"

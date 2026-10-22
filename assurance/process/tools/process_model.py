@@ -388,11 +388,13 @@ def check(model: Model, ctx: Context) -> dict[str, list[str]]:
 
   # P9 feedback: a finding of a later phase routed back to work products of earlier phases
   phase_of = {wp: a["phase"] for a in model.activities.values() for wp in a["produces"]}
+  updated_in = {(wp, a["phase"]) for a in model.activities.values() for wp in a.get("updates", [])}
   for fid, fb in model.feedback.items():
     if fb["source"] not in phase_of:
       model.err("P9", fid, f"source {fb['source']} is not produced by any activity")
-    elif phase_of[fb["source"]] != fb["phase"]:
-      model.err("P9", fid, f"source {fb['source']} is produced in {phase_of[fb['source']]}, not {fb['phase']}")
+    elif phase_of[fb["source"]] != fb["phase"] and (fb["source"], fb["phase"]) not in updated_in:
+      model.err("P9", fid, f"source {fb['source']} is produced in {phase_of[fb['source']]}, not {fb['phase']}, "
+                f"and not updated there")
     for wp in fb["targets"]:
       if wp not in phase_of:
         model.err("P9", fid, f"target {wp} is not produced by any activity")

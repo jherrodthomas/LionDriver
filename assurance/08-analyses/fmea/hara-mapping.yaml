@@ -1,6 +1,7 @@
 # Mapping of the second-set HARA (analyses/hara.yaml, LD-HARA-001 rev 0.3) onto WP-C-03, the HARA of record
 # (docs-safety-reconciliation.md §7 OI-5, §8). The FMEA data cites second-set hazard IDs (HZ-xxx) in its effects; this file
 # carries those links to WP-C-03 hazards (H-0n), hazardous events (HE-0n.m) and safety goals (SG-0n).
+# The second set is withdrawn (DQ-124 A, 2026-10-22); this mapping is the trace that keeps its IDs usable.
 # Checked by tools/safety/fmea_lint.py: every second-set hazard and goal is mapped, every WP-C-03 ID exists in WP-C-03, both
 # ASILs match their sources, and `agreement` matches the comparison.
 #   agreement: same            - same ASIL

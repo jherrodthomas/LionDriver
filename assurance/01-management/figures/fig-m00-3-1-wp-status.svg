@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1192" viewBox="0 0 1280 1192" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 3-1 · Work-product status by gate (WP-M-00)</title>
-<desc>Heat map of the 88 work products of the WP-M-00 register by gate G0 to G6. Status totals: Skeleton 4, Draft 84, In review 0, Approved 0, Baselined 0, tailored out 0. Per gate: G0 21, G1 14, G2 16, G3 21, G4 10, G5 14, G6 2.</desc>
+<desc>Heat map of the 88 work products of the WP-M-00 register by gate G0 to G6. Status totals: Skeleton 4, Draft 84, In review 0, Approved 0, Baselined 0, tailored out 0. Per gate: G0 21, G1 15, G2 16, G3 21, G4 10, G5 14, G6 2.</desc>
 <defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
 <rect x="0" y="0" width="1280" height="1192" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-1 · Work-product status by gate</text>
@@ -22,7 +22,7 @@
 <text x="50" y="168" font-size="10" fill="#475569">Governance</text>
 <rect x="213.4" y="136" width="167.4" height="40" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
 <text x="221.4" y="152" font-size="11" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G1</text>
-<text x="245.4" y="152" font-size="10.5" fill="#0F172A" font-weight="700">14 WPs (14 D)</text>
+<text x="245.4" y="152" font-size="10.5" fill="#0F172A" font-weight="700">15 WPs (15 D)</text>
 <text x="221.4" y="168" font-size="10" fill="#475569">Concept</text>
 <rect x="384.9" y="136" width="167.4" height="40" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
 <text x="392.9" y="152" font-size="11" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G2</text>
@@ -516,7 +516,9 @@
 <text x="1201" y="900.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
 <rect x="652" y="905" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
 <text x="654" y="916" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-O-04</text>
-<text x="714" y="916" font-size="10" fill="#0F172A">Field monitoring (safety, SOTIF and AI) and crash reporting</text>
+<text x="714" y="916" font-size="10" fill="#0F172A">Field monitoring (safety, SOTIF and AI) and crash reporting *</text>
+<rect x="1086" y="906.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1097" y="915.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
 <rect x="1216" y="906.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
 <text x="1227" y="915.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
 <text x="654" y="931" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-O-05</text>
@@ -576,7 +578,7 @@
 <text x="714" y="1096" font-size="10" fill="#0F172A">Requirements and traceability data (machine-readable) … *</text>
 <rect x="1086" y="1086.5" width="126" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
 <text x="1149" y="1095.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
-<text x="40" y="1118" font-size="10.5" fill="#475569">* Gate column not a single gate: WP-M-14 G2 (activation), G3–G4 (use) · WP-K-01 G1→G5 (living) · WP-T-01 G1→G5 (drawn over every gate named).</text>
+<text x="40" y="1118" font-size="10.5" fill="#475569">* Gate column not a single gate: WP-M-14 G2 (activation), G3–G4 (use) · WP-O-04 G1 (development slice: the §3.3 data path for the first road drives, DQ-122 A), G6 (the rest) · WP-K-01 G1→G5 (living) · WP-T-01 G1→G5 (drawn over every gate named).</text>
 <text x="40" y="1136" font-size="10.5" fill="#475569">Status letter = Status column of the register, legend of §3. A WP spanning several gates is counted at each gate in the gate key. No work product is in review, approved, baselined or tailored out.</text>
 <line x1="40" y1="1152" x2="1240" y2="1152" stroke="#E2E8F0" stroke-width="1"/>
 <rect x="40" y="1164" width="14" height="12" rx="3" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>

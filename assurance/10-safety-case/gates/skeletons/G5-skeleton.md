@@ -23,13 +23,13 @@
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 4 performed: CR-12, FSA-F, SR-03, SR-04@G5 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 66 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 63 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
 | Work product | Activity | Status in WP-M-00 | Open items | Verification review (WP-P-05) |
 |---|---|---|---|---|
-| [WP-V-01](../../../06-validation/WP-V-01-safety-validation.md) Safety validation plan, specification and report | REL-01 | Draft | 5 | |
+| [WP-V-01](../../../06-validation/WP-V-01-safety-validation.md) Safety validation plan, specification and report | REL-01 | Draft | 4 | |
 | [WP-V-04](../../../06-validation/WP-V-04-sotif-unknown-scenarios.md) Evaluation of unknown hazardous scenarios | REL-02 | Draft | 3 | |
 | [WP-V-06](../../../06-validation/WP-V-06-cybersecurity-validation.md) Cybersecurity validation and penetration testing | REL-03 | Draft | 4 | |
 | [WP-O-01](../../../09-production-operation/WP-O-01-installation-and-provisioning-control.md) Installation, provisioning and production control | REL-04 | Draft | 8 | |
@@ -38,8 +38,8 @@
 | [WP-K-02](../../../10-safety-case/WP-K-02-sotif-release-argument.md) SOTIF achievement evaluation and release recommendation | REL-07 | Skeleton | 2 | |
 | [WP-K-03](../../../10-safety-case/WP-K-03-cybersecurity-case.md) Cybersecurity case | REL-08 | Draft | 5 | |
 | [WP-P-10](../../../07-supporting/WP-P-10-release-management.md) Release management and baseline procedure | REL-09 | Draft | 6 | |
-| [WP-K-01](../../../10-safety-case/WP-K-01-safety-case.md) Safety case (GSN, integrated FuSa, SOTIF and AI argument) (update) | REL-10 | Draft | 5 | |
-| [WP-T-01](../../../trace/README.md) Requirements and traceability data (machine-readable), consistency evidence (update) | REL-10 | Draft | 4 | |
+| [WP-K-01](../../../10-safety-case/WP-K-01-safety-case.md) Safety case (GSN, integrated FuSa, SOTIF and AI argument) (update) | REL-10 | Draft | 4 | |
+| [WP-T-01](../../../trace/README.md) Requirements and traceability data (machine-readable), consistency evidence (update) | REL-10 | Draft | 3 | |
 | [WP-K-04](../../../10-safety-case/WP-K-04-functional-safety-assessment.md) Functional safety assessment report (performed independently, I3) | REL-11 | Skeleton | 3 | |
 | [WP-K-05](../../../10-safety-case/WP-K-05-cybersecurity-assessment.md) Cybersecurity assessment report (performed independently) | REL-12 | Skeleton | 4 | |
 | [WP-K-06](../../../10-safety-case/WP-K-06-release-record.md) Release for production / release record | REL-13 | Skeleton | 3 | |

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="364" viewBox="0 0 640 364" role="img" aria-labelledby="t d">
 <title id="t">09-production-operation: work products by gate and status</title>
-<desc id="d">Work products of 09-production-operation from WP-M-00 §3, by the gates they are needed for: WP-O-01 Installation, provisioning and production control: G5, Draft; WP-O-02 Operation, service (maintenance, repair) and decommissioning: G5, Draft; WP-O-03 User information and safety warnings: G5, Draft; WP-O-04 Field monitoring (safety, SOTIF and AI) and crash reporting: G6, Draft; WP-O-05 Cybersecurity incident response, vulnerability management and software updates: G6, Draft.</desc>
+<desc id="d">Work products of 09-production-operation from WP-M-00 §3, by the gates they are needed for: WP-O-01 Installation, provisioning and production control: G5, Draft; WP-O-02 Operation, service (maintenance, repair) and decommissioning: G5, Draft; WP-O-03 User information and safety warnings: G5, Draft; WP-O-04 Field monitoring (safety, SOTIF and AI) and crash reporting: G1 (development slice: the §3.3 data path for the first road drives, DQ-122 A), G6 (the rest), Draft; WP-O-05 Cybersecurity incident response, vulnerability management and software updates: G6, Draft.</desc>
 <style>
 svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
       --amb:#c98500; --amb-bg:#fdf4dc; --ok:#2e9e6a; --ok2:#166534; }
@@ -45,6 +45,7 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 <rect x="550.3" y="217" width="26.9" height="14" rx="7" class="s-draft"/>
 <text x="24" y="260" class="tb">WP-O-04</text>
 <text x="24" y="276" class="t2">Field monitoring (safety, SOTIF and AI) and cra…</text>
+<rect x="410.9" y="257" width="26.9" height="14" rx="7" class="s-draft"/>
 <rect x="585.1" y="257" width="26.9" height="14" rx="7" class="s-draft"/>
 <rect x="16" y="284" width="608" height="40" rx="4" class="lane"/>
 <text x="24" y="300" class="tb">WP-O-05</text>

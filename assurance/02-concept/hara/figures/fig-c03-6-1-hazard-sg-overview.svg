@@ -50,9 +50,9 @@
 <path d="M356 294 H372" stroke="#94A3B8" stroke-width="1.4" fill="none"/>
 <rect x="372" y="282" width="236" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
 <text x="382" y="298" font-size="11" fill="#0F172A" font-weight="700">HE-01.6</text>
-<text x="446" y="298" font-size="10.5" fill="#475569">S3 E3 C2 ⚠</text>
-<rect x="568" y="286.0" width="32" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
-<text x="584" y="297.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<text x="446" y="298" font-size="10.5" fill="#475569">S3 E3 C3</text>
+<rect x="568" y="286.0" width="32" height="16" rx="8" fill="#C2410C" stroke="#9A3412"/>
+<text x="584" y="297.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
 <rect x="40" y="368" width="300" height="86" rx="9" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
 <text x="52" y="388" font-size="12.5" fill="#0F172A" font-weight="700">H-02</text>
 <text x="52" y="405" font-size="11.5" fill="#0F172A" font-weight="600">Unannounced loss or degradation of lateral</text>
@@ -351,7 +351,7 @@
 <path d="M608 204 C728 204 780 235.7 898 235.7" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
 <path d="M608 234 C728 234 780 244.3 898 244.3" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#aR)"/>
 <path d="M608 264 C728 264 780 252.9 898 252.9" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
-<path d="M608 294 C728 294 780 261.4 898 261.4" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
+<path d="M608 294 C728 294 780 261.4 898 261.4" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#aR)"/>
 <path d="M608 396 C728 396 780 270.0 898 270.0" stroke="#64748B" stroke-width="1.2" fill="none" marker-end="url(#aS)"/>
 <path d="M608 336 C728 336 780 688.5 898 688.5" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#aR)"/>
 <path d="M608 366 C728 366 780 696.0 898 696.0" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#aR)"/>
