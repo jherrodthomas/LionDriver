@@ -32,8 +32,9 @@ DINER_CARS = 3
 
 # ------------------------------------------------------------------------------------------------- kits
 def _fix_images(root: Path):
-  """Point every image the model could not find at the file of the same name under root, else at another colour of
-  the same model (the car pack's FBX names colours its download leaves out)."""
+  """Point every image the model could not find at the file of the same name under root, else at its albedo for a
+  baked-light map (the civil service vehicles' base colour; the download leaves the bakes out), else at another
+  colour of the same model (the car pack's FBX names colours its download leaves out)."""
   files = {f.name.lower(): f for f in root.rglob("*") if f.is_file()}
   for img in bpy.data.images:
     if img.source != "FILE":
@@ -43,6 +44,8 @@ def _fix_images(root: Path):
       continue
     f = files.get(p.name.lower()) or next((files[n] for n in (p.stem.lower() + e for e in (".png", ".jpg", ".jpeg"))
                                            if n in files), None)
+    if f is None and p.stem.lower().endswith("_baked"):
+      f = files.get(p.stem.lower().removesuffix("_baked") + "_albedo.png")
     if f is None:
       stem = p.stem.lower()
       pre = "wheel_" if stem.startswith("wheel_") else p.parent.name.lower()
