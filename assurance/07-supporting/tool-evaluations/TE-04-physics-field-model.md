@@ -3,9 +3,9 @@
 | Field | Value |
 |---|---|
 | Purpose | Decide whether LionDriver needs a physics field model (heat, stress or diffusion over a geometry, shown as a 2D or 3D picture), which problem it should answer first, and which open-source solver it should use |
-| Status | Draft. The lead's go on 2026-10-21: the device heat model F1 (DQ-410 A), a cabin-air logger of about US$100 for validation (DQ-412 A), and a design aid with no credit sought, credit revisited at G2 (DQ-413 A). Solver per DQ-411 (Claude's choice, open to objection until 2026-10-28). Pilot started 2026-10-21: T2 and T3 done on estimated inputs ([`assurance/sim/thermal/`](../../sim/thermal/README.md), tool TL-53); T1, T4 and T5 open. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Draft. The lead's go on 2026-10-21: the device heat model F1 (DQ-410 A), a cabin-air logger of about US$100 for validation (DQ-412 A), and a design aid with no credit sought, credit revisited at G2 (DQ-413 A). Solver: FEniCSx, checked by FiPy and an independent lumped check (DQ-411 A, confirmed by the lead on 2026-10-22). Pilot started 2026-10-21: T2 and T3 done on estimated inputs ([`assurance/sim/thermal/`](../../sim/thermal/README.md), tool TL-53); T1, T4 and T5 open. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Standard reference | ISO 26262-8:2018 §11 (confidence in the use of software tools), applied as in [WP-P-07](../WP-P-07-tool-classification-qualification.md) §2; ISO 21448 for the ODD use |
-| Date | 2026-10-21 |
+| Date | 2026-10-21; Status and OI-1 updated 2026-10-22 (DQ-411 A) |
 | Baseline | `liondriver-dev` at `561f5c1` |
 | Related | [WP-C-02](../../02-concept/WP-C-02-odd-and-intended-functionality.md) OI-3, [WP-C-06](../../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) TC-21, [WP-A-03](../../08-analyses/WP-A-03-dependent-failure-analysis.md) DFI-04, [WP-S-02](../../03-system/WP-S-02-technical-safety-requirements.md) TSR-509, [WP-H-01](../../04-hardware/WP-H-01-hardware-safety-requirements.md) HWSR-509/509a, [sim README](../../sim/README.md), [WP-V-02](../../06-validation/WP-V-02-sotif-vv-strategy.md) §5.3 |
 
@@ -38,7 +38,7 @@ safety question. §2 lists the candidates against the work products.
 | Fit for F1 | Good: 3D conduction with convection and a sun-flux boundary; a linearised radiation term is easy to write | Good on a 2D cross-section, weak on the full 3D shell | Very good physically (radiation between surfaces built in), but a second language and file format in the repo | Poor: no maintenance and no modern build | Good for the time series, cannot show *where* it is hot |
 | Evidence view (ISO 26262-8 §11) | Weak-form code is short and reviewable; verification by manufactured solutions and the analytic slab case | Independent method and code base from FEniCSx, which makes it a useful cross-check | Mature code, but its input files are less readable to a reviewer | A NASA pedigree does not help an unmaintained build | Hand-checkable; the natural sanity check |
 
-**Recommendation (decider: Claude, reversible; recorded with DQ-411):** FEniCSx for the 3D model, rendered with
+**Recommendation (decider: Claude, reversible; the lead confirmed it on 2026-10-22, DQ-411 A):** FEniCSx for the 3D model, rendered with
 PyVista, with two independent checks: FiPy on a 2D cross-section of the same device, and a lumped RC network in numpy.
 If the three agree within a stated tolerance, a solver or mesh error is unlikely to pass unnoticed (tool error
 detection TD2 without measurement, TD1 once logged drives back it, §5). In the pilot the lumped network became two
@@ -115,7 +115,7 @@ its range. T1 adds the MCU's marking and package to its list.
 
 | ID | Item |
 |---|---|
-| OI-1 | ~~The lead's go or no-go~~ **Closed** 2026-10-21: go on F1 (DQ-410 A), logger approved, not yet bought (DQ-412 A), design aid, TCL1 (DQ-413 A); the tool choice is Claude's, open to objection until 2026-10-28 (DQ-411) |
+| OI-1 | ~~The lead's go or no-go~~ **Closed** 2026-10-21: go on F1 (DQ-410 A), logger approved, not yet bought (DQ-412 A), design aid, TCL1 (DQ-413 A); the tool choice FEniCSx with FiPy and the lumped check, confirmed by the lead on 2026-10-22 (DQ-411 A) |
 | OI-2 | ~~Confirm that PyVista renders off-screen~~ **Closed** 2026-10-21: VTK 9.7 renders through Mesa's software EGL (surfaceless), no screen or GPU; conda-forge Mesa 26 no longer ships OSMesa |
 | OI-3 | Task for the WP-V-01 owner: a heat-soaked repeat of VS-VAL-01 to see whether the EPS derates (F2) |
 | OI-4 | Licence: conda-forge's PETSc build links ParMETIS, whose licence allows non-commercial use only without permission. The serial runs here use PETSc's own LU, not ParMETIS. Before LionDriver is used commercially, settle it: a PETSc build without ParMETIS, or the authors' permission (coordinator) |

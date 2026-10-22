@@ -339,6 +339,17 @@ package LionDriverVerification {
             verify LionDriverRequirements::tsr_516;
         }
     }
+    verification <'VS-FI-32'> vs_fi_32 : VerificationCase {
+        doc /* Fault late in an assisted lane change (HE-01.6, DQ-406 A) */
+        :>> spec = "WP-V-05 §5.6";
+        :>> level = "VS-FI";
+        :>> names = "HE-01.6";
+        objective {
+            verify LionDriverRequirements::tsr_110;
+            verify LionDriverRequirements::tsr_408;
+            verify LionDriverRequirements::tsr_516;
+        }
+    }
     verification <'VS-HW-01'> vs_hw_01 : VerificationCase {
         doc /* Relay switching and default state */
         :>> spec = "WP-H-06 §3";
@@ -1906,7 +1917,7 @@ package LionDriverVerification {
         doc /* Worst-case lateral disturbance inside the envelope */
         :>> spec = "WP-V-01 §5.2";
         :>> level = "VS-VAL";
-        :>> names = "HE-01.1, HE-01.2, HE-01.3, HE-01.4, HE-01.5";
+        :>> names = "HE-01.1, HE-01.2, HE-01.3, HE-01.4, HE-01.5, HE-01.6";
         objective {
             verify LionDriverRequirements::sg_01;
         }

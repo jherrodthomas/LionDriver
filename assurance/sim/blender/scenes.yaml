@@ -105,6 +105,23 @@ scenes:
       The same hard-over with a driver who is not supervising (foreseeable misuse): no correction within the scene, so
       the car crosses the right lane and the shoulder toward the barrier.
 
+  - id: he-01-6-lane-change-overshoot
+    he: HE-01.6
+    case: F-03
+    case_overrides: {road: straight, speed_kph: 80.0, t_fault: 7.069, duration: 8.0, lane_change: 6.0, lane_change_s: 3.96}
+    assumptions: {driver_t_r_s: 1.5}
+    case_title: "Steering command frozen 27 % into an assisted lane change to the left (F-03), 80 km/h"
+    trigger_label: command frozen mid lane change
+    window: [-1.5, 6.0]
+    environment: highway-free-flow
+    road: {lanes_left: 2}
+    actors:
+      - {name: car two lanes left, kind: car, lane: 2, ds_m: 12, speed_kph: 85, source: illustrative, critical: true, paint: [0.85, 0.86, 0.88]}
+    caption: >-
+      HE-01.6 (DQ-406 A): the car does not stop in the target lane. The frozen frame keeps the lateral push of the lane
+      change, so the car runs on over the target lane's far line toward the lane beyond, which the driver did not
+      check. The motion is catalogue row EC-11 (finding EC-N1). The car two lanes over is illustrative.
+
   # ---------------------------------------------------------------------------------------------- H-02 loss of lateral
   - id: he-02-1-eps-loss-curve
     he: HE-02.1
