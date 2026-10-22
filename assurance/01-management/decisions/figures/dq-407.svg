@@ -1,0 +1,40 @@
+<svg viewBox="0 0 640 250" role="img" aria-labelledby="dq407t">
+<title id="dq407t">Fault soft disable timelines: A, alert and slowing both start at 0 s, control handed back at 3 s; B, alert at 0 s, slowing from 1 s, hand-back at 3 s; C, alert at 0 s, slowing from 1 s, hand-back at 4 s</title>
+<text x="0" y="14" class="s-muted" font-size="12" font-weight="600" letter-spacing=".06em">FAULT SOFT DISABLE: WHEN THE SLOW-DOWN STARTS</text>
+<line x1="170" y1="34" x2="170" y2="196" stroke="var(--line)" stroke-width="1"/>
+<text x="170" y="212" text-anchor="middle" class="s-muted" font-size="11">0 s</text>
+<line x1="270" y1="34" x2="270" y2="196" stroke="var(--line)" stroke-width="1"/>
+<text x="270" y="212" text-anchor="middle" class="s-muted" font-size="11">1 s</text>
+<line x1="370" y1="34" x2="370" y2="196" stroke="var(--line)" stroke-width="1"/>
+<text x="370" y="212" text-anchor="middle" class="s-muted" font-size="11">2 s</text>
+<line x1="470" y1="34" x2="470" y2="196" stroke="var(--line)" stroke-width="1"/>
+<text x="470" y="212" text-anchor="middle" class="s-muted" font-size="11">3 s</text>
+<line x1="570" y1="34" x2="570" y2="196" stroke="var(--line)" stroke-width="1"/>
+<text x="570" y="212" text-anchor="middle" class="s-muted" font-size="11">4 s</text>
+<text x="0" y="66" class="s-ink" font-size="12">A · as built (recommended)</text>
+<rect x="170" y="48" width="300" height="12" rx="2" class="s-accsoft"/>
+<text x="174" y="58" class="s-ink" font-size="10">alert sounding</text>
+<rect x="170" y="64" width="300" height="12" rx="2" class="s-oksoft"/>
+<text x="174" y="74" class="s-ink" font-size="10">slowing, ≤ 1.2 m/s²</text>
+<line x1="470" y1="44" x2="470" y2="80" stroke="var(--ink)" stroke-width="2"/>
+<text x="475" y="90" class="s-muted" font-size="10">hand-back</text>
+<text x="0" y="118" class="s-ink" font-size="12">B · wait 1 s, slow 2 s</text>
+<rect x="170" y="100" width="300" height="12" rx="2" class="s-accsoft"/>
+<text x="174" y="110" class="s-ink" font-size="10">alert sounding</text>
+<rect x="170" y="116" width="100" height="12" rx="2" class="s-badsoft"/>
+<text x="174" y="126" class="s-ink" font-size="10">at speed, fault active</text>
+<rect x="270" y="116" width="200" height="12" rx="2" class="s-oksoft"/>
+<text x="274" y="126" class="s-ink" font-size="10">slowing, ≤ 1.2 m/s²</text>
+<line x1="470" y1="96" x2="470" y2="132" stroke="var(--ink)" stroke-width="2"/>
+<text x="475" y="142" class="s-muted" font-size="10">hand-back</text>
+<text x="0" y="170" class="s-ink" font-size="12">C · wait 1 s, slow 3 s</text>
+<rect x="170" y="152" width="400" height="12" rx="2" class="s-accsoft"/>
+<text x="174" y="162" class="s-ink" font-size="10">alert sounding</text>
+<rect x="170" y="168" width="100" height="12" rx="2" class="s-badsoft"/>
+<text x="174" y="178" class="s-ink" font-size="10">at speed, fault active</text>
+<rect x="270" y="168" width="300" height="12" rx="2" class="s-oksoft"/>
+<text x="274" y="178" class="s-ink" font-size="10">slowing, ≤ 1.2 m/s²</text>
+<line x1="570" y1="148" x2="570" y2="184" stroke="var(--ink)" stroke-width="2"/>
+<text x="575" y="194" class="s-muted" font-size="10">hand-back</text>
+<text x="0" y="240" class="s-muted" font-size="11">Time from the fault (s). Synthetic search: no order ended in contact.</text>
+</svg>
