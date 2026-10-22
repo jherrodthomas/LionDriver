@@ -882,8 +882,7 @@ scenes:
       - {name: car ahead left, kind: car, lane: 1, ds_m: 40, speed_kph: 110, source: illustrative, paint: [0.2, 0.22, 0.25]}
     events:
       - {t: -2.0, label: ambulance closing from behind with beacons; the item holds lane and speed}
-      - {t: 0, label: the ambulance brakes (4 m/s²) behind the ego}
-    trigger_label: ambulance must brake; the ego has not yielded
+    trigger_label: the ambulance brakes (4 m/s²) behind the ego, which has not yielded
     caption: >-
       An ambulance with its beacons on closes from behind in the ego's lane at 140 km/h. The item has no siren or
       beacon detection: it holds its lane and 105 km/h, and the driver, relying on it, does not move over to let the
@@ -896,17 +895,16 @@ scenes:
     case_title: "Patrol car on the shoulder; the item keeps the right lane at 105 km/h, the driver does not move over"
     window: [-1.0, 4.5]
     environment: highway-free-flow
+    road: {lanes_right: 0}                       # the ego in the right lane, the shoulder beside it
     conditions: W03
     variants: [W01]
     ego:
       speed_kph: 105
-      d: -3.7
     actors:
-      - {name: officer, kind: pedestrian, d: -6.0, ds_m: 3.0 * 105 / 3.6, critical: true, figure: female}
-      - {name: patrol car, kind: car, d: -7.1, ds_m: 3.0 * 105 / 3.6 - 3.5, source: illustrative, beacons: true, body: police_sedan, paint: [0.92, 0.92, 0.92]}
-      - {name: stopped car, kind: car, d: -7.1, ds_m: 3.0 * 105 / 3.6 + 6, source: illustrative, paint: [0.45, 0.1, 0.1]}
+      - {name: officer, kind: pedestrian, d: -2.3, ds_m: 3.0 * 105 / 3.6, critical: true, figure: female}
+      - {name: patrol car, kind: car, d: -3.35, ds_m: 3.0 * 105 / 3.6 - 3.5, source: illustrative, beacons: true, body: police_sedan, paint: [0.92, 0.92, 0.92]}
+      - {name: stopped car, kind: car, d: -3.35, ds_m: 3.0 * 105 / 3.6 + 6, source: illustrative, paint: [0.45, 0.1, 0.1]}
     events:
-      - {t: 0, label: 3 s before the patrol car; the item keeps the lane and speed (no move-over)}
       - {t: 3.0, label: passes the officer 1.2 m away at 105 km/h}
     trigger_label: TTC 3 s to the officer's position, no lane change or slowing
     caption: >-

@@ -72,7 +72,7 @@ class Kit:
   """A kit slot's pieces as templates kept out of the scene ({use: [piece]}): a piece is {name, parts [(mesh,
   matrix)], w, d, h}. Buildings are centred in X with their facade (-Y in the file) at Y = 0 and the base at Z = 0;
   cars are centred and face +X (the bonnet end is the lower one), and so are vehicles (the slot's fronts name the
-file's front, its lights the roof points of the beacons as fractions of the length from the centre); a trailer has its kingpin end at the origin and
+mesh's front in its own frame, its lights the roof points of the beacons as fractions of the length from the centre); a trailer has its kingpin end at the origin and
   reaches along -X, scaled to the slot's width_m."""
 
   def __init__(self, slot: dict, root: Path):
@@ -133,9 +133,12 @@ file's front, its lights the roof points of the beacons as fractions of the leng
 
   def _vehicle(self, ob):
     name = ob.name.split(".")[0]
-    lo, hi = _bbox([ob])
+    sc = Matrix.Diagonal(ob.matrix_world.to_scale()).to_4x4()   # its own frame: the file places some turned
+    loc = [sc @ v.co for v in ob.data.vertices]
+    lo = Vector([min(v[i] for v in loc) for i in range(3)])
+    hi = Vector([max(v[i] for v in loc) for i in range(3)])
     turn = math.pi / 2 if self.slot["fronts"][name] == "-y" else -math.pi / 2
-    m = Matrix.Rotation(turn, 4, "Z") @ Matrix.Translation((-(lo.x + hi.x) / 2, -(lo.y + hi.y) / 2, -lo.z)) @ ob.matrix_world
+    m = Matrix.Rotation(turn, 4, "Z") @ Matrix.Translation((-(lo.x + hi.x) / 2, -(lo.y + hi.y) / 2, -lo.z)) @ sc
     vs = [m @ v.co for v in ob.data.vertices]
     length = hi.y - lo.y
     lights = []
