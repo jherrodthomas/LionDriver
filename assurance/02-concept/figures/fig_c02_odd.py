@@ -46,7 +46,7 @@ SCOPE = "#B45309"
 PROSE = {
   "a_ctrl": {"value": 3.0, "src": ["R_ctrl = v² / 3.0 m/s² is the curve the controller can command at its lateral acceleration limit"]},
   "a_odd": {"value": 2.5, "src": ["R_ODD = v² / 2.5 m/s² is the proposed ODD bound"]},
-  "margin": {"value": 0.5, "src": ["(0.5 m/s² margin for controller error, road crown and wind)"]},
+  "margin": {"value": 0.5, "src": ["(0.5 m/s² margin for controller error and road crown)"]},
   "aou": {"src": ["Both assume the EPS torque authority suffices; that is not yet characterised (GAP-04, AOU-01)."]},
   "chill": {"src": ["The planner in Chill mode does not reduce speed ahead of curves",
                     "Entering a curve tighter than R_ODD at the current speed is therefore a driver task."]},
@@ -471,7 +471,7 @@ def figure_3_2(md: str) -> str:
   vk = 64
   tx, tyy = sx(vk), sy((radius(vk, a_odd) + radius(vk, a_ctrl)) / 2)
   b.append(text(mx, my, f"Margin {margin} m/s²: R_ctrl ≤ R < R_ODD", size=13, fill=AMBER, weight=700))
-  b.append(text(mx, my + 17, "for controller error, road crown and wind", size=11.5, fill=INK))
+  b.append(text(mx, my + 17, "for controller error and road crown (wind: DQ-415)", size=11.5, fill=INK))
   b.append(text(mx, my + 33, "outside the proposed ODD: driver task", size=11, fill=MUTED))
   b.append(line(mx + 40, my + 42, tx - 3, tyy - 5, stroke=AMBER, sw=1.4, marker="amber"))
   # beyond controller authority: left of the speed bound, where the region below R_ctrl is tall

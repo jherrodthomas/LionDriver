@@ -1,0 +1,68 @@
+# Device heat model (TE-04 pilot): every input with its source and status.
+# status: estimate = a placeholder until step T1 replaces it; code = read from the openpilot source at the baseline;
+# measured = from a caliper, a device log or the logger (none yet).
+# Units: SI (m, W, K or °C, s). Synthetic (DSR-12), design aid, no evidence credit (DQ-413).
+
+device:
+  name: comma 3X
+  size: {value: [0.120, 0.060, 0.025], status: estimate,
+         source: "outer box width x height x depth; to measure with calipers (T1)"}
+  # x: across the car, y: up, z: from the screen (z = 0, cabin side) to the face toward the windshield (z = depth)
+  conductivity: {value: 8.0, unit: W/m/K, status: estimate,
+                 source: "homogenised board, spreader and shell; aluminium spreader over FR-4 and plastic"}
+  heat_capacity: {value: 1600000.0, unit: J/m3/K, status: estimate,
+                  source: "about 290 J/K over the box volume: a 300 g device at about 950 J/kg/K"}
+
+sources:
+  soc: {centre: [0.052, 0.034, 0.012], size: [0.015, 0.015, 0.004], power: 5.0, status: estimate,
+        source: "SoC under the heat spreader; power to be read from deviceState.somPowerDrawW (T1)"}
+  mcu: {centre: [0.092, 0.016, 0.006], size: [0.008, 0.008, 0.003], power: 0.4, status: estimate,
+        source: "panda STM32H7 with its CAN transceivers; position assumed, to confirm (T1)"}
+  rest: {power: 1.6, status: estimate,
+         source: "display, modem, cameras and regulators, spread over the box; total from deviceState.powerDrawW (T1)"}
+
+boundaries:
+  # Robin condition on each face: -k dT/dn = h (T - T_ref); T_ref is the cabin air or the glass
+  rear:  {face: z0, h: 8.0, ref: air, status: estimate, source: "screen to cabin air, natural convection"}
+  left:  {face: x0, h: 8.0, ref: air, status: estimate, source: "natural convection"}
+  bottom: {face: y0, h: 8.0, ref: air, status: estimate, source: "natural convection"}
+  fan:   {face: x1, conductance: 0.25, ref: air, status: estimate,
+          source: "fan and fins as one conductance in W/K, spread over the fan face; fan at 100 %"}
+  mount: {face: y1, h: 20.0, ref: glass, status: estimate, source: "mount bracket pressed to the windshield"}
+  front: {face: z1, h: 6.0, ref: glass, status: estimate, source: "air gap between the device and the glass"}
+
+sun:
+  irradiance: {value: 800.0, unit: W/m2, status: estimate, source: "clear summer noon"}
+  glass_transmittance: {value: 0.5, status: estimate, source: "laminated windshield, solar band"}
+  absorptance: {value: 0.8, status: estimate, source: "dark plastic shell"}
+  glass_above_air: {value: 15.0, unit: K, status: estimate, source: "sun-heated windshield above cabin air"}
+
+drive:
+  duration: 3600.0
+  step: 60.0
+  soak_above_air: {value: 10.0, unit: K, status: estimate,
+                   source: "device temperature at the start, after parking in the sun"}
+
+# One-at-a-time variations for the uncertainty band of the bound (each multiplies the nominal value)
+uncertainty:
+  soc_power: [0.8, 1.2]
+  fan_conductance: [0.7, 1.3]
+  conductivity: [0.7, 1.3]
+  irradiance: [0.7, 1.3]
+
+sweep:
+  air: [25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0]
+  plot: [35.0, 45.0, 55.0]
+
+# The panda's safety MCU against its own limits (mcu_heat.py; WP-A-03 DFI-04, TSR-509, HWSR-509)
+mcu:
+  part: {value: STM32H725, status: code, source: "panda/SConscript: -DSTM32H725xx; direct SMPS supply and voltage scale VOS1 (panda/board/stm32h7/clock.h)"}
+  tj_max: {industrial: 125.0, extended: 140.0, status: published,
+           source: "DS13311 (STM32H725xE/G) Table 12: maximum junction temperature 125 °C (range 6) and 140 °C (range 3); Table 14 allows 140 °C at VOS1 with the SMPS, so the part's range decides. The fitted part's suffix is read off its marking (T1)"}
+  dts_error_k: {low: -7.0, high: 2.0, supply: 1.0, status: published,
+                source: "DS13311 Table 94: DTS offset −7 to +2 °C from 30 °C to TJmax, ±1 °C more for supply variation at VOS0, VOS1, VOS3"}
+  theta_jb: {low: 5.6, high: 29.1, status: published,
+             source: "DS13311 Table 136: junction to board, 5.6 °C/W (VFQFPN68) to 29.1 °C/W (LQFP176); the 3X's package to confirm (T1)"}
+  die_power: {value: 0.3, low: 0.2, high: 0.4, status: estimate,
+              source: "the MCU's own share of the 0.4 W source (the rest is the CAN transceivers); the junction sits P·ΘJB above the board"}
+  air: [25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0]

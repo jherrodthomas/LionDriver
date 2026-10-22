@@ -5298,3 +5298,212 @@
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-21, note: "Lead in chat with the coordinator: \"1\" (build it as shown)"}
   applied: {ref: "jherrodthomas/LionDriver#417", record: "assurance/models/fmdtools/sg02/fault_lab.py writes fault-lab.html (F-07 replay, P3/P4 figures, pair matrix, findings; synthetic, DSR-12); CI runs test_fault_lab.py and fault_lab.py --check; fmdtools README and TE-02 updated. Open in P5: TE-02 OI-4 extension note, TL-49 confirmation", at: 2026-10-21}
+
+- id: DQ-410
+  question: "Should LionDriver build a heat model of the comma device behind the windshield, to propose the ODD's hot-weather limit?"
+  context: >-
+    The ODD's ambient temperature bound is still TBD (WP-C-02 OI-3, due at G1). On a hot day the device's SoC can reach
+    its overheat band (96 °C on the comma 3X), which soft-disables LionDriver mid-drive, and the same heat warms the
+    panda MCU (common cause DFI-04). **A field model would show where the device gets hot and at what cabin
+    temperature it crosses the limit, as a candidate bound with its uncertainty.** EPS heat derating and tyre contact
+    were also looked at: the first is a vehicle measurement, not a model, and the second is too heavy for what it would
+    add. Mock-ups (synthetic, no credit): TE-04 §4. Scoping only; nothing is built until you say go.
+  reversibility: easy
+  blocks: "TE-04 pilot steps T1–T5; a candidate number for WP-C-02 OI-3 and for WP-A-03 DFI-04"
+  gate: G1
+  decider: lead
+  batch: 14
+  asked: 2026-10-21
+  options:
+    - key: A
+      recommended: true
+      title: "Go: device heat model first"
+      detail: "About a week of Claude work over steps T1–T5, no money beyond the logger question. Gives OI-3 a candidate bound and DFI-04 a number. Cost: one more tool to classify (TCL1) and keep in CI."
+    - key: B
+      title: "Measure only, no model"
+      detail: "Log cabin air and device temperatures on hot drives and set the bound from the data. Cost: no picture of where it is hot, and the bound covers only the days you happened to drive."
+    - key: C
+      title: "No-go for now"
+      detail: "Set OI-3 from comma's device data alone, as WP-C-02 plans. Cost: DFI-04 stays rated P with no number behind it."
+  sources: ["assurance/07-supporting/tool-evaluations/TE-04-physics-field-model.md §2, §4", "WP-C-02 §3.1, OI-3", "WP-C-06 TC-21", "WP-A-03 DFI-04", "WP-S-02 TSR-509", "openpilot/system/hardware/hardwared.py:93-103"]
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-21, note: "Lead in chat: \"go\""}
+  applied: {ref: 72db4de, record: "TE-04 Status and OI-1", at: 2026-10-21}
+
+- id: DQ-411
+  question: "Which solver should the device heat model use?"
+  context: >-
+    A reversible technical choice, so Claude goes with the recommendation unless you object. FEniCSx (finite elements,
+    LGPL-3.0, active) solves the 3D shape and renders through PyVista. **Two independent checks catch a solver or mesh
+    error:** FiPy (NIST finite volumes) on a 2D cross-section and a small lumped heat network in numpy. Elmer FEM is the
+    fallback if radiation inside the mount turns out to matter. No NASA tool fits: NASA's open heat code (NASTRAN-95)
+    is unmaintained.
+  reversibility: easy
+  blocks: "TE-04 step T2; a new WP-P-07 tool row"
+  gate: G1
+  decider: claude
+  batch: 14
+  asked: 2026-10-21
+  proceed_after: 2026-10-28
+  after: [DQ-410]
+  options:
+    - key: A
+      recommended: true
+      title: "FEniCSx, checked by FiPy and a lumped network"
+      detail: "Python throughout, pinned by an explicit conda lock like OpenModelica. Cost: three things to keep in agreement."
+    - key: B
+      title: "Elmer FEM alone"
+      detail: "Mature, with radiation built in. Cost: a second language and file format in the repo, and no independent check."
+    - key: C
+      title: "FiPy alone, 2D only"
+      detail: "Simplest install. Cost: a cross-section, not the 3D device, and no independent check."
+  sources: ["TE-04 §3", "WP-P-07 §2 (TL-44 pinning pattern)"]
+  status: open
+
+- id: DQ-412
+  question: "May we buy a temperature logger (about US$100) to measure cabin air at the device mount on hot drives?"
+  context: >-
+    The model is only as good as its check against reality. The device already logs its own SoC temperatures and fan
+    speed, so the one missing measurement is the air around the mount. **Without it, the model's bound stays an
+    unchecked estimate.** Logs stay on the car (no uploads, DQ-084).
+  reversibility: easy
+  blocks: "TE-04 step T4 (validation) and the uncertainty band of the candidate bound"
+  gate: G1
+  decider: lead
+  batch: 14
+  asked: 2026-10-21
+  after: [DQ-410]
+  options:
+    - key: A
+      recommended: true
+      title: "Buy a small 2–4 channel thermocouple logger"
+      detail: "About US$100, taped at the mount and in the cabin on ordinary hot drives. Cost: the money and fitting it on a few drives."
+    - key: B
+      title: "Use a weather-station temperature instead"
+      detail: "No purchase. Cost: outside air is not cabin air behind sun-loaded glass, so the band stays wide."
+    - key: C
+      title: "No measurement"
+      detail: "The model stays illustrative. Cost: its bound cannot be offered for OI-3."
+  sources: ["TE-04 §5 T4", "WP-V-02 §5.3 (fidelity case)", "DQ-084"]
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-21, note: "Lead in chat: \"yes\""}
+  applied: {ref: 72db4de, record: "TE-04 Status and OI-1", at: 2026-10-21}
+
+- id: DQ-413
+  question: "Should the device heat model aim to earn evidence credit for the ODD temperature bound, or stay a design aid?"
+  context: >-
+    Simulation earns no credit until a fidelity case is approved (WP-V-02 §5.3, DQ-139). As a design aid the tool is
+    TCL1 and a measured drive confirms the bound. **To let the bound rest on the model alone, the tool becomes TCL2 and
+    needs a qualification plan and a fidelity case.**
+  reversibility: revisit
+  blocks: "The TE-04 tool classification (TL row in WP-P-07) and whether a fidelity case is written for it"
+  gate: G2
+  decider: lead
+  batch: 14
+  asked: 2026-10-21
+  after: [DQ-410]
+  options:
+    - key: A
+      recommended: true
+      title: "Design aid now; revisit credit at G2 once logged drives exist"
+      detail: "TCL1, no qualification. The bound in WP-C-02 rests on measurement, the model says where margin is thin. Cost: a hot-day drive is still needed to set the bound."
+    - key: B
+      title: "Aim for credit from the start"
+      detail: "TCL2 with a qualification plan and a fidelity case. Cost: more work now, and an assessor must accept a thermal model of a device whose internals we do not have."
+    - key: C
+      title: "Never credit it"
+      detail: "The bound comes from comma's data and measurement only. Cost: none now; closes the door on using the model to extend the bound."
+  sources: ["TE-04 §5, §6", "WP-V-02 §5.3, DQ-139", "WP-P-07 §2"]
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-21, note: "Lead in chat: \"design aid\""}
+  applied: {ref: 72db4de, record: "TE-04 Status and OI-1", at: 2026-10-21}
+
+- id: DQ-414
+  question: "Should the ODD put a number on “light rain” and exclude standing water on the road?"
+  context: >-
+    The ODD includes light rain and excludes heavier rain, but gives no number (WP-C-02 §3.1). The hydroplaning study
+    (synthetic, no credit) finds that rain alone lowers the Corolla's hydroplaning speed to 110 km/h only from about
+    25 mm/h, ten times the usual top of light rain. **Standing water deeper than the tread (ruts, puddles, a worn
+    tyre) gives about 98 km/h at 35 psi, below the 110 km/h bound,** and it can lie on the road after the rain has
+    stopped. The item cannot detect either, so like the other weather limits this is an operating rule for the driver.
+  reversibility: revisit
+  blocks: "WP-C-02 §3.1 precipitation row; WP-C-06 TC-03; WP-V-03 KS-15 pass criteria"
+  gate: G1
+  decider: lead
+  batch: 14
+  asked: 2026-10-21
+  options:
+    - key: A
+      recommended: true
+      title: "Light rain is below 2.5 mm/h (US NWS); standing water on the road is outside the ODD"
+      detail: "Two lines in the WP-C-02 table and the user guidance: the driver does not engage, or takes over, on standing water. Cost: one more limit the driver must judge, with no item detection behind it."
+    - key: B
+      title: "Put a number on light rain only"
+      detail: "Defines the ODD edge for KS-15. Cost: standing water stays inside the ODD, where the models say the car can hydroplane below 110 km/h."
+    - key: C
+      title: "Also cap the speed at 90 km/h whenever the wipers run"
+      detail: "Keeps the car below NASA's 98 km/h on standing water. Cost: the item must read the wiper state from CAN (not in the reference build) and enforce a second speed bound; a change to the software requirements."
+  sources: ["assurance/sim/results/hydroplaning.md", "assurance/sim/weather/README.md §2", "WP-C-02 §3.1 (precipitation, speed DQ-260)", "WP-C-06 TC-03", "WP-V-03 KS-15", "NASA TN D-2056", "FHWA-RD-79-31"]
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-21, note: "Lead in chat: \"A\""}
+  applied: {ref: d3e22f9, record: "WP-C-02 v0.8 §3.1 (precipitation and road-surface rows)", at: 2026-10-21}
+  note: "Correction on applying: WP-C-02 §3.1 already listed standing water among the road-surface exclusions, so option A adds the rain-rate number and gives that exclusion its reason (after the rain, about 98 km/h); the context's \"standing water stays inside the ODD\" under B was wrong."
+
+- id: DQ-415
+  question: "Does the ODD's curve margin need to cover crosswind, and if so, how?"
+  context: >-
+    The ODD's curve bound (R ≥ v²/2.5) keeps 0.5 m/s² of the controller's 3.0 m/s² for controller error, road crown and
+    wind. The crosswind study (textbook models on the Corolla's measured outline, synthetic, no credit) finds that a
+    30 km/h side wind at 110 km/h already needs **0.9–1.8 m/s² of steering, beyond the whole margin**; in a curve at the
+    bound the two together exceed what the controller can command. The ODD excludes only "strong cross-wind (warnings
+    issued or gusts noticeable)", with no number, while the KS-02 test treats ≥ 30 km/h wind as inside. The model's
+    band is about a factor of two wide.
+  reversibility: revisit
+  blocks: "WP-C-02 §3.1 wind row and §3.2 margin; WP-V-03 KS-02 pass criteria"
+  gate: G1
+  decider: lead
+  batch: 14
+  asked: 2026-10-21
+  options:
+    - key: A
+      recommended: true
+      title: "Measure first: a windy-day log, then decide; meanwhile say the margin is not shown to cover wind"
+      detail: "Log steering torque on a straight on a windy day (local logs, wind from a weather station) to set the real push; WP-C-02 §3.2 states the margin covers controller error and crown only until then. Cost: a drive in wind, and the ODD stays open on wind for now."
+    - key: B
+      title: "Put a number on the wind limit now: sustained crosswind above 30 km/h is outside the ODD"
+      detail: "A driver operating rule like the rain limit; KS-02 then tests just inside it. Cost: by the model even 30 km/h wind uses more than the margin at 110 km/h, so the curve bound would still not cover it."
+    - key: C
+      title: "Widen the margin: curve bound R ≥ v²/2.0"
+      detail: "1.0 m/s² of margin covers the lower edge of the band at 110 km/h. Cost: more curves fall outside the ODD (at 110 km/h the minimum radius grows from 373 m to 467 m)."
+  sources: ["assurance/sim/results/crosswind.md", "assurance/sim/weather/README.md §4", "WP-C-02 §3.1 (wind), §3.2 (R_ODD)", "WP-V-03 KS-02", "openpilot/selfdrive/controls/lib/drive_helpers.py MAX_LATERAL_ACCEL_NO_ROLL", "SAE 2016-01-1620"]
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-21, note: "Lead in chat: \"go with your recomm\""}
+  applied: {ref: 43e71e8, record: "WP-C-02 v0.9 §3.1 wind row, §3.2 margin, OI-10", at: 2026-10-21}
+
+- id: DQ-416
+  question: "Should the ODD ask for more tyre tread than the legal minimum, because worn tyres cannot brake as hard as the item asks on a wet road?"
+  context: >-
+    The item brakes at up to 3.5 m/s², which needs a tyre-road friction of 0.36. The wet-braking study (a handbook
+    table of typical tyres, synthetic, no credit) gives new tyres 5.6 m/s² on a wet road at 110 km/h, but tyres worn to
+    the legal minimum (1.6 mm, 2/32 in) only **about 2.0 m/s²**: a stop from 110 km/h in light rain takes about 253 m
+    instead of 149 m, and the item asks for more braking than the tyres hold. The ODD's vehicle-state row says only
+    "maintained", which legal-minimum tyres meet.
+  reversibility: easy
+  blocks: "WP-C-02 §3.1 vehicle-state row; the user information; an installation check in WP-O-01"
+  gate: G1
+  decider: lead
+  batch: 14
+  asked: 2026-10-21
+  options:
+    - key: A
+      recommended: true
+      title: "Add a tread condition: at least 3 mm (4/32 in) on all four tyres"
+      detail: "The ODD's vehicle state gains the condition, the user information says to check it and replace at 3 mm, and the installation checks record it. Cost: one more condition the driver keeps, which the system cannot see."
+    - key: B
+      title: "User information only: advise 3 mm, leave the ODD as it is"
+      detail: "The driver is told; the ODD claim still includes worn tyres that the study says cannot give the item's braking in rain. Cost: none now; the gap stays in the claim."
+    - key: C
+      title: "No change until real-tyre data"
+      detail: "\"Maintained\" stands; revisit when the reference car's own wet braking is measured. Cost: nothing is written about tyres meanwhile."
+  sources: ["assurance/sim/results/wet-braking.md", "assurance/sim/weather/README.md §7", "WP-C-02 §3.1 (vehicle state, road surface)", "opendbc/car/interfaces.py ACCEL_MIN", "Bosch Automotive Handbook, 4th ed., p. 335"]
+  status: open
