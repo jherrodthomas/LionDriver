@@ -194,7 +194,7 @@ def allocation(items: dict[str, dict]) -> tuple[dict[str, str], dict[str, list[s
   return status, dict(values)
 
 
-CHECK_ROW = re.compile(r"^\|\s*([KRXPS]\d+)(?:\s+\*\*\[ext\]\*\*|\s+\(planned\))?\s*\|")
+CHECK_ROW = re.compile(r"^\|\s*([KRXPSA]\d+)(?:\s+\*\*\[ext\]\*\*|\s+\(planned\))?\s*\|")
 
 
 def readme_checks() -> list[tuple[str, str, str]]:
@@ -443,6 +443,9 @@ def fig2(d: Data) -> str:
   on = traced("FI", "AIR")
   out.append(line(fx + NODE_W / 2, fy, F2_POS["AIR"][0] - NODE_W / 2 - 1, fy, stroke=SW if on else FAINT,
                   sw=1.6 if on else 1.2, dash="" if on else "5 4", marker="sw" if on else "faint"))
+  if on:
+    out.append(text((fx + F2_POS["AIR"][0]) / 2, fy - 8, str(d.links[("FI", "AIR")]), size=11, weight=700, fill=SW,
+                    anchor="middle"))
   # cross-standard links
   sx, sy = F2_POS["SH"]
   hx, hy = F2_POS["H"]
@@ -776,11 +779,12 @@ CHECK_SHORT = {
   "R1": "HE ASIL = S + E + C", "R2": "SG ASIL = max of HEs", "R3": "AoU-fail ASIL rule", "R4": "every H has an HE",
   "X1": "HARA = WP-C-03", "X2": "AoU = WP-C-01", "X3": "generated YAML fresh",
   "P1": "unverified AoU in WP-K-01", "P2": "IDs in the block ranges", "S1": "SH → FI, TC → FM complete",
+  "A1": "AIR rests on a parent · AIR ↔ TSR",
 }
 CHECK_GROUPS = [("STRUCTURE AND DERIVATION (WP-P-06 §7)", ("K1", "K2", "K3", "K4", "K5", "K11", "K12")),
                 ("CODE AND TEST LINKS, AND PLANNED CHECKS", ("K6", "K7", "K8", "K9", "K10", "P1", "P2")),
                 ("LIONDRIVER EXTENSIONS", ("R1", "R2", "R3", "R4", "X1", "X2", "X3")),
-                ("CHAINS OF THE OTHER STANDARDS", ("S1",))]
+                ("CHAINS OF THE OTHER STANDARDS", ("S1", "A1"))]
 CHECK_STYLE = {"yes": (GREEN_BG, GREEN, ""), "partly": (AMBER_BG, AMBER, ""), "no": (CHIP, FAINT, "4 3")}
 
 

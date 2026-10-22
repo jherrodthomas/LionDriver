@@ -44,10 +44,12 @@
 <text x="644" y="383.5" font-size="11" fill="#0F766E" font-weight="700" text-anchor="start">18</text>
 <line x1="702" y1="347" x2="666" y2="412" stroke="#0F766E" stroke-width="1.6" marker-end="url(#sw)"/>
 <text x="676" y="383.5" font-size="11" fill="#0F766E" font-weight="700" text-anchor="end">22</text>
-<line x1="885" y1="347" x2="885" y2="412" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#faint)"/>
+<line x1="885" y1="347" x2="885" y2="412" stroke="#0F766E" stroke-width="1.6" marker-end="url(#sw)"/>
+<text x="893" y="383.5" font-size="11" fill="#0F766E" font-weight="700" text-anchor="start">33</text>
 <line x1="1060" y1="227" x2="1060" y2="312" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#faint)"/>
 <line x1="1060" y1="347" x2="1060" y2="412" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#faint)"/>
-<line x1="772" y1="330" x2="832" y2="330" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#faint)"/>
+<line x1="772" y1="330" x2="832" y2="330" stroke="#0F766E" stroke-width="1.6" marker-end="url(#sw)"/>
+<text x="802.5" y="322" font-size="11" fill="#0F766E" font-weight="700" text-anchor="middle">9</text>
 <line x1="608" y1="210" x2="263" y2="140" stroke="#0F766E" stroke-width="1.6" marker-end="url(#sw)"/>
 <text x="400" y="150" font-size="10.5" fill="#0F766E" font-weight="700" text-anchor="middle">shares hazard (SH → H) · 7</text>
 <path d="M1008.0,322 L986.0,322 L986.0,280 L263.0,280" stroke="#94A3B8" stroke-width="1.2" fill="none" stroke-dasharray="5 4" marker-end="url(#faint)" stroke-linejoin="round"/>
@@ -77,10 +79,10 @@
 <text x="720" y="334" font-size="12" fill="#0F766E" font-weight="700" text-anchor="middle">FI  23</text>
 <rect x="608" y="413" width="104" height="34" rx="7" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
 <text x="660" y="434" font-size="12" fill="#0F766E" font-weight="700" text-anchor="middle">FM  11</text>
-<rect x="833" y="313" width="104" height="34" rx="7" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 4"/>
-<text x="885" y="334" font-size="12" fill="#475569" font-weight="700" text-anchor="middle">AIR  30</text>
-<rect x="833" y="413" width="104" height="34" rx="7" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 4"/>
-<text x="885" y="434" font-size="12" fill="#475569" font-weight="700" text-anchor="middle">DSR  13</text>
+<rect x="833" y="313" width="104" height="34" rx="7" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="885" y="334" font-size="12" fill="#0F766E" font-weight="700" text-anchor="middle">AIR  30</text>
+<rect x="833" y="413" width="104" height="34" rx="7" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="885" y="434" font-size="12" fill="#0F766E" font-weight="700" text-anchor="middle">DSR  13</text>
 <rect x="1008" y="193" width="104" height="34" rx="7" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 4"/>
 <text x="1060" y="214" font-size="12" fill="#475569" font-weight="700" text-anchor="middle">TS  14</text>
 <rect x="1008" y="313" width="104" height="34" rx="7" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 4"/>
@@ -95,7 +97,7 @@
 <text x="58" y="614" font-size="11" fill="#475569">See Figure 8 and the allocation resolution report.</text>
 <rect x="650" y="552" width="590" height="74" rx="10" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2" stroke-dasharray="5 4"/>
 <text x="668" y="576" font-size="12" fill="#D2553F" font-weight="700">Code and tests · @req tags, links/verification.yaml</text>
-<text x="668" y="596" font-size="11" fill="#475569">0 tags in code or tests. 296 of 526 items are named by a test-specification case:</text>
+<text x="668" y="596" font-size="11" fill="#475569">0 tags in code or tests. 320 of 569 items are named by a test-specification case:</text>
 <text x="668" y="614" font-size="11" fill="#475569">a specified link, not a passed test.</text>
 <rect x="40" y="650" width="14" height="12" rx="3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.2"/>
 <text x="60" y="660" font-size="11" fill="#475569">in items/, checked</text>

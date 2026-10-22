@@ -8,8 +8,9 @@ Sources (the work products stay the reviewed documents; the YAML files are gener
   HWSR  WP-H-01 §4 requirement tables
   SOTIF WP-C-05 §3 (SH), WP-C-06 §3 (FI), §4 and §5 (TC), WP-C-07 §2 (FM); the TC and FM links come from the
         WP-C-06 §5 TC → FI → SH evaluation rows
+  AI    WP-C-11 §6 (AIR) and §7 (DSR) requirement tables
 
-Outputs: assurance/trace/items/fsr.yaml, tsr.yaml, swsr.yaml, hwsr.yaml, sotif.yaml
+Outputs: assurance/trace/items/fsr.yaml, tsr.yaml, swsr.yaml, hwsr.yaml, sotif.yaml, ai.yaml
 
 Usage:
   python3 assurance/trace/tools/sync_requirements.py           # regenerate the YAML files
@@ -37,6 +38,7 @@ HWSR_MD = ASSURANCE_DIR / "04-hardware" / "WP-H-01-hardware-safety-requirements.
 SH_MD = ASSURANCE_DIR / "02-concept" / "WP-C-05-sotif-hazard-identification.md"
 FI_MD = ASSURANCE_DIR / "02-concept" / "WP-C-06-sotif-insufficiencies-triggering-conditions.md"
 FM_MD = ASSURANCE_DIR / "02-concept" / "WP-C-07-sotif-functional-modifications.md"
+AI_MD = ASSURANCE_DIR / "02-concept" / "WP-C-11-ai-system-definition-and-safety-requirements.md"
 
 ITEM_PREFIXES = {"FSR", "TSR", "SG", "AOU", "H", "HE", "GAP"}
 
@@ -328,6 +330,62 @@ def sotif_items() -> list[dict]:
   return items
 
 
+# ---------------------------------------------------------------- AI: AIR, DSR
+
+AI_PARENT_PREFIXES = ("SG", "FSR", "SH", "TC", "FI", "FM", "GAP", "AIR", "DSR")
+AI_REF = re.compile(r"^([A-Z]+)-([0-9]{2,3}(?:\.[0-9]{2})?)(?:\s*…\s*(?:[A-Z]+-)?([0-9]{2,3}(?:\.[0-9]{2})?))?$")
+
+
+def ai_refs(cell: str) -> tuple[list[str], list[str], bool]:
+  """Read a WP-C-11 Parent cell: (parent IDs, TSRs it names, whether it also names something that is not an item).
+  A TSR is never a parent: AIRs sit at the FSR level, and the cell names TSRs that refine an AIR ('refined by') or
+  share its FSR. Markdown links are read as their text; parentheticals are notes and are dropped."""
+  parents: list[str] = []
+  tsrs: list[str] = []
+  other = False
+  for group in re.sub(r"\([^)]*\)", "", MD_LINK.sub(r"\1", cell)).split(";"):
+    group = re.sub(r"^\s*refined by\s+", "", group)
+    for tok in (t.strip() for t in group.split(",")):
+      if not tok:
+        continue
+      m = AI_REF.match(tok)
+      if m and m.group(1) == "TSR":
+        tsrs.append(tok)
+      elif m and m.group(1) in AI_PARENT_PREFIXES:
+        prefix, a, b = m.groups()
+        parents += _range(prefix, a, b) if b else [tok]
+      else:
+        other = True
+  return list(dict.fromkeys(parents)), list(dict.fromkeys(tsrs)), other
+
+
+def ai_items() -> list[dict]:
+  text = AI_MD.read_text(encoding="utf-8")
+  items: list[dict] = []
+  category = ""
+  for line in _section(text, "## 6. AI safety requirements", "\n## 7.", AI_MD).splitlines():
+    m = re.match(r"^### 6\.[0-9]+ (.+?)\s*$", line)
+    if m:
+      category = m.group(1)
+    if not re.match(r"^\| AIR-[0-9]{2} \|", line):
+      continue
+    c = cells(line)
+    if len(c) != 6:
+      raise ValueError(f"{AI_MD.name} §6: unexpected column count {len(c)} in {c[0]}")
+    aid, req, comp, parent, verif, status = c
+    parents, tsrs, other = ai_refs(parent)
+    items.append({"id": aid, "kind": "ai-requirement", "text": req, "category": category, "component": comp,
+                  "parents": parents, "parent_text": parent, "other_parents": other, "related_tsr": tsrs,
+                  "verification": verif, "baseline_impl": status, "status": "proposed", "source": "WP-C-11"})
+  for c in _rows(_section(text, "## 7. Dataset requirements", "\n## 8.", AI_MD), "DSR", 5, AI_MD):
+    did, req, parent, verif, status = c
+    parents, _, other = ai_refs(parent)
+    items.append({"id": did, "kind": "dataset-requirement", "text": req, "parents": parents, "parent_text": parent,
+                  "other_parents": other, "verification": verif, "baseline_impl": status, "status": "proposed",
+                  "source": "WP-C-11"})
+  return items
+
+
 def not_refined(md: Path, heading: str) -> list[str]:
   """TSR IDs listed in a work product's 'TSRs not refined into ...' table (first column)."""
   text = md.read_text(encoding="utf-8")
@@ -346,11 +404,11 @@ def not_refined(md: Path, heading: str) -> list[str]:
 
 FIELD_ORDER = ["id", "kind", "title", "text", "fi_type", "component", "category", "functions", "function_text", "s", "c",
                "situations", "asil", "parents", "shares_event", "linked_text", "insufficiencies", "addresses", "evaluation",
-               "gap_text", "priority", "parent_text", "other_parents", "allocated_to", "mechanism",
+               "gap_text", "priority", "related_tsr", "parent_text", "other_parents", "allocated_to", "mechanism",
                "timing", "hw_kind", "verification", "acceptance", "applies_to", "proposed_by", "baseline_impl", "status",
                "source"]
 SOURCE_MD = {"WP-C-04": FSC_MD, "WP-S-02": TSR_MD, "WP-S-06": TSR8_MD, "WP-W-02": SWSR_MD, "WP-H-01": HWSR_MD,
-             "WP-C-05": SH_MD, "WP-C-06": FI_MD, "WP-C-07": FM_MD}
+             "WP-C-05": SH_MD, "WP-C-06": FI_MD, "WP-C-07": FM_MD, "WP-C-11": AI_MD}
 REPO_ROOT = ASSURANCE_DIR.parent
 MD_LINK = re.compile(r"\[([^\]]*)\]\(([^)\s]+)\)")
 
@@ -427,6 +485,12 @@ SOTIF_HEADER = """# SOTIF items: SOTIF hazards (WP-C-05 §3), functional insuffi
 # Schema: see ../README.md §4.6."""
 
 
+AI_HEADER = """# AI items: AI safety requirements (WP-C-11 §6) and dataset requirements (WP-C-11 §7).
+# GENERATED by tools/sync_requirements.py from the work product, which stays the source of truth.
+# Do not edit by hand: change WP-C-11 and regenerate. CI fails if this file is out of date.
+# Schema: see ../README.md §4.7."""
+
+
 def expected_outputs() -> dict[str, str]:
   return {
     "fsr.yaml": render(fsr_items(), FSR_HEADER),
@@ -434,6 +498,7 @@ def expected_outputs() -> dict[str, str]:
     "swsr.yaml": render(swsr_items(), SWSR_HEADER),
     "hwsr.yaml": render(hwsr_items(), HWSR_HEADER),
     "sotif.yaml": render(sotif_items(), SOTIF_HEADER),
+    "ai.yaml": render(ai_items(), AI_HEADER),
   }
 
 
@@ -451,7 +516,7 @@ def main(argv: list[str]) -> int:
       path.write_text(content, encoding="utf-8")
       print(f"wrote {path.relative_to(ASSURANCE_DIR.parent).as_posix()}")
   if stale:
-    print(f"FAIL: {', '.join(stale)} out of date with WP-C-04 / WP-S-02 / WP-S-06 / WP-W-02 / WP-H-01 / WP-C-05…07; run assurance/trace/tools/sync_requirements.py")
+    print(f"FAIL: {', '.join(stale)} out of date with WP-C-04 / WP-S-02 / WP-S-06 / WP-W-02 / WP-H-01 / WP-C-05…07 / WP-C-11; run assurance/trace/tools/sync_requirements.py")
     return 1
   print("OK: requirement items match the work products" if check else "OK: requirement items generated")
   return 0

@@ -17,7 +17,9 @@
     },
     "kind": {
       "enum": [
+        "ai-requirement",
         "aou",
+        "dataset-requirement",
         "fsr",
         "functional-insufficiency",
         "functional-modification",
@@ -267,9 +269,42 @@
         "type": "string",
         "minLength": 1
       }
+    },
+    "related_tsr": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^TSR-[0-9]{3}[a-z]?$"
+      }
     }
   },
   "allOf": [
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "ai-requirement"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "category",
+          "component",
+          "parents",
+          "parent_text",
+          "other_parents",
+          "related_tsr",
+          "verification",
+          "baseline_impl",
+          "status",
+          "source"
+        ]
+      }
+    },
     {
       "if": {
         "properties": {
@@ -286,6 +321,29 @@
           "credited_in",
           "verification_approach",
           "aou_status",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "dataset-requirement"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "parents",
+          "parent_text",
+          "other_parents",
+          "verification",
+          "baseline_impl",
           "status",
           "source"
         ]
