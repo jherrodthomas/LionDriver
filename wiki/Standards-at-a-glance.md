@@ -40,7 +40,7 @@ in [`assurance/trace/`](../assurance/trace/README.md), hold the five standards t
 | Hazards from insufficiencies and misuse | ISO 21448 | Uses the same hazardous events; severity and controllability reuse the HARA ratings |
 | ML models | ISO/PAS 8800, ASPICE MLE | Model errors feed in as SOTIF functional insufficiencies; data and model lifecycle in WP-W-10 |
 | Cyber attacks that cause safety hazards | ISO/SAE 21434 TARA | Damage scenarios link to HARA hazards; cybersecurity goals that protect safety goals are traced both ways |
-| Process capability | Automotive SPICE | The ISO 26262 work products double as ASPICE information items; each register entry carries its process ID |
+| Process capability | Automotive SPICE | The ISO 26262 work products double as ASPICE information items; each register entry carries its process ID; explained on [ASPICE: is the process capable?](ASPICE-process-capability.md) |
 
 ## The central argument: the safety envelope
 

@@ -70,6 +70,10 @@ in [`assurance/`](../assurance/README.md) that owns it.
   `ai-requirements.svg`, `ai-data.svg`, `ai-testing.svg`, `ai-layers.svg`) are rendered by
   [`tools/wiki/ai_animations.py`](../tools/wiki/ai_animations.py): requirement statuses, input-space dimensions and counts
   are read from WP-C-11 and WP-W-10, and every other phrase is checked against its record.
+- The figures of "ASPICE: is the process capable?" (`aspice-question.svg`, `aspice-v.svg`, `aspice-rating.svg`,
+  `aspice-baseline.svg`, `aspice-trace.svg`, `aspice-together.svg`, `aspice-plan.svg`) are rendered by
+  [`tools/wiki/aspice_animations.py`](../tools/wiki/aspice_animations.py): levels, targets, improvement actions, trace
+  coverage and the activity count are read from WP-M-13, the trace map and the process model.
 - Standard GitHub Markdown, including alerts (`> [!IMPORTANT]`) and tables.
 
 Check locally before opening a pull request:
