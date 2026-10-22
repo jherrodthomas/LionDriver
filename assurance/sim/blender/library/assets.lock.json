@@ -1247,6 +1247,336 @@
     }
    }
   },
+  "civil_vehicles": {
+   "source": "liondriver-assets",
+   "id": "sketchfab/generic-civil-service-vehicles-pack.zip",
+   "page": "https://sketchfab.com/3d-models/8ff2a13f30914932a70c7950cfa58465",
+   "licence": "CC-BY 4.0",
+   "kind": "kit",
+   "use": "Emergency vehicles drawn on a road user with a body (fire engine, patrol car), beacons on their own roofs",
+   "title": "Generic civil service vehicles pack",
+   "author": "comrade1280",
+   "file": "source/scene.fbx",
+   "pieces": {
+    "vehicles": [
+     "fire_truck",
+     "police_sedan"
+    ]
+   },
+   "fronts": {
+    "fire_truck": "-y",
+    "police_sedan": "+y"
+   },
+   "lights": {
+    "fire_truck": [
+     0.38,
+     -0.47
+    ],
+    "police_sedan": [
+     -0.05
+    ]
+   },
+   "archive": {
+    "sha256": "4385386bddc172d2a9497686cf82f896bac535196274959f06ca58edbab52376"
+   },
+   "files": {
+    "source/scene.fbx": {
+     "path": "civil_vehicles/source/scene.fbx",
+     "sha256": "aae14a7b15c350b1c646e61f17b85722dce0b4fd71d16214384f94852eedc928",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/towtruck_albedo.png": {
+     "path": "civil_vehicles/textures/towtruck_albedo.png",
+     "sha256": "49ce285e3ffcada4403e777c989fa8eb6e7a27d2c787d5b15eaee4815d0ceda8",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/towtruck_nm.png": {
+     "path": "civil_vehicles/textures/towtruck_nm.png",
+     "sha256": "8db26a4e0e032e809b2971dcac42681dc82665bedd582fac0ea76f6e5e0ce0a6",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/postvan_metall.png": {
+     "path": "civil_vehicles/textures/postvan_metall.png",
+     "sha256": "d2b21477b936e6aba7752e49828f66222ee9fecd75099f7203cf77d39afc5efa",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/police_albedo.png": {
+     "path": "civil_vehicles/textures/police_albedo.png",
+     "sha256": "d0faece24c4eddf1c1b86c604ee1387509572e665870956faca1f5281ee9a1c7",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/police_roughness.png": {
+     "path": "civil_vehicles/textures/police_roughness.png",
+     "sha256": "bdf8fc6aa85ab87821518a15ffbf1db4178abd23867c05fbb5bb3419c8a49e3a",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/garbagetruck_albedo.png": {
+     "path": "civil_vehicles/textures/garbagetruck_albedo.png",
+     "sha256": "3f4105837c41eed61f1ae9d3d38f214be86d08b300ccd56545223f2260dcbd6f",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/taxi_decals.png": {
+     "path": "civil_vehicles/textures/taxi_decals.png",
+     "sha256": "58170dca5044970e201144fe5b22a2f6ef649a02c54addca34430f2b3e832fc6",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/postvan_roughness.png": {
+     "path": "civil_vehicles/textures/postvan_roughness.png",
+     "sha256": "88d46ac2610a53d7e6aa3061040a1bcd3385302f3039c9eb578035ed89eefff7",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/garbagetruck_roughness.png": {
+     "path": "civil_vehicles/textures/garbagetruck_roughness.png",
+     "sha256": "de6912ba3594da3081700fe4bba266cf81ebc81f0aef9c77495a571f496deb8f",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/postvan_opacity.png": {
+     "path": "civil_vehicles/textures/postvan_opacity.png",
+     "sha256": "209479446ef26a6c244806510afd4d2c15a9f4afd5fc54244ad5ccd047e0fee5",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/ambulance_albedo.png": {
+     "path": "civil_vehicles/textures/ambulance_albedo.png",
+     "sha256": "679346fdac2d8cac867693923aeffceca1adb21732d8e1a4bcd451dbfb8aa324",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/servicetruck_metall.png": {
+     "path": "civil_vehicles/textures/servicetruck_metall.png",
+     "sha256": "2a641681c9fca5c077a4e538573acaa5b1bb5e68a5c01477f4854a601ac130d7",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/towtruck_opacity.png": {
+     "path": "civil_vehicles/textures/towtruck_opacity.png",
+     "sha256": "c01cd4547592b77ee5d531e978b5be75579da824238c3d73c7f1d64a92a5dae3",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/citybus_roughness.png": {
+     "path": "civil_vehicles/textures/citybus_roughness.png",
+     "sha256": "853a1c301932e3714d07b7bb80aa5dcc8d3952a11b5f21d834dc3acdfb6467c4",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/taxi_roughness.png": {
+     "path": "civil_vehicles/textures/taxi_roughness.png",
+     "sha256": "9b92d6d1c2b8b704d015b926be84e1c17d8f5514f8a8e747d4312c0946c091b0",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/schoolbus_albedo.png": {
+     "path": "civil_vehicles/textures/schoolbus_albedo.png",
+     "sha256": "641ac71398258691a9eeb43e21ab69d3971c22ef1c3cf83864be74c68f043a58",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/firetruck_roughness.png": {
+     "path": "civil_vehicles/textures/firetruck_roughness.png",
+     "sha256": "bd8a6930e214cc201af06ccc42f6d4300b3f292da009ea292ce76093553fe2a2",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/garbagetruck_nm.png": {
+     "path": "civil_vehicles/textures/garbagetruck_nm.png",
+     "sha256": "d5b2070fff07476562874dcd2e77c0137518bf702aa770b5cc1f655c30262f54",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/FireTruckDecals.png": {
+     "path": "civil_vehicles/textures/FireTruckDecals.png",
+     "sha256": "97603649ae01663b73ec8604302e232df56216bd3dd557e5b2b98251948ef076",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/rdservtruck_decal.png": {
+     "path": "civil_vehicles/textures/rdservtruck_decal.png",
+     "sha256": "379c8e8bac73343306a4c140b4bcc1e17a661fc59721fadb90bc86b678e701b4",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/taxi_nm.png": {
+     "path": "civil_vehicles/textures/taxi_nm.png",
+     "sha256": "0686120f010c73f73393521fcfadde8c7b3b38f35d5ba6eb8efbc4e359d21a43",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/firetruck_albedo.png": {
+     "path": "civil_vehicles/textures/firetruck_albedo.png",
+     "sha256": "7d0e58f703468dd664240c333f46f6e81a1c707afceeb492edc8383523af8434",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/citybus_albedo.png": {
+     "path": "civil_vehicles/textures/citybus_albedo.png",
+     "sha256": "30f81bc6e8b9ddea9be72d550f07c1926d3809a2a5efc5c5d43be28cdd54bbe2",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/Police_decals.png": {
+     "path": "civil_vehicles/textures/Police_decals.png",
+     "sha256": "feb9dccb3ba2de90727b775b39c6531321e0530aac07bdee5039c254157942b9",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/ambulance_opacity.png": {
+     "path": "civil_vehicles/textures/ambulance_opacity.png",
+     "sha256": "f0ef33218eb98009c16cc21f54bd5dd24884a4251537f61f41c10217c5724244",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/schoolbus_metall.png": {
+     "path": "civil_vehicles/textures/schoolbus_metall.png",
+     "sha256": "7769ddf9ae8004a8d6ae0fb4d51e303eed485d20f8163bdcc7c26be046945cb3",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/taxi_albedo.png": {
+     "path": "civil_vehicles/textures/taxi_albedo.png",
+     "sha256": "0228b96588d6464e07063c1fe28ea793aa63d1fe385498e6fcaf1f6494e715d5",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/police_metall.png": {
+     "path": "civil_vehicles/textures/police_metall.png",
+     "sha256": "3803227f4918d162a494cdd16af4b2656dcc46723f2215f4eeebc7c29b5ed7e4",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/CityBusDecals.png": {
+     "path": "civil_vehicles/textures/CityBusDecals.png",
+     "sha256": "a5ed05ad69586c20291a1a831e5cc76ed697598119a0c380ae6f9e1f5babcd2f",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/servicetruck_nm.png": {
+     "path": "civil_vehicles/textures/servicetruck_nm.png",
+     "sha256": "8df21a8008d33f0c3546e179938586b9fa8abc07637873846dbc0a5624754dae",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/ambulance_decals.png": {
+     "path": "civil_vehicles/textures/ambulance_decals.png",
+     "sha256": "eb1a3560c19f51b08c60d9c45b40d20d6bcf2a44d28c0fc8e3f810b44a2e0ec6",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/citybus_metall.png": {
+     "path": "civil_vehicles/textures/citybus_metall.png",
+     "sha256": "661365b44ac475cae8a0190401584cfbed30418d94c785a5c882b178cb7a7915",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/SchoolBus_decals.png": {
+     "path": "civil_vehicles/textures/SchoolBus_decals.png",
+     "sha256": "6cf24cea3574f90dc1cf615b4fa313da002ab1dcc053ac09cbfabafb7fe23299",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/garbagetruck_metall.png": {
+     "path": "civil_vehicles/textures/garbagetruck_metall.png",
+     "sha256": "d0364b8a6e26266046571869f34f86164cbb15d8a454df9e0ad1108c3962407b",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/ambulance_nm.png": {
+     "path": "civil_vehicles/textures/ambulance_nm.png",
+     "sha256": "9a945b6792c1092316481d212f5ef51018b5d379b324f8ef454b9ce81d00d17f",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/towtruck_roughness.png": {
+     "path": "civil_vehicles/textures/towtruck_roughness.png",
+     "sha256": "e80af20c02db040407b475633ef9c7b2f94ed1dfcaec9b7ad5b1f3abea5e87f8",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/ambulance_metall.png": {
+     "path": "civil_vehicles/textures/ambulance_metall.png",
+     "sha256": "80dbd556fa4ca5549facbc0da8bfd8385afd77e714969a78f4dfe310dc910578",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/ambulance_roughness.png": {
+     "path": "civil_vehicles/textures/ambulance_roughness.png",
+     "sha256": "4176a06170caaf41ef81e21de99910ea7d00a77ff7e8c3a8bd971579d1bf2804",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/citybus_opacity.png": {
+     "path": "civil_vehicles/textures/citybus_opacity.png",
+     "sha256": "c22212f37d7f6a131a5957b8a9ec91ef02119b333efce05d687211872a695b97",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/firetruck_opacity.png": {
+     "path": "civil_vehicles/textures/firetruck_opacity.png",
+     "sha256": "b3908d90dd858b92a77f75692c57e4934a8982e5e3e5e443bf82e4173016ff2b",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/servicetruck_roughness.png": {
+     "path": "civil_vehicles/textures/servicetruck_roughness.png",
+     "sha256": "64c3ac4f5f963306261457a2d660f052d9fb153e514a22d4f8af861cdeba9d88",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/garbagetruck_opacity.png": {
+     "path": "civil_vehicles/textures/garbagetruck_opacity.png",
+     "sha256": "f3575b11fe2bb86941de95a863f096dd6adef1a472cb2d1e3954945129b52f89",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/schoolbus_opacity.png": {
+     "path": "civil_vehicles/textures/schoolbus_opacity.png",
+     "sha256": "5a84cc49b5a8c9e6752d7d822c1d9b12b1874de45284b27d3c40ce0a76549268",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/internal_ground_ao_texture.jpeg": {
+     "path": "civil_vehicles/textures/internal_ground_ao_texture.jpeg",
+     "sha256": "87e87665e6c8d805db81687f1b2ff29b6b8c85c3c18debba45dfddf4caa107ee",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/postvan_albedo.png": {
+     "path": "civil_vehicles/textures/postvan_albedo.png",
+     "sha256": "97705ba59607e37f2770b55450581cf10e0bec09d74eaa54f6681270dd52147c",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/schoolbus_nm.png": {
+     "path": "civil_vehicles/textures/schoolbus_nm.png",
+     "sha256": "6f3b86d1b5921ae2e2dd851694c01e8c7f550361c6f772f2272f268fb81fef41",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/citybus_nm.png": {
+     "path": "civil_vehicles/textures/citybus_nm.png",
+     "sha256": "743c3106346b853b55d5bc0e26d1a3521f13a983c3eb41d1f3069713e2e050d0",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/police_nm.png": {
+     "path": "civil_vehicles/textures/police_nm.png",
+     "sha256": "265a66891174a2bf5a0f86d5d2dfdca23c84f0413beaca3572f56934cdd453ac",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/police_opacity.png": {
+     "path": "civil_vehicles/textures/police_opacity.png",
+     "sha256": "174f6ff6ee74f4d7b93efa6fcb70c94dfbbbc3a1abd6ce2d4520f5f3048b85fc",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/firetruck_nm.png": {
+     "path": "civil_vehicles/textures/firetruck_nm.png",
+     "sha256": "38d947cf07e5321d1f13c1c86f6b0060c5026cae728007d6f562b2b66ae8a315",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/taxi_metall.png": {
+     "path": "civil_vehicles/textures/taxi_metall.png",
+     "sha256": "104c37e83c1fa1257b06f72f70d8e0472b015431bd997b674986e515da0a66a6",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/schoolbus_roughness.png": {
+     "path": "civil_vehicles/textures/schoolbus_roughness.png",
+     "sha256": "4f12a58d3036f153f0748893f8438490a52d0d7f363b15db96f5775c2e59408c",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/towtruck_metall.png": {
+     "path": "civil_vehicles/textures/towtruck_metall.png",
+     "sha256": "a76940fd8d0424f054dc89d81a084b6a47ec677b85e83bf9d4d1458133d5a5a8",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/servicetruck_albedo.png": {
+     "path": "civil_vehicles/textures/servicetruck_albedo.png",
+     "sha256": "b7bcc3cfc5ca1ec8c2fc04a6ae2c05fb81904d8d744f0944f98413bf4469d766",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/taxi_opacity.png": {
+     "path": "civil_vehicles/textures/taxi_opacity.png",
+     "sha256": "cacbbb4766de31425cbc95fc34f708540c6caab35940275c8531951e6479ea82",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/CSPOptics.jpg": {
+     "path": "civil_vehicles/textures/CSPOptics.jpg",
+     "sha256": "9f544f97edf05884ce331b35d63afa32fe4feba4ef0cf6cf46f7881c050e4a09",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/postvan_decal.png": {
+     "path": "civil_vehicles/textures/postvan_decal.png",
+     "sha256": "5a55eb60fdb0b5c651747644e3e7956ef69e51fb1901804b0b64d9f0c2eb2300",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    },
+    "textures/firetruck_metall.png": {
+     "path": "civil_vehicles/textures/firetruck_metall.png",
+     "sha256": "dc375cbcecc185d6aeaa52e326cba1b6427ea7e4242af13930e483bd3940cc25",
+     "url": "liondriver-assets:sketchfab/generic-civil-service-vehicles-pack.zip"
+    }
+   }
+  },
   "concrete": {
    "source": "ambientcg",
    "id": "Concrete034",

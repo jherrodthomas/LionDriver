@@ -18,7 +18,9 @@
 #                 illustrative), critical (the gap and TTC on the dashboard are to it), figure (pedestrian: male or
 #                 female, library/people/; default: picked from the name and the scene ID), paint (car or truck
 #                 body, RGB 0..1), yaw_deg (turned on the spot, e.g. a vehicle stopped across a lane), beacons (car or
-#                 truck: a flashing red and blue light bar; the picture only, and the car keeps its own body)
+#                 truck: a flashing red and blue light bar), body (fire_truck or police_sedan: drawn with the civil
+#                 service vehicles kit at the analysis' length; without the kit the procedural body stays); paint,
+#                 yaw_deg, beacons and body are the picture only
 #   environment   the static world, from library/environments.yaml (road cross-section, geometry, scenery, props,
 #                 the OS it represents, the conditions it allows)
 #   conditions    W01 (default) .. W06 or TC-01, from library/conditions.yaml: sky, sun, wet, rain, snow, fog, night
@@ -846,9 +848,9 @@ scenes:
       accel:
         - {t: t_r, a: a_driver_full}
     actors:
-      - {name: fire engine, kind: truck, lane: 0, ds_m: 3.0 * 105 / 3.6 + (4.63 + 9.5) / 2, yaw_deg: -15, critical: true, beacons: true, paint: [0.62, 0.04, 0.03]}
+      - {name: fire engine, kind: truck, lane: 0, ds_m: 3.0 * 105 / 3.6 + (4.63 + 9.5) / 2, yaw_deg: -15, critical: true, beacons: true, body: fire_truck, paint: [0.62, 0.04, 0.03]}
       - {name: crashed car, kind: car, lane: -1, ds_m: 3.0 * 105 / 3.6 + 22, yaw_deg: 35, source: illustrative, paint: [0.3, 0.32, 0.35]}
-      - {name: patrol car, kind: car, d: -7.0, ds_m: 3.0 * 105 / 3.6 - 14, source: illustrative, beacons: true, paint: [0.92, 0.92, 0.92]}
+      - {name: patrol car, kind: car, d: -7.0, ds_m: 3.0 * 105 / 3.6 - 14, source: illustrative, beacons: true, body: police_sedan, paint: [0.92, 0.92, 0.92]}
       - {name: firefighter, kind: pedestrian, d: -4.6, ds_m: 3.0 * 105 / 3.6 + 16, source: illustrative, figure: male}
       - {name: police officer, kind: pedestrian, d: -6.2, ds_m: 3.0 * 105 / 3.6 - 9, source: illustrative, figure: female}
     props:

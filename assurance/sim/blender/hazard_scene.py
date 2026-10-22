@@ -642,8 +642,10 @@ def build(sc: dict, vehicle: Path | None, front: str | None) -> dict:
   cams = build_cameras(sc)
   scene.camera = cams["chase"]
   A.build_surroundings(sc, env, cams["chase"], obs[0], frames, sc["fps"], street_layout.rear_view(sc))
+  night = bool(env.get("night"))
   print("extras: " + scenery_kits.build(sc, env, assets, keyframe_poses, walk_rig, (headlights, taillights),
-                                                street_layout.rear_view(sc)))
+                                        street_layout.rear_view(sc),
+                                        lambda r, c, x, z: beacons(r, c, x, z, frames, sc["fps"], night)))
   A.build_weather(env, obs[0], sc["road"]["centre"], frames, sc["fps"], cams=(cams["chase"], cams["driver"]))
   return {"keys": keys, "cams": cams}
 

@@ -528,7 +528,8 @@ def build(scene: dict, hes: dict[str, dict], lib: dict | None = None) -> dict:
     actors.append({"name": a["name"], "kind": kind, "source": a.get("source", "kinematic"), "poses": poses,
                    "paint": a.get("paint"), "critical": bool(a.get("critical")), "traffic": bool(a.get("traffic")),
                    **({"figure": a["figure"]} if a.get("figure") else {}),
-                   **({"beacons": True} if a.get("beacons") else {})})
+                   **({"beacons": True} if a.get("beacons") else {}),
+                   **({"body": a["body"]} if a.get("body") else {})})
 
   # props in road coordinates (s relative to the ego at t = 0)
   props = []

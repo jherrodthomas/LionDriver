@@ -3,7 +3,8 @@ templates, and what the scene's env asks of them. city_blocks: brownstone, Chica
 lines of an urban street (in place of the procedural boxes) and towers beyond it; street_life: parked and passing
 cars and people on the pavements; farmstead: a farm with grain bins and a roadside diner beside a rural road;
 traffic_skins: the traffic cars drawn with the car pack, scaled to the analysis' car length (street_life.skin_scale);
-trailers: a box trailer behind each truck street_life.trailers allows. A kit that is not fetched is left out (the
+trailers: a box trailer behind each truck street_life.trailers allows; bodies: a road user with a body (fire_truck,
+police_sedan) drawn with the civil service vehicles pack, its beacons on the model's roof. A kit that is not fetched is left out (the
 procedural look stays), so CI and offline runs need none of them.
 
 Pictures only: export_scene.py reads none of this, and the scene's road users keep their poses (a skin or a trailer
@@ -67,7 +68,8 @@ def _bbox(objs):
 class Kit:
   """A kit slot's pieces as templates kept out of the scene ({use: [piece]}): a piece is {name, parts [(mesh,
   matrix)], w, d, h}. Buildings are centred in X with their facade (-Y in the file) at Y = 0 and the base at Z = 0;
-  cars are centred and face +X (the bonnet end is the lower one); a trailer has its kingpin end at the origin and
+  cars are centred and face +X (the bonnet end is the lower one), and so are vehicles (the slot's fronts name the
+file's front, its lights the roof points of the beacons as fractions of the length from the centre); a trailer has its kingpin end at the origin and
   reaches along -X, scaled to the slot's width_m."""
 
   def __init__(self, slot: dict, root: Path):
@@ -93,6 +95,8 @@ class Kit:
     for use, names in slot["pieces"].items():
       if use == "cars":
         self.pieces[use] = self._cars(meshes, names)
+      elif use == "vehicles":
+        self.pieces[use] = [self._vehicle(o) for n in names for o in meshes if o.name.split(".")[0] == n]
       elif names == ["all"]:
         self.pieces[use] = [self._trailer(meshes) if use == "trailer" else self._building("all", meshes, k)]
       else:
@@ -123,6 +127,19 @@ class Kit:
          @ Matrix.Translation((-(lo.x + hi.x) / 2, -lo.y, -lo.z)))      # kingpin end (low Y) to +X, at the origin
     return {"name": "trailer", "parts": [(o.data, t @ o.matrix_world) for o in objs],
             "w": (hi.y - lo.y) * k, "d": (hi.x - lo.x) * k, "h": (hi.z - lo.z) * k}
+
+  def _vehicle(self, ob):
+    name = ob.name.split(".")[0]
+    lo, hi = _bbox([ob])
+    turn = math.pi / 2 if self.slot["fronts"][name] == "-y" else -math.pi / 2
+    m = Matrix.Rotation(turn, 4, "Z") @ Matrix.Translation((-(lo.x + hi.x) / 2, -(lo.y + hi.y) / 2, -lo.z)) @ ob.matrix_world
+    vs = [m @ v.co for v in ob.data.vertices]
+    length = hi.y - lo.y
+    lights = []
+    for f in self.slot.get("lights", {}).get(name, []):
+      zs = sorted(v.z for v in vs if abs(v.x - f * length) < 0.06 * length)
+      lights.append((f * length, zs[int(0.95 * (len(zs) - 1))]))    # the roof there, not an aerial
+    return {"name": name, "parts": [(ob.data, m)], "w": length, "d": hi.x - lo.x, "h": hi.z - lo.z, "lights": lights}
 
   @staticmethod
   def _cars(meshes, names):
@@ -255,9 +272,10 @@ def _snow(env, mats):
         A.snow_on(m, float(env["snow"]))
 
 
-def build(sc: dict, env: dict, assets, keyframe, walk, lamps=None, rear: bool = False) -> str:
+def build(sc: dict, env: dict, assets, keyframe, walk, lamps=None, rear: bool = False, beacon=None) -> str:
   """Everything env asks of the kits; keyframe, walk and lamps are hazard_scene's keyframe_poses, walk_rig and
-  (headlights, taillights), the lamps lit on the passing cars at night or in poor visibility."""
+  (headlights, taillights), the lamps lit on the passing cars at night or in poor visibility; beacon(root, coll, x, z)
+  puts an emergency light bar on a body's roof."""
   want = set()
   urban = sc["road"]["type"] == "urban"
   if env.get("city_blocks") and urban:
@@ -268,6 +286,8 @@ def build(sc: dict, env: dict, assets, keyframe, walk, lamps=None, rear: bool = 
     want |= {"rural_buildings", "grain_bins"}
   if env.get("trailers"):
     want.add("box_trailer")
+  if any(a.get("body") for a in sc["actors"]):
+    want.add("civil_vehicles")
   kits = _kits(assets, sorted(want))
   if not kits:
     return "none"
@@ -358,6 +378,25 @@ def build(sc: dict, env: dict, assets, keyframe, walk, lamps=None, rear: bool = 
         if o.type == "LIGHT" and o.location.x < 0:
           o.location.x = 2.45 - trailer["w"]
     done.append(f"{len(names)} trailers")
+
+  if "civil_vehicles" in kits:
+    bodies = {p["name"]: p for p in kits["civil_vehicles"].pieces["vehicles"]}
+    n = 0
+    for a in sc["actors"]:
+      b = bodies.get(a.get("body"))
+      root = bpy.data.objects.get(a["name"].replace(" ", "_"))
+      if b is None or root is None:
+        continue
+      for o in root.children_recursive:              # the procedural body and its beacons go; the lamps stay
+        if o.type == "MESH" or o.name.startswith("beacon"):
+          o.hide_render = True
+      k = street_life.body_scale(sc, a["kind"], b["w"])
+      place(b, f"{root.name}_body", coll, (0, 0, 0), parent=root).scale = (k, k, k)
+      if beacon and a.get("beacons"):
+        for x, z in b["lights"]:
+          beacon(root, coll, x * k, z * k)
+      n += 1
+    done.append(f"{n} bodies")
 
   if env.get("farmstead") and "rural_buildings" in kits:
     done.append(farmstead(sc, env, kits, coll, cars, rnd, rear))

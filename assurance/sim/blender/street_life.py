@@ -226,13 +226,23 @@ def skins(sc: dict) -> dict[str, float]:
   user, each scaled by skin_scale so the picture keeps the outline the analysis uses."""
   rnd = _rng(sc, "skins")
   return {a["name"]: rnd.random() for a in sc["actors"][1:]
-          if a["kind"] == "car" and a["name"] != sc.get("critical") and not a.get("critical") and not a.get("beacons")}
+          if a["kind"] == "car" and a["name"] != sc.get("critical") and not a.get("critical") and not a.get("beacons")
+          and not a.get("body")}
 
 
 def skin_scale(sc: dict, length: float) -> float:
   """The uniform scale that gives a car-pack body (length m) the length of the car the analysis draws every road
   user as (export_scene's car outline, which decides contact): a skin never reaches beyond its road user."""
   return sc["car"]["length"] / length
+
+
+TRUCK_LENGTH_M = 9.5      # export_scene.SIZES: the truck outline the analysis uses
+
+
+def body_scale(sc: dict, kind: str, length: float) -> float:
+  """The uniform scale that gives a civil service vehicle (length m) the length of the outline the analysis draws its
+  road user as (a car's or a truck's), like skin_scale."""
+  return (sc["car"]["length"] if kind == "car" else TRUCK_LENGTH_M) / length
 
 
 def trailers(sc: dict) -> list[str]:
