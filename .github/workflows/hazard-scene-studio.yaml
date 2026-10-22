@@ -1,0 +1,104 @@
+name: hazard-scene-studio
+
+# Hazard Scene Studio, the Windows app over the risk-scene renderer (assurance/sim/render-tool,
+# windows-build-plan.md). Phase 1: the engine's tests on Linux and on Windows, and the plant back to back: Windows runs
+# the panda safety code prebuilt with MinGW-w64 (build_sim_panda.py) and must give the Linux plant's fingerprint on
+# every gallery scene (plant_fingerprint.py, within 1e-6). No Blender: tests/fake_blender.py stands in.
+# Read-only: the jobs never write to the repository.
+
+on:
+  push:
+    paths:
+      - 'assurance/sim/render-tool/**'
+      - 'assurance/sim/plant/**'
+      - 'assurance/sim/blender/**'
+      - 'opendbc_repo'
+      - 'panda'
+      - '.github/workflows/hazard-scene-studio.yaml'
+  pull_request:
+    paths:
+      - 'assurance/sim/render-tool/**'
+      - 'assurance/sim/plant/**'
+      - 'assurance/sim/blender/**'
+      - 'opendbc_repo'
+      - 'panda'
+      - '.github/workflows/hazard-scene-studio.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hazard-scene-studio-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux:
+    name: engine on Linux, plant fingerprint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Checkout opendbc and panda submodules
+      run: git submodule update --init --depth 1 opendbc_repo panda
+    - name: Install the engine's pinned packages
+      run: python3 -m pip install --quiet --user --break-system-packages -r assurance/sim/render-tool/requirements.txt
+    - name: Engine and renderer tests, template current
+      run: |
+        python3 assurance/sim/render-tool/template.py --check
+        python3 assurance/sim/render-tool/test_render_tool.py
+        python3 assurance/sim/render-tool/test_engine.py
+    - name: Plant fingerprint on every gallery scene (the plant compiles sim_panda.c with cc, as always)
+      run: python3 assurance/sim/render-tool/plant_fingerprint.py write build/fingerprint-linux.json
+    - uses: actions/upload-artifact@v7
+      with:
+        name: fingerprint-linux
+        path: build/fingerprint-linux.json
+
+  windows:
+    name: engine on Windows, plant back to back with Linux
+    needs: linux
+    runs-on: windows-2025
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: bash
+    env:
+      LIONDRIVER_SIM_PANDA_DIR: ${{ github.workspace }}/build/sim-panda
+      PYTHONUTF8: "1"
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Checkout opendbc and panda submodules
+      run: git submodule update --init --depth 1 opendbc_repo panda
+    - uses: actions/setup-python@v6
+      with:
+        python-version: '3.12'
+    - name: Install the engine's pinned packages
+      run: python -m pip install --quiet -r assurance/sim/render-tool/requirements.txt
+    - name: Prebuild the panda safety code for Windows (MinGW-w64 gcc, the run-time flags less -fPIC)
+      run: |
+        gcc --version | head -1
+        python assurance/sim/plant/build_sim_panda.py --out build/sim-panda --cc gcc --windows
+    - name: Engine and renderer tests on Windows, template current
+      run: |
+        python assurance/sim/render-tool/template.py --check
+        python assurance/sim/render-tool/test_render_tool.py
+        python assurance/sim/render-tool/test_engine.py
+    - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+      with:
+        name: fingerprint-linux
+        path: build
+    - name: The Windows plant gives the Linux fingerprint on every gallery scene
+      run: |
+        python assurance/sim/render-tool/plant_fingerprint.py write build/fingerprint-windows.json
+        python assurance/sim/render-tool/plant_fingerprint.py compare build/fingerprint-linux.json build/fingerprint-windows.json
+    - uses: actions/upload-artifact@v7
+      if: always()
+      with:
+        name: fingerprint-windows
+        path: build/fingerprint-windows.json
+        if-no-files-found: ignore

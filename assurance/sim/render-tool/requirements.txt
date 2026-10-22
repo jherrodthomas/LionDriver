@@ -1,0 +1,11 @@
+# Hazard Scene Studio engine (engine.py, run_sheet.py, the tests): the plant's packages from ../requirements.txt that
+# export_scene.py needs, and the sheet and image packages. Exact pins, as ../requirements.txt; also installed on Windows.
+commonroad-vehicle-models==3.0.2  # BSD-3-Clause, TUM; CommonRoad vehicle models
+omegaconf==2.4.0                  # BSD-3-Clause; needed by commonroad-vehicle-models
+PyYAML==6.0.3                     # MIT; needed by omegaconf
+cffi==2.1.1                       # MIT-0; loads the compiled panda safety code
+pycparser==3.11                   # BSD-3-Clause; needed by cffi
+pycapnp==2.1.0                    # BSD-2-Clause; opendbc.car imports it (same pin as the root pyproject.toml)
+numpy==2.5.4                      # BSD-3-Clause and bundled permissive licences; opendbc host limit functions
+openpyxl==3.1.5                   # MIT; reads and writes the .xlsx sheets
+Pillow==12.3.0                    # MIT-CMU (HPND); compose.py and the dashboard JPEGs

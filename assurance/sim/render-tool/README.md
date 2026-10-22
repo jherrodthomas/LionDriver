@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Scope | Turn a row of a risk assessment into the scene dashboard the [Blender pipeline](../blender/README.md) draws, and write the outcome back into the row. The demo of [render-tool-plan.md](../render-tool-plan.md) §5: a spreadsheet on our own machine, the ISO 26262 HARA adapter, stills only |
-| Version | 0.1 (2026-10-22): template, HARA adapter, prefill, row to scene, run and write-back, tests; the demo sheet rendered |
+| Version | 0.2 (2026-10-22): the engine as a library (`engine.py`: progress, Stop and carry on, a queue, renders cached by quality) and the Windows checks (phase 1 of [windows-build-plan.md](windows-build-plan.md)). 0.1 (2026-10-22): template, HARA adapter, prefill, row to scene, run and write-back, tests; the demo sheet rendered |
 | Status | Demo. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Credit | None. Every picture is synthetic (DSR-12) and earns no evidence credit. The tool draws a row's rating; it never rates |
 
@@ -72,3 +72,20 @@ variant's illustrative traffic; `compose.py` prints a card's own `heading`.
 | … at night | the same row under W03: a look change | the same contact |
 | … at 90 km/h | the same row at 90 km/h: a motion change | the body reaches the barrier instead |
 | F-01/M01/OS-19/W01 | a roundabout row | cannot draw: no library environment draws OS-19 yet |
+
+## 5. The engine and the Windows checks
+
+[`engine.py`](engine.py) is what `run_sheet.py` and the Windows app drive: `Engine.run` takes a row through the
+outcome (seconds), the render (Blender, minutes) and the dashboard (seconds), reporting each still as it is made;
+Stop ends Blender at once and the next run carries on from the stills already made. `RenderQueue` runs rows one
+after another on a worker thread. Renders are cached by render key and quality, so another quality is another
+render. [`test_engine.py`](test_engine.py) checks all of it with [`tests/fake_blender.py`](tests/fake_blender.py)
+standing in for Blender.
+
+On Windows the plant cannot compile the panda safety code at run time, so
+[`../plant/build_sim_panda.py`](../plant/build_sim_panda.py) prebuilds it (MinGW-w64) and `LIONDRIVER_SIM_PANDA_DIR`
+points `panda_loop.py` at it. The [`hazard-scene-studio`](../../../.github/workflows/hazard-scene-studio.yaml)
+workflow runs the engine's tests on Linux and on Windows and compares the Windows plant with the Linux plant on every
+gallery scene ([`plant_fingerprint.py`](plant_fingerprint.py): frame counts, events, contact, poses, speed, lateral
+offset, gap and TTC within 1e-6); a difference fails it. The engine's packages are pinned in
+[`requirements.txt`](requirements.txt).

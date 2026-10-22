@@ -5999,4 +5999,5 @@
       title: "Sign from 0.1"
       detail: "No warning for anyone. Cost: a certificate, roughly $10 a month (Azure Trusted Signing) to a few hundred dollars a year, and an identity check."
   sources: ["assurance/sim/render-tool/windows-build-plan.md §6, §7"]
-  status: open
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-22}

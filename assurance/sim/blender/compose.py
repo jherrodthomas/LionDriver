@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import os
 import shutil
 import subprocess
 import sys
@@ -39,7 +40,8 @@ CRITICAL = "#d03b3b"      # fault onset, hazardous event, contact
 WARNING = "#fab219"       # thresholds
 EGO = "#d95926"
 
-FONT_DIRS = [Path("/usr/share/fonts/opentype/inter"), Path("/usr/share/fonts/truetype/dejavu")]
+FONT_DIRS = ([Path(os.environ["LIONDRIVER_FONT_DIR"])] if os.environ.get("LIONDRIVER_FONT_DIR") else []) + [
+  Path("/usr/share/fonts/opentype/inter"), Path("/usr/share/fonts/truetype/dejavu")]   # the app bundles Inter
 
 
 def font(size: int, weight: str = "Regular"):

@@ -716,6 +716,7 @@ def main(argv: list[str]) -> int:
   if args.stills:
     w, h = (int(v) for v in args.res.split("x"))
     render_setup((w, h), args.samples)
+    total = len(built["keys"]) * len(built["cams"])
     for k in built["keys"]:
       for name, cam in built["cams"].items():
         sized(name, w, h)
@@ -723,6 +724,7 @@ def main(argv: list[str]) -> int:
         if not (args.resume and p.exists()):
           render_frame(cam, k["frame"], p)
         manifest["stills"].append({**k, "camera": name, "file": str(p.relative_to(out))})
+        print(f"still {len(manifest['stills'])}/{total} {name} {k['t']:+.2f} s", flush=True)  # progress for callers
   if args.video:
     w, h = (int(v) for v in args.video_res.split("x"))
     render_setup((w, h), max(4, args.samples // 2))

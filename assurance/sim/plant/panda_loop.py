@@ -8,6 +8,7 @@ code, and the IWDG hardware counter, which counts down from the reload value the
 
 from __future__ import annotations
 
+import atexit
 import os
 import subprocess
 import sys
@@ -48,18 +49,50 @@ bool sim_iwdg_running(void);
 """)
 
 
-@cache
-def build(reference: bool = True) -> str:
-  """Compile sim_panda.c (with libsafety and the panda drivers) and return the library path."""
-  fd, out = tempfile.mkstemp(suffix=".so", prefix="sim_panda_")
-  os.close(fd)
-  cmd = ["cc", "-fPIC", "-shared", "-std=gnu11", "-O1", "-Wall", "-Wextra", "-Werror", "-Wno-unused-function",
-         "-Wno-unused-parameter", "-Wno-pointer-to-int-cast", "-DALLOW_DEBUG",
+PREBUILT = "LIONDRIVER_SIM_PANDA_DIR"   # a folder with prebuilt libraries (build_sim_panda.py), e.g. on Windows
+LIB_SUFFIX = ".dll" if sys.platform == "win32" else ".so"
+
+
+def compile_command(reference: bool, out: str, cc: str = "cc", windows: bool = False) -> list[str]:
+  """The compiler call that builds sim_panda.c (with libsafety and the panda drivers) into a shared library."""
+  cmd = [cc, *([] if windows else ["-fPIC"]), "-shared", "-std=gnu11", "-O1", "-Wall", "-Wextra", "-Werror",
+         "-Wno-unused-function", "-Wno-unused-parameter", "-Wno-pointer-to-int-cast", "-DALLOW_DEBUG",
          "-I", str(ROOT / "opendbc_repo"), "-I", str(ROOT / "panda"), str(HERE / "sim_panda.c"), "-o", out]
   if reference:
-    cmd.insert(5, "-DLIONDRIVER_REFERENCE")
-  subprocess.check_call(cmd)
+    cmd.insert(cmd.index("-std=gnu11"), "-DLIONDRIVER_REFERENCE")
+  return cmd
+
+
+def prebuilt_name(reference: bool) -> str:
+  return ("sim_panda_reference" if reference else "sim_panda") + LIB_SUFFIX
+
+
+@cache
+def build(reference: bool = True) -> str:
+  """The library path: the prebuilt one when LIONDRIVER_SIM_PANDA_DIR names a folder, else compiled here."""
+  if os.environ.get(PREBUILT):
+    lib = Path(os.environ[PREBUILT]) / prebuilt_name(reference)
+    if not lib.exists():
+      raise FileNotFoundError(f"{lib}: not built (python3 assurance/sim/plant/build_sim_panda.py)")
+    return str(lib)
+  fd, out = tempfile.mkstemp(suffix=LIB_SUFFIX, prefix="sim_panda_")
+  os.close(fd)
+  subprocess.check_call(compile_command(reference, out))
   return out
+
+
+_COPIES: list[str] = []          # Windows keeps a loaded library locked: remove the copies at exit
+
+
+def _remove_copies() -> None:
+  for p in _COPIES:
+    try:
+      os.unlink(p)
+    except OSError:
+      pass
+
+
+atexit.register(_remove_copies)
 
 
 class Panda:
@@ -68,11 +101,14 @@ class Panda:
   def __init__(self, reference: bool = True):
     # each Panda gets its own copy of the library, so runs do not share static firmware state
     src = build(reference)
-    fd, path = tempfile.mkstemp(suffix=".so", prefix="sim_panda_run_")
+    fd, path = tempfile.mkstemp(suffix=LIB_SUFFIX, prefix="sim_panda_run_")
     os.close(fd)
     Path(path).write_bytes(Path(src).read_bytes())
     self.lib = ffi.dlopen(path)
-    os.unlink(path)
+    if sys.platform == "win32":
+      _COPIES.append(path)
+    else:
+      os.unlink(path)
     self.packer = CANPacker(DBC)
     self.hung = False
     self.resets = 0

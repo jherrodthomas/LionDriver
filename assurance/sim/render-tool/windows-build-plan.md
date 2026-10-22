@@ -3,9 +3,9 @@
 | Field | Value |
 |---|---|
 | Purpose | Build the six screens of the [mockups](mockups/) into a Windows desktop app that installs and launches like any other, used with no Claude, no terminal and nothing else to install. It wraps the engine of the [demo](README.md) |
-| Status | Plan, 2026-10-22. Nothing of the app built yet. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Plan, 2026-10-22. Phase 1 built ([README §5](README.md#5-the-engine-and-the-windows-checks)); the app's screens not yet. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Credit | None. Every picture stays synthetic (DSR-12), with no evidence credit, and says so on screen |
-| Lead decisions | Answered: the name (DQ-425 B, working name), a native Windows window and you as the first user (DQ-426, DQ-427, from "plan the Windows build from these screens"). One new question: code signing (DQ-428, §7). One fact needed from you before phase 4: your PC (§7) |
+| Lead decisions | Answered: the name (DQ-425 B, working name), a native Windows window and you as the first user (DQ-426, DQ-427, from "plan the Windows build from these screens"). Code signing: not for 0.1 (DQ-428 A). One fact needed from you before phase 4: your PC (§7) |
 
 ## 1. What you get
 
