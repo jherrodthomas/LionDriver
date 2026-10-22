@@ -226,7 +226,7 @@ def skins(sc: dict) -> dict[str, float]:
   user, each scaled by skin_scale so the picture keeps the outline the analysis uses."""
   rnd = _rng(sc, "skins")
   return {a["name"]: rnd.random() for a in sc["actors"][1:]
-          if a["kind"] == "car" and a["name"] != sc.get("critical") and not a.get("critical")}
+          if a["kind"] == "car" and a["name"] != sc.get("critical") and not a.get("critical") and not a.get("beacons")}
 
 
 def skin_scale(sc: dict, length: float) -> float:
