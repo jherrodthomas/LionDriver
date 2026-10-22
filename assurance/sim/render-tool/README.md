@@ -11,6 +11,8 @@
 
 *The demo row, drawn from [examples/demo.xlsx](examples/demo.xlsx). The card on the left is the row as the HARA writes it.*
 
+Next: the Windows desktop app, from the [mockups](mockups/): [windows-build-plan.md](windows-build-plan.md).
+
 ## 1. Use it
 
 1. Copy [`template.xlsx`](template.xlsx), or let `prefill.py` start a sheet. Open the sheet of your method (today:

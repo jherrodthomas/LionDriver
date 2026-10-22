@@ -5931,3 +5931,72 @@
   sources: ["chat 2026-10-22", "assurance/sim/render-tool/README.md"]
   status: answered
   answer: {choice: B, via: chat, at: 2026-10-22, note: "\"We can do Hazard Scene Studio for now\": a working name, may change before release."}
+
+- id: DQ-426
+  question: "Should Hazard Scene Studio be a native Windows app or a page in the browser?"
+  context: >-
+    The lead wants a tool that installs and launches like any other Windows app and is used without Claude. A native
+    window (Qt) behaves like other Windows apps; a local web page is quicker to build but opens in a browser.
+  reversibility: easy
+  blocks: "assurance/sim/render-tool/windows-build-plan.md"
+  gate: G1
+  decider: lead
+  asked: 2026-10-22
+  options:
+    - key: A
+      recommended: true
+      title: "A native Windows window (Qt)"
+      detail: "Start menu, desktop icon, its own window, native dialogs. Cost: an installer of about 650 MB."
+    - key: B
+      title: "A page in the browser, opened by a desktop shortcut"
+      detail: "Quicker to build. Cost: does not behave like a Windows app."
+  sources: ["chat 2026-10-22", "assurance/sim/render-tool/mockups/"]
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-22, note: "\"Plan the Windows build from these screens\": the mockups drew a native window."}
+
+- id: DQ-427
+  question: "Who installs the first version of Hazard Scene Studio?"
+  context: >-
+    The purchased Corolla model may not go in an installer for other people. For one user it is loaded from the
+    user's own folder; anyone else gets the stand-in or their own model.
+  reversibility: easy
+  blocks: "assurance/sim/render-tool/windows-build-plan.md"
+  gate: G1
+  decider: lead
+  after: [DQ-419]
+  asked: 2026-10-22
+  options:
+    - key: A
+      recommended: true
+      title: "Only the lead, with the Corolla from the lead's own folder"
+      detail: "No licence question; no signing needed yet. Cost: nobody else tries it in 0.1."
+    - key: B
+      title: "The team too, with the stand-in or their own models"
+      detail: "Wider feedback. Cost: signing and support first."
+  sources: ["chat 2026-10-22", "assurance/sim/assets/README.md"]
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-22, note: "\"Plan the Windows build from these screens\": the mockups drew the lead's own Corolla folder."}
+
+- id: DQ-428
+  question: "Should Hazard Scene Studio be code-signed from its first version?"
+  context: >-
+    An unsigned new Windows app shows "Windows protected your PC" until the user clicks "More info, Run anyway", and
+    some antivirus tools flag such apps. Signing removes that but costs money and an identity check. Version 0.1 is
+    for the lead only (DQ-427).
+  reversibility: easy
+  blocks: "windows-build-plan.md phase 4 (the installer)"
+  gate: G1
+  decider: lead
+  after: [DQ-427]
+  asked: 2026-10-22
+  batch: 16
+  options:
+    - key: A
+      recommended: true
+      title: "Not for 0.1; sign before anyone else installs it"
+      detail: "No cost now. The lead clicks \"Run anyway\" once."
+    - key: B
+      title: "Sign from 0.1"
+      detail: "No warning for anyone. Cost: a certificate, roughly $10 a month (Azure Trusted Signing) to a few hundred dollars a year, and an identity check."
+  sources: ["assurance/sim/render-tool/windows-build-plan.md §6, §7"]
+  status: open
