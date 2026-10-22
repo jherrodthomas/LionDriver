@@ -4,7 +4,7 @@
 <defs><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F172A"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="faint" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><marker id="sw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F766E"/></marker><marker id="hw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker><marker id="aou" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D97706"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D2553F"/></marker></defs>
 <rect x="0" y="0" width="1280" height="690" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 2 · Trace data model: what is in, what is missing</text>
-<text x="40" y="66" font-size="12.5" fill="#475569">One column per standard. Solid kinds are in items/ and checked; dashed kinds exist only in their work products. Edge labels are parent links counted in items/.</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">One column per standard. Solid kinds are in items/ and checked; dashed kinds exist only in their work products. Edge labels are links counted in items/.</text>
 <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-T-01 §3</text>
 <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
 <text x="280" y="108" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">ISO 26262</text>
@@ -36,16 +36,20 @@
 <line x1="158" y1="210" x2="133" y2="210" stroke="#D97706" stroke-width="1.2" stroke-dasharray="2 3" marker-end="url(#aou)"/>
 <text x="28" y="244" font-size="10" fill="#D97706">credited by</text>
 <text x="28" y="257" font-size="10" fill="#D97706">28 HE · 8 SG</text>
-<line x1="642" y1="227" x2="606" y2="312" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#faint)"/>
-<line x1="678" y1="227" x2="714" y2="312" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#faint)"/>
-<line x1="618" y1="347" x2="654" y2="412" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#faint)"/>
-<line x1="702" y1="347" x2="666" y2="412" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#faint)"/>
+<line x1="642" y1="227" x2="606" y2="312" stroke="#0F766E" stroke-width="1.6" marker-end="url(#sw)"/>
+<text x="616" y="273.5" font-size="11" fill="#0F766E" font-weight="700" text-anchor="end">58</text>
+<line x1="678" y1="227" x2="714" y2="312" stroke="#0F766E" stroke-width="1.6" marker-end="url(#sw)"/>
+<text x="704" y="273.5" font-size="11" fill="#0F766E" font-weight="700" text-anchor="start">43</text>
+<line x1="618" y1="347" x2="654" y2="412" stroke="#0F766E" stroke-width="1.6" marker-end="url(#sw)"/>
+<text x="644" y="383.5" font-size="11" fill="#0F766E" font-weight="700" text-anchor="start">18</text>
+<line x1="702" y1="347" x2="666" y2="412" stroke="#0F766E" stroke-width="1.6" marker-end="url(#sw)"/>
+<text x="676" y="383.5" font-size="11" fill="#0F766E" font-weight="700" text-anchor="end">22</text>
 <line x1="885" y1="347" x2="885" y2="412" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#faint)"/>
 <line x1="1060" y1="227" x2="1060" y2="312" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#faint)"/>
 <line x1="1060" y1="347" x2="1060" y2="412" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#faint)"/>
 <line x1="772" y1="330" x2="832" y2="330" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#faint)"/>
-<line x1="608" y1="210" x2="263" y2="210" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#faint)"/>
-<text x="430" y="202" font-size="10.5" fill="#475569" text-anchor="middle">shares event (SH → HE)</text>
+<line x1="608" y1="210" x2="263" y2="140" stroke="#0F766E" stroke-width="1.6" marker-end="url(#sw)"/>
+<text x="400" y="150" font-size="10.5" fill="#0F766E" font-weight="700" text-anchor="middle">shares hazard (SH → H) · 7</text>
 <path d="M1008.0,322 L986.0,322 L986.0,280 L263.0,280" stroke="#94A3B8" stroke-width="1.2" fill="none" stroke-dasharray="5 4" marker-end="url(#faint)" stroke-linejoin="round"/>
 <text x="430" y="272" font-size="10.5" fill="#475569" text-anchor="middle">protects (CSG → SG)</text>
 <text x="1190" y="364" font-size="10" fill="#475569" text-anchor="middle">not linked yet</text>
@@ -65,14 +69,14 @@
 <text x="290" y="504" font-size="12" fill="#0F766E" font-weight="700" text-anchor="middle">HWSR  46</text>
 <rect x="28" y="193" width="104" height="34" rx="7" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
 <text x="80" y="214" font-size="12" fill="#0F766E" font-weight="700" text-anchor="middle">AOU  17</text>
-<rect x="608" y="193" width="104" height="34" rx="7" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 4"/>
-<text x="660" y="214" font-size="12" fill="#475569" font-weight="700" text-anchor="middle">SH  13</text>
-<rect x="548" y="313" width="104" height="34" rx="7" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 4"/>
-<text x="600" y="334" font-size="12" fill="#475569" font-weight="700" text-anchor="middle">TC  35</text>
-<rect x="668" y="313" width="104" height="34" rx="7" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 4"/>
-<text x="720" y="334" font-size="12" fill="#475569" font-weight="700" text-anchor="middle">FI  23</text>
-<rect x="608" y="413" width="104" height="34" rx="7" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 4"/>
-<text x="660" y="434" font-size="12" fill="#475569" font-weight="700" text-anchor="middle">FM  11</text>
+<rect x="608" y="193" width="104" height="34" rx="7" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="660" y="214" font-size="12" fill="#0F766E" font-weight="700" text-anchor="middle">SH  13</text>
+<rect x="548" y="313" width="104" height="34" rx="7" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="600" y="334" font-size="12" fill="#0F766E" font-weight="700" text-anchor="middle">TC  35</text>
+<rect x="668" y="313" width="104" height="34" rx="7" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="720" y="334" font-size="12" fill="#0F766E" font-weight="700" text-anchor="middle">FI  23</text>
+<rect x="608" y="413" width="104" height="34" rx="7" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="660" y="434" font-size="12" fill="#0F766E" font-weight="700" text-anchor="middle">FM  11</text>
 <rect x="833" y="313" width="104" height="34" rx="7" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 4"/>
 <text x="885" y="334" font-size="12" fill="#475569" font-weight="700" text-anchor="middle">AIR  30</text>
 <rect x="833" y="413" width="104" height="34" rx="7" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 4"/>
@@ -91,7 +95,7 @@
 <text x="58" y="614" font-size="11" fill="#475569">See Figure 8 and the allocation resolution report.</text>
 <rect x="650" y="552" width="590" height="74" rx="10" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2" stroke-dasharray="5 4"/>
 <text x="668" y="576" font-size="12" fill="#D2553F" font-weight="700">Code and tests · @req tags, links/verification.yaml</text>
-<text x="668" y="596" font-size="11" fill="#475569">0 tags in code or tests. 295 of 444 items are named by a test-specification case:</text>
+<text x="668" y="596" font-size="11" fill="#475569">0 tags in code or tests. 296 of 526 items are named by a test-specification case:</text>
 <text x="668" y="614" font-size="11" fill="#475569">a specified link, not a passed test.</text>
 <rect x="40" y="650" width="14" height="12" rx="3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.2"/>
 <text x="60" y="660" font-size="11" fill="#475569">in items/, checked</text>

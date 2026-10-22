@@ -22,7 +22,7 @@ Specification on the left, verification on the right. Each verification process 
 ```mermaid
 block-beta
   columns 13
-  SYS1["<b>SYS.1</b><br/>Requirements elicitation<br/>AOU 17 · H 9 · HE 39<br/>SG 8 · SH 13* · TS 14*"]
+  SYS1["<b>SYS.1</b><br/>Requirements elicitation<br/>AOU 17 · H 9 · HE 39<br/>SG 8 · SH 13 · TS 14*"]
   space
   space
   space
@@ -36,7 +36,7 @@ block-beta
   space
   VAL1["<b>VAL.1</b><br/>Validation<br/>VS-VAL: 31 cases"]
   space
-  SYS2["<b>SYS.2</b><br/>System requirements<br/>SYS 39* · FSR 58 · TSR 128<br/>TC 35* · FI 23* · FM 11*<br/>CSG 8*<br/><i>from SG: 8/8</i>"]
+  SYS2["<b>SYS.2</b><br/>System requirements<br/>SYS 39* · FSR 58 · TSR 128<br/>TC 35 · FI 23 · FM 11<br/>CSG 8*<br/><i>from SG: 8/8</i>"]
   space
   space
   space
@@ -156,14 +156,14 @@ block-beta
 
 One colour rule for every V: blue when every item of the level is in the trace data, or every item of the paired level is named by a case (done in the design, not verified); amber when some are; red when none is; dashed grey when the level holds nothing yet. Green is kept for approved work products and passed verification; nothing here is either. The gate band shows the gate records of WP-M-00 §2 (none held yet).
 
-A named item is a **specified** link, not a passed test. 0 of 444 traced items carry status `verified`, and the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K6–K10 in the [README](../README.md) §6 are not implemented).
+A named item is a **specified** link, not a passed test. 0 of 526 traced items carry status `verified`, and the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K6–K10 in the [README](../README.md) §6 are not implemented).
 
 ## 2. Process to work product and items
 
 | Process | Name | Work products | Items or test cases |
 |---|---|---|---|
-| **SYS.1** | Requirements elicitation | WP-C-01, WP-C-02, WP-C-03, WP-C-05, WP-C-09 | AOU (17, trace data), H (9, trace data), HE (39, trace data), SG (8, trace data), SH (13, document), TS (14, document) |
-| **SYS.2** | System requirements analysis | WP-S-01, WP-C-04, WP-S-02, WP-C-07, WP-C-10 | SYS (39, document), FSR (58, trace data), TSR (128, trace data), TC (35, document), FI (23, document), FM (11, document), CSG (8, document) |
+| **SYS.1** | Requirements elicitation | WP-C-01, WP-C-02, WP-C-03, WP-C-05, WP-C-09 | AOU (17, trace data), H (9, trace data), HE (39, trace data), SG (8, trace data), SH (13, trace data), TS (14, document) |
+| **SYS.2** | System requirements analysis | WP-S-01, WP-C-04, WP-S-02, WP-C-07, WP-C-10 | SYS (39, document), FSR (58, trace data), TSR (128, trace data), TC (35, trace data), FI (23, trace data), FM (11, trace data), CSG (8, document) |
 | **SYS.3** | System architectural design | WP-S-03, WP-S-05, WP-S-07 | CSR (64, document) |
 | **SWE.1** | SW requirements analysis | WP-W-02 | SWSR (139, trace data) |
 | **HWE.1** | HW requirements analysis | WP-H-01 | HWSR (46, trace data) |
@@ -201,10 +201,10 @@ flowchart LR
   style ISO26262 fill:#FFFFFF,stroke:#CBD5E1
   subgraph ISO21448["ISO 21448"]
     direction LR
-    kSH["<b>SH</b> 13<br/>SOTIF hazards"]:::doc
-    kTC["<b>TC</b> 35<br/>triggering conditions"]:::doc
-    kFI["<b>FI</b> 23<br/>functional insufficiencies"]:::doc
-    kFM["<b>FM</b> 11<br/>functional modifications"]:::doc
+    kSH["<b>SH</b> 13<br/>SOTIF hazards"]:::traced
+    kTC["<b>TC</b> 35<br/>triggering conditions"]:::traced
+    kFI["<b>FI</b> 23<br/>functional insufficiencies"]:::traced
+    kFM["<b>FM</b> 11<br/>functional modifications"]:::traced
   end
   style ISO21448 fill:#FFFFFF,stroke:#CBD5E1
   subgraph ISOPAS8800["ISO/PAS 8800"]
@@ -232,11 +232,11 @@ flowchart LR
   kTSR -->|"97/104"| kSWSR
   kTSR -->|"19/19"| kHWSR
   kAOU --> kSG
-  kSH -.-> kTC
-  kSH -.-> kFI
-  kTC -.-> kFM
-  kFI -.-> kFM
-  kSH -.-> kHE
+  kSH -->|"12/12"| kTC
+  kSH -->|"12/12"| kFI
+  kTC --> kFM
+  kFI --> kFM
+  kSH --> kH
   kFI -.-> kAIR
   kAIR -.-> kDSR
   kTS -.-> kCSG
@@ -250,7 +250,7 @@ flowchart LR
 | Standard | Kinds | In trace data | Defined in documents only |
 |---|---|---|---|
 | ISO 26262 | H, HE, SG, AOU, FSR, TSR, SWSR, HWSR | H 9, HE 39, SG 8, AOU 17, FSR 58, TSR 128, SWSR 139, HWSR 46 | — |
-| ISO 21448 | SH, TC, FI, FM | — | SH 13, TC 35, FI 23, FM 11 |
+| ISO 21448 | SH, TC, FI, FM | SH 13, TC 35, FI 23, FM 11 | — |
 | ISO/PAS 8800 | AIR, DSR | — | AIR 30, DSR 13 |
 | ISO/SAE 21434 | TS, CSG, CSR | — | TS 14, CSG 8, CSR 64 |
 | ASPICE | SYS | — | SYS 39 |
@@ -267,6 +267,10 @@ Parents with at least one child in the trace data (WP-T-01 checks K4, K12).
 | FSR -> TSR | 58/58 | complete | — |
 | TSR -> SWSR (SW-allocated TSRs) | 97/104 | partial | TSR-628, TSR-629, TSR-630, TSR-631, TSR-632, TSR-633, TSR-712 |
 | TSR -> HWSR (HW-allocated TSRs) | 19/19 | complete | — |
+| SOTIF hazard -> functional insufficiency | 12/12 | complete | — |
+| SOTIF hazard -> triggering condition | 12/12 | complete | — |
+
+SOTIF modifications whose stated scope (WP-C-07 §2, *Addresses*) differs from the SOTIF hazards of the WP-C-06 §5 rows that name them, for review; a modification can address a hazard directly, so this is not an error: FM-01 (also SH-03); FM-03 (not SH-01); FM-04 (also SH-02); FM-08 (not SH-02); FM-09 (also SH-04; not SH-02, SH-03); FM-10 (also SH-01). *Also* lists hazards only WP-C-07 names, *not* those only the §5 rows give.
 
 ## 5. Verification coverage (across the V)
 
@@ -294,6 +298,6 @@ None.
 
 ## 7. Not yet traced
 
-- **Kinds outside the trace data:** SH (13), TC (35), FI (23), FM (11), AIR (30), DSR (13), TS (14), CSG (8), CSR (64), SYS (39). Their links (SH → TC/FI → FM, FI → AIR → DSR, TS → CSG → CSR, CSG ↔ SG, SH ↔ HE, SYS → TSR) are dashed in §3 until they are added to `items/` (README §3.1).
+- **Kinds outside the trace data:** AIR (30), DSR (13), TS (14), CSG (8), CSR (64), SYS (39). Their links (FI → AIR, AIR → DSR, TS → CSG, CSG → CSR, CSG → SG, SYS → TSR) are dashed in §3 until they are added to `items/` (README §3.1).
 - **Allocation to elements** (SYS.3, SWE.2, HWE.2): `allocated_to` holds work-product cells; element IDs need `elements.yaml` (WP-P-06 OI-4).
 - **Code and test results:** no `@req` tags and no `links/verification.yaml` yet, so the SWE.3 → code link and every test → result link are absent (WP-P-06 §5.3, §6).

@@ -169,6 +169,57 @@ class TestItemChecks(unittest.TestCase):
     self.assertEqual(tags(run(self.items), "K12"), [])
 
 
+SOTIF = [
+  {"id": "SH-01", "kind": "sotif-hazard", "text": "t", "functions": ["F-01"], "function_text": "F-01", "situations": "x",
+   "shares_event": ["H-01"], "linked_text": "H-01", "status": "proposed", "source": "WP-C-05"},
+  {"id": "SH-07", "kind": "sotif-hazard", "text": "not used", "functions": [], "function_text": "—", "situations": "—",
+   "shares_event": [], "linked_text": "—", "status": "withdrawn", "source": "WP-C-05"},
+  {"id": "FI-01", "kind": "functional-insufficiency", "text": "t", "fi_type": "P", "component": "x",
+   "parents": ["SH-01"], "status": "proposed", "source": "WP-C-06"},
+  {"id": "TC-01", "kind": "triggering-condition", "text": "t", "category": "x", "parents": ["SH-01"],
+   "insufficiencies": ["FI-01"], "evaluation": "x", "status": "proposed", "source": "WP-C-06"},
+  {"id": "FM-01", "kind": "functional-modification", "title": "t", "addresses": ["SH-01"], "parents": ["TC-01", "FI-01"],
+   "gap_text": "—", "priority": "P1", "status": "proposed", "source": "WP-C-07"},
+]
+
+
+class TestSotifChecks(unittest.TestCase):
+  def setUp(self):
+    self.items = copy.deepcopy(GOOD + SOTIF)
+
+  def test_good_set_is_clean(self):
+    self.assertEqual(run(self.items), [])
+
+  def test_k3_sotif_link_kinds(self):
+    find(self.items, "FI-01")["parents"] = ["H-01"]
+    self.assertIn("[K3] FI-01: parent H-01 is a hazard, not one of ['sotif-hazard']", run(self.items))
+    self.items = copy.deepcopy(GOOD + SOTIF)
+    find(self.items, "SH-01")["shares_event"] = ["SG-01"]
+    self.assertIn("[K3] SH-01: shares_event SG-01 is a safety-goal, not one of ['hazard', 'hazardous-event']",
+                  run(self.items))
+    self.items = copy.deepcopy(GOOD + SOTIF)
+    find(self.items, "TC-01")["insufficiencies"] = ["FI-09"]
+    self.assertIn("[K3] TC-01: insufficiencies reference FI-09 does not resolve", run(self.items))
+
+  def test_s1_hazard_without_insufficiency_or_condition(self):
+    self.items.append(dict(find(self.items, "SH-01"), id="SH-02"))
+    self.assertEqual(tags(run(self.items), "S1"),
+                     ["[S1] SH-02: no functional insufficiency", "[S1] SH-02: no triggering condition"])
+
+  def test_s1_withdrawn_hazard_needs_nothing(self):
+    self.assertEqual(tags(run(self.items), "S1"), [])
+
+  def test_s1_insufficiency_not_evaluated(self):
+    find(self.items, "TC-01")["insufficiencies"] = []
+    errs = tags(run(self.items), "S1")
+    self.assertIn("[S1] FI-01: not evaluated with a triggering condition (WP-C-06 §5)", errs)
+    self.assertIn("[S1] TC-01: SH-01 is not a parent of any of its insufficiencies []", errs)
+
+  def test_s1_modification_named_by_no_row(self):
+    find(self.items, "FM-01")["parents"] = []
+    self.assertEqual(tags(run(self.items), "S1"), ["[S1] FM-01: named by no evaluation row of WP-C-06 §5"])
+
+
 class TestRepository(unittest.TestCase):
   def test_main_passes_on_repository(self):
     out = io.StringIO()
