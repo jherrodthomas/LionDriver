@@ -54,7 +54,7 @@ gallery say so.
 | W04 | Moderate or heavy rain | E2 | outside | The darkest overcast, standing water with longer streaks and mirror-smooth wheel tracks, a rain ripple, heavy rain, visibility 350 m, lights on |
 | W05 | Snow or ice | E2 | outside | Overcast, snow on verges and trees, slush between the wheel tracks, icy tracks, snowfall, visibility 600 m |
 | W06 | Fog below the ODD bound | E1 | outside | A slightly darker overcast, fog at 120 m visibility (the ODD bound is 200 m, WP-C-02 §3), lights on |
-| TC-01 | Low sun in the camera's view | — (SOTIF) | in | Sun 5° above the horizon ahead (12° where buildings would hide it), bloom |
+| TC-01 | Low sun in the camera's view | — (SOTIF; no class. Sun in the frame on I-85 about 203 h/year southbound, 158 h/year northbound: [sun-glare.md](../../results/sun-glare.md), synthetic, no evidence credit) | in | Sun 5° above the horizon ahead (12° where buildings would hide it), bloom |
 
 Fog and haze are a volume over the scene with extinction 3 / visibility per metre (Koschmieder: 5 % contrast at the
 stated visibility).
