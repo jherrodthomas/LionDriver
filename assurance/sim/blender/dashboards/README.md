@@ -143,6 +143,15 @@ The worst cases the failure search found ([edge-case catalogue](../../results/ed
 
 The whole scene with the dashboard running, 24 fps (`hazard_scene.py --video`, `compose.py --video`):
 
+- [ec-03-frozen-curve-exit](clips/ec-03-frozen-curve-exit.mp4)
+- [ec-04-stall-curve-tunnel](clips/ec-04-stall-curve-tunnel.mp4)
+- [ec-11-lane-change-frozen-overshoot](clips/ec-11-lane-change-frozen-overshoot.mp4)
+- [ec-12-lane-change-stall-exit](clips/ec-12-lane-change-stall-exit.mp4)
+- [ec-18-wrong-direction-correction](clips/ec-18-wrong-direction-correction.mp4)
+- [ec-20-brakes-instead-of-steering](clips/ec-20-brakes-instead-of-steering.mp4)
+- [ec-24-silent-stall-r-odd](clips/ec-24-silent-stall-r-odd.mp4)
+- [ec-26-narrow-lane-truck-hardover](clips/ec-26-narrow-lane-truck-hardover.mp4)
+- [ec-27-crosswind-hardover-left](clips/ec-27-crosswind-hardover-left.mp4)
 - [he-01-1-rural-hardover-oncoming](clips/he-01-1-rural-hardover-oncoming.mp4)
 - [he-01-2-hardover-adjacent](clips/he-01-2-hardover-adjacent.mp4)
 - [he-01-3-urban-hardover-cyclist](clips/he-01-3-urban-hardover-cyclist.mp4)
