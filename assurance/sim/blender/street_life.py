@@ -236,13 +236,10 @@ def skin_scale(sc: dict, length: float) -> float:
   return sc["car"]["length"] / length
 
 
-TRUCK_LENGTH_M = 9.5      # export_scene.SIZES: the truck outline the analysis uses
-
-
-def body_scale(sc: dict, kind: str, length: float) -> float:
+def body_scale(a: dict, length: float) -> float:
   """The uniform scale that gives a civil service vehicle (length m) the length of the outline the analysis draws its
-  road user as (a car's or a truck's), like skin_scale."""
-  return (sc["car"]["length"] if kind == "car" else TRUCK_LENGTH_M) / length
+  road user a as (export_scene writes it with the body), like skin_scale."""
+  return a["length"] / length
 
 
 def trailers(sc: dict) -> list[str]:

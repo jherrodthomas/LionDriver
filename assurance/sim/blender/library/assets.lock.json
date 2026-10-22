@@ -1260,12 +1260,16 @@
    "pieces": {
     "vehicles": [
      "fire_truck",
-     "police_sedan"
+     "police_sedan",
+     "ambulance",
+     "towtruck"
     ]
    },
    "fronts": {
     "fire_truck": "-y",
-    "police_sedan": "+y"
+    "police_sedan": "+y",
+    "ambulance": "-y",
+    "towtruck": "-y"
    },
    "lights": {
     "fire_truck": [
@@ -1274,6 +1278,10 @@
     ],
     "police_sedan": [
      -0.05
+    ],
+    "ambulance": [
+     0.25,
+     -0.47
     ]
    },
    "archive": {

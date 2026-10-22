@@ -13,12 +13,12 @@
 #   ego           kinematic: speed_kph, d (lateral offset), accel [{t, a, v_to_kph}], lateral [{t, law, ...}]
 #                 (laws: hold, drift ay, track to wn ay_max, walk to v); values are numbers or expressions over the
 #                 named assumptions of export_scene.py (t_r, t_r_min, a_item_max, a_item_min, a_driver_full, a_pcs, ...)
-#   actors        other road users: kind (car, truck, pedestrian, cyclist), lane or d, ds_m (start ahead of the ego
+#   actors        other road users: kind (car, truck, van, pedestrian, cyclist), lane or d, ds_m (start ahead of the ego
 #                 at t = 0, body centres), speed_kph (negative: oncoming), accel, lateral, source (kinematic or
 #                 illustrative), critical (the gap and TTC on the dashboard are to it), figure (pedestrian: male or
 #                 female, library/people/; default: picked from the name and the scene ID), paint (car or truck
 #                 body, RGB 0..1), yaw_deg (turned on the spot, e.g. a vehicle stopped across a lane), beacons (car or
-#                 truck: a flashing red and blue light bar), body (fire_truck or police_sedan: drawn with the civil
+#                 truck: a flashing red and blue light bar), body (fire_truck, police_sedan, ambulance or towtruck: drawn with the civil
 #                 service vehicles kit at the analysis' length; without the kit the procedural body stays); paint,
 #                 yaw_deg, beacons and body are the picture only
 #   environment   the static world, from library/environments.yaml (road cross-section, geometry, scenery, props,
@@ -851,6 +851,8 @@ scenes:
       - {name: fire engine, kind: truck, lane: 0, ds_m: 3.0 * 105 / 3.6 + (4.63 + 9.5) / 2, yaw_deg: -15, critical: true, beacons: true, body: fire_truck, paint: [0.62, 0.04, 0.03]}
       - {name: crashed car, kind: car, lane: -1, ds_m: 3.0 * 105 / 3.6 + 22, yaw_deg: 35, source: illustrative, paint: [0.3, 0.32, 0.35]}
       - {name: patrol car, kind: car, d: -7.0, ds_m: 3.0 * 105 / 3.6 - 14, source: illustrative, beacons: true, body: police_sedan, paint: [0.92, 0.92, 0.92]}
+      - {name: ambulance, kind: van, d: -7.0, ds_m: 3.0 * 105 / 3.6 + 34, source: illustrative, beacons: true, body: ambulance, paint: [0.95, 0.95, 0.93]}
+      - {name: tow truck, kind: van, d: -7.0, ds_m: 3.0 * 105 / 3.6 + 50, source: illustrative, body: towtruck, paint: [0.9, 0.75, 0.1]}
       - {name: firefighter, kind: pedestrian, d: -4.6, ds_m: 3.0 * 105 / 3.6 + 16, source: illustrative, figure: male}
       - {name: police officer, kind: pedestrian, d: -6.2, ds_m: 3.0 * 105 / 3.6 - 9, source: illustrative, figure: female}
     props:
@@ -860,7 +862,7 @@ scenes:
     trigger_label: TTC 3 s, no deceleration (KS-05)
     caption: >-
       A fire engine shields a crash scene, stopped at an angle across the ego's lane with its beacons flashing; a
-      patrol car stands on the shoulder. The item does not take the stationary engine as its lead: at TTC 3 s, where
+      patrol car, an ambulance and a tow truck stand on the shoulder. The item does not take the stationary engine as its lead: at TTC 3 s, where
       KS-05 expects the first deceleration, nothing happens, and the driver brakes after the reaction time. The
       pattern of the crashes NHTSA's preliminary evaluation PE26007 (2026) reports (stopped vehicles in the travel
       lane, one a first responder's); not a reconstruction of any of them.

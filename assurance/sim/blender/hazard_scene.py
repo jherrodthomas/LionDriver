@@ -211,6 +211,11 @@ def make_actor(a: dict, model, coll, lights: bool, night: bool = False, seed: st
     if lights:
       headlights(ob, coll, 4.8, 4000 if night else 1200)
       taillights(ob, coll, -4.76, 1.05, 1.0)
+  elif kind == "van":                           # an ambulance or tow truck's stand-in: a short box truck
+    ob = A.truck(name, coll, tuple(a.get("paint") or (0.85, 0.85, 0.83)), length=7.2)
+    if lights:
+      headlights(ob, coll, 3.5, 4000 if night else 1200)
+      taillights(ob, coll, -3.61, 1.05, 1.0)
   elif kind == "pedestrian":
     scanned = A.scanned_pedestrian(name, coll, seed, a.get("figure"))
     ob, limbs = scanned if scanned else A.pedestrian(name, coll)
@@ -218,8 +223,8 @@ def make_actor(a: dict, model, coll, lights: bool, night: bool = False, seed: st
     ob = A.cyclist(name, coll)
   else:
     raise ValueError(kind)
-  if a.get("beacons") and kind in ("car", "truck"):
-    x, z = (9.5 / 2 - 1.2, 2.9) if kind == "truck" else (-0.2, 1.46)
+  if a.get("beacons") and kind in ("car", "truck", "van"):
+    x, z = {"truck": (9.5 / 2 - 1.2, 2.9), "van": (7.2 / 2 - 1.2, 2.9)}.get(kind, (-0.2, 1.46))
     beacons(ob, coll, x, z, len(a["poses"]), fps, night)
   keyframe_poses(ob, a["poses"])
   if isinstance(limbs, bpy.types.Object):       # a scanned figure: its rig
@@ -655,7 +660,7 @@ def screen_positions(sc: dict, cam) -> dict:
   from bpy_extras.object_utils import world_to_camera_view
   from mathutils import Vector
   s = bpy.context.scene
-  heights = {"pedestrian": 1.9, "cyclist": 1.8, "truck": 3.9}
+  heights = {"pedestrian": 1.9, "cyclist": 1.8, "truck": 3.9, "van": 3.0}
   out = {}
   for f in range(1, len(sc["t"]) + 1):
     s.frame_set(f)

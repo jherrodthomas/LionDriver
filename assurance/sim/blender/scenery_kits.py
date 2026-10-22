@@ -390,7 +390,7 @@ def build(sc: dict, env: dict, assets, keyframe, walk, lamps=None, rear: bool = 
       for o in root.children_recursive:              # the procedural body and its beacons go; the lamps stay
         if o.type == "MESH" or o.name.startswith("beacon"):
           o.hide_render = True
-      k = street_life.body_scale(sc, a["kind"], b["w"])
+      k = street_life.body_scale(a, b["w"])
       place(b, f"{root.name}_body", coll, (0, 0, 0), parent=root).scale = (k, k, k)
       if beacon and a.get("beacons"):
         for x, z in b["lights"]:

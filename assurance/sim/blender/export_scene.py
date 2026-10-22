@@ -55,7 +55,7 @@ FPS = 24
 DT = 0.01                # s, kinematic integration step
 END_AFTER_CONTACT = 0.5  # s shown after the first contact
 DS_ROAD = 1.0            # m between exported road samples
-SIZES = {"ego": (4.63, 1.781), "car": (4.63, 1.781), "truck": (9.5, 2.5), "pedestrian": (0.5, 0.5),
+SIZES = {"ego": (4.63, 1.781), "car": (4.63, 1.781), "truck": (9.5, 2.5), "van": (7.2, 2.4), "pedestrian": (0.5, 0.5),
          "cyclist": (1.8, 0.6), "cone": (0.4, 0.4)}
 
 # Named values a kinematic scene may use instead of a number. The plant's assumptions are read from simulate.py;
@@ -529,7 +529,7 @@ def build(scene: dict, hes: dict[str, dict], lib: dict | None = None) -> dict:
                    "paint": a.get("paint"), "critical": bool(a.get("critical")), "traffic": bool(a.get("traffic")),
                    **({"figure": a["figure"]} if a.get("figure") else {}),
                    **({"beacons": True} if a.get("beacons") else {}),
-                   **({"body": a["body"]} if a.get("body") else {})})
+                   **({"body": a["body"], "length": SIZES.get(kind, SIZES["car"])[0]} if a.get("body") else {})})
 
   # props in road coordinates (s relative to the ego at t = 0)
   props = []
