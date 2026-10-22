@@ -339,7 +339,7 @@ jobs:
     name: fmdtools fault-propagation models
     # NASA fmdtools models of the fault trees (TE-02; assurance/models/fmdtools). Synthetic: no evidence credit.
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
     - uses: actions/checkout@v7
       with:
@@ -369,6 +369,16 @@ jobs:
       run: |
         python3 assurance/models/fmdtools/sg06/test_fault_lab.py
         python3 assurance/models/fmdtools/sg06/fault_lab.py --check
+    - name: SG-01 model maps the WP-A-04 tree and reproduces the reference cut sets (DQ-417)
+      run: python3 assurance/models/fmdtools/sg01/test_sg01.py
+    - name: SG-01 single-fault and joint-fault pages are current (order 1 and 2; the full sweep runs weekly)
+      run: |
+        python3 assurance/models/fmdtools/sg01/sweep.py --check
+        python3 assurance/models/fmdtools/sg01/sweep.py joint --check --order 2
+    - name: SG-01 Fault Lab page is current, and its tests
+      run: |
+        python3 assurance/models/fmdtools/sg01/test_fault_lab.py
+        python3 assurance/models/fmdtools/sg01/fault_lab.py --check
 
   fret:
     name: FRETish restatements of the panda TSRs

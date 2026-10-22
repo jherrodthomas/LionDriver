@@ -1,8 +1,8 @@
 name: fmdtools full sweep
 
-# TE-02 step P3: the full SG-02 and SG-06 joint-fault sweeps (sets of up to 4 failure modes, a few minutes each on 4
-# cores) checked against the committed p3-minimal-sets.json and p3-joint-faults.md. Pull requests check orders 1 and 2
-# only, in the fmdtools job of assurance.yaml. Synthetic (DSR-12): no evidence credit. Read-only.
+# TE-02 step P3: the full SG-02, SG-06 and SG-01 joint-fault sweeps (sets of up to 4, 4 and 3 failure modes, a few
+# minutes each on 4 cores) checked against the committed p3-minimal-sets.json and p3-joint-faults.md. Pull requests
+# check orders 1 and 2 only, in the fmdtools job of assurance.yaml. Synthetic (DSR-12): no evidence credit. Read-only.
 
 on:
   schedule:
@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   sweep:
-    name: SG-02 and SG-06 joint faults, full sweep
+    name: SG-02, SG-06 and SG-01 joint faults, full sweep
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
@@ -27,3 +27,5 @@ jobs:
       run: python3 assurance/models/fmdtools/sg02/sweep.py joint --check
     - name: SG-06 minimal sets of up to 4 modes are current (DQ-417)
       run: python3 assurance/models/fmdtools/sg06/sweep.py joint --check
+    - name: SG-01 minimal sets of up to 3 modes are current (DQ-417)
+      run: python3 assurance/models/fmdtools/sg01/sweep.py joint --check

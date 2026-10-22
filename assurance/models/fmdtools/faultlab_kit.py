@@ -9,7 +9,7 @@ import html
 esc = html.escape
 
 
-def matrix(d: dict, lost: str = "lose lateral control") -> str:
+def matrix(d: dict, label: str = "lose lateral control without a cue in time") -> str:
   """Order-2 sets: a filled cell is a minimal set the model finds, a ring an effective tree set. An empty cell is not a
   minimal pair; it is not a claim that the pair is safe, since supersets of a single-point set are not run."""
   pairs = [c for c in d["model"] + d["tree"] if len(c) == 2]
@@ -18,7 +18,7 @@ def matrix(d: dict, lost: str = "lose lateral control") -> str:
   model, tree = {c for c in d["model"] if len(c) == 2}, {c for c in d["tree"] if len(c) == 2}
   W = L + n * cs + 20
   out = [f'<svg viewBox="0 0 {W} {T + n * cs + 4}" width="100%" role="img" aria-label="Pairs of failure modes that '
-         f'{lost} without a cue in time" font-size="7.5">']
+         f'{label}" font-size="7.5">']
   for i, e in enumerate(ev):
     out.append(f'<text x="{L - 4}" y="{T + i * cs + 10}" text-anchor="end" class="hl">{e}</text>')
     out.append(f'<text transform="translate({L + i * cs + 10} {T - 4}) rotate(-60)" class="hl">{e}</text>')
@@ -89,3 +89,28 @@ def finding(kind: str, title: str, text: str) -> str:
   icon = {"g": "✓", "w": "▲", "c": "✕"}[kind]
   return (f'<div class="fd"><div class="i {kind}">{icon}</div><div><div class="t">{esc(title)}</div>'
           f'<div class="x">{text}</div></div></div>')
+
+
+def plant_table(text: str, first: str) -> dict[str, dict[str, str]]:
+  """Rows of the plant-results.md table whose header starts with `Case | <first>`, keyed by their first cell."""
+  lines = text.splitlines()
+  for i, line in enumerate(lines):
+    cells = [c.strip() for c in line.strip().strip("|").split("|")]
+    if cells and cells[0] == "Case" and len(cells) > 1 and cells[1].startswith(first):
+      rows = {}
+      for row in lines[i + 2:]:
+        if not row.startswith("|"):
+          break
+        vals = [c.strip() for c in row.strip().strip("|").split("|")]
+        rows[vals[0]] = dict(zip(cells, vals))
+      return rows
+  raise KeyError(f"no table starting with 'Case | {first}'")
+
+
+def plant_events(text: str, case: str) -> dict[str, float]:
+  """The event log of one plant case: event name -> seconds from the fault onset."""
+  out = {}
+  for part in plant_table(text, "Events")[case]["Events (s from fault onset)"].split(";"):
+    name, _, t = part.strip().rpartition(" ")
+    out[name] = float(t)
+  return out
