@@ -138,9 +138,10 @@ def load_scenes() -> list[dict]:
 
 def traffic_actors(scene: dict, lib: dict, v_ego: float) -> list[dict]:
   """The scene's traffic preset as actors (illustrative, never critical); a variant moves each one by up to the
-  preset's jitter_m along the road, seeded by the variant's ID."""
+  preset's jitter_m along the road, seeded by the variant's ID (or the scene's jitter_seed)."""
   preset = lib["traffic"][scene.get("traffic", "none")]
-  rnd = random.Random(zlib.crc32(scene["id"].encode())) if scene.get("variant_of") else None
+  seed = scene.get("jitter_seed") or (scene["id"] if scene.get("variant_of") else None)
+  rnd = random.Random(zlib.crc32(seed.encode())) if seed else None
   out = []
   for a in preset["actors"]:
     q = {k: v for k, v in a.items() if k not in ("speed_rel_kph", "oncoming")}
@@ -370,6 +371,8 @@ def condition_text(scene: dict) -> str:
 
 
 def card(scene: dict, hes: dict) -> dict:
+  if "card" in scene:                            # a caller that builds its own scenes brings its card
+    return scene["card"]
   if "he" in scene:
     he = hes.get(scene["he"])
     if he is None or he["kind"] != "hazardous-event":

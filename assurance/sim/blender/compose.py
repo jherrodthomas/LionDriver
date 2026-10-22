@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import os
 import shutil
 import subprocess
 import sys
@@ -39,7 +40,8 @@ CRITICAL = "#d03b3b"      # fault onset, hazardous event, contact
 WARNING = "#fab219"       # thresholds
 EGO = "#d95926"
 
-FONT_DIRS = [Path("/usr/share/fonts/opentype/inter"), Path("/usr/share/fonts/truetype/dejavu")]
+FONT_DIRS = ([Path(os.environ["LIONDRIVER_FONT_DIR"])] if os.environ.get("LIONDRIVER_FONT_DIR") else []) + [
+  Path("/usr/share/fonts/opentype/inter"), Path("/usr/share/fonts/truetype/dejavu")]   # the app bundles Inter
 
 
 def font(size: int, weight: str = "Regular"):
@@ -248,7 +250,8 @@ def frame(sc: dict, screen: dict, keys: list[dict], views: dict[str, Path], i: i
   # left: the HARA or SOTIF entry
   hb = (12, 64, 372, 412)
   panel(d, hb, edge=CRITICAL)
-  d.text((24, 74), ("Hazardous event " if cd["kind"] == "HARA" else "SOTIF hazard ") + cd["id"], font=F["h1"],
+  head = cd.get("heading") or ("Hazardous event " if cd["kind"] == "HARA" else "SOTIF hazard ") + cd["id"]
+  d.text((24, 74), clip(head, F["h1"], 335), font=F["h1"],
          fill=CRITICAL)
   y = wrap(d, (24, 102), cd["title"], F["bs"], TEXT, 330)
   y = wrap(d, (24, y + 6), "Situation: " + cd["situation"], F["s"], TEXT2, 330, 3)
