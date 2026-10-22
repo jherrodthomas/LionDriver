@@ -1,0 +1,103 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1600px;height:1000px;background:#c9d3de;font:13px/1.4 Inter,'Segoe UI',sans-serif;color:#1b1b1b;
+  -webkit-font-smoothing:antialiased;overflow:hidden}
+.win{position:absolute;inset:14px;background:#f3f3f3;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,.28);
+  overflow:hidden;display:flex;flex-direction:column;border:1px solid #b9b9b9}
+.title{height:36px;display:flex;align-items:center;padding-left:14px;gap:10px;background:#ebebeb;font-size:12px}
+.title .logo{width:16px;height:16px;border-radius:4px;background:linear-gradient(135deg,#e8743b,#c4402a)}
+.title .name{flex:1}
+.title .ctl{width:46px;height:36px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#333}
+.title .ctl.x:hover{background:#c42b1c}
+.cmd{height:48px;display:flex;align-items:center;gap:4px;padding:0 12px;background:#f9f9f9;border-bottom:1px solid #e3e3e3}
+.btn{display:flex;align-items:center;gap:7px;padding:6px 11px;border-radius:5px;font-size:13px;color:#1b1b1b}
+.btn svg{width:16px;height:16px;stroke:#333;fill:none;stroke-width:1.6}
+.btn.primary{background:#c4402a;color:#fff}.btn.primary svg{stroke:#fff}
+.btn.ghost{border:1px solid #d6d6d6;background:#fff}
+.sep{width:1px;height:24px;background:#e0e0e0;margin:0 6px}
+.spacer{flex:1}
+.body{flex:1;display:flex;min-height:0}
+.nav{width:220px;background:#f3f3f3;padding:12px 8px;border-right:1px solid #e3e3e3}
+.nav h4{font-size:11px;font-weight:600;color:#666;text-transform:uppercase;letter-spacing:.05em;margin:10px 10px 6px}
+.nav .item{display:flex;justify-content:space-between;padding:8px 10px;border-radius:5px;color:#1b1b1b}
+.nav .item.on{background:#e5e5e5;position:relative;font-weight:600}
+.nav .item.on:before{content:'';position:absolute;left:0;top:9px;bottom:9px;width:3px;border-radius:2px;background:#c4402a}
+.nav .item .n{color:#777;font-weight:400}
+.nav .item.soon{color:#999}
+.main{flex:1;display:flex;flex-direction:column;min-width:0;background:#fff;overflow:hidden}
+.sheetbar{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid #eee}
+.sheetbar .file{font-weight:600;font-size:15px}
+.sheetbar .muted{color:#777}
+table{border-collapse:collapse;width:100%;font-size:12px;table-layout:fixed}
+th{position:sticky;top:0;background:#fafafa;text-align:left;font-weight:600;color:#444;padding:8px 10px;
+  border-bottom:1px solid #e3e3e3;white-space:nowrap}
+th .k{display:block;font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+td{padding:10px 8px;border-bottom:1px solid #f0f0f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+th{padding:8px}
+tr.pick td{background:#fdf0ec}
+tr.pick td:first-child{box-shadow:inset 3px 0 #c4402a}
+.k.scene{color:#b05a10}.k.look{color:#2c7a43}.k.motion{color:#2a59b8}.k.rating{color:#8a6d00}.k.result{color:#6b3fa0}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:10px;font-size:11.5px;font-weight:500}
+.pill.ok{background:#e3f4e8;color:#1e6b34}.pill.bad{background:#fde7e4;color:#a1281a}.pill.run{background:#e4ecfb;color:#24489a}
+.pill.wait{background:#f0f0f0;color:#555}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.asil{font-weight:700;color:#c4402a}
+.detail{width:400px;border-left:1px solid #e3e3e3;background:#fbfbfb;overflow:hidden;display:flex;flex-direction:column}
+.detail .hd{padding:14px 18px 10px;border-bottom:1px solid #eee}
+.detail .hd .id{font-weight:700;font-size:15px}
+.detail .hd .sub{color:#666;font-size:12px}
+.grp{padding:10px 18px 4px}
+.grp h5{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.field{display:grid;grid-template-columns:110px 1fr;align-items:center;gap:8px;margin-bottom:7px}
+.field label{color:#555;font-size:12px}
+.sel{height:30px;border:1px solid #d1d1d1;border-bottom-color:#a9a9a9;border-radius:4px;background:#fff;display:flex;
+  align-items:center;justify-content:space-between;padding:0 9px;font-size:12.5px}
+.sel:after{content:'⌄';color:#555;font-size:13px;margin-top:-5px}
+.sel.ro{background:#f5f5f5;color:#333}.sel.ro:after{content:''}
+.note{font-size:11.5px;color:#8a5a14;background:#fff6e5;border-radius:4px;padding:6px 8px;margin:2px 0 8px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid #e2d9a8;background:#fffbe6;border-radius:4px;padding:3px 8px;font-size:12px}
+.chip b{color:#8a6d00;font-weight:600;margin-right:3px}
+.res{margin:6px 18px 0;border:1px solid #e6e6e6;border-radius:6px;background:#fff;overflow:hidden}
+.res img{display:block;width:100%}
+.res .rows{padding:8px 10px;display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px}
+.res .rows span:nth-child(odd){color:#666}
+.status{height:28px;display:flex;align-items:center;gap:16px;padding:0 14px;background:#f3f3f3;border-top:1px solid #e3e3e3;
+  font-size:11.5px;color:#555}
+.status .syn{margin-left:auto;color:#a1281a;font-weight:600}
+.dim{position:absolute;inset:50px 0 28px 0;background:rgba(0,0,0,.28)}
+.dialog{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:760px;background:#fff;border-radius:8px;
+  box-shadow:0 16px 48px rgba(0,0,0,.35);overflow:hidden;border:1px solid #c8c8c8}
+.dialog .dh{padding:20px 24px 6px;font-size:19px;font-weight:600}
+.dialog .dd{padding:0 24px 14px;color:#555}
+.dialog .search{margin:0 24px 12px;height:34px;border:1px solid #c8c8c8;border-bottom:2px solid #c4402a;border-radius:4px;
+  display:flex;align-items:center;padding:0 10px;gap:8px;font-size:13.5px}
+.list{margin:0 24px;border:1px solid #e3e3e3;border-radius:6px;overflow:hidden}
+.li{display:grid;grid-template-columns:22px 210px 1fr 60px;gap:10px;align-items:center;padding:9px 12px;border-bottom:1px solid #f0f0f0;font-size:12.5px}
+.li:last-child{border-bottom:0}
+.li.on{background:#fdf0ec}
+.cb{width:16px;height:16px;border-radius:3px;border:1.5px solid #888;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff}
+.cb.on{background:#c4402a;border-color:#c4402a}
+.mono{font-family:'JetBrains Mono',monospace;font-size:12px}
+.preview{margin:14px 24px 0;border-radius:6px;background:#f7f7f7;padding:12px 14px;display:grid;grid-template-columns:130px 1fr;gap:6px 12px;font-size:12.5px}
+.preview span:nth-child(odd){color:#666}
+.df{display:flex;justify-content:flex-end;gap:8px;padding:16px 24px;background:#f3f3f3;margin-top:16px;border-top:1px solid #e3e3e3}
+.df .btn{border:1px solid #d1d1d1;background:#fff;min-width:110px;justify-content:center}
+.df .btn.primary{border-color:#c4402a;background:#c4402a}
+.bar{height:6px;background:#e6e6e6;border-radius:3px;overflow:hidden}.bar i{display:block;height:100%;background:#c4402a}
+.card{background:#fff;border:1px solid #e6e6e6;border-radius:8px}
+</style></head><body>
+<div class="win"><div class="title"><div class="logo"></div><div class="name">Compare — F-01/M03/OS-01/W02 vs at 90 km/h</div>
+<div class="ctl">&#8211;</div><div class="ctl">&#9633;</div><div class="ctl x">&#10005;</div></div>
+<div class="cmd"><div class="btn "><svg viewBox="0 0 16 16"><path d="M2 3h5v10H2z M9 3h5v10H9z"/></svg>Compare</div><div style="color:#777">two rows side by side; what differs is highlighted</div>
+<div class="spacer"></div><div class="btn "><svg viewBox="0 0 16 16"><path d="M5.5 5.5h8v8h-8z M2.5 10.5v-8h8"/></svg>Copy both</div></div>
+<div style="padding:12px 18px;background:#fff;border-bottom:1px solid #eee;display:flex;gap:18px;font-size:12.5px">
+<span><b>Same:</b> environment, motion preset, rating</span><span style="color:#2a59b8"><b>Different:</b> Speed 110 → 90 km/h (Motion)</span>
+<span style="color:#a1281a;margin-left:auto"><b>Outcome changed:</b> adjacent car → barrier</span></div>
+<div style="flex:1;background:#202020;display:flex;gap:18px;padding:22px;align-items:center">
+<div style="flex:1;display:flex;flex-direction:column;gap:8px"><div style="display:flex;gap:8px;align-items:center">
+<b class="mono" style="color:#eee">F-01/M03/OS-01/W02</b><span class="pill wait">as rated</span></div><img src="img/row-f-01-m03-os-01-w02.jpg" style="width:100%;border-radius:4px;box-shadow:0 2px 10px rgba(0,0,0,.4)">
+<div style="color:#ddd;font-size:12.5px">Contact with the adjacent car at +2.21 s, 10 km/h relative</div></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px"><div style="display:flex;gap:8px;align-items:center">
+<b class="mono" style="color:#eee">… at 90 km/h</b><span class="pill run">motion changed</span></div><img src="img/row-f-01-m03-os-01-w02-at-90-km-h.jpg" style="width:100%;border-radius:4px;box-shadow:0 2px 10px rgba(0,0,0,.4)">
+<div style="color:#ddd;font-size:12.5px">Body reaches the barrier at +3.88 s, 90 km/h</div></div></div></div></body></html>
