@@ -13,7 +13,7 @@
 
 ![Three hazardous-event scenes rendered in Blender, cropped to their 3D view: the orange ego Corolla touching a car in the adjacent highway lane after a steering hard-over; the ego going straight on in a highway curve after losing EPS assist; the ego reaching a pedestrian who steps out from behind a parked truck in a city street](figures/sim-hero-dashboards.jpg)
 
-*Hard-over into the adjacent lane ([HE-01.2](blender/dashboards/he-01-2-hardover-adjacent.jpg), plant F-01b), EPS assist lost in a curve ([HE-02.1](blender/dashboards/he-02-1-eps-loss-curve.jpg), plant F-07), occluded pedestrian ([SH-11](blender/dashboards/sh-11-pedestrian-occluded.jpg), kinematic; a city street, outside the ODD); all 49 in the [gallery](blender/dashboards/README.md).*
+*Hard-over into the adjacent lane ([HE-01.2](blender/dashboards/he-01-2-hardover-adjacent.jpg), plant F-01b), EPS assist lost in a curve ([HE-02.1](blender/dashboards/he-02-1-eps-loss-curve.jpg), plant F-07), occluded pedestrian ([SH-11](blender/dashboards/sh-11-pedestrian-occluded.jpg), kinematic; a city street, outside the ODD); every scene in the [gallery](blender/dashboards/README.md), and as a web page with filters and the clips: [hazard scenes](https://claude.ai/artifact/9jBQoqn2dNVRcpYwsJF8W3) (private to the project lead).*
 
 Clips (mp4, open to play): [HE-01.1 rural hard-over toward oncoming traffic](blender/dashboards/clips/he-01-1-rural-hardover-oncoming.mp4) ·
 [HE-02.1 EPS loss in a curve](blender/dashboards/clips/he-02-1-eps-loss-curve.mp4) ·
