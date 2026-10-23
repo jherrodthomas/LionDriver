@@ -665,7 +665,7 @@ def fig4(d: Data) -> str:
                         (RED_BG, RED, "none"), (AMBER_BG, AMBER, "partial"), (GREEN_BG, GREEN, "complete"),
                         (CHIP, LINE + " dashed", "no data source yet")])
   out.append(text(40, y + 24, "“Named”: a test-specification case cites the ID. “Linked”: links/verification.yaml " +
-                  "links an existing test to it (WP-W-06 §4.1). Both are specified links, not a passed test (K7).",
+                  "links an existing test to it (WP-W-06 §4.1, §4.9). Both are specified links, not a passed test (K7).",
                   size=11, fill=MUTED))
   out.append(text(40, y + 40, "Allocated: the requirement's allocated_to names elements of the SysML model " +
                   "(check M8). A requirement under several goals counts in each row.", size=11, fill=MUTED))

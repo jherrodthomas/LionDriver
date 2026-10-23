@@ -513,7 +513,7 @@ def render(m: Model) -> str:
     "",
     para(f"A named item is a **specified** link, not a passed test. {verified} of {len(m.items)} traced items carry status",
          f"`verified`. [`links/verification.yaml`](../links/verification.yaml) links {len(ver)} existing tests to",
-         f"{len({r for ln in ver for r in ln.get('reqs') or []})} requirements (WP-W-06 §4.1) and records no result;",
+         f"{len({r for ln in ver for r in ln.get('reqs') or []})} requirements (WP-W-06 §4.1, §4.9) and records no result;",
          "the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K7–K10 in the [README](../README.md) §6",
          "are not implemented)."),
     "",
