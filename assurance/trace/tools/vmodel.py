@@ -19,9 +19,9 @@ the right) steps inward, then one dashed bracket holds the parallel engineering 
 Nothing about the V is typed here. Levels, names, work products, test prefixes and pairs come from
 trace_map.LEFT, RIGHT, PAIRS and SHORT; the trunk and the arms are derived from the process prefixes in PAIRS
 order. Status comes from the register tables of WP-M-00 §3 and its gate list §2, gate outcomes from the gate
-records (caselib.gate_records), counts from trace_map.build(). No verification result exists yet
-(links/verification.yaml is absent), so every executed count is 0; if that file appears, this module stops
-and asks to be extended.
+records (caselib.gate_records), counts from trace_map.build(). No verification result exists yet:
+links/verification.yaml links tests to requirements but records no result, so every executed count is 0; if
+an entry carries a result, this module stops and asks to be extended.
 
 One colour rule for every lens: grey dashed = nothing yet; amber = in progress or specified; blue = done in the
 design, not verified; green only for approved or baselined work products, or a passed gate or verification;
@@ -151,11 +151,11 @@ def load(m: tm.Model | None = None) -> Data:
   missing = sorted({w for lv in tm.LEFT + tm.RIGHT for w in lv.wps} - set(reg))
   if missing:
     raise SystemExit(f"vmodel.py: work products of trace_map.LEFT/RIGHT missing from the WP-M-00 register: {missing}")
-  if VERIFICATION_LINKS.exists():
-    raise SystemExit(f"{VERIFICATION_LINKS.relative_to(REPO)} now exists: extend vmodel.py to count executed and passed " +
-                     "cases from it")
+  if VERIFICATION_LINKS.exists() and "result:" in VERIFICATION_LINKS.read_text(encoding="utf-8"):
+    raise SystemExit(f"{VERIFICATION_LINKS.relative_to(REPO)} now records results: extend vmodel.py to count executed " +
+                     "and passed cases from it")
   cases = {lv.key: sum(len(m.specs.get(p, {})) for p in lv.tests) for lv in tm.RIGHT}
-  zero = dict.fromkeys(cases, 0)  # no verification result exists (no links/verification.yaml)
+  zero = dict.fromkeys(cases, 0)  # no verification result exists (links/verification.yaml holds links, not results)
   children: dict[str, list[str]] = {}
   for i, it in sorted(m.items.items()):
     for p in it.get("parents") or []:

@@ -465,6 +465,8 @@ def id_list(ids: list[str], limit: int = 40) -> str:
 
 def render(m: Model) -> str:
   verified = sum(1 for it in m.items.values() if it.get("status") == "verified")
+  links_path = TRACE_DIR / "links" / "verification.yaml"
+  ver = ct.load_yaml(links_path) if links_path.exists() else []
   out = [
     "# ASPICE-Aligned Traceability Map (WP-T-01)",
     "",
@@ -510,8 +512,10 @@ def render(m: Model) -> str:
          "nothing here is either. The gate band shows the gate records of WP-M-00 §2 (none held yet)."),
     "",
     para(f"A named item is a **specified** link, not a passed test. {verified} of {len(m.items)} traced items carry status",
-         "`verified`, and the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K6–K10 in the",
-         "[README](../README.md) §6 are not implemented)."),
+         f"`verified`. [`links/verification.yaml`](../links/verification.yaml) links {len(ver)} existing tests to",
+         f"{len({r for ln in ver for r in ln.get('reqs') or []})} requirements (WP-W-06 §4.1) and records no result;",
+         "the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K7–K10 in the [README](../README.md) §6",
+         "are not implemented)."),
     "",
     "## 2. Process to work product and items",
     "",
@@ -580,8 +584,9 @@ def render(m: Model) -> str:
           "- **Kinds outside the trace data:** none; every kind of §3 is in `items/`.",
           para("- **Allocation to elements** (SYS.3, SWE.2, HWE.2): `allocated_to` holds work-product cells; element IDs",
                "need `elements.yaml` (WP-P-06 OI-4)."),
-          para("- **Code and test results:** no `@req` tags and no `links/verification.yaml` yet, so the SWE.3 → code link",
-               "and every test → result link are absent (WP-P-06 §5.3, §6)."),
+          para("- **Code and test results:** no `@req` tags yet, so the SWE.3 → code link is absent;",
+               f"`links/verification.yaml` links {len(ver)} tests to requirements but no test → result link exists",
+               "(WP-P-06 §5.3, §6; check K7)."),
           ""]
   return "\n".join(out)
 

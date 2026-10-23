@@ -35,6 +35,10 @@ jobs:
       OP_SKIP_LFS: 1
     steps:
     - uses: commaai/timeout@v1
+      with:
+        # LionDriver: setup alone takes 60-70 s on a slow runner (the build itself about 1 s), so the 60 s default
+        # failed jobs whose docs had built
+        timeout: 120
     - uses: actions/checkout@v7
     - run: ./tools/op.sh setup
 

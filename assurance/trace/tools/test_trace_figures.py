@@ -46,7 +46,10 @@ class Figures(unittest.TestCase):
   def test_named_is_never_shown_as_verified(self):
     fig4 = self.out[tf.FIG_DIR / "fig-4-trace-depth-per-goal.svg"]
     self.assertIn("not a passed test", fig4)
-    self.assertNotIn(tf.GREEN_BG, fig4.split("NAMED BY A", 1)[1].split("TAGGED", 1)[0])
+    # no cell of the "named by a test-spec case" (x=740) or "linked to a test" (x=930) column is ever green
+    cells = re.findall(r'<rect x="(740|930)"[^>]*fill="([^"]+)"', fig4)
+    self.assertTrue(cells)
+    self.assertNotIn(tf.GREEN_BG, {fill for _, fill in cells})
 
   def test_check_board_matches_readme(self):
     fig7 = self.out[tf.FIG_DIR / "fig-7-consistency-checks.svg"]

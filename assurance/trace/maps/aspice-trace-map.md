@@ -156,7 +156,7 @@ block-beta
 
 One colour rule for every V: blue when every item of the level is in the trace data, or every item of the paired level is named by a case (done in the design, not verified); amber when some are; red when none is; dashed grey when the level holds nothing yet. Green is kept for approved work products and passed verification; nothing here is either. The gate band shows the gate records of WP-M-00 §2 (none held yet).
 
-A named item is a **specified** link, not a passed test. 0 of 694 traced items carry status `verified`, and the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K6–K10 in the [README](../README.md) §6 are not implemented).
+A named item is a **specified** link, not a passed test. 0 of 694 traced items carry status `verified`. [`links/verification.yaml`](../links/verification.yaml) links 28 existing tests to 16 requirements (WP-W-06 §4.1) and records no result; the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K7–K10 in the [README](../README.md) §6 are not implemented).
 
 ## 2. Process to work product and items
 
@@ -302,4 +302,4 @@ None.
 
 - **Kinds outside the trace data:** none; every kind of §3 is in `items/`.
 - **Allocation to elements** (SYS.3, SWE.2, HWE.2): `allocated_to` holds work-product cells; element IDs need `elements.yaml` (WP-P-06 OI-4).
-- **Code and test results:** no `@req` tags and no `links/verification.yaml` yet, so the SWE.3 → code link and every test → result link are absent (WP-P-06 §5.3, §6).
+- **Code and test results:** no `@req` tags yet, so the SWE.3 → code link is absent; `links/verification.yaml` links 28 tests to requirements but no test → result link exists (WP-P-06 §5.3, §6; check K7).
