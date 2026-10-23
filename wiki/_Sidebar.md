@@ -2,6 +2,7 @@
 
 - [Home](Home.md)
 - [Roadmap and status](Roadmap-and-status.md)
+- [How LionDriver works](How-LionDriver-works.md)
 - [How the repository is organized](How-the-repository-is-organized.md)
 - [How decisions are made](How-decisions-are-made.md)
 - [Glossary](Glossary.md)
