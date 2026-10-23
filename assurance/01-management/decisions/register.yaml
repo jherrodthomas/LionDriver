@@ -242,8 +242,9 @@
       title: "No assessor for now"
       detail: "Engineering continues. Cost: G0 and G1 can't pass; nothing can be claimed as assessed."
   sources: ["assurance/01-management/WP-M-01-assurance-strategy.md D-06", "assurance/01-management/WP-M-03-project-plan.md OI-2", "assurance/10-safety-case/WP-K-01-safety-case.md OI-5"]
-  status: answered
+  status: applied
   answer: {choice: C, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#449", record: "WP-M-07 v0.9 §5 D-06 and R-08, R-20; WP-M-01 v0.11 §8 D-06; WP-M-03 OI-2; WP-K-01 OI-5", at: 2026-10-23}
 
 - id: DQ-010
   question: "Who will review your work independently?"
@@ -267,6 +268,7 @@
   sources: ["assurance/01-management/WP-M-02-safety-plan.md OI-1", "assurance/01-management/WP-M-02-safety-plan.md OI-2", "assurance/07-supporting/WP-P-02-change-management.md OI-1", "assurance/05-software/WP-W-04-software-safety-analysis.md OI-4", "assurance/10-safety-case/gates/skeletons/G0-skeleton.md “Verification reviewer(s) | TBD (at least one person other th”", "assurance/process/README.md “3. **One person holds almost every role.** Safety manager, p”"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "Recorded 2026-10-23 in WP-M-02 v0.7 OI-1/OI-2, WP-P-02 OI-1, WP-W-04 OI-4 and process README §6.5. Left: the recruitment itself (lead); the items close when a reviewer is named"
 
 - id: DQ-011
   question: "Which comma device is the reference device: comma 3X or comma four?"
@@ -286,9 +288,10 @@
       detail: "Longer support horizon. Cost: re-check the UI-dependent rows of the HMI analysis."
   sources: ["assurance/01-management/WP-M-11-upstream-and-supplier-management.md OI-5", "assurance/03-system/WP-S-05-hsi-specification.md OI-6", "assurance/04-hardware/WP-H-01-hardware-safety-requirements.md OI-7"]
   note: "Hardware part applied in df2c0ed: both boards stay in scope (WP-H-01 OI-7, WP-H-02 OI-3, WP-H-04, DFMEA diagram data). Item definitions applied in #96 (WP-C-01 v0.10, LD-ITEM-001 rev 0.3). Left: WP-M-11 OI-5 and WP-S-05 OI-6 (other sessions). The answer leaves the reference device open; the purchase follow-up is queued as DQ-212."
-  status: answered
+  status: applied
   answer: {choice: other, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g, note: "not sure, we might have to review both 3x and four"}
   note: "Hardware part applied in df2c0ed: both boards stay in scope (WP-H-01 OI-7, WP-H-02 OI-3, WP-H-04, DFMEA diagram data). Left: WP-M-11 OI-5 and WP-S-05 OI-6 (other sessions). The answer leaves the reference device open; a follow-up question may be needed before purchases."
+  applied: {ref: "jherrodthomas/LionDriver#449", record: "WP-S-05 v0.13 OI-6; WP-M-11 OI-5 (both boards in scope)", at: 2026-10-23}
 
 - id: DQ-012
   question: "How should the AI assistant that drafts most documents and code be classified as a tool?"
@@ -307,8 +310,9 @@
       title: "Higher classification; restrict its use"
       detail: "Qualification, or AI drafting only for non-safety work products. Cost: much slower progress."
   sources: ["assurance/01-management/WP-M-02-safety-plan.md OI-7"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#449", record: "WP-P-07 v0.9.19 TL-56; WP-M-02 v0.7 OI-7 and §3.3", at: 2026-10-23}
 
 - id: DQ-013
   question: "With no assessor, should G0 be marked passed with its two reviews left as open conditions, or held?"
@@ -327,8 +331,9 @@
       title: "Hold G0 until the reviews are done"
       detail: "Strict. Cost: every later gate waits for an assessor."
   sources: ["assurance/01-management/WP-M-06-confirmation-measures-plan.md OI-5"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#449", record: "WP-M-06 v0.5 §9 and OI-5 (G0 passed as a recorded deviation with CR-01, CR-03 open)", at: 2026-10-23}
 
 - id: DQ-014
   question: "Should you buy the standards (ISO 26262, 21448, 21434, PAS 8800, ASPICE PAM)?"
@@ -347,8 +352,9 @@
       title: "Wait until an assessor is engaged"
       detail: "No cost now. Cost: clause references stay unchecked and may need rework later."
   sources: ["assurance/01-management/WP-M-03-project-plan.md OI-3"]
-  status: answered
+  status: applied
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#449", record: "WP-M-03 v0.11 OI-3; WP-M-07 R-23", at: 2026-10-23}
 
 - id: DQ-015
   question: "How is your functional safety expertise as safety manager shown?"
@@ -367,8 +373,9 @@
       title: "Name an external mentor"
       detail: "Covers a gap. Cost: a mentor's time or fee."
   sources: ["assurance/01-management/WP-M-04-organization-competence-safety-culture.md OI-2"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#449", record: "WP-M-04 OI-2 (the competence record itself is WP-M-04 OI-1, waiting on the lead's evidence)", at: 2026-10-23}
 
 - id: DQ-016
   question: "How should volunteer contributors' competence be checked?"
@@ -412,8 +419,9 @@
       title: "Leave it until release"
       detail: "No effort now. Cost: the risk stays open, and renaming later costs more."
   sources: ["assurance/01-management/WP-M-04-organization-competence-safety-culture.md OI-6"]
-  status: answered
+  status: applied
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#449", record: "WP-M-04 OI-6 (trademark check before release, G5)", at: 2026-10-23}
 
 - id: DQ-018
   question: "Can you keep the promised safety triage times: 1 working day for safety issues, 10 otherwise?"
@@ -432,8 +440,9 @@
       title: "Relax them to what you can actually do"
       detail: "An honest commitment. Cost: slower stated response, for example 3 and 20 days."
   sources: ["assurance/01-management/WP-M-02-safety-plan.md OI-4"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#449", record: "WP-M-02 v0.7 OI-4", at: 2026-10-23}
 
 - id: DQ-019
   question: "Should the cybersecurity and machine-learning data processes get a capability target, and should three more processes join the ASPICE scope?"
@@ -479,6 +488,7 @@
   sources: ["assurance/02-concept/WP-C-10-cybersecurity-goals-and-concept.md OI-2", "assurance/01-management/WP-M-09-cybersecurity-plan.md OI-2", "assurance/07-supporting/WP-P-08-software-component-qualification.md OI-5"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "Recorded 2026-10-23 in WP-C-10 v0.6 OI-2, WP-M-09 OI-2 and WP-P-08 OI-5. Left: SSH off by default in the build (CSR-C-10), the TARA ratings in WP-C-09, and marking the disabled components in WP-P-08 §4.2"
 
 - id: DQ-021
   question: "Should the optional external GPU (\"Chestnut\") be excluded from the reference car?"
@@ -678,6 +688,7 @@
   sources: ["assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md OI-4"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "Recorded 2026-10-23 in WP-O-01 v0.4 OI-4. Left: choose the storage service and set the retention rule"
 
 - id: DQ-030
   question: "What may test-drive logs contain, how do drivers consent, and how long are they kept?"
@@ -698,6 +709,7 @@
   sources: ["assurance/09-production-operation/WP-O-04-field-monitoring.md OI-3"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "Recorded 2026-10-23 in WP-O-04 v0.4 OI-3. Left: the short privacy review that sets data categories, consent text and retention (§3.4), before G1"
 
 - id: DQ-031
   question: "What ASIL applies to unexpected steering while not engaged, and to one braking case, if their assumptions about the car fail?"
@@ -898,6 +910,7 @@
   sources: ["assurance/01-management/WP-M-03-project-plan.md OI-4"]
   status: answered
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "Recorded 2026-10-23 in WP-M-03 v0.11 OI-4 and WP-M-07 R-19. Left: the lead arranges access to a reference Corolla and its insurance (waits on DQ-040)"
 
 - id: DQ-040
   question: "Should LionDriver set up a legal entity, or should you sign contracts and insurance as an individual?"
@@ -930,8 +943,6 @@
   reversibility: revisit
   blocks: "Closed-course tests; entry to public-road testing"
   gate: G1
-  asked: 2026-10-14
-  batch: 2
   options:
     - key: A
       recommended: true
@@ -944,8 +955,8 @@
       title: "NCAT / Auburn as a research partner"
       detail: "Not a rental; brings reviewers and test subjects. Cost: a slower, partnership-style arrangement."
   sources: ["assurance/06-validation/WP-V-01-safety-validation.md OI-1"]
-  status: answered
-  answer: {choice: other, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g, note: "not sure yet"}
+  status: queued
+  note: "The lead answered 'not sure yet' on 2026-10-14, so nothing was decided. Back in the queue on 2026-10-23, to be asked again once access to a reference car is arranged (DQ-039); WP-V-01 OI-1 stays open"
 
 - id: DQ-042
   question: "When should the pass/fail limits for the controllability tests be fixed: override force and lateral margin?"
@@ -964,9 +975,10 @@
       title: "Now, from the concept drafts"
       detail: "Tests can be planned now. Cost: may need changing if the measurements disagree."
   sources: ["assurance/06-validation/WP-V-01-safety-validation.md OI-3"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
   note: "SOTIF part applied in aae16af (WP-V-02 §3.3). Left: write the fixed values into WP-V-01 OI-3 and WP-C-08 OI-3 (validation and HMI sessions)."
+  applied: {ref: "jherrodthomas/LionDriver#449", record: "WP-V-01 v0.10 OI-3, §5.2 VS-VAL-10 and VS-VAL-12; WP-C-08 v0.8 OI-3", at: 2026-10-23}
 
 - id: DQ-043
   question: "Should you buy the vehicle test equipment, and in what order?"
@@ -990,6 +1002,7 @@
   sources: ["assurance/06-validation/WP-V-01-safety-validation.md OI-6"]
   status: answered
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "Recorded 2026-10-23 in WP-V-01 v0.10 OI-6. Left: the lead buys stage 1 (abort switch, CAN logger, rear camera); stage 2 waits on a site booking (DQ-041)"
 
 - id: DQ-044
   question: "Before engaged public-road testing (L5), should an outside reviewer with vehicle-test experience check the test procedure?"
@@ -1010,6 +1023,7 @@
   sources: ["assurance/06-validation/WP-V-07-vehicle-test-operations.md OI-1"]
   status: answered
   answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all five (the recommended option of each)"}
+  note: "Recorded 2026-10-23 in WP-V-07 v0.2 OI-1. Left: engaging the reviewer, once a second safety driver is in view (OI-2)"
 
 - id: DQ-045
   question: "Should you buy insurance that covers development testing?"
@@ -1030,6 +1044,7 @@
   sources: ["assurance/06-validation/WP-V-07-vehicle-test-operations.md OI-4"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "Recorded 2026-10-23 in WP-V-07 v0.2 OI-4 and §12. Left: the lead obtains the policy before L3"
 
 - id: DQ-046
   question: "Should the draft limits for public-road test drives be adopted: 105 km/h cap, 0.5 m abort margin, 5 years' licence?"
@@ -1048,9 +1063,10 @@
       title: "Start more conservatively until reviewed"
       detail: "For example 90 km/h. Cost: less highway-speed data early on."
   sources: ["assurance/06-validation/WP-V-07-vehicle-test-operations.md OI-6"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
   note: "SOTIF part applied in aae16af (WP-V-02 §3.4, WP-V-03 §2, WP-V-04 §4). Left: WP-V-07 OI-6 and the (TBC) marks (validation session)."
+  applied: {ref: "jherrodthomas/LionDriver#449", record: "WP-V-07 v0.2 OI-6 and the former (TBC) values in §5.1, §5.2, §8.2, §8.4, §9.1, §11", at: 2026-10-23}
 
 - id: DQ-047
   question: "Which checks must a build pass before it goes in a test car?"
@@ -1069,8 +1085,9 @@
       title: "Full release criteria every time"
       detail: "Maximum assurance. Cost: much slower testing."
   sources: ["assurance/07-supporting/WP-P-10-release-management.md OI-5"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#449", record: "WP-P-10 v0.6 §3 vehicle-test baseline row and OI-5", at: 2026-10-23}
 
 - id: DQ-048
   question: "The EPS-fault siren can sound up to 1.26 s after the fault, past the 1 s warning budget. Shorten the wait, or justify it?"
@@ -1111,9 +1128,10 @@
       title: "Defer it"
       detail: "No spend. Cost: G4 can't pass and changes earn no on-device credit."
   sources: ["assurance/01-management/WP-M-01-assurance-strategy.md D-04", "assurance/05-software/hil-bench/README.md A-1"]
-  status: answered
+  status: applied
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
   note: "Hardware part applied in df2c0ed: WP-H-06 OI-1 and the T-HIL/FI cases marked blocked, WP-H-04 plan step 5, DFM-ACT-003. Left: hil-bench README A-1 and WP-M-01 D-04 (software and management sessions)."
+  applied: {ref: "jherrodthomas/LionDriver#449", record: "WP-M-07 v0.9 §5 D-04 and R-06; WP-M-01 v0.11 §8 D-04; hil-bench README v0.8 A-1", at: 2026-10-23}
 
 - id: DQ-050
   question: "If the controllability tests can't show that a driver always overpowers the steering, do we add a second independent steering limiter?"
@@ -1156,9 +1174,10 @@
       title: "Commit to an external monitor now"
       detail: "Ready early. Cost: highest; may be unnecessary once steering authority is lowered."
   sources: ["assurance/01-management/WP-M-07-risk-management.md R-02", "assurance/00-assessment/docs-safety-reconciliation.md OI-3", "assurance/04-hardware/WP-H-01-hardware-safety-requirements.md OI-6"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
   note: "Hardware part applied in df2c0ed (WP-H-01 OI-6, WP-H-04 plan step 7). Left for the management session: WP-M-07 R-02 and docs-safety-reconciliation OI-3."
+  applied: {ref: "jherrodthomas/LionDriver#449", record: "WP-M-07 v0.9 R-02; docs-safety-reconciliation v0.6 OI-3", at: 2026-10-23}
 
 - id: DQ-052
   question: "The false forward-collision warning carries ASIL A, but it runs on the non-safety computer. How should that be resolved?"
@@ -1736,6 +1755,7 @@
   sources: ["assurance/02-concept/WP-C-10-cybersecurity-goals-and-concept.md OI-5", "assurance/01-management/WP-M-09-cybersecurity-plan.md OI-3", "assurance/07-supporting/WP-P-10-release-management.md OI-4", "assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md OI-6"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "Recorded 2026-10-23 in WP-C-10 OI-5, WP-P-10 OI-4, WP-O-01 OI-6 and WP-M-09 OI-3. Left: the signing design (WP-S-07, WP-O-05), key custody, the signing pipeline and the update channel before G3"
 
 - id: DQ-076
   question: "Who will be the second safety driver, the hardware safety engineer and the test-bench (HIL) owner?"
@@ -2045,6 +2065,7 @@
   sources: ["assurance/09-production-operation/WP-O-03-user-information-safety-warnings.md OI-7"]
   status: answered
   answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all ten (the recommended option of each)"}
+  note: "Recorded 2026-10-23 in WP-O-03 v0.4 OI-7. Left: replacing the inherited comma.ai terms and training flow with on-device acceptance, and writing the booklet (G5)"
 
 - id: DQ-089
   question: "After release, should field data be collected by hand at service visits, or uploaded to a LionDriver server?"
@@ -2066,8 +2087,9 @@
       title: "Decide at G4 when the user count is known"
       detail: "No commitment yet. Cost: WP-O-04 stays open until then."
   sources: ["assurance/09-production-operation/WP-O-04-field-monitoring.md OI-2"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all ten (the recommended option of each)"}
+  applied: {ref: "jherrodthomas/LionDriver#449", record: "WP-O-04 v0.4 §3.3 and OI-2; WP-O-03 v0.4 OI-4", at: 2026-10-23}
 
 - id: DQ-090
   question: "Do you accept the four remaining cybersecurity risks as proposed, once their conditions are met?"
@@ -2089,8 +2111,9 @@
       title: "Decide at G5 with the evidence in hand"
       detail: "Nothing recorded now. Cost: the cybersecurity case shows these as open until G5."
   sources: ["assurance/10-safety-case/WP-K-03-cybersecurity-case.md RR-01"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all ten (the recommended option of each)"}
+  applied: {ref: "jherrodthomas/LionDriver#449", record: "WP-K-03 v0.3 §5 RR-01…RR-04 and the Acceptance paragraph; CSn-43", at: 2026-10-23}
 
 - id: DQ-091
   question: "Now that it's highways only: should testing go above 90 km/h, or should the ODD stop at the tested speed?"
@@ -2109,10 +2132,9 @@
       title: "Cap the ODD at 90 km/h"
       detail: "No high-speed testing. Cost: the system must refuse or warn above 90 km/h, which limits it on most highways."
   sources: ["assurance/process/README.md “4. **The SOTIF release argument waits on evidence from other”"]
-  note: "SOTIF part applied in aae16af (WP-V-02 §3.3). ODD side applied: the bound is 110 km/h, the tested speed (DQ-260 A; WP-C-02 v0.5). Left: the 110 km/h test risk review and the VS-VAL-10 plan in WP-V-01 (validation session)."
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
-  note: "SOTIF part applied in aae16af (WP-V-02 §3.3; DQ-260 queued for the ODD bound). Left: the 110 km/h risk review and VS-VAL-10 plan in WP-V-01 (validation session)."
+  note: "SOTIF part applied in aae16af; recorded 2026-10-23 in WP-V-01 v0.10 OI-7 and VS-VAL-10, WP-V-07 v0.2 §8.1 and process README §6.5. Left: the lead's 110 km/h risk review before any test above 90 km/h, and a site that allows 110 km/h (waits on DQ-041)"
 
 - id: DQ-092
   question: "Should LionDriver ever pay for a formal ASPICE assessment, and if so when?"
@@ -2134,8 +2156,9 @@
       title: "Never; state the ratings are self-assessed"
       detail: "No cost ever. Cost: rules out any external capability claim."
   sources: ["assurance/01-management/WP-M-13-aspice-capability-baseline.md OI-1"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all ten (the recommended option of each)"}
+  applied: {ref: "jherrodthomas/LionDriver#449", record: "WP-M-13 v0.5 OI-1", at: 2026-10-23}
 
 - id: DQ-093
   question: "Where should release evidence be kept for the long term, and who pays for it?"
@@ -2324,8 +2347,9 @@
       title: "Support others without a deputy"
       detail: "Wider use sooner. Cost: incident response stops whenever you are away; WP-O-05 would need changing and the risk recording."
   sources: ["assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md OI-1"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all ten (the recommended option of each)"}
+  applied: {ref: "jherrodthomas/LionDriver#449", record: "WP-O-05 v0.2 §2 and OI-1 (naming a deputy stays open)", at: 2026-10-23}
 
 - id: DQ-102
   question: "Can you commit to the proposed incident-response times and support period?"
@@ -2347,8 +2371,9 @@
       title: "Decide at G5 with the release plan in hand"
       detail: "No promise yet. Cost: SECURITY.md keeps its current best-effort wording until then."
   sources: ["assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md OI-4"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all ten (the recommended option of each)"}
+  applied: {ref: "jherrodthomas/LionDriver#449", record: "WP-O-05 v0.2 OI-4", at: 2026-10-23}
 
 - id: DQ-103
   question: "Should the confirmation plan add independent checks where it has none, even though there is no assessor yet?"
@@ -2437,8 +2462,9 @@
       title: "Keep CAL 3"
       detail: "No agreement needed later. Cost: boundary tests and fuzzing now, and the second-person reviews stay blocked until a second person joins."
   sources: ["assurance/05-software/WP-W-11-cybersecurity-implementation-verification.md OI-7"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all ten (the recommended option of each)"}
+  applied: {ref: "jherrodthomas/LionDriver#449", record: "WP-W-11 v0.5 §8 footnote and OI-7", at: 2026-10-23}
 
 - id: DQ-107
   question: "Which simulation scenario families, if any, may count as validation credit?"
@@ -2522,6 +2548,7 @@
   sources: ["assurance/06-validation/WP-V-06-cybersecurity-validation.md OI-5"]
   status: answered
   answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all ten (the recommended option of each)"}
+  note: "Recorded 2026-10-23: TC-09 row added to WP-V-07 v0.2 §8.1; WP-V-06 v0.4 OI-5. Left: the safety manager reviews the row before the TC-09 vehicle stage"
 
 - id: DQ-111
   question: "Should LionDriver get its own GitHub organization?"
@@ -2611,7 +2638,7 @@
   sources: ["assurance/07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md OI-5"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
-  note: "Hardware part applied in df2c0ed: FMEDA SG-009 IWDG credit marked provisional, WP-H-04 status note. Left: the safety-case residuals and the impact record OI-5 (case and change sessions)."
+  note: "Recorded 2026-10-23 in impact change-2026-10-12-panda-hw-watchdog OI-5. Left: the independent review (waits on DQ-010) and the LSI tolerance check (impact OI-2)"
 
 - id: DQ-115
   question: "Should the slower stale-input check (10 periods instead of the required 2) be accepted for now?"
@@ -3411,6 +3438,7 @@
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-3"]
   status: answered
   answer: {choice: A, via: chat, at: 2026-10-19, note: "Lead in chat: take all ten (the recommended option of each)"}
+  note: "Recorded 2026-10-23 in WP-W-02 v0.46 OI-3 and the SWSR-109a status. Left: the panda firmware for SWSR-109/109a and its tests (GAP-46)"
 
 - id: DQ-149
   question: "Should starting the hardware watchdog in the bootstub (before the application runs) stay a target for SWSR-501b?"
@@ -4682,9 +4710,10 @@
       detail: "Drop the other board's rows. Cost: none extra; the answer to DQ-011 changes."
   sources: ["assurance/01-management/decisions/register.yaml DQ-011", "assurance/02-concept/WP-C-01-item-definition.md §1"]
   asked: 2026-10-16
-  note: "Recorded in WP-C-01 v0.11 §1 (device row). Left: the purchase and the bench plan (WP-M-11 OI-5, WP-H-06; management and hardware sessions). Which board is on the car is DQ-211."
   status: answered
   answer: {choice: A, via: chat, at: 2026-10-16}
+  note: "Recorded in WP-C-01 v0.11 §1 and, 2026-10-23, WP-M-11 OI-5. Left: which board is on the car (DQ-211), the purchase (waits on the deferred bench, DQ-049) and WP-H-06"
+
 - id: DQ-220
   question: "When the driver stays unresponsive at the final driver-monitoring alert, should the car keep steering while it slows to a stop, or hand steering back?"
   context: "Today the final alert (\"DISENGAGE IMMEDIATELY\") is a warning only. After 5 s at that level the item slows the car to a stop **while it keeps steering**, and it never disengages by itself. FSR-040 asks for the SG-010 safe state, but nothing records which behaviour that is. This decides what the item does with a driver who may be asleep."
@@ -5149,8 +5178,9 @@
   sources: ["assurance/sim/vehicle-3d-model.md", "assurance/sim/README.md §2 layer 3", "docs/liondriver/vehicles/vehicles.yaml CFG-001 trims"]
   asked: 2026-10-17
   gate: G1
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-17, note: "Bought 2026-10-17 with the Standard licence (editorial-use restriction applies); files held outside the public repository"}
+  applied: {ref: "jherrodthomas/LionDriver#449", record: "assurance/sim/vehicle-3d-model.md v0.6 Status row and §4; assurance/sim/assets/README.md", at: 2026-10-23}
 
 - id: DQ-369
   question: "With the move to a platform (DQ-037 B), how should hazards be rated across vehicles?"
@@ -5761,4 +5791,4 @@
   sources: ["assurance/02-concept/WP-C-03-hara.md HE-01.6, §5.12, OI-11", "assurance/sim/results/edge-cases.md (rows EC-11, EC-13 and their assumption probes)", "assurance/02-concept/hara/hara_model.py RULES H-01 OS-12", "assurance/06-validation/WP-V-05-fault-injection.md VS-FI-32", "DQ-406"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Applied in part (jherrodthomas/LionDriver#429): WP-C-03 v0.9 rates HE-01.6 S3 E3 C3, ASIL C, no AoU credit, so it leaves §5.12; trace hazards.yaml; HARA figures; sim README §3.7 loop diagram and animation of HE-01.6 (fig_sim_he.py). Left (WP-C-03 OI-11): re-rate the OS-12 rules of hara_model.py and regenerate both workbooks with the hara-builder generator, which this session does not have"
+  note: "Applied in part (jherrodthomas/LionDriver#429): WP-C-03 v0.9 rates HE-01.6 S3 E3 C3, ASIL C. Left (WP-C-03 OI-11): re-rate the OS-12 rules of hara_model.py and regenerate both workbooks together; needs the hara-builder generator, not available in the sessions of 2026-10-22 and 2026-10-23"

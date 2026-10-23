@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-O-01 Installation, provisioning and production control |
 | Standard reference | ISO 26262-7:2018 §5 (planning for production, production control, special characteristics, records), tailored per T-07; ISO 26262-4:2018 §6 (requirements for production, by reference to WP-S-06); ISO/SAE 21434:2021 §12 (production) |
-| Version | 0.3 (INS-07 and R-VEH: tread depth of all four tyres measured and recorded, at least 3 mm (4/32 in), the ODD's vehicle state (WP-C-02 v0.10, DQ-416 A); 2026-10-22). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
+| Version | 0.4 (OI-6 notes the signed-release decision, DQ-075 A; OI-4: installation records holding VIN and driver identity are kept in encrypted storage the project lead controls, minimum fields, not in the repository, DQ-029 A, storage service and retention rule still open; 2026-10-23). 0.3 (INS-07 and R-VEH: tread depth of all four tyres measured and recorded, at least 3 mm (4/32 in), the ODD's vehicle state (WP-C-02 v0.10, DQ-416 A); 2026-10-22). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (SG-01 elements: harness, relay, panda firmware, safety-mode configuration); CS (provisioning) |
 | Author | Assurance team (initial draft) |
@@ -188,8 +188,8 @@ A template file is to be created with the first installation (OI-3). Automating 
 | OI-1 | Review the INS → TSR-8xx trace in [WP-S-06](../03-system/WP-S-06-requirements-production-operation.md) (requirements now drafted) and close any INS step without a parent | G2 |
 | OI-2 | Define the mount position tolerance and the calibration angle tolerance band (narrower than the `calibrationd` validity limits), based on the angles at which the driving model was validated | G4 |
 | OI-3 | Create the installation record template (§5) and fill it for the reference vehicle; this also closes WP-C-01 OI-1/OI-2 | G1 |
-| OI-4 | Decide where records holding VIN and driver identity are stored (privacy) | G1 |
+| OI-4 | Decided 2026-10-23 (DQ-029, option A): records holding VIN and driver identity are kept in encrypted storage the project lead controls, with the minimum fields, not in the repository. Open: pick the storage service and set the retention rule | G1 |
 | OI-5 | Write a script that extracts R-SW and R-CFG fields from the installation route log and compares them with the release record | G4 |
-| OI-6 | Define the LionDriver release channel and installer URL so INS-15 cannot fall back to comma.ai's default installer | G5 |
+| OI-6 | Define the LionDriver release channel and installer URL so INS-15 cannot fall back to comma.ai's default installer. The lead decided on 2026-10-14 that releases are signed with an offline LionDriver key and checked by the device (decision register DQ-075, A); the channel and the installer URL are still to be defined | G5 |
 | OI-7 | Specify the PCS-preservation check (INS-27) message list exactly, once AOU-04 analysis in [WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) identifies the PCS-relevant camera messages | G2 |
 | OI-8 | Installer training content and competence record ([WP-M-04](../01-management/WP-M-04-organization-competence-safety-culture.md)) | G5 |

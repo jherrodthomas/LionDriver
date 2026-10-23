@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-13 ASPICE capability baseline (self-assessment) |
 | Standard reference | Automotive SPICE PAM 4.0: process capability levels 1–2 (PA 1.1, PA 2.1, PA 2.2); processes per WP-M-01 T-12 |
-| Version | 0.4 (group C targets CL1 and VAL.1, ACQ.4 and MAN.7 join the scope, decided by the lead 2026-10-18 (DQ-019, A); the three new processes rated P for PA 1.1 from the current evidence; OI-2 closed; Figure 6-1 regenerated; 2026-10-19). 0.3 (§9 lists evidence that moved after the rating baseline, no re-rating; open items with owner and due gate; 2026-10-14). 0.2 (Figure 6-1 added, generated from §2–§6; 2026-10-13). 0.1 |
+| Version | 0.5 (OI-1 closed: no formal ASPICE assessment before G5, and only if an external claim is wanted, DQ-092 A; 2026-10-23). 0.4 (group C targets CL1 and VAL.1, ACQ.4 and MAN.7 join the scope, decided by the lead 2026-10-18 (DQ-019, A); the three new processes rated P for PA 1.1 from the current evidence; OI-2 closed; Figure 6-1 regenerated; 2026-10-19). 0.3 (§9 lists evidence that moved after the rating baseline, no re-rating; open items with owner and due gate; 2026-10-14). 0.2 (Figure 6-1 added, generated from §2–§6; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | Process (all) |
 | Author | Assurance team (initial draft) |
@@ -188,7 +188,7 @@ The §2 method counted no `assurance/` work product, because none was tracked at
 
 | ID | Open item | Owner | Due |
 |---|---|---|---|
-| OI-1 | Decide whether and when to commission a formal ASPICE assessment, and by whom | PM | G2 |
+| OI-1 | Closed 2026-10-23: no formal ASPICE assessment before G5, and only if an external capability claim is wanted (decision register DQ-092, A, the lead 2026-10-19). Until then the ratings stay a self-assessment that guides process work and is not quoted outside the project | PM | G2 |
 | OI-2 | Closed 2026-10-19: group C (SEC.1–SEC.4, SUP.11, VAL.1, ACQ.4, MAN.7) targets CL1 (§3, §6; decision register DQ-019, A, the lead 2026-10-18) | PM / CSM | G1 |
 | OI-3 | Verify process names and base-practice content against the licensed PAM 4.0 | PM | G1 |
 | OI-4 | Agree how upstream-only practices (comma Jenkins tests) are treated once the fork has its own equivalents | PM | G1 |

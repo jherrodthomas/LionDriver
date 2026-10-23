@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-O-03 User information and safety warnings |
 | Standard reference | ISO 26262-7:2018 §6 (user manual / information for operation); ISO 21448:2022 §6 and Annex B (reasonably foreseeable misuse), §13 (information to users in operation); ISO 26262-3:2018 §6 (controllability assumptions) |
-| Version | 0.3 (UI-12: tyre tread of at least 3 mm (4/32 in) on all four tyres, replace at 3 mm, from the ODD's vehicle state (WP-C-02 v0.10, DQ-416 A); 2026-10-22). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
+| Version | 0.4 (OI-7: delivery format decided, on-device acceptance plus a printed or PDF booklet (DQ-088 A); OI-4: post-release data path decided, manual retrieval plus driver reports (WP-O-04 OI-2, DQ-089 A); 2026-10-23). 0.3 (UI-12: tyre tread of at least 3 mm (4/32 in) on all four tyres, replace at 3 mm, from the ODD's vehicle state (WP-C-02 v0.10, DQ-416 A); 2026-10-22). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | Controllability basis for SG-01…SG-06 (AOU-06, AOU-07); SOTIF misuse measures |
 | Author | Assurance team (initial draft) |
@@ -260,7 +260,7 @@ These affect the user text and should be fixed in the software rather than expla
 | OI-1 | Merge the final ODD (WP-C-02), insufficiency list (WP-C-06) and misuse analysis (WP-C-08) into §4, §9, §10 and §12 | G1 |
 | OI-2 | Review the MC-ID mapping in §12 with the WP-C-08 owner (first mapping done in this pass) | G1 |
 | OI-3 | Fix the accelerator behaviour statement (UI-16) after the HMI decision on `DisengageOnAccelerator` | G1 |
-| OI-4 | Complete UI-11 after decision D-08, UI-39/UI-43 after the WP-O-04 data path and privacy decisions | G1 |
+| OI-4 | Complete UI-11 after decision D-08, UI-39/UI-43 after the WP-O-04 data path and privacy decisions. The post-release data path is decided (2026-10-23, DQ-089 option A, [WP-O-04](WP-O-04-field-monitoring.md) OI-2): manual retrieval at service visits plus driver reports, no upload server. Still open: the report channel for UI-39, and UI-43 after the privacy rules (WP-O-04 OI-3) | G1 |
 | OI-5 | Human-factors review and comprehension test of the draft text with drivers who are not project members | G5 |
 | OI-6 | Raise change requests for the HMI inconsistencies in §13 | G2 |
-| OI-7 | Decide the delivery format (printed booklet plus on-device acceptance; the inherited `HasAcceptedTerms` / `CompletedTrainingVersion` flow shows comma.ai's terms and training) | G5 |
+| OI-7 | Decided 2026-10-23 (DQ-088, option A): users get LionDriver's warnings in a printed or PDF booklet and accept them on the device, and the acceptance is logged on the device as evidence for AOU-06. Open: the software change that replaces the inherited `HasAcceptedTerms` / `CompletedTrainingVersion` flow (which shows comma.ai's terms and training) with LionDriver's acceptance, and writing the booklet | G5 |

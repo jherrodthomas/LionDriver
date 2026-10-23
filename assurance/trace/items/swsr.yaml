@@ -239,7 +239,7 @@
   acceptance: "Zero frames present on bus 0 from ≤ 10 ms after revocation"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not impl; needs the periodic task of SWSR-401a and a design decision on frame ownership (OI-3)"
+  baseline_impl: "Not impl; needs the periodic task of SWSR-401a; frame ownership decided: the envelope owns these frames (OI-3, DQ-148 A)"
   status: proposed
   source: WP-W-02
 

@@ -4,8 +4,8 @@
 |---|---|
 | Work product | Hardware-in-the-loop bench plan (decision D-04 of [WP-M-01](../../01-management/WP-M-01-assurance-strategy.md); test environment of [WP-W-08](../WP-W-08-embedded-software-testing.md) §3) |
 | Standard reference | ISO 26262-6:2018 §11.4.2 (test environments); ISO 26262-8:2018 §9.4.3 (verification environment); ASPICE 4.0 SWE.6 |
-| Version | 0.7 (`test_16` in the pin since `3a8b7c2` (#405); AI-drafted; 2026-10-21). 0.6 (`test_16_engaged_mismatch_siren.py`, panda PR #22, mapped to VS-FI-10 (b); AI-drafted; 2026-10-21). 0.5 (merge of PR #47 software alignment with the base; §7 mapping rows of `test_12`…`test_14` merged into the base's rows; 2026-10-13). It carries PR #47's draft, numbered 0.2 there: alignment pass: baseline and pins consistent; mapping for `test_12`…`test_14`. History on the base: 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (§3 diagram redrawn as Figure 3-1; text version kept; 2026-10-13). 0.2 (verification status for the integrated envelope changes: pins `b790fca`/`7993399`, reference-build campaign for `test_11…14`; 2026-10-12). 0.1 |
-| Status | Draft: plan only. No bench exists, no part has been bought, no test has been run on hardware |
+| Version | 0.8 (A-1 and Status: the bench is deferred by the lead, D-04, DQ-049 B; 2026-10-23). 0.7 (`test_16` in the pin since `3a8b7c2` (#405); AI-drafted; 2026-10-21). 0.6 (`test_16_engaged_mismatch_siren.py`, panda PR #22, mapped to VS-FI-10 (b); AI-drafted; 2026-10-21). 0.5 (merge of PR #47 software alignment with the base; §7 mapping rows of `test_12`…`test_14` merged into the base's rows; 2026-10-13). It carries PR #47's draft, numbered 0.2 there: alignment pass: baseline and pins consistent; mapping for `test_12`…`test_14`. History on the base: 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (§3 diagram redrawn as Figure 3-1; text version kept; 2026-10-13). 0.2 (verification status for the integrated envelope changes: pins `b790fca`/`7993399`, reference-build campaign for `test_11…14`; 2026-10-12). 0.1 |
+| Status | Draft: plan only. No bench exists, no part has been bought, no test has been run on hardware. The bench is deferred by the lead (D-04, decision register DQ-049, B, 2026-10-14) |
 | Author | Assurance team (AI-assisted draft) |
 | Reviewer(s) | TBD |
 | Approver | Project maintainer (acting safety manager) |
@@ -220,7 +220,7 @@ Results go in the record as observed. A failed or skipped case is recorded as su
 
 | ID | Action | Owner | Needed by |
 |---|---|---|---|
-| A-1 | Confirm which of P-1, P-2, P-11 are owned or can be bought | Maintainer | B1 |
+| A-1 | Confirm which of P-1, P-2, P-11 are owned or can be bought. Deferred: the lead decided on 2026-10-14 not to build the bench for now (D-04, decision register DQ-049, B), so no part is bought. Until the bench is built, no envelope change gets on-device test credit and G4 cannot pass | Maintainer | B1 |
 | A-2 | Build B1 and run §5.4 on the pinned panda; attach the output to the change record | Maintainer | Before any release image for a car |
 | A-3 | Add the GPIO start marker (R-3) and run the §6 campaign | Maintainer (firmware: assistant draft) | Release |
 | A-4 | Injection mode for an SPI interrupt hang, on the reference device | Assistant draft, maintainer review | Release |

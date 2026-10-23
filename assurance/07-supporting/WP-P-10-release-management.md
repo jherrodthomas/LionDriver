@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-10 Release management and baseline procedure |
 | Standard reference | ISO 26262-2:2018 §6 (release for production); ISO 26262-8:2018 §7; ISO 21448:2022 §12; ISO/SAE 21434:2021 §6 (release for post-development); ASPICE 4.0 SUP.8 |
-| Version | 0.5 (OI-2 decided: release evidence kept as signed GitHub release assets plus an offline copy, DQ-093 B, 2026-10-19). 0.4 (release key custody decided, DQ-086: hardware token with escrowed backup; §6 key row and OI-3; 2026-10-17). 0.3 (§4 Figure 4-1, release swimlane generated from the §4 table; 2026-10-14). 0.2 (status update for the integrated envelope changes: panda release build is the reference build, `LIONDRIVER_REFERENCE=1`; 2026-10-12). 0.1 |
+| Version | 0.6 (§3 vehicle-test baseline criteria decided, DQ-047 A, OI-5 closed; OI-4 notes the signed-release decision, DQ-075 A; 2026-10-23). 0.5 (OI-2 decided: release evidence kept as signed GitHub release assets plus an offline copy, DQ-093 B, 2026-10-19). 0.4 (release key custody decided, DQ-086: hardware token with escrowed backup; §6 key row and OI-3; 2026-10-17). 0.3 (§4 Figure 4-1, release swimlane generated from the §4 table; 2026-10-14). 0.2 (status update for the integrated envelope changes: panda release build is the reference build, `LIONDRIVER_REFERENCE=1`; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All |
 | Author | Assurance team (initial draft) |
@@ -36,7 +36,7 @@ LionDriver keeps the useful mechanics (stripped release tree, no submodules in t
 | Baseline type | Gate | Minimum criteria |
 |---|---|---|
 | Gate baseline | G0 | Plans (WP-M-*, WP-P-01..06) Approved; CM, change control and CODEOWNERS in force |
-| Vehicle-test baseline | G1 onward | All SR-A CI green (safety tests, coverage gate, MISRA, mutation); panda RELEASE build with LionDriver key (§6); [WP-V-07](../06-validation/WP-V-07-vehicle-test-operations.md) approved; open S-1 problems: none; impact analysis since last test baseline reviewed |
+| Vehicle-test baseline | G1 onward | All SR-A CI green (safety tests, coverage gate, MISRA, mutation); panda RELEASE build with LionDriver key (§6); [WP-V-07](../06-validation/WP-V-07-vehicle-test-operations.md) approved; closed-course checkout of the build passed before it goes on a public road; safety-relevant changes since the last test baseline reviewed by a reviewer other than the author; open S-1 problems: none; impact analysis since last test baseline reviewed. This subset was decided by the lead on 2026-10-14 (decision register DQ-047, A) |
 | Gate baseline | G2 | As G1 + TSC/architecture/analyses Approved; trace checks K1–K6 pass ([WP-P-06 §7](WP-P-06-requirements-management-traceability.md#7-consistency-checks-to-automate)) |
 | Gate baseline | G3 | All HW/SW safety WPs Approved; tool qualification reports for TCL2/3 tools ([WP-P-07](WP-P-07-tool-classification-qualification.md)); trace check K8, K10 errors resolved |
 | Gate baseline | G4 | Integration, HIL and fault injection reports complete; functional configuration audit passed |
@@ -121,6 +121,6 @@ Note: upstream updates are git fetches from a configurable branch with no signat
 | OI-1 | Write a LionDriver release script replacing `build_release.sh` (key path, identity, no force-push of shared branches, evidence capture) |
 | OI-2 | Choose evidence storage outside GitHub Actions and its backup. Decided by the lead on 2026-10-19 (decision register DQ-093, B): release evidence is kept as signed GitHub release assets, with an offline copy held by the maintainer. No new service; the archive depends on GitHub staying available and on its file-size limits. Open: write the offline-copy step into the release checklist |
 | OI-3 | Generate the LionDriver panda release key and put it on the token. Custody is decided (DQ-086: hardware token held by the lead, escrowed backup); still to do: choose a token that supports the bootstub's signature scheme, name the escrow holder, generate and import the key |
-| OI-4 | Define the update channel for the reference device (which branch `updated` follows) |
-| OI-5 | Define the reduced criteria for vehicle-test baselines with the WP-V-07 author |
+| OI-4 | Define the update channel for the reference device (which branch `updated` follows). The lead decided on 2026-10-14 (decision register DQ-075, A) that updates come as releases signed with an offline LionDriver key and checked by the device, replacing the git-branch updater (GAP-26); until then updates are off and installs are manual. Open: the channel and the signing pipeline, before G3 |
+| OI-5 | Closed 2026-10-23: the reduced criteria for vehicle-test baselines are the §3 row: CI green, safety tests, a closed-course checkout and reviewed safety changes (decision register DQ-047, A, the lead 2026-10-14). The review item needs the reviewer of [WP-M-02](../01-management/WP-M-02-safety-plan.md) OI-1 |
 | OI-6 | Device-side rollback procedure in WP-O-02 |

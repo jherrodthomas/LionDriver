@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-02 Change management plan |
 | Standard reference | ISO 26262-8:2018 §8; ISO 26262-2:2018 §6 (impact analysis); ISO/SAE 21434:2021 §6 (change management in cybersecurity activities); ASPICE 4.0 SUP.10 |
-| Version | 0.3 (§7.2 code owners named individually, since the repository stays on a personal account (DQ-111, B); 2026-10-18). 0.2 (§5 Figure 5-1, change request swimlane generated from the §5 table; 2026-10-14). 0.1 |
+| Version | 0.4 (OI-1 notes the lead's decision to recruit a volunteer reviewer, DQ-010 A; 2026-10-23). 0.3 (§7.2 code owners named individually, since the repository stays on a personal account (DQ-111, B); 2026-10-18). 0.2 (§5 Figure 5-1, change request swimlane generated from the §5 table; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | All |
 | Author | Assurance team (initial draft) |
@@ -243,7 +243,7 @@ Number of SR changes per month; median CR lead time; changes merged without requ
 
 | ID | Item |
 |---|---|
-| OI-1 | Name at least one second reviewer (internal or external) with GitHub access so SR-A approvals can meet the two-approval rule |
+| OI-1 | Name at least one second reviewer (internal or external) with GitHub access so SR-A approvals can meet the two-approval rule. Decided by the lead on 2026-10-14 (decision register DQ-010, A): recruit a volunteer reviewer who does not author the work products; if nobody is found by G0, pay an external reviewer part-time. Open: the recruitment |
 | OI-2 | Implement automatic PR classification from the machine-readable file list |
 | OI-3 | Raise CR-CI-01 to CR-CI-08 as issues and implement |
 | OI-4 | Create `.github/CODEOWNERS` and `.github/pull_request_template.md` from §7.2 and §8 via a CR, with each reviewer group written out as individual handles (no teams; DQ-111) |
