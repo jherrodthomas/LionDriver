@@ -15,7 +15,7 @@ import how_animations as H
 
 
 def copy_records(root: Path) -> None:
-  for path in {p for p, _ in H.SOURCES} | {H.S02, H.S04, H.W09, H.TSR_LIST}:
+  for path in {p for p, _ in H.SOURCES} | {H.S02, H.S04, H.W09, H.TSR_LIST, H.C01, H.C02}:
     (root / path).parent.mkdir(parents=True, exist_ok=True)
     shutil.copy(H.ROOT / path, root / path)
 
@@ -30,6 +30,37 @@ class RecordTests(unittest.TestCase):
     self.assertEqual((d["gap_ms"], d["rate_hz"], d["hb_s"], d["ftti"]), (50, 100, 0.3, 0.5))
     self.assertEqual(d["blocked"], ["0x2E4", "0x191", "0x412", "0x343"])
     self.assertEqual(set(d["status"]), set(H.TSRS))
+    self.assertEqual((d["vision"], d["wheel"], d["extra"]), ([5, 8, 13], [5, 15, 25], 5))
+    self.assertEqual([round(det + rea, 3) for _, _, det, rea, _ in d["faults"]], [0.3, 0.4, 0.15, 0.2, 0.4])
+    self.assertEqual(d["r100"], 309)
+    self.assertEqual([k for k, _, _ in d["aous"]], ["AOU-01", "AOU-03", "AOU-04", "AOU-13"])
+
+  def test_an_exit_the_figure_calls_undetected_must_stay_so(self):
+    with tempfile.TemporaryDirectory() as tmp:
+      root = Path(tmp)
+      copy_records(root)
+      f = root / H.C02
+      f.write_text(f.read_text(encoding="utf-8").replace("| Speed > 110 km/h (ODD bound, DQ-260) | No |",
+                                                         "| Speed > 110 km/h (ODD bound, DQ-260) | Yes |"), encoding="utf-8")
+      self.assertTrue(any("Speed > 110 km/h" in e for e in H.problems(root)))
+      self.assertIn("6 detected", H.render(root)["how-odd.svg"])
+
+  def test_a_fault_budget_past_the_ftti_is_a_problem(self):
+    with tempfile.TemporaryDirectory() as tmp:
+      root = Path(tmp)
+      copy_records(root)
+      f = root / H.S04
+      f.write_text(f.read_text(encoding="utf-8").replace("| SG-01 relay stuck | 0.5 s | ≤ 0.3 s (TSR-506) | ≤ 0.1 s |",
+                                                         "| SG-01 relay stuck | 0.5 s | ≤ 0.45 s (TSR-506) | ≤ 0.1 s |"), encoding="utf-8")
+      self.assertTrue(any("harness relay sticks" in e for e in H.problems(root)))
+
+  def test_a_planned_check_is_labelled_planned(self):
+    with tempfile.TemporaryDirectory() as tmp:
+      root = Path(tmp)
+      copy_records(root)
+      svg = H.render(root)["how-in-charge.svg"]
+      planned = H.data(root)["status"]["TSR-304"] == "not implemented"
+      self.assertEqual("planned: refuse torque" in svg, planned)
 
   def test_a_changed_limit_is_drawn(self):
     with tempfile.TemporaryDirectory() as tmp:
