@@ -57,6 +57,27 @@ in [`assurance/`](../assurance/README.md) that owns it.
 - The figures of "After release" (`p7-general.svg`, `p7-ours.svg`) are rendered by
   [`tools/wiki/p7_animations.py`](../tools/wiki/p7_animations.py); each LionDriver step is checked against the WP-O
   record it names. The general figure quotes nothing from the standard.
+- The figures of "SOTIF and ISO 26262" (`sotif-two-questions.svg`, `sotif-who-owns.svg`, `sotif-triggering.svg`,
+  `sotif-four-areas.svg`, `sotif-how-much.svg`, `sotif-unknowns.svg`, `sotif-one-chain.svg`) are rendered by
+  [`tools/wiki/sotif_animations.py`](../tools/wiki/sotif_animations.py), checked against the SOTIF and validation work
+  products and the case records; the WP-C-05 and WP-C-06 counts come from the generator of WP-C-05 Figure 2-1.
+- The figures of "Cybersecurity and ISO/SAE 21434" (`cyber-third-question.svg`, `cyber-one-threat.svg`,
+  `cyber-more-than-safety.svg`, `cyber-how-hard.svg`, `cyber-risk-map.svg`, `cyber-goal-to-evidence.svg`, `cyber-meet.svg`,
+  `cyber-after-release.svg`) are rendered by [`tools/wiki/cyber_animations.py`](../tools/wiki/cyber_animations.py): the
+  risk map, attack-path factors and counts are read from WP-C-09, WP-C-10 and `hatara/`, and every other phrase is
+  checked against its record. No figure shows how to carry out an attack.
+- The figures of "AI safety and ISO/PAS 8800" (`ai-why.svg`, `ai-boundary.svg`, `ai-errors.svg`, `ai-input-space.svg`,
+  `ai-requirements.svg`, `ai-data.svg`, `ai-testing.svg`, `ai-layers.svg`) are rendered by
+  [`tools/wiki/ai_animations.py`](../tools/wiki/ai_animations.py): requirement statuses, input-space dimensions and counts
+  are read from WP-C-11 and WP-W-10, and every other phrase is checked against its record.
+- The figures of "ASPICE: is the process capable?" (`aspice-question.svg`, `aspice-v.svg`, `aspice-rating.svg`,
+  `aspice-baseline.svg`, `aspice-trace.svg`, `aspice-together.svg`, `aspice-plan.svg`) are rendered by
+  [`tools/wiki/aspice_animations.py`](../tools/wiki/aspice_animations.py): levels, targets, improvement actions, trace
+  coverage and the activity count are read from WP-M-13, the trace map and the process model.
+- The figures of "Integrated standards: one system, not five" (`integrated-silos.svg`, `integrated-joins.svg`,
+  `integrated-coverage.svg`, `integrated-log.svg`, `integrated-mechanism.svg`, `integrated-case.svg`) are rendered by
+  [`tools/wiki/integrated_animations.py`](../tools/wiki/integrated_animations.py): lanes, interfaces, register coverage,
+  the hazard log, trace lanes and case status are read from their records.
 - Standard GitHub Markdown, including alerts (`> [!IMPORTANT]`) and tables.
 
 Check locally before opening a pull request:

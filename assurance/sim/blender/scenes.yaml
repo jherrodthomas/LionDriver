@@ -820,7 +820,7 @@ scenes:
     window: [-1.0, 5.0]
     environment: highway-queue
     conditions: TC-01
-    variants: [W02, W04]
+    variants: [W02, W04, TC-01-NB]
     ego:
       speed_kph: 80
       accel:
@@ -986,6 +986,7 @@ scenes:
     window: [-1.5, 4.0]
     environment: urban-arterial
     conditions: TC-01
+    variants: [TC-01-NB]
     traffic: parked
     ego:
       speed_kph: 50

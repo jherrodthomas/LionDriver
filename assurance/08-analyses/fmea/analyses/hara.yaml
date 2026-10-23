@@ -3,6 +3,10 @@
 # Hazard analysis and risk assessment (ISO 26262-3 clause 6).
 # ASIL per ISO 26262-3 Table 4, checked by tools/safety/fmea_lint.py.
 # Hazards are derived from the System FMEA end effects (sfm_refs); the FMEA effects link back via `hazard`.
+#
+# WITHDRAWN 2026-10-22 (decision register DQ-124, option A). This second-set HARA is not of record:
+# WP-C-03 (HARA) and WP-C-04 (FSC) are. The file stays because FMEA and FMEDA rows still cite its HZ-0nn and
+# SG-0nn IDs; hara-mapping.yaml carries them to WP-C-03 and fmea_lint checks it. Do not revise it further.
 schema_version: 1
 analysis:
   id: HARA
@@ -10,7 +14,7 @@ analysis:
   title: "HARA — LionDriver L2 ACC/ALC on Corolla E210 · ZRE212 · US (CFG-001)"
   doc_id: LD-HARA-001
   revision: "0.4"
-  status: draft
+  status: withdrawn
   approver: Jherrod Thomas (pending)
   baseline: BL-001
   scope: >-

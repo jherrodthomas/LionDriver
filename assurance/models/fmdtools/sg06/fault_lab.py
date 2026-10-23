@@ -200,7 +200,7 @@ def build() -> str:
       only loses with a siren or cancel failure as well</p>
       <div class="leg"><span><i style="background:var(--te)"></i>minimal pair in the model</span>
       <span>○ minimal pair in the tree</span></div>
-      {kit.matrix(d, "lose deceleration")}
+      {kit.matrix(d, "lose deceleration without a cue in time")}
     </div>
   </div>
 </div>
