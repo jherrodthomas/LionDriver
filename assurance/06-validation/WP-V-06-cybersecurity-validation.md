@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-06 Cybersecurity validation and penetration testing (plan, specification, report) |
 | Standard reference | ISO/SAE 21434:2021 §11 (cybersecurity validation of the item at vehicle level), §10 (verification inputs), §15 (TARA as basis); UN R155 (informative); ASPICE 4.0 SEC.4 |
-| Version | 0.3 (OI-3 closed: TC-05 without its destructive steps, DQ-085 B; 2026-10-19). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
+| Version | 0.4 (OI-5: closed-course rules for TC-09 added to WP-V-07 §8.1, DQ-110 A; 2026-10-23). 0.3 (OI-3 closed: TC-05 without its destructive steps, DQ-085 B; 2026-10-19). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft — plan and specification written; **no validation or penetration test has been executed and no tester is engaged** ([WP-M-09](../01-management/WP-M-09-cybersecurity-plan.md) OI-6). All result sections are "Not yet executed" |
 | ASIL / scope | CS (CAL 1–3); safety relation to SG-01…SG-08 |
 | Author | Assurance team (initial draft); report to be authored by the penetration tester |
@@ -152,5 +152,5 @@ The rating is mapped to the TARA risk value and to problem severity S-1…S-4 pe
 | OI-2 | Build the HIL bench (D-04) and a bench panda setup able to run release images with a LionDriver test key |
 | OI-3 | **Closed 2026-10-19 (DQ-085, option B):** no sacrificial unit is bought. TC-05 runs its non-destructive steps only; the report records the skipped destructive steps and why. Accepted cost: weaker evidence for boot protection (CSG-02) |
 | OI-4 | Define tester-controlled stand-ins for the athena server and update origin (TC-12, TC-14) |
-| OI-5 | Agree with the safety manager the closed-course procedure additions for TC-09 in [WP-V-07](WP-V-07-vehicle-test-operations.md) |
+| OI-5 | Agree with the safety manager the closed-course procedure additions for TC-09 in [WP-V-07](WP-V-07-vehicle-test-operations.md). Decided 2026-10-19 (DQ-110, option A): the rules go into WP-V-07 §8.1 and TC-09 runs under the normal procedure, with the reflash-and-log rule of DQ-105 B; added to WP-V-07 §8.1 on 2026-10-23. Left: the safety manager's review of the added row before the TC-09 vehicle stage |
 | OI-6 | Agree the finding rating scheme (§8) with the assessor |

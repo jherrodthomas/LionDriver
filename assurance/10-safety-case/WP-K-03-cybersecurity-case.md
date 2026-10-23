@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-K-03 Cybersecurity case |
 | Standard reference | ISO/SAE 21434:2021 §6 (cybersecurity case), with evidence from §8–§15; UN R155 (informative) |
-| Version | 0.2 (CSn-21 Partial: safety-mode lock and command gating implemented in the reference build, panda `9f60e17`; CDF-04 annotated; 2026-10-12). 0.1.1 (§3 trees show CDF-02/CDF-04 on CG2.1 and CDF-10 on CG5.6, as the §6 register already did; GSN diagrams in [gsn/](gsn/README.md); 2026-10-12). 0.1: initial draft |
+| Version | 0.3 (§5 RR-01…RR-04 and CSn-43: the project lead accepts each residual risk once its condition is met; conditions checked at G5 (DQ-090 A); 2026-10-23). 0.2 (CSn-21 Partial: safety-mode lock and command gating implemented in the reference build, panda `9f60e17`; CDF-04 annotated; 2026-10-12). 0.1.1 (§3 trees show CDF-02/CDF-04 on CG2.1 and CDF-10 on CG5.6, as the §6 register already did; GSN diagrams in [gsn/](gsn/README.md); 2026-10-12). 0.1: initial draft |
 | Status | Draft — argument structure written; **almost all evidence is Missing or Partial**. This case does not support a release at this version |
 | ASIL / scope | CS (CAL 1–3); interface to the safety case G4 ([WP-K-01](WP-K-01-safety-case.md)) |
 | Author | Assurance team (initial draft) |
@@ -174,7 +174,7 @@ Evidence rule (shared by [WP-K-01 §6](WP-K-01-safety-case.md#6-evidence-status)
 | CSn-40 | Physical-access assumption recorded in user information | [WP-O-03](../09-production-operation/WP-O-03-user-information-safety-warnings.md) | CG3.1 | Partial | Draft user information |
 | CSn-41 | Onroad streaming block (inherited mechanism) | `openpilot/common/params_keys.h:62`, `openpilot/system/manager/process_config.py:119`, `openpilot/system/webrtc/helpers.py:28` | CG3.2 | Partial | Implemented in code; not verified (CSR-116) |
 | CSn-42 | eGPU exclusion in reference configuration | [WP-C-01](../02-concept/WP-C-01-item-definition.md) E-06 | CG3.5 | Partial | Draft |
-| CSn-43 | Residual-risk list (§5) with acceptance | This document | CG4.2 | Partial | Draft list; no acceptance |
+| CSn-43 | Residual-risk list (§5) with acceptance | This document | CG4.2 | Partial | Conditional acceptance of RR-01…RR-04 recorded (DQ-090 A); conditions checked at G5; RR-05 not yet rated |
 | CSn-44 | Safety manager acceptance of safety-relevant CS residuals | [WP-K-01](WP-K-01-safety-case.md) G4 | CG4.3 | Missing | — |
 | CSn-50 | Monitoring, vulnerability management, incident response, update management | [WP-O-05](../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md) | CG5.1–5.3, CG3.4 | Partial | Process drafted; not running |
 | CSn-51 | Field-action criteria incl. stop-use for exploitable vulnerability | [WP-O-04 §9](../09-production-operation/WP-O-04-field-monitoring.md) | CG5.2 | Partial | Draft; notification channel missing |
@@ -192,11 +192,13 @@ Summary (evidence rule above): Available 0; Partial 17; Missing 20 (of 37 eviden
 
 | ID | Residual / claim | Basis | Status |
 |---|---|---|---|
-| RR-01 | Physical CAN injection on a vehicle with an accessible OBD port | CSC-01 | Proposed retain; condition (CSG-05) not met |
-| RR-02 | Back-end and network security | CSC-02 | Proposed share; condition (athena constrained) not met |
-| RR-03 | Non-repudiation limited to per-device key | CSC-03 | Proposed retain |
-| RR-04 | OTS binaries (AGNOS, toolchain wheels, eGPU firmware) not source-verified | CSC-04 | Proposed share; SBOM/monitoring not running |
+| RR-01 | Physical CAN injection on a vehicle with an accessible OBD port | CSC-01 | Retain, accepted once its condition is met (DQ-090 A); condition (CSG-05) not met |
+| RR-02 | Back-end and network security | CSC-02 | Share, accepted once its condition is met (DQ-090 A); condition (athena constrained) not met |
+| RR-03 | Non-repudiation limited to per-device key | CSC-03 | Retain, accepted once its condition is met (DQ-090 A); condition per WP-C-10 CSC-03 |
+| RR-04 | OTS binaries (AGNOS, toolchain wheels, eGPU firmware) not source-verified | CSC-04 | Share, accepted once its condition is met (DQ-090 A); condition (SBOM/monitoring running) not met |
 | RR-05 | Firmware substitution by an SoC-root attacker through boot-pin control, if no RDP level closes it | WP-S-07 CS-AD-03 | Open; risk not yet re-rated |
+
+Acceptance (2026-10-23, DQ-090 option A): the project lead, as safety manager, accepts RR-01…RR-04 as proposed, each once its condition is met. The conditions are tracked in this table and checked at G5; until then the residuals are not accepted. There is no assessor to confirm the acceptance (DQ-009 C).
 
 ## 6. Defeaters (counter-evidence)
 
