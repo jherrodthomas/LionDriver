@@ -61,6 +61,8 @@ faults safely and that stock pre-collision braking stays available, is written d
 
 *Figure 3-2 of WP-C-01, generated from the item model and checked by CI.*
 
+[How LionDriver works](How-LionDriver-works.md) shows how the device connects to this car and steers it.
+
 ![Assumptions-of-use map: each AOU placed against the vehicle element it concerns and the safety goals that depend on it.](../assurance/02-concept/figures/fig-c01-7-1-aou-map.svg)
 
 *Figure 7-1 of WP-C-01. Dense by design: the [full-size figure](../assurance/02-concept/figures/fig-c01-7-1-aou-map.svg) is easier to read than the embed.*
