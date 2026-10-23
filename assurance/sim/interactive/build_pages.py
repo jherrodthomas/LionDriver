@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the interactive 3D pages (Machine Skill, tool TL-56) from the committed results of the simulation track.
+"""Build the interactive 3D pages (Machine Skill, tool TL-57) from the committed results of the simulation track.
 
 Each page is one self-contained HTML file: `page.html` with the vendored kit
 (`.claude/skills/machine/kit/lab-kit.js`) pasted in, the page's own script (`<name>.js`) and the data it shows,

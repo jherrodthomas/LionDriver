@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-09 Cybersecurity plan |
 | Standard reference | ISO/SAE 21434:2021 §6 (project dependent cybersecurity management), with activity references to §7–§15; UN R155 / R156 (informative); ASPICE 4.0 MAN.7, SEC.1–SEC.4 |
-| Version | 0.5 (GAP-27: athena and the uploader are never started in LionDriver builds, DQ-121 A; 2026-10-22). 0.4 (OI-8 decided: rely on the TARA privacy rating, DQ-095 A, 2026-10-19). 0.3 (status update: §2 GAP-28 and GAP-29 rows, §5 status of the concept and post-development work products (now Draft), §6 tinygrad pin, owner and due gate for each open item, the lead's answers of 2026-10-14 noted at OI-2 and OI-3; 2026-10-14). 0.2 (status update for the integrated envelope changes: §5 activity status, GAP-09, OI-5; 2026-10-12). 0.1 |
+| Version | 0.6 (OI-2: the feature set of DQ-020 is recorded in WP-C-10 OI-2; 2026-10-23). 0.5 (GAP-27: athena and the uploader are never started in LionDriver builds, DQ-121 A; 2026-10-22). 0.4 (OI-8 decided: rely on the TARA privacy rating, DQ-095 A, 2026-10-19). 0.3 (status update: §2 GAP-28 and GAP-29 rows, §5 status of the concept and post-development work products (now Draft), §6 tinygrad pin, owner and due gate for each open item, the lead's answers of 2026-10-14 noted at OI-2 and OI-3; 2026-10-14). 0.2 (status update for the integrated envelope changes: §5 activity status, GAP-09, OI-5; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | CS |
 | Author | Assurance team (initial draft) |
@@ -140,7 +140,7 @@ Tooling for SBOM generation and scanning is not in the repository today; selecti
 | ID | Item | Owner | Due |
 |---|---|---|---|
 | OI-1 | Decide the panda firmware signing and boot-chain approach for LionDriver-modified firmware (comma release key unavailable; debug key must not ship). Queued for the lead (decision register DQ-168) | CSM | G3 |
-| OI-2 | Decide which remote features are disabled in the reference configuration (athena RPCs, SSH, live streaming, comma-hosted uploads) — WP-C-10. Answered by the lead 2026-10-14 (decision register DQ-020): switched off by default, remote access only if the owner opts in. Open: record it in WP-C-10 and the TARA | CSM | G1 |
+| OI-2 | Decide which remote features are disabled in the reference configuration (athena RPCs, SSH, live streaming, comma-hosted uploads) — WP-C-10. Answered by the lead 2026-10-14 (decision register DQ-020): switched off by default, remote access only if the owner opts in. Recorded in [WP-C-10](../02-concept/WP-C-10-cybersecurity-goals-and-concept.md) OI-2 (2026-10-23). Open: the TARA ([WP-C-09](../02-concept/WP-C-09-tara.md)) and the build changes (CSR-C-10) | CSM | G1 |
 | OI-3 | Define the LionDriver update mechanism replacing the git-branch updater, with signature verification (GAP-26). Answered by the lead 2026-10-14 (decision register DQ-075): signed releases with an offline LionDriver key. Open: specify it in WP-S-07 and WP-O-05 | CSM | G3 |
 | OI-4 | Select SBOM and vulnerability-scanning tooling; classify it under WP-P-07. Queued for the lead (decision register DQ-169) | CSM | G3 |
 | OI-5 | Publish a LionDriver `SECURITY.md` and intake channel (GAP-28). Status 2026-10-12: `SECURITY.md` published (private vulnerability reporting, response times, scope); private vulnerability reporting not yet enabled in the repository settings (B-07) | CSM | G0 |

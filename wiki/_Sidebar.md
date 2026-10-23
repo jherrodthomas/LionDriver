@@ -2,6 +2,7 @@
 
 - [Home](Home.md)
 - [Roadmap and status](Roadmap-and-status.md)
+- [How LionDriver works](How-LionDriver-works.md)
 - [How the repository is organized](How-the-repository-is-organized.md)
 - [How decisions are made](How-decisions-are-made.md)
 - [Glossary](Glossary.md)
@@ -10,6 +11,7 @@
 - [Standards at a glance](Standards-at-a-glance.md)
 - [From hazard to test](From-hazard-to-test.md)
 - [Deriving and writing safety requirements](Deriving-and-writing-safety-requirements.md)
+- [ASIL decomposition](ASIL-decomposition.md)
 - [Building a fault tree](Building-a-fault-tree.md)
 - [Hardware safety and interference](Hardware-safety-and-interference.md)
 - [After release (ISO 26262 Part 7)](After-release.md)

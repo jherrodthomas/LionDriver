@@ -4,7 +4,7 @@
 |---|---|
 | Work product | Reconciliation record (supporting document, not a registered work product) |
 | Standard reference | ISO 26262-8:2018 §7 (configuration management), §8 (change management) |
-| Version | 0.5 (OI-5 closed: the second set is withdrawn, DQ-124 A; 2026-10-22). 0.4 (§8: second-set HARA mapped onto WP-C-03, decisions RD-1…RD-3; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status of the layer-1 measures after the firmware changes integrated 2026-10-12: TSR-501 IWDG implemented, not verified; layer 2 and OI-3 re-scoped; TSR-306, TSR-405 added to ASM-V-03…05; 2026-10-12). 0.1: initial reconciliation |
+| Version | 0.6 (OI-3 notes the lead's decision to allow an external monitor in principle, DQ-051 A; 2026-10-23). 0.5 (OI-5 closed: the second set is withdrawn, DQ-124 A; 2026-10-22). 0.4 (§8: second-set HARA mapped onto WP-C-03, decisions RD-1…RD-3; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status of the layer-1 measures after the firmware changes integrated 2026-10-12: TSR-501 IWDG implemented, not verified; layer 2 and OI-3 re-scoped; TSR-306, TSR-405 added to ASM-V-03…05; 2026-10-12). 0.1: initial reconciliation |
 | Status | Draft |
 | Author | Assurance team |
 | Reviewer(s) | TBD |
@@ -85,7 +85,7 @@ Decision rule proposed in LD-TSC-001: implement layer 1, design layer 2, then le
 |---|---|---|---|
 | OI-1 | Decide the controllability ratings at motorway speed for H-01, H-03, H-04 and H-05 (§3). Either justify the C2 credit for OEM EPS and PCM limits or re-rate to C3, and record the rationale in WP-C-03. Close LD-SPL-001 anomaly A04 with the outcome | Safety engineer, I3 reviewer | G1 |
 | OI-2 | Confirm that rating uncommanded engagement, driver-monitoring failure and mode confusion inside other hazards (§3) does not lose a safety goal; record the review in WP-C-03 | Safety engineer | G1 |
-| OI-3 | Evaluate the relay supervisor (§5) for the cases the IWDG reset (TSR-501) does not cover: a failed or unstarted IWDG, a stuck relay GPIO and a relay stuck in intercept (GAP-43 remainder, TSR-502), in WP-S-03 and [WP-H-02](../04-hardware/WP-H-02-hardware-design.md) | HW lead | G2 |
+| OI-3 | Evaluate the relay supervisor (§5) for the cases the IWDG reset (TSR-501) does not cover: a failed or unstarted IWDG, a stuck relay GPIO and a relay stuck in intercept (GAP-43 remainder, TSR-502), in WP-S-03 and [WP-H-02](../04-hardware/WP-H-02-hardware-design.md). The lead allows added hardware such as an external monitor in principle, decided from the [WP-H-04](../04-hardware/WP-H-04-hardware-metrics.md) results within an agreed budget limit (decision register DQ-051, A, 2026-10-14; WP-H-01 OI-6) | HW lead | G2 |
 | OI-4 | Decide whether the multi-vehicle model (platform plus configurations checked against its assumptions) becomes the scope method in WP-M-01 and WP-M-12, or stays as described there today | Maintainer | G1 |
 
 ## 7. Second set: AIAG-VDA analyses (`assurance/08-analyses/fmea/`)

@@ -8,7 +8,7 @@
 | Taken | `SKILL.md`, `LICENSE`, `package.json`, `kit/`, `scripts/`, `references/`, unchanged |
 | Left out | `examples/`, `film/`, `evals/`, `.github/` and the launch notes (about 20 MB of example pages, stills and posters) |
 | Check | [`SHA256SUMS`](SHA256SUMS): `assurance/sim/interactive/build_pages.py --check` fails if a vendored file differs from upstream |
-| Tool record | WP-P-07 TL-56 |
+| Tool record | WP-P-07 TL-57 |
 
 ## How LionDriver uses it
 

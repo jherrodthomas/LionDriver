@@ -85,7 +85,7 @@ SOURCES = [
   (V04, "Two lateral rows matched no hazardous event"), (V04, "the HARA rates it as HE-01.6"),
   (C04, "| FSR-01.01 | The envelope shall limit the commanded LKA torque magnitude to a speed-dependent bound derived from driver controllability"),
   (C04, "Partial: fixed 1500 raw"), (C04, "not speed-dependent, no physical rationale (GAP-04)"),
-  (V01, "| VS-VAL-10 | Worst-case lateral disturbance inside the envelope"), (V01, "at 30, 50, 70, 90 km/h"), (V01, "≥ 20/20 subjects"),
+  (V01, "| VS-VAL-10 | Worst-case lateral disturbance inside the envelope"), (V01, "at 30, 50, 70, 90 and 110 km/h"), (V01, "≥ 20/20 subjects"),
   (G1, "title: \"SG-01 lateral motion is met\""), (G2, "title: \"SOTIF (ISO 21448)\""),
   (EV, "Draft; controllability tests (CA-01…CA-07) not performed"),
 ]
@@ -567,7 +567,7 @@ def one_chain():
   y4 = 414
   b.append(g(f"{tl.show(13.6)} fin", [f'<line x1="{W / 2}" y1="{y3 + 70}" x2="{W / 2}" y2="{y4}" stroke="{BOTH}" stroke-width="2.5"/>']
              + card(120, y4, W - 240, 70, "THE TEST · VS-VAL-10 / CA-01 (WP-V-01)", NAVY,
-                    ["Unannounced worst-case torque at 30–90 km/h:", "20 of 20 drivers must keep the car in its lane"])))
+                    ["Unannounced worst-case torque at 30–110 km/h:", "20 of 20 drivers must keep the car in its lane"])))
   ch, w = chip(W - 120 - 96, y4 + 20, "not run yet", AMBER)
   b.append(g(f"{tl.show(15.2)} fin", ch))
   # split to two claims

@@ -22,6 +22,7 @@ built, with the evidence for each claim and the known counter-evidence against i
 
 | If you want to | Read |
 |---|---|
+| See how the device connects to the car and steers it safely | [How LionDriver works](How-LionDriver-works.md) |
 | Understand how the code and the record fit together | [How the repository is organized](How-the-repository-is-organized.md) |
 | See what is done, active and planned | [Roadmap and status](Roadmap-and-status.md) |
 | Contribute, or follow a Claude session's work | [How decisions are made](How-decisions-are-made.md) |

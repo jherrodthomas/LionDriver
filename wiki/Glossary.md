@@ -40,6 +40,7 @@ revision and status.
 | `BL-` | Baseline: a frozen, named state of the record. The dashboard names the baseline and the commit it was taken at | [`assurance/case/baselines/`](../assurance/case/baselines) |
 | `CFG-` | Vehicle configuration | [`assurance/case/configurations/`](../assurance/case/configurations), [vehicle register](../docs/liondriver/vehicles/README.md) |
 | `DQ-` | Decision question for the project lead | [Decision register](How-decisions-are-made.md) |
+| `DEC-`, `IR-` | ASIL decomposition record and independence requirement; `B(C)` is an element developed to ASIL B for an ASIL C goal ([explained](ASIL-decomposition.md)) | [WP-A-01](../assurance/08-analyses/WP-A-01-asil-decomposition.md) |
 | `GAP-` | A gap between the inherited baseline and what the safety goals need | [Gap assessment](../assurance/00-assessment/gap-assessment.md) |
 | `TL-` | A tool, with its classification | [WP-P-07](../assurance/07-supporting/WP-P-07-tool-classification-qualification.md) |
 | `FI-` | Field incident case, for example `FI-2026-001` | [Field monitoring register](../docs/safety/field-monitoring/REGISTER.md) |

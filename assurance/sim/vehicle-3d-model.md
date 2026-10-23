@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Scope | A 3D mesh of the reference car (Corolla E210, CFG-001) for simulation layer 3 (MetaDrive) renders and for figures. Procurement comparison, what the mesh does and does not change, and the handover for whoever picks this up next |
-| Version | 0.5 (pure-Python glTF export, load-tested in Panda3D, 2026-10-17). 0.4 (Blender export script, MetaDrive vehicle class and bridge hook, 2026-10-17). 0.3 (renders, use, mock-ups, target results, 2026-10-17). 0.2 (receipt check, 2026-10-17). 0.1 (2026-10-17) |
+| Version | 0.6 (§1: the lead's choice recorded, DQ-368 A, 2026-10-23). 0.5 (pure-Python glTF export, load-tested in Panda3D, 2026-10-17). 0.4 (Blender export script, MetaDrive vehicle class and bridge hook, 2026-10-17). 0.3 (renders, use, mock-ups, target results, 2026-10-17). 0.2 (receipt check, 2026-10-17). 0.1 (2026-10-17) |
 | Status | Draft. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed. DQ-368 answered A (bought 2026-10-17, Standard licence) |
 | Feeds | [README](README.md) §2 layer 3; the WP-V-02/WP-V-03 figures that show the reference car; nothing in the safety case |
 
@@ -24,7 +24,7 @@ bridge (`openpilot/tools/sim`), layer 4 is a numerical search over layer 1. None
 | Should the car be rigged in Unreal Engine or another game engine? | **No.** UE4/UE5 Chaos Vehicles, Rigacar and similar rigs were considered in the originating chat and dropped: the track has no Unreal in its toolchain, and MetaDrive (Panda3D) takes a plain glTF with wheels as separate nodes. A game-engine car rig would be a separate visualisation project with no owner |
 
 So the value is cosmetic: layer-3 clips and WP-V figures show a Corolla instead of MetaDrive's stock car, and the body
-shape helps camera-height and blind-zone drawings. The cost is $99 plus a decimation pass. The lead decides (DQ-368).
+shape helps camera-height and blind-zone drawings. The cost is $99 plus a decimation pass. The lead chose option A, bought on 2026-10-17 (DQ-368).
 
 ## 2. How MetaDrive takes a vehicle mesh
 

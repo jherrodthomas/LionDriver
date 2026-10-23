@@ -653,7 +653,7 @@ jobs:
 
   sim-interactive:
     name: simulation interactive pages
-    # Interactive 3D pages (assurance/sim/interactive, Machine Skill, tool TL-56): the committed pages equal a fresh build
+    # Interactive 3D pages (assurance/sim/interactive, Machine Skill, tool TL-57): the committed pages equal a fresh build
     # from the committed results and the vendored skill is unchanged upstream e0bd066; each page then opens headless with
     # no page error, carries the synthetic stamp, and shows the results file's numbers. Presentation only, no credit.
     runs-on: ubuntu-24.04

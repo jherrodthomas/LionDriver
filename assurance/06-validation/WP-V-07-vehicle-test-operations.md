@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-07 Vehicle test operations and safety-driver procedures |
 | Standard reference | ISO 26262-4:2018 §8 (validation environment and conditions); ISO 21448:2022 §10–11 (testing in real conditions); ASPICE 4.0 VAL.1. Informative: SAE J3018 (safety-relevant guidance for on-road testing of prototype automated driving system-operated vehicles) |
-| Version | 0.1 |
+| Version | 0.2 (the lead's decisions applied: the drafted (TBC) values adopted, OI-6, DQ-046 A; external reviewer engaged once a second safety driver is in view, OI-1, DQ-044 A; own insurance policy for development testing, OI-4, §12, DQ-045 A; closed-course rules for the CAN-injection test TC-09 added to §8.1, DQ-110 A; tests above 90 km/h up to 110 km/h after the risk review, DQ-091 A, and the 110 km/h ODD bound, DQ-260 A, in §8.1 and §8.2; 2026-10-23). 0.1 |
 | Status | Draft |
 | ASIL / scope | All vehicle operation of LD-SDA during development (FuSa, SOTIF, AI, CS tests) |
 | Author | Assurance team (initial draft) |
@@ -81,7 +81,7 @@ All criteria of the lower levels also apply.
 
 | Requirement | Evidence |
 |---|---|
-| Full, valid US driver licence held for at least 5 years **(TBC)** | Licence copy |
+| Full, valid US driver licence held for at least 5 years (DQ-046) | Licence copy |
 | No at-fault crash, DUI/DWI or licence suspension in the last 5 years | Signed declaration; motor vehicle record where obtainable |
 | Fit to drive: no condition or medication that impairs driving; uncorrected vision meets licence requirements | Signed declaration |
 | Accepts the conduct rules of §5.5 | Signed |
@@ -93,7 +93,7 @@ All criteria of the lower levels also apply.
 | T1 System knowledge | Item functions F-01…F-09; what the envelope limits and does not limit; known limitations (`docs/LIMITATIONS.md`); DM behaviour and timers; alert classes (warning, soft disable, immediate disable); the gaps that matter for the driver (GAP-16 soft-disable keeps actuating up to 3 s; GAP-02 envelope does not monitor driver torque; GAP-19 `speedTooHigh` does not disengage) | Classroom, 2 h | Written quiz ≥ 80 % |
 | T2 This procedure | Levels, entry criteria, pre-drive checks, abort criteria, incident handling, data rules | Classroom, 1 h | Quiz ≥ 80 % |
 | T3 Vehicle | Reference Corolla controls, cruise stalk, LKA/PCS switches, VSC, hazard lights; how to remove the device or switch the item to passive | Practical, stationary | Demonstrated |
-| T4 Takeover drills | On closed course: brake, cancel and steering override at 30/50/70 km/h; unannounced takeover requests from the TO; unannounced lateral disturbance within the envelope (test build) | Practical, closed course | ≥ 10 successful takeovers per input type; reaction time to unannounced events ≤ 1.0 s **(TBC)** in every trial |
+| T4 Takeover drills | On closed course: brake, cancel and steering override at 30/50/70 km/h; unannounced takeover requests from the TO; unannounced lateral disturbance within the envelope (test build) | Practical, closed course | ≥ 10 successful takeovers per input type; reaction time to unannounced events ≤ 1.0 s (DQ-046) in every trial |
 | T5 Commentary driving | Supervised drive with the test manager narrating hazards and ODD boundaries, then the trainee narrating | Practical, L4/L5 | Test manager sign-off |
 | T6 Route familiarisation | Drive each L5 route in manual mode before driving it engaged | Practical | Logged |
 
@@ -202,10 +202,11 @@ Developer and debug modes (`JoystickDebugMode`, `LongitudinalManeuverMode`, `Lat
 
 | Rule | Value |
 |---|---|
-| Maximum speed | The lower of the site limit and the test plan; no test above 90 km/h without a separate risk review (WP-V-01 VS-VAL-10) |
+| Maximum speed | The lower of the site limit and the test plan; no test above 90 km/h without the separate risk review, which the project lead decided to hold for tests up to 110 km/h (DQ-091 A; [WP-V-01](WP-V-01-safety-validation.md) VS-VAL-10, OI-7) |
 | Clearance | No other vehicle or person in the test lane or its run-off area during a run, except planned soft targets |
 | Soft targets | Only radar-reflective soft targets designed for collision; never real vehicles or people as targets |
 | Test subjects | Only with RSO present, SD in the passenger seat with the abort switch, and consent recorded |
+| CAN injection, replay and flooding ([WP-V-06](WP-V-06-cybersecurity-validation.md) TC-09; added 2026-10-23, DQ-110 A) | Only after the bench stage of TC-09 has passed (WP-V-06 RoE-2). The injection setup is a test build under §7.4, listed in the session plan with the frames it can inject. Ignition on and vehicle stationary before any motion; motion only on the course. Injection triggered by the TO only after the SD confirms "ready"; the SD can disconnect the harness (stock path) at any time. Any unexpected actuation or loss of the stock path stops the session and opens an S-1 problem report (WP-V-06 RoE-9). The release build is reflashed before the car leaves the site and the reflash is recorded on the drive sheet (§7.4 item 3, DQ-105 B) |
 
 ### 8.2 Public road (L5/L6) ODD restrictions
 
@@ -214,13 +215,13 @@ Initial restricted ODD for L5 — a subset of ODD-H of [WP-C-02 §3.1](../02-con
 | Attribute | L5 restriction |
 |---|---|
 | Road type | Limited-access divided highway with clear lane markings on pre-approved route segments |
-| Speed | ≤ posted limit and ≤ 105 km/h (65 mph) **(TBC)**; set speed never above the posted limit |
+| Speed | ≤ posted limit and ≤ 105 km/h (65 mph) (DQ-046); set speed never above the posted limit |
 | Light | Daylight, sun elevation not directly ahead and low (avoid sunrise/sunset driving toward the sun) |
 | Weather | Dry road, no precipitation, visibility > 1 km |
 | Traffic | Light to moderate; avoid peak congestion until stop-and-go has been checked at L3 |
 | Excluded | Construction zones, toll plazas, school zones, lane-drop merges flagged on the route plan, tunnels, roads with pedestrians or cyclists, any area flagged in the route review |
 
-L6 uses the claimed ODD of [WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md) (ODD-H; ODD-A only if confirmed, WP-C-02 OI-4) with the WP-V-04 block plan. Conditions WP-C-02 excludes (work zones, toll plazas, tunnels, low sun in the camera view, moderate/heavy rain, speeds above 120 km/h) remain abort criteria at every level.
+L6 uses the claimed ODD of [WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md) (ODD-H; ODD-A only if confirmed, WP-C-02 OI-4) with the WP-V-04 block plan. Conditions WP-C-02 excludes (work zones, toll plazas, tunnels, low sun in the camera view, moderate/heavy rain, speeds above 110 km/h, the ODD bound since DQ-260 A) remain abort criteria at every level.
 
 ### 8.3 Communication protocol
 
@@ -241,7 +242,7 @@ The SD disengages (brake or cancel) and drives manually when any of the followin
 | # | Criterion |
 |---|---|
 | A-01 | Any unexpected steering, acceleration or braking, or any doubt about what the item is doing |
-| A-02 | Vehicle closer than 0.5 m **(TBC)** to a lane line without a requested lane change, or drifting toward another vehicle, barrier or road edge |
+| A-02 | Vehicle closer than 0.5 m (DQ-046) to a lane line without a requested lane change, or drifting toward another vehicle, barrier or road edge |
 | A-03 | Time gap to the lead below 1.0 s, or a lead vehicle braking hard, or a vehicle cutting in closely |
 | A-04 | Stationary or slow object in or near the lane ahead (including breakdowns, debris, emergency vehicles) |
 | A-05 | Any alert from the item (warning, soft disable, immediate disable, FCW, DM alert level ≥ 2), any unexpected HMI state, or any mismatch between HMI and vehicle behaviour |
@@ -267,7 +268,7 @@ The SD disengages (brake or cancel) and drives manually when any of the followin
 
 | Category | Definition |
 |---|---|
-| I-1 Collision | Any contact with a vehicle, person, animal or object, any injury, or any airbag deployment, while the item was engaged or within 30 s **(TBC)** after disengagement |
+| I-1 Collision | Any contact with a vehicle, person, animal or object, any injury, or any airbag deployment, while the item was engaged or within 30 s (DQ-046) after disengagement |
 | I-2 Near miss | Situation where a collision was avoided only by driver intervention or by the other party's action, or an abort criterion A-01…A-04 with a hazard in proximity |
 | I-3 Item anomaly | Unexpected item behaviour without a hazard (wrong alert, unexplained disengagement, fault event) |
 | I-4 Procedure deviation | A rule of this document not followed (e.g., wrong software driven, check skipped) |
@@ -322,7 +323,7 @@ Drive sheets are retained with the validation records ([WP-P-04](../07-supportin
 | Retention on device | Not deleted until the copy is verified (OPS-11) |
 | Storage | Access limited to named project members; encrypted at rest; backups |
 | Privacy | Consent forms for crew and test subjects (cabin video, voice if recorded); third-party faces and plates not published, blurred in reports, including the plates of following vehicles in the rear-facing camera recordings; location traces treated as personal data |
-| Retention period | Evaluation datasets and incident data: until the release they support is withdrawn plus 5 years **(TBC)**; other raw video: 24 months **(TBC)**; deletion on request where not needed for an incident |
+| Retention period | Evaluation datasets and incident data: until the release they support is withdrawn plus 5 years (DQ-046); other raw video: 24 months (DQ-046); deletion on request where not needed for an incident |
 | Incident data | Preserved unchanged (write-protected copy) until the incident is closed |
 
 ## 12. Legal, insurance and site matters
@@ -330,7 +331,7 @@ Drive sheets are retained with the validation records ([WP-P-04](../07-supportin
 | Item | Status |
 |---|---|
 | Legal status of L2 development testing in the test state(s) | Open ([WP-C-01](../02-concept/WP-C-01-item-definition.md) OI-6) — must be confirmed before L4 |
-| Insurance cover for development testing of an aftermarket driving assistance device | Open (OI-4) — must be confirmed before L3 |
+| Insurance cover for development testing of an aftermarket driving assistance device | Decided: a policy that explicitly covers development testing, closed course and public road (DQ-045 A); not yet obtained (OI-4) — must be confirmed before L3 |
 | Closed-course site agreement and site rules | Open ([WP-V-01](WP-V-01-safety-validation.md) OI-1) |
 | Vehicle registration and inspection current | Checked per session (PD-01…PD-06) |
 
@@ -355,10 +356,10 @@ A deviation from this procedure is requested in writing by the test manager, sta
 
 | ID | Item |
 |---|---|
-| OI-1 | External review of this procedure by someone with vehicle-test or J3018 experience before first L5 use |
+| OI-1 | External review of this procedure by someone with vehicle-test or J3018 experience before first L5 use. Decided 2026-10-19 (DQ-044, option A): the reviewer is engaged once a second safety driver is in view (OI-2), not before; the same reviewer revisits the OI-6 values and signs the maintainer's own qualification (§5.2). Left: engage the reviewer; until then L5 is not possible |
 | OI-2 | Recruit and qualify at least one more safety driver / test operator so that two-person crews are possible; until then only L0–L4 and L3 sessions with a qualified second person are possible |
 | OI-3 | Confirm that `OpenpilotEnabledToggle = 0` (passive, `noOutput`) leaves the stock camera and PCS path intact (repeat INS-27 in passive mode) |
-| OI-4 | Confirm insurance cover |
+| OI-4 | Confirm insurance cover. Decided 2026-10-14 (DQ-045, option A): get a policy that explicitly covers development testing on the closed course and on public roads. Left: obtain the policy, and confirm that the owner's terms for the rented or borrowed test car allow development testing; before L3 (§12) |
 | OI-5 | Design, build and verify the passenger abort switch (device power cut) and confirm the harness relay restores the stock camera path when the device is unpowered |
-| OI-6 | Confirm the (TBC) values (licence years, takeover reaction time, L5 speed cap, lane-line margin, incident window, retention periods) with the external reviewer |
+| OI-6 | Closed 2026-10-23: the drafted values (licence years, takeover reaction time, L5 speed cap, lane-line margin, incident window, retention periods), marked (DQ-046) in this document, are adopted now on the project lead's judgement and revisited when the external reviewer of OI-1 exists (DQ-046, option A, 2026-10-14) |
 | OI-7 | Prepare consent forms, incident form and drive-sheet template as controlled documents (WP-P-04) |

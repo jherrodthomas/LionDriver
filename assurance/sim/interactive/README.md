@@ -17,7 +17,7 @@ page's break. **How it is computed** says where every number comes from.
 
 ## Rules
 
-The pages are built with the [Machine Skill](../../../.claude/skills/machine/VENDORED.md) (tool TL-56), a Claude Code
+The pages are built with the [Machine Skill](../../../.claude/skills/machine/VENDORED.md) (tool TL-57), a Claude Code
 skill vendored at upstream commit `e0bd066`. LionDriver uses it as a presentation layer only:
 
 1. **No second solver.** A page shows only numbers from committed, CI-checked results. [`build_pages.py`](build_pages.py)

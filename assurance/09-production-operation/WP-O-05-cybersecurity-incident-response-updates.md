@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-O-05 Cybersecurity incident response, vulnerability management and software updates |
 | Standard reference | ISO/SAE 21434:2021 §8 (continual cybersecurity activities: monitoring, event evaluation, vulnerability analysis, vulnerability management), §13 (operations and maintenance: incident response, updates), §14 (end of cybersecurity support and decommissioning); UN R156 (informative, software update management); ASPICE 4.0 SEC.* |
-| Version | 0.1 |
+| Version | 0.2 (§2 and OI-1: only the maintainer's own installation is supported until a deputy is named (DQ-101 A); OI-4: the timelines of §4.3 and §5.3 and the support period of §7 agreed as proposed (DQ-102 A); 2026-10-23). 0.1 |
 | Status | Draft — process defined; **not running**. No monitoring, intake or incident record exists yet (GAP-28) |
 | ASIL / scope | CS; safety coordination for SG-01…SG-08 |
 | Author | Assurance team (initial draft) |
@@ -35,7 +35,7 @@ With a single maintainer, one person holds most roles. The table records the rol
 | External reviewer / assessor | External, TBD | Independent review of incident closure for Critical incidents ([WP-K-05](../10-safety-case/WP-K-05-cybersecurity-assessment.md)) |
 | Reporter | Users, researchers, upstream | Report through the channel in §8 |
 
-Backup: a named deputy with repository and key-access instructions is required before more than the maintainer's own installations are supported (OI-1).
+Backup: a named deputy with repository and key-access instructions is required before more than the maintainer's own installations are supported (OI-1). Until one is named, LionDriver supports only the maintainer's own installation (decided 2026-10-23, DQ-101 option A).
 
 ## 3. Cybersecurity monitoring and event evaluation (21434 §8)
 
@@ -270,10 +270,10 @@ end-of-support date of each release.
 
 | ID | Item |
 |---|---|
-| OI-1 | Name a deputy for the CSM/VMO roles with documented access, before supporting installations beyond the maintainer's own |
+| OI-1 | Name a deputy for the CSM/VMO roles with documented access, before supporting installations beyond the maintainer's own. Decided 2026-10-23 (DQ-101, option A): until a deputy is named, only the maintainer's own installation is supported; no other users are supported. Open: name the deputy; revisit before release (G5) |
 | OI-2 | Set up private vulnerability reporting and the restricted register index |
 | OI-3 | `SECURITY.md` reporting section adopted (GitHub private vulnerability reporting). Remaining: enable private vulnerability reporting in the repository settings; obtain a LionDriver-controlled security contact address |
-| OI-4 | Agree timelines (§4.3, §5.3) and the support period (§7) with the assessor and the SM |
+| OI-4 | Closed 2026-10-23 (DQ-102, option A): the project lead, as safety manager, agreed the timelines of §4.3 and §5.3 and the support period of §7 as proposed (acknowledge within 3 working days; assess within 5, 2 if safety-relevant; High fixes within 30 days; advisory with the fix or by 90 days; each release supported until the next plus 90 days). No assessor is engaged (DQ-009 C) |
 | OI-5 | Define the staged-rollout mechanism once signed updates exist (U5 needs per-installation release targeting) |
 | OI-6 | Closed: monitoring cadence harmonised as weekly automated scan/watch (WP-W-11 SCAN-03/SCAN-04) plus monthly manual review (WP-M-11 §6, this document §2) |
 | OI-7 | Write the key-rotation manifest format (K4) together with the update manifest (WP-S-07 OI-4) |
