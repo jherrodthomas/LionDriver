@@ -66,9 +66,9 @@ jobs:
       run: python3 assurance/trace/tools/check_trace.py
     - name: Trace items against their JSON schema (WP-P-06 §5.1, DQ-123 A)
       run: python3 assurance/trace/tools/check_schema.py
-    - name: Checkout the opendbc submodule (test sources the verification links name)
-      run: git submodule update --init --depth 1 opendbc_repo
-    - name: Test -> requirement links current with WP-W-06 §4.1, every linked test exists (WP-P-06 §5.3)
+    - name: Checkout the opendbc and panda submodules (test sources the verification links name)
+      run: git submodule update --init --depth 1 opendbc_repo panda
+    - name: Test -> requirement links current with WP-W-06 §4.1 and §4.9, every linked test exists (WP-P-06 §5.3)
       run: python3 assurance/trace/tools/verification_links.py --check
     - name: State machines (WP-W-05 §5 generated from state-machines/*.yaml)
       run: python3 assurance/trace/tools/check_state_machines.py --check

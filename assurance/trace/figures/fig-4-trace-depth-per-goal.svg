@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="632" viewBox="0 0 1280 632" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 4 · Trace depth per safety goal</title>
-<desc>For each safety goal: the derived and refined requirement counts, the share allocated to model elements and the share named by a test-specification case. Over all goals 308 of 362 requirements are allocated, 268 named and 16 linked to an existing test; none is verified by a recorded passed test.</desc>
+<desc>For each safety goal: the derived and refined requirement counts, the share allocated to model elements and the share named by a test-specification case. Over all goals 308 of 362 requirements are allocated, 268 named and 36 linked to an existing test; none is verified by a recorded passed test.</desc>
 <defs><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F172A"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="faint" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><marker id="sw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F766E"/></marker><marker id="hw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker><marker id="aou" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D97706"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D2553F"/></marker></defs>
 <rect x="0" y="0" width="1280" height="632" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 4 · Trace depth per safety goal</text>
@@ -33,8 +33,8 @@
 <text x="819" y="160" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">81 %</text>
 <text x="819" y="172" font-size="9.5" fill="#475569" text-anchor="middle">155 of 191</text>
 <rect x="930" y="144" width="128" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
-<text x="994" y="160" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">4 %</text>
-<text x="994" y="172" font-size="9.5" fill="#475569" text-anchor="middle">8 of 191</text>
+<text x="994" y="160" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">12 %</text>
+<text x="994" y="172" font-size="9.5" fill="#475569" text-anchor="middle">23 of 191</text>
 <rect x="1090" y="144" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="1159" y="165" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
 <text x="48" y="210" font-size="12.5" fill="#0F172A" font-weight="700">SG-02</text>
@@ -49,9 +49,9 @@
 <rect x="740" y="190" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
 <text x="819" y="206" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">63 %</text>
 <text x="819" y="218" font-size="9.5" fill="#475569" text-anchor="middle">97 of 153</text>
-<rect x="930" y="190" width="128" height="32" rx="6" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
-<text x="994" y="206" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">0 %</text>
-<text x="994" y="218" font-size="9.5" fill="#475569" text-anchor="middle">0 of 153</text>
+<rect x="930" y="190" width="128" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="994" y="206" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">7 %</text>
+<text x="994" y="218" font-size="9.5" fill="#475569" text-anchor="middle">10 of 153</text>
 <rect x="1090" y="190" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="1159" y="211" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
 <text x="48" y="256" font-size="12.5" fill="#0F172A" font-weight="700">SG-03</text>
@@ -67,8 +67,8 @@
 <text x="819" y="252" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">81 %</text>
 <text x="819" y="264" font-size="9.5" fill="#475569" text-anchor="middle">139 of 172</text>
 <rect x="930" y="236" width="128" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
-<text x="994" y="252" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">3 %</text>
-<text x="994" y="264" font-size="9.5" fill="#475569" text-anchor="middle">5 of 172</text>
+<text x="994" y="252" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">12 %</text>
+<text x="994" y="264" font-size="9.5" fill="#475569" text-anchor="middle">20 of 172</text>
 <rect x="1090" y="236" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="1159" y="257" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
 <text x="48" y="302" font-size="12.5" fill="#0F172A" font-weight="700">SG-04</text>
@@ -84,8 +84,8 @@
 <text x="819" y="298" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">79 %</text>
 <text x="819" y="310" font-size="9.5" fill="#475569" text-anchor="middle">133 of 169</text>
 <rect x="930" y="282" width="128" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
-<text x="994" y="298" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">2 %</text>
-<text x="994" y="310" font-size="9.5" fill="#475569" text-anchor="middle">4 of 169</text>
+<text x="994" y="298" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">11 %</text>
+<text x="994" y="310" font-size="9.5" fill="#475569" text-anchor="middle">19 of 169</text>
 <rect x="1090" y="282" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="1159" y="303" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
 <text x="48" y="348" font-size="12.5" fill="#0F172A" font-weight="700">SG-05</text>
@@ -101,8 +101,8 @@
 <text x="819" y="344" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">78 %</text>
 <text x="819" y="356" font-size="9.5" fill="#475569" text-anchor="middle">111 of 142</text>
 <rect x="930" y="328" width="128" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
-<text x="994" y="344" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">4 %</text>
-<text x="994" y="356" font-size="9.5" fill="#475569" text-anchor="middle">5 of 142</text>
+<text x="994" y="344" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">11 %</text>
+<text x="994" y="356" font-size="9.5" fill="#475569" text-anchor="middle">16 of 142</text>
 <rect x="1090" y="328" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="1159" y="349" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
 <text x="48" y="394" font-size="12.5" fill="#0F172A" font-weight="700">SG-06</text>
@@ -117,9 +117,9 @@
 <rect x="740" y="374" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
 <text x="819" y="390" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">62 %</text>
 <text x="819" y="402" font-size="9.5" fill="#475569" text-anchor="middle">93 of 151</text>
-<rect x="930" y="374" width="128" height="32" rx="6" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
-<text x="994" y="390" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">0 %</text>
-<text x="994" y="402" font-size="9.5" fill="#475569" text-anchor="middle">0 of 151</text>
+<rect x="930" y="374" width="128" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="994" y="390" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">5 %</text>
+<text x="994" y="402" font-size="9.5" fill="#475569" text-anchor="middle">8 of 151</text>
 <rect x="1090" y="374" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="1159" y="395" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
 <text x="48" y="440" font-size="12.5" fill="#0F172A" font-weight="700">SG-07</text>
@@ -135,8 +135,8 @@
 <text x="819" y="436" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">68 %</text>
 <text x="819" y="448" font-size="9.5" fill="#475569" text-anchor="middle">98 of 144</text>
 <rect x="930" y="420" width="128" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
-<text x="994" y="436" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">2 %</text>
-<text x="994" y="448" font-size="9.5" fill="#475569" text-anchor="middle">3 of 144</text>
+<text x="994" y="436" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">8 %</text>
+<text x="994" y="448" font-size="9.5" fill="#475569" text-anchor="middle">12 of 144</text>
 <rect x="1090" y="420" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="1159" y="441" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
 <text x="48" y="486" font-size="12.5" fill="#0F172A" font-weight="700">SG-08</text>
@@ -169,8 +169,8 @@
 <text x="819" y="534" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">74 %</text>
 <text x="819" y="546" font-size="9.5" fill="#475569" text-anchor="middle">268 of 362</text>
 <rect x="930" y="518" width="128" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
-<text x="994" y="534" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">4 %</text>
-<text x="994" y="546" font-size="9.5" fill="#475569" text-anchor="middle">16 of 362</text>
+<text x="994" y="534" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">10 %</text>
+<text x="994" y="546" font-size="9.5" fill="#475569" text-anchor="middle">36 of 362</text>
 <rect x="1090" y="518" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="1159" y="539" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
 <rect x="40" y="564" width="14" height="12" rx="3" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
@@ -183,6 +183,6 @@
 <text x="521.6" y="574" font-size="11" fill="#475569">complete</text>
 <rect x="585.2" y="564" width="14" height="12" rx="3" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="605.2" y="574" font-size="11" fill="#475569">no data source yet</text>
-<text x="40" y="598" font-size="11" fill="#475569">“Named”: a test-specification case cites the ID. “Linked”: links/verification.yaml links an existing test to it (WP-W-06 §4.1). Both are specified links, not a passed test (K7).</text>
+<text x="40" y="598" font-size="11" fill="#475569">“Named”: a test-specification case cites the ID. “Linked”: links/verification.yaml links an existing test to it (WP-W-06 §4.1, §4.9). Both are specified links, not a passed test (K7).</text>
 <text x="40" y="614" font-size="11" fill="#475569">Allocated: the requirement's allocated_to names elements of the SysML model (check M8). A requirement under several goals counts in each row.</text>
 </svg>
