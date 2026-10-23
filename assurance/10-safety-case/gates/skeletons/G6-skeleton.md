@@ -23,14 +23,14 @@
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | None planned at this gate | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 14 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 12 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
 | Work product | Activity | Status in WP-M-00 | Open items | Verification review (WP-P-05) |
 |---|---|---|---|---|
-| [WP-O-04](../../../09-production-operation/WP-O-04-field-monitoring.md) Field monitoring (safety, SOTIF and AI) and crash reporting (update) | OPS-01 | Draft | 8 | |
-| [WP-O-05](../../../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md) Cybersecurity incident response, vulnerability management and software updates | OPS-02 | Draft | 6 | |
+| [WP-O-04](../../../09-production-operation/WP-O-04-field-monitoring.md) Field monitoring (safety, SOTIF and AI) and crash reporting (update) | OPS-01 | Draft | 7 | |
+| [WP-O-05](../../../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md) Cybersecurity incident response, vulnerability management and software updates | OPS-02 | Draft | 5 | |
 
 ### Open cross-domain interfaces due by this gate
 

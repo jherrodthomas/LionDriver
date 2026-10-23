@@ -23,7 +23,7 @@
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 6 performed: CR-06@G3, CR-07, CR-08, CR-09, CR-10, SR-04@G3 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 135 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 134 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
@@ -44,7 +44,7 @@
 | [WP-W-06](../../../05-software/WP-W-06-software-unit-verification.md) Software unit verification specification and report (static analysis, MISRA, coverage, mutation) | DEV-13 | Draft | 10 | |
 | [WP-W-09](../../../05-software/WP-W-09-configuration-calibration-data.md) Safety-related configuration and calibration data (car params, fingerprints, limits, model weights) | DEV-14 | Draft | 7 | |
 | [WP-W-10](../../../05-software/WP-W-10-ml-engineering.md) ML engineering: model requirements, data management, training, testing, deployment | DEV-15 | Draft | 5 | |
-| [WP-W-11](../../../05-software/WP-W-11-cybersecurity-implementation-verification.md) Cybersecurity implementation and verification | DEV-16 | Draft | 8 | |
+| [WP-W-11](../../../05-software/WP-W-11-cybersecurity-implementation-verification.md) Cybersecurity implementation and verification | DEV-16 | Draft | 7 | |
 | [WP-P-08](../../../07-supporting/WP-P-08-software-component-qualification.md) Qualification of software components (third-party and upstream software) | DEV-17 | Draft | 8 | |
 | [WP-P-09](../../../07-supporting/WP-P-09-proven-in-use.md) Proven-in-use argument evaluation | DEV-18 | Draft | 3 | |
 
