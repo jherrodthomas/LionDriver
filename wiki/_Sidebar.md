@@ -11,6 +11,7 @@
 - [Standards at a glance](Standards-at-a-glance.md)
 - [From hazard to test](From-hazard-to-test.md)
 - [Deriving and writing safety requirements](Deriving-and-writing-safety-requirements.md)
+- [ASIL decomposition](ASIL-decomposition.md)
 - [Building a fault tree](Building-a-fault-tree.md)
 - [Hardware safety and interference](Hardware-safety-and-interference.md)
 - [After release (ISO 26262 Part 7)](After-release.md)
