@@ -729,6 +729,9 @@ def main(argv: list[str]) -> int:
     w, h = (int(v) for v in args.video_res.split("x"))
     render_setup((w, h), max(4, args.samples // 2))
     rendered = 0
+    total = len(built["cams"]) * len(sc["t"])
+    done = sum(1 for name in built["cams"] for f in range(1, len(sc["t"]) + 1)
+               if args.resume and (out / "frames" / name / f"{f:04d}.png").exists())
     for name, cam in built["cams"].items():
       sized(name, w, h)
       for f in range(1, len(sc["t"]) + 1):
@@ -739,6 +742,7 @@ def main(argv: list[str]) -> int:
           return MORE_FRAMES
         render_frame(cam, f, out / "frames" / name / f"{f:04d}.png")
         rendered += 1
+        print(f"frame {done + rendered}/{total} {name}", flush=True)   # progress for callers
       manifest["video"][name] = f"frames/{name}/%04d.png"
   (out / "render.json").write_text(json.dumps(manifest, indent=1))
   print(f"{sc['id']}: {len(manifest['stills'])} stills ({manifest['vehicle']}); clip cameras {list(manifest['video'])}")
