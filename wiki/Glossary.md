@@ -1,6 +1,6 @@
 # Glossary
 
-The codes that appear in file names, commit messages, the records and the dashboard, decoded in one place.
+The codes that appear in file names, commit messages, the records and the dashboard, decoded in one place. Every abbreviation and record code used on the assurance pages and figures is also listed, one line each, in [assurance/terms.md](../assurance/terms.md), the list those pages and figures are checked against.
 
 ## Work product prefixes
 
