@@ -91,5 +91,6 @@ Generated from the SysML model (view V-09): requirements by verification method,
 |---|---|
 | [`requirements/`](requirements/README.md) | Requirements at a glance |
 | [`reviews/`](reviews/) | — |
+| [`tsc/`](tsc/README.md) | Technical safety concept |
 
 GitHub lists this folder's files above this page; each work product's document embeds its own figures.

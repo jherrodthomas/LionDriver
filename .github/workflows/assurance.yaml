@@ -121,6 +121,8 @@ jobs:
         python3 assurance/03-system/figures/test_fig_s03_defence_in_depth.py
         python3 assurance/03-system/figures/fig_s03_hierarchy.py --check
         python3 assurance/03-system/figures/test_fig_s03_hierarchy.py
+        python3 assurance/03-system/figures/fig_s03_mechanisms.py --check
+        python3 assurance/03-system/figures/test_fig_s03_mechanisms.py
         python3 assurance/03-system/figures/fig_s05_hsi.py --check
         python3 assurance/03-system/figures/test_fig_s05_hsi.py
         python3 assurance/03-system/figures/fig_s00_se.py --check

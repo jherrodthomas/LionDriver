@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="786" viewBox="0 0 1280 786" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">Figure 12-1. Degradation ladder (WP-C-04 §12.1, §6)</title>
+<desc id="d">Six degradation levels of WP-C-04 §12.1, one row each: L0 Full function: lateral Active, longitudinal Active; L1 Override: lateral Torque reduced toward zero while the driver steers against it (FSR-05.03, DQ-053), longitudinal Blocked while gas pressed; L2 Take-over request, planned: lateral Active with valid inputs, ramping down ≤ soft-disable time, longitudinal Force decel to cruise 0; L3 Immediate disengagement: lateral SS-L, longitudinal SS-G + cancel; L4 Envelope silent: lateral SS-S, longitudinal SS-S; L5 Lockout: lateral Not available, longitudinal Not available. Safe states from §6: SS-L: 0x2E4 torque 0, steer request cleared; SS-G: 0x343 inactive value; ACC cancel requested; SS-S: SILENT/NO_OUTPUT: no TX, relay released (stock camera path).</desc>
+<defs></defs>
+<rect width="1280" height="786" fill="#FFFFFF"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 12-1 · Degradation ladder: from full function to lockout</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">What the item does at each level of §12.1: lateral and longitudinal control, what the driver is told, and what puts it there</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-04 §12.1, §6</text>
+<text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">fail-silent: no emergency operation (§6)</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+<text x="312" y="112" font-size="10.5" fill="#475569" font-weight="700" letter-spacing=".04em">LATERAL</text>
+<text x="512" y="112" font-size="10.5" fill="#475569" font-weight="700" letter-spacing=".04em">LONGITUDINAL</text>
+<text x="692" y="112" font-size="10.5" fill="#475569" font-weight="700" letter-spacing=".04em">DRIVER INFORMATION</text>
+<text x="952" y="112" font-size="10.5" fill="#475569" font-weight="700" letter-spacing=".04em">TRIGGER EXAMPLES</text>
+<text x="92" y="112" font-size="10.5" fill="#475569" font-weight="700" letter-spacing=".04em">LEVEL</text>
+<rect x="84" y="126" width="1156" height="58" rx="9" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.2"/>
+<rect x="84" y="126" width="6" height="58" rx="3" fill="#0F766E"/>
+<rect x="98" y="138" width="40" height="22" rx="11" fill="#0F766E"/>
+<text x="118" y="153.5" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">L0</text>
+<text x="148" y="154" font-size="13" fill="#0F172A" font-weight="700">Full function</text>
+<text x="312" y="152" font-size="11" fill="#0F172A">Active</text>
+<text x="512" y="152" font-size="11" fill="#0F172A">Active</text>
+<text x="692" y="152" font-size="11" fill="#0F172A">Engaged indication (device + cluster cruise +</text>
+<text x="692" y="166" font-size="11" fill="#0F172A">LKAS HUD)</text>
+<text x="952" y="152" font-size="11" fill="#0F172A">—</text>
+<rect x="84" y="194" width="1156" height="72" rx="9" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
+<rect x="84" y="194" width="6" height="72" rx="3" fill="#1D4ED8"/>
+<rect x="98" y="206" width="40" height="22" rx="11" fill="#1D4ED8"/>
+<text x="118" y="221.5" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">L1</text>
+<text x="148" y="222" font-size="13" fill="#0F172A" font-weight="700">Override</text>
+<text x="312" y="220" font-size="11" fill="#0F172A">Torque reduced toward zero while</text>
+<text x="312" y="234" font-size="11" fill="#0F172A">the driver steers against it</text>
+<text x="312" y="248" font-size="11" fill="#0F172A">(FSR-05.03, DQ-053)</text>
+<text x="512" y="220" font-size="11" fill="#0F172A">Blocked while gas pressed</text>
+<text x="692" y="220" font-size="11" fill="#0F172A">Override indication</text>
+<text x="952" y="220" font-size="11" fill="#0F172A">Driver gas or steering (events.py:728, 736)</text>
+<rect x="84" y="276" width="1156" height="58" rx="9" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<rect x="84" y="276" width="6" height="58" rx="3" fill="#D97706"/>
+<rect x="98" y="288" width="40" height="22" rx="11" fill="#D97706"/>
+<text x="118" y="303.5" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">L2</text>
+<text x="148" y="304" font-size="13" fill="#0F172A" font-weight="700">Take-over request,</text>
+<text x="148" y="319" font-size="13" fill="#0F172A" font-weight="700">planned</text>
+<text x="312" y="302" font-size="11" fill="#0F172A">Active with valid inputs, ramping</text>
+<text x="312" y="316" font-size="11" fill="#0F172A">down ≤ soft-disable time</text>
+<text x="512" y="302" font-size="11" fill="#0F172A">Force decel to cruise 0</text>
+<text x="692" y="302" font-size="11" fill="#0F172A">Soft-disable alert, then immediate-disable</text>
+<text x="692" y="316" font-size="11" fill="#0F172A">form &lt; 0.5 s</text>
+<text x="952" y="302" font-size="11" fill="#0F172A">Non-critical faults (thermal, memory, calibration)</text>
+<rect x="84" y="344" width="1156" height="58" rx="9" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<rect x="84" y="344" width="6" height="58" rx="3" fill="#D2553F"/>
+<rect x="98" y="356" width="40" height="22" rx="11" fill="#D2553F"/>
+<text x="118" y="371.5" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">L3</text>
+<text x="148" y="372" font-size="13" fill="#0F172A" font-weight="700">Immediate</text>
+<text x="148" y="387" font-size="13" fill="#0F172A" font-weight="700">disengagement</text>
+<rect x="312" y="358" width="40.1" height="18" rx="9" fill="#FFF7ED" stroke="#9A3412" stroke-width="1.3"/>
+<text x="332.038" y="371" font-size="10" fill="#9A3412" font-weight="700" text-anchor="middle">SS-L</text>
+<rect x="512" y="358" width="40.1" height="18" rx="9" fill="#FFF7ED" stroke="#9A3412" stroke-width="1.3"/>
+<text x="532.038" y="371" font-size="10" fill="#9A3412" font-weight="700" text-anchor="middle">SS-G</text>
+<text x="558.076" y="370" font-size="11" fill="#0F172A">+ cancel</text>
+<text x="692" y="370" font-size="11" fill="#0F172A">Immediate-disable alert (visual + acoustic)</text>
+<text x="952" y="370" font-size="11" fill="#0F172A">Untrusted command or input, envelope/RX fault, relay</text>
+<text x="952" y="384" font-size="11" fill="#0F172A">fault, CAN error</text>
+<rect x="84" y="412" width="1156" height="48" rx="9" fill="#FEE2E2" stroke="#991B1B" stroke-width="1.2"/>
+<rect x="84" y="412" width="6" height="48" rx="3" fill="#991B1B"/>
+<rect x="98" y="424" width="40" height="22" rx="11" fill="#991B1B"/>
+<text x="118" y="439.5" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">L4</text>
+<text x="148" y="440" font-size="13" fill="#0F172A" font-weight="700">Envelope silent</text>
+<rect x="312" y="426" width="40.1" height="18" rx="9" fill="#FFF7ED" stroke="#9A3412" stroke-width="1.3"/>
+<text x="332.038" y="439" font-size="10" fill="#9A3412" font-weight="700" text-anchor="middle">SS-S</text>
+<rect x="512" y="426" width="40.1" height="18" rx="9" fill="#FFF7ED" stroke="#9A3412" stroke-width="1.3"/>
+<text x="532.038" y="439" font-size="10" fill="#9A3412" font-weight="700" text-anchor="middle">SS-S</text>
+<text x="692" y="438" font-size="11" fill="#0F172A">Panda buzzer (SoC lost)</text>
+<text x="952" y="438" font-size="11" fill="#0F172A">SoC heartbeat loss, MCU fault</text>
+<rect x="84" y="470" width="1156" height="44" rx="9" fill="#F1F5F9" stroke="#475569" stroke-width="1.2"/>
+<rect x="84" y="470" width="6" height="44" rx="3" fill="#475569"/>
+<rect x="98" y="482" width="40" height="22" rx="11" fill="#475569"/>
+<text x="118" y="497.5" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">L5</text>
+<text x="148" y="498" font-size="13" fill="#0F172A" font-weight="700">Lockout</text>
+<text x="312" y="496" font-size="11" fill="#0F172A">Not available</text>
+<text x="512" y="496" font-size="11" fill="#0F172A">Not available</text>
+<text x="692" y="496" font-size="11" fill="#0F172A">No-entry alert with remaining time</text>
+<text x="952" y="496" font-size="11" fill="#0F172A">DM non-compliance (policy.py:47-49)</text>
+<defs><marker id="dl-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker></defs>
+<line x1="56" y1="134" x2="56" y2="502" stroke="#475569" stroke-width="1.6" marker-end="url(#dl-arrow)"/>
+<text x="48" y="325" font-size="11" fill="#475569" font-weight="700" text-anchor="middle" transform="rotate(-90 48 325)">more function withdrawn</text>
+<line x1="40" y1="538" x2="1240" y2="538" stroke="#E2E8F0"/>
+<text x="40" y="564" font-size="10.5" fill="#475569" font-weight="700" letter-spacing=".04em">SAFE STATES (§6)</text>
+<rect x="40" y="578" width="389.333" height="160" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="54" y="589" width="40.1" height="18" rx="9" fill="#FFF7ED" stroke="#9A3412" stroke-width="1.3"/>
+<text x="74.038" y="602" font-size="10" fill="#9A3412" font-weight="700" text-anchor="middle">SS-L</text>
+<text x="102.076" y="602" font-size="12" fill="#0F172A" font-weight="700">lateral safe</text>
+<text x="54" y="624" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".04em">WHAT IT IS</text>
+<text x="54" y="638" font-size="10.5" fill="#0F172A">0x2E4 torque 0, steer request cleared</text>
+<text x="54" y="657.5" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".04em">ENTERED BY</text>
+<text x="54" y="671.5" font-size="10.5" fill="#0F172A">Any lateral fault, driver brake/cancel, authority revoked</text>
+<text x="54" y="691" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".04em">LEFT BY</text>
+<text x="54" y="705" font-size="10.5" fill="#0F172A">New valid engagement (PCM rising edge)</text>
+<rect x="445.333" y="578" width="389.333" height="160" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="459.333" y="589" width="40.1" height="18" rx="9" fill="#FFF7ED" stroke="#9A3412" stroke-width="1.3"/>
+<text x="479.371" y="602" font-size="10" fill="#9A3412" font-weight="700" text-anchor="middle">SS-G</text>
+<text x="507.409" y="602" font-size="12" fill="#0F172A" font-weight="700">longitudinal safe</text>
+<text x="459.333" y="624" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".04em">WHAT IT IS</text>
+<text x="459.333" y="638" font-size="10.5" fill="#0F172A">0x343 inactive value; ACC cancel requested</text>
+<text x="459.333" y="657.5" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".04em">ENTERED BY</text>
+<text x="459.333" y="671.5" font-size="10.5" fill="#0F172A">Any longitudinal fault, driver brake/cancel</text>
+<text x="459.333" y="691" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".04em">LEFT BY</text>
+<text x="459.333" y="705" font-size="10.5" fill="#0F172A">New valid engagement</text>
+<rect x="850.667" y="578" width="389.333" height="160" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="864.667" y="589" width="40.1" height="18" rx="9" fill="#FFF7ED" stroke="#9A3412" stroke-width="1.3"/>
+<text x="884.705" y="602" font-size="10" fill="#9A3412" font-weight="700" text-anchor="middle">SS-S</text>
+<text x="912.743" y="602" font-size="12" fill="#0F172A" font-weight="700">envelope silent</text>
+<text x="864.667" y="624" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".04em">WHAT IT IS</text>
+<text x="864.667" y="638" font-size="10.5" fill="#0F172A">SILENT/NO_OUTPUT: no TX, relay released (stock camera path)</text>
+<text x="864.667" y="657.5" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".04em">ENTERED BY</text>
+<text x="864.667" y="671.5" font-size="10.5" fill="#0F172A">Heartbeat loss, MCU fault, unknown mode (panda/board/main.c:33-54,</text>
+<text x="864.667" y="685" font-size="10.5" fill="#0F172A">193-213)</text>
+<text x="864.667" y="704.5" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".04em">LEFT BY</text>
+<text x="864.667" y="718.5" font-size="10.5" fill="#0F172A">Restart / re-initialisation</text>
+<text x="40" y="764" font-size="11" fill="#475569">Every fault-induced move to L2, L3 or L4 gives an acoustic and visual take-over request (§12.2). There is no lateral-only or longitudinal-only mode.</text>
+<text x="1240" y="764" font-size="10" fill="#475569" text-anchor="end">Generated by fsc_degradation.py</text>
+</svg>
