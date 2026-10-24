@@ -3,8 +3,8 @@
 | Field | Value |
 |---|---|
 | Scope | Design of a simulation that plays the [WP-C-09](../../02-concept/WP-C-09-tara.md) attack paths through LionDriver's topology ([WP-S-07](../../03-system/WP-S-07-cybersecurity-requirements-architecture.md) §3.1–3.2), shows where each path meets a control and how far that control is built, and, where a path reaches the car, hands the last step to the layer-1 plant ([`../plant/`](../plant/)), which runs the real panda safety code |
-| Version | 0.1 (first draft: model, mapping, outputs, limits, and the prototype proposal for TS-06 and TS-14; nothing built; 2026-10-24) |
-| Status | Draft. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed. Design only: no code, no result |
+| Version | 0.2 (§7: a mock review dashboard for TS-14, a Blender hardware cutaway with CC-BY stand-in parts and the TARA panels, from `mock/`; cyber accents; the path model itself is still not built; 2026-10-24). 0.1 (first draft: model, mapping, outputs, limits, and the prototype proposal for TS-06 and TS-14; nothing built; 2026-10-24) |
+| Status | Draft. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed. Design and one mock picture: no path model, no result |
 | Feeds | Review figures and dashboards for [WP-C-09](../../02-concept/WP-C-09-tara.md), [WP-C-10](../../02-concept/WP-C-10-cybersecurity-goals-and-concept.md) and [WP-S-07](../../03-system/WP-S-07-cybersecurity-requirements-architecture.md); previews cases for [WP-V-06](../../06-validation/WP-V-06-cybersecurity-validation.md). **Never evidence** (§5) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (acting cybersecurity manager) |
@@ -217,3 +217,40 @@ One question is recorded in the [decision register](../../01-management/decision
 asked, because the prototype does not wait on it: whether the HARA and HATARA should record attacker-triggered
 hazardous events, whose exposure is chosen rather than random (choice 5 above works either way). Nothing else here
 needs the lead.
+
+## 7. Mock dashboard (v0.2)
+
+A mock of what the §4 dashboard could look like for TS-14, made for the lead's review of the layout before the path
+model is built. Like everything in the track it is synthetic (DSR-12) and earns no evidence credit.
+
+![Mock review dashboard for TS-14: a Blender cutaway of the item's hardware inside a see-through Corolla with the attack path from the SoC through the panda and the harness relay to the EPS drawn in fuchsia and the panda's gate as a dashed amber ring; around it the threat card with the attack-potential factors and the CAL flag, the risk matrix with treatment and residual, a TARA summary row, the gates with their status, STRIDE and CIA chips with the impact heat strip, an isometric attack path with its precursor threat scenarios, and two plots from plant case F-01b](figures/cy-ts-14-tx-flood-mock.jpg)
+
+*Mock, TS-14.* Made by [`mock/cyber_scene.py`](mock/cyber_scene.py) (Blender 5 through `bpy`) and
+[`mock/compose.py`](mock/compose.py).
+
+| Source | What it gives the picture |
+|---|---|
+| WP-C-09 v0.8 §2–§8 | Assets, STRIDE, violated properties, impact, feasibility factors, risk value, treatment, residual, precursor paths |
+| WP-C-10 v0.6 §3, §4, OI-8 | CSG-05, its CAL proposal and the open CAL question |
+| WP-S-07 v0.7 §4 | Gate states of CSR-061, CSR-063, CSR-092 and CSR-093 |
+| WP-C-03 | The ASILs of the linked hazards (proposals) |
+| Plant case F-01b, run by `compose.py` | The torque and offset plots and the driver-correction time |
+| HE-01.2 dashboard | The consequence picture, reused |
+
+What the mock does not have yet:
+
+- The TARA values are written out in `compose.py`. The §6 path model will read them from the documents and fail when they change.
+- The rate-flood fault kind is not built. The hand-off reuses the hard-over case, and the "as built" outcome is marked as expected from the code, not run.
+- The hardware is generic CC-BY stand-ins from the private assets repository (credited on the picture), not the comma device, the panda or the Toyota ECUs.
+
+Colours: fuchsia marks the cyber items (path, threat, impact, risk and feasibility scales) and cyan the security
+properties and the chosen treatment. Red and amber appear only where safety comes in (hazards, ASILs) and in the
+barrier convention shared with Figures 9-2 and 7-1, so the cyber pages are not mistaken for the FuSa and SOTIF
+dashboards.
+
+```sh
+python3 assurance/sim/cyber/mock/cyber_scene.py   # needs the LionDriver-assets clone (Corolla glb via Git LFS); about 2 min on 4 CPUs
+python3 assurance/sim/cyber/mock/compose.py       # needs the opendbc and panda submodules for the plant run
+```
+
+The mock needs Blender and the private assets, so it is not in CI (as with the Blender scenes of `../blender/`).
