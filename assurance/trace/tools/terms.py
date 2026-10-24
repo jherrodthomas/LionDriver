@@ -35,6 +35,7 @@ TERMS_PAGE = A / "terms.md"
 # Pages that carry a generated "Terms on this page" block, and generated figures that carry a definitions line.
 PAGES = [
   A / "02-concept/item/README.md",
+  A / "02-concept/cybersecurity/README.md",
   A / "02-concept/hara/README.md",
   A / "02-concept/fsc/README.md",
   A / "02-concept/sotif/README.md",
@@ -43,6 +44,7 @@ PAGES = [
 ]
 FIGURES = [
   A / "02-concept/figures/fig-c01-3-4-function-allocation.svg",
+  A / "02-concept/figures/fig-c10-6-1-concept-view.svg",
   A / "02-concept/fsc/figures/fig-c04-10-1-safety-view.svg",
   A / "02-concept/fsc/figures/fig-c04-12-1-degradation-ladder.svg",
   A / "02-concept/hara/figures/fig-c03-3-1-situations.svg",
@@ -127,6 +129,8 @@ TERMS = {
   "VRU": "vulnerable road user: pedestrian or cyclist",
   "AGNOS": "the comma device's operating system",
   "MPU": "memory protection unit",
+  "RDP": "read-out protection of the MCU's flash (option bytes)",
+  "WRP": "write protection of the MCU's flash (option bytes)",
   "RAM": "random-access memory",
   "ECC": "error-correcting code (memory)",
   "CRC": "cyclic redundancy check",
@@ -180,6 +184,9 @@ TERMS = {
   "TS-": "threat scenario (TARA §4)",
   "AP-": "attack path (TARA §5)",
   "CSG-": "cybersecurity goal (WP-C-10)",
+  "CSR-": "cybersecurity requirement: CSR-C-nn at concept level (WP-C-10 §7), CSR-nnn refined (WP-S-07)",
+  "CSC-": "cybersecurity claim: a risk retained, shared or avoided, with its condition (WP-C-10 §5)",
+  "CA-": "cybersecurity assumption on an entity outside the item (WP-C-10 §2)",
   "IX-": "safety-security interaction (HATARA)",
   "DQ-": "decision of the project lead (decision register)",
   "D-": "design decision of the earlier decision list (D-01…D-12; D-08 is the Experimental Mode decision)",

@@ -31,6 +31,7 @@ Standard clauses: 26262-3, 21448 §5–8, 21434 §9/§15, PAS 8800.
 
 | Folder | What it holds |
 |---|---|
+| [`cybersecurity/`](cybersecurity/README.md) | Cybersecurity concept |
 | [`fsc/`](fsc/README.md) | Functional safety concept |
 | [`hara/`](hara/README.md) | Hazard analysis and risk assessment (HARA) |
 | [`hatara/`](hatara/README.md) | HATARA: where the HARA and the TARA meet |
