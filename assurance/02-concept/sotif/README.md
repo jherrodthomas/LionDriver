@@ -1,40 +1,165 @@
-# SOTIF figure generator
+# Safety of the intended functionality (SOTIF)
 
-This folder holds the generator for the triggering-condition chain in [WP-C-06](../WP-C-06-sotif-insufficiencies-triggering-conditions.md) §5.
+The HARA and the functional safety concept ask what happens when something **fails**. SOTIF (ISO 21448) asks what
+happens when nothing fails: the camera, the model and the planner all work as designed, and the car still does
+something hazardous. The cause is a situation the design was never good enough for, such as low sun, a tar seam that
+looks like a lane line, or a stopped car around a curve.
 
-| File | What it is |
-|---|---|
-| [`sotif_figures.py`](sotif_figures.py) | Generator. It reads the WP-C-06 tables (§3 functional insufficiencies, §4 triggering conditions, §5 evaluation) and the WP-C-05 §3 hazard table, then writes Figure 5-1 of WP-C-06 |
-| [`sotif_scenes.py`](sotif_scenes.py) | Draws the SOTIF scene sheet: one card per SOTIF hazard of WP-C-05 §3, each the chart of one WP-C-06 §5 row (triggering condition → insufficiency → hazard) over a top-down scene. Texts, S/C and evaluations come from the documents; the behaviour curves are schematic and live in this file. Written and checked by `sotif_figures.py` |
-| [`fm_scenes.py`](fm_scenes.py) | Draws the WP-C-07 modification sheets: one card per functional modification, what the car does today against the same scene with it. Chips and cells come from WP-C-07 §2-§3; every "today" and "status" text quotes the documents and the build fails if a quoted passage changes. Written and checked by `sotif_figures.py` |
-| [`test_fm_scenes.py`](test_fm_scenes.py) | Unit tests: one card per modification on the right sheet, chips and cells match WP-C-07, changed quotes, missing cards, unaddressed hazards and priority mismatches are rejected, every scene loops |
-| [`test_sotif_scenes.py`](test_sotif_scenes.py) | Unit tests: one card per hazard, card texts and chips match WP-C-05/06, missing models and unlinked insufficiencies are rejected, every scene loops |
-| [`test_sotif_figures.py`](test_sotif_figures.py) | Unit tests: the committed SVG is current, every TC and FI appears in the chain, and malformed tables are rejected |
-| [`../figures/fig-c06-5-1-tc-fi-sh-chain.svg`](../figures/fig-c06-5-1-tc-fi-sh-chain.svg) | Generated. TC → FI edges come from §5, coloured by the row's evaluation outcome. FI → SH edges come from the "Linked SH" column of §3 |
-| [`../figures/fig-c06-5-2-sotif-scenes.svg`](../figures/fig-c06-5-2-sotif-scenes.svg) | Generated. The SOTIF scene sheet (below) |
-| [`../figures/fig-c07-3-1-fm-scenes-p1.svg`](../figures/fig-c07-3-1-fm-scenes-p1.svg), [`fig-c07-3-2-fm-scenes-p2-p3.svg`](../figures/fig-c07-3-2-fm-scenes-p2-p3.svg) | Generated. The modification sheets of [WP-C-07](../WP-C-07-sotif-functional-modifications.md#modification-scenes-p1) §2: P1, then P2 and P3 |
+This page walks through LionDriver's SOTIF analysis with its figures. The documents are the source of record, and
+every figure here is generated from them.
 
-WP-C-05 and WP-C-06 are the analysis of record. Do not edit the SVGs by hand.
+**The analysis in five lines.**
 
-## SOTIF scenes
+1. The intended functionality and its operating domain (ODD) are set in [WP-C-02](../WP-C-02-odd-and-intended-functionality.md).
+   The ODD is limited-access highways only, up to 110 km/h, in no more than light rain (DQ-023, DQ-260, DQ-414).
+2. Twelve SOTIF hazards, SH-01 to SH-13, are identified and rated in [WP-C-05](../WP-C-05-sotif-hazard-identification.md).
+   SH-07 is not used. Most share their vehicle-level effect, and their S and C ratings, with a HARA hazard.
+3. [WP-C-06](../WP-C-06-sotif-insufficiencies-triggering-conditions.md) finds 23 functional insufficiencies and 35
+   triggering conditions that expose them, and evaluates each. 12 need a modification, 20 need validation, and 3 are
+   acceptable with a stated condition.
+4. [WP-C-07](../WP-C-07-sotif-functional-modifications.md) specifies 11 functional modifications: 6 before any on-road
+   use (P1), 4 before release (P2) and 1 to decide at G2 (P3).
+5. [WP-V-02](../../06-validation/WP-V-02-sotif-vv-strategy.md) sets 15 validation targets. The residual risk is
+   accepted when they are met. They are proposals until the lead freezes them (DQ-096), and none is met yet.
+
+| Where it comes from | The analysis | Where it goes |
+|---|---|---|
+| [Item definition (WP-C-01)](../WP-C-01-item-definition.md) and [ODD and intended functionality (WP-C-02)](../WP-C-02-odd-and-intended-functionality.md) | Hazards, insufficiencies, triggering conditions, modifications, acceptance criteria | [SOTIF V&V strategy (WP-V-02)](../../06-validation/WP-V-02-sotif-vv-strategy.md), [known scenarios (WP-V-03)](../../06-validation/WP-V-03-sotif-known-scenarios.md) |
+| [HARA (WP-C-03)](../WP-C-03-hara.md): hazards and ratings shared with SH-nn | Driver, HMI and misuse ([WP-C-08](../WP-C-08-driver-hmi-misuse-analysis.md)) | [System requirements (WP-S-01)](../../03-system/WP-S-01-system-requirements.md), [TSRs (WP-S-02)](../../03-system/WP-S-02-technical-safety-requirements.md) |
+
+## 1. From the ODD to the SOTIF view
+
+The ODD says where the function is meant to work. The SOTIF analysis asks which situations inside that domain, or at
+its edge, catch the function out. Below, the ODD is shown twice: first as WP-C-02 draws it, then with the triggering
+conditions placed in it.
+
+![WP-C-02 Figure 3-1: ODD taxonomy tree from the reference ODD through its 14 categories (road type, geometry, lane markings, speed, weather, lighting, road surface, traffic, VRUs, geography, infrastructure, connectivity, vehicle state, driver state) to the values included in ODD-H](../figures/fig-c02-3-1-odd-taxonomy.svg)
+
+*The ODD, as [WP-C-02](../WP-C-02-odd-and-intended-functionality.md) §3.1 draws it (Figure 3-1).*
+
+![WP-C-06 Figure 4-1: the same ODD categories in the SOTIF view, each with the triggering conditions that sit in it, coloured by their evaluation: needs modification, needs validation, acceptable with a stated condition; conditions inside the system, its configuration or its HMI grouped apart](../figures/fig-c06-4-1-odd-sotif-view.svg)
+
+*The same ODD in the SOTIF view (WP-C-06 §4, Figure 4-1).* Traffic and geometry hold the most conditions: cut-ins,
+stopped cars, a lead hidden in a curve, curves tighter than the ODD bound, narrow lanes. Five conditions are not in
+the domain at all. They are inside the system (a model switch, stale messages), its configuration (debug modes) or
+its HMI (the driver believes the system is off). A category with no condition here has not been shown to be free of
+them.
+
+The ODD's speed and curve envelope is where the lateral insufficiencies sit:
+
+![WP-C-02 Figure 3-2: ODD speed–curvature envelope, minimum curve radius against speed 0–130 km/h, with the controller limit and the proposed ODD bound](../figures/fig-c02-3-2-odd-envelope.svg)
+
+*Figure 3-2 of WP-C-02.* Above the dashed bound is inside the ODD. A tighter curve at speed is triggering condition
+TC-14. The planner does not slow down for curves in Chill mode, so entering one is the driver's task.
+
+## 2. Where the analysis stands: the four areas
+
+![WP-C-05 Figure 2-1: ISO 21448 four-area chart: known hazardous (the SOTIF hazards, insufficiencies and triggering conditions), unknown hazardous (the black-box driving model), known not hazardous (nothing yet by evidence), and the treatment routes between them](../figures/fig-c05-2-1-sotif-four-areas.svg)
+
+*WP-C-05 Figure 2-1.* ISO 21448 aims to move scenarios out of the hazardous areas, either known (area 2) or
+unknown (area 3), into area 1, known not hazardous. Area 1 is still empty: nothing has yet been shown safe by
+evidence. The driving model is a black box (its training data is not published, GAP-22), so area 3 is reduced only
+by exploration (WP-V-04, AC-07) and the runtime monitor (FM-09).
+
+## 3. From each hazard to its evidence
+
+![WP-C-05 Figure 6-1: the SOTIF line-up: one row per hazard SH-01 to SH-13 with its insufficiencies, triggering conditions by evaluation, modifications by priority, validation targets and acceptance criteria](../figures/fig-c05-6-1-sotif-lineup.svg)
+
+*WP-C-05 Figure 6-1.* Read a row left to right: what exposes the hazard, what changes the function, what must be
+shown. It shows links, not progress. Gaps to note:
+
+- **SH-08** (stock PCS degraded) and **SH-10** (lane change into an occupied lane) have no modification. SH-08 rests
+  on the PCS tests of AC-06. SH-10 rests on user information and an abort test (VT-13).
+- **SH-11** (no reaction to a VRU) has no validation target. Highways only (DQ-023) makes a VRU in the lane rare;
+  it stays the driver's responsibility.
+- **SH-09** (traffic-control non-compliance) leaves scope with Experimental Mode locked off (FM-01). KS-24 verifies
+  the lock.
+
+## 4. Triggering conditions → insufficiencies → hazards
+
+![WP-C-06 Figure 5-1: three-column chain from the triggering conditions TC-01 to TC-35, coloured by evaluation, to the functional insufficiencies FI-01 to FI-23, to the SOTIF hazards](../figures/fig-c06-5-1-tc-fi-sh-chain.svg)
+
+*WP-C-06 Figure 5-1.* Every condition is evaluated once (§5). The generator fails if a condition is not evaluated,
+or if an insufficiency is activated by no condition.
+
+### What each hazard looks like on the road
 
 ![Twelve looping cards, one per SOTIF hazard SH-01 to SH-13 (SH-07 is not used). Each shows a chart of what the situation needs, as a dashed green line, against what the car does, as a red line, over a top-down road scene in which a triggering condition such as a tar seam, an overhead gantry, a tight curve or a red light exposes an insufficiency of the intended function](../figures/fig-c06-5-2-sotif-scenes.svg)
 
-*What each SOTIF hazard looks like on the road.* Nothing fails in these scenes: the system works as specified, and a triggering condition exposes an insufficiency. Each card draws one row of WP-C-06 §5 and lists the other triggering conditions that reach the same hazard. Two styles follow the class WP-C-06 §3 gives the insufficiency:
+*What each SOTIF hazard looks like on the road (WP-C-06 Figure 5-2).* Nothing fails in these scenes. The system
+works as specified, and a triggering condition exposes an insufficiency. Each card draws one row of WP-C-06 §5. Two
+styles follow the class WP-C-06 §3 gives the insufficiency:
 
-- **P, performance insufficiency** ("it sees it wrong"): the blue dashed layer is what the camera or radar believes, drawn over the true road. The chart sets that belief against what is true.
-- **S, specification insufficiency** ("not enough as specified"): the chart sets what the situation needs against what the specification delivers, with the specified limit as a grey dashed line and the gap shaded.
+- **P, performance insufficiency** ("it sees it wrong"): the blue dashed layer is what the camera or radar believes,
+  drawn over the true road.
+- **S, specification insufficiency** ("not enough as specified"): the chart sets what the situation needs against
+  what the specification delivers, with the specified limit as a grey dashed line.
 
-The scenes are schematic, to explain each hazard; the measured cases are the plant runs in [assurance/sim §3.7](../../sim/README.md#37-the-asil-c-hazardous-events-in-the-loop). Each card loops in a browser; a viewer that shows the SVG as a still shows the last frame.
+The scenes are schematic, to explain each hazard. The measured cases are the plant runs in
+[assurance/sim §3.7](../../sim/README.md#37-the-asil-c-hazardous-events-in-the-loop). Each card loops in a browser.
+
+## 5. What changes the function
+
+![WP-C-07 Figure 3-1: six cards, FM-01 to FM-06, each setting what the car does today against what it does with the modification](../figures/fig-c07-3-1-fm-scenes-p1.svg)
+
+*The P1 modifications, needed before any on-road use beyond safety-driver testing (WP-C-07 §2).* Each card sets what
+the car does today against the same scene with the modification. Of the eleven, WP-C-07 records one as done: FM-01(a),
+the Chill-mode default (DQ-001). The others are specified, each with its verification.
+
+<details><summary>The P2 and P3 modifications (FM-07 to FM-11)</summary>
+
+![WP-C-07 Figure 3-2: five cards, FM-07 to FM-11: the 110 km/h bound, the off-highway speed floor, the model plausibility monitor, speed-dependent lateral authority and restricted auto-resume](../figures/fig-c07-3-2-fm-scenes-p2-p3.svg)
+
+</details>
+
+## 6. The driver and misuse
+
+SOTIF counts reasonably foreseeable misuse as well as insufficiencies ([WP-C-08](../WP-C-08-driver-hmi-misuse-analysis.md)).
+The driver who stops supervising is treated on both sides (DQ-003). Here, as SH-12, it removes the basis of the C2
+ratings of SH-01 to SH-11. In the HARA it is the unresponsive-driver goal SG-08. Driver monitoring is the counter
+(FM-05, FM-06, AC-05). Off-highway use is analysed as misuse, not claimed (DQ-213).
+
+## 7. When is the residual risk accepted
+
+The top-level claim is that residual risk is no worse than manual driving of the same car with its stock assistance
+(WP-C-05 §5.1). Two layers carry it:
+
+- **Qualitative criteria AC-01 to AC-07** (WP-C-05 §5.3), checked by review and test. Examples: every triggering
+  condition evaluated; actuation inside the envelope; stock PCS unchanged; exploration finding nothing new.
+- **Validation targets VT-01 to VT-15** (WP-V-02 §4), from rate and scenario-level targets to driver-monitoring
+  performance.
+
+![WP-V-02 Figure 4-1: validation targets VT-01 to VT-15 on log scales of driving exposure and of trials per scenario, against the capacity of public road, closed course and simulation](../../06-validation/figures/fig-v02-4-1-validation-targets.svg)
+
+*WP-V-02 Figure 4-1.* What each target needs in driving or trials, set against what public road, closed course
+and simulation can supply (WP-V-02 §3.2).
+
+## 8. Open items
+
+The ones that can change the analysis are below; each document lists all of its own.
+
+- **WP-C-05 OI-3:** choose the human-driver baseline data for the acceptance targets.
+- **WP-C-05 OI-4:** whether the reference car has a blind-spot input (SH-10).
+- **WP-V-02 OI-2, OI-3:** replace the illustrative crash rates with real data, then freeze the targets.
+- **WP-C-07 OI-5:** re-run the WP-C-06 evaluation once the modifications are implemented.
+
+## Files in this folder
+
+| File | What it is |
+|---|---|
+| [`sotif_figures.py`](sotif_figures.py) | Generator. It reads the WP-C-05 and WP-C-06 tables and writes WP-C-06 Figure 5-1, then the scene sheet, the modification sheets and the two overview figures through the modules below |
+| [`sotif_views.py`](sotif_views.py) | Draws WP-C-06 Figure 4-1 (the ODD in the SOTIF view, from WP-C-02 §3.1 and WP-C-06 §4–§5) and WP-C-05 Figure 6-1 (the line-up, from WP-C-05 §3 and §5.3, WP-C-06, WP-C-07 §2 and WP-V-02 §4). The ODD category of each triggering condition is an analyst input, `TC_ODD` |
+| [`sotif_scenes.py`](sotif_scenes.py) | Draws the SOTIF scene sheet, one card per hazard. Texts, S/C and evaluations come from the documents; the behaviour curves are schematic and live in this file |
+| [`fm_scenes.py`](fm_scenes.py) | Draws the WP-C-07 modification sheets. Every "today" and "status" text quotes the documents, and the build fails if a quoted passage changes |
+| `test_*.py` | Unit tests: every figure is current, every TC and FI appears, every condition has one ODD category, the line-up follows the documents, and malformed tables are rejected |
+| [`../figures/`](../figures/) | The generated SVGs `fig-c05-6-1-*`, `fig-c06-4-1-*`, `fig-c06-5-1-*`, `fig-c06-5-2-*` and `fig-c07-3-*`. Do not edit by hand. The four-area chart is drawn by [`../figures/fig_c05_four_areas.py`](../figures/fig_c05_four_areas.py), the ODD figures by [`../figures/fig_c02_odd.py`](../figures/fig_c02_odd.py) |
 
 ## Regenerating
 
 ```bash
-python3 sotif_figures.py            # write ../figures/fig-c06-5-1-*, fig-c06-5-2-* and the two fig-c07-3-* sheets
-python3 sotif_figures.py --check    # fail if the committed SVG is stale (run in CI)
-python3 test_sotif_figures.py
-python3 test_sotif_scenes.py
-python3 test_fm_scenes.py
+python3 sotif_figures.py            # write every figure listed above
+python3 sotif_figures.py --check    # fail if a figure is stale (run in CI)
+python3 -m unittest discover -p 'test_*.py'
 ```
 
 The generator fails if:
@@ -43,8 +168,9 @@ The generator fails if:
 - a TC is not evaluated in §5, or is evaluated in more than one row;
 - an FI is not activated by any §5 row;
 - an evaluation outcome is not one of the three defined in WP-C-06 §1;
-- an FI links to a hazard that WP-C-05 §3 does not define.
+- an FI links to a hazard that WP-C-05 §3 does not define;
+- a TC has no ODD category, or `TC_ODD` names a category WP-C-02 §3.1 does not have;
+- WP-C-07 §2, WP-V-02 §4 or WP-C-05 §5.3 names a hazard WP-C-05 §3 does not define.
 
-A §5 row that names a hazard which none of its FIs links to in §3 is printed as a warning. The figure follows §3. There is no such row at present.
-
-The drawing helpers and the ASIL colour scale are shared with [`../hara/hara_figures.py`](../hara/hara_figures.py).
+A §5 row that names a hazard which none of its FIs links to in §3 is printed as a warning. The drawing helpers and
+the colour scale are shared with [`../hara/hara_figures.py`](../hara/hara_figures.py).

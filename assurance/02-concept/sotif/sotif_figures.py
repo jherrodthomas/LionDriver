@@ -6,7 +6,8 @@ functional insufficiencies FI-nn (§3) -> SOTIF hazards SH-nn (WP-C-05 §3).
 
 The SOTIF scene sheet (`../figures/fig-c06-5-2-sotif-scenes.svg`, one card per hazard) is drawn by `sotif_scenes.py`
 and written and checked here with Figure 5-1. The WP-C-07 modification sheets (`../figures/fig-c07-3-1-fm-scenes-p1.svg`,
-`fig-c07-3-2-fm-scenes-p2-p3.svg`, one card per FM) are drawn by `fm_scenes.py` and written and checked here too.
+`fig-c07-3-2-fm-scenes-p2-p3.svg`, one card per FM) are drawn by `fm_scenes.py` and written and checked here too, and so
+are WP-C-06 Figure 4-1 (the ODD in the SOTIF view) and WP-C-05 Figure 6-1 (the SOTIF line-up), drawn by `sotif_views.py`.
 
 - TC -> FI edges come from the WP-C-06 §5 evaluation table, coloured by the row's evaluation outcome.
 - FI -> SH edges come from the "Linked SH" column of WP-C-06 §3.
@@ -276,7 +277,9 @@ def load() -> Data:
 def build() -> dict[str, str]:
   import fm_scenes  # the WP-C-07 modification sheets; imports this module, so it is loaded here
   import sotif_scenes  # the SOTIF scene sheet; imports this module, so it is loaded here
-  return {NAME: figure(load()), **sotif_scenes.build(), **fm_scenes.build()}
+  import sotif_views  # the ODD in the SOTIF view and the SOTIF line-up; imports this module too
+  data = load()
+  return {NAME: figure(data), **sotif_scenes.build(), **fm_scenes.build(), **sotif_views.build(data)}
 
 
 def main(argv: list[str]) -> int:
@@ -284,8 +287,9 @@ def main(argv: list[str]) -> int:
   try:
     import fm_scenes  # the WP-C-07 modification sheets (see build)
     import sotif_scenes  # the SOTIF scene sheet (see build)
+    import sotif_views  # the ODD in the SOTIF view and the SOTIF line-up (see build)
     data = load()
-    outputs = {NAME: figure(data), **sotif_scenes.build(), **fm_scenes.build()}
+    outputs = {NAME: figure(data), **sotif_scenes.build(), **fm_scenes.build(), **sotif_views.build(data)}
   except FigureError as e:
     print(f"sotif_figures: {e}", file=sys.stderr)
     return 1
