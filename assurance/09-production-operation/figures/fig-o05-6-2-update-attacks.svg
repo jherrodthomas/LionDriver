@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1310" viewBox="0 0 640 1310" role="img" aria-labelledby="t d">
+<title id="t">Figure 6-2. Update threats: entry and gate (WP-S-07 §4.12, WP-O-05 §6)</title>
+<desc id="d">Figure 6-2: five update threats on one topology of signing key, release origin, network, device and panda. Forged or altered release at the source (R155 Annex 5 12.1, 12.3): enters at the release origin; gate CSR-121, not implemented, no control yet: gets through. Code LionDriver never signed runs on every device that updates. Device sent to another origin or branch (R155 Annex 5 12.1): enters at the device (soc); gate CSR-122, not met, no control yet: gets through. The device installs from a source nobody released. Older release replayed to downgrade (R155 Annex 5 6.3): enters at the network; gate CSR-123, not implemented, no control yet: gets through. A release with known weaknesses goes back on. Install cut short, by fault or on purpose (UN R156 7.2.2.1.1 (informative)): enters at the device (soc); gate CSR-125, partial, partly built: some gets through. A half-installed release; the previous one is meant to stay bootable. Update-signing key stolen (R155 Annex 5 12.4): enters at the signing key; gate CSR-126, not implemented, no control yet: gets through. Forged releases pass every device check, even once CSR-121 is built.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
+      --real:#2a78d6; --real-bg:#e9f1fb; --amb:#c98500; --amb-bg:#fdf4dc; --bad:#e34948; --bad-bg:#fdecec;
+      --pic:#6250d6; --pic-bg:#efedfb; --flt:#eb6834; --cop:#eb6834; --cop-bg:#fde9df; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#1a1a19; --ink:#f0efec; --ink2:#c3c2b7; --ink3:#8d8c85; --grid:#33322f; --card:#232321;
+        --real:#3987e5; --real-bg:#16273c; --amb:#eda100; --amb-bg:#3a2f12; --bad:#e66767; --bad-bg:#3d1e1e;
+        --pic:#9085e9; --pic-bg:#26223f; --flt:#d95926; --cop:#d95926; --cop-bg:#3f2417; }
+}
+.bg { fill:var(--bg); }
+.h { font:600 21px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t { font:15px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.tb { font:600 15px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.tl { font:600 17px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.t2b { font:600 13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.chip { font:600 12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:#ffffff; }
+.tbad { font:600 13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--bad); }
+.hair { stroke:var(--grid); stroke-width:1; }
+.card { fill:var(--card); stroke:var(--grid); stroke-width:1.2; }
+.real { fill:var(--real-bg); stroke:var(--real); stroke-width:2.4; }
+.model { fill:var(--card); stroke:var(--ink3); stroke-width:1.4; }
+.amb { fill:var(--amb-bg); stroke:var(--amb); stroke-width:1.6; stroke-dasharray:6 4; }
+.plan { fill:var(--bg); stroke:var(--ink3); stroke-width:1.4; stroke-dasharray:6 4; }
+.pic { fill:var(--pic-bg); stroke:var(--pic); stroke-width:1.4; }
+.picbox { fill:var(--bg); stroke:var(--pic); stroke-width:1.2; }
+.badbox { fill:var(--bad-bg); stroke:var(--bad); stroke-width:1.4; }
+.copbox { fill:var(--cop-bg); stroke:var(--cop); stroke-width:1.4; }
+.f-real { fill:var(--real); } .f-model { fill:var(--ink3); } .f-amb { fill:var(--amb); } .f-bad { fill:var(--bad); }
+.f-pic { fill:var(--pic); } .f-flt { fill:var(--flt); } .f-cop { fill:var(--cop); } .f-ink2 { fill:var(--ink2); }
+.arr { stroke:var(--ink2); stroke-width:1.6; fill:none; }
+.arrd { stroke:var(--ink3); stroke-width:1.6; fill:none; stroke-dasharray:5 4; }
+.arrb { stroke:var(--bad); stroke-width:1.6; fill:none; stroke-dasharray:5 4; }
+.spring { stroke:var(--ink2); stroke-width:1.8; fill:none; stroke-linejoin:round; }
+.strike { stroke:var(--bad); stroke-width:1.6; }
+svg { --ok:#16a34a; --ok-bg:#e8f6ec; --unv:#0284c7; --unv-bg:#e6f3fb; }
+@media (prefers-color-scheme: dark) { svg { --ok:#3fbf6a; --ok-bg:#16301f; --unv:#38a6e0; --unv-bg:#132a3a; } }
+.unv { fill:var(--unv-bg); stroke:var(--unv); stroke-width:1.6; stroke-dasharray:6 4; }
+.ok { fill:var(--ok-bg); stroke:var(--ok); stroke-width:1.8; }
+.entry { fill:var(--pic-bg); stroke:var(--pic); stroke-width:2.4; }
+.f-ok { fill:var(--ok); } .f-unv { fill:var(--unv); }
+.gate-partial { fill:var(--amb-bg); stroke:var(--amb); stroke-width:2; stroke-dasharray:4 3; }
+.gate-unverified { fill:var(--unv-bg); stroke:var(--unv); stroke-width:2; stroke-dasharray:4 3; }
+.gate-done { fill:var(--ok-bg); stroke:var(--ok); stroke-width:2; }
+.path { stroke:var(--bad); stroke-width:2.6; fill:none; }
+.pathok { stroke:var(--pic); stroke-width:2.6; fill:none; }
+.link { stroke:var(--grid); stroke-width:3; fill:none; }
+</style>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-ink2"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-bad"/></marker><marker id="ap" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-pic"/></marker></defs>
+<rect class="bg" width="640" height="1310"/>
+<text x="24" y="34" class="h">Update threats: entry and gate</text>
+<text x="24" y="56" class="t2">Five threats on one topology; each gate drawn as built (WP-S-07 §4.12)</text>
+<text x="24" y="76" class="t2b">Schematic · no evidence credit · generated by fig_o05_updates.py</text>
+<line x1="24" y1="90" x2="616" y2="90" class="hair"/>
+<rect x="24" y="105" width="18" height="14" rx="3" class="entry"/>
+<text x="48" y="116" class="t2">Entry point</text>
+<rect x="143.8" y="105" width="18" height="14" rx="3" class="gate-partial"/>
+<text x="167.8" y="116" class="t2">Partly built</text>
+<rect x="270.5" y="105" width="18" height="14" rx="3" class="gate-unverified"/>
+<text x="294.5" y="116" class="t2">Built, not verified</text>
+<rect x="445.4" y="105" width="18" height="14" rx="3" class="gate-done"/>
+<text x="469.4" y="116" class="t2">Verified</text>
+<text x="24" y="142" class="t2">No barrier drawn: no control yet. Red: what gets through.</text>
+<rect x="24" y="158" width="592" height="200" rx="8" class="card"/>
+<text x="36" y="182" class="tb">Forged or altered release at the source</text>
+<text x="36" y="202" class="t2">R155 Annex 5 12.1, 12.3</text>
+<line x1="136" y1="252" x2="153" y2="252" class="link"/>
+<line x1="253" y1="252" x2="270" y2="252" class="link"/>
+<line x1="370" y1="252" x2="387" y2="252" class="link"/>
+<line x1="487" y1="252" x2="504" y2="252" class="link"/>
+<rect x="36" y="232" width="100" height="40" rx="6" class="model"/>
+<text x="86" y="257" class="t2b" text-anchor="middle">Signing key</text>
+<rect x="153" y="232" width="100" height="40" rx="6" class="entry"/>
+<text x="203" y="257" class="t2b" text-anchor="middle">Release origin</text>
+<rect x="270" y="232" width="100" height="40" rx="6" class="model"/>
+<text x="320" y="257" class="t2b" text-anchor="middle">Network</text>
+<rect x="387" y="232" width="100" height="40" rx="6" class="badbox"/>
+<text x="437" y="257" class="t2b" text-anchor="middle">Device (SoC)</text>
+<rect x="504" y="232" width="100" height="40" rx="6" class="model"/>
+<text x="554" y="257" class="t2b" text-anchor="middle">panda</text>
+<text x="203" y="225" class="t2" text-anchor="middle">entry</text>
+<path d="M203,288 L437,288" class="path" marker-end="url(#ab)"/>
+<rect x="36" y="303" width="190" height="20" rx="10" class="f-bad"/>
+<text x="131" y="317" class="chip" text-anchor="middle">CSR-121 · Not implemented</text>
+<text x="238" y="318" class="tbad">no control yet: gets through</text>
+<text x="36" y="342" class="t">Code LionDriver never signed runs on every device that updates</text>
+<rect x="24" y="370" width="592" height="200" rx="8" class="card"/>
+<text x="36" y="394" class="tb">Device sent to another origin or branch</text>
+<text x="36" y="414" class="t2">R155 Annex 5 12.1</text>
+<line x1="136" y1="464" x2="153" y2="464" class="link"/>
+<line x1="253" y1="464" x2="270" y2="464" class="link"/>
+<line x1="370" y1="464" x2="387" y2="464" class="link"/>
+<line x1="487" y1="464" x2="504" y2="464" class="link"/>
+<rect x="36" y="444" width="100" height="40" rx="6" class="model"/>
+<text x="86" y="469" class="t2b" text-anchor="middle">Signing key</text>
+<rect x="153" y="444" width="100" height="40" rx="6" class="model"/>
+<text x="203" y="469" class="t2b" text-anchor="middle">Release origin</text>
+<rect x="270" y="444" width="100" height="40" rx="6" class="model"/>
+<text x="320" y="469" class="t2b" text-anchor="middle">Network</text>
+<rect x="387" y="444" width="100" height="40" rx="6" class="entry"/>
+<text x="437" y="469" class="t2b" text-anchor="middle">Device (SoC)</text>
+<rect x="504" y="444" width="100" height="40" rx="6" class="model"/>
+<text x="554" y="469" class="t2b" text-anchor="middle">panda</text>
+<text x="437" y="437" class="t2" text-anchor="middle">entry</text>
+<path d="M203,500 L437,500" class="path" marker-end="url(#ab)"/>
+<rect x="36" y="515" width="134.3" height="20" rx="10" class="f-bad"/>
+<text x="103.2" y="529" class="chip" text-anchor="middle">CSR-122 · Not met</text>
+<text x="182.3" y="530" class="tbad">no control yet: gets through</text>
+<text x="36" y="554" class="t">The device installs from a source nobody released</text>
+<rect x="24" y="582" width="592" height="200" rx="8" class="card"/>
+<text x="36" y="606" class="tb">Older release replayed to downgrade</text>
+<text x="36" y="626" class="t2">R155 Annex 5 6.3</text>
+<line x1="136" y1="676" x2="153" y2="676" class="link"/>
+<line x1="253" y1="676" x2="270" y2="676" class="link"/>
+<line x1="370" y1="676" x2="387" y2="676" class="link"/>
+<line x1="487" y1="676" x2="504" y2="676" class="link"/>
+<rect x="36" y="656" width="100" height="40" rx="6" class="model"/>
+<text x="86" y="681" class="t2b" text-anchor="middle">Signing key</text>
+<rect x="153" y="656" width="100" height="40" rx="6" class="model"/>
+<text x="203" y="681" class="t2b" text-anchor="middle">Release origin</text>
+<rect x="270" y="656" width="100" height="40" rx="6" class="entry"/>
+<text x="320" y="681" class="t2b" text-anchor="middle">Network</text>
+<rect x="387" y="656" width="100" height="40" rx="6" class="badbox"/>
+<text x="437" y="681" class="t2b" text-anchor="middle">Device (SoC)</text>
+<rect x="504" y="656" width="100" height="40" rx="6" class="model"/>
+<text x="554" y="681" class="t2b" text-anchor="middle">panda</text>
+<text x="320" y="649" class="t2" text-anchor="middle">entry</text>
+<path d="M320,712 L437,712" class="path" marker-end="url(#ab)"/>
+<rect x="36" y="727" width="190" height="20" rx="10" class="f-bad"/>
+<text x="131" y="741" class="chip" text-anchor="middle">CSR-123 · Not implemented</text>
+<text x="238" y="742" class="tbad">no control yet: gets through</text>
+<text x="36" y="766" class="t">A release with known weaknesses goes back on</text>
+<rect x="24" y="794" width="592" height="200" rx="8" class="card"/>
+<text x="36" y="818" class="tb">Install cut short, by fault or on purpose</text>
+<text x="36" y="838" class="t2">UN R156 7.2.2.1.1 (informative)</text>
+<line x1="136" y1="888" x2="153" y2="888" class="link"/>
+<line x1="253" y1="888" x2="270" y2="888" class="link"/>
+<line x1="370" y1="888" x2="387" y2="888" class="link"/>
+<line x1="487" y1="888" x2="504" y2="888" class="link"/>
+<rect x="36" y="868" width="100" height="40" rx="6" class="model"/>
+<text x="86" y="893" class="t2b" text-anchor="middle">Signing key</text>
+<rect x="153" y="868" width="100" height="40" rx="6" class="model"/>
+<text x="203" y="893" class="t2b" text-anchor="middle">Release origin</text>
+<rect x="270" y="868" width="100" height="40" rx="6" class="model"/>
+<text x="320" y="893" class="t2b" text-anchor="middle">Network</text>
+<rect x="387" y="868" width="100" height="40" rx="6" class="entry"/>
+<text x="437" y="893" class="t2b" text-anchor="middle">Device (SoC)</text>
+<rect x="504" y="868" width="100" height="40" rx="6" class="model"/>
+<text x="554" y="893" class="t2b" text-anchor="middle">panda</text>
+<text x="437" y="861" class="t2" text-anchor="middle">entry</text>
+<path d="M405,924 L469,924" class="path" marker-end="url(#ab)"/>
+<rect x="374.5" y="864" width="8" height="68" rx="2" class="gate-partial"/>
+<rect x="36" y="939" width="134.3" height="20" rx="10" class="f-amb"/>
+<text x="103.2" y="953" class="chip" text-anchor="middle">CSR-125 · Partial</text>
+<text x="182.3" y="954" class="tbad">partly built: some gets through</text>
+<text x="36" y="978" class="t">A half-installed release; the previous one is meant to stay bootable</text>
+<rect x="24" y="1006" width="592" height="200" rx="8" class="card"/>
+<text x="36" y="1030" class="tb">Update-signing key stolen</text>
+<text x="36" y="1050" class="t2">R155 Annex 5 12.4</text>
+<line x1="136" y1="1100" x2="153" y2="1100" class="link"/>
+<line x1="253" y1="1100" x2="270" y2="1100" class="link"/>
+<line x1="370" y1="1100" x2="387" y2="1100" class="link"/>
+<line x1="487" y1="1100" x2="504" y2="1100" class="link"/>
+<rect x="36" y="1080" width="100" height="40" rx="6" class="entry"/>
+<text x="86" y="1105" class="t2b" text-anchor="middle">Signing key</text>
+<rect x="153" y="1080" width="100" height="40" rx="6" class="model"/>
+<text x="203" y="1105" class="t2b" text-anchor="middle">Release origin</text>
+<rect x="270" y="1080" width="100" height="40" rx="6" class="model"/>
+<text x="320" y="1105" class="t2b" text-anchor="middle">Network</text>
+<rect x="387" y="1080" width="100" height="40" rx="6" class="badbox"/>
+<text x="437" y="1105" class="t2b" text-anchor="middle">Device (SoC)</text>
+<rect x="504" y="1080" width="100" height="40" rx="6" class="model"/>
+<text x="554" y="1105" class="t2b" text-anchor="middle">panda</text>
+<text x="86" y="1073" class="t2" text-anchor="middle">entry</text>
+<path d="M86,1136 L437,1136" class="path" marker-end="url(#ab)"/>
+<rect x="36" y="1151" width="190" height="20" rx="10" class="f-bad"/>
+<text x="131" y="1165" class="chip" text-anchor="middle">CSR-126 · Not implemented</text>
+<text x="238" y="1166" class="tbad">no control yet: gets through</text>
+<text x="36" y="1190" class="t">Forged releases pass every device check, even once CSR-121 is built</text>
+<text x="24" y="1234" class="t2">All five sit under CSG-07, install only verified updates (CAL 3; TS-06 risk 4, TS-10</text>
+<text x="24" y="1252" class="t2">risk 4); WP-C-10 rates it no control yet.</text>
+<text x="24" y="1270" class="t2">Threat classes at the level of WP-C-09; no exploitation detail. Update management per</text>
+<text x="24" y="1288" class="t2">WP-O-05 §6; UN R155/R156 labels informative, not claimed.</text>
+</svg>
