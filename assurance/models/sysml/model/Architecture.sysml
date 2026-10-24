@@ -125,70 +125,129 @@ package LionDriverArchitecture {
             doc /* Hook dispatch, RX checks and timeout, authority controls_allowed with grant on the PCM rising edge. */
             @Unit { id = "U-SAF-CORE"; build = Build::both; }
             @Safety { integrity = Integrity::C; label = "C"; }
+            @Catalogue {
+                description = "Hook dispatch (`safety_rx_hook` `:201-230`, `safety_tx_hook` `:283-302`, `safety_fwd_hook` `:316`); RX checks and timeout (`rx_check_lagging` `:373-386`, `safety_tick` `:404-420`); authority `controls_allowed` (`:57`) with grant on PCM rising edge gated by `rx_checks_allow_engagement` (`:390-401`, `pcm_cruise_check` `:601-610`); generic brake/gas edges (`:426-446`); relay-malfunction detection; TX whitelist (`tx_msg_safety_check` `:232-241`); mode switching (`set_safety_hooks` `:467-565`)";
+                sources = "`safety.h`";
+            }
             part <'panda.safety.core.rx_engagement'> rxEngagement : SoftwareElement {
                 doc /* rx_timeout_periods and rx_checks_allow_engagement: no grant while an RX check lags or is invalid. */
                 @Unit { id = "U-SAF-CORE"; build = Build::both; }
                 @Safety { integrity = Integrity::C; label = "C"; }
+                @Catalogue {
+                    description = "`rx_timeout_periods` tightens the lag threshold to N nominal periods with no 1 s floor (`:380-383`); `rx_checks_allow_engagement` refuses a grant while any RX check lags or is invalid. Active for any mode that sets `rx_timeout_periods`; Toyota sets 5 (`modes/toyota.h:83, 543`)";
+                    sources = "`safety.h:373-401`; `declarations.h:242`";
+                    buildNote = "Toyota";
+                }
             }
             part <'panda.safety.core.tx_rate_check'> txRateCheck : SoftwareElement {
                 doc /* Per-ID TX rate budget over a sliding 250 ms window. */
                 @Unit { id = "U-SAF-CORE"; build = Build::reference; }
                 @Safety { integrity = Integrity::C; label = "C"; }
+                @Catalogue {
+                    description = "Per-ID TX rate budget over a sliding 250 ms window; frames over budget are rejected before the mode's TX hook; on the 3rd rejection while authority is granted, clears `controls_allowed` and sets `safety_tx_rate_exceeded` (`:269-272`) (SWSR-518)";
+                    sources = "`safety.h:243-281`, called first in `safety_tx_hook` (`:290-294`)";
+                }
             }
         }
         part <'panda.safety.lateral'> lateral : SoftwareElement {
             doc /* Torque limit, rate, measured-torque, RT window and steer-request tolerance. */
             @Unit { id = "U-SAF-LAT"; build = Build::both; }
             @Safety { integrity = Integrity::C; label = "C"; }
+            @Catalogue {
+                description = "Torque limit, rate, measured-torque, RT window, steer-request tolerance (`steer_torque_cmd_checks`, reads `controls_allowed` at `:64, 99, 141`); angle/curvature checks unused in the reference configuration";
+                sources = "`lateral.h`";
+            }
         }
         part <'panda.safety.longitudinal'> longitudinal : SoftwareElement {
             doc /* Longitudinal allowed, acceleration bounds, inactive value. */
             @Unit { id = "U-SAF-LONG"; build = Build::both; }
             @Safety { integrity = Integrity::B; label = "B"; }
+            @Catalogue {
+                description = "Longitudinal allowed, accel bounds, inactive value";
+                sources = "`longitudinal.h`";
+            }
         }
         part <'panda.safety.helpers'> helpers : SoftwareElement {
             doc /* Macros, CRC8, message matching, timestamps, interpolation, safety_config. */
             @Unit { id = "U-SAF-HELP"; build = Build::both; }
             @Safety { integrity = Integrity::C; label = "C"; }
+            @Catalogue {
+                description = "Macros, CRC8, message matching, timestamps, interpolation, packet type, `safety_config` incl. `rx_timeout_periods` and `tx_rate_checks` (`declarations.h:242-244`)";
+                sources = "`helpers.h`, `declarations.h`, `can.h`";
+            }
         }
         part <'panda.safety.toyota'> toyota : SoftwareElement {
             doc /* Toyota RX parsing, TX checks, limits, init and parameter decoding; hook table toyota_hooks. */
             @Unit { id = "U-SAF-TOY"; build = Build::both; }
             @Safety { integrity = Integrity::C; label = "C"; }
+            @Catalogue {
+                description = "Toyota RX parsing, TX checks, limits, init/param decoding; hook table `toyota_hooks` (`:565-572`)";
+                sources = "`modes/toyota.h`";
+            }
             part <'panda.safety.toyota.eps_fault'> epsFault : SoftwareElement {
                 doc /* Decodes EPS_STATUS.LKA_STATE into safety_eps_fault; refuses torque while it is set. */
                 @Unit { id = "U-SAF-TOY"; build = Build::reference; }
                 @Safety { integrity = Integrity::C; label = "C"; }
+                @Catalogue {
+                    description = "`toyota_lka_state_is_fault` decodes `0x262` EPS_STATUS.LKA_STATE into `safety_eps_fault`; while set, `0x2E4` frames with non-zero torque or steer request are refused before the limit checks. Does not clear `controls_allowed` (SWSR-110 partial)";
+                    sources = "`modes/toyota.h:91-116, 236-240, 425-434`";
+                }
             }
             part <'panda.safety.toyota.ref_rx_set'> refRxSet : SoftwareElement {
                 doc /* Adds 0x262 and 0x1D3 to the RX checks. */
                 @Unit { id = "U-SAF-TOY"; build = Build::reference; }
                 @Safety { integrity = Integrity::C; label = "C"; }
+                @Catalogue {
+                    description = "Adds `0x262` (25 Hz) and `0x1D3` (33 Hz) to the RX checks (presence, checksum, timeout)";
+                    sources = "`modes/toyota.h:56-63`";
+                }
             }
             part <'panda.safety.toyota.cruise_main'> cruiseMain : SoftwareElement {
                 doc /* CRUISE_ACTIVE with MAIN_ON = 0 revokes authority. */
                 @Unit { id = "U-SAF-TOY"; build = Build::reference; }
                 @Safety { integrity = Integrity::C; label = "C"; }
+                @Catalogue {
+                    description = "`toyota_cruise_main_check`: CRUISE_ACTIVE with MAIN_ON = 0 revokes authority at once on a cruise edge, or after 150 ms of disagreement (SWSR-405 (c))";
+                    sources = "`modes/toyota.h:123-145, 241-249`";
+                }
             }
             part <'panda.safety.toyota.tx_budgets'> txBudgets : SoftwareElement {
                 doc /* TX rate rows for the non-SecOC configurations. */
                 @Unit { id = "U-SAF-TOY"; build = Build::reference; }
                 @Safety { integrity = Integrity::C; label = "C"; }
+                @Catalogue {
+                    description = "TX rate rows for non-SecOC configurations (`0x2E4` 100 Hz + 5, `0x191`, `0x343`, `0x412`, `0x1D2`, `0x283`, `0x750`)";
+                    sources = "`modes/toyota.h:545-560`";
+                }
             }
         }
         part <'panda.safety.defaults'> defaults : SoftwareElement {
             doc /* SILENT, NOOUTPUT and ELM327 hooks. */
             @Unit { id = "U-SAF-DEF"; build = Build::both; }
             @Safety { integrity = Integrity::C; label = "C (safe-state modes)"; }
+            @Catalogue {
+                description = "SILENT/NOOUTPUT/ELM327 hooks";
+                sources = "`modes/defaults.h`, `modes/elm327.h`";
+            }
         }
         part <'panda.safety.ignition'> ignition : SoftwareElement {
             doc /* CAN ignition detection. */
             @Unit { id = "U-SAF-IGN"; build = Build::both; }
             @Safety { integrity = Integrity::B; label = "B"; }
+            @Catalogue {
+                description = "CAN ignition detection";
+                sources = "`ignition.h`";
+                attribution = "B (feeds heartbeat timeout choice, TSR-510)";
+            }
         }
         part <'panda.safety.other_modes'> otherModes : SoftwareElement {
             doc /* Other brands' modes; linked in both builds, not selectable by the host in the reference build. */
             @Safety { integrity = Integrity::QM; label = "Interference source; dead code"; }
+            @Catalogue {
+                description = "Linked in both builds. Standard build: selectable via `0xdc`. Reference build: not selectable by the host (`reference_lock.h:22-29`), so dead code (OI-2)";
+                sources = "`modes/*.h` other brands, included at `safety.h:10-33`, registered at `:468-498`";
+                attribution = "Interference source (standard build); dead code to be removed or justified (reference build, OI-2)";
+            }
         }
     }
 
@@ -200,62 +259,110 @@ package LionDriverArchitecture {
             doc /* Start-up, set_safety_mode, 8 Hz tick. */
             @Unit { id = "U-PND-MAIN"; build = Build::both; }
             @Safety { integrity = Integrity::C; label = "C"; }
+            @Catalogue {
+                description = "Start-up (`main` `:292-383`), `set_safety_mode` (`:38-93`, both `set_safety_hooks` calls in `ENTER_CRITICAL` `:43-45, 49-51`), 8 Hz tick (`tick_handler` `:147-290`: harness, software watchdog kick, siren; 1 Hz: heartbeat counter, `heartbeat_engaged` mismatch, SILENT after 5 s/2 s heartbeat loss, `check_registers`), main loop (`:386-420`)";
+                sources = "`board/main.c`";
+            }
             part <'panda.main.safety_task'> safetyTask : SoftwareElement {
                 doc /* TIM4 safety task at 100 Hz: safety_tick, heartbeat monitor, IWDG feed. */
                 @Unit { id = "U-PND-MAIN"; build = Build::both; }
                 @Safety { integrity = Integrity::C; label = "C"; }
+                @Catalogue {
+                    description = "TIM4 safety task at `SAFETY_TASK_FREQ` = 100 Hz: `safety_tick` (`:133`), heartbeat monitor with revocation in car modes (`:135-137`), IWDG feed (`:138`). Rate supervision at 110 calls/s (`main.c:352`) (SWSR-401a partial). Since panda `b790fca` / `c33343b` it also runs the EPS-fault siren and the heartbeat-loss siren (rows below)";
+                    sources = "`board/main.c:130-144`; timer `board/drivers/timers.h:30-38`; `board/stm32h7/stm32h7_config.h:39-41`";
+                }
             }
         }
         part <'panda.drivers.heartbeat_monitor'> heartbeatMonitor : SoftwareElement {
             doc /* Revokes authority after 0.3 s without a heartbeat (SWSR-407). */
             @Unit { id = "U-PND-MAIN"; build = Build::both; }
             @Safety { integrity = Integrity::C; label = "C"; }
+            @Catalogue {
+                description = "`heartbeat_age_ticks` reset on `0xf3` (`:20-22`, called from `main_comms.h:301`); incremented in the safety task, returns true at ≥ 30 ticks = 0.3 s (`:15, 25-30`) (SWSR-407)";
+                sources = "`board/drivers/heartbeat_monitor.h`";
+            }
         }
         part <'panda.drivers.heartbeat_siren'> heartbeatSiren : SoftwareElement {
             doc /* Siren for 3 s when the heartbeat monitor revokes authority. */
             @Unit { id = "U-PND-HK"; build = Build::both; }
             @Safety { integrity = Integrity::B; label = "B"; }
+            @Catalogue {
+                description = "When the heartbeat monitor revokes authority in a car mode while `controls_allowed` was set, the safety task requests the siren at once and holds it 3 s (`HEARTBEAT_SIREN_HOLD_TICKS` 300); reset on every mode change. Audible ≈ 0.56 s after the last heartbeat worst case (odd 8 Hz ticks) (SWSR-516 (a))";
+                sources = "`board/drivers/heartbeat_siren.h` (panda `c33343b`)";
+            }
         }
         part <'panda.drivers.eps_fault_siren'> epsFaultSiren : SoftwareElement {
             doc /* Siren once the EPS fault has persisted 1 s while authority is granted. */
             @Unit { id = "U-PND-HK"; build = Build::both; }
             @Safety { integrity = Integrity::B; label = "B"; }
+            @Catalogue {
+                description = "Once `safety_eps_fault` has been set for 0.7 s, counted from when it was first seen while `controls_allowed` (DQ-048, DQ-367; panda `bf8102a`), siren for at least 3 s, re-triggered while the fault persists; reset on every mode change. Worst case ≈ 0.96 s after the fault onset (SWSR-516 (b), EPS fault). Compiled in every build; only the reference build sets `safety_eps_fault`";
+                sources = "`board/drivers/eps_fault_siren.h` (panda `b790fca`)";
+            }
         }
         part <'panda.drivers.hw_watchdog'> hwWatchdog : SoftwareElement {
             doc /* IWDG1 window watchdog, started on the first relay drive. */
             @Unit { id = "U-PND-FLT"; build = Build::both; }
             @Safety { integrity = Integrity::C; label = "C"; }
+            @Catalogue {
+                description = "IWDG1, prescaler /4, RLR 719, window 679 (`:35-37`); started on the first relay drive by `set_intercept_relay` (`drivers/harness.h:16-21`), not at boot (`:45-58`); fed from the safety task only if the main loop has run since the last feed (`:61-76`); first tick after start skipped. A watchdog reset is reported as `HEALTH_FLAG_WATCHDOG_RESET` (`main.c:377-380`) (SWSR-501)";
+                sources = "`board/drivers/hw_watchdog.h`";
+            }
         }
         part <'panda.drivers.irq_priorities'> irqPriorities : SoftwareElement {
             doc /* Explicit priority for every enabled IRQ (SWSR-519 partial). */
             @Unit { id = "U-PND-PLAT"; build = Build::both; }
             @Safety { integrity = Integrity::C; label = "C"; }
+            @Catalogue {
+                description = "`interrupt_priorities_init` (`:21-46`, called at `main.c:300` before any `NVIC_EnableIRQ`) sets an explicit priority for every enabled IRQ; five classes, all at level 8 (`:15-19`) (SWSR-519 partial)";
+                sources = "`board/drivers/irq_priorities.h`";
+            }
         }
         part <'panda.reference_lock'> referenceLock : SoftwareElement {
             doc /* Limits 0xdc to the reference modes; refuses 0xdf and the softloader in car modes. */
             @Unit { id = "U-PND-COMMS"; build = Build::reference; }
             @Safety { integrity = Integrity::C; label = "C"; }
+            @Catalogue {
+                description = "`reference_request_allowed`: `0xdc` limited to SILENT, NOOUTPUT, ELM327 and TOYOTA param 73, and from TOYOTA only to NOOUTPUT/SILENT (`:22-29`); `0xdf` always refused (`:30-32`); `0xd1` softloader refused in car modes (`:33-36`); `0xc5, 0xd8, 0xdb, 0xde, 0xe5–0xe8, 0xf1, 0xf9, 0xfc` refused in car modes (`:37-49`); refused requests counted in `reference_requests_rejected` (health)";
+                sources = "`board/reference_lock.h:13-63`, called at `board/main_comms.h:74-79`";
+            }
         }
         part <'panda.comms'> comms : SoftwareElement {
             doc /* Control-request dispatcher, health packet, CAN stream packing and unpacking. */
             @Unit { id = "U-PND-COMMS"; build = Build::both; }
             @Safety { integrity = Integrity::C; label = "C (it calls envelope APIs and can change configuration)"; }
+            @Catalogue {
+                description = "Control-request dispatcher `comms_control_handler` (`main_comms.h:69-343`), health packet (`:8-61`), CAN stream packing/unpacking (`comms_can_write` `can_comms.h:83-129`)";
+                sources = "`board/main_comms.h`, `board/can_comms.h`";
+            }
         }
         part <'panda.drivers.spi'> spi : SoftwareElement {
             doc /* SPI framing, XOR checksum, DMA control. */
             @Unit { id = "U-PND-SPI"; build = Build::both; }
             @Safety { integrity = Integrity::C; label = "C"; }
+            @Catalogue {
+                description = "SPI framing, XOR checksum, DMA control; `spi_rx_done` (`spi.h:106`) runs in the DMA2 Stream2 IRQ (`llspi.h:56-61`)";
+                sources = "`board/drivers/spi.h`, `board/stm32h7/llspi.h`";
+            }
             port host : SpiPort;
         }
         part <'panda.drivers.usb'> usb : SoftwareElement {
             doc /* USB endpoint handling; not needed by the reference device. */
             @Unit { id = "U-PND-USB"; build = Build::both; }
             @Safety { integrity = Integrity::QM; label = "Not needed by the reference device (SPI); interference source (OI-3)"; }
+            @Catalogue {
+                description = "USB endpoint handling; reaches the same comms handlers (`usb.h:616` → `comms_can_write`); initialised in both builds (`main.c:356`)";
+                sources = "`board/drivers/usb.h`, `board/stm32h7/llusb.h`";
+            }
         }
         part <'panda.drivers.fdcan'> fdcan : SoftwareElement {
             doc /* CAN RX ISR with the forward and RX hooks; TX path through the TX hook. */
             @Unit { id = "U-PND-FDCAN"; build = Build::both; }
             @Safety { integrity = Integrity::C; label = "C"; }
+            @Catalogue {
+                description = "CAN RX ISR `can_rx` (`fdcan.h:154-243`: forward hook `:199`, forwarding with hook skipped `:213`, RX hook `:221`), TX path `can_send` (`can_common.h:161-177`) → TX hook → queue → `process_can` (`fdcan.h:88-150`, XOR check `:100`)";
+                sources = "`board/drivers/fdcan.h`, `board/drivers/can_common.h`, `board/stm32h7/llfdcan.h`";
+            }
             port bus0 : CanPort;
             port bus1 : CanPort;
             port bus2 : CanPort;
@@ -264,32 +371,59 @@ package LionDriverArchitecture {
             doc /* Relay drive, orientation and ignition sense. */
             @Unit { id = "U-PND-HARN"; build = Build::both; }
             @Safety { integrity = Integrity::C; label = "C (blocking) / B (PCS restore)"; }
+            @Catalogue {
+                description = "Relay drive (`set_intercept_relay` `:9-37`, also starts the IWDG), orientation and ignition sense";
+                sources = "`board/drivers/harness.h`";
+            }
         }
         part <'panda.sys.faults'> faults : SoftwareElement {
             doc /* Fault recording and the software watchdog. */
             @Unit { id = "U-PND-FLT"; build = Build::both; }
             @Safety { integrity = Integrity::C; label = "C (report-only)"; }
+            @Catalogue {
+                description = "Fault recording (`fault_occurred`/`fault_recovered` in critical sections, `faults.h:10-11, 25-26`), software watchdog (kicked and checked in the 8 Hz tick, `simple_watchdog.h:7-17`, `main.c:160`), register check (1 Hz), interrupt-rate supervision (`interrupts.h:50`)";
+                sources = "`board/sys/faults.h`, `board/drivers/simple_watchdog.h`, `board/drivers/registers.h`, `board/drivers/interrupts.h`";
+                attribution = "C (report-only; `PERMANENT_FAULTS 0U`, `sys/sys.h:50`)";
+            }
         }
         part <'panda.sys.power_saving'> powerSaving : SoftwareElement {
             doc /* Power-save: CAN IRQ and transceiver disable. */
             @Unit { id = "U-PND-PWR"; build = Build::both; }
             @Safety { integrity = Integrity::C; label = "C"; }
+            @Catalogue {
+                description = "Power-save: CAN IRQ and transceiver disable";
+                sources = "`board/sys/power_saving.h`";
+                attribution = "C (can stop camera-side forwarding, WP-A-02 FFI-CM-08)";
+            }
         }
         part <'panda.drivers.siren'> siren : SoftwareElement {
             doc /* Siren and housekeeping drivers (fan, LED, bootkick, clock source, PWM, ADC). */
             @Unit { id = "U-PND-HK"; build = Build::both; }
             @Safety { integrity = Integrity::B; label = "Mixed: siren B, rest QM"; }
+            @Catalogue {
+                name = "`panda.drivers.siren` / housekeeping";
+                description = "Siren (B, TSR-516); others QM";
+                sources = "`board/drivers/fake_siren.h`, `board/stm32h7/sound.h`, `board/drivers/{fan,led,bootkick,clock_source,pwm}.h`, `board/stm32h7/lldts.h`, ADC";
+            }
             port audio : HmiPort;
         }
         part <'panda.platform'> platform : SoftwareElement {
             doc /* Reset, exception handlers, clocks, vectors, timers, critical sections. */
             @Unit { id = "U-PND-PLAT"; build = Build::both; }
             @Safety { integrity = Integrity::C; label = "C"; }
+            @Catalogue {
+                description = "Reset, exception handlers (NMI/HardFault `early_init.h:73-81`), clocks, vectors, timers, critical sections (`sys.h:10-22`)";
+                sources = "`board/stm32h7/startup_stm32h7x5xx.s`, `board/early_init.h`, `board/stm32h7/{clock,peripherals,interrupt_handlers,llflash}.h`, `board/drivers/timers.h`, `board/sys/sys.h`";
+            }
         }
         part <'panda.bootstub'> bootstub : SoftwareElement {
             doc /* Signature check and soft flasher. */
             @Unit { id = "U-PND-BOOT"; build = Build::both; }
             @Safety { integrity = Integrity::C; label = "C + CS"; }
+            @Catalogue {
+                description = "Signature check (`bootstub.c:33-82`), soft flasher";
+                sources = "`board/bootstub.c`, `board/crypto/*`, `board/flasher.h`";
+            }
         }
     }
 
@@ -298,6 +432,11 @@ package LionDriverArchitecture {
         @Source { workProduct = "WP-S-03"; clause = "§3.1"; }
         part <'E-03a'> safetyLayer : SafetyLayer {
             @Safety { integrity = Integrity::C; label = "C"; }
+            @Catalogue {
+                name = "Safety layer";
+                description = "opendbc safety core + Toyota mode, compiled into the panda firmware";
+                sources = "`opendbc_repo/opendbc/safety/{safety.h,lateral.h,longitudinal.h,helpers.h,modes/toyota.h}`";
+            }
             perform LionDriverMechanisms::torqueMagnitudeLimit;
             perform LionDriverMechanisms::torqueRateLimit;
             perform LionDriverMechanisms::measuredTorqueTracking;
@@ -318,6 +457,11 @@ package LionDriverArchitecture {
         }
         part <'E-03b'> platformFirmware : PlatformFirmware {
             @Safety { integrity = Integrity::C; label = "C"; }
+            @Catalogue {
+                name = "Panda platform firmware";
+                description = "main loop, tick handler, CAN/SPI drivers, comms handlers, harness/relay driver, fault handling, bootstub";
+                sources = "`panda/board/{main.c,main_comms.h,can_comms.h,drivers/*,sys/*,stm32h7/*,bootstub.c}`";
+            }
             perform LionDriverMechanisms::heartbeatLiveness;
             perform LionDriverMechanisms::commandFreshness;
             perform LionDriverMechanisms::spiIntegrity;
@@ -387,6 +531,11 @@ package LionDriverArchitecture {
         @Source { workProduct = "WP-S-03"; clause = "§3.1"; }
         part <'E-04a'> safetyMcu : SafetyMcuHardware {
             @Safety { integrity = Integrity::C; label = "C"; }
+            @Catalogue {
+                name = "Safety MCU hardware";
+                description = "STM32H7 with clock, supply, memories, SPI4, FDCAN1–3, ADC, GPIO, DAC/codec siren path";
+                sources = "[WP-H-02](../04-hardware/WP-H-02-hardware-design.md)";
+            }
             perform LionDriverMechanisms::independentWatchdog;
             perform LionDriverMechanisms::memoryIntegrity;
             perform LionDriverMechanisms::clockMonitor;
@@ -401,6 +550,11 @@ package LionDriverArchitecture {
         }
         part <'E-04b'> restOfDevice : DeviceHardwareRest {
             @Safety { integrity = Integrity::QM; label = "QM"; }
+            @Catalogue {
+                name = "Device hardware (rest)";
+                description = "SoC, cameras, IMU, display, speaker, power supply, enclosure";
+                sources = "WP-H-02";
+            }
         }
     }
 
@@ -429,6 +583,11 @@ package LionDriverArchitecture {
 
         part <'E-01'> socSoftware : SocSoftware {
             @Safety { integrity = Integrity::QM; label = "QM"; }
+            @Catalogue {
+                name = "SoC software";
+                description = "openpilot processes on AGNOS Linux (Qualcomm SoC); §8";
+                sources = "`openpilot/system/manager/process_config.py:70-121`";
+            }
             perform LionDriverMechanisms::hostFaultClassification;
             perform LionDriverMechanisms::driverMonitoring;
             perform LionDriverMechanisms::excessiveActuationDetector;
@@ -443,6 +602,11 @@ package LionDriverArchitecture {
         }
         part <'E-02'> mlModels : MlModels {
             @Safety { integrity = Integrity::QM; label = "QM (SOTIF/PAS 8800)"; }
+            @Catalogue {
+                name = "ML models";
+                description = "Driving model, DM model";
+                sources = "`openpilot/selfdrive/modeld/`";
+            }
             perform LionDriverMechanisms::driverMonitoring;
         }
         part <'E-03'> safetyFirmware : SafetyMcuFirmware {
@@ -453,6 +617,11 @@ package LionDriverArchitecture {
         }
         part <'E-05'> harness : Harness {
             @Safety { integrity = Integrity::C; label = "B (PCS restore), C (blocking)"; }
+            @Catalogue {
+                name = "Harness";
+                description = "Toyota TSS2 harness with intercept relay, ignition line, orientation sense";
+                sources = "WP-H-02";
+            }
             perform LionDriverMechanisms::relayReadback;
             perform LionDriverMechanisms::harnessDetection;
         }
@@ -469,24 +638,49 @@ package LionDriverArchitecture {
 
         interface ifSpi : SpiLink
             connect host ::> socSoftware.pandad.spi to device ::> safetyFirmware.platformFirmware.spi.host {
-            @InterfaceId { id = "IF-04"; tsr = ("TSR-407", "TSR-408", "TSR-409", "TSR-410", "TSR-411", "TSR-412", "TSR-413", "TSR-511", "TSR-512", "TSR-513", "TSR-514"); }
+            @InterfaceId { id = "IF-04"; tsr = ("TSR-407", "TSR-408", "TSR-409", "TSR-410", "TSR-411", "TSR-412", "TSR-413", "TSR-511", "TSR-512", "TSR-513", "TSR-514");
+                name = "SoC ↔ MCU SPI";
+                between = "E-01 ↔ E-03";
+                content = "control requests, CAN streams, health";
+                relevance = "C (FFI)";
+                detail = "WP-S-05 §4";
+            }
             @FfiClaim { claims = ("FFI-1", "FFI-2", "FFI-4", "FFI-5"); }
         }
         interface ifBoot : GpioLink
             connect driver ::> socSoftware.pandad.bootControl to receiver ::> deviceHardware.safetyMcu.gpio.bootPins {
             doc /* STM_BOOT0 and STM_RST_N. */
-            @InterfaceId { id = "IF-04b"; tsr = "TSR-511"; }
+            @InterfaceId { id = "IF-04b"; tsr = "TSR-511";
+                name = "SoC → MCU boot/reset GPIO";
+                between = "E-01 → E-04a";
+                content = "`STM_BOOT0`, `STM_RST_N`";
+                relevance = "C (FFI, CS)";
+                detail = "WP-S-05 §7";
+            }
             @FfiClaim { claims = "FFI-3"; }
         }
         interface ifRelay : GpioLink
             connect driver ::> deviceHardware.safetyMcu.gpio.relayDrive to receiver ::> harness.interceptRelay.drive {
             doc /* Relay GPIO and harness (SBU) sense. */
-            @InterfaceId { id = "IF-10"; tsr = ("TSR-506", "TSR-701"); }
+            @InterfaceId { id = "IF-10"; tsr = ("TSR-506", "TSR-701");
+                name = "Relay drive / harness sense";
+                between = "E-04a ↔ E-05";
+                content = "relay GPIO, SBU sense";
+                relevance = "C/B";
+                detail = "WP-S-05 §6";
+            }
         }
         interface roadImages : ImageLink
             connect source ::> deviceHardware.restOfDevice.roadCameras.images to target ::> socSoftware.modeld.roadImages {
             doc /* VisionIPC: road images to the driving model (E-02, run by host.modeld). */
-            @InterfaceId { id = "IF-05"; }
+            @InterfaceId { id = "IF-05";
+                label = "IF-05/06";
+                name = "Cameras";
+                between = "→ E-01/E-02";
+                content = "images";
+                relevance = "SOTIF";
+                detail = "—";
+            }
         }
         interface driverImages : ImageLink
             connect source ::> deviceHardware.restOfDevice.driverCamera.images to target ::> socSoftware.dm.driverImages {
@@ -497,7 +691,13 @@ package LionDriverArchitecture {
             connect source ::> deviceHardware.restOfDevice.imuGnss.messages to target ::> socSoftware.estimators.sensors;
         interface hmiDisplay : HmiLink
             connect source ::> socSoftware.hmi.alerts to target ::> deviceHardware.restOfDevice.display.screen {
-            @InterfaceId { id = "IF-07"; tsr = "TSR-606"; }
+            @InterfaceId { id = "IF-07"; tsr = "TSR-606";
+                name = "HMI";
+                between = "E-01 ↔ driver; E-03 siren";
+                content = "alerts";
+                relevance = "QM; B for siren";
+                detail = "—";
+            }
         }
         interface hmiSound : HmiLink
             connect source ::> socSoftware.hmi.alerts to target ::> deviceHardware.restOfDevice.speaker.sound {
@@ -644,11 +844,19 @@ package LionDriverArchitecture {
             doc /* Receives LKA torque requests; reports driver torque, EPS torque and LKA state. */
             @Boundary { scope = Scope::outside; }
             @Safety { integrity = Integrity::AoU; label = "AOU-01, AOU-02"; }
+            @Catalogue {
+                description = "Toyota EPS";
+                sources = "[WP-C-04 §11](../02-concept/WP-C-04-functional-safety-concept.md)";
+            }
         }
         part <'EXT-PCM'> ecmPcm : ExternalElement {
             doc /* Engine and powertrain ECU: ACC acceleration, permit-braking, cruise state. */
             @Boundary { scope = Scope::outside; }
             @Safety { integrity = Integrity::AoU; label = "AOU-03, AOU-05, AOU-10"; }
+            @Catalogue {
+                description = "PCM/brake";
+                sources = "[WP-C-04 §11](../02-concept/WP-C-04-functional-safety-concept.md)";
+            }
         }
         part absVsc : ExternalElement {
             doc /* Brake actuator: wheel speeds and brake-pedal state. */
@@ -659,6 +867,10 @@ package LionDriverArchitecture {
             doc /* Instrument cluster and cruise stalk: cruise main, set, resume, cancel; LKA HUD. */
             @Boundary { scope = Scope::outside; }
             @Safety { integrity = Integrity::AoU; label = "AOU-05, AOU-12"; }
+            @Catalogue {
+                description = "cluster";
+                sources = "[WP-C-04 §11](../02-concept/WP-C-04-functional-safety-concept.md)";
+            }
         }
         part forwardCamera : ExternalElement {
             doc /* Toyota forward camera: LKA and ACC outputs intercepted, PCS outputs forwarded. */
@@ -717,12 +929,24 @@ package LionDriverArchitecture {
         interface ifCarTx : CanLink
             connect source ::> ldsda.safetyFirmware.platformFirmware.fdcan.bus0 to target ::> vehicleCan.bus {
             doc /* 0x2E4, 0x343, 0x412, 0x1D2 cancel, (0x750 tester present) to EPS and PCM. */
-            @InterfaceId { id = "IF-01"; route = "E-05"; tsr = ("TSR-1xx", "TSR-2xx", "TSR-705"); }
+            @InterfaceId { id = "IF-01"; route = "E-05"; tsr = ("TSR-1xx", "TSR-2xx", "TSR-705");
+                name = "Car-side CAN TX";
+                between = "E-03 → EPS, PCM";
+                content = "`0x2E4`, `0x343`, `0x412`, `0x1D2` cancel, (`0x750` tester present)";
+                relevance = "C actuation";
+                detail = "WP-S-05 §5";
+            }
         }
         interface ifCarRx : CanLink
             connect source ::> vehicleCan.bus to target ::> ldsda.safetyFirmware.platformFirmware.fdcan.bus0 {
             doc /* 0xAA, 0x260, 0x1D2, 0x226 (+ 0x262, 0x1D3, 0xB4 proposed) from EPS, PCM and ABS. */
-            @InterfaceId { id = "IF-02"; route = "E-05"; tsr = ("TSR-3xx", "TSR-401", "TSR-402", "TSR-403", "TSR-404", "TSR-405", "TSR-406"); }
+            @InterfaceId { id = "IF-02"; route = "E-05"; tsr = ("TSR-3xx", "TSR-401", "TSR-402", "TSR-403", "TSR-404", "TSR-405", "TSR-406");
+                name = "Car-side CAN RX";
+                between = "EPS, PCM, ABS → E-03";
+                content = "`0xAA`, `0x260`, `0x1D2`, `0x226` (+ `0x262`, `0x1D3`, `0xB4` proposed)";
+                relevance = "C gating/limiting";
+                detail = "WP-S-05 §5";
+            }
         }
         interface ifRadarRx : CanLink
             connect source ::> radarCan.bus to target ::> ldsda.safetyFirmware.platformFirmware.fdcan.bus1 {
@@ -733,7 +957,13 @@ package LionDriverArchitecture {
         interface ifCamera : CanLink
             connect source ::> forwardCamera.can to target ::> ldsda.safetyFirmware.platformFirmware.fdcan.bus2 {
             doc /* Camera-side CAN; forwarded to the car except intercepted control messages. */
-            @InterfaceId { id = "IF-03"; route = "E-05"; tsr = ("TSR-704", "TSR-707"); }
+            @InterfaceId { id = "IF-03"; route = "E-05"; tsr = ("TSR-704", "TSR-707");
+                name = "Camera-side CAN";
+                between = "camera ↔ E-03";
+                content = "forwarding";
+                relevance = "B (SG-07)";
+                detail = "WP-S-05 §5";
+            }
         }
         interface ifRoadCameras : ImageLink
             connect source ::> roadEnvironment.scene to target ::> ldsda.deviceHardware.restOfDevice.roadCameras.scene {
@@ -758,7 +988,13 @@ package LionDriverArchitecture {
         }
         interface ifDevicePower : PowerLink
             connect supply ::> vehicleSupply.supply to load ::> ldsda.deviceHardware.restOfDevice.powerSupply.input {
-            @InterfaceId { id = "IF-08"; route = "E-05"; tsr = ("TSR-505", "TSR-510"); }
+            @InterfaceId { id = "IF-08"; route = "E-05"; tsr = ("TSR-505", "TSR-510");
+                name = "Power, ignition";
+                between = "vehicle → E-04, E-05";
+                content = "12 V, ignition line";
+                relevance = "B";
+                detail = "WP-S-05 §6";
+            }
         }
         interface ifHarnessPower : PowerLink
             connect supply ::> vehicleSupply.supply to load ::> ldsda.harness.wiring.power {
@@ -767,7 +1003,13 @@ package LionDriverArchitecture {
         interface ifNetwork : NetworkLink
             connect device ::> ldsda.socSoftware.remoteAndLogging.network to peer ::> backEnd.network {
             doc /* Athena RPC, uploads, OTA updates, SSH. Cybersecurity only (AOU-11). */
-            @InterfaceId { id = "IF-09"; }
+            @InterfaceId { id = "IF-09";
+                name = "Network";
+                between = "E-01 ↔ back end";
+                content = "athena, updates";
+                relevance = "CS only (AOU-11)";
+                detail = "[WP-S-07](WP-S-07-cybersecurity-requirements-architecture.md)";
+            }
         }
     }
 

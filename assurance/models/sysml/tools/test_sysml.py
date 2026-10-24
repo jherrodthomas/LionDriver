@@ -10,6 +10,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import check_model
 import explorer
+import gen_tables
 import render_se
 import render_views
 import svgkit
@@ -264,6 +265,52 @@ class Requirements(unittest.TestCase):
     import gen_requirements
     self.assertEqual(gen_requirements.main(["--check"]), 0)
     self.assertEqual(check_model.main([]), 0)
+
+
+class Tables(unittest.TestCase):
+  def test_tsr_cell(self):
+    self.assertEqual(gen_tables.tsr_cell(["TSR-1xx", "TSR-2xx", "TSR-705"]), "1xx, 2xx, 705")
+    self.assertEqual(gen_tables.tsr_cell(["TSR-406", "TSR-401", "TSR-402", "TSR-403", "TSR-404", "TSR-405", "TSR-3xx"]),
+                     "3xx, 401–406")
+    self.assertEqual(gen_tables.tsr_cell(["TSR-101", "TSR-102"]), "101, 102")
+    self.assertEqual(gen_tables.tsr_cell(["TSR-307(a)", "TSR-309"]), "307(a), 309")
+    self.assertEqual(gen_tables.tsr_cell([]), "—")
+
+  def test_tables_match_the_work_products(self):
+    self.assertEqual(gen_tables.main([]), 0)
+
+  def test_a_changed_cell_is_reported(self):
+    m = sysml_lite.load()
+    want = gen_tables.mechanisms_table(m)
+    have = [ln.replace("| SM-02 | Torque rate", "| SM-02 | Torque speed") for ln in want]
+    d = gen_tables.differences(have, want)
+    self.assertEqual(len(d), 1)
+    self.assertIn("row SM-02, Mechanism", d[0])
+    self.assertIn("rows in a different order", gen_tables.differences(want[:2] + want[3:4] + want[2:3] + want[4:], want))
+
+  def test_model_as_record_writes_the_same_tables(self):
+    import shutil
+    import tempfile
+    with tempfile.TemporaryDirectory() as tmp:
+      tmp = Path(tmp)
+      saved = gen_tables.TABLES, gen_tables.RECORD
+      try:
+        copies = {}
+        for wp, _h, _r in saved[0]:
+          copies.setdefault(wp, shutil.copy(wp, tmp / wp.name))
+        gen_tables.TABLES = [(Path(copies[wp]), h, r) for wp, h, r in saved[0]]
+        gen_tables.RECORD = tmp / "record.toml"
+        gen_tables.RECORD.write_text('record = "model"\n')
+        self.assertEqual(gen_tables.main([]), 1)  # no markers yet
+        self.assertEqual(gen_tables.main(["--write"]), 0)
+        self.assertEqual(gen_tables.main([]), 0)
+        for wp, copy in copies.items():
+          before, after = wp.read_text(encoding="utf-8"), Path(copy).read_text(encoding="utf-8")
+          self.assertEqual(after.replace(gen_tables.MARKER + "\n\n", ""), before)
+        gen_tables.RECORD.write_text('record = "work-products"\n')
+        self.assertEqual(gen_tables.main(["--write"]), 1)
+      finally:
+        gen_tables.TABLES, gen_tables.RECORD = saved
 
 
 if __name__ == "__main__":
