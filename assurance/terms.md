@@ -11,7 +11,7 @@ Every abbreviation and record code used on the assurance pages and figures is de
 3. **On every figure.** Each generated figure ends with a "Terms:" line for what it draws, so a figure read on its own still explains itself.
 4. **Checked.** CI fails if a block is stale, a figure lacks its line, or a page or figure uses a term that is not in the list. To add one, add it to `TERMS` and run `python3 assurance/trace/tools/terms.py`.
 
-Pages covered: [item](02-concept/item/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md). Other pages and older figures join the list as they are reworked.
+Pages covered: [item](02-concept/item/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md). Other pages and older figures join the list as they are reworked.
 
 ## Abbreviations
 
@@ -86,6 +86,7 @@ Pages covered: [item](02-concept/item/README.md), [hara](02-concept/hara/README.
 | PVD | programmable voltage detector (MCU supply monitor) |
 | QM | quality managed: no ASIL; ordinary quality processes suffice |
 | RAM | random-access memory |
+| RDP | read-out protection of the MCU's flash (option bytes) |
 | RPC | remote procedure call |
 | RT | real time |
 | RX | receive |
@@ -108,6 +109,7 @@ Pages covered: [item](02-concept/item/README.md), [hara](02-concept/hara/README.
 | US | United States |
 | VIN | vehicle identification number |
 | VRU | vulnerable road user: pedestrian or cyclist |
+| WRP | write protection of the MCU's flash (option bytes) |
 
 ## Record codes
 
@@ -119,8 +121,11 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | AOU-nn | assumption of use (WP-C-01 §7); an R suffix marks the FSC's refined version |
 | AP-nn | attack path (TARA §5) |
 | AS-nn | asset (TARA §2) |
+| CA-nn | cybersecurity assumption on an entity outside the item (WP-C-10 §2) |
 | CFG-nn | vehicle configuration in the vehicle register (CFG-001 is the reference Corolla) |
+| CSC-nn | cybersecurity claim: a risk retained, shared or avoided, with its condition (WP-C-10 §5) |
 | CSG-nn | cybersecurity goal (WP-C-10) |
+| CSR-nn | cybersecurity requirement: CSR-C-nn at concept level (WP-C-10 §7), CSR-nnn refined (WP-S-07) |
 | D-nn | design decision of the earlier decision list (D-01…D-12; D-08 is the Experimental Mode decision) |
 | DQ-nn | decision of the project lead (decision register) |
 | DS-nn | damage scenario (TARA §3) |
