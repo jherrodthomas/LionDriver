@@ -7,7 +7,9 @@ private LionDriver-assets repository (sketchfab/), not the real hardware; the ca
 
 The assets repository is LIONDRIVER_ASSETS_REPO, else a liondriver-assets or LionDriver-assets folder beside this
 repository (as in ../../blender/fetch_assets.py). Each zip is checked against its SHA256SUMS and unpacked under out/.
-Writes out/cutaway.png and out/anchors.json (pixel positions of the labelled points, for compose.py).
+Writes out/cutaway.png and out/anchors.json: pixel positions of the labelled points (compose.py), and of the TS-14 path
+centre line and the gate ring sampled along their length (animate.py). With --anchors-only it writes the JSON and skips
+the render (a few seconds).
 """
 import bpy, bmesh, hashlib, json, math, os, sys, zipfile
 from pathlib import Path
@@ -236,8 +238,10 @@ tube([DEV, EXP_PANDA + Vector((0, 0, -0.12))], 0.0025, lead, "lead_panda")
 # TS-14: SoC -> panda (through its gate) -> harness relay -> car bus -> EPS
 P = [EXP_SOC + Vector((-0.12, 0, 0.02)), (EXP_SOC + EXP_PANDA) / 2 + Vector((0, 0, 0.08)), EXP_PANDA + Vector((0.1, 0, 0.0)),
      EXP_PANDA + Vector((0.05, 0.05, -0.35)), HB + Vector((0, 0, 0.06))]
-tube(P, 0.011, path, "ts14_upper")
-tube([HB + Vector((0, 0, 0.0))] + [b + Vector((0, 0, 0.012)) for b in BUS[1:]] + [Vector((0.39, -0.86, 0.66))], 0.011, path, "ts14_lower")
+PATH_UP = P
+PATH_LO = [HB + Vector((0, 0, 0.0))] + [b + Vector((0, 0, 0.012)) for b in BUS[1:]] + [Vector((0.39, -0.86, 0.66))]
+tube(PATH_UP, 0.011, path, "ts14_upper")
+tube(PATH_LO, 0.011, path, "ts14_lower")
 
 # the gate at the panda: dashed amber ring (partial: built in the reference build only, not verified)
 amber = mat("amber", (0.98, 0.62, 0.05), emit=3.5)
@@ -285,6 +289,29 @@ bpy.context.view_layer.update()
 px = {}
 for k, v in anchors.items():
   p = world_to_camera_view(sc, camo, v); px[k] = [round(p.x * RES[0]), round((1 - p.y) * RES[1])]
-json.dump({"res": RES, "px": px}, open(OUT / "anchors.json", "w"), indent=1)
+
+
+def centre_line(points, name):
+  """The same Bezier as tube() without a bevel, evaluated to its centre-line vertices, in order."""
+  cu = bpy.data.curves.new(name, "CURVE"); cu.dimensions = "3D"; cu.resolution_u = 24
+  sp = cu.splines.new("BEZIER"); sp.bezier_points.add(len(points) - 1)
+  for p_, q in zip(sp.bezier_points, points):
+    p_.co = q; p_.handle_left_type = p_.handle_right_type = "AUTO"
+  o = bpy.data.objects.new(name, cu); sc.collection.objects.link(o); bpy.context.view_layer.update()
+  me = o.evaluated_get(bpy.context.evaluated_depsgraph_get()).to_mesh()
+  pts = [o.matrix_world @ v.co for v in me.vertices]; o.hide_render = True
+  return pts
+
+
+def to_px(v):
+  p_ = world_to_camera_view(sc, camo, v); return [round(p_.x * RES[0], 1), round((1 - p_.y) * RES[1], 1)]
+
+
+ring = [EXP_PANDA + Vector((R * math.cos(a), 0.0, R * math.sin(a))) for a in (2 * math.pi * k / 48 for k in range(48))]
+geo = {"path_upper": [to_px(v) for v in centre_line(PATH_UP, "cl_up")],
+       "path_lower": [to_px(v) for v in centre_line(PATH_LO, "cl_lo")], "ring": [to_px(v) for v in ring]}
+json.dump({"res": RES, "px": px, **geo}, open(OUT / "anchors.json", "w"), indent=1)
+if "--anchors-only" in sys.argv:
+  sys.exit(0)
 bpy.ops.render.render(write_still=True)
 print("rendered", OUT / "cutaway.png")

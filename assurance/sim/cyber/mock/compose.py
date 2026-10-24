@@ -24,7 +24,7 @@ def plant_f01b() -> dict:
   from cases import all_cases
   from simulate import simulate
   r = simulate(next(c for c in all_cases() if c.id == "F-01b"))
-  return {"t": r.t, "e_y": r.e_y, "torque": r.torque, "t0": r.t0, "events": r.events}
+  return {"t": r.t, "x": r.x, "e_y": r.e_y, "torque": r.torque, "t0": r.t0, "events": r.events}
 W, H = 1600, 900
 BG, PANEL, EDGE = "#111110", "#1a1a19", "#2c2c2a"
 TEXT, TEXT2, MUTED, DIM = "#f0efec", "#c3c2b7", "#898781", "#5f5e59"
@@ -37,6 +37,7 @@ def font(size, w="Regular"): return ImageFont.truetype(f"/usr/share/fonts/openty
 F = {k: font(*v) for k, v in {"h1": (19, "SemiBold"), "h2": (15, "SemiBold"), "b": (14, "Regular"), "bs": (14, "SemiBold"),
      "s": (12, "Regular"), "ss": (12, "SemiBold"), "big": (26, "SemiBold"), "xs": (10, "Regular"), "xss": (10, "SemiBold"),
      "x9": (9, "Regular"), "x9s": (9, "SemiBold")}.items()}
+ANIM = globals().get("ANIM", False)   # animate.py: leave out what the clip brings in step by step
 R = plant_f01b(); T_CORR = R["events"]["driver correction"] - R["t0"]
 im = Image.new("RGB", (W, H), BG); d = ImageDraw.Draw(im)
 
@@ -292,10 +293,12 @@ pill((px_, py_ - 74), "TS-14 · risk 5", CY, BG, anchor="ma")
 def mtag(x, y, text, c):
   tw_ = d.textlength(text, font=F["xs"]); d.rounded_rectangle((x - tw_ / 2 - 5, y, x + tw_ / 2 + 5, y + 15), 3, fill="#141413", outline=c)
   d.text((x, y + 2), text, font=F["xs"], fill=c, anchor="ma")
-mtag(cent[0][0] - 8, cent[0][1] + 14, "item sees: nothing", MUTED)
-mtag(cent[1][0] - 8, cent[1][1] + 16, "item sees: TX refused (ref.)", WARN)
-mtag(cent[2][0] - 8, cent[2][1] + 14, "credited: reaches EPS", CY_TXT)
-mtag(cent[3][0] - 8, cent[3][1] + 14, f"driver corrects +{T_CORR:.2f} s", TEXT2)
+TAGS = [(cent[0][0] - 8, cent[0][1] + 14, "item sees: nothing", MUTED),
+        (cent[1][0] - 8, cent[1][1] + 16, "item sees: TX refused (ref.)", WARN),
+        (cent[2][0] - 8, cent[2][1] + 14, "credited: reaches EPS", CY_TXT),
+        (cent[3][0] - 8, cent[3][1] + 14, f"driver corrects +{T_CORR:.2f} s", TEXT2)]
+if not ANIM:
+  for tg in TAGS: mtag(*tg)
 
 # ================================================================ bottom: plots from the plant run
 r = R; t0 = r["t0"]; t = [x - t0 for x in r["t"]]
@@ -322,4 +325,5 @@ d.text((12, 872), "MOCK for review · synthetic (DSR-12), no evidence credit. Pa
 d.text((12, 885), "3D stand-ins (CC BY, Sketchfab): ADAS+DMS device, ZackyRomiz · CM4, Vacui · STM32 PCB, Aravind Vallaban · relay, ecramirez · "
        "enclosure, AnsysLearn · IMCU, mkonstadakis · ECU, Ryn.Works · Pi Cam, F2A. Car: TurboSquid 1450755 (editorial).", font=F["xs"], fill=MUTED)
 d.text((W - 12, 885), "LionDriver assurance/sim/cyber", font=F["xs"], fill=MUTED, anchor="ra")
-DEST.parent.mkdir(exist_ok=True); im.save(DEST, quality=90); print("wrote", DEST)
+if __name__ == "__main__":
+  DEST.parent.mkdir(exist_ok=True); im.save(DEST, quality=90); print("wrote", DEST)
