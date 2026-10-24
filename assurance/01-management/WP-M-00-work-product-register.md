@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-00 Work product register |
 | Standard reference | ISO 26262-2:2018 §6 (safety plan, work product list); ASPICE 4.0 MAN.3 (BP: define work products), SUP.8 (configuration items) |
-| Version | 0.4 (WP-O-04 gets a development slice due at G1, the §3.3 data path for the first road drives, the rest stays at G6, DQ-122 A; 2026-10-22). 0.3 (Figure 3-1 added, generated from §2 and §3; 2026-10-13). 0.2 (status update for the integrated envelope changes: design notes, change records, HIL plan, review records, confirmation folder; 2026-10-12). 0.1 |
+| Version | 0.5 (WP-C-12 item and environment models added at G1: an index of the reference car data, its 3D model and the scene library, the lead's choice to place them in the concept phase after the item definition; 2026-10-24). 0.4 (WP-O-04 gets a development slice due at G1, the §3.3 data path for the first road drives, the rest stays at G6, DQ-122 A; 2026-10-22). 0.3 (Figure 3-1 added, generated from §2 and §3; 2026-10-13). 0.2 (status update for the integrated envelope changes: design notes, change records, HIL plan, review records, confirmation folder; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All |
 | Author | Assurance team (initial draft) |
@@ -74,6 +74,7 @@ Legend for **ASPICE**: process IDs from ASPICE PAM 4.0, including the ML (MLE), 
 | [WP-C-09](../02-concept/WP-C-09-tara.md) | Threat analysis and risk assessment (TARA) | | | §15, §9.4 | UN R155 Annex 5 (informative) | SEC.1 | G1 | D |
 | [WP-C-10](../02-concept/WP-C-10-cybersecurity-goals-and-concept.md) | Cybersecurity goals, claims and concept | | | §9.4, §9.5 | | SEC.1 | G1 | D |
 | [WP-C-11](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) | AI system definition and AI safety requirements | | §7 | | PAS 8800 (AI safety requirements) | MLE.1 | G1 | D |
+| [WP-C-12](../02-concept/WP-C-12-item-and-environment-models.md) | Item and environment models (reference car data, 3D model, scene library; index, no evidence credit) | 3 §5 | §5 (system, environment) | | | SYS.1 | G1 | D |
 
 ### 3.3 System level (`03-system/`)
 

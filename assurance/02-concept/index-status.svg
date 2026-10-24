@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="586" viewBox="0 0 640 586" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="626" viewBox="0 0 640 626" role="img" aria-labelledby="t d">
 <title id="t">02-concept: work products by gate and status</title>
-<desc id="d">Work products of 02-concept from WP-M-00 §3, by the gates they are needed for: WP-C-01 Item definition: G1, Draft; WP-C-02 ODD and intended functionality specification: G1, Draft; WP-C-03 Hazard analysis and risk assessment, safety goals: G1, Draft; WP-C-04 Functional safety concept (FSRs, allocation, AoUs): G1, Draft; WP-C-05 SOTIF hazard identification and risk evaluation, acceptance criteria: G1, Draft; WP-C-06 Functional insufficiencies and triggering conditions analysis: G1, Draft; WP-C-07 Functional modifications addressing SOTIF risk: G1, Draft; WP-C-08 Driver interaction, HMI and reasonably foreseeable misuse analysis: G1, Draft; WP-C-09 Threat analysis and risk assessment (TARA): G1, Draft; WP-C-10 Cybersecurity goals, claims and concept: G1, Draft; WP-C-11 AI system definition and AI safety requirements: G1, Draft.</desc>
+<desc id="d">Work products of 02-concept from WP-M-00 §3, by the gates they are needed for: WP-C-01 Item definition: G1, Draft; WP-C-02 ODD and intended functionality specification: G1, Draft; WP-C-03 Hazard analysis and risk assessment, safety goals: G1, Draft; WP-C-04 Functional safety concept (FSRs, allocation, AoUs): G1, Draft; WP-C-05 SOTIF hazard identification and risk evaluation, acceptance criteria: G1, Draft; WP-C-06 Functional insufficiencies and triggering conditions analysis: G1, Draft; WP-C-07 Functional modifications addressing SOTIF risk: G1, Draft; WP-C-08 Driver interaction, HMI and reasonably foreseeable misuse analysis: G1, Draft; WP-C-09 Threat analysis and risk assessment (TARA): G1, Draft; WP-C-10 Cybersecurity goals, claims and concept: G1, Draft; WP-C-11 AI system definition and AI safety requirements: G1, Draft; WP-C-12 Item and environment models (reference car data, 3D model, scene library; index, no evidence credit): G1, Draft.</desc>
 <style>
 svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
       --amb:#c98500; --amb-bg:#fdf4dc; --ok:#2e9e6a; --ok2:#166534; }
@@ -20,7 +20,7 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 .s-appr { fill:var(--ok); } .s-base { fill:var(--ok2); }
 .s-na { fill:var(--bg); stroke:var(--grid); stroke-width:1.2; stroke-dasharray:2 2; }
 </style>
-<rect class="bg" width="640" height="586"/>
+<rect class="bg" width="640" height="626"/>
 <text x="24" y="34" class="h">02-concept: work products by gate</text>
 <text x="24" y="56" class="t2">WP-M-00 §3 (Concept phase): a chip at each gate the work product is needed for</text>
 <line x1="24" y1="70" x2="616" y2="70" class="hair"/>
@@ -70,6 +70,9 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 <text x="24" y="522" class="tb">WP-C-11</text>
 <text x="24" y="538" class="t2">AI system definition and AI safety requirements</text>
 <rect x="410.9" y="519" width="26.9" height="14" rx="7" class="s-draft"/>
-<rect x="24" y="557" width="26" height="14" rx="7" class="s-draft"/>
-<text x="56" y="568" class="t2">Draft</text>
+<text x="24" y="562" class="tb">WP-C-12</text>
+<text x="24" y="578" class="t2">Item and environment models (reference car data…</text>
+<rect x="410.9" y="559" width="26.9" height="14" rx="7" class="s-draft"/>
+<rect x="24" y="597" width="26" height="14" rx="7" class="s-draft"/>
+<text x="56" y="608" class="t2">Draft</text>
 </svg>

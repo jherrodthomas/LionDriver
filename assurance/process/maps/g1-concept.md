@@ -14,6 +14,7 @@ flowchart LR
   CON_12["CON-12<br/>Prepare vehicle test operations (road-test hold point)<br/>WP-V-07"]
   CON_13["CON-13<br/>Record hazard log and argument structure<br/>WP-T-01, WP-K-01"]
   CON_14["CON-14<br/>Set up field monitoring for the development drives (WP-O-04 §3.3 data path, DQ-122 A)<br/>WP-O-04"]
+  CON_15["CON-15<br/>Build the item and environment models<br/>WP-C-12"]
   subgraph L_fusa["Functional safety (ISO 26262)"]
     direction LR
     CON_04["CON-04<br/>Hazard analysis and risk assessment<br/>WP-C-03"]
@@ -62,11 +63,13 @@ flowchart LR
   CON_09 --> CON_13
   CON_11 --> CON_13
   CON_12 --> CON_14
+  CON_01 --> CON_15
   CON_13 --> GATE
   CON_14 --> GATE
+  CON_15 --> GATE
   L_assess --> GATE
   classDef joint fill:#dafbe1,stroke:#1a7f37,color:#0f3d1c
-  class CON_01,CON_12,CON_13,CON_14 joint
+  class CON_01,CON_12,CON_13,CON_14,CON_15 joint
   classDef review fill:#fff8c5,stroke:#9a6700,color:#3d2c00
   class CR_02,CR_03_G1,CR_04,FSA_I1,SR_01,CS_I1 review
   classDef gate fill:#1f6feb,stroke:#0b3d91,color:#ffffff
@@ -109,6 +112,7 @@ Clause references and status are read from the [register (WP-M-00)](../../01-man
 | CON-12 Prepare vehicle test operations (road-test hold point) | Joint (all disciplines) | [WP-V-07](../../06-validation/WP-V-07-vehicle-test-operations.md) | WP-C-02, WP-C-03, WP-C-08 | 4 §8 | §10–11 |  | SAE J3018 (informative) | VAL.1 | WP-6 | Draft |
 | CON-13 Record hazard log and argument structure | Joint (all disciplines) | [WP-T-01](../../trace/README.md), [WP-K-01](../../10-safety-case/WP-K-01-safety-case.md) | WP-C-03, WP-C-04, WP-C-05, WP-C-10, WP-C-11 | 8 §6; 2 §6 | §12 | §10 | UL 4600, PAS 8800 (assurance argument) | 13-51 consistency evidence (SYS.2–5, SWE.1–6) | WP-7 | Draft |
 | CON-14 Set up field monitoring for the development drives (WP-O-04 §3.3 data path, DQ-122 A) | Joint (all disciplines) | [WP-O-04](../../09-production-operation/WP-O-04-field-monitoring.md) | WP-V-07, WP-C-02 | 2 §7 | §13 | §8 | PAS 8800 (operation phase), NHTSA SGO (US) |  | WP-8 | Draft |
+| CON-15 Build the item and environment models | Joint (all disciplines) | [WP-C-12](../../02-concept/WP-C-12-item-and-environment-models.md) | WP-C-01 | 3 §5 | §5 (system, environment) |  |  | SYS.1 | WP-1 | Draft |
 
 ## 3. Cross-domain interfaces
 
@@ -129,17 +133,17 @@ Each interface is anchored to text in the work products; the checker fails if an
 
 Which activity answers each clause reference listed in the register. One activity can answer several standards; that is the point of the integrated lifecycle.
 
-- **ISO 26262:** 3 §5 → CON-01, CON-02; 3 §6 (controllability) → CON-03; 3 §6 → CON-04; 3 §7 → CON-05; 4 §8 → CON-12; 8 §6 → CON-13; 2 §6 → CON-13; 2 §7 → CON-14
-- **ISO 21448:** §5 (functionality, system) → CON-01; §5 → CON-02; §6, Annex B → CON-03; §6 → CON-06; §7 → CON-07, CON-09; §8 → CON-08; §10–11 → CON-12; §12 → CON-13; §13 → CON-14
+- **ISO 26262:** 3 §5 → CON-01, CON-02, CON-15; 3 §6 (controllability) → CON-03; 3 §6 → CON-04; 3 §7 → CON-05; 4 §8 → CON-12; 8 §6 → CON-13; 2 §6 → CON-13; 2 §7 → CON-14
+- **ISO 21448:** §5 (functionality, system) → CON-01; §5 → CON-02; §6, Annex B → CON-03; §6 → CON-06; §7 → CON-07, CON-09; §8 → CON-08; §10–11 → CON-12; §12 → CON-13; §13 → CON-14; §5 (system, environment) → CON-15
 - **ISO/SAE 21434:** §9.3 → CON-01; §15, §9.4 → CON-10; §9.4, §9.5 → CON-11; §10 → CON-13; §8 → CON-14
 - **Other:** PAS 8800 (input space definition) → CON-02; PAS 8800 (AI error causes) → CON-07; PAS 8800 (AI safety requirements) → CON-09; UN R155 Annex 5 (informative) → CON-10; SAE J3018 (informative) → CON-12; UL 4600, PAS 8800 (assurance argument) → CON-13; PAS 8800 (operation phase), NHTSA SGO (US) → CON-14
-- **ASPICE:** SYS.1 → CON-01, CON-02; SYS.2 → CON-05, CON-08; MLE.1 → CON-09; SEC.1 → CON-10, CON-11; VAL.1 → CON-12; 13-51 consistency evidence (SYS.2–5, SWE.1–6) → CON-13
+- **ASPICE:** SYS.1 → CON-01, CON-02, CON-15; SYS.2 → CON-05, CON-08; MLE.1 → CON-09; SEC.1 → CON-10, CON-11; VAL.1 → CON-12; 13-51 consistency evidence (SYS.2–5, SWE.1–6) → CON-13
 
 ## 5. G1 readiness
 
 **Exit criterion (WP-M-00 §2):** Item definition, HARA, FSC, SOTIF hazard and insufficiency analysis, TARA and CS concept approved; confirmation review of HARA (I3) passed
 
-**Work products:** 15 Draft of 15. Approval needs the verification review of [WP-P-05](../../07-supporting/WP-P-05-verification-review-procedure.md).
+**Work products:** 16 Draft of 16. Approval needs the verification review of [WP-P-05](../../07-supporting/WP-P-05-verification-review-procedure.md).
 
 **Roles the lanes need (WP-M-02 §3.1):**
 
@@ -165,6 +169,6 @@ Which activity answers each clause reference listed in the register. One activit
 | SR-01 Review of SOTIF hazard identification and acceptance criteria | WP-C-05, WP-C-06, WP-C-08 | I3-equivalent | Not performed |
 | CS-I1 Interim cybersecurity review (TARA, goals, links to safety goals) | WP-C-09, WP-C-10 | external | Not performed |
 
-**Work products with no confirmation measure at this gate** (verification review only): WP-C-02, WP-C-07, WP-C-11, WP-V-07, WP-T-01, WP-K-01, WP-O-04.
+**Work products with no confirmation measure at this gate** (verification review only): WP-C-02, WP-C-07, WP-C-11, WP-V-07, WP-T-01, WP-K-01, WP-O-04, WP-C-12.
 
 **Open interfaces due by this gate** (from this or an earlier phase): none.
