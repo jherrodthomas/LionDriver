@@ -34,6 +34,7 @@ TERMS_PAGE = A / "terms.md"
 
 # Pages that carry a generated "Terms on this page" block, and generated figures that carry a definitions line.
 PAGES = [
+  A / "02-concept/item/README.md",
   A / "02-concept/hara/README.md",
   A / "02-concept/fsc/README.md",
   A / "02-concept/sotif/README.md",
@@ -41,6 +42,7 @@ PAGES = [
   A / "03-system/tsc/README.md",
 ]
 FIGURES = [
+  A / "02-concept/figures/fig-c01-3-4-function-allocation.svg",
   A / "02-concept/fsc/figures/fig-c04-10-1-safety-view.svg",
   A / "02-concept/fsc/figures/fig-c04-12-1-degradation-ladder.svg",
   A / "02-concept/hara/figures/fig-c03-3-1-situations.svg",
@@ -88,6 +90,9 @@ TERMS = {
   "ID": "identifier",
   # vehicle and item
   "LD-SDA": "LionDriver Supervised Driving Assistance, the item",
+  "TSS": "Toyota Safety Sense (TSS 2.0: the car's stock lane assist, radar cruise and pre-collision package)",
+  "VIN": "vehicle identification number",
+  "US": "United States",
   "SoC": "system on chip: the comma device's main processor, running openpilot (QM)",
   "MCU": "microcontroller: the panda safety processor (STM32H7)",
   "E/E": "electrical and electronic (systems)",
@@ -146,6 +151,9 @@ TERMS = {
   "URL": "web address",
   "NUL": "null byte",
   # record-code prefixes
+  "CFG-": "vehicle configuration in the vehicle register (CFG-001 is the reference Corolla)",
+  "PL-": "platform (PL-001 is LionDriver's)",
+  "VF-": "vehicle family in the vehicle register",
   "WP-": "work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)",
   "F-": "function of the item (WP-C-01 §2.1), F-01…F-09",
   "E-": "element of the item (WP-C-01 §3.1), E-01…E-06",
