@@ -35,6 +35,6 @@ Standard clauses: 26262-3, 21448 §5–8, 21434 §9/§15, PAS 8800.
 | [`hara/`](hara/README.md) | HARA |
 | [`hatara/`](hatara/README.md) | HATARA: where the HARA and the TARA meet |
 | [`reviews/`](reviews/) | — |
-| [`sotif/`](sotif/README.md) | SOTIF figure generator |
+| [`sotif/`](sotif/README.md) | Safety of the intended functionality (SOTIF) |
 
 GitHub lists this folder's files above this page; each work product's document embeds its own figures.

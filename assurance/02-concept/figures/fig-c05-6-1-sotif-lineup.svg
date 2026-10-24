@@ -1,0 +1,270 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1063.5" viewBox="0 0 1280 1063.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">Figure 6-1. The SOTIF line-up (WP-C-05, WP-C-06, WP-C-07, WP-V-02)</title>
+<desc id="d">One row per SOTIF hazard of WP-C-05 §3. SH-01: FI FI-01, FI-02, FI-03, FI-08, FI-15, FI-22; TC TC-01, TC-02, TC-03, TC-04, TC-05, TC-06, TC-15, TC-18, TC-19, TC-21, TC-22, TC-31, TC-32; FM FM-02, FM-08, FM-09, FM-10; VT VT-01, VT-14, VT-15; AC AC-02. SH-02: FI FI-01, FI-02, FI-08, FI-09, FI-11, FI-14, FI-15, FI-17, FI-22; TC TC-01, TC-02, TC-04, TC-05, TC-06, TC-14, TC-15, TC-16, TC-19, TC-21, TC-22, TC-23; FM FM-02, FM-03, FM-04, FM-10; VT VT-02; AC AC-03. SH-03: FI FI-03, FI-06, FI-07, FI-12; TC TC-27, TC-35; FM FM-01, FM-11; VT VT-03; AC AC-02. SH-04: FI FI-03, FI-05, FI-06, FI-07, FI-15; TC TC-03, TC-07, TC-10, TC-11, TC-13, TC-22; FM FM-01, FM-02, FM-09; VT VT-04, VT-14, VT-15; AC AC-02. SH-05: FI FI-17, FI-21; TC TC-29, TC-30; FM FM-04; VT VT-05; AC none. SH-06: FI FI-02, FI-04, FI-06, FI-10, FI-14; TC TC-01, TC-02, TC-03, TC-04, TC-07, TC-08, TC-09, TC-17, TC-23, TC-33, TC-35; FM FM-03, FM-09; VT VT-06, VT-15; AC AC-03. SH-08: FI FI-23; TC TC-34; FM none; VT VT-07; AC AC-06. SH-09: FI FI-05, FI-20; TC TC-13; FM FM-01; VT none; AC AC-04. SH-10: FI FI-13; TC TC-28; FM none; VT VT-13; AC none. SH-11: FI FI-04, FI-12; TC TC-12, TC-27; FM FM-11; VT none; AC none. SH-12: FI FI-18, FI-19, FI-20; TC TC-18, TC-24, TC-25, TC-26; FM FM-05, FM-06; VT VT-08; AC AC-05. SH-13: FI FI-03, FI-16, FI-20; TC TC-06, TC-20, TC-26; FM FM-06, FM-07, FM-08; VT VT-12, VT-15; AC AC-04.</desc>
+<defs></defs>
+<rect width="1280" height="1063.5" fill="#FFFFFF"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 6-1 · The SOTIF line-up: from each hazard to its evidence</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Per SOTIF hazard: what exposes it, what changes the function, and what must be shown before the residual risk is accepted</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-05 §3, §5.3; WP-C-06 §3, §5</text>
+<text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">WP-C-07 §2; WP-V-02 §4</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+<text x="40" y="112" font-size="10" fill="#475569" font-weight="700" letter-spacing=".03em">SOTIF HAZARD (WP-C-05 §3)</text>
+<text x="354" y="112" font-size="10" fill="#475569" font-weight="700" letter-spacing=".03em">INSUFFICIENCIES (C-06 §3)</text>
+<text x="536" y="112" font-size="10" fill="#475569" font-weight="700" letter-spacing=".03em">TRIGGERING CONDITIONS (C-06 §5)</text>
+<text x="798" y="112" font-size="10" fill="#475569" font-weight="700" letter-spacing=".03em">MODIFICATIONS (C-07 §2)</text>
+<text x="970" y="112" font-size="10" fill="#475569" font-weight="700" letter-spacing=".03em">VALIDATION (V-02 §4)</text>
+<text x="1122" y="112" font-size="10" fill="#475569" font-weight="700" letter-spacing=".03em">ACCEPTANCE (§5.3)</text>
+<rect x="32" y="124" width="1216" height="79.0" rx="6" fill="#F8FAFC"/>
+<text x="50" y="146" font-size="12.5" fill="#0F172A" font-weight="700">SH-01</text>
+<rect x="104" y="135" width="28" height="16" rx="8" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="118" y="146.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">S3</text>
+<rect x="136" y="135" width="28" height="16" rx="8" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="150" y="146.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">C2</text>
+<text x="50" y="166" font-size="10.5" fill="#0F172A">Model-commanded steering moves the vehicle out of the</text>
+<text x="50" y="179.5" font-size="10.5" fill="#0F172A">lane</text>
+<rect x="354" y="134" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="373.501" y="145.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-01</text>
+<rect x="397.002" y="134" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="416.502" y="145.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-02</text>
+<rect x="440.003" y="134" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="459.504" y="145.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-03</text>
+<rect x="483.005" y="134" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="502.506" y="145.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-08</text>
+<rect x="354" y="154" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="373.501" y="165.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-15</text>
+<rect x="397.002" y="154" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="416.502" y="165.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-22</text>
+<rect x="536" y="134" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="555.501" y="145.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-01</text>
+<rect x="579.002" y="134" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="598.502" y="145.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-02</text>
+<rect x="622.003" y="134" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="641.504" y="145.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-03</text>
+<rect x="665.005" y="134" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="684.506" y="145.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-04</text>
+<rect x="708.006" y="134" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="727.507" y="145.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-05</text>
+<rect x="536" y="154" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="555.501" y="165.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-06</text>
+<rect x="579.002" y="154" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="598.502" y="165.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-15</text>
+<rect x="622.003" y="154" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="641.504" y="165.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-18</text>
+<rect x="665.005" y="154" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="684.506" y="165.5" font-size="9.5" fill="#64748B" font-weight="700" text-anchor="middle">TC-19</text>
+<rect x="708.006" y="154" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="727.507" y="165.5" font-size="9.5" fill="#64748B" font-weight="700" text-anchor="middle">TC-21</text>
+<rect x="536" y="174" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="555.501" y="185.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-22</text>
+<rect x="579.002" y="174" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="598.502" y="185.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-31</text>
+<rect x="622.003" y="174" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="641.504" y="185.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-32</text>
+<rect x="798" y="134" width="55.3" height="16" rx="4" fill="#FEE2E2" stroke="#991B1B"/><text x="825.658" y="145.5" font-size="9.5" fill="#991B1B" font-weight="700" text-anchor="middle">FM-02 P1</text>
+<rect x="857.315" y="134" width="55.3" height="16" rx="4" fill="#F1F5F9" stroke="#475569"/><text x="884.973" y="145.5" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FM-08 P3</text>
+<rect x="798" y="154" width="55.3" height="16" rx="4" fill="#FFFBEB" stroke="#B45309"/><text x="825.658" y="165.5" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">FM-09 P2</text>
+<rect x="857.315" y="154" width="55.3" height="16" rx="4" fill="#FFFBEB" stroke="#B45309"/><text x="884.973" y="165.5" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">FM-10 P2</text>
+<rect x="970" y="134" width="39.0" height="16" rx="4" fill="#F0FDFA" stroke="#0F766E"/><text x="989.501" y="145.5" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">VT-01</text>
+<rect x="1013" y="134" width="39.0" height="16" rx="4" fill="#F0FDFA" stroke="#0F766E"/><text x="1032.5" y="145.5" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">VT-14</text>
+<rect x="1056" y="134" width="39.0" height="16" rx="4" fill="#F0FDFA" stroke="#0F766E"/><text x="1075.5" y="145.5" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">VT-15</text>
+<rect x="1122" y="134" width="39.0" height="16" rx="4" fill="#EFF6FF" stroke="#1D4ED8"/><text x="1141.5" y="145.5" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">AC-02</text>
+<text x="50" y="225" font-size="12.5" fill="#0F172A" font-weight="700">SH-02</text>
+<rect x="104" y="214.0" width="28" height="16" rx="8" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="118" y="225.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">S3</text>
+<rect x="136" y="214.0" width="28" height="16" rx="8" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="150" y="225.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">C2</text>
+<text x="50" y="245" font-size="10.5" fill="#0F172A">Lateral control insufficient for the road</text>
+<rect x="354" y="213" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="373.501" y="224.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-01</text>
+<rect x="397.002" y="213" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="416.502" y="224.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-02</text>
+<rect x="440.003" y="213" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="459.504" y="224.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-08</text>
+<rect x="483.005" y="213" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="502.506" y="224.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-09</text>
+<rect x="354" y="233" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="373.501" y="244.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-11</text>
+<rect x="397.002" y="233" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="416.502" y="244.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-14</text>
+<rect x="440.003" y="233" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="459.504" y="244.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-15</text>
+<rect x="483.005" y="233" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="502.506" y="244.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-17</text>
+<rect x="354" y="253" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="373.501" y="264.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-22</text>
+<rect x="536" y="213" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="555.501" y="224.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-01</text>
+<rect x="579.002" y="213" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="598.502" y="224.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-02</text>
+<rect x="622.003" y="213" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="641.504" y="224.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-04</text>
+<rect x="665.005" y="213" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="684.506" y="224.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-05</text>
+<rect x="708.006" y="213" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="727.507" y="224.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-06</text>
+<rect x="536" y="233" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="555.501" y="244.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-14</text>
+<rect x="579.002" y="233" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="598.502" y="244.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-15</text>
+<rect x="622.003" y="233" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="641.504" y="244.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-16</text>
+<rect x="665.005" y="233" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="684.506" y="244.5" font-size="9.5" fill="#64748B" font-weight="700" text-anchor="middle">TC-19</text>
+<rect x="708.006" y="233" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="727.507" y="244.5" font-size="9.5" fill="#64748B" font-weight="700" text-anchor="middle">TC-21</text>
+<rect x="536" y="253" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="555.501" y="264.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-22</text>
+<rect x="579.002" y="253" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="598.502" y="264.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-23</text>
+<rect x="798" y="213" width="55.3" height="16" rx="4" fill="#FEE2E2" stroke="#991B1B"/><text x="825.658" y="224.5" font-size="9.5" fill="#991B1B" font-weight="700" text-anchor="middle">FM-02 P1</text>
+<rect x="857.315" y="213" width="55.3" height="16" rx="4" fill="#FEE2E2" stroke="#991B1B"/><text x="884.973" y="224.5" font-size="9.5" fill="#991B1B" font-weight="700" text-anchor="middle">FM-03 P1</text>
+<rect x="798" y="233" width="55.3" height="16" rx="4" fill="#FEE2E2" stroke="#991B1B"/><text x="825.658" y="244.5" font-size="9.5" fill="#991B1B" font-weight="700" text-anchor="middle">FM-04 P1</text>
+<rect x="857.315" y="233" width="55.3" height="16" rx="4" fill="#FFFBEB" stroke="#B45309"/><text x="884.973" y="244.5" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">FM-10 P2</text>
+<rect x="970" y="213" width="39.0" height="16" rx="4" fill="#F0FDFA" stroke="#0F766E"/><text x="989.501" y="224.5" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">VT-02</text>
+<rect x="1122" y="213" width="39.0" height="16" rx="4" fill="#EFF6FF" stroke="#1D4ED8"/><text x="1141.5" y="224.5" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">AC-03</text>
+<rect x="32" y="279.0" width="1216" height="65.5" rx="6" fill="#F8FAFC"/>
+<text x="50" y="301" font-size="12.5" fill="#0F172A" font-weight="700">SH-03</text>
+<rect x="104" y="290.0" width="28" height="16" rx="8" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="118" y="301.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">S3</text>
+<rect x="136" y="290.0" width="28" height="16" rx="8" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="150" y="301.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">C2</text>
+<text x="50" y="321" font-size="10.5" fill="#0F172A">Unintended acceleration</text>
+<rect x="354" y="289" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="373.501" y="300.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-03</text>
+<rect x="397.002" y="289" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="416.502" y="300.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-06</text>
+<rect x="440.003" y="289" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="459.504" y="300.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-07</text>
+<rect x="483.005" y="289" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="502.506" y="300.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-12</text>
+<rect x="536" y="289" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="555.501" y="300.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-27</text>
+<rect x="579.002" y="289" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="598.502" y="300.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-35</text>
+<rect x="798" y="289" width="55.3" height="16" rx="4" fill="#FEE2E2" stroke="#991B1B"/><text x="825.658" y="300.5" font-size="9.5" fill="#991B1B" font-weight="700" text-anchor="middle">FM-01 P1</text>
+<rect x="857.315" y="289" width="55.3" height="16" rx="4" fill="#FFFBEB" stroke="#B45309"/><text x="884.973" y="300.5" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">FM-11 P2</text>
+<rect x="970" y="289" width="39.0" height="16" rx="4" fill="#F0FDFA" stroke="#0F766E"/><text x="989.501" y="300.5" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">VT-03</text>
+<rect x="1122" y="289" width="39.0" height="16" rx="4" fill="#EFF6FF" stroke="#1D4ED8"/><text x="1141.5" y="300.5" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">AC-02</text>
+<text x="50" y="366.5" font-size="12.5" fill="#0F172A" font-weight="700">SH-04</text>
+<rect x="104" y="355.5" width="28" height="16" rx="8" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="118" y="367" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">S2</text>
+<rect x="136" y="355.5" width="28" height="16" rx="8" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="150" y="367" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">C2</text>
+<text x="50" y="386.5" font-size="10.5" fill="#0F172A">Unintended deceleration</text>
+<rect x="354" y="354.5" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="373.501" y="366" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-03</text>
+<rect x="397.002" y="354.5" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="416.502" y="366" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-05</text>
+<rect x="440.003" y="354.5" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="459.504" y="366" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-06</text>
+<rect x="483.005" y="354.5" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="502.506" y="366" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-07</text>
+<rect x="354" y="374.5" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="373.501" y="386" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-15</text>
+<rect x="536" y="354.5" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="555.501" y="366" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-03</text>
+<rect x="579.002" y="354.5" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="598.502" y="366" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-07</text>
+<rect x="622.003" y="354.5" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="641.504" y="366" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-10</text>
+<rect x="665.005" y="354.5" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="684.506" y="366" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-11</text>
+<rect x="708.006" y="354.5" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="727.507" y="366" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-13</text>
+<rect x="536" y="374.5" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="555.501" y="386" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-22</text>
+<rect x="798" y="354.5" width="55.3" height="16" rx="4" fill="#FEE2E2" stroke="#991B1B"/><text x="825.658" y="366" font-size="9.5" fill="#991B1B" font-weight="700" text-anchor="middle">FM-01 P1</text>
+<rect x="857.315" y="354.5" width="55.3" height="16" rx="4" fill="#FEE2E2" stroke="#991B1B"/><text x="884.973" y="366" font-size="9.5" fill="#991B1B" font-weight="700" text-anchor="middle">FM-02 P1</text>
+<rect x="798" y="374.5" width="55.3" height="16" rx="4" fill="#FFFBEB" stroke="#B45309"/><text x="825.658" y="386" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">FM-09 P2</text>
+<rect x="970" y="354.5" width="39.0" height="16" rx="4" fill="#F0FDFA" stroke="#0F766E"/><text x="989.501" y="366" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">VT-04</text>
+<rect x="1013" y="354.5" width="39.0" height="16" rx="4" fill="#F0FDFA" stroke="#0F766E"/><text x="1032.5" y="366" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">VT-14</text>
+<rect x="1056" y="354.5" width="39.0" height="16" rx="4" fill="#F0FDFA" stroke="#0F766E"/><text x="1075.5" y="366" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">VT-15</text>
+<rect x="1122" y="354.5" width="39.0" height="16" rx="4" fill="#EFF6FF" stroke="#1D4ED8"/><text x="1141.5" y="366" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">AC-02</text>
+<rect x="32" y="410.0" width="1216" height="79.0" rx="6" fill="#F8FAFC"/>
+<text x="50" y="432" font-size="12.5" fill="#0F172A" font-weight="700">SH-05</text>
+<rect x="104" y="421.0" width="28" height="16" rx="8" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="118" y="432.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">S3</text>
+<rect x="136" y="421.0" width="28" height="16" rx="8" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="150" y="432.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">C2</text>
+<text x="50" y="452" font-size="10.5" fill="#0F172A">Driver override not recognised or not effective as the</text>
+<text x="50" y="465.5" font-size="10.5" fill="#0F172A">driver expects</text>
+<rect x="354" y="420" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="373.501" y="431.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-17</text>
+<rect x="397.002" y="420" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="416.502" y="431.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-21</text>
+<rect x="536" y="420" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="555.501" y="431.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-29</text>
+<rect x="579.002" y="420" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="598.502" y="431.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-30</text>
+<rect x="798" y="420" width="55.3" height="16" rx="4" fill="#FEE2E2" stroke="#991B1B"/><text x="825.658" y="431.5" font-size="9.5" fill="#991B1B" font-weight="700" text-anchor="middle">FM-04 P1</text>
+<rect x="970" y="420" width="39.0" height="16" rx="4" fill="#F0FDFA" stroke="#0F766E"/><text x="989.501" y="431.5" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">VT-05</text>
+<text x="1122" y="432" font-size="10" fill="#94A3B8" font-style="italic">none</text>
+<text x="50" y="511" font-size="12.5" fill="#0F172A" font-weight="700">SH-06</text>
+<rect x="104" y="500.0" width="28" height="16" rx="8" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="118" y="511.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">S3</text>
+<rect x="136" y="500.0" width="28" height="16" rx="8" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="150" y="511.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">C2</text>
+<text x="50" y="531" font-size="10.5" fill="#0F172A">Insufficient deceleration</text>
+<rect x="354" y="499" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="373.501" y="510.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-02</text>
+<rect x="397.002" y="499" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="416.502" y="510.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-04</text>
+<rect x="440.003" y="499" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="459.504" y="510.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-06</text>
+<rect x="483.005" y="499" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="502.506" y="510.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-10</text>
+<rect x="354" y="519" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="373.501" y="530.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-14</text>
+<rect x="536" y="499" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="555.501" y="510.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-01</text>
+<rect x="579.002" y="499" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="598.502" y="510.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-02</text>
+<rect x="622.003" y="499" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="641.504" y="510.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-03</text>
+<rect x="665.005" y="499" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="684.506" y="510.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-04</text>
+<rect x="708.006" y="499" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="727.507" y="510.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-07</text>
+<rect x="536" y="519" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="555.501" y="530.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-08</text>
+<rect x="579.002" y="519" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="598.502" y="530.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-09</text>
+<rect x="622.003" y="519" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="641.504" y="530.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-17</text>
+<rect x="665.005" y="519" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="684.506" y="530.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-23</text>
+<rect x="708.006" y="519" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="727.507" y="530.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-33</text>
+<rect x="536" y="539" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="555.501" y="550.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-35</text>
+<rect x="798" y="499" width="55.3" height="16" rx="4" fill="#FEE2E2" stroke="#991B1B"/><text x="825.658" y="510.5" font-size="9.5" fill="#991B1B" font-weight="700" text-anchor="middle">FM-03 P1</text>
+<rect x="857.315" y="499" width="55.3" height="16" rx="4" fill="#FFFBEB" stroke="#B45309"/><text x="884.973" y="510.5" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">FM-09 P2</text>
+<rect x="970" y="499" width="39.0" height="16" rx="4" fill="#F0FDFA" stroke="#0F766E"/><text x="989.501" y="510.5" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">VT-06</text>
+<rect x="1013" y="499" width="39.0" height="16" rx="4" fill="#F0FDFA" stroke="#0F766E"/><text x="1032.5" y="510.5" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">VT-15</text>
+<rect x="1122" y="499" width="39.0" height="16" rx="4" fill="#EFF6FF" stroke="#1D4ED8"/><text x="1141.5" y="510.5" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">AC-03</text>
+<rect x="32" y="565.0" width="1216" height="79.0" rx="6" fill="#F8FAFC"/>
+<text x="50" y="587" font-size="12.5" fill="#0F172A" font-weight="700">SH-08</text>
+<rect x="104" y="576.0" width="28" height="16" rx="8" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="118" y="587.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">S3</text>
+<rect x="136" y="576.0" width="28" height="16" rx="8" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="150" y="587.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">C3</text>
+<text x="50" y="607" font-size="10.5" fill="#0F172A">Stock PCS performance degraded by the item's intended</text>
+<text x="50" y="620.5" font-size="10.5" fill="#0F172A">behaviour</text>
+<rect x="354" y="575" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="373.501" y="586.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-23</text>
+<rect x="536" y="575" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="555.501" y="586.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-34</text>
+<rect x="970" y="575" width="39.0" height="16" rx="4" fill="#F0FDFA" stroke="#0F766E"/><text x="989.501" y="586.5" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">VT-07</text>
+<rect x="1122" y="575" width="39.0" height="16" rx="4" fill="#EFF6FF" stroke="#1D4ED8"/><text x="1141.5" y="586.5" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">AC-06</text>
+<text x="798" y="587" font-size="10" fill="#94A3B8" font-style="italic">none</text>
+<text x="50" y="666" font-size="12.5" fill="#0F172A" font-weight="700">SH-09</text>
+<rect x="104" y="655.0" width="28" height="16" rx="8" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="118" y="666.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">S3</text>
+<rect x="136" y="655.0" width="28" height="16" rx="8" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="150" y="666.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">C2</text>
+<text x="50" y="686" font-size="10.5" fill="#0F172A">Traffic-control non-compliance with over-trust</text>
+<rect x="354" y="654" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="373.501" y="665.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-05</text>
+<rect x="397.002" y="654" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="416.502" y="665.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-20</text>
+<rect x="536" y="654" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="555.501" y="665.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-13</text>
+<rect x="798" y="654" width="55.3" height="16" rx="4" fill="#FEE2E2" stroke="#991B1B"/><text x="825.658" y="665.5" font-size="9.5" fill="#991B1B" font-weight="700" text-anchor="middle">FM-01 P1</text>
+<rect x="1122" y="654" width="39.0" height="16" rx="4" fill="#EFF6FF" stroke="#1D4ED8"/><text x="1141.5" y="665.5" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">AC-04</text>
+<text x="970" y="666" font-size="10" fill="#94A3B8" font-style="italic">none</text>
+<rect x="32" y="709.5" width="1216" height="65.5" rx="6" fill="#F8FAFC"/>
+<text x="50" y="731.5" font-size="12.5" fill="#0F172A" font-weight="700">SH-10</text>
+<rect x="104" y="720.5" width="28" height="16" rx="8" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="118" y="732" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">S3</text>
+<rect x="136" y="720.5" width="28" height="16" rx="8" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="150" y="732" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">C2</text>
+<text x="50" y="751.5" font-size="10.5" fill="#0F172A">Assisted lane change into an occupied lane</text>
+<rect x="354" y="719.5" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="373.501" y="731" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-13</text>
+<rect x="536" y="719.5" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="555.501" y="731" font-size="9.5" fill="#64748B" font-weight="700" text-anchor="middle">TC-28</text>
+<rect x="970" y="719.5" width="39.0" height="16" rx="4" fill="#F0FDFA" stroke="#0F766E"/><text x="989.501" y="731" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">VT-13</text>
+<text x="798" y="731.5" font-size="10" fill="#94A3B8" font-style="italic">none</text>
+<text x="1122" y="731.5" font-size="10" fill="#94A3B8" font-style="italic">none</text>
+<text x="50" y="797" font-size="12.5" fill="#0F172A" font-weight="700">SH-11</text>
+<rect x="104" y="786.0" width="28" height="16" rx="8" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="118" y="797.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">S3</text>
+<rect x="136" y="786.0" width="28" height="16" rx="8" fill="#F1F5F9" stroke="#94A3B8"/>
+<text x="150" y="797.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">C2</text>
+<text x="50" y="817" font-size="10.5" fill="#0F172A">No reaction to a VRU in or entering the path</text>
+<rect x="354" y="785" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="373.501" y="796.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-04</text>
+<rect x="397.002" y="785" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="416.502" y="796.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-12</text>
+<rect x="536" y="785" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="555.501" y="796.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-12</text>
+<rect x="579.002" y="785" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="598.502" y="796.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-27</text>
+<rect x="798" y="785" width="55.3" height="16" rx="4" fill="#FFFBEB" stroke="#B45309"/><text x="825.658" y="796.5" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">FM-11 P2</text>
+<text x="970" y="797" font-size="10" fill="#94A3B8" font-style="italic">none</text>
+<text x="1122" y="797" font-size="10" fill="#94A3B8" font-style="italic">none</text>
+<rect x="32" y="840.5" width="1216" height="65.5" rx="6" fill="#F8FAFC"/>
+<text x="50" y="862.5" font-size="12.5" fill="#0F172A" font-weight="700">SH-12</text>
+<text x="50" y="882.5" font-size="10.5" fill="#0F172A">Prolonged unsupervised operation</text>
+<rect x="354" y="850.5" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="373.501" y="862" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-18</text>
+<rect x="397.002" y="850.5" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="416.502" y="862" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-19</text>
+<rect x="440.003" y="850.5" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="459.504" y="862" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-20</text>
+<rect x="536" y="850.5" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="555.501" y="862" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-18</text>
+<rect x="579.002" y="850.5" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="598.502" y="862" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-24</text>
+<rect x="622.003" y="850.5" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="641.504" y="862" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-25</text>
+<rect x="665.005" y="850.5" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="684.506" y="862" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-26</text>
+<rect x="798" y="850.5" width="55.3" height="16" rx="4" fill="#FEE2E2" stroke="#991B1B"/><text x="825.658" y="862" font-size="9.5" fill="#991B1B" font-weight="700" text-anchor="middle">FM-05 P1</text>
+<rect x="857.315" y="850.5" width="55.3" height="16" rx="4" fill="#FEE2E2" stroke="#991B1B"/><text x="884.973" y="862" font-size="9.5" fill="#991B1B" font-weight="700" text-anchor="middle">FM-06 P1</text>
+<rect x="970" y="850.5" width="39.0" height="16" rx="4" fill="#F0FDFA" stroke="#0F766E"/><text x="989.501" y="862" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">VT-08</text>
+<rect x="1122" y="850.5" width="39.0" height="16" rx="4" fill="#EFF6FF" stroke="#1D4ED8"/><text x="1141.5" y="862" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">AC-05</text>
+<text x="50" y="928" font-size="12.5" fill="#0F172A" font-weight="700">SH-13</text>
+<text x="104" y="928.5" font-size="9.5" fill="#475569">S, C as linked SH</text>
+<text x="50" y="948" font-size="10.5" fill="#0F172A">System stays engaged outside the ODD</text>
+<rect x="354" y="916" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="373.501" y="927.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-03</text>
+<rect x="397.002" y="916" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="416.502" y="927.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-16</text>
+<rect x="440.003" y="916" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="459.504" y="927.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">FI-20</text>
+<rect x="536" y="916" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="555.501" y="927.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-06</text>
+<rect x="579.002" y="916" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="598.502" y="927.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-20</text>
+<rect x="622.003" y="916" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="641.504" y="927.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-26</text>
+<rect x="798" y="916" width="55.3" height="16" rx="4" fill="#FEE2E2" stroke="#991B1B"/><text x="825.658" y="927.5" font-size="9.5" fill="#991B1B" font-weight="700" text-anchor="middle">FM-06 P1</text>
+<rect x="857.315" y="916" width="55.3" height="16" rx="4" fill="#FFFBEB" stroke="#B45309"/><text x="884.973" y="927.5" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">FM-07 P2</text>
+<rect x="798" y="936" width="55.3" height="16" rx="4" fill="#F1F5F9" stroke="#475569"/><text x="825.658" y="947.5" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FM-08 P3</text>
+<rect x="970" y="916" width="39.0" height="16" rx="4" fill="#F0FDFA" stroke="#0F766E"/><text x="989.501" y="927.5" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">VT-12</text>
+<rect x="1013" y="916" width="39.0" height="16" rx="4" fill="#F0FDFA" stroke="#0F766E"/><text x="1032.5" y="927.5" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">VT-15</text>
+<rect x="1122" y="916" width="39.0" height="16" rx="4" fill="#EFF6FF" stroke="#1D4ED8"/><text x="1141.5" y="927.5" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">AC-04</text>
+<line x1="346" y1="124" x2="346" y2="971.5" stroke="#E2E8F0"/>
+<line x1="528" y1="124" x2="528" y2="971.5" stroke="#E2E8F0"/>
+<line x1="790" y1="124" x2="790" y2="971.5" stroke="#E2E8F0"/>
+<line x1="962" y1="124" x2="962" y2="971.5" stroke="#E2E8F0"/>
+<line x1="1114" y1="124" x2="1114" y2="971.5" stroke="#E2E8F0"/>
+<text x="40" y="987.5" font-size="11" fill="#475569">Apply to every hazard and not repeated per row: validation targets VT-09, VT-10, VT-11; acceptance criteria AC-01, AC-07.</text>
+<rect x="40" y="998.5" width="36" height="15" rx="4" fill="#FFFFFF" stroke="#D2553F"/>
+<text x="58" y="1009.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC</text>
+<text x="82" y="1009.5" font-size="11" fill="#0F172A">Needs modification</text>
+<rect x="199.02000000000004" y="998.5" width="36" height="15" rx="4" fill="#FFFFFF" stroke="#D97706"/>
+<text x="217.02" y="1009.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC</text>
+<text x="241.02" y="1009.5" font-size="11" fill="#0F172A">Needs validation</text>
+<rect x="346.38000000000005" y="998.5" width="36" height="15" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="364.38" y="1009.5" font-size="9.5" fill="#64748B" font-weight="700" text-anchor="middle">TC</text>
+<text x="388.38" y="1009.5" font-size="11" fill="#0F172A">Acceptable, with a stated condition</text>
+<rect x="589.7700000000001" y="998.5" width="22" height="15" rx="4" fill="#FEE2E2" stroke="#991B1B"/>
+<text x="617.77" y="1009.5" font-size="11" fill="#0F172A">P1 before on-road use</text>
+<rect x="749.9500000000002" y="998.5" width="22" height="15" rx="4" fill="#FFFBEB" stroke="#B45309"/>
+<text x="777.95" y="1009.5" font-size="11" fill="#0F172A">P2 before release</text>
+<rect x="887.1400000000001" y="998.5" width="22" height="15" rx="4" fill="#F1F5F9" stroke="#475569"/>
+<text x="915.14" y="1009.5" font-size="11" fill="#0F172A">P3 decide at G2</text>
+<text x="40" y="1029.5" font-size="11" fill="#475569">A row shows what the documents link, not what is done: no modification is verified and no validation target is frozen or met yet. SH-07 is not used (WP-C-05 §2).</text>
+<text x="1240" y="1049.5" font-size="10" fill="#475569" text-anchor="end">Generated by sotif_views.py</text>
+</svg>
