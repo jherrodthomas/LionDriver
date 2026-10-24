@@ -96,6 +96,9 @@ logs settle it.
 
 *Figure 6. The safety MCU's junction against the cabin air.*
 
+The same results drive an interactive 3D page, [`interactive/comma3x.html`](../interactive/README.md): the device under the
+windshield, which you can cut open, take apart and run with the fan stalled.
+
 ## 3. Checks
 
 [`test_thermal.py`](test_thermal.py) runs in CI. Each check is meant to catch a different error:

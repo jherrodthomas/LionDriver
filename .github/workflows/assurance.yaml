@@ -24,6 +24,7 @@ on:
       - 'docs/liondriver/**'
       - 'docs/assets/liondriver/**'
       - '.github/workflows/assurance.yaml'
+      - '.claude/skills/**'
   pull_request:
     paths:
       - 'assurance/**'
@@ -40,6 +41,7 @@ on:
       - 'docs/liondriver/**'
       - 'docs/assets/liondriver/**'
       - '.github/workflows/assurance.yaml'
+      - '.claude/skills/**'
 
 permissions:
   contents: read
@@ -648,6 +650,28 @@ jobs:
         figures.mcu_figure(p, json.load(open("assurance/sim/results/mcu-heat.json")), out)
         assert len(list(out.glob("*.webp"))) == 5
         PY
+
+  sim-interactive:
+    name: simulation interactive pages
+    # Interactive 3D pages (assurance/sim/interactive, Machine Skill, tool TL-57): the committed pages equal a fresh build
+    # from the committed results and the vendored skill is unchanged upstream e0bd066; each page then opens headless with
+    # no page error, carries the synthetic stamp, and shows the results file's numbers. Presentation only, no credit.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Pages current, vendored skill unchanged
+      run: |
+        python3 -m pip install --quiet --user --break-system-packages pyyaml
+        python3 assurance/sim/interactive/build_pages.py --check
+    - name: Install Playwright and Chromium
+      run: |
+        npm i --no-save --no-audit --no-fund --prefix assurance/sim/interactive playwright@1.56.1
+        cd assurance/sim/interactive && npx playwright install --with-deps chromium
+    - name: Pages open headless with no error and show the committed results
+      run: node assurance/sim/interactive/check_pages.mjs
 
   sim-weather:
     name: simulation weather physics

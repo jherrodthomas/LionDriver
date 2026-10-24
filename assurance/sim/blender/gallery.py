@@ -62,6 +62,9 @@ def preview(clip: Path, sc: dict) -> Path | None:
   return out
 
 
+PAGE = "https://claude.ai/artifact/9jBQoqn2dNVRcpYwsJF8W3"                 # the gallery as a claude.ai page (README.md section 1)
+
+
 def credits() -> str:
   """The credit section for the CC-BY model kits in the lock (library/README.md section 5), or nothing."""
   slots = json.loads(LOCK.read_text()).get("slots", {}) if LOCK.exists() else {}
@@ -130,7 +133,8 @@ def main() -> int:
           "plant's driver assumptions and WP-S-04 §3 values. Contact is not modelled by either: the outcome column "
           "reports the first overlap of the body outlines and the relative speed there. Road users labelled *illustrative* are "
           "simulated by neither: they are placed by hand for a qualitative analysis. Each scene is an environment, "
-          "a condition and traffic from [`../library/`](../library/README.md).\n\n" + HERO +
+          "a condition and traffic from [`../library/`](../library/README.md). As a web page with filters and the "
+          f"clips: [hazard scenes]({PAGE}) (private to the project lead).\n\n" + HERO +
           "| Scene | Entry | Effect (HARA / WP-C-05) | Environment, condition | Motion | Outcome in the scene |\n"
           "|---|---|---|---|---|---|\n")
   clips = sorted((GAL / "clips").glob("*.mp4")) if (GAL / "clips").exists() else []

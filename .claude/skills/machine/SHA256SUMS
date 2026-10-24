@@ -1,0 +1,14 @@
+7c20e0daf6c82af38eb9ce32f4f78ff61fc2172c1914d0fbec80c26c44fd4143  ./LICENSE
+1f71d2c90c9b1c0cca4b7af526b5a9721cb039638e872fb959173a5ec533611c  ./SKILL.md
+6b6bf13e2f146eb725547538ce9700b0926b63885528cf8ed5f7b85cadb7f236  ./kit/lab-kit.js
+ec10cfb01f1b673e2f27ab7fec1921b85d415169edd241a30b008d41b385e26d  ./kit/template.html
+21e6afaca6fe0bd92cdd1428652d5b1a3aa57e200a236634b500adcc91f37d71  ./package.json
+9c40c1c0d88e4e7df67ce084e71f23e8aa86ff9434a2fdcb20f02a1612e5e2ec  ./references/solvers.md
+b3f38b47b79c30df49dc9622ce0014c63e0338299e3ce669030f745e086d0d2e  ./scripts/inline.mjs
+cf86daa5652502fd6bf73ff00fe4cff1d75690c756744456135d2c66c36b535d  ./scripts/lib/browser.mjs
+06057c6011cb57cdfe711524987fb9587f99ba81f203b64e61a96d65962ce090  ./scripts/lib/guard.mjs
+070beb972dfca9e34600c3bd03e487dfd4b71258d145db9a0f47e76fbc9b7cff  ./scripts/lib/png.mjs
+924e5deeaa4eb28e09f44226c7fdcd162735563f240c67e72fe43293d153cd33  ./scripts/lib/serve.mjs
+20796066ba4f4bf69bbdd94eb7555bd948bd94c554ca682b45d7420cb4cc2098  ./scripts/pinkscan.mjs
+fa7377c00e7187bc11f900cd181b5ae32c191383e17614afa1fdaf3682be2722  ./scripts/record.mjs
+affdf0584c66d1bdeb2d4bdac2ea635fb4d51194a29f43fb514aac84cfb4efab  ./scripts/shot.mjs
