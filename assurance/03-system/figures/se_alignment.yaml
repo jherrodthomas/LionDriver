@@ -179,7 +179,8 @@ views:
   - name: Safety mechanisms (defence in depth)
     status: present
     where:
-      - {path: 03-system/figures/fig-s03-6-1-defence-in-depth.svg, label: "WP-S-03 §6"}
+      - {path: 03-system/figures/fig-s03-6-1-defence-in-depth.svg, label: "defence in depth (WP-S-03 §6)"}
+      - {path: 03-system/figures/fig-s03-6-2-safety-mechanisms.svg, label: "safety mechanisms (WP-S-03 §6)"}
   - name: Security architecture
     status: partial
     where:

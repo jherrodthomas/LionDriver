@@ -81,7 +81,7 @@ Generated from the SysML model (view V-09): requirements by verification method,
 | Technical budgets with margins (TPMs) | partial | [timing budgets (WP-S-04 §5)](figures/fig-s04-5-1-timing-budgets.svg) | timing only; no CAN bus-load, CPU, memory or power budget |
 | Verification matrix (VCRM) | present | [summary (SysML V-09, below)](../models/sysml/generated/fig-sysml-v09-vcrm.svg), [per requirement](../models/sysml/generated/vcrm.md) | methods and named cases only; no verification has been run, so no result is recorded |
 | Integration plan and sequence | partial | [steps I-1 to I-4 (WP-S-08 §3.1)](WP-S-08-system-integration-test.md) | a table only; no integration build-up figure |
-| Safety mechanisms (defence in depth) | present | [WP-S-03 §6](figures/fig-s03-6-1-defence-in-depth.svg) | — |
+| Safety mechanisms (defence in depth) | present | [defence in depth (WP-S-03 §6)](figures/fig-s03-6-1-defence-in-depth.svg), [safety mechanisms (WP-S-03 §6)](figures/fig-s03-6-2-safety-mechanisms.svg) | — |
 | Security architecture | partial | [zones and trust boundaries (WP-S-07 §3)](WP-S-07-cybersecurity-requirements-architecture.md) | text only; no zone or trust-boundary figure |
 | Life-cycle reviews and decision gates | present | [gates G0–G6 (WP-M-00 §2)](../01-management/WP-M-00-work-product-register.md), [nearest NASA reviews (Vee, above)](figures/fig-s00-1-se-vee.svg) | — |
 
