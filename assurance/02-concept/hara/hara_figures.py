@@ -446,7 +446,9 @@ def fig_overview() -> str:
 def build() -> dict[str, str]:
   import guideword_scenes  # guide-word scenes; imports this module, so it is loaded here
   import hazlog_cards  # Figure 7-1, the hazard log cards; gets this module for its FigureError
+  import hara_views  # Figure 3-1 (situations) and Figure 4-9 (the functions in the hazard view)
   return {
+    **hara_views.build(),
     "fig-c03-2-1-asil-heatmap.svg": fig_heatmap(),
     **guideword_scenes.build(),
     "fig-c03-6-1-hazard-sg-overview.svg": fig_overview(),

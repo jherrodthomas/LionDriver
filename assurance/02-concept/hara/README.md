@@ -1,25 +1,81 @@
-# HARA
+# Hazard analysis and risk assessment (HARA)
 
+The HARA, [WP-C-03](../WP-C-03-hara.md), asks what happens when the item **malfunctions**: steering it did not ask for,
+braking that does not come, a warning that never shows. It rates each hazardous event for severity, exposure and
+controllability, and turns the worst cases into safety goals with an ASIL. Those goals are where the
+[functional safety concept](../fsc/README.md) starts.
 
-This folder holds the Cartesian HARA behind [WP-C-03](../WP-C-03-hara.md) §2.
+This page walks through the HARA with its figures. The document and its model, [`hara_model.py`](hara_model.py), are
+the source of record, and every figure here is generated from them.
 
-Where these hazards meet the TARA's threats, and where a safety measure changes a security risk or the reverse: [HATARA](../hatara/README.md).
+**The HARA in five lines.**
 
-| File | What it is |
-|---|---|
-| [`hara_model.py`](hara_model.py) | Source of truth. It holds every analyst input: functions, the 14-guide-word classification with rationale, situations, conditions, and the S/C rating rules |
-| [`hara-cartesian-summary.md`](hara-cartesian-summary.md) | Generated step counts and worst cases per hazard |
-| [`WP-C-03-hara-cartesian.xlsx`](WP-C-03-hara-cartesian.xlsx) | Generated workbook, reference scope (Chill mode only) |
-| [`WP-C-03-hara-cartesian_experimental.xlsx`](WP-C-03-hara-cartesian_experimental.xlsx) | Generated workbook, Experimental Mode variant (D-08 option B) |
-| [Workbook viewer](https://claude.ai/artifact/WHMhKBZQywWzDetcTKaDe3) | Both workbooks (and every other assurance workbook) in a spreadsheet-style page that opens on a phone: one tab per sheet, frozen header and HARA ID, filters by function, guide word, ASIL, S/E/C, location and weather, search, and every field of a row, rationale included. Private claude.ai page, built by [`tools/xlsx_viewer.py`](../../../tools/xlsx_viewer.py) |
-| [`hara-events.csv`](hara-events.csv) | Generated. All 3 264 hazardous-event rows of the reference workbook (tab 12), one per line, with S/E/C rationale, ASIL, ASIL if the ⚠ AoUs fail, and safety goal. A PR diff of it shows exactly which rows a rule change moves. At 2.4 MB it is too large for GitHub to show as a table; to read the rows, use the workbook viewer above |
-| [`hara-events_experimental.csv`](hara-events_experimental.csv) | Generated. The same for the Experimental Mode variant (3 468 rows) |
-| [`hara_figures.py`](hara_figures.py) | Figure generator. It draws WP-C-03 Figure 2-1 (rows per S × E × C cell, as rated and if every ⚠ AoU fails) from the model, and Figure 6-1 (hazards → hazardous events → safety goals) from WP-C-03 §4–§6 and the model. It fails if a goal's ASIL is not the highest ASIL of its source events, or if a rated event has no goal |
-| [`guideword_scenes.py`](guideword_scenes.py) | Draws the guide-word scenes: one card per SC guide word of a function, the function over time (required against performed) over a top-down road scene of what the malfunction does to the car. Words, hazards, subsumption and rationale come from `FM` in `hara_model.py`; goal and ASIL from WP-C-03 §6. The behaviour models are schematic and live in this file; it fails if an SC guide word has no model. One sheet per function with SC guide words (F-07 and F-09 have none). Run through `hara_figures.py` |
-| [`hazlog_cards.py`](hazlog_cards.py) | Draws WP-C-03 Figure 7-1, the hazard log: one card per hazard with the malfunctions (§4), SOTIF insufficiencies (§7, WP-C-06), attacks (WP-C-09) and misuse situations (§5) that reach it, a scene of its highest-rated event, and the status of what holds it (WP-C-04 FSR Impl through the §9 trace, WP-C-07 modifications, WP-C-09 treatment). It fails if §4, §5 and §7 list different hazards, a rated event has no goal, or a hazard has no scene. Run through `hara_figures.py`; tested by [`test_hazlog_cards.py`](test_hazlog_cards.py) |
-| [`figures/`](figures/) | Generated SVGs `fig-c03-2-1-asil-heatmap.svg` and `fig-c03-6-1-hazard-sg-overview.svg` and `fig-c03-7-1-hazard-log.svg`, embedded in WP-C-03, and `fig-c03-4-1-…` to `fig-c03-4-8-…-guide-words.svg` (guide-word scenes, below). Do not edit by hand |
-| [`test_hara_figures.py`](test_hara_figures.py), [`test_guideword_scenes.py`](test_guideword_scenes.py) | Unit tests: the figures are current, the heat-map totals equal the model's ASIL counts, inconsistent goal tables are rejected, every function with SC guide words has a sheet, and every SC guide word has one card that agrees with `FM` and §6 and names the moment it matters |
-| [`hara-function-guideword.csv`](hara-function-guideword.csv) | Generated. The 140 function × guide-word pairs (tab 11, both variants) with class SC / NSC / NA, subsumption and the reason. This is the SC filter that decides which rows exist (RR-2026-003 F-01) |
+1. Every function of the item meets all 14 guide words (no function, unrequested, excessive, late, …), which gives 126
+   pairs. 59 are safety-critical, and 32 of those are expanded; the rest are covered by a pair with the same effect.
+2. Each expanded pair is crossed with 20 operational situations and 6 weather and surface conditions: 3 840 rows, each
+   rated S, E and C with a written reason. The item's own safety mechanisms are not credited.
+3. Nine vehicle-level hazards, H-01 to H-09, lead to **eight safety goals**. Four are ASIL C: SG-01 lateral motion,
+   SG-02 lateral loss without warning, SG-03 unintended acceleration and SG-06 longitudinal loss without warning.
+   SG-04, SG-05 and SG-07 are ASIL B, and SG-08, the driver who is not supervising, is ASIL A.
+4. The ⚠ marks a rating that credits an unverified vehicle assumption (the EPS, brake or PCM). If those assumptions
+   fail, SG-01 and SG-03 become ASIL D. For a new vehicle they are entry criteria (DQ-369).
+5. The ratings are proposals until the independent confirmation review (I3).
+
+| Where it comes from | The analysis | Where it goes |
+|---|---|---|
+| [Item definition (WP-C-01)](../WP-C-01-item-definition.md): functions F-01…F-09, boundary, assumptions | Guide words, situations, ratings, hazardous events, safety goals | [Functional safety concept (WP-C-04)](../fsc/README.md) |
+| [ODD (WP-C-02)](../WP-C-02-odd-and-intended-functionality.md): the situations | Hazard log shared with SOTIF and the TARA | [SOTIF (WP-C-05…07)](../sotif/README.md), [HATARA](../hatara/README.md) |
+
+## 1. From the item's functions to the hazard view
+
+The item definition lists what the item does. The HARA asks how each of those functions can go wrong in a way that
+hurts someone. Below, the functions are shown as WP-C-01 draws them, then in the hazard view.
+
+![WP-C-01 Figure 3-1: element hierarchy of LD-SDA: the item realizes the functions F-01 to F-09 and consists of one system, whose components E-01 to E-05 consist of hardware parts and software units](../figures/fig-3-1-element-hierarchy.svg)
+
+*The item and its functions, as [WP-C-01](../WP-C-01-item-definition.md#31-elements-inside-the-item) §2.1 and §3.1 describe them
+(Figure 3-1).*
+
+![WP-C-03 Figure 4-9: the same functions in the hazard view, each with its 14 guide words classified, safety-critical pairs coloured by the highest ASIL of their rows, the hazards each function reaches and the safety goals they lead to](figures/fig-c03-4-9-function-hazard-view.svg)
+
+*The same functions in the hazard view (WP-C-03 §4, Figure 4-9).* Lateral and longitudinal control carry almost every
+guide word at ASIL C. Driver information (F-05) reaches ASIL C too: a missing take-over alert or a frozen engagement
+display is mode confusion (H-07). The safety envelope (F-08) is rated only where it acts on its own: blocking the stock
+pre-collision braking or getting stuck blocking. Elsewhere its failure is a latent fault of a safety mechanism,
+handled in the FSC. Lane departure warning (F-07) and the non-driving functions (F-09) have no safety-critical pair.
+
+## 2. The situations
+
+![WP-C-03 Figure 3-1: the operational situations OS-01 to OS-21 by speed range, coloured by exposure, with the foreseeable-misuse situations hatched and the weather and surface conditions](figures/fig-c03-3-1-situations.svg)
+
+*Figure 3-1 (§3, §3.1).* The situations come from the ODD. Those outside it are kept and hatched: off the highway,
+or with a driver who stops supervising. The item cannot yet prevent engagement there, so they are rated as
+reasonably foreseeable misuse. Off-highway use is rated E3, 1–10 % of engaged time, after a video showed owners
+engaging upstream openpilot on back roads (DQ-213). If it were more than 10 %, SG-02 would become ASIL D (§6.1).
+
+## 3. Where the ratings fall
+
+![WP-C-03 Figure 2-1: two ISO 26262-3 Table 4 matrices coloured by ASIL, giving the number of rows per S × E × C cell, as rated and if every ⚠ assumption fails](figures/fig-c03-2-1-asil-heatmap.svg)
+
+*Figure 2-1 (§2.1).* Left, as rated: 110 rows reach ASIL C and none reaches D. Right, with C+1 on every row that credits
+an unverified assumption: 385 rows at C and 29 at D. That is why verifying the EPS, brake and PCM assumptions is a G1
+activity (OI-1), not a late validation task.
+
+## 4. From hazards to safety goals
+
+![WP-C-03 Figure 6-1: hazards H-01 to H-09 with their row statistics, connected to the representative hazardous events with S, E, C and ASIL, which connect to the safety goals SG-01 to SG-08 with their ASIL](figures/fig-c03-6-1-hazard-sg-overview.svg)
+
+*Figure 6-1 (§4–§6).* Each hazard, its representative hazardous events (39 in §5, each with full rationale) and the goal
+each feeds. A goal takes the highest ASIL of its events; the generator fails if it does not. Mode confusion (H-07)
+feeds both warning goals, SG-02 and SG-06.
+
+## 5. The hazard log
+
+![WP-C-03 Figure 7-1: nine cards, one per hazard, with the malfunctions, SOTIF insufficiencies, attacks and misuse situations that lead to it, a scene of its highest-rated event, and what holds it today](figures/fig-c03-7-1-hazard-log.svg)
+
+*Figure 7-1 (§7).* One card per hazard. Every route to it converges on the card: malfunctions (here), insufficiencies
+(SOTIF), attacks (TARA) and misuse. Each card also shows what holds the hazard today: the safety requirements, SOTIF
+modifications and threat treatments behind it.
 
 ## Guide-word scenes
 
@@ -92,6 +148,39 @@ Sheets: [F-01](#f-01-lateral-control) · [F-02](#f-02-longitudinal-control-acc-c
 Sheets: [F-01](#f-01-lateral-control) · [F-02](#f-02-longitudinal-control-acc-chill-mode) · [F-02X](#f-02x-longitudinal-control-experimental-mode) · [F-03](#f-03-engagement-and-mode-management) · [F-04](#f-04-driver-monitoring) · [F-05](#f-05-driver-information-and-warnings) · [F-06](#f-06-forward-collision-warning) · **F-08**
 
 ![F-08 Safety envelope and forwarding: 4 cards, one per guide word. Stock AEB request blocked before a stopped car, or commands blocked in the curve](figures/fig-c03-4-8-f08-guide-words.svg)
+
+## 6. Open items
+
+The ones that can change a rating are below; the full list is in WP-C-03 §8.
+
+- **OI-1:** verify the EPS, brake and PCM assumptions by vehicle tests, then confirm or revise every ⚠ rating. For
+  SG-01 this is a G1 entry condition (DQ-008).
+- **OI-2:** confirm the exposure classes against real usage data, including the share of off-highway use and of
+  driving without supervision.
+- **OI-6:** the independent confirmation review (I3).
+- **OI-8:** I1 review of the 126-pair classification and the rating rules.
+
+Where these hazards meet the TARA's threats, and where a safety measure changes a security risk or the reverse:
+[HATARA](../hatara/README.md).
+
+## Files in this folder
+
+| File | What it is |
+|---|---|
+| [`hara_model.py`](hara_model.py) | Source of truth. It holds every analyst input: functions, the 14-guide-word classification with rationale, situations, conditions, and the S/C rating rules |
+| [`hara-cartesian-summary.md`](hara-cartesian-summary.md) | Generated step counts and worst cases per hazard |
+| [`WP-C-03-hara-cartesian.xlsx`](WP-C-03-hara-cartesian.xlsx) | Generated workbook, reference scope (Chill mode only) |
+| [`WP-C-03-hara-cartesian_experimental.xlsx`](WP-C-03-hara-cartesian_experimental.xlsx) | Generated workbook, Experimental Mode variant (D-08 option B) |
+| [Workbook viewer](https://claude.ai/artifact/WHMhKBZQywWzDetcTKaDe3) | Both workbooks (and every other assurance workbook) in a spreadsheet-style page that opens on a phone: one tab per sheet, frozen header and HARA ID, filters by function, guide word, ASIL, S/E/C, location and weather, search, and every field of a row, rationale included. Private claude.ai page, built by [`tools/xlsx_viewer.py`](../../../tools/xlsx_viewer.py) |
+| [`hara-events.csv`](hara-events.csv) | Generated. All 3 840 hazardous-event rows of the reference workbook (tab 12), one per line, with S/E/C rationale, ASIL, ASIL if the ⚠ AoUs fail, and safety goal. A PR diff of it shows exactly which rows a rule change moves. At 2.4 MB it is too large for GitHub to show as a table; to read the rows, use the workbook viewer above |
+| [`hara-events_experimental.csv`](hara-events_experimental.csv) | Generated. The same for the Experimental Mode variant (4 080 rows) |
+| [`hara_figures.py`](hara_figures.py) | Figure generator. It draws WP-C-03 Figure 2-1 (rows per S × E × C cell, as rated and if every ⚠ AoU fails) from the model, and Figure 6-1 (hazards → hazardous events → safety goals) from WP-C-03 §4–§6 and the model. It fails if a goal's ASIL is not the highest ASIL of its source events, or if a rated event has no goal |
+| [`guideword_scenes.py`](guideword_scenes.py) | Draws the guide-word scenes: one card per SC guide word of a function, the function over time (required against performed) over a top-down road scene of what the malfunction does to the car. Words, hazards, subsumption and rationale come from `FM` in `hara_model.py`; goal and ASIL from WP-C-03 §6. The behaviour models are schematic and live in this file; it fails if an SC guide word has no model. One sheet per function with SC guide words (F-07 and F-09 have none). Run through `hara_figures.py` |
+| [`hazlog_cards.py`](hazlog_cards.py) | Draws WP-C-03 Figure 7-1, the hazard log: one card per hazard with the malfunctions (§4), SOTIF insufficiencies (§7, WP-C-06), attacks (WP-C-09) and misuse situations (§5) that reach it, a scene of its highest-rated event, and the status of what holds it (WP-C-04 FSR Impl through the §9 trace, WP-C-07 modifications, WP-C-09 treatment). It fails if §4, §5 and §7 list different hazards, a rated event has no goal, or a hazard has no scene. Run through `hara_figures.py`; tested by [`test_hazlog_cards.py`](test_hazlog_cards.py) |
+| [`hara_views.py`](hara_views.py) | Draws WP-C-03 Figure 3-1 (the operational situations by speed range and exposure, from `SITUATIONS` and `WEATHER`) and Figure 4-9 (the item's functions in the hazard view, from `FUNCTIONS`, `FM` and `SG_MAP`; also shown in WP-C-01 §2.1). Run through `hara_figures.py`; tested by [`test_hara_views.py`](test_hara_views.py) |
+| [`figures/`](figures/) | Generated SVGs `fig-c03-2-1-asil-heatmap.svg` and `fig-c03-6-1-hazard-sg-overview.svg` and `fig-c03-7-1-hazard-log.svg`, embedded in WP-C-03, and `fig-c03-4-1-…` to `fig-c03-4-8-…-guide-words.svg` (guide-word scenes, below). Do not edit by hand |
+| [`test_hara_figures.py`](test_hara_figures.py), [`test_guideword_scenes.py`](test_guideword_scenes.py) | Unit tests: the figures are current, the heat-map totals equal the model's ASIL counts, inconsistent goal tables are rejected, every function with SC guide words has a sheet, and every SC guide word has one card that agrees with `FM` and §6 and names the moment it matters |
+| [`hara-function-guideword.csv`](hara-function-guideword.csv) | Generated. The 140 function × guide-word pairs (tab 11, both variants) with class SC / NSC / NA, subsumption and the reason. This is the SC filter that decides which rows exist (RR-2026-003 F-01) |
 
 ## Regenerating
 
