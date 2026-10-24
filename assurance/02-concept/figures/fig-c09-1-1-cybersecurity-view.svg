@@ -1,0 +1,186 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="878" viewBox="0 0 1280 878" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">Figure 1-1. The item boundary in the cybersecurity view (WP-C-09 §2, §4, §5, §8)</title>
+<desc id="d">The WP-C-01 item boundary with the WP-C-09 TARA on it. E-01 SoC software: assets AS-05, AS-06, AS-07, AS-09, AS-14; threat scenarios TS-02 (risk 5), TS-04 (risk 5), TS-06 (risk 4), TS-08 (risk 4), TS-09 (risk 4), TS-12 (risk 4), TS-14 (risk 5); entered by AP-02, AP-03, AP-04, AP-08, AP-12, AP-14. E-02 ML models: assets AS-08; threat scenarios TS-09 (risk 4), TS-10 (risk 4); entered by AP-09. E-03 panda safety MCU: assets AS-02, AS-03, AS-04; threat scenarios TS-02 (risk 5), TS-03 (risk 5), TS-05 (risk 4); entered by AP-05. E-04 storage, cameras, key: assets AS-11, AS-12, AS-13; threat scenarios TS-07 (risk 4), TS-11 (risk 5), TS-13 (risk 3); entered by AP-11. E-05 harness and relay: assets AS-15; threat scenarios TS-01 (risk 4), TS-14 (risk 5); entered by none. Vehicle CAN · Toyota ECUs: assets AS-01; threat scenarios TS-01 (risk 4), TS-14 (risk 5); entered by AP-01. comma.ai back end: assets AS-10; threat scenarios TS-07 (risk 4); entered by AP-07, AP-13. Code and supply chain: assets AS-16; threat scenarios TS-10 (risk 4); entered by AP-06, AP-10.</desc>
+<defs></defs>
+<rect width="1280" height="878" fill="#FFFFFF"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 1-1 · The item boundary in the cybersecurity view</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">WP-C-01 Figure 3-2 with the TARA on it: the assets each element holds (§2), the threat scenarios against them by risk value (§4, §8) and the attack paths that enter there (§5)</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-09 §2, §4, §5, §8</text>
+<text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">layout: WP-C-01 Figure 3-2</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+<rect x="244" y="150" width="736" height="490" rx="16" fill="#FFFDF7" stroke="#C2410C" stroke-width="1.6" stroke-dasharray="7 5"/>
+<rect x="262" y="136" width="190" height="26" rx="13" fill="#C2410C"/>
+<text x="357" y="153.5" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">ITEM BOUNDARY · LD-SDA</text>
+<rect x="266" y="176" width="712" height="332" rx="11" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="280" y="200" font-size="12.5" fill="#0F172A" font-weight="700">E-04 comma device</text>
+<text x="420" y="200" font-size="10.5" fill="#475569">the QM SoC and the safety MCU share one board; SPI between them (IF-04)</text>
+<line x1="642" y1="300" x2="662" y2="300" stroke="#475569" stroke-width="2"/>
+<line x1="812" y1="390" x2="812" y2="400" stroke="#475569" stroke-width="0"/>
+<line x1="812" y1="492" x2="812" y2="532" stroke="#475569" stroke-width="2"/>
+<line x1="700" y1="624" x2="700" y2="676" stroke="#475569" stroke-width="2"/>
+<path d="M978 280 H 1010" stroke="#7C3AED" stroke-width="1.6" stroke-dasharray="5 4" fill="none"/>
+<text x="994" y="272" font-size="9.5" fill="#7C3AED" font-weight="700" text-anchor="middle">IF-09</text>
+<path d="M978 426 H 1010" stroke="#7C3AED" stroke-width="1.6" stroke-dasharray="5 4" fill="none"/>
+<rect x="282" y="214" width="360" height="176" rx="9" fill="#FDE4E1" stroke="#B42318" stroke-width="2"/>
+<text x="292" y="233" font-size="12" fill="#0F172A" font-weight="700">E-01 SoC software</text>
+<text x="292" y="247" font-size="10" fill="#475569">openpilot on AGNOS, params, IPC, updater, SSH</text>
+<rect x="292" y="255" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="311.501" y="266.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">AS-05</text>
+<rect x="335.002" y="255" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="354.502" y="266.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">AS-06</text>
+<rect x="378.003" y="255" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="397.504" y="266.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">AS-07</text>
+<rect x="421.005" y="255" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="440.506" y="266.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">AS-09</text>
+<rect x="464.006" y="255" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="483.507" y="266.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">AS-14</text>
+<rect x="292" y="274" width="54.7" height="16" rx="4" fill="#B42318" stroke="#B42318"/>
+<text x="319.355" y="285.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-02 · 5</text>
+<rect x="350.711" y="274" width="54.7" height="16" rx="4" fill="#B42318" stroke="#B42318"/>
+<text x="378.066" y="285.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-04 · 5</text>
+<rect x="409.422" y="274" width="54.7" height="16" rx="4" fill="#C2410C" stroke="#C2410C"/>
+<text x="436.777" y="285.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-06 · 4</text>
+<rect x="468.132" y="274" width="54.7" height="16" rx="4" fill="#C2410C" stroke="#C2410C"/>
+<text x="495.488" y="285.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-08 · 4</text>
+<rect x="526.843" y="274" width="54.7" height="16" rx="4" fill="#C2410C" stroke="#C2410C"/>
+<text x="554.199" y="285.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-09 · 4</text>
+<rect x="292" y="293" width="54.7" height="16" rx="4" fill="#C2410C" stroke="#C2410C"/>
+<text x="319.355" y="304.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-12 · 4</text>
+<rect x="350.711" y="293" width="54.7" height="16" rx="4" fill="#B42318" stroke="#B42318"/>
+<text x="378.066" y="304.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-14 · 5</text>
+<text x="292" y="323" font-size="10" fill="#7C3AED" font-weight="700">entered by AP-02, AP-03, AP-04, AP-08, AP-12, AP-14</text>
+<rect x="282" y="400" width="360" height="92" rx="9" fill="#FFF1EB" stroke="#C2410C" stroke-width="2"/>
+<text x="292" y="419" font-size="12" fill="#0F172A" font-weight="700">E-02 ML models</text>
+<text x="292" y="433" font-size="10" fill="#475569">driving and DM models (LFS)</text>
+<rect x="292" y="441" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="311.501" y="452.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">AS-08</text>
+<rect x="292" y="460" width="54.7" height="16" rx="4" fill="#C2410C" stroke="#C2410C"/>
+<text x="319.355" y="471.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-09 · 4</text>
+<rect x="350.711" y="460" width="54.7" height="16" rx="4" fill="#C2410C" stroke="#C2410C"/>
+<text x="378.066" y="471.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-10 · 4</text>
+<text x="292" y="490" font-size="10" fill="#7C3AED" font-weight="700">entered by AP-09</text>
+<rect x="662" y="214" width="300" height="176" rx="9" fill="#FDE4E1" stroke="#B42318" stroke-width="2"/>
+<text x="672" y="233" font-size="12" fill="#0F172A" font-weight="700">E-03 panda safety MCU</text>
+<text x="672" y="247" font-size="10" fill="#475569">envelope firmware, safety mode, boot chain</text>
+<rect x="672" y="255" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="691.501" y="266.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">AS-02</text>
+<rect x="715.002" y="255" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="734.502" y="266.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">AS-03</text>
+<rect x="758.003" y="255" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="777.504" y="266.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">AS-04</text>
+<rect x="672" y="274" width="54.7" height="16" rx="4" fill="#B42318" stroke="#B42318"/>
+<text x="699.355" y="285.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-02 · 5</text>
+<rect x="730.711" y="274" width="54.7" height="16" rx="4" fill="#B42318" stroke="#B42318"/>
+<text x="758.066" y="285.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-03 · 5</text>
+<rect x="789.422" y="274" width="54.7" height="16" rx="4" fill="#C2410C" stroke="#C2410C"/>
+<text x="816.777" y="285.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-05 · 4</text>
+<text x="672" y="304" font-size="10" fill="#7C3AED" font-weight="700">entered by AP-05</text>
+<rect x="662" y="400" width="300" height="92" rx="9" fill="#FDE4E1" stroke="#B42318" stroke-width="2"/>
+<text x="672" y="419" font-size="12" fill="#0F172A" font-weight="700">E-04 storage, cameras, key</text>
+<text x="672" y="433" font-size="10" fill="#475569">data at rest on the device hardware</text>
+<rect x="672" y="441" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="691.501" y="452.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">AS-11</text>
+<rect x="715.002" y="441" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="734.502" y="452.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">AS-12</text>
+<rect x="758.003" y="441" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="777.504" y="452.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">AS-13</text>
+<rect x="672" y="460" width="54.7" height="16" rx="4" fill="#C2410C" stroke="#C2410C"/>
+<text x="699.355" y="471.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-07 · 4</text>
+<rect x="730.711" y="460" width="54.7" height="16" rx="4" fill="#B42318" stroke="#B42318"/>
+<text x="758.066" y="471.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-11 · 5</text>
+<rect x="789.422" y="460" width="54.7" height="16" rx="4" fill="#B45309" stroke="#B45309"/>
+<text x="816.777" y="471.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">TS-13 · 3</text>
+<text x="672" y="490" font-size="10" fill="#7C3AED" font-weight="700">entered by AP-11</text>
+<rect x="560" y="532" width="402" height="92" rx="9" fill="#FDE4E1" stroke="#B42318" stroke-width="2"/>
+<text x="570" y="551" font-size="12" fill="#0F172A" font-weight="700">E-05 harness and relay</text>
+<text x="570" y="565" font-size="10" fill="#475569">camera-side forwarding, stock PCS</text>
+<rect x="570" y="573" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="589.501" y="584.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">AS-15</text>
+<rect x="570" y="592" width="54.7" height="16" rx="4" fill="#C2410C" stroke="#C2410C"/>
+<text x="597.355" y="603.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-01 · 4</text>
+<rect x="628.711" y="592" width="54.7" height="16" rx="4" fill="#B42318" stroke="#B42318"/>
+<text x="656.066" y="603.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-14 · 5</text>
+<rect x="240" y="676" width="722" height="92" rx="9" fill="#F8FAFC" stroke="#B42318" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="250" y="695" font-size="12" fill="#0F172A" font-weight="700">Vehicle CAN · Toyota ECUs</text>
+<text x="250" y="709" font-size="10" fill="#475569">bus 0 actuation and status (IF-01, IF-02); OBD-II port</text>
+<rect x="250" y="717" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="269.501" y="728.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">AS-01</text>
+<rect x="250" y="736" width="54.7" height="16" rx="4" fill="#C2410C" stroke="#C2410C"/>
+<text x="277.355" y="747.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-01 · 4</text>
+<rect x="308.711" y="736" width="54.7" height="16" rx="4" fill="#B42318" stroke="#B42318"/>
+<text x="336.066" y="747.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-14 · 5</text>
+<text x="250" y="766" font-size="10" fill="#7C3AED" font-weight="700">entered by AP-01</text>
+<rect x="1010" y="214" width="230" height="130" rx="9" fill="#F8FAFC" stroke="#C2410C" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="1020" y="233" font-size="12" fill="#0F172A" font-weight="700">comma.ai back end</text>
+<text x="1020" y="247" font-size="10" fill="#475569">athena RPC, connect, upload</text>
+<rect x="1020" y="255" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="1039.5" y="266.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">AS-10</text>
+<rect x="1020" y="274" width="54.7" height="16" rx="4" fill="#C2410C" stroke="#C2410C"/>
+<text x="1047.36" y="285.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-07 · 4</text>
+<text x="1020" y="304" font-size="10" fill="#7C3AED" font-weight="700">entered by AP-07, AP-13</text>
+<rect x="1010" y="360" width="230" height="132" rx="9" fill="#F8FAFC" stroke="#C2410C" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="1020" y="379" font-size="12" fill="#0F172A" font-weight="700">Code and supply chain</text>
+<text x="1020" y="393" font-size="10" fill="#475569">GitHub, update branch, submodules, wheels</text>
+<rect x="1020" y="401" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="1039.5" y="412.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">AS-16</text>
+<rect x="1020" y="420" width="54.7" height="16" rx="4" fill="#C2410C" stroke="#C2410C"/>
+<text x="1047.36" y="431.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-10 · 4</text>
+<text x="1020" y="450" font-size="10" fill="#7C3AED" font-weight="700">entered by AP-06, AP-10</text>
+<rect x="40" y="170" width="180" height="544" rx="10" fill="#F5F3FF" stroke="#7C3AED" stroke-dasharray="5 4"/>
+<text x="52" y="192" font-size="12" fill="#0F172A" font-weight="700">Attacker positions (§5)</text>
+<text x="52" y="212" font-size="10" fill="#7C3AED" font-weight="700">AP-01</text>
+<text x="52" y="225" font-size="10" fill="#0F172A">Physical OBD-II / bus tap</text>
+<text x="52" y="241.5" font-size="10" fill="#7C3AED" font-weight="700">AP-02, AP-14</text>
+<text x="52" y="254.5" font-size="10" fill="#0F172A">Root on SoC (QM user space)</text>
+<text x="52" y="271" font-size="10" fill="#7C3AED" font-weight="700">AP-03</text>
+<text x="52" y="284" font-size="10" fill="#0F172A">Root on SoC</text>
+<text x="52" y="300.5" font-size="10" fill="#7C3AED" font-weight="700">AP-04</text>
+<text x="52" y="313.5" font-size="10" fill="#0F172A">Root or any local process on</text>
+<text x="52" y="326" font-size="10" fill="#0F172A">SoC</text>
+<text x="52" y="342.5" font-size="10" fill="#7C3AED" font-weight="700">AP-05</text>
+<text x="52" y="355.5" font-size="10" fill="#0F172A">Ability to build+flash panda FW</text>
+<text x="52" y="372" font-size="10" fill="#7C3AED" font-weight="700">AP-06</text>
+<text x="52" y="385" font-size="10" fill="#0F172A">Control of update source /</text>
+<text x="52" y="397.5" font-size="10" fill="#0F172A">branch, or on-path position</text>
+<text x="52" y="414" font-size="10" fill="#7C3AED" font-weight="700">AP-07</text>
+<text x="52" y="427" font-size="10" fill="#0F172A">Compromised back-end / stolen</text>
+<text x="52" y="439.5" font-size="10" fill="#0F172A">device JWT</text>
+<text x="52" y="456" font-size="10" fill="#7C3AED" font-weight="700">AP-08</text>
+<text x="52" y="469" font-size="10" fill="#0F172A">Network reachability + valid SSH</text>
+<text x="52" y="481.5" font-size="10" fill="#0F172A">key</text>
+<text x="52" y="498" font-size="10" fill="#7C3AED" font-weight="700">AP-09</text>
+<text x="52" y="511" font-size="10" fill="#0F172A">Ability to place a model file (via</text>
+<text x="52" y="523.5" font-size="10" fill="#0F172A">AP-06/AP-08 or supply chain)</text>
+<text x="52" y="540" font-size="10" fill="#7C3AED" font-weight="700">AP-10</text>
+<text x="52" y="553" font-size="10" fill="#0F172A">Upstream repo / dependency /</text>
+<text x="52" y="565.5" font-size="10" fill="#0F172A">mutable branch</text>
+<text x="52" y="582" font-size="10" fill="#7C3AED" font-weight="700">AP-11</text>
+<text x="52" y="595" font-size="10" fill="#0F172A">Physical possession of a</text>
+<text x="52" y="607.5" font-size="10" fill="#0F172A">stolen/lost device</text>
+<text x="52" y="624" font-size="10" fill="#7C3AED" font-weight="700">AP-12</text>
+<text x="52" y="637" font-size="10" fill="#0F172A">Local process or crafted input</text>
+<text x="52" y="649.5" font-size="10" fill="#0F172A">on SoC</text>
+<text x="52" y="666" font-size="10" fill="#7C3AED" font-weight="700">AP-13</text>
+<text x="52" y="679" font-size="10" fill="#0F172A">Possession of the device</text>
+<text x="52" y="691.5" font-size="10" fill="#0F172A">identity key</text>
+<text x="1010" y="520" font-size="10.5" fill="#475569" font-weight="700" letter-spacing=".04em">HOW TO READ</text>
+<text x="1010" y="536" font-size="11" fill="#0F172A" font-weight="700">Grey chips</text>
+<text x="1010" y="549.5" font-size="10.5" fill="#475569">assets held there (§2)</text>
+<text x="1010" y="565.5" font-size="11" fill="#0F172A" font-weight="700">Coloured chips</text>
+<text x="1010" y="579" font-size="10.5" fill="#475569">threat scenarios against them, with their §8</text>
+<text x="1010" y="592.5" font-size="10.5" fill="#475569">risk value</text>
+<text x="1010" y="608.5" font-size="11" fill="#0F172A" font-weight="700">Outline</text>
+<text x="1010" y="622" font-size="10.5" fill="#475569">the highest risk value in the box</text>
+<text x="1010" y="638" font-size="11" fill="#0F172A" font-weight="700">Violet</text>
+<text x="1010" y="651.5" font-size="10.5" fill="#475569">attack paths whose entry point is there (§5)</text>
+<line x1="40" y1="800" x2="1240" y2="800" stroke="#E2E8F0"/>
+<rect x="40" y="812" width="36.8" height="16" rx="4" fill="#B42318" stroke="#B42318"/>
+<text x="58.3931" y="823.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">risk 5</text>
+<rect x="84.7862" y="812" width="36.8" height="16" rx="4" fill="#C2410C" stroke="#C2410C"/>
+<text x="103.179" y="823.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">risk 4</text>
+<rect x="129.572" y="812" width="36.8" height="16" rx="4" fill="#B45309" stroke="#B45309"/>
+<text x="147.966" y="823.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">risk 3</text>
+<text x="180.359" y="824" font-size="11" fill="#0F172A">risk ≥ 3 needs treatment; 4–5 drive a cybersecurity goal (§7, WP-C-10)</text>
+<text x="40" y="844" font-size="11" fill="#475569">Ratings reflect the baseline as shipped and credit no control that does not exist yet; treatments in the reference build are not re-rated (OI-5). Where each asset and entry point is drawn is an analyst input in fig_c09_boundary.py.</text>
+<text x="1240" y="864" font-size="10" fill="#475569" text-anchor="end">Generated by fig_c09_boundary.py</text>
+</svg>
