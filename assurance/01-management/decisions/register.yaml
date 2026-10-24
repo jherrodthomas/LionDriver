@@ -1347,7 +1347,8 @@
       title: "Add an AI architecture view at G2"
       detail: "The models, their inputs, outputs and monitors drawn in WP-S-03 or WP-C-11. Cost: one more G2 work product to write and keep with model updates."
   sources: ["assurance/process/README.md (finding 2, no AI-lane work product gated at G2)", "assurance/01-management/WP-M-10-ai-safety-plan.md", "assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-23, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-059
   question: "On the tightest curve allowed, the car would drift 0.6 m in 0.7 s if steering silently failed. Tighten the curve limit, or re-rate?"
@@ -2959,7 +2960,8 @@
       title: "Develop all of it to ASIL C"
       detail: "No partitioning needed. Cost: the fan, sound, LED and debug code is reviewed, tested and covered to ASIL C, and every upstream change to it has to be too."
   sources: ["assurance/08-analyses/WP-A-02-coexistence-freedom-from-interference.md §2, §6, OI-2", "assurance/00-assessment/gap-assessment.md GAP-11"]
-  status: open
+  status: answered
+  answer: {choice: B, via: inbox, at: 2026-10-23, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-127
   question: "Should the System FMEA table in WP-A-04 §10 (SFMEA-01…40) be retired, so that system-fmea.yaml is the only System FMEA?"
@@ -5792,3 +5794,31 @@
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
   note: "Applied in part (jherrodthomas/LionDriver#429): WP-C-03 v0.9 rates HE-01.6 S3 E3 C3, ASIL C. Left (WP-C-03 OI-11): re-rate the OS-12 rules of hara_model.py and regenerate both workbooks together; needs the hara-builder generator, not available in the sessions of 2026-10-22 and 2026-10-23"
+- id: DQ-419
+  question: "When an attacker, not a random fault, triggers a hazard, should the HARA and the safety–security interactions record that the attacker picks the moment, so the exposure rating does not apply?"
+  context: >-
+    The HARA rates each hazardous event with an exposure (E) that assumes the fault happens at a random moment. An
+    attacker who controls the SoC can wait for the worst situation in the ODD. The TARA already rates safety impact
+    without exposure (WP-C-09 §3), so no risk value changes either way. **The question is whether the HARA and HATARA
+    should say so explicitly, so a reviewer does not read an ASIL's E as covering attacks.** The cyber simulation
+    shows the HARA hazard and the TARA safety impact, not an ASIL, and runs the worst in-ODD case, so it works with
+    any answer.
+  reversibility: easy
+  blocks: "Wording in WP-C-03 and hatara/ only; the cyber simulation does not wait on it"
+  decider: lead
+  options:
+  - key: A
+    recommended: true
+    title: Add one HATARA interaction and a note in the HARA; no rating changes
+    detail: "One interaction row says attacker-triggered hazardous events take the worst situation, so E does not apply and the TARA safety impact governs; WP-C-03 points to it. Cost: two short edits."
+  - key: B
+    title: Rate attacker-triggered events as their own hazardous events at E4
+    detail: "Explicit, but duplicates every SoC-reachable event and can raise ASILs for faults that are not random, mixing the two methods. Cost: HARA model and both workbooks regenerated."
+  - key: C
+    title: Leave it to the TARA
+    detail: "No change. Cost: the gap stays implicit and a reviewer may raise it."
+  sources:
+  - assurance/sim/cyber/README.md §2.4, §6.1 choice 5
+  - assurance/02-concept/WP-C-09-tara.md §3
+  - assurance/02-concept/hatara/hatara-interactions.md
+  status: queued
