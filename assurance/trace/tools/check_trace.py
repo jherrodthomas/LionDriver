@@ -5,13 +5,25 @@ Checks implemented so far (IDs per assurance/trace/README.md section 6):
   K1  item files parse and carry the mandatory keys for their kind
   K2  IDs are unique and match the ID pattern
   K3  every reference (parents, aou_dependency) resolves
+  K6  every requirement a test links to in links/verification.yaml exists, is a requirement and is not withdrawn
+      (the @req tags of the same check are not implemented)
   K12 every hazardous event is linked to a safety goal or has sg_exempt_reason
   R1  hazardous-event ASIL equals the risk-graph result of S, E, C
   R2  safety-goal ASIL equals the highest ASIL of its source hazardous events
   R3  asil_if_aou_fails is not lower than asil and only appears with aou_dependency
   R4  every hazard has at least one hazardous event
+  S1  SOTIF: every SOTIF hazard in use has a functional insufficiency and a triggering condition; every
+      insufficiency is evaluated with a triggering condition; every SOTIF hazard of a triggering condition is
+      reached through its insufficiencies (WP-C-06 §5); every functional modification is named by an evaluation row
+  A1  AI: every AI safety and dataset requirement has a parent or names what it rests on; every TSR whose row names
+      an AI safety requirement is listed in that requirement's related_tsr (a TSR need not cite the AIRs it refines)
+  C1  Cybersecurity: every threat scenario treated by reduction or avoidance has a cybersecurity goal; every goal has
+      a cybersecurity requirement; every safety goal is protected by a cybersecurity goal; every cybersecurity
+      requirement has a parent goal or says what it rests on
+  Q1  ASPICE system requirements: every one names its function, its allocation and its WP-S-01 §10 traceability row
   X1  hazardous events and safety goals match the tables in WP-C-03
   X2  assumptions of use match the table in WP-C-01
+  X3  the generated requirement and SOTIF items equal a fresh extraction from their work products
 
 Usage: python3 assurance/trace/tools/check_trace.py [--no-source-compare]
 Exit code 0 when no errors, 1 otherwise.
@@ -30,6 +42,10 @@ from pathlib import Path
 TRACE_DIR = Path(__file__).resolve().parent.parent
 ASSURANCE_DIR = TRACE_DIR.parent
 ITEMS_DIR = TRACE_DIR / "items"
+LINKS = TRACE_DIR / "links" / "verification.yaml"
+# README §5: only requirements may be linked to a test, never a goal or a hazard
+LINKABLE = {"fsr", "tsr", "swsr", "hwsr", "cybersecurity-requirement", "ai-requirement", "system-requirement",
+            "functional-modification"}
 HARA_MD = ASSURANCE_DIR / "02-concept" / "WP-C-03-hara.md"
 ITEMDEF_MD = ASSURANCE_DIR / "02-concept" / "WP-C-01-item-definition.md"
 
@@ -54,10 +70,39 @@ REQUIRED = {
            "acceptance", "baseline_impl", "status", "source"],
   "hwsr": ["id", "kind", "text", "asil", "parents", "parent_text", "other_parents", "allocated_to", "hw_kind",
            "verification", "baseline_impl", "status", "source"],
+  "sotif-hazard": ["id", "kind", "text", "functions", "function_text", "situations", "shares_event", "linked_text",
+                   "status", "source"],
+  "functional-insufficiency": ["id", "kind", "text", "fi_type", "component", "parents", "status", "source"],
+  "triggering-condition": ["id", "kind", "text", "category", "parents", "insufficiencies", "evaluation", "status",
+                           "source"],
+  "functional-modification": ["id", "kind", "title", "addresses", "parents", "gap_text", "priority", "status", "source"],
+  "ai-requirement": ["id", "kind", "text", "category", "component", "parents", "parent_text", "other_parents",
+                     "related_tsr", "verification", "baseline_impl", "status", "source"],
+  "dataset-requirement": ["id", "kind", "text", "parents", "parent_text", "other_parents", "verification",
+                          "baseline_impl", "status", "source"],
+  "threat-scenario": ["id", "kind", "text", "stride", "assets", "violated_property", "damage_text", "gap_text", "risk",
+                      "treatment", "status", "source"],
+  "cybersecurity-goal": ["id", "kind", "text", "parents", "parent_text", "cal", "protects", "rationale", "status",
+                         "source"],
+  "cybersecurity-requirement": ["id", "kind", "text", "parents", "concept_requirement", "cal", "other_parents",
+                                "allocated_to", "safety_relation", "related_tsr", "verification", "baseline_impl",
+                                "status", "source"],
+  "system-requirement": ["id", "kind", "text", "type", "functions", "criterion", "verification", "baseline_impl",
+                         "allocated_to", "related_text", "related_tsr", "related_items", "status", "source"],
 }
 GAP_MD = ASSURANCE_DIR / "00-assessment" / "gap-assessment.md"
 PARENT_KINDS = {"fsr": {"safety-goal"}, "tsr": {"fsr", "tsr", "safety-goal", "aou"}, "swsr": {"tsr"},
-                "hwsr": {"tsr", "fsr", "aou"}}
+                "hwsr": {"tsr", "fsr", "aou"}, "functional-insufficiency": {"sotif-hazard"},
+                "triggering-condition": {"sotif-hazard"},
+                "functional-modification": {"triggering-condition", "functional-insufficiency"},
+                "ai-requirement": {"safety-goal", "fsr", "sotif-hazard", "triggering-condition",
+                                   "functional-insufficiency", "functional-modification", "ai-requirement"},
+                "dataset-requirement": {"ai-requirement", "dataset-requirement"},
+                "cybersecurity-goal": {"threat-scenario"}, "cybersecurity-requirement": {"cybersecurity-goal"}}
+# Other link keys: key -> kinds the reference must be (README §3.2)
+REF_KINDS = {"shares_event": {"hazard", "hazardous-event"}, "insufficiencies": {"functional-insufficiency"},
+             "addresses": {"sotif-hazard"}, "related_tsr": {"tsr"},
+             "protects": {"safety-goal"}, "related_items": {"sotif-hazard", "ai-requirement"}}
 SW_ALLOC = ("P-SW", "SoC")  # WP-S-02 allocation cells that put a TSR (also) on software
 HW_ALLOC = ("P-HW", "HAR")  # ... and (also) on hardware
 
@@ -188,6 +233,12 @@ def check_links(by_id: dict[str, dict], rep: Report) -> None:
           rep.err("K3", f"{iid}: parent {ref} is a {by_id[ref]['kind']}, not one of {sorted(PARENT_KINDS[it['kind']])}")
         elif key == "aou_dependency" and by_id[ref]["kind"] != "aou":
           rep.err("K3", f"{iid}: aou_dependency {ref} is not an AOU")
+    for key, kinds in REF_KINDS.items():
+      for ref in it.get(key) or []:
+        if ref not in by_id:
+          rep.err("K3", f"{iid}: {key} reference {ref} does not resolve")
+        elif by_id[ref]["kind"] not in kinds:
+          rep.err("K3", f"{iid}: {key} {ref} is a {by_id[ref]['kind']}, not one of {sorted(kinds)}")
     for f in it.get("functions") or []:
       if not FUNC_RE.match(str(f)):
         rep.err("K3", f"{iid}: bad function ID {f}")
@@ -221,6 +272,10 @@ def check_links(by_id: dict[str, dict], rep: Report) -> None:
 
   check_requirement_coverage(by_id, rep)
   check_sw_hw_coverage(by_id, rep)
+  check_sotif(by_id, rep)
+  check_ai(by_id, rep)
+  check_cs(by_id, rep)
+  check_sys(by_id, rep)
 
   for iid, sg in sgs.items():
     parents = [p for p in sg.get("parents") or [] if p in hes]
@@ -230,6 +285,97 @@ def check_links(by_id: dict[str, dict], rep: Report) -> None:
     top = max((hes[p]["asil"] for p in parents), key=lambda a: ASIL_ORDER[a])
     if sg["asil"] != top:
       rep.err("R2", f"{iid}: asil {sg['asil']} but highest source HE ASIL is {top}")
+
+
+def check_sotif(by_id: dict[str, dict], rep: Report) -> None:
+  """S1: the SOTIF chain SH -> TC/FI -> FM is complete, and each TC's SOTIF hazards follow from its insufficiencies."""
+  def of(kind: str) -> dict[str, dict]:
+    return {i: x for i, x in by_id.items() if x["kind"] == kind and x.get("status") != "withdrawn"}
+  shs, fis, tcs, fms = (of(k) for k in ("sotif-hazard", "functional-insufficiency", "triggering-condition",
+                                        "functional-modification"))
+  if not shs:
+    return
+  for iid in shs:
+    for kind, children in (("functional insufficiency", fis), ("triggering condition", tcs)):
+      if not any(iid in (x.get("parents") or []) for x in children.values()):
+        rep.err("S1", f"{iid}: no {kind}")
+  evaluated = {f for x in tcs.values() for f in x.get("insufficiencies") or []}
+  for iid in sorted(set(fis) - evaluated):
+    rep.err("S1", f"{iid}: not evaluated with a triggering condition (WP-C-06 §5)")
+  for iid, tc in tcs.items():
+    reached = {p for f in tc.get("insufficiencies") or [] if f in fis for p in fis[f].get("parents") or []}
+    for sh in sorted(set(tc.get("parents") or []) - reached):
+      rep.err("S1", f"{iid}: {sh} is not a parent of any of its insufficiencies {tc.get('insufficiencies')}")
+  for iid, fm in fms.items():
+    if not fm.get("parents"):
+      rep.err("S1", f"{iid}: named by no evaluation row of WP-C-06 §5")
+
+
+def check_ai(by_id: dict[str, dict], rep: Report) -> None:
+  """A1: AI requirements rest on something, and every TSR that names an AIR is named by it."""
+  ai = {i: x for i, x in by_id.items() if x["kind"] in ("ai-requirement", "dataset-requirement")}
+  if not ai:
+    return
+  for iid, it in ai.items():
+    if not it.get("parents") and not it.get("other_parents"):
+      rep.err("A1", f"{iid}: no parent and names nothing it rests on")
+  named = {(a, t) for a, x in ai.items() for t in x.get("related_tsr") or []}
+  for tid, t in by_id.items():
+    if t["kind"] != "tsr":
+      continue
+    cited = set(re.findall(r"\bAIR-[0-9]{2}\b", " ".join(str(t.get(k, "")) for k in ("text", "parent_text", "baseline_impl"))))
+    for a in sorted(cited):
+      if a in ai and (a, tid) not in named:
+        rep.err("A1", f"{tid} names {a}, but {a} does not list {tid} in related_tsr (WP-C-11 Parent column)")
+
+
+def check_cs(by_id: dict[str, dict], rep: Report) -> None:
+  """C1: the TS -> CSG -> CSR chain is complete and every safety goal is protected by a cybersecurity goal."""
+  def of(kind: str) -> dict[str, dict]:
+    return {i: x for i, x in by_id.items() if x["kind"] == kind and x.get("status") != "withdrawn"}
+  tss, csgs, csrs = of("threat-scenario"), of("cybersecurity-goal"), of("cybersecurity-requirement")
+  if not tss:
+    return
+  for iid, ts in tss.items():
+    if re.search(r"Reduce|Avoid", str(ts.get("treatment"))) and not any(iid in (g.get("parents") or [])
+                                                                         for g in csgs.values()):
+      rep.err("C1", f"{iid}: treated by {ts.get('treatment')!r} but no cybersecurity goal addresses it")
+  for iid in csgs:
+    if not any(iid in (r.get("parents") or []) for r in csrs.values()):
+      rep.err("C1", f"{iid}: no cybersecurity requirement")
+  protected = {sg for g in csgs.values() for sg in g.get("protects") or []}
+  for iid in sorted(i for i, x in by_id.items() if x["kind"] == "safety-goal"):
+    if iid not in protected:
+      rep.err("C1", f"{iid}: protected by no cybersecurity goal (WP-C-10 §8)")
+  for iid, r in csrs.items():
+    if not r.get("parents") and not r.get("other_parents"):
+      rep.err("C1", f"{iid}: no parent goal and names nothing it rests on")
+
+
+def check_sys(by_id: dict[str, dict], rep: Report) -> None:
+  """Q1: every system requirement names its function, its allocation and its traceability row."""
+  for iid, it in by_id.items():
+    if it["kind"] != "system-requirement":
+      continue
+    for key, what in (("functions", "function"), ("allocated_to", "allocation (WP-S-01 §10.1)"),
+                      ("related_text", "traceability row (WP-S-01 §10)")):
+      if not it.get(key):
+        rep.err("Q1", f"{iid}: no {what}")
+
+
+def check_verification_links(by_id: dict[str, dict], links: list[dict], rep: Report) -> None:
+  """K6 for links/verification.yaml: each linked ID is an existing, non-withdrawn requirement."""
+  for ln in links:
+    for ref in ln.get("reqs") or []:
+      it = by_id.get(ref)
+      if it is None:
+        rep.err("K6", f"{ln.get('test')}: links {ref}, which does not exist")
+      elif it["kind"] not in LINKABLE:
+        rep.err("K6", f"{ln.get('test')}: links {ref}, a {it['kind']}; only requirements may be linked (README §5)")
+      elif it.get("status") == "withdrawn":
+        rep.err("K6", f"{ln.get('test')}: links {ref}, which is withdrawn")
+    if not ln.get("reqs"):
+      rep.err("K6", f"{ln.get('test')}: links no requirement")
 
 
 def check_requirement_coverage(by_id: dict[str, dict], rep: Report) -> None:
@@ -288,7 +434,7 @@ def expand_fsr_refs(text: str) -> list[str]:
 
 
 def check_requirements_in_sync(rep: Report) -> None:
-  """X3: fsr/tsr/swsr/hwsr.yaml equal a fresh extraction from WP-C-04, WP-S-02, WP-S-06, WP-W-02 and WP-H-01."""
+  """X3: the generated items/*.yaml equal a fresh extraction from their work products (sync_requirements.py)."""
   import sync_requirements as sync
   for name, content in sync.expected_outputs().items():
     path = ITEMS_DIR / name
@@ -372,6 +518,8 @@ def main(argv: list[str]) -> int:
     items += data
   by_id = check_items(items, rep)
   check_links(by_id, rep)
+  if LINKS.exists():
+    check_verification_links(by_id, load_yaml(LINKS), rep)
   if "--no-source-compare" not in argv:
     check_against_hara(by_id, rep)
     check_against_itemdef(by_id, rep)

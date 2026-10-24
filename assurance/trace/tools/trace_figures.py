@@ -162,6 +162,8 @@ class Data:
   children: dict[str, list[str]]        # item ID -> items that list it in `parents`
   links: Counter                        # (parent kind, child kind) -> number of parent links
   named: set[str]                       # item IDs named by at least one test-specification case
+  linked: dict[str, int]                # requirement ID -> number of tests links/verification.yaml links to it
+  n_links: int                          # entries of links/verification.yaml
   alloc: dict[str, str]                 # requirement ID -> resolved / partly resolved / not resolved
   alloc_values: dict[str, list[str]]    # unresolved allocated_to text -> requirement IDs
   checks: list[tuple[str, str, str]]    # (check ID, description, implemented: yes / partly / no)
@@ -194,7 +196,7 @@ def allocation(items: dict[str, dict]) -> tuple[dict[str, str], dict[str, list[s
   return status, dict(values)
 
 
-CHECK_ROW = re.compile(r"^\|\s*([KRXP]\d+)(?:\s+\*\*\[ext\]\*\*|\s+\(planned\))?\s*\|")
+CHECK_ROW = re.compile(r"^\|\s*([KRXPSACQ]\d+)(?:\s+\*\*\[ext\]\*\*|\s+\(planned\))?\s*\|")
 
 
 def readme_checks() -> list[tuple[str, str, str]]:
@@ -235,10 +237,12 @@ def load() -> Data:
         links[(kind[p], kind[i])] += 1
   named = {r for cases in m.specs.values() for refs in cases.values() for r in refs} & set(m.items)
   alloc, values = allocation(m.items)
-  if VERIFICATION_LINKS.exists():
-    raise SystemExit(f"{VERIFICATION_LINKS.relative_to(REPO)} now exists: teach trace_figures.py (figures 1, 2, 4) " +
+  ver = tm.ct.load_yaml(VERIFICATION_LINKS) if VERIFICATION_LINKS.exists() else []
+  linked = Counter(r for ln in ver for r in ln.get("reqs") or [])
+  if any("result" in ln for ln in ver):
+    raise SystemExit(f"{VERIFICATION_LINKS.relative_to(REPO)} now records results: teach trace_figures.py (figures 1, 2, 4) " +
                      "to count its test results")
-  return Data(m, kind, dict(children), links, named, alloc, values, readme_checks(), block_titles(),
+  return Data(m, kind, dict(children), links, named, dict(linked), len(ver), alloc, values, readme_checks(), block_titles(),
               sum(len(c) for c in m.specs.values()), len(m.specs))
 
 
@@ -329,8 +333,10 @@ def fig1(d: Data) -> str:
   out.append(line(1138, 272, 1138, 298, marker="muted"))
   # trace data
   out += box(200, 390, 806, 62, f"items/*.yaml · {total} items", counts, fill=SW_BG, stroke=SW, title_fill=SW)
-  out += box(1040, 390, 196, 62, "links/verification.yaml", "not yet · 0 @req tags", dash="5 4", stroke=RED,
-             detail_fill=RED, mono=True, size=11)
+  out += box(1040, 390, 196, 62, "links/verification.yaml",
+             f"{d.n_links} test links · no results\n0 @req tags" if d.n_links else "not yet · 0 @req tags",
+             dash="" if d.n_links else "5 4", stroke=AMBER if d.n_links else RED, detail_fill=INK if d.n_links else RED,
+             mono=True, size=11)
   out.append(line(298, 362, 298, 388, marker="muted"))
   out.append(line(718, 362, 718, 388, marker="muted"))
   out.append(path("M1006,404 L1022,404 L1022,331 L1038,331", stroke=MUTED, sw=1.4, marker="muted"))
@@ -360,7 +366,8 @@ def fig1(d: Data) -> str:
   return svg(W, H, "Figure 1 · How the trace data works",
              "Swimlane from authors through work products, generators, the trace data and its checks to the " +
              f"consumers. The trace data holds {total} items ({counts}); requirement YAML is regenerated from the work " +
-             "product tables; no verification links or @req tags exist yet.", out)
+             (f"product tables; {d.n_links} test links come from WP-W-06, no results and no @req tags exist yet." if d.n_links
+              else "product tables; no verification links or @req tags exist yet."), out)
 
 
 # ---------------------------------------------------------------- Figure 2: trace data model
@@ -381,7 +388,7 @@ def fig2(d: Data) -> str:
   W, H = 1280, 690
   out = header(W, 2, "Trace data model: what is in, what is missing",
                "One column per standard. Solid kinds are in items/ and checked; dashed kinds exist only in their work " +
-               "products. Edge labels are parent links counted in items/.", "WP-T-01 §3")
+               "products. Edge labels are links counted in items/.", "WP-T-01 §3")
   for name, x0, x1 in F2_COLUMNS:
     out.append(text((x0 + x1) / 2, 108, name, size=11, weight=700, fill=MUTED, anchor="middle"))
     if x0 > 40:
@@ -425,32 +432,55 @@ def fig2(d: Data) -> str:
                   marker="aou"))
   out.append(text(ax - NODE_W / 2, ay + 34, "credited by", size=10, fill=AOU_C))
   out.append(text(ax - NODE_W / 2, ay + 47, f"{he_c} HE · {sg_c} SG", size=10, fill=AOU_C))
-  # other standards (work-product kinds, dashed)
+  # other standards: solid with the link count once both kinds are in items/, dashed while either is in documents only
+  def traced(a: str, b: str) -> bool:
+    return a in d.m.in_trace and b in d.m.in_trace
+
   for a, b in (("SH", "TC"), ("SH", "FI"), ("TC", "FM"), ("FI", "FM"), ("AIR", "DSR"), ("TS", "CSG"), ("CSG", "CSR")):
     (ax2, ay2), (bx2, by2) = F2_POS[a], F2_POS[b]
-    out.append(line(ax2 + (bx2 - ax2) * 0.3, ay2 + NODE_H / 2, bx2 - (bx2 - ax2) * 0.1, by2 - NODE_H / 2 - 1,
-                    stroke=FAINT, sw=1.2, dash="5 4", marker="faint"))
+    x1, y1, x2, y2 = ax2 + (bx2 - ax2) * 0.3, ay2 + NODE_H / 2, bx2 - (bx2 - ax2) * 0.1, by2 - NODE_H / 2 - 1
+    on = traced(a, b)
+    out.append(line(x1, y1, x2, y2, stroke=SW if on else FAINT, sw=1.6 if on else 1.2, dash="" if on else "5 4",
+                    marker="sw" if on else "faint"))
+    if on:
+      right = x2 >= x1
+      out.append(text((x1 + x2) / 2 + (8 if right else -8), (y1 + y2) / 2 + 4, str(d.links[(a, b)]), size=11,
+                      weight=700, fill=SW, anchor="start" if right else "end"))
   fx, fy = F2_POS["FI"]
-  out.append(line(fx + NODE_W / 2, fy, F2_POS["AIR"][0] - NODE_W / 2 - 1, fy, stroke=FAINT, sw=1.2, dash="5 4",
-                  marker="faint"))
+  on = traced("FI", "AIR")
+  out.append(line(fx + NODE_W / 2, fy, F2_POS["AIR"][0] - NODE_W / 2 - 1, fy, stroke=SW if on else FAINT,
+                  sw=1.6 if on else 1.2, dash="" if on else "5 4", marker="sw" if on else "faint"))
+  if on:
+    out.append(text((fx + F2_POS["AIR"][0]) / 2, fy - 8, str(d.links[("FI", "AIR")]), size=11, weight=700, fill=SW,
+                    anchor="middle"))
   # cross-standard links
   sx, sy = F2_POS["SH"]
-  hx, hy = F2_POS["HE"]
-  out.append(line(sx - NODE_W / 2, sy, hx + NODE_W / 2 + 1, hy, stroke=FAINT, sw=1.2, dash="5 4", marker="faint"))
-  out.append(text(430, sy - 8, "shares event (SH → HE)", size=10.5, fill=MUTED, anchor="middle"))
+  hx, hy = F2_POS["H"]
+  shared = sum(len(it.get("shares_event") or []) for it in d.m.items.values())
+  on = traced("SH", "H") and shared > 0
+  out.append(line(sx - NODE_W / 2, sy, hx + NODE_W / 2 + 1, hy, stroke=SW if on else FAINT, sw=1.6 if on else 1.2,
+                  dash="" if on else "5 4", marker="sw" if on else "faint"))
+  out.append(text(400, 150, "shares hazard (SH → H)" + (f" · {shared}" if on else ""), size=10.5,
+                  fill=SW if on else MUTED, weight=700 if on else "", anchor="middle"))
   cx, cy = F2_POS["CSG"]
   gx, gy = F2_POS["SG"]
+  protects = sum(len(it.get("protects") or []) for it in d.m.items.values())
+  on = traced("CSG", "SG") and protects > 0
   out.append(path(f"M{cx - NODE_W / 2},{cy - 8} L{cx - NODE_W / 2 - 22},{cy - 8} L{cx - NODE_W / 2 - 22},{gy} " +
-                  f"L{gx + NODE_W / 2 + 1},{gy}", stroke=FAINT, sw=1.2, dash="5 4", marker="faint"))
-  out.append(text(430, gy - 8, "protects (CSG → SG)", size=10.5, fill=MUTED, anchor="middle"))
+                  f"L{gx + NODE_W / 2 + 1},{gy}", stroke=SW if on else FAINT, sw=1.6 if on else 1.2,
+                  dash="" if on else "5 4", marker="sw" if on else "faint"))
+  out.append(text(430, gy - 8, "protects (CSG → SG)" + (f" · {protects}" if on else ""), size=10.5,
+                  fill=SW if on else MUTED, weight=700 if on else "", anchor="middle"))
   sx2, sy2 = F2_POS["SYS"]
-  out.append(text(sx2, sy2 + 34, "not linked yet", size=10, fill=MUTED, anchor="middle"))
+  related = sum(len(it.get("related_tsr") or []) for it in d.m.items.values() if d.kind.get(it["id"]) == "SYS")
+  out.append(text(sx2, sy2 + 34, f"related to TSRs: {related}" if traced("SYS", "TSR") else "not linked yet", size=10,
+                  fill=SW if traced("SYS", "TSR") else MUTED, anchor="middle"))
   for k in F2_POS:
     out += node_box(k)
   # footer: the two halves that are not item kinds
   res = Counter(d.alloc.values())
   per = {k: (sum(1 for i, s in d.alloc.items() if d.kind[i] == k and s == "resolved"),
-             sum(1 for i in d.alloc if d.kind[i] == k)) for k in REQ_KINDS}
+             sum(1 for i in d.alloc if d.kind[i] == k)) for k in REQ_KINDS + ("CSR", "SYS")}
   out.append(rect(40, 552, 590, 74, fill="#EFF6FF", stroke="#93C5FD", rx=10))
   out.append(text(58, 576, "Elements · SysML v2 model", size=12, weight=700))
   out.append(text(58, 596, f"allocated_to resolved: {res['resolved']} of {len(d.alloc)} · "
@@ -459,9 +489,10 @@ def fig2(d: Data) -> str:
   named = len(d.named)
   out.append(rect(650, 552, 590, 74, fill=RED_BG, stroke=RED, rx=10, dash="5 4"))
   out.append(text(668, 576, "Code and tests · @req tags, links/verification.yaml", size=12, weight=700, fill=RED))
-  out.append(text(668, 596, f"0 tags in code or tests. {named} of {len(d.m.items)} items are named by a " +
-                  "test-specification case:", size=11, fill=MUTED))
-  out.append(text(668, 614, "a specified link, not a passed test.", size=11, fill=MUTED))
+  out.append(text(668, 596, f"{d.n_links} test links to {len(d.linked)} requirements (from WP-W-06), 0 @req tags, " +
+                  "no results.", size=11, fill=MUTED))
+  out.append(text(668, 614, f"{named} of {len(d.m.items)} items are named by a test-specification case: specified, " +
+                  "not passed.", size=11, fill=MUTED))
   out += legend(40, 660, [(SW_BG, SW, "in items/, checked"), ("#FFFFFF", FAINT + " dashed", "only in its work product"),
                           ("#FFFFFF", AOU_C, "assumption link")])
   return svg(W, H, "Figure 2 · Trace data model",
@@ -584,7 +615,8 @@ def goal_row(d: Data, ids: set[str]) -> dict:
   reqs = [i for i in ids if d.kind[i] in REQ_KINDS]
   alloc = [i for i in reqs if d.alloc.get(i) == "resolved"]
   named = [i for i in reqs if i in d.named]
-  return {"by": by, "n": len(reqs), "alloc": len(alloc), "named": len(named)}
+  linked = [i for i in reqs if i in d.linked]
+  return {"by": by, "n": len(reqs), "alloc": len(alloc), "named": len(named), "linked": len(linked)}
 
 
 def fig4(d: Data) -> str:
@@ -592,9 +624,9 @@ def fig4(d: Data) -> str:
   gs = goals(d)
   out = header(W, 4, "Trace depth per safety goal",
                "How far each goal's chain reaches today, over the requirements it derives (FSR, TSR, SWSR, HWSR). " +
-               "Every chain stops before code.", "WP-T-01 §6")
+               "No chain reaches a recorded result.", "WP-T-01 §6")
   cols = [("DERIVED", "FSR · TSR", 210), ("REFINED", "SWSR · HWSR", 380), ("ALLOCATED", "to a model element", 550),
-          ("NAMED BY A", "test-spec case", 740), ("TAGGED", "in code (@req)", 930), ("TEST", "passed", 1090)]
+          ("NAMED BY A", "test-spec case", 740), ("LINKED", "to a test (K6)", 930), ("TEST", "passed", 1090)]
   cw = [150, 150, 170, 170, 140, 150]
   for (a, b, x), w in zip(cols, cw, strict=True):
     out.append(text(x + w / 2, 112, a, size=10.5, weight=700, fill=MUTED, anchor="middle"))
@@ -616,23 +648,24 @@ def fig4(d: Data) -> str:
     for (_, _, x), w, v in zip(cols[:2], cw[:2], vals, strict=True):
       out.append(rect(x, y + 4, w - 12, 32, fill="#EFF6FF", stroke="#93C5FD", rx=6))
       out.append(text(x + (w - 12) / 2, y + 25, v, size=12.5, weight=700, fill="#1D4ED8", anchor="middle"))
-    for (_, _, x), w, num in ((cols[2], cw[2], r["alloc"]), (cols[3], cw[3], r["named"])):
+    for (_, _, x), w, num in ((cols[2], cw[2], r["alloc"]), (cols[3], cw[3], r["named"]), (cols[4], cw[4], r["linked"])):
       p = pct(num, r["n"])
       full = num == r["n"]
-      fill, stroke = (GREEN_BG, GREEN) if full and x == cols[2][2] else (AMBER_BG, AMBER)
+      fill, stroke = ((GREEN_BG, GREEN) if full and x == cols[2][2] else (RED_BG, RED) if num == 0 else
+                      (AMBER_BG, AMBER))
       out.append(rect(x, y + 4, w - 12, 32, fill=fill, stroke=stroke, rx=6))
       out.append(text(x + (w - 12) / 2, y + 20, f"{p} %", size=12.5, weight=700, fill=INK, anchor="middle"))
       out.append(text(x + (w - 12) / 2, y + 32, f"{num} of {r['n']}", size=9.5, fill=MUTED, anchor="middle"))
-    for (_, _, x), w in ((cols[4], cw[4]), (cols[5], cw[5])):
+    for (_, _, x), w in ((cols[5], cw[5]),):
       out.append(rect(x, y + 4, w - 12, 32, fill=CHIP, stroke=LINE, rx=6, dash="4 3"))
       out.append(text(x + (w - 12) / 2, y + 25, "no data yet", size=11, fill=FAINT, anchor="middle"))
     y += 46
   y += 14
   out += legend(40, y, [("#EFF6FF", "#93C5FD", "count of derived items (proposed, not approved)"),
-                        (AMBER_BG, AMBER, "partial"), (GREEN_BG, GREEN, "complete"),
+                        (RED_BG, RED, "none"), (AMBER_BG, AMBER, "partial"), (GREEN_BG, GREEN, "complete"),
                         (CHIP, LINE + " dashed", "no data source yet")])
-  out.append(text(40, y + 24, "“Named” means a test-specification case cites the ID: a specified link, not a " +
-                  "passed test. Tagged and passed need @req tags and links/verification.yaml (checks K6–K10).",
+  out.append(text(40, y + 24, "“Named”: a test-specification case cites the ID. “Linked”: links/verification.yaml " +
+                  "links an existing test to it (WP-W-06 §4.1, §4.9). Both are specified links, not a passed test (K7).",
                   size=11, fill=MUTED))
   out.append(text(40, y + 40, "Allocated: the requirement's allocated_to names elements of the SysML model " +
                   "(check M8). A requirement under several goals counts in each row.", size=11, fill=MUTED))
@@ -640,8 +673,8 @@ def fig4(d: Data) -> str:
   return svg(W, y + 58, "Figure 4 · Trace depth per safety goal",
              "For each safety goal: the derived and refined requirement counts, the share allocated to model elements " +
              f"and the share named by a test-specification case. Over all goals {allr['alloc']} of {allr['n']} " +
-             f"requirements are allocated and {allr['named']} named; none is tagged in code or verified by a passed " +
-             "test.", out)
+             f"requirements are allocated, {allr['named']} named and {allr['linked']} linked to an existing test; none is " +
+             "verified by a recorded passed test.", out)
 
 
 # ---------------------------------------------------------------- Figure 5: TSR blocks x goals
@@ -761,11 +794,15 @@ CHECK_SHORT = {
   "K10": "every SR-A file tagged", "K11": "WP tables = YAML", "K12": "every HE → SG or exempt",
   "R1": "HE ASIL = S + E + C", "R2": "SG ASIL = max of HEs", "R3": "AoU-fail ASIL rule", "R4": "every H has an HE",
   "X1": "HARA = WP-C-03", "X2": "AoU = WP-C-01", "X3": "generated YAML fresh",
-  "P1": "unverified AoU in WP-K-01", "P2": "IDs in the block ranges",
+  "P1": "unverified AoU in WP-K-01", "P2": "IDs in the block ranges", "S1": "SH → FI, TC → FM complete",
+  "A1": "AIR basis · AIR ↔ TSR",
+  "C1": "TS → CSG → CSR; SG → CSG",
+  "Q1": "SYS: function, alloc, row",
 }
 CHECK_GROUPS = [("STRUCTURE AND DERIVATION (WP-P-06 §7)", ("K1", "K2", "K3", "K4", "K5", "K11", "K12")),
                 ("CODE AND TEST LINKS, AND PLANNED CHECKS", ("K6", "K7", "K8", "K9", "K10", "P1", "P2")),
-                ("LIONDRIVER EXTENSIONS", ("R1", "R2", "R3", "R4", "X1", "X2", "X3"))]
+                ("LIONDRIVER EXTENSIONS", ("R1", "R2", "R3", "R4", "X1", "X2", "X3")),
+                ("CHAINS OF THE OTHER STANDARDS", ("S1", "A1", "C1", "Q1"))]
 CHECK_STYLE = {"yes": (GREEN_BG, GREEN, ""), "partly": (AMBER_BG, AMBER, ""), "no": (CHIP, FAINT, "4 3")}
 
 
@@ -804,7 +841,7 @@ def fig7(d: Data) -> str:
 def fig8(d: Data) -> str:
   W = 1280
   rows = []
-  for k in ("TSR", "FSR", "SWSR", "HWSR"):
+  for k in ("TSR", "FSR", "SWSR", "HWSR", "CSR", "SYS"):
     ids = [i for i in d.alloc if d.kind[i] == k]
     c = Counter(d.alloc[i] for i in ids)
     rows.append((k, len(ids), c))

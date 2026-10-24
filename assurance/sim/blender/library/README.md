@@ -2,7 +2,8 @@
 
 The parts the hazardous-event scenes are built from ([`../scenes.yaml`](../scenes.yaml), [`../README.md`](../README.md)).
 A scene is **environment + condition + traffic + motion source**, so one hazardous event can be drawn under every
-weather or lighting code it is rated for. Pictures only: synthetic (DSR-12), no evidence credit.
+weather or lighting code it is rated for. Pictures only: synthetic (DSR-12), no evidence credit. The library is one of
+the item and environment models indexed in [WP-C-12](../../../02-concept/WP-C-12-item-and-environment-models.md).
 
 | File | Holds | Used by |
 |---|---|---|
@@ -262,6 +263,12 @@ road user's own animated root, so its poses do not move. Nor may an extra change
 - the ego and the critical road user are never skinned or given a trailer.
 
 The same test exports every scene with these keys removed and checks that the analysis is unchanged.
+
+Under `city_blocks` the pavement's paving runs on 60 m past its back edge, under and between the rows, so no sky shows
+between the pavement and the facades or through the gaps. The brownstone and downtown kits' FBX materials import as
+metal with no specular (Metallic 1, Specular 0); they are set back to a dielectric (Metallic 0, Specular 0.5). That
+lifts a facade in shade by about half; brownstone on the shaded side of a street still reads dark, as it would in a
+photograph.
 
 Scans carry daylight in their colour maps, so at night they are dimmed; under snow their roofs get snow. People are
 cloned from the two figures, each with its own rig, walk and shirt colour. A 1280 × 720 chase still of

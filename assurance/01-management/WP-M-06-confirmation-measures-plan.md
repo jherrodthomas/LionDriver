@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-06 Confirmation measures plan (reviews, audit, assessment, independence) |
 | Standard reference | ISO 26262-2:2018 §6 (confirmation measures; Table 1 independence scheme); ISO 21448:2022 §4 (SOTIF management, release argument review); ISO/SAE 21434:2021 §6 (cybersecurity assessment); ISO/PAS 8800:2024 (assurance argument review, informative) |
-| Version | 0.4 (OI-7: no confirmation measures added for operation or the operation documents, DQ-103 B, 2026-10-19). 0.3 (§2 ASIL assumption worded against the draft HARA; OI-5 notes the lead's answer of 2026-10-14 on the assessor; 2026-10-14). 0.2 (status update for the integrated envelope changes: queued maintainer acceptances, CR-05/CR-06 scope, confirmation folder; 2026-10-12). 0.1 |
+| Version | 0.5 (OI-5 closed: G0 may pass with CR-01 and CR-03 as open conditions, a deviation decided by the lead, DQ-013 A; §1 and §9 note that no assessor is engaged for now, DQ-009 C; 2026-10-23). 0.4 (OI-7: no confirmation measures added for operation or the operation documents, DQ-103 B, 2026-10-19). 0.3 (§2 ASIL assumption worded against the draft HARA; OI-5 notes the lead's answer of 2026-10-14 on the assessor; 2026-10-14). 0.2 (status update for the integrated envelope changes: queued maintainer acceptances, CR-05/CR-06 scope, confirmation folder; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All. Planned to ASIL D until the HARA ([WP-C-03](../02-concept/WP-C-03-hara.md)) is approved |
 | Author | Assurance team (initial draft) |
@@ -16,7 +16,7 @@
 
 This plan defines the confirmation measures for LionDriver: which work products get a confirmation review and at what independence, when the functional safety audits and assessments take place, who may perform them, and where the records go. It also covers the equivalent independent evaluations for SOTIF and cybersecurity.
 
-No confirmation measure has been performed at baseline `8b8c6ae`, nor by 2026-10-12. No assessor has been engaged (D-06 open).
+No confirmation measure has been performed at baseline `8b8c6ae`, nor by 2026-10-12. No assessor has been engaged: the lead decided on 2026-10-14 to engage none for now (D-06, decision register DQ-009, C).
 
 Confirmation measures are separate from verification reviews. Verification reviews (normally by pull request, per [WP-P-05](../07-supporting/WP-P-05-verification-review-procedure.md)) check a work product against its inputs and requirements. Confirmation measures check that the work product, the process and the overall result meet ISO 26262 and are adequate for the safety argument.
 
@@ -147,6 +147,8 @@ Per ISO/SAE 21434 §6 and [WP-M-09](WP-M-09-cybersecurity-plan.md).
 | G4 | AUD-2 |
 | G5 | CR-12; FSA-F (WP-K-04); SR-03, SR-04; CS assessment (WP-K-05) |
 
+While no assessor is engaged (D-06, DQ-009 C), the I2 and I3 measures above are unscheduled. The lead decided on 2026-10-14 (decision register DQ-013, A) that G0 may be marked passed with CR-01 and CR-03 as open conditions. That is the lead's documented deviation, not a confirmed pass: work built on G0 rests on unreviewed plans until an assessor is engaged and the two reviews are performed.
+
 ## 10. Records
 
 All confirmation records are stored in [`assurance/10-safety-case/confirmation/`](../10-safety-case/confirmation/README.md). Each record contains: identifier; object (work product ID, version, baseline commit); reviewer name and independence declaration; date; method; findings with IDs; outcome. Findings are tracked as GitHub issues labelled `confirmation-finding` and resolved via [WP-P-03](../07-supporting/WP-P-03-problem-resolution.md). The register (WP-M-00 §4) points here for confirmation review and audit reports.
@@ -159,6 +161,6 @@ All confirmation records are stored in [`assurance/10-safety-case/confirmation/`
 | OI-2 | Re-plan independence after HARA approval; record rationale for any reduction from the ASIL D assumption | SM | G1 |
 | OI-3 | Engage the external FuSa assessor (D-06) and agree whether SOTIF/AI reviews (§7) are in their scope | PM | G0 |
 | OI-4 | Identify a cybersecurity assessor and a pen tester; agree independence statement | CSM | G1 |
-| OI-5 | CR-01 and CR-03 are due at G0 but no assessor is engaged; decide whether G0 can pass with them scheduled rather than performed. The lead answered on 2026-10-14: no assessor for now (DQ-009 option C), so every I2 and I3 measure in §9 is unscheduled until that changes (WP-M-03 OI-6) | SM | G0 |
+| OI-5 | Closed 2026-10-23: CR-01 and CR-03 are due at G0 but no assessor is engaged (DQ-009, C). The lead decided on 2026-10-14 (decision register DQ-013, A) that G0 may be marked passed with the two reviews as open conditions, a documented deviation, not a confirmed pass (§9). Every I2 and I3 measure in §9 stays unscheduled until an assessor is engaged (WP-M-03 OI-6) | SM | G0 |
 | OI-6 | Closed: `10-safety-case/confirmation/` created with naming rules; the record template is WP-P-05 §7.2 | SM | G0 |
 | OI-7 | Operation (G6) and the operation documents (WP-O-01…03, WP-P-10) have no confirmation measure. The lead decided on 2026-10-19 (decision register DQ-103, B) to keep the plan and rely on verification reviews, which the standard allows. Cost: a weaker case for misuse and field monitoring. Revisit when an assessor is engaged | SM | G6 |

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-08 Qualification of software components (third-party and upstream software) |
 | Standard reference | ISO 26262-8:2018 §12; ISO 26262-6:2018 §7 (reuse in architecture); ISO 26262-9:2018 §6 (coexistence); ISO/SAE 21434:2021 §10 (reuse, off-the-shelf and open-source components) |
-| Version | 0.3 (merge of PR #47 software alignment with the base: SC-01/SC-02 name the current pins opendbc `273f44e` and panda `c33343b`; reference vehicle named by generation (E210); 2026-10-13). 0.2 (RR-2026-009 F-29: reuse-assessment records per WP-M-14 §6 (§4.5), inherited/LionDriver-authored split; pins updated to `682f184`; F-28: Author, baseline; 2026-10-12). 0.1 |
+| Version | 0.4 (OI-5 notes the lead's decision on the remote features of the reference configuration, DQ-020 A; 2026-10-23). 0.3 (merge of PR #47 software alignment with the base: SC-01/SC-02 name the current pins opendbc `273f44e` and panda `c33343b`; reference vehicle named by generation (E210); 2026-10-13). 0.2 (RR-2026-009 F-29: reuse-assessment records per WP-M-14 §6 (§4.5), inherited/LionDriver-authored split; pins updated to `682f184`; F-28: Author, baseline; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | QM components and the boundary to the ASIL path; reuse assessment of the ASIL-path components |
 | Author | Assurance team (AI-assisted draft, Claude) |
@@ -271,7 +271,7 @@ A machine-readable SBOM (CycloneDX or SPDX) is generated per release from `uv.lo
 | OI-2 | Write SCQ records in the priority order of §4.1 |
 | OI-3 | SBOM generation in CI |
 | OI-4 | Record the actual AGNOS version on the reference device (default in `launch_env.sh` is only a fallback) |
-| OI-5 | Decide which QM-CS components are disabled in the reference configuration (with WP-C-10) |
+| OI-5 | Decide which QM-CS components are disabled in the reference configuration (with WP-C-10). Decided by the lead on 2026-10-14 (decision register DQ-020, A; [WP-C-10](../02-concept/WP-C-10-cybersecurity-goals-and-concept.md) OI-2): remote access, SSH, uploads to comma's servers and developer modes are off by default, remote access only if the owner opts in; athena and the uploader are not started in LionDriver builds (DQ-121, A). Open: mark the disabled components in §4.2 |
 | OI-6 | Confirm that no code from SC-04/SC-05 executes on the panda MCU (only `opendbc/safety` is compiled into firmware) |
 | OI-7 | Review the reuse-assessment records RA-01…RA-09 (§4.5) and resolve their "not confirmed" statements |
 | OI-8 | Add reuse-assessment records for the remaining safety-relevant components of [`safety-relevant-paths.txt`](safety-relevant-paths.txt) (host processes in the actuation path, AGNOS, acados) |

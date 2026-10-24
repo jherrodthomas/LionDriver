@@ -74,6 +74,88 @@ class TestExpandRefs(unittest.TestCase):
     self.assertEqual(sr._swsr_status("The envelope shall"), "proposed")
 
 
+class TestSotif(unittest.TestCase):
+  def test_ids(self):
+    self.assertEqual(sr._ids("SH-01, SH-04", "SH"), ["SH-01", "SH-04"])
+    self.assertEqual(sr._ids("Increases probability of SH-01…SH-03", "SH"), ["SH-01", "SH-02", "SH-03"])
+    self.assertEqual(sr._ids("TC-10, TC-11", "TC"), ["TC-10", "TC-11"])
+    self.assertEqual(sr._ids("SH-01", "H"), [])  # SH-01 is not H-01
+
+  def test_rating(self):
+    self.assertEqual(sr._rating("S3", "S"), 3)
+    self.assertIsNone(sr._rating("—", "S"))
+    self.assertIsNone(sr._rating("as linked SH", "C"))
+
+  def test_items_from_the_work_products(self):
+    items = {i["id"]: i for i in sr.sotif_items()}
+    self.assertEqual(items["SH-01"]["shares_event"], ["H-01"])
+    self.assertEqual(items["SH-09"]["shares_event"], [])  # a new hazard "with an effect like H-03/H-06"
+    self.assertEqual(items["SH-07"]["status"], "withdrawn")
+    self.assertNotIn("s", items["SH-12"])
+    self.assertEqual(items["FI-14"]["parents"], ["SH-02", "SH-06"])
+    self.assertEqual(items["TC-23"]["insufficiencies"], ["FI-14"])
+    self.assertIn("FI-14", items["FM-03"]["parents"])
+    self.assertEqual(items["FM-03"]["addresses"], ["SH-02", "SH-06"])
+    evaluated = {t for r in sr.evaluation_rows() for t in r["tc"]}
+    self.assertEqual({i for i in items if i.startswith("TC-")}, evaluated)  # every TC of §4 has a §5 row
+
+
+class TestAi(unittest.TestCase):
+  def test_ai_refs(self):
+    cases = {
+      "SH-01, SH-02; FI-01": (["SH-01", "SH-02", "FI-01"], [], False),
+      "SH-01…SH-06": ([f"SH-0{n}" for n in range(1, 7)], [], False),
+      "SH-12; FSR-02.07; DMP-03; FM-05; refined by TSR-609; GAP-21": (["SH-12", "FSR-02.07", "FM-05", "GAP-21"],
+                                                                       ["TSR-609"], True),
+      "FM-04; refined by TSR-604, TSR-616 ([WP-S-02](../03-system/x.md))": (["FM-04"], ["TSR-604", "TSR-616"], False),
+      "SH-12; FSR-02.07, FSR-02.09; TSR-609, TSR-611": (["SH-12", "FSR-02.07", "FSR-02.09"], ["TSR-609", "TSR-611"],
+                                                         False),
+      "SH-06 (F-06, QM)": (["SH-06"], [], False),
+      "Enables AIR-14": ([], [], True),
+      "AIR-14, WP-C-06": (["AIR-14"], [], True),
+    }
+    for cell, want in cases.items():
+      self.assertEqual(sr.ai_refs(cell), want, cell)
+
+  def test_items_from_the_work_product(self):
+    items = {i["id"]: i for i in sr.ai_items()}
+    self.assertEqual(items["AIR-01"]["category"], "Performance")
+    self.assertEqual(items["AIR-30"]["related_tsr"], ["TSR-603"])
+    self.assertTrue(all(not p.startswith("TSR-") for i in items.values() for p in i["parents"]))
+    self.assertEqual(items["DSR-07"]["parents"], ["DSR-06"])
+
+
+class TestCs(unittest.TestCase):
+  def test_ids3(self):
+    self.assertEqual(sr._ids3("TSR-401…405, TSR-410", "TSR"), ["TSR-401", "TSR-402", "TSR-403", "TSR-404", "TSR-405",
+                                                                "TSR-410"])
+    self.assertEqual(sr._ids3("QM (B-sup: TSR-511); TSR-802 at installation", "TSR"), ["TSR-511", "TSR-802"])
+
+  def test_items_from_the_work_products(self):
+    items = {i["id"]: i for i in sr.cs_items()}
+    self.assertEqual(items["TS-02"]["risk"], 5)
+    self.assertEqual(items["TS-02"]["treatment"], "Reduce")
+    self.assertEqual(items["CSG-02"]["parents"], ["TS-03", "TS-05"])
+    self.assertIn("SG-08", items["CSG-03"]["protects"])
+    self.assertEqual(items["CSG-08"]["protects"], [])  # privacy only
+    self.assertEqual(items["CSR-021"]["parents"], ["CSG-01", "CSG-02"])  # heading 'CSG-01/CSG-02'
+    self.assertEqual(items["CSR-021"]["concept_requirement"], "CSR-C-02")
+    self.assertTrue(items["CSR-161"]["other_parents"])
+    self.assertEqual(items["CSR-091"]["related_tsr"], ["TSR-401", "TSR-402", "TSR-403", "TSR-404", "TSR-405"])
+
+
+class TestSys(unittest.TestCase):
+  def test_items_from_the_work_product(self):
+    items = {i["id"]: i for i in sr.sys_items()}
+    self.assertEqual(items["SYS-001"]["functions"], ["F-01"])
+    self.assertEqual(items["SYS-001"]["related_tsr"], ["TSR-101", "TSR-102", "TSR-103", "TSR-104", "TSR-105", "TSR-605"])
+    self.assertEqual(items["SYS-001"]["related_items"], ["SH-01", "SH-02", "AIR-01", "AIR-11"])
+    self.assertEqual(items["SYS-100"]["functions"], ["F-06", "F-07"])
+    self.assertEqual(items["SYS-100"]["related_tsr"], [])  # QM (HARA §5.8)
+    self.assertIn("`", items["SYS-001"]["allocated_to"])  # kept verbatim for M8
+    self.assertTrue(all(i["text"] and i["type"] for i in items.values()))
+
+
 class TestDelink(unittest.TestCase):
   def test_relative_link_becomes_repo_path(self):
     out = sr.delink("see [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md#3-x)", sr.SWSR_MD)

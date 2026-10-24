@@ -142,7 +142,8 @@ class VModel(unittest.TestCase):
       self.assertNotIn("ok", dr.states.values(), g)
 
   def test_executed_counts_are_derived(self):
-    self.assertFalse(vm.VERIFICATION_LINKS.exists())
+    # links/verification.yaml links tests to requirements; it records no result, so nothing counts as executed
+    self.assertNotIn("result:", vm.VERIFICATION_LINKS.read_text(encoding="utf-8") if vm.VERIFICATION_LINKS.exists() else "")
     self.assertEqual(set(self.d.executed.values()), {0})
     self.assertEqual(self.d.cases["SYS4"], sum(len(self.d.m.specs.get(p, {})) for p in tm.level("SYS4").tests))
     self.assertIn(f">{self.d.cases['VAL1']} specified · 0 executed</text>", vm.render("status", "full", model=self.d))

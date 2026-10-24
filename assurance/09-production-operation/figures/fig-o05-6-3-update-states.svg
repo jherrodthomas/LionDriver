@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1004" viewBox="0 0 640 1004" role="img" aria-labelledby="t d">
+<title id="t">Figure 6-3. An update's states and where a failure goes (WP-O-05 §6.2)</title>
+<desc id="d">Figure 6-3: an update's states. Release published: Manifest and panda image signed (U3, U4). Receipt (ISO 24089: receipt): Fetched to staging; nothing that runs changes. Verify gate (a gate, not a step): Manifest signature, the tree, every hash, the version (CSR-121 not implemented, CSR-123 not implemented). Install (ISO 24089: installation): Offroad only, atomic, into a staged copy (CSR-125 partial). Activate (ISO 24089: activation): At the next start, offroad. Confirm: Parameters checked against the release record (U6); installation recorded (U9). Running the new release: . A release refused at the gate is not staged and the installed release keeps running. A failure while installing, starting or confirming falls back to the previous release, which remains bootable, or, as the UN R156 alternative not defined for LionDriver, to a safe state.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
+      --real:#2a78d6; --real-bg:#e9f1fb; --amb:#c98500; --amb-bg:#fdf4dc; --bad:#e34948; --bad-bg:#fdecec;
+      --pic:#6250d6; --pic-bg:#efedfb; --flt:#eb6834; --cop:#eb6834; --cop-bg:#fde9df; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#1a1a19; --ink:#f0efec; --ink2:#c3c2b7; --ink3:#8d8c85; --grid:#33322f; --card:#232321;
+        --real:#3987e5; --real-bg:#16273c; --amb:#eda100; --amb-bg:#3a2f12; --bad:#e66767; --bad-bg:#3d1e1e;
+        --pic:#9085e9; --pic-bg:#26223f; --flt:#d95926; --cop:#d95926; --cop-bg:#3f2417; }
+}
+.bg { fill:var(--bg); }
+.h { font:600 21px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t { font:15px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.tb { font:600 15px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.tl { font:600 17px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.t2b { font:600 13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.chip { font:600 12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:#ffffff; }
+.tbad { font:600 13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--bad); }
+.hair { stroke:var(--grid); stroke-width:1; }
+.card { fill:var(--card); stroke:var(--grid); stroke-width:1.2; }
+.real { fill:var(--real-bg); stroke:var(--real); stroke-width:2.4; }
+.model { fill:var(--card); stroke:var(--ink3); stroke-width:1.4; }
+.amb { fill:var(--amb-bg); stroke:var(--amb); stroke-width:1.6; stroke-dasharray:6 4; }
+.plan { fill:var(--bg); stroke:var(--ink3); stroke-width:1.4; stroke-dasharray:6 4; }
+.pic { fill:var(--pic-bg); stroke:var(--pic); stroke-width:1.4; }
+.picbox { fill:var(--bg); stroke:var(--pic); stroke-width:1.2; }
+.badbox { fill:var(--bad-bg); stroke:var(--bad); stroke-width:1.4; }
+.copbox { fill:var(--cop-bg); stroke:var(--cop); stroke-width:1.4; }
+.f-real { fill:var(--real); } .f-model { fill:var(--ink3); } .f-amb { fill:var(--amb); } .f-bad { fill:var(--bad); }
+.f-pic { fill:var(--pic); } .f-flt { fill:var(--flt); } .f-cop { fill:var(--cop); } .f-ink2 { fill:var(--ink2); }
+.arr { stroke:var(--ink2); stroke-width:1.6; fill:none; }
+.arrd { stroke:var(--ink3); stroke-width:1.6; fill:none; stroke-dasharray:5 4; }
+.arrb { stroke:var(--bad); stroke-width:1.6; fill:none; stroke-dasharray:5 4; }
+.spring { stroke:var(--ink2); stroke-width:1.8; fill:none; stroke-linejoin:round; }
+.strike { stroke:var(--bad); stroke-width:1.6; }
+svg { --ok:#16a34a; --ok-bg:#e8f6ec; --unv:#0284c7; --unv-bg:#e6f3fb; }
+@media (prefers-color-scheme: dark) { svg { --ok:#3fbf6a; --ok-bg:#16301f; --unv:#38a6e0; --unv-bg:#132a3a; } }
+.unv { fill:var(--unv-bg); stroke:var(--unv); stroke-width:1.6; stroke-dasharray:6 4; }
+.ok { fill:var(--ok-bg); stroke:var(--ok); stroke-width:1.8; }
+.entry { fill:var(--pic-bg); stroke:var(--pic); stroke-width:2.4; }
+.f-ok { fill:var(--ok); } .f-unv { fill:var(--unv); }
+.gate-partial { fill:var(--amb-bg); stroke:var(--amb); stroke-width:2; stroke-dasharray:4 3; }
+.gate-unverified { fill:var(--unv-bg); stroke:var(--unv); stroke-width:2; stroke-dasharray:4 3; }
+.gate-done { fill:var(--ok-bg); stroke:var(--ok); stroke-width:2; }
+.path { stroke:var(--bad); stroke-width:2.6; fill:none; }
+.pathok { stroke:var(--pic); stroke-width:2.6; fill:none; }
+.link { stroke:var(--grid); stroke-width:3; fill:none; }
+</style>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-ink2"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-bad"/></marker><marker id="ap" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-pic"/></marker></defs>
+<rect class="bg" width="640" height="1004"/>
+<text x="24" y="34" class="h">An update's states</text>
+<text x="24" y="56" class="t2">Receipt → verify gate → install → activate → confirm, and where a failure goes</text>
+<text x="24" y="76" class="t2b">Schematic · no evidence credit · generated by fig_o05_updates.py</text>
+<line x1="24" y1="90" x2="616" y2="90" class="hair"/>
+<rect x="24" y="108" width="352" height="65" rx="8" class="card"/>
+<text x="36" y="132" class="tb">Release published</text>
+<text x="36" y="153" class="t">Manifest and panda image signed (U3, U4)</text>
+<rect x="24" y="199" width="352" height="85" rx="8" class="card"/>
+<text x="36" y="223" class="tb">Receipt</text>
+<text x="364" y="223" class="t2" text-anchor="end">ISO 24089: receipt</text>
+<text x="36" y="244" class="t">Fetched to staging; nothing that runs</text>
+<text x="36" y="264" class="t">changes</text>
+<rect x="24" y="310" width="352" height="141" rx="8" class="plan"/>
+<text x="36" y="334" class="tb">Verify gate</text>
+<text x="364" y="334" class="t2" text-anchor="end">a gate, not a step</text>
+<text x="36" y="355" class="t">Manifest signature, the tree, every hash,</text>
+<text x="36" y="375" class="t">the version</text>
+<rect x="36" y="389" width="190" height="20" rx="10" class="f-bad"/>
+<text x="131" y="403" class="chip" text-anchor="middle">CSR-121 · Not implemented</text>
+<rect x="36" y="415" width="190" height="20" rx="10" class="f-bad"/>
+<text x="131" y="429" class="chip" text-anchor="middle">CSR-123 · Not implemented</text>
+<rect x="24" y="477" width="352" height="95" rx="8" class="amb"/>
+<text x="36" y="501" class="tb">Install</text>
+<text x="364" y="501" class="t2" text-anchor="end">ISO 24089: installation</text>
+<text x="36" y="522" class="t">Offroad only, atomic, into a staged copy</text>
+<rect x="36" y="536" width="134.3" height="20" rx="10" class="f-amb"/>
+<text x="103.2" y="550" class="chip" text-anchor="middle">CSR-125 · Partial</text>
+<rect x="24" y="598" width="352" height="65" rx="8" class="card"/>
+<text x="36" y="622" class="tb">Activate</text>
+<text x="364" y="622" class="t2" text-anchor="end">ISO 24089: activation</text>
+<text x="36" y="643" class="t">At the next start, offroad</text>
+<rect x="24" y="689" width="352" height="85" rx="8" class="card"/>
+<text x="36" y="713" class="tb">Confirm</text>
+<text x="36" y="734" class="t">Parameters checked against the release</text>
+<text x="36" y="754" class="t">record (U6); installation recorded (U9)</text>
+<rect x="24" y="800" width="352" height="45" rx="8" class="real"/>
+<text x="36" y="824" class="tb">Running the new release</text>
+<path d="M54,173 L54,197" class="arr" marker-end="url(#a)"/>
+<path d="M54,284 L54,308" class="arr" marker-end="url(#a)"/>
+<path d="M54,451 L54,475" class="arr" marker-end="url(#a)"/>
+<path d="M54,572 L54,596" class="arr" marker-end="url(#a)"/>
+<path d="M54,663 L54,687" class="arr" marker-end="url(#a)"/>
+<path d="M54,774 L54,798" class="arr" marker-end="url(#a)"/>
+<rect x="400" y="310" width="216" height="105" rx="8" class="card"/>
+<text x="412" y="334" class="tb">Refused</text>
+<text x="412" y="355" class="t">Nothing staged; the</text>
+<text x="412" y="375" class="t">installed release keeps</text>
+<text x="412" y="395" class="t">running</text>
+<path d="M376,380.5 L398,380.5" class="arrb" marker-end="url(#ab)"/>
+<rect x="400" y="477" width="216" height="85" rx="8" class="badbox"/>
+<text x="412" y="501" class="tb">A step fails</text>
+<text x="412" y="522" class="t">Falls back to one of</text>
+<text x="412" y="542" class="t">these</text>
+<path d="M376,524.5 L382,524.5 L382,497 L398,497" class="arrb" marker-end="url(#ab)"/>
+<path d="M376,630.5 L382,630.5 L382,497 L398,497" class="arrb"/>
+<path d="M376,731.5 L382,731.5 L382,497 L398,497" class="arrb"/>
+<rect x="400" y="586" width="216" height="155" rx="8" class="amb"/>
+<text x="412" y="610" class="tb">Previous release</text>
+<text x="412" y="631" class="t">Remains bootable; the</text>
+<text x="412" y="651" class="t">rollback procedure is</text>
+<text x="412" y="671" class="t">not specified (WP-P-10</text>
+<text x="412" y="691" class="t">OI-6)</text>
+<rect x="412" y="705" width="134.3" height="20" rx="10" class="f-amb"/>
+<text x="479.2" y="719" class="chip" text-anchor="middle">CSR-125 · Partial</text>
+<text x="508" y="763" class="t2b" text-anchor="middle">or</text>
+<rect x="400" y="775" width="216" height="105" rx="8" class="plan"/>
+<text x="412" y="799" class="tb">Safe state</text>
+<text x="412" y="820" class="t">The UN R156 alternative;</text>
+<text x="412" y="840" class="t">not defined for</text>
+<text x="412" y="860" class="t">LionDriver</text>
+<path d="M508.0,562 L508.0,584" class="arrb" marker-end="url(#ab)"/>
+<circle cx="12" cy="140.5" r="7" class="f-pic" opacity="0"><animate attributeName="cy" values="140.5;140.5;241.5;241.5;380.5;380.5;524.5;524.5;630.5;630.5;731.5;731.5;822.5;822.5;822.5" keyTimes="0.0;0.03;0.077;0.097;0.143;0.163;0.21;0.23;0.277;0.297;0.343;0.363;0.41;0.48;1" dur="14s" repeatCount="indefinite" calcMode="linear"/><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.48;0.49;1" dur="14s" repeatCount="indefinite"/></circle>
+<circle cx="12" cy="140.5" r="7" class="f-bad" opacity="0"><animate attributeName="cy" values="140.5;140.5;380.5;630.5;630.5;497;497;616;616" keyTimes="0;0.5;0.62;0.72;0.76;0.84;0.87;0.94;1" dur="14s" repeatCount="indefinite"/><animate attributeName="cx" values="12;12;12;12;12;430;430;508;508" keyTimes="0;0.5;0.62;0.72;0.76;0.84;0.87;0.94;1" dur="14s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.5;0.51;0.98;1" dur="14s" repeatCount="indefinite"/></circle>
+<text x="24" y="910" class="t2">Chips: WP-S-07 §4.12 statuses. A dashed grey box is designed, not built; amber is</text>
+<text x="24" y="928" class="t2">partly built.</text>
+<text x="24" y="946" class="t2">Animated: one update goes through, a second fails at activation and falls back.</text>
+<text x="24" y="964" class="t2">Update management per WP-O-05 §6; UN R156 (7.2.2.1.1) and ISO 24089 terms</text>
+<text x="24" y="982" class="t2">informative, not claimed.</text>
+</svg>

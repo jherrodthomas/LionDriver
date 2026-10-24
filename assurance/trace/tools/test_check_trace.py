@@ -169,6 +169,186 @@ class TestItemChecks(unittest.TestCase):
     self.assertEqual(tags(run(self.items), "K12"), [])
 
 
+SOTIF = [
+  {"id": "SH-01", "kind": "sotif-hazard", "text": "t", "functions": ["F-01"], "function_text": "F-01", "situations": "x",
+   "shares_event": ["H-01"], "linked_text": "H-01", "status": "proposed", "source": "WP-C-05"},
+  {"id": "SH-07", "kind": "sotif-hazard", "text": "not used", "functions": [], "function_text": "—", "situations": "—",
+   "shares_event": [], "linked_text": "—", "status": "withdrawn", "source": "WP-C-05"},
+  {"id": "FI-01", "kind": "functional-insufficiency", "text": "t", "fi_type": "P", "component": "x",
+   "parents": ["SH-01"], "status": "proposed", "source": "WP-C-06"},
+  {"id": "TC-01", "kind": "triggering-condition", "text": "t", "category": "x", "parents": ["SH-01"],
+   "insufficiencies": ["FI-01"], "evaluation": "x", "status": "proposed", "source": "WP-C-06"},
+  {"id": "FM-01", "kind": "functional-modification", "title": "t", "addresses": ["SH-01"], "parents": ["TC-01", "FI-01"],
+   "gap_text": "—", "priority": "P1", "status": "proposed", "source": "WP-C-07"},
+]
+
+
+class TestSotifChecks(unittest.TestCase):
+  def setUp(self):
+    self.items = copy.deepcopy(GOOD + SOTIF)
+
+  def test_good_set_is_clean(self):
+    self.assertEqual(run(self.items), [])
+
+  def test_k3_sotif_link_kinds(self):
+    find(self.items, "FI-01")["parents"] = ["H-01"]
+    self.assertIn("[K3] FI-01: parent H-01 is a hazard, not one of ['sotif-hazard']", run(self.items))
+    self.items = copy.deepcopy(GOOD + SOTIF)
+    find(self.items, "SH-01")["shares_event"] = ["SG-01"]
+    self.assertIn("[K3] SH-01: shares_event SG-01 is a safety-goal, not one of ['hazard', 'hazardous-event']",
+                  run(self.items))
+    self.items = copy.deepcopy(GOOD + SOTIF)
+    find(self.items, "TC-01")["insufficiencies"] = ["FI-09"]
+    self.assertIn("[K3] TC-01: insufficiencies reference FI-09 does not resolve", run(self.items))
+
+  def test_s1_hazard_without_insufficiency_or_condition(self):
+    self.items.append(dict(find(self.items, "SH-01"), id="SH-02"))
+    self.assertEqual(tags(run(self.items), "S1"),
+                     ["[S1] SH-02: no functional insufficiency", "[S1] SH-02: no triggering condition"])
+
+  def test_s1_withdrawn_hazard_needs_nothing(self):
+    self.assertEqual(tags(run(self.items), "S1"), [])
+
+  def test_s1_insufficiency_not_evaluated(self):
+    find(self.items, "TC-01")["insufficiencies"] = []
+    errs = tags(run(self.items), "S1")
+    self.assertIn("[S1] FI-01: not evaluated with a triggering condition (WP-C-06 §5)", errs)
+    self.assertIn("[S1] TC-01: SH-01 is not a parent of any of its insufficiencies []", errs)
+
+  def test_s1_modification_named_by_no_row(self):
+    find(self.items, "FM-01")["parents"] = []
+    self.assertEqual(tags(run(self.items), "S1"), ["[S1] FM-01: named by no evaluation row of WP-C-06 §5"])
+
+
+TSR = {"id": "TSR-603", "kind": "tsr", "text": "t", "asil": "QM", "parents": [], "parent_text": "x",
+       "other_parents": True, "allocated_to": "SoC", "verification": "x", "baseline_impl": "see AIR-30",
+       "status": "proposed", "source": "WP-S-02"}
+AI = [
+  {"id": "AIR-30", "kind": "ai-requirement", "text": "t", "category": "c", "component": "x", "parents": ["FM-01"],
+   "parent_text": "FM-01; refined by TSR-603", "other_parents": False, "related_tsr": ["TSR-603"], "verification": "x",
+   "baseline_impl": "x", "status": "proposed", "source": "WP-C-11"},
+  {"id": "DSR-01", "kind": "dataset-requirement", "text": "t", "parents": ["AIR-30"], "parent_text": "AIR-30",
+   "other_parents": False, "verification": "x", "baseline_impl": "x", "status": "proposed", "source": "WP-C-11"},
+]
+
+
+class TestAiChecks(unittest.TestCase):
+  def setUp(self):
+    self.items = copy.deepcopy(GOOD + SOTIF + [TSR] + AI)
+
+  def test_good_set_is_clean(self):
+    self.assertEqual(tags(run(self.items), "A1") + tags(run(self.items), "K3"), [])
+
+  def test_k3_ai_link_kinds(self):
+    find(self.items, "DSR-01")["parents"] = ["SH-01"]
+    self.assertIn("[K3] DSR-01: parent SH-01 is a sotif-hazard, not one of ['ai-requirement', 'dataset-requirement']",
+                  run(self.items))
+    self.items = copy.deepcopy(GOOD + SOTIF + [TSR] + AI)
+    find(self.items, "AIR-30")["related_tsr"] = ["FM-01"]
+    self.assertIn("[K3] AIR-30: related_tsr FM-01 is a functional-modification, not one of ['tsr']", run(self.items))
+
+  def test_a1_no_parent(self):
+    find(self.items, "DSR-01")["parents"] = []
+    self.assertEqual(tags(run(self.items), "A1"), ["[A1] DSR-01: no parent and names nothing it rests on"])
+    find(self.items, "DSR-01")["other_parents"] = True
+    self.assertEqual(tags(run(self.items), "A1"), [])
+
+  def test_a1_tsr_names_an_air_that_does_not_name_it(self):
+    find(self.items, "AIR-30")["related_tsr"] = []
+    self.assertEqual(tags(run(self.items), "A1"),
+                     ["[A1] TSR-603 names AIR-30, but AIR-30 does not list TSR-603 in related_tsr (WP-C-11 Parent column)"])
+
+
+CS = [
+  {"id": "TS-01", "kind": "threat-scenario", "text": "t", "stride": "S", "assets": "AS-01", "violated_property": "I",
+   "damage_text": "DS-01", "gap_text": "GAP-01", "risk": 4, "treatment": "Reduce", "status": "proposed",
+   "source": "WP-C-09"},
+  {"id": "TS-02", "kind": "threat-scenario", "text": "t", "stride": "S", "assets": "AS-01", "violated_property": "I",
+   "damage_text": "DS-01", "gap_text": "—", "risk": 2, "treatment": "Retain", "status": "proposed", "source": "WP-C-09"},
+  {"id": "CSG-01", "kind": "cybersecurity-goal", "text": "t", "parents": ["TS-01"], "parent_text": "TS-01 (4)",
+   "cal": "CAL 3", "protects": ["SG-01"], "rationale": "x", "status": "proposed", "source": "WP-C-10"},
+  {"id": "CSR-011", "kind": "cybersecurity-requirement", "text": "t", "parents": ["CSG-01"],
+   "concept_requirement": "CSR-C-01", "cal": "CAL 3", "other_parents": False, "allocated_to": "FW",
+   "safety_relation": "TSR-603", "related_tsr": ["TSR-603"], "verification": "UT", "baseline_impl": "x",
+   "status": "proposed", "source": "WP-S-07"},
+]
+
+
+class TestCsChecks(unittest.TestCase):
+  def setUp(self):
+    self.items = copy.deepcopy(GOOD + [TSR] + CS)
+
+  def test_good_set_is_clean(self):
+    self.assertEqual(tags(run(self.items), "C1") + tags(run(self.items), "K3"), [])
+
+  def test_k3_cs_link_kinds(self):
+    find(self.items, "CSG-01")["protects"] = ["HE-01.1"]
+    self.assertIn("[K3] CSG-01: protects HE-01.1 is a hazardous-event, not one of ['safety-goal']", run(self.items))
+    self.items = copy.deepcopy(GOOD + [TSR] + CS)
+    find(self.items, "CSR-011")["parents"] = ["TS-01"]
+    self.assertIn("[K3] CSR-011: parent TS-01 is a threat-scenario, not one of ['cybersecurity-goal']", run(self.items))
+
+  def test_c1_reduced_threat_without_goal(self):
+    find(self.items, "TS-02")["treatment"] = "Reduce / Retain"
+    self.assertEqual(tags(run(self.items), "C1"),
+                     ["[C1] TS-02: treated by 'Reduce / Retain' but no cybersecurity goal addresses it"])
+
+  def test_c1_goal_without_requirement(self):
+    find(self.items, "CSR-011")["parents"] = []
+    errs = tags(run(self.items), "C1")
+    self.assertIn("[C1] CSG-01: no cybersecurity requirement", errs)
+    self.assertIn("[C1] CSR-011: no parent goal and names nothing it rests on", errs)
+
+  def test_c1_unprotected_safety_goal(self):
+    find(self.items, "CSG-01")["protects"] = []
+    self.assertEqual(tags(run(self.items), "C1"), ["[C1] SG-01: protected by no cybersecurity goal (WP-C-10 §8)"])
+
+
+SYS = {"id": "SYS-001", "kind": "system-requirement", "text": "t", "type": "P", "functions": ["F-01"], "criterion": "x",
+       "verification": "LOG", "baseline_impl": "x", "allocated_to": "`host.controlsd`", "related_text": "TSR-603; SH-01",
+       "related_tsr": ["TSR-603"], "related_items": ["SH-01"], "status": "proposed", "source": "WP-S-01"}
+
+
+class TestSysChecks(unittest.TestCase):
+  def setUp(self):
+    self.items = copy.deepcopy(GOOD + SOTIF + [TSR, SYS])
+
+  def test_good_set_is_clean(self):
+    self.assertEqual(tags(run(self.items), "Q1") + tags(run(self.items), "K3"), [])
+
+  def test_k3_related_items_kind(self):
+    find(self.items, "SYS-001")["related_items"] = ["FM-01"]
+    self.assertIn("[K3] SYS-001: related_items FM-01 is a functional-modification, not one of "
+                  "['ai-requirement', 'sotif-hazard']", run(self.items))
+
+  def test_q1_missing_attributes(self):
+    it = find(self.items, "SYS-001")
+    it["functions"], it["allocated_to"] = [], ""
+    self.assertEqual(tags(run(self.items), "Q1"), ["[Q1] SYS-001: no function",
+                                                   "[Q1] SYS-001: no allocation (WP-S-01 §10.1)"])
+
+
+class TestVerificationLinks(unittest.TestCase):
+  def setUp(self):
+    self.items = copy.deepcopy(GOOD + SOTIF + [TSR])
+    self.by_id = ct.check_items(self.items, ct.Report())
+
+  def errors(self, links):
+    rep = ct.Report()
+    ct.check_verification_links(self.by_id, links, rep)
+    return rep.errors
+
+  def test_a_requirement_link_is_clean(self):
+    self.assertEqual(self.errors([{"test": "t.py::C::test_a", "reqs": ["TSR-603", "FM-01"]}]), [])
+
+  def test_k6_unknown_goal_withdrawn_and_empty(self):
+    find(self.items, "TSR-603")["status"] = "withdrawn"
+    errs = self.errors([{"test": "t", "reqs": ["TSR-999", "SG-01", "TSR-603"]}, {"test": "u", "reqs": []}])
+    self.assertEqual(errs, ["[K6] t: links TSR-999, which does not exist",
+                            "[K6] t: links SG-01, a safety-goal; only requirements may be linked (README §5)",
+                            "[K6] t: links TSR-603, which is withdrawn", "[K6] u: links no requirement"])
+
+
 class TestRepository(unittest.TestCase):
   def test_main_passes_on_repository(self):
     out = io.StringIO()

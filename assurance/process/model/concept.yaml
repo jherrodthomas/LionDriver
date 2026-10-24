@@ -14,6 +14,14 @@
   produces: [WP-C-01]
   inputs: [WP-M-01, WP-M-12]
   handbook_wp: [WP-1]
+- id: CON-15
+  kind: activity
+  phase: G1
+  lane: joint
+  name: "Build the item and environment models"
+  produces: [WP-C-12]
+  inputs: [WP-C-01]
+  handbook_wp: [WP-1]
 - id: CON-02
   kind: activity
   phase: G1

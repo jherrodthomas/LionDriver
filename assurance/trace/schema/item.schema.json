@@ -17,13 +17,23 @@
     },
     "kind": {
       "enum": [
+        "ai-requirement",
         "aou",
+        "cybersecurity-goal",
+        "cybersecurity-requirement",
+        "dataset-requirement",
         "fsr",
+        "functional-insufficiency",
+        "functional-modification",
         "hazard",
         "hazardous-event",
         "hwsr",
         "safety-goal",
+        "sotif-hazard",
         "swsr",
+        "system-requirement",
+        "threat-scenario",
+        "triggering-condition",
         "tsr"
       ]
     },
@@ -200,9 +210,172 @@
           "minimum": 0
         }
       ]
+    },
+    "function_text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "linked_text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "situations": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fi_type": {
+      "enum": [
+        "P",
+        "S"
+      ],
+      "description": "WP-C-06 §3: P performance limitation, S specification insufficiency"
+    },
+    "component": {
+      "type": "string",
+      "minLength": 1
+    },
+    "category": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evaluation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "gap_text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "priority": {
+      "enum": [
+        "P1",
+        "P2",
+        "P3"
+      ]
+    },
+    "shares_event": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "insufficiencies": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "addresses": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "related_tsr": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^TSR-[0-9]{3}[a-z]?$"
+      }
+    },
+    "stride": {
+      "type": "string",
+      "minLength": 1
+    },
+    "assets": {
+      "type": "string",
+      "minLength": 1
+    },
+    "violated_property": {
+      "type": "string",
+      "minLength": 1
+    },
+    "damage_text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "treatment": {
+      "type": "string",
+      "minLength": 1
+    },
+    "concept_requirement": {
+      "type": "string",
+      "pattern": "^CSR-C-[0-9]{2}$"
+    },
+    "cal": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "safety_relation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "risk": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "protects": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^SG-[0-9]{2}$"
+      }
+    },
+    "criterion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "related_text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tbd_rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "related_items": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(SH|AIR)-[0-9]{2}$"
+      }
     }
   },
   "allOf": [
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "ai-requirement"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "category",
+          "component",
+          "parents",
+          "parent_text",
+          "other_parents",
+          "related_tsr",
+          "verification",
+          "baseline_impl",
+          "status",
+          "source"
+        ]
+      }
+    },
     {
       "if": {
         "properties": {
@@ -228,6 +401,79 @@
       "if": {
         "properties": {
           "kind": {
+            "const": "cybersecurity-goal"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "parents",
+          "parent_text",
+          "cal",
+          "protects",
+          "rationale",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "cybersecurity-requirement"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "parents",
+          "concept_requirement",
+          "cal",
+          "other_parents",
+          "allocated_to",
+          "safety_relation",
+          "related_tsr",
+          "verification",
+          "baseline_impl",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "dataset-requirement"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "parents",
+          "parent_text",
+          "other_parents",
+          "verification",
+          "baseline_impl",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
             "const": "fsr"
           }
         }
@@ -242,6 +488,49 @@
           "allocated_to",
           "verification",
           "baseline_impl",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "functional-insufficiency"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "fi_type",
+          "component",
+          "parents",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "functional-modification"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "title",
+          "addresses",
+          "parents",
+          "gap_text",
+          "priority",
           "status",
           "source"
         ]
@@ -349,6 +638,29 @@
       "if": {
         "properties": {
           "kind": {
+            "const": "sotif-hazard"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "functions",
+          "function_text",
+          "situations",
+          "shares_event",
+          "linked_text",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
             "const": "swsr"
           }
         }
@@ -366,6 +678,80 @@
           "verification",
           "acceptance",
           "baseline_impl",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "system-requirement"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "type",
+          "functions",
+          "criterion",
+          "verification",
+          "baseline_impl",
+          "allocated_to",
+          "related_text",
+          "related_tsr",
+          "related_items",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "threat-scenario"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "stride",
+          "assets",
+          "violated_property",
+          "damage_text",
+          "gap_text",
+          "risk",
+          "treatment",
+          "status",
+          "source"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "triggering-condition"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "category",
+          "parents",
+          "insufficiencies",
+          "evaluation",
           "status",
           "source"
         ]

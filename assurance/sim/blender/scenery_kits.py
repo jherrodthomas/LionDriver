@@ -28,6 +28,8 @@ import street_life
 BUILDING_USES = ("city_block", "skyline", "farm", "roadside", "bins")
 NIGHT_DIM = (0.25, 0.25, 0.28)   # the scans' colour maps carry daylight: multiplied down at night
 DINER_CARS = 3
+LOT_M = 60.0                     # paving from the back of each pavement out under and between the street's rows
+DIELECTRIC_KITS = ("city_brownstones", "city_downtown")   # their FBX materials import as Metallic 1, Specular 0
 
 
 # ------------------------------------------------------------------------------------------------- kits
@@ -271,6 +273,16 @@ def _night(env, mats):
     nt.links.new(mix.outputs[2], sock)
 
 
+def _dielectric(mats):
+  """The facades as a dielectric (Metallic 0, Blender's default Specular 0.5) where no map drives them: as imported
+  (Metallic 1, Specular 0), a facade in shade has no sky sheen and renders near black."""
+  for m in mats:
+    bsdf = next((n for n in m.node_tree.nodes if n.type == "BSDF_PRINCIPLED"), None) if m.use_nodes else None
+    for name, v in (("Metallic", 0.0), ("Specular IOR Level", 0.5)):
+      if bsdf is not None and not bsdf.inputs[name].links:
+        bsdf.inputs[name].default_value = v
+
+
 def _snow(env, mats):
   if env.get("snow"):
     for m in mats:
@@ -309,6 +321,11 @@ def build(sc: dict, env: dict, assets, keyframe, walk, lamps=None, rear: bool = 
   street = [p for n in ("city_brownstones", "city_chicago", "city_downtown") if n in kits
             for p in kits[n].pieces.get("city_block", [])]
   if street and env.get("city_blocks") and urban:
+    _dielectric({m for n in DIELECTRIC_KITS if n in kits for m in kits[n].materials})
+    pave = bpy.data.materials.get("sidewalk")
+    for side, _, back in L.pavements(sc["road"]):   # the ground under and between the rows (else the sky shows below)
+      far = back + side * LOT_M
+      A.strip(f"lot_{side:+d}", sc["road"]["centre"], max(back, far), min(back, far), A.KERB_H, pave, coll)
     rows = street_life.blocks(sc, [p["w"] for p in street])
     for k, b in enumerate(rows):
       place(street[b["k"]], f"block{k}", coll, (b["x"], b["y"], 0.0), b["yaw"], b["mirror"])

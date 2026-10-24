@@ -22,7 +22,7 @@ Specification on the left, verification on the right. Each verification process 
 ```mermaid
 block-beta
   columns 13
-  SYS1["<b>SYS.1</b><br/>Requirements elicitation<br/>AOU 17 · H 9 · HE 39<br/>SG 8 · SH 13* · TS 14*"]
+  SYS1["<b>SYS.1</b><br/>Requirements elicitation<br/>AOU 17 · H 9 · HE 39<br/>SG 8 · SH 13 · TS 14"]
   space
   space
   space
@@ -36,7 +36,7 @@ block-beta
   space
   VAL1["<b>VAL.1</b><br/>Validation<br/>VS-VAL: 31 cases"]
   space
-  SYS2["<b>SYS.2</b><br/>System requirements<br/>SYS 39* · FSR 58 · TSR 128<br/>TC 35* · FI 23* · FM 11*<br/>CSG 8*<br/><i>from SG: 8/8</i>"]
+  SYS2["<b>SYS.2</b><br/>System requirements<br/>SYS 39 · FSR 58 · TSR 128<br/>TC 35 · FI 23 · FM 11<br/>CSG 8<br/><i>from SG: 8/8</i>"]
   space
   space
   space
@@ -50,7 +50,7 @@ block-beta
   space
   space
   space
-  SYS3["<b>SYS.3</b><br/>System architecture<br/>CSR 64*"]
+  SYS3["<b>SYS.3</b><br/>System architecture<br/>CSR 64"]
   space
   space
   space
@@ -68,7 +68,7 @@ block-beta
     columns 1
     SWE1["<b>SWE.1</b><br/>SW requirements<br/>SWSR 139<br/><i>from TSR: 97/104</i>"]
     HWE1["<b>HWE.1</b><br/>HW requirements<br/>HWSR 46<br/><i>from TSR: 19/19</i>"]
-    MLE1["<b>MLE.1</b><br/>ML requirements<br/>AIR 30* · DSR 13*"]
+    MLE1["<b>MLE.1</b><br/>ML requirements<br/>AIR 30 · DSR 13"]
   end
   space
   space
@@ -141,12 +141,12 @@ block-beta
   style SWE5 fill:#FFFBEB,stroke:#D97706,stroke-width:2px
   style HWE3 fill:#FFFBEB,stroke:#D97706,stroke-width:2px
   style SWE4 fill:#FFFBEB,stroke:#D97706,stroke-width:2px
-  style SYS1 fill:#FFFBEB,stroke:#D97706
-  style SYS2 fill:#FFFBEB,stroke:#D97706
-  style SYS3 fill:#F8FAFC,stroke:#94A3B8,stroke-dasharray:5 4
+  style SYS1 fill:#EFF6FF,stroke:#2563EB
+  style SYS2 fill:#EFF6FF,stroke:#2563EB
+  style SYS3 fill:#EFF6FF,stroke:#2563EB
   style SWE1 fill:#EFF6FF,stroke:#2563EB
   style HWE1 fill:#EFF6FF,stroke:#2563EB
-  style MLE1 fill:#F8FAFC,stroke:#94A3B8,stroke-dasharray:5 4
+  style MLE1 fill:#EFF6FF,stroke:#2563EB
   style SWE2 fill:#F8FAFC,stroke:#94A3B8,stroke-dasharray:5 4
   style HWE2 fill:#F8FAFC,stroke:#94A3B8,stroke-dasharray:5 4
   style SWE3 fill:#F8FAFC,stroke:#94A3B8,stroke-dasharray:5 4
@@ -156,18 +156,18 @@ block-beta
 
 One colour rule for every V: blue when every item of the level is in the trace data, or every item of the paired level is named by a case (done in the design, not verified); amber when some are; red when none is; dashed grey when the level holds nothing yet. Green is kept for approved work products and passed verification; nothing here is either. The gate band shows the gate records of WP-M-00 §2 (none held yet).
 
-A named item is a **specified** link, not a passed test. 0 of 444 traced items carry status `verified`, and the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K6–K10 in the [README](../README.md) §6 are not implemented).
+A named item is a **specified** link, not a passed test. 0 of 694 traced items carry status `verified`. [`links/verification.yaml`](../links/verification.yaml) links 103 existing tests to 36 requirements (WP-W-06 §4.1, §4.9) and records no result; the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K7–K10 in the [README](../README.md) §6 are not implemented).
 
 ## 2. Process to work product and items
 
 | Process | Name | Work products | Items or test cases |
 |---|---|---|---|
-| **SYS.1** | Requirements elicitation | WP-C-01, WP-C-02, WP-C-03, WP-C-05, WP-C-09 | AOU (17, trace data), H (9, trace data), HE (39, trace data), SG (8, trace data), SH (13, document), TS (14, document) |
-| **SYS.2** | System requirements analysis | WP-S-01, WP-C-04, WP-S-02, WP-C-07, WP-C-10 | SYS (39, document), FSR (58, trace data), TSR (128, trace data), TC (35, document), FI (23, document), FM (11, document), CSG (8, document) |
-| **SYS.3** | System architectural design | WP-S-03, WP-S-05, WP-S-07 | CSR (64, document) |
+| **SYS.1** | Requirements elicitation | WP-C-01, WP-C-02, WP-C-03, WP-C-05, WP-C-09 | AOU (17, trace data), H (9, trace data), HE (39, trace data), SG (8, trace data), SH (13, trace data), TS (14, trace data) |
+| **SYS.2** | System requirements analysis | WP-S-01, WP-C-04, WP-S-02, WP-C-07, WP-C-10 | SYS (39, trace data), FSR (58, trace data), TSR (128, trace data), TC (35, trace data), FI (23, trace data), FM (11, trace data), CSG (8, trace data) |
+| **SYS.3** | System architectural design | WP-S-03, WP-S-05, WP-S-07 | CSR (64, trace data) |
 | **SWE.1** | SW requirements analysis | WP-W-02 | SWSR (139, trace data) |
 | **HWE.1** | HW requirements analysis | WP-H-01 | HWSR (46, trace data) |
-| **MLE.1** | ML requirements analysis | WP-C-11 | AIR (30, document), DSR (13, document) |
+| **MLE.1** | ML requirements analysis | WP-C-11 | AIR (30, trace data), DSR (13, trace data) |
 | **SWE.2** | SW architectural design | WP-W-03 | — |
 | **HWE.2** | HW design | WP-H-02 | — |
 | **SWE.3** | SW detailed design and unit construction | WP-W-05 | — |
@@ -201,28 +201,28 @@ flowchart LR
   style ISO26262 fill:#FFFFFF,stroke:#CBD5E1
   subgraph ISO21448["ISO 21448"]
     direction LR
-    kSH["<b>SH</b> 13<br/>SOTIF hazards"]:::doc
-    kTC["<b>TC</b> 35<br/>triggering conditions"]:::doc
-    kFI["<b>FI</b> 23<br/>functional insufficiencies"]:::doc
-    kFM["<b>FM</b> 11<br/>functional modifications"]:::doc
+    kSH["<b>SH</b> 13<br/>SOTIF hazards"]:::traced
+    kTC["<b>TC</b> 35<br/>triggering conditions"]:::traced
+    kFI["<b>FI</b> 23<br/>functional insufficiencies"]:::traced
+    kFM["<b>FM</b> 11<br/>functional modifications"]:::traced
   end
   style ISO21448 fill:#FFFFFF,stroke:#CBD5E1
   subgraph ISOPAS8800["ISO/PAS 8800"]
     direction LR
-    kAIR["<b>AIR</b> 30<br/>AI safety req."]:::doc
-    kDSR["<b>DSR</b> 13<br/>dataset req."]:::doc
+    kAIR["<b>AIR</b> 30<br/>AI safety req."]:::traced
+    kDSR["<b>DSR</b> 13<br/>dataset req."]:::traced
   end
   style ISOPAS8800 fill:#FFFFFF,stroke:#CBD5E1
   subgraph ISOSAE21434["ISO/SAE 21434"]
     direction LR
-    kTS["<b>TS</b> 14<br/>threat scenarios"]:::doc
-    kCSG["<b>CSG</b> 8<br/>cybersecurity goals"]:::doc
-    kCSR["<b>CSR</b> 64<br/>cybersecurity req."]:::doc
+    kTS["<b>TS</b> 14<br/>threat scenarios"]:::traced
+    kCSG["<b>CSG</b> 8<br/>cybersecurity goals"]:::traced
+    kCSR["<b>CSR</b> 64<br/>cybersecurity req."]:::traced
   end
   style ISOSAE21434 fill:#FFFFFF,stroke:#CBD5E1
   subgraph ASPICE["ASPICE"]
     direction LR
-    kSYS["<b>SYS</b> 39<br/>system req."]:::doc
+    kSYS["<b>SYS</b> 39<br/>system req."]:::traced
   end
   style ASPICE fill:#FFFFFF,stroke:#CBD5E1
   kH -->|"9/9"| kHE
@@ -232,17 +232,17 @@ flowchart LR
   kTSR -->|"97/104"| kSWSR
   kTSR -->|"19/19"| kHWSR
   kAOU --> kSG
-  kSH -.-> kTC
-  kSH -.-> kFI
-  kTC -.-> kFM
-  kFI -.-> kFM
-  kSH -.-> kHE
-  kFI -.-> kAIR
-  kAIR -.-> kDSR
-  kTS -.-> kCSG
-  kCSG -.-> kCSR
-  kCSG -.-> kSG
-  kSYS -.-> kTSR
+  kSH -->|"12/12"| kTC
+  kSH -->|"12/12"| kFI
+  kTC --> kFM
+  kFI --> kFM
+  kSH --> kH
+  kFI --> kAIR
+  kAIR --> kDSR
+  kTS -->|"14/14"| kCSG
+  kCSG -->|"8/8"| kCSR
+  kCSG --> kSG
+  kSYS --> kTSR
   classDef traced fill:#DBEAFE,stroke:#2563EB,color:#0F172A
   classDef doc fill:#F1F5F9,stroke:#94A3B8,stroke-dasharray:4 3,color:#475569
 ```
@@ -250,10 +250,10 @@ flowchart LR
 | Standard | Kinds | In trace data | Defined in documents only |
 |---|---|---|---|
 | ISO 26262 | H, HE, SG, AOU, FSR, TSR, SWSR, HWSR | H 9, HE 39, SG 8, AOU 17, FSR 58, TSR 128, SWSR 139, HWSR 46 | — |
-| ISO 21448 | SH, TC, FI, FM | — | SH 13, TC 35, FI 23, FM 11 |
-| ISO/PAS 8800 | AIR, DSR | — | AIR 30, DSR 13 |
-| ISO/SAE 21434 | TS, CSG, CSR | — | TS 14, CSG 8, CSR 64 |
-| ASPICE | SYS | — | SYS 39 |
+| ISO 21448 | SH, TC, FI, FM | SH 13, TC 35, FI 23, FM 11 | — |
+| ISO/PAS 8800 | AIR, DSR | AIR 30, DSR 13 | — |
+| ISO/SAE 21434 | TS, CSG, CSR | TS 14, CSG 8, CSR 64 | — |
+| ASPICE | SYS | SYS 39 | — |
 
 ## 4. Derivation coverage (left side of the V)
 
@@ -267,6 +267,12 @@ Parents with at least one child in the trace data (WP-T-01 checks K4, K12).
 | FSR -> TSR | 58/58 | complete | — |
 | TSR -> SWSR (SW-allocated TSRs) | 97/104 | partial | TSR-628, TSR-629, TSR-630, TSR-631, TSR-632, TSR-633, TSR-712 |
 | TSR -> HWSR (HW-allocated TSRs) | 19/19 | complete | — |
+| SOTIF hazard -> functional insufficiency | 12/12 | complete | — |
+| SOTIF hazard -> triggering condition | 12/12 | complete | — |
+| threat scenario -> cybersecurity goal | 14/14 | complete | — |
+| cybersecurity goal -> cybersecurity requirement | 8/8 | complete | — |
+
+SOTIF modifications whose stated scope (WP-C-07 §2, *Addresses*) differs from the SOTIF hazards of the WP-C-06 §5 rows that name them, for review; a modification can address a hazard directly, so this is not an error: FM-01 (also SH-03); FM-03 (not SH-01); FM-04 (also SH-02); FM-08 (not SH-02); FM-09 (also SH-04; not SH-02, SH-03); FM-10 (also SH-01). *Also* lists hazards only WP-C-07 names, *not* those only the §5 rows give.
 
 ## 5. Verification coverage (across the V)
 
@@ -294,6 +300,6 @@ None.
 
 ## 7. Not yet traced
 
-- **Kinds outside the trace data:** SH (13), TC (35), FI (23), FM (11), AIR (30), DSR (13), TS (14), CSG (8), CSR (64), SYS (39). Their links (SH → TC/FI → FM, FI → AIR → DSR, TS → CSG → CSR, CSG ↔ SG, SH ↔ HE, SYS → TSR) are dashed in §3 until they are added to `items/` (README §3.1).
+- **Kinds outside the trace data:** none; every kind of §3 is in `items/`.
 - **Allocation to elements** (SYS.3, SWE.2, HWE.2): `allocated_to` holds work-product cells; element IDs need `elements.yaml` (WP-P-06 OI-4).
-- **Code and test results:** no `@req` tags and no `links/verification.yaml` yet, so the SWE.3 → code link and every test → result link are absent (WP-P-06 §5.3, §6).
+- **Code and test results:** no `@req` tags yet, so the SWE.3 → code link is absent; `links/verification.yaml` links 103 tests to requirements but no test → result link exists (WP-P-06 §5.3, §6; check K7).

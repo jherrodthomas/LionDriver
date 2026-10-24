@@ -95,8 +95,9 @@ build/
 !.vscode/extensions.json
 !.vscode/*.code-snippets
 
-# agents
-.claude/
+# agents (project skills under .claude/skills/ are tracked; local agent settings are not)
+.claude/*
+!.claude/skills/
 .context/
 PLAN.md
 TASK.md
