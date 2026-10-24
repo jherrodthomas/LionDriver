@@ -53,6 +53,20 @@ package LionDriverViews {
         render Views::asElementTable;
     }
 
+    view <'V-08'> interfaceN2 : InterconnectionView {
+        doc /* N2 chart: which component or outside element sends to which, over which interface (IF-01 to IF-10). */
+        expose LdSda::**;
+        expose OperationalContext::*;
+        render Views::asElementTable;
+    }
+
+    view <'V-09'> verificationMatrix : RequirementMatrixView {
+        doc /* Verification cross-reference matrix: SYS, TSR and CSR requirements by verification method and by the level of the cases that verify them. */
+        expose LionDriverRequirements::*;
+        expose LionDriverVerification::*;
+        render Views::asElementTable;
+    }
+
     view <'V-04'> mechanismAllocation : AllocationView {
         doc /* Safety mechanisms SM-01 to SM-43 against the elements that perform them. */
         expose LionDriverMechanisms::*;

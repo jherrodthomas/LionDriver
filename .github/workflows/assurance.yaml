@@ -125,6 +125,8 @@ jobs:
         python3 assurance/03-system/figures/test_fig_s03_mechanisms.py
         python3 assurance/03-system/figures/fig_s05_hsi.py --check
         python3 assurance/03-system/figures/test_fig_s05_hsi.py
+        python3 assurance/03-system/figures/fig_s00_se.py --check
+        python3 assurance/03-system/figures/test_fig_s00_se.py
         python3 assurance/03-system/requirements/requirements_view.py --check
         python3 assurance/03-system/requirements/test_requirements_view.py
         python3 assurance/06-validation/figures/fig_v02_validation_targets.py --check

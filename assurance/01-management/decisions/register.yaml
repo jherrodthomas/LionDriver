@@ -4096,6 +4096,8 @@
 - id: DQ-185
   question: "Adopt the proposed SysML decisions SY-01…SY-04 (textual SysML v2, OMG pilot 0.62.0 for conformance, in-house renderer, work products stay the record)?"
   context: "The modelling plan says SY-01…SY-06 are proposals not yet taken; tool classification TL-26/TL-27 depends on them."
+  gate: G2
+  asked: 2026-10-24
   reversibility: easy
   blocks: "WP-P-07 TL-26/27"
   decider: claude
@@ -4108,11 +4110,14 @@
       title: "Revise"
       detail: "Rework of the model tooling."
   sources: ["assurance/models/sysml/README.md SY-01"]
-  status: queued
+  status: answered
+  answer: {choice: B, via: chat, at: 2026-10-24, note: "Lead in chat: SysML MBSE for everything, in the readable in-house style. Adopt SY-01 to SY-03 as proposed; SY-04 revised: the model becomes the record (DQ-186), not a checked copy."}
 
 - id: DQ-186
   question: "Generate the architecture tables (WP-S-03 §3.1/3.3/§6, WP-W-03 §3.1) from the SysML model (SY-05)?"
   context: "Removes double editing and makes the model the document of record, after the model is reviewed."
+  gate: G2
+  asked: 2026-10-24
   reversibility: revisit
   blocks: "—"
   decider: claude
@@ -4125,11 +4130,14 @@
       title: "Keep work products as record"
       detail: "Double edit continues."
   sources: ["assurance/models/sysml/README.md OI-5"]
-  status: queued
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-24, note: "Lead in chat: the model is the record too. The model is AI-drafted (I0, WP-M-02 §3.3): its human review comes before the generated tables replace the hand-written ones."}
 
 - id: DQ-187
   question: "Replace hand-drawn architecture figures with generated views (SY-06)?"
   context: "One drawing per fact; candidates listed in SY-06."
+  gate: G2
+  asked: 2026-10-24
   reversibility: easy
   blocks: "—"
   decider: claude
@@ -4142,7 +4150,8 @@
       title: "Keep hand-drawn"
       detail: "Manual sync."
   sources: ["assurance/models/sysml/README.md OI-6"]
-  status: queued
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-24, note: "Lead in chat: generated views replace the hand-drawn architecture figures, in the V-01/V-03 style."}
 
 - id: DQ-188
   question: "What replaces Python pickle for loading model artefacts?"

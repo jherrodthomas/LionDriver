@@ -10,6 +10,7 @@
 [titles]
 context = "Vehicle context"
 ldsda = "LD-SDA"
+driver = "Driver"
 socSoftware = "SoC software"
 mlModels = "ML models"
 safetyFirmware = "Safety MCU firmware"
@@ -623,3 +624,26 @@ width = 1520
 desc = """Matrix view generated from the SysML v2 model: the 39 system requirements of WP-S-01 grouped by function, a dot \
 for each element that satisfies them and the verification cases that verify them; requirements without a case are \
 marked."""
+
+# ======================================================================= V-08, V-09 (systems-engineering views)
+
+[views.V-08]
+file = "fig-sysml-v08-n2-chart.svg"
+kind = "n2"
+title = "N2 chart · interfaces between components and their neighbours"
+subtitle = "Every connection of the model rolled up to the components E-01 to E-05 and the elements outside the item"
+width = 1280
+desc = """N2 chart generated from the SysML v2 model. The diagonal holds the components E-01 to E-05 inside the item \
+boundary and the outside elements they connect to; a cell (row, column) names the interfaces over which the row element \
+sends to the column element, coloured by the edge class of V-01 and V-03."""
+
+[views.V-09]
+file = "fig-sysml-v09-vcrm.svg"
+kind = "vcrm"
+title = "Verification matrix (VCRM) · system-level requirements"
+subtitle = "SYS, TSR and CSR requirements by method (NASA A, I, D, T) and by the level of their verification cases"
+width = 1320
+desc = """Verification cross-reference matrix generated from the SysML v2 model: per requirement group, how many \
+requirements name each verification method and how many a verification case at each level verifies; no case has a \
+result yet."""
+

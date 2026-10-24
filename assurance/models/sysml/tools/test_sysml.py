@@ -10,6 +10,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import check_model
 import explorer
+import render_se
 import render_views
 import svgkit
 import sysml_lite
@@ -148,10 +149,40 @@ class Rendering(unittest.TestCase):
   def test_every_view_is_drawn(self):
     m = sysml_lite.load()
     files = render_views.render_all(m)
-    self.assertEqual(len(files), len(m.views))
+    self.assertEqual(len([f for f in files if f.endswith(".svg")]), len(m.views))
     v03 = files["fig-sysml-v03-system-interconnection.svg"]
     for iid in ("IF-01", "IF-03", "IF-04", "IF-04b", "IF-07", "IF-08", "IF-09", "IF-10"):
       self.assertIn(iid, v03)
+
+  def test_n2_rolls_up_to_components(self):
+    m = sysml_lite.load()
+    order, cells = render_se.n2_cells(m)
+    shorts = [e.short for e in order]
+    self.assertEqual(shorts[:4], ["E-01", "E-03", "E-04", "E-05"])
+    e01, e03 = m.find("E-01").path, m.find("E-03").path
+    self.assertIn("IF-04", {lab for lab, _ in cells[(e01, e03)]})
+    # a bus attachment reads both ways
+    for (a, b), entries in cells.items():
+      if ("CAN", "bus") in entries:
+        self.assertIn(("CAN", "bus"), cells[(b, a)])
+
+  def test_vcrm_methods_and_levels(self):
+    req = lambda v: sysml_lite.Requirement.__new__(sysml_lite.Requirement)
+    cases = {"UT, HIL": ["T-SIL", "T-HIL"], "R-SW, BA": ["R"], "HIL (option-byte read), PR": ["T-HIL", "R"],
+             "BA, R, FZ": ["R", "PT"], "maintenance log": ["Rec"], "T-SIL (replay), T-VEH": ["T-SIL", "T-VEH"]}
+    for text, want in cases.items():
+      r = req(text)
+      r.values = {"verifMethod": text}
+      self.assertEqual(render_se.methods_of(r), want, text)
+    self.assertEqual(render_se.level_of("VS-SQ-12"), "SYS.5")
+    self.assertEqual(render_se.level_of("VS-FI-03"), "SYS.4")
+    self.assertEqual(render_se.level_of("VS-VAL-01"), "VAL.1")
+    self.assertEqual(render_se.level_of("SWV-07"), "below")
+    m = sysml_lite.load()
+    page = render_se.vcrm_page(m)
+    rows = [ln for ln in page.splitlines() if ln.startswith(("| SYS-", "| TSR-", "| CSR-"))]
+    self.assertEqual(len(rows), len(render_se.vcrm_rows(m)))
+    self.assertNotIn("Rec", "".join(ln for ln in rows if ln.startswith("| CSR-")))
 
   def test_envelope_drawn_as_asil_c(self):
     m = sysml_lite.load()
