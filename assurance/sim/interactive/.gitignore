@@ -1,0 +1,4 @@
+# the browser check installs Playwright here; films from the Machine Skill recorder stay out of git
+node_modules/
+out/
+*.mp4
