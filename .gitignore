@@ -112,6 +112,8 @@ assurance/sim/assets/*
 
 # Hazardous-event scene clips (rendered output, may be published; see assurance/sim/blender/README.md)
 !assurance/sim/blender/dashboards/clips/*.mp4
+# Cyber simulation mock clip (rendered output, synthetic; see assurance/sim/cyber/README.md §7)
+!assurance/sim/cyber/figures/*.mp4
 
 # FRET CLI built by assurance/models/fret/install_fret.sh (TE-03)
 .fret/

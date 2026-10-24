@@ -137,6 +137,8 @@ jobs:
         python3 assurance/sim/figures/test_fig_sim_reel.py
         python3 assurance/sim/figures/fig_sim_guide.py --check
         python3 assurance/sim/figures/test_fig_sim_guide.py
+        python3 assurance/sim/cyber/figures/fig_cy_iso.py --check
+        python3 assurance/sim/cyber/figures/test_fig_cy_iso.py
         python3 assurance/models/figures/fig_models.py --check
         python3 assurance/models/figures/test_fig_models.py
         python3 assurance/models/figures/fig_timing_anim.py --check

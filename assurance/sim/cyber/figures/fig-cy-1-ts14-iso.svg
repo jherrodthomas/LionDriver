@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420" viewBox="0 0 640 420" font-family="Inter, &#x27;Segoe UI&#x27;, Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">TS-14 attack path through LionDriver&#x27;s zones, isometric</title>
+<desc id="d">Threat scenarios TS-06, TS-08, TS-09, TS-10 (risk 4, 4, 4, 4) give a foothold on the SoC. From there the TS-14 path (risk 5) crosses the SoC host, the panda envelope and the vehicle bus to DS-01 and hazard H-01. Gate CSR-092 and CSR-061 on the boundary after S3: dashed amber: part built; gate CSR-093 on the boundary after S4: dashed amber: part built. Under the credited lens nothing stops it. A pulse runs the path in a 5 s loop; the still shows it at the hazard. What the item sees: nothing on the SoC, a refused frame at the panda in the reference build only, nothing on the bus, and then only the driver.</desc>
+<style>
+:root{--bg:#FFFFFF;--ink:#1F2328;--muted:#5A6270;--hair:#D0D5DD;--cy:#A21CAF;--cysoft:#FAE8FF;--cyglow:#E879F9;
+--prop:#0E7490;--amber:#B45309;--amberfill:#FDE68A;--blue:#0369A1;--green:#15803D;--red:#B91C1C;--redsoft:#FEE2E2;
+--top:#E2E8F0;--left:#CBD5E1;--right:#94A3B8;--edge:#64748B;--box:#F8FAFC}
+@media (prefers-color-scheme: dark){:root{--bg:#111110;--ink:#F0EFEC;--muted:#A3A29B;--hair:#2C2C2A;--cy:#E879F9;
+--cysoft:#2A1030;--cyglow:#D946EF;--prop:#22D3EE;--amber:#FAB219;--amberfill:#3A2A0A;--blue:#38BDF8;--green:#4ADE80;
+--red:#F87171;--redsoft:#3B1717;--top:#2B3A4F;--left:#22303F;--right:#1A2532;--edge:#5B7AA6;--box:#1A1A19}}
+.bg{fill:var(--bg)}.ink{fill:var(--ink)}.mu{fill:var(--muted)}.cy{fill:var(--cy)}.am{fill:var(--amber)}.rd{fill:var(--red)}
+.box{fill:var(--box);stroke:var(--hair)}.hair{stroke:var(--hair)}.cysoft{fill:var(--cysoft);stroke:var(--cy)}
+.top{fill:var(--top);stroke:var(--edge)}.lf{fill:var(--left)}.rt{fill:var(--right)}
+.gtop{fill:var(--redsoft);stroke:var(--red)}.path{fill:none;stroke:var(--cy);stroke-width:3}
+.pulse{fill:var(--cyglow);stroke:var(--cy);stroke-width:2}
+.w-partial{fill:var(--amberfill);fill-opacity:.55;stroke:var(--amber);stroke-dasharray:5 4;stroke-width:2}
+.w-unverified{fill:none;stroke:var(--blue);stroke-dasharray:5 4;stroke-width:2}
+.w-done{fill:none;stroke:var(--green);stroke-width:3}
+</style>
+<rect width="640" height="420" class="bg"/>
+<text x="16.0" y="26.0" font-size="16" class="ink" font-weight="700">TS-14: the attack path through LionDriver&#x27;s zones</text>
+<text x="16.0" y="45.0" font-size="13" class="mu">Credited lens: only a verified gate stops the path, and none is verified yet</text>
+<rect x="16" y="80" width="120" height="34" rx="5" class="box"/>
+<text x="26.0" y="102.0" font-size="13" class="ink" font-weight="600">TS-06</text>
+<rect x="80" y="88" width="48" height="19" rx="4" class="cysoft"/>
+<text x="104.0" y="102.0" font-size="13" class="cy" font-weight="600" text-anchor="middle">risk 4</text>
+<line x1="136" y1="97" x2="157.0" y2="163.0" class="hair" stroke-width="1.2"/>
+<rect x="16" y="124" width="120" height="34" rx="5" class="box"/>
+<text x="26.0" y="146.0" font-size="13" class="ink" font-weight="600">TS-08</text>
+<rect x="80" y="132" width="48" height="19" rx="4" class="cysoft"/>
+<text x="104.0" y="146.0" font-size="13" class="cy" font-weight="600" text-anchor="middle">risk 4</text>
+<line x1="136" y1="141" x2="157.0" y2="163.0" class="hair" stroke-width="1.2"/>
+<rect x="16" y="168" width="120" height="34" rx="5" class="box"/>
+<text x="26.0" y="190.0" font-size="13" class="ink" font-weight="600">TS-09</text>
+<rect x="80" y="176" width="48" height="19" rx="4" class="cysoft"/>
+<text x="104.0" y="190.0" font-size="13" class="cy" font-weight="600" text-anchor="middle">risk 4</text>
+<line x1="136" y1="185" x2="157.0" y2="163.0" class="hair" stroke-width="1.2"/>
+<rect x="16" y="212" width="120" height="34" rx="5" class="box"/>
+<text x="26.0" y="234.0" font-size="13" class="ink" font-weight="600">TS-10</text>
+<rect x="80" y="220" width="48" height="19" rx="4" class="cysoft"/>
+<text x="104.0" y="234.0" font-size="13" class="cy" font-weight="600" text-anchor="middle">risk 4</text>
+<line x1="136" y1="229" x2="157.0" y2="163.0" class="hair" stroke-width="1.2"/>
+<circle cx="170.0" cy="163.0" r="13" class="box"/>
+<text x="170.0" y="167.5" font-size="13" class="ink" font-weight="700" text-anchor="middle">OR</text>
+<text x="16.0" y="266.0" font-size="13" class="mu">Footholds on the SoC</text>
+<text x="16.0" y="282.0" font-size="13" class="mu">(WP-C-09 §5, §8)</text>
+<polygon points="293.1,242.1 262.0,260.1 262.0,273.9 293.1,255.9" class="rt"/>
+<polygon points="262.0,260.1 230.9,242.1 230.9,255.9 262.0,273.9" class="lf"/>
+<polygon points="262.0,224.2 293.1,242.1 262.0,260.1 230.9,242.1" class="top" stroke-width="1.2"/>
+<polygon points="398.2,236.6 367.2,254.6 367.2,273.9 398.2,255.9" class="rt"/>
+<polygon points="367.2,254.6 336.1,236.6 336.1,255.9 367.2,273.9" class="lf"/>
+<polygon points="367.2,218.7 398.2,236.6 367.2,254.6 336.1,236.6" class="top" stroke-width="1.2"/>
+<polygon points="503.4,242.1 472.3,260.1 472.3,273.9 503.4,255.9" class="rt"/>
+<polygon points="472.3,260.1 441.3,242.1 441.3,255.9 472.3,273.9" class="lf"/>
+<polygon points="472.3,224.2 503.4,242.1 472.3,260.1 441.3,242.1" class="top" stroke-width="1.2"/>
+<polygon points="608.6,245.8 577.5,263.8 577.5,273.9 608.6,255.9" class="rt"/>
+<polygon points="577.5,263.8 546.4,245.8 546.4,255.9 577.5,273.9" class="lf"/>
+<polygon points="577.5,227.9 608.6,245.8 577.5,263.8 546.4,245.8" class="gtop" stroke-width="1.2"/>
+<line x1="183.0" y1="163.0" x2="262.0" y2="242.1" class="path" stroke-dasharray="4 4"/>
+<polygon points="345.7,238.0 314.6,255.9 314.6,230.6 345.7,212.7" class="w-partial"><animate attributeName="stroke-width" values="2;4;2" dur="5s" repeatCount="indefinite"/></polygon>
+<text x="330.1" y="188.7" font-size="13" class="am" font-weight="600" text-anchor="middle">CSR-092 · CSR-061</text>
+<text x="330.1" y="203.7" font-size="13" class="am" text-anchor="middle">part built</text>
+<polygon points="450.8,238.0 419.8,255.9 419.8,230.6 450.8,212.7" class="w-partial"><animate attributeName="stroke-width" values="2;4;2" dur="5s" repeatCount="indefinite"/></polygon>
+<text x="435.3" y="188.7" font-size="13" class="am" font-weight="600" text-anchor="middle">CSR-093</text>
+<text x="435.3" y="203.7" font-size="13" class="am" text-anchor="middle">part built</text>
+<polyline points="262.0,242.1 268.6,235.7 275.1,230.1 281.7,225.3 288.3,221.3 294.9,218.1 301.4,215.7 308.0,214.1 314.6,213.4 321.2,213.4 327.7,214.3 334.3,216.0 340.9,218.5 347.5,221.8 354.0,225.9 360.6,230.9 367.2,236.6 373.7,230.9 380.3,225.9 386.9,221.8 393.5,218.5 400.0,216.0 406.6,214.3 413.2,213.4 419.8,213.4 426.3,214.1 432.9,215.7 439.5,218.1 446.0,221.3 452.6,225.3 459.2,230.1 465.8,235.7 472.3,242.1 478.9,236.3 485.5,231.2 492.1,227.0 498.6,223.6 505.2,220.9 511.8,219.1 518.4,218.2 524.9,218.0 531.5,218.6 538.1,220.1 544.6,222.3 551.2,225.4 557.8,229.3 564.4,234.0 570.9,239.5 577.5,245.8" class="path" stroke-linejoin="round"/>
+<circle cx="262.0" cy="242.1" r="4" class="cy"/>
+<circle cx="367.2" cy="236.6" r="4" class="cy"/>
+<circle cx="472.3" cy="242.1" r="4" class="cy"/>
+<circle cx="577.5" cy="245.8" r="4" class="cy"/>
+<circle cx="577.5" cy="245.8" r="7" class="pulse"><animate attributeName="cx" values="262.0;268.6;275.1;281.7;288.3;294.9;301.4;308.0;314.6;321.2;327.7;334.3;340.9;347.5;354.0;360.6;367.2;373.7;380.3;386.9;393.5;400.0;406.6;413.2;419.8;426.3;432.9;439.5;446.0;452.6;459.2;465.8;472.3;478.9;485.5;492.1;498.6;505.2;511.8;518.4;524.9;531.5;538.1;544.6;551.2;557.8;564.4;570.9;577.5;577.5" keyTimes="0.0000;0.0167;0.0333;0.0500;0.0667;0.0833;0.1000;0.1167;0.1333;0.1500;0.1667;0.1833;0.2000;0.2167;0.2333;0.2500;0.2667;0.2833;0.3000;0.3167;0.3333;0.3500;0.3667;0.3833;0.4000;0.4167;0.4333;0.4500;0.4667;0.4833;0.5000;0.5167;0.5333;0.5500;0.5667;0.5833;0.6000;0.6167;0.6333;0.6500;0.6667;0.6833;0.7000;0.7167;0.7333;0.7500;0.7667;0.7833;0.8000;1" dur="5s" repeatCount="indefinite"/><animate attributeName="cy" values="242.1;235.7;230.1;225.3;221.3;218.1;215.7;214.1;213.4;213.4;214.3;216.0;218.5;221.8;225.9;230.9;236.6;230.9;225.9;221.8;218.5;216.0;214.3;213.4;213.4;214.1;215.7;218.1;221.3;225.3;230.1;235.7;242.1;236.3;231.2;227.0;223.6;220.9;219.1;218.2;218.0;218.6;220.1;222.3;225.4;229.3;234.0;239.5;245.8;245.8" keyTimes="0.0000;0.0167;0.0333;0.0500;0.0667;0.0833;0.1000;0.1167;0.1333;0.1500;0.1667;0.1833;0.2000;0.2167;0.2333;0.2500;0.2667;0.2833;0.3000;0.3167;0.3333;0.3500;0.3667;0.3833;0.4000;0.4167;0.4333;0.4500;0.4667;0.4833;0.5000;0.5167;0.5333;0.5500;0.5667;0.5833;0.6000;0.6167;0.6333;0.6500;0.6667;0.6833;0.7000;0.7167;0.7333;0.7500;0.7667;0.7833;0.8000;1" dur="5s" repeatCount="indefinite"/></circle>
+<line x1="262.0" y1="242.1" x2="262.0" y2="178.1" stroke="var(--cy)" stroke-width="2"/>
+<rect x="206.0" y="154.1" width="112" height="24" rx="5" class="cy"/>
+<text x="262.0" y="171.1" font-size="13" class="bg" font-weight="700" text-anchor="middle">TS-14 · risk 5</text>
+<text x="262.0" y="295.9" font-size="13" class="ink" font-weight="700" text-anchor="middle">S3 SoC host</text>
+<text x="262.0" y="311.9" font-size="13" class="mu" text-anchor="middle">Z2</text>
+<text x="367.2" y="295.9" font-size="13" class="ink" font-weight="700" text-anchor="middle">S4 Envelope</text>
+<text x="367.2" y="311.9" font-size="13" class="mu" text-anchor="middle">Z1</text>
+<text x="472.3" y="295.9" font-size="13" class="ink" font-weight="700" text-anchor="middle">S5 Vehicle bus</text>
+<text x="472.3" y="311.9" font-size="13" class="mu" text-anchor="middle">Z5</text>
+<text x="577.5" y="295.9" font-size="13" class="rd" font-weight="700" text-anchor="middle">DS-01 → H-01</text>
+<text x="577.5" y="311.9" font-size="13" class="mu" text-anchor="middle">hazard</text>
+<line x1="200" y1="325.88" x2="624" y2="325.88" class="hair"/>
+<text x="200.0" y="343.9" font-size="13" class="mu">What the item sees</text>
+<text x="262.0" y="361.9" font-size="13" class="ink" text-anchor="middle">nothing</text>
+<text x="367.2" y="361.9" font-size="13" class="am" text-anchor="middle">TX refused</text>
+<text x="367.2" y="376.9" font-size="13" class="am" text-anchor="middle">(ref. build)</text>
+<text x="472.3" y="361.9" font-size="13" class="ink" text-anchor="middle">—</text>
+<text x="577.5" y="361.9" font-size="13" class="ink" text-anchor="middle">driver only</text>
+<text x="16.0" y="408.0" font-size="13" class="mu">Synthetic (DSR-12), no evidence credit · WP-C-09 §3, §5, §8 · WP-S-07 §4 · fig_cy_iso.py</text>
+</svg>
