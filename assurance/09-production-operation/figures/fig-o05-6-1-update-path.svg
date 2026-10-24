@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1221" viewBox="0 0 640 1221" role="img" aria-labelledby="t d">
+<title id="t">Figure 6-1. Update path today and the target (WP-S-07 §3.6, WP-O-05 §6)</title>
+<desc id="d">Figure 6-1: the update path today and the target. Where it comes from: today whatever branch the device is set to follow, from a configurable origin; target a fixed origin and the release channel only (CSR-122 not met). Before anything is staged: today nothing signed by liondriver: tls is the only check; target a release manifest signed with the offline key (ECDSA P-256, SHA-256), checked with a pinned public key (CSR-121 not implemented). The code: today checked out and cleaned exactly as fetched; target the fetched tree checked against the manifest commit and its submodule pins (CSR-121 not implemented). System images: today checked against hashes that came in the same unsigned tree; target every artefact hash checked against the manifest before use (CSR-121 not implemented). An older release: today not refused; target refused unless it is a signed rollback release (CSR-123 not implemented). Until the target exists automatic updates are off and releases are installed by hand with a hash comparison (CSR-124). The manifest lists release ID, git tree commit, with submodule pins, AGNOS version and image hashes, panda image hash, model artefact hashes, minimum version.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
+      --real:#2a78d6; --real-bg:#e9f1fb; --amb:#c98500; --amb-bg:#fdf4dc; --bad:#e34948; --bad-bg:#fdecec;
+      --pic:#6250d6; --pic-bg:#efedfb; --flt:#eb6834; --cop:#eb6834; --cop-bg:#fde9df; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#1a1a19; --ink:#f0efec; --ink2:#c3c2b7; --ink3:#8d8c85; --grid:#33322f; --card:#232321;
+        --real:#3987e5; --real-bg:#16273c; --amb:#eda100; --amb-bg:#3a2f12; --bad:#e66767; --bad-bg:#3d1e1e;
+        --pic:#9085e9; --pic-bg:#26223f; --flt:#d95926; --cop:#d95926; --cop-bg:#3f2417; }
+}
+.bg { fill:var(--bg); }
+.h { font:600 21px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t { font:15px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.tb { font:600 15px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.tl { font:600 17px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.t2b { font:600 13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.chip { font:600 12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:#ffffff; }
+.tbad { font:600 13px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--bad); }
+.hair { stroke:var(--grid); stroke-width:1; }
+.card { fill:var(--card); stroke:var(--grid); stroke-width:1.2; }
+.real { fill:var(--real-bg); stroke:var(--real); stroke-width:2.4; }
+.model { fill:var(--card); stroke:var(--ink3); stroke-width:1.4; }
+.amb { fill:var(--amb-bg); stroke:var(--amb); stroke-width:1.6; stroke-dasharray:6 4; }
+.plan { fill:var(--bg); stroke:var(--ink3); stroke-width:1.4; stroke-dasharray:6 4; }
+.pic { fill:var(--pic-bg); stroke:var(--pic); stroke-width:1.4; }
+.picbox { fill:var(--bg); stroke:var(--pic); stroke-width:1.2; }
+.badbox { fill:var(--bad-bg); stroke:var(--bad); stroke-width:1.4; }
+.copbox { fill:var(--cop-bg); stroke:var(--cop); stroke-width:1.4; }
+.f-real { fill:var(--real); } .f-model { fill:var(--ink3); } .f-amb { fill:var(--amb); } .f-bad { fill:var(--bad); }
+.f-pic { fill:var(--pic); } .f-flt { fill:var(--flt); } .f-cop { fill:var(--cop); } .f-ink2 { fill:var(--ink2); }
+.arr { stroke:var(--ink2); stroke-width:1.6; fill:none; }
+.arrd { stroke:var(--ink3); stroke-width:1.6; fill:none; stroke-dasharray:5 4; }
+.arrb { stroke:var(--bad); stroke-width:1.6; fill:none; stroke-dasharray:5 4; }
+.spring { stroke:var(--ink2); stroke-width:1.8; fill:none; stroke-linejoin:round; }
+.strike { stroke:var(--bad); stroke-width:1.6; }
+svg { --ok:#16a34a; --ok-bg:#e8f6ec; --unv:#0284c7; --unv-bg:#e6f3fb; }
+@media (prefers-color-scheme: dark) { svg { --ok:#3fbf6a; --ok-bg:#16301f; --unv:#38a6e0; --unv-bg:#132a3a; } }
+.unv { fill:var(--unv-bg); stroke:var(--unv); stroke-width:1.6; stroke-dasharray:6 4; }
+.ok { fill:var(--ok-bg); stroke:var(--ok); stroke-width:1.8; }
+.entry { fill:var(--pic-bg); stroke:var(--pic); stroke-width:2.4; }
+.f-ok { fill:var(--ok); } .f-unv { fill:var(--unv); }
+.gate-partial { fill:var(--amb-bg); stroke:var(--amb); stroke-width:2; stroke-dasharray:4 3; }
+.gate-unverified { fill:var(--unv-bg); stroke:var(--unv); stroke-width:2; stroke-dasharray:4 3; }
+.gate-done { fill:var(--ok-bg); stroke:var(--ok); stroke-width:2; }
+.path { stroke:var(--bad); stroke-width:2.6; fill:none; }
+.pathok { stroke:var(--pic); stroke-width:2.6; fill:none; }
+.link { stroke:var(--grid); stroke-width:3; fill:none; }
+</style>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-ink2"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-bad"/></marker><marker id="ap" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-pic"/></marker></defs>
+<rect class="bg" width="640" height="1221"/>
+<text x="24" y="34" class="h">Update path: today and the target</text>
+<text x="24" y="56" class="t2">What the device trusts before it stages an update (WP-S-07 §3.6)</text>
+<text x="24" y="76" class="t2b">Schematic · no evidence credit · generated by fig_o05_updates.py</text>
+<line x1="24" y1="90" x2="616" y2="90" class="hair"/>
+<text x="24" y="120" class="tl">Today: inherited updater</text>
+<text x="332" y="120" class="tl">Target: signed release</text>
+<text x="24" y="140" class="t2">as the code stands</text>
+<text x="332" y="140" class="t2">designed, not built</text>
+<text x="24" y="172" class="t2b">1  Where it comes from</text>
+<rect x="24" y="180" width="284" height="94" rx="8" class="badbox"/>
+<text x="36" y="204" class="t">Whatever branch the device is</text>
+<text x="36" y="224" class="t">set to follow, from a</text>
+<text x="36" y="244" class="t">configurable origin</text>
+<rect x="332" y="180" width="284" height="94" rx="8" class="plan"/>
+<text x="344" y="204" class="t">A fixed origin and the release</text>
+<text x="344" y="224" class="t">channel only</text>
+<rect x="344" y="238" width="134.3" height="20" rx="10" class="f-bad"/>
+<text x="411.2" y="252" class="chip" text-anchor="middle">CSR-122 · Not met</text>
+<text x="24" y="298" class="t2b">2  Before anything is staged</text>
+<rect x="24" y="306" width="284" height="134" rx="8" class="badbox"/>
+<text x="36" y="330" class="t">Nothing signed by LionDriver:</text>
+<text x="36" y="350" class="t">TLS is the only check</text>
+<rect x="332" y="306" width="284" height="134" rx="8" class="plan"/>
+<text x="344" y="330" class="t">A release manifest signed with</text>
+<text x="344" y="350" class="t">the offline key (ECDSA P-256,</text>
+<text x="344" y="370" class="t">SHA-256), checked with a pinned</text>
+<text x="344" y="390" class="t">public key</text>
+<rect x="344" y="404" width="190" height="20" rx="10" class="f-bad"/>
+<text x="439" y="418" class="chip" text-anchor="middle">CSR-121 · Not implemented</text>
+<text x="24" y="464" class="t2b">3  The code</text>
+<rect x="24" y="472" width="284" height="114" rx="8" class="badbox"/>
+<text x="36" y="496" class="t">Checked out and cleaned exactly</text>
+<text x="36" y="516" class="t">as fetched</text>
+<rect x="332" y="472" width="284" height="114" rx="8" class="plan"/>
+<text x="344" y="496" class="t">The fetched tree checked against</text>
+<text x="344" y="516" class="t">the manifest commit and its</text>
+<text x="344" y="536" class="t">submodule pins</text>
+<rect x="344" y="550" width="190" height="20" rx="10" class="f-bad"/>
+<text x="439" y="564" class="chip" text-anchor="middle">CSR-121 · Not implemented</text>
+<text x="24" y="610" class="t2b">4  System images</text>
+<rect x="24" y="618" width="284" height="94" rx="8" class="badbox"/>
+<text x="36" y="642" class="t">Checked against hashes that came</text>
+<text x="36" y="662" class="t">in the same unsigned tree</text>
+<rect x="332" y="618" width="284" height="94" rx="8" class="plan"/>
+<text x="344" y="642" class="t">Every artefact hash checked</text>
+<text x="344" y="662" class="t">against the manifest before use</text>
+<rect x="344" y="676" width="190" height="20" rx="10" class="f-bad"/>
+<text x="439" y="690" class="chip" text-anchor="middle">CSR-121 · Not implemented</text>
+<text x="24" y="736" class="t2b">5  An older release</text>
+<rect x="24" y="744" width="284" height="94" rx="8" class="badbox"/>
+<text x="36" y="768" class="t">Not refused</text>
+<rect x="332" y="744" width="284" height="94" rx="8" class="plan"/>
+<text x="344" y="768" class="t">Refused unless it is a signed</text>
+<text x="344" y="788" class="t">rollback release</text>
+<rect x="344" y="802" width="190" height="20" rx="10" class="f-bad"/>
+<text x="439" y="816" class="chip" text-anchor="middle">CSR-123 · Not implemented</text>
+<rect x="24" y="854" width="592" height="135" rx="8" class="amb"/>
+<text x="36" y="878" class="tb">In the reference configuration until then</text>
+<text x="36" y="899" class="t">Automatic updates are switched off. The maintainer installs each</text>
+<text x="36" y="919" class="t">release by hand and compares its hashes with the release record</text>
+<text x="36" y="939" class="t">(WP-O-02 UPD-02).</text>
+<rect x="36" y="953" width="197" height="20" rx="10" class="f-unv"/>
+<text x="134.5" y="967" class="chip" text-anchor="middle">CSR-124 · Mechanism exists</text>
+<rect x="24" y="1003" width="592" height="116" rx="8" class="card"/>
+<text x="36" y="1027" class="tb">What the signed manifest will list</text>
+<text x="604" y="1027" class="t2" text-anchor="end">WP-S-07 §3.6</text>
+<text x="36" y="1059" class="t">· release ID</text>
+<text x="36" y="1081" class="t">· git tree commit, with submodule pins</text>
+<text x="36" y="1103" class="t">· AGNOS version and image hashes</text>
+<text x="326" y="1059" class="t">· panda image hash</text>
+<text x="326" y="1081" class="t">· model artefact hashes</text>
+<text x="326" y="1103" class="t">· minimum version</text>
+<text x="24" y="1145" class="t2">Format, channel and signing pipeline are not defined yet (WP-P-10 OI-4); the</text>
+<text x="24" y="1163" class="t2">device-side rollback procedure is open (OI-6). Chips: the WP-S-07 §4.12 status of</text>
+<text x="24" y="1181" class="t2">each requirement.</text>
+<text x="24" y="1199" class="t2">Update management per WP-O-05 §6; UN R156 informative, not claimed.</text>
+</svg>
