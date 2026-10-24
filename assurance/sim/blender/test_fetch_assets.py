@@ -235,7 +235,9 @@ class TestFetchAssets(unittest.TestCase):
         self.assertTrue(slot["licence"].startswith("CC-BY") and slot["author"] and slot["title"], name)
         self.assertTrue(slot["page"].startswith("https://sketchfab.com/3d-models/") and slot["file"], name)
         self.assertLessEqual(set(slot["pieces"]), {"city_block", "skyline", "farm", "roadside", "bins", "cars",
-                                                    "trailer"}, name)
+                                                    "trailer", "vehicles"}, name)
+        for v in slot["pieces"].get("vehicles", []):  # one mesh each: its front in the file says which way it faces
+          self.assertIn(slot["fronts"][v], ("+y", "-y"), name)
         continue
       self.assertTrue(slot["candidates"] and slot.get("search"), name)
       if slot["kind"] == "pbr":

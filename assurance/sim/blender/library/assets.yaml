@@ -377,3 +377,18 @@ slots:
     pieces: {trailer: [all]}
     candidates:
       - {source: liondriver-assets, id: sketchfab/truck-trailer-free.zip}
+
+  civil_vehicles:
+    kind: kit
+    use: Emergency vehicles drawn on a road user with a body (fire engine, patrol car, ambulance, tow truck)
+    licence: CC-BY 4.0
+    title: Generic civil service vehicles pack
+    author: comrade1280
+    page: https://sketchfab.com/3d-models/8ff2a13f30914932a70c7950cfa58465
+    file: source/scene.fbx
+    pieces: {vehicles: [fire_truck, police_sedan, ambulance, towtruck]}
+    fronts: {fire_truck: -y, police_sedan: +y, ambulance: -y, towtruck: -y}   # each mesh's front, in its own frame
+    lights: {fire_truck: [0.38, -0.47], police_sedan: [-0.05], ambulance: [0.25, -0.47]}   # beacon points (the tow
+                                                      # truck's bar is amber: none)
+    candidates:
+      - {source: liondriver-assets, id: sketchfab/generic-civil-service-vehicles-pack.zip}

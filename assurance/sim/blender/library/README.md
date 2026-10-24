@@ -232,8 +232,9 @@ clone the scenes keep the procedural look.
 | `grain_bins` | [Panola Grain Bins](https://sketchfab.com/3d-models/342892c5b0ff4519a2327d05316e266c) | frankmcmains | Grain bins on the farmstead |
 | `car_pack` | [Generic passenger car pack](https://sketchfab.com/3d-models/20f9af9b8a404d5cb022ac6fe87f21f5) | comrade1280 | Traffic, parked and passing cars (nine shapes, no real makes) |
 | `box_trailer` | [Truck Trailer FREE](https://sketchfab.com/3d-models/575958a53e3d4e9f8bcfb1ee2cef67bf) | NLM-Group | A 53 ft box trailer behind traffic trucks |
+| `civil_vehicles` | [Generic civil service vehicles pack](https://sketchfab.com/3d-models/8ff2a13f30914932a70c7950cfa58465) | comrade1280 | The fire engine, patrol car, ambulance and tow truck of an actor's `body` (no real makes) |
 
-All seven are [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/). The pedestrians are the CC0 Quaternius
+All eight are [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/). The pedestrians are the CC0 Quaternius
 figures of `people/`. The Brooklyn street-row kit is in the private folder but not used, because its facades carry
 graffiti. The gas station and the overpass from the shortlist are not used yet: one came as a `.rar` inside its zip,
 the other is over GitHub's 100 MB file limit.
