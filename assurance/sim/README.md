@@ -94,7 +94,7 @@ credit.
 3. **Ego state**: the car's speed, accelerations and lateral offset at the time shown, its **margin to the lane line**
    (red once negative), and the EPS LKA torque.
 4. **3D view**: the scene at the time shown. Each road user's label names its source: plant, kinematic, or
-   *illustrative* (drawn, not simulated). The banner at the bottom names the current event.
+   *illustrative* (drawn, not simulated: a qualitative analysis). The banner at the bottom names the current event.
 5. **Forward and top views**: roughly what the driver sees, and the path from above with "ghosts" of the car at
    each event.
 6. **Outcome tiles**: time from the fault, offset, when the body reaches the lane line, the peak offset, and contact.

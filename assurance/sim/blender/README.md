@@ -21,7 +21,10 @@ Each scene names its motion source on the dashboard.
 | **Plant** | 26 scenes (and their condition variants): every HE whose situation the highway plant can represent, including variants of a catalog case (speed, road, engagement, a mirrored fault) and of its assumptions (a driver who does not react) | The ego's motion and the panda and driver events from a [layer-1 plant](../plant/) run: the real panda safety code in the loop, under the assumptions in [plant-results.md](../results/plant-results.md); in longitudinal cases the plant's own lead and follower | A measurement; a model of the EPS, the PCM or the driver beyond the stated assumptions; tyre limits (the tyre model is linear: HE-04.2 on a wet road shows the dry-road motion) |
 | **Kinematic** | 23 scenes (and their condition variants): urban, rural and pedestrian situations, perception insufficiencies, override and mode-confusion events the plant does not model | Piecewise-constant accelerations and a lateral law. Every time and acceleration in [`scenes.yaml`](scenes.yaml) is a number or a named assumption from [`export_scene.py`](export_scene.py): the plant's driver assumptions (reaction 1.5 s, lateral cue 0.2 m, longitudinal cue 1 m/s²) and WP-S-04 §3 values (envelope +2.0 / -3.5 m/s², driver braking to 6 m/s², PCS 6 m/s², envelope torque about 1.99 m/s²) | A run of the item: no panda code, no controller. It shows the hazardous behaviour the entry describes and what the stated driver does about it |
 
-Road users the scene adds without simulating them are marked **illustrative**. Neither source models contact: at
+Road users the scene adds without simulating them are marked **illustrative**: they are placed by hand for a
+qualitative analysis, so read *illustrative* as *qualitative analysis*. The next re-render, and any new project, labels
+them **qualitative** instead (the lead's direction, 2026-10-24; the committed renders keep the old word until then).
+Neither source models contact: at
 the first overlap of two body outlines (or the body and the barrier, or a cone) the scene freezes, records the relative
 speed and ends half a second later; the dashboard says "not modelled". Layer 1 has no perception, so the dashboard has
 no perception, camera-detection or sensor-fusion panel; a triggering condition (low sun, night, faded markings, an

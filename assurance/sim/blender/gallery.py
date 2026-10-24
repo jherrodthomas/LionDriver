@@ -128,7 +128,8 @@ def main() -> int:
           "explained in [`../README.md`](../README.md). Synthetic (DSR-12): **pictures only, no evidence credit**. "
           "Plant scenes run the real panda safety code under the plant's stated assumptions; kinematic scenes use the "
           "plant's driver assumptions and WP-S-04 §3 values. Contact is not modelled by either: the outcome column "
-          "reports the first overlap of the body outlines and the relative speed there. Each scene is an environment, "
+          "reports the first overlap of the body outlines and the relative speed there. Road users labelled *illustrative* are "
+          "simulated by neither: they are placed by hand for a qualitative analysis. Each scene is an environment, "
           "a condition and traffic from [`../library/`](../library/README.md).\n\n" + HERO +
           "| Scene | Entry | Effect (HARA / WP-C-05) | Environment, condition | Motion | Outcome in the scene |\n"
           "|---|---|---|---|---|---|\n")
