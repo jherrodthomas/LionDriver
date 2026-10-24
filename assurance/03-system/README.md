@@ -30,5 +30,6 @@ Standard clauses: 26262-4, SYS.1–5.
 |---|---|
 | [`requirements/`](requirements/README.md) | Requirements at a glance |
 | [`reviews/`](reviews/) | — |
+| [`tsc/`](tsc/README.md) | Technical safety concept |
 
 GitHub lists this folder's files above this page; each work product's document embeds its own figures.
