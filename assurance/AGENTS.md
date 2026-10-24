@@ -8,4 +8,6 @@ Keep proposed text, actual evidence and accepted conclusions separate. Do not in
 
 AI-authored work is I0 under WP-M-02 §3.3. Request the required human verification; do not mark your own output Approved, accept evidence/claims, close defeaters or pass gates. Complete the impact analysis, version/history updates and meaningful checks with the change.
 
-This file and the audit aid do not override the user's task or the repository's safety/QMS records. Revision 0.2, 2026-10-14; author Codex (OpenAI AI assistant); Draft, approval pending.
+Define every abbreviation and record code for the reader. The list is `TERMS` in [`trace/tools/terms.py`](trace/tools/terms.py), shown as [`terms.md`](terms.md): add a new term there, never define one elsewhere. A page in its `PAGES` gets a generated "Terms on this page" block; a generated figure in its `FIGURES` ends with `terms.svg_footer`. Spell a term out in the prose where it first matters. CI fails on an undefined term.
+
+This file and the audit aid do not override the user's task or the repository's safety/QMS records. Revision 0.3, 2026-10-24 (abbreviation standard added; Claude). Revision 0.2, 2026-10-14; author Codex (OpenAI AI assistant); Draft, approval pending.
