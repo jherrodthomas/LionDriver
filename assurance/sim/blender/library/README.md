@@ -263,6 +263,12 @@ road user's own animated root, so its poses do not move. Nor may an extra change
 
 The same test exports every scene with these keys removed and checks that the analysis is unchanged.
 
+Under `city_blocks` the pavement's paving runs on 60 m past its back edge, under and between the rows, so no sky shows
+between the pavement and the facades or through the gaps. The brownstone and downtown kits' FBX materials import as
+metal with no specular (Metallic 1, Specular 0); they are set back to a dielectric (Metallic 0, Specular 0.5). That
+lifts a facade in shade by about half; brownstone on the shaded side of a street still reads dark, as it would in a
+photograph.
+
 Scans carry daylight in their colour maps, so at night they are dimmed; under snow their roofs get snow. People are
 cloned from the two figures, each with its own rig, walk and shirt colour. A 1280 × 720 chase still of
 `sh-09-red-light`, with 30 buildings, 36 parked and 5 passing cars and 57 people, builds in about 25 s and peaks at

@@ -3,8 +3,10 @@
 Copies each scene's decisive dashboard (out/<scene>/dashboard.png from compose.py) to dashboards/<scene>.jpg at
 1600 px (a scene not rendered here keeps its committed dashboard; its row is built from out/<scene>/scene.json, so run
 export_scene.py first) and writes dashboards/README.md: one row per scene with the entry it pictures, the motion source, the
-outcome and the image. Renders of the purchased mesh may be published (assets/README.md); the .blend files may not
-and stay in out/. The page ends with the credits the CC-BY kits of library/assets.lock.json ask for.
+outcome and the image. Each clip in dashboards/clips/ gets a short looping preview, clips/previews/<scene>.webp (ffmpeg),
+around its decisive moment, so the page shows the clips moving: GitHub plays no MP4 from the repository. Renders of
+the purchased mesh may be published (assets/README.md); the .blend files may not and stay in out/. The page ends with
+the credits the CC-BY kits of library/assets.lock.json ask for.
 
   python3 assurance/sim/blender/gallery.py
 """
@@ -12,6 +14,8 @@ and stay in out/. The page ends with the credits the CC-BY kits of library/asset
 from __future__ import annotations
 
 import json
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -23,6 +27,39 @@ HERE = Path(__file__).resolve().parent
 OUT = HERE / "out"
 GAL = HERE / "dashboards"
 LOCK = HERE / "library" / "assets.lock.json"
+PREVIEW = {"s": 3.0, "before_s": 2.0, "fps": 10, "width": 640, "quality": 50}  # a clip's looping preview
+VIEW_3D = (322 / 1600, 55 / 900, 1232 / 1600, 566 / 900)  # the 3D view of a dashboard (figures/fig_sim_readme.py)
+
+
+def decisive_t(sc: dict) -> float:
+  """The time of the moment the dashboard shows (compose.py's choice, from the scene's events): the contact, else the
+  driver's response, else any response, else the middle event."""
+  ev = sc["events"]
+  red = [e for e in ev if any(w in e["label"] for w in ("contact", "barrier", "strikes"))]
+  responses = [e for e in ev if "correction" in e["label"] or "brakes" in e["label"]]
+  driver = [e for e in responses if e["label"].startswith("driver")]
+  e = (red or driver or responses or [None])[0]
+  return e["t"] if e else (ev[len(ev) // 2]["t"] if ev else sc["t"][len(sc["t"]) // 2])
+
+
+def preview(clip: Path, sc: dict) -> Path | None:
+  """clips/previews/<scene>.webp: PREVIEW["s"] seconds of the clip's 3D view around its decisive moment, looping (the
+  numbers stay in the clip: at phone width they would not be legible); rebuilt when
+  the clip is newer. None without ffmpeg (the page then links the clip only)."""
+  out = clip.parent / "previews" / f"{clip.stem}.webp"
+  if out.exists() and out.stat().st_mtime >= clip.stat().st_mtime:
+    return out
+  if not shutil.which("ffmpeg"):
+    return out if out.exists() else None
+  t0, t1 = sc["t"][0], sc["t"][-1]
+  start = min(max(decisive_t(sc) - PREVIEW["before_s"], t0), max(t1 - PREVIEW["s"], t0)) - t0
+  x0, y0, x1, y1 = VIEW_3D
+  out.parent.mkdir(exist_ok=True)
+  crop = f"crop=iw*{x1 - x0:.4f}:ih*{y1 - y0:.4f}:iw*{x0:.4f}:ih*{y0:.4f}"
+  subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{start:.3f}", "-t", str(PREVIEW["s"]), "-i", str(clip),
+                  "-vf", f"fps={PREVIEW['fps']},{crop},scale={PREVIEW['width']}:-2:flags=lanczos", "-an", "-c:v", "libwebp",
+                  "-q:v", str(PREVIEW["quality"]), "-loop", "0", str(out)], check=True)
+  return out
 
 
 PAGE = "https://claude.ai/artifact/9jBQoqn2dNVRcpYwsJF8W3"                 # the gallery as a claude.ai page (README.md section 1)
@@ -94,7 +131,8 @@ def main() -> int:
           "explained in [`../README.md`](../README.md). Synthetic (DSR-12): **pictures only, no evidence credit**. "
           "Plant scenes run the real panda safety code under the plant's stated assumptions; kinematic scenes use the "
           "plant's driver assumptions and WP-S-04 §3 values. Contact is not modelled by either: the outcome column "
-          "reports the first overlap of the body outlines and the relative speed there. Each scene is an environment, "
+          "reports the first overlap of the body outlines and the relative speed there. Road users labelled *illustrative* are "
+          "simulated by neither: they are placed by hand for a qualitative analysis. Each scene is an environment, "
           "a condition and traffic from [`../library/`](../library/README.md). As a web page with filters and the "
           f"clips: [hazard scenes]({PAGE}) (private to the project lead).\n\n" + HERO +
           "| Scene | Entry | Effect (HARA / WP-C-05) | Environment, condition | Motion | Outcome in the scene |\n"
@@ -102,8 +140,17 @@ def main() -> int:
   clips = sorted((GAL / "clips").glob("*.mp4")) if (GAL / "clips").exists() else []
   tail = ""
   if clips:
+    items = []
+    for c in clips:
+      scj = OUT / c.stem / "scene.json"
+      pv = preview(c, json.loads(scj.read_text())) if scj.exists() else None
+      if pv is None and (c.parent / "previews" / f"{c.stem}.webp").exists():
+        pv = c.parent / "previews" / f"{c.stem}.webp"
+      items.append(f"**[{c.stem}](clips/{c.name})**\n\n" + (f"[![{c.stem}: its 3D view, a {PREVIEW['s']:.0f} s loop around "
+                   f"the decisive moment](clips/previews/{pv.name})](clips/{c.name})\n" if pv else ""))
     tail = ("\n## Clips\n\nThe whole scene with the dashboard running, 24 fps (`hazard_scene.py --video`, "
-            "`compose.py --video`):\n\n" + "\n".join(f"- [{c.stem}](clips/{c.name})" for c in clips) + "\n")
+            f"`compose.py --video`). Each picture loops the 3D view for {PREVIEW['s']:.0f} s around the scene's "
+            "decisive moment; tap it for the full clip with the dashboard (MP4).\n\n" + "\n".join(items))
   if edge:
     tail = ("\n## Edge cases from the search\n\nThe worst cases the failure search found ([edge-case catalogue]"
             "(../../results/edge-cases.md), WP-V-04 U-4), each a plant scene that reproduces its catalogue row with "
