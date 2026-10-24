@@ -2,7 +2,8 @@
 
 The parts the hazardous-event scenes are built from ([`../scenes.yaml`](../scenes.yaml), [`../README.md`](../README.md)).
 A scene is **environment + condition + traffic + motion source**, so one hazardous event can be drawn under every
-weather or lighting code it is rated for. Pictures only: synthetic (DSR-12), no evidence credit.
+weather or lighting code it is rated for. Pictures only: synthetic (DSR-12), no evidence credit. The library is one of
+the item and environment models indexed in [WP-C-12](../../../02-concept/WP-C-12-item-and-environment-models.md).
 
 | File | Holds | Used by |
 |---|---|---|

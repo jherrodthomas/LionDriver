@@ -18,7 +18,7 @@
 
 | Input | Status at this baseline | Link |
 |---|---|---|
-| WP-M-00 status of the gate's work products | 15 Draft of 15 (table below) | [WP-M-00](../../../01-management/WP-M-00-work-product-register.md) |
+| WP-M-00 status of the gate's work products | 16 Draft of 16 (table below) | [WP-M-00](../../../01-management/WP-M-00-work-product-register.md) |
 | Open anomalies (`safety-anomaly`), incl. any potential safety goal violation | | GitHub issues labelled `safety-anomaly` |
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 6 performed: CR-02, CR-03@G1, CR-04, FSA-I1, SR-01, CS-I1 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
@@ -44,6 +44,7 @@
 | [WP-T-01](../../../trace/README.md) Requirements and traceability data (machine-readable), consistency evidence | CON-13 | Draft | 2 | |
 | [WP-K-01](../../../10-safety-case/WP-K-01-safety-case.md) Safety case (GSN, integrated FuSa, SOTIF and AI argument) | CON-13 | Draft | 4 | |
 | [WP-O-04](../../../09-production-operation/WP-O-04-field-monitoring.md) Field monitoring (safety, SOTIF and AI) and crash reporting | CON-14 | Draft | 7 | |
+| [WP-C-12](../../../02-concept/WP-C-12-item-and-environment-models.md) Item and environment models (reference car data, 3D model, scene library; index, no evidence credit) | CON-15 | Draft | 0 | |
 
 ### Confirmation measures
 

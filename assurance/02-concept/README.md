@@ -6,7 +6,7 @@ Item definition, HARA, FSC, SOTIF hazard and insufficiency analysis, TARA.
 
 Standard clauses: 26262-3, 21448 §5–8, 21434 §9/§15, PAS 8800.
 
-![The 11 work products of this folder, one row each, with a chip at every gate G0 to G6 it is needed for, coloured by its status in the WP-M-00 register: 11 at G1; 11 draft](index-status.svg)
+![The 12 work products of this folder, one row each, with a chip at every gate G0 to G6 it is needed for, coloured by its status in the WP-M-00 register: 12 at G1; 12 draft](index-status.svg)
 
 *Drawn from [WP-M-00](../01-management/WP-M-00-work-product-register.md#3-register) §3 (Concept phase), which also has the clauses of each work product and the register for every folder.*
 
@@ -25,6 +25,7 @@ Standard clauses: 26262-3, 21448 §5–8, 21434 §9/§15, PAS 8800.
 | [WP-C-09](WP-C-09-tara.md) | Threat analysis and risk assessment (TARA) | G1 | Draft |
 | [WP-C-10](WP-C-10-cybersecurity-goals-and-concept.md) | Cybersecurity goals, claims and concept | G1 | Draft |
 | [WP-C-11](WP-C-11-ai-system-definition-and-safety-requirements.md) | AI system definition and AI safety requirements | G1 | Draft |
+| [WP-C-12](WP-C-12-item-and-environment-models.md) | Item and environment models (reference car data, 3D model, scene library; index, no evidence credit) | G1 | Draft |
 
 ## Subfolders
 
