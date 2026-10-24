@@ -35,6 +35,7 @@ class TestIsoFigure(unittest.TestCase):
     self.assertEqual(fi.csr_state("Partly met by design (limits are compile-time constants)"), "partial")
     self.assertEqual(fi.csr_state("Not implemented (GAP-20)"), "open")
     self.assertEqual(fi.csr_state("Not implemented. **2026-10-12: Implemented, not verified (reference build)**"), "unverified")
+    self.assertEqual(fi.csr_state("Mechanism exists (`updated.py:416`); procedure in [WP-O-02](x.md)"), "unverified")
     with self.assertRaises(fi.ParseError):
       fi.csr_state("Something else entirely")
 

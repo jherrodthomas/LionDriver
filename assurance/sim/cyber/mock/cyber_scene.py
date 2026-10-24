@@ -3,11 +3,12 @@
 Render-only mock for review (synthetic, DSR-12; no evidence credit). The parts are generic CC-BY stand-ins from the
 private LionDriver-assets repository (sketchfab/), not the real hardware; the car is the purchased Corolla mesh.
 
-  python3 assurance/sim/cyber/mock/cyber_scene.py            # Python 3.13 with `pip install bpy` (Blender 5.x)
+  python3 assurance/sim/cyber/mock/cyber_scene.py --ts TS-14   # Python 3.13 with `pip install bpy` (Blender 5.x)
+  python3 assurance/sim/cyber/mock/cyber_scene.py --ts TS-06   # adds the update source, the network leg and the firmware branch
 
 The assets repository is LIONDRIVER_ASSETS_REPO, else a liondriver-assets or LionDriver-assets folder beside this
 repository (as in ../../blender/fetch_assets.py). Each zip is checked against its SHA256SUMS and unpacked under out/.
-Writes out/cutaway.png and out/anchors.json: pixel positions of the labelled points (compose.py), and of the TS-14 path
+Writes out/<ts>/cutaway.png and out/<ts>/anchors.json: pixel positions of the labelled points (compose.py), and of the TS-14 path
 centre line and the gate ring sampled along their length (animate.py). With --anchors-only it writes the JSON and skips
 the render (a few seconds).
 """
@@ -19,6 +20,10 @@ from bpy_extras.object_utils import world_to_camera_view
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[3]
 OUT = HERE / "out"; OUT.mkdir(parents=True, exist_ok=True)
+TS = sys.argv[sys.argv.index("--ts") + 1] if "--ts" in sys.argv else "TS-14"
+if TS not in ("TS-14", "TS-06"):
+  sys.exit(f"{TS}: only TS-14 and TS-06 have a mock scene")
+DIR = OUT / TS.lower().replace("-", ""); DIR.mkdir(exist_ok=True)
 RES = (1840, 1040)
 PARTS = ("saphyroo-adasdms-device", "electronics-enclosure", "automotive-relay", "raspberry-pi-cam-v21",
          "intelligent-motor-control-module-imcu", "engine-control-unit-simplified", "raspberry-pi-4-compute-module-cm4",
@@ -243,19 +248,49 @@ PATH_LO = [HB + Vector((0, 0, 0.0))] + [b + Vector((0, 0, 0.012)) for b in BUS[1
 tube(PATH_UP, 0.011, path, "ts14_upper")
 tube(PATH_LO, 0.011, path, "ts14_lower")
 
-# the gate at the panda: dashed amber ring (partial: built in the reference build only, not verified)
+# the gate at the panda: dashed amber ring (partial: built in the reference build only, not verified); the ring stays in
+# the XZ plane, facing the camera, so it reads as a ring around the board in the view
 amber = mat("amber", (0.98, 0.62, 0.05), emit=3.5)
 R, N = 0.2, 22
-for i in range(N):
-  if i % 2: continue
-  a0, a1 = 2 * math.pi * i / N, 2 * math.pi * (i + 1) / N
-  pts = [EXP_PANDA + Vector((R * math.cos(a), 0.0, R * math.sin(a))) for a in (a0, (a0 + a1) / 2, a1)]
-  bpy.ops.mesh.primitive_cube_add(size=1)
-  o = bpy.context.object; mid = pts[1]; o.location = mid
-  o.scale = (0.012, 0.012, (pts[2] - pts[0]).length / 2 * 1.9)
-  o.rotation_euler = (pts[2] - pts[0]).to_track_quat("Z", "Y").to_euler(); o.data.materials.append(amber)
-# rotate the ring into the board's tilted plane
-# (left in the XZ plane facing the camera: reads as a ring around the board in the view)
+
+
+def dashed_ring(c, r):
+  for i in range(0, N, 2):
+    a0, a1 = 2 * math.pi * i / N, 2 * math.pi * (i + 1) / N
+    pts = [c + Vector((r * math.cos(a), 0.0, r * math.sin(a))) for a in (a0, (a0 + a1) / 2, a1)]
+    bpy.ops.mesh.primitive_cube_add(size=1)
+    o = bpy.context.object; o.location = pts[1]
+    o.scale = (0.012, 0.012, (pts[2] - pts[0]).length / 2 * 1.9)
+    o.rotation_euler = (pts[2] - pts[0]).to_track_quat("Z", "Y").to_euler(); o.data.materials.append(amber)
+
+
+dashed_ring(EXP_PANDA, R)
+
+# TS-06: the update source outside the car, the network leg into the device (dashed: through the air), the device to
+# the SoC board, the update gate around the SoC board (updates off by procedure, origin not fixed: part built) and the
+# firmware branch from the SoC to the panda (no barrier: unsigned recovery and weak firmware signing)
+SRC = Vector((1.5, -1.2, 1.95))
+NET = [SRC + Vector((-0.12, 0, -0.02)), Vector((0.85, -1.0, 1.78)), Vector((0.25, -0.7, 1.3)), DEV + Vector((0.03, 0, 0.03))]
+DEV_SOC = [DEV + Vector((0.03, 0, 0.03)), DEV + Vector((0.2, -0.1, 0.4)), EXP_SOC + Vector((0.04, 0, -0.13)), EXP_SOC + Vector((-0.12, 0, 0.02))]
+BRANCH = [EXP_SOC + Vector((-0.06, 0, -0.1)), (EXP_SOC + EXP_PANDA) / 2 + Vector((0, 0, -0.3)), EXP_PANDA + Vector((0.06, 0, -0.1))]
+if TS == "TS-06":
+  srv = mat("server", (0.16, 0.17, 0.19), rough=0.4)
+  led = mat("led", (0.85, 0.15, 0.95), emit=4.0)
+  for k in range(3):
+    bpy.ops.mesh.primitive_cube_add(size=1, location=SRC + Vector((0, 0, -0.07 + k * 0.07)))
+    o = bpy.context.object; o.scale = (0.24, 0.16, 0.055); o.data.materials.append(srv)
+    bpy.ops.mesh.primitive_cube_add(size=1, location=SRC + Vector((-0.05, -0.081, -0.07 + k * 0.07)))
+    o = bpy.context.object; o.scale = (0.1, 0.004, 0.008); o.data.materials.append(led)
+  cyl(SRC + Vector((0.08, 0, 0.03)), SRC + Vector((0.08, 0, 0.2)), 0.006, alu, "antenna")
+  for k in range(0, 15, 2):                      # dashed: the leg through the network, sampled along the curve
+    a, b = k / 15, (k + 1) / 15
+    seg = [NET[0].lerp(NET[1], 0), NET[1], NET[2], NET[3]]
+    def bez(u):                                  # piecewise linear through the control points is enough for dashes
+      L = len(seg) - 1; i = min(int(u * L), L - 1); return seg[i].lerp(seg[i + 1], u * L - i)
+    tube([bez(a), bez((a + b) / 2), bez(b)], 0.009, path, f"net{k}")
+  tube(DEV_SOC, 0.011, path, "ts06_dev_soc")
+  tube(BRANCH, 0.006, mat("fw", (0.95, 0.55, 1.0), emit=2.0), "ts06_fw_branch")
+  dashed_ring(EXP_SOC, 0.21)
 
 # ------------------------------------------------------------------ world, light, camera
 w = bpy.data.worlds.new("w"); sc.world = w; w.use_nodes = True
@@ -280,11 +315,12 @@ sc.render.resolution_x, sc.render.resolution_y = RES; sc.render.resolution_perce
 sc.view_settings.view_transform = "AgX" if "AgX" in [i.identifier for i in sc.view_settings.bl_rna.properties["view_transform"].enum_items] else "Filmic"
 sc.view_settings.look = "None"
 sc.render.film_transparent = False
-sc.render.filepath = str(OUT / "cutaway.png")
+sc.render.filepath = str(DIR / "cutaway.png")
 
 anchors = {"device": DEV, "harness": HB, "fcam": FC, "eps": Vector((0.39, -0.86, 0.62)), "pcm": Vector((-0.35, -1.75, 0.78)),
            "abs": Vector((0.48, -1.7, 0.72)), "obd": Vector((0.45, -0.98, 0.42)), "soc": EXP_SOC, "panda": EXP_PANDA,
-           "gate": EXP_PANDA + Vector((-R * 0.7, 0, R * 0.7)), "wheel": Vector((0.39, -0.48, 0.9)), "bus": BUS[2]}
+           "gate": EXP_PANDA + Vector((-R * 0.7, 0, R * 0.7)), "wheel": Vector((0.39, -0.48, 0.9)), "bus": BUS[2],
+           "src": SRC, "gateA": EXP_SOC + Vector((0.21 * 0.7, 0, 0.21 * 0.7)), "branch": BRANCH[1]}
 bpy.context.view_layer.update()
 px = {}
 for k, v in anchors.items():
@@ -307,11 +343,14 @@ def to_px(v):
   p_ = world_to_camera_view(sc, camo, v); return [round(p_.x * RES[0], 1), round((1 - p_.y) * RES[1], 1)]
 
 
-ring = [EXP_PANDA + Vector((R * math.cos(a), 0.0, R * math.sin(a))) for a in (2 * math.pi * k / 48 for k in range(48))]
+circle = lambda c, r: [to_px(c + Vector((r * math.cos(a), 0.0, r * math.sin(a)))) for a in (2 * math.pi * k / 48 for k in range(48))]
 geo = {"path_upper": [to_px(v) for v in centre_line(PATH_UP, "cl_up")],
-       "path_lower": [to_px(v) for v in centre_line(PATH_LO, "cl_lo")], "ring": [to_px(v) for v in ring]}
-json.dump({"res": RES, "px": px, **geo}, open(OUT / "anchors.json", "w"), indent=1)
+       "path_lower": [to_px(v) for v in centre_line(PATH_LO, "cl_lo")], "ring": circle(EXP_PANDA, R)}
+if TS == "TS-06":
+  geo |= {"path_net": [to_px(v) for v in centre_line(NET, "cl_net")], "path_dev_soc": [to_px(v) for v in centre_line(DEV_SOC, "cl_ds")],
+          "branch": [to_px(v) for v in centre_line(BRANCH, "cl_br")], "ringA": circle(EXP_SOC, 0.21)}
+json.dump({"ts": TS, "res": RES, "px": px, **geo}, open(DIR / "anchors.json", "w"), indent=1)
 if "--anchors-only" in sys.argv:
   sys.exit(0)
 bpy.ops.render.render(write_still=True)
-print("rendered", OUT / "cutaway.png")
+print("rendered", DIR / "cutaway.png")

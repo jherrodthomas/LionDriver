@@ -55,7 +55,8 @@ def csr_state(cell: str) -> str:
   parts = re.split(r"\b\d{4}-\d{2}-\d{2}:", plain)
   s = parts[-1].strip().lower() if len(parts) > 1 and re.match(r"\s*(implemented|partial|not|verified)", parts[-1].lower()) else plain.lower()
   for key, pat in (("done", r"^(implemented and )?verified"), ("partial", r"^(implemented in part|partial|partly)"),
-                   ("unverified", r"^implemented\b.*not verified"), ("open", r"^not (implemented|met|determined)")):
+                   ("unverified", r"^(implemented\b.*not verified|mechanism exists)"),   # a procedural control in place
+                   ("open", r"^not (implemented|met|determined)")):
     if re.search(pat, s):
       return key
   raise ParseError(f"WP-S-07 §4 status not understood: '{s[:60]}'")
