@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Purpose | Plan ten physics studies that follow the four already built (sun, hydroplaning, cabin heat soak, crosswind; [weather README](weather/README.md)): what each one answers, how, with which inputs, checks and picture, and in what order |
-| Status | Phase A built 2026-10-21 (studies 1, 3, 4, 5; §2); phases B and C planned. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Phase A built 2026-10-21 (studies 1, 3, 4, 5; §2); phase B built 2026-10-25 (studies 2, 9, 10; §3); phase C planned. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Credit | None. Every study is a design aid, synthetic (DSR-12), with no evidence credit (DQ-413, WP-V-02 §5.3, DQ-139). A result that would move an ODD limit goes to the lead as a register question; the study itself does not move it |
 | Lead decisions needed | **None to start.** Phase A raised one: whether the ODD should ask for more tyre tread than the legal minimum (register, from study 3). The one new tool (ngspice, study 8) is a reversible technical choice: Claude decides and logs it in the register when phase C starts. Measurements on the car are tasks for T1 ([TE-04](../07-supporting/tool-evaluations/TE-04-physics-field-model.md) §5), not decisions |
 
@@ -93,6 +93,21 @@ Changes from the plan below:
 - **Feeds.** DQ-414 rain bound (is the item's braking bound always available inside the ODD?), TC-33.
 
 ## 3. Phase B: real code in the loop
+
+**Built 2026-10-25.** Results, synthetic:
+
+| # | Study | Finding | Results |
+|---|---|---|---|
+| 2 | Gust | Gusts of 0.5–8 s move the car at most 26 cm with ideal steering. A step into a 30 km/h wind at the upper load band leaves the lane even so: the steady push takes 89 % of the Corolla's steering | [`gust.md`](results/gust.md), [weather §8](weather/README.md#8-a-gust-through-the-car-and-its-lane-keeping-tc-15-ks-02) |
+| 10 | Tunnel | openpilot's auto exposure (ported from camerad): about 0.25 s of dark frames at the entry and 1–1.25 s of bright ones at the exit | [`tunnel.md`](results/tunnel.md), [weather §9](weather/README.md#9-tunnel-entry-and-exit-tc-18-ks-12) |
+| 9 | Headlights | The lamps' own pixels do not move the median-based exposure. Veiling glare does: low beams leave at least 88 % of the road's contrast, and an undipped high beam across an 8 m median leaves 20 % with a dirty windshield | [`headlights.md`](results/headlights.md), [weather §10](weather/README.md#10-oncoming-headlights-at-night-tc-02-ks-12) |
+
+Changes from the plan below:
+- **Gust:** the truck bow wave is left out for want of a source. The steering is taken from the plant's law and
+  opendbc's limiter, with an ideal-steering bound added.
+- **Tunnel:** the exposure loop is ported line by line rather than run as C++; a check pins every line it follows.
+- **Headlights:** these use UN R112's bounds only, as the US limits were not confirmed. The ODD's divided highways
+  are the main case, with the undivided road as a reference.
 
 ### 2. A gust through the car and controller (TC-15, KS-02, DQ-415)
 

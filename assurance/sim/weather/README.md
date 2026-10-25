@@ -1,8 +1,8 @@
-# Weather physics: sun, rain, heat, wind, fog, road crown and wet braking
+# Weather physics: sun, rain, heat, wind, fog, road crown, wet braking, gusts, tunnels and headlights
 
 > **Synthetic data (DSR-12). Design aid, no evidence credit (DQ-139).** Small physics studies for the SOTIF
-> triggering conditions of low sun (TC-01), rain (TC-03), crown and wind (TC-15), the windshield in front of the
-> camera (TC-19) and heat (TC-21). They answer *when*, *how much* and *how fast*, not whether the item copes: that is
+> triggering conditions of low sun (TC-01), oncoming headlights (TC-02), rain (TC-03), crown and wind (TC-15),
+> tunnels (TC-18), the windshield in front of the camera (TC-19) and heat (TC-21). They answer *when*, *how much* and *how fast*, not whether the item copes: that is
 > for the logged drives and the known-scenario tests (KS-02, KS-12, KS-15, KS-16).
 
 ## 1. Sun in the road camera (TC-01, KS-12)
@@ -304,7 +304,118 @@ Results: [`results/wet-braking.md`](../results/wet-braking.md).
 
 *Figure 15. Braking from 110 km/h in light rain, new and worn tyres.*
 
-## 8. Checks
+## 8. A gust through the car and its lane keeping (TC-15, KS-02)
+
+**Question.** The crosswind study gave the steady push of a side wind (§4). How far does the car move when the wind
+changes in time, against the room to the lane line?
+
+**Method.** [`gust.py`](gust.py):
+- **The wind:** the crosswind study's loads on the measured outline, quasi-steady, rising to the KS-02 wind of
+  30 km/h. Two shapes: a step (leaving a cutting or a bridge, the wind reaching the whole car while it drives its own
+  length) and one-minus-cosine gusts of 0.5–8 s.
+- **The car:** a linear single-track Corolla (opendbc mass, axles, inertia).
+- **The steering:** 100 Hz frames through opendbc's own torque limiter. The function is executed from
+  `opendbc/car/lateral.py`, with the Corolla's limits from `toyota/values.py`. The EPS follows with the
+  `steerActuatorDelay` lag.
+- **The lane keeping, two versions:**
+  - *ideal steering* adds the gust's push at once, a bound on what any lane keeping can do with this steering;
+  - *the plant's stand-in* uses its law alone, read from `plant/simulate.py`.
+
+**Result (110 km/h).**
+- **Gusts of 0.5–8 s:** with ideal steering the car moves at most 26 cm, against 96 cm of room in a 3.7 m lane.
+- **A step at the lower load band:** 18 cm.
+- **A step at the upper load band: about 2.4 m, out of the lane even with ideal steering.** The steady push
+  (1.76 m/s²) takes 89 % of the steering the Corolla's full torque gives (1.99 m/s²), so too little is left to bring
+  the car back.
+- **What the windy-day log should look for (WP-C-02 OI-10):** how much steering a 30 km/h wind leaves, not only how
+  hard it pushes.
+- **The plant's stand-in** moves further on long gusts. It has no integral action, so its steady offset belongs to
+  the stand-in, not to openpilot.
+
+**Limits.**
+- Perfect perception, no driver, no planner.
+- Quasi-steady loads, on the safe side for short gusts.
+- The crosswind study's load band carries over.
+
+Results: [`results/gust.md`](../results/gust.md).
+
+![Peak sideways movement against gust length for ideal steering in the lower and upper load band and for the plant's stand-in, against the room to the line of a 3.7 m and a 3.3 m lane; a step in the upper band reaches about 2.4 m, the gusts stay under 26 cm](figures/fig-wx-16-gust-peaks.webp)
+
+*Figure 16. Peak sideways movement against gust length.*
+
+![Animation, looping: two lanes seen from above, the wind from the left; leaving shelter into a 30 km/h wind, the car in the lower load band moves a few centimetres while the one in the upper band drifts across the lane line](figures/fig-wx-17-gust-anim.webp)
+
+*Figure 17. Leaving shelter into a 30 km/h wind, lower and upper load band.*
+
+## 9. Tunnel entry and exit (TC-18, KS-12)
+
+**Question.** At a tunnel portal the road ahead dims by a factor of hundreds, and brightens again at the exit. How
+long is openpilot's road camera badly exposed?
+
+**Method.** [`camera_ae.py`](camera_ae.py) ports camerad's `set_camera_exposure` line by line:
+- **Source:** the road camera's loop with the comma 3X's OX03C10 sensor. It covers the target grey that follows the
+  exposure, the three-frame latency, the averaging, the brute-force gain and time choice with its score, and the
+  always-on conversion gain.
+- **Constants:** every one is read from `camera_qcom2.cc` and `ox03c10.cc`. The port stops if a line it follows
+  changes.
+
+[`tunnel.py`](tunnel.py) drives it with the median luminance ahead at 110 km/h:
+- the sunlit approach, then the threshold zone at 5 % of it for 150 m;
+- a transition to 10 cd/m² inside, then the exit into daylight (orders of CIE 88);
+- a frame is badly exposed when its grey is more than a stop from the loop's target.
+
+**Result.**
+- **Entry:** 4–5 frames (about 0.25 s) too dark, then the loop catches up with a brief overshoot under a stop.
+- **Exit:** 19–25 frames (about 1–1.25 s) too bright. An overexposed frame tells the loop little (its grey is near
+  the top of the gamma curve), so it steps down slowly.
+- **The loop's range:** inside, it settles at about 200 times the daylight exposure, well within the sensor's range.
+  On a bright approach it can reach its floor (2 lines at the always-on gain).
+- **For a TC-18 validation:** windows of about a second at each portal, the exit the longer.
+
+**Limits.**
+- One median luminance per frame, with the gamma curve. HDR merging and the driving model's response are not in it.
+- The sensor's sensitivity is an assumption until local logs give the exposure on a sunny road.
+
+Results: [`results/tunnel.md`](../results/tunnel.md).
+
+![Entry and exit of a tunnel at 110 km/h: the road luminance ahead on a log scale, and below it the grey the exposure loop measures against its one-stop band; at the entry five frames fall below the band, at the exit about twenty frames sit above it, clipped at first](figures/fig-wx-18-tunnel.webp)
+
+*Figure 18. The road camera's exposure through a tunnel.*
+
+## 10. Oncoming headlights at night (TC-02, KS-12)
+
+**Question.** What do oncoming headlights do to openpilot's road camera on a divided highway (inside the ODD), and on
+an undivided road (outside it, for reference)?
+
+**Method.** [`headlights.py`](headlights.py):
+- **The encounter:** the oncoming car closes at twice 110 km/h. Its lamps stay in the camera's frame (field of view
+  from `camera.py`) until their bearing passes 20°.
+- **The light toward us** is bounded by UN R112: at most 350 cd from a low beam (point B50L, toward an oncoming
+  driver's eyes) and 40,500 cd from an undipped driving beam (the class B minimum of Imax). Both are taken in every
+  direction, an upper bound.
+- **The lamps' own image** covers at most 0.2 % of the exposure rectangle. The loop takes the rectangle's median, so
+  those pixels do not move it.
+- **Veiling glare:** the lens and the windshield scatter 1–10 % of the light over the image (assumed). That lifts the
+  median, the ported exposure loop darkens the frame, and the road loses contrast.
+
+**Result.**
+- **Low beams:** at least 88 % of the road's contrast in every case, and at least 97 % across a median.
+- **Across a median the lamps leave the frame early:** 21–82 m before the cars pass, so the brightest part of the
+  encounter is outside the camera's view.
+- **An undipped high beam** is the case that matters, with 10 % scatter:
+  - across an 8 m median, 20 % of the contrast left and the road up to 1.2 stops darker;
+  - on an undivided road, 6 % left and 1.9 stops darker.
+- **For KS-12:** test oncoming undipped high beams across the median, and with a dirty windshield.
+
+**Limits.** No flare data for this camera; a measurement of its veiling glare would turn the band into a line.
+
+Results: [`results/headlights.md`](../results/headlights.md).
+
+![Road contrast left against the distance to an oncoming car with an undipped high beam, for an undivided road and medians of 8, 15 and 30 m, with bands for 1–10 % scatter; each line ends where the lamps leave the camera's frame, at 9, 21, 39 and 82 m](figures/fig-wx-19-headlights.webp)
+
+*Figure 19. Oncoming high beams: the road's contrast in the camera's image.*
+
+## 11. Checks
 
 [`test_weather.py`](test_weather.py) runs in CI:
 
@@ -339,6 +450,17 @@ Results: [`results/wet-braking.md`](../results/wet-braking.md).
 | R1 The roll path read from openpilot equals the reviewed one (compensation, zero calibration roll, filter constants) | a code change that moves the result |
 | R2 The steady Kalman gain solves the scalar Riccati equation; more noise, a slower filter | a filter error |
 | R3 Uncompensated push equals g × slope; no mount roll, no mount error; a near-perfect localizer leaves almost nothing | a sign or unit error |
+| G1 The lane-keeping law read from `plant/simulate.py`; the torque limits read from opendbc; the limiter is opendbc's own function | a drift from the plant or opendbc |
+| G2 Open loop, a fixed steer angle settles at the neutral-steer yaw rate v·δ/L | a wrong single-track model |
+| G3 A wind that rises and stays: ideal steering settles at the crosswind study's push (1 %), the car within 5 cm of the centre | a mismatch with the crosswind study |
+| G4 No wind, no movement | motion from nowhere |
+| T1 The exposure port's constants are camerad's; the port stops if a line it follows changes | a port drifting from the code |
+| T2 The OX03C10 gamma curve runs from 0 to 1 and rises | a mistyped curve |
+| T3 A steady scene settles at the target grey (within the whole-line quantisation) with a constant exposure | a loop that does not settle |
+| T4 A scene half as bright settles at twice the exposure and the same grey | a wrong loop gain |
+| H1 The lamps leave the frame at offset / tan(hfov/2) | a wrong geometry |
+| H2 The glare veil scales with intensity and 1 / range² | a wrong photometry |
+| H3 No lamps, no change in the road's exposure or contrast | glare from nowhere |
 
 Each study's `--check` reruns it and fails if any number moves by more than 0.05 from the committed JSON. The crown
 study reads openpilot's code, so a change there shows up as a failed R1 or `--check` the next time this job runs.
@@ -353,4 +475,7 @@ python3 assurance/sim/weather/crosswind.py --figures       # needs the opendbc s
 python3 assurance/sim/weather/windshield_fog.py --figures  # reads climate-gsp.csv
 python3 assurance/sim/weather/road_crown.py --figures      # reads the openpilot source and results/crosswind.json
 python3 assurance/sim/weather/wet_braking.py --figures     # needs the opendbc submodule (ACCEL_MIN)
+python3 assurance/sim/weather/gust.py --figures            # needs the opendbc submodule (torque limiter)
+python3 assurance/sim/weather/tunnel.py --figures          # reads the camerad sources
+python3 assurance/sim/weather/headlights.py --figures      # reads the camerad sources and camera.py
 ```
