@@ -143,3 +143,64 @@ braking:
   grade_pct: {value: 4.0, status: assumed, source: "a steep downhill on an Interstate (the hydroplaning study's steepest grade)"}
   reaction_s: {value: 0.5, status: assumed, source: "from the planner's decision to the brakes at the item's rate, a round half second"}
   rain_mm_h: [2.5, 7.6, 15.0, 30.0]
+
+gust:
+  # A gust through the car and its lane keeping (gust.py): the crosswind study's loads, changing in time, on a
+  # single-track Corolla steered by the plant's perfect-perception controller through the EPS lag and opendbc's
+  # torque limits.
+  speed_kph: 110.0
+  wind_kph: {value: 30.0, status: published, source: "WP-V-03 KS-02: crosswind of 30 km/h and more"}
+  step_rise: {status: assumed, source: "leaving a cutting or a bridge's shelter: the wind reaches the whole car while it drives its own length"}
+  cosine_periods_s: {value: [0.5, 1.0, 2.0, 4.0, 8.0], status: assumed,
+                     source: "one-minus-cosine gusts of these lengths: from a gap in a hedge or between buildings (short) to open country (long); amplitude the KS-02 wind"}
+  lane_width_m: {value: 3.7, narrow: 3.3, status: published, source: "12 ft Interstate lane; 3.3 m is WP-C-06 TC-32's narrow lane"}
+  duration_s: 14.0
+  quasi_steady: {status: assumed, source: "the loads follow the wind instantly (quasi-steady); real flow builds up over about a car length, so short gusts are on the safe side"}
+
+tunnel:
+  # Tunnel entry and exit (tunnel.py): openpilot's road-camera auto exposure (camera_ae.py) against the brightness of
+  # the road ahead at 110 km/h. Luminance values are typical orders of CIE 88:2004 (tunnel lighting), not a real tunnel.
+  speed_kph: 110.0
+  outside_cd_m2: {value: 4000.0, low: 2000.0, high: 8000.0, status: estimate,
+                  source: "sunlit road and surroundings ahead of a portal: a few thousand cd/m² (CIE 88 access-zone luminance)"}
+  threshold_ratio: {value: 0.05, status: estimate, source: "threshold-zone lighting about 5 % of the access zone (CIE 88, high speed)"}
+  threshold_m: {value: 150.0, status: estimate, source: "about the stopping distance at 110 km/h"}
+  transition_m: {value: 300.0, status: estimate, source: "the lighting steps down to the interior level over a few hundred metres"}
+  interior_cd_m2: {value: 10.0, status: estimate, source: "interior zone of a lit road tunnel for fast traffic (CIE 88, order of 10 cd/m²)"}
+  length_m: {value: 1000.0, status: assumed, source: "a 1 km tunnel"}
+  portal_s: {value: 0.3, status: assumed, source: "the time for the dark portal (entry) or the bright exit to fill half the exposure rectangle, where the median flips"}
+  ev_day: {value: 30.0, low: 15.0, high: 120.0, status: assumed,
+           source: "exposure (lines x gain) at which the loop settles on the sunlit approach; sets the sensor's sensitivity in the model. Local logs of the frame's exposure give it (T1)"}
+  off_stops: {value: 1.0, status: assumed, source: "a frame counts as badly exposed when its grey is more than one stop (a factor of two) from the loop's target"}
+
+headlights:
+  # Oncoming headlights at night (headlights.py): where they sit in the road camera's frame, how much light they put
+  # on it, and what openpilot's auto exposure (camera_ae.py) makes of it.
+  speed_kph: 110.0          # each car; they close at twice this
+  start_m: 400.0
+  road_cd_m2: {value: 1.0, low: 0.5, high: 2.0, status: estimate, source: "the road ahead under the car's own low beams, the median the exposure loop sees at night"}
+  low_beam_cd: {value: 350.0, status: published, source: "UN R112 passing beam, point B50L (0.57U, 3.43L, toward an oncoming driver's eyes): at most 350 cd"}
+  high_beam_cd: {value: 40500.0, high: 215000.0, status: published, source: "UN R112 driving beam, class B: Imax at least 40,500 cd and never over 215,000 cd (an oncoming driver who does not dip)"}
+  veil_fraction: {value: 0.03, low: 0.01, high: 0.10, status: assumed,
+                  source: "share of the light reaching the lens that the lens and windshield scatter over the whole image (veiling glare): 1 % clean, 3 % typical, 10 % a dirty windshield; camera data would set it"}
+  camera_height_m: {value: 1.2, status: "mesh-derived", source: "top of the Corolla's windshield 1.28 m (corolla-e210-geometry.json), the camera just below"}
+  lamp_height_m: {value: 0.65, status: assumed, source: "headlamp height of an oncoming car"}
+  lamp_size_m: {value: 0.2, status: assumed, source: "the lit area of one headlamp"}
+  offsets_m: {undivided: 3.7, divided: [8.0, 15.0, 30.0], status: assumed,
+              source: "oncoming lane centre to ours: one lane on an undivided road (outside the ODD), across medians of 8, 15 and 30 m on a divided highway (inside)"}
+
+device_sun:
+  # Sun on the device through the car (device_sun.py, physics plan study 6): where the device hangs, read by the ray
+  # caster (assets/tools/device_shading.py) that writes figures/corolla-e210-device-shading.json from the mesh.
+  mount_down_glass_m: {value: 0.15, low: 0.10, high: 0.25, status: estimate,
+                       source: "the mount pad's centre down the glass from its top edge, below the stock camera housing (TSS) behind the mirror; T1 measures it (photo with a scale)"}
+  mount_drop_m: {value: 0.02, status: estimate, source: "pad and mount between the glass and the device's top"}
+  gap_m: {value: 0.01, status: estimate, source: "between the glass and the top of the device's windshield-side face"}
+  lateral_m: {value: 0.0, status: estimate, source: "the device on the car's centre line; T1 measures it"}
+  box_m: {value: [0.120, 0.060, 0.025], status: estimate, source: "the device across the car x up x deep (thermal/params.yaml device size)"}
+  points: {across: 5, up: 3}
+  grid: {elev_step_deg: 2.5, relaz_step_deg: 5.0}
+  transmittance: {value: 0.5, side: 0.6, roof: 0.3, status: estimate,
+                  source: "solar transmittance at normal incidence: laminated windshield as the heat model; side glass as the cabin soak; a tinted roof panel (assumed)"}
+  absorptance: {value: 0.8, status: estimate, source: "dark plastic shell (thermal/params.yaml sun.absorptance)"}
+  model_flux_w_m2: {value: 320.0, status: code, source: "the heat model's sun on the device's windshield-side face: 800 W/m² x 0.5 x 0.8 (thermal/params.yaml sun), as one constant, all day"}

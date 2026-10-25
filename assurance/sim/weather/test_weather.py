@@ -26,6 +26,33 @@ Wet braking
   B2  The item's bound is read from opendbc (−3.5 m/s²) and equals WP-C-02 F-02; a level road needs 3.5/9.81.
   B3  Two sources agree: at 2 mm of water and speeds above NASA's hydroplaning speed the handbook gives at most 0.05.
   B4  Stopping distance: v·t + v²/2a, and the 110 km/h, 3.5 m/s² stop is 133 m plus the reaction distance.
+Gust
+  G1  The lane keeping's law is read from plant/simulate.py and the torque limits from opendbc (Corolla, torque
+      tuning); the limiter is opendbc's own function and raises the torque 15 units per frame.
+  G2  Open loop, a fixed steer angle settles at the neutral-steer yaw rate v·delta/L (the crosswind convention).
+  G3  A wind that rises and stays: with ideal steering the steering settles at the crosswind study's push (1 %) and
+      the car within 5 cm of the lane centre (it crabs into the wind; the law's heading term holds it about 2 cm off).
+  G4  No wind, no movement.
+Tunnel (openpilot's auto exposure)
+  T1  The port's constants are camerad's (20 fps, ts_ev 0.05 s, ts_grey 10 s, conversion gain 7.32 always on,
+      exposure 2–2016 lines, 55 gains to 15.5); camera_ae.code() stops if a line the port follows has changed.
+  T2  The OX03C10 gamma curve runs from 0 to 1 and rises.
+  T3  On a steady scene the loop settles: grey at its target within 5 % (whole exposure lines), the exposure constant.
+  T4  A scene half as bright settles at twice the exposure (within the time quantisation) and the same grey.
+Headlights
+  H1  The lamps leave the frame where their bearing passes half the camera's field of view: offset / tan(hfov/2),
+      within one frame's travel.
+  H2  Inverse square: the glare veil at the frame edge scales with intensity and with 1 / range².
+  H3  No lamps, no change: the road's exposure and contrast stay as without them.
+Sun on the device
+  D1  The ray caster against an analytic shadow: an opaque square above a point hides exactly the directions whose
+      ray meets it; a hit behind the ray's start is no hit.
+  D2  The sun straight down the windshield's normal reaches the whole windshield-side face, through the windshield;
+      no face is lit from behind (device_shading.check on the committed table).
+  D3  The device sits on the car's centre line, so its left and right faces see mirror images (the mesh is nearly
+      symmetric: mean difference under 0.02).
+  D4  The flux: a direct beam on the windshield side is absorptance x DNI x cos x transmittance x pvlib's angle loss;
+      the sky weights give 0.5 for an upright face open to the whole sky (1 %).
 Road crown
   R1  The roll path read from openpilot is the one reviewed: compensation by params.roll·g, calibration roll taken as
       zero, 20 Hz, process noise 1°/√s, fallback noise 10°, validity limit 1.5°. A change in the code fails here.
@@ -40,6 +67,7 @@ Synthetic (DSR-12), design aid, no evidence credit.
 from __future__ import annotations
 
 import json
+import math
 import re
 import sys
 import unittest
@@ -54,11 +82,16 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import climate  # noqa: E402
 import hydroplaning as hp  # noqa: E402
+import gust as gu  # noqa: E402
+import camera_ae as cae  # noqa: E402
 import road_crown as rc  # noqa: E402
+import headlights as hl  # noqa: E402
+import tunnel as tu  # noqa: E402
 import wet_braking as wb  # noqa: E402
 import windshield_fog as wf  # noqa: E402
 import cabin_soak as cs  # noqa: E402
 import crosswind as cw  # noqa: E402
+import device_sun as dsun  # noqa: E402
 import sun_glare as sg  # noqa: E402
 
 P = yaml.safe_load((HERE / "params.yaml").read_text(encoding="utf-8"))
@@ -293,6 +326,105 @@ class Braking(unittest.TestCase):
     self.assertAlmostEqual(wb.stop_m(110.0, 3.5, 0.5) - wb.stop_m(110.0, 3.5, 0.0), v * 0.5, places=9)
 
 
+class Gust(unittest.TestCase):
+  def setUp(self):
+    self.c, self.k = cw.corolla(), gu.code()
+    self.v = 110 / 3.6
+
+  def test_g1_code(self):
+    k = self.k
+    self.assertEqual((k["k_y"], k["k_psi"], k["delta_up"], k["delta_down"], k["steer_error_max"], k["steer_max"]),
+                     (1.0, 1.6, 15, 25, 350, 1500))
+    self.assertEqual(int(k["limiter"](1500, 0, 0, 15, 25, 350, 1500)), 15)
+    self.assertEqual(int(k["limiter"](1500, 300, 300, 15, 25, 350, 1500)), 315)
+
+  def test_g2_open_loop_yaw_rate(self):
+    t = np.arange(0, 6, gu.DT)
+    z = np.zeros_like(t)
+    delta = 0.002
+    res = gu.simulate(self.c, self.k, self.v, z, z, t, controller=False, delta_open=delta)
+    self.assertLess(abs(res["r"] / (self.v * delta / self.c["L"]) - 1), 0.005)
+
+  def test_g3_settles_at_the_push(self):
+    p = yaml.safe_load((HERE / "params.yaml").read_text(encoding="utf-8"))
+    geom = json.loads(cw.GEOM.read_text(encoding="utf-8"))
+    prof = cw.profile(geom)
+    x_cg = prof["front_axle_x"] - self.c["a"]
+    t = np.arange(0, 25, gu.DT)
+    w = np.clip((t - 1.0) / 5.0, 0, 1) * 5.0
+    Y, N = gu.loads_series(p, prof, x_cg, self.v, w, "low")
+    ff = np.array([-math.copysign(cw.push(yy, nn, self.v, self.c), yy) if yy else 0.0 for yy, nn in zip(Y, N, strict=True)])
+    res = gu.simulate(self.c, self.k, self.v, Y, N, t, feedforward=ff)
+    self.assertLess(abs(abs(res["a_eps"][-1]) / abs(ff[-1]) - 1), 0.01)
+    # the car crabs into the wind at a small heading; the law's heading term holds it about 2 cm off the centre
+    self.assertLess(abs(res["y"][-1]), 0.05)
+
+  def test_g4_still_air(self):
+    t = np.arange(0, 3, gu.DT)
+    z = np.zeros_like(t)
+    res = gu.simulate(self.c, self.k, self.v, z, z, t)
+    self.assertEqual(float(np.abs(res["y"]).max()), 0.0)
+
+
+class Tunnel(unittest.TestCase):
+  def setUp(self):
+    self.c = cae.code()
+
+  def test_t1_constants(self):
+    c = self.c
+    self.assertEqual((c["fps"], c["dt"], c["ts_ev"], c["ts_grey"], c["gain_factor"]), (20.0, 0.05, 0.05, 10.0, 7.32))
+    self.assertEqual((c["exposure_time_min"], c["exposure_time_max"], len(c["gains"]), c["gains"][-1]), (2.0, 2016.0, 55, 15.5))
+    self.assertEqual(c["gain_max_idx"], 54)
+
+  def test_t2_gamma(self):
+    x = np.linspace(0, 1, 101)
+    y = cae.gamma(x)
+    self.assertAlmostEqual(float(y[0]), 0.0, places=6)
+    self.assertAlmostEqual(float(y[-1]), 1.0, places=3)
+    self.assertTrue(np.all(np.diff(y) > 0))
+
+  def test_t3_steady(self):
+    scale = tu.scale_for(self.c, 1000.0, 200.0)
+    r = cae.run(self.c, np.full(200, 1000.0), scale)
+    # exposure time is whole lines: at about 27 lines one line is 4 %, so the grey sits within a few % of its target
+    self.assertLess(abs(r["grey"][-1] / r["target"][-1] - 1), 0.05)
+    self.assertEqual(float(np.ptp(r["ev"][-50:])), 0.0)
+
+  def test_t4_halving(self):
+    scale = tu.scale_for(self.c, 1000.0, 200.0)
+    r1 = cae.run(self.c, np.full(400, 1000.0), scale)
+    r2 = cae.run(self.c, np.r_[np.full(40, 1000.0), np.full(1600, 500.0)], scale)
+    self.assertLess(abs(r2["ev"][-1] / r1["ev"][-1] - 2), 0.03)
+    self.assertLess(abs(r2["grey"][-1] / r2["target"][-1] - 1), 0.05)
+
+
+class Headlights(unittest.TestCase):
+  def setUp(self):
+    self.c, self.fov = cae.code(), sg.camera_fov()
+    self.scale = tu.scale_for(self.c, P["tunnel"]["outside_cd_m2"]["value"], P["tunnel"]["ev_day"]["value"])
+
+  def test_h1_leaves_the_frame(self):
+    off = 15.0
+    r = hl.run_case(P, self.c, self.fov, self.scale, off, 350.0, 0.03, 1.0)
+    want = off / math.tan(math.radians(self.fov["hfov_deg"] / 2))
+    step = 2 * P["headlights"]["speed_kph"] / 3.6 / self.c["fps"]
+    self.assertLess(abs(r["leave_frame_m"] - want), step + 0.1)
+
+  def test_h2_inverse_square(self):
+    a = hl.run_case(P, self.c, self.fov, self.scale, 15.0, 1000.0, 0.03, 1.0)["veil_ratio_max"]
+    b = hl.run_case(P, self.c, self.fov, self.scale, 15.0, 2000.0, 0.03, 1.0)["veil_ratio_max"]
+    self.assertAlmostEqual(b / a, 2.0, places=2)
+    c = hl.run_case(P, self.c, self.fov, self.scale, 30.0, 1000.0, 0.03, 1.0)
+    e15, e30 = hl.encounter(P, self.c["fps"], 15.0), hl.encounter(P, self.c["fps"], 30.0)
+    r15 = e15["range"][np.argmax(e15["bearing"] > self.fov["hfov_deg"] / 2) - 1]
+    r30 = e30["range"][np.argmax(e30["bearing"] > self.fov["hfov_deg"] / 2) - 1]
+    self.assertAlmostEqual(c["veil_ratio_max"] / a, (r15 / r30) ** 2, places=2)
+
+  def test_h3_no_lamps(self):
+    r = hl.run_case(P, self.c, self.fov, self.scale, 8.0, 0.0, 0.1, 1.0)
+    self.assertEqual((r["road_stops_min"], r["contrast_min"], r["frames_over_1_stop"]), (0.0, 1.0, 0))
+
+
 class Crown(unittest.TestCase):
   def test_r1_code_constants(self):
     c = rc.code()
@@ -339,6 +471,55 @@ class Crosswind(unittest.TestCase):
       self.assertEqual(d["upper"][0], 0.0)
       self.assertTrue(all(np.diff(d["upper"]) > 0) and all(np.diff(d["lower"]) > 0))
       self.assertTrue(all(lo <= hi for lo, hi in zip(d["lower"], d["upper"], strict=True)))
+
+
+
+class DeviceSun(unittest.TestCase):
+  @classmethod
+  def setUpClass(cls):
+    cls.t = json.loads(dsun.TABLE.read_text(encoding="utf-8"))
+
+  def test_d1_box_shadow(self):
+    a, h = 0.5, 1.0
+    sq = np.array([[[-a, h, -a], [a, h, -a], [a, h, a]], [[-a, h, -a], [a, h, a], [-a, h, a]]])
+    E, A = np.meshgrid(np.arange(5.0, 90.0, 2.5), np.arange(-180.0, 180.0, 5.0), indexing="ij")
+    dirs = dsun.ds.direction(E, A).reshape(-1, 3)
+    reach = np.abs(dirs[:, [0, 2]] * h / dirs[:, [1]])            # where the ray crosses the square's plane
+    inside, outside = (reach < a - 0.01).all(1), (reach > a + 0.01).any(1)
+    hit = dsun.ds.hits(np.zeros(3), dirs, sq)
+    self.assertTrue(hit[inside].all())
+    self.assertFalse(hit[outside].any())
+    self.assertFalse(dsun.ds.hits(np.array([0.0, 2 * h, 0.0]), dirs, sq).any())
+
+  def test_d2_windshield_normal(self):
+    self.assertEqual(dsun.ds.check(self.t), [])
+    n = np.array(json.loads(dsun.GEOMETRY.read_text(encoding="utf-8"))["glass"]["windshield"]["normal"])
+    elev = math.degrees(math.asin(n[1] / np.linalg.norm(n)))
+    for case in self.t["cases"]:
+      lit, code = dsun.lookup(self.t, case, "front", np.array([elev]), np.array([0.0]))
+      self.assertAlmostEqual(float(lit[0]), 1.0, places=6)
+      self.assertEqual(int(code[0]), self.t["glass_code"]["windshield"])
+
+  def test_d3_mirror(self):
+    for case in self.t["cases"]:
+      left = np.array(self.t["cases"][case]["left"]["lit"])
+      right = np.array(self.t["cases"][case]["right"]["lit"])
+      self.assertLess(np.abs(left - right[:, ::-1]).mean(), 0.02)
+
+  def test_d4_flux(self):
+    d = P["device_sun"]
+    normals = dsun.glass_normals()
+    elev, dni = 20.0, 900.0
+    df = pd.DataFrame({"elev": [elev], "az": [180.0], "dni": [dni], "dhi": [0.0]})
+    t = dict(self.t, sky={c: {f: 0.0 for f in self.t["faces"]} for c in self.t["cases"]})
+    got = dsun.faces_flux(t, d, normals, "glass_roof", df, 180.0)["front"][0]
+    s = dsun.ds.direction(elev, 0.0)
+    aoi = math.degrees(math.acos(abs(float(s @ normals[1]))))
+    want = d["absorptance"]["value"] * dni * math.cos(math.radians(elev)) * d["transmittance"]["value"] \
+      * float(pvlib.iam.physical(aoi))
+    self.assertAlmostEqual(got, want, places=6)
+    dirs, w = dsun.sky_cells(self.t)
+    self.assertLess(abs((np.clip(dirs @ np.array([1.0, 0, 0]), 0, None) * w).sum() / math.pi - 0.5), 0.005)
 
 
 if __name__ == "__main__":

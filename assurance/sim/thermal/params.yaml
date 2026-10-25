@@ -66,3 +66,39 @@ mcu:
   die_power: {value: 0.3, low: 0.2, high: 0.4, status: estimate,
               source: "the MCU's own share of the 0.4 W source (the rest is the CAN transceivers); the junction sits P·ΘJB above the board"}
   air: [25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0]
+
+# The mount's vibration modes (mount_modes.py, physics plan study 7; WP-C-06 TC-19, WP-V-03 KS-16, WP-H-07 QE-08).
+# Blocks in metres in the pad's frame: x across the car, y along the glass's normal (0 at the glass), z up the glass.
+# The device stands off the glass square to it (on the car it hangs nearer upright). Every size waits on T1.
+vibration:
+  blocks:
+    pad: {lo: [-0.025, -0.0011, -0.0125], hi: [0.025, 0.0, 0.0125], material: pad, status: estimate,
+          source: "adhesive foam pad, 50 x 25 mm, 1.1 mm thick, on the glass"}
+    plate: {lo: [-0.025, -0.0041, -0.0125], hi: [0.025, -0.0011, 0.0125], material: plastic, status: estimate,
+            source: "the mount's plate on the pad, 3 mm"}
+    stem: {lo: [-0.015, -0.0141, -0.005], hi: [0.015, -0.0041, 0.005], material: plastic, status: estimate,
+           source: "the hinge between the plate and the device, 30 x 10 mm, 10 mm long"}
+    device: {lo: [-0.060, -0.0741, -0.0125], hi: [0.060, -0.0141, 0.0125], material: device, status: estimate,
+             source: "the comma 3X box, 120 x 60 x 25 mm (the heat model's size), hanging from the stem"}
+  materials:
+    pad: {E: 1.5e6, nu: 0.49, rho: 900.0, E_band: [0.5e6, 5.0e6], status: estimate,
+          source: "acrylic foam adhesive tape: dynamic modulus of order 1 MPa, softer when hot and stiffer at higher frequency; the tape's datasheet or a measurement sets it (T1)"}
+    plastic: {E: 2.3e9, nu: 0.37, rho: 1150.0, status: estimate, source: "polycarbonate-ABS, a typical moulded mount"}
+    device: {E: 10.0e9, nu: 0.3, rho: 1667.0, status: estimate,
+             source: "the box homogenised: 0.3 kg over its volume (the heat model's 300 g); stiff against the pad"}
+  damping: {value: 0.05, low: 0.02, high: 0.2, status: estimate,
+            source: "modal damping ratio; the pad's foam is lossy, so 5 % is on the low (more response) side"}
+  glass_tilt_deg: {value: 26.3, status: mesh-derived, source: "the windshield's rake from horizontal on the device's line (figures/corolla-e210-device-shading.json)"}
+  modes: 6
+  cells_per_m: 200.0          # the coarse mesh (5 mm); the mesh study refines it
+  # Road input through the car's suspension: a quarter-car (one corner) at the ODD's top speed
+  speed_kph: 110.0
+  road: {A: 16.0e-6, B: 64.0e-6, n0: 0.1, waviness: 2.0, status: published,
+         source: "ISO 8608 road classes, Gd(n0) in m³ at n0 = 0.1 cycles/m, the geometric mean of each class (Agostinacchio, Ciampa, Olita 2014, Eur. Transp. Res. Rev. 6:267, Table 1): A very good, B good"}
+  quarter_car: {m_body: 330.0, m_wheel: 40.0, k_spring: 22000.0, c_damper: 1800.0, k_tyre: 220000.0, status: estimate,
+                source: "one corner of a compact sedan: body bounce about 1.3 Hz, wheel hop about 12 Hz (the usual ranges, Gillespie, Fundamentals of Vehicle Dynamics, ch. 5)"}
+  # What else shakes the body, by frequency (Hz): compared with the modes, not driven through them
+  orders:
+    wheel: {value: [14.0, 16.0], status: estimate, source: "wheel turning at 100–110 km/h on a 0.32 m rolling radius (first order: unbalance, runout)"}
+    idle: {value: [21.7, 26.7], status: estimate, source: "four-cylinder firing (second engine order) at 650–800 rpm idle"}
+    cruise: {value: [60.0, 85.0], status: estimate, source: "second engine order at 1800–2550 rpm, the CVT's cruise range at 100–110 km/h"}

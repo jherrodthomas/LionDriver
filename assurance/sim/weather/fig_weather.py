@@ -6,16 +6,18 @@ Every figure is stamped synthetic (DSR-12), design aid, no evidence credit.
 from __future__ import annotations
 
 import io
+import json
 import math
 from pathlib import Path
 
 import matplotlib
+import matplotlib.ticker
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 from matplotlib.colors import LinearSegmentedColormap  # noqa: E402
-from matplotlib.patches import Circle, Polygon, Rectangle  # noqa: E402
+from matplotlib.patches import Circle, Patch, Polygon, Rectangle  # noqa: E402
 from PIL import Image  # noqa: E402
 
 INK, INK2, MUTED, CRIT, GRID, SURF = "#0b0b0b", "#52514e", "#8a8984", "#d03b3b", "#e6e5e0", "#fcfcfb"
@@ -720,3 +722,254 @@ def braking_figures(p, r, out: Path):
   _braking_mu(r, out / "fig-wx-14-braking-friction.webp")
   _braking_anim(r, out / "fig-wx-15-braking-anim.webp")
   _report(out, "fig-wx-14", "fig-wx-15")
+
+
+# ------------------------------------------------------------------------------------------------ gust
+
+def _gust_peaks(r, path):
+  rows = [x for x in r["rows"] if x["kind"] != "step"]
+  T = np.array([x["period_s"] for x in rows])
+  step = next(x for x in r["rows"] if x["kind"] == "step")
+  room = r["room_m"]
+  fig = plt.figure(figsize=(9, 10), dpi=100)
+  fig.text(0.05, 0.955, "A gust through the car and its lane keeping", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.925, f"Corolla at {r['speed_kph']:.0f} km/h, wind to {r['wind_kph']:.0f} km/h · peak sideways "
+           "movement against the room to the lane line", fontsize=12, color=INK2)
+  ax = fig.add_axes([0.12, 0.2, 0.62, 0.64])
+  for k, lab in (("lane", "room, 3.7 m lane"), ("narrow", "room, 3.3 m lane")):
+    ax.axhline(100 * room[k], color=CRIT, lw=1.8 if k == "lane" else 1.2, ls="-" if k == "lane" else (0, (4, 3)))
+    ax.text(8.6, 100 * room[k], lab, color=CRIT, fontsize=11, va="center")
+  lo = [100 * x["ideal_low"]["peak_m"] for x in rows]
+  hi = [100 * x["ideal_high"]["peak_m"] for x in rows]
+  ax.fill_between(T, lo, hi, color="#86b6ef", alpha=0.45, lw=0)
+  ax.plot(T, hi, color="#2a78d6", lw=2.4, marker="o")
+  ax.plot(T, lo, color="#2a78d6", lw=1.4, marker="o", mfc="white")
+  ax.text(T[-1] * 1.08, hi[-1] + 6, "ideal steering\n(upper / lower band)", fontsize=11, color=INK)
+  fb = [100 * x["feedback_high"]["peak_m"] for x in rows]
+  ax.plot(T, fb, color=MUTED, lw=1.6, ls=(0, (3, 2)), marker="s", ms=5)
+  ax.text(T[-1] * 1.08, fb[-1], "plant's stand-in,\nupper band", fontsize=11, color=INK2, va="center")
+  for e, mk in (("ideal_low", "o"), ("ideal_high", "D")):
+    ax.plot([0.3], [100 * step[e]["peak_m"]], mk, color="#104281", ms=10, mfc="white" if e == "ideal_low" else "#104281")
+  ax.annotate(f"step, upper band: {100 * step['ideal_high']['peak_m']:.0f} cm", (0.3, 100 * step["ideal_high"]["peak_m"]),
+              (0.45, 100 * step["ideal_high"]["peak_m"] - 25), fontsize=11, color=INK)
+  ax.annotate(f"step, lower band: {100 * step['ideal_low']['peak_m']:.0f} cm", (0.3, 100 * step["ideal_low"]["peak_m"]),
+              (0.45, 100 * step["ideal_low"]["peak_m"] + 25), fontsize=11, color=INK)
+  ax.set_xscale("log"); ax.set_xlim(0.22, 9); ax.set_ylim(0, 260)
+  ax.xaxis.set_minor_locator(matplotlib.ticker.NullLocator())
+  ax.set_xticks([0.3, 0.5, 1, 2, 4, 8]); ax.set_xticklabels(["step", "0.5", "1", "2", "4", "8"])
+  ax.set_xlabel("gust length, s (one-minus-cosine)"); ax.set_ylabel("peak sideways movement, cm")
+  ax.grid(axis="y", color=GRID); ax.spines[["top", "right"]].set_visible(False)
+  fig.text(0.05, 0.075, "Ideal steering adds the gust's push at once; only opendbc's torque rise limit and the EPS lag\n"
+           "hold it back. In the upper band the steady push takes 89 % of the steering, so a step is not caught.",
+           fontsize=11.5, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def _gust_anim(r, path):
+  t = np.array(r["t_s"])
+  lo, hi = r["traces"]["ideal-low-step-0"], r["traces"]["ideal-high-step-0"]
+  lane, width = 3.7, 1.781
+  top = _top_outline()
+  sel = np.arange(0, len(t), 3)[: int(9.0 / (t[1] - t[0]) / 3)]
+  frames = []
+  for i in sel:
+    fig = plt.figure(figsize=(7.2, 9), dpi=80)
+    fig.text(0.05, 0.955, "Leaving shelter into a 30 km/h wind", fontsize=18, weight="bold", color=INK)
+    fig.text(0.05, 0.925, "110 km/h, ideal steering · the wind's load band, lower and upper", fontsize=12, color=INK2)
+    fig.text(0.95, 0.885, f"t = {max(t[i] - 1.0, 0):3.1f} s", ha="right", fontsize=15, color=INK, family="DejaVu Sans Mono")
+    for k, (tr, title) in enumerate(((lo, "lower band"), (hi, "upper band"))):
+      ax = fig.add_axes([0.04 + k * 0.48, 0.2, 0.44, 0.62]); ax.set_xlim(-3.2, 3.2); ax.set_ylim(-2, 14); ax.set_aspect("equal")
+      ax.axis("off")
+      ax.add_patch(Rectangle((-3.2, -2), 6.4, 16, color="#d6d4cc"))
+      for xl, st in ((-lane / 2, "-"), (lane / 2, "-")):
+        ax.plot([xl, xl], [-2, 14], color="white", lw=2.5, ls=st)
+      y = tr["y"][i]
+      over = abs(y) + width / 2 > lane / 2
+      car = np.c_[-top[:, 1] + y, top[:, 0] + 3]      # downwind (+y) is to the right, the wind from the left
+      ax.add_patch(Polygon(car, color="#c84b2f" if over else "#6d6b64", ec=INK, lw=1))
+      if tr["w"][i] > 0.5:
+        for yy in (1, 5, 9):
+          ax.annotate("", (-1.2, yy), (-2.9, yy), arrowprops=dict(arrowstyle="->", color="#1c5cab", lw=1.6))
+      ax.text(0, 12.6, f"{title}\n{100 * abs(y):3.0f} cm", ha="center", fontsize=12, color=INK, weight="bold")
+    fig.text(0.05, 0.1, "Top view of the 3.7 m lane, the wind from the left. In the upper band the steady\npush takes "
+             "almost all the steering, and the car leaves the lane.", fontsize=10.5, color=INK2)
+    _stamp(fig, "SYNTHETIC (DSR-12) · design aid, no credit · textbook loads")
+    frames.append(_png(fig))
+  _anim(frames, [120] * (len(frames) - 1) + [2500], path)
+
+
+def gust_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _gust_peaks(r, out / "fig-wx-16-gust-peaks.webp")
+  _gust_anim(r, out / "fig-wx-17-gust-anim.webp")
+  _report(out, "fig-wx-16", "fig-wx-17")
+
+
+# ------------------------------------------------------------------------------------------------ tunnel
+
+def _tunnel_timeline(p, r, path):
+  n = r["cases"]["nominal"]
+  tr = n["trace"]
+  t, lum, grey, target = (np.array(tr[k]) for k in ("t", "lum", "grey", "target"))
+  stops = p["tunnel"]["off_stops"]["value"]
+  fig = plt.figure(figsize=(9, 11.5), dpi=100)
+  fig.text(0.05, 0.965, "Through a tunnel: the road camera's exposure", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.94, "openpilot's auto exposure (ported from camerad, OX03C10) at 110 km/h · CIE 88 orders of luminance",
+           fontsize=12, color=INK2)
+  wins = (("Entry", n["entry_s"] - 0.6, n["entry_s"] + 1.6), ("Exit", n["exit_s"] - 0.6, n["exit_s"] + 2.4))
+  for k, (title, a, b) in enumerate(wins):
+    sel = (t >= a) & (t <= b)
+    ts = t[sel] - (n["entry_s"] if k == 0 else n["exit_s"])
+    ax1 = fig.add_axes([0.1 + k * 0.46, 0.62, 0.38, 0.24])
+    ax1.semilogy(ts, lum[sel], color=MUTED, lw=2)
+    ax1.set_ylim(3, 2e4); ax1.set_title(title, loc="left", fontsize=14, color=INK)
+    ax1.set_ylabel("road ahead, cd/m²" if k == 0 else ""); ax1.grid(axis="y", color=GRID)
+    ax1.spines[["top", "right"]].set_visible(False)
+    ax2 = fig.add_axes([0.1 + k * 0.46, 0.2, 0.38, 0.36])
+    tg = target[sel]
+    ax2.fill_between(ts, tg / 2 ** stops, np.minimum(tg * 2 ** stops, 1), color="#cde2fb", lw=0)
+    ax2.plot(ts, tg, color="#2a78d6", lw=1.2, ls=(0, (4, 3)))
+    g = grey[sel]
+    bad = np.abs(np.log2(np.maximum(g, 1e-6) / tg)) > stops
+    ax2.plot(ts, g, color=INK, lw=2.2)
+    ax2.scatter(ts[bad], g[bad], color=CRIT, s=18, zorder=5)
+    ax2.set_ylim(0, 1.02); ax2.set_xlabel(f"s after the {'portal' if k == 0 else 'exit'}")
+    ax2.set_ylabel("grey the loop measures" if k == 0 else ""); ax2.grid(axis="y", color=GRID)
+    ax2.spines[["top", "right"]].set_visible(False)
+    w = n["entry"] if k == 0 else n["exit"]
+    ax2.text(0.98, 0.95, f"{w['frames']} frames off\n({1000 * w['frames'] / r['code']['fps']:.0f} ms)", transform=ax2.transAxes,
+             ha="right", va="top", fontsize=12, color=CRIT, weight="bold")
+  fig.text(0.05, 0.085, "Blue band: within one stop of the loop's target grey; red dots: frames outside it. The exit is "
+           "the\nlonger window: an overexposed frame tells the loop little, so it steps down slowly.", fontsize=11.5,
+           color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def tunnel_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _tunnel_timeline(p, r, out / "fig-wx-18-tunnel.webp")
+  _report(out, "fig-wx-18")
+
+
+# ------------------------------------------------------------------------------------------------ headlights
+
+def _headlight_contrast(p, r, path):
+  h = p["headlights"]
+  vf = h["veil_fraction"]
+  cases = [("undivided", h["offsets_m"]["undivided"], "undivided road, one lane over (outside the ODD)", CRIT),
+           ("divided", h["offsets_m"]["divided"][0], f"divided, {h['offsets_m']['divided'][0]:g} m median", "#104281"),
+           ("divided", h["offsets_m"]["divided"][1], f"divided, {h['offsets_m']['divided'][1]:g} m median", "#2a78d6"),
+           ("divided", h["offsets_m"]["divided"][2], f"divided, {h['offsets_m']['divided'][2]:g} m median", "#86b6ef")]
+  fig = plt.figure(figsize=(9, 10), dpi=100)
+  fig.text(0.05, 0.955, "Oncoming high beams at night: the road's contrast", fontsize=18, weight="bold", color=INK)
+  fig.text(0.05, 0.925, "Undipped driving beam (UN R112, 40,500 cd) · veiling glare from the lens and windshield, "
+           "1–10 %", fontsize=12, color=INK2)
+  ax = fig.add_axes([0.12, 0.2, 0.84, 0.64])
+  for road, off, lab, col in cases:
+    tr = r["cases"][f"{road}-{off:g}-high-value"]["trace"]
+    d, veil = np.array(tr["d"]), np.array(tr["veil"])
+    seen = veil > 0
+    c_lo = 1 / (1 + veil * vf["high"] / vf["value"])     # the veil scales with the scatter share
+    c_hi = 1 / (1 + veil * vf["low"] / vf["value"])
+    ax.fill_between(d[seen], 100 * c_lo[seen], 100 * c_hi[seen], color=col, alpha=0.18, lw=0)
+    leave = r["cases"][f"{road}-{off:g}-high-value"]["leave_frame_m"]
+    ax.plot(d[seen], 100 / (1 + veil[seen]), color=col, lw=2.2, label=f"{lab}: leaves the frame at {leave:.0f} m")
+    ax.plot([d[seen][-1]], [100 / (1 + veil[seen][-1])], "o", color=col, ms=7)
+  ax.set_xlim(250, 0); ax.set_ylim(0, 105)
+  ax.legend(loc="lower left", frameon=False, fontsize=10.5)
+  ax.set_xlabel("distance to the oncoming car along the road, m"); ax.set_ylabel("road contrast left, %")
+  ax.grid(axis="y", color=GRID); ax.spines[["top", "right"]].set_visible(False)
+  low = min(v["contrast_min"] for k, v in r["cases"].items() if "-low-" in k)
+  fig.text(0.05, 0.075, "Lines: 3 % scatter; bands: 1–10 %. The beam's peak intensity is taken in every direction, an\n"
+           f"upper bound. Low beams (≤ 350 cd toward us) leave at least {100 * low:.0f} % of the contrast in every case.",
+           fontsize=11.5, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def headlight_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _headlight_contrast(p, r, out / "fig-wx-19-headlights.webp")
+  _report(out, "fig-wx-19")
+
+
+# ------------------------------------------------------------------------------------------------ sun on the device
+
+GLASS_COL = {1: "#86b6ef", 2: "#f6b48f", 3: "#b9b7ae", 4: "#cfa6e8"}
+GLASS_LAB = {1: "through the windshield", 2: "through the roof panel", 3: "through a side window", 4: "through the rear window"}
+
+
+def _sky_map(ax, t, case, face, title, sun_paths):
+  """The sky above the car as the face sees it: relative azimuth around (ahead at the top), elevation inward."""
+  E, A = np.array(t["elev_deg"]), np.array(t["relaz_deg"])
+  f = t["cases"][case][face]
+  lit, via = np.array(f["lit"]), np.array(f["glass"])
+  th = np.radians(A)
+  for i in range(len(E) - 1):
+    for j in range(len(A) - 1):
+      if lit[i, j] <= 0:
+        continue
+      ax.bar((th[j] + th[j + 1]) / 2, E[i + 1] - E[i], width=th[j + 1] - th[j], bottom=90 - E[i + 1],
+             color=GLASS_COL[int(via[i, j])], alpha=0.25 + 0.75 * float(lit[i, j]), lw=0)
+  for lab, (rel, el, col) in sun_paths.items():
+    ax.plot(np.radians(rel), 90 - el, color=col, lw=2.4, label=lab)
+  ax.set_theta_zero_location("N"); ax.set_theta_direction(-1)
+  ax.set_ylim(0, 90); ax.set_yticks([30, 60]); ax.set_yticklabels(["60°", "30°"], fontsize=9, color=MUTED)
+  ax.set_xticks(np.radians([0, 90, 180, 270])); ax.set_xticklabels(["ahead", "right", "behind", "left"], fontsize=10)
+  ax.grid(color=GRID); ax.set_title(title, fontsize=13, color=INK, pad=12)
+
+
+def _device_sun(p, r, path):
+  import pvlib
+  t = json.loads((Path(__file__).resolve().parent.parent / "figures" / "corolla-e210-device-shading.json").read_text())
+  s = p["sun"]
+  head = s["corridor"]["northbound"]["heading"]
+  paths = {}
+  for lab, day, col in (("21 July", "2027-07-21", CRIT), ("21 December", "2027-12-21", "#104281")):
+    tt = pd.date_range(f"{day} 05:00", f"{day} 21:00", freq="10min", tz=s["site"]["tz"])
+    sp = pvlib.solarposition.get_solarposition(tt, s["site"]["lat"], s["site"]["lon"])
+    up = sp["apparent_elevation"].to_numpy() > 0
+    rel = (sp["azimuth"].to_numpy()[up] - head + 180) % 360 - 180
+    paths[f"sun, {lab}, northbound"] = (rel, sp["apparent_elevation"].to_numpy()[up], col)
+  fig = plt.figure(figsize=(9, 12.5), dpi=100)
+  fig.text(0.05, 0.968, "Sun on the device through the car", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.943, "Ray cast through the Corolla mesh from each face of the comma device · clear sky, I-85 corridor",
+           fontsize=12, color=INK2)
+  for k, (face, title) in enumerate((("front", "Windshield side: the sky it sees"), ("screen", "Screen side (cabin)"))):
+    ax = fig.add_axes([0.06 + 0.5 * k, 0.57, 0.37, 0.29], projection="polar")
+    _sky_map(ax, t, "glass_roof", face, title, paths)
+  hs = [Patch(color=GLASS_COL[c], label=GLASS_LAB[c]) for c in (1, 2, 3, 4)]
+  hs += [plt.Line2D([], [], color=v[2], lw=2.4, label=k) for k, v in paths.items()]
+  fig.legend(handles=hs, loc="upper left", bbox_to_anchor=(0.05, 0.535), ncol=2, frameon=False, fontsize=10.5)
+  c = r["cases"]["glass_roof"]
+  m = r["model"]
+  ax = fig.add_axes([0.12, 0.17, 0.84, 0.25])
+  styles = {"northbound": ("northbound", "#2a78d6"), "southbound": ("southbound", "#104281"),
+            c["worst_parked"]: (f"parked facing {c['headings'][c['worst_parked']]['heading']:.0f}°", "#b8401a")}
+  for dn, ls in (("summer", "-"), ("winter", (0, (4, 2)))):
+    dd = c["days"][dn]
+    hr = np.array(dd["hour"])
+    for name, (lab, col) in styles.items():
+      tot = sum(np.array(v) for v in dd[name].values())
+      ax.plot(hr, tot, color=col, lw=2.2, ls=ls, label=f"{lab}, {'21 July' if dn == 'summer' else '21 December'}")
+  ax.axhspan(m["band_w"][0], m["band_w"][1], color=GRID, lw=0)
+  ax.axhline(m["power_w"], color=INK, lw=1.6)
+  ax.text(5.2, m["power_w"] + 0.05, f"heat model: {m['power_w']:.2f} W all day (band {m['band_w'][0]:.1f}–{m['band_w'][1]:.1f})",
+          fontsize=10.5, color=INK, va="bottom")
+  ax.set_xlim(5, 21); ax.set_ylim(0, max(3.3, m["band_w"][1] + 0.3))
+  ax.set_xlabel("hour of day (local)"); ax.set_ylabel("sun into the device, W")
+  ax.grid(axis="y", color=GRID); ax.spines[["top", "right"]].set_visible(False)
+  ax.legend(loc="upper right", frameon=False, fontsize=9.5, ncol=2)
+  fig.text(0.05, 0.07, f"Brighter cells: more of the face lit. The year's most is {c['power_max_w']:.2f} W, in winter; in "
+           f"June–August at most\n{c['summer_power_max_w']:.2f} W. The device's place on the glass is an estimate until T1; the "
+           "mesh has a glass roof panel,\nthe reference car may not.", fontsize=11, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def device_sun_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _device_sun(p, r, out / "fig-wx-20-device-sun.webp")
+  _report(out, "fig-wx-20")

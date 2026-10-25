@@ -655,7 +655,7 @@ jobs:
         chmod +x "$RUNNER_TEMP/micromamba"
         MAMBA_ROOT_PREFIX="$RUNNER_TEMP/mamba" "$RUNNER_TEMP/micromamba" create -y -q -p "$THERMAL_ENV" \
           --file assurance/sim/thermal/thermal-linux-64.lock
-    - name: Checks (analytic slab, lumped transient, FiPy cross-check, energy balance, mesh study, limits from the code, cabin-driven runner, MCU study)
+    - name: Checks (analytic slab, lumped transient, FiPy cross-check, energy balance, mesh study, limits from the code, cabin-driven runner, MCU study, mount modes)
       run: '"$THERMAL_ENV/bin/python" assurance/sim/thermal/test_thermal.py'
     - name: Pilot results within 0.05 K of the committed JSON, results page current
       run: '"$THERMAL_ENV/bin/python" assurance/sim/thermal/thermal_pilot.py --check'
@@ -663,6 +663,8 @@ jobs:
       run: '"$THERMAL_ENV/bin/python" assurance/sim/thermal/cabin_drive.py --check'
     - name: The safety MCU next to the SoC (mcu_heat.py, DFI-04, TSR-509) within 0.05 K of the committed JSON
       run: '"$THERMAL_ENV/bin/python" assurance/sim/thermal/mcu_heat.py --check'
+    - name: The mount's vibration modes (mount_modes.py, FEniCSx and SLEPc; TC-19, KS-16) within 1 % of the committed JSON
+      run: '"$THERMAL_ENV/bin/python" assurance/sim/thermal/mount_modes.py --check'
     - name: Figures render off-screen (Mesa software EGL; pixels are not compared)
       env:
         CONDA_PREFIX: ${{ env.THERMAL_ENV }}
@@ -678,6 +680,41 @@ jobs:
         figures.mcu_figure(p, json.load(open("assurance/sim/results/mcu-heat.json")), out)
         assert len(list(out.glob("*.webp"))) == 5
         PY
+
+  sim-supply:
+    name: simulation 12 V supply
+    # 12 V cranking dip (assurance/sim/supply, physics plan study 8, tool TL-58): ngspice 41 runs a generic device power
+    # path through the ISO 16750-2 starting profiles against the panda MCU's reset thresholds (TSR-505). The environment
+    # comes from an explicit conda-forge lock (every package by URL and md5) and is cached on the lock's hash. Design
+    # aid: synthetic data (DSR-12), no credit.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      MICROMAMBA_URL: https://github.com/mamba-org/micromamba-releases/releases/download/2.3.2-0/micromamba-linux-64
+      MICROMAMBA_SHA256: ffc3cb8d52d4d6b354bdbb979c407719c485392b74e462cbd50811aa88e58f85
+      SUPPLY_ENV: ${{ github.workspace }}/../supply-env
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Cache the supply environment (keyed on the lock)
+      id: supply-cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.SUPPLY_ENV }}
+        key: supply-env-${{ hashFiles('assurance/sim/supply/supply-linux-64.lock') }}
+    - name: Create the supply environment from the explicit lock
+      if: steps.supply-cache.outputs.cache-hit != 'true'
+      run: |
+        curl -sSL -o "$RUNNER_TEMP/micromamba" "$MICROMAMBA_URL"
+        echo "$MICROMAMBA_SHA256  $RUNNER_TEMP/micromamba" | sha256sum -c -
+        chmod +x "$RUNNER_TEMP/micromamba"
+        MAMBA_ROOT_PREFIX="$RUNNER_TEMP/mamba" "$RUNNER_TEMP/micromamba" create -y -q -p "$SUPPLY_ENV" \
+          --file assurance/sim/supply/supply-linux-64.lock
+    - name: Checks (RC discharge against the closed form, regulators, power balance, the ISO 16750-2 profile)
+      run: '"$SUPPLY_ENV/bin/python" assurance/sim/supply/test_supply.py'
+    - name: Cranking-dip results within 1 % of the committed JSON, results page current
+      run: '"$SUPPLY_ENV/bin/python" assurance/sim/supply/crank.py --check'
 
   sim-interactive:
     name: simulation interactive pages
@@ -705,8 +742,9 @@ jobs:
     name: simulation weather physics
     # Sun in the road camera (TC-01, KS-12) with pvlib's NREL SPA (tool TL-54), hydroplaning (TC-03) from the
     # published FHWA/NCHRP and NASA models, the cabin heat soak, crosswind, fog on the windshield on NOAA climate
-    # normals, road crown against openpilot's roll path, and wet braking (assurance/sim/weather). Design aid:
-    # synthetic data (DSR-12), no credit.
+    # normals, road crown against openpilot's roll path, wet braking, gusts through opendbc's torque limiter, and
+    # tunnels and oncoming headlights through openpilot's ported auto exposure, and the sun on the device through the
+    # car from a ray cast through the mesh (assurance/sim/weather). Design aid: synthetic data (DSR-12), no credit.
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -717,7 +755,7 @@ jobs:
       run: git submodule update --init --depth 1 opendbc_repo
     - name: Install the pinned packages of the weather physics
       run: python3 -m pip install --quiet --user --break-system-packages -r assurance/sim/weather/requirements.txt
-    - name: Checks (NREL reference, NOAA cross-check, camera frame, unit conversion, model branches, ODD bound, cabin against McLaren 2005, crosswind against the single-track algebra, fog, wet braking, road crown)
+    - name: Checks (NREL reference, NOAA cross-check, camera frame, unit conversion, model branches, ODD bound, cabin against McLaren 2005, crosswind against the single-track algebra, fog, wet braking, road crown, gust, tunnel, headlights, sun on the device)
       run: python3 assurance/sim/weather/test_weather.py
     - name: Results within 0.05 of the committed JSON, results pages current
       run: |
@@ -728,7 +766,12 @@ jobs:
         python3 assurance/sim/weather/windshield_fog.py --check
         python3 assurance/sim/weather/road_crown.py --check
         python3 assurance/sim/weather/wet_braking.py --check
+        python3 assurance/sim/weather/gust.py --check
+        python3 assurance/sim/weather/tunnel.py --check
+        python3 assurance/sim/weather/headlights.py --check
+        python3 assurance/sim/weather/device_sun.py --check
         python3 assurance/sim/assets/tools/vehicle_geometry.py --check
+        python3 assurance/sim/assets/tools/device_shading.py --check
 
   sim-scenarios:
     name: simulation known scenarios
