@@ -414,7 +414,7 @@ def render_states(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str
         txt = ("host: " if side == "host" else "panda: ") + " · ".join(r.split(" ", 1)[1] for r in refs)
         body.append(k.text(x + 14, ty, k.clip(txt, bw - 28, 10.5, 400, True), 10.5, color, 400, None, True))
         ty += 16
-    room = max(1, int((y + bh - 40 - ty) // 14))
+    room = max(1, int((y + bh - 34 - (ty + 4)) // 14) + 1)  # text above the actuation pill
     for ln in k.wrap(re.sub(r"\s*\(`[^)]*`\)|`", "", str(row.get("description", ""))), bw - 28, 10.5)[:room]:
       body.append(k.text(x + 14, ty + 4, ln, 10.5, k.INK2))
       ty += 14

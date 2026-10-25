@@ -718,7 +718,7 @@ composite state (enabled, overriding, soft disabling), immediate disable and dri
 labelled by the state-machine record transitions it stands for and coloured by who enforces it."""
 
 [views.V-13.states]
-off = [40, 336, 196, 156]
+off = [40, 336, 196, 176]
 disengaged = [380, 300, 252, 220]
 immediateDisable = [380, 112, 252, 124]
 lockout = [380, 596, 252, 140]
