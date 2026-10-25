@@ -1,0 +1,181 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="1208" viewBox="0 0 1520 1208" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">V-11. Security zones and trust boundaries (SysML v2 view securityZones)</title>
+<desc id="d">Security architecture generated from the SysML v2 model: the security zones of WP-S-07 §3.1 coloured by trust level, the model elements in each zone, and the trust boundaries of §3.2 with what crosses them, their threats and the number of cybersecurity requirements that control them.</desc>
+<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter><marker id="tb-arrow" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#0F172A"/></marker></defs>
+<rect width="1520" height="1208" fill="#FFFFFF"/>
+<text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-11 · Security zones and trust boundaries</text>
+<text x="40" y="69" font-size="12.5" fill="#64748B">Zones Z1 to Z7 and boundaries TB-1 to TB-7 of WP-S-07 §3, with the model elements in each zone</text>
+<text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::securityZones</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">SecurityView · render asElementTable · model d1c56e2837b1</text>
+<line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
+<rect x="420" y="214" width="1060" height="476" rx="14" fill="none" stroke="#334155" stroke-width="1.6" stroke-dasharray="7 5"/>
+<text x="434" y="234" font-size="12" fill="#334155" font-weight="700">E-04 comma device</text>
+<rect x="880" y="100" width="600" height="84" rx="10" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.6"/>
+<rect x="892" y="112" width="27.8" height="20" rx="10" fill="#0F766E"/><text x="905.9" y="125.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Z6</text>
+<rect x="1319.5" y="112" width="148.5" height="20" rx="10" fill="#FFFFFF" stroke="#0F766E" stroke-width="1"/><text x="1393.8" y="125.6" font-size="10" fill="#0F766E" font-weight="700" text-anchor="middle">Trusted, outside the device</text>
+<text x="927.8" y="127" font-size="13" fill="#0F172A" font-weight="700">Release environment</text>
+<text x="892" y="158" font-size="10.5" fill="#64748B">WP-S-07: LionDriver signing keys (offline), release build host, release record</text>
+<rect x="40" y="246" width="300" height="140" rx="10" fill="#FAF5FF" stroke="#A855F7" stroke-width="1.6"/>
+<rect x="52" y="258" width="28.1" height="20" rx="10" fill="#9333EA"/><text x="66" y="271.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Z4</text>
+<rect x="264.9" y="258" width="63.1" height="20" rx="10" fill="#FFFFFF" stroke="#A855F7" stroke-width="1"/><text x="296.4" y="271.6" font-size="10" fill="#9333EA" font-weight="700" text-anchor="middle">Untrusted</text>
+<text x="88.1" y="273" font-size="13" fill="#0F172A" font-weight="700">External network and</text>
+<text x="88.1" y="289" font-size="13" fill="#0F172A" font-weight="700">back end</text>
+<rect x="52" y="306" width="116.1" height="20" rx="5" fill="#FAF5FF" stroke="#A855F7" stroke-width="1.2"/>
+<text x="60" y="320" font-size="10.5" fill="#0F172A" font-weight="600">Comma.ai back end</text>
+<text x="52" y="344" font-size="10.5" fill="#64748B">WP-S-07: comma athena/connect, GitHub, LFS store,</text>
+<text x="52" y="358" font-size="10.5" fill="#64748B">AGNOS CDN, Wi-Fi/LTE</text>
+<rect x="440" y="246" width="1020" height="100" rx="10" fill="#FAF5FF" stroke="#A855F7" stroke-width="1.6"/>
+<rect x="452" y="258" width="27.8" height="20" rx="10" fill="#9333EA"/><text x="465.9" y="271.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Z3</text>
+<rect x="1312.1" y="258" width="135.9" height="20" rx="10" fill="#FFFFFF" stroke="#A855F7" stroke-width="1"/><text x="1380" y="271.6" font-size="10" fill="#9333EA" font-weight="700" text-anchor="middle">Untrusted input handlers</text>
+<text x="487.8" y="273" font-size="13" fill="#0F172A" font-weight="700">SoC — network-facing</text>
+<rect x="452" y="290" width="60.2" height="20" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="460" y="304" font-size="10.5" fill="#0F172A" font-weight="600">host.hmi</text>
+<rect x="518.2" y="290" width="100.2" height="20" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="526.2" y="304" font-size="10.5" fill="#0F172A" font-weight="600">Athena · loggerd</text>
+<text x="452" y="328" font-size="10.5" fill="#64748B">WP-S-07: athenad, uploader, updated, sshd, webrtcd, UI, installer</text>
+<rect x="440" y="386" width="1020" height="130" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.6"/>
+<rect x="452" y="398" width="27.5" height="20" rx="10" fill="#475569"/><text x="465.8" y="411.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Z2</text>
+<rect x="1416.9" y="398" width="31.1" height="20" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="1432.5" y="411.6" font-size="10" fill="#475569" font-weight="700" text-anchor="middle">QM</text>
+<text x="487.5" y="413" font-size="13" fill="#0F172A" font-weight="700">SoC — safety-relevant host</text>
+<rect x="452" y="430" width="79.5" height="20" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="460" y="444" font-size="10.5" fill="#0F172A" font-weight="600">host.pandad</text>
+<rect x="537.5" y="430" width="64.4" height="20" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="545.5" y="444" font-size="10.5" fill="#0F172A" font-weight="600">host.card</text>
+<rect x="607.9" y="430" width="89.8" height="20" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="615.9" y="444" font-size="10.5" fill="#0F172A" font-weight="600">host.controlsd</text>
+<rect x="703.7" y="430" width="92.8" height="20" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="711.7" y="444" font-size="10.5" fill="#0F172A" font-weight="600">host.selfdrived</text>
+<rect x="802.5" y="430" width="86.6" height="20" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="810.5" y="444" font-size="10.5" fill="#0F172A" font-weight="600">host.plannerd</text>
+<rect x="895.1" y="430" width="75" height="20" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="903.1" y="444" font-size="10.5" fill="#0F172A" font-weight="600">host.radard</text>
+<rect x="976.1" y="430" width="79.4" height="20" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="984.1" y="444" font-size="10.5" fill="#0F172A" font-weight="600">host.modeld</text>
+<rect x="1061.5" y="430" width="57.6" height="20" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="1069.5" y="444" font-size="10.5" fill="#0F172A" font-weight="600">host.dm</text>
+<rect x="1125.1" y="430" width="86.5" height="20" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="1133.1" y="444" font-size="10.5" fill="#0F172A" font-weight="600">host.manager</text>
+<rect x="1217.5" y="430" width="73" height="20" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="1225.5" y="444" font-size="10.5" fill="#0F172A" font-weight="600">host.cereal</text>
+<rect x="1296.5" y="430" width="70.1" height="20" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="1304.5" y="444" font-size="10.5" fill="#0F172A" font-weight="600">Estimators</text>
+<rect x="1372.6" y="430" width="72.3" height="20" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="1380.6" y="444" font-size="10.5" fill="#0F172A" font-weight="600">Hardwared</text>
+<rect x="452" y="456" width="98.7" height="20" rx="5" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.2"/>
+<text x="460" y="470" font-size="10.5" fill="#0F172A" font-weight="600">E-02 ML models</text>
+<text x="452" y="494" font-size="10.5" fill="#64748B">WP-S-07: pandad, card/controlsd, selfdrived, modeld, dmonitoringmodeld, plannerd, params store, msgq</text>
+<rect x="440" y="556" width="1020" height="110" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
+<rect x="452" y="568" width="25.4" height="20" rx="10" fill="#C2410C"/><text x="464.7" y="581.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Z1</text>
+<rect x="1395.4" y="568" width="52.6" height="20" rx="10" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1421.7" y="581.6" font-size="10" fill="#C2410C" font-weight="700" text-anchor="middle">Trusted</text>
+<text x="485.4" y="583" font-size="13" fill="#0F172A" font-weight="700">Safety MCU</text>
+<rect x="452" y="600" width="110.5" height="20" rx="5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="460" y="614" font-size="10.5" fill="#0F172A" font-weight="600">E-03a Safety layer</text>
+<rect x="568.5" y="600" width="141.8" height="20" rx="5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="576.5" y="614" font-size="10.5" fill="#0F172A" font-weight="600">E-03b Platform firmware</text>
+<rect x="716.3" y="600" width="162.9" height="20" rx="5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="724.3" y="614" font-size="10.5" fill="#0F172A" font-weight="600">E-04a STM32H7 safety MCU</text>
+<text x="452" y="638" font-size="10.5" fill="#64748B">WP-S-07: panda STM32H7: bootstub (flash sector 0), application firmware, option bytes, opendbc safety code (E-03)</text>
+<rect x="40" y="420" width="300" height="120" rx="10" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.6"/>
+<rect x="52" y="432" width="27" height="20" rx="10" fill="#64748B"/><text x="65.5" y="445.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Z7</text>
+<rect x="227" y="432" width="101" height="20" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="277.5" y="445.6" font-size="10" fill="#64748B" font-weight="700" text-anchor="middle">Owner-controlled</text>
+<text x="87" y="447" font-size="13" fill="#0F172A" font-weight="700">Physical device</text>
+<rect x="52" y="464" width="141.5" height="20" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="60" y="478" font-size="10.5" fill="#0F172A" font-weight="600">E-04b Rest of the device</text>
+<text x="52" y="502" font-size="10.5" fill="#64748B">WP-S-07: eMMC/UFS storage, /persist, /data, debug</text>
+<text x="52" y="516" font-size="10.5" fill="#64748B">ports</text>
+<rect x="420" y="730" width="1060" height="96" rx="10" fill="#FAF5FF" stroke="#A855F7" stroke-width="1.6"/>
+<rect x="432" y="742" width="27.6" height="20" rx="10" fill="#9333EA"/><text x="445.8" y="755.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Z5</text>
+<rect x="1343.7" y="742" width="124.3" height="20" rx="10" fill="#FFFFFF" stroke="#A855F7" stroke-width="1"/><text x="1405.9" y="755.6" font-size="10" fill="#9333EA" font-weight="700" text-anchor="middle">Untrusted for injection</text>
+<text x="467.6" y="757" font-size="13" fill="#0F172A" font-weight="700">Vehicle bus</text>
+<rect x="432" y="774" width="85.7" height="20" rx="5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="440" y="788" font-size="10.5" fill="#0F172A" font-weight="600">E-05 Harness</text>
+<rect x="523.7" y="774" width="61.9" height="20" rx="5" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="531.7" y="788" font-size="10.5" fill="#0F172A" font-weight="600">EXT-EPS</text>
+<rect x="591.6" y="774" width="126" height="20" rx="5" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="599.6" y="788" font-size="10.5" fill="#0F172A" font-weight="600">EXT-PCM ECM / PCM</text>
+<rect x="723.6" y="774" width="68.9" height="20" rx="5" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="731.6" y="788" font-size="10.5" fill="#0F172A" font-weight="600">ABS / VSC</text>
+<rect x="798.6" y="774" width="132.9" height="20" rx="5" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="806.6" y="788" font-size="10.5" fill="#0F172A" font-weight="600">EXT-CLU Cluster, stalk</text>
+<rect x="937.4" y="774" width="135" height="20" rx="5" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="945.4" y="788" font-size="10.5" fill="#0F172A" font-weight="600">Toyota forward camera</text>
+<rect x="1078.4" y="774" width="87.8" height="20" rx="5" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="1086.4" y="788" font-size="10.5" fill="#0F172A" font-weight="600">Forward radar</text>
+<rect x="1172.2" y="774" width="80" height="20" rx="5" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="1180.2" y="788" font-size="10.5" fill="#0F172A" font-weight="600">Vehicle CAN</text>
+<rect x="1258.3" y="774" width="71.5" height="20" rx="5" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="1266.3" y="788" font-size="10.5" fill="#0F172A" font-weight="600">Radar CAN</text>
+<text x="432" y="812" font-size="10.5" fill="#64748B">WP-S-07: Toyota ECUs, OBD-II port, harness</text>
+<line x1="800" y1="516" x2="800" y2="556" stroke="#0F172A" stroke-width="2" marker-end="url(#tb-arrow)"/>
+<rect x="781.9" y="526" width="36.3" height="20" rx="10" fill="#0F172A"/><text x="800" y="539.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TB-1</text>
+<line x1="1040" y1="516" x2="1040" y2="556" stroke="#0F172A" stroke-width="2" marker-end="url(#tb-arrow)"/>
+<rect x="1020.9" y="526" width="38.3" height="20" rx="10" fill="#0F172A"/><text x="1040" y="539.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TB-2</text>
+<line x1="340" y1="300" x2="440" y2="300" stroke="#0F172A" stroke-width="2" marker-end="url(#tb-arrow)" marker-start="url(#tb-arrow)"/>
+<rect x="370.8" y="290" width="38.5" height="20" rx="10" fill="#0F172A"/><text x="390" y="303.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TB-3</text>
+<line x1="700" y1="346" x2="700" y2="386" stroke="#0F172A" stroke-width="2" marker-end="url(#tb-arrow)"/>
+<rect x="680.6" y="356" width="38.8" height="20" rx="10" fill="#0F172A"/><text x="700" y="369.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TB-4</text>
+<line x1="940" y1="666" x2="940" y2="730" stroke="#0F172A" stroke-width="2" marker-end="url(#tb-arrow)" marker-start="url(#tb-arrow)"/>
+<rect x="920.8" y="688" width="38.4" height="20" rx="10" fill="#0F172A"/><text x="940" y="701.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TB-5</text>
+<line x1="1180" y1="184" x2="1180" y2="246" stroke="#0F172A" stroke-width="2" marker-end="url(#tb-arrow)"/>
+<rect x="1160.8" y="205" width="38.5" height="20" rx="10" fill="#0F172A"/><text x="1180" y="218.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TB-6</text>
+<rect x="171.1" y="548" width="37.8" height="20" rx="10" fill="#0F172A"/><text x="190" y="561.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TB-7</text>
+<text x="40" y="856" font-size="11" fill="#0F172A" font-weight="700">Trust boundary</text>
+<text x="420" y="856" font-size="11" fill="#0F172A" font-weight="700">Data or control crossing</text>
+<text x="1150" y="856" font-size="11" fill="#0F172A" font-weight="700">Threats</text>
+<text x="1480" y="856" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">Controls</text>
+<line x1="40" y1="866" x2="1480" y2="866" stroke="#E2E8F0"/>
+<rect x="40" y="873" width="35.2" height="18" rx="9" fill="#0F172A"/><text x="57.6" y="885.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TB-1</text>
+<text x="81.2" y="886" font-size="10.5" fill="#0F172A" font-weight="600">Z2 → Z1 command channel (SPI/USB)</text>
+<text x="420" y="886" font-size="10.5" fill="#334155">Safety mode/param 0xdc, alternative experience 0xdf, bus config 0xdb/0xde, relay debug 0xc5, softloader 0xd1, CAN TX frames</text>
+<text x="1150" y="886" font-size="10.5" fill="#334155">TS-02, TS-05, TS-12</text>
+<text x="1480" y="886" font-size="10.5" fill="#334155" font-weight="600" text-anchor="end">11 CSR</text>
+<line x1="40" y1="896" x2="1480" y2="896" stroke="#E2E8F0"/>
+<rect x="40" y="903" width="37.1" height="18" rx="9" fill="#0F172A"/><text x="58.5" y="915.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TB-2</text>
+<text x="83.1" y="916" font-size="10.5" fill="#0F172A" font-weight="600">Z2 → Z1 boot control (GPIO)</text>
+<text x="420" y="916" font-size="10.5" fill="#334155">STM_BOOT0, STM_RST_N (openpilot/common/hardware/comma/hardware.py:401-419)</text>
+<text x="1150" y="916" font-size="10.5" fill="#334155">TS-03</text>
+<text x="1480" y="916" font-size="10.5" fill="#334155" font-weight="600" text-anchor="end">7 CSR</text>
+<line x1="40" y1="926" x2="1480" y2="926" stroke="#E2E8F0"/>
+<rect x="40" y="933" width="37.3" height="18" rx="9" fill="#0F172A"/><text x="58.6" y="945.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TB-3</text>
+<text x="83.3" y="946" font-size="10.5" fill="#0F172A" font-weight="600">Z4 ↔ Z3 network</text>
+<text x="420" y="946" font-size="10.5" fill="#334155">athena RPCs, uploads, SSH, git updates, AGNOS images, LFS objects</text>
+<text x="1150" y="946" font-size="10.5" fill="#334155">TS-06, TS-07, TS-08, TS-10</text>
+<text x="1480" y="946" font-size="10.5" fill="#334155" font-weight="600" text-anchor="end">22 CSR</text>
+<line x1="40" y1="956" x2="1480" y2="956" stroke="#E2E8F0"/>
+<rect x="40" y="963" width="37.6" height="18" rx="9" fill="#0F172A"/><text x="58.8" y="975.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TB-4</text>
+<text x="83.6" y="976" font-size="10.5" fill="#0F172A" font-weight="600">Z3 → Z2 local integrity</text>
+<text x="420" y="976" font-size="10.5" fill="#334155">Params, msgq, model files, filesystem</text>
+<text x="1150" y="976" font-size="10.5" fill="#334155">TS-04, TS-09, TS-12</text>
+<text x="1480" y="976" font-size="10.5" fill="#334155" font-weight="600" text-anchor="end">9 CSR</text>
+<line x1="40" y1="986" x2="1480" y2="986" stroke="#E2E8F0"/>
+<rect x="40" y="993" width="37.2" height="18" rx="9" fill="#0F172A"/><text x="58.6" y="1005.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TB-5</text>
+<text x="83.2" y="1006" font-size="10.5" fill="#0F172A" font-weight="600">Z1 ↔ Z5 vehicle CAN</text>
+<text x="420" y="1006" font-size="10.5" fill="#334155">RX plausibility inputs, TX actuation, PCS forwarding</text>
+<text x="1150" y="1006" font-size="10.5" fill="#334155">TS-01</text>
+<text x="1480" y="1006" font-size="10.5" fill="#334155" font-weight="600" text-anchor="end">3 CSR</text>
+<line x1="40" y1="1016" x2="1480" y2="1016" stroke="#E2E8F0"/>
+<rect x="40" y="1023" width="37.3" height="18" rx="9" fill="#0F172A"/><text x="58.6" y="1035.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TB-6</text>
+<text x="83.3" y="1036" font-size="10.5" fill="#0F172A" font-weight="600">Z6 → device</text>
+<text x="420" y="1036" font-size="10.5" fill="#334155">Signed images and manifests; release key material never crosses</text>
+<text x="1150" y="1036" font-size="10.5" fill="#334155">TS-05, TS-06, TS-10</text>
+<text x="1480" y="1036" font-size="10.5" fill="#334155" font-weight="600" text-anchor="end">7 CSR</text>
+<line x1="40" y1="1046" x2="1480" y2="1046" stroke="#E2E8F0"/>
+<rect x="40" y="1053" width="36.6" height="18" rx="9" fill="#0F172A"/><text x="58.3" y="1065.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TB-7</text>
+<text x="82.6" y="1066" font-size="10.5" fill="#0F172A" font-weight="600">Z7 physical</text>
+<text x="420" y="1066" font-size="10.5" fill="#334155">Data and keys at rest</text>
+<text x="1150" y="1066" font-size="10.5" fill="#334155">TS-11, TS-13</text>
+<text x="1480" y="1066" font-size="10.5" fill="#334155" font-weight="600" text-anchor="end">6 CSR</text>
+<text x="40" y="1100" font-size="11.5" fill="#334155">Zones and boundaries carry every column of WP-S-07 §3.1 and §3.2 (check M10); the chips are the model elements in each zone (@Zone). Every safety-relevant protection sits at Z1 or below it in the trust order.</text>
+<line x1="40" y1="1116" x2="1480" y2="1116" stroke="#E2E8F0"/>
+<rect x="40" y="1138" width="18" height="14" rx="4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="64" y="1149" font-size="11" fill="#334155">Trusted (envelope)</text>
+<rect x="179.1" y="1138" width="18" height="14" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="203.1" y="1149" font-size="11" fill="#334155">QM, assumed compromisable</text>
+<rect x="373.9" y="1138" width="18" height="14" rx="4" fill="#FAF5FF" stroke="#A855F7" stroke-width="1.4"/>
+<text x="397.9" y="1149" font-size="11" fill="#334155">Untrusted</text>
+<rect x="465.4" y="1138" width="18" height="14" rx="4" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="489.4" y="1149" font-size="11" fill="#334155">Owner-controlled</text>
+<rect x="597" y="1138" width="18" height="14" rx="4" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="621" y="1149" font-size="11" fill="#334155">Trusted, outside the device</text>
+<text x="40" y="1192" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+</svg>
