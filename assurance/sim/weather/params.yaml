@@ -143,3 +143,16 @@ braking:
   grade_pct: {value: 4.0, status: assumed, source: "a steep downhill on an Interstate (the hydroplaning study's steepest grade)"}
   reaction_s: {value: 0.5, status: assumed, source: "from the planner's decision to the brakes at the item's rate, a round half second"}
   rain_mm_h: [2.5, 7.6, 15.0, 30.0]
+
+gust:
+  # A gust through the car and its lane keeping (gust.py): the crosswind study's loads, changing in time, on a
+  # single-track Corolla steered by the plant's perfect-perception controller through the EPS lag and opendbc's
+  # torque limits.
+  speed_kph: 110.0
+  wind_kph: {value: 30.0, status: published, source: "WP-V-03 KS-02: crosswind of 30 km/h and more"}
+  step_rise: {status: assumed, source: "leaving a cutting or a bridge's shelter: the wind reaches the whole car while it drives its own length"}
+  cosine_periods_s: {value: [0.5, 1.0, 2.0, 4.0, 8.0], status: assumed,
+                     source: "one-minus-cosine gusts of these lengths: from a gap in a hedge or between buildings (short) to open country (long); amplitude the KS-02 wind"}
+  lane_width_m: {value: 3.7, narrow: 3.3, status: published, source: "12 ft Interstate lane; 3.3 m is WP-C-06 TC-32's narrow lane"}
+  duration_s: 14.0
+  quasi_steady: {status: assumed, source: "the loads follow the wind instantly (quasi-steady); real flow builds up over about a car length, so short gusts are on the safe side"}

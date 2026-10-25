@@ -10,6 +10,7 @@ import math
 from pathlib import Path
 
 import matplotlib
+import matplotlib.ticker
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
@@ -720,3 +721,85 @@ def braking_figures(p, r, out: Path):
   _braking_mu(r, out / "fig-wx-14-braking-friction.webp")
   _braking_anim(r, out / "fig-wx-15-braking-anim.webp")
   _report(out, "fig-wx-14", "fig-wx-15")
+
+
+# ------------------------------------------------------------------------------------------------ gust
+
+def _gust_peaks(r, path):
+  rows = [x for x in r["rows"] if x["kind"] != "step"]
+  T = np.array([x["period_s"] for x in rows])
+  step = next(x for x in r["rows"] if x["kind"] == "step")
+  room = r["room_m"]
+  fig = plt.figure(figsize=(9, 10), dpi=100)
+  fig.text(0.05, 0.955, "A gust through the car and its lane keeping", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.925, f"Corolla at {r['speed_kph']:.0f} km/h, wind to {r['wind_kph']:.0f} km/h · peak sideways "
+           "movement against the room to the lane line", fontsize=12, color=INK2)
+  ax = fig.add_axes([0.12, 0.2, 0.62, 0.64])
+  for k, lab in (("lane", "room, 3.7 m lane"), ("narrow", "room, 3.3 m lane")):
+    ax.axhline(100 * room[k], color=CRIT, lw=1.8 if k == "lane" else 1.2, ls="-" if k == "lane" else (0, (4, 3)))
+    ax.text(8.6, 100 * room[k], lab, color=CRIT, fontsize=11, va="center")
+  lo = [100 * x["ideal_low"]["peak_m"] for x in rows]
+  hi = [100 * x["ideal_high"]["peak_m"] for x in rows]
+  ax.fill_between(T, lo, hi, color="#86b6ef", alpha=0.45, lw=0)
+  ax.plot(T, hi, color="#2a78d6", lw=2.4, marker="o")
+  ax.plot(T, lo, color="#2a78d6", lw=1.4, marker="o", mfc="white")
+  ax.text(T[-1] * 1.08, hi[-1] + 6, "ideal steering\n(upper / lower band)", fontsize=11, color=INK)
+  fb = [100 * x["feedback_high"]["peak_m"] for x in rows]
+  ax.plot(T, fb, color=MUTED, lw=1.6, ls=(0, (3, 2)), marker="s", ms=5)
+  ax.text(T[-1] * 1.08, fb[-1], "plant's stand-in,\nupper band", fontsize=11, color=INK2, va="center")
+  for e, mk in (("ideal_low", "o"), ("ideal_high", "D")):
+    ax.plot([0.3], [100 * step[e]["peak_m"]], mk, color="#104281", ms=10, mfc="white" if e == "ideal_low" else "#104281")
+  ax.annotate(f"step, upper band: {100 * step['ideal_high']['peak_m']:.0f} cm", (0.3, 100 * step["ideal_high"]["peak_m"]),
+              (0.45, 100 * step["ideal_high"]["peak_m"] - 25), fontsize=11, color=INK)
+  ax.annotate(f"step, lower band: {100 * step['ideal_low']['peak_m']:.0f} cm", (0.3, 100 * step["ideal_low"]["peak_m"]),
+              (0.45, 100 * step["ideal_low"]["peak_m"] + 25), fontsize=11, color=INK)
+  ax.set_xscale("log"); ax.set_xlim(0.22, 9); ax.set_ylim(0, 260)
+  ax.xaxis.set_minor_locator(matplotlib.ticker.NullLocator())
+  ax.set_xticks([0.3, 0.5, 1, 2, 4, 8]); ax.set_xticklabels(["step", "0.5", "1", "2", "4", "8"])
+  ax.set_xlabel("gust length, s (one-minus-cosine)"); ax.set_ylabel("peak sideways movement, cm")
+  ax.grid(axis="y", color=GRID); ax.spines[["top", "right"]].set_visible(False)
+  fig.text(0.05, 0.075, "Ideal steering adds the gust's push at once; only opendbc's torque rise limit and the EPS lag\n"
+           "hold it back. In the upper band the steady push takes 89 % of the steering, so a step is not caught.",
+           fontsize=11.5, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def _gust_anim(r, path):
+  t = np.array(r["t_s"])
+  lo, hi = r["traces"]["ideal-low-step-0"], r["traces"]["ideal-high-step-0"]
+  lane, width = 3.7, 1.781
+  top = _top_outline()
+  sel = np.arange(0, len(t), 3)[: int(9.0 / (t[1] - t[0]) / 3)]
+  frames = []
+  for i in sel:
+    fig = plt.figure(figsize=(7.2, 9), dpi=80)
+    fig.text(0.05, 0.955, "Leaving shelter into a 30 km/h wind", fontsize=18, weight="bold", color=INK)
+    fig.text(0.05, 0.925, "110 km/h, ideal steering · the wind's load band, lower and upper", fontsize=12, color=INK2)
+    fig.text(0.95, 0.885, f"t = {max(t[i] - 1.0, 0):3.1f} s", ha="right", fontsize=15, color=INK, family="DejaVu Sans Mono")
+    for k, (tr, title) in enumerate(((lo, "lower band"), (hi, "upper band"))):
+      ax = fig.add_axes([0.04 + k * 0.48, 0.2, 0.44, 0.62]); ax.set_xlim(-3.2, 3.2); ax.set_ylim(-2, 14); ax.set_aspect("equal")
+      ax.axis("off")
+      ax.add_patch(Rectangle((-3.2, -2), 6.4, 16, color="#d6d4cc"))
+      for xl, st in ((-lane / 2, "-"), (lane / 2, "-")):
+        ax.plot([xl, xl], [-2, 14], color="white", lw=2.5, ls=st)
+      y = tr["y"][i]
+      over = abs(y) + width / 2 > lane / 2
+      car = np.c_[-top[:, 1] + y, top[:, 0] + 3]      # downwind (+y) is to the right, the wind from the left
+      ax.add_patch(Polygon(car, color="#c84b2f" if over else "#6d6b64", ec=INK, lw=1))
+      if tr["w"][i] > 0.5:
+        for yy in (1, 5, 9):
+          ax.annotate("", (-1.2, yy), (-2.9, yy), arrowprops=dict(arrowstyle="->", color="#1c5cab", lw=1.6))
+      ax.text(0, 12.6, f"{title}\n{100 * abs(y):3.0f} cm", ha="center", fontsize=12, color=INK, weight="bold")
+    fig.text(0.05, 0.1, "Top view of the 3.7 m lane, the wind from the left. In the upper band the steady\npush takes "
+             "almost all the steering, and the car leaves the lane.", fontsize=10.5, color=INK2)
+    _stamp(fig, "SYNTHETIC (DSR-12) · design aid, no credit · textbook loads")
+    frames.append(_png(fig))
+  _anim(frames, [120] * (len(frames) - 1) + [2500], path)
+
+
+def gust_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _gust_peaks(r, out / "fig-wx-16-gust-peaks.webp")
+  _gust_anim(r, out / "fig-wx-17-gust-anim.webp")
+  _report(out, "fig-wx-16", "fig-wx-17")

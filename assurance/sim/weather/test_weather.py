@@ -26,6 +26,13 @@ Wet braking
   B2  The item's bound is read from opendbc (−3.5 m/s²) and equals WP-C-02 F-02; a level road needs 3.5/9.81.
   B3  Two sources agree: at 2 mm of water and speeds above NASA's hydroplaning speed the handbook gives at most 0.05.
   B4  Stopping distance: v·t + v²/2a, and the 110 km/h, 3.5 m/s² stop is 133 m plus the reaction distance.
+Gust
+  G1  The lane keeping's law is read from plant/simulate.py and the torque limits from opendbc (Corolla, torque
+      tuning); the limiter is opendbc's own function and raises the torque 15 units per frame.
+  G2  Open loop, a fixed steer angle settles at the neutral-steer yaw rate v·delta/L (the crosswind convention).
+  G3  A wind that rises and stays: with ideal steering the steering settles at the crosswind study's push (1 %) and
+      the car within 5 cm of the lane centre (it crabs into the wind; the law's heading term holds it about 2 cm off).
+  G4  No wind, no movement.
 Road crown
   R1  The roll path read from openpilot is the one reviewed: compensation by params.roll·g, calibration roll taken as
       zero, 20 Hz, process noise 1°/√s, fallback noise 10°, validity limit 1.5°. A change in the code fails here.
@@ -40,6 +47,7 @@ Synthetic (DSR-12), design aid, no evidence credit.
 from __future__ import annotations
 
 import json
+import math
 import re
 import sys
 import unittest
@@ -54,6 +62,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import climate  # noqa: E402
 import hydroplaning as hp  # noqa: E402
+import gust as gu  # noqa: E402
 import road_crown as rc  # noqa: E402
 import wet_braking as wb  # noqa: E402
 import windshield_fog as wf  # noqa: E402
@@ -291,6 +300,46 @@ class Braking(unittest.TestCase):
     self.assertAlmostEqual(wb.stop_m(110.0, 3.5, 0.0), v * v / 7.0, places=9)
     self.assertAlmostEqual(wb.stop_m(110.0, 3.5, 0.0), 133.4, places=1)
     self.assertAlmostEqual(wb.stop_m(110.0, 3.5, 0.5) - wb.stop_m(110.0, 3.5, 0.0), v * 0.5, places=9)
+
+
+class Gust(unittest.TestCase):
+  def setUp(self):
+    self.c, self.k = cw.corolla(), gu.code()
+    self.v = 110 / 3.6
+
+  def test_g1_code(self):
+    k = self.k
+    self.assertEqual((k["k_y"], k["k_psi"], k["delta_up"], k["delta_down"], k["steer_error_max"], k["steer_max"]),
+                     (1.0, 1.6, 15, 25, 350, 1500))
+    self.assertEqual(int(k["limiter"](1500, 0, 0, 15, 25, 350, 1500)), 15)
+    self.assertEqual(int(k["limiter"](1500, 300, 300, 15, 25, 350, 1500)), 315)
+
+  def test_g2_open_loop_yaw_rate(self):
+    t = np.arange(0, 6, gu.DT)
+    z = np.zeros_like(t)
+    delta = 0.002
+    res = gu.simulate(self.c, self.k, self.v, z, z, t, controller=False, delta_open=delta)
+    self.assertLess(abs(res["r"] / (self.v * delta / self.c["L"]) - 1), 0.005)
+
+  def test_g3_settles_at_the_push(self):
+    p = yaml.safe_load((HERE / "params.yaml").read_text(encoding="utf-8"))
+    geom = json.loads(cw.GEOM.read_text(encoding="utf-8"))
+    prof = cw.profile(geom)
+    x_cg = prof["front_axle_x"] - self.c["a"]
+    t = np.arange(0, 25, gu.DT)
+    w = np.clip((t - 1.0) / 5.0, 0, 1) * 5.0
+    Y, N = gu.loads_series(p, prof, x_cg, self.v, w, "low")
+    ff = np.array([-math.copysign(cw.push(yy, nn, self.v, self.c), yy) if yy else 0.0 for yy, nn in zip(Y, N, strict=True)])
+    res = gu.simulate(self.c, self.k, self.v, Y, N, t, feedforward=ff)
+    self.assertLess(abs(abs(res["a_eps"][-1]) / abs(ff[-1]) - 1), 0.01)
+    # the car crabs into the wind at a small heading; the law's heading term holds it about 2 cm off the centre
+    self.assertLess(abs(res["y"][-1]), 0.05)
+
+  def test_g4_still_air(self):
+    t = np.arange(0, 3, gu.DT)
+    z = np.zeros_like(t)
+    res = gu.simulate(self.c, self.k, self.v, z, z, t)
+    self.assertEqual(float(np.abs(res["y"]).max()), 0.0)
 
 
 class Crown(unittest.TestCase):
