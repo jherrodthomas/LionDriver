@@ -1,0 +1,199 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1426" viewBox="0 0 1280 1426" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 4-1. What the SoC can ask the safety MCU to do (WP-S-05 §4.2)</title>
+<desc>28 control requests of WP-S-05 §4.2. 0xa8 read microsecond timer: needed allow; today none. 0xb0 set IR power: needed allow; today none. 0xb1 / 0xb2 fan power / rpm: needed allow; today none. 0xb5 deep sleep: needed absent; today ALLOW_DEBUG only. 0xb6 read debug log: needed allow; today none. 0xc0 reset comms buffers: needed allow (logged); today none. 0xc1, 0xc3, 0xd0, 0xd3, 0xd4, 0xd6, 0xdd read HW type, UID, serial, signature, version, packet versions: needed allow; today none. 0xc2 CAN health: needed allow; today bounds-checked. 0xc4 interrupt call rate: needed allow; today bounds-checked. 0xc5 drive relay / ignition relay: needed reject; today none (no gate). 0xc6 read SoC GPIO: needed allow; today none. 0xd1 bootloader (param 0) / softloader (param 1): needed reject param 1 in car mode; today param 0 ALLOW_DEBUG; param 1 none (no gate). 0xd2 health packet: needed allow; today none. 0xd8 MCU reset: needed allow (reset is safe if TSR-502 holds); today none. 0xdb OBD CAN multiplexing: needed reject; today none (no gate). 0xdc set safety mode and parameter: needed only reference modes; de-escalation only once TOYOTA active; today none (no gate). 0xde CAN bit rate: needed reject; today speed whitelist only. 0xdf alternative experience: needed keep; release value must be 0; today only outside car modes. 0xe5 CAN loopback: needed reject; today none (no gate). 0xe6 clock-source timer parameters: needed reject; today none (no gate). 0xe7 power save: needed reject while authority possible; today none (no gate). 0xe8 CAN-FD auto switching: needed reject; bounds-check; today none (no gate). 0xf1 clear CAN queues: needed reject in car mode; today bus index checked. 0xf3 heartbeat, param1 = engaged: needed carry control-loop evidence; today none (no gate). 0xf6 siren enable: needed allow; today none. 0xf8 disable heartbeat checks: needed keep; today refused in car modes. 0xf9, 0xfc CAN-FD data rate / non-ISO: needed reject; today bus index checked. 0xfb deep sleep (host panda.cc): needed —; today not handled in application (falls to default).</desc>
+<defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="1426" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 4-1 · What the SoC can ask the safety MCU to do</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">The 28 control requests of §4.2 by the treatment a release build needs in a car mode, each with its effect and its gating at the baseline: 9 that must be refused or limited have no gate today</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-S-05 §4.2</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="30" y="104" width="1220" height="406" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="129" font-size="14" fill="#D2553F" font-weight="700">Must be refused in a car mode, or absent from release builds (11)</text>
+<rect x="40" y="140" width="292.5" height="112" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="52" y="159" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xb5</text>
+<rect x="245.6" y="147" width="78.9" height="17" rx="8.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1.1"/>
+<text x="285.1" y="159" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">gated today</text>
+<text x="52" y="178" font-size="10.5" fill="#0F172A" font-weight="600">deep sleep</text>
+<text x="52" y="191.5" font-size="10" fill="#475569">enters SILENT, power save</text>
+<text x="52" y="240" font-size="9.5" fill="#475569">today: ALLOW_DEBUG only · needed: absent</text>
+<rect x="342.5" y="140" width="292.5" height="112" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="2"/>
+<text x="354.5" y="159" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xc5</text>
+<rect x="536.3" y="147" width="90.7" height="17" rx="8.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.1"/>
+<text x="581.6" y="159" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">no gate today</text>
+<text x="354.5" y="178" font-size="10.5" fill="#0F172A" font-weight="600">drive relay / ignition relay</text>
+<text x="354.5" y="191.5" font-size="10" fill="#475569">can release or engage relay at any time</text>
+<text x="354.5" y="240" font-size="9.5" fill="#475569">today: none · needed: reject</text>
+<rect x="645" y="140" width="292.5" height="112" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="2"/>
+<text x="657" y="159" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xd1</text>
+<rect x="838.8" y="147" width="90.7" height="17" rx="8.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.1"/>
+<text x="884.1" y="159" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">no gate today</text>
+<text x="657" y="178" font-size="10.5" fill="#0F172A" font-weight="600">bootloader (param 0) / softloader (param 1)</text>
+<text x="657" y="191.5" font-size="10" fill="#475569">firmware replacement</text>
+<text x="657" y="228" font-size="9.5" fill="#475569">today: param 0 ALLOW_DEBUG; param 1 none · needed:</text>
+<text x="657" y="240" font-size="9.5" fill="#475569">reject param 1 in car mode</text>
+<rect x="947.5" y="140" width="292.5" height="112" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="2"/>
+<text x="959.5" y="159" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xdb</text>
+<rect x="1141.3" y="147" width="90.7" height="17" rx="8.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.1"/>
+<text x="1186.7" y="159" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">no gate today</text>
+<text x="959.5" y="178" font-size="10.5" fill="#0F172A" font-weight="600">OBD CAN multiplexing</text>
+<text x="959.5" y="191.5" font-size="10" fill="#475569">changes CAN pin routing</text>
+<text x="959.5" y="240" font-size="9.5" fill="#475569">today: none · needed: reject</text>
+<rect x="40" y="262" width="292.5" height="112" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="52" y="281" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xde</text>
+<rect x="245.6" y="269" width="78.9" height="17" rx="8.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1.1"/>
+<text x="285.1" y="281" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">gated today</text>
+<text x="52" y="300" font-size="10.5" fill="#0F172A" font-weight="600">CAN bit rate</text>
+<text x="52" y="313.5" font-size="10" fill="#475569">can disable a bus</text>
+<text x="52" y="362" font-size="9.5" fill="#475569">today: speed whitelist only · needed: reject</text>
+<rect x="342.5" y="262" width="292.5" height="112" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="2"/>
+<text x="354.5" y="281" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xe5</text>
+<rect x="536.3" y="269" width="90.7" height="17" rx="8.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.1"/>
+<text x="581.6" y="281" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">no gate today</text>
+<text x="354.5" y="300" font-size="10.5" fill="#0F172A" font-weight="600">CAN loopback</text>
+<text x="354.5" y="313.5" font-size="10" fill="#475569">breaks bus communication</text>
+<text x="354.5" y="362" font-size="9.5" fill="#475569">today: none · needed: reject</text>
+<rect x="645" y="262" width="292.5" height="112" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="2"/>
+<text x="657" y="281" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xe6</text>
+<rect x="838.8" y="269" width="90.7" height="17" rx="8.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.1"/>
+<text x="884.1" y="281" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">no gate today</text>
+<text x="657" y="300" font-size="10.5" fill="#0F172A" font-weight="600">clock-source timer parameters</text>
+<text x="657" y="313.5" font-size="10" fill="#475569">timing</text>
+<text x="657" y="362" font-size="9.5" fill="#475569">today: none · needed: reject</text>
+<rect x="947.5" y="262" width="292.5" height="112" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="2"/>
+<text x="959.5" y="281" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xe7</text>
+<rect x="1141.3" y="269" width="90.7" height="17" rx="8.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.1"/>
+<text x="1186.7" y="281" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">no gate today</text>
+<text x="959.5" y="300" font-size="10.5" fill="#0F172A" font-weight="600">power save</text>
+<text x="959.5" y="313.5" font-size="10" fill="#475569">disables transceivers and CAN IRQs</text>
+<text x="959.5" y="362" font-size="9.5" fill="#475569">today: none · needed: reject while authority possible</text>
+<rect x="40" y="384" width="292.5" height="112" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="2"/>
+<text x="52" y="403" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xe8</text>
+<rect x="233.8" y="391" width="90.7" height="17" rx="8.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.1"/>
+<text x="279.1" y="403" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">no gate today</text>
+<text x="52" y="422" font-size="10.5" fill="#0F172A" font-weight="600">CAN-FD auto switching</text>
+<text x="52" y="435.5" font-size="10" fill="#475569">CAN config; param1 not bounds-checked</text>
+<text x="52" y="484" font-size="9.5" fill="#475569">today: none · needed: reject; bounds-check</text>
+<rect x="342.5" y="384" width="292.5" height="112" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="354.5" y="403" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xf1</text>
+<rect x="548.1" y="391" width="78.9" height="17" rx="8.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1.1"/>
+<text x="587.5" y="403" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">gated today</text>
+<text x="354.5" y="422" font-size="10.5" fill="#0F172A" font-weight="600">clear CAN queues</text>
+<text x="354.5" y="435.5" font-size="10" fill="#475569">can drop queued actuation/forwarded frames</text>
+<text x="354.5" y="484" font-size="9.5" fill="#475569">today: bus index checked · needed: reject in car mode</text>
+<rect x="645" y="384" width="292.5" height="112" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="657" y="403" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xf9, 0xfc</text>
+<rect x="850.6" y="391" width="78.9" height="17" rx="8.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1.1"/>
+<text x="890" y="403" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">gated today</text>
+<text x="657" y="422" font-size="10.5" fill="#0F172A" font-weight="600">CAN-FD data rate / non-ISO</text>
+<text x="657" y="435.5" font-size="10" fill="#475569">CAN config</text>
+<text x="657" y="484" font-size="9.5" fill="#475569">today: bus index checked · needed: reject</text>
+<rect x="30" y="524" width="1220" height="162" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="549" font-size="14" fill="#D97706" font-weight="700">Allowed only under a condition (4)</text>
+<rect x="40" y="560" width="292.5" height="112" rx="8" fill="#FFFBEB" stroke="#D2553F" stroke-width="2"/>
+<text x="52" y="579" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xdc</text>
+<rect x="233.8" y="567" width="90.7" height="17" rx="8.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.1"/>
+<text x="279.1" y="579" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">no gate today</text>
+<text x="52" y="598" font-size="10.5" fill="#0F172A" font-weight="600">set safety mode and parameter</text>
+<text x="52" y="611.5" font-size="10" fill="#475569">configures the envelope</text>
+<text x="52" y="648" font-size="9.5" fill="#475569">today: none · needed: only reference modes; de-escalation</text>
+<text x="52" y="660" font-size="9.5" fill="#475569">only once TOYOTA active</text>
+<rect x="342.5" y="560" width="292.5" height="112" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="354.5" y="579" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xdf</text>
+<rect x="548.1" y="567" width="78.9" height="17" rx="8.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1.1"/>
+<text x="587.5" y="579" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">gated today</text>
+<text x="354.5" y="598" font-size="10.5" fill="#0F172A" font-weight="600">alternative experience</text>
+<text x="354.5" y="611.5" font-size="10" fill="#475569">changes safety behaviour flags</text>
+<text x="354.5" y="648" font-size="9.5" fill="#475569">today: only outside car modes · needed: keep; release value</text>
+<text x="354.5" y="660" font-size="9.5" fill="#475569">must be 0</text>
+<rect x="645" y="560" width="292.5" height="112" rx="8" fill="#FFFBEB" stroke="#D2553F" stroke-width="2"/>
+<text x="657" y="579" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xf3</text>
+<rect x="838.8" y="567" width="90.7" height="17" rx="8.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.1"/>
+<text x="884.1" y="579" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">no gate today</text>
+<text x="657" y="598" font-size="10.5" fill="#0F172A" font-weight="600">heartbeat, param1 = engaged</text>
+<text x="657" y="611.5" font-size="10" fill="#475569">resets heartbeat counter, sets heartbeat_engaged</text>
+<text x="657" y="660" font-size="9.5" fill="#475569">today: none · needed: carry control-loop evidence</text>
+<rect x="947.5" y="560" width="292.5" height="112" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="959.5" y="579" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xf8</text>
+<rect x="1153.1" y="567" width="78.9" height="17" rx="8.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1.1"/>
+<text x="1192.5" y="579" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">gated today</text>
+<text x="959.5" y="598" font-size="10.5" fill="#0F172A" font-weight="600">disable heartbeat checks</text>
+<text x="959.5" y="611.5" font-size="10" fill="#475569">removes SoC supervision</text>
+<text x="959.5" y="660" font-size="9.5" fill="#475569">today: refused in car modes · needed: keep</text>
+<rect x="30" y="700" width="1220" height="406" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="725" font-size="14" fill="#0F172A" font-weight="700">Allowed: no effect on safety, or the effect is itself safe (12)</text>
+<rect x="40" y="736" width="292.5" height="112" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="52" y="755" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xa8</text>
+<text x="52" y="774" font-size="10.5" fill="#0F172A" font-weight="600">read microsecond timer</text>
+<text x="52" y="787.5" font-size="10" fill="#475569">none</text>
+<rect x="342.5" y="736" width="292.5" height="112" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="354.5" y="755" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xb0</text>
+<text x="354.5" y="774" font-size="10.5" fill="#0F172A" font-weight="600">set IR power</text>
+<text x="354.5" y="787.5" font-size="10" fill="#475569">none (DM camera illumination: SOTIF)</text>
+<rect x="645" y="736" width="292.5" height="112" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="657" y="755" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xb1 / 0xb2</text>
+<text x="657" y="774" font-size="10.5" fill="#0F172A" font-weight="600">fan power / rpm</text>
+<text x="657" y="787.5" font-size="10" fill="#475569">thermal</text>
+<text x="657" y="836" font-size="9.5" fill="#475569">TSR 509</text>
+<rect x="947.5" y="736" width="292.5" height="112" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="959.5" y="755" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xb6</text>
+<text x="959.5" y="774" font-size="10.5" fill="#0F172A" font-weight="600">read debug log</text>
+<text x="959.5" y="787.5" font-size="10" fill="#475569">none</text>
+<rect x="40" y="858" width="292.5" height="112" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="52" y="877" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xc0</text>
+<text x="52" y="896" font-size="10.5" fill="#0F172A" font-weight="600">reset comms buffers</text>
+<text x="52" y="909.5" font-size="10" fill="#475569">may drop a partial CAN packet</text>
+<text x="52" y="958" font-size="9.5" fill="#475569">TSR 410</text>
+<rect x="342.5" y="858" width="292.5" height="112" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="354.5" y="877" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xc1, 0xc3, 0xd0, 0xd3, 0xd4,…</text>
+<text x="354.5" y="896" font-size="10.5" fill="#0F172A" font-weight="600">read HW type, UID, serial, signature, version,</text>
+<text x="354.5" y="909.5" font-size="10.5" fill="#0F172A" font-weight="600">packet versions</text>
+<text x="354.5" y="923" font-size="10" fill="#475569">none</text>
+<text x="354.5" y="958" font-size="9.5" fill="#475569">TSR 514 (version shows build type)</text>
+<rect x="645" y="858" width="292.5" height="112" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="657" y="877" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xc2</text>
+<text x="657" y="896" font-size="10.5" fill="#0F172A" font-weight="600">CAN health</text>
+<text x="657" y="909.5" font-size="10" fill="#475569">none</text>
+<rect x="947.5" y="858" width="292.5" height="112" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="959.5" y="877" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xc4</text>
+<text x="959.5" y="896" font-size="10.5" fill="#0F172A" font-weight="600">interrupt call rate</text>
+<text x="959.5" y="909.5" font-size="10" fill="#475569">none</text>
+<rect x="40" y="980" width="292.5" height="112" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="52" y="999" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xc6</text>
+<text x="52" y="1018" font-size="10.5" fill="#0F172A" font-weight="600">read SoC GPIO</text>
+<text x="52" y="1031.5" font-size="10" fill="#475569">none</text>
+<rect x="342.5" y="980" width="292.5" height="112" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="354.5" y="999" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xd2</text>
+<text x="354.5" y="1018" font-size="10.5" fill="#0F172A" font-weight="600">health packet</text>
+<text x="354.5" y="1031.5" font-size="10" fill="#475569">none (diagnostic input to SoC)</text>
+<text x="354.5" y="1080" font-size="9.5" fill="#475569">TSR 615</text>
+<rect x="645" y="980" width="292.5" height="112" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="657" y="999" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xd8</text>
+<text x="657" y="1018" font-size="10.5" fill="#0F172A" font-weight="600">MCU reset</text>
+<text x="657" y="1031.5" font-size="10" fill="#475569">→ SS-S after reset</text>
+<text x="657" y="1080" font-size="9.5" fill="#475569">TSR 502</text>
+<rect x="947.5" y="980" width="292.5" height="112" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="959.5" y="999" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xf6</text>
+<text x="959.5" y="1018" font-size="10.5" fill="#0F172A" font-weight="600">siren enable</text>
+<text x="959.5" y="1031.5" font-size="10" fill="#475569">warning</text>
+<text x="959.5" y="1080" font-size="9.5" fill="#475569">TSR 516</text>
+<rect x="30" y="1120" width="1220" height="162" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="1145" font-size="14" fill="#94A3B8" font-weight="700">Not handled by the application (1)</text>
+<rect x="40" y="1156" width="292.5" height="112" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="52" y="1175" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xfb</text>
+<text x="52" y="1194" font-size="10.5" fill="#0F172A" font-weight="600">deep sleep (host panda.cc)</text>
+<text x="52" y="1207.5" font-size="10" fill="#475569">—</text>
+<text x="52" y="1256" font-size="9.5" fill="#475569">today: not handled in application (falls to default)</text>
+<rect x="40" y="1290" width="30" height="16" rx="6" fill="#FEF2F2" stroke="#D2553F" stroke-width="2"/>
+<text x="78" y="1302" font-size="11" fill="#0F172A">no gate today: the SoC can use it now in any mode</text>
+<rect x="400" y="1290" width="30" height="16" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="438" y="1302" font-size="11" fill="#0F172A">gated today, but not yet as required</text>
+<text x="700" y="1302" font-size="11" fill="#475569">The table and figure describe the baseline; the reference build adds the mode lock of TSR-512.</text>
+<text x="40" y="1320" font-size="11" fill="#475569">Generated by fig_s05_requests.py from WP-S-05 §4.2; the release whitelist per mode is OI-3.</text>
+<g class="terms">
+<text x="40" y="1342" font-size="10.5" fill="#475569">Terms: CAN controller area network: the vehicle's data bus · DM driver monitoring · GPIO general-purpose input/output pin · HW hardware · IR infrared · IRQ interrupt request · MCU microcontroller: the panda safety</text>
+<text x="40" y="1356.5" font-size="10.5" fill="#475569">processor (STM32H7) · OBD on-board diagnostics port · OI-nn open item of the document it appears in · SILENT the panda's safety mode that sends nothing · SoC system on chip: the comma device's main processor,</text>
+<text x="40" y="1371" font-size="10.5" fill="#475569">running openpilot (QM) · SOTIF safety of the intended functionality (ISO 21448): hazards with nothing failing · SS-nn safe state (FSC §6): SS-L lateral, SS-G longitudinal, SS-S envelope silent · TOYOTA the panda's</text>
+<text x="40" y="1385.5" font-size="10.5" fill="#475569">Toyota car mode (parameter 73 in the reference build) · TSR-nn technical safety requirement (WP-S-02) · UID unique identifier of the chip · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C</text>
+<text x="40" y="1400" font-size="10.5" fill="#475569">concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>

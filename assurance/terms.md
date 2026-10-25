@@ -11,13 +11,14 @@ Every abbreviation and record code used on the assurance pages and figures is de
 3. **On every figure.** Each generated figure ends with a "Terms:" line for what it draws, so a figure read on its own still explains itself.
 4. **Checked.** CI fails if a block is stale, a figure lacks its line, or a page or figure uses a term that is not in the list. To add one, add it to `TERMS` and run `python3 assurance/trace/tools/terms.py`.
 
-Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md), [odd](02-concept/odd/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md). Other pages and older figures join the list as they are reworked.
+Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md), [hsi](03-system/hsi/README.md), [odd](02-concept/odd/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md). Other pages and older figures join the list as they are reworked.
 
 ## Abbreviations
 
 | Term | Meaning |
 |---|---|
 | ACC | adaptive cruise control |
+| ACK | acknowledge (NACK: not acknowledge) |
 | AEB | automatic emergency braking |
 | AGNOS | the comma device's operating system |
 | AI | artificial intelligence |
@@ -35,8 +36,10 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | DC | diagnostic coverage: the share of faults a safety mechanism detects |
 | DFA | dependent failure analysis |
 | DM | driver monitoring |
+| DMA | direct memory access: hardware that copies data without the processor |
 | DRV | the driver |
 | DSU | driving support unit (Toyota's radar cruise module) |
+| DTCM | the MCU's tightly coupled data memory, where the safety state lives |
 | E/E | electrical and electronic (systems) |
 | ECC | error-correcting code (memory) |
 | ECM | engine control module |
@@ -45,6 +48,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | EPS | electric power steering |
 | EV | exposure value: one EV halves or doubles the light |
 | FCW | forward collision warning |
+| FD | flexible data rate (CAN FD: CAN with a faster data phase and up to 64 bytes) |
 | FDCAN | CAN with flexible data rate (the MCU's CAN controller) |
 | FDTI | fault detection time interval |
 | FFI | freedom from interference |
@@ -57,6 +61,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | FTTI | fault-tolerant time interval: fault to hazard, the time a safety mechanism has |
 | FW | firmware |
 | GNSS | global navigation satellite system (GPS) |
+| GPIO | general-purpose input/output pin |
 | GPS | global positioning system |
 | GPU | graphics processor (runs the models) |
 | HARA | hazard analysis and risk assessment (ISO 26262-3) |
@@ -68,6 +73,8 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | HW | hardware |
 | ID | identifier |
 | IPC | inter-process communication |
+| IR | infrared |
+| IRQ | interrupt request |
 | ISO | International Organization for Standardization |
 | ISR | interrupt service routine |
 | IWDG | independent watchdog of the MCU |
@@ -83,6 +90,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | ML | machine learning |
 | MPU | memory protection unit |
 | NA | not applicable |
+| NACK | not acknowledge |
 | NOOUTPUT | the panda's safety mode that receives but sends nothing |
 | NRST | the MCU's reset line (BOOT0 is its boot-mode line) |
 | NSC | not safety-critical |
@@ -103,18 +111,22 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | QM | quality managed: no ASIL; ordinary quality processes suffice |
 | RAM | random-access memory |
 | RDP | read-out protection of the MCU's flash (option bytes) |
+| ROM | read-only memory |
 | RPC | remote procedure call |
+| RSA-1024 | RSA signature with a 1024-bit key, too short today |
 | RT | real time |
 | RTK | real-time kinematic GPS, accurate to centimetres |
 | RX | receive |
 | SAE | SAE International (formerly the Society of Automotive Engineers) |
 | SC | safety-critical (a guide-word pair that can cause a hazard) |
+| SHA-1 | secure hash algorithm 1, an outdated hash |
 | SHA-256 | a cryptographic hash used to identify a file exactly |
 | SILENT | the panda's safety mode that sends nothing |
 | SoC | system on chip: the comma device's main processor, running openpilot (QM) |
 | SOTIF | safety of the intended functionality (ISO 21448): hazards with nothing failing |
 | SPI | serial peripheral interface (the link between SoC and MCU) |
 | SSH | secure shell (remote login) |
+| ST | STMicroelectronics, the maker of the safety MCU |
 | STPA | system-theoretic process analysis |
 | STRIDE | spoofing, tampering, repudiation, information disclosure, denial of service, elevation of privilege |
 | SVG | scalable vector graphics (the figure format) |
@@ -125,6 +137,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | TSC | technical safety concept |
 | TSS | Toyota Safety Sense (TSS 2.0: the car's stock lane assist, radar cruise and pre-collision package) |
 | TX | transmit |
+| UID | unique identifier of the chip |
 | URL | web address |
 | US | United States |
 | VIN | vehicle identification number |
@@ -132,6 +145,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | VSC | vehicle stability control (Toyota's stability system) |
 | WCET | worst-case execution time |
 | WRP | write protection of the MCU's flash (option bytes) |
+| XOR | exclusive or: a simple checksum that misses many multi-bit errors |
 
 ## Record codes
 
