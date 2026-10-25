@@ -11,7 +11,7 @@ Every abbreviation and record code used on the assurance pages and figures is de
 3. **On every figure.** Each generated figure ends with a "Terms:" line for what it draws, so a figure read on its own still explains itself.
 4. **Checked.** CI fails if a block is stale, a figure lacks its line, or a page or figure uses a term that is not in the list. To add one, add it to `TERMS` and run `python3 assurance/trace/tools/terms.py`.
 
-Pages covered: [item](02-concept/item/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md). Other pages and older figures join the list as they are reworked.
+Pages covered: [item](02-concept/item/README.md), [odd](02-concept/odd/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md). Other pages and older figures join the list as they are reworked.
 
 ## Abbreviations
 
@@ -20,6 +20,7 @@ Pages covered: [item](02-concept/item/README.md), [cybersecurity](02-concept/cyb
 | ACC | adaptive cruise control |
 | AEB | automatic emergency braking |
 | AGNOS | the comma device's operating system |
+| AI | artificial intelligence |
 | AoU | assumption of use: what the analysis assumes about the car, the driver or the environment |
 | ASIL | Automotive Safety Integrity Level, A (lowest) to D (highest), from ISO 26262 |
 | BOR | brown-out reset (MCU supply monitor) |
@@ -109,6 +110,7 @@ Pages covered: [item](02-concept/item/README.md), [cybersecurity](02-concept/cyb
 | US | United States |
 | VIN | vehicle identification number |
 | VRU | vulnerable road user: pedestrian or cyclist |
+| VSC | vehicle stability control (Toyota's stability system) |
 | WRP | write protection of the MCU's flash (option bytes) |
 
 ## Record codes
