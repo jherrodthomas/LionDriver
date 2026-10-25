@@ -1,0 +1,549 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="2992" viewBox="0 0 1280 2992" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 4-1. The cybersecurity requirements and where each stands (WP-S-07 §4)</title>
+<desc>64 cybersecurity requirements of WP-S-07 §4. CSR-C-01: CSR-011 (in place, not verified), CSR-012 (partly), CSR-013 (in place, not verified), CSR-014 (partly), CSR-015 (in place, not verified), CSR-016 (not met). CSR-C-02: CSR-021 (not met), CSR-022 (partly), CSR-023 (partly), CSR-024 (partly). CSR-C-03: CSR-031 (not met), CSR-032 (not met), CSR-033 (partly), CSR-034 (not met). CSR-C-04: CSR-041 (not met), CSR-042 (not met), CSR-043 (not met). CSR-C-05: CSR-051 (not met), CSR-052 (not met), CSR-053 (partly), CSR-054 (not met). CSR-C-06: CSR-061 (partly), CSR-062 (not met), CSR-063 (not met), CSR-064 (not determined). CSR-C-07: CSR-071 (not met), CSR-072 (not met), CSR-073 (not met). CSR-C-08: CSR-081 (not met), CSR-082 (not met), CSR-083 (not met). CSR-C-09: CSR-091 (partly), CSR-092 (partly), CSR-093 (partly). CSR-C-10: CSR-101 (not met), CSR-102 (in place, not verified), CSR-103 (not determined), CSR-104 (not met). CSR-C-11: CSR-111 (not met), CSR-112 (partly), CSR-113 (not met), CSR-114 (not met), CSR-115 (not met), CSR-116 (in place, not verified), CSR-117 (not determined). CSR-C-12: CSR-121 (not met), CSR-122 (not met), CSR-123 (not met), CSR-124 (in place, not verified), CSR-125 (partly), CSR-126 (not met). CSR-C-13: CSR-131 (not met), CSR-132 (not met), CSR-133 (not met), CSR-134 (not met), CSR-135 (not met). CSR-C-14: CSR-141 (not determined), CSR-142 (not determined), CSR-143 (not determined), CSR-144 (not determined). CSR-C-15: CSR-151 (partly), CSR-152 (partly). CSR-C-16: CSR-161 (not met), CSR-162 (not met).</desc>
+<defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="2992" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 4-1 · The cybersecurity requirements and where each stands</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">The 64 requirements of §4 in their sixteen groups, each with its allocation and status: 6 in place, 15 partly, 36 not met, 7 not determined; none verified</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-S-07 §4</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="30" y="104" width="1220" height="226" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="128" font-size="13" fill="#0F172A" font-weight="700">CSR-C-01 Safety configuration lock</text>
+<text x="316.4" y="128" font-size="11" fill="#475569">CSG-01 · CAL 3</text>
+<rect x="40" y="138" width="292.5" height="84" rx="8" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.4"/>
+<text x="50" y="156" font-size="11.5" fill="#0F172A" font-weight="700">CSR-011</text>
+<rect x="301.7" y="144" width="22.8" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="313.1" y="156" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FW</text>
+<text x="50" y="174" font-size="9.5" fill="#0F172A">Release panda firmware for the reference configuration shall</text>
+<text x="50" y="186" font-size="9.5" fill="#0F172A">accept a car safety mode only if model, parameter and</text>
+<text x="50" y="198" font-size="9.5" fill="#0F172A">alternative experience equal the compile-time locked values</text>
+<text x="50" y="210" font-size="9.5" fill="#0F172A">recorded in the release record.</text>
+<rect x="342.5" y="138" width="292.5" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="352.5" y="156" font-size="11.5" fill="#0F172A" font-weight="700">CSR-012</text>
+<rect x="604.2" y="144" width="22.8" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="615.6" y="156" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FW</text>
+<text x="352.5" y="174" font-size="9.5" fill="#0F172A">A rejected safety-configuration request shall leave the</text>
+<text x="352.5" y="186" font-size="9.5" fill="#0F172A">panda in a non-actuating mode and set a fault flag reported</text>
+<text x="352.5" y="198" font-size="9.5" fill="#0F172A">to the SoC in the health packet.</text>
+<rect x="645" y="138" width="292.5" height="84" rx="8" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.4"/>
+<text x="655" y="156" font-size="11.5" fill="#0F172A" font-weight="700">CSR-013</text>
+<rect x="906.7" y="144" width="22.8" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="918.1" y="156" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FW</text>
+<text x="655" y="174" font-size="9.5" fill="#0F172A">Transitions from the locked car mode to SILENT or</text>
+<text x="655" y="186" font-size="9.5" fill="#0F172A">NOOUTPUT shall remain permitted at all times.</text>
+<rect x="947.5" y="138" width="292.5" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="957.5" y="156" font-size="11.5" fill="#0F172A" font-weight="700">CSR-014</text>
+<rect x="1209.2" y="144" width="22.8" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="1220.6" y="156" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FW</text>
+<text x="957.5" y="174" font-size="9.5" fill="#0F172A">While a car safety mode is active, release firmware shall</text>
+<text x="957.5" y="186" font-size="9.5" fill="#0F172A">reject host commands outside a documented allow-list,</text>
+<text x="957.5" y="198" font-size="9.5" fill="#0F172A">including relay drive (0xc5), CAN mode/speed changes</text>
+<text x="957.5" y="210" font-size="9.5" fill="#0F172A">(0xdb, 0xde) and loopback.</text>
+<rect x="40" y="232" width="292.5" height="84" rx="8" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.4"/>
+<text x="50" y="250" font-size="11.5" fill="#0F172A" font-weight="700">CSR-015</text>
+<rect x="301.7" y="238" width="22.8" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="313.1" y="250" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FW</text>
+<text x="50" y="268" font-size="9.5" fill="#0F172A">Alternative experience shall not be changeable in release</text>
+<text x="50" y="280" font-size="9.5" fill="#0F172A">firmware for the reference configuration.</text>
+<rect x="342.5" y="232" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="352.5" y="250" font-size="11.5" fill="#0F172A" font-weight="700">CSR-016</text>
+<rect x="597.8" y="238" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="612.4" y="250" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="352.5" y="268" font-size="9.5" fill="#0F172A">pandad shall compare the panda-reported safety model,</text>
+<text x="352.5" y="280" font-size="9.5" fill="#0F172A">parameter and alternative experience with the release-record</text>
+<text x="352.5" y="292" font-size="9.5" fill="#0F172A">values and prevent engagement and raise an alert on</text>
+<text x="352.5" y="304" font-size="9.5" fill="#0F172A">mismatch.</text>
+<rect x="30" y="342" width="1220" height="132" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="366" font-size="13" fill="#0F172A" font-weight="700">CSR-C-02 No debug capability in release firmware</text>
+<text x="422.8" y="366" font-size="11" fill="#475569">CSG-01/CSG-02 · CAL 3</text>
+<rect x="40" y="376" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="50" y="394" font-size="11.5" fill="#0F172A" font-weight="700">CSR-021</text>
+<rect x="295.3" y="382" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="309.9" y="394" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">ENV</text>
+<rect x="268.5" y="382" width="22.8" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="279.9" y="394" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FW</text>
+<text x="50" y="412" font-size="9.5" fill="#0F172A">The release panda firmware and bootstub shall be built with</text>
+<text x="50" y="424" font-size="9.5" fill="#0F172A">RELEASE and the LionDriver certificate, and the release</text>
+<text x="50" y="436" font-size="9.5" fill="#0F172A">build shall fail if ALLOW_DEBUG is defined.</text>
+<rect x="342.5" y="376" width="292.5" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="352.5" y="394" font-size="11.5" fill="#0F172A" font-weight="700">CSR-022</text>
+<rect x="604.2" y="382" width="22.8" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="615.6" y="394" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FW</text>
+<text x="352.5" y="412" font-size="9.5" fill="#0F172A">The release bootstub shall not contain the debug public key</text>
+<text x="352.5" y="424" font-size="9.5" fill="#0F172A">and shall accept no key other than the LionDriver release</text>
+<text x="352.5" y="436" font-size="9.5" fill="#0F172A">key.</text>
+<rect x="645" y="376" width="292.5" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="655" y="394" font-size="11.5" fill="#0F172A" font-weight="700">CSR-023</text>
+<rect x="906.7" y="382" width="22.8" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="918.1" y="394" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FW</text>
+<text x="655" y="412" font-size="9.5" fill="#0F172A">Debug-only host commands (relay drive 0xc5, ALLOUTPUT</text>
+<text x="655" y="424" font-size="9.5" fill="#0F172A">mode, bootloader entry, debug sleep) shall be absent from</text>
+<text x="655" y="436" font-size="9.5" fill="#0F172A">release firmware.</text>
+<rect x="947.5" y="376" width="292.5" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="957.5" y="394" font-size="11.5" fill="#0F172A" font-weight="700">CSR-024</text>
+<rect x="1209.2" y="382" width="22.8" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="1220.6" y="394" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FW</text>
+<text x="957.5" y="412" font-size="9.5" fill="#0F172A">Softloader entry (0xd1 param 1) shall be accepted only while</text>
+<text x="957.5" y="424" font-size="9.5" fill="#0F172A">the panda is in a non-actuating mode and the vehicle ignition</text>
+<text x="957.5" y="436" font-size="9.5" fill="#0F172A">is off.</text>
+<rect x="30" y="486" width="1220" height="132" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="510" font-size="13" fill="#0F172A" font-weight="700">CSR-C-03 Authenticated firmware boot</text>
+<text x="331.6" y="510" font-size="11" fill="#475569">CSG-02 · CAL 3</text>
+<rect x="40" y="520" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="50" y="538" font-size="11.5" fill="#0F172A" font-weight="700">CSR-031</text>
+<rect x="301.7" y="526" width="22.8" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="313.1" y="538" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FW</text>
+<text x="50" y="556" font-size="9.5" fill="#0F172A">The bootstub shall verify the application image with an</text>
+<text x="50" y="568" font-size="9.5" fill="#0F172A">ECDSA signature over P-256 and a SHA-256 digest (128-bit</text>
+<text x="50" y="580" font-size="9.5" fill="#0F172A">security strength; decided 2026-10-19, DQ-191 A) before</text>
+<text x="50" y="592" font-size="9.5" fill="#0F172A">transferring control.</text>
+<rect x="342.5" y="520" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="352.5" y="538" font-size="11.5" fill="#0F172A" font-weight="700">CSR-032</text>
+<rect x="597.8" y="526" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="612.4" y="538" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">ENV</text>
+<rect x="571" y="526" width="22.8" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="582.4" y="538" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FW</text>
+<text x="352.5" y="556" font-size="9.5" fill="#0F172A">The verifying public key shall be the LionDriver panda</text>
+<text x="352.5" y="568" font-size="9.5" fill="#0F172A">release key, whose private key is generated and held offline</text>
+<text x="352.5" y="580" font-size="9.5" fill="#0F172A">and never stored in the repository, CI or logs.</text>
+<rect x="645" y="520" width="292.5" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="655" y="538" font-size="11.5" fill="#0F172A" font-weight="700">CSR-033</text>
+<rect x="906.7" y="526" width="22.8" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="918.1" y="538" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FW</text>
+<text x="655" y="556" font-size="9.5" fill="#0F172A">The bootstub shall reject an image whose version is below a</text>
+<text x="655" y="568" font-size="9.5" fill="#0F172A">minimum version held in write-protected storage.</text>
+<rect x="947.5" y="520" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="957.5" y="538" font-size="11.5" fill="#0F172A" font-weight="700">CSR-034</text>
+<rect x="1209.2" y="526" width="22.8" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="1220.6" y="538" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FW</text>
+<text x="957.5" y="556" font-size="9.5" fill="#0F172A">The application image integrity shall be re-checked at</text>
+<text x="957.5" y="568" font-size="9.5" fill="#0F172A">start-up and periodically at run time, with mismatch leading</text>
+<text x="957.5" y="580" font-size="9.5" fill="#0F172A">to the safe state.</text>
+<rect x="30" y="630" width="1220" height="132" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="654" font-size="13" fill="#0F172A" font-weight="700">CSR-C-04 Flash protection</text>
+<text x="248" y="654" font-size="11" fill="#475569">CSG-02 · CAL 3</text>
+<rect x="40" y="664" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="50" y="682" font-size="11.5" fill="#0F172A" font-weight="700">CSR-041</text>
+<rect x="295.3" y="670" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="309.9" y="682" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">USR</text>
+<rect x="268.5" y="670" width="22.8" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="279.9" y="682" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FW</text>
+<text x="50" y="700" font-size="9.5" fill="#0F172A">The panda option bytes shall be set at provisioning to an</text>
+<text x="50" y="712" font-size="9.5" fill="#0F172A">RDP level chosen by CS-AD-02 that prevents read-out and</text>
+<text x="50" y="724" font-size="9.5" fill="#0F172A">debug-port access to the firmware.</text>
+<rect x="342.5" y="664" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="352.5" y="682" font-size="11.5" fill="#0F172A" font-weight="700">CSR-042</text>
+<rect x="597.8" y="670" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="612.4" y="682" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">USR</text>
+<rect x="571" y="670" width="22.8" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="582.4" y="682" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FW</text>
+<text x="352.5" y="700" font-size="9.5" fill="#0F172A">Write protection shall be set on the bootstub sector(s) so</text>
+<text x="352.5" y="712" font-size="9.5" fill="#0F172A">that neither the application nor the softloader can modify</text>
+<text x="352.5" y="724" font-size="9.5" fill="#0F172A">them.</text>
+<rect x="645" y="664" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="655" y="682" font-size="11.5" fill="#0F172A" font-weight="700">CSR-043</text>
+<rect x="900.3" y="670" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="914.9" y="682" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">USR</text>
+<text x="655" y="700" font-size="9.5" fill="#0F172A">Installation shall record the option-byte values and the</text>
+<text x="655" y="712" font-size="9.5" fill="#0F172A">bootstub and application hashes, and compare them with the</text>
+<text x="655" y="724" font-size="9.5" fill="#0F172A">release record.</text>
+<rect x="30" y="774" width="1220" height="132" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="798" font-size="13" fill="#0F172A" font-weight="700">CSR-C-05 No unauthenticated recovery path</text>
+<text x="369.6" y="798" font-size="11" fill="#475569">CSG-02 · CAL 3</text>
+<rect x="40" y="808" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="50" y="826" font-size="11.5" fill="#0F172A" font-weight="700">CSR-051</text>
+<rect x="295.3" y="814" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="309.9" y="826" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="50" y="844" font-size="9.5" fill="#0F172A">Release pandad shall not flash a development bootstub;</text>
+<text x="50" y="856" font-size="9.5" fill="#0F172A">recovery shall flash only the release-signed bootstub and</text>
+<text x="50" y="868" font-size="9.5" fill="#0F172A">application of the installed release.</text>
+<rect x="342.5" y="808" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="352.5" y="826" font-size="11.5" fill="#0F172A" font-weight="700">CSR-052</text>
+<rect x="597.8" y="814" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="612.4" y="826" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">USR</text>
+<rect x="564.6" y="814" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="579.2" y="826" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="352.5" y="844" font-size="9.5" fill="#0F172A">SoC use of STM_BOOT0 for recovery shall occur only on</text>
+<text x="352.5" y="856" font-size="9.5" fill="#0F172A">explicit offroad owner action and shall be logged as a</text>
+<text x="352.5" y="868" font-size="9.5" fill="#0F172A">security event.</text>
+<rect x="645" y="808" width="292.5" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="655" y="826" font-size="11.5" fill="#0F172A" font-weight="700">CSR-053</text>
+<rect x="900.3" y="814" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="914.9" y="826" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="655" y="844" font-size="9.5" fill="#0F172A">pandad shall not set a car safety mode unless the panda</text>
+<text x="655" y="856" font-size="9.5" fill="#0F172A">reports the firmware version and signature recorded in the</text>
+<text x="655" y="868" font-size="9.5" fill="#0F172A">release record.</text>
+<rect x="947.5" y="808" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="957.5" y="826" font-size="11.5" fill="#0F172A" font-weight="700">CSR-054</text>
+<rect x="1202.8" y="814" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="1217.4" y="826" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">USR</text>
+<rect x="1169.6" y="814" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="1184.2" y="826" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<rect x="1142.8" y="814" width="22.8" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="1154.2" y="826" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FW</text>
+<text x="957.5" y="844" font-size="9.5" fill="#0F172A">The architecture shall prevent SoC control of</text>
+<text x="957.5" y="856" font-size="9.5" fill="#0F172A">STM_BOOT0/STM_RST_N from resulting in execution of</text>
+<text x="957.5" y="868" font-size="9.5" fill="#0F172A">firmware not signed with the LionDriver release key, or the</text>
+<text x="957.5" y="880" font-size="9.5" fill="#0F172A">residual shall be recorded as a cybersecurity claim per…</text>
+<rect x="30" y="918" width="1220" height="132" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="942" font-size="13" fill="#0F172A" font-weight="700">CSR-C-06 Params and IPC</text>
+<text x="232.8" y="942" font-size="11" fill="#475569">CSG-03 · CAL 2</text>
+<rect x="40" y="952" width="292.5" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="50" y="970" font-size="11.5" fill="#0F172A" font-weight="700">CSR-061</text>
+<rect x="301.7" y="958" width="22.8" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="313.1" y="970" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FW</text>
+<text x="50" y="988" font-size="9.5" fill="#0F172A">The panda envelope limits and checks shall not depend on</text>
+<text x="50" y="1000" font-size="9.5" fill="#0F172A">any value from the SoC params store or msgq other than the</text>
+<text x="50" y="1012" font-size="9.5" fill="#0F172A">locked safety configuration of CSR-011.</text>
+<rect x="342.5" y="952" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="352.5" y="970" font-size="11.5" fill="#0F172A" font-weight="700">CSR-062</text>
+<rect x="597.8" y="958" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="612.4" y="970" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="352.5" y="988" font-size="9.5" fill="#0F172A">Safety-relevant params (§3.8) shall be writable only by their</text>
+<text x="352.5" y="1000" font-size="9.5" fill="#0F172A">designated writer processes, enforced by OS file</text>
+<text x="352.5" y="1012" font-size="9.5" fill="#0F172A">permissions, and their values shall be checked against the</text>
+<text x="352.5" y="1024" font-size="9.5" fill="#0F172A">release record at manager start with engagement blocked on…</text>
+<rect x="645" y="952" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="655" y="970" font-size="11.5" fill="#0F172A" font-weight="700">CSR-063</text>
+<rect x="900.3" y="958" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="914.9" y="970" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="655" y="988" font-size="9.5" fill="#0F172A">Each safety-relevant msgq topic consumed by controlsd,</text>
+<text x="655" y="1000" font-size="9.5" fill="#0F172A">selfdrived, plannerd or dmonitoringd shall be publishable only</text>
+<text x="655" y="1012" font-size="9.5" fill="#0F172A">by its designated process, and a second publisher shall be</text>
+<text x="655" y="1024" font-size="9.5" fill="#0F172A">detected and reported.</text>
+<rect x="947.5" y="952" width="292.5" height="84" rx="8" fill="#F1F5F9" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3"/>
+<text x="957.5" y="970" font-size="11.5" fill="#0F172A" font-weight="700">CSR-064</text>
+<rect x="1202.8" y="958" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="1217.4" y="970" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="957.5" y="988" font-size="9.5" fill="#0F172A">Network-facing processes (athenad, uploader, updated,</text>
+<text x="957.5" y="1000" font-size="9.5" fill="#0F172A">webrtcd, UI) shall run without permission to write</text>
+<text x="957.5" y="1012" font-size="9.5" fill="#0F172A">safety-relevant params or publish safety-relevant topics.</text>
+<rect x="30" y="1062" width="1220" height="132" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="1086" font-size="13" fill="#0F172A" font-weight="700">CSR-C-07 Developer modes</text>
+<text x="240.4" y="1086" font-size="11" fill="#475569">CSG-03 · CAL 2</text>
+<rect x="40" y="1096" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="50" y="1114" font-size="11.5" fill="#0F172A" font-weight="700">CSR-071</text>
+<rect x="295.3" y="1102" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="309.9" y="1114" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="50" y="1132" font-size="9.5" fill="#0F172A">Release builds shall not start the joystick,</text>
+<text x="50" y="1144" font-size="9.5" fill="#0F172A">longitudinal-maneuver or lateral-maneuver replacement</text>
+<text x="50" y="1156" font-size="9.5" fill="#0F172A">processes regardless of params.</text>
+<rect x="342.5" y="1096" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="352.5" y="1114" font-size="11.5" fill="#0F172A" font-weight="700">CSR-072</text>
+<rect x="597.8" y="1102" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="612.4" y="1114" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="352.5" y="1132" font-size="9.5" fill="#0F172A">Driver-view demo mode (IsDriverViewEnabled) shall not</text>
+<text x="352.5" y="1144" font-size="9.5" fill="#0F172A">affect driver-monitoring output while onroad.</text>
+<rect x="645" y="1096" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="655" y="1114" font-size="11.5" fill="#0F172A" font-weight="700">CSR-073</text>
+<rect x="900.3" y="1102" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="914.9" y="1114" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">ENV</text>
+<text x="655" y="1132" font-size="9.5" fill="#0F172A">The release build check shall fail if any developer-mode</text>
+<text x="655" y="1144" font-size="9.5" fill="#0F172A">entry point is reachable in the release configuration.</text>
+<rect x="30" y="1206" width="1220" height="132" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="1230" font-size="13" fill="#0F172A" font-weight="700">CSR-C-08 Model artefacts</text>
+<text x="240.4" y="1230" font-size="11" fill="#475569">CSG-04 · CAL 2</text>
+<rect x="40" y="1240" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="50" y="1258" font-size="11.5" fill="#0F172A" font-weight="700">CSR-081</text>
+<rect x="295.3" y="1246" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="309.9" y="1258" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="50" y="1276" font-size="9.5" fill="#0F172A">modeld and dmonitoringmodeld shall load model artefacts and</text>
+<text x="50" y="1288" font-size="9.5" fill="#0F172A">metadata without deserializing executable objects (no pickle</text>
+<text x="50" y="1300" font-size="9.5" fill="#0F172A">of artefact content).</text>
+<rect x="342.5" y="1240" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="352.5" y="1258" font-size="11.5" fill="#0F172A" font-weight="700">CSR-082</text>
+<rect x="597.8" y="1246" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="612.4" y="1258" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="352.5" y="1276" font-size="9.5" fill="#0F172A">Before loading, every model artefact shall be verified against</text>
+<text x="352.5" y="1288" font-size="9.5" fill="#0F172A">a SHA-256 hash in the authenticated release manifest, and</text>
+<text x="352.5" y="1300" font-size="9.5" fill="#0F172A">the process shall refuse to run on mismatch so that</text>
+<text x="352.5" y="1312" font-size="9.5" fill="#0F172A">engagement is blocked.</text>
+<rect x="645" y="1240" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="655" y="1258" font-size="11.5" fill="#0F172A" font-weight="700">CSR-083</text>
+<rect x="900.3" y="1246" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="914.9" y="1258" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">USR</text>
+<rect x="867.1" y="1246" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="881.7" y="1258" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">ENV</text>
+<text x="655" y="1276" font-size="9.5" fill="#0F172A">Model artefacts shall be fetched from LionDriver-controlled</text>
+<text x="655" y="1288" font-size="9.5" fill="#0F172A">storage and their hashes recorded in the release record.</text>
+<rect x="30" y="1350" width="1220" height="132" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="1374" font-size="13" fill="#0F172A" font-weight="700">CSR-C-09 Vehicle CAN</text>
+<text x="210" y="1374" font-size="11" fill="#475569">CSG-05 · CAL 2</text>
+<rect x="40" y="1384" width="292.5" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="50" y="1402" font-size="11.5" fill="#0F172A" font-weight="700">CSR-091</text>
+<rect x="301.7" y="1390" width="22.8" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="313.1" y="1402" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FW</text>
+<text x="50" y="1420" font-size="9.5" fill="#0F172A">Panda firmware shall verify every checksum and counter that</text>
+<text x="50" y="1432" font-size="9.5" fill="#0F172A">the vehicle provides on safety-relevant RX messages, and</text>
+<text x="50" y="1444" font-size="9.5" fill="#0F172A">shall cross-check messages that carry none (brake 0x226,</text>
+<text x="50" y="1456" font-size="9.5" fill="#0F172A">wheel speed 0xAA) for plausibility against independent…</text>
+<rect x="342.5" y="1384" width="292.5" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="352.5" y="1402" font-size="11.5" fill="#0F172A" font-weight="700">CSR-092</text>
+<rect x="604.2" y="1390" width="22.8" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="615.6" y="1402" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FW</text>
+<text x="352.5" y="1420" font-size="9.5" fill="#0F172A">Panda firmware shall transmit only allow-listed actuation</text>
+<text x="352.5" y="1432" font-size="9.5" fill="#0F172A">messages on the car-side bus and shall not alter</text>
+<text x="352.5" y="1444" font-size="9.5" fill="#0F172A">camera-originated PCS messages it forwards.</text>
+<rect x="645" y="1384" width="292.5" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="655" y="1402" font-size="11.5" fill="#0F172A" font-weight="700">CSR-093</text>
+<rect x="906.7" y="1390" width="22.8" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="918.1" y="1402" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FW</text>
+<text x="655" y="1420" font-size="9.5" fill="#0F172A">Reception on the car-side bus of an actuation message ID</text>
+<text x="655" y="1432" font-size="9.5" fill="#0F172A">that the panda transmits, while the relay intercepts, shall be</text>
+<text x="655" y="1444" font-size="9.5" fill="#0F172A">detected and lead to actuation inhibit.</text>
+<rect x="30" y="1494" width="1220" height="132" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="1518" font-size="13" fill="#0F172A" font-weight="700">CSR-C-10 SSH</text>
+<text x="149.2" y="1518" font-size="11" fill="#475569">CSG-06 · CAL 3</text>
+<rect x="40" y="1528" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="50" y="1546" font-size="11.5" fill="#0F172A" font-weight="700">CSR-101</text>
+<rect x="295.3" y="1534" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="309.9" y="1546" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">ENV</text>
+<rect x="262.1" y="1534" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="276.7" y="1546" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="50" y="1564" font-size="9.5" fill="#0F172A">LionDriver installer and image builds shall not contain an</text>
+<text x="50" y="1576" font-size="9.5" fill="#0F172A">embedded authorized SSH key or set SshEnabled.</text>
+<rect x="342.5" y="1528" width="292.5" height="84" rx="8" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.4"/>
+<text x="352.5" y="1546" font-size="11.5" fill="#0F172A" font-weight="700">CSR-102</text>
+<rect x="597.8" y="1534" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="612.4" y="1546" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">USR</text>
+<text x="352.5" y="1564" font-size="9.5" fill="#0F172A">SshEnabled shall be false in the reference configuration and</text>
+<text x="352.5" y="1576" font-size="9.5" fill="#0F172A">checked at installation.</text>
+<rect x="645" y="1528" width="292.5" height="84" rx="8" fill="#F1F5F9" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3"/>
+<text x="655" y="1546" font-size="11.5" fill="#0F172A" font-weight="700">CSR-103</text>
+<rect x="900.3" y="1534" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="914.9" y="1546" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="655" y="1564" font-size="9.5" fill="#0F172A">When the owner enables SSH, only key authentication with</text>
+<text x="655" y="1576" font-size="9.5" fill="#0F172A">owner-provided keys shall be accepted.</text>
+<rect x="947.5" y="1528" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="957.5" y="1546" font-size="11.5" fill="#0F172A" font-weight="700">CSR-104</text>
+<rect x="1202.8" y="1534" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="1217.4" y="1546" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="957.5" y="1564" font-size="9.5" fill="#0F172A">SSH shall not accept new sessions while the vehicle is</text>
+<text x="957.5" y="1576" font-size="9.5" fill="#0F172A">onroad.</text>
+<rect x="30" y="1638" width="1220" height="226" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="1662" font-size="13" fill="#0F172A" font-weight="700">CSR-C-11 Remote RPC</text>
+<text x="202.4" y="1662" font-size="11" fill="#475569">CSG-06 · CAL 3</text>
+<rect x="40" y="1672" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="50" y="1690" font-size="11.5" fill="#0F172A" font-weight="700">CSR-111</text>
+<rect x="295.3" y="1678" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="309.9" y="1690" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">USR</text>
+<rect x="262.1" y="1678" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="276.7" y="1690" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="50" y="1708" font-size="9.5" fill="#0F172A">athenad shall not run in the reference configuration unless</text>
+<text x="50" y="1720" font-size="9.5" fill="#0F172A">the owner opts in.</text>
+<rect x="342.5" y="1672" width="292.5" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="352.5" y="1690" font-size="11.5" fill="#0F172A" font-weight="700">CSR-112</text>
+<rect x="597.8" y="1678" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="612.4" y="1690" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="352.5" y="1708" font-size="9.5" fill="#0F172A">If enabled, file uploads requested over athena shall go only</text>
+<text x="352.5" y="1720" font-size="9.5" fill="#0F172A">to allow-listed destination hosts over TLS with certificate</text>
+<text x="352.5" y="1732" font-size="9.5" fill="#0F172A">validation.</text>
+<rect x="645" y="1672" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="655" y="1690" font-size="11.5" fill="#0F172A" font-weight="700">CSR-113</text>
+<rect x="900.3" y="1678" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="914.9" y="1690" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="655" y="1708" font-size="9.5" fill="#0F172A">If enabled, the SSH-tunnel and authorized-key RPCs shall</text>
+<text x="655" y="1720" font-size="9.5" fill="#0F172A">be absent.</text>
+<rect x="947.5" y="1672" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="957.5" y="1690" font-size="11.5" fill="#0F172A" font-weight="700">CSR-114</text>
+<rect x="1202.8" y="1678" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="1217.4" y="1690" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="957.5" y="1708" font-size="9.5" fill="#0F172A">If enabled, getMessage shall serve only allow-listed,</text>
+<text x="957.5" y="1720" font-size="9.5" fill="#0F172A">non-personal services.</text>
+<rect x="40" y="1766" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="50" y="1784" font-size="11.5" fill="#0F172A" font-weight="700">CSR-115</text>
+<rect x="295.3" y="1772" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="309.9" y="1784" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="50" y="1802" font-size="9.5" fill="#0F172A">Release builds shall ignore the ATHENA_HOST environment</text>
+<text x="50" y="1814" font-size="9.5" fill="#0F172A">override.</text>
+<rect x="342.5" y="1766" width="292.5" height="84" rx="8" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.4"/>
+<text x="352.5" y="1784" font-size="11.5" fill="#0F172A" font-weight="700">CSR-116</text>
+<rect x="597.8" y="1772" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="612.4" y="1784" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="352.5" y="1802" font-size="9.5" fill="#0F172A">Onroad camera streaming shall remain impossible, and</text>
+<text x="352.5" y="1814" font-size="9.5" fill="#0F172A">webrtcd shall bind only to the loopback interface.</text>
+<rect x="645" y="1766" width="292.5" height="84" rx="8" fill="#F1F5F9" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3"/>
+<text x="655" y="1784" font-size="11.5" fill="#0F172A" font-weight="700">CSR-117</text>
+<rect x="900.3" y="1772" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="914.9" y="1784" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="655" y="1802" font-size="9.5" fill="#0F172A">No safety function shall depend on athena or any back-end</text>
+<text x="655" y="1814" font-size="9.5" fill="#0F172A">availability.</text>
+<rect x="30" y="1876" width="1220" height="226" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="1900" font-size="13" fill="#0F172A" font-weight="700">CSR-C-12 Software updates</text>
+<text x="248" y="1900" font-size="11" fill="#475569">CSG-07 · CAL 3</text>
+<rect x="40" y="1910" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="50" y="1928" font-size="11.5" fill="#0F172A" font-weight="700">CSR-121</text>
+<rect x="295.3" y="1916" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="309.9" y="1928" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">ENV</text>
+<rect x="262.1" y="1916" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="276.7" y="1928" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="50" y="1946" font-size="9.5" fill="#0F172A">The updater shall stage an update only after verifying a</text>
+<text x="50" y="1958" font-size="9.5" fill="#0F172A">LionDriver-signed release manifest (§3.6) and every artefact</text>
+<text x="50" y="1970" font-size="9.5" fill="#0F172A">against it; the manifest signature uses the firmware scheme,</text>
+<text x="50" y="1982" font-size="9.5" fill="#0F172A">ECDSA over P-256 with SHA-256 (DQ-191 A), with the…</text>
+<rect x="342.5" y="1910" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="352.5" y="1928" font-size="11.5" fill="#0F172A" font-weight="700">CSR-122</text>
+<rect x="597.8" y="1916" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="612.4" y="1928" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="352.5" y="1946" font-size="9.5" fill="#0F172A">Release builds shall fix the update origin and accept only</text>
+<text x="352.5" y="1958" font-size="9.5" fill="#0F172A">release-channel branches, ignoring UpdaterTargetBranch</text>
+<text x="352.5" y="1970" font-size="9.5" fill="#0F172A">values outside it.</text>
+<rect x="645" y="1910" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="655" y="1928" font-size="11.5" fill="#0F172A" font-weight="700">CSR-123</text>
+<rect x="900.3" y="1916" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="914.9" y="1928" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">ENV</text>
+<rect x="867.1" y="1916" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="881.7" y="1928" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="655" y="1946" font-size="9.5" fill="#0F172A">The updater shall reject a manifest whose release version is</text>
+<text x="655" y="1958" font-size="9.5" fill="#0F172A">lower than the installed one unless the manifest is a signed</text>
+<text x="655" y="1970" font-size="9.5" fill="#0F172A">rollback release.</text>
+<rect x="947.5" y="1910" width="292.5" height="84" rx="8" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.4"/>
+<text x="957.5" y="1928" font-size="11.5" fill="#0F172A" font-weight="700">CSR-124</text>
+<rect x="1202.8" y="1916" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="1217.4" y="1928" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">USR</text>
+<text x="957.5" y="1946" font-size="9.5" fill="#0F172A">Until CSR-121 is implemented, DisableUpdates shall be set</text>
+<text x="957.5" y="1958" font-size="9.5" fill="#0F172A">in the reference configuration and updates installed manually</text>
+<text x="957.5" y="1970" font-size="9.5" fill="#0F172A">per WP-O-02 UPD-02.</text>
+<rect x="40" y="2004" width="292.5" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="50" y="2022" font-size="11.5" fill="#0F172A" font-weight="700">CSR-125</text>
+<rect x="295.3" y="2010" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="309.9" y="2022" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="50" y="2040" font-size="9.5" fill="#0F172A">Update installation shall be offroad-only and atomic, with the</text>
+<text x="50" y="2052" font-size="9.5" fill="#0F172A">previous release remaining bootable if finalization fails.</text>
+<rect x="342.5" y="2004" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="352.5" y="2022" font-size="11.5" fill="#0F172A" font-weight="700">CSR-126</text>
+<rect x="597.8" y="2010" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="612.4" y="2022" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">ENV</text>
+<text x="352.5" y="2040" font-size="9.5" fill="#0F172A">The update-signing key shall be distinct from the panda</text>
+<text x="352.5" y="2052" font-size="9.5" fill="#0F172A">release key, held offline, and covered by a re-keying</text>
+<text x="352.5" y="2064" font-size="9.5" fill="#0F172A">procedure.</text>
+<rect x="30" y="2114" width="1220" height="226" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="2138" font-size="13" fill="#0F172A" font-weight="700">CSR-C-13 Supply chain</text>
+<text x="217.6" y="2138" font-size="11" fill="#475569">CSG-07 · CAL 3</text>
+<rect x="40" y="2148" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="50" y="2166" font-size="11.5" fill="#0F172A" font-weight="700">CSR-131</text>
+<rect x="295.3" y="2154" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="309.9" y="2166" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">ENV</text>
+<text x="50" y="2184" font-size="9.5" fill="#0F172A">All submodules shall point to LionDriver-controlled forks and</text>
+<text x="50" y="2196" font-size="9.5" fill="#0F172A">be pinned by commit.</text>
+<rect x="342.5" y="2148" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="352.5" y="2166" font-size="11.5" fill="#0F172A" font-weight="700">CSR-132</text>
+<rect x="597.8" y="2154" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="612.4" y="2166" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">ENV</text>
+<text x="352.5" y="2184" font-size="9.5" fill="#0F172A">No release dependency or tool shall be resolved from a</text>
+<text x="352.5" y="2196" font-size="9.5" fill="#0F172A">mutable reference (branch or tag without hash).</text>
+<rect x="645" y="2148" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="655" y="2166" font-size="11.5" fill="#0F172A" font-weight="700">CSR-133</text>
+<rect x="900.3" y="2154" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="914.9" y="2166" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">ENV</text>
+<text x="655" y="2184" font-size="9.5" fill="#0F172A">Every release shall have an SBOM covering uv.lock</text>
+<text x="655" y="2196" font-size="9.5" fill="#0F172A">packages, submodule commits, LFS artefacts, AGNOS</text>
+<text x="655" y="2208" font-size="9.5" fill="#0F172A">version and images, comma-deps wheels and the panda</text>
+<text x="655" y="2220" font-size="9.5" fill="#0F172A">toolchain.</text>
+<rect x="947.5" y="2148" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="957.5" y="2166" font-size="11.5" fill="#0F172A" font-weight="700">CSR-134</text>
+<rect x="1202.8" y="2154" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="1217.4" y="2166" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">ENV</text>
+<text x="957.5" y="2184" font-size="9.5" fill="#0F172A">Every release and the current release weekly shall be</text>
+<text x="957.5" y="2196" font-size="9.5" fill="#0F172A">scanned against public vulnerability data, with each finding</text>
+<text x="957.5" y="2208" font-size="9.5" fill="#0F172A">assessed before release.</text>
+<rect x="40" y="2242" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="50" y="2260" font-size="11.5" fill="#0F172A" font-weight="700">CSR-135</text>
+<rect x="295.3" y="2248" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="309.9" y="2260" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">ENV</text>
+<text x="50" y="2278" font-size="9.5" fill="#0F172A">Release signing material shall never be available to CI jobs</text>
+<text x="50" y="2290" font-size="9.5" fill="#0F172A">triggered from pull requests or forks.</text>
+<rect x="30" y="2352" width="1220" height="132" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="2376" font-size="13" fill="#0F172A" font-weight="700">CSR-C-14 Personal data and identity key</text>
+<text x="354.4" y="2376" font-size="11" fill="#475569">CSG-08 · CAL 2</text>
+<rect x="40" y="2386" width="292.5" height="84" rx="8" fill="#F1F5F9" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3"/>
+<text x="50" y="2404" font-size="11.5" fill="#0F172A" font-weight="700">CSR-141</text>
+<rect x="295.3" y="2392" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="309.9" y="2404" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="50" y="2422" font-size="9.5" fill="#0F172A">The device identity private key shall be readable only by the</text>
+<text x="50" y="2434" font-size="9.5" fill="#0F172A">processes that sign with it and shall not be exposed through</text>
+<text x="50" y="2446" font-size="9.5" fill="#0F172A">any RPC, log or upload.</text>
+<rect x="342.5" y="2386" width="292.5" height="84" rx="8" fill="#F1F5F9" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3"/>
+<text x="352.5" y="2404" font-size="11.5" fill="#0F172A" font-weight="700">CSR-142</text>
+<rect x="597.8" y="2392" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="612.4" y="2404" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">USR</text>
+<rect x="564.6" y="2392" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="579.2" y="2404" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="352.5" y="2422" font-size="9.5" fill="#0F172A">Driver-facing video, cabin imagery and location logs shall be</text>
+<text x="352.5" y="2434" font-size="9.5" fill="#0F172A">encrypted at rest, or, if AGNOS cannot provide this,</text>
+<text x="352.5" y="2446" font-size="9.5" fill="#0F172A">driver-camera recording shall be off by default and retention</text>
+<text x="352.5" y="2458" font-size="9.5" fill="#0F172A">bounded.</text>
+<rect x="645" y="2386" width="292.5" height="84" rx="8" fill="#F1F5F9" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3"/>
+<text x="655" y="2404" font-size="11.5" fill="#0F172A" font-weight="700">CSR-143</text>
+<rect x="900.3" y="2392" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="914.9" y="2404" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">ENV</text>
+<rect x="867.1" y="2392" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="881.7" y="2404" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="655" y="2422" font-size="9.5" fill="#0F172A">Any data upload shall use TLS with certificate validation to</text>
+<text x="655" y="2434" font-size="9.5" fill="#0F172A">an approved endpoint.</text>
+<rect x="947.5" y="2386" width="292.5" height="84" rx="8" fill="#F1F5F9" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3"/>
+<text x="957.5" y="2404" font-size="11.5" fill="#0F172A" font-weight="700">CSR-144</text>
+<rect x="1202.8" y="2392" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="1217.4" y="2404" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">USR</text>
+<rect x="1169.6" y="2392" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="1184.2" y="2404" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<text x="957.5" y="2422" font-size="9.5" fill="#0F172A">Driver-camera video shall not be uploaded unless the owner</text>
+<text x="957.5" y="2434" font-size="9.5" fill="#0F172A">opts in.</text>
+<rect x="30" y="2496" width="1220" height="132" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="2520" font-size="13" fill="#0F172A" font-weight="700">CSR-C-15 Decommissioning</text>
+<text x="240.4" y="2520" font-size="11" fill="#475569">CSG-08 · CAL 2</text>
+<rect x="40" y="2530" width="292.5" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="50" y="2548" font-size="11.5" fill="#0F172A" font-weight="700">CSR-151</text>
+<rect x="295.3" y="2536" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="309.9" y="2548" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">SoC</text>
+<rect x="262.1" y="2536" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="276.7" y="2548" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">USR</text>
+<text x="50" y="2566" font-size="9.5" fill="#0F172A">The decommissioning procedure shall erase user data and</text>
+<text x="50" y="2578" font-size="9.5" fill="#0F172A">the device identity keys in /persist/comma/.</text>
+<rect x="342.5" y="2530" width="292.5" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="352.5" y="2548" font-size="11.5" fill="#0F172A" font-weight="700">CSR-152</text>
+<rect x="597.8" y="2536" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="612.4" y="2548" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">ENV</text>
+<rect x="564.6" y="2536" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="579.2" y="2548" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">USR</text>
+<text x="352.5" y="2566" font-size="9.5" fill="#0F172A">Decommissioning shall revoke the device's credentials at</text>
+<text x="352.5" y="2578" font-size="9.5" fill="#0F172A">every LionDriver endpoint and remove owner SSH keys.</text>
+<rect x="30" y="2640" width="1220" height="132" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="2664" font-size="13" fill="#0F172A" font-weight="700">CSR-C-16 Vulnerability handling</text>
+<text x="293.6" y="2664" font-size="11" fill="#475569">no goal · CAL 1</text>
+<rect x="40" y="2674" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="50" y="2692" font-size="11.5" fill="#0F172A" font-weight="700">CSR-161</text>
+<rect x="295.3" y="2680" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="309.9" y="2692" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">ENV</text>
+<rect x="262.1" y="2680" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="276.7" y="2692" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">USR</text>
+<text x="50" y="2710" font-size="9.5" fill="#0F172A">LionDriver shall publish a security policy with a private</text>
+<text x="50" y="2722" font-size="9.5" fill="#0F172A">reporting channel it controls.</text>
+<rect x="342.5" y="2674" width="292.5" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="352.5" y="2692" font-size="11.5" fill="#0F172A" font-weight="700">CSR-162</text>
+<rect x="597.8" y="2680" width="29.2" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="612.4" y="2692" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">USR</text>
+<text x="352.5" y="2710" font-size="9.5" fill="#0F172A">Vulnerability analysis, incident response and update</text>
+<text x="352.5" y="2722" font-size="9.5" fill="#0F172A">management shall run per WP-O-05 from G6.</text>
+<rect x="40" y="2780" width="30" height="16" rx="6" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.4"/>
+<text x="78" y="2792" font-size="11" fill="#0F172A">in place, not verified (6)</text>
+<rect x="263.8" y="2780" width="30" height="16" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="301.8" y="2792" font-size="11" fill="#0F172A">partly (15)</text>
+<rect x="393.1" y="2780" width="30" height="16" rx="6" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="431.1" y="2792" font-size="11" fill="#0F172A">not met (36)</text>
+<rect x="528.7" y="2780" width="30" height="16" rx="6" fill="#F1F5F9" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3"/>
+<text x="566.7" y="2792" font-size="11" fill="#0F172A">not determined (7)</text>
+<text x="40" y="2810" font-size="11" fill="#475569">Allocation: FW panda firmware · SoC host software · ENV build and release environment · USR user procedure.</text>
+<text x="40" y="2828" font-size="11" fill="#475569">Status is the latest dated note of the Evidence column (the reference build where one is given). Generated by fig_s07_csr_status.py from WP-S-07 §4.</text>
+<g class="terms">
+<text x="40" y="2850" font-size="10.5" fill="#475569">Terms: AGNOS the comma device's operating system · CAL cybersecurity assurance level, 1 to 4 (ISO/SAE 21434) · CAN controller area network: the vehicle's data bus · CI continuous integration: the checks that run on</text>
+<text x="40" y="2864.5" font-size="10.5" fill="#475569">every pull request · CS-nn cybersecurity architecture decision CS-AD-nn (WP-S-07 §3.4) · CSG-nn cybersecurity goal (WP-C-10) · CSR-nn cybersecurity requirement: CSR-C-nn at concept level (WP-C-10 §7), CSR-nnn</text>
+<text x="40" y="2879" font-size="10.5" fill="#475569">refined (WP-S-07) · DQ-nn decision of the project lead (decision register) · ECDSA elliptic-curve digital signature algorithm · ENV build and release environment (allocation class, WP-S-07 §2) · FW firmware · ID</text>
+<text x="40" y="2893.5" font-size="10.5" fill="#475569">identifier · IPC inter-process communication · LFS Git Large File Storage (where the model files live) · NOOUTPUT the panda's safety mode that receives but sends nothing · OS-nn operational situation (HARA §3) ·</text>
+<text x="40" y="2908" font-size="10.5" fill="#475569">P-256 the NIST elliptic curve used with ECDSA (128-bit security) · PCS pre-collision system: Toyota's stock collision warning and braking · RDP read-out protection of the MCU's flash (option bytes) · RPC remote</text>
+<text x="40" y="2922.5" font-size="10.5" fill="#475569">procedure call · RX receive · SBOM software bill of materials: the list of every component and version · SHA-256 a cryptographic hash used to identify a file exactly · SILENT the panda's safety mode that sends</text>
+<text x="40" y="2937" font-size="10.5" fill="#475569">nothing · SoC system on chip: the comma device's main processor, running openpilot (QM) · SSH secure shell (remote login) · TLS transport layer security: encrypted network connections · UI user interface: the</text>
+<text x="40" y="2951.5" font-size="10.5" fill="#475569">device's screen · UPD-nn update procedure step (WP-O-02) · USR owner, installer or maintainer acting under a procedure (allocation class) · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C</text>
+<text x="40" y="2966" font-size="10.5" fill="#475569">concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>
