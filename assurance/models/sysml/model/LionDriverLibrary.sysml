@@ -5,8 +5,10 @@ package LionDriverLibrary {
      * element classes, port and interface kinds, safety mechanisms and the metadata
      * that ties each model element back to the work product it comes from.
      *
-     * Status: draft, AI-assisted (Claude), not reviewed. The work products named in
-     * the Source metadata stay the documents of record (assurance/models/sysml/README.md).
+     * Status: draft, AI-assisted (Claude), not reviewed. The model is to become the record
+     * of the architecture tables (SY-05, DQ-186); until its review (OI-8) the work products
+     * named in the Source metadata stay the record and tools/gen_tables.py checks that the
+     * tables they hold are the tables the model generates (assurance/models/sysml/README.md).
      */
 
     private import ScalarValues::*;
@@ -71,8 +73,29 @@ package LionDriverLibrary {
         attribute id : String;
         attribute route : String[0..*];
         attribute tsr : String[0..*];
+        // the row of WP-S-03 §3.3, on the first connection of each interface (SY-05)
+        attribute label : String[0..1];
+        attribute name : String[0..1];
+        attribute between : String[0..1];
+        attribute content : String[0..1];
+        attribute relevance : String[0..1];
+        attribute detail : String[0..1];
     }
 
+    metadata def Catalogue {
+        doc
+        /*
+         * The text columns of the element's row in an architecture table generated from the
+         * model (SY-05): WP-S-03 §3.1 (name, description, main sources) or WP-W-03 §3.1
+         * (name when it is more than the short name, responsibility, files, a note to the build
+         * column, ASIL attribution when it says more than the integrity label).
+         */
+        attribute name : String[0..1];
+        attribute description : String;
+        attribute sources : String;
+        attribute attribution : String[0..1];
+        attribute buildNote : String[0..1];
+    }
     metadata def FfiClaim {
         doc /* Freedom-from-interference claims (WP-S-03 §7) that this connection crosses. */
         attribute claims : String[1..*];
@@ -153,6 +176,10 @@ package LionDriverLibrary {
         attribute covers : String;
         attribute dcTarget : String;
         attribute tsr : String[0..*];
+        // the other columns of its WP-S-03 §6 row (SY-05)
+        attribute element : String;
+        attribute status : String;
+        attribute latent : String;
     }
 
     // ------------------------------------------------------------------ views

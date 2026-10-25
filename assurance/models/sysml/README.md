@@ -27,9 +27,21 @@ Taken by the lead on 2026-10-24 ([DQ-185, DQ-186, DQ-187](../../01-management/de
 | SY-01 | Which notation? | **SysML v2 textual notation** (OMG SysML 2.0, 2025). Plain text files reviewed in pull requests like code | No GUI tool is needed to read or change the model; diffs are reviewable |
 | SY-02 | Which tool says the model is valid SysML v2? | The **OMG pilot implementation**, version 0.62.0, pinned by SHA-256 ([`tools/pilot/`](tools/pilot)), run in CI | Conformance is checked by the reference implementation, not by in-house code (WP-P-07 TL-26) |
 | SY-03 | How are figures drawn? | **In-house renderer** ([`tools/render_views.py`](tools/render_views.py)) in the style of the existing work-product figures. The model says what is drawn; [`views/layout.toml`](views/layout.toml) says only where | The pilot's PlantUML rendering is not used. A layout entry that names an element the model does not have fails the build |
-| SY-04 | Model or Markdown, which is the source? | **The model becomes the record** (revised by DQ-185). Until SY-05 is carried out, the work products stay the record and the model a checked copy (§4) | Two places to edit until the generated tables replace the hand-written ones |
-| SY-05 | Should the architecture tables be generated from the model? | **Yes** (DQ-186): generate WP-S-03 §3.1, §3.3 and §6 and WP-W-03 §3.1 from the model. The model is AI-drafted (I0): its human review (OI-8) comes before the generated tables replace the hand-written ones (OI-5) | Removes the double edit; makes the model the record |
-| SY-06 | Should generated views replace the hand-drawn figures? | **Yes** (DQ-187), in the V-01/V-03 style. Candidates: WP-S-03 Figure 3-2 → V-03; WP-C-01 Figure 3-1 and the element-hierarchy figures of WP-S-03, WP-W-03 and WP-H-02 → V-02 (OI-6) | One drawing per fact |
+| SY-04 | Model or Markdown, which is the source? | **The model becomes the record** (revised by DQ-185). Until the model review (OI-8) the work products stay the record; [`record.toml`](record.toml) says which side is, and `gen_tables.py` holds the two to the same table cell by cell (T1, §4) | Two places to edit until the switch; no drift between them |
+| SY-05 | Should the architecture tables be generated from the model? | **Yes** (DQ-186). Every column of WP-S-03 §3.1, §3.3 and §6 and WP-W-03 §3.1 is in the model (`@Catalogue`, `@InterfaceId`, the `SafetyMechanism` attributes) and [`tools/gen_tables.py`](tools/gen_tables.py) writes the four tables. The model is AI-drafted (I0): its human review (OI-8) comes before `record.toml` is set to `model` and the generated tables replace the hand-written ones (OI-5) | Removes the double edit; makes the model the record |
+| SY-06 | Should generated views replace the hand-drawn figures? | **Yes** (DQ-187), in the V-01/V-03 style, figure by figure once the view shows what the figure shows (§2.1, OI-6) | One drawing per fact |
+
+### 2.1 Figures to be replaced (SY-06)
+
+A generated view replaces a hand-drawn figure when it carries the same facts; until then the figure stays, so that no work product loses content. What each view still lacks:
+
+| Hand-drawn figure | Generated view | Not yet in the view | In the model? |
+|---|---|---|---|
+| WP-S-03 Figure 3-2, technical safety architecture | V-03 | TSR tags per block (§3.3, §5); cereal data flow between the processes (§9); the hooks inside E-03a and E-03b | TSRs: yes (`satisfy`); data flow: yes (M6); hooks: no |
+| WP-S-03 Figure 3-1, system element hierarchy | V-02 | TSRs of §5 per element; mechanisms shared by two elements; the §8 processes that are not safety-related or must be absent | TSRs and mechanisms: yes; the other processes: no |
+| WP-C-01 Figure 3-1, element hierarchy of LD-SDA | V-01, V-02 | functions F-01 to F-09 and the elements that realise them; the sensor, controller and actuation grouping; the F-09 processes | no |
+| WP-W-03 Figure 3-1, software element hierarchy | V-02 | units UN-01 to UN-46, UN-N1 and the planned UN-N2 to UN-N6 of WP-W-05 §2 | no |
+| WP-H-02 Figure 3-2, hardware element hierarchy | V-02 | hardware parts HE-01 to HE-17 with their HWSRs, unknowns and variant differences | no (OI-1) |
 
 ## 3. Contents
 
@@ -47,6 +59,7 @@ Taken by the lead on 2026-10-24 ([DQ-185, DQ-186, DQ-187](../../01-management/de
 | [`tools/gen_requirements.py`](tools/gen_requirements.py) | Generates the three requirement files above from the work products; `--check` fails if they differ |
 | [`tools/check_model.py`](tools/check_model.py) | Checks M1 to M8 and R1 to R4 (§4), the allocation-resolution report and the requirements-coverage report |
 | [`tools/render_requirements.py`](tools/render_requirements.py) | Renderer of the requirement views V-05 to V-07 |
+| [`tools/gen_tables.py`](tools/gen_tables.py), [`record.toml`](record.toml) | Generates the architecture tables of WP-S-03 §3.1, §3.3, §6 and WP-W-03 §3.1 from the model (SY-05); `record.toml` says whether the work products or the model are the record |
 | [`tools/render_se.py`](tools/render_se.py) | Renderer of the systems-engineering views: V-08 N2 chart, V-09 VCRM and the per-requirement [`generated/vcrm.md`](generated/vcrm.md) |
 | [`tools/render_views.py`](tools/render_views.py), [`tools/svgkit.py`](tools/svgkit.py) | View renderer and drawing kit (palette, measured Inter metrics, orthogonal routing) |
 | [`tools/explorer.py`](tools/explorer.py), [`tools/explorer_assets/`](tools/explorer_assets) | Builds the interactive explorer |
@@ -70,19 +83,21 @@ Taken by the lead on 2026-10-24 ([DQ-185, DQ-186, DQ-187](../../01-management/de
 | R2 | Every `satisfy` ends on an element inside the item; every SYS requirement is satisfied and every name in WP-S-01 §10.1 is an element of the model |
 | R3 | Every verification case that names a requirement verifies it in the model, and the requirement lists the case |
 | R4 | [`generated/requirements-coverage.md`](generated/requirements-coverage.md) is up to date: per kind, how many requirements are satisfied, allocated outside the item, verified by at least one case and derived from a parent, with the lists of those that are not (informational) |
+| T1 | WP-S-03 §3.1, §3.3, §6 and WP-W-03 §3.1 are, cell by cell, the tables `gen_tables.py` generates from the model; with `record = "model"` they also carry the generated marker |
 
 Integrity in a table cell is read as the highest level it names (`B (PCS restore), C (blocking)` is C; C > B‡ > B > QM (B-sup) > QM). Run from this folder:
 
 ```sh
 python3 tools/gen_requirements.py      # regenerate the requirement files (--check to compare)
 python3 tools/check_model.py           # M1-M8, R1-R4 (--write regenerates the two reports)
+python3 tools/gen_tables.py            # T1: architecture tables (--write once record.toml says model)
 python3 tools/render_views.py --check  # figures match the model
 python3 tools/explorer.py --check      # explorer matches the model
 python3 tools/test_sysml.py
 tools/pilot/validate.sh                # SysML v2 conformance (JDK 21+, python3 with zstandard)
 ```
 
-All of them run in CI (`.github/workflows/assurance.yaml`, job "sysml model"). Result at this baseline: M1 to M8 and R1 to R4 pass; the pilot reports 0 errors and 0 warnings for the seven files.
+All of them run in CI (`.github/workflows/assurance.yaml`, job "sysml model"). Result at this baseline: M1 to M8, R1 to R4 and T1 pass; the pilot reports 0 errors and 0 warnings for the seven files.
 
 Writing the model found one difference worth recording. WP-S-03 §3.3 defines IF-05/06 as camera images reaching E-01/E-02 and IF-07 as starting in E-01, while WP-C-01 §3.4 defines the same IDs at the item boundary (road environment and driver to the cameras and display). The model now carries both hops under one identifier; the work products should say that the identifier covers the whole path (OI-7).
 
@@ -145,7 +160,7 @@ Every figure below is generated. The explorer shows V-01 to V-04 with the model 
 
 ## 7. Changing the model
 
-1. Change the work product and the `.sysml` file in the same pull request.
+1. Change the work product and the `.sysml` file in the same pull request. For the four architecture tables, change the cell in both places (T1 says which cells differ); once `record.toml` says `model`, change the model and run `gen_tables.py --write`.
 2. Run the commands of §4; regenerate with `check_model.py --write`, `render_views.py` and `explorer.py`.
 3. For a new construct the reader refuses, extend `sysml_lite.py` and its tests; the pilot decides whether the construct is valid SysML v2.
 
@@ -161,7 +176,7 @@ Keep to SysML v2 words for names: `item`, `view`, `via`, `state`, `flow` and sim
 | OI-4 | **Closed 2026-10-14:** SG, FSR, TSR, SYS and CSR are in the model with `satisfy` and `verify` relationships (R1–R4). SWSR and HWSR are not yet requirement elements; they follow with OI-1 (hardware parts) and the firmware interfaces of OI-2 |
 | OI-9 | Add verification cases for the cybersecurity requirements (no test specification names a CSR) and for the 14 SYS requirements without a case (WP-S-09 OI-6); the coverage report lists them |
 | OI-10 | Steps 2 to 5 of the MBSE extension: functions and functional chains, behaviour (state machines, sequences), timing budgets and HSI signals, security zones (views V-10 onwards) |
-| OI-5 | Carry out SY-05: generate the architecture tables from the model after the review of OI-8 |
-| OI-6 | Carry out SY-06: replace the hand-drawn figures with generated views |
+| OI-5 | Finish SY-05: after the review of OI-8, set `record.toml` to `model` and run `gen_tables.py --write` |
+| OI-6 | Carry out SY-06 figure by figure: close the gaps of §2.1, then swap the figure for its view |
 | OI-7 | State in WP-C-01 §3.4 and WP-S-03 §3.3 that IF-05, IF-06 and IF-07 cover the path from the environment or driver to E-01/E-02 |
 | OI-8 | Review the model (I1) and classify TL-26 and TL-27 in a confirmation review |

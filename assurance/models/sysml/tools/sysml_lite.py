@@ -473,6 +473,7 @@ class Mechanism:
   dc_target: str
   tsr: list[str]
   performers: list[str] = field(default_factory=list)  # element paths
+  values: dict[str, object] = field(default_factory=dict)  # every attribute as written
 
 
 @dataclass
@@ -671,7 +672,8 @@ def load(files: list[Path] | None = None) -> Model:
     for m in pkg_decl.members:
       if m.kind == "action" and m.short:
         mechanisms[m.short] = Mechanism(m.short, m.name or "", m.doc, str(m.values.get("covers", "")),
-                                        str(m.values.get("dcTarget", "")), _as_list(m.values.get("tsr")))
+                                        str(m.values.get("dcTarget", "")), _as_list(m.values.get("tsr")),
+                                        values=dict(m.values))
         mech_names[m.name] = m.short
         mech_names[f"{pkg_decl.name}::{m.name}"] = m.short
   for e in elements.values():
