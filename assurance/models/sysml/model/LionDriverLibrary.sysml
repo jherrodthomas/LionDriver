@@ -182,6 +182,75 @@ package LionDriverLibrary {
         attribute latent : String;
     }
 
+    // ------------------------------------------------------------------ functions
+    action def ItemFunction {
+        doc /* A function of the item (WP-C-01 §2.1), decomposed into the steps of its functional chain. */
+    }
+    enum def Stage {
+        doc /* Position of a step on the functional chain, from sensing to acting on the vehicle or the driver. */
+        enum sense;
+        enum perceive;
+        enum plan;
+        enum control;
+        enum command;
+        enum envelope;
+        enum act;
+    }
+    action def FunctionStep {
+        doc /* One step of a function; the element that performs it is where the step runs. */
+        attribute stage : Stage;
+    }
+    // ------------------------------------------------------------------ security architecture
+    part def SecurityZone {
+        doc /* A security zone of WP-S-07 §3.1: what it holds, its trust level and the goals or claims it rests on. */
+        attribute holds : String;
+        attribute trust : String;
+        attribute basis : String;
+    }
+    part def TrustBoundary {
+        doc /* A trust boundary of WP-S-07 §3.2 between zones, with what crosses it, its threats and its controls. */
+        attribute zones : String[1..*];
+        attribute crossing : String;
+        attribute threats : String;
+        attribute controls : String;
+    }
+    metadata def Zone {
+        doc /* The security zone (WP-S-07 §3.1) an element and, unless they name their own, its parts belong to. */
+        attribute id : String;
+    }
+    // ------------------------------------------------------------------ integration
+    action def IntegrationStep {
+        doc /* A system integration step of WP-S-08 §3.1, with the elements it adds and the interfaces it exercises. */
+        attribute elements : String;
+        attribute interfaces : String;
+        attribute stimulus : String;
+        attribute purpose : String;
+        attribute integrates : String[0..*];
+        attribute exercises : String[0..*];
+    }
+    // ------------------------------------------------------------------ behaviour
+    metadata def ModeRow {
+        doc /* The WP-C-01 §4 row of an operating mode, and the record states (machine and state) it stands for. */
+        attribute description : String;
+        attribute actuation : String;
+        attribute host : String[0..*];
+        attribute panda : String[0..*];
+    }
+    metadata def ModeConfigurations {
+        doc /* WP-C-01 §4 rows that select a configuration rather than name a mode. */
+        attribute rows : String[0..*];
+    }
+    enum def Enforcer {
+        doc /* Who enforces a mode transition (WP-C-01 Figure 4-1). */
+        enum envelope;
+        enum host;
+        enum gap16;
+    }
+    metadata def Enforcement {
+        doc /* Who enforces a transition, and the record transitions (machine and ID) it stands for. */
+        attribute kind : Enforcer;
+        attribute records : String[0..*];
+    }
     // ------------------------------------------------------------------ views
 
     view def ContextView {
@@ -204,5 +273,17 @@ package LionDriverLibrary {
     }
     view def RequirementMatrixView {
         doc /* Requirements against the elements that satisfy them and the cases that verify them. */
+    }
+    view def SecurityView {
+        doc /* Security zones, the elements in them and the trust boundaries between them. */
+    }
+    view def IntegrationView {
+        doc /* The integration steps in order, with what each adds and exercises and the cases that run at it. */
+    }
+    view def StateView {
+        doc /* A state machine: states, transitions, and who enforces each transition. */
+    }
+    view def FunctionalView {
+        doc /* Functions along their functional chain, each step on the element that performs it. */
     }
 }
