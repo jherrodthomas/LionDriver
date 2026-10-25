@@ -35,6 +35,7 @@ TERMS_PAGE = A / "terms.md"
 # Pages that carry a generated "Terms on this page" block, and generated figures that carry a definitions line.
 PAGES = [
   A / "02-concept/item/README.md",
+  A / "02-concept/odd/README.md",
   A / "02-concept/cybersecurity/README.md",
   A / "02-concept/hara/README.md",
   A / "02-concept/fsc/README.md",
@@ -44,6 +45,7 @@ PAGES = [
 ]
 FIGURES = [
   A / "02-concept/figures/fig-c01-3-4-function-allocation.svg",
+  A / "02-concept/figures/fig-c02-5-1-odd-exits.svg",
   A / "02-concept/figures/fig-c10-6-1-concept-view.svg",
   A / "02-concept/fsc/figures/fig-c04-10-1-safety-view.svg",
   A / "02-concept/fsc/figures/fig-c04-12-1-degradation-ladder.svg",
@@ -123,6 +125,8 @@ TERMS = {
   "DM": "driver monitoring",
   "DRV": "the driver",
   "ML": "machine learning",
+  "AI": "artificial intelligence",
+  "VSC": "vehicle stability control (Toyota's stability system)",
   "eGPU": "external graphics processor (the optional big-model hardware)",
   "LFS": "Git Large File Storage (where the model files live)",
   "GNSS": "global navigation satellite system (GPS)",
@@ -214,6 +218,7 @@ NOT_TERMS = {
   "IS", "IT", "ITEM", "LATERAL", "LEFT", "LEVEL", "LONGITUDINAL", "MODAL", "MODIFICATIONS", "OBJECT", "RANGE", "READ",
   "SAFE", "SITUATION", "SITUATIONS", "SPEED", "STATES", "SURFACE", "TO", "TRIGGER", "TRIGGERING", "VALIDATION",
   "WEATHER", "WHAT", "SAFETY", "GOAL", "SOTIF HAZARD", "ELEMENT", "STATE", "THE", "OF", "VIEW", "IN", "ON", "AT",
+  "WAY", "OUT", "DOES", "NOTICE", "TODAY", "CLOSES", "BRAKE",
   "LionDriver", "GitHub", "LibreOffice", "README", "II", "IsDriverViewEnabled",
 }
 
@@ -268,6 +273,8 @@ def find(text: str) -> tuple[list[str], list[str]]:
     elif k.endswith("-") and k[:-1] in TERMS:
       add(k[:-1])
     elif k in NOT_TERMS or k.split("-")[0] in NOT_TERMS:
+      continue
+    elif k[0].islower():               # a code identifier such as speedTooHigh, not an abbreviation
       continue
     elif k + "-" in TERMS:              # a record prefix written as a word: "FSR", "the SM catalogue"
       add(k + "-")
