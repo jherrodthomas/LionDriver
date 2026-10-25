@@ -172,3 +172,19 @@ tunnel:
   ev_day: {value: 30.0, low: 15.0, high: 120.0, status: assumed,
            source: "exposure (lines x gain) at which the loop settles on the sunlit approach; sets the sensor's sensitivity in the model. Local logs of the frame's exposure give it (T1)"}
   off_stops: {value: 1.0, status: assumed, source: "a frame counts as badly exposed when its grey is more than one stop (a factor of two) from the loop's target"}
+
+headlights:
+  # Oncoming headlights at night (headlights.py): where they sit in the road camera's frame, how much light they put
+  # on it, and what openpilot's auto exposure (camera_ae.py) makes of it.
+  speed_kph: 110.0          # each car; they close at twice this
+  start_m: 400.0
+  road_cd_m2: {value: 1.0, low: 0.5, high: 2.0, status: estimate, source: "the road ahead under the car's own low beams, the median the exposure loop sees at night"}
+  low_beam_cd: {value: 350.0, status: published, source: "UN R112 passing beam, point B50L (0.57U, 3.43L, toward an oncoming driver's eyes): at most 350 cd"}
+  high_beam_cd: {value: 40500.0, high: 215000.0, status: published, source: "UN R112 driving beam, class B: Imax at least 40,500 cd and never over 215,000 cd (an oncoming driver who does not dip)"}
+  veil_fraction: {value: 0.03, low: 0.01, high: 0.10, status: assumed,
+                  source: "share of the light reaching the lens that the lens and windshield scatter over the whole image (veiling glare): 1 % clean, 3 % typical, 10 % a dirty windshield; camera data would set it"}
+  camera_height_m: {value: 1.2, status: "mesh-derived", source: "top of the Corolla's windshield 1.28 m (corolla-e210-geometry.json), the camera just below"}
+  lamp_height_m: {value: 0.65, status: assumed, source: "headlamp height of an oncoming car"}
+  lamp_size_m: {value: 0.2, status: assumed, source: "the lit area of one headlamp"}
+  offsets_m: {undivided: 3.7, divided: [8.0, 15.0, 30.0], status: assumed,
+              source: "oncoming lane centre to ours: one lane on an undivided road (outside the ODD), across medians of 8, 15 and 30 m on a divided highway (inside)"}

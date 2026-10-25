@@ -39,6 +39,11 @@ Tunnel (openpilot's auto exposure)
   T2  The OX03C10 gamma curve runs from 0 to 1 and rises.
   T3  On a steady scene the loop settles: grey at its target within 5 % (whole exposure lines), the exposure constant.
   T4  A scene half as bright settles at twice the exposure (within the time quantisation) and the same grey.
+Headlights
+  H1  The lamps leave the frame where their bearing passes half the camera's field of view: offset / tan(hfov/2),
+      within one frame's travel.
+  H2  Inverse square: the glare veil at the frame edge scales with intensity and with 1 / range².
+  H3  No lamps, no change: the road's exposure and contrast stay as without them.
 Road crown
   R1  The roll path read from openpilot is the one reviewed: compensation by params.roll·g, calibration roll taken as
       zero, 20 Hz, process noise 1°/√s, fallback noise 10°, validity limit 1.5°. A change in the code fails here.
@@ -71,6 +76,7 @@ import hydroplaning as hp  # noqa: E402
 import gust as gu  # noqa: E402
 import camera_ae as cae  # noqa: E402
 import road_crown as rc  # noqa: E402
+import headlights as hl  # noqa: E402
 import tunnel as tu  # noqa: E402
 import wet_braking as wb  # noqa: E402
 import windshield_fog as wf  # noqa: E402
@@ -380,6 +386,33 @@ class Tunnel(unittest.TestCase):
     r2 = cae.run(self.c, np.r_[np.full(40, 1000.0), np.full(1600, 500.0)], scale)
     self.assertLess(abs(r2["ev"][-1] / r1["ev"][-1] - 2), 0.03)
     self.assertLess(abs(r2["grey"][-1] / r2["target"][-1] - 1), 0.05)
+
+
+class Headlights(unittest.TestCase):
+  def setUp(self):
+    self.c, self.fov = cae.code(), sg.camera_fov()
+    self.scale = tu.scale_for(self.c, P["tunnel"]["outside_cd_m2"]["value"], P["tunnel"]["ev_day"]["value"])
+
+  def test_h1_leaves_the_frame(self):
+    off = 15.0
+    r = hl.run_case(P, self.c, self.fov, self.scale, off, 350.0, 0.03, 1.0)
+    want = off / math.tan(math.radians(self.fov["hfov_deg"] / 2))
+    step = 2 * P["headlights"]["speed_kph"] / 3.6 / self.c["fps"]
+    self.assertLess(abs(r["leave_frame_m"] - want), step + 0.1)
+
+  def test_h2_inverse_square(self):
+    a = hl.run_case(P, self.c, self.fov, self.scale, 15.0, 1000.0, 0.03, 1.0)["veil_ratio_max"]
+    b = hl.run_case(P, self.c, self.fov, self.scale, 15.0, 2000.0, 0.03, 1.0)["veil_ratio_max"]
+    self.assertAlmostEqual(b / a, 2.0, places=2)
+    c = hl.run_case(P, self.c, self.fov, self.scale, 30.0, 1000.0, 0.03, 1.0)
+    e15, e30 = hl.encounter(P, self.c["fps"], 15.0), hl.encounter(P, self.c["fps"], 30.0)
+    r15 = e15["range"][np.argmax(e15["bearing"] > self.fov["hfov_deg"] / 2) - 1]
+    r30 = e30["range"][np.argmax(e30["bearing"] > self.fov["hfov_deg"] / 2) - 1]
+    self.assertAlmostEqual(c["veil_ratio_max"] / a, (r15 / r30) ** 2, places=2)
+
+  def test_h3_no_lamps(self):
+    r = hl.run_case(P, self.c, self.fov, self.scale, 8.0, 0.0, 0.1, 1.0)
+    self.assertEqual((r["road_stops_min"], r["contrast_min"], r["frames_over_1_stop"]), (0.0, 1.0, 0))
 
 
 class Crown(unittest.TestCase):

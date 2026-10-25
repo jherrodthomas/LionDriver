@@ -850,3 +850,45 @@ def tunnel_figures(p, r, out: Path):
   out.mkdir(exist_ok=True)
   _tunnel_timeline(p, r, out / "fig-wx-18-tunnel.webp")
   _report(out, "fig-wx-18")
+
+
+# ------------------------------------------------------------------------------------------------ headlights
+
+def _headlight_contrast(p, r, path):
+  h = p["headlights"]
+  vf = h["veil_fraction"]
+  cases = [("undivided", h["offsets_m"]["undivided"], "undivided road, one lane over (outside the ODD)", CRIT),
+           ("divided", h["offsets_m"]["divided"][0], f"divided, {h['offsets_m']['divided'][0]:g} m median", "#104281"),
+           ("divided", h["offsets_m"]["divided"][1], f"divided, {h['offsets_m']['divided'][1]:g} m median", "#2a78d6"),
+           ("divided", h["offsets_m"]["divided"][2], f"divided, {h['offsets_m']['divided'][2]:g} m median", "#86b6ef")]
+  fig = plt.figure(figsize=(9, 10), dpi=100)
+  fig.text(0.05, 0.955, "Oncoming high beams at night: the road's contrast", fontsize=18, weight="bold", color=INK)
+  fig.text(0.05, 0.925, "Undipped driving beam (UN R112, 40,500 cd) · veiling glare from the lens and windshield, "
+           "1–10 %", fontsize=12, color=INK2)
+  ax = fig.add_axes([0.12, 0.2, 0.84, 0.64])
+  for road, off, lab, col in cases:
+    tr = r["cases"][f"{road}-{off:g}-high-value"]["trace"]
+    d, veil = np.array(tr["d"]), np.array(tr["veil"])
+    seen = veil > 0
+    c_lo = 1 / (1 + veil * vf["high"] / vf["value"])     # the veil scales with the scatter share
+    c_hi = 1 / (1 + veil * vf["low"] / vf["value"])
+    ax.fill_between(d[seen], 100 * c_lo[seen], 100 * c_hi[seen], color=col, alpha=0.18, lw=0)
+    leave = r["cases"][f"{road}-{off:g}-high-value"]["leave_frame_m"]
+    ax.plot(d[seen], 100 / (1 + veil[seen]), color=col, lw=2.2, label=f"{lab}: leaves the frame at {leave:.0f} m")
+    ax.plot([d[seen][-1]], [100 / (1 + veil[seen][-1])], "o", color=col, ms=7)
+  ax.set_xlim(250, 0); ax.set_ylim(0, 105)
+  ax.legend(loc="lower left", frameon=False, fontsize=10.5)
+  ax.set_xlabel("distance to the oncoming car along the road, m"); ax.set_ylabel("road contrast left, %")
+  ax.grid(axis="y", color=GRID); ax.spines[["top", "right"]].set_visible(False)
+  low = min(v["contrast_min"] for k, v in r["cases"].items() if "-low-" in k)
+  fig.text(0.05, 0.075, "Lines: 3 % scatter; bands: 1–10 %. The beam's peak intensity is taken in every direction, an\n"
+           f"upper bound. Low beams (≤ 350 cd toward us) leave at least {100 * low:.0f} % of the contrast in every case.",
+           fontsize=11.5, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def headlight_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _headlight_contrast(p, r, out / "fig-wx-19-headlights.webp")
+  _report(out, "fig-wx-19")
