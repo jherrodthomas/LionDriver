@@ -117,12 +117,16 @@ jobs:
         python3 assurance/02-concept/hatara/test_hatara.py
         python3 assurance/02-concept/figures/fig_c10_goals.py --check
         python3 assurance/02-concept/figures/test_fig_c10_goals.py
+        python3 assurance/02-concept/figures/fig_c10_concept_view.py --check
+        python3 assurance/02-concept/figures/test_fig_c10_concept_view.py
         python3 assurance/09-production-operation/figures/fig_o05_updates.py --check
         python3 assurance/09-production-operation/figures/test_fig_o05_updates.py
         python3 assurance/02-concept/figures/fig_c01_interfaces.py --check
         python3 assurance/02-concept/figures/test_fig_c01_interfaces.py
         python3 assurance/02-concept/figures/fig_c01_modes.py --check
         python3 assurance/02-concept/figures/test_fig_c01_modes.py
+        python3 assurance/02-concept/figures/fig_c01_allocation.py --check
+        python3 assurance/02-concept/figures/test_fig_c01_allocation.py
         python3 assurance/03-system/figures/fig_s03_defence_in_depth.py --check
         python3 assurance/03-system/figures/test_fig_s03_defence_in_depth.py
         python3 assurance/03-system/figures/fig_s03_hierarchy.py --check
