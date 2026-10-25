@@ -22,7 +22,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 MODEL_DIR = HERE.parent / "model"
-MODEL_FILES = ["LionDriverLibrary.sysml", "Mechanisms.sysml", "Architecture.sysml", "Requirements.sysml", "Satisfaction.sysml",
+MODEL_FILES = ["LionDriverLibrary.sysml", "Mechanisms.sysml", "Functions.sysml", "Architecture.sysml", "Security.sysml", "Integration.sysml", "Behaviour.sysml", "Requirements.sysml", "Satisfaction.sysml",
                "Verification.sysml", "Views.sysml"]
 ROOT_USAGE = ("LionDriverArchitecture", "context")
 
@@ -366,7 +366,32 @@ class Parser:
       d = Decl("enum", self.name(), fname=self.fname, line=t.line)
       self.expect(";")
       return d
-    if kw in ("part", "port", "action", "view", "metadata", "interface", "connection", "attribute", "requirement", "verification"):
+    if kw == "entry":
+      # entry; then <state>;  (the initial state of a state definition or composite state)
+      self.next()
+      self.expect(";")
+      d = Decl("entry", None, fname=self.fname, line=t.line)
+      if self.accept("then"):
+        d.target = self.qualified()
+        self.expect(";")
+      return d
+    if kw == "transition":
+      # transition [<short>] name first <source> then <target> (; | { body })
+      self.next()
+      d = Decl("transition", None, fname=self.fname, line=t.line)
+      if self.accept("<"):
+        d.short = self.name()
+        self.expect(">")
+      if self.peek().text != "first":
+        d.name = self.name()
+      self.expect("first")
+      d.target = self.qualified()
+      self.expect("then")
+      d.target2 = self.qualified()
+      self.body(d)
+      return d
+    if kw in ("part", "port", "action", "view", "metadata", "interface", "connection", "attribute", "requirement",
+              "verification", "state"):
       self.next()
       is_def = self.accept("def")
       kind = kw + (" def" if is_def else "")
@@ -444,6 +469,14 @@ class Element:
         return str(b["scope"]).split("::")[-1]
     return "inside"
 
+  def zone(self) -> str | None:
+    """Security zone from the nearest @Zone on this element or an ancestor (WP-S-07 §3.1)."""
+    for e in (self, *self.ancestors()):
+      z = e.meta.get("Zone")
+      if z and "id" in z:
+        return str(z["id"])
+    return None
+
 
 @dataclass
 class Connection:
@@ -474,6 +507,92 @@ class Mechanism:
   tsr: list[str]
   performers: list[str] = field(default_factory=list)  # element paths
   values: dict[str, object] = field(default_factory=dict)  # every attribute as written
+
+
+@dataclass
+class Step:
+  short: str
+  name: str
+  doc: str
+  stage: str
+  function: str                                        # short of the function it belongs to
+  performers: list[str] = field(default_factory=list)  # element paths
+
+
+@dataclass
+class Record:
+  """A package-level usage read for its attributes only: a security zone or a trust boundary."""
+  short: str
+  name: str
+  doc: str
+  values: dict[str, object]
+
+
+@dataclass
+class State:
+  path: str            # dotted path inside the state definition (engaged.enabled)
+  doc: str
+  meta: dict[str, dict]
+  children: list[str] = field(default_factory=list)
+  initial: str | None = None
+
+
+@dataclass
+class Transition:
+  name: str
+  source: str          # state path
+  target: str
+  doc: str
+  meta: dict[str, dict]
+
+
+@dataclass
+class StateMachine:
+  short: str
+  name: str
+  doc: str
+  meta: dict[str, dict]
+  states: dict[str, State] = field(default_factory=dict)
+  transitions: list[Transition] = field(default_factory=list)
+  initial: str | None = None
+
+
+def _state_machine(d: Decl) -> StateMachine:
+  sm = StateMachine(d.short or d.name or "", d.name or "", d.doc, dict(d.meta))
+
+  def walk(decl: Decl, prefix: str, parent: State | None):
+    for m in decl.members:
+      if m.kind == "state":
+        path = f"{prefix}{m.name}"
+        st = State(path, m.doc, dict(m.meta))
+        sm.states[path] = st
+        if parent is not None:
+          parent.children.append(path)
+        walk(m, path + ".", st)
+      elif m.kind == "entry" and m.target:
+        if parent is None:
+          sm.initial = prefix + m.target
+        else:
+          parent.initial = prefix + m.target
+      elif m.kind == "transition":
+        sm.transitions.append(Transition(m.name or m.short or "", prefix + m.target, prefix + m.target2, m.doc,
+                                         dict(m.meta)))
+  walk(d, "", None)
+  for t in sm.transitions:
+    for end in (t.source, t.target):
+      if end not in sm.states:
+        raise ModelError(f"{d.fname}:{d.line}: transition {t.name} names state {end!r}, which {sm.short} does not have")
+  if sm.initial not in sm.states:
+    raise ModelError(f"{d.fname}:{d.line}: {sm.short} has no initial state (entry; then …)")
+  return sm
+
+
+@dataclass
+class Function:
+  short: str
+  name: str
+  doc: str
+  steps: list[Step] = field(default_factory=list)
 
 
 @dataclass
@@ -522,6 +641,11 @@ class Model:
   files: list[Path]
   requirements: dict[str, Requirement] = field(default_factory=dict)
   verifications: dict[str, Verification] = field(default_factory=dict)
+  functions: dict[str, Function] = field(default_factory=dict)
+  zones: dict[str, Record] = field(default_factory=dict)
+  boundaries: dict[str, Record] = field(default_factory=dict)
+  integration: dict[str, Record] = field(default_factory=dict)  # steps I-n of WP-S-08 §3.1
+  state_machines: dict[str, StateMachine] = field(default_factory=dict)
 
   def by_ident(self) -> dict[str, Element]:
     return {e.short: e for e in self.elements.values() if e.short}
@@ -670,18 +794,38 @@ def load(files: list[Path] | None = None) -> Model:
   mech_names: dict[str, str] = {}
   for pkg_decl in packages.values():
     for m in pkg_decl.members:
-      if m.kind == "action" and m.short:
+      if m.kind == "action" and m.short and m.type == "SafetyMechanism":
         mechanisms[m.short] = Mechanism(m.short, m.name or "", m.doc, str(m.values.get("covers", "")),
                                         str(m.values.get("dcTarget", "")), _as_list(m.values.get("tsr")),
                                         values=dict(m.values))
         mech_names[m.name] = m.short
         mech_names[f"{pkg_decl.name}::{m.name}"] = m.short
+  # functions and their steps (LionDriverFunctions)
+  functions: dict[str, Function] = {}
+  step_names: dict[str, Step] = {}
+  for pkg_decl in packages.values():
+    for m in pkg_decl.members:
+      if m.kind == "action" and m.short and m.type == "ItemFunction":
+        f = Function(m.short, m.name or "", m.doc)
+        for st in m.members:
+          if st.kind == "action" and st.type == "FunctionStep":
+            if not st.short:
+              raise ModelError(f"{st.fname}:{st.line}: step of {m.short} has no short name")
+            step = Step(st.short, st.name or "", st.doc, str(st.values.get("stage", "")).split("::")[-1], m.short)
+            f.steps.append(step)
+            for key in (f"{m.name}.{st.name}", f"{pkg_decl.name}::{m.name}.{st.name}"):
+              step_names[key] = step
+        functions[m.short] = f
   for e in elements.values():
     resolved = []
     for p in e.performs:
+      step = step_names.get(p) or step_names.get(p.split("::")[-1])
+      if step is not None:
+        step.performers.append(e.path)
+        continue
       short = mech_names.get(p) or mech_names.get(p.split("::")[-1])
       if short is None:
-        raise ModelError(f"{e.path}: perform {p!r} does not name a safety mechanism")
+        raise ModelError(f"{e.path}: perform {p!r} does not name a safety mechanism or a function step")
       resolved.append(short)
       mechanisms[short].performers.append(e.path)
     e.performs = resolved
@@ -711,8 +855,26 @@ def load(files: list[Path] | None = None) -> Model:
     raise ModelError(f"short names used more than once in the instance tree: {', '.join(dupes)}")
 
   requirements, verifications = _requirements(packages, elements)
+  zones: dict[str, Record] = {}
+  boundaries: dict[str, Record] = {}
+  integration: dict[str, Record] = {}
+  state_machines: dict[str, StateMachine] = {}
+  for pkg_decl in packages.values():
+    for m in pkg_decl.members:
+      if m.kind == "part" and m.short and m.type in ("SecurityZone", "TrustBoundary"):
+        rec = Record(m.short, m.name or "", m.doc, dict(m.values))
+        (zones if m.type == "SecurityZone" else boundaries)[m.short] = rec
+      if m.kind == "action" and m.short and m.type == "IntegrationStep":
+        integration[m.short] = Record(m.short, m.name or "", m.doc, dict(m.values))
+      if m.kind == "state def":
+        sm = _state_machine(m)
+        state_machines[sm.short] = sm
+  for e in elements.values():
+    z = (e.meta.get("Zone") or {}).get("id")
+    if z is not None and zones and z not in zones:
+      raise ModelError(f"{e.path}: @Zone names {z!r}, which is not a security zone")
   return Model(packages, root, elements, connections, allocations, mechanisms, aliases, views, files,
-               requirements, verifications)
+               requirements, verifications, functions, zones, boundaries, integration, state_machines)
 
 
 def _requirements(packages: dict[str, Decl], elements: dict[str, Element]):

@@ -143,6 +143,8 @@ views:
     where:
       - {path: 03-system/figures/fig-s03-3-3-functional-flow.svg, label: "functional flow (WP-S-03 §3.4)"}
       - {path: 03-system/figures/fig-3-2-tsc-block-diagram.svg, label: "TSC block diagram (WP-S-03 §3.2)"}
+      - {path: models/sysml/generated/fig-sysml-v10-functional-architecture.svg, label: "functions along their chain (SysML V-10)"}
+    gap: the decomposition of F-01 to F-09 into steps is AI-drafted and not reviewed
   - name: Physical architecture (system element hierarchy)
     status: present
     where:
@@ -161,6 +163,7 @@ views:
       - {path: 03-system/figures/fig-4-1-startup-engagement.svg, label: "start-up sequence"}
       - {path: 03-system/figures/fig-4-4-heartbeat-timeout-chain.svg, label: "heartbeat chain"}
       - {path: 03-system/figures/fig-s03-4-5-envelope-states.svg, label: "envelope states (WP-S-03 §4.5)"}
+      - {path: models/sysml/generated/fig-sysml-v13-system-modes.svg, label: "system modes state machine (SysML V-13)"}
   - name: Technical budgets with margins (TPMs)
     status: partial
     where:
@@ -173,20 +176,20 @@ views:
       - {path: models/sysml/generated/vcrm.md, label: "per requirement"}
     gap: methods and named cases only; no verification has been run, so no result is recorded
   - name: Integration plan and sequence
-    status: partial
+    status: present
     where:
       - {path: 03-system/WP-S-08-system-integration-test.md, label: "steps I-1 to I-4 (WP-S-08 §3.1)"}
-    gap: a table only; no integration build-up figure
+      - {path: models/sysml/generated/fig-sysml-v12-integration-build-up.svg, label: "integration build-up (SysML V-12)"}
   - name: Safety mechanisms (defence in depth)
     status: present
     where:
       - {path: 03-system/figures/fig-s03-6-1-defence-in-depth.svg, label: "defence in depth (WP-S-03 §6)"}
       - {path: 03-system/figures/fig-s03-6-2-safety-mechanisms.svg, label: "safety mechanisms (WP-S-03 §6)"}
   - name: Security architecture
-    status: partial
+    status: present
     where:
       - {path: 03-system/WP-S-07-cybersecurity-requirements-architecture.md, label: "zones and trust boundaries (WP-S-07 §3)"}
-    gap: text only; no zone or trust-boundary figure
+      - {path: models/sysml/generated/fig-sysml-v11-security-zones.svg, label: "security zones (SysML V-11)"}
   - name: Life-cycle reviews and decision gates
     status: present
     where:
