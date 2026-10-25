@@ -89,6 +89,7 @@ Generated from the SysML model (view V-09): requirements by verification method,
 
 | Folder | What it holds |
 |---|---|
+| [`hsi/`](hsi/README.md) | Hardware-software interface |
 | [`requirements/`](requirements/README.md) | Requirements at a glance |
 | [`reviews/`](reviews/) | — |
 | [`tsc/`](tsc/README.md) | Technical safety concept |
