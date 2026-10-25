@@ -2987,7 +2987,8 @@
       title: "Keep both"
       detail: "No change. Cost: two System FMEAs to keep in step, and the map stays tied to one of them."
   sources: ["assurance/08-analyses/fta-fmea-mapping.md (step 5)", "assurance/08-analyses/WP-A-04-system-fta-fmea.md §10", "assurance/08-analyses/fmea/analyses/system-fmea.yaml", "assurance/06-validation/WP-V-05-fault-injection.md §6"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-128
   question: "Should the GSN diagrams be generated from YAML records? (A generator already exists, so can this item be closed?)?"
@@ -3034,7 +3035,8 @@
       title: "No change"
       detail: "Cost: the agreed status means only that someone set it."
   sources: ["assurance/process/README.md OI-2", "assurance/process/model/ (interfaces IX-nn)", "assurance/trace/README.md"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-130
   question: "Which human-driver crash data sources and road-class split are used to derive SOTIF validation targets?"
@@ -3079,7 +3081,8 @@
       title: "Keep the engagement refusal only"
       detail: "No build change. Cost: the debug processes can still start; safety then rests on the refusal and the panda's engagement check alone."
   sources: ["assurance/02-concept/WP-C-01-item-definition.md OI-5", "openpilot/selfdrive/selfdrived/assured_config.py ASSURED_PARAMS", "openpilot/system/manager/process_config.py (joystick, maneuversd, lateral_maneuversd)", "assurance/07-supporting/impact/change-2026-10-19-reference-entry-checks.md", "DQ-221"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-132
   question: "Should LionDriver read the car's fault codes for steering and stability control at start-up and refuse to engage while one is active, instead of relying on the driver to check the warning lamps?"
@@ -3103,25 +3106,31 @@
       title: "Keep the bus checks and the driver's lamp check"
       detail: "No change. Cost: stored faults without a bus signal are caught only by the driver."
   sources: ["assurance/09-production-operation/WP-O-02-operation-service-decommissioning.md OPS-01, OPS-02, OI-2", "assurance/03-system/WP-S-06-requirements-production-operation.md OI-4", "assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md INS-06"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-133
-  question: "Should the architecture be copied into docs/contributing/architecture.md or that empty file replaced by a pointer to WP-S-03?"
-  context: "An empty upstream architecture file could mislead; editorial choice."
+  question: "The upstream file docs/contributing/architecture.md is empty. Should it point to LionDriver's architecture document, or hold a copy?"
+  context: >-
+    The empty upstream file can make a contributor think the architecture is undocumented. LionDriver's architecture
+    is WP-S-03. **A copy would be a second version to keep in step; a pointer cannot drift.**
   reversibility: easy
-  blocks: "None significant"
+  blocks: "WP-S-03 OI-5 (needed by G2)"
   gate: G2
   decider: claude
+  asked: 2026-10-25
+  batch: 17
+  proceed_after: 2026-11-01
   options:
     - key: A
       recommended: true
-      title: "Replace with a pointer to WP-S-03"
-      detail: "Single source of truth."
+      title: "Replace it with a short pointer to WP-S-03"
+      detail: "One source of truth. Cost: a one-paragraph file that differs from upstream openpilot."
     - key: B
-      title: "Copy the architecture"
-      detail: "Duplication to maintain."
-  sources: ["assurance/03-system/WP-S-03-technical-safety-concept-architecture.md OI-5"]
-  status: queued
+      title: "Copy the architecture into it"
+      detail: "Readable without leaving docs/. Cost: a second copy to update with every architecture change."
+  sources: ["assurance/03-system/WP-S-03-technical-safety-concept-architecture.md OI-5", "docs/contributing/architecture.md"]
+  status: open
 
 - id: DQ-134
   question: "Should the panda's watchdog and forwarding checks be made faster than 0.1 s, so that the stock pre-collision braking (SG-07) keeps some margin?"
@@ -3149,43 +3158,56 @@
       title: "Shorten the watchdog now"
       detail: "Gives margin at once. Cost: a shorter watchdog trips on longer legitimate tasks, so the task timings must be re-measured, without knowing yet whether the margin is needed."
   sources: ["assurance/03-system/WP-S-04-timing-ftti-budget.md §3.6, §4 (SG-07 row), OI-7", "DQ-062"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-135
-  question: "What latency bound is set for PCS message forwarding in integration test VS-SI-20?"
-  context: "Derived from camera message periods and bounded by TSR-707 (≤ 1 ms, TBD) and the SG-07 FTTI."
+  question: "How quickly must the panda pass the camera's emergency-braking messages to the car in the integration test?"
+  context: >-
+    The panda forwards the stock camera's pre-collision braking messages (PCS) to the car unchanged. Integration
+    test VS-SI-20 needs a pass/fail latency. TSR-707 proposes at most 1 ms, marked TBD until the camera's message
+    periods are measured. **Using 1 ms now lets the test be written; the measurement can only tighten or confirm it.**
   reversibility: easy
-  blocks: "VS-SI-20"
+  blocks: "VS-SI-20 pass criterion (WP-S-08 OI-4, needed by G2)"
   gate: G2
   decider: claude
+  asked: 2026-10-25
+  batch: 17
+  proceed_after: 2026-11-01
   options:
     - key: A
       recommended: true
-      title: "Use TSR-707 ≤ 1 ms, revise after measurement"
-      detail: "Consistent with WP-S-02."
+      title: "Use TSR-707's 1 ms now and revise it once the message periods are measured"
+      detail: "The test is specified today and stays consistent with WP-S-02. Cost: may change after the measurement."
     - key: B
-      title: "Derive directly from measured message periods"
-      detail: "Waits for data."
-  sources: ["assurance/03-system/WP-S-08-system-integration-test.md OI-4"]
-  status: queued
+      title: "Wait and derive the bound from measured message periods"
+      detail: "Set once, from data. Cost: VS-SI-20 stays without a pass criterion until the car is measured."
+  sources: ["assurance/03-system/WP-S-08-system-integration-test.md OI-4, VS-SI-20", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-707"]
+  status: open
 
 - id: DQ-136
-  question: "What margin target is used for verification case VS-SQ-18?"
-  context: "Set together with the derived limits of TSR-605; bounded by requirements."
+  question: "How far below the panda's limits must openpilot's own commands stay, for verification case VS-SQ-18?"
+  context: >-
+    TSR-605 asks openpilot to command with margin below every envelope limit (proposed: steering torque at most 90 %
+    of the bound, acceleration 0.2 m/s² inside it). VS-SQ-18 checks that in 99.9 % of frames. **The margin is set by
+    TSR-605; this is only whether the test uses those values or a placeholder until TSR-605's limits are derived.**
   reversibility: easy
-  blocks: "VS-SQ-18"
+  blocks: "VS-SQ-18 pass criterion (WP-S-09 OI-5, needed by G2)"
   gate: G2
   decider: claude
+  asked: 2026-10-25
+  batch: 17
+  proceed_after: 2026-11-01
   options:
     - key: A
       recommended: true
-      title: "Set with TSR-605 derived limits"
-      detail: "Consistent."
+      title: "Use TSR-605's margins, and update the test when TSR-605's limits are derived"
+      detail: "One set of numbers, owned by the requirement. Cost: the test's targets move when TSR-605 does."
     - key: B
-      title: "Fixed interim percentage"
-      detail: "Earlier test planning; may change."
-  sources: ["assurance/03-system/WP-S-09-system-verification.md OI-5"]
-  status: queued
+      title: "Fix an interim percentage in the test now"
+      detail: "Test planning can start at once. Cost: a second number that may disagree with TSR-605 later."
+  sources: ["assurance/03-system/WP-S-09-system-verification.md OI-5, VS-SQ-18", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-605"]
+  status: open
 
 - id: DQ-137
   question: "Which US crash data should set the human-driver baseline that LionDriver's SOTIF targets must beat, and how is it cut down to the ODD's roads?"
@@ -3213,7 +3235,8 @@
       title: "A naturalistic driving study (for example SHRP 2) instead"
       detail: "Includes near-crashes, so more events per mile. Cost: access terms, and a fleet and era that do not match US highways today."
   sources: ["assurance/01-management/WP-M-08-sotif-plan.md §5 (B1), OI-1", "assurance/02-concept/WP-C-05-sotif-hazard-identification.md §5.2, OI-3", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md OI-2, OI-3", "DQ-096", "DQ-130 (merged here)", "DQ-194 (merged here)"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-138
   question: "How should LionDriver be compared with Toyota's own lane tracing and radar cruise on the same Corolla?"
@@ -3238,7 +3261,8 @@
       title: "Matched segments of public road"
       detail: "The same route driven with each system. Cost: traffic differs run to run, so the hard scenarios hardly ever occur and cannot be set up."
   sources: ["assurance/01-management/WP-M-08-sotif-plan.md §5 (B2), OI-2", "assurance/06-validation/WP-V-03-sotif-known-scenarios.md", "assurance/06-validation/WP-V-07-vehicle-test-operations.md"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-139
   question: "May simulation results count as validation evidence, and for which kinds of scenario?"
@@ -3289,7 +3313,8 @@
       title: "No surrogates"
       detail: "Only crashes count. Cost: no rate can be shown with one car, so the rate-level targets stay unmet."
   sources: ["assurance/01-management/WP-M-08-sotif-plan.md OI-8", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md §2 (public-road row), VT-01…VT-15", "assurance/06-validation/WP-V-04-sotif-unknown-scenarios.md (AS-08)"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-141
   question: "Is a soft real-time 100 Hz loop on the bench PC acceptable for the HIL plant model at bench stage B3?"
@@ -3328,40 +3353,52 @@
   status: queued
 
 - id: DQ-143
-  question: "Which CRC polynomial and residual-error target protect the SoC-to-panda SPI link?"
-  context: "The SPI link needs a CRC and sequence counter sized to a residual-error target; CRC is for safety, not security. Specified jointly with WP-S-05 and WP-S-07."
+  question: "How should the CRC that protects commands from the main computer to the panda be chosen?"
+  context: >-
+    Every steering command crosses the SPI link from the main computer to the panda under an 8-bit XOR, which
+    misses two flipped bits in the same position. TSR-410 and TSR-411 ask for a CRC and a sequence counter (WP-S-05
+    §4, §12.3: the one hop LionDriver owns at both ends). **The CRC protects against faults on the link, not
+    against attacks; picking it from a residual-error target is what an assessor will expect.**
   reversibility: revisit
-  blocks: "TSR-4xx SoC link; HSI-01…03"
+  blocks: "TSR-410, TSR-411; HSI-01…03; WP-S-02 OI-7 and WP-S-05 OI-2"
   gate: G3
   decider: claude
+  asked: 2026-10-25
+  batch: 17
   options:
     - key: A
       recommended: true
-      title: "Set residual-error target from the ASIL budget, then choose the CRC meeting it"
-      detail: "Method-driven choice."
+      title: "Set a residual-error target from the ASIL C budget, then pick the shortest CRC that meets it"
+      detail: "Defensible by calculation; the counter comes with it. Cost: an analysis, then a firmware and host change with tests."
     - key: B
-      title: "Keep the existing checksum and justify"
-      detail: "Less change, may not meet the target."
-  sources: ["assurance/03-system/WP-S-02-technical-safety-requirements.md OI-7"]
-  status: queued
+      title: "Keep the 8-bit XOR and justify it"
+      detail: "No change. Cost: unlikely to meet any ASIL C target, and TSR-410 stays unmet."
+  sources: ["assurance/03-system/WP-S-02-technical-safety-requirements.md OI-7, TSR-410, TSR-411", "assurance/03-system/WP-S-05-hsi-specification.md §4.1, §12.3, OI-2"]
+  status: open
 
 - id: DQ-144
-  question: "Which control requests does the release panda accept in each mode?"
-  context: "The HSI needs a per-mode whitelist of SPI control requests for release builds, recorded in WP-W-02. Bounded by TSR-512/513 and the cybersecurity CSRs."
+  question: "Which commands should the released panda firmware accept from the main computer, mode by mode?"
+  context: >-
+    The panda takes about 30 kinds of command from the main computer (WP-S-05 §4.2), including some that move the
+    relay, change the CAN set-up or reflash it. The reference build refuses some of them while a car mode is
+    active. **A release needs one written list per mode, recorded as software safety requirements.**
   reversibility: easy
-  blocks: "WP-W-02; TSR-513"
+  blocks: "WP-W-02 requirements for TSR-513; WP-S-05 OI-3"
   gate: G3
   decider: claude
+  asked: 2026-10-25
+  batch: 17
+  proceed_after: 2026-11-01
   options:
     - key: A
       recommended: true
-      title: "Derive whitelist from TSR-512/513 and CSR-011…016"
-      detail: "Consistent with existing lock design."
+      title: "Derive the list from TSR-512/513 and the cybersecurity requirements CSR-011…016"
+      detail: "Consistent with the lock already built. Cost: a review of every command against each mode."
     - key: B
-      title: "Allow all, block known-dangerous"
-      detail: "Weaker; contradicts TSR-513."
-  sources: ["assurance/03-system/WP-S-05-hsi-specification.md OI-3"]
-  status: queued
+      title: "Accept everything and block only known-dangerous commands"
+      detail: "Less work. Cost: contradicts TSR-513 and lets future commands through by default."
+  sources: ["assurance/03-system/WP-S-05-hsi-specification.md §4.2, OI-3"]
+  status: open
 
 - id: DQ-145
   question: "Should host and MCU SPI buffer sizes be aligned, or the difference documented?"
@@ -3400,25 +3437,32 @@
   status: queued
 
 - id: DQ-147
-  question: "Should host requests 0xb0/0xb1, 0xc0 (comms reset) and 0xf6 be refused while a car mode is active, by switching to an allow-list?"
-  context: "The reference-build lock uses a deny-list; these four requests are not on it and pass in a car mode. Review finding F-37 proposes an allow-list of only the requests the reference host needs (ATC-22)."
+  question: "While the car is under control, should the panda refuse every command the main computer does not need, instead of only the ones known to be dangerous?"
+  context: >-
+    In a car mode the reference build refuses a list of dangerous commands (a deny-list). Four others still pass:
+    IR power (`0xb0`), fan (`0xb1`), comms reset (`0xc0`) and siren (`0xf6`). The comms reset can drop a half-sent
+    CAN packet. **An allow-list keeps only what the main computer sends while driving (heartbeat, health, CAN, fan
+    and the driver-monitoring camera's IR power) and refuses everything else, including commands added later.**
   reversibility: easy
-  blocks: "SWSR-513, CSR-014, SWF-24"
+  blocks: "SWSR-513, CSR-014, SWF-24; WP-W-02 OI-5; ATC-22"
   gate: G3
   decider: claude
+  asked: 2026-10-25
+  batch: 17
+  proceed_after: 2026-11-01
   options:
     - key: A
       recommended: true
-      title: "Allow-list in car modes (ATC-22)"
-      detail: "Closes these and any future unlisted requests; must confirm the host needs none of them while driving."
+      title: "Switch to an allow-list in car modes (ATC-22)"
+      detail: "Closes the comms reset and any future command by default. Cost: confirm from pandad exactly what the host sends while driving, so the list breaks nothing."
     - key: B
       title: "Add the four to the deny-list"
-      detail: "Smaller change; future requests still pass by default."
+      detail: "Smaller change. Cost: refusing IR power or fan control would break driver monitoring or cooling; future commands still pass."
     - key: C
-      title: "Leave as is with justification"
-      detail: "No change; justification needed for each request."
-  sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-5"]
-  status: queued
+      title: "Leave as is and justify each one"
+      detail: "No change. Cost: the comms reset stays open while driving."
+  sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-5", "assurance/05-software/WP-W-03-software-architecture.md ATC-22", "assurance/03-system/WP-S-05-hsi-specification.md §4.2"]
+  status: open
 
 - id: DQ-148
   question: "When the panda refuses a steering frame from the main computer, should it send its own zero-torque frame in its place, or send nothing?"
@@ -3520,22 +3564,28 @@
   status: queued
 
 - id: DQ-153
-  question: "Should the panda adopt the proposed interrupt priority scheme (§5.4.2) or keep equal priorities justified by measured handler times?"
-  context: "All interrupts run at the same priority; the proposal raises the safety task so its latency is bounded by construction. Code changes are done (panda 52cad44); I1 review and target measurements are outstanding."
+  question: "Should the panda's safety checks get a higher interrupt priority than its communication, or stay at the same level?"
+  context: >-
+    Today every interrupt runs at one level, so the 100 Hz safety task can wait behind any host or CAN handler, and
+    its timing is bounded only by how long those run. WP-W-03 §5.4.2 proposes ranking the safety task first, then
+    CAN, then host traffic. **This is one of the timing measures the coexistence analysis still needs (WP-A-02 OI-9);
+    ranking adds preemption, which §5.4.3 has analysed.**
   reversibility: revisit
-  blocks: "SWSR-519, ATC-04, §6.3"
+  blocks: "SWSR-519, ATC-04, WP-W-03 §6.3; WP-A-02 OI-9"
   gate: G3
   decider: claude
+  asked: 2026-10-25
+  batch: 17
   options:
     - key: A
       recommended: true
-      title: "Measure baseline, then adopt §5.4.2 unless margin is large"
-      detail: "Bounded latency by construction; needs §5.4.4 measures."
+      title: "Measure handler times first, then adopt the ranking unless the margin is large"
+      detail: "Latency bounded by construction. Cost: a measurement campaign on the target and the race measures of §5.4.4."
     - key: B
-      title: "Keep equal priority"
-      detail: "No extra measures but re-measure every ISR change."
-  sources: ["assurance/05-software/WP-W-03-software-architecture.md OI-4"]
-  status: queued
+      title: "Keep one level and justify it by measurement"
+      detail: "No preemption to analyse. Cost: every change to any handler has to be re-measured."
+  sources: ["assurance/05-software/WP-W-03-software-architecture.md §5.4, OI-4, ATC-04", "assurance/08-analyses/WP-A-02-coexistence-freedom-from-interference.md OI-9"]
+  status: open
 
 - id: DQ-154
   question: "Should the transmit path re-check steering authority with interrupts masked just before loading a frame into the CAN controller?"
@@ -3556,40 +3606,52 @@
   status: queued
 
 - id: DQ-155
-  question: "Should unused car-brand safety modes be removed from the reference firmware build?"
-  context: "Every brand mode is compiled into the reference build, enlarging the interference surface and coupling the core to all modes."
+  question: "Should the reference firmware leave out the safety code for car brands other than Toyota?"
+  context: >-
+    Every brand's safety mode is compiled into the reference build, although the reference lock already stops the
+    host from selecting them. That is dead code in a single image with no memory partitioning, and every line of it
+    would have to be justified. **Leaving it out at compile time shrinks the code that must be analysed.**
   reversibility: easy
-  blocks: "ATC-10, WP-A-02 OI-2"
+  blocks: "ATC-10; WP-W-03 OI-2; WP-A-02 OI-9"
   gate: G3
   decider: claude
+  asked: 2026-10-25
+  batch: 17
+  proceed_after: 2026-11-01
   options:
     - key: A
       recommended: true
-      title: "Remove at compile time"
-      detail: "Smaller surface; build variant to maintain."
+      title: "Leave the other brands out of the reference build"
+      detail: "Smaller surface to analyse and test. Cost: a build variant to maintain at every upstream sync."
     - key: B
-      title: "Keep and justify"
-      detail: "No build change; justification and analysis needed."
-  sources: ["assurance/05-software/WP-W-03-software-architecture.md OI-2"]
-  status: queued
+      title: "Keep them and justify them"
+      detail: "No build change. Cost: analysis and justification of code that never runs on the reference car."
+  sources: ["assurance/05-software/WP-W-03-software-architecture.md OI-2, ATC-10"]
+  status: open
 
 - id: DQ-156
-  question: "Should USB communication be disabled in the reference firmware build?"
-  context: "The reference device uses SPI; USB is initialised anyway and reaches the same command handlers."
+  question: "Should USB communication be switched off in the reference panda firmware?"
+  context: >-
+    The reference device talks to the panda over SPI only. USB is still started and reaches the same command
+    handlers, so it is a second way in. **Turning it off removes an interference path; bench tools that use USB
+    would move to the debug build.**
   reversibility: easy
-  blocks: "ATC-11"
+  blocks: "ATC-11; WP-W-03 OI-3; WP-A-02 OI-9"
   gate: G3
   decider: claude
+  asked: 2026-10-25
+  batch: 17
+  proceed_after: 2026-11-01
   options:
     - key: A
       recommended: true
-      title: "Disable USB"
-      detail: "Removes an interference path; bench tools that use USB need the debug build."
+      title: "Switch USB off in the reference build"
+      detail: "One way in fewer. Cost: USB bench tools need the debug build."
     - key: B
-      title: "Keep and justify"
-      detail: "No change; justification needed."
-  sources: ["assurance/05-software/WP-W-03-software-architecture.md OI-3"]
-  status: queued
+      title: "Keep USB and justify it"
+      detail: "No change. Cost: the USB path has to be analysed and tested like SPI."
+  sources: ["assurance/05-software/WP-W-03-software-architecture.md OI-3, ATC-11"]
+  status: open
 
 - id: DQ-157
   question: "Is a separate forwarding queue needed so a host flood cannot delay forwarded camera (PCS) frames?"
@@ -5835,35 +5897,35 @@
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-25}
   applied: {ref: 65bab85, record: "WP-C-01 v0.23 §7 AOU-18 (vehicle admission); WP-S-05 v0.15 OI-8 closed, §12.1, §12.6", at: 2026-10-25}
-  note: "AOU-18 is Unverified: each vehicle needs a configuration review and a bus capture at the harness point (WP-C-01 §7)."
+  note: "AOU-18 is Unverified: each vehicle needs a configuration review and a bus capture at the harness point (WP-C-01 §7). The inbox page also holds B (2026-10-25 00:14 UTC); the lead answered A in chat about two hours later, and the later answer stands."
 - id: DQ-420
-  question: "When an attacker, not a random fault, triggers a hazard, should the HARA and the safety–security interactions record that the attacker picks the moment, so the exposure rating does not apply?"
+  question: "When an attacker, not a random fault, sets off a hazard, should the HARA say that the usual exposure rating does not apply?"
   context: >-
-    The HARA rates each hazardous event with an exposure (E) that assumes the fault happens at a random moment. An
-    attacker who controls the SoC can wait for the worst situation in the ODD. The TARA already rates safety impact
-    without exposure (WP-C-09 §3), so no risk value changes either way. **The question is whether the HARA and HATARA
-    should say so explicitly, so a reviewer does not read an ASIL's E as covering attacks.** The cyber simulation
-    shows the HARA hazard and the TARA safety impact, not an ASIL, and runs the worst in-ODD case, so it works with
-    any answer.
+    The HARA rates every hazardous event with an exposure (E): how often the driving situation occurs, on the
+    assumption that a fault strikes at a random moment. An attacker who controls the main computer can wait for the
+    worst moment instead. **The cybersecurity analysis (TARA) already rates safety impact without exposure, so no
+    risk value changes; the question is only whether the HARA says so, so that a reviewer does not read an ASIL's E
+    as covering attacks.**
   reversibility: easy
-  blocks: "Wording in WP-C-03 and hatara/ only; the cyber simulation does not wait on it"
+  blocks: "Wording in WP-C-03 and the joint HARA/TARA view (hatara/) only; the cyber simulation works with any answer"
+  gate: G1
   decider: lead
+  asked: 2026-10-25
+  batch: 17
   options:
-  - key: A
-    recommended: true
-    title: Add one HATARA interaction and a note in the HARA; no rating changes
-    detail: "One interaction row says attacker-triggered hazardous events take the worst situation, so E does not apply and the TARA safety impact governs; WP-C-03 points to it. Cost: two short edits."
-  - key: B
-    title: Rate attacker-triggered events as their own hazardous events at E4
-    detail: "Explicit, but duplicates every SoC-reachable event and can raise ASILs for faults that are not random, mixing the two methods. Cost: HARA model and both workbooks regenerated."
-  - key: C
-    title: Leave it to the TARA
-    detail: "No change. Cost: the gap stays implicit and a reviewer may raise it."
-  sources:
-  - assurance/sim/cyber/README.md §2.4, §6.1 choice 5 (PR #454)
-  - assurance/02-concept/WP-C-09-tara.md §3
-  - assurance/02-concept/hatara/hatara-interactions.md
-  status: queued
+    - key: A
+      recommended: true
+      title: "Add one note to the HARA and one row to the joint view; no rating changes"
+      detail: "The row says an attacker-triggered event takes the worst situation, so E does not apply and the TARA's safety impact governs; WP-C-03 points to it. Cost: two short edits. Easy to undo."
+    - key: B
+      title: "Rate attacker-triggered events as their own hazardous events at the highest exposure (E4)"
+      detail: "Explicit, but duplicates every event the main computer can cause and can raise ASILs for faults that are not random. Cost: the HARA model and both workbooks regenerated; mixes two methods."
+    - key: C
+      title: "Leave it to the TARA"
+      detail: "No change. Cost: the gap stays implicit and an assessor may raise it."
+  sources: ["assurance/sim/cyber/README.md §2.4, §6.1 choice 5 (PR #454)", "assurance/02-concept/WP-C-09-tara.md §3", "assurance/02-concept/hatara/hatara-interactions.md"]
+  status: open
+
 - id: DQ-421
   question: "LionDriver is public. Should the details of security weaknesses that are not fixed yet move to a private repository until they are fixed?"
   context: >-
@@ -5895,7 +5957,8 @@
       title: "Keep everything public"
       detail: "Rely on the abstraction rule (no exploits, payloads or procedures). Cost: the gap list and code locations stay a ready target list for anyone."
   sources: ["assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md §4.4", "assurance/01-management/WP-M-09-cybersecurity-plan.md §2 gap table", "assurance/02-concept/WP-C-09-tara.md §2–§5", "assurance/03-system/WP-S-07-cybersecurity-requirements-architecture.md §4", "PR #454"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-422
   question: "Which circuit simulator should the 12 V cranking-dip study use?"
