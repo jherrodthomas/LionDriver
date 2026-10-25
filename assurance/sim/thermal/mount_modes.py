@@ -62,7 +62,7 @@ def focal_px() -> float:
 
 def grid_lines(lo: float, hi: float, cuts: list, step: float, min_cells: dict) -> np.ndarray:
   """Grid lines through every block boundary, no wider apart than `step`; a thin layer gets at least its minimum."""
-  b = sorted(set(round(c, 9) for c in cuts if lo - 1e-12 <= c <= hi + 1e-12))
+  b = sorted({round(c, 9) for c in cuts if lo - 1e-12 <= c <= hi + 1e-12})
   out = [b[0]]
   for a, c in zip(b[:-1], b[1:], strict=True):
     n = max(int(math.ceil((c - a) / step - 1e-9)), min_cells.get((a, c), 1))
@@ -319,7 +319,7 @@ def markdown(r: dict, p: dict) -> str:
     L.append(f"| {i + 1} | {md['freq_hz']:.0f} Hz | {r['pad_band_hz']['soft'][i]:.0f} – {r['pad_band_hz']['stiff'][i]:.0f} Hz "
              f"| {md['kind']} | {100 * s[0]:.0f} / {100 * s[1]:.0f} / {100 * s[2]:.0f} % |")
   ms = r["mesh_study"]
-  L += ["", f"Mesh study, first mode: " + ", ".join(f"{s['f1_hz']:.2f} Hz ({s['dofs']:,} unknowns)" for s in ms) + ".",
+  L += ["", "Mesh study, first mode: " + ", ".join(f"{s['f1_hz']:.2f} Hz ({s['dofs']:,} unknowns)" for s in ms) + ".",
         "", "## Against what shakes the car", "",
         "| Source | Frequencies | First mode / its top |", "|---|---|---|"]
   labels = {"wheel": "Wheel turning (first order)", "idle": "Engine at idle (second order)",

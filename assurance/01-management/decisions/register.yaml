@@ -5831,3 +5831,31 @@
       detail: "A larger market. Cost: a new item, not a new car: new HARA (mass, stopping distance), new ODD, new actuators, and nothing upstream to build on."
   sources: ["assurance/03-system/WP-S-05-hsi-specification.md §12.1, §12.6, OI-8", "wiki/Reference-vehicle.md 'Adding a second vehicle'", "opendbc_repo/opendbc/safety/modes/toyota.h (toyota_secoc)"]
   status: open
+
+- id: DQ-420
+  question: "Which circuit simulator should the 12 V cranking-dip study use?"
+  context: >-
+    A reversible technical choice, so Claude goes with the recommendation unless you object. Physics plan study 8 asks
+    whether the panda MCU's supply stays in range when the engine cranks (TSR-505). **It needs a circuit simulator,
+    the plan's only new tool.** The device's power path is not published, so the model is generic, with a band on each
+    part, and the result is a design aid with no credit (DQ-413).
+  reversibility: easy
+  blocks: "Physics plan study 8; a new WP-P-07 tool row"
+  gate: G1
+  decider: claude
+  asked: 2026-10-25
+  proceed_after: 2026-10-25
+  options:
+    - key: A
+      recommended: true
+      title: "ngspice 41 from conda-forge, in its own explicit lock"
+      detail: "Open source (BSD-3), the standard SPICE, runs headless in CI, pinned by URL and md5 like the heat model. Cost: one more lock and CI job, a TL entry at TCL1."
+    - key: B
+      title: "Hand-written ODEs in numpy"
+      detail: "No new tool. Cost: the diode, the regulators and the switching between them written and checked by hand, which is what a circuit simulator is for."
+    - key: C
+      title: "A vendor simulator (LTspice)"
+      detail: "Free and widely known. Cost: closed source, Windows-first, hard to pin and run in CI."
+  sources: ["assurance/sim/physics-plan.md §4 study 8", "assurance/sim/supply/README.md", "WP-P-07 TL-58"]
+  status: assumed
+  answer: {choice: A, via: assumed, at: 2026-10-25, note: "Decided by Claude when phase C started, as the physics plan said; the lead can change it"}
