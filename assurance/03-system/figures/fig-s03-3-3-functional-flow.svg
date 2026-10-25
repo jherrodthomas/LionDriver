@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="868" viewBox="0 0 1440 868" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 3-3. Functional flow (WP-S-03 §3.4)</title>
+<desc>Processes: camerad: road and cabin camera frames; modeld: AI-1 driving model: path, lanes, leads, curvature; plannerd: longitudinal plan: leads, set speed; controlsd: control law: steering torque, acceleration; card: CAN to carState; commands to CAN frames; pandad: link to the panda: frames, mode, heartbeat; dmonitoringmodeld: AI-3 driver monitoring model; dmonitoringd: driver monitoring policy: timers, lockout; radard: lead fusion: radar and vision; selfdrived: engagement, events, alerts, warnings. Services: modelV2 modeld → plannerd; longitudinalPlan plannerd → controlsd; carControl controlsd → card; carState card → controlsd; sendcan card → pandad; can pandad → card; modelV2 modeld → controlsd; radarState radard → plannerd; driverStateV2 dmonitoringmodeld → dmonitoringd; driverMonitoringState dmonitoringd → selfdrived; selfdriveState selfdrived → controlsd; selfdriveState selfdrived → pandad; pandaStates pandad → selfdrived. Envelope: RX checks, Authority, Limits, Transmit.</desc>
+<defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1440" height="868" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-3 · Functional flow: from what the car sees to what it does</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">The functions in the order they act, by partition rather than by hardware, with where each kind of AI error enters and what the envelope can catch</text>
+<text x="1400" y="44" font-size="11" fill="#475569" text-anchor="end">WP-S-03 §3.4 · §8, §9</text>
+<line x1="40" y1="82" x2="1400" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="30" y="100" width="1380" height="344" rx="12" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="1394" y="122" font-size="12.5" fill="#475569" font-weight="700" text-anchor="end">QM partition · SoC processes (E-01) and models (E-02)</text>
+<rect x="30" y="462" width="1380" height="130" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="290" y="582" font-size="12.5" fill="#C2410C" font-weight="700">ASIL C safety envelope · panda MCU (E-03, E-04a) · F-08</text>
+<rect x="30" y="610" width="1380" height="108" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.4"/>
+<text x="1394" y="632" font-size="12.5" fill="#475569" font-weight="700" text-anchor="end">Vehicle and driver</text>
+<rect x="50" y="150" width="170" height="78" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="62" y="171" font-size="12.5" fill="#0F172A" font-weight="700">camerad</text>
+<text x="62" y="188" font-size="10" fill="#475569">road and cabin camera frames</text>
+<rect x="310" y="150" width="170" height="78" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="322" y="171" font-size="12.5" fill="#0F172A" font-weight="700">modeld</text>
+<text x="322" y="188" font-size="10" fill="#475569">AI-1 driving model: path,</text>
+<text x="322" y="201" font-size="10" fill="#475569">lanes, leads, curvature</text>
+<rect x="322" y="219" width="35.6" height="17" rx="8.5" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="339.8" y="231.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">F-01</text>
+<rect x="361.6" y="219" width="35.6" height="17" rx="8.5" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="379.3" y="231.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">F-02</text>
+<rect x="444.4" y="141" width="35.6" height="17" rx="8.5" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="462.2" y="153.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">AE-N</text>
+<rect x="404.9" y="141" width="35.6" height="17" rx="8.5" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="422.7" y="153.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">AE-T</text>
+<rect x="365.3" y="141" width="35.6" height="17" rx="8.5" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="383.1" y="153.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">AE-O</text>
+<rect x="325.8" y="141" width="35.6" height="17" rx="8.5" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="343.5" y="153.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">AE-P</text>
+<rect x="570" y="150" width="170" height="78" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="582" y="171" font-size="12.5" fill="#0F172A" font-weight="700">plannerd</text>
+<text x="582" y="188" font-size="10" fill="#475569">longitudinal plan: leads, set</text>
+<text x="582" y="201" font-size="10" fill="#475569">speed</text>
+<rect x="582" y="219" width="35.6" height="17" rx="8.5" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="599.8" y="231.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">F-02</text>
+<rect x="704.4" y="141" width="35.6" height="17" rx="8.5" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="722.2" y="153.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">AE-L</text>
+<rect x="830" y="150" width="170" height="78" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="842" y="171" font-size="12.5" fill="#0F172A" font-weight="700">controlsd</text>
+<text x="842" y="188" font-size="10" fill="#475569">control law: steering torque,</text>
+<text x="842" y="201" font-size="10" fill="#475569">acceleration</text>
+<rect x="842" y="219" width="35.6" height="17" rx="8.5" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="859.8" y="231.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">F-01</text>
+<rect x="881.6" y="219" width="35.6" height="17" rx="8.5" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="899.3" y="231.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">F-02</text>
+<rect x="1090" y="150" width="170" height="78" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="1102" y="171" font-size="12.5" fill="#0F172A" font-weight="700">card</text>
+<text x="1102" y="188" font-size="10" fill="#475569">CAN to carState; commands to</text>
+<text x="1102" y="201" font-size="10" fill="#475569">CAN frames</text>
+<rect x="1090" y="300" width="170" height="78" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="1102" y="321" font-size="12.5" fill="#0F172A" font-weight="700">pandad</text>
+<text x="1102" y="338" font-size="10" fill="#475569">link to the panda: frames,</text>
+<text x="1102" y="351" font-size="10" fill="#475569">mode, heartbeat</text>
+<rect x="50" y="300" width="170" height="78" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="62" y="321" font-size="12.5" fill="#0F172A" font-weight="700">dmonitoringmodeld</text>
+<text x="62" y="338" font-size="10" fill="#475569">AI-3 driver monitoring model</text>
+<rect x="62" y="369" width="35.6" height="17" rx="8.5" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="79.8" y="381.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">F-04</text>
+<rect x="184.4" y="291" width="35.6" height="17" rx="8.5" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="202.2" y="303.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">AE-D</text>
+<rect x="310" y="300" width="170" height="78" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="322" y="321" font-size="12.5" fill="#0F172A" font-weight="700">dmonitoringd</text>
+<text x="322" y="338" font-size="10" fill="#475569">driver monitoring policy: timers,</text>
+<text x="322" y="351" font-size="10" fill="#475569">lockout</text>
+<rect x="322" y="369" width="35.6" height="17" rx="8.5" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="339.8" y="381.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">F-04</text>
+<rect x="570" y="300" width="170" height="78" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="582" y="321" font-size="12.5" fill="#0F172A" font-weight="700">radard</text>
+<text x="582" y="338" font-size="10" fill="#475569">lead fusion: radar and vision</text>
+<rect x="582" y="369" width="35.6" height="17" rx="8.5" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="599.8" y="381.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">F-02</text>
+<rect x="830" y="300" width="170" height="78" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="842" y="321" font-size="12.5" fill="#0F172A" font-weight="700">selfdrived</text>
+<text x="842" y="338" font-size="10" fill="#475569">engagement, events, alerts,</text>
+<text x="842" y="351" font-size="10" fill="#475569">warnings</text>
+<rect x="842" y="369" width="35.6" height="17" rx="8.5" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="859.8" y="381.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">F-03</text>
+<rect x="881.6" y="369" width="35.6" height="17" rx="8.5" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="899.3" y="381.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">F-05</text>
+<rect x="921.1" y="369" width="35.6" height="17" rx="8.5" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="938.9" y="381.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">F-06</text>
+<rect x="960.7" y="369" width="35.6" height="17" rx="8.5" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="978.5" y="381.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">F-07</text>
+<polyline points="222,176 308,176" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#muted)"/>
+<text x="265" y="168" font-size="9.5" fill="#475569" text-anchor="middle">frames</text>
+<polyline points="135,228 135,298" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#muted)"/>
+<text x="143" y="268" font-size="9.5" fill="#475569">frames</text>
+<polyline points="482,176 568,176" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#muted)"/>
+<text x="525" y="168" font-size="9" fill="#0F172A" text-anchor="middle" font-family="'JetBrains Mono', Menlo, Consolas, monospace">modelV2</text>
+<polyline points="742,176 828,176" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#muted)"/>
+<text x="785" y="168" font-size="9" fill="#0F172A" text-anchor="middle" font-family="'JetBrains Mono', Menlo, Consolas, monospace">longitudinalPlan</text>
+<polyline points="1002,170 1088,170" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#muted)"/>
+<text x="1045" y="162" font-size="9" fill="#0F172A" text-anchor="middle" font-family="'JetBrains Mono', Menlo, Consolas, monospace">carControl</text>
+<polyline points="1088,206 1004,206" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#muted)"/>
+<text x="1045" y="222" font-size="9" fill="#0F172A" text-anchor="middle" font-family="'JetBrains Mono', Menlo, Consolas, monospace">carState</text>
+<polyline points="1150,228 1150,298" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#muted)"/>
+<text x="1158" y="268" font-size="9" fill="#0F172A" font-family="'JetBrains Mono', Menlo, Consolas, monospace">sendcan</text>
+<polyline points="1210,298 1210,230" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#muted)"/>
+<text x="1218" y="268" font-size="9" fill="#0F172A" font-family="'JetBrains Mono', Menlo, Consolas, monospace">can</text>
+<polyline points="316,150 316,128 915,128 915,148" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#muted)"/>
+<text x="622" y="122" font-size="9" fill="#0F172A" text-anchor="middle" font-family="'JetBrains Mono', Menlo, Consolas, monospace">modelV2</text>
+<polyline points="655,300 655,230" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#muted)"/>
+<text x="663" y="270" font-size="9" fill="#0F172A" font-family="'JetBrains Mono', Menlo, Consolas, monospace">radarState</text>
+<polyline points="222,339 308,339" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#muted)"/>
+<text x="265" y="331" font-size="9" fill="#0F172A" text-anchor="middle" font-family="'JetBrains Mono', Menlo, Consolas, monospace">driverStateV2</text>
+<polyline points="395,378 395,404 915,404 915,380" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#muted)"/>
+<text x="655" y="418" font-size="9" fill="#0F172A" text-anchor="middle" font-family="'JetBrains Mono', Menlo, Consolas, monospace">driverMonitoringState</text>
+<polyline points="895,300 895,230" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#muted)"/>
+<text x="903" y="270" font-size="9" fill="#0F172A" font-family="'JetBrains Mono', Menlo, Consolas, monospace">selfdriveState</text>
+<polyline points="1002,326 1088,326" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#muted)"/>
+<text x="1045" y="318" font-size="9" fill="#0F172A" text-anchor="middle" font-family="'JetBrains Mono', Menlo, Consolas, monospace">selfdriveState</text>
+<polyline points="1088,358 1004,358" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#muted)"/>
+<text x="1045" y="374" font-size="9" fill="#0F172A" text-anchor="middle" font-family="'JetBrains Mono', Menlo, Consolas, monospace">pandaStates</text>
+<rect x="42" y="474" width="236" height="108" rx="10" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="54" y="494" font-size="10.5" fill="#D2553F" font-weight="700">The envelope bounds the size of a</text>
+<text x="54" y="508" font-size="10.5" fill="#D2553F" font-weight="700">command, not its direction.</text>
+<text x="54" y="522" font-size="9.5" fill="#D2553F">A wrong curvature or a missed lead inside the</text>
+<text x="54" y="534.5" font-size="9.5" fill="#D2553F">limits passes every check; only the driver or a</text>
+<text x="54" y="547" font-size="9.5" fill="#D2553F">monitor on the SoC catches it.</text>
+<rect x="290" y="494" width="230" height="70" rx="10" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4"/>
+<text x="302" y="515" font-size="12.5" fill="#0F172A" font-weight="700">RX checks</text>
+<text x="302" y="532" font-size="10" fill="#475569">brake, cruise, checksums, timeouts</text>
+<polyline points="520,529 568,529" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#muted)"/>
+<rect x="570" y="494" width="230" height="70" rx="10" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4"/>
+<text x="582" y="515" font-size="12.5" fill="#0F172A" font-weight="700">Authority</text>
+<text x="582" y="532" font-size="10" fill="#475569">controls_allowed: grant, revoke (Figure 4-5)</text>
+<polyline points="800,529 848,529" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#muted)"/>
+<rect x="850" y="494" width="230" height="70" rx="10" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4"/>
+<text x="862" y="515" font-size="12.5" fill="#0F172A" font-weight="700">Limits</text>
+<text x="862" y="532" font-size="10" fill="#475569">torque, rate, −3.5…+2.0 m/s²</text>
+<polyline points="1080,529 1128,529" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#muted)"/>
+<rect x="1130" y="494" width="230" height="70" rx="10" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4"/>
+<text x="1142" y="515" font-size="12.5" fill="#0F172A" font-weight="700">Transmit</text>
+<text x="1142" y="532" font-size="10" fill="#475569">relay; frames to the EPS and PCM</text>
+<polyline points="1120,378 1120,476 965,476 965,492" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#muted)"/>
+<text x="1128" y="396" font-size="9.5" fill="#475569">frames (SPI)</text>
+<polyline points="1240,378 1240,453 685,453 685,492" fill="none" stroke="#0F172A" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#muted)"/>
+<text x="695" y="484" font-size="9.5" fill="#475569">heartbeat 0xf3: engaged, 10 Hz</text>
+<rect x="1130" y="636" width="230" height="64" rx="10" fill="#FFFFFF" stroke="#64748B" stroke-width="1.4"/>
+<text x="1142" y="657" font-size="12.5" fill="#0F172A" font-weight="700">EPS · PCM</text>
+<text x="1142" y="674" font-size="10" fill="#475569">steer and drive the car</text>
+<rect x="290" y="636" width="300" height="64" rx="10" fill="#FFFFFF" stroke="#64748B" stroke-width="1.4"/>
+<text x="302" y="657" font-size="12.5" fill="#0F172A" font-weight="700">Driver</text>
+<text x="302" y="674" font-size="10" fill="#475569">supervises; brakes, cancels, steers, takes over</text>
+<polyline points="1245,564 1245,634" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#muted)"/>
+<polyline points="405,636 405,566" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#muted)"/>
+<text x="413" y="610" font-size="9.5" fill="#475569">brake, cancel (car CAN)</text>
+<polyline points="1128,668 592,668" fill="none" stroke="#0F172A" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#muted)"/>
+<text x="860" y="660" font-size="9.5" fill="#475569" text-anchor="middle">the car's motion, seen by the driver and the cameras</text>
+<rect x="40" y="732" width="35.6" height="17" rx="8.5" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="57.8" y="744.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">F-01</text>
+<text x="81.6" y="744" font-size="10.5" fill="#475569">item function it realises (WP-C-01 §2.1)</text>
+<rect x="333.6" y="732" width="35.6" height="17" rx="8.5" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="351.3" y="744.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">AE-P</text>
+<text x="375.1" y="744" font-size="10.5" fill="#475569">AI error type that enters there (WP-C-11 §5)</text>
+<text x="649.9" y="744" font-size="10.5" fill="#475569">Arrows between processes are cereal services (§9); dashed arrows are not data the item acts on.</text>
+<text x="40" y="762" font-size="10.5" fill="#475569">Generated by fig_s03_functional_flow.py; every process, service, function and error type is checked against WP-S-03 §8–§9, WP-C-01 §2.1 and WP-C-11 §5.</text>
+<g class="terms">
+<text x="40" y="784" font-size="10.5" fill="#475569">Terms: AE-nn AI error type (WP-C-11 §5) · AI artificial intelligence · AI-nn AI component (WP-C-11 §2.1): AI-1 driving model, AI-2 big driving model (excluded), AI-3 driver monitoring model · ASIL Automotive Safety Integrity Level, A (lowest)</text>
+<text x="40" y="798.5" font-size="10.5" fill="#475569">to D (highest), from ISO 26262 · CAN controller area network: the vehicle's data bus · E-nn element of the item (WP-C-01 §3.1), E-01…E-06 · EPS electric power steering · F-nn function of the item (WP-C-01 §2.1), F-01…F-09 · MCU microcontroller:</text>
+<text x="40" y="813" font-size="10.5" fill="#475569">the panda safety processor (STM32H7) · PCM powertrain control module (engine and drive) · QM quality managed: no ASIL; ordinary quality processes suffice · RX receive · SoC system on chip: the comma device's main processor, running openpilot</text>
+<text x="40" y="827.5" font-size="10.5" fill="#475569">(QM) · SPI serial peripheral interface (the link between SoC and MCU) · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K</text>
+<text x="40" y="842" font-size="10.5" fill="#475569">safety case)</text>
+</g>
+</svg>

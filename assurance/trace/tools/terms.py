@@ -47,6 +47,9 @@ PAGES = [
 FIGURES = [
   A / "02-concept/figures/fig-c01-3-4-function-allocation.svg",
   A / "02-concept/figures/fig-c11-6-1-air-map.svg",
+  A / "03-system/figures/fig-s03-3-3-functional-flow.svg",
+  A / "03-system/figures/fig-s03-4-5-envelope-states.svg",
+  A / "03-system/figures/fig-s03-7-1-ffi.svg",
   A / "02-concept/figures/fig-c02-5-1-odd-exits.svg",
   A / "02-concept/figures/fig-c10-6-1-concept-view.svg",
   A / "02-concept/fsc/figures/fig-c04-10-1-safety-view.svg",
@@ -165,6 +168,14 @@ TERMS = {
   "JWT": "JSON web token (the device's login token to the back end)",
   "AoU": "assumption of use: what the analysis assumes about the car, the driver or the environment",
   "SILENT": "the panda's safety mode that sends nothing",
+  "NRST": "the MCU's reset line (BOOT0 is its boot-mode line)",
+  "ISR": "interrupt service routine",
+  "IWDG": "independent watchdog of the MCU",
+  "WCET": "worst-case execution time",
+  "PCB": "printed circuit board",
+  "NOOUTPUT": "the panda's safety mode that receives but sends nothing",
+  "TOYOTA": "the panda's Toyota car mode (parameter 73 in the reference build)",
+  "ALLOWED": "the envelope's authority state with controls_allowed = 1 (NOT_ALLOWED: 0), WP-W-05 §5.2",
   # files and repository
   "CSV": "comma-separated values file",
   "SVG": "scalable vector graphics (the figure format)",
@@ -189,6 +200,7 @@ TERMS = {
   "FSR-": "functional safety requirement (FSC)",
   "TSR-": "technical safety requirement (WP-S-02)",
   "SM-": "safety mechanism (TSC §6)",
+  "IND-": "independence claim (WP-S-03 §7)",
   "SS-": "safe state (FSC §6): SS-L lateral, SS-G longitudinal, SS-S envelope silent",
   "SH-": "SOTIF hazard (WP-C-05)",
   "FI-": "functional insufficiency (WP-C-06)",
@@ -200,7 +212,7 @@ TERMS = {
   "AS-": "asset (TARA §2)",
   "DS-": "damage scenario (TARA §3)",
   "TS-": "threat scenario (TARA §4)",
-  "AP-": "attack path (TARA §5)",
+  "AP-": "attack path (TARA §5); in WP-S-03 and on the TSC page, an architectural principle (WP-S-03 §2)",
   "AI-": "AI component (WP-C-11 §2.1): AI-1 driving model, AI-2 big driving model (excluded), AI-3 driver monitoring model",
   "AIR-": "AI safety requirement (WP-C-11 §6)",
   "DSR-": "dataset requirement (WP-C-11 §7)",
@@ -224,7 +236,7 @@ TERMS = {
   "S#": "severity class S0 (no injuries) to S3 (life-threatening)",
   "E#": "exposure class E0 (incredible) to E4 (high probability)",
   "C#": "controllability class C0 (controllable in general) to C3 (difficult or uncontrollable)",
-  "M#": "guide word M01…M14 of the HARA (no function, unrequested, excessive, …)",
+  "M#": "guide word M01…M14 of the HARA (no function, unrequested, excessive, …); M1…M8 (one digit) a safety-mode transition (WP-W-05 §5.1)",
   "W#": "weather and surface condition W01…W06 (HARA §3.1)",
   "L#": "degradation level L0 (full function) to L5 (lockout), FSC §12.1",
   "P#": "priority of a functional modification: P1 before on-road use, P2 before release, P3 decide at G2",
@@ -314,7 +326,7 @@ def find(text: str) -> tuple[list[str], list[str]]:
 
 def label(key: str) -> str:
   if key.endswith("#"):
-    return {"S#": "S0–S3", "E#": "E0–E4", "C#": "C0–C3", "M#": "M01–M14", "W#": "W01–W06", "L#": "L0–L5",
+    return {"S#": "S0–S3", "E#": "E0–E4", "C#": "C0–C3", "M#": "M01–M14, M1–M8", "W#": "W01–W06", "L#": "L0–L5",
             "P#": "P1–P3", "G#": "G0–G6", "I#": "I0–I3"}[key]
   return key + "nn" if key.endswith("-") else key
 

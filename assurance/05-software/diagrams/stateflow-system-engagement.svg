@@ -63,7 +63,7 @@ svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:
 <text x="34.0" y="300.0" class="t2" text-anchor="start">panda</text>
 <rect class="hi" x="20" y="340" width="960" height="78" rx="10"/>
 <text x="34.0" y="374.0" class="tb" text-anchor="start">SM-TOY-AUTH</text>
-<text x="34.0" y="390.0" class="t2" text-anchor="start">envelope, B‡</text>
+<text x="34.0" y="390.0" class="t2" text-anchor="start">envelope, ASIL C</text>
 <path class="edge" d="M350.0,109.0 L420.0,109.0"/>
 <path class="arrow" d="M420.0,109.0 L413.0,112.2 L413.0,105.8 Z"/>
 <rect class="lbl" x="374.9" y="94.5" width="20.2" height="17.0" rx="3"/>

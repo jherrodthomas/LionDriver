@@ -2960,8 +2960,10 @@
       title: "Develop all of it to ASIL C"
       detail: "No partitioning needed. Cost: the fan, sound, LED and debug code is reviewed, tested and covered to ASIL C, and every upstream change to it has to be too."
   sources: ["assurance/08-analyses/WP-A-02-coexistence-freedom-from-interference.md §2, §6, OI-2", "assurance/00-assessment/gap-assessment.md GAP-11"]
-  status: answered
+  status: applied
   answer: {choice: B, via: inbox, at: 2026-10-23, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: caaa702, record: "WP-A-02 v0.12 §2 and OI-2 (closed), OI-9; WP-W-03 v0.20 §3.1 U-PND-HK; SysML model", at: 2026-10-25}
+  note: "Left as work: ASIL C requirements, reviews, unit tests and coverage for the U-PND-HK units (WP-W-05, WP-W-06), and ASIL C assessment of upstream changes to them. The §7 MPU and timing measures stay required (WP-A-02 OI-9)."
 
 - id: DQ-127
   question: "Should the System FMEA table in WP-A-04 §10 (SFMEA-01…40) be retired, so that system-fmea.yaml is the only System FMEA?"
@@ -5830,7 +5832,10 @@
       title: "Also plan for J1939 trucks"
       detail: "A larger market. Cost: a new item, not a new car: new HARA (mass, stopping distance), new ODD, new actuators, and nothing upstream to build on."
   sources: ["assurance/03-system/WP-S-05-hsi-specification.md §12.1, §12.6, OI-8", "wiki/Reference-vehicle.md 'Adding a second vehicle'", "opendbc_repo/opendbc/safety/modes/toyota.h (toyota_secoc)"]
-  status: open
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-25}
+  applied: {ref: 65bab85, record: "WP-C-01 v0.23 §7 AOU-18 (vehicle admission); WP-S-05 v0.15 OI-8 closed, §12.1, §12.6", at: 2026-10-25}
+  note: "AOU-18 is Unverified: each vehicle needs a configuration review and a bus capture at the harness point (WP-C-01 §7)."
 
 - id: DQ-420
   question: "Which circuit simulator should the 12 V cranking-dip study use?"

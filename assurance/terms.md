@@ -21,6 +21,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | AEB | automatic emergency braking |
 | AGNOS | the comma device's operating system |
 | AI | artificial intelligence |
+| ALLOWED | the envelope's authority state with controls_allowed = 1 (NOT_ALLOWED: 0), WP-W-05 §5.2 |
 | AoU | assumption of use: what the analysis assumes about the car, the driver or the environment |
 | ASIL | Automotive Safety Integrity Level, A (lowest) to D (highest), from ISO 26262 |
 | BOR | brown-out reset (MCU supply monitor) |
@@ -68,6 +69,8 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | ID | identifier |
 | IPC | inter-process communication |
 | ISO | International Organization for Standardization |
+| ISR | interrupt service routine |
+| IWDG | independent watchdog of the MCU |
 | JPEG | a compressed image format |
 | JWT | JSON web token (the device's login token to the back end) |
 | LD-SDA | LionDriver Supervised Driving Assistance, the item |
@@ -80,6 +83,8 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | ML | machine learning |
 | MPU | memory protection unit |
 | NA | not applicable |
+| NOOUTPUT | the panda's safety mode that receives but sends nothing |
+| NRST | the MCU's reset line (BOOT0 is its boot-mode line) |
 | NSC | not safety-critical |
 | NUL | null byte |
 | OBD | on-board diagnostics port |
@@ -90,6 +95,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | OOD | out of distribution: unlike the data the model learned from |
 | OTA | over-the-air (software update) |
 | PAS | publicly available specification (ISO/PAS 8800 is the AI safety one) |
+| PCB | printed circuit board |
 | PCM | powertrain control module (engine and drive) |
 | PCS | pre-collision system: Toyota's stock collision warning and braking |
 | PR | pull request |
@@ -115,6 +121,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | SW | software |
 | TARA | threat analysis and risk assessment (ISO/SAE 21434) |
 | TBC | to be confirmed |
+| TOYOTA | the panda's Toyota car mode (parameter 73 in the reference build) |
 | TSC | technical safety concept |
 | TSS | Toyota Safety Sense (TSS 2.0: the car's stock lane assist, radar cruise and pre-collision package) |
 | TX | transmit |
@@ -123,6 +130,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | VIN | vehicle identification number |
 | VRU | vulnerable road user: pedestrian or cyclist |
 | VSC | vehicle stability control (Toyota's stability system) |
+| WCET | worst-case execution time |
 | WRP | write protection of the MCU's flash (option bytes) |
 
 ## Record codes
@@ -136,7 +144,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | AI-nn | AI component (WP-C-11 §2.1): AI-1 driving model, AI-2 big driving model (excluded), AI-3 driver monitoring model |
 | AIR-nn | AI safety requirement (WP-C-11 §6) |
 | AOU-nn | assumption of use (WP-C-01 §7); an R suffix marks the FSC's refined version |
-| AP-nn | attack path (TARA §5) |
+| AP-nn | attack path (TARA §5); in WP-S-03 and on the TSC page, an architectural principle (WP-S-03 §2) |
 | AS-nn | asset (TARA §2) |
 | CA-nn | cybersecurity assumption on an entity outside the item (WP-C-10 §2) |
 | CFG-nn | vehicle configuration in the vehicle register (CFG-001 is the reference Corolla) |
@@ -158,6 +166,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | H-nn | hazard (HARA) |
 | HE-nn | hazardous event (HARA) |
 | IF-nn | interface of the item (WP-C-01 §3.4) |
+| IND-nn | independence claim (WP-S-03 §7) |
 | INS-nn | installation check (WP-O-01) |
 | IX-nn | safety-security interaction (HATARA) |
 | KS-nn | known scenario (WP-V-03) |
@@ -186,7 +195,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | S0–S3 | severity class S0 (no injuries) to S3 (life-threatening) |
 | E0–E4 | exposure class E0 (incredible) to E4 (high probability) |
 | C0–C3 | controllability class C0 (controllable in general) to C3 (difficult or uncontrollable) |
-| M01–M14 | guide word M01…M14 of the HARA (no function, unrequested, excessive, …) |
+| M01–M14, M1–M8 | guide word M01…M14 of the HARA (no function, unrequested, excessive, …); M1…M8 (one digit) a safety-mode transition (WP-W-05 §5.1) |
 | W01–W06 | weather and surface condition W01…W06 (HARA §3.1) |
 | L0–L5 | degradation level L0 (full function) to L5 (lockout), FSC §12.1 |
 | P1–P3 | priority of a functional modification: P1 before on-road use, P2 before release, P3 decide at G2 |

@@ -427,10 +427,10 @@ package LionDriverArchitecture {
         part <'panda.drivers.siren'> siren : SoftwareElement {
             doc /* Siren and housekeeping drivers (fan, LED, bootkick, clock source, PWM, ADC). */
             @Unit { id = "U-PND-HK"; build = Build::both; }
-            @Safety { integrity = Integrity::B; label = "Mixed: siren B, rest QM"; }
+            @Safety { integrity = Integrity::C; label = "C"; }
             @Catalogue {
                 name = "`panda.drivers.siren` / housekeeping";
-                description = "Siren (B, TSR-516); others QM";
+                description = "Siren (B, TSR-516); fan, LED and the rest developed to ASIL C, no FFI claimed (WP-A-02 §2, DQ-126)";
                 sources = "`board/drivers/fake_siren.h`, `board/stm32h7/sound.h`, `board/drivers/{fan,led,bootkick,clock_source,pwm}.h`, `board/stm32h7/lldts.h`, ADC";
             }
             port audio : HmiPort;
