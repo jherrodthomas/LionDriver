@@ -61,7 +61,7 @@ here is generated from it or drawn from its tables.
    the harness. External compute (E-06) is excluded (DQ-021).
 4. **One path to the actuators.** Every steering and acceleration command leaves through the panda safety MCU (the
    envelope) and the harness, and nothing else in the item can move the car.
-5. **17 assumptions of use.** They cover what the item takes for granted about the Toyota ECUs, the installation, the
+5. **18 assumptions of use.** They cover what the item takes for granted about the Toyota ECUs and the vehicle buses, the installation, the
    driver, the network and the build. Most are not yet verified.
 
 | Where it comes from | The definition | Where it goes |
@@ -145,7 +145,7 @@ authentication, and the envelope itself.
 
 ## 5. What it assumes
 
-![WP-C-01 Figure 7-1: the 17 assumptions of use grouped by subject (vehicle ECUs, installation and maintenance, driver, network and back end, build configuration), each with its status, where it is credited and how it is to be verified](../figures/fig-c01-7-1-aou-map.svg)
+![WP-C-01 Figure 7-1: the 18 assumptions of use grouped by subject (vehicle ECUs, installation and maintenance, driver, network and back end, build configuration), each with its status, where it is credited and how it is to be verified](../figures/fig-c01-7-1-aou-map.svg)
 
 *The assumptions of use (§7, Figure 7-1).* The ratings of the HARA lean hardest on the first group. The EPS limits
 and fades the steering torque (AOU-01/02). Braking always works and cancels cruise (AOU-03). The stock PCS keeps

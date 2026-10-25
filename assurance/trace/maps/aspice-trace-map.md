@@ -22,7 +22,7 @@ Specification on the left, verification on the right. Each verification process 
 ```mermaid
 block-beta
   columns 13
-  SYS1["<b>SYS.1</b><br/>Requirements elicitation<br/>AOU 17 · H 9 · HE 39<br/>SG 8 · SH 13 · TS 14"]
+  SYS1["<b>SYS.1</b><br/>Requirements elicitation<br/>AOU 18 · H 9 · HE 39<br/>SG 8 · SH 13 · TS 14"]
   space
   space
   space
@@ -156,13 +156,13 @@ block-beta
 
 One colour rule for every V: blue when every item of the level is in the trace data, or every item of the paired level is named by a case (done in the design, not verified); amber when some are; red when none is; dashed grey when the level holds nothing yet. Green is kept for approved work products and passed verification; nothing here is either. The gate band shows the gate records of WP-M-00 §2 (none held yet).
 
-A named item is a **specified** link, not a passed test. 0 of 694 traced items carry status `verified`. [`links/verification.yaml`](../links/verification.yaml) links 103 existing tests to 36 requirements (WP-W-06 §4.1, §4.9) and records no result; the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K7–K10 in the [README](../README.md) §6 are not implemented).
+A named item is a **specified** link, not a passed test. 0 of 695 traced items carry status `verified`. [`links/verification.yaml`](../links/verification.yaml) links 103 existing tests to 36 requirements (WP-W-06 §4.1, §4.9) and records no result; the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K7–K10 in the [README](../README.md) §6 are not implemented).
 
 ## 2. Process to work product and items
 
 | Process | Name | Work products | Items or test cases |
 |---|---|---|---|
-| **SYS.1** | Requirements elicitation | WP-C-01, WP-C-02, WP-C-03, WP-C-05, WP-C-09 | AOU (17, trace data), H (9, trace data), HE (39, trace data), SG (8, trace data), SH (13, trace data), TS (14, trace data) |
+| **SYS.1** | Requirements elicitation | WP-C-01, WP-C-02, WP-C-03, WP-C-05, WP-C-09 | AOU (18, trace data), H (9, trace data), HE (39, trace data), SG (8, trace data), SH (13, trace data), TS (14, trace data) |
 | **SYS.2** | System requirements analysis | WP-S-01, WP-C-04, WP-S-02, WP-C-07, WP-C-10 | SYS (39, trace data), FSR (58, trace data), TSR (128, trace data), TC (35, trace data), FI (23, trace data), FM (11, trace data), CSG (8, trace data) |
 | **SYS.3** | System architectural design | WP-S-03, WP-S-05, WP-S-07 | CSR (64, trace data) |
 | **SWE.1** | SW requirements analysis | WP-W-02 | SWSR (139, trace data) |
@@ -196,7 +196,7 @@ flowchart LR
     kTSR["<b>TSR</b> 128<br/>technical safety req."]:::traced
     kSWSR["<b>SWSR</b> 139<br/>SW safety req."]:::traced
     kHWSR["<b>HWSR</b> 46<br/>HW safety req."]:::traced
-    kAOU["<b>AOU</b> 17<br/>assumptions of use"]:::traced
+    kAOU["<b>AOU</b> 18<br/>assumptions of use"]:::traced
   end
   style ISO26262 fill:#FFFFFF,stroke:#CBD5E1
   subgraph ISO21448["ISO 21448"]
@@ -249,7 +249,7 @@ flowchart LR
 
 | Standard | Kinds | In trace data | Defined in documents only |
 |---|---|---|---|
-| ISO 26262 | H, HE, SG, AOU, FSR, TSR, SWSR, HWSR | H 9, HE 39, SG 8, AOU 17, FSR 58, TSR 128, SWSR 139, HWSR 46 | — |
+| ISO 26262 | H, HE, SG, AOU, FSR, TSR, SWSR, HWSR | H 9, HE 39, SG 8, AOU 18, FSR 58, TSR 128, SWSR 139, HWSR 46 | — |
 | ISO 21448 | SH, TC, FI, FM | SH 13, TC 35, FI 23, FM 11 | — |
 | ISO/PAS 8800 | AIR, DSR | AIR 30, DSR 13 | — |
 | ISO/SAE 21434 | TS, CSG, CSR | TS 14, CSG 8, CSR 64 | — |
