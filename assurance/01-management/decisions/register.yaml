@@ -2960,8 +2960,10 @@
       title: "Develop all of it to ASIL C"
       detail: "No partitioning needed. Cost: the fan, sound, LED and debug code is reviewed, tested and covered to ASIL C, and every upstream change to it has to be too."
   sources: ["assurance/08-analyses/WP-A-02-coexistence-freedom-from-interference.md §2, §6, OI-2", "assurance/00-assessment/gap-assessment.md GAP-11"]
-  status: answered
+  status: applied
   answer: {choice: B, via: inbox, at: 2026-10-23, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: caaa702, record: "WP-A-02 v0.12 §2 and OI-2 (closed), OI-9; WP-W-03 v0.20 §3.1 U-PND-HK; SysML model", at: 2026-10-25}
+  note: "Left as work: ASIL C requirements, reviews, unit tests and coverage for the U-PND-HK units (WP-W-05, WP-W-06), and ASIL C assessment of upstream changes to them. The §7 MPU and timing measures stay required (WP-A-02 OI-9)."
 
 - id: DQ-127
   question: "Should the System FMEA table in WP-A-04 §10 (SFMEA-01…40) be retired, so that system-fmea.yaml is the only System FMEA?"
