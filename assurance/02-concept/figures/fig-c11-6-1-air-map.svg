@@ -1,0 +1,334 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1537.0" viewBox="0 0 1280 1537.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">Figure 6-1. The AI safety requirements and how far they have got (WP-C-11 §6)</title>
+<desc id="d">30 AI safety requirements of WP-C-11 §6 by group. 6.1 Performance: AIR-01 (not evaluated), AIR-02 (not evaluated), AIR-03 (not evaluated), AIR-04 (not evaluated), AIR-05 (not evaluated), AIR-06 (not evaluated), AIR-07 (not evaluated), AIR-08 (not evaluated). 6.2 Robustness: AIR-09 (not evaluated), AIR-10 (not evaluated), AIR-11 (not evaluated), AIR-12 (not met). 6.3 Uncertainty estimation: AIR-13 (not evaluated), AIR-14 (not met), AIR-15 (not met). 6.4 Runtime monitoring: AIR-16 (partly), AIR-17 (partly), AIR-18 (not met). 6.5 Integrity and provenance: AIR-19 (not met), AIR-20 (not met), AIR-21 (not met), AIR-22 (not met). 6.6 Version control: AIR-23 (not met), AIR-24 (partly). 6.7 Fallback behaviour and architecture: AIR-25 (not met), AIR-26 (partly), AIR-27 (partly), AIR-28 (partly), AIR-29 (partly), AIR-30 (partly).</desc>
+<defs></defs>
+<rect width="1280" height="1537.0" fill="#FFFFFF"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 6-1 · The AI safety requirements and how far they have got</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">The 30 AI safety requirements of §6 in their seven groups, each with the component it applies to and its status at the baseline</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-11 §6</text>
+<text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end"></text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+<rect x="30" y="104" width="1220" height="246" rx="10" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="44" y="126" font-size="13" fill="#0F172A" font-weight="700">6.1 Performance</text>
+<rect x="40" y="136" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="40" y="136" width="5" height="96" rx="2" fill="#475569"/>
+<text x="54" y="155" font-size="12" fill="#0F172A" font-weight="700">AIR-01</text>
+<text x="112" y="155" font-size="9.5" fill="#5B21B6" font-weight="700">AI-1</text>
+<rect x="246.958" y="143" width="77.5" height="17" rx="8.5" fill="#F1F5F9" stroke="#475569"/>
+<text x="285.729" y="155" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">not evaluated</text>
+<text x="54" y="174" font-size="10.5" fill="#0F172A">In nominal ODD conditions, while lateral control is</text>
+<text x="54" y="187.5" font-size="10.5" fill="#0F172A">active and no lane change is requested, the vehicle's</text>
+<text x="54" y="201" font-size="10.5" fill="#0F172A">lateral offset from the lane centre shall stay within</text>
+<text x="54" y="214.5" font-size="10.5" fill="#0F172A">±0.5 m throughout at least 99 % of 60 s nominal…</text>
+<rect x="342.5" y="136" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="342.5" y="136" width="5" height="96" rx="2" fill="#475569"/>
+<text x="356.5" y="155" font-size="12" fill="#0F172A" font-weight="700">AIR-02</text>
+<text x="414.5" y="155" font-size="9.5" fill="#5B21B6" font-weight="700">AI-1</text>
+<rect x="549.458" y="143" width="77.5" height="17" rx="8.5" fill="#F1F5F9" stroke="#475569"/>
+<text x="588.229" y="155" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">not evaluated</text>
+<text x="356.5" y="174" font-size="10.5" fill="#0F172A">The rate of unrequested lane departures (a front</text>
+<text x="356.5" y="187.5" font-size="10.5" fill="#0F172A">wheel crossing a lane marking with no desire active</text>
+<text x="356.5" y="201" font-size="10.5" fill="#0F172A">and no driver steering input) shall not exceed the</text>
+<text x="356.5" y="214.5" font-size="10.5" fill="#0F172A">validation target VT-01 of WP-V-02</text>
+<rect x="645" y="136" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="645" y="136" width="5" height="96" rx="2" fill="#475569"/>
+<text x="659" y="155" font-size="12" fill="#0F172A" font-weight="700">AIR-03</text>
+<text x="717" y="155" font-size="9.5" fill="#5B21B6" font-weight="700">AI-1</text>
+<rect x="851.958" y="143" width="77.5" height="17" rx="8.5" fill="#F1F5F9" stroke="#475569"/>
+<text x="890.729" y="155" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">not evaluated</text>
+<text x="659" y="174" font-size="10.5" fill="#0F172A">A lead vehicle in the ego lane within 80 m shall be</text>
+<text x="659" y="187.5" font-size="10.5" fill="#0F172A">reported (leadsV3[0].prob &gt; 0.5) within 0.5 s of</text>
+<text x="659" y="201" font-size="10.5" fill="#0F172A">becoming unoccluded, with distance error ≤ max(2 m,</text>
+<text x="659" y="214.5" font-size="10.5" fill="#0F172A">10 %) against the radar reference</text>
+<rect x="947.5" y="136" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="947.5" y="136" width="5" height="96" rx="2" fill="#475569"/>
+<text x="961.5" y="155" font-size="12" fill="#0F172A" font-weight="700">AIR-04</text>
+<text x="1019.5" y="155" font-size="9.5" fill="#5B21B6" font-weight="700">AI-1</text>
+<rect x="1154.46" y="143" width="77.5" height="17" rx="8.5" fill="#F1F5F9" stroke="#475569"/>
+<text x="1193.23" y="155" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">not evaluated</text>
+<text x="961.5" y="174" font-size="10.5" fill="#0F172A">A stationary vehicle in the ego lane shall be reported</text>
+<text x="961.5" y="187.5" font-size="10.5" fill="#0F172A">as a lead at a distance not less than v·t_r +</text>
+<text x="961.5" y="201" font-size="10.5" fill="#0F172A">v²/(2·a_lim), with t_r = 1.0 s and a_lim = 3.0 m/s², for</text>
+<text x="961.5" y="214.5" font-size="10.5" fill="#0F172A">all speeds in the ODD (e.g., ≈ 180 m at 30 m/s, ≈ 186…</text>
+<rect x="40" y="242" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="40" y="242" width="5" height="96" rx="2" fill="#475569"/>
+<text x="54" y="261" font-size="12" fill="#0F172A" font-weight="700">AIR-05</text>
+<text x="112" y="261" font-size="9.5" fill="#5B21B6" font-weight="700">AI-1</text>
+<rect x="246.958" y="249" width="77.5" height="17" rx="8.5" fill="#F1F5F9" stroke="#475569"/>
+<text x="285.729" y="261" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">not evaluated</text>
+<text x="54" y="280" font-size="10.5" fill="#0F172A">The rate of model-induced decelerations stronger than</text>
+<text x="54" y="293.5" font-size="10.5" fill="#0F172A">2.0 m/s² with no relevant object present (phantom</text>
+<text x="54" y="307" font-size="10.5" fill="#0F172A">braking) shall not exceed VT-04 of WP-V-02</text>
+<rect x="342.5" y="242" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="342.5" y="242" width="5" height="96" rx="2" fill="#475569"/>
+<text x="356.5" y="261" font-size="12" fill="#0F172A" font-weight="700">AIR-06</text>
+<text x="414.5" y="261" font-size="9.5" fill="#5B21B6" font-weight="700">AI-1</text>
+<rect x="549.458" y="249" width="77.5" height="17" rx="8.5" fill="#F1F5F9" stroke="#475569"/>
+<text x="588.229" y="261" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">not evaluated</text>
+<text x="356.5" y="280" font-size="10.5" fill="#0F172A">In a closing-lead scenario requiring more than 5 m/s²</text>
+<text x="356.5" y="293.5" font-size="10.5" fill="#0F172A">to avoid collision, hardBrakePredicted shall become</text>
+<text x="356.5" y="307" font-size="10.5" fill="#0F172A">true at a time-to-collision of at least 2.0 s</text>
+<rect x="645" y="242" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="645" y="242" width="5" height="96" rx="2" fill="#475569"/>
+<text x="659" y="261" font-size="12" fill="#0F172A" font-weight="700">AIR-07</text>
+<text x="717" y="261" font-size="9.5" fill="#5B21B6" font-weight="700">AI-3</text>
+<rect x="851.958" y="249" width="77.5" height="17" rx="8.5" fill="#F1F5F9" stroke="#475569"/>
+<text x="890.729" y="261" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">not evaluated</text>
+<text x="659" y="280" font-size="10.5" fill="#0F172A">The DM chain shall classify a driver whose gaze is off</text>
+<text x="659" y="293.5" font-size="10.5" fill="#0F172A">the road for more than 2 s as distracted within 1.0 s</text>
+<text x="659" y="307" font-size="10.5" fill="#0F172A">with recall ≥ 95 % per DM stratum (day, night, glasses,</text>
+<text x="659" y="320.5" font-size="10.5" fill="#0F172A">sunglasses). With the 5 s vision-policy timer this gives…</text>
+<rect x="947.5" y="242" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="947.5" y="242" width="5" height="96" rx="2" fill="#475569"/>
+<text x="961.5" y="261" font-size="12" fill="#0F172A" font-weight="700">AIR-08</text>
+<text x="1019.5" y="261" font-size="9.5" fill="#5B21B6" font-weight="700">AI-3</text>
+<rect x="1154.46" y="249" width="77.5" height="17" rx="8.5" fill="#F1F5F9" stroke="#475569"/>
+<text x="1193.23" y="261" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">not evaluated</text>
+<text x="961.5" y="280" font-size="10.5" fill="#0F172A">The DM chain shall detect eyes closed &gt; 1 s and</text>
+<text x="961.5" y="293.5" font-size="10.5" fill="#0F172A">handheld phone use with recall ≥ 90 % and a</text>
+<text x="961.5" y="307" font-size="10.5" fill="#0F172A">false-distraction rate ≤ 1 per hour of attentive driving.</text>
+<text x="961.5" y="320.5" font-size="10.5" fill="#0F172A">Values confirmed 2026-10-12 (WP-C-08 OI-2)</text>
+<rect x="30" y="362" width="1220" height="140" rx="10" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="44" y="384" font-size="13" fill="#0F172A" font-weight="700">6.2 Robustness</text>
+<rect x="40" y="394" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="40" y="394" width="5" height="96" rx="2" fill="#475569"/>
+<text x="54" y="413" font-size="12" fill="#0F172A" font-weight="700">AIR-09</text>
+<text x="112" y="413" font-size="9.5" fill="#5B21B6" font-weight="700">AI-1, AI-3</text>
+<rect x="246.958" y="401" width="77.5" height="17" rx="8.5" fill="#F1F5F9" stroke="#475569"/>
+<text x="285.729" y="413" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">not evaluated</text>
+<text x="54" y="432" font-size="10.5" fill="#0F172A">AIR-01…AIR-08 shall be met in each input-space</text>
+<text x="54" y="445.5" font-size="10.5" fill="#0F172A">stratum of §3 for which a claim is made, not only in</text>
+<text x="54" y="459" font-size="10.5" fill="#0F172A">aggregate; a stratum that fails is removed from the</text>
+<text x="54" y="472.5" font-size="10.5" fill="#0F172A">ODD (WP-C-07)</text>
+<rect x="342.5" y="394" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="342.5" y="394" width="5" height="96" rx="2" fill="#475569"/>
+<text x="356.5" y="413" font-size="12" fill="#0F172A" font-weight="700">AIR-10</text>
+<text x="414.5" y="413" font-size="9.5" fill="#5B21B6" font-weight="700">AI-1</text>
+<rect x="549.458" y="401" width="77.5" height="17" rx="8.5" fill="#F1F5F9" stroke="#475569"/>
+<text x="588.229" y="413" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">not evaluated</text>
+<text x="356.5" y="432" font-size="10.5" fill="#0F172A">Under perturbations inside the input space (calibration</text>
+<text x="356.5" y="445.5" font-size="10.5" fill="#0F172A">error up to the INS-25 tolerance, exposure ±1 EV,</text>
+<text x="356.5" y="459" font-size="10.5" fill="#0F172A">sensor noise, JPEG/HEVC artefacts, partial lens</text>
+<text x="356.5" y="472.5" font-size="10.5" fill="#0F172A">occlusion ≤ 10 %), the AI-1 action shall change by…</text>
+<rect x="645" y="394" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="645" y="394" width="5" height="96" rx="2" fill="#475569"/>
+<text x="659" y="413" font-size="12" fill="#0F172A" font-weight="700">AIR-11</text>
+<text x="717" y="413" font-size="9.5" fill="#5B21B6" font-weight="700">AI-1</text>
+<rect x="851.958" y="401" width="77.5" height="17" rx="8.5" fill="#F1F5F9" stroke="#475569"/>
+<text x="890.729" y="413" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">not evaluated</text>
+<text x="659" y="432" font-size="10.5" fill="#0F172A">Frame-to-frame change of desiredCurvature while the</text>
+<text x="659" y="445.5" font-size="10.5" fill="#0F172A">scene is steady shall not exceed the curvature-rate</text>
+<text x="659" y="459" font-size="10.5" fill="#0F172A">implied by 5 m/s³ lateral jerk at the current speed;</text>
+<text x="659" y="472.5" font-size="10.5" fill="#0F172A">lead existence (prob crossing 0.5) shall not toggle…</text>
+<rect x="947.5" y="394" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="947.5" y="394" width="5" height="96" rx="2" fill="#B42318"/>
+<text x="961.5" y="413" font-size="12" fill="#0F172A" font-weight="700">AIR-12</text>
+<text x="1019.5" y="413" font-size="9.5" fill="#5B21B6" font-weight="700">AI-1, AI-2</text>
+<rect x="1183.46" y="401" width="48.5" height="17" rx="8.5" fill="#FEF2F2" stroke="#B42318"/>
+<text x="1207.73" y="413" font-size="9.5" fill="#B42318" font-weight="700" text-anchor="middle">not met</text>
+<text x="961.5" y="432" font-size="10.5" fill="#0F172A">After any (re)initialisation of recurrent state, model</text>
+<text x="961.5" y="445.5" font-size="10.5" fill="#0F172A">outputs shall not be used for actuation until at least 2</text>
+<text x="961.5" y="459" font-size="10.5" fill="#0F172A">s of consecutive frames have been processed</text>
+<rect x="30" y="514" width="1220" height="140" rx="10" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="44" y="536" font-size="13" fill="#0F172A" font-weight="700">6.3 Uncertainty estimation</text>
+<rect x="40" y="546" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="40" y="546" width="5" height="96" rx="2" fill="#475569"/>
+<text x="54" y="565" font-size="12" fill="#0F172A" font-weight="700">AIR-13</text>
+<text x="112" y="565" font-size="9.5" fill="#5B21B6" font-weight="700">AI-1</text>
+<rect x="246.958" y="553" width="77.5" height="17" rx="8.5" fill="#F1F5F9" stroke="#475569"/>
+<text x="285.729" y="565" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">not evaluated</text>
+<text x="54" y="584" font-size="10.5" fill="#0F172A">The standard deviations published for plan, lead and</text>
+<text x="54" y="597.5" font-size="10.5" fill="#0F172A">lane lines shall be calibrated on LionDriver evaluation</text>
+<text x="54" y="611" font-size="10.5" fill="#0F172A">data: the observed error shall lie within ±2σ for 90–98</text>
+<text x="54" y="624.5" font-size="10.5" fill="#0F172A">% of samples per stratum, and mean error shall…</text>
+<rect x="342.5" y="546" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="342.5" y="546" width="5" height="96" rx="2" fill="#B42318"/>
+<text x="356.5" y="565" font-size="12" fill="#0F172A" font-weight="700">AIR-14</text>
+<text x="414.5" y="565" font-size="9.5" fill="#5B21B6" font-weight="700">Monitor</text>
+<rect x="578.46" y="553" width="48.5" height="17" rx="8.5" fill="#FEF2F2" stroke="#B42318"/>
+<text x="602.73" y="565" font-size="9.5" fill="#B42318" font-weight="700" text-anchor="middle">not met</text>
+<text x="356.5" y="584" font-size="10.5" fill="#0F172A">A runtime plausibility/uncertainty monitor (RM-3 of</text>
+<text x="356.5" y="597.5" font-size="10.5" fill="#0F172A">WP-M-10) shall flag low-confidence or OOD states</text>
+<text x="356.5" y="611" font-size="10.5" fill="#0F172A">from model σ, lane-line probabilities and action–plan</text>
+<text x="356.5" y="624.5" font-size="10.5" fill="#0F172A">consistency, with recall ≥ 80 % on the…</text>
+<rect x="645" y="546" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="645" y="546" width="5" height="96" rx="2" fill="#B42318"/>
+<text x="659" y="565" font-size="12" fill="#0F172A" font-weight="700">AIR-15</text>
+<text x="717" y="565" font-size="9.5" fill="#5B21B6" font-weight="700">AI-3 + monitor</text>
+<rect x="880.96" y="553" width="48.5" height="17" rx="8.5" fill="#FEF2F2" stroke="#B42318"/>
+<text x="905.23" y="565" font-size="9.5" fill="#B42318" font-weight="700" text-anchor="middle">not met</text>
+<text x="659" y="584" font-size="10.5" fill="#0F172A">driverStateV2.valid shall be false when the cabin</text>
+<text x="659" y="597.5" font-size="10.5" fill="#0F172A">image or model uncertainty indicates that the driver</text>
+<text x="659" y="611" font-size="10.5" fill="#0F172A">state cannot be determined (RM-4)</text>
+<rect x="30" y="666" width="1220" height="140" rx="10" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="44" y="688" font-size="13" fill="#0F172A" font-weight="700">6.4 Runtime monitoring</text>
+<rect x="40" y="698" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="40" y="698" width="5" height="96" rx="2" fill="#B45309"/>
+<text x="54" y="717" font-size="12" fill="#0F172A" font-weight="700">AIR-16</text>
+<text x="112" y="717" font-size="9.5" fill="#5B21B6" font-weight="700">AI-1, AI-3 + modeld</text>
+<rect x="283.815" y="705" width="40.7" height="17" rx="8.5" fill="#FFFBEB" stroke="#B45309"/>
+<text x="304.157" y="717" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">partly</text>
+<text x="54" y="736" font-size="10.5" fill="#0F172A">Every AI-1 and AI-3 output tensor shall be checked</text>
+<text x="54" y="749.5" font-size="10.5" fill="#0F172A">for non-finite values and for range plausibility before</text>
+<text x="54" y="763" font-size="10.5" fill="#0F172A">use; a failed check shall make the published message</text>
+<text x="54" y="776.5" font-size="10.5" fill="#0F172A">invalid and cause a driver take-over request, never a…</text>
+<rect x="342.5" y="698" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="342.5" y="698" width="5" height="96" rx="2" fill="#B45309"/>
+<text x="356.5" y="717" font-size="12" fill="#0F172A" font-weight="700">AIR-17</text>
+<text x="414.5" y="717" font-size="9.5" fill="#5B21B6" font-weight="700">AI-1 + consumers</text>
+<rect x="586.314" y="705" width="40.7" height="17" rx="8.5" fill="#FFFBEB" stroke="#B45309"/>
+<text x="606.657" y="717" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">partly</text>
+<text x="356.5" y="736" font-size="10.5" fill="#0F172A">Model inference shall complete within 50 ms (TBC</text>
+<text x="356.5" y="749.5" font-size="10.5" fill="#0F172A">from WP-S-04) per frame; an output older than 100 ms</text>
+<text x="356.5" y="763" font-size="10.5" fill="#0F172A">shall not be used for actuation, and a sustained</text>
+<text x="356.5" y="776.5" font-size="10.5" fill="#0F172A">overrun shall raise a take-over request within the…</text>
+<rect x="645" y="698" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="645" y="698" width="5" height="96" rx="2" fill="#B42318"/>
+<text x="659" y="717" font-size="12" fill="#0F172A" font-weight="700">AIR-18</text>
+<text x="717" y="717" font-size="9.5" fill="#5B21B6" font-weight="700">Monitor</text>
+<rect x="880.96" y="705" width="48.5" height="17" rx="8.5" fill="#FEF2F2" stroke="#B42318"/>
+<text x="905.23" y="717" font-size="9.5" fill="#B42318" font-weight="700" text-anchor="middle">not met</text>
+<text x="659" y="736" font-size="10.5" fill="#0F172A">The monitor shall compare action.desiredCurvature</text>
+<text x="659" y="749.5" font-size="10.5" fill="#0F172A">with the curvature implied by the published plan and</text>
+<text x="659" y="763" font-size="10.5" fill="#0F172A">flag divergence above a threshold set from evaluation</text>
+<text x="659" y="776.5" font-size="10.5" fill="#0F172A">data</text>
+<rect x="30" y="818" width="1220" height="140" rx="10" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="44" y="840" font-size="13" fill="#0F172A" font-weight="700">6.5 Integrity and provenance</text>
+<rect x="40" y="850" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="40" y="850" width="5" height="96" rx="2" fill="#B42318"/>
+<text x="54" y="869" font-size="12" fill="#0F172A" font-weight="700">AIR-19</text>
+<text x="112" y="869" font-size="9.5" fill="#5B21B6" font-weight="700">modeld, dmonitoringmodeld</text>
+<rect x="275.96" y="857" width="48.5" height="17" rx="8.5" fill="#FEF2F2" stroke="#B42318"/>
+<text x="300.23" y="869" font-size="9.5" fill="#B42318" font-weight="700" text-anchor="middle">not met</text>
+<text x="54" y="888" font-size="10.5" fill="#0F172A">Before deserialization, each model and warp artefact</text>
+<text x="54" y="901.5" font-size="10.5" fill="#0F172A">shall be verified against a SHA-256 value from the</text>
+<text x="54" y="915" font-size="10.5" fill="#0F172A">signed release manifest; on mismatch the artefact</text>
+<text x="54" y="928.5" font-size="10.5" fill="#0F172A">shall not be loaded and engagement shall be…</text>
+<rect x="342.5" y="850" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="342.5" y="850" width="5" height="96" rx="2" fill="#B42318"/>
+<text x="356.5" y="869" font-size="12" fill="#0F172A" font-weight="700">AIR-20</text>
+<text x="414.5" y="869" font-size="9.5" fill="#5B21B6" font-weight="700">modeld, dmonitoringmodeld</text>
+<rect x="578.46" y="857" width="48.5" height="17" rx="8.5" fill="#FEF2F2" stroke="#B42318"/>
+<text x="602.73" y="869" font-size="9.5" fill="#B42318" font-weight="700" text-anchor="middle">not met</text>
+<text x="356.5" y="888" font-size="10.5" fill="#0F172A">No deserialization mechanism capable of executing</text>
+<text x="356.5" y="901.5" font-size="10.5" fill="#0F172A">code (Python pickle) shall be applied to data that has</text>
+<text x="356.5" y="915" font-size="10.5" fill="#0F172A">not passed AIR-19</text>
+<rect x="645" y="850" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="645" y="850" width="5" height="96" rx="2" fill="#B42318"/>
+<text x="659" y="869" font-size="12" fill="#0F172A" font-weight="700">AIR-21</text>
+<text x="717" y="869" font-size="9.5" fill="#5B21B6" font-weight="700">Process</text>
+<rect x="880.96" y="857" width="48.5" height="17" rx="8.5" fill="#FEF2F2" stroke="#B42318"/>
+<text x="905.23" y="869" font-size="9.5" fill="#B42318" font-weight="700" text-anchor="middle">not met</text>
+<text x="659" y="888" font-size="10.5" fill="#0F172A">For each released model, the provenance record shall</text>
+<text x="659" y="901.5" font-size="10.5" fill="#0F172A">contain: source artefact LFS oid and size, upstream</text>
+<text x="659" y="915" font-size="10.5" fill="#0F172A">commit that introduced it, tinygrad commit and compile</text>
+<text x="659" y="928.5" font-size="10.5" fill="#0F172A">flags used, compiled artefact hash, compile host, and…</text>
+<rect x="947.5" y="850" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="947.5" y="850" width="5" height="96" rx="2" fill="#B42318"/>
+<text x="961.5" y="869" font-size="12" fill="#0F172A" font-weight="700">AIR-22</text>
+<text x="1019.5" y="869" font-size="9.5" fill="#5B21B6" font-weight="700">Toolchain</text>
+<rect x="1183.46" y="857" width="48.5" height="17" rx="8.5" fill="#FEF2F2" stroke="#B42318"/>
+<text x="1207.73" y="869" font-size="9.5" fill="#B42318" font-weight="700" text-anchor="middle">not met</text>
+<text x="961.5" y="888" font-size="10.5" fill="#0F172A">The compiled device artefact shall reproduce the</text>
+<text x="961.5" y="901.5" font-size="10.5" fill="#0F172A">outputs of a reference execution of the source ONNX</text>
+<text x="961.5" y="915" font-size="10.5" fill="#0F172A">(independent runtime) on a fixed input set within a</text>
+<text x="961.5" y="928.5" font-size="10.5" fill="#0F172A">stated tolerance per output field</text>
+<rect x="30" y="970" width="1220" height="140" rx="10" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="44" y="992" font-size="13" fill="#0F172A" font-weight="700">6.6 Version control</text>
+<rect x="40" y="1002" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="40" y="1002" width="5" height="96" rx="2" fill="#B42318"/>
+<text x="54" y="1021" font-size="12" fill="#0F172A" font-weight="700">AIR-23</text>
+<text x="112" y="1021" font-size="9.5" fill="#5B21B6" font-weight="700">modeld, dmonitoringmodeld</text>
+<rect x="275.96" y="1009" width="48.5" height="17" rx="8.5" fill="#FEF2F2" stroke="#B42318"/>
+<text x="300.23" y="1021" font-size="9.5" fill="#B42318" font-weight="700" text-anchor="middle">not met</text>
+<text x="54" y="1040" font-size="10.5" fill="#0F172A">Every drive log shall identify the exact model</text>
+<text x="54" y="1053.5" font-size="10.5" fill="#0F172A">artefacts in use (hash or release-manifest ID), so</text>
+<text x="54" y="1067" font-size="10.5" fill="#0F172A">that field data can be attributed to a model version</text>
+<rect x="342.5" y="1002" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="342.5" y="1002" width="5" height="96" rx="2" fill="#B45309"/>
+<text x="356.5" y="1021" font-size="12" fill="#0F172A" font-weight="700">AIR-24</text>
+<text x="414.5" y="1021" font-size="9.5" fill="#5B21B6" font-weight="700">Process</text>
+<rect x="586.314" y="1009" width="40.7" height="17" rx="8.5" fill="#FFFBEB" stroke="#B45309"/>
+<text x="606.657" y="1021" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">partly</text>
+<text x="356.5" y="1040" font-size="10.5" fill="#0F172A">Any change to a model artefact, the tinygrad pin, or</text>
+<text x="356.5" y="1053.5" font-size="10.5" fill="#0F172A">the files listed in WP-M-10 §9 shall be released only</text>
+<text x="356.5" y="1067" font-size="10.5" fill="#0F172A">after the AIR verification set has been re-run on the</text>
+<text x="356.5" y="1080.5" font-size="10.5" fill="#0F172A">new configuration (D-05, adopted as written by the…</text>
+<rect x="30" y="1122" width="1220" height="246" rx="10" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="44" y="1144" font-size="13" fill="#0F172A" font-weight="700">6.7 Fallback behaviour and architecture</text>
+<rect x="40" y="1154" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="40" y="1154" width="5" height="96" rx="2" fill="#B42318"/>
+<text x="54" y="1173" font-size="12" fill="#0F172A" font-weight="700">AIR-25</text>
+<text x="112" y="1173" font-size="9.5" fill="#5B21B6" font-weight="700">System (modeld, selfdrived)</text>
+<rect x="275.96" y="1161" width="48.5" height="17" rx="8.5" fill="#FEF2F2" stroke="#B42318"/>
+<text x="300.23" y="1173" font-size="9.5" fill="#B42318" font-weight="700" text-anchor="middle">not met</text>
+<text x="54" y="1192" font-size="10.5" fill="#0F172A">On failure of the driving model while engaged</text>
+<text x="54" y="1205.5" font-size="10.5" fill="#0F172A">(exception, AIR-16 check, AIR-17 overrun), the</text>
+<text x="54" y="1219" font-size="10.5" fill="#0F172A">system shall stop using model outputs for actuation,</text>
+<text x="54" y="1232.5" font-size="10.5" fill="#0F172A">warn the driver and hand back control within the…</text>
+<rect x="342.5" y="1154" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="342.5" y="1154" width="5" height="96" rx="2" fill="#B45309"/>
+<text x="356.5" y="1173" font-size="12" fill="#0F172A" font-weight="700">AIR-26</text>
+<text x="414.5" y="1173" font-size="9.5" fill="#5B21B6" font-weight="700">selfdrived</text>
+<rect x="586.314" y="1161" width="40.7" height="17" rx="8.5" fill="#FFFBEB" stroke="#B45309"/>
+<text x="606.657" y="1173" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">partly</text>
+<text x="356.5" y="1192" font-size="10.5" fill="#0F172A">Engagement shall not be permitted until the driving</text>
+<text x="356.5" y="1205.5" font-size="10.5" fill="#0F172A">model has published valid outputs for at least 2 s</text>
+<text x="356.5" y="1219" font-size="10.5" fill="#0F172A">after start-up</text>
+<rect x="645" y="1154" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="645" y="1154" width="5" height="96" rx="2" fill="#B45309"/>
+<text x="659" y="1173" font-size="12" fill="#0F172A" font-weight="700">AIR-27</text>
+<text x="717" y="1173" font-size="9.5" fill="#5B21B6" font-weight="700">dmonitoringd, selfdrived</text>
+<rect x="888.814" y="1161" width="40.7" height="17" rx="8.5" fill="#FFFBEB" stroke="#B45309"/>
+<text x="909.157" y="1173" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">partly</text>
+<text x="659" y="1192" font-size="10.5" fill="#0F172A">If the DM model output is unavailable or invalid for</text>
+<text x="659" y="1205.5" font-size="10.5" fill="#0F172A">longer than 2 s while engaged, the system shall</text>
+<text x="659" y="1219" font-size="10.5" fill="#0F172A">escalate to a take-over alert and disengage if the</text>
+<text x="659" y="1232.5" font-size="10.5" fill="#0F172A">condition persists</text>
+<rect x="947.5" y="1154" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="947.5" y="1154" width="5" height="96" rx="2" fill="#B45309"/>
+<text x="961.5" y="1173" font-size="12" fill="#0F172A" font-weight="700">AIR-28</text>
+<text x="1019.5" y="1173" font-size="9.5" fill="#5B21B6" font-weight="700">Architecture</text>
+<rect x="1191.31" y="1161" width="40.7" height="17" rx="8.5" fill="#FFFBEB" stroke="#B45309"/>
+<text x="1211.66" y="1173" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">partly</text>
+<text x="961.5" y="1192" font-size="10.5" fill="#0F172A">AI outputs shall reach the actuators only through</text>
+<text x="961.5" y="1205.5" font-size="10.5" fill="#0F172A">controlsd/card and the panda safety envelope; no</text>
+<text x="961.5" y="1219" font-size="10.5" fill="#0F172A">AI-derived signal shall alter envelope limits or the</text>
+<text x="961.5" y="1232.5" font-size="10.5" fill="#0F172A">safety mode</text>
+<rect x="40" y="1260" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="40" y="1260" width="5" height="96" rx="2" fill="#B45309"/>
+<text x="54" y="1279" font-size="12" fill="#0F172A" font-weight="700">AIR-29</text>
+<text x="112" y="1279" font-size="9.5" fill="#5B21B6" font-weight="700">Configuration</text>
+<rect x="283.815" y="1267" width="40.7" height="17" rx="8.5" fill="#FFFBEB" stroke="#B45309"/>
+<text x="304.157" y="1279" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">partly</text>
+<text x="54" y="1298" font-size="10.5" fill="#0F172A">In the reference configuration,</text>
+<text x="54" y="1311.5" font-size="10.5" fill="#0F172A">action.desiredAcceleration (end-to-end longitudinal)</text>
+<text x="54" y="1325" font-size="10.5" fill="#0F172A">shall not be a candidate in longitudinal arbitration</text>
+<text x="54" y="1338.5" font-size="10.5" fill="#0F172A">unless WP-C-07 admits Experimental Mode to the ODD</text>
+<rect x="342.5" y="1260" width="292.5" height="96" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="342.5" y="1260" width="5" height="96" rx="2" fill="#B45309"/>
+<text x="356.5" y="1279" font-size="12" fill="#0F172A" font-weight="700">AIR-30</text>
+<text x="414.5" y="1279" font-size="9.5" fill="#5B21B6" font-weight="700">Configuration</text>
+<rect x="586.314" y="1267" width="40.7" height="17" rx="8.5" fill="#FFFBEB" stroke="#B45309"/>
+<text x="606.657" y="1279" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">partly</text>
+<text x="356.5" y="1298" font-size="10.5" fill="#0F172A">AI-2 (Chestnut) shall not be present or loadable in</text>
+<text x="356.5" y="1311.5" font-size="10.5" fill="#0F172A">the reference configuration until AIR-12, AIR-21,</text>
+<text x="356.5" y="1325" font-size="10.5" fill="#0F172A">AIR-22 and AIR-25 are met for it</text>
+<rect x="40" y="1378" width="30" height="16" rx="8" fill="#F1F5F9" stroke="#475569"/>
+<text x="78" y="1390" font-size="11" fill="#0F172A">not evaluated (12)</text>
+<rect x="193.61" y="1378" width="30" height="16" rx="8" fill="#FEF2F2" stroke="#B42318"/>
+<text x="231.61" y="1390" font-size="11" fill="#0F172A">not met (10)</text>
+<rect x="315.54" y="1378" width="30" height="16" rx="8" fill="#FFFBEB" stroke="#B45309"/>
+<text x="353.54" y="1390" font-size="11" fill="#0F172A">partly (8)</text>
+<text x="422.73" y="1390" font-size="11" fill="#475569">None is met yet. Not evaluated: it needs LionDriver evaluation data, which does not exist yet.</text>
+<text x="40" y="1410" font-size="11" fill="#475569">Values marked TBC in §6 are left out of the tiles; they are confirmed through WP-V-02 (OI-2). Components: AI-1 driving model, AI-2 big driving model (excluded), AI-3 driver monitoring model.</text>
+<g class="terms">
+<text x="40" y="1430" font-size="10.5" fill="#475569">Terms: AI artificial intelligence · AI-nn AI component (WP-C-11 §2.1): AI-1 driving model, AI-2 big driving model (excluded), AI-3 driver monitoring model · AIR-nn AI safety requirement (WP-C-11 §6) · D-nn design</text>
+<text x="40" y="1444.5" font-size="10.5" fill="#475569">decision of the earlier decision list (D-01…D-12; D-08 is the Experimental Mode decision) · DM driver monitoring · EV exposure value: one EV halves or doubles the light · HEVC a compressed video format (H.265) · ID</text>
+<text x="40" y="1459" font-size="10.5" fill="#475569">identifier · INS-nn installation check (WP-O-01) · JPEG a compressed image format · LFS Git Large File Storage (where the model files live) · ODD operational design domain: where the system is meant to work · OI-nn</text>
+<text x="40" y="1473.5" font-size="10.5" fill="#475569">open item of the document it appears in · ONNX Open Neural Network Exchange, the model file format · OOD out of distribution: unlike the data the model learned from · RM-nn runtime monitor of the AI safety plan</text>
+<text x="40" y="1488" font-size="10.5" fill="#475569">(WP-M-10) · SHA-256 a cryptographic hash used to identify a file exactly · TBC to be confirmed · VT-nn validation target (WP-V-02) · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept,</text>
+<text x="40" y="1502.5" font-size="10.5" fill="#475569">S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+<text x="1240" y="1523" font-size="10" fill="#475569" text-anchor="end">Generated by fig_c11_airs.py</text>
+</svg>

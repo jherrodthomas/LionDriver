@@ -1,0 +1,445 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="2058" viewBox="0 0 1280 2058" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 6-2. Safety mechanisms by element (WP-S-03 §6)</title>
+<desc>43 safety mechanisms of WP-S-03 §6 grouped by element. E-03a: SM-01 Torque magnitude limit (speed-dependent) (partly), SM-02 Torque rate and RT-window limit (implemented), SM-03 Measured-torque tracking (implemented), SM-04 Authority gating (PCM edge, brake, gas, steer request) (partly), SM-05 Driver-torque override monitor (not implemented), SM-06 EPS status monitor (partly), SM-07 Longitudinal bounds and jerk limits (partly), SM-08 Active safe-state frame (not implemented), SM-09 RX timeout (implemented), SM-10 RX checksum + length (partly), SM-11 RX rate, frozen-content and cross-checks (partly), SM-13 Command-frame freshness (partly), SM-24 Relay malfunction detection (traffic-based) (implemented), SM-29 Engagement follows PCM cruise; revoke on SoC "not engaged" (partly), SM-35 Forwarding with fixed block list and forwarding supervision (partly), SM-36 PCS and DSU message TX gate (implemented), SM-39 Per-ID TX rate supervision (implemented). E-03b: SM-12 Heartbeat + control-loop liveness (partly), SM-14 SPI CRC + sequence counter + bounds checks (partly), SM-16 Fault → safe state (not implemented), SM-22 Configuration lock and command gating (partly), SM-23 SoC-independent siren (partly), SM-38 Post-load TX read-back (not implemented). E-04a: SM-15 Independent watchdog (implemented), SM-17 RAM ECC, flash CRC, register checks (partly), SM-18 Clock monitor (CSS + cross-check) (partly), SM-19 Supply monitor (BOR, PVD, input voltage) (unknown), SM-20 Relay readback and latch (partly), SM-21 MPU isolation (not implemented), SM-40 Car-side transceiver supervision (partly), SM-41 MCU die-temperature monitor (partly), SM-42 Harness orientation and connection detection (partly). E-01: SM-25 Host fault classification and freshness (partly), SM-26 Driver monitoring (partly), SM-27 Excessive-actuation detector (implemented), SM-28 Controller margin (partly), SM-30 Engagement and authority mismatch detection (SoC side) (partly), SM-31 HMI path liveness and audible minimum (partly), SM-32 Announced, bounded item-initiated deceleration (partly), SM-33 FCW input freshness and false-alarm rate (partly), SM-34 PCM ACC-fault reaction (implemented), SM-37 Stock AEB/FCW event indication (implemented), SM-43 ACC cancel on every fault-induced disengagement (implemented).</desc>
+<defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="2058" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 6-2 · Safety mechanisms by element</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">The 43 mechanisms of the §6 catalogue on the element that carries them, with the fault each covers, its TSRs, its DC target and its status</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-S-03 §3.1, §6</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="30" y="108" width="1220" height="624" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="46" y="134" font-size="14" fill="#0F172A" font-weight="700">E-03a · Safety layer</text>
+<text x="226" y="134" font-size="11" fill="#475569">opendbc safety core and Toyota mode in the panda firmware</text>
+<rect x="1075.2" y="120" width="158.8" height="20" rx="10" fill="#C2410C" stroke="none" stroke-width="0"/>
+<text x="1154.6" y="134" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">ASIL C · 17 mechanisms</text>
+<rect x="40" y="148" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="40" y="148" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="54" y="168" font-size="12" fill="#0F172A" font-weight="700">SM-01</text>
+<rect x="268.4" y="156" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="294.7" y="168" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<text x="54" y="188" font-size="11.5" fill="#0F172A" font-weight="600">Torque magnitude limit (speed-dependent)</text>
+<text x="54" y="203" font-size="10" fill="#475569">Covers: excessive torque command from SoC</text>
+<text x="54" y="242" font-size="9.5" fill="#475569">TSR 101, 102 · DC high (for SoC command faults)</text>
+<rect x="343" y="148" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="343" y="148" width="5" height="104" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<text x="357" y="168" font-size="12" fill="#0F172A" font-weight="700">SM-02</text>
+<rect x="540.9" y="156" width="83.1" height="17" rx="8.5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/>
+<text x="582.5" y="168" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">implemented</text>
+<text x="357" y="188" font-size="11.5" fill="#0F172A" font-weight="600">Torque rate and RT-window limit</text>
+<text x="357" y="203" font-size="10" fill="#475569">Covers: high-rate torque command</text>
+<text x="357" y="242" font-size="9.5" fill="#475569">TSR 103 · DC high</text>
+<rect x="646" y="148" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="646" y="148" width="5" height="104" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<text x="660" y="168" font-size="12" fill="#0F172A" font-weight="700">SM-03</text>
+<rect x="843.9" y="156" width="83.1" height="17" rx="8.5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/>
+<text x="885.5" y="168" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">implemented</text>
+<text x="660" y="188" font-size="11.5" fill="#0F172A" font-weight="600">Measured-torque tracking</text>
+<text x="660" y="203" font-size="10" fill="#475569">Covers: command diverging from EPS output</text>
+<text x="660" y="242" font-size="9.5" fill="#475569">TSR 104 · DC medium (depends on 0x260 integrity)</text>
+<rect x="949" y="148" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="949" y="148" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="963" y="168" font-size="12" fill="#0F172A" font-weight="700">SM-04</text>
+<rect x="1177.4" y="156" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="1203.7" y="168" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<text x="963" y="188" font-size="11.5" fill="#0F172A" font-weight="600">Authority gating (PCM edge, brake, gas, steer</text>
+<text x="963" y="203" font-size="11.5" fill="#0F172A" font-weight="600">request)</text>
+<text x="963" y="218" font-size="10" fill="#475569">Covers: actuation when not engaged; no release on</text>
+<text x="963" y="231" font-size="10" fill="#475569">driver action</text>
+<text x="963" y="242" font-size="9.5" fill="#475569">TSR 105–107, 203, 301–306 · DC high</text>
+<rect x="40" y="264" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="40" y="264" width="5" height="104" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="54" y="284" font-size="12" fill="#0F172A" font-weight="700">SM-05</text>
+<rect x="213.5" y="272" width="107.5" height="17" rx="8.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="267.2" y="284" font-size="9.5" fill="#991B1B" font-weight="700" text-anchor="middle">not implemented</text>
+<text x="54" y="304" font-size="11.5" fill="#0F172A" font-weight="600">Driver-torque override monitor</text>
+<text x="54" y="319" font-size="10" fill="#475569">Covers: actuation opposing driver</text>
+<text x="54" y="358" font-size="9.5" fill="#475569">TSR 304, 628 · DC medium</text>
+<rect x="343" y="264" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="343" y="264" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="357" y="284" font-size="12" fill="#0F172A" font-weight="700">SM-06</text>
+<rect x="571.4" y="272" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="597.7" y="284" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<text x="357" y="304" font-size="11.5" fill="#0F172A" font-weight="600">EPS status monitor</text>
+<text x="357" y="319" font-size="10" fill="#475569">Covers: EPS LKA fault while engaged</text>
+<text x="357" y="358" font-size="9.5" fill="#475569">TSR 110, 607 · DC medium</text>
+<rect x="646" y="264" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="646" y="264" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="660" y="284" font-size="12" fill="#0F172A" font-weight="700">SM-07</text>
+<rect x="874.4" y="272" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="900.7" y="284" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<text x="660" y="304" font-size="11.5" fill="#0F172A" font-weight="600">Longitudinal bounds and jerk limits</text>
+<text x="660" y="319" font-size="10" fill="#475569">Covers: excessive accel/decel or onset</text>
+<text x="660" y="358" font-size="9.5" fill="#475569">TSR 201–207 · DC high</text>
+<rect x="949" y="264" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="949" y="264" width="5" height="104" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="963" y="284" font-size="12" fill="#0F172A" font-weight="700">SM-08</text>
+<rect x="1122.5" y="272" width="107.5" height="17" rx="8.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="1176.2" y="284" font-size="9.5" fill="#991B1B" font-weight="700" text-anchor="middle">not implemented</text>
+<text x="963" y="304" font-size="11.5" fill="#0F172A" font-weight="600">Active safe-state frame</text>
+<text x="963" y="319" font-size="10" fill="#475569">Covers: torque persisting after rejection</text>
+<text x="963" y="358" font-size="9.5" fill="#475569">TSR 108, 109 · DC high</text>
+<rect x="40" y="380" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="40" y="380" width="5" height="104" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<text x="54" y="400" font-size="12" fill="#0F172A" font-weight="700">SM-09</text>
+<rect x="237.9" y="388" width="83.1" height="17" rx="8.5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/>
+<text x="279.4" y="400" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">implemented</text>
+<text x="54" y="420" font-size="11.5" fill="#0F172A" font-weight="600">RX timeout</text>
+<text x="54" y="435" font-size="10" fill="#475569">Covers: lost/delayed RX</text>
+<text x="54" y="474" font-size="9.5" fill="#475569">TSR 401 · DC medium (alone)</text>
+<rect x="343" y="380" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="343" y="380" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="357" y="400" font-size="12" fill="#0F172A" font-weight="700">SM-10</text>
+<rect x="571.4" y="388" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="597.7" y="400" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<text x="357" y="420" font-size="11.5" fill="#0F172A" font-weight="600">RX checksum + length</text>
+<text x="357" y="435" font-size="10" fill="#475569">Covers: corrupted RX (0x260, 0x1D2)</text>
+<text x="357" y="474" font-size="9.5" fill="#475569">TSR 402 · DC low (8-bit additive)</text>
+<rect x="646" y="380" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="646" y="380" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="660" y="400" font-size="12" fill="#0F172A" font-weight="700">SM-11</text>
+<rect x="874.4" y="388" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="900.7" y="400" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<text x="660" y="420" font-size="11.5" fill="#0F172A" font-weight="600">RX rate, frozen-content and cross-checks</text>
+<text x="660" y="435" font-size="10" fill="#475569">Covers: repeated/inserted/masqueraded RX</text>
+<text x="660" y="474" font-size="9.5" fill="#475569">TSR 403–405 · DC medium (combined with SM-09/10)</text>
+<rect x="949" y="380" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="949" y="380" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="963" y="400" font-size="12" fill="#0F172A" font-weight="700">SM-13</text>
+<rect x="1177.4" y="388" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="1203.7" y="400" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<rect x="1011" y="388" width="46" height="17" rx="4" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="1034" y="400" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">+E-03b</text>
+<text x="963" y="420" font-size="11.5" fill="#0F172A" font-weight="600">Command-frame freshness</text>
+<text x="963" y="435" font-size="10" fill="#475569">Covers: SoC stops sending commands</text>
+<text x="963" y="474" font-size="9.5" fill="#475569">TSR 408, 614 · DC high</text>
+<rect x="40" y="496" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="40" y="496" width="5" height="104" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<text x="54" y="516" font-size="12" fill="#0F172A" font-weight="700">SM-24</text>
+<rect x="237.9" y="504" width="83.1" height="17" rx="8.5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/>
+<text x="279.4" y="516" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">implemented</text>
+<text x="54" y="536" font-size="11.5" fill="#0F172A" font-weight="600">Relay malfunction detection (traffic-based)</text>
+<text x="54" y="551" font-size="10" fill="#475569">Covers: relay stuck released / camera on car bus</text>
+<text x="54" y="590" font-size="9.5" fill="#475569">TSR 710 · DC medium</text>
+<rect x="343" y="496" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="343" y="496" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="357" y="516" font-size="12" fill="#0F172A" font-weight="700">SM-29</text>
+<rect x="571.4" y="504" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="597.7" y="516" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<rect x="405" y="504" width="46" height="17" rx="4" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="428" y="516" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">+E-03b</text>
+<text x="357" y="536" font-size="11.5" fill="#0F172A" font-weight="600">Engagement follows PCM cruise; revoke on</text>
+<text x="357" y="551" font-size="11.5" fill="#0F172A" font-weight="600">SoC "not engaged"</text>
+<text x="357" y="566" font-size="10" fill="#475569">Covers: engagement state of the envelope differs from</text>
+<text x="357" y="579" font-size="10" fill="#475569">the PCM or from the SoC</text>
+<text x="357" y="590" font-size="9.5" fill="#475569">TSR 307(a), 309 · DC high</text>
+<rect x="646" y="496" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="646" y="496" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="660" y="516" font-size="12" fill="#0F172A" font-weight="700">SM-35</text>
+<rect x="874.4" y="504" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="900.7" y="516" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<rect x="708" y="504" width="46" height="17" rx="4" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="731" y="516" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">+E-03b</text>
+<text x="660" y="536" font-size="11.5" fill="#0F172A" font-weight="600">Forwarding with fixed block list and</text>
+<text x="660" y="551" font-size="11.5" fill="#0F172A" font-weight="600">forwarding supervision</text>
+<text x="660" y="566" font-size="10" fill="#475569">Covers: camera-side frames lost, delayed or altered;</text>
+<text x="660" y="579" font-size="10" fill="#475569">block list wrong</text>
+<text x="660" y="590" font-size="9.5" fill="#475569">TSR 704, 707, 711 · DC high (block list, design); medium…</text>
+<rect x="949" y="496" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="949" y="496" width="5" height="104" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<text x="963" y="516" font-size="12" fill="#0F172A" font-weight="700">SM-36</text>
+<rect x="1146.9" y="504" width="83.1" height="17" rx="8.5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/>
+<text x="1188.5" y="516" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">implemented</text>
+<text x="963" y="536" font-size="11.5" fill="#0F172A" font-weight="600">PCS and DSU message TX gate</text>
+<text x="963" y="551" font-size="10" fill="#475569">Covers: item originates or alters frames used by the</text>
+<text x="963" y="564" font-size="10" fill="#475569">stock PCS</text>
+<text x="963" y="590" font-size="9.5" fill="#475569">TSR 705 · DC high (when implemented)</text>
+<rect x="40" y="612" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="40" y="612" width="5" height="104" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<text x="54" y="632" font-size="12" fill="#0F172A" font-weight="700">SM-39</text>
+<rect x="237.9" y="620" width="83.1" height="17" rx="8.5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/>
+<text x="279.4" y="632" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">implemented</text>
+<text x="54" y="652" font-size="11.5" fill="#0F172A" font-weight="600">Per-ID TX rate supervision</text>
+<text x="54" y="667" font-size="10" fill="#475569">Covers: actuation frames sent faster than nominal</text>
+<text x="54" y="680" font-size="10" fill="#475569">(burst, duplicated frames)</text>
+<text x="54" y="706" font-size="9.5" fill="#475569">TSR 518 · DC medium</text>
+<rect x="30" y="746" width="1220" height="276" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="46" y="772" font-size="14" fill="#0F172A" font-weight="700">E-03b · Panda platform firmware</text>
+<text x="317.3" y="772" font-size="11" fill="#475569">main loop, drivers, comms handlers, fault handling</text>
+<rect x="1081.6" y="758" width="152.4" height="20" rx="10" fill="#C2410C" stroke="none" stroke-width="0"/>
+<text x="1157.8" y="772" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">ASIL C · 6 mechanisms</text>
+<rect x="40" y="786" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="40" y="786" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="54" y="806" font-size="12" fill="#0F172A" font-weight="700">SM-12</text>
+<rect x="268.4" y="794" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="294.7" y="806" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<text x="54" y="826" font-size="11.5" fill="#0F172A" font-weight="600">Heartbeat + control-loop liveness</text>
+<text x="54" y="841" font-size="10" fill="#475569">Covers: SoC hang, frozen control loop</text>
+<text x="54" y="880" font-size="9.5" fill="#475569">TSR 407, 409 · DC medium</text>
+<rect x="343" y="786" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="343" y="786" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="357" y="806" font-size="12" fill="#0F172A" font-weight="700">SM-14</text>
+<rect x="571.4" y="794" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="597.7" y="806" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<text x="357" y="826" font-size="11.5" fill="#0F172A" font-weight="600">SPI CRC + sequence counter + bounds</text>
+<text x="357" y="841" font-size="11.5" fill="#0F172A" font-weight="600">checks</text>
+<text x="357" y="856" font-size="10" fill="#475569">Covers: corrupted/stale/oversized SoC transfers</text>
+<text x="357" y="880" font-size="9.5" fill="#475569">TSR 410–413 · DC high (with CRC-16/32)</text>
+<rect x="646" y="786" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="646" y="786" width="5" height="104" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="660" y="806" font-size="12" fill="#0F172A" font-weight="700">SM-16</text>
+<rect x="819.5" y="794" width="107.5" height="17" rx="8.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="873.2" y="806" font-size="9.5" fill="#991B1B" font-weight="700" text-anchor="middle">not implemented</text>
+<text x="660" y="826" font-size="11.5" fill="#0F172A" font-weight="600">Fault → safe state</text>
+<text x="660" y="841" font-size="10" fill="#475569">Covers: any detected platform fault</text>
+<text x="660" y="880" font-size="9.5" fill="#475569">TSR 406, 502, 706 · DC — (enabler)</text>
+<rect x="949" y="786" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="949" y="786" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="963" y="806" font-size="12" fill="#0F172A" font-weight="700">SM-22</text>
+<rect x="1177.4" y="794" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="1203.7" y="806" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<text x="963" y="826" font-size="11.5" fill="#0F172A" font-weight="600">Configuration lock and command gating</text>
+<text x="963" y="841" font-size="10" fill="#475569">Covers: SoC selects wrong mode/param; debug</text>
+<text x="963" y="854" font-size="10" fill="#475569">commands</text>
+<text x="963" y="880" font-size="9.5" fill="#475569">TSR 511–514, 619, 620 · DC high</text>
+<rect x="40" y="902" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="40" y="902" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="54" y="922" font-size="12" fill="#0F172A" font-weight="700">SM-23</text>
+<rect x="268.4" y="910" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="294.7" y="922" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<rect x="102" y="910" width="46" height="17" rx="4" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="125" y="922" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">+E-04a</text>
+<text x="54" y="942" font-size="11.5" fill="#0F172A" font-weight="600">SoC-independent siren</text>
+<text x="54" y="957" font-size="10" fill="#475569">Covers: warning when the SoC is lost, on every</text>
+<text x="54" y="970" font-size="10" fill="#475569">envelope revocation that is not a driver action, and</text>
+<text x="54" y="996" font-size="9.5" fill="#475569">TSR 516 · DC — (warning)</text>
+<rect x="343" y="902" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="343" y="902" width="5" height="104" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="357" y="922" font-size="12" fill="#0F172A" font-weight="700">SM-38</text>
+<rect x="516.5" y="910" width="107.5" height="17" rx="8.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="570.2" y="922" font-size="9.5" fill="#991B1B" font-weight="700" text-anchor="middle">not implemented</text>
+<rect x="405" y="910" width="46" height="17" rx="4" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="428" y="922" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">+E-04a</text>
+<text x="357" y="942" font-size="11.5" fill="#0F172A" font-weight="600">Post-load TX read-back</text>
+<text x="357" y="957" font-size="10" fill="#475569">Covers: approved actuation frame altered in FDCAN</text>
+<text x="357" y="970" font-size="10" fill="#475569">message RAM, FDCAN core or transceiver</text>
+<text x="357" y="996" font-size="9.5" fill="#475569">TSR 517 · DC high</text>
+<rect x="30" y="1036" width="1220" height="392" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="46" y="1062" font-size="14" fill="#0F172A" font-weight="700">E-04a · Safety MCU hardware</text>
+<text x="284.1" y="1062" font-size="11" fill="#475569">STM32H7, clock, supply, memories, CAN, siren path</text>
+<rect x="1081.6" y="1048" width="152.4" height="20" rx="10" fill="#C2410C" stroke="none" stroke-width="0"/>
+<text x="1157.8" y="1062" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">ASIL C · 9 mechanisms</text>
+<rect x="40" y="1076" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="40" y="1076" width="5" height="104" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<text x="54" y="1096" font-size="12" fill="#0F172A" font-weight="700">SM-15</text>
+<rect x="237.9" y="1084" width="83.1" height="17" rx="8.5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/>
+<text x="279.4" y="1096" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">implemented</text>
+<rect x="102" y="1084" width="46" height="17" rx="4" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="125" y="1096" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">+E-03b</text>
+<text x="54" y="1116" font-size="11.5" fill="#0F172A" font-weight="600">Independent watchdog</text>
+<text x="54" y="1131" font-size="10" fill="#475569">Covers: MCU program-flow stall</text>
+<text x="54" y="1170" font-size="9.5" fill="#475569">TSR 501 · DC medium (timeout only) / high (window +…</text>
+<rect x="343" y="1076" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="343" y="1076" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="357" y="1096" font-size="12" fill="#0F172A" font-weight="700">SM-17</text>
+<rect x="571.4" y="1084" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="597.7" y="1096" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<rect x="405" y="1084" width="46" height="17" rx="4" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="428" y="1096" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">+E-03b</text>
+<text x="357" y="1116" font-size="11.5" fill="#0F172A" font-weight="600">RAM ECC, flash CRC, register checks</text>
+<text x="357" y="1131" font-size="10" fill="#475569">Covers: memory/register corruption</text>
+<text x="357" y="1170" font-size="9.5" fill="#475569">TSR 503 · DC high (ECC), medium (register)</text>
+<rect x="646" y="1076" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="646" y="1076" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="660" y="1096" font-size="12" fill="#0F172A" font-weight="700">SM-18</text>
+<rect x="874.4" y="1084" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="900.7" y="1096" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<text x="660" y="1116" font-size="11.5" fill="#0F172A" font-weight="600">Clock monitor (CSS + cross-check)</text>
+<text x="660" y="1131" font-size="10" fill="#475569">Covers: clock loss/drift</text>
+<text x="660" y="1170" font-size="9.5" fill="#475569">TSR 504 · DC medium</text>
+<rect x="949" y="1076" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="949" y="1076" width="5" height="104" rx="2" fill="#94A3B8" stroke="none" stroke-width="0"/>
+<text x="963" y="1096" font-size="12" fill="#0F172A" font-weight="700">SM-19</text>
+<rect x="1171.3" y="1084" width="58.7" height="17" rx="8.5" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1200.7" y="1096" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">unknown</text>
+<text x="963" y="1116" font-size="11.5" fill="#0F172A" font-weight="600">Supply monitor (BOR, PVD, input voltage)</text>
+<text x="963" y="1131" font-size="10" fill="#475569">Covers: under/over-voltage</text>
+<text x="963" y="1170" font-size="9.5" fill="#475569">TSR 505 · DC medium</text>
+<rect x="40" y="1192" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="40" y="1192" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="54" y="1212" font-size="12" fill="#0F172A" font-weight="700">SM-20</text>
+<rect x="268.4" y="1200" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="294.7" y="1212" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<rect x="102" y="1200" width="46" height="17" rx="4" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="125" y="1212" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">+E-05</text>
+<text x="54" y="1232" font-size="11.5" fill="#0F172A" font-weight="600">Relay readback and latch</text>
+<text x="54" y="1247" font-size="10" fill="#475569">Covers: relay stuck either way</text>
+<text x="54" y="1286" font-size="9.5" fill="#475569">TSR 506, 710, 712 · DC high (with readback)</text>
+<rect x="343" y="1192" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="343" y="1192" width="5" height="104" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="357" y="1212" font-size="12" fill="#0F172A" font-weight="700">SM-21</text>
+<rect x="516.5" y="1200" width="107.5" height="17" rx="8.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="570.2" y="1212" font-size="9.5" fill="#991B1B" font-weight="700" text-anchor="middle">not implemented</text>
+<text x="357" y="1232" font-size="11.5" fill="#0F172A" font-weight="600">MPU isolation</text>
+<text x="357" y="1247" font-size="10" fill="#475569">Covers: comms handler corrupting safety data</text>
+<text x="357" y="1286" font-size="9.5" fill="#475569">TSR 507 · DC medium</text>
+<rect x="646" y="1192" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="646" y="1192" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="660" y="1212" font-size="12" fill="#0F172A" font-weight="700">SM-40</text>
+<rect x="874.4" y="1200" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="900.7" y="1212" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<rect x="708" y="1200" width="46" height="17" rx="4" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="731" y="1212" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">+E-03b</text>
+<text x="660" y="1232" font-size="11.5" fill="#0F172A" font-weight="600">Car-side transceiver supervision</text>
+<text x="660" y="1247" font-size="10" fill="#475569">Covers: transceiver transmitting from reset; bus-off or</text>
+<text x="660" y="1260" font-size="10" fill="#475569">persistent TX failure while authority is granted</text>
+<text x="660" y="1286" font-size="9.5" fill="#475569">TSR 508 · DC medium</text>
+<rect x="949" y="1192" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="949" y="1192" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="963" y="1212" font-size="12" fill="#0F172A" font-weight="700">SM-41</text>
+<rect x="1177.4" y="1200" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="1203.7" y="1212" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<rect x="1011" y="1200" width="46" height="17" rx="4" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="1034" y="1212" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">+E-03b</text>
+<text x="963" y="1232" font-size="11.5" fill="#0F172A" font-weight="600">MCU die-temperature monitor</text>
+<text x="963" y="1247" font-size="10" fill="#475569">Covers: MCU outside its specified temperature range</text>
+<text x="963" y="1286" font-size="9.5" fill="#475569">TSR 509 · DC medium</text>
+<rect x="40" y="1308" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="40" y="1308" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="54" y="1328" font-size="12" fill="#0F172A" font-weight="700">SM-42</text>
+<rect x="268.4" y="1316" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="294.7" y="1328" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<rect x="102" y="1316" width="46" height="17" rx="4" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="125" y="1328" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">+E-05</text>
+<text x="54" y="1348" font-size="11.5" fill="#0F172A" font-weight="600">Harness orientation and connection detection</text>
+<text x="54" y="1363" font-size="10" fill="#475569">Covers: harness flipped, not connected or partly</text>
+<text x="54" y="1376" font-size="10" fill="#475569">inserted; wrong CAN routing or relay pin</text>
+<text x="54" y="1402" font-size="9.5" fill="#475569">TSR 701 · DC medium</text>
+<rect x="30" y="1442" width="1220" height="392" rx="12" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.2"/>
+<text x="46" y="1468" font-size="14" fill="#0F172A" font-weight="700">E-01 · Host SoC software and models</text>
+<text x="350.5" y="1468" font-size="11" fill="#475569">openpilot processes and ML models (E-01, E-02)</text>
+<rect x="1100.8" y="1454" width="133.2" height="20" rx="10" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="1167.4" y="1468" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">QM · 11 mechanisms</text>
+<rect x="40" y="1482" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="40" y="1482" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="54" y="1502" font-size="12" fill="#0F172A" font-weight="700">SM-25</text>
+<rect x="268.4" y="1490" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="294.7" y="1502" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<text x="54" y="1522" font-size="11.5" fill="#0F172A" font-weight="600">Host fault classification and freshness</text>
+<text x="54" y="1537" font-size="10" fill="#475569">Covers: stale/invalid inputs on SoC</text>
+<text x="54" y="1576" font-size="9.5" fill="#475569">TSR 601–604, 606, 615, 616 · DC QM</text>
+<rect x="343" y="1482" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="343" y="1482" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="357" y="1502" font-size="12" fill="#0F172A" font-weight="700">SM-26</text>
+<rect x="571.4" y="1490" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="597.7" y="1502" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<rect x="405" y="1490" width="46" height="17" rx="4" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="428" y="1502" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">+E-02</text>
+<text x="357" y="1522" font-size="11.5" fill="#0F172A" font-weight="600">Driver monitoring</text>
+<text x="357" y="1537" font-size="10" fill="#475569">Covers: inattention (misuse)</text>
+<text x="357" y="1576" font-size="9.5" fill="#475569">TSR 608–612 · DC QM (SOTIF)</text>
+<rect x="646" y="1482" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="646" y="1482" width="5" height="104" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<text x="660" y="1502" font-size="12" fill="#0F172A" font-weight="700">SM-27</text>
+<rect x="843.9" y="1490" width="83.1" height="17" rx="8.5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/>
+<text x="885.5" y="1502" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">implemented</text>
+<text x="660" y="1522" font-size="11.5" fill="#0F172A" font-weight="600">Excessive-actuation detector</text>
+<text x="660" y="1537" font-size="10" fill="#475569">Covers: vehicle response beyond 2× limits</text>
+<text x="660" y="1576" font-size="9.5" fill="#475569">TSR 617 · DC QM</text>
+<rect x="949" y="1482" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="949" y="1482" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="963" y="1502" font-size="12" fill="#0F172A" font-weight="700">SM-28</text>
+<rect x="1177.4" y="1490" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="1203.7" y="1502" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<text x="963" y="1522" font-size="11.5" fill="#0F172A" font-weight="600">Controller margin</text>
+<text x="963" y="1537" font-size="10" fill="#475569">Covers: operation at envelope boundary</text>
+<text x="963" y="1576" font-size="9.5" fill="#475569">TSR 605 · DC QM</text>
+<rect x="40" y="1598" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="40" y="1598" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="54" y="1618" font-size="12" fill="#0F172A" font-weight="700">SM-30</text>
+<rect x="268.4" y="1606" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="294.7" y="1618" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<text x="54" y="1638" font-size="11.5" fill="#0F172A" font-weight="600">Engagement and authority mismatch detection</text>
+<text x="54" y="1653" font-size="11.5" fill="#0F172A" font-weight="600">(SoC side)</text>
+<text x="54" y="1668" font-size="10" fill="#475569">Covers: envelope blocks or never grants authority while</text>
+<text x="54" y="1681" font-size="10" fill="#475569">engaged; PCM cruise differs from the item's state</text>
+<text x="54" y="1692" font-size="9.5" fill="#475569">TSR 307(b), 308, 621, 626 · DC QM (B-sup: SM-08, SM-23)</text>
+<rect x="343" y="1598" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="343" y="1598" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="357" y="1618" font-size="12" fill="#0F172A" font-weight="700">SM-31</text>
+<rect x="571.4" y="1606" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="597.7" y="1618" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<text x="357" y="1638" font-size="11.5" fill="#0F172A" font-weight="600">HMI path liveness and audible minimum</text>
+<text x="357" y="1653" font-size="10" fill="#475569">Covers: hung render loop, stalled or muted audio, so the</text>
+<text x="357" y="1666" font-size="10" fill="#475569">take-over request is not perceived</text>
+<text x="357" y="1692" font-size="9.5" fill="#475569">TSR 622, 623, 627 · DC QM (B-sup: SM-23 siren, SM-29…</text>
+<rect x="646" y="1598" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="646" y="1598" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="660" y="1618" font-size="12" fill="#0F172A" font-weight="700">SM-32</text>
+<rect x="874.4" y="1606" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="900.7" y="1618" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<text x="660" y="1638" font-size="11.5" fill="#0F172A" font-weight="600">Announced, bounded item-initiated</text>
+<text x="660" y="1653" font-size="11.5" fill="#0F172A" font-weight="600">deceleration</text>
+<text x="660" y="1668" font-size="10" fill="#475569">Covers: deceleration not caused by traffic (DM</text>
+<text x="660" y="1681" font-size="10" fill="#475569">no-response, soft disable) applied without warning or as</text>
+<text x="660" y="1692" font-size="9.5" fill="#475569">TSR 624 · DC QM (B-sup: SM-07)</text>
+<rect x="949" y="1598" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="949" y="1598" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="963" y="1618" font-size="12" fill="#0F172A" font-weight="700">SM-33</text>
+<rect x="1177.4" y="1606" width="52.6" height="17" rx="8.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="1203.7" y="1618" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
+<text x="963" y="1638" font-size="11.5" fill="#0F172A" font-weight="600">FCW input freshness and false-alarm rate</text>
+<text x="963" y="1653" font-size="10" fill="#475569">Covers: FCW from stale or invalid inputs; false FCW</text>
+<text x="963" y="1666" font-size="10" fill="#475569">causing reflex braking</text>
+<text x="963" y="1692" font-size="9.5" fill="#475569">TSR 625 · DC ASIL A on QM element (open, WP-C-04…</text>
+<rect x="40" y="1714" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="40" y="1714" width="5" height="104" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<text x="54" y="1734" font-size="12" fill="#0F172A" font-weight="700">SM-34</text>
+<rect x="237.9" y="1722" width="83.1" height="17" rx="8.5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/>
+<text x="279.4" y="1734" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">implemented</text>
+<text x="54" y="1754" font-size="11.5" fill="#0F172A" font-weight="600">PCM ACC-fault reaction</text>
+<text x="54" y="1769" font-size="10" fill="#475569">Covers: PCM does not execute ACC (ACC or cruise</text>
+<text x="54" y="1782" font-size="10" fill="#475569">fault)</text>
+<text x="54" y="1808" font-size="9.5" fill="#475569">TSR 618 · DC QM (B-sup: SM-29)</text>
+<rect x="343" y="1714" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="343" y="1714" width="5" height="104" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<text x="357" y="1734" font-size="12" fill="#0F172A" font-weight="700">SM-37</text>
+<rect x="540.9" y="1722" width="83.1" height="17" rx="8.5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/>
+<text x="582.5" y="1734" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">implemented</text>
+<text x="357" y="1754" font-size="11.5" fill="#0F172A" font-weight="600">Stock AEB/FCW event indication</text>
+<text x="357" y="1769" font-size="10" fill="#475569">Covers: driver not told that the stock system intervened</text>
+<text x="357" y="1808" font-size="9.5" fill="#475569">TSR 709 · DC QM</text>
+<rect x="646" y="1714" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="646" y="1714" width="5" height="104" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<text x="660" y="1734" font-size="12" fill="#0F172A" font-weight="700">SM-43</text>
+<rect x="843.9" y="1722" width="83.1" height="17" rx="8.5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/>
+<text x="885.5" y="1734" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">implemented</text>
+<text x="660" y="1754" font-size="11.5" fill="#0F172A" font-weight="600">ACC cancel on every fault-induced</text>
+<text x="660" y="1769" font-size="11.5" fill="#0F172A" font-weight="600">disengagement</text>
+<text x="660" y="1784" font-size="10" fill="#475569">Covers: driver not told by an independent cue that the</text>
+<text x="660" y="1797" font-size="10" fill="#475569">item disengaged on a fault</text>
+<text x="660" y="1808" font-size="9.5" fill="#475569">TSR 303 · DC QM (B-sup: SM-23 via TSR-516(c), SM-29)</text>
+<rect x="40" y="1845" width="30" height="15" rx="7.5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/>
+<text x="78" y="1856" font-size="11" fill="#0F172A">implemented (11)</text>
+<rect x="200.8" y="1845" width="30" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="238.8" y="1856" font-size="11" fill="#0F172A">partly (26)</text>
+<rect x="330.1" y="1845" width="30" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="368.1" y="1856" font-size="11" fill="#0F172A">not implemented (5)</text>
+<rect x="509.8" y="1845" width="30" height="15" rx="7.5" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="547.8" y="1856" font-size="11" fill="#0F172A">unknown (1)</text>
+<rect x="639.1" y="1845" width="46" height="15" rx="4" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="662.1" y="1856" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">+E-0x</text>
+<text x="693.1" y="1856" font-size="11" fill="#0F172A">also carried by that element</text>
+<text x="40" y="1878" font-size="11" fill="#475569">Status is the latest in §6 (the reference build where it is given). Nothing is verified: implemented means the code does it, drawn blue, not green. Mixed statuses (Impl / Partial) count as partly.</text>
+<text x="40" y="1894" font-size="11" fill="#475569">DC targets are targets for the FMEDA (WP-H-03) and software safety analysis (WP-W-04), not demonstrated. Generated by fig_s03_mechanisms.py from WP-S-03 §3.1 and §6.</text>
+<g class="terms">
+<text x="40" y="1916" font-size="10.5" fill="#475569">Terms: ACC adaptive cruise control · AEB automatic emergency braking · ASIL Automotive Safety Integrity Level, A (lowest) to D (highest), from ISO 26262 · BOR brown-out reset (MCU supply monitor) · CAN controller</text>
+<text x="40" y="1930.5" font-size="10.5" fill="#475569">area network: the vehicle's data bus · CRC cyclic redundancy check · CSS clock security system (MCU clock monitor) · DC diagnostic coverage: the share of faults a safety mechanism detects · DM driver monitoring ·</text>
+<text x="40" y="1945" font-size="10.5" fill="#475569">DSU driving support unit (Toyota's radar cruise module) · E-nn element of the item (WP-C-01 §3.1), E-01…E-06 · ECC error-correcting code (memory) · EPS electric power steering · FCW forward collision warning · FDCAN</text>
+<text x="40" y="1959.5" font-size="10.5" fill="#475569">CAN with flexible data rate (the MCU's CAN controller) · FMEDA failure modes, effects and diagnostic analysis (hardware metrics) · HMI human-machine interface: display, sounds, cluster · LKA lane keeping assist ·</text>
+<text x="40" y="1974" font-size="10.5" fill="#475569">MCU microcontroller: the panda safety processor (STM32H7) · ML machine learning · MPU memory protection unit · PCM powertrain control module (engine and drive) · PCS pre-collision system: Toyota's stock collision</text>
+<text x="40" y="1988.5" font-size="10.5" fill="#475569">warning and braking · PVD programmable voltage detector (MCU supply monitor) · QM quality managed: no ASIL; ordinary quality processes suffice · RAM random-access memory · RT real time · RX receive · SM-nn safety</text>
+<text x="40" y="2003" font-size="10.5" fill="#475569">mechanism (TSC §6) · SoC system on chip: the comma device's main processor, running openpilot (QM) · SOTIF safety of the intended functionality (ISO 21448): hazards with nothing failing · SPI serial peripheral</text>
+<text x="40" y="2017.5" font-size="10.5" fill="#475569">interface (the link between SoC and MCU) · TSR-nn technical safety requirement (WP-S-02) · TX transmit · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W</text>
+<text x="40" y="2032" font-size="10.5" fill="#475569">software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>

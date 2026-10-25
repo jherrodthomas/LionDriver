@@ -53,10 +53,52 @@ package LionDriverViews {
         render Views::asElementTable;
     }
 
+    view <'V-08'> interfaceN2 : InterconnectionView {
+        doc /* N2 chart: which component or outside element sends to which, over which interface (IF-01 to IF-10). */
+        expose LdSda::**;
+        expose OperationalContext::*;
+        render Views::asElementTable;
+    }
+
+    view <'V-09'> verificationMatrix : RequirementMatrixView {
+        doc /* Verification cross-reference matrix: SYS, TSR and CSR requirements by verification method and by the level of the cases that verify them. */
+        expose LionDriverRequirements::*;
+        expose LionDriverVerification::*;
+        render Views::asElementTable;
+    }
+
     view <'V-04'> mechanismAllocation : AllocationView {
         doc /* Safety mechanisms SM-01 to SM-43 against the elements that perform them. */
         expose LionDriverMechanisms::*;
         expose LdSda::**;
         render Views::asElementTable;
+    }
+
+    view <'V-10'> functionalArchitecture : FunctionalView {
+        doc /* Functional architecture: the functions F-01 to F-09 along their functional chain, each step on the element that performs it. */
+        expose LionDriverFunctions::**;
+        expose LdSda::**;
+        render Views::asElementTable;
+    }
+
+    view <'V-11'> securityZones : SecurityView {
+        doc /* Security zones Z1 to Z7 of WP-S-07 §3.1 with the model elements in them, and the trust boundaries TB-1 to TB-7 of §3.2. */
+        expose LionDriverSecurity::*;
+        expose LdSda::**;
+        render Views::asElementTable;
+    }
+
+    view <'V-12'> integrationBuildUp : IntegrationView {
+        doc /* System integration build-up: the steps I-1 to I-4 of WP-S-08 §3.1, the elements each adds, the interfaces it exercises and the cases that run at it. */
+        expose LionDriverIntegration::*;
+        expose LionDriverVerification::*;
+        expose LdSda::**;
+        render Views::asElementTable;
+    }
+
+    view <'V-13'> systemModes : StateView {
+        doc /* System modes: the operating modes of WP-C-01 §4 as a state machine, each transition with the record transitions it stands for and who enforces it. */
+        expose LionDriverBehaviour::**;
+        render Views::asInterconnectionDiagram;
     }
 }

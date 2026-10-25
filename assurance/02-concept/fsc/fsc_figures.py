@@ -10,7 +10,9 @@ WP-C-04 is the source of record. Edit it and regenerate:
     python3 fsc_figures.py            # write figures/*.svg
     python3 fsc_figures.py --check    # fail if the committed figure is stale
 
-Figures 8-1 … 8-3 (the FTTI scene sheets, one card per safety goal) are drawn by `fsc_scenes.py` from the same parse.
+Figures 8-1 … 8-3 (the FTTI scene sheets, one card per safety goal) are drawn by `fsc_scenes.py` from the same parse,
+Figure 10-1 (the item boundary of WP-C-01 Figure 3-2 in the safety view) by `fsc_safety_view.py`, and
+Figure 12-1 (the degradation ladder, §12.1 and §6) by `fsc_degradation.py`.
 
 Standard library only. Drawing helpers and the ASIL colour scale are shared with ../hara/hara_figures.py.
 """
@@ -28,6 +30,8 @@ import hara_figures as hf  # noqa: E402
 from hara_figures import INK, MUTED, HAIR, ASIL_FILL, ASIL_TEXT, ASIL_STROKE, t, wrap, pill, header, svg_doc  # noqa: E402
 sys.path.insert(0, str(HERE))
 import fsc_scenes  # noqa: E402
+import fsc_degradation  # noqa: E402
+import fsc_safety_view  # noqa: E402
 
 SOURCE = HERE.parent / "WP-C-04-functional-safety-concept.md"
 OUT_DIR = HERE / "figures"
@@ -282,6 +286,8 @@ def build() -> dict[str, str]:
   out = {NAME: figure()}
   md = SOURCE.read_text(encoding="utf-8")
   out.update(fsc_scenes.build(parse(md), md, sys.modules[__name__]))  # Figures 8-1 … 8-3, the FTTI scene sheets
+  out.update(fsc_safety_view.build(parse(md), md))  # Figure 10-1, the item boundary in the safety view
+  out.update(fsc_degradation.build(md))  # Figure 12-1, the degradation ladder
   return out
 
 

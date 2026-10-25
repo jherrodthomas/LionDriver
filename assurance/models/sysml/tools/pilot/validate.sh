@@ -17,6 +17,6 @@ BUILD="$CACHE/classes"
 mkdir -p "$BUILD"
 javac -d "$BUILD" -cp "$JAR" "$HERE/SysMLValidate.java"
 java -cp "$JAR:$BUILD" SysMLValidate "$KERNEL/sysml.library" \
-  "$MODEL/LionDriverLibrary.sysml" "$MODEL/Mechanisms.sysml" "$MODEL/Architecture.sysml" "$MODEL/Requirements.sysml" \
+  "$MODEL/LionDriverLibrary.sysml" "$MODEL/Mechanisms.sysml" "$MODEL/Functions.sysml" "$MODEL/Architecture.sysml" "$MODEL/Security.sysml" "$MODEL/Integration.sysml" "$MODEL/Behaviour.sysml" "$MODEL/Requirements.sysml" \
   "$MODEL/Satisfaction.sysml" "$MODEL/Verification.sysml" "$MODEL/Views.sysml" \
   2>&1 | grep -vE '^(Reading |log4j:)'

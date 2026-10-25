@@ -1,0 +1,345 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="816.0" viewBox="0 0 1280 816.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">Figure 4-9. The item's functions in the hazard view (WP-C-03 §2, §4, §6)</title>
+<desc id="d">The functions of WP-C-01 §2.1 with their guide-word classification. F-01: 14 safety-critical pairs, hazards H-01, H-02, goals SG-01, SG-02, highest C. F-02: 13 safety-critical pairs, hazards H-03, H-04, H-06, goals SG-03, SG-04, SG-06, highest C. F-03: 10 safety-critical pairs, hazards H-01, H-02, H-05, goals SG-01, SG-02, SG-05, highest C. F-04: 9 safety-critical pairs, hazards H-04, H-09, goals SG-04, SG-08, highest B. F-05: 8 safety-critical pairs, hazards H-07, goals SG-02, SG-06, highest C. F-06: 1 safety-critical pairs, hazards H-04, goals SG-04, highest A. F-07: 0 safety-critical pairs, hazards none, goals none, highest —. F-08: 4 safety-critical pairs, hazards H-02, H-08, goals SG-02, SG-07, highest C. F-09: 0 safety-critical pairs, hazards none, goals none, highest —.</desc>
+<defs></defs>
+<rect width="1280" height="816.0" fill="#FFFFFF"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 4-9 · The item's functions in the hazard view</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">The functions of WP-C-01 §2.1, each with its 14 guide words classified (§2 step 2), the hazards its safety-critical pairs reach (§4) and the goals they lead to (§6)</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-03 §2, §4, §6</text>
+<text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">model: hara_model.py</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+<text x="40" y="112" font-size="10.5" fill="#475569" font-weight="700" letter-spacing=".04em">FUNCTION (WP-C-01 §2.1)</text>
+<text x="343" y="112" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">M01</text>
+<text x="385" y="112" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">M02</text>
+<text x="427" y="112" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">M03</text>
+<text x="469" y="112" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">M04</text>
+<text x="511" y="112" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">M05</text>
+<text x="553" y="112" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">M06</text>
+<text x="595" y="112" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">M07</text>
+<text x="637" y="112" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">M08</text>
+<text x="679" y="112" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">M09</text>
+<text x="721" y="112" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">M10</text>
+<text x="763" y="112" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">M11</text>
+<text x="805" y="112" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">M12</text>
+<text x="847" y="112" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">M13</text>
+<text x="889" y="112" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">M14</text>
+<text x="928" y="112" font-size="10.5" fill="#475569" font-weight="700" letter-spacing=".04em">HAZARDS (§4) · GOALS (§6) · HIGHEST</text>
+<rect x="32" y="122" width="1216" height="58" rx="6" fill="#F8FAFC"/>
+<text x="40" y="144" font-size="12.5" fill="#0F172A" font-weight="700">F-01</text>
+<text x="86" y="144" font-size="11" fill="#0F172A">Lateral control (lane centring)</text>
+<text x="86" y="172" font-size="9.5" fill="#475569">14/14 safety-critical · authority high</text>
+<rect x="325" y="134" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="343" y="155" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="367" y="134" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="385" y="155" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="409" y="134" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="427" y="155" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="451" y="134" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="469" y="155" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="493" y="134" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="511" y="155" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="535" y="134" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="553" y="155" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="577" y="134" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="595" y="155" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="619" y="134" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="637" y="155" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→11</text>
+<rect x="661" y="134" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="679" y="155" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→02</text>
+<rect x="703" y="134" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="721" y="155" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→03</text>
+<rect x="745" y="134" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="763" y="155" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="787" y="134" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="805" y="155" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="829" y="134" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="847" y="155" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="871" y="134" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="889" y="155" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→05</text>
+<rect x="928" y="131" width="40" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="948" y="143" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">H-01</text>
+<rect x="971" y="131" width="40" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="991" y="143" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">H-02</text>
+<rect x="928" y="153" width="44" height="16" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="950" y="165" font-size="9.5" fill="#9A3412" font-weight="700" text-anchor="middle">SG-01</text>
+<rect x="975" y="153" width="44" height="16" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="997" y="165" font-size="9.5" fill="#9A3412" font-weight="700" text-anchor="middle">SG-02</text>
+<rect x="1206" y="139" width="34" height="22" rx="11" fill="#C2410C" stroke="#9A3412"/>
+<text x="1223" y="154" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<text x="40" y="202" font-size="12.5" fill="#0F172A" font-weight="700">F-02</text>
+<text x="86" y="202" font-size="11" fill="#0F172A">Longitudinal control (ACC, Chill mode)</text>
+<text x="86" y="230" font-size="9.5" fill="#475569">13/14 safety-critical · authority high</text>
+<rect x="325" y="192" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="343" y="213" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="367" y="192" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="385" y="213" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="409" y="192" width="36" height="34" rx="5" fill="#FB923C" stroke="#EA580C"/>
+<text x="427" y="213" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<rect x="451" y="192" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="469" y="213" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="493" y="192" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="511" y="213" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="535" y="192" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="553" y="213" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="577" y="192" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="595" y="213" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→03</text>
+<rect x="619" y="192" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="637" y="213" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→11</text>
+<rect x="661" y="192" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="679" y="213" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→02</text>
+<rect x="703" y="192" width="36" height="34" rx="5" fill="#FB923C" stroke="#EA580C"/>
+<text x="721" y="213" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<rect x="745" y="192" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="763" y="213" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="787" y="192" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="805" y="213" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="829" y="192" width="36" height="34" rx="5" fill="#FB923C" stroke="#EA580C"/>
+<text x="847" y="213" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<rect x="871" y="192" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="928" y="189" width="40" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="948" y="201" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">H-03</text>
+<rect x="971" y="189" width="40" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="991" y="201" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">H-04</text>
+<rect x="1014" y="189" width="40" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="1034" y="201" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">H-06</text>
+<rect x="928" y="211" width="44" height="16" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="950" y="223" font-size="9.5" fill="#9A3412" font-weight="700" text-anchor="middle">SG-03</text>
+<rect x="975" y="211" width="44" height="16" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="997" y="223" font-size="9.5" fill="#9A3412" font-weight="700" text-anchor="middle">SG-04</text>
+<rect x="1022" y="211" width="44" height="16" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="1044" y="223" font-size="9.5" fill="#9A3412" font-weight="700" text-anchor="middle">SG-06</text>
+<rect x="1206" y="197" width="34" height="22" rx="11" fill="#C2410C" stroke="#9A3412"/>
+<text x="1223" y="212" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="32" y="238" width="1216" height="58" rx="6" fill="#F8FAFC"/>
+<text x="40" y="260" font-size="12.5" fill="#0F172A" font-weight="700">F-03</text>
+<text x="86" y="260" font-size="11" fill="#0F172A">Engagement and mode management</text>
+<text x="86" y="288" font-size="9.5" fill="#475569">10/14 safety-critical · authority medium</text>
+<rect x="325" y="250" width="36" height="34" rx="5" fill="#FB923C" stroke="#EA580C"/>
+<text x="343" y="271" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<rect x="367" y="250" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="385" y="271" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="409" y="250" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="427" y="271" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="451" y="250" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="469" y="271" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→01</text>
+<rect x="493" y="250" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="535" y="250" width="36" height="34" rx="5" fill="#FB923C" stroke="#EA580C"/>
+<text x="553" y="271" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<rect x="577" y="250" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="619" y="250" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="637" y="271" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→11</text>
+<rect x="661" y="250" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="703" y="250" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="721" y="271" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→01</text>
+<rect x="745" y="250" width="36" height="34" rx="5" fill="#FB923C" stroke="#EA580C"/>
+<text x="763" y="271" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<rect x="787" y="250" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="805" y="271" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→03</text>
+<rect x="829" y="250" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="847" y="271" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→02</text>
+<rect x="871" y="250" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="928" y="247" width="40" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="948" y="259" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">H-01</text>
+<rect x="971" y="247" width="40" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="991" y="259" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">H-02</text>
+<rect x="1014" y="247" width="40" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="1034" y="259" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">H-05</text>
+<rect x="928" y="269" width="44" height="16" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="950" y="281" font-size="9.5" fill="#9A3412" font-weight="700" text-anchor="middle">SG-01</text>
+<rect x="975" y="269" width="44" height="16" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="997" y="281" font-size="9.5" fill="#9A3412" font-weight="700" text-anchor="middle">SG-02</text>
+<rect x="1022" y="269" width="44" height="16" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="1044" y="281" font-size="9.5" fill="#9A3412" font-weight="700" text-anchor="middle">SG-05</text>
+<rect x="1206" y="255" width="34" height="22" rx="11" fill="#C2410C" stroke="#9A3412"/>
+<text x="1223" y="270" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<text x="40" y="318" font-size="12.5" fill="#0F172A" font-weight="700">F-04</text>
+<text x="86" y="318" font-size="11" fill="#0F172A">Driver monitoring</text>
+<text x="86" y="346" font-size="9.5" fill="#475569">9/14 safety-critical · authority medium</text>
+<rect x="325" y="308" width="36" height="34" rx="5" fill="#FED7AA" stroke="#FDBA74"/>
+<text x="343" y="329" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">A</text>
+<rect x="367" y="308" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="385" y="329" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→01</text>
+<rect x="409" y="308" width="36" height="34" rx="5" fill="#FB923C" stroke="#EA580C"/>
+<text x="427" y="329" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<rect x="451" y="308" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="469" y="329" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→01</text>
+<rect x="493" y="308" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="511" y="329" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→03</text>
+<rect x="535" y="308" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="553" y="329" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→01</text>
+<rect x="577" y="308" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="595" y="329" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→03</text>
+<rect x="619" y="308" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="637" y="329" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→01</text>
+<rect x="661" y="308" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="703" y="308" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="745" y="308" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="763" y="329" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→01</text>
+<rect x="787" y="308" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="829" y="308" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="871" y="308" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="928" y="305" width="40" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="948" y="317" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">H-04</text>
+<rect x="971" y="305" width="40" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="991" y="317" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">H-09</text>
+<rect x="928" y="327" width="44" height="16" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="950" y="339" font-size="9.5" fill="#9A3412" font-weight="700" text-anchor="middle">SG-04</text>
+<rect x="975" y="327" width="44" height="16" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="997" y="339" font-size="9.5" fill="#9A3412" font-weight="700" text-anchor="middle">SG-08</text>
+<rect x="1206" y="313" width="34" height="22" rx="11" fill="#FB923C" stroke="#EA580C"/>
+<text x="1223" y="328" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<rect x="32" y="354" width="1216" height="58" rx="6" fill="#F8FAFC"/>
+<text x="40" y="376" font-size="12.5" fill="#0F172A" font-weight="700">F-05</text>
+<text x="86" y="376" font-size="11" fill="#0F172A">Driver information and warnings</text>
+<text x="86" y="404" font-size="9.5" fill="#475569">8/14 safety-critical · authority low</text>
+<rect x="325" y="366" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="343" y="387" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="367" y="366" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="385" y="387" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→01</text>
+<rect x="409" y="366" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="451" y="366" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="469" y="387" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="493" y="366" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="535" y="366" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="553" y="387" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→01</text>
+<rect x="577" y="366" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="619" y="366" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="637" y="387" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→01</text>
+<rect x="661" y="366" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="679" y="387" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→01</text>
+<rect x="703" y="366" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="745" y="366" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="763" y="387" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→01</text>
+<rect x="787" y="366" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="805" y="387" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→04</text>
+<rect x="829" y="366" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="871" y="366" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="928" y="363" width="40" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="948" y="375" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">H-07</text>
+<rect x="928" y="385" width="44" height="16" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="950" y="397" font-size="9.5" fill="#9A3412" font-weight="700" text-anchor="middle">SG-02</text>
+<rect x="975" y="385" width="44" height="16" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="997" y="397" font-size="9.5" fill="#9A3412" font-weight="700" text-anchor="middle">SG-06</text>
+<rect x="1206" y="371" width="34" height="22" rx="11" fill="#C2410C" stroke="#9A3412"/>
+<text x="1223" y="386" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<text x="40" y="434" font-size="12.5" fill="#0F172A" font-weight="700">F-06</text>
+<text x="86" y="434" font-size="11" fill="#0F172A">Forward collision warning</text>
+<text x="86" y="462" font-size="9.5" fill="#475569">1/14 safety-critical · authority low</text>
+<rect x="325" y="424" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="367" y="424" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="409" y="424" width="36" height="34" rx="5" fill="#FED7AA" stroke="#FDBA74"/>
+<text x="427" y="445" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">A</text>
+<rect x="451" y="424" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="493" y="424" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="535" y="424" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="577" y="424" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="619" y="424" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="661" y="424" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="703" y="424" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="745" y="424" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="787" y="424" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="829" y="424" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="871" y="424" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="928" y="421" width="40" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="948" y="433" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">H-04</text>
+<rect x="928" y="443" width="44" height="16" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="950" y="455" font-size="9.5" fill="#9A3412" font-weight="700" text-anchor="middle">SG-04</text>
+<rect x="1206" y="429" width="34" height="22" rx="11" fill="#FED7AA" stroke="#FDBA74"/>
+<text x="1223" y="444" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">A</text>
+<rect x="32" y="470" width="1216" height="58" rx="6" fill="#F8FAFC"/>
+<text x="40" y="492" font-size="12.5" fill="#0F172A" font-weight="700">F-07</text>
+<text x="86" y="492" font-size="11" fill="#0F172A">Lane departure warning</text>
+<text x="86" y="520" font-size="9.5" fill="#475569">0/14 safety-critical · authority low</text>
+<rect x="325" y="482" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="367" y="482" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="409" y="482" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="451" y="482" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="493" y="482" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="535" y="482" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="577" y="482" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="619" y="482" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="661" y="482" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="703" y="482" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="745" y="482" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="787" y="482" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="829" y="482" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="871" y="482" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<text x="928" y="491" font-size="10" fill="#94A3B8" font-style="italic">no safety-critical pair</text>
+<text x="40" y="550" font-size="12.5" fill="#0F172A" font-weight="700">F-08</text>
+<text x="86" y="550" font-size="11" fill="#0F172A">Safety envelope and camera-message</text>
+<text x="86" y="564" font-size="11" fill="#0F172A">forwarding</text>
+<text x="86" y="578" font-size="9.5" fill="#475569">4/14 safety-critical · authority medium</text>
+<rect x="325" y="540" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="367" y="540" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="409" y="540" width="36" height="34" rx="5" fill="#FB923C" stroke="#EA580C"/>
+<text x="427" y="561" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<rect x="451" y="540" width="36" height="34" rx="5" fill="#C2410C" stroke="#9A3412"/>
+<text x="469" y="561" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="493" y="540" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="511" y="561" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→04</text>
+<rect x="535" y="540" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="577" y="540" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="619" y="540" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="661" y="540" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="703" y="540" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="745" y="540" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="787" y="540" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="829" y="540" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="847" y="561" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">→04</text>
+<rect x="871" y="540" width="36" height="34" rx="5" fill="#FFFFFF" stroke="#E2E8F0"/>
+<rect x="928" y="537" width="40" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="948" y="549" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">H-02</text>
+<rect x="971" y="537" width="40" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="991" y="549" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">H-08</text>
+<rect x="928" y="559" width="44" height="16" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="950" y="571" font-size="9.5" fill="#9A3412" font-weight="700" text-anchor="middle">SG-02</text>
+<rect x="975" y="559" width="44" height="16" rx="8" fill="#FFF7ED" stroke="#C2410C"/>
+<text x="997" y="571" font-size="9.5" fill="#9A3412" font-weight="700" text-anchor="middle">SG-07</text>
+<rect x="1206" y="545" width="34" height="22" rx="11" fill="#C2410C" stroke="#9A3412"/>
+<text x="1223" y="560" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="32" y="586" width="1216" height="58" rx="6" fill="#F8FAFC"/>
+<text x="40" y="608" font-size="12.5" fill="#0F172A" font-weight="700">F-09</text>
+<text x="86" y="608" font-size="11" fill="#0F172A">Logging, upload, remote access, software</text>
+<text x="86" y="622" font-size="11" fill="#0F172A">update</text>
+<text x="86" y="636" font-size="9.5" fill="#475569">0/14 safety-critical · authority none</text>
+<rect x="325" y="598" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="367" y="598" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="409" y="598" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="451" y="598" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="493" y="598" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="535" y="598" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="577" y="598" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="619" y="598" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="661" y="598" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="703" y="598" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="745" y="598" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="787" y="598" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="829" y="598" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<rect x="871" y="598" width="36" height="34" rx="5" fill="#E2E8F0"/>
+<text x="928" y="607" font-size="10" fill="#94A3B8" font-style="italic">no safety-critical pair</text>
+<rect x="40" y="650" width="26" height="16" rx="4" fill="#C2410C" stroke="#9A3412"/>
+<text x="53" y="662" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="72" y="650" width="26" height="16" rx="4" fill="#FB923C" stroke="#EA580C"/>
+<text x="85" y="662" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<rect x="104" y="650" width="26" height="16" rx="4" fill="#FED7AA" stroke="#FDBA74"/>
+<text x="117" y="662" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">A</text>
+<rect x="136" y="650" width="26" height="16" rx="4" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="149" y="662" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">QM</text>
+<text x="168" y="662" font-size="11" fill="#0F172A">safety-critical, expanded: highest ASIL of its rows</text>
+<rect x="454.6600000000001" y="650" width="26" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="488.66" y="662" font-size="11" fill="#0F172A">subsumed by the pair named</text>
+<rect x="655.7500000000001" y="650" width="26" height="16" rx="4" fill="#E2E8F0"/>
+<text x="689.75" y="662" font-size="11" fill="#0F172A">NSC</text>
+<rect x="734.8500000000001" y="650" width="26" height="16" rx="4" fill="#FFFFFF" stroke="#E2E8F0"/>
+<text x="768.85" y="662" font-size="11" fill="#0F172A">NA</text>
+<text x="40" y="684" font-size="10.5" fill="#0F172A">Guide words: M01 no function · M02 stops functioning · M03 unrequested function · M04 function stuck · M05 excessive function · M06 partial function · M07 functions early · M08 functions late · M09 function applies too short · M10 function</text>
+<text x="40" y="699" font-size="10.5" fill="#0F172A">applies too long · M11 function is delayed · M12 inverse function · M13 erratic or intermittent · M14 function is uneven</text>
+<text x="40" y="718" font-size="11" fill="#475569">Every pair keeps its written reason in the workbook (tab 11) and hara-function-guideword.csv. Reference scope: Experimental Mode (F-02X) is in the variant workbook (§5.11). Ratings as proposed, before I3 confirmation.</text>
+<g class="terms">
+<text x="40" y="738" font-size="10.5" fill="#475569">Terms: ACC adaptive cruise control · ASIL Automotive Safety Integrity Level, A (lowest) to D (highest), from ISO 26262 · F-nn function of the item (WP-C-01 §2.1), F-01…F-09 · H-nn hazard (HARA) · I0–I3 independence</text>
+<text x="40" y="752.5" font-size="10.5" fill="#475569">level of a review, I0 (none, e.g. the author or an AI) to I3 (independent organisation) · M01–M14, M1–M8 guide word M01…M14 of the HARA (no function, unrequested, excessive, …); M1…M8 (one digit) a safety-mode</text>
+<text x="40" y="767" font-size="10.5" fill="#475569">transition (WP-W-05 §5.1) · NA not applicable · NSC not safety-critical · QM quality managed: no ASIL; ordinary quality processes suffice · SG-nn safety goal (HARA §6) · WP-nn work product, e.g. WP-C-04; the letter</text>
+<text x="40" y="781.5" font-size="10.5" fill="#475569">is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+<text x="1240" y="802" font-size="10" fill="#475569" text-anchor="end">Generated by hara_views.py</text>
+</svg>

@@ -46,8 +46,8 @@ SHEETS = {
   "fig-c04-8-3-ftti-scenes-pcs-driver.svg": ("8-3", "Stock PCS and driver", "stock PCS and the driver", ["SG-07", "SG-08"]),
 }
 TILES = [
-  ("E-03", "envelope", "ASIL B target"),
-  ("E-05", "harness", "ASIL B target"),
+  ("E-03", "envelope", "ASIL C"),
+  ("E-05", "harness", "ASIL C · B for PCS"),
   ("E-01", "SoC", "QM"),
   ("E-01/DM", "DM", "QM"),
   ("E-01/HMI", "HMI", "QM"),

@@ -94,5 +94,7 @@ why the limits of the intended function are analysed at all.
 ## See also
 
 - [Reference vehicle](Reference-vehicle.md): the car, the device and what the configuration fixes.
+- [CAN, CAN FD and end-to-end protection](CAN-CAN-FD-and-end-to-end-protection.md): the bus these messages travel on, and
+  what protects them on the way.
 - [Integrated standards](Integrated-standards.md): what each standard asks of the same envelope.
 - [Glossary](Glossary.md) for the work product and ID codes.

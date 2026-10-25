@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="663.5" viewBox="0 0 1280 663.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">Figure 3-4. Which elements realize each function (WP-C-01 §2.1, §3.1, §3.2)</title>
+<desc id="d">Functions of WP-C-01 §2.1 against elements. F-01: E-01 realizes, E-02 realizes, E-03 carries, E-04 carries, E-05 carries, EPS relies on, DRIVER relies on. F-02: E-01 realizes, E-02 realizes, E-03 carries, E-04 carries, E-05 carries, PCM relies on, RADAR relies on, DRIVER relies on. F-03: E-01 realizes, E-03 realizes, E-04 carries, PCM relies on, CLUSTER relies on, DRIVER relies on. F-04: E-01 realizes, E-02 realizes, E-04 carries, DRIVER relies on. F-05: E-01 realizes, E-04 carries, CLUSTER relies on, DRIVER relies on. F-06: E-01 realizes, E-02 realizes, E-04 carries, DRIVER relies on. F-07: E-01 realizes, E-02 realizes, E-04 carries, DRIVER relies on. F-08: E-03 realizes, E-04 carries, E-05 carries, CAM relies on. F-09: E-01 realizes, E-04 carries, BACKEND relies on.</desc>
+<defs></defs>
+<rect width="1280" height="663.5" fill="#FFFFFF"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-4 · Which elements realize each function</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Each function of §2.1 against the elements inside the item (§3.1) that realize or carry it, and the elements outside it (§3.2) it relies on</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-01 §2.1, §3.1, §3.2</text>
+<text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end"></text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+<text x="525" y="112" font-size="11.5" fill="#0F172A" font-weight="700" text-anchor="middle">Inside the item (§3.1)</text>
+<line x1="336" y1="118" x2="714" y2="118" stroke="#0F766E" stroke-width="1.5"/>
+<text x="984.78" y="112" font-size="11.5" fill="#0F172A" font-weight="700" text-anchor="middle">Outside the item, relied on (§3.2)</text>
+<line x1="756" y1="118" x2="1213.56" y2="118" stroke="#64748B" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="369" y="138" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">E-01</text>
+<text x="369" y="152" font-size="9.5" fill="#475569" text-anchor="middle">SoC software</text>
+<text x="447" y="138" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">E-02</text>
+<text x="447" y="152" font-size="9.5" fill="#475569" text-anchor="middle">ML models</text>
+<text x="525" y="138" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">E-03</text>
+<text x="525" y="152" font-size="9.5" fill="#475569" text-anchor="middle">safety MCU</text>
+<text x="525" y="164" font-size="9.5" fill="#475569" text-anchor="middle">firmware</text>
+<text x="603" y="138" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">E-04</text>
+<text x="603" y="152" font-size="9.5" fill="#475569" text-anchor="middle">device</text>
+<text x="603" y="164" font-size="9.5" fill="#475569" text-anchor="middle">hardware</text>
+<text x="681" y="138" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">E-05</text>
+<text x="681" y="152" font-size="9.5" fill="#475569" text-anchor="middle">harness</text>
+<text x="783.54" y="138" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">Toyota EPS</text>
+<text x="850.62" y="138" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">PCM and</text>
+<text x="850.62" y="150" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">brakes</text>
+<text x="917.7" y="138" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">forward</text>
+<text x="917.7" y="150" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">camera</text>
+<text x="984.78" y="138" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">forward radar</text>
+<text x="1051.86" y="138" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">cluster and</text>
+<text x="1051.86" y="150" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">stalk</text>
+<text x="1118.94" y="138" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">driver</text>
+<text x="1186.02" y="138" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">comma.ai</text>
+<text x="1186.02" y="150" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">back end</text>
+<rect x="32" y="172" width="1216" height="40" rx="6" fill="#F8FAFC"/>
+<rect x="32" y="252" width="1216" height="40" rx="6" fill="#F8FAFC"/>
+<rect x="32" y="332" width="1216" height="40" rx="6" fill="#F8FAFC"/>
+<rect x="32" y="412" width="1216" height="40" rx="6" fill="#F8FAFC"/>
+<rect x="32" y="492" width="1216" height="40" rx="6" fill="#F8FAFC"/>
+<line x1="369" y1="172" x2="369" y2="532" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="447" y1="172" x2="447" y2="532" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="525" y1="172" x2="525" y2="532" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="603" y1="172" x2="603" y2="532" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="681" y1="172" x2="681" y2="532" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="783.54" y1="172" x2="783.54" y2="532" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="850.62" y1="172" x2="850.62" y2="532" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="917.7" y1="172" x2="917.7" y2="532" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="984.78" y1="172" x2="984.78" y2="532" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1051.86" y1="172" x2="1051.86" y2="532" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1118.94" y1="172" x2="1118.94" y2="532" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1186.02" y1="172" x2="1186.02" y2="532" stroke="#E2E8F0" stroke-width="1"/>
+<text x="40" y="197" font-size="12" fill="#0F172A" font-weight="700">F-01</text>
+<text x="86" y="197" font-size="11" fill="#0F172A">Lateral control</text>
+<circle cx="369" cy="192" r="8" fill="#0F766E" stroke="#0F766E" stroke-width="2"/>
+<circle cx="447" cy="192" r="8" fill="#0F766E" stroke="#0F766E" stroke-width="2"/>
+<circle cx="525" cy="192" r="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
+<circle cx="603" cy="192" r="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
+<circle cx="681" cy="192" r="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
+<circle cx="783.54" cy="192" r="8" fill="#FFFFFF" stroke="#64748B" stroke-width="2" stroke-dasharray="3 2"/>
+<circle cx="1118.94" cy="192" r="8" fill="#FFFFFF" stroke="#64748B" stroke-width="2" stroke-dasharray="3 2"/>
+<text x="40" y="237" font-size="12" fill="#0F172A" font-weight="700">F-02</text>
+<text x="86" y="237" font-size="11" fill="#0F172A">Longitudinal control</text>
+<circle cx="369" cy="232" r="8" fill="#0F766E" stroke="#0F766E" stroke-width="2"/>
+<circle cx="447" cy="232" r="8" fill="#0F766E" stroke="#0F766E" stroke-width="2"/>
+<circle cx="525" cy="232" r="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
+<circle cx="603" cy="232" r="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
+<circle cx="681" cy="232" r="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
+<circle cx="850.62" cy="232" r="8" fill="#FFFFFF" stroke="#64748B" stroke-width="2" stroke-dasharray="3 2"/>
+<circle cx="984.78" cy="232" r="8" fill="#FFFFFF" stroke="#64748B" stroke-width="2" stroke-dasharray="3 2"/>
+<circle cx="1118.94" cy="232" r="8" fill="#FFFFFF" stroke="#64748B" stroke-width="2" stroke-dasharray="3 2"/>
+<text x="40" y="277" font-size="12" fill="#0F172A" font-weight="700">F-03</text>
+<text x="86" y="277" font-size="11" fill="#0F172A">Engagement and mode management</text>
+<circle cx="369" cy="272" r="8" fill="#0F766E" stroke="#0F766E" stroke-width="2"/>
+<circle cx="525" cy="272" r="8" fill="#0F766E" stroke="#0F766E" stroke-width="2"/>
+<circle cx="603" cy="272" r="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
+<circle cx="850.62" cy="272" r="8" fill="#FFFFFF" stroke="#64748B" stroke-width="2" stroke-dasharray="3 2"/>
+<circle cx="1051.86" cy="272" r="8" fill="#FFFFFF" stroke="#64748B" stroke-width="2" stroke-dasharray="3 2"/>
+<circle cx="1118.94" cy="272" r="8" fill="#FFFFFF" stroke="#64748B" stroke-width="2" stroke-dasharray="3 2"/>
+<text x="40" y="317" font-size="12" fill="#0F172A" font-weight="700">F-04</text>
+<text x="86" y="317" font-size="11" fill="#0F172A">Driver monitoring</text>
+<circle cx="369" cy="312" r="8" fill="#0F766E" stroke="#0F766E" stroke-width="2"/>
+<circle cx="447" cy="312" r="8" fill="#0F766E" stroke="#0F766E" stroke-width="2"/>
+<circle cx="603" cy="312" r="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
+<circle cx="1118.94" cy="312" r="8" fill="#FFFFFF" stroke="#64748B" stroke-width="2" stroke-dasharray="3 2"/>
+<text x="40" y="357" font-size="12" fill="#0F172A" font-weight="700">F-05</text>
+<text x="86" y="357" font-size="11" fill="#0F172A">Driver information and warnings</text>
+<circle cx="369" cy="352" r="8" fill="#0F766E" stroke="#0F766E" stroke-width="2"/>
+<circle cx="603" cy="352" r="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
+<circle cx="1051.86" cy="352" r="8" fill="#FFFFFF" stroke="#64748B" stroke-width="2" stroke-dasharray="3 2"/>
+<circle cx="1118.94" cy="352" r="8" fill="#FFFFFF" stroke="#64748B" stroke-width="2" stroke-dasharray="3 2"/>
+<text x="40" y="397" font-size="12" fill="#0F172A" font-weight="700">F-06</text>
+<text x="86" y="397" font-size="11" fill="#0F172A">Forward collision warning</text>
+<circle cx="369" cy="392" r="8" fill="#0F766E" stroke="#0F766E" stroke-width="2"/>
+<circle cx="447" cy="392" r="8" fill="#0F766E" stroke="#0F766E" stroke-width="2"/>
+<circle cx="603" cy="392" r="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
+<circle cx="1118.94" cy="392" r="8" fill="#FFFFFF" stroke="#64748B" stroke-width="2" stroke-dasharray="3 2"/>
+<text x="40" y="437" font-size="12" fill="#0F172A" font-weight="700">F-07</text>
+<text x="86" y="437" font-size="11" fill="#0F172A">Lane departure warning</text>
+<circle cx="369" cy="432" r="8" fill="#0F766E" stroke="#0F766E" stroke-width="2"/>
+<circle cx="447" cy="432" r="8" fill="#0F766E" stroke="#0F766E" stroke-width="2"/>
+<circle cx="603" cy="432" r="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
+<circle cx="1118.94" cy="432" r="8" fill="#FFFFFF" stroke="#64748B" stroke-width="2" stroke-dasharray="3 2"/>
+<text x="40" y="477" font-size="12" fill="#0F172A" font-weight="700">F-08</text>
+<text x="86" y="477" font-size="11" fill="#0F172A">Safety envelope</text>
+<circle cx="525" cy="472" r="8" fill="#0F766E" stroke="#0F766E" stroke-width="2"/>
+<circle cx="603" cy="472" r="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
+<circle cx="681" cy="472" r="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
+<circle cx="917.7" cy="472" r="8" fill="#FFFFFF" stroke="#64748B" stroke-width="2" stroke-dasharray="3 2"/>
+<text x="40" y="517" font-size="12" fill="#0F172A" font-weight="700">F-09</text>
+<text x="86" y="510" font-size="11" fill="#0F172A">Data logging, upload, remote access,</text>
+<text x="86" y="524" font-size="11" fill="#0F172A">software update</text>
+<circle cx="369" cy="512" r="8" fill="#0F766E" stroke="#0F766E" stroke-width="2"/>
+<circle cx="603" cy="512" r="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
+<circle cx="1186.02" cy="512" r="8" fill="#FFFFFF" stroke="#64748B" stroke-width="2" stroke-dasharray="3 2"/>
+<line x1="735" y1="112" x2="735" y2="532" stroke="#CBD5E1" stroke-dasharray="4 3"/>
+<circle cx="48" cy="554" r="8" fill="#0F766E" stroke="#0F766E" stroke-width="2"/>
+<text x="62" y="558" font-size="11" fill="#0F172A">realizes: its code, model or hardware performs the function</text>
+<circle cx="399.4" cy="554" r="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
+<text x="413.4" y="558" font-size="11" fill="#0F172A">carries: hosts it or passes it on</text>
+<circle cx="612.09" cy="554" r="8" fill="#FFFFFF" stroke="#64748B" stroke-width="2" stroke-dasharray="3 2"/>
+<text x="626.09" y="558" font-size="11" fill="#0F172A">relies on: outside the item, credited through an assumption of use (§7)</text>
+<text x="40" y="580" font-size="11" fill="#475569">E-06 (external compute) is excluded from the reference configuration and not drawn. The cells are an analyst reading of §2.1–§3.2, listed in fig_c01_allocation.py; the code paths are in §2.1.</text>
+<g class="terms">
+<text x="40" y="600" font-size="10.5" fill="#475569">Terms: E-nn element of the item (WP-C-01 §3.1), E-01…E-06 · EPS electric power steering · F-nn function of the item (WP-C-01 §2.1), F-01…F-09 · MCU microcontroller: the panda safety processor (STM32H7) · ML machine</text>
+<text x="40" y="614.5" font-size="10.5" fill="#475569">learning · PCM powertrain control module (engine and drive) · SoC system on chip: the comma device's main processor, running openpilot (QM) · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C</text>
+<text x="40" y="629" font-size="10.5" fill="#475569">concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+<text x="1240" y="649.5" font-size="10" fill="#475569" text-anchor="end">Generated by fig_c01_allocation.py</text>
+</svg>

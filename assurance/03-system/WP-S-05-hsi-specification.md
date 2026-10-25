@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-05 Hardware-software interface specification |
 | Standard reference | ISO 26262-4:2018 §6 (HSI specification); ISO 26262-5:2018 §6 and ISO 26262-6:2018 §6 (HSI refinement, by reference); ASPICE 4.0 SYS.3 |
-| Version | 0.13 (OI-6: both boards stay in scope, DQ-011; 2026-10-23). 0.12 (§2 ASIL column: each interface carries the highest ASIL of its TSRs, C for the MCU interfaces since WP-C-03 v0.4 (the column still showed B‡), B for orientation and ignition; Figure 2-1 added, generated from §2; 2026-10-19). 0.11 (scope line: the MCU interfaces are ASIL C since WP-C-03 v0.4 raised SG-02, SG-03 and SG-06; 2026-10-16). 0.10 (§11: bit numbering defined; provisional bit positions for S-06, S-07 quality flag, S-12, S-13 MAIN_ON; LC-01, maintainer decision 2026-10-13). 0.9 (S-21: reference-build flag in the health packet, required by `pandad`; panda `6dee6fa`; 2026-10-12). 0.8 (HSI-09: IWDG1 now used, per TSR-501 v0.4; RR-2026-008; 2026-10-12). 0.7 (S-12: siren on a persistent EPS fault, panda `b790fca`; 2026-10-12). 0.6 (S-13: MAIN_ON cross-check implemented in the reference build, opendbc `875e325`; 2026-10-12). 0.5 (S-12: EPS fault reported to the host as `pandaState.epsFault`, panda `877730e`, opendbc `adcb7c2`; 2026-10-12). 0.4 (S-12: EPS fault codes evaluated by the envelope in the reference build, opendbc `242d63d`; 2026-10-12). 0.3 (S-12, S-13: `0x262` and `0x1D3` supervised in the reference build, opendbc `98404a4`; 2026-10-12). 0.2 (§11 signal catalogue, RR-2026-005 F-06; watchdog ≤ 0.1 s; 2026-10-12) |
+| Version | 0.14 (§12 added: vehicle networks and end-to-end protection, hop by hop, with OI-8…OI-12; no requirement changed; I0, Claude; 2026-10-24). 0.13 (OI-6: both boards stay in scope, DQ-011; 2026-10-23). 0.12 (§2 ASIL column: each interface carries the highest ASIL of its TSRs, C for the MCU interfaces since WP-C-03 v0.4 (the column still showed B‡), B for orientation and ignition; Figure 2-1 added, generated from §2; 2026-10-19). 0.11 (scope line: the MCU interfaces are ASIL C since WP-C-03 v0.4 raised SG-02, SG-03 and SG-06; 2026-10-16). 0.10 (§11: bit numbering defined; provisional bit positions for S-06, S-07 quality flag, S-12, S-13 MAIN_ON; LC-01, maintainer decision 2026-10-13). 0.9 (S-21: reference-build flag in the health packet, required by `pandad`; panda `6dee6fa`; 2026-10-12). 0.8 (HSI-09: IWDG1 now used, per TSR-501 v0.4; RR-2026-008; 2026-10-12). 0.7 (S-12: siren on a persistent EPS fault, panda `b790fca`; 2026-10-12). 0.6 (S-13: MAIN_ON cross-check implemented in the reference build, opendbc `875e325`; 2026-10-12). 0.5 (S-12: EPS fault reported to the host as `pandaState.epsFault`, panda `877730e`, opendbc `adcb7c2`; 2026-10-12). 0.4 (S-12: EPS fault codes evaluated by the envelope in the reference build, opendbc `242d63d`; 2026-10-12). 0.3 (S-12, S-13: `0x262` and `0x1D3` supervised in the reference build, opendbc `98404a4`; 2026-10-12). 0.2 (§11 signal catalogue, RR-2026-005 F-06; watchdog ≤ 0.1 s; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Safety MCU (STM32H7 "panda") and its interfaces: ASIL C (SG-02, SG-03, SG-06 since WP-C-03 v0.4; see [WP-S-02 §2.1](WP-S-02-technical-safety-requirements.md)) |
 | Author | Assurance team (initial draft) |
@@ -21,7 +21,8 @@ This document specifies the interfaces between hardware and software that the sa
 - harness relay drive, harness orientation and ignition sensing, §6;
 - reset and boot control of the safety MCU by the SoC, watchdog and fault handling resources, §7;
 - the safety-relevant memory map, §8;
-- operating modes and power states, §9.
+- operating modes and power states, §9;
+- the vehicle networks and the end-to-end protection of the information on them, §12.
 
 All facts are taken from the firmware source at the baseline. **Pin assignments and electrical behaviour must be confirmed against the device schematic** ([WP-H-02](../04-hardware/WP-H-02-hardware-design.md) OI-1); firmware shows only what the MCU drives or reads. Both board variants are listed: "tres" (comma 3X) and "cuatro" (comma four). Which one is the reference device is open ([WP-C-01](../02-concept/WP-C-01-item-definition.md) OI-2).
 
@@ -269,6 +270,111 @@ Columns: **Dir** = direction across the item boundary or the HW/SW boundary. **O
 
 S-12 and S-13 are envelope RX checks in the reference build since opendbc `98404a4` (presence, checksum, timeout); the fault-code revocation (TSR-110) and cross-checks (TSR-405) that use their content are not implemented. S-14 is a proposed addition. All three rates are to be measured on the reference vehicle (WP-S-04 measurement plan, OI-7).
 
+## 12. Vehicle networks and end-to-end protection
+
+Added in v0.14. §4 and §5 describe the links the item has today; this section asks what protects the information on them, end to end, and what changes when a configuration uses another vehicle network. It is an engineering analysis (AI-authored, I0): it proposes, it changes no requirement. The open items it raises are OI-8…OI-12; the question it raises for the project lead is in the decision register.
+
+### 12.1 The networks, and which of them the item touches
+
+| Network | Standard | What it is | Where it appears for LionDriver |
+|---|---|---|---|
+| Classical CAN | ISO 11898-1, ISO 11898-2 | Two-wire differential bus, every node hears every frame; 11- or 29-bit identifier that is also the arbitration priority; 0 to 8 data bytes; CRC-15, bit stuffing, acknowledge and error frames in the controller; typically 500 kbit/s in a car | **The reference configuration.** All three panda buses (§5) are classical CAN at 500 kbit/s (§3). Every safety-relevant vehicle signal of §11.1 travels on it |
+| CAN FD | ISO 11898-1:2015 | Same arbitration, then an optional faster data phase (bit-rate switch, BRS, typically 2 to 5 Mbit/s) and up to 64 data bytes; CRC-17 (≤ 16 bytes) or CRC-21, with a stuff-bit count inside the CRC field. "Non-ISO" CAN FD is the earlier Bosch version without the stuff-bit count | **Not in the reference configuration, but in the hardware.** The panda's FDCAN controllers and the SPI packet format (§4.3, FD flag, ≤ 64 bytes) carry CAN FD; control requests `0xe8`, `0xf9`, `0xfc` switch it on (§4.2, rejected in a car mode). Upstream brands on CAN FD include the Hyundai/Kia/Genesis CAN FD platforms, Ford's newer platforms and Honda's CAN FD platforms (`hyundai_canfd.h`, `ford.h`, `honda.h` in opendbc) |
+| CAN XL | ISO 11898-1 (2024 revision), CiA 610 | Up to 2048 data bytes, 10 Mbit/s and more; carries Ethernet frames | Not in any upstream configuration. Noted only so that the analysis is not surprised by it |
+| SAE J1939 | SAE J1939-21, -71, -81 and others | An application layer on 29-bit CAN for heavy vehicles: the identifier holds priority, parameter group number (PGN) and source address; 250 or 500 kbit/s; addresses are claimed at start-up (J1939-81); messages over 8 bytes use a transport protocol. Engine and brake control use parameter groups such as TSC1 (torque/speed control) and XBR (external brake request, with its own message counter and checksum) | **Not supported by openpilot or opendbc, and outside the item.** A J1939 vehicle would be a new item, not a new configuration: the HARA (mass, stopping distance, articulation), the ODD and the actuators all change. The scope question is the lead's (decision register, "Should LionDriver's next vehicles stay on CAN and CAN FD passenger cars?") |
+| LIN | ISO 17987 | Single-wire, one commander and up to 15 responders, ≤ 20 kbit/s; protected identifier with 2 parity bits, an 8-bit checksum (classic over the data, enhanced over the identifier and data); no counter | **Never seen by the item.** LIN sits behind a body or gateway ECU (switches, wipers, rain and light sensors, seat and mirror motors). A LIN-sourced value reaches the panda only after an ECU has re-packed it into a CAN frame, so for the item the sender is that ECU and the protection is that of the CAN frame |
+| FlexRay | ISO 17458 | Time-triggered, 10 Mbit/s, dual channel | No upstream configuration actuates over FlexRay. A car whose steering or braking commands travel on FlexRay cannot be intercepted by a CAN harness |
+| Automotive Ethernet | IEEE 802.3bw (100BASE-T1), 802.3bp (1000BASE-T1); SOME/IP | Switched point-to-point links in zonal architectures | Same as FlexRay: outside the interception architecture. Listed because new platforms move ADAS commands there |
+
+The architecture rests on one property that the table makes visible: **the actuation commands must travel on a CAN or CAN FD bus that the harness can split, without authentication the item cannot produce.** On the reference car this holds. It is not yet written as an assumption of use (OI-8). Toyota's newer platforms with authenticated actuation messages (SecOC, the `toyota_secoc` path in `modes/toyota.h`) already break it: openpilot supports them only with a key recovered from the car, which is a cybersecurity question for [WP-C-09](../02-concept/WP-C-09-tara.md), not a networking one.
+
+### 12.2 The faults to protect against
+
+ISO 26262-6:2018 Annex D lists the faults in the exchange of information that a software architecture has to consider: repetition, loss, delay, insertion, masquerade or incorrect addressing, incorrect sequence, corruption, asymmetric information sent to several receivers, information received by only some receivers, and blocking of the channel. ISO 26262-5:2018 Annex D, Table D.7 (communication) lists the mechanisms and the diagnostic coverage each can be credited with. The two lists meet in this matrix, for the mechanisms available on a CAN path:
+
+| Fault | CAN controller (CRC-15/17/21, stuffing, ACK, error frames) | OEM checksum over the data | OEM checksum that includes the identifier (data ID) | Message counter | Timeout (absence) | Rate check | Frozen-value and cross-checks | Message authentication (SecOC) |
+|---|---|---|---|---|---|---|---|---|
+| Corruption | **yes**: the protocol CRC, per hop | yes, end to end | yes | — | — | — | partly | yes |
+| Repetition (same frame again) | — | — | — | **yes** | — | partly (TSR-403) | partly (TSR-404) | with a freshness value |
+| Loss | — | — | — | yes (gap in sequence) | **yes** (TSR-401) | — | — | — |
+| Delay (stale value arrives late) | — | — | — | partly (only relative to other frames) | yes, if longer than the timeout | — | partly | with a freshness value |
+| Insertion (extra frame) | — | — | — | yes | — | **yes** (TSR-403) | partly | yes |
+| Masquerade, incorrect addressing | — | — | **yes** against an accidental wrong ID; **no** against a deliberate sender, since the checksum is no secret | — | — | partly | partly (TSR-405) | **yes** |
+| Incorrect sequence | — | — | — | **yes** | — | — | — | with a freshness value |
+| Asymmetric, partial reception | the CAN error frame makes reception consistent in most cases; a few last-bit cases remain | — | — | — | per receiver | — | — | — |
+| Blocking of the channel (bus-off, babbling node) | error counters, bus-off (TSR-508) | — | — | — | **yes** | — | — | — |
+
+Three conclusions follow, and they shape §12.3.
+
+1. **The protocol CRC protects one hop, not the path.** Every CAN controller recomputes the CRC when it sends. A frame corrupted inside the panda, the SoC, or the SPI link is sent out with a fresh, valid CRC. Only a check computed by the sender and verified by the receiver, over the data, survives the hops: that is end-to-end (E2E) protection, and the links in between become a "black channel" whose own checks need no safety credit.
+2. **A checksum alone answers corruption; repetition, delay and sequence need a counter, and masquerade needs a key.** A Toyota frame with a valid checksum and no counter can be replayed indefinitely and still pass every E2E check.
+3. **E2E protects the channel, not the sender.** If the sender computes the checksum and counter over a wrong value, the receiver accepts it. On the actuation path the sender is openpilot on the SoC, which is QM (§12.3, hop H1 and H2). E2E can never be credited against SoC faults; only the envelope's content checks (TSR-101…108, TSR-201…207) can.
+
+### 12.3 The reference configuration, hop by hop
+
+| Hop | From → to | What protects it end to end today | What is missing | Requirement |
+|---|---|---|---|---|
+| H1 | SoC (QM) → panda, SPI (§4) | 8-bit XOR per transfer and per CAN packet | CRC with a residual-error target; sequence counter; freshness | TSR-410, 411, 412, 413 (OI-2) |
+| H2 | panda → EPS and PCM, bus 0 (`0x2E4`, `0x343`) | `0x2E4`: 8-bit Toyota checksum over identifier, length and data, plus a 6-bit counter, both written by openpilot on the SoC; `0x343`: checksum only (§11, S-01, S-03). The EPS is assumed to check both; nothing in the item does | The EPS's checks are not an assumption of use yet (OI-9). The panda does not check the checksum or counter of the frames it lets through, so an SPI corruption that keeps the XOR valid but breaks the checksum is caught only by the EPS | TSR-108, 408; OI-9, OI-10 |
+| H3 | car → panda, bus 0 (`0xAA`, `0x260`, `0x1D2`, `0x226`, `0x262`, `0x1D3`) | Protocol CRC; Toyota checksum on `0x260`, `0x1D2`, `0x262`, `0x1D3` (TSR-402); absence after 5 periods (TSR-401) | **No counter on any of them**, and no checksum at all on `0xAA` wheel speeds and `0x226` brake (§5, GAP-01). Repetition, delay and a stuck sender are covered only by plausibility: rate (TSR-403), frozen payload (TSR-404) and cross-checks (TSR-405), of which only TSR-405(c) is built | TSR-401…406 |
+| H4 | camera → car through the panda, bus 2 → bus 0 (PCS `0x283`, `0x344`) | The camera's own checksum (and on `0x283` an 8-bit counter, DBC `_toyota_adas_standard.dbc`) passes through unchanged, because the panda forwards these frames byte for byte (TSR-704). The brake ECU checks them. For these frames the panda is a black channel | Nothing in the item needs adding, provided forwarding never alters a byte. A forwarding fault that changes data is caught by the receiver's checksum; one that drops or delays frames is TSR-707 and TSR-711 | TSR-704, 707, 711 |
+| H5 | panda → SoC, SPI (health, RX frames) | As H1 | As H1, but the SoC is QM and acts only as a second, supervising channel | TSR-615, 626 |
+
+The picture is unusual and worth stating plainly. **On the reference car, end-to-end protection in the usual sense (checksum, counter and timeout together, which Table D.7 credits with high coverage) exists only on the camera's PCS frames, which the item does not touch.** The vehicle signals the envelope gates on carry at most a checksum, and the commands the item sends are protected by a sender the safety argument cannot trust. The safety argument therefore cannot lean on E2E. It leans on three other things, and this section asks that they be named as such in WP-S-03:
+
+- **timeout and plausibility on the receive side** (TSR-401, 403, 404, 405): these do the work a counter would do. They are mostly not built (GAP-01), which makes them the communication gap with the most weight;
+- **content checks on the transmit side** (the envelope, TSR-1xx and TSR-2xx), which catch a wrong value regardless of how well it is packed;
+- **a stronger link on H1** (TSR-410, 411), the only hop the item owns at both ends, and so the only one where the item can add a real E2E profile (CRC, counter, freshness) without changing the car.
+
+### 12.4 How strong is the CAN CRC?
+
+Classical CAN's CRC-15 has a Hamming distance of 6 over the frame, but bit stuffing weakens it: two bit errors that create or remove a stuff bit shift the rest of the frame and can escape the CRC. The residual-error figure usually quoted for classical CAN (Unruh, Mathony and Kaiser, 1990) is in the order of 10⁻¹¹ times the frame error rate; later work found the stuffing cases make it worse than that figure for some error patterns. CAN FD fixed this: the stuff-bit count is protected, fixed stuff bits are used in the CRC field, and the CRC is 17 or 21 bits. Non-ISO CAN FD does not have the fix.
+
+For the analysis this means: the protocol CRC can be credited for corruption on one CAN hop, as the FMEDA already does ([WP-H-03](../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md), Table D.7, "CRC, high"), but its residual error rate depends on the bit error rate of the harness, which nobody has measured. The harness adds wire and connectors between camera and car. The residual-error calculation for the vehicle hops, with a measured or bounded bit error rate, is OI-11.
+
+### 12.5 When the next configuration is not a Toyota
+
+Each brand protects its messages differently, and the envelope's RX checks inherit whatever the brand offers. From the opendbc safety modes at the baseline:
+
+| Brand family (opendbc mode) | Checksum on RX messages | Counter | Comment |
+|---|---|---|---|
+| Toyota (`toyota.h`) | 8-bit additive, includes identifier and length | none on the RX checks | Weakest in the table; §12.3 |
+| Subaru (`subaru.h`), Tesla (`tesla.h`) | 8-bit additive, includes identifier | 4-bit (Subaru), per message (Tesla) | A counter catches repetition and sequence faults |
+| Honda (`honda.h`) | 4-bit nibble sum, includes identifier | 2-bit | Short: a stuck counter pattern repeats every 4 frames |
+| Ford (`ford.h`) | inverted 8-bit sum over selected signals | 4-bit, with a quality flag | |
+| Chrysler (`chrysler_common.h`), Rivian (`rivian.h`) | CRC-8 (polynomial `0x1D`) | 4-bit | |
+| Hyundai/Kia CAN (`hyundai.h`) | per message: bit count or nibble sums | 2 to 4 bits | |
+| Hyundai/Kia CAN FD (`hyundai_canfd.h`) | CRC-16 over data and identifier, length-dependent final XOR | 8-bit on long frames | Closest to a full E2E profile among the upstream brands |
+| Volkswagen MQB/MEB (`volkswagen_common.h`) | CRC-8H2F (AUTOSAR) with a data ID that changes with the counter | 4-bit | This is the AUTOSAR E2E profile 2 pattern: the data ID makes a frame from one message invalid as another |
+
+So a second vehicle can be *better* protected than the reference car, and the TSRs should not be written around Toyota's weakness. TSR-402 names the Toyota checksum; for the second configuration it becomes a per-configuration table: for each RX message, its checksum, counter, data ID and the plausibility checks that compensate for what is missing (OI-12). The table above is the starting point.
+
+CAN FD adds three things to check for such a configuration:
+
+- **Physical layer.** In the data phase a bit lasts 200 to 500 ns, so the harness, its stub to the device and the transceivers' ringing suppression matter in a way they do not at 500 kbit/s. The harness design and the transceiver parts need a CAN FD review against the car's data rate ([WP-H-02](../04-hardware/WP-H-02-hardware-design.md)).
+- **Only ISO CAN FD.** Non-ISO operation (`0xfc`) gives up the protected stuff-bit count. A configuration that needs it needs a recorded argument.
+- **The SPI link carries 64-byte payloads** under the same 8-bit XOR (§4.3). The weakness of H1 grows with the frame, which adds weight to TSR-410.
+
+### 12.6 What a J1939 or LIN signal would mean
+
+Neither is in scope, but the questions are predictable, so the answers are recorded here.
+
+- **J1939.** Addresses are claimed, not fixed, so the source address in the identifier is not proof of the sender, and a masquerade check has to bind PGN, source address and, where the parameter group defines them, its own counter and checksum (XBR has both; TSC1 has them in later revisions of J1939-71). Commands over 8 bytes arrive in pieces by the transport protocol, and an envelope would have to reassemble and check them before acting. Heavy-vehicle buses also run at 250 kbit/s on many older trucks, which halves the rate budget of §3. All of this is a new item, which is why §12.1 sends the scope question to the lead rather than proposing requirements.
+- **LIN.** If a future configuration wants a LIN-sourced signal (say the wiper state as an ODD exit, [WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md)), it reaches the item through a gateway ECU on CAN. The item can claim no more than the gateway's CAN frame offers, and the gateway's handling of LIN errors becomes an assumption of use. A signal from LIN can support a QM function or an ODD monitor that the driver backs up; it should not carry an ASIL claim from the item side.
+
+### 12.7 Proposals
+
+None of these is applied. Each is an open item below; requirement changes go through WP-P-02.
+
+| # | Proposal | Why | Where |
+|---|---|---|---|
+| P-1 | Write the assumption that actuation is on CAN or CAN FD at a harness point, without authentication the item cannot produce | It holds the architecture together and is unwritten | OI-8, WP-C-01 §7 |
+| P-2 | Write the EPS's own checks of the `0x2E4` checksum and counter as an assumption of use, with its verification on the car | The item relies on them at H2 and nothing checks them | OI-9, WP-C-01 §7 |
+| P-3 | Let the envelope verify the Toyota checksum of `0x2E4` and `0x343` before sending | Catches a corruption between the SoC's packer and the FDCAN that the SPI XOR misses; a few lines in the TX hook; becomes redundant once TSR-410 is built | OI-10 |
+| P-4 | Calculate the residual error of the vehicle CAN hops with a bounded bit error rate, and measure the error counters on the car | Table D.7 credit for the protocol CRC needs the number | OI-11 |
+| P-5 | Turn TSR-402 into a per-configuration E2E table when the second configuration is added | The reference car's weakness should not shape the requirements of a better-protected car | OI-12 |
+| P-6 | Name timeout and plausibility, not E2E, as the communication argument in WP-S-03, and give TSR-403 and TSR-404 the priority of the communication gaps | They do the work a counter would do on H3, and they are not built | GAP-01 |
+
 ## 10. Open items
 
 | ID | Item | Owner | Needed by |
@@ -280,3 +386,8 @@ S-12 and S-13 are envelope RX checks in the reference build since opendbc `98404
 | OI-5 | Align host and MCU SPI buffer sizes or document why they differ | SW lead | G3 |
 | OI-6 | Fix the reference board variant (tres/cuatro) and drop the other column. The lead answered on 2026-10-14 (decision register DQ-011) that the comma 3X and the comma four may both need review, so both columns stay. Re-open when one device is fixed for the reference car | Maintainer | G1 |
 | OI-7 | Measure the rates of `0x262`, `0x1D3`, `0xB4` and the camera-side PCS messages on the reference vehicle and fill §11 (S-12…S-15) | Test lead | G2 |
+| OI-8 | Write the assumption of use that the actuation commands travel on CAN or CAN FD at the harness point, without authentication the item cannot produce (§12.1, P-1) | Safety manager | G2 |
+| OI-9 | Write the EPS's own checks of the `0x2E4` checksum and counter as an assumption of use, and verify them on the car (§12.3 H2, P-2) | Safety manager; test lead | G2 |
+| OI-10 | Decide whether the envelope verifies the Toyota checksum of `0x2E4` and `0x343` before sending (§12.7 P-3); technical choice, recommended until TSR-410 is built | SW lead | G3 |
+| OI-11 | Residual-error calculation for the vehicle CAN hops with a bounded bit error rate; read the FDCAN error counters on the car during the measurement drives (§12.4, P-4) | HW lead | G3 |
+| OI-12 | When a second configuration is added, turn TSR-402 into a per-configuration E2E table from §12.5 (P-5) | SW lead | second configuration |

@@ -13,6 +13,13 @@ so a change to one without the other fails CI (assurance/models/sysml/README.md 
   M7  integrity rules: every element inside the item has an integrity; a connection between
       a QM element and an ASIL element inside the item declares the FFI claims it crosses
   M8  the allocation-resolution report (generated/allocation-resolution.md) is up to date
+  M9  functions of WP-C-01 §2.1: same IDs and titles; every step of a function is performed by an element
+  M10 security zones and trust boundaries of WP-S-07 §3.1 and §3.2: same rows, cell by cell; every element inside
+      the item is in a zone
+  M11 integration steps of WP-S-08 §3.1: same rows, cell by cell; the elements a step integrates and the interfaces
+      it exercises exist in the model; every element inside the item is integrated by some step
+  M12 operating modes of WP-C-01 §4: every row is a state of SM-SYS (description and actuation cell by cell) or a
+      listed configuration; the record states and transitions it names exist in the state-machine records
   R1  Requirements, Satisfaction and Verification (.sysml) match the work products they are generated from
   R2  every satisfy relationship ends on an element inside the item; every SYS requirement of WP-S-01 is
       satisfied and every name in WP-S-01 §10.1 resolves
@@ -40,6 +47,9 @@ ASSURANCE = SYSML_DIR.parent.parent
 REPO = ASSURANCE.parent
 WP_S03 = ASSURANCE / "03-system" / "WP-S-03-technical-safety-concept-architecture.md"
 WP_W03 = ASSURANCE / "05-software" / "WP-W-03-software-architecture.md"
+WP_C01 = ASSURANCE / "02-concept" / "WP-C-01-item-definition.md"
+WP_S07 = ASSURANCE / "03-system" / "WP-S-07-cybersecurity-requirements-architecture.md"
+WP_S08 = ASSURANCE / "03-system" / "WP-S-08-system-integration-test.md"
 ITEMS = ASSURANCE / "trace" / "items"
 REPORT = SYSML_DIR / "generated" / "allocation-resolution.md"
 COVERAGE = SYSML_DIR / "generated" / "requirements-coverage.md"
@@ -261,6 +271,154 @@ PROCESS = {"pandad": "host.pandad", "card": "host.card", "selfdrived": "host.sel
            "radard": "host.radard", "dmonitoringmodeld": "host.dm", "dmonitoringd": "host.dm",
            "locationd": "estimators", "calibrationd": "estimators", "paramsd": "estimators",
            "torqued": "estimators", "lagd": "estimators", "hardwared": "hardwared"}
+
+
+def check_functions(m: sysml_lite.Model, rep: Report) -> None:
+  md = WP_C01.read_text(encoding="utf-8")
+  documented = {}
+  for row in section_table(md, "2.1 Functions"):
+    documented[row["ID"]] = strip_md(row["Function"])
+  for fid, title in documented.items():
+    f = m.functions.get(fid)
+    if f is None:
+      rep.err("M9", f"{fid} (WP-C-01 §2.1) is not in the model")
+    elif f.doc != title:
+      rep.err("M9", f"{fid}: {f.doc!r} in the model, {title!r} in WP-C-01 §2.1")
+  for fid, f in m.functions.items():
+    if fid not in documented:
+      rep.err("M9", f"{fid} is in the model but not in WP-C-01 §2.1")
+    if not f.steps:
+      rep.err("M9", f"{fid} has no steps")
+    for st in f.steps:
+      if not st.performers:
+        rep.err("M9", f"{st.short} ({st.name}) is performed by no element")
+
+
+def check_security(m: sysml_lite.Model, rep: Report) -> None:
+  md = WP_S07.read_text(encoding="utf-8")
+  def same(kind: str, ident: str, col: str, model_val: object, doc_val: str):
+    if str(model_val) != doc_val:
+      rep.err("M10", f"{ident} {col}: {str(model_val)!r} in the model, {doc_val!r} in WP-S-07 {kind}")
+  seen = set()
+  for row in section_table(md, "3.1 Elements and security zones"):
+    zid, name = row["Zone"].split(" ", 1)
+    seen.add(zid)
+    z = m.zones.get(zid)
+    if z is None:
+      rep.err("M10", f"{zid} (WP-S-07 §3.1) is not in the model")
+      continue
+    same("§3.1", zid, "name", z.doc, name)
+    for col, key in (("Elements", "holds"), ("Trust level", "trust"), ("Basis", "basis")):
+      same("§3.1", zid, col, z.values.get(key, ""), row[col])
+  for zid in sorted(set(m.zones) - seen):
+    rep.err("M10", f"{zid} is in the model but not in WP-S-07 §3.1")
+  seen = set()
+  for row in section_table(md, "3.2 Trust boundaries"):
+    tb = row["ID"]
+    seen.add(tb)
+    b = m.boundaries.get(tb)
+    if b is None:
+      rep.err("M10", f"{tb} (WP-S-07 §3.2) is not in the model")
+      continue
+    same("§3.2", tb, "Boundary", b.doc, row["Boundary"])
+    want = re.findall(r"Z\d", row["Boundary"])
+    if sysml_lite._as_list(b.values.get("zones")) != want:
+      rep.err("M10", f"{tb}: zones {b.values.get('zones')} in the model, {want} in WP-S-07 §3.2")
+    for col, key in (("Data / control crossing", "crossing"), ("Threats (TS)", "threats"), ("Controls (CSR)", "controls")):
+      same("§3.2", tb, col, b.values.get(key, ""), row[col])
+  for tb in sorted(set(m.boundaries) - seen):
+    rep.err("M10", f"{tb} is in the model but not in WP-S-07 §3.2")
+  for e in m.find("E-01").parent.children:  # a component split across zones (E-04) is checked by its parts
+    for x in [e] if e.zone() or not e.children else e.children:
+      if x.zone() is None:
+        rep.err("M10", f"{x.short or x.path} is inside the item but in no security zone")
+
+
+def find_element(m: sysml_lite.Model, ident: str) -> sysml_lite.Element | None:
+  """An element by its short name, alias or (for elements without one) its name."""
+  return m.find(ident) or next((e for e in m.elements.values() if e.name == ident and not e.short), None)
+
+
+def check_integration(m: sysml_lite.Model, rep: Report) -> None:
+  md = WP_S08.read_text(encoding="utf-8")
+  seen = set()
+  for row in section_table(md, "3.1 Approach"):
+    sid = row["Step"]
+    seen.add(sid)
+    st = m.integration.get(sid)
+    if st is None:
+      rep.err("M11", f"{sid} (WP-S-08 §3.1) is not in the model")
+      continue
+    for col, key in (("Integrated elements", "elements"), ("Interfaces exercised", "interfaces"),
+                     ("Stimulus", "stimulus"), ("Purpose", "purpose")):
+      if str(st.values.get(key, "")) != row[col]:
+        rep.err("M11", f"{sid} {col}: {st.values.get(key)!r} in the model, {row[col]!r} in WP-S-08 §3.1")
+  for sid in sorted(set(m.integration) - seen):
+    rep.err("M11", f"{sid} is in the model but not in WP-S-08 §3.1")
+  ifs = {c.interface_id for c in m.connections if c.interface_id}
+  integrated = set()
+  for sid, st in m.integration.items():
+    for ident in sysml_lite._as_list(st.values.get("integrates")):
+      e = find_element(m, ident)
+      if e is None:
+        rep.err("M11", f"{sid} integrates {ident!r}, which is not an element of the model")
+      else:
+        integrated |= {e.path, *(x.path for x in e.walk())}
+    for i in sysml_lite._as_list(st.values.get("exercises")):
+      if i not in ifs:
+        rep.err("M11", f"{sid} exercises {i!r}, which is not an interface of the model")
+  for e in m.find("E-01").parent.walk():
+    if e.short and re.fullmatch(r"E-0\d[ab]?", e.short) and not any(x.path in integrated for x in e.walk()):
+      rep.err("M11", f"{e.short} is integrated by no step of WP-S-08 §3.1")
+
+
+def load_state_records() -> dict[str, dict]:
+  sys.path.insert(0, str(ASSURANCE / "trace" / "tools"))
+  import check_state_machines as csm
+  return {r["machine"]: r for r in (csm.load(p) for p in sorted(csm.SM_DIR.glob("*.yaml")))}
+
+
+def check_modes(m: sysml_lite.Model, rep: Report) -> None:
+  sm = m.state_machines.get("SM-SYS")
+  if sm is None:
+    rep.err("M12", "the system modes state machine SM-SYS is not in the model")
+    return
+  md = WP_C01.read_text(encoding="utf-8")
+  by_title = {st.doc: st for st in sm.states.values() if "ModeRow" in st.meta}
+  configs = sysml_lite._as_list((sm.meta.get("ModeConfigurations") or {}).get("rows"))
+  seen = set()
+  for row in section_table(md, "4. Operating modes and states"):
+    mode = row["Mode"]
+    seen.add(mode)
+    if mode in configs:
+      continue
+    st = by_title.get(mode)
+    if st is None:
+      rep.err("M12", f"WP-C-01 §4 mode {mode!r} is neither a state of SM-SYS nor a listed configuration")
+      continue
+    for col, key in (("Description", "description"), ("Actuation", "actuation")):
+      if str(st.meta["ModeRow"].get(key, "")) != row[col]:
+        rep.err("M12", f"{mode} {col}: {st.meta['ModeRow'].get(key)!r} in the model, {row[col]!r} in WP-C-01 §4")
+  for mode in sorted((set(by_title) | set(configs)) - seen):
+    rep.err("M12", f"{mode!r} is in the model but not a row of WP-C-01 §4")
+  recs = load_state_records()
+  def known(ref: str, what: str) -> bool:
+    machine, _, item = ref.partition(" ")
+    r = recs.get(machine)
+    return r is not None and item in (r["states"] if what == "state" else [t["id"] for t in r["transitions"]])
+  for st in sm.states.values():
+    for side in ("host", "panda"):
+      for ref in sysml_lite._as_list((st.meta.get("ModeRow") or {}).get(side)):
+        if not known(ref, "state"):
+          rep.err("M12", f"state {st.path}: {side} names {ref!r}, which is not a state of the records")
+  for t in sm.transitions:
+    enf = t.meta.get("Enforcement")
+    if not enf:
+      rep.err("M12", f"transition {t.name} says nothing about who enforces it (@Enforcement)")
+      continue
+    for ref in sysml_lite._as_list(enf.get("records")):
+      if not known(ref, "transition"):
+        rep.err("M12", f"transition {t.name}: {ref!r} is not a transition of the records")
 
 
 def check_flows(m: sysml_lite.Model, rep: Report) -> None:
@@ -498,7 +656,7 @@ def main(argv: list[str]) -> int:
   except sysml_lite.ModelError as e:
     print(f"FAIL model: {e}")
     return 1
-  for check in (check_elements, check_firmware, check_host, check_interfaces, check_mechanisms, check_flows,
+  for check in (check_elements, check_firmware, check_host, check_interfaces, check_mechanisms, check_functions, check_security, check_integration, check_modes, check_flows,
                 check_integrity_rules, check_requirements):
     try:
       check(m, rep)
@@ -533,7 +691,7 @@ def main(argv: list[str]) -> int:
         f"{sum(1 for r in m.requirements.values() if r.satisfied_by)} satisfied, " +
         f"{sum(1 for r in m.requirements.values() if r.verified_by)} verified by a case " +
         f"(informational, {COVERAGE.name})")
-  print("OK: M1-M8 and R1-R4 passed")
+  print("OK: M1-M12 and R1-R4 passed")
   return 0
 
 

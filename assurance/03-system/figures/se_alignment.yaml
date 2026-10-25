@@ -1,0 +1,197 @@
+# Systems engineering alignment of the system folder (03-system) with the INCOSE Systems Engineering Handbook
+# (5th ed., 2023; its technical processes are those of ISO/IEC/IEEE 15288) and the NASA Systems Engineering Handbook
+# (NASA/SP-2016-6105 Rev 2; the 17 common technical processes of NPR 7123.1, "the SE engine"). Informative: ISO 26262
+# and ASPICE govern LionDriver; the handbooks are guidance, and nothing here claims compliance with either.
+#
+# fig_s00_se.py draws the Vee (figures/fig-s00-1-se-vee.svg) and the README section (figures/index-section.md) from this file, and checks every
+# WP ID against the WP-M-00 register and every path against the files on disk.
+#
+#   stages      the Vee, left arm top-down, then the bottom, then the right arm bottom-up, then transition
+#     side      left, bottom, right or top (transition, after validation)
+#     incose    15288 technical processes the stage covers
+#     nasa      SE-engine process numbers (1-9 here; 10-17 are technical management below)
+#     aspice    the ASPICE level of the trace V (assurance/trace) at the same place
+#     wps       LionDriver work products: WP IDs; 'folder:<name>' for a whole folder
+#   pairs       left stage, right stage, label: each right stage checks its left counterpart
+#   management  NASA processes 10-17 and where LionDriver keeps them
+#   incose_management  the 15288 technical management processes and the NASA process that covers the same ground
+#   gates       LionDriver gate (WP-M-00 §2) and the nearest NASA life-cycle review (informative)
+#   views       system-level views both handbooks expect; status present, partial or missing, with where
+schema_version: 1
+
+stages:
+  - id: needs
+    title: Stakeholder needs and requirements
+    side: left
+    incose: [Business or mission analysis, Stakeholder needs and requirements definition]
+    nasa: [1]
+    aspice: SYS.1
+    wps: [WP-C-01, WP-C-02, WP-C-03, WP-C-05, WP-C-08, WP-C-09]
+  - id: sysreq
+    title: System requirements
+    side: left
+    incose: [System requirements definition]
+    nasa: [2]
+    aspice: SYS.2
+    wps: [WP-S-01, WP-S-02, WP-S-06, WP-S-07, WP-C-04, WP-C-10]
+  - id: arch
+    title: Architecture, design and analysis
+    side: left
+    incose: [System architecture definition, Design definition, System analysis]
+    nasa: [3, 4]
+    aspice: SYS.3
+    wps: [WP-S-03, WP-S-05, WP-S-04, WP-S-07, "folder:08-analyses"]
+  - id: impl
+    title: Implementation
+    side: bottom
+    incose: [Implementation]
+    nasa: [5]
+    aspice: SWE, HWE, MLE
+    wps: ["folder:04-hardware", "folder:05-software"]
+  - id: integ
+    title: Integration
+    side: right
+    incose: [Integration]
+    nasa: [6]
+    aspice: SYS.4
+    wps: [WP-S-08, WP-V-05]
+  - id: verif
+    title: Verification
+    side: right
+    incose: [Verification]
+    nasa: [7]
+    aspice: SYS.5
+    wps: [WP-S-09]
+  - id: valid
+    title: Validation
+    side: right
+    incose: [Validation]
+    nasa: [8]
+    aspice: VAL.1
+    wps: [WP-V-01, WP-V-02, WP-V-03, WP-V-04, WP-V-06]
+  - id: transition
+    title: Transition, operation, maintenance, disposal
+    side: top
+    incose: [Transition, Operation, Maintenance, Disposal]
+    nasa: [9]
+    aspice: "—"
+    wps: [WP-S-06, WP-K-06, WP-O-01, WP-O-02, WP-O-04, WP-O-05]
+
+pairs:
+  - [needs, valid, "validated against"]
+  - [sysreq, verif, "verified against (VCRM)"]
+  - [arch, integ, "integration verified against"]
+
+management:
+  - {nasa: 10, name: Technical planning, wps: [WP-M-01, WP-M-02, WP-M-03]}
+  - {nasa: 11, name: Requirements management, wps: [WP-P-06], paths: [trace/README.md]}
+  - {nasa: 12, name: Interface management, wps: [WP-S-03, WP-S-05, WP-M-11]}
+  - {nasa: 13, name: Technical risk management, wps: [WP-M-07]}
+  - {nasa: 14, name: Configuration management, wps: [WP-P-01, WP-P-02]}
+  - {nasa: 15, name: Technical data management, wps: [WP-P-04]}
+  - {nasa: 16, name: Technical assessment, wps: [WP-P-05, WP-M-06, WP-M-00]}
+  - {nasa: 17, name: Decision analysis, paths: [01-management/decisions/README.md]}
+
+incose_management:
+  - {name: Project planning, nasa: [10]}
+  - {name: Project assessment and control, nasa: [16]}
+  - {name: Decision management, nasa: [17]}
+  - {name: Risk management, nasa: [13]}
+  - {name: Configuration management, nasa: [14]}
+  - {name: Information management, nasa: [15]}
+  - {name: Measurement, nasa: [16]}
+  - {name: Quality assurance, wps: [WP-M-05]}
+
+gates:
+  - {gate: G0, review: "—"}
+  - {gate: G1, review: "MCR, SRR"}
+  - {gate: G2, review: "SDR, PDR"}
+  - {gate: G3, review: CDR}
+  - {gate: G4, review: "SIR, TRR"}
+  - {gate: G5, review: "SAR, ORR"}
+  - {gate: G6, review: PLAR}
+
+views:
+  - name: Context diagram and operational concept
+    status: partial
+    where:
+      - {path: 02-concept/figures/fig-3-2-item-boundary.svg, label: "item boundary (WP-C-01 §3.3)"}
+      - {path: 02-concept/figures/fig-c02-3-1-odd-taxonomy.svg, label: "ODD (WP-C-02 §3.1)"}
+      - {path: models/sysml/generated/fig-sysml-v01-item-context.svg, label: "SysML context view"}
+    gap: no stand-alone concept of operations; operational situations are listed in WP-C-03 §3
+  - name: Stakeholder needs
+    status: partial
+    where:
+      - {path: 02-concept/WP-C-03-hara.md, label: "safety goals (WP-C-03 §6)"}
+      - {path: 02-concept/WP-C-04-functional-safety-concept.md, label: "FSRs (WP-C-04)"}
+    gap: safety-led; no list of user, owner or regulator needs beyond the item definition
+  - name: System requirements with method, rationale and allocation
+    status: partial
+    where:
+      - {path: 03-system/WP-S-01-system-requirements.md, label: "WP-S-01"}
+      - {path: 03-system/WP-S-02-technical-safety-requirements.md, label: "WP-S-02"}
+      - {path: 03-system/requirements/README.md, label: "requirements at a glance"}
+    gap: WP-S-02 carries method and allocation but no rationale column
+  - name: Requirements traceability
+    status: present
+    where:
+      - {path: trace/figures/fig-9-system-v-status.svg, label: "system V"}
+      - {path: trace/figures/fig-3-derivation-flow.svg, label: "derivation flow"}
+      - {path: 03-system/requirements/figures/fig-req-2-matrix.svg, label: "FSR × TSR matrix"}
+  - name: Logical (functional) architecture
+    status: present
+    where:
+      - {path: 03-system/figures/fig-s03-3-3-functional-flow.svg, label: "functional flow (WP-S-03 §3.4)"}
+      - {path: 03-system/figures/fig-3-2-tsc-block-diagram.svg, label: "TSC block diagram (WP-S-03 §3.2)"}
+      - {path: models/sysml/generated/fig-sysml-v10-functional-architecture.svg, label: "functions along their chain (SysML V-10)"}
+    gap: the decomposition of F-01 to F-09 into steps is AI-drafted and not reviewed
+  - name: Physical architecture (system element hierarchy)
+    status: present
+    where:
+      - {path: 03-system/figures/fig-s03-3-1-system-element-hierarchy.svg, label: "WP-S-03 §3.1"}
+      - {path: models/sysml/generated/fig-sysml-v02-element-hierarchy.svg, label: "SysML"}
+  - name: Interfaces (N2 chart and interface definitions)
+    status: present
+    where:
+      - {path: models/sysml/generated/fig-sysml-v08-n2-chart.svg, label: "N2 chart (SysML V-08, below)"}
+      - {path: 03-system/figures/fig-s05-2-1-hsi-overview.svg, label: "HSI (WP-S-05)"}
+      - {path: models/sysml/generated/fig-sysml-v03-system-interconnection.svg, label: "SysML interconnection"}
+  - name: Behaviour (modes and sequences)
+    status: present
+    where:
+      - {path: 02-concept/figures/fig-c01-4-1-operating-modes.svg, label: "operating modes (WP-C-01 §4)"}
+      - {path: 03-system/figures/fig-4-1-startup-engagement.svg, label: "start-up sequence"}
+      - {path: 03-system/figures/fig-4-4-heartbeat-timeout-chain.svg, label: "heartbeat chain"}
+      - {path: 03-system/figures/fig-s03-4-5-envelope-states.svg, label: "envelope states (WP-S-03 §4.5)"}
+      - {path: models/sysml/generated/fig-sysml-v13-system-modes.svg, label: "system modes state machine (SysML V-13)"}
+  - name: Technical budgets with margins (TPMs)
+    status: partial
+    where:
+      - {path: 03-system/figures/fig-s04-5-1-timing-budgets.svg, label: "timing budgets (WP-S-04 §5)"}
+    gap: timing only; no CAN bus-load, CPU, memory or power budget
+  - name: Verification matrix (VCRM)
+    status: present
+    where:
+      - {path: models/sysml/generated/fig-sysml-v09-vcrm.svg, label: "summary (SysML V-09, below)"}
+      - {path: models/sysml/generated/vcrm.md, label: "per requirement"}
+    gap: methods and named cases only; no verification has been run, so no result is recorded
+  - name: Integration plan and sequence
+    status: present
+    where:
+      - {path: 03-system/WP-S-08-system-integration-test.md, label: "steps I-1 to I-4 (WP-S-08 §3.1)"}
+      - {path: models/sysml/generated/fig-sysml-v12-integration-build-up.svg, label: "integration build-up (SysML V-12)"}
+  - name: Safety mechanisms (defence in depth)
+    status: present
+    where:
+      - {path: 03-system/figures/fig-s03-6-1-defence-in-depth.svg, label: "defence in depth (WP-S-03 §6)"}
+      - {path: 03-system/figures/fig-s03-6-2-safety-mechanisms.svg, label: "safety mechanisms (WP-S-03 §6)"}
+  - name: Security architecture
+    status: present
+    where:
+      - {path: 03-system/WP-S-07-cybersecurity-requirements-architecture.md, label: "zones and trust boundaries (WP-S-07 §3)"}
+      - {path: models/sysml/generated/fig-sysml-v11-security-zones.svg, label: "security zones (SysML V-11)"}
+  - name: Life-cycle reviews and decision gates
+    status: present
+    where:
+      - {path: 01-management/WP-M-00-work-product-register.md, label: "gates G0–G6 (WP-M-00 §2)"}
+      - {path: 03-system/figures/fig-s00-1-se-vee.svg, label: "nearest NASA reviews (Vee, above)"}

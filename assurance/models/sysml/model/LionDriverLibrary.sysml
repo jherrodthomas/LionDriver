@@ -5,8 +5,10 @@ package LionDriverLibrary {
      * element classes, port and interface kinds, safety mechanisms and the metadata
      * that ties each model element back to the work product it comes from.
      *
-     * Status: draft, AI-assisted (Claude), not reviewed. The work products named in
-     * the Source metadata stay the documents of record (assurance/models/sysml/README.md).
+     * Status: draft, AI-assisted (Claude), not reviewed. The model is to become the record
+     * of the architecture tables (SY-05, DQ-186); until its review (OI-8) the work products
+     * named in the Source metadata stay the record and tools/gen_tables.py checks that the
+     * tables they hold are the tables the model generates (assurance/models/sysml/README.md).
      */
 
     private import ScalarValues::*;
@@ -71,8 +73,29 @@ package LionDriverLibrary {
         attribute id : String;
         attribute route : String[0..*];
         attribute tsr : String[0..*];
+        // the row of WP-S-03 §3.3, on the first connection of each interface (SY-05)
+        attribute label : String[0..1];
+        attribute name : String[0..1];
+        attribute between : String[0..1];
+        attribute content : String[0..1];
+        attribute relevance : String[0..1];
+        attribute detail : String[0..1];
     }
 
+    metadata def Catalogue {
+        doc
+        /*
+         * The text columns of the element's row in an architecture table generated from the
+         * model (SY-05): WP-S-03 §3.1 (name, description, main sources) or WP-W-03 §3.1
+         * (name when it is more than the short name, responsibility, files, a note to the build
+         * column, ASIL attribution when it says more than the integrity label).
+         */
+        attribute name : String[0..1];
+        attribute description : String;
+        attribute sources : String;
+        attribute attribution : String[0..1];
+        attribute buildNote : String[0..1];
+    }
     metadata def FfiClaim {
         doc /* Freedom-from-interference claims (WP-S-03 §7) that this connection crosses. */
         attribute claims : String[1..*];
@@ -153,8 +176,81 @@ package LionDriverLibrary {
         attribute covers : String;
         attribute dcTarget : String;
         attribute tsr : String[0..*];
+        // the other columns of its WP-S-03 §6 row (SY-05)
+        attribute element : String;
+        attribute status : String;
+        attribute latent : String;
     }
 
+    // ------------------------------------------------------------------ functions
+    action def ItemFunction {
+        doc /* A function of the item (WP-C-01 §2.1), decomposed into the steps of its functional chain. */
+    }
+    enum def Stage {
+        doc /* Position of a step on the functional chain, from sensing to acting on the vehicle or the driver. */
+        enum sense;
+        enum perceive;
+        enum plan;
+        enum control;
+        enum command;
+        enum envelope;
+        enum act;
+    }
+    action def FunctionStep {
+        doc /* One step of a function; the element that performs it is where the step runs. */
+        attribute stage : Stage;
+    }
+    // ------------------------------------------------------------------ security architecture
+    part def SecurityZone {
+        doc /* A security zone of WP-S-07 §3.1: what it holds, its trust level and the goals or claims it rests on. */
+        attribute holds : String;
+        attribute trust : String;
+        attribute basis : String;
+    }
+    part def TrustBoundary {
+        doc /* A trust boundary of WP-S-07 §3.2 between zones, with what crosses it, its threats and its controls. */
+        attribute zones : String[1..*];
+        attribute crossing : String;
+        attribute threats : String;
+        attribute controls : String;
+    }
+    metadata def Zone {
+        doc /* The security zone (WP-S-07 §3.1) an element and, unless they name their own, its parts belong to. */
+        attribute id : String;
+    }
+    // ------------------------------------------------------------------ integration
+    action def IntegrationStep {
+        doc /* A system integration step of WP-S-08 §3.1, with the elements it adds and the interfaces it exercises. */
+        attribute elements : String;
+        attribute interfaces : String;
+        attribute stimulus : String;
+        attribute purpose : String;
+        attribute integrates : String[0..*];
+        attribute exercises : String[0..*];
+    }
+    // ------------------------------------------------------------------ behaviour
+    metadata def ModeRow {
+        doc /* The WP-C-01 §4 row of an operating mode, and the record states (machine and state) it stands for. */
+        attribute description : String;
+        attribute actuation : String;
+        attribute host : String[0..*];
+        attribute panda : String[0..*];
+    }
+    metadata def ModeConfigurations {
+        doc /* WP-C-01 §4 rows that select a configuration rather than name a mode. */
+        attribute rows : String[0..*];
+    }
+    enum def Enforcer {
+        doc /* Who enforces a mode transition (WP-C-01 Figure 4-1). */
+        enum envelope;
+        enum host;
+        enum gap16;
+    }
+    metadata def Enforcement {
+        doc /* Who enforces a transition, and the record transitions (machine and ID) it stands for. */
+        attribute kind : Enforcer;
+        attribute records : String[0..*];
+    }
     // ------------------------------------------------------------------ views
 
     view def ContextView {
@@ -177,5 +273,17 @@ package LionDriverLibrary {
     }
     view def RequirementMatrixView {
         doc /* Requirements against the elements that satisfy them and the cases that verify them. */
+    }
+    view def SecurityView {
+        doc /* Security zones, the elements in them and the trust boundaries between them. */
+    }
+    view def IntegrationView {
+        doc /* The integration steps in order, with what each adds and exercises and the cases that run at it. */
+    }
+    view def StateView {
+        doc /* A state machine: states, transitions, and who enforces each transition. */
+    }
+    view def FunctionalView {
+        doc /* Functions along their functional chain, each step on the element that performs it. */
     }
 }

@@ -33,7 +33,7 @@ import trace_map as tm  # noqa: E402
 
 WP_S01 = ASSURANCE / "03-system" / "WP-S-01-system-requirements.md"
 WP_S07 = ASSURANCE / "03-system" / "WP-S-07-cybersecurity-requirements-architecture.md"
-ARCH_FILES = ["LionDriverLibrary.sysml", "Mechanisms.sysml", "Architecture.sysml"]
+ARCH_FILES = ["LionDriverLibrary.sysml", "Mechanisms.sysml", "Functions.sysml", "Architecture.sysml"]
 OUT = {"req": MODEL_DIR / "Requirements.sysml", "sat": MODEL_DIR / "Satisfaction.sysml", "ver": MODEL_DIR / "Verification.sysml"}
 TRACE_KINDS = {"safety-goal": "SafetyGoal", "fsr": "FunctionalSafetyRequirement", "tsr": "TechnicalSafetyRequirement"}
 MODELLED = ("SG", "FSR", "TSR", "SYS", "CSR")
@@ -170,6 +170,8 @@ def verification_cases(known: set[str]) -> list[dict]:
       c = cases.setdefault(cid, {"id": cid, "title": plain(cells[1]) if len(cells) > 1 else "",
                                  "spec": f"{wp.group(1) if wp else path.stem} {section}".strip(), "refs": set()})
       c["refs"] |= refs
+      if "Step" in header:  # WP-S-08: the integration steps a case runs at
+        c["steps"] = re.findall(r"I-\d", cells[header.index("Step")])
   return sorted(cases.values(), key=lambda c: sort_key(c["id"]))
 
 
@@ -309,13 +311,15 @@ def build() -> dict[str, str]:
          "    doc /* Test cases of the specification tables. Each verifies the modelled requirements (SG, FSR, TSR, SYS, CSR) it names. */", "",
          "    private import ScalarValues::*;", "    private import LionDriverRequirements::*;", "",
          "    verification def VerificationCase {", "        attribute spec : String;", "        attribute level : String;",
-         "        attribute names : String;", "    }"]
+         "        attribute names : String;", "        attribute steps : String[0..*];", "    }"]
   for c in cases:
     vrefs = sorted((x for x in c["refs"] if x in ids), key=lambda x: (MODELLED.index(x.split("-")[0]), sort_key(x)))
     other = sorted(x for x in c["refs"] if x not in ids)
     out += [f"    verification <'{c['id']}'> {usage_name(c['id'])} : VerificationCase {{", f"        doc /* {doc(c['title'])} */",
             f"        :>> spec = {s(c['spec'])};", f"        :>> level = {s(c['id'].rsplit('-', 1)[0])};",
             f"        :>> names = {s(', '.join(other))};"]
+    if c.get("steps"):
+      out.append(f"        :>> steps = ({', '.join(s(x) for x in c['steps'])});")
     if vrefs:
       out.append("        objective {")
       out += [f"            verify LionDriverRequirements::{usage_name(x)};" for x in vrefs]

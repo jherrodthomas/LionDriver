@@ -4098,6 +4098,8 @@
 - id: DQ-185
   question: "Adopt the proposed SysML decisions SY-01…SY-04 (textual SysML v2, OMG pilot 0.62.0 for conformance, in-house renderer, work products stay the record)?"
   context: "The modelling plan says SY-01…SY-06 are proposals not yet taken; tool classification TL-26/TL-27 depends on them."
+  gate: G2
+  asked: 2026-10-24
   reversibility: easy
   blocks: "WP-P-07 TL-26/27"
   decider: claude
@@ -4110,11 +4112,14 @@
       title: "Revise"
       detail: "Rework of the model tooling."
   sources: ["assurance/models/sysml/README.md SY-01"]
-  status: queued
+  status: answered
+  answer: {choice: B, via: chat, at: 2026-10-24, note: "Lead in chat: SysML MBSE for everything, in the readable in-house style. Adopt SY-01 to SY-03 as proposed; SY-04 revised: the model becomes the record (DQ-186), not a checked copy."}
 
 - id: DQ-186
   question: "Generate the architecture tables (WP-S-03 §3.1/3.3/§6, WP-W-03 §3.1) from the SysML model (SY-05)?"
   context: "Removes double editing and makes the model the document of record, after the model is reviewed."
+  gate: G2
+  asked: 2026-10-24
   reversibility: revisit
   blocks: "—"
   decider: claude
@@ -4127,11 +4132,14 @@
       title: "Keep work products as record"
       detail: "Double edit continues."
   sources: ["assurance/models/sysml/README.md OI-5"]
-  status: queued
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-24, note: "Lead in chat: the model is the record too. The model is AI-drafted (I0, WP-M-02 §3.3): its human review comes before the generated tables replace the hand-written ones."}
 
 - id: DQ-187
   question: "Replace hand-drawn architecture figures with generated views (SY-06)?"
   context: "One drawing per fact; candidates listed in SY-06."
+  gate: G2
+  asked: 2026-10-24
   reversibility: easy
   blocks: "—"
   decider: claude
@@ -4144,7 +4152,8 @@
       title: "Keep hand-drawn"
       detail: "Manual sync."
   sources: ["assurance/models/sysml/README.md OI-6"]
-  status: queued
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-24, note: "Lead in chat: generated views replace the hand-drawn architecture figures, in the V-01/V-03 style."}
 
 - id: DQ-188
   question: "What replaces Python pickle for loading model artefacts?"
@@ -5794,7 +5803,35 @@
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-22, by: u_X1u501HWo3YGVNlzcvkvmg}
   note: "Applied in part (jherrodthomas/LionDriver#429): WP-C-03 v0.9 rates HE-01.6 S3 E3 C3, ASIL C. Left (WP-C-03 OI-11): re-rate the OS-12 rules of hara_model.py and regenerate both workbooks together; needs the hara-builder generator, not available in the sessions of 2026-10-22 and 2026-10-23"
+
 - id: DQ-419
+  question: "Should LionDriver's next vehicles stay on CAN and CAN FD passenger cars, leaving trucks (J1939) and cars with locked or Ethernet-based steering commands out of scope?"
+  context: >-
+    The panda works by splitting a CAN cable and swapping the car camera's steering messages for its own. That only
+    works where the steering and braking commands travel on CAN or CAN FD at a connector the harness can reach,
+    without a cryptographic signature the device cannot make. **Trucks use J1939, a different vehicle class with its
+    own hazards; newer cars move commands to Ethernet or sign them (SecOC).** Saying so now fixes what the next
+    configuration may be and lets the assumption be written (WP-S-05 OI-8). It changes nothing on the Corolla.
+  reversibility: revisit
+  blocks: "WP-S-05 §12.1 and OI-8 (the network assumption of use); choice of the second configuration (wiki Reference vehicle, 'Adding a second vehicle')"
+  gate: G2
+  decider: lead
+  asked: 2026-10-24
+  batch: 16
+  options:
+    - key: A
+      recommended: true
+      title: "CAN and ISO CAN FD passenger cars only, unsigned commands"
+      detail: "Matches how the device works and what openpilot supports. Cost: Toyota's signed (SecOC) cars and any truck stay out until a new decision."
+    - key: B
+      title: "Also allow signed (SecOC) cars with a recovered key"
+      detail: "openpilot already drives some of them. Cost: key recovery from the owner's car becomes part of the item, a cybersecurity case (WP-C-09) and a support burden."
+    - key: C
+      title: "Also plan for J1939 trucks"
+      detail: "A larger market. Cost: a new item, not a new car: new HARA (mass, stopping distance), new ODD, new actuators, and nothing upstream to build on."
+  sources: ["assurance/03-system/WP-S-05-hsi-specification.md §12.1, §12.6, OI-8", "wiki/Reference-vehicle.md 'Adding a second vehicle'", "opendbc_repo/opendbc/safety/modes/toyota.h (toyota_secoc)"]
+  status: open
+- id: DQ-420
   question: "When an attacker, not a random fault, triggers a hazard, should the HARA and the safety–security interactions record that the attacker picks the moment, so the exposure rating does not apply?"
   context: >-
     The HARA rates each hazardous event with an exposure (E) that assumes the fault happens at a random moment. An
@@ -5822,3 +5859,35 @@
   - assurance/02-concept/WP-C-09-tara.md §3
   - assurance/02-concept/hatara/hatara-interactions.md
   status: queued
+- id: DQ-421
+  question: "LionDriver is public. Should the details of security weaknesses that are not fixed yet move to a private repository until they are fixed?"
+  context: >-
+    WP-O-05 §4.4 already keeps a weakness that someone reports to us private until its fix ships (90-day embargo).
+    The weaknesses we found ourselves are not treated that way: WP-C-09, WP-S-07 and the WP-M-09 gap table name many
+    of them with the place in the code and what is missing, and the new cyber-simulation mocks (PR #454) show which
+    controls on two attack paths are not built yet. **ISO/SAE 21434 and UN R155 expect unfixed-vulnerability details
+    to be shared on a need-to-know basis.** The threat model itself (threats, risk values, goals, statuses) is normal
+    to publish and the open safety case needs it. What has already been pushed may have been copied; restricting
+    only reduces exposure from now on.
+  reversibility: hard
+  blocks: "PR #454 (cyber-simulation mocks, held as a draft until this is answered); WP-O-05 §4.4 scope; future edits of WP-C-09, WP-S-07 and the WP-M-09 gap table"
+  gate: G1
+  decider: lead
+  asked: 2026-10-25
+  batch: 16
+  options:
+    - key: A
+      recommended: true
+      title: "Split by sensitivity: threat model public, unfixed-gap details private"
+      detail: "Threats, risks, goals and statuses stay public. Code locations and mechanisms of unfixed gaps, and the cyber-simulation mocks and clips, move to a private repository until their controls are verified, then are published. Cost: a one-time sweep of three documents and a rule for later edits."
+    - key: B
+      title: "Restrict only the new cyber-simulation material"
+      detail: "Close PR #454 and keep the mocks private; the existing documents stay as they are. Cost: cheap, but the larger exposure, the gap details already in the public documents, remains."
+    - key: C
+      title: "Make the whole repository private"
+      detail: "Strongest protection. Cost: ends the open-source, transparent-assurance aim of the project and every public link to it."
+    - key: D
+      title: "Keep everything public"
+      detail: "Rely on the abstraction rule (no exploits, payloads or procedures). Cost: the gap list and code locations stay a ready target list for anyone."
+  sources: ["assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md §4.4", "assurance/01-management/WP-M-09-cybersecurity-plan.md §2 gap table", "assurance/02-concept/WP-C-09-tara.md §2–§5", "assurance/03-system/WP-S-07-cybersecurity-requirements-architecture.md §4", "PR #454"]
+  status: open

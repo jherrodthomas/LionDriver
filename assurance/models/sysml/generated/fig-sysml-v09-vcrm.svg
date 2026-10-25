@@ -1,0 +1,393 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="696" viewBox="0 0 1320 696" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">V-09. Verification matrix (VCRM) · system-level requirements (SysML v2 view verificationMatrix)</title>
+<desc id="d">Verification cross-reference matrix generated from the SysML v2 model: per requirement group, how many requirements name each verification method and how many a verification case at each level verifies; no case has a result yet.</desc>
+<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter></defs>
+<rect width="1320" height="696" fill="#FFFFFF"/>
+<text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-09 · Verification matrix (VCRM) · system-level requirements</text>
+<text x="40" y="69" font-size="12.5" fill="#64748B">SYS, TSR and CSR requirements by method (NASA A, I, D, T) and by the level of their verification cases</text>
+<text x="1280" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::verificationMatrix</text>
+<text x="1280" y="62" font-size="11" fill="#64748B" text-anchor="end">RequirementMatrixView · render asElementTable · model d1c56e2837b1</text>
+<line x1="40" y1="86" x2="1280" y2="86" stroke="#E2E8F0"/>
+<rect x="303" y="100" width="180" height="22" rx="6" fill="#0F172A"/>
+<text x="393" y="115" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">Analysis</text>
+<rect x="489" y="100" width="118" height="22" rx="6" fill="#0F172A"/>
+<text x="548" y="115" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">Inspection</text>
+<rect x="613" y="100" width="56" height="22" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="641" y="115" font-size="11" fill="#64748B" font-weight="700" text-anchor="middle">none</text>
+<rect x="675" y="100" width="304" height="22" rx="6" fill="#0F172A"/>
+<text x="827" y="115" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">Test</text>
+<rect x="985" y="100" width="304" height="22" rx="6" fill="#2563EB"/>
+<text x="1137" y="115" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">Verified by a case («verify»)</text>
+<text x="331" y="154" font-size="11" fill="#334155" font-weight="600" text-anchor="middle">A</text>
+<text x="393" y="154" font-size="11" fill="#334155" font-weight="600" text-anchor="middle">LOG</text>
+<text x="455" y="154" font-size="11" fill="#334155" font-weight="600" text-anchor="middle">SIM</text>
+<text x="517" y="154" font-size="11" fill="#334155" font-weight="600" text-anchor="middle">R</text>
+<text x="579" y="154" font-size="11" fill="#334155" font-weight="600" text-anchor="middle">Rec</text>
+<text x="641" y="154" font-size="11" fill="#334155" font-weight="600" text-anchor="middle">DEM</text>
+<text x="703" y="154" font-size="11" fill="#334155" font-weight="600" text-anchor="middle">T-SIL</text>
+<text x="765" y="154" font-size="11" fill="#334155" font-weight="600" text-anchor="middle">T-HIL</text>
+<text x="827" y="154" font-size="11" fill="#334155" font-weight="600" text-anchor="middle">FI</text>
+<text x="889" y="154" font-size="11" fill="#334155" font-weight="600" text-anchor="middle">PT</text>
+<text x="951" y="154" font-size="11" fill="#334155" font-weight="600" text-anchor="middle">T-VEH</text>
+<text x="1013" y="154" font-size="11" fill="#334155" font-weight="600" text-anchor="middle">SYS.4</text>
+<text x="1075" y="154" font-size="11" fill="#334155" font-weight="600" text-anchor="middle">SYS.5</text>
+<text x="1137" y="154" font-size="11" fill="#334155" font-weight="600" text-anchor="middle">VAL.1</text>
+<text x="1199" y="154" font-size="11" fill="#334155" font-weight="600" text-anchor="middle">SW/HW</text>
+<text x="1261" y="154" font-size="11" fill="#334155" font-weight="600" text-anchor="middle">result</text>
+<line x1="40" y1="168" x2="1280" y2="168" stroke="#E2E8F0"/>
+<text x="40" y="185" font-size="12.5" fill="#0F172A" font-weight="700">SYS</text>
+<text x="40" y="199" font-size="10.5" fill="#64748B">functional, non-safety (WP-S-01) · 39</text>
+<rect x="303" y="173" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="331" y="191" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="365" y="173" width="56" height="28" rx="5" fill="rgba(194,65,12,0.18)"/>
+<text x="393" y="191" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">8</text>
+<rect x="427" y="173" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="455" y="191" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="489" y="173" width="56" height="28" rx="5" fill="rgba(194,65,12,0.16)"/>
+<text x="517" y="191" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">6</text>
+<rect x="551" y="173" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="579" y="191" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="613" y="173" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="641" y="191" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="675" y="173" width="56" height="28" rx="5" fill="rgba(194,65,12,0.30)"/>
+<text x="703" y="191" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">17</text>
+<rect x="737" y="173" width="56" height="28" rx="5" fill="rgba(194,65,12,0.11)"/>
+<text x="765" y="191" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">2</text>
+<rect x="799" y="173" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="827" y="191" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="861" y="173" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="889" y="191" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="923" y="173" width="56" height="28" rx="5" fill="rgba(194,65,12,0.31)"/>
+<text x="951" y="191" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">18</text>
+<rect x="985" y="173" width="56" height="28" rx="5" fill="#FEF2F2"/>
+<text x="1013" y="191" font-size="12" fill="#D2553F" font-weight="600" text-anchor="middle">0</text>
+<rect x="1047" y="173" width="56" height="28" rx="5" fill="rgba(37,99,235,0.40)"/>
+<text x="1075" y="191" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">25</text>
+<rect x="1109" y="173" width="56" height="28" rx="5" fill="#FEF2F2"/>
+<text x="1137" y="191" font-size="12" fill="#D2553F" font-weight="600" text-anchor="middle">0</text>
+<rect x="1171" y="173" width="56" height="28" rx="5" fill="#FEF2F2"/>
+<text x="1199" y="191" font-size="12" fill="#D2553F" font-weight="600" text-anchor="middle">0</text>
+<rect x="1233" y="173" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="1261" y="191" font-size="12" fill="#94A3B8" text-anchor="middle">—</text>
+<line x1="40" y1="206" x2="1280" y2="206" stroke="#E2E8F0"/>
+<text x="40" y="223" font-size="12.5" fill="#0F172A" font-weight="700">TSR-1xx</text>
+<text x="40" y="237" font-size="10.5" fill="#64748B">lateral envelope · 11</text>
+<rect x="303" y="211" width="56" height="28" rx="5" fill="rgba(194,65,12,0.22)"/>
+<text x="331" y="229" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">3</text>
+<rect x="365" y="211" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="393" y="229" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="427" y="211" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="455" y="229" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="489" y="211" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="517" y="229" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="551" y="211" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="579" y="229" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="613" y="211" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="641" y="229" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="675" y="211" width="56" height="28" rx="5" fill="rgba(194,65,12,0.49)"/>
+<text x="703" y="229" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">9</text>
+<rect x="737" y="211" width="56" height="28" rx="5" fill="rgba(194,65,12,0.17)"/>
+<text x="765" y="229" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">2</text>
+<rect x="799" y="211" width="56" height="28" rx="5" fill="rgba(194,65,12,0.17)"/>
+<text x="827" y="229" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">2</text>
+<rect x="861" y="211" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="889" y="229" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="923" y="211" width="56" height="28" rx="5" fill="rgba(194,65,12,0.31)"/>
+<text x="951" y="229" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">5</text>
+<rect x="985" y="211" width="56" height="28" rx="5" fill="rgba(37,99,235,0.58)"/>
+<text x="1013" y="229" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">11</text>
+<rect x="1047" y="211" width="56" height="28" rx="5" fill="rgba(37,99,235,0.58)"/>
+<text x="1075" y="229" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">11</text>
+<rect x="1109" y="211" width="56" height="28" rx="5" fill="#FEF2F2"/>
+<text x="1137" y="229" font-size="12" fill="#D2553F" font-weight="600" text-anchor="middle">0</text>
+<rect x="1171" y="211" width="56" height="28" rx="5" fill="#FEF2F2"/>
+<text x="1199" y="229" font-size="12" fill="#D2553F" font-weight="600" text-anchor="middle">0</text>
+<rect x="1233" y="211" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="1261" y="229" font-size="12" fill="#94A3B8" text-anchor="middle">—</text>
+<line x1="40" y1="244" x2="1280" y2="244" stroke="#E2E8F0"/>
+<text x="40" y="261" font-size="12.5" fill="#0F172A" font-weight="700">TSR-2xx</text>
+<text x="40" y="275" font-size="10.5" fill="#64748B">longitudinal envelope · 8</text>
+<rect x="303" y="249" width="56" height="28" rx="5" fill="rgba(194,65,12,0.27)"/>
+<text x="331" y="267" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">3</text>
+<rect x="365" y="249" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="393" y="267" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="427" y="249" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="455" y="267" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="489" y="249" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="517" y="267" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="551" y="249" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="579" y="267" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="613" y="249" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="641" y="267" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="675" y="249" width="56" height="28" rx="5" fill="rgba(194,65,12,0.46)"/>
+<text x="703" y="267" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">6</text>
+<rect x="737" y="249" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="765" y="267" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="799" y="249" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="827" y="267" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="861" y="249" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="889" y="267" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="923" y="249" width="56" height="28" rx="5" fill="rgba(194,65,12,0.46)"/>
+<text x="951" y="267" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">6</text>
+<rect x="985" y="249" width="56" height="28" rx="5" fill="rgba(37,99,235,0.58)"/>
+<text x="1013" y="267" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">8</text>
+<rect x="1047" y="249" width="56" height="28" rx="5" fill="rgba(37,99,235,0.58)"/>
+<text x="1075" y="267" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">8</text>
+<rect x="1109" y="249" width="56" height="28" rx="5" fill="#FEF2F2"/>
+<text x="1137" y="267" font-size="12" fill="#D2553F" font-weight="600" text-anchor="middle">0</text>
+<rect x="1171" y="249" width="56" height="28" rx="5" fill="#FEF2F2"/>
+<text x="1199" y="267" font-size="12" fill="#D2553F" font-weight="600" text-anchor="middle">0</text>
+<rect x="1233" y="249" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="1261" y="267" font-size="12" fill="#94A3B8" text-anchor="middle">—</text>
+<line x1="40" y1="282" x2="1280" y2="282" stroke="#E2E8F0"/>
+<text x="40" y="299" font-size="12.5" fill="#0F172A" font-weight="700">TSR-3xx</text>
+<text x="40" y="313" font-size="10.5" fill="#64748B">engagement, override · 11</text>
+<rect x="303" y="287" width="56" height="28" rx="5" fill="rgba(194,65,12,0.13)"/>
+<text x="331" y="305" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">1</text>
+<rect x="365" y="287" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="393" y="305" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="427" y="287" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="455" y="305" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="489" y="287" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="517" y="305" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="551" y="287" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="579" y="305" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="613" y="287" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="641" y="305" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="675" y="287" width="56" height="28" rx="5" fill="rgba(194,65,12,0.44)"/>
+<text x="703" y="305" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">8</text>
+<rect x="737" y="287" width="56" height="28" rx="5" fill="rgba(194,65,12,0.13)"/>
+<text x="765" y="305" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">1</text>
+<rect x="799" y="287" width="56" height="28" rx="5" fill="rgba(194,65,12,0.13)"/>
+<text x="827" y="305" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">1</text>
+<rect x="861" y="287" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="889" y="305" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="923" y="287" width="56" height="28" rx="5" fill="rgba(194,65,12,0.35)"/>
+<text x="951" y="305" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">6</text>
+<rect x="985" y="287" width="56" height="28" rx="5" fill="rgba(37,99,235,0.58)"/>
+<text x="1013" y="305" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">11</text>
+<rect x="1047" y="287" width="56" height="28" rx="5" fill="rgba(37,99,235,0.58)"/>
+<text x="1075" y="305" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">11</text>
+<rect x="1109" y="287" width="56" height="28" rx="5" fill="#FEF2F2"/>
+<text x="1137" y="305" font-size="12" fill="#D2553F" font-weight="600" text-anchor="middle">0</text>
+<rect x="1171" y="287" width="56" height="28" rx="5" fill="#FEF2F2"/>
+<text x="1199" y="305" font-size="12" fill="#D2553F" font-weight="600" text-anchor="middle">0</text>
+<rect x="1233" y="287" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="1261" y="305" font-size="12" fill="#94A3B8" text-anchor="middle">—</text>
+<line x1="40" y1="320" x2="1280" y2="320" stroke="#E2E8F0"/>
+<text x="40" y="337" font-size="12.5" fill="#0F172A" font-weight="700">TSR-4xx</text>
+<text x="40" y="351" font-size="10.5" fill="#64748B">communication integrity · 13</text>
+<rect x="303" y="325" width="56" height="28" rx="5" fill="rgba(194,65,12,0.12)"/>
+<text x="331" y="343" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">1</text>
+<rect x="365" y="325" width="56" height="28" rx="5" fill="rgba(194,65,12,0.16)"/>
+<text x="393" y="343" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">2</text>
+<rect x="427" y="325" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="455" y="343" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="489" y="325" width="56" height="28" rx="5" fill="rgba(194,65,12,0.12)"/>
+<text x="517" y="343" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">1</text>
+<rect x="551" y="325" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="579" y="343" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="613" y="325" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="641" y="343" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="675" y="325" width="56" height="28" rx="5" fill="rgba(194,65,12,0.31)"/>
+<text x="703" y="343" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">6</text>
+<rect x="737" y="325" width="56" height="28" rx="5" fill="rgba(194,65,12,0.39)"/>
+<text x="765" y="343" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">8</text>
+<rect x="799" y="325" width="56" height="28" rx="5" fill="rgba(194,65,12,0.54)"/>
+<text x="827" y="343" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">12</text>
+<rect x="861" y="325" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="889" y="343" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="923" y="325" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="951" y="343" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="985" y="325" width="56" height="28" rx="5" fill="rgba(37,99,235,0.58)"/>
+<text x="1013" y="343" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">13</text>
+<rect x="1047" y="325" width="56" height="28" rx="5" fill="rgba(37,99,235,0.39)"/>
+<text x="1075" y="343" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">8</text>
+<rect x="1109" y="325" width="56" height="28" rx="5" fill="#FEF2F2"/>
+<text x="1137" y="343" font-size="12" fill="#D2553F" font-weight="600" text-anchor="middle">0</text>
+<rect x="1171" y="325" width="56" height="28" rx="5" fill="rgba(37,99,235,0.12)"/>
+<text x="1199" y="343" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">1</text>
+<rect x="1233" y="325" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="1261" y="343" font-size="12" fill="#94A3B8" text-anchor="middle">—</text>
+<line x1="40" y1="358" x2="1280" y2="358" stroke="#E2E8F0"/>
+<text x="40" y="375" font-size="12.5" fill="#0F172A" font-weight="700">TSR-5xx</text>
+<text x="40" y="389" font-size="10.5" fill="#64748B">safety-MCU platform · 19</text>
+<rect x="303" y="363" width="56" height="28" rx="5" fill="rgba(194,65,12,0.19)"/>
+<text x="331" y="381" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">4</text>
+<rect x="365" y="363" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="393" y="381" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="427" y="363" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="455" y="381" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="489" y="363" width="56" height="28" rx="5" fill="rgba(194,65,12,0.29)"/>
+<text x="517" y="381" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">8</text>
+<rect x="551" y="363" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="579" y="381" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="613" y="363" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="641" y="381" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="675" y="363" width="56" height="28" rx="5" fill="rgba(194,65,12,0.11)"/>
+<text x="703" y="381" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">1</text>
+<rect x="737" y="363" width="56" height="28" rx="5" fill="rgba(194,65,12,0.42)"/>
+<text x="765" y="381" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">13</text>
+<rect x="799" y="363" width="56" height="28" rx="5" fill="rgba(194,65,12,0.32)"/>
+<text x="827" y="381" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">9</text>
+<rect x="861" y="363" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="889" y="381" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="923" y="363" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="951" y="381" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="985" y="363" width="56" height="28" rx="5" fill="rgba(37,99,235,0.50)"/>
+<text x="1013" y="381" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">16</text>
+<rect x="1047" y="363" width="56" height="28" rx="5" fill="rgba(37,99,235,0.13)"/>
+<text x="1075" y="381" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">2</text>
+<rect x="1109" y="363" width="56" height="28" rx="5" fill="rgba(37,99,235,0.11)"/>
+<text x="1137" y="381" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">1</text>
+<rect x="1171" y="363" width="56" height="28" rx="5" fill="rgba(37,99,235,0.11)"/>
+<text x="1199" y="381" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">1</text>
+<rect x="1233" y="363" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="1261" y="381" font-size="12" fill="#94A3B8" text-anchor="middle">—</text>
+<line x1="40" y1="396" x2="1280" y2="396" stroke="#E2E8F0"/>
+<text x="40" y="413" font-size="12.5" fill="#0F172A" font-weight="700">TSR-6xx</text>
+<text x="40" y="427" font-size="10.5" fill="#64748B">host monitoring, DM, HMI · 35</text>
+<rect x="303" y="401" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="331" y="419" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="365" y="401" width="56" height="28" rx="5" fill="rgba(194,65,12,0.11)"/>
+<text x="393" y="419" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">2</text>
+<rect x="427" y="401" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="455" y="419" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="489" y="401" width="56" height="28" rx="5" fill="rgba(194,65,12,0.14)"/>
+<text x="517" y="419" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">4</text>
+<rect x="551" y="401" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="579" y="419" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="613" y="401" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="641" y="419" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="675" y="401" width="56" height="28" rx="5" fill="rgba(194,65,12,0.55)"/>
+<text x="703" y="419" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">33</text>
+<rect x="737" y="401" width="56" height="28" rx="5" fill="rgba(194,65,12,0.14)"/>
+<text x="765" y="419" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">4</text>
+<rect x="799" y="401" width="56" height="28" rx="5" fill="rgba(194,65,12,0.19)"/>
+<text x="827" y="419" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">8</text>
+<rect x="861" y="401" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="889" y="419" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="923" y="401" width="56" height="28" rx="5" fill="rgba(194,65,12,0.24)"/>
+<text x="951" y="419" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">11</text>
+<rect x="985" y="401" width="56" height="28" rx="5" fill="rgba(37,99,235,0.27)"/>
+<text x="1013" y="419" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">13</text>
+<rect x="1047" y="401" width="56" height="28" rx="5" fill="rgba(37,99,235,0.34)"/>
+<text x="1075" y="419" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">18</text>
+<rect x="1109" y="401" width="56" height="28" rx="5" fill="rgba(37,99,235,0.09)"/>
+<text x="1137" y="419" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">1</text>
+<rect x="1171" y="401" width="56" height="28" rx="5" fill="#FEF2F2"/>
+<text x="1199" y="419" font-size="12" fill="#D2553F" font-weight="600" text-anchor="middle">0</text>
+<rect x="1233" y="401" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="1261" y="419" font-size="12" fill="#94A3B8" text-anchor="middle">—</text>
+<line x1="40" y1="434" x2="1280" y2="434" stroke="#E2E8F0"/>
+<text x="40" y="451" font-size="12.5" fill="#0F172A" font-weight="700">TSR-7xx</text>
+<text x="40" y="465" font-size="10.5" fill="#64748B">PCS, harness · 13</text>
+<rect x="303" y="439" width="56" height="28" rx="5" fill="rgba(194,65,12,0.23)"/>
+<text x="331" y="457" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">4</text>
+<rect x="365" y="439" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="393" y="457" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="427" y="439" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="455" y="457" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="489" y="439" width="56" height="28" rx="5" fill="rgba(194,65,12,0.16)"/>
+<text x="517" y="457" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">2</text>
+<rect x="551" y="439" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="579" y="457" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="613" y="439" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="641" y="457" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="675" y="439" width="56" height="28" rx="5" fill="rgba(194,65,12,0.27)"/>
+<text x="703" y="457" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">5</text>
+<rect x="737" y="439" width="56" height="28" rx="5" fill="rgba(194,65,12,0.39)"/>
+<text x="765" y="457" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">8</text>
+<rect x="799" y="439" width="56" height="28" rx="5" fill="rgba(194,65,12,0.23)"/>
+<text x="827" y="457" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">4</text>
+<rect x="861" y="439" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="889" y="457" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="923" y="439" width="56" height="28" rx="5" fill="rgba(194,65,12,0.16)"/>
+<text x="951" y="457" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">2</text>
+<rect x="985" y="439" width="56" height="28" rx="5" fill="rgba(37,99,235,0.35)"/>
+<text x="1013" y="457" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">7</text>
+<rect x="1047" y="439" width="56" height="28" rx="5" fill="rgba(37,99,235,0.20)"/>
+<text x="1075" y="457" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">3</text>
+<rect x="1109" y="439" width="56" height="28" rx="5" fill="#FEF2F2"/>
+<text x="1137" y="457" font-size="12" fill="#D2553F" font-weight="600" text-anchor="middle">0</text>
+<rect x="1171" y="439" width="56" height="28" rx="5" fill="rgba(37,99,235,0.12)"/>
+<text x="1199" y="457" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">1</text>
+<rect x="1233" y="439" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="1261" y="457" font-size="12" fill="#94A3B8" text-anchor="middle">—</text>
+<line x1="40" y1="472" x2="1280" y2="472" stroke="#E2E8F0"/>
+<text x="40" y="489" font-size="12.5" fill="#0F172A" font-weight="700">TSR-8xx</text>
+<text x="40" y="503" font-size="10.5" fill="#64748B">production, operation · 18</text>
+<rect x="303" y="477" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="331" y="495" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="365" y="477" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="393" y="495" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="427" y="477" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="455" y="495" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="489" y="477" width="56" height="28" rx="5" fill="rgba(194,65,12,0.36)"/>
+<text x="517" y="495" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">10</text>
+<rect x="551" y="477" width="56" height="28" rx="5" fill="rgba(194,65,12,0.33)"/>
+<text x="579" y="495" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">9</text>
+<rect x="613" y="477" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="641" y="495" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="675" y="477" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="703" y="495" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="737" y="477" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="765" y="495" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="799" y="477" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="827" y="495" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="861" y="477" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="889" y="495" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="923" y="477" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="951" y="495" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="985" y="477" width="56" height="28" rx="5" fill="rgba(37,99,235,0.11)"/>
+<text x="1013" y="495" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">1</text>
+<rect x="1047" y="477" width="56" height="28" rx="5" fill="#FEF2F2"/>
+<text x="1075" y="495" font-size="12" fill="#D2553F" font-weight="600" text-anchor="middle">0</text>
+<rect x="1109" y="477" width="56" height="28" rx="5" fill="#FEF2F2"/>
+<text x="1137" y="495" font-size="12" fill="#D2553F" font-weight="600" text-anchor="middle">0</text>
+<rect x="1171" y="477" width="56" height="28" rx="5" fill="#FEF2F2"/>
+<text x="1199" y="495" font-size="12" fill="#D2553F" font-weight="600" text-anchor="middle">0</text>
+<rect x="1233" y="477" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="1261" y="495" font-size="12" fill="#94A3B8" text-anchor="middle">—</text>
+<line x1="40" y1="510" x2="1280" y2="510" stroke="#E2E8F0"/>
+<text x="40" y="527" font-size="12.5" fill="#0F172A" font-weight="700">CSR</text>
+<text x="40" y="541" font-size="10.5" fill="#64748B">cybersecurity (WP-S-07) · 64</text>
+<rect x="303" y="515" width="56" height="28" rx="5" fill="rgba(194,65,12,0.10)"/>
+<text x="331" y="533" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">2</text>
+<rect x="365" y="515" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="393" y="533" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="427" y="515" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="455" y="533" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="489" y="515" width="56" height="28" rx="5" fill="rgba(194,65,12,0.42)"/>
+<text x="517" y="533" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">43</text>
+<rect x="551" y="515" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="579" y="533" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="613" y="515" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="641" y="533" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="675" y="515" width="56" height="28" rx="5" fill="rgba(194,65,12,0.28)"/>
+<text x="703" y="533" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">26</text>
+<rect x="737" y="515" width="56" height="28" rx="5" fill="rgba(194,65,12,0.26)"/>
+<text x="765" y="533" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">23</text>
+<rect x="799" y="515" width="56" height="28" rx="5" fill="rgba(194,65,12,0.09)"/>
+<text x="827" y="533" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">1</text>
+<rect x="861" y="515" width="56" height="28" rx="5" fill="rgba(194,65,12,0.17)"/>
+<text x="889" y="533" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">11</text>
+<rect x="923" y="515" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="951" y="533" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="985" y="515" width="56" height="28" rx="5" fill="#FEF2F2"/>
+<text x="1013" y="533" font-size="12" fill="#D2553F" font-weight="600" text-anchor="middle">0</text>
+<rect x="1047" y="515" width="56" height="28" rx="5" fill="#FEF2F2"/>
+<text x="1075" y="533" font-size="12" fill="#D2553F" font-weight="600" text-anchor="middle">0</text>
+<rect x="1109" y="515" width="56" height="28" rx="5" fill="#FEF2F2"/>
+<text x="1137" y="533" font-size="12" fill="#D2553F" font-weight="600" text-anchor="middle">0</text>
+<rect x="1171" y="515" width="56" height="28" rx="5" fill="#FEF2F2"/>
+<text x="1199" y="533" font-size="12" fill="#D2553F" font-weight="600" text-anchor="middle">0</text>
+<rect x="1233" y="515" width="56" height="28" rx="5" fill="#FFFFFF"/>
+<text x="1261" y="533" font-size="12" fill="#94A3B8" text-anchor="middle">—</text>
+<line x1="40" y1="548" x2="1280" y2="548" stroke="#E2E8F0"/>
+<text x="40" y="574" font-size="12" fill="#0F172A" font-weight="600">231 requirements · 115 verified by at least one case · 116 by none · no case has a result yet (specified, not run) · one row per requirement: generated/vcrm.md</text>
+<line x1="40" y1="604" x2="1280" y2="604" stroke="#E2E8F0"/>
+<text x="40" y="620" font-size="11" fill="#334155">A analysis · LOG drive-log analysis · SIM simulation · R review · Rec operational record · DEM demonstration · T-SIL software test · T-HIL bench test · FI fault injection · PT fuzzing, penetration test · T-VEH vehicle test</text>
+<text x="40" y="640" font-size="11" fill="#334155">SYS.4 integration (VS-SI, VS-FI) · SYS.5 system verification (VS-SQ) · VAL.1 validation (VS-VAL) · SW/HW cases below system level · a requirement counts once per level</text>
+<text x="40" y="680" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+</svg>

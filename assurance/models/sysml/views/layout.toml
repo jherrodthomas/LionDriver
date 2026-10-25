@@ -10,6 +10,7 @@
 [titles]
 context = "Vehicle context"
 ldsda = "LD-SDA"
+driver = "Driver"
 socSoftware = "SoC software"
 mlModels = "ML models"
 safetyFirmware = "Safety MCU firmware"
@@ -623,3 +624,125 @@ width = 1520
 desc = """Matrix view generated from the SysML v2 model: the 39 system requirements of WP-S-01 grouped by function, a dot \
 for each element that satisfies them and the verification cases that verify them; requirements without a case are \
 marked."""
+
+# ======================================================================= V-08, V-09 (systems-engineering views)
+
+[views.V-08]
+file = "fig-sysml-v08-n2-chart.svg"
+kind = "n2"
+title = "N2 chart · interfaces between components and their neighbours"
+subtitle = "Every connection of the model rolled up to the components E-01 to E-05 and the elements outside the item"
+width = 1280
+desc = """N2 chart generated from the SysML v2 model. The diagonal holds the components E-01 to E-05 inside the item \
+boundary and the outside elements they connect to; a cell (row, column) names the interfaces over which the row element \
+sends to the column element, coloured by the edge class of V-01 and V-03."""
+
+[views.V-09]
+file = "fig-sysml-v09-vcrm.svg"
+kind = "vcrm"
+title = "Verification matrix (VCRM) · system-level requirements"
+subtitle = "SYS, TSR and CSR requirements by method (NASA A, I, D, T) and by the level of their verification cases"
+width = 1320
+desc = """Verification cross-reference matrix generated from the SysML v2 model: per requirement group, how many \
+requirements name each verification method and how many a verification case at each level verifies; no case has a \
+result yet."""
+
+# ======================================================================= V-10 to V-13 (MBSE extension, OI-10)
+
+[views.V-10]
+file = "fig-sysml-v10-functional-architecture.svg"
+kind = "functions"
+title = "Functional architecture · functions along their chain"
+subtitle = "Functions F-01 to F-09 of WP-C-01 §2.1, each step placed on the element that performs it"
+width = 1520
+desc = """Functional architecture generated from the SysML v2 model. One row per function F-01 to F-09; columns are \
+the stages of the functional chain (sense, perceive, plan, control, command path, safety envelope, act or inform); \
+each step is drawn on the element that performs it, coloured by that element's integrity (QM, ML, ASIL C envelope, \
+outside the item)."""
+
+[views.V-11]
+file = "fig-sysml-v11-security-zones.svg"
+kind = "security"
+title = "Security zones and trust boundaries"
+subtitle = "Zones Z1 to Z7 and boundaries TB-1 to TB-7 of WP-S-07 §3, with the model elements in each zone"
+width = 1520
+note_y = 856
+expand = ["E-01", "E-03"]
+device = [420, 214, 1060, 476]
+device_label = "E-04 comma device"
+desc = """Security architecture generated from the SysML v2 model: the security zones of WP-S-07 §3.1 coloured by \
+trust level, the model elements in each zone, and the trust boundaries of §3.2 with what crosses them, their threats \
+and the number of cybersecurity requirements that control them."""
+
+[views.V-11.zones]
+Z6 = [880, 100, 600, 84]
+Z4 = [40, 246, 300, 140]
+Z3 = [440, 246, 1020, 100]
+Z2 = [440, 386, 1020, 130]
+Z1 = [440, 556, 1020, 110]
+Z7 = [40, 420, 300, 120]
+Z5 = [420, 730, 1060, 96]
+
+[views.V-11.boundaries]
+TB-1 = [800, 516, 800, 556]
+TB-2 = [1040, 516, 1040, 556]
+TB-3 = [340, 300, 440, 300]
+TB-4 = [700, 346, 700, 386]
+TB-5 = [940, 666, 940, 730]
+TB-6 = [1180, 184, 1180, 246]
+TB-7 = [0, 0, 0, 0, 190, 558]
+
+[views.V-12]
+file = "fig-sysml-v12-integration-build-up.svg"
+kind = "integration"
+title = "System integration build-up"
+subtitle = "Steps I-1 to I-4 of WP-S-08 §3.1: what each adds, the interfaces it exercises, the cases that run at it"
+width = 1520
+rise = 34
+handover = "Hand-over to WP-S-09 system verification (SYS.5)"
+desc = """System integration build-up generated from the SysML v2 model: the four bottom-up steps of WP-S-08 §3.1 as a \
+staircase, each with the model elements it adds to those of the earlier steps, the interfaces it exercises, its stimulus \
+and purpose, and the number of VS-SI test cases that run at it."""
+
+[views.V-13]
+file = "fig-sysml-v13-system-modes.svg"
+kind = "states"
+machine = "SM-SYS"
+title = "System modes · operating modes and actuation authority"
+subtitle = "WP-C-01 §4 modes as a SysML v2 state machine; each transition names its record transitions and who enforces it"
+width = 1280
+note_y = 790
+initial = [138, 300]
+desc = """State machine of the operating modes generated from the SysML v2 model: off, onroad disengaged, the engaged \
+composite state (enabled, overriding, soft disabling), immediate disable and driver lockout, with every transition \
+labelled by the state-machine record transitions it stands for and coloured by who enforces it."""
+
+[views.V-13.states]
+off = [40, 336, 196, 176]
+disengaged = [380, 300, 252, 220]
+immediateDisable = [380, 112, 252, 124]
+lockout = [380, 596, 252, 140]
+engaged = [880, 96, 360, 656]
+engaged_overriding = [900, 132, 290, 140]
+engaged_enabled = [900, 320, 290, 160]
+engaged_softDisabling = [900, 560, 290, 176]
+
+[views.V-13.transitions]
+onroad = { points = [[236, 378], [380, 378]], label = [244, 352] }
+offroad = { points = [[380, 430], [236, 430]], label = [244, 404] }
+heartbeatLost = { points = [[380, 486], [236, 486]], label = [244, 460] }
+engage = { points = [[632, 352], [880, 352]], label = [642, 326], wrap = 230 }
+refused = { label = [642, 368], wrap = 230 }
+driverDisengage = { points = [[880, 434], [632, 434]], label = [642, 408], wrap = 230 }
+envelopeFault = { points = [[880, 490], [632, 490]], label = [642, 450], wrap = 230 }
+softDisableTimeout = { points = [[900, 650], [724, 650], [724, 512], [632, 512]], label = [734, 590], wrap = 140 }
+immediate = { points = [[880, 168], [632, 168]], label = [642, 146] }
+immediateEnd = { points = [[506, 236], [506, 300]], label = [516, 258] }
+dmLockout = { points = [[450, 520], [450, 596]], label = [442, 552, "end"] }
+lockoutExpires = { points = [[560, 596], [560, 520]], label = [570, 552], dash = true }
+gasOrSteering = { points = [[996, 320], [996, 272]], label = [988, 292, "end"] }
+released = { points = [[1090, 272], [1090, 320]], label = [1098, 292] }
+softDisable = { points = [[996, 480], [996, 560]], label = [988, 516, "end"] }
+cleared = { points = [[1090, 560], [1090, 480]], label = [1098, 516], dash = true }
+softFromOverride = { points = [[1190, 230], [1218, 230], [1218, 600], [1190, 600]], label = [1222, 420], compact = true }
+

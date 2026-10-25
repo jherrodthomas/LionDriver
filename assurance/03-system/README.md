@@ -24,11 +24,73 @@ Standard clauses: 26262-4, SYS.1–5.
 | [WP-S-08](WP-S-08-system-integration-test.md) | System integration and test strategy, specification and report | G4 | Draft |
 | [WP-S-09](WP-S-09-system-verification.md) | System verification (qualification) specification and report | G4 | Draft |
 
+## Systems engineering alignment
+
+Where this folder sits in the systems-engineering processes of the INCOSE Systems Engineering Handbook (5th ed., 2023; the technical processes of ISO/IEC/IEEE 15288) and the NASA Systems Engineering Handbook (NASA/SP-2016-6105 Rev 2; the 17 processes of the NPR 7123.1 SE engine). The alignment is informative: ISO 26262 and ASPICE govern LionDriver, and nothing here claims compliance with either handbook. The N2 chart and the VCRM are views of the [SysML model](../models/sysml/README.md), drawn from it on every build.
+
+![The system folder on the systems-engineering Vee: stakeholder needs, system requirements and architecture down the left arm, implementation at the bottom, integration, verification and validation up the right arm, each with its NASA process numbers and work products; technical management processes 10 to 17 and the gates G0 to G6 with the nearest NASA reviews below](figures/fig-s00-1-se-vee.svg)
+
+| Stage | INCOSE / ISO/IEC/IEEE 15288 | NASA | ASPICE | Work products |
+|---|---|---|---|---|
+| Stakeholder needs and requirements | Business or mission analysis, Stakeholder needs and requirements definition | 1 stakeholder expectations definition | SYS.1 | [WP-C-01](../02-concept/WP-C-01-item-definition.md), [WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md), [WP-C-03](../02-concept/WP-C-03-hara.md), [WP-C-05](../02-concept/WP-C-05-sotif-hazard-identification.md), [WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md), [WP-C-09](../02-concept/WP-C-09-tara.md) |
+| System requirements | System requirements definition | 2 technical requirements definition | SYS.2 | [WP-S-01](WP-S-01-system-requirements.md), [WP-S-02](WP-S-02-technical-safety-requirements.md), [WP-S-06](WP-S-06-requirements-production-operation.md), [WP-S-07](WP-S-07-cybersecurity-requirements-architecture.md), [WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md), [WP-C-10](../02-concept/WP-C-10-cybersecurity-goals-and-concept.md) |
+| Architecture, design and analysis | System architecture definition, Design definition, System analysis | 3 logical decomposition, 4 design solution definition | SYS.3 | [WP-S-03](WP-S-03-technical-safety-concept-architecture.md), [WP-S-05](WP-S-05-hsi-specification.md), [WP-S-04](WP-S-04-timing-ftti-budget.md), [WP-S-07](WP-S-07-cybersecurity-requirements-architecture.md), [`08-analyses/`](../08-analyses/README.md) |
+| Implementation | Implementation | 5 product implementation | SWE, HWE, MLE | [`04-hardware/`](../04-hardware/README.md), [`05-software/`](../05-software/README.md) |
+| Integration | Integration | 6 product integration | SYS.4 | [WP-S-08](WP-S-08-system-integration-test.md), [WP-V-05](../06-validation/WP-V-05-fault-injection.md) |
+| Verification | Verification | 7 product verification | SYS.5 | [WP-S-09](WP-S-09-system-verification.md) |
+| Validation | Validation | 8 product validation | VAL.1 | [WP-V-01](../06-validation/WP-V-01-safety-validation.md), [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md), [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md), [WP-V-04](../06-validation/WP-V-04-sotif-unknown-scenarios.md), [WP-V-06](../06-validation/WP-V-06-cybersecurity-validation.md) |
+| Transition, operation, maintenance, disposal | Transition, Operation, Maintenance, Disposal | 9 product transition | — | [WP-S-06](WP-S-06-requirements-production-operation.md), [WP-K-06](../10-safety-case/WP-K-06-release-record.md), [WP-O-01](../09-production-operation/WP-O-01-installation-and-provisioning-control.md), [WP-O-02](../09-production-operation/WP-O-02-operation-service-decommissioning.md), [WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md), [WP-O-05](../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md) |
+
+| NASA technical management | Where LionDriver keeps it |
+|---|---|
+| 10 technical planning | [WP-M-01](../01-management/WP-M-01-assurance-strategy.md), [WP-M-02](../01-management/WP-M-02-safety-plan.md), [WP-M-03](../01-management/WP-M-03-project-plan.md) |
+| 11 requirements management | [WP-P-06](../07-supporting/WP-P-06-requirements-management-traceability.md), [`trace/`](../trace/README.md) |
+| 12 interface management | [WP-S-03](WP-S-03-technical-safety-concept-architecture.md), [WP-S-05](WP-S-05-hsi-specification.md), [WP-M-11](../01-management/WP-M-11-upstream-and-supplier-management.md) |
+| 13 technical risk management | [WP-M-07](../01-management/WP-M-07-risk-management.md) |
+| 14 configuration management | [WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md), [WP-P-02](../07-supporting/WP-P-02-change-management.md) |
+| 15 technical data management | [WP-P-04](../07-supporting/WP-P-04-documentation-management.md) |
+| 16 technical assessment | [WP-P-05](../07-supporting/WP-P-05-verification-review-procedure.md), [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md), [WP-M-00](../01-management/WP-M-00-work-product-register.md) |
+| 17 decision analysis | [`01-management/decisions/`](../01-management/decisions/README.md) |
+
+The 15288 technical management processes map onto these: project planning (NASA 10); project assessment and control (NASA 16); decision management (NASA 17); risk management (NASA 13); configuration management (NASA 14); information management (NASA 15); measurement (NASA 16); quality assurance ([WP-M-05](../01-management/WP-M-05-quality-assurance-plan.md)). Nearest NASA life-cycle review per gate (informative): G0 —, G1 MCR, SRR, G2 SDR, PDR, G3 CDR, G4 SIR, TRR, G5 SAR, ORR, G6 PLAR.
+
+### Interfaces: N2 chart
+
+Generated from the SysML model (view V-08). A row sends to a column over the interfaces in the cell.
+
+![V-08: N2 chart of the components E-01 to E-05 and the elements outside the item, generated from the SysML model](../models/sysml/generated/fig-sysml-v08-n2-chart.svg)
+
+### Verification: VCRM
+
+Generated from the SysML model (view V-09): requirements by verification method, grouped as NASA analysis, inspection, demonstration and test, and by the level of their verification cases. One row per requirement: [`vcrm.md`](../models/sysml/generated/vcrm.md).
+
+![V-09: verification matrix of the SYS, TSR and CSR requirements, generated from the SysML model](../models/sysml/generated/fig-sysml-v09-vcrm.svg)
+
+### Views the handbooks expect
+
+| View | Status | Where | Gap |
+|---|---|---|---|
+| Context diagram and operational concept | partial | [item boundary (WP-C-01 §3.3)](../02-concept/figures/fig-3-2-item-boundary.svg), [ODD (WP-C-02 §3.1)](../02-concept/figures/fig-c02-3-1-odd-taxonomy.svg), [SysML context view](../models/sysml/generated/fig-sysml-v01-item-context.svg) | no stand-alone concept of operations; operational situations are listed in WP-C-03 §3 |
+| Stakeholder needs | partial | [safety goals (WP-C-03 §6)](../02-concept/WP-C-03-hara.md), [FSRs (WP-C-04)](../02-concept/WP-C-04-functional-safety-concept.md) | safety-led; no list of user, owner or regulator needs beyond the item definition |
+| System requirements with method, rationale and allocation | partial | [WP-S-01](WP-S-01-system-requirements.md), [WP-S-02](WP-S-02-technical-safety-requirements.md), [requirements at a glance](requirements/README.md) | WP-S-02 carries method and allocation but no rationale column |
+| Requirements traceability | present | [system V](../trace/figures/fig-9-system-v-status.svg), [derivation flow](../trace/figures/fig-3-derivation-flow.svg), [FSR × TSR matrix](requirements/figures/fig-req-2-matrix.svg) | — |
+| Logical (functional) architecture | present | [functional flow (WP-S-03 §3.4)](figures/fig-s03-3-3-functional-flow.svg), [TSC block diagram (WP-S-03 §3.2)](figures/fig-3-2-tsc-block-diagram.svg), [functions along their chain (SysML V-10)](../models/sysml/generated/fig-sysml-v10-functional-architecture.svg) | the decomposition of F-01 to F-09 into steps is AI-drafted and not reviewed |
+| Physical architecture (system element hierarchy) | present | [WP-S-03 §3.1](figures/fig-s03-3-1-system-element-hierarchy.svg), [SysML](../models/sysml/generated/fig-sysml-v02-element-hierarchy.svg) | — |
+| Interfaces (N2 chart and interface definitions) | present | [N2 chart (SysML V-08, below)](../models/sysml/generated/fig-sysml-v08-n2-chart.svg), [HSI (WP-S-05)](figures/fig-s05-2-1-hsi-overview.svg), [SysML interconnection](../models/sysml/generated/fig-sysml-v03-system-interconnection.svg) | — |
+| Behaviour (modes and sequences) | present | [operating modes (WP-C-01 §4)](../02-concept/figures/fig-c01-4-1-operating-modes.svg), [start-up sequence](figures/fig-4-1-startup-engagement.svg), [heartbeat chain](figures/fig-4-4-heartbeat-timeout-chain.svg), [envelope states (WP-S-03 §4.5)](figures/fig-s03-4-5-envelope-states.svg), [system modes state machine (SysML V-13)](../models/sysml/generated/fig-sysml-v13-system-modes.svg) | — |
+| Technical budgets with margins (TPMs) | partial | [timing budgets (WP-S-04 §5)](figures/fig-s04-5-1-timing-budgets.svg) | timing only; no CAN bus-load, CPU, memory or power budget |
+| Verification matrix (VCRM) | present | [summary (SysML V-09, below)](../models/sysml/generated/fig-sysml-v09-vcrm.svg), [per requirement](../models/sysml/generated/vcrm.md) | methods and named cases only; no verification has been run, so no result is recorded |
+| Integration plan and sequence | present | [steps I-1 to I-4 (WP-S-08 §3.1)](WP-S-08-system-integration-test.md), [integration build-up (SysML V-12)](../models/sysml/generated/fig-sysml-v12-integration-build-up.svg) | — |
+| Safety mechanisms (defence in depth) | present | [defence in depth (WP-S-03 §6)](figures/fig-s03-6-1-defence-in-depth.svg), [safety mechanisms (WP-S-03 §6)](figures/fig-s03-6-2-safety-mechanisms.svg) | — |
+| Security architecture | present | [zones and trust boundaries (WP-S-07 §3)](WP-S-07-cybersecurity-requirements-architecture.md), [security zones (SysML V-11)](../models/sysml/generated/fig-sysml-v11-security-zones.svg) | — |
+| Life-cycle reviews and decision gates | present | [gates G0–G6 (WP-M-00 §2)](../01-management/WP-M-00-work-product-register.md), [nearest NASA reviews (Vee, above)](figures/fig-s00-1-se-vee.svg) | — |
+
 ## Subfolders
 
 | Folder | What it holds |
 |---|---|
 | [`requirements/`](requirements/README.md) | Requirements at a glance |
 | [`reviews/`](reviews/) | — |
+| [`tsc/`](tsc/README.md) | Technical safety concept |
 
 GitHub lists this folder's files above this page; each work product's document embeds its own figures.

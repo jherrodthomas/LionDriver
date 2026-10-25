@@ -80,6 +80,10 @@ jobs:
       run: python3 -m unittest discover -s assurance/trace/tools -p 'test_*.py' -v
     - name: Relative links
       run: python3 assurance/trace/tools/check_links.py
+    - name: Abbreviations defined on every covered page and figure (assurance/terms.md)
+      run: |
+        python3 assurance/trace/tools/terms.py --check
+        python3 assurance/trace/tools/test_terms.py
     - name: ASPICE traceability map matches the trace data and test specifications (and its tests)
       run: |
         python3 assurance/trace/tools/trace_map.py --check
@@ -102,8 +106,12 @@ jobs:
         python3 assurance/01-management/figures/test_scenekit.py
         python3 assurance/02-concept/figures/fig_c02_odd.py --check
         python3 assurance/02-concept/figures/test_fig_c02_odd.py
+        python3 assurance/02-concept/figures/fig_c02_exits.py --check
+        python3 assurance/02-concept/figures/test_fig_c02_exits.py
         python3 assurance/02-concept/figures/fig_c09_scenes.py --check
         python3 assurance/02-concept/figures/test_fig_c09_scenes.py
+        python3 assurance/02-concept/figures/fig_c09_boundary.py --check
+        python3 assurance/02-concept/figures/test_fig_c09_boundary.py
         python3 assurance/02-concept/figures/fig_c05_four_areas.py --check
         python3 assurance/02-concept/figures/test_fig_c05_four_areas.py
         python3 assurance/02-concept/hatara/hatara_model.py --check
@@ -111,18 +119,34 @@ jobs:
         python3 assurance/02-concept/hatara/test_hatara.py
         python3 assurance/02-concept/figures/fig_c10_goals.py --check
         python3 assurance/02-concept/figures/test_fig_c10_goals.py
+        python3 assurance/02-concept/figures/fig_c10_concept_view.py --check
+        python3 assurance/02-concept/figures/test_fig_c10_concept_view.py
+        python3 assurance/02-concept/figures/fig_c11_airs.py --check
+        python3 assurance/02-concept/figures/test_fig_c11_airs.py
         python3 assurance/09-production-operation/figures/fig_o05_updates.py --check
         python3 assurance/09-production-operation/figures/test_fig_o05_updates.py
         python3 assurance/02-concept/figures/fig_c01_interfaces.py --check
         python3 assurance/02-concept/figures/test_fig_c01_interfaces.py
         python3 assurance/02-concept/figures/fig_c01_modes.py --check
         python3 assurance/02-concept/figures/test_fig_c01_modes.py
+        python3 assurance/02-concept/figures/fig_c01_allocation.py --check
+        python3 assurance/02-concept/figures/test_fig_c01_allocation.py
         python3 assurance/03-system/figures/fig_s03_defence_in_depth.py --check
         python3 assurance/03-system/figures/test_fig_s03_defence_in_depth.py
         python3 assurance/03-system/figures/fig_s03_hierarchy.py --check
         python3 assurance/03-system/figures/test_fig_s03_hierarchy.py
+        python3 assurance/03-system/figures/fig_s03_mechanisms.py --check
+        python3 assurance/03-system/figures/test_fig_s03_mechanisms.py
+        python3 assurance/03-system/figures/fig_s03_functional_flow.py --check
+        python3 assurance/03-system/figures/test_fig_s03_functional_flow.py
+        python3 assurance/03-system/figures/fig_s03_envelope_states.py --check
+        python3 assurance/03-system/figures/test_fig_s03_envelope_states.py
+        python3 assurance/03-system/figures/fig_s03_ffi.py --check
+        python3 assurance/03-system/figures/test_fig_s03_ffi.py
         python3 assurance/03-system/figures/fig_s05_hsi.py --check
         python3 assurance/03-system/figures/test_fig_s05_hsi.py
+        python3 assurance/03-system/figures/fig_s00_se.py --check
+        python3 assurance/03-system/figures/test_fig_s00_se.py
         python3 assurance/03-system/requirements/requirements_view.py --check
         python3 assurance/03-system/requirements/test_requirements_view.py
         python3 assurance/06-validation/figures/fig_v02_validation_targets.py --check
@@ -183,6 +207,7 @@ jobs:
         python3 assurance/02-concept/sotif/test_sotif_figures.py
         python3 assurance/02-concept/sotif/test_sotif_scenes.py
         python3 assurance/02-concept/sotif/test_fm_scenes.py
+        python3 assurance/02-concept/sotif/test_sotif_views.py
     - name: FMEA, FMEDA and DFA figures match the YAML analyses (and their tests)
       run: |
         python3 tools/safety/fmea_diagrams.py --check
@@ -262,11 +287,12 @@ jobs:
     - uses: actions/checkout@v7
       with:
         persist-credentials: false
-    - name: Model matches WP-C-01, WP-S-03 and WP-W-03 (M1-M8), requirements match WP-S-01, WP-S-02, WP-S-07 and the test specifications (R1-R4), figures and explorer up to date, tests
+    - name: Model matches WP-C-01, WP-S-03 and WP-W-03 (M1-M8), requirements match WP-S-01, WP-S-02, WP-S-07 and the test specifications (R1-R4), architecture tables are the generated ones (T1), figures and explorer up to date, tests
       working-directory: assurance/models/sysml
       run: |
         python3 tools/gen_requirements.py --check
         python3 tools/check_model.py
+        python3 tools/gen_tables.py
         python3 tools/render_views.py --check
         python3 tools/explorer.py --check
         python3 tools/test_sysml.py

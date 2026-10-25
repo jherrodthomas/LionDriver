@@ -1,0 +1,235 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1060.5" viewBox="0 0 1280 1060.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">Figure 10-1. The item boundary in the safety view (WP-C-04 §2, §5, §9, §10)</title>
+<desc id="d">The item boundary of WP-C-01 Figure 3-2 with the WP-C-04 allocation on each element. E-01: 17 FSRs, highest C, serving SG-01, SG-02, SG-03, SG-04, SG-05, SG-06, SG-07; QM element carrying ASIL FSRs. E-01/DM: 5 FSRs, highest A, serving SG-02, SG-04, SG-06, SG-08; QM element carrying ASIL FSRs. E-01/HMI: 5 FSRs, highest C, serving SG-02, SG-05, SG-06, SG-07, SG-08; QM element carrying ASIL FSRs. E-02: 1 FSRs, highest A, serving SG-02, SG-06, SG-08; QM element carrying ASIL FSRs. E-03: 42 FSRs, highest C, serving SG-01, SG-02, SG-03, SG-04, SG-05, SG-06, SG-07. E-05: 3 FSRs, highest C, serving SG-01, SG-03, SG-07. EXT-EPS: 1 FSRs, highest ext, serving SG-01, SG-05. EXT-PCM: 4 FSRs, highest B, serving SG-03, SG-04, SG-05, SG-07. EXT-CLU: 1 FSRs, highest C, serving SG-02, SG-05, SG-06. Driver: no FSR, assumptions AOU-06R, AOU-02R.</desc>
+<defs></defs>
+<rect width="1280" height="1060.5" fill="#FFFFFF"/>
+<defs><pattern id="sv-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="6" stroke="#E2E8F0" stroke-width="2"/></pattern><marker id="sv-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><marker id="sv-m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker></defs>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 10-1 · The item boundary in the safety view</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">WP-C-01 Figure 3-2 with the functional safety concept on it: the FSRs each element carries, their highest ASIL and the safety goals they serve</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-04 §2, §5, §9, §10</text>
+<text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">layout: WP-C-01 Figure 3-2</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+<g transform="translate(0,-64)">
+<rect x="244" y="190" width="764" height="470" rx="16" fill="#FFFDF7" stroke="#C2410C" stroke-width="1.6" stroke-dasharray="7 5"/>
+<rect x="262" y="176" width="190" height="26" rx="13" fill="#C2410C"/>
+<text x="357" y="193.5" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">ITEM BOUNDARY · LD-SDA</text>
+<rect x="266" y="216" width="726" height="296" rx="11" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="280" y="240" font-size="12.5" fill="#0F172A" font-weight="700">E-04 comma device</text>
+<text x="410" y="240" font-size="10.5" fill="#475569">SoC, panda MCU, shared supply and clocks; no FSR of its own (§2: integrity of E-03 depends on it)</text>
+<line x1="728" y1="300" x2="750" y2="300" stroke="#C2410C" stroke-width="2.4" marker-end="url(#sv-a)"/>
+<text x="739" y="286" font-size="9.5" fill="#C2410C" font-weight="700" text-anchor="middle">SPI</text>
+<line x1="865" y1="504" x2="865" y2="538" stroke="#C2410C" stroke-width="2.4" marker-end="url(#sv-a)"/>
+<line x1="700" y1="636" x2="700" y2="712" stroke="#C2410C" stroke-width="2.4" marker-end="url(#sv-a)"/>
+<text x="708" y="690" font-size="10" fill="#C2410C" font-weight="700">actuation · IF-01</text>
+<line x1="240" y1="716" x2="1000" y2="716" stroke="#0F172A" stroke-width="4"/>
+<text x="240" y="706" font-size="11.5" fill="#0F172A" font-weight="700">Vehicle CAN · car side</text>
+<line x1="335.0" y1="716" x2="335.0" y2="752" stroke="#0F172A" stroke-width="1.6"/>
+<line x1="541.0" y1="716" x2="541.0" y2="752" stroke="#0F172A" stroke-width="1.6"/>
+<line x1="747.0" y1="716" x2="747.0" y2="752" stroke="#0F172A" stroke-width="1.6"/>
+<rect x="282" y="262" width="446" height="92" rx="9" fill="#FFF7ED" stroke="#D2553F" stroke-width="2.4"/>
+<text x="292" y="281" font-size="12" fill="#0F172A" font-weight="700">E-01</text>
+<text x="327.73" y="281" font-size="11" fill="#475569">SoC software · openpilot</text>
+<text x="292" y="304" font-size="12" fill="#0F172A" font-weight="700">17 FSRs</text>
+<rect x="350.534" y="291" width="83.9" height="17" rx="8.5" fill="#C2410C" stroke="#9A3412"/>
+<text x="392.461" y="303.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">up to ASIL C</text>
+<rect x="292" y="315" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="311" y="326.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-01</text>
+<rect x="333" y="315" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="352" y="326.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-02</text>
+<rect x="374" y="315" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="393" y="326.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-03</text>
+<rect x="415" y="315" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="434" y="326.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-04</text>
+<rect x="456" y="315" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="475" y="326.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-05</text>
+<rect x="497" y="315" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="516" y="326.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-06</text>
+<rect x="538" y="315" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="557" y="326.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-07</text>
+<text x="292" y="346" font-size="10" fill="#D2553F" font-weight="700">QM element, carries ASIL FSRs</text>
+<rect x="282" y="364" width="142" height="140" rx="9" fill="#FFFBEB" stroke="#D2553F" stroke-width="2.4"/>
+<text x="292" y="383" font-size="12" fill="#0F172A" font-weight="700">E-01/DM</text>
+<text x="292" y="397" font-size="10.5" fill="#475569">Driver monitoring chain</text>
+<text x="292" y="420" font-size="12" fill="#0F172A" font-weight="700">5 FSRs</text>
+<rect x="343.41" y="407" width="83.9" height="17" rx="8.5" fill="#FED7AA" stroke="#FDBA74"/>
+<text x="385.337" y="419.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">up to ASIL A</text>
+<rect x="292" y="431" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="311" y="442.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-02</text>
+<rect x="333" y="431" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="352" y="442.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-04</text>
+<rect x="374" y="431" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="393" y="442.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-06</text>
+<rect x="292" y="450" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="311" y="461.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-08</text>
+<text x="292" y="481" font-size="10" fill="#D2553F" font-weight="700">QM element, carries</text>
+<text x="292" y="494" font-size="10" fill="#D2553F" font-weight="700">ASIL FSRs</text>
+<rect x="434" y="364" width="142" height="140" rx="9" fill="#FFF7ED" stroke="#D2553F" stroke-width="2.4"/>
+<text x="444" y="383" font-size="12" fill="#0F172A" font-weight="700">E-01/HMI</text>
+<text x="444" y="397" font-size="10.5" fill="#475569">HMI · display, sound</text>
+<text x="444" y="420" font-size="12" fill="#0F172A" font-weight="700">5 FSRs</text>
+<rect x="495.41" y="407" width="83.9" height="17" rx="8.5" fill="#C2410C" stroke="#9A3412"/>
+<text x="537.337" y="419.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">up to ASIL C</text>
+<rect x="444" y="431" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="463" y="442.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-02</text>
+<rect x="485" y="431" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="504" y="442.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-05</text>
+<rect x="526" y="431" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="545" y="442.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-06</text>
+<rect x="444" y="450" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="463" y="461.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-07</text>
+<rect x="485" y="450" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="504" y="461.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-08</text>
+<text x="444" y="481" font-size="10" fill="#D2553F" font-weight="700">QM element, carries</text>
+<text x="444" y="494" font-size="10" fill="#D2553F" font-weight="700">ASIL FSRs</text>
+<rect x="586" y="364" width="142" height="140" rx="9" fill="#FFFBEB" stroke="#D2553F" stroke-width="2.4"/>
+<text x="596" y="383" font-size="12" fill="#0F172A" font-weight="700">E-02</text>
+<text x="596" y="397" font-size="10.5" fill="#475569">ML models</text>
+<text x="596" y="420" font-size="12" fill="#0F172A" font-weight="700">1 FSR</text>
+<rect x="640.414" y="407" width="83.9" height="17" rx="8.5" fill="#FED7AA" stroke="#FDBA74"/>
+<text x="682.341" y="419.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">up to ASIL A</text>
+<rect x="596" y="431" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="615" y="442.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-02</text>
+<rect x="637" y="431" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="656" y="442.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-06</text>
+<rect x="678" y="431" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="697" y="442.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-08</text>
+<text x="596" y="462" font-size="10" fill="#D2553F" font-weight="700">QM element, carries</text>
+<text x="596" y="475" font-size="10" fill="#D2553F" font-weight="700">ASIL FSRs</text>
+<rect x="752" y="262" width="226" height="242" rx="9" fill="#FFF7ED" stroke="#9A3412" stroke-width="1.8"/>
+<text x="762" y="281" font-size="12" fill="#0F172A" font-weight="700">E-03</text>
+<text x="762" y="295" font-size="10.5" fill="#475569">Panda safety MCU · envelope</text>
+<text x="762" y="318" font-size="12" fill="#0F172A" font-weight="700">42 FSRs</text>
+<rect x="820.534" y="305" width="83.9" height="17" rx="8.5" fill="#C2410C" stroke="#9A3412"/>
+<text x="862.461" y="317.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">up to ASIL C</text>
+<rect x="762" y="329" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="781" y="340.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-01</text>
+<rect x="803" y="329" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="822" y="340.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-02</text>
+<rect x="844" y="329" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="863" y="340.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-03</text>
+<rect x="885" y="329" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="904" y="340.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-04</text>
+<rect x="926" y="329" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="945" y="340.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-05</text>
+<rect x="762" y="348" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="781" y="359.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-06</text>
+<rect x="803" y="348" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="822" y="359.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-07</text>
+<text x="762" y="379" font-size="10" fill="#475569">Element: ASIL C: hardened to C; SG-01</text>
+<text x="762" y="392" font-size="10" fill="#475569">FSRs carry ASIL C until C1 is shown</text>
+<rect x="560" y="540" width="418" height="96" rx="9" fill="#FFF7ED" stroke="#9A3412" stroke-width="1.8"/>
+<text x="570" y="559" font-size="12" fill="#0F172A" font-weight="700">E-05</text>
+<text x="605.73" y="559" font-size="11" fill="#475569">Harness with intercept relay</text>
+<text x="570" y="582" font-size="12" fill="#0F172A" font-weight="700">3 FSRs</text>
+<rect x="621.41" y="569" width="83.9" height="17" rx="8.5" fill="#C2410C" stroke="#9A3412"/>
+<text x="663.337" y="581.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">up to ASIL C</text>
+<rect x="570" y="593" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="589" y="604.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-01</text>
+<rect x="611" y="593" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="630" y="604.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-03</text>
+<rect x="652" y="593" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="671" y="604.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-07</text>
+<text x="570" y="624" font-size="10" fill="#475569">Element: ASIL C for blocking; B for the PCS path</text>
+<rect x="240" y="752" width="190" height="126" rx="9" fill="url(#sv-hatch)" stroke="#64748B" stroke-width="1.3" stroke-dasharray="5 4"/>
+<text x="250" y="771" font-size="12" fill="#0F172A" font-weight="700">EXT-EPS</text>
+<text x="250" y="785" font-size="10.5" fill="#475569">Toyota EPS</text>
+<text x="250" y="808" font-size="12" fill="#0F172A" font-weight="700">1 FSR</text>
+<rect x="294.414" y="795" width="34.7" height="17" rx="8.5" fill="#FFFFFF" stroke="#64748B"/>
+<text x="311.749" y="807.5" font-size="10" fill="#475569" font-weight="700" text-anchor="middle">AoU</text>
+<rect x="250" y="819" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="269" y="830.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-01</text>
+<rect x="291" y="819" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="310" y="830.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-05</text>
+<text x="250" y="850" font-size="10" fill="#475569">Element: Unknown; credited through</text>
+<text x="250" y="863" font-size="10" fill="#475569">AOU-01/02 only</text>
+<rect x="446" y="752" width="190" height="126" rx="9" fill="url(#sv-hatch)" stroke="#64748B" stroke-width="1.3" stroke-dasharray="5 4"/>
+<text x="456" y="771" font-size="12" fill="#0F172A" font-weight="700">EXT-PCM</text>
+<text x="456" y="785" font-size="10.5" fill="#475569">ECM / PCM and brake</text>
+<text x="456" y="808" font-size="12" fill="#0F172A" font-weight="700">4 FSRs</text>
+<rect x="507.41" y="795" width="83.9" height="17" rx="8.5" fill="#FB923C" stroke="#EA580C"/>
+<text x="549.337" y="807.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">up to ASIL B</text>
+<rect x="456" y="819" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="475" y="830.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-03</text>
+<rect x="497" y="819" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="516" y="830.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-04</text>
+<rect x="538" y="819" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="557" y="830.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-05</text>
+<rect x="579" y="819" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="598" y="830.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-07</text>
+<text x="456" y="850" font-size="10" fill="#475569">Element: Unknown; credited through</text>
+<text x="456" y="863" font-size="10" fill="#475569">AOU-03/05 only</text>
+<rect x="652" y="752" width="190" height="126" rx="9" fill="url(#sv-hatch)" stroke="#64748B" stroke-width="1.3" stroke-dasharray="5 4"/>
+<text x="662" y="771" font-size="12" fill="#0F172A" font-weight="700">EXT-CLU</text>
+<text x="662" y="785" font-size="10.5" fill="#475569">Instrument cluster</text>
+<text x="662" y="808" font-size="12" fill="#0F172A" font-weight="700">1 FSR</text>
+<rect x="706.414" y="795" width="83.9" height="17" rx="8.5" fill="#C2410C" stroke="#9A3412"/>
+<text x="748.341" y="807.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">up to ASIL C</text>
+<rect x="662" y="819" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="681" y="830.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-02</text>
+<rect x="703" y="819" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="722" y="830.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-05</text>
+<rect x="744" y="819" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="763" y="830.5" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">SG-06</text>
+<text x="662" y="850" font-size="10" fill="#475569">Element: Unknown; used as an</text>
+<text x="662" y="863" font-size="10" fill="#475569">independent mode indication</text>
+<rect x="1046" y="540" width="194" height="96" rx="9" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="1058" y="560" font-size="12" fill="#0F172A" font-weight="700">Toyota forward camera</text>
+<text x="1058" y="578" font-size="10.5" fill="#475569">Outside the item. Its PCS/AEB</text>
+<text x="1058" y="591.5" font-size="10.5" fill="#475569">path is kept by SG-07 (E-03, E-05,</text>
+<text x="1058" y="605" font-size="10.5" fill="#475569">PCM)</text>
+<line x1="978" y1="588" x2="1044" y2="588" stroke="#0F766E" stroke-width="2" marker-end="url(#sv-m)" marker-start="url(#sv-m)"/>
+<rect x="40" y="262" width="176" height="234" rx="10" fill="url(#sv-hatch)" stroke="#64748B" stroke-width="1.3" stroke-dasharray="5 4"/>
+<text x="52" y="282" font-size="12" fill="#0F172A" font-weight="700">DRV · Driver</text>
+<text x="52" y="300" font-size="10.5" fill="#475569">Not an E/E element: no FSR.</text>
+<text x="52" y="313.5" font-size="10.5" fill="#475569">Credited through assumptions</text>
+<text x="52" y="327" font-size="10.5" fill="#475569">of use only:</text>
+<rect x="52" y="346.5" width="59.4" height="17" rx="8.5" fill="#FFFFFF" stroke="#64748B"/>
+<text x="81.684" y="359" font-size="10" fill="#475569" font-weight="700" text-anchor="middle">AOU-06R</text>
+<rect x="52" y="368.5" width="59.4" height="17" rx="8.5" fill="#FFFFFF" stroke="#64748B"/>
+<text x="81.684" y="381" font-size="10" fill="#475569" font-weight="700" text-anchor="middle">AOU-02R</text>
+<text x="52" y="400.5" font-size="10.5" fill="#0F172A">Supervises, overrides with</text>
+<text x="52" y="414" font-size="10.5" fill="#0F172A">brake, cancel and steering,</text>
+<text x="52" y="427.5" font-size="10.5" fill="#0F172A">responds to warnings (§11)</text>
+<line x1="216" y1="430" x2="280" y2="430" stroke="#475569" stroke-width="1.6" marker-end="url(#sv-m)" marker-start="url(#sv-m)"/>
+<path d="M128 496 V 808 H 238" fill="none" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 4" marker-end="url(#sv-m)"/>
+<text x="136" y="790" font-size="10" fill="#475569">wheel, pedals, stalk</text>
+<text x="1046" y="262" font-size="10.5" fill="#475569" font-weight="700" letter-spacing=".04em">HOW TO READ</text>
+<text x="1046" y="286" font-size="11" fill="#0F172A" font-weight="700">Box colour</text>
+<text x="1046" y="299.5" font-size="10.5" fill="#475569">the highest ASIL among the FSRs</text>
+<text x="1046" y="313" font-size="10.5" fill="#475569">allocated to the element (§5 Alloc)</text>
+<text x="1046" y="333" font-size="11" fill="#0F172A" font-weight="700">SG chips</text>
+<text x="1046" y="346.5" font-size="10.5" fill="#475569">the safety goals the FSRs of that</text>
+<text x="1046" y="360" font-size="10.5" fill="#475569">element serve (§9)</text>
+<text x="1046" y="380" font-size="11" fill="#0F172A" font-weight="700">Red outline</text>
+<text x="1046" y="393.5" font-size="10.5" fill="#475569">a QM element (§2) that carries ASIL</text>
+<text x="1046" y="407" font-size="10.5" fill="#475569">FSRs; §10 backs them by E-03 or</text>
+<text x="1046" y="420.5" font-size="10.5" fill="#475569">leaves them open (OI-9, OI-11)</text>
+<text x="1046" y="440.5" font-size="11" fill="#0F172A" font-weight="700">Hatched</text>
+<text x="1046" y="454" font-size="10.5" fill="#475569">external measure or driver, credited</text>
+<text x="1046" y="467.5" font-size="10.5" fill="#475569">through an AoU (§11), no ASIL</text>
+</g>
+<line x1="40" y1="846" x2="1240" y2="846" stroke="#E2E8F0"/>
+<rect x="40" y="858" width="28" height="16" rx="8" fill="#C2410C" stroke="#9A3412"/>
+<text x="76" y="870" font-size="11" fill="#0F172A">ASIL C</text>
+<rect x="140.45999999999998" y="858" width="28" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="176.46" y="870" font-size="11" fill="#0F172A">ASIL B</text>
+<rect x="240.91999999999996" y="858" width="28" height="16" rx="8" fill="#FED7AA" stroke="#FDBA74"/>
+<text x="276.92" y="870" font-size="11" fill="#0F172A">ASIL A</text>
+<rect x="341.37999999999994" y="858" width="28" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="2.4"/>
+<text x="377.38" y="870" font-size="11" fill="#0F172A">QM element carrying ASIL FSRs</text>
+<line x1="570.7599999999999" y1="866" x2="600.7599999999999" y2="866" stroke="#C2410C" stroke-width="2.4"/>
+<text x="608.76" y="870" font-size="11" fill="#0F172A">Actuation path through the envelope</text>
+<text x="40" y="890" font-size="11" fill="#475569">Every FSR is Proposed: a box shows allocation, not implementation (§5 Impl). FSR-06.05 is allocated as the FSRs it references and is not counted. ASILs are those of the HARA, not yet confirmed (I3).</text>
+<g class="terms">
+<text x="40" y="910" font-size="10.5" fill="#475569">Terms: AEB automatic emergency braking · AoU assumption of use: what the analysis assumes about the car, the driver or the environment · AOU-nn assumption of use (WP-C-01 §7); an R suffix marks the FSC's refined</text>
+<text x="40" y="924.5" font-size="10.5" fill="#475569">version · ASIL Automotive Safety Integrity Level, A (lowest) to D (highest), from ISO 26262 · C0–C3 controllability class C0 (controllable in general) to C3 (difficult or uncontrollable) · CAN controller area</text>
+<text x="40" y="939" font-size="10.5" fill="#475569">network: the vehicle's data bus · DM driver monitoring · DRV the driver · E-nn element of the item (WP-C-01 §3.1), E-01…E-06 · E/E electrical and electronic (systems) · ECM engine control module · EPS electric power</text>
+<text x="40" y="953.5" font-size="10.5" fill="#475569">steering · EXT-nn external element credited only through an assumption of use (EXT-EPS, EXT-PCM, EXT-CLU) · FSR-nn functional safety requirement (FSC) · HARA hazard analysis and risk assessment (ISO 26262-3) · HMI</text>
+<text x="40" y="968" font-size="10.5" fill="#475569">human-machine interface: display, sounds, cluster · I0–I3 independence level of a review, I0 (none, e.g. the author or an AI) to I3 (independent organisation) · IF-nn interface of the item (WP-C-01 §3.4) · LD-SDA</text>
+<text x="40" y="982.5" font-size="10.5" fill="#475569">LionDriver Supervised Driving Assistance, the item · MCU microcontroller: the panda safety processor (STM32H7) · ML machine learning · OI-nn open item of the document it appears in · PCM powertrain control module</text>
+<text x="40" y="997" font-size="10.5" fill="#475569">(engine and drive) · PCS pre-collision system: Toyota's stock collision warning and braking · QM quality managed: no ASIL; ordinary quality processes suffice · SG-nn safety goal (HARA §6) · SoC system on chip: the</text>
+<text x="40" y="1011.5" font-size="10.5" fill="#475569">comma device's main processor, running openpilot (QM) · SPI serial peripheral interface (the link between SoC and MCU) · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H</text>
+<text x="40" y="1026" font-size="10.5" fill="#475569">hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+<text x="1240" y="1046.5" font-size="10" fill="#475569" text-anchor="end">Generated by fsc_safety_view.py</text>
+</svg>

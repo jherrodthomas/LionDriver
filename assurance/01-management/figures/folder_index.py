@@ -7,6 +7,9 @@ exist, so it never needs editing by hand:
 - the folder's line of the Layout table in assurance/README.md (what the folder holds, the standard clauses);
 - its section of the WP-M-00 §3 register (work products, gate, status), the figure `index-status.svg` drawn from it
   (one row per work product, a chip at each gate it is needed for, coloured by status) and a table with links;
+- the folder's own section, if it has one: `figures/index-section.md`, written by that folder's figure script (for
+  03-system, fig_s00_se.py: the systems-engineering alignment). Its links are relative to figures/, where it lives,
+  and are rewritten to work from the README;
 - its subfolders, with the title of their own README. Files are not listed (GitHub shows them above the page), so
   adding a file to a folder never makes a page stale.
 
@@ -18,6 +21,7 @@ Standard library only. Output is deterministic. Register parsing is fig_m_manage
 
 from __future__ import annotations
 
+import os
 import re
 import sys
 from pathlib import Path
@@ -131,6 +135,18 @@ def rebase(text: str, folder: str) -> str:
   return re.sub(r"\[([^\]]*)\]\(([^)]+)\)", fix, text)
 
 
+def rebase_from(text: str, src: Path, dst: Path) -> str:
+  """Relative links and images of markdown written in folder src, rewritten to work from folder dst."""
+  def fix(m):
+    url = m.group(3)
+    if re.match(r"[a-z]+:|#|/", url):
+      return m.group(0)
+    path, _, frag = url.partition("#")
+    rel = Path(os.path.relpath((src / path).resolve(), dst.resolve())).as_posix()
+    return f"{m.group(1)}[{m.group(2)}]({rel}{'#' + frag if frag else ''})"
+  return re.sub(r"(!?)\[([^\]]*)\]\(([^)]+)\)", fix, text)
+
+
 def md_title(p: Path) -> str:
   for ln in p.read_text(encoding="utf-8", errors="replace").splitlines():
     if ln.startswith("# "):
@@ -211,6 +227,9 @@ def page(folder: str, lay: dict, regs: dict, reg) -> tuple[str, str | None]:
       link = f"[{it['id']}]({href})" if href else it["id"]
       out.append(f"| {link} | {it['name']} | {it['gate']} | {names[it['status']]} |")
     out.append("")
+  extra = d / "figures" / "index-section.md"
+  if extra.exists():
+    out += [rebase_from(extra.read_text(encoding="utf-8").rstrip(), extra.parent, d), ""]
   subdirs = sorted(p for p in d.iterdir() if p.is_dir() and p.name not in ("figures", "__pycache__"))
   if subdirs:
     out += ["## Subfolders", "", "| Folder | What it holds |", "|---|---|"]

@@ -11,6 +11,7 @@ package LionDriverVerification {
         attribute spec : String;
         attribute level : String;
         attribute names : String;
+        attribute steps : String[0..*];
     }
     verification <'VS-FI-01'> vs_fi_01 : VerificationCase {
         doc /* Corrupted frame (bad checksum, wrong length) */
@@ -583,6 +584,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.1";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-1", "I-2", "I-4");
         objective {
             verify LionDriverRequirements::fsr_01_05;
             verify LionDriverRequirements::tsr_301;
@@ -595,6 +597,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.1";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-1", "I-3", "I-4");
         objective {
             verify LionDriverRequirements::sg_05;
             verify LionDriverRequirements::fsr_05_01;
@@ -609,6 +612,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.1";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-1", "I-3");
         objective {
             verify LionDriverRequirements::fsr_05_03;
             verify LionDriverRequirements::tsr_304;
@@ -619,6 +623,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.1";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-1");
         objective {
             verify LionDriverRequirements::fsr_04_04;
             verify LionDriverRequirements::fsr_05_04;
@@ -631,6 +636,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.2";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-1", "I-2");
         objective {
             verify LionDriverRequirements::fsr_01_07;
             verify LionDriverRequirements::fsr_02_05;
@@ -644,6 +650,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.2";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-1");
         objective {
             verify LionDriverRequirements::fsr_01_07;
             verify LionDriverRequirements::tsr_307;
@@ -655,6 +662,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.2";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-1");
         objective {
             verify LionDriverRequirements::fsr_01_10;
             verify LionDriverRequirements::tsr_512;
@@ -665,6 +673,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.2";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-1");
         objective {
             verify LionDriverRequirements::tsr_506;
             verify LionDriverRequirements::tsr_513;
@@ -675,6 +684,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.2";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-2");
         objective {
             verify LionDriverRequirements::fsr_01_08;
             verify LionDriverRequirements::tsr_410;
@@ -687,6 +697,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.2";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-1");
         objective {
             verify LionDriverRequirements::fsr_01_07;
             verify LionDriverRequirements::fsr_01_08;
@@ -700,6 +711,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.2";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-1");
         objective {
             verify LionDriverRequirements::fsr_01_08;
             verify LionDriverRequirements::tsr_502;
@@ -711,6 +723,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.3";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-1", "I-3");
         objective {
             verify LionDriverRequirements::fsr_01_06;
             verify LionDriverRequirements::tsr_401;
@@ -722,6 +735,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.3";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-1", "I-3");
         objective {
             verify LionDriverRequirements::fsr_01_06;
             verify LionDriverRequirements::tsr_403;
@@ -735,6 +749,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.3";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-1");
         objective {
             verify LionDriverRequirements::fsr_01_06;
             verify LionDriverRequirements::tsr_402;
@@ -746,6 +761,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.4";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-1", "I-3");
         objective {
             verify LionDriverRequirements::fsr_01_01;
             verify LionDriverRequirements::fsr_01_12;
@@ -764,6 +780,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.4";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-1", "I-3");
         objective {
             verify LionDriverRequirements::fsr_03_01;
             verify LionDriverRequirements::fsr_04_01;
@@ -781,6 +798,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.4";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-2", "I-3");
         objective {
             verify LionDriverRequirements::fsr_06_04;
             verify LionDriverRequirements::tsr_604;
@@ -792,6 +810,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.5";
         :>> level = "VS-SI";
         :>> names = "AOU-13";
+        :>> steps = ("I-1", "I-4");
         objective {
             verify LionDriverRequirements::fsr_07_03;
             verify LionDriverRequirements::tsr_506;
@@ -804,6 +823,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.5";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-1");
         objective {
             verify LionDriverRequirements::fsr_01_11;
             verify LionDriverRequirements::tsr_506;
@@ -815,6 +835,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.5";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-1", "I-2", "I-4");
         objective {
             verify LionDriverRequirements::fsr_07_01;
             verify LionDriverRequirements::tsr_704;
@@ -826,6 +847,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.5";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-1");
         objective {
             verify LionDriverRequirements::fsr_07_02;
             verify LionDriverRequirements::tsr_705;
@@ -836,6 +858,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.6";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-2", "I-3");
         objective {
             verify LionDriverRequirements::fsr_02_02;
             verify LionDriverRequirements::fsr_02_03;
@@ -850,6 +873,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.6";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-2");
         objective {
             verify LionDriverRequirements::fsr_01_07;
             verify LionDriverRequirements::fsr_02_05;
@@ -864,6 +888,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.6";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-2");
         objective {
             verify LionDriverRequirements::fsr_05_06;
             verify LionDriverRequirements::tsr_307;
@@ -875,6 +900,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.6";
         :>> level = "VS-SI";
         :>> names = "AOU-13";
+        :>> steps = ("I-1", "I-2");
         objective {
             verify LionDriverRequirements::fsr_01_09;
             verify LionDriverRequirements::fsr_07_03;
@@ -887,6 +913,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.7";
         :>> level = "VS-SI";
         :>> names = "";
+        :>> steps = ("I-1", "I-2");
         objective {
             verify LionDriverRequirements::fsr_01_01;
             verify LionDriverRequirements::fsr_01_02;
@@ -982,6 +1009,7 @@ package LionDriverVerification {
         :>> spec = "WP-S-08 §6.7";
         :>> level = "VS-SI";
         :>> names = "SWSR-307h";
+        :>> steps = ("I-2");
         objective {
             verify LionDriverRequirements::tsr_307;
             verify LionDriverRequirements::tsr_514;

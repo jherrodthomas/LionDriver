@@ -173,8 +173,29 @@ def taillights(root, coll, rear: float, half: float = 0.62, z: float = 0.85):
     A.part("tail_lamp", me, root, coll, (rear, y, z))
 
 
-def make_actor(a: dict, model, coll, lights: bool, night: bool = False, seed: str = ""):
-  """A road user; lights: headlights and tail lamps (night, or poor visibility by day: dipped, dimmer)."""
+def beacons(root, coll, x: float, z: float, frames: int, fps: int, night: bool):
+  """An emergency light bar on the roof (red left, blue right) at (x, z), each half lighting its side in turn, about
+  twice a second (stills catch whichever half is on)."""
+  half = max(1, round(fps / 4))
+  for y, rgb, phase in ((0.35, (1.0, 0.03, 0.02), 0), (-0.35, (0.05, 0.2, 1.0), 1)):
+    lens = A.material(f"beacon_{phase}", rgb, rough=0.2, emit=25.0)
+    A.part("beacon", A.box_mesh(f"beacon_{phase}", 0.3, 0.6, 0.14, mat=lens), root, coll, (x, y, z))
+    lt = bpy.data.objects.new("beacon_light", bpy.data.lights.new("beacon_light", "POINT"))
+    lt.data.color, lt.data.shadow_soft_size = rgb, 0.1
+    lt.parent, lt.location = root, (x, y * 1.5, z + 0.2)
+    coll.objects.link(lt)
+    on = 1500 if night else 400
+    for f in range(1, frames + 1, half):
+      lt.data.energy = on if (f // half + phase) % 2 == 0 else on * 0.05
+      lt.data.keyframe_insert("energy", frame=f)
+    for fc in fcurves(lt.data):
+      for kp in fc.keyframe_points:
+        kp.interpolation = "CONSTANT"
+
+
+def make_actor(a: dict, model, coll, lights: bool, night: bool = False, seed: str = "", fps: int = 20):
+  """A road user; lights: headlights and tail lamps (night, or poor visibility by day: dipped, dimmer); beacons: an
+  emergency vehicle's light bar, flashing whether or not it moves."""
   kind = a["kind"]
   name = a["name"].replace(" ", "_")
   limbs = None
@@ -186,10 +207,15 @@ def make_actor(a: dict, model, coll, lights: bool, night: bool = False, seed: st
       headlights(ob, coll, energy=4000 if night else 1200)
       taillights(ob, coll, -2.32)
   elif kind == "truck":
-    ob = A.truck(name, coll)
+    ob = A.truck(name, coll, tuple(a["paint"])) if a.get("paint") else A.truck(name, coll)
     if lights:
       headlights(ob, coll, 4.8, 4000 if night else 1200)
       taillights(ob, coll, -4.76, 1.05, 1.0)
+  elif kind == "van":                           # an ambulance or tow truck's stand-in: a short box truck
+    ob = A.truck(name, coll, tuple(a.get("paint") or (0.85, 0.85, 0.83)), length=7.2)
+    if lights:
+      headlights(ob, coll, 3.5, 4000 if night else 1200)
+      taillights(ob, coll, -3.61, 1.05, 1.0)
   elif kind == "pedestrian":
     scanned = A.scanned_pedestrian(name, coll, seed, a.get("figure"))
     ob, limbs = scanned if scanned else A.pedestrian(name, coll)
@@ -197,6 +223,9 @@ def make_actor(a: dict, model, coll, lights: bool, night: bool = False, seed: st
     ob = A.cyclist(name, coll)
   else:
     raise ValueError(kind)
+  if a.get("beacons") and kind in ("car", "truck", "van"):
+    x, z = {"truck": (9.5 / 2 - 1.2, 2.9), "van": (7.2 / 2 - 1.2, 2.9)}.get(kind, (-0.2, 1.46))
+    beacons(ob, coll, x, z, len(a["poses"]), fps, night)
   keyframe_poses(ob, a["poses"])
   if isinstance(limbs, bpy.types.Object):       # a scanned figure: its rig
     walk_rig(limbs, a["poses"])
@@ -600,7 +629,7 @@ def build(sc: dict, vehicle: Path | None, front: str | None) -> dict:
   scene.collection.children.link(users)
   lights = bool(env.get("night")) or (env.get("visibility_m") or 1e9) < 1000
   seed = sc.get("variant_of") or sc["id"]       # a condition variant draws the same people as its base scene
-  obs = [make_actor(a, model, users, lights, bool(env.get("night")), seed) for a in sc["actors"]]
+  obs = [make_actor(a, model, users, lights, bool(env.get("night")), seed, sc["fps"]) for a in sc["actors"]]
   A.setup_glare(env)
 
   ghosts = bpy.data.collections.new("event_ghosts")
@@ -618,8 +647,10 @@ def build(sc: dict, vehicle: Path | None, front: str | None) -> dict:
   cams = build_cameras(sc)
   scene.camera = cams["chase"]
   A.build_surroundings(sc, env, cams["chase"], obs[0], frames, sc["fps"], street_layout.rear_view(sc))
+  night = bool(env.get("night"))
   print("extras: " + scenery_kits.build(sc, env, assets, keyframe_poses, walk_rig, (headlights, taillights),
-                                                street_layout.rear_view(sc)))
+                                        street_layout.rear_view(sc),
+                                        lambda r, c, x, z: beacons(r, c, x, z, frames, sc["fps"], night)))
   A.build_weather(env, obs[0], sc["road"]["centre"], frames, sc["fps"], cams=(cams["chase"], cams["driver"]))
   return {"keys": keys, "cams": cams}
 
@@ -629,7 +660,7 @@ def screen_positions(sc: dict, cam) -> dict:
   from bpy_extras.object_utils import world_to_camera_view
   from mathutils import Vector
   s = bpy.context.scene
-  heights = {"pedestrian": 1.9, "cyclist": 1.8, "truck": 3.9}
+  heights = {"pedestrian": 1.9, "cyclist": 1.8, "truck": 3.9, "van": 3.0}
   out = {}
   for f in range(1, len(sc["t"]) + 1):
     s.frame_set(f)
