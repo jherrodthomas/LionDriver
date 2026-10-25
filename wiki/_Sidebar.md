@@ -22,6 +22,7 @@
 - [Integrated standards: one system, not five](Integrated-standards.md)
 - [For the assessor](For-the-assessor.md)
 - [Reference vehicle](Reference-vehicle.md)
+- [CAN, CAN FD and end-to-end protection](CAN-CAN-FD-and-end-to-end-protection.md)
 - [Contributor guide](Contributor-guide.md)
 - [Reporting a safety concern](Reporting-a-safety-concern.md)
 - [Session log](Session-log.md)

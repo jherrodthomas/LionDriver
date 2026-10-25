@@ -89,9 +89,11 @@ records. See [vehicle compatibility](../docs/liondriver/compatibility.md).
    `python3 tools/vehicles/vehicle_register.py`.
 3. Record the configuration baseline: car platform, brand safety mode and parameters, each with its source in
    the pinned upstream code.
-4. Write the [impact analysis](../assurance/01-management/WP-M-12-impact-analysis.md): which assumptions of use
+4. Record how the car protects its messages (checksum, counter, CAN or CAN FD) against the table in
+   [CAN, CAN FD and end-to-end protection](CAN-CAN-FD-and-end-to-end-protection.md#6-other-cars-protect-their-messages-better).
+5. Write the [impact analysis](../assurance/01-management/WP-M-12-impact-analysis.md): which assumptions of use
    hold for this vehicle, which differ, and what evidence each needs.
-5. Run the validator and the dashboard generator, then open a pull request.
+6. Run the validator and the dashboard generator, then open a pull request.
 
 Upstream car-port changes arrive through submodule updates under the
 [upstream management process](../assurance/01-management/WP-M-11-upstream-and-supplier-management.md); they

@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="699.5" viewBox="0 0 1280 699.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">Figure 5-1. Leaving the ODD (WP-C-02 §5)</title>
+<desc id="d">ODD exits of WP-C-02 §5.2: Speed &gt; 110 km/h (ODD bound, DQ-260): not detected, today None, closed by FM-07; Speed &gt; 149 km/h: detected, today Warning + no-entry; stays engaged (events.py:989-996), closed by FM-07; Curve tighter than R_ODD: partly, today Warning only, closed by driver task; Missing/faded markings, construction zone, road type change (leaving the highway), intersection: not detected, today None, closed by FM-08; Heavy rain, fog, glare, camera blocked: not detected, today None specific (GAP-22), closed by FM-09; Snow / ice: not detected, today None, closed by driver task; Roundabout, road works (cones, lane shifts): not detected, today None, closed by driver task; Device mis-calibration: detected, today Soft disable, closed by implemented; Device overheat: detected, today Soft disable, closed by implemented; Driver not visible to DM: detected, today Wheel-touch fallback (policy.py:82-83), closed by GAP-21; Vehicle state (VSC off, door, seatbelt, gear): detected, today Soft disable / no entry, closed by implemented.</desc>
+<defs></defs>
+<rect width="1280" height="699.5" fill="#FFFFFF"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 5-1 · Leaving the ODD: what the item notices and what it does</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Every way out of the ODD in §5.2, whether the item detects it, how it reacts today, and what closes the gap. There is no ODD monitor: where it does not notice, the driver must</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-02 §5</text>
+<text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end"></text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+<text x="40" y="112" font-size="10.5" fill="#475569" font-weight="700" letter-spacing=".04em">WAY OUT OF THE ODD (§5.2)</text>
+<text x="384" y="112" font-size="10.5" fill="#475569" font-weight="700" letter-spacing=".04em">DOES THE ITEM NOTICE?</text>
+<text x="648" y="112" font-size="10.5" fill="#475569" font-weight="700" letter-spacing=".04em">WHAT IT DOES TODAY</text>
+<text x="962" y="112" font-size="10.5" fill="#475569" font-weight="700" letter-spacing=".04em">WHAT CLOSES THE GAP</text>
+<rect x="32" y="122" width="1216" height="34" rx="6" fill="#F8FAFC"/>
+<text x="40" y="141" font-size="11.5" fill="#0F172A" font-weight="600">Speed &gt; 110 km/h (ODD bound, DQ-260)</text>
+<rect x="384" y="129" width="72.8" height="17" rx="8.5" fill="#FEF2F2" stroke="#B42318"/>
+<text x="420.404" y="141" font-size="9.5" fill="#B42318" font-weight="700" text-anchor="middle">not detected</text>
+<text x="648" y="141" font-size="10.5" fill="#B42318" font-weight="700">None</text>
+<text x="962" y="141" font-size="10.5" fill="#7C3AED" font-weight="700">FM-07</text>
+<text x="40" y="175" font-size="11.5" fill="#0F172A" font-weight="600">Speed &gt; 149 km/h</text>
+<rect x="384" y="163" width="54.5" height="17" rx="8.5" fill="#F0FDFA" stroke="#0F766E"/>
+<text x="411.241" y="175" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">detected</text>
+<text x="446.481" y="175" font-size="10" fill="#475569">speedTooHigh</text>
+<text x="446.481" y="188" font-size="10" fill="#475569">(car_events.py:126)</text>
+<text x="648" y="175" font-size="10.5" fill="#0F172A">Warning + no-entry; stays engaged (events.py:989-996)</text>
+<text x="962" y="175" font-size="10.5" fill="#7C3AED" font-weight="700">FM-07</text>
+<rect x="32" y="198" width="1216" height="55" rx="6" fill="#F8FAFC"/>
+<text x="40" y="217" font-size="11.5" fill="#0F172A" font-weight="600">Curve tighter than R_ODD</text>
+<rect x="384" y="205" width="40.7" height="17" rx="8.5" fill="#FFFBEB" stroke="#B45309"/>
+<text x="404.343" y="217" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">partly</text>
+<text x="432.685" y="217" font-size="10" fill="#475569">steerSaturated warning when</text>
+<text x="432.685" y="230" font-size="10" fill="#475569">the controller saturates</text>
+<text x="432.685" y="243" font-size="10" fill="#475569">(events.py:619)</text>
+<text x="648" y="217" font-size="10.5" fill="#0F172A">Warning only</text>
+<text x="962" y="217" font-size="10.5" fill="#0F172A" font-weight="700">driver task</text>
+<text x="40" y="272" font-size="11.5" fill="#0F172A" font-weight="600">Missing/faded markings, construction zone, road type</text>
+<text x="40" y="287" font-size="11.5" fill="#0F172A" font-weight="600">change (leaving the highway), intersection</text>
+<rect x="384" y="260" width="72.8" height="17" rx="8.5" fill="#FEF2F2" stroke="#B42318"/>
+<text x="420.404" y="272" font-size="9.5" fill="#B42318" font-weight="700" text-anchor="middle">not detected</text>
+<text x="648" y="272" font-size="10.5" fill="#B42318" font-weight="700">None</text>
+<text x="962" y="272" font-size="10.5" fill="#7C3AED" font-weight="700">FM-08</text>
+<rect x="32" y="299" width="1216" height="42" rx="6" fill="#F8FAFC"/>
+<text x="40" y="318" font-size="11.5" fill="#0F172A" font-weight="600">Heavy rain, fog, glare, camera blocked</text>
+<rect x="384" y="306" width="72.8" height="17" rx="8.5" fill="#FEF2F2" stroke="#B42318"/>
+<text x="420.404" y="318" font-size="9.5" fill="#B42318" font-weight="700" text-anchor="middle">not detected</text>
+<text x="464.809" y="318" font-size="10" fill="#475569">possible model degradation</text>
+<text x="464.809" y="331" font-size="10" fill="#475569">without gating</text>
+<text x="648" y="318" font-size="10.5" fill="#B42318" font-weight="700">None specific (GAP-22)</text>
+<text x="962" y="318" font-size="10.5" fill="#7C3AED" font-weight="700">FM-09</text>
+<text x="40" y="360" font-size="11.5" fill="#0F172A" font-weight="600">Snow / ice</text>
+<rect x="384" y="348" width="72.8" height="17" rx="8.5" fill="#FEF2F2" stroke="#B42318"/>
+<text x="420.404" y="360" font-size="9.5" fill="#B42318" font-weight="700" text-anchor="middle">not detected</text>
+<text x="648" y="360" font-size="10.5" fill="#B42318" font-weight="700">None</text>
+<text x="962" y="360" font-size="10.5" fill="#0F172A" font-weight="700">driver task</text>
+<rect x="32" y="375" width="1216" height="34" rx="6" fill="#F8FAFC"/>
+<text x="40" y="394" font-size="11.5" fill="#0F172A" font-weight="600">Roundabout, road works (cones, lane shifts)</text>
+<rect x="384" y="382" width="72.8" height="17" rx="8.5" fill="#FEF2F2" stroke="#B42318"/>
+<text x="420.404" y="394" font-size="9.5" fill="#B42318" font-weight="700" text-anchor="middle">not detected</text>
+<text x="648" y="394" font-size="10.5" fill="#B42318" font-weight="700">None</text>
+<text x="962" y="394" font-size="10.5" fill="#0F172A" font-weight="700">driver task</text>
+<text x="40" y="428" font-size="11.5" fill="#0F172A" font-weight="600">Device mis-calibration</text>
+<rect x="384" y="416" width="54.5" height="17" rx="8.5" fill="#F0FDFA" stroke="#0F766E"/>
+<text x="411.241" y="428" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">detected</text>
+<text x="446.481" y="428" font-size="10" fill="#475569">calibrationInvalid</text>
+<text x="446.481" y="441" font-size="10" fill="#475569">(events.py:816)</text>
+<text x="648" y="428" font-size="10.5" fill="#0F172A">Soft disable</text>
+<text x="962" y="428" font-size="10.5" fill="#0F766E" font-weight="700">implemented</text>
+<rect x="32" y="451" width="1216" height="34" rx="6" fill="#F8FAFC"/>
+<text x="40" y="470" font-size="11.5" fill="#0F172A" font-weight="600">Device overheat</text>
+<rect x="384" y="458" width="54.5" height="17" rx="8.5" fill="#F0FDFA" stroke="#0F766E"/>
+<text x="411.241" y="470" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">detected</text>
+<text x="446.481" y="470" font-size="10" fill="#475569">overheat (events.py:800)</text>
+<text x="648" y="470" font-size="10.5" fill="#0F172A">Soft disable</text>
+<text x="962" y="470" font-size="10.5" fill="#0F766E" font-weight="700">implemented</text>
+<text x="40" y="504" font-size="11.5" fill="#0F172A" font-weight="600">Driver not visible to DM</text>
+<rect x="384" y="492" width="54.5" height="17" rx="8.5" fill="#F0FDFA" stroke="#0F766E"/>
+<text x="411.241" y="504" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">detected</text>
+<text x="446.481" y="504" font-size="10" fill="#475569">(no face / high uncertainty)</text>
+<text x="648" y="504" font-size="10.5" fill="#0F172A">Wheel-touch fallback (policy.py:82-83)</text>
+<text x="962" y="504" font-size="10.5" fill="#0F172A" font-weight="700">GAP-21</text>
+<rect x="32" y="519" width="1216" height="55" rx="6" fill="#F8FAFC"/>
+<text x="40" y="538" font-size="11.5" fill="#0F172A" font-weight="600">Vehicle state (VSC off, door, seatbelt, gear)</text>
+<rect x="384" y="526" width="54.5" height="17" rx="8.5" fill="#F0FDFA" stroke="#0F766E"/>
+<text x="411.241" y="538" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">detected</text>
+<text x="446.481" y="538" font-size="10" fill="#475569">(espDisabled, doorOpen,</text>
+<text x="446.481" y="551" font-size="10" fill="#475569">seatbeltNotLatched,</text>
+<text x="446.481" y="564" font-size="10" fill="#475569">wrongGear)</text>
+<text x="648" y="538" font-size="10.5" fill="#0F172A">Soft disable / no entry</text>
+<text x="962" y="538" font-size="10.5" fill="#0F766E" font-weight="700">implemented</text>
+<rect x="40" y="584" width="30" height="16" rx="8" fill="#F0FDFA" stroke="#0F766E"/>
+<text x="78" y="596" font-size="11" fill="#0F172A">detected (5)</text>
+<rect x="162.26000000000002" y="584" width="30" height="16" rx="8" fill="#FFFBEB" stroke="#B45309"/>
+<text x="200.26" y="596" font-size="11" fill="#0F172A">partly (1)</text>
+<rect x="269.45000000000005" y="584" width="30" height="16" rx="8" fill="#FEF2F2" stroke="#B42318"/>
+<text x="307.45" y="596" font-size="11" fill="#0F172A">not detected (5)</text>
+<text x="411.73" y="596" font-size="11" fill="#475569">Red reaction: nothing happens. Violet: a functional modification of WP-C-07 that would close it.</text>
+<text x="40" y="616" font-size="11" fill="#475569">Required at an exit the item detects (§5.3): a take-over request, never staying engaged indefinitely, and no engagement where it can tell it is outside. First such check: the highway speed floor (DQ-280).</text>
+<g class="terms">
+<text x="40" y="636" font-size="10.5" fill="#475569">Terms: DM driver monitoring · DQ-nn decision of the project lead (decision register) · FM-nn functional modification (WP-C-07) · GAP-nn gap found by the gap assessment · ODD operational design domain: where the</text>
+<text x="40" y="650.5" font-size="10.5" fill="#475569">system is meant to work · VSC vehicle stability control (Toyota's stability system) · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V</text>
+<text x="40" y="665" font-size="10.5" fill="#475569">validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+<text x="1240" y="685.5" font-size="10" fill="#475569" text-anchor="end">Generated by fig_c02_exits.py</text>
+</svg>

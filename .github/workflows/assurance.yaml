@@ -106,6 +106,8 @@ jobs:
         python3 assurance/01-management/figures/test_scenekit.py
         python3 assurance/02-concept/figures/fig_c02_odd.py --check
         python3 assurance/02-concept/figures/test_fig_c02_odd.py
+        python3 assurance/02-concept/figures/fig_c02_exits.py --check
+        python3 assurance/02-concept/figures/test_fig_c02_exits.py
         python3 assurance/02-concept/figures/fig_c09_scenes.py --check
         python3 assurance/02-concept/figures/test_fig_c09_scenes.py
         python3 assurance/02-concept/figures/fig_c09_boundary.py --check
@@ -119,6 +121,8 @@ jobs:
         python3 assurance/02-concept/figures/test_fig_c10_goals.py
         python3 assurance/02-concept/figures/fig_c10_concept_view.py --check
         python3 assurance/02-concept/figures/test_fig_c10_concept_view.py
+        python3 assurance/02-concept/figures/fig_c11_airs.py --check
+        python3 assurance/02-concept/figures/test_fig_c11_airs.py
         python3 assurance/09-production-operation/figures/fig_o05_updates.py --check
         python3 assurance/09-production-operation/figures/test_fig_o05_updates.py
         python3 assurance/02-concept/figures/fig_c01_interfaces.py --check

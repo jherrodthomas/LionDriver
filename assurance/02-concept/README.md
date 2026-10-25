@@ -31,11 +31,13 @@ Standard clauses: 26262-3, 21448 §5–8, 21434 §9/§15, PAS 8800.
 
 | Folder | What it holds |
 |---|---|
+| [`ai/`](ai/README.md) | AI system definition and AI safety requirements |
 | [`cybersecurity/`](cybersecurity/README.md) | Cybersecurity concept |
 | [`fsc/`](fsc/README.md) | Functional safety concept |
 | [`hara/`](hara/README.md) | Hazard analysis and risk assessment (HARA) |
 | [`hatara/`](hatara/README.md) | HATARA: where the HARA and the TARA meet |
 | [`item/`](item/README.md) | Item definition |
+| [`odd/`](odd/README.md) | Operational design domain (ODD) and intended functionality |
 | [`reviews/`](reviews/) | — |
 | [`sotif/`](sotif/README.md) | Safety of the intended functionality (SOTIF) |
 | [`tara/`](tara/README.md) | Threat analysis and risk assessment (TARA) |
