@@ -16,6 +16,8 @@ V9  Mount modes, solver: a steel cantilever in the same FEniCSx and SLEPc code a
 V10 Mount modes, mesh study: the first mode changes by less than 1 % between the two finest meshes.
 V11 Mount modes, mass and input: the modes' effective masses add up to at most the whole mass and, the device being
     stiff on a soft pad, to at least 90 % of it along each axis; slow road waves pass the suspension unchanged.
+V12 Dust in the fan: the clean and the stalled ends equal the MCU study's as-built and fan-stalled results (0.1 K),
+    and the cabin air at each limit falls monotonically as the fan clogs.
 
 Runs in the environment of `thermal-linux-64.lock`. Synthetic (DSR-12), design aid, no evidence credit (DQ-413).
 """
@@ -33,6 +35,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import section_fipy  # noqa: E402
 import mcu_heat  # noqa: E402
+import fan_dust  # noqa: E402
 import mount_modes  # noqa: E402
 import thermal_pilot as tp  # noqa: E402
 from heat import Box, Face, Model  # noqa: E402
@@ -158,6 +161,20 @@ class MountModes(unittest.TestCase):
     road = rd["B"] * rd["n0"] ** 2 * v / f ** 2 * (2 * np.pi * f) ** 4
     self.assertLess(abs(mount_modes.road_accel_psd(P, f, "B")[0] / road[0] - 1), 0.02)
 
+
+
+class FanDust(unittest.TestCase):
+  def test_v12_ends_and_monotone(self):
+    import json
+    r = json.loads(fan_dust.OUT_JSON.read_text(encoding="utf-8"))
+    m = json.loads(mcu_heat.OUT_JSON.read_text(encoding="utf-8"))["at_soc_limit"]
+    clean, stalled = r["steps"][0], r["steps"][-1]
+    self.assertEqual((clean["cooling_left"], stalled["cooling_left"]), (1.0, 0.0))
+    for step, ref in ((clean, m["as_built"]), (stalled, m["fan_stalled"])):
+      self.assertLess(abs(step["air_at_soc_limit"] - ref["air_at_soc_limit"]), 0.1)
+      self.assertLess(abs(step["air_at_mcu_limit"] - ref["air_at_mcu_limit"]), 0.1)
+    for k in ("air_at_soc_limit", "air_at_mcu_limit"):
+      self.assertTrue(all(np.diff([x[k] for x in r["steps"]]) < 0))
 
 if __name__ == "__main__":
   unittest.main(verbosity=2)

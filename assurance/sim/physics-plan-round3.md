@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Purpose | Plan ten physics studies that follow the fourteen already built ([weather README](weather/README.md), [thermal README](thermal/README.md), [supply README](supply/README.md), [round 2](physics-plan.md)): what each answers, how, with which inputs, checks and picture, and in what order. They cover triggering conditions (TCs) the first two rounds left out: what the sensors can see, the vehicle at its limits, the driver camera and the device |
-| Status | Planned 2026-10-25; nothing built. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Phase A built 2026-10-25 (studies 11, 12, 14, 15; §2); study 13 stopped for want of a source; phases B and C planned. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Credit | None. Every study is a design aid, synthetic (DSR-12), with no evidence credit (DQ-413, WP-V-02 §5.3, DQ-139). A result that would move an ODD limit goes to the lead as a register question; the study itself does not move it |
 | Lead decisions needed | **None to start.** No new tool: every study runs in an existing environment. Inputs that have no public source yet (the radar's beam, the driver camera's light) are tasks, and the study that needs them waits in phase B |
 
@@ -30,6 +30,23 @@ radio data, each with a source before it starts; 18 and 19 also need a fact abou
 public. Phase C runs openpilot's own localizer. Each phase ends with its CI checks green and a results page.
 
 ## 2. Phase A: reuse what is built
+
+**Built 2026-10-25.** Results, synthetic and on estimated inputs:
+
+| # | Study | Finding | Results |
+|---|---|---|---|
+| 11 | A stopped car ahead | At highway speed openpilot takes a lead only from the driving model (radard, read from the code). For the item to stop on its own the model must take the stopped car at 149 m, where it is 11 px wide in its input; it reaches 32 px only at 51 m | [`stopped-car.md`](results/stopped-car.md), [weather §14](weather/README.md#14-a-stopped-car-ahead-tc-08-ks-05) |
+| 12 | Hill crests | Over a crest built for 110 km/h the camera sees a stopped car at 228 m and the radar, lowest, at 172 m; both cover the item's stop and a driver's wet stop. Crests built for 100 km/h cut that to 191 and 144 m | [`crest.md`](results/crest.md), [weather §13](weather/README.md#13-hill-crests-tc-17-ks-27) |
+| 13 | Passing a truck | **Not built.** No source holds up: the car–truck measurements (Howell et al. 2014, Noger and Van Grevenynghe 2011) are not openly available, and the open simulation found (Uystepruyst and Krajnović, arXiv 1511.06220) is two car-like bodies with its numbers only in plots. A windy-day log passing trucks (WP-C-02 OI-10) or one of those papers would unblock it | — |
+| 14 | Wet curves | With the ODD's 3 mm of tread, cornering at the curve bound and braking at the item's rate on a straight each hold in light rain; both at once fall just short at MIRA's end of the measured band (3.4 m/s² left instead of 3.5 at 110 km/h). A note for the curve bound's rationale, not a register question | [`wet-curves.md`](results/wet-curves.md), [weather §12](weather/README.md#12-curves-on-a-wet-road-tc-14-tc-03-ks-01) |
+| 15 | Dust in the fan | Clean to stalled costs 18 K of cabin air, most of it in the last fifth of the fan's cooling; the host still stops before the MCU leaves its range at every step | [`fan-dust.md`](results/fan-dust.md), [thermal §2.4](thermal/README.md#24-dust-in-the-fan-tc-21-hwsr-509a) |
+
+Changes from the plan below:
+- **Study 11** found that the radar does not make a stopped car a lead at highway speed (radard needs the model), so
+  it sizes the car in the model's input rather than computing a radar range.
+- **Study 14** first interpolated 3 mm between the table's rows, which put 3 mm below the item's braking even on a
+  straight. Two measured tread-depth tests (Continental, MIRA) replaced it and give a band.
+- **Study 13** stopped, as §5 said it would without a source.
 
 ### 11. A stopped car ahead (TC-08, KS-05)
 

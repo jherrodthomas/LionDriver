@@ -1,0 +1,61 @@
+{
+ "about": "Synthetic (DSR-12), design aid, no evidence credit. AASHTO's crest geometry; estimated sensor heights.",
+ "cases": {
+  "100": {
+   "design_speed_kph": 100,
+   "k": 52.0,
+   "design_ssd_m": 184.2,
+   "sight_m": {
+    "driver_tail_lights": 185.0,
+    "camera_tail_lights": 190.7,
+    "camera_roof": 233.7,
+    "radar_return": 144.2,
+    "radar_return_low": 136.6
+   },
+   "need_at_110_m": {
+    "aashto": 215.2,
+    "driver_dry": 105.3,
+    "driver_wet_3mm": 157.6,
+    "item_rate": 148.7
+   }
+  },
+  "110": {
+   "design_speed_kph": 110,
+   "k": 74.0,
+   "design_ssd_m": 215.2,
+   "sight_m": {
+    "driver_tail_lights": 220.7,
+    "camera_tail_lights": 227.5,
+    "camera_roof": 278.7,
+    "radar_return": 172.0,
+    "radar_return_low": 163.0
+   },
+   "need_at_110_m": {
+    "aashto": 215.2,
+    "driver_dry": 105.3,
+    "driver_wet_3mm": 157.6,
+    "item_rate": 148.7
+   }
+  },
+  "120": {
+   "design_speed_kph": 120,
+   "k": 95.0,
+   "design_ssd_m": 248.6,
+   "sight_m": {
+    "driver_tail_lights": 250.0,
+    "camera_tail_lights": 257.8,
+    "camera_roof": 315.8,
+    "radar_return": 194.9,
+    "radar_return_low": 184.6
+   },
+   "need_at_110_m": {
+    "aashto": 215.2,
+    "driver_dry": 105.3,
+    "driver_wet_3mm": 157.6,
+    "item_rate": 148.7
+   }
+  }
+ },
+ "mu_wet_3mm_110": 0.426,
+ "mu_dry": 0.8
+}

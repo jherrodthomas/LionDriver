@@ -1,4 +1,4 @@
-# Weather physics: sun, rain, heat, wind, fog, road crown, wet braking, gusts, tunnels, headlights and sun on the device
+# Weather physics: sun, rain, heat, wind, fog, road crown, wet braking, gusts, tunnels, headlights, sun on the device, wet curves, crests and a stopped car
 
 > **Synthetic data (DSR-12). Design aid, no evidence credit (DQ-139).** Small physics studies for the SOTIF
 > triggering conditions of low sun (TC-01), oncoming headlights (TC-02), rain (TC-03), crown and wind (TC-15),
@@ -452,7 +452,83 @@ Results: [`results/device-sun.md`](../results/device-sun.md).
 
 *Figure 20. Sun on the device through the car.*
 
-## 12. Checks
+## 12. Curves on a wet road (TC-14, TC-03, KS-01)
+
+**Question.** Does the ODD's curve bound (2.5 m/s², WP-C-02 §3.2) leave tyre grip on a wet road with the ODD's 3 mm
+of tread, cornering alone and while the item brakes in the curve?
+
+**Method.** [`wet_curves.py`](wet_curves.py): the friction circle (the same grip sideways as lengthways) against the
+wet-braking study's friction table in the ODD's light rain. The 3 mm grip is the new tyre's divided by the measured
+ratio of wet stopping distances at 3 mm to new: 1.07 in Continental's test and 1.35 in MIRA's. A 6 % bank is a
+variant.
+
+**Result.**
+- Cornering alone needs 0.26 and braking at the item's rate on a straight 0.36. The 3 mm tyres give at least 0.43:
+  both hold at every ODD speed.
+- Both together need 0.44. Continental's end holds; MIRA's falls just short at speed, leaving 3.4 m/s² of braking at
+  110 km/h instead of 3.5.
+- At the 1.6 mm legal minimum even cornering alone falls short above about 83 km/h: the reason the ODD asks for 3 mm.
+- For WP-C-02 §3.2: a note for the curve bound's rationale, not a reason to move it.
+
+Results: [`results/wet-curves.md`](../results/wet-curves.md).
+
+![Wet tyre-road friction against speed for new tyres, the 3 mm band between the MIRA and Continental tests, and the 1.6 mm legal minimum, against the friction needed to corner at the ODD's bound (0.26) and to corner and brake at the item's rate (0.44)](figures/fig-wx-21-wet-curves.webp)
+
+*Figure 21. A curve at the ODD's bound on a wet road.*
+
+## 13. Hill crests (TC-17, KS-27)
+
+**Question.** Over a crest built to the design standard, do the road camera and the radar see a stopped car far
+enough ahead to stop?
+
+**Method.** [`crest.py`](crest.py): AASHTO's crest geometry (K from its published table; sight distance
+√(200K)(√h1 + √h2)). The camera is at 1.2 m and the radar at 0.5 m (an estimate until T1). The targets are a
+stopped car's tail lights, its roof and its radar return. These are set against the distance to stop from 110 km/h.
+
+**Result.**
+- On a crest built for 110 km/h the camera sees the tail lights at 228 m,
+  a little farther than the driver (221 m). The radar, lowest,
+  sees the car only at 172 m.
+- That covers a driver stopping in 105 m dry and
+  158 m wet with 3 mm of tread, and the item's
+  149 m.
+- Older crests built for 100 km/h cut the camera's sight to 191 m and
+  the radar's to 144 m.
+
+Results: [`results/crest.md`](../results/crest.md).
+
+![A crest built for 110 km/h in profile with the camera's and the radar's sight lines to a stopped car, and bars of the sight distances against the distances to stop from 110 km/h](figures/fig-wx-22-crest.webp)
+
+*Figure 22. Over a hill crest.*
+
+## 14. A stopped car ahead (TC-08, KS-05)
+
+**Question.** At highway speed, how big is a stopped car in the driving model's input when the item, or the driver,
+has to start braking for it?
+
+**Method.** [`stopped_car.py`](stopped_car.py): at highway speed openpilot takes a lead only from the driving model.
+radard pairs a radar track with the model's lead when its probability passes 0.5, and uses radar alone only below
+4 m/s and within 25 m (`radard.py`, read and pinned). The car's width in the model's input frames (910 and 455 px
+focal length, `model.py`) is set against the distances to stop.
+
+**Result.**
+- For the item to stop on its own at −3.5 m/s², the model must take the car as a lead by
+  149 m, where it is **11 px wide** in the narrow frame. That is
+  far under the 32 px below which MS COCO counts an object as small.
+- The car reaches 32 px only at 51 m, closer than every stopping distance.
+- An unwarned driver needs 138 m dry and 188 m wet.
+- **For KS-05:** start the stopped car from 200 m and more. Logs of `radarState` and `modelV2` leads show at what
+  range the model takes it (T1).
+
+**Limits.** What the model detects at a given size is learned, not geometry.
+
+Results: [`results/stopped-car.md`](../results/stopped-car.md).
+
+![The width of a stopped car's rear in the driving model's narrow and wide input frames against distance, with the 32 px small-object band and the stopping distances of the item and the driver](figures/fig-wx-23-stopped-car.webp)
+
+*Figure 23. A stopped car ahead in the model's input.*
+
+## 15. Checks
 
 [`test_weather.py`](test_weather.py) runs in CI:
 
@@ -502,6 +578,13 @@ Results: [`results/device-sun.md`](../results/device-sun.md).
 | D2 The sun down the windshield's normal reaches the whole windshield-side face, through the windshield; no face lit from behind | a wrong device place or table |
 | D3 The left and right faces see mirror images (the device is on the centre line) | a frame or sign error |
 | D4 The beam on the face is absorptance × DNI × cos × transmittance × angle loss; the sky weights give 0.5 for an upright face | a wrong flux or quadrature |
+| Q1 Friction needed: a/g cornering, the friction circle with braking, less on a bank | a wrong combination |
+| Q2 The 3 mm grip is the new tyre's over the measured stop ratio, between the table's rows | a wrong tread model |
+| K1 AASHTO's formula rounds to its published distances and K | a wrong standard |
+| K2 The closed-form crest sight distance against a brute-force line of sight (1 %) | a wrong geometry |
+| K3 The design eye sees the design object at the design distance | a wrong formula |
+| P1 Model focal lengths and radard's lead rules read from openpilot; width = f·W/d | a code change or pixel error |
+| P2 Stopping distances as the wet-braking study's | a mismatch between studies |
 
 Each study's `--check` reruns it and fails if any number moves by more than 0.05 from the committed JSON. The crown
 study reads openpilot's code, so a change there shows up as a failed R1 or `--check` the next time this job runs.
@@ -521,4 +604,7 @@ python3 assurance/sim/weather/tunnel.py --figures          # reads the camerad s
 python3 assurance/sim/weather/headlights.py --figures      # reads the camerad sources and camera.py
 python3 assurance/sim/weather/device_sun.py --figures      # reads figures/corolla-e210-device-shading.json
 python3 assurance/sim/assets/tools/device_shading.py       # only where the licensed mesh is (about 2 min)
+python3 assurance/sim/weather/wet_curves.py --figures      # reads the wet-braking table
+python3 assurance/sim/weather/crest.py --figures
+python3 assurance/sim/weather/stopped_car.py --figures     # reads model.py and radard.py
 ```
