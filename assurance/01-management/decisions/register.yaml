@@ -5868,7 +5868,7 @@
     title: Leave it to the TARA
     detail: "No change. Cost: the gap stays implicit and a reviewer may raise it."
   sources:
-  - "LionDriver-assets (private): restricted/cyber-sim/README.md §2.4, §6.1 choice 5"
+  - "LionDriver-security (private): cyber-sim/README.md §2.4, §6.1 choice 5"
   - assurance/02-concept/WP-C-09-tara.md §3
   - assurance/02-concept/hatara/hatara-interactions.md
   status: queued
@@ -5905,7 +5905,7 @@
   sources: ["assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md §4.4", "assurance/01-management/WP-M-09-cybersecurity-plan.md §2 gap table", "assurance/02-concept/WP-C-09-tara.md §2–§5", "assurance/03-system/WP-S-07-cybersecurity-requirements-architecture.md §4", "PR #454"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Partly applied 2026-10-25: the cyber-simulation material (closed PR #454) moved to the private assets repository (restricted/). Still to do: sweep the code locations and mechanisms of unfixed gaps out of WP-C-09, WP-S-07 and the WP-M-09 gap table, and add the rule to WP-O-05 §4.4."
+  note: "Partly applied 2026-10-25: the cyber-simulation material (closed PR #454) moved to the private LionDriver-security repository (cyber-sim/). Still to do: sweep the code locations and mechanisms of unfixed gaps out of WP-C-09, WP-S-07 and the WP-M-09 gap table, and add the rule to WP-O-05 §4.4."
 
 - id: DQ-422
   question: "Which circuit simulator should the 12 V cranking-dip study use?"
