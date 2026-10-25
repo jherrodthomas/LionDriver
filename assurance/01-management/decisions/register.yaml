@@ -2987,7 +2987,8 @@
       title: "Keep both"
       detail: "No change. Cost: two System FMEAs to keep in step, and the map stays tied to one of them."
   sources: ["assurance/08-analyses/fta-fmea-mapping.md (step 5)", "assurance/08-analyses/WP-A-04-system-fta-fmea.md §10", "assurance/08-analyses/fmea/analyses/system-fmea.yaml", "assurance/06-validation/WP-V-05-fault-injection.md §6"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-128
   question: "Should the GSN diagrams be generated from YAML records? (A generator already exists, so can this item be closed?)?"
@@ -3034,7 +3035,8 @@
       title: "No change"
       detail: "Cost: the agreed status means only that someone set it."
   sources: ["assurance/process/README.md OI-2", "assurance/process/model/ (interfaces IX-nn)", "assurance/trace/README.md"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-130
   question: "Which human-driver crash data sources and road-class split are used to derive SOTIF validation targets?"
@@ -3079,7 +3081,8 @@
       title: "Keep the engagement refusal only"
       detail: "No build change. Cost: the debug processes can still start; safety then rests on the refusal and the panda's engagement check alone."
   sources: ["assurance/02-concept/WP-C-01-item-definition.md OI-5", "openpilot/selfdrive/selfdrived/assured_config.py ASSURED_PARAMS", "openpilot/system/manager/process_config.py (joystick, maneuversd, lateral_maneuversd)", "assurance/07-supporting/impact/change-2026-10-19-reference-entry-checks.md", "DQ-221"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-132
   question: "Should LionDriver read the car's fault codes for steering and stability control at start-up and refuse to engage while one is active, instead of relying on the driver to check the warning lamps?"
@@ -3103,7 +3106,8 @@
       title: "Keep the bus checks and the driver's lamp check"
       detail: "No change. Cost: stored faults without a bus signal are caught only by the driver."
   sources: ["assurance/09-production-operation/WP-O-02-operation-service-decommissioning.md OPS-01, OPS-02, OI-2", "assurance/03-system/WP-S-06-requirements-production-operation.md OI-4", "assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md INS-06"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-133
   question: "Should the architecture be copied into docs/contributing/architecture.md or that empty file replaced by a pointer to WP-S-03?"
@@ -3149,7 +3153,8 @@
       title: "Shorten the watchdog now"
       detail: "Gives margin at once. Cost: a shorter watchdog trips on longer legitimate tasks, so the task timings must be re-measured, without knowing yet whether the margin is needed."
   sources: ["assurance/03-system/WP-S-04-timing-ftti-budget.md §3.6, §4 (SG-07 row), OI-7", "DQ-062"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-135
   question: "What latency bound is set for PCS message forwarding in integration test VS-SI-20?"
@@ -3213,7 +3218,8 @@
       title: "A naturalistic driving study (for example SHRP 2) instead"
       detail: "Includes near-crashes, so more events per mile. Cost: access terms, and a fleet and era that do not match US highways today."
   sources: ["assurance/01-management/WP-M-08-sotif-plan.md §5 (B1), OI-1", "assurance/02-concept/WP-C-05-sotif-hazard-identification.md §5.2, OI-3", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md OI-2, OI-3", "DQ-096", "DQ-130 (merged here)", "DQ-194 (merged here)"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-138
   question: "How should LionDriver be compared with Toyota's own lane tracing and radar cruise on the same Corolla?"
@@ -3238,7 +3244,8 @@
       title: "Matched segments of public road"
       detail: "The same route driven with each system. Cost: traffic differs run to run, so the hard scenarios hardly ever occur and cannot be set up."
   sources: ["assurance/01-management/WP-M-08-sotif-plan.md §5 (B2), OI-2", "assurance/06-validation/WP-V-03-sotif-known-scenarios.md", "assurance/06-validation/WP-V-07-vehicle-test-operations.md"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-139
   question: "May simulation results count as validation evidence, and for which kinds of scenario?"
@@ -3289,7 +3296,8 @@
       title: "No surrogates"
       detail: "Only crashes count. Cost: no rate can be shown with one car, so the rate-level targets stay unmet."
   sources: ["assurance/01-management/WP-M-08-sotif-plan.md OI-8", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md §2 (public-road row), VT-01…VT-15", "assurance/06-validation/WP-V-04-sotif-unknown-scenarios.md (AS-08)"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-141
   question: "Is a soft real-time 100 Hz loop on the bench PC acceptable for the HIL plant model at bench stage B3?"
@@ -5860,7 +5868,7 @@
     title: Leave it to the TARA
     detail: "No change. Cost: the gap stays implicit and a reviewer may raise it."
   sources:
-  - assurance/sim/cyber/README.md §2.4, §6.1 choice 5 (PR #454)
+  - "LionDriver-assets (private): restricted/cyber-sim/README.md §2.4, §6.1 choice 5"
   - assurance/02-concept/WP-C-09-tara.md §3
   - assurance/02-concept/hatara/hatara-interactions.md
   status: queued
@@ -5895,7 +5903,9 @@
       title: "Keep everything public"
       detail: "Rely on the abstraction rule (no exploits, payloads or procedures). Cost: the gap list and code locations stay a ready target list for anyone."
   sources: ["assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md §4.4", "assurance/01-management/WP-M-09-cybersecurity-plan.md §2 gap table", "assurance/02-concept/WP-C-09-tara.md §2–§5", "assurance/03-system/WP-S-07-cybersecurity-requirements-architecture.md §4", "PR #454"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Partly applied 2026-10-25: the cyber-simulation material (closed PR #454) moved to the private assets repository (restricted/). Still to do: sweep the code locations and mechanisms of unfixed gaps out of WP-C-09, WP-S-07 and the WP-M-09 gap table, and add the rule to WP-O-05 §4.4."
 
 - id: DQ-422
   question: "Which circuit simulator should the 12 V cranking-dip study use?"
