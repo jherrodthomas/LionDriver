@@ -742,6 +742,7 @@ AOU_MAP = {
   "AOU-12": ("veh", "cluster", "The cluster cruise indicator is driven by PCM state"),
   "AOU-16": ("veh", "PCM", "the PCM keeps it stopped and held"),
   "AOU-17": ("veh", "EPS · PCM", "The EPS signals every drop of LKA assistance"),
+  "AOU-18": ("veh", "vehicle CAN", "travel on classical CAN or ISO CAN FD"),
   "AOU-08": ("inst", "device mount", "The device is mounted and calibrated"),
   "AOU-09": ("inst", "vehicle", "The vehicle is maintained, unmodified"),
   "AOU-13": ("inst", "harness", "The de-energised harness relay connects the forward camera"),

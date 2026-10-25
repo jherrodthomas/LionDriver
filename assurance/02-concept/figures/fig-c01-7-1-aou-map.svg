@@ -1,17 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1382" viewBox="0 0 1280 1382" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1606" viewBox="0 0 1280 1606" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 7-1 · Assumptions of use by subject and status</title>
-<desc>Cards for the 17 assumptions of use of WP-C-01 §7, grouped as Vehicle ECUs: AOU-01, AOU-02, AOU-03, AOU-04, AOU-05, AOU-10, AOU-12, AOU-16, AOU-17; Installation and maintenance: AOU-08, AOU-09, AOU-13; Driver: AOU-06, AOU-07; Network and back end: AOU-11; Build configuration: AOU-14, AOU-15. Each card shows the ID, the first clause of the assumption, a status pill (AOU-01 Unverified; AOU-02 Unverified; AOU-03 Unverified; AOU-04 Unverified; AOU-05 Unverified; AOU-06 SOTIF-managed; AOU-07 Not started; AOU-08 Partially; AOU-09 Not started; AOU-10 Not started; AOU-11 Design constraint; AOU-12 Unverified; AOU-13 Unverified; AOU-14 Unverified; AOU-15 Unverified; AOU-16 Not started; AOU-17 Unverified), where it is credited and the verification approach. None is verified.</desc>
+<desc>Cards for the 18 assumptions of use of WP-C-01 §7, grouped as Vehicle ECUs: AOU-01, AOU-02, AOU-03, AOU-04, AOU-05, AOU-10, AOU-12, AOU-16, AOU-17, AOU-18; Installation and maintenance: AOU-08, AOU-09, AOU-13; Driver: AOU-06, AOU-07; Network and back end: AOU-11; Build configuration: AOU-14, AOU-15. Each card shows the ID, the first clause of the assumption, a status pill (AOU-01 Unverified; AOU-02 Unverified; AOU-03 Unverified; AOU-04 Unverified; AOU-05 Unverified; AOU-06 SOTIF-managed; AOU-07 Not started; AOU-08 Partially; AOU-09 Not started; AOU-10 Not started; AOU-11 Design constraint; AOU-12 Unverified; AOU-13 Unverified; AOU-14 Unverified; AOU-15 Unverified; AOU-16 Not started; AOU-17 Unverified; AOU-18 Unverified), where it is credited and the verification approach. None is verified.</desc>
 <defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D2553F"/></marker><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F172A"/></marker><pattern id="hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)"><rect width="8" height="8" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="8" stroke="#E2E8F0" stroke-width="2.5"/></pattern><pattern id="hatch-red" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)"><rect width="8" height="8" fill="#FEF2F2"/><line x1="0" y1="0" x2="0" y2="8" stroke="#F5B5A8" stroke-width="2"/></pattern></defs>
-<rect x="0" y="0" width="1280" height="1382" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="0" y="0" width="1280" height="1606" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 7-1 · Assumptions of use by subject and status</text>
-<text x="40" y="66" font-size="12.5" fill="#475569">The 17 assumptions of §7 grouped by what they assume. No assumption is verified; each needs evidence before it is credited.</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">The 18 assumptions of §7 grouped by what they assume. No assumption is verified; each needs evidence before it is credited.</text>
 <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-01 §7</text>
 <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
-<rect x="40" y="102" width="1200" height="557" rx="12" fill="#F8FAFC" stroke="none" stroke-width="1.2"/>
+<rect x="40" y="102" width="1200" height="781" rx="12" fill="#F8FAFC" stroke="none" stroke-width="1.2"/>
 <text x="54" y="130" font-size="13.5" fill="#0F172A" font-weight="700">Vehicle ECUs</text>
 <text x="54" y="148" font-size="10.5" fill="#475569">existing elements outside</text>
 <text x="54" y="162" font-size="10.5" fill="#475569">the item (§3.2)</text>
-<text x="54" y="182" font-size="10.5" fill="#475569" font-weight="700">9 AoU</text>
+<text x="54" y="182" font-size="10.5" fill="#475569" font-weight="700">10 AoU</text>
 <rect x="216" y="114" width="333.3" height="155" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
 <rect x="216" y="124" width="4" height="135" rx="2" fill="#D2553F" stroke="none" stroke-width="1.2"/>
 <text x="232" y="138" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-01</text>
@@ -127,118 +127,135 @@
 <text x="922.7" y="601" font-size="10.5" fill="#0F766E">(WP-V-07). If a test finds a silent drop, a</text>
 <text x="922.7" y="615" font-size="10.5" fill="#0F766E">response-versus-command check is added (TSR-626 (b),</text>
 <text x="922.7" y="629" font-size="10.5" fill="#0F766E">(c) extended to that case; DQ-360 option B)</text>
-<rect x="40" y="673" width="1200" height="165" rx="12" fill="#F8FAFC" stroke="none" stroke-width="1.2"/>
-<text x="54" y="701" font-size="13.5" fill="#0F172A" font-weight="700">Installation and</text>
-<text x="54" y="718" font-size="13.5" fill="#0F172A" font-weight="700">maintenance</text>
-<text x="54" y="736" font-size="10.5" fill="#475569">device, harness, vehicle</text>
-<text x="54" y="750" font-size="10.5" fill="#475569">condition</text>
-<text x="54" y="770" font-size="10.5" fill="#475569" font-weight="700">3 AoU</text>
-<rect x="216" y="685" width="333.3" height="141" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
-<rect x="216" y="695" width="4" height="121" rx="2" fill="#D97706" stroke="none" stroke-width="1.2"/>
-<text x="232" y="709" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-08</text>
-<text x="302" y="708" font-size="10.5" fill="#475569" font-weight="600">device mount</text>
-<rect x="472" y="695" width="65.3" height="18" rx="9" fill="#D97706" stroke="none" stroke-width="1.2"/>
-<text x="504.7" y="707.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Partially</text>
-<text x="232" y="729" font-size="11.5" fill="#0F172A" font-weight="600">The device is mounted and calibrated according</text>
-<text x="232" y="744" font-size="11.5" fill="#0F172A" font-weight="600">to installation instructions</text>
-<text x="232" y="765" font-size="10.5" fill="#475569">Credited in: SOTIF</text>
-<text x="232" y="779" font-size="10.5" fill="#0F766E">Verification: Calibration check (calibrationd) and</text>
-<text x="232" y="793" font-size="10.5" fill="#0F766E">installation checklist WP-O-01</text>
-<rect x="561.3" y="685" width="333.3" height="141" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
-<rect x="561.3" y="695" width="4" height="121" rx="2" fill="#D2553F" stroke="none" stroke-width="1.2"/>
-<text x="577.3" y="709" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-09</text>
-<text x="647.3" y="708" font-size="10.5" fill="#475569" font-weight="600">vehicle</text>
-<rect x="806" y="695" width="76.7" height="18" rx="9" fill="#D2553F" stroke="none" stroke-width="1.2"/>
-<text x="844.3" y="707.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Not started</text>
-<text x="577.3" y="729" font-size="11.5" fill="#0F172A" font-weight="600">The vehicle is maintained, unmodified, and has</text>
-<text x="577.3" y="744" font-size="11.5" fill="#0F172A" font-weight="600">no active DTCs in the EPS, brake or powertrain</text>
-<text x="577.3" y="759" font-size="11.5" fill="#0F172A" font-weight="600">systems</text>
-<text x="577.3" y="780" font-size="10.5" fill="#475569">Credited in: All</text>
-<text x="577.3" y="794" font-size="10.5" fill="#0F766E">Verification: Pre-drive checklist</text>
-<rect x="906.7" y="685" width="333.3" height="141" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
-<rect x="906.7" y="695" width="4" height="121" rx="2" fill="#D2553F" stroke="none" stroke-width="1.2"/>
-<text x="922.7" y="709" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-13</text>
-<text x="992.7" y="708" font-size="10.5" fill="#475569" font-weight="600">harness</text>
-<rect x="1157" y="695" width="71" height="18" rx="9" fill="#D2553F" stroke="none" stroke-width="1.2"/>
-<text x="1192.5" y="707.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Unverified</text>
-<text x="922.7" y="729" font-size="11.5" fill="#0F172A" font-weight="600">The de-energised harness relay connects the</text>
-<text x="922.7" y="744" font-size="11.5" fill="#0F172A" font-weight="600">forward camera to the vehicle CAN without any</text>
-<text x="922.7" y="759" font-size="11.5" fill="#0F172A" font-weight="600">active component in the path</text>
-<text x="922.7" y="780" font-size="10.5" fill="#475569">Credited in: FSC FSR-07.03; SG-07 safe state</text>
-<text x="922.7" y="794" font-size="10.5" fill="#0F766E">Verification: Harness inspection and test (WP-H-02</text>
-<text x="922.7" y="808" font-size="10.5" fill="#0F766E">UK-03; WP-S-08 VS-SI-18)</text>
-<rect x="40" y="852" width="1200" height="151" rx="12" fill="#F8FAFC" stroke="none" stroke-width="1.2"/>
-<text x="54" y="880" font-size="13.5" fill="#0F172A" font-weight="700">Driver</text>
-<text x="54" y="898" font-size="10.5" fill="#475569">supervision and operation</text>
-<text x="54" y="918" font-size="10.5" fill="#475569" font-weight="700">2 AoU</text>
-<rect x="216" y="864" width="333.3" height="127" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
-<rect x="216" y="874" width="4" height="107" rx="2" fill="#94A3B8" stroke="none" stroke-width="1.2"/>
-<text x="232" y="888" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-06</text>
-<text x="302" y="887" font-size="10.5" fill="#475569" font-weight="600">driver</text>
-<rect x="449.2" y="874" width="88.1" height="18" rx="9" fill="#94A3B8" stroke="none" stroke-width="1.2"/>
-<text x="493.3" y="886.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SOTIF-managed</text>
-<text x="232" y="908" font-size="11.5" fill="#0F172A" font-weight="600">The driver is licensed, attentive, briefed</text>
-<text x="232" y="923" font-size="11.5" fill="#0F172A" font-weight="600">according to WP-O-03, and keeps their eyes on</text>
-<text x="232" y="938" font-size="11.5" fill="#0F172A" font-weight="600">the road</text>
-<text x="232" y="959" font-size="10.5" fill="#475569">Credited in: Controllability (all)</text>
-<text x="232" y="973" font-size="10.5" fill="#0F766E">Verification: Enforced by F-04</text>
-<rect x="561.3" y="864" width="333.3" height="127" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
-<rect x="561.3" y="874" width="4" height="107" rx="2" fill="#D2553F" stroke="none" stroke-width="1.2"/>
-<text x="577.3" y="888" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-07</text>
-<text x="647.3" y="887" font-size="10.5" fill="#475569" font-weight="600">safety driver</text>
-<rect x="806" y="874" width="76.7" height="18" rx="9" fill="#D2553F" stroke="none" stroke-width="1.2"/>
-<text x="844.3" y="886.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Not started</text>
-<text x="577.3" y="908" font-size="11.5" fill="#0F172A" font-weight="600">During development, only trained safety drivers</text>
-<text x="577.3" y="923" font-size="11.5" fill="#0F172A" font-weight="600">operate the item on public roads, under WP-V-07</text>
-<text x="577.3" y="944" font-size="10.5" fill="#475569">Credited in: All</text>
-<text x="577.3" y="958" font-size="10.5" fill="#0F766E">Verification: Training records</text>
-<rect x="40" y="1017" width="1200" height="121" rx="12" fill="#F8FAFC" stroke="none" stroke-width="1.2"/>
-<text x="54" y="1045" font-size="13.5" fill="#0F172A" font-weight="700">Network and back</text>
-<text x="54" y="1062" font-size="13.5" fill="#0F172A" font-weight="700">end</text>
-<text x="54" y="1080" font-size="10.5" fill="#475569">external, untrusted</text>
-<text x="54" y="1100" font-size="10.5" fill="#475569" font-weight="700">1 AoU</text>
-<rect x="216" y="1029" width="333.3" height="97" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
-<rect x="216" y="1039" width="4" height="77" rx="2" fill="#94A3B8" stroke="none" stroke-width="1.2"/>
-<text x="232" y="1053" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-11</text>
-<text x="302" y="1052" font-size="10.5" fill="#475569" font-weight="600">back end</text>
-<rect x="426.4" y="1039" width="110.9" height="18" rx="9" fill="#94A3B8" stroke="none" stroke-width="1.2"/>
-<text x="481.9" y="1051.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Design constraint</text>
-<text x="232" y="1073" font-size="11.5" fill="#0F172A" font-weight="600">The comma.ai back end and network are untrusted</text>
-<text x="232" y="1094" font-size="10.5" fill="#475569">Credited in: CS / FuSa</text>
-<text x="232" y="1108" font-size="10.5" fill="#0F766E">Verification: Architecture review</text>
-<rect x="40" y="1152" width="1200" height="150" rx="12" fill="#F8FAFC" stroke="none" stroke-width="1.2"/>
-<text x="54" y="1180" font-size="13.5" fill="#0F172A" font-weight="700">Build</text>
-<text x="54" y="1197" font-size="13.5" fill="#0F172A" font-weight="700">configuration</text>
-<text x="54" y="1215" font-size="10.5" fill="#475569">reference build use</text>
-<text x="54" y="1235" font-size="10.5" fill="#475569" font-weight="700">2 AoU</text>
-<rect x="216" y="1164" width="333.3" height="126" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
-<rect x="216" y="1174" width="4" height="106" rx="2" fill="#D2553F" stroke="none" stroke-width="1.2"/>
-<text x="232" y="1188" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-14</text>
-<text x="302" y="1187" font-size="10.5" fill="#475569" font-weight="600">reference build</text>
-<rect x="466.3" y="1174" width="71" height="18" rx="9" fill="#D2553F" stroke="none" stroke-width="1.2"/>
-<text x="501.8" y="1186.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Unverified</text>
-<text x="232" y="1208" font-size="11.5" fill="#0F172A" font-weight="600">The reference build is used with openpilot's</text>
-<text x="232" y="1223" font-size="11.5" fill="#0F172A" font-weight="600">default alternative experience</text>
-<text x="232" y="1244" font-size="10.5" fill="#475569">Credited in: WP-S-02 TSR-512 (SWSR-512a)</text>
-<text x="232" y="1258" font-size="10.5" fill="#0F766E">Verification: Installation checklist</text>
-<rect x="561.3" y="1164" width="333.3" height="126" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
-<rect x="561.3" y="1174" width="4" height="106" rx="2" fill="#D2553F" stroke="none" stroke-width="1.2"/>
-<text x="577.3" y="1188" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-15</text>
-<text x="647.3" y="1187" font-size="10.5" fill="#475569" font-weight="600">reference build</text>
-<rect x="811.7" y="1174" width="71" height="18" rx="9" fill="#D2553F" stroke="none" stroke-width="1.2"/>
-<text x="847.2" y="1186.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Unverified</text>
-<text x="577.3" y="1208" font-size="11.5" fill="#0F172A" font-weight="600">The reference build is used only on camera-ACC</text>
-<text x="577.3" y="1223" font-size="11.5" fill="#0F172A" font-weight="600">configurations</text>
-<text x="577.3" y="1244" font-size="10.5" fill="#475569">Credited in: WP-S-02 TSR-705 (decision D-1)</text>
-<text x="577.3" y="1258" font-size="10.5" fill="#0F766E">Verification: Installation checklist (reference</text>
-<text x="577.3" y="1272" font-size="10.5" fill="#0F766E">vehicle is camera-ACC)</text>
-<line x1="40" y1="1318" x2="1240" y2="1318" stroke="#E2E8F0" stroke-width="1"/>
-<rect x="40" y="1328" width="26" height="12" rx="6" fill="#D2553F" stroke="none" stroke-width="1.2"/>
-<text x="72" y="1338" font-size="11" fill="#475569">Unverified / Not started</text>
-<rect x="242" y="1328" width="26" height="12" rx="6" fill="#D97706" stroke="none" stroke-width="1.2"/>
-<text x="274" y="1338" font-size="11" fill="#475569">Partially</text>
-<rect x="354" y="1328" width="26" height="12" rx="6" fill="#94A3B8" stroke="none" stroke-width="1.2"/>
-<text x="386" y="1338" font-size="11" fill="#475569">SOTIF-managed / Design constraint (not a verification status)</text>
-<text x="778" y="1338" font-size="11" fill="#475569">Verification line in teal: the approach of §7, not a result.</text>
-<text x="40" y="1362" font-size="11" fill="#475569">What credits each assumption (hazardous events, goals, TSRs, HWSRs) is shown in WP-T-01 Figure 6 (assumption exposure); this figure groups the §7 table and does not repeat those counts.</text>
+<rect x="216" y="659" width="333.3" height="212" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="216" y="669" width="4" height="192" rx="2" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="232" y="683" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-18</text>
+<text x="302" y="682" font-size="10.5" fill="#475569" font-weight="600">vehicle CAN</text>
+<rect x="466.3" y="669" width="71" height="18" rx="9" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="501.8" y="681.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Unverified</text>
+<text x="232" y="703" font-size="11.5" fill="#0F172A" font-weight="600">The commands the item replaces travel on</text>
+<text x="232" y="718" font-size="11.5" fill="#0F172A" font-weight="600">classical CAN or ISO CAN FD at the connector</text>
+<text x="232" y="733" font-size="11.5" fill="#0F172A" font-weight="600">the harness splits, without message</text>
+<text x="232" y="748" font-size="11.5" fill="#0F172A" font-weight="600">authentication that the item cannot produce</text>
+<text x="232" y="769" font-size="10.5" fill="#475569">Credited in: Architecture: interception at the</text>
+<text x="232" y="783" font-size="10.5" fill="#475569">harness (WP-S-03); WP-S-05 §12.1; vehicle admission</text>
+<text x="232" y="797" font-size="10.5" fill="#475569">(§1.1)</text>
+<text x="232" y="811" font-size="10.5" fill="#0F766E">Verification: Configuration review of each vehicle:</text>
+<text x="232" y="825" font-size="10.5" fill="#0F766E">bus type and bit rates from the DBC and the opendbc</text>
+<text x="232" y="839" font-size="10.5" fill="#0F766E">platform flags (no SecOC on the replaced messages),</text>
+<text x="232" y="853" font-size="10.5" fill="#0F766E">confirmed by a bus capture at the harness point</text>
+<rect x="40" y="897" width="1200" height="165" rx="12" fill="#F8FAFC" stroke="none" stroke-width="1.2"/>
+<text x="54" y="925" font-size="13.5" fill="#0F172A" font-weight="700">Installation and</text>
+<text x="54" y="942" font-size="13.5" fill="#0F172A" font-weight="700">maintenance</text>
+<text x="54" y="960" font-size="10.5" fill="#475569">device, harness, vehicle</text>
+<text x="54" y="974" font-size="10.5" fill="#475569">condition</text>
+<text x="54" y="994" font-size="10.5" fill="#475569" font-weight="700">3 AoU</text>
+<rect x="216" y="909" width="333.3" height="141" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="216" y="919" width="4" height="121" rx="2" fill="#D97706" stroke="none" stroke-width="1.2"/>
+<text x="232" y="933" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-08</text>
+<text x="302" y="932" font-size="10.5" fill="#475569" font-weight="600">device mount</text>
+<rect x="472" y="919" width="65.3" height="18" rx="9" fill="#D97706" stroke="none" stroke-width="1.2"/>
+<text x="504.7" y="931.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Partially</text>
+<text x="232" y="953" font-size="11.5" fill="#0F172A" font-weight="600">The device is mounted and calibrated according</text>
+<text x="232" y="968" font-size="11.5" fill="#0F172A" font-weight="600">to installation instructions</text>
+<text x="232" y="989" font-size="10.5" fill="#475569">Credited in: SOTIF</text>
+<text x="232" y="1003" font-size="10.5" fill="#0F766E">Verification: Calibration check (calibrationd) and</text>
+<text x="232" y="1017" font-size="10.5" fill="#0F766E">installation checklist WP-O-01</text>
+<rect x="561.3" y="909" width="333.3" height="141" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="561.3" y="919" width="4" height="121" rx="2" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="577.3" y="933" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-09</text>
+<text x="647.3" y="932" font-size="10.5" fill="#475569" font-weight="600">vehicle</text>
+<rect x="806" y="919" width="76.7" height="18" rx="9" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="844.3" y="931.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Not started</text>
+<text x="577.3" y="953" font-size="11.5" fill="#0F172A" font-weight="600">The vehicle is maintained, unmodified, and has</text>
+<text x="577.3" y="968" font-size="11.5" fill="#0F172A" font-weight="600">no active DTCs in the EPS, brake or powertrain</text>
+<text x="577.3" y="983" font-size="11.5" fill="#0F172A" font-weight="600">systems</text>
+<text x="577.3" y="1004" font-size="10.5" fill="#475569">Credited in: All</text>
+<text x="577.3" y="1018" font-size="10.5" fill="#0F766E">Verification: Pre-drive checklist</text>
+<rect x="906.7" y="909" width="333.3" height="141" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="906.7" y="919" width="4" height="121" rx="2" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="922.7" y="933" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-13</text>
+<text x="992.7" y="932" font-size="10.5" fill="#475569" font-weight="600">harness</text>
+<rect x="1157" y="919" width="71" height="18" rx="9" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="1192.5" y="931.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Unverified</text>
+<text x="922.7" y="953" font-size="11.5" fill="#0F172A" font-weight="600">The de-energised harness relay connects the</text>
+<text x="922.7" y="968" font-size="11.5" fill="#0F172A" font-weight="600">forward camera to the vehicle CAN without any</text>
+<text x="922.7" y="983" font-size="11.5" fill="#0F172A" font-weight="600">active component in the path</text>
+<text x="922.7" y="1004" font-size="10.5" fill="#475569">Credited in: FSC FSR-07.03; SG-07 safe state</text>
+<text x="922.7" y="1018" font-size="10.5" fill="#0F766E">Verification: Harness inspection and test (WP-H-02</text>
+<text x="922.7" y="1032" font-size="10.5" fill="#0F766E">UK-03; WP-S-08 VS-SI-18)</text>
+<rect x="40" y="1076" width="1200" height="151" rx="12" fill="#F8FAFC" stroke="none" stroke-width="1.2"/>
+<text x="54" y="1104" font-size="13.5" fill="#0F172A" font-weight="700">Driver</text>
+<text x="54" y="1122" font-size="10.5" fill="#475569">supervision and operation</text>
+<text x="54" y="1142" font-size="10.5" fill="#475569" font-weight="700">2 AoU</text>
+<rect x="216" y="1088" width="333.3" height="127" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="216" y="1098" width="4" height="107" rx="2" fill="#94A3B8" stroke="none" stroke-width="1.2"/>
+<text x="232" y="1112" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-06</text>
+<text x="302" y="1111" font-size="10.5" fill="#475569" font-weight="600">driver</text>
+<rect x="449.2" y="1098" width="88.1" height="18" rx="9" fill="#94A3B8" stroke="none" stroke-width="1.2"/>
+<text x="493.3" y="1110.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SOTIF-managed</text>
+<text x="232" y="1132" font-size="11.5" fill="#0F172A" font-weight="600">The driver is licensed, attentive, briefed</text>
+<text x="232" y="1147" font-size="11.5" fill="#0F172A" font-weight="600">according to WP-O-03, and keeps their eyes on</text>
+<text x="232" y="1162" font-size="11.5" fill="#0F172A" font-weight="600">the road</text>
+<text x="232" y="1183" font-size="10.5" fill="#475569">Credited in: Controllability (all)</text>
+<text x="232" y="1197" font-size="10.5" fill="#0F766E">Verification: Enforced by F-04</text>
+<rect x="561.3" y="1088" width="333.3" height="127" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="561.3" y="1098" width="4" height="107" rx="2" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="577.3" y="1112" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-07</text>
+<text x="647.3" y="1111" font-size="10.5" fill="#475569" font-weight="600">safety driver</text>
+<rect x="806" y="1098" width="76.7" height="18" rx="9" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="844.3" y="1110.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Not started</text>
+<text x="577.3" y="1132" font-size="11.5" fill="#0F172A" font-weight="600">During development, only trained safety drivers</text>
+<text x="577.3" y="1147" font-size="11.5" fill="#0F172A" font-weight="600">operate the item on public roads, under WP-V-07</text>
+<text x="577.3" y="1168" font-size="10.5" fill="#475569">Credited in: All</text>
+<text x="577.3" y="1182" font-size="10.5" fill="#0F766E">Verification: Training records</text>
+<rect x="40" y="1241" width="1200" height="121" rx="12" fill="#F8FAFC" stroke="none" stroke-width="1.2"/>
+<text x="54" y="1269" font-size="13.5" fill="#0F172A" font-weight="700">Network and back</text>
+<text x="54" y="1286" font-size="13.5" fill="#0F172A" font-weight="700">end</text>
+<text x="54" y="1304" font-size="10.5" fill="#475569">external, untrusted</text>
+<text x="54" y="1324" font-size="10.5" fill="#475569" font-weight="700">1 AoU</text>
+<rect x="216" y="1253" width="333.3" height="97" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="216" y="1263" width="4" height="77" rx="2" fill="#94A3B8" stroke="none" stroke-width="1.2"/>
+<text x="232" y="1277" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-11</text>
+<text x="302" y="1276" font-size="10.5" fill="#475569" font-weight="600">back end</text>
+<rect x="426.4" y="1263" width="110.9" height="18" rx="9" fill="#94A3B8" stroke="none" stroke-width="1.2"/>
+<text x="481.9" y="1275.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Design constraint</text>
+<text x="232" y="1297" font-size="11.5" fill="#0F172A" font-weight="600">The comma.ai back end and network are untrusted</text>
+<text x="232" y="1318" font-size="10.5" fill="#475569">Credited in: CS / FuSa</text>
+<text x="232" y="1332" font-size="10.5" fill="#0F766E">Verification: Architecture review</text>
+<rect x="40" y="1376" width="1200" height="150" rx="12" fill="#F8FAFC" stroke="none" stroke-width="1.2"/>
+<text x="54" y="1404" font-size="13.5" fill="#0F172A" font-weight="700">Build</text>
+<text x="54" y="1421" font-size="13.5" fill="#0F172A" font-weight="700">configuration</text>
+<text x="54" y="1439" font-size="10.5" fill="#475569">reference build use</text>
+<text x="54" y="1459" font-size="10.5" fill="#475569" font-weight="700">2 AoU</text>
+<rect x="216" y="1388" width="333.3" height="126" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="216" y="1398" width="4" height="106" rx="2" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="232" y="1412" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-14</text>
+<text x="302" y="1411" font-size="10.5" fill="#475569" font-weight="600">reference build</text>
+<rect x="466.3" y="1398" width="71" height="18" rx="9" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="501.8" y="1410.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Unverified</text>
+<text x="232" y="1432" font-size="11.5" fill="#0F172A" font-weight="600">The reference build is used with openpilot's</text>
+<text x="232" y="1447" font-size="11.5" fill="#0F172A" font-weight="600">default alternative experience</text>
+<text x="232" y="1468" font-size="10.5" fill="#475569">Credited in: WP-S-02 TSR-512 (SWSR-512a)</text>
+<text x="232" y="1482" font-size="10.5" fill="#0F766E">Verification: Installation checklist</text>
+<rect x="561.3" y="1388" width="333.3" height="126" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="561.3" y="1398" width="4" height="106" rx="2" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="577.3" y="1412" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-15</text>
+<text x="647.3" y="1411" font-size="10.5" fill="#475569" font-weight="600">reference build</text>
+<rect x="811.7" y="1398" width="71" height="18" rx="9" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="847.2" y="1410.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Unverified</text>
+<text x="577.3" y="1432" font-size="11.5" fill="#0F172A" font-weight="600">The reference build is used only on camera-ACC</text>
+<text x="577.3" y="1447" font-size="11.5" fill="#0F172A" font-weight="600">configurations</text>
+<text x="577.3" y="1468" font-size="10.5" fill="#475569">Credited in: WP-S-02 TSR-705 (decision D-1)</text>
+<text x="577.3" y="1482" font-size="10.5" fill="#0F766E">Verification: Installation checklist (reference</text>
+<text x="577.3" y="1496" font-size="10.5" fill="#0F766E">vehicle is camera-ACC)</text>
+<line x1="40" y1="1542" x2="1240" y2="1542" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="40" y="1552" width="26" height="12" rx="6" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="72" y="1562" font-size="11" fill="#475569">Unverified / Not started</text>
+<rect x="242" y="1552" width="26" height="12" rx="6" fill="#D97706" stroke="none" stroke-width="1.2"/>
+<text x="274" y="1562" font-size="11" fill="#475569">Partially</text>
+<rect x="354" y="1552" width="26" height="12" rx="6" fill="#94A3B8" stroke="none" stroke-width="1.2"/>
+<text x="386" y="1562" font-size="11" fill="#475569">SOTIF-managed / Design constraint (not a verification status)</text>
+<text x="778" y="1562" font-size="11" fill="#475569">Verification line in teal: the approach of §7, not a result.</text>
+<text x="40" y="1586" font-size="11" fill="#475569">What credits each assumption (hazardous events, goals, TSRs, HWSRs) is shown in WP-T-01 Figure 6 (assumption exposure); this figure groups the §7 table and does not repeat those counts.</text>
 </svg>

@@ -48,13 +48,14 @@ under the same weak 8-bit check, and only the ISO version should be accepted. Th
 
 | Network | What it is | Why LionDriver does not touch it |
 |---|---|---|
-| **SAE J1939** | The standard language of trucks, buses and heavy machinery, spoken on CAN with 29-bit identifiers. The identifier holds a priority, a parameter group number (PGN, what the message is) and a source address (who sent it). Units claim their addresses at start-up. Engine and brake commands have their own parameter groups, some with their own counter and checksum | openpilot does not support any J1939 vehicle. A truck would not be a new car for LionDriver but a new item: different mass, stopping distances and actuators, so a new hazard analysis. Whether to stay on passenger cars is a question for the project lead in the [decision register](How-decisions-are-made.md) |
+| **SAE J1939** | The standard language of trucks, buses and heavy machinery, spoken on CAN with 29-bit identifiers. The identifier holds a priority, a parameter group number (PGN, what the message is) and a source address (who sent it). Units claim their addresses at start-up. Engine and brake commands have their own parameter groups, some with their own counter and checksum | openpilot does not support any J1939 vehicle. A truck would not be a new car for LionDriver but a new item: different mass, stopping distances and actuators, so a new hazard analysis. The project lead has decided to stay on CAN and CAN FD passenger cars ([how decisions are made](How-decisions-are-made.md)) |
 | **LIN** | A slow (≤ 20 kbit/s), single-wire bus with one commander and a handful of responders: steering-wheel switches, wipers, rain and light sensors, mirrors and seats. An 8-bit checksum and two parity bits, no counter | The panda never sees it. A LIN signal reaches the item only after a control unit has re-packed it into a CAN message, so its protection is that of the CAN message. A LIN-sourced signal can feed an operating-domain monitor the driver backs up; it should not carry a safety claim |
 
 Two more networks matter only because they set a limit. FlexRay and automotive Ethernet carry the steering and
 braking commands of some newer platforms, and some Toyota platforms sign their commands with a key (SecOC). The
 harness can split a CAN cable, not an Ethernet switch, and the panda cannot sign what it has no key for. LionDriver
-works only where the commands travel unsigned on CAN or CAN FD, an assumption WP-S-05 asks to be written down.
+works only where the commands travel unsigned on CAN or CAN FD. That is now an assumption of use (AOU-18 in
+[WP-C-01](../assurance/02-concept/WP-C-01-item-definition.md) §7) and a condition for admitting any new vehicle.
 
 ## 4. End-to-end protection
 
