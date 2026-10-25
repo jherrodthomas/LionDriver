@@ -11,7 +11,7 @@ Every abbreviation and record code used on the assurance pages and figures is de
 3. **On every figure.** Each generated figure ends with a "Terms:" line for what it draws, so a figure read on its own still explains itself.
 4. **Checked.** CI fails if a block is stale, a figure lacks its line, or a page or figure uses a term that is not in the list. To add one, add it to `TERMS` and run `python3 assurance/trace/tools/terms.py`.
 
-Pages covered: [item](02-concept/item/README.md), [odd](02-concept/odd/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md). Other pages and older figures join the list as they are reworked.
+Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md), [odd](02-concept/odd/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md). Other pages and older figures join the list as they are reworked.
 
 ## Abbreviations
 
@@ -42,6 +42,7 @@ Pages covered: [item](02-concept/item/README.md), [odd](02-concept/odd/README.md
 | ECU | electronic control unit |
 | eGPU | external graphics processor (the optional big-model hardware) |
 | EPS | electric power steering |
+| EV | exposure value: one EV halves or doubles the light |
 | FCW | forward collision warning |
 | FDCAN | CAN with flexible data rate (the MCU's CAN controller) |
 | FDTI | fault detection time interval |
@@ -55,8 +56,11 @@ Pages covered: [item](02-concept/item/README.md), [odd](02-concept/odd/README.md
 | FTTI | fault-tolerant time interval: fault to hazard, the time a safety mechanism has |
 | FW | firmware |
 | GNSS | global navigation satellite system (GPS) |
+| GPS | global positioning system |
+| GPU | graphics processor (runs the models) |
 | HARA | hazard analysis and risk assessment (ISO 26262-3) |
 | HATARA | the joint HARA and TARA view: where hazards and threats meet |
+| HEVC | a compressed video format (H.265) |
 | HMI | human-machine interface: display, sounds, cluster |
 | HSI | hardware-software interface |
 | HUD | head-up display (here the cluster's lane-assist display) |
@@ -64,6 +68,7 @@ Pages covered: [item](02-concept/item/README.md), [odd](02-concept/odd/README.md
 | ID | identifier |
 | IPC | inter-process communication |
 | ISO | International Organization for Standardization |
+| JPEG | a compressed image format |
 | JWT | JSON web token (the device's login token to the back end) |
 | LD-SDA | LionDriver Supervised Driving Assistance, the item |
 | LFS | Git Large File Storage (where the model files live) |
@@ -71,6 +76,7 @@ Pages covered: [item](02-concept/item/README.md), [odd](02-concept/odd/README.md
 | LKAS | lane keeping assist system |
 | MB | megabyte |
 | MCU | microcontroller: the panda safety processor (STM32H7) |
+| MDN | mixture density network (how the model reports a spread of possible values) |
 | ML | machine learning |
 | MPU | memory protection unit |
 | NA | not applicable |
@@ -80,7 +86,10 @@ Pages covered: [item](02-concept/item/README.md), [odd](02-concept/odd/README.md
 | OBD-II | on-board diagnostics port |
 | ODD | operational design domain: where the system is meant to work |
 | ODD-H | the claimed ODD: limited-access highways |
+| ONNX | Open Neural Network Exchange, the model file format |
+| OOD | out of distribution: unlike the data the model learned from |
 | OTA | over-the-air (software update) |
+| PAS | publicly available specification (ISO/PAS 8800 is the AI safety one) |
 | PCM | powertrain control module (engine and drive) |
 | PCS | pre-collision system: Toyota's stock collision warning and braking |
 | PR | pull request |
@@ -90,9 +99,11 @@ Pages covered: [item](02-concept/item/README.md), [odd](02-concept/odd/README.md
 | RDP | read-out protection of the MCU's flash (option bytes) |
 | RPC | remote procedure call |
 | RT | real time |
+| RTK | real-time kinematic GPS, accurate to centimetres |
 | RX | receive |
 | SAE | SAE International (formerly the Society of Automotive Engineers) |
 | SC | safety-critical (a guide-word pair that can cause a hazard) |
+| SHA-256 | a cryptographic hash used to identify a file exactly |
 | SILENT | the panda's safety mode that sends nothing |
 | SoC | system on chip: the comma device's main processor, running openpilot (QM) |
 | SOTIF | safety of the intended functionality (ISO 21448): hazards with nothing failing |
@@ -103,6 +114,7 @@ Pages covered: [item](02-concept/item/README.md), [odd](02-concept/odd/README.md
 | SVG | scalable vector graphics (the figure format) |
 | SW | software |
 | TARA | threat analysis and risk assessment (ISO/SAE 21434) |
+| TBC | to be confirmed |
 | TSC | technical safety concept |
 | TSS | Toyota Safety Sense (TSS 2.0: the car's stock lane assist, radar cruise and pre-collision package) |
 | TX | transmit |
@@ -120,6 +132,9 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | Code | Meaning |
 |---|---|
 | AC-nn | acceptance criterion (WP-C-05 §5.3) |
+| AE-nn | AI error type (WP-C-11 §5) |
+| AI-nn | AI component (WP-C-11 §2.1): AI-1 driving model, AI-2 big driving model (excluded), AI-3 driver monitoring model |
+| AIR-nn | AI safety requirement (WP-C-11 §6) |
 | AOU-nn | assumption of use (WP-C-01 §7); an R suffix marks the FSC's refined version |
 | AP-nn | attack path (TARA §5) |
 | AS-nn | asset (TARA §2) |
@@ -129,8 +144,10 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | CSG-nn | cybersecurity goal (WP-C-10) |
 | CSR-nn | cybersecurity requirement: CSR-C-nn at concept level (WP-C-10 §7), CSR-nnn refined (WP-S-07) |
 | D-nn | design decision of the earlier decision list (D-01…D-12; D-08 is the Experimental Mode decision) |
+| DMP-nn | driver monitoring performance requirement (WP-C-08 §5) |
 | DQ-nn | decision of the project lead (decision register) |
 | DS-nn | damage scenario (TARA §3) |
+| DSR-nn | dataset requirement (WP-C-11 §7) |
 | E-nn | element of the item (WP-C-01 §3.1), E-01…E-06 |
 | EXT-nn | external element credited only through an assumption of use (EXT-EPS, EXT-PCM, EXT-CLU) |
 | F-nn | function of the item (WP-C-01 §2.1), F-01…F-09 |
@@ -141,12 +158,14 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | H-nn | hazard (HARA) |
 | HE-nn | hazardous event (HARA) |
 | IF-nn | interface of the item (WP-C-01 §3.4) |
+| INS-nn | installation check (WP-O-01) |
 | IX-nn | safety-security interaction (HATARA) |
 | KS-nn | known scenario (WP-V-03) |
 | NF-nn | finding of the onboard code review |
 | OI-nn | open item of the document it appears in |
 | OS-nn | operational situation (HARA §3) |
 | PL-nn | platform (PL-001 is LionDriver's) |
+| RM-nn | runtime monitor of the AI safety plan (WP-M-10) |
 | RR-nn | review record |
 | SG-nn | safety goal (HARA §6) |
 | SH-nn | SOTIF hazard (WP-C-05) |

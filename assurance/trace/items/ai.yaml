@@ -47,7 +47,7 @@
 
 - id: AIR-04
   kind: ai-requirement
-  text: "A stationary vehicle in the ego lane shall be reported as a lead at a distance not less than v·t_r + v²/(2·a_lim), with t_r = 1.0 s **(TBC)** and a_lim = 3.0 m/s² **(TBC)**, for all speeds in the ODD (e.g., ≈ 180 m at 30 m/s, ≈ 218 m at the 120 km/h ODD bound). The same applies to a slower lead closing faster than the 19 m/s that AIR-03 covers, with v replaced by the closing speed. Values derived in WP-V-02 §4.3"
+  text: "A stationary vehicle in the ego lane shall be reported as a lead at a distance not less than v·t_r + v²/(2·a_lim), with t_r = 1.0 s **(TBC)** and a_lim = 3.0 m/s² **(TBC)**, for all speeds in the ODD (e.g., ≈ 180 m at 30 m/s, ≈ 186 m at the 110 km/h ODD bound, DQ-260). The same applies to a slower lead closing faster than the 19 m/s that AIR-03 covers, with v replaced by the closing speed. Values derived in WP-V-02 §4.3"
   component: "AI-1"
   category: "Performance"
   parents: [SH-06, FI-04, TC-08]
