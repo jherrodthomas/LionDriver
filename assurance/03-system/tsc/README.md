@@ -14,12 +14,11 @@ figures. The documents are the source of record, and the figures are drawn from 
 | AI | artificial intelligence |
 | ALLOWED | the envelope's authority state with controls_allowed = 1 (NOT_ALLOWED: 0), WP-W-05 §5.2 |
 | AoU | assumption of use: what the analysis assumes about the car, the driver or the environment |
-| AP-nn | attack path (TARA §5) |
+| AP-nn | attack path (TARA §5); in WP-S-03 and on the TSC page, an architectural principle (WP-S-03 §2) |
 | ASIL | Automotive Safety Integrity Level, A (lowest) to D (highest), from ISO 26262 |
 | CAN | controller area network: the vehicle's data bus |
 | CI | continuous integration: the checks that run on every pull request |
 | DC | diagnostic coverage: the share of faults a safety mechanism detects |
-| DFA | dependent failure analysis |
 | DQ-nn | decision of the project lead (decision register) |
 | E-nn | element of the item (WP-C-01 §3.1), E-01…E-06 |
 | ECU | electronic control unit |
@@ -36,6 +35,7 @@ figures. The documents are the source of record, and the figures are drawn from 
 | HMI | human-machine interface: display, sounds, cluster |
 | HSI | hardware-software interface |
 | IF-nn | interface of the item (WP-C-01 §3.4) |
+| IND-nn | independence claim (WP-S-03 §7) |
 | ISO | International Organization for Standardization |
 | MCU | microcontroller: the panda safety processor (STM32H7) |
 | MPU | memory protection unit |
@@ -162,17 +162,16 @@ because none is verified.
 
 ## 6. Freedom from interference
 
-The QM SoC and the ASIL C MCU share a board, a supply and a speaker. §7 lists what the SoC could do to the MCU and
-what stops it.
+![WP-S-03 Figure 7-1: freedom from interference and independence: the six ways the QM side could interfere with the ASIL C envelope, the four causes the two share and the fallback independent limiter, each with the mechanisms required to stop it and its status](../figures/fig-s03-7-1-ffi.svg)
 
-| Claim | What the SoC could do | Today |
-|---|---|---|
-| FFI-1 | Send wrong or excessive commands | Partly stopped by the actuation limits (SM-01…08) |
-| FFI-2 | Reconfigure the safety element | Partly: locked in the reference build only (SM-22) |
-| FFI-3 | Replace the MCU firmware through its boot and reset lines | **Not met** (GAP-24, GAP-38) |
-| FFI-4 | Corrupt MCU memory through malformed SPI transfers | **Not met** (NF-04): bounds checks partial (SM-14), no MPU isolation (SM-21) |
-| FFI-5 | Hang or freeze its control loop | Partly: 0.3 s heartbeat revoke |
-| DFA-1…4 | Shared supply, board, speaker, PCM cruise state | Open; analysed in [WP-A-03](../../08-analyses/WP-A-03-dependent-failure-analysis.md) |
+*Figure 7-1 (§7).* The QM SoC and the ASIL C MCU share a board, a supply and a speaker. The figure lists what the SoC
+could do to the MCU, what the two share, and what is required to stop each. Two interference paths are open: the SoC
+can still replace the MCU firmware through its boot and reset lines (FFI-3, GAP-24, GAP-38). A malformed SPI
+transfer can still corrupt MCU memory (FFI-4, NF-04). The other four are partly covered. Two of the shared causes, the
+power supply and the speaker, have not been analysed yet. The second, independent limiter (IND-1) does not exist. It
+waits on the decision after the SG-01 controllability tests (OI-3, DQ-050). The analyses themselves are
+[WP-A-02](../../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) and
+[WP-A-03](../../08-analyses/WP-A-03-dependent-failure-analysis.md).
 
 ## 7. The hardware-software interface
 
@@ -196,6 +195,7 @@ This folder has no files of its own besides this page. The figures live next to 
 |---|---|
 | WP-S-03 Figures 3-1, 6-1, 6-2 | [`../figures/fig_s03_hierarchy.py`](../figures/fig_s03_hierarchy.py), [`fig_s03_defence_in_depth.py`](../figures/fig_s03_defence_in_depth.py), [`fig_s03_mechanisms.py`](../figures/fig_s03_mechanisms.py); CI fails if stale |
 | WP-S-03 Figure 3-3, the functional flow | [`fig_s03_functional_flow.py`](../figures/fig_s03_functional_flow.py), checked against WP-S-03 §8–§9, WP-C-01 §2.1 and WP-C-11 §5 |
+| WP-S-03 Figure 7-1, freedom from interference | [`fig_s03_ffi.py`](../figures/fig_s03_ffi.py), from §7; it fails if a status cannot be classified |
 | WP-S-03 Figure 4-5, the envelope's states | [`fig_s03_envelope_states.py`](../figures/fig_s03_envelope_states.py), from the state-machine records of WP-W-05 §5 |
 | WP-S-03 Figures 3-2, 4-1, 4-4 | Hand-drawn SVGs in [`../figures/`](../figures/); change them together with the sections named in their captions |
 | WP-S-04 Figure 5-1, WP-S-05 Figure 2-1 | [`fig_s04_timing.py`](../figures/fig_s04_timing.py), [`fig_s05_hsi.py`](../figures/fig_s05_hsi.py) |

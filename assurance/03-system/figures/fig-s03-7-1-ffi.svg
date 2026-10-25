@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1075" viewBox="0 0 1280 1075" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 7-1. Freedom from interference and independence (WP-S-03 §7)</title>
+<desc>WP-S-03 §7 claims. FFI-1: QM SoC sends wrong or excessive commands; required SM-01…08 (partly). FFI-2: QM SoC reconfigures the safety element (mode, param, relay, CAN config); required SM-22 (TSR-512, 513) (partly). FFI-3: QM SoC replaces MCU firmware via BOOT0/NRST or softloader; required TSR-511 (not met). FFI-4: QM SoC corrupts MCU memory through malformed SPI transfers; required SM-14 bounds checks, SM-21 MPU (not met). FFI-5: QM SoC timing faults (hang, frozen loop); required SM-12, SM-13 (partly). FFI-6: Comms ISRs on the MCU starve safety processing; required interrupt-rate monitors with reaction, SM-15 with logical checkpoint (partly). DFA-1: Shared power supply of SoC and MCU; required SM-19, de-energise-to-safe relay (AP-4) (not analysed). DFA-2: Shared PCB, enclosure, thermal environment; required SM-15, TSR-509 (partly). DFA-3: Shared speaker/codec between SoC audio and MCU siren; required TSR-516 analysis (not analysed). DFA-4: Driver and envelope both rely on PCM cruise state; required AOU-03R (brake works mechanically), TSR-405(b) (partly). IND-1: (Fallback, FSC §4.3) second limiter independent of E-03; required not present (not present).</desc>
+<defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="1075" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 7-1 · Freedom from interference and independence</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Each way the QM side could interfere with the ASIL C envelope, each cause they share, and what is required to stop it, with its status at the reference build</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-S-03 §7</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="30" y="104" width="1220" height="392" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="129" font-size="14" fill="#0F172A" font-weight="700">What the QM side could do to the envelope</text>
+<text x="394.2" y="129" font-size="11" fill="#475569">the SoC (E-01) and its models (E-02) against the panda MCU (E-03, E-04a)</text>
+<rect x="46" y="142" width="404" height="48" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="58" y="160" font-size="11.5" fill="#0F172A" font-weight="700">FFI-1</text>
+<text x="116" y="160" font-size="10.5" fill="#0F172A">QM SoC sends wrong or excessive commands</text>
+<line x1="450" y1="166" x2="488" y2="166" stroke="#475569" stroke-width="1.4" marker-end="url(#muted)"/>
+<rect x="490" y="142" width="330" height="48" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="502" y="158" font-size="9.5" fill="#C2410C" font-weight="700">required</text>
+<text x="502" y="172" font-size="10.5" fill="#0F172A">SM-01…08</text>
+<rect x="838" y="148" width="57.6" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="866.8" y="162" font-size="10.5" fill="#D97706" font-weight="700" text-anchor="middle">partly</text>
+<rect x="46" y="200" width="404" height="48" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="58" y="218" font-size="11.5" fill="#0F172A" font-weight="700">FFI-2</text>
+<text x="116" y="218" font-size="10.5" fill="#0F172A">QM SoC reconfigures the safety element (mode, param, relay,</text>
+<text x="116" y="232" font-size="10.5" fill="#0F172A">CAN config)</text>
+<line x1="450" y1="224" x2="488" y2="224" stroke="#475569" stroke-width="1.4" marker-end="url(#muted)"/>
+<rect x="490" y="200" width="330" height="48" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="502" y="216" font-size="9.5" fill="#C2410C" font-weight="700">required</text>
+<text x="502" y="230" font-size="10.5" fill="#0F172A">SM-22 (TSR-512, 513)</text>
+<rect x="838" y="206" width="57.6" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="866.8" y="220" font-size="10.5" fill="#D97706" font-weight="700" text-anchor="middle">partly</text>
+<text x="905.6" y="214" font-size="10" fill="#475569">reference build lock and gating; other builds unchanged</text>
+<rect x="46" y="258" width="404" height="48" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="58" y="276" font-size="11.5" fill="#0F172A" font-weight="700">FFI-3</text>
+<text x="116" y="276" font-size="10.5" fill="#0F172A">QM SoC replaces MCU firmware via BOOT0/NRST or softloader</text>
+<line x1="450" y1="282" x2="488" y2="282" stroke="#475569" stroke-width="1.4" marker-end="url(#muted)"/>
+<rect x="490" y="258" width="330" height="48" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="502" y="274" font-size="9.5" fill="#C2410C" font-weight="700">required</text>
+<text x="502" y="288" font-size="10.5" fill="#0F172A">TSR-511</text>
+<rect x="838" y="264" width="64.2" height="20" rx="10" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="870.1" y="278" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle">not met</text>
+<text x="912.2" y="272" font-size="10" fill="#475569">GAP-24, GAP-38</text>
+<rect x="46" y="316" width="404" height="48" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="58" y="334" font-size="11.5" fill="#0F172A" font-weight="700">FFI-4</text>
+<text x="116" y="334" font-size="10.5" fill="#0F172A">QM SoC corrupts MCU memory through malformed SPI transfers</text>
+<line x1="450" y1="340" x2="488" y2="340" stroke="#475569" stroke-width="1.4" marker-end="url(#muted)"/>
+<rect x="490" y="316" width="330" height="48" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="502" y="332" font-size="9.5" fill="#C2410C" font-weight="700">required</text>
+<text x="502" y="346" font-size="10.5" fill="#0F172A">SM-14 bounds checks, SM-21 MPU</text>
+<rect x="838" y="322" width="64.2" height="20" rx="10" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="870.1" y="336" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle">not met</text>
+<text x="912.2" y="330" font-size="10" fill="#475569">NF-04</text>
+<rect x="46" y="374" width="404" height="48" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="58" y="392" font-size="11.5" fill="#0F172A" font-weight="700">FFI-5</text>
+<text x="116" y="392" font-size="10.5" fill="#0F172A">QM SoC timing faults (hang, frozen loop)</text>
+<line x1="450" y1="398" x2="488" y2="398" stroke="#475569" stroke-width="1.4" marker-end="url(#muted)"/>
+<rect x="490" y="374" width="330" height="48" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="502" y="390" font-size="9.5" fill="#C2410C" font-weight="700">required</text>
+<text x="502" y="404" font-size="10.5" fill="#0F172A">SM-12, SM-13</text>
+<rect x="838" y="380" width="57.6" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="866.8" y="394" font-size="10.5" fill="#D97706" font-weight="700" text-anchor="middle">partly</text>
+<text x="905.6" y="388" font-size="10" fill="#475569">0.3 s revoke; TSR-408 open</text>
+<rect x="46" y="432" width="404" height="48" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="58" y="450" font-size="11.5" fill="#0F172A" font-weight="700">FFI-6</text>
+<text x="116" y="450" font-size="10.5" fill="#0F172A">Comms ISRs on the MCU starve safety processing</text>
+<line x1="450" y1="456" x2="488" y2="456" stroke="#475569" stroke-width="1.4" marker-end="url(#muted)"/>
+<rect x="490" y="432" width="330" height="48" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="502" y="448" font-size="9.5" fill="#C2410C" font-weight="700">required</text>
+<text x="502" y="462" font-size="10.5" fill="#0F172A">interrupt-rate monitors with reaction, SM-15 with logical</text>
+<text x="502" y="475" font-size="10.5" fill="#0F172A">checkpoint</text>
+<rect x="838" y="438" width="57.6" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="866.8" y="452" font-size="10.5" fill="#D97706" font-weight="700" text-anchor="middle">partly</text>
+<text x="905.6" y="446" font-size="10" fill="#475569">IWDG, explicit equal priorities; no WCET; rate faults report-only</text>
+<rect x="30" y="510" width="1220" height="276" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="535" font-size="14" fill="#0F172A" font-weight="700">What the two share</text>
+<text x="205.6" y="535" font-size="11" fill="#475569">common causes that could defeat both at once</text>
+<rect x="46" y="548" width="404" height="48" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="58" y="566" font-size="11.5" fill="#0F172A" font-weight="700">DFA-1</text>
+<text x="116" y="566" font-size="10.5" fill="#0F172A">Shared power supply of SoC and MCU</text>
+<line x1="450" y1="572" x2="488" y2="572" stroke="#475569" stroke-width="1.4" marker-end="url(#muted)"/>
+<rect x="490" y="548" width="330" height="48" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="502" y="564" font-size="9.5" fill="#C2410C" font-weight="700">required</text>
+<text x="502" y="578" font-size="10.5" fill="#0F172A">SM-19, de-energise-to-safe relay (AP-4)</text>
+<rect x="838" y="554" width="97.2" height="20" rx="10" fill="#F1F5F9" stroke="#475569" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="886.6" y="568" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">not analysed</text>
+<rect x="46" y="606" width="404" height="48" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="58" y="624" font-size="11.5" fill="#0F172A" font-weight="700">DFA-2</text>
+<text x="116" y="624" font-size="10.5" fill="#0F172A">Shared PCB, enclosure, thermal environment</text>
+<line x1="450" y1="630" x2="488" y2="630" stroke="#475569" stroke-width="1.4" marker-end="url(#muted)"/>
+<rect x="490" y="606" width="330" height="48" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="502" y="622" font-size="9.5" fill="#C2410C" font-weight="700">required</text>
+<text x="502" y="636" font-size="10.5" fill="#0F172A">SM-15, TSR-509</text>
+<rect x="838" y="612" width="57.6" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="866.8" y="626" font-size="10.5" fill="#D97706" font-weight="700" text-anchor="middle">partly</text>
+<rect x="46" y="664" width="404" height="48" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="58" y="682" font-size="11.5" fill="#0F172A" font-weight="700">DFA-3</text>
+<text x="116" y="682" font-size="10.5" fill="#0F172A">Shared speaker/codec between SoC audio and MCU siren</text>
+<line x1="450" y1="688" x2="488" y2="688" stroke="#475569" stroke-width="1.4" marker-end="url(#muted)"/>
+<rect x="490" y="664" width="330" height="48" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="502" y="680" font-size="9.5" fill="#C2410C" font-weight="700">required</text>
+<text x="502" y="694" font-size="10.5" fill="#0F172A">TSR-516 analysis</text>
+<rect x="838" y="670" width="97.2" height="20" rx="10" fill="#F1F5F9" stroke="#475569" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="886.6" y="684" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">not analysed</text>
+<rect x="46" y="722" width="404" height="48" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="58" y="740" font-size="11.5" fill="#0F172A" font-weight="700">DFA-4</text>
+<text x="116" y="740" font-size="10.5" fill="#0F172A">Driver and envelope both rely on PCM cruise state</text>
+<line x1="450" y1="746" x2="488" y2="746" stroke="#475569" stroke-width="1.4" marker-end="url(#muted)"/>
+<rect x="490" y="722" width="330" height="48" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="502" y="738" font-size="9.5" fill="#C2410C" font-weight="700">required</text>
+<text x="502" y="752" font-size="10.5" fill="#0F172A">AOU-03R (brake works mechanically), TSR-405(b)</text>
+<rect x="838" y="728" width="57.6" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="866.8" y="742" font-size="10.5" fill="#D97706" font-weight="700" text-anchor="middle">partly</text>
+<rect x="30" y="800" width="1220" height="102" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="825" font-size="14" fill="#0F172A" font-weight="700">A second, independent limiter</text>
+<text x="295.8" y="825" font-size="11" fill="#475569">the fallback of FSC §4.3, if the envelope alone is not enough</text>
+<rect x="46" y="838" width="404" height="48" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="58" y="856" font-size="11.5" fill="#0F172A" font-weight="700">IND-1</text>
+<text x="116" y="856" font-size="10.5" fill="#0F172A">(Fallback, FSC §4.3) second limiter independent of E-03</text>
+<line x1="450" y1="862" x2="488" y2="862" stroke="#475569" stroke-width="1.4" marker-end="url(#muted)"/>
+<rect x="490" y="838" width="330" height="48" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="502" y="854" font-size="9.5" fill="#C2410C" font-weight="700">required</text>
+<text x="502" y="868" font-size="10.5" fill="#0F172A">not present</text>
+<rect x="838" y="844" width="90.6" height="20" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="883.3" y="858" font-size="10.5" fill="#94A3B8" font-weight="700" text-anchor="middle">not present</text>
+<rect x="40" y="910" width="30" height="16" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="78" y="922" font-size="11" fill="#0F172A">not met (2)</text>
+<rect x="169.3" y="910" width="30" height="16" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="207.3" y="922" font-size="11" fill="#0F172A">partly (6)</text>
+<rect x="292.3" y="910" width="30" height="16" rx="8" fill="#F1F5F9" stroke="#475569" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="330.3" y="922" font-size="11" fill="#0F172A">not analysed (2)</text>
+<rect x="453.1" y="910" width="30" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="491.1" y="922" font-size="11" fill="#0F172A">not present (1)</text>
+<text x="607.6" y="922" font-size="11" fill="#475569">Nothing here is verified. The analyses are WP-A-02 (interference) and WP-A-03 (dependent failures).</text>
+<text x="40" y="940" font-size="11" fill="#475569">Status is the latest dated note of the §7 Baseline cell (the reference build where one is given). Generated by fig_s03_ffi.py from WP-S-03 §7.</text>
+<g class="terms">
+<text x="40" y="962" font-size="10.5" fill="#475569">Terms: AOU-nn assumption of use (WP-C-01 §7); an R suffix marks the FSC's refined version · AP-nn attack path (TARA §5); in WP-S-03 and on the TSC page, an architectural principle (WP-S-03 §2) · ASIL Automotive</text>
+<text x="40" y="976.5" font-size="10.5" fill="#475569">Safety Integrity Level, A (lowest) to D (highest), from ISO 26262 · CAN controller area network: the vehicle's data bus · DFA dependent failure analysis · E-nn element of the item (WP-C-01 §3.1), E-01…E-06 · FFI</text>
+<text x="40" y="991" font-size="10.5" fill="#475569">freedom from interference · FSC functional safety concept · GAP-nn gap found by the gap assessment · IND-nn independence claim (WP-S-03 §7) · ISR interrupt service routine · IWDG independent watchdog of the MCU ·</text>
+<text x="40" y="1005.5" font-size="10.5" fill="#475569">MCU microcontroller: the panda safety processor (STM32H7) · MPU memory protection unit · NF-nn finding of the onboard code review · NRST the MCU's reset line (BOOT0 is its boot-mode line) · PCB printed circuit board</text>
+<text x="40" y="1020" font-size="10.5" fill="#475569">· PCM powertrain control module (engine and drive) · QM quality managed: no ASIL; ordinary quality processes suffice · SM-nn safety mechanism (TSC §6) · SoC system on chip: the comma device's main processor, running</text>
+<text x="40" y="1034.5" font-size="10.5" fill="#475569">openpilot (QM) · SPI serial peripheral interface (the link between SoC and MCU) · TSR-nn technical safety requirement (WP-S-02) · WCET worst-case execution time · WP-nn work product, e.g. WP-C-04; the letter is its</text>
+<text x="40" y="1049" font-size="10.5" fill="#475569">area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>
