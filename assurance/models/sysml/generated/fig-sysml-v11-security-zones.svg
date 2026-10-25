@@ -18,11 +18,12 @@
 <rect x="40" y="246" width="300" height="140" rx="10" fill="#FAF5FF" stroke="#A855F7" stroke-width="1.6"/>
 <rect x="52" y="258" width="28.1" height="20" rx="10" fill="#9333EA"/><text x="66" y="271.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Z4</text>
 <rect x="264.9" y="258" width="63.1" height="20" rx="10" fill="#FFFFFF" stroke="#A855F7" stroke-width="1"/><text x="296.4" y="271.6" font-size="10" fill="#9333EA" font-weight="700" text-anchor="middle">Untrusted</text>
-<text x="88.1" y="273" font-size="13" fill="#0F172A" font-weight="700">External network and…</text>
-<rect x="52" y="290" width="116.1" height="20" rx="5" fill="#FAF5FF" stroke="#A855F7" stroke-width="1.2"/>
-<text x="60" y="304" font-size="10.5" fill="#0F172A" font-weight="600">Comma.ai back end</text>
-<text x="52" y="328" font-size="10.5" fill="#64748B">WP-S-07: comma athena/connect, GitHub, LFS store,</text>
-<text x="52" y="342" font-size="10.5" fill="#64748B">AGNOS CDN, Wi-Fi/LTE</text>
+<text x="88.1" y="273" font-size="13" fill="#0F172A" font-weight="700">External network and</text>
+<text x="88.1" y="289" font-size="13" fill="#0F172A" font-weight="700">back end</text>
+<rect x="52" y="306" width="116.1" height="20" rx="5" fill="#FAF5FF" stroke="#A855F7" stroke-width="1.2"/>
+<text x="60" y="320" font-size="10.5" fill="#0F172A" font-weight="600">Comma.ai back end</text>
+<text x="52" y="344" font-size="10.5" fill="#64748B">WP-S-07: comma athena/connect, GitHub, LFS store,</text>
+<text x="52" y="358" font-size="10.5" fill="#64748B">AGNOS CDN, Wi-Fi/LTE</text>
 <rect x="440" y="246" width="1020" height="100" rx="10" fill="#FAF5FF" stroke="#A855F7" stroke-width="1.6"/>
 <rect x="452" y="258" width="27.8" height="20" rx="10" fill="#9333EA"/><text x="465.9" y="271.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Z3</text>
 <rect x="1312.1" y="258" width="135.9" height="20" rx="10" fill="#FFFFFF" stroke="#A855F7" stroke-width="1"/><text x="1380" y="271.6" font-size="10" fill="#9333EA" font-weight="700" text-anchor="middle">Untrusted input handlers</text>

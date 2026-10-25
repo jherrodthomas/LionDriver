@@ -180,9 +180,11 @@ def render_security(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> s
     body.append(pill)
     tp, tw = k.pill(x + bw - 12, y + 12, trust, "#FFFFFF", st["chip"], h=20, size=10, stroke=st["stroke"], anchor="end")
     body.append(tp)
-    body.append(k.text(x + 20 + pw, y + 27, k.clip(z.doc, bw - pw - tw - 50, 13, 700), 13, k.INK, 700))
+    name_lines = k.wrap(z.doc, bw - pw - tw - 50, 13, 700)[:2]
+    for li, ln in enumerate(name_lines):
+      body.append(k.text(x + 20 + pw, y + 27 + li * 16, ln, 13, k.INK, 700))
     # model elements in the zone
-    cx, cy = x + 12, y + 44
+    cx, cy = x + 12, y + 44 + 16 * (len(name_lines) - 1)
     members = zone_members(m, zid, spec.get("expand", []))
     for e in members:
       label = element_label(e)
