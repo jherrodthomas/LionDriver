@@ -1,0 +1,7 @@
+# Which side is the record of the architecture tables: WP-S-03 §3.1, §3.3 and §6 and WP-W-03 §3.1 (SY-05, DQ-186).
+#
+#   "work-products"  until the model has been reviewed (OI-8). Edit the work product and the model together;
+#                    tools/gen_tables.py fails CI when a table is not the table the model generates.
+#   "model"          after the review. tools/gen_tables.py --write puts the generated tables into the work
+#                    products under a marker; edit the model only.
+record = "work-products"
