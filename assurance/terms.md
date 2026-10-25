@@ -11,7 +11,7 @@ Every abbreviation and record code used on the assurance pages and figures is de
 3. **On every figure.** Each generated figure ends with a "Terms:" line for what it draws, so a figure read on its own still explains itself.
 4. **Checked.** CI fails if a block is stale, a figure lacks its line, or a page or figure uses a term that is not in the list. To add one, add it to `TERMS` and run `python3 assurance/trace/tools/terms.py`.
 
-Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md), [hsi](03-system/hsi/README.md), [odd](02-concept/odd/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md). Other pages and older figures join the list as they are reworked.
+Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md), [hsi](03-system/hsi/README.md), [timing](03-system/timing/README.md), [odd](02-concept/odd/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md). Other pages and older figures join the list as they are reworked.
 
 ## Abbreviations
 
@@ -67,6 +67,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | HARA | hazard analysis and risk assessment (ISO 26262-3) |
 | HATARA | the joint HARA and TARA view: where hazards and threats meet |
 | HEVC | a compressed video format (H.265) |
+| HIL | hardware in the loop: the bench with the real panda and simulated car buses |
 | HMI | human-machine interface: display, sounds, cluster |
 | HSI | hardware-software interface |
 | HUD | head-up display (here the cluster's lane-assist display) |
@@ -184,6 +185,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | INS-nn | installation check (WP-O-01) |
 | IX-nn | safety-security interaction (HATARA) |
 | KS-nn | known scenario (WP-V-03) |
+| M-nn | timing measurement of the plan in WP-S-04 §6 |
 | NF-nn | finding of the onboard code review |
 | OI-nn | open item of the document it appears in |
 | OS-nn | operational situation (HARA §3) |
@@ -194,6 +196,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | SH-nn | SOTIF hazard (WP-C-05) |
 | SM-nn | safety mechanism (TSC §6) |
 | SS-nn | safe state (FSC §6): SS-L lateral, SS-G longitudinal, SS-S envelope silent |
+| T-nn | code-derived detection or reaction time (WP-S-04 §4) |
 | TC-nn | triggering condition (WP-C-06) |
 | TL-nn | tool entry in the tool register (WP-P-07) |
 | TS-nn | threat scenario (TARA §4) |

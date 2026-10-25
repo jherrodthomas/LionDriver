@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1460" viewBox="0 0 1280 1460" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 5-3. Where each timing requirement stands (WP-S-04 §5)</title>
+<desc>19 timing requirements of WP-S-04 §5. RX loss: met by design in the reference build, not verified; ≤ 0.2 s by design; 0x262 marginal at ≈ 0.21 s. RX stuck/inserted: not met; rate, frozen-content and cross-checks not built. SoC heartbeat loss: partly, or just over the budget; revoke by design ≤ 0.31 s; SILENT still 4–5 s. SoC heartbeat loss → warning: met by design in the reference build, not verified; siren ≤ 0.56 s when authority was granted. Host/panda mismatch: met by design in the reference build, not verified; revoked ≤ 0.31 s (was 2–3 s). SoC command stall: partly, or just over the budget; ≤ 0.06 s against 0.05 s: one task period over. MCU hang: met by design in the reference build, not verified; ≈ 90 ms watchdog, if the clock tolerance holds. Relay stuck released: not met; no relay read-back. Brake / cancel: met (code-derived, envelope side); 25–30 ms; EPS and PCM response to verify. Steering override: not met; no driver-torque monitor in the envelope. Stale SoC inputs: not met; 3–3.5 s of actuation on a failed input. Diagnostic masking: not met; up to 5 s blind while the big model loads. Cruise mismatch: not met; 6 s, no reaction. sendcan age: not met; 1 s against 20 ms. Take-over request: no derived time yet; alerts immediate; latency not measured. Cruise active with main off: met by design in the reference build, not verified; refused at once; revoked after 150 ms. SoC TX rate above budget: met by design in the reference build, not verified; revoked ≤ 0.1 s after the first rejected frame. EPS fault: met by design in the reference build, not verified; torque refused at once; siren ≤ 0.96 s. Full SoC stall → warning: met by design in the reference build, not verified; siren ≤ 0.31 s after the last command frame.</desc>
+<defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="1460" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 5-3 · Where each timing requirement stands</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">The 19 fault classes of §5 by verdict, each with its budget, the time in its Baseline column and the latest status: 7 not met, 2 partly, 9 met in code or by design, none measured</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-S-04 §5</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="30" y="104" width="1220" height="148" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="129" font-size="14" fill="#1D4ED8" font-weight="700">Met (code-derived, envelope side) (1)</text>
+<rect x="40" y="140" width="392" height="96" rx="8" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.4"/>
+<text x="52" y="160" font-size="12" fill="#0F172A" font-weight="700">Brake / cancel</text>
+<text x="422" y="160" font-size="9.5" fill="#475569" text-anchor="end">TSR 302, 109</text>
+<text x="52" y="178" font-size="10.5" fill="#0F172A" font-weight="600">25–30 ms; EPS and PCM response to verify</text>
+<text x="52" y="226" font-size="9.5" fill="#475569">budget ≤ 30 ms · baseline: 25–30 ms (T-04)</text>
+<rect x="30" y="266" width="1220" height="364" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="291" font-size="14" fill="#1D4ED8" font-weight="700">Met by design in the reference build, not verified (8)</text>
+<rect x="40" y="302" width="392" height="96" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.4"/>
+<text x="52" y="322" font-size="12" fill="#0F172A" font-weight="700">RX loss</text>
+<text x="422" y="322" font-size="9.5" fill="#475569" text-anchor="end">TSR 401</text>
+<text x="52" y="340" font-size="10.5" fill="#0F172A" font-weight="600">≤ 0.2 s by design; 0x262 marginal at ≈ 0.21 s</text>
+<text x="52" y="388" font-size="9.5" fill="#475569">budget ≤ 0.2 s · baseline: 1–2 s (T-01)</text>
+<rect x="444" y="302" width="392" height="96" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.4"/>
+<text x="456" y="322" font-size="12" fill="#0F172A" font-weight="700">SoC heartbeat loss → warning</text>
+<text x="826" y="322" font-size="9.5" fill="#475569" text-anchor="end">TSR 516, 407</text>
+<text x="456" y="340" font-size="10.5" fill="#0F172A" font-weight="600">siren ≤ 0.56 s when authority was granted</text>
+<text x="456" y="388" font-size="9.5" fill="#475569">budget warning within SG-02 1 s (§3.7) · baseline: siren at T-06: 4–5 s (T-07)</text>
+<rect x="848" y="302" width="392" height="96" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.4"/>
+<text x="860" y="322" font-size="12" fill="#0F172A" font-weight="700">Host/panda mismatch</text>
+<text x="1230" y="322" font-size="9.5" fill="#475569" text-anchor="end">TSR 307</text>
+<text x="860" y="340" font-size="10.5" fill="#0F172A" font-weight="600">revoked ≤ 0.31 s (was 2–3 s)</text>
+<text x="860" y="388" font-size="9.5" fill="#475569">budget ≤ 0.3 s · baseline: 2–3 s (T-05), 2 s (T-17)</text>
+<rect x="40" y="410" width="392" height="96" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.4"/>
+<text x="52" y="430" font-size="12" fill="#0F172A" font-weight="700">MCU hang</text>
+<text x="422" y="430" font-size="9.5" fill="#475569" text-anchor="end">TSR 501</text>
+<text x="52" y="448" font-size="10.5" fill="#0F172A" font-weight="600">≈ 90 ms watchdog, if the clock tolerance holds</text>
+<text x="52" y="496" font-size="9.5" fill="#475569">budget ≤ 0.1 s · baseline: not detected (T-09)</text>
+<rect x="444" y="410" width="392" height="96" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.4"/>
+<text x="456" y="430" font-size="12" fill="#0F172A" font-weight="700">Cruise active with main off</text>
+<text x="826" y="430" font-size="9.5" fill="#475569" text-anchor="end">TSR 405(c)</text>
+<text x="456" y="448" font-size="10.5" fill="#0F172A" font-weight="600">refused at once; revoked after 150 ms</text>
+<text x="456" y="496" font-size="9.5" fill="#475569">budget ≤ 0.2 s · baseline: refuse at once; revoke after 150 ms (T-26)</text>
+<rect x="848" y="410" width="392" height="96" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.4"/>
+<text x="860" y="430" font-size="12" fill="#0F172A" font-weight="700">SoC TX rate above budget</text>
+<text x="1230" y="430" font-size="9.5" fill="#475569" text-anchor="end">TSR 518</text>
+<text x="860" y="448" font-size="10.5" fill="#0F172A" font-weight="600">revoked ≤ 0.1 s after the first rejected frame</text>
+<text x="860" y="484" font-size="9.5" fill="#475569">budget revoke · baseline: ≤ 0.1 s after first rejected frame, ≤ 0.2 s from onset at</text>
+<text x="860" y="496" font-size="9.5" fill="#475569">2× (T-27)</text>
+<rect x="40" y="518" width="392" height="96" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.4"/>
+<text x="52" y="538" font-size="12" fill="#0F172A" font-weight="700">EPS fault</text>
+<text x="422" y="538" font-size="9.5" fill="#475569" text-anchor="end">TSR 110, 516</text>
+<text x="52" y="556" font-size="10.5" fill="#0F172A" font-weight="600">torque refused at once; siren ≤ 0.96 s</text>
+<text x="52" y="592" font-size="9.5" fill="#475569">budget LKA refused; warning within SG-02 1 s (§3.7) · baseline: LKA refused on</text>
+<text x="52" y="604" font-size="9.5" fill="#475569">receipt; siren ≤ 0.96 s worst case after onset (T-28, panda bf8102a)</text>
+<rect x="444" y="518" width="392" height="96" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.4"/>
+<text x="456" y="538" font-size="12" fill="#0F172A" font-weight="700">Full SoC stall → warning</text>
+<text x="826" y="538" font-size="9.5" fill="#475569" text-anchor="end">TSR 516, 408</text>
+<text x="456" y="556" font-size="10.5" fill="#0F172A" font-weight="600">siren ≤ 0.31 s after the last command frame</text>
+<text x="456" y="592" font-size="9.5" fill="#475569">budget warning within SG-02 1 s (§3.7); TSR-516(b) · baseline: revoke ≤ 0.06 s</text>
+<text x="456" y="604" font-size="9.5" fill="#475569">(T-34); siren on that revocation ≤ 0.31 s after the last 0x2E4 (panda 8a69ccf,…</text>
+<rect x="30" y="644" width="1220" height="148" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="669" font-size="14" fill="#D97706" font-weight="700">Partly, or just over the budget (2)</text>
+<rect x="40" y="680" width="392" height="96" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="52" y="700" font-size="12" fill="#0F172A" font-weight="700">SoC heartbeat loss</text>
+<text x="422" y="700" font-size="9.5" fill="#475569" text-anchor="end">TSR 407, 510</text>
+<text x="52" y="718" font-size="10.5" fill="#D97706" font-weight="600">revoke by design ≤ 0.31 s; SILENT still 4–5 s</text>
+<text x="52" y="766" font-size="9.5" fill="#475569">budget ≤ 0.3 s · baseline: 4–5 s (T-06)</text>
+<rect x="444" y="680" width="392" height="96" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="456" y="700" font-size="12" fill="#0F172A" font-weight="700">SoC command stall</text>
+<text x="826" y="700" font-size="9.5" fill="#475569" text-anchor="end">TSR 408, 109</text>
+<text x="456" y="718" font-size="10.5" fill="#D97706" font-weight="600">≤ 0.06 s against 0.05 s: one task period over</text>
+<text x="456" y="766" font-size="9.5" fill="#475569">budget ≤ 0.05 s · baseline: 0.1 s at host (T-13), then EPS ≈ 2 s (T-23)</text>
+<rect x="30" y="806" width="1220" height="364" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="831" font-size="14" fill="#D2553F" font-weight="700">Not met (7)</text>
+<rect x="40" y="842" width="392" height="96" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="52" y="862" font-size="12" fill="#0F172A" font-weight="700">RX stuck/inserted</text>
+<text x="422" y="862" font-size="9.5" fill="#475569" text-anchor="end">TSR 403…405</text>
+<text x="52" y="880" font-size="10.5" fill="#D2553F" font-weight="600">rate, frozen-content and cross-checks not built</text>
+<text x="52" y="928" font-size="9.5" fill="#475569">budget ≤ 0.2 s · baseline: not detected (T-03)</text>
+<rect x="444" y="842" width="392" height="96" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="456" y="862" font-size="12" fill="#0F172A" font-weight="700">Relay stuck released</text>
+<text x="826" y="862" font-size="9.5" fill="#475569" text-anchor="end">TSR 506</text>
+<text x="456" y="880" font-size="10.5" fill="#D2553F" font-weight="600">no relay read-back</text>
+<text x="456" y="928" font-size="9.5" fill="#475569">budget ≤ 0.3 s · baseline: 1–2 s window (T-08)</text>
+<rect x="848" y="842" width="392" height="96" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="860" y="862" font-size="12" fill="#0F172A" font-weight="700">Steering override</text>
+<text x="1230" y="862" font-size="9.5" fill="#475569" text-anchor="end">TSR 304</text>
+<text x="860" y="880" font-size="10.5" fill="#D2553F" font-weight="600">no driver-torque monitor in the envelope</text>
+<text x="860" y="928" font-size="9.5" fill="#475569">budget ≤ 0.2 s · baseline: not in envelope</text>
+<rect x="40" y="950" width="392" height="96" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="52" y="970" font-size="12" fill="#0F172A" font-weight="700">Stale SoC inputs</text>
+<text x="422" y="970" font-size="9.5" fill="#475569" text-anchor="end">TSR 601, 602</text>
+<text x="52" y="988" font-size="10.5" fill="#D2553F" font-weight="600">3–3.5 s of actuation on a failed input</text>
+<text x="52" y="1036" font-size="9.5" fill="#475569">budget ≤ 0.2 s actuation on failed input · baseline: 3–3.5 s (T-14 + T-16)</text>
+<rect x="444" y="950" width="392" height="96" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="456" y="970" font-size="12" fill="#0F172A" font-weight="700">Diagnostic masking</text>
+<text x="826" y="970" font-size="9.5" fill="#475569" text-anchor="end">TSR 603</text>
+<text x="456" y="988" font-size="10.5" fill="#D2553F" font-weight="600">up to 5 s blind while the big model loads</text>
+<text x="456" y="1036" font-size="9.5" fill="#475569">budget none while engaged · baseline: 5 s (T-22)</text>
+<rect x="848" y="950" width="392" height="96" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="860" y="970" font-size="12" fill="#0F172A" font-weight="700">Cruise mismatch</text>
+<text x="1230" y="970" font-size="9.5" fill="#475569" text-anchor="end">TSR 308</text>
+<text x="860" y="988" font-size="10.5" fill="#D2553F" font-weight="600">6 s, no reaction</text>
+<text x="860" y="1036" font-size="9.5" fill="#475569">budget ≤ 1 s with reaction · baseline: 6 s, no reaction (T-19)</text>
+<rect x="40" y="1058" width="392" height="96" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="52" y="1078" font-size="12" fill="#0F172A" font-weight="700">sendcan age</text>
+<text x="422" y="1078" font-size="9.5" fill="#475569" text-anchor="end">TSR 614</text>
+<text x="52" y="1096" font-size="10.5" fill="#D2553F" font-weight="600">1 s against 20 ms</text>
+<text x="52" y="1144" font-size="9.5" fill="#475569">budget ≤ 20 ms · baseline: 1 s (T-11)</text>
+<rect x="30" y="1184" width="1220" height="148" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="1209" font-size="14" fill="#0F172A" font-weight="700">No derived time yet (1)</text>
+<rect x="40" y="1220" width="392" height="96" rx="8" fill="#F1F5F9" stroke="#475569" stroke-width="1.4" stroke-dasharray="5 3"/>
+<text x="52" y="1240" font-size="12" fill="#0F172A" font-weight="700">Take-over request</text>
+<text x="422" y="1240" font-size="9.5" fill="#475569" text-anchor="end">TSR 606</text>
+<text x="52" y="1258" font-size="10.5" fill="#0F172A" font-weight="600">alerts immediate; latency not measured</text>
+<text x="52" y="1306" font-size="9.5" fill="#475569">budget ≤ 1 s after detection · baseline: alerts immediate; timing unverified</text>
+<text x="40" y="1350" font-size="11" fill="#475569">Nothing in this figure is measured: “met” is derived from the code, “by design” is implemented in the reference build and simulated at most. The measurements are §6 (M-01…M-12).</text>
+<text x="40" y="1368" font-size="11" fill="#475569">Generated by fig_s04_verdicts.py from WP-S-04 §5; each row's verdict is listed in the script with a phrase from its cell, and CI fails when the cell changes.</text>
+<g class="terms">
+<text x="40" y="1390" font-size="10.5" fill="#475569">Terms: CI continuous integration: the checks that run on every pull request · EPS electric power steering · LKA lane keeping assist · M-nn timing measurement of the plan in WP-S-04 §6 · MCU microcontroller: the</text>
+<text x="40" y="1404.5" font-size="10.5" fill="#475569">panda safety processor (STM32H7) · PCM powertrain control module (engine and drive) · RX receive · SG-nn safety goal (HARA §6) · SILENT the panda's safety mode that sends nothing · SoC system on chip: the comma</text>
+<text x="40" y="1419" font-size="10.5" fill="#475569">device's main processor, running openpilot (QM) · T-nn code-derived detection or reaction time (WP-S-04 §4) · TSR-nn technical safety requirement (WP-S-02) · TX transmit · WP-nn work product, e.g. WP-C-04; the</text>
+<text x="40" y="1433.5" font-size="10.5" fill="#475569">letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>
