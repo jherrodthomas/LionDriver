@@ -33,6 +33,12 @@ Gust
   G3  A wind that rises and stays: with ideal steering the steering settles at the crosswind study's push (1 %) and
       the car within 5 cm of the lane centre (it crabs into the wind; the law's heading term holds it about 2 cm off).
   G4  No wind, no movement.
+Tunnel (openpilot's auto exposure)
+  T1  The port's constants are camerad's (20 fps, ts_ev 0.05 s, ts_grey 10 s, conversion gain 7.32 always on,
+      exposure 2–2016 lines, 55 gains to 15.5); camera_ae.code() stops if a line the port follows has changed.
+  T2  The OX03C10 gamma curve runs from 0 to 1 and rises.
+  T3  On a steady scene the loop settles: grey at its target within 5 % (whole exposure lines), the exposure constant.
+  T4  A scene half as bright settles at twice the exposure (within the time quantisation) and the same grey.
 Road crown
   R1  The roll path read from openpilot is the one reviewed: compensation by params.roll·g, calibration roll taken as
       zero, 20 Hz, process noise 1°/√s, fallback noise 10°, validity limit 1.5°. A change in the code fails here.
@@ -63,7 +69,9 @@ sys.path.insert(0, str(HERE))
 import climate  # noqa: E402
 import hydroplaning as hp  # noqa: E402
 import gust as gu  # noqa: E402
+import camera_ae as cae  # noqa: E402
 import road_crown as rc  # noqa: E402
+import tunnel as tu  # noqa: E402
 import wet_braking as wb  # noqa: E402
 import windshield_fog as wf  # noqa: E402
 import cabin_soak as cs  # noqa: E402
@@ -340,6 +348,38 @@ class Gust(unittest.TestCase):
     z = np.zeros_like(t)
     res = gu.simulate(self.c, self.k, self.v, z, z, t)
     self.assertEqual(float(np.abs(res["y"]).max()), 0.0)
+
+
+class Tunnel(unittest.TestCase):
+  def setUp(self):
+    self.c = cae.code()
+
+  def test_t1_constants(self):
+    c = self.c
+    self.assertEqual((c["fps"], c["dt"], c["ts_ev"], c["ts_grey"], c["gain_factor"]), (20.0, 0.05, 0.05, 10.0, 7.32))
+    self.assertEqual((c["exposure_time_min"], c["exposure_time_max"], len(c["gains"]), c["gains"][-1]), (2.0, 2016.0, 55, 15.5))
+    self.assertEqual(c["gain_max_idx"], 54)
+
+  def test_t2_gamma(self):
+    x = np.linspace(0, 1, 101)
+    y = cae.gamma(x)
+    self.assertAlmostEqual(float(y[0]), 0.0, places=6)
+    self.assertAlmostEqual(float(y[-1]), 1.0, places=3)
+    self.assertTrue(np.all(np.diff(y) > 0))
+
+  def test_t3_steady(self):
+    scale = tu.scale_for(self.c, 1000.0, 200.0)
+    r = cae.run(self.c, np.full(200, 1000.0), scale)
+    # exposure time is whole lines: at about 27 lines one line is 4 %, so the grey sits within a few % of its target
+    self.assertLess(abs(r["grey"][-1] / r["target"][-1] - 1), 0.05)
+    self.assertEqual(float(np.ptp(r["ev"][-50:])), 0.0)
+
+  def test_t4_halving(self):
+    scale = tu.scale_for(self.c, 1000.0, 200.0)
+    r1 = cae.run(self.c, np.full(400, 1000.0), scale)
+    r2 = cae.run(self.c, np.r_[np.full(40, 1000.0), np.full(1600, 500.0)], scale)
+    self.assertLess(abs(r2["ev"][-1] / r1["ev"][-1] - 2), 0.03)
+    self.assertLess(abs(r2["grey"][-1] / r2["target"][-1] - 1), 0.05)
 
 
 class Crown(unittest.TestCase):

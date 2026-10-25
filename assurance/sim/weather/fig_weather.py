@@ -803,3 +803,50 @@ def gust_figures(p, r, out: Path):
   _gust_peaks(r, out / "fig-wx-16-gust-peaks.webp")
   _gust_anim(r, out / "fig-wx-17-gust-anim.webp")
   _report(out, "fig-wx-16", "fig-wx-17")
+
+
+# ------------------------------------------------------------------------------------------------ tunnel
+
+def _tunnel_timeline(p, r, path):
+  n = r["cases"]["nominal"]
+  tr = n["trace"]
+  t, lum, grey, target = (np.array(tr[k]) for k in ("t", "lum", "grey", "target"))
+  stops = p["tunnel"]["off_stops"]["value"]
+  fig = plt.figure(figsize=(9, 11.5), dpi=100)
+  fig.text(0.05, 0.965, "Through a tunnel: the road camera's exposure", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.94, "openpilot's auto exposure (ported from camerad, OX03C10) at 110 km/h · CIE 88 orders of luminance",
+           fontsize=12, color=INK2)
+  wins = (("Entry", n["entry_s"] - 0.6, n["entry_s"] + 1.6), ("Exit", n["exit_s"] - 0.6, n["exit_s"] + 2.4))
+  for k, (title, a, b) in enumerate(wins):
+    sel = (t >= a) & (t <= b)
+    ts = t[sel] - (n["entry_s"] if k == 0 else n["exit_s"])
+    ax1 = fig.add_axes([0.1 + k * 0.46, 0.62, 0.38, 0.24])
+    ax1.semilogy(ts, lum[sel], color=MUTED, lw=2)
+    ax1.set_ylim(3, 2e4); ax1.set_title(title, loc="left", fontsize=14, color=INK)
+    ax1.set_ylabel("road ahead, cd/m²" if k == 0 else ""); ax1.grid(axis="y", color=GRID)
+    ax1.spines[["top", "right"]].set_visible(False)
+    ax2 = fig.add_axes([0.1 + k * 0.46, 0.2, 0.38, 0.36])
+    tg = target[sel]
+    ax2.fill_between(ts, tg / 2 ** stops, np.minimum(tg * 2 ** stops, 1), color="#cde2fb", lw=0)
+    ax2.plot(ts, tg, color="#2a78d6", lw=1.2, ls=(0, (4, 3)))
+    g = grey[sel]
+    bad = np.abs(np.log2(np.maximum(g, 1e-6) / tg)) > stops
+    ax2.plot(ts, g, color=INK, lw=2.2)
+    ax2.scatter(ts[bad], g[bad], color=CRIT, s=18, zorder=5)
+    ax2.set_ylim(0, 1.02); ax2.set_xlabel(f"s after the {'portal' if k == 0 else 'exit'}")
+    ax2.set_ylabel("grey the loop measures" if k == 0 else ""); ax2.grid(axis="y", color=GRID)
+    ax2.spines[["top", "right"]].set_visible(False)
+    w = n["entry"] if k == 0 else n["exit"]
+    ax2.text(0.98, 0.95, f"{w['frames']} frames off\n({1000 * w['frames'] / r['code']['fps']:.0f} ms)", transform=ax2.transAxes,
+             ha="right", va="top", fontsize=12, color=CRIT, weight="bold")
+  fig.text(0.05, 0.085, "Blue band: within one stop of the loop's target grey; red dots: frames outside it. The exit is "
+           "the\nlonger window: an overexposed frame tells the loop little, so it steps down slowly.", fontsize=11.5,
+           color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def tunnel_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _tunnel_timeline(p, r, out / "fig-wx-18-tunnel.webp")
+  _report(out, "fig-wx-18")

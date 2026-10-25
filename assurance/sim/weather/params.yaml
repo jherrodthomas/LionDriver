@@ -156,3 +156,19 @@ gust:
   lane_width_m: {value: 3.7, narrow: 3.3, status: published, source: "12 ft Interstate lane; 3.3 m is WP-C-06 TC-32's narrow lane"}
   duration_s: 14.0
   quasi_steady: {status: assumed, source: "the loads follow the wind instantly (quasi-steady); real flow builds up over about a car length, so short gusts are on the safe side"}
+
+tunnel:
+  # Tunnel entry and exit (tunnel.py): openpilot's road-camera auto exposure (camera_ae.py) against the brightness of
+  # the road ahead at 110 km/h. Luminance values are typical orders of CIE 88:2004 (tunnel lighting), not a real tunnel.
+  speed_kph: 110.0
+  outside_cd_m2: {value: 4000.0, low: 2000.0, high: 8000.0, status: estimate,
+                  source: "sunlit road and surroundings ahead of a portal: a few thousand cd/m² (CIE 88 access-zone luminance)"}
+  threshold_ratio: {value: 0.05, status: estimate, source: "threshold-zone lighting about 5 % of the access zone (CIE 88, high speed)"}
+  threshold_m: {value: 150.0, status: estimate, source: "about the stopping distance at 110 km/h"}
+  transition_m: {value: 300.0, status: estimate, source: "the lighting steps down to the interior level over a few hundred metres"}
+  interior_cd_m2: {value: 10.0, status: estimate, source: "interior zone of a lit road tunnel for fast traffic (CIE 88, order of 10 cd/m²)"}
+  length_m: {value: 1000.0, status: assumed, source: "a 1 km tunnel"}
+  portal_s: {value: 0.3, status: assumed, source: "the time for the dark portal (entry) or the bright exit to fill half the exposure rectangle, where the median flips"}
+  ev_day: {value: 30.0, low: 15.0, high: 120.0, status: assumed,
+           source: "exposure (lines x gain) at which the loop settles on the sunlit approach; sets the sensor's sensitivity in the model. Local logs of the frame's exposure give it (T1)"}
+  off_stops: {value: 1.0, status: assumed, source: "a frame counts as badly exposed when its grey is more than one stop (a factor of two) from the loop's target"}
