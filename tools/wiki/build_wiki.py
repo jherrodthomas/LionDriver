@@ -24,6 +24,7 @@ everything else. This tool turns that folder into what the GitHub wiki repositor
     integrated_animations.py (from the process model, WP-M-00, WP-C-03, WP-C-09, the trace map and the case records)
     and the how-it-works figures of how_animations.py (from WP-S-02, WP-S-03, WP-S-04, WP-W-09 and the TSR list)
     and the ASIL decomposition figures of dec_animations.py (from WP-A-01, WP-H-04 and WP-S-02)
+    and the CAN and end-to-end figures of comms_animations.py (from WP-S-05 and the TSR list)
     likewise: a drawn phrase that is no longer in its source is a build problem;
   * wiki/README.md, which describes the folder, is not published.
 
@@ -58,6 +59,7 @@ import aspice_animations
 import integrated_animations
 import how_animations
 import dec_animations
+import comms_animations
 import infographics
 
 ROOT = HERE.parents[1]
@@ -146,7 +148,7 @@ def rewrite(text: str, page: Path, src: Path, root: Path, values: dict[str, str]
       if path not in names:
         problems.append(f"{page.name}: page link target does not exist: {path}")
       return f"{before}{path[:-3]}{anchor}{after}"
-    if path in infographics.NAMES or path in animations.NAMES or path in fta_animations.NAMES or path in case_animations.NAMES or path in h2t_animations.NAMES or path in hw_animations.NAMES or path in p7_animations.NAMES or path in sotif_animations.NAMES or path in cyber_animations.NAMES or path in ai_animations.NAMES or path in aspice_animations.NAMES or path in integrated_animations.NAMES or path in how_animations.NAMES or path in dec_animations.NAMES:
+    if path in infographics.NAMES or path in animations.NAMES or path in fta_animations.NAMES or path in case_animations.NAMES or path in h2t_animations.NAMES or path in hw_animations.NAMES or path in p7_animations.NAMES or path in sotif_animations.NAMES or path in cyber_animations.NAMES or path in ai_animations.NAMES or path in aspice_animations.NAMES or path in integrated_animations.NAMES or path in how_animations.NAMES or path in dec_animations.NAMES or path in comms_animations.NAMES:
       return m.group(0)  # a generated figure, written next to the pages by build()
     problems.append(f"{page.name}: link is neither a page (Name.md), a repository path (../path), a generated figure nor a URL: {target}")
     return m.group(0)
@@ -203,6 +205,8 @@ def build(src: Path = SRC, out: Path | None = None, root: Path = ROOT, *, repo: 
     problems += how_animations.problems(root)
   if (root / dec_animations.A01).exists():
     problems += dec_animations.problems(root)
+  if (root / comms_animations.S05).exists():
+    problems += comms_animations.problems(root)
   built: dict[str, str] = {}
   for page in pages(src):
     built[page.name] = rewrite(page.read_text(encoding="utf-8"), page, src, root, values, problems)
@@ -238,6 +242,8 @@ def build(src: Path = SRC, out: Path | None = None, root: Path = ROOT, *, repo: 
       how_animations.write_all(out, root)
     if (root / dec_animations.A01).exists():
       dec_animations.write_all(out, root)
+    if (root / comms_animations.S05).exists():
+      comms_animations.write_all(out, root)
   return problems
 
 
