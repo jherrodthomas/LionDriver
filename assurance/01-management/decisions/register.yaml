@@ -5831,3 +5831,63 @@
       detail: "A larger market. Cost: a new item, not a new car: new HARA (mass, stopping distance), new ODD, new actuators, and nothing upstream to build on."
   sources: ["assurance/03-system/WP-S-05-hsi-specification.md §12.1, §12.6, OI-8", "wiki/Reference-vehicle.md 'Adding a second vehicle'", "opendbc_repo/opendbc/safety/modes/toyota.h (toyota_secoc)"]
   status: open
+- id: DQ-420
+  question: "When an attacker, not a random fault, triggers a hazard, should the HARA and the safety–security interactions record that the attacker picks the moment, so the exposure rating does not apply?"
+  context: >-
+    The HARA rates each hazardous event with an exposure (E) that assumes the fault happens at a random moment. An
+    attacker who controls the SoC can wait for the worst situation in the ODD. The TARA already rates safety impact
+    without exposure (WP-C-09 §3), so no risk value changes either way. **The question is whether the HARA and HATARA
+    should say so explicitly, so a reviewer does not read an ASIL's E as covering attacks.** The cyber simulation
+    shows the HARA hazard and the TARA safety impact, not an ASIL, and runs the worst in-ODD case, so it works with
+    any answer.
+  reversibility: easy
+  blocks: "Wording in WP-C-03 and hatara/ only; the cyber simulation does not wait on it"
+  decider: lead
+  options:
+  - key: A
+    recommended: true
+    title: Add one HATARA interaction and a note in the HARA; no rating changes
+    detail: "One interaction row says attacker-triggered hazardous events take the worst situation, so E does not apply and the TARA safety impact governs; WP-C-03 points to it. Cost: two short edits."
+  - key: B
+    title: Rate attacker-triggered events as their own hazardous events at E4
+    detail: "Explicit, but duplicates every SoC-reachable event and can raise ASILs for faults that are not random, mixing the two methods. Cost: HARA model and both workbooks regenerated."
+  - key: C
+    title: Leave it to the TARA
+    detail: "No change. Cost: the gap stays implicit and a reviewer may raise it."
+  sources:
+  - assurance/sim/cyber/README.md §2.4, §6.1 choice 5 (PR #454)
+  - assurance/02-concept/WP-C-09-tara.md §3
+  - assurance/02-concept/hatara/hatara-interactions.md
+  status: queued
+- id: DQ-421
+  question: "LionDriver is public. Should the details of security weaknesses that are not fixed yet move to a private repository until they are fixed?"
+  context: >-
+    WP-O-05 §4.4 already keeps a weakness that someone reports to us private until its fix ships (90-day embargo).
+    The weaknesses we found ourselves are not treated that way: WP-C-09, WP-S-07 and the WP-M-09 gap table name many
+    of them with the place in the code and what is missing, and the new cyber-simulation mocks (PR #454) show which
+    controls on two attack paths are not built yet. **ISO/SAE 21434 and UN R155 expect unfixed-vulnerability details
+    to be shared on a need-to-know basis.** The threat model itself (threats, risk values, goals, statuses) is normal
+    to publish and the open safety case needs it. What has already been pushed may have been copied; restricting
+    only reduces exposure from now on.
+  reversibility: hard
+  blocks: "PR #454 (cyber-simulation mocks, held as a draft until this is answered); WP-O-05 §4.4 scope; future edits of WP-C-09, WP-S-07 and the WP-M-09 gap table"
+  gate: G1
+  decider: lead
+  asked: 2026-10-25
+  batch: 16
+  options:
+    - key: A
+      recommended: true
+      title: "Split by sensitivity: threat model public, unfixed-gap details private"
+      detail: "Threats, risks, goals and statuses stay public. Code locations and mechanisms of unfixed gaps, and the cyber-simulation mocks and clips, move to a private repository until their controls are verified, then are published. Cost: a one-time sweep of three documents and a rule for later edits."
+    - key: B
+      title: "Restrict only the new cyber-simulation material"
+      detail: "Close PR #454 and keep the mocks private; the existing documents stay as they are. Cost: cheap, but the larger exposure, the gap details already in the public documents, remains."
+    - key: C
+      title: "Make the whole repository private"
+      detail: "Strongest protection. Cost: ends the open-source, transparent-assurance aim of the project and every public link to it."
+    - key: D
+      title: "Keep everything public"
+      detail: "Rely on the abstraction rule (no exploits, payloads or procedures). Cost: the gap list and code locations stay a ready target list for anyone."
+  sources: ["assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md §4.4", "assurance/01-management/WP-M-09-cybersecurity-plan.md §2 gap table", "assurance/02-concept/WP-C-09-tara.md §2–§5", "assurance/03-system/WP-S-07-cybersecurity-requirements-architecture.md §4", "PR #454"]
+  status: open
