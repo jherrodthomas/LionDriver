@@ -305,3 +305,72 @@ def mcu_figure(p: dict, r: dict, out: Path):
   path = out / "fig-th-6-mcu.webp"
   _save(fig, path)
   print(f"wrote {path.name} ({path.stat().st_size // 1024} KB)")
+
+
+def _mode_image(V, shape, scale, size=(560, 520)):
+  """One mode shape, deformed and coloured by how far each point moves (the glass at the top)."""
+  import pyvista as pv
+  from dolfinx import plot
+  _offscreen()
+  top, types, geom = plot.vtk_mesh(V)
+  g = pv.UnstructuredGrid(top, types, geom * 1000.0)
+  u = shape.reshape(-1, 3)
+  g.point_data["u"] = u
+  g.point_data["mag"] = np.linalg.norm(u, axis=1)
+  w = g.warp_by_vector("u", factor=scale)
+  p = pv.Plotter(off_screen=True, window_size=size)
+  p.set_background(SURF)
+  p.add_mesh(g.outline(), color="#b9b7ae", line_width=1.2)
+  p.add_mesh(w, scalars="mag", cmap=HEAT, show_scalar_bar=False, ambient=0.5, diffuse=0.5, specular=0.0)
+  glass = pv.Plane(center=(0, 0.5, 0), direction=(0, 1, 0), i_size=150, j_size=60)
+  p.add_mesh(glass, color="#9ec5f4", opacity=0.45)
+  p.camera_position = [(190, -5, 230), (0, -36, 0), (0, 1, 0)]
+  p.camera.zoom(0.95)
+  img = p.screenshot(return_img=True)
+  p.close()
+  return img
+
+
+def mount_figure(p: dict, r: dict, m: dict, out: Path):
+  """The first three mode shapes and the road-driven pitch jitter against frequency (mount_modes.py)."""
+  out.mkdir(exist_ok=True)
+  fig = plt.figure(figsize=(9, 12), dpi=100)
+  fig.text(0.05, 0.968, "The mount's vibration modes", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.943, "comma device on its foam pad, FEniCSx and SLEPc · fixed at the glass (blue) · shapes exaggerated",
+           fontsize=12, color=INK2)
+  for k in range(3):
+    sh = m["shapes"][k]
+    scale = 12.0 / max(np.abs(sh).max(), 1e-12)
+    img = _mode_image(m["V"], sh, scale)
+    ax = fig.add_axes([0.02 + 0.32 * k, 0.58, 0.31, 0.33])
+    ax.imshow(img); ax.axis("off")
+    md = r["modes"][k]
+    ax.set_title(f"{md['freq_hz']:.0f} Hz", fontsize=15, color=INK, weight="bold")
+    ax.text(0.5, -0.02, md["kind"].replace(" (", "\n(").replace("about the axis", "about\nthe axis"), transform=ax.transAxes, ha="center", va="top",
+            fontsize=10.5, color=INK2)
+  tr = r["roads"]["B"]["trace"]
+  f, psd = np.array(tr["f_hz"]), np.array(tr["pitch_psd_px2"])
+  ax = fig.add_axes([0.13, 0.16, 0.82, 0.33])
+  labels = {"wheel": "wheel", "idle": "engine idle", "cruise": "engine cruise"}
+  for k, (lo, hi) in r["orders_hz"].items():
+    ax.axvspan(lo, hi, color=GRID, lw=0)
+    ax.text(np.sqrt(lo * hi), 1.0, labels[k], transform=ax.get_xaxis_transform(), ha="center", va="top",
+            fontsize=10, color=INK2, rotation=90)
+  soft, stiff = r["pad_band_hz"]["soft"][0], r["pad_band_hz"]["stiff"][0]
+  ax.axvspan(soft, stiff, color="#fdecec", lw=0)
+  ax.loglog(f, np.maximum(psd, 1e-30), color="#104281", lw=2.2)
+  ax.axvline(r["modes"][0]["freq_hz"], color=CRIT, lw=1.5)
+  ax.text(r["modes"][0]["freq_hz"] * 1.06, 0.06, f"first mode\n{soft:.0f}–{stiff:.0f} Hz\nover the pad's band",
+          transform=ax.get_xaxis_transform(), fontsize=10, color=CRIT)
+  peak = psd.max()
+  ax.set_ylim(peak * 1e-8, peak * 30); ax.set_xlim(1, 1000)
+  ax.set_xlabel("frequency, Hz"); ax.set_ylabel("pitch jitter, px²/Hz")
+  ax.grid(color=GRID, which="major"); ax.spines[["top", "right"]].set_visible(False)
+  rb = r["roads"]["B"]
+  fig.text(0.05, 0.075, f"Road class B at 110 km/h through the suspension: pitch jitter {rb['zeta_value']['pitch_px']:.1g} px RMS "
+           f"({rb['zeta_low']['pitch_px']:.1g} px at 2 %\ndamping). The engine's own shaking is not modelled, only "
+           "where its orders fall.", fontsize=11.5, color=INK2)
+  _stamp(fig)
+  path = out / "fig-th-7-mount-modes.webp"
+  _save(fig, path)
+  print(f"wrote {path.name} ({path.stat().st_size // 1024} KB)")

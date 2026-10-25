@@ -1,0 +1,56 @@
+# 12 V cranking dip (crank.py, physics plan study 8; WP-S-02 TSR-505, WP-H-01 HWSR-505…505b): every input with its
+# source and status. The device's power path is not published, so the circuit is generic: each part has a band.
+# status: published = from a cited document; code = read from the repository; estimate = a placeholder until a
+# schematic or a bench measurement (T1) replaces it. Units: SI. Synthetic (DSR-12), design aid, no evidence credit.
+
+profile:
+  # ISO 16750-2 starting profile as reproduced in TI's TIC10024-Q1 datasheet (SCPS268A, Table 10-5): from UB the
+  # supply falls in tf to US6, stays t6, rises in t7 to US, stays t8, and returns in tr to UB. The superimposed ripple
+  # of some levels is not given there and is left out.
+  ub: 14.0
+  tf: 0.005
+  t6: 0.015
+  t7: 0.050
+  levels:
+    I:  {us6: 8.0, us: 9.5, t8: 1.0, tr: 0.040}
+    II: {us6: 4.5, us: 6.5, t8: 10.0, tr: 0.100}
+    IV: {us6: 6.0, us: 6.5, t8: 10.0, tr: 0.100}
+  status: published
+  source: "ISO 16750-2 cranking profile, levels I, II and IV, via Texas Instruments TIC10024-Q1 datasheet SCPS268A Table 10-5 (US6, US, UB, tf, t6, t7, t8, tr)"
+
+harness: {r: 0.05, r_band: [0.02, 0.15], l: 1.0e-6, status: estimate,
+          source: "the car's feed to the harness box and the cable to the device: tens of milliohms, about a microhenry"}
+diode: {is: 1.0e-5, n: 1.3, status: estimate,
+        source: "a Schottky reverse-polarity diode: about 0.4 V at 2 A; an ideal-diode controller would drop less"}
+holdup: {c: 100.0e-6, band: [22.0e-6, 470.0e-6], esr: 0.05, status: estimate,
+         source: "input capacitance after the diode; the diode stops it discharging back into the car"}
+buck:
+  # the device's 12 V to 5 V converter: regulates, falls into dropout below 5 V plus its headroom, stops below UVLO
+  vout: 5.0
+  headroom: 0.4
+  uvlo: {value: 4.5, band: [3.5, 6.0], status: estimate, source: "under-voltage lockout of an automotive buck, falling edge"}
+  efficiency: 0.88
+  c_out: 470.0e-6
+  status: estimate
+  source: "a generic synchronous buck; the 3X's converter and its UVLO are not published"
+load_5v: {power: 7.0, band: [5.0, 9.0], status: estimate,
+          source: "the device's draw at its 12 V input, about 8 W while driving (deviceState.powerDrawW, T1), less the converter loss"}
+ldo:
+  vout: 3.3
+  dropout: 0.3
+  c_out: 10.0e-6
+  status: estimate
+  source: "the panda MCU's 3.3 V regulator from the 5 V rail, a generic LDO"
+mcu_load: {current: 0.1, status: estimate, source: "STM32H725 at VOS1 with its peripherals, about 100 mA"}
+mcu_thresholds:
+  # DS13311 Rev 2 Table 20 (reset and power control block), falling edges, typical (min–max)
+  pdr: {value: 1.62, range: [1.58, 1.68]}
+  bor1: {value: 2.00, range: [1.95, 2.06]}
+  bor2: {value: 2.31, range: [2.25, 2.37]}
+  bor3: {value: 2.61, range: [2.54, 2.68]}
+  vdd_min: {value: 1.71, source: "DS13311 §2: VDD must stay above 1.71 V with the internal PDR on"}
+  status: published
+  source: "STM32H725xE/G datasheet DS13311 Rev 2, Table 20; BOR and PVD are not configured today (TSR-505, HWSR-505)"
+run:
+  window_s: 0.4             # simulated from 20 ms before the dip
+  step_s: 1.0e-5

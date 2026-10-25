@@ -6,6 +6,7 @@ Every figure is stamped synthetic (DSR-12), design aid, no evidence credit.
 from __future__ import annotations
 
 import io
+import json
 import math
 from pathlib import Path
 
@@ -16,7 +17,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 from matplotlib.colors import LinearSegmentedColormap  # noqa: E402
-from matplotlib.patches import Circle, Polygon, Rectangle  # noqa: E402
+from matplotlib.patches import Circle, Patch, Polygon, Rectangle  # noqa: E402
 from PIL import Image  # noqa: E402
 
 INK, INK2, MUTED, CRIT, GRID, SURF = "#0b0b0b", "#52514e", "#8a8984", "#d03b3b", "#e6e5e0", "#fcfcfb"
@@ -892,3 +893,83 @@ def headlight_figures(p, r, out: Path):
   out.mkdir(exist_ok=True)
   _headlight_contrast(p, r, out / "fig-wx-19-headlights.webp")
   _report(out, "fig-wx-19")
+
+
+# ------------------------------------------------------------------------------------------------ sun on the device
+
+GLASS_COL = {1: "#86b6ef", 2: "#f6b48f", 3: "#b9b7ae", 4: "#cfa6e8"}
+GLASS_LAB = {1: "through the windshield", 2: "through the roof panel", 3: "through a side window", 4: "through the rear window"}
+
+
+def _sky_map(ax, t, case, face, title, sun_paths):
+  """The sky above the car as the face sees it: relative azimuth around (ahead at the top), elevation inward."""
+  E, A = np.array(t["elev_deg"]), np.array(t["relaz_deg"])
+  f = t["cases"][case][face]
+  lit, via = np.array(f["lit"]), np.array(f["glass"])
+  th = np.radians(A)
+  for i in range(len(E) - 1):
+    for j in range(len(A) - 1):
+      if lit[i, j] <= 0:
+        continue
+      ax.bar((th[j] + th[j + 1]) / 2, E[i + 1] - E[i], width=th[j + 1] - th[j], bottom=90 - E[i + 1],
+             color=GLASS_COL[int(via[i, j])], alpha=0.25 + 0.75 * float(lit[i, j]), lw=0)
+  for lab, (rel, el, col) in sun_paths.items():
+    ax.plot(np.radians(rel), 90 - el, color=col, lw=2.4, label=lab)
+  ax.set_theta_zero_location("N"); ax.set_theta_direction(-1)
+  ax.set_ylim(0, 90); ax.set_yticks([30, 60]); ax.set_yticklabels(["60°", "30°"], fontsize=9, color=MUTED)
+  ax.set_xticks(np.radians([0, 90, 180, 270])); ax.set_xticklabels(["ahead", "right", "behind", "left"], fontsize=10)
+  ax.grid(color=GRID); ax.set_title(title, fontsize=13, color=INK, pad=12)
+
+
+def _device_sun(p, r, path):
+  import pvlib
+  t = json.loads((Path(__file__).resolve().parent.parent / "figures" / "corolla-e210-device-shading.json").read_text())
+  s = p["sun"]
+  head = s["corridor"]["northbound"]["heading"]
+  paths = {}
+  for lab, day, col in (("21 July", "2027-07-21", CRIT), ("21 December", "2027-12-21", "#104281")):
+    tt = pd.date_range(f"{day} 05:00", f"{day} 21:00", freq="10min", tz=s["site"]["tz"])
+    sp = pvlib.solarposition.get_solarposition(tt, s["site"]["lat"], s["site"]["lon"])
+    up = sp["apparent_elevation"].to_numpy() > 0
+    rel = (sp["azimuth"].to_numpy()[up] - head + 180) % 360 - 180
+    paths[f"sun, {lab}, northbound"] = (rel, sp["apparent_elevation"].to_numpy()[up], col)
+  fig = plt.figure(figsize=(9, 12.5), dpi=100)
+  fig.text(0.05, 0.968, "Sun on the device through the car", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.943, "Ray cast through the Corolla mesh from each face of the comma device · clear sky, I-85 corridor",
+           fontsize=12, color=INK2)
+  for k, (face, title) in enumerate((("front", "Windshield side: the sky it sees"), ("screen", "Screen side (cabin)"))):
+    ax = fig.add_axes([0.06 + 0.5 * k, 0.57, 0.37, 0.29], projection="polar")
+    _sky_map(ax, t, "glass_roof", face, title, paths)
+  hs = [Patch(color=GLASS_COL[c], label=GLASS_LAB[c]) for c in (1, 2, 3, 4)]
+  hs += [plt.Line2D([], [], color=v[2], lw=2.4, label=k) for k, v in paths.items()]
+  fig.legend(handles=hs, loc="upper left", bbox_to_anchor=(0.05, 0.535), ncol=2, frameon=False, fontsize=10.5)
+  c = r["cases"]["glass_roof"]
+  m = r["model"]
+  ax = fig.add_axes([0.12, 0.17, 0.84, 0.25])
+  styles = {"northbound": ("northbound", "#2a78d6"), "southbound": ("southbound", "#104281"),
+            c["worst_parked"]: (f"parked facing {c['headings'][c['worst_parked']]['heading']:.0f}°", "#b8401a")}
+  for dn, ls in (("summer", "-"), ("winter", (0, (4, 2)))):
+    dd = c["days"][dn]
+    hr = np.array(dd["hour"])
+    for name, (lab, col) in styles.items():
+      tot = sum(np.array(v) for v in dd[name].values())
+      ax.plot(hr, tot, color=col, lw=2.2, ls=ls, label=f"{lab}, {'21 July' if dn == 'summer' else '21 December'}")
+  ax.axhspan(m["band_w"][0], m["band_w"][1], color=GRID, lw=0)
+  ax.axhline(m["power_w"], color=INK, lw=1.6)
+  ax.text(5.2, m["power_w"] + 0.05, f"heat model: {m['power_w']:.2f} W all day (band {m['band_w'][0]:.1f}–{m['band_w'][1]:.1f})",
+          fontsize=10.5, color=INK, va="bottom")
+  ax.set_xlim(5, 21); ax.set_ylim(0, max(3.3, m["band_w"][1] + 0.3))
+  ax.set_xlabel("hour of day (local)"); ax.set_ylabel("sun into the device, W")
+  ax.grid(axis="y", color=GRID); ax.spines[["top", "right"]].set_visible(False)
+  ax.legend(loc="upper right", frameon=False, fontsize=9.5, ncol=2)
+  fig.text(0.05, 0.07, f"Brighter cells: more of the face lit. The year's most is {c['power_max_w']:.2f} W, in winter; in "
+           f"June–August at most\n{c['summer_power_max_w']:.2f} W. The device's place on the glass is an estimate until T1; the "
+           "mesh has a glass roof panel,\nthe reference car may not.", fontsize=11, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def device_sun_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _device_sun(p, r, out / "fig-wx-20-device-sun.webp")
+  _report(out, "fig-wx-20")

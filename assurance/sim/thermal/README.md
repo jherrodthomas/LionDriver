@@ -99,6 +99,29 @@ logs settle it.
 The same results drive an interactive 3D page, [`interactive/comma3x.html`](../interactive/README.md): the device under the
 windshield, which you can cut open, take apart and run with the fan stalled.
 
+### 2.3 The mount's vibration modes (TC-19, KS-16, WP-H-07 QE-08)
+
+Physics plan study 7, in the same environment. [`mount_modes.py`](mount_modes.py) solves linear elasticity in FEniCSx
+(quadratic hexahedra) on the foam pad, the mount and the device as blocks (`params.yaml`, `vibration:`), fixed at the
+glass. SLEPc finds the six lowest modes. The road shakes the body through the suspension: ISO 8608 roads of class A
+and B at 110 km/h through a quarter-car. Their vertical motion, tilted onto the glass's rake, drives the modes. The
+device's turn, through the road camera's focal length (2648 px, `camera.py`), gives the jitter in pixels.
+
+- **First mode 91 Hz,** the device nodding on the pad; 56–117 Hz over the pad's stiffness band, the least known input.
+  Then a twist at 92 Hz and a side-to-side rock at 146 Hz.
+- **Away from the wheel and idle orders** (3.4 and 5.7 times above), but **inside the engine's cruise order** (second
+  order at 60–85 Hz) over the soft end of the pad's band. A log at cruise should look for it.
+- **The road's own jitter is far below a pixel**: 0.03 px RMS (class A) to 0.06 px (class B). Most of it is the pad
+  giving under the body's slow bounce, so the damping hardly matters.
+- **Not modelled:** a mount that is not sound (a soft or failing pad, play in the hinge), the glass's own modes, the
+  engine's shaking (only its frequencies), and the device's real hang (it stands square to the glass here).
+
+Results: [`results/mount-modes.md`](../results/mount-modes.md).
+
+![The first three mode shapes of the device on its pad, nodding at 91 Hz, twisting at 92 Hz and rocking at 146 Hz; below, the road-driven pitch jitter against frequency on a class B road at 110 km/h, with the wheel, idle and cruise orders shaded and the first mode's band](figures/fig-th-7-mount-modes.webp)
+
+*Figure 7. The mount's vibration modes and the road-driven jitter.*
+
 ## 3. Checks
 
 [`test_thermal.py`](test_thermal.py) runs in CI. Each check is meant to catch a different error:
@@ -113,9 +136,12 @@ windshield, which you can cut open, take apart and run with the fan stalled.
 | V6 Limits from the code | a moved band in `hardwared.py` | 96/88 °C (comma 3X), 100/92 °C (comma four) |
 | V7 The cabin-driven runner (phases, references changing every step) against the pilot's runner when nothing changes | an error in the time-varying path | equal to 1e-9 K |
 | V8 MCU study: linear in the cabin air; taking the SoC's heat away cools the MCU, a stalled fan heats it; the part is the panda build's; the trip follows the DTS error | a set-up or arithmetic error in the MCU study | the second difference is under 1e-6 K |
+| V9 Mount modes: a steel cantilever in the same elasticity and eigen code against Euler–Bernoulli's first bending frequency | a wrong weak form, mass matrix or eigen set-up | both bending planes within 1 % |
+| V10 Mount modes, mesh study (55,731, 183,141 and 348,075 unknowns) | a mesh too coarse for the pad | 92.39, 91.62, 91.31 Hz: the finest two 0.3 % apart |
+| V11 Mount modes: the effective masses add to at most the whole mass and to at least 90 % along each axis; slow road waves pass the suspension unchanged | a wrong participation factor or road input | 100 / 99 / 100 % of the mass in six modes |
 
 The pilot's own `--check` reruns every drive and fails if any number moves by more than 0.05 K from the committed
-JSON. Figures render in CI, but their pixels are not compared, because software rendering differs slightly between
+JSON; the mount study's, if any number moves by more than 1 %. Figures render in CI, but their pixels are not compared, because software rendering differs slightly between
 machines.
 
 ## 4. Run it
@@ -123,11 +149,12 @@ machines.
 ```sh
 # environment: FEniCSx 0.10.0, FiPy 4.0.3, PyVista 0.49.1, VTK 9.7.0, Mesa 26.2.5 (explicit lock, every package by md5)
 micromamba create -p <env> --file assurance/sim/thermal/thermal-linux-64.lock
-<env>/bin/python assurance/sim/thermal/test_thermal.py              # checks V1–V8, about 2 min
+<env>/bin/python assurance/sim/thermal/test_thermal.py              # checks V1–V11, about 2 min
 <env>/bin/python assurance/sim/thermal/thermal_pilot.py --figures   # results and figures, about 4 min
 <env>/bin/python assurance/sim/thermal/thermal_pilot.py --check     # CI: a fresh run against the committed JSON
 <env>/bin/python assurance/sim/thermal/cabin_drive.py --check      # the device on the cabin model's temperatures
 <env>/bin/python assurance/sim/thermal/mcu_heat.py --figures        # the safety MCU (§2.2), about 30 s
+<env>/bin/python assurance/sim/thermal/mount_modes.py --figures     # the mount's modes (§2.3), about 2 min
 ```
 
 Figures render with no screen and no GPU through Mesa's software EGL (`figures.py` sets it up, TE-04 OI-2). They are
@@ -151,6 +178,7 @@ WebP because PNG and GIF go to the repository's read-only LFS store.
 | [`thermal_pilot.py`](thermal_pilot.py) | The device model, drives, sweep and bound; writes the results |
 | [`cabin_drive.py`](cabin_drive.py) | The device on the cabin heat soak's temperatures (§2.1) |
 | [`mcu_heat.py`](mcu_heat.py) | The safety MCU next to the SoC (§2.2) |
-| [`figures.py`](figures.py) | The six figures (PyVista off-screen, matplotlib) |
-| [`test_thermal.py`](test_thermal.py) | Checks V1–V8 |
+| [`mount_modes.py`](mount_modes.py) | The mount's vibration modes and the road camera's jitter (§2.3) |
+| [`figures.py`](figures.py) | The seven figures (PyVista off-screen, matplotlib) |
+| [`test_thermal.py`](test_thermal.py) | Checks V1–V11 |
 | [`thermal-linux-64.lock`](thermal-linux-64.lock) | The environment, every package by URL and md5 |

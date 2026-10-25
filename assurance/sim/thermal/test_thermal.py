@@ -11,6 +11,11 @@ V7  The cabin-driven runner (phases, time-varying references) equals the pilot's
 V8  MCU study: steady conduction is linear in the cabin air (so the crossings are exact); taking the SoC's heat
     away cools the MCU but leaves it above the air; a stalled fan heats it; the MCU part is the one the panda
     build names, and the trip arithmetic follows the datasheet's DTS error.
+V9  Mount modes, solver: a steel cantilever in the same FEniCSx and SLEPc code against Euler–Bernoulli's first
+    bending frequency (1 %), the two bending planes alike.
+V10 Mount modes, mesh study: the first mode changes by less than 1 % between the two finest meshes.
+V11 Mount modes, mass and input: the modes' effective masses add up to at most the whole mass and, the device being
+    stiff on a soft pad, to at least 90 % of it along each axis; slow road waves pass the suspension unchanged.
 
 Runs in the environment of `thermal-linux-64.lock`. Synthetic (DSR-12), design aid, no evidence credit (DQ-413).
 """
@@ -28,6 +33,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import section_fipy  # noqa: E402
 import mcu_heat  # noqa: E402
+import mount_modes  # noqa: E402
 import thermal_pilot as tp  # noqa: E402
 from heat import Box, Face, Model  # noqa: E402
 
@@ -121,6 +127,36 @@ class Checks(unittest.TestCase):
     r = mcu_heat.run(q)
     e = P["mcu"]["dts_error_k"]
     self.assertEqual(r["tsr509"]["grades"]["industrial"]["trip_at_most"], 125.0 + e["low"] - e["supply"])
+
+
+class MountModes(unittest.TestCase):
+  def test_v9_cantilever(self):
+    L, b, E, rho = 0.2, 0.01, 200e9, 7800.0
+    blocks = {"beam": {"lo": [0.0, -b, -b / 2], "hi": [L, 0.0, b / 2], "material": "steel"}}
+    m = mount_modes.modes(blocks, {"steel": {"E": E, "nu": 0.3, "rho": rho}}, 400.0, 2,
+                          fixed=lambda x: np.isclose(x[0], 0.0), rotation_block="beam")
+    f_eb = 1.8751 ** 2 / (2 * np.pi) * np.sqrt(E * b ** 4 / 12 / (rho * b * b * L ** 4))
+    for f in m["freq_hz"]:
+      self.assertLess(abs(f / f_eb - 1), 0.01)
+
+  def test_v10_mesh_study(self):
+    import json
+    r = json.loads(mount_modes.OUT_JSON.read_text(encoding="utf-8"))
+    a, b = (s["f1_hz"] for s in r["mesh_study"][-2:])
+    self.assertLess(abs(a - b) / b, 0.01)
+
+  def test_v11_mass_and_input(self):
+    import json
+    r = json.loads(mount_modes.OUT_JSON.read_text(encoding="utf-8"))
+    for ax in range(3):
+      share = sum(md["eff_mass_share"][ax] for md in r["modes"])
+      self.assertLessEqual(share, 1.0 + 1e-3)
+      self.assertGreater(share, 0.9)
+    f = np.array([0.05])
+    rd = P["vibration"]["road"]
+    v = P["vibration"]["speed_kph"] / 3.6
+    road = rd["B"] * rd["n0"] ** 2 * v / f ** 2 * (2 * np.pi * f) ** 4
+    self.assertLess(abs(mount_modes.road_accel_psd(P, f, "B")[0] / road[0] - 1), 0.02)
 
 
 if __name__ == "__main__":

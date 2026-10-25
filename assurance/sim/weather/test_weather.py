@@ -44,6 +44,15 @@ Headlights
       within one frame's travel.
   H2  Inverse square: the glare veil at the frame edge scales with intensity and with 1 / range².
   H3  No lamps, no change: the road's exposure and contrast stay as without them.
+Sun on the device
+  D1  The ray caster against an analytic shadow: an opaque square above a point hides exactly the directions whose
+      ray meets it; a hit behind the ray's start is no hit.
+  D2  The sun straight down the windshield's normal reaches the whole windshield-side face, through the windshield;
+      no face is lit from behind (device_shading.check on the committed table).
+  D3  The device sits on the car's centre line, so its left and right faces see mirror images (the mesh is nearly
+      symmetric: mean difference under 0.02).
+  D4  The flux: a direct beam on the windshield side is absorptance x DNI x cos x transmittance x pvlib's angle loss;
+      the sky weights give 0.5 for an upright face open to the whole sky (1 %).
 Road crown
   R1  The roll path read from openpilot is the one reviewed: compensation by params.roll·g, calibration roll taken as
       zero, 20 Hz, process noise 1°/√s, fallback noise 10°, validity limit 1.5°. A change in the code fails here.
@@ -82,6 +91,7 @@ import wet_braking as wb  # noqa: E402
 import windshield_fog as wf  # noqa: E402
 import cabin_soak as cs  # noqa: E402
 import crosswind as cw  # noqa: E402
+import device_sun as dsun  # noqa: E402
 import sun_glare as sg  # noqa: E402
 
 P = yaml.safe_load((HERE / "params.yaml").read_text(encoding="utf-8"))
@@ -461,6 +471,55 @@ class Crosswind(unittest.TestCase):
       self.assertEqual(d["upper"][0], 0.0)
       self.assertTrue(all(np.diff(d["upper"]) > 0) and all(np.diff(d["lower"]) > 0))
       self.assertTrue(all(lo <= hi for lo, hi in zip(d["lower"], d["upper"], strict=True)))
+
+
+
+class DeviceSun(unittest.TestCase):
+  @classmethod
+  def setUpClass(cls):
+    cls.t = json.loads(dsun.TABLE.read_text(encoding="utf-8"))
+
+  def test_d1_box_shadow(self):
+    a, h = 0.5, 1.0
+    sq = np.array([[[-a, h, -a], [a, h, -a], [a, h, a]], [[-a, h, -a], [a, h, a], [-a, h, a]]])
+    E, A = np.meshgrid(np.arange(5.0, 90.0, 2.5), np.arange(-180.0, 180.0, 5.0), indexing="ij")
+    dirs = dsun.ds.direction(E, A).reshape(-1, 3)
+    reach = np.abs(dirs[:, [0, 2]] * h / dirs[:, [1]])            # where the ray crosses the square's plane
+    inside, outside = (reach < a - 0.01).all(1), (reach > a + 0.01).any(1)
+    hit = dsun.ds.hits(np.zeros(3), dirs, sq)
+    self.assertTrue(hit[inside].all())
+    self.assertFalse(hit[outside].any())
+    self.assertFalse(dsun.ds.hits(np.array([0.0, 2 * h, 0.0]), dirs, sq).any())
+
+  def test_d2_windshield_normal(self):
+    self.assertEqual(dsun.ds.check(self.t), [])
+    n = np.array(json.loads(dsun.GEOMETRY.read_text(encoding="utf-8"))["glass"]["windshield"]["normal"])
+    elev = math.degrees(math.asin(n[1] / np.linalg.norm(n)))
+    for case in self.t["cases"]:
+      lit, code = dsun.lookup(self.t, case, "front", np.array([elev]), np.array([0.0]))
+      self.assertAlmostEqual(float(lit[0]), 1.0, places=6)
+      self.assertEqual(int(code[0]), self.t["glass_code"]["windshield"])
+
+  def test_d3_mirror(self):
+    for case in self.t["cases"]:
+      left = np.array(self.t["cases"][case]["left"]["lit"])
+      right = np.array(self.t["cases"][case]["right"]["lit"])
+      self.assertLess(np.abs(left - right[:, ::-1]).mean(), 0.02)
+
+  def test_d4_flux(self):
+    d = P["device_sun"]
+    normals = dsun.glass_normals()
+    elev, dni = 20.0, 900.0
+    df = pd.DataFrame({"elev": [elev], "az": [180.0], "dni": [dni], "dhi": [0.0]})
+    t = dict(self.t, sky={c: {f: 0.0 for f in self.t["faces"]} for c in self.t["cases"]})
+    got = dsun.faces_flux(t, d, normals, "glass_roof", df, 180.0)["front"][0]
+    s = dsun.ds.direction(elev, 0.0)
+    aoi = math.degrees(math.acos(abs(float(s @ normals[1]))))
+    want = d["absorptance"]["value"] * dni * math.cos(math.radians(elev)) * d["transmittance"]["value"] \
+      * float(pvlib.iam.physical(aoi))
+    self.assertAlmostEqual(got, want, places=6)
+    dirs, w = dsun.sky_cells(self.t)
+    self.assertLess(abs((np.clip(dirs @ np.array([1.0, 0, 0]), 0, None) * w).sum() / math.pi - 0.5), 0.005)
 
 
 if __name__ == "__main__":

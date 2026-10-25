@@ -188,3 +188,19 @@ headlights:
   lamp_size_m: {value: 0.2, status: assumed, source: "the lit area of one headlamp"}
   offsets_m: {undivided: 3.7, divided: [8.0, 15.0, 30.0], status: assumed,
               source: "oncoming lane centre to ours: one lane on an undivided road (outside the ODD), across medians of 8, 15 and 30 m on a divided highway (inside)"}
+
+device_sun:
+  # Sun on the device through the car (device_sun.py, physics plan study 6): where the device hangs, read by the ray
+  # caster (assets/tools/device_shading.py) that writes figures/corolla-e210-device-shading.json from the mesh.
+  mount_down_glass_m: {value: 0.15, low: 0.10, high: 0.25, status: estimate,
+                       source: "the mount pad's centre down the glass from its top edge, below the stock camera housing (TSS) behind the mirror; T1 measures it (photo with a scale)"}
+  mount_drop_m: {value: 0.02, status: estimate, source: "pad and mount between the glass and the device's top"}
+  gap_m: {value: 0.01, status: estimate, source: "between the glass and the top of the device's windshield-side face"}
+  lateral_m: {value: 0.0, status: estimate, source: "the device on the car's centre line; T1 measures it"}
+  box_m: {value: [0.120, 0.060, 0.025], status: estimate, source: "the device across the car x up x deep (thermal/params.yaml device size)"}
+  points: {across: 5, up: 3}
+  grid: {elev_step_deg: 2.5, relaz_step_deg: 5.0}
+  transmittance: {value: 0.5, side: 0.6, roof: 0.3, status: estimate,
+                  source: "solar transmittance at normal incidence: laminated windshield as the heat model; side glass as the cabin soak; a tinted roof panel (assumed)"}
+  absorptance: {value: 0.8, status: estimate, source: "dark plastic shell (thermal/params.yaml sun.absorptance)"}
+  model_flux_w_m2: {value: 320.0, status: code, source: "the heat model's sun on the device's windshield-side face: 800 W/m² x 0.5 x 0.8 (thermal/params.yaml sun), as one constant, all day"}

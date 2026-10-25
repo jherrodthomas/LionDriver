@@ -3,9 +3,9 @@
 | Field | Value |
 |---|---|
 | Purpose | Plan ten physics studies that follow the four already built (sun, hydroplaning, cabin heat soak, crosswind; [weather README](weather/README.md)): what each one answers, how, with which inputs, checks and picture, and in what order |
-| Status | Phase A built 2026-10-21 (studies 1, 3, 4, 5; §2); phase B built 2026-10-25 (studies 2, 9, 10; §3); phase C planned. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Phase A built 2026-10-21 (studies 1, 3, 4, 5; §2); phase B built 2026-10-25 (studies 2, 9, 10; §3); phase C built 2026-10-25 (studies 6, 7, 8; §4). AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Credit | None. Every study is a design aid, synthetic (DSR-12), with no evidence credit (DQ-413, WP-V-02 §5.3, DQ-139). A result that would move an ODD limit goes to the lead as a register question; the study itself does not move it |
-| Lead decisions needed | **None to start.** Phase A raised one: whether the ODD should ask for more tyre tread than the legal minimum (register, from study 3). The one new tool (ngspice, study 8) is a reversible technical choice: Claude decides and logs it in the register when phase C starts. Measurements on the car are tasks for T1 ([TE-04](../07-supporting/tool-evaluations/TE-04-physics-field-model.md) §5), not decisions |
+| Lead decisions needed | **None to start.** Phase A raised one: whether the ODD should ask for more tyre tread than the legal minimum (register, from study 3). The one new tool (ngspice, study 8) is a reversible technical choice: Claude decided it and logged it in the register (DQ-419) when phase C started. Measurements on the car are tasks for T1 ([TE-04](../07-supporting/tool-evaluations/TE-04-physics-field-model.md) §5), not decisions |
 
 ## 1. The ten at a glance
 
@@ -148,6 +148,24 @@ Changes from the plan below:
 
 ## 4. Phase C: new physics or a new tool
 
+**Built 2026-10-25.** Results, synthetic and on estimated inputs:
+
+| # | Study | Finding | Results |
+|---|---|---|---|
+| 6 | Sun on the device | The car never shades the device's windshield side: every direction in front of it is windshield. Its angle limits the sun. Into the whole box at most 2.32 W, in winter, the heat model's 2.30 W; in June–August at most 1.89 W, so the hot-day bound has margin on the sun | [`device-sun.md`](results/device-sun.md), [weather §11](weather/README.md#11-sun-on-the-device-through-the-car-tc-21-dfi-04) |
+| 7 | Mount vibration | First mode about 91 Hz (56–117 Hz over the pad's band), the device nodding on its pad: clear of the wheel and idle orders, but near the engine's second order at cruise. The road's own jitter is 0.03–0.06 px RMS | [`mount-modes.md`](results/mount-modes.md), [thermal §2.3](thermal/README.md#23-the-mounts-vibration-modes-tc-19-ks-16-wp-h-07-qe-08) |
+| 8 | Cranking dip | ISO 16750-2 level I rides through; level II locks out the nominal converter and the device resets. On the way down the MCU's rail is out of range without a reset for a fraction of a millisecond, which a BOR closes. The input dips to 4.3–7.5 V, which an HWSR-505b threshold has to allow | [`crank-dip.md`](results/crank-dip.md), [supply README](supply/README.md) |
+
+Changes from the plan below:
+- **Study 6** found the shading the plan expected does not happen on the windshield side. It computes every face and
+  the glass each ray crosses, and runs in the weather job (pvlib), not the thermal one. The ray cast runs only where
+  the mesh is; its table is committed.
+- **Study 7** models the pad, the mount and the device as blocks square to the glass, and drives them with ISO 8608
+  roads through a quarter-car. The engine's shaking is compared by frequency only, for want of an amplitude. The
+  modes are drawn as still shapes, not animated.
+- **Study 8** uses ISO 16750-2 levels I, II and IV as TI reproduces them; the ripple and level III are not given
+  there. Whether the reference car has engine stop-start stays a T1 task.
+
 ### 6. Sun on the device through the car (TC-21, DFI-04)
 
 - **Method.** Cast the sun vector from the sun-position model through the licensed mesh to the device's mount point.
@@ -193,7 +211,7 @@ Changes from the plan below:
 - **Every study** has a `params.yaml` entry with a source for each number, a results page (`results/*.md` and
   `.json`) that `--check` regenerates in CI, checks that fail the job, and figures as WebP under about 300 KB, marked
   "synthetic (DSR-12), no evidence credit".
-- **Tool entries.** TL-53 and TL-54 grow to cover the new scripts; TL-55 for ngspice.
+- **Tool entries.** TL-53 and TL-54 grow to cover the new scripts; TL-58 for ngspice (TL-55 was taken).
 - **What would come back to the lead.** Only results that suggest moving an ODD limit, as register questions to the
   standard in CLAUDE.md. Most likely from studies 1, 3 and 2.
 

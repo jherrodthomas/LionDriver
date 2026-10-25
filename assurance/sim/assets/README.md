@@ -16,7 +16,9 @@ restriction (Toyota design rights). This folder is git-ignored except for this f
 
 `tools/` is the one committed subfolder: `vehicle_figures.py` (silhouette extraction and the mock-up figures),
 `vehicle_geometry.py` (glass areas and rakes and a side elevation for the physics models, written to
-`../figures/corolla-e210-geometry.json`, labelled mesh-derived),
+`../figures/corolla-e210-geometry.json`, labelled mesh-derived), `device_shading.py` (a ray cast from each face of
+the comma device through the mesh, for the sun on the device: `../figures/corolla-e210-device-shading.json`, derived
+numbers only),
 `render_views.py` (the documentation renders) and `corolla_e210_metadrive_export.py` (headless Blender script that
 writes the MetaDrive files below). All read the GLB from this folder when it is present.
 

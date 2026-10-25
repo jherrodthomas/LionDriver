@@ -1,4 +1,4 @@
-# Weather physics: sun, rain, heat, wind, fog, road crown, wet braking, gusts, tunnels and headlights
+# Weather physics: sun, rain, heat, wind, fog, road crown, wet braking, gusts, tunnels, headlights and sun on the device
 
 > **Synthetic data (DSR-12). Design aid, no evidence credit (DQ-139).** Small physics studies for the SOTIF
 > triggering conditions of low sun (TC-01), oncoming headlights (TC-02), rain (TC-03), crown and wind (TC-15),
@@ -415,7 +415,44 @@ Results: [`results/headlights.md`](../results/headlights.md).
 
 *Figure 19. Oncoming high beams: the road's contrast in the camera's image.*
 
-## 11. Checks
+## 11. Sun on the device through the car (TC-21, DFI-04)
+
+**Question.** How much sun reaches the comma device through the Corolla, face by face, against the heat model's
+constant of 320 W/m² on its windshield-side face?
+
+**Method.** [`device_sun.py`](device_sun.py), on a ray cast through the licensed mesh:
+- **The ray cast** ([`assets/tools/device_shading.py`](../assets/tools/device_shading.py)) runs where the mesh is,
+  never in CI. From points on each face of the device, it casts rays toward every sun direction in the car's frame
+  (2.5° by 5°). A ray that hits an opaque part is shaded; one that passes glass reaches the face, and the glass is
+  recorded. The table ([`corolla-e210-device-shading.json`](../figures/corolla-e210-device-shading.json), derived
+  numbers only) is committed; the mesh is not. The mesh has a glass roof panel, so a second table treats it as metal.
+- **The device** hangs 0.15 m down the glass from its top edge, on the centre line, upright (an estimate until T1).
+- **The sun:** clear sky (pvlib, Ineichen) every 10 minutes of a year at the corridor's middle. The car is either
+  heading along I-85 or parked facing any of 12 ways.
+- **Each face** takes the beam (cosine on the face, glass transmittance with pvlib's angle loss) and the sky's diffuse
+  light through the glass it sees.
+
+**Result.**
+- **The windshield side is never shaded by the car.** Every direction in front of it and above the horizon is
+  windshield; only the A-pillars cut grazing sun. What limits it is the angle: upright, it meets the sun squarely only
+  when the sun is low ahead. At most 305 W/m², on a winter day.
+- **The screen side takes sun from behind,** through the rear window and the roof panel: up to 1.22 W (0.96 W with
+  a metal roof) when the sun is low behind the car. The windshield side is dark then, so the box's total stays under
+  its peak.
+- **Into the whole box**, the year's most is 2.32 W, the model's 2.30 W, but in winter. In June–August it is at most
+  1.89 W, 0.82 of the model's: the hot-day bound has margin on the sun.
+- **For the heat model (TE-04 T1):** its input stays until T1 measures the mount; then the summer value can replace it.
+
+**Limits.** No light reflected off the dashboard, the hood or the ground. The stock camera housing behind the mirror
+and the windshield's frit are not in the mesh.
+
+Results: [`results/device-sun.md`](../results/device-sun.md).
+
+![Two sky maps from the device, the windshield side seeing the sky ahead through the windshield and the screen side seeing it behind through the roof panel, side and rear windows, with the sun's path on 21 July and 21 December northbound; below, the sun into the device over those days for both corridor headings and the worst parked heading, against the heat model's 2.30 W](figures/fig-wx-20-device-sun.webp)
+
+*Figure 20. Sun on the device through the car.*
+
+## 12. Checks
 
 [`test_weather.py`](test_weather.py) runs in CI:
 
@@ -461,6 +498,10 @@ Results: [`results/headlights.md`](../results/headlights.md).
 | H1 The lamps leave the frame at offset / tan(hfov/2) | a wrong geometry |
 | H2 The glare veil scales with intensity and 1 / range² | a wrong photometry |
 | H3 No lamps, no change in the road's exposure or contrast | glare from nowhere |
+| D1 The ray caster against an analytic shadow: a square above a point hides exactly the rays that meet it | a wrong ray test |
+| D2 The sun down the windshield's normal reaches the whole windshield-side face, through the windshield; no face lit from behind | a wrong device place or table |
+| D3 The left and right faces see mirror images (the device is on the centre line) | a frame or sign error |
+| D4 The beam on the face is absorptance × DNI × cos × transmittance × angle loss; the sky weights give 0.5 for an upright face | a wrong flux or quadrature |
 
 Each study's `--check` reruns it and fails if any number moves by more than 0.05 from the committed JSON. The crown
 study reads openpilot's code, so a change there shows up as a failed R1 or `--check` the next time this job runs.
@@ -478,4 +519,6 @@ python3 assurance/sim/weather/wet_braking.py --figures     # needs the opendbc s
 python3 assurance/sim/weather/gust.py --figures            # needs the opendbc submodule (torque limiter)
 python3 assurance/sim/weather/tunnel.py --figures          # reads the camerad sources
 python3 assurance/sim/weather/headlights.py --figures      # reads the camerad sources and camera.py
+python3 assurance/sim/weather/device_sun.py --figures      # reads figures/corolla-e210-device-shading.json
+python3 assurance/sim/assets/tools/device_shading.py       # only where the licensed mesh is (about 2 min)
 ```
