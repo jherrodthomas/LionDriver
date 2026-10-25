@@ -5,7 +5,7 @@
 | Purpose | Plan ten physics studies that follow the four already built (sun, hydroplaning, cabin heat soak, crosswind; [weather README](weather/README.md)): what each one answers, how, with which inputs, checks and picture, and in what order |
 | Status | Phase A built 2026-10-21 (studies 1, 3, 4, 5; §2); phase B built 2026-10-25 (studies 2, 9, 10; §3); phase C built 2026-10-25 (studies 6, 7, 8; §4). AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Credit | None. Every study is a design aid, synthetic (DSR-12), with no evidence credit (DQ-413, WP-V-02 §5.3, DQ-139). A result that would move an ODD limit goes to the lead as a register question; the study itself does not move it |
-| Lead decisions needed | **None to start.** Phase A raised one: whether the ODD should ask for more tyre tread than the legal minimum (register, from study 3). The one new tool (ngspice, study 8) is a reversible technical choice: Claude decided it and logged it in the register (DQ-420) when phase C started. Measurements on the car are tasks for T1 ([TE-04](../07-supporting/tool-evaluations/TE-04-physics-field-model.md) §5), not decisions |
+| Lead decisions needed | **None to start.** Phase A raised one: whether the ODD should ask for more tyre tread than the legal minimum (register, from study 3). The one new tool (ngspice, study 8) is a reversible technical choice: Claude decided it and logged it in the register (DQ-422) when phase C started. Measurements on the car are tasks for T1 ([TE-04](../07-supporting/tool-evaluations/TE-04-physics-field-model.md) §5), not decisions |
 
 ## 1. The ten at a glance
 
