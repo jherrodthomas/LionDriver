@@ -697,7 +697,7 @@ HOST = {
 # lanes: (machine or None, title, subtitle); boxes: (lane, machine state or None, label, sub, x, w, role slot)
 SYSTEM = {
   "lanes": [("SM-SELFDRIVED", "SM-SELFDRIVED", "host, QM"), (None, "heartbeat", "pandad → panda, 10 Hz"),
-            ("SM-SAFETY-MODE", "SM-SAFETY-MODE", "panda"), ("SM-TOY-AUTH", "SM-TOY-AUTH", "envelope, B‡")],
+            ("SM-SAFETY-MODE", "SM-SAFETY-MODE", "panda"), ("SM-TOY-AUTH", "SM-TOY-AUTH", "envelope, ASIL C")],
   "boxes": {"dis": (0, "disabled", "disabled", "", 210, 140, None), "en": (0, "enabled", "enabled", "", 420, 140, 1),
             "hb": (1, None, "engaged flag = 1", "0xf3 heartbeat", 420, 170, None),
             "toy": (2, "TOYOTA", "TOYOTA, p = 73", "reference build: the only car mode", 210, 210, 1),

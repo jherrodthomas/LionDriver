@@ -139,10 +139,10 @@ views:
       - {path: trace/figures/fig-3-derivation-flow.svg, label: "derivation flow"}
       - {path: 03-system/requirements/figures/fig-req-2-matrix.svg, label: "FSR × TSR matrix"}
   - name: Logical (functional) architecture
-    status: partial
+    status: present
     where:
+      - {path: 03-system/figures/fig-s03-3-3-functional-flow.svg, label: "functional flow (WP-S-03 §3.4)"}
       - {path: 03-system/figures/fig-3-2-tsc-block-diagram.svg, label: "TSC block diagram (WP-S-03 §3.2)"}
-    gap: the block diagram mixes logical and physical elements; no separate functional architecture
   - name: Physical architecture (system element hierarchy)
     status: present
     where:
@@ -160,6 +160,7 @@ views:
       - {path: 02-concept/figures/fig-c01-4-1-operating-modes.svg, label: "operating modes (WP-C-01 §4)"}
       - {path: 03-system/figures/fig-4-1-startup-engagement.svg, label: "start-up sequence"}
       - {path: 03-system/figures/fig-4-4-heartbeat-timeout-chain.svg, label: "heartbeat chain"}
+      - {path: 03-system/figures/fig-s03-4-5-envelope-states.svg, label: "envelope states (WP-S-03 §4.5)"}
   - name: Technical budgets with margins (TPMs)
     status: partial
     where:

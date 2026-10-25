@@ -21,6 +21,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | AEB | automatic emergency braking |
 | AGNOS | the comma device's operating system |
 | AI | artificial intelligence |
+| ALLOWED | the envelope's authority state with controls_allowed = 1 (NOT_ALLOWED: 0), WP-W-05 §5.2 |
 | AoU | assumption of use: what the analysis assumes about the car, the driver or the environment |
 | ASIL | Automotive Safety Integrity Level, A (lowest) to D (highest), from ISO 26262 |
 | BOR | brown-out reset (MCU supply monitor) |
@@ -80,6 +81,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | ML | machine learning |
 | MPU | memory protection unit |
 | NA | not applicable |
+| NOOUTPUT | the panda's safety mode that receives but sends nothing |
 | NSC | not safety-critical |
 | NUL | null byte |
 | OBD | on-board diagnostics port |
@@ -115,6 +117,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | SW | software |
 | TARA | threat analysis and risk assessment (ISO/SAE 21434) |
 | TBC | to be confirmed |
+| TOYOTA | the panda's Toyota car mode (parameter 73 in the reference build) |
 | TSC | technical safety concept |
 | TSS | Toyota Safety Sense (TSS 2.0: the car's stock lane assist, radar cruise and pre-collision package) |
 | TX | transmit |
@@ -186,7 +189,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | S0–S3 | severity class S0 (no injuries) to S3 (life-threatening) |
 | E0–E4 | exposure class E0 (incredible) to E4 (high probability) |
 | C0–C3 | controllability class C0 (controllable in general) to C3 (difficult or uncontrollable) |
-| M01–M14 | guide word M01…M14 of the HARA (no function, unrequested, excessive, …) |
+| M01–M14, M1–M8 | guide word M01…M14 of the HARA (no function, unrequested, excessive, …); M1…M8 (one digit) a safety-mode transition (WP-W-05 §5.1) |
 | W01–W06 | weather and surface condition W01…W06 (HARA §3.1) |
 | L0–L5 | degradation level L0 (full function) to L5 (lockout), FSC §12.1 |
 | P1–P3 | priority of a functional modification: P1 before on-road use, P2 before release, P3 decide at G2 |
