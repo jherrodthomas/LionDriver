@@ -89,6 +89,7 @@ Generated from the SysML model (view V-09): requirements by verification method,
 
 | Folder | What it holds |
 |---|---|
+| [`cybersecurity/`](cybersecurity/README.md) | Cybersecurity requirements and architecture |
 | [`hsi/`](hsi/README.md) | Hardware-software interface |
 | [`requirements/`](requirements/README.md) | Requirements at a glance |
 | [`reviews/`](reviews/) | — |

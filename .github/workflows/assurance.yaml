@@ -147,6 +147,8 @@ jobs:
         python3 assurance/03-system/figures/test_fig_s05_requests.py
         python3 assurance/03-system/figures/fig_s04_verdicts.py --check
         python3 assurance/03-system/figures/test_fig_s04_verdicts.py
+        python3 assurance/03-system/figures/fig_s07_csr_status.py --check
+        python3 assurance/03-system/figures/test_fig_s07_csr_status.py
         python3 assurance/03-system/figures/fig_s05_hsi.py --check
         python3 assurance/03-system/figures/test_fig_s05_hsi.py
         python3 assurance/03-system/figures/fig_s00_se.py --check
