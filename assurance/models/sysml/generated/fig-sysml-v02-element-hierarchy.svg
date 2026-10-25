@@ -6,7 +6,7 @@
 <text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-02 · Element hierarchy</text>
 <text x="40" y="69" font-size="12.5" fill="#64748B">Item, components, parts and software units of LD-SDA (ISO 26262-1 3.39) with integrity attribution, unit and build scope</text>
 <text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::elementHierarchy</text>
-<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">DecompositionView · render asTreeDiagram · model b9c6450235ee</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">DecompositionView · render asTreeDiagram · model 07aba3270b90</text>
 <line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
 <rect x="580" y="112" width="360" height="74" rx="12" fill="#FFFDF8" stroke="#C2410C" stroke-width="1.6" stroke-dasharray="6 4"/>
 <rect x="596" y="126" width="37.7" height="18" rx="9" fill="#C2410C"/><text x="614.8" y="138.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">ITEM</text>
@@ -285,7 +285,7 @@
 </g>
 <g data-el="context.ldsda.safetyFirmware.platformFirmware.siren"><rect x="572" y="915" width="384" height="19" rx="4" fill="transparent"/>
 <path d="M588 909.5V924.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
-<circle cx="599" cy="924.5" r="3.6" fill="#FB923C"/>
+<circle cx="599" cy="924.5" r="3.6" fill="#C2410C"/>
 <text x="948" y="927.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-HK</text>
 <text x="608" y="928.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.drivers.siren</text>
 </g>
