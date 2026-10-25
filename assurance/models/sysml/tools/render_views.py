@@ -890,11 +890,12 @@ def render_all(m: sysml_lite.Model) -> dict[str, str]:
     if vid not in m.views:
       raise sysml_lite.ModelError(f"layout.toml: view {vid} is not declared in Views.sysml")
     kind = spec.get("kind", "interconnection")
+    import render_arch
     import render_requirements
     import render_se
-    render_requirements.rv = render_se.rv = sys.modules[__name__]  # the running module, with TITLES filled
+    render_requirements.rv = render_se.rv = render_arch.rv = sys.modules[__name__]  # with TITLES filled
     fn = {"interconnection": render_interconnection, "hierarchy": render_hierarchy, "matrix": render_matrix,
-          **render_requirements.RENDERERS, **render_se.RENDERERS}[kind]
+          **render_requirements.RENDERERS, **render_se.RENDERERS, **render_arch.RENDERERS}[kind]
     out[spec["file"]] = fn(m, vid, spec, digest)
   import render_se
   out.update(render_se.extra_outputs(m))

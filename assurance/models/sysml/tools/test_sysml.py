@@ -48,7 +48,7 @@ class Reader(unittest.TestCase):
 
   def test_refuses_unknown_construct(self):
     with self.assertRaisesRegex(sysml_lite.ModelError, r"<text>:1: construct not supported"):
-      sysml_lite.parse_text("package X { state def S; }")
+      sysml_lite.parse_text("package X { occurrence def S; }")
 
   def test_refuses_unbalanced(self):
     with self.assertRaises(sysml_lite.ModelError):
@@ -265,6 +265,61 @@ class Requirements(unittest.TestCase):
     import gen_requirements
     self.assertEqual(gen_requirements.main(["--check"]), 0)
     self.assertEqual(check_model.main([]), 0)
+
+
+class Extension(unittest.TestCase):
+  """Functions, security zones, integration steps and system modes (V-10 to V-13)."""
+
+  @classmethod
+  def setUpClass(cls):
+    cls.m = sysml_lite.load()
+
+  def test_every_function_step_runs_somewhere(self):
+    self.assertEqual(sorted(self.m.functions), [f"F-0{i}" for i in range(1, 10)])
+    lat = self.m.functions["F-01"]
+    self.assertEqual([s.stage for s in lat.steps][-2:], ["envelope", "act"])
+    env = next(s for s in lat.steps if s.stage == "envelope")
+    self.assertEqual([self.m.elements[p].short for p in env.performers], ["E-03a"])
+    for f in self.m.functions.values():
+      for st in f.steps:
+        self.assertTrue(st.performers, st.short)
+
+  def test_function_steps_are_not_mechanisms(self):
+    self.assertNotIn("F-01", self.m.mechanisms)
+    self.assertEqual(len(self.m.mechanisms), 43)
+
+  def test_zones_inherit_and_boundaries_join_zones(self):
+    self.assertEqual(self.m.find("host.pandad").zone(), "Z2")
+    self.assertEqual(self.m.find("host.hmi").zone(), "Z3")
+    self.assertEqual(self.m.find("E-03a").zone(), "Z1")
+    self.assertEqual(sysml_lite._as_list(self.m.boundaries["TB-1"].values["zones"]), ["Z2", "Z1"])
+    import render_arch
+    self.assertEqual(render_arch.csr_count("CSR-011…CSR-016, CSR-021…CSR-024, CSR-061"), 11)
+
+  def test_integration_steps_and_cases(self):
+    self.assertEqual(sorted(self.m.integration), ["I-1", "I-2", "I-3", "I-4"])
+    vs = self.m.verifications["VS-SI-03"]
+    self.assertEqual(sysml_lite._as_list(vs.values.get("steps")), ["I-1", "I-3"])
+
+  def test_system_modes(self):
+    sm = self.m.state_machines["SM-SYS"]
+    self.assertEqual(sm.initial, "off")
+    self.assertEqual(sm.states["engaged"].initial, "engaged.enabled")
+    names = {t.name: t for t in sm.transitions}
+    self.assertEqual((names["softDisable"].source, names["softDisable"].target),
+                     ("engaged.enabled", "engaged.softDisabling"))
+    self.assertEqual(str(names["softDisable"].meta["Enforcement"]["kind"]).split("::")[-1], "gap16")
+
+  def test_reader_parses_states_and_transitions(self):
+    decls = sysml_lite.parse_text("""package P {
+        state def <'S'> M { entry; then a; state a; state b { entry; then c; state c; } transition go first a then b.c; }
+    }""")
+    sm = sysml_lite._state_machine(decls[0].members[0])
+    self.assertEqual((sm.initial, sm.states["b"].initial), ("a", "b.c"))
+    self.assertEqual([(t.source, t.target) for t in sm.transitions], [("a", "b.c")])
+    bad = sysml_lite.parse_text("package P { state def M { entry; then a; state a; transition x first a then z; } }")
+    with self.assertRaises(sysml_lite.ModelError):
+      sysml_lite._state_machine(bad[0].members[0])
 
 
 class Tables(unittest.TestCase):

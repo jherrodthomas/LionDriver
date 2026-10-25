@@ -27,31 +27,46 @@ package LionDriverArchitecture {
             @Source { workProduct = "WP-W-03"; clause = "§4.1"; paths = "openpilot/selfdrive/pandad/"; }
             port spi : SpiPort;
             port bootControl : GpioPort;
+            perform LionDriverFunctions::lateralControl.sendLka;
+            perform LionDriverFunctions::longitudinalControl.sendAcc;
+            perform LionDriverFunctions::engagement.heartbeat;
         }
         part <'host.card'> card : SoftwareElement {
             doc /* CAN parse to carState; carControl to sendcan; CarParams and fingerprint. */
             @Safety { integrity = Integrity::QMBsup; label = "QM (B-sup)"; }
             @Source { workProduct = "WP-W-03"; clause = "§4.1"; paths = ("openpilot/selfdrive/car/card.py", "opendbc/car/toyota/"); }
+            perform LionDriverFunctions::lateralControl.packLka;
+            perform LionDriverFunctions::longitudinalControl.packAcc;
+            perform LionDriverFunctions::engagement.carState;
+            perform LionDriverFunctions::driverInformation.packHud;
         }
         part <'host.controlsd'> controlsd : SoftwareElement {
             doc /* Lateral and longitudinal control law. */
             @Safety { integrity = Integrity::QMBsup; label = "QM (B-sup)"; }
             @Source { workProduct = "WP-W-03"; clause = "§4.1"; paths = "openpilot/selfdrive/controls/controlsd.py"; }
+            perform LionDriverFunctions::lateralControl.lateralLaw;
+            perform LionDriverFunctions::longitudinalControl.longitudinalLaw;
         }
         part <'host.selfdrived'> selfdrived : SoftwareElement {
             doc /* Engagement state machine, event classification, alerts. */
             @Safety { integrity = Integrity::QMBsup; label = "QM (B-sup)"; }
             @Source { workProduct = "WP-W-03"; clause = "§4.1"; paths = "openpilot/selfdrive/selfdrived/"; }
+            perform LionDriverFunctions::engagement.engagementState;
+            perform LionDriverFunctions::driverInformation.alertClasses;
+            perform LionDriverFunctions::forwardCollisionWarning.fcwEvent;
+            perform LionDriverFunctions::laneDepartureWarning.ldwLogic;
         }
         part <'host.plannerd'> plannerd : SoftwareElement {
             doc /* Longitudinal plan. */
             @Safety { integrity = Integrity::QM; label = "QM (SOTIF)"; }
             @Source { workProduct = "WP-W-03"; clause = "§4.1"; paths = "openpilot/selfdrive/controls/plannerd.py"; }
+            perform LionDriverFunctions::longitudinalControl.longitudinalPlan;
         }
         part <'host.radard'> radard : SoftwareElement {
             doc /* Lead fusion. */
             @Safety { integrity = Integrity::QM; label = "QM (SOTIF)"; }
             @Source { workProduct = "WP-W-03"; clause = "§4.1"; paths = "openpilot/selfdrive/controls/radard.py"; }
+            perform LionDriverFunctions::longitudinalControl.leadFusion;
         }
         part <'host.modeld'> modeld : SoftwareElement {
             doc /* Runs the driving model (E-02). */
@@ -64,12 +79,18 @@ package LionDriverArchitecture {
             @Safety { integrity = Integrity::QM; label = "QM (SOTIF)"; }
             @Source { workProduct = "WP-W-03"; clause = "§4.1"; paths = ("openpilot/selfdrive/modeld/dmonitoringmodeld.py", "openpilot/selfdrive/monitoring/"); }
             port driverImages : ImagePort;
+            perform LionDriverFunctions::driverMonitoring.dmPolicy;
         }
         part <'host.hmi'> hmi : SoftwareElement {
+            @Zone { id = "Z3"; }
             doc /* ui and soundd: display and audible alerts. */
             @Safety { integrity = Integrity::QMBsup; label = "QM (B-sup)"; }
             @Source { workProduct = "WP-W-03"; clause = "§4.1"; }
             port alerts : HmiPort;
+            perform LionDriverFunctions::driverMonitoring.dmAlerts;
+            perform LionDriverFunctions::driverInformation.uiSound;
+            perform LionDriverFunctions::forwardCollisionWarning.fcwAlert;
+            perform LionDriverFunctions::laneDepartureWarning.ldwAlert;
         }
         part <'host.manager'> manager : SoftwareElement {
             doc /* Process start and stop by run condition. */
@@ -93,10 +114,13 @@ package LionDriverArchitecture {
             @Source { workProduct = "WP-S-03"; clause = "§8"; }
         }
         part remoteAndLogging : SoftwareElement {
+            @Zone { id = "Z3"; }
             doc /* loggerd, uploader, athenad, updated, webrtcd and the other non-driving processes (F-09). Interference sources for FFI. */
             @Safety { integrity = Integrity::QM; label = "No (interference sources for FFI)"; }
             @Source { workProduct = "WP-S-03"; clause = "§8"; }
             port network : NetworkPort;
+            perform LionDriverFunctions::loggingAndUpdate.logging;
+            perform LionDriverFunctions::loggingAndUpdate.remote;
         }
     }
 
@@ -108,10 +132,14 @@ package LionDriverArchitecture {
         part drivingModel : MlElement {
             doc /* Camera-based driving model; executed by host.modeld. */
             @Safety { integrity = Integrity::QM; label = "QM (SOTIF / PAS 8800)"; }
+            perform LionDriverFunctions::lateralControl.desiredPath;
+            perform LionDriverFunctions::forwardCollisionWarning.hardBrake;
+            perform LionDriverFunctions::laneDepartureWarning.laneLines;
         }
         part dmModel : MlElement {
             doc /* Driver monitoring model; executed by dmonitoringmodeld (host.dm). */
             @Safety { integrity = Integrity::QM; label = "QM (SOTIF / PAS 8800)"; }
+            perform LionDriverFunctions::driverMonitoring.attention;
         }
     }
 
@@ -454,6 +482,11 @@ package LionDriverArchitecture {
             perform LionDriverMechanisms::forwardingSupervision;
             perform LionDriverMechanisms::pcsTxGate;
             perform LionDriverMechanisms::txRateSupervision;
+            perform LionDriverFunctions::lateralControl.limitTorque;
+            perform LionDriverFunctions::longitudinalControl.boundAccel;
+            perform LionDriverFunctions::engagement.authority;
+            perform LionDriverFunctions::safetyEnvelope.rxChecks;
+            perform LionDriverFunctions::safetyEnvelope.txChecks;
         }
         part <'E-03b'> platformFirmware : PlatformFirmware {
             @Safety { integrity = Integrity::C; label = "C"; }
@@ -475,6 +508,8 @@ package LionDriverArchitecture {
             perform LionDriverMechanisms::txReadBack;
             perform LionDriverMechanisms::transceiverSupervision;
             perform LionDriverMechanisms::dieTemperatureMonitor;
+            perform LionDriverFunctions::safetyEnvelope.canRx;
+            perform LionDriverFunctions::safetyEnvelope.supervision;
         }
     }
 
@@ -509,18 +544,29 @@ package LionDriverArchitecture {
             doc /* Wide and narrow road-facing cameras. */
             port scene : ImagePort;
             port images : ImagePort;
+            perform LionDriverFunctions::lateralControl.lateralRoadImages;
+            perform LionDriverFunctions::longitudinalControl.longitudinalRoadImages;
+            perform LionDriverFunctions::forwardCollisionWarning.fcwRoadImages;
+            perform LionDriverFunctions::laneDepartureWarning.ldwRoadImages;
         }
         part driverCamera : HardwareElement {
             doc /* Driver-facing IR camera. */
             port scene : ImagePort;
             port images : ImagePort;
+            perform LionDriverFunctions::driverMonitoring.driverImages;
         }
         part imuGnss : HardwareElement {
             doc /* IMU and GNSS. */
             port messages : SensorPort;
         }
-        part display : HardwareElement { port screen : HmiPort; }
-        part speaker : HardwareElement { port sound : HmiPort; }
+        part display : HardwareElement {
+            port screen : HmiPort;
+            perform LionDriverFunctions::driverInformation.displaySpeaker;
+        }
+        part speaker : HardwareElement {
+            port sound : HmiPort;
+            perform LionDriverFunctions::driverInformation.displaySpeaker;
+        }
         part canTransceivers : HardwareElement;
         part powerSupply : HardwareElement { port input : PowerPort; }
         part enclosure : HardwareElement { doc /* Enclosure and windscreen mount. */ }
@@ -530,6 +576,7 @@ package LionDriverArchitecture {
         doc /* The comma device (WP-C-01 §3.1). */
         @Source { workProduct = "WP-S-03"; clause = "§3.1"; }
         part <'E-04a'> safetyMcu : SafetyMcuHardware {
+            @Zone { id = "Z1"; }
             @Safety { integrity = Integrity::C; label = "C"; }
             @Catalogue {
                 name = "Safety MCU hardware";
@@ -549,6 +596,7 @@ package LionDriverArchitecture {
             perform LionDriverMechanisms::harnessDetection;
         }
         part <'E-04b'> restOfDevice : DeviceHardwareRest {
+            @Zone { id = "Z7"; }
             @Safety { integrity = Integrity::QM; label = "QM"; }
             @Catalogue {
                 name = "Device hardware (rest)";
@@ -582,6 +630,7 @@ package LionDriverArchitecture {
         @Boundary { scope = Scope::inside; }
 
         part <'E-01'> socSoftware : SocSoftware {
+            @Zone { id = "Z2"; }
             @Safety { integrity = Integrity::QM; label = "QM"; }
             @Catalogue {
                 name = "SoC software";
@@ -601,6 +650,7 @@ package LionDriverArchitecture {
             perform LionDriverMechanisms::accCancelOnFault;
         }
         part <'E-02'> mlModels : MlModels {
+            @Zone { id = "Z2"; }
             @Safety { integrity = Integrity::QM; label = "QM (SOTIF/PAS 8800)"; }
             @Catalogue {
                 name = "ML models";
@@ -610,12 +660,14 @@ package LionDriverArchitecture {
             perform LionDriverMechanisms::driverMonitoring;
         }
         part <'E-03'> safetyFirmware : SafetyMcuFirmware {
+            @Zone { id = "Z1"; }
             @Safety { integrity = Integrity::C; label = "C"; }
         }
         part <'E-04'> deviceHardware : DeviceHardware {
             @Safety { integrity = Integrity::C; label = "E-04a C, E-04b QM"; }
         }
         part <'E-05'> harness : Harness {
+            @Zone { id = "Z5"; }
             @Safety { integrity = Integrity::C; label = "B (PCS restore), C (blocking)"; }
             @Catalogue {
                 name = "Harness";
@@ -624,6 +676,7 @@ package LionDriverArchitecture {
             }
             perform LionDriverMechanisms::relayReadback;
             perform LionDriverMechanisms::harnessDetection;
+            perform LionDriverFunctions::safetyEnvelope.intercept;
         }
 
         // ---------------------------------------------------------- where software runs
@@ -841,6 +894,7 @@ package LionDriverArchitecture {
         part ldsda : LdSda;
 
         part <'EXT-EPS'> eps : ExternalElement {
+            @Zone { id = "Z5"; }
             doc /* Receives LKA torque requests; reports driver torque, EPS torque and LKA state. */
             @Boundary { scope = Scope::outside; }
             @Safety { integrity = Integrity::AoU; label = "AOU-01, AOU-02"; }
@@ -848,8 +902,10 @@ package LionDriverArchitecture {
                 description = "Toyota EPS";
                 sources = "[WP-C-04 §11](../02-concept/WP-C-04-functional-safety-concept.md)";
             }
+            perform LionDriverFunctions::lateralControl.applyTorque;
         }
         part <'EXT-PCM'> ecmPcm : ExternalElement {
+            @Zone { id = "Z5"; }
             doc /* Engine and powertrain ECU: ACC acceleration, permit-braking, cruise state. */
             @Boundary { scope = Scope::outside; }
             @Safety { integrity = Integrity::AoU; label = "AOU-03, AOU-05, AOU-10"; }
@@ -857,13 +913,17 @@ package LionDriverArchitecture {
                 description = "PCM/brake";
                 sources = "[WP-C-04 §11](../02-concept/WP-C-04-functional-safety-concept.md)";
             }
+            perform LionDriverFunctions::longitudinalControl.applyAccel;
+            perform LionDriverFunctions::engagement.cruiseInputs;
         }
         part absVsc : ExternalElement {
+            @Zone { id = "Z5"; }
             doc /* Brake actuator: wheel speeds and brake-pedal state. */
             @Boundary { scope = Scope::outside; }
             @Safety { integrity = Integrity::AoU; label = "AOU-03, AOU-10"; }
         }
         part <'EXT-CLU'> cluster : ExternalElement {
+            @Zone { id = "Z5"; }
             doc /* Instrument cluster and cruise stalk: cruise main, set, resume, cancel; LKA HUD. */
             @Boundary { scope = Scope::outside; }
             @Safety { integrity = Integrity::AoU; label = "AOU-05, AOU-12"; }
@@ -871,18 +931,22 @@ package LionDriverArchitecture {
                 description = "cluster";
                 sources = "[WP-C-04 §11](../02-concept/WP-C-04-functional-safety-concept.md)";
             }
+            perform LionDriverFunctions::driverInformation.clusterHud;
         }
         part forwardCamera : ExternalElement {
+            @Zone { id = "Z5"; }
             doc /* Toyota forward camera: LKA and ACC outputs intercepted, PCS outputs forwarded. */
             @Boundary { scope = Scope::outside; }
             @Safety { integrity = Integrity::AoU; label = "AOU-04"; }
             port can : CanPort;
         }
         part forwardRadar : ExternalElement {
+            @Zone { id = "Z5"; }
             doc /* Toyota forward radar: lead tracks; supports the stock PCS. */
             @Boundary { scope = Scope::outside; }
             @Safety { integrity = Integrity::AoU; label = "AOU-04"; }
             port can : CanPort;
+            perform LionDriverFunctions::longitudinalControl.radarTracks;
         }
         part driver : Person {
             doc /* Supervises, overrides and responds to warnings. */
@@ -892,10 +956,12 @@ package LionDriverArchitecture {
             port senses : HmiPort;
         }
         part backEnd : ExternalElement {
+            @Zone { id = "Z4"; }
             doc /* comma.ai back end (connect, athena) and update origin. Not trusted for safety. */
             @Boundary { scope = Scope::outside; }
             @Safety { integrity = Integrity::Untrusted; label = "Untrusted (AOU-11)"; }
             port network : NetworkPort;
+            perform LionDriverFunctions::loggingAndUpdate.backEnd;
         }
         part roadEnvironment : ExternalElement {
             doc /* Road users, lanes, light and weather within the ODD (WP-C-02). */
@@ -912,9 +978,11 @@ package LionDriverArchitecture {
             @Boundary { scope = Scope::excluded; }
         }
         part vehicleCan : VehicleCan {
+            @Zone { id = "Z5"; }
             @Boundary { scope = Scope::outside; }
         }
         part radarCan : RadarCan {
+            @Zone { id = "Z5"; }
             @Boundary { scope = Scope::outside; }
         }
 
