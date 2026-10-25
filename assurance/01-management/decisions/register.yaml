@@ -5832,5 +5832,7 @@
       title: "Also plan for J1939 trucks"
       detail: "A larger market. Cost: a new item, not a new car: new HARA (mass, stopping distance), new ODD, new actuators, and nothing upstream to build on."
   sources: ["assurance/03-system/WP-S-05-hsi-specification.md §12.1, §12.6, OI-8", "wiki/Reference-vehicle.md 'Adding a second vehicle'", "opendbc_repo/opendbc/safety/modes/toyota.h (toyota_secoc)"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-25}
+  applied: {ref: 65bab85, record: "WP-C-01 v0.23 §7 AOU-18 (vehicle admission); WP-S-05 v0.15 OI-8 closed, §12.1, §12.6", at: 2026-10-25}
+  note: "AOU-18 is Unverified: each vehicle needs a configuration review and a bus capture at the harness point (WP-C-01 §7)."
