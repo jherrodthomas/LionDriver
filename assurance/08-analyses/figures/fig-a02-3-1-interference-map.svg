@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-1. Coexistence and interference map: QM SoC, panda firmware partitions, interference channels and FFI verdicts (WP-A-02 §2–§8)</title>
-  <desc id="d">Generated from WP-A-02 v0.11. The comma device (L-DEV) holds the QM SoC software and the panda STM32H7 firmware (L-MCU), one image without MPU partitioning: SoC-facing code (SPI/USB transport, command dispatcher, bootstub and softloader) is ASIL C where it touches safety state and FFI otherwise; the envelope core, tick handler, CAN driver, relay drivers, mode setting and fault handling are the ASIL partition; housekeeping is QM with FFI. Interference channels: SP-01…05 spatial, TM-01…07 temporal, CM-01…19 communication. Verdicts of §8: L-MCU spatial not shown; L-MCU temporal partially shown; L-DEV communication (data) partially shown; L-DEV communication (commands) partial (ref); L-DEV boot control not shown.</desc>
+  <desc id="d">Generated from WP-A-02 v0.12. The comma device (L-DEV) holds the QM SoC software and the panda STM32H7 firmware (L-MCU), one image without MPU partitioning: SoC-facing code (SPI/USB transport, command dispatcher, bootstub and softloader) is ASIL C where it touches safety state and FFI otherwise; the envelope core, tick handler, CAN driver, relay drivers, mode setting and fault handling are the ASIL partition; housekeeping is developed to ASIL C too. Interference channels: SP-01…05 spatial, TM-01…07 temporal, CM-01…19 communication. Verdicts of §8: L-MCU spatial not shown; L-MCU temporal partially shown; L-DEV communication (data) partially shown; L-DEV communication (commands) partial (ref); L-DEV boot control not shown.</desc>
   <defs>
     <marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F766E"/></marker>
     <marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7C3AED"/></marker>
@@ -15,7 +15,7 @@
   </defs>
   <rect width="1280" height="800" fill="#FFFFFF"/>
   <text x="40" y="44" class="t b" font-size="20">Figure 3-1 · Coexistence and interference map with FFI verdicts</text>
-  <text x="40" y="66" class="m" font-size="12.5">QM SoC and ASIL-allocated panda firmware on one device · interference channels by type · verdicts of WP-A-02 v0.11 §8</text>
+  <text x="40" y="66" class="m" font-size="12.5">QM SoC and ASIL-allocated panda firmware on one device · interference channels by type · verdicts of WP-A-02 v0.12 §8</text>
   <text x="1240" y="44" class="m s" text-anchor="end">WP-A-02 §3</text>
   <text x="1240" y="62" class="m s" text-anchor="end">decisions §2 · channels §4–§6 · verdicts §8</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
@@ -96,10 +96,10 @@
   <rect x="548" y="530" width="74" height="16" rx="8" fill="#7C3AED"/><text x="585" y="542" class="tag" text-anchor="middle">SP-01, -04</text>
   <path d="M700 556V524" stroke="#A16207" stroke-width="2" stroke-dasharray="5 3" fill="none" marker-end="url(#aY)"/>
   <rect x="708" y="530" width="74" height="16" rx="8" fill="#A16207"/><text x="745" y="542" class="tag" text-anchor="middle">TM-01, -02</text>
-  <rect x="456" y="556" width="364" height="62" rx="9" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
-  <rect x="468" y="566" width="86" height="18" rx="9" fill="#64748B"/>
-  <text x="511" y="579" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle">QM with FFI</text>
-  <text x="564" y="579" class="m xs">housekeeping, must not block or corrupt</text>
+  <rect x="456" y="556" width="364" height="62" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.8"/>
+  <rect x="468" y="566" width="86" height="18" rx="9" fill="#C2410C"/>
+  <text x="511" y="579" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle">ASIL C</text>
+  <text x="564" y="579" class="m xs">housekeeping, developed to ASIL C, no FFI claimed</text>
   <text x="468" y="604" class="t" font-size="10.5">fan · sound · LED · IR · DTS/ADC · debug print</text>
   <path d="M276 240H466" stroke="#0F766E" stroke-width="2" fill="none" marker-end="url(#aT)"/>
   <rect x="300" y="222" width="102" height="16" rx="8" fill="#0F766E"/><text x="351" y="234" class="tag" text-anchor="middle">data · CM-01…05</text>
@@ -165,7 +165,6 @@
     <line x1="550" y1="0" x2="578" y2="0" stroke="#0F766E" stroke-width="2" stroke-dasharray="2 3"/><text x="586" y="4" class="t">Boot/reset GPIO</text>
     <rect x="700" y="-8" width="28" height="16" rx="4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/><text x="736" y="4" class="t">ASIL partition</text>
     <rect x="846" y="-8" width="28" height="16" rx="4" fill="#FFFFFF" stroke="#C2410C" stroke-dasharray="5 3"/><text x="882" y="4" class="t">ASIL C in part, FFI for the rest</text>
-    <rect x="1080" y="-8" width="28" height="16" rx="4" fill="#F1F5F9" stroke="#94A3B8"/><text x="1116" y="4" class="t">QM with FFI</text>
   </g>
   <g transform="translate(40,764)" font-size="10.5">
     <rect x="0" y="-8" width="28" height="16" rx="8" fill="#D2553F"/><text x="36" y="4" class="t">Not shown</text>

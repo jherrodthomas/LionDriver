@@ -154,3 +154,12 @@
   aou_status: "Unverified"
   status: proposed
   source: WP-C-01
+
+- id: AOU-18
+  kind: aou
+  text: "The commands the item replaces (the steering command and, with openpilot longitudinal, the ACC request) travel on classical CAN or ISO CAN FD at the connector the harness splits, without message authentication (such as SecOC) that the item cannot produce. Vehicles on SAE J1939, and vehicles whose actuation commands are signed or travel on FlexRay or Ethernet, are outside the platform (decision register DQ-419 A)"
+  credited_in: "Architecture: interception at the harness ([WP-S-03](../03-system/WP-S-03-technical-safety-concept-architecture.md)); [WP-S-05](../03-system/WP-S-05-hsi-specification.md) §12.1; vehicle admission (§1.1)"
+  verification_approach: "Configuration review of each vehicle: bus type and bit rates from the DBC and the opendbc platform flags (no SecOC on the replaced messages), confirmed by a bus capture at the harness point"
+  aou_status: "Unverified"
+  status: proposed
+  source: WP-C-01
