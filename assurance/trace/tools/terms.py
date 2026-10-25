@@ -35,6 +35,7 @@ TERMS_PAGE = A / "terms.md"
 # Pages that carry a generated "Terms on this page" block, and generated figures that carry a definitions line.
 PAGES = [
   A / "02-concept/item/README.md",
+  A / "02-concept/ai/README.md",
   A / "02-concept/odd/README.md",
   A / "02-concept/cybersecurity/README.md",
   A / "02-concept/hara/README.md",
@@ -45,6 +46,7 @@ PAGES = [
 ]
 FIGURES = [
   A / "02-concept/figures/fig-c01-3-4-function-allocation.svg",
+  A / "02-concept/figures/fig-c11-6-1-air-map.svg",
   A / "02-concept/figures/fig-c02-5-1-odd-exits.svg",
   A / "02-concept/figures/fig-c10-6-1-concept-view.svg",
   A / "02-concept/fsc/figures/fig-c04-10-1-safety-view.svg",
@@ -125,6 +127,18 @@ TERMS = {
   "DM": "driver monitoring",
   "DRV": "the driver",
   "ML": "machine learning",
+  "ONNX": "Open Neural Network Exchange, the model file format",
+  "SHA-256": "a cryptographic hash used to identify a file exactly",
+  "TBC": "to be confirmed",
+  "MDN": "mixture density network (how the model reports a spread of possible values)",
+  "GPU": "graphics processor (runs the models)",
+  "GPS": "global positioning system",
+  "RTK": "real-time kinematic GPS, accurate to centimetres",
+  "EV": "exposure value: one EV halves or doubles the light",
+  "JPEG": "a compressed image format",
+  "HEVC": "a compressed video format (H.265)",
+  "OOD": "out of distribution: unlike the data the model learned from",
+  "PAS": "publicly available specification (ISO/PAS 8800 is the AI safety one)",
   "AI": "artificial intelligence",
   "VSC": "vehicle stability control (Toyota's stability system)",
   "eGPU": "external graphics processor (the optional big-model hardware)",
@@ -187,6 +201,13 @@ TERMS = {
   "DS-": "damage scenario (TARA §3)",
   "TS-": "threat scenario (TARA §4)",
   "AP-": "attack path (TARA §5)",
+  "AI-": "AI component (WP-C-11 §2.1): AI-1 driving model, AI-2 big driving model (excluded), AI-3 driver monitoring model",
+  "AIR-": "AI safety requirement (WP-C-11 §6)",
+  "DSR-": "dataset requirement (WP-C-11 §7)",
+  "AE-": "AI error type (WP-C-11 §5)",
+  "RM-": "runtime monitor of the AI safety plan (WP-M-10)",
+  "DMP-": "driver monitoring performance requirement (WP-C-08 §5)",
+  "INS-": "installation check (WP-O-01)",
   "CSG-": "cybersecurity goal (WP-C-10)",
   "CSR-": "cybersecurity requirement: CSR-C-nn at concept level (WP-C-10 §7), CSR-nnn refined (WP-S-07)",
   "CSC-": "cybersecurity claim: a risk retained, shared or avoided, with its condition (WP-C-10 §5)",
@@ -256,7 +277,7 @@ def find(text: str) -> tuple[list[str], list[str]]:
 
   hits = []
   for m in CODE_RE.finditer(text):
-    whole = re.match(r"[A-Z]+-[A-Z]+\b", text[m.start():])
+    whole = re.match(r"[A-Z]+-[A-Z0-9]+\b", text[m.start():])
     hits.append((m.start(), whole.group(0) if whole and whole.group(0) in TERMS else m.group(1) + "-"))
   for m in CLASS_RE.finditer(text):
     hits.append((m.start(), m.group(1) + "#"))

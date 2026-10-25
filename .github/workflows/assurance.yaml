@@ -121,6 +121,8 @@ jobs:
         python3 assurance/02-concept/figures/test_fig_c10_goals.py
         python3 assurance/02-concept/figures/fig_c10_concept_view.py --check
         python3 assurance/02-concept/figures/test_fig_c10_concept_view.py
+        python3 assurance/02-concept/figures/fig_c11_airs.py --check
+        python3 assurance/02-concept/figures/test_fig_c11_airs.py
         python3 assurance/09-production-operation/figures/fig_o05_updates.py --check
         python3 assurance/09-production-operation/figures/test_fig_o05_updates.py
         python3 assurance/02-concept/figures/fig_c01_interfaces.py --check
