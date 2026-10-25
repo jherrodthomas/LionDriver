@@ -241,6 +241,8 @@ jobs:
       run: |
         python3 assurance/08-analyses/dfa/dfa_gates.py --check
         python3 assurance/08-analyses/dfa/test_dfa_gates.py
+        python3 assurance/08-analyses/dfa/dfa_figures.py --check
+        python3 assurance/08-analyses/dfa/test_dfa_figures.py
     - name: STPA figures match WP-A-05, stpa-map.yaml and the decision register (and their tests)
       run: |
         python3 assurance/08-analyses/figures/fig_a05_stpa.py --check
