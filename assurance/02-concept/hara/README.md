@@ -32,7 +32,7 @@ controllability, and turns the worst cases into safety goals with an ASIL. Those
 | ID | identifier |
 | ISO | International Organization for Standardization |
 | LD-SDA | LionDriver Supervised Driving Assistance, the item |
-| M01–M14 | guide word M01…M14 of the HARA (no function, unrequested, excessive, …) |
+| M01–M14, M1–M8 | guide word M01…M14 of the HARA (no function, unrequested, excessive, …); M1…M8 (one digit) a safety-mode transition (WP-W-05 §5.1) |
 | MB | megabyte |
 | NA | not applicable |
 | NSC | not safety-critical |
