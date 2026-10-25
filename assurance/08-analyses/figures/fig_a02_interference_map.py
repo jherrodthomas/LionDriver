@@ -16,8 +16,9 @@ What is read from the document and what is drawing:
   * The two short lines of reason on each card are drawing (CARD_TEXT), condensed from the §8
     row. Each carries a fingerprint of that row: when the row changes, the build fails until the
     card text is reviewed and the fingerprint updated (`--fingerprints` prints the current ones).
-  * The channels drawn from the QM housekeeping partition into the ASIL core (HOUSEKEEPING) are a
-    drawing choice; they must exist in §4 / §5.1.
+  * The channels drawn from the housekeeping code into the ASIL core (HOUSEKEEPING) are a drawing
+    choice; they must exist in §4 / §5.1. Since WP-A-02 v0.12 the housekeeping code is itself ASIL C,
+    so its box is drawn as part of the ASIL partition and the channels are addressed by its development.
 
     python3 fig_a02_interference_map.py                 # regenerate the SVG
     python3 fig_a02_interference_map.py --check         # fail if the committed SVG is stale
@@ -54,11 +55,11 @@ PARTITIONS = {
   "Fault handling": "ASIL C",
   "Host command dispatcher": "ASIL C for the commands that touch safety state; others shown non-interfering",
   "SPI/USB transport": "ASIL C (integrity checks) / FFI for the rest",
-  "Fan, sound, LED": "QM with FFI",
+  "Fan, sound, LED": "ASIL C",
   "Bootstub / softloader": "ASIL C for signature check and relay-safe start; cybersecurity scope",
 }
 
-# Channels drawn from the QM housekeeping partition into the ASIL core.
+# Channels drawn from the housekeeping code (ASIL C since WP-A-02 v0.12) into the ASIL core.
 HOUSEKEEPING = ["FFI-SP-01", "FFI-SP-04", "FFI-TM-01", "FFI-TM-02"]
 
 # §8 level -> (card colour, condensed reason, fingerprint of the §8 row).
@@ -298,7 +299,7 @@ def draw(model: Model) -> str:
           f"panda STM32H7 firmware (L-MCU), one image without MPU partitioning: SoC-facing code (SPI/USB "
           f"transport, command dispatcher, bootstub and softloader) is ASIL C where it touches safety state and "
           f"FFI otherwise; the envelope core, tick handler, CAN driver, relay drivers, mode setting and fault "
-          f"handling are the ASIL partition; housekeeping is QM with FFI. Interference channels: "
+          f"handling are the ASIL partition; housekeeping is developed to ASIL C too. Interference channels: "
           f"{compress([i for i in all_ids if '-SP-' in i])} spatial, {compress([i for i in all_ids if '-TM-' in i])} "
           f"temporal, {compress([i for i in all_ids if '-CM-' in i])} communication. Verdicts of §8: "
           + "; ".join(f"{k} {v}" for k, v in latest.items()) + ".")
@@ -398,10 +399,10 @@ def draw(model: Model) -> str:
   a('  ' + tag(548, 530, tag_w(hsp), hsp, SPATIAL))
   a(f'  <path d="M700 556V524" stroke="{TEMPORAL}" stroke-width="2" stroke-dasharray="5 3" fill="none" marker-end="url(#aY)"/>')
   a('  ' + tag(708, 530, tag_w(htm), htm, TEMPORAL))
-  a('  <rect x="456" y="556" width="364" height="62" rx="9" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>')
-  a('  <rect x="468" y="566" width="86" height="18" rx="9" fill="#64748B"/>')
+  a('  <rect x="456" y="556" width="364" height="62" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.8"/>')
+  a('  <rect x="468" y="566" width="86" height="18" rx="9" fill="#C2410C"/>')
   a(f'  <text x="511" y="579" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle">{escape(PARTITIONS["Fan, sound, LED"])}</text>')
-  a('  <text x="564" y="579" class="m xs">housekeeping, must not block or corrupt</text>')
+  a('  <text x="564" y="579" class="m xs">housekeeping, developed to ASIL C, no FFI claimed</text>')
   a('  <text x="468" y="604" class="t" font-size="10.5">fan · sound · LED · IR · DTS/ADC · debug print</text>')
 
   # channels SoC -> MCU
@@ -465,7 +466,6 @@ def draw(model: Model) -> str:
   a(f'    <line x1="550" y1="0" x2="578" y2="0" stroke="{COMMS}" stroke-width="2" stroke-dasharray="2 3"/><text x="586" y="4" class="t">Boot/reset GPIO</text>')
   a('    <rect x="700" y="-8" width="28" height="16" rx="4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/><text x="736" y="4" class="t">ASIL partition</text>')
   a('    <rect x="846" y="-8" width="28" height="16" rx="4" fill="#FFFFFF" stroke="#C2410C" stroke-dasharray="5 3"/><text x="882" y="4" class="t">ASIL C in part, FFI for the rest</text>')
-  a('    <rect x="1080" y="-8" width="28" height="16" rx="4" fill="#F1F5F9" stroke="#94A3B8"/><text x="1116" y="4" class="t">QM with FFI</text>')
   a('  </g>')
   a('  <g transform="translate(40,764)" font-size="10.5">')
   a(f'    <rect x="0" y="-8" width="28" height="16" rx="8" fill="{RED}"/><text x="36" y="4" class="t">Not shown</text>')
