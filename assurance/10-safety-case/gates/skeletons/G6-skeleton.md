@@ -32,13 +32,45 @@
 | [WP-O-04](../../../09-production-operation/WP-O-04-field-monitoring.md) Field monitoring (safety, SOTIF and AI) and crash reporting (update) | OPS-01 | Draft | 7 | |
 | [WP-O-05](../../../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md) Cybersecurity incident response, vulnerability management and software updates | OPS-02 | Draft | 5 | |
 
-### Open cross-domain interfaces due by this gate
+### Cross-domain interfaces due by this gate
 
-From the [process model](../../../process/README.md). Each one is a condition on the gate unless it is closed before the review.
+From the [process model](../../../process/README.md) and the IFR items in [`trace/items/ifr.yaml`](../../../trace/items/ifr.yaml). An interface is agreed only when an accepted review record of both owners lists its IFR item (DQ-129 A). Each one not agreed is a condition on the gate unless it is agreed before the review.
 
-| Interface | Topic | Open item | Due | Closed? |
-|---|---|---|---|---|
-| IX-13 | The AI safety requirements carry (TBC) performance values that the SOTIF validation targets VT-01…VT-15 must confirm. WP-V-02 §4.1 traces each value: 8 confirmed or replaced (AIR-11 and AIR-14 through VT-14 and VT-15; AIR-01, AIR-03 and AIR-04 derived in §4.3); 6 come from other documents. The targets are not yet frozen: the project lead freezes them once the B1 crash data replaces the illustrative rates, with a later assessor review (DQ-096 B) | WP-V-02 OI-3 | G2 | |
+| IFR | Interface | Title | Owners | Open item | Due | Review record | Agreed? |
+|---|---|---|---|---|---|---|---|
+| IFR-01 | IX-01 | TARA safety impact is rated against the HARA hazards | Safety manager / Cybersecurity manager | — | G1 | none |  |
+| IFR-02 | IX-02 | Cybersecurity goals protect the safety goals | Safety manager / Cybersecurity manager | — | G1 | none |  |
+| IFR-03 | IX-03 | One hazard log for HARA and SOTIF hazards | Safety manager / SOTIF lead | — | G1 | none |  |
+| IFR-04 | IX-04 | Driver monitoring is a SOTIF misuse measure under the C2 ratings | Safety manager / SOTIF lead | — | G1 | none |  |
+| IFR-05 | IX-05 | Driver-monitoring targets are AI safety requirements | SOTIF lead / AI/ML safety lead | — | G2 | none |  |
+| IFR-06 | IX-06 | The claimed ODD rests on LionDriver evaluation data, not on the training data | SOTIF lead / AI/ML safety lead | — | G2 | none |  |
+| IFR-07 | IX-07 | Model artefacts that load through pickle: AI integrity and threat TS-09 | AI/ML safety lead / Cybersecurity manager | — | G1 | none |  |
+| IFR-08 | IX-08 | The FSC transition rule is implemented by FM-03 | Safety manager / SOTIF lead | — | G1 | none |  |
+| IFR-09 | IX-09 | Boot integrity, mode lock and command gating are safety and security requirements | Safety manager / Cybersecurity manager | — | G2 | none |  |
+| IFR-10 | IX-10 | FFI-3 depends on trust boundary TB-2 (BOOT0/NRST) | Safety manager / Cybersecurity manager | — | G2 | none |  |
+| IFR-11 | IX-11 | Unauthenticated SoC messaging is an interference path and an attack surface | Safety manager / Cybersecurity manager | — | G2 | none |  |
+| IFR-12 | IX-12 | ML insufficiencies are [SOTIF] basic events in the system fault trees | Safety manager / SOTIF lead | — | G2 | none |  |
+| IFR-13 | IX-13 | The SOTIF validation targets confirm the AI performance values | SOTIF lead / AI/ML safety lead | WP-V-02 OI-3 | G2 | none |  |
+| IFR-14 | IX-14 | ML outputs reach the actuators only through the envelope (AIR-28) | Safety manager / AI/ML safety lead | — | G2 | none |  |
+| IFR-15 | IX-15 | Hardware-dependent SWSRs pair with the HWSRs | Envelope software engineer(s) / Hardware safety engineer | — | G3 | none |  |
+| IFR-16 | IX-16 | SoC control of the MCU boot and reset lines | Hardware safety engineer / Cybersecurity manager | — | G3 | none |  |
+| IFR-17 | IX-17 | One coding guideline for safety and security (MISRA C and CERT C) | Cybersecurity manager / Envelope software engineer(s) | — | G3 | none |  |
+| IFR-18 | IX-18 | ML compiler confidence by back-to-back comparison with ONNX Runtime | AI/ML safety lead / Safety manager | — | G3 | none |  |
+| IFR-19 | IX-19 | Model weights are safety-related configuration data | Envelope software engineer(s) / AI/ML safety lead | — | G3 | none |  |
+| IFR-20 | IX-20 | One HIL bench for hardware, software and system integration | Hardware safety engineer / Envelope software engineer(s) | — | G4 | none |  |
+| IFR-21 | IX-21 | Split of software qualification, system integration and fault injection | Envelope software engineer(s) / Safety manager | — | G4 | none |  |
+| IFR-22 | IX-22 | Faults under WP-V-05, triggering conditions under WP-V-03 | Safety manager / SOTIF lead | — | G4 | none |  |
+| IFR-23 | IX-23 | Known-scenario evaluation reuses the ML test cases | SOTIF lead / AI/ML safety lead | — | G4 | none |  |
+| IFR-24 | IX-24 | The safety case delegates its cybersecurity branch to the cybersecurity case | Safety manager / Cybersecurity manager | — | G5 | none |  |
+| IFR-25 | IX-25 | P(not controlled) for the SOTIF targets comes from the safety validation tests | Safety manager / SOTIF lead | — | G5 | none |  |
+| IFR-26 | IX-26 | The SOTIF release argument needs the model evaluation report | SOTIF lead / AI/ML safety lead | — | G5 | none |  |
+| IFR-27 | IX-27 | Field events with a possible cyber cause go to incident response | Safety manager / Cybersecurity manager | — | G6 | none |  |
+| IFR-28 | IX-28 | One anomaly signature set before and after release | Safety manager / SOTIF lead | — | G6 | none |  |
+| IFR-29 | IX-29 | Field monitoring checks that the ML models behave as validated | Safety manager / AI/ML safety lead | — | G6 | none |  |
+| IFR-30 | IX-30 | Security fixes reach the field as releases that are not signed | Cybersecurity manager / Safety manager | — | G6 | none |  |
+| IFR-31 | IX-31 | The cybersecurity manager carries the interface to safety | Safety manager / Cybersecurity manager | — | G0 | none |  |
+| IFR-32 | IX-32 | The AI safety lead supplies model insufficiencies to the SOTIF lead | SOTIF lead / AI/ML safety lead | — | G0 | none |  |
+| IFR-33 | IX-33 | Supplier information on the ML models bounds the AI claims | AI/ML safety lead / Safety manager | — | G0 | none |  |
 
 ### Roles WP-M-02 §3.1 needs by this gate that are not assigned
 

@@ -47,6 +47,7 @@ BRANCHES = [("g1-functional-safety", "G1 ISO 26262", FS), ("g2-sotif", "G2 ISO 2
 A = Path("assurance")
 REG = A / "01-management" / "WP-M-00-work-product-register.md"
 MODEL = A / "process" / "model"
+IFR = A / "trace" / "items" / "ifr.yaml"
 HARA = A / "02-concept" / "WP-C-03-hara.md"
 TARA = A / "02-concept" / "WP-C-09-tara.md"
 MAP = A / "trace" / "maps" / "aspice-trace-map.md"
@@ -163,6 +164,11 @@ def data(root: Path = ROOT) -> dict:
     if isinstance(items, list):
       acts += [x for x in items if isinstance(x, dict) and x.get("kind") == "activity"]
       ifs += [x for x in items if isinstance(x, dict) and x.get("kind") == "interface"]
+  # an interface's status is read from its IFR item (DQ-129 A), as in process_model.ix_status
+  ifrs = {x["id"]: x for x in yaml.safe_load((root / IFR).read_text(encoding="utf-8")) or []}
+  for x in ifs:
+    ifr = ifrs.get(x.get("ifr"), {})
+    x["status"] = "agreed" if ifr.get("status") == "agreed" else "open" if ifr.get("open_item") else "documented"
   per = collections.Counter(a.get("lane") for a in acts)
   lanes = {k: sum(per[p] for p in k.split("+")) for _, _, k in LANES}
   reg_text = (root / REG).read_text(encoding="utf-8")

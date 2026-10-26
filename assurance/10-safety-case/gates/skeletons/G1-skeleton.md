@@ -23,18 +23,18 @@
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 6 performed: CR-02, CR-03@G1, CR-04, FSA-I1, SR-01, CS-I1 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 86 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 84 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
 | Work product | Activity | Status in WP-M-00 | Open items | Verification review (WP-P-05) |
 |---|---|---|---|---|
-| [WP-C-01](../../../02-concept/WP-C-01-item-definition.md) Item definition | CON-01 | Draft | 8 | |
+| [WP-C-01](../../../02-concept/WP-C-01-item-definition.md) Item definition | CON-01 | Draft | 7 | |
 | [WP-C-02](../../../02-concept/WP-C-02-odd-and-intended-functionality.md) ODD and intended functionality specification | CON-02 | Draft | 7 | |
 | [WP-C-08](../../../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) Driver interaction, HMI and reasonably foreseeable misuse analysis | CON-03 | Draft | 5 | |
 | [WP-C-03](../../../02-concept/WP-C-03-hara.md) Hazard analysis and risk assessment, safety goals | CON-04 | Draft | 9 | |
 | [WP-C-04](../../../02-concept/WP-C-04-functional-safety-concept.md) Functional safety concept (FSRs, allocation, AoUs) | CON-05 | Draft | 8 | |
-| [WP-C-05](../../../02-concept/WP-C-05-sotif-hazard-identification.md) SOTIF hazard identification and risk evaluation, acceptance criteria | CON-06 | Draft | 4 | |
+| [WP-C-05](../../../02-concept/WP-C-05-sotif-hazard-identification.md) SOTIF hazard identification and risk evaluation, acceptance criteria | CON-06 | Draft | 3 | |
 | [WP-C-06](../../../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) Functional insufficiencies and triggering conditions analysis | CON-07 | Draft | 4 | |
 | [WP-C-07](../../../02-concept/WP-C-07-sotif-functional-modifications.md) Functional modifications addressing SOTIF risk | CON-08 | Draft | 5 | |
 | [WP-C-11](../../../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) AI system definition and AI safety requirements | CON-09 | Draft | 6 | |
@@ -59,11 +59,21 @@ A gate cannot pass if a confirmation review WP-M-06 assigns to it has not been p
 | SR-01 Review of SOTIF hazard identification and acceptance criteria | WP-C-05, WP-C-06, WP-C-08 | I3-equivalent | `confirmation/SR-01.md` (not present) | |
 | CS-I1 Interim cybersecurity review (TARA, goals, links to safety goals) | WP-C-09, WP-C-10 | external | `confirmation/CS-I1.md` (not present) | |
 
-### Open cross-domain interfaces due by this gate
+### Cross-domain interfaces due by this gate
 
-From the [process model](../../../process/README.md). Each one is a condition on the gate unless it is closed before the review.
+From the [process model](../../../process/README.md) and the IFR items in [`trace/items/ifr.yaml`](../../../trace/items/ifr.yaml). An interface is agreed only when an accepted review record of both owners lists its IFR item (DQ-129 A). Each one not agreed is a condition on the gate unless it is agreed before the review.
 
-None.
+| IFR | Interface | Title | Owners | Open item | Due | Review record | Agreed? |
+|---|---|---|---|---|---|---|---|
+| IFR-01 | IX-01 | TARA safety impact is rated against the HARA hazards | Safety manager / Cybersecurity manager | — | G1 | none |  |
+| IFR-02 | IX-02 | Cybersecurity goals protect the safety goals | Safety manager / Cybersecurity manager | — | G1 | none |  |
+| IFR-03 | IX-03 | One hazard log for HARA and SOTIF hazards | Safety manager / SOTIF lead | — | G1 | none |  |
+| IFR-04 | IX-04 | Driver monitoring is a SOTIF misuse measure under the C2 ratings | Safety manager / SOTIF lead | — | G1 | none |  |
+| IFR-07 | IX-07 | Model artefacts that load through pickle: AI integrity and threat TS-09 | AI/ML safety lead / Cybersecurity manager | — | G1 | none |  |
+| IFR-08 | IX-08 | The FSC transition rule is implemented by FM-03 | Safety manager / SOTIF lead | — | G1 | none |  |
+| IFR-31 | IX-31 | The cybersecurity manager carries the interface to safety | Safety manager / Cybersecurity manager | — | G0 | none |  |
+| IFR-32 | IX-32 | The AI safety lead supplies model insufficiencies to the SOTIF lead | SOTIF lead / AI/ML safety lead | — | G0 | none |  |
+| IFR-33 | IX-33 | Supplier information on the ML models bounds the AI claims | AI/ML safety lead / Safety manager | — | G0 | none |  |
 
 ### Roles WP-M-02 §3.1 needs by this gate that are not assigned
 

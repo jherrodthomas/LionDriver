@@ -15,7 +15,7 @@ import integrated_animations as I
 
 
 def copy_records(root: Path) -> None:
-  for path in {p for p, _ in I.SOURCES} | {I.REG, I.HARA, I.TARA, I.MAP}:
+  for path in {p for p, _ in I.SOURCES} | {I.REG, I.HARA, I.TARA, I.MAP, I.IFR}:
     (root / path).parent.mkdir(parents=True, exist_ok=True)
     shutil.copy(I.ROOT / path, root / path)
   shutil.copytree(I.ROOT / I.MODEL, root / I.MODEL, dirs_exist_ok=True)

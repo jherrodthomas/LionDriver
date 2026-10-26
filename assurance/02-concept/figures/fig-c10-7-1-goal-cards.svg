@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1320" height="1286" viewBox="0 0 1320 1286" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
 <title id="t">Figure 7-1. Cybersecurity goals: what each control stops (WP-C-10 §4-§7)</title>
-<desc id="d">Figure 7-1: one card per cybersecurity goal. CSG-01 (Lock the panda's safety configuration; CAL 3; TS-02 risk 5): Mode lock built (reference build, not verified); release key, RDP open. CSR-C-01 implemented, not verified. CSR-C-02 partial. CSG-02 (Only authorized firmware on the safety MCU; CAL 3; TS-03 risk 5, TS-05 risk 4): Softloader refused in a car mode; signing, RDP/WRP, recovery open. CSR-C-02 partial. CSR-C-03 not implemented. CSR-C-04 not implemented. CSR-C-05 not implemented. CSG-03 (Protect what the control software reads; CAL 2; TS-04 risk 5, TS-12 risk 4): No control yet: parameters and IPC are unauthenticated. CSR-C-06 not implemented. CSR-C-07 not implemented. CSG-04 (Load only verified, non-executable models; CAL 2; TS-09 risk 4): No control yet: the model loader runs code, no hash check. CSR-C-08 not implemented. CSG-05 (Protect the safety-relevant CAN messages; CAL 2 provisional; TS-01 risk 4, TS-14 risk 5): No control yet: no counter or CRC on received messages. CSR-C-09 not implemented. CSG-06 (Minimal, authenticated remote access; CAL 3; TS-07 risk 4, TS-08 risk 4, TS-13 risk 3): Onroad streaming blocked; RPCs and the SSH key path still open. CSR-C-10 not implemented. CSR-C-11 partial. CSG-07 (Install only verified updates; CAL 3; TS-06 risk 4, TS-10 risk 4): No control yet: git-branch updater, in-tree hashes only. CSR-C-12 not implemented. CSR-C-13 not implemented. CSG-08 (Keep personal data and device key private; CAL 2; TS-11 risk 5, TS-07 risk 4): No control confirmed: encryption at rest unverified, no wipe. CSR-C-14 not confirmed. CSR-C-15 not implemented.</desc>
+<desc id="d">Figure 7-1: one card per cybersecurity goal. CSG-01 (Lock the panda's safety configuration; CAL 3; TS-02 risk 5): Mode lock built (reference build, not verified); release key, RDP open. CSR-C-01 implemented, not verified. CSR-C-02 partial. CSG-02 (Only authorized firmware on the safety MCU; CAL 3; TS-03 risk 5, TS-05 risk 4): Softloader refused in a car mode; signing, RDP/WRP, recovery open. CSR-C-02 partial. CSR-C-03 not implemented. CSR-C-04 not implemented. CSR-C-05 not implemented. CSG-03 (Protect what the control software reads; CAL 2; TS-04 risk 5, TS-12 risk 4): Debug and joystick modes left out (reference build); params, IPC open. CSR-C-06 not implemented. CSR-C-07 partial. CSG-04 (Load only verified, non-executable models; CAL 2; TS-09 risk 4): No control yet: the model loader runs code, no hash check. CSR-C-08 not implemented. CSG-05 (Protect the safety-relevant CAN messages; CAL 2 provisional; TS-01 risk 4, TS-14 risk 5): No control yet: no counter or CRC on received messages. CSR-C-09 not implemented. CSG-06 (Minimal, authenticated remote access; CAL 3; TS-07 risk 4, TS-08 risk 4, TS-13 risk 3): Onroad streaming blocked; RPCs and the SSH key path still open. CSR-C-10 not implemented. CSR-C-11 partial. CSG-07 (Install only verified updates; CAL 3; TS-06 risk 4, TS-10 risk 4): No control yet: git-branch updater, in-tree hashes only. CSR-C-12 not implemented. CSR-C-13 not implemented. CSG-08 (Keep personal data and device key private; CAL 2; TS-11 risk 5, TS-07 risk 4): No control confirmed: encryption at rest unverified, no wipe. CSR-C-14 not confirmed. CSR-C-15 not implemented.</desc>
 <defs></defs>
 <rect width="1320" height="1286" fill="#FFFFFF"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Cybersecurity goals · what each control stops, and how far it has got</text>
@@ -114,19 +114,20 @@
 <rect x="1174.0" y="262.0" width="84" height="32" rx="6" fill="#FFFFFF" stroke="#334155" stroke-width="1.3"/>
 <text x="1216" y="276" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">Actuation or DM</text>
 <text x="1216" y="287" font-size="9" fill="#0F172A" font-weight="600" text-anchor="middle">altered</text>
+<rect x="1024.0" y="254.0" width="8" height="48" rx="2" fill="#D97706" fill-opacity="0.18" stroke="#D97706" stroke-width="1.6" stroke-dasharray="4 3"/>
+<circle cx="1018.0" cy="278.0" r="4" fill="#7C3AED" opacity="0.6"><animate attributeName="cx" values="944.0;944.0;1018.0;1018.0" keyTimes="0;0.1;0.45;1" dur="6s" repeatCount="indefinite"/></circle>
 <circle cx="1167.0" cy="278.0" r="5" fill="#DC2626"><animate attributeName="cx" values="944.0;944.0;1167.0;1167.0" keyTimes="0;0.1;0.6;1" dur="6s" repeatCount="indefinite"/></circle>
 <rect x="1174.0" y="262.0" width="84" height="32" rx="6" fill="#DC2626" fill-opacity="0.12" stroke="#DC2626" stroke-width="1.6"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6;0.62;1" dur="6s" repeatCount="indefinite"/></rect>
-<text x="902" y="321" font-size="9.5" fill="#DC2626" font-weight="600">No control yet: parameters and IPC are unauthenticated</text>
+<text x="902" y="321" font-size="9.5" fill="#DC2626" font-weight="600">Debug and joystick modes left out (reference build); params, IPC open</text>
 <text x="892" y="346" font-size="9.5" fill="#475569" font-weight="700">Requirements</text>
 <text x="1268" y="346" font-size="9.5" fill="#475569" text-anchor="end">Allocated to SoC; panda FW</text>
 <rect x="1183.59" y="354" width="86.4" height="16" rx="8" fill="#FEE2E2"/><text x="1226.8" y="365.24" font-size="9" fill="#7F1D1D" font-weight="700" text-anchor="middle">Not implemented</text>
 <text x="892" y="366" font-size="9.5" fill="#0F172A">CSR-C-06 Params and IPC protected, or the envelope does</text>
 <text x="892" y="378" font-size="9.5" fill="#0F172A">not depend on them</text>
-<rect x="1183.59" y="388" width="86.4" height="16" rx="8" fill="#FEE2E2"/><text x="1226.8" y="399.24" font-size="9" fill="#7F1D1D" font-weight="700" text-anchor="middle">Not implemented</text>
-<text x="892" y="400" font-size="9.5" fill="#0F172A">CSR-C-07 No debug, maneuver or joystick modes in reference</text>
-<text x="892" y="412" font-size="9.5" fill="#0F172A">builds</text>
-<text x="892" y="432" font-size="9.5" fill="#475569">Gaps</text>
-<text x="952" y="432" font-size="9.5" fill="#0F172A">GAP-20</text>
+<rect x="1226.62" y="388" width="43.4" height="16" rx="8" fill="#FEF3C7"/><text x="1248.31" y="399.24" font-size="9" fill="#78350F" font-weight="700" text-anchor="middle">Partial</text>
+<text x="892" y="400" font-size="9.5" fill="#0F172A">CSR-C-07 No debug, maneuver or joystick modes in reference builds</text>
+<text x="892" y="420" font-size="9.5" fill="#475569">Gaps</text>
+<text x="952" y="420" font-size="9.5" fill="#0F172A">GAP-20</text>
 </g>
 <g>
 <rect x="40" y="506" width="400" height="336" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>

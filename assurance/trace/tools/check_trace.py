@@ -25,6 +25,9 @@ Checks implemented so far (IDs per assurance/trace/README.md section 6):
       a cybersecurity requirement; every safety goal is protected by a cybersecurity goal; every cybersecurity
       requirement has a parent goal or says what it rests on
   Q1  ASPICE system requirements: every one names its function, its allocation and its WP-S-01 §10 traceability row
+  I1  Interfaces (DQ-129 A): every IFR item names one interface of the process model, two different owners and a
+      status of proposed, agreed or withdrawn; it is agreed only with no open item and a review_ref to an accepted
+      review record in case/reviews/reviews.yaml that lists it
   X1  hazardous events and safety goals match the tables in WP-C-03
   X2  assumptions of use match the table in WP-C-01
   X3  the generated requirement and SOTIF items equal a fresh extraction from their work products
@@ -52,12 +55,15 @@ LINKABLE = {"fsr", "tsr", "swsr", "hwsr", "cybersecurity-requirement", "ai-requi
             "functional-modification"}
 HARA_MD = ASSURANCE_DIR / "02-concept" / "WP-C-03-hara.md"
 ITEMDEF_MD = ASSURANCE_DIR / "02-concept" / "WP-C-01-item-definition.md"
+REVIEWS = ASSURANCE_DIR / "case" / "reviews" / "reviews.yaml"
+INTERFACES = ASSURANCE_DIR / "process" / "model" / "interfaces.yaml"
 
 ID_RE = re.compile(
-  r"^((H|HE|HS|SG|FSR|TSR|SWSR|HWSR|SH|TC|FI|FM|SOTIF|AIR|DSR|MLR|MON|KS|DVR|DEV|TS|CSG|CSR|SYS|AOU)"
+  r"^((H|HE|HS|SG|FSR|TSR|SWSR|HWSR|SH|TC|FI|FM|SOTIF|AIR|DSR|MLR|MON|KS|DVR|DEV|TS|CSG|CSR|SYS|AOU|IFR)"
   + r"-[0-9]{2,3}(\.[0-9]{1,2})?[a-z]?|VS-[A-Z]{2,4}-[0-9]{2,3}[a-z]?)$")
 FUNC_RE = re.compile(r"^F-[0-9]{2}$")
 STATUS = {"proposed", "agreed", "implemented", "verified", "withdrawn"}
+IFR_STATUS = {"proposed", "agreed", "withdrawn"}  # an interface is agreed, never implemented or verified itself
 ASIL_ORDER = {"QM": 0, "A": 1, "B": 2, "C": 3, "D": 4}
 K5_KINDS = ("fsr", "tsr", "swsr", "hwsr")
 K5_KNOWN = TRACE_DIR / "links" / "k5-known.yaml"
@@ -100,6 +106,7 @@ REQUIRED = {
                                 "status", "source"],
   "system-requirement": ["id", "kind", "text", "type", "functions", "criterion", "verification", "baseline_impl",
                          "allocated_to", "related_text", "related_tsr", "related_items", "status", "source"],
+  "interface-requirement": ["id", "kind", "interface", "title", "owners", "open_item", "review_ref", "status", "source"],
 }
 GAP_MD = ASSURANCE_DIR / "00-assessment" / "gap-assessment.md"
 PARENT_KINDS = {"fsr": {"safety-goal"}, "tsr": {"fsr", "tsr", "safety-goal", "aou"}, "swsr": {"tsr"},
@@ -444,6 +451,44 @@ def check_sys(by_id: dict[str, dict], rep: Report) -> None:
         rep.err("Q1", f"{iid}: no {what}")
 
 
+def check_interfaces(by_id: dict[str, dict], reviews: list[dict], interfaces: set[str] | None, rep: Report) -> None:
+  """I1: an interface item is agreed only through an accepted review record that lists it (DQ-129 A)."""
+  revs = {r.get("id"): r for r in reviews}
+  seen: dict[str, str] = {}
+  for iid, it in by_id.items():
+    if it["kind"] != "interface-requirement":
+      continue
+    ix, owners, ref, status = it.get("interface"), it.get("owners"), it.get("review_ref"), it.get("status")
+    if not isinstance(ix, str) or not re.fullmatch(r"IX-[0-9]{2}", ix):
+      rep.err("I1", f"{iid}: interface {ix!r} is not an IX-nn")
+    elif ix in seen:
+      rep.err("I1", f"{iid}: interface {ix} already has {seen[ix]}")
+    else:
+      seen[ix] = iid
+      if interfaces is not None and ix not in interfaces:
+        rep.err("I1", f"{iid}: interface {ix} is not in the process model")
+    if not isinstance(owners, list) or len(owners) != 2 or len(set(owners)) != 2:
+      rep.err("I1", f"{iid}: owners must name two different roles")
+    if status not in IFR_STATUS:
+      rep.err("I1", f"{iid}: status {status!r} not in {sorted(IFR_STATUS)}")
+    if ref is not None:
+      rv = revs.get(ref)
+      if rv is None:
+        rep.err("I1", f"{iid}: review_ref {ref} is not a review record in case/reviews/reviews.yaml")
+      elif status == "agreed" and (rv.get("outcome") != "accepted" or iid not in (rv.get("reviewed_objects") or [])):
+        rep.err("I1", f"{iid}: agreed, but review {ref} is not accepted or does not list {iid}")
+    if status == "agreed":
+      if ref is None:
+        rep.err("I1", f"{iid}: agreed without a review_ref; an interface is agreed only through a recorded review")
+      if it.get("open_item"):
+        rep.err("I1", f"{iid}: agreed while open item {it['open_item']} is open")
+
+
+def interface_ids() -> set[str]:
+  """IX-nn of the process model (assurance/process/model/interfaces.yaml)."""
+  return {x["id"] for x in load_yaml(INTERFACES) if x.get("kind") == "interface"}
+
+
 def check_verification_links(by_id: dict[str, dict], links: list[dict], rep: Report) -> None:
   """K6 for links/verification.yaml: each linked ID is an existing, non-withdrawn requirement."""
   for ln in links:
@@ -601,6 +646,7 @@ def main(argv: list[str]) -> int:
   check_links(by_id, rep)
   if LINKS.exists():
     check_verification_links(by_id, load_yaml(LINKS), rep)
+  check_interfaces(by_id, load_yaml(REVIEWS) if REVIEWS.exists() else [], interface_ids(), rep)
   if "--no-source-compare" not in argv:
     check_against_hara(by_id, rep)
     check_against_itemdef(by_id, rep)

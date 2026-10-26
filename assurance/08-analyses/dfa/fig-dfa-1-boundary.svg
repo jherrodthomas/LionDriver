@@ -1,0 +1,257 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1197" viewBox="0 0 1280 1197" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 1. The item boundary in the DFA view</title>
+<desc>The WP-C-01 item boundary with the WP-A-03 dependent failure analysis on it. E-04 comma device hardware: depends on R-01, R-02, R-03, R-05, R-07, R-16. E-01 SoC software (openpilot): depends on R-02, R-04, R-05, R-07, R-08, R-09, R-11, R-12, R-13, R-14, R-15. E-02 ML models: depends on R-02, R-05, R-08, R-14, R-17. E-03 panda safety MCU: depends on R-02, R-04, R-05, R-06, R-07, R-09, R-10, R-11, R-12, R-13, R-15. E-05 harness and harness box: depends on R-01, R-03, R-06, R-16. Cluster, cruise indicator: depends on R-01, R-09. PCM, ACC execution: depends on R-01, R-06, R-09, R-10, R-16. EPS: depends on R-01, R-06, R-09, R-10, R-16. Stock camera and PCS: depends on R-03, R-16. Driver: depends on R-17. IC-01 (Not independent): not analysed R-10. IC-02 (Partly): not analysed R-06. IC-03 (Open): not analysed none. IC-04 (Partly): not analysed R-01, R-06, R-10, R-16. IC-05 (Not independent): not analysed R-09, R-10. IC-06 (Not independent): not analysed R-05, R-06, R-09, R-10, R-12, R-13, R-15, R-16.</desc>
+<defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="1197" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 1 · The item boundary in the DFA view</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">WP-C-01 Figure 3-2 with the dependent failure analysis on it: the shared resources each element depends on, and the independence claims between elements</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-A-03 §2, §5, §5.1</text>
+<text x="1240" y="60" font-size="11" fill="#475569" text-anchor="end">layout: WP-C-01 Figure 3-2</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="244" y="150" width="736" height="492" rx="16" fill="#FFFDF7" stroke="#C2410C" stroke-width="1.6" stroke-dasharray="7 5"/>
+<rect x="262" y="136" width="190" height="26" rx="13" fill="#C2410C" stroke="none" stroke-width="0"/>
+<text x="357" y="153.5" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">ITEM BOUNDARY · LD-SDA</text>
+<rect x="266" y="176" width="712" height="300" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3"/>
+<text x="278" y="196" font-size="12.5" fill="#0F172A" font-weight="700">E-04 comma device hardware</text>
+<rect x="506" y="183" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="525.2" y="196" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-01</text>
+<rect x="549.4" y="183" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="568.6" y="196" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-02</text>
+<rect x="592.8" y="183" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="612" y="196" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-03</text>
+<rect x="636.2" y="183" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="655.4" y="196" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-05</text>
+<rect x="679.6" y="183" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="698.8" y="196" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-07</text>
+<rect x="723" y="183" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="742.2" y="196" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-16</text>
+<rect x="282" y="222" width="330" height="130" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="294" y="242" font-size="12.5" fill="#0F172A" font-weight="700">E-01 SoC software (openpilot)</text>
+<rect x="294" y="252" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="313.2" y="265" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-02</text>
+<rect x="337.4" y="252" width="45" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="359.9" y="265" font-size="10" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-04?</text>
+<rect x="387.4" y="252" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="406.6" y="265" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-05</text>
+<rect x="430.8" y="252" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="450" y="265" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-07</text>
+<rect x="474.2" y="252" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="493.4" y="265" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-08</text>
+<rect x="517.6" y="252" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="536.8" y="265" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-09</text>
+<rect x="561" y="252" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="580.2" y="265" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-11</text>
+<rect x="294" y="274" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="313.2" y="287" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-12</text>
+<rect x="337.4" y="274" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="356.6" y="287" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-13</text>
+<rect x="380.8" y="274" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="400" y="287" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-14</text>
+<rect x="424.2" y="274" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="443.4" y="287" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-15</text>
+<rect x="282" y="364" width="330" height="96" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="294" y="384" font-size="12.5" fill="#0F172A" font-weight="700">E-02 ML models</text>
+<rect x="294" y="394" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="313.2" y="407" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-02</text>
+<rect x="337.4" y="394" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="356.6" y="407" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-05</text>
+<rect x="380.8" y="394" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="400" y="407" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-08</text>
+<rect x="424.2" y="394" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="443.4" y="407" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-14</text>
+<rect x="467.6" y="394" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="486.8" y="407" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-17</text>
+<rect x="702" y="222" width="260" height="238" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="714" y="242" font-size="12.5" fill="#0F172A" font-weight="700">E-03 panda safety MCU</text>
+<rect x="714" y="252" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="733.2" y="265" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-02</text>
+<rect x="757.4" y="252" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="776.6" y="265" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-04</text>
+<rect x="800.8" y="252" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="820" y="265" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-05</text>
+<rect x="844.2" y="252" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="863.4" y="265" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-06</text>
+<rect x="887.6" y="252" width="45" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="910.1" y="265" font-size="10" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-07?</text>
+<rect x="714" y="274" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="733.2" y="287" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-09</text>
+<rect x="757.4" y="274" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="776.6" y="287" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-10</text>
+<rect x="800.8" y="274" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="820" y="287" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-11</text>
+<rect x="844.2" y="274" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="863.4" y="287" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-12</text>
+<rect x="887.6" y="274" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="906.8" y="287" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-13</text>
+<rect x="714" y="296" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="733.2" y="309" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-15</text>
+<rect x="430" y="512" width="260" height="104" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="442" y="532" font-size="12.5" fill="#0F172A" font-weight="700">E-05 harness and harness box</text>
+<rect x="442" y="542" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="461.2" y="555" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-01</text>
+<rect x="485.4" y="542" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="504.6" y="555" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-03</text>
+<rect x="528.8" y="542" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="548" y="555" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-06</text>
+<rect x="572.2" y="542" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="591.4" y="555" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-16</text>
+<rect x="240" y="700" width="172" height="112" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.3" stroke-dasharray="5 4"/>
+<text x="252" y="720" font-size="12.5" fill="#0F172A" font-weight="700">Cluster, cruise indicator</text>
+<rect x="252" y="730" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="271.2" y="743" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-01</text>
+<rect x="295.4" y="730" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="314.6" y="743" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-09</text>
+<rect x="424" y="700" width="172" height="112" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.3" stroke-dasharray="5 4"/>
+<text x="436" y="720" font-size="12.5" fill="#0F172A" font-weight="700">PCM, ACC execution</text>
+<rect x="436" y="730" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="455.2" y="743" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-01</text>
+<rect x="479.4" y="730" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="498.6" y="743" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-06</text>
+<rect x="522.8" y="730" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="542" y="743" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-09</text>
+<rect x="436" y="752" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="455.2" y="765" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-10</text>
+<rect x="479.4" y="752" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="498.6" y="765" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-16</text>
+<rect x="608" y="700" width="172" height="112" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.3" stroke-dasharray="5 4"/>
+<text x="620" y="720" font-size="12.5" fill="#0F172A" font-weight="700">EPS</text>
+<rect x="620" y="730" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="639.2" y="743" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-01</text>
+<rect x="663.4" y="730" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="682.6" y="743" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-06</text>
+<rect x="706.8" y="730" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="726" y="743" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-09</text>
+<rect x="620" y="752" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="639.2" y="765" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-10</text>
+<rect x="663.4" y="752" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="682.6" y="765" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-16</text>
+<rect x="792" y="700" width="172" height="112" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.3" stroke-dasharray="5 4"/>
+<text x="804" y="720" font-size="12.5" fill="#0F172A" font-weight="700">Stock camera and PCS</text>
+<rect x="804" y="730" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="823.2" y="743" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-03</text>
+<rect x="847.4" y="730" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="866.6" y="743" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-16</text>
+<rect x="40" y="222" width="172" height="238" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.3" stroke-dasharray="5 4"/>
+<text x="52" y="242" font-size="12.5" fill="#0F172A" font-weight="700">Driver</text>
+<rect x="52" y="252" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="71.2" y="265" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-17</text>
+<text x="436" y="782" font-size="10" fill="#D2553F" font-weight="700">no claim:</text>
+<text x="436" y="795" font-size="10" fill="#D2553F">G3.1, G3.4, G4.1, G4.7, G5.2.1</text>
+<text x="600" y="384" font-size="10" fill="#D2553F" font-weight="700" text-anchor="end">no claim: G8.1.1</text>
+<line x1="612" y1="263" x2="702" y2="263" stroke="#D2553F" stroke-width="2.2" stroke-dasharray="6 4"/>
+<rect x="623" y="252" width="68" height="22" rx="11" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.6"/>
+<text x="657" y="268" font-size="11" fill="#D2553F" font-weight="700" text-anchor="middle">IC-01</text>
+<text x="657" y="288" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">1 not analysed</text>
+<line x1="612" y1="363" x2="702" y2="363" stroke="#D2553F" stroke-width="2.2" stroke-dasharray="6 4"/>
+<rect x="623" y="352" width="68" height="22" rx="11" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.6"/>
+<text x="657" y="368" font-size="11" fill="#D2553F" font-weight="700" text-anchor="middle">IC-06</text>
+<text x="657" y="388" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">8 not analysed</text>
+<line x1="330" y1="460" x2="330" y2="700" stroke="#D97706" stroke-width="2.2" stroke-dasharray="6 4"/>
+<rect x="296" y="652" width="68" height="22" rx="11" fill="#FFFBEB" stroke="#D97706" stroke-width="1.6"/>
+<text x="330" y="668" font-size="11" fill="#D97706" font-weight="700" text-anchor="middle">IC-04</text>
+<text x="330" y="688" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">4 not analysed</text>
+<line x1="740" y1="460" x2="740" y2="700" stroke="#D97706" stroke-width="2.2" stroke-dasharray="6 4"/>
+<rect x="706" y="652" width="68" height="22" rx="11" fill="#FFFBEB" stroke="#D97706" stroke-width="1.6"/>
+<text x="740" y="668" font-size="11" fill="#D97706" font-weight="700" text-anchor="middle">IC-02</text>
+<text x="740" y="688" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">1 not analysed</text>
+<line x1="900" y1="460" x2="900" y2="700" stroke="#D2553F" stroke-width="2.2" stroke-dasharray="6 4"/>
+<rect x="866" y="652" width="68" height="22" rx="11" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.6"/>
+<text x="900" y="668" font-size="11" fill="#D2553F" font-weight="700" text-anchor="middle">IC-05</text>
+<text x="900" y="688" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">2 not analysed</text>
+<line x1="212" y1="420" x2="266" y2="420" stroke="#475569" stroke-width="2.2" stroke-dasharray="6 4"/>
+<rect x="194" y="476" width="68" height="22" rx="11" fill="#FFFFFF" stroke="#475569" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="228" y="492" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">IC-03</text>
+<text x="228" y="512" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">all analysed</text>
+<text x="1000" y="150" font-size="12" fill="#0F172A" font-weight="700">Independence claims (WP-A-03 §2, §5)</text>
+<rect x="1000" y="164" width="50" height="20" rx="10" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="1025" y="178" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle">IC-01</text>
+<text x="1058" y="178" font-size="11" fill="#D2553F" font-weight="700">Not independent</text>
+<text x="1000" y="198" font-size="10.5" fill="#0F172A">envelope vs SoC command path</text>
+<text x="1000" y="211" font-size="10" fill="#D97706">18 AND gates; not analysed: R-10</text>
+<rect x="1000" y="233.5" width="50" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="1025" y="247.5" font-size="10.5" fill="#D97706" font-weight="700" text-anchor="middle">IC-02</text>
+<text x="1058" y="247.5" font-size="11" fill="#D97706" font-weight="700">Partly</text>
+<text x="1000" y="267.5" font-size="10.5" fill="#0F172A">envelope vs EPS limits</text>
+<text x="1000" y="280.5" font-size="10" fill="#D97706">2 AND gates; not analysed: R-06</text>
+<rect x="1000" y="303" width="50" height="20" rx="10" fill="#FFFFFF" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3"/>
+<text x="1025" y="317" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">IC-03</text>
+<text x="1058" y="317" font-size="11" fill="#475569" font-weight="700">Open</text>
+<text x="1000" y="337" font-size="10.5" fill="#0F172A">envelope and EPS vs driver</text>
+<text x="1000" y="350" font-size="10" fill="#475569">1 AND gate; every shared resource analysed</text>
+<rect x="1000" y="372.5" width="50" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="1025" y="386.5" font-size="10.5" fill="#D97706" font-weight="700" text-anchor="middle">IC-04</text>
+<text x="1058" y="386.5" font-size="11" fill="#D97706" font-weight="700">Partly</text>
+<text x="1000" y="406.5" font-size="10.5" fill="#0F172A">cluster shows engagement on its own</text>
+<text x="1000" y="419.5" font-size="10" fill="#D97706">3 AND gates; not analysed: R-01, R-06, R-10, R-16</text>
+<rect x="1000" y="442" width="50" height="20" rx="10" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="1025" y="456" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle">IC-05</text>
+<text x="1058" y="456" font-size="11" fill="#D2553F" font-weight="700">Not independent</text>
+<text x="1000" y="476" font-size="10.5" fill="#0F172A">stock PCS unaffected</text>
+<text x="1000" y="489" font-size="10" fill="#D97706">5 AND gates; not analysed: R-09, R-10</text>
+<rect x="1000" y="511.5" width="50" height="20" rx="10" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="1025" y="525.5" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle">IC-06</text>
+<text x="1058" y="525.5" font-size="11" fill="#D2553F" font-weight="700">Not independent</text>
+<text x="1000" y="545.5" font-size="10.5" fill="#0F172A">panda buzzer vs SoC HMI</text>
+<text x="1000" y="558.5" font-size="10" fill="#D97706">15 AND gates; not analysed: R-05, R-06, R-09,</text>
+<text x="1000" y="571" font-size="10" fill="#D97706">R-10, R-12, R-13, R-15, R-16</text>
+<line x1="40" y1="846" x2="1240" y2="846" stroke="#E2E8F0" stroke-width="1"/>
+<text x="40" y="870" font-size="12" fill="#0F172A" font-weight="700">Shared resources (shared-resources.yaml)</text>
+<text x="40" y="890" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-01</text>
+<text x="80" y="890" font-size="10.5" fill="#475569">Vehicle 12 V supply</text>
+<text x="40" y="906" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-02</text>
+<text x="80" y="906" font-size="10.5" fill="#475569">Device input stage and regulators</text>
+<text x="40" y="922" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-03</text>
+<text x="80" y="922" font-size="10.5" fill="#475569">Harness-box supply and switch release default</text>
+<text x="40" y="938" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-04</text>
+<text x="80" y="938" font-size="10.5" fill="#475569">MCU clock (HSE)</text>
+<text x="40" y="954" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-05</text>
+<text x="80" y="954" font-size="10.5" fill="#475569">PCB, enclosure and heat</text>
+<text x="40" y="970" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-06</text>
+<text x="80" y="970" font-size="10.5" fill="#475569">Harness connector and CAN wiring (EMC)</text>
+<text x="440" y="890" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-07</text>
+<text x="480" y="890" font-size="10.5" fill="#475569">Speaker and audio codec</text>
+<text x="440" y="906" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-08</text>
+<text x="480" y="906" font-size="10.5" fill="#475569">SoC compute, OS and IPC</text>
+<text x="440" y="922" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-09</text>
+<text x="480" y="922" font-size="10.5" fill="#475569">Vehicle signals read by host and envelope (torque, cruise…</text>
+<text x="440" y="938" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-10</text>
+<text x="480" y="938" font-size="10.5" fill="#475569">Command path to the EPS and PCM (bus 0)</text>
+<text x="440" y="954" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-11</text>
+<text x="480" y="954" font-size="10.5" fill="#475569">SoC to MCU link and commands (IF-04, mode, reset, flash)</text>
+<text x="440" y="970" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-12</text>
+<text x="480" y="970" font-size="10.5" fill="#475569">CarParams, safety mode and parameter</text>
+<text x="840" y="890" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-13</text>
+<text x="880" y="890" font-size="10.5" fill="#475569">Limits and constants of controller and envelope</text>
+<text x="840" y="906" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-14</text>
+<text x="880" y="906" font-size="10.5" fill="#475569">Model output and lead input</text>
+<text x="840" y="922" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-15</text>
+<text x="880" y="922" font-size="10.5" fill="#475569">Source, authors, toolchain and test oracle</text>
+<text x="840" y="938" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-16</text>
+<text x="880" y="938" font-size="10.5" fill="#475569">Installation and vehicle service</text>
+<text x="840" y="954" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-17</text>
+<text x="880" y="954" font-size="10.5" fill="#475569">Driver state (fatigue, glare)</text>
+<line x1="40" y1="986" x2="1240" y2="986" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="40" y="999" width="30" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="78" y="1013" font-size="11" fill="#0F172A">R-nn depends on it</text>
+<rect x="209.8" y="999" width="30" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="247.8" y="1013" font-size="11" fill="#0F172A">a claim relies on it but WP-A-03 has not analysed it under that claim</text>
+<rect x="690.7" y="999" width="30" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="728.7" y="1013" font-size="11" fill="#0F172A">dependence not known yet (OI-2)</text>
+<rect x="40" y="1023" width="44" height="18" rx="9" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="92" y="1037" font-size="11" fill="#0F172A">claim not independent</text>
+<rect x="248.1" y="1023" width="44" height="18" rx="9" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="300.1" y="1037" font-size="11" fill="#0F172A">partly</text>
+<rect x="364.7" y="1023" width="44" height="18" rx="9" fill="#FFFFFF" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3"/>
+<text x="416.7" y="1037" font-size="11" fill="#0F172A">open</text>
+<text x="469.1" y="1037" font-size="11" fill="#475569">Claim colour: its WP-A-03 §5 verdict. Other road users share no resource.</text>
+<text x="40" y="1062" font-size="11" fill="#475569">Generated by dfa_figures.py from shared-resources.yaml, and-gates.yaml and WP-A-03. Where each claim is drawn is CLAIM_AT in the script; the resource map is an AI-assisted draft.</text>
+<g class="terms">
+<text x="40" y="1084" font-size="10.5" fill="#475569">Terms: ACC adaptive cruise control · AI artificial intelligence · CAN controller area network: the vehicle's data bus · DFA dependent failure analysis · E-nn element of the item (WP-C-01 §3.1), E-01…E-06 · EMC</text>
+<text x="40" y="1098.5" font-size="10.5" fill="#475569">electromagnetic compatibility: interference between electrical parts and wiring · EPS electric power steering · HMI human-machine interface: display, sounds, cluster · HSE high-speed external oscillator: the crystal</text>
+<text x="40" y="1113" font-size="10.5" fill="#475569">that clocks the panda MCU · IC-nn independence claim (WP-A-03 §2): two elements the safety concept relies on not failing together · IF-nn interface of the item (WP-C-01 §3.4) · IPC inter-process communication ·</text>
+<text x="40" y="1127.5" font-size="10.5" fill="#475569">LD-SDA LionDriver Supervised Driving Assistance, the item · MCU microcontroller: the panda safety processor (STM32H7) · ML machine learning · OI-nn open item of the document it appears in · OS-nn operational</text>
+<text x="40" y="1142" font-size="10.5" fill="#475569">situation (HARA §3) · PCB printed circuit board · PCM powertrain control module (engine and drive) · PCS pre-collision system: Toyota's stock collision warning and braking · R-nn shared resource in the DFA map</text>
+<text x="40" y="1156.5" font-size="10.5" fill="#475569">(08-analyses/dfa/shared-resources.yaml): something two elements both depend on · SoC system on chip: the comma device's main processor, running openpilot (QM) · WP-nn work product, e.g. WP-C-04; the letter is its</text>
+<text x="40" y="1171" font-size="10.5" fill="#475569">area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>

@@ -50,14 +50,14 @@ Clause references and status are read from the [register (WP-M-00)](../../01-man
 
 ## 3. Cross-domain interfaces
 
-Each interface is anchored to text in the work products; the checker fails if an anchor disappears. *Documented* means the documents reference each other but nobody has reviewed the agreement yet.
+Each interface is anchored to text in the work products; the checker fails if an anchor disappears. *Documented* means the documents reference each other but nobody has reviewed the agreement yet. An interface is *agreed* only when an accepted review record of both owners lists its IFR item in [`trace/items/ifr.yaml`](../../trace/items/ifr.yaml) (DQ-129 A). Agreed in the whole model: 0 of 33.
 
-| ID | Pattern | Between | Topic | Status | Open item | Due |
-|---|---|---|---|---|---|---|
-| IX-27 | Safety-Security | [WP-O-04](../../09-production-operation/WP-O-04-field-monitoring.md), [WP-O-05](../../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md) (Joint / Cybersecurity) | A field event may have a safety or a cyber cause: field monitoring passes possible cyber causes to incident response, which watches field data for tampering indicators | Documented | — | G6 |
-| IX-28 | Operation-SOTIF | [WP-O-04](../../09-production-operation/WP-O-04-field-monitoring.md), [WP-V-04](../../06-validation/WP-V-04-sotif-unknown-scenarios.md) (Joint / SOTIF) | Pre-release exploration and field monitoring use one signature set: WP-V-04 §2.1 defines AS-01…AS-11 with thresholds and maps each to a WP-O-04 MON event (MON-17 added for the three without one); one extractor and signature-set version, thresholds frozen per version, and the same ODD denominator and discovery-rate definition. Numeric thresholds are still to be tuned (WP-O-04 OI-5) | Documented | — | G6 |
-| IX-29 | Operation-AI | [WP-O-04](../../09-production-operation/WP-O-04-field-monitoring.md), [WP-W-10](../../05-software/WP-W-10-ml-engineering.md) (Joint / AI safety) | Field monitoring checks that the ML models behave as validated and stay inside their input space; anomalies go back to the model test set | Documented | — | G6 |
-| IX-30 | Security-Release | [WP-O-05](../../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md), [WP-P-10](../../07-supporting/WP-P-10-release-management.md) (Cybersecurity / Joint) | Security fixes reach the field as releases, but updates are not signed (GAP-26), so the update path is itself an open security weakness | Documented | — | G6 |
+| ID | IFR | Pattern | Between | Topic | Status | Open item | Due |
+|---|---|---|---|---|---|---|---|
+| IX-27 | IFR-27 | Safety-Security | [WP-O-04](../../09-production-operation/WP-O-04-field-monitoring.md), [WP-O-05](../../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md) (Joint / Cybersecurity) | A field event may have a safety or a cyber cause: field monitoring passes possible cyber causes to incident response, which watches field data for tampering indicators | Documented | — | G6 |
+| IX-28 | IFR-28 | Operation-SOTIF | [WP-O-04](../../09-production-operation/WP-O-04-field-monitoring.md), [WP-V-04](../../06-validation/WP-V-04-sotif-unknown-scenarios.md) (Joint / SOTIF) | Pre-release exploration and field monitoring use one signature set: WP-V-04 §2.1 defines AS-01…AS-11 with thresholds and maps each to a WP-O-04 MON event (MON-17 added for the three without one); one extractor and signature-set version, thresholds frozen per version, and the same ODD denominator and discovery-rate definition. Numeric thresholds are still to be tuned (WP-O-04 OI-5) | Documented | — | G6 |
+| IX-29 | IFR-29 | Operation-AI | [WP-O-04](../../09-production-operation/WP-O-04-field-monitoring.md), [WP-W-10](../../05-software/WP-W-10-ml-engineering.md) (Joint / AI safety) | Field monitoring checks that the ML models behave as validated and stay inside their input space; anomalies go back to the model test set | Documented | — | G6 |
+| IX-30 | IFR-30 | Security-Release | [WP-O-05](../../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md), [WP-P-10](../../07-supporting/WP-P-10-release-management.md) (Cybersecurity / Joint) | Security fixes reach the field as releases, but updates are not signed (GAP-26), so the update path is itself an open security weakness | Documented | — | G6 |
 
 ### 3.1 Feedback into earlier phases
 
@@ -103,3 +103,5 @@ Which activity answers each clause reference listed in the register. One activit
 **Work products with no confirmation measure at this gate** (verification review only): WP-O-04, WP-O-05.
 
 **Open interfaces due by this gate** (from this or an earlier phase): IX-13 (WP-V-02 OI-3).
+
+**Interfaces due by this gate that are not agreed** (no accepted review of their IFR item, DQ-129 A): 33 of 33: IFR-01, IFR-02, IFR-03, IFR-04, IFR-05, IFR-06, IFR-07, IFR-08, IFR-09, IFR-10, IFR-11, IFR-12, IFR-13, IFR-14, IFR-15, IFR-16, IFR-17, IFR-18, IFR-19, IFR-20, IFR-21, IFR-22, IFR-23, IFR-24, IFR-25, IFR-26, IFR-27, IFR-28, IFR-29, IFR-30, IFR-31, IFR-32, IFR-33.

@@ -59,13 +59,13 @@
 <path d="M237.6 154.0 L313.2 184.0" stroke="#FCA5A5" stroke-width="1"/>
 <line x1="60.3" y1="244.0" x2="60.3" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="60.3" cy="304" r="3.6" fill="#16A34A"/>
-<line x1="60.3" y1="309" x2="60.3" y2="344" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;344;344" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
+<line x1="60.3" y1="309" x2="60.3" y2="349" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;349;349" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="69.0" y1="304.0" x2="69.0" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="69.0" cy="304" r="3.6" fill="#16A34A"/>
 <line x1="69.0" y1="309" x2="69.0" y2="369" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;369;369" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="77.6" y1="304.0" x2="77.6" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="77.6" cy="304" r="3.6" fill="#16A34A"/>
-<line x1="77.6" y1="309" x2="77.6" y2="359" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;359;359" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
+<line x1="77.6" y1="309" x2="77.6" y2="364" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;364;364" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="86.3" y1="304.0" x2="86.3" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="86.3" cy="304" r="3.6" fill="#16A34A"/>
 <line x1="86.3" y1="309" x2="86.3" y2="314" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;314;314" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
@@ -263,7 +263,7 @@
 <line x1="386.2" y1="309" x2="386.2" y2="334" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;334;334" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="390.3" y1="266.5" x2="390.3" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="390.3" cy="304" r="3.6" fill="#16A34A"/>
-<line x1="390.3" y1="309" x2="390.3" y2="324" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;324;324" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
+<line x1="390.3" y1="309" x2="390.3" y2="329" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;329;329" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="394.3" y1="304.0" x2="394.3" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="394.3" cy="304" r="3.6" fill="#16A34A"/>
 <line x1="394.3" y1="309" x2="394.3" y2="329" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;329;329" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
@@ -328,7 +328,7 @@
 <circle cx="532.4" cy="304" r="2.6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
 <line x1="536.5" y1="266.5" x2="536.5" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="536.5" cy="304" r="3.6" fill="#16A34A"/>
-<line x1="536.5" y1="309" x2="536.5" y2="324" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;324;324" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
+<line x1="536.5" y1="309" x2="536.5" y2="329" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;329;329" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="540.5" y1="266.5" x2="540.5" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="540.5" cy="304" r="3.6" fill="#16A34A"/>
 <line x1="540.5" y1="309" x2="540.5" y2="319" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;319;319" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
@@ -564,7 +564,7 @@
 <line x1="1007.7" y1="309" x2="1007.7" y2="324" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;324;324" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="1015.2" y1="274.0" x2="1015.2" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="1015.2" cy="304" r="3.6" fill="#16A34A"/>
-<line x1="1015.2" y1="309" x2="1015.2" y2="324" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;324;324" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
+<line x1="1015.2" y1="309" x2="1015.2" y2="329" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;329;329" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="1022.6" y1="304.0" x2="1022.6" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="1022.6" cy="304" r="3.6" fill="#16A34A"/>
 <line x1="1022.6" y1="309" x2="1022.6" y2="329" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;329;329" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
@@ -591,7 +591,7 @@
 <circle cx="1082.2" cy="304" r="2.6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
 <line x1="1089.6" y1="244.0" x2="1089.6" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="1089.6" cy="304" r="3.6" fill="#16A34A"/>
-<line x1="1089.6" y1="309" x2="1089.6" y2="329" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;329;329" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
+<line x1="1089.6" y1="309" x2="1089.6" y2="334" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;334;334" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="1097.1" y1="244.0" x2="1097.1" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="1097.1" cy="304" r="3.6" fill="#16A34A"/>
 <line x1="1097.1" y1="309" x2="1097.1" y2="324" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;324;324" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
@@ -612,7 +612,7 @@
 <line x1="1141.7" y1="309" x2="1141.7" y2="324" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;324;324" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="1149.2" y1="214.0" x2="1149.2" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="1149.2" cy="304" r="3.6" fill="#16A34A"/>
-<line x1="1149.2" y1="309" x2="1149.2" y2="329" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;329;329" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
+<line x1="1149.2" y1="309" x2="1149.2" y2="334" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;334;334" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="1156.6" y1="214.0" x2="1156.6" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="1156.6" cy="304" r="3.6" fill="#94A3B8"/>
 <line x1="1164.1" y1="244.0" x2="1164.1" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
@@ -908,7 +908,7 @@
 <circle cx="447.7" cy="624" r="3.6" fill="#94A3B8"/>
 <line x1="451.6" y1="586.5" x2="451.6" y2="624" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="451.6" cy="624" r="3.6" fill="#16A34A"/>
-<line x1="451.6" y1="629" x2="451.6" y2="639" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;639;639" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
+<line x1="451.6" y1="629" x2="451.6" y2="644" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;644;644" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <circle cx="455.5" cy="624" r="2.6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
 <circle cx="459.4" cy="624" r="2.6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
 <circle cx="463.3" cy="624" r="2.6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
@@ -941,7 +941,7 @@
 <circle cx="537.1" cy="624" r="2.6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
 <line x1="541.0" y1="586.5" x2="541.0" y2="624" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="541.0" cy="624" r="3.6" fill="#16A34A"/>
-<line x1="541.0" y1="629" x2="541.0" y2="644" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;644;644" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
+<line x1="541.0" y1="629" x2="541.0" y2="649" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;649;649" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="544.8" y1="586.5" x2="544.8" y2="624" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="544.8" cy="624" r="3.6" fill="#16A34A"/>
 <line x1="544.8" y1="629" x2="544.8" y2="639" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;639;639" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
@@ -1095,10 +1095,10 @@
 <path d="M1145.6 474.0 L1233.7 511.5" stroke="#FCA5A5" stroke-width="1"/>
 <line x1="1013.6" y1="549.0" x2="1013.6" y2="624" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="1013.6" cy="624" r="3.6" fill="#16A34A"/>
-<line x1="1013.6" y1="629" x2="1013.6" y2="644" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;644;644" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
+<line x1="1013.6" y1="629" x2="1013.6" y2="649" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;649;649" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="1032.7" y1="549.0" x2="1032.7" y2="624" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="1032.7" cy="624" r="3.6" fill="#16A34A"/>
-<line x1="1032.7" y1="629" x2="1032.7" y2="644" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;644;644" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
+<line x1="1032.7" y1="629" x2="1032.7" y2="649" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;649;649" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="1051.9" y1="586.5" x2="1051.9" y2="624" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="1051.9" cy="624" r="3.6" fill="#DC2626"/>
 <line x1="1071.0" y1="624.0" x2="1071.0" y2="624" stroke="#E2E8F0" stroke-dasharray="2 2"/>

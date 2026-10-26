@@ -1325,7 +1325,7 @@ package LionDriverRequirements {
         :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'TSR-629'> tsr_629 : TechnicalSafetyRequirement {
-        doc /* At start-up before the first engagement, and again at least every drive cycle, the SoC shall read the stored diagnostic trouble codes of the EPS and of the brake / stability control ECU, and shall prevent engagement with a no-entry alert naming the system while a code from the release-record list of codes affecting lateral or longitudinal control is set. A failed or incomplete read shall also prevent engagement. */
+        doc /* At start-up, before the first engagement of each ignition cycle, the SoC shall read the stored diagnostic trouble codes (DTCs) of the EPS and of the brake / stability control (ABS/VSC) ECU, and shall prevent engagement with a no-entry alert naming the system while either ECU reports an active code. (a) The read shall run only while the item cannot be engaged (before the car safety mode is requested) and only after the vehicle has been seen stationary; it shall never run while the vehicle moves or the item is engaged. (b) A code is active when its status shows test failed, test failed this operation cycle, confirmed, or warning indicator requested (ISO 14229-1 status bits 0, 1, 3, 7), counting only the bits the ECU reports as supported. Pending or history bits alone do not count. A code the release record exempts as not affecting lateral or longitudinal control does not count; none is exempt in the first release, and an exemption needs an impact analysis. (c) A read that was not made (vehicle not seen stationary), not answered completely within the read time, answered with a negative response or malformed, or that reports none of the active bits as supported, shall also prevent engagement, with its own no-entry alert, until the next start-up. (d) The result is an entry condition only: it does not disengage an engaged item. The driver's lamp check (WP-O-02 OPS-01) stays as a second barrier. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
         :>> asil = "QM (supports TSR-110, TSR-618)";
@@ -1748,7 +1748,7 @@ package LionDriverRequirements {
         :>> verifMethod = "T-VEH";
     }
     requirement <'SYS-021'> sys_021 : SystemRequirement {
-        doc /* The set-speed range shall be the PCM cruise set range of the reference vehicle, and shall not exceed the ODD speed bound of 120 km/h (ODD-H) / 90 km/h (ODD-A). */
+        doc /* The set-speed range shall be the PCM cruise set range of the reference vehicle, and shall not exceed the ODD speed bound of 110 km/h (ODD-H, DQ-260; the arterial ODD-A was dropped, DQ-023). */
         :>> workProduct = "WP-S-01";
         :>> allocText = "host.card";
         :>> functionId = "F-02";

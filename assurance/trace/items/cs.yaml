@@ -59,7 +59,7 @@
 
 - id: TS-05
   kind: threat-scenario
-  text: "Panda firmware authenticity defeated (RSA-1024/SHA-1 signing, committed debug key, softloader in release)"
+  text: "Panda firmware authenticity defeated (weak signing scheme, a public debug key, recovery entry in release)"
   gap_text: "GAP-24/25"
   stride: "Tampering, Spoofing"
   assets: "AS-03"
@@ -286,7 +286,7 @@
   other_parents: false
   allocated_to: "FW"
   verification: "R, UT, HIL"
-  baseline_impl: "Not implemented: `0xdc` unconditional (`main_comms.h:223-225`) (GAP-09). **2026-10-12: Implemented, not verified (reference build)**: `reference_lock.h` (TSR-512)"
+  baseline_impl: "Not implemented at baseline (GAP-09; details: private record GD-04). **2026-10-12: Implemented, not verified (reference build)**: `reference_lock.h` (TSR-512)"
   status: proposed
   source: WP-S-07
 
@@ -331,7 +331,7 @@
   other_parents: false
   allocated_to: "FW"
   verification: "R, UT, FZ"
-  baseline_impl: "Not implemented; none of the TSR-513 commands is gated (`main_comms.h:144-147, 218-276, 296-314`) (GAP-09). **2026-10-12: Partial (reference build)**: the TSR-513 list (`0xc5`, `0xd8`, `0xdb`, `0xde`, `0xe5`, `0xe6`, `0xe7`, `0xe8`, `0xf1`, `0xf9`, `0xfc`, `0xd1` param 1) refused in a car mode; `0xc0`, `0xb0`, `0xb1`, `0xf6` to confirm (WP-W-02 OI-5); a deny-list, not an allow-list"
+  baseline_impl: "Not implemented at baseline: none of the TSR-513 commands is gated (GAP-09; details: private record GD-04). **2026-10-12: Partial (reference build)**: the TSR-513 list (`0xc5`, `0xd8`, `0xdb`, `0xde`, `0xe5`, `0xe6`, `0xe7`, `0xe8`, `0xf1`, `0xf9`, `0xfc`, `0xd1` param 1) refused in a car mode; `0xc0`, `0xb0`, `0xb1`, `0xf6` to confirm (WP-W-02 OI-5); a deny-list, not an allow-list"
   status: proposed
   source: WP-S-07
 
@@ -346,7 +346,7 @@
   other_parents: false
   allocated_to: "FW"
   verification: "UT"
-  baseline_impl: "Partial: only in non-car mode (`main_comms.h:242-247`), bypassable by mode switching. **2026-10-12: Implemented, not verified (reference build)**: `0xdf` refused in every mode (SWSR-512a); AOU-14"
+  baseline_impl: "Partial at baseline (details: private record GD-04). **2026-10-12: Implemented, not verified (reference build)**: `0xdf` refused in every mode (SWSR-512a); AOU-14"
   status: proposed
   source: WP-S-07
 
@@ -361,7 +361,7 @@
   other_parents: false
   allocated_to: "SoC"
   verification: "UT, HIL"
-  baseline_impl: "Not implemented; pandad takes values from `CarParams` (`panda_safety.cc:56-69`). 2026-10-12: unchanged (TSR-619 not implemented)"
+  baseline_impl: "Not implemented (details: private record GD-04). 2026-10-12: unchanged (TSR-619 not implemented)"
   status: proposed
   source: WP-S-07
 
@@ -376,7 +376,7 @@
   other_parents: false
   allocated_to: "FW; ENV"
   verification: "BA"
-  baseline_impl: "Not met: DEBUG + `ALLOW_DEBUG` is the default (`panda/SConscript:12-20`) (GAP-25)"
+  baseline_impl: "Not met (GAP-25; details: private record GD-02)"
   status: proposed
   source: WP-S-07
 
@@ -391,7 +391,7 @@
   other_parents: false
   allocated_to: "FW"
   verification: "BA, HIL"
-  baseline_impl: "Conditional: debug key accepted only under `ALLOW_DEBUG` (`bootstub.c:67-72`); correct only if CSR-021 holds"
+  baseline_impl: "Conditional: correct only if CSR-021 holds (details: private record GD-02)"
   status: proposed
   source: WP-S-07
 
@@ -406,7 +406,7 @@
   other_parents: false
   allocated_to: "FW"
   verification: "BA, R, FZ"
-  baseline_impl: "Partial: ALLOUTPUT (`safety.h:413-422`), `0xd1` param 0 (`main_comms.h:170`), `0xb5` (`:92`) gated; `0xc5` not gated (GAP-09)"
+  baseline_impl: "Partial: some debug-only commands gated, relay drive not gated (GAP-09; details: private record GD-02)"
   status: proposed
   source: WP-S-07
 
@@ -421,7 +421,7 @@
   other_parents: false
   allocated_to: "FW"
   verification: "UT, HIL"
-  baseline_impl: "Not implemented: allowed in release at any time (`main_comms.h:176-179`) (GAP-24). **2026-10-12: Partial (reference build)**: refused in a car mode (panda `7e2d148`); ignition-off condition not implemented"
+  baseline_impl: "Not implemented at baseline (GAP-24; details: private record GD-01). **2026-10-12: Partial (reference build)**: refused in a car mode (panda `7e2d148`); ignition-off condition not implemented"
   status: proposed
   source: WP-S-07
 
@@ -436,7 +436,7 @@
   other_parents: false
   allocated_to: "FW"
   verification: "R, HIL"
-  baseline_impl: "Not met: RSA-1024 / SHA-1 (`rsa.h:37`, `sha.h:45`; 1024-bit assert `SConscript:32-46`) (GAP-24); ECDSA P-256 verification not implemented"
+  baseline_impl: "Not met: the baseline scheme is weaker than required (GAP-24; details: private record GD-01); ECDSA P-256 verification not implemented"
   status: proposed
   source: WP-S-07
 
@@ -451,7 +451,7 @@
   other_parents: false
   allocated_to: "FW; ENV"
   verification: "CM, PR"
-  baseline_impl: "Not met: `release.pub` is comma's (`bootstub.c:63`); LionDriver key not yet generated (WP-P-10 §6 (assurance/07-supporting/WP-P-10-release-management.md))"
+  baseline_impl: "Not met: the bootstub verifies against comma's key (details: private record GD-01); LionDriver key not yet generated (WP-P-10 §6 (assurance/07-supporting/WP-P-10-release-management.md))"
   status: proposed
   source: WP-S-07
 
@@ -466,7 +466,7 @@
   other_parents: false
   allocated_to: "FW"
   verification: "UT, HIL"
-  baseline_impl: "Partial: `MIN_VERSION` compile-time check (`bootstub.c:2, 58`); not field-updatable or protected"
+  baseline_impl: "Partial: compile-time minimum only, not field-updatable or protected (details: private record GD-01)"
   status: proposed
   source: WP-S-07
 
@@ -511,7 +511,7 @@
   other_parents: false
   allocated_to: "FW; USR"
   verification: "HIL"
-  baseline_impl: "Not implemented; only a software refusal to erase sector 0 (`llflash.h:14`)"
+  baseline_impl: "Not implemented (details: private record GD-01)"
   status: proposed
   source: WP-S-07
 
@@ -541,7 +541,7 @@
   other_parents: false
   allocated_to: "SoC"
   verification: "R, HIL"
-  baseline_impl: "Not met: development bootstub flashed on boot failure (`pandad.py:34-39`) (GAP-38)"
+  baseline_impl: "Not met (GAP-38; details: private record GD-03)"
   status: proposed
   source: WP-S-07
 
@@ -556,7 +556,7 @@
   other_parents: false
   allocated_to: "SoC; USR"
   verification: "R, HIL"
-  baseline_impl: "Not met: automatic (`hardware.py:410-419` via `pandad.py:37-38`)"
+  baseline_impl: "Not met (details: private record GD-03)"
   status: proposed
   source: WP-S-07
 
@@ -571,7 +571,7 @@
   other_parents: false
   allocated_to: "SoC"
   verification: "UT, HIL"
-  baseline_impl: "Partial: pandad checks the signature against the locally built image (`pandad.py:18-31`); not against a release record"
+  baseline_impl: "Partial: checked against the locally built image, not against a release record (details: private record GD-03)"
   status: proposed
   source: WP-S-07
 
@@ -661,7 +661,7 @@
   other_parents: false
   allocated_to: "SoC"
   verification: "BA, UT"
-  baseline_impl: "Not met: param-gated only (`process_config.py:34-47`)"
+  baseline_impl: "Implemented in the reference build (DQ-131 A, change-2026-10-25-reference-debug-procs (assurance/07-supporting/impact/change-2026-10-25-reference-debug-procs.md)): `joystick`, `maneuversd` and `lateral_maneuversd` not registered, `joystickd` for notCar only, no debug param changes the control processes (`process_config.py` `REFERENCE_BUILD`); unit test `system/manager/test/test_reference_build.py`; not verified on the device"
   status: proposed
   source: WP-S-07
 
@@ -676,7 +676,7 @@
   other_parents: false
   allocated_to: "SoC"
   verification: "UT"
-  baseline_impl: "Not implemented (GAP-20; `selfdrive/monitoring/dmonitoringd.py:26-38` per WP-S-02)"
+  baseline_impl: "Not implemented (GAP-20; details: private record GD-09)"
   status: proposed
   source: WP-S-07
 
@@ -691,7 +691,7 @@
   other_parents: false
   allocated_to: "ENV"
   verification: "BA"
-  baseline_impl: "Not implemented"
+  baseline_impl: "Partly (DQ-131 A): `build_release.sh` stops a reference release that has the upstream-build marker or the joystick or maneuver modules, and CI (`safety.yaml`, \"Release variant selection\") checks the reference file list; DM demo mode (CSR-072) and the developer toggles in the UI are not covered"
   status: proposed
   source: WP-S-07
 
@@ -706,7 +706,7 @@
   other_parents: false
   allocated_to: "SoC"
   verification: "R, UT"
-  baseline_impl: "Not met: `pickle` at `modeld.py:150,159`, `dmonitoringmodeld.py:33,48`; `helpers.py:19-20`"
+  baseline_impl: "Not met (GAP-22; details: private record GD-08)"
   status: proposed
   source: WP-S-07
 
@@ -781,7 +781,7 @@
   other_parents: false
   allocated_to: "FW"
   verification: "UT, HIL"
-  baseline_impl: "Partial: relay-malfunction detection on intercepted IDs (`safety.h:372-380`); timing per HWSR-506a"
+  baseline_impl: "Partial: relay-malfunction detection on intercepted IDs (details: private record GD-11); timing per HWSR-506a"
   status: proposed
   source: WP-S-07
 
@@ -796,7 +796,7 @@
   other_parents: false
   allocated_to: "SoC; ENV"
   verification: "BA"
-  baseline_impl: "Not met for INTERNAL builds (`installer.cc:204-213`)"
+  baseline_impl: "Not met for INTERNAL builds (details: private record GD-07)"
   status: proposed
   source: WP-S-07
 
@@ -856,7 +856,7 @@
   other_parents: false
   allocated_to: "SoC; USR"
   verification: "BA, PR"
-  baseline_impl: "Not met: daemon always started (`process_config.py:71`)"
+  baseline_impl: "Not met upstream; athena is not started in LionDriver builds since 2026-10-22 (DQ-121 A), not yet checked on the device (details: private record GD-06)"
   status: proposed
   source: WP-S-07
 
@@ -871,7 +871,7 @@
   other_parents: false
   allocated_to: "SoC"
   verification: "UT, PT"
-  baseline_impl: "Not met if enabled: arbitrary URL (`athenad.py:619-672`) (GAP-27). Athena is not started in LionDriver builds since 2026-10-22 (DQ-121 A)"
+  baseline_impl: "Not met if enabled (GAP-27; details: private record GD-06). Athena is not started in LionDriver builds since 2026-10-22 (DQ-121 A)"
   status: proposed
   source: WP-S-07
 
@@ -886,7 +886,7 @@
   other_parents: false
   allocated_to: "SoC"
   verification: "UT, PT"
-  baseline_impl: "Not met (`athenad.py:710-757`)"
+  baseline_impl: "Not met if enabled (details: private record GD-06)"
   status: proposed
   source: WP-S-07
 
@@ -901,7 +901,7 @@
   other_parents: false
   allocated_to: "SoC"
   verification: "UT"
-  baseline_impl: "Not met: any service (`athenad.py:354-370`)"
+  baseline_impl: "Not met if enabled (details: private record GD-06)"
   status: proposed
   source: WP-S-07
 
@@ -916,7 +916,7 @@
   other_parents: false
   allocated_to: "SoC"
   verification: "BA, UT"
-  baseline_impl: "Not met (`athenad.py:51`)"
+  baseline_impl: "Not met (details: private record GD-06)"
   status: proposed
   source: WP-S-07
 
@@ -961,7 +961,7 @@
   other_parents: false
   allocated_to: "SoC; ENV"
   verification: "R, UT, PT"
-  baseline_impl: "Not implemented: TLS + in-tree hashes (`updated.py:205-222, 387-399`) (GAP-26)"
+  baseline_impl: "Not implemented: TLS and in-tree hashes only (GAP-26; details: private record GD-05)"
   status: proposed
   source: WP-S-07
 
@@ -976,7 +976,7 @@
   other_parents: false
   allocated_to: "SoC"
   verification: "UT"
-  baseline_impl: "Not met (`updated.py:237-245`)"
+  baseline_impl: "Not met (details: private record GD-05)"
   status: proposed
   source: WP-S-07
 
@@ -1021,7 +1021,7 @@
   other_parents: false
   allocated_to: "SoC"
   verification: "R, HIL"
-  baseline_impl: "Partial: offroad-only (`process_config.py:114`); overlay and consistency flag (`updated.py:201, 217`); rollback not specified"
+  baseline_impl: "Partial: offroad-only, with an overlay and a consistency flag; rollback not specified (details: private record GD-05)"
   status: proposed
   source: WP-S-07
 
@@ -1126,7 +1126,7 @@
   other_parents: false
   allocated_to: "SoC"
   verification: "R, PT"
-  baseline_impl: "To verify: key at `/persist/comma/` (`openpilot/common/api.py:61-62`)"
+  baseline_impl: "To verify (details: private record GD-10)"
   status: proposed
   source: WP-S-07
 

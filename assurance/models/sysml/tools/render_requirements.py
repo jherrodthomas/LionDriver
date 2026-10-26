@@ -14,9 +14,11 @@ import sysml_lite
 
 TEAL, BLUE, RED, RED_BG, VIOLET = "#0F766E", "#2563EB", "#D2553F", "#FEF2F2", "#7C3AED"
 BLUE_LINE = "#93C5FD"
+NEED = {"chip": "#0E7490", "fill": "#ECFEFF", "stroke": "#0891B2"}   # stakeholder needs
+USE = {"chip": "#4338CA", "fill": "#EEF2FF", "stroke": "#818CF8"}    # use cases and functions
 REQ_STROKE = "#475569"
 ENV = k.ENVELOPE
-KIND_ORDER = ("SG", "FSR", "TSR", "SYS", "CSR")
+KIND_ORDER = ("SN", "SG", "FSR", "TSR", "SYS", "CSR")
 MARKERS = "".join([k.arrow_marker("rq-teal", TEAL), k.arrow_marker("rq-blue", BLUE), k.arrow_marker("rq-or", "#C2410C"),
                    k.arrow_marker("rq-ink", k.INK2), k.arrow_marker("rq-mut", k.MUTED)])
 
@@ -72,6 +74,8 @@ def column_title(x, y, text) -> str:
 def req_style(short: str) -> tuple[str, str, str]:
   """(chip colour, fill, stroke) by requirement kind: safety requirements in the envelope colours."""
   kind = short.split("-")[0]
+  if kind == "SN":
+    return NEED["chip"], NEED["fill"], NEED["stroke"]
   if kind in ("SG", "FSR", "TSR"):
     return ENV["chip"], ENV["fill"], ENV["stroke"]
   if kind == "CSR":
@@ -210,7 +214,7 @@ def render_thread(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str
     body.append(k.text(sx + 28, yy + 14, b, 10, k.MUTED))
   h_content = max(top + rh, arch_bottom, verif_bottom, top + 240, concept_bottom)
   note_y = h_content + 20
-  body.append(k.text(40, note_y, "Every arrow is a model relationship: #derivation connections from the trace data, satisfy from the "
+  body.append(k.text(40, note_y, "Every arrow is a model relationship: #derivation connections from the trace data and WP-S-01 §1.3, satisfy from the "
                      "allocation, perform statements of the mechanisms, verify from the test specifications. Execution results are "
                      "not in the model.", 11, k.MUTED))
   legend_y = note_y + 24
@@ -372,4 +376,260 @@ def render_requirement_matrix(m: sysml_lite.Model, vid: str, spec: dict, digest:
                    spec.get("desc", view.doc), body, MARKERS)
 
 
-RENDERERS = {"thread": render_thread, "requirements": render_requirement_diagram, "reqmatrix": render_requirement_matrix}
+# ---------------------------------------------------------------- V-14 needs and use cases
+
+
+
+def needs_of(m: sysml_lite.Model) -> list[sysml_lite.Requirement]:
+  return sorted((r for r in m.requirements.values() if r.definition == "StakeholderNeed"), key=lambda r: sort_key(r.short))
+
+
+def refined_by(m: sysml_lite.Model, need: str) -> list[str]:
+  return sorted((r.short for r in m.requirements.values() if need in r.derived_from), key=req_key)
+
+
+def people_label(pairs: list[tuple[str, str]]) -> str:
+  return ", ".join(re.sub(r"(?<!^)([A-Z])", r" \1", d).capitalize() for _, d in pairs)
+
+
+def render_needs(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str:
+  """Stakeholder needs and actors against the use cases, and the functions each use case performs."""
+  view = m.views[vid]
+  w = spec["width"]
+  needs = needs_of(m)
+  cases = sorted(m.use_cases.values(), key=lambda u: sort_key(u.short))
+  actors = list(dict.fromkeys(d for u in cases for _, d in u.actors))  # in order of first appearance
+  fns = sorted(m.functions.values(), key=lambda f: sort_key(f.short))
+  body = rv.header(w, view, spec["title"], spec["subtitle"], digest)
+  x0, cw = 470, 70
+  rx = x0 + len(cases) * cw + 24
+  top = 104
+  body.append(column_title(x0, top + 8, "USE CASES · «use case» with subject LD-SDA"))
+  body.append(column_title(rx, top + 8, "REFINED BY · «derivation»"))
+  hy = top + 22
+  for j, u in enumerate(cases):
+    cx = x0 + j * cw + cw / 2
+    p_, _ = k.pill(cx, hy, u.short, USE["chip"], size=9.5, anchor="middle", mono=True)
+    body.append(p_)
+    for i, ln in enumerate(k.wrap(u.doc, cw - 6, 9.5)[:3]):
+      body.append(k.text(cx, hy + 32 + i * 12, ln, 9.5, k.INK2, 600, "middle"))
+  y = hy + 76
+
+  def band(title: str, rows: list[tuple[str, str, str, list[bool], list[str]]], dot: str) -> None:
+    nonlocal y
+    body.append(column_title(40, y + 4, title))
+    y += 14
+    for i, (chip, chip_col, text_, marks, right) in enumerate(rows):
+      rh = 26
+      if i % 2 == 0:
+        body.append(k.rect(40, y, w - 80, rh, k.WASH, None, 4))
+      if chip:
+        p_, pw = k.pill(48, y + 4, chip, chip_col, size=9.5, mono=True)
+        body.append(p_)
+      else:
+        pw = -8
+      body.append(k.text(56 + pw, y + 17, k.clip(text_, x0 - 70 - pw, 11), 11, k.INK))
+      for j, on in enumerate(marks):
+        cx = x0 + j * cw + cw / 2
+        body.append(f'<line x1="{k.f(cx)}" y1="{k.f(y)}" x2="{k.f(cx)}" y2="{k.f(y + rh)}" stroke="{k.HAIR}"/>')
+        if on:
+          body.append(f'<circle cx="{k.f(cx)}" cy="{k.f(y + rh / 2)}" r="6" fill="{dot}"/>')
+      xx = rx
+      for c in right:
+        col = ENV["chip"] if c.startswith("SG-") else "#334155"
+        p_, pw2 = k.pill(xx, y + 5, c, "#FFFFFF", col, 16, 9, 700, col, mono=True)
+        if xx + pw2 > w - 46:
+          body.append(k.text(xx, y + 17, f"+{len(right) - right.index(c)}", 10.5, k.MUTED, 700))
+          break
+        body.append(p_)
+        xx += pw2 + 3
+      y += rh
+    y += 16
+
+  band("ACTORS · «actor» of the use case",
+       [("", "", people_label([("", d)]), [d in dict(u.actors).values() for u in cases], []) for d in actors], k.INK2)
+  band("STAKEHOLDER NEEDS · the use case's objective requires the need",
+       [(n.short, NEED["chip"], f"{people_label(n.stakeholders)}: {n.doc}", [n.short in u.needs for u in cases],
+         refined_by(m, n.short)) for n in needs], NEED["chip"])
+  band("FUNCTIONS (WP-C-01 §2.1) · «perform» in the use case",
+       [(f.short, USE["chip"], f.doc, [f.short in u.functions for u in cases], []) for f in fns], USE["chip"])
+  n_req = sum(len(refined_by(m, n.short)) for n in needs)
+  body.append(k.text(40, y + 8, f"{len(needs)} needs · {len(cases)} use cases · {len(fns)} functions · {n_req} refinements to "
+                     f"system requirements and safety goals. Every need has a use case and a refining requirement; every "
+                     f"function is used (check_model N1-N3).", 12, k.INK, 600))
+  legend_y = y + 26
+  p1, _ = k.pill(330, legend_y + 22, "SYS-001", "#FFFFFF", "#334155", 16, 9, 700, "#334155", mono=True)
+  p2, _ = k.pill(500, legend_y + 22, "SG-05", "#FFFFFF", ENV["chip"], 16, 9, 700, ENV["chip"], mono=True)
+  items = [f'<circle cx="48" cy="{k.f(legend_y + 30)}" r="6" fill="{NEED["chip"]}"/>',
+           k.text(60, legend_y + 34, "the use case serves the need", 11, k.INK2),
+           f'<circle cx="250" cy="{k.f(legend_y + 30)}" r="6" fill="{USE["chip"]}"/>', k.text(262, legend_y + 34, "performs", 11, k.INK2),
+           p1, k.text(390, legend_y + 34, "system requirement", 11, k.INK2), p2, k.text(552, legend_y + 34, "safety goal", 11, k.INK2)]
+  body += rv.footer(w, legend_y, items)
+  return k.svg_doc(w, legend_y + 92, f"{view.short}. {spec['title']} (SysML v2 view {view.name})",
+                   spec.get("desc", view.doc), body, MARKERS)
+
+
+# ---------------------------------------------------------------- V-15 end-to-end thread
+
+def render_end_to_end(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str:
+  """One stakeholder need from its stakeholder, through the use cases that serve it and the functions they perform,
+  and through the requirements that refine it, to the elements that satisfy them and the cases that verify them."""
+  view = m.views[vid]
+  w = spec["width"]
+  need = m.requirements[spec["need"]]
+  cases = sorted((u for u in m.use_cases.values() if need.short in u.needs), key=lambda u: sort_key(u.short))
+  reqs = [m.requirements[s] for s in refined_by(m, need.short)]
+  body = rv.header(w, view, spec["title"], spec["subtitle"], digest)
+  top = 116
+  ax, aw = 40, 300            # stakeholder and need
+  bx, bw = 400, 300           # use cases / requirements
+  cx_, cw_ = 744, 330         # functions / satisfying elements
+  dx, dw = 1112, w - 1112 - 40  # performers / verification cases
+  # stakeholders and the need
+  y = top
+  body.append(column_title(ax, y - 6, "STAKEHOLDER · NEED"))
+  for name, d in need.stakeholders:
+    body.append(k.actor(ax + 20, y + 14, k.INK2, 0.8))
+    body.append(k.text(ax + 42, y + 24, people_label([(name, d)]), 12, k.INK, 600))
+    body.append(k.text(ax + 42, y + 39, f"«part def» {d} · stakeholder", 10, k.MUTED, 400, None, True))
+    y += 50
+  lines = k.wrap(need.doc, aw - 24, 11)
+  nh = 64 + 15 * len(lines) + 12
+  body.append(k.rect(ax, y, aw, nh, NEED["fill"], NEED["stroke"], 8, 1.6, None, ' filter="url(#lift)"'))
+  body.append(k.text(ax + 12, y + 16, "«requirement» StakeholderNeed", 9.5, k.MUTED, 400, None, True))
+  p_, _ = k.pill(ax + 12, y + 22, need.short, NEED["chip"], size=9.5, mono=True)
+  body.append(p_)
+  for i, ln in enumerate(lines):
+    body.append(k.text(ax + 12, y + 58 + i * 15, ln, 11, k.INK))
+  body.append(k.text(ax + 12, y + nh - 10, f"source: {need.values.get('source', '')}", 9.5, k.MUTED))
+  need_mid = y + nh / 2
+  need_bottom = y + nh
+
+  def chips(x, y0, width, items, style) -> float:
+    """Pills left to right, wrapping; returns the height used."""
+    xx, yy = x, y0
+    for label_, fill, color, stroke in items:
+      p_, pw = k.pill(0, 0, label_, fill, color, 18, 9.5, 700, stroke, mono=style)
+      if xx + pw > x + width and xx > x:
+        xx, yy = x, yy + 22
+      p_, pw = k.pill(xx, yy, label_, fill, color, 18, 9.5, 700, stroke, mono=style)
+      body.append(p_)
+      xx += pw + 4
+    return yy - y0 + 22
+
+  # band 1: how the need is used
+  y = top
+  body.append(column_title(bx, y - 6, "SERVED BY · «use case» objective requires it"))
+  body.append(column_title(cx_, y - 6, "PERFORMS · «perform» a function"))
+  body.append(column_title(dx, y - 6, "ON THE ELEMENTS THAT PERFORM ITS STEPS"))
+  uc_y = []
+  n_fn, performers_all = 0, set()
+  for u in cases:
+    fns = [m.functions[f] for f in u.functions]
+    ul = k.wrap(u.goal, bw - 24, 10.5)[:5]
+    uh = max(58 + 14 * len(ul) + 18, 70 * len(fns) - 10)
+    body += card(bx, y, bw, uh, u.doc, u.short, USE["chip"], USE["fill"], USE["stroke"], ul, "«use case» ItemUseCase", 1.4)
+    body.append(k.text(bx + 12, y + uh - 10, f"actors: {people_label(u.actors)}", 9.5, k.MUTED))
+    uc_y.append(y + 30)
+    fy = y
+    for f in fns:
+      n_fn += 1
+      perf = []
+      for st in f.steps:
+        for p in st.performers:
+          if p not in perf:
+            perf.append(p)
+      performers_all.update(perf)
+      body += card(cx_, fy, cw_, 60, f.doc, f.short, USE["chip"], "#FFFFFF", USE["stroke"],
+                   [f"{len(f.steps)} steps, sense to act"], "«action» ItemFunction")
+      body.append(edge([(bx + bw, y + 30), (bx + bw + 20, y + 30), (bx + bw + 20, fy + 30), (cx_, fy + 30)], USE["chip"], 1.3, None, "rq-ink"))
+      items = []
+      for p in perf:
+        ch, title = label(m, p)
+        st_ = rv.style_of(m.elements[p])
+        items.append((ch or title, "#FFFFFF", st_["chip"], st_["stroke"]))
+      body.append(edge([(cx_ + cw_, fy + 30), (dx - 6, fy + 30)], k.FAINT, 1.1, "3 3"))
+      chips(dx, fy + 6, dw, items, True)
+      fy += 70
+    y += uh + 14
+  band1_bottom = max(y, need_bottom + 10)
+  # band 2: how the need is refined
+  y = band1_bottom + 26
+  body.append(f'<line x1="{bx}" y1="{k.f(y - 14)}" x2="{k.f(w - 40)}" y2="{k.f(y - 14)}" stroke="{k.HAIR}"/>')
+  body.append(column_title(bx, y + 6, "REFINED BY · «derivation»"))
+  body.append(column_title(cx_, y + 6, "SATISFIED BY · «satisfy»"))
+  body.append(column_title(dx, y + 6, "VERIFIED BY · «verify» (specified, not run)"))
+  y += 20
+  req_y = []
+  n_case, no_case, sat_all = set(), [], set()
+  for r in reqs:
+    chip, fill, stroke = req_style(r.short)
+    rl = k.wrap(r.doc, bw - 24, 10.5)[:3]
+    extra = " · ".join(x for x in (f"target {r.values['target']}" if r.values.get("target") not in (None, "", "as stated") else "",
+                                    f"ASIL {r.values['asil']}" if r.values.get("asil") else "") if x)
+    if extra:
+      rl.append(k.clip(extra, bw - 24, 10.5))
+    rh = 48 + 14 * len(rl)
+    body += card(bx, y, bw, rh, "", r.short, chip, fill, stroke, rl, f"«requirement» {r.definition}", 1.3)
+    req_y.append(y + 30)
+    items = []
+    for p in r.satisfied_by:
+      ch, title = label(m, p)
+      st_ = rv.style_of(m.elements[p])
+      items.append((ch or title, "#FFFFFF", st_["chip"], st_["stroke"]))
+      sat_all.add(p)
+    body.append(edge([(bx + bw, y + 30), (cx_ - 6, y + 30)], TEAL, 1.4, "6 4", "rq-teal"))
+    if items:
+      chips(cx_, y + 21, cw_, items, True)
+    else:
+      body.append(k.text(cx_, y + 34, "no satisfying element", 11, RED, 600))
+    if r.verified_by:
+      chips(dx, y + 21, dw, [(c.replace("VS-", ""), "#FFFFFF", BLUE, BLUE_LINE) for c in sorted(r.verified_by, key=sort_key)], True)
+      n_case.update(r.verified_by)
+    else:
+      p_, _ = k.pill(dx, y + 21, "no test case", RED, size=9.5)
+      body.append(p_)
+      no_case.append(r.short)
+    y += rh + 10
+  bottom = y
+  # need -> use cases and requirements
+  bus = ax + aw + 24
+  for yy in uc_y:
+    body.append(edge([(bx, yy), (bus, yy), (bus, need_mid), (ax + aw, need_mid)], NEED["chip"], 1.4, None, "rq-ink"))
+  for yy in req_y:
+    body.append(edge([(bx, yy), (bus, yy), (bus, need_mid)], "#334155", 1.2))
+  body.append(edge([(bus, need_mid), (ax + aw, need_mid)], "#334155", 1.4, None, "rq-ink"))
+  # summary under the need
+  sy = need_bottom + 24
+  body.append(k.rect(ax, sy, aw, 200, k.WASH, k.HAIR, 8))
+  body.append(k.text(ax + 12, sy + 22, "THREAD", 10, k.MUTED, 700, extra=' letter-spacing="1.1"'))
+  rows = [("use cases", f"{len(cases)} serve it", TEAL if cases else RED),
+          ("functions", f"{n_fn} performed on {len(performers_all)} elements", TEAL if n_fn else RED),
+          ("requirements", f"{len(reqs)} refine it", TEAL if reqs else RED),
+          ("satisfied", f"{sum(1 for r in reqs if r.satisfied_by)} of {len(reqs)}, by {len(sat_all)} elements", TEAL),
+          ("verified", f"{len(reqs) - len(no_case)} of {len(reqs)}, by {len(n_case)} cases", BLUE if not no_case else "#D97706")]
+  for i, (a, b, c) in enumerate(rows):
+    yy = sy + 48 + i * 30
+    body.append(f'<circle cx="{ax + 16}" cy="{yy - 4}" r="5" fill="{c}"/>')
+    body.append(k.text(ax + 28, yy, a, 11, k.INK, 600))
+    body.append(k.text(ax + 118, yy, b, 10.5, k.MUTED))
+  bottom = max(bottom, sy + 210)
+  note_y = bottom + 16
+  gap = f" No case verifies {', '.join(no_case)} yet." if no_case else ""
+  body.append(k.text(40, note_y, "Every line is a model relationship: the use case's objective requires the need, perform from the use case "
+                     "and from each element, #derivation from WP-S-01 §1.3, satisfy from §10.1, verify from the test specifications."
+                     + gap, 11, k.MUTED))
+  legend_y = note_y + 22
+  items = [edge([(40, legend_y + 30), (66, legend_y + 30)], NEED["chip"], 2), k.text(74, legend_y + 34, "objective requires", 11, k.INK2),
+           edge([(200, legend_y + 30), (226, legend_y + 30)], USE["chip"], 2), k.text(234, legend_y + 34, "«perform»", 11, k.INK2),
+           edge([(320, legend_y + 30), (346, legend_y + 30)], "#334155", 2), k.text(354, legend_y + 34, "«derivation»", 11, k.INK2),
+           edge([(450, legend_y + 30), (476, legend_y + 30)], TEAL, 2, "6 4"), k.text(484, legend_y + 34, "«satisfy»", 11, k.INK2),
+           k.pill(570, legend_y + 21, "SQ-16", "#FFFFFF", BLUE, 18, 9.5, 700, BLUE_LINE, mono=True)[0],
+           k.text(630, legend_y + 34, "«verify»: a case that names the requirement", 11, k.INK2)]
+  body += rv.footer(w, legend_y, items)
+  return k.svg_doc(w, legend_y + 92, f"{view.short}. {spec['title']} (SysML v2 view {view.name})",
+                   spec.get("desc", view.doc), body, MARKERS)
+
+
+RENDERERS = {"thread": render_thread, "requirements": render_requirement_diagram, "reqmatrix": render_requirement_matrix,
+             "needs": render_needs, "endtoend": render_end_to_end}

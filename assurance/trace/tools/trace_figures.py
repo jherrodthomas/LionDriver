@@ -196,7 +196,7 @@ def allocation(items: dict[str, dict]) -> tuple[dict[str, str], dict[str, list[s
   return status, dict(values)
 
 
-CHECK_ROW = re.compile(r"^\|\s*([KRXPSACQ]\d+)(?:\s+\*\*\[ext\]\*\*|\s+\(planned\))?\s*\|")
+CHECK_ROW = re.compile(r"^\|\s*([KRXPSACQI]\d+)(?:\s+\*\*\[ext\]\*\*|\s+\(planned\))?\s*\|")
 
 
 def readme_checks() -> list[tuple[str, str, str]]:
@@ -798,11 +798,12 @@ CHECK_SHORT = {
   "A1": "AIR basis · AIR ↔ TSR",
   "C1": "TS → CSG → CSR; SG → CSG",
   "Q1": "SYS: function, alloc, row",
+  "I1": "IFR agreed only by review",
 }
 CHECK_GROUPS = [("STRUCTURE AND DERIVATION (WP-P-06 §7)", ("K1", "K2", "K3", "K4", "K5", "K11", "K12")),
                 ("CODE AND TEST LINKS, AND PLANNED CHECKS", ("K6", "K7", "K8", "K9", "K10", "P1", "P2")),
                 ("LIONDRIVER EXTENSIONS", ("R1", "R2", "R3", "R4", "X1", "X2", "X3")),
-                ("CHAINS OF THE OTHER STANDARDS", ("S1", "A1", "C1", "Q1"))]
+                ("CHAINS OF THE OTHER STANDARDS", ("S1", "A1", "C1", "Q1", "I1"))]
 CHECK_STYLE = {"yes": (GREEN_BG, GREEN, ""), "partly": (AMBER_BG, AMBER, ""), "no": (CHIP, FAINT, "4 3")}
 
 

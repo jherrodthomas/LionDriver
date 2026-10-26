@@ -286,4 +286,10 @@ package LionDriverLibrary {
     view def FunctionalView {
         doc /* Functions along their functional chain, each step on the element that performs it. */
     }
+    view def SequenceView {
+        doc /* A sequence of messages between lifelines that stand for elements of the architecture. */
+    }
+    view def NeedsView {
+        doc /* Stakeholder needs and actors against the use cases that serve them, with the requirements that refine each need. */
+    }
 }

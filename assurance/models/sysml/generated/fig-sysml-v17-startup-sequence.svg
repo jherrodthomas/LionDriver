@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="1326" viewBox="0 0 1520 1326" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">V-17. Start-up and engagement sequence (SysML v2 view startupSequence)</title>
+<desc id="d">Sequence view generated from the SysML v2 model for WP-S-03 §4.1 (Figure 4-1). Lifelines from the driver and the vehicle through the relay and the safety MCU to the host processes pandad, card, controlsd and selfdrived. One row per step S-01 to S-21 in four phases: the message or action, its condition in brackets, the safety MCU or selfdrived state after it, its status (as inherited, required in the reference build, required and not yet implemented), the record transitions it stands for and its code reference.</desc>
+<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter><marker id="sq-0" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#334155"/></marker><marker id="sq-1" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#C2410C"/></marker><marker id="sq-2" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#D2553F"/></marker></defs>
+<rect width="1520" height="1326" fill="#FFFFFF"/>
+<text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-17 · Start-up and engagement sequence</text>
+<text x="40" y="69" font-size="12.5" fill="#64748B">WP-S-03 §4.1 Table 4-1 from ignition on to engaged actuation; each lifeline is an element of the model, each step names the record transitions it stands for</text>
+<text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::startupSequence</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">SequenceView · render asInterconnectionDiagram · model 5d5f4756c724</text>
+<line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
+<line x1="140" y1="148" x2="140" y2="1220" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 4"/>
+<line x1="261.4" y1="148" x2="261.4" y2="1220" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 4"/>
+<line x1="382.9" y1="148" x2="382.9" y2="1220" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 4"/>
+<line x1="504.3" y1="148" x2="504.3" y2="1220" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 4"/>
+<line x1="625.7" y1="148" x2="625.7" y2="1220" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 4"/>
+<line x1="747.1" y1="148" x2="747.1" y2="1220" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 4"/>
+<line x1="868.6" y1="148" x2="868.6" y2="1220" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 4"/>
+<line x1="990" y1="148" x2="990" y2="1220" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 4"/>
+<rect x="82" y="104" width="116" height="44" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="140" y="123" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Driver</text>
+<text x="140" y="138" font-size="9.5" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">driver</text>
+<rect x="203.4" y="104" width="116" height="44" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="261.4" y="123" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Vehicle</text>
+<text x="261.4" y="138" font-size="9.5" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">EXT-PCM</text>
+<rect x="324.9" y="104" width="116" height="44" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="382.9" y="123" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Relay</text>
+<text x="382.9" y="138" font-size="9.5" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-05</text>
+<rect x="446.3" y="104" width="116" height="44" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="504.3" y="123" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Safety MCU</text>
+<text x="504.3" y="138" font-size="9.5" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03</text>
+<rect x="567.7" y="104" width="116" height="44" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="625.7" y="123" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">pandad</text>
+<text x="625.7" y="138" font-size="9.5" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.pandad</text>
+<rect x="689.1" y="104" width="116" height="44" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="747.1" y="123" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">card</text>
+<text x="747.1" y="138" font-size="9.5" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.card</text>
+<rect x="810.6" y="104" width="116" height="44" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="868.6" y="123" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">controlsd</text>
+<text x="868.6" y="138" font-size="9.5" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.controlsd</text>
+<rect x="932" y="104" width="116" height="44" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="990" y="123" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">selfdrived</text>
+<text x="990" y="138" font-size="9.5" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.selfdrived</text>
+<text x="1100" y="123" font-size="9.5" fill="#64748B" font-weight="700" letter-spacing="1">RECORDS · CODE</text>
+<rect x="40" y="176" width="1440" height="22" rx="4" fill="#F8FAFC"/>
+<text x="52" y="191" font-size="10" fill="#64748B" font-weight="700" letter-spacing="1.1">POWER-UP</text>
+<text x="48" y="224" font-size="10.5" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">S-01</text>
+<line x1="261.4" y1="228" x2="504.3" y2="228" stroke="#334155" stroke-width="1.6" marker-end="url(#sq-0)"/>
+<text x="382.9" y="222" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="middle">Ignition on: 12 V and ignition reach the devic…</text>
+<text x="48" y="264" font-size="10.5" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">S-02</text>
+<path d="M504.3 256h26v16h-24" fill="none" stroke="#334155" stroke-width="1.6" marker-end="url(#sq-0)"/>
+<text x="538.3" y="262" font-size="10.5" fill="#0F172A" font-weight="600">main(): clock and peripherals, set_safety_mode(SILENT),…</text>
+<rect x="448.1" y="250" width="48.2" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="472.2" y="261.4" font-size="9.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SILENT</text>
+<text x="1100" y="260" font-size="10" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-SAFETY-MODE M1</text>
+<text x="1100" y="273" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">main.c:251-328</text>
+<text x="48" y="304" font-size="10.5" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">S-03</text>
+<path d="M504.3 296h26v16h-24" fill="none" stroke="#D2553F" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#sq-2)"/>
+<text x="538.3" y="302" font-size="10.5" fill="#D2553F" font-weight="600">Start-up tests before the first relay drive</text>
+<text x="538.3" y="322" font-size="10" fill="#64748B">[TSR-515]</text>
+<rect x="40" y="346" width="1440" height="22" rx="4" fill="#F8FAFC"/>
+<text x="52" y="361" font-size="10" fill="#64748B" font-weight="700" letter-spacing="1.1">MODE CONFIGURATION</text>
+<text x="48" y="394" font-size="10.5" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">S-04</text>
+<line x1="625.7" y1="398" x2="504.3" y2="398" stroke="#334155" stroke-width="1.6" marker-end="url(#sq-0)"/>
+<text x="565" y="392" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="middle">pandad.py checks or flashes the firmware…</text>
+<text x="1100" y="390" font-size="10" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">pandad.py:20-50</text>
+<text x="48" y="434" font-size="10.5" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">S-05</text>
+<line x1="625.7" y1="438" x2="504.3" y2="438" stroke="#334155" stroke-width="1.6" marker-end="url(#sq-0)"/>
+<text x="565" y="432" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="middle">Set NOOUTPUT (0xdc)</text>
+<text x="565" y="452" font-size="10" fill="#64748B" text-anchor="middle">[the MCU is in SILENT]</text>
+<rect x="512.3" y="454" width="59.6" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="542.1" y="465.4" font-size="9.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">NOOUTPUT</text>
+<text x="1100" y="430" font-size="10" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-SAFETY-MODE M2 · SM-SAFETY-MODE M4</text>
+<text x="1100" y="443" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">pandad.cc:194-196</text>
+<text x="48" y="486" font-size="10.5" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">S-06</text>
+<line x1="625.7" y1="490" x2="504.3" y2="490" stroke="#334155" stroke-width="1.6" marker-end="url(#sq-0)"/>
+<text x="565" y="484" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="middle">Set ELM327 for the firmware query</text>
+<text x="565" y="504" font-size="10" fill="#64748B" text-anchor="middle">[onroad]</text>
+<rect x="512.3" y="506" width="48.2" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="536.4" y="517.4" font-size="9.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">ELM327</text>
+<text x="1100" y="482" font-size="10" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-SAFETY-MODE M2 · SM-SAFETY-MODE M4</text>
+<text x="1100" y="495" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda_safety.cc:23-34</text>
+<text x="48" y="538" font-size="10.5" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">S-07</text>
+<line x1="747.1" y1="542" x2="625.7" y2="542" stroke="#334155" stroke-width="1.6" marker-end="url(#sq-0)"/>
+<text x="686.4" y="536" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="middle">Fingerprint, then CarParams</text>
+<text x="48" y="578" font-size="10.5" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">S-08</text>
+<line x1="625.7" y1="582" x2="504.3" y2="582" stroke="#334155" stroke-width="1.6" marker-end="url(#sq-0)"/>
+<text x="565" y="576" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="middle">Set TOYOTA, param 73 (0xdc)</text>
+<rect x="512.3" y="586" width="48.2" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="536.4" y="597.4" font-size="9.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TOYOTA</text>
+<text x="1100" y="574" font-size="10" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-SAFETY-MODE M2 · SM-SAFETY-MODE M4</text>
+<text x="1100" y="587" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda_safety.cc:56-69</text>
+<text x="48" y="618" font-size="10.5" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">S-09</text>
+<line x1="504.3" y1="622" x2="382.9" y2="622" stroke="#334155" stroke-width="1.6" marker-end="url(#sq-0)"/>
+<text x="443.6" y="616" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="middle">set_safety_hooks(): authority false, limiter…</text>
+<text x="1100" y="614" font-size="10" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-TOY-AUTH T7</text>
+<text x="1100" y="627" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">main.c:70-76; safety.h:391-462</text>
+<text x="48" y="658" font-size="10.5" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">S-10</text>
+<path d="M504.3 650h26v16h-24" fill="none" stroke="#C2410C" stroke-width="1.6" marker-end="url(#sq-1)"/>
+<text x="538.3" y="656" font-size="10.5" fill="#C2410C" font-weight="600">Accept only TOYOTA with param 73; afterwards only de-e…</text>
+<text x="538.3" y="676" font-size="10" fill="#64748B">[TSR-512]</text>
+<text x="1100" y="654" font-size="10" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-SAFETY-MODE M4 · SM-SAFETY-MODE M5 · SM-SAFETY-MODE M6</text>
+<text x="1100" y="667" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">board/reference_lock.h:22-27</text>
+<text x="48" y="710" font-size="10.5" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">S-11</text>
+<path d="M990 702h26v16h-24" fill="none" stroke="#334155" stroke-width="1.6" marker-end="url(#sq-0)"/>
+<text x="926" y="708" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="end">Wait for all checks or 6 s; check the panda mode and param after 10 s</text>
+<text x="1100" y="706" font-size="10" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">selfdrived.py:479-480, 338</text>
+<rect x="40" y="740" width="1440" height="22" rx="4" fill="#F8FAFC"/>
+<text x="52" y="755" font-size="10" fill="#64748B" font-weight="700" letter-spacing="1.1">ENGAGEMENT</text>
+<text x="48" y="788" font-size="10.5" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">S-12</text>
+<line x1="140" y1="792" x2="261.4" y2="792" stroke="#334155" stroke-width="1.6" marker-end="url(#sq-0)"/>
+<text x="200.7" y="786" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="middle">Press SET</text>
+<text x="48" y="828" font-size="10.5" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">S-13</text>
+<line x1="261.4" y1="832" x2="504.3" y2="832" stroke="#334155" stroke-width="1.6" marker-end="url(#sq-0)"/>
+<text x="382.9" y="826" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="middle">0x1D2 CRUISE_ACTIVE 0→1 (IF-02)</text>
+<text x="48" y="868" font-size="10.5" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">S-14</text>
+<path d="M504.3 860h26v16h-24" fill="none" stroke="#334155" stroke-width="1.6" marker-end="url(#sq-0)"/>
+<text x="538.3" y="866" font-size="10.5" fill="#0F172A" font-weight="600">pcm_cruise_check: rising edge, controls_allowed = true</text>
+<text x="538.3" y="886" font-size="10" fill="#64748B">[rising edge; TSR-306: all RX checks valid]</text>
+<rect x="442.4" y="854" width="53.9" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="469.3" y="865.4" font-size="9.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">ALLOWED</text>
+<text x="1100" y="864" font-size="10" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-TOY-AUTH T1</text>
+<text x="1100" y="877" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">safety.h:518-527</text>
+<text x="48" y="920" font-size="10.5" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">S-15</text>
+<line x1="747.1" y1="924" x2="990" y2="924" stroke="#334155" stroke-width="1.6" marker-end="url(#sq-0)"/>
+<text x="868.6" y="918" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="middle">carState.cruiseState.enabled; selfdrived EN…</text>
+<rect x="998" y="928" width="53.9" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1025" y="939.4" font-size="9.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">enabled</text>
+<text x="1100" y="916" font-size="10" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-SELFDRIVED D1 · SM-SELFDRIVED D3</text>
+<text x="1100" y="929" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">state.py</text>
+<rect x="40" y="950" width="1440" height="22" rx="4" fill="#F8FAFC"/>
+<text x="52" y="965" font-size="10" fill="#64748B" font-weight="700" letter-spacing="1.1">ENGAGED ACTUATION</text>
+<text x="48" y="998" font-size="10.5" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">S-16</text>
+<line x1="990" y1="1002" x2="625.7" y2="1002" stroke="#334155" stroke-width="1.6" marker-end="url(#sq-0)"/>
+<text x="807.9" y="996" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="middle">selfdriveState</text>
+<text x="48" y="1038" font-size="10.5" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">S-17</text>
+<line x1="625.7" y1="1042" x2="504.3" y2="1042" stroke="#334155" stroke-width="1.6" marker-end="url(#sq-0)"/>
+<text x="565" y="1036" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="middle">Heartbeat 0xf3 engaged = 1 at 10 Hz (IF-04)</text>
+<text x="1100" y="1034" font-size="10" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">pandad.cc:385-394</text>
+<text x="48" y="1078" font-size="10.5" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">S-18</text>
+<line x1="868.6" y1="1082" x2="747.1" y2="1082" stroke="#334155" stroke-width="1.6" marker-end="url(#sq-0)"/>
+<text x="807.9" y="1076" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="middle">carControl: latActive, longActive</text>
+<text x="48" y="1118" font-size="10.5" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">S-19</text>
+<line x1="747.1" y1="1122" x2="625.7" y2="1122" stroke="#334155" stroke-width="1.6" marker-end="url(#sq-0)"/>
+<text x="686.4" y="1116" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="middle">sendcan</text>
+<text x="48" y="1158" font-size="10.5" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">S-20</text>
+<line x1="625.7" y1="1162" x2="504.3" y2="1162" stroke="#334155" stroke-width="1.6" marker-end="url(#sq-0)"/>
+<text x="565" y="1156" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="middle">SPI frames (IF-04)</text>
+<text x="48" y="1198" font-size="10.5" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">S-21</text>
+<line x1="504.3" y1="1202" x2="261.4" y2="1202" stroke="#334155" stroke-width="1.6" marker-end="url(#sq-0)"/>
+<text x="382.9" y="1196" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="middle">Each 0x2E4 / 0x343 after the safety_tx_hoo…</text>
+<text x="1100" y="1194" font-size="10" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">can_common.h:161-176</text>
+<line x1="40" y1="1234" x2="1480" y2="1234" stroke="#E2E8F0"/>
+<line x1="40" y1="1263" x2="70" y2="1263" stroke="#334155" stroke-width="1.6" marker-end="url(#sq-0)"/>
+<text x="78" y="1267" font-size="11" fill="#334155">as inherited</text>
+<line x1="170.61" y1="1263" x2="200.61" y2="1263" stroke="#C2410C" stroke-width="1.6" marker-end="url(#sq-1)"/>
+<text x="208.6" y="1267" font-size="11" fill="#334155">required, in the reference build (not verified)</text>
+<line x1="471.28" y1="1263" x2="501.28" y2="1263" stroke="#D2553F" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#sq-2)"/>
+<text x="509.3" y="1267" font-size="11" fill="#334155">required, not yet implemented</text>
+<rect x="697.6" y="1255" width="48.2" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="721.7" y="1266.4" font-size="9.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SILENT</text>
+<text x="753.8" y="1267" font-size="11" fill="#334155">state after the step (safety MCU or selfdrived record)</text>
+<text x="40" y="1310" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+</svg>

@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="799" viewBox="0 0 1120 799" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 5. One gate worked through: G-LATCUE</title>
+<desc>G-LATCUE (SG-02, claim IC-04): inputs G-SIREN in E-03, E-04; BE-2.16 in EXT-CLU, EXT-PCM. 4 of 5 shared resources have no DFI under IC-04: WP-A-03 has not analysed them for this claim (finding, OI-12).</desc>
+<defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1120" height="799" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 5 · One gate worked through: G-LATCUE (SG-02)</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Its two inputs, the elements they lie in, the resources both depend on, and whether WP-A-03 has analysed each one under the gate's claim</text>
+<text x="1080" y="44" font-size="11" fill="#475569" text-anchor="end">WP-A-03 §5.1 · dfa_gates.py</text>
+<line x1="40" y1="82" x2="1080" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="280" y="108" width="560" height="65" rx="8" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.6"/>
+<text x="298" y="134" font-size="13" fill="#0F172A" font-weight="700">G-LATCUE  ·  AND gate  ·  claim IC-04</text>
+<text x="298" y="156" font-size="12.5" fill="#475569">SoC-independent cue missing or late (lateral loss)</text>
+<rect x="40" y="223" width="250" height="110" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="56" y="247" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">Input G-SIREN</text>
+<text x="274" y="247" font-size="10.5" fill="#475569" text-anchor="end">lies in</text>
+<text x="56" y="269" font-size="11.5" fill="#0F172A">E-03 Safety MCU firmware (panda,</text>
+<text x="56" y="285" font-size="11.5" fill="#0F172A">envelope, siren)</text>
+<text x="56" y="301" font-size="11.5" fill="#0F172A">E-04 Device hardware (SoC, MCU,</text>
+<text x="56" y="317" font-size="11.5" fill="#0F172A">cameras, speaker, supply)</text>
+<line x1="165" y1="223" x2="350" y2="177" stroke="#94A3B8" stroke-width="1.3" marker-end="url(#muted)"/>
+<rect x="830" y="223" width="250" height="110" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="846" y="247" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">Input BE-2.16</text>
+<text x="1064" y="247" font-size="10.5" fill="#475569" text-anchor="end">lies in</text>
+<text x="846" y="269" font-size="11.5" fill="#0F172A">EXT-CLU Cluster and cruise indicator</text>
+<text x="846" y="285" font-size="11.5" fill="#0F172A">(vehicle)</text>
+<text x="846" y="301" font-size="11.5" fill="#0F172A">EXT-PCM PCM, ACC execution</text>
+<text x="846" y="317" font-size="11.5" fill="#0F172A">(vehicle)</text>
+<line x1="955" y1="223" x2="770" y2="177" stroke="#94A3B8" stroke-width="1.3" marker-end="url(#muted)"/>
+<text x="560" y="211" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Resources both inputs depend on (5)</text>
+<rect x="350" y="223" width="420" height="72" rx="8" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3"/>
+<text x="364" y="245" font-size="12" fill="#0F172A" font-weight="700">R-09 Vehicle signals read by host and</text>
+<text x="364" y="261" font-size="12" fill="#0F172A" font-weight="700">envelope (torque, cruise, brake, gas, speed)</text>
+<text x="364" y="281" font-size="11" fill="#475569">its DFIs: DFI-10, DFI-11, DFI-15</text>
+<text x="756" y="245" font-size="11" fill="#0F766E" font-weight="700" text-anchor="end">under IC-04</text>
+<line x1="290" y1="278" x2="350" y2="259" stroke="#CBD5E1" stroke-width="1.2"/>
+<line x1="830" y1="278" x2="770" y2="259" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="350" y="305" width="420" height="56" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.3"/>
+<text x="364" y="327" font-size="12" fill="#0F172A" font-weight="700">R-01 Vehicle 12 V supply</text>
+<text x="364" y="347" font-size="11" fill="#475569">its DFIs: DFI-01, DFI-06</text>
+<text x="756" y="327" font-size="11" fill="#D97706" font-weight="700" text-anchor="end">not under IC-04</text>
+<line x1="290" y1="278" x2="350" y2="333" stroke="#CBD5E1" stroke-width="1.2"/>
+<line x1="830" y1="278" x2="770" y2="333" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="350" y="371" width="420" height="72" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.3"/>
+<text x="364" y="393" font-size="12" fill="#0F172A" font-weight="700">R-06 Harness connector and CAN wiring</text>
+<text x="364" y="409" font-size="12" fill="#0F172A" font-weight="700">(EMC)</text>
+<text x="364" y="429" font-size="11" fill="#475569">its DFIs: DFI-05, DFI-07</text>
+<text x="756" y="393" font-size="11" fill="#D97706" font-weight="700" text-anchor="end">not under IC-04</text>
+<line x1="290" y1="278" x2="350" y2="407" stroke="#CBD5E1" stroke-width="1.2"/>
+<line x1="830" y1="278" x2="770" y2="407" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="350" y="453" width="420" height="72" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.3"/>
+<text x="364" y="475" font-size="12" fill="#0F172A" font-weight="700">R-10 Command path to the EPS and PCM</text>
+<text x="364" y="491" font-size="12" fill="#0F172A" font-weight="700">(bus 0)</text>
+<text x="364" y="511" font-size="11" fill="#475569">its DFIs: DFI-12</text>
+<text x="756" y="475" font-size="11" fill="#D97706" font-weight="700" text-anchor="end">not under IC-04</text>
+<line x1="290" y1="278" x2="350" y2="489" stroke="#CBD5E1" stroke-width="1.2"/>
+<line x1="830" y1="278" x2="770" y2="489" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="350" y="535" width="420" height="56" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.3"/>
+<text x="364" y="557" font-size="12" fill="#0F172A" font-weight="700">R-16 Installation and vehicle service</text>
+<text x="364" y="577" font-size="11" fill="#475569">its DFIs: DFI-20, DFI-22</text>
+<text x="756" y="557" font-size="11" fill="#D97706" font-weight="700" text-anchor="end">not under IC-04</text>
+<line x1="290" y1="278" x2="350" y2="563" stroke="#CBD5E1" stroke-width="1.2"/>
+<line x1="830" y1="278" x2="770" y2="563" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="40" y="623" font-size="12.5" fill="#D97706" font-weight="700">4 of 5 shared resources have no DFI under IC-04: WP-A-03 has not analysed them for this claim (finding, OI-12).</text>
+<text x="40" y="649" font-size="11" fill="#475569">Generated by dfa_figures.py from the join of dfa_gates.py; the gate shown is set in the script.</text>
+<g class="terms">
+<text x="40" y="671" font-size="10.5" fill="#475569">Terms: ACC adaptive cruise control · BE-nn basic event of a WP-A-04 fault tree · CAN controller area network: the vehicle's data bus · DFI-nn dependent failure initiator (WP-A-03 §4):</text>
+<text x="40" y="685.5" font-size="10.5" fill="#475569">one cause that could defeat two elements at once · E-nn element of the item (WP-C-01 §3.1), E-01…E-06 · EMC electromagnetic compatibility: interference between electrical parts and</text>
+<text x="40" y="700" font-size="10.5" fill="#475569">wiring · EPS electric power steering · EXT-nn external element credited only through an assumption of use (EXT-EPS, EXT-PCM, EXT-CLU) · G-nn named gate of a WP-A-04 fault tree (G-SIREN,</text>
+<text x="40" y="714.5" font-size="10.5" fill="#475569">G-LATCUE); numbered gates read G1.1, G2.3 … · IC-nn independence claim (WP-A-03 §2): two elements the safety concept relies on not failing together · MCU microcontroller: the panda</text>
+<text x="40" y="729" font-size="10.5" fill="#475569">safety processor (STM32H7) · OI-nn open item of the document it appears in · PCM powertrain control module (engine and drive) · R-nn shared resource in the DFA map</text>
+<text x="40" y="743.5" font-size="10.5" fill="#475569">(08-analyses/dfa/shared-resources.yaml): something two elements both depend on · SG-nn safety goal (HARA §6) · SoC system on chip: the comma device's main processor, running openpilot</text>
+<text x="40" y="758" font-size="10.5" fill="#475569">(QM) · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety</text>
+<text x="40" y="772.5" font-size="10.5" fill="#475569">case)</text>
+</g>
+</svg>

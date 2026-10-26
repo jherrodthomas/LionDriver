@@ -292,12 +292,12 @@ events:
     class: random_hw
     fmeda: [fmeda-sg009:FMD-017, fmeda-sg009:FMD-011]
     note: >-
-      No DFMEA failure mode for the camera-side FDCAN or transceiver (SFMEA-39); only FMEDA SG-009 rows. F-17
+      No DFMEA failure mode for the camera-side FDCAN or transceiver (System FMEA SFM-033.C6); only FMEDA SG-009 rows. F-17
   - id: BE-7.07
     class: systematic_sw
     gap: >-
       No SW FMEA mode for 0x344, 0x411 or DSU IDs in the TX whitelist without a content check (GAP-42, TSR-705;
-      removed in the reference build). SFMEA-05 of WP-A-04 §10 is the only row. F-17
+      removed in the reference build). SFM-035.C3 of the System FMEA is the only row. F-17
   - id: BE-7.08
     class: systematic_sw
     fmea: [SFM-035]
@@ -372,7 +372,7 @@ events:
   # ---- SG-02 tree (§4)
   - id: BE-2.01
     class: external
-    ref: EPS internal fault (outside the item), signalled as an LKA fault state in 0x262 (SFMEA-15)
+    ref: EPS internal fault (outside the item), signalled as an LKA fault state in 0x262 (SFM-038.C2)
     fmea: [SFM-004]
     note: >-
       SFM-004.C2 (EPS limits or rejects the torque request: fault, torque limit, lockout). SFM-004.C1/C3 are BE-2.23
@@ -407,7 +407,7 @@ events:
     fmeda: [fmeda-sg001:FMD-003, fmeda-sg001:FMD-017, fmeda-sg009:FMD-001]
     note: >-
       Car-side bus-off: DFM-008 (transceiver holds bus 0 dominant), DFM-021 (clamp diode short); MCU hang or not running:
-      DFM-004, DFM-016 (bootloader, SFMEA-27), DFM-018 (over-temperature); CAN path lost at the harness: DFM-012.C1, PFM-008,
+      DFM-004, DFM-016 (bootloader, SFM-015.C4), DFM-018 (over-temperature); CAN path lost at the harness: DFM-012.C1, PFM-008,
       PFM-006; host side: SWF-024.C1/C2 and SFM-005.C2 (sendcan dropped in pandad), SWF-047.C1/C2 (controlsd exits or overruns,
       card stops). The configuration commands 0xe5/0xde/0xf1 (FFI-CM-09) have no SW FMEA mode (as BE-7.03, F-17). DFM-004 and
       DFM-016 cite no HZ-004 (F-26).
@@ -425,7 +425,7 @@ events:
     fmea: [SFM-038, SWF-088]
     note: >-
       SFM-038.C1 (EPS-fault prompt latched at low priority after an override in the last 1.5 s, never escalated; car_events.py; GAP-03) and SFM-038.C2 (the
-      panda's epsFault published but read by no SoC process, SWF-025 notes); System FMEA rev 0.23. SFMEA-15 of WP-A-04 §10. F-28. SW FMEA rev 1.3: SWF-088.C1
+      panda's epsFault published but read by no SoC process, SWF-025 notes); System FMEA rev 0.23. F-28. SW FMEA rev 1.3: SWF-088.C1
       (latched prompt, TSR-607 (b)) and SWF-088.C2 (no prompt while the driver keeps steering, TSR-607 (c)); fixed after BL-005 by SWF-ACT-077 (#174, #179)
   - id: BE-2.09
     class: systematic_sw

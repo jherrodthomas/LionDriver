@@ -1,0 +1,336 @@
+# IFR items: cross-domain interfaces as items that need both owners' agreement (decision register DQ-129 A).
+# One item per interface IX-nn of the process model (assurance/process/model/interfaces.yaml), which holds the
+# work products, topic, anchors and due gate; this file holds the owners and the agreement state. Kept by hand.
+# Schema: see ../README.md §4.10. Checked by tools/check_trace.py (I1) and process_model.py (P7).
+# status: proposed until an accepted review record of both owners lists the item (review_ref, REV-nnn in
+# assurance/case/reviews/reviews.yaml); only then agreed. No such review has been recorded yet.
+
+- id: IFR-01
+  kind: interface-requirement
+  interface: IX-01
+  title: "TARA safety impact is rated against the HARA hazards"
+  owners: ["Safety manager", "Cybersecurity manager"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-02
+  kind: interface-requirement
+  interface: IX-02
+  title: "Cybersecurity goals protect the safety goals"
+  owners: ["Safety manager", "Cybersecurity manager"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-03
+  kind: interface-requirement
+  interface: IX-03
+  title: "One hazard log for HARA and SOTIF hazards"
+  owners: ["Safety manager", "SOTIF lead"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-04
+  kind: interface-requirement
+  interface: IX-04
+  title: "Driver monitoring is a SOTIF misuse measure under the C2 ratings"
+  owners: ["Safety manager", "SOTIF lead"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-05
+  kind: interface-requirement
+  interface: IX-05
+  title: "Driver-monitoring targets are AI safety requirements"
+  owners: ["SOTIF lead", "AI/ML safety lead"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-06
+  kind: interface-requirement
+  interface: IX-06
+  title: "The claimed ODD rests on LionDriver evaluation data, not on the training data"
+  owners: ["SOTIF lead", "AI/ML safety lead"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-07
+  kind: interface-requirement
+  interface: IX-07
+  title: "Model artefacts that load through pickle: AI integrity and threat TS-09"
+  owners: ["AI/ML safety lead", "Cybersecurity manager"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-08
+  kind: interface-requirement
+  interface: IX-08
+  title: "The FSC transition rule is implemented by FM-03"
+  owners: ["Safety manager", "SOTIF lead"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-09
+  kind: interface-requirement
+  interface: IX-09
+  title: "Boot integrity, mode lock and command gating are safety and security requirements"
+  owners: ["Safety manager", "Cybersecurity manager"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-10
+  kind: interface-requirement
+  interface: IX-10
+  title: "FFI-3 depends on trust boundary TB-2 (BOOT0/NRST)"
+  owners: ["Safety manager", "Cybersecurity manager"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-11
+  kind: interface-requirement
+  interface: IX-11
+  title: "Unauthenticated SoC messaging is an interference path and an attack surface"
+  owners: ["Safety manager", "Cybersecurity manager"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-12
+  kind: interface-requirement
+  interface: IX-12
+  title: "ML insufficiencies are [SOTIF] basic events in the system fault trees"
+  owners: ["Safety manager", "SOTIF lead"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-13
+  kind: interface-requirement
+  interface: IX-13
+  title: "The SOTIF validation targets confirm the AI performance values"
+  owners: ["SOTIF lead", "AI/ML safety lead"]
+  open_item: "WP-V-02 OI-3"
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-14
+  kind: interface-requirement
+  interface: IX-14
+  title: "ML outputs reach the actuators only through the envelope (AIR-28)"
+  owners: ["Safety manager", "AI/ML safety lead"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-15
+  kind: interface-requirement
+  interface: IX-15
+  title: "Hardware-dependent SWSRs pair with the HWSRs"
+  owners: ["Envelope software engineer(s)", "Hardware safety engineer"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-16
+  kind: interface-requirement
+  interface: IX-16
+  title: "SoC control of the MCU boot and reset lines"
+  owners: ["Hardware safety engineer", "Cybersecurity manager"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-17
+  kind: interface-requirement
+  interface: IX-17
+  title: "One coding guideline for safety and security (MISRA C and CERT C)"
+  owners: ["Cybersecurity manager", "Envelope software engineer(s)"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-18
+  kind: interface-requirement
+  interface: IX-18
+  title: "ML compiler confidence by back-to-back comparison with ONNX Runtime"
+  owners: ["AI/ML safety lead", "Safety manager"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-19
+  kind: interface-requirement
+  interface: IX-19
+  title: "Model weights are safety-related configuration data"
+  owners: ["Envelope software engineer(s)", "AI/ML safety lead"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-20
+  kind: interface-requirement
+  interface: IX-20
+  title: "One HIL bench for hardware, software and system integration"
+  owners: ["Hardware safety engineer", "Envelope software engineer(s)"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-21
+  kind: interface-requirement
+  interface: IX-21
+  title: "Split of software qualification, system integration and fault injection"
+  owners: ["Envelope software engineer(s)", "Safety manager"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-22
+  kind: interface-requirement
+  interface: IX-22
+  title: "Faults under WP-V-05, triggering conditions under WP-V-03"
+  owners: ["Safety manager", "SOTIF lead"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-23
+  kind: interface-requirement
+  interface: IX-23
+  title: "Known-scenario evaluation reuses the ML test cases"
+  owners: ["SOTIF lead", "AI/ML safety lead"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-24
+  kind: interface-requirement
+  interface: IX-24
+  title: "The safety case delegates its cybersecurity branch to the cybersecurity case"
+  owners: ["Safety manager", "Cybersecurity manager"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-25
+  kind: interface-requirement
+  interface: IX-25
+  title: "P(not controlled) for the SOTIF targets comes from the safety validation tests"
+  owners: ["Safety manager", "SOTIF lead"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-26
+  kind: interface-requirement
+  interface: IX-26
+  title: "The SOTIF release argument needs the model evaluation report"
+  owners: ["SOTIF lead", "AI/ML safety lead"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-27
+  kind: interface-requirement
+  interface: IX-27
+  title: "Field events with a possible cyber cause go to incident response"
+  owners: ["Safety manager", "Cybersecurity manager"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-28
+  kind: interface-requirement
+  interface: IX-28
+  title: "One anomaly signature set before and after release"
+  owners: ["Safety manager", "SOTIF lead"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-29
+  kind: interface-requirement
+  interface: IX-29
+  title: "Field monitoring checks that the ML models behave as validated"
+  owners: ["Safety manager", "AI/ML safety lead"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-30
+  kind: interface-requirement
+  interface: IX-30
+  title: "Security fixes reach the field as releases that are not signed"
+  owners: ["Cybersecurity manager", "Safety manager"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-31
+  kind: interface-requirement
+  interface: IX-31
+  title: "The cybersecurity manager carries the interface to safety"
+  owners: ["Safety manager", "Cybersecurity manager"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-32
+  kind: interface-requirement
+  interface: IX-32
+  title: "The AI safety lead supplies model insufficiencies to the SOTIF lead"
+  owners: ["SOTIF lead", "AI/ML safety lead"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+
+- id: IFR-33
+  kind: interface-requirement
+  interface: IX-33
+  title: "Supplier information on the ML models bounds the AI claims"
+  owners: ["AI/ML safety lead", "Safety manager"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11

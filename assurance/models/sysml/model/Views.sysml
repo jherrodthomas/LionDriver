@@ -101,4 +101,37 @@ package LionDriverViews {
         expose LionDriverBehaviour::**;
         render Views::asInterconnectionDiagram;
     }
+
+    view <'V-14'> needsUseCases : NeedsView {
+        doc /* Stakeholder needs SN-01 to SN-12 and actors of WP-S-01 §1.2 and §1.3 against the use cases UC-01 to UC-11 of §1.4, the requirements that refine each need and the functions each use case performs. */
+        expose LionDriverNeeds::*;
+        expose LionDriverRequirements::*;
+        expose LionDriverFunctions::*;
+        render Views::asElementTable;
+    }
+
+    view <'V-15'> endToEndThread : ThreadView {
+        doc /* SN-01 end to end: stakeholder, need, use case, functions and the elements that perform them; system requirements, satisfying elements and verification cases. */
+        expose LionDriverNeeds::sn_01;
+        expose LionDriverNeeds::uc_01;
+        expose LionDriverRequirements::*;
+        expose LionDriverSatisfaction::*;
+        expose LionDriverVerification::*;
+        expose LionDriverFunctions::**;
+        expose LdSda::**;
+        render Views::asTreeDiagram;
+    }
+
+    view <'V-16'> stateMachineRecords : StateView {
+        doc /* The state-machine records of WP-W-05 §5 (SM-SAFETY-MODE, SM-TOY-AUTH, SM-SELFDRIVED): states, record transitions, status and SWSRs. */
+        expose LionDriverStateRecords::**;
+        render Views::asElementTable;
+    }
+
+    view <'V-17'> startupSequence : SequenceView {
+        doc /* The start-up and engagement sequence of WP-S-03 §4.1 (Table 4-1): lifelines, steps, conditions and the states they lead to. */
+        expose LionDriverSequences::**;
+        expose LdSda::**;
+        render Views::asInterconnectionDiagram;
+    }
 }

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-06 Requirements for production, operation, service and decommissioning |
 | Standard reference | ISO 26262-4:2018 §6 (specification of requirements for production, operation, service and decommissioning); ISO 26262-7:2018 §5–§6 (by reference); ISO 21448:2022 §13 (operation phase); ISO/SAE 21434:2021 §10, §12, §14 (production, operations, end of support, by reference); ASPICE 4.0 SYS.2 |
-| Version | 0.1 |
+| Version | 0.3 (TSR-806 status: debug, maneuver and joystick modes absent by construction in the reference build, DQ-131 A; requirement unchanged; 2026-10-25). 0.2 (OI-4 closed: the item reads the EPS and ABS/VSC fault codes at start-up and blocks engagement on an active one, TSR-629 (DQ-132 A); TSR-811 status and §4 updated, the lamp check stays; 2026-10-25). 0.1 |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (SG-01, until re-rated; B‡ per [WP-S-02 §2.1](WP-S-02-technical-safety-requirements.md)); SOTIF; CS overlaps |
 | Author | Assurance team (initial draft) |
@@ -54,7 +54,7 @@ Attributes as in [WP-S-02 §2](WP-S-02-technical-safety-requirements.md). "Speci
 | TSR-803 | Every vehicle ECU firmware version (engine, EPS, ABS, radar, camera) shall equal the reference record before engagement; a mismatch shall put the item in dashcam mode until an impact analysis extends the scope. | B‡ | AOU-01…05; WP-M-12 | INS-21; SPC-07; WP-O-01 §6 | R-CFG raw FW query output | Procedure defined |
 | TSR-804 | The installed configuration shall show fingerprint `TOYOTA_COROLLA_TSS2` (exact, not fuzzy), safety model `toyota`, safety parameter 73, alternative experience 0, openpilot longitudinal on, both in `carParams` and in `pandaStates`. | B‡ | FSR-01.10; TSR-512 | INS-22, INS-23, INS-24; SPC-06 | R-CFG | Procedure defined. Needed because the panda accepts any mode from the SoC (GAP-09) |
 | TSR-805 | Harness seating and the relay intercept/PCS-forwarding function shall be verified at installation: no relay malfunction or CAN errors, intercepted messages absent on the car side, PCS-relevant camera messages present on the car side with LD-SDA disengaged. | B | FSR-07.01, 07.03; TSR-704, 706 | INS-11, INS-13, INS-14, INS-27; SPC-01, SPC-02 | R-INS, R-FUN | Procedure defined; message list pending (WP-O-01 OI-7) |
-| TSR-806 | The parameter set shall equal the release record: Experimental Mode per D-08, `DisengageOnAccelerator` per WP-C-08, debug/maneuver/joystick modes absent, DM demo mode off, SSH off. | QM (B-sup) | FSR-02.08; TSR-610, 613 | INS-19; SPC-09 | R-SW parameter dump | Procedure defined |
+| TSR-806 | The parameter set shall equal the release record: Experimental Mode per D-08, `DisengageOnAccelerator` per WP-C-08, debug/maneuver/joystick modes absent, DM demo mode off, SSH off. | QM (B-sup) | FSR-02.08; TSR-610, 613 | INS-19; SPC-09 | R-SW parameter dump | Procedure defined. Debug, maneuver and joystick modes absent by construction in the reference build (DQ-131 A, [change record](../07-supporting/impact/change-2026-10-25-reference-debug-procs.md)): the manager does not register `joystick`, `maneuversd` or `lateral_maneuversd` and the reference release does not ship them; the parameter dump still checks the three params, and the DM demo mode and SSH stay with the procedure |
 | TSR-807 | The device shall be mounted within the position tolerance and calibrated within the angle tolerance band derived from the model validation range. | QM (SOTIF) | AOU-08 | INS-09, INS-10, INS-25, INS-26; SPC-03 | R-CAL | Tolerance band TBD (WP-O-01 OI-2) |
 | TSR-815 | Only devices and harnesses of the approved hardware revision, with clean history, shall be installed; units returned after a field event or decommissioned from another vehicle shall pass refurbishment inspection first. | B‡ | T-04; WP-H-07 | INS-01…INS-04; ITS-03…ITS-05 | R-DEV | Procedure defined; approved revision TBD (WP-C-01 OI-2) |
 | TSR-816 | Installation shall be done by a trained installer, and the installation record (R-DEV…R-USR) shall be complete and second-person checked before the first engagement and retained per WP-P-04. | B‡ | ISO 26262-7 §5 (by ref.) | WP-O-01 §5; WP-M-04 | Record review | Template pending (WP-O-01 OI-3) |
@@ -63,7 +63,7 @@ Attributes as in [WP-S-02 §2](WP-S-02-technical-safety-requirements.md). "Speci
 
 | ID | Requirement | ASIL | Parent | Implemented by | Verification / record | Status at baseline |
 |---|---|---|---|---|---|---|
-| TSR-811 | Before every drive the driver shall perform the pre-drive checks and shall not engage if a check fails (vehicle warning lamps, VSC on, clean camera area, device seated, DM camera unobstructed, no offroad alert, driver fit). | QM (B-sup) | AOU-06, 08, 09, 10 | OPS-01…OPS-07; WP-O-03 §5 | Briefing acknowledgement | Defined. WP-O-02 OI-2: consider system-side DTC checks |
+| TSR-811 | Before every drive the driver shall perform the pre-drive checks and shall not engage if a check fails (vehicle warning lamps, VSC on, clean camera area, device seated, DM camera unobstructed, no offroad alert, driver fit). | QM (B-sup) | AOU-06, 08, 09, 10 | OPS-01…OPS-07; WP-O-03 §5 | Briefing acknowledgement | Defined. The lamp check stays as a second barrier: since DQ-132 A (2026-10-25) the item itself reads the EPS and ABS/VSC fault codes at start-up and refuses engagement on an active code or a failed read (TSR-629, WP-S-02; implemented, not verified on the vehicle). Engine, camera and radar codes, and lamps without a code, stay with the driver |
 | TSR-812 | Each driver shall receive the user information and safety warnings before first use and acknowledge them; in the development phase only approved safety drivers shall operate the item. | QM (B-sup) | AOU-06, AOU-07 | WP-O-03 Part A/B; INS-30 | R-USR | Defined |
 | TSR-813 | Field monitoring shall collect and analyse drive logs and driver reports of every installed item, including every disengagement caused by a safety mechanism (`controlsMismatch`, `relayMalfunction`, RX invalid, heartbeat lost, `safetyTxBlocked` > 0), and feed problem resolution and the safety case. | QM | SG-01…07; ISO 21448 §13 | OPS-11, OPS-12; WP-O-04; WP-P-03 | Monitoring reports | WP-O-04 pending |
 
@@ -99,6 +99,7 @@ These are design-side requirements that make the TSR-8xx checks possible or repl
 | Relay checked at every power-up so PM-03 is not the latent-fault interval | TSR-506, TSR-515 | Not met (GAP-12, GAP-43) |
 | Configuration extraction from the installation log | WP-O-01 OI-5 script | Not started |
 | Logs identify software, firmware and model versions | SYS-141; AIR-23 | Partial |
+| EPS and ABS/VSC fault codes read by the item, so the OPS-01 lamp check is no longer the only barrier for those systems | TSR-629 (DQ-056 A, DQ-132 A) | Implemented in host software; not verified on the vehicle (WP-S-09 VS-SQ-20) |
 
 ## 5. Traceability
 
@@ -130,4 +131,4 @@ These are design-side requirements that make the TSR-8xx checks possible or repl
 | OI-1 | Define the LionDriver release channel, key and build pipeline so TSR-801/802 can be met in substance (with WP-S-07) | Maintainer | G3 |
 | OI-2 | Set the latent-fault interval assumption for the relay (PM-03, 6 months) in WP-H-04 and replace it by TSR-515 start-up tests once implemented | Safety engineer | G3 |
 | OI-3 | Add a WP-O-01/WP-O-02 cross-reference column for TSR-8xx IDs (owner of those WPs) | Maintainer | G2 |
-| OI-4 | Decide on system-side checks that can replace manual pre-drive checks (WP-O-02 OI-2), e.g. blocking engagement on EPS/VSC DTC status | Safety engineer | G2 |
+| OI-4 | **Closed 2026-10-25** (register DQ-132 A, after DQ-056 A): the item reads the EPS and ABS/VSC fault codes at start-up and blocks engagement on an active one (TSR-629, SWSR-629…629d); it adds to the driver's pre-drive check (TSR-811, OPS-01) and does not replace it. ~~Decide on system-side checks that can replace manual pre-drive checks (WP-O-02 OI-2), e.g. blocking engagement on EPS/VSC DTC status~~ | Safety engineer | G2 |

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-O-05 Cybersecurity incident response, vulnerability management and software updates |
 | Standard reference | ISO/SAE 21434:2021 §8 (continual cybersecurity activities: monitoring, event evaluation, vulnerability analysis, vulnerability management), §13 (operations and maintenance: incident response, updates), §14 (end of cybersecurity support and decommissioning); UN R156 (informative, software update management); ASPICE 4.0 SEC.* |
-| Version | 0.3 (§6: Figures 6-1 to 6-3, the update path today and the target, five update threats with their gates, and an update's states, generated from WP-S-07 §3.6 and §4.12 and this section; no change to the process or the requirements; 2026-10-24). 0.2 (§2 and OI-1: only the maintainer's own installation is supported until a deputy is named (DQ-101 A); OI-4: the timelines of §4.3 and §5.3 and the support period of §7 agreed as proposed (DQ-102 A); 2026-10-23). 0.1 |
+| Version | 0.4 (§4.4 items 5 to 8: weaknesses the project finds itself are embargoed until their control is verified; details in the private repository as GD records; DQ-421 A; 2026-10-26). 0.3 (§6: Figures 6-1 to 6-3, the update path today and the target, five update threats with their gates, and an update's states, generated from WP-S-07 §3.6 and §4.12 and this section; no change to the process or the requirements; 2026-10-24). 0.2 (§2 and OI-1: only the maintainer's own installation is supported until a deputy is named (DQ-101 A); OI-4: the timelines of §4.3 and §5.3 and the support period of §7 agreed as proposed (DQ-102 A); 2026-10-23). 0.1 |
 | Status | Draft — process defined; **not running**. No monitoring, intake or incident record exists yet (GAP-28) |
 | ASIL / scope | CS; safety coordination for SG-01…SG-08 |
 | Author | Assurance team (initial draft) |
@@ -102,6 +102,10 @@ Retained or shared risks are added to the CS case ([WP-K-03](../10-safety-case/W
 2. Coordinated disclosure: LionDriver publishes an advisory when the fix release is available, or at **90 days** after the report, whichever is first, unless the reporter agrees an extension. Safety-relevant issues may be disclosed earlier as a stop-use notice without technical detail.
 3. If the vulnerability is in upstream code, LionDriver reports it to the upstream owner (comma.ai `SECURITY.md` contacts, or the tinygrad / dependency maintainers) under the same embargo before publishing.
 4. Advisories state affected releases, impact, fix release and workaround; they contain no exploit detail.
+5. **Weaknesses the project finds itself** (TARA, review, test, simulation) are embargoed like reported ones, until their control is verified (decision register DQ-421 A, 2026-10-25). Their code locations and mechanisms, and attack-path simulations, mocks and clips, live only in the private repository `jherrodthomas/LionDriver-security`, as GD records (GD-nn). The public documents keep the threat, the asset, the damage, the risk ratings, the goal and requirement text, the status, a one-line statement of the weakness, and the pointer `(details: private record GD-nn)`.
+6. When a GD record's controls are verified, its text goes back into the public documents in one commit, and the record is marked `published` with that commit. A GD ID is never reused.
+7. Every edit to a public document follows items 5 and 6. A reviewer who finds an unfixed weakness's code location or mechanism in a public pull request asks for it to be moved before merge. What was public before 2026-10-26 stays in the public history; the rule reduces exposure from then on.
+8. The abstraction rule applies in both repositories: no exploits, payloads, keys or procedures.
 
 ## 5. Incident response plan
 

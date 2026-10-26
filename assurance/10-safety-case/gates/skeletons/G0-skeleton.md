@@ -23,7 +23,7 @@
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 2 performed: CR-01, CR-03@G0 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 95 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 91 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
@@ -35,7 +35,7 @@
 | [WP-M-04](../../../01-management/WP-M-04-organization-competence-safety-culture.md) Organization-specific rules, safety culture, competence management | GOV-04 | Draft | 5 | |
 | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) Quality management and quality assurance plan | GOV-05 | Draft | 3 | |
 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) Confirmation measures plan (reviews, audit, assessment, independence) | GOV-06 | Draft | 5 | |
-| [WP-M-08](../../../01-management/WP-M-08-sotif-plan.md) SOTIF plan | GOV-07 | Draft | 8 | |
+| [WP-M-08](../../../01-management/WP-M-08-sotif-plan.md) SOTIF plan | GOV-07 | Draft | 5 | |
 | [WP-M-09](../../../01-management/WP-M-09-cybersecurity-plan.md) Cybersecurity plan | GOV-08 | Draft | 8 | |
 | [WP-M-10](../../../01-management/WP-M-10-ai-safety-plan.md) AI safety management plan | GOV-09 | Draft | 6 | |
 | [WP-M-11](../../../01-management/WP-M-11-upstream-and-supplier-management.md) Upstream (comma.ai) and supplier management, development interface agreements | GOV-10 | Draft | 4 | |
@@ -49,7 +49,7 @@
 | [WP-P-02](../../../07-supporting/WP-P-02-change-management.md) Change management plan | GOV-18 | Draft | 5 | |
 | [WP-M-13](../../../01-management/WP-M-13-aspice-capability-baseline.md) ASPICE capability baseline (self-assessment) | GOV-19 | Draft | 4 | |
 | [WP-M-00](../../../01-management/WP-M-00-work-product-register.md) Work product register | GOV-20 | Draft | 0 | |
-| [WP-P-11](../../../process/README.md) Integrated process model and generated process maps (all phases G0–G6 modelled) | GOV-21 | Draft | 3 | |
+| [WP-P-11](../../../process/README.md) Integrated process model and generated process maps (all phases G0–G6 modelled) | GOV-21 | Draft | 2 | |
 
 ### Confirmation measures
 
@@ -60,11 +60,15 @@ A gate cannot pass if a confirmation review WP-M-06 assigns to it has not been p
 | CR-01 Confirmation review of the impact analysis | WP-M-12 | I3 | `confirmation/CR-01-*.md` (not present) | |
 | CR-03@G0 Confirmation review of the safety plan and tailoring | WP-M-02, WP-M-01, WP-M-06 | I3 | `confirmation/CR-03-*.md` (not present) | |
 
-### Open cross-domain interfaces due by this gate
+### Cross-domain interfaces due by this gate
 
-From the [process model](../../../process/README.md). Each one is a condition on the gate unless it is closed before the review.
+From the [process model](../../../process/README.md) and the IFR items in [`trace/items/ifr.yaml`](../../../trace/items/ifr.yaml). An interface is agreed only when an accepted review record of both owners lists its IFR item (DQ-129 A). Each one not agreed is a condition on the gate unless it is agreed before the review.
 
-None.
+| IFR | Interface | Title | Owners | Open item | Due | Review record | Agreed? |
+|---|---|---|---|---|---|---|---|
+| IFR-31 | IX-31 | The cybersecurity manager carries the interface to safety | Safety manager / Cybersecurity manager | — | G0 | none |  |
+| IFR-32 | IX-32 | The AI safety lead supplies model insufficiencies to the SOTIF lead | SOTIF lead / AI/ML safety lead | — | G0 | none |  |
+| IFR-33 | IX-33 | Supplier information on the ML models bounds the AI claims | AI/ML safety lead / Safety manager | — | G0 | none |  |
 
 ### Roles WP-M-02 §3.1 needs by this gate that are not assigned
 

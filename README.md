@@ -32,7 +32,7 @@ LionDriver publishes its safety argument as it is built: the claims, the evidenc
 
 [![Download the safety case snapshot (PDF)](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fjherrodthomas%2FLionDriver%2Fliondriver-dev%2Fassurance%2Fcase%2Fbadge.json)](https://github.com/jherrodthomas/LionDriver/releases/download/snapshot-latest/LionDriver-safety-case.pdf) · [all snapshots and how to verify them](https://github.com/jherrodthomas/LionDriver/releases/tag/snapshot-latest)
 
-**Development** · baseline `BL-002` at `bf6ce8c` · 36 claims (0 with accepted evidence) · 50 evidence items (0 accepted) · 42 open defeaters · records digest `3c3e529b0f49`
+**Development** · baseline `BL-002` at `bf6ce8c` · 36 claims (0 with accepted evidence) · 50 evidence items (0 accepted) · 42 open defeaters · records digest `d6368d324eab`
 
 <!-- END GENERATED: assurance-headline -->
 

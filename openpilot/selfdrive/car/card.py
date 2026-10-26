@@ -20,7 +20,8 @@ from opendbc.car.car_helpers import get_car, interfaces
 from opendbc.car.interfaces import CarInterfaceBase, RadarInterfaceBase
 from openpilot.selfdrive.pandad import can_capnp_to_list, can_list_to_can_capnp
 from openpilot.selfdrive.car.cruise import VCruiseHelper
-from openpilot.selfdrive.car import stock_aeb_interlock
+from openpilot.selfdrive.car import stock_aeb_interlock, vehicle_dtc
+from openpilot.selfdrive.selfdrived.assured_config import ASSURED_PLATFORMS
 
 REPLAY = "REPLAY" in os.environ
 
@@ -113,6 +114,14 @@ class Car:
       if not self.stock_aeb_preserved:
         cloudlog.error("LD-FSR-001: car interface may disable stock AEB, forcing passive mode")
 
+      # LionDriver TSR-629 (DQ-132): read the EPS and ABS/VSC fault codes here, once, while pandad still holds the panda
+      # in the diagnostic mode (no actuation, not engaged); FirmwareQueryDone below ends that window. A log replay and
+      # the simulator have no ECUs to ask, and selfdrived does not gate on the read there
+      if self.CP.carFingerprint in ASSURED_PLATFORMS and not REPLAY and not stock_aeb_interlock.is_simulation():
+        dtc_status = vehicle_dtc.read_startup_dtcs(self.can_callbacks[1], self.can_callbacks[0], self.CP.carFingerprint,
+                                                   self.parse_can_for_dtc_read)
+        self.params.put(vehicle_dtc.PARAM, dtc_status.to_dict(), block=True)
+
       # continue onto next fingerprinting step in pandad
       self.params.put_bool("FirmwareQueryDone", True, block=True)
     else:
@@ -167,6 +176,10 @@ class Car:
 
     # card is driven by can recv, expected at 100Hz
     self.rk = Ratekeeper(100, print_delay_threshold=None)
+
+  def parse_can_for_dtc_read(self) -> structs.CarState:
+    """carState from the CAN received since the last call, for the stationary check before the fault-code read"""
+    return self.CI.update(can_capnp_to_list(messaging.drain_sock_raw(self.can_sock, wait_for_one=True)))
 
   def state_update(self) -> tuple[car.CarState, structs.RadarDataT | None]:
     """carState update loop, driven by can"""

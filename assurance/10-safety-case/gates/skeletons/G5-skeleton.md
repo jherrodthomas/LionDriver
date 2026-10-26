@@ -23,7 +23,7 @@
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 4 performed: CR-12, FSA-F, SR-03, SR-04@G5 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 59 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 58 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
@@ -34,7 +34,7 @@
 | [WP-V-06](../../../06-validation/WP-V-06-cybersecurity-validation.md) Cybersecurity validation and penetration testing | REL-03 | Draft | 4 | |
 | [WP-O-01](../../../09-production-operation/WP-O-01-installation-and-provisioning-control.md) Installation, provisioning and production control | REL-04 | Draft | 8 | |
 | [WP-O-03](../../../09-production-operation/WP-O-03-user-information-safety-warnings.md) User information and safety warnings | REL-05 | Draft | 7 | |
-| [WP-O-02](../../../09-production-operation/WP-O-02-operation-service-decommissioning.md) Operation, service (maintenance, repair) and decommissioning | REL-06 | Draft | 7 | |
+| [WP-O-02](../../../09-production-operation/WP-O-02-operation-service-decommissioning.md) Operation, service (maintenance, repair) and decommissioning | REL-06 | Draft | 6 | |
 | [WP-K-02](../../../10-safety-case/WP-K-02-sotif-release-argument.md) SOTIF achievement evaluation and release recommendation | REL-07 | Skeleton | 2 | |
 | [WP-K-03](../../../10-safety-case/WP-K-03-cybersecurity-case.md) Cybersecurity case | REL-08 | Draft | 5 | |
 | [WP-P-10](../../../07-supporting/WP-P-10-release-management.md) Release management and baseline procedure | REL-09 | Draft | 5 | |
@@ -55,13 +55,41 @@ A gate cannot pass if a confirmation review WP-M-06 assigns to it has not been p
 | SR-03 Review of the SOTIF release argument and residual risk | WP-K-02, WP-V-03, WP-V-04 | I3-equivalent | `confirmation/SR-03.md` (not present) | |
 | SR-04@G5 Review of the AI assurance argument (PAS 8800) | WP-C-11, WP-W-10, WP-K-01 | external | `confirmation/SR-04-G5.md` (not present) | |
 
-### Open cross-domain interfaces due by this gate
+### Cross-domain interfaces due by this gate
 
-From the [process model](../../../process/README.md). Each one is a condition on the gate unless it is closed before the review.
+From the [process model](../../../process/README.md) and the IFR items in [`trace/items/ifr.yaml`](../../../trace/items/ifr.yaml). An interface is agreed only when an accepted review record of both owners lists its IFR item (DQ-129 A). Each one not agreed is a condition on the gate unless it is agreed before the review.
 
-| Interface | Topic | Open item | Due | Closed? |
-|---|---|---|---|---|
-| IX-13 | The AI safety requirements carry (TBC) performance values that the SOTIF validation targets VT-01…VT-15 must confirm. WP-V-02 §4.1 traces each value: 8 confirmed or replaced (AIR-11 and AIR-14 through VT-14 and VT-15; AIR-01, AIR-03 and AIR-04 derived in §4.3); 6 come from other documents. The targets are not yet frozen: the project lead freezes them once the B1 crash data replaces the illustrative rates, with a later assessor review (DQ-096 B) | WP-V-02 OI-3 | G2 | |
+| IFR | Interface | Title | Owners | Open item | Due | Review record | Agreed? |
+|---|---|---|---|---|---|---|---|
+| IFR-01 | IX-01 | TARA safety impact is rated against the HARA hazards | Safety manager / Cybersecurity manager | — | G1 | none |  |
+| IFR-02 | IX-02 | Cybersecurity goals protect the safety goals | Safety manager / Cybersecurity manager | — | G1 | none |  |
+| IFR-03 | IX-03 | One hazard log for HARA and SOTIF hazards | Safety manager / SOTIF lead | — | G1 | none |  |
+| IFR-04 | IX-04 | Driver monitoring is a SOTIF misuse measure under the C2 ratings | Safety manager / SOTIF lead | — | G1 | none |  |
+| IFR-05 | IX-05 | Driver-monitoring targets are AI safety requirements | SOTIF lead / AI/ML safety lead | — | G2 | none |  |
+| IFR-06 | IX-06 | The claimed ODD rests on LionDriver evaluation data, not on the training data | SOTIF lead / AI/ML safety lead | — | G2 | none |  |
+| IFR-07 | IX-07 | Model artefacts that load through pickle: AI integrity and threat TS-09 | AI/ML safety lead / Cybersecurity manager | — | G1 | none |  |
+| IFR-08 | IX-08 | The FSC transition rule is implemented by FM-03 | Safety manager / SOTIF lead | — | G1 | none |  |
+| IFR-09 | IX-09 | Boot integrity, mode lock and command gating are safety and security requirements | Safety manager / Cybersecurity manager | — | G2 | none |  |
+| IFR-10 | IX-10 | FFI-3 depends on trust boundary TB-2 (BOOT0/NRST) | Safety manager / Cybersecurity manager | — | G2 | none |  |
+| IFR-11 | IX-11 | Unauthenticated SoC messaging is an interference path and an attack surface | Safety manager / Cybersecurity manager | — | G2 | none |  |
+| IFR-12 | IX-12 | ML insufficiencies are [SOTIF] basic events in the system fault trees | Safety manager / SOTIF lead | — | G2 | none |  |
+| IFR-13 | IX-13 | The SOTIF validation targets confirm the AI performance values | SOTIF lead / AI/ML safety lead | WP-V-02 OI-3 | G2 | none |  |
+| IFR-14 | IX-14 | ML outputs reach the actuators only through the envelope (AIR-28) | Safety manager / AI/ML safety lead | — | G2 | none |  |
+| IFR-15 | IX-15 | Hardware-dependent SWSRs pair with the HWSRs | Envelope software engineer(s) / Hardware safety engineer | — | G3 | none |  |
+| IFR-16 | IX-16 | SoC control of the MCU boot and reset lines | Hardware safety engineer / Cybersecurity manager | — | G3 | none |  |
+| IFR-17 | IX-17 | One coding guideline for safety and security (MISRA C and CERT C) | Cybersecurity manager / Envelope software engineer(s) | — | G3 | none |  |
+| IFR-18 | IX-18 | ML compiler confidence by back-to-back comparison with ONNX Runtime | AI/ML safety lead / Safety manager | — | G3 | none |  |
+| IFR-19 | IX-19 | Model weights are safety-related configuration data | Envelope software engineer(s) / AI/ML safety lead | — | G3 | none |  |
+| IFR-20 | IX-20 | One HIL bench for hardware, software and system integration | Hardware safety engineer / Envelope software engineer(s) | — | G4 | none |  |
+| IFR-21 | IX-21 | Split of software qualification, system integration and fault injection | Envelope software engineer(s) / Safety manager | — | G4 | none |  |
+| IFR-22 | IX-22 | Faults under WP-V-05, triggering conditions under WP-V-03 | Safety manager / SOTIF lead | — | G4 | none |  |
+| IFR-23 | IX-23 | Known-scenario evaluation reuses the ML test cases | SOTIF lead / AI/ML safety lead | — | G4 | none |  |
+| IFR-24 | IX-24 | The safety case delegates its cybersecurity branch to the cybersecurity case | Safety manager / Cybersecurity manager | — | G5 | none |  |
+| IFR-25 | IX-25 | P(not controlled) for the SOTIF targets comes from the safety validation tests | Safety manager / SOTIF lead | — | G5 | none |  |
+| IFR-26 | IX-26 | The SOTIF release argument needs the model evaluation report | SOTIF lead / AI/ML safety lead | — | G5 | none |  |
+| IFR-31 | IX-31 | The cybersecurity manager carries the interface to safety | Safety manager / Cybersecurity manager | — | G0 | none |  |
+| IFR-32 | IX-32 | The AI safety lead supplies model insufficiencies to the SOTIF lead | SOTIF lead / AI/ML safety lead | — | G0 | none |  |
+| IFR-33 | IX-33 | Supplier information on the ML models bounds the AI claims | AI/ML safety lead / Safety manager | — | G0 | none |  |
 
 ### Roles WP-M-02 §3.1 needs by this gate that are not assigned
 

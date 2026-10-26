@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-07 Cybersecurity requirements and architectural design |
 | Standard reference | ISO/SAE 21434:2021 §10 (product development: refinement of cybersecurity requirements, architectural design, cybersecurity controls); §9.5 (concept, as input); ASPICE 4.0 SEC.1, SYS.3 |
-| Version | 0.8 (§4: Figure 4-1, the requirements by group with allocation and status, generated from the tables; 2026-10-25). 0.7 (CSR-112 status: athena not started in LionDriver builds, DQ-121 A; 2026-10-22). 0.6 (CSR-031 and CSR-121 name the signature scheme, ECDSA P-256 with SHA-256 (decided 2026-10-19, DQ-191 A, replacing RSA-1024/SHA-1); §3.6 target and OI-4 updated; not implemented; CSR-031 links TSR-511 at ASIL C (was B‡, DQ-341 A); 2026-10-20). 0.5 (CSR-012 and OI-9: the lead decided on 2026-10-19 (decision register DQ-082, B) that a refused request is ignored and does not withdraw authority; CSR-012's intent stays open; 2026-10-19). 0.4 (merge of PR #47 software alignment with the base; carries PR #47's draft 0.2: RR-2026-009 F-20: CSR-136 was cited in §3.2 TB-3 and TB-6 but defined nowhere and its intent is not clear from the context; the citations are replaced by the nearest existing CSR (TB-3: CSR-131…CSR-135; TB-6: CSR-135, signing material); CSR-136 stays unused; 2026-10-13). History: 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: evidence of CSR-011, -012, -014, -015, -016, -024, -092 for the reference build at `bf6ce8c`; §3.5 status; §8 differences 2 and 3 resolved by WP-S-02 (TSR-512, TSR-619); not verified on hardware, not reviewed independently). 0.1 |
+| Version | 0.10 (§3.2 TB-2, §3.3, §3.4, §3.5, §3.6, §3.7 and the §4 evidence column: code locations and mechanisms of unverified controls moved to private GD records (DQ-421 A, WP-O-05 §4.4); no requirement or status changed; 2026-10-26). 0.9 (CSR-071 implemented and CSR-073 partly, in the reference build: no joystick or maneuver processes registered or shipped, DQ-131 A; 2026-10-25). 0.8 (§4: Figure 4-1, the requirements by group with allocation and status, generated from the tables; 2026-10-25). 0.7 (CSR-112 status: athena not started in LionDriver builds, DQ-121 A; 2026-10-22). 0.6 (CSR-031 and CSR-121 name the signature scheme, ECDSA P-256 with SHA-256 (decided 2026-10-19, DQ-191 A, replacing RSA-1024/SHA-1); §3.6 target and OI-4 updated; not implemented; CSR-031 links TSR-511 at ASIL C (was B‡, DQ-341 A); 2026-10-20). 0.5 (CSR-012 and OI-9: the lead decided on 2026-10-19 (decision register DQ-082, B) that a refused request is ignored and does not withdraw authority; CSR-012's intent stays open; 2026-10-19). 0.4 (merge of PR #47 software alignment with the base; carries PR #47's draft 0.2: RR-2026-009 F-20: CSR-136 was cited in §3.2 TB-3 and TB-6 but defined nowhere and its intent is not clear from the context; the citations are replaced by the nearest existing CSR (TB-3: CSR-131…CSR-135; TB-6: CSR-135, signing material); CSR-136 stays unused; 2026-10-13). History: 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: evidence of CSR-011, -012, -014, -015, -016, -024, -092 for the reference build at `bf6ce8c`; §3.5 status; §8 differences 2 and 3 resolved by WP-S-02 (TSR-512, TSR-619); not verified on hardware, not reviewed independently). 0.1 |
 | Status | Draft — requirements are proposals derived from code review and the concept; not verified, not approved |
 | ASIL / scope | CS (CAL 1–3); requirements with a safety relation reference their TSR in WP-S-02 (B‡: target ASIL B, ASIL C until SG-01 is re-rated) |
 | Author | Assurance team (initial draft) |
@@ -87,7 +87,7 @@ Paths are relative to the repository root. `safety.h` is `opendbc_repo/opendbc/s
 | ID | Boundary | Data / control crossing | Threats (TS) | Controls (CSR) |
 |---|---|---|---|---|
 | TB-1 | Z2 → Z1 command channel (SPI/USB) | Safety mode/param `0xdc`, alternative experience `0xdf`, bus config `0xdb`/`0xde`, relay debug `0xc5`, softloader `0xd1`, CAN TX frames | TS-02, TS-05, TS-12 | CSR-011…CSR-016, CSR-021…CSR-024, CSR-061 |
-| TB-2 | Z2 → Z1 boot control (GPIO) | `STM_BOOT0`, `STM_RST_N` (`openpilot/common/hardware/comma/hardware.py:401-419`) | TS-03 | CSR-041…CSR-043, CSR-051…CSR-054 |
+| TB-2 | Z2 → Z1 boot control (GPIO) | Panda boot and reset lines driven by the SoC (details: private record GD-03) | TS-03 | CSR-041…CSR-043, CSR-051…CSR-054 |
 | TB-3 | Z4 ↔ Z3 network | athena RPCs, uploads, SSH, git updates, AGNOS images, LFS objects | TS-06, TS-07, TS-08, TS-10 | CSR-101…CSR-104, CSR-111…CSR-117, CSR-121…CSR-126, CSR-131…CSR-135 |
 | TB-4 | Z3 → Z2 local integrity | Params, msgq, model files, filesystem | TS-04, TS-09, TS-12 | CSR-062…CSR-064, CSR-071…CSR-073, CSR-081…CSR-083 |
 | TB-5 | Z1 ↔ Z5 vehicle CAN | RX plausibility inputs, TX actuation, PCS forwarding | TS-01 | CSR-091…CSR-093 |
@@ -98,7 +98,7 @@ Paths are relative to the repository root. `safety.h` is `opendbc_repo/opendbc/s
 
 ### 3.3 Secure boot chain (recommendation)
 
-Current chain at the baseline: ST ROM bootloader (immutable) → panda bootstub in flash sector 0 → application. The bootstub checks a length/version tag (`panda/board/bootstub.c:47-60`) and an RSA-1024 signature over a SHA-1 digest against `release_rsa_key` (`bootstub.c:63`; `panda/board/crypto/rsa.h:37`, `sha.h:45`), and in DEBUG builds also against the committed debug key (`bootstub.c:67-72`). The key-header generator asserts a 1024-bit modulus (`panda/SConscript:32-46`). Builds default to DEBUG with `-DALLOW_DEBUG` unless `RELEASE` and `CERT` are set (`panda/SConscript:12-20`). No RDP/WRP option bytes are set anywhere in the code; the in-application flasher only refuses to erase sector 0 (`panda/board/stm32h7/llflash.h:14`).
+Current chain at the baseline: ST ROM bootloader (immutable) → panda bootstub → application. The bootstub's signature scheme is below the strength this document requires, debug builds also accept a key that is public, and the flash is not protected by option bytes (GAP-24, GAP-25; details: private records GD-01 and GD-02).
 
 Target chain for the reference configuration:
 
@@ -115,7 +115,7 @@ Target chain for the reference configuration:
 
 ### 3.4 SoC control of the panda boot pins
 
-The SoC can drive `STM_BOOT0`/`STM_RST_N` and so start the STM32 ROM bootloader (`hardware.py:410-419`), and `pandad` automatically flashes a development bootstub when the firmware does not boot (`openpilot/selfdrive/pandad/pandad.py:34-39`). With the ROM bootloader reachable, signature checks in the bootstub do not protect against an SoC-root attacker who can erase and reprogram the MCU (GAP-38, TS-03, risk 5). WP-H-01 HWSR-502c states the same from the safety side.
+The SoC can start the STM32 ROM bootloader, and the host software reflashes the panda on its own when the firmware does not boot (details: private record GD-03). With the ROM bootloader reachable, signature checks in the bootstub do not protect against an SoC-root attacker who can erase and reprogram the MCU (GAP-38, TS-03, risk 5). WP-H-01 HWSR-502c states the same from the safety side.
 
 Architecture decisions (proposed, for CCB and assessor agreement):
 
@@ -128,7 +128,7 @@ Architecture decisions (proposed, for CCB and assessor agreement):
 
 ### 3.5 Safety-mode lock
 
-At baseline `8b8c6ae`, `0xdc` calls `set_safety_mode(param1, param2)` with no check (`panda/board/main_comms.h:223-225`); pandad takes the mode and parameter from `CarParams` in the unauthenticated params store (`openpilot/selfdrive/pandad/panda_safety.cc:56-69`). Alternative experience (`0xdf`) is settable only in a non-car mode (`main_comms.h:242-247`), but the SoC can switch to a non-car mode, set it and switch back.
+At baseline `8b8c6ae`, the panda accepts a safety-mode request from the host without a check, and the host takes the mode from an unauthenticated store; the alternative-experience restriction can be bypassed by switching modes (details: private record GD-04).
 
 Design for the release firmware of the reference configuration:
 
@@ -143,7 +143,7 @@ This design serves CSG-01 and FSR-01.10 at the same time; the safety requirement
 
 ### 3.6 Authenticated update path
 
-Today: `updated` fetches a branch chosen by the `UpdaterTargetBranch` param or the current branch (`openpilot/system/updated/updated.py:237-245`), force-checks out `FETCH_HEAD`, resets, cleans and updates submodules (`:387-399`); AGNOS images are checked against hashes in `agnos.json` taken from the same unsigned tree (`:205-222`). `DisableUpdates` stops the updater (`:416`).
+Today: the updater installs a git branch that a local setting can choose, and the OS images are checked only against hashes from the same unsigned tree; nothing is signed beyond TLS (details: private record GD-05). `DisableUpdates` stops the updater.
 
 Target: a LionDriver release manifest (release ID, git tree commit including submodule pins, AGNOS version and image hashes, panda image hash, model artefact hashes, minimum version) signed with the offline update key (ECDSA P-256 with SHA-256, the firmware scheme, DQ-191 A). The device verifies the manifest signature with a pinned public key before staging, verifies the fetched tree against the manifest commit, and verifies every artefact hash before use. Until it exists, automatic updates are disabled and updates are installed manually ([WP-O-02](../09-production-operation/WP-O-02-operation-service-decommissioning.md) UPD-02). The process side (staged rollout, rollback, notification) is in [WP-O-05](../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md).
 
@@ -151,8 +151,8 @@ Target: a LionDriver release manifest (release ID, git tree commit including sub
 
 | Feature | Baseline | Reference configuration (proposed under CT-4) |
 |---|---|---|
-| athenad | Always running daemon (`openpilot/system/manager/process_config.py:71`); server from `ATHENA_HOST` env (`athenad.py:51`); RPCs `athenad.py:354-807` | **Disabled** by default. If the owner opts in: `ATHENA_HOST` override ignored in release, upload destinations allow-listed, SSH tunnel and authorized-key RPCs removed, `getMessage` allow-listed |
-| SSH | Off by default (`SshEnabled`, `openpilot/common/params_keys.h:124`); INTERNAL installer enables it with an embedded CI key (`openpilot/selfdrive/ui/installer/installer.cc:204-213`) | Off; INTERNAL path excluded from LionDriver builds; owner-managed keys only if enabled |
+| athenad | Always running daemon upstream; server chosen by an environment override; RPCs that read services, upload files and open tunnels (details: private record GD-06). Not started in LionDriver builds since 2026-10-22 (DQ-121 A) | **Disabled** by default. If the owner opts in: `ATHENA_HOST` override ignored in release, upload destinations allow-listed, SSH tunnel and authorized-key RPCs removed, `getMessage` allow-listed |
+| SSH | Off by default (`SshEnabled`, `openpilot/common/params_keys.h:124`); the INTERNAL installer enables it with an embedded key (details: private record GD-07) | Off; INTERNAL path excluded from LionDriver builds; owner-managed keys only if enabled |
 | Live streaming | webrtcd only when `IsLiveStreaming` or not a car (`process_config.py:119`); flag cleared on ignition-on (`params_keys.h:62`); onroad requests refused (`openpilot/system/webrtc/helpers.py:28`); binds 127.0.0.1:5001 (`webrtcd.py:640-641`) | Keep as is; regression test |
 | Updates | git branch updater | Disabled until CSR-121 (manual updates) |
 | Uploads to comma | Uploader / athena | Off unless the owner opts in; driver camera not uploaded by default |
@@ -173,29 +173,29 @@ Safety-relevant keys (initial list; maintained with [WP-W-09](../05-software/WP-
 
 | ID | Statement | Alloc | Safety relation | Verif | Evidence at baseline |
 |---|---|---|---|---|---|
-| CSR-011 | Release panda firmware for the reference configuration shall accept a car safety mode only if model, parameter and alternative experience equal the compile-time locked values recorded in the release record. | FW | TSR-512, FSR-01.10, B‡ | R, UT, HIL | Not implemented: `0xdc` unconditional (`main_comms.h:223-225`) (GAP-09). **2026-10-12: Implemented, not verified (reference build)**: `reference_lock.h` (TSR-512) |
+| CSR-011 | Release panda firmware for the reference configuration shall accept a car safety mode only if model, parameter and alternative experience equal the compile-time locked values recorded in the release record. | FW | TSR-512, FSR-01.10, B‡ | R, UT, HIL | Not implemented at baseline (GAP-09; details: private record GD-04). **2026-10-12: Implemented, not verified (reference build)**: `reference_lock.h` (TSR-512) |
 | CSR-012 | A rejected safety-configuration request shall leave the panda in a non-actuating mode and set a fault flag reported to the SoC in the health packet. | FW | TSR-512, B‡ | UT, HIL | Not implemented. **2026-10-12: Partial (reference build)**: rejected, counted as `requestsRejected` (panda `3859fa8`); no fault-flag reaction (the panda keeps its current mode) and no driver alert. **2026-10-19: the lead decided (DQ-082, B) to keep ignoring the request without withdrawing authority (WP-S-02 TSR-513); the non-actuating-mode intent is not met and stays open (OI-9)** |
 | CSR-013 | Transitions from the locked car mode to SILENT or NOOUTPUT shall remain permitted at all times. | FW | TSR-512, B‡ (safe state reachable) | UT, HIL | Implemented generically (`set_safety_mode` accepts any mode); keep under the lock |
-| CSR-014 | While a car safety mode is active, release firmware shall reject host commands outside a documented allow-list, including relay drive (`0xc5`), CAN mode/speed changes (`0xdb`, `0xde`) and loopback. | FW | TSR-513, B‡ | R, UT, FZ | Not implemented; none of the TSR-513 commands is gated (`main_comms.h:144-147, 218-276, 296-314`) (GAP-09). **2026-10-12: Partial (reference build)**: the TSR-513 list (`0xc5`, `0xd8`, `0xdb`, `0xde`, `0xe5`, `0xe6`, `0xe7`, `0xe8`, `0xf1`, `0xf9`, `0xfc`, `0xd1` param 1) refused in a car mode; `0xc0`, `0xb0`, `0xb1`, `0xf6` to confirm (WP-W-02 OI-5); a deny-list, not an allow-list |
-| CSR-015 | Alternative experience shall not be changeable in release firmware for the reference configuration. | FW | TSR-512, TSR-804 | UT | Partial: only in non-car mode (`main_comms.h:242-247`), bypassable by mode switching. **2026-10-12: Implemented, not verified (reference build)**: `0xdf` refused in every mode (SWSR-512a); AOU-14 |
-| CSR-016 | pandad shall compare the panda-reported safety model, parameter and alternative experience with the release-record values and prevent engagement and raise an alert on mismatch. | SoC | QM (B-sup: TSR-512); no matching TSR-6xx (proposed addition, OI-1). 2026-10-12: TSR-619 of WP-S-02 now refines this CSR | UT, HIL | Not implemented; pandad takes values from `CarParams` (`panda_safety.cc:56-69`). 2026-10-12: unchanged (TSR-619 not implemented) |
+| CSR-014 | While a car safety mode is active, release firmware shall reject host commands outside a documented allow-list, including relay drive (`0xc5`), CAN mode/speed changes (`0xdb`, `0xde`) and loopback. | FW | TSR-513, B‡ | R, UT, FZ | Not implemented at baseline: none of the TSR-513 commands is gated (GAP-09; details: private record GD-04). **2026-10-12: Partial (reference build)**: the TSR-513 list (`0xc5`, `0xd8`, `0xdb`, `0xde`, `0xe5`, `0xe6`, `0xe7`, `0xe8`, `0xf1`, `0xf9`, `0xfc`, `0xd1` param 1) refused in a car mode; `0xc0`, `0xb0`, `0xb1`, `0xf6` to confirm (WP-W-02 OI-5); a deny-list, not an allow-list |
+| CSR-015 | Alternative experience shall not be changeable in release firmware for the reference configuration. | FW | TSR-512, TSR-804 | UT | Partial at baseline (details: private record GD-04). **2026-10-12: Implemented, not verified (reference build)**: `0xdf` refused in every mode (SWSR-512a); AOU-14 |
+| CSR-016 | pandad shall compare the panda-reported safety model, parameter and alternative experience with the release-record values and prevent engagement and raise an alert on mismatch. | SoC | QM (B-sup: TSR-512); no matching TSR-6xx (proposed addition, OI-1). 2026-10-12: TSR-619 of WP-S-02 now refines this CSR | UT, HIL | Not implemented (details: private record GD-04). 2026-10-12: unchanged (TSR-619 not implemented) |
 
 ### 4.2 CSR-C-02 No debug capability in release firmware (CSG-01/CSG-02, CAL 3)
 
 | ID | Statement | Alloc | Safety relation | Verif | Evidence at baseline |
 |---|---|---|---|---|---|
-| CSR-021 | The release panda firmware and bootstub shall be built with `RELEASE` and the LionDriver certificate, and the release build shall fail if `ALLOW_DEBUG` is defined. | FW; ENV | TSR-514, FSR-01.10, B‡ | BA | Not met: DEBUG + `ALLOW_DEBUG` is the default (`panda/SConscript:12-20`) (GAP-25) |
-| CSR-022 | The release bootstub shall not contain the debug public key and shall accept no key other than the LionDriver release key. | FW | TSR-514, B‡ | BA, HIL | Conditional: debug key accepted only under `ALLOW_DEBUG` (`bootstub.c:67-72`); correct only if CSR-021 holds |
-| CSR-023 | Debug-only host commands (relay drive `0xc5`, ALLOUTPUT mode, bootloader entry, debug sleep) shall be absent from release firmware. | FW | TSR-514, TSR-513, HWSR-506c | BA, R, FZ | Partial: ALLOUTPUT (`safety.h:413-422`), `0xd1` param 0 (`main_comms.h:170`), `0xb5` (`:92`) gated; `0xc5` not gated (GAP-09) |
-| CSR-024 | Softloader entry (`0xd1` param 1) shall be accepted only while the panda is in a non-actuating mode and the vehicle ignition is off. | FW | TSR-511 (softloader refused in car mode), B‡; ignition-off condition is an additional CS constraint | UT, HIL | Not implemented: allowed in release at any time (`main_comms.h:176-179`) (GAP-24). **2026-10-12: Partial (reference build)**: refused in a car mode (panda `7e2d148`); ignition-off condition not implemented |
+| CSR-021 | The release panda firmware and bootstub shall be built with `RELEASE` and the LionDriver certificate, and the release build shall fail if `ALLOW_DEBUG` is defined. | FW; ENV | TSR-514, FSR-01.10, B‡ | BA | Not met (GAP-25; details: private record GD-02) |
+| CSR-022 | The release bootstub shall not contain the debug public key and shall accept no key other than the LionDriver release key. | FW | TSR-514, B‡ | BA, HIL | Conditional: correct only if CSR-021 holds (details: private record GD-02) |
+| CSR-023 | Debug-only host commands (relay drive `0xc5`, ALLOUTPUT mode, bootloader entry, debug sleep) shall be absent from release firmware. | FW | TSR-514, TSR-513, HWSR-506c | BA, R, FZ | Partial: some debug-only commands gated, relay drive not gated (GAP-09; details: private record GD-02) |
+| CSR-024 | Softloader entry (`0xd1` param 1) shall be accepted only while the panda is in a non-actuating mode and the vehicle ignition is off. | FW | TSR-511 (softloader refused in car mode), B‡; ignition-off condition is an additional CS constraint | UT, HIL | Not implemented at baseline (GAP-24; details: private record GD-01). **2026-10-12: Partial (reference build)**: refused in a car mode (panda `7e2d148`); ignition-off condition not implemented |
 
 ### 4.3 CSR-C-03 Authenticated firmware boot (CSG-02, CAL 3)
 
 | ID | Statement | Alloc | Safety relation | Verif | Evidence at baseline |
 |---|---|---|---|---|---|
-| CSR-031 | The bootstub shall verify the application image with an ECDSA signature over P-256 and a SHA-256 digest (128-bit security strength; decided 2026-10-19, DQ-191 A) before transferring control. | FW | TSR-511, C | R, HIL | Not met: RSA-1024 / SHA-1 (`rsa.h:37`, `sha.h:45`; 1024-bit assert `SConscript:32-46`) (GAP-24); ECDSA P-256 verification not implemented |
-| CSR-032 | The verifying public key shall be the LionDriver panda release key, whose private key is generated and held offline and never stored in the repository, CI or logs. | FW; ENV | TSR-511, TSR-514 | CM, PR | Not met: `release.pub` is comma's (`bootstub.c:63`); LionDriver key not yet generated ([WP-P-10 §6](../07-supporting/WP-P-10-release-management.md)) |
-| CSR-033 | The bootstub shall reject an image whose version is below a minimum version held in write-protected storage. | FW | TSR-511 | UT, HIL | Partial: `MIN_VERSION` compile-time check (`bootstub.c:2, 58`); not field-updatable or protected |
+| CSR-031 | The bootstub shall verify the application image with an ECDSA signature over P-256 and a SHA-256 digest (128-bit security strength; decided 2026-10-19, DQ-191 A) before transferring control. | FW | TSR-511, C | R, HIL | Not met: the baseline scheme is weaker than required (GAP-24; details: private record GD-01); ECDSA P-256 verification not implemented |
+| CSR-032 | The verifying public key shall be the LionDriver panda release key, whose private key is generated and held offline and never stored in the repository, CI or logs. | FW; ENV | TSR-511, TSR-514 | CM, PR | Not met: the bootstub verifies against comma's key (details: private record GD-01); LionDriver key not yet generated ([WP-P-10 §6](../07-supporting/WP-P-10-release-management.md)) |
+| CSR-033 | The bootstub shall reject an image whose version is below a minimum version held in write-protected storage. | FW | TSR-511 | UT, HIL | Partial: compile-time minimum only, not field-updatable or protected (details: private record GD-01) |
 | CSR-034 | The application image integrity shall be re-checked at start-up and periodically at run time, with mismatch leading to the safe state. | FW | TSR-503, TSR-515, HWSR-503c, B‡ | HIL, FI | Not implemented (GAP-24) |
 
 ### 4.4 CSR-C-04 Flash protection (CSG-02, CAL 3)
@@ -203,16 +203,16 @@ Safety-relevant keys (initial list; maintained with [WP-W-09](../05-software/WP-
 | ID | Statement | Alloc | Safety relation | Verif | Evidence at baseline |
 |---|---|---|---|---|---|
 | CSR-041 | The panda option bytes shall be set at provisioning to an RDP level chosen by CS-AD-02 that prevents read-out and debug-port access to the firmware. | FW; USR | TSR-511, HWSR-502c | HIL (option-byte read), PR | Not implemented (GAP-38) |
-| CSR-042 | Write protection shall be set on the bootstub sector(s) so that neither the application nor the softloader can modify them. | FW; USR | TSR-511 | HIL | Not implemented; only a software refusal to erase sector 0 (`llflash.h:14`) |
+| CSR-042 | Write protection shall be set on the bootstub sector(s) so that neither the application nor the softloader can modify them. | FW; USR | TSR-511 | HIL | Not implemented (details: private record GD-01) |
 | CSR-043 | Installation shall record the option-byte values and the bootstub and application hashes, and compare them with the release record. | USR | TSR-802 | PR | Not in [WP-O-01](../09-production-operation/WP-O-01-installation-and-provisioning-control.md) INS-17 today (version/signature only) |
 
 ### 4.5 CSR-C-05 No unauthenticated recovery path (CSG-02, CAL 3)
 
 | ID | Statement | Alloc | Safety relation | Verif | Evidence at baseline |
 |---|---|---|---|---|---|
-| CSR-051 | Release pandad shall not flash a development bootstub; recovery shall flash only the release-signed bootstub and application of the installed release. | SoC | TSR-511 | R, HIL | Not met: development bootstub flashed on boot failure (`pandad.py:34-39`) (GAP-38) |
-| CSR-052 | SoC use of `STM_BOOT0` for recovery shall occur only on explicit offroad owner action and shall be logged as a security event. | SoC; USR | TSR-511 | R, HIL | Not met: automatic (`hardware.py:410-419` via `pandad.py:37-38`) |
-| CSR-053 | pandad shall not set a car safety mode unless the panda reports the firmware version and signature recorded in the release record. | SoC | QM (B-sup: TSR-511); TSR-802 at installation | UT, HIL | Partial: pandad checks the signature against the locally built image (`pandad.py:18-31`); not against a release record |
+| CSR-051 | Release pandad shall not flash a development bootstub; recovery shall flash only the release-signed bootstub and application of the installed release. | SoC | TSR-511 | R, HIL | Not met (GAP-38; details: private record GD-03) |
+| CSR-052 | SoC use of `STM_BOOT0` for recovery shall occur only on explicit offroad owner action and shall be logged as a security event. | SoC; USR | TSR-511 | R, HIL | Not met (details: private record GD-03) |
+| CSR-053 | pandad shall not set a car safety mode unless the panda reports the firmware version and signature recorded in the release record. | SoC | QM (B-sup: TSR-511); TSR-802 at installation | UT, HIL | Partial: checked against the locally built image, not against a release record (details: private record GD-03) |
 | CSR-054 | The architecture shall prevent SoC control of `STM_BOOT0`/`STM_RST_N` from resulting in execution of firmware not signed with the LionDriver release key, or the residual shall be recorded as a cybersecurity claim per CS-AD-03. | FW; SoC; USR | HWSR-502c, TSR-511 | A, HIL | Not met (GAP-38); depends on CS-AD-02 |
 
 ### 4.6 CSR-C-06 Params and IPC (CSG-03, CAL 2)
@@ -228,15 +228,15 @@ Safety-relevant keys (initial list; maintained with [WP-W-09](../05-software/WP-
 
 | ID | Statement | Alloc | Safety relation | Verif | Evidence at baseline |
 |---|---|---|---|---|---|
-| CSR-071 | Release builds shall not start the joystick, longitudinal-maneuver or lateral-maneuver replacement processes regardless of params. | SoC | TSR-613, QM (B-sup) | BA, UT | Not met: param-gated only (`process_config.py:34-47`) |
-| CSR-072 | Driver-view demo mode (`IsDriverViewEnabled`) shall not affect driver-monitoring output while onroad. | SoC | TSR-610, QM | UT | Not implemented (GAP-20; `selfdrive/monitoring/dmonitoringd.py:26-38` per WP-S-02) |
-| CSR-073 | The release build check shall fail if any developer-mode entry point is reachable in the release configuration. | ENV | — | BA | Not implemented |
+| CSR-071 | Release builds shall not start the joystick, longitudinal-maneuver or lateral-maneuver replacement processes regardless of params. | SoC | TSR-613, QM (B-sup) | BA, UT | Implemented in the reference build (DQ-131 A, [change-2026-10-25-reference-debug-procs](../07-supporting/impact/change-2026-10-25-reference-debug-procs.md)): `joystick`, `maneuversd` and `lateral_maneuversd` not registered, `joystickd` for notCar only, no debug param changes the control processes (`process_config.py` `REFERENCE_BUILD`); unit test `system/manager/test/test_reference_build.py`; not verified on the device |
+| CSR-072 | Driver-view demo mode (`IsDriverViewEnabled`) shall not affect driver-monitoring output while onroad. | SoC | TSR-610, QM | UT | Not implemented (GAP-20; details: private record GD-09) |
+| CSR-073 | The release build check shall fail if any developer-mode entry point is reachable in the release configuration. | ENV | — | BA | Partly (DQ-131 A): `build_release.sh` stops a reference release that has the upstream-build marker or the joystick or maneuver modules, and CI (`safety.yaml`, "Release variant selection") checks the reference file list; DM demo mode (CSR-072) and the developer toggles in the UI are not covered |
 
 ### 4.8 CSR-C-08 Model artefacts (CSG-04, CAL 2)
 
 | ID | Statement | Alloc | Safety relation | Verif | Evidence at baseline |
 |---|---|---|---|---|---|
-| CSR-081 | modeld and dmonitoringmodeld shall load model artefacts and metadata without deserializing executable objects (no `pickle` of artefact content). | SoC | AIR ([WP-C-11](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md)); GAP-22 | R, UT | Not met: `pickle` at `modeld.py:150,159`, `dmonitoringmodeld.py:33,48`; `helpers.py:19-20` |
+| CSR-081 | modeld and dmonitoringmodeld shall load model artefacts and metadata without deserializing executable objects (no `pickle` of artefact content). | SoC | AIR ([WP-C-11](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md)); GAP-22 | R, UT | Not met (GAP-22; details: private record GD-08) |
 | CSR-082 | Before loading, every model artefact shall be verified against a SHA-256 hash in the authenticated release manifest, and the process shall refuse to run on mismatch so that engagement is blocked. | SoC | AIR; TSR-801 (model hashes at installation) | UT, HIL | Not implemented (GAP-22) |
 | CSR-083 | Model artefacts shall be fetched from LionDriver-controlled storage and their hashes recorded in the release record. | ENV; USR | D-05 | CM | Not met: `.lfsconfig` points to comma's store (GAP-40); INS-18 records hashes manually |
 
@@ -246,7 +246,7 @@ Safety-relevant keys (initial list; maintained with [WP-W-09](../05-software/WP-
 |---|---|---|---|---|---|
 | CSR-091 | Panda firmware shall verify every checksum and counter that the vehicle provides on safety-relevant RX messages, and shall cross-check messages that carry none (brake `0x226`, wheel speed `0xAA`) for plausibility against independent signals. | FW | TSR-401…405, B‡; GAP-01 | R, UT, HIL | Partial: 8-bit checksums on some messages; none on `0x226`/`0xAA`; no counters (GAP-01) |
 | CSR-092 | Panda firmware shall transmit only allow-listed actuation messages on the car-side bus and shall not alter camera-originated PCS messages it forwards. | FW | TSR-7xx, SG-07 | R, UT | Implemented in part: Toyota TX allow-list (`opendbc_repo/opendbc/safety/modes/toyota.h:6-19`); forwarding verification per TSR-7xx. 2026-10-12: PCS and DSU IDs removed from the allow-list, `0x411` in the reference build only (TSR-705); per-ID TX rate supervision in the reference build (TSR-518); not verified on hardware |
-| CSR-093 | Reception on the car-side bus of an actuation message ID that the panda transmits, while the relay intercepts, shall be detected and lead to actuation inhibit. | FW | TSR-506, HWSR-506b, B‡ | UT, HIL | Partial: relay-malfunction detection on intercepted IDs (`safety.h:372-380`); timing per HWSR-506a |
+| CSR-093 | Reception on the car-side bus of an actuation message ID that the panda transmits, while the relay intercepts, shall be detected and lead to actuation inhibit. | FW | TSR-506, HWSR-506b, B‡ | UT, HIL | Partial: relay-malfunction detection on intercepted IDs (details: private record GD-11); timing per HWSR-506a |
 
 Residual risk of physical injection after CSR-091…093 is retained under CSC-01.
 
@@ -254,7 +254,7 @@ Residual risk of physical injection after CSR-091…093 is retained under CSC-01
 
 | ID | Statement | Alloc | Safety relation | Verif | Evidence at baseline |
 |---|---|---|---|---|---|
-| CSR-101 | LionDriver installer and image builds shall not contain an embedded authorized SSH key or set `SshEnabled`. | SoC; ENV | — | BA | Not met for INTERNAL builds (`installer.cc:204-213`) |
+| CSR-101 | LionDriver installer and image builds shall not contain an embedded authorized SSH key or set `SshEnabled`. | SoC; ENV | — | BA | Not met for INTERNAL builds (details: private record GD-07) |
 | CSR-102 | `SshEnabled` shall be false in the reference configuration and checked at installation. | USR | TSR-806 | PR | Process exists: [WP-O-01](../09-production-operation/WP-O-01-installation-and-provisioning-control.md) INS-19 |
 | CSR-103 | When the owner enables SSH, only key authentication with owner-provided keys shall be accepted. | SoC | — | R, PT | To verify against AGNOS sshd configuration (OI-5) |
 | CSR-104 | SSH shall not accept new sessions while the vehicle is onroad. | SoC | — | HIL, PT | Not implemented (proposal; decision OI-3) |
@@ -263,11 +263,11 @@ Residual risk of physical injection after CSR-091…093 is retained under CSC-01
 
 | ID | Statement | Alloc | Safety relation | Verif | Evidence at baseline |
 |---|---|---|---|---|---|
-| CSR-111 | athenad shall not run in the reference configuration unless the owner opts in. | SoC; USR | — | BA, PR | Not met: daemon always started (`process_config.py:71`) |
-| CSR-112 | If enabled, file uploads requested over athena shall go only to allow-listed destination hosts over TLS with certificate validation. | SoC | — | UT, PT | Not met if enabled: arbitrary URL (`athenad.py:619-672`) (GAP-27). Athena is not started in LionDriver builds since 2026-10-22 (DQ-121 A) |
-| CSR-113 | If enabled, the SSH-tunnel and authorized-key RPCs shall be absent. | SoC | — | UT, PT | Not met (`athenad.py:710-757`) |
-| CSR-114 | If enabled, `getMessage` shall serve only allow-listed, non-personal services. | SoC | — | UT | Not met: any service (`athenad.py:354-370`) |
-| CSR-115 | Release builds shall ignore the `ATHENA_HOST` environment override. | SoC | — | BA, UT | Not met (`athenad.py:51`) |
+| CSR-111 | athenad shall not run in the reference configuration unless the owner opts in. | SoC; USR | — | BA, PR | Not met upstream; athena is not started in LionDriver builds since 2026-10-22 (DQ-121 A), not yet checked on the device (details: private record GD-06) |
+| CSR-112 | If enabled, file uploads requested over athena shall go only to allow-listed destination hosts over TLS with certificate validation. | SoC | — | UT, PT | Not met if enabled (GAP-27; details: private record GD-06). Athena is not started in LionDriver builds since 2026-10-22 (DQ-121 A) |
+| CSR-113 | If enabled, the SSH-tunnel and authorized-key RPCs shall be absent. | SoC | — | UT, PT | Not met if enabled (details: private record GD-06) |
+| CSR-114 | If enabled, `getMessage` shall serve only allow-listed, non-personal services. | SoC | — | UT | Not met if enabled (details: private record GD-06) |
+| CSR-115 | Release builds shall ignore the `ATHENA_HOST` environment override. | SoC | — | BA, UT | Not met (details: private record GD-06) |
 | CSR-116 | Onroad camera streaming shall remain impossible, and webrtcd shall bind only to the loopback interface. | SoC | — | UT, PT | Implemented: `params_keys.h:62`, `process_config.py:119`, `helpers.py:28`, `webrtcd.py:640-641`; regression test needed |
 | CSR-117 | No safety function shall depend on athena or any back-end availability. | SoC | CA-01 | HIL (network off) | Believed met (athenad is not in the control path); not verified |
 
@@ -275,11 +275,11 @@ Residual risk of physical injection after CSR-091…093 is retained under CSC-01
 
 | ID | Statement | Alloc | Safety relation | Verif | Evidence at baseline |
 |---|---|---|---|---|---|
-| CSR-121 | The updater shall stage an update only after verifying a LionDriver-signed release manifest (§3.6) and every artefact against it; the manifest signature uses the firmware scheme, ECDSA over P-256 with SHA-256 (DQ-191 A), with the offline update key. | SoC; ENV | TSR-810, TSR-801 | R, UT, PT | Not implemented: TLS + in-tree hashes (`updated.py:205-222, 387-399`) (GAP-26) |
-| CSR-122 | Release builds shall fix the update origin and accept only release-channel branches, ignoring `UpdaterTargetBranch` values outside it. | SoC | TSR-810 | UT | Not met (`updated.py:237-245`) |
+| CSR-121 | The updater shall stage an update only after verifying a LionDriver-signed release manifest (§3.6) and every artefact against it; the manifest signature uses the firmware scheme, ECDSA over P-256 with SHA-256 (DQ-191 A), with the offline update key. | SoC; ENV | TSR-810, TSR-801 | R, UT, PT | Not implemented: TLS and in-tree hashes only (GAP-26; details: private record GD-05) |
+| CSR-122 | Release builds shall fix the update origin and accept only release-channel branches, ignoring `UpdaterTargetBranch` values outside it. | SoC | TSR-810 | UT | Not met (details: private record GD-05) |
 | CSR-123 | The updater shall reject a manifest whose release version is lower than the installed one unless the manifest is a signed rollback release. | SoC; ENV | — | UT | Not implemented |
 | CSR-124 | Until CSR-121 is implemented, `DisableUpdates` shall be set in the reference configuration and updates installed manually per WP-O-02 UPD-02. | USR | TSR-810 | PR | Mechanism exists (`updated.py:416`); procedure in [WP-O-02](../09-production-operation/WP-O-02-operation-service-decommissioning.md) |
-| CSR-125 | Update installation shall be offroad-only and atomic, with the previous release remaining bootable if finalization fails. | SoC | UPD-05 | R, HIL | Partial: offroad-only (`process_config.py:114`); overlay and consistency flag (`updated.py:201, 217`); rollback not specified |
+| CSR-125 | Update installation shall be offroad-only and atomic, with the previous release remaining bootable if finalization fails. | SoC | UPD-05 | R, HIL | Partial: offroad-only, with an overlay and a consistency flag; rollback not specified (details: private record GD-05) |
 | CSR-126 | The update-signing key shall be distinct from the panda release key, held offline, and covered by a re-keying procedure. | ENV | — | PR | Not implemented ([WP-O-05](../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md)) |
 
 ### 4.13 CSR-C-13 Supply chain (CSG-07, CAL 3)
@@ -296,7 +296,7 @@ Residual risk of physical injection after CSR-091…093 is retained under CSC-01
 
 | ID | Statement | Alloc | Safety relation | Verif | Evidence at baseline |
 |---|---|---|---|---|---|
-| CSR-141 | The device identity private key shall be readable only by the processes that sign with it and shall not be exposed through any RPC, log or upload. | SoC | — | R, PT | To verify: key at `/persist/comma/` (`openpilot/common/api.py:61-62`) |
+| CSR-141 | The device identity private key shall be readable only by the processes that sign with it and shall not be exposed through any RPC, log or upload. | SoC | — | R, PT | To verify (details: private record GD-10) |
 | CSR-142 | Driver-facing video, cabin imagery and location logs shall be encrypted at rest, or, if AGNOS cannot provide this, driver-camera recording shall be off by default and retention bounded. | SoC; USR | — | R, HIL | Unknown (WP-C-09 OI-3) |
 | CSR-143 | Any data upload shall use TLS with certificate validation to an approved endpoint. | SoC; ENV | — | R, PT | To verify per uploader |
 | CSR-144 | Driver-camera video shall not be uploaded unless the owner opts in. | SoC; USR | — | R, PR | Depends on `RecordFront` and uploader policy (WP-O-01 INS-19) |

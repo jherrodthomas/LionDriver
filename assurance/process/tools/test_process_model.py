@@ -60,9 +60,26 @@ class ProcessModelTest(unittest.TestCase):
   def test_missing_anchor_text(self):
     self.assertFails("P7", lambda m: m.interfaces["IX-01"].update(anchors=["WP-C-03:text that is not in the HARA"]))
 
-  def test_open_interface_needs_open_item(self):
-    open_ix = next(i for i, x in self.base.interfaces.items() if x["status"] == "open")
-    self.assertFails("P7", lambda m: m.interfaces[open_ix].update(open_item=None))
+  def test_interface_needs_its_ifr_item(self):
+    self.assertFails("P7", lambda m: m.ifrs.pop("IFR-01"))
+    self.assertFails("P7", lambda m: m.interfaces["IX-01"].update(ifr="IFR-02"))
+    self.assertFails("P7", lambda m: m.ifrs["IFR-01"].update(interface="IX-99"))
+
+  def test_ifr_owners_are_the_lane_roles(self):
+    self.assertFails("P7", lambda m: m.ifrs["IFR-01"].update(owners=["Safety manager", "SOTIF lead"]))
+
+  def test_status_is_read_from_the_ifr_item(self):
+    model = copy.deepcopy(self.base)
+    ix = model.interfaces["IX-13"]
+    self.assertEqual(pm.ix_status(model, ix), "open")
+    model.ifrs["IFR-13"].update(open_item=None)
+    self.assertEqual(pm.ix_status(model, ix), "documented")
+    model.ifrs["IFR-13"].update(status="agreed", review_ref="REV-001")
+    self.assertEqual(pm.ix_status(model, ix), "agreed")
+    orders = pm.check(model, self.ctx)
+    sk = pm.render_gate_skeleton("G2", orders["G2"], model, self.ctx)
+    self.assertIn("| IFR-13 | IX-13 |", sk)
+    self.assertIn("| REV-001 | Yes |", sk)
 
   def test_review_gate_suffix_matches_phase(self):
     self.assertFails("P6", lambda m: m.reviews["CR-06@G2"].update(phase="G1"))

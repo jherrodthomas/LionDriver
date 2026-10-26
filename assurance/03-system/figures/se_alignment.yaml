@@ -26,7 +26,7 @@ stages:
     incose: [Business or mission analysis, Stakeholder needs and requirements definition]
     nasa: [1]
     aspice: SYS.1
-    wps: [WP-C-01, WP-C-02, WP-C-03, WP-C-05, WP-C-08, WP-C-09]
+    wps: [WP-C-01, WP-C-02, WP-C-03, WP-C-05, WP-C-08, WP-C-09, WP-S-01]
   - id: sysreq
     title: System requirements
     side: left
@@ -120,11 +120,12 @@ views:
       - {path: models/sysml/generated/fig-sysml-v01-item-context.svg, label: "SysML context view"}
     gap: no stand-alone concept of operations; operational situations are listed in WP-C-03 §3
   - name: Stakeholder needs
-    status: partial
+    status: present
     where:
+      - {path: 03-system/WP-S-01-system-requirements.md, label: "stakeholders, needs and use cases (WP-S-01 §1.2–§1.4)"}
+      - {path: models/sysml/generated/fig-sysml-v14-needs-use-cases.svg, label: "needs and use cases (SysML V-14)"}
       - {path: 02-concept/WP-C-03-hara.md, label: "safety goals (WP-C-03 §6)"}
-      - {path: 02-concept/WP-C-04-functional-safety-concept.md, label: "FSRs (WP-C-04)"}
-    gap: safety-led; no list of user, owner or regulator needs beyond the item definition
+    gap: the needs and use cases are AI-drafted and not reviewed; no regulator needs beyond WP-C-01 §5
   - name: System requirements with method, rationale and allocation
     status: partial
     where:
@@ -138,6 +139,7 @@ views:
       - {path: trace/figures/fig-9-system-v-status.svg, label: "system V"}
       - {path: trace/figures/fig-3-derivation-flow.svg, label: "derivation flow"}
       - {path: 03-system/requirements/figures/fig-req-2-matrix.svg, label: "FSR × TSR matrix"}
+      - {path: models/sysml/generated/fig-sysml-v15-end-to-end-thread.svg, label: "need to verification case (SysML V-15)"}
   - name: Logical (functional) architecture
     status: present
     where:
@@ -160,10 +162,11 @@ views:
     status: present
     where:
       - {path: 02-concept/figures/fig-c01-4-1-operating-modes.svg, label: "operating modes (WP-C-01 §4)"}
-      - {path: 03-system/figures/fig-4-1-startup-engagement.svg, label: "start-up sequence"}
+      - {path: models/sysml/generated/fig-sysml-v17-startup-sequence.svg, label: "start-up sequence (SysML V-17)"}
       - {path: 03-system/figures/fig-4-4-heartbeat-timeout-chain.svg, label: "heartbeat chain"}
       - {path: 03-system/figures/fig-s03-4-5-envelope-states.svg, label: "envelope states (WP-S-03 §4.5)"}
       - {path: models/sysml/generated/fig-sysml-v13-system-modes.svg, label: "system modes state machine (SysML V-13)"}
+      - {path: models/sysml/generated/fig-sysml-v16-state-machine-records.svg, label: "state-machine records (SysML V-16)"}
   - name: Technical budgets with margins (TPMs)
     status: partial
     where:

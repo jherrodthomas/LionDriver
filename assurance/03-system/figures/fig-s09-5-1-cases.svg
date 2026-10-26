@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="975" viewBox="0 0 1280 975" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1001" viewBox="0 0 1280 1001" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 5-1. The vehicle verification cases (WP-S-09 §5)</title>
-<desc>19 vehicle verification cases of WP-S-09 §5. VS-SQ-01 EPS LKA torque authority: covers AOU, TSR-1; early. VS-SQ-02 EPS timeout and request-bit behaviour: covers AOU, TSR-1; early; test build. VS-SQ-03 Envelope-bounded worst case: lateral deviation: covers TSR-1; test build. VS-SQ-04 Brake override: covers AOU, TSR-3; early. VS-SQ-05 PCM ACC envelope and cancel: covers AOU, TSR-2; early; test build. VS-SQ-06 Stock PCS preserved: covers AOU, TSR-7; early. VS-SQ-07 Cluster cruise indication independence: covers AOU, TSR-3. VS-SQ-08 Engagement and disengagement end-to-end: covers SYS, TSR-3. VS-SQ-09 Gas override: covers SYS, TSR-2, TSR-3. VS-SQ-10 Steering override: covers TSR-3; expected to fail. VS-SQ-11 Accel / decel limits and jerk on vehicle: covers SYS, TSR-2. VS-SQ-12 SoC loss while driving: covers TSR-4, TSR-5; test build; expected to fail. VS-SQ-13 Fault-induced lateral safe-state transition in a curve: covers SYS, TSR-1, TSR-6; test build. VS-SQ-14 Longitudinal safe-state transition: covers SYS, TSR-2, TSR-6. VS-SQ-15 Driver monitoring escalation and lockout: covers SYS, TSR-6. VS-SQ-16 Process replay regression: covers SYS, TSR-6. VS-SQ-17 Safety replay of the full Corolla log set: covers TSR-1, TSR-2, TSR-3, TSR-4. VS-SQ-18 Controller margin to envelope: covers SYS, TSR-6; expected to fail. VS-SQ-19 Supervised endurance drive: covers SYS, TSR-1, TSR-2, TSR-3, TSR-4, TSR-5, TSR-6, TSR-7.</desc>
+<desc>20 vehicle verification cases of WP-S-09 §5. VS-SQ-01 EPS LKA torque authority: covers AOU, TSR-1; early. VS-SQ-02 EPS timeout and request-bit behaviour: covers AOU, TSR-1; early; test build. VS-SQ-03 Envelope-bounded worst case: lateral deviation: covers TSR-1; test build. VS-SQ-04 Brake override: covers AOU, TSR-3; early. VS-SQ-05 PCM ACC envelope and cancel: covers AOU, TSR-2; early; test build. VS-SQ-06 Stock PCS preserved: covers AOU, TSR-7; early. VS-SQ-07 Cluster cruise indication independence: covers AOU, TSR-3. VS-SQ-08 Engagement and disengagement end-to-end: covers SYS, TSR-3. VS-SQ-09 Gas override: covers SYS, TSR-2, TSR-3. VS-SQ-10 Steering override: covers TSR-3; expected to fail. VS-SQ-11 Accel / decel limits and jerk on vehicle: covers SYS, TSR-2. VS-SQ-12 SoC loss while driving: covers TSR-4, TSR-5; test build; expected to fail. VS-SQ-13 Fault-induced lateral safe-state transition in a curve: covers SYS, TSR-1, TSR-6; test build. VS-SQ-14 Longitudinal safe-state transition: covers SYS, TSR-2, TSR-6. VS-SQ-15 Driver monitoring escalation and lockout: covers SYS, TSR-6. VS-SQ-20 Start-up fault-code read, per ECU: covers AOU, TSR-6. VS-SQ-16 Process replay regression: covers SYS, TSR-6. VS-SQ-17 Safety replay of the full Corolla log set: covers TSR-1, TSR-2, TSR-3, TSR-4. VS-SQ-18 Controller margin to envelope: covers SYS, TSR-6; expected to fail. VS-SQ-19 Supervised endurance drive: covers SYS, TSR-1, TSR-2, TSR-3, TSR-4, TSR-5, TSR-6, TSR-7.</desc>
 <defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
-<rect x="0" y="0" width="1280" height="975" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="0" y="0" width="1280" height="1001" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 5-1 · The vehicle verification cases and what each covers</text>
-<text x="40" y="66" font-size="12.5" fill="#475569">The 19 cases of §5 by where they run, the requirement groups each covers, and three flags: 5 decide a HARA rating, 5 need a test build, 3 are expected to fail; none executed</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">The 20 cases of §5 by where they run, the requirement groups each covers, and three flags: 5 decide a HARA rating, 5 need a test build, 3 are expected to fail; none executed</text>
 <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-S-09 §5, §8</text>
 <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
 <text x="565" y="112" font-size="11.5" fill="#0F172A" font-weight="700" text-anchor="middle">AoU</text>
@@ -131,7 +131,7 @@
 <circle cx="865.0" cy="335.0" r="2" fill="#94A3B8"/>
 <circle cx="915.0" cy="335.0" r="2" fill="#94A3B8"/>
 <circle cx="965.0" cy="335.0" r="2" fill="#94A3B8"/>
-<rect x="30" y="364" width="1220" height="242" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="30" y="364" width="1220" height="268" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
 <text x="44" y="383" font-size="12.5" fill="#0F172A" font-weight="700">5.2 Item behaviour on the vehicle (TSRs)</text>
 <rect x="429.4" y="370" width="96.6" height="18" rx="9" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.2"/>
 <text x="477.7" y="383" font-size="9.5" fill="#C2410C" font-weight="700" text-anchor="middle">closed course</text>
@@ -239,77 +239,89 @@
 <rect x="857.0" y="579.0" width="16" height="16" rx="4" fill="#C2410C"/>
 <circle cx="915.0" cy="587.0" r="2" fill="#94A3B8"/>
 <rect x="957.0" y="579.0" width="16" height="16" rx="4" fill="#0F766E"/>
-<rect x="30" y="616" width="1220" height="112" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
-<text x="44" y="635" font-size="12.5" fill="#0F172A" font-weight="700">5.3 Regression on recorded data</text>
-<rect x="429.4" y="622" width="96.6" height="18" rx="9" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.2"/>
-<text x="477.7" y="635" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">recorded data</text>
-<line x1="40" y1="670" x2="1240" y2="670" stroke="#EEF2F6" stroke-width="1"/>
-<text x="44" y="661" font-size="11" fill="#0F172A" font-weight="700">VS-SQ-16</text>
-<text x="118" y="661" font-size="11" fill="#0F172A">Process replay regression</text>
-<circle cx="565.0" cy="657.0" r="2" fill="#94A3B8"/>
-<circle cx="615.0" cy="657.0" r="2" fill="#94A3B8"/>
-<circle cx="665.0" cy="657.0" r="2" fill="#94A3B8"/>
-<circle cx="715.0" cy="657.0" r="2" fill="#94A3B8"/>
-<circle cx="765.0" cy="657.0" r="2" fill="#94A3B8"/>
-<circle cx="815.0" cy="657.0" r="2" fill="#94A3B8"/>
-<rect x="857.0" y="649.0" width="16" height="16" rx="4" fill="#C2410C"/>
-<circle cx="915.0" cy="657.0" r="2" fill="#94A3B8"/>
-<rect x="957.0" y="649.0" width="16" height="16" rx="4" fill="#0F766E"/>
+<line x1="40" y1="626" x2="1240" y2="626" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="617" font-size="11" fill="#0F172A" font-weight="700">VS-SQ-20</text>
+<text x="118" y="617" font-size="11" fill="#0F172A">Start-up fault-code read, per ECU</text>
+<rect x="557.0" y="605.0" width="16" height="16" rx="4" fill="#0F766E"/>
+<circle cx="615.0" cy="613.0" r="2" fill="#94A3B8"/>
+<circle cx="665.0" cy="613.0" r="2" fill="#94A3B8"/>
+<circle cx="715.0" cy="613.0" r="2" fill="#94A3B8"/>
+<circle cx="765.0" cy="613.0" r="2" fill="#94A3B8"/>
+<circle cx="815.0" cy="613.0" r="2" fill="#94A3B8"/>
+<rect x="857.0" y="605.0" width="16" height="16" rx="4" fill="#C2410C"/>
+<circle cx="915.0" cy="613.0" r="2" fill="#94A3B8"/>
+<circle cx="965.0" cy="613.0" r="2" fill="#94A3B8"/>
+<rect x="30" y="642" width="1220" height="112" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="44" y="661" font-size="12.5" fill="#0F172A" font-weight="700">5.3 Regression on recorded data</text>
+<rect x="429.4" y="648" width="96.6" height="18" rx="9" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.2"/>
+<text x="477.7" y="661" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">recorded data</text>
 <line x1="40" y1="696" x2="1240" y2="696" stroke="#EEF2F6" stroke-width="1"/>
-<text x="44" y="687" font-size="11" fill="#0F172A" font-weight="700">VS-SQ-17</text>
-<text x="118" y="687" font-size="11" fill="#0F172A">Safety replay of the full Corolla log set</text>
+<text x="44" y="687" font-size="11" fill="#0F172A" font-weight="700">VS-SQ-16</text>
+<text x="118" y="687" font-size="11" fill="#0F172A">Process replay regression</text>
 <circle cx="565.0" cy="683.0" r="2" fill="#94A3B8"/>
-<rect x="607.0" y="675.0" width="16" height="16" rx="4" fill="#C2410C"/>
-<rect x="657.0" y="675.0" width="16" height="16" rx="4" fill="#C2410C"/>
-<rect x="707.0" y="675.0" width="16" height="16" rx="4" fill="#C2410C"/>
-<rect x="757.0" y="675.0" width="16" height="16" rx="4" fill="#C2410C"/>
+<circle cx="615.0" cy="683.0" r="2" fill="#94A3B8"/>
+<circle cx="665.0" cy="683.0" r="2" fill="#94A3B8"/>
+<circle cx="715.0" cy="683.0" r="2" fill="#94A3B8"/>
+<circle cx="765.0" cy="683.0" r="2" fill="#94A3B8"/>
 <circle cx="815.0" cy="683.0" r="2" fill="#94A3B8"/>
-<circle cx="865.0" cy="683.0" r="2" fill="#94A3B8"/>
+<rect x="857.0" y="675.0" width="16" height="16" rx="4" fill="#C2410C"/>
 <circle cx="915.0" cy="683.0" r="2" fill="#94A3B8"/>
-<circle cx="965.0" cy="683.0" r="2" fill="#94A3B8"/>
+<rect x="957.0" y="675.0" width="16" height="16" rx="4" fill="#0F766E"/>
 <line x1="40" y1="722" x2="1240" y2="722" stroke="#EEF2F6" stroke-width="1"/>
-<text x="44" y="713" font-size="11" fill="#0F172A" font-weight="700">VS-SQ-18</text>
-<text x="118" y="713" font-size="11" fill="#0F172A">Controller margin to envelope</text>
+<text x="44" y="713" font-size="11" fill="#0F172A" font-weight="700">VS-SQ-17</text>
+<text x="118" y="713" font-size="11" fill="#0F172A">Safety replay of the full Corolla log set</text>
 <circle cx="565.0" cy="709.0" r="2" fill="#94A3B8"/>
-<circle cx="615.0" cy="709.0" r="2" fill="#94A3B8"/>
-<circle cx="665.0" cy="709.0" r="2" fill="#94A3B8"/>
-<circle cx="715.0" cy="709.0" r="2" fill="#94A3B8"/>
-<circle cx="765.0" cy="709.0" r="2" fill="#94A3B8"/>
+<rect x="607.0" y="701.0" width="16" height="16" rx="4" fill="#C2410C"/>
+<rect x="657.0" y="701.0" width="16" height="16" rx="4" fill="#C2410C"/>
+<rect x="707.0" y="701.0" width="16" height="16" rx="4" fill="#C2410C"/>
+<rect x="757.0" y="701.0" width="16" height="16" rx="4" fill="#C2410C"/>
 <circle cx="815.0" cy="709.0" r="2" fill="#94A3B8"/>
-<rect x="857.0" y="701.0" width="16" height="16" rx="4" fill="#C2410C"/>
+<circle cx="865.0" cy="709.0" r="2" fill="#94A3B8"/>
 <circle cx="915.0" cy="709.0" r="2" fill="#94A3B8"/>
-<rect x="957.0" y="701.0" width="16" height="16" rx="4" fill="#0F766E"/>
-<rect x="1000" y="700" width="108.4" height="18" rx="9" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
-<text x="1054.2" y="713" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">expected to fail</text>
-<rect x="30" y="738" width="1220" height="60" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
-<text x="44" y="757" font-size="12.5" fill="#0F172A" font-weight="700">5.4 Long-duration verification</text>
-<rect x="423.2" y="744" width="102.8" height="18" rx="9" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.2"/>
-<text x="474.6" y="757" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">road, after G1</text>
-<line x1="40" y1="792" x2="1240" y2="792" stroke="#EEF2F6" stroke-width="1"/>
-<text x="44" y="783" font-size="11" fill="#0F172A" font-weight="700">VS-SQ-19</text>
-<text x="118" y="783" font-size="11" fill="#0F172A">Supervised endurance drive</text>
-<circle cx="565.0" cy="779.0" r="2" fill="#94A3B8"/>
-<rect x="607.0" y="771.0" width="16" height="16" rx="4" fill="#C2410C"/>
-<rect x="657.0" y="771.0" width="16" height="16" rx="4" fill="#C2410C"/>
-<rect x="707.0" y="771.0" width="16" height="16" rx="4" fill="#C2410C"/>
-<rect x="757.0" y="771.0" width="16" height="16" rx="4" fill="#C2410C"/>
-<rect x="807.0" y="771.0" width="16" height="16" rx="4" fill="#C2410C"/>
-<rect x="857.0" y="771.0" width="16" height="16" rx="4" fill="#C2410C"/>
-<rect x="907.0" y="771.0" width="16" height="16" rx="4" fill="#C2410C"/>
-<rect x="957.0" y="771.0" width="16" height="16" rx="4" fill="#0F766E"/>
-<rect x="40" y="806" width="16" height="16" rx="4" fill="#C2410C"/>
-<text x="62" y="818" font-size="11" fill="#0F172A">covers a TSR block</text>
-<rect x="200" y="806" width="16" height="16" rx="4" fill="#0F766E"/>
-<text x="222" y="818" font-size="11" fill="#0F172A">covers assumptions of use or system requirements</text>
-<text x="560" y="818" font-size="11" fill="#475569">TSR blocks 5xx (the MCU platform) are verified on the bench, in WP-S-08, WP-H-06 and WP-V-05.</text>
-<text x="40" y="836" font-size="11" fill="#475569">Early: the result decides a HARA controllability rating marked ⚠, so it runs at G1. Test build: a closed-course host or panda build that injects out-of-range commands, reflashed after every session (DQ-105 B).</text>
-<text x="40" y="854" font-size="11" fill="#475569">Generated by fig_s09_cases.py from WP-S-09 §5 (cases and Trace column) and §8 (OI-2, OI-4); nothing is hand-listed.</text>
+<circle cx="965.0" cy="709.0" r="2" fill="#94A3B8"/>
+<line x1="40" y1="748" x2="1240" y2="748" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="739" font-size="11" fill="#0F172A" font-weight="700">VS-SQ-18</text>
+<text x="118" y="739" font-size="11" fill="#0F172A">Controller margin to envelope</text>
+<circle cx="565.0" cy="735.0" r="2" fill="#94A3B8"/>
+<circle cx="615.0" cy="735.0" r="2" fill="#94A3B8"/>
+<circle cx="665.0" cy="735.0" r="2" fill="#94A3B8"/>
+<circle cx="715.0" cy="735.0" r="2" fill="#94A3B8"/>
+<circle cx="765.0" cy="735.0" r="2" fill="#94A3B8"/>
+<circle cx="815.0" cy="735.0" r="2" fill="#94A3B8"/>
+<rect x="857.0" y="727.0" width="16" height="16" rx="4" fill="#C2410C"/>
+<circle cx="915.0" cy="735.0" r="2" fill="#94A3B8"/>
+<rect x="957.0" y="727.0" width="16" height="16" rx="4" fill="#0F766E"/>
+<rect x="1000" y="726" width="108.4" height="18" rx="9" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="1054.2" y="739" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">expected to fail</text>
+<rect x="30" y="764" width="1220" height="60" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="44" y="783" font-size="12.5" fill="#0F172A" font-weight="700">5.4 Long-duration verification</text>
+<rect x="423.2" y="770" width="102.8" height="18" rx="9" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="474.6" y="783" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">road, after G1</text>
+<line x1="40" y1="818" x2="1240" y2="818" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="809" font-size="11" fill="#0F172A" font-weight="700">VS-SQ-19</text>
+<text x="118" y="809" font-size="11" fill="#0F172A">Supervised endurance drive</text>
+<circle cx="565.0" cy="805.0" r="2" fill="#94A3B8"/>
+<rect x="607.0" y="797.0" width="16" height="16" rx="4" fill="#C2410C"/>
+<rect x="657.0" y="797.0" width="16" height="16" rx="4" fill="#C2410C"/>
+<rect x="707.0" y="797.0" width="16" height="16" rx="4" fill="#C2410C"/>
+<rect x="757.0" y="797.0" width="16" height="16" rx="4" fill="#C2410C"/>
+<rect x="807.0" y="797.0" width="16" height="16" rx="4" fill="#C2410C"/>
+<rect x="857.0" y="797.0" width="16" height="16" rx="4" fill="#C2410C"/>
+<rect x="907.0" y="797.0" width="16" height="16" rx="4" fill="#C2410C"/>
+<rect x="957.0" y="797.0" width="16" height="16" rx="4" fill="#0F766E"/>
+<rect x="40" y="832" width="16" height="16" rx="4" fill="#C2410C"/>
+<text x="62" y="844" font-size="11" fill="#0F172A">covers a TSR block</text>
+<rect x="200" y="832" width="16" height="16" rx="4" fill="#0F766E"/>
+<text x="222" y="844" font-size="11" fill="#0F172A">covers assumptions of use or system requirements</text>
+<text x="560" y="844" font-size="11" fill="#475569">TSR blocks 5xx (the MCU platform) are verified on the bench, in WP-S-08, WP-H-06 and WP-V-05.</text>
+<text x="40" y="862" font-size="11" fill="#475569">Early: the result decides a HARA controllability rating marked ⚠, so it runs at G1. Test build: a closed-course host or panda build that injects out-of-range commands, reflashed after every session (DQ-105 B).</text>
+<text x="40" y="880" font-size="11" fill="#475569">Generated by fig_s09_cases.py from WP-S-09 §5 (cases and Trace column) and §8 (OI-2, OI-4); nothing is hand-listed.</text>
 <g class="terms">
-<text x="40" y="876" font-size="10.5" fill="#475569">Terms: ACC adaptive cruise control · AoU assumption of use: what the analysis assumes about the car, the driver or the environment · DQ-nn decision of the project lead (decision register) · EPS electric power</text>
-<text x="40" y="890.5" font-size="10.5" fill="#475569">steering · G0–G6 gate G0…G6 of the project lifecycle · HARA hazard analysis and risk assessment (ISO 26262-3) · LKA lane keeping assist · MCU microcontroller: the panda safety processor (STM32H7) · OI-nn open item</text>
-<text x="40" y="905" font-size="10.5" fill="#475569">of the document it appears in · PCM powertrain control module (engine and drive) · PCS pre-collision system: Toyota's stock collision warning and braking · SoC system on chip: the comma device's main processor,</text>
-<text x="40" y="919.5" font-size="10.5" fill="#475569">running openpilot (QM) · SYS system requirement SYS-nnn of WP-S-01 · TSR-nn technical safety requirement (WP-S-02) · VS-nn verification case: VS-SI system integration, VS-HW hardware, VS-SWQ software, VS-FI fault</text>
-<text x="40" y="934" font-size="10.5" fill="#475569">injection, VS-SQ system qualification · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K</text>
-<text x="40" y="948.5" font-size="10.5" fill="#475569">safety case)</text>
+<text x="40" y="902" font-size="10.5" fill="#475569">Terms: ACC adaptive cruise control · AoU assumption of use: what the analysis assumes about the car, the driver or the environment · DQ-nn decision of the project lead (decision register) · ECU electronic control</text>
+<text x="40" y="916.5" font-size="10.5" fill="#475569">unit · EPS electric power steering · G0–G6 gate G0…G6 of the project lifecycle · HARA hazard analysis and risk assessment (ISO 26262-3) · LKA lane keeping assist · MCU microcontroller: the panda safety processor</text>
+<text x="40" y="931" font-size="10.5" fill="#475569">(STM32H7) · OI-nn open item of the document it appears in · PCM powertrain control module (engine and drive) · PCS pre-collision system: Toyota's stock collision warning and braking · SoC system on chip: the comma</text>
+<text x="40" y="945.5" font-size="10.5" fill="#475569">device's main processor, running openpilot (QM) · SYS system requirement SYS-nnn of WP-S-01 · TSR-nn technical safety requirement (WP-S-02) · VS-nn verification case: VS-SI system integration, VS-HW hardware, VS-SWQ</text>
+<text x="40" y="960" font-size="10.5" fill="#475569">software, VS-FI fault injection, VS-SQ system qualification · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A</text>
+<text x="40" y="974.5" font-size="10.5" fill="#475569">analyses, O operation, K safety case)</text>
 </g>
 </svg>

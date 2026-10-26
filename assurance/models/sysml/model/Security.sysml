@@ -65,7 +65,7 @@ package LionDriverSecurity {
     part <'TB-2'> bootControl : TrustBoundary {
         doc /* Z2 → Z1 boot control (GPIO) */
         :>> zones = ("Z2", "Z1");
-        :>> crossing = "`STM_BOOT0`, `STM_RST_N` (`openpilot/common/hardware/comma/hardware.py:401-419`)";
+        :>> crossing = "Panda boot and reset lines driven by the SoC (details: private record GD-03)";
         :>> threats = "TS-03";
         :>> controls = "CSR-041…CSR-043, CSR-051…CSR-054";
     }

@@ -84,14 +84,14 @@ Clause references and status are read from the [register (WP-M-00)](../../01-man
 
 ## 3. Cross-domain interfaces
 
-Each interface is anchored to text in the work products; the checker fails if an anchor disappears. *Documented* means the documents reference each other but nobody has reviewed the agreement yet.
+Each interface is anchored to text in the work products; the checker fails if an anchor disappears. *Documented* means the documents reference each other but nobody has reviewed the agreement yet. An interface is *agreed* only when an accepted review record of both owners lists its IFR item in [`trace/items/ifr.yaml`](../../trace/items/ifr.yaml) (DQ-129 A). Agreed in the whole model: 0 of 33.
 
-| ID | Pattern | Between | Topic | Status | Open item | Due |
-|---|---|---|---|---|---|---|
-| IX-20 | Hardware-Software | [WP-H-06](../../04-hardware/WP-H-06-hardware-integration-verification.md), [WP-W-08](../../05-software/WP-W-08-embedded-software-testing.md) (Hardware / Software) | Hardware, embedded-software and system integration share one HIL bench (D-04): WP-W-08 §3 uses the WP-H-06 §2 bench and adds its software needs; both plan it ready by G3 as WP-M-03 phase P4 requires. Building it stays open as WP-H-06 OI-1 / WP-W-08 OI-1 / WP-M-03 task 5.1 | Documented | — | G4 |
-| IX-21 | Software-System | [WP-W-08](../../05-software/WP-W-08-embedded-software-testing.md), [WP-V-05](../../06-validation/WP-V-05-fault-injection.md) (Software / Functional safety) | Embedded-software qualification, system integration and the fault-injection campaign test the same faults on one bench. WP-W-08 §6.1 splits them: WP-V-05 owns every injection procedure; a case at WP-S-08 step I-1 runs once under WP-W-08 and is cited by WP-S-08 and WP-V-05; WP-S-08 adds steps I-2 to I-4 | Documented | — | G4 |
-| IX-22 | Safety-SOTIF | [WP-V-05](../../06-validation/WP-V-05-fault-injection.md), [WP-V-03](../../06-validation/WP-V-03-sotif-known-scenarios.md) (Functional safety / SOTIF) | Faults (malfunctions) are injected under WP-V-05 and triggering conditions are tested under WP-V-03; scenarios that need an induced fault reuse the WP-V-05 rules | Documented | — | G4 |
-| IX-23 | SOTIF-AI | [WP-V-03](../../06-validation/WP-V-03-sotif-known-scenarios.md), [WP-W-10](../../05-software/WP-W-10-ml-engineering.md) (SOTIF / AI safety) | Known-scenario evaluation reuses the ML test cases (e.g. VS-ML-06 for driver monitoring) and is re-run after every model change listed in WP-W-10 | Documented | — | G4 |
+| ID | IFR | Pattern | Between | Topic | Status | Open item | Due |
+|---|---|---|---|---|---|---|---|
+| IX-20 | IFR-20 | Hardware-Software | [WP-H-06](../../04-hardware/WP-H-06-hardware-integration-verification.md), [WP-W-08](../../05-software/WP-W-08-embedded-software-testing.md) (Hardware / Software) | Hardware, embedded-software and system integration share one HIL bench (D-04): WP-W-08 §3 uses the WP-H-06 §2 bench and adds its software needs; both plan it ready by G3 as WP-M-03 phase P4 requires. Building it stays open as WP-H-06 OI-1 / WP-W-08 OI-1 / WP-M-03 task 5.1 | Documented | — | G4 |
+| IX-21 | IFR-21 | Software-System | [WP-W-08](../../05-software/WP-W-08-embedded-software-testing.md), [WP-V-05](../../06-validation/WP-V-05-fault-injection.md) (Software / Functional safety) | Embedded-software qualification, system integration and the fault-injection campaign test the same faults on one bench. WP-W-08 §6.1 splits them: WP-V-05 owns every injection procedure; a case at WP-S-08 step I-1 runs once under WP-W-08 and is cited by WP-S-08 and WP-V-05; WP-S-08 adds steps I-2 to I-4 | Documented | — | G4 |
+| IX-22 | IFR-22 | Safety-SOTIF | [WP-V-05](../../06-validation/WP-V-05-fault-injection.md), [WP-V-03](../../06-validation/WP-V-03-sotif-known-scenarios.md) (Functional safety / SOTIF) | Faults (malfunctions) are injected under WP-V-05 and triggering conditions are tested under WP-V-03; scenarios that need an induced fault reuse the WP-V-05 rules | Documented | — | G4 |
+| IX-23 | IFR-23 | SOTIF-AI | [WP-V-03](../../06-validation/WP-V-03-sotif-known-scenarios.md), [WP-W-10](../../05-software/WP-W-10-ml-engineering.md) (SOTIF / AI safety) | Known-scenario evaluation reuses the ML test cases (e.g. VS-ML-06 for driver monitoring) and is re-run after every model change listed in WP-W-10 | Documented | — | G4 |
 
 ## 4. Clause coverage by standard
 
@@ -131,3 +131,5 @@ Which activity answers each clause reference listed in the register. One activit
 **Work products with no confirmation measure at this gate** (verification review only): WP-H-06, WP-W-07, WP-W-08, WP-V-05, WP-S-08, WP-V-03, WP-S-09.
 
 **Open interfaces due by this gate** (from this or an earlier phase): IX-13 (WP-V-02 OI-3).
+
+**Interfaces due by this gate that are not agreed** (no accepted review of their IFR item, DQ-129 A): 26 of 26: IFR-01, IFR-02, IFR-03, IFR-04, IFR-05, IFR-06, IFR-07, IFR-08, IFR-09, IFR-10, IFR-11, IFR-12, IFR-13, IFR-14, IFR-15, IFR-16, IFR-17, IFR-18, IFR-19, IFR-20, IFR-21, IFR-22, IFR-23, IFR-31, IFR-32, IFR-33.

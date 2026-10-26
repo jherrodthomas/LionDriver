@@ -1396,6 +1396,16 @@ package LionDriverVerification {
             verify LionDriverRequirements::sys_141;
         }
     }
+    verification <'VS-SQ-20'> vs_sq_20 : VerificationCase {
+        doc /* Start-up fault-code read, per ECU */
+        :>> spec = "WP-S-09 §5.2";
+        :>> level = "VS-SQ";
+        :>> names = "AOU-09, AOU-10, SWSR-629";
+        objective {
+            verify LionDriverRequirements::fsr_02_12;
+            verify LionDriverRequirements::tsr_629;
+        }
+    }
     verification <'VS-SWI-01'> vs_swi_01 : VerificationCase {
         doc /* Actuation path across units: SoC frame → TX hook → limits → accept/reject; lateral and longitudinal; substitute zero-torque frame after rejection */
         :>> spec = "WP-W-07 §5";

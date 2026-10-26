@@ -1,0 +1,495 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="1060" viewBox="0 0 1520 1060" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">V-14. Stakeholder needs and use cases (SysML v2 view needsUseCases)</title>
+<desc id="d">Needs and use cases view generated from the SysML v2 model. Columns are the use cases UC-01 to UC-11, each a SysML v2 use case with LD-SDA as its subject. Three bands of rows: the actors that take part in each use case; the stakeholder needs SN-01 to SN-12 that each use case's objective requires, with the system requirements and safety goals that refine each need; and the functions F-01 to F-09 each use case performs.</desc>
+<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter><marker id="rq-teal" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#0F766E"/></marker><marker id="rq-blue" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#2563EB"/></marker><marker id="rq-or" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#C2410C"/></marker><marker id="rq-ink" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#334155"/></marker><marker id="rq-mut" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#64748B"/></marker></defs>
+<rect width="1520" height="1060" fill="#FFFFFF"/>
+<text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-14 · Stakeholder needs and use cases</text>
+<text x="40" y="69" font-size="12.5" fill="#64748B">WP-S-01 §1.2–§1.4: who uses LD-SDA, what each needs, the use cases that serve the needs and the functions they perform</text>
+<text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::needsUseCases</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">NeedsView · render asElementTable · model 5d5f4756c724</text>
+<line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
+<text x="470" y="112" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">USE CASES · «use case» with subject LD-SDA</text>
+<text x="1264" y="112" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">REFINED BY · «derivation»</text>
+<rect x="483.8" y="126" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="505" y="138.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-01</text>
+<text x="505" y="158" font-size="9.5" fill="#334155" font-weight="600" text-anchor="middle">Keep the lane</text>
+<text x="505" y="170" font-size="9.5" fill="#334155" font-weight="600" text-anchor="middle">on a highway</text>
+<rect x="553.8" y="126" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="575" y="138.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-02</text>
+<text x="575" y="158" font-size="9.5" fill="#334155" font-weight="600" text-anchor="middle">Change lanes</text>
+<text x="575" y="170" font-size="9.5" fill="#334155" font-weight="600" text-anchor="middle">on request</text>
+<rect x="623.8" y="126" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="645" y="138.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-03</text>
+<text x="645" y="158" font-size="9.5" fill="#334155" font-weight="600" text-anchor="middle">Cruise and</text>
+<text x="645" y="170" font-size="9.5" fill="#334155" font-weight="600" text-anchor="middle">follow</text>
+<rect x="693.8" y="126" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="715" y="138.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-04</text>
+<text x="715" y="158" font-size="9.5" fill="#334155" font-weight="600" text-anchor="middle">Stop and go</text>
+<text x="715" y="170" font-size="9.5" fill="#334155" font-weight="600" text-anchor="middle">in a queue</text>
+<rect x="763.8" y="126" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="785" y="138.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-05</text>
+<text x="785" y="158" font-size="9.5" fill="#334155" font-weight="600" text-anchor="middle">Engage</text>
+<rect x="833.8" y="126" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="855" y="138.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-06</text>
+<text x="855" y="158" font-size="9.5" fill="#334155" font-weight="600" text-anchor="middle">Take over</text>
+<rect x="903.8" y="126" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="925" y="138.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-07</text>
+<text x="925" y="158" font-size="9.5" fill="#334155" font-weight="600" text-anchor="middle">Hand back at</text>
+<text x="925" y="170" font-size="9.5" fill="#334155" font-weight="600" text-anchor="middle">a limit</text>
+<rect x="973.8" y="126" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="995" y="138.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-08</text>
+<text x="995" y="158" font-size="9.5" fill="#334155" font-weight="600" text-anchor="middle">Warn when</text>
+<text x="995" y="170" font-size="9.5" fill="#334155" font-weight="600" text-anchor="middle">not assisted</text>
+<rect x="1043.8" y="126" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="1065" y="138.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-09</text>
+<text x="1065" y="158" font-size="9.5" fill="#334155" font-weight="600" text-anchor="middle">Keep the</text>
+<text x="1065" y="170" font-size="9.5" fill="#334155" font-weight="600" text-anchor="middle">driver</text>
+<text x="1065" y="182" font-size="9.5" fill="#334155" font-weight="600" text-anchor="middle">attentive</text>
+<rect x="1113.8" y="126" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="1135" y="138.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-10</text>
+<text x="1135" y="158" font-size="9.5" fill="#334155" font-weight="600" text-anchor="middle">Record and</text>
+<text x="1135" y="170" font-size="9.5" fill="#334155" font-weight="600" text-anchor="middle">review a drive</text>
+<rect x="1183.8" y="126" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="1205" y="138.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-11</text>
+<text x="1205" y="158" font-size="9.5" fill="#334155" font-weight="600" text-anchor="middle">Install and</text>
+<text x="1205" y="170" font-size="9.5" fill="#334155" font-weight="600" text-anchor="middle">update</text>
+<text x="40" y="206" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">ACTORS · «actor» of the use case</text>
+<rect x="40" y="216" width="1440" height="26" rx="4" fill="#F8FAFC"/>
+<text x="48" y="233" font-size="11" fill="#0F172A">Driver</text>
+<line x1="505" y1="216" x2="505" y2="242" stroke="#E2E8F0"/>
+<circle cx="505" cy="229" r="6" fill="#334155"/>
+<line x1="575" y1="216" x2="575" y2="242" stroke="#E2E8F0"/>
+<circle cx="575" cy="229" r="6" fill="#334155"/>
+<line x1="645" y1="216" x2="645" y2="242" stroke="#E2E8F0"/>
+<circle cx="645" cy="229" r="6" fill="#334155"/>
+<line x1="715" y1="216" x2="715" y2="242" stroke="#E2E8F0"/>
+<circle cx="715" cy="229" r="6" fill="#334155"/>
+<line x1="785" y1="216" x2="785" y2="242" stroke="#E2E8F0"/>
+<circle cx="785" cy="229" r="6" fill="#334155"/>
+<line x1="855" y1="216" x2="855" y2="242" stroke="#E2E8F0"/>
+<circle cx="855" cy="229" r="6" fill="#334155"/>
+<line x1="925" y1="216" x2="925" y2="242" stroke="#E2E8F0"/>
+<circle cx="925" cy="229" r="6" fill="#334155"/>
+<line x1="995" y1="216" x2="995" y2="242" stroke="#E2E8F0"/>
+<circle cx="995" cy="229" r="6" fill="#334155"/>
+<line x1="1065" y1="216" x2="1065" y2="242" stroke="#E2E8F0"/>
+<circle cx="1065" cy="229" r="6" fill="#334155"/>
+<line x1="1135" y1="216" x2="1135" y2="242" stroke="#E2E8F0"/>
+<circle cx="1135" cy="229" r="6" fill="#334155"/>
+<line x1="1205" y1="216" x2="1205" y2="242" stroke="#E2E8F0"/>
+<text x="48" y="259" font-size="11" fill="#0F172A">Vehicle</text>
+<line x1="505" y1="242" x2="505" y2="268" stroke="#E2E8F0"/>
+<circle cx="505" cy="255" r="6" fill="#334155"/>
+<line x1="575" y1="242" x2="575" y2="268" stroke="#E2E8F0"/>
+<circle cx="575" cy="255" r="6" fill="#334155"/>
+<line x1="645" y1="242" x2="645" y2="268" stroke="#E2E8F0"/>
+<circle cx="645" cy="255" r="6" fill="#334155"/>
+<line x1="715" y1="242" x2="715" y2="268" stroke="#E2E8F0"/>
+<circle cx="715" cy="255" r="6" fill="#334155"/>
+<line x1="785" y1="242" x2="785" y2="268" stroke="#E2E8F0"/>
+<circle cx="785" cy="255" r="6" fill="#334155"/>
+<line x1="855" y1="242" x2="855" y2="268" stroke="#E2E8F0"/>
+<circle cx="855" cy="255" r="6" fill="#334155"/>
+<line x1="925" y1="242" x2="925" y2="268" stroke="#E2E8F0"/>
+<line x1="995" y1="242" x2="995" y2="268" stroke="#E2E8F0"/>
+<line x1="1065" y1="242" x2="1065" y2="268" stroke="#E2E8F0"/>
+<line x1="1135" y1="242" x2="1135" y2="268" stroke="#E2E8F0"/>
+<line x1="1205" y1="242" x2="1205" y2="268" stroke="#E2E8F0"/>
+<rect x="40" y="268" width="1440" height="26" rx="4" fill="#F8FAFC"/>
+<text x="48" y="285" font-size="11" fill="#0F172A">Project lead</text>
+<line x1="505" y1="268" x2="505" y2="294" stroke="#E2E8F0"/>
+<line x1="575" y1="268" x2="575" y2="294" stroke="#E2E8F0"/>
+<line x1="645" y1="268" x2="645" y2="294" stroke="#E2E8F0"/>
+<line x1="715" y1="268" x2="715" y2="294" stroke="#E2E8F0"/>
+<line x1="785" y1="268" x2="785" y2="294" stroke="#E2E8F0"/>
+<line x1="855" y1="268" x2="855" y2="294" stroke="#E2E8F0"/>
+<line x1="925" y1="268" x2="925" y2="294" stroke="#E2E8F0"/>
+<line x1="995" y1="268" x2="995" y2="294" stroke="#E2E8F0"/>
+<line x1="1065" y1="268" x2="1065" y2="294" stroke="#E2E8F0"/>
+<line x1="1135" y1="268" x2="1135" y2="294" stroke="#E2E8F0"/>
+<circle cx="1135" cy="281" r="6" fill="#334155"/>
+<line x1="1205" y1="268" x2="1205" y2="294" stroke="#E2E8F0"/>
+<text x="48" y="311" font-size="11" fill="#0F172A">Owner</text>
+<line x1="505" y1="294" x2="505" y2="320" stroke="#E2E8F0"/>
+<line x1="575" y1="294" x2="575" y2="320" stroke="#E2E8F0"/>
+<line x1="645" y1="294" x2="645" y2="320" stroke="#E2E8F0"/>
+<line x1="715" y1="294" x2="715" y2="320" stroke="#E2E8F0"/>
+<line x1="785" y1="294" x2="785" y2="320" stroke="#E2E8F0"/>
+<line x1="855" y1="294" x2="855" y2="320" stroke="#E2E8F0"/>
+<line x1="925" y1="294" x2="925" y2="320" stroke="#E2E8F0"/>
+<line x1="995" y1="294" x2="995" y2="320" stroke="#E2E8F0"/>
+<line x1="1065" y1="294" x2="1065" y2="320" stroke="#E2E8F0"/>
+<line x1="1135" y1="294" x2="1135" y2="320" stroke="#E2E8F0"/>
+<line x1="1205" y1="294" x2="1205" y2="320" stroke="#E2E8F0"/>
+<circle cx="1205" cy="307" r="6" fill="#334155"/>
+<text x="40" y="340" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">STAKEHOLDER NEEDS · the use case's objective requires the need</text>
+<rect x="40" y="350" width="1440" height="26" rx="4" fill="#F8FAFC"/>
+<rect x="48" y="354" width="42.5" height="18" rx="9" fill="#0E7490"/><text x="69.2" y="366.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SN-01</text>
+<text x="98.5" y="367" font-size="11" fill="#0F172A">Driver: Less effort keeping the car in its lane on a highway, while st…</text>
+<line x1="505" y1="350" x2="505" y2="376" stroke="#E2E8F0"/>
+<circle cx="505" cy="363" r="6" fill="#0E7490"/>
+<line x1="575" y1="350" x2="575" y2="376" stroke="#E2E8F0"/>
+<line x1="645" y1="350" x2="645" y2="376" stroke="#E2E8F0"/>
+<line x1="715" y1="350" x2="715" y2="376" stroke="#E2E8F0"/>
+<line x1="785" y1="350" x2="785" y2="376" stroke="#E2E8F0"/>
+<line x1="855" y1="350" x2="855" y2="376" stroke="#E2E8F0"/>
+<line x1="925" y1="350" x2="925" y2="376" stroke="#E2E8F0"/>
+<line x1="995" y1="350" x2="995" y2="376" stroke="#E2E8F0"/>
+<line x1="1065" y1="350" x2="1065" y2="376" stroke="#E2E8F0"/>
+<line x1="1135" y1="350" x2="1135" y2="376" stroke="#E2E8F0"/>
+<line x1="1205" y1="350" x2="1205" y2="376" stroke="#E2E8F0"/>
+<rect x="1264" y="355" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1289.9" y="366.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-001</text>
+<rect x="1318.8" y="355" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1344.7" y="366.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-002</text>
+<rect x="1373.6" y="355" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1399.5" y="366.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-003</text>
+<text x="1428.4" y="367" font-size="10.5" fill="#64748B" font-weight="700">+2</text>
+<rect x="48" y="380" width="42.5" height="18" rx="9" fill="#0E7490"/><text x="69.2" y="392.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SN-02</text>
+<text x="98.5" y="393" font-size="11" fill="#0F172A">Driver: Help with a lane change, but only when the driver asks for it</text>
+<line x1="505" y1="376" x2="505" y2="402" stroke="#E2E8F0"/>
+<line x1="575" y1="376" x2="575" y2="402" stroke="#E2E8F0"/>
+<circle cx="575" cy="389" r="6" fill="#0E7490"/>
+<line x1="645" y1="376" x2="645" y2="402" stroke="#E2E8F0"/>
+<line x1="715" y1="376" x2="715" y2="402" stroke="#E2E8F0"/>
+<line x1="785" y1="376" x2="785" y2="402" stroke="#E2E8F0"/>
+<line x1="855" y1="376" x2="855" y2="402" stroke="#E2E8F0"/>
+<line x1="925" y1="376" x2="925" y2="402" stroke="#E2E8F0"/>
+<line x1="995" y1="376" x2="995" y2="402" stroke="#E2E8F0"/>
+<line x1="1065" y1="376" x2="1065" y2="402" stroke="#E2E8F0"/>
+<line x1="1135" y1="376" x2="1135" y2="402" stroke="#E2E8F0"/>
+<line x1="1205" y1="376" x2="1205" y2="402" stroke="#E2E8F0"/>
+<rect x="1264" y="381" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1289.9" y="392.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-005</text>
+<rect x="1318.8" y="381" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1344.7" y="392.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-006</text>
+<rect x="40" y="402" width="1440" height="26" rx="4" fill="#F8FAFC"/>
+<rect x="48" y="406" width="42.5" height="18" rx="9" fill="#0E7490"/><text x="69.2" y="418.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SN-03</text>
+<text x="98.5" y="419" font-size="11" fill="#0F172A">Driver: A set speed and a chosen gap to the car ahead, also when…</text>
+<line x1="505" y1="402" x2="505" y2="428" stroke="#E2E8F0"/>
+<line x1="575" y1="402" x2="575" y2="428" stroke="#E2E8F0"/>
+<line x1="645" y1="402" x2="645" y2="428" stroke="#E2E8F0"/>
+<circle cx="645" cy="415" r="6" fill="#0E7490"/>
+<line x1="715" y1="402" x2="715" y2="428" stroke="#E2E8F0"/>
+<circle cx="715" cy="415" r="6" fill="#0E7490"/>
+<line x1="785" y1="402" x2="785" y2="428" stroke="#E2E8F0"/>
+<line x1="855" y1="402" x2="855" y2="428" stroke="#E2E8F0"/>
+<line x1="925" y1="402" x2="925" y2="428" stroke="#E2E8F0"/>
+<line x1="995" y1="402" x2="995" y2="428" stroke="#E2E8F0"/>
+<line x1="1065" y1="402" x2="1065" y2="428" stroke="#E2E8F0"/>
+<line x1="1135" y1="402" x2="1135" y2="428" stroke="#E2E8F0"/>
+<line x1="1205" y1="402" x2="1205" y2="428" stroke="#E2E8F0"/>
+<rect x="1264" y="407" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1289.9" y="418.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-020</text>
+<rect x="1318.8" y="407" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1344.7" y="418.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-021</text>
+<rect x="1373.6" y="407" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1399.5" y="418.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-022</text>
+<text x="1428.4" y="419" font-size="10.5" fill="#64748B" font-weight="700">+4</text>
+<rect x="48" y="432" width="42.5" height="18" rx="9" fill="#0E7490"/><text x="69.2" y="444.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SN-04</text>
+<text x="98.5" y="445" font-size="11" fill="#0F172A">Driver: Switching the assistance on and off with the car's own cont…</text>
+<line x1="505" y1="428" x2="505" y2="454" stroke="#E2E8F0"/>
+<line x1="575" y1="428" x2="575" y2="454" stroke="#E2E8F0"/>
+<line x1="645" y1="428" x2="645" y2="454" stroke="#E2E8F0"/>
+<line x1="715" y1="428" x2="715" y2="454" stroke="#E2E8F0"/>
+<line x1="785" y1="428" x2="785" y2="454" stroke="#E2E8F0"/>
+<circle cx="785" cy="441" r="6" fill="#0E7490"/>
+<line x1="855" y1="428" x2="855" y2="454" stroke="#E2E8F0"/>
+<circle cx="855" cy="441" r="6" fill="#0E7490"/>
+<line x1="925" y1="428" x2="925" y2="454" stroke="#E2E8F0"/>
+<line x1="995" y1="428" x2="995" y2="454" stroke="#E2E8F0"/>
+<line x1="1065" y1="428" x2="1065" y2="454" stroke="#E2E8F0"/>
+<line x1="1135" y1="428" x2="1135" y2="454" stroke="#E2E8F0"/>
+<line x1="1205" y1="428" x2="1205" y2="454" stroke="#E2E8F0"/>
+<rect x="1264" y="433" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1284.5" y="444.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-05</text>
+<rect x="1308" y="433" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1333.9" y="444.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-040</text>
+<rect x="1362.8" y="433" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1388.7" y="444.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-042</text>
+<rect x="40" y="454" width="1440" height="26" rx="4" fill="#F8FAFC"/>
+<rect x="48" y="458" width="42.5" height="18" rx="9" fill="#0E7490"/><text x="69.2" y="470.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SN-05</text>
+<text x="98.5" y="471" font-size="11" fill="#0F172A">Project lead: Assistance only where it was assured: on highways in…</text>
+<line x1="505" y1="454" x2="505" y2="480" stroke="#E2E8F0"/>
+<line x1="575" y1="454" x2="575" y2="480" stroke="#E2E8F0"/>
+<line x1="645" y1="454" x2="645" y2="480" stroke="#E2E8F0"/>
+<line x1="715" y1="454" x2="715" y2="480" stroke="#E2E8F0"/>
+<line x1="785" y1="454" x2="785" y2="480" stroke="#E2E8F0"/>
+<circle cx="785" cy="467" r="6" fill="#0E7490"/>
+<line x1="855" y1="454" x2="855" y2="480" stroke="#E2E8F0"/>
+<line x1="925" y1="454" x2="925" y2="480" stroke="#E2E8F0"/>
+<line x1="995" y1="454" x2="995" y2="480" stroke="#E2E8F0"/>
+<line x1="1065" y1="454" x2="1065" y2="480" stroke="#E2E8F0"/>
+<line x1="1135" y1="454" x2="1135" y2="480" stroke="#E2E8F0"/>
+<line x1="1205" y1="454" x2="1205" y2="480" stroke="#E2E8F0"/>
+<rect x="1264" y="459" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1289.9" y="470.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-021</text>
+<rect x="1318.8" y="459" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1344.7" y="470.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-027</text>
+<rect x="1373.6" y="459" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1399.5" y="470.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-040</text>
+<text x="1428.4" y="471" font-size="10.5" fill="#64748B" font-weight="700">+1</text>
+<rect x="48" y="484" width="42.5" height="18" rx="9" fill="#0E7490"/><text x="69.2" y="496.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SN-06</text>
+<text x="98.5" y="497" font-size="11" fill="#0F172A">Driver: Knowing at all times whether the assistance is on, and why…</text>
+<line x1="505" y1="480" x2="505" y2="506" stroke="#E2E8F0"/>
+<line x1="575" y1="480" x2="575" y2="506" stroke="#E2E8F0"/>
+<line x1="645" y1="480" x2="645" y2="506" stroke="#E2E8F0"/>
+<line x1="715" y1="480" x2="715" y2="506" stroke="#E2E8F0"/>
+<line x1="785" y1="480" x2="785" y2="506" stroke="#E2E8F0"/>
+<line x1="855" y1="480" x2="855" y2="506" stroke="#E2E8F0"/>
+<line x1="925" y1="480" x2="925" y2="506" stroke="#E2E8F0"/>
+<circle cx="925" cy="493" r="6" fill="#0E7490"/>
+<line x1="995" y1="480" x2="995" y2="506" stroke="#E2E8F0"/>
+<line x1="1065" y1="480" x2="1065" y2="506" stroke="#E2E8F0"/>
+<line x1="1135" y1="480" x2="1135" y2="506" stroke="#E2E8F0"/>
+<line x1="1205" y1="480" x2="1205" y2="506" stroke="#E2E8F0"/>
+<rect x="1264" y="485" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1289.9" y="496.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-004</text>
+<rect x="1318.8" y="485" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1344.7" y="496.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-080</text>
+<rect x="1373.6" y="485" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1399.5" y="496.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-081</text>
+<text x="1428.4" y="497" font-size="10.5" fill="#64748B" font-weight="700">+2</text>
+<rect x="40" y="506" width="1440" height="26" rx="4" fill="#F8FAFC"/>
+<rect x="48" y="510" width="42.5" height="18" rx="9" fill="#0E7490"/><text x="69.2" y="522.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SN-07</text>
+<text x="98.5" y="523" font-size="11" fill="#0F172A">Driver: A warning of an imminent collision or of drifting out of the l…</text>
+<line x1="505" y1="506" x2="505" y2="532" stroke="#E2E8F0"/>
+<line x1="575" y1="506" x2="575" y2="532" stroke="#E2E8F0"/>
+<line x1="645" y1="506" x2="645" y2="532" stroke="#E2E8F0"/>
+<line x1="715" y1="506" x2="715" y2="532" stroke="#E2E8F0"/>
+<line x1="785" y1="506" x2="785" y2="532" stroke="#E2E8F0"/>
+<line x1="855" y1="506" x2="855" y2="532" stroke="#E2E8F0"/>
+<line x1="925" y1="506" x2="925" y2="532" stroke="#E2E8F0"/>
+<line x1="995" y1="506" x2="995" y2="532" stroke="#E2E8F0"/>
+<circle cx="995" cy="519" r="6" fill="#0E7490"/>
+<line x1="1065" y1="506" x2="1065" y2="532" stroke="#E2E8F0"/>
+<line x1="1135" y1="506" x2="1135" y2="532" stroke="#E2E8F0"/>
+<line x1="1205" y1="506" x2="1205" y2="532" stroke="#E2E8F0"/>
+<rect x="1264" y="511" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1289.9" y="522.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-100</text>
+<rect x="1318.8" y="511" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1344.7" y="522.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-101</text>
+<rect x="1373.6" y="511" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1399.5" y="522.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-102</text>
+<rect x="48" y="536" width="42.5" height="18" rx="9" fill="#0E7490"/><text x="69.2" y="548.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SN-08</text>
+<text x="98.5" y="549" font-size="11" fill="#0F172A">Other road users: A driver who stays attentive while assisted, and…</text>
+<line x1="505" y1="532" x2="505" y2="558" stroke="#E2E8F0"/>
+<line x1="575" y1="532" x2="575" y2="558" stroke="#E2E8F0"/>
+<line x1="645" y1="532" x2="645" y2="558" stroke="#E2E8F0"/>
+<line x1="715" y1="532" x2="715" y2="558" stroke="#E2E8F0"/>
+<line x1="785" y1="532" x2="785" y2="558" stroke="#E2E8F0"/>
+<line x1="855" y1="532" x2="855" y2="558" stroke="#E2E8F0"/>
+<line x1="925" y1="532" x2="925" y2="558" stroke="#E2E8F0"/>
+<line x1="995" y1="532" x2="995" y2="558" stroke="#E2E8F0"/>
+<line x1="1065" y1="532" x2="1065" y2="558" stroke="#E2E8F0"/>
+<circle cx="1065" cy="545" r="6" fill="#0E7490"/>
+<line x1="1135" y1="532" x2="1135" y2="558" stroke="#E2E8F0"/>
+<line x1="1205" y1="532" x2="1205" y2="558" stroke="#E2E8F0"/>
+<rect x="1264" y="537" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1284.5" y="548.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-08</text>
+<rect x="1308" y="537" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1333.9" y="548.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-060</text>
+<rect x="1362.8" y="537" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1388.7" y="548.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-061</text>
+<rect x="1417.6" y="537" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1443.5" y="548.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-062</text>
+<text x="1472.4" y="549" font-size="10.5" fill="#64748B" font-weight="700">+1</text>
+<rect x="40" y="558" width="1440" height="26" rx="4" fill="#F8FAFC"/>
+<rect x="48" y="562" width="42.5" height="18" rx="9" fill="#0E7490"/><text x="69.2" y="574.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SN-09</text>
+<text x="98.5" y="575" font-size="11" fill="#0F172A">Occupants, Other road users: The item never moves the car in a w…</text>
+<line x1="505" y1="558" x2="505" y2="584" stroke="#E2E8F0"/>
+<line x1="575" y1="558" x2="575" y2="584" stroke="#E2E8F0"/>
+<line x1="645" y1="558" x2="645" y2="584" stroke="#E2E8F0"/>
+<line x1="715" y1="558" x2="715" y2="584" stroke="#E2E8F0"/>
+<line x1="785" y1="558" x2="785" y2="584" stroke="#E2E8F0"/>
+<line x1="855" y1="558" x2="855" y2="584" stroke="#E2E8F0"/>
+<circle cx="855" cy="571" r="6" fill="#0E7490"/>
+<line x1="925" y1="558" x2="925" y2="584" stroke="#E2E8F0"/>
+<circle cx="925" cy="571" r="6" fill="#0E7490"/>
+<line x1="995" y1="558" x2="995" y2="584" stroke="#E2E8F0"/>
+<line x1="1065" y1="558" x2="1065" y2="584" stroke="#E2E8F0"/>
+<line x1="1135" y1="558" x2="1135" y2="584" stroke="#E2E8F0"/>
+<line x1="1205" y1="558" x2="1205" y2="584" stroke="#E2E8F0"/>
+<rect x="1264" y="563" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1284.5" y="574.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-01</text>
+<rect x="1308" y="563" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1328.5" y="574.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-02</text>
+<rect x="1352" y="563" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1372.5" y="574.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-03</text>
+<rect x="1396" y="563" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1416.5" y="574.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-04</text>
+<text x="1440" y="575" font-size="10.5" fill="#64748B" font-weight="700">+2</text>
+<rect x="48" y="588" width="42.5" height="18" rx="9" fill="#0E7490"/><text x="69.2" y="600.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SN-10</text>
+<text x="98.5" y="601" font-size="11" fill="#0F172A">Driver: Assistance that is ready soon after starting and does not dr…</text>
+<line x1="505" y1="584" x2="505" y2="610" stroke="#E2E8F0"/>
+<line x1="575" y1="584" x2="575" y2="610" stroke="#E2E8F0"/>
+<line x1="645" y1="584" x2="645" y2="610" stroke="#E2E8F0"/>
+<line x1="715" y1="584" x2="715" y2="610" stroke="#E2E8F0"/>
+<line x1="785" y1="584" x2="785" y2="610" stroke="#E2E8F0"/>
+<circle cx="785" cy="597" r="6" fill="#0E7490"/>
+<line x1="855" y1="584" x2="855" y2="610" stroke="#E2E8F0"/>
+<line x1="925" y1="584" x2="925" y2="610" stroke="#E2E8F0"/>
+<circle cx="925" cy="597" r="6" fill="#0E7490"/>
+<line x1="995" y1="584" x2="995" y2="610" stroke="#E2E8F0"/>
+<line x1="1065" y1="584" x2="1065" y2="610" stroke="#E2E8F0"/>
+<line x1="1135" y1="584" x2="1135" y2="610" stroke="#E2E8F0"/>
+<line x1="1205" y1="584" x2="1205" y2="610" stroke="#E2E8F0"/>
+<rect x="1264" y="589" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1289.9" y="600.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-043</text>
+<rect x="1318.8" y="589" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1344.7" y="600.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-120</text>
+<rect x="1373.6" y="589" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1399.5" y="600.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-145</text>
+<rect x="40" y="610" width="1440" height="26" rx="4" fill="#F8FAFC"/>
+<rect x="48" y="614" width="42.5" height="18" rx="9" fill="#0E7490"/><text x="69.2" y="626.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SN-11</text>
+<text x="98.5" y="627" font-size="11" fill="#0F172A">Project lead: Every drive recorded and tied to the software that ran…</text>
+<line x1="505" y1="610" x2="505" y2="636" stroke="#E2E8F0"/>
+<line x1="575" y1="610" x2="575" y2="636" stroke="#E2E8F0"/>
+<line x1="645" y1="610" x2="645" y2="636" stroke="#E2E8F0"/>
+<line x1="715" y1="610" x2="715" y2="636" stroke="#E2E8F0"/>
+<line x1="785" y1="610" x2="785" y2="636" stroke="#E2E8F0"/>
+<line x1="855" y1="610" x2="855" y2="636" stroke="#E2E8F0"/>
+<line x1="925" y1="610" x2="925" y2="636" stroke="#E2E8F0"/>
+<line x1="995" y1="610" x2="995" y2="636" stroke="#E2E8F0"/>
+<line x1="1065" y1="610" x2="1065" y2="636" stroke="#E2E8F0"/>
+<line x1="1135" y1="610" x2="1135" y2="636" stroke="#E2E8F0"/>
+<circle cx="1135" cy="623" r="6" fill="#0E7490"/>
+<line x1="1205" y1="610" x2="1205" y2="636" stroke="#E2E8F0"/>
+<rect x="1264" y="615" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1289.9" y="626.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-121</text>
+<rect x="1318.8" y="615" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1344.7" y="626.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-140</text>
+<rect x="1373.6" y="615" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1399.5" y="626.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-141</text>
+<text x="1428.4" y="627" font-size="10.5" fill="#64748B" font-weight="700">+2</text>
+<rect x="48" y="640" width="42.5" height="18" rx="9" fill="#0E7490"/><text x="69.2" y="652.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SN-12</text>
+<text x="98.5" y="653" font-size="11" fill="#0F172A">Owner: Control over what leaves the car and when its software ch…</text>
+<line x1="505" y1="636" x2="505" y2="662" stroke="#E2E8F0"/>
+<line x1="575" y1="636" x2="575" y2="662" stroke="#E2E8F0"/>
+<line x1="645" y1="636" x2="645" y2="662" stroke="#E2E8F0"/>
+<line x1="715" y1="636" x2="715" y2="662" stroke="#E2E8F0"/>
+<line x1="785" y1="636" x2="785" y2="662" stroke="#E2E8F0"/>
+<line x1="855" y1="636" x2="855" y2="662" stroke="#E2E8F0"/>
+<line x1="925" y1="636" x2="925" y2="662" stroke="#E2E8F0"/>
+<line x1="995" y1="636" x2="995" y2="662" stroke="#E2E8F0"/>
+<line x1="1065" y1="636" x2="1065" y2="662" stroke="#E2E8F0"/>
+<line x1="1135" y1="636" x2="1135" y2="662" stroke="#E2E8F0"/>
+<line x1="1205" y1="636" x2="1205" y2="662" stroke="#E2E8F0"/>
+<circle cx="1205" cy="649" r="6" fill="#0E7490"/>
+<rect x="1264" y="641" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1289.9" y="652.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-144</text>
+<rect x="1318.8" y="641" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="1344.7" y="652.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-145</text>
+<text x="40" y="682" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">FUNCTIONS (WP-C-01 §2.1) · «perform» in the use case</text>
+<rect x="40" y="692" width="1440" height="26" rx="4" fill="#F8FAFC"/>
+<rect x="48" y="696" width="36.8" height="18" rx="9" fill="#4338CA"/><text x="66.4" y="708.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">F-01</text>
+<text x="92.8" y="709" font-size="11" fill="#0F172A">Lateral control (lane centring)</text>
+<line x1="505" y1="692" x2="505" y2="718" stroke="#E2E8F0"/>
+<circle cx="505" cy="705" r="6" fill="#4338CA"/>
+<line x1="575" y1="692" x2="575" y2="718" stroke="#E2E8F0"/>
+<circle cx="575" cy="705" r="6" fill="#4338CA"/>
+<line x1="645" y1="692" x2="645" y2="718" stroke="#E2E8F0"/>
+<line x1="715" y1="692" x2="715" y2="718" stroke="#E2E8F0"/>
+<line x1="785" y1="692" x2="785" y2="718" stroke="#E2E8F0"/>
+<line x1="855" y1="692" x2="855" y2="718" stroke="#E2E8F0"/>
+<line x1="925" y1="692" x2="925" y2="718" stroke="#E2E8F0"/>
+<line x1="995" y1="692" x2="995" y2="718" stroke="#E2E8F0"/>
+<line x1="1065" y1="692" x2="1065" y2="718" stroke="#E2E8F0"/>
+<line x1="1135" y1="692" x2="1135" y2="718" stroke="#E2E8F0"/>
+<line x1="1205" y1="692" x2="1205" y2="718" stroke="#E2E8F0"/>
+<rect x="48" y="722" width="36.8" height="18" rx="9" fill="#4338CA"/><text x="66.4" y="734.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">F-02</text>
+<text x="92.8" y="735" font-size="11" fill="#0F172A">Longitudinal control (ACC with stop-and-go)</text>
+<line x1="505" y1="718" x2="505" y2="744" stroke="#E2E8F0"/>
+<line x1="575" y1="718" x2="575" y2="744" stroke="#E2E8F0"/>
+<line x1="645" y1="718" x2="645" y2="744" stroke="#E2E8F0"/>
+<circle cx="645" cy="731" r="6" fill="#4338CA"/>
+<line x1="715" y1="718" x2="715" y2="744" stroke="#E2E8F0"/>
+<circle cx="715" cy="731" r="6" fill="#4338CA"/>
+<line x1="785" y1="718" x2="785" y2="744" stroke="#E2E8F0"/>
+<line x1="855" y1="718" x2="855" y2="744" stroke="#E2E8F0"/>
+<line x1="925" y1="718" x2="925" y2="744" stroke="#E2E8F0"/>
+<line x1="995" y1="718" x2="995" y2="744" stroke="#E2E8F0"/>
+<line x1="1065" y1="718" x2="1065" y2="744" stroke="#E2E8F0"/>
+<circle cx="1065" cy="731" r="6" fill="#4338CA"/>
+<line x1="1135" y1="718" x2="1135" y2="744" stroke="#E2E8F0"/>
+<line x1="1205" y1="718" x2="1205" y2="744" stroke="#E2E8F0"/>
+<rect x="40" y="744" width="1440" height="26" rx="4" fill="#F8FAFC"/>
+<rect x="48" y="748" width="36.8" height="18" rx="9" fill="#4338CA"/><text x="66.4" y="760.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">F-03</text>
+<text x="92.8" y="761" font-size="11" fill="#0F172A">Engagement and mode management</text>
+<line x1="505" y1="744" x2="505" y2="770" stroke="#E2E8F0"/>
+<line x1="575" y1="744" x2="575" y2="770" stroke="#E2E8F0"/>
+<line x1="645" y1="744" x2="645" y2="770" stroke="#E2E8F0"/>
+<line x1="715" y1="744" x2="715" y2="770" stroke="#E2E8F0"/>
+<line x1="785" y1="744" x2="785" y2="770" stroke="#E2E8F0"/>
+<circle cx="785" cy="757" r="6" fill="#4338CA"/>
+<line x1="855" y1="744" x2="855" y2="770" stroke="#E2E8F0"/>
+<circle cx="855" cy="757" r="6" fill="#4338CA"/>
+<line x1="925" y1="744" x2="925" y2="770" stroke="#E2E8F0"/>
+<circle cx="925" cy="757" r="6" fill="#4338CA"/>
+<line x1="995" y1="744" x2="995" y2="770" stroke="#E2E8F0"/>
+<line x1="1065" y1="744" x2="1065" y2="770" stroke="#E2E8F0"/>
+<line x1="1135" y1="744" x2="1135" y2="770" stroke="#E2E8F0"/>
+<line x1="1205" y1="744" x2="1205" y2="770" stroke="#E2E8F0"/>
+<rect x="48" y="774" width="36.8" height="18" rx="9" fill="#4338CA"/><text x="66.4" y="786.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">F-04</text>
+<text x="92.8" y="787" font-size="11" fill="#0F172A">Driver monitoring</text>
+<line x1="505" y1="770" x2="505" y2="796" stroke="#E2E8F0"/>
+<line x1="575" y1="770" x2="575" y2="796" stroke="#E2E8F0"/>
+<line x1="645" y1="770" x2="645" y2="796" stroke="#E2E8F0"/>
+<line x1="715" y1="770" x2="715" y2="796" stroke="#E2E8F0"/>
+<line x1="785" y1="770" x2="785" y2="796" stroke="#E2E8F0"/>
+<line x1="855" y1="770" x2="855" y2="796" stroke="#E2E8F0"/>
+<line x1="925" y1="770" x2="925" y2="796" stroke="#E2E8F0"/>
+<line x1="995" y1="770" x2="995" y2="796" stroke="#E2E8F0"/>
+<line x1="1065" y1="770" x2="1065" y2="796" stroke="#E2E8F0"/>
+<circle cx="1065" cy="783" r="6" fill="#4338CA"/>
+<line x1="1135" y1="770" x2="1135" y2="796" stroke="#E2E8F0"/>
+<line x1="1205" y1="770" x2="1205" y2="796" stroke="#E2E8F0"/>
+<rect x="40" y="796" width="1440" height="26" rx="4" fill="#F8FAFC"/>
+<rect x="48" y="800" width="36.8" height="18" rx="9" fill="#4338CA"/><text x="66.4" y="812.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">F-05</text>
+<text x="92.8" y="813" font-size="11" fill="#0F172A">Driver information and warnings</text>
+<line x1="505" y1="796" x2="505" y2="822" stroke="#E2E8F0"/>
+<circle cx="505" cy="809" r="6" fill="#4338CA"/>
+<line x1="575" y1="796" x2="575" y2="822" stroke="#E2E8F0"/>
+<line x1="645" y1="796" x2="645" y2="822" stroke="#E2E8F0"/>
+<line x1="715" y1="796" x2="715" y2="822" stroke="#E2E8F0"/>
+<line x1="785" y1="796" x2="785" y2="822" stroke="#E2E8F0"/>
+<circle cx="785" cy="809" r="6" fill="#4338CA"/>
+<line x1="855" y1="796" x2="855" y2="822" stroke="#E2E8F0"/>
+<line x1="925" y1="796" x2="925" y2="822" stroke="#E2E8F0"/>
+<circle cx="925" cy="809" r="6" fill="#4338CA"/>
+<line x1="995" y1="796" x2="995" y2="822" stroke="#E2E8F0"/>
+<circle cx="995" cy="809" r="6" fill="#4338CA"/>
+<line x1="1065" y1="796" x2="1065" y2="822" stroke="#E2E8F0"/>
+<circle cx="1065" cy="809" r="6" fill="#4338CA"/>
+<line x1="1135" y1="796" x2="1135" y2="822" stroke="#E2E8F0"/>
+<line x1="1205" y1="796" x2="1205" y2="822" stroke="#E2E8F0"/>
+<rect x="48" y="826" width="36.8" height="18" rx="9" fill="#4338CA"/><text x="66.4" y="838.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">F-06</text>
+<text x="92.8" y="839" font-size="11" fill="#0F172A">Forward collision warning</text>
+<line x1="505" y1="822" x2="505" y2="848" stroke="#E2E8F0"/>
+<line x1="575" y1="822" x2="575" y2="848" stroke="#E2E8F0"/>
+<line x1="645" y1="822" x2="645" y2="848" stroke="#E2E8F0"/>
+<line x1="715" y1="822" x2="715" y2="848" stroke="#E2E8F0"/>
+<line x1="785" y1="822" x2="785" y2="848" stroke="#E2E8F0"/>
+<line x1="855" y1="822" x2="855" y2="848" stroke="#E2E8F0"/>
+<line x1="925" y1="822" x2="925" y2="848" stroke="#E2E8F0"/>
+<line x1="995" y1="822" x2="995" y2="848" stroke="#E2E8F0"/>
+<circle cx="995" cy="835" r="6" fill="#4338CA"/>
+<line x1="1065" y1="822" x2="1065" y2="848" stroke="#E2E8F0"/>
+<line x1="1135" y1="822" x2="1135" y2="848" stroke="#E2E8F0"/>
+<line x1="1205" y1="822" x2="1205" y2="848" stroke="#E2E8F0"/>
+<rect x="40" y="848" width="1440" height="26" rx="4" fill="#F8FAFC"/>
+<rect x="48" y="852" width="36.8" height="18" rx="9" fill="#4338CA"/><text x="66.4" y="864.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">F-07</text>
+<text x="92.8" y="865" font-size="11" fill="#0F172A">Lane departure warning</text>
+<line x1="505" y1="848" x2="505" y2="874" stroke="#E2E8F0"/>
+<line x1="575" y1="848" x2="575" y2="874" stroke="#E2E8F0"/>
+<line x1="645" y1="848" x2="645" y2="874" stroke="#E2E8F0"/>
+<line x1="715" y1="848" x2="715" y2="874" stroke="#E2E8F0"/>
+<line x1="785" y1="848" x2="785" y2="874" stroke="#E2E8F0"/>
+<line x1="855" y1="848" x2="855" y2="874" stroke="#E2E8F0"/>
+<line x1="925" y1="848" x2="925" y2="874" stroke="#E2E8F0"/>
+<line x1="995" y1="848" x2="995" y2="874" stroke="#E2E8F0"/>
+<circle cx="995" cy="861" r="6" fill="#4338CA"/>
+<line x1="1065" y1="848" x2="1065" y2="874" stroke="#E2E8F0"/>
+<line x1="1135" y1="848" x2="1135" y2="874" stroke="#E2E8F0"/>
+<line x1="1205" y1="848" x2="1205" y2="874" stroke="#E2E8F0"/>
+<rect x="48" y="878" width="36.8" height="18" rx="9" fill="#4338CA"/><text x="66.4" y="890.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">F-08</text>
+<text x="92.8" y="891" font-size="11" fill="#0F172A">Safety envelope</text>
+<line x1="505" y1="874" x2="505" y2="900" stroke="#E2E8F0"/>
+<circle cx="505" cy="887" r="6" fill="#4338CA"/>
+<line x1="575" y1="874" x2="575" y2="900" stroke="#E2E8F0"/>
+<circle cx="575" cy="887" r="6" fill="#4338CA"/>
+<line x1="645" y1="874" x2="645" y2="900" stroke="#E2E8F0"/>
+<circle cx="645" cy="887" r="6" fill="#4338CA"/>
+<line x1="715" y1="874" x2="715" y2="900" stroke="#E2E8F0"/>
+<circle cx="715" cy="887" r="6" fill="#4338CA"/>
+<line x1="785" y1="874" x2="785" y2="900" stroke="#E2E8F0"/>
+<circle cx="785" cy="887" r="6" fill="#4338CA"/>
+<line x1="855" y1="874" x2="855" y2="900" stroke="#E2E8F0"/>
+<circle cx="855" cy="887" r="6" fill="#4338CA"/>
+<line x1="925" y1="874" x2="925" y2="900" stroke="#E2E8F0"/>
+<circle cx="925" cy="887" r="6" fill="#4338CA"/>
+<line x1="995" y1="874" x2="995" y2="900" stroke="#E2E8F0"/>
+<line x1="1065" y1="874" x2="1065" y2="900" stroke="#E2E8F0"/>
+<line x1="1135" y1="874" x2="1135" y2="900" stroke="#E2E8F0"/>
+<line x1="1205" y1="874" x2="1205" y2="900" stroke="#E2E8F0"/>
+<rect x="40" y="900" width="1440" height="26" rx="4" fill="#F8FAFC"/>
+<rect x="48" y="904" width="36.8" height="18" rx="9" fill="#4338CA"/><text x="66.4" y="916.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">F-09</text>
+<text x="92.8" y="917" font-size="11" fill="#0F172A">Data logging, upload, remote access, software update (non-driving)</text>
+<line x1="505" y1="900" x2="505" y2="926" stroke="#E2E8F0"/>
+<line x1="575" y1="900" x2="575" y2="926" stroke="#E2E8F0"/>
+<line x1="645" y1="900" x2="645" y2="926" stroke="#E2E8F0"/>
+<line x1="715" y1="900" x2="715" y2="926" stroke="#E2E8F0"/>
+<line x1="785" y1="900" x2="785" y2="926" stroke="#E2E8F0"/>
+<line x1="855" y1="900" x2="855" y2="926" stroke="#E2E8F0"/>
+<line x1="925" y1="900" x2="925" y2="926" stroke="#E2E8F0"/>
+<line x1="995" y1="900" x2="995" y2="926" stroke="#E2E8F0"/>
+<line x1="1065" y1="900" x2="1065" y2="926" stroke="#E2E8F0"/>
+<line x1="1135" y1="900" x2="1135" y2="926" stroke="#E2E8F0"/>
+<circle cx="1135" cy="913" r="6" fill="#4338CA"/>
+<line x1="1205" y1="900" x2="1205" y2="926" stroke="#E2E8F0"/>
+<circle cx="1205" cy="913" r="6" fill="#4338CA"/>
+<text x="40" y="950" font-size="12" fill="#0F172A" font-weight="600">12 needs · 11 use cases · 9 functions · 50 refinements to system requirements and safety goals. Every need has a use case and a refining requirement; every function is used (check_model N1-N3).</text>
+<line x1="40" y1="968" x2="1480" y2="968" stroke="#E2E8F0"/>
+<circle cx="48" cy="998" r="6" fill="#0E7490"/>
+<text x="60" y="1002" font-size="11" fill="#334155">the use case serves the need</text>
+<circle cx="250" cy="998" r="6" fill="#4338CA"/>
+<text x="262" y="1002" font-size="11" fill="#334155">performs</text>
+<rect x="330" y="990" width="51.8" height="16" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1"/><text x="355.9" y="1001.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-001</text>
+<text x="390" y="1002" font-size="11" fill="#334155">system requirement</text>
+<rect x="500" y="990" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="520.5" y="1001.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-05</text>
+<text x="552" y="1002" font-size="11" fill="#334155">safety goal</text>
+<text x="40" y="1044" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+</svg>
