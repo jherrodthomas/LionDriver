@@ -24,6 +24,11 @@ so a change to one without the other fails CI (assurance/models/sysml/README.md 
   R2  every satisfy relationship ends on an element inside the item; every SYS requirement of WP-S-01 is
       satisfied and every name in WP-S-01 §10.1 resolves
   R3  every verification case that names a requirement verifies it in the model (ranges expanded)
+  N1  stakeholders and actors of WP-S-01 §1.2: every stakeholder has a need and every actor takes part in a use case,
+      and nothing else does
+  N2  needs of WP-S-01 §1.3: every need is refined by a requirement and served by a use case; every SYS requirement
+      and every safety goal refines a need
+  N3  use cases of WP-S-01 §1.4: every function of the model is performed by a use case
   R4  the requirements-coverage report (generated/requirements-coverage.md) is up to date: satisfied,
       verified and derived, per kind, with the requirements that are not (informational)
 
@@ -587,6 +592,49 @@ def check_requirements(m: sysml_lite.Model, rep: Report) -> None:
         rep.err("R3", f"{v.short} verifies {r} but {r} does not list it")
 
 
+# ---------------------------------------------------------------- needs and use cases (N1-N3)
+
+def check_needs(m: sysml_lite.Model, rep: Report) -> None:
+  import gen_requirements
+  people, _, _ = gen_requirements.stakeholder_needs()
+  needs = {s: r for s, r in m.requirements.items() if r.definition == "StakeholderNeed"}
+  if not needs:
+    rep.err("N2", "the model has no stakeholder needs (WP-S-01 §1.3)")
+    return
+  as_stakeholder = {d for r in needs.values() for _, d in r.stakeholders}
+  as_actor = {d for u in m.use_cases.values() for _, d in u.actors}
+  for p in people:
+    d = gen_requirements.camel(p["name"], True)
+    for role, used, where in (("stakeholder", as_stakeholder, "names no need"), ("actor", as_actor, "takes part in no use case")):
+      if role in p["kinds"] and d not in used:
+        rep.err("N1", f"{p['name']} is a {role} in WP-S-01 §1.2 but {where}")
+      if role not in p["kinds"] and d in used:
+        rep.err("N1", f"{p['name']} is used as a {role} but WP-S-01 §1.2 does not list it as one")
+  refined = defaultdict(list)
+  for r in m.requirements.values():
+    for parent in r.derived_from:
+      if parent in needs:
+        refined[parent].append(r.short)
+  served = {n for u in m.use_cases.values() for n in u.needs}
+  for s in needs:
+    if not refined[s]:
+      rep.err("N2", f"{s} is refined by no requirement")
+    if s not in served:
+      rep.err("N2", f"{s} is served by no use case")
+  for r in m.requirements.values():
+    if r.short.split("-")[0] in ("SYS", "SG") and not any(p in needs for p in r.derived_from):
+      rep.err("N2", f"{r.short} refines no stakeholder need (WP-S-01 §1.3)")
+  for u in m.use_cases.values():
+    if not u.functions:
+      rep.err("N3", f"{u.short} performs no function")
+    if not u.actors:
+      rep.err("N3", f"{u.short} has no actor")
+  used = {f for u in m.use_cases.values() for f in u.functions}
+  for f in m.functions:
+    if f not in used:
+      rep.err("N3", f"{f} is performed by no use case (WP-S-01 §1.4)")
+
+
 def outside_reason(text: str) -> str | None:
   toks = [t for t in re.split(r"[^A-Z]+", text) if t]
   hits = [OUTSIDE[t] for t in toks if t in OUTSIDE]
@@ -606,13 +654,13 @@ def coverage_report(m: sysml_lite.Model) -> str:
     ver = [r for r in rs if r.verified_by]
     der = [r for r in rs if r.derived_from]
     rows.append(f"| {label} | {len(rs)} | {len(sat)} | {len(out_)} | {len(none)} | {len(ver)} | " +
-                (f"{len(der)} |" if k in ("FSR", "TSR") else "— |"))
+                (f"{len(der)} |" if k != "CSR" else "— |"))
     if none:
       lists.append((f"{k}: no satisfying element", [f"{r.short} (`{r.values.get('allocText', '') or 'no allocation'}`)" for r in none]))
     unver = [r.short for r in rs if not r.verified_by]
     if unver:
       lists.append((f"{k}: not verified by any case", unver))
-    if k in ("FSR", "TSR"):
+    if k != "CSR":
       underived = [r.short for r in rs if not r.derived_from]
       if underived:
         lists.append((f"{k}: no parent requirement in the model", underived))
@@ -657,7 +705,7 @@ def main(argv: list[str]) -> int:
     print(f"FAIL model: {e}")
     return 1
   for check in (check_elements, check_firmware, check_host, check_interfaces, check_mechanisms, check_functions, check_security, check_integration, check_modes, check_flows,
-                check_integrity_rules, check_requirements):
+                check_integrity_rules, check_requirements, check_needs):
     try:
       check(m, rep)
     except sysml_lite.ModelError as e:
@@ -691,7 +739,9 @@ def main(argv: list[str]) -> int:
         f"{sum(1 for r in m.requirements.values() if r.satisfied_by)} satisfied, " +
         f"{sum(1 for r in m.requirements.values() if r.verified_by)} verified by a case " +
         f"(informational, {COVERAGE.name})")
-  print("OK: M1-M12 and R1-R4 passed")
+  print(f"needs: {sum(1 for r in m.requirements.values() if r.definition == 'StakeholderNeed')} stakeholder needs, " +
+        f"{len(m.use_cases)} use cases")
+  print("OK: M1-M12, N1-N3 and R1-R4 passed")
   return 0
 
 
