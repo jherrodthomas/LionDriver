@@ -5965,8 +5965,10 @@
       title: "Keep everything public"
       detail: "Rely on the abstraction rule (no exploits, payloads or procedures). Cost: the gap list and code locations stay a ready target list for anyone."
   sources: ["assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md §4.4", "assurance/01-management/WP-M-09-cybersecurity-plan.md §2 gap table", "assurance/02-concept/WP-C-09-tara.md §2–§5", "assurance/03-system/WP-S-07-cybersecurity-requirements-architecture.md §4", "PR #454"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: 66c93c7, record: "WP-O-05 v0.4 §4.4 items 5–8 (the rule for later edits); WP-C-09 v0.10, WP-S-07 v0.9, WP-M-09 v0.7 swept; GD-01…GD-11 and the cyber simulation of PR #454 in the private repository jherrodthomas/LionDriver-security", at: 2026-10-26}
+  note: "Still public, outside the three swept documents: gap-assessment §5, the SysML Architecture model and some HW work products cite the same code locations; they follow the rule at their next edit. Everything pushed before 2026-10-26 stays in the public history."
 
 - id: DQ-422
   question: "Which circuit simulator should the 12 V cranking-dip study use?"
