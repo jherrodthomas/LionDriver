@@ -114,6 +114,13 @@
 #   The open notes of rev 1.8 are closed. Actions: SWF-ACT-050 and -059 completed; SWF-ACT-047 and -058 in progress; SWF-ACT-007 evidence.
 #   Totals: 93 failure modes, 149 causes (135 H, 1 M, 13 L); 73 actions (10 completed, 11 in progress, 52 open). D 8 rows need mutation
 #   proof for D 4; nothing in BL-007 is verified on the vehicle.
+# rev 1.10 (after BL-007, ratings within BL-007, the code is unchanged): tools/ci/host_mutation.py runs 25 hand-written mutants of the host
+#   safety code (tools/ci/host_mutants.toml) in the tests.yaml unit_tests job, and each makes its targeted tests fail. D 8 -> 4 where every part of
+#   the cause is mutated: SWF-049.C1 (O3, AP H -> L), SWF-050.C1, SWF-061.C1, SWF-061.C4, SWF-067.C2, SWF-088.C1, SWF-088.C2, SWF-091.C1 (O5, AP
+#   stays H: with S 10 and O 4-5 the AP is H for any D above 1, so these need an occurrence argument too). D stays 8 where only part is mutated:
+#   SWF-062.C1, SWF-067.C1, SWF-091.C2, SWF-093.C1 (the controlsd and selfdrived call sites). Corrected: the opendbc Toyota car tests run in the
+#   unit_tests job, so SWF-093.C2 D 9 -> 8 and SWF-046.C1's note. SWF-ACT-078 completed; SWF-ACT-080, -081 in progress. The System FMEA
+#   re-inherits SFM-009.C4 and SFM-038.C1 (D 4).
 # Post rev 1.4, FTA WP-A-04 v1.12 (BE-1.25 in the SG-04 tree), ratings unchanged: SWF-055 and SWF-089 gain HZ-006 end effects (an authority
 #   grant covers longitudinal commands, as SWF-007). SWF-002 stays steering-only (HZ-001); its note says why HZ-006 and HZ-010 do not apply.
 #
@@ -163,7 +170,7 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.9"
+  revision: "1.10"
   status: draft
   baseline: BL-007
   rating_tables: RT-2
@@ -3485,8 +3492,8 @@ failure_modes:
       ref: opendbc_repo/opendbc/car/toyota/carcontroller.py
     detection_controls:
     - description: process_replay covers card on the Corolla segment; not designed for implausible pitch or step requests. opendbc
-        test_carcontroller.py (6 cases, BL-007) targets the final rate limit and the stock-AEB cap, not the pitch input, and is not run by
-        LionDriver CI (D 9 rule)
+        test_carcontroller.py (6 cases, BL-007, run by the tests.yaml unit_tests job) targets the final rate limit and the stock-AEB cap,
+        not the pitch input
       ref: openpilot/selfdrive/test/process_replay/test_processes.py
     occurrence: 6
     detection: 9
@@ -3661,12 +3668,15 @@ failure_modes:
         bans developer modes; INS-19)'
       ref: openpilot/system/manager/process_config.py
     detection_controls:
+    - description: 'Proven by mutation in CI (after BL-007): the tests fail on each hand-written mutant of this cause (PC-1, PC-2),
+        tools/ci/host_mutation.py in the tests.yaml unit_tests job; so D 4 (RT-2), from D 8'
+      ref: tools/ci/host_mutants.toml
     - description: 'test_reference_build.py (debug processes not registered, debug params do not change the control processes, the reference release ships no
         debug process, the default build is the reference build), run by the CI unit_tests job; not proven by mutation (D 8)'
       test: openpilot/system/manager/test/test_reference_build.py
     occurrence: 3
-    detection: 8
-    ap: H
+    detection: 4
+    ap: L
     previous:
       baseline: BL-006
       occurrence: 7
@@ -3712,12 +3722,15 @@ failure_modes:
         (-1.2 m/s²) for SOFT_DISABLE_TIME (3 s); TSR-624 accepts this order (DQ-407 A)
       ref: openpilot/selfdrive/selfdrived/state.py
     detection_controls:
+    - description: 'Proven by mutation in CI (after BL-007): the tests fail on each hand-written mutant of this cause (AN-1, AN-2),
+        tools/ci/host_mutation.py in the tests.yaml unit_tests job; so D 4 (RT-2), from D 8'
+      ref: tools/ci/host_mutants.toml
     - description: 'test_monitoring.py (the countdown runs 5 s to 0 and the stop starts at least 1 s after the announcement) and test_minimum_risk.py (alert
         texts and sounds, the new event wired), run by the CI unit_tests job; not proven by mutation (D 8, RT-2)'
       test: openpilot/selfdrive/monitoring/test_monitoring.py
       ref: openpilot/selfdrive/selfdrived/tests/test_minimum_risk.py
     occurrence: 5
-    detection: 8
+    detection: 4
     ap: H
     previous:
       baseline: BL-006
@@ -4237,11 +4250,14 @@ failure_modes:
         (SWF-078)
       ref: assurance/07-supporting/impact/change-2026-10-20-dm-first-alert-time.md
     detection_controls:
+    - description: 'Proven by mutation in CI (after BL-007): the tests fail on each hand-written mutant of this cause (PO-1, PO-2, PO-3),
+        tools/ci/host_mutation.py in the tests.yaml unit_tests job; so D 4 (RT-2), from D 8'
+      ref: tools/ci/host_mutants.toml
     - description: 'test_monitoring.py TestFirstAlertTime (5 tests: skipped frames, uncertain pose, face lost past orange) and test_somehow_indecisive_model (vision
         timers 5 / 8 / 13 s), run by the CI unit_tests job; 6 fail without the change; not proven by mutation (D 8, RT-2)'
       test: openpilot/selfdrive/monitoring/test_monitoring.py
     occurrence: 5
-    detection: 8
+    detection: 4
     ap: H
     previous:
       baseline: BL-006
@@ -4290,11 +4306,14 @@ failure_modes:
     - description: LionDriver change with a requirement (SWSR-634, DQ-077 A) and targeted unit tests; reviewed in the PR, not independently; O 5
       ref: assurance/07-supporting/impact/change-2026-10-17-dm-wheeltouch-distance.md
     detection_controls:
+    - description: 'Proven by mutation in CI (after BL-007): the tests fail on each hand-written mutant of this cause (WT-1),
+        tools/ci/host_mutation.py in the tests.yaml unit_tests job; so D 4 (RT-2), from D 8'
+      ref: tools/ci/host_mutants.toml
     - description: 'test_monitoring.py, 6 distance tests (constant speeds 0-120 km/h, ±1.5 m/s² ramps, interaction reset, vision recovery, disengaged, low speed),
         run by the CI unit_tests job; 5 fail on the previous logic; not proven by mutation; vehicle validation open (WP-V-02 §4.4)'
       test: openpilot/selfdrive/monitoring/test_monitoring.py
     occurrence: 5
-    detection: 8
+    detection: 4
     ap: H
     actions:
     - SWF-ACT-058
@@ -4337,6 +4356,8 @@ failure_modes:
         host code with targeted tests
       ref: openpilot/selfdrive/selfdrived/minimum_risk.py
     detection_controls:
+    - description: 'Mutation in CI covers part of this cause (MR-1..MR-3: the latch class; the controlsd forceDecel hold, the alert re-raise and the lockout timing are not mutated), tools/ci/host_mutation.py; D stays 8 until the rest is proven'
+      ref: tools/ci/host_mutants.toml
     - description: 'test_minimum_risk.py (latch set, held, cleared only on disengagement), test_monitoring.py (lockout from the takeover) and a longitudinal maneuver
         that stays stopped under forced deceleration while the lead drives off (test_longitudinal.py), run by the CI unit_tests job; not proven by mutation (D 8).
         The PCM standstill hold over time is a vehicle test (AOU-16) and not done'
@@ -4590,6 +4611,8 @@ failure_modes:
         No SWSR yet (change record OI-1)'
       ref: assurance/07-supporting/impact/change-2026-10-19-reference-entry-checks.md
     detection_controls:
+    - description: 'Mutation in CI covers part of this cause (AC-1: assured_config.evaluate; add_reference_entry_events, reference_platform and the distance button are not mutated), tools/ci/host_mutation.py; D stays 8 until the rest is proven'
+      ref: tools/ci/host_mutants.toml
     - description: 'test_assured_config.py: each setting refuses entry, entry only, other platforms unchanged, distance button ignored on the reference platform. Run
         by the CI unit_tests job since the LFS mirror returned (tests run 39296172878 at 6126485: 1578 passed, 0 failed); not proven by mutation, so D 8, D 4 with mutation'
       test: openpilot/selfdrive/selfdrived/tests/test_assured_config.py
@@ -4614,12 +4637,15 @@ failure_modes:
         upstream review, ruff + ty. No SWSR yet (change record OI-3)'
       ref: assurance/07-supporting/impact/change-2026-10-20-settings-held-while-engaged.md
     detection_controls:
+    - description: 'Proven by mutation in CI (after BL-007): the tests fail on each hand-written mutant of this cause (AC-2),
+        tools/ci/host_mutation.py in the tests.yaml unit_tests job; so D 4 (RT-2), from D 8'
+      ref: tools/ci/host_mutants.toml
     - description: 'test_assured_config.py TestSettingsHeldWhileEngaged (5 tests: held while engaged, applied after disengagement, next engagement refused, applied at
         once while disengaged, other platforms unchanged; 4 fail on the code before #342). Run by the CI unit_tests job (tests run 39348218534 at 18b15cd: 1583 passed,
         0 failed); not proven by mutation, so D 8, D 4 with mutation'
       test: openpilot/selfdrive/selfdrived/tests/test_assured_config.py
     occurrence: 5
-    detection: 8
+    detection: 4
     ap: H
     previous:
       baseline: BL-006
@@ -5551,11 +5577,14 @@ failure_modes:
         other new host code with targeted tests (SWF-034.C1)
       ref: assurance/07-supporting/impact/change-2026-10-17-eps-fault-escalation.md
     detection_controls:
+    - description: 'Proven by mutation in CI (after BL-007): the tests fail on each hand-written mutant of this cause (CE-1, CE-2),
+        tools/ci/host_mutation.py in the tests.yaml unit_tests job; so D 4 (RT-2), from D 8'
+      ref: tools/ci/host_mutants.toml
     - description: test_steer_fault_warning.py (7 unittest tests, collected by the unit_tests job); targeted at the escalation, not proven by mutation (D 8 at
         best, RT-2), not on the vehicle
       test: openpilot/selfdrive/car/tests/test_steer_fault_warning.py
     occurrence: 5
-    detection: 8
+    detection: 4
     ap: H
     actions:
     - SWF-ACT-077
@@ -5568,10 +5597,13 @@ failure_modes:
     - description: LionDriver change to upstream code with a requirement (TSR-607 (c)) and a targeted unit test; reviewed in the PR, not independently; O 5
       ref: openpilot/selfdrive/car/car_events.py
     detection_controls:
+    - description: 'Proven by mutation in CI (after BL-007): the tests fail on each hand-written mutant of this cause (CE-3),
+        tools/ci/host_mutation.py in the tests.yaml unit_tests job; so D 4 (RT-2), from D 8'
+      ref: tools/ci/host_mutants.toml
     - description: test_steer_fault_warning.py (the steering-held case), collected by the unit_tests job; not proven by mutation, not on the vehicle
       test: openpilot/selfdrive/car/tests/test_steer_fault_warning.py
     occurrence: 5
-    detection: 8
+    detection: 4
     ap: H
     actions:
     - SWF-ACT-077
@@ -5695,12 +5727,15 @@ failure_modes:
         the other new host code with targeted tests'
       ref: assurance/07-supporting/impact/change-2026-10-25-startup-fault-code-read.md
     detection_controls:
+    - description: 'Proven by mutation in CI (after BL-007): the tests fail on each hand-written mutant of this cause (DT-1..DT-5),
+        tools/ci/host_mutation.py in the tests.yaml unit_tests job; so D 4 (RT-2), from D 8'
+      ref: tools/ci/host_mutants.toml
     - description: 'test_vehicle_dtc.py (each active bit alone, unsupported bit ignored, exempt code, silent, 0x7F 0x19 0x11, malformed, availability 0x30, no
         address, raised error, retry count), run by the CI unit_tests job with mocked UDS responses; not proven by mutation (D 8). Whether the reference car''s
         EPS and ABS/VSC answer 0x19 is open (VS-SQ-20, change record OI-1)'
       test: openpilot/selfdrive/car/tests/test_vehicle_dtc.py
     occurrence: 5
-    detection: 8
+    detection: 4
     ap: H
     actions:
     - SWF-ACT-080
@@ -5713,6 +5748,8 @@ failure_modes:
     - description: LionDriver change with a requirement (SWSR-629d) and targeted unit tests; reviewed in the PR, not independently; O 5
       ref: openpilot/selfdrive/selfdrived/selfdrived.py
     detection_controls:
+    - description: 'Mutation in CI covers part of this cause (DT-6, DT-7: dtc_entry_events; the start-up read of the record in selfdrived is not mutated), tools/ci/host_mutation.py; D stays 8 until the rest is proven'
+      ref: tools/ci/host_mutants.toml
     - description: test_vehicle_dtc_entry.py (each outcome raises its no-entry event on the reference platform; other platforms unchanged), run by the CI
         unit_tests job; not proven by mutation (D 8)
       test: openpilot/selfdrive/selfdrived/tests/test_vehicle_dtc_entry.py
@@ -5813,6 +5850,8 @@ failure_modes:
     - description: LionDriver change with a requirement (TSR-713, SWSR-713h) and targeted unit tests; reviewed in the PR, not independently; O 5
       ref: assurance/07-supporting/impact/change-2026-10-19-stock-aeb-stand-down.md
     detection_controls:
+    - description: 'Mutation in CI covers part of this cause (AE-1, AE-2: stock_aeb_stand_down; its call in controlsd is not covered by a test), tools/ci/host_mutation.py; D stays 8 until the rest is proven'
+      ref: tools/ci/host_mutants.toml
     - description: test_stock_aeb.py (cap from the first frame, braking kept), run by the CI unit_tests job since the LFS mirror returned; not proven by mutation
         (D 8)
       test: openpilot/selfdrive/controls/tests/test_stock_aeb.py
@@ -5829,10 +5868,11 @@ failure_modes:
     - description: LionDriver change to the opendbc Toyota port with a requirement (TSR-713) and targeted tests; O 5
       ref: opendbc_repo/opendbc/car/toyota/carcontroller.py
     detection_controls:
-    - description: opendbc test_carcontroller.py (6 cases; 3 fail on the previous code), not run by LionDriver CI (D 9 rule)
+    - description: 'opendbc test_carcontroller.py (6 cases; 3 fail on the previous code), run by the LionDriver tests.yaml unit_tests job
+        (step "Run opendbc Toyota car tests"); targeted, not proven by mutation (D 8). Corrected from D 9 after BL-007: rev 1.9 said it was not run'
       test: opendbc_repo/opendbc/car/toyota/tests/test_carcontroller.py
     occurrence: 5
-    detection: 9
+    detection: 8
     ap: H
     actions:
     - SWF-ACT-081
@@ -6139,7 +6179,7 @@ actions:
   owner: Jherrod Thomas
   status: in_progress
   evidence: 'Processes done: DQ-131 A (be0b4ff, BL-007) leaves joystick, maneuversd and lateral_maneuversd out of the reference build (process_config.py
-    REFERENCE_EXCLUDED_PROCS; test_reference_build.py in CI); SWF-049.C1 O7 D10 -> O3 D8. Open: the lateralManeuverPlan subscription and path in controlsd'
+    REFERENCE_EXCLUDED_PROCS; test_reference_build.py in CI); SWF-049.C1 O7 D10 -> O3 D8, then D 4 (AP L) once mutation-proven (PC-1, PC-2). Open: the lateralManeuverPlan subscription and path in controlsd'
 - id: SWF-ACT-048
   kind: detection
   description: Bench or HIL fault injection (WP-V-05) - stop or stall selfdrived, modeld, plannerd and controlsd while engaged and measure time
@@ -6361,7 +6401,10 @@ actions:
   description: 'Prove the EPS-fault warning tests: mutate the escalation in car_events.py (the STEER_FAULT_SILENT_FRAMES comparisons, the silent_steer_warning latch and
     the steering-held branch) and show test_steer_fault_warning.py fails on each mutant, in CI, so D can drop to 4 (System FMEA SFM-ACT-023 points to the same run)'
   owner: Jherrod Thomas
-  status: open
+  status: completed
+  evidence: 'tools/ci/host_mutation.py with tools/ci/host_mutants.toml (CE-1..CE-3), run by the tests.yaml unit_tests job after the unit tests:
+    test_steer_fault_warning.py fails on each mutant of the STEER_FAULT_SILENT_FRAMES comparisons, the silent_steer_warning latch and the
+    steering-held branch. Achieved after BL-007: SWF-088.C1, .C2 O5 D4 (rev 1.10). Not verified on the vehicle'
   revised:
     severity: 10
     occurrence: 5
@@ -6388,7 +6431,8 @@ actions:
     the status-bit and failure rules in vehicle_dtc.py and the entry check, shown to fail test_vehicle_dtc.py and test_vehicle_dtc_entry.py in CI, so D can drop
     to 4'
   owner: Jherrod Thomas
-  status: open
+  status: in_progress
+  evidence: 'Mutation done (DT-1..DT-7, host_mutation.py in CI): SWF-091.C1 D 4; C2 in part. Open: the vehicle check VS-SQ-20 and the mutation of the start-up record read in selfdrived'
   revised:
     severity: 10
     occurrence: 5
@@ -6399,7 +6443,8 @@ actions:
   description: 'Stock-AEB stand-down: mutate stock_aeb_stand_down and the opendbc cap and show test_stock_aeb.py and test_carcontroller.py fail in CI (run the
     opendbc Toyota car tests in LionDriver CI); AOU-04R vehicle test of the engine computer''s AEB priority (System FMEA SFM-036)'
   owner: Jherrod Thomas
-  status: open
+  status: in_progress
+  evidence: 'Host part done: stock_aeb_stand_down mutated in CI (AE-1, AE-2); the opendbc Toyota car tests already run in the unit_tests job. Open: a test of the controlsd call, mutation of the opendbc cap, the AOU-04R vehicle test'
   revised:
     severity: 10
     occurrence: 5

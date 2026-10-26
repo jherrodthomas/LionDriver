@@ -146,6 +146,8 @@
 # and TSR-634 policy changes, C1/C2 keep the SWF-061 ratings; SFM-026 notes the new siren triggers; SFM-038 mechanism 0.7 s (bf8102a,
 # DQ-048) and C1 rationale (SWF-088 O 5 D 8 at both baselines). No other row cites a changed file. The DTC entry check (TSR-629), the
 # assured-settings entry gate (#287, #342) and DQ-131/DQ-121 have no System FMEA cause; the SW FMEA and PFMEA carry them.
+# Rev 0.36 (after BL-007, ratings within BL-007): SFM-009.C4 and SFM-038.C1 D 8 -> 4, re-inherited from SWF-050.C1 and SWF-088.C1/C2
+#   once their tests were proven by mutation in CI (tools/ci/host_mutation.py, SW FMEA rev 1.10). AP stays H (S 10, O 5).
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -154,7 +156,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.35"
+  revision: "0.36"
   status: draft
   baseline: BL-007
   rating_tables: RT-3
@@ -1681,11 +1683,13 @@ failure_modes:
             alert counts down to it; new LionDriver code reviewed in the PR only, ruff and ty in CI; rated in the SW FMEA (SWF-050.C1)'
           ref: openpilot/selfdrive/monitoring/policy.py
         detection_controls:
+        - description: 'Proven by mutation in CI after BL-007 (AN-1, AN-2, tools/ci/host_mutation.py), as SWF-050.C1; D 8 -> 4 (System FMEA rev 0.36)'
+          ref: tools/ci/host_mutants.toml
         - description: 'test_monitoring.py (the countdown runs 5 s to 0 and the stop starts at least 1 s after the first countdown frame) and
             the alert and event tests, in the CI unit_tests job; targeted, not proven by mutation, so D 8 (SW FMEA SWF-050.C1)'
           test: openpilot/selfdrive/monitoring/test_monitoring.py
         occurrence: 5
-        detection: 8
+        detection: 4
         ap: H
         previous:
           baseline: BL-006
@@ -4400,13 +4404,15 @@ failure_modes:
             Not reviewed independently'
           ref: openpilot/selfdrive/car/car_events.py
         detection_controls:
+        - description: 'Proven by mutation in CI after BL-007 (CE-1..CE-3, tools/ci/host_mutation.py), as SWF-088.C1/C2; D 8 -> 4 (System FMEA rev 0.36)'
+          ref: tools/ci/host_mutants.toml
         - description: 'test_steer_fault_warning.py (7 tests: silent window, no recent override, escalation after an override, at
             standstill, after releasing the wheel, a returning fault, a short fault while holding), run by the CI test runner; 4 of
             the #174 tests fail on the BL-005 code. Targeted but not proven by mutation, so D 8 (RT-2); not verified on the vehicle
             (impact record OI-1)'
           test: openpilot/selfdrive/car/tests/test_steer_fault_warning.py
         occurrence: 5
-        detection: 8
+        detection: 4
         ap: H
         previous:
           baseline: BL-005

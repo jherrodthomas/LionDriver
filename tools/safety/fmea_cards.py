@@ -12,7 +12,7 @@ One card per failure mode SFM-nnn. Each card shows:
   cause), amber for M 5–7 (targets the cause, FTTI met on code-derived timing only, or untimed), red for M 8–10 (late, not
   designed for this cause, or none), grey where the cause has no MSR rating; then its AP and its MSR AP;
 - the actions of its causes, with their status. A completed action with a predicted (`revised`) rating that none of its
-  linked causes has reached yet reads "completed, not yet credited": its effect waits for the next baseline's re-rating;
+  linked causes has reached (or bettered) yet reads "completed, not yet credited": its effect waits for the next baseline's re-rating;
 - where it sits in the fault trees of WP-A-04: per goal, the basic events (red if a single point) and gates whose FMEA
   backing it is in fta-fmea-map.yaml, or that the map lists it outside the tree (justified, or a tree gap). Read through
   assurance/08-analyses/figures/fta_fmea_figures.backlinks(), so a tree or map change asks for a regeneration here too.
@@ -123,7 +123,8 @@ def cards(doc, mapping, links=None):
         linked.setdefault(a, []).append((c["occurrence"], c["detection"]))
   for a in doc["actions"]:
     rv = a.get("revised")
-    if a["status"] == "completed" and rv and (rv["occurrence"], rv["detection"]) not in linked.get(a["id"], []):
+    reached = any(o <= rv["occurrence"] and d <= rv["detection"] for o, d in linked.get(a["id"], [])) if rv else True
+    if a["status"] == "completed" and not reached:
       acts[a["id"]] = "completed, not yet credited"
   placed = [s for _, _, ids in SHEETS.values() for s in ids]
   if dupes := sorted({s for s in placed if placed.count(s) > 1}):
