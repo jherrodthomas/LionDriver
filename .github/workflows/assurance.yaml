@@ -78,6 +78,8 @@ jobs:
       run: python3 assurance/05-software/diagrams/make_diagrams.py --check
     - name: Trace tool unit tests (check_state_machines, check_trace, sync_requirements; WP-P-07 TL-28, OI-9)
       run: python3 -m unittest discover -s assurance/trace/tools -p 'test_*.py' -v
+    - name: Clause-check register consistent and its coverage page current (ISO 26262-3 pilot, WP-P-07 TL-59)
+      run: python3 assurance/trace/tools/check_clauses.py --check
     - name: Relative links
       run: python3 assurance/trace/tools/check_links.py
     - name: Abbreviations defined on every covered page and figure (assurance/terms.md)
