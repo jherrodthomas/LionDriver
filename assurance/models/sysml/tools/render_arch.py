@@ -1107,3 +1107,197 @@ def render_lifecycle(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> 
 
 
 RENDERERS["activity"] = render_lifecycle
+
+# ---------------------------------------------------------------- V-24 HSI internal block diagram
+
+HSI_STATUS = {"in place": ("#0F766E", "#F0FDFA"), "partial": ("#B45309", "#FFFBEB"), "missing": ("#D2553F", "#FEF2F2")}
+
+
+def render_hsi_ibd(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str:
+  """Internal block diagram of the hardware-software interface of the safety MCU: the firmware parts and the SoC
+  software above, the parts of the MCU hardware (E-04a) below, one connector per interface HSI-nn of WP-S-05 crossing
+  the boundary between them, and the parts outside the MCU each hardware part leads to."""
+  view = m.views[vid]
+  w = spec["width"]
+  order = [h for g in spec["groups"] for h in g["hsi"]]
+  missing = sorted(set(m.responsibilities) - set(order))
+  if missing or len(order) != len(set(order)) or set(order) - set(m.responsibilities):
+    raise sysml_lite.ModelError(f"layout.toml {vid}: groups must list each HSI of the model once (missing {missing})")
+  rs = {h: m.responsibilities[h] for h in order}
+  lst = sysml_lite._as_list
+
+  def vals(h, key):
+    return [x for x in lst(rs[h].values.get(key)) if x]
+
+  body = rv.header(w, view, spec["title"], spec["subtitle"], digest)
+  x0, n = 56, len(order)
+  cw = (w - 2 * x0) / n
+  cx = {h: x0 + cw * (i + 0.5) for i, h in enumerate(order)}
+  base_sw = "E-03b"
+  y_up, up_h, y_sw, sw_h = 150, 40, 222, 44
+  y_if, if_h = 334, 116
+  y_hw, part_y, part_h = 492, 504, 46
+  hw_bottom = part_y + part_h + 44
+  # software owners above E-03b: one box per owner over the interfaces it owns; a shared column is split
+  uppers = {}
+  for h in order:
+    for o in vals(h, "swOwners"):
+      if o != base_sw:
+        uppers.setdefault(o, []).append(h)
+  spans = []
+  for o, hs in uppers.items():
+    spans.append([cx[hs[0]] - cw / 2 + 4, cx[hs[-1]] + cw / 2 - 4, o, hs])
+  spans.sort()
+  for a, b in zip(spans, spans[1:], strict=False):
+    if a[1] > b[0]:
+      shared = next(h for h in b[3] if h in a[3])
+      a[1], b[0] = cx[shared] - 3, cx[shared] + 3
+  for left, right, o, hs in spans:
+    e = sysml_lite_find(m, o)
+    st = rv.style_of(e) if e else k.SLATE
+    body.append(k.rect(left, y_up, right - left, up_h, st["fill"], st["stroke"], 6, 1.4))
+    body.append(k.text(left + 8, y_up + 16, "«part»", 9, k.MUTED))
+    body.append(k.text(left + 8, y_up + 31, k.clip(element_label(e) if e else o, right - left - 16, 11, 700), 11, k.INK, 700))
+  e3 = m.find(base_sw)
+  st3 = rv.style_of(e3)
+  body.append(k.rect(x0 + 4, y_sw, w - 2 * x0 - 8, sw_h, st3["fill"], st3["stroke"], 6, 1.6))
+  body.append(k.text(x0 + 14, y_sw + 17, "«part»", 9, k.MUTED))
+  body.append(k.text(x0 + 14, y_sw + 33, f"{element_label(e3)} : PlatformFirmware · ASIL C · drivers, comms, "
+                     "fault handling, bootstub", 11.5, k.INK, 700))
+  lines = []
+  for h in order:
+    at = [o for o, hs in uppers.items() if h in hs]
+    for i, o in enumerate(at):
+      dx = (i - (len(at) - 1) / 2) * 22
+      lines.append((cx[h] + dx, y_sw, cx[h] + dx, y_up + up_h))
+    if base_sw in vals(h, "swOwners"):
+      lines.append((cx[h], y_if, cx[h], y_sw + sw_h))
+  # the boundary and the interfaces on it
+  body.append(f'<line x1="{k.f(x0 - 30)}" y1="{k.f(y_if - 22)}" x2="{k.f(w - x0 + 30)}" y2="{k.f(y_if - 22)}" '
+              f'stroke="{k.FAINT}" stroke-width="1.2" stroke-dasharray="6 4"/>')
+  body.append(k.text(x0 - 26, y_if - 28, "SOFTWARE ↑", 9.5, k.MUTED, 700))
+  body.append(k.text(x0 - 26, y_if - 8, "HARDWARE ↓", 9.5, k.MUTED, 700))
+  undetected = []
+  for gi, g in enumerate(spec["groups"]):
+    if gi:
+      xs = cx[g["hsi"][0]] - cw / 2
+      body.append(f'<line x1="{k.f(xs)}" y1="{k.f(y_if - 8)}" x2="{k.f(xs)}" y2="{k.f(y_if + if_h + 8)}" stroke="{k.HAIR}" '
+                  'stroke-width="1.4"/>')
+  for h in order:
+    v = rs[h].values
+    col, bg = HSI_STATUS.get(str(v.get("status")), (k.INK2, k.WASH))
+    x = cx[h] - cw / 2 + 5
+    bw = cw - 10
+    body.append(k.rect(x, y_if, bw, if_h, bg, col, 8, 1.4))
+    p, pw = k.pill(x + 6, y_if + 7, h, col, "#FFFFFF", 16, 9, 700, mono=True)
+    body.append(p)
+    for i, ln in enumerate(k.wrap(rs[h].doc, bw - 12, 9.5, 600)[:3]):
+      body.append(k.text(x + 6, y_if + 38 + i * 12, ln, 9.5, k.INK, 600))
+    ntsr = len(vals(h, "tsr"))
+    body.append(k.text(x + 6, y_if + if_h - 30, f"{ntsr} TSR{'s' if ntsr != 1 else ''}", 9, k.INK2))
+    det = str(v.get("detection", ""))
+    nd = det.lower().startswith("not detected")
+    if nd:
+      undetected.append(h)
+    label = "not detected" if nd else ("HW + SW" if "HW" in det and "SW" in det else "HW detects" if "HW" in det else "SW detects")
+    body.append(k.text(x + 6, y_if + if_h - 14, label, 9, "#D2553F" if nd else k.MUTED, 700 if nd else 400))
+  # the MCU hardware and its parts, ordered by the interfaces that use them
+  mcu = m.find("E-04a")
+  stm = rv.style_of(mcu)
+  body.append(k.rect(x0 + 4, y_hw, w - 2 * x0 - 8, hw_bottom - y_hw, stm["fill"], stm["stroke"], 8, 1.6))
+  users = {}
+  for h in order:
+    for p_ in vals(h, "hwParts"):
+      users.setdefault(p_, []).append(h)
+  parts = sorted(users, key=lambda p_: sum(cx[h] for h in users[p_]) / len(users[p_]))
+  pw_ = (w - 2 * x0 - 28) / len(parts)
+  px = {p_: x0 + 14 + i * pw_ + pw_ / 2 for i, p_ in enumerate(parts)}
+  for p_ in parts:
+    title = {"spi4": "SPI4 + DMA", "fdcanPeripherals": "FDCAN1–3", "iwdg1": "IWDG1 watchdog", "sirenPath": "siren path",
+             "memories": "memories, flash"}.get(p_, p_)
+    body.append(k.rect(px[p_] - pw_ / 2 + 4, part_y, pw_ - 8, part_h, "#FFFFFF", stm["stroke"], 5, 1.2))
+    body.append(k.text(px[p_], part_y + 19, title, 10.5, k.INK, 700, "middle"))
+    sub = ", ".join(h if i == 0 else h[4:] for i, h in enumerate(sorted(users[p_])))
+    body.append(k.text(px[p_], part_y + 34, k.clip(sub, pw_ - 16, 8.5, 400, True), 8.5, k.MUTED, 400, "middle", True))
+    for h in users[p_]:
+      lines.append((cx[h], y_if + if_h, px[p_], part_y))
+  for x1, y1, x2, y2 in lines:
+    body.append(f'<line x1="{k.f(x1)}" y1="{k.f(y1)}" x2="{k.f(x2)}" y2="{k.f(y2)}" stroke="{k.INK2}" stroke-width="1.2"/>')
+  # what an interface leads to outside the MCU (its other hardware owners, and the peers of the layout), drawn from
+  # the part its resource names first
+  peers_of = {h: [o for o in vals(h, "hwOwners") if o != "E-04a"] + [spec.get("peers", {}).get(h)] for h in order}
+  edges = []
+  for h in order:
+    for o in (x for x in peers_of[h] if x):
+      for p_ in vals(h, "hwParts")[:1]:
+        if (p_, o) not in edges:
+          edges.append((p_, o))
+  # the part's name in the strip under its parts, in the widest gap between the ports
+  title = f"«part» {element_label(mcu)} : SafetyMcuHardware · ASIL C"
+  stops = sorted([x0 + 4, w - x0 - 4] + [px[p_] for p_, _ in edges])
+  a, b = max(zip(stops, stops[1:], strict=False), key=lambda ab: ab[1] - ab[0])
+  body.append(k.text((a + b) / 2, hw_bottom - 15, title, 11.5, k.INK, 700, "middle"))
+  peer_ids = list(dict.fromkeys(o for _, o in edges))
+  peer_x = {o: sum(px[p_] for p_, oo in edges if oo == o) / sum(1 for _, oo in edges if oo == o) for o in peer_ids}
+  pbw = 230
+  placed = sorted(peer_ids, key=lambda o: peer_x[o])
+  for a, b in zip(placed, placed[1:], strict=False):
+    if peer_x[b] - peer_x[a] < pbw + 20:
+      peer_x[b] = peer_x[a] + pbw + 20
+  for o in placed:
+    peer_x[o] = min(max(peer_x[o], x0 + pbw / 2), w - x0 - pbw / 2)
+  edges.sort(key=lambda e_: (px[e_[0]]))
+  lane0 = hw_bottom + 14
+  y_peer = lane0 + 9 * len(edges) + 16
+  for i, (p_, o) in enumerate(edges):
+    ly = lane0 + 9 * i
+    k_ = [e_ for e_ in edges if e_[1] == o].index((p_, o))
+    n_ = sum(1 for e_ in edges if e_[1] == o)
+    tx = peer_x[o] + (k_ - (n_ - 1) / 2) * 14
+    body.append(f'<rect x="{k.f(px[p_] - 4)}" y="{k.f(hw_bottom - 4)}" width="8" height="8" fill="#FFFFFF" '
+                f'stroke="{k.INK2}" stroke-width="1.2"/>')
+    body.append(f'<path d="{k.rounded_path([(px[p_], part_y + part_h), (px[p_], ly), (tx, ly), (tx, y_peer)], 5)}" '
+                f'fill="none" stroke="{k.INK2}" stroke-width="1.2"/>')
+  for o in placed:
+    e = sysml_lite_find(m, o)
+    st = rv.style_of(e) if e else k.OUTSIDE
+    x = peer_x[o] - pbw / 2
+    body.append(k.rect(x, y_peer, pbw, 40, st["fill"], st["stroke"], 6, 1.4))
+    body.append(k.text(x + 8, y_peer + 15, "«part»", 9, k.MUTED))
+    body.append(k.text(x + 8, y_peer + 30, k.clip(element_label(e) if e else o, pbw - 16, 11, 700), 11, k.INK, 700))
+  bottom = y_peer + 58
+  from render_requirements import sysml_frame
+  body += sysml_frame(24, 100, w - 48, bottom - 100, "ibd", "LionDriverArchitecture", "safety MCU hardware-software interface")
+  count = {s_: sum(str(r.values.get("status")) == s_ for r in rs.values()) for s_ in HSI_STATUS}
+  note = (f"{n} interfaces cross the boundary between the firmware and the MCU hardware: {count['in place']} in place, "
+          f"{count['partial']} partial, {count['missing']} missing (WP-S-05 §11.4). At {len(undetected)} ({', '.join(undetected)}) "
+          "a failure of the other side is not detected today. Each line is a connection of the model: an interface to the software "
+          "that owns it (WP-S-05 §11.4) and to the hardware parts its resource names (§2, check H5).")
+  for i, ln in enumerate(k.wrap(note, w - 80, 11.5)):
+    body.append(k.text(40, bottom + 26 + i * 16, ln, 11.5, k.INK2))
+  legend_y = bottom + 26 + 16 * len(k.wrap(note, w - 80, 11.5))
+  items, lx_ = [], 40
+  for s_, (col, bg) in HSI_STATUS.items():
+    items.append(k.rect(lx_, legend_y + 22, 18, 14, bg, col, 4, 1.4))
+    items.append(k.text(lx_ + 24, legend_y + 33, s_, 11, k.INK2))
+    lx_ += 40 + k.text_w(s_, 11)
+  items.append(f'<rect x="{k.f(lx_)}" y="{k.f(legend_y + 25)}" width="8" height="8" fill="#FFFFFF" stroke="{k.INK2}" '
+               'stroke-width="1.2"/>')
+  items.append(k.text(lx_ + 14, legend_y + 33, "port of E-04a to a part outside the MCU", 11, k.INK2))
+  lx_ += 270
+  items.append(k.text(lx_, legend_y + 33, "part colours: integrity, as in V-03", 11, k.MUTED))
+  body += rv.footer(w, legend_y, items)
+  return k.svg_doc(w, legend_y + 92, f"{view.short}. {spec['title']} (SysML v2 view {view.name})",
+                   spec.get("desc", view.doc), body)
+
+
+def sysml_lite_find(m: sysml_lite.Model, ident: str):
+  """An element by short name or, for a part outside the item, by its part name."""
+  e = m.find(ident)
+  if e is None:
+    named = [x for x in m.elements.values() if x.kind == "part" and x.name == ident]
+    e = named[0] if len(named) == 1 else None
+  return e
+
+
+RENDERERS["hsiblocks"] = render_hsi_ibd

@@ -179,4 +179,12 @@ package LionDriverViews {
         expose LionDriverVerification::*;
         render Views::asInterconnectionDiagram;
     }
+
+    view <'V-24'> hsiInternalBlocks : InterconnectionView {
+        doc /* The hardware-software interface of the safety MCU as an internal block diagram: the firmware and SoC software that own each interface HSI-nn, the parts of the MCU hardware it uses (WP-S-05 §2, §11.4) and what they lead to outside the MCU. */
+        expose LdSda::**;
+        expose OperationalContext::*;
+        expose LionDriverSignals::*;
+        render Views::asInterconnectionDiagram;
+    }
 }

@@ -1,0 +1,217 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="886" viewBox="0 0 1520 886" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">V-24. HSI internal block diagram (SysML v2 view hsiInternalBlocks)</title>
+<desc id="d">SysML internal block diagram generated from the model for the hardware-software interface of WP-S-05. Above the boundary, the safety MCU firmware E-03b and the other software owners of each interface (E-03a, host pandad); on the boundary, the 14 interfaces HSI-01 to HSI-14 with their status, signals, TSRs and who detects a failure; below, the parts of the safety MCU hardware E-04a each interface uses, and the parts outside the MCU they lead to.</desc>
+<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter></defs>
+<rect width="1520" height="886" fill="#FFFFFF"/>
+<text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-24 · HSI internal block diagram</text>
+<text x="40" y="69" font-size="12.5" fill="#64748B">The 14 hardware-software interfaces of the safety MCU: the firmware and SoC software that own them above, the parts of the MCU hardware they use below</text>
+<text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::hsiInternalBlocks</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">InterconnectionView · render asInterconnectionDiagram · model 050b0632b1b0</text>
+<line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
+<rect x="60" y="150" width="345" height="40" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="68" y="166" font-size="9" fill="#64748B">«part»</text>
+<text x="68" y="181" font-size="11" fill="#0F172A" font-weight="700">host.pandad</text>
+<rect x="411" y="150" width="143.9" height="40" rx="6" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="419" y="166" font-size="9" fill="#64748B">«part»</text>
+<text x="419" y="181" font-size="11" fill="#0F172A" font-weight="700">E-03a Safety layer</text>
+<rect x="60" y="222" width="1400" height="44" rx="6" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
+<text x="70" y="239" font-size="9" fill="#64748B">«part»</text>
+<text x="70" y="255" font-size="11.5" fill="#0F172A" font-weight="700">E-03b Platform firmware : PlatformFirmware · ASIL C · drivers, comms, fault handling, bootstub</text>
+<line x1="26" y1="312" x2="1494" y2="312" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="6 4"/>
+<text x="30" y="306" font-size="9.5" fill="#64748B" font-weight="700">SOFTWARE ↑</text>
+<text x="30" y="326" font-size="9.5" fill="#64748B" font-weight="700">HARDWARE ↓</text>
+<line x1="458.3" y1="326" x2="458.3" y2="458" stroke="#E2E8F0" stroke-width="1.4"/>
+<line x1="860.6" y1="326" x2="860.6" y2="458" stroke="#E2E8F0" stroke-width="1.4"/>
+<rect x="61" y="334" width="90.6" height="116" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.4"/>
+<rect x="67" y="341" width="46.4" height="16" rx="8" fill="#B45309"/><text x="90.2" y="352.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-08</text>
+<text x="67" y="372" font-size="9.5" fill="#0F172A" font-weight="600">Reset / boot pins</text>
+<text x="67" y="384" font-size="9.5" fill="#0F172A" font-weight="600">from SoC</text>
+<text x="67" y="420" font-size="9" fill="#334155">2 TSRs</text>
+<text x="67" y="436" font-size="9" fill="#64748B">SW detects</text>
+<rect x="161.6" y="334" width="90.6" height="116" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.4"/>
+<rect x="167.6" y="341" width="46.4" height="16" rx="8" fill="#B45309"/><text x="190.8" y="352.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-01</text>
+<text x="167.6" y="372" font-size="9.5" fill="#0F172A" font-weight="600">SoC ↔ MCU SPI</text>
+<text x="167.6" y="384" font-size="9.5" fill="#0F172A" font-weight="600">link</text>
+<text x="167.6" y="420" font-size="9" fill="#334155">4 TSRs</text>
+<text x="167.6" y="436" font-size="9" fill="#64748B">SW detects</text>
+<rect x="262.1" y="334" width="90.6" height="116" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.4"/>
+<rect x="268.1" y="341" width="46.4" height="16" rx="8" fill="#B45309"/><text x="291.3" y="352.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-02</text>
+<text x="268.1" y="372" font-size="9.5" fill="#0F172A" font-weight="600">Control requests</text>
+<text x="268.1" y="384" font-size="9.5" fill="#0F172A" font-weight="600">over SPI</text>
+<text x="268.1" y="396" font-size="9.5" fill="#0F172A" font-weight="600">endpoint 0</text>
+<text x="268.1" y="420" font-size="9" fill="#334155">5 TSRs</text>
+<text x="268.1" y="436" font-size="9" fill="#64748B">SW detects</text>
+<rect x="362.7" y="334" width="90.6" height="116" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.4"/>
+<rect x="368.7" y="341" width="46.4" height="16" rx="8" fill="#B45309"/><text x="391.9" y="352.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-03</text>
+<text x="368.7" y="372" font-size="9.5" fill="#0F172A" font-weight="600">CAN packet</text>
+<text x="368.7" y="384" font-size="9.5" fill="#0F172A" font-weight="600">stream over SPI</text>
+<text x="368.7" y="396" font-size="9.5" fill="#0F172A" font-weight="600">endpoints 1/3</text>
+<text x="368.7" y="420" font-size="9" fill="#334155">3 TSRs</text>
+<text x="368.7" y="436" font-size="9" fill="#64748B">SW detects</text>
+<rect x="463.3" y="334" width="90.6" height="116" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.4"/>
+<rect x="469.3" y="341" width="46.4" height="16" rx="8" fill="#B45309"/><text x="492.5" y="352.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-04</text>
+<text x="469.3" y="372" font-size="9.5" fill="#0F172A" font-weight="600">FDCAN1–3 and</text>
+<text x="469.3" y="384" font-size="9.5" fill="#0F172A" font-weight="600">transceivers</text>
+<text x="469.3" y="420" font-size="9" fill="#334155">9 TSRs</text>
+<text x="469.3" y="436" font-size="9" fill="#64748B">HW + SW</text>
+<rect x="563.9" y="334" width="90.6" height="116" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.4"/>
+<rect x="569.9" y="341" width="46.4" height="16" rx="8" fill="#B45309"/><text x="593.1" y="352.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-05</text>
+<text x="569.9" y="372" font-size="9.5" fill="#0F172A" font-weight="600">Harness relay</text>
+<text x="569.9" y="384" font-size="9.5" fill="#0F172A" font-weight="600">drive</text>
+<text x="569.9" y="420" font-size="9" fill="#334155">2 TSRs</text>
+<text x="569.9" y="436" font-size="9" fill="#D2553F" font-weight="700">not detected</text>
+<rect x="664.4" y="334" width="90.6" height="116" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.4"/>
+<rect x="670.4" y="341" width="46.4" height="16" rx="8" fill="#B45309"/><text x="693.6" y="352.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-07</text>
+<text x="670.4" y="372" font-size="9.5" fill="#0F172A" font-weight="600">Ignition line</text>
+<text x="670.4" y="420" font-size="9" fill="#334155">1 TSR</text>
+<text x="670.4" y="436" font-size="9" fill="#D2553F" font-weight="700">not detected</text>
+<rect x="765" y="334" width="90.6" height="116" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.4"/>
+<rect x="771" y="341" width="46.4" height="16" rx="8" fill="#B45309"/><text x="794.2" y="352.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-06</text>
+<text x="771" y="372" font-size="9.5" fill="#0F172A" font-weight="600">Harness</text>
+<text x="771" y="384" font-size="9.5" fill="#0F172A" font-weight="600">orientation</text>
+<text x="771" y="396" font-size="9.5" fill="#0F172A" font-weight="600">sense</text>
+<text x="771" y="420" font-size="9" fill="#334155">1 TSR</text>
+<text x="771" y="436" font-size="9" fill="#64748B">SW detects</text>
+<rect x="865.6" y="334" width="90.6" height="116" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.4"/>
+<rect x="871.6" y="341" width="46.4" height="16" rx="8" fill="#B45309"/><text x="894.8" y="352.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-13</text>
+<text x="871.6" y="372" font-size="9.5" fill="#0F172A" font-weight="600">Supply</text>
+<text x="871.6" y="384" font-size="9.5" fill="#0F172A" font-weight="600">measurement</text>
+<text x="871.6" y="420" font-size="9" fill="#334155">1 TSR</text>
+<text x="871.6" y="436" font-size="9" fill="#64748B">SW detects</text>
+<rect x="966.1" y="334" width="90.6" height="116" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.4"/>
+<rect x="972.1" y="341" width="46.4" height="16" rx="8" fill="#B45309"/><text x="995.3" y="352.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-10</text>
+<text x="972.1" y="372" font-size="9.5" fill="#0F172A" font-weight="600">Fault / health</text>
+<text x="972.1" y="384" font-size="9.5" fill="#0F172A" font-weight="600">monitors</text>
+<text x="972.1" y="420" font-size="9" fill="#334155">5 TSRs</text>
+<text x="972.1" y="436" font-size="9" fill="#64748B">HW + SW</text>
+<rect x="1066.7" y="334" width="90.6" height="116" rx="8" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<rect x="1072.7" y="341" width="46.4" height="16" rx="8" fill="#0F766E"/><text x="1095.9" y="352.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-09</text>
+<text x="1072.7" y="372" font-size="9.5" fill="#0F172A" font-weight="600">Watchdog</text>
+<text x="1072.7" y="420" font-size="9" fill="#334155">1 TSR</text>
+<text x="1072.7" y="436" font-size="9" fill="#64748B">HW detects</text>
+<rect x="1167.3" y="334" width="90.6" height="116" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<rect x="1173.3" y="341" width="46.4" height="16" rx="8" fill="#D2553F"/><text x="1196.5" y="352.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-14</text>
+<text x="1173.3" y="372" font-size="9.5" fill="#0F172A" font-weight="600">MPU, RAM ECC</text>
+<text x="1173.3" y="384" font-size="9.5" fill="#0F172A" font-weight="600">(to be added)</text>
+<text x="1173.3" y="420" font-size="9" fill="#334155">2 TSRs</text>
+<text x="1173.3" y="436" font-size="9" fill="#64748B">HW detects</text>
+<rect x="1267.9" y="334" width="90.6" height="116" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.4"/>
+<rect x="1273.9" y="341" width="46.4" height="16" rx="8" fill="#B45309"/><text x="1297.1" y="352.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-12</text>
+<text x="1273.9" y="372" font-size="9.5" fill="#0F172A" font-weight="600">Flash and</text>
+<text x="1273.9" y="384" font-size="9.5" fill="#0F172A" font-weight="600">bootstub</text>
+<text x="1273.9" y="420" font-size="9" fill="#334155">3 TSRs</text>
+<text x="1273.9" y="436" font-size="9" fill="#64748B">SW detects</text>
+<rect x="1368.4" y="334" width="90.6" height="116" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.4"/>
+<rect x="1374.4" y="341" width="46.4" height="16" rx="8" fill="#B45309"/><text x="1397.6" y="352.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-11</text>
+<text x="1374.4" y="372" font-size="9.5" fill="#0F172A" font-weight="600">Siren</text>
+<text x="1374.4" y="420" font-size="9" fill="#334155">2 TSRs</text>
+<text x="1374.4" y="436" font-size="9" fill="#D2553F" font-weight="700">not detected</text>
+<rect x="60" y="492" width="1400" height="102" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
+<rect x="74" y="504" width="130" height="46" rx="5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.2"/>
+<text x="139" y="523" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">SPI4 + DMA</text>
+<text x="139" y="538" font-size="8.5" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-01, 03</text>
+<rect x="212" y="504" width="130" height="46" rx="5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.2"/>
+<text x="277" y="523" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">gpio</text>
+<text x="277" y="538" font-size="8.5" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-04, 05, 07, 08</text>
+<rect x="350" y="504" width="130" height="46" rx="5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.2"/>
+<text x="415" y="523" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">FDCAN1–3</text>
+<text x="415" y="538" font-size="8.5" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-04</text>
+<rect x="488" y="504" width="130" height="46" rx="5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.2"/>
+<text x="553" y="523" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">memories, flash</text>
+<text x="553" y="538" font-size="8.5" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-01, 12, 14</text>
+<rect x="626" y="504" width="130" height="46" rx="5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.2"/>
+<text x="691" y="523" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">adc</text>
+<text x="691" y="538" font-size="8.5" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-06, 10, 13</text>
+<rect x="764" y="504" width="130" height="46" rx="5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.2"/>
+<text x="829" y="523" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">supply</text>
+<text x="829" y="538" font-size="8.5" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-13</text>
+<rect x="902" y="504" width="130" height="46" rx="5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.2"/>
+<text x="967" y="523" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">clock</text>
+<text x="967" y="538" font-size="8.5" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-10</text>
+<rect x="1040" y="504" width="130" height="46" rx="5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.2"/>
+<text x="1105" y="523" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">core</text>
+<text x="1105" y="538" font-size="8.5" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-10, 14</text>
+<rect x="1178" y="504" width="130" height="46" rx="5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.2"/>
+<text x="1243" y="523" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">IWDG1 watchdog</text>
+<text x="1243" y="538" font-size="8.5" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-09</text>
+<rect x="1316" y="504" width="130" height="46" rx="5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.2"/>
+<text x="1381" y="523" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">siren path</text>
+<text x="1381" y="538" font-size="8.5" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-11</text>
+<line x1="106.3" y1="222" x2="106.3" y2="190" stroke="#334155" stroke-width="1.2"/>
+<line x1="106.3" y1="334" x2="106.3" y2="266" stroke="#334155" stroke-width="1.2"/>
+<line x1="206.9" y1="222" x2="206.9" y2="190" stroke="#334155" stroke-width="1.2"/>
+<line x1="206.9" y1="334" x2="206.9" y2="266" stroke="#334155" stroke-width="1.2"/>
+<line x1="307.4" y1="222" x2="307.4" y2="190" stroke="#334155" stroke-width="1.2"/>
+<line x1="307.4" y1="334" x2="307.4" y2="266" stroke="#334155" stroke-width="1.2"/>
+<line x1="397" y1="222" x2="397" y2="190" stroke="#334155" stroke-width="1.2"/>
+<line x1="419" y1="222" x2="419" y2="190" stroke="#334155" stroke-width="1.2"/>
+<line x1="408" y1="334" x2="408" y2="266" stroke="#334155" stroke-width="1.2"/>
+<line x1="508.6" y1="222" x2="508.6" y2="190" stroke="#334155" stroke-width="1.2"/>
+<line x1="508.6" y1="334" x2="508.6" y2="266" stroke="#334155" stroke-width="1.2"/>
+<line x1="609.1" y1="334" x2="609.1" y2="266" stroke="#334155" stroke-width="1.2"/>
+<line x1="709.7" y1="334" x2="709.7" y2="266" stroke="#334155" stroke-width="1.2"/>
+<line x1="810.3" y1="334" x2="810.3" y2="266" stroke="#334155" stroke-width="1.2"/>
+<line x1="910.9" y1="334" x2="910.9" y2="266" stroke="#334155" stroke-width="1.2"/>
+<line x1="1011.4" y1="334" x2="1011.4" y2="266" stroke="#334155" stroke-width="1.2"/>
+<line x1="1112" y1="334" x2="1112" y2="266" stroke="#334155" stroke-width="1.2"/>
+<line x1="1212.6" y1="334" x2="1212.6" y2="266" stroke="#334155" stroke-width="1.2"/>
+<line x1="1313.1" y1="334" x2="1313.1" y2="266" stroke="#334155" stroke-width="1.2"/>
+<line x1="1413.7" y1="334" x2="1413.7" y2="266" stroke="#334155" stroke-width="1.2"/>
+<line x1="206.9" y1="450" x2="139" y2="504" stroke="#334155" stroke-width="1.2"/>
+<line x1="408" y1="450" x2="139" y2="504" stroke="#334155" stroke-width="1.2"/>
+<line x1="106.3" y1="450" x2="277" y2="504" stroke="#334155" stroke-width="1.2"/>
+<line x1="508.6" y1="450" x2="277" y2="504" stroke="#334155" stroke-width="1.2"/>
+<line x1="609.1" y1="450" x2="277" y2="504" stroke="#334155" stroke-width="1.2"/>
+<line x1="709.7" y1="450" x2="277" y2="504" stroke="#334155" stroke-width="1.2"/>
+<line x1="508.6" y1="450" x2="415" y2="504" stroke="#334155" stroke-width="1.2"/>
+<line x1="206.9" y1="450" x2="553" y2="504" stroke="#334155" stroke-width="1.2"/>
+<line x1="1212.6" y1="450" x2="553" y2="504" stroke="#334155" stroke-width="1.2"/>
+<line x1="1313.1" y1="450" x2="553" y2="504" stroke="#334155" stroke-width="1.2"/>
+<line x1="810.3" y1="450" x2="691" y2="504" stroke="#334155" stroke-width="1.2"/>
+<line x1="910.9" y1="450" x2="691" y2="504" stroke="#334155" stroke-width="1.2"/>
+<line x1="1011.4" y1="450" x2="691" y2="504" stroke="#334155" stroke-width="1.2"/>
+<line x1="910.9" y1="450" x2="829" y2="504" stroke="#334155" stroke-width="1.2"/>
+<line x1="1011.4" y1="450" x2="967" y2="504" stroke="#334155" stroke-width="1.2"/>
+<line x1="1011.4" y1="450" x2="1105" y2="504" stroke="#334155" stroke-width="1.2"/>
+<line x1="1212.6" y1="450" x2="1105" y2="504" stroke="#334155" stroke-width="1.2"/>
+<line x1="1112" y1="450" x2="1243" y2="504" stroke="#334155" stroke-width="1.2"/>
+<line x1="1413.7" y1="450" x2="1381" y2="504" stroke="#334155" stroke-width="1.2"/>
+<text x="1036" y="579" font-size="11.5" fill="#0F172A" font-weight="700" text-anchor="middle">«part» E-04a STM32H7 safety MCU : SafetyMcuHardware · ASIL C</text>
+<rect x="135" y="590" width="8" height="8" fill="#FFFFFF" stroke="#334155" stroke-width="1.2"/>
+<path d="M139 550L139 603Q139 608 144 608L896 608Q901 608 901 613L901 678" fill="none" stroke="#334155" stroke-width="1.2"/>
+<rect x="273" y="590" width="8" height="8" fill="#FFFFFF" stroke="#334155" stroke-width="1.2"/>
+<path d="M277 550L277 612Q277 617 282 617L910 617Q915 617 915 622L915 678" fill="none" stroke="#334155" stroke-width="1.2"/>
+<rect x="273" y="590" width="8" height="8" fill="#FFFFFF" stroke="#334155" stroke-width="1.2"/>
+<path d="M277 550L277 621Q277 626 282 626L653 626Q658 626 658 631L658 678" fill="none" stroke="#334155" stroke-width="1.2"/>
+<rect x="411" y="590" width="8" height="8" fill="#FFFFFF" stroke="#334155" stroke-width="1.2"/>
+<path d="M415 550L415 635L415 678" fill="none" stroke="#334155" stroke-width="1.2"/>
+<rect x="687" y="590" width="8" height="8" fill="#FFFFFF" stroke="#334155" stroke-width="1.2"/>
+<path d="M691 550L691 639Q691 644 686 644L677 644Q672 644 672 649L672 678" fill="none" stroke="#334155" stroke-width="1.2"/>
+<rect x="1377" y="590" width="8" height="8" fill="#FFFFFF" stroke="#334155" stroke-width="1.2"/>
+<path d="M1381 550L1381 648Q1381 653 1376 653L934 653Q929 653 929 658L929 678" fill="none" stroke="#334155" stroke-width="1.2"/>
+<rect x="300" y="678" width="230" height="40" rx="6" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="308" y="693" font-size="9" fill="#64748B">«part»</text>
+<text x="308" y="708" font-size="11" fill="#0F172A" font-weight="700">Vehicle CAN</text>
+<rect x="550" y="678" width="230" height="40" rx="6" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="558" y="693" font-size="9" fill="#64748B">«part»</text>
+<text x="558" y="708" font-size="11" fill="#0F172A" font-weight="700">E-05 Harness</text>
+<rect x="800" y="678" width="230" height="40" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
+<text x="808" y="693" font-size="9" fill="#64748B">«part»</text>
+<text x="808" y="708" font-size="11" fill="#0F172A" font-weight="700">E-04b Rest of the device</text>
+<rect x="24" y="100" width="1472" height="636" rx="4" fill="none" stroke="#94A3B8" stroke-width="1.2"/>
+<path d="M24 100h396.7v12l-10 10h-386.7z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="34" y="115" font-size="11" fill="#334155" font-weight="600">ibd [LionDriverArchitecture] safety MCU hardware-software interface</text>
+<text x="40" y="762" font-size="11.5" fill="#334155">14 interfaces cross the boundary between the firmware and the MCU hardware: 1 in place, 12 partial, 1 missing (WP-S-05 §11.4). At 3 (HSI-05, HSI-07, HSI-11) a failure of the other side is not detected today. Each line is a connection of the model: an interface to the</text>
+<text x="40" y="778" font-size="11.5" fill="#334155">software that owns it (WP-S-05 §11.4) and to the hardware parts its resource names (§2, check H5).</text>
+<line x1="40" y1="794" x2="1480" y2="794" stroke="#E2E8F0"/>
+<rect x="40" y="816" width="18" height="14" rx="4" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="64" y="827" font-size="11" fill="#334155">in place</text>
+<rect x="120.4" y="816" width="18" height="14" rx="4" fill="#FFFBEB" stroke="#B45309" stroke-width="1.4"/>
+<text x="144.4" y="827" font-size="11" fill="#334155">partial</text>
+<rect x="192.5" y="816" width="18" height="14" rx="4" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="216.5" y="827" font-size="11" fill="#334155">missing</text>
+<rect x="272.3" y="819" width="8" height="8" fill="#FFFFFF" stroke="#334155" stroke-width="1.2"/>
+<text x="286.3" y="827" font-size="11" fill="#334155">port of E-04a to a part outside the MCU</text>
+<text x="542.3" y="827" font-size="11" fill="#64748B">part colours: integrity, as in V-03</text>
+<text x="40" y="870" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+</svg>

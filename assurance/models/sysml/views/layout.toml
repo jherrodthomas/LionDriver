@@ -884,3 +884,20 @@ desc = """SysML action flow diagram generated from the model (LionDriverLifecycl
 installation and provisioning, then operation; operation goes to service or to a software update and back, and ends in \
 decommissioning and done. Each phase is an action of LifecyclePhase containing one ProcedureStep action per requirement \
 TSR-801 to TSR-818, with its ASIL, its status, the procedure steps and record that carry it and the cases that verify it."""
+
+[views.V-24]
+file = "fig-sysml-v24-hsi-ibd.svg"
+kind = "hsiblocks"
+title = "HSI internal block diagram"
+subtitle = "The 14 hardware-software interfaces of the safety MCU: the firmware and SoC software that own them above, the parts of the MCU hardware they use below"
+width = 1520
+groups = [
+  { title = "SoC link", hsi = ["HSI-08", "HSI-01", "HSI-02", "HSI-03"] },
+  { title = "car side", hsi = ["HSI-04", "HSI-05", "HSI-07", "HSI-06"] },
+  { title = "inside the MCU", hsi = ["HSI-13", "HSI-10", "HSI-09", "HSI-14", "HSI-12", "HSI-11"] },
+]
+peers = { "HSI-04" = "vehicleCan" }
+desc = """SysML internal block diagram generated from the model for the hardware-software interface of WP-S-05. Above \
+the boundary, the safety MCU firmware E-03b and the other software owners of each interface (E-03a, host pandad); on \
+the boundary, the 14 interfaces HSI-01 to HSI-14 with their status, signals, TSRs and who detects a failure; below, the \
+parts of the safety MCU hardware E-04a each interface uses, and the parts outside the MCU they lead to."""

@@ -12,9 +12,10 @@
                        expanded against the model) and test cases; and the hardware and software responsibilities
                        of WP-S-05 §11.4 as `item` usages of HsiResponsibility, one per interface HSI-nn: what the
                        hardware provides, what the software must do, who detects a failure, the reaction, shared
-                       resources, the hardware and software owner elements, the TSRs the row names and its status
+                       resources, the hardware and software owner elements, the TSRs the row names and its status,
+                       with the HW resource of the §2 summary and the parts of the safety MCU (E-04a) it names
 
-Checks H1-H4 in check_model.py hold the model to these files and the budgets to their own arithmetic.
+Checks H1-H5 in check_model.py hold the model to these files and the budgets to their own arithmetic.
 
 Usage: python3 tools/gen_timing_hsi.py [--check]
 """
@@ -195,12 +196,40 @@ def responsibilities() -> list[dict]:
   return out
 
 
+# The parts of the safety MCU hardware (E-04a in LionDriverArchitecture) that a resource of WP-S-05 §2 names, by the
+# words of its interface name and HW resource cells, in the order the HW resource cell names them.
+RESOURCE_PARTS = [(r"\bSPI4\b", "spi4"), (r"\b(SRAM|[Ff]lash|RAMECC)", "memories"), (r"\bFDCAN", "fdcanPeripherals"),
+                  (r"\bGPIO", "gpio"), (r"\bADC", "adc"), (r"\bIWDG", "iwdg1"), (r"\b(NVIC|MPU|DTS|Cortex)", "core"),
+                  (r"\b(RCC|CSS)\b", "clock"), (r"\b(DAC|codec)\b", "sirenPath"), (r"\b[Ss]upply\b", "supply")]
+
+
+def summary() -> dict[str, dict]:
+  """HSI-nn -> its row of the WP-S-05 §2 summary table: interface name, HW resource and the parts of E-04a it uses."""
+  for heading, head, rows in tables(WP_S05):
+    if heading.startswith("2. ") and head[:3] == ["HSI", "Interface", "HW resource"]:
+      out = {}
+      for r in rows:
+        if not re.fullmatch(r"HSI-\d\d", r[0]):
+          continue
+        res = plain(r[2])
+        pos = {}
+        for rx, p in RESOURCE_PARTS:
+          m_ = re.search(rx, res)
+          if m_:
+            pos[p] = m_.start()
+          elif re.search(rx, plain(r[1])):
+            pos[p] = len(res) + 1
+        parts = sorted(pos, key=pos.get)  # the first is the resource the cell names first
+        if res not in ("—", "-", "") and not parts:
+          raise TimingError(f"WP-S-05 §2 {r[0]}: HW resource {res!r} names no part of the safety MCU; extend RESOURCE_PARTS")
+        out[r[0]] = {"name": plain(r[1]), "resource": res, "parts": parts}
+      return out
+  raise TimingError("WP-S-05 §2 has no interface summary table with columns HSI, Interface, HW resource")
+
+
 def interfaces() -> dict[str, str]:
   """HSI-nn -> interface name from the WP-S-05 §2 summary table."""
-  for heading, head, rows in tables(WP_S05):
-    if heading.startswith("2. ") and head[:2] == ["HSI", "Interface"]:
-      return {r[0]: plain(r[1]) for r in rows if re.fullmatch(r"HSI-\d\d", r[0])}
-  raise TimingError("WP-S-05 §2 has no interface summary table")
+  return {k: v["name"] for k, v in summary().items()}
 
 
 def signals_sysml() -> str:
@@ -226,8 +255,10 @@ def signals_sysml() -> str:
   rattrs = [("hardware", "hw"), ("software", "sw"), ("detection", "detect"), ("reaction", "reaction"),
             ("shared", "shared"), ("hwOwnerText", "hwOwnerText"), ("swOwnerText", "swOwnerText"),
             ("hwOwners", "hwOwners"), ("swOwners", "swOwners"), ("tsr", "tsr"), ("status", "status")]
-  rlists = {"hwOwners", "swOwners", "tsr"}
+  rattrs += [("hwResource", "resource"), ("hwParts", "parts")]
+  rlists = {"hwOwners", "swOwners", "tsr", "hwParts"}
   names = interfaces()
+  rows = summary()
   out += ["", "    item def HsiResponsibility {",
           "        doc /* What the hardware and the software each provide and must do at one interface HSI-nn, who detects",
           "               a failure of the other side and how the item reacts (WP-S-05 §11.4). */"]
@@ -235,6 +266,7 @@ def signals_sysml() -> str:
     out.append(f"        attribute {a} : String{'[0..*]' if a in rlists else ''};")
   out += ["    }", ""]
   for r in responsibilities():
+    r = {**r, "resource": rows.get(r["id"], {}).get("resource", ""), "parts": rows.get(r["id"], {}).get("parts", [])}
     out += [f"    item <'{r['id']}'> {r['id'].lower().replace('-', '_')} : HsiResponsibility {{",
             f"        doc /* {doc(names.get(r['id'], r['id']))} */"]
     for a, k in rattrs:
