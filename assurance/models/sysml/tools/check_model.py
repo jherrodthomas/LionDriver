@@ -38,6 +38,9 @@ so a change to one without the other fails CI (assurance/models/sysml/README.md 
   H2  every timing budget names safety goals and TSRs of the model and adds up: FDTI + FRTI within the FTTI, FHTI equal
       to FDTI + FRTI and the margin within FTTI - FHTI wherever the cells are times; every safety goal has a budget
   H3  every HSI signal has an owner element, a TSR and test cases, and every one of them is in the model
+  H4  every interface of WP-S-05 §2 has one hardware/software responsibility (§11.4) and no other does; each names a
+      hardware owner that is hardware (device hardware or harness) and a software owner that is software (SoC
+      software or safety firmware), all elements of the model, and TSRs of the model
   R4  the requirements-coverage report (generated/requirements-coverage.md) is up to date: satisfied,
       verified and derived, per kind, with the requirements that are not (informational)
 
@@ -706,7 +709,11 @@ def check_behaviour(m: sysml_lite.Model, rep: Report) -> None:
           rep.err("B2", f"{q.short} {msg.short}: condition names {req}, which is not a requirement of the model")
 
 
-# ---------------------------------------------------------------- timing and HSI (H1-H3)
+# ---------------------------------------------------------------- timing and HSI (H1-H4)
+
+HW_ROOTS = ("context.ldsda.deviceHardware", "context.ldsda.harness")
+SW_ROOTS = ("context.ldsda.socSoftware", "context.ldsda.safetyFirmware")
+
 
 def check_timing_hsi(m: sysml_lite.Model, rep: Report) -> None:
   import gen_timing_hsi
@@ -757,6 +764,35 @@ def check_timing_hsi(m: sysml_lite.Model, rep: Report) -> None:
     for c in (x for x in sysml_lite._as_list(v.get("tests")) if x):
       if c not in m.verifications:
         rep.err("H3", f"{sid} is tested by {c}, which is not a verification case of the model")
+  try:
+    interfaces = gen_timing_hsi.interfaces()
+  except gen_timing_hsi.TimingError as e:
+    rep.err("H4", str(e))
+    interfaces = {}
+  for hsi in sorted(set(interfaces) - set(m.responsibilities)):
+    rep.err("H4", f"{hsi} has no hardware/software responsibility in WP-S-05 §11.4")
+  for hsi in sorted(set(m.responsibilities) - set(interfaces)):
+    rep.err("H4", f"{hsi} has a responsibility but is not an interface of WP-S-05 §2")
+  for hsi, r in m.responsibilities.items():
+    v = r.values
+    for key, side, roots in (("hwOwners", "hardware", HW_ROOTS), ("swOwners", "software", SW_ROOTS)):
+      owners = [x for x in sysml_lite._as_list(v.get(key)) if x]
+      if not owners:
+        rep.err("H4", f"{hsi} names no {side} owner")
+      for o in owners:
+        e = find_any(m, o)
+        if e is None:
+          rep.err("H4", f"{hsi}: {side} owner {o!r} is not an element of the model")
+        elif not any(e.path == x or e.path.startswith(x + ".") for x in roots):
+          rep.err("H4", f"{hsi}: {side} owner {o} is not {side} ({e.path})")
+    tsr = [x for x in sysml_lite._as_list(v.get("tsr")) if x]
+    if not tsr:
+      rep.err("H4", f"{hsi} names no TSR")
+    for x in tsr:
+      if x not in m.requirements:
+        rep.err("H4", f"{hsi} names {x}, which is not a requirement of the model")
+    if v.get("status") not in gen_timing_hsi.STATUS:
+      rep.err("H4", f"{hsi}: status {v.get('status')!r} is not one of {', '.join(gen_timing_hsi.STATUS)}")
 
 
 def outside_reason(text: str) -> str | None:
@@ -867,8 +903,9 @@ def main(argv: list[str]) -> int:
         f"{len(m.use_cases)} use cases")
   print(f"behaviour: {sum(1 for s in m.state_machines.values() if 'StateRecord' in s.meta)} state-machine records, " +
         f"{sum(len(q.messages) for q in m.sequences.values())} sequence steps")
-  print(f"timing and HSI: {len(m.budgets)} timing budgets, {len(m.signals)} HSI signals")
-  print("OK: M1-M12, N1-N3, B1-B3, H1-H3 and R1-R4 passed")
+  print(f"timing and HSI: {len(m.budgets)} timing budgets, {len(m.signals)} HSI signals, "
+        f"{len(m.responsibilities)} HSI responsibilities")
+  print("OK: M1-M12, N1-N3, B1-B3, H1-H4 and R1-R4 passed")
   return 0
 
 

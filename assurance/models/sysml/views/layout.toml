@@ -824,3 +824,14 @@ desc = """HSI signals view generated from the SysML v2 model. One row per signal
 its table: vehicle CAN signals (HSI-04), SoC to safety MCU signals (HSI-01 to 03) and safety MCU hardware signals \
 (HSI-05 to 14). Each row gives the direction, the owner elements, whether the signal carries integrity protection and \
 a liveness indication of its own, the ASIL, the TSRs it serves and the number of test cases."""
+
+[views.V-20]
+file = "fig-sysml-v20-hsi-responsibilities.svg"
+kind = "responsibilities"
+title = "HSI responsibilities · hardware, software, detection"
+subtitle = "The 14 interfaces of WP-S-05 §11.4: what the hardware provides and the software must do, their owner elements, who detects a failure and the reaction"
+width = 1520
+desc = """HSI responsibilities view generated from the SysML v2 model. One row per interface HSI-01 to HSI-14 of WP-S-05 \
+§11.4: what the hardware provides and the software must do, each with its owner elements (chips coloured by integrity), \
+how a failure of the other side is detected (red where it is not detected today), the reaction, resources shared with \
+another interface, and the status of the row: in place, partial or missing."""

@@ -149,4 +149,11 @@ package LionDriverViews {
         expose LdSda::**;
         render Views::asElementTable;
     }
+
+    view <'V-20'> hsiResponsibilities : InterconnectionView {
+        doc /* The hardware and software responsibilities of WP-S-05 §11.4 per interface: what each side provides and must do, their owner elements, who detects a failure and the reaction. */
+        expose LionDriverSignals::*;
+        expose LdSda::**;
+        render Views::asElementTable;
+    }
 }

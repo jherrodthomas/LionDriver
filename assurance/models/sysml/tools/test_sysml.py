@@ -429,7 +429,7 @@ class Behaviour(unittest.TestCase):
 
 
 class TimingHsi(unittest.TestCase):
-  """Timing budgets of WP-S-04 §3.7 and HSI signals of WP-S-05 §11 (V-18, V-19)."""
+  """Timing budgets of WP-S-04 §3.7, HSI signals of WP-S-05 §11 and HSI responsibilities of §11.4 (V-18, V-19, V-20)."""
 
   @classmethod
   def setUpClass(cls):
@@ -472,6 +472,42 @@ class TimingHsi(unittest.TestCase):
     self.assertFalse(render_arch.protection(self.m, "S-08", "validity"))      # "as S-07": none
     self.assertFalse(render_arch.protection(self.m, "S-27", "validity"))      # "required start-up test"
     self.assertFalse(render_arch.protection(self.m, "S-11", "integrity"))     # "none (..., checksum ignored)"
+
+  def test_responsibilities_cover_every_interface(self):
+    import gen_timing_hsi as g
+    self.assertEqual(sorted(self.m.responsibilities), sorted(g.interfaces()))
+    r = self.m.responsibilities["HSI-05"].values
+    self.assertEqual(sysml_lite._as_list(r["hwOwners"]), ["E-04a", "E-05"])
+    self.assertEqual(sysml_lite._as_list(r["swOwners"]), ["E-03b"])
+    self.assertEqual(sysml_lite._as_list(r["tsr"]), ["TSR-506", "TSR-706"])   # "TSR-506, 706": the bare number too
+    self.assertEqual(sysml_lite._as_list(self.m.responsibilities["HSI-04"].values["tsr"])[:6],
+                     [f"TSR-40{n}" for n in range(1, 7)])                        # "TSR-401…406" expanded
+    self.assertEqual(self.m.responsibilities["HSI-14"].values["status"], "missing")
+
+  def test_responsibility_owner_on_the_wrong_side_is_reported(self):
+    r = self.m.responsibilities["HSI-09"]
+    saved = dict(r.values)
+    try:
+      r.values["hwOwners"] = ["E-03b"]          # firmware named as the hardware owner
+      r.values["swOwners"] = ["E-99"]           # not an element
+      r.values["status"] = "done"
+      rep = check_model.Report()
+      check_model.check_timing_hsi(self.m, rep)
+      text = "\n".join(rep.errors)
+      self.assertIn("HSI-09: hardware owner E-03b is not hardware", text)
+      self.assertIn("HSI-09: software owner 'E-99' is not an element of the model", text)
+      self.assertIn("HSI-09: status 'done'", text)
+    finally:
+      r.values = saved
+
+  def test_interface_without_responsibility_is_reported(self):
+    saved = self.m.responsibilities.pop("HSI-13")
+    try:
+      rep = check_model.Report()
+      check_model.check_timing_hsi(self.m, rep)
+      self.assertIn("HSI-13 has no hardware/software responsibility in WP-S-05 §11.4", "\n".join(rep.errors))
+    finally:
+      self.m.responsibilities["HSI-13"] = saved
 
 
 class Tables(unittest.TestCase):

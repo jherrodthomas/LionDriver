@@ -41,7 +41,7 @@ firmware at the baseline; the pins and electrical values still have to be confir
 | SysML | Systems Modeling Language: the system model in models/sysml |
 | TSC | technical safety concept |
 | TSR-nn | technical safety requirement (WP-S-02) |
-| V-nn | view of the SysML model (V-01…V-19) |
+| V-nn | view of the SysML model (V-01…V-20) |
 | WP-nn | work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case) |
 | XOR | exclusive or: a simple checksum that misses many multi-bit errors |
 
@@ -129,6 +129,15 @@ elements of the architecture and tied to its TSRs and test cases; CI fails if on
 Eleven signals carry no checksum, CRC or XOR of their own, and 22 no counter, alive check or supervision. For those,
 the receiver's own checks are the protection: rates, timeouts and cross-checks.
 
+![SysML view V-20: the 14 interfaces of WP-S-05 §11.4, one row each, with what the hardware provides and what the software must do, their owner elements, how a failure of the other side is detected, the reaction and the status: one in place, twelve partial, one missing](../../models/sysml/generated/fig-sysml-v20-hsi-responsibilities.svg)
+
+*Who does what at each interface (SysML view V-20).* Where hardware and software share a safety function, WP-S-05 §11.4
+says what each side provides and must do, who detects a failure of the other and how the item reacts. Each row is an
+item in the SysML model, with a hardware owner and a software owner that must be elements of the right kind (check H4).
+Only the watchdog is in place. At three interfaces a failure of the other side is not detected today: the relay has no
+readback, the ignition line no plausibility check, and the siren no feedback. The memory protection and RAM error
+correction of HSI-14 do not exist yet.
+
 ## 5. Relay, reset, boot and watchdog
 
 - **Relay (HSI-05).** Open-drain and active-low, so a released or reset MCU releases the relay and restores the stock
@@ -180,4 +189,5 @@ document:
 |---|---|
 | WP-S-05 Figure 2-1, the interfaces | [`fig_s05_hsi.py`](../figures/fig_s05_hsi.py), from §2; it fails when a row is added that it does not place |
 | SysML view V-19, the signals in the model | [`render_arch.py`](../../models/sysml/tools/render_arch.py), from the model, which [`gen_timing_hsi.py`](../../models/sysml/tools/gen_timing_hsi.py) generates from §11 |
+| SysML view V-20, the hardware and software responsibilities | [`render_arch.py`](../../models/sysml/tools/render_arch.py), from the model, which [`gen_timing_hsi.py`](../../models/sysml/tools/gen_timing_hsi.py) generates from §11.4 |
 | WP-S-05 Figure 4-1, the control requests | [`fig_s05_requests.py`](../figures/fig_s05_requests.py), from §4.2; it fails if a required treatment cannot be classified |

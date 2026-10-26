@@ -549,4 +549,217 @@ package LionDriverSignals {
         :>> asil = "B";
         :>> tests = ("VS-HW-15", "VS-FI-26");
     }
+
+    item def HsiResponsibility {
+        doc /* What the hardware and the software each provide and must do at one interface HSI-nn, who detects
+               a failure of the other side and how the item reacts (WP-S-05 §11.4). */
+        attribute hardware : String;
+        attribute software : String;
+        attribute detection : String;
+        attribute reaction : String;
+        attribute shared : String;
+        attribute hwOwnerText : String;
+        attribute swOwnerText : String;
+        attribute hwOwners : String[0..*];
+        attribute swOwners : String[0..*];
+        attribute tsr : String[0..*];
+        attribute status : String;
+    }
+
+    item <'HSI-01'> hsi_01 : HsiResponsibility {
+        doc /* SoC ↔ MCU SPI link */
+        :>> hardware = "SPI4 slave and DMA2 streams into the SRAM1/2 buffers (§3, §8)";
+        :>> software = "Check every transfer and bound every length against the MCU buffer (TSR-410, 412); keep the DMA buffers apart from the safety state (TSR-507, HSI-14)";
+        :>> detection = "SW: per-transfer checksum and length check";
+        :>> reaction = "Transfer refused (NACK) and counted; an error burst while engaged revokes authority (TSR-413)";
+        :>> shared = "—";
+        :>> hwOwnerText = "E-04a; E-04b";
+        :>> swOwnerText = "E-03b; host pandad";
+        :>> hwOwners = ("E-04a", "E-04b");
+        :>> swOwners = ("E-03b", "host.pandad");
+        :>> tsr = ("TSR-410", "TSR-412", "TSR-507", "TSR-413");
+        :>> status = "partial";
+    }
+    item <'HSI-02'> hsi_02 : HsiResponsibility {
+        doc /* Control requests over SPI endpoint 0 */
+        :>> hardware = "Nothing beyond HSI-01: requests arrive on SPI endpoint 0";
+        :>> software = "Accept only the requests the mode allows (TSR-512, 513) and supervise the heartbeat (TSR-407, 409)";
+        :>> detection = "SW: heartbeat monitor, reference lock";
+        :>> reaction = "Authority revoked with the siren (TSR-516); a refused request leaves the state unchanged";
+        :>> shared = "HSI-01";
+        :>> hwOwnerText = "E-04a";
+        :>> swOwnerText = "E-03b; host pandad";
+        :>> hwOwners = ("E-04a");
+        :>> swOwners = ("E-03b", "host.pandad");
+        :>> tsr = ("TSR-512", "TSR-513", "TSR-407", "TSR-409", "TSR-516");
+        :>> status = "partial";
+    }
+    item <'HSI-03'> hsi_03 : HsiResponsibility {
+        doc /* CAN packet stream over SPI endpoints 1/3 */
+        :>> hardware = "Nothing beyond HSI-01: CAN packets on SPI endpoints 1 and 3";
+        :>> software = "Unpack the stream and pass every actuation frame through the TX hook (TSR-410, 411, 518)";
+        :>> detection = "SW: per-packet checksum, TX hook, TX-rate check";
+        :>> reaction = "Frame rejected and returned to the SoC; a rate excess revokes authority (TSR-518)";
+        :>> shared = "HSI-01";
+        :>> hwOwnerText = "E-04a";
+        :>> swOwnerText = "E-03a; E-03b; host pandad";
+        :>> hwOwners = ("E-04a");
+        :>> swOwners = ("E-03a", "E-03b", "host.pandad");
+        :>> tsr = ("TSR-410", "TSR-411", "TSR-518");
+        :>> status = "partial";
+    }
+    item <'HSI-04'> hsi_04 : HsiResponsibility {
+        doc /* FDCAN1–3 and transceivers */
+        :>> hardware = "FDCAN1–3 controllers with the CAN CRC, error counters and bus-off, and the transceiver enable lines (§5)";
+        :>> software = "Check every RX message the envelope uses (TSR-401…406), forward camera frames unchanged (TSR-704, 707), send only through the TX hook and react to bus-off (TSR-508)";
+        :>> detection = "HW: CAN CRC and error confinement; SW: RX checks and timeouts";
+        :>> reaction = "An RX fault revokes authority; bus-off is counted and the core reset, a safety reaction is required (HWSR-508)";
+        :>> shared = "One TX queue for forwarded and host frames (SDF-05)";
+        :>> hwOwnerText = "E-04a";
+        :>> swOwnerText = "E-03a; E-03b";
+        :>> hwOwners = ("E-04a");
+        :>> swOwners = ("E-03a", "E-03b");
+        :>> tsr = ("TSR-401", "TSR-402", "TSR-403", "TSR-404", "TSR-405", "TSR-406", "TSR-704", "TSR-707", "TSR-508");
+        :>> status = "partial";
+    }
+    item <'HSI-05'> hsi_05 : HsiResponsibility {
+        doc /* Harness relay drive */
+        :>> hardware = "Open-drain GPIO driving the intercept relay in the harness; released at reset (to be confirmed, AOU-13)";
+        :>> software = "Drive the relay only in a car mode with a harness detected, and release it in SILENT, NOOUTPUT and ELM327 and in the safe state (TSR-506, 706)";
+        :>> detection = "Not detected: no readback (GAP-12); required by HWSR-506a";
+        :>> reaction = "Relay released: the stock camera path is restored (SG-07)";
+        :>> shared = "—";
+        :>> hwOwnerText = "E-04a; E-05";
+        :>> swOwnerText = "E-03b";
+        :>> hwOwners = ("E-04a", "E-05");
+        :>> swOwners = ("E-03b");
+        :>> tsr = ("TSR-506", "TSR-706");
+        :>> status = "partial";
+    }
+    item <'HSI-06'> hsi_06 : HsiResponsibility {
+        doc /* Harness orientation sense */
+        :>> hardware = "ADC1 channels 4 and 17 on the SBU lines (§6)";
+        :>> software = "Detect the orientation while the relay is not driven, map CAN and relay pins to it, and re-initialise on a change (TSR-701)";
+        :>> detection = "SW: ADC threshold at 8 Hz";
+        :>> reaction = "CAN re-initialised and the safety mode re-applied";
+        :>> shared = "ADC1 with HSI-13";
+        :>> hwOwnerText = "E-04a; E-05";
+        :>> swOwnerText = "E-03b";
+        :>> hwOwners = ("E-04a", "E-05");
+        :>> swOwners = ("E-03b");
+        :>> tsr = ("TSR-701");
+        :>> status = "partial";
+    }
+    item <'HSI-07'> hsi_07 : HsiResponsibility {
+        doc /* Ignition line */
+        :>> hardware = "Digital input on the SBU ignition line";
+        :>> software = "Use the line to select the heartbeat timeouts and the power state (TSR-510)";
+        :>> detection = "Not detected: no plausibility check of the line (LS-28)";
+        :>> reaction = "—";
+        :>> shared = "—";
+        :>> hwOwnerText = "E-04a; E-05";
+        :>> swOwnerText = "E-03b";
+        :>> hwOwners = ("E-04a", "E-05");
+        :>> swOwners = ("E-03b");
+        :>> tsr = ("TSR-510");
+        :>> status = "partial";
+    }
+    item <'HSI-08'> hsi_08 : HsiResponsibility {
+        doc /* Reset / boot pins from SoC */
+        :>> hardware = "SoC GPIOs to NRST and BOOT0; ST ROM bootloader on BOOT0 high (§7)";
+        :>> software = "Keep the MCU outputs safe during reset and boot (TSR-502, HWSR-502c) and keep flash closed to the ROM bootloader (TSR-511)";
+        :>> detection = "SW: reset cause reported in the health packet";
+        :>> reaction = "Restart in SILENT with the relay released; RDP and WRP are required (TSR-511)";
+        :>> shared = "—";
+        :>> hwOwnerText = "E-04a; E-04b";
+        :>> swOwnerText = "E-03b; host pandad";
+        :>> hwOwners = ("E-04a", "E-04b");
+        :>> swOwners = ("E-03b", "host.pandad");
+        :>> tsr = ("TSR-502", "TSR-511");
+        :>> status = "partial";
+    }
+    item <'HSI-09'> hsi_09 : HsiResponsibility {
+        doc /* Watchdog */
+        :>> hardware = "IWDG1 window watchdog, 90 ms nominal, on its own clock";
+        :>> software = "Start it at the first relay drive and service it only after the 100 Hz safety task completes (TSR-501)";
+        :>> detection = "HW: watchdog timeout";
+        :>> reaction = "MCU reset: relay released, restart in SILENT";
+        :>> shared = "—";
+        :>> hwOwnerText = "E-04a";
+        :>> swOwnerText = "E-03b";
+        :>> hwOwners = ("E-04a");
+        :>> swOwners = ("E-03b");
+        :>> tsr = ("TSR-501");
+        :>> status = "in place";
+    }
+    item <'HSI-10'> hsi_10 : HsiResponsibility {
+        doc /* Fault / health monitors */
+        :>> hardware = "Fault vectors (NMI, HardFault), clock security system, die temperature sensor, interrupt-rate counters";
+        :>> software = "Classify each fault and take the safe state (TSR-502…505, 509); today most are reported only";
+        :>> detection = "HW: CSS and fault vectors; SW: counters and register checks";
+        :>> reaction = "NMI and HardFault reset the MCU; the other faults are reported only, a reaction is required";
+        :>> shared = "—";
+        :>> hwOwnerText = "E-04a";
+        :>> swOwnerText = "E-03b";
+        :>> hwOwners = ("E-04a");
+        :>> swOwners = ("E-03b");
+        :>> tsr = ("TSR-502", "TSR-503", "TSR-504", "TSR-505", "TSR-509");
+        :>> status = "partial";
+    }
+    item <'HSI-11'> hsi_11 : HsiResponsibility {
+        doc /* Siren */
+        :>> hardware = "DAC with DMA and an audio codec over I2C5, or an amplifier, to the speaker";
+        :>> software = "Sound the siren when authority is revoked or the EPS fault persists (TSR-516), and test it at start-up (TSR-515)";
+        :>> detection = "Not detected: no feedback from the speaker; a start-up test is required";
+        :>> reaction = "—";
+        :>> shared = "The speaker with the SoC's audio (DFA)";
+        :>> hwOwnerText = "E-04a; E-04b";
+        :>> swOwnerText = "E-03b";
+        :>> hwOwners = ("E-04a", "E-04b");
+        :>> swOwners = ("E-03b");
+        :>> tsr = ("TSR-516", "TSR-515");
+        :>> status = "partial";
+    }
+    item <'HSI-12'> hsi_12 : HsiResponsibility {
+        doc /* Flash and bootstub */
+        :>> hardware = "Flash bank 1: bootstub in sector 0, application from 0x08020000; RDP and WRP option bytes";
+        :>> software = "Verify the application's signature before it runs (TSR-511, 514) and its CRC at start-up and periodically (TSR-503)";
+        :>> detection = "SW: signature check at boot";
+        :>> reaction = "The bootstub does not start the application and enters the soft flasher";
+        :>> shared = "—";
+        :>> hwOwnerText = "E-04a";
+        :>> swOwnerText = "E-03b";
+        :>> hwOwners = ("E-04a");
+        :>> swOwners = ("E-03b");
+        :>> tsr = ("TSR-511", "TSR-514", "TSR-503");
+        :>> status = "partial";
+    }
+    item <'HSI-13'> hsi_13 : HsiResponsibility {
+        doc /* Supply measurement */
+        :>> hardware = "ADC1 with an input divider on the supply; BOR and PVD in the MCU";
+        :>> software = "Measure the supply and take the safe state outside the operating range (TSR-505, HWSR-505b)";
+        :>> detection = "SW: ADC reading on each health request; BOR and PVD are not configured yet";
+        :>> reaction = "Required: safe state outside the range";
+        :>> shared = "ADC1 with HSI-06";
+        :>> hwOwnerText = "E-04a";
+        :>> swOwnerText = "E-03b";
+        :>> hwOwners = ("E-04a");
+        :>> swOwners = ("E-03b");
+        :>> tsr = ("TSR-505");
+        :>> status = "partial";
+    }
+    item <'HSI-14'> hsi_14 : HsiResponsibility {
+        doc /* MPU, RAM ECC (to be added) */
+        :>> hardware = "Cortex-M7 MPU and RAM ECC (RAMECC)";
+        :>> software = "Configure MPU regions so DMA and non-safety code cannot reach the safety state, and handle ECC errors (TSR-503, 507)";
+        :>> detection = "HW: MPU fault and ECC error, once configured";
+        :>> reaction = "Required: safe state";
+        :>> shared = "—";
+        :>> hwOwnerText = "E-04a";
+        :>> swOwnerText = "E-03b";
+        :>> hwOwners = ("E-04a");
+        :>> swOwners = ("E-03b");
+        :>> tsr = ("TSR-503", "TSR-507");
+        :>> status = "missing";
+    }
 }
