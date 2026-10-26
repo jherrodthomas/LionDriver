@@ -204,3 +204,44 @@ device_sun:
                   source: "solar transmittance at normal incidence: laminated windshield as the heat model; side glass as the cabin soak; a tinted roof panel (assumed)"}
   absorptance: {value: 0.8, status: estimate, source: "dark plastic shell (thermal/params.yaml sun.absorptance)"}
   model_flux_w_m2: {value: 320.0, status: code, source: "the heat model's sun on the device's windshield-side face: 800 W/m² x 0.5 x 0.8 (thermal/params.yaml sun), as one constant, all day"}
+
+curves:
+  # Curves on a wet road (wet_curves.py, physics plan round 3 study 14): the friction a curve at the ODD's bound
+  # needs, alone and while the item brakes, against the wet-braking study's friction table.
+  lateral_odd: {value: 2.5, status: published, source: "WP-C-02 §3.2: R_ODD = v²/2.5 m/s², the ODD's curve bound at every speed"}
+  lateral_ctrl: {value: 3.0, status: code, source: "openpilot drive_helpers.py MAX_LATERAL_ACCEL_NO_ROLL, the controller's limit"}
+  rain_mm_h: {value: 2.5, status: published, source: "WP-C-02 §3.1: light rain, below 2.5 mm/h, is the ODD's wettest"}
+  tread_mm: {new: 8.0, odd: 3.0, worn: 1.6, status: published, source: "the ODD's 3 mm (WP-C-02 §3.1, DQ-416 A); the table's 'worn' row is the 1.6 mm legal minimum"}
+  odd_tread_stop_ratio: {low: 1.07, high: 1.35, status: published,
+                         source: "wet braking distance at 3 mm against new (8 mm) tyres: 7 % longer in Continental's Contidrom test (TechShow 2019; 24 % at 1.6 mm); 35 % longer in MIRA's tests for the BRMA (80 km/h, 0.5–1.5 mm of water; via Tire Review). Friction taken as inverse to the stopping distance, so 3 mm keeps 1/1.07 to 1/1.35 of the new tyre's grip"}
+  superelevation: {value: 0.0, high: 0.06, status: assumed,
+                   source: "the road's bank toward the curve's inside: none (worst, also a crown sloping the wrong way) to 6 % (a common highway design value); it takes g·e of the lateral load off the tyres"}
+  speeds_kph: [60, 70, 80, 90, 100, 110]
+
+crest:
+  # Hill crests (crest.py, physics plan round 3 study 12): sight over a crest built to the design standard against
+  # the distance to stop. AASHTO, A Policy on Geometric Design of Highways and Streets (the Green Book), metric.
+  design_speeds_kph: {value: [100, 110, 120], status: published,
+                      source: "Interstate design speeds; the ODD's 110 km/h bound sits in the middle"}
+  ssd: {reaction_s: 2.5, decel: 3.4, status: published,
+        source: "AASHTO Green Book stopping sight distance: brake reaction 2.5 s, deceleration 3.4 m/s² (SSD = 0.278 V t + 0.039 V²/a, metric)"}
+  design_heights_m: {eye: 1.08, object: 0.60, status: published,
+                     source: "AASHTO Green Book: driver's eye 1.08 m, object (a car's tail lights) 0.60 m; crest K = SSD² / 658"}
+  k_table: {speeds_kph: [100, 110, 120], ssd_m: [185, 220, 250], k: [52, 74, 95], status: published,
+            source: "AASHTO Green Book, design controls for crest vertical curves (stopping sight distance), metric, rounded"}
+  camera_height_m: {value: 1.2, status: "mesh-derived", source: "the road camera just below the top of the Corolla's windshield (1.28 m, corolla-e210-geometry.json)"}
+  radar_height_m: {value: 0.5, low: 0.4, high: 0.7, status: estimate, source: "the stock radar behind the front emblem; T1 measures it"}
+  targets_m: {tail_lights: 0.60, roof: 1.43, radar_return: 0.5, status: estimate,
+              source: "a stopped car: tail lights at AASHTO's 0.60 m, its roof (the Corolla's 1.43 m height), and the height of its rear's radar return (bumper and boot lid)"}
+  driver_reaction_s: {value: 1.5, low: 0.75, status: assumed, source: "WP-S-04: 0.75–1.5 s for an attentive driver to a take-over request; AASHTO's 2.5 s for an unwarned one"}
+
+stopped_car:
+  # A stopped car ahead (stopped_car.py, physics plan round 3 study 11): how big a stopped car is in the driving
+  # model's input against the distance to stop. The model's input intrinsics and radard's rules are read from the code.
+  speed_kph: 110.0
+  car_rear_m: {width: 1.8, height: 1.45, status: estimate, source: "a compact or mid-size car's rear (the Corolla: 1.78 m wide, 1.43 m high)"}
+  small_object_px: {value: 32, status: published,
+                    source: "MS COCO (Lin et al. 2014): objects under 32 x 32 px are 'small', where object detectors do worst; a reference size, not openpilot's own threshold"}
+  sizes_px: [32, 20, 10]
+  driver_reaction_s: {value: 2.5, low: 1.5, status: published,
+                      source: "AASHTO's 2.5 s for an unwarned driver; WP-S-04's 1.5 s for an attentive one after a warning"}
