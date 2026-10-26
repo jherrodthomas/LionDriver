@@ -4,9 +4,9 @@
 |---|---|
 | Work product | WP-S-08 System integration and test strategy, specification and report |
 | Standard reference | ISO 26262-4:2018 §7 (item integration and testing); ISO 26262-4 §7 test methods and fault-injection guidance (verify table numbers against the licensed copy); ISO 26262-8:2018 §9 (verification); ASPICE 4.0 SYS.4 (system integration and integration verification) |
-| Version | 0.5 (VS-SI-24: code changed by #51 since the recorded result; not re-run; 2026-10-20). 0.4 (merge of PR #47 software alignment with the base; carries PR #47's draft 0.2: VS-SI-27 (drafted as VS-SI-25, renumbered because VS-SI-25 is the MCU-reset case) added from WP-W-08 VS-SWQ-20, RR-2026-009 F-24; 2026-10-13). 0.3 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
+| Version | 0.6 (§6: Figure 6-1, the cases by integration step and expected result, generated from the tables; ASIL / scope row brought up to WP-C-03 v0.4; 2026-10-25). 0.5 (VS-SI-24: code changed by #51 since the recorded result; not re-run; 2026-10-20). 0.4 (merge of PR #47 software alignment with the base; carries PR #47's draft 0.2: VS-SI-27 (drafted as VS-SI-25, renumbered because VS-SI-25 is the MCU-reset case) added from WP-W-08 VS-SWQ-20, RR-2026-009 F-24; 2026-10-13). 0.3 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (specification). **Results: not yet executed** |
-| ASIL / scope | ASIL C (SG-01 until re-rated), ASIL B (SG-02…SG-07); reference configuration only |
+| ASIL / scope | Up to ASIL C: SG-02, SG-03 and SG-06 (WP-C-03 v0.4) and SG-01 until re-rated; ASIL B for SG-04, SG-05 and SG-07; ASIL A for SG-08; reference configuration only |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); test specification review with independence per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
 | Approver | Safety manager |
@@ -92,6 +92,10 @@ Pass criteria use the preliminary FTTI allocation of [WP-C-04 §8](../02-concept
 - Any change to a safety-relevant file (WP-P-01 list) re-runs the affected VS-SI cases per the impact analysis ([WP-P-02](../07-supporting/WP-P-02-change-management.md)).
 
 ## 6. Test specification
+
+![Figure 6-1: the 27 test cases of this section by group, with the integration steps I-1 to I-4 each runs at and the result the code is expected to give: 6 expected to meet, 4 by design in the reference build, 8 partly, 6 known gap, 3 cannot be judged yet; none executed](figures/fig-s08-6-1-cases.svg)
+
+*Figure 6-1.* The cases of the tables below, one row each, with a dot at each integration step in its Step column and the result its Expected-baseline column gives. No case has been executed. Because the Expected-baseline cells are free text, each case's expected result is listed in [`figures/fig_s08_cases.py`](figures/fig_s08_cases.py) with a phrase quoted from its cell; CI fails when a case is added or removed or the phrase leaves its cell.
 
 Columns: **Trace** = FSR / TSR block / interface; **Step** = integration step; **Expected baseline** = what the code at `8b8c6ae` is expected to do (from code reading), where it differs from the pass criterion.
 

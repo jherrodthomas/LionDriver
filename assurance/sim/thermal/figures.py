@@ -374,3 +374,33 @@ def mount_figure(p: dict, r: dict, m: dict, out: Path):
   path = out / "fig-th-7-mount-modes.webp"
   _save(fig, path)
   print(f"wrote {path.name} ({path.stat().st_size // 1024} KB)")
+
+
+def fan_dust_figure(p: dict, r: dict, out: Path):
+  """Cabin air at which the SoC and the MCU reach their limits as the fan clogs (fan_dust.py)."""
+  s = r["steps"]
+  x = np.array([100 * v["cooling_left"] for v in s])
+  soc = np.array([v["air_at_soc_limit"] for v in s])
+  mcu = np.array([v["air_at_mcu_limit"] for v in s])
+  fig, ax = plt.subplots(figsize=(9, 9.5), dpi=100)
+  fig.subplots_adjust(left=0.12, right=0.95, top=0.84, bottom=0.2)
+  fig.text(0.05, 0.95, "Dust in the fan", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.92, "comma 3X box model, steady at the end of a drive · fan cooling from as built to stalled",
+           fontsize=12.5, color=INK2)
+  ax.fill_between(x, soc, mcu, color="#cde2fb", lw=0)
+  ax.plot(x, soc, "o-", color="#2a78d6", lw=2.4, label=f"SoC reaches {r['soc_limit']:.0f} °C: the host stops")
+  ax.plot(x, mcu, "o-", color="#104281", lw=2.4,
+          label=f"MCU junction would reach {r['tj_max']:.0f} °C (hottest package), if the host ran on")
+  ax.text(50, (soc[4] + mcu[4]) / 2, "the host stops first:\nthe MCU is still in range", ha="center", va="center",
+          fontsize=11.5, color=INK2)
+  ax.set_xlim(102, -2); ax.set_ylim(20, 95)
+  ax.set_xlabel("fan cooling left, % (100 = clean, 0 = stalled)"); ax.set_ylabel("cabin air at the device, °C")
+  ax.grid(axis="y", color=GRID); ax.spines[["top", "right"]].set_visible(False)
+  ax.legend(loc="upper right", frameon=False, fontsize=10.5)
+  fig.text(0.05, 0.085, f"Clean to stalled costs {r['soc_limit_air_lost_k']:.0f} K of cabin air, most of it in the last "
+           "fifth of the fan's cooling.\nHow fast a fan clogs is not modelled.", fontsize=11.5, color=INK2)
+  _stamp(fig)
+  out.mkdir(exist_ok=True)
+  path = out / "fig-th-8-fan-dust.webp"
+  _save(fig, path)
+  print(f"wrote {path.name} ({path.stat().st_size // 1024} KB)")

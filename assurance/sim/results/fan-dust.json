@@ -1,0 +1,121 @@
+{
+ "about": "Synthetic (DSR-12), design aid, no evidence credit (DQ-413). Estimated inputs until T1.",
+ "soc_limit": 96.0,
+ "tj_max": 125.0,
+ "still_scale": 0.048,
+ "steps": [
+  {
+   "cooling_left": 1.0,
+   "air_at_soc_limit": 50.03,
+   "mcu_block_then": 78.06,
+   "tj_then": [
+    79.18,
+    89.7
+   ],
+   "air_at_mcu_limit": 85.34,
+   "soc_above_air": 45.97
+  },
+  {
+   "cooling_left": 0.8,
+   "air_at_soc_limit": 48.59,
+   "mcu_block_then": 78.63,
+   "tj_then": [
+    79.75,
+    90.27
+   ],
+   "air_at_mcu_limit": 83.32,
+   "soc_above_air": 47.41
+  },
+  {
+   "cooling_left": 0.6,
+   "air_at_soc_limit": 46.64,
+   "mcu_block_then": 79.39,
+   "tj_then": [
+    80.51,
+    91.03
+   ],
+   "air_at_mcu_limit": 80.61,
+   "soc_above_air": 49.36
+  },
+  {
+   "cooling_left": 0.4,
+   "air_at_soc_limit": 43.86,
+   "mcu_block_then": 80.46,
+   "tj_then": [
+    81.58,
+    92.1
+   ],
+   "air_at_mcu_limit": 76.76,
+   "soc_above_air": 52.14
+  },
+  {
+   "cooling_left": 0.3,
+   "air_at_soc_limit": 41.99,
+   "mcu_block_then": 81.18,
+   "tj_then": [
+    82.3,
+    92.82
+   ],
+   "air_at_mcu_limit": 74.17,
+   "soc_above_air": 54.01
+  },
+  {
+   "cooling_left": 0.2,
+   "air_at_soc_limit": 39.62,
+   "mcu_block_then": 82.1,
+   "tj_then": [
+    83.22,
+    93.74
+   ],
+   "air_at_mcu_limit": 70.88,
+   "soc_above_air": 56.38
+  },
+  {
+   "cooling_left": 0.1,
+   "air_at_soc_limit": 36.53,
+   "mcu_block_then": 83.29,
+   "tj_then": [
+    84.41,
+    94.93
+   ],
+   "air_at_mcu_limit": 66.6,
+   "soc_above_air": 59.47
+  },
+  {
+   "cooling_left": 0.05,
+   "air_at_soc_limit": 34.6,
+   "mcu_block_then": 84.04,
+   "tj_then": [
+    85.16,
+    95.68
+   ],
+   "air_at_mcu_limit": 63.93,
+   "soc_above_air": 61.4
+  },
+  {
+   "cooling_left": 0.0,
+   "air_at_soc_limit": 32.33,
+   "mcu_block_then": 84.91,
+   "tj_then": [
+    86.03,
+    96.55
+   ],
+   "air_at_mcu_limit": 60.78,
+   "soc_above_air": 63.67
+  }
+ ],
+ "host_first_everywhere": true,
+ "soc_limit_air_lost_k": 17.7,
+ "half_of_loss_by": 0.8,
+ "at_40_percent": {
+  "cooling_left": 0.4,
+  "air_at_soc_limit": 43.86,
+  "mcu_block_then": 80.46,
+  "tj_then": [
+   81.58,
+   92.1
+  ],
+  "air_at_mcu_limit": 76.76,
+  "soc_above_air": 52.14
+ }
+}
