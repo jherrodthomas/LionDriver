@@ -11,10 +11,11 @@ import openpilot.cereal.messaging as messaging
 from openpilot.common.utils import atomic_write
 from openpilot.common.params import Params, ParamKeyFlag
 from openpilot.common.text_window import TextWindow
-from openpilot.common.hardware import HARDWARE
+from openpilot.common.hardware import HARDWARE, PC
 from openpilot.system.manager.helpers import unblock_stdout, save_bootlog
 from openpilot.system.manager.process import ensure_running
-from openpilot.system.manager.process_config import managed_processes
+from openpilot.system.manager.process_config import managed_processes, REFERENCE_BUILD
+from openpilot.system.manager.reference_env import remove_test_switches
 from openpilot.system.athena.registration import register, UNREGISTERED_DONGLE_ID
 from openpilot.common.swaglog import cloudlog, add_file_handler
 from openpilot.common.version import get_build_metadata
@@ -100,6 +101,10 @@ def manager_cleanup() -> None:
 def manager_thread() -> None:
   cloudlog.bind(daemon="manager")
   cloudlog.info("manager start")
+  # LionDriver: no process started below sees a test-only switch in the reference build on the device (reference_env.py)
+  removed = remove_test_switches(os.environ, REFERENCE_BUILD, not PC)
+  if removed:
+    cloudlog.event("test-only environment switches removed in the reference build", error=True, removed=removed)
   cloudlog.info({"environ": os.environ})
 
   params = Params()

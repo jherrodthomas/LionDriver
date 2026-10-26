@@ -6151,3 +6151,33 @@
       detail: "Shortest time at speed. Cost: a firm, unannounced-feeling stop for following traffic (rear-end risk, HZ-006), and the same planner change."
   sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-086.C2", "DQ-365", "openpilot/selfdrive/controls/lib/longitudinal_planner.py (A_CRUISE_MIN)", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633"]
   status: queued
+
+- id: DQ-425
+  question: "Should the reference build on the device ignore the test-only switches (REPLAY, SIMULATION, FINGERPRINT, BLOCK, STARTED and the others)?"
+  context: >-
+    A reversible technical choice, so Claude goes with the recommendation unless you object. Ten environment switches
+    meant for tests and the simulator still work on the car: one makes the item show engaged whenever the panda allows
+    control, one skips the panda firmware check, one fakes ignition, one overrides the car identification. Nothing sets
+    them, but a shell on the device can. **The fix keeps them on a PC, where the simulator and tests need them, and
+    removes them on the device before any process starts.** Same reasoning as your DQ-131 answer for the debug modes.
+  reversibility: easy
+  blocks: "SW FMEA SWF-028.C2, SWF-030.C2 (AP H -> L), SWF-058.C2, SWF-082.C1; SWF-ACT-028, -031, -057, -070"
+  gate: G1
+  decider: claude
+  asked: 2026-10-27
+  proceed_after: 2026-10-30
+  after:
+    - DQ-131
+  options:
+    - key: A
+      recommended: true
+      title: "manager removes them on the device in the reference build, and logs what it removed"
+      detail: "One small module, tested and mutation-checked in CI. Cost: a process started by hand from a shell still sees them (a cybersecurity matter, shell access)."
+    - key: B
+      title: "Compile or code them out of each process in the reference build"
+      detail: "Also covers a process started by hand. Cost: changes in pandad, selfdrived, card, the messaging library and opendbc, each a fork difference to carry at upstream syncs."
+    - key: C
+      title: "Leave them; rely on no shell access"
+      detail: "No change. Cost: SWF-028.C2 and SWF-030.C2 stay AP H with nothing that detects them."
+  sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-028, SWF-030, SWF-058, SWF-082", "assurance/07-supporting/impact/change-2026-10-27-reference-test-switches.md", "DQ-131"]
+  status: open
