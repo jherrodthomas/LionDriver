@@ -69,10 +69,20 @@ def fit(img: Image.Image, w: int, h: int) -> Image.Image:
   return img.crop((x, y, x + w, y + h))
 
 
-def wrap(d, xy, text: str, f, fill, width_px: int, gap: int = 4) -> int:
-  x, y = xy
+def wrap_lines(text: str, f, width_px: int) -> list[str]:
   avg = max(1, f.getlength("abcdefghijklmnopqrstuvwxyz") / 26)
-  for line in textwrap.wrap(text, max(10, int(width_px / avg))):
+  return textwrap.wrap(text, max(10, int(width_px / avg)))
+
+
+def wrap(d, xy, text: str, f, fill, width_px: int, gap: int = 4, max_lines: int | None = None) -> int:
+  """Draw text wrapped to width_px; with max_lines, a longer text ends its last line with an ellipsis."""
+  x, y = xy
+  lines = wrap_lines(text, f, width_px)
+  if max_lines is not None and len(lines) > max_lines:
+    lines = lines[:max(max_lines, 0)]
+    if lines:
+      lines[-1] = clip(lines[-1] + " …", f, width_px)
+  for line in lines:
     d.text((x, y), line, font=f, fill=fill)
     y += f.size + gap
   return y
@@ -251,13 +261,21 @@ def frame(sc: dict, screen: dict, keys: list[dict], views: dict[str, Path], i: i
   d.text((24, 74), ("Hazardous event " if cd["kind"] == "HARA" else "SOTIF hazard ") + cd["id"], font=F["h1"],
          fill=CRITICAL)
   y = wrap(d, (24, 102), cd["title"], F["bs"], TEXT, 330)
-  y = wrap(d, (24, y + 6), "Situation: " + cd["situation"], F["s"], TEXT2, 330, 3)
-  y = wrap(d, (24, y + 4), "Effect: " + cd["effect"], F["s"], TEXT2, 330, 3)
   extra = []
   if cd["kind"] == "HARA" and (cd.get("tc") or cd.get("ks")):
     extra = [r for r in (["Triggering condition", ", ".join(cd["tc"])], ["Known scenario", ", ".join(cd["ks"])]) if r[1]]
   rows = cd["rows"] + extra
-  y = max(y + 8, hb[3] - 30 - 20 * len(rows))
+  rows_top = hb[3] - 30 - 20 * len(rows)
+  # the situation and effect share the space above the rows, so a long entry never runs into them
+  sit, eff = "Situation: " + cd["situation"], "Effect: " + cd["effect"]
+  n_sit, n_eff = len(wrap_lines(sit, F["s"], 330)), len(wrap_lines(eff, F["s"], 330))
+  budget = max(2, (rows_top - 8 - (y + 10)) // (F["s"].size + 3))
+  if n_sit + n_eff > budget:
+    n_eff = min(n_eff, max(1, budget // 2))
+    n_sit = budget - n_eff
+  y = wrap(d, (24, y + 6), sit, F["s"], TEXT2, 330, 3, n_sit)
+  y = wrap(d, (24, y + 4), eff, F["s"], TEXT2, 330, 3, n_eff)
+  y = max(y + 8, rows_top)
   for k, v in rows:
     d.text((24, y), k, font=F["s"], fill=TEXT2)
     d.text((200, y), clip(str(v), F["ss"], 160), font=F["ss"], fill=CRITICAL if k == "ASIL" else TEXT)
