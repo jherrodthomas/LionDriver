@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1344" height="814" viewBox="0 0 1344 814" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
 <title id="t">Figure 2. Every fault tree, and what backs its events</title>
-<desc id="d">Figure 2. SG-01 (uncontrollable lateral motion, or steering actuation while not engaged): 28 events · all backed or reasoned; 74 FMEA modes reach it, 60 in the tree, 14 justified, 0 tree gaps. SG-02 (loss or degradation of lateral control without adequate take-over warning): 27 events · 1 without FMEA: BE-2.14; 36 FMEA modes reach it, 35 in the tree, 1 justified, 0 tree gaps. SG-03 (unintended acceleration): 29 events · all backed or reasoned; 43 FMEA modes reach it, 32 in the tree, 11 justified, 0 tree gaps. SG-04 (deceleration beyond what following traffic and the driver can control): 35 events · all backed or reasoned; 39 FMEA modes reach it, 33 in the tree, 5 justified, 1 tree gaps. SG-05 (no release on driver brake, cancel or steering override): 16 events · 1 without FMEA: BE-5.12; 18 FMEA modes reach it, 16 in the tree, 2 justified, 0 tree gaps. SG-06 (loss of longitudinal deceleration without take-over warning): 26 events · 1 without FMEA: BE-2.14; 32 FMEA modes reach it, 27 in the tree, 4 justified, 1 tree gaps. SG-07 (suppression, delay or alteration of the stock PCS/AEB): 21 events · 4 without FMEA: BE-7.02, BE-7.03, BE-7.04, BE-7.07; 19 FMEA modes reach it, 17 in the tree, 2 justified, 0 tree gaps. SG-08 (automated control continues with a driver who is not supervising or not responding): 14 events · 1 without FMEA: BE-8.03; 12 FMEA modes reach it, 12 in the tree, 0 justified, 0 tree gaps.</desc>
+<desc id="d">Figure 2. SG-01 (uncontrollable lateral motion, or steering actuation while not engaged): 28 events · all backed or reasoned; 74 FMEA modes reach it, 60 in the tree, 14 justified, 0 tree gaps. SG-02 (loss or degradation of lateral control without adequate take-over warning): 27 events · all backed or reasoned; 38 FMEA modes reach it, 36 in the tree, 2 justified, 0 tree gaps. SG-03 (unintended acceleration): 29 events · all backed or reasoned; 43 FMEA modes reach it, 32 in the tree, 11 justified, 0 tree gaps. SG-04 (deceleration beyond what following traffic and the driver can control): 35 events · all backed or reasoned; 39 FMEA modes reach it, 33 in the tree, 5 justified, 1 tree gaps. SG-05 (no release on driver brake, cancel or steering override): 16 events · 1 without FMEA: BE-5.12; 18 FMEA modes reach it, 16 in the tree, 2 justified, 0 tree gaps. SG-06 (loss of longitudinal deceleration without take-over warning): 26 events · all backed or reasoned; 34 FMEA modes reach it, 28 in the tree, 5 justified, 1 tree gaps. SG-07 (suppression, delay or alteration of the stock PCS/AEB): 21 events · 4 without FMEA: BE-7.02, BE-7.03, BE-7.04, BE-7.07; 20 FMEA modes reach it, 18 in the tree, 2 justified, 0 tree gaps. SG-08 (automated control continues with a driver who is not supervising or not responding): 14 events · 1 without FMEA: BE-8.03; 12 FMEA modes reach it, 12 in the tree, 0 justified, 0 tree gaps.</desc>
 <defs><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2563EB"/></marker><marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker><marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker></defs>
 <rect width="1344" height="814" fill="#FFFFFF"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Every fault tree, and what backs its events</text>
@@ -130,7 +130,7 @@
 <line x1="276.5" y1="309" x2="276.5" y2="314" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;314;314" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="285.1" y1="244.0" x2="285.1" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="285.1" cy="304" r="3.6" fill="#16A34A"/>
-<line x1="285.1" y1="309" x2="285.1" y2="339" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;339;339" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
+<line x1="285.1" y1="309" x2="285.1" y2="344" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;344;344" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="293.7" y1="244.0" x2="293.7" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="293.7" cy="304" r="3.6" fill="#94A3B8"/>
 <line x1="302.4" y1="244.0" x2="302.4" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
@@ -274,7 +274,8 @@
 <circle cx="402.5" cy="304" r="3.6" fill="#16A34A"/>
 <line x1="402.5" y1="309" x2="402.5" y2="324" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;324;324" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="406.5" y1="304.0" x2="406.5" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
-<circle cx="406.5" cy="304" r="3.6" fill="#DC2626"/>
+<circle cx="406.5" cy="304" r="3.6" fill="#16A34A"/>
+<line x1="406.5" y1="309" x2="406.5" y2="319" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;319;319" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="410.6" y1="304.0" x2="410.6" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="410.6" cy="304" r="3.6" fill="#16A34A"/>
 <line x1="410.6" y1="309" x2="410.6" y2="319" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;319;319" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
@@ -368,7 +369,7 @@
 <circle cx="633.9" cy="304" r="2.6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
 <circle cx="638.0" cy="304" r="2.6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
 <line x1="368" y1="304" x2="644" y2="304" stroke="#94A3B8" stroke-width="0.8"/>
-<text x="368" y="398" font-size="10" fill="#DC2626" font-weight="700">27 events · 1 without FMEA: BE-2.14</text>
+<text x="368" y="398" font-size="10" fill="#475569">27 events · all backed or reasoned</text>
 <rect x="672" y="110" width="300" height="300" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/>
 <text x="684" y="132" font-size="12.5" fill="#0F172A" font-weight="700">SG-03</text>
 <text x="732" y="132" font-size="10" fill="#475569">unintended acceleration</text>
@@ -421,7 +422,7 @@
 <line x1="692.5" y1="309" x2="692.5" y2="324" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;324;324" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="701.4" y1="304.0" x2="701.4" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="701.4" cy="304" r="3.6" fill="#16A34A"/>
-<line x1="701.4" y1="309" x2="701.4" y2="334" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;334;334" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
+<line x1="701.4" y1="309" x2="701.4" y2="339" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;339;339" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="710.3" y1="304.0" x2="710.3" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="710.3" cy="304" r="3.6" fill="#16A34A"/>
 <line x1="710.3" y1="309" x2="710.3" y2="329" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;329;329" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
@@ -451,7 +452,7 @@
 <circle cx="790.7" cy="304" r="2.6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
 <line x1="799.7" y1="214.0" x2="799.7" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="799.7" cy="304" r="3.6" fill="#16A34A"/>
-<line x1="799.7" y1="309" x2="799.7" y2="334" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;334;334" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
+<line x1="799.7" y1="309" x2="799.7" y2="339" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;339;339" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="808.6" y1="214.0" x2="808.6" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="808.6" cy="304" r="3.6" fill="#94A3B8"/>
 <line x1="817.5" y1="214.0" x2="817.5" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
@@ -490,7 +491,7 @@
 <line x1="915.8" y1="309" x2="915.8" y2="314" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;314;314" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="924.7" y1="214.0" x2="924.7" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="924.7" cy="304" r="3.6" fill="#16A34A"/>
-<line x1="924.7" y1="309" x2="924.7" y2="339" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;339;339" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
+<line x1="924.7" y1="309" x2="924.7" y2="344" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;344;344" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="933.7" y1="244.0" x2="933.7" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="933.7" cy="304" r="3.6" fill="#16A34A"/>
 <line x1="933.7" y1="309" x2="933.7" y2="329" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;329;329" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
@@ -591,7 +592,7 @@
 <circle cx="1082.2" cy="304" r="2.6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
 <line x1="1089.6" y1="244.0" x2="1089.6" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="1089.6" cy="304" r="3.6" fill="#16A34A"/>
-<line x1="1089.6" y1="309" x2="1089.6" y2="334" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;334;334" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
+<line x1="1089.6" y1="309" x2="1089.6" y2="339" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;339;339" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="1097.1" y1="244.0" x2="1097.1" y2="304" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="1097.1" cy="304" r="3.6" fill="#16A34A"/>
 <line x1="1097.1" y1="309" x2="1097.1" y2="324" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="309;324;324" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
@@ -881,7 +882,8 @@
 <circle cx="393.4" cy="624" r="3.6" fill="#16A34A"/>
 <line x1="393.4" y1="629" x2="393.4" y2="644" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;644;644" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="397.2" y1="624.0" x2="397.2" y2="624" stroke="#E2E8F0" stroke-dasharray="2 2"/>
-<circle cx="397.2" cy="624" r="3.6" fill="#DC2626"/>
+<circle cx="397.2" cy="624" r="3.6" fill="#16A34A"/>
+<line x1="397.2" y1="629" x2="397.2" y2="639" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;639;639" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="401.1" y1="624.0" x2="401.1" y2="624" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="401.1" cy="624" r="3.6" fill="#16A34A"/>
 <line x1="401.1" y1="629" x2="401.1" y2="639" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;639;639" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
@@ -934,7 +936,7 @@
 <line x1="517.7" y1="629" x2="517.7" y2="679" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;679;679" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="521.5" y1="549.0" x2="521.5" y2="624" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="521.5" cy="624" r="3.6" fill="#16A34A"/>
-<line x1="521.5" y1="629" x2="521.5" y2="659" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;659;659" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
+<line x1="521.5" y1="629" x2="521.5" y2="664" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;664;664" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <circle cx="525.4" cy="624" r="2.6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
 <circle cx="529.3" cy="624" r="2.6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
 <circle cx="533.2" cy="624" r="2.6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
@@ -980,7 +982,7 @@
 <circle cx="634.2" cy="624" r="2.6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
 <circle cx="638.1" cy="624" r="2.6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
 <line x1="368" y1="624" x2="644" y2="624" stroke="#94A3B8" stroke-width="0.8"/>
-<text x="368" y="718" font-size="10" fill="#DC2626" font-weight="700">26 events · 1 without FMEA: BE-2.14</text>
+<text x="368" y="718" font-size="10" fill="#475569">26 events · all backed or reasoned</text>
 <rect x="672" y="430" width="300" height="300" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/>
 <text x="684" y="452" font-size="12.5" fill="#0F172A" font-weight="700">SG-07</text>
 <text x="732" y="452" font-size="10" fill="#475569">suppression, delay or alteration of the stock …</text>
@@ -1065,7 +1067,7 @@
 <line x1="924.1" y1="629" x2="924.1" y2="634" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;634;634" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="936.9" y1="574.0" x2="936.9" y2="624" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="936.9" cy="624" r="3.6" fill="#16A34A"/>
-<line x1="936.9" y1="629" x2="936.9" y2="639" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;639;639" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
+<line x1="936.9" y1="629" x2="936.9" y2="649" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;649;649" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="949.6" y1="574.0" x2="949.6" y2="624" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="949.6" cy="624" r="3.6" fill="#94A3B8"/>
 <line x1="684" y1="624" x2="960" y2="624" stroke="#94A3B8" stroke-width="0.8"/>
@@ -1106,13 +1108,13 @@
 <line x1="1071.0" y1="629" x2="1071.0" y2="639" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;639;639" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="1090.1" y1="624.0" x2="1090.1" y2="624" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="1090.1" cy="624" r="3.6" fill="#16A34A"/>
-<line x1="1090.1" y1="629" x2="1090.1" y2="644" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;644;644" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
+<line x1="1090.1" y1="629" x2="1090.1" y2="649" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;649;649" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="1109.3" y1="549.0" x2="1109.3" y2="624" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="1109.3" cy="624" r="3.6" fill="#16A34A"/>
 <line x1="1109.3" y1="629" x2="1109.3" y2="639" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;639;639" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="1128.4" y1="549.0" x2="1128.4" y2="624" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="1128.4" cy="624" r="3.6" fill="#16A34A"/>
-<line x1="1128.4" y1="629" x2="1128.4" y2="654" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;654;654" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
+<line x1="1128.4" y1="629" x2="1128.4" y2="659" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;659;659" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>
 <line x1="1147.6" y1="586.5" x2="1147.6" y2="624" stroke="#E2E8F0" stroke-dasharray="2 2"/>
 <circle cx="1147.6" cy="624" r="3.6" fill="#16A34A"/>
 <line x1="1147.6" y1="629" x2="1147.6" y2="649" stroke="#C2410C" stroke-width="2"><animate attributeName="y2" values="629;649;649" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/></line>

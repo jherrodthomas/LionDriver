@@ -1,15 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1615" viewBox="0 0 1280 1615" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1629" viewBox="0 0 1280 1629" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-2. System FMEA failure chains — sheet 5 of 8 (SFM)</title>
-  <desc id="d">System FMEA failure chains, sheet 5 of 8 (SFM rev 0.34): failure modes SFM-018 to SFM-025 (8 failure modes, 15 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <desc id="d">System FMEA failure chains, sheet 5 of 8 (SFM rev 0.35): failure modes SFM-018 to SFM-025 (8 failure modes, 15 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
     <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
     <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
   </defs>
-  <rect width="1280" height="1615" fill="#FFFFFF"/>
+  <rect width="1280" height="1629" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-2 · System FMEA failure chains — sheet 5 of 8</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SFM rev 0.34 · BL-006 · draft · SFM-018 … SFM-025 · 15 causes on this sheet</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SFM rev 0.35 · BL-007 · draft · SFM-018 … SFM-025 · 15 causes on this sheet</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.1</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/system-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -17,8 +17,8 @@
   <text x="250" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FUNCTION (STEP 3)</text>
   <text x="520" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FAILURE MODE · S · END EFFECT (STEP 4)</text>
   <text x="876" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FAILURE CAUSE · O · D · AP · ACTIONS (STEPS 4–6)</text>
-  <path d="M220 802.3H235V429.7H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M220 802.3H235V1131H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 809.4H235V429.7H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 809.4H235V1138H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <path d="M490 429.7H505V242.3H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <path d="M490 429.7H505V430.7H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <path d="M490 429.7H505V520.9H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
@@ -30,10 +30,10 @@
   <path d="M846 520.9H861V527.5H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <path d="M846 666.4H861V624.3H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <path d="M846 666.4H861V708.5H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 1131H505V936.5H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 1131H505V1215.7H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 1131H505V1352.5H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 1131H505V1438.2H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 1138H505V936.5H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 1138H505V1215.7H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 1138H505V1352.5H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 1138H505V1445.3H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <path d="M846 936.5H861V802.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <path d="M846 936.5H861V886.9H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <path d="M846 936.5H861V971.1H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
@@ -41,13 +41,13 @@
   <path d="M846 1215.7H861V1173.6H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <path d="M846 1215.7H861V1257.8H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <path d="M846 1352.5H861V1348H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 1438.2H861V1438.2H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <rect x="40" y="780.3" width="180" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
-  <text x="49" y="799.8" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-001</text>
-  <rect x="136.1" y="788.8" width="35.6" height="15" rx="7.5" fill="#E2E8F0"/><text x="153.9" y="799.7" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">cont.</text>
-  <text x="49" y="814.4" font-size="10.5" fill="#0F172A" font-weight="600">LionDriver item (L2 ACC +</text>
-  <text x="49" y="828.5" font-size="10.5" fill="#0F172A" font-weight="600">ALC + driver monitoring)</text>
-  <text x="49" y="841.2" font-size="9.5" fill="#475569">item</text>
+  <path d="M846 1445.3H861V1438.2H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <rect x="40" y="787.4" width="180" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="806.9" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-001</text>
+  <rect x="136.1" y="795.9" width="35.6" height="15" rx="7.5" fill="#E2E8F0"/><text x="153.9" y="806.8" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">cont.</text>
+  <text x="49" y="821.4" font-size="10.5" fill="#0F172A" font-weight="600">LionDriver item (L2 ACC +</text>
+  <text x="49" y="835.5" font-size="10.5" fill="#0F172A" font-weight="600">ALC + driver monitoring)</text>
+  <text x="49" y="848.2" font-size="9.5" fill="#475569">item</text>
   <rect x="250" y="407.7" width="240" height="71.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
   <text x="259" y="427.2" font-size="12" fill="#0F172A" font-weight="700">SFM-FN-004</text>
   <rect x="346.1" y="416.2" width="58.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="375.3" y="427.2" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">continued</text>
@@ -132,11 +132,11 @@
   <text x="885" y="720.6" font-size="10.5" fill="#0F172A">PCM ignores cancel request</text>
   <text x="885" y="733.7" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in SFM-SE-031</text>
   <rect x="885" y="739.7" width="135.3" height="15" rx="7.5" fill="#2E9E6A"/><text x="952.7" y="750.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SFM-ACT-011 completed</text>
-  <rect x="250" y="1109" width="240" height="71.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
-  <text x="259" y="1128.5" font-size="12" fill="#0F172A" font-weight="700">SFM-FN-005</text>
-  <text x="259" y="1143.1" font-size="10.5" fill="#0F172A">F5 Driver monitoring: detect inattention and</text>
-  <text x="259" y="1157.1" font-size="10.5" fill="#0F172A">escalate alerts; lock out engagement after</text>
-  <text x="259" y="1171.2" font-size="10.5" fill="#0F172A">repeated non-response</text>
+  <rect x="250" y="1116" width="240" height="71.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="1135.5" font-size="12" fill="#0F172A" font-weight="700">SFM-FN-005</text>
+  <text x="259" y="1150.1" font-size="10.5" fill="#0F172A">F5 Driver monitoring: detect inattention and</text>
+  <text x="259" y="1164.2" font-size="10.5" fill="#0F172A">escalate alerts; lock out engagement after</text>
+  <text x="259" y="1178.2" font-size="10.5" fill="#0F172A">repeated non-response</text>
   <rect x="520" y="914.5" width="326" height="91.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
   <text x="529" y="934" font-size="12" fill="#0F172A" font-weight="700">SFM-022</text>
   <rect x="593.9" y="923" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="933.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
@@ -205,32 +205,34 @@
   <text x="885" y="1360.1" font-size="10.5" fill="#0F172A">DM model false positive (sunglasses, lighting)</text>
   <text x="885" y="1373.2" font-size="9.8" fill="#475569" font-weight="600">O7 · D10 · in SFM-SE-015</text>
   <rect x="885" y="1379.2" width="104.4" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="937.2" y="1390.2" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">rationale, no action</text>
-  <rect x="520" y="1416.2" width="326" height="92.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="1435.7" font-size="12" fill="#0F172A" font-weight="700">SFM-025</text>
-  <rect x="593.9" y="1424.7" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1435.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="1424.7" width="65.7" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="662.3" y="1435.7" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">insufficient</text>
-  <text x="529" y="1450.3" font-size="10.5" fill="#0F172A" font-weight="600">Terminal driver-unresponsive state does not bring the item</text>
-  <text x="529" y="1464.4" font-size="10.5" fill="#0F172A" font-weight="600">to a safe state</text>
-  <text x="529" y="1477.5" font-size="9.8" fill="#475569" font-style="italic">End effect: No fallback if the driver is incapacitated</text>
-  <text x="529" y="1494.5" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="1483.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1494.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-013</text>
-  <rect x="876" y="1416.2" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <rect x="520" y="1423.3" width="326" height="92.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="1442.8" font-size="12" fill="#0F172A" font-weight="700">SFM-025</text>
+  <rect x="593.9" y="1431.8" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1442.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="1431.8" width="65.7" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="662.3" y="1442.7" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">insufficient</text>
+  <text x="529" y="1457.3" font-size="10.5" fill="#0F172A" font-weight="600">Terminal driver-unresponsive state does not bring the item</text>
+  <text x="529" y="1471.4" font-size="10.5" fill="#0F172A" font-weight="600">to a safe state</text>
+  <text x="529" y="1484.5" font-size="9.8" fill="#475569" font-style="italic">End effect: No fallback if the driver is incapacitated</text>
+  <text x="529" y="1501.5" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="1490.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1501.5" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-013</text>
+  <rect x="876" y="1416.2" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
   <text x="885" y="1435.7" font-size="12" fill="#0F172A" font-weight="700">SFM-025.C1</text>
   <rect x="1194.5" y="1424.7" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1435.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="1450.3" font-size="10.5" fill="#0F172A">driverDistracted3 / driverUnresponsive3 mapped only to</text>
-  <text x="885" y="1464.4" font-size="10.5" fill="#0F172A">ET.PERMANENT (no disable reaction)</text>
-  <text x="885" y="1477.5" font-size="9.8" fill="#475569" font-weight="600">O8 · D9 · in SFM-SE-014 · → SWF-062</text>
-  <rect x="885" y="1483.5" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1494.4" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SFM-ACT-005 open</text>
-  <line x1="40" y1="1534.5" x2="1240" y2="1534.5" stroke="#E2E8F0" stroke-width="1"/>
-  <text x="40" y="1556.5" font-size="10.5" fill="#0F172A" font-weight="700">Legend</text>
-  <rect x="96" y="1545.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="114.2" y="1556.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <rect x="136.5" y="1545.5" width="38.9" height="15" rx="7.5" fill="#D97706"/><text x="156" y="1556.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP M</text>
-  <rect x="179.4" y="1545.5" width="36.5" height="15" rx="7.5" fill="#0F766E"/><text x="197.7" y="1556.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP L</text>
-  <text x="223.9" y="1556.5" font-size="10.5" fill="#0F172A">Action Priority as rated (rating-tables §5)</text>
-  <rect x="455.4" y="1545.5" width="59.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="485" y="1556.4" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">ACT open</text>
-  <rect x="518.7" y="1545.5" width="85.7" height="15" rx="7.5" fill="#2E9E6A"/><text x="561.5" y="1556.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">ACT completed</text>
-  <rect x="608.4" y="1545.5" width="104.4" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="660.6" y="1556.4" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">rationale, no action</text>
-  <text x="720.8" y="1556.5" font-size="10.5" fill="#0F172A">action status (step 6)</text>
-  <text x="40" y="1576.5" font-size="10" fill="#475569">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
-  <text x="40" y="1594.5" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/system-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+  <text x="885" y="1450.3" font-size="10.5" fill="#0F172A">Defect in the minimum-risk manoeuvre of TSR-633 (#372): the latch</text>
+  <text x="885" y="1464.4" font-size="10.5" fill="#0F172A">in minimum_risk.py not set or cleared while the item is still</text>
+  <text x="885" y="1478.4" font-size="10.5" fill="#0F172A">engaged, controlsd not keeping forceDecel on while…</text>
+  <text x="885" y="1491.6" font-size="9.8" fill="#475569" font-weight="600">O5 · D8 · in SFM-SE-014 · → SWF-062</text>
+  <rect x="885" y="1497.6" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="1508.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SFM-ACT-005 in progress</text>
+  <line x1="40" y1="1548.6" x2="1240" y2="1548.6" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="1570.6" font-size="10.5" fill="#0F172A" font-weight="700">Legend</text>
+  <rect x="96" y="1559.6" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="114.2" y="1570.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <rect x="136.5" y="1559.6" width="38.9" height="15" rx="7.5" fill="#D97706"/><text x="156" y="1570.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP M</text>
+  <rect x="179.4" y="1559.6" width="36.5" height="15" rx="7.5" fill="#0F766E"/><text x="197.7" y="1570.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP L</text>
+  <text x="223.9" y="1570.6" font-size="10.5" fill="#0F172A">Action Priority as rated (rating-tables §5)</text>
+  <rect x="455.4" y="1559.6" width="59.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="485" y="1570.5" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">ACT open</text>
+  <rect x="518.7" y="1559.6" width="90.4" height="15" rx="7.5" fill="#D97706"/><text x="563.9" y="1570.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">ACT in progress</text>
+  <rect x="613.1" y="1559.6" width="85.7" height="15" rx="7.5" fill="#2E9E6A"/><text x="655.9" y="1570.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">ACT completed</text>
+  <rect x="702.7" y="1559.6" width="104.4" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="754.9" y="1570.5" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">rationale, no action</text>
+  <text x="815.1" y="1570.6" font-size="10.5" fill="#0F172A">action status (step 6)</text>
+  <text x="40" y="1590.6" font-size="10" fill="#475569">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
+  <text x="40" y="1608.6" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/system-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>

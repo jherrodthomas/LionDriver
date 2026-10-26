@@ -327,8 +327,9 @@ events:
     fmeda: [fmeda-sg009:FMD-022, fmeda-sg009:FMD-023]
   - id: BE-7.13
     class: systematic_sw
-    fmea: [SFM-036]
+    fmea: [SFM-036, SWF-093]
     note: >-
+      SWF-093 (SW FMEA rev 1.9): defects in the host stand-down and in the opendbc cap of the final ACCEL_CMD (f4e6166).
       SFM-036.C1: no item reaction to a stock PCS event on the longitudinal command (always true at the baseline; SFM-ACT-020).
       DQ-300 A (2026-10-18): the item requests zero acceleration during a PCS event; implemented by #292
       (change-2026-10-19-stock-aeb-stand-down, unit-tested only), so SFM-036.C1 now means a defect in that stand-down or an
@@ -444,11 +445,13 @@ events:
     note: SWF-045 (no event, alert or disable for the latched NaN; TSR-604 not met)
   - id: BE-2.14
     class: systematic_sw
-    gap: >-
-      No FMEA mode for the panda siren not being triggered. Implemented triggers: heartbeat loss (c33343b), EPS fault
-      (≤ 0.96 s, bf8102a), command-arrival revocation (8a69ccf) and engaged mismatch with PCM cruise still active
-      (TSR-516(c), f4803c5). Not implemented: the TSR-516(b) triggers on an RX fault, a rejected command, a TX failure
-      or bus-off and a platform fault. DFM-017 covers the siren path, not its trigger logic. F-28
+    fmea: [SWF-092]
+    note: >-
+      SWF-092 (SW FMEA rev 1.9, BL-007) rates the trigger logic of the implemented triggers: heartbeat loss (c33343b),
+      command-arrival revocation (8a69ccf, opendbc 0ff85e6) and engaged mismatch with PCM cruise still active (TSR-516(c),
+      f4803c5); the EPS-fault trigger (≤ 0.96 s, bf8102a) is SWF-088's mechanism and DFM-017's path. Not implemented, so
+      still latent by design: the TSR-516(b) triggers on an RX fault, a rejected command, a TX failure or bus-off and a
+      platform fault. DFM-017 covers the siren path, not its trigger logic. F-28
   - id: BE-2.15
     class: random_hw
     fmea: [DFM-017]
@@ -1016,3 +1019,16 @@ not_in_fta:
       The SG-06 tree analyses the assured configuration. The driver can change the following distance or Experimental
       Mode while driving (SWF-067.C1), and the item only logs it. Whether to refuse engagement outside the assured settings
       is queued for the lead (DQ-221); until it is decided, the tree has no event for planning in another configuration.
+  - fm: SWF-091
+    goal: SG-02
+    kind: justified
+    reason: >-
+      The start-up fault-code read (TSR-629, BL-007) is a barrier against engaging on a car with a stored EPS fault; the
+      SG-02 tree starts from an EPS fault while engaged (BE-2.01, external), which the read neither causes nor detects, and
+      does not credit the read. A failed read removes an uncredited barrier; the driver's lamp check (TSR-811) remains.
+  - fm: SWF-091
+    goal: SG-06
+    kind: justified
+    reason: >-
+      As for SG-02: the read is an uncredited start-up barrier against a stored ABS/VSC fault; the SG-06 tree starts from a
+      loss of longitudinal control while engaged and does not credit the read.

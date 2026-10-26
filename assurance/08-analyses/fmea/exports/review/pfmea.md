@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.3 | draft | BL-003 | RT-1 | 2026-10-12 |
+| 0.4 | draft | BL-007 | RT-1 | 2026-10-26 |
 
 **Scope.** Release (WP-P-10), installation and provisioning (WP-O-01) and software update/rollback for the reference configuration AC-001, as defined at BL-003. Calibration and fingerprinting are covered as installation steps.
 
@@ -137,7 +137,7 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `PFM-001.C1` panda/SConscript defaults to DEBUG with ALLOW_DEBUG; LIONDRIVER_REFERENCE is opt-in and no build path sets it | • WP-P-10 §6 rule (RELEASE=1 with the LionDriver key); not implemented <sub>assurance/07-supporting/WP-P-10-release-management.md</sub> | • INS-17 reads the version string (human check); planned release check for RELEASE and absent ALLOW_DEBUG not implemented <sub>assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md</sub> | 8 | 8 | 🔴 **H** | PFM-ACT-001 |
+| `PFM-001.C1` The release is built with a bypass of the release defaults: PANDA_DEBUG_BUILD set (build_release.sh then builds the panda without RELEASE=1, with ALLOW_DEBUG) or RELEASE_VARIANT=upstream / an empty LIONDRIVER_REFERENCE, neither of which needs a recorded override. Up to BL-003 panda/SConscript defaulted to DEBUG and no build path set LIONDRIVER_REFERENCE; since BL-005 the root SConstruct and tools/release/release_variant.sh default to the reference build and build_release.sh builds the panda with RELEASE=1 | • Technical defaults: SConstruct sets LIONDRIVER_REFERENCE=1 unless it is set; release_variant.sh selects the reference variant and refuses an unknown one; build_release.sh builds RELEASE=1 unless PANDA_DEBUG_BUILD is set. Proven in CI, but a variable bypasses them (O 5). Signing with a LionDriver key is PFM-002 <sub>tools/release/release_variant.sh</sub> | • CI job panda reference release build (safety.yaml, WP-W-03 ATC-19): variant selection checks, then RELEASE=1 build and an assertion that every firmware compile carries -DLIONDRIVER_REFERENCE and none -DALLOW_DEBUG. Proven automated check at a later station (CI, not the publication step, and signed with the debug key), so D 5. At run time pandad refuses a car mode on a non-reference panda (TSR-619); INS-17 reads the version string (human check) <sub>.github/workflows/safety.yaml</sub> | 5 | 5 | 🔴 **H** | PFM-ACT-001 |
 
 #### PFM-002 · panda firmware signed with the debug key or a key not controlled by LionDriver
 
@@ -221,7 +221,7 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `PFM-007.C1` Exact ECU firmware compare and DTC read are manual steps; the reference ECU versions are not recorded yet (WP-C-01 OI-1) | • INS-05..08, INS-21 (draft) <sub>assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md</sub> | • INS-21 FW query script output compared by hand with the reference record <sub>assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md</sub> | 8 | 7 | 🔴 **H** | PFM-ACT-006 |
+| `PFM-007.C1` Exact ECU firmware compare is a manual step; the reference ECU versions are not recorded yet (WP-C-01 OI-1). Since BL-007 the EPS and ABS/VSC fault codes are read automatically at every stationary start and an active code or a failed read refuses engagement (TSR-629, DQ-132 A, vehicle_dtc.py; unit-tested with mocked UDS answers, not verified on the vehicle): that checks the car's health (AOU-09), not its configuration, so the rating is unchanged | • INS-05..08, INS-21 (draft) <sub>assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md</sub> | • INS-21 FW query script output compared by hand with the reference record <sub>assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md</sub> | 8 | 7 | 🔴 **H** | PFM-ACT-006 |
 
 ### `PFM-SE-022` I3 Mechanical and electrical installation (INS-09..14)
 
@@ -285,7 +285,8 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `PFM-011.C1` Upstream default turns Experimental Mode on (B-06 open); parameters set by hand | • D-08 decided; INS-19 parameter list (draft) <sub>assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md</sub> | • INS-19 parameter dump compared by hand <sub>assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md</sub> | 8 | 8 | 🔴 **H** | PFM-ACT-008 |
+| `PFM-011.C1` An assured setting (ExperimentalMode, LongitudinalPersonality, AlphaLongitudinalEnabled, the joystick and maneuver debug modes) is set by hand away from its reference value and the entry gate fails to refuse engagement. Up to BL-003 the upstream default turned Experimental Mode on (B-06) and parameters were set by hand only | • Technical controls in BL-007: ExperimentalMode defaults off (params_keys.h, chill-mode default); on the reference platform the item does not engage while any ASSURED_PARAMS setting differs from its assured value (#287, DQ-221 A) and a change made while engaged is held until disengagement (#342, DQ-403 A); the reference build neither registers nor ships the joystick and maneuver processes (DQ-131 A). Not bypassable without a code change (O 4) <sub>openpilot/selfdrive/selfdrived/assured_config.py</sub> | • Automated check at the step itself: NO_ENTRY settingNotAssured at every engagement attempt; test_assured_config.py and test_reference_build.py in the CI unit_tests job, the release file list checked in the panda reference release build job. Targeted, not proven by mutation and not verified on the vehicle, so D 7. INS-19 parameter dump compared by hand <sub>openpilot/selfdrive/selfdrived/tests/test_assured_config.py</sub> | 4 | 7 | 🔴 **H** | PFM-ACT-008 |
+| `PFM-011.C2` SSH enabled by hand and left on (SshEnabled defaults off); the entry gate does not check it | • D-08 decided; INS-19 parameter list (draft); SshEnabled has no default value, so it is off until set <sub>assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md</sub> | • INS-19 parameter dump compared by hand <sub>assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md</sub> | 8 | 8 | 🔴 **H** | PFM-ACT-008 |
 
 #### PFM-012 · Model weights on the device differ from the release
 
@@ -387,14 +388,14 @@ Effects:
 
 | ID | Kind | Action | Owner | Status | Causes | Revised S/O/D → AP |
 |---|---|---|---|---|---|---|
-| PFM-ACT-001 | design_change | Make RELEASE=1 LIONDRIVER_REFERENCE=1 with the LionDriver key the only release build, and add an automated release check (version contains RELEASE, ALLOW_DEBUG absent, reference lock present) that blocks publication (WP-P-10 §6; SW FMEA SWF-ACT-009) | Jherrod Thomas | open | PFM-001.C1 | — |
+| PFM-ACT-001 | design_change | Make RELEASE=1 LIONDRIVER_REFERENCE=1 with the LionDriver key the only release build, and add an automated release check (version contains RELEASE, ALLOW_DEBUG absent, reference lock present) that blocks publication (WP-P-10 §6; SW FMEA SWF-ACT-009) | Jherrod Thomas | in_progress | PFM-001.C1 | — |
 | PFM-ACT-002 | design_change | Generate the LionDriver release key offline and define the signing procedure (D-09); remove the debug key from release builds | Jherrod Thomas | open | PFM-002.C1 | — |
 | PFM-ACT-003 | detection | Build the HIL bench (D-04) and define the evidence package location and contents (WP-P-10 §5, OI-2) before the first vehicle-test baseline | Jherrod Thomas | open | PFM-003.C1, PFM-004.C1 | — |
 | PFM-ACT-004 | design_change | Set up the LionDriver release channel and an installer that installs only signed release tags and records the installed commit (INS-15) | Jherrod Thomas | open | PFM-005.C1 | — |
 | PFM-ACT-005 | prevention | Turn WP-O-01 into a recorded checklist (R-DEV, R-INS) with photos and sign-off, and include harness approval list, latch check and airbag-zone routing diagram for the reference vehicle | Jherrod Thomas | open | PFM-006.C1, PFM-008.C1, PFM-010.C1 | — |
 | PFM-ACT-006 | detection | Write a configuration-check script for INS-18 and INS-21..24 that compares ECU FW versions, model hashes, carParams and pandaStates with the release record and refuses engagement on mismatch (TSR-803) | Jherrod Thomas | open | PFM-007.C1, PFM-012.C1, PFM-013.C1 | — |
 | PFM-ACT-007 | prevention | Define the mount position and attitude tolerance band (WP-O-01 OI-2) and check the converged calibration against it | Jherrod Thomas | open | PFM-009.C1 | — |
-| PFM-ACT-008 | design_change | Ship the reference parameter set as release defaults (Chill Mode, B-06; debug modes off; SSH off) and check it at boot | Jherrod Thomas | open | PFM-011.C1 | — |
+| PFM-ACT-008 | design_change | Ship the reference parameter set as release defaults (Chill Mode, B-06; debug modes off; SSH off) and check it at boot | Jherrod Thomas | in_progress | PFM-011.C1, PFM-011.C2 | — |
 | PFM-ACT-009 | detection | Provide a log-analysis tool for INS-27 that proves forwarding of stock PCS messages and blocking of intercepted ones | Jherrod Thomas | open | PFM-014.C1 | — |
 | PFM-ACT-010 | prevention | Write the user information for the reference configuration (WP-O-03), covering Chill Mode limits and override behaviour | Jherrod Thomas | open | PFM-015.C1 | — |
 | PFM-ACT-011 | design_change | Signed updates from a LionDriver-controlled branch, and a bench-tested rollback procedure for the device side (GAP-26, WP-S-07, WP-O-02) | Jherrod Thomas | open | PFM-016.C1, PFM-017.C1 | — |
@@ -403,7 +404,7 @@ Effects:
 
 | Cause | Failure mode | S/O/D | Open actions |
 |---|---|---|---|
-| `PFM-001.C1` | panda firmware released as a DEBUG build, or without LIONDRIVER_REFERENCE | 10/8/8 | PFM-ACT-001 |
+| `PFM-001.C1` | panda firmware released as a DEBUG build, or without LIONDRIVER_REFERENCE | 10/5/5 | PFM-ACT-001 |
 | `PFM-002.C1` | panda firmware signed with the debug key or a key not controlled by LionDriver | 10/8/8 | PFM-ACT-002 |
 | `PFM-004.C1` | Release made without the required verification on the release commit | 10/9/8 | PFM-ACT-003 |
 | `PFM-005.C1` | Device installed from the upstream installer or a development branch instead of the LionDriver release | 10/8/8 | PFM-ACT-004 |
@@ -412,7 +413,8 @@ Effects:
 | `PFM-008.C1` | Harness connector not fully latched | 10/7/8 | PFM-ACT-005 |
 | `PFM-009.C1` | Device mounted outside the position and attitude tolerance | 10/8/8 | PFM-ACT-007 |
 | `PFM-010.C1` | Harness routed through an airbag deployment zone | 10/7/8 | PFM-ACT-005 |
-| `PFM-011.C1` | Parameters not at the reference values (Experimental Mode on, debug or maneuver modes, SSH) | 10/8/8 | PFM-ACT-008 |
+| `PFM-011.C1` | Parameters not at the reference values (Experimental Mode on, debug or maneuver modes, SSH) | 10/4/7 | PFM-ACT-008 |
+| `PFM-011.C2` | Parameters not at the reference values (Experimental Mode on, debug or maneuver modes, SSH) | 10/8/8 | PFM-ACT-008 |
 | `PFM-012.C1` | Model weights on the device differ from the release | 10/3/7 | PFM-ACT-006 |
 | `PFM-013.C1` | Item identifies the vehicle wrongly (fuzzy fingerprint or cached CarParams of another car) | 10/5/6 | PFM-ACT-006 |
 | `PFM-014.C1` | Stock PCS path not verified after installation | 10/8/9 | PFM-ACT-009 |
