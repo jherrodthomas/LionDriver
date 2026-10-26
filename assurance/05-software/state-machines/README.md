@@ -37,4 +37,4 @@ How the three machines couple at engagement (WP-W-05 §5.4):
 
 ## Changing a record
 
-Edit the YAML, then run `python3 assurance/trace/tools/check_state_machines.py --write` (WP-W-05 tables) and `python3 assurance/05-software/diagrams/make_diagrams.py` (charts and this page). A new state needs a position in `LAYOUT` in `make_diagrams.py`, a new revocation of SM-TOY-AUTH a group in its panel; the generator stops until it has one. CI runs both with `--check`.
+Edit the YAML, then run `python3 assurance/trace/tools/check_state_machines.py --write` (WP-W-05 tables) and `python3 assurance/05-software/diagrams/make_diagrams.py` (charts and this page). A new state needs a position in `LAYOUT` in `make_diagrams.py`, a new revocation of SM-TOY-AUTH a group in its panel; the generator stops until it has one. The SysML model holds the records too: run `python3 tools/gen_behaviour.py` and `python3 tools/render_views.py` in `assurance/models/sysml` (view V-16). CI runs all of them with `--check`.

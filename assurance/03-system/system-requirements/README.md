@@ -28,7 +28,7 @@ same quantity the safety requirement wins.
 | TBD | to be determined: a value not yet set |
 | TSR-nn | technical safety requirement (WP-S-02) |
 | UC-nn | use case (WP-S-01 §1.4), UC-01…UC-11 |
-| V-nn | view of the SysML model (V-01…V-15) |
+| V-nn | view of the SysML model (V-01…V-17) |
 | VS-nn | verification case: VS-SI system integration, VS-HW hardware, VS-SWQ software, VS-FI fault injection, VS-SQ system qualification |
 | WP-nn | work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case) |
 
