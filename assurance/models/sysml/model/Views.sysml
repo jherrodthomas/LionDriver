@@ -171,4 +171,12 @@ package LionDriverViews {
         expose LionDriverMechanisms::*;
         render Views::asTreeDiagram;
     }
+
+    view <'V-23'> lifecycle : ActivityView {
+        doc /* The life of an installed item (WP-S-06 §3): its phases as actions from start to done, the successions between them, and in each phase the procedure steps that meet its production and operation requirements. */
+        expose LionDriverLifecycle::**;
+        expose LionDriverRequirements::*;
+        expose LionDriverVerification::*;
+        render Views::asInterconnectionDiagram;
+    }
 }

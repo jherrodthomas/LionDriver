@@ -980,3 +980,130 @@ def render_responsibilities(m: sysml_lite.Model, vid: str, spec: dict, digest: s
 
 
 RENDERERS["responsibilities"] = render_responsibilities
+
+# ---------------------------------------------------------------- V-23 life cycle of an installed item
+
+LC_STATUS = {"defined": ("procedure defined", "#334155", "#F8FAFC"), "waiting": ("waiting on an input", "#B45309", "#FFFBEB"),
+             "blocked": ("blocked by a design gap", "#D2553F", "#FEF2F2"), "design": ("backed by the design", "#0F766E", "#F0FDFA")}
+
+
+def lc_step(x: float, y: float, w: float, st: sysml_lite.Record, m: sysml_lite.Model) -> list[str]:
+  """One procedure step: the TSR it carries, its ASIL and status, the requirement, the steps and record that carry it,
+  and the cases that verify the TSR."""
+  v = st.values
+  label, col, bg = LC_STATUS[str(v.get("status"))]
+  out = [k.rect(x, y, w, LC_H, bg, col, 10, 1.3), k.rect(x, y + 6, 4, LC_H - 12, col, None, 2)]
+  p, pw = k.pill(x + 12, y + 8, str(v.get("tsr")), col, "#FFFFFF", 17, 9.5, 700, mono=True)
+  out.append(p)
+  out.append(k.text(x + 18 + pw, y + 21, f"ASIL {v.get('asil')}", 10, k.INK2, 600))
+  out.append(k.text(x + w - 10, y + 21, label, 9.5, col, 700, "end"))
+  for i, ln in enumerate(k.wrap(st.doc, w - 24, 10.5, 400)[:2]):
+    if i == 1 and len(k.wrap(st.doc, w - 24, 10.5, 400)) > 2:
+      ln = k.clip(ln + " …", w - 24, 10.5)
+    out.append(k.text(x + 12, y + 39 + i * 13, ln, 10.5, k.INK))
+  r = m.requirements.get(str(v.get("tsr")))
+  cases = ", ".join(c.replace("VS-", "") for c in sorted(r.verified_by)) if r and r.verified_by else "no case"
+  out.append(k.text(x + 12, y + LC_H - 9, k.clip(f"by {v.get('steps')} · record {v.get('record')} · «verify» {cases}",
+                                                 w - 24, 9, 400, True), 9, k.MUTED, 400, None, True))
+  return out
+
+
+LC_H, LC_GAP, LC_HEAD = 76, 8, 46
+
+
+def render_lifecycle(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str:
+  """An action flow diagram of the life of an installed item: start, the phases as actions with the procedure steps
+  they contain, the successions between them, done."""
+  view = m.views[vid]
+  w = spec["width"]
+  act = m.activities[spec["activity"]]
+  body = rv.header(w, view, spec["title"], spec["subtitle"], digest)
+  steps = act.steps
+  # columns: the first phase, the hub it leads to, the phases reached from the hub; the phase that leads to done sits
+  # under the hub
+  first = next(b for a, b in act.flows if a == "start")
+  hub = next(b for a, b in act.flows if a == first)
+  last = next(a for a, b in act.flows if b == "done")
+  side = [p.name for p in act.phases if p.name not in (first, hub, last)]
+  cw, top = 400, 132
+  col_x = {first: 100, hub: 100 + cw + 72}
+  x3 = col_x[hub] + cw + 100
+  boxes = {}
+
+  def height(ph: str) -> float:
+    return LC_HEAD + len(steps[ph]) * (LC_H + LC_GAP) + 6
+
+  boxes[first] = (col_x[first], top, cw, height(first))
+  boxes[hub] = (col_x[hub], top, cw, height(hub))
+  boxes[last] = (col_x[hub], top + height(hub) + 84, cw, height(last))
+  y3 = top
+  for ph in side:
+    boxes[ph] = (x3, y3, cw, height(ph))
+    y3 += height(ph) + 84
+  phase_of = {p.name: p for p in act.phases}
+  for ph, (x, y, bw, bh) in boxes.items():
+    p = phase_of[ph]
+    body.append(k.rect(x, y, bw, bh, "#FFFFFF", k.INK2, 18, 1.6))
+    body.append(k.text(x + 16, y + 20, f"§{p.short} {p.doc}", 12.5, k.INK, 700))
+    body.append(k.text(x + 16, y + 36, k.clip(f"action {ph} : LifecyclePhase · {len(steps[ph])} procedure steps",
+                                              bw - 32, 9.5, 400, True), 9.5, k.MUTED, 400, None, True))
+    for i, st in enumerate(steps[ph]):
+      body += lc_step(x + 12, y + LC_HEAD + i * (LC_H + LC_GAP), bw - 24, st, m)
+  # start and done
+  fx, fy, fw, fh = boxes[first]
+  sx, sy = fx - 52, fy + 24
+  body.append(f'<circle cx="{k.f(sx)}" cy="{k.f(sy)}" r="9" fill="{k.INK}"/>')
+  body.append(k.text(sx, sy - 16, "start", 10, k.INK2, 600, "middle"))
+  arrows = [[(sx + 9, sy), (fx, sy)]]
+  lx, ly, lw_, lh = boxes[last]
+  dx, dy = lx + lw_ / 2, ly + lh + 46
+  body.append(f'<circle cx="{k.f(dx)}" cy="{k.f(dy)}" r="11" fill="none" stroke="{k.INK}" stroke-width="1.6"/>'
+              f'<circle cx="{k.f(dx)}" cy="{k.f(dy)}" r="6.5" fill="{k.INK}"/>')
+  body.append(k.text(dx + 20, dy + 4, "done", 10, k.INK2, 600))
+  arrows.append([(dx, ly + lh), (dx, dy - 11)])
+  hx, hy, hw, hh = boxes[hub]
+  arrows.append([(fx + fw, hy + 24), (hx, hy + 24)])                     # first -> hub
+  arrows.append([(hx + hw / 2, hy + hh), (hx + hw / 2, ly)])            # hub -> last
+  # hub <-> each side phase: out on an outer lane, back on an inner one, so the routes do not cross
+  for i, ph in enumerate(side):
+    bx, by, _, bh = boxes[ph]
+    if by < hy + hh - 40:                                              # beside the hub: two straight arrows
+      y_out, y_back = by + 30 + 0, by + 52
+      arrows.append([(hx + hw, y_out), (bx, y_out)])
+      arrows.append([(bx, y_back), (hx + hw, y_back)])
+    else:                                                              # below: route through the gap
+      lane_out, lane_back = hx + hw + 66, hx + hw + 34
+      y_hub_out, y_hub_back = hy + hh - 46, hy + hh - 22
+      arrows.append([(hx + hw, y_hub_out), (lane_out, y_hub_out), (lane_out, by + 30), (bx, by + 30)])
+      arrows.append([(bx, by + 56), (lane_back, by + 56), (lane_back, y_hub_back), (hx + hw, y_hub_back)])
+  for pts in arrows:
+    body.append(f'<path d="{k.rounded_path(pts)}" fill="none" stroke="{k.INK2}" stroke-width="1.5" '
+                'marker-end="url(#lc-arrow)"/>')
+  bottom = max(max(y + h for _, y, _, h in boxes.values()), dy + 12) + 18
+  from render_requirements import sysml_frame
+  body += sysml_frame(24, 100, w - 48, bottom - 100, "act", "LionDriverLifecycle", act.name)
+  allr = [st for v in steps.values() for st in v]
+  count = {s_: sum(str(st.values.get("status")) == s_ for st in allr) for s_ in LC_STATUS}
+  note = (f"{len(allr)} procedure steps, one per production or operation requirement: {count['defined']} defined, "
+          f"{count['waiting']} waiting on an input, {count['blocked']} blocked by a design gap, {count['design']} backed by "
+          "the design. Each arrow is a succession of the model; operation returns from service and from an update.")
+  for i, ln in enumerate(k.wrap(note, w - 80, 11.5)):
+    body.append(k.text(40, bottom + 26 + i * 16, ln, 11.5, k.INK2))
+  legend_y = bottom + 26 + 16 * len(k.wrap(note, w - 80, 11.5))
+  items, lx_ = [], 40
+  for s_, (label, col, bg) in LC_STATUS.items():
+    items.append(k.rect(lx_, legend_y + 22, 18, 14, bg, col, 4, 1.4))
+    items.append(k.text(lx_ + 24, legend_y + 33, label, 11, k.INK2))
+    lx_ += 40 + k.text_w(label, 11)
+  items.append(f'<circle cx="{k.f(lx_ + 8)}" cy="{k.f(legend_y + 29)}" r="6" fill="{k.INK}"/>')
+  items.append(k.text(lx_ + 20, legend_y + 33, "start", 11, k.INK2))
+  lx_ += 70
+  items.append(f'<circle cx="{k.f(lx_ + 8)}" cy="{k.f(legend_y + 29)}" r="7" fill="none" stroke="{k.INK}" stroke-width="1.4"/>'
+               f'<circle cx="{k.f(lx_ + 8)}" cy="{k.f(legend_y + 29)}" r="4" fill="{k.INK}"/>')
+  items.append(k.text(lx_ + 22, legend_y + 33, "done", 11, k.INK2))
+  body += rv.footer(w, legend_y, items)
+  return k.svg_doc(w, legend_y + 92, f"{view.short}. {spec['title']} (SysML v2 view {view.name})",
+                   spec.get("desc", view.doc), body, k.arrow_marker("lc-arrow", k.INK2, 7))
+
+
+RENDERERS["activity"] = render_lifecycle

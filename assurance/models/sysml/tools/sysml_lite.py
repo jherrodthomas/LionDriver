@@ -23,7 +23,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 MODEL_DIR = HERE.parent / "model"
 MODEL_FILES = ["LionDriverLibrary.sysml", "Mechanisms.sysml", "Functions.sysml", "Architecture.sysml", "Security.sysml", "Integration.sysml", "Behaviour.sysml", "Requirements.sysml", "Satisfaction.sysml",
-               "Verification.sysml", "Needs.sysml", "StateRecords.sysml", "Sequences.sysml", "Timing.sysml",
+               "Verification.sysml", "Needs.sysml", "StateRecords.sysml", "Sequences.sysml", "Lifecycle.sysml", "Timing.sysml",
                "Signals.sysml", "Views.sysml"]
 ROOT_USAGE = ("LionDriverArchitecture", "context")
 
@@ -737,6 +737,17 @@ class View:
 
 
 @dataclass
+class Activity:
+  """An action def whose actions are phases (LifecyclePhase), each with the actions it contains, and the successions
+  between the phases."""
+  name: str
+  doc: str
+  phases: list[Record]                                   # in the order of the model
+  steps: dict[str, list[Record]]                        # phase name -> its actions
+  flows: list[tuple[str, str]]                          # (from phase, to phase); "start" and "done" as in SysML v2
+
+
+@dataclass
 class Model:
   packages: dict[str, Decl]
   root: Element
@@ -759,6 +770,7 @@ class Model:
   budgets: dict[str, Record] = field(default_factory=dict)       # timing budgets of WP-S-04 §3.7, by row label
   signals: dict[str, Record] = field(default_factory=dict)       # HSI signals S-nn of WP-S-05 §11
   responsibilities: dict[str, Record] = field(default_factory=dict)  # HW/SW responsibilities HSI-nn of WP-S-05 §11.4
+  activities: dict[str, Activity] = field(default_factory=dict)     # action defs made of phases (WP-S-06 §3)
 
   def by_ident(self) -> dict[str, Element]:
     return {e.short: e for e in self.elements.values() if e.short}
@@ -977,6 +989,7 @@ def load(files: list[Path] | None = None) -> Model:
   budgets: dict[str, Record] = {}
   signals: dict[str, Record] = {}
   responsibilities: dict[str, Record] = {}
+  activities: dict[str, Activity] = {}
   for pkg_decl in packages.values():
     for m in pkg_decl.members:
       if m.kind == "part" and m.short and m.type in ("SecurityZone", "TrustBoundary"):
@@ -996,13 +1009,24 @@ def load(files: list[Path] | None = None) -> Model:
       if m.kind == "occurrence def" and m.short:
         sq = _sequence(m)
         sequences[sq.short] = sq
+      if m.kind == "action def" and any(x.kind == "action" and x.type == "LifecyclePhase" for x in m.members):
+        phases = [x for x in m.members if x.kind == "action" and x.type == "LifecyclePhase"]
+        names = {x.name for x in phases} | {"start", "done"}  # start and done: the start and end of every action
+        flows = [(x.target, x.target2) for x in m.members if x.kind == "succession"]
+        for a, b in flows:
+          if a not in names or b not in names:
+            raise ModelError(f"{m.fname}:{m.line}: succession {a} then {b} joins something that is not a phase of {m.name}")
+        activities[m.name] = Activity(
+          m.name, m.doc, [Record(str(x.values.get("section", "")), x.name, x.doc, dict(x.values)) for x in phases],
+          {x.name: [Record(y.name, y.name, y.doc, dict(y.values)) for y in x.members if y.kind == "action"] for x in phases},
+          flows)
   for e in elements.values():
     z = (e.meta.get("Zone") or {}).get("id")
     if z is not None and zones and z not in zones:
       raise ModelError(f"{e.path}: @Zone names {z!r}, which is not a security zone")
   return Model(packages, root, elements, connections, allocations, mechanisms, aliases, views, files,
                requirements, verifications, functions, zones, boundaries, integration, state_machines, use_cases, sequences, budgets, signals,
-               responsibilities)
+               responsibilities, activities)
 
 
 def _use_cases(packages: dict[str, Decl], reqs: dict[str, Requirement], functions: dict[str, Function]) -> dict[str, UseCase]:

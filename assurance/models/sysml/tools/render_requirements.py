@@ -752,7 +752,11 @@ def render_tsr_blocks(m: sysml_lite.Model, vid: str, spec: dict, digest: str) ->
                      "the mechanisms that cite them and the cases that verify them", digest)
     top, rh, gap = 156, 74, 8
     fx, fw, tx, tw, cx = 40, 270, 360, 560, 950
-    body.append(column_title(fx, 140, "DERIVED FROM · «requirement» FSR"))
+    kinds = {}
+    for p_ in parents:
+      kinds.setdefault(re.match(r"[A-Z]+", p_).group(0), []).append(p_)
+    only_fsr = set(kinds) == {"FSR"}
+    body.append(column_title(fx, 140, "DERIVED FROM · «requirement» FSR" if only_fsr else "DERIVED FROM · «requirement»"))
     body.append(column_title(tx, 140, "TECHNICAL SAFETY REQUIREMENTS · «requirement»"))
     body.append(column_title(cx, 140, "«satisfy» · MECHANISMS · «verify»"))
     ty = {}
@@ -810,13 +814,17 @@ def render_tsr_blocks(m: sysml_lite.Model, vid: str, spec: dict, digest: str) ->
     bottom = top + max(total, len(parents) * step) + 4
     body += sysml_frame(24, 100, w - 48, bottom - 92, "req", "LionDriverRequirements",
                         f"{g['from']}…{g['to']} {g['title']}")
-    note = (f"{len(reqs)} TSRs from {len(parents)} FSRs; {len(reqs) - len(no_case)} named by a verification case"
+    kind_name = {"SG": ("safety goal", "safety goals"), "FSR": ("FSR", "FSRs"), "TSR": ("TSR", "TSRs")}
+    src = (f"{len(parents)} FSRs" if only_fsr else
+           ", ".join(f"{len(v)} {kind_name.get(k_, (k_, k_))[len(v) != 1]}" for k_, v in sorted(kinds.items(), key=lambda kv: ["SG", "FSR", "TSR"].index(kv[0]) if kv[0] in ("SG", "FSR", "TSR") else 9)))
+    note = (f"{len(reqs)} TSRs from {src}; {len(reqs) - len(no_case)} named by a verification case"
             + (f"; no case yet: {', '.join(no_case)}." if no_case else "."))
     for i, ln in enumerate(k.wrap(note, w - 80, 11.5)):
       body.append(k.text(40, bottom + 26 + i * 16, ln, 11.5, k.INK2))
     legend_y = bottom + 26 + 16 * len(k.wrap(note, w - 80, 11.5))
     items = [edge([(40, legend_y + 30), (66, legend_y + 30)], "#64748B", 1.6, "4 3", "rq-mut"),
-             k.text(74, legend_y + 34, "«deriveReqt»: the TSR refines the FSR", 11, k.INK2),
+             k.text(74, legend_y + 34, "«deriveReqt»: the TSR refines the FSR" if only_fsr else
+                    "«deriveReqt»: the TSR refines its parent", 11, k.INK2),
              k.pill(330, legend_y + 22, "E-03", "#F0FDFA", TEAL, 15, 8.5, 700, TEAL, mono=True)[0],
              k.text(372, legend_y + 34, "satisfying element", 11, k.INK2),
              k.pill(500, legend_y + 22, "SM-12", ENV["fill"], ENV["chip"], 15, 8.5, 700, ENV["chip"], mono=True)[0],
