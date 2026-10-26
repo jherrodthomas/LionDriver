@@ -729,3 +729,105 @@ def render_use_cases(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> 
 
 
 RENDERERS["usecases"] = render_use_cases
+
+
+# ---------------------------------------------------------------- V-22 TSR requirement diagrams
+
+def render_tsr_blocks(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> dict[str, str]:
+  """One SysML requirement diagram per TSR block: each TSR with the FSRs it is derived from («deriveReqt», arrows to
+  the FSR column), the elements that satisfy it («satisfy»), the safety mechanisms that cite it and the cases that
+  verify it («verify»). Blocks too long for one page are split by the ranges in the layout."""
+  out = {}
+  view = m.views[vid]
+  w = spec["width"]
+  for g in spec["blocks"]:
+    lo, hi = int(g["from"][4:]), int(g["to"][4:])
+    reqs = sorted((r for r in m.requirements.values() if r.short.startswith("TSR-") and lo <= int(r.short[4:7]) <= hi),
+                  key=lambda r: sort_key(r.short))
+    if not reqs:
+      raise sysml_lite.ModelError(f"layout.toml {vid}: no TSR between {g['from']} and {g['to']}")
+    parents = sorted({p for r in reqs for p in r.derived_from}, key=req_key)
+    body = rv.header(w, view, f"TSR requirement diagram · {g['title']}",
+                     f"{g['from']}…{g['to']} of WP-S-02 with the FSRs they derive from, the elements that satisfy them, "
+                     "the mechanisms that cite them and the cases that verify them", digest)
+    top, rh, gap = 156, 74, 8
+    fx, fw, tx, tw, cx = 40, 270, 360, 560, 950
+    body.append(column_title(fx, 140, "DERIVED FROM · «requirement» FSR"))
+    body.append(column_title(tx, 140, "TECHNICAL SAFETY REQUIREMENTS · «requirement»"))
+    body.append(column_title(cx, 140, "«satisfy» · MECHANISMS · «verify»"))
+    ty = {}
+    no_case = []
+    for i, r in enumerate(reqs):
+      y = top + i * (rh + gap)
+      chip, fill, stroke = req_style(r.short)
+      txt = k.wrap(r.doc, tw - 110, 11, 600)
+      line2 = k.clip(" ".join(txt[1:]), tw - 24, 10.5) if len(txt) > 1 else ""
+      attrs = " · ".join(x for x in (f"ASIL {r.values.get('asil')}" if r.values.get("asil") else "",
+                                      f"SM {r.values.get('mechanism')}" if r.values.get("mechanism") else "",
+                                      str(r.values.get("timing") or "")) if x)
+      gap_ = not r.verified_by
+      if gap_:
+        no_case.append(r.short)
+      body += card(tx, y, tw, rh, txt[0] if txt else "", r.short, chip, fill, RED if gap_ else stroke,
+                   [line2, k.clip(attrs, tw - 24, 10.5)], None, 1.8 if gap_ else 1.3)
+      ty[r.short] = y + rh / 2
+      # right side: satisfy elements, mechanisms, verify cases
+      rows = [("«satisfy»", [label(m, p)[0] or label(m, p)[1] for p in r.satisfied_by], TEAL, "#F0FDFA"),
+              ("SM", [me.short for me in m.mechanisms.values() if r.short in me.tsr], ENV["chip"], ENV["fill"]),
+              ("«verify»", [c.replace("VS-", "") for c in sorted(r.verified_by, key=sort_key)], BLUE, "#EFF6FF")]
+      yy = y + 8
+      for lab, items, col, bg in rows:
+        body.append(k.text(cx, yy + 12, lab, 9.5, col, 700, None, True))
+        xx = cx + 66
+        if not items:
+          body.append(k.text(xx, yy + 12, "none" if lab != "«verify»" else "no case", 9.5,
+                             RED if lab == "«verify»" else k.FAINT, 600))
+        for j, it in enumerate(items):
+          p, pw = k.pill(xx, yy + 1, it, bg, col, 15, 8.5, 700, col, mono=True)
+          if xx + pw > w - 40:
+            body.append(k.text(xx, yy + 12, f"+{len(items) - j}", 9.5, col, 700))
+            break
+          body.append(p)
+          xx += pw + 3
+        yy += 20
+    # FSR cards spread along the TSR column, with deriveReqt arrows from each TSR to its FSRs
+    total = len(reqs) * (rh + gap)
+    step = max(52, total / max(len(parents), 1))
+    fy = {}
+    for i, p in enumerate(parents):
+      y = top + i * step
+      rp = m.requirements[p]
+      c_, f_, s_ = req_style(p)
+      body += card(fx, y, fw, 44, rp.doc, p, c_, f_, s_, [], None, 1.2)
+      fy[p] = y + 22
+    for r in reqs:
+      for j, p in enumerate(r.derived_from):
+        if p in fy:
+          xm = fx + fw + 14 + 4 * (parents.index(p) % 8)
+          body.append(edge([(tx, ty[r.short] + 4 * j - 4), (xm, ty[r.short] + 4 * j - 4), (xm, fy[p]), (fx + fw, fy[p])],
+                           "#64748B", 1.0, "4 3", "rq-mut"))
+    body += tag(fx + fw + 26, 150, "«deriveReqt»", k.MUTED)
+    bottom = top + max(total, len(parents) * step) + 4
+    body += sysml_frame(24, 100, w - 48, bottom - 92, "req", "LionDriverRequirements",
+                        f"{g['from']}…{g['to']} {g['title']}")
+    note = (f"{len(reqs)} TSRs from {len(parents)} FSRs; {len(reqs) - len(no_case)} named by a verification case"
+            + (f"; no case yet: {', '.join(no_case)}." if no_case else "."))
+    for i, ln in enumerate(k.wrap(note, w - 80, 11.5)):
+      body.append(k.text(40, bottom + 26 + i * 16, ln, 11.5, k.INK2))
+    legend_y = bottom + 26 + 16 * len(k.wrap(note, w - 80, 11.5))
+    items = [edge([(40, legend_y + 30), (66, legend_y + 30)], "#64748B", 1.6, "4 3", "rq-mut"),
+             k.text(74, legend_y + 34, "«deriveReqt»: the TSR refines the FSR", 11, k.INK2),
+             k.pill(330, legend_y + 22, "E-03", "#F0FDFA", TEAL, 15, 8.5, 700, TEAL, mono=True)[0],
+             k.text(372, legend_y + 34, "satisfying element", 11, k.INK2),
+             k.pill(500, legend_y + 22, "SM-12", ENV["fill"], ENV["chip"], 15, 8.5, 700, ENV["chip"], mono=True)[0],
+             k.text(548, legend_y + 34, "safety mechanism that cites it (WP-S-03 §6)", 11, k.INK2),
+             k.pill(830, legend_y + 22, "SI-05", "#EFF6FF", BLUE, 15, 8.5, 700, BLUE, mono=True)[0],
+             k.text(872, legend_y + 34, "verification case VS-SI-05 (specified, not run)", 11, k.INK2)]
+    body += rv.footer(w, legend_y, items)
+    out[spec["file"].format(f=g["key"])] = k.svg_doc(
+      w, legend_y + 92, f"{view.short}. TSR requirement diagram {g['from']}…{g['to']} (SysML v2 view {view.name})",
+      spec.get("desc", view.doc), body, MARKERS)
+  return out
+
+
+RENDERERS["tsrblocks"] = render_tsr_blocks

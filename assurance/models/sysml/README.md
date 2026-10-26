@@ -64,14 +64,14 @@ A generated view replaces a hand-drawn figure when it carries the same facts; un
 | [`model/Sequences.sysml`](model/Sequences.sysml) | **Generated.** The start-up and engagement sequence of WP-S-03 §4.1 (Table 4-1) as an `occurrence def`: one lifeline per element, one `message` per step with its phase, condition, state after, status, records and code, in order |
 | [`model/Timing.sysml`](model/Timing.sysml) | **Generated.** The 17 FTTI budgets of WP-S-04 §3.7 as `constraint` usages of `TimingBudget`, named by the row label: FTTI, FDTI, FRTI, margin and FHTI as written and, where a cell is one time, in seconds; the safety goals and TSRs each names |
 | [`model/Signals.sysml`](model/Signals.sysml) | **Generated.** The 29 safety-relevant signals of WP-S-05 §11 as `item` usages of `Signal`: interface, direction, owner elements, integrity, validity, rate, failure reaction, ASIL, TSRs and test cases |
-| [`model/Views.sysml`](model/Views.sysml) | Views V-01 to V-21: what each exposes and how it is rendered |
+| [`model/Views.sysml`](model/Views.sysml) | Views V-01 to V-22: what each exposes and how it is rendered |
 | [`views/layout.toml`](views/layout.toml) | Placement only: boxes, grids, route adjustments, display names |
 | [`tools/sysml_lite.py`](tools/sysml_lite.py) | Reader for the subset of the textual notation the model uses; builds the instance tree. Refuses any other construct with its line number |
 | [`tools/gen_behaviour.py`](tools/gen_behaviour.py) | Generates `StateRecords.sysml` and `Sequences.sysml` from the records and WP-S-03 §4.1; `--check` fails if they differ |
 | [`tools/gen_timing_hsi.py`](tools/gen_timing_hsi.py) | Generates `Timing.sysml` and `Signals.sysml` from WP-S-04 §3.7 and WP-S-05 §11; `--check` fails if they differ |
 | [`tools/gen_requirements.py`](tools/gen_requirements.py) | Generates the four requirement and needs files above from the work products; `--check` fails if they differ |
 | [`tools/check_model.py`](tools/check_model.py) | Checks M1 to M12, N1 to N3, B1 to B3, H1 to H3 and R1 to R4 (§4), the allocation-resolution report and the requirements-coverage report |
-| [`tools/render_requirements.py`](tools/render_requirements.py) | Renderer of the requirement views V-05 to V-07, the needs views V-14 and V-15 and the use case diagram V-21 |
+| [`tools/render_requirements.py`](tools/render_requirements.py) | Renderer of the requirement views V-05 to V-07, the needs views V-14 and V-15, the use case diagram V-21 and the TSR requirement diagrams V-22 |
 | [`tools/gen_tables.py`](tools/gen_tables.py), [`record.toml`](record.toml) | Generates the architecture tables of WP-S-03 §3.1, §3.3, §6 and WP-W-03 §3.1 from the model (SY-05); `record.toml` says whether the work products or the model are the record |
 | [`tools/render_arch.py`](tools/render_arch.py) | Renderer of V-10 functional architecture, V-11 security zones, V-12 integration build-up, V-13 system modes, V-16 state-machine records, V-17 start-up sequence, V-18 timing budgets, V-19 HSI signals and V-20 HSI responsibilities |
 | [`tools/render_se.py`](tools/render_se.py) | Renderer of the systems-engineering views: V-08 N2 chart, V-09 VCRM and the per-requirement [`generated/vcrm.md`](generated/vcrm.md) |
@@ -183,6 +183,10 @@ Every figure below is generated. The explorer shows V-01 to V-04 with the model 
 **V-06 Requirement diagrams:** one SysML `req` diagram per function (F-06 and F-07 together, as they share their requirements): each system requirement with the stakeholder need it is derived from, its satisfying elements and its verification cases. F-01 is shown here; all of them are on the [system requirements page](../../03-system/system-requirements/README.md).
 
 ![V-06: requirement diagram of F-01 generated from the SysML model](generated/fig-sysml-v06-f01-requirements.svg)
+
+**V-22 TSR requirement diagrams:** one SysML `req` diagram per block of WP-S-02 (1xx…7xx; 6xx in two parts): each technical safety requirement with its ASIL, mechanism kind and timing, the FSRs it is derived from («deriveReqt»), the elements that satisfy it, the mechanisms of WP-S-03 §6 that cite it and the cases that verify it; a TSR no case names is outlined in red. 4xx is shown here; all of them are on the [technical safety requirements page](../../03-system/technical-safety-requirements/README.md).
+
+![V-22: TSR requirement diagram of the 4xx communication block generated from the SysML model](generated/fig-sysml-v22-tsr-4xx.svg)
 
 **V-07 Satisfy and verify matrix:** all 39 system requirements of WP-S-01.
 

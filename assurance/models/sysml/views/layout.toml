@@ -848,3 +848,26 @@ actor_side = { Driver = "left", Owner = "left", Vehicle = "right", ProjectLead =
 desc = """SysML use case diagram generated from the model (LionDriverNeeds): LD-SDA as the subject boundary with the use \
 cases UC-01 to UC-11 inside it, the actors Driver and Owner on the left and Vehicle and Project lead on the right, and an \
 association from each actor to every use case it takes part in."""
+
+# ======================================================================= V-22 TSR requirement diagrams
+
+[views.V-22]
+file = "fig-sysml-v22-tsr-{f}.svg"
+kind = "tsrblocks"
+width = 1520
+title = "TSR requirement diagrams"
+subtitle = "One SysML requirement diagram per WP-S-02 block"
+blocks = [
+  { key = "1xx", from = "TSR-101", to = "TSR-111", title = "lateral actuation envelope" },
+  { key = "2xx", from = "TSR-201", to = "TSR-208", title = "longitudinal envelope" },
+  { key = "3xx", from = "TSR-301", to = "TSR-311", title = "engagement, disengagement, override" },
+  { key = "4xx", from = "TSR-401", to = "TSR-413", title = "communication integrity" },
+  { key = "5xx", from = "TSR-501", to = "TSR-519", title = "safety-MCU platform integrity" },
+  { key = "6xx-a", from = "TSR-601", to = "TSR-618", title = "host monitoring" },
+  { key = "6xx-b", from = "TSR-619", to = "TSR-635", title = "host monitoring, DM, HMI" },
+  { key = "7xx", from = "TSR-701", to = "TSR-713", title = "PCS preservation and harness" },
+]
+desc = """SysML requirement diagram generated from the model for one block of WP-S-02: each technical safety requirement \
+with its ASIL, mechanism type and timing, a «deriveReqt» arrow to each FSR it refines, the elements that satisfy it, the \
+safety mechanisms of WP-S-03 §6 that cite it, and the verification cases that name it; requirements no case names are \
+outlined red."""
