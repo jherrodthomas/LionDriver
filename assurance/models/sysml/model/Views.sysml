@@ -162,4 +162,13 @@ package LionDriverViews {
         expose LionDriverNeeds::*;
         render Views::asInterconnectionDiagram;
     }
+
+    view <'V-22'> tsrBlocks : RequirementView {
+        doc /* One requirement diagram per TSR block of WP-S-02: each TSR with the FSRs it derives from, its satisfying elements, the mechanisms that cite it and its verification cases. */
+        expose LionDriverRequirements::*;
+        expose LionDriverSatisfaction::*;
+        expose LionDriverVerification::*;
+        expose LionDriverMechanisms::*;
+        render Views::asTreeDiagram;
+    }
 }

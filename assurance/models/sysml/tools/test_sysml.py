@@ -154,7 +154,9 @@ class Rendering(unittest.TestCase):
     for vid in m.views:  # every view drawn; V-06 once per function or function group
       self.assertTrue(any(f.startswith(f"fig-sysml-{vid.lower().replace('-', '')}-") for f in svgs), vid)
     self.assertEqual(len([f for f in svgs if f.startswith("fig-sysml-v06-")]), 8)
-    self.assertEqual(len(svgs), len(m.views) - 1 + 8)
+    layout = render_views.tomllib.loads(render_views.LAYOUT.read_text(encoding="utf-8"))["views"]
+    per_view = sum(len(s.get("functions") or s.get("blocks") or [1]) for s in layout.values())
+    self.assertEqual(len(svgs), per_view)
     v03 = files["fig-sysml-v03-system-interconnection.svg"]
     for iid in ("IF-01", "IF-03", "IF-04", "IF-04b", "IF-07", "IF-08", "IF-09", "IF-10"):
       self.assertIn(iid, v03)

@@ -280,7 +280,7 @@ TERMS = {
   "TB-": "trust boundary (WP-S-07 §3.2)",
   "ST-": "step of the start-up and engagement sequence (WP-S-03 Table 4-1), ST-01…ST-21",
   "CS-": "cybersecurity architecture decision CS-AD-nn (WP-S-07 §3.4)",
-  "V-": "view of the SysML model (V-01…V-21)",
+  "V-": "view of the SysML model (V-01…V-22)",
   "UPD-": "update procedure step (WP-O-02)",
   "I-": "integration step I-1…I-4 (WP-S-08 §3.1)",
   "GC-": "global pass criterion of every integration test (WP-S-08 §5)",
