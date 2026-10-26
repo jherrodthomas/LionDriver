@@ -1,176 +1,196 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="1110" viewBox="0 0 1180 1110">
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="1308" viewBox="0 0 1180 1308">
 <title>FTA SG-03 sheet 6 of 6: unintended acceleration</title>
-<style>.id{font:700 13px 'JetBrains Mono', Menlo, Consolas, monospace;fill:#1d2433}.kind{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.1em;fill:#8a93a3;text-anchor:end}.d{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#2b3343}.n{font:italic 400 10.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#6b7385}.chip{font:600 9.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;text-anchor:middle}.gl{font:700 7.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.06em;text-anchor:middle}.eyebrow{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.14em;fill:#9fb7d1}.title{font:600 21px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.title2{font:600 17px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.hc{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.04em;fill:#fff;text-anchor:middle}.lh{font:600 13px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.lb{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.s{font:400 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#5b6475}.tbh{font:700 14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#0f2a44}.k{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.12em;fill:#8a93a3}.v{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.mm{font:700 11px 'JetBrains Mono', Menlo, Consolas, monospace;text-anchor:middle}.w{stroke:#9aa3b2;stroke-width:1.4;stroke-linecap:round}.wh{stroke:#c62828;stroke-width:3.2;stroke-linecap:round}.shadow{fill:#0f172a;opacity:.06}</style>
-<defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e3e7ee"/></pattern></defs>
-<rect width="100%" height="100%" fill="#f7f8fa"/>
-<rect y="78" width="100%" height="1032" fill="url(#dots)"/>
-<rect width="100%" height="78" fill="#0f2a44"/>
-<text x="40" y="32" class="eyebrow">FTA · SG-03 · WP-A-04 §3</text>
-<text x="40" y="59" class="title">Unintended acceleration</text>
-<rect x="904" y="21" width="236" height="36" rx="18" fill="#ffffff14" stroke="#ffffff40"/>
-<text x="1022" y="44" class="hc">Sheet 6 of 6  ·  ASIL C</text>
-<rect x="344.0" y="116.5" width="220" height="93.0" rx="9" class="shadow"/>
-<rect x="342.5" y="114" width="220" height="93.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
-<path d="M351.5,114 H553.5 A9,9 0 0 1 562.5,123 V119 H342.5 V123 A9,9 0 0 1 351.5,114 Z" fill="#1d2433"/>
-<text x="356.5" y="139" class="id">G3.5</text>
-<text x="548.5" y="139" class="kind">INTERMEDIATE</text>
-<text x="356.5" y="153.5" class="d">Stale positive acceleration held</text>
-<text x="356.5" y="168.0" class="d">beyond FTTI</text>
-<rect x="356.5" y="176.0" width="82.4" height="16" rx="8" fill="#e6e9ef"/>
-<text x="397.7" y="187.5" class="chip" fill="#334155">from sheet 1</text>
-<path d="M432.5,245.0 L432.5,225.0 A20,18 0 0 1 472.5,225.0 L472.5,245.0 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="452.5" y="237.0" class="gl" fill="#1d2433">AND</text>
-<line x1="271.0" y1="268.0" x2="634.0" y2="268.0" class="w"/>
-<line x1="452.5" y1="245.0" x2="452.5" y2="268.0" class="w"/>
-<line x1="271.0" y1="268.0" x2="271.0" y2="293.0" class="w"/>
-<line x1="634.0" y1="268.0" x2="634.0" y2="293.0" class="w"/>
-<rect x="162.5" y="295.5" width="220" height="38.5" rx="9" class="shadow"/>
-<rect x="161.0" y="293.0" width="220" height="38.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1" stroke-dasharray="5 4"/>
-<text x="367.0" y="311.0" class="kind">ANY OF</text>
-<text x="175.0" y="315.5" class="d">Any of BE-1.19, BE-1.21</text>
-<path d="M251.0,369.5 Q271.0,360.5 291.0,369.5 Q289.0,342.5 271.0,331.5 Q253.0,342.5 251.0,369.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="271.0" y="361.5" class="gl" fill="#1d2433">OR</text>
-<line x1="150.0" y1="392.5" x2="392.0" y2="392.5" class="w"/>
-<line x1="271.0" y1="369.5" x2="271.0" y2="392.5" class="w"/>
-<line x1="150.0" y1="392.5" x2="150.0" y2="631.0" class="w"/>
-<line x1="392.0" y1="392.5" x2="392.0" y2="631.0" class="w"/>
-<rect x="41.5" y="633.5" width="220" height="159.0" rx="9" class="shadow"/>
-<rect x="40" y="631.0" width="220" height="159.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
-<path d="M49,631.0 H251 A9,9 0 0 1 260,640.0 V636.0 H40 V640.0 A9,9 0 0 1 49,631.0 Z" fill="#64748b"/>
-<text x="54" y="656.0" class="id">BE-1.19</text>
-<text x="246" y="656.0" class="kind">BASIC</text>
-<text x="54" y="670.5" class="d">controlsd hang / stale modelV2</text>
-<text x="54" y="685.0" class="d">used up to ≈3.5 s (GAP-16)</text>
-<rect x="54.0" y="693.0" width="99.5" height="16" rx="8" fill="#e6e9ef"/>
-<text x="103.8" y="704.5" class="chip" fill="#334155">repeated, SG-01</text>
-<rect x="158.5" y="693.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="185.4" y="704.5" class="chip" fill="#fff">SFM-006</text>
-<rect x="54.0" y="715.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="81.0" y="726.5" class="chip" fill="#fff">SFM-037</text>
-<rect x="112.9" y="715.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="139.8" y="726.5" class="chip" fill="#fff">SWF-040</text>
-<rect x="171.8" y="715.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="198.8" y="726.5" class="chip" fill="#fff">SWF-043</text>
-<rect x="54.0" y="737.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="81.0" y="748.5" class="chip" fill="#fff">SWF-033</text>
-<rect x="112.9" y="737.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="139.8" y="748.5" class="chip" fill="#fff">SWF-072</text>
-<rect x="171.8" y="737.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="198.8" y="748.5" class="chip" fill="#fff">SWF-078</text>
-<rect x="54.0" y="759.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="81.0" y="770.5" class="chip" fill="#fff">SWF-080</text>
-<rect x="112.9" y="759.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="139.8" y="770.5" class="chip" fill="#fff">SWF-081</text>
-<circle cx="150.0" cy="807.0" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
-<rect x="283.5" y="633.5" width="220" height="107.5" rx="9" class="shadow"/>
-<rect x="282" y="631.0" width="220" height="107.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
-<path d="M291,631.0 H493 A9,9 0 0 1 502,640.0 V636.0 H282 V640.0 A9,9 0 0 1 291,631.0 Z" fill="#64748b"/>
-<text x="296" y="656.0" class="id">BE-1.21</text>
-<text x="488" y="656.0" class="kind">BASIC</text>
-<text x="296" y="670.5" class="d">SoC replays an old command</text>
-<text x="296" y="685.0" class="d">buffer (no sequence counter,</text>
-<text x="296" y="699.5" class="d">GAP-10)</text>
-<rect x="296.0" y="707.5" width="99.5" height="16" rx="8" fill="#e6e9ef"/>
-<text x="345.8" y="719.0" class="chip" fill="#334155">repeated, SG-01</text>
-<rect x="400.5" y="707.5" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="427.4" y="719.0" class="chip" fill="#fff">SWF-023</text>
-<circle cx="392.0" cy="755.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
-<rect x="525.5" y="295.5" width="220" height="252.0" rx="9" class="shadow"/>
-<rect x="524" y="293.0" width="220" height="252.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
-<path d="M533,293.0 H735 A9,9 0 0 1 744,302.0 V298.0 H524 V302.0 A9,9 0 0 1 533,293.0 Z" fill="#5f6368"/>
-<text x="538" y="318.0" class="id">BE-1.22</text>
-<text x="730" y="318.0" class="kind">BASIC</text>
-<text x="538" y="332.5" class="d">Command freshness not</text>
-<text x="538" y="347.0" class="d">supervised: heartbeat shows</text>
-<text x="538" y="361.5" class="d">pandad liveness only; mismatch 3</text>
-<text x="538" y="376.0" class="d">s, loss 5 s (main.c:182-213;</text>
-<text x="538" y="390.5" class="d">GAP-06, GAP-10) . 2026-10-12,</text>
-<text x="538" y="405.0" class="d">reference build: heartbeat loss</text>
-<text x="538" y="419.5" class="d">revokes at 0.3 s (TSR-407);</text>
-<text x="538" y="434.0" class="d">actuation-frame arrival</text>
-<text x="538" y="448.5" class="d">supervised (TSR-408, opendbc…</text>
-<text x="538" y="462.0" class="n">slow envelope detection</text>
-<rect x="538.0" y="470.0" width="105.2" height="16" rx="8" fill="#5f6368"/>
-<text x="590.6" y="481.5" class="chip" fill="#fff">latent, baseline</text>
-<rect x="538.0" y="492.0" width="99.5" height="16" rx="8" fill="#e6e9ef"/>
-<text x="587.8" y="503.5" class="chip" fill="#334155">repeated, SG-01</text>
-<rect x="642.5" y="492.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="669.5" y="503.5" class="chip" fill="#fff">SWF-014</text>
-<rect x="538.0" y="514.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="565.0" y="525.5" class="chip" fill="#fff">SWF-020</text>
-<rect x="596.9" y="514.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="623.9" y="525.5" class="chip" fill="#fff">SWF-018</text>
-<rect x="655.8" y="514.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="682.8" y="525.5" class="chip" fill="#fff">DFM-014</text>
-<circle cx="634.0" cy="562.0" r="16" fill="#eceef1" stroke="#5f6368" stroke-width="1.7"/>
-<text x="40" y="888.0" class="lh">Symbols · IEC 61025</text>
-<rect x="46" y="908.0" width="44" height="28" rx="6" fill="#fff" stroke="#d9dee6"/>
-<rect x="46" y="908.0" width="44" height="4" rx="2" fill="#1d2433"/>
-<text x="68" y="962.0" class="s" text-anchor="middle">Event</text>
-<path d="M128,942.0 Q148,933.0 168,942.0 Q166,915.0 148,904.0 Q130,915.0 128,942.0 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="148" y="934.0" class="gl" fill="#1d2433">OR</text>
-<text x="148" y="962.0" class="s" text-anchor="middle">OR gate</text>
-<path d="M208,942.0 L208,922.0 A20,18 0 0 1 248,922.0 L248,942.0 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="228" y="934.0" class="gl" fill="#1d2433">AND</text>
-<text x="228" y="962.0" class="s" text-anchor="middle">AND gate</text>
-<circle cx="308" cy="922.0" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
-<text x="308" y="962.0" class="s" text-anchor="middle">Basic event</text>
-<path d="M388,905.0 L410,922.0 L388,939.0 L366,922.0 Z" fill="#e7f1e7" stroke="#3d6b3d" stroke-width="1.7"/>
-<text x="388" y="962.0" class="s" text-anchor="middle">Undeveloped</text>
-<path d="M468,904.0 L488,937.0 L448,937.0 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><line x1="478" y1="920.0" x2="502" y2="920.0" stroke="#1d2433" stroke-width="1.7" stroke-linecap="round"/>
-<text x="468" y="962.0" class="s" text-anchor="middle">Transfer out</text>
-<path d="M548,905.0 L568,938.0 L528,938.0 Z" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
-<text x="548" y="962.0" class="s" text-anchor="middle">Transfer in</text>
-<rect x="40.0" y="980.0" width="31.1" height="16" rx="8" fill="#c62828"/>
-<text x="55.5" y="991.5" class="chip" fill="#fff">SPF</text>
-<rect x="77.1" y="980.0" width="48.2" height="16" rx="8" fill="#5f6368"/>
-<text x="101.2" y="991.5" class="chip" fill="#fff">latent</text>
-<rect x="131.3" y="980.0" width="42.5" height="16" rx="8" fill="#6a3fb5"/>
-<text x="152.6" y="991.5" class="chip" fill="#fff">SOTIF</text>
-<rect x="179.8" y="980.0" width="71.0" height="16" rx="8" fill="#b45309"/>
-<text x="215.3" y="991.5" class="chip" fill="#fff">CCF DFI-nn</text>
-<rect x="256.8" y="980.0" width="31.1" height="16" rx="8" fill="#1a5fb4"/>
-<text x="272.4" y="991.5" class="chip" fill="#fff">FFI</text>
-<rect x="293.9" y="980.0" width="82.4" height="16" rx="8" fill="#3d6b3d"/>
-<text x="335.1" y="991.5" class="chip" fill="#fff">outside item</text>
-<rect x="382.3" y="980.0" width="122.3" height="16" rx="8" fill="#e6e9ef"/>
-<text x="443.5" y="991.5" class="chip" fill="#334155">repeated / transfer</text>
-<rect x="510.6" y="980.0" width="105.2" height="16" rx="8" fill="#111827"/>
-<text x="563.2" y="991.5" class="chip" fill="#fff">FMEA / FMEDA row</text>
-<rect x="621.8" y="980.0" width="53.9" height="16" rx="8" fill="#fff1f1"/>
-<text x="648.8" y="991.5" class="chip" fill="#c62828">no FMEA</text>
-<line x1="40" y1="1014.0" x2="74" y2="1014.0" class="wh"/>
-<text x="86" y="1018.0" class="lb">Single-point path</text>
-<text x="86" y="1034.0" class="s">One basic event in the item reaches the top event; undeveloped events outside the item assumed.</text>
-<text x="86" y="1049.0" class="s">Computed from the gate logic (see cut-sets.md); the SPF tags are WP-A-04's own claims.</text>
-<rect x="640" y="874.0" width="500" height="196" rx="10" fill="#fff" stroke="#d9dee6"/>
-<line x1="640" y1="920.0" x2="1140" y2="920.0" stroke="#d9dee6"/>
-<line x1="958" y1="920.0" x2="958" y2="1070.0" stroke="#d9dee6"/>
-<text x="658" y="903.0" class="tbh">LionDriver · FTA SG-03</text>
-<rect x="990" y="888.0" width="132" height="20" rx="10" fill="#fff4e0" stroke="#f0c36d"/>
-<text x="1056" y="902.0" class="chip" fill="#8a5a00">DRAFT · NOT VERIFIED</text>
-<text x="658" y="946.0" class="k">TOP OF SHEET</text>
-<text x="756" y="946.0" class="v">G3.5</text>
-<text x="658" y="972.0" class="k">SINGLE-POINT</text>
-<text x="756" y="972.0" class="v">0 basic events on this sheet</text>
-<text x="658" y="998.0" class="k">SOURCE</text>
-<text x="756" y="998.0" class="v">WP-A-04 §3 (analysis of record)</text>
-<text x="658" y="1024.0" class="k">GENERATED BY</text>
-<text x="756" y="1024.0" class="v">fta_diagrams.py</text>
-<text x="658" y="1050.0" class="k">EDIT</text>
-<text x="756" y="1050.0" class="v">WP-A-04, not this file</text>
-<text x="974" y="944.0" class="k">SHEETS</text>
-<line x1="1049.0" y1="979.0" x2="984.2" y2="993.0" stroke="#9aa3b2" stroke-width="1.3"/>
-<line x1="1049.0" y1="979.0" x2="1016.6" y2="993.0" stroke="#9aa3b2" stroke-width="1.3"/>
-<line x1="1049.0" y1="979.0" x2="1049.0" y2="993.0" stroke="#9aa3b2" stroke-width="1.3"/>
-<line x1="1049.0" y1="979.0" x2="1081.4" y2="993.0" stroke="#9aa3b2" stroke-width="1.3"/>
-<line x1="1049.0" y1="979.0" x2="1113.8" y2="993.0" stroke="#9aa3b2" stroke-width="1.3"/>
-<rect x="1035.0" y="959.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
-<text x="1049.0" y="973.0" class="mm" fill="#0f2a44">1</text>
-<rect x="970.2" y="993.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
-<text x="984.2" y="1007.0" class="mm" fill="#0f2a44">2</text>
-<rect x="1002.6" y="993.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
-<text x="1016.6" y="1007.0" class="mm" fill="#0f2a44">3</text>
-<rect x="1035.0" y="993.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
-<text x="1049.0" y="1007.0" class="mm" fill="#0f2a44">4</text>
-<rect x="1067.4" y="993.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
-<text x="1081.4" y="1007.0" class="mm" fill="#0f2a44">5</text>
-<rect x="1099.8" y="993.0" width="28" height="20" rx="5" fill="#0f2a44" stroke="#0f2a44" stroke-width="1.3"/>
-<text x="1113.8" y="1007.0" class="mm" fill="#fff">6</text>
+<style>.id{font:700 12.5px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace;fill:#0b0b0b}.kind{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.08em;fill:#898781;text-anchor:end}.d{font:400 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#0b0b0b}.n{font:italic 400 10.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#52514e}.chip{font:700 9.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;text-anchor:middle}.st{font:700 10.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif}.cs{font:400 10.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#898781}.gl{font:700 7.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.04em;text-anchor:middle}.eyebrow{font:400 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#52514e}.title{font:700 20px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#0b0b0b}.title2{font:700 16px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#0b0b0b}.hc{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#52514e;text-anchor:middle}.lh{font:600 13px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#0b0b0b}.lb{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#0b0b0b}.s{font:400 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#52514e}.tbh{font:700 14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#0b0b0b}.k{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.12em;fill:#898781}.v{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#0b0b0b}.mm{font:700 11px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace;text-anchor:middle}.w{fill:none;stroke:#c9c7bf;stroke-width:1.6;stroke-linecap:round}.wh{fill:none;stroke:#d03b3b;stroke-width:2.6;stroke-linecap:round}.shadow{fill:#000;opacity:.05}</style>
+<defs><pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1.2" cy="1.2" r="1.2" fill="#e7e6e0"/></pattern></defs>
+<rect width="100%" height="100%" fill="#fcfcfb"/>
+<rect y="96" width="100%" height="1212" fill="url(#dots)"/>
+<line x1="0" y1="96" x2="1180" y2="96" stroke="#e1e0d9"/>
+<text x="40" y="34" class="eyebrow">FTA › SG-03 · WP-A-04 §3 · ASIL C</text>
+<text x="40" y="60" class="title">TE-03 unintended acceleration</text>
+<rect x="40.0" y="70.0" width="66.7" height="17" rx="8.5" fill="#fbe9e9"/>
+<circle cx="51" cy="78.5" r="5" fill="#9e2424"/><rect x="48" y="77.5" width="6" height="2" fill="#fbe9e9"/>
+<text x="59" y="82.3" class="st" fill="#9e2424">1 fault</text>
+<text x="114.69999999999999" y="82.3" class="cs">fewest item faults that reach the top event · 23 minimal cut sets</text>
+<rect x="990" y="28" width="150" height="30" rx="8" fill="#ffffff" stroke="#e1e0d9"/>
+<text x="1065" y="47" class="hc">Sheet 6 of 6</text>
+<path d="M447.5,277.0 V288.0 Q447.5,298.0 437.5,298.0 H279.0 Q269.0,298.0 269.0,308.0 V319.0" class="w"/>
+<path d="M447.5,277.0 V288.0 Q447.5,298.0 457.5,298.0 H616.0 Q626.0,298.0 626.0,308.0 V319.0" class="w"/>
+<path d="M269.0,411.0 V519.2 Q269.0,529.2 259.0,529.2 H160.0 Q150.0,529.2 150.0,539.2 V647.5" class="w"/>
+<path d="M269.0,411.0 V519.2 Q269.0,529.2 279.0,529.2 H378.0 Q388.0,529.2 388.0,539.2 V647.5" class="w"/>
+<rect x="337.5" y="131" width="220" height="121.0" rx="12" class="shadow"/>
+<rect x="337.5" y="128" width="220" height="121.0" rx="12" fill="#ffffff" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="350.5" y="142.5" width="12" height="11" rx="3" fill="#6250d6"/>
+<text x="369.5" y="152" class="id">G3.5</text>
+<text x="545.5" y="152" class="kind">AND GATE</text>
+<text x="349.5" y="171" class="d">Stale positive acceleration held</text>
+<text x="349.5" y="186" class="d">beyond FTTI</text>
+<rect x="349.5" y="194.0" width="79.2" height="17" rx="4" fill="none" stroke="#c9c7bf"/>
+<text x="389.1" y="206.0" class="chip" fill="#52514e">from sheet 1</text>
+<rect x="349.5" y="222.0" width="72.8" height="17" rx="8.5" fill="#fdeee6"/>
+<path d="M360.5,226.0 L365.5,234.5 H355.5 Z" fill="#9a4a25"/>
+<text x="368.5" y="234.3" class="st" fill="#9a4a25">2 faults</text>
+<text x="428.3" y="234.3" class="cs">2 cut sets</text>
+<path d="M433.5,277.0 V261.4 A14,13.4 0 0 1 461.5,261.4 V277.0 Z" fill="#ffffff" stroke="#6250d6" stroke-width="2" stroke-linejoin="round"/><text x="447.5" y="271.0" class="gl" fill="#6250d6">AND</text>
+<rect x="159.0" y="322.0" width="220" height="64.0" rx="12" class="shadow"/>
+<rect x="159.0" y="319.0" width="220" height="64.0" rx="12" fill="#ffffff" stroke="#e1e0d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="367.0" y="337.0" class="kind">ANY OF</text>
+<text x="171.0" y="348.0" class="d">Any of BE-1.19, BE-1.21</text>
+<rect x="171.0" y="356.0" width="66.7" height="17" rx="8.5" fill="#fbe9e9"/>
+<circle cx="182.0" cy="364.5" r="5" fill="#9e2424"/><rect x="179.0" y="363.5" width="6" height="2" fill="#fbe9e9"/>
+<text x="190.0" y="368.3" class="st" fill="#9e2424">1 fault</text>
+<text x="243.7" y="368.3" class="cs">2 cut sets</text>
+<path d="M254.0,411.0 Q269.0,402.0 284.0,411.0 Q284.0,391.5 269.0,382.0 Q254.0,391.5 254.0,411.0 Z" fill="#ffffff" stroke="#2a78d6" stroke-width="2" stroke-linejoin="round"/><text x="269.0" y="405.0" class="gl" fill="#2a78d6">OR</text>
+<rect x="40" y="650.5" width="220" height="162.0" rx="12" class="shadow"/>
+<rect x="40" y="647.5" width="220" height="162.0" rx="12" fill="#ffffff" stroke="#e1e0d9" stroke-width="1"/>
+<circle cx="59" cy="667.5" r="5.5" fill="#1baf7a"/>
+<text x="72" y="671.5" class="id">BE-1.19</text>
+<text x="248" y="671.5" class="kind">BASIC EVENT</text>
+<text x="52" y="690.5" class="d">controlsd hang / stale modelV2</text>
+<text x="52" y="705.5" class="d">used up to ≈3.5 s (GAP-16)</text>
+<rect x="52.0" y="713.5" width="96.0" height="17" rx="4" fill="none" stroke="#c9c7bf"/>
+<text x="100.0" y="725.5" class="chip" fill="#52514e">repeated, SG-01</text>
+<rect x="152.0" y="713.5" width="51.2" height="17" rx="4" fill="none" stroke="#e1e0d9"/>
+<text x="177.6" y="725.5" class="chip" fill="#52514e">SFM-006</text>
+<rect x="52.0" y="735.5" width="51.2" height="17" rx="4" fill="none" stroke="#e1e0d9"/>
+<text x="77.6" y="747.5" class="chip" fill="#52514e">SFM-037</text>
+<rect x="107.2" y="735.5" width="51.2" height="17" rx="4" fill="none" stroke="#e1e0d9"/>
+<text x="132.8" y="747.5" class="chip" fill="#52514e">SWF-040</text>
+<rect x="162.4" y="735.5" width="51.2" height="17" rx="4" fill="none" stroke="#e1e0d9"/>
+<text x="188.0" y="747.5" class="chip" fill="#52514e">SWF-043</text>
+<rect x="52.0" y="757.5" width="51.2" height="17" rx="4" fill="none" stroke="#e1e0d9"/>
+<text x="77.6" y="769.5" class="chip" fill="#52514e">SWF-033</text>
+<rect x="107.2" y="757.5" width="51.2" height="17" rx="4" fill="none" stroke="#e1e0d9"/>
+<text x="132.8" y="769.5" class="chip" fill="#52514e">SWF-072</text>
+<rect x="162.4" y="757.5" width="51.2" height="17" rx="4" fill="none" stroke="#e1e0d9"/>
+<text x="188.0" y="769.5" class="chip" fill="#52514e">SWF-078</text>
+<rect x="52.0" y="779.5" width="51.2" height="17" rx="4" fill="none" stroke="#e1e0d9"/>
+<text x="77.6" y="791.5" class="chip" fill="#52514e">SWF-080</text>
+<rect x="107.2" y="779.5" width="51.2" height="17" rx="4" fill="none" stroke="#e1e0d9"/>
+<text x="132.8" y="791.5" class="chip" fill="#52514e">SWF-081</text>
+<rect x="278" y="650.5" width="220" height="111.0" rx="12" class="shadow"/>
+<rect x="278" y="647.5" width="220" height="111.0" rx="12" fill="#ffffff" stroke="#e1e0d9" stroke-width="1"/>
+<circle cx="297" cy="667.5" r="5.5" fill="#1baf7a"/>
+<text x="310" y="671.5" class="id">BE-1.21</text>
+<text x="486" y="671.5" class="kind">BASIC EVENT</text>
+<text x="290" y="690.5" class="d">SoC replays an old command</text>
+<text x="290" y="705.5" class="d">buffer (no sequence counter,</text>
+<text x="290" y="720.5" class="d">GAP-10)</text>
+<rect x="290.0" y="728.5" width="96.0" height="17" rx="4" fill="none" stroke="#c9c7bf"/>
+<text x="338.0" y="740.5" class="chip" fill="#52514e">repeated, SG-01</text>
+<rect x="390.0" y="728.5" width="51.2" height="17" rx="4" fill="none" stroke="#e1e0d9"/>
+<text x="415.6" y="740.5" class="chip" fill="#52514e">SWF-023</text>
+<rect x="516" y="322.0" width="220" height="258.5" rx="12" class="shadow"/>
+<rect x="516" y="319.0" width="220" height="258.5" rx="12" fill="#ffffff" stroke="#898781" stroke-width="1.5" stroke-dasharray="5 4"/>
+<circle cx="535" cy="339.0" r="5.5" fill="#1baf7a"/>
+<text x="548" y="343.0" class="id">BE-1.22</text>
+<text x="724" y="343.0" class="kind">BASIC EVENT</text>
+<text x="528" y="362.0" class="d">Command freshness not</text>
+<text x="528" y="377.0" class="d">supervised: heartbeat shows</text>
+<text x="528" y="392.0" class="d">pandad liveness only; mismatch 3</text>
+<text x="528" y="407.0" class="d">s, loss 5 s (main.c:182-213;</text>
+<text x="528" y="422.0" class="d">GAP-06, GAP-10) . 2026-10-12,</text>
+<text x="528" y="437.0" class="d">reference build: heartbeat loss</text>
+<text x="528" y="452.0" class="d">revokes at 0.3 s (TSR-407);</text>
+<text x="528" y="467.0" class="d">actuation-frame arrival</text>
+<text x="528" y="482.0" class="d">supervised (TSR-408, opendbc…</text>
+<text x="528" y="495.5" class="n">slow envelope detection</text>
+<rect x="528.0" y="503.5" width="101.6" height="17" rx="4" fill="none" stroke="#898781" stroke-dasharray="3 2"/>
+<text x="578.8" y="515.5" class="chip" fill="#52514e">latent, baseline</text>
+<rect x="528.0" y="525.5" width="96.0" height="17" rx="4" fill="none" stroke="#c9c7bf"/>
+<text x="576.0" y="537.5" class="chip" fill="#52514e">repeated, SG-01</text>
+<rect x="628.0" y="525.5" width="51.2" height="17" rx="4" fill="none" stroke="#e1e0d9"/>
+<text x="653.6" y="537.5" class="chip" fill="#52514e">SWF-014</text>
+<rect x="528.0" y="547.5" width="51.2" height="17" rx="4" fill="none" stroke="#e1e0d9"/>
+<text x="553.6" y="559.5" class="chip" fill="#52514e">SWF-020</text>
+<rect x="583.2" y="547.5" width="51.2" height="17" rx="4" fill="none" stroke="#e1e0d9"/>
+<text x="608.8" y="559.5" class="chip" fill="#52514e">SWF-018</text>
+<rect x="638.4" y="547.5" width="51.2" height="17" rx="4" fill="none" stroke="#e1e0d9"/>
+<text x="664.0" y="559.5" class="chip" fill="#52514e">DFM-014</text>
+<text x="40" y="897.5" class="lh">Symbols · IEC 61025</text>
+<rect x="40" y="913.5" width="16" height="13" rx="3" fill="#ffffff" stroke="#e1e0d9"/>
+<rect x="40" y="913.5" width="16" height="3" fill="#0b0b0b"/>
+<text x="62" y="924.5" class="s">Top event</text>
+<rect x="144.7" y="914.5" width="12" height="11" rx="3" fill="#2a78d6"/>
+<text x="164.7" y="924.5" class="s">OR gate</text>
+<rect x="234.79999999999998" y="914.5" width="12" height="11" rx="3" fill="#6250d6"/>
+<text x="254.79999999999998" y="924.5" class="s">AND gate</text>
+<circle cx="337.2" cy="920.0" r="5.5" fill="#1baf7a"/>
+<text x="351.2" y="924.5" class="s">Basic event</text>
+<path d="M452.5,914.0 L459.0,920.0 L452.5,926.0 L446.0,920.0 Z" fill="#eda100"/>
+<text x="466.5" y="924.5" class="s">Undeveloped</text>
+<path d="M567.8,914.5 L573.8,925.5 H561.8 Z" fill="none" stroke="#52514e" stroke-width="1.7" stroke-linejoin="round"/>
+<text x="581.8" y="924.5" class="s">Transfer in</text>
+<path d="M683.0999999999999,914.5 L689.0999999999999,925.5 H677.0999999999999 Z" fill="none" stroke="#52514e" stroke-width="1.7" stroke-linejoin="round"/><line x1="686.0999999999999" y1="920.0" x2="694.0999999999999" y2="920.0" stroke="#52514e" stroke-width="1.7"/>
+<text x="701.0999999999999" y="924.5" class="s">Transfer out</text>
+<rect x="40.0" y="941.5" width="28.8" height="17" rx="4" fill="#fbe9e9"/>
+<text x="54.4" y="953.5" class="chip" fill="#9e2424">SPF</text>
+<rect x="74.8" y="941.5" width="45.6" height="17" rx="4" fill="none" stroke="#898781" stroke-dasharray="3 2"/>
+<text x="97.6" y="953.5" class="chip" fill="#52514e">latent</text>
+<rect x="126.4" y="941.5" width="40.0" height="17" rx="4" fill="#f3f2ee"/>
+<text x="146.4" y="953.5" class="chip" fill="#52514e">SOTIF</text>
+<rect x="172.4" y="941.5" width="68.0" height="17" rx="4" fill="#f3f2ee"/>
+<text x="206.4" y="953.5" class="chip" fill="#52514e">CCF DFI-nn</text>
+<rect x="246.4" y="941.5" width="28.8" height="17" rx="4" fill="#f3f2ee"/>
+<text x="260.8" y="953.5" class="chip" fill="#52514e">FFI</text>
+<rect x="281.2" y="941.5" width="79.2" height="17" rx="4" fill="#fff5dc"/>
+<text x="320.8" y="953.5" class="chip" fill="#7a5600">outside item</text>
+<rect x="366.4" y="941.5" width="118.4" height="17" rx="4" fill="none" stroke="#c9c7bf"/>
+<text x="425.6" y="953.5" class="chip" fill="#52514e">repeated / transfer</text>
+<rect x="490.8" y="941.5" width="124.0" height="17" rx="4" fill="#0b0b0b"/>
+<text x="552.8" y="953.5" class="chip" fill="#fff">continued on sheet ▸</text>
+<rect x="620.8" y="941.5" width="101.6" height="17" rx="4" fill="none" stroke="#e1e0d9"/>
+<text x="671.6" y="953.5" class="chip" fill="#52514e">FMEA / FMEDA row</text>
+<rect x="728.4" y="941.5" width="51.2" height="17" rx="4" fill="#fbe9e9"/>
+<text x="754.0" y="953.5" class="chip" fill="#9e2424">no FMEA</text>
+<rect x="40.0" y="971.5" width="66.7" height="17" rx="8.5" fill="#fbe9e9"/>
+<circle cx="51" cy="980.0" r="5" fill="#9e2424"/><rect x="48" y="979.0" width="6" height="2" fill="#fbe9e9"/>
+<text x="59" y="983.8" class="st" fill="#9e2424">1 fault</text>
+<rect x="112.7" y="971.5" width="72.8" height="17" rx="8.5" fill="#fdeee6"/>
+<path d="M123.69999999999999,975.5 L128.7,984.0 H118.69999999999999 Z" fill="#9a4a25"/>
+<text x="131.7" y="983.8" class="st" fill="#9a4a25">2 faults</text>
+<rect x="191.5" y="971.5" width="72.8" height="17" rx="8.5" fill="#fff5dc"/>
+<path d="M202.5,975.0 L207.5,980.0 L202.5,985.0 L197.5,980.0 Z" fill="#7a5600"/>
+<text x="210.5" y="983.8" class="st" fill="#7a5600">3 faults</text>
+<rect x="270.3" y="971.5" width="72.8" height="17" rx="8.5" fill="#e6f5e6"/>
+<circle cx="281.3" cy="980.0" r="4.5" fill="#0a6a0a"/>
+<text x="289.3" y="983.8" class="st" fill="#0a6a0a">4 faults</text>
+<text x="355.1" y="983.8" class="s">Fewest item basic events in a cut set below the gate (UE assumed)</text>
+<line x1="40" y1="1011.5" x2="74" y2="1011.5" class="wh"/>
+<text x="86" y="1015.5" class="lb">Single-point path</text>
+<text x="86" y="1031.5" class="s">One basic event in the item reaches the top event; undeveloped events outside the item assumed.</text>
+<text x="86" y="1046.5" class="s">Computed from the gate logic (see cut-sets.md); the SPF tags are WP-A-04's own claims. Dashed card: latent event.</text>
+<rect x="40" y="1071.5" width="500" height="196" rx="12" fill="#ffffff" stroke="#e1e0d9"/>
+<line x1="40" y1="1117.5" x2="540" y2="1117.5" stroke="#e1e0d9"/>
+<line x1="358" y1="1117.5" x2="358" y2="1267.5" stroke="#e1e0d9"/>
+<text x="58" y="1100.5" class="tbh">LionDriver · FTA SG-03</text>
+<rect x="390" y="1085.5" width="132" height="20" rx="10" fill="#fff5dc"/>
+<text x="456" y="1099.5" class="chip" fill="#7a5600">DRAFT · NOT VERIFIED</text>
+<text x="58" y="1143.5" class="k">TOP OF SHEET</text>
+<text x="156" y="1143.5" class="v">G3.5</text>
+<text x="58" y="1169.5" class="k">SINGLE-POINT</text>
+<text x="156" y="1169.5" class="v">0 basic events on this sheet</text>
+<text x="58" y="1195.5" class="k">SOURCE</text>
+<text x="156" y="1195.5" class="v">WP-A-04 §3 (analysis of record)</text>
+<text x="58" y="1221.5" class="k">GENERATED BY</text>
+<text x="156" y="1221.5" class="v">fta_diagrams.py</text>
+<text x="58" y="1247.5" class="k">EDIT</text>
+<text x="156" y="1247.5" class="v">WP-A-04, not this file</text>
+<text x="374" y="1141.5" class="k">SHEETS</text>
+<line x1="449.0" y1="1176.5" x2="384.2" y2="1190.5" stroke="#c9c7bf" stroke-width="1.3"/>
+<line x1="449.0" y1="1176.5" x2="416.6" y2="1190.5" stroke="#c9c7bf" stroke-width="1.3"/>
+<line x1="449.0" y1="1176.5" x2="449.0" y2="1190.5" stroke="#c9c7bf" stroke-width="1.3"/>
+<line x1="449.0" y1="1176.5" x2="481.4" y2="1190.5" stroke="#c9c7bf" stroke-width="1.3"/>
+<line x1="449.0" y1="1176.5" x2="513.8" y2="1190.5" stroke="#c9c7bf" stroke-width="1.3"/>
+<rect x="435.0" y="1156.5" width="28" height="20" rx="6" fill="#ffffff" stroke="#e1e0d9" stroke-width="1.3"/>
+<text x="449.0" y="1170.5" class="mm" fill="#52514e">1</text>
+<rect x="370.2" y="1190.5" width="28" height="20" rx="6" fill="#ffffff" stroke="#e1e0d9" stroke-width="1.3"/>
+<text x="384.2" y="1204.5" class="mm" fill="#52514e">2</text>
+<rect x="402.6" y="1190.5" width="28" height="20" rx="6" fill="#ffffff" stroke="#e1e0d9" stroke-width="1.3"/>
+<text x="416.6" y="1204.5" class="mm" fill="#52514e">3</text>
+<rect x="435.0" y="1190.5" width="28" height="20" rx="6" fill="#ffffff" stroke="#e1e0d9" stroke-width="1.3"/>
+<text x="449.0" y="1204.5" class="mm" fill="#52514e">4</text>
+<rect x="467.4" y="1190.5" width="28" height="20" rx="6" fill="#ffffff" stroke="#e1e0d9" stroke-width="1.3"/>
+<text x="481.4" y="1204.5" class="mm" fill="#52514e">5</text>
+<rect x="499.8" y="1190.5" width="28" height="20" rx="6" fill="#0b0b0b" stroke="#0b0b0b" stroke-width="1.3"/>
+<text x="513.8" y="1204.5" class="mm" fill="#fff">6</text>
 </svg>

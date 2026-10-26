@@ -6,10 +6,13 @@ The source of record is the indented text tree of each safety goal in
 SVG per sheet, plus `README.md` listing the sheets. Nothing here is analysis
 content: change the trees in WP-A-04 and regenerate.
 
-Symbols: rectangle = top or intermediate event; AND / OR gate below it;
-circle = basic event; diamond = undeveloped event; triangle = transfer
-(to another sheet, or to a gate developed in another tree). An event that
-already appears earlier (same ID) is drawn again with a "repeated" tag.
+Each event is a card in the style of `fta-viewer.html`. Symbols: the icon before
+the ID is the IEC 61025 shape (square = gate, with its AND / OR symbol beneath the
+card; circle = basic event; diamond = undeveloped event; triangle = transfer, to
+another sheet or to a gate developed in another tree). An event that already
+appears earlier (same ID) is drawn again with a "repeated" tag. Each gate card
+shows the fewest item basic events in its cut sets and how many there are
+(`fta_cutsets.Solver`).
 
 Each sheet also shows, in red, the single-point paths: from a basic event in a
 cut set with exactly one item basic event (undeveloped events assumed) up to the
@@ -342,48 +345,43 @@ def single_point_nodes(tree: Tree) -> set[int]:
 # ---------------------------------------------------------------- drawing
 
 CARD_W = 220
-GAP_X = 22
+GAP_X = 18
 CHARS = 32
-LINE_H = 14.5
+LINE_H = 15
 NOTE_H = 13.5
-CHIP_H = 16
-SYM_H = 40
-LEVEL_GAP = 46
+CHIP_H = 17
+SYM_H = 30
+LEVEL_GAP = 40
 MARGIN = 40
-HEADER_H = 78
+HEADER_H = 96
 MIN_WIDTH = 1180
 
-INK, MUTED, WIRE, HAIR, NAVY, HOT = "#1d2433", "#5b6475", "#9aa3b2", "#d9dee6", "#0f2a44", "#c62828"
+# Palette shared with fta-viewer.html (fta_viewer.template.html)
+BG, CARD, INK, INK2, MUTED, LINE, GRID, SOFT = "#fcfcfb", "#ffffff", "#0b0b0b", "#52514e", "#898781", "#c9c7bf", "#e1e0d9", "#f3f2ee"
+OR_C, AND_C, BASIC_C, UE_C, HOT = "#2a78d6", "#6250d6", "#1baf7a", "#eda100", "#d03b3b"
+NAVY = INK   # kept for callers of the old palette
 SANS = "Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-MONO = "'JetBrains Mono', Menlo, Consolas, monospace"
+MONO = "'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace"
 
-BADGE_STYLE = {   # chip background, chip text
-  "spf": ("#c62828", "#fff"),
-  "latent": ("#5f6368", "#fff"),
-  "sotif": ("#6a3fb5", "#fff"),
-  "ccf": ("#b45309", "#fff"),
-  "ffi": ("#1a5fb4", "#fff"),
-  "ue": ("#3d6b3d", "#fff"),
-  "repeat": ("#e6e9ef", "#334155"),
-  "sheet": ("#e6e9ef", "#334155"),
-  "fmea": ("#111827", "#fff"),
-  "nofmea": ("#fff1f1", "#c62828"),
+BADGE_STYLE = {   # chip background, chip text, outline (None: filled chip)
+  "spf": ("#fbe9e9", "#9e2424", None),
+  "latent": ("none", INK2, MUTED),
+  "sotif": (SOFT, INK2, None),
+  "ccf": (SOFT, INK2, None),
+  "ffi": (SOFT, INK2, None),
+  "ue": ("#fff5dc", "#7a5600", None),
+  "repeat": ("none", INK2, LINE),
+  "sheet": (INK, "#fff", None),
+  "fmea": ("none", INK2, GRID),
+  "nofmea": ("#fbe9e9", "#9e2424", None),
 }
-TINT = {   # event colour (card stripe, symbol outline) and symbol fill
-  "spf": ("#c62828", "#fde8e8"),
-  "latent": ("#5f6368", "#eceef1"),
-  "sotif": ("#6a3fb5", "#efe8fb"),
-  "ccf": ("#b45309", "#fdf0e1"),
-  "ffi": ("#1a5fb4", "#e6effb"),
-  "ue": ("#3d6b3d", "#e7f1e7"),
-  "plain": ("#64748b", "#eef1f5"),
-  "gate": (INK, "#fff"),
-  "top": (NAVY, "#fff"),
-}
+STAT_STYLE = {1: ("#fbe9e9", "#9e2424"), 2: ("#fdeee6", "#9a4a25"), 3: ("#fff5dc", "#7a5600"), 4: ("#e6f5e6", "#0a6a0a"),
+              0: (SOFT, INK2)}
 KIND_LABEL = {
-  "top": "TOP EVENT", "gate": "INTERMEDIATE", "basic": "BASIC", "undeveloped": "UNDEVELOPED",
-  "transfer_in": "TRANSFER IN", "implicit_or": "ANY OF",
+  "top": "TOP EVENT", "gate": "GATE", "basic": "BASIC EVENT", "undeveloped": "UNDEVELOPED",
+  "transfer_in": "TRANSFER IN", "implicit_or": "ANY OF", "transfer_out": "TRANSFER OUT",
 }
+STATS: dict[int, tuple[int, int]] = {}   # id(defining gate) -> (fewest item BE, minimal cut sets), filled by build()
 
 ASIL_RE = re.compile(r"^\| \*\*(SG-\d+)\*\* \|[^|]*\| \*\*([A-D]|QM)\*\*", re.M)
 HARA = HERE.parents[1] / "02-concept" / "WP-C-03-hara.md"
@@ -420,7 +418,6 @@ class Box:
   node: Node
   title: str
   kind: str
-  tint: str
   lines: list[str]
   italic: list[str]
   chip_rows: list[list[tuple[str, str, float]]]
@@ -430,21 +427,19 @@ class Box:
   y: float = 0.0
   children: list[Box] = field(default_factory=list)
   symbol: str = "basic"
+  stat: tuple[int, int] | None = None
 
 
 def _chip_w(label: str) -> float:
-  return 14 + 5.7 * len(label)
+  return 12 + 5.6 * len(label)
 
 
-def _tint(node: Node) -> str:
-  if node.kind in ("top", "gate", "implicit_or", "transfer_in"):
-    return "top" if node.kind == "top" else ("plain" if node.kind == "transfer_in" else "gate")
-  if node.kind == "undeveloped":
-    return "ue"
-  for kind in ("spf", "sotif", "ccf", "latent", "ffi"):
-    if kind in {k for k, _ in node.badges}:
-      return kind
-  return "plain"
+def _stat_label(m: int) -> str:
+  return "UE only" if m == 0 else f"{m} fault{'s' if m != 1 else ''}"
+
+
+def _stat_w(m: int) -> float:
+  return 24 + 6.1 * len(_stat_label(m))
 
 
 def make_box(node: Node, sheet_root: Node, expand: bool, hot: set[int]) -> Box:
@@ -463,9 +458,9 @@ def make_box(node: Node, sheet_root: Node, expand: bool, hot: set[int]) -> Box:
       badges.append(("repeat", f"repeated, {node.ref_tree}" if node.ref_tree else "repeated"))
   transfer_out = node is not sheet_root and node.sheet_link is not None
   if transfer_out:
-    badges.append(("sheet", f"continued on sheet {node.sheet_link}"))
+    badges.append(("sheet", f"continued on sheet {node.sheet_link} ▸"))
   if node is sheet_root and node.sheet_from is not None:
-    badges.append(("sheet", f"from sheet {node.sheet_from}"))
+    badges.append(("repeat", f"from sheet {node.sheet_from}"))
   ref = FMEA_REFS.get(node.ident) if node.kind != "transfer_in" else None
   if ref is not None:
     backing = list(ref.get("fmea", [])) + [f.partition(":")[2] for f in ref.get("fmeda", [])]
@@ -477,14 +472,18 @@ def make_box(node: Node, sheet_root: Node, expand: bool, hot: set[int]) -> Box:
   used = 0.0
   for kind, label in badges:
     w = _chip_w(label)
-    if row and used + w > CARD_W - 28:
+    if row and used + w > CARD_W - 24:
       rows.append(row)
       row, used = [], 0.0
     row.append((kind, label, w))
-    used += w + 5
+    used += w + 4
   if row:
     rows.append(row)
-  h = (30 if title else 12) + LINE_H * len(lines) + NOTE_H * len(italic) + (CHIP_H + 6) * len(rows) + 12
+  target = node.ref_of if node.ref_of is not None else node
+  stat = STATS.get(id(target)) if target.children else None
+  h = (34 if title else 14) + LINE_H * len(lines) + NOTE_H * len(italic) + (CHIP_H + 5) * len(rows) + 10
+  if stat:
+    h += CHIP_H + 8
   kind = "transfer_out" if transfer_out else node.kind
   if node.kind == "implicit_or":
     symbol = "or"
@@ -494,7 +493,7 @@ def make_box(node: Node, sheet_root: Node, expand: bool, hot: set[int]) -> Box:
     symbol = node.kind
   else:
     symbol = "basic"
-  box = Box(node, title, kind, _tint(node), lines, italic, rows, h, hot=id(node) in hot, symbol=symbol)
+  box = Box(node, title, kind, lines, italic, rows, h, hot=id(node) in hot, symbol=symbol, stat=stat)
   if expand and node.children and not transfer_out:
     box.children = [make_box(c, sheet_root, True, hot) for c in node.children]
   return box
@@ -509,7 +508,7 @@ def layout(root: Box) -> tuple[float, float]:
       heights(c, d + 1)
 
   heights(root, 0)
-  level_y = {0: HEADER_H + 36}
+  level_y = {0: HEADER_H + 32}
   for d in range(1, max(level_h) + 1):
     level_y[d] = level_y[d - 1] + level_h[d - 1] + SYM_H + LEVEL_GAP
 
@@ -559,101 +558,164 @@ def _sym_bottom(kind: str) -> float:
   return {"and": 38, "or": 38, "basic": 33, "undeveloped": 34, "transfer_in": 33, "transfer_out": 33}[kind]
 
 
+def _gate(kind: str, cx: float, top: float, col: str) -> str:
+  """Small gate symbol hanging from a card, as in fta-viewer.html (34 x 30)."""
+  x0 = cx - 17
+  if kind == "or":
+    d = f"M{x0 + 2},{top + 30} Q{cx},{top + 21} {x0 + 32},{top + 30} Q{x0 + 32},{top + 10.5} {cx},{top + 1} Q{x0 + 2},{top + 10.5} {x0 + 2},{top + 30} Z"
+  elif kind == "and":
+    d = f"M{x0 + 3},{top + 30} V{top + 14.4} A14,13.4 0 0 1 {x0 + 31},{top + 14.4} V{top + 30} Z"
+  else:   # transfer out: triangle with the outgoing line
+    return (f'<path d="M{cx},{top + 1} L{cx + 15},{top + 27} L{cx - 15},{top + 27} Z" fill="{CARD}" stroke="{col}" ' +
+            f'stroke-width="2" stroke-linejoin="round"/><line x1="{cx + 8}" y1="{top + 14}" x2="{cx + 26}" y2="{top + 14}" ' +
+            f'stroke="{col}" stroke-width="2" stroke-linecap="round"/>')
+  return (f'<path d="{d}" fill="{CARD}" stroke="{col}" stroke-width="2" stroke-linejoin="round"/>' +
+          f'<text x="{cx}" y="{top + 24}" class="gl" fill="{col}">{kind.upper()}</text>')
+
+
+def _icon(symbol: str, x: float, y: float) -> str:
+  """14 x 13 type icon left of the ID: gate square, basic circle, undeveloped diamond, transfer triangle."""
+  if symbol in ("or", "and"):
+    return f'<rect x="{x + 1}" y="{y + 1}" width="12" height="11" rx="3" fill="{OR_C if symbol == "or" else AND_C}"/>'
+  if symbol == "basic":
+    return f'<circle cx="{x + 7}" cy="{y + 6.5}" r="5.5" fill="{BASIC_C}"/>'
+  if symbol == "undeveloped":
+    return f'<path d="M{x + 7},{y + 0.5} L{x + 13.5},{y + 6.5} L{x + 7},{y + 12.5} L{x + 0.5},{y + 6.5} Z" fill="{UE_C}"/>'
+  return (f'<path d="M{x + 7},{y + 1} L{x + 13},{y + 12} H{x + 1} Z" fill="none" stroke="{INK2}" stroke-width="1.7" ' +
+          'stroke-linejoin="round"/>')
+
+
 def _chip(out: list[str], x: float, y: float, kind: str, label: str, w: float) -> None:
-  bg, fg = BADGE_STYLE[kind]
-  out.append(f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="{CHIP_H}" rx="8" fill="{bg}"/>')
-  out.append(f'<text x="{x + w / 2:.1f}" y="{y + 11.5:.1f}" class="chip" fill="{fg}">{escape(label)}</text>')
+  bg, fg, outline = BADGE_STYLE[kind]
+  stroke = f' stroke="{outline}" stroke-dasharray="3 2"' if kind == "latent" else (f' stroke="{outline}"' if outline else "")
+  out.append(f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="{CHIP_H}" rx="4" fill="{bg}"{stroke}/>')
+  out.append(f'<text x="{x + w / 2:.1f}" y="{y + 12:.1f}" class="chip" fill="{fg}">{escape(label)}</text>')
 
 
-def _wire(out: list[str], x1: float, y1: float, x2: float, y2: float, hot: bool) -> None:
-  out.append(f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" class="{"wh" if hot else "w"}"/>')
+def _stat(out: list[str], x: float, y: float, m: int) -> float:
+  """Pill with the fewest item basic events in a cut set below the gate: shape and words, never colour alone."""
+  bg, fg = STAT_STYLE[min(m, 4)]
+  w = _stat_w(m)
+  out.append(f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="{CHIP_H}" rx="8.5" fill="{bg}"/>')
+  cx, cy = x + 11, y + CHIP_H / 2
+  if m == 1:
+    out.append(f'<circle cx="{cx}" cy="{cy}" r="5" fill="{fg}"/><rect x="{cx - 3}" y="{cy - 1}" width="6" height="2" fill="{bg}"/>')
+  elif m == 2:
+    out.append(f'<path d="M{cx},{cy - 4.5} L{cx + 5},{cy + 4} H{cx - 5} Z" fill="{fg}"/>')
+  elif m == 3:
+    out.append(f'<path d="M{cx},{cy - 5} L{cx + 5},{cy} L{cx},{cy + 5} L{cx - 5},{cy} Z" fill="{fg}"/>')
+  elif m >= 4:
+    out.append(f'<circle cx="{cx}" cy="{cy}" r="4.5" fill="{fg}"/>')
+  out.append(f'<text x="{x + (19 if m else 8)}" y="{y + 12.3:.1f}" class="st" fill="{fg}">{_stat_label(m)}</text>')
+  return w
 
 
-def draw_box(b: Box, out: list[str]) -> None:
+def _elbow(x0: float, y0: float, x1: float, y1: float, cls: str) -> str:
+  my, r = (y0 + y1) / 2, 10
+  if abs(x1 - x0) < 1:
+    d = f"M{x0:.1f},{y0:.1f} V{y1:.1f}"
+  else:
+    s = 1 if x1 > x0 else -1
+    r = min(r, abs(x1 - x0) / 2)
+    d = (f"M{x0:.1f},{y0:.1f} V{my - r:.1f} Q{x0:.1f},{my:.1f} {x0 + s * r:.1f},{my:.1f} H{x1 - s * r:.1f} " +
+         f"Q{x1:.1f},{my:.1f} {x1:.1f},{my + r:.1f} V{y1:.1f}")
+  return f'<path d="{d}" class="{cls}"/>'
+
+
+def draw_box(b: Box, out: list[str], wires: list[str] | None = None) -> None:
   x, y = b.x, b.y
   node = b.node
-  stripe, sym_fill = TINT[b.tint]
   top = node.kind == "top"
-  dash = ' stroke-dasharray="5 4"' if node.kind == "implicit_or" else ""
-  border = HOT if b.hot else (NAVY if top else HAIR)
-  out.append(f'<rect x="{x + 1.5}" y="{y + 2.5}" width="{CARD_W}" height="{b.h}" rx="9" class="shadow"/>')
-  out.append(f'<rect x="{x}" y="{y}" width="{CARD_W}" height="{b.h}" rx="9" fill="#fff" stroke="{border}" ' +
-             f'stroke-width="{2 if b.hot or top else 1}"{dash}/>')
-  if node.kind != "implicit_or":
-    out.append(f'<path d="M{x + 9},{y} H{x + CARD_W - 9} A9,9 0 0 1 {x + CARD_W},{y + 9} V{y + 5} H{x} V{y + 9} ' +
-               f'A9,9 0 0 1 {x + 9},{y} Z" fill="{stripe}"/>')
-  ty = y + (25 if b.title else 8)
+  latent = "latent" in {k for k, _ in node.badges}
+  dash = ' stroke-dasharray="5 4"' if node.kind == "implicit_or" or latent else ""
+  border, bw = (HOT, 2.5) if b.hot else ((MUTED, 1.5) if latent else (GRID, 1))
+  out.append(f'<rect x="{x}" y="{y + 3}" width="{CARD_W}" height="{b.h}" rx="12" class="shadow"/>')
+  out.append(f'<rect x="{x}" y="{y}" width="{CARD_W}" height="{b.h}" rx="12" fill="{CARD}" stroke="{border}" ' +
+             f'stroke-width="{bw}"{dash}/>')
+  if top:
+    out.append(f'<path d="M{x + 12},{y} H{x + CARD_W - 12} A12,12 0 0 1 {x + CARD_W},{y + 12} V{y + 5} H{x} V{y + 12} ' +
+               f'A12,12 0 0 1 {x + 12},{y} Z" fill="{INK}"/>')
+  ty = y + (24 if b.title else 10)
   if b.title:
-    out.append(f'<text x="{x + 14}" y="{ty}" class="id">{escape(b.title)}</text>')
-  label = "TRANSFER OUT" if b.kind == "transfer_out" else KIND_LABEL[node.kind]
-  out.append(f'<text x="{x + CARD_W - 14}" y="{y + 25 if b.title else y + 18}" class="kind">{label}</text>')
+    out.append(_icon(node.gate.lower() if b.symbol == "transfer_out" else b.symbol, x + 12, ty - 10.5))
+    out.append(f'<text x="{x + 32}" y="{ty}" class="id">{escape(b.title)}</text>')
+  label = KIND_LABEL["transfer_out" if b.kind == "transfer_out" else node.kind]
+  if node.kind == "gate" and b.kind != "transfer_out":
+    label = f"{node.gate} GATE"
+  out.append(f'<text x="{x + CARD_W - 12}" y="{ty if b.title else y + 18}" class="kind">{label}</text>')
+  ty += 4
   for ln in b.lines:
     ty += LINE_H
-    out.append(f'<text x="{x + 14}" y="{ty}" class="d">{escape(ln)}</text>')
+    out.append(f'<text x="{x + 12}" y="{ty}" class="d">{escape(ln)}</text>')
   for ln in b.italic:
     ty += NOTE_H
-    out.append(f'<text x="{x + 14}" y="{ty}" class="n">{escape(ln)}</text>')
+    out.append(f'<text x="{x + 12}" y="{ty}" class="n">{escape(ln)}</text>')
   ty += 8
   for row in b.chip_rows:
-    bx = x + 14
+    bx = x + 12
     for kind, lab, w in row:
       _chip(out, bx, ty, kind, lab, w)
-      bx += w + 5
-    ty += CHIP_H + 6
+      bx += w + 4
+    ty += CHIP_H + 5
+  if b.stat:
+    m, cs = b.stat
+    sy = y + b.h - CHIP_H - 10
+    w = _stat(out, x + 12, sy, m)
+    out.append(f'<text x="{x + 18 + w}" y="{sy + 12.3:.1f}" class="cs">{cs} cut set{"s" if cs != 1 else ""}</text>')
   cx = x + CARD_W / 2
-  sym_top = y + b.h
-  is_event = b.symbol in ("basic", "undeveloped", "transfer_in")
-  stroke = HOT if b.hot else (stripe if is_event else INK)
-  out.append(_symbol(b.symbol, cx, sym_top, stroke, sym_fill if is_event else "#fff", b.hot))
+  if b.symbol in ("and", "or", "transfer_out"):
+    col = HOT if b.hot else (INK2 if b.symbol == "transfer_out" else (OR_C if b.symbol == "or" else AND_C))
+    out.append(_gate(b.symbol, cx, y + b.h - 2, col))
   if b.children:
-    sb = sym_top + _sym_bottom(b.symbol)
-    bus_y = sb + LEVEL_GAP / 2
-    xs = [c.x + CARD_W / 2 for c in b.children]
-    _wire(out, min(xs), bus_y, max(xs), bus_y, False)
-    hot_xs = [c.x + CARD_W / 2 for c in b.children if c.hot]
-    if hot_xs:
-      _wire(out, min(hot_xs + [cx]), bus_y, max(hot_xs + [cx]), bus_y, True)
-    _wire(out, cx, sb, cx, bus_y, b.hot)
+    own = wires is None
+    wires = [] if own else wires
+    sb = y + b.h - 2 + SYM_H
+    for c in sorted(b.children, key=lambda c: c.hot):
+      wires.append(_elbow(cx, sb, c.x + CARD_W / 2, c.y, "wh" if b.hot and c.hot else "w"))
     for c in b.children:
-      _wire(out, c.x + CARD_W / 2, bus_y, c.x + CARD_W / 2, c.y, c.hot)
-    for c in b.children:
-      draw_box(c, out)
+      draw_box(c, out, wires)
+    if own:
+      hot_last = sorted(wires, key=lambda w: 'class="wh"' in w)
+      out[0:0] = hot_last
 
 
 def _legend(x: float, y: float) -> tuple[list[str], float]:
   out = [f'<text x="{x}" y="{y + 14}" class="lh">Symbols · IEC 61025</text>']
-  items = [
-    ("rect", "Event"), ("or", "OR gate"), ("and", "AND gate"), ("basic", "Basic event"),
-    ("undeveloped", "Undeveloped"), ("transfer_out", "Transfer out"), ("transfer_in", "Transfer in"),
-  ]
+  items = [("top", "Top event"), ("or", "OR gate"), ("and", "AND gate"), ("basic", "Basic event"),
+           ("undeveloped", "Undeveloped"), ("transfer_in", "Transfer in"), ("transfer_out", "Transfer out")]
   sx = x
   for kind, label in items:
-    cx = sx + 28
-    if kind == "rect":
-      out.append(f'<rect x="{cx - 22}" y="{y + 34}" width="44" height="28" rx="6" fill="#fff" stroke="{HAIR}"/>')
-      out.append(f'<rect x="{cx - 22}" y="{y + 34}" width="44" height="4" rx="2" fill="{INK}"/>')
-    elif kind in ("or", "and", "transfer_out"):
-      out.append(_symbol(kind, cx, y + 30))
+    if kind == "top":
+      out.append(f'<rect x="{sx}" y="{y + 30}" width="16" height="13" rx="3" fill="{CARD}" stroke="{GRID}"/>')
+      out.append(f'<rect x="{sx}" y="{y + 30}" width="16" height="3" fill="{INK}"/>')
+    elif kind == "transfer_out":
+      out.append(_icon("transfer_in", sx + 1, y + 30) +
+                 f'<line x1="{sx + 11}" y1="{y + 36.5}" x2="{sx + 19}" y2="{y + 36.5}" stroke="{INK2}" stroke-width="1.7"/>')
     else:
-      fill = TINT["ue" if kind == "undeveloped" else "plain"]
-      out.append(_symbol(kind, cx, y + 31, fill[0], fill[1]))
-    out.append(f'<text x="{cx}" y="{y + 88}" class="s" text-anchor="middle">{label}</text>')
-    sx += 80
-  cy = y + 106
+      out.append(_icon(kind, sx + 1, y + 30))
+    out.append(f'<text x="{sx + (26 if kind == "transfer_out" else 22)}" y="{y + 41}" class="s">{label}</text>')
+    sx += 26 + 6.3 * len(label) + 20
+  cy = y + 58
   bx = x
   for kind, label in [("spf", "SPF"), ("latent", "latent"), ("sotif", "SOTIF"), ("ccf", "CCF DFI-nn"),
                       ("ffi", "FFI"), ("ue", "outside item"), ("repeat", "repeated / transfer"),
-                      ("fmea", "FMEA / FMEDA row"), ("nofmea", "no FMEA")]:
+                      ("sheet", "continued on sheet ▸"), ("fmea", "FMEA / FMEDA row"), ("nofmea", "no FMEA")]:
     w = _chip_w(label)
     _chip(out, bx, cy, kind, label, w)
     bx += w + 6
-  py = cy + 38
+  sy = cy + 30
+  bx = x
+  for m in (1, 2, 3, 4):
+    bx += _stat(out, bx, sy, m) + 6
+  out.append(f'<text x="{bx + 6}" y="{sy + 12.3}" class="s">Fewest item basic events in a cut set below the gate ' +
+             '(UE assumed)</text>')
+  py = sy + 44
   out.append(f'<line x1="{x}" y1="{py - 4}" x2="{x + 34}" y2="{py - 4}" class="wh"/>')
   out.append(f'<text x="{x + 46}" y="{py}" class="lb">Single-point path</text>')
   out.append(f'<text x="{x + 46}" y="{py + 16}" class="s">One basic event in the item reaches the top event; undeveloped events ' +
              'outside the item assumed.</text>')
   out.append(f'<text x="{x + 46}" y="{py + 31}" class="s">Computed from the gate logic (see cut-sets.md); the SPF tags are ' +
-             'WP-A-04\'s own claims.</text>')
+             'WP-A-04\'s own claims. Dashed card: latent event.</text>')
   return out, py + 40 - y
 
 
@@ -674,12 +736,12 @@ def _sheet_map(sheets: list[Node], current: int, x: float, y: float, w: float, h
   out = []
   for no, root in enumerate(sheets[1:], 2):
     (px, py), (cx, cy) = pos[root.sheet_from], pos[no]
-    out.append(f'<line x1="{px:.1f}" y1="{py + 10:.1f}" x2="{cx:.1f}" y2="{cy - 10:.1f}" stroke="{WIRE}" stroke-width="1.3"/>')
+    out.append(f'<line x1="{px:.1f}" y1="{py + 10:.1f}" x2="{cx:.1f}" y2="{cy - 10:.1f}" stroke="{LINE}" stroke-width="1.3"/>')
   for no, (cx, cy) in pos.items():
     cur = no == current
-    out.append(f'<rect x="{cx - 14:.1f}" y="{cy - 10:.1f}" width="28" height="20" rx="5" ' +
-               f'fill="{NAVY if cur else "#fff"}" stroke="{NAVY}" stroke-width="1.3"/>')
-    out.append(f'<text x="{cx:.1f}" y="{cy + 4:.1f}" class="mm" fill="{"#fff" if cur else NAVY}">{no}</text>')
+    out.append(f'<rect x="{cx - 14:.1f}" y="{cy - 10:.1f}" width="28" height="20" rx="6" ' +
+               f'fill="{INK if cur else CARD}" stroke="{INK if cur else GRID}" stroke-width="1.3"/>')
+    out.append(f'<text x="{cx:.1f}" y="{cy + 4:.1f}" class="mm" fill="{"#fff" if cur else INK2}">{no}</text>')
   return out
 
 
@@ -698,14 +760,16 @@ def render_sheet(tree: Tree, sheets: list[Node], sheet_no: int, asil: str, hot: 
   footer, lh = _legend(MARGIN, fy)
   tb_w, tb_h = 500, 196
   tb_x, tb_y = width - MARGIN - tb_w, fy
+  if tb_x < MARGIN + 880:   # narrow sheet: title block under the legend
+    tb_x, tb_y = MARGIN, fy + lh + 16
   split = tb_x + 318
   footer += [
-    f'<rect x="{tb_x}" y="{tb_y}" width="{tb_w}" height="{tb_h}" rx="10" fill="#fff" stroke="{HAIR}"/>',
-    f'<line x1="{tb_x}" y1="{tb_y + 46}" x2="{tb_x + tb_w}" y2="{tb_y + 46}" stroke="{HAIR}"/>',
-    f'<line x1="{split}" y1="{tb_y + 46}" x2="{split}" y2="{tb_y + tb_h}" stroke="{HAIR}"/>',
+    f'<rect x="{tb_x}" y="{tb_y}" width="{tb_w}" height="{tb_h}" rx="12" fill="{CARD}" stroke="{GRID}"/>',
+    f'<line x1="{tb_x}" y1="{tb_y + 46}" x2="{tb_x + tb_w}" y2="{tb_y + 46}" stroke="{GRID}"/>',
+    f'<line x1="{split}" y1="{tb_y + 46}" x2="{split}" y2="{tb_y + tb_h}" stroke="{GRID}"/>',
     f'<text x="{tb_x + 18}" y="{tb_y + 29}" class="tbh">LionDriver · FTA {tree.goal}</text>',
-    f'<rect x="{tb_x + tb_w - 150}" y="{tb_y + 14}" width="132" height="20" rx="10" fill="#fff4e0" stroke="#f0c36d"/>',
-    f'<text x="{tb_x + tb_w - 84}" y="{tb_y + 28}" class="chip" fill="#8a5a00">DRAFT · NOT VERIFIED</text>',
+    f'<rect x="{tb_x + tb_w - 150}" y="{tb_y + 14}" width="132" height="20" rx="10" fill="#fff5dc"/>',
+    f'<text x="{tb_x + tb_w - 84}" y="{tb_y + 28}" class="chip" fill="#7a5600">DRAFT · NOT VERIFIED</text>',
   ]
   rows = [
     ("Top of sheet", sheet_root.ident),
@@ -723,44 +787,55 @@ def render_sheet(tree: Tree, sheets: list[Node], sheet_no: int, asil: str, hot: 
   footer += _sheet_map(sheets, sheet_no, split + 10, tb_y + 84, tb_x + tb_w - split - 20, tb_h - 100)
   total_h = max(fy + lh, tb_y + tb_h) + MARGIN
 
-  title = tree.title[0].upper() + tree.title[1:]
-  title_cls = "title" if len(title) * 11 < width - 2 * MARGIN - 260 else "title2"
-  chip_w = 236
+  title = f"{tree.root.ident} {tree.title}"
+  title_cls = "title" if len(title) * 11 < width - 2 * MARGIN - 300 else "title2"
+  root_stat = STATS.get(id(tree.root))
   css = "".join([
-    f".id{{font:700 13px {MONO};fill:{INK}}}",
-    f".kind{{font:600 9px {SANS};letter-spacing:.1em;fill:#8a93a3;text-anchor:end}}",
-    f".d{{font:400 11.5px {SANS};fill:#2b3343}}",
-    f".n{{font:italic 400 10.5px {SANS};fill:#6b7385}}",
-    f".chip{{font:600 9.5px {SANS};text-anchor:middle}}",
-    f".gl{{font:700 7.5px {SANS};letter-spacing:.06em;text-anchor:middle}}",
-    f".eyebrow{{font:600 12px {SANS};letter-spacing:.14em;fill:#9fb7d1}}",
-    f".title{{font:600 21px {SANS};fill:#fff}}",
-    f".title2{{font:600 17px {SANS};fill:#fff}}",
-    f".hc{{font:600 12px {SANS};letter-spacing:.04em;fill:#fff;text-anchor:middle}}",
+    f".id{{font:700 12.5px {MONO};fill:{INK}}}",
+    f".kind{{font:600 9px {SANS};letter-spacing:.08em;fill:{MUTED};text-anchor:end}}",
+    f".d{{font:400 12px {SANS};fill:{INK}}}",
+    f".n{{font:italic 400 10.5px {SANS};fill:{INK2}}}",
+    f".chip{{font:700 9.5px {SANS};text-anchor:middle}}",
+    f".st{{font:700 10.5px {SANS}}}",
+    f".cs{{font:400 10.5px {SANS};fill:{MUTED}}}",
+    f".gl{{font:700 7.5px {SANS};letter-spacing:.04em;text-anchor:middle}}",
+    f".eyebrow{{font:400 12px {SANS};fill:{INK2}}}",
+    f".title{{font:700 20px {SANS};fill:{INK}}}",
+    f".title2{{font:700 16px {SANS};fill:{INK}}}",
+    f".hc{{font:600 12px {SANS};fill:{INK2};text-anchor:middle}}",
     f".lh{{font:600 13px {SANS};fill:{INK}}}",
     f".lb{{font:600 12px {SANS};fill:{INK}}}",
-    f".s{{font:400 11px {SANS};fill:{MUTED}}}",
-    f".tbh{{font:700 14px {SANS};fill:{NAVY}}}",
-    f".k{{font:600 9px {SANS};letter-spacing:.12em;fill:#8a93a3}}",
+    f".s{{font:400 11px {SANS};fill:{INK2}}}",
+    f".tbh{{font:700 14px {SANS};fill:{INK}}}",
+    f".k{{font:600 9px {SANS};letter-spacing:.12em;fill:{MUTED}}}",
     f".v{{font:400 11.5px {SANS};fill:{INK}}}",
     f".mm{{font:700 11px {MONO};text-anchor:middle}}",
-    f".w{{stroke:{WIRE};stroke-width:1.4;stroke-linecap:round}}",
-    f".wh{{stroke:{HOT};stroke-width:3.2;stroke-linecap:round}}",
-    ".shadow{fill:#0f172a;opacity:.06}",
+    f".w{{fill:none;stroke:{LINE};stroke-width:1.6;stroke-linecap:round}}",
+    f".wh{{fill:none;stroke:{HOT};stroke-width:2.6;stroke-linecap:round}}",
+    ".shadow{fill:#000;opacity:.05}",
   ])
   head = [
     f'<svg xmlns="http://www.w3.org/2000/svg" width="{width:.0f}" height="{total_h:.0f}" viewBox="0 0 {width:.0f} {total_h:.0f}">',
     f'<title>FTA {tree.goal} sheet {sheet_no} of {n_sheets}: {escape(tree.title)}</title>',
     f'<style>{css}</style>',
-    '<defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">' +
-    '<circle cx="1" cy="1" r="1" fill="#e3e7ee"/></pattern></defs>',
-    '<rect width="100%" height="100%" fill="#f7f8fa"/>',
+    '<defs><pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">' +
+    '<circle cx="1.2" cy="1.2" r="1.2" fill="#e7e6e0"/></pattern></defs>',
+    f'<rect width="100%" height="100%" fill="{BG}"/>',
     f'<rect y="{HEADER_H}" width="100%" height="{total_h - HEADER_H:.0f}" fill="url(#dots)"/>',
-    f'<rect width="100%" height="{HEADER_H}" fill="{NAVY}"/>',
-    f'<text x="{MARGIN}" y="32" class="eyebrow">FTA · {tree.goal} · WP-A-04 §{tree.section}</text>',
-    f'<text x="{MARGIN}" y="59" class="{title_cls}">{escape(title)}</text>',
-    f'<rect x="{width - MARGIN - chip_w:.0f}" y="21" width="{chip_w}" height="36" rx="18" fill="#ffffff14" stroke="#ffffff40"/>',
-    f'<text x="{width - MARGIN - chip_w / 2:.0f}" y="44" class="hc">Sheet {sheet_no} of {n_sheets}  ·  ASIL {asil}</text>',
+    f'<line x1="0" y1="{HEADER_H}" x2="{width:.0f}" y2="{HEADER_H}" stroke="{GRID}"/>',
+    f'<text x="{MARGIN}" y="34" class="eyebrow">FTA › {tree.goal} · WP-A-04 §{tree.section} · ASIL {asil}</text>',
+    f'<text x="{MARGIN}" y="60" class="{title_cls}">{escape(title)}</text>',
+  ]
+  if root_stat:
+    m, cs = root_stat
+    sw: list[str] = []
+    w = _stat(sw, MARGIN, 70, m)
+    sw.append(f'<text x="{MARGIN + w + 8}" y="{82.3}" class="cs">fewest item faults that reach the top event · {cs} minimal cut sets</text>')
+    head += sw
+  chip_w = 150
+  head += [
+    f'<rect x="{width - MARGIN - chip_w:.0f}" y="28" width="{chip_w}" height="30" rx="8" fill="{CARD}" stroke="{GRID}"/>',
+    f'<text x="{width - MARGIN - chip_w / 2:.0f}" y="47" class="hc">Sheet {sheet_no} of {n_sheets}</text>',
   ]
   return "\n".join(head + body + footer) + "\n</svg>\n"
 
@@ -806,6 +881,15 @@ def build() -> dict[str, str]:
       for n in _desc(root):
         if n.sheet_link is None:
           SHEET_OF.setdefault(id(n), (goal, no))
+  import fta_cutsets   # imports this module, so not at the top
+  solver = fta_cutsets.Solver(trees)
+  STATS.clear()
+  stack = [t.root for t in trees]
+  while stack:
+    n = stack.pop()
+    if n.children and n.ref_of is None:
+      STATS[id(n)] = (_min_be(n), len(solver.cut_sets(n)))
+      stack += n.children
   asils = goal_asils()
   for tree in trees:
     sheets = all_sheets[tree.goal]
@@ -816,13 +900,16 @@ def build() -> dict[str, str]:
       outputs[name] = render_sheet(tree, sheets, no, asils.get(tree.goal, "?"), hot)
       names.append(f"[{no}: {root.ident}]({name})")
     index.append(f"| {tree.goal} | {tree.root.ident} {tree.title} | {', '.join(names)} |")
-  index += ["", "Symbols follow IEC 61025: rectangle = top or intermediate event; OR / AND gate beneath it; " +
-            "circle = basic event; diamond = undeveloped event; triangle = transfer. " +
+  index += ["", "Each event is a card, styled like [fta-viewer.html](fta-viewer.html). Symbols follow IEC 61025, " +
+            "as the icon before the ID: square = gate (blue OR, violet AND), with the gate symbol beneath the card; " +
+            "circle = basic event; diamond = undeveloped event; triangle = transfer. A dashed card is a latent event. " +
+            "Each gate card shows the fewest item basic events in a cut set below it (undeveloped events assumed) and " +
+            "its number of minimal cut sets. " +
             "Tags: SPF (single point in the baseline design), latent, SOTIF, CCF (→ WP-A-03 DFI), " +
             "FFI (→ WP-A-02), repeated (event drawn again; defined where first shown). " +
             "Red path: single-point path, one basic event in the item reaching the top event " +
             "(undeveloped events outside the item assumed), computed from the gate logic. " +
-            "Dark tags: the FMEA failure modes and FMEDA rows that realise a basic event " +
+            "Outlined tags: the FMEA failure modes and FMEDA rows that realise a basic event " +
             "([fta-fmea-map.yaml](../fta-fmea-map.yaml), checked by `fmea_lint.py`); red \"no FMEA\": an event of a mapped " +
             "tree that no FMEA row backs yet.", "",
             "Minimal cut sets computed from the same trees, and the check of the WP-A-04 tables: " +
