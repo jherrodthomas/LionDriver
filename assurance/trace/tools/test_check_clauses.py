@@ -15,7 +15,7 @@ KEYS = dict(subclause=None, source_verified_by=None, source_verified_date=None)
 
 
 def reg(*obligations):
-  return {"standard": "ISO 26262-3:2018", "obligations": [dict(KEYS, **o) for o in obligations]}
+  return {"standard": "ISO 26262-3:2018", "id_prefix": "O3", "obligations": [dict(KEYS, **o) for o in obligations]}
 
 
 def ob(oid="O3-5.01", clause="5", wp="WP-C-01", checks=("section:Item boundary",)):
@@ -55,9 +55,31 @@ class TestEvaluate(unittest.TestCase):
       self.assertTrue(problems, bad)
     rows, problems = cc.evaluate(reg(ob(), ob()), STATES, {}, ITEMS)
     self.assertTrue(any("duplicated" in p for p in problems))
-    rows, problems = cc.evaluate({"standard": "ISO 26262-3:2018", "obligations": [{"id": "O3-5.01"}]},
+    rows, problems = cc.evaluate({"standard": "ISO 26262-3:2018", "id_prefix": "O3", "obligations": [{"id": "O3-5.01"}]},
                                  STATES, {}, ITEMS)
     self.assertTrue(any("missing keys" in p for p in problems))
+
+
+class TestSectionMatch(unittest.TestCase):
+  def test_exact_heading_beats_a_longer_one_that_contains_it(self):
+    with tempfile.TemporaryDirectory() as d:
+      md = Path(d) / "WP-Z-01-x.md"
+      md.write_text("# T\n## 3. Method for deriving validation targets\n\n## 4. Validation targets\ntext\n")
+      o = ob(wp="WP-Z-01", checks=["section:Validation targets"])
+      orig = cc.work_product
+      cc.work_product = lambda wp: md
+      try:
+        rows, problems = cc.evaluate(reg(o), STATES, {}, ITEMS)
+      finally:
+        cc.work_product = orig
+      self.assertEqual(problems, [])
+      self.assertEqual(rows[0][1], "pass")               # the empty "Method for deriving..." would be open
+      self.assertIn("4. Validation targets", rows[0][2][0][2])
+
+  def test_withdrawn_items_are_not_required_to_fill_fields(self):
+    items = ITEMS + [{"id": "SG-09", "kind": "safety-goal", "safe_state": "", "ftti_text": "", "status": "withdrawn"}]
+    rows, _ = cc.evaluate(reg(ob(checks=["items:safety-goal:ftti_text"])), STATES, {}, items)
+    self.assertEqual(rows[0][1], "pass")
 
 
 class TestSources(unittest.TestCase):
