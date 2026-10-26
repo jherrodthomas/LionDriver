@@ -1044,6 +1044,20 @@ EVENTS: dict[int, dict[str, Alert | AlertCallbackType]] = {
     ET.NO_ENTRY: below_highway_speed_alert,
   },
 
+  # LionDriver (TSR-629, DQ-132): on the reference platform the item engages only after the start-up read of the EPS
+  # and ABS/VSC fault codes found none active
+  EventName.epsFaultCode: {
+    ET.NO_ENTRY: NoEntryAlert("EPS Fault Code: Have Car Checked"),
+  },
+
+  EventName.brakeFaultCode: {
+    ET.NO_ENTRY: NoEntryAlert("ABS/VSC Fault Code: Have Car Checked"),
+  },
+
+  EventName.faultCodeReadFailed: {
+    ET.NO_ENTRY: NoEntryAlert("Fault Code Check Failed: Restart Car"),
+  },
+
   # LionDriver TSR-633, TSR-624: stopping in lane, then held, until the driver takes over
   EventName.minimumRiskManeuver: {
     ET.PERMANENT: minimum_risk_maneuver_alert,

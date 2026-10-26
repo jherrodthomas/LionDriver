@@ -10,13 +10,13 @@ This report is informational: it does not fail CI, but CI asks for it to be rege
 
 | Kind | Requirements | Satisfied | Outside the item | No satisfying element | Verified by ≥ 1 case | Derived from a parent |
 |---|---|---|---|---|---|---|
-| Safety goals (WP-C-03) | 8 | 8 | 0 | 0 | 7 | — |
+| Safety goals (WP-C-03) | 8 | 8 | 0 | 0 | 7 | 8 |
 | Functional safety requirements (WP-C-04) | 58 | 53 | 4 | 1 | 57 | 58 |
-| Technical safety requirements (WP-S-02, WP-S-06) | 128 | 106 | 22 | 0 | 90 | 119 |
-| System requirements (WP-S-01) | 39 | 39 | 0 | 0 | 25 | — |
+| Technical safety requirements (WP-S-02, WP-S-06) | 128 | 106 | 22 | 0 | 91 | 119 |
+| System requirements (WP-S-01) | 39 | 39 | 0 | 0 | 25 | 39 |
 | Cybersecurity requirements (WP-S-07) | 64 | 50 | 14 | 0 | 0 | — |
 
-213 verification cases; 118 name at least one modelled requirement.
+214 verification cases; 119 name at least one modelled requirement.
 
 ## SG: not verified by any case (1)
 
@@ -30,9 +30,9 @@ FSR-06.05 (`as ref.`)
 
 FSR-08.01
 
-## TSR: not verified by any case (38)
+## TSR: not verified by any case (37)
 
-TSR-515, TSR-517, TSR-519, TSR-621, TSR-622, TSR-623, TSR-624, TSR-625, TSR-626, TSR-627, TSR-628, TSR-629, TSR-630, TSR-631, TSR-632, TSR-633, TSR-635, TSR-703, TSR-711, TSR-712, TSR-713, TSR-801, TSR-802, TSR-803, TSR-804, TSR-805, TSR-807, TSR-808, TSR-809, TSR-810, TSR-811, TSR-812, TSR-813, TSR-814, TSR-815, TSR-816, TSR-817, TSR-818
+TSR-515, TSR-517, TSR-519, TSR-621, TSR-622, TSR-623, TSR-624, TSR-625, TSR-626, TSR-627, TSR-628, TSR-630, TSR-631, TSR-632, TSR-633, TSR-635, TSR-703, TSR-711, TSR-712, TSR-713, TSR-801, TSR-802, TSR-803, TSR-804, TSR-805, TSR-807, TSR-808, TSR-809, TSR-810, TSR-811, TSR-812, TSR-813, TSR-814, TSR-815, TSR-816, TSR-817, TSR-818
 
 ## TSR: no parent requirement in the model (9)
 

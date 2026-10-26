@@ -150,7 +150,7 @@
 
 - id: SYS-021
   kind: system-requirement
-  text: "The set-speed range shall be the PCM cruise set range of the reference vehicle, and shall not exceed the ODD speed bound of 120 km/h (ODD-H) / 90 km/h (ODD-A)."
+  text: "The set-speed range shall be the PCM cruise set range of the reference vehicle, and shall not exceed the ODD speed bound of 110 km/h (ODD-H, DQ-260; the arterial ODD-A was dropped, DQ-023)."
   type: "C"
   criterion: "as stated"
   functions: [F-02]

@@ -1,0 +1,388 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1820" viewBox="0 0 1280 1820" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 10-1. The system requirements by function (WP-S-01)</title>
+<desc>39 system requirements of WP-S-01. SYS-001 (P, LOG, T-VEH, target TBD). SYS-002 (C, T-SIL). SYS-003 (P, T-VEH, LOG, target TBD). SYS-004 (H, T-SIL). SYS-005 (F, T-SIL, no test case). SYS-006 (F, T-SIL, no test case). SYS-007 (F, T-SIL). SYS-008 (P, LOG, T-VEH, target TBD). SYS-020 (P, T-VEH, target TBD). SYS-021 (C, R, T-VEH). SYS-022 (P, T-VEH, LOG, target TBD). SYS-023 (C, R). SYS-024 (F/P, T-VEH, target TBD). SYS-025 (F, T-VEH, target TBD). SYS-026 (P, T-SIL). SYS-027 (C, R, T-SIL, no test case). SYS-040 (F, T-SIL, T-VEH). SYS-041 (F, T-SIL, T-VEH, target TBD). SYS-042 (F, T-VEH). SYS-043 (P, T-VEH, target TBD, no test case). SYS-060 (H, T-SIL, T-VEH). SYS-061 (P, LOG, no test case). SYS-062 (P, T-VEH, LOG, target TBD). SYS-063 (F, T-SIL, T-VEH). SYS-080 (H, T-VEH). SYS-081 (P, T-HIL). SYS-082 (H, R). SYS-083 (P, T-VEH, target TBD, no test case). SYS-100 (F, T-SIL, no test case). SYS-101 (P, LOG, target TBD, no test case). SYS-102 (F, T-SIL, no test case). SYS-120 (P, LOG). SYS-121 (I, T-HIL, no test case). SYS-140 (F, T-SIL). SYS-141 (F, R). SYS-142 (F, T-SIL, no test case). SYS-143 (C, T-SIL, no test case). SYS-144 (C, R, T-SIL, no test case). SYS-145 (F, T-VEH, no test case).</desc>
+<defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="1820" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 10-1 · The system requirements by function</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">The 39 system requirements of §2–§9, each with its type, its verification methods and two flags: 12 with a target still TBD, 14 with no test case yet</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-S-01 · SysML coverage</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="30" y="104" width="1220" height="242" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="128" font-size="13" fill="#0F172A" font-weight="700">F-01 Lateral control (lane centring, assisted lane change)</text>
+<rect x="40" y="138" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="50" y="156" font-size="11.5" fill="#0F172A" font-weight="700">SYS-001</text>
+<rect x="114" y="144" width="73.6" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="150.8" y="156" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">performance</text>
+<text x="50" y="174" font-size="9.5" fill="#0F172A">While lateral control is active on a straight or curved road</text>
+<text x="50" y="186" font-size="9.5" fill="#0F172A">inside the ODD, the system shall keep the vehicle near the</text>
+<text x="50" y="198" font-size="9.5" fill="#0F172A">lane centre.</text>
+<rect x="50" y="210" width="69" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="84.5" y="221" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">target TBD</text>
+<text x="322.5" y="221" font-size="9" fill="#475569" text-anchor="end">LOG, T-VEH</text>
+<rect x="342.5" y="138" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="352.5" y="156" font-size="11.5" fill="#0F172A" font-weight="700">SYS-002</text>
+<rect x="416.5" y="144" width="68" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="450.5" y="156" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">constraint</text>
+<text x="352.5" y="174" font-size="9.5" fill="#0F172A">The commanded lateral acceleration shall not exceed 3.0</text>
+<text x="352.5" y="186" font-size="9.5" fill="#0F172A">m/s² (roll-compensated) and the lateral jerk shall not exceed</text>
+<text x="352.5" y="198" font-size="9.5" fill="#0F172A">5 m/s³.</text>
+<text x="625" y="221" font-size="9" fill="#475569" text-anchor="end">T-SIL</text>
+<rect x="645" y="138" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="655" y="156" font-size="11.5" fill="#0F172A" font-weight="700">SYS-003</text>
+<rect x="719" y="144" width="73.6" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="755.8" y="156" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">performance</text>
+<text x="655" y="174" font-size="9.5" fill="#0F172A">The system shall follow curves down to the radius R_ODD =</text>
+<text x="655" y="186" font-size="9.5" fill="#0F172A">v²/2.5 m/s² at the travel speed without saturating the</text>
+<text x="655" y="198" font-size="9.5" fill="#0F172A">steering command.</text>
+<rect x="655" y="210" width="69" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="689.5" y="221" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">target TBD</text>
+<text x="927.5" y="221" font-size="9" fill="#475569" text-anchor="end">T-VEH, LOG</text>
+<rect x="947.5" y="138" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="957.5" y="156" font-size="11.5" fill="#0F172A" font-weight="700">SYS-004</text>
+<rect x="1021.5" y="144" width="28.8" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="1035.9" y="156" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">HMI</text>
+<text x="957.5" y="174" font-size="9.5" fill="#0F172A">When the steering command saturates, the system shall warn</text>
+<text x="957.5" y="186" font-size="9.5" fill="#0F172A">the driver ("Turn Exceeds Steering Limit").</text>
+<text x="1230" y="221" font-size="9" fill="#475569" text-anchor="end">T-SIL</text>
+<rect x="40" y="240" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="50" y="258" font-size="11.5" fill="#0F172A" font-weight="700">SYS-005</text>
+<rect x="114" y="246" width="68" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="148" y="258" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">functional</text>
+<text x="50" y="276" font-size="9.5" fill="#0F172A">An assisted lane change shall start only after the driver</text>
+<text x="50" y="288" font-size="9.5" fill="#0F172A">activates the turn signal and applies steering torque in the</text>
+<text x="50" y="300" font-size="9.5" fill="#0F172A">same direction, above 20 mph.</text>
+<rect x="50" y="312" width="80.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="90.2" y="323" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">no test case</text>
+<text x="322.5" y="323" font-size="9" fill="#475569" text-anchor="end">T-SIL</text>
+<rect x="342.5" y="240" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="352.5" y="258" font-size="11.5" fill="#0F172A" font-weight="700">SYS-006</text>
+<rect x="416.5" y="246" width="68" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="450.5" y="258" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">functional</text>
+<text x="352.5" y="276" font-size="9.5" fill="#0F172A">An assisted lane change shall complete or be cancelled</text>
+<text x="352.5" y="288" font-size="9.5" fill="#0F172A">within 10 s of the turn signal; it shall be cancelled when the</text>
+<text x="352.5" y="300" font-size="9.5" fill="#0F172A">turn signal is released.</text>
+<rect x="352.5" y="312" width="80.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="392.7" y="323" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">no test case</text>
+<text x="625" y="323" font-size="9" fill="#475569" text-anchor="end">T-SIL</text>
+<rect x="645" y="240" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="655" y="258" font-size="11.5" fill="#0F172A" font-weight="700">SYS-007</text>
+<rect x="719" y="246" width="68" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="753" y="258" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">functional</text>
+<text x="655" y="276" font-size="9.5" fill="#0F172A">Lateral control shall not be active at standstill and shall</text>
+<text x="655" y="288" font-size="9.5" fill="#0F172A">resume without a steering jump when the vehicle moves off.</text>
+<text x="927.5" y="323" font-size="9" fill="#475569" text-anchor="end">T-SIL</text>
+<rect x="947.5" y="240" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="957.5" y="258" font-size="11.5" fill="#0F172A" font-weight="700">SYS-008</text>
+<rect x="1021.5" y="246" width="73.6" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="1058.3" y="258" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">performance</text>
+<text x="957.5" y="276" font-size="9.5" fill="#0F172A">Lateral control shall not cause oscillation (weaving) on a</text>
+<text x="957.5" y="288" font-size="9.5" fill="#0F172A">straight road.</text>
+<rect x="957.5" y="312" width="69" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="992" y="323" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">target TBD</text>
+<text x="1230" y="323" font-size="9" fill="#475569" text-anchor="end">LOG, T-VEH</text>
+<rect x="30" y="358" width="1220" height="242" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="382" font-size="13" fill="#0F172A" font-weight="700">F-02 Longitudinal control (ACC with stop-and-go)</text>
+<rect x="40" y="392" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="50" y="410" font-size="11.5" fill="#0F172A" font-weight="700">SYS-020</text>
+<rect x="114" y="398" width="73.6" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="150.8" y="410" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">performance</text>
+<text x="50" y="428" font-size="9.5" fill="#0F172A">The system shall hold the set speed within ±TBD km/h on</text>
+<text x="50" y="440" font-size="9.5" fill="#0F172A">level road without a lead.</text>
+<rect x="50" y="464" width="69" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="84.5" y="475" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">target TBD</text>
+<text x="322.5" y="475" font-size="9" fill="#475569" text-anchor="end">T-VEH</text>
+<rect x="342.5" y="392" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="352.5" y="410" font-size="11.5" fill="#0F172A" font-weight="700">SYS-021</text>
+<rect x="416.5" y="398" width="68" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="450.5" y="410" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">constraint</text>
+<text x="352.5" y="428" font-size="9.5" fill="#0F172A">The set-speed range shall be the PCM cruise set range of</text>
+<text x="352.5" y="440" font-size="9.5" fill="#0F172A">the reference vehicle, and shall not exceed the ODD speed</text>
+<text x="352.5" y="452" font-size="9.5" fill="#0F172A">bound of 110 km/h (ODD-H, DQ-260; the arterial ODD-A was…</text>
+<text x="625" y="475" font-size="9" fill="#475569" text-anchor="end">R, T-VEH</text>
+<rect x="645" y="392" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="655" y="410" font-size="11.5" fill="#0F172A" font-weight="700">SYS-022</text>
+<rect x="719" y="398" width="73.6" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="755.8" y="410" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">performance</text>
+<text x="655" y="428" font-size="9.5" fill="#0F172A">When following a lead, the system shall keep a time gap</text>
+<text x="655" y="440" font-size="9.5" fill="#0F172A">equal to the selected personality: relaxed 1.75 s, standard</text>
+<text x="655" y="452" font-size="9.5" fill="#0F172A">1.45 s, aggressive 1.25 s.</text>
+<rect x="655" y="464" width="69" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="689.5" y="475" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">target TBD</text>
+<text x="927.5" y="475" font-size="9" fill="#475569" text-anchor="end">T-VEH, LOG</text>
+<rect x="947.5" y="392" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="957.5" y="410" font-size="11.5" fill="#0F172A" font-weight="700">SYS-023</text>
+<rect x="1021.5" y="398" width="68" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="1055.5" y="410" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">constraint</text>
+<text x="957.5" y="428" font-size="9.5" fill="#0F172A">The default personality in the reference configuration shall</text>
+<text x="957.5" y="440" font-size="9.5" fill="#0F172A">be "standard" or "relaxed", not "aggressive".</text>
+<text x="1230" y="475" font-size="9" fill="#475569" text-anchor="end">R</text>
+<rect x="40" y="494" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="50" y="512" font-size="11.5" fill="#0F172A" font-weight="700">SYS-024</text>
+<rect x="114" y="500" width="68" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="148" y="512" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">functional</text>
+<rect x="186" y="500" width="73.6" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="222.8" y="512" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">performance</text>
+<text x="50" y="530" font-size="9.5" fill="#0F172A">The system shall bring the vehicle to a stop behind a</text>
+<text x="50" y="542" font-size="9.5" fill="#0F172A">stopping lead, keeping a stopped distance of about 6 m, and</text>
+<text x="50" y="554" font-size="9.5" fill="#0F172A">hold it at standstill.</text>
+<rect x="50" y="566" width="69" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="84.5" y="577" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">target TBD</text>
+<text x="322.5" y="577" font-size="9" fill="#475569" text-anchor="end">T-VEH</text>
+<rect x="342.5" y="494" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="352.5" y="512" font-size="11.5" fill="#0F172A" font-weight="700">SYS-025</text>
+<rect x="416.5" y="500" width="68" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="450.5" y="512" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">functional</text>
+<text x="352.5" y="530" font-size="9.5" fill="#0F172A">After a standstill, the system shall resume automatically</text>
+<text x="352.5" y="542" font-size="9.5" fill="#0F172A">when the lead moves off, within TBD s; without a lead, it</text>
+<text x="352.5" y="554" font-size="9.5" fill="#0F172A">shall not move off without a driver action.</text>
+<rect x="352.5" y="566" width="69" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="387" y="577" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">target TBD</text>
+<text x="625" y="577" font-size="9" fill="#475569" text-anchor="end">T-VEH</text>
+<rect x="645" y="494" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="655" y="512" font-size="11.5" fill="#0F172A" font-weight="700">SYS-026</text>
+<rect x="719" y="500" width="73.6" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="755.8" y="512" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">performance</text>
+<text x="655" y="530" font-size="9.5" fill="#0F172A">Comfort: in normal following, the commanded acceleration</text>
+<text x="655" y="542" font-size="9.5" fill="#0F172A">shall stay within the cruise limits (1.6→0.6 m/s² by speed,</text>
+<text x="655" y="554" font-size="9.5" fill="#0F172A">−1.2 m/s² cruise braking) and use stronger braking only for…</text>
+<text x="927.5" y="577" font-size="9" fill="#475569" text-anchor="end">T-SIL</text>
+<rect x="947.5" y="494" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="957.5" y="512" font-size="11.5" fill="#0F172A" font-weight="700">SYS-027</text>
+<rect x="1021.5" y="500" width="68" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="1055.5" y="512" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">constraint</text>
+<text x="957.5" y="530" font-size="9.5" fill="#0F172A">Experimental Mode (end-to-end longitudinal) shall be disabled</text>
+<text x="957.5" y="542" font-size="9.5" fill="#0F172A">and not selectable in the reference configuration until</text>
+<text x="957.5" y="554" font-size="9.5" fill="#0F172A">decision D-08 includes it.</text>
+<rect x="957.5" y="566" width="80.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="997.7" y="577" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">no test case</text>
+<text x="1230" y="577" font-size="9" fill="#475569" text-anchor="end">R, T-SIL</text>
+<rect x="30" y="612" width="1220" height="140" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="636" font-size="13" fill="#0F172A" font-weight="700">F-03 Engagement and mode management</text>
+<rect x="40" y="646" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="50" y="664" font-size="11.5" fill="#0F172A" font-weight="700">SYS-040</text>
+<rect x="114" y="652" width="68" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="148" y="664" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">functional</text>
+<text x="50" y="682" font-size="9.5" fill="#0F172A">Engagement shall be possible only through the stock cruise</text>
+<text x="50" y="694" font-size="9.5" fill="#0F172A">controls and only when no no-entry condition is present. In</text>
+<text x="50" y="706" font-size="9.5" fill="#0F172A">the reference configuration a setting outside the assured…</text>
+<text x="322.5" y="729" font-size="9" fill="#475569" text-anchor="end">T-SIL, T-VEH</text>
+<rect x="342.5" y="646" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="352.5" y="664" font-size="11.5" fill="#0F172A" font-weight="700">SYS-041</text>
+<rect x="416.5" y="652" width="68" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="450.5" y="664" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">functional</text>
+<text x="352.5" y="682" font-size="9.5" fill="#0F172A">The system shall refuse engagement, with a no-entry alert,</text>
+<text x="352.5" y="694" font-size="9.5" fill="#0F172A">below the highway speed floor v_floor, and shall engage from</text>
+<text x="352.5" y="706" font-size="9.5" fill="#0F172A">v_floor up to the ODD speed bound. This is the entry check…</text>
+<rect x="352.5" y="718" width="69" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="387" y="729" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">target TBD</text>
+<text x="625" y="729" font-size="9" fill="#475569" text-anchor="end">T-SIL, T-VEH</text>
+<rect x="645" y="646" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="655" y="664" font-size="11.5" fill="#0F172A" font-weight="700">SYS-042</text>
+<rect x="719" y="652" width="68" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="753" y="664" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">functional</text>
+<text x="655" y="682" font-size="9.5" fill="#0F172A">A brake press or cancel shall disengage; the accelerator</text>
+<text x="655" y="694" font-size="9.5" fill="#0F172A">shall override longitudinal control without disengaging</text>
+<text x="655" y="706" font-size="9.5" fill="#0F172A">(reference setting).</text>
+<text x="927.5" y="729" font-size="9" fill="#475569" text-anchor="end">T-VEH</text>
+<rect x="947.5" y="646" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="957.5" y="664" font-size="11.5" fill="#0F172A" font-weight="700">SYS-043</text>
+<rect x="1021.5" y="652" width="73.6" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="1058.3" y="664" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">performance</text>
+<text x="957.5" y="682" font-size="9.5" fill="#0F172A">After start-up, the system shall be ready to engage within</text>
+<text x="957.5" y="694" font-size="9.5" fill="#0F172A">TBD s of ignition on.</text>
+<rect x="957.5" y="718" width="69" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="992" y="729" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">target TBD</text>
+<rect x="1030.5" y="718" width="80.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="1070.7" y="729" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">no test case</text>
+<text x="1230" y="729" font-size="9" fill="#475569" text-anchor="end">T-VEH</text>
+<rect x="30" y="764" width="1220" height="140" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="788" font-size="13" fill="#0F172A" font-weight="700">F-04 Driver monitoring</text>
+<rect x="40" y="798" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="50" y="816" font-size="11.5" fill="#0F172A" font-weight="700">SYS-060</text>
+<rect x="114" y="804" width="28.8" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="128.4" y="816" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">HMI</text>
+<text x="50" y="834" font-size="9.5" fill="#0F172A">Above 10 km/h, DM shall warn a visually distracted driver</text>
+<text x="50" y="846" font-size="9.5" fill="#0F172A">with escalating alerts at 5, 8 and 13 s (vision policy) or 5,</text>
+<text x="50" y="858" font-size="9.5" fill="#0F172A">15 and 25 s (wheel-touch policy).</text>
+<text x="322.5" y="881" font-size="9" fill="#475569" text-anchor="end">T-SIL, T-VEH</text>
+<rect x="342.5" y="798" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="352.5" y="816" font-size="11.5" fill="#0F172A" font-weight="700">SYS-061</text>
+<rect x="416.5" y="804" width="73.6" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="453.3" y="816" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">performance</text>
+<text x="352.5" y="834" font-size="9.5" fill="#0F172A">DM classification performance shall meet AIR-07/AIR-08 of</text>
+<text x="352.5" y="846" font-size="9.5" fill="#0F172A">WP-C-11.</text>
+<rect x="352.5" y="870" width="80.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="392.7" y="881" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">no test case</text>
+<text x="625" y="881" font-size="9" fill="#475569" text-anchor="end">LOG</text>
+<rect x="645" y="798" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="655" y="816" font-size="11.5" fill="#0F172A" font-weight="700">SYS-062</text>
+<rect x="719" y="804" width="73.6" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="755.8" y="816" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">performance</text>
+<text x="655" y="834" font-size="9.5" fill="#0F172A">DM shall work in the ODD lighting conditions (day, dusk,</text>
+<text x="655" y="846" font-size="9.5" fill="#0F172A">night with IR) and with sunglasses, or fall back to the</text>
+<text x="655" y="858" font-size="9.5" fill="#0F172A">wheel-touch policy.</text>
+<rect x="655" y="870" width="69" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="689.5" y="881" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">target TBD</text>
+<text x="927.5" y="881" font-size="9" fill="#475569" text-anchor="end">T-VEH, LOG</text>
+<rect x="947.5" y="798" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="957.5" y="816" font-size="11.5" fill="#0F172A" font-weight="700">SYS-063</text>
+<rect x="1021.5" y="804" width="68" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="1055.5" y="816" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">functional</text>
+<text x="957.5" y="834" font-size="9.5" fill="#0F172A">On no response to the highest alert, the system shall slow</text>
+<text x="957.5" y="846" font-size="9.5" fill="#0F172A">the vehicle, disengage and lock out re-engagement</text>
+<text x="957.5" y="858" font-size="9.5" fill="#0F172A">(1/5/15/30 min).</text>
+<text x="1230" y="881" font-size="9" fill="#475569" text-anchor="end">T-SIL, T-VEH</text>
+<rect x="30" y="916" width="1220" height="140" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="940" font-size="13" fill="#0F172A" font-weight="700">F-05 Driver information and warnings (HMI)</text>
+<rect x="40" y="950" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="50" y="968" font-size="11.5" fill="#0F172A" font-weight="700">SYS-080</text>
+<rect x="114" y="956" width="28.8" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="128.4" y="968" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">HMI</text>
+<text x="50" y="986" font-size="9.5" fill="#0F172A">The engaged/disengaged state shall be shown continuously</text>
+<text x="50" y="998" font-size="9.5" fill="#0F172A">on the device and through the cluster cruise indicator and</text>
+<text x="50" y="1010" font-size="9.5" fill="#0F172A">LKAS HUD.</text>
+<text x="322.5" y="1033" font-size="9" fill="#475569" text-anchor="end">T-VEH</text>
+<rect x="342.5" y="950" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="352.5" y="968" font-size="11.5" fill="#0F172A" font-weight="700">SYS-081</text>
+<rect x="416.5" y="956" width="73.6" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="453.3" y="968" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">performance</text>
+<text x="352.5" y="986" font-size="9.5" fill="#0F172A">An alert shall be displayed and its sound started within ≤</text>
+<text x="352.5" y="998" font-size="9.5" fill="#0F172A">0.2 s of the event being raised by selfdrived.</text>
+<text x="625" y="1033" font-size="9" fill="#475569" text-anchor="end">T-HIL</text>
+<rect x="645" y="950" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="655" y="968" font-size="11.5" fill="#0F172A" font-weight="700">SYS-082</text>
+<rect x="719" y="956" width="28.8" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="733.4" y="968" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">HMI</text>
+<text x="655" y="986" font-size="9.5" fill="#0F172A">Alert text shall describe the actual cause.</text>
+<text x="927.5" y="1033" font-size="9" fill="#475569" text-anchor="end">R</text>
+<rect x="947.5" y="950" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="957.5" y="968" font-size="11.5" fill="#0F172A" font-weight="700">SYS-083</text>
+<rect x="1021.5" y="956" width="73.6" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="1058.3" y="968" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">performance</text>
+<text x="957.5" y="986" font-size="9.5" fill="#0F172A">Alerts and sounds shall be perceivable at highway noise</text>
+<text x="957.5" y="998" font-size="9.5" fill="#0F172A">levels.</text>
+<rect x="957.5" y="1022" width="69" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="992" y="1033" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">target TBD</text>
+<rect x="1030.5" y="1022" width="80.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="1070.7" y="1033" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">no test case</text>
+<text x="1230" y="1033" font-size="9" fill="#475569" text-anchor="end">T-VEH</text>
+<rect x="30" y="1068" width="1220" height="140" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="1092" font-size="13" fill="#0F172A" font-weight="700">F-06 / F-07 Forward collision warning and lane departure warning</text>
+<rect x="40" y="1102" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="50" y="1120" font-size="11.5" fill="#0F172A" font-weight="700">SYS-100</text>
+<rect x="114" y="1108" width="68" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="148" y="1120" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">functional</text>
+<text x="50" y="1138" font-size="9.5" fill="#0F172A">FCW shall alert when the model predicts hard braking or the</text>
+<text x="50" y="1150" font-size="9.5" fill="#0F172A">planner predicts a collision.</text>
+<rect x="50" y="1174" width="80.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="90.2" y="1185" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">no test case</text>
+<text x="322.5" y="1185" font-size="9" fill="#475569" text-anchor="end">T-SIL</text>
+<rect x="342.5" y="1102" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="352.5" y="1120" font-size="11.5" fill="#0F172A" font-weight="700">SYS-101</text>
+<rect x="416.5" y="1108" width="73.6" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="453.3" y="1120" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">performance</text>
+<text x="352.5" y="1138" font-size="9.5" fill="#0F172A">FCW false alert rate shall be ≤ TBD per 1000 km.</text>
+<rect x="352.5" y="1174" width="69" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="387" y="1185" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">target TBD</text>
+<rect x="425.5" y="1174" width="80.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="465.7" y="1185" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">no test case</text>
+<text x="625" y="1185" font-size="9" fill="#475569" text-anchor="end">LOG</text>
+<rect x="645" y="1102" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="655" y="1120" font-size="11.5" fill="#0F172A" font-weight="700">SYS-102</text>
+<rect x="719" y="1108" width="68" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="753" y="1120" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">functional</text>
+<text x="655" y="1138" font-size="9.5" fill="#0F172A">LDW shall warn when not laterally engaged, above 31 mph,</text>
+<text x="655" y="1150" font-size="9.5" fill="#0F172A">with no turn signal in the last 5 s, when the vehicle drifts</text>
+<text x="655" y="1162" font-size="9.5" fill="#0F172A">toward a visible lane line.</text>
+<rect x="655" y="1174" width="80.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="695.2" y="1185" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">no test case</text>
+<text x="927.5" y="1185" font-size="9" fill="#475569" text-anchor="end">T-SIL</text>
+<rect x="30" y="1220" width="1220" height="140" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="1244" font-size="13" fill="#0F172A" font-weight="700">F-08 Safety envelope (functional aspects)</text>
+<rect x="40" y="1254" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="50" y="1272" font-size="11.5" fill="#0F172A" font-weight="700">SYS-120</text>
+<rect x="114" y="1260" width="73.6" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="150.8" y="1272" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">performance</text>
+<text x="50" y="1290" font-size="9.5" fill="#0F172A">In normal operation inside the ODD, the envelope shall not</text>
+<text x="50" y="1302" font-size="9.5" fill="#0F172A">reject any command produced by the SoC controller (no false</text>
+<text x="50" y="1314" font-size="9.5" fill="#0F172A">interventions).</text>
+<text x="322.5" y="1337" font-size="9" fill="#475569" text-anchor="end">LOG</text>
+<rect x="342.5" y="1254" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="352.5" y="1272" font-size="11.5" fill="#0F172A" font-weight="700">SYS-121</text>
+<rect x="416.5" y="1260" width="62.4" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="447.7" y="1272" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">interface</text>
+<text x="352.5" y="1290" font-size="9.5" fill="#0F172A">The envelope shall report its mode, parameter, authority</text>
+<text x="352.5" y="1302" font-size="9.5" fill="#0F172A">state, fault flags and counters to the SoC at ≥ 10 Hz.</text>
+<rect x="352.5" y="1326" width="80.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="392.7" y="1337" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">no test case</text>
+<text x="625" y="1337" font-size="9" fill="#475569" text-anchor="end">T-HIL</text>
+<rect x="30" y="1372" width="1220" height="242" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="1396" font-size="13" fill="#0F172A" font-weight="700">F-09 Logging, upload, remote access, update</text>
+<rect x="40" y="1406" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="50" y="1424" font-size="11.5" fill="#0F172A" font-weight="700">SYS-140</text>
+<rect x="114" y="1412" width="68" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="148" y="1424" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">functional</text>
+<text x="50" y="1442" font-size="9.5" fill="#0F172A">Every drive shall be logged in 60 s segments including CAN,</text>
+<text x="50" y="1454" font-size="9.5" fill="#0F172A">carControl, selfdriveState, pandaStates and model outputs.</text>
+<text x="322.5" y="1489" font-size="9" fill="#475569" text-anchor="end">T-SIL</text>
+<rect x="342.5" y="1406" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="352.5" y="1424" font-size="11.5" fill="#0F172A" font-weight="700">SYS-141</text>
+<rect x="416.5" y="1412" width="68" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="450.5" y="1424" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">functional</text>
+<text x="352.5" y="1442" font-size="9.5" fill="#0F172A">Logs shall identify the software release, panda firmware</text>
+<text x="352.5" y="1454" font-size="9.5" fill="#0F172A">version and model artefacts in use.</text>
+<text x="625" y="1489" font-size="9" fill="#475569" text-anchor="end">R</text>
+<rect x="645" y="1406" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="655" y="1424" font-size="11.5" fill="#0F172A" font-weight="700">SYS-142</text>
+<rect x="719" y="1412" width="68" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="753" y="1424" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">functional</text>
+<text x="655" y="1442" font-size="9.5" fill="#0F172A">Segments flagged by the driver shall be preserved from</text>
+<text x="655" y="1454" font-size="9.5" fill="#0F172A">automatic deletion.</text>
+<rect x="655" y="1478" width="80.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="695.2" y="1489" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">no test case</text>
+<text x="927.5" y="1489" font-size="9" fill="#475569" text-anchor="end">T-SIL</text>
+<rect x="947.5" y="1406" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="957.5" y="1424" font-size="11.5" fill="#0F172A" font-weight="700">SYS-143</text>
+<rect x="1021.5" y="1412" width="68" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="1055.5" y="1424" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">constraint</text>
+<text x="957.5" y="1442" font-size="9.5" fill="#0F172A">Automatic deletion shall keep at least 5 GiB or 10 % of</text>
+<text x="957.5" y="1454" font-size="9.5" fill="#0F172A">storage free.</text>
+<rect x="957.5" y="1478" width="80.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="997.7" y="1489" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">no test case</text>
+<text x="1230" y="1489" font-size="9" fill="#475569" text-anchor="end">T-SIL</text>
+<rect x="40" y="1508" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="50" y="1526" font-size="11.5" fill="#0F172A" font-weight="700">SYS-144</text>
+<rect x="114" y="1514" width="68" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="148" y="1526" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">constraint</text>
+<text x="50" y="1544" font-size="9.5" fill="#0F172A">Uploads, remote access and software updates shall be</text>
+<text x="50" y="1556" font-size="9.5" fill="#0F172A">configurable to the LionDriver policy and shall not run while</text>
+<text x="50" y="1568" font-size="9.5" fill="#0F172A">onroad unless the policy allows it.</text>
+<rect x="50" y="1580" width="80.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="90.2" y="1591" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">no test case</text>
+<text x="322.5" y="1591" font-size="9" fill="#475569" text-anchor="end">R, T-SIL</text>
+<rect x="342.5" y="1508" width="292.5" height="92" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="352.5" y="1526" font-size="11.5" fill="#0F172A" font-weight="700">SYS-145</text>
+<rect x="416.5" y="1514" width="68" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="450.5" y="1526" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">functional</text>
+<text x="352.5" y="1544" font-size="9.5" fill="#0F172A">With automatic updates disabled, the system shall not block</text>
+<text x="352.5" y="1556" font-size="9.5" fill="#0F172A">engagement because of missing update connectivity.</text>
+<rect x="352.5" y="1580" width="80.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="392.7" y="1591" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">no test case</text>
+<text x="625" y="1591" font-size="9" fill="#475569" text-anchor="end">T-VEH</text>
+<rect x="40" y="1622" width="30" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="78" y="1634" font-size="11" fill="#0F172A">target TBD: the value is not set yet (OI-1)</text>
+<rect x="380" y="1622" width="30" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="418" y="1634" font-size="11" fill="#0F172A">no test case: no specified case verifies it (WP-S-09 OI-6)</text>
+<text x="40" y="1652" font-size="11" fill="#475569">Verification methods: A analysis · R review · T-SIL software test or process replay · T-HIL bench test · T-VEH vehicle test · LOG drive-log analysis · SIM simulation.</text>
+<text x="40" y="1670" font-size="11" fill="#475569">Generated by fig_s01_requirements.py from WP-S-01 §2–§9 and the coverage report of the SysML model; nothing is hand-listed. These are the non-safety requirements; the safety ones are the TSRs of WP-S-02.</text>
+<g class="terms">
+<text x="40" y="1692" font-size="10.5" fill="#475569">Terms: ACC adaptive cruise control · AIR-nn AI safety requirement (WP-C-11 §6) · CAN controller area network: the vehicle's data bus · D-nn design decision of the earlier decision list (D-01…D-12; D-08 is the</text>
+<text x="40" y="1706.5" font-size="10.5" fill="#475569">Experimental Mode decision) · DM driver monitoring · DQ-nn decision of the project lead (decision register) · F-nn function of the item (WP-C-01 §2.1), F-01…F-09 · FCW forward collision warning · GiB gibibyte (2³⁰</text>
+<text x="40" y="1721" font-size="10.5" fill="#475569">bytes) · HMI human-machine interface: display, sounds, cluster · HUD head-up display (here the cluster's lane-assist display) · IR infrared · LDW lane departure warning · LKAS lane keeping assist system · LOG</text>
+<text x="40" y="1735.5" font-size="10.5" fill="#475569">verification by analysis of drive logs · ODD operational design domain: where the system is meant to work · ODD-H the claimed ODD: limited-access highways · OI-nn open item of the document it appears in · PCM</text>
+<text x="40" y="1750" font-size="10.5" fill="#475569">powertrain control module (engine and drive) · SIM verification by scenario simulation · SoC system on chip: the comma device's main processor, running openpilot (QM) · SYS system requirement SYS-nnn of WP-S-01 ·</text>
+<text x="40" y="1764.5" font-size="10.5" fill="#475569">SysML Systems Modeling Language: the system model in models/sysml · T-HIL verification by bench test with the real panda (hardware in the loop) · T-SIL verification by software test or process replay (WP-S-01 §1.1)</text>
+<text x="40" y="1779" font-size="10.5" fill="#475569">· T-VEH verification by vehicle test · TBD to be determined: a value not yet set · TSR-nn technical safety requirement (WP-S-02) · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S</text>
+<text x="40" y="1793.5" font-size="10.5" fill="#475569">system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>

@@ -48,7 +48,7 @@ class Reader(unittest.TestCase):
 
   def test_refuses_unknown_construct(self):
     with self.assertRaisesRegex(sysml_lite.ModelError, r"<text>:1: construct not supported"):
-      sysml_lite.parse_text("package X { occurrence def S; }")
+      sysml_lite.parse_text("package X { flow def S; }")
 
   def test_refuses_unbalanced(self):
     with self.assertRaises(sysml_lite.ModelError):
@@ -320,6 +320,112 @@ class Extension(unittest.TestCase):
     bad = sysml_lite.parse_text("package P { state def M { entry; then a; state a; transition x first a then z; } }")
     with self.assertRaises(sysml_lite.ModelError):
       sysml_lite._state_machine(bad[0].members[0])
+
+
+class Needs(unittest.TestCase):
+  """Stakeholder needs and use cases of WP-S-01 §1.2-§1.4 (V-14, V-15)."""
+
+  @classmethod
+  def setUpClass(cls):
+    cls.m = sysml_lite.load()
+
+  def test_reader_parses_use_cases(self):
+    decls = sysml_lite.parse_text("""package P {
+        requirement def N { subject s : S; }
+        requirement <'SN-01'> n : N { subject :>> s; stakeholder driver : Driver; }
+        use case def U { subject s : S; }
+        use case <'UC-01'> u : U { subject :>> s; actor driver : Driver; objective { doc /* goal */ require n; } perform f; }
+    }""")
+    uc = decls[0].member("u")
+    self.assertEqual(uc.kind, "use case")
+    self.assertEqual([(x.kind, x.name, x.type) for x in uc.members if x.kind == "actor"], [("actor", "driver", "Driver")])
+    obj = next(x for x in uc.members if x.kind == "objective")
+    self.assertEqual((obj.doc, [x.target for x in obj.members]), ("goal", ["n"]))
+    self.assertEqual(decls[0].member("n").members[0].target, "s")
+
+  def test_needs_trace_to_requirements_and_use_cases(self):
+    n = self.m.requirements["SN-01"]
+    self.assertEqual((n.definition, n.stakeholders), ("StakeholderNeed", [("driver", "Driver")]))
+    self.assertIn("SN-01", self.m.requirements["SYS-001"].derived_from)
+    self.assertIn("SN-04", self.m.requirements["SG-05"].derived_from)
+    uc = self.m.use_cases["UC-01"]
+    self.assertEqual((uc.needs, uc.functions), (["SN-01"], ["F-01", "F-05", "F-08"]))
+    self.assertEqual(sorted(self.m.use_cases), [f"UC-{i:02d}" for i in range(1, 12)])
+
+  def test_checks_catch_a_need_without_a_use_case_and_an_unused_function(self):
+    rep = check_model.Report()
+    check_model.check_needs(self.m, rep)
+    self.assertEqual(rep.errors, [])
+    saved = self.m.use_cases.pop("UC-08")
+    try:
+      rep = check_model.Report()
+      check_model.check_needs(self.m, rep)
+      text = "\n".join(rep.errors)
+      self.assertIn("SN-07 is served by no use case", text)
+      self.assertIn("F-06 is performed by no use case", text)
+    finally:
+      self.m.use_cases["UC-08"] = saved
+
+  def test_every_system_requirement_and_goal_refines_a_need(self):
+    needs = {s for s, r in self.m.requirements.items() if r.definition == "StakeholderNeed"}
+    for r in self.m.requirements.values():
+      if r.short.split("-")[0] in ("SYS", "SG"):
+        self.assertTrue(needs & set(r.derived_from), r.short)
+
+
+class Behaviour(unittest.TestCase):
+  """State-machine records and the start-up sequence (V-16, V-17)."""
+
+  @classmethod
+  def setUpClass(cls):
+    cls.m = sysml_lite.load()
+
+  def test_reader_parses_messages_in_order(self):
+    decls = sysml_lite.parse_text("""package P {
+        occurrence def <'Q'> Q { part a : L; part b : L; message <'S-02'> s2 from b to a; message <'S-01'> s1 from a to b;
+            first s1 then s2; }
+    }""")
+    q = sysml_lite._sequence(decls[0].members[0])
+    self.assertEqual([(x.short, x.source, x.target) for x in q.messages], [("S-01", "a", "b"), ("S-02", "b", "a")])
+    bad = sysml_lite.parse_text("package P { occurrence def <'Q'> Q { part a : L; message s1 from a to z; } }")
+    with self.assertRaises(sysml_lite.ModelError):
+      sysml_lite._sequence(bad[0].members[0])
+
+  def test_record_transitions_expand(self):
+    import gen_behaviour
+    rec = {"machine": "SM-X", "states": ["A", "B", "C"]}
+    self.assertEqual(gen_behaviour.expand(rec, {"id": "1", "from": "any", "to": "A"}), [("A", "A"), ("B", "A"), ("C", "A")])
+    self.assertEqual(gen_behaviour.expand(rec, {"id": "2", "from": "A, B", "to": "same"}), [("A", "A"), ("B", "B")])
+    self.assertEqual(gen_behaviour.expand(rec, {"id": "3", "from": "C", "to": "m", "guard": "m in {A, B}"}), [("C", "A"), ("C", "B")])
+    self.assertEqual(len(gen_behaviour.expand(rec, {"id": "4", "from": "A", "to": "m", "guard": "registry"})), 3)
+    with self.assertRaises(gen_behaviour.BehaviourError):
+      gen_behaviour.expand(rec, {"id": "5", "from": "D", "to": "A"})
+
+  def test_records_and_sequence_in_the_model(self):
+    auth = self.m.state_machines["SM-TOY-AUTH"]
+    self.assertEqual((auth.initial, sorted(auth.states)), ("NOT_ALLOWED", ["ALLOWED", "ENGAGE_PENDING", "NOT_ALLOWED"]))
+    self.assertIn("T1a", check_model.record_ids(auth))
+    self.assertTrue(check_model.known_record(self.m, "SM-SELFDRIVED D3", "transition"))
+    self.assertFalse(check_model.known_record(self.m, "SM-SYS engage", "transition"))  # SM-SYS is not a record
+    q = self.m.sequences["SEQ-START"]
+    self.assertEqual((q.messages[0].short, q.messages[-1].short), ("S-01", "S-21"))
+    self.assertEqual(dict(q.lifelines)["safety_mcu"], "E-03")
+
+  def test_checks_catch_a_wrong_record_and_state(self):
+    rep = check_model.Report()
+    check_model.check_behaviour(self.m, rep)
+    self.assertEqual(rep.errors, [])
+    msg = self.m.sequences["SEQ-START"].messages[13]
+    saved = dict(msg.meta["SequenceStep"])
+    try:
+      msg.meta["SequenceStep"].update(records="SM-TOY-AUTH T99", stateAfter="Safety MCU: NOWHERE")
+      rep = check_model.Report()
+      check_model.check_behaviour(self.m, rep)
+      text = "\n".join(rep.errors)
+      self.assertIn("'SM-TOY-AUTH T99' is not a transition", text)
+      self.assertIn("state after 'NOWHERE'", text)
+    finally:
+      msg.meta["SequenceStep"] = saved
 
 
 class Tables(unittest.TestCase):

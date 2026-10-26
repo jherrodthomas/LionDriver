@@ -52,8 +52,8 @@ RESULT_COLOUR = {"pass": GREEN, "fail": RED, "fail known gap": RED, "blocked": A
 
 # Prose-only facts, each with the exact text it is read from (checked by --check).
 PROSE = {
-  "sfmea_open": {"label": "SFMEA-33…-40", "detail": "WP-A-04 v0.2 rows: no case yet (OI-6)",
-                 "src": ["(SFMEA-33…-40, added in WP-A-04 v0.2, still need cases: OI-6)"]},
+  "sfmea_open": {"label": "8 System FMEA causes", "detail": "from WP-A-04 v0.2: no case yet (OI-6)",
+                 "src": ["except eight added in WP-A-04 v0.2, which still need cases (OI-6)"]},
   "not_executed": {"src": ["| Status | Draft (specification). **Results: not yet executed** |"]},
   "level_a": {"src": ["| VS-FI-20 | Clock fault | HSE stop (test pad) or analysis; clock drift (if injectable) | H, A |"]},
 }
@@ -421,7 +421,7 @@ def figure(cases: list[Case], sections: dict[str, str], items: list[Item], tsrs:
   body.append(text(40, sy, "§6 Coverage of safety analyses", size=13, weight=700))
   n_cov = sum(1 for it in items if it.cases)
   body.append(text(270, sy, f"{len(items)} items listed: {n_cov} have a specified case (not executed), " +
-                   f"{len(items) - n_cov} not testable by fault injection; WP-A-04 SFMEA-33…-40 have no case yet. " +
+                   f"{len(items) - n_cov} not testable by fault injection; eight System FMEA causes from WP-A-04 v0.2 have no case yet. " +
                    "§6 names no STPA (WP-A-05) item.", size=10.5, fill=MUTED))
   groups = [("WP-A-04", "System FTA / FMEA (WP-A-04)"), ("WP-A-02", "Freedom from interference (WP-A-02)"),
             ("WP-A-03", "Dependent failures (WP-A-03)")]
@@ -488,7 +488,7 @@ def figure(cases: list[Case], sections: dict[str, str], items: list[Item], tsrs:
           "SG-01 to SG-07 reached through the parent FSRs, whether a §6 analysis item names it, the WP-W-02 " +
           "implementation status, and the §8 result, which is 'not yet executed' for every case. Below, the " +
           f"{len(items)} §6 analysis items from WP-A-04, WP-A-02 and WP-A-03 with their cases; SPF-01 is not " +
-          "testable by fault injection and SFMEA-33 to -40 have no case yet.")
+          "testable by fault injection and eight System FMEA causes from WP-A-04 v0.2 have no case yet.")
   return svg(W, height, "Figure 6-1 · Fault-injection coverage", desc, body)
 
 

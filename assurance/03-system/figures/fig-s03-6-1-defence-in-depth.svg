@@ -32,9 +32,9 @@
 <rect x="212" y="168" width="200" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="222" y="186" font-size="12.5" fill="#0F172A" font-weight="700">12 TSRs</text>
 <rect x="222" y="194" width="13.5" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
-<rect x="237" y="194" width="43.5" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
-<rect x="282" y="194" width="118.5" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
-<text x="222" y="217" font-size="10.5" fill="#475569">1 impl. · 3 partly · 8 not</text>
+<rect x="237" y="194" width="58.5" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="297" y="194" width="103.5" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="222" y="217" font-size="10.5" fill="#475569">1 impl. · 4 partly · 7 not</text>
 <text x="222" y="231" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PLB 4 · CFG 3 · TMO 2</text>
 <rect x="422" y="168" width="236" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="432" y="186" font-size="12.5" fill="#0F172A" font-weight="700">44 TSRs</text>
@@ -65,10 +65,10 @@
 <text x="48" y="296" font-size="10.5" fill="#475569">Lateral loss without warning</text>
 <rect x="212" y="248" width="200" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="222" y="266" font-size="12.5" fill="#0F172A" font-weight="700">28 TSRs</text>
-<rect x="222" y="274" width="30.6" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
-<rect x="254.1" y="274" width="62.8" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
-<rect x="318.4" y="274" width="82.1" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
-<text x="222" y="297" font-size="10.5" fill="#475569">5 impl. · 10 partly · 13 not</text>
+<rect x="222" y="274" width="37.1" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<rect x="260.6" y="274" width="69.2" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="331.3" y="274" width="69.2" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="222" y="297" font-size="10.5" fill="#475569">6 impl. · 11 partly · 11 not</text>
 <text x="222" y="311" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PLB 11 · TMO 6 · WRN 6</text>
 <rect x="422" y="248" width="236" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="432" y="266" font-size="12.5" fill="#0F172A" font-weight="700">20 TSRs</text>
@@ -197,10 +197,10 @@
 <text x="48" y="616" font-size="10.5" fill="#475569">Decel. loss without warning</text>
 <rect x="212" y="568" width="200" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="222" y="586" font-size="12.5" fill="#0F172A" font-weight="700">28 TSRs</text>
-<rect x="222" y="594" width="43.5" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
-<rect x="267" y="594" width="43.5" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
-<rect x="312" y="594" width="88.5" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
-<text x="222" y="617" font-size="10.5" fill="#475569">7 impl. · 7 partly · 14 not</text>
+<rect x="222" y="594" width="49.9" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<rect x="273.4" y="594" width="49.9" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="324.9" y="594" width="75.6" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="222" y="617" font-size="10.5" fill="#475569">8 impl. · 8 partly · 12 not</text>
 <text x="222" y="631" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PLB 11 · FR 6 · TMO 5</text>
 <rect x="422" y="568" width="236" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="432" y="586" font-size="12.5" fill="#0F172A" font-weight="700">18 TSRs</text>
@@ -263,9 +263,9 @@
 <rect x="212" y="728" width="200" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="222" y="746" font-size="12.5" fill="#0F172A" font-weight="700">9 TSRs</text>
 <rect x="222" y="754" width="38.5" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
-<rect x="262" y="754" width="38.5" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
-<rect x="302" y="754" width="98.5" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
-<text x="222" y="777" font-size="10.5" fill="#475569">2 impl. · 2 partly · 5 not</text>
+<rect x="262" y="754" width="58.5" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="322" y="754" width="78.5" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="222" y="777" font-size="10.5" fill="#475569">2 impl. · 3 partly · 4 not</text>
 <text x="222" y="791" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WRN 4 · CFG 2 · FR 2</text>
 <rect x="422" y="728" width="236" height="70" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.4" stroke-dasharray="3 4"/>
 <text x="540" y="767" font-size="12" fill="#94A3B8" text-anchor="middle">—</text>

@@ -377,7 +377,7 @@ MODEL: dict[str, dict] = {
     broken=(1, "flash protection not in place"),
     trusts="Only signed firmware ever runs on the safety MCU.",
     true="With code on the SoC, its control of the panda boot path can put other firmware on the MCU, and flash protection "
-         "is not yet in place to stop it. The envelope is then whatever that firmware does. Detail restricted (DQ-421)."),
+         "is not yet in place to stop it. The envelope is then whatever that firmware does. Details: private record GD-03."),
   "TS-04": dict(
     title="Forged parameters or messages on the SoC bend the plan or mute monitoring",
     scene=dict(DRIFT_LAT, pills=P((1, "A local process on the SoC", "bad", 0.15, 6), (2, "Forged parameters or IPC messages", "bad", 0.3, 28),
@@ -397,7 +397,7 @@ MODEL: dict[str, dict] = {
     broken=(1, "signing below CSG-02"),
     trusts="A firmware image that passes the signature check is ours.",
     true="Firmware signing and the exclusion of debug capability are below what CSG-02 needs. An image that passes the check "
-         "need not come from LionDriver. Detail restricted (DQ-421)."),
+         "need not come from LionDriver. Details: GD-01, GD-02."),
   "TS-06": dict(
     title="A malicious update reaches every device through the updater",
     scene=dict(SWERVE, pills=P((1, "Update source controlled", "bad", 0.15, 6), (2, "Devices install it at the next update", "bad", 0.3, 28),
@@ -407,7 +407,7 @@ MODEL: dict[str, dict] = {
     broken=(1, "no end-to-end signature"),
     trusts="What the update source delivers is a LionDriver release.",
     true="Updates are not authenticated end to end, so whoever controls the update source controls every device that "
-         "updates. Automatic updates stay off until signed updates exist. Detail restricted (DQ-421)."),
+         "updates. Automatic updates stay off until signed updates exist. Details: private record GD-05."),
   "TS-07": dict(
     title="Server-directed remote calls take data or open remote access",
     scene=dict(kind="data", origin="server", origin_label="compromised back end", device_label="the device, online",
@@ -419,7 +419,7 @@ MODEL: dict[str, dict] = {
     broken=(1, "call scope wider than needed"),
     trusts="Requests on the remote channel come from a trustworthy back end.",
     true="With the back end compromised or a device token stolen, remote calls reach further than the item needs: data out "
-         "and remote access in. Streaming is blocked while driving. Detail restricted (DQ-421)."),
+         "and remote access in. Streaming is blocked while driving. Details: private record GD-06."),
   "TS-08": dict(
     title="A build with SSH switched on gives root on the SoC",
     scene=dict(SWERVE, pills=P((1, "Network reach and a valid SSH key", "bad", 0.15, 6), (2, "Root on the SoC", "bad", 0.3, 28),
@@ -487,7 +487,7 @@ MODEL: dict[str, dict] = {
     broken=(1, "transmit checks incomplete"), net=(2, "refused: reference build, not verified"),
     trusts="Every frame the panda lets through is safe to send.",
     true="At the shipped baseline the panda's transmit checks did not cover these frames and rates. The reference build now "
-         "refuses them and checks the rate; not verified on hardware. Detail restricted (DQ-421)."),
+         "refuses them and checks the rate; not verified on hardware. Details: private record GD-11."),
 }
 
 

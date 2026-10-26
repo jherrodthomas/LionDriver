@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-O-02 Operation, service (maintenance, repair) and decommissioning |
 | Standard reference | ISO 26262-7:2018 §6 (operation, service and decommissioning: planning, instructions, records); ISO 26262-4:2018 §6 (requirements for operation and service, by reference to WP-S-06); ISO/SAE 21434:2021 §14 (end of cybersecurity support and decommissioning) |
-| Version | 0.2 (§9 OI-7: rollback and post-update re-validation are not yet specified, found against the ISO 26262-7 operation themes while drafting the wiki page *After release*; 2026-10-21). 0.1 |
+| Version | 0.3 (OPS-01: the item reads the EPS and ABS/VSC fault codes at start-up and refuses engagement on an active code or a failed read; the lamp check stays as the second barrier; OI-2 closed (DQ-132 A); 2026-10-25). 0.2 (§9 OI-7: rollback and post-update re-validation are not yet specified, found against the ISO 26262-7 operation themes while drafting the wiki page *After release*; 2026-10-21). 0.1 |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (actions that restore or preserve SG-01…SG-08 preconditions); SOTIF; CS |
 | Author | Assurance team (initial draft) |
@@ -46,7 +46,7 @@ The driver performs these. The ones the item can check itself are noted; the oth
 
 | ID | Check | Automatic support at baseline | Action if not met |
 |---|---|---|---|
-| OPS-01 | No vehicle warning lamps for EPS, brake, ABS/VSC, engine, PCS/TSS | Partial: the item raises events for some car faults (`openpilot/selfdrive/car/car_events.py:116-180` ESP disabled, steering faults; `openpilot/selfdrive/selfdrived/events.py`). Not all DTCs are visible to it | Do not engage. Get the vehicle checked (AOU-09/10) |
+| OPS-01 | No vehicle warning lamps for EPS, brake, ABS/VSC, engine, PCS/TSS | Partial: the item raises events for some car faults (`openpilot/selfdrive/car/car_events.py:116-180` ESP disabled, steering faults; `openpilot/selfdrive/selfdrived/events.py`). Since DQ-132 A it also reads the stored fault codes of the EPS and ABS/VSC ECU at start-up and refuses to engage on an active code ("EPS Fault Code" or "ABS/VSC Fault Code: Have Car Checked") or when the read fails ("Fault Code Check Failed: Restart Car") (TSR-629; not verified on the vehicle). Engine, camera and radar codes are not read. The lamp check stays: it is the second barrier for EPS and ABS/VSC and the only one for the other systems | Do not engage. Get the vehicle checked (AOU-09/10). After a fault-code alert, have the codes read and the fault repaired (INS-06, SVC-10); a failed check that repeats after restarting the car stationary is reported as a field event (WP-O-04) |
 | OPS-02 | VSC is on (not switched off with the VSC OFF button) | Yes: `espDisabled` event (`openpilot/selfdrive/car/car_events.py:116-117`) | Turn VSC on |
 | OPS-03 | Windscreen area in front of both cameras is clean and clear of ice, stickers or objects | Partial: camera health and model checks; no specific obstruction detector | Clean before driving |
 | OPS-04 | Device is firmly in its mount, not tilted; display shows no calibration alert | Yes: `calibrationInvalid` / `calibrationRecalibrating` events (`events.py:816-832`), engagement blocked until `calibrated` (`selfdrived.py:298-309`) | Re-seat; if remounted, follow §4.2 |
@@ -190,7 +190,7 @@ A decommissioning record is added to the vehicle's installation record: date, pe
 | ID | Item | Needed by |
 |---|---|---|
 | OI-1 | Review the OPS/SVC/UPD/DEC → TSR-8xx trace in [WP-S-06](../03-system/WP-S-06-requirements-production-operation.md) (requirements now drafted) | G2 |
-| OI-2 | Decide whether the item should read selected vehicle DTC states itself (e.g. EPS, VSC) and block engagement, instead of relying on the driver's lamp check (OPS-01) | G2 |
+| OI-2 | **Closed 2026-10-25** (register DQ-132 A, after DQ-056 A): the item reads the EPS and ABS/VSC fault codes at start-up and blocks engagement on an active one or on a failed read (TSR-629, SWSR-629…629d; OPS-01 updated); the driver's lamp check stays as the second barrier. Vehicle check per ECU: WP-S-09 VS-SQ-20. ~~Decide whether the item should read selected vehicle DTC states itself (e.g. EPS, VSC) and block engagement, instead of relying on the driver's lamp check (OPS-01)~~ | G2 |
 | OI-3 | Confirm periodic maintenance intervals (§4.3) from field data | G6 |
 | OI-4 | Test the inherited updater's connectivity-required lockout against a LionDriver update origin with automatic updates disabled | G4 |
 | OI-5 | Define the procedure and tool for removing `/persist/comma/` keys on decommissioning (DEC-08) without damaging the device | G5 |

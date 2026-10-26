@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-02 SOTIF verification and validation strategy, validation targets |
 | Standard reference | ISO 21448:2022 §9 (V&V strategy, validation targets), Annex C (informative, validation target derivation); ISO/PAS 8800:2024 (AI V&V); ASPICE 4.0 VAL.1 |
-| Version | 0.14 (§3 step 1: the 10 % reserve for unknown scenarios is fixed by the R3 threshold the project lead approved, P̂₀ ≤ 0.10 with N ≥ 30, DQ-262 A; 2026-10-19). 0.13 (§5.3.2: KS-27 in family SF-3, with occlusion by the curve as a fidelity concern; 2026-10-19). 0.12 (§6: TC-35, lead detected late in a curve while accelerating, covered by KS-27; inputs TC-01…TC-35; 2026-10-19). 0.11 (targets are frozen by the project lead in a dated record once the B1 crash data replaces the illustrative rates, with a later assessor review, DQ-096 B; no SOTIF campaign counts before; §3 step 1 holds back a 10 % reserve for unknown scenarios, proposed with WP-V-04 R3, DQ-108; 2026-10-19). 0.10 (§3 step 3: confidence level C = 95 % one-sided for every target and for release criterion R-08, DQ-057 A; 2026-10-19). 0.9 (§6: TC-34, stock PCS interaction, covered by KS-20; inputs FI-01…FI-23 and TC-01…TC-34; 2026-10-18). 0.8 (§4.4: the rule is implemented in `policy.py` (SWSR-634); its unit tests run the check (a) speed profiles; 2026-10-17). 0.7 (§4.4 added: validation of the speed-dependent wheel-touch reminder timing, TSR-634 (DQ-077 A); VT-08 covers DMP-05; 2026-10-17). 0.6 (the lead's decisions: simulation credit per scenario family once its fidelity case is approved, DQ-139; CARLA not now, revisit at G3, DQ-261; §5.3, §5.4, OI-4; 2026-10-16). 0.5.1 (§5.3.1 simulator status brought up to date by the simulation session at the SOTIF session's request: bridge PR #124, scenario files, plant model; no plan or target changed; 2026-10-16). 0.5 (ODD speed bound 110 km/h, decision register DQ-260: §3.3, §3.4, §4; 2026-10-16). 0.4 (§5.3 fidelity-case plan written: scenario families, fidelity elements, comparison, synthetic-data labelling for DSR-12; §5.4 CARLA assessed, decision queued as DQ-261; 2026-10-16). 0.3 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; controllability pass limits fixed before testing, DQ-042; public-road limits, DQ-046; no uploads to comma, DQ-084; 2026-10-16). 0.2 (Figure 4-1 added, generated from §3.1, §3.2 and §4; 2026-10-13). 0.1 |
+| Version | 0.15 (the lead's decisions applied: §2.1 B1 data set, NHTSA FARS and CRSS over FHWA travel data, Interstate against other arterials, with its limits, DQ-137 A; §2.2 B2 by paired closed-course runs, DQ-138 A; §4.5 surrogates for harm, three with draft arguments not yet checked against logs, DQ-140 A; OI-2 and OI-5 rewritten; VT-01…VT-15 keep their illustrative values and the freeze (OI-3) stays open; 2026-10-25). 0.14 (§3 step 1: the 10 % reserve for unknown scenarios is fixed by the R3 threshold the project lead approved, P̂₀ ≤ 0.10 with N ≥ 30, DQ-262 A; 2026-10-19). 0.13 (§5.3.2: KS-27 in family SF-3, with occlusion by the curve as a fidelity concern; 2026-10-19). 0.12 (§6: TC-35, lead detected late in a curve while accelerating, covered by KS-27; inputs TC-01…TC-35; 2026-10-19). 0.11 (targets are frozen by the project lead in a dated record once the B1 crash data replaces the illustrative rates, with a later assessor review, DQ-096 B; no SOTIF campaign counts before; §3 step 1 holds back a 10 % reserve for unknown scenarios, proposed with WP-V-04 R3, DQ-108; 2026-10-19). 0.10 (§3 step 3: confidence level C = 95 % one-sided for every target and for release criterion R-08, DQ-057 A; 2026-10-19). 0.9 (§6: TC-34, stock PCS interaction, covered by KS-20; inputs FI-01…FI-23 and TC-01…TC-34; 2026-10-18). 0.8 (§4.4: the rule is implemented in `policy.py` (SWSR-634); its unit tests run the check (a) speed profiles; 2026-10-17). 0.7 (§4.4 added: validation of the speed-dependent wheel-touch reminder timing, TSR-634 (DQ-077 A); VT-08 covers DMP-05; 2026-10-17). 0.6 (the lead's decisions: simulation credit per scenario family once its fidelity case is approved, DQ-139; CARLA not now, revisit at G3, DQ-261; §5.3, §5.4, OI-4; 2026-10-16). 0.5.1 (§5.3.1 simulator status brought up to date by the simulation session at the SOTIF session's request: bridge PR #124, scenario files, plant model; no plan or target changed; 2026-10-16). 0.5 (ODD speed bound 110 km/h, decision register DQ-260: §3.3, §3.4, §4; 2026-10-16). 0.4 (§5.3 fidelity-case plan written: scenario families, fidelity elements, comparison, synthetic-data labelling for DSR-12; §5.4 CARLA assessed, decision queued as DQ-261; 2026-10-16). 0.3 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; controllability pass limits fixed before testing, DQ-042; public-road limits, DQ-046; no uploads to comma, DQ-084; 2026-10-16). 0.2 (Figure 4-1 added, generated from §3.1, §3.2 and §4; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -24,12 +24,43 @@ Inputs: SOTIF hazards SH-01…SH-13 and acceptance criteria ([WP-C-05](../02-con
 
 ## 2. Acceptance criteria (input)
 
-| Baseline | Use | Source (to be confirmed, [WP-M-08](../01-management/WP-M-08-sotif-plan.md) OI-1, OI-2) |
+| Baseline | Use | Source ([WP-M-08](../01-management/WP-M-08-sotif-plan.md) OI-1, OI-2, closed 2026-10-25) |
 |---|---|---|
-| B1 human driver | Rate-level targets (per distance / per hour) | US crash, injury and fatality rates (NHTSA FARS, CRSS) filtered to the ODD road types |
-| B2 stock TSS2 | Scenario-level comparison: LD-SDA shall not perform worse than the same Corolla with stock Lane Tracing Assist / Dynamic Radar Cruise Control in any validated scenario | Comparative closed-course tests on the reference vehicle |
+| B1 human driver | Rate-level targets (per distance / per hour) | NHTSA FARS and CRSS crashes over FHWA travel data, split Interstate against other arterials (§2.1, DQ-137 A) |
+| B2 stock TSS2 | Scenario-level comparison: LD-SDA shall not perform worse than the same Corolla with stock Lane Tracing Assist / Dynamic Radar Cruise Control in any validated scenario | Paired closed-course runs from the WP-V-03 known scenarios (§2.2, DQ-138 A) |
 
 The acceptance criteria are those of [WP-C-05 §5](../02-concept/WP-C-05-sotif-hazard-identification.md#5-acceptance-criteria): (1) per SH group, the rate of harm while engaged shall not exceed the human-driver rate for comparable conditions reduced by a factor for the stock-TSS2 baseline; (2) the qualitative criteria AC-01…AC-07. This document adds the B2 scenario comparison (VT-09).
+
+### 2.1 B1 human-driver data set (DQ-137)
+
+Decided 2026-10-25 by the project lead (decision register DQ-137 option A). No rate has been extracted yet (OI-2). Until then, §3.1 and VT-01…VT-15 keep their illustrative values.
+
+| Item | Choice |
+|---|---|
+| Crashes | NHTSA FARS (every fatal crash, a census) and CRSS (police-reported crashes of every severity, a weighted sample with standard errors) |
+| Travel | FHWA travel data: vehicle-miles per year by functional class (Highway Statistics). The table and its edition are recorded at extraction |
+| Year | One data year for all three sources, the latest with a final FARS file. Recorded at extraction. Other years only show the trend |
+| Road-class filter | Interstate against other arterials. The Interstate rate sets the targets for ODD-H. ODD-H also includes other limited-access freeways and expressways (WP-C-02 §3.1), which fall in the other-arterial group; their rate is reported on its own where the files allow, and if it is lower, the freeze (OI-3) decides whether a target uses it. The other arterials are outside ODD-H: their rate sets no target and informs the out-of-ODD residual (SH-13) in WP-K-02 |
+| Harm classes | Fatal crashes (FARS) and police-reported injury crashes (CRSS), per 10⁸ vehicle-miles. These are the harm classes of §3 step 1 and §3.5 item 1 |
+| Bound | The CRSS standard errors give the one-sided 95 % bounds (§3 step 3). FARS is a census and needs none for its count |
+| Recorded per value | Source and release, data year, the filter variables and codes, the counts, the travel figure, the rate and its bound. The road-class variables of each file are checked against the NHTSA manual of the release year first, as for OI-8. Where a file cannot split a class, that is recorded |
+
+Known limits:
+
+- **Minor crashes are undercounted.** Police-reported crashes miss many minor ones, so the CRSS injury-crash rate is lower than the true human rate. LionDriver's own events are counted in full from logs. The comparison therefore errs on the strict side. The FARS fatal rate is not affected.
+- **The human car's assistance is unknown.** The data do not say whether the human-driven car had LKA or ACC. B1 is human driving in the mixed US fleet, not the stock TSS2 Corolla. No adjustment for stock LKA, ACC or PCS is derived from these data (that was option B, not chosen). The stock-TSS2 comparison is made scenario by scenario instead (B2, §2.2). The factor of [WP-C-05 §5.1](../02-concept/WP-C-05-sotif-hazard-identification.md#51-approach) item 1 therefore gets no value from B1. Whether the rate criterion carries a fixed factor is settled with the target freeze (OI-3).
+- **Class, not ODD.** An Interstate rate includes conditions outside the ODD (snow, fog, work zones, night in some stretches). It is not filtered further unless a file supports it; any filter used is recorded.
+
+### 2.2 B2 paired runs against stock TSS2 (DQ-138)
+
+Decided 2026-10-25 by the project lead (decision register DQ-138 option A). Nothing has been run.
+
+1. **Pairs.** Each selected known scenario of [WP-V-03](WP-V-03-sotif-known-scenarios.md) is driven twice at each parameter point: once with the stock TSS2 functions (Lane Tracing Assist, Dynamic Radar Cruise Control) and once with LD-SDA. Same course, speeds and targets. WP-V-03 §2 lists the scenarios that get a paired run, and why the others do not.
+2. **Logging.** Both arms are logged on the device. In the stock arm the item is installed but passive, so the device still logs while the stock path acts. That passive mode leaves the stock camera and PCS path intact is still to be confirmed ([WP-V-07](WP-V-07-vehicle-test-operations.md) OI-3). How the arms are switched, and the time per swap, is WP-V-03 OI-4.
+3. **Runs.** Several runs per arm at each point. The count follows the WP-V-03 trial-count rule and is approved with the targets (OI-3).
+4. **Comparison (proposed, approved with the targets, OI-3).** At each point, LD-SDA has no more failures than stock against the scenario's pass criterion, and its scenario metric (WP-V-03 §2, B2 row) is not worse than stock beyond the spread between runs of the stock arm.
+5. **Needs.** A closed-course site, soft targets for stopped and cut-in vehicles, and several runs per pair ([WP-V-07](WP-V-07-vehicle-test-operations.md) §8.1.1). Which site is a separate question still queued for the project lead (DQ-041).
+6. **Limits.** Closed-course points stop at 90 km/h, or 110 km/h after the risk review (DQ-091 A). Above that, B2 has no evidence. Matched public-road segments were not chosen (option B), so public-road driving gives no B2 credit.
 
 ## 3. Method for deriving validation targets
 
@@ -48,7 +79,7 @@ For each SOTIF hazardous behaviour SH-nn:
 
 ### 3.1 Illustration of magnitudes
 
-The figures below are **illustrative orders of magnitude** to show feasibility; the baseline values must be replaced by the selected and filtered data set (OI-2). Average engaged speed is assumed to be 64 km/h (40 mph) to convert distance to time. `−ln(1 − 0.95) ≈ 3.0`; `−ln(1 − 0.99) ≈ 4.6`.
+The figures below are **illustrative orders of magnitude** to show feasibility; the baseline values must be replaced by the data set of §2.1 once its rates are extracted (OI-2). Average engaged speed is assumed to be 64 km/h (40 mph) to convert distance to time. `−ln(1 − 0.95) ≈ 3.0`; `−ln(1 − 0.99) ≈ 4.6`.
 
 | Case | Assumed rate λ | Zero-failure exposure at C = 95 % | Same in hours | C = 99 % |
 |---|---|---|---|---|
@@ -63,7 +94,7 @@ The figures below are **illustrative orders of magnitude** to show feasibility; 
 
 | Means | Plausible capacity per year (one reference vehicle, one maintainer plus safety drivers) | Reaches |
 |---|---|---|
-| Public-road driving with safety driver (WP-V-07; engaged at ≤ 105 km/h, DQ-046) | 10⁴ – 2 × 10⁴ km engaged (≈ 150–300 h) | Exposure estimates ε_s for common scenarios; surrogate rates (takeovers, envelope hits); **no** rate-level demonstration of cases A–D |
+| Public-road driving with safety driver (WP-V-07; engaged at ≤ 105 km/h, DQ-046) | 10⁴ – 2 × 10⁴ km engaged (≈ 150–300 h) | Exposure estimates ε_s for common scenarios; surrogate rates (§4.5: unrequested lane departures, envelope limit hits, take-overs with a short time to the line); **no** rate-level demonstration of cases A–D |
 | Closed-course trials | Tens to low hundreds of trials per scenario per campaign | Case F; case E for a few scenarios |
 | Replay of recorded drives (process/model replay, open loop) | All recorded data, repeatedly, per software change | Perception and planner outputs on real inputs; no closed-loop consequence |
 | Simulation (MetaDrive, closed loop) | 10³ – 10⁵ runs per scenario family (compute-bound) | Case E and below for scenario families that the simulator can represent credibly (§5.3) |
@@ -326,7 +357,7 @@ A later change to a frozen target needs a new dated record, and evidence collect
 | VT-06 | SH-06 missed or late stationary/slow lead | Collision or required driver braking > 5 m/s² | p_s ≤ 1 % per approach-speed band in the ODD (KS-05, KS-08); FCW at TTC ≥ 2 s (AIR-06) | §3 step 5, case E; B2 comparison | CC with soft target, SIM | Yes for the bands tested |
 | VT-07 | SH-08 PCS suppression | Stock PCS activation with LD-SDA installed vs stock | Equivalent activation (same TTC ± 0.2 s) in every PCS soft-target test | B2 | CC (KS-20; VS-VAL in WP-V-01) | Yes |
 | VT-08 | SH-12 prolonged unsupervised operation (DM) | Distraction, phone, sleep detection; fallback on camera blockage; reminder timing in the wheel-touch fallback | AIR-07/AIR-08 thresholds per DM stratum; DMP-01…DMP-05; AC-05; fallback timing per §4.4 | WP-C-08 §5.3, §5.4; §4.4 | EVAL (VS-ML-06), CC (WP-C-08 §8 V-5), T-SIL and PR for §4.4 | Yes, once TSR-634 is implemented |
-| VT-09 | All | Comparative performance vs stock TSS2 (B2) | LD-SDA not worse than stock in any KS scenario run with both (metric per scenario in WP-V-03) | B2 | CC, PR (paired routes) | Yes for scenarios run |
+| VT-09 | All | Comparative performance vs stock TSS2 (B2) | LD-SDA not worse than stock in any KS scenario run with both (metric per scenario in WP-V-03) | B2 | CC (paired runs, §2.2) | Yes for scenarios run |
 | VT-10 | All | Unknown-scenario discovery rate | Discovery rate of new hazardous scenario classes (WP-V-04 §5) decreasing over the last 3 exploration blocks, with no class of severity S3 found in the last block | 21448 §11 | PR, SIM exploration, log mining | Yes as a trend; not as a proof |
 | VT-11 | All | Field: harm-level events attributable to LD-SDA | Zero injury crashes; trigger thresholds for restriction defined in WP-O-04 | B1 (long-term) | Field monitoring | Long-term only |
 | VT-12 | SH-13 operation outside the ODD | Engaged operation above the ODD speed bound or in excluded conditions | Deterministic speed bound (FM-07): 100 % prevention/disengagement in ≥ 59 trials per speed threshold; other exits covered by user information and driver procedure (AC-04) | FM-07, FM-08 | CC, inspection | Yes for speed; not for other exits |
@@ -393,7 +424,7 @@ At the ODD speed bound, the required report distance is 33.3 + 33.3² / 6 ≈ 21
 | AIR-04 | t_r = 1.0 s, a_lim = 3.0 m/s² | VT-06 (KS-05) | C | Derived in §4.3 |
 | AIR-05 | Phantom deceleration below −2.0 m/s² | VT-04 (−2.0 m/s²) | C | — |
 | AIR-06 | `hardBrakePredicted` at TTC ≥ 2.0 s | VT-06 (FCW at TTC ≥ 2 s) | C | — |
-| AIR-11 | Curvature rate from 5 m/s³ jerk; ≤ 1 lead toggle per second | VT-14 (field surrogate AS-08 in [WP-V-04](WP-V-04-sotif-unknown-scenarios.md)) | C | — |
+| AIR-11 | Curvature rate from 5 m/s³ jerk; ≤ 1 lead toggle per second | VT-14 (field signature AS-08 in [WP-V-04](WP-V-04-sotif-unknown-scenarios.md); not a surrogate for harm, §4.5) | C | — |
 | AIR-14 | Monitor recall ≥ 80 % on known triggering conditions; ≤ 1 false flag per hour | VT-15 (KS-12, KS-13, KS-16 of [WP-V-03](WP-V-03-sotif-known-scenarios.md)) | C | Per-condition recall may need to be higher (§4.2) |
 | AIR-10 | Partial lens occlusion ≤ 10 % | — | N | Input-space bound of WP-C-11 §3, verified by VS-ML-04 ([WP-W-10](../05-software/WP-W-10-ml-engineering.md)) |
 | AIR-13 | 90–98 % of samples within ±2σ | — | N | Calibration criterion of WP-W-10 (VS-ML-05); enables AIR-14 |
@@ -417,6 +448,32 @@ Result: eight values are confirmed or replaced (C). AIR-11 and AIR-14 are confir
 
 If (b) or (c) fails, the anchor of D*k* is revisited (WP-C-08 OI-8). A change of D*k* goes back through WP-C-08 §5.4 and TSR-634, not into the code alone.
 
+### 4.5 Surrogates for harm (DQ-140)
+
+Decided 2026-10-25 by the project lead (decision register DQ-140 option A): a small set of surrogates, each with its own argument. One car cannot drive far enough to show a crash rate (§3.2), so public-road driving reports surrogate rates instead: events far more frequent than harm that lie on the path to it. A surrogate counts toward a target only once its argument has been checked against LionDriver logs. None has been: no LionDriver log exists yet ([WP-M-08](../01-management/WP-M-08-sotif-plan.md) OI-4). **The arguments below are drafts.**
+
+Each argument has two parts: why the event precedes harm, and how often it does. "How often" is the share of events that would have ended in the SH's hazardous behaviour or harm without the driver. It is estimated from triage of the events, as in [WP-V-04](WP-V-04-sotif-unknown-scenarios.md) §5.2 (3). Until it is estimated, no scaling credit is taken: each event counts as one hazardous behaviour.
+
+| ID | Surrogate | SH, VT | Why it precedes harm (draft) | How often it does (draft) | Detected from logs | WP-V-04 signature | Checked against logs |
+|---|---|---|---|---|---|---|---|
+| SU-01 | Unrequested lane departure: a front wheel crosses a lane marking with no desire active and no driver steering input (AIR-02) | SH-01, SH-02; VT-01 | A sideswipe or barrier impact of SH-01/02 (HE-01.2, HE-02.1) needs the car to leave its lane first. The departure is the hazardous behaviour itself; what stands between it and harm is §3 step 2: a vehicle or barrier on that side, a driver who does not correct, and the severity | P(harm \| HB) of §3 step 2, factor by factor from §3.3–§3.5; each factor is 1 until it has evidence | Engaged, no blinker, `modelV2` lane-change state off, `carState.steeringPressed` false; the vehicle side at or over a model lane line with probability ≥ 0.5 (vehicle width 1.781 m). The side reaches the line before the wheel does, so this counts more events than AIR-02, not fewer. Each event is confirmed on the road video, because the model's lines can be wrong | AS-05 at a gap of 0 m. The 0 m reading is not yet in the AS-05 definition (OI-5) | No |
+| SU-02 | Envelope limit hit | SH-01, SH-03, SH-04; VT-01, VT-04 | The envelope caps every actuation (AC-02). A command at or past a limit means the QM stack asked for more than the controllability tests cover (§3.3); the envelope then cuts it to the bounded behaviour those tests reproduce. A hit marks the stack at the edge of what is shown controllable. It does not precede a hazardous behaviour that stays inside the limits, such as a slow drift; SU-01 covers that | Many hits are expected to be harmless: a tight curve inside the ODD, or firm braking for a real lead. The share followed within a few seconds by SU-01, a phantom deceleration (AS-06) or a take-over is estimated from triage | Safety replay of each engaged log (`opendbc_repo/opendbc/safety/safety_replay/`, method M6): TX frames blocked, and frames at the torque or acceleration limit, while engaged; per engaged km | AS-04 | No |
+| SU-03 | Take-over with a short time to the line | SH-01, SH-02; VT-01, VT-02 | A driver steering correction while the car moves toward a lane line is the driver controlling an SH-01/02 departure that has already started. With little time left to the line, a driver reacting later would not have prevented the departure. It is the near-miss of SU-01 | The share that would have crossed the line without the take-over, judged from the path before it. Until estimated, each counts as a departure for VT-01 | AS-01 events (steering override while engaged, no blinker). Time to the line at the first `steeringPressed` frame: the AS-05 gap divided by the speed toward the line, from successive lane-line positions. Threshold proposed: ≤ 1.5 s, the upper end of the driver reaction time of [WP-S-04 §3.7](../03-system/WP-S-04-timing-ftti-budget.md) (t_r = 0.75–1.5 s). Fixed before block B1 with the signature thresholds (WP-V-04 §2.1.1 item 3) and approved with the targets (OI-3). Each event is confirmed on video | AS-01 with a time-to-line reading, not yet in the AS-01 definition (OI-5) | No |
+
+Not in the set:
+
+- **Other take-overs and disengagements** (AS-01 above the threshold, AS-02, AS-03), FCW events (AS-07), DM alerts (AS-10) and system events (AS-11). Most are routine, so their rate mixes noise with risk (option B, not chosen). They stay discovery signatures for WP-V-04 and triage classes in the field.
+- **Phantom deceleration (AS-06).** VT-04's quantity is the SH-04 hazardous behaviour itself (AIR-05), counted directly. Its link to harm is §3 step 2 for SH-04 (a following vehicle, §3.4), not a surrogate argument.
+- **Model disagreement (AS-08).** It stays the field signature of VT-14 (§4.1): it tracks plan stability against AIR-11 after release. §4.2 argues why an unstable plan precedes SH-01 and SH-04, but not how often, so it stands in for no harm event and earns no rate credit.
+
+**Check against logs (OI-5).** On the first engaged blocks (WP-V-04 B1), for each surrogate:
+
+1. **Detector.** Every event is reviewed on video; the share of false detections is recorded, and a sample of drive time without events is reviewed for missed ones.
+2. **Share.** "How often" is estimated with its one-sided 95 % Clopper–Pearson bound (§3 step 3).
+3. **Review.** The argument and its data are reviewed under [WP-P-05](../07-supporting/WP-P-05-verification-review-procedure.md).
+
+A surrogate whose detector or argument fails the check leaves the set. Its target is then reported without it.
+
 ## 5. Test methods
 
 ### 5.1 Methods matrix
@@ -431,7 +488,7 @@ If (b) or (c) fails, the anchor of D*k* is revisited (WP-C-08 OI-8). A change of
 | M6 Safety replay | `opendbc_repo/opendbc/safety/safety_replay/` | Envelope limit hits in recorded drives | Needs LionDriver Corolla logs | Surrogate indicator | VT-01, 04 (surrogate) |
 | M7 HIL bench | To be built (D-04) | Envelope and fault reactions with real panda firmware | Bench CAN only | FuSa (WP-V-05); SOTIF for VT-05 | VT-05 |
 | M8 Closed course | Reference vehicle, test site, soft targets; `tools/longitudinal_maneuvers`, `tools/lateral_maneuvers` for characterization | Real vehicle, real sensors, controlled scenario | Limited speed, scenario set, number of trials; soft target radar signature | Primary for VT-02, 03, 05, 06, 07, 09 | as listed |
-| M9 Public road with safety driver | [WP-V-07](WP-V-07-vehicle-test-operations.md) | Real ODD exposure, exposure rates ε_s, surrogates, unknown scenarios | Uncontrolled; low mileage | Exposure estimates and surrogate rates; WP-V-04 exploration | VT-01, 04, 09, 10 |
+| M9 Public road with safety driver | [WP-V-07](WP-V-07-vehicle-test-operations.md) | Real ODD exposure, exposure rates ε_s, surrogates, unknown scenarios | Uncontrolled; low mileage | Exposure estimates and surrogate rates (§4.5); WP-V-04 exploration. No B2 credit (§2.2) | VT-01, 04, 10 |
 | M10 Field monitoring | [WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md) | Post-release behaviour | Small fleet | Operation phase only | VT-11 |
 
 ### 5.2 Order of application per scenario
@@ -583,9 +640,9 @@ Each functional modification decided in [WP-C-07](../02-concept/WP-C-07-sotif-fu
 | ID | Item |
 |---|---|
 | OI-1 | Keep the §6 TC table in step with WP-C-06 revisions (new TCs need a KS entry) |
-| OI-2 | Select B1 data set and filter to the ODD; replace the illustrative rates of §3.1 (shared with WP-M-08 OI-1) |
+| OI-2 | Decided 2026-10-25 (DQ-137 option A; WP-M-08 OI-1 closed): the B1 data set and filter are in §2.1. Open, the extraction: download FARS, CRSS and the FHWA travel by functional class for one data year; compute fatal-crash and injury-crash rates per 10⁸ vehicle-miles for Interstate, other freeways and expressways where the files allow, and the other arterials, with one-sided 95 % bounds from the CRSS standard errors; record each value as §2.1 requires; then replace the illustrative rates of §3.1 and update the derivations. [`tools/severity/`](../../tools/severity/README.md) reads FARS and CRSS but computes no rate over travel, so it needs extending, with its tool classification under WP-P-07. Same download as OI-8; the NHTSA hosts are not reachable from the project's cloud environment. VT-01…VT-15 keep their illustrative values until then, and the freeze (OI-3) stays open |
 | OI-3 | Decided 2026-10-19 (DQ-096 option B): the project lead freezes VT-01…VT-15, the derivations of §4.2 and §4.3 and the values marked "approved with the targets" in a dated record, once the B1 data (OI-2) has replaced the illustrative rates; an assessor reviews them later. Open: update the derivations with the B1 data, then the freeze. SOTIF campaigns wait for it |
 | OI-4 | Execute the fidelity-case plan of §5.3 (matched M8 points per family, plant constants from VS-VAL-08 and lateral step tests, radar comparison); credit per family once its case is approved (DQ-139 option A). CARLA: not now, revisit at G3 (§5.4, DQ-261 option A) |
-| OI-5 | Define the surrogate-to-harm argument for VT-04 and the takeover-based surrogates (WP-M-08 OI-8) |
+| OI-5 | Decided 2026-10-25 (DQ-140 option A; WP-M-08 OI-8 closed): the surrogate set SU-01…SU-03 and its draft arguments are in §4.5; VT-04 counts the hazardous behaviour directly. Open: (a) add the 0 m reading of AS-05 and the time-to-line reading of AS-01 to WP-V-04 §2.1 as a new signature-set version, and to the extractor (`tools/field_monitoring/extract_events.py`), before block B1; (b) check each argument against LionDriver logs as §4.5 requires, once the log store exists (WP-M-08 OI-4). No surrogate rate counts toward a target before (b) |
 | OI-7 | Fit the rear-facing camera now listed in the [WP-V-01](WP-V-01-safety-validation.md) §2 equipment (procurement: WP-V-01 OI-6), and annotate following vehicles from its recordings, so that P(E-situation) for SH-04 (following vehicle, OS-08) is measured (§3.4). Blocks driven before it is fitted give no SH-04 data |
 | OI-8 | Extract P(severity class) per SH from FARS/CRSS (and injury-risk curves where §3.5 item 3 requires them) for the selected B1 data set (OI-2); record the values and bounds per §3.5 item 4. The extraction tool is [`tools/severity/`](../../tools/severity/README.md); its variable codes must be checked against the NHTSA manual of the release year first. The same download gives the weighted mean age of pedestrians aged 15 and older struck in 2007–2009 (GES person file), which fixes the reference age of the SH-11 age shift (§3.5). Not run yet: the NHTSA download hosts are not reachable from the project's cloud environment |

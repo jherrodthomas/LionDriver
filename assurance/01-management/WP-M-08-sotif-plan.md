@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-08 SOTIF plan |
 | Standard reference | ISO 21448:2022 §4 (management of SOTIF activities), §5–§13; ISO/PAS 8800:2024 (interface for AI-related insufficiencies); ASPICE 4.0 MAN.3 |
-| Version | 0.8 (§5.2 step 3: confidence level one-sided 95 %, DQ-057 A; 2026-10-19). 0.7 (roles: the project lead signs the SOTIF recommendation after an external SOTIF review, DQ-025; the lead supervises human-subject tests, no external human-factors reviewer, DQ-026; OI-6 decided; 2026-10-17). 0.6 (OI-3: simulation credit rule decided, DQ-139; CARLA deferred to G3, DQ-261; 2026-10-16). 0.5 (OI-3 and the simulation row of §7 point to the WP-V-02 §5.3 fidelity-case plan and DQ-139; CARLA, DQ-261; 2026-10-16). 0.4 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; D-05 adopted, DQ-038; no log uploads to comma, DQ-084; 2026-10-16). 0.3 (status in §4 from WP-M-00; Experimental Mode default off since 2026-10-14 in §2 and §8; open items with owner and due gate; 2026-10-14). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
+| Version | 0.9 (the lead's decisions applied: B1 is NHTSA FARS and CRSS over FHWA travel data, Interstate against other arterials, DQ-137 A, OI-1 closed; B2 by paired closed-course runs from the WP-V-03 known scenarios, DQ-138 A, OI-2 closed; a small set of surrogates, each with its own argument, DQ-140 A, OI-8 closed; §5.1, §5.2; 2026-10-25). 0.8 (§5.2 step 3: confidence level one-sided 95 %, DQ-057 A; 2026-10-19). 0.7 (roles: the project lead signs the SOTIF recommendation after an external SOTIF review, DQ-025; the lead supervises human-subject tests, no external human-factors reviewer, DQ-026; OI-6 decided; 2026-10-17). 0.6 (OI-3: simulation credit rule decided, DQ-139; CARLA deferred to G3, DQ-261; 2026-10-16). 0.5 (OI-3 and the simulation row of §7 point to the WP-V-02 §5.3 fidelity-case plan and DQ-139; CARLA, DQ-261; 2026-10-16). 0.4 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; D-05 adopted, DQ-038; no log uploads to comma, DQ-084; 2026-10-16). 0.3 (status in §4 from WP-M-00; Experimental Mode default off since 2026-10-14 in §2 and §8; open items with owner and due gate; 2026-10-14). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -80,10 +80,10 @@ Acceptance criteria are owned by WP-C-05. Numerical validation targets are owned
 
 The top-level claim G0 states that residual risk is **no worse than manual driving of the same vehicle with its stock TSS 2.0 driver assistance**. The SOTIF acceptance criterion therefore uses a positive-risk-balance / GAMAB-style comparison against two baselines:
 
-| Baseline | What it represents | Candidate data sources (to be confirmed in WP-V-02) |
+| Baseline | What it represents | Data source (recorded in WP-V-02) |
 |---|---|---|
-| B1 Human driver | US human-driven crash and injury rates per distance, filtered to road types and conditions inside the ODD | Public US crash statistics (e.g. NHTSA FARS/CRSS) combined with exposure data. Selection and filtering to be justified |
-| B2 Stock TSS2 | The same Corolla driven with Toyota's own lane tracing / lane keeping and dynamic radar cruise control | No public per-feature rate exists. Expected route: comparative scenario testing (same scenarios, stock vs LionDriver) on the reference vehicle rather than a fleet rate |
+| B1 Human driver | US human-driven crash and injury rates per distance, filtered to road types and conditions inside the ODD | NHTSA FARS and CRSS crashes over FHWA travel data (vehicle-miles), split Interstate against other arterials (decided 2026-10-25, DQ-137 A). Source, year and filter are recorded in [WP-V-02 §2.1](../06-validation/WP-V-02-sotif-vv-strategy.md#21-b1-human-driver-data-set-dq-137) |
+| B2 Stock TSS2 | The same Corolla driven with Toyota's own lane tracing / lane keeping and dynamic radar cruise control | No public per-feature rate exists. Paired runs on a closed course: each selected WP-V-03 known scenario driven with stock TSS2 and with LionDriver, same speeds and targets, logged on the device (decided 2026-10-25, DQ-138 A; [WP-V-02 §2.2](../06-validation/WP-V-02-sotif-vv-strategy.md#22-b2-paired-runs-against-stock-tss2-dq-138)) |
 
 B1 gives an overall rate target. B2 is a per-scenario comparison and guards against the case where LionDriver meets B1 overall but performs worse than the stock system in specific scenarios (for example, stopped-vehicle approach, cut-ins).
 
@@ -96,7 +96,7 @@ For each SOTIF hazardous behaviour SH-nn in WP-C-05:
 3. The result is a target rate for the hazardous behaviour, from which a test-distance or test-count target follows at one-sided 95 % confidence (WP-V-02 §3 step 3; decided 2026-10-19 by the project lead, decision register DQ-057 option A).
 4. Where a target is not achievable by LionDriver-owned driving (expected for most targets, given one vehicle and one maintainer), the target is decomposed into scenario-level targets that can be evaluated by replay and simulation, and the ODD is narrowed (§8). The rationale for each decomposition is recorded in WP-V-02.
 
-Surrogate measures (driver takeovers, disengagements, FCW events, envelope limit hits, DM alerts) may be used as leading indicators. Their relationship to harm must be argued, not assumed.
+Surrogate measures (driver takeovers, disengagements, FCW events, envelope limit hits, DM alerts) may be used as leading indicators. Their relationship to harm must be argued, not assumed. The project lead chose a small set, each with its own argument (decided 2026-10-25, DQ-140 A): unrequested lane departures, envelope limit hits and take-overs with a short time to the line. The arguments are drafted in [WP-V-02 §4.5](../06-validation/WP-V-02-sotif-vv-strategy.md#45-surrogates-for-harm-dq-140) and still have to be checked against logs.
 
 ### 5.3 What LionDriver cannot claim
 
@@ -172,11 +172,11 @@ Dates are set in [WP-M-03](WP-M-03-project-plan.md). The ordering is: §4 (G0) �
 
 | ID | Open item | Owner | Due |
 |---|---|---|---|
-| OI-1 | Select and justify the B1 human-driver baseline data set and filtering to the ODD (WP-V-02) | SL | G2 |
-| OI-2 | Define how the B2 stock-TSS2 comparison is executed on the reference vehicle (scenario list, test site, measurement) | SL | G2 |
+| OI-1 | Closed 2026-10-25 (DQ-137 option A): B1 is NHTSA FARS and CRSS crashes over FHWA travel data, split Interstate against other arterials; source, year, filter and known limits in WP-V-02 §2.1. The extraction of the rates is WP-V-02 OI-2 | SL | G2 |
+| OI-2 | Closed 2026-10-25 (DQ-138 option A): paired closed-course runs from the WP-V-03 known scenarios, same speeds and targets, logged on the device (WP-V-02 §2.2; scenarios marked in WP-V-03 §2; needs in WP-V-07 §8.1.1). The site is a separate question still queued for the lead (DQ-041) | SL | G2 |
 | OI-3 | Decided 2026-10-16 by the project lead (DQ-139 option A): simulation earns credit per scenario family, only once that family's fidelity case (WP-V-02 §5.3) passes and is approved. Open: build and approve the fidelity cases; re-enable the CI job (simulation session). CARLA: not now, revisit at G3 (WP-V-02 §5.4, DQ-261 option A) | SL | G2 |
 | OI-4 | Build a LionDriver-controlled log store so that drive logs do not depend on comma servers (shared with WP-O-04, WP-M-09) | PM | G4 |
 | OI-5 | Generate fork-owned process-replay and model-replay reference sets, including Corolla routes (shared with D-03) | PM / ML | G0 (process replay, with D-03); G2 (model replay, Corolla routes) |
 | OI-6 | Decided 2026-10-14 by the project lead (DQ-026 option B): no external human-factors reviewer; the lead supervises human-subject tests with a written protocol and consent. Open: write the protocol and consent material (WP-V-01 OI-5) | PM | G1 |
 | OI-7 | Confirm with the assessor that excluding Experimental Mode and Chestnut from claims is an acceptable scoping (D-08) | SL | G1 |
-| OI-8 | Agree which surrogate measures may stand in for harm events, and the argument linking them | SL | G2 |
+| OI-8 | Closed 2026-10-25 (DQ-140 option A): a small set of surrogates, each with its own argument: unrequested lane departures, envelope limit hits, take-overs with a short time to the line (WP-V-02 §4.5). The arguments are drafts; checking them against logs is WP-V-02 OI-5 | SL | G2 |

@@ -598,10 +598,10 @@ file = "fig-sysml-v05-requirement-thread.svg"
 kind = "thread"
 requirement = "TSR-407"
 title = "Requirement thread · TSR-407 heartbeat loss"
-subtitle = "Derived from its safety goals through FSR-01.07, satisfied by the safety MCU firmware, cited by SM-12 and verified by the cases that name it"
+subtitle = "Derived through FSR-01.07 from its safety goals and the stakeholder need behind them, satisfied by the safety MCU firmware, cited by SM-12 and verified by the cases that name it"
 width = 1520
-desc = """Thread view generated from the SysML v2 model for TSR-407: the #derivation chain to FSR-01.07 and its safety \
-goals, the satisfy relationship to the element its allocation names, the safety mechanisms whose TSR list cites it with \
+desc = """Thread view generated from the SysML v2 model for TSR-407: the #derivation chain to FSR-01.07, its safety \
+goals and the stakeholder need they refine (SN-09), the satisfy relationship to the element its allocation names, the safety mechanisms whose TSR list cites it with \
 their performing elements, and the verification cases of the test specifications that verify it."""
 
 [views.V-06]
@@ -746,3 +746,56 @@ softDisable = { points = [[996, 480], [996, 560]], label = [988, 516, "end"] }
 cleared = { points = [[1090, 560], [1090, 480]], label = [1098, 516], dash = true }
 softFromOverride = { points = [[1190, 230], [1218, 230], [1218, 600], [1190, 600]], label = [1222, 420], compact = true }
 
+
+# ======================================================================= V-14 and V-15 (stakeholder needs and use cases)
+
+[views.V-14]
+file = "fig-sysml-v14-needs-use-cases.svg"
+kind = "needs"
+title = "Stakeholder needs and use cases"
+subtitle = "WP-S-01 §1.2–§1.4: who uses LD-SDA, what each needs, the use cases that serve the needs and the functions they perform"
+width = 1520
+desc = """Needs and use cases view generated from the SysML v2 model. Columns are the use cases UC-01 to UC-11, each a \
+SysML v2 use case with LD-SDA as its subject. Three bands of rows: the actors that take part in each use case; the \
+stakeholder needs SN-01 to SN-12 that each use case's objective requires, with the system requirements and safety goals \
+that refine each need; and the functions F-01 to F-09 each use case performs."""
+
+[views.V-15]
+file = "fig-sysml-v15-end-to-end-thread.svg"
+kind = "endtoend"
+need = "SN-01"
+title = "End-to-end thread · SN-01 staying in the lane"
+subtitle = "One stakeholder need from the driver, through its use case and functions to the elements, and through its requirements to the cases that verify them"
+width = 1520
+desc = """End-to-end thread generated from the SysML v2 model for stakeholder need SN-01. Upper band: the use cases whose \
+objective requires the need, the functions they perform and the elements that perform the functions' steps. Lower band: \
+the system requirements derived from the need, the elements that satisfy each one and the verification cases that verify \
+it, with the requirements no case verifies flagged."""
+
+# ======================================================================= V-16 and V-17 (behaviour records and sequences, OI-3)
+
+[views.V-16]
+file = "fig-sysml-v16-state-machine-records.svg"
+kind = "records"
+machines = ["SM-SAFETY-MODE", "SM-TOY-AUTH", "SM-SELFDRIVED"]
+title = "State-machine records · safety mode, authority, engagement"
+subtitle = "The three records of WP-W-05 §5 as SysML state machines: every record transition with its trigger, its states, its status and the SWSRs it realises"
+width = 1520
+desc = """State-machine records view generated from the SysML v2 model. One panel per record of WP-W-05 §5: the panda \
+safety mode (SM-SAFETY-MODE), the Toyota authority controls_allowed (SM-TOY-AUTH) and the selfdrived engagement state \
+(SM-SELFDRIVED), each with its states, initial state and the software units that run it. One row per record \
+transition: trigger, source and target states, status (not implemented, implemented with a gap, reference build only, \
+every build) and the software safety requirements it realises."""
+
+[views.V-17]
+file = "fig-sysml-v17-startup-sequence.svg"
+kind = "sequence"
+sequence = "SEQ-START"
+title = "Start-up and engagement sequence"
+subtitle = "WP-S-03 §4.1 Table 4-1 from ignition on to engaged actuation; each lifeline is an element of the model, each step names the record transitions it stands for"
+width = 1520
+desc = """Sequence view generated from the SysML v2 model for WP-S-03 §4.1 (Figure 4-1). Lifelines from the driver and \
+the vehicle through the relay and the safety MCU to the host processes pandad, card, controlsd and selfdrived. One row \
+per step S-01 to S-21 in four phases: the message or action, its condition in brackets, the safety MCU or selfdrived \
+state after it, its status (as inherited, required in the reference build, required and not yet implemented), the \
+record transitions it stands for and its code reference."""

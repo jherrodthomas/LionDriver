@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 3 · Derivation flow</title>
-<desc>Sankey diagram of parent links: H to HE 39, HE to SG 38, SG to FSR 100, SG to TSR 16, FSR to TSR 155, AOU to TSR 20, TSR to SWSR 147, TSR to HWSR 50, FSR to HWSR 44, AOU to HWSR 1. 1 hazardous event has no goal, 1 FSR has no TSR of its own, 28 TSRs have no SW or HW requirement.</desc>
+<desc>Sankey diagram of parent links: H to HE 39, HE to SG 38, SG to FSR 100, SG to TSR 16, FSR to TSR 155, AOU to TSR 20, TSR to SWSR 152, TSR to HWSR 50, FSR to HWSR 44, AOU to HWSR 1. 1 hazardous event has no goal, 1 FSR has no TSR of its own, 27 TSRs have no SW or HW requirement.</desc>
 <defs><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F172A"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="faint" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><marker id="sw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F766E"/></marker><marker id="hw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker><marker id="aou" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D97706"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D2553F"/></marker></defs>
 <rect x="0" y="0" width="1280" height="640" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3 · Derivation flow: hazard to software and hardware requirement</text>
@@ -19,13 +19,13 @@
 <text x="749" y="139" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">155</text>
 <path d="M658,452 C749,452 749,380.9 840,380.9 L840,407.9 C749,407.9 749,479 658,479 Z" fill="#D97706" opacity="0.28"/>
 <text x="720" y="493" font-size="10.5" fill="#D97706" font-weight="700" text-anchor="middle">AOU → TSR  20</text>
-<path d="M858,150 C964,150 964,120 1070,120 L1070,318.5 C964,318.5 964,348.5 858,348.5 Z" fill="#0F766E" opacity="0.28"/>
-<text x="964" y="129" font-size="10.5" fill="#0F766E" font-weight="700" text-anchor="middle">147</text>
-<path d="M858,348.5 C964,348.5 964,411.4 1070,411.4 L1070,478.9 C964,478.9 964,416 858,416 Z" fill="#4F46E5" opacity="0.28"/>
-<text x="964" y="373.9" font-size="10.5" fill="#4F46E5" font-weight="700" text-anchor="middle">50</text>
-<path d="M658,349.2 C753.5,349.2 753.5,430 849,430 C959.5,430 959.5,352 1070,352 L1070,411.4 C959.5,411.4 959.5,489.4 849,489.4 C753.5,489.4 753.5,408.6 658,408.6 Z" fill="#4F46E5" opacity="0.28"/>
-<text x="849" y="502.4" font-size="10.5" fill="#4F46E5" font-weight="700" text-anchor="middle">FSR → HWSR  44</text>
-<path d="M658,479 C753.5,479 753.5,511.4 849,511.4 C959.5,511.4 959.5,478.9 1070,478.9 L1070,480.2 C959.5,480.2 959.5,512.7 849,512.7 C753.5,512.7 753.5,480.4 658,480.4 Z" fill="#D97706" opacity="0.28"/>
+<path d="M858,150 C964,150 964,120 1070,120 L1070,325.2 C964,325.2 964,355.2 858,355.2 Z" fill="#0F766E" opacity="0.28"/>
+<text x="964" y="129" font-size="10.5" fill="#0F766E" font-weight="700" text-anchor="middle">152</text>
+<path d="M858,355.2 C964,355.2 964,411.4 1070,411.4 L1070,478.9 C964,478.9 964,422.7 858,422.7 Z" fill="#4F46E5" opacity="0.28"/>
+<text x="964" y="377.3" font-size="10.5" fill="#4F46E5" font-weight="700" text-anchor="middle">50</text>
+<path d="M658,349.2 C753.5,349.2 753.5,436.7 849,436.7 C959.5,436.7 959.5,352 1070,352 L1070,411.4 C959.5,411.4 959.5,496.1 849,496.1 C753.5,496.1 753.5,408.6 658,408.6 Z" fill="#4F46E5" opacity="0.28"/>
+<text x="849" y="509.1" font-size="10.5" fill="#4F46E5" font-weight="700" text-anchor="middle">FSR → HWSR  44</text>
+<path d="M658,479 C753.5,479 753.5,518.1 849,518.1 C959.5,518.1 959.5,478.9 1070,478.9 L1070,480.2 C959.5,480.2 959.5,519.5 849,519.5 C753.5,519.5 753.5,480.4 658,480.4 Z" fill="#D97706" opacity="0.28"/>
 <text x="950" y="474.2" font-size="10.5" fill="#D97706" font-weight="700" text-anchor="middle">AOU → HWSR  1</text>
 <rect x="90" y="248.7" width="18" height="52.7" rx="3" fill="#475569" stroke="none" stroke-width="0"/>
 <text x="99" y="240.7" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">H 9</text>
@@ -37,10 +37,10 @@
 <text x="649" y="132" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">FSR 58</text>
 <rect x="640" y="452" width="18" height="28.4" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
 <text x="632" y="470.2" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="end">AOU 18</text>
-<rect x="840" y="150" width="18" height="266" rx="3" fill="#C2410C" stroke="none" stroke-width="0"/>
+<rect x="840" y="150" width="18" height="272.7" rx="3" fill="#C2410C" stroke="none" stroke-width="0"/>
 <text x="849" y="142" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">TSR 128</text>
-<rect x="1070" y="120" width="18" height="198.5" rx="3" fill="#0F766E" stroke="none" stroke-width="0"/>
-<text x="1098" y="223.2" font-size="12.5" fill="#0F172A" font-weight="700">SWSR 139</text>
+<rect x="1070" y="120" width="18" height="205.2" rx="3" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="1098" y="226.6" font-size="12.5" fill="#0F172A" font-weight="700">SWSR 144</text>
 <rect x="1070" y="352" width="18" height="128.2" rx="3" fill="#4F46E5" stroke="none" stroke-width="0"/>
 <text x="1098" y="420.1" font-size="12.5" fill="#0F172A" font-weight="700">HWSR 46</text>
 <rect x="130" y="452" width="330" height="39" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
@@ -50,8 +50,8 @@
 <text x="142" y="530" font-size="11.5" fill="#0F172A" font-weight="700">1 FSR without its own TSR</text>
 <text x="142" y="546" font-size="10.5" fill="#475569">FSR-03.04 · applies other FSRs</text>
 <rect x="870" y="520" width="360" height="54" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
-<text x="882" y="538" font-size="11.5" fill="#0F172A" font-weight="700">28 TSRs with no SWSR or HWSR</text>
-<text x="882" y="554" font-size="10.5" fill="#475569">17 allocated to operation (OPS); 11 listed as not refined</text>
+<text x="882" y="538" font-size="11.5" fill="#0F172A" font-weight="700">27 TSRs with no SWSR or HWSR</text>
+<text x="882" y="554" font-size="10.5" fill="#475569">17 allocated to operation (OPS); 10 listed as not refined</text>
 <text x="882" y="569" font-size="10.5" fill="#475569">(WP-W-02 §10, WP-H-01) or not allocated to SW or HW (K4)</text>
 <rect x="40" y="610" width="14" height="12" rx="3" fill="#475569" stroke="#475569" stroke-width="1.2"/>
 <text x="60" y="620" font-size="11" fill="#475569">hazard analysis</text>

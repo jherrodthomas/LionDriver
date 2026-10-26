@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="1221" viewBox="0 0 640 1221" role="img" aria-labelledby="t d">
 <title id="t">Figure 6-1. Update path today and the target (WP-S-07 §3.6, WP-O-05 §6)</title>
-<desc id="d">Figure 6-1: the update path today and the target. Where it comes from: today not fixed to a liondriver origin or release channel; target a fixed origin and the release channel only (CSR-122 not met). Before anything is staged: today no liondriver signature is checked; target a release manifest signed with the offline key (ECDSA P-256, SHA-256), checked with a pinned public key (CSR-121 not implemented). The code: today not checked against a signed release; target the fetched tree checked against the manifest commit and its submodule pins (CSR-121 not implemented). System images: today not checked against a signed release; target every artefact hash checked against the manifest before use (CSR-121 not implemented). An older release: today not refused; target refused unless it is a signed rollback release (CSR-123 not implemented). Until the target exists automatic updates are off and releases are installed by hand with a hash comparison (CSR-124). The manifest lists release ID, git tree commit, with submodule pins, AGNOS version and image hashes, panda image hash, model artefact hashes, minimum version.</desc>
+<desc id="d">Figure 6-1: the update path today and the target. Where it comes from: today whatever branch the device is set to follow, from a configurable origin; target a fixed origin and the release channel only (CSR-122 not met). Before anything is staged: today nothing signed by liondriver: tls is the only check; target a release manifest signed with the offline key (ECDSA P-256, SHA-256), checked with a pinned public key (CSR-121 not implemented). The code: today checked out and cleaned exactly as fetched; target the fetched tree checked against the manifest commit and its submodule pins (CSR-121 not implemented). System images: today checked against hashes that came in the same unsigned tree; target every artefact hash checked against the manifest before use (CSR-121 not implemented). An older release: today not refused; target refused unless it is a signed rollback release (CSR-123 not implemented). Until the target exists automatic updates are off and releases are installed by hand with a hash comparison (CSR-124). The manifest lists release ID, git tree commit, with submodule pins, AGNOS version and image hashes, panda image hash, model artefact hashes, minimum version.</desc>
 <style>
 svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
       --real:#2a78d6; --real-bg:#e9f1fb; --amb:#c98500; --amb-bg:#fdf4dc; --bad:#e34948; --bad-bg:#fdecec;
@@ -61,8 +61,9 @@ svg { --ok:#16a34a; --ok-bg:#e8f6ec; --unv:#0284c7; --unv-bg:#e6f3fb; }
 <text x="332" y="140" class="t2">designed, not built</text>
 <text x="24" y="172" class="t2b">1  Where it comes from</text>
 <rect x="24" y="180" width="284" height="94" rx="8" class="badbox"/>
-<text x="36" y="204" class="t">Not fixed to a LionDriver origin</text>
-<text x="36" y="224" class="t">or release channel</text>
+<text x="36" y="204" class="t">Whatever branch the device is</text>
+<text x="36" y="224" class="t">set to follow, from a</text>
+<text x="36" y="244" class="t">configurable origin</text>
 <rect x="332" y="180" width="284" height="94" rx="8" class="plan"/>
 <text x="344" y="204" class="t">A fixed origin and the release</text>
 <text x="344" y="224" class="t">channel only</text>
@@ -70,8 +71,8 @@ svg { --ok:#16a34a; --ok-bg:#e8f6ec; --unv:#0284c7; --unv-bg:#e6f3fb; }
 <text x="411.2" y="252" class="chip" text-anchor="middle">CSR-122 · Not met</text>
 <text x="24" y="298" class="t2b">2  Before anything is staged</text>
 <rect x="24" y="306" width="284" height="134" rx="8" class="badbox"/>
-<text x="36" y="330" class="t">No LionDriver signature is</text>
-<text x="36" y="350" class="t">checked</text>
+<text x="36" y="330" class="t">Nothing signed by LionDriver:</text>
+<text x="36" y="350" class="t">TLS is the only check</text>
 <rect x="332" y="306" width="284" height="134" rx="8" class="plan"/>
 <text x="344" y="330" class="t">A release manifest signed with</text>
 <text x="344" y="350" class="t">the offline key (ECDSA P-256,</text>
@@ -81,8 +82,8 @@ svg { --ok:#16a34a; --ok-bg:#e8f6ec; --unv:#0284c7; --unv-bg:#e6f3fb; }
 <text x="439" y="418" class="chip" text-anchor="middle">CSR-121 · Not implemented</text>
 <text x="24" y="464" class="t2b">3  The code</text>
 <rect x="24" y="472" width="284" height="114" rx="8" class="badbox"/>
-<text x="36" y="496" class="t">Not checked against a signed</text>
-<text x="36" y="516" class="t">release</text>
+<text x="36" y="496" class="t">Checked out and cleaned exactly</text>
+<text x="36" y="516" class="t">as fetched</text>
 <rect x="332" y="472" width="284" height="114" rx="8" class="plan"/>
 <text x="344" y="496" class="t">The fetched tree checked against</text>
 <text x="344" y="516" class="t">the manifest commit and its</text>
@@ -91,8 +92,8 @@ svg { --ok:#16a34a; --ok-bg:#e8f6ec; --unv:#0284c7; --unv-bg:#e6f3fb; }
 <text x="439" y="564" class="chip" text-anchor="middle">CSR-121 · Not implemented</text>
 <text x="24" y="610" class="t2b">4  System images</text>
 <rect x="24" y="618" width="284" height="94" rx="8" class="badbox"/>
-<text x="36" y="642" class="t">Not checked against a signed</text>
-<text x="36" y="662" class="t">release</text>
+<text x="36" y="642" class="t">Checked against hashes that came</text>
+<text x="36" y="662" class="t">in the same unsigned tree</text>
 <rect x="332" y="618" width="284" height="94" rx="8" class="plan"/>
 <text x="344" y="642" class="t">Every artefact hash checked</text>
 <text x="344" y="662" class="t">against the manifest before use</text>

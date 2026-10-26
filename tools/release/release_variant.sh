@@ -3,7 +3,8 @@
 #
 #   RELEASE_VARIANT=reference (default)  panda firmware and pandad built with LIONDRIVER_REFERENCE=1: safety-mode lock,
 #                                         reduced TX whitelist, TX-rate and command-freshness supervision; the panda
-#                                         reports HEALTH_FLAG_REFERENCE_BUILD and pandad refuses a non-reference panda
+#                                         reports HEALTH_FLAG_REFERENCE_BUILD and pandad refuses a non-reference panda;
+#                                         no joystick or maneuver processes registered or shipped (DQ-131)
 #   RELEASE_VARIANT=upstream              built without them, for upstream compatibility only; not a LionDriver release
 #
 # The root SConstruct already defaults to the reference build when LIONDRIVER_REFERENCE is unset; setting it here

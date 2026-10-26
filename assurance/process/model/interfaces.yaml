@@ -3,8 +3,10 @@
 # Automotive Standards Handbook §3.3, "explicit domain interfaces"). Each one is anchored to text
 # that already exists in the work products: an anchor `WP-x-nn:text` must occur verbatim in that
 # work product, so the model cannot claim a link the documents do not make.
-# status: documented = both sides reference each other, not yet reviewed;
-#         open = a recorded open item still has to settle it (named in open_item).
+# ifr: the IFR item in assurance/trace/items/ifr.yaml that holds the interface's two owners, its open item and its
+# agreement state (DQ-129 A). The status is read from there and not kept here: documented = both sides reference
+# each other, nobody has reviewed the agreement; open = a recorded open item still has to settle it; agreed = an
+# accepted review record of both owners lists the IFR item.
 
 - id: IX-01
   kind: interface
@@ -13,8 +15,7 @@
   pattern: "Safety-Security"
   topic: "Cyber-induced effects map onto the HARA hazards; TARA safety impact is rated against those hazards and their ASILs"
   anchors: ["WP-C-03:Cyber-induced effects are analysed in the TARA", "WP-C-09:Safety impact is anchored to the HARA hazards"]
-  status: documented
-  open_item: null
+  ifr: IFR-01
   due: G1
 - id: IX-02
   kind: interface
@@ -23,8 +24,7 @@
   pattern: "Safety-Security"
   topic: "Cybersecurity goals protect the safety goals; the SG to CSG mapping was checked against the FSC allocation and corrected (WP-C-10 OI-6 closed), and the FSC now points back to it"
   anchors: ["WP-C-10:Checked against the functional safety concept", "WP-C-04:Interface to cybersecurity (ISO/SAE 21434 §9.5)"]
-  status: documented
-  open_item: null
+  ifr: IFR-02
   due: G1
 - id: IX-03
   kind: interface
@@ -33,8 +33,7 @@
   pattern: "Safety-SOTIF"
   topic: "One hazard log: each HARA hazard cross-references the SOTIF hazards that can cause the same vehicle-level effect"
   anchors: ["WP-C-03:Hazard log cross-references", "WP-C-03:SH-01 (model-induced lateral error)"]
-  status: documented
-  open_item: null
+  ifr: IFR-03
   due: G1
 - id: IX-04
   kind: interface
@@ -43,8 +42,7 @@
   pattern: "Safety-SOTIF"
   topic: "Driver monitoring carries no ASIL and is managed as a SOTIF misuse measure, while the C2 controllability ratings assume a supervising driver (AOU-06R)"
   anchors: ["WP-C-04:DM is not assigned an ASIL", "WP-C-04:AOU-06R"]
-  status: documented
-  open_item: null
+  ifr: IFR-04
   due: G1
 - id: IX-05
   kind: interface
@@ -53,8 +51,7 @@
   pattern: "SOTIF-AI"
   topic: "Driver-monitoring performance targets (DMP-01/02) are AI safety requirements AIR-07/08; their values are confirmed, with the end-to-end alert time set at 6 s, and validated under VT-08"
   anchors: ["WP-C-08:Target confirmed 2026-10-12 (OI-2)", "WP-C-11:Values confirmed 2026-10-12 (WP-C-08 OI-2)"]
-  status: documented
-  open_item: null
+  ifr: IFR-05
   due: G2
 - id: IX-06
   kind: interface
@@ -63,8 +60,7 @@
   pattern: "SOTIF-AI"
   topic: "The driving model's training-data ODD is unpublished, so by the maintainer's decision it is not compared with the reference ODD. WP-C-02 §3.3: a stratum is claimed only where LionDriver evaluation data covers it and meets AIR-09 (DSR-03/04/05); AIR-14 is the runtime backstop; the residual stays as defeater DF-20"
   anchors: ["WP-C-02:Relation to the driving model's training data", "WP-C-02:A stratum of §3.1 is part of the claimed ODD only if LionDriver evaluation data covers it", "WP-C-11:makes no claim about training data", "WP-C-11:The reference ODD is therefore not compared with the training-data ODD"]
-  status: documented
-  open_item: null
+  ifr: IFR-06
   due: G2
 - id: IX-07
   kind: interface
@@ -73,8 +69,7 @@
   pattern: "Security-AI"
   topic: "Model artefacts load through pickle without a hash or signature: AI integrity requirements AIR-19/AIR-20 and threat scenario TS-09 address the same weakness (GAP-22)"
   anchors: ["WP-C-11:AIR-20 | No deserialization mechanism capable of executing code", "WP-C-09:Tampered ML model artefact executes code on load"]
-  status: documented
-  open_item: null
+  ifr: IFR-07
   due: G1
 - id: IX-08
   kind: interface
@@ -83,8 +78,7 @@
   pattern: "Safety-SOTIF"
   topic: "The FSC transition rule (untrusted command to immediate safe state, otherwise soft disable) is implemented by functional modification FM-03"
   anchors: ["WP-C-04:FM-03 in [WP-C-07]", "WP-C-07:No actuation on stale or failed inputs during soft disable"]
-  status: documented
-  open_item: null
+  ifr: IFR-08
   due: G1
 
 # System design (G2)
@@ -95,8 +89,7 @@
   pattern: "Safety-Security"
   topic: "Boot integrity, safety-mode lock and command gating are both safety and security requirements: TSR-511…514 overlap the CSRs that refine them"
   anchors: ["WP-S-02:Cybersecurity requirements that overlap TSR-511…514", "WP-S-07:TSR-402…405"]
-  status: documented
-  open_item: null
+  ifr: IFR-09
   due: G2
 - id: IX-10
   kind: interface
@@ -105,8 +98,7 @@
   pattern: "Safety-Security"
   topic: "The FFI claim that the QM SoC cannot replace the safety MCU firmware (FFI-3, not met) depends on the trust boundary TB-2 over the BOOT0/NRST lines"
   anchors: ["WP-S-03:QM SoC replaces MCU firmware via BOOT0/NRST or softloader", "WP-S-07:TB-2 | Z2 → Z1 boot control (GPIO)"]
-  status: documented
-  open_item: null
+  ifr: IFR-10
   due: G2
 - id: IX-11
   kind: interface
@@ -115,8 +107,7 @@
   pattern: "Safety-Security"
   topic: "Unauthenticated SoC messaging (GAP-20) is both an interference path into safety-relevant processes and an attack surface; CSR-062/063 restrict writers and publishers"
   anchors: ["WP-S-03:This is a cybersecurity and FFI matter handled in WP-S-07 and WP-A-02", "WP-S-07:msgq shared memory has no publisher authentication (GAP-20)"]
-  status: documented
-  open_item: null
+  ifr: IFR-11
   due: G2
 - id: IX-12
   kind: interface
@@ -125,8 +116,7 @@
   pattern: "Safety-SOTIF"
   topic: "The system fault trees include ML functional insufficiencies as [SOTIF] basic events so they are complete; their evaluation stays in the SOTIF analysis"
   anchors: ["WP-A-04:appear as basic events labelled **[SOTIF]**", "WP-A-04:They are evaluated in [WP-C-06]"]
-  status: documented
-  open_item: null
+  ifr: IFR-12
   due: G2
 - id: IX-13
   kind: interface
@@ -135,8 +125,7 @@
   pattern: "SOTIF-AI"
   topic: "The AI safety requirements carry (TBC) performance values that the SOTIF validation targets VT-01…VT-15 must confirm. WP-V-02 §4.1 traces each value: 8 confirmed or replaced (AIR-11 and AIR-14 through VT-14 and VT-15; AIR-01, AIR-03 and AIR-04 derived in §4.3); 6 come from other documents. The targets are not yet frozen: the project lead freezes them once the B1 crash data replaces the illustrative rates, with a later assessor review (DQ-096 B)"
   anchors: ["WP-C-11:are proposals that [WP-V-02]", "WP-V-02:the project lead freezes VT-01…VT-15", "WP-V-02:(TBC) values of WP-C-11 and the targets that confirm them", "WP-C-11:AIR-11 and AIR-14 are covered by VT-14 and VT-15"]
-  status: open
-  open_item: "WP-V-02 OI-3"
+  ifr: IFR-13
   due: G2
 - id: IX-14
   kind: interface
@@ -145,8 +134,7 @@
   pattern: "Safety-AI"
   topic: "The QM ML models may reach the actuators only through the envelope and may not alter its limits (AIR-28); the FFI analysis is where that containment is shown"
   anchors: ["WP-C-11:no AI-derived signal shall alter envelope limits or the safety mode", "WP-A-02:E-02 ML models"]
-  status: documented
-  open_item: null
+  ifr: IFR-14
   due: G2
 
 # Hardware and software development (G3)
@@ -157,8 +145,7 @@
   pattern: "Hardware-Software"
   topic: "Software safety requirements that depend on a hardware resource refine the HSI and pair with the hardware safety requirements"
   anchors: ["WP-W-02:pair with the HWSRs of [WP-H-01]", "WP-W-02:These SWSRs depend on a hardware resource"]
-  status: documented
-  open_item: null
+  ifr: IFR-15
   due: G3
 - id: IX-16
   kind: interface
@@ -167,8 +154,7 @@
   pattern: "Safety-Security"
   topic: "The SoC's control of the MCU boot and reset lines is a hardware safety requirement (HWSR-502c) and an input to the security architecture"
   anchors: ["WP-H-01:The SoC's control of the MCU reset (`STM_RST_N`) and boot-mode (`STM_BOOT0`) lines", "WP-S-07:HWSR-502c (boot pins)"]
-  status: documented
-  open_item: null
+  ifr: IFR-16
   due: G3
 - id: IX-17
   kind: interface
@@ -177,8 +163,7 @@
   pattern: "Safety-Security"
   topic: "One coding guideline for safety and security: the CERT C subset for security static analysis is recorded next to MISRA C:2012, with each rule mapped to the cppcheck or MISRA checker that covers it or to review (the pinned cppcheck has no CERT addon)"
   anchors: ["WP-W-11:CERT C subset of WP-W-01 §5.5", "WP-W-01:Security coding rules: CERT C subset (SAST-02)"]
-  status: documented
-  open_item: null
+  ifr: IFR-17
   due: G3
 - id: IX-18
   kind: interface
@@ -187,8 +172,7 @@
   pattern: "AI-Tools"
   topic: "The ML compiler (tinygrad) is a QM tool whose confidence comes from back-to-back comparison against an independent reference: ONNX Runtime 1.24.1 on CPU (TL-23), with a seeded difference that the comparison must catch"
   anchors: ["WP-W-10:Not yet installed in a LionDriver environment (WP-P-07 OI-8)", "WP-P-07:for tinygrad a back-to-back comparison of compiled-model outputs"]
-  status: documented
-  open_item: null
+  ifr: IFR-18
   due: G3
 - id: IX-19
   kind: interface
@@ -197,8 +181,7 @@
   pattern: "Safety-AI"
   topic: "Model weights are safety-related configuration data: which model runs depends on file presence and device detection"
   anchors: ["WP-W-09:Model selection depends on file presence and USB device detection"]
-  status: documented
-  open_item: null
+  ifr: IFR-19
   due: G3
 
 # Integration and verification (G4)
@@ -209,8 +192,7 @@
   pattern: "Hardware-Software"
   topic: "Hardware, embedded-software and system integration share one HIL bench (D-04): WP-W-08 §3 uses the WP-H-06 §2 bench and adds its software needs; both plan it ready by G3 as WP-M-03 phase P4 requires. Building it stays open as WP-H-06 OI-1 / WP-W-08 OI-1 / WP-M-03 task 5.1"
   anchors: ["WP-H-06:Test environment: HIL bench (decision D-04)", "WP-W-08:it does not define a second bench", "WP-H-06:Build and characterize the HIL bench (D-04", "WP-W-08:One bench with WP-H-06 §2; tracked as WP-H-06 OI-1 and WP-M-03 task 5.1"]
-  status: documented
-  open_item: null
+  ifr: IFR-20
   due: G4
 - id: IX-21
   kind: interface
@@ -219,8 +201,7 @@
   pattern: "Software-System"
   topic: "Embedded-software qualification, system integration and the fault-injection campaign test the same faults on one bench. WP-W-08 §6.1 splits them: WP-V-05 owns every injection procedure; a case at WP-S-08 step I-1 runs once under WP-W-08 and is cited by WP-S-08 and WP-V-05; WP-S-08 adds steps I-2 to I-4"
   anchors: ["WP-W-08:Split with WP-S-08 and WP-V-05", "WP-W-08:WP-V-05 is the only source of fault-injection procedures", "WP-V-05:this document cites that entry and does not re-run it", "WP-S-08:is not re-run here: its I-1 result is the WP-W-08 report entry"]
-  status: documented
-  open_item: null
+  ifr: IFR-21
   due: G4
 - id: IX-22
   kind: interface
@@ -229,8 +210,7 @@
   pattern: "Safety-SOTIF"
   topic: "Faults (malfunctions) are injected under WP-V-05 and triggering conditions are tested under WP-V-03; scenarios that need an induced fault reuse the WP-V-05 rules"
   anchors: ["WP-V-05:SOTIF triggering-condition testing ([WP-V-03]", "WP-V-03:(WP-V-05 rules)"]
-  status: documented
-  open_item: null
+  ifr: IFR-22
   due: G4
 - id: IX-23
   kind: interface
@@ -239,8 +219,7 @@
   pattern: "SOTIF-AI"
   topic: "Known-scenario evaluation reuses the ML test cases (e.g. VS-ML-06 for driver monitoring) and is re-run after every model change listed in WP-W-10"
   anchors: ["WP-V-03:WP-W-10 VS-ML-06", "WP-V-03:is re-run after any change listed in [WP-W-10 §8]"]
-  status: documented
-  open_item: null
+  ifr: IFR-23
   due: G4
 
 # Validation and release (G5)
@@ -251,8 +230,7 @@
   pattern: "Safety-Security"
   topic: "The safety case delegates its cybersecurity branch (G4) to the cybersecurity case, which argues against the same reference configuration"
   anchors: ["WP-K-01:G4 Cybersecurity (ISO/SAE 21434) — WP-K-03", "WP-K-03:interface to the safety case G4"]
-  status: documented
-  open_item: null
+  ifr: IFR-24
   due: G5
 - id: IX-25
   kind: interface
@@ -261,8 +239,7 @@
   pattern: "Safety-SOTIF"
   topic: "The SOTIF validation targets take P(not controlled) from the subject controllability tests of the safety validation: WP-V-02 §3.3 maps each SH to a WP-V-01 test and uses the one-sided 95 % upper bound at the least favourable tested condition; untested SHs and speeds above the highest tested use 1. P(E-situation) has its own route in WP-V-02 §3.4"
   anchors: ["WP-V-02:Evidence for P(not controlled)", "WP-V-02:Step 2 takes P(not controlled) only from driver controllability tests with test subjects", "WP-V-01:also supply P(not controlled) to the SOTIF validation targets"]
-  status: documented
-  open_item: null
+  ifr: IFR-25
   due: G5
 - id: IX-26
   kind: interface
@@ -271,8 +248,7 @@
   pattern: "SOTIF-AI"
   topic: "The SOTIF release argument needs the model evaluation report and hash-identified models from ML engineering; the report is missing"
   anchors: ["WP-K-02:ML models identified by hash in the release", "WP-K-02:| E-15 | Model evaluation report | WP-W-10 | Missing"]
-  status: documented
-  open_item: null
+  ifr: IFR-26
   due: G5
 
 # Operation (G6)
@@ -283,8 +259,7 @@
   pattern: "Safety-Security"
   topic: "A field event may have a safety or a cyber cause: field monitoring passes possible cyber causes to incident response, which watches field data for tampering indicators"
   anchors: ["WP-O-04:Events found here that may have a cybersecurity cause are passed to it", "WP-O-05:Indicators of tampering"]
-  status: documented
-  open_item: null
+  ifr: IFR-27
   due: G6
 - id: IX-28
   kind: interface
@@ -293,8 +268,7 @@
   pattern: "Operation-SOTIF"
   topic: "Pre-release exploration and field monitoring use one signature set: WP-V-04 §2.1 defines AS-01…AS-11 with thresholds and maps each to a WP-O-04 MON event (MON-17 added for the three without one); one extractor and signature-set version, thresholds frozen per version, and the same ODD denominator and discovery-rate definition. Numeric thresholds are still to be tuned (WP-O-04 OI-5)"
   anchors: ["WP-V-04:One signature set before and after release", "WP-V-04:This table is the only definition of AS-01…AS-11", "WP-O-04:are defined only in WP-V-04 §2.1", "WP-O-04:SOTIF anomaly signatures with no other field event"]
-  status: documented
-  open_item: null
+  ifr: IFR-28
   due: G6
 - id: IX-29
   kind: interface
@@ -303,8 +277,7 @@
   pattern: "Operation-AI"
   topic: "Field monitoring checks that the ML models behave as validated and stay inside their input space; anomalies go back to the model test set"
   anchors: ["WP-O-04:Are the ML models behaving as validated"]
-  status: documented
-  open_item: null
+  ifr: IFR-29
   due: G6
 - id: IX-30
   kind: interface
@@ -313,8 +286,7 @@
   pattern: "Security-Release"
   topic: "Security fixes reach the field as releases, but updates are not signed (GAP-26), so the update path is itself an open security weakness"
   anchors: ["WP-O-05:| Signed updates | Not available (GAP-26); manual updates only |", "WP-O-05:release management [WP-P-10]"]
-  status: documented
-  open_item: null
+  ifr: IFR-30
   due: G6
 
 # Governance (G0)
@@ -325,8 +297,7 @@
   pattern: "Safety-Security"
   topic: "The cybersecurity manager carries the interface to safety on safety-relevant threats; the G1 cybersecurity review is combined with the FuSa confirmation review where one assessor has both competences"
   anchors: ["WP-M-02:interface to safety on safety-relevant threats", "WP-M-09:combined with the functional safety confirmation review where the assessor has both competences"]
-  status: documented
-  open_item: null
+  ifr: IFR-31
   due: G0
 - id: IX-32
   kind: interface
@@ -335,8 +306,7 @@
   pattern: "SOTIF-AI"
   topic: "The AI safety lead supplies model-related insufficiencies to the SOTIF lead, who records them in the SOTIF analysis"
   anchors: ["WP-M-08:Supplies model-related insufficiencies and evaluation data", "WP-M-10:Receives AI-related FI-nn into WP-C-06"]
-  status: documented
-  open_item: null
+  ifr: IFR-32
   due: G0
 - id: IX-33
   kind: interface
@@ -345,6 +315,5 @@
   pattern: "Supplier-AI"
   topic: "The ML models are supplier artefacts of comma.ai; what comma.ai publishes about their training data and evaluation is recorded in upstream management (no model card, dataset description or evaluation report exists) and bounds the AI plan's claims"
   anchors: ["WP-M-10:answered from comma.ai's public statements", "WP-M-11:Public information on the ML models (WP-M-10 OI-7)"]
-  status: documented
-  open_item: null
+  ifr: IFR-33
   due: G0

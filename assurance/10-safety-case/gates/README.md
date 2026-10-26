@@ -18,7 +18,7 @@ No gate review has been held yet.
 
 - the gate's work products with their WP-M-00 status and open-item counts;
 - the confirmation measures WP-M-06 assigns to the gate and whether a record exists in [`../confirmation/`](../confirmation/README.md);
-- the open cross-domain interfaces due by the gate;
+- the cross-domain interfaces due by the gate, as IFR items with their owners, open item and review record (an interface is agreed only through a recorded review, DQ-129 A);
 - the WP-M-02 roles still unassigned;
 - the exit criteria of WP-M-00 §2, split into rows.
 

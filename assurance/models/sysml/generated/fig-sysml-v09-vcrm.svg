@@ -6,7 +6,7 @@
 <text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-09 · Verification matrix (VCRM) · system-level requirements</text>
 <text x="40" y="69" font-size="12.5" fill="#64748B">SYS, TSR and CSR requirements by method (NASA A, I, D, T) and by the level of their verification cases</text>
 <text x="1280" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::verificationMatrix</text>
-<text x="1280" y="62" font-size="11" fill="#64748B" text-anchor="end">RequirementMatrixView · render asElementTable · model 5b926a816b32</text>
+<text x="1280" y="62" font-size="11" fill="#64748B" text-anchor="end">RequirementMatrixView · render asElementTable · model 5d5f4756c724</text>
 <line x1="40" y1="86" x2="1280" y2="86" stroke="#E2E8F0"/>
 <rect x="303" y="100" width="180" height="22" rx="6" fill="#0F172A"/>
 <text x="393" y="115" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">Analysis</text>
@@ -271,8 +271,8 @@
 <text x="951" y="419" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">11</text>
 <rect x="985" y="401" width="56" height="28" rx="5" fill="rgba(37,99,235,0.27)"/>
 <text x="1013" y="419" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">13</text>
-<rect x="1047" y="401" width="56" height="28" rx="5" fill="rgba(37,99,235,0.34)"/>
-<text x="1075" y="419" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">18</text>
+<rect x="1047" y="401" width="56" height="28" rx="5" fill="rgba(37,99,235,0.35)"/>
+<text x="1075" y="419" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">19</text>
 <rect x="1109" y="401" width="56" height="28" rx="5" fill="rgba(37,99,235,0.09)"/>
 <text x="1137" y="419" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">1</text>
 <rect x="1171" y="401" width="56" height="28" rx="5" fill="#FEF2F2"/>
@@ -385,7 +385,7 @@
 <rect x="1233" y="515" width="56" height="28" rx="5" fill="#FFFFFF"/>
 <text x="1261" y="533" font-size="12" fill="#94A3B8" text-anchor="middle">—</text>
 <line x1="40" y1="548" x2="1280" y2="548" stroke="#E2E8F0"/>
-<text x="40" y="574" font-size="12" fill="#0F172A" font-weight="600">231 requirements · 115 verified by at least one case · 116 by none · no case has a result yet (specified, not run) · one row per requirement: generated/vcrm.md</text>
+<text x="40" y="574" font-size="12" fill="#0F172A" font-weight="600">231 requirements · 116 verified by at least one case · 115 by none · no case has a result yet (specified, not run) · one row per requirement: generated/vcrm.md</text>
 <line x1="40" y1="604" x2="1280" y2="604" stroke="#E2E8F0"/>
 <text x="40" y="620" font-size="11" fill="#334155">A analysis · LOG drive-log analysis · SIM simulation · R review · Rec operational record · DEM demonstration · T-SIL software test · T-HIL bench test · FI fault injection · PT fuzzing, penetration test · T-VEH vehicle test</text>
 <text x="40" y="640" font-size="11" fill="#334155">SYS.4 integration (VS-SI, VS-FI) · SYS.5 system verification (VS-SQ) · VAL.1 validation (VS-VAL) · SW/HW cases below system level · a requirement counts once per level</text>

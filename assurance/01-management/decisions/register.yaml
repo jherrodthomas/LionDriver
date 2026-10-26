@@ -2987,8 +2987,9 @@
       title: "Keep both"
       detail: "No change. Cost: two System FMEAs to keep in step, and the map stays tied to one of them."
   sources: ["assurance/08-analyses/fta-fmea-mapping.md (step 5)", "assurance/08-analyses/WP-A-04-system-fta-fmea.md §10", "assurance/08-analyses/fmea/analyses/system-fmea.yaml", "assurance/06-validation/WP-V-05-fault-injection.md §6"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: be0b4ff, record: "WP-A-04 v1.19 §10 (table retired; SFMEA-to-SFM map; system-fmea.yaml is the only System FMEA); WP-V-05 v0.12 §6; fta-fmea-mapping.md step 5", at: 2026-10-26}
 
 - id: DQ-128
   question: "Should the GSN diagrams be generated from YAML records? (A generator already exists, so can this item be closed?)?"
@@ -3035,8 +3036,9 @@
       title: "No change"
       detail: "Cost: the agreed status means only that someone set it."
   sources: ["assurance/process/README.md OI-2", "assurance/process/model/ (interfaces IX-nn)", "assurance/trace/README.md"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: be0b4ff, record: "trace/items/ifr.yaml (IFR-01…33, none agreed until a recorded review); check_trace.py and the item schema; process README v0.5 OI-2 closed; trace README v0.5; gate skeletons G0–G6", at: 2026-10-26}
 
 - id: DQ-130
   question: "Which human-driver crash data sources and road-class split are used to derive SOTIF validation targets?"
@@ -3081,8 +3083,9 @@
       title: "Keep the engagement refusal only"
       detail: "No build change. Cost: the debug processes can still start; safety then rests on the refusal and the panda's engagement check alone."
   sources: ["assurance/02-concept/WP-C-01-item-definition.md OI-5", "openpilot/selfdrive/selfdrived/assured_config.py ASSURED_PARAMS", "openpilot/system/manager/process_config.py (joystick, maneuversd, lateral_maneuversd)", "assurance/07-supporting/impact/change-2026-10-19-reference-entry-checks.md", "DQ-221"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: be0b4ff, record: "WP-C-01 v0.24 OI-5 closed; tools/release and process_config: reference build without the joystick and maneuver processes, test_reference_build.py; impact record change-2026-10-25-reference-debug-procs.md", at: 2026-10-26}
 
 - id: DQ-132
   question: "Should LionDriver read the car's fault codes for steering and stability control at start-up and refuse to engage while one is active, instead of relying on the driver to check the warning lamps?"
@@ -3106,8 +3109,9 @@
       title: "Keep the bus checks and the driver's lamp check"
       detail: "No change. Cost: stored faults without a bus signal are caught only by the driver."
   sources: ["assurance/09-production-operation/WP-O-02-operation-service-decommissioning.md OPS-01, OPS-02, OI-2", "assurance/03-system/WP-S-06-requirements-production-operation.md OI-4", "assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md INS-06"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: be0b4ff, record: "WP-S-02 v0.58 TSR-629, WP-W-02 SWSR-629…629d; WP-O-02 v0.3 OI-2 closed; WP-S-06 v0.3 OI-4 closed; WP-S-09 VS-SQ-20 (car test); impact record change-2026-10-25-startup-fault-code-read.md. Not verified on the car", at: 2026-10-26}
 
 - id: DQ-133
   question: "The upstream file docs/contributing/architecture.md is empty. Should it point to LionDriver's architecture document, or hold a copy?"
@@ -3158,8 +3162,9 @@
       title: "Shorten the watchdog now"
       detail: "Gives margin at once. Cost: a shorter watchdog trips on longer legitimate tasks, so the task timings must be re-measured, without knowing yet whether the margin is needed."
   sources: ["assurance/03-system/WP-S-04-timing-ftti-budget.md §3.6, §4 (SG-07 row), OI-7", "DQ-062"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: be0b4ff, record: "WP-S-04 v0.26 OI-7 (decision rule; waits on the PCS timing and watchdog clock measurements)", at: 2026-10-26}
 
 - id: DQ-135
   question: "How quickly must the panda pass the camera's emergency-braking messages to the car in the integration test?"
@@ -3235,8 +3240,9 @@
       title: "A naturalistic driving study (for example SHRP 2) instead"
       detail: "Includes near-crashes, so more events per mile. Cost: access terms, and a fleet and era that do not match US highways today."
   sources: ["assurance/01-management/WP-M-08-sotif-plan.md §5 (B1), OI-1", "assurance/02-concept/WP-C-05-sotif-hazard-identification.md §5.2, OI-3", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md OI-2, OI-3", "DQ-096", "DQ-130 (merged here)", "DQ-194 (merged here)"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: be0b4ff, record: "WP-V-02 v0.15 §2.1 (FARS and CRSS over FHWA, Interstate against other arterials, with limits); WP-M-08 v0.9 OI-1 closed; WP-C-05 v0.10 §5.2, OI-3", at: 2026-10-26}
 
 - id: DQ-138
   question: "How should LionDriver be compared with Toyota's own lane tracing and radar cruise on the same Corolla?"
@@ -3261,8 +3267,9 @@
       title: "Matched segments of public road"
       detail: "The same route driven with each system. Cost: traffic differs run to run, so the hard scenarios hardly ever occur and cannot be set up."
   sources: ["assurance/01-management/WP-M-08-sotif-plan.md §5 (B2), OI-2", "assurance/06-validation/WP-V-03-sotif-known-scenarios.md", "assurance/06-validation/WP-V-07-vehicle-test-operations.md"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: be0b4ff, record: "WP-V-02 v0.15 §2.2 (paired closed-course runs); WP-V-03 v0.10; WP-V-07 v0.3; WP-M-08 v0.9 OI-2 closed", at: 2026-10-26}
 
 - id: DQ-139
   question: "May simulation results count as validation evidence, and for which kinds of scenario?"
@@ -3313,8 +3320,9 @@
       title: "No surrogates"
       detail: "Only crashes count. Cost: no rate can be shown with one car, so the rate-level targets stay unmet."
   sources: ["assurance/01-management/WP-M-08-sotif-plan.md OI-8", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md §2 (public-road row), VT-01…VT-15", "assurance/06-validation/WP-V-04-sotif-unknown-scenarios.md (AS-08)"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: be0b4ff, record: "WP-V-02 v0.15 §4.5 (SU-01…03, draft arguments not yet checked against logs); WP-V-04 v0.10; WP-M-08 v0.9 OI-8 closed", at: 2026-10-26}
 
 - id: DQ-141
   question: "Is a soft real-time 100 Hz loop on the bench PC acceptable for the HIL plant model at bench stage B3?"
@@ -5923,7 +5931,7 @@
     - key: C
       title: "Leave it to the TARA"
       detail: "No change. Cost: the gap stays implicit and an assessor may raise it."
-  sources: ["assurance/sim/cyber/README.md §2.4, §6.1 choice 5 (PR #454)", "assurance/02-concept/WP-C-09-tara.md §3", "assurance/02-concept/hatara/hatara-interactions.md"]
+  sources: ["LionDriver-security (private): assurance/sim/cyber/README.md §2.4, §6.1 choice 5 (moved there from PR #454, DQ-421 A)", "assurance/02-concept/WP-C-09-tara.md §3", "assurance/02-concept/hatara/hatara-interactions.md"]
   status: open
 
 - id: DQ-421
@@ -5957,8 +5965,10 @@
       title: "Keep everything public"
       detail: "Rely on the abstraction rule (no exploits, payloads or procedures). Cost: the gap list and code locations stay a ready target list for anyone."
   sources: ["assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md §4.4", "assurance/01-management/WP-M-09-cybersecurity-plan.md §2 gap table", "assurance/02-concept/WP-C-09-tara.md §2–§5", "assurance/03-system/WP-S-07-cybersecurity-requirements-architecture.md §4", "PR #454"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-25, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: 66c93c7, record: "WP-O-05 v0.4 §4.4 items 5–8 (the rule for later edits); WP-C-09 v0.10, WP-S-07 v0.10, WP-M-09 v0.7 swept; GD-01…GD-11 and the cyber simulation of PR #454 in the private repository jherrodthomas/LionDriver-security", at: 2026-10-26}
+  note: "Still public, outside the three swept documents: gap-assessment §5, the SysML Architecture model and some HW work products cite the same code locations; they follow the rule at their next edit. Everything pushed before 2026-10-26 stays in the public history."
 
 - id: DQ-422
   question: "Which circuit simulator should the 12 V cranking-dip study use?"
@@ -5989,17 +5999,17 @@
   answer: {choice: A, via: assumed, at: 2026-10-25, note: "Decided by Claude when phase C started, as the physics plan said; the lead can change it"}
 
 - id: DQ-423
-  question: "Should the details of unfixed security weaknesses also be taken out of the public safety requirements and records, or only out of the cybersecurity documents?"
+  question: "Should the details of unfixed security weaknesses also be taken out of the public safety requirements and records now, or only when each is next edited?"
   context: >-
-    Your DQ-421 answer (A) is applied to the four cybersecurity documents, their figures and the pages built from them:
-    the threat model stays public and the details are in the private LionDriver-security repository. About 140 other
-    public files still carry such details, mostly the software safety requirements, the FMEA and their verification,
-    which name the exact commands and code paths so they can be tested and reviewed, and historical records such as the
-    gap assessment, the ISO 26262 audit and earlier decisions. **Removing the details from the safety requirements
-    weakens the open safety case; leaving them keeps a target list public.** The list is in LionDriver-security
-    (restricted-docs/INVENTORY.md).
+    Your DQ-421 answer (A) is applied to the cybersecurity documents: the threat model stays public, and the details
+    are private records GD-01…GD-11 in LionDriver-security. About 140 other public files still carry such details,
+    mostly the software safety requirements, the FMEA and their verification, which name the exact commands and code
+    paths so they can be tested and reviewed, and historical records such as the gap assessment, the ISO 26262 audit
+    and earlier decisions. Today they follow the rule only at their next edit (DQ-421 note). **Removing the details
+    from the safety requirements weakens the open safety case; leaving them keeps a target list public.** The list of
+    files is in LionDriver-security (gaps/INVENTORY.md).
   reversibility: revisit
-  blocks: "A second DQ-421 sweep; WP-O-05 §4.5 scope"
+  blocks: "A second DQ-421 sweep; WP-O-05 §4.4 scope"
   gate: G1
   decider: lead
   asked: 2026-10-26
@@ -6007,14 +6017,14 @@
   options:
     - key: A
       recommended: true
-      title: "Keep the safety requirements as they are; restrict only new cybersecurity material and future gap notes"
-      detail: "The safety case stays complete and reviewable. The rule of WP-O-05 §4.5 applies from now on to cybersecurity documents and to new gap notes anywhere. Cost: the requirement-level detail already in the safety documents stays public."
+      title: "Keep the safety requirements as they are; apply the rule at each next edit"
+      detail: "The safety case stays complete and reviewable, and nothing is reworked now. Cost: the requirement-level detail in the safety documents stays public until those documents are next changed."
     - key: B
-      title: "Also restate the software safety requirements and analyses at a higher level, with the detail private"
-      detail: "Removes most of the remaining detail. Cost: about 140 files, a private copy of each requirement to test against, and reviewers and the assessor need access to the private repository."
+      title: "Restate the software safety requirements and analyses now, with the detail in GD records"
+      detail: "Removes most of the remaining detail. Cost: about 140 files, private GD records to test against, and reviewers and the assessor need access to the private repository."
     - key: C
       title: "Also edit the historical records"
       detail: "Option B plus the gap assessment, the audit and old decisions. Cost: rewrites records that should stay as they were; the git history keeps them anyway."
-  sources: ["assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md §4.5", "DQ-421", "LionDriver-security (private): restricted-docs/INVENTORY.md"]
+  sources: ["assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md §4.4 items 5–8", "DQ-421", "LionDriver-security (private): gaps/INVENTORY.md"]
   status: open
 

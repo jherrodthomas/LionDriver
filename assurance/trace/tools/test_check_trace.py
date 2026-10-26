@@ -328,6 +328,60 @@ class TestSysChecks(unittest.TestCase):
                                                    "[Q1] SYS-001: no allocation (WP-S-01 §10.1)"])
 
 
+IFR = {"id": "IFR-01", "kind": "interface-requirement", "interface": "IX-01", "title": "t",
+       "owners": ["Safety manager", "Cybersecurity manager"], "open_item": None, "review_ref": None,
+       "status": "proposed", "source": "WP-P-11"}
+REV = {"id": "REV-001", "kind": "review", "reviewed_objects": ["IFR-01"], "outcome": "accepted"}
+
+
+class TestInterfaceChecks(unittest.TestCase):
+  def errors(self, ifr, reviews=(), interfaces=frozenset({"IX-01"})):
+    rep = ct.Report()
+    by_id = ct.check_items(copy.deepcopy(GOOD) + [ifr], rep)
+    ct.check_interfaces(by_id, list(reviews), set(interfaces), rep)
+    return rep.errors
+
+  def test_proposed_without_review_is_clean(self):
+    self.assertEqual(self.errors(dict(IFR)), [])
+    self.assertEqual(self.errors(dict(IFR, open_item="WP-V-02 OI-3")), [])
+
+  def test_agreed_with_accepted_review_that_lists_it(self):
+    self.assertEqual(self.errors(dict(IFR, status="agreed", review_ref="REV-001"), [REV]), [])
+
+  def test_i1_agreed_without_review(self):
+    self.assertEqual(self.errors(dict(IFR, status="agreed")),
+                     ["[I1] IFR-01: agreed without a review_ref; an interface is agreed only through a recorded review"])
+
+  def test_i1_agreed_with_review_that_is_missing_rejected_or_silent(self):
+    self.assertEqual(self.errors(dict(IFR, status="agreed", review_ref="REV-002"), [REV]),
+                     ["[I1] IFR-01: review_ref REV-002 is not a review record in case/reviews/reviews.yaml"])
+    for rv in (dict(REV, outcome="rejected"), dict(REV, reviewed_objects=["G0"])):
+      self.assertEqual(self.errors(dict(IFR, status="agreed", review_ref="REV-001"), [rv]),
+                       ["[I1] IFR-01: agreed, but review REV-001 is not accepted or does not list IFR-01"])
+
+  def test_i1_agreed_with_open_item(self):
+    self.assertEqual(self.errors(dict(IFR, status="agreed", review_ref="REV-001", open_item="WP-V-02 OI-3"), [REV]),
+                     ["[I1] IFR-01: agreed while open item WP-V-02 OI-3 is open"])
+
+  def test_i1_interface_owners_and_status(self):
+    self.assertEqual(self.errors(dict(IFR, interface="IX-99")), ["[I1] IFR-01: interface IX-99 is not in the process model"])
+    self.assertEqual(self.errors(dict(IFR, interface="CON-01")), ["[I1] IFR-01: interface 'CON-01' is not an IX-nn"])
+    self.assertEqual(self.errors(dict(IFR, owners=["Safety manager", "Safety manager"])),
+                     ["[I1] IFR-01: owners must name two different roles"])
+    self.assertEqual(self.errors(dict(IFR, status="verified")),
+                     ["[I1] IFR-01: status 'verified' not in ['agreed', 'proposed', 'withdrawn']"])
+
+  def test_i1_one_item_per_interface(self):
+    rep = ct.Report()
+    by_id = ct.check_items(copy.deepcopy(GOOD) + [dict(IFR), dict(IFR, id="IFR-02")], rep)
+    ct.check_interfaces(by_id, [], {"IX-01"}, rep)
+    self.assertEqual(rep.errors, ["[I1] IFR-02: interface IX-01 already has IFR-01"])
+
+  def test_committed_items_match_the_process_model(self):
+    ifrs = ct.load_yaml(ct.ITEMS_DIR / "ifr.yaml")
+    self.assertEqual({x["interface"] for x in ifrs}, ct.interface_ids())
+
+
 class TestVerificationLinks(unittest.TestCase):
   def setUp(self):
     self.items = copy.deepcopy(GOOD + SOTIF + [TSR])

@@ -125,7 +125,7 @@
   <text x="456" y="310" class="m xs">feasibility High · impact 4</text>
   <rect x="626" y="298" width="94" height="18" rx="9.0" fill="#C2410C"/><text x="673.0" y="310.6" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle" letter-spacing=".04em">TS-03 · risk 5</text>
   <text x="412" y="329" class="t" font-size="10.5">SoC reprograms the panda MCU through its boot</text>
-  <text x="412" y="343" class="t" font-size="10.5">path; detail restricted (DQ-421)</text>
+  <text x="412" y="343" class="t" font-size="10.5">path (details: private record GD-03)</text>
   <path d="M366 332.0 H398" fill="none" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#aP)"/>
   <path d="M730 332.0 H758" fill="none" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#aP)"/>
   <rect x="760" y="295.0" width="196" height="34" rx="6" fill="#FFFFFF" stroke="#64748B" stroke-width="1.2"/>
@@ -147,7 +147,7 @@
   <text x="456" y="404" class="m xs">feasibility High · impact 4</text>
   <rect x="626" y="392" width="94" height="18" rx="9.0" fill="#C2410C"/><text x="673.0" y="404.6" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle" letter-spacing=".04em">TS-14 · risk 5</text>
   <text x="412" y="423" class="t" font-size="10.5">Host CAN transmit through the panda carries frames</text>
-  <text x="412" y="437" class="t" font-size="10.5">or rates it should refuse; detail restricted (DQ-421)</text>
+  <text x="412" y="437" class="t" font-size="10.5">or rates it should refuse (details: GD-11)</text>
   <circle cx="416" cy="454" r="4" fill="#D97706"/>
   <text x="425" y="457.5" font-size="10" font-weight="600" fill="#B45309">TSR-705, TSR-518 in reference build, not verified on HW</text>
   <path d="M366 426.0 H398" fill="none" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#aP)"/>

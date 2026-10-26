@@ -60,6 +60,14 @@ class TestStructure(unittest.TestCase):
     case.records["G1.1"]["related_hazards"] = ["SG-99"]
     self.assertIn("V3", codes(case))
 
+  def test_review_may_list_interface_items(self):
+    # DQ-129 A: an interface (IFR-nn) is agreed only through a review record that lists it
+    case = fresh()
+    add_review(case, ["IFR-01"])
+    self.assertNotIn("V3", codes(case))
+    case.records["REV-001"]["reviewed_objects"] = ["IFR-99"]
+    self.assertIn("V3", codes(case))
+
   def test_one_directional_link(self):
     case = fresh()
     case.records["Sn-01"]["related_claims"] = [c for c in case.records["Sn-01"]["related_claims"] if c != "G1.2"]

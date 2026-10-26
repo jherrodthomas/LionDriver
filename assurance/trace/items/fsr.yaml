@@ -285,7 +285,7 @@
   parents: [SG-02, SG-06]
   allocated_to: "E-01"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Not implemented: no diagnostic read for engagement; the lamp check is a driver procedure (WP-O-02). New in v0.6"
+  baseline_impl: "Implemented in host software, not verified on the vehicle (DQ-132 A, 2026-10-25): TSR-629, SWSR-629…629d; any active EPS or ABS/VSC code, and a failed read, refuse engagement; the lamp check (WP-O-02 OPS-01) stays as a second barrier. Vehicle check WP-S-09 VS-SQ-20. New in v0.6"
   status: proposed
   source: WP-C-04
 

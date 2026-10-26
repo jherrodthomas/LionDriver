@@ -126,7 +126,7 @@
 <rect x="1020" y="420" width="54.7" height="16" rx="4" fill="#C2410C" stroke="#C2410C"/>
 <text x="1047.36" y="431.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-10 · 4</text>
 <text x="1020" y="450" font-size="10" fill="#7C3AED" font-weight="700">entered by AP-06, AP-10</text>
-<rect x="40" y="170" width="180" height="556.5" rx="10" fill="#F5F3FF" stroke="#7C3AED" stroke-dasharray="5 4"/>
+<rect x="40" y="170" width="180" height="544" rx="10" fill="#F5F3FF" stroke="#7C3AED" stroke-dasharray="5 4"/>
 <text x="52" y="192" font-size="12" fill="#0F172A" font-weight="700">Attacker positions (§5)</text>
 <text x="52" y="212" font-size="10" fill="#7C3AED" font-weight="700">AP-01</text>
 <text x="52" y="225" font-size="10" fill="#0F172A">Physical OBD-II / bus tap</text>
@@ -138,32 +138,31 @@
 <text x="52" y="313.5" font-size="10" fill="#0F172A">Root or any local process on</text>
 <text x="52" y="326" font-size="10" fill="#0F172A">SoC</text>
 <text x="52" y="342.5" font-size="10" fill="#7C3AED" font-weight="700">AP-05</text>
-<text x="52" y="355.5" font-size="10" fill="#0F172A">Ability to build and flash panda</text>
-<text x="52" y="368" font-size="10" fill="#0F172A">FW</text>
-<text x="52" y="384.5" font-size="10" fill="#7C3AED" font-weight="700">AP-06</text>
-<text x="52" y="397.5" font-size="10" fill="#0F172A">Control of the update source, or</text>
-<text x="52" y="410" font-size="10" fill="#0F172A">on-path position</text>
-<text x="52" y="426.5" font-size="10" fill="#7C3AED" font-weight="700">AP-07</text>
-<text x="52" y="439.5" font-size="10" fill="#0F172A">Compromised back-end / stolen</text>
-<text x="52" y="452" font-size="10" fill="#0F172A">device JWT</text>
-<text x="52" y="468.5" font-size="10" fill="#7C3AED" font-weight="700">AP-08</text>
-<text x="52" y="481.5" font-size="10" fill="#0F172A">Network reachability + valid SSH</text>
-<text x="52" y="494" font-size="10" fill="#0F172A">key</text>
-<text x="52" y="510.5" font-size="10" fill="#7C3AED" font-weight="700">AP-09</text>
-<text x="52" y="523.5" font-size="10" fill="#0F172A">Ability to place a model file (via</text>
-<text x="52" y="536" font-size="10" fill="#0F172A">AP-06/AP-08 or supply chain)</text>
-<text x="52" y="552.5" font-size="10" fill="#7C3AED" font-weight="700">AP-10</text>
-<text x="52" y="565.5" font-size="10" fill="#0F172A">Upstream repo / dependency /</text>
-<text x="52" y="578" font-size="10" fill="#0F172A">mutable branch</text>
-<text x="52" y="594.5" font-size="10" fill="#7C3AED" font-weight="700">AP-11</text>
-<text x="52" y="607.5" font-size="10" fill="#0F172A">Physical possession of a</text>
-<text x="52" y="620" font-size="10" fill="#0F172A">stolen/lost device</text>
-<text x="52" y="636.5" font-size="10" fill="#7C3AED" font-weight="700">AP-12</text>
-<text x="52" y="649.5" font-size="10" fill="#0F172A">Local process or crafted input</text>
-<text x="52" y="662" font-size="10" fill="#0F172A">on SoC</text>
-<text x="52" y="678.5" font-size="10" fill="#7C3AED" font-weight="700">AP-13</text>
-<text x="52" y="691.5" font-size="10" fill="#0F172A">Possession of the device</text>
-<text x="52" y="704" font-size="10" fill="#0F172A">identity key</text>
+<text x="52" y="355.5" font-size="10" fill="#0F172A">Ability to build+flash panda FW</text>
+<text x="52" y="372" font-size="10" fill="#7C3AED" font-weight="700">AP-06</text>
+<text x="52" y="385" font-size="10" fill="#0F172A">Control of update source /</text>
+<text x="52" y="397.5" font-size="10" fill="#0F172A">branch, or on-path position</text>
+<text x="52" y="414" font-size="10" fill="#7C3AED" font-weight="700">AP-07</text>
+<text x="52" y="427" font-size="10" fill="#0F172A">Compromised back-end / stolen</text>
+<text x="52" y="439.5" font-size="10" fill="#0F172A">device JWT</text>
+<text x="52" y="456" font-size="10" fill="#7C3AED" font-weight="700">AP-08</text>
+<text x="52" y="469" font-size="10" fill="#0F172A">Network reachability + valid SSH</text>
+<text x="52" y="481.5" font-size="10" fill="#0F172A">key</text>
+<text x="52" y="498" font-size="10" fill="#7C3AED" font-weight="700">AP-09</text>
+<text x="52" y="511" font-size="10" fill="#0F172A">Ability to place a model file (via</text>
+<text x="52" y="523.5" font-size="10" fill="#0F172A">AP-06/AP-08 or supply chain)</text>
+<text x="52" y="540" font-size="10" fill="#7C3AED" font-weight="700">AP-10</text>
+<text x="52" y="553" font-size="10" fill="#0F172A">Upstream repo / dependency /</text>
+<text x="52" y="565.5" font-size="10" fill="#0F172A">mutable branch</text>
+<text x="52" y="582" font-size="10" fill="#7C3AED" font-weight="700">AP-11</text>
+<text x="52" y="595" font-size="10" fill="#0F172A">Physical possession of a</text>
+<text x="52" y="607.5" font-size="10" fill="#0F172A">stolen/lost device</text>
+<text x="52" y="624" font-size="10" fill="#7C3AED" font-weight="700">AP-12</text>
+<text x="52" y="637" font-size="10" fill="#0F172A">Local process or crafted input</text>
+<text x="52" y="649.5" font-size="10" fill="#0F172A">on SoC</text>
+<text x="52" y="666" font-size="10" fill="#7C3AED" font-weight="700">AP-13</text>
+<text x="52" y="679" font-size="10" fill="#0F172A">Possession of the device</text>
+<text x="52" y="691.5" font-size="10" fill="#0F172A">identity key</text>
 <text x="1010" y="520" font-size="10.5" fill="#475569" font-weight="700" letter-spacing=".04em">HOW TO READ</text>
 <text x="1010" y="536" font-size="11" fill="#0F172A" font-weight="700">Grey chips</text>
 <text x="1010" y="549.5" font-size="10.5" fill="#475569">assets held there (§2)</text>

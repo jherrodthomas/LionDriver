@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1075.5" viewBox="0 0 1280 1075.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
 <title id="t">Figure 6-1. The cybersecurity concept on the item (WP-C-10 §4, §6, §7)</title>
-<desc id="d">The concept-level cybersecurity requirements of WP-C-10 §7 by place. E-03 panda safety firmware: CSR-C-01 (implemented), CSR-C-02 (partly), CSR-C-03 (not yet), CSR-C-04 (not yet), CSR-C-05 (not yet), CSR-C-06 (not yet), CSR-C-09 (not yet). E-01/E-02 SoC software and models: CSR-C-05 (not yet), CSR-C-06 (not yet), CSR-C-07 (not yet), CSR-C-08 (not yet), CSR-C-10 (not yet), CSR-C-11 (partly), CSR-C-12 (not yet), CSR-C-13 (not yet), CSR-C-14 (not yet), CSR-C-15 (not yet). comma.ai back end: CSR-C-11 (partly), CSR-C-12 (not yet), CSR-C-14 (not yet). Owner, installer and operation: CSR-C-04 (not yet), CSR-C-13 (not yet), CSR-C-15 (not yet), CSR-C-16 (not yet).</desc>
+<desc id="d">The concept-level cybersecurity requirements of WP-C-10 §7 by place. E-03 panda safety firmware: CSR-C-01 (implemented), CSR-C-02 (partly), CSR-C-03 (not yet), CSR-C-04 (not yet), CSR-C-05 (not yet), CSR-C-06 (not yet), CSR-C-09 (not yet). E-01/E-02 SoC software and models: CSR-C-05 (not yet), CSR-C-06 (not yet), CSR-C-07 (partly), CSR-C-08 (not yet), CSR-C-10 (not yet), CSR-C-11 (partly), CSR-C-12 (not yet), CSR-C-13 (not yet), CSR-C-14 (not yet), CSR-C-15 (not yet). comma.ai back end: CSR-C-11 (partly), CSR-C-12 (not yet), CSR-C-14 (not yet). Owner, installer and operation: CSR-C-04 (not yet), CSR-C-13 (not yet), CSR-C-15 (not yet), CSR-C-16 (not yet).</desc>
 <defs></defs>
 <rect width="1280" height="1075.5" fill="#FFFFFF"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 6-1 · The cybersecurity concept on the item</text>
@@ -113,16 +113,16 @@
 <rect x="578.9704" y="568.0" width="45.0" height="16" rx="8" fill="#FFFFFF" stroke="#B42318"/>
 <text x="601.485" y="579.5" font-size="9.5" fill="#B42318" font-weight="700" text-anchor="middle">not yet</text>
 <text x="254" y="592" font-size="9.5" fill="#475569" font-style="italic">shared</text>
-<rect x="48" y="601.0" width="584" height="35.0" rx="6" fill="#FEF2F2" stroke="#B42318" stroke-opacity=".35"/>
-<rect x="48" y="601.0" width="4" height="35.0" rx="2" fill="#B42318"/>
+<rect x="48" y="601.0" width="584" height="35.0" rx="6" fill="#FFFBEB" stroke="#B45309" stroke-opacity=".35"/>
+<rect x="48" y="601.0" width="4" height="35.0" rx="2" fill="#B45309"/>
 <text x="60" y="618" font-size="11" fill="#0F172A" font-weight="700">CSR-C-07</text>
 <rect x="132" y="607.0" width="46.1" height="16" rx="4" fill="#FFFFFF" stroke="#7C3AED"/>
 <text x="155.025" y="618.5" font-size="9.5" fill="#5B21B6" font-weight="700" text-anchor="middle">CSG-03</text>
 <text x="254" y="618" font-size="10" fill="#0F172A" font-weight="700">CAL 2</text>
 <text x="302" y="618" font-size="10.5" fill="#0F172A">Developer process-replacement modes (debug,</text>
 <text x="302" y="631.5" font-size="10.5" fill="#0F172A">maneuver, joystick) shall be absent or…</text>
-<rect x="578.9704" y="607.0" width="45.0" height="16" rx="8" fill="#FFFFFF" stroke="#B42318"/>
-<text x="601.485" y="618.5" font-size="9.5" fill="#B42318" font-weight="700" text-anchor="middle">not yet</text>
+<rect x="585.3145" y="607.0" width="38.7" height="16" rx="8" fill="#FFFFFF" stroke="#B45309"/>
+<text x="604.657" y="618.5" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">partly</text>
 <rect x="48" y="640.0" width="584" height="35.0" rx="6" fill="#FEF2F2" stroke="#B42318" stroke-opacity=".35"/>
 <rect x="48" y="640.0" width="4" height="35.0" rx="2" fill="#B42318"/>
 <text x="60" y="657" font-size="11" fill="#0F172A" font-weight="700">CSR-C-08</text>
@@ -283,9 +283,9 @@
 <rect x="40" y="932.0" width="30" height="15" rx="4" fill="#EFF6FF" stroke="#1D4ED8"/>
 <text x="78" y="943" font-size="11" fill="#0F172A">implemented (1)</text>
 <rect x="179.86" y="932.0" width="30" height="15" rx="4" fill="#FFFBEB" stroke="#B45309"/>
-<text x="217.86" y="943" font-size="11" fill="#0F172A">partly (2)</text>
+<text x="217.86" y="943" font-size="11" fill="#0F172A">partly (3)</text>
 <rect x="287.05" y="932.0" width="30" height="15" rx="4" fill="#FEF2F2" stroke="#B42318"/>
-<text x="325.05" y="943" font-size="11" fill="#0F172A">not yet (13)</text>
+<text x="325.05" y="943" font-size="11" fill="#0F172A">not yet (12)</text>
 <rect x="407.33000000000004" y="931.0" width="52" height="16" rx="4" fill="#FFFFFF" stroke="#7C3AED"/>
 <text x="433.33" y="943" font-size="9.5" fill="#5B21B6" font-weight="700" text-anchor="middle">CSG-nn</text>
 <text x="467.33" y="943" font-size="11" fill="#0F172A">the goal it serves (§4)</text>
