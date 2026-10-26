@@ -663,7 +663,7 @@ jobs:
         chmod +x "$RUNNER_TEMP/micromamba"
         MAMBA_ROOT_PREFIX="$RUNNER_TEMP/mamba" "$RUNNER_TEMP/micromamba" create -y -q -p "$THERMAL_ENV" \
           --file assurance/sim/thermal/thermal-linux-64.lock
-    - name: Checks (analytic slab, lumped transient, FiPy cross-check, energy balance, mesh study, limits from the code, cabin-driven runner, MCU study, mount modes)
+    - name: Checks (analytic slab, lumped transient, FiPy cross-check, energy balance, mesh study, limits from the code, cabin-driven runner, MCU study, mount modes, fan dust)
       run: '"$THERMAL_ENV/bin/python" assurance/sim/thermal/test_thermal.py'
     - name: Pilot results within 0.05 K of the committed JSON, results page current
       run: '"$THERMAL_ENV/bin/python" assurance/sim/thermal/thermal_pilot.py --check'
@@ -673,6 +673,8 @@ jobs:
       run: '"$THERMAL_ENV/bin/python" assurance/sim/thermal/mcu_heat.py --check'
     - name: The mount's vibration modes (mount_modes.py, FEniCSx and SLEPc; TC-19, KS-16) within 1 % of the committed JSON
       run: '"$THERMAL_ENV/bin/python" assurance/sim/thermal/mount_modes.py --check'
+    - name: Dust in the fan (fan_dust.py, HWSR-509a) within 0.05 K of the committed JSON
+      run: '"$THERMAL_ENV/bin/python" assurance/sim/thermal/fan_dust.py --check'
     - name: Figures render off-screen (Mesa software EGL; pixels are not compared)
       env:
         CONDA_PREFIX: ${{ env.THERMAL_ENV }}
@@ -752,7 +754,8 @@ jobs:
     # published FHWA/NCHRP and NASA models, the cabin heat soak, crosswind, fog on the windshield on NOAA climate
     # normals, road crown against openpilot's roll path, wet braking, gusts through opendbc's torque limiter, and
     # tunnels and oncoming headlights through openpilot's ported auto exposure, and the sun on the device through the
-    # car from a ray cast through the mesh (assurance/sim/weather). Design aid: synthetic data (DSR-12), no credit.
+    # car from a ray cast through the mesh, wet curves, hill crests and a stopped car ahead (assurance/sim/weather).
+    # Design aid: synthetic data (DSR-12), no credit.
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -763,7 +766,7 @@ jobs:
       run: git submodule update --init --depth 1 opendbc_repo
     - name: Install the pinned packages of the weather physics
       run: python3 -m pip install --quiet --user --break-system-packages -r assurance/sim/weather/requirements.txt
-    - name: Checks (NREL reference, NOAA cross-check, camera frame, unit conversion, model branches, ODD bound, cabin against McLaren 2005, crosswind against the single-track algebra, fog, wet braking, road crown, gust, tunnel, headlights, sun on the device)
+    - name: Checks (NREL reference, NOAA cross-check, camera frame, unit conversion, model branches, ODD bound, cabin against McLaren 2005, crosswind against the single-track algebra, fog, wet braking, road crown, gust, tunnel, headlights, sun on the device, wet curves, crests, a stopped car)
       run: python3 assurance/sim/weather/test_weather.py
     - name: Results within 0.05 of the committed JSON, results pages current
       run: |
@@ -778,6 +781,9 @@ jobs:
         python3 assurance/sim/weather/tunnel.py --check
         python3 assurance/sim/weather/headlights.py --check
         python3 assurance/sim/weather/device_sun.py --check
+        python3 assurance/sim/weather/wet_curves.py --check
+        python3 assurance/sim/weather/crest.py --check
+        python3 assurance/sim/weather/stopped_car.py --check
         python3 assurance/sim/assets/tools/vehicle_geometry.py --check
         python3 assurance/sim/assets/tools/device_shading.py --check
 

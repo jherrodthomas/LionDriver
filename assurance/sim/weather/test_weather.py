@@ -53,6 +53,20 @@ Sun on the device
       symmetric: mean difference under 0.02).
   D4  The flux: a direct beam on the windshield side is absorptance x DNI x cos x transmittance x pvlib's angle loss;
       the sky weights give 0.5 for an upright face open to the whole sky (1 %).
+Curves on a wet road
+  Q1  The friction needed: cornering alone is a/g; with braking, the friction circle hypot(a_lat, a_brake)/g; a bank
+      toward the inside lowers it.
+  Q2  The 3 mm grip is the new tyre's over the measured stop ratio (1.07 to 1.35), wet only, and lies between the
+      table's new and 1.6 mm rows.
+Hill crests
+  K1  AASHTO's stopping sight distance formula rounds to its published table (185, 220, 250 m), and K from the rounded
+      distance gives the published K (52, 74, 95).
+  K2  The closed-form sight distance over a crest equals a brute-force line of sight on the parabola (1 %).
+  K3  On a crest of the design K, the driver's eye sees the design object at the design distance.
+A stopped car ahead
+  P1  The model's input focal lengths (910, 455 px) and radard's lead rules are read from openpilot; the car's width
+      in pixels is f·W/d.
+  P2  The stopping distances are the wet-braking study's: reaction distance plus v²/2a.
 Road crown
   R1  The roll path read from openpilot is the one reviewed: compensation by params.roll·g, calibration roll taken as
       zero, 20 Hz, process noise 1°/√s, fallback noise 10°, validity limit 1.5°. A change in the code fails here.
@@ -92,6 +106,9 @@ import windshield_fog as wf  # noqa: E402
 import cabin_soak as cs  # noqa: E402
 import crosswind as cw  # noqa: E402
 import device_sun as dsun  # noqa: E402
+import wet_curves as wcv  # noqa: E402
+import crest as cst  # noqa: E402
+import stopped_car as stc  # noqa: E402
 import sun_glare as sg  # noqa: E402
 
 P = yaml.safe_load((HERE / "params.yaml").read_text(encoding="utf-8"))
@@ -521,6 +538,56 @@ class DeviceSun(unittest.TestCase):
     dirs, w = dsun.sky_cells(self.t)
     self.assertLess(abs((np.clip(dirs @ np.array([1.0, 0, 0]), 0, None) * w).sum() / math.pi - 0.5), 0.005)
 
+
+
+class WetCurves(unittest.TestCase):
+  def test_q1_friction_needed(self):
+    self.assertAlmostEqual(wcv.need(2.5, 0.0), 2.5 / 9.81, places=9)
+    self.assertAlmostEqual(wcv.need(2.5, 3.5), math.hypot(2.5, 3.5) / 9.81, places=9)
+    self.assertLess(wcv.need(2.5, 3.5, 0.06), wcv.need(2.5, 3.5, 0.0))
+
+  def test_q2_odd_tread(self):
+    r_ = P["curves"]["odd_tread_stop_ratio"]
+    self.assertEqual((r_["low"], r_["high"]), (1.07, 1.35))
+    for v in (60.0, 110.0):
+      new, worn = wcv.wb.mu(P, "new", v, 0.3), wcv.wb.mu(P, "worn_1_6mm", v, 0.3)
+      for end in ("low", "high"):
+        m3 = wcv.mu_odd(P, v, 0.3, end)
+        self.assertAlmostEqual(m3, new / r_[end], places=9)
+        self.assertTrue(worn <= m3 <= new)
+      self.assertEqual(wcv.mu_odd(P, v, 0.0), wcv.wb.mu(P, "new", v, 0.0))
+
+
+class Crest(unittest.TestCase):
+  def test_k1_aashto_table(self):
+    kt = P["crest"]["k_table"]
+    for v, s_tab, k_tab in zip(kt["speeds_kph"], kt["ssd_m"], kt["k"], strict=True):
+      s = cst.ssd(v, 2.5, 3.4)
+      self.assertLess(abs(s - s_tab), 6.0)                 # the table rounds up to 5 m
+      self.assertLess(abs(cst.k_design(s_tab) - k_tab), 1.0)
+
+  def test_k2_numeric_line_of_sight(self):
+    k, A = 74.0, 6.0
+    for h1, h2 in ((1.08, 0.60), (0.5, 0.5), (1.2, 1.43)):
+      self.assertLess(abs(cst.sight_numeric(k, A, h1, h2) / cst.sight(k, h1, h2) - 1), 0.01)
+
+  def test_k3_design_object(self):
+    s = 220.0
+    self.assertAlmostEqual(cst.sight(cst.k_design(s), 1.08, 0.60), s, places=6)
+
+
+class StoppedCar(unittest.TestCase):
+  def test_p1_code_and_pixels(self):
+    c = stc.code()
+    self.assertEqual((c["narrow_fl_px"], c["wide_fl_px"]), (910.0, 455.0))
+    self.assertEqual((c["lead_prob_min"], c["radar_alone_below_mps"], c["radar_alone_within_m"]), (0.5, 4.0, 25.0))
+    r = stc.run(P)
+    self.assertAlmostEqual(r["distance_at_px"]["narrow"]["10"], round(910.0 * 1.8 / 10, 1), places=6)
+
+  def test_p2_stopping_distances(self):
+    r = stc.run(P)
+    v = 110 / 3.6
+    self.assertAlmostEqual(r["stop_m"]["item"], round(v * 0.5 + v * v / 7.0, 1), places=6)
 
 if __name__ == "__main__":
   unittest.main(verbosity=2)
