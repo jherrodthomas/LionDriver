@@ -50,9 +50,9 @@ from it or from the SysML model that mirrors it.
    assumed compromisable. Controls there reduce the likelihood of an attack; they are never the last line of defence
    for a safety goal (§3.2).
 2. **64 requirements, none verified.** 7 are in place, 16 partly, 34 not met, and 7 not yet determined.
-3. **One boundary is open.** The SoC drives the MCU's boot and reset lines, so with root on the SoC it can start the
-   ROM bootloader and rewrite the firmware (TB-2, GAP-38). Whether a read-protection level closes this is open
-   (CS-AD-02, OI-2).
+3. **One boundary is open.** The SoC drives the MCU's boot and reset lines, so with root on the SoC it could replace
+   the firmware (TB-2, GAP-38; details: private record GD-03, WP-O-05 §4.4). Whether a read-protection level closes
+   this is open (CS-AD-02, OI-2).
 4. **The boot chain is weak today.** Its signature scheme is below the strength required, and it checks against
    comma's key (details: private records GD-01 and GD-02, WP-O-05 §4.4). ECDSA P-256 with SHA-256 and a LionDriver
    key are decided (DQ-191 A), not built.
@@ -88,12 +88,12 @@ The target boot chain (§3.3) is: an offline LionDriver release key; ECDSA P-256
 built without debug support that accepts no other key; anti-rollback; the bootstub sector write-protected and the
 flash read-protected at provisioning; and a runtime check of the image.
 
-The boot lines are the hard part (§3.4). Signature checks in the bootstub do not help if the SoC can start the ROM
-bootloader and erase the flash. Four architecture decisions are proposed:
+The boot lines are the hard part (§3.4). Signature checks in the bootstub do not help if the SoC can reprogram the
+MCU through its boot lines. Four architecture decisions are proposed:
 
-- **CS-AD-01:** remove the automatic development-bootstub recovery from release builds.
-- **CS-AD-02:** find out from the reference manual which read-protection level, if any, stops the ROM bootloader from
-  rewriting the flash, and choose it, accepting that field recovery is lost.
+- **CS-AD-01:** release builds recover only with the release-signed image, and only on an owner action.
+- **CS-AD-02:** find out from the reference manual which read-protection level, if any, closes the boot-line path,
+  and choose it, accepting that field recovery is lost.
 - **CS-AD-03:** if no level closes it, record that firmware substitution needs SoC root, as a claim and a residual
   risk.
 - **CS-AD-04:** in the ROM bootloader the relay is released, which is the safe direction; the threat is substitution,
@@ -101,8 +101,8 @@ bootloader and erase the flash. Four architecture decisions are proposed:
 
 ## 3. The safety-mode lock
 
-The SoC sets the panda's safety mode and parameter through one control request, `0xdc`, from a params store anyone
-on the SoC can write (§3.5). The lock fixes the car configuration at compile time, allows only the step down to
+The SoC sets the panda's safety mode and parameter through a control request whose values come from the SoC's
+params store (§3.5). The lock fixes the car configuration at compile time, allows only the step down to
 NOOUTPUT or SILENT from the car mode, and refuses the commands that could change actuation, the relay or the CAN
 configuration while a car mode is active. The reference build implements it (TSR-512, TSR-513). A refused request is
 counted but does not drop the panda to a non-actuating mode; the lead decided to keep it that way (DQ-082 B), so that
@@ -111,11 +111,10 @@ part of CSR-012 stays a residual (OI-9). Every control request the SoC can send 
 
 ## 4. Updates, remote access and local integrity
 
-- **Updates (§3.6).** Today the updater fetches whatever branch a param names and trusts hashes from the same
-  unsigned tree. The target is a release manifest signed with an offline key, checked before staging. Until it exists,
+- **Updates (§3.6).** Today updates are not authenticated end to end (GAP-26). The target is a release manifest signed with an offline key, checked before staging. Until it exists,
   updates are installed by hand.
-- **Remote surface (§3.7).** Athena is disabled by default (and not started in LionDriver builds), SSH is off with the
-  installer's CI key path removed, live streaming stays local, and uploads to comma are opt-in.
+- **Remote surface (§3.7).** Athena is disabled by default (and not started in LionDriver builds), SSH is off with
+  pre-provisioned access removed, live streaming stays local, and uploads to comma are opt-in.
 - **Params and messages (§3.8).** The SoC's params store and message bus have no authentication. The design does not
   try to secure them against root. It makes the envelope independent of them, limits who may write the
   safety-relevant keys, and removes developer modes from release builds.

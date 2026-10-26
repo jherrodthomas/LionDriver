@@ -92,9 +92,9 @@
   <text x="50" y="320" class="t b" font-size="12">AP-08</text>
   <rect x="50" y="328" width="92" height="18" rx="9.0" fill="#9A3412"/><text x="96.0" y="340.6" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle" letter-spacing=".04em">TS-08 · risk 4</text>
   <text x="50" y="366" class="m xs">network reachability +</text>
-  <text x="50" y="379" class="m xs">valid SSH key; INTERNAL</text>
-  <text x="50" y="392" class="m xs">builds pre-enable SSH</text>
-  <text x="50" y="405" class="m xs">and install a key</text>
+  <text x="50" y="379" class="m xs">valid SSH key; some</text>
+  <text x="50" y="392" class="m xs">builds come with SSH</text>
+  <text x="50" y="405" class="m xs">and a key installed</text>
   <text x="50" y="418" class="t xs" font-weight="600">→ root on the SoC</text>
   <text x="50" y="440" class="m xs">feasibility Medium</text>
   <text x="50" y="453" class="m xs">(§6: High if shipped)</text>
@@ -103,7 +103,7 @@
   <text x="412" y="216" class="t b" font-size="12.5">AP-02</text>
   <text x="456" y="216" class="m xs">feasibility High · impact 4</text>
   <rect x="626" y="204" width="94" height="18" rx="9.0" fill="#C2410C"/><text x="673.0" y="216.6" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle" letter-spacing=".04em">TS-02 · risk 5</text>
-  <text x="412" y="235" class="t" font-size="10.5">Host→panda 0xdc sets a permissive or non-Toyota</text>
+  <text x="412" y="235" class="t" font-size="10.5">Host → panda command sets a permissive</text>
   <text x="412" y="249" class="t" font-size="10.5">safety mode or parameter; no authentication</text>
   <circle cx="416" cy="266" r="4" fill="#D97706"/>
   <text x="425" y="269.5" font-size="10" font-weight="600" fill="#B45309">mode lock implemented (reference build), not verified</text>
@@ -124,8 +124,8 @@
   <text x="412" y="310" class="t b" font-size="12.5">AP-03</text>
   <text x="456" y="310" class="m xs">feasibility High · impact 4</text>
   <rect x="626" y="298" width="94" height="18" rx="9.0" fill="#C2410C"/><text x="673.0" y="310.6" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle" letter-spacing=".04em">TS-03 · risk 5</text>
-  <text x="412" y="329" class="t" font-size="10.5">Toggle boot pins → ROM bootloader → pandad recovery</text>
-  <text x="412" y="343" class="t" font-size="10.5">flashes a development bootstub (no RDP/WRP)</text>
+  <text x="412" y="329" class="t" font-size="10.5">SoC reprograms the panda MCU through its boot</text>
+  <text x="412" y="343" class="t" font-size="10.5">path (details: private record GD-03)</text>
   <path d="M366 332.0 H398" fill="none" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#aP)"/>
   <path d="M730 332.0 H758" fill="none" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#aP)"/>
   <rect x="760" y="295.0" width="196" height="34" rx="6" fill="#FFFFFF" stroke="#64748B" stroke-width="1.2"/>
@@ -146,8 +146,8 @@
   <text x="412" y="404" class="t b" font-size="12.5">AP-14</text>
   <text x="456" y="404" class="m xs">feasibility High · impact 4</text>
   <rect x="626" y="392" width="94" height="18" rx="9.0" fill="#C2410C"/><text x="673.0" y="404.6" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle" letter-spacing=".04em">TS-14 · risk 5</text>
-  <text x="412" y="423" class="t" font-size="10.5">Host CAN TX: PCS/DSU IDs pass the TX whitelist with no</text>
-  <text x="412" y="437" class="t" font-size="10.5">content check; actuation IDs sent above nominal rate</text>
+  <text x="412" y="423" class="t" font-size="10.5">Host CAN transmit through the panda carries frames</text>
+  <text x="412" y="437" class="t" font-size="10.5">or rates it should refuse (details: GD-11)</text>
   <circle cx="416" cy="454" r="4" fill="#D97706"/>
   <text x="425" y="457.5" font-size="10" font-weight="600" fill="#B45309">TSR-705, TSR-518 in reference build, not verified on HW</text>
   <path d="M366 426.0 H398" fill="none" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#aP)"/>
