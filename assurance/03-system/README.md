@@ -91,6 +91,7 @@ Generated from the SysML model (view V-09): requirements by verification method,
 |---|---|
 | [`cybersecurity/`](cybersecurity/README.md) | Cybersecurity requirements and architecture |
 | [`hsi/`](hsi/README.md) | Hardware-software interface |
+| [`integration/`](integration/README.md) | System integration and test |
 | [`requirements/`](requirements/README.md) | Requirements at a glance |
 | [`reviews/`](reviews/) | — |
 | [`timing/`](timing/README.md) | Timing: FTTI, fault detection and reaction budget |
