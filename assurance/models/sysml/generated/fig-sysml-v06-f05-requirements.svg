@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1340" height="730" viewBox="0 0 1340 730" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">V-06. Requirement diagram · F-05 driver information and warnings (SysML v2 view functionRequirements)</title>
+<desc id="d">Requirement diagram generated from the SysML v2 model, one per function: its system requirements with the stakeholder need each is derived from (WP-S-01 §1.3), the elements that satisfy them from WP-S-01 §10.1, and the verification cases of the test specifications that name them; requirements no case names are outlined red.</desc>
+<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter><marker id="rq-teal" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#0F766E"/></marker><marker id="rq-blue" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#2563EB"/></marker><marker id="rq-or" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#C2410C"/></marker><marker id="rq-ink" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#334155"/></marker><marker id="rq-mut" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#64748B"/></marker></defs>
+<rect width="1340" height="730" fill="#FFFFFF"/>
+<text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-06 · Requirement diagram · F-05 driver information and warnings</text>
+<text x="40" y="69" font-size="12.5" fill="#64748B">SYS requirements of WP-S-01 with the needs they refine (§1.3), the elements that satisfy them (§10.1) and the cases that verify them</text>
+<text x="1300" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::functionRequirements</text>
+<text x="1300" y="62" font-size="11" fill="#64748B" text-anchor="end">RequirementView · render asTreeDiagram · model 655179f15d5a</text>
+<line x1="40" y1="86" x2="1300" y2="86" stroke="#E2E8F0"/>
+<text x="40" y="138" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">SATISFIED BY · «part»</text>
+<text x="340" y="138" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">REQUIREMENTS · F-05 · «requirement»</text>
+<text x="980" y="138" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">VERIFIED BY · «verification»</text>
+<rect x="340" y="154" width="520" height="102" rx="8" fill="#FFFFFF" stroke="#475569" stroke-width="1.3" filter="url(#lift)"/>
+<text x="352" y="170" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«requirement» SystemRequirement</text>
+<rect x="352" y="174" width="53.9" height="18" rx="9" fill="#334155"/><text x="378.9" y="186.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-080</text>
+<text x="412.9" y="187" font-size="12" fill="#0F172A" font-weight="600">The engaged/disengaged state shall be shown continuously on the</text>
+<text x="352" y="204" font-size="10.5" fill="#64748B">device and through the cluster cruise indicator and LKAS HUD.</text>
+<text x="352" y="218" font-size="10.5" fill="#64748B">type H · verif T-VEH · target as stated</text>
+<text x="352" y="232" font-size="10.5" fill="#64748B">«deriveReqt» from SN-06: Knowing at all times whether the assistance is on, and why it asks the…</text>
+<rect x="340" y="268" width="520" height="102" rx="8" fill="#FFFFFF" stroke="#475569" stroke-width="1.3" filter="url(#lift)"/>
+<text x="352" y="284" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«requirement» SystemRequirement</text>
+<rect x="352" y="288" width="53.9" height="18" rx="9" fill="#334155"/><text x="378.9" y="300.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-081</text>
+<text x="412.9" y="301" font-size="12" fill="#0F172A" font-weight="600">An alert shall be displayed and its sound started within ≤ 0.2 s of the</text>
+<text x="352" y="318" font-size="10.5" fill="#64748B">event being raised by selfdrived.</text>
+<text x="352" y="332" font-size="10.5" fill="#64748B">type P · verif T-HIL · target p99 ≤ 0.2 s</text>
+<text x="352" y="346" font-size="10.5" fill="#64748B">«deriveReqt» from SN-06: Knowing at all times whether the assistance is on, and why it asks the…</text>
+<rect x="340" y="382" width="520" height="102" rx="8" fill="#FFFFFF" stroke="#475569" stroke-width="1.3" filter="url(#lift)"/>
+<text x="352" y="398" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«requirement» SystemRequirement</text>
+<rect x="352" y="402" width="53.9" height="18" rx="9" fill="#334155"/><text x="378.9" y="414.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-082</text>
+<text x="412.9" y="415" font-size="12" fill="#0F172A" font-weight="600">Alert text shall describe the actual cause.</text>
+<text x="352" y="432" font-size="10.5" fill="#64748B"></text>
+<text x="352" y="446" font-size="10.5" fill="#64748B">type H · verif R · target Review of every alert used in the reference configuration</text>
+<text x="352" y="460" font-size="10.5" fill="#64748B">«deriveReqt» from SN-06: Knowing at all times whether the assistance is on, and why it asks the…</text>
+<rect x="340" y="496" width="520" height="102" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<text x="352" y="512" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«requirement» SystemRequirement</text>
+<rect x="352" y="516" width="53.9" height="18" rx="9" fill="#334155"/><text x="378.9" y="528.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-083</text>
+<text x="412.9" y="529" font-size="12" fill="#0F172A" font-weight="600">Alerts and sounds shall be perceivable at highway noise levels.</text>
+<text x="352" y="546" font-size="10.5" fill="#64748B"></text>
+<text x="352" y="560" font-size="10.5" fill="#64748B">type P · verif T-VEH · target sound level ≥ TBD dB(A) above cabin noise</text>
+<text x="352" y="574" font-size="10.5" fill="#64748B">«deriveReqt» from SN-06: Knowing at all times whether the assistance is on, and why it asks the…</text>
+<rect x="788.7" y="503" width="59.3" height="18" rx="9" fill="#D2553F"/><text x="818.4" y="515.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">no verifier</text>
+<rect x="40" y="154" width="220" height="58" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" filter="url(#lift)"/>
+<text x="52" y="170" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«part»</text>
+<rect x="52" y="174" width="59.6" height="18" rx="9" fill="#475569"/><text x="81.8" y="186.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.hmi</text>
+<text x="118.6" y="187" font-size="12" fill="#0F172A" font-weight="600"></text>
+<text x="52" y="204" font-size="10.5" fill="#64748B">QM · B-sup</text>
+<rect x="40" y="306" width="220" height="58" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" filter="url(#lift)"/>
+<text x="52" y="322" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«part»</text>
+<rect x="52" y="326" width="65.3" height="18" rx="9" fill="#475569"/><text x="84.7" y="338.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.card</text>
+<text x="124.3" y="339" font-size="12" fill="#0F172A" font-weight="600"></text>
+<text x="52" y="356" font-size="10.5" fill="#64748B">QM · B-sup</text>
+<rect x="40" y="458" width="220" height="58" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" filter="url(#lift)"/>
+<text x="52" y="474" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«part»</text>
+<rect x="52" y="478" width="99.5" height="18" rx="9" fill="#475569"/><text x="101.8" y="490.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.selfdrived</text>
+<text x="158.5" y="491" font-size="12" fill="#0F172A" font-weight="600"></text>
+<text x="52" y="508" font-size="10.5" fill="#64748B">QM · B-sup</text>
+<path d="M260 190L261 190Q262 190 262 189L262 188Q262 186 264 186L340 186" fill="none" stroke="#0F766E" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-teal)"/>
+<path d="M260 342L267 342Q274 342 274 335L274 199Q274 192 281 192L340 192" fill="none" stroke="#0F766E" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-teal)"/>
+<path d="M260 494L279 494Q286 494 286 487L286 307Q286 300 293 300L340 300" fill="none" stroke="#0F766E" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-teal)"/>
+<path d="M260 190L261 190Q262 190 262 191L262 299Q262 306 269 306L340 306" fill="none" stroke="#0F766E" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-teal)"/>
+<path d="M260 494L279 494Q286 494 286 487L286 421Q286 414 293 414L340 414" fill="none" stroke="#0F766E" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-teal)"/>
+<path d="M260 190L261 190Q262 190 262 191L262 521Q262 528 269 528L340 528" fill="none" stroke="#0F766E" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-teal)"/>
+<rect x="269.4" y="139" width="61.3" height="16" rx="4" fill="#FFFFFF"/>
+<text x="300" y="151" font-size="9.5" fill="#0F766E" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="980" y="154" width="300" height="72" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.3" filter="url(#lift)"/>
+<text x="992" y="170" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verification»</text>
+<rect x="992" y="174" width="59.6" height="18" rx="9" fill="#2563EB"/><text x="1021.8" y="186.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">VS-SQ-08</text>
+<text x="1058.6" y="187" font-size="12" fill="#0F172A" font-weight="600">Engagement and disengagement…</text>
+<text x="992" y="204" font-size="10.5" fill="#64748B">WP-S-09 §5.2</text>
+<text x="992" y="218" font-size="10.5" fill="#64748B">verifies SYS-080</text>
+<rect x="980" y="268" width="300" height="72" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.3" filter="url(#lift)"/>
+<text x="992" y="284" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verification»</text>
+<rect x="992" y="288" width="59.6" height="18" rx="9" fill="#2563EB"/><text x="1021.8" y="300.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">VS-SQ-13</text>
+<text x="1058.6" y="301" font-size="12" fill="#0F172A" font-weight="600">Fault-induced lateral safe-state tr…</text>
+<text x="992" y="318" font-size="10.5" fill="#64748B">WP-S-09 §5.2</text>
+<text x="992" y="332" font-size="10.5" fill="#64748B">verifies SYS-081, SYS-082</text>
+<rect x="980" y="382" width="300" height="72" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.3" filter="url(#lift)"/>
+<text x="992" y="398" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verification»</text>
+<rect x="992" y="402" width="59.6" height="18" rx="9" fill="#2563EB"/><text x="1021.8" y="414.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">VS-SQ-14</text>
+<text x="1058.6" y="415" font-size="12" fill="#0F172A" font-weight="600">Longitudinal safe-state transition</text>
+<text x="992" y="432" font-size="10.5" fill="#64748B">WP-S-09 §5.2</text>
+<text x="992" y="446" font-size="10.5" fill="#64748B">verifies SYS-081</text>
+<rect x="980" y="496" width="300" height="72" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.3" filter="url(#lift)"/>
+<text x="992" y="512" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verification»</text>
+<rect x="992" y="516" width="59.6" height="18" rx="9" fill="#2563EB"/><text x="1021.8" y="528.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">VS-SQ-19</text>
+<text x="1058.6" y="529" font-size="12" fill="#0F172A" font-weight="600">Supervised endurance drive</text>
+<text x="992" y="546" font-size="10.5" fill="#64748B">WP-S-09 §5.4</text>
+<text x="992" y="560" font-size="10.5" fill="#64748B">verifies SYS-081</text>
+<path d="M980 190L881.5 190Q880 190 880 188.5L880 188.5Q880 187 878.5 187L862 187" fill="none" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-blue)"/>
+<path d="M980 304L895.5 304Q894 304 894 302.5L894 302.5Q894 301 892.5 301L862 301" fill="none" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-blue)"/>
+<path d="M980 418L915 418Q908 418 908 411L908 314Q908 307 901 307L862 307" fill="none" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-blue)"/>
+<path d="M980 532L929 532Q922 532 922 525L922 320Q922 313 915 313L862 313" fill="none" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-blue)"/>
+<path d="M980 304L901 304Q894 304 894 311L894 408Q894 415 887 415L862 415" fill="none" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-blue)"/>
+<rect x="872.2" y="139" width="55.6" height="16" rx="4" fill="#FFFFFF"/>
+<text x="900" y="151" font-size="9.5" fill="#2563EB" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<rect x="980" y="500" width="300" height="100" rx="8" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1.2"/>
+<text x="994" y="524" font-size="12" fill="#991B1B" font-weight="700">Not verified by any case (R4 report)</text>
+<text x="994" y="544" font-size="11" fill="#7F1D1D">SYS-083. Add a case to a test specification, or</text>
+<text x="994" y="559" font-size="11" fill="#7F1D1D">record why none is needed.</text>
+<rect x="24" y="100" width="1292" height="528" rx="4" fill="none" stroke="#94A3B8" stroke-width="1.2"/>
+<path d="M24 100h386v12l-10 10h-376z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="34" y="115" font-size="11" fill="#334155" font-weight="600">req [LionDriverRequirements] F-05 Driver information and warnings</text>
+<line x1="40" y1="638" x2="1300" y2="638" stroke="#E2E8F0"/>
+<path d="M40 668L66 668" fill="none" stroke="#0F766E" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="74" y="672" font-size="11" fill="#334155">«satisfy»</text>
+<path d="M150 668L176 668" fill="none" stroke="#2563EB" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="184" y="672" font-size="11" fill="#334155">«verify» (specified, not run)</text>
+<rect x="370" y="661" width="22" height="14" rx="3" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="400" y="672" font-size="11" fill="#334155">requirement without a verification case</text>
+<text x="40" y="714" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+</svg>

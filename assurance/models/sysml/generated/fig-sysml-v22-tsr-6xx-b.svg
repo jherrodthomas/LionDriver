@@ -1,0 +1,279 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="1688" viewBox="0 0 1520 1688" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">V-22. TSR requirement diagram TSR-619…TSR-635 (SysML v2 view tsrBlocks)</title>
+<desc id="d">SysML requirement diagram generated from the model for one block of WP-S-02: each technical safety requirement with its ASIL, mechanism type and timing, a «deriveReqt» arrow to each FSR it refines, the elements that satisfy it, the safety mechanisms of WP-S-03 §6 that cite it, and the verification cases that name it; requirements no case names are outlined red.</desc>
+<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter><marker id="rq-teal" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#0F766E"/></marker><marker id="rq-blue" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#2563EB"/></marker><marker id="rq-or" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#C2410C"/></marker><marker id="rq-ink" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#334155"/></marker><marker id="rq-mut" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#64748B"/></marker></defs>
+<rect width="1520" height="1688" fill="#FFFFFF"/>
+<text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-22 · TSR requirement diagram · host monitoring, DM, HMI</text>
+<text x="40" y="69" font-size="12.5" fill="#64748B">TSR-619…TSR-635 of WP-S-02 with the FSRs they derive from, the elements that satisfy them, the mechanisms that cite them and the cases that verify them</text>
+<text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::tsrBlocks</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">RequirementView · render asTreeDiagram · model 655179f15d5a</text>
+<line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
+<text x="40" y="140" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">DERIVED FROM · «requirement» FSR</text>
+<text x="360" y="140" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">TECHNICAL SAFETY REQUIREMENTS · «requirement»</text>
+<text x="950" y="140" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">«satisfy» · MECHANISMS · «verify»</text>
+<rect x="360" y="156" width="560" height="74" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" filter="url(#lift)"/>
+<rect x="372" y="164" width="53.9" height="18" rx="9" fill="#C2410C"/><text x="398.9" y="176.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-619</text>
+<text x="432.9" y="177" font-size="12" fill="#0F172A" font-weight="600">pandad shall compare the panda-reported safety model, safety parameter and</text>
+<text x="372" y="194" font-size="10.5" fill="#64748B">alternative experience with the release-record values and shall prevent engagement and raise an alert on…</text>
+<text x="372" y="208" font-size="10.5" fill="#64748B">ASIL QM (C-sup: TSR-512) · SM PLB · before engagement; ≤ 1 s</text>
+<text x="950" y="176" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="165" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="175.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
+<text x="950" y="196" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM</text>
+<rect x="1016" y="185" width="39.5" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1035.8" y="195.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-22</text>
+<text x="950" y="216" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<rect x="1016" y="205" width="39.5" height="15" rx="7.5" fill="#EFF6FF" stroke="#2563EB" stroke-width="1"/><text x="1035.8" y="215.6" font-size="8.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SI-27</text>
+<rect x="360" y="238" width="560" height="74" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" filter="url(#lift)"/>
+<rect x="372" y="246" width="53.9" height="18" rx="9" fill="#C2410C"/><text x="398.9" y="258.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-620</text>
+<text x="432.9" y="259" font-size="12" fill="#0F172A" font-weight="600">The item shall not request the TOYOTA safety mode or allow engagement unles…</text>
+<text x="372" y="276" font-size="10.5" fill="#64748B">ECU firmware versions read at start-up (EPS, engine, ABS, radar, camera) match the release record of the…</text>
+<text x="372" y="290" font-size="10.5" fill="#64748B">ASIL QM (C-sup: TSR-512, TSR-803) · SM CFG · at start-up</text>
+<text x="950" y="258" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="247" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="257.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
+<text x="950" y="278" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM</text>
+<rect x="1016" y="267" width="39.5" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1035.8" y="277.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-22</text>
+<text x="950" y="298" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<rect x="1016" y="287" width="39.5" height="15" rx="7.5" fill="#EFF6FF" stroke="#2563EB" stroke-width="1"/><text x="1035.8" y="297.6" font-size="8.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SI-27</text>
+<rect x="360" y="320" width="560" height="74" rx="8" fill="#FFF7ED" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="328" width="53.9" height="18" rx="9" fill="#C2410C"/><text x="398.9" y="340.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-621</text>
+<text x="432.9" y="341" font-size="12" fill="#0F172A" font-weight="600">While engaged, selfdrived shall raise an immediate disable with a take-over req…</text>
+<text x="372" y="358" font-size="10.5" fill="#64748B">when any panda in a car safety mode reports controlsAllowed false, after at most 2 consecutive mismatch…</text>
+<text x="372" y="372" font-size="10.5" fill="#64748B">ASIL QM (C-sup: TSR-108, TSR-516) · SM PLB · ≤ 0.5 s / ≤ 0.5 s to warning</text>
+<text x="950" y="340" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="329" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="339.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
+<text x="950" y="360" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM</text>
+<rect x="1016" y="349" width="39.5" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1035.8" y="359.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-30</text>
+<text x="950" y="380" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="380" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="402" width="560" height="74" rx="8" fill="#FFF7ED" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="410" width="53.9" height="18" rx="9" fill="#C2410C"/><text x="398.9" y="422.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-622</text>
+<text x="432.9" y="423" font-size="12" fill="#0F172A" font-weight="600">While the item can engage, the SoC shall supervise the liveness of the HMI path…</text>
+<text x="372" y="440" font-size="10.5" fill="#64748B">render loop and sound output stream, each with a heartbeat) and treat a missing heartbeat for &gt; 1 s as a f…</text>
+<text x="372" y="454" font-size="10.5" fill="#64748B">ASIL QM (C-sup: TSR-516) · SM TMO · ≤ 1 s / ≤ 0.2 s</text>
+<text x="950" y="422" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="411" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="421.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
+<text x="950" y="442" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM</text>
+<rect x="1016" y="431" width="39.5" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1035.8" y="441.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-31</text>
+<text x="950" y="462" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="462" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="484" width="560" height="74" rx="8" fill="#FFF7ED" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="492" width="53.9" height="18" rx="9" fill="#C2410C"/><text x="398.9" y="504.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-623</text>
+<text x="432.9" y="505" font-size="12" fill="#0F172A" font-weight="600">Alert sound output shall not be muted or set below a defined audible minimum w…</text>
+<text x="372" y="522" font-size="10.5" fill="#64748B">the item can engage; if the minimum cannot be guaranteed, engagement shall be prevented with a no-ent…</text>
+<text x="372" y="536" font-size="10.5" fill="#64748B">ASIL QM (C-sup: TSR-516) · SM CFG · —</text>
+<text x="950" y="504" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="493" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="503.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
+<text x="950" y="524" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM</text>
+<rect x="1016" y="513" width="39.5" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1035.8" y="523.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-31</text>
+<text x="950" y="544" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="544" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="566" width="560" height="74" rx="8" fill="#FFF7ED" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="574" width="53.9" height="18" rx="9" fill="#C2410C"/><text x="398.9" y="586.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-624</text>
+<text x="432.9" y="587" font-size="12" fill="#0F172A" font-weight="600">The SoC shall command deceleration that is not caused by traffic (driver-monito…</text>
+<text x="372" y="604" font-size="10.5" fill="#64748B">no-response, fault-induced force deceleration) only after a visual and acoustic alert announcing it has be…</text>
+<text x="372" y="618" font-size="10.5" fill="#64748B">ASIL QM (B-sup: TSR-202, TSR-205) · SM WRN · Driver-monitoring stop: alert ≥ 1 s before decel onset (pr…</text>
+<text x="950" y="586" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="575" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="585.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
+<text x="950" y="606" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM</text>
+<rect x="1016" y="595" width="39.5" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1035.8" y="605.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-32</text>
+<text x="950" y="626" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="626" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="648" width="560" height="74" rx="8" fill="#FFF7ED" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="656" width="53.9" height="18" rx="9" fill="#C2410C"/><text x="398.9" y="668.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-625</text>
+<text x="432.9" y="669" font-size="12" fill="#0F172A" font-weight="600">Forward collision warnings shall be raised only from fresh and valid inputs (mod…</text>
+<text x="372" y="686" font-size="10.5" fill="#64748B">and longitudinalPlan within 2 nominal periods, validity flags set), and the false-FCW rate per driving hour i…</text>
+<text x="372" y="700" font-size="10.5" fill="#64748B">ASIL A (until re-rated: DQ-052 A, WP-C-04 OI-9; allocated to the QM SoC) · SM PLB · ≤ 2 periods</text>
+<text x="950" y="668" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="657" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="667.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
+<text x="950" y="688" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM</text>
+<rect x="1016" y="677" width="39.5" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1035.8" y="687.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-33</text>
+<text x="950" y="708" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="708" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="730" width="560" height="74" rx="8" fill="#FFF7ED" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="738" width="53.9" height="18" rx="9" fill="#C2410C"/><text x="398.9" y="750.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-626</text>
+<text x="432.9" y="751" font-size="12" fill="#0F172A" font-weight="600">While engaged, the SoC shall detect that the envelope does not actuate from</text>
+<text x="372" y="768" font-size="10.5" fill="#64748B">evidence other than the envelope's own status report: (a) pandaStates older than 2 nominal periods (0.2 s…</text>
+<text x="372" y="782" font-size="10.5" fill="#64748B">ASIL QM (C-sup: TSR-516) · SM PLB · (a) 0.2 s; (b), (c) ≤ t_blk ≤ 0.5 s</text>
+<text x="950" y="750" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="739" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="749.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
+<text x="950" y="770" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM</text>
+<rect x="1016" y="759" width="39.5" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1035.8" y="769.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-30</text>
+<text x="950" y="790" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="790" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="812" width="560" height="74" rx="8" fill="#FFF7ED" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="820" width="53.9" height="18" rx="9" fill="#C2410C"/><text x="398.9" y="832.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-627</text>
+<text x="432.9" y="833" font-size="12" fill="#0F172A" font-weight="600">The alert sound path (soundd) shall run with a real-time scheduling priority not l…</text>
+<text x="372" y="850" font-size="10.5" fill="#64748B">than that of ui, or a worst-case load test (maximum logging, encoding and upload) shall show that alert so…</text>
+<text x="372" y="864" font-size="10.5" fill="#64748B">ASIL QM (C-sup: TSR-516) · SM TMO · within TSR-606</text>
+<text x="950" y="832" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="821" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="831.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
+<text x="950" y="852" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM</text>
+<rect x="1016" y="841" width="39.5" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1035.8" y="851.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-31</text>
+<text x="950" y="872" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="872" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="894" width="560" height="74" rx="8" fill="#FFF7ED" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="902" width="53.9" height="18" rx="9" fill="#C2410C"/><text x="398.9" y="914.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-628</text>
+<text x="432.9" y="915" font-size="12" fill="#0F172A" font-weight="600">While the envelope reports a driver override on the LKA path (TSR-304(b)), the…</text>
+<text x="372" y="932" font-size="10.5" fill="#64748B">shall show an override cue on the device display within ≤ 0.2 s, so the driver sees that the steering backe…</text>
+<text x="372" y="946" font-size="10.5" fill="#64748B">ASIL QM · SM WRN · ≤ 0.2 s</text>
+<text x="950" y="914" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="903" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="913.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
+<text x="950" y="934" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM</text>
+<rect x="1016" y="923" width="39.5" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1035.8" y="933.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-05</text>
+<text x="950" y="954" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="954" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="976" width="560" height="74" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" filter="url(#lift)"/>
+<rect x="372" y="984" width="53.9" height="18" rx="9" fill="#C2410C"/><text x="398.9" y="996.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-629</text>
+<text x="432.9" y="997" font-size="12" fill="#0F172A" font-weight="600">At start-up, before the first engagement of each ignition cycle, the SoC shall read</text>
+<text x="372" y="1014" font-size="10.5" fill="#64748B">the stored diagnostic trouble codes (DTCs) of the EPS and of the brake / stability control (ABS/VSC) ECU,…</text>
+<text x="372" y="1028" font-size="10.5" fill="#64748B">ASIL QM (supports TSR-110, TSR-618) · SM PLB, ST · before engagement</text>
+<text x="950" y="996" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="985" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="995.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
+<text x="950" y="1016" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM</text>
+<text x="1016" y="1016" font-size="9.5" fill="#94A3B8" font-weight="600">none</text>
+<text x="950" y="1036" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<rect x="1016" y="1025" width="39.5" height="15" rx="7.5" fill="#EFF6FF" stroke="#2563EB" stroke-width="1"/><text x="1035.8" y="1035.6" font-size="8.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-20</text>
+<rect x="360" y="1058" width="560" height="74" rx="8" fill="#FFF7ED" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="1066" width="53.9" height="18" rx="9" fill="#C2410C"/><text x="398.9" y="1078.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-630</text>
+<text x="432.9" y="1079" font-size="12" fill="#0F172A" font-weight="600">While a car safety mode is active and the item is not engaged, the SoC shall check</text>
+<text x="372" y="1096" font-size="10.5" fill="#64748B">that every panda reports controlsAllowed false. A report of true for more than 2 consecutive pandaStates…</text>
+<text x="372" y="1110" font-size="10.5" fill="#64748B">ASIL QM (C-sup: TSR-105, TSR-301) · SM PLB · ≤ 0.3 s (within the SG-01 0.5 s FTTI)</text>
+<text x="950" y="1078" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="1067" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="1077.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
+<text x="950" y="1098" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM</text>
+<text x="1016" y="1098" font-size="9.5" fill="#94A3B8" font-weight="600">none</text>
+<text x="950" y="1118" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="1118" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="1140" width="560" height="74" rx="8" fill="#FFF7ED" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="1148" width="53.9" height="18" rx="9" fill="#C2410C"/><text x="398.9" y="1160.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-631</text>
+<text x="432.9" y="1161" font-size="12" fill="#0F172A" font-weight="600">controlsd shall treat the driving-model output as stale, with the TSR-602 reaction,</text>
+<text x="372" y="1178" font-size="10.5" fill="#64748B">when (a) its frame ID does not advance for more than 2 nominal periods while messages keep arriving (fr…</text>
+<text x="372" y="1192" font-size="10.5" fill="#64748B">ASIL QM (C-sup: TSR-101, TSR-103 bound the effect; TSR-408 covers a stopped command stream) · SM…</text>
+<text x="950" y="1160" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="1149" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="1159.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
+<text x="950" y="1180" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM</text>
+<text x="1016" y="1180" font-size="9.5" fill="#94A3B8" font-weight="600">none</text>
+<text x="950" y="1200" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="1200" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="1222" width="560" height="74" rx="8" fill="#FFF7ED" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="1230" width="53.9" height="18" rx="9" fill="#C2410C"/><text x="398.9" y="1242.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-632</text>
+<text x="432.9" y="1243" font-size="12" fill="#0F172A" font-weight="600">The safety MCU shall report to the SoC, for each supervised actuation ID (0x2E4,</text>
+<text x="372" y="1260" font-size="10.5" fill="#64748B">0x343), the count of frames accepted by the envelope and transmitted on the car-side bus (transmit com…</text>
+<text x="372" y="1274" font-size="10.5" fill="#64748B">ASIL C (report content); QM for its use (TSR-626(e)) · SM PLB · per health report (≤ 0.1 s)</text>
+<text x="950" y="1242" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="1231" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="1241.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03</text>
+<text x="950" y="1262" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM</text>
+<text x="1016" y="1262" font-size="9.5" fill="#94A3B8" font-weight="600">none</text>
+<text x="950" y="1282" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="1282" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="1304" width="560" height="74" rx="8" fill="#FFF7ED" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="1312" width="53.9" height="18" rx="9" fill="#C2410C"/><text x="398.9" y="1324.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-633</text>
+<text x="432.9" y="1325" font-size="12" fill="#0F172A" font-weight="600">When driver awareness has reached zero (terminal DM alert) and the driver has…</text>
+<text x="372" y="1342" font-size="10.5" fill="#64748B">responded for 5 s, the item shall keep the lane and decelerate in lane to a standstill within a_min and j_do…</text>
+<text x="372" y="1356" font-size="10.5" fill="#64748B">ASIL A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11) · SM FR, WRN · reaction starts ≤ 5 s after…</text>
+<text x="950" y="1324" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="1313" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="1323.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
+<text x="950" y="1344" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM</text>
+<text x="1016" y="1344" font-size="9.5" fill="#94A3B8" font-weight="600">none</text>
+<text x="950" y="1364" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="1364" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="1386" width="560" height="74" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" filter="url(#lift)"/>
+<rect x="372" y="1394" width="53.9" height="18" rx="9" fill="#C2410C"/><text x="398.9" y="1406.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-634</text>
+<text x="432.9" y="1407" font-size="12" fill="#0F172A" font-weight="600">When driver monitoring has fallen back to the wheel-touch policy (camera</text>
+<text x="372" y="1424" font-size="10.5" fill="#64748B">confidence too low), the escalation times of TSR-608 shall shorten as vehicle speed rises, so that the dist…</text>
+<text x="372" y="1438" font-size="10.5" fill="#64748B">ASIL A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11) · SM WRN · alert k at T_k = 5/15/25 s or D…</text>
+<text x="950" y="1406" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="1395" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="1405.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
+<text x="950" y="1426" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM</text>
+<text x="1016" y="1426" font-size="9.5" fill="#94A3B8" font-weight="600">none</text>
+<text x="950" y="1446" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<rect x="1016" y="1435" width="44.6" height="15" rx="7.5" fill="#EFF6FF" stroke="#2563EB" stroke-width="1"/><text x="1038.3" y="1445.6" font-size="8.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">VAL-17</text>
+<rect x="360" y="1468" width="560" height="74" rx="8" fill="#FFF7ED" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="1476" width="53.9" height="18" rx="9" fill="#C2410C"/><text x="398.9" y="1488.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-635</text>
+<text x="432.9" y="1489" font-size="12" fill="#0F172A" font-weight="600">The time from the driver's change of state (eyes off the road, or hands off under…</text>
+<text x="372" y="1506" font-size="10.5" fill="#64748B">wheel-touch policy) to the first driver alert shall be ≤ 6 s end to end, including camera frame time, DM mo…</text>
+<text x="372" y="1520" font-size="10.5" fill="#64748B">ASIL A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11) · SM WRN · first alert ≤ 6 s end to end</text>
+<text x="950" y="1488" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="1477" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="1487.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
+<text x="950" y="1508" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM</text>
+<text x="1016" y="1508" font-size="9.5" fill="#94A3B8" font-weight="600">none</text>
+<text x="950" y="1528" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="1528" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="40" y="156" width="270" height="44" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="52" y="164" width="65.3" height="18" rx="9" fill="#C2410C"/><text x="84.7" y="176.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-01.05</text>
+<text x="124.3" y="177" font-size="12" fill="#0F172A" font-weight="600">The envelope shall grant act…</text>
+<rect x="40" y="255.6" width="270" height="44" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="52" y="263.6" width="65.3" height="18" rx="9" fill="#C2410C"/><text x="84.7" y="276" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-01.10</text>
+<text x="124.3" y="276.6" font-size="12" fill="#0F172A" font-weight="600">The safety mode and safety…</text>
+<rect x="40" y="355.1" width="270" height="44" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="52" y="363.1" width="65.3" height="18" rx="9" fill="#C2410C"/><text x="84.7" y="375.6" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-02.02</text>
+<text x="124.3" y="376.1" font-size="12" fill="#0F172A" font-weight="600">The item shall detect loss of…</text>
+<rect x="40" y="454.7" width="270" height="44" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="52" y="462.7" width="65.3" height="18" rx="9" fill="#C2410C"/><text x="84.7" y="475.1" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-02.03</text>
+<text x="124.3" y="475.7" font-size="12" fill="#0F172A" font-weight="600">On a detected loss or degra…</text>
+<rect x="40" y="554.3" width="270" height="44" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="52" y="562.3" width="65.3" height="18" rx="9" fill="#C2410C"/><text x="84.7" y="574.7" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-02.06</text>
+<text x="124.3" y="575.3" font-size="12" fill="#0F172A" font-weight="600">Driver monitoring shall dete…</text>
+<rect x="40" y="653.9" width="270" height="44" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="52" y="661.9" width="65.3" height="18" rx="9" fill="#C2410C"/><text x="84.7" y="674.3" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-02.09</text>
+<text x="124.3" y="674.9" font-size="12" fill="#0F172A" font-weight="600">If the driver does not respon…</text>
+<rect x="40" y="753.4" width="270" height="44" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="52" y="761.4" width="65.3" height="18" rx="9" fill="#C2410C"/><text x="84.7" y="773.8" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-02.10</text>
+<text x="124.3" y="774.4" font-size="12" fill="#0F172A" font-weight="600">The item shall detect that th…</text>
+<rect x="40" y="853" width="270" height="44" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="52" y="861" width="65.3" height="18" rx="9" fill="#C2410C"/><text x="84.7" y="873.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-02.11</text>
+<text x="124.3" y="874" font-size="12" fill="#0F172A" font-weight="600">The item shall detect failure…</text>
+<rect x="40" y="952.6" width="270" height="44" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="52" y="960.6" width="65.3" height="18" rx="9" fill="#C2410C"/><text x="84.7" y="973" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-02.12</text>
+<text x="124.3" y="973.6" font-size="12" fill="#0F172A" font-weight="600">Before granting engagemen…</text>
+<rect x="40" y="1052.1" width="270" height="44" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="52" y="1060.1" width="65.3" height="18" rx="9" fill="#C2410C"/><text x="84.7" y="1072.6" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-04.05</text>
+<text x="124.3" y="1073.1" font-size="12" fill="#0F172A" font-weight="600">Deceleration that the item in…</text>
+<rect x="40" y="1151.7" width="270" height="44" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="52" y="1159.7" width="65.3" height="18" rx="9" fill="#C2410C"/><text x="84.7" y="1172.1" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-04.06</text>
+<text x="124.3" y="1172.7" font-size="12" fill="#0F172A" font-weight="600">Forward collision warnings…</text>
+<rect x="40" y="1251.3" width="270" height="44" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="52" y="1259.3" width="65.3" height="18" rx="9" fill="#C2410C"/><text x="84.7" y="1271.7" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-05.03</text>
+<text x="124.3" y="1272.3" font-size="12" fill="#0F172A" font-weight="600">The envelope shall detect dr…</text>
+<rect x="40" y="1350.9" width="270" height="44" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="52" y="1358.9" width="65.3" height="18" rx="9" fill="#C2410C"/><text x="84.7" y="1371.3" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-06.01</text>
+<text x="124.3" y="1371.9" font-size="12" fill="#0F172A" font-weight="600">The item shall detect loss or…</text>
+<rect x="40" y="1450.4" width="270" height="44" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="52" y="1458.4" width="65.3" height="18" rx="9" fill="#C2410C"/><text x="84.7" y="1470.8" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-08.01</text>
+<text x="124.3" y="1471.4" font-size="12" fill="#0F172A" font-weight="600">While engaged, the item sha…</text>
+<path d="M360 189L335 189Q328 189 328 196L328 270.6Q328 277.6 321 277.6L310 277.6" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 271L331.3 271Q328 271 328 274.3L328 274.3Q328 277.6 324.7 277.6L310 277.6" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 353L354 353Q348 353 348 359L348 768.4Q348 775.4 341 775.4L310 775.4" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 435L356 435Q352 435 352 439L352 868Q352 875 345 875L310 875" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 517L356 517Q352 517 352 521L352 868Q352 875 345 875L310 875" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 599L335 599Q328 599 328 606L328 1067.1Q328 1074.1 321 1074.1L310 1074.1" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 681L339 681Q332 681 332 688L332 1166.7Q332 1173.7 325 1173.7L310 1173.7" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 763L354 763Q348 763 348 769L348 769.2Q348 775.4 341.8 775.4L310 775.4" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 845L356 845Q352 845 352 849L352 868Q352 875 345 875L310 875" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 849L343 849Q336 849 336 842L336 483.7Q336 476.7 329 476.7L310 476.7" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 927L343 927Q336 927 336 934L336 1266.3Q336 1273.3 329 1273.3L310 1273.3" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 1009L331 1009Q324 1009 324 1002L324 981.6Q324 974.6 317 974.6L310 974.6" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 1091L331 1091Q324 1091 324 1084L324 185Q324 178 317 178L310 178" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 1095L354 1095Q348 1095 348 1089L348 782.4Q348 775.4 341 775.4L310 775.4" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 1173L339 1173Q332 1173 332 1166L332 384.1Q332 377.1 325 377.1L310 377.1" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 1177L347 1177Q340 1177 340 1184L340 1365.9Q340 1372.9 333 1372.9L310 1372.9" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 1255L354 1255Q348 1255 348 1249L348 782.4Q348 775.4 341 775.4L310 775.4" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 1337L351 1337Q344 1337 344 1330L344 682.9Q344 675.9 337 675.9L310 675.9" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 1419L347 1419Q340 1419 340 1412L340 583.3Q340 576.3 333 576.3L310 576.3" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 1501L351 1501Q344 1501 344 1494L344 1479.4Q344 1472.4 337 1472.4L310 1472.4" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<rect x="296.8" y="141" width="78.4" height="16" rx="4" fill="#FFFFFF"/>
+<text x="336" y="153" font-size="9.5" fill="#64748B" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«deriveReqt»</text>
+<rect x="24" y="100" width="1472" height="1462" rx="4" fill="none" stroke="#94A3B8" stroke-width="1.2"/>
+<path d="M24 100h428.6v12l-10 10h-418.6z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="34" y="115" font-size="11" fill="#334155" font-weight="600">req [LionDriverRequirements] TSR-619…TSR-635 host monitoring, DM, HMI</text>
+<text x="40" y="1580" font-size="11.5" fill="#334155">17 TSRs from 14 FSRs; 4 named by a verification case; no case yet: TSR-621, TSR-622, TSR-623, TSR-624, TSR-625, TSR-626, TSR-627, TSR-628, TSR-630, TSR-631, TSR-632, TSR-633, TSR-635.</text>
+<line x1="40" y1="1596" x2="1480" y2="1596" stroke="#E2E8F0"/>
+<path d="M40 1626L66 1626" fill="none" stroke="#64748B" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<text x="74" y="1630" font-size="11" fill="#334155">«deriveReqt»: the TSR refines the FSR</text>
+<rect x="330" y="1618" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="347.2" y="1628.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03</text>
+<text x="372" y="1630" font-size="11" fill="#334155">satisfying element</text>
+<rect x="500" y="1618" width="39.5" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="519.8" y="1628.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-12</text>
+<text x="548" y="1630" font-size="11" fill="#334155">safety mechanism that cites it (WP-S-03 §6)</text>
+<rect x="830" y="1618" width="39.5" height="15" rx="7.5" fill="#EFF6FF" stroke="#2563EB" stroke-width="1"/><text x="849.8" y="1628.6" font-size="8.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SI-05</text>
+<text x="872" y="1630" font-size="11" fill="#334155">verification case VS-SI-05 (specified, not run)</text>
+<text x="40" y="1672" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+</svg>

@@ -55,7 +55,7 @@ figures. The documents are the source of record, and the figures are drawn from 
 | TSC | technical safety concept |
 | TSR-nn | technical safety requirement (WP-S-02) |
 | TX | transmit |
-| V-nn | view of the SysML model (V-01…V-20) |
+| V-nn | view of the SysML model (V-01…V-22) |
 | WP-nn | work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case) |
 
 All terms: [abbreviations and record codes](../../terms.md).

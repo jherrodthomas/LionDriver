@@ -605,15 +605,15 @@ goals and the stakeholder need they refine (SN-09), the satisfy relationship to 
 their performing elements, and the verification cases of the test specifications that verify it."""
 
 [views.V-06]
-file = "fig-sysml-v06-f01-requirements.svg"
+file = "fig-sysml-v06-{f}-requirements.svg"
 kind = "requirements"
-function = "F-01"
-title = "Requirement diagram · F-01 lateral control"
-subtitle = "SYS requirements of WP-S-01 §2 with the elements that satisfy them (§10.1) and the cases that verify them (WP-S-09)"
+functions = ["F-01", "F-02", "F-03", "F-04", "F-05", "F-06/F-07", "F-08", "F-09"]
+title = "Requirement diagram"
+subtitle = "SYS requirements of WP-S-01 with the needs they refine (§1.3), the elements that satisfy them (§10.1) and the cases that verify them"
 width = 1340
-desc = """Requirement view generated from the SysML v2 model: the system requirements of F-01 lateral control, the \
-elements that satisfy them from WP-S-01 §10.1, and the verification cases of the test specifications that name them; \
-requirements no case names are outlined red."""
+desc = """Requirement diagram generated from the SysML v2 model, one per function: its system requirements with the \
+stakeholder need each is derived from (WP-S-01 §1.3), the elements that satisfy them from WP-S-01 §10.1, and the \
+verification cases of the test specifications that name them; requirements no case names are outlined red."""
 
 [views.V-07]
 file = "fig-sysml-v07-system-requirement-matrix.svg"
@@ -835,3 +835,39 @@ desc = """HSI responsibilities view generated from the SysML v2 model. One row p
 §11.4: what the hardware provides and the software must do, each with its owner elements (chips coloured by integrity), \
 how a failure of the other side is detected (red where it is not detected today), the reaction, resources shared with \
 another interface, and the status of the row: in place, partial or missing."""
+
+# ======================================================================= V-21 use case diagram
+
+[views.V-21]
+file = "fig-sysml-v21-use-cases.svg"
+kind = "usecases"
+title = "Use case diagram · LD-SDA"
+subtitle = "The 11 use cases of WP-S-01 §1.4 with LD-SDA as their subject and the actors that take part in them"
+width = 1280
+actor_side = { Driver = "left", Owner = "left", Vehicle = "right", ProjectLead = "right" }
+desc = """SysML use case diagram generated from the model (LionDriverNeeds): LD-SDA as the subject boundary with the use \
+cases UC-01 to UC-11 inside it, the actors Driver and Owner on the left and Vehicle and Project lead on the right, and an \
+association from each actor to every use case it takes part in."""
+
+# ======================================================================= V-22 TSR requirement diagrams
+
+[views.V-22]
+file = "fig-sysml-v22-tsr-{f}.svg"
+kind = "tsrblocks"
+width = 1520
+title = "TSR requirement diagrams"
+subtitle = "One SysML requirement diagram per WP-S-02 block"
+blocks = [
+  { key = "1xx", from = "TSR-101", to = "TSR-111", title = "lateral actuation envelope" },
+  { key = "2xx", from = "TSR-201", to = "TSR-208", title = "longitudinal envelope" },
+  { key = "3xx", from = "TSR-301", to = "TSR-311", title = "engagement, disengagement, override" },
+  { key = "4xx", from = "TSR-401", to = "TSR-413", title = "communication integrity" },
+  { key = "5xx", from = "TSR-501", to = "TSR-519", title = "safety-MCU platform integrity" },
+  { key = "6xx-a", from = "TSR-601", to = "TSR-618", title = "host monitoring" },
+  { key = "6xx-b", from = "TSR-619", to = "TSR-635", title = "host monitoring, DM, HMI" },
+  { key = "7xx", from = "TSR-701", to = "TSR-713", title = "PCS preservation and harness" },
+]
+desc = """SysML requirement diagram generated from the model for one block of WP-S-02: each technical safety requirement \
+with its ASIL, mechanism type and timing, a «deriveReqt» arrow to each FSR it refines, the elements that satisfy it, the \
+safety mechanisms of WP-S-03 §6 that cite it, and the verification cases that name it; requirements no case names are \
+outlined red."""

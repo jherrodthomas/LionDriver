@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1340" height="1186" viewBox="0 0 1340 1186" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">V-06. Requirement diagram · F-02 longitudinal control (SysML v2 view functionRequirements)</title>
+<desc id="d">Requirement diagram generated from the SysML v2 model, one per function: its system requirements with the stakeholder need each is derived from (WP-S-01 §1.3), the elements that satisfy them from WP-S-01 §10.1, and the verification cases of the test specifications that name them; requirements no case names are outlined red.</desc>
+<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter><marker id="rq-teal" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#0F766E"/></marker><marker id="rq-blue" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#2563EB"/></marker><marker id="rq-or" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#C2410C"/></marker><marker id="rq-ink" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#334155"/></marker><marker id="rq-mut" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#64748B"/></marker></defs>
+<rect width="1340" height="1186" fill="#FFFFFF"/>
+<text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-06 · Requirement diagram · F-02 longitudinal control</text>
+<text x="40" y="69" font-size="12.5" fill="#64748B">SYS requirements of WP-S-01 with the needs they refine (§1.3), the elements that satisfy them (§10.1) and the cases that verify them</text>
+<text x="1300" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::functionRequirements</text>
+<text x="1300" y="62" font-size="11" fill="#64748B" text-anchor="end">RequirementView · render asTreeDiagram · model 655179f15d5a</text>
+<line x1="40" y1="86" x2="1300" y2="86" stroke="#E2E8F0"/>
+<text x="40" y="138" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">SATISFIED BY · «part»</text>
+<text x="340" y="138" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">REQUIREMENTS · F-02 · «requirement»</text>
+<text x="980" y="138" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">VERIFIED BY · «verification»</text>
+<rect x="340" y="154" width="520" height="102" rx="8" fill="#FFFFFF" stroke="#475569" stroke-width="1.3" filter="url(#lift)"/>
+<text x="352" y="170" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«requirement» SystemRequirement</text>
+<rect x="352" y="174" width="53.9" height="18" rx="9" fill="#334155"/><text x="378.9" y="186.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-020</text>
+<text x="412.9" y="187" font-size="12" fill="#0F172A" font-weight="600">The system shall hold the set speed within ±TBD km/h on level road</text>
+<text x="352" y="204" font-size="10.5" fill="#64748B">without a lead.</text>
+<text x="352" y="218" font-size="10.5" fill="#64748B">type P · verif T-VEH · target proposed ±2 km/h</text>
+<text x="352" y="232" font-size="10.5" fill="#64748B">«deriveReqt» from SN-03: A set speed and a chosen gap to the car ahead, also when stopping an…</text>
+<rect x="340" y="268" width="520" height="102" rx="8" fill="#FFFFFF" stroke="#475569" stroke-width="1.3" filter="url(#lift)"/>
+<text x="352" y="284" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«requirement» SystemRequirement</text>
+<rect x="352" y="288" width="53.9" height="18" rx="9" fill="#334155"/><text x="378.9" y="300.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-021</text>
+<text x="412.9" y="301" font-size="12" fill="#0F172A" font-weight="600">The set-speed range shall be the PCM cruise set range of the reference</text>
+<text x="352" y="318" font-size="10.5" fill="#64748B">vehicle, and shall not exceed the ODD speed bound of 110 km/h (ODD-H…</text>
+<text x="352" y="332" font-size="10.5" fill="#64748B">type C · verif R, T-VEH · target as stated</text>
+<text x="352" y="346" font-size="10.5" fill="#64748B">«deriveReqt» from SN-03, SN-05: A set speed and a chosen gap to the car ahead, also when sto…</text>
+<rect x="340" y="382" width="520" height="102" rx="8" fill="#FFFFFF" stroke="#475569" stroke-width="1.3" filter="url(#lift)"/>
+<text x="352" y="398" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«requirement» SystemRequirement</text>
+<rect x="352" y="402" width="53.9" height="18" rx="9" fill="#334155"/><text x="378.9" y="414.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-022</text>
+<text x="412.9" y="415" font-size="12" fill="#0F172A" font-weight="600">When following a lead, the system shall keep a time gap equal to the</text>
+<text x="352" y="432" font-size="10.5" fill="#64748B">selected personality: relaxed 1.75 s, standard 1.45 s, aggressive 1.25 s.</text>
+<text x="352" y="446" font-size="10.5" fill="#64748B">type P · verif T-VEH, LOG · target steady-state gap error ≤ TBD</text>
+<text x="352" y="460" font-size="10.5" fill="#64748B">«deriveReqt» from SN-03: A set speed and a chosen gap to the car ahead, also when stopping an…</text>
+<rect x="340" y="496" width="520" height="102" rx="8" fill="#FFFFFF" stroke="#475569" stroke-width="1.3" filter="url(#lift)"/>
+<text x="352" y="512" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«requirement» SystemRequirement</text>
+<rect x="352" y="516" width="53.9" height="18" rx="9" fill="#334155"/><text x="378.9" y="528.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-023</text>
+<text x="412.9" y="529" font-size="12" fill="#0F172A" font-weight="600">The default personality in the reference configuration shall be "standard"</text>
+<text x="352" y="546" font-size="10.5" fill="#64748B">or "relaxed", not "aggressive".</text>
+<text x="352" y="560" font-size="10.5" fill="#64748B">type C · verif R · target as stated</text>
+<text x="352" y="574" font-size="10.5" fill="#64748B">«deriveReqt» from SN-03: A set speed and a chosen gap to the car ahead, also when stopping an…</text>
+<rect x="340" y="610" width="520" height="102" rx="8" fill="#FFFFFF" stroke="#475569" stroke-width="1.3" filter="url(#lift)"/>
+<text x="352" y="626" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«requirement» SystemRequirement</text>
+<rect x="352" y="630" width="53.9" height="18" rx="9" fill="#334155"/><text x="378.9" y="642.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-024</text>
+<text x="412.9" y="643" font-size="12" fill="#0F172A" font-weight="600">The system shall bring the vehicle to a stop behind a stopping lead,</text>
+<text x="352" y="660" font-size="10.5" fill="#64748B">keeping a stopped distance of about 6 m, and hold it at standstill.</text>
+<text x="352" y="674" font-size="10.5" fill="#64748B">type F/P · verif T-VEH · target stop distance 6 m ± TBD</text>
+<text x="352" y="688" font-size="10.5" fill="#64748B">«deriveReqt» from SN-03: A set speed and a chosen gap to the car ahead, also when stopping an…</text>
+<rect x="340" y="724" width="520" height="102" rx="8" fill="#FFFFFF" stroke="#475569" stroke-width="1.3" filter="url(#lift)"/>
+<text x="352" y="740" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«requirement» SystemRequirement</text>
+<rect x="352" y="744" width="53.9" height="18" rx="9" fill="#334155"/><text x="378.9" y="756.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-025</text>
+<text x="412.9" y="757" font-size="12" fill="#0F172A" font-weight="600">After a standstill, the system shall resume automatically when the lead</text>
+<text x="352" y="774" font-size="10.5" fill="#64748B">moves off, within TBD s; without a lead, it shall not move off without a d…</text>
+<text x="352" y="788" font-size="10.5" fill="#64748B">type F · verif T-VEH · target as stated</text>
+<text x="352" y="802" font-size="10.5" fill="#64748B">«deriveReqt» from SN-03: A set speed and a chosen gap to the car ahead, also when stopping an…</text>
+<rect x="340" y="838" width="520" height="102" rx="8" fill="#FFFFFF" stroke="#475569" stroke-width="1.3" filter="url(#lift)"/>
+<text x="352" y="854" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«requirement» SystemRequirement</text>
+<rect x="352" y="858" width="53.9" height="18" rx="9" fill="#334155"/><text x="378.9" y="870.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-026</text>
+<text x="412.9" y="871" font-size="12" fill="#0F172A" font-weight="600">Comfort: in normal following, the commanded acceleration shall stay</text>
+<text x="352" y="888" font-size="10.5" fill="#64748B">within the cruise limits (1.6→0.6 m/s² by speed, −1.2 m/s² cruise brakin…</text>
+<text x="352" y="902" font-size="10.5" fill="#64748B">type P · verif T-SIL · target as stated</text>
+<text x="352" y="916" font-size="10.5" fill="#64748B">«deriveReqt» from SN-03: A set speed and a chosen gap to the car ahead, also when stopping an…</text>
+<rect x="340" y="952" width="520" height="102" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<text x="352" y="968" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«requirement» SystemRequirement</text>
+<rect x="352" y="972" width="53.9" height="18" rx="9" fill="#334155"/><text x="378.9" y="984.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-027</text>
+<text x="412.9" y="985" font-size="12" fill="#0F172A" font-weight="600">Experimental Mode (end-to-end longitudinal) shall be disabled and not</text>
+<text x="352" y="1002" font-size="10.5" fill="#64748B">selectable in the reference configuration until decision D-08 includes it.</text>
+<text x="352" y="1016" font-size="10.5" fill="#64748B">type C · verif R, T-SIL · target Param default "0", toggle disabled</text>
+<text x="352" y="1030" font-size="10.5" fill="#64748B">«deriveReqt» from SN-05: Assistance only where it was assured: on highways inside the ODD, at…</text>
+<rect x="788.7" y="959" width="59.3" height="18" rx="9" fill="#D2553F"/><text x="818.4" y="971.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">no verifier</text>
+<rect x="40" y="154" width="220" height="58" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" filter="url(#lift)"/>
+<text x="52" y="170" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«part»</text>
+<rect x="52" y="174" width="88.1" height="18" rx="9" fill="#475569"/><text x="96" y="186.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.plannerd</text>
+<text x="147.1" y="187" font-size="12" fill="#0F172A" font-weight="600"></text>
+<text x="52" y="204" font-size="10.5" fill="#64748B">QM</text>
+<rect x="40" y="382" width="220" height="58" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" filter="url(#lift)"/>
+<text x="52" y="398" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«part»</text>
+<rect x="52" y="402" width="65.3" height="18" rx="9" fill="#475569"/><text x="84.7" y="414.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.card</text>
+<text x="124.3" y="415" font-size="12" fill="#0F172A" font-weight="600"></text>
+<text x="52" y="432" font-size="10.5" fill="#64748B">QM · B-sup</text>
+<rect x="40" y="610" width="220" height="58" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" filter="url(#lift)"/>
+<text x="52" y="626" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«part»</text>
+<rect x="52" y="630" width="82.4" height="18" rx="9" fill="#475569"/><text x="93.2" y="642.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.manager</text>
+<text x="141.4" y="643" font-size="12" fill="#0F172A" font-weight="600"></text>
+<text x="52" y="660" font-size="10.5" fill="#64748B">QM</text>
+<rect x="40" y="838" width="220" height="58" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" filter="url(#lift)"/>
+<text x="52" y="854" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«part»</text>
+<rect x="52" y="858" width="59.6" height="18" rx="9" fill="#475569"/><text x="81.8" y="870.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.hmi</text>
+<text x="118.6" y="871" font-size="12" fill="#0F172A" font-weight="600"></text>
+<text x="52" y="888" font-size="10.5" fill="#64748B">QM · B-sup</text>
+<path d="M260 190L261 190Q262 190 262 189L262 188Q262 186 264 186L340 186" fill="none" stroke="#0F766E" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-teal)"/>
+<path d="M260 418L267 418Q274 418 274 411L274 307Q274 300 281 300L340 300" fill="none" stroke="#0F766E" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-teal)"/>
+<path d="M260 190L261 190Q262 190 262 191L262 407Q262 414 269 414L340 414" fill="none" stroke="#0F766E" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-teal)"/>
+<path d="M260 646L279 646Q286 646 286 639L286 535Q286 528 293 528L340 528" fill="none" stroke="#0F766E" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-teal)"/>
+<path d="M260 190L261 190Q262 190 262 191L262 635Q262 642 269 642L340 642" fill="none" stroke="#0F766E" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-teal)"/>
+<path d="M260 418L267 418Q274 418 274 425L274 641Q274 648 281 648L340 648" fill="none" stroke="#0F766E" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-teal)"/>
+<path d="M260 418L267 418Q274 418 274 425L274 749Q274 756 281 756L340 756" fill="none" stroke="#0F766E" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-teal)"/>
+<path d="M260 190L261 190Q262 190 262 191L262 863Q262 870 269 870L340 870" fill="none" stroke="#0F766E" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-teal)"/>
+<path d="M260 646L279 646Q286 646 286 653L286 977Q286 984 293 984L340 984" fill="none" stroke="#0F766E" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-teal)"/>
+<path d="M260 874L291 874Q298 874 298 881L298 983Q298 990 305 990L340 990" fill="none" stroke="#0F766E" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-teal)"/>
+<rect x="269.4" y="139" width="61.3" height="16" rx="4" fill="#FFFFFF"/>
+<text x="300" y="151" font-size="9.5" fill="#0F766E" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="980" y="154" width="300" height="72" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.3" filter="url(#lift)"/>
+<text x="992" y="170" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verification»</text>
+<rect x="992" y="174" width="59.6" height="18" rx="9" fill="#2563EB"/><text x="1021.8" y="186.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">VS-SQ-11</text>
+<text x="1058.6" y="187" font-size="12" fill="#0F172A" font-weight="600">Accel / decel limits and jerk on ve…</text>
+<text x="992" y="204" font-size="10.5" fill="#64748B">WP-S-09 §5.2</text>
+<text x="992" y="218" font-size="10.5" fill="#64748B">verifies SYS-022, SYS-024, SYS-026</text>
+<rect x="980" y="458" width="300" height="72" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.3" filter="url(#lift)"/>
+<text x="992" y="474" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verification»</text>
+<rect x="992" y="478" width="59.6" height="18" rx="9" fill="#2563EB"/><text x="1021.8" y="490.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">VS-SQ-16</text>
+<text x="1058.6" y="491" font-size="12" fill="#0F172A" font-weight="600">Process replay regression</text>
+<text x="992" y="508" font-size="10.5" fill="#64748B">WP-S-09 §5.3</text>
+<text x="992" y="522" font-size="10.5" fill="#64748B">verifies SYS-020, SYS-021, SYS-022, SYS-023, SYS-…</text>
+<rect x="980" y="762" width="300" height="72" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.3" filter="url(#lift)"/>
+<text x="992" y="778" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verification»</text>
+<rect x="992" y="782" width="59.6" height="18" rx="9" fill="#2563EB"/><text x="1021.8" y="794.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">VS-SQ-19</text>
+<text x="1058.6" y="795" font-size="12" fill="#0F172A" font-weight="600">Supervised endurance drive</text>
+<text x="992" y="812" font-size="10.5" fill="#64748B">WP-S-09 §5.4</text>
+<text x="992" y="826" font-size="10.5" fill="#64748B">verifies SYS-020, SYS-022</text>
+<path d="M980 494L901 494Q894 494 894 487L894 194Q894 187 887 187L862 187" fill="none" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-blue)"/>
+<path d="M980 798L915 798Q908 798 908 791L908 200Q908 193 901 193L862 193" fill="none" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-blue)"/>
+<path d="M980 494L901 494Q894 494 894 487L894 308Q894 301 887 301L862 301" fill="none" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-blue)"/>
+<path d="M980 190L887 190Q880 190 880 197L880 408Q880 415 873 415L862 415" fill="none" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-blue)"/>
+<path d="M980 494L901 494Q894 494 894 487L894 428Q894 421 887 421L862 421" fill="none" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-blue)"/>
+<path d="M980 798L915 798Q908 798 908 791L908 434Q908 427 901 427L862 427" fill="none" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-blue)"/>
+<path d="M980 494L901 494Q894 494 894 501L894 522Q894 529 887 529L862 529" fill="none" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-blue)"/>
+<path d="M980 190L887 190Q880 190 880 197L880 636Q880 643 873 643L862 643" fill="none" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-blue)"/>
+<path d="M980 494L901 494Q894 494 894 501L894 642Q894 649 887 649L862 649" fill="none" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-blue)"/>
+<path d="M980 494L901 494Q894 494 894 501L894 750Q894 757 887 757L862 757" fill="none" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-blue)"/>
+<path d="M980 190L887 190Q880 190 880 197L880 864Q880 871 873 871L862 871" fill="none" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-blue)"/>
+<path d="M980 494L901 494Q894 494 894 501L894 870Q894 877 887 877L862 877" fill="none" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#rq-blue)"/>
+<rect x="872.2" y="139" width="55.6" height="16" rx="4" fill="#FFFFFF"/>
+<text x="900" y="151" font-size="9.5" fill="#2563EB" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<rect x="980" y="956" width="300" height="100" rx="8" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1.2"/>
+<text x="994" y="980" font-size="12" fill="#991B1B" font-weight="700">Not verified by any case (R4 report)</text>
+<text x="994" y="1000" font-size="11" fill="#7F1D1D">SYS-027. Add a case to a test specification, or</text>
+<text x="994" y="1015" font-size="11" fill="#7F1D1D">record why none is needed.</text>
+<rect x="24" y="100" width="1292" height="984" rx="4" fill="none" stroke="#94A3B8" stroke-width="1.2"/>
+<path d="M24 100h320.8v12l-10 10h-310.8z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="34" y="115" font-size="11" fill="#334155" font-weight="600">req [LionDriverRequirements] F-02 Longitudinal control</text>
+<line x1="40" y1="1094" x2="1300" y2="1094" stroke="#E2E8F0"/>
+<path d="M40 1124L66 1124" fill="none" stroke="#0F766E" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="74" y="1128" font-size="11" fill="#334155">«satisfy»</text>
+<path d="M150 1124L176 1124" fill="none" stroke="#2563EB" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="184" y="1128" font-size="11" fill="#334155">«verify» (specified, not run)</text>
+<rect x="370" y="1117" width="22" height="14" rx="3" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="400" y="1128" font-size="11" fill="#334155">requirement without a verification case</text>
+<text x="40" y="1170" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+</svg>
