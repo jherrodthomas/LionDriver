@@ -2042,7 +2042,7 @@ package LionDriverRequirements {
         :>> verifMethod = "UT, HIL";
     }
     requirement <'CSR-014'> csr_014 : CybersecurityRequirement {
-        doc /* While a car safety mode is active, release firmware shall reject host commands outside a documented allow-list, including relay drive (0xc5), CAN mode/speed changes (0xdb, 0xde) and loopback. */
+        doc /* While a car safety mode is active, release firmware shall reject host commands outside a documented allow-list, including relay drive, CAN mode and speed changes, and loopback. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-01";
@@ -2066,7 +2066,7 @@ package LionDriverRequirements {
         :>> verifMethod = "UT, HIL";
     }
     requirement <'CSR-021'> csr_021 : CybersecurityRequirement {
-        doc /* The release panda firmware and bootstub shall be built with RELEASE and the LionDriver certificate, and the release build shall fail if ALLOW_DEBUG is defined. */
+        doc /* The release panda firmware and bootstub shall be built in the release configuration with the LionDriver certificate, and the release build shall fail if debug capability is enabled. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW; ENV";
         :>> group = "CSR-C-02";
@@ -2082,7 +2082,7 @@ package LionDriverRequirements {
         :>> verifMethod = "BA, HIL";
     }
     requirement <'CSR-023'> csr_023 : CybersecurityRequirement {
-        doc /* Debug-only host commands (relay drive 0xc5, ALLOUTPUT mode, bootloader entry, debug sleep) shall be absent from release firmware. */
+        doc /* Debug-only host commands (relay drive, all-output mode, bootloader entry, debug sleep) shall be absent from release firmware. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-02";
@@ -2090,7 +2090,7 @@ package LionDriverRequirements {
         :>> verifMethod = "BA, R, FZ";
     }
     requirement <'CSR-024'> csr_024 : CybersecurityRequirement {
-        doc /* Softloader entry (0xd1 param 1) shall be accepted only while the panda is in a non-actuating mode and the vehicle ignition is off. */
+        doc /* Softloader entry shall be accepted only while the panda is in a non-actuating mode and the vehicle ignition is off. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-02";
@@ -2162,7 +2162,7 @@ package LionDriverRequirements {
         :>> verifMethod = "R, HIL";
     }
     requirement <'CSR-052'> csr_052 : CybersecurityRequirement {
-        doc /* SoC use of STM_BOOT0 for recovery shall occur only on explicit offroad owner action and shall be logged as a security event. */
+        doc /* SoC use of the panda boot lines for recovery shall occur only on explicit offroad owner action and shall be logged as a security event. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC; USR";
         :>> group = "CSR-C-05";
@@ -2178,7 +2178,7 @@ package LionDriverRequirements {
         :>> verifMethod = "UT, HIL";
     }
     requirement <'CSR-054'> csr_054 : CybersecurityRequirement {
-        doc /* The architecture shall prevent SoC control of STM_BOOT0/STM_RST_N from resulting in execution of firmware not signed with the LionDriver release key, or the residual shall be recorded as a cybersecurity claim per CS-AD-03. */
+        doc /* The architecture shall prevent SoC control of the panda boot lines from resulting in execution of firmware not signed with the LionDriver release key, or the residual shall be recorded as a cybersecurity claim per CS-AD-03. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW; SoC; USR";
         :>> group = "CSR-C-05";
@@ -2226,7 +2226,7 @@ package LionDriverRequirements {
         :>> verifMethod = "BA, UT";
     }
     requirement <'CSR-072'> csr_072 : CybersecurityRequirement {
-        doc /* Driver-view demo mode (IsDriverViewEnabled) shall not affect driver-monitoring output while onroad. */
+        doc /* Driver-view demo mode shall not affect driver-monitoring output while onroad. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-07";
@@ -2242,7 +2242,7 @@ package LionDriverRequirements {
         :>> verifMethod = "BA";
     }
     requirement <'CSR-081'> csr_081 : CybersecurityRequirement {
-        doc /* modeld and dmonitoringmodeld shall load model artefacts and metadata without deserializing executable objects (no pickle of artefact content). */
+        doc /* modeld and dmonitoringmodeld shall load model artefacts and metadata without deserializing executable objects. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-08";
@@ -2266,7 +2266,7 @@ package LionDriverRequirements {
         :>> verifMethod = "CM";
     }
     requirement <'CSR-091'> csr_091 : CybersecurityRequirement {
-        doc /* Panda firmware shall verify every checksum and counter that the vehicle provides on safety-relevant RX messages, and shall cross-check messages that carry none (brake 0x226, wheel speed 0xAA) for plausibility against independent signals. */
+        doc /* Panda firmware shall verify every checksum and counter that the vehicle provides on safety-relevant RX messages, and shall cross-check messages that carry none for plausibility against independent signals. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-09";
@@ -2290,7 +2290,7 @@ package LionDriverRequirements {
         :>> verifMethod = "UT, HIL";
     }
     requirement <'CSR-101'> csr_101 : CybersecurityRequirement {
-        doc /* LionDriver installer and image builds shall not contain an embedded authorized SSH key or set SshEnabled. */
+        doc /* LionDriver installer and image builds shall not contain an embedded authorized SSH key or enable SSH. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC; ENV";
         :>> group = "CSR-C-10";
@@ -2298,7 +2298,7 @@ package LionDriverRequirements {
         :>> verifMethod = "BA";
     }
     requirement <'CSR-102'> csr_102 : CybersecurityRequirement {
-        doc /* SshEnabled shall be false in the reference configuration and checked at installation. */
+        doc /* SSH shall be disabled in the reference configuration and checked at installation. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "USR";
         :>> group = "CSR-C-10";
@@ -2346,7 +2346,7 @@ package LionDriverRequirements {
         :>> verifMethod = "UT, PT";
     }
     requirement <'CSR-114'> csr_114 : CybersecurityRequirement {
-        doc /* If enabled, getMessage shall serve only allow-listed, non-personal services. */
+        doc /* If enabled, the service-read call shall serve only allow-listed, non-personal services. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-11";
@@ -2354,7 +2354,7 @@ package LionDriverRequirements {
         :>> verifMethod = "UT";
     }
     requirement <'CSR-115'> csr_115 : CybersecurityRequirement {
-        doc /* Release builds shall ignore the ATHENA_HOST environment override. */
+        doc /* Release builds shall ignore any override of the back-end server address. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-11";
@@ -2386,7 +2386,7 @@ package LionDriverRequirements {
         :>> verifMethod = "R, UT, PT";
     }
     requirement <'CSR-122'> csr_122 : CybersecurityRequirement {
-        doc /* Release builds shall fix the update origin and accept only release-channel branches, ignoring UpdaterTargetBranch values outside it. */
+        doc /* Release builds shall fix the update origin and accept only release-channel branches, ignoring any other configured branch. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-12";
@@ -2498,7 +2498,7 @@ package LionDriverRequirements {
         :>> verifMethod = "R, PR";
     }
     requirement <'CSR-151'> csr_151 : CybersecurityRequirement {
-        doc /* The decommissioning procedure shall erase user data and the device identity keys in /persist/comma/. */
+        doc /* The decommissioning procedure shall erase user data and the device identity keys. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "USR; SoC";
         :>> group = "CSR-C-15";

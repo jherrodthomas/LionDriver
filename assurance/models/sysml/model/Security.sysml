@@ -58,14 +58,14 @@ package LionDriverSecurity {
     part <'TB-1'> commandChannel : TrustBoundary {
         doc /* Z2 → Z1 command channel (SPI/USB) */
         :>> zones = ("Z2", "Z1");
-        :>> crossing = "Safety mode/param `0xdc`, alternative experience `0xdf`, bus config `0xdb`/`0xde`, relay debug `0xc5`, softloader `0xd1`, CAN TX frames";
+        :>> crossing = "Safety mode and parameter, alternative experience, bus configuration, relay control, softloader entry, CAN TX frames";
         :>> threats = "TS-02, TS-05, TS-12";
         :>> controls = "CSR-011…CSR-016, CSR-021…CSR-024, CSR-061";
     }
     part <'TB-2'> bootControl : TrustBoundary {
         doc /* Z2 → Z1 boot control (GPIO) */
         :>> zones = ("Z2", "Z1");
-        :>> crossing = "`STM_BOOT0`, `STM_RST_N` (`openpilot/common/hardware/comma/hardware.py:401-419`)";
+        :>> crossing = "Panda boot-mode and reset lines";
         :>> threats = "TS-03";
         :>> controls = "CSR-041…CSR-043, CSR-051…CSR-054";
     }

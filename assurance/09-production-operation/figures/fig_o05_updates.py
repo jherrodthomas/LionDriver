@@ -160,8 +160,8 @@ def c(D, r: str) -> tuple[str, str]:
 # ---------------------------------------------------------------- F1: the update path, today against the target
 
 SRC["fig-o05-6-1-update-path.svg"] = [
-  ("S07", "force-checks out `FETCH_HEAD`, resets, cleans and updates submodules"),
-  ("S07", "AGNOS images are checked against hashes in `agnos.json` taken from the same unsigned tree"),
+  ("S07", "the inherited updater does not authenticate updates end to end"),
+  ("S07", "neither the origin, nor the code, nor the system images are checked against a LionDriver-signed release"),
   ("S07", "release ID, git tree commit including submodule pins, AGNOS version and image hashes, panda image hash, model "
           "artefact hashes, minimum version"),
   ("S07", "signed with the offline update key (ECDSA P-256 with SHA-256, the firmware scheme, DQ-191 A)"),
@@ -171,18 +171,18 @@ SRC["fig-o05-6-1-update-path.svg"] = [
   ("S07", "Release builds shall fix the update origin and accept only release-channel branches"),
   ("S07", "shall reject a manifest whose release version is lower than the installed one unless the manifest is a signed "
           "rollback release"),
-  ("O05", "with no verification beyond TLS and in-tree hashes"),
+  ("O05", "The inherited updater does not authenticate updates end to end"),
   ("O05", "Until then: manual installation with hash comparison against the release record"),
 ]
 
 ROWS = [  # (what the row compares, today, target, the requirements of the target)
-  ("Where it comes from", "Whatever branch the device is set to follow, from a configurable origin",
+  ("Where it comes from", "Not fixed to a LionDriver origin or release channel",
    "A fixed origin and the release channel only", ["CSR-122"]),
-  ("Before anything is staged", "Nothing signed by LionDriver: TLS is the only check",
+  ("Before anything is staged", "No LionDriver signature is checked",
    "A release manifest signed with the offline key (ECDSA P-256, SHA-256), checked with a pinned public key", ["CSR-121"]),
-  ("The code", "Checked out and cleaned exactly as fetched", "The fetched tree checked against the manifest commit and its "
+  ("The code", "Not checked against a signed release", "The fetched tree checked against the manifest commit and its "
    "submodule pins", ["CSR-121"]),
-  ("System images", "Checked against hashes that came in the same unsigned tree",
+  ("System images", "Not checked against a signed release",
    "Every artefact hash checked against the manifest before use", ["CSR-121"]),
   ("An older release", "Not refused", "Refused unless it is a signed rollback release", ["CSR-123"]),
 ]
@@ -338,7 +338,7 @@ SRC["fig-o05-6-2-update-attacks.svg"] = [
           "finalization fails."),
   ("S07", "The update-signing key shall be distinct from the panda release key, held offline, and covered by a re-keying "
           "procedure."),
-  ("O05", "The inherited updater fetches a git branch and force-checks it out"),
+  ("O05", "The inherited updater does not authenticate updates end to end"),
 ]
 
 NODES = [("key", "Signing key"), ("origin", "Release origin"), ("net", "Network"), ("soc", "Device (SoC)"), ("panda", "panda")]
