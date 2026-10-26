@@ -796,6 +796,31 @@ subtitle = "WP-S-03 §4.1 Table 4-1 from ignition on to engaged actuation; each 
 width = 1520
 desc = """Sequence view generated from the SysML v2 model for WP-S-03 §4.1 (Figure 4-1). Lifelines from the driver and \
 the vehicle through the relay and the safety MCU to the host processes pandad, card, controlsd and selfdrived. One row \
-per step S-01 to S-21 in four phases: the message or action, its condition in brackets, the safety MCU or selfdrived \
+per step ST-01 to ST-21 in four phases: the message or action, its condition in brackets, the safety MCU or selfdrived \
 state after it, its status (as inherited, required in the reference build, required and not yet implemented), the \
 record transitions it stands for and its code reference."""
+
+# ======================================================================= V-18 and V-19 (timing budgets and HSI signals, OI-10)
+
+[views.V-18]
+file = "fig-sysml-v18-timing-budgets.svg"
+kind = "budgets"
+axis_seconds = 1.2
+title = "Timing budgets · FTTI, detection and reaction"
+subtitle = "The 17 budgets of WP-S-04 §3.7 on one time axis, each with its safety goals, its TSRs and the elements those TSRs are allocated to"
+width = 1520
+desc = """Timing budgets view generated from the SysML v2 model. One row per budget of WP-S-04 §3.7: the safety goals it \
+serves, the fault detection (FDTI) and reaction (FRTI) budgets as bars on a 0 to 1.2 s axis against the FTTI, with the \
+margin left; rows whose cells are not all times are given as text. On the right the TSRs the row names and the elements \
+that satisfy them in the model."""
+
+[views.V-19]
+file = "fig-sysml-v19-hsi-signals.svg"
+kind = "signals"
+title = "HSI signals · owners, protection and tests"
+subtitle = "The 29 safety-relevant signals of WP-S-05 §11 by interface, with the elements that own them, the protection the signal carries, its TSRs and its test cases"
+width = 1520
+desc = """HSI signals view generated from the SysML v2 model. One row per signal S-01 to S-29 of WP-S-05 §11, grouped by \
+its table: vehicle CAN signals (HSI-04), SoC to safety MCU signals (HSI-01 to 03) and safety MCU hardware signals \
+(HSI-05 to 14). Each row gives the direction, the owner elements, whether the signal carries integrity protection and \
+a liveness indication of its own, the ASIL, the TSRs it serves and the number of test cases."""

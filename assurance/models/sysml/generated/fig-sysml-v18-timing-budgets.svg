@@ -1,0 +1,189 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="944" viewBox="0 0 1520 944" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">V-18. Timing budgets · FTTI, detection and reaction (SysML v2 view timingBudgets)</title>
+<desc id="d">Timing budgets view generated from the SysML v2 model. One row per budget of WP-S-04 §3.7: the safety goals it serves, the fault detection (FDTI) and reaction (FRTI) budgets as bars on a 0 to 1.2 s axis against the FTTI, with the margin left; rows whose cells are not all times are given as text. On the right the TSRs the row names and the elements that satisfy them in the model.</desc>
+<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter></defs>
+<rect width="1520" height="944" fill="#FFFFFF"/>
+<text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-18 · Timing budgets · FTTI, detection and reaction</text>
+<text x="40" y="69" font-size="12.5" fill="#64748B">The 17 budgets of WP-S-04 §3.7 on one time axis, each with its safety goals, its TSRs and the elements those TSRs are allocated to</text>
+<text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::timingBudgets</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">AllocationView · render asElementTable · model 67e8c93a9360</text>
+<line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
+<text x="40" y="112" font-size="9.5" fill="#64748B" font-weight="700" letter-spacing="1">SAFETY GOAL · FAULT CLASS</text>
+<text x="1040" y="112" font-size="9.5" fill="#64748B" font-weight="700" letter-spacing="1">TSRs · SATISFIED BY (allocation)</text>
+<line x1="470" y1="120" x2="470" y2="126" stroke="#94A3B8"/>
+<text x="470" y="112" font-size="9.5" fill="#64748B" text-anchor="middle">0 s</text>
+<line x1="560" y1="120" x2="560" y2="126" stroke="#94A3B8"/>
+<text x="560" y="112" font-size="9.5" fill="#64748B" text-anchor="middle">0.2 s</text>
+<line x1="650" y1="120" x2="650" y2="126" stroke="#94A3B8"/>
+<text x="650" y="112" font-size="9.5" fill="#64748B" text-anchor="middle">0.4 s</text>
+<line x1="740" y1="120" x2="740" y2="126" stroke="#94A3B8"/>
+<text x="740" y="112" font-size="9.5" fill="#64748B" text-anchor="middle">0.6 s</text>
+<line x1="830" y1="120" x2="830" y2="126" stroke="#94A3B8"/>
+<text x="830" y="112" font-size="9.5" fill="#64748B" text-anchor="middle">0.8 s</text>
+<line x1="920" y1="120" x2="920" y2="126" stroke="#94A3B8"/>
+<text x="920" y="112" font-size="9.5" fill="#64748B" text-anchor="middle">1 s</text>
+<line x1="1010" y1="120" x2="1010" y2="126" stroke="#94A3B8"/>
+<text x="1010" y="112" font-size="9.5" fill="#64748B" text-anchor="middle">1.2 s</text>
+<rect x="30" y="132" width="1460" height="40" rx="4" fill="#F8FAFC"/>
+<rect x="40" y="137" width="41" height="18" rx="9" fill="#C2410C"/><text x="60.5" y="149.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-01</text>
+<text x="89" y="150" font-size="11" fill="#0F172A" font-weight="600">continuous limits</text>
+<text x="40" y="165" font-size="10" fill="#64748B">FTTI per frame</text>
+<text x="470" y="150" font-size="10" fill="#64748B">FDTI 0 · FRTI ≤ 10 ms (+ TSR-109)</text>
+<text x="470" y="164" font-size="9.5" fill="#B45309" font-weight="600">not all times: drawn as text (WP-S-04 §3.7)</text>
+<text x="1040" y="149" font-size="10.5" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR 109</text>
+<text x="1040" y="164" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">on E-03</text>
+<rect x="40" y="177" width="41" height="18" rx="9" fill="#C2410C"/><text x="60.5" y="189.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-01</text>
+<text x="89" y="190" font-size="11" fill="#0F172A" font-weight="600">RX loss/corruption</text>
+<text x="40" y="205" font-size="10" fill="#64748B">FTTI 0.5 s</text>
+<rect x="470" y="181" width="90" height="14" rx="2" fill="#2563EB"/>
+<rect x="560" y="181" width="45" height="14" rx="2" fill="#C2410C"/>
+<rect x="605" y="185" width="90" height="6" rx="2" fill="#99F6E4"/>
+<line x1="695" y1="177" x2="695" y2="199" stroke="#0F172A" stroke-width="2"/>
+<text x="699" y="207" font-size="9.5" fill="#0F172A" font-weight="700">FTTI 0.5 s</text>
+<text x="1040" y="189" font-size="10.5" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR 401</text>
+<text x="1040" y="204" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">on E-03</text>
+<rect x="30" y="212" width="1460" height="40" rx="4" fill="#F8FAFC"/>
+<rect x="40" y="217" width="41" height="18" rx="9" fill="#C2410C"/><text x="60.5" y="229.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-01</text>
+<text x="89" y="230" font-size="11" fill="#0F172A" font-weight="600">SoC heartbeat loss</text>
+<text x="40" y="245" font-size="10" fill="#64748B">FTTI 0.5 s</text>
+<rect x="470" y="221" width="135" height="14" rx="2" fill="#2563EB"/>
+<rect x="605" y="221" width="45" height="14" rx="2" fill="#C2410C"/>
+<rect x="650" y="225" width="45" height="6" rx="2" fill="#99F6E4"/>
+<line x1="695" y1="217" x2="695" y2="239" stroke="#0F172A" stroke-width="2"/>
+<text x="699" y="247" font-size="9.5" fill="#0F172A" font-weight="700">FTTI 0.5 s</text>
+<text x="1040" y="229" font-size="10.5" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR 407</text>
+<text x="1040" y="244" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">on E-03</text>
+<rect x="40" y="257" width="41" height="18" rx="9" fill="#C2410C"/><text x="60.5" y="269.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-01</text>
+<text x="89" y="270" font-size="11" fill="#0F172A" font-weight="600">SoC command stall</text>
+<text x="40" y="285" font-size="10" fill="#64748B">FTTI 0.5 s</text>
+<rect x="470" y="261" width="22.5" height="14" rx="2" fill="#2563EB"/>
+<rect x="492.5" y="261" width="45" height="14" rx="2" fill="#C2410C"/>
+<rect x="537.5" y="265" width="157.5" height="6" rx="2" fill="#99F6E4"/>
+<line x1="695" y1="257" x2="695" y2="279" stroke="#0F172A" stroke-width="2"/>
+<text x="699" y="287" font-size="9.5" fill="#0F172A" font-weight="700">FTTI 0.5 s</text>
+<text x="1040" y="269" font-size="10.5" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR 408</text>
+<text x="1040" y="284" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">on E-03</text>
+<rect x="30" y="292" width="1460" height="40" rx="4" fill="#F8FAFC"/>
+<rect x="40" y="297" width="41" height="18" rx="9" fill="#C2410C"/><text x="60.5" y="309.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-01</text>
+<text x="89" y="310" font-size="11" fill="#0F172A" font-weight="600">MCU execution fault</text>
+<text x="40" y="325" font-size="10" fill="#64748B">FTTI 0.5 s</text>
+<rect x="470" y="301" width="45" height="14" rx="2" fill="#2563EB"/>
+<rect x="515" y="301" width="45" height="14" rx="2" fill="#C2410C"/>
+<rect x="560" y="305" width="135" height="6" rx="2" fill="#99F6E4"/>
+<line x1="695" y1="297" x2="695" y2="319" stroke="#0F172A" stroke-width="2"/>
+<text x="699" y="327" font-size="9.5" fill="#0F172A" font-weight="700">FTTI 0.5 s</text>
+<text x="1040" y="309" font-size="10.5" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR 501</text>
+<text x="1040" y="324" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">on E-04a, E-03</text>
+<rect x="40" y="337" width="41" height="18" rx="9" fill="#C2410C"/><text x="60.5" y="349.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-01</text>
+<text x="89" y="350" font-size="11" fill="#0F172A" font-weight="600">relay stuck</text>
+<text x="40" y="365" font-size="10" fill="#64748B">FTTI 0.5 s</text>
+<rect x="470" y="341" width="135" height="14" rx="2" fill="#2563EB"/>
+<rect x="605" y="341" width="45" height="14" rx="2" fill="#C2410C"/>
+<rect x="650" y="345" width="45" height="6" rx="2" fill="#99F6E4"/>
+<line x1="695" y1="337" x2="695" y2="359" stroke="#0F172A" stroke-width="2"/>
+<text x="699" y="367" font-size="9.5" fill="#0F172A" font-weight="700">FTTI 0.5 s</text>
+<text x="1040" y="349" font-size="10.5" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR 506</text>
+<text x="1040" y="364" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">on E-04a, E-05, E-03</text>
+<rect x="30" y="372" width="1460" height="40" rx="4" fill="#F8FAFC"/>
+<rect x="40" y="377" width="41" height="18" rx="9" fill="#C2410C"/><text x="60.5" y="389.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-02</text>
+<rect x="85" y="377" width="41" height="18" rx="9" fill="#C2410C"/><text x="105.5" y="389.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-06</text>
+<text x="134" y="390" font-size="11" fill="#0F172A" font-weight="600">loss without warning</text>
+<text x="40" y="405" font-size="10" fill="#64748B">FTTI 1 s to warning</text>
+<text x="470" y="390" font-size="10" fill="#64748B">FDTI ≤ 0.5 s · FRTI ≤ 0.5 s</text>
+<text x="470" y="404" font-size="9.5" fill="#B45309" font-weight="600">not all times: drawn as text (WP-S-04 §3.7)</text>
+<text x="1040" y="389" font-size="10.5" fill="#B45309" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">no TSR named</text>
+<text x="1040" y="404" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace"></text>
+<rect x="40" y="417" width="41" height="18" rx="9" fill="#C2410C"/><text x="60.5" y="429.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-03</text>
+<rect x="85" y="417" width="41" height="18" rx="9" fill="#C2410C"/><text x="105.5" y="429.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-04</text>
+<text x="134" y="430" font-size="11" fill="#0F172A" font-weight="600">all fault classes</text>
+<text x="40" y="445" font-size="10" fill="#64748B">FTTI 1 s</text>
+<rect x="470" y="421" width="225" height="14" rx="2" fill="#2563EB"/>
+<rect x="695" y="421" width="135" height="14" rx="2" fill="#C2410C"/>
+<rect x="830" y="425" width="90" height="6" rx="2" fill="#99F6E4"/>
+<line x1="920" y1="417" x2="920" y2="439" stroke="#0F172A" stroke-width="2"/>
+<text x="924" y="447" font-size="9.5" fill="#0F172A" font-weight="700">FTTI 1 s</text>
+<text x="1040" y="429" font-size="10.5" fill="#B45309" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">no TSR named</text>
+<text x="1040" y="444" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace"></text>
+<rect x="30" y="452" width="1460" height="40" rx="4" fill="#F8FAFC"/>
+<rect x="40" y="457" width="41" height="18" rx="9" fill="#C2410C"/><text x="60.5" y="469.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-05</text>
+<text x="89" y="470" font-size="11" fill="#0F172A" font-weight="600">brake/cancel</text>
+<text x="40" y="485" font-size="10" fill="#64748B">FTTI 0.2 s</text>
+<text x="470" y="470" font-size="10" fill="#64748B">FDTI ≤ 30 ms · FRTI ≤ 10 ms + EPS/PCM</text>
+<text x="470" y="484" font-size="9.5" fill="#B45309" font-weight="600">not all times: drawn as text (WP-S-04 §3.7)</text>
+<text x="1040" y="469" font-size="10.5" fill="#B45309" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">no TSR named</text>
+<text x="1040" y="484" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace"></text>
+<rect x="40" y="497" width="41" height="18" rx="9" fill="#C2410C"/><text x="60.5" y="509.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-05</text>
+<text x="89" y="510" font-size="11" fill="#0F172A" font-weight="600">steering override</text>
+<text x="40" y="525" font-size="10" fill="#64748B">FTTI 0.2 s</text>
+<text x="470" y="510" font-size="10" fill="#64748B">FDTI ≤ 40 ms + t_ovr · FRTI ≤ 0.1 s</text>
+<text x="470" y="524" font-size="9.5" fill="#B45309" font-weight="600">not all times: drawn as text (WP-S-04 §3.7)</text>
+<text x="1040" y="509" font-size="10.5" fill="#B45309" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">no TSR named</text>
+<text x="1040" y="524" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace"></text>
+<rect x="30" y="532" width="1460" height="40" rx="4" fill="#F8FAFC"/>
+<rect x="40" y="537" width="41" height="18" rx="9" fill="#C2410C"/><text x="60.5" y="549.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-07</text>
+<text x="89" y="550" font-size="11" fill="#0F172A" font-weight="600">content (TX gate, block list)</text>
+<text x="40" y="565" font-size="10" fill="#64748B">FTTI per frame</text>
+<text x="470" y="550" font-size="10" fill="#64748B">FDTI 0 · FRTI —</text>
+<text x="470" y="564" font-size="9.5" fill="#B45309" font-weight="600">not all times: drawn as text (WP-S-04 §3.7)</text>
+<text x="1040" y="549" font-size="10.5" fill="#B45309" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">no TSR named</text>
+<text x="1040" y="564" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace"></text>
+<rect x="40" y="577" width="41" height="18" rx="9" fill="#C2410C"/><text x="60.5" y="589.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-07</text>
+<text x="89" y="590" font-size="11" fill="#0F172A" font-weight="600">forwarding loss</text>
+<text x="40" y="605" font-size="10" fill="#64748B">FTTI 0.2 s (preliminary, §3.6)</text>
+<rect x="470" y="581" width="45" height="14" rx="2" fill="#2563EB"/>
+<rect x="515" y="581" width="45" height="14" rx="2" fill="#C2410C"/>
+<line x1="560" y1="577" x2="560" y2="599" stroke="#0F172A" stroke-width="2"/>
+<text x="564" y="607" font-size="9.5" fill="#0F172A" font-weight="700">FTTI 0.2 s</text>
+<text x="1040" y="589" font-size="10.5" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR 501, 706, 711</text>
+<text x="1040" y="604" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">on E-04a, E-03, E-05</text>
+<rect x="30" y="612" width="1460" height="40" rx="4" fill="#F8FAFC"/>
+<rect x="40" y="617" width="41" height="18" rx="9" fill="#C2410C"/><text x="60.5" y="629.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-02</text>
+<text x="89" y="630" font-size="11" fill="#0F172A" font-weight="600">insufficient lateral control (warning path, §3.8.1)</text>
+<text x="40" y="645" font-size="10" fill="#64748B">FTTI 1.1 s to 0.6 m at a 1 m/s² deficit; 1.55 s at 0.5 m/s²</text>
+<text x="470" y="630" font-size="10" fill="#64748B">FDTI ≤ 0.4 s (steerSaturated, T-30) · FRTI ≤ 0.1 s to alert</text>
+<text x="470" y="644" font-size="9.5" fill="#B45309" font-weight="600">not all times: drawn as text (WP-S-04 §3.7)</text>
+<text x="1040" y="629" font-size="10.5" fill="#B45309" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">no TSR named</text>
+<text x="1040" y="644" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace"></text>
+<rect x="40" y="657" width="41" height="18" rx="9" fill="#C2410C"/><text x="60.5" y="669.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-06</text>
+<text x="89" y="670" font-size="11" fill="#0F172A" font-weight="600">late or insufficient braking warning (FCW, §3.8.2)</text>
+<text x="40" y="685" font-size="10" fill="#64748B">FTTI 1.6 s at 1.0 s time gap; 3.2 s at 1.5 s (lead braking 6 m/s², item limited to 3.5 m/s²)</text>
+<text x="470" y="670" font-size="10" fill="#64748B">FDTI FCW onset after the lead brakes (T-31, not derived) · FRTI ≤ 0.1 s to alert</text>
+<text x="470" y="684" font-size="9.5" fill="#B45309" font-weight="600">not all times: drawn as text (WP-S-04 §3.7)</text>
+<text x="1040" y="669" font-size="10.5" fill="#B45309" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">no TSR named</text>
+<text x="1040" y="684" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace"></text>
+<rect x="30" y="692" width="1460" height="40" rx="4" fill="#F8FAFC"/>
+<rect x="40" y="697" width="41" height="18" rx="9" fill="#C2410C"/><text x="60.5" y="709.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-01</text>
+<rect x="85" y="697" width="41" height="18" rx="9" fill="#C2410C"/><text x="105.5" y="709.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-03</text>
+<text x="134" y="710" font-size="11" fill="#0F172A" font-weight="600">unintended engagement (System FMEA SG-008, §3.8.3)</text>
+<text x="40" y="725" font-size="10" fill="#64748B">FTTI 0.5 s (as SG-01)</text>
+<text x="470" y="710" font-size="10" fill="#64748B">FDTI per frame (TSR-105, TSR-301); latent panda authority while disengaged ≤ 0.3 s (TSR-630, T-32) · FRTI ≤ 0.…</text>
+<text x="470" y="724" font-size="9.5" fill="#B45309" font-weight="600">not all times: drawn as text (WP-S-04 §3.7)</text>
+<text x="1040" y="709" font-size="10.5" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR 105, 301, 630</text>
+<text x="1040" y="724" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">on E-03, E-01</text>
+<rect x="40" y="737" width="41" height="18" rx="9" fill="#C2410C"/><text x="60.5" y="749.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-08</text>
+<text x="89" y="750" font-size="11" fill="#0F172A" font-weight="600">driver not supervising (§3.8.4)</text>
+<text x="40" y="765" font-size="10" fill="#64748B">FTTI ≤ 6 s from loss of attention to the first alert (WP-C-03 v0.4, preliminary)</text>
+<text x="470" y="750" font-size="10" fill="#64748B">FDTI first vision alert at 5 s of distraction (policy timer, T-24) + DM frame and model latency (not measured) · FR…</text>
+<text x="470" y="764" font-size="9.5" fill="#B45309" font-weight="600">not all times: drawn as text (WP-S-04 §3.7)</text>
+<text x="1040" y="749" font-size="10.5" fill="#B45309" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">no TSR named</text>
+<text x="1040" y="764" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace"></text>
+<rect x="30" y="772" width="1460" height="40" rx="4" fill="#F8FAFC"/>
+<rect x="40" y="777" width="41" height="18" rx="9" fill="#C2410C"/><text x="60.5" y="789.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-08</text>
+<text x="89" y="790" font-size="11" fill="#0F172A" font-weight="600">no-response reaction (§3.8.4; DQ-365 A)</text>
+<text x="40" y="805" font-size="10" fill="#64748B">FTTI preliminary: reaction starts ≤ 18 s (vision) / ≤ 30 s (wheel-touch) from loss of at…</text>
+<text x="470" y="790" font-size="10" fill="#64748B">FDTI terminal alert at 13 s vision / 25 s wheel-touch (T-24); DM invalid → take-over request ≤ 2 s (TSR-609) · FR…</text>
+<text x="470" y="804" font-size="9.5" fill="#B45309" font-weight="600">not all times: drawn as text (WP-S-04 §3.7)</text>
+<text x="1040" y="789" font-size="10.5" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR 609, 633</text>
+<text x="1040" y="804" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">on E-01</text>
+<text x="40" y="834" font-size="12" fill="#0F172A" font-weight="600">17 budgets: 7 given as times and checked to add up (FDTI + FRTI within the FTTI, FHTI and margin consistent, check H2); 10 with a cell that is not a time.</text>
+<line x1="40" y1="852" x2="1480" y2="852" stroke="#E2E8F0"/>
+<rect x="40" y="874" width="26" height="14" rx="2" fill="#2563EB"/>
+<text x="74" y="885" font-size="11" fill="#334155">FDTI: detection</text>
+<rect x="179.5" y="874" width="26" height="14" rx="2" fill="#C2410C"/>
+<text x="213.5" y="885" font-size="11" fill="#334155">FRTI: reaction</text>
+<rect x="311.8" y="878" width="26" height="6" rx="2" fill="#99F6E4"/>
+<text x="345.8" y="885" font-size="11" fill="#334155">margin left</text>
+<line x1="427.46000000000004" y1="870" x2="427.46000000000004" y2="892" stroke="#0F172A" stroke-width="2"/>
+<text x="435.5" y="885" font-size="11" fill="#334155">FTTI</text>
+<text x="40" y="928" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+</svg>

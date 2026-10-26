@@ -30,109 +30,109 @@ package LionDriverSequences {
         part card : Lifeline { doc /* card */ :>> element = "host.card"; }
         part controlsd : Lifeline { doc /* controlsd */ :>> element = "host.controlsd"; }
         part selfdrived : Lifeline { doc /* selfdrived */ :>> element = "host.selfdrived"; }
-        message <'S-01'> s_01 from vehicle to safety_mcu {
+        message <'ST-01'> st_01 from vehicle to safety_mcu {
             doc /* Ignition on: 12 V and ignition reach the device (IF-08) */
             @SequenceStep { phase = "Power-up"; condition = ""; stateAfter = ""; status = "as inherited"; records = ""; code = ""; }
         }
-        message <'S-02'> s_02 from safety_mcu to safety_mcu {
+        message <'ST-02'> st_02 from safety_mcu to safety_mcu {
             doc /* main(): clock and peripherals, set_safety_mode(SILENT), CAN transceivers on, 8 Hz tick, SPI */
             @SequenceStep { phase = "Power-up"; condition = ""; stateAfter = "Safety MCU: SILENT"; status = "as inherited"; records = ("SM-SAFETY-MODE M1"); code = "main.c:251-328"; }
         }
-        first s_01 then s_02;
-        message <'S-03'> s_03 from safety_mcu to safety_mcu {
+        first st_01 then st_02;
+        message <'ST-03'> st_03 from safety_mcu to safety_mcu {
             doc /* Start-up tests before the first relay drive */
             @SequenceStep { phase = "Power-up"; condition = "TSR-515"; stateAfter = ""; status = "required, not implemented"; records = ""; code = ""; }
         }
-        first s_02 then s_03;
-        message <'S-04'> s_04 from pandad to safety_mcu {
+        first st_02 then st_03;
+        message <'ST-04'> st_04 from pandad to safety_mcu {
             doc /* pandad.py checks or flashes the firmware signature, then pandad (C++) starts */
             @SequenceStep { phase = "Mode configuration"; condition = ""; stateAfter = ""; status = "as inherited"; records = ""; code = "pandad.py:20-50"; }
         }
-        first s_03 then s_04;
-        message <'S-05'> s_05 from pandad to safety_mcu {
+        first st_03 then st_04;
+        message <'ST-05'> st_05 from pandad to safety_mcu {
             doc /* Set NOOUTPUT (0xdc) */
             @SequenceStep { phase = "Mode configuration"; condition = "the MCU is in SILENT"; stateAfter = "Safety MCU: NOOUTPUT"; status = "as inherited"; records = ("SM-SAFETY-MODE M2", "SM-SAFETY-MODE M4"); code = "pandad.cc:194-196"; }
         }
-        first s_04 then s_05;
-        message <'S-06'> s_06 from pandad to safety_mcu {
+        first st_04 then st_05;
+        message <'ST-06'> st_06 from pandad to safety_mcu {
             doc /* Set ELM327 for the firmware query */
             @SequenceStep { phase = "Mode configuration"; condition = "onroad"; stateAfter = "Safety MCU: ELM327"; status = "as inherited"; records = ("SM-SAFETY-MODE M2", "SM-SAFETY-MODE M4"); code = "panda_safety.cc:23-34"; }
         }
-        first s_05 then s_06;
-        message <'S-07'> s_07 from card to pandad {
+        first st_05 then st_06;
+        message <'ST-07'> st_07 from card to pandad {
             doc /* Fingerprint, then CarParams */
             @SequenceStep { phase = "Mode configuration"; condition = ""; stateAfter = ""; status = "as inherited"; records = ""; code = ""; }
         }
-        first s_06 then s_07;
-        message <'S-08'> s_08 from pandad to safety_mcu {
+        first st_06 then st_07;
+        message <'ST-08'> st_08 from pandad to safety_mcu {
             doc /* Set TOYOTA, param 73 (0xdc) */
             @SequenceStep { phase = "Mode configuration"; condition = ""; stateAfter = "Safety MCU: TOYOTA"; status = "as inherited"; records = ("SM-SAFETY-MODE M2", "SM-SAFETY-MODE M4"); code = "panda_safety.cc:56-69"; }
         }
-        first s_07 then s_08;
-        message <'S-09'> s_09 from safety_mcu to relay {
+        first st_07 then st_08;
+        message <'ST-09'> st_09 from safety_mcu to relay {
             doc /* set_safety_hooks(): authority false, limiter state reset; relay driven */
             @SequenceStep { phase = "Mode configuration"; condition = ""; stateAfter = ""; status = "as inherited"; records = ("SM-TOY-AUTH T7"); code = "main.c:70-76; safety.h:391-462"; }
         }
-        first s_08 then s_09;
-        message <'S-10'> s_10 from safety_mcu to safety_mcu {
+        first st_08 then st_09;
+        message <'ST-10'> st_10 from safety_mcu to safety_mcu {
             doc /* Accept only TOYOTA with param 73; afterwards only de-escalation */
             @SequenceStep { phase = "Mode configuration"; condition = "TSR-512"; stateAfter = ""; status = "required, in the reference build"; records = ("SM-SAFETY-MODE M4", "SM-SAFETY-MODE M5", "SM-SAFETY-MODE M6"); code = "board/reference_lock.h:22-27"; }
         }
-        first s_09 then s_10;
-        message <'S-11'> s_11 from selfdrived to selfdrived {
+        first st_09 then st_10;
+        message <'ST-11'> st_11 from selfdrived to selfdrived {
             doc /* Wait for all checks or 6 s; check the panda mode and param after 10 s */
             @SequenceStep { phase = "Mode configuration"; condition = ""; stateAfter = ""; status = "as inherited"; records = ""; code = "selfdrived.py:479-480, 338"; }
         }
-        first s_10 then s_11;
-        message <'S-12'> s_12 from driver to vehicle {
+        first st_10 then st_11;
+        message <'ST-12'> st_12 from driver to vehicle {
             doc /* Press SET */
             @SequenceStep { phase = "Engagement"; condition = ""; stateAfter = ""; status = "as inherited"; records = ""; code = ""; }
         }
-        first s_11 then s_12;
-        message <'S-13'> s_13 from vehicle to safety_mcu {
+        first st_11 then st_12;
+        message <'ST-13'> st_13 from vehicle to safety_mcu {
             doc /* 0x1D2 CRUISE_ACTIVE 0→1 (IF-02) */
             @SequenceStep { phase = "Engagement"; condition = ""; stateAfter = ""; status = "as inherited"; records = ""; code = ""; }
         }
-        first s_12 then s_13;
-        message <'S-14'> s_14 from safety_mcu to safety_mcu {
+        first st_12 then st_13;
+        message <'ST-14'> st_14 from safety_mcu to safety_mcu {
             doc /* pcm_cruise_check: rising edge, controls_allowed = true */
             @SequenceStep { phase = "Engagement"; condition = "rising edge; TSR-306: all RX checks valid"; stateAfter = "Safety MCU: ALLOWED"; status = "as inherited"; records = ("SM-TOY-AUTH T1"); code = "safety.h:518-527"; }
         }
-        first s_13 then s_14;
-        message <'S-15'> s_15 from card to selfdrived {
+        first st_13 then st_14;
+        message <'ST-15'> st_15 from card to selfdrived {
             doc /* carState.cruiseState.enabled; selfdrived ENABLE */
             @SequenceStep { phase = "Engagement"; condition = ""; stateAfter = "selfdrived: enabled"; status = "as inherited"; records = ("SM-SELFDRIVED D1", "SM-SELFDRIVED D3"); code = "state.py"; }
         }
-        first s_14 then s_15;
-        message <'S-16'> s_16 from selfdrived to pandad {
+        first st_14 then st_15;
+        message <'ST-16'> st_16 from selfdrived to pandad {
             doc /* selfdriveState */
             @SequenceStep { phase = "Engaged actuation"; condition = ""; stateAfter = ""; status = "as inherited"; records = ""; code = ""; }
         }
-        first s_15 then s_16;
-        message <'S-17'> s_17 from pandad to safety_mcu {
+        first st_15 then st_16;
+        message <'ST-17'> st_17 from pandad to safety_mcu {
             doc /* Heartbeat 0xf3 engaged = 1 at 10 Hz (IF-04) */
             @SequenceStep { phase = "Engaged actuation"; condition = ""; stateAfter = ""; status = "as inherited"; records = ""; code = "pandad.cc:385-394"; }
         }
-        first s_16 then s_17;
-        message <'S-18'> s_18 from controlsd to card {
+        first st_16 then st_17;
+        message <'ST-18'> st_18 from controlsd to card {
             doc /* carControl: latActive, longActive */
             @SequenceStep { phase = "Engaged actuation"; condition = ""; stateAfter = ""; status = "as inherited"; records = ""; code = ""; }
         }
-        first s_17 then s_18;
-        message <'S-19'> s_19 from card to pandad {
+        first st_17 then st_18;
+        message <'ST-19'> st_19 from card to pandad {
             doc /* sendcan */
             @SequenceStep { phase = "Engaged actuation"; condition = ""; stateAfter = ""; status = "as inherited"; records = ""; code = ""; }
         }
-        first s_18 then s_19;
-        message <'S-20'> s_20 from pandad to safety_mcu {
+        first st_18 then st_19;
+        message <'ST-20'> st_20 from pandad to safety_mcu {
             doc /* SPI frames (IF-04) */
             @SequenceStep { phase = "Engaged actuation"; condition = ""; stateAfter = ""; status = "as inherited"; records = ""; code = ""; }
         }
-        first s_19 then s_20;
-        message <'S-21'> s_21 from safety_mcu to vehicle {
+        first st_19 then st_20;
+        message <'ST-21'> st_21 from safety_mcu to vehicle {
             doc /* Each 0x2E4 / 0x343 after the safety_tx_hook limits, FDCAN TX to the EPS and PCM (IF-01) */
             @SequenceStep { phase = "Engaged actuation"; condition = ""; stateAfter = ""; status = "as inherited"; records = ""; code = "can_common.h:161-176"; }
         }
-        first s_20 then s_21;
+        first st_20 then st_21;
     }
 }

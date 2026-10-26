@@ -3396,7 +3396,7 @@
   sources: ["assurance/03-system/WP-S-02-technical-safety-requirements.md OI-7, TSR-410, TSR-411", "assurance/03-system/WP-S-05-hsi-specification.md §4.1, §12.3, OI-2"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Method recorded (WP-S-02 v0.59 OI-7, WP-S-05 v0.17 OI-2): residual-error target from the ASIL C budget, then the shortest CRC that meets it, with the TSR-411 counter. Left: the analysis, then the panda and host change with tests (panda fork, outside this repository) (jherrodthomas/LionDriver#490)"
+  note: "Method recorded (WP-S-02 v0.59 OI-7, WP-S-05 v0.18 OI-2): residual-error target from the ASIL C budget, then the shortest CRC that meets it, with the TSR-411 counter. Left: the analysis, then the panda and host change with tests (panda fork, outside this repository) (jherrodthomas/LionDriver#490)"
 
 - id: DQ-144
   question: "Which commands should the released panda firmware accept from the main computer, mode by mode?"
@@ -3422,7 +3422,7 @@
   sources: ["assurance/03-system/WP-S-05-hsi-specification.md §4.2, OI-3"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Method recorded (WP-S-05 v0.17 OI-3): the per-mode request list is derived from TSR-512/513 and CSR-011…016. Left: the review of every request against each mode, and the SWSRs in WP-W-02 (jherrodthomas/LionDriver#490)"
+  note: "Method recorded (WP-S-05 v0.18 OI-3): the per-mode request list is derived from TSR-512/513 and CSR-011…016. Left: the review of every request against each mode, and the SWSRs in WP-W-02 (jherrodthomas/LionDriver#490)"
 
 - id: DQ-145
   question: "The panda's SPI buffer is 4096 bytes and the main computer's is 2048. Should they be made the same size, or the difference written down as intended?"

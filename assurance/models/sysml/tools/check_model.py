@@ -34,6 +34,10 @@ so a change to one without the other fails CI (assurance/models/sysml/README.md 
       an element; every record a step names is a record transition, and the state after it a state of that machine;
       every requirement a step's condition names is in the model
   B3  every lifeline of a sequence takes part in a step
+  H1  Timing.sysml and Signals.sysml match WP-S-04 §3.7 and WP-S-05 §11 they are generated from
+  H2  every timing budget names safety goals and TSRs of the model and adds up: FDTI + FRTI within the FTTI, FHTI equal
+      to FDTI + FRTI and the margin within FTTI - FHTI wherever the cells are times; every safety goal has a budget
+  H3  every HSI signal has an owner element, a TSR and test cases, and every one of them is in the model
   R4  the requirements-coverage report (generated/requirements-coverage.md) is up to date: satisfied,
       verified and derived, per kind, with the requirements that are not (informational)
 
@@ -702,6 +706,59 @@ def check_behaviour(m: sysml_lite.Model, rep: Report) -> None:
           rep.err("B2", f"{q.short} {msg.short}: condition names {req}, which is not a requirement of the model")
 
 
+# ---------------------------------------------------------------- timing and HSI (H1-H3)
+
+def check_timing_hsi(m: sysml_lite.Model, rep: Report) -> None:
+  import gen_timing_hsi
+  try:
+    texts = gen_timing_hsi.build()
+  except gen_timing_hsi.TimingError as e:
+    rep.err("H1", str(e))
+    texts = {}
+  for key, text in texts.items():
+    f = gen_timing_hsi.OUT[key]
+    if not f.exists() or f.read_text(encoding="utf-8") != text:
+      rep.err("H1", f"{f.relative_to(REPO)} does not match its work product; run tools/gen_timing_hsi.py")
+  if not m.budgets or not m.signals:
+    rep.err("H1", "the model has no timing budgets or no HSI signals")
+  eps = 1e-9
+  covered = set()
+  for label, b in m.budgets.items():
+    v = b.values
+    sec = {a: v.get(f"{a}Seconds") for a in ("ftti", "fdti", "frti", "margin", "fhti")}
+    for ref in [*sysml_lite._as_list(v.get("goals")), *sysml_lite._as_list(v.get("tsr"))]:
+      if ref and ref not in m.requirements:
+        rep.err("H2", f"budget {label!r} names {ref}, which is not a requirement of the model")
+    covered.update(sysml_lite._as_list(v.get("goals")))
+    d, r, f, h, mg = (sec[a] for a in ("fdti", "frti", "ftti", "fhti", "margin"))
+    if None not in (d, r, f) and d + r > f + eps:
+      rep.err("H2", f"budget {label!r}: FDTI {d:g} s + FRTI {r:g} s exceeds the FTTI {f:g} s")
+    if None not in (d, r, h) and abs(h - (d + r)) > eps:
+      rep.err("H2", f"budget {label!r}: FHTI {h:g} s is not FDTI + FRTI = {d + r:g} s")
+    if None not in (f, h, mg) and mg > f - h + eps:
+      rep.err("H2", f"budget {label!r}: margin {mg:g} s is more than FTTI - FHTI = {f - h:g} s")
+  for sg in (s for s in m.requirements if s.startswith("SG-")):
+    if sg not in covered:
+      rep.err("H2", f"{sg} has no timing budget in WP-S-04 §3.7")
+  for sid, sgl in m.signals.items():
+    v = sgl.values
+    owners = [x for x in sysml_lite._as_list(v.get("owners")) if x]
+    if not owners:
+      rep.err("H3", f"{sid} names no owner element (E-nn or host `process`)")
+    for o in owners:
+      if find_any(m, o) is None:
+        rep.err("H3", f"{sid} is owned by {o!r}, which is not an element of the model")
+    tsr = [x for x in sysml_lite._as_list(v.get("tsr")) if x]
+    if not tsr:
+      rep.err("H3", f"{sid} serves no TSR")
+    for x in tsr:
+      if x not in m.requirements:
+        rep.err("H3", f"{sid} names {x}, which is not a requirement of the model")
+    for c in (x for x in sysml_lite._as_list(v.get("tests")) if x):
+      if c not in m.verifications:
+        rep.err("H3", f"{sid} is tested by {c}, which is not a verification case of the model")
+
+
 def outside_reason(text: str) -> str | None:
   toks = [t for t in re.split(r"[^A-Z]+", text) if t]
   hits = [OUTSIDE[t] for t in toks if t in OUTSIDE]
@@ -772,7 +829,7 @@ def main(argv: list[str]) -> int:
     print(f"FAIL model: {e}")
     return 1
   for check in (check_elements, check_firmware, check_host, check_interfaces, check_mechanisms, check_functions, check_security, check_integration, check_modes, check_flows,
-                check_integrity_rules, check_requirements, check_needs, check_behaviour):
+                check_integrity_rules, check_requirements, check_needs, check_behaviour, check_timing_hsi):
     try:
       check(m, rep)
     except sysml_lite.ModelError as e:
@@ -810,7 +867,8 @@ def main(argv: list[str]) -> int:
         f"{len(m.use_cases)} use cases")
   print(f"behaviour: {sum(1 for s in m.state_machines.values() if 'StateRecord' in s.meta)} state-machine records, " +
         f"{sum(len(q.messages) for q in m.sequences.values())} sequence steps")
-  print("OK: M1-M12, N1-N3, B1-B3 and R1-R4 passed")
+  print(f"timing and HSI: {len(m.budgets)} timing budgets, {len(m.signals)} HSI signals")
+  print("OK: M1-M12, N1-N3, B1-B3, H1-H3 and R1-R4 passed")
   return 0
 
 
