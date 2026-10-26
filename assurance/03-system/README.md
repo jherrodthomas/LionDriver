@@ -92,6 +92,7 @@ Generated from the SysML model (view V-09): requirements by verification method,
 | [`cybersecurity/`](cybersecurity/README.md) | Cybersecurity requirements and architecture |
 | [`hsi/`](hsi/README.md) | Hardware-software interface |
 | [`integration/`](integration/README.md) | System integration and test |
+| [`production/`](production/README.md) | Production and operation requirements |
 | [`requirements/`](requirements/README.md) | Requirements at a glance |
 | [`reviews/`](reviews/) | — |
 | [`system-requirements/`](system-requirements/README.md) | System requirements |

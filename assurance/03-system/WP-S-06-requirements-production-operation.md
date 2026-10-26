@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-06 Requirements for production, operation, service and decommissioning |
 | Standard reference | ISO 26262-4:2018 §6 (specification of requirements for production, operation, service and decommissioning); ISO 26262-7:2018 §5–§6 (by reference); ISO 21448:2022 §13 (operation phase); ISO/SAE 21434:2021 §10, §12, §14 (production, operations, end of support, by reference); ASPICE 4.0 SYS.2 |
-| Version | 0.3 (TSR-806 status: debug, maneuver and joystick modes absent by construction in the reference build, DQ-131 A; requirement unchanged; 2026-10-25). 0.2 (OI-4 closed: the item reads the EPS and ABS/VSC fault codes at start-up and blocks engagement on an active one, TSR-629 (DQ-132 A); TSR-811 status and §4 updated, the lamp check stays; 2026-10-25). 0.1 |
+| Version | 0.4 (§3: Figure 3-1, the requirements by phase of the item's life with their status and the design measures of §4, generated from §3 and §4; §2, TSR-804 and §4 brought up to TSR-512 in the reference build (WP-S-02); 2026-10-26). 0.3 (TSR-806 status: debug, maneuver and joystick modes absent by construction in the reference build, DQ-131 A; requirement unchanged; 2026-10-25). 0.2 (OI-4 closed: the item reads the EPS and ABS/VSC fault codes at start-up and blocks engagement on an active one, TSR-629 (DQ-132 A); TSR-811 status and §4 updated, the lamp check stays; 2026-10-25). 0.1 |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (SG-01, until re-rated; B‡ per [WP-S-02 §2.1](WP-S-02-technical-safety-requirements.md)); SOTIF; CS overlaps |
 | Author | Assurance team (initial draft) |
@@ -34,7 +34,7 @@ The technical safety concept depends on facts that only installation and operati
 
 | Concept dependency | Established/preserved by | Concept element |
 |---|---|---|
-| The envelope runs the release firmware with the reference mode and parameter | provisioning checks | TSR-511…514; until TSR-512 is implemented this is the **only** control of the safety-mode configuration (GAP-09) |
+| The envelope runs the release firmware with the reference mode and parameter | provisioning checks | TSR-511…514; in the reference build the firmware fixes the mode and parameter (TSR-512, panda `3859fa8`) and these checks confirm it; in other builds they are the **only** control (GAP-09) |
 | The vehicle is the one whose EPS/PCM behaviour was characterised | ECU firmware identity | AOU-01R…05R; TSR-102 table, TSR-111, 208, 310, 708 |
 | The harness is intact and the relay works in both directions | installation and periodic test | TSR-506, 701…706 (no readback today, GAP-12, GAP-43) |
 | The camera is mounted and calibrated within the range the model was validated in | installation and service | AOU-08; SOTIF |
@@ -45,6 +45,10 @@ The technical safety concept depends on facts that only installation and operati
 
 Attributes as in [WP-S-02 §2](WP-S-02-technical-safety-requirements.md). "Special characteristic" (SC) refers to SPC-nn in WP-O-01 §4.
 
+![Figure 3-1: the 18 requirements of §3 by phase of the installed item's life, from installation and provisioning through operation, service and software updates to decommissioning, each with its ASIL, what it protects, the procedure steps that carry it and its status (7 procedure defined, 8 waiting on an input, 1 blocked by a design gap, 2 backed by the design), and the design measures of §4 that would turn a manual check into a system measure](figures/fig-s06-3-1-lifecycle.svg)
+
+*Figure 3-1.* The requirements of §3.1–§3.5 by phase, and the design measures of §4. A requirement is "waiting on an input" when its procedure is defined but needs something not yet there (a message list, a tolerance band, a template, a tool, a work product), "blocked" when it cannot be met in substance until a design gap closes, and "backed by the design" when the design now carries part of it. The status cells are free text, so each requirement's status is listed in [`figures/fig_s06_lifecycle.py`](figures/fig_s06_lifecycle.py) with a phrase quoted from its cell; CI fails when the phrase leaves the cell, so a changed status is re-sorted on purpose.
+
 ### 3.1 Installation and provisioning ("production")
 
 | ID | Requirement | ASIL | Parent | Implemented by | Verification / record | Status at baseline |
@@ -52,7 +56,7 @@ Attributes as in [WP-S-02 §2](WP-S-02-technical-safety-requirements.md). "Speci
 | TSR-801 | Only a released LionDriver baseline shall be installed: the installed openpilot commit, AGNOS version and model artefact hashes shall equal the release record, and the build shall not be dirty. | B‡ | SG-01…07; T-03 | INS-15, INS-16, INS-18; SPC-04 | R-SW record, second-person check | Procedure defined; release channel not yet defined (WP-O-01 OI-6) |
 | TSR-802 | The panda firmware shall be the release-signed, non-debug build recorded in the release record; its version string and signature shall be compared before first engagement. | B‡ | FSR-01.10; TSR-511, 514 | INS-17; SPC-05 | R-SW | Blocked in substance by GAP-24/25 (no LionDriver key, debug build default) |
 | TSR-803 | Every vehicle ECU firmware version (engine, EPS, ABS, radar, camera) shall equal the reference record before engagement; a mismatch shall put the item in dashcam mode until an impact analysis extends the scope. | B‡ | AOU-01…05; WP-M-12 | INS-21; SPC-07; WP-O-01 §6 | R-CFG raw FW query output | Procedure defined |
-| TSR-804 | The installed configuration shall show fingerprint `TOYOTA_COROLLA_TSS2` (exact, not fuzzy), safety model `toyota`, safety parameter 73, alternative experience 0, openpilot longitudinal on, both in `carParams` and in `pandaStates`. | B‡ | FSR-01.10; TSR-512 | INS-22, INS-23, INS-24; SPC-06 | R-CFG | Procedure defined. Needed because the panda accepts any mode from the SoC (GAP-09) |
+| TSR-804 | The installed configuration shall show fingerprint `TOYOTA_COROLLA_TSS2` (exact, not fuzzy), safety model `toyota`, safety parameter 73, alternative experience 0, openpilot longitudinal on, both in `carParams` and in `pandaStates`. | B‡ | FSR-01.10; TSR-512 | INS-22, INS-23, INS-24; SPC-06 | R-CFG | Procedure defined. In the reference build the firmware fixes the mode and parameter (TSR-512, panda `3859fa8`, not verified on hardware), so the check confirms it; in other builds the panda accepts any mode from the SoC and the check is the only control (GAP-09) |
 | TSR-805 | Harness seating and the relay intercept/PCS-forwarding function shall be verified at installation: no relay malfunction or CAN errors, intercepted messages absent on the car side, PCS-relevant camera messages present on the car side with LD-SDA disengaged. | B | FSR-07.01, 07.03; TSR-704, 706 | INS-11, INS-13, INS-14, INS-27; SPC-01, SPC-02 | R-INS, R-FUN | Procedure defined; message list pending (WP-O-01 OI-7) |
 | TSR-806 | The parameter set shall equal the release record: Experimental Mode per D-08, `DisengageOnAccelerator` per WP-C-08, debug/maneuver/joystick modes absent, DM demo mode off, SSH off. | QM (B-sup) | FSR-02.08; TSR-610, 613 | INS-19; SPC-09 | R-SW parameter dump | Procedure defined. Debug, maneuver and joystick modes absent by construction in the reference build (DQ-131 A, [change record](../07-supporting/impact/change-2026-10-25-reference-debug-procs.md)): the manager does not register `joystick`, `maneuversd` or `lateral_maneuversd` and the reference release does not ship them; the parameter dump still checks the three params, and the DM demo mode and SSH stay with the procedure |
 | TSR-807 | The device shall be mounted within the position tolerance and calibrated within the angle tolerance band derived from the model validation range. | QM (SOTIF) | AOU-08 | INS-09, INS-10, INS-25, INS-26; SPC-03 | R-CAL | Tolerance band TBD (WP-O-01 OI-2) |
@@ -95,7 +99,7 @@ These are design-side requirements that make the TSR-8xx checks possible or repl
 | Need | Design TSR | Status |
 |---|---|---|
 | Firmware build type and identity readable for INS-17 | TSR-514 (version shows build type) | Not met (GAP-25) |
-| Safety mode/param fixed in firmware so INS-22/23 become a confirmation, not the only control | TSR-512 | Not met (GAP-09) |
+| Safety mode/param fixed in firmware so INS-22/23 become a confirmation, not the only control | TSR-512 | Implemented in the reference build (panda `3859fa8`), not verified on hardware; other builds still accept any mode (GAP-09) |
 | Relay checked at every power-up so PM-03 is not the latent-fault interval | TSR-506, TSR-515 | Not met (GAP-12, GAP-43) |
 | Configuration extraction from the installation log | WP-O-01 OI-5 script | Not started |
 | Logs identify software, firmware and model versions | SYS-141; AIR-23 | Partial |
