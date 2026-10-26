@@ -5987,3 +5987,34 @@
   sources: ["assurance/sim/physics-plan.md §4 study 8", "assurance/sim/supply/README.md", "WP-P-07 TL-58"]
   status: assumed
   answer: {choice: A, via: assumed, at: 2026-10-25, note: "Decided by Claude when phase C started, as the physics plan said; the lead can change it"}
+
+- id: DQ-423
+  question: "Should the details of unfixed security weaknesses also be taken out of the public safety requirements and records, or only out of the cybersecurity documents?"
+  context: >-
+    Your DQ-421 answer (A) is applied to the four cybersecurity documents, their figures and the pages built from them:
+    the threat model stays public and the details are in the private LionDriver-security repository. About 140 other
+    public files still carry such details, mostly the software safety requirements, the FMEA and their verification,
+    which name the exact commands and code paths so they can be tested and reviewed, and historical records such as the
+    gap assessment, the ISO 26262 audit and earlier decisions. **Removing the details from the safety requirements
+    weakens the open safety case; leaving them keeps a target list public.** The list is in LionDriver-security
+    (restricted-docs/INVENTORY.md).
+  reversibility: revisit
+  blocks: "A second DQ-421 sweep; WP-O-05 §4.5 scope"
+  gate: G1
+  decider: lead
+  asked: 2026-10-26
+  batch: 17
+  options:
+    - key: A
+      recommended: true
+      title: "Keep the safety requirements as they are; restrict only new cybersecurity material and future gap notes"
+      detail: "The safety case stays complete and reviewable. The rule of WP-O-05 §4.5 applies from now on to cybersecurity documents and to new gap notes anywhere. Cost: the requirement-level detail already in the safety documents stays public."
+    - key: B
+      title: "Also restate the software safety requirements and analyses at a higher level, with the detail private"
+      detail: "Removes most of the remaining detail. Cost: about 140 files, a private copy of each requirement to test against, and reviewers and the assessor need access to the private repository."
+    - key: C
+      title: "Also edit the historical records"
+      detail: "Option B plus the gap assessment, the audit and old decisions. Cost: rewrites records that should stay as they were; the git history keeps them anyway."
+  sources: ["assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md §4.5", "DQ-421", "LionDriver-security (private): restricted-docs/INVENTORY.md"]
+  status: open
+
