@@ -96,5 +96,6 @@ Generated from the SysML model (view V-09): requirements by verification method,
 | [`reviews/`](reviews/) | — |
 | [`timing/`](timing/README.md) | Timing: FTTI, fault detection and reaction budget |
 | [`tsc/`](tsc/README.md) | Technical safety concept |
+| [`verification/`](verification/README.md) | System verification |
 
 GitHub lists this folder's files above this page; each work product's document embeds its own figures.
