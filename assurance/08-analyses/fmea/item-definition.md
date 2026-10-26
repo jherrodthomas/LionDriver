@@ -125,11 +125,11 @@ The System FMEA structure (SFM-SE-001…034) and the FSC elements (EL-01…EL-12
 |---|---|---|---|---|---|---|
 | IF-01 | Vehicle CAN at the ADAS camera or gateway | Vehicle ECUs (EPS, powertrain, brakes, ADAS, cluster) | in/out | Vehicle state in; steering, acceleration, cruise and HUD requests out | Panda safety model filters TX; panda RX checks (checksum, counter, timing); SoC canValid/canError | Bus layout, messages, harness location, message authentication |
 | IF-02 | Harness relay | Stock ADAS camera | out | Switches the stock camera's control messages between vehicle and item | Panda relay-malfunction detection | Present only on camera-intercept harnesses |
-| IF-03 | 12 V supply | Vehicle electrical system | in | Power | Device power management; loss of power is fail-silent (DFA DFI-01) | Connector |
+| IF-03 | 12 V supply | Vehicle electrical system | in | Power | Device power management; loss of power is fail-silent (DFA DFI-01a) | Connector |
 | IF-04 | Driver HMI (device) | Driver | in/out | Engagement state, alerts; settings | Two-channel alerts (visual, audible) | — |
 | IF-05 | Driver controls | Driver via vehicle (pedals, wheel, cruise buttons) | in | Brake, accelerator, steering torque, cruise/cancel buttons | Read over IF-01 by both SoC and panda | Button mapping |
 | IF-06 | Device sensors | Road environment, driver | in | Road and driver camera frames, IMU, GNSS | Liveness and frequency checks (cameraMalfunction, sensorDataInvalid) | Mounting, calibration |
-| IF-07 | Cellular / Wi-Fi | comma.ai and LionDriver servers | in/out | OTA updates, logs | Update verification per release process (PFMEA; DFA DFI-18) | — |
+| IF-07 | Cellular / Wi-Fi | comma.ai and LionDriver servers | in/out | OTA updates, logs | Update verification per release process (PFMEA; DFA DFI-36) | — |
 
 ## A.5 Operating modes
 
@@ -201,13 +201,13 @@ Each must be established for a vehicle before its variant family or assured conf
 | P1 | opendbc platform and safety model / parameter | Defines the panda's limits and checks | FSC panda FSRs, LD-DES-001 vehicle lock record |
 | P2 | Steering interface (torque, angle, curvature) and limits | Actuator authority; HARA controllability for HZ-001/002 | SG-001, SG-002 |
 | P3 | Longitudinal mode (openpilot or stock) and acceleration limits | Whether F2 commands acceleration at all | SG-004, SG-005, SG-006 |
-| P4 | Harness type and interception point | Relay presence; effect on stock functions | SG-009, DFA DFI-17 |
+| P4 | Harness type and interception point | Relay presence; effect on stock functions | SG-009, DFA DFI-20 |
 | P5 | Stock safety functions retained (AEB, FCW, lane assist) | HZ-011 | SG-009, OI-003 |
 | P6 | Minimum engage speeds | Operating conditions | HARA situations |
 | P7 | Vehicle mass, wheelbase, steering ratio | Lateral and longitudinal dynamics; FTTI | OI-004 |
 | P8 | EPS and powertrain behavior on item requests and message loss | External measures XM-02, XM-05; DFA DM-03 | OI-001, OI-002 |
 | P9 | Message authentication (SecOC) | VA-02 | Platform eligibility |
-| P10 | Diagnostic actions by the port (e.g. disabling a stock ECU) | DFA DFI-08 | SG-009 |
+| P10 | Diagnostic actions by the port (e.g. disabling a stock ECU) | DFA DFI-13c | SG-009 |
 | P11 | Market and legal context | §A.8 | HARA exposure |
 
 ---
@@ -255,7 +255,7 @@ From the BL-001 catalog; all are on opendbc platform `TOYOTA_COROLLA_TSS2`.
 | P10 | To be confirmed for TSS2 Corolla | — |
 | P11 | US (three members), South America (one member) | `docs/CARS.md` |
 
-The identical panda and SoC steering limits under P2 are concrete evidence for DFA DFI-14 (one shared specification).
+The identical panda and SoC steering limits under P2 are concrete evidence for DFA DFI-08 (one shared specification).
 
 ## B.5 Differences within the family relevant to safety
 

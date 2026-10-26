@@ -103,7 +103,7 @@
 <text x="28" y="472" font-size="10" fill="#6250d6" font-weight="700" text-anchor="start">cascading</text>
 <circle cx="332.0" cy="461.0" r="7" fill="#0F1B33"/>
 <circle cx="460.0" cy="461.0" r="7" fill="#0F1B33"/>
-<text x="1016" y="465.0" font-size="10.5" fill="#0F1B33" font-weight="400" text-anchor="start">DFI-13, DFI-24</text>
+<text x="1016" y="465.0" font-size="10.5" fill="#0F1B33" font-weight="400" text-anchor="start">DFI-13, DFI-24, DFI-34, DFI-35</text>
 <rect x="16" y="485" width="5" height="20" rx="2" fill="#2a78d6"/>
 <text x="28" y="493" font-size="11.5" fill="#0F1B33" font-weight="600" text-anchor="start">R-12 CarParams, safety mode and parameter</text>
 <text x="28" y="506" font-size="10" fill="#2a78d6" font-weight="700" text-anchor="start">configuration</text>
@@ -129,7 +129,7 @@
 <text x="28" y="608" font-size="10" fill="#7f8aa0" font-weight="700" text-anchor="start">systematic</text>
 <circle cx="332.0" cy="597.0" r="7" fill="#0F1B33"/>
 <circle cx="460.0" cy="597.0" r="7" fill="#0F1B33"/>
-<text x="1016" y="601.0" font-size="10.5" fill="#0F1B33" font-weight="400" text-anchor="start">DFI-16, DFI-17, DFI-18, DFI-19</text>
+<text x="1016" y="601.0" font-size="10.5" fill="#0F1B33" font-weight="400" text-anchor="start">DFI-16, DFI-17, DFI-18, DFI-19, DFI-36</text>
 <rect x="16" y="621" width="5" height="20" rx="2" fill="#b45309"/>
 <text x="28" y="629" font-size="11.5" fill="#0F1B33" font-weight="600" text-anchor="start">R-16 Installation and vehicle service</text>
 <text x="28" y="642" font-size="10" fill="#b45309" font-weight="700" text-anchor="start">installation</text>

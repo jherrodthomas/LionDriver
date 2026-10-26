@@ -2,8 +2,8 @@
 #
 # One entry per resource that more than one element depends on, by the coupling categories of WP-A-03 §3, with the
 # elements that depend on it (`elements`), those whose dependence is not known yet (`unknown`), and the dependent
-# failure initiators of WP-A-03 §4 that already analyse it (`dfis`). DFI numbers are those of WP-A-03; the DFIs of
-# fmea/analyses/dfa.yaml are a separate list (decomposition level) and are cited there as "dfa.yaml DFI-nn".
+# failure initiators of WP-A-03 §4 that already analyse it (`dfis`). DFI numbers are those of WP-A-03, which
+# fmea/analyses/dfa.yaml (decomposition level) also uses since its rev 0.16.
 #
 # dfa_gates.py reads this map with the AND gates of WP-A-04 (and-gates.yaml) and writes dfa-gates.md.
 # Elements: WP-C-01 §3.1 (E-01…E-05) and the external elements of WP-A-03 (EXT-*, DRIVER, TRAFFIC).
@@ -82,7 +82,7 @@ resources:
     name: SoC to MCU link and commands (IF-04, mode, reset, flash)
     category: cascading
     elements: [E-01, E-03]
-    dfis: [DFI-13, DFI-24]
+    dfis: [DFI-13, DFI-24, DFI-34, DFI-35]
   - id: R-12
     name: CarParams, safety mode and parameter
     category: configuration
@@ -102,7 +102,7 @@ resources:
     name: Source, authors, toolchain and test oracle
     category: systematic
     elements: [E-01, E-03]
-    dfis: [DFI-16, DFI-17, DFI-18, DFI-19]
+    dfis: [DFI-16, DFI-17, DFI-18, DFI-19, DFI-36]
   - id: R-16
     name: Installation and vehicle service
     category: installation

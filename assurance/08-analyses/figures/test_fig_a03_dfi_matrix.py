@@ -16,9 +16,9 @@ class TestRealDocument(unittest.TestCase):
     cls.dfis, cls.claims, cls.sections = fm.parse(fm.SOURCE.read_text(encoding="utf-8"))
 
   def test_all_initiators_and_claims(self):
-    self.assertEqual(sorted(d.ident for d in self.dfis), [f"DFI-{i:02d}" for i in range(1, 34)])
+    self.assertEqual(sorted(d.ident for d in self.dfis), [f"DFI-{i:02d}" for i in range(1, 37)])
     self.assertEqual([c.ident for c in self.claims], [f"IC-{i:02d}" for i in range(1, 8)])
-    self.assertEqual(sorted(self.sections), [f"4.{i}" for i in range(1, 9)])
+    self.assertEqual(sorted(self.sections), [f"4.{i}" for i in range(1, 10)])
 
   def test_ratings_are_known(self):
     for d in self.dfis:

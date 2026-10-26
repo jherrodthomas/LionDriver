@@ -16,6 +16,9 @@
 # partly in the pinned code. Decomposition statuses unchanged.
 # Rev 0.13: panda pinned at 0a7da85 (jherrodthomas/panda#17, LionDriver e5109376): the relay-malfunction part of DM-25 is coded;
 # DM-25 required -> existing_unverified; DFI-07 stays open pending the bench checks.
+# Rev 0.16 renumbers the DFIs to the WP-A-03 §4 numbers (a letter marks one part of a §4 initiator; DFI-34..36
+# are new in WP-A-03). The header comments and the revision history above rev 0.16 keep the old numbers; the
+# old-to-new table is in WP-A-03 §4.
 # Rev 0.15 records lead decision DQ-055 A on DFI-14 and DM-10 (safety limits derived apart from the controller tuning,
 # controller set lower). No assessment changed.
 # Rev 0.14: DFI-07 also cites SWF-090 (sw-fmea.yaml rev 1.4), the SW FMEA row for the relay-malfunction part of DM-25.
@@ -30,7 +33,7 @@ analysis:
   type: dfa
   doc_id: LD-DFA-001
   title: "Dependent Failure Analysis — panda/SoC decompositions (LD-FSC-001)"
-  revision: "0.15"
+  revision: "0.16"
   status: draft
   baseline: BL-004
   fsc_revision: "0.5"
@@ -68,6 +71,7 @@ analysis:
     - {revision: "0.13", date: 2026-10-17, author: Claude (AI-assisted draft), change: "panda pin a55bdfc -> 0a7da85 (jherrodthomas/panda#17, liondriver-dev e5109376) checked in the code: the reference lock latches a relay malfunction for the ignition cycle and refuses TOYOTA until the ignition goes off, fed from the 8 Hz tick and from set_safety_mode() before set_safety_hooks() clears the flag. All parts of DM-25 now coded and unit-tested: required -> existing_unverified. DFI-07 stays open: HIL test_11_reference_lock, DM-22 and the latch bench test (impact record change-2026-10-17-relay-malfunction-latch OI-1) not run. Decomposition statuses unchanged"}
     - {revision: "0.14", date: 2026-10-17, author: Claude (AI-assisted draft), change: "DFI-07 cites SWF-090 of sw-fmea.yaml rev 1.4 (#196): the relay-malfunction reaction cleared by a mode change, fixed by panda#17, O3 D4 AP L. Row checked against the coupling cited. No content change"}
     - {revision: "0.15", date: 2026-10-17, author: Claude (AI-assisted draft), change: "Lead decision DQ-055 A (2026-10-14) recorded on DFI-14 and DM-10: the safety limits are derived independently of the controller tuning, and the controller is set lower. It confirms the route DQ-007 C set for the lateral limits and extends it to every envelope limit. DFI-14 stays insufficient until DM-10 exists. No assessment or decomposition status changed"}
+    - {revision: "0.16", date: 2026-10-26, author: Claude (AI-assisted draft), change: "DFIs renumbered to the WP-A-03 §4 numbers, so one number names one initiator across the DFA: 01->01a, 02->01b, 03->13a, 04->02, 05->10, 06->34, 07->13b, 08->13c, 09->13d, 10->35, 11->04, 12->07, 13->05, 14->08, 15->16, 16->03, 17->20, 18->36, 19->15, 20->27a, 21->27b. DFI-34, -35 and -36 are new rows in WP-A-03 §4.9. References inside the DFIs, decompositions, measures and open items follow; the history above keeps the old numbers. No assessment, measure or decomposition status changed"}
 
 categories:
   - {id: CAT-01, name: Shared power supply, applicable: true, rationale: "Panda and SoC are on the same comma 3X board, powered from the same 12 V input. On the Toyota harness that input is the harness-box supply VIN (ignition through D1, or comma power), which also powers both intercept switches; the ignition sense hangs on the same ignition line (RR-2026-010 HB-03, HB-06)."}
@@ -88,15 +92,15 @@ decompositions:
   - fsr: FSR-001
     channels: [{fsr: FSR-002, elements: [EL-07]}, {fsr: FSR-003, elements: [EL-03]}]
     status: not_accepted
-    rationale: SoC can reconfigure (DFI-07) and reflash (DFI-09) the panda; envelope specification shared (DFI-14); one update path (DFI-18).
+    rationale: SoC can reconfigure (DFI-13b) and reflash (DFI-13d) the panda; envelope specification shared (DFI-08); one update path (DFI-36).
   - fsr: FSR-004
     channels: [{fsr: FSR-005, elements: [EL-07]}, {fsr: FSR-006, elements: [EL-03]}]
     status: not_accepted
-    rationale: DFI-07, DFI-09 and DFI-18.
+    rationale: DFI-13b, DFI-13d and DFI-36.
   - fsr: FSR-009
     channels: [{fsr: FSR-010, elements: [EL-07]}, {fsr: FSR-011, elements: [EL-03, EL-04, EL-06]}]
     status: not_accepted
-    rationale: The configuration the panda enforces is chosen by the SoC (DFI-07); DFI-09 and DFI-18.
+    rationale: The configuration the panda enforces is chosen by the SoC (DFI-13b); DFI-13d and DFI-36.
   - fsr: FSR-012
     channels: [{fsr: FSR-013, elements: [EL-03, EL-04]}, {fsr: FSR-014, elements: [EL-07]}]
     status: not_assessable
@@ -104,35 +108,35 @@ decompositions:
   - fsr: FSR-015
     channels: [{fsr: FSR-016, elements: [EL-03, EL-04, EL-05]}, {fsr: FSR-017, elements: [EL-07, XM-04]}]
     status: not_accepted
-    rationale: The cluster's lane-assist indication is driven by SoC-generated messages (DFI-19); DFI-07, DFI-09, DFI-18.
+    rationale: The cluster's lane-assist indication is driven by SoC-generated messages (DFI-15); DFI-13b, DFI-13d, DFI-36.
   - fsr: FSR-018
     channels: [{fsr: FSR-019, elements: [EL-07]}, {fsr: FSR-020, elements: [EL-03, EL-04]}]
     status: not_accepted
-    rationale: DFI-07, DFI-09, DFI-14 and DFI-18.
+    rationale: DFI-13b, DFI-13d, DFI-08 and DFI-36.
   - fsr: FSR-021
     channels: [{fsr: FSR-022, elements: [EL-07]}, {fsr: FSR-023, elements: [EL-03]}]
     status: not_accepted
-    rationale: DFI-07, DFI-09, DFI-14 and DFI-18.
+    rationale: DFI-13b, DFI-13d, DFI-08 and DFI-36.
   - fsr: FSR-025
     channels: [{fsr: FSR-026, elements: [EL-03, EL-04, EL-05]}, {fsr: FSR-027, elements: [EL-07, XM-04]}]
     status: not_accepted
-    rationale: As FSR-015 (DFI-19).
+    rationale: As FSR-015 (DFI-15).
   - fsr: FSR-028
     channels: [{fsr: FSR-029, elements: [EL-07]}, {fsr: FSR-030, elements: [EL-03, EL-04]}]
     status: not_accepted
-    rationale: Both channels read the same brake signal (DFI-05); DFI-07, DFI-09, DFI-18.
+    rationale: Both channels read the same brake signal (DFI-10); DFI-13b, DFI-13d, DFI-36.
   - fsr: FSR-031
     channels: [{fsr: FSR-032, elements: [EL-07]}, {fsr: FSR-033, elements: [EL-03, EL-04]}]
     status: not_accepted
-    rationale: DFI-05 (driver torque signal), DFI-07, DFI-09, DFI-14, DFI-18.
+    rationale: DFI-10 (driver torque signal), DFI-13b, DFI-13d, DFI-08, DFI-36.
   - fsr: FSR-034
     channels: [{fsr: FSR-035, elements: [EL-07]}, {fsr: FSR-036, elements: [EL-04]}]
     status: not_accepted
-    rationale: Both channels follow the same cruise-state signal (DFI-05); DFI-07, DFI-09, DFI-18.
+    rationale: Both channels follow the same cruise-state signal (DFI-10); DFI-13b, DFI-13d, DFI-36.
 
 dfis:
   # --- CAT-01 power
-  - id: DFI-01
+  - id: DFI-01a
     category: CAT-01
     kind: common_cause
     description: Loss of the device supply (12 V input, comma power, harness power pins) switches off SoC and panda together.
@@ -149,8 +153,8 @@ dfis:
       Rev 0.6: whether the stock camera path comes back (DM-02) does not decide the outcome for these decompositions,
       because an intercept that stays closed carries no item messages either; it decides SG-009 (FSR-037/038, not
       decomposed; FMEDA SG-009). This DFI covers loss downstream of the harness box (OBD-C cable, device input stage,
-      regulators); loss of the box supply itself is DFI-20 and DFI-21.
-  - id: DFI-02
+      regulators); loss of the box supply itself is DFI-27a and DFI-27b.
+  - id: DFI-01b
     category: CAT-01
     kind: common_cause
     description: Undervoltage or brown-out leaves one or both processors running erratically instead of off.
@@ -160,20 +164,20 @@ dfis:
     assessment: open
     rationale: Panda brown-out reset level and supply monitoring are not verified (DOI-001).
   # --- CAT-02 clock / reset
-  - id: DFI-03
+  - id: DFI-13a
     category: CAT-02
     kind: cascading
     description: The SoC drives the panda's reset and BOOT0 lines; a faulty SoC can hold the panda in reset or in its bootloader.
     decompositions: [FSR-001, FSR-004, FSR-009, FSR-015, FSR-018, FSR-021, FSR-025, FSR-028, FSR-031, FSR-034]
-    effect: A panda held in reset or bootloader transmits nothing, so the result is fail-silent, the same as DFI-01.
+    effect: A panda held in reset or bootloader transmits nothing, so the result is fail-silent, the same as DFI-01a.
     evidence: openpilot/common/hardware/comma/hardware.py (reset_internal_panda, recover_internal_panda)
     measures: [DM-01, DM-02, DM-03]
     assessment: safe_by_design
     rationale: >-
-      Silent output only. Same dependency on DM-03 as DFI-01. Reflashing through BOOT0 is DFI-09. Rev 0.6: the stock
+      Silent output only. Same dependency on DM-03 as DFI-01a. Reflashing through BOOT0 is DFI-13d. Rev 0.6: the stock
       path returns only if the R2/R3 pull-down is intact (DM-02, RR-2026-010 F-03), which matters for SG-009, not
       for these decompositions.
-  - id: DFI-04
+  - id: DFI-02
     category: CAT-02
     kind: common_cause
     description: Shared clock source between SoC and panda.
@@ -183,7 +187,7 @@ dfis:
     assessment: open
     rationale: Panda clock source not verified from the schematic (DOI-001).
   # --- CAT-04 shared inputs
-  - id: DFI-05
+  - id: DFI-10
     category: CAT-04
     kind: common_cause
     description: >-
@@ -210,9 +214,9 @@ dfis:
       RX messages, and BRAKE_MODULE has no checksum, so a frozen frame with a valid checksum passes both channels
       (the panda sets ignore_counter on 0x260, 0x1D2 and 0x226, toyota.h:48-69). The decoding code is diverse: the
       panda extracts bits by hand in C, the host decodes through the DBC. What both share is the signal definition
-      (byte positions, scaling, sign), which is DFI-14's systematic coupling.
+      (byte positions, scaling, sign), which is DFI-08's systematic coupling.
   # --- CAT-05 communication
-  - id: DFI-06
+  - id: DFI-34
     category: CAT-05
     kind: cascading
     description: Malformed, flooding or out-of-sequence SPI traffic from a faulty SoC.
@@ -223,7 +227,7 @@ dfis:
     assessment: open
     rationale: The checksum catches transmission errors, not well-formed bad commands. Firmware robustness against host input is not demonstrated (DM-15).
   # --- CAT-06 configuration / mode control
-  - id: DFI-07
+  - id: DFI-13b
     category: CAT-06
     kind: cascading
     description: >-
@@ -290,7 +294,7 @@ dfis:
       DM-22, and the latch bench test of change-2026-10-17-relay-malfunction-latch OI-1). A false relay malfunction now
       costs the car mode for the rest of the ignition cycle, an availability loss in the safe direction.
       Rev 0.14: the SW FMEA carries this part as SWF-090 (sw-fmea.yaml rev 1.4, O3 D4 AP L), next to SWF-054 and SWF-055.
-  - id: DFI-08
+  - id: DFI-13c
     category: CAT-06
     kind: cascading
     description: The SoC can put the panda in ELM327 (diagnostic) mode, used for fingerprinting at start-up, which allows diagnostic messages to vehicle ECUs.
@@ -312,7 +316,7 @@ dfis:
       is the harness line alone (main.c:213, harness_check_ignition(); opendbc ignition.h has no Toyota CAN
       ignition). With comma power keeping the box powered, an open ignition branch or an open Q6 (RR-2026-010 HB-06,
       F-09) reads ignition off while driving and releases DM-12; a faulty SoC can then reach ELM327. DM-24 required.
-  - id: DFI-09
+  - id: DFI-13d
     category: CAT-06
     kind: cascading
     description: The SoC flashes panda firmware from its own filesystem whenever the signature differs, and can enter the bootloader through BOOT0.
@@ -343,7 +347,7 @@ dfis:
       (pandad.py:30-33, DR-14), no MIN_VERSION change (DR-12), key ID not reported (DR-16). Development builds keep
       the debug key. So part of DR-10/DR-11 is configured, nothing is verified, and the bypass paths remain.
   # --- CAT-07 timing
-  - id: DFI-10
+  - id: DFI-35
     category: CAT-07
     kind: cascading
     description: SoC lag or a stuck SoC loop keeps sending stale but well-formed steering or acceleration requests with the heartbeat still reporting engaged.
@@ -359,7 +363,7 @@ dfis:
       (DOI-001). Note: the panda heartbeat timeout is 5 s and the engaged-mismatch drop ~3 s (panda main.c:102,184),
       which matters for FSR-007 (FSC FOI-008, LD-DES-001 DR-20) but not for envelope enforcement.
   # --- CAT-08 environment
-  - id: DFI-11
+  - id: DFI-04
     category: CAT-08
     kind: common_cause
     description: High temperature in the windshield mount affects SoC and panda on the same board.
@@ -369,7 +373,7 @@ dfis:
     measures: [DM-14]
     assessment: open
     rationale: Device thermal profile versus component ratings is not characterized.
-  - id: DFI-12
+  - id: DFI-07
     category: CAT-08
     kind: common_cause
     description: EMC transients, radiated disturbance or ESD at the harness upsetting both processors through the shared board and ground.
@@ -378,17 +382,17 @@ dfis:
     measures: [DM-13]
     assessment: open
     rationale: No immunity test evidence (ISO 7637-2, ISO 11452, ISO 10605) for device plus harness.
-  - id: DFI-13
+  - id: DFI-05
     category: CAT-08
     kind: common_cause
     description: Vibration or a loose harness connector interrupting power and CAN for both channels.
     decompositions: [FSR-001, FSR-004, FSR-009, FSR-018, FSR-021, FSR-028, FSR-031, FSR-034]
-    effect: Power interruption behaves as DFI-01 (silent). An intermittent CAN line is seen by both channels.
+    effect: Power interruption behaves as DFI-01a (silent). An intermittent CAN line is seen by both channels.
     measures: [DM-01, DM-05]
     assessment: open
     rationale: Silent for power loss; panda RX checks on intermittent CAN unverified (DOI-001).
   # --- CAT-09 specification
-  - id: DFI-14
+  - id: DFI-08
     category: CAT-09
     kind: common_cause
     description: SoC controller limits and panda safety limits are specified in the same repository by the same authors from the same vehicle characterization.
@@ -409,7 +413,7 @@ dfis:
       are derived independently of the controller's tuning values, and the controller is set lower, with a margin.
       Unchanged: insufficient until the derivation record and the measurements behind DM-10 exist.
   # --- CAT-10 development process
-  - id: DFI-15
+  - id: DFI-16
     category: CAT-10
     kind: common_cause
     description: Same upstream organization, reviewers and practices for both channels.
@@ -419,17 +423,17 @@ dfis:
     assessment: open
     rationale: Language and toolchain diversity exists (C with MISRA versus Python/C++), but there is no independent review or process evidence for the panda safety model (FSC FOI-003).
   # --- CAT-11 manufacturing
-  - id: DFI-16
+  - id: DFI-03
     category: CAT-11
     kind: common_cause
     description: A board-level manufacturing defect affecting both processors.
     decompositions: [FSR-001, FSR-004, FSR-009, FSR-018, FSR-021, FSR-028, FSR-031, FSR-034]
-    effect: Most board defects show as supply or clock faults (DFI-01, DFI-02, DFI-04).
+    effect: Most board defects show as supply or clock faults (DFI-01a, DFI-01b, DFI-02).
     measures: []
     assessment: open
     rationale: No manufacturing or end-of-line test evidence for the device is available to the project.
   # --- CAT-12 installation
-  - id: DFI-17
+  - id: DFI-20
     category: CAT-12
     kind: common_cause
     description: Wrong harness for the vehicle, or a partly seated connector.
@@ -439,7 +443,7 @@ dfis:
     assessment: open
     rationale: Panda RX checks would block controls if expected messages are absent (unverified). Installation checks belong to the PFMEA (DM-19).
   # --- CAT-13 update
-  - id: DFI-18
+  - id: DFI-36
     category: CAT-13
     kind: common_cause
     description: One OTA release replaces SoC software and panda firmware together.
@@ -460,7 +464,7 @@ dfis:
       not who approves it: the panda image still ships in the same release as the SoC software, with no separate
       approval, HIL run or independent review (DQ-010 A: volunteer reviewer, none named yet).
   # --- CAT-04 warning channel
-  - id: DFI-19
+  - id: DFI-15
     category: CAT-04
     kind: cascading
     description: >-
@@ -480,7 +484,7 @@ dfis:
       that BARRIERS is the indication the driver reads as "assist active" is from the DBC and openpilot's
       carcontroller, to be confirmed on the reference cluster (DOI-005).
   # --- CAT-01 harness-box supply (RR-2026-010, rev 0.6)
-  - id: DFI-20
+  - id: DFI-27a
     category: CAT-01
     kind: common_cause
     description: >-
@@ -498,12 +502,12 @@ dfis:
     measures: [DM-01, DM-03, DM-23]
     assessment: safe_by_design
     rationale: >-
-      For these decompositions the result is fail-silent, as DFI-01: whatever position the unpowered switches
+      For these decompositions the result is fail-silent, as DFI-01a: whatever position the unpowered switches
       take, nothing generates item messages, and the EPS and PCM end LKA/ACC on message loss (DM-03, unverified,
       DOI-001). A disturbed car-side bus gives more missing messages, not wrong ones, unless the bench test shows
       otherwise (DM-23). The same loss removes the stock camera path (SG-009, FSR-037/038, not decomposed): that is
       DFMEA DFM-020, FMEDA SG-009 and WP-A-03 DFI-27; the lead kept comma's box (DQ-209 option A, 2026-10-16).
-  - id: DFI-21
+  - id: DFI-27b
     category: CAT-01
     kind: common_cause
     description: >-
@@ -519,7 +523,7 @@ dfis:
     measures: [DM-11, DM-23]
     assessment: open
     rationale: >-
-      Unlike DFI-01, where the pull-down returns the stock camera and the cluster sees a clean bus, here the second
+      Unlike DFI-01a, where the pull-down returns the stock camera and the cluster sees a clean bus, here the second
       channel depends on cluster behaviour on a possibly disturbed bus, which nobody has observed. XM-04 is not
       credited (FSC FOI-005). Needed to close: the box-unpowered bench test (DM-23, VS-HW-22) and the cluster
       reaction to it on the reference vehicle (DOI-005, DOI-008). Rev 0.10: the lead chose DQ-209 option A (keep
@@ -568,16 +572,16 @@ open_items:
     text: >-
       Design the panda-side configuration lock (DM-07) and firmware authenticity (DM-08). These change upstream
       panda firmware and pandad behavior, and they are the measures every panda/SoC decomposition depends on.
-    affects: [DM-07, DM-08, DFI-07, DFI-09]
+    affects: [DM-07, DM-08, DFI-13b, DFI-13d]
     status: closed
     resolution: Designed in assurance/08-analyses/fmea/design/panda-config-lock-and-fw-authenticity.md (LD-DES-001 rev 0.1). Implementation tracked in DOI-007.
   - id: DOI-003
     text: Define the separate panda safety release gate (DM-09) in the PFMEA and release control plan; hand the malicious-update case to the TARA.
-    affects: [DM-09, DFI-18]
+    affects: [DM-09, DFI-36]
     status: open
   - id: DOI-004
-    text: Verify the PCM brake/cancel path (XM-03, FSC FOI-006) as the diverse input for DFI-05.
-    affects: [DFI-05]
+    text: Verify the PCM brake/cancel path (XM-03, FSC FOI-006) as the diverse input for DFI-10.
+    affects: [DFI-10]
     status: open
   - id: DOI-005
     text: >-
@@ -585,7 +589,7 @@ open_items:
       (DM-11). Progress at rev 0.5: the reference build refuses LKAS_HUD.BARRIERS without authority (opendbc
       c393a04); still to do: confirm on the reference cluster that BARRIERS is the indication the driver reads as
       lane assist active, and name the bits in FSR-017/027.
-    affects: [DFI-19, DM-11, FSR-017, FSR-027]
+    affects: [DFI-15, DM-11, FSR-017, FSR-027]
     status: open
   - id: DOI-006
     text: Plan EMC/ESD immunity (DM-13), thermal characterization (DM-14) and host-input robustness testing (DM-15).
@@ -598,15 +602,15 @@ open_items:
       after decisions D1-D4 in LD-DES-001 section 7. DM-07, DM-08 and DM-12 stay "required" until then.
       Progress at rev 0.5: for AC-001 the reference lock (DM-21) implements DR-01, DR-03 and the effect of DR-06
       without a VLR, and refuses softloader entry in a car mode (part of DR-14); DR-05 implemented in the same gate
-      (panda 4ac8e1c, see DFI-08). Not implemented: DR-10..DR-13, DR-15, DR-16.
-    affects: [DM-07, DM-08, DM-12, DFI-07, DFI-08, DFI-09]
+      (panda 4ac8e1c, see DFI-13c). Not implemented: DR-10..DR-13, DR-15, DR-16.
+    affects: [DM-07, DM-08, DM-12, DFI-13b, DFI-13c, DFI-13d]
     status: open
   - id: DOI-008
     text: >-
       Harness box (RR-2026-010): run the bench tests DM-23 and record what the unpowered switches do to the stock
-      path and to CAN0, and what the reference cluster shows when the box loses power while driving (DFI-21). The
-      lead kept comma's box (DQ-209 option A, 2026-10-16), so these tests are the route: re-assess DFI-20 and DFI-21
+      path and to CAN0, and what the reference cluster shows when the box loses power while driving (DFI-27b). The
+      lead kept comma's box (DQ-209 option A, 2026-10-16), so these tests are the route: re-assess DFI-27a and DFI-27b
       on their results; a failed test returns the decision to the lead (DQ-320). Implement DM-24 in the panda reference build (handed to the panda software
       work).
-    affects: [DFI-08, DFI-20, DFI-21, DM-02, DM-23, DM-24]
+    affects: [DFI-13c, DFI-27a, DFI-27b, DM-02, DM-23, DM-24]
     status: open

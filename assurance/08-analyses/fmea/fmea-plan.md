@@ -62,7 +62,7 @@ PFMEA ─► Release / install control plan  (feeds "configuration as assured")
 
 ---
 
-![Figure 2-1: DFA initiators DFI-01..DFI-19 by category against the 11 panda/SoC ASIL decompositions, with measures DM-01..DM-20 and open items](figures/generated/fig-2-1-dfa-initiators.svg)
+![Figure 2-1: DFA initiators by category against the 11 panda/SoC ASIL decompositions, with measures DM-01..DM-20 and open items](figures/generated/fig-2-1-dfa-initiators.svg)
 
 *Figure 2-1.* Dependent failure initiators against the FSC decompositions, coloured by assessment; measures by status (green only for `existing`). Drawn from `analyses/dfa.yaml` by `tools/safety/fmea_diagrams.py`; index of all generated figures: [figures/generated/README.md](figures/generated/README.md).
 

@@ -14,8 +14,8 @@
 
 The DFA (LD-DFA-001) accepts none of the 11 panda/SoC decompositions. Every panda channel depends on the SoC in two ways the panda cannot see:
 
-- **DFI-07:** the SoC chooses the configuration the panda enforces.
-- **DFI-09:** the SoC chooses the firmware the panda runs.
+- **DFI-13b:** the SoC chooses the configuration the panda enforces.
+- **DFI-13d:** the SoC chooses the firmware the panda runs.
 
 This design makes both decisions the panda's own, so a fault on the SoC cannot widen what the panda lets through.
 
@@ -66,7 +66,7 @@ The VLR is stored in two copies in a dedicated flash sector, outside the app and
 | DR-06 | LionDriver release builds shall not define `ALLOW_DEBUG`. This removes `SAFETY_ALLOUTPUT` and the debug-only modes from the registry, independently of the VLR. |
 | DR-07 | The health packet shall report the VLR state (valid / absent / corrupt), `baseline_id`, the VLR CRC and the `CONFIG_REJECTED` flag. The SoC compares them with CarParams (extends `controlsMismatch`). This is a supplementary QM check; the panda-side checks above don't depend on it. |
 
-**Why this removes DFI-07.** After provisioning, nothing the SoC sends while driving can change the mode, parameter or alternative experience that the panda enforces. The SoC can only *downgrade* the panda to SILENT/NOOUTPUT, which is the safe direction. Two residual risks remain:
+**Why this removes DFI-13b.** After provisioning, nothing the SoC sends while driving can change the mode, parameter or alternative experience that the panda enforces. The SoC can only *downgrade* the panda to SILENT/NOOUTPUT, which is the safe direction. Two residual risks remain:
 
 - A wrong record written at installation, which belongs in the PFMEA install step.
 - A SoC fault during the offroad provisioning window, which DR-04 bounds with the ignition-off condition, the confirmation token and the read-back.
@@ -78,18 +78,18 @@ The VLR is stored in two copies in a dedicated flash sector, outside the app and
 | DR-10 | LionDriver release firmware shall be built with `RELEASE=1` and signed with a LionDriver release key. The private key is held offline, never in the repository. Its public key is compiled into the LionDriver bootstub. |
 | DR-11 | The LionDriver bootstub shall accept only images signed with the LionDriver release key. The debug key is accepted only by development bootstubs, and a device carrying one is outside the assured configuration (see DR-16). |
 | DR-12 | The bootstub shall reject images below the LionDriver minimum qualified version (raise `MIN_VERSION`; the existing check at `bootstub.c:58` is kept). |
-| DR-13 | Protect the bootstub sector: set write protection on flash sector 0 and RDP level 1 during provisioning. Any route that removes the protection (RDP regression) mass-erases the flash, leaving a blank panda that transmits nothing and leaves the relay to stock (DFI-03 outcome). RDP level 2 is rejected because it is irreversible and prevents recovery from a bootstub defect. **To verify:** system bootloader behavior under RDP1+WRP on STM32H725 (RM0468, AN2606) before relying on it (D2). |
+| DR-13 | Protect the bootstub sector: set write protection on flash sector 0 and RDP level 1 during provisioning. Any route that removes the protection (RDP regression) mass-erases the flash, leaving a blank panda that transmits nothing and leaves the relay to stock (DFI-13a outcome). RDP level 2 is rejected because it is irreversible and prevents recovery from a bootstub defect. **To verify:** system bootloader behavior under RDP1+WRP on STM32H725 (RM0468, AN2606) before relying on it (D2). |
 | DR-14 | pandad shall flash panda firmware or enter the softloader only while ignition is off. The panda enforces the same condition for 0xd1 (both modes). |
 | DR-15 | In LionDriver release builds, pandad shall not install a development bootstub. The fallback at `pandad.py:34-40` becomes: report the fault and stay in dashcam mode. |
 | DR-16 | The panda shall report its bootstub build type and signing key ID in the health packet. The SoC shall refuse to engage (NO_ENTRY, permanent alert) when either is not the LionDriver release one. |
 
-**Why this removes DFI-09.**
+**Why this removes DFI-13d.**
 - A corrupted image fails the signature check and doesn't boot, so the result is fail-silent.
 - A wrong but validly signed older image is blocked by DR-12.
 - An image signed with the public debug key is refused by a LionDriver release bootstub (DR-11), and a device with a development bootstub is detected (DR-16).
 - The ROM DFU path can no longer leave a modified bootstub running; it can only produce a blank panda (DR-13).
 
-What remains is a *correctly signed but defective* release. That is DFI-18, owned by the release process: the signing step becomes the enforcement point of the separate panda release gate (DM-09). Deliberate attacks, such as key theft or physical access, go to the TARA.
+What remains is a *correctly signed but defective* release. That is DFI-36, owned by the release process: the signing step becomes the enforcement point of the separate panda release gate (DM-09). Deliberate attacks, such as key theft or physical access, go to the TARA.
 
 ### 3.3 Heartbeat timing (F10, FSC FOI-008)
 
@@ -103,10 +103,10 @@ Out of scope for DM-07/08, but recorded here because the code was read for this 
 
 | DFI | Now | After this design | Remaining dependency |
 |---|---|---|---|
-| DFI-07 configuration | insufficient | expected sufficient | Install-time provisioning (PFMEA), DR-01…07 verified |
-| DFI-08 diagnostic mode | open → **insufficient** (F5 confirms no restriction) | expected sufficient | DR-05 verified |
-| DFI-09 firmware | insufficient | expected sufficient | DR-13 bootloader behavior verified (D2) |
-| DFI-18 release | insufficient | still insufficient | Panda release gate (DM-09), with DR-10 signing as its enforcement point |
+| DFI-13b configuration | insufficient | expected sufficient | Install-time provisioning (PFMEA), DR-01…07 verified |
+| DFI-13c diagnostic mode | open → **insufficient** (F5 confirms no restriction) | expected sufficient | DR-05 verified |
+| DFI-13d firmware | insufficient | expected sufficient | DR-13 bootloader behavior verified (D2) |
+| DFI-36 release | insufficient | still insufficient | Panda release gate (DM-09), with DR-10 signing as its enforcement point |
 
 The DFA itself still marks DM-07, DM-08 and DM-12 as *required*. They move to *existing* only when implemented and tested.
 
