@@ -96,6 +96,7 @@ Generated from the SysML model (view V-09): requirements by verification method,
 | [`requirements/`](requirements/README.md) | Requirements at a glance |
 | [`reviews/`](reviews/) | — |
 | [`system-requirements/`](system-requirements/README.md) | System requirements |
+| [`technical-safety-requirements/`](technical-safety-requirements/README.md) | Technical safety requirements |
 | [`timing/`](timing/README.md) | Timing: FTTI, fault detection and reaction budget |
 | [`tsc/`](tsc/README.md) | Technical safety concept |
 | [`verification/`](verification/README.md) | System verification |

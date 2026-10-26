@@ -11,7 +11,7 @@ Every abbreviation and record code used on the assurance pages and figures is de
 3. **On every figure.** Each generated figure ends with a "Terms:" line for what it draws, so a figure read on its own still explains itself.
 4. **Checked.** CI fails if a block is stale, a figure lacks its line, or a page or figure uses a term that is not in the list. To add one, add it to `TERMS` and run `python3 assurance/trace/tools/terms.py`.
 
-Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md), [hsi](03-system/hsi/README.md), [timing](03-system/timing/README.md), [cybersecurity](03-system/cybersecurity/README.md), [integration](03-system/integration/README.md), [verification](03-system/verification/README.md), [system-requirements](03-system/system-requirements/README.md), [production](03-system/production/README.md), [odd](02-concept/odd/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md), [dfa](08-analyses/dfa/README.md). Other pages and older figures join the list as they are reworked.
+Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md), [hsi](03-system/hsi/README.md), [timing](03-system/timing/README.md), [cybersecurity](03-system/cybersecurity/README.md), [integration](03-system/integration/README.md), [verification](03-system/verification/README.md), [system-requirements](03-system/system-requirements/README.md), [production](03-system/production/README.md), [technical-safety-requirements](03-system/technical-safety-requirements/README.md), [odd](02-concept/odd/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md), [dfa](08-analyses/dfa/README.md). Other pages and older figures join the list as they are reworked.
 
 ## Abbreviations
 
@@ -53,6 +53,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | ENV | build and release environment (allocation class, WP-S-07 §2) |
 | EPS | electric power steering |
 | EV | exposure value: one EV halves or doubles the light |
+| EXT | allocation to an existing vehicle element, credited only through an assumption of use (WP-S-02 §2.2) |
 | FCW | forward collision warning |
 | FD | flexible data rate (CAN FD: CAN with a faster data phase and up to 64 bytes) |
 | FDCAN | CAN with flexible data rate (the MCU's CAN controller) |
@@ -72,6 +73,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | GPIO | general-purpose input/output pin |
 | GPS | global positioning system |
 | GPU | graphics processor (runs the models) |
+| HAR | allocation to the harness and relay (E-05; WP-S-02 §2.2) |
 | HARA | hazard analysis and risk assessment (ISO 26262-3) |
 | HATARA | the joint HARA and TARA view: where hazards and threats meet |
 | HEVC | a compressed video format (H.265) |
@@ -117,8 +119,11 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | ODD-H | the claimed ODD: limited-access highways |
 | ONNX | Open Neural Network Exchange, the model file format |
 | OOD | out of distribution: unlike the data the model learned from |
+| OPS | allocation to a production or operation process (WP-S-02 §2.2) |
 | OTA | over-the-air (software update) |
 | P-256 | the NIST elliptic curve used with ECDSA (128-bit security) |
+| P-HW | allocation to the panda hardware: the safety MCU (E-04; WP-S-02 §2.2) |
+| P-SW | allocation to the panda firmware: the envelope on the safety MCU (E-03; WP-S-02 §2.2) |
 | PAS | publicly available specification (ISO/PAS 8800 is the AI safety one) |
 | PC | personal computer |
 | PCB | printed circuit board |
@@ -224,6 +229,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | GD-nn | private record of an unfixed weakness's code locations and mechanism, held until its control is verified (WP-O-05 §4.4) |
 | H-nn | hazard (HARA) |
 | HE-nn | hazardous event (HARA) |
+| HWSR-nn | hardware safety requirement (WP-H-01) |
 | I-nn | integration step I-1…I-4 (WP-S-08 §3.1) |
 | IC-nn | independence claim (WP-A-03 §2): two elements the safety concept relies on not failing together |
 | IF-nn | interface of the item (WP-C-01 §3.4) |
@@ -250,6 +256,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | SS-nn | safe state (FSC §6): SS-L lateral, SS-G longitudinal, SS-S envelope silent |
 | ST-nn | step of the start-up and engagement sequence (WP-S-03 Table 4-1), ST-01…ST-21 |
 | SVC-nn | vehicle service action that needs a re-check of the item (WP-O-02 §4) |
+| SWSR-nn | software safety requirement (WP-W-02) |
 | T-nn | code-derived detection or reaction time (WP-S-04 §4); in WP-M-01 and WP-S-06, a tailoring decision T-01…T-08 (WP-M-01 §5) |
 | TB-nn | trust boundary (WP-S-07 §3.2) |
 | TC-nn | triggering condition (WP-C-06) |
