@@ -44,6 +44,8 @@ so a change to one without the other fails CI (assurance/models/sysml/README.md 
   H4  every interface of WP-S-05 §2 has one hardware/software responsibility (§11.4) and no other does; each names a
       hardware owner that is hardware (device hardware or harness) and a software owner that is software (SoC
       software or safety firmware), all elements of the model, and TSRs of the model
+  H5  every hardware resource of WP-S-05 §2 is a part of the safety MCU hardware E-04a, and every part of E-04a is
+      behind some interface
   R4  the requirements-coverage report (generated/requirements-coverage.md) is up to date: satisfied,
       verified and derived, per kind, with the requirements that are not (informational)
 
@@ -743,7 +745,7 @@ def check_lifecycle(m: sysml_lite.Model, rep: Report) -> None:
                     f"{', '.join(carried.get(r, [])) or 'none'}")
 
 
-# ---------------------------------------------------------------- timing and HSI (H1-H4)
+# ---------------------------------------------------------------- timing and HSI (H1-H5)
 
 HW_ROOTS = ("context.ldsda.deviceHardware", "context.ldsda.harness")
 SW_ROOTS = ("context.ldsda.socSoftware", "context.ldsda.safetyFirmware")
@@ -827,6 +829,17 @@ def check_timing_hsi(m: sysml_lite.Model, rep: Report) -> None:
         rep.err("H4", f"{hsi} names {x}, which is not a requirement of the model")
     if v.get("status") not in gen_timing_hsi.STATUS:
       rep.err("H4", f"{hsi}: status {v.get('status')!r} is not one of {', '.join(gen_timing_hsi.STATUS)}")
+  mcu = m.find("E-04a")
+  mcu_parts = {p.rsplit(".", 1)[1] for p in m.elements if mcu and p.startswith(mcu.path + ".")
+               and p.count(".") == mcu.path.count(".") + 1}
+  used = set()
+  for hsi, rr in m.responsibilities.items():
+    for part in (x for x in sysml_lite._as_list(rr.values.get("hwParts")) if x):
+      used.add(part)
+      if part not in mcu_parts:
+        rep.err("H5", f"{hsi} uses {part!r}, which is not a part of the safety MCU hardware E-04a")
+  for part in sorted(mcu_parts - used):
+    rep.err("H5", f"E-04a part {part} is behind no hardware-software interface of WP-S-05 §2")
 
 
 def outside_reason(text: str) -> str | None:
@@ -940,7 +953,7 @@ def main(argv: list[str]) -> int:
         f"{sum(len(x) for a in m.activities.values() for x in a.steps.values())} life-cycle procedure steps")
   print(f"timing and HSI: {len(m.budgets)} timing budgets, {len(m.signals)} HSI signals, "
         f"{len(m.responsibilities)} HSI responsibilities")
-  print("OK: M1-M12, N1-N3, B1-B4, H1-H4 and R1-R4 passed")
+  print("OK: M1-M12, N1-N3, B1-B4, H1-H5 and R1-R4 passed")
   return 0
 
 

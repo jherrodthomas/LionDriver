@@ -6,7 +6,7 @@
 <text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-02 · Element hierarchy</text>
 <text x="40" y="69" font-size="12.5" fill="#64748B">Item, components, parts and software units of LD-SDA (ISO 26262-1 3.39) with integrity attribution, unit and build scope</text>
 <text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::elementHierarchy</text>
-<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">DecompositionView · render asTreeDiagram · model 0c3618d61c94</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">DecompositionView · render asTreeDiagram · model 050b0632b1b0</text>
 <line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
 <rect x="580" y="112" width="360" height="74" rx="12" fill="#FFFDF8" stroke="#C2410C" stroke-width="1.6" stroke-dasharray="6 4"/>
 <rect x="596" y="126" width="37.7" height="18" rx="9" fill="#C2410C"/><text x="614.8" y="138.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">ITEM</text>
@@ -301,13 +301,13 @@
 <text x="948" y="965.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-BOOT</text>
 <text x="608" y="966.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.bootstub</text>
 </g>
-<rect x="978" y="250" width="300" height="468" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="978" y="250" width="300" height="487" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2" filter="url(#lift)"/>
 <path d="M978 262a12 12 0 0 1 12 -12h276a12 12 0 0 1 12 12v54h-300z" fill="#FFEDD5" />
 <line x1="978" y1="316" x2="1278" y2="316" stroke="#C2410C" stroke-width="1"/>
 <rect x="992" y="263" width="38.3" height="18" rx="9" fill="#C2410C"/><text x="1011.1" y="275.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-04</text>
 <rect x="1243" y="263" width="21" height="17" rx="8.5" fill="#C2410C"/><text x="1253.5" y="274.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
 <text x="992" y="296" font-size="13.5" fill="#0F172A" font-weight="700">Device hardware</text>
-<text x="992" y="310" font-size="10" fill="#64748B">20 parts · 11 SM</text>
+<text x="992" y="310" font-size="10" fill="#64748B">21 parts · 11 SM</text>
 <g data-el="context.ldsda.deviceHardware"><rect x="978" y="250" width="300" height="66" fill="transparent"/></g>
 <g data-el="context.ldsda.deviceHardware.safetyMcu"><rect x="982" y="326" width="292" height="19" rx="4" fill="transparent"/>
 <circle cx="995" cy="335.5" r="3.6" fill="#C2410C"/>
@@ -359,54 +359,59 @@
 <circle cx="1009" cy="506.5" r="3.6" fill="#C2410C"/>
 <text x="1018" y="510.1" font-size="10.5" fill="#334155">IWDG1</text>
 </g>
-<g data-el="context.ldsda.deviceHardware.restOfDevice"><rect x="982" y="516" width="292" height="19" rx="4" fill="transparent"/>
-<circle cx="995" cy="525.5" r="3.6" fill="#CBD5E1"/>
-<text x="1004" y="529.1" font-size="10.5" fill="#0F172A" font-weight="600">E-04b  Rest of the device</text>
+<g data-el="context.ldsda.deviceHardware.safetyMcu.core"><rect x="982" y="516" width="292" height="19" rx="4" fill="transparent"/>
+<path d="M998 510.5V525.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="1009" cy="525.5" r="3.6" fill="#C2410C"/>
+<text x="1018" y="529.1" font-size="10.5" fill="#334155">Core</text>
 </g>
-<g data-el="context.ldsda.deviceHardware.restOfDevice.soc"><rect x="982" y="535" width="292" height="19" rx="4" fill="transparent"/>
-<path d="M998 529.5V544.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
-<circle cx="1009" cy="544.5" r="3.6" fill="#CBD5E1"/>
-<text x="1018" y="548.1" font-size="10.5" fill="#334155">Qualcomm SoC</text>
+<g data-el="context.ldsda.deviceHardware.restOfDevice"><rect x="982" y="535" width="292" height="19" rx="4" fill="transparent"/>
+<circle cx="995" cy="544.5" r="3.6" fill="#CBD5E1"/>
+<text x="1004" y="548.1" font-size="10.5" fill="#0F172A" font-weight="600">E-04b  Rest of the device</text>
 </g>
-<g data-el="context.ldsda.deviceHardware.restOfDevice.roadCameras"><rect x="982" y="554" width="292" height="19" rx="4" fill="transparent"/>
+<g data-el="context.ldsda.deviceHardware.restOfDevice.soc"><rect x="982" y="554" width="292" height="19" rx="4" fill="transparent"/>
 <path d="M998 548.5V563.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
 <circle cx="1009" cy="563.5" r="3.6" fill="#CBD5E1"/>
-<text x="1018" y="567.1" font-size="10.5" fill="#334155">Road cameras</text>
+<text x="1018" y="567.1" font-size="10.5" fill="#334155">Qualcomm SoC</text>
 </g>
-<g data-el="context.ldsda.deviceHardware.restOfDevice.driverCamera"><rect x="982" y="573" width="292" height="19" rx="4" fill="transparent"/>
+<g data-el="context.ldsda.deviceHardware.restOfDevice.roadCameras"><rect x="982" y="573" width="292" height="19" rx="4" fill="transparent"/>
 <path d="M998 567.5V582.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
 <circle cx="1009" cy="582.5" r="3.6" fill="#CBD5E1"/>
-<text x="1018" y="586.1" font-size="10.5" fill="#334155">Driver camera</text>
+<text x="1018" y="586.1" font-size="10.5" fill="#334155">Road cameras</text>
 </g>
-<g data-el="context.ldsda.deviceHardware.restOfDevice.imuGnss"><rect x="982" y="592" width="292" height="19" rx="4" fill="transparent"/>
+<g data-el="context.ldsda.deviceHardware.restOfDevice.driverCamera"><rect x="982" y="592" width="292" height="19" rx="4" fill="transparent"/>
 <path d="M998 586.5V601.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
 <circle cx="1009" cy="601.5" r="3.6" fill="#CBD5E1"/>
-<text x="1018" y="605.1" font-size="10.5" fill="#334155">IMU · GNSS</text>
+<text x="1018" y="605.1" font-size="10.5" fill="#334155">Driver camera</text>
 </g>
-<g data-el="context.ldsda.deviceHardware.restOfDevice.display"><rect x="982" y="611" width="292" height="19" rx="4" fill="transparent"/>
+<g data-el="context.ldsda.deviceHardware.restOfDevice.imuGnss"><rect x="982" y="611" width="292" height="19" rx="4" fill="transparent"/>
 <path d="M998 605.5V620.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
 <circle cx="1009" cy="620.5" r="3.6" fill="#CBD5E1"/>
-<text x="1018" y="624.1" font-size="10.5" fill="#334155">Display</text>
+<text x="1018" y="624.1" font-size="10.5" fill="#334155">IMU · GNSS</text>
 </g>
-<g data-el="context.ldsda.deviceHardware.restOfDevice.speaker"><rect x="982" y="630" width="292" height="19" rx="4" fill="transparent"/>
+<g data-el="context.ldsda.deviceHardware.restOfDevice.display"><rect x="982" y="630" width="292" height="19" rx="4" fill="transparent"/>
 <path d="M998 624.5V639.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
 <circle cx="1009" cy="639.5" r="3.6" fill="#CBD5E1"/>
-<text x="1018" y="643.1" font-size="10.5" fill="#334155">Speaker</text>
+<text x="1018" y="643.1" font-size="10.5" fill="#334155">Display</text>
 </g>
-<g data-el="context.ldsda.deviceHardware.restOfDevice.canTransceivers"><rect x="982" y="649" width="292" height="19" rx="4" fill="transparent"/>
+<g data-el="context.ldsda.deviceHardware.restOfDevice.speaker"><rect x="982" y="649" width="292" height="19" rx="4" fill="transparent"/>
 <path d="M998 643.5V658.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
 <circle cx="1009" cy="658.5" r="3.6" fill="#CBD5E1"/>
-<text x="1018" y="662.1" font-size="10.5" fill="#334155">CAN transceivers</text>
+<text x="1018" y="662.1" font-size="10.5" fill="#334155">Speaker</text>
 </g>
-<g data-el="context.ldsda.deviceHardware.restOfDevice.powerSupply"><rect x="982" y="668" width="292" height="19" rx="4" fill="transparent"/>
+<g data-el="context.ldsda.deviceHardware.restOfDevice.canTransceivers"><rect x="982" y="668" width="292" height="19" rx="4" fill="transparent"/>
 <path d="M998 662.5V677.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
 <circle cx="1009" cy="677.5" r="3.6" fill="#CBD5E1"/>
-<text x="1018" y="681.1" font-size="10.5" fill="#334155">Power supply</text>
+<text x="1018" y="681.1" font-size="10.5" fill="#334155">CAN transceivers</text>
 </g>
-<g data-el="context.ldsda.deviceHardware.restOfDevice.enclosure"><rect x="982" y="687" width="292" height="19" rx="4" fill="transparent"/>
+<g data-el="context.ldsda.deviceHardware.restOfDevice.powerSupply"><rect x="982" y="687" width="292" height="19" rx="4" fill="transparent"/>
 <path d="M998 681.5V696.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
 <circle cx="1009" cy="696.5" r="3.6" fill="#CBD5E1"/>
-<text x="1018" y="700.1" font-size="10.5" fill="#334155">Enclosure</text>
+<text x="1018" y="700.1" font-size="10.5" fill="#334155">Power supply</text>
+</g>
+<g data-el="context.ldsda.deviceHardware.restOfDevice.enclosure"><rect x="982" y="706" width="292" height="19" rx="4" fill="transparent"/>
+<path d="M998 700.5V715.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="1009" cy="715.5" r="3.6" fill="#CBD5E1"/>
+<text x="1018" y="719.1" font-size="10.5" fill="#334155">Enclosure</text>
 </g>
 <rect x="1296" y="250" width="196" height="126" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2" filter="url(#lift)"/>
 <path d="M1296 262a12 12 0 0 1 12 -12h172a12 12 0 0 1 12 12v54h-196z" fill="#FFEDD5" />

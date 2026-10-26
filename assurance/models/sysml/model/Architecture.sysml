@@ -534,6 +534,9 @@ package LionDriverArchitecture {
         part <'IWDG1'> iwdg1 : HardwareElement {
             doc /* Independent window watchdog. */
         }
+        part core : HardwareElement {
+            doc /* Cortex-M7 core: interrupt controller (NVIC) with the fault vectors, memory protection unit (MPU) and the die temperature sensor. */
+        }
     }
 
     part def DeviceHardwareRest :> HardwareElement {

@@ -564,6 +564,8 @@ package LionDriverSignals {
         attribute swOwners : String[0..*];
         attribute tsr : String[0..*];
         attribute status : String;
+        attribute hwResource : String;
+        attribute hwParts : String[0..*];
     }
 
     item <'HSI-01'> hsi_01 : HsiResponsibility {
@@ -579,6 +581,8 @@ package LionDriverSignals {
         :>> swOwners = ("E-03b", "host.pandad");
         :>> tsr = ("TSR-410", "TSR-412", "TSR-507", "TSR-413");
         :>> status = "partial";
+        :>> hwResource = "SPI4, DMA2 streams 2/3, SRAM1/2 buffers";
+        :>> hwParts = ("spi4", "memories");
     }
     item <'HSI-02'> hsi_02 : HsiResponsibility {
         doc /* Control requests over SPI endpoint 0 */
@@ -593,6 +597,8 @@ package LionDriverSignals {
         :>> swOwners = ("E-03b", "host.pandad");
         :>> tsr = ("TSR-512", "TSR-513", "TSR-407", "TSR-409", "TSR-516");
         :>> status = "partial";
+        :>> hwResource = "—";
+        :>> hwParts = "";
     }
     item <'HSI-03'> hsi_03 : HsiResponsibility {
         doc /* CAN packet stream over SPI endpoints 1/3 */
@@ -607,6 +613,8 @@ package LionDriverSignals {
         :>> swOwners = ("E-03a", "E-03b", "host.pandad");
         :>> tsr = ("TSR-410", "TSR-411", "TSR-518");
         :>> status = "partial";
+        :>> hwResource = "SPI4";
+        :>> hwParts = ("spi4");
     }
     item <'HSI-04'> hsi_04 : HsiResponsibility {
         doc /* FDCAN1–3 and transceivers */
@@ -621,6 +629,8 @@ package LionDriverSignals {
         :>> swOwners = ("E-03a", "E-03b");
         :>> tsr = ("TSR-401", "TSR-402", "TSR-403", "TSR-404", "TSR-405", "TSR-406", "TSR-704", "TSR-707", "TSR-508");
         :>> status = "partial";
+        :>> hwResource = "FDCAN, transceiver enable GPIOs";
+        :>> hwParts = ("fdcanPeripherals", "gpio");
     }
     item <'HSI-05'> hsi_05 : HsiResponsibility {
         doc /* Harness relay drive */
@@ -635,6 +645,8 @@ package LionDriverSignals {
         :>> swOwners = ("E-03b");
         :>> tsr = ("TSR-506", "TSR-706");
         :>> status = "partial";
+        :>> hwResource = "GPIO (open-drain, active-low)";
+        :>> hwParts = ("gpio");
     }
     item <'HSI-06'> hsi_06 : HsiResponsibility {
         doc /* Harness orientation sense */
@@ -649,6 +661,8 @@ package LionDriverSignals {
         :>> swOwners = ("E-03b");
         :>> tsr = ("TSR-701");
         :>> status = "partial";
+        :>> hwResource = "ADC1 ch4/ch17 on SBU1/SBU2";
+        :>> hwParts = ("adc");
     }
     item <'HSI-07'> hsi_07 : HsiResponsibility {
         doc /* Ignition line */
@@ -663,6 +677,8 @@ package LionDriverSignals {
         :>> swOwners = ("E-03b");
         :>> tsr = ("TSR-510");
         :>> status = "partial";
+        :>> hwResource = "SBU GPIO input";
+        :>> hwParts = ("gpio");
     }
     item <'HSI-08'> hsi_08 : HsiResponsibility {
         doc /* Reset / boot pins from SoC */
@@ -677,6 +693,8 @@ package LionDriverSignals {
         :>> swOwners = ("E-03b", "host.pandad");
         :>> tsr = ("TSR-502", "TSR-511");
         :>> status = "partial";
+        :>> hwResource = "SoC GPIO → MCU NRST, BOOT0";
+        :>> hwParts = ("gpio");
     }
     item <'HSI-09'> hsi_09 : HsiResponsibility {
         doc /* Watchdog */
@@ -691,6 +709,8 @@ package LionDriverSignals {
         :>> swOwners = ("E-03b");
         :>> tsr = ("TSR-501");
         :>> status = "in place";
+        :>> hwResource = "IWDG1 (window mode, 90 ms nominal, started at the first relay energisation; panda 3859fa8), software timestamp check";
+        :>> hwParts = ("iwdg1");
     }
     item <'HSI-10'> hsi_10 : HsiResponsibility {
         doc /* Fault / health monitors */
@@ -705,6 +725,8 @@ package LionDriverSignals {
         :>> swOwners = ("E-03b");
         :>> tsr = ("TSR-502", "TSR-503", "TSR-504", "TSR-505", "TSR-509");
         :>> status = "partial";
+        :>> hwResource = "NVIC, RCC CSS, DTS, ADC, interrupt-rate counters";
+        :>> hwParts = ("core", "clock", "adc");
     }
     item <'HSI-11'> hsi_11 : HsiResponsibility {
         doc /* Siren */
@@ -719,6 +741,8 @@ package LionDriverSignals {
         :>> swOwners = ("E-03b");
         :>> tsr = ("TSR-516", "TSR-515");
         :>> status = "partial";
+        :>> hwResource = "DAC/DMA + codec over I2C5 (board-dependent)";
+        :>> hwParts = ("sirenPath");
     }
     item <'HSI-12'> hsi_12 : HsiResponsibility {
         doc /* Flash and bootstub */
@@ -733,6 +757,8 @@ package LionDriverSignals {
         :>> swOwners = ("E-03b");
         :>> tsr = ("TSR-511", "TSR-514", "TSR-503");
         :>> status = "partial";
+        :>> hwResource = "Flash bank 1, sector 0 bootstub, app at 0x08020000";
+        :>> hwParts = ("memories");
     }
     item <'HSI-13'> hsi_13 : HsiResponsibility {
         doc /* Supply measurement */
@@ -747,6 +773,8 @@ package LionDriverSignals {
         :>> swOwners = ("E-03b");
         :>> tsr = ("TSR-505");
         :>> status = "partial";
+        :>> hwResource = "ADC1 (input divider)";
+        :>> hwParts = ("adc", "supply");
     }
     item <'HSI-14'> hsi_14 : HsiResponsibility {
         doc /* MPU, RAM ECC (to be added) */
@@ -761,5 +789,7 @@ package LionDriverSignals {
         :>> swOwners = ("E-03b");
         :>> tsr = ("TSR-503", "TSR-507");
         :>> status = "missing";
+        :>> hwResource = "Cortex-M7 MPU, RAMECC";
+        :>> hwParts = ("core", "memories");
     }
 }

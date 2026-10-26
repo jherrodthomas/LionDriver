@@ -533,6 +533,22 @@ class TimingHsi(unittest.TestCase):
     finally:
       self.m.responsibilities["HSI-13"] = saved
 
+  def test_hardware_parts_of_each_interface(self):
+    v = self.m.responsibilities
+    self.assertEqual(sysml_lite._as_list(v["HSI-04"].values["hwParts"]), ["fdcanPeripherals", "gpio"])  # FDCAN first
+    self.assertEqual(sysml_lite._as_list(v["HSI-13"].values["hwParts"]), ["adc", "supply"])  # supply from the name
+    r = v["HSI-09"]
+    saved = dict(r.values)
+    try:
+      r.values["hwParts"] = ["watchdogTimer"]          # not a part of E-04a; iwdg1 is then behind no interface
+      rep = check_model.Report()
+      check_model.check_timing_hsi(self.m, rep)
+      text = "\n".join(rep.errors)
+      self.assertIn("HSI-09 uses 'watchdogTimer', which is not a part of the safety MCU hardware E-04a", text)
+      self.assertIn("E-04a part iwdg1 is behind no hardware-software interface", text)
+    finally:
+      r.values = saved
+
 
 class Tables(unittest.TestCase):
   def test_tsr_cell(self):

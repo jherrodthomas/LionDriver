@@ -20,6 +20,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | ABS | anti-lock braking system; on the Toyota, the ABS/VSC ECU that also runs stability control |
 | ACC | adaptive cruise control |
 | ACK | acknowledge (NACK: not acknowledge) |
+| ADC | analogue-to-digital converter (in the safety MCU: orientation, supply and health readings) |
 | AEB | automatic emergency braking |
 | AGNOS | the comma device's operating system |
 | AI | artificial intelligence |
@@ -266,7 +267,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | UC-nn | use case (WP-S-01 §1.4), UC-01…UC-11 |
 | UE-nn | undeveloped event of a WP-A-04 fault tree |
 | UPD-nn | update procedure step (WP-O-02) |
-| V-nn | view of the SysML model (V-01…V-23) |
+| V-nn | view of the SysML model (V-01…V-24) |
 | VF-nn | vehicle family in the vehicle register |
 | VS-nn | verification case: VS-SI system integration, VS-HW hardware, VS-SWQ software, VS-FI fault injection, VS-SQ system qualification |
 | VT-nn | validation target (WP-V-02) |
