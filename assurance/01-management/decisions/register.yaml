@@ -5931,7 +5931,7 @@
     - key: C
       title: "Leave it to the TARA"
       detail: "No change. Cost: the gap stays implicit and an assessor may raise it."
-  sources: ["assurance/sim/cyber/README.md §2.4, §6.1 choice 5 (PR #454)", "assurance/02-concept/WP-C-09-tara.md §3", "assurance/02-concept/hatara/hatara-interactions.md"]
+  sources: ["LionDriver-security (private): assurance/sim/cyber/README.md §2.4, §6.1 choice 5 (moved there from PR #454, DQ-421 A)", "assurance/02-concept/WP-C-09-tara.md §3", "assurance/02-concept/hatara/hatara-interactions.md"]
   status: open
 
 - id: DQ-421
