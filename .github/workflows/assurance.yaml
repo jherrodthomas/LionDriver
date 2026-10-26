@@ -228,12 +228,14 @@ jobs:
         python3 tools/safety/test_fmea_diagrams.py
         python3 tools/safety/fmea_cards.py --check
         python3 tools/safety/test_fmea_cards.py
-    - name: Timing-budget, DFI-matrix and FFI-map figures match WP-S-04, WP-A-03 and WP-A-02 (and their tests)
+    - name: Timing-budget, DFI-matrix, two-channel DFA and FFI-map figures match WP-S-04, WP-A-03, dfa.yaml and WP-A-02 (and their tests)
       run: |
         python3 assurance/03-system/figures/fig_s04_timing.py --check
         python3 assurance/03-system/figures/test_fig_s04_timing.py
         python3 assurance/08-analyses/figures/fig_a03_dfi_matrix.py --check
         python3 assurance/08-analyses/figures/test_fig_a03_dfi_matrix.py
+        python3 assurance/08-analyses/figures/fig_a03_two_channel.py --check
+        python3 assurance/08-analyses/figures/test_fig_a03_two_channel.py
         python3 assurance/08-analyses/figures/fig_a02_interference_map.py --check
         python3 assurance/08-analyses/figures/test_fig_a02_interference_map.py
     - name: Fault tree diagrams and cut sets match WP-A-04 (and their tests)
