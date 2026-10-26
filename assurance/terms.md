@@ -11,7 +11,7 @@ Every abbreviation and record code used on the assurance pages and figures is de
 3. **On every figure.** Each generated figure ends with a "Terms:" line for what it draws, so a figure read on its own still explains itself.
 4. **Checked.** CI fails if a block is stale, a figure lacks its line, or a page or figure uses a term that is not in the list. To add one, add it to `TERMS` and run `python3 assurance/trace/tools/terms.py`.
 
-Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md), [hsi](03-system/hsi/README.md), [timing](03-system/timing/README.md), [cybersecurity](03-system/cybersecurity/README.md), [integration](03-system/integration/README.md), [odd](02-concept/odd/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md), [dfa](08-analyses/dfa/README.md). Other pages and older figures join the list as they are reworked.
+Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md), [hsi](03-system/hsi/README.md), [timing](03-system/timing/README.md), [cybersecurity](03-system/cybersecurity/README.md), [integration](03-system/integration/README.md), [verification](03-system/verification/README.md), [odd](02-concept/odd/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md), [dfa](08-analyses/dfa/README.md). Other pages and older figures join the list as they are reworked.
 
 ## Abbreviations
 
@@ -77,6 +77,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | HUD | head-up display (here the cluster's lane-assist display) |
 | HW | hardware |
 | ID | identifier |
+| IMU | inertial measurement unit: accelerometers and gyroscopes |
 | IPC | inter-process communication |
 | IR | infrared |
 | IRQ | interrupt request |
@@ -140,6 +141,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | STRIDE | spoofing, tampering, repudiation, information disclosure, denial of service, elevation of privilege |
 | SVG | scalable vector graphics (the figure format) |
 | SW | software |
+| SYS | system requirement SYS-nnn of WP-S-01 |
 | SysML | Systems Modeling Language: the system model in models/sysml |
 | TARA | threat analysis and risk assessment (ISO/SAE 21434) |
 | TBC | to be confirmed |
