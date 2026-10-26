@@ -284,7 +284,7 @@ def one_threat():
     ("1", "What do we protect?", "Asset AS-02: the panda's safety mode and parameter", "integrity · authenticity", None),
     ("2", "What harm if it is broken?", "Damage DS-01: unintended steering (H-01)", "impact Severe · level 4", RED),
     ("3", "Who could do what?", "Threat TS-02: a hacked openpilot computer sets an unsafe mode", "STRIDE: tampering, elevation", None),
-    ("4", "How, step by step?", "Attack path AP-02: root on the SoC → command 0xdc → no check", "", None),
+    ("4", "How, step by step?", "Attack path AP-02: root on the SoC → mode command → no check", "", None),
     ("5", "How hard is it?", "Hours · proficient · public design · moderate access · standard kit", "feasibility High", RED),
     ("6", "So how risky?", "Impact 4 × feasibility High", "risk 5 of 5", RED),
     ("7", "What do we do?", "Reduce: goal CSG-01 (CAL 3), lock the mode in panda firmware", "built, not verified", AMBER),
@@ -310,7 +310,7 @@ def one_threat():
   b.append(g(f"{tl.show(30.2)} fin", [t(70, y0 + 7 * 66 + 10, "The firmware lock is in the reference build but not verified, and the threat is not re-rated (OI-5).", 11.5, MID, 400, "start", True)]))
   b.append(stick(W - 40, h - 20, "point"))
   return svg(h, "Following one threat through the TARA (animated)",
-             "Seven questions for TS-02: the asset AS-02, the panda safety mode and parameter; the damage DS-01, unintended steering, impact Severe, level 4; the threat, a hacked openpilot computer setting an unsafe mode (tampering, elevation); the attack path AP-02, root on the SoC to command 0xdc with no check; the feasibility, High; the risk, 5 of 5; the treatment, reduce with goal CSG-01 at CAL 3, a lock in the panda firmware, built in the reference build and not verified (OI-5).", tl, b)
+             "Seven questions for TS-02: the asset AS-02, the panda safety mode and parameter; the damage DS-01, unintended steering, impact Severe, level 4; the threat, a hacked openpilot computer setting an unsafe mode (tampering, elevation); the attack path AP-02, root on the SoC to the mode command with no check; the feasibility, High; the risk, 5 of 5; the treatment, reduce with goal CSG-01 at CAL 3, a lock in the panda firmware, built in the reference build and not verified (OI-5).", tl, b)
 
 
 # ------------------------------------------------------------------ 2 damage is more than safety
@@ -533,7 +533,7 @@ def meet(d):
   rows = [
     (2.8, "HELP · IX-04", GRN, "One lock serves both", ["Envelope must run Toyota mode", "TSR-512 (SG-01…SG-07)"], ["No SoC command may change it", "CSR-C-01 (TS-02, risk 5)"], "both",
      "Verify it once, for both. Built, not verified."),
-    (7.6, "HURT · IX-01", RED, "A recovery path is an attack path", ["If the panda will not boot,", "the dev bootstub revives it"], ["The same route flashes unsigned", "firmware (TS-03, risk 5)"], "right",
+    (7.6, "HURT · IX-01", RED, "A recovery path is an attack path", ["If the panda will not boot,", "a recovery path revives it"], ["The same route can load other", "firmware (TS-03, risk 5)"], "right",
      "Authenticate the recovery or remove it (CSR-C-05: not built)."),
     (12.4, "HURT · IX-03", RED, "A rejected frame is a lost function", ["Stopping control unannounced", "is silent loss (H-02, H-06)"], ["Counter and CRC checks reject", "forged frames (CSR-C-09)"], "left",
      "A rejection must end in an announced take-over request."),

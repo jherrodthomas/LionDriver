@@ -28,7 +28,7 @@ derived from the code and cross-checked in simulation, and the measurement plan 
 | SG-nn | safety goal (HARA §6) |
 | SoC | system on chip: the comma device's main processor, running openpilot (QM) |
 | SysML | Systems Modeling Language: the system model in models/sysml |
-| T-nn | code-derived detection or reaction time (WP-S-04 §4) |
+| T-nn | code-derived detection or reaction time (WP-S-04 §4); in WP-M-01 and WP-S-06, a tailoring decision T-01…T-08 (WP-M-01 §5) |
 | TSC | technical safety concept |
 | TSR-nn | technical safety requirement (WP-S-02) |
 | TX | transmit |

@@ -1709,7 +1709,7 @@
   mechanism: ""
   timing: ""
   verification: "R-CFG"
-  baseline_impl: "Implemented by: INS-22, INS-23, INS-24; SPC-06. Status: Procedure defined. Needed because the panda accepts any mode from the SoC (GAP-09)"
+  baseline_impl: "Implemented by: INS-22, INS-23, INS-24; SPC-06. Status: Procedure defined. In the reference build the firmware fixes the mode and parameter (TSR-512, panda `3859fa8`, not verified on hardware), so the check confirms it; in other builds the panda accepts any mode from the SoC and the check is the only control (GAP-09)"
   status: proposed
   source: WP-S-06
 

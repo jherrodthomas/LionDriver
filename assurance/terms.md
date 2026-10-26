@@ -11,7 +11,7 @@ Every abbreviation and record code used on the assurance pages and figures is de
 3. **On every figure.** Each generated figure ends with a "Terms:" line for what it draws, so a figure read on its own still explains itself.
 4. **Checked.** CI fails if a block is stale, a figure lacks its line, or a page or figure uses a term that is not in the list. To add one, add it to `TERMS` and run `python3 assurance/trace/tools/terms.py`.
 
-Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md), [hsi](03-system/hsi/README.md), [timing](03-system/timing/README.md), [cybersecurity](03-system/cybersecurity/README.md), [integration](03-system/integration/README.md), [verification](03-system/verification/README.md), [system-requirements](03-system/system-requirements/README.md), [odd](02-concept/odd/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md), [dfa](08-analyses/dfa/README.md). Other pages and older figures join the list as they are reworked.
+Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md), [hsi](03-system/hsi/README.md), [timing](03-system/timing/README.md), [cybersecurity](03-system/cybersecurity/README.md), [integration](03-system/integration/README.md), [verification](03-system/verification/README.md), [system-requirements](03-system/system-requirements/README.md), [production](03-system/production/README.md), [odd](02-concept/odd/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md), [dfa](08-analyses/dfa/README.md). Other pages and older figures join the list as they are reworked.
 
 ## Abbreviations
 
@@ -38,6 +38,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | DFA | dependent failure analysis |
 | DM | driver monitoring |
 | DMA | direct memory access: hardware that copies data without the processor |
+| DRCC | dynamic radar cruise control: Toyota's stock adaptive cruise |
 | DRV | the driver |
 | DSU | driving support unit (Toyota's radar cruise module) |
 | DTC | diagnostic trouble code: a fault code an ECU stores, read with a scan tool or over UDS |
@@ -91,11 +92,13 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | JPEG | a compressed image format |
 | JWT | JSON web token (the device's login token to the back end) |
 | LD-SDA | LionDriver Supervised Driving Assistance, the item |
+| LDA | lane departure alert: Toyota's stock lane warning |
 | LDW | lane departure warning |
 | LFS | Git Large File Storage (where the model files live) |
 | LKA | lane keeping assist |
 | LKAS | lane keeping assist system |
 | LOG | verification by analysis of drive logs |
+| LTA | lane tracing assist: Toyota's stock lane-centring function |
 | MB | megabyte |
 | MCU | microcontroller: the panda safety processor (STM32H7) |
 | MDN | mixture density network (how the model reports a spread of possible values) |
@@ -124,6 +127,14 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | PR | pull request |
 | PVD | programmable voltage detector (MCU supply monitor) |
 | QM | quality managed: no ASIL; ordinary quality processes suffice |
+| R-CAL | installation record block: calibration (WP-O-01 §5) |
+| R-CFG | installation record block: configuration (WP-O-01 §5) |
+| R-DEV | installation record block: device and harness (WP-O-01 §5) |
+| R-FUN | installation record block: function checks (WP-O-01 §5) |
+| R-INS | installation record block: installation work (WP-O-01 §5) |
+| R-SW | installation record block: software and firmware (WP-O-01 §5) |
+| R-USR | installation record block: driver briefing (WP-O-01 §5) |
+| R-VEH | installation record block: vehicle (WP-O-01 §5) |
 | RAM | random-access memory |
 | RDP | read-out protection of the MCU's flash (option bytes) |
 | ROM | read-only memory |
@@ -195,6 +206,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | CSG-nn | cybersecurity goal (WP-C-10) |
 | CSR-nn | cybersecurity requirement: CSR-C-nn at concept level (WP-C-10 §7), CSR-nnn refined (WP-S-07) |
 | D-nn | design decision of the earlier decision list (D-01…D-12; D-08 is the Experimental Mode decision) |
+| DEC-nn | decommissioning step (WP-O-02 §7) |
 | DFI-nn | dependent failure initiator (WP-A-03 §4): one cause that could defeat two elements at once |
 | DMP-nn | driver monitoring performance requirement (WP-C-08 §5) |
 | DQ-nn | decision of the project lead (decision register) |
@@ -217,13 +229,16 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | IF-nn | interface of the item (WP-C-01 §3.4) |
 | IND-nn | independence claim (WP-S-03 §7) |
 | INS-nn | installation check (WP-O-01) |
+| ITS-nn | item service step: replacing a faulty device or harness (WP-O-02 §5) |
 | IX-nn | safety-security interaction (HATARA) |
 | KS-nn | known scenario (WP-V-03) |
 | M-nn | timing measurement of the plan in WP-S-04 §6 |
 | NF-nn | finding of the onboard code review |
 | OI-nn | open item of the document it appears in |
+| OPS-nn | operation step: the driver's pre-drive and field checks (WP-O-02 §3) |
 | OS-nn | operational situation (HARA §3) |
 | PL-nn | platform (PL-001 is LionDriver's) |
+| PM-nn | periodic maintenance check of the item (WP-O-02 §4) |
 | R-nn | shared resource in the DFA map (08-analyses/dfa/shared-resources.yaml): something two elements both depend on |
 | RM-nn | runtime monitor of the AI safety plan (WP-M-10) |
 | RR-nn | review record |
@@ -231,9 +246,11 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | SH-nn | SOTIF hazard (WP-C-05) |
 | SM-nn | safety mechanism (TSC §6) |
 | SN-nn | stakeholder need (WP-S-01 §1.3), SN-01…SN-12 |
+| SPC-nn | special characteristic of the installation (WP-O-01 §4) |
 | SS-nn | safe state (FSC §6): SS-L lateral, SS-G longitudinal, SS-S envelope silent |
 | ST-nn | step of the start-up and engagement sequence (WP-S-03 Table 4-1), ST-01…ST-21 |
-| T-nn | code-derived detection or reaction time (WP-S-04 §4) |
+| SVC-nn | vehicle service action that needs a re-check of the item (WP-O-02 §4) |
+| T-nn | code-derived detection or reaction time (WP-S-04 §4); in WP-M-01 and WP-S-06, a tailoring decision T-01…T-08 (WP-M-01 §5) |
 | TB-nn | trust boundary (WP-S-07 §3.2) |
 | TC-nn | triggering condition (WP-C-06) |
 | TL-nn | tool entry in the tool register (WP-P-07) |

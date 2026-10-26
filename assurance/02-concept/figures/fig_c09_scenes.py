@@ -352,14 +352,14 @@ SOC = "Code execution on the SoC (QM user space)"
 MODEL: dict[str, dict] = {
   "TS-01": dict(
     title="Forged frames on the vehicle bus reach actuation and plausibility",
-    scene=dict(PHANTOM, pills=P((1, "A device on the OBD port or bus", "bad", 0.15, 6), (2, "Forged frames: valid checksum, no counter", "bad", 0.3, 28),
+    scene=dict(PHANTOM, pills=P((1, "A device on the OBD port or bus", "bad", 0.15, 6), (2, "Forged frames accepted as the car's own", "bad", 0.3, 28),
                                  (3, "The car brakes for nothing; follower closes", "bad", 0.6, 224))),
-    steps=["Physical access to the OBD-II port or bus", "Valid-checksum frames injected on bus 0", "Actuation and plausibility messages",
+    steps=["Physical access to the OBD-II port or bus", "Forged frames injected on the car bus", "Actuation and plausibility messages",
            "Unintended steering, braking or acceleration"],
-    broken=(1, "no counter or authentication on RX"),
+    broken=(1, "received frames not authenticated"),
     trusts="A frame with a valid checksum came from the car's own ECU.",
-    true="Received plausibility frames carry no counter or authentication, so a device on the bus can forge them. Physical access is "
-         "needed, which keeps feasibility at Medium."),
+    true="Received plausibility frames are not authenticated end to end, so a device on the bus can forge them. Physical access "
+         "is needed, which keeps feasibility at Medium."),
   "TS-02": dict(
     title="A compromised SoC switches the panda to a permissive safety mode",
     scene=dict(SWERVE, pills=P((1, "Foothold: code runs on the SoC", "bad", 0.15, 6), (2, "Panda told to use another safety mode", "bad", 0.3, 28),
@@ -370,14 +370,14 @@ MODEL: dict[str, dict] = {
     true="The safety-mode command has no authentication or cross-check, so code on the SoC can swap the envelope out. The reference "
          "build now locks the mode in firmware; not yet verified, and the risk is not re-rated (OI-5)."),
   "TS-03": dict(
-    title="A compromised SoC puts development firmware on the panda",
-    scene=dict(SWERVE, pills=P((1, "Foothold: code runs on the SoC", "bad", 0.15, 6), (2, "Boot pins and recovery load other firmware", "bad", 0.3, 28),
+    title="A compromised SoC puts other firmware on the panda",
+    scene=dict(SWERVE, pills=P((1, "Foothold: code runs on the SoC", "bad", 0.15, 6), (2, "The panda boot path loads other firmware", "bad", 0.3, 28),
                                 (3, "No envelope: any actuation passes", "bad", 0.6, 224))),
-    steps=[SOC, "Boot pins and recovery flash a dev bootstub", "Panda firmware and boot chain", "Envelope replaced or removed"],
-    broken=(1, "no read/write protection; recovery open"),
+    steps=[SOC, "SoC reprograms the panda via its boot path", "Panda firmware and boot chain", "Envelope replaced or removed"],
+    broken=(1, "flash protection not in place"),
     trusts="Only signed firmware ever runs on the safety MCU.",
-    true="With code on the SoC, the boot pins and a recovery path can put a development bootstub on the MCU, and no read- or "
-         "write-protection stops it. The envelope is then whatever that firmware does."),
+    true="With code on the SoC, its control of the panda boot path can put other firmware on the MCU, and flash protection "
+         "is not yet in place to stop it. The envelope is then whatever that firmware does. Details: private record GD-03."),
   "TS-04": dict(
     title="Forged parameters or messages on the SoC bend the plan or mute monitoring",
     scene=dict(DRIFT_LAT, pills=P((1, "A local process on the SoC", "bad", 0.15, 6), (2, "Forged parameters or IPC messages", "bad", 0.3, 28),
@@ -389,56 +389,56 @@ MODEL: dict[str, dict] = {
     true="Parameters are plain files and inter-process messages carry no authentication, so any local process can change the plan, "
          "the model output or driver monitoring. The panda bounds the torque, not the path."),
   "TS-05": dict(
-    title="Weak firmware signing lets other panda firmware pass as ours",
-    scene=dict(SWERVE, pills=P((1, "Firmware built outside LionDriver", "bad", 0.15, 6), (2, "Passes the weak signature check", "bad", 0.3, 28),
+    title="Firmware signing below target lets other firmware pass as ours",
+    scene=dict(SWERVE, pills=P((1, "Firmware built outside LionDriver", "bad", 0.15, 6), (2, "Accepted by the firmware check", "bad", 0.3, 28),
                                 (3, "Unsigned-equivalent firmware runs", "bad", 0.6, 224))),
-    steps=["Ability to build and flash panda firmware", "Debug-key path or a forged weak signature", "Panda firmware image",
+    steps=["Ability to build and flash panda firmware", "Accepted without the release key", "Panda firmware image",
            "Firmware with no assured envelope runs"],
-    broken=(1, "RSA-1024/SHA-1; debug key accepted"),
+    broken=(1, "signing below CSG-02"),
     trusts="A firmware image that passes the signature check is ours.",
-    true="Signing rests on RSA-1024/SHA-1, a debug key is committed and a softloader ships in release builds. An image that passes "
-         "the check need not come from LionDriver."),
+    true="Firmware signing and the exclusion of debug capability are below what CSG-02 needs. An image that passes the check "
+         "need not come from LionDriver. Details: GD-01, GD-02."),
   "TS-06": dict(
-    title="A malicious update reaches every device through the branch updater",
-    scene=dict(SWERVE, pills=P((1, "Update source or branch controlled", "bad", 0.15, 6), (2, "Devices check it out at the next update", "bad", 0.3, 28),
+    title="A malicious update reaches every device through the updater",
+    scene=dict(SWERVE, pills=P((1, "Update source controlled", "bad", 0.15, 6), (2, "Devices install it at the next update", "bad", 0.3, 28),
                                 (3, "Any SoC-rooted damage, fleet-wide", "bad", 0.6, 224))),
-    steps=["Control of the update source or branch", "Device checks the branch out at update", "Software update payload",
+    steps=["Control of the update source", "Device installs it at the next update", "Software update payload",
            "Any SoC-rooted damage, on every device"],
     broken=(1, "no end-to-end signature"),
-    trusts="What the update branch delivers is a LionDriver release.",
-    true="The updater force-checks-out a configurable branch. Beyond TLS nothing signs the code, and system images are trusted by "
-         "hashes in the same tree, so whoever controls the source controls every device that updates."),
+    trusts="What the update source delivers is a LionDriver release.",
+    true="Updates are not authenticated end to end, so whoever controls the update source controls every device that "
+         "updates. Automatic updates stay off until signed updates exist. Details: private record GD-05."),
   "TS-07": dict(
-    title="Server-directed remote calls take data, open a tunnel or read keys",
+    title="Server-directed remote calls take data or open remote access",
     scene=dict(kind="data", origin="server", origin_label="compromised back end", device_label="the device, online",
-               items=["log uploads", "SSH tunnel", "authorized keys"],
+               items=["log uploads", "remote access", "device data"],
                pills=P((1, "Back end compromised or token stolen", "bad", 0.1, 6), (2, "Remote calls with wide scope", "bad", 0.3, 28),
-                       (3, "Data out; a tunnel in", "bad", 0.6, 224))),
+                       (3, "Data out; access in", "bad", 0.6, 224))),
     steps=["Compromised back end or stolen device token", "Server-directed remote calls", "Remote channel, video, location",
            "Personal data out; impersonation"],
-    broken=(1, "call scope and upload targets open"),
+    broken=(1, "call scope wider than needed"),
     trusts="Requests on the remote channel come from a trustworthy back end.",
-    true="With the back end compromised or a device token stolen, remote calls can upload log files to any address, open an SSH "
-         "tunnel and read the authorized keys. Streaming is blocked while driving."),
+    true="With the back end compromised or a device token stolen, remote calls reach further than the item needs: data out "
+         "and remote access in. Streaming is blocked while driving. Details: private record GD-06."),
   "TS-08": dict(
     title="A build with SSH switched on gives root on the SoC",
     scene=dict(SWERVE, pills=P((1, "Network reach and a valid SSH key", "bad", 0.15, 6), (2, "Root on the SoC", "bad", 0.3, 28),
                                 (3, "Every SoC-rooted path opens", "bad", 0.6, 224))),
     steps=["Network reach and a valid SSH key", "Interactive login to the device", "SSH access and the SoC software",
            "Root on the SoC: every SoC path"],
-    broken=(1, "INTERNAL builds pre-enable SSH"),
+    broken=(1, "pre-provisioned SSH access"),
     trusts="Only the owner can log in to the device.",
-    true="INTERNAL installer builds enable SSH and install a key. Anyone with that key and network reach gets root on the SoC, and "
-         "from there every SoC-rooted path. Release builds default SSH to off."),
+    true="Some builds can come with SSH already enabled and a key installed. Anyone with that key and network reach gets "
+         "root on the SoC, and from there every SoC-rooted path. Release builds default SSH to off."),
   "TS-09": dict(
     title="A tampered model file runs code when it is loaded",
     scene=dict(DRIFT_LAT, pills=P((1, "A model file is replaced", "bad", 0.15, 6), (2, "Loading it runs code", "bad", 0.3, 28),
                                    (3, "The driving model's output is theirs", "bad", 0.6, 224))),
-    steps=["A way to place a model file", "Model loaded with pickle", "ML model artefacts", "Code runs in the driving-model process"],
+    steps=["A way to place a model file", "Model loaded without a check", "ML model artefacts", "Code runs in the driving-model process"],
     broken=(1, "no integrity check; load runs code"),
     trusts="A model file is only numbers.",
-    true="Models load with pickle, which can execute code, and no hash or signature is checked at load. Whoever can place a model "
-         "file runs code in the driving-model process."),
+    true="Model files are loaded in a format that can execute code, and no hash or signature is checked at load. Whoever "
+         "can place a model file runs code in the driving-model process."),
   "TS-10": dict(
     title="A compromised upstream flows into every build",
     scene=dict(SWERVE, pills=P((1, "Upstream repo or dependency compromised", "bad", 0.15, 6), (2, "Flows into the next build or sync", "bad", 0.3, 28),
@@ -462,13 +462,13 @@ MODEL: dict[str, dict] = {
          "device can read them, and the key lets them sign as the device."),
   "TS-12": dict(
     title="Flooding the SoC starves the processes that drive",
-    scene=dict(CURVE_DRIFT, pills=P((1, "CPU or IPC exhausted", "bad", 0.36, 150), (2, "Soft disable: about 3 s on stale data", "bad", 0.5, 174),
+    scene=dict(CURVE_DRIFT, pills=P((1, "CPU or IPC exhausted", "bad", 0.36, 150), (2, "Soft disable: seconds on stale data", "bad", 0.5, 174),
                                      (3, "The car runs wide", "bad", 0.7, 198))),
     steps=["A foothold or crafted input on the SoC", "CPU or IPC exhausted", "SoC software and its messages", "Stale actuation, silent loss of control"],
     broken=(1, "no temporal partitioning"),
     trusts="If something stalls, control ends at once.",
     true="Nothing partitions the processes that drive from the rest. A stall raises a soft disable, so actuation goes on with stale "
-         "data for about 3 s."),
+         "data for a few seconds."),
   "TS-13": dict(
     title="Data signed with a stolen key passes as the device's own",
     scene=dict(kind="data", origin="none", device_label="a copy of the key", items=["trip logs", "uploads", "requests"],
@@ -480,14 +480,14 @@ MODEL: dict[str, dict] = {
     true="Non-repudiation rests only on the device token and its key. With the key, anyone can sign data and requests that cannot "
          "be told apart from the device's."),
   "TS-14": dict(
-    title="A compromised SoC sends PCS frames or floods actuation through the panda",
-    scene=dict(PHANTOM, pills=P((1, "Foothold: code runs on the SoC", "bad", 0.15, 6), (2, "PCS frames pass the TX whitelist", "bad", 0.3, 28),
+    title="A compromised SoC sends camera frames or floods actuation via the panda",
+    scene=dict(PHANTOM, pills=P((1, "Foothold: code runs on the SoC", "bad", 0.15, 6), (2, "Frames the panda should refuse pass", "bad", 0.3, 28),
                                  (3, "Braking nobody asked for", "bad", 0.6, 224))),
-    steps=[SOC, "PCS frames, or a flood of actuation IDs", "Actuation and stock PCS messages", "Unintended braking or steering"],
-    broken=(1, "no content or per-ID rate check"), net=(2, "refused: reference build, not verified"),
-    trusts="Every frame on my TX whitelist is safe to send.",
-    true="At the shipped baseline the whitelist accepts the PCS and DSU IDs with no content check, and no per-ID rate is supervised. "
-         "The reference build now refuses them and checks the rate; not verified on hardware."),
+    steps=[SOC, "Camera-side frames, or an actuation flood", "Actuation and stock PCS messages", "Unintended braking or steering"],
+    broken=(1, "transmit checks incomplete"), net=(2, "refused: reference build, not verified"),
+    trusts="Every frame the panda lets through is safe to send.",
+    true="At the shipped baseline the panda's transmit checks did not cover these frames and rates. The reference build now "
+         "refuses them and checks the rate; not verified on hardware. Details: private record GD-11."),
 }
 
 

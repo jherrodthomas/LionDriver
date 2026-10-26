@@ -96,7 +96,7 @@ the reference build but not verified, and not re-rated (OI-5).
 *WP-C-09 Figure 9-1 (§9).* All five risk-5 scenarios:
 
 - **TS-02:** an unauthenticated host command sets any panda safety mode, disabling the envelope.
-- **TS-03:** the SoC drives the panda's boot pins and flashes a development bootstub.
+- **TS-03:** the SoC uses its control of the panda boot path to replace the firmware.
 - **TS-04:** unauthenticated parameters or IPC override control, the model or driver monitoring.
 - **TS-11:** a stolen device exposes video, location history and the identity key at rest.
 - **TS-14:** a compromised SoC injects pre-collision frames or floods actuation IDs.
