@@ -3,8 +3,8 @@
 | Field | Value |
 |---|---|
 | Work product | WP-S-01 System requirements specification (functional, non-safety) |
-| Standard reference | ASPICE 4.0 SYS.2; ISO 21448:2022 §5 (specification of the intended functionality); ISO 15622, ISO 22179, ISO 11270 as informative performance references |
-| Version | 0.6 (SYS-040 status: the no-entry is in the code since the 2026-10-19 change; the alert does not name the setting; 2026-10-20). 0.5 (lead answers of 2026-10-18: SYS-040 refuses engagement outside the assured settings (DQ-221 A); SYS-041 refuses engagement below a highway speed floor (DQ-280 A); 2026-10-18). 0.4 (§10.1 allocation of every SYS requirement to architecture elements, read by the SysML model; SYS-027 updated for the Chill-mode default; 2026-10-14). 0.3 (reference configuration named by generation, E210; 2026-10-12). History: 0.2 (status update 2026-10-12: SYS-120 metric excludes frames refused by design in the reference build; SYS-121 evidence lists the health fields added at `bf6ce8c`). 0.1 |
+| Standard reference | ASPICE 4.0 SYS.1 (stakeholder needs, §1.2–§1.4), SYS.2; ISO 21448:2022 §5 (specification of the intended functionality); ISO 15622, ISO 22179, ISO 11270 as informative performance references |
+| Version | 0.8 (§1.2–§1.4: stakeholders, stakeholder needs SN-01…SN-12 and use cases UC-01…UC-11, refined by the SYS requirements and safety goals and modelled in SysML; AI-drafted, not reviewed (I0); 2026-10-26). 0.7 (SYS-021: the ODD speed bound is 110 km/h on highways only (DQ-260, DQ-023), was 120 / 90 km/h; §10: Figure 10-1, the requirements by function, generated from §2–§9 and the SysML coverage; 2026-10-26). 0.6 (SYS-040 status: the no-entry is in the code since the 2026-10-19 change; the alert does not name the setting; 2026-10-20). 0.5 (lead answers of 2026-10-18: SYS-040 refuses engagement outside the assured settings (DQ-221 A); SYS-041 refuses engagement below a highway speed floor (DQ-280 A); 2026-10-18). 0.4 (§10.1 allocation of every SYS requirement to architecture elements, read by the SysML model; SYS-027 updated for the Chill-mode default; 2026-10-14). 0.3 (reference configuration named by generation, E210; 2026-10-12). History: 0.2 (status update 2026-10-12: SYS-120 metric excludes frames refused by design in the reference build; SYS-121 evidence lists the health fields added at `bf6ce8c`). 0.1 |
 | Status | Draft |
 | ASIL / scope | QM / SOTIF (safety requirements are in [WP-S-02](WP-S-02-technical-safety-requirements.md)) |
 | Author | Assurance team (initial draft) |
@@ -29,6 +29,58 @@ Many targets need data that LionDriver does not yet have (fork-owned drive logs,
 
 Paths are under `openpilot/` unless prefixed.
 
+### 1.2 Stakeholders and actors
+
+The people with an interest in what LD-SDA does, and the people and systems that take part in its use cases (§1.4). A stakeholder has needs (§1.3); an actor takes part in a use case. Drafted from WP-C-01 and WP-C-02 by the assurance team (AI-assisted, not yet reviewed, I0).
+
+| Stakeholder | Kind | Who |
+|---|---|---|
+| Driver | stakeholder, actor | The licensed driver who engages LD-SDA and supervises it at all times (SAE Level 2; WP-C-02 §4.2) |
+| Occupants | stakeholder | The passengers in the car |
+| Other road users | stakeholder | Drivers, riders and pedestrians around the car |
+| Owner | stakeholder, actor | The person who installs the device, keeps the car as AOU-08…AOU-10 require, and decides when the software changes |
+| Project lead | stakeholder, actor | The maintainer and safety authority: releases, field monitoring and the evidence behind them |
+| Vehicle | actor | The reference car's own systems that the item commands or reads: steering, engine, brakes, collision braking, cluster (WP-C-01 §3.2) |
+
+### 1.3 Stakeholder needs
+
+What each stakeholder needs from LD-SDA, in their words rather than as requirements. Each need is refined by the system requirements of §2–§9 and, where it is about harm, by the safety goals of [WP-C-03 §6](../02-concept/WP-C-03-hara.md). Every system requirement and every safety goal refines at least one need.
+
+| ID | Stakeholder | Need | Refined by | Source |
+|---|---|---|---|---|
+| SN-01 | Driver | Less effort keeping the car in its lane on a highway, while staying in charge of the steering | SYS-001, SYS-002, SYS-003, SYS-007, SYS-008 | WP-C-01 §2.1 (F-01); WP-C-02 §4.1 |
+| SN-02 | Driver | Help with a lane change, but only when the driver asks for it | SYS-005, SYS-006 | WP-C-02 §4.1 (F-01) |
+| SN-03 | Driver | A set speed and a chosen gap to the car ahead, also when stopping and moving off in a queue | SYS-020, SYS-021, SYS-022, SYS-023, SYS-024, SYS-025, SYS-026 | WP-C-02 §4.1 (F-02) |
+| SN-04 | Driver | Switching the assistance on and off with the car's own controls, and taking over at any moment by braking, steering or accelerating | SYS-040, SYS-042, SG-05 | WP-C-02 §4.1 (F-03); WP-C-03 §6 |
+| SN-05 | Project lead | Assistance only where it was assured: on highways inside the ODD, at highway speed and with the assured settings | SYS-021, SYS-027, SYS-040, SYS-041 | WP-C-02 §3; DQ-023, DQ-221, DQ-280 |
+| SN-06 | Driver | Knowing at all times whether the assistance is on, and why it asks the driver to take over | SYS-004, SYS-080, SYS-081, SYS-082, SYS-083 | WP-C-02 §4.1 (F-05); WP-C-08 |
+| SN-07 | Driver | A warning of an imminent collision or of drifting out of the lane, also when the assistance is off | SYS-100, SYS-101, SYS-102 | WP-C-02 §4.1 (F-06, F-07) |
+| SN-08 | Other road users | A driver who stays attentive while assisted, and a car that slows down safely if the driver does not respond | SYS-060, SYS-061, SYS-062, SYS-063, SG-08 | WP-C-02 §4.2; WP-C-03 §6 |
+| SN-09 | Occupants, other road users | The item never moves the car in a way the driver cannot control, and never weakens the car's own safety functions | SG-01, SG-02, SG-03, SG-04, SG-06, SG-07 | WP-C-03 §6 |
+| SN-10 | Driver | Assistance that is ready soon after starting and does not drop out without cause | SYS-043, SYS-120, SYS-145 | WP-C-02 §4.1 |
+| SN-11 | Project lead | Every drive recorded and tied to the software that ran, so that incidents can be analysed | SYS-121, SYS-140, SYS-141, SYS-142, SYS-143 | WP-C-01 §2.1 (F-09); WP-O-04 |
+| SN-12 | Owner | Control over what leaves the car and when its software changes | SYS-144, SYS-145 | WP-S-07 §3.6, §3.7; DQ-121 |
+
+### 1.4 Use cases
+
+How the stakeholders use LD-SDA, the subject of every use case. Each use case names its actors, the functions of WP-C-01 §2.1 it performs and the needs it serves. Every need has a use case and every function takes part in one.
+
+| ID | Use case | Actors | Goal and main flow | Functions | Needs |
+|---|---|---|---|---|---|
+| UC-01 | Keep the lane on a highway | Driver, Vehicle | The item steers the car near the lane centre, through curves down to R_ODD, while the driver keeps eyes on the road and hands near the wheel | F-01, F-05, F-08 | SN-01 |
+| UC-02 | Change lanes on request | Driver, Vehicle | The driver checks the next lane, signals and nudges the wheel; the item moves the car over within 10 s, or cancels when the signal is released | F-01, F-08 | SN-02 |
+| UC-03 | Cruise and follow | Driver, Vehicle | The item holds the set speed, then follows a slower car ahead at the chosen gap | F-02, F-08 | SN-03 |
+| UC-04 | Stop and go in a queue | Driver, Vehicle | The item stops behind a stopping car, holds the car, and moves off when the car ahead does; with no car ahead, the driver moves off | F-02, F-08 | SN-03 |
+| UC-05 | Engage | Driver, Vehicle | The driver sets cruise with the car's controls; the item takes control only inside the ODD, at highway speed and with the assured settings, and otherwise refuses with a no-entry alert | F-03, F-05, F-08 | SN-04, SN-05, SN-10 |
+| UC-06 | Take over | Driver, Vehicle | The driver brakes, cancels, steers or accelerates; the item releases control at once on brake or cancel, and lets the driver override on steering or accelerator | F-03, F-08 | SN-04, SN-09 |
+| UC-07 | Hand back at a limit | Driver | At a curve beyond the item's authority, a fault or the edge of the ODD, the item warns, says why, and hands control back | F-03, F-05, F-08 | SN-06, SN-09, SN-10 |
+| UC-08 | Warn when not assisted | Driver | With the assistance off, the item warns of a predicted collision or of a drift towards a lane line | F-05, F-06, F-07 | SN-07 |
+| UC-09 | Keep the driver attentive | Driver | The item watches the driver; on distraction it escalates its alerts, and with no response it slows the car, disengages and locks out | F-02, F-04, F-05 | SN-08 |
+| UC-10 | Record and review a drive | Driver, Project lead | Every drive is logged with the software that ran; the driver can flag a moment; the project lead reviews the logs for field monitoring | F-09 | SN-11 |
+| UC-11 | Install and update | Owner | The owner installs the device and installs each release by hand; nothing is uploaded or updated while driving unless the policy allows it | F-09 | SN-12 |
+
+The needs and use cases are in the SysML model with the requirements, the architecture and the verification cases, so a need can be followed from its stakeholder to the cases that verify it ([models/sysml](../models/sysml/README.md), views V-14 and V-15).
+
 ## 2. F-01 Lateral control (lane centring, assisted lane change)
 
 | ID | Requirement | Type | Target / criterion | Verif | Current implementation | Rationale for TBD |
@@ -47,7 +99,7 @@ Paths are under `openpilot/` unless prefixed.
 | ID | Requirement | Type | Target / criterion | Verif | Current implementation | Rationale for TBD |
 |---|---|---|---|---|---|---|
 | SYS-020 | The system shall hold the set speed within ±**TBD** km/h on level road without a lead. | P | proposed ±2 km/h | T-VEH | `selfdrive/controls/lib/longitudinal_planner.py` | Grade effects need measurement |
-| SYS-021 | The set-speed range shall be the PCM cruise set range of the reference vehicle, and shall not exceed the ODD speed bound of 120 km/h (ODD-H) / 90 km/h (ODD-A). | C | as stated | R, T-VEH | Toyota set speed from PCM (pcm cruise); openpilot cap `V_CRUISE_MAX = 145` km/h (`selfdrive/car/cruise.py:12`); engagement allowed to ≈ 149 km/h (`opendbc_repo/opendbc/car/interfaces.py:23-24`) | System-side enforcement of the ODD bound is FM-07 ([WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md)) |
+| SYS-021 | The set-speed range shall be the PCM cruise set range of the reference vehicle, and shall not exceed the ODD speed bound of 110 km/h (ODD-H, DQ-260; the arterial ODD-A was dropped, DQ-023). | C | as stated | R, T-VEH | Toyota set speed from PCM (pcm cruise); openpilot cap `V_CRUISE_MAX = 145` km/h (`selfdrive/car/cruise.py:12`); engagement allowed to ≈ 149 km/h (`opendbc_repo/opendbc/car/interfaces.py:23-24`) | System-side enforcement of the ODD bound is FM-07 ([WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md)) |
 | SYS-022 | When following a lead, the system shall keep a time gap equal to the selected personality: relaxed 1.75 s, standard 1.45 s, aggressive 1.25 s. | P | steady-state gap error ≤ **TBD** | T-VEH, LOG | `selfdrive/controls/lib/longitudinal_mpc_lib/long_mpc.py:71-79` | Steady-state accuracy needs logs |
 | SYS-023 | The default personality in the reference configuration shall be "standard" or "relaxed", not "aggressive". | C | as stated | R | Param `LongitudinalPersonality` | Decision in [WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) |
 | SYS-024 | The system shall bring the vehicle to a stop behind a stopping lead, keeping a stopped distance of about 6 m, and hold it at standstill. | F/P | stop distance 6 m ± **TBD** | T-VEH | `STOP_DISTANCE = 6.0` (`long_mpc.py:57`); standstill/permit braking `opendbc_repo/opendbc/car/toyota/carcontroller.py:179-186, 244-248` | — |
@@ -111,6 +163,10 @@ The safety requirements of F-08 are TSR-1xx…7xx in [WP-S-02](WP-S-02-technical
 | SYS-145 | With automatic updates disabled, the system shall not block engagement because of missing update connectivity. | F | as stated | T-VEH | `Offroad_ConnectivityNeeded` gate (`system/updated/updated.py:324-341`; `system/hardware/hardwared.py:349`, `DisableUpdates` honoured) | To be tested ([WP-O-02](../09-production-operation/WP-O-02-operation-service-decommissioning.md) OI-4) |
 
 ## 10. Traceability
+
+![Figure 10-1: the 39 system requirements by function, each with its type and verification methods, flagged where the target is still TBD (12) or no test case verifies it (14)](figures/fig-s01-10-1-requirements.svg)
+
+*Figure 10-1.* The requirements of §2–§9 by function. A requirement is flagged "target TBD" when its statement or its Target cell still contains TBD (OI-1), and "no test case" when the SysML model's coverage report finds no specified case that verifies it (WP-S-09 OI-6). Generated by [`figures/fig_s01_requirements.py`](figures/fig_s01_requirements.py) from this document and the model; nothing is hand-listed.
 
 | SYS | Function | Related TSR / SOTIF item |
 |---|---|---|

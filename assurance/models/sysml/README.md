@@ -2,9 +2,9 @@
 
 | Field | Value |
 |---|---|
-| What | The LD-SDA architecture as a SysML v2 model: elements, integrity, ports, interfaces, cereal services, safety mechanisms, functions and their chains, security zones and trust boundaries, integration steps, the operating modes as a state machine, the requirements of WP-C-03, WP-C-04, WP-S-01, WP-S-02 and WP-S-07 with their derivation, satisfy and verify relationships, and the views drawn from them |
+| What | LD-SDA end to end as a SysML v2 model: stakeholders, stakeholder needs and use cases, elements, integrity, ports, interfaces, cereal services, safety mechanisms, functions and their chains, security zones and trust boundaries, integration steps, the operating modes as a state machine, the requirements of WP-C-03, WP-C-04, WP-S-01, WP-S-02 and WP-S-07 with their derivation, satisfy and verify relationships, and the views drawn from them |
 | Status | Draft, AI-assisted (Claude), not reviewed. Decisions SY-01 to SY-06 taken by the lead on 2026-10-24 (DQ-185 to DQ-187); SY-05 and SY-06 wait for the model review (OI-8) |
-| Documents of record | [WP-C-01](../../02-concept/WP-C-01-item-definition.md) §3, [WP-S-03](../../03-system/WP-S-03-technical-safety-concept-architecture.md) §3, §6, §8, §9, [WP-W-03](../../05-software/WP-W-03-software-architecture.md) §3.1, §4.1; for requirements the trace data ([`trace/items`](../../trace/items)), [WP-S-01](../../03-system/WP-S-01-system-requirements.md) §2–§10.1, [WP-S-07](../../03-system/WP-S-07-cybersecurity-requirements-architecture.md) §4 and the test specifications. The model is a checked copy of them (§4) |
+| Documents of record | [WP-C-01](../../02-concept/WP-C-01-item-definition.md) §3, [WP-S-03](../../03-system/WP-S-03-technical-safety-concept-architecture.md) §3, §6, §8, §9, [WP-W-03](../../05-software/WP-W-03-software-architecture.md) §3.1, §4.1; for requirements the trace data ([`trace/items`](../../trace/items)), [WP-S-01](../../03-system/WP-S-01-system-requirements.md) §1.2–§10.1, [WP-S-07](../../03-system/WP-S-07-cybersecurity-requirements-architecture.md) §4 and the test specifications. The model is a checked copy of them (§4) |
 | Tool classification | [WP-P-07](../../07-supporting/WP-P-07-tool-classification-qualification.md) TL-26 (OMG pilot implementation), TL-27 (in-house reader, checks, renderer); TCL1, no verification credit |
 | Explorer | [`generated/explorer.html`](generated/explorer.html): open locally in a browser |
 
@@ -58,12 +58,13 @@ A generated view replaces a hand-drawn figure when it carries the same facts; un
 | [`model/Requirements.sysml`](model/Requirements.sysml) | **Generated.** 282 requirements as `requirement` usages: safety goals SG, FSRs and TSRs from the trace data, system requirements SYS of WP-S-01, cybersecurity requirements CSR of WP-S-07 §4, each with its text, ASIL, allocation text and verification method; the parent links of the trace data as `#derivation` connections |
 | [`model/Satisfaction.sysml`](model/Satisfaction.sysml) | **Generated.** `satisfy` relationships from each requirement's allocation: `allocated_to` of the trace data (resolved as in M8), WP-S-01 §10.1, the Alloc column of WP-S-07 §4 (FW → E-03, SoC → E-01); a safety goal is satisfied by the item. EXT, OPS, ENV and USR give no relationship |
 | [`model/Verification.sysml`](model/Verification.sysml) | **Generated.** Every test case of a specification table (VS-…) as a `verification` usage whose objective verifies the modelled requirements it names, ranges expanded |
-| [`model/Views.sysml`](model/Views.sysml) | Views V-01 to V-13: what each exposes and how it is rendered |
+| [`model/Needs.sysml`](model/Needs.sysml) | **Generated.** The stakeholders and actors of WP-S-01 §1.2 as part definitions; the 12 stakeholder needs of §1.3 as `requirement` usages with their `stakeholder` parameters and a `#derivation` to each SYS requirement and safety goal that refines them; the 11 use cases of §1.4 as `use case` usages with LD-SDA as subject, their `actor`s, an objective that `require`s the needs they serve, and a `perform` of each function they use |
+| [`model/Views.sysml`](model/Views.sysml) | Views V-01 to V-15: what each exposes and how it is rendered |
 | [`views/layout.toml`](views/layout.toml) | Placement only: boxes, grids, route adjustments, display names |
 | [`tools/sysml_lite.py`](tools/sysml_lite.py) | Reader for the subset of the textual notation the model uses; builds the instance tree. Refuses any other construct with its line number |
-| [`tools/gen_requirements.py`](tools/gen_requirements.py) | Generates the three requirement files above from the work products; `--check` fails if they differ |
-| [`tools/check_model.py`](tools/check_model.py) | Checks M1 to M12 and R1 to R4 (§4), the allocation-resolution report and the requirements-coverage report |
-| [`tools/render_requirements.py`](tools/render_requirements.py) | Renderer of the requirement views V-05 to V-07 |
+| [`tools/gen_requirements.py`](tools/gen_requirements.py) | Generates the four requirement and needs files above from the work products; `--check` fails if they differ |
+| [`tools/check_model.py`](tools/check_model.py) | Checks M1 to M12, N1 to N3 and R1 to R4 (§4), the allocation-resolution report and the requirements-coverage report |
+| [`tools/render_requirements.py`](tools/render_requirements.py) | Renderer of the requirement views V-05 to V-07 and of the needs views V-14 and V-15 |
 | [`tools/gen_tables.py`](tools/gen_tables.py), [`record.toml`](record.toml) | Generates the architecture tables of WP-S-03 §3.1, §3.3, §6 and WP-W-03 §3.1 from the model (SY-05); `record.toml` says whether the work products or the model are the record |
 | [`tools/render_arch.py`](tools/render_arch.py) | Renderer of V-10 functional architecture, V-11 security zones, V-12 integration build-up and V-13 system modes |
 | [`tools/render_se.py`](tools/render_se.py) | Renderer of the systems-engineering views: V-08 N2 chart, V-09 VCRM and the per-requirement [`generated/vcrm.md`](generated/vcrm.md) |
@@ -89,7 +90,10 @@ A generated view replaces a hand-drawn figure when it carries the same facts; un
 | M10 | Security zones and trust boundaries of WP-S-07 §3.1 and §3.2, cell by cell; every element inside the item is in a zone |
 | M11 | Integration steps of WP-S-08 §3.1, cell by cell; the elements a step integrates and the interfaces it exercises exist; every component is integrated by some step |
 | M12 | Operating modes of WP-C-01 §4: every row is a state of SM-SYS (description and actuation cell by cell) or a listed configuration; the record states and transitions it names exist in the state-machine records |
-| R1 | `Requirements.sysml`, `Satisfaction.sysml` and `Verification.sysml` equal what `gen_requirements.py` builds from the work products today: a requirement, allocation or test case changed in a document without regenerating fails |
+| N1 | Stakeholders and actors of WP-S-01 §1.2: every stakeholder has a need and every actor takes part in a use case, and nothing else is used as one |
+| N2 | Needs of WP-S-01 §1.3: every need is refined by a requirement and served by a use case; every SYS requirement and every safety goal refines a need |
+| N3 | Use cases of WP-S-01 §1.4: each has an actor and performs a function; every function of the model is performed by some use case |
+| R1 | `Requirements.sysml`, `Satisfaction.sysml`, `Verification.sysml` and `Needs.sysml` equal what `gen_requirements.py` builds from the work products today: a requirement, allocation or test case changed in a document without regenerating fails |
 | R2 | Every `satisfy` ends on an element inside the item; every SYS requirement is satisfied and every name in WP-S-01 §10.1 is an element of the model |
 | R3 | Every verification case that names a requirement verifies it in the model, and the requirement lists the case |
 | R4 | [`generated/requirements-coverage.md`](generated/requirements-coverage.md) is up to date: per kind, how many requirements are satisfied, allocated outside the item, verified by at least one case and derived from a parent, with the lists of those that are not (informational) |
@@ -99,7 +103,7 @@ Integrity in a table cell is read as the highest level it names (`B (PCS restore
 
 ```sh
 python3 tools/gen_requirements.py      # regenerate the requirement files (--check to compare)
-python3 tools/check_model.py           # M1-M12, R1-R4 (--write regenerates the two reports)
+python3 tools/check_model.py           # M1-M12, N1-N3, R1-R4 (--write regenerates the two reports)
 python3 tools/gen_tables.py            # T1: architecture tables (--write once record.toml says model)
 python3 tools/render_views.py --check  # figures match the model
 python3 tools/explorer.py --check      # explorer matches the model
@@ -107,7 +111,7 @@ python3 tools/test_sysml.py
 tools/pilot/validate.sh                # SysML v2 conformance (JDK 21+, python3 with zstandard)
 ```
 
-All of them run in CI (`.github/workflows/assurance.yaml`, job "sysml model"). Result at this baseline: M1 to M12, R1 to R4 and T1 pass; the pilot reports 0 errors and 0 warnings for the eleven files.
+All of them run in CI (`.github/workflows/assurance.yaml`, job "sysml model"). Result at this baseline: M1 to M12, N1 to N3, R1 to R4 and T1 pass; the pilot reports 0 errors and 0 warnings for the twelve files.
 
 Writing the model found one difference worth recording. WP-S-03 §3.3 defines IF-05/06 as camera images reaching E-01/E-02 and IF-07 as starting in E-01, while WP-C-01 §3.4 defines the same IDs at the item boundary (road environment and driver to the cameras and display). The model now carries both hops under one identifier; the work products should say that the identifier covers the whole path (OI-7).
 
@@ -128,6 +132,14 @@ HWSRs are allocated to chip-level parts (RAMECC, PVD, relay driver, codec) that 
 
 Every figure below is generated. The explorer shows V-01 to V-04 with the model tree and an inspector (interfaces, services, mechanisms, allocated requirements per element).
 
+**V-15 End-to-end thread (start here):** one stakeholder need followed through the whole model. SN-01, the driver's need for less effort keeping the lane, is served by use case UC-01, which performs F-01, F-05 and F-08 on the elements that perform their steps; it is refined by five system requirements, each satisfied by elements of the architecture and verified by specified cases.
+
+![V-15: end-to-end thread of SN-01 generated from the SysML model](generated/fig-sysml-v15-end-to-end-thread.svg)
+
+**V-14 Stakeholder needs and use cases:** who uses LD-SDA (the actors), what each stakeholder needs, which use cases serve each need and which functions each use case performs, with the system requirements and safety goals that refine each need (WP-S-01 §1.2–§1.4). The needs and use cases are AI-drafted from WP-C-01 and WP-C-02 (I0).
+
+![V-14: stakeholder needs and use cases generated from the SysML model](generated/fig-sysml-v14-needs-use-cases.svg)
+
 **V-01 Item context:** the item boundary, components E-01 to E-05 and the elements outside the item.
 
 ![V-01: item context generated from the SysML model](generated/fig-sysml-v01-item-context.svg)
@@ -144,7 +156,7 @@ Every figure below is generated. The explorer shows V-01 to V-04 with the model 
 
 ![V-04: safety mechanism allocation generated from the SysML model](generated/fig-sysml-v04-mechanism-allocation.svg)
 
-**V-05 Requirement thread:** one requirement (TSR-407, heartbeat loss) with what it derives from, what satisfies it, the mechanisms that cite it and the cases that verify it.
+**V-05 Requirement thread:** one requirement (TSR-407, heartbeat loss) with what it derives from, up to the stakeholder need behind its safety goals, what satisfies it, the mechanisms that cite it and the cases that verify it.
 
 ![V-05: requirement thread of TSR-407 generated from the SysML model](generated/fig-sysml-v05-requirement-thread.svg)
 
@@ -201,7 +213,7 @@ Keep to SysML v2 words for names: `item`, `view`, `via`, `state`, `flow` and sim
 | OI-3 | Model behaviour: done for the operating modes (SM-SYS, V-13). Still to do: the three state-machine records in [`05-software/state-machines/`](../../05-software/state-machines) as SysML `state def` (SM-SYS cites their transitions by ID today), and the start-up sequence of WP-S-03 §4.1 |
 | OI-4 | **Closed 2026-10-14:** SG, FSR, TSR, SYS and CSR are in the model with `satisfy` and `verify` relationships (R1–R4). SWSR and HWSR are not yet requirement elements; they follow with OI-1 (hardware parts) and the firmware interfaces of OI-2 |
 | OI-9 | Add verification cases for the cybersecurity requirements (no test specification names a CSR) and for the 14 SYS requirements without a case (WP-S-09 OI-6); the coverage report lists them |
-| OI-10 | MBSE extension: functions and functional chains (V-10), security zones (V-11), integration build-up (V-12) and system modes (V-13) are in. Still to do: sequences, timing budgets and HSI signals; a review of the function decomposition (AI-drafted) |
+| OI-10 | MBSE extension: functions and functional chains (V-10), security zones (V-11), integration build-up (V-12), system modes (V-13), and stakeholder needs and use cases with the end-to-end thread (V-14, V-15) are in. Still to do: sequences, timing budgets and HSI signals; a review of the function decomposition, the stakeholder needs and the use cases (all AI-drafted) |
 | OI-5 | Finish SY-05: after the review of OI-8, set `record.toml` to `model` and run `gen_tables.py --write` |
 | OI-6 | Carry out SY-06 figure by figure: close the gaps of §2.1, then swap the figure for its view |
 | OI-7 | State in WP-C-01 §3.4 and WP-S-03 §3.3 that IF-05, IF-06 and IF-07 cover the path from the environment or driver to E-01/E-02 |

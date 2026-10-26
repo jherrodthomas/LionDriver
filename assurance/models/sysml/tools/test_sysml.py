@@ -322,6 +322,57 @@ class Extension(unittest.TestCase):
       sysml_lite._state_machine(bad[0].members[0])
 
 
+class Needs(unittest.TestCase):
+  """Stakeholder needs and use cases of WP-S-01 §1.2-§1.4 (V-14, V-15)."""
+
+  @classmethod
+  def setUpClass(cls):
+    cls.m = sysml_lite.load()
+
+  def test_reader_parses_use_cases(self):
+    decls = sysml_lite.parse_text("""package P {
+        requirement def N { subject s : S; }
+        requirement <'SN-01'> n : N { subject :>> s; stakeholder driver : Driver; }
+        use case def U { subject s : S; }
+        use case <'UC-01'> u : U { subject :>> s; actor driver : Driver; objective { doc /* goal */ require n; } perform f; }
+    }""")
+    uc = decls[0].member("u")
+    self.assertEqual(uc.kind, "use case")
+    self.assertEqual([(x.kind, x.name, x.type) for x in uc.members if x.kind == "actor"], [("actor", "driver", "Driver")])
+    obj = next(x for x in uc.members if x.kind == "objective")
+    self.assertEqual((obj.doc, [x.target for x in obj.members]), ("goal", ["n"]))
+    self.assertEqual(decls[0].member("n").members[0].target, "s")
+
+  def test_needs_trace_to_requirements_and_use_cases(self):
+    n = self.m.requirements["SN-01"]
+    self.assertEqual((n.definition, n.stakeholders), ("StakeholderNeed", [("driver", "Driver")]))
+    self.assertIn("SN-01", self.m.requirements["SYS-001"].derived_from)
+    self.assertIn("SN-04", self.m.requirements["SG-05"].derived_from)
+    uc = self.m.use_cases["UC-01"]
+    self.assertEqual((uc.needs, uc.functions), (["SN-01"], ["F-01", "F-05", "F-08"]))
+    self.assertEqual(sorted(self.m.use_cases), [f"UC-{i:02d}" for i in range(1, 12)])
+
+  def test_checks_catch_a_need_without_a_use_case_and_an_unused_function(self):
+    rep = check_model.Report()
+    check_model.check_needs(self.m, rep)
+    self.assertEqual(rep.errors, [])
+    saved = self.m.use_cases.pop("UC-08")
+    try:
+      rep = check_model.Report()
+      check_model.check_needs(self.m, rep)
+      text = "\n".join(rep.errors)
+      self.assertIn("SN-07 is served by no use case", text)
+      self.assertIn("F-06 is performed by no use case", text)
+    finally:
+      self.m.use_cases["UC-08"] = saved
+
+  def test_every_system_requirement_and_goal_refines_a_need(self):
+    needs = {s for s, r in self.m.requirements.items() if r.definition == "StakeholderNeed"}
+    for r in self.m.requirements.values():
+      if r.short.split("-")[0] in ("SYS", "SG"):
+        self.assertTrue(needs & set(r.derived_from), r.short)
+
+
 class Tables(unittest.TestCase):
   def test_tsr_cell(self):
     self.assertEqual(gen_tables.tsr_cell(["TSR-1xx", "TSR-2xx", "TSR-705"]), "1xx, 2xx, 705")
