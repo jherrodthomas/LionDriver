@@ -286,6 +286,9 @@ package LionDriverLibrary {
     view def FunctionalView {
         doc /* Functions along their functional chain, each step on the element that performs it. */
     }
+    view def UseCaseView {
+        doc /* Use cases of the item with their subject and actors. */
+    }
     view def SequenceView {
         doc /* A sequence of messages between lifelines that stand for elements of the architecture. */
     }

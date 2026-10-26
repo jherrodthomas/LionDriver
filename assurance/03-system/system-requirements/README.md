@@ -12,10 +12,10 @@ same quantity the safety requirement wins.
 | Term | Meaning |
 |---|---|
 | AI | artificial intelligence |
+| CSR-nn | cybersecurity requirement: CSR-C-nn at concept level (WP-C-10 §7), CSR-nnn refined (WP-S-07) |
 | DQ-nn | decision of the project lead (decision register) |
 | F-nn | function of the item (WP-C-01 §2.1), F-01…F-09 |
 | FCW | forward collision warning |
-| HMI | human-machine interface: display, sounds, cluster |
 | I0–I3 | independence level of a review, I0 (none, e.g. the author or an AI) to I3 (independent organisation) |
 | LD-SDA | LionDriver Supervised Driving Assistance, the item |
 | LDW | lane departure warning |
@@ -28,7 +28,7 @@ same quantity the safety requirement wins.
 | TBD | to be determined: a value not yet set |
 | TSR-nn | technical safety requirement (WP-S-02) |
 | UC-nn | use case (WP-S-01 §1.4), UC-01…UC-11 |
-| V-nn | view of the SysML model (V-01…V-20) |
+| V-nn | view of the SysML model (V-01…V-21) |
 | VS-nn | verification case: VS-SI system integration, VS-HW hardware, VS-SWQ software, VS-FI fault injection, VS-SQ system qualification |
 | WP-nn | work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case) |
 
@@ -37,9 +37,11 @@ All terms: [abbreviations and record codes](../../terms.md).
 </details>
 <!-- terms:end -->
 
-This page walks through them with their figures. The document is the source of record. The figures are generated from
-it and from the SysML model, which holds every requirement with the elements that satisfy it and the cases that
-verify it.
+This page is drawn from the SysML system model. WP-S-01 is the document of record; its stakeholders, needs, use
+cases and requirements are generated into the model (`LionDriverNeeds`, `LionDriverRequirements`), related there to
+the functions, the architecture and the test cases, and checked on every pull request. Every diagram below is a SysML
+view of that model, in SysML notation: use case (`uc`) and requirement (`req`) diagrams with their frames, and the
+model's relationships (`«deriveReqt»`, `«satisfy»`, `«verify»`, `«perform»`) drawn as they are held.
 
 **The system requirements in five lines.**
 
@@ -60,55 +62,108 @@ verify it.
 | Stakeholders, needs and use cases (§1.2–§1.4) · [Item definition (WP-C-01)](../../02-concept/item/README.md): functions F-01…F-09 · [ODD (WP-C-02)](../../02-concept/odd/README.md): where they apply · [AI requirements (WP-C-11)](../../02-concept/ai/README.md): model performance | SYS-001…SYS-145 with type, target, verification method and allocation | [SysML model](../../models/sysml/README.md): satisfy and verify relationships · [System verification (WP-S-09)](../verification/README.md) · [SOTIF validation (WP-V-02)](../../06-validation/WP-V-02-sotif-vv-strategy.md) for the TBD targets |
 | [TSRs (WP-S-02)](../WP-S-02-technical-safety-requirements.md): the bounds a SYS value must stay inside, with margin (TSR-605) | | |
 
-## 1. Who needs what
+## 1. Who uses LD-SDA
+
+![SysML view V-21: use case diagram with LD-SDA as the subject, the use cases UC-01 to UC-11 inside it, the actors Driver and Owner on the left and Vehicle and Project lead on the right, and an association from each actor to each use case it takes part in](../../models/sysml/generated/fig-sysml-v21-use-cases.svg)
+
+*Use cases (§1.4, SysML view V-21, `uc` diagram).* LD-SDA is the subject of eleven use cases. The driver takes part in
+ten of them; the car's own systems (the vehicle) in the six that drive the car; the owner installs and updates; the
+project lead reviews the drives.
+
+## 2. What each stakeholder needs
 
 ![SysML view V-14: the 12 stakeholder needs and the actors against the 11 use cases that serve them, with the system requirements and safety goals that refine each need and the functions each use case performs](../../models/sysml/generated/fig-sysml-v14-needs-use-cases.svg)
 
-*Stakeholders, needs and use cases (§1.2–§1.4, SysML view V-14).* Five stakeholders have needs: the driver, the
-occupants, other road users, the owner and the project lead. Eleven use cases serve those needs, from keeping the lane
-to installing an update. Some things to read off the figure:
+*Stakeholder needs (§1.2, §1.3, SysML view V-14).* Five stakeholders have needs: the driver, the occupants, other road
+users, the owner and the project lead. Each need is served by a use case and refined by system requirements or safety
+goals; each use case performs functions of the item.
 
 - **Every system requirement refines a need,** and so does every safety goal. The safety goals sit under two needs:
   the car never moves in a way the driver cannot control (SN-09), and the driver stays attentive (SN-08).
 - **Every function is used,** and the safety envelope (F-08) takes part in seven of the eleven use cases.
 - **The needs and use cases are AI-drafted** from the item definition and the ODD, and not reviewed yet (I0).
 
-## 2. One need end to end
+## 3. One need end to end
 
 ![SysML view V-15: stakeholder need SN-01 from the driver through use case UC-01 and the functions it performs to the elements, and through its five system requirements to the elements that satisfy them and the cases that verify them](../../models/sysml/generated/fig-sysml-v15-end-to-end-thread.svg)
 
 *The end-to-end thread (SysML view V-15).* The driver's need for less effort keeping the lane (SN-01) is served by
 one use case, which performs lateral control, driver information and the safety envelope on 14 elements. Five system
 requirements refine it. All five are satisfied by elements of the architecture and named by a vehicle test case. No
-case has been run. Every line in the figure is a relationship in the model, and the checks fail if one is missing.
+case has been run.
 
-## 3. The requirements by function
+## 4. The requirements, function by function
+
+One SysML requirement diagram per function (view V-06). Each requirement shows its text, type, verification method
+and target, the stakeholder need it is derived from (`«deriveReqt»`), the elements that satisfy it (`«satisfy»`, from
+§10.1) and the cases that verify it (`«verify»`, from WP-S-08 and WP-S-09). A red outline marks a requirement no case
+verifies.
+
+![SysML view V-06, F-01: the eight lateral-control requirements with the needs they refine, the processes that satisfy them and the cases that verify them](../../models/sysml/generated/fig-sysml-v06-f01-requirements.svg)
+
+*F-01 lateral control (§2).* Eight requirements from three needs (keeping the lane, lane changes, knowing why it hands
+back). The two lane-change rules (SYS-005, SYS-006) have no case.
+
+![SysML view V-06, F-02: the eight longitudinal-control requirements with their needs, satisfying processes and cases](../../models/sysml/generated/fig-sysml-v06-f02-requirements.svg)
+
+*F-02 longitudinal control (§3).* Eight requirements from the needs for a set speed and gap and for assistance only
+where it was assured. Experimental Mode not being selectable (SYS-027) has no case.
+
+![SysML view V-06, F-03: the four engagement requirements with their needs, satisfying processes and cases](../../models/sysml/generated/fig-sysml-v06-f03-requirements.svg)
+
+*F-03 engagement and mode management (§4).* Engagement only through the car's cruise controls, the highway speed
+floor, brake and cancel, and start-up time. The start-up time (SYS-043) has no case.
+
+![SysML view V-06, F-04: the four driver-monitoring requirements with their need, satisfying processes and case](../../models/sysml/generated/fig-sysml-v06-f04-requirements.svg)
+
+*F-04 driver monitoring (§5).* All four come from the other road users' need for an attentive driver. The
+classification performance (SYS-061) has no case.
+
+![SysML view V-06, F-05: the four driver-information requirements with their need, satisfying processes and cases](../../models/sysml/generated/fig-sysml-v06-f05-requirements.svg)
+
+*F-05 driver information and warnings (§6).* The driver's need to know what the assistance is doing. Alert loudness
+(SYS-083) has no case.
+
+![SysML view V-06, F-06 and F-07: the three collision and lane-departure warning requirements with their need; none has a verification case](../../models/sysml/generated/fig-sysml-v06-f06f07-requirements.svg)
+
+*F-06 forward collision warning and F-07 lane departure warning (§7).* The two warnings share their three
+requirements, and none of them has a case yet.
+
+![SysML view V-06, F-08: the two functional requirements of the safety envelope with their needs, satisfying firmware and cases](../../models/sysml/generated/fig-sysml-v06-f08-requirements.svg)
+
+*F-08 safety envelope, functional side (§8).* No false interventions, and a status report to the host. The status
+report (SYS-121) has no case. The envelope's safety requirements are the TSRs of
+[WP-S-02](../technical-safety-requirements/README.md).
+
+![SysML view V-06, F-09: the six logging and update requirements with their needs, satisfying processes and case](../../models/sysml/generated/fig-sysml-v06-f09-requirements.svg)
+
+*F-09 logging, upload, remote access and update (§9).* Six requirements from three needs; four have no case.
+
+## 5. All requirements against the architecture and the tests
+
+![SysML view V-07: the satisfy and verify matrix of the 39 system requirements, with the elements that satisfy each one and the cases that verify it](../../models/sysml/generated/fig-sysml-v07-system-requirement-matrix.svg)
+
+*Satisfy and verify (SysML view V-07).* All 39 requirements in one matrix: a dot where an element satisfies a
+requirement, and the cases that verify it. "Verified" means a case is specified, not that it has passed.
+
+![SysML view V-09: verification cross-reference matrix of the SYS, TSR and CSR requirements by verification method and by the level of the cases that verify them](../../models/sysml/generated/fig-sysml-v09-vcrm.svg)
+
+*Verification cross-reference matrix (SysML view V-09).* The system requirements next to the safety and security
+requirements, by verification method (analysis, inspection, demonstration, test) and by the level of their cases.
+
+## 6. The requirements as the document lists them
 
 ![WP-S-01 Figure 10-1: the 39 system requirements by function, each with its type and verification methods, flagged where the target is still TBD or no test case verifies it](../figures/fig-s01-10-1-requirements.svg)
 
-*The requirements (§2–§9, Figure 10-1).* One tile per requirement, with its type (functional, performance, interface,
-HMI, constraint) and how it is verified. Two flags show what is still missing:
+*The requirements (§2–§9, Figure 10-1).* The document's own overview, with two flags:
 
 - **Target TBD (12).** Most are performance targets that need data: lane-centre offset, curve following, weaving,
   set-speed accuracy, following gap, stop distance, resume time, start-up time, driver-monitoring coverage, alert
   loudness and the FCW false-alert rate, plus the highway speed floor.
-- **No test case (14).** The lane-change rules (SYS-005, -006), Experimental Mode not selectable (SYS-027), start-up
-  time, driver-monitoring classification, alert loudness, FCW and LDW (SYS-100…102), the envelope's status report
-  (SYS-121), and four logging and update rules.
+- **No test case (14).** The same fourteen the requirement diagrams outline in red; the list comes from the model's
+  coverage report.
 
-## 4. How the model holds them
-
-![SysML view V-07: the satisfy and verify matrix of the 39 system requirements, with the elements that satisfy each one and the cases that verify it](../../models/sysml/generated/fig-sysml-v07-system-requirement-matrix.svg)
-
-*Satisfy and verify (SysML view V-07).* Every requirement is satisfied by the elements §10.1 names, and verified by
-the cases of WP-S-08 and WP-S-09 that name it. "Verified" means a case is specified, not that it has passed.
-
-![SysML view V-06: the system requirements of F-01 lateral control with their satisfying elements and verification cases](../../models/sysml/generated/fig-sysml-v06-f01-requirements.svg)
-
-*One function in full (SysML view V-06).* Lateral control: its eight requirements, the processes that satisfy them,
-and the cases that verify them. The two lane-change requirements have no case.
-
-## 5. How they relate to the safety requirements
+## 7. How they relate to the safety requirements
 
 The system requirements describe good behaviour inside the limits the safety requirements set. Two rules follow:
 
@@ -118,7 +173,7 @@ The system requirements describe good behaviour inside the limits the safety req
 - **A shared limit is a finding.** Today the controller and the envelope use the same limits, so the margin is zero;
   WP-S-09 expects its margin case (VS-SQ-18) to fail.
 
-## 6. Open items
+## 8. Open items
 
 The full list is in WP-S-01 §11.
 
@@ -134,5 +189,6 @@ This folder has no files of its own besides this page.
 
 | Figure | Generator |
 |---|---|
+| SysML views V-06 (one per function), V-07, V-14, V-15 and V-21 | [`render_requirements.py`](../../models/sysml/tools/render_requirements.py), from the SysML model; WP-S-01 §1.2–§1.4, §2–§9 and §10.1 are generated into it by [`gen_requirements.py`](../../models/sysml/tools/gen_requirements.py) |
+| SysML view V-09, the verification matrix | [`render_se.py`](../../models/sysml/tools/render_se.py), from the SysML model |
 | WP-S-01 Figure 10-1, the requirements by function | [`fig_s01_requirements.py`](../figures/fig_s01_requirements.py), from §2–§9 and the coverage report of the SysML model; nothing is hand-listed |
-| SysML views V-06, V-07, V-14 and V-15 | [`render_requirements.py`](../../models/sysml/tools/render_requirements.py), from the SysML model; the needs and use cases are generated into it from §1.2–§1.4 by [`gen_requirements.py`](../../models/sysml/tools/gen_requirements.py) |

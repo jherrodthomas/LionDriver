@@ -228,11 +228,31 @@ def render_thread(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str
 
 # ---------------------------------------------------------------- V-06 requirement diagram
 
-def render_requirement_diagram(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str:
+def sysml_frame(x, y, w, h, kind: str, package: str, name: str) -> list[str]:
+  """A SysML diagram frame with its name tab: kind [package] name, as in the SysML v2 graphical notation."""
+  label = f"{kind} [{package}] {name}"
+  tw = k.text_w(label, 11, 600) + 26
+  return [k.rect(x, y, w, h, "none", k.FAINT, 4, 1.2),
+          f'<path d="M{k.f(x)} {k.f(y)}h{k.f(tw)}v12l-10 10h{k.f(-(tw - 10))}z" fill="#F8FAFC" stroke="{k.FAINT}" stroke-width="1.2"/>',
+          k.text(x + 10, y + 15, label, 11, k.INK2, 600)]
+
+
+def render_requirement_diagram(m: sysml_lite.Model, vid: str, spec: dict, digest: str):
+  """One SysML requirement diagram per function: its system requirements with the needs they refine, the elements
+  that satisfy them and the cases that verify them. With `functions` in the layout, one figure per function."""
+  if "functions" in spec:
+    out = {}
+    for fn in spec["functions"]:  # an entry "F-06/F-07" draws functions that share their requirements together
+      title = " and ".join(m.functions[f].doc.split(" (")[0].lower() for f in fn.split("/"))
+      one = {**{k_: v for k_, v in spec.items() if k_ != "functions"}, "function": fn,
+             "title": f"Requirement diagram · {fn} {title}"}
+      out[spec["file"].format(f=fn.lower().replace("-", "").replace("/", ""))] = render_requirement_diagram(m, vid, one, digest)
+    return out
   view = m.views[vid]
   fn = spec["function"]
   w = spec["width"]
-  reqs = sorted((r for r in m.requirements.values() if fn in str(r.values.get("functionId", "")).split(", ")),
+  fns = fn.split("/")
+  reqs = sorted((r for r in m.requirements.values() if set(fns) & set(str(r.values.get("functionId", "")).split(", "))),
                 key=lambda r: sort_key(r.short))
   elems: list[str] = []
   for r in reqs:
@@ -241,18 +261,23 @@ def render_requirement_diagram(m: sysml_lite.Model, vid: str, spec: dict, digest
         elems.append(p)
   cases = sorted({c for r in reqs for c in r.verified_by}, key=sort_key)
   body = rv.header(w, view, spec["title"], spec["subtitle"], digest)
-  top, rh, gap = 130, 72, 12
+  top, rh, gap = 154, 102, 12
   ex, rx, cx = 40, 340, 980
   rw = 520
-  body.append(column_title(ex, 114, "SATISFIED BY · «part»"))
-  body.append(column_title(rx, 114, f"REQUIREMENTS · {fn} · «requirement»"))
-  body.append(column_title(cx, 114, "VERIFIED BY · «verification»"))
+  body.append(column_title(ex, 138, "SATISFIED BY · «part»"))
+  body.append(column_title(rx, 138, f"REQUIREMENTS · {fn} · «requirement»"))
+  body.append(column_title(cx, 138, "VERIFIED BY · «verification»"))
   ry = {}
   for i, r in enumerate(reqs):
     y = top + i * (rh + gap)
     gap_ = not r.verified_by
     attrs = f"type {r.values.get('reqType', '')} · verif {r.values.get('verifMethod', '')} · target {r.values.get('target', '')}"
-    body += card(rx, y, rw, rh, r.doc, r.short, "#334155", "#FFFFFF", RED if gap_ else REQ_STROKE, [attrs],
+    needs = [p for p in r.derived_from if p.startswith("SN-")]
+    derive = f"«deriveReqt» from {', '.join(needs)}: {m.requirements[needs[0]].doc}" if needs else "derived from no need"
+    txt = k.wrap(r.doc, rw - 110, 11.5, 600)
+    txt = txt[:2] if len(txt) <= 2 else [txt[0], k.clip(txt[1] + " " + " ".join(txt[2:]), rw - 110, 11.5, 600)]
+    body += card(rx, y, rw, rh, txt[0], r.short, "#334155", "#FFFFFF", RED if gap_ else REQ_STROKE,
+                 ([txt[1]] if len(txt) > 1 else [""]) + [attrs, derive],
                  f"«requirement» {r.definition}", 1.8 if gap_ else 1.3)
     if gap_:
       p, _ = k.pill(rx + rw - 12, y + 7, "no verifier", RED, size=9, anchor="end")
@@ -276,7 +301,7 @@ def render_requirement_diagram(m: sysml_lite.Model, vid: str, spec: dict, digest
       xm = 262 + 12 * elems.index(p)
       body.append(edge([(ex + 220, ey[p]), (xm, ey[p]), (xm, ry[r.short] + 6 * j - 4), (rx, ry[r.short] + 6 * j - 4)],
                        TEAL, 1.2, "5 4", "rq-teal"))
-  body += tag(300, 124, "«satisfy»", TEAL)
+  body += tag(300, 148, "«satisfy»", TEAL)
   # cases
   cy = {}
   cstep = max(100, total_h / max(len(cases), 1))
@@ -293,7 +318,7 @@ def render_requirement_diagram(m: sysml_lite.Model, vid: str, spec: dict, digest
       off = 6 * j - 3
       body.append(edge([(cx, cy[c]), (bus[c], cy[c]), (bus[c], ry[r.short] + off), (rx + rw + 2, ry[r.short] + off)],
                        BLUE, 1.2, "5 4", "rq-blue"))
-  body += tag(rx + rw + 40, 124, "«verify»", BLUE)
+  body += tag(rx + rw + 40, 148, "«verify»", BLUE)
   bottom = top + max(total_h, len(elems) * step, len(cases) * cstep) + 10
   missing = [r.short for r in reqs if not r.verified_by]
   if missing:
@@ -301,7 +326,9 @@ def render_requirement_diagram(m: sysml_lite.Model, vid: str, spec: dict, digest
     body.append(k.text(cx + 14, bottom - 96, "Not verified by any case (R4 report)", 12, "#991B1B", 700))
     for i, ln in enumerate(k.wrap(", ".join(missing) + ". Add a case to a test specification, or record why none is needed.", 270, 11)[:4]):
       body.append(k.text(cx + 14, bottom - 76 + i * 15, ln, 11, "#7F1D1D"))
-  legend_y = bottom + 10
+  body += sysml_frame(24, 100, w - 48, bottom - 92, "req", "LionDriverRequirements",
+                      " / ".join(f"{f} {m.functions[f].doc.split(' (')[0]}" for f in fns))
+  legend_y = bottom + 18
   items = [edge([(40, legend_y + 30), (66, legend_y + 30)], TEAL, 2, "5 4"), k.text(74, legend_y + 34, "«satisfy»", 11, k.INK2),
            edge([(150, legend_y + 30), (176, legend_y + 30)], BLUE, 2, "5 4"), k.text(184, legend_y + 34, "«verify» (specified, not run)", 11, k.INK2),
            k.rect(370, legend_y + 23, 22, 14, RED_BG, RED, 3), k.text(400, legend_y + 34, "requirement without a verification case", 11, k.INK2)]
@@ -633,3 +660,72 @@ def render_end_to_end(m: sysml_lite.Model, vid: str, spec: dict, digest: str) ->
 
 RENDERERS = {"thread": render_thread, "requirements": render_requirement_diagram, "reqmatrix": render_requirement_matrix,
              "needs": render_needs, "endtoend": render_end_to_end}
+
+
+# ---------------------------------------------------------------- V-20 use case diagram
+
+def render_use_cases(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str:
+  """SysML use case diagram: the subject LD-SDA as a boundary with one oval per use case, the actors outside it on the
+  side the layout names, and an association from each actor to each use case it takes part in."""
+  view = m.views[vid]
+  w = spec["width"]
+  cases = sorted(m.use_cases.values(), key=lambda u: sort_key(u.short))
+  side = spec["actor_side"]   # actor definition -> "left" | "right"
+  actors = list(dict.fromkeys(d for u in cases for _, d in u.actors))
+  missing = [a for a in actors if a not in side]
+  if missing:
+    raise sysml_lite.ModelError(f"layout.toml {vid}: actor_side has no side for {missing}")
+  head = rv.header(w, view, spec["title"], spec["subtitle"], digest)
+  boundary, lines, body = [], [], []  # drawn in this order: subject, associations, then ovals and actors
+  top = 140
+  ow, oh, gap = 420, 46, 14
+  ox = w / 2 - ow / 2
+  sub_x, sub_w = ox - 60, ow + 120
+  sub_h = 40 + len(cases) * (oh + gap) + 10
+  boundary.append(k.rect(sub_x, top, sub_w, sub_h, "#FFFFFF", k.INK2, 6, 1.6))
+  boundary.append(k.text(sub_x + 14, top + 22, "«subject» LD-SDA · LionDriver Supervised Driving Assistance", 12, k.INK, 700))
+  oy = {}
+  for i, u in enumerate(cases):
+    y = top + 40 + i * (oh + gap)
+    body.append(f'<ellipse cx="{k.f(w / 2)}" cy="{k.f(y + oh / 2)}" rx="{k.f(ow / 2)}" ry="{k.f(oh / 2)}" '
+                f'fill="{USE["fill"]}" stroke="{USE["stroke"]}" stroke-width="1.4"/>')
+    p, pw = k.pill(w / 2 - ow / 2 + 34, y + oh / 2 - 9, u.short, USE["chip"], size=9.5, mono=True)
+    body.append(p)
+    body.append(k.text(w / 2 - ow / 2 + 44 + pw, y + oh / 2 + 4, k.clip(u.doc, ow - pw - 90, 12, 600), 12, k.INK, 600))
+    oy[u.short] = y + oh / 2
+  # actors, spread down each side
+  pos = {}
+  for s, x in (("left", 120), ("right", w - 120)):
+    group = [a for a in actors if side[a] == s]
+    for j, a in enumerate(group):
+      y = top + 40 + (j + 0.5) * (sub_h - 60) / max(len(group), 1) - 20
+      body.append(k.actor(x, y, k.INK2, 1.1))
+      body.append(k.text(x, y + 62, people_label([("", a)]), 12, k.INK, 700, "middle"))
+      body.append(k.text(x, y + 77, "«actor»", 10, k.MUTED, 400, "middle", True))
+      pos[a] = (x, y + 22)
+  for u in cases:
+    for _, a in u.actors:
+      ax, ay = pos[a]
+      ex = w / 2 - ow / 2 if side[a] == "left" else w / 2 + ow / 2
+      sx = ax + 22 if side[a] == "left" else ax - 22
+      lines.append(f'<line x1="{k.f(sx)}" y1="{k.f(ay)}" x2="{k.f(ex)}" y2="{k.f(oy[u.short])}" stroke="{k.INK2}" '
+                   'stroke-width="1.1" stroke-opacity="0.7"/>')
+  body = head + boundary + lines + body
+  bottom = top + sub_h + 20
+  body += sysml_frame(24, 100, w - 48, bottom - 92, "uc", "LionDriverNeeds", "use cases of LD-SDA")
+  n_assoc = sum(len(u.actors) for u in cases)
+  body.append(k.text(40, bottom + 24, f"{len(cases)} use cases, {len(actors)} actors, {n_assoc} associations, from WP-S-01 §1.4 "
+                     "through the model (LionDriverNeeds). Each use case's objective requires the stakeholder needs it serves "
+                     "and it performs functions of WP-C-01 §2.1 (view V-14).", 11.5, k.INK2))
+  legend_y = bottom + 40
+  items = [k.actor(52, legend_y + 18, k.INK2, 0.5), k.text(66, legend_y + 34, "actor", 11, k.INK2),
+           f'<ellipse cx="150" cy="{k.f(legend_y + 30)}" rx="34" ry="11" fill="{USE["fill"]}" stroke="{USE["stroke"]}"/>',
+           k.text(192, legend_y + 34, "use case", 11, k.INK2),
+           f'<line x1="270" y1="{k.f(legend_y + 30)}" x2="300" y2="{k.f(legend_y + 30)}" stroke="{k.INK2}"/>',
+           k.text(308, legend_y + 34, "association: the actor takes part", 11, k.INK2)]
+  body += rv.footer(w, legend_y, items)
+  return k.svg_doc(w, legend_y + 92, f"{view.short}. {spec['title']} (SysML v2 view {view.name})",
+                   spec.get("desc", view.doc), body, MARKERS)
+
+
+RENDERERS["usecases"] = render_use_cases

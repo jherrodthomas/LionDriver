@@ -112,7 +112,8 @@ def page(m: sysml_lite.Model, figures: dict[str, str]) -> str:
   for vid in VIEW_ORDER:
     spec = layout[vid]
     tabs.append(f'<button class="tab" role="tab" data-v="{vid}"><span class="vid">{vid}</span>{k.escape(spec["title"])}</button>')
-    svg = figures[spec["file"]]
+    first = spec["functions"][0].lower().replace("-", "") if "functions" in spec else ""
+    svg = figures[spec["file"].format(f=first)]  # a view drawn per function shows its first function here
     sheets.append(f'<template id="svg-{vid}">{svg}</template>')
   blob = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
   return f"""<title>LionDriver Model Explorer</title>
