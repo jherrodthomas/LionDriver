@@ -162,10 +162,11 @@ views:
     status: present
     where:
       - {path: 02-concept/figures/fig-c01-4-1-operating-modes.svg, label: "operating modes (WP-C-01 §4)"}
-      - {path: 03-system/figures/fig-4-1-startup-engagement.svg, label: "start-up sequence"}
+      - {path: models/sysml/generated/fig-sysml-v17-startup-sequence.svg, label: "start-up sequence (SysML V-17)"}
       - {path: 03-system/figures/fig-4-4-heartbeat-timeout-chain.svg, label: "heartbeat chain"}
       - {path: 03-system/figures/fig-s03-4-5-envelope-states.svg, label: "envelope states (WP-S-03 §4.5)"}
       - {path: models/sysml/generated/fig-sysml-v13-system-modes.svg, label: "system modes state machine (SysML V-13)"}
+      - {path: models/sysml/generated/fig-sysml-v16-state-machine-records.svg, label: "state-machine records (SysML V-16)"}
   - name: Technical budgets with margins (TPMs)
     status: partial
     where:

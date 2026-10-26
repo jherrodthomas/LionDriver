@@ -23,7 +23,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 MODEL_DIR = HERE.parent / "model"
 MODEL_FILES = ["LionDriverLibrary.sysml", "Mechanisms.sysml", "Functions.sysml", "Architecture.sysml", "Security.sysml", "Integration.sysml", "Behaviour.sysml", "Requirements.sysml", "Satisfaction.sysml",
-               "Verification.sysml", "Needs.sysml", "Views.sysml"]
+               "Verification.sysml", "Needs.sysml", "StateRecords.sysml", "Sequences.sysml", "Views.sysml"]
 ROOT_USAGE = ("LionDriverArchitecture", "context")
 
 
@@ -359,6 +359,28 @@ class Parser:
         d = self.head(kw, t)
       self.expect(";")
       return d
+    if kw == "message":
+      # message [<short>] name from <lifeline> to <lifeline> (; | { body })
+      self.next()
+      d = Decl("message", None, fname=self.fname, line=t.line)
+      if self.accept("<"):
+        d.short = self.name()
+        self.expect(">")
+      d.name = self.name()
+      self.expect("from")
+      d.target = self.qualified()
+      self.expect("to")
+      d.target2 = self.qualified()
+      self.body(d)
+      return d
+    if kw == "first":
+      # first <a> then <b>;  (a succession: b happens after a)
+      self.next()
+      d = Decl("succession", None, target=self.qualified(), fname=self.fname, line=t.line)
+      self.expect("then")
+      d.target2 = self.qualified()
+      self.expect(";")
+      return d
     if kw == "use" and self.peek(1).text == "case":
       self.next()
       self.next()
@@ -413,7 +435,7 @@ class Parser:
       self.body(d)
       return d
     if kw in ("part", "port", "action", "view", "metadata", "interface", "connection", "attribute", "requirement",
-              "verification", "state"):
+              "verification", "state", "occurrence"):
       self.next()
       is_def = self.accept("def")
       kind = kw + (" def" if is_def else "")
@@ -610,6 +632,57 @@ def _state_machine(d: Decl) -> StateMachine:
 
 
 @dataclass
+class Message:
+  short: str
+  name: str
+  doc: str
+  source: str          # lifeline name
+  target: str
+  meta: dict[str, dict]
+
+
+@dataclass
+class Sequence:
+  short: str
+  name: str
+  doc: str
+  lifelines: list[tuple[str, str]]                      # (name, element identifier it stands for)
+  messages: list[Message] = field(default_factory=list)  # in the order of the successions
+
+
+def _sequence(d: Decl) -> Sequence:
+  lifelines = [(m.name, str(m.values.get("element", ""))) for m in d.members if m.kind == "part" and m.name]
+  names = {n for n, _ in lifelines}
+  msgs = {}
+  for m in d.members:
+    if m.kind == "message":
+      for end in (m.target, m.target2):
+        if end not in names:
+          raise ModelError(f"{m.fname}:{m.line}: message {m.short or m.name} names {end!r}, which is not a lifeline of {d.short}")
+      msgs[m.name] = Message(m.short or m.name, m.name, m.doc, m.target, m.target2, dict(m.meta))
+  nxt, has_pred = {}, set()
+  for m in d.members:
+    if m.kind == "succession":
+      for end in (m.target, m.target2):
+        if end not in msgs:
+          raise ModelError(f"{m.fname}:{m.line}: succession names {end!r}, which is not a message of {d.short}")
+      if m.target in nxt or m.target2 in has_pred:
+        raise ModelError(f"{m.fname}:{m.line}: the messages of {d.short} must form one chain")
+      nxt[m.target] = m.target2
+      has_pred.add(m.target2)
+  starts = [n for n in msgs if n not in has_pred]
+  if len(starts) != 1:
+    raise ModelError(f"{d.fname}:{d.line}: the messages of {d.short} must form one chain ({len(starts)} start messages)")
+  order, cur = [], starts[0]
+  while cur is not None:
+    order.append(msgs[cur])
+    cur = nxt.get(cur)
+  if len(order) != len(msgs):
+    raise ModelError(f"{d.fname}:{d.line}: the messages of {d.short} must form one chain")
+  return Sequence(d.short or d.name or "", d.name or "", d.doc, lifelines, order)
+
+
+@dataclass
 class Function:
   short: str
   name: str
@@ -681,6 +754,7 @@ class Model:
   integration: dict[str, Record] = field(default_factory=dict)  # steps I-n of WP-S-08 §3.1
   state_machines: dict[str, StateMachine] = field(default_factory=dict)
   use_cases: dict[str, UseCase] = field(default_factory=dict)
+  sequences: dict[str, Sequence] = field(default_factory=dict)
 
   def by_ident(self) -> dict[str, Element]:
     return {e.short: e for e in self.elements.values() if e.short}
@@ -895,6 +969,7 @@ def load(files: list[Path] | None = None) -> Model:
   boundaries: dict[str, Record] = {}
   integration: dict[str, Record] = {}
   state_machines: dict[str, StateMachine] = {}
+  sequences: dict[str, Sequence] = {}
   for pkg_decl in packages.values():
     for m in pkg_decl.members:
       if m.kind == "part" and m.short and m.type in ("SecurityZone", "TrustBoundary"):
@@ -905,12 +980,15 @@ def load(files: list[Path] | None = None) -> Model:
       if m.kind == "state def":
         sm = _state_machine(m)
         state_machines[sm.short] = sm
+      if m.kind == "occurrence def" and m.short:
+        sq = _sequence(m)
+        sequences[sq.short] = sq
   for e in elements.values():
     z = (e.meta.get("Zone") or {}).get("id")
     if z is not None and zones and z not in zones:
       raise ModelError(f"{e.path}: @Zone names {z!r}, which is not a security zone")
   return Model(packages, root, elements, connections, allocations, mechanisms, aliases, views, files,
-               requirements, verifications, functions, zones, boundaries, integration, state_machines, use_cases)
+               requirements, verifications, functions, zones, boundaries, integration, state_machines, use_cases, sequences)
 
 
 def _use_cases(packages: dict[str, Decl], reqs: dict[str, Requirement], functions: dict[str, Function]) -> dict[str, UseCase]:

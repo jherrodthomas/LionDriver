@@ -478,3 +478,212 @@ def render_states(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str
 
 
 RENDERERS["states"] = render_states
+
+
+# ---------------------------------------------------------------- V-16 state-machine records
+
+REC_STATUS = [("not implemented", "#D2553F", "#FEF2F2", "not implemented: the record says what is required"),
+              ("gap", "#B45309", "#FFFBEB", "implemented with a gap the record names"),
+              ("reference build", k.ENVELOPE["chip"], k.ENVELOPE["fill"], "in the reference build only"),
+              ("upstream build", k.MUTED, "#F1F5F9", "without the reference build only"),
+              ("every build", "#334155", "#F8FAFC", "in every build")]
+
+
+def record_status(meta: dict) -> str:
+  if str(meta.get("code", "")).startswith("not implemented"):
+    return "not implemented"
+  if meta.get("gap"):
+    return "gap"
+  return {"reference": "reference build", "upstream": "upstream build"}.get(str(meta.get("build")), "every build")
+
+
+def ends_label(names: list[str], states: list[str]) -> str:
+  return "any state" if len(names) == len(states) > 1 else ", ".join(names)
+
+
+def render_records(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str:
+  """The state-machine records (WP-W-05 §5) as modelled: one panel per machine, one row per record transition."""
+  view = m.views[vid]
+  w = spec["width"]
+  body = rv.header(w, view, spec["title"], spec["subtitle"], digest)
+  style = {s: (c, bg) for s, c, bg, _ in REC_STATUS}
+  y = 104
+  totals: dict[str, int] = {}
+  for short in spec["machines"]:
+    sm = m.state_machines[short]
+    states = list(sm.states)
+    groups: dict[str, dict] = {}
+    for t in sm.transitions:
+      meta = t.meta.get("RecordTransition") or {}
+      g = groups.setdefault(str(meta.get("id")), {"meta": meta, "src": [], "dst": [], "self": True})
+      g["self"] = g["self"] and t.source == t.target
+      for key, end in (("src", t.source), ("dst", t.target)):
+        if end not in g[key]:
+          g[key].append(end)
+    rows = list(groups.items())
+    rh = 24
+    ph = 92 + len(rows) * rh
+    body.append(k.rect(30, y, w - 60, ph, k.WASH, k.HAIR, 12))
+    body.append(k.text(46, y + 26, f"{short} · {sm.doc}", 15, k.INK, 700))
+    units = sysml_lite._as_list(sm.meta["StateRecord"].get("units"))
+    body.append(k.text(w - 46, y + 26, "runs on " + " · ".join(units), 11, k.MUTED, 400, "end", True))
+    sx = 46
+    body.append(k.text(sx, y + 52, "STATES", 9.5, k.MUTED, 700, extra=' letter-spacing="1"'))
+    sx += 58
+    for st in states:
+      init = st == sm.initial
+      p, pw = k.pill(sx, y + 40, st + (" · initial" if init else ""), k.INK2 if init else "#FFFFFF",
+                     "#FFFFFF" if init else k.INK2, 18, 10, 700, None if init else k.FAINT, mono=True)
+      body.append(p)
+      sx += pw + 6
+    ty = y + 72
+    cols = (54, 120, 560, 900, 1030)
+    for x, h in zip(cols, ("ID", "trigger · guard", "from → to", "status", "requirements (SWSR)")):
+      body.append(k.text(x, ty, h.upper(), 9.5, k.MUTED, 700, extra=' letter-spacing="1"'))
+    ty += 8
+    for i, (tid, g) in enumerate(rows):
+      meta = g["meta"]
+      st = record_status(meta)
+      totals[st] = totals.get(st, 0) + 1
+      col, bg = style[st]
+      if i % 2 == 0:
+        body.append(k.rect(40, ty, w - 80, rh, "#FFFFFF", None, 4))
+      p, _ = k.pill(cols[0], ty + 3, tid, col, size=9.5, mono=True)
+      body.append(p)
+      trig = str(meta.get("trigger", ""))
+      guard = str(meta.get("condition", ""))
+      body.append(f'<text x="{cols[1]}" y="{k.f(ty + 16)}" font-size="10.5" fill="{k.INK}">{k.escape(trig)}'
+                  + (f'<tspan fill="{k.MUTED}"> · {k.escape(k.clip(guard, max(40, cols[2] - cols[1] - 24 - k.text_w(trig + " · ", 10.5)), 10.5))}</tspan>'
+                     if guard else "") + "</text>")
+      fr = f"{ends_label(g['src'], states)} → {'same' if g['self'] else ends_label(g['dst'], states)}"
+      body.append(k.text(cols[2], ty + 16, k.clip(fr, cols[3] - cols[2] - 16, 10.5, 400, True), 10.5, k.INK2, 400, None, True))
+      p, _ = k.pill(cols[3], ty + 4, st, bg, col, 16, 9.5, 700, col)
+      body.append(p)
+      xx = cols[4]
+      swsr = [x for x in sysml_lite._as_list(meta.get("swsr")) if x]
+      for j, s_ in enumerate(swsr):
+        p, pw = k.pill(xx, ty + 4, s_.replace("SWSR-", ""), "#FFFFFF", "#334155", 16, 9, 700, k.FAINT, mono=True)
+        if xx + pw > w - 70:
+          body.append(k.text(xx, ty + 16, f"+{len(swsr) - j}", 10, k.MUTED, 700))
+          break
+        body.append(p)
+        xx += pw + 3
+      if not swsr:
+        body.append(k.text(cols[4], ty + 16, "no SWSR", 10, "#B45309", 600))
+      ty += rh
+    y += ph + 16
+  summary = " · ".join(f"{totals.get(s, 0)} {s}" for s, *_ in REC_STATUS)
+  body.append(k.text(40, y + 8, f"{sum(totals.values())} record transitions: {summary}. A transition from any state or "
+                     "to the requested mode is one record row and several model transitions (gen_behaviour.py).", 12, k.INK, 600))
+  legend_y = y + 26
+  items, lx = [], 40
+  for s, c, bg, label in REC_STATUS:
+    p, pw = k.pill(lx, legend_y + 21, s, bg, c, 16, 9.5, 700, c)
+    items += [p, k.text(lx + pw + 8, legend_y + 33, label, 11, k.INK2)]
+    lx += pw + 30 + k.text_w(label, 11)
+  body += rv.footer(w, legend_y, items)
+  return k.svg_doc(w, legend_y + 92, f"{view.short}. {spec['title']} (SysML v2 view {view.name})",
+                   spec.get("desc", view.doc), body)
+
+
+RENDERERS["records"] = render_records
+
+
+# ---------------------------------------------------------------- V-17 sequence
+
+SEQ_STATUS = {"as inherited": (k.INK2, None, "as inherited"),
+              "required, in the reference build": (k.ENVELOPE["chip"], None, "required, in the reference build (not verified)"),
+              "required, not implemented": ("#D2553F", "6 4", "required, not yet implemented")}
+
+
+def render_sequence(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str:
+  """A sequence of the model as a sequence diagram: lifelines left to right, one row per step."""
+  view = m.views[vid]
+  w = spec["width"]
+  q = m.sequences[spec["sequence"]]
+  body = rv.header(w, view, spec["title"], spec["subtitle"], digest)
+  x0, x1 = 140, 990
+  lx = {name: x0 + i * (x1 - x0) / (len(q.lifelines) - 1) for i, (name, _) in enumerate(q.lifelines)}
+  top = 104
+  decl = next(o for p in m.packages.values() for o in p.members if o.kind == "occurrence def" and o.short == q.short)
+  titles = {x.name: x.doc for x in decl.members if x.kind == "part" and x.doc}
+  lanes_at = len(body)  # lifelines are drawn behind the steps, once their length is known
+  for name, ident in q.lifelines:
+    e = m.find(ident)
+    if e is None:
+      named = [x for x in m.elements.values() if x.kind == "part" and x.name == ident]
+      e = named[0] if named else None
+    st = rv.style_of(e) if e is not None else k.OUTSIDE
+    if e is not None and e.scope() != "inside":
+      st = k.OUTSIDE
+    cx = lx[name]
+    body.append(k.rect(cx - 58, top, 116, 44, st["fill"], st["stroke"], 8, 1.4))
+    body.append(k.text(cx, top + 19, titles.get(name, name), 12, k.INK, 700, "middle"))
+    body.append(k.text(cx, top + 34, ident, 9.5, k.MUTED, 400, "middle", True))
+  rx = 1100
+  body.append(k.text(rx, top + 19, "RECORDS · CODE", 9.5, k.MUTED, 700, extra=' letter-spacing="1"'))
+  y = top + 64
+  phase = None
+  for msg in q.messages:
+    stp = msg.meta.get("SequenceStep") or {}
+    if stp.get("phase") != phase:
+      phase = stp.get("phase")
+      y += 8
+      body.append(k.rect(40, y, w - 80, 22, k.WASH, None, 4))
+      body.append(k.text(52, y + 15, str(phase).upper(), 10, k.MUTED, 700, extra=' letter-spacing="1.1"'))
+      y += 30
+    color, dash, _ = SEQ_STATUS[str(stp.get("status"))]
+    sx, tx = lx[msg.source], lx[msg.target]
+    text = msg.doc
+    cond = str(stp.get("condition", ""))
+    after = str(stp.get("stateAfter", ""))
+    rh = 40 + (12 if cond else 0)
+    body.append(k.text(48, y + 18, msg.short, 10.5, k.MUTED, 700, None, True))
+    if sx == tx:
+      d = f' stroke-dasharray="{dash}"' if dash else ""
+      body.append(f'<path d="M{k.f(sx)} {k.f(y + 10)}h26v16h-24" fill="none" stroke="{color}" stroke-width="1.6"{d} '
+                  f'marker-end="url(#sq-{list(SEQ_STATUS).index(str(stp.get("status")))})"/>')
+      last = sx == max(lx.values())
+      label_x, anchor = (sx - 64, "end") if last else (sx + 34, None)
+      width = 300 if not last else 420
+    else:
+      d = f' stroke-dasharray="{dash}"' if dash else ""
+      body.append(f'<line x1="{k.f(sx)}" y1="{k.f(y + 22)}" x2="{k.f(tx)}" y2="{k.f(y + 22)}" stroke="{color}" '
+                  f'stroke-width="1.6"{d} marker-end="url(#sq-{list(SEQ_STATUS).index(str(stp.get("status")))})"/>')
+      label_x, anchor = (sx + tx) / 2, "middle"
+      width = max(abs(tx - sx) - 12, 220)
+    body.append(k.text(label_x, y + 16, k.clip(text, width, 10.5), 10.5, color if color != k.INK2 else k.INK, 600, anchor))
+    if cond:
+      body.append(k.text(label_x, y + 36, k.clip(f"[{cond}]", width, 10), 10, k.MUTED, 400, anchor))
+    if after:
+      p, _ = k.pill(tx + 8 if sx != tx else tx + 34, y + 26 + (12 if cond else 0) - (0 if sx != tx else -2),
+                    after.split(":", 1)[-1].strip(), "#FFFFFF", k.INK2, 16, 9.5, 700, k.INK2, mono=True)
+      if sx == tx:
+        p, _ = k.pill(sx - 8, y + 4, after.split(":", 1)[-1].strip(), "#FFFFFF", k.INK2, 16, 9.5, 700, k.INK2,
+                      anchor="end", mono=True)
+      body.append(p)
+    recs = [r for r in sysml_lite._as_list(stp.get("records")) if r]
+    code = str(stp.get("code", ""))
+    side = [ln for ln in (" · ".join(recs), code) if ln]
+    for i, ln in enumerate(side[:2]):
+      body.append(k.text(rx, y + 14 + i * 13, k.clip(ln, w - rx - 40, 10, 400, True), 10, k.MUTED if i else k.INK2, 400, None, True))
+    y += rh
+  body[lanes_at:lanes_at] = [f'<line x1="{k.f(lx[name])}" y1="{k.f(top + 44)}" x2="{k.f(lx[name])}" y2="{k.f(y)}" '
+                             f'stroke="{k.FAINT}" stroke-width="1" stroke-dasharray="3 4"/>' for name, _ in q.lifelines]
+  legend_y = y + 14
+  items, lxx = [], 40
+  for i, (s, (c, dash, label)) in enumerate(SEQ_STATUS.items()):
+    d = f' stroke-dasharray="{dash}"' if dash else ""
+    items.append(f'<line x1="{lxx}" y1="{legend_y + 29}" x2="{lxx + 30}" y2="{legend_y + 29}" stroke="{c}" stroke-width="1.6"{d} '
+                 f'marker-end="url(#sq-{i})"/>')
+    items.append(k.text(lxx + 38, legend_y + 33, label, 11, k.INK2))
+    lxx += 70 + k.text_w(label, 11)
+  p, pw = k.pill(lxx, legend_y + 21, "SILENT", "#FFFFFF", k.INK2, 16, 9.5, 700, k.INK2, mono=True)
+  items += [p, k.text(lxx + pw + 8, legend_y + 33, "state after the step (safety MCU or selfdrived record)", 11, k.INK2)]
+  body += rv.footer(w, legend_y, items)
+  defs = "".join(k.arrow_marker(f"sq-{i}", c, 8) for i, (c, _, _) in enumerate(SEQ_STATUS.values()))
+  return k.svg_doc(w, legend_y + 92, f"{view.short}. {spec['title']} (SysML v2 view {view.name})",
+                   spec.get("desc", view.doc), body, defs)
+
+
+RENDERERS["sequence"] = render_sequence

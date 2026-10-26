@@ -29,6 +29,11 @@ so a change to one without the other fails CI (assurance/models/sysml/README.md 
   N2  needs of WP-S-01 §1.3: every need is refined by a requirement and served by a use case; every SYS requirement
       and every safety goal refines a need
   N3  use cases of WP-S-01 §1.4: every function of the model is performed by a use case
+  B1  StateRecords.sysml and Sequences.sysml match the state-machine records and WP-S-03 §4.1 they are generated from
+  B2  every unit that runs a record state machine is an element of the model; every lifeline of a sequence stands for
+      an element; every record a step names is a record transition, and the state after it a state of that machine;
+      every requirement a step's condition names is in the model
+  B3  every lifeline of a sequence takes part in a step
   R4  the requirements-coverage report (generated/requirements-coverage.md) is up to date: satisfied,
       verified and derived, per kind, with the requirements that are not (informational)
 
@@ -377,10 +382,18 @@ def check_integration(m: sysml_lite.Model, rep: Report) -> None:
       rep.err("M11", f"{e.short} is integrated by no step of WP-S-08 §3.1")
 
 
-def load_state_records() -> dict[str, dict]:
-  sys.path.insert(0, str(ASSURANCE / "trace" / "tools"))
-  import check_state_machines as csm
-  return {r["machine"]: r for r in (csm.load(p) for p in sorted(csm.SM_DIR.glob("*.yaml")))}
+def record_ids(sm: sysml_lite.StateMachine) -> list[str]:
+  """The record transition IDs of a record state machine (one ID can stand for several model transitions)."""
+  return list(dict.fromkeys(str((t.meta.get("RecordTransition") or {}).get("id", "")) for t in sm.transitions))
+
+
+def known_record(m: sysml_lite.Model, ref: str, what: str) -> bool:
+  """Whether "SM-X item" names a state or a record transition of a record state machine in the model."""
+  machine, _, item = ref.partition(" ")
+  sm = m.state_machines.get(machine)
+  if sm is None or "StateRecord" not in sm.meta:
+    return False
+  return item in (sm.states if what == "state" else record_ids(sm))
 
 
 def check_modes(m: sysml_lite.Model, rep: Report) -> None:
@@ -406,11 +419,8 @@ def check_modes(m: sysml_lite.Model, rep: Report) -> None:
         rep.err("M12", f"{mode} {col}: {st.meta['ModeRow'].get(key)!r} in the model, {row[col]!r} in WP-C-01 §4")
   for mode in sorted((set(by_title) | set(configs)) - seen):
     rep.err("M12", f"{mode!r} is in the model but not a row of WP-C-01 §4")
-  recs = load_state_records()
   def known(ref: str, what: str) -> bool:
-    machine, _, item = ref.partition(" ")
-    r = recs.get(machine)
-    return r is not None and item in (r["states"] if what == "state" else [t["id"] for t in r["transitions"]])
+    return known_record(m, ref, what)
   for st in sm.states.values():
     for side in ("host", "panda"):
       for ref in sysml_lite._as_list((st.meta.get("ModeRow") or {}).get(side)):
@@ -635,6 +645,63 @@ def check_needs(m: sysml_lite.Model, rep: Report) -> None:
       rep.err("N3", f"{f} is performed by no use case (WP-S-01 §1.4)")
 
 
+# ---------------------------------------------------------------- behaviour (B1-B3)
+
+def find_any(m: sysml_lite.Model, ident: str) -> sysml_lite.Element | None:
+  """An element by short name, alias or (unique) part name; for a software unit, the first element in it."""
+  e = m.find(ident)
+  if e is None:
+    named = [x for x in m.elements.values() if x.kind == "part" and x.name == ident]
+    units = [x for x in m.elements.values() if (x.meta.get("Unit") or {}).get("id") == ident]
+    e = named[0] if len(named) == 1 else units[0] if units else None
+  return e
+
+
+def check_behaviour(m: sysml_lite.Model, rep: Report) -> None:
+  import gen_behaviour
+  try:
+    texts = gen_behaviour.build()
+  except gen_behaviour.BehaviourError as e:
+    rep.err("B1", str(e))
+    texts = {}
+  for key, text in texts.items():
+    f = gen_behaviour.OUT[key]
+    if not f.exists() or f.read_text(encoding="utf-8") != text:
+      rep.err("B1", f"{f.relative_to(REPO)} does not match its record; run tools/gen_behaviour.py")
+  records = {k: sm for k, sm in m.state_machines.items() if "StateRecord" in sm.meta}
+  if not records:
+    rep.err("B1", "the model has no state-machine records")
+  for k, sm in records.items():
+    for u in sysml_lite._as_list(sm.meta["StateRecord"].get("units")):
+      if find_any(m, u) is None:
+        rep.err("B2", f"{k} runs on {u!r}, which is not an element of the model")
+  if not m.sequences:
+    rep.err("B1", "the model has no sequence (WP-S-03 §4.1)")
+  for q in m.sequences.values():
+    for name, ident in q.lifelines:
+      if find_any(m, ident) is None:
+        rep.err("B2", f"{q.short} lifeline {name} stands for {ident!r}, which is not an element of the model")
+    used = {x for msg in q.messages for x in (msg.source, msg.target)}
+    for name, _ in q.lifelines:
+      if name not in used:
+        rep.err("B3", f"{q.short} lifeline {name} takes part in no step")
+    for msg in q.messages:
+      step = msg.meta.get("SequenceStep") or {}
+      refs = [r for r in sysml_lite._as_list(step.get("records")) if r]
+      for ref in refs:
+        if not known_record(m, ref, "transition"):
+          rep.err("B2", f"{q.short} {msg.short}: {ref!r} is not a transition of the state-machine records")
+      after = str(step.get("stateAfter", ""))
+      if after:
+        state = after.split(":", 1)[-1].strip()
+        machines = {r.split(" ")[0] for r in refs}
+        if not any(known_record(m, f"{x} {state}", "state") for x in machines):
+          rep.err("B2", f"{q.short} {msg.short}: state after {state!r} is not a state of a machine its records name")
+      for req in re.findall(r"\b(?:TSR|SYS|FSR|SG)-[0-9.]+[a-z]?\b", str(step.get("condition", ""))):
+        if req not in m.requirements:
+          rep.err("B2", f"{q.short} {msg.short}: condition names {req}, which is not a requirement of the model")
+
+
 def outside_reason(text: str) -> str | None:
   toks = [t for t in re.split(r"[^A-Z]+", text) if t]
   hits = [OUTSIDE[t] for t in toks if t in OUTSIDE]
@@ -705,7 +772,7 @@ def main(argv: list[str]) -> int:
     print(f"FAIL model: {e}")
     return 1
   for check in (check_elements, check_firmware, check_host, check_interfaces, check_mechanisms, check_functions, check_security, check_integration, check_modes, check_flows,
-                check_integrity_rules, check_requirements, check_needs):
+                check_integrity_rules, check_requirements, check_needs, check_behaviour):
     try:
       check(m, rep)
     except sysml_lite.ModelError as e:
@@ -741,7 +808,9 @@ def main(argv: list[str]) -> int:
         f"(informational, {COVERAGE.name})")
   print(f"needs: {sum(1 for r in m.requirements.values() if r.definition == 'StakeholderNeed')} stakeholder needs, " +
         f"{len(m.use_cases)} use cases")
-  print("OK: M1-M12, N1-N3 and R1-R4 passed")
+  print(f"behaviour: {sum(1 for s in m.state_machines.values() if 'StateRecord' in s.meta)} state-machine records, " +
+        f"{sum(len(q.messages) for q in m.sequences.values())} sequence steps")
+  print("OK: M1-M12, N1-N3, B1-B3 and R1-R4 passed")
   return 0
 
 
