@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-01 System requirements specification (functional, non-safety) |
 | Standard reference | ASPICE 4.0 SYS.2; ISO 21448:2022 §5 (specification of the intended functionality); ISO 15622, ISO 22179, ISO 11270 as informative performance references |
-| Version | 0.6 (SYS-040 status: the no-entry is in the code since the 2026-10-19 change; the alert does not name the setting; 2026-10-20). 0.5 (lead answers of 2026-10-18: SYS-040 refuses engagement outside the assured settings (DQ-221 A); SYS-041 refuses engagement below a highway speed floor (DQ-280 A); 2026-10-18). 0.4 (§10.1 allocation of every SYS requirement to architecture elements, read by the SysML model; SYS-027 updated for the Chill-mode default; 2026-10-14). 0.3 (reference configuration named by generation, E210; 2026-10-12). History: 0.2 (status update 2026-10-12: SYS-120 metric excludes frames refused by design in the reference build; SYS-121 evidence lists the health fields added at `bf6ce8c`). 0.1 |
+| Version | 0.7 (SYS-021: the ODD speed bound is 110 km/h on highways only (DQ-260, DQ-023), was 120 / 90 km/h; §10: Figure 10-1, the requirements by function, generated from §2–§9 and the SysML coverage; 2026-10-26). 0.6 (SYS-040 status: the no-entry is in the code since the 2026-10-19 change; the alert does not name the setting; 2026-10-20). 0.5 (lead answers of 2026-10-18: SYS-040 refuses engagement outside the assured settings (DQ-221 A); SYS-041 refuses engagement below a highway speed floor (DQ-280 A); 2026-10-18). 0.4 (§10.1 allocation of every SYS requirement to architecture elements, read by the SysML model; SYS-027 updated for the Chill-mode default; 2026-10-14). 0.3 (reference configuration named by generation, E210; 2026-10-12). History: 0.2 (status update 2026-10-12: SYS-120 metric excludes frames refused by design in the reference build; SYS-121 evidence lists the health fields added at `bf6ce8c`). 0.1 |
 | Status | Draft |
 | ASIL / scope | QM / SOTIF (safety requirements are in [WP-S-02](WP-S-02-technical-safety-requirements.md)) |
 | Author | Assurance team (initial draft) |
@@ -47,7 +47,7 @@ Paths are under `openpilot/` unless prefixed.
 | ID | Requirement | Type | Target / criterion | Verif | Current implementation | Rationale for TBD |
 |---|---|---|---|---|---|---|
 | SYS-020 | The system shall hold the set speed within ±**TBD** km/h on level road without a lead. | P | proposed ±2 km/h | T-VEH | `selfdrive/controls/lib/longitudinal_planner.py` | Grade effects need measurement |
-| SYS-021 | The set-speed range shall be the PCM cruise set range of the reference vehicle, and shall not exceed the ODD speed bound of 120 km/h (ODD-H) / 90 km/h (ODD-A). | C | as stated | R, T-VEH | Toyota set speed from PCM (pcm cruise); openpilot cap `V_CRUISE_MAX = 145` km/h (`selfdrive/car/cruise.py:12`); engagement allowed to ≈ 149 km/h (`opendbc_repo/opendbc/car/interfaces.py:23-24`) | System-side enforcement of the ODD bound is FM-07 ([WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md)) |
+| SYS-021 | The set-speed range shall be the PCM cruise set range of the reference vehicle, and shall not exceed the ODD speed bound of 110 km/h (ODD-H, DQ-260; the arterial ODD-A was dropped, DQ-023). | C | as stated | R, T-VEH | Toyota set speed from PCM (pcm cruise); openpilot cap `V_CRUISE_MAX = 145` km/h (`selfdrive/car/cruise.py:12`); engagement allowed to ≈ 149 km/h (`opendbc_repo/opendbc/car/interfaces.py:23-24`) | System-side enforcement of the ODD bound is FM-07 ([WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md)) |
 | SYS-022 | When following a lead, the system shall keep a time gap equal to the selected personality: relaxed 1.75 s, standard 1.45 s, aggressive 1.25 s. | P | steady-state gap error ≤ **TBD** | T-VEH, LOG | `selfdrive/controls/lib/longitudinal_mpc_lib/long_mpc.py:71-79` | Steady-state accuracy needs logs |
 | SYS-023 | The default personality in the reference configuration shall be "standard" or "relaxed", not "aggressive". | C | as stated | R | Param `LongitudinalPersonality` | Decision in [WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) |
 | SYS-024 | The system shall bring the vehicle to a stop behind a stopping lead, keeping a stopped distance of about 6 m, and hold it at standstill. | F/P | stop distance 6 m ± **TBD** | T-VEH | `STOP_DISTANCE = 6.0` (`long_mpc.py:57`); standstill/permit braking `opendbc_repo/opendbc/car/toyota/carcontroller.py:179-186, 244-248` | — |
@@ -111,6 +111,10 @@ The safety requirements of F-08 are TSR-1xx…7xx in [WP-S-02](WP-S-02-technical
 | SYS-145 | With automatic updates disabled, the system shall not block engagement because of missing update connectivity. | F | as stated | T-VEH | `Offroad_ConnectivityNeeded` gate (`system/updated/updated.py:324-341`; `system/hardware/hardwared.py:349`, `DisableUpdates` honoured) | To be tested ([WP-O-02](../09-production-operation/WP-O-02-operation-service-decommissioning.md) OI-4) |
 
 ## 10. Traceability
+
+![Figure 10-1: the 39 system requirements by function, each with its type and verification methods, flagged where the target is still TBD (12) or no test case verifies it (14)](figures/fig-s01-10-1-requirements.svg)
+
+*Figure 10-1.* The requirements of §2–§9 by function. A requirement is flagged "target TBD" when its statement or its Target cell still contains TBD (OI-1), and "no test case" when the SysML model's coverage report finds no specified case that verifies it (WP-S-09 OI-6). Generated by [`figures/fig_s01_requirements.py`](figures/fig_s01_requirements.py) from this document and the model; nothing is hand-listed.
 
 | SYS | Function | Related TSR / SOTIF item |
 |---|---|---|
