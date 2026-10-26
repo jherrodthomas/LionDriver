@@ -17,6 +17,7 @@ from openpilot.common.swaglog import cloudlog
 from openpilot.common.gps import get_gps_location_service
 
 from openpilot.selfdrive.car.car_events import CarEvents
+from openpilot.selfdrive.car import stock_aeb_interlock, vehicle_dtc
 from openpilot.selfdrive.locationd.helpers import PoseCalibrator, Pose
 from openpilot.selfdrive.selfdrived.supervision import ControlsMismatch, TxBlockedMonitor
 from openpilot.selfdrive.selfdrived.events import Events, ET
@@ -58,6 +59,19 @@ MISMATCH_ENGAGE_GRACE = 0.3  # s after engaging in which samples are not counted
 CRUISE_MISMATCH_TIME = 1.0   # s of stock cruise engaged while the item is not
 
 
+def dtc_entry_events(status: vehicle_dtc.DtcStatus) -> list:
+  """TSR-629 (DQ-132): the no-entry events for card's start-up fault-code read; an incomplete read refuses entry"""
+  events = []
+  active = status.active_ecus()
+  if "eps" in active:
+    events.append(EventName.epsFaultCode)
+  if "abs" in active:
+    events.append(EventName.brakeFaultCode)
+  if not status.complete():
+    events.append(EventName.faultCodeReadFailed)
+  return events
+
+
 class SelfdriveD:
   def __init__(self, CP=None):
     self.params = Params()
@@ -78,6 +92,10 @@ class SelfdriveD:
     self.update_assured_config()
     # DQ-221, DQ-280: on the reference platform the item engages only in the assured settings and at highway speed
     self.reference_platform = self.CP.carFingerprint in assured_config.ASSURED_PLATFORMS
+    # TSR-629 (DQ-132): card wrote its fault-code read before CarParams; a missing record counts as not read. A log
+    # replay and the simulator (no vehicle CAN bus) have no read, so they are not gated
+    self.dtc_entry_events = [] if REPLAY or stock_aeb_interlock.is_simulation() else dtc_entry_events(
+      vehicle_dtc.DtcStatus.from_dict(self.params.get(vehicle_dtc.PARAM)))
 
     self.car_events = CarEvents(self.CP)
 
@@ -517,9 +535,12 @@ class SelfdriveD:
 
   def add_reference_entry_events(self, CS):
     # LionDriver: on the reference platform, no engagement outside the assured settings (DQ-221, CA-008) or below the
-    # highway speed floor (DQ-280, ODD entry). Both only refuse entry; an engaged item is not disengaged by them
+    # highway speed floor (DQ-280, ODD entry), or after a start-up fault-code read that found an active code or gave no
+    # complete answer (TSR-629, DQ-132). They only refuse entry; an engaged item is not disengaged by them
     if not self.reference_platform:
       return
+    for event in self.dtc_entry_events:
+      self.events.add(event)
     if self.assured_config is not None and not self.assured_config.settings_in_scope:
       self.events.add(EventName.settingNotAssured)
     if CS.vEgo < assured_config.HIGHWAY_SPEED_FLOOR:

@@ -283,6 +283,17 @@ if _reference_env is None:
   del os.environ["LIONDRIVER_REFERENCE"]
 Export('liondriver_reference')
 
+# LionDriver DQ-131 (FM-06, TSR-806, CSG-03): the same setting decides the process set. Only a non-reference build
+# writes this marker; without it the manager does not register the joystick and maneuver processes
+# (system/manager/process_config.py). The marker is untracked, so a release only carries it if built non-reference.
+_upstream_marker = Dir('#openpilot/system/manager').File('upstream_build').abspath
+if liondriver_reference:
+  if os.path.exists(_upstream_marker):
+    os.remove(_upstream_marker)
+else:
+  with open(_upstream_marker, "w") as f:
+    f.write("LIONDRIVER_REFERENCE= (empty): upstream process set, outside the LionDriver safety claims\n")
+
 # Build rednose library
 SConscript(['rednose_repo/rednose/SConscript'])
 

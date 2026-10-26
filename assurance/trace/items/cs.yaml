@@ -661,7 +661,7 @@
   other_parents: false
   allocated_to: "SoC"
   verification: "BA, UT"
-  baseline_impl: "Not met: param-gated only (`process_config.py:34-47`)"
+  baseline_impl: "Implemented in the reference build (DQ-131 A, change-2026-10-25-reference-debug-procs (assurance/07-supporting/impact/change-2026-10-25-reference-debug-procs.md)): `joystick`, `maneuversd` and `lateral_maneuversd` not registered, `joystickd` for notCar only, no debug param changes the control processes (`process_config.py` `REFERENCE_BUILD`); unit test `system/manager/test/test_reference_build.py`; not verified on the device"
   status: proposed
   source: WP-S-07
 
@@ -691,7 +691,7 @@
   other_parents: false
   allocated_to: "ENV"
   verification: "BA"
-  baseline_impl: "Not implemented"
+  baseline_impl: "Partly (DQ-131 A): `build_release.sh` stops a reference release that has the upstream-build marker or the joystick or maneuver modules, and CI (`safety.yaml`, \"Release variant selection\") checks the reference file list; DM demo mode (CSR-072) and the developer toggles in the UI are not covered"
   status: proposed
   source: WP-S-07
 

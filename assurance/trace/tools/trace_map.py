@@ -41,7 +41,8 @@ YAML_KIND = {"hazard": "H", "hazardous-event": "HE", "safety-goal": "SG", "aou":
              "tsr": "TSR", "swsr": "SWSR", "hwsr": "HWSR", "sotif-hazard": "SH", "triggering-condition": "TC",
              "functional-insufficiency": "FI", "functional-modification": "FM", "ai-requirement": "AIR",
              "dataset-requirement": "DSR", "threat-scenario": "TS", "cybersecurity-goal": "CSG",
-             "cybersecurity-requirement": "CSR", "system-requirement": "SYS"}
+             "cybersecurity-requirement": "CSR", "system-requirement": "SYS",
+             "interface-requirement": "IFR"}  # IFR: cross-domain interfaces (DQ-129 A); not a level of the V
 # Kinds defined only in work-product tables so far: prefix -> defining work products.
 DOC_KINDS: dict[str, list[str]] = {}  # every kind of KIND_NAME is in items/ now; a new kind starts here
 KIND_NAME = {

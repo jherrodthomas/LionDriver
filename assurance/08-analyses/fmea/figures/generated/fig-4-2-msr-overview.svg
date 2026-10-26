@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="831" viewBox="0 0 1280 831" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 4-2. FMEA-MSR overview of the System FMEA and DFMEA</title>
-  <desc id="d">FMEA-MSR overview: System FMEA SFM rev 0.33 at BL-006: 67 causes rated, 8 exempt, MSR AP H 65, M 2, L 0, monitoring M 1-4 0, M 5-6 18, M 7-8 17, M 9-10 32; DFMEA DFM rev 0.10 at BL-005: 23 causes rated, 0 exempt, MSR AP H 20, M 3, L 0, monitoring M 1-4 0, M 5-6 1, M 7-8 5, M 9-10 17. For each FMEA a frequency by monitoring grid over the S 10 handbook MSR AP table, the count per monitoring band, the timing basis, how many responses lower the severity, and the actions the MSR rows name.</desc>
+  <desc id="d">FMEA-MSR overview: System FMEA SFM rev 0.34 at BL-006: 75 causes rated, 14 exempt, MSR AP H 73, M 2, L 0, monitoring M 1-4 0, M 5-6 18, M 7-8 17, M 9-10 40; DFMEA DFM rev 0.10 at BL-005: 23 causes rated, 0 exempt, MSR AP H 20, M 3, L 0, monitoring M 1-4 0, M 5-6 1, M 7-8 5, M 9-10 17. For each FMEA a frequency by monitoring grid over the S 10 handbook MSR AP table, the count per monitoring band, the timing basis, how many responses lower the severity, and the actions the MSR rows name.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -14,12 +14,12 @@
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/system-fmea.yaml, dfmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
   <text x="40" y="114" font-size="15" fill="#0F172A" font-weight="700">System FMEA</text>
-  <text x="40" y="131" font-size="10.5" fill="#475569">SFM rev 0.33 · BL-006 · draft · msr: complete</text>
-  <text x="40" y="146" font-size="10.5" fill="#475569">67 causes rated for monitoring and system response · 8 rated in another FMEA</text>
-  <rect x="40" y="158" width="562.7" height="22" fill="#D2553F"/>
-  <text x="321.3" y="173" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">MSR AP H 65</text>
-  <rect x="602.7" y="158" width="17.3" height="22" fill="#D97706"/>
-  <text x="40" y="194" font-size="10.5" fill="#0F172A" font-weight="600">MSR AP: H 65  M 2  L 0</text>
+  <text x="40" y="131" font-size="10.5" fill="#475569">SFM rev 0.34 · BL-006 · draft · msr: complete</text>
+  <text x="40" y="146" font-size="10.5" fill="#475569">75 causes rated for monitoring and system response · 14 rated in another FMEA</text>
+  <rect x="40" y="158" width="564.5" height="22" fill="#D2553F"/>
+  <text x="322.3" y="173" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">MSR AP H 73</text>
+  <rect x="604.5" y="158" width="15.5" height="22" fill="#D97706"/>
+  <text x="40" y="194" font-size="10.5" fill="#0F172A" font-weight="600">MSR AP: H 73  M 2  L 0</text>
   <text x="40" y="214" font-size="10" fill="#475569" font-weight="700">Causes by frequency × monitoring</text>
   <text x="64" y="239.5" font-size="9.5" fill="#475569" text-anchor="end">10</text>
   <rect x="70" y="224" width="24" height="24" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -57,7 +57,7 @@
   <rect x="262" y="272" width="24" height="24" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="286" y="272" width="24" height="24" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <circle cx="298" cy="284" r="10" fill="#D2553F"/>
-  <text x="298" y="287.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+  <text x="298" y="287.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">8</text>
   <text x="64" y="311.5" font-size="9.5" fill="#475569" text-anchor="end">7</text>
   <rect x="70" y="296" width="24" height="24" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="94" y="296" width="24" height="24" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -118,7 +118,7 @@
   <text x="274" y="359.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
   <rect x="286" y="344" width="24" height="24" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <circle cx="298" cy="356" r="10" fill="#D2553F"/>
-  <text x="298" y="359.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+  <text x="298" y="359.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
   <text x="64" y="383.5" font-size="9.5" fill="#475569" text-anchor="end">4</text>
   <rect x="70" y="368" width="24" height="24" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="94" y="368" width="24" height="24" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -137,7 +137,7 @@
   <text x="274" y="383.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="286" y="368" width="24" height="24" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <circle cx="298" cy="380" r="10" fill="#D2553F"/>
-  <text x="298" y="383.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+  <text x="298" y="383.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
   <text x="64" y="407.5" font-size="9.5" fill="#475569" text-anchor="end">3</text>
   <rect x="70" y="392" width="24" height="24" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="94" y="392" width="24" height="24" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="1"/>
@@ -154,7 +154,7 @@
   <rect x="262" y="392" width="24" height="24" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="286" y="392" width="24" height="24" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <circle cx="298" cy="404" r="10" fill="#D2553F"/>
-  <text x="298" y="407.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+  <text x="298" y="407.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
   <text x="64" y="431.5" font-size="9.5" fill="#475569" text-anchor="end">2</text>
   <rect x="70" y="416" width="24" height="24" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="94" y="416" width="24" height="24" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
@@ -195,29 +195,29 @@
   <text x="344" y="248" font-size="10.5" fill="#0F172A" font-weight="700">0</text>
   <text x="338" y="266" font-size="10" fill="#0F172A" font-weight="700">M 1–4</text>
   <text x="377.7" y="266" font-size="9.5" fill="#475569">measured FDTI + FRTI within the FTTI</text>
-  <rect x="338" y="284" width="65" height="16" fill="#0F766E" rx="2"/>
-  <text x="409" y="296" font-size="10.5" fill="#0F172A" font-weight="700">18</text>
+  <rect x="338" y="284" width="58.1" height="16" fill="#0F766E" rx="2"/>
+  <text x="402.1" y="296" font-size="10.5" fill="#0F172A" font-weight="700">18</text>
   <text x="338" y="314" font-size="10" fill="#0F172A" font-weight="700">M 5–6</text>
   <text x="377.7" y="314" font-size="9.5" fill="#475569">code-derived timing within the FTTI, test exists</text>
-  <rect x="338" y="332" width="61.4" height="16" fill="#D97706" rx="2"/>
-  <text x="405.4" y="344" font-size="10.5" fill="#0F172A" font-weight="700">17</text>
+  <rect x="338" y="332" width="54.9" height="16" fill="#D97706" rx="2"/>
+  <text x="398.9" y="344" font-size="10.5" fill="#0F172A" font-weight="700">17</text>
   <text x="338" y="362" font-size="10" fill="#0F172A" font-weight="700">M 7–8</text>
   <text x="377.7" y="362" font-size="9.5" fill="#475569">reacts, but incomplete, too slow or no FTTI row</text>
-  <rect x="338" y="380" width="115.6" height="16" fill="#D2553F" rx="2"/>
-  <text x="459.6" y="392" font-size="10.5" fill="#0F172A" font-weight="700">32</text>
+  <rect x="338" y="380" width="129.1" height="16" fill="#D2553F" rx="2"/>
+  <text x="473.1" y="392" font-size="10.5" fill="#0F172A" font-weight="700">40</text>
   <text x="338" y="410" font-size="10" fill="#0F172A" font-weight="700">M 9–10</text>
   <text x="384.3" y="410" font-size="9.5" fill="#475569">no in-field monitor, or the driver must notice</text>
   <text x="338" y="432" font-size="10" fill="#475569" font-weight="700">Timing basis</text>
-  <text x="338" y="448" font-size="10.5" fill="#0F172A">measured 0  code-derived 30  unknown 37</text>
+  <text x="338" y="448" font-size="10.5" fill="#0F172A">measured 0  code-derived 30  unknown 45</text>
   <text x="338" y="472" font-size="10" fill="#475569" font-weight="700">Severity after the response</text>
-  <text x="338" y="488" font-size="10.5" fill="#0F172A">lowered 13  unchanged 54</text>
+  <text x="338" y="488" font-size="10.5" fill="#0F172A">lowered 13  unchanged 62</text>
   <text x="40" y="504" font-size="10" fill="#0F766E" font-weight="600">M ≤ 6: SFM-001.C1, SFM-001.C3, SFM-002.C1, SFM-002.C2, SFM-002.C4, SFM-008.C2, SFM-008.C3, SFM-009.C2,</text>
   <text x="40" y="517" font-size="10" fill="#0F766E" font-weight="600">SFM-013.C1, SFM-013.C2, SFM-017.C1, SFM-017.C2, SFM-019.C1, SFM-020.C1, SFM-035.C1, SFM-005.C2,</text>
   <text x="40" y="530" font-size="10" fill="#0F766E" font-weight="600">SFM-011.C2, SFM-015.C2</text>
   <text x="40" y="557" font-size="10" fill="#475569" font-weight="700">Actions named in the MSR rows (20)</text>
   <rect x="40" y="565" width="139.1" height="15" rx="7.5" fill="#FBE4DF" stroke="#D2553F" stroke-width="1"/><text x="109.5" y="575.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SFM-ACT-001 · open · 2</text>
-  <rect x="185.1" y="565" width="139.1" height="15" rx="7.5" fill="#FBE4DF" stroke="#D2553F" stroke-width="1"/><text x="254.6" y="575.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SFM-ACT-002 · open · 1</text>
-  <rect x="330.1" y="565" width="139.1" height="15" rx="7.5" fill="#FBE4DF" stroke="#D2553F" stroke-width="1"/><text x="399.7" y="575.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SFM-ACT-003 · open · 3</text>
+  <rect x="185.1" y="565" width="139.1" height="15" rx="7.5" fill="#FBE4DF" stroke="#D2553F" stroke-width="1"/><text x="254.6" y="575.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SFM-ACT-002 · open · 3</text>
+  <rect x="330.1" y="565" width="139.1" height="15" rx="7.5" fill="#FBE4DF" stroke="#D2553F" stroke-width="1"/><text x="399.7" y="575.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SFM-ACT-003 · open · 4</text>
   <rect x="475.2" y="565" width="139.1" height="15" rx="7.5" fill="#FBE4DF" stroke="#D2553F" stroke-width="1"/><text x="544.7" y="575.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SFM-ACT-005 · open · 2</text>
   <rect x="40" y="587" width="139.1" height="15" rx="7.5" fill="#FBE4DF" stroke="#D2553F" stroke-width="1"/><text x="109.5" y="597.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SFM-ACT-006 · open · 1</text>
   <rect x="185.1" y="587" width="139.1" height="15" rx="7.5" fill="#FBE4DF" stroke="#D2553F" stroke-width="1"/><text x="254.6" y="597.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SFM-ACT-007 · open · 4</text>

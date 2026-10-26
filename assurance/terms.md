@@ -17,6 +17,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 
 | Term | Meaning |
 |---|---|
+| ABS | anti-lock braking system; on the Toyota, the ABS/VSC ECU that also runs stability control |
 | ACC | adaptive cruise control |
 | ACK | acknowledge (NACK: not acknowledge) |
 | AEB | automatic emergency braking |
@@ -39,6 +40,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | DMA | direct memory access: hardware that copies data without the processor |
 | DRV | the driver |
 | DSU | driving support unit (Toyota's radar cruise module) |
+| DTC | diagnostic trouble code: a fault code an ECU stores, read with a scan tool or over UDS |
 | DTCM | the MCU's tightly coupled data memory, where the safety state lives |
 | E/E | electrical and electronic (systems) |
 | ECC | error-correcting code (memory) |
@@ -138,6 +140,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | TSC | technical safety concept |
 | TSS | Toyota Safety Sense (TSS 2.0: the car's stock lane assist, radar cruise and pre-collision package) |
 | TX | transmit |
+| UDS | unified diagnostic services (ISO 14229): the diagnostic protocol used to read ECU versions and fault codes |
 | UID | unique identifier of the chip |
 | URL | web address |
 | US | United States |

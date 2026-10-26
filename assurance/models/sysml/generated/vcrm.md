@@ -167,7 +167,7 @@ One row per system-level requirement of the SysML model: SYS (WP-S-01), TSR (WP-
 | TSR-626 | QM (C-sup: TSR-516) | LOG, T-SIL, FI | AT | — | — | — | — | none |
 | TSR-627 | QM (C-sup: TSR-516) | T-SIL, T-HIL | T | — | — | — | — | none |
 | TSR-628 | QM | T-SIL, T-VEH | T | — | — | — | — | none |
-| TSR-629 | QM (supports TSR-110, TSR-618) | T-SIL, T-VEH | T | — | — | — | — | none |
+| TSR-629 | QM (supports TSR-110, TSR-618) | T-SIL, T-VEH | T | — | VS-SQ-20 | — | — | none |
 | TSR-630 | QM (C-sup: TSR-105, TSR-301) | T-SIL, FI | T | — | — | — | — | none |
 | TSR-631 | QM (C-sup: TSR-101, TSR-103 bound the effect; TSR-408 covers a stopped command stream) | T-SIL, FI | T | — | — | — | — | none |
 | TSR-632 | C (report content); QM for its use (TSR-626(e)) | T-SIL, T-HIL | T | — | — | — | — | none |

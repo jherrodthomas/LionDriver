@@ -102,13 +102,13 @@ Clause references and status are read from the [register (WP-M-00)](../../01-man
 
 ## 3. Cross-domain interfaces
 
-Each interface is anchored to text in the work products; the checker fails if an anchor disappears. *Documented* means the documents reference each other but nobody has reviewed the agreement yet.
+Each interface is anchored to text in the work products; the checker fails if an anchor disappears. *Documented* means the documents reference each other but nobody has reviewed the agreement yet. An interface is *agreed* only when an accepted review record of both owners lists its IFR item in [`trace/items/ifr.yaml`](../../trace/items/ifr.yaml) (DQ-129 A). Agreed in the whole model: 0 of 33.
 
-| ID | Pattern | Between | Topic | Status | Open item | Due |
-|---|---|---|---|---|---|---|
-| IX-24 | Safety-Security | [WP-K-01](../../10-safety-case/WP-K-01-safety-case.md), [WP-K-03](../../10-safety-case/WP-K-03-cybersecurity-case.md) (Joint / Cybersecurity) | The safety case delegates its cybersecurity branch (G4) to the cybersecurity case, which argues against the same reference configuration | Documented | — | G5 |
-| IX-25 | Safety-SOTIF | [WP-V-01](../../06-validation/WP-V-01-safety-validation.md), [WP-V-02](../../06-validation/WP-V-02-sotif-vv-strategy.md) (Functional safety / SOTIF) | The SOTIF validation targets take P(not controlled) from the subject controllability tests of the safety validation: WP-V-02 §3.3 maps each SH to a WP-V-01 test and uses the one-sided 95 % upper bound at the least favourable tested condition; untested SHs and speeds above the highest tested use 1. P(E-situation) has its own route in WP-V-02 §3.4 | Documented | — | G5 |
-| IX-26 | SOTIF-AI | [WP-K-02](../../10-safety-case/WP-K-02-sotif-release-argument.md), [WP-W-10](../../05-software/WP-W-10-ml-engineering.md) (SOTIF / AI safety) | The SOTIF release argument needs the model evaluation report and hash-identified models from ML engineering; the report is missing | Documented | — | G5 |
+| ID | IFR | Pattern | Between | Topic | Status | Open item | Due |
+|---|---|---|---|---|---|---|---|
+| IX-24 | IFR-24 | Safety-Security | [WP-K-01](../../10-safety-case/WP-K-01-safety-case.md), [WP-K-03](../../10-safety-case/WP-K-03-cybersecurity-case.md) (Joint / Cybersecurity) | The safety case delegates its cybersecurity branch (G4) to the cybersecurity case, which argues against the same reference configuration | Documented | — | G5 |
+| IX-25 | IFR-25 | Safety-SOTIF | [WP-V-01](../../06-validation/WP-V-01-safety-validation.md), [WP-V-02](../../06-validation/WP-V-02-sotif-vv-strategy.md) (Functional safety / SOTIF) | The SOTIF validation targets take P(not controlled) from the subject controllability tests of the safety validation: WP-V-02 §3.3 maps each SH to a WP-V-01 test and uses the one-sided 95 % upper bound at the least favourable tested condition; untested SHs and speeds above the highest tested use 1. P(E-situation) has its own route in WP-V-02 §3.4 | Documented | — | G5 |
+| IX-26 | IFR-26 | SOTIF-AI | [WP-K-02](../../10-safety-case/WP-K-02-sotif-release-argument.md), [WP-W-10](../../05-software/WP-W-10-ml-engineering.md) (SOTIF / AI safety) | The SOTIF release argument needs the model evaluation report and hash-identified models from ML engineering; the report is missing | Documented | — | G5 |
 
 ## 4. Clause coverage by standard
 
@@ -150,3 +150,5 @@ Which activity answers each clause reference listed in the register. One activit
 **Work products with no confirmation measure at this gate** (verification review only): WP-O-01, WP-O-03, WP-O-02, WP-P-10, WP-T-01, WP-K-06.
 
 **Open interfaces due by this gate** (from this or an earlier phase): IX-13 (WP-V-02 OI-3).
+
+**Interfaces due by this gate that are not agreed** (no accepted review of their IFR item, DQ-129 A): 29 of 29: IFR-01, IFR-02, IFR-03, IFR-04, IFR-05, IFR-06, IFR-07, IFR-08, IFR-09, IFR-10, IFR-11, IFR-12, IFR-13, IFR-14, IFR-15, IFR-16, IFR-17, IFR-18, IFR-19, IFR-20, IFR-21, IFR-22, IFR-23, IFR-24, IFR-25, IFR-26, IFR-31, IFR-32, IFR-33.

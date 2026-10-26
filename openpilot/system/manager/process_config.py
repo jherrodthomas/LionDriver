@@ -9,6 +9,15 @@ from openpilot.system.manager.process import PythonProcess, NativeProcess, Daemo
 
 WEBCAM = os.getenv("USE_WEBCAM") is not None
 
+# LionDriver DQ-131 (FM-06, TSR-806, CSG-03): the reference build leaves out the debug, maneuver and joystick modes.
+# The root SConstruct writes this marker only for a non-reference build (LIONDRIVER_REFERENCE= empty); without it,
+# the processes that replace or feed the control processes are not registered, and no debug param changes which
+# control processes run. selfdrived still refuses to engage while one of these params is set (DQ-221), as a second
+# barrier.
+UPSTREAM_BUILD_MARKER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "upstream_build")
+REFERENCE_BUILD = not os.path.exists(UPSTREAM_BUILD_MARKER)
+REFERENCE_EXCLUDED_PROCS = ("joystick", "maneuversd", "lateral_maneuversd")
+
 def driverview(started: bool, params: Params, CP: car.CarParams) -> bool:
   return started or params.get_bool("IsDriverViewEnabled")
 
@@ -93,8 +102,8 @@ procs = [
   NativeProcess("_pandad", "openpilot/selfdrive/pandad", ["./pandad"], always_run, enabled=False),
   PythonProcess("calibrationd", "openpilot.selfdrive.locationd.calibrationd", only_onroad),
   PythonProcess("torqued", "openpilot.selfdrive.locationd.torqued", only_onroad),
-  PythonProcess("controlsd", "openpilot.selfdrive.controls.controlsd", and_(not_joystick, iscar)),
-  PythonProcess("joystickd", "openpilot.tools.joystick.joystickd", or_(joystick, notcar)),
+  PythonProcess("controlsd", "openpilot.selfdrive.controls.controlsd", iscar if REFERENCE_BUILD else and_(not_joystick, iscar)),
+  PythonProcess("joystickd", "openpilot.tools.joystick.joystickd", notcar if REFERENCE_BUILD else or_(joystick, notcar)),
   PythonProcess("selfdrived", "openpilot.selfdrive.selfdrived.selfdrived", only_onroad),
   PythonProcess("card", "openpilot.selfdrive.car.card", only_onroad),
   PythonProcess("deleter", "openpilot.system.loggerd.deleter", always_run),
@@ -105,7 +114,7 @@ procs = [
   PythonProcess("lagd", "openpilot.selfdrive.locationd.lagd", only_onroad),
   PythonProcess("ubloxd", "openpilot.system.ubloxd.ubloxd", ublox, enabled=COMMA_HARDWARE),
   PythonProcess("pigeond", "openpilot.system.ubloxd.pigeond", ublox, enabled=COMMA_HARDWARE),
-  PythonProcess("plannerd", "openpilot.selfdrive.controls.plannerd", not_long_maneuver),
+  PythonProcess("plannerd", "openpilot.selfdrive.controls.plannerd", only_onroad if REFERENCE_BUILD else not_long_maneuver),
   PythonProcess("maneuversd", "openpilot.tools.longitudinal_maneuvers.maneuversd", long_maneuver),
   PythonProcess("lateral_maneuversd", "openpilot.tools.lateral_maneuvers.lateral_maneuversd", lat_maneuver),
   PythonProcess("radard", "openpilot.selfdrive.controls.radard", only_onroad),
@@ -120,5 +129,8 @@ procs = [
   PythonProcess("webrtcd", "openpilot.system.webrtc.webrtcd", or_(livestream, notcar)),
   PythonProcess("joystick", "openpilot.tools.joystick.joystick_control", and_(joystick, iscar)),
 ]
+
+if REFERENCE_BUILD:
+  procs = [p for p in procs if p.name not in REFERENCE_EXCLUDED_PROCS]
 
 managed_processes = {p.name: p for p in procs}

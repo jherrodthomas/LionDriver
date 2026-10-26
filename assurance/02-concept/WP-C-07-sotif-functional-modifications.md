@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-07 Functional modifications addressing SOTIF risk |
 | Standard reference | ISO 21448:2022 §8 (functional modifications addressing SOTIF-related risks); ASPICE 4.0 SYS.2 |
-| Version | 0.4 (§2: Figures 3-1 and 3-2, one scene card per modification, today against the same scene with it, drawn by `sotif/fm_scenes.py`; no modification, priority or requirement changed; 2026-10-19). 0.3.1 (FM-01 status: part (a), the Chill default, is in the code since 2026-10-14, while the toggle stays and a stored "1" is honoured (DQ-001 A); OI-1 narrowed; 2026-10-19). 0.3 (FM-07 bound 110 km/h, decision register DQ-260; 2026-10-16). 0.2 (FM-07 and FM-08 follow the highway-only ODD, decision register DQ-023, and the 110 km/h controllability test, DQ-091; 2026-10-16). 0.1 |
+| Version | 0.5 (FM-06 status: debug, maneuver and joystick modes left out of the reference build, DQ-131 A; DM demo mode still open; 2026-10-25). 0.4 (§2: Figures 3-1 and 3-2, one scene card per modification, today against the same scene with it, drawn by `sotif/fm_scenes.py`; no modification, priority or requirement changed; 2026-10-19). 0.3.1 (FM-01 status: part (a), the Chill default, is in the code since 2026-10-14, while the toggle stays and a stored "1" is honoured (DQ-001 A); OI-1 narrowed; 2026-10-19). 0.3 (FM-07 bound 110 km/h, decision register DQ-260; 2026-10-16). 0.2 (FM-07 and FM-08 follow the highway-only ODD, decision register DQ-023, and the 110 km/h controllability test, DQ-091; 2026-10-16). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF (some modifications also support FSRs in WP-C-04) |
 | Author | Assurance team (initial draft) |
@@ -120,6 +120,7 @@ Sheets: [P1](#modification-scenes-p1) · **P2 and P3**
 | Expected risk reduction | Removes TC-26; supports FSR-02.08 |
 | Verification | Configuration review; test setting each parameter onroad shows no effect / no-entry |
 | Priority | P1 |
+| Status | Debug, maneuver and joystick modes: **implemented 2026-10-25 in the reference build**, the option the project lead chose (decision register DQ-131 A; [change record](../07-supporting/impact/change-2026-10-25-reference-debug-procs.md)). The manager does not register `joystick`, `maneuversd` or `lateral_maneuversd`, runs `joystickd` for notCar only, and keeps `controlsd` and `plannerd` running whatever the three params say; the reference release does not ship the three modules. The engagement refusal while a param is set (DQ-221) stays as a second barrier. `controlsd` still subscribes to `lateralManeuverPlan`, which nothing publishes in the reference build. Unit-tested; not reviewed independently, not verified on the device. DM demo mode (`IsDriverViewEnabled`): **not implemented** |
 
 ### FM-07 Enforce the ODD speed bound
 

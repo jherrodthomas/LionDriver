@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="530" viewBox="0 0 1280 530" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
 <title id="t">SG-08 requirement tree: FSRs and TSRs</title>
-<desc id="d">SG-08 (ASIL A): FSR-02.06 (implemented) → TSR-608 (implemented), TSR-634 (partly); FSR-02.07 (partly) → TSR-609 (not implemented), TSR-612 (not implemented); FSR-02.08 (not implemented) → TSR-610 (not implemented), TSR-613 (not implemented), TSR-806 (partly); FSR-02.09 (implemented) → TSR-611 (partly), TSR-633 (implemented); FSR-08.01 (partly) → TSR-635 (not implemented).</desc>
+<desc id="d">SG-08 (ASIL A): FSR-02.06 (implemented) → TSR-608 (implemented), TSR-634 (partly); FSR-02.07 (partly) → TSR-609 (not implemented), TSR-612 (not implemented); FSR-02.08 (not implemented) → TSR-610 (not implemented), TSR-613 (partly), TSR-806 (partly); FSR-02.09 (implemented) → TSR-611 (partly), TSR-633 (implemented); FSR-08.01 (partly) → TSR-635 (not implemented).</desc>
 <rect width="1280" height="530" fill="#FFFFFF"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">SG-08 requirement tree</text>
 <text x="40" y="66" font-size="12" fill="#475569">SG-08 → 5 FSRs (WP-C-04 §5, §9) → 10 TSRs (WP-S-02 §12.1) · coloured by status</text>
@@ -53,7 +53,7 @@
 <line x1="680" y1="265.0" x2="706" y2="265.0" stroke="#CBD5E1" stroke-width="1.4"/>
 <rect x="712" y="255.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
 <text x="753.0" y="269.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-610</text>
-<rect x="800" y="255.0" width="82" height="20" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1" stroke-dasharray="3 2"/>
+<rect x="800" y="255.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1" stroke-dasharray="3 2"/>
 <text x="841.0" y="269.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-613</text>
 <rect x="888" y="255.0" width="82" height="20" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
 <text x="929.0" y="269.0" font-size="10" fill="#0F172A" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TSR-806</text>

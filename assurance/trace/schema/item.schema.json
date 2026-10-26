@@ -13,7 +13,7 @@
   "properties": {
     "id": {
       "type": "string",
-      "pattern": "^((H|HE|HS|SG|FSR|TSR|SWSR|HWSR|SH|TC|FI|FM|SOTIF|AIR|DSR|MLR|MON|KS|DVR|DEV|TS|CSG|CSR|SYS|AOU)-[0-9]{2,3}(\\.[0-9]{1,2})?[a-z]?|VS-[A-Z]{2,4}-[0-9]{2,3}[a-z]?)$"
+      "pattern": "^((H|HE|HS|SG|FSR|TSR|SWSR|HWSR|SH|TC|FI|FM|SOTIF|AIR|DSR|MLR|MON|KS|DVR|DEV|TS|CSG|CSR|SYS|AOU|IFR)-[0-9]{2,3}(\\.[0-9]{1,2})?[a-z]?|VS-[A-Z]{2,4}-[0-9]{2,3}[a-z]?)$"
     },
     "kind": {
       "enum": [
@@ -28,6 +28,7 @@
         "hazard",
         "hazardous-event",
         "hwsr",
+        "interface-requirement",
         "safety-goal",
         "sotif-hazard",
         "swsr",
@@ -347,6 +348,45 @@
         "type": "string",
         "pattern": "^(SH|AIR)-[0-9]{2}$"
       }
+    },
+    "interface": {
+      "type": "string",
+      "pattern": "^IX-[0-9]{2}$",
+      "description": "The process-model interface (assurance/process/model/interfaces.yaml) the item stands for"
+    },
+    "owners": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "The two roles (WP-M-02 §3.1) whose lanes the interface joins, in the order of the interface's work products"
+    },
+    "open_item": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ]
+    },
+    "review_ref": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "pattern": "^REV-[0-9]{3}$"
+        }
+      ],
+      "description": "Review record in assurance/case/reviews/reviews.yaml"
     }
   },
   "allOf": [
@@ -607,6 +647,63 @@
           "source"
         ]
       }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "interface-requirement"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "kind",
+          "interface",
+          "title",
+          "owners",
+          "open_item",
+          "review_ref",
+          "status",
+          "source"
+        ],
+        "properties": {
+          "status": {
+            "enum": [
+              "agreed",
+              "proposed",
+              "withdrawn"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "interface-requirement"
+          },
+          "status": {
+            "const": "agreed"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "review_ref": {
+            "type": "string"
+          },
+          "open_item": {
+            "type": "null"
+          }
+        }
+      },
+      "description": "DQ-129 A: an interface is agreed only through a recorded review and with no open item"
     },
     {
       "if": {

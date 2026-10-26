@@ -29,6 +29,7 @@ REGISTER_MD = ASSURANCE_DIR / "01-management" / "WP-M-00-work-product-register.m
 SAFETY_PLAN_MD = ASSURANCE_DIR / "01-management" / "WP-M-02-safety-plan.md"
 CONFIRMATION_MD = ASSURANCE_DIR / "01-management" / "WP-M-06-confirmation-measures-plan.md"
 CONFIRMATION_DIR = ASSURANCE_DIR / "10-safety-case" / "confirmation"
+IFR_YAML = ASSURANCE_DIR / "trace" / "items" / "ifr.yaml"  # owners and agreement state of each interface (DQ-129 A)
 
 sys.path.insert(0, str(ASSURANCE_DIR / "trace" / "tools"))
 from check_trace import _load_subset
@@ -36,7 +37,6 @@ from check_trace import _load_subset
 GATES = ["G0", "G1", "G2", "G3", "G4", "G5", "G6"]
 STANDARDS = [("iso26262", "ISO 26262"), ("iso21448", "ISO 21448"), ("iso21434", "ISO/SAE 21434"), ("other", "Other"), ("aspice", "ASPICE")]
 STATUS_NAMES = {"S": "Skeleton", "D": "Draft", "R": "In review", "A": "Approved", "B": "Baselined", "N/A": "Tailored out"}
-INTERFACE_STATUS = {"documented", "open"}
 HANDBOOK_WPS = {f"WP-{n}" for n in range(1, 9)}
 
 REQUIRED = {
@@ -44,7 +44,7 @@ REQUIRED = {
   "lane": ["id", "kind", "name", "role", "plan"],
   "activity": ["id", "kind", "phase", "lane", "name", "produces", "inputs", "handbook_wp"],
   "review": ["id", "kind", "phase", "name", "covers", "independence"],
-  "interface": ["id", "kind", "phase", "between", "pattern", "topic", "anchors", "status", "open_item", "due"],
+  "interface": ["id", "kind", "phase", "between", "pattern", "topic", "anchors", "ifr", "due"],
   "feedback": ["id", "kind", "phase", "source", "targets", "finding", "anchors"],
 }
 LIST_FIELDS = {"handbook_chapters", "produces", "updates", "inputs", "handbook_wp", "covers", "between", "anchors", "targets"}
@@ -168,14 +168,19 @@ class Model:
   reviews: dict[str, dict] = field(default_factory=dict)
   interfaces: dict[str, dict] = field(default_factory=dict)
   feedback: dict[str, dict] = field(default_factory=dict)
+  ifrs: dict[str, dict] = field(default_factory=dict)  # IFR items of trace/items/ifr.yaml
   errors: list[str] = field(default_factory=list)
 
   def err(self, check: str, where: str, msg: str) -> None:
     self.errors.append(f"[{check}] {where}: {msg}")
 
 
-def load_model(model_dir: Path = MODEL_DIR) -> Model:
+def load_model(model_dir: Path = MODEL_DIR, ifr_yaml: Path = IFR_YAML) -> Model:
   model = Model()
+  try:
+    model.ifrs = {x["id"]: x for x in _load_subset(ifr_yaml.read_text(encoding="utf-8"))}
+  except (OSError, ValueError) as e:
+    model.err("P1", ifr_yaml.name, f"cannot read the IFR items: {e}")
   buckets = {"phase": model.phases, "lane": model.lanes, "activity": model.activities, "review": model.reviews, "interface": model.interfaces, "feedback": model.feedback}
   for path in sorted(model_dir.glob("*.yaml")):
     try:
@@ -203,6 +208,18 @@ def load_model(model_dir: Path = MODEL_DIR) -> Model:
       it["_file"] = path.name
       buckets[kind][it["id"]] = it
   return model
+
+
+def ix_status(model: Model, ix: dict) -> str:
+  """documented, open or agreed, read from the interface's IFR item (DQ-129 A)."""
+  ifr = model.ifrs.get(ix["ifr"], {})
+  if ifr.get("status") == "agreed":
+    return "agreed"
+  return "open" if ifr.get("open_item") else "documented"
+
+
+def ix_open_item(model: Model, ix: dict) -> str | None:
+  return model.ifrs.get(ix["ifr"], {}).get("open_item")
 
 
 def measure_id(review_id: str) -> str:
@@ -368,13 +385,23 @@ def check(model: Model, ctx: Context) -> dict[str, list[str]]:
     if "@" in rid and rid.split("@", 1)[1] != rv["phase"]:
       model.err("P6", rid, f"gate suffix does not match phase {rv['phase']}")
 
-  # P7 interfaces: both ends produced by an activity, anchors present verbatim
+  # P7 interfaces: both ends produced by an activity, anchors present verbatim, one IFR item each whose owners are
+  # the roles of the two lanes (its status rules are check I1 of check_trace.py)
   texts: dict[str, str] = {}
+  lane_of = {wp: a["lane"] for a in model.activities.values() for wp in a["produces"]}
+  for fid, f in model.ifrs.items():
+    if f.get("interface") not in model.interfaces:
+      model.err("P7", fid, f"names interface {f.get('interface')}, which is not in the model")
   for iid, ix in model.interfaces.items():
-    if ix["status"] not in INTERFACE_STATUS:
-      model.err("P7", iid, f"status must be one of {sorted(INTERFACE_STATUS)}")
-    if (ix["status"] == "open") != bool(ix["open_item"]):
-      model.err("P7", iid, "open_item is required exactly when status is open")
+    ifr = model.ifrs.get(ix["ifr"])
+    if ifr is None:
+      model.err("P7", iid, f"IFR item {ix['ifr']} is not in trace/items/ifr.yaml")
+    elif ifr.get("interface") != iid:
+      model.err("P7", iid, f"IFR item {ix['ifr']} names interface {ifr.get('interface')}")
+    elif all(w in lane_of and lane_of[w] in model.lanes for w in ix["between"]):
+      roles = [model.lanes[lane_of[w]]["role"] for w in ix["between"]]
+      if ifr.get("owners") != roles:
+        model.err("P7", iid, f"IFR item {ix['ifr']} owners {ifr.get('owners')} are not the lane roles {roles}")
     if ix["due"] not in GATES:
       model.err("P7", iid, f"unknown gate {ix['due']}")
     elif ix["phase"] in GATES and GATES.index(ix["due"]) < GATES.index(ix["phase"]):
@@ -572,7 +599,7 @@ def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
   pairs: dict[tuple[str, str], list[str]] = {}
   for x in ixs:
     la, lb = sorted(lane_of[w] for w in x["between"])
-    pairs.setdefault((la, lb), []).append(x["id"] + (" OPEN" if x["status"] == "open" else ""))
+    pairs.setdefault((la, lb), []).append(x["id"] + (" OPEN" if ix_status(model, x) == "open" else ""))
   used = sorted({ln for p in pairs for ln in p}, key=list(model.lanes).index)
   for ln in used:
     out.append(f"  {ln}([{_q(model.lanes[ln]['name'])}])")
@@ -594,11 +621,11 @@ def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
 
   # 3. interfaces
   out += ["## 3. Cross-domain interfaces", "",
-          "Each interface is anchored to text in the work products; the checker fails if an anchor disappears. *Documented* means the documents reference each other but nobody has reviewed the agreement yet.", "",
-          "| ID | Pattern | Between | Topic | Status | Open item | Due |", "|---|---|---|---|---|---|---|"]
+          "Each interface is anchored to text in the work products; the checker fails if an anchor disappears. *Documented* means the documents reference each other but nobody has reviewed the agreement yet. An interface is *agreed* only when an accepted review record of both owners lists its IFR item in [`trace/items/ifr.yaml`](../../trace/items/ifr.yaml) (DQ-129 A). Agreed in the whole model: " + f"{sum(ix_status(model, x) == 'agreed' for x in model.interfaces.values())} of {len(model.interfaces)}.", "",
+          "| ID | IFR | Pattern | Between | Topic | Status | Open item | Due |", "|---|---|---|---|---|---|---|---|"]
   for x in ixs:
     lanes = " / ".join(model.lanes[lane_of[w]]["name"].split(" (")[0] for w in x["between"])
-    out.append(f"| {x['id']} | {x['pattern']} | {', '.join(_link(w, ctx) for w in x['between'])} ({lanes}) | {x['topic']} | {x['status'].capitalize()} | {x['open_item'] or '—'} | {x['due']} |")
+    out.append(f"| {x['id']} | {x['ifr']} | {x['pattern']} | {', '.join(_link(w, ctx) for w in x['between'])} ({lanes}) | {x['topic']} | {ix_status(model, x).capitalize()} | {ix_open_item(model, x) or '—'} | {x['due']} |")
   out.append("")
 
   fbs = [f for f in model.feedback.values() if f["phase"] == gid]
@@ -665,10 +692,19 @@ def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
   covered = {w for r in reviews for w in r["covers"]} | {w for a in assessments for w in a["inputs"] + outputs(a)}
   uncovered = [w for w in wps if w not in covered]
   out += ["", "**Work products with no confirmation measure at this gate** (verification review only): " + (", ".join(uncovered) if uncovered else "none") + ".", ""]
-  due = [x for x in model.interfaces.values() if x["status"] == "open" and GATES.index(x["due"]) <= GATES.index(gid)
-         and GATES.index(x["phase"]) <= GATES.index(gid)]
-  out.append("**Open interfaces due by this gate** (from this or an earlier phase): " + (", ".join(f"{x['id']} ({x['open_item']})" for x in due) if due else "none") + ".")
+  due = due_interfaces(model, gid)
+  opened = [x for x in due if ix_status(model, x) == "open"]
+  out.append("**Open interfaces due by this gate** (from this or an earlier phase): " + (", ".join(f"{x['id']} ({ix_open_item(model, x)})" for x in opened) if opened else "none") + ".")
+  pending = [x for x in due if ix_status(model, x) != "agreed"]
+  out += ["", f"**Interfaces due by this gate that are not agreed** (no accepted review of their IFR item, DQ-129 A): {len(pending)} of {len(due)}" + (": " + ", ".join(x["ifr"] for x in pending) if pending else "") + "."]
   return "\n".join(out) + "\n"
+
+
+def due_interfaces(model: Model, gid: str) -> list[dict]:
+  """Interfaces of this or an earlier phase that are due by this gate."""
+  return sorted((x for x in model.interfaces.values() if x["due"] in GATES and x["phase"] in GATES
+                 and GATES.index(x["due"]) <= GATES.index(gid) and GATES.index(x["phase"]) <= GATES.index(gid)),
+                key=lambda x: x["id"])
 
 
 SKELETON_NOTE = "> [!IMPORTANT]\n> **Generated skeleton, not a gate review record.** No review has been held on the basis of this file. When the gate review is held, copy it to `../G{n}-<YYYY-MM-DD>.md`, re-check every pre-filled value at the review baseline, and complete it by hand. The pre-filled values are as recorded in the source documents when this file was generated by [`process_model.py`](../../../process/tools/process_model.py)."
@@ -726,13 +762,14 @@ def render_gate_skeleton(gid: str, order: list[str], model: Model, ctx: Context)
       out.append(f"| {r['id']} {r['name']} | {', '.join(r['covers'])} | {r['independence']} | `{record_label(r)}` {('(approved)' if record_present(r, ctx.register) else '(not approved)') if r.get('record_wp') else ('(present)' if record_present(r, ctx.register) else '(not present)')} | |")
     out.append("")
 
-  due = [x for x in model.interfaces.values() if x["status"] == "open" and GATES.index(x["due"]) <= GATES.index(gid)
-         and GATES.index(x["phase"]) <= GATES.index(gid)]
-  out += ["### Open cross-domain interfaces due by this gate", "",
-          "From the [process model](../../../process/README.md). Each one is a condition on the gate unless it is closed before the review.", ""]
+  due = due_interfaces(model, gid)
+  out += ["### Cross-domain interfaces due by this gate", "",
+          "From the [process model](../../../process/README.md) and the IFR items in [`trace/items/ifr.yaml`](../../../trace/items/ifr.yaml). An interface is agreed only when an accepted review record of both owners lists its IFR item (DQ-129 A). Each one not agreed is a condition on the gate unless it is agreed before the review.", ""]
   if due:
-    out += ["| Interface | Topic | Open item | Due | Closed? |", "|---|---|---|---|---|"]
-    out += [f"| {x['id']} | {x['topic']} | {x['open_item']} | {x['due']} | |" for x in due]
+    out += ["| IFR | Interface | Title | Owners | Open item | Due | Review record | Agreed? |", "|---|---|---|---|---|---|---|---|"]
+    for x in due:
+      f = model.ifrs.get(x["ifr"], {})
+      out.append(f"| {x['ifr']} | {x['id']} | {f.get('title', '')} | {' / '.join(f.get('owners') or [])} | {f.get('open_item') or '—'} | {x['due']} | {f.get('review_ref') or 'none'} | {'Yes' if ix_status(model, x) == 'agreed' else ''} |")
   else:
     out.append("None.")
   out.append("")
