@@ -57,6 +57,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | FDCAN | CAN with flexible data rate (the MCU's CAN controller) |
 | FDTI | fault detection time interval |
 | FFI | freedom from interference |
+| FHTI | fault handling time interval: FDTI + FRTI |
 | FMEA | failure mode and effects analysis |
 | FMEDA | failure modes, effects and diagnostic analysis (hardware metrics) |
 | FRET | NASA's Formal Requirements Elicitation Tool |
@@ -231,6 +232,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | SM-nn | safety mechanism (TSC §6) |
 | SN-nn | stakeholder need (WP-S-01 §1.3), SN-01…SN-12 |
 | SS-nn | safe state (FSC §6): SS-L lateral, SS-G longitudinal, SS-S envelope silent |
+| ST-nn | step of the start-up and engagement sequence (WP-S-03 Table 4-1), ST-01…ST-21 |
 | T-nn | code-derived detection or reaction time (WP-S-04 §4) |
 | TB-nn | trust boundary (WP-S-07 §3.2) |
 | TC-nn | triggering condition (WP-C-06) |
@@ -240,7 +242,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | UC-nn | use case (WP-S-01 §1.4), UC-01…UC-11 |
 | UE-nn | undeveloped event of a WP-A-04 fault tree |
 | UPD-nn | update procedure step (WP-O-02) |
-| V-nn | view of the SysML model (V-01…V-17) |
+| V-nn | view of the SysML model (V-01…V-19) |
 | VF-nn | vehicle family in the vehicle register |
 | VS-nn | verification case: VS-SI system integration, VS-HW hardware, VS-SWQ software, VS-FI fault injection, VS-SQ system qualification |
 | VT-nn | validation target (WP-V-02) |

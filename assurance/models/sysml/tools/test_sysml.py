@@ -408,7 +408,7 @@ class Behaviour(unittest.TestCase):
     self.assertTrue(check_model.known_record(self.m, "SM-SELFDRIVED D3", "transition"))
     self.assertFalse(check_model.known_record(self.m, "SM-SYS engage", "transition"))  # SM-SYS is not a record
     q = self.m.sequences["SEQ-START"]
-    self.assertEqual((q.messages[0].short, q.messages[-1].short), ("S-01", "S-21"))
+    self.assertEqual((q.messages[0].short, q.messages[-1].short), ("ST-01", "ST-21"))
     self.assertEqual(dict(q.lifelines)["safety_mcu"], "E-03")
 
   def test_checks_catch_a_wrong_record_and_state(self):
@@ -426,6 +426,52 @@ class Behaviour(unittest.TestCase):
       self.assertIn("state after 'NOWHERE'", text)
     finally:
       msg.meta["SequenceStep"] = saved
+
+
+class TimingHsi(unittest.TestCase):
+  """Timing budgets of WP-S-04 §3.7 and HSI signals of WP-S-05 §11 (V-18, V-19)."""
+
+  @classmethod
+  def setUpClass(cls):
+    cls.m = sysml_lite.load()
+
+  def test_cells_that_are_times(self):
+    import gen_timing_hsi as g
+    self.assertEqual(g.seconds("≤ 0.2 s (TSR-401)"), 0.2)
+    self.assertEqual(g.seconds("≤ 30 ms"), 0.03)
+    self.assertIsNone(g.seconds("≤ 10 ms (+ TSR-109)"))
+    self.assertIsNone(g.seconds("≤ 40 ms + t_ovr"))
+    self.assertIsNone(g.seconds("per frame"))
+    self.assertEqual(g.goals_of("SG-01 / SG-03 unintended engagement (System FMEA SG-008, §3.8.3)"), ["SG-01", "SG-03"])
+    self.assertEqual(g.goals_of("SG-02/06 loss without warning"), ["SG-02", "SG-06"])
+    self.assertEqual(g.expand_numbers("101…104, 108, 109", "TSR"), ["TSR-101", "TSR-102", "TSR-103", "TSR-104", "TSR-108", "TSR-109"])
+    self.assertEqual(g.tests_of("VS-HW-01…04, VS-SI-18"), ["VS-HW-01", "VS-HW-02", "VS-HW-03", "VS-HW-04", "VS-SI-18"])
+    self.assertEqual(g.owners_of("SW: host `controlsd`/`card` (E-01)"), ["E-01", "host.controlsd", "host.card"])
+
+  def test_budget_arithmetic_is_checked(self):
+    rep = check_model.Report()
+    check_model.check_timing_hsi(self.m, rep)
+    self.assertEqual(rep.errors, [])
+    b = self.m.budgets["SG-01 RX loss/corruption"]
+    saved = dict(b.values)
+    try:
+      b.values["frti" + "Seconds"] = 0.4
+      rep = check_model.Report()
+      check_model.check_timing_hsi(self.m, rep)
+      text = "\n".join(rep.errors)
+      self.assertIn("exceeds the FTTI 0.5 s", text)
+      self.assertIn("is not FDTI + FRTI", text)
+    finally:
+      b.values = saved
+
+  def test_signals_and_protection(self):
+    import render_arch
+    self.assertEqual(len(self.m.signals), 29)
+    self.assertEqual(sysml_lite._as_list(self.m.signals["S-25"].values["owners"]), ["host.pandad"])
+    self.assertTrue(render_arch.protection(self.m, "S-02", "validity"))       # "as S-01": the EPS checks the counter
+    self.assertFalse(render_arch.protection(self.m, "S-08", "validity"))      # "as S-07": none
+    self.assertFalse(render_arch.protection(self.m, "S-27", "validity"))      # "required start-up test"
+    self.assertFalse(render_arch.protection(self.m, "S-11", "integrity"))     # "none (..., checksum ignored)"
 
 
 class Tables(unittest.TestCase):
