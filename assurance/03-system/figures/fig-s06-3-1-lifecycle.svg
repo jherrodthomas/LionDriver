@@ -1,0 +1,291 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1735" viewBox="0 0 1280 1735" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 3-1. Production and operation over the life of an installed item (WP-S-06)</title>
+<desc>18 production and operation requirements of WP-S-06 §3. TSR-801 (B‡, waiting on an input). TSR-802 (B‡, blocked by a design gap). TSR-803 (B‡, procedure defined). TSR-804 (B‡, procedure defined). TSR-805 (B, waiting on an input). TSR-806 (QM (B-sup), backed by the design). TSR-807 (QM (SOTIF), waiting on an input). TSR-815 (B‡, waiting on an input). TSR-816 (B‡, waiting on an input). TSR-811 (QM (B-sup), backed by the design). TSR-812 (QM (B-sup), procedure defined). TSR-813 (QM, waiting on an input). TSR-808 (B‡, waiting on an input). TSR-809 (B, procedure defined). TSR-817 (B‡, procedure defined). TSR-810 (B‡, procedure defined). TSR-814 (B (stock path); CS (data), waiting on an input). TSR-818 (QM, procedure defined). Design measures of §4: TSR-514 (version shows build type): not met. TSR-512: implemented. TSR-506, TSR-515: not met. WP-O-01 OI-5 script: not met. SYS-141; AIR-23: partial. TSR-629 (DQ-056 A, DQ-132 A): implemented.</desc>
+<defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="1735" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-1 · Production and operation over the life of an installed item</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">The 18 requirements of §3 by phase, each with what it protects, the procedure steps that carry it and where it stands: 7 defined, 8 waiting on an input, 1 blocked, 2 backed by the design</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-S-06 §3, §4</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="40" y="100" width="220.8" height="34" rx="17" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="150.4" y="122" font-size="11.9" fill="#C2410C" font-weight="700" text-anchor="middle">Installation and provisioning</text>
+<line x1="264.8" y1="117" x2="280.8" y2="117" stroke="#C2410C" stroke-width="1.6"/>
+<path d="M280.8 113l6 4-6 4z" fill="#C2410C"/>
+<rect x="284.8" y="100" width="220.8" height="34" rx="17" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="395.2" y="122" font-size="12.0" fill="#C2410C" font-weight="700" text-anchor="middle">Operation</text>
+<line x1="509.6" y1="117" x2="525.6" y2="117" stroke="#C2410C" stroke-width="1.6"/>
+<path d="M525.6 113l6 4-6 4z" fill="#C2410C"/>
+<rect x="529.6" y="100" width="220.8" height="34" rx="17" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="640" y="122" font-size="12.0" fill="#C2410C" font-weight="700" text-anchor="middle">Service</text>
+<line x1="754.4" y1="117" x2="770.4" y2="117" stroke="#C2410C" stroke-width="1.6"/>
+<path d="M770.4 113l6 4-6 4z" fill="#C2410C"/>
+<rect x="774.4" y="100" width="220.8" height="34" rx="17" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="884.8" y="122" font-size="12.0" fill="#C2410C" font-weight="700" text-anchor="middle">Software updates</text>
+<line x1="999.2" y1="117" x2="1015.2" y2="117" stroke="#C2410C" stroke-width="1.6"/>
+<path d="M1015.2 113l6 4-6 4z" fill="#C2410C"/>
+<rect x="1019.2" y="100" width="220.8" height="34" rx="17" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="1129.6" y="122" font-size="10.2" fill="#C2410C" font-weight="700" text-anchor="middle">Decommissioning and end of support</text>
+<rect x="30" y="152" width="1220" height="416" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="176" font-size="13" fill="#0F172A" font-weight="700">3.1 Installation and provisioning ("production")</text>
+<rect x="40" y="186" width="393.3" height="116" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1.3"/>
+<text x="50" y="204" font-size="11.5" fill="#0F172A" font-weight="700">TSR-801</text>
+<rect x="116" y="192" width="26" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="129" y="204" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">B‡</text>
+<rect x="302.9" y="192" width="120.4" height="16" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="363.1" y="204" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">waiting on an input</text>
+<text x="50" y="223" font-size="9.5" fill="#0F172A">Only a released LionDriver baseline shall be installed: the installed openpilot</text>
+<text x="50" y="235" font-size="9.5" fill="#0F172A">commit, AGNOS version and model artefact hashes shall equal the release record,</text>
+<text x="50" y="247" font-size="9.5" fill="#0F172A">and the build shall not be dirty.</text>
+<text x="50" y="280" font-size="9" fill="#475569">protects: SG-01…07; T-03</text>
+<text x="50" y="292" font-size="9" fill="#475569">carried by: INS-15, INS-16, INS-18; SPC-04</text>
+<rect x="443.3" y="186" width="393.3" height="116" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.3"/>
+<text x="453.3" y="204" font-size="11.5" fill="#0F172A" font-weight="700">TSR-802</text>
+<rect x="519.3" y="192" width="26" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="532.3" y="204" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">B‡</text>
+<rect x="683.9" y="192" width="142.8" height="16" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="755.3" y="204" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">blocked by a design gap</text>
+<text x="453.3" y="223" font-size="9.5" fill="#0F172A">The panda firmware shall be the release-signed, non-debug build recorded in the</text>
+<text x="453.3" y="235" font-size="9.5" fill="#0F172A">release record; its version string and signature shall be compared before first</text>
+<text x="453.3" y="247" font-size="9.5" fill="#0F172A">engagement.</text>
+<text x="453.3" y="280" font-size="9" fill="#475569">protects: FSR-01.10; TSR-511, 514</text>
+<text x="453.3" y="292" font-size="9" fill="#475569">carried by: INS-17; SPC-05</text>
+<rect x="846.7" y="186" width="393.3" height="116" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3"/>
+<text x="856.7" y="204" font-size="11.5" fill="#0F172A" font-weight="700">TSR-803</text>
+<rect x="922.7" y="192" width="26" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="935.7" y="204" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">B‡</text>
+<rect x="1120.8" y="192" width="109.2" height="16" rx="8" fill="#F8FAFC" stroke="#334155" stroke-width="1"/>
+<text x="1175.4" y="204" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">procedure defined</text>
+<text x="856.7" y="223" font-size="9.5" fill="#0F172A">Every vehicle ECU firmware version (engine, EPS, ABS, radar, camera) shall equal</text>
+<text x="856.7" y="235" font-size="9.5" fill="#0F172A">the reference record before engagement; a mismatch shall put the item in dashcam</text>
+<text x="856.7" y="247" font-size="9.5" fill="#0F172A">mode until an impact analysis extends the scope.</text>
+<text x="856.7" y="280" font-size="9" fill="#475569">protects: AOU-01…05; WP-M-12</text>
+<text x="856.7" y="292" font-size="9" fill="#475569">carried by: INS-21; SPC-07; WP-O-01 §6</text>
+<rect x="40" y="312" width="393.3" height="116" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3"/>
+<text x="50" y="330" font-size="11.5" fill="#0F172A" font-weight="700">TSR-804</text>
+<rect x="116" y="318" width="26" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="129" y="330" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">B‡</text>
+<rect x="314.1" y="318" width="109.2" height="16" rx="8" fill="#F8FAFC" stroke="#334155" stroke-width="1"/>
+<text x="368.7" y="330" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">procedure defined</text>
+<text x="50" y="349" font-size="9.5" fill="#0F172A">The installed configuration shall show fingerprint TOYOTA_COROLLA_TSS2</text>
+<text x="50" y="361" font-size="9.5" fill="#0F172A">(exact, not fuzzy), safety model toyota, safety parameter 73, alternative experience</text>
+<text x="50" y="373" font-size="9.5" fill="#0F172A">0, openpilot longitudinal on, both in carParams and in pandaStates.</text>
+<text x="50" y="406" font-size="9" fill="#475569">protects: FSR-01.10; TSR-512</text>
+<text x="50" y="418" font-size="9" fill="#475569">carried by: INS-22, INS-23, INS-24; SPC-06</text>
+<rect x="443.3" y="312" width="393.3" height="116" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1.3"/>
+<text x="453.3" y="330" font-size="11.5" fill="#0F172A" font-weight="700">TSR-805</text>
+<rect x="519.3" y="318" width="20" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="529.3" y="330" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">B</text>
+<rect x="706.3" y="318" width="120.4" height="16" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="766.5" y="330" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">waiting on an input</text>
+<text x="453.3" y="349" font-size="9.5" fill="#0F172A">Harness seating and the relay intercept/PCS-forwarding function shall be verified</text>
+<text x="453.3" y="361" font-size="9.5" fill="#0F172A">at installation: no relay malfunction or CAN errors, intercepted messages absent on</text>
+<text x="453.3" y="373" font-size="9.5" fill="#0F172A">the car side, PCS-relevant camera messages present on the car side with LD-SDA</text>
+<text x="453.3" y="385" font-size="9.5" fill="#0F172A">disengaged.</text>
+<text x="453.3" y="406" font-size="9" fill="#475569">protects: FSR-07.01, 07.03; TSR-704, 706</text>
+<text x="453.3" y="418" font-size="9" fill="#475569">carried by: INS-11, INS-13, INS-14, INS-27; SPC-01, SPC-02</text>
+<rect x="846.7" y="312" width="393.3" height="116" rx="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<text x="856.7" y="330" font-size="11.5" fill="#0F172A" font-weight="700">TSR-806</text>
+<rect x="922.7" y="318" width="74" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="959.7" y="330" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">QM (B-sup)</text>
+<rect x="1104" y="318" width="126" height="16" rx="8" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/>
+<text x="1167" y="330" font-size="9" fill="#0F766E" font-weight="700" text-anchor="middle">backed by the design</text>
+<text x="856.7" y="349" font-size="9.5" fill="#0F172A">The parameter set shall equal the release record: Experimental Mode per D-08,</text>
+<text x="856.7" y="361" font-size="9.5" fill="#0F172A">DisengageOnAccelerator per WP-C-08, debug/maneuver/joystick modes absent, DM</text>
+<text x="856.7" y="373" font-size="9.5" fill="#0F172A">demo mode off, SSH off.</text>
+<text x="856.7" y="406" font-size="9" fill="#475569">protects: FSR-02.08; TSR-610, 613</text>
+<text x="856.7" y="418" font-size="9" fill="#475569">carried by: INS-19; SPC-09</text>
+<rect x="40" y="438" width="393.3" height="116" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1.3"/>
+<text x="50" y="456" font-size="11.5" fill="#0F172A" font-weight="700">TSR-807</text>
+<rect x="116" y="444" width="74" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="153" y="456" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">QM (SOTIF)</text>
+<rect x="302.9" y="444" width="120.4" height="16" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="363.1" y="456" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">waiting on an input</text>
+<text x="50" y="475" font-size="9.5" fill="#0F172A">The device shall be mounted within the position tolerance and calibrated within the</text>
+<text x="50" y="487" font-size="9.5" fill="#0F172A">angle tolerance band derived from the model validation range.</text>
+<text x="50" y="532" font-size="9" fill="#475569">protects: AOU-08</text>
+<text x="50" y="544" font-size="9" fill="#475569">carried by: INS-09, INS-10, INS-25, INS-26; SPC-03</text>
+<rect x="443.3" y="438" width="393.3" height="116" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1.3"/>
+<text x="453.3" y="456" font-size="11.5" fill="#0F172A" font-weight="700">TSR-815</text>
+<rect x="519.3" y="444" width="26" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="532.3" y="456" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">B‡</text>
+<rect x="706.3" y="444" width="120.4" height="16" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="766.5" y="456" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">waiting on an input</text>
+<text x="453.3" y="475" font-size="9.5" fill="#0F172A">Only devices and harnesses of the approved hardware revision, with clean history,</text>
+<text x="453.3" y="487" font-size="9.5" fill="#0F172A">shall be installed; units returned after a field event or decommissioned from another</text>
+<text x="453.3" y="499" font-size="9.5" fill="#0F172A">vehicle shall pass refurbishment inspection first.</text>
+<text x="453.3" y="532" font-size="9" fill="#475569">protects: T-04; WP-H-07</text>
+<text x="453.3" y="544" font-size="9" fill="#475569">carried by: INS-01…INS-04; ITS-03…ITS-05</text>
+<rect x="846.7" y="438" width="393.3" height="116" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1.3"/>
+<text x="856.7" y="456" font-size="11.5" fill="#0F172A" font-weight="700">TSR-816</text>
+<rect x="922.7" y="444" width="26" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="935.7" y="456" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">B‡</text>
+<rect x="1109.6" y="444" width="120.4" height="16" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="1169.8" y="456" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">waiting on an input</text>
+<text x="856.7" y="475" font-size="9.5" fill="#0F172A">Installation shall be done by a trained installer, and the installation record</text>
+<text x="856.7" y="487" font-size="9.5" fill="#0F172A">(R-DEV…R-USR) shall be complete and second-person checked before the first</text>
+<text x="856.7" y="499" font-size="9.5" fill="#0F172A">engagement and retained per WP-P-04.</text>
+<text x="856.7" y="532" font-size="9" fill="#475569">protects: ISO 26262-7 §5 (by ref.)</text>
+<text x="856.7" y="544" font-size="9" fill="#475569">carried by: WP-O-01 §5; WP-M-04</text>
+<rect x="30" y="580" width="1220" height="164" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="604" font-size="13" fill="#0F172A" font-weight="700">3.2 Operation</text>
+<rect x="40" y="614" width="393.3" height="116" rx="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<text x="50" y="632" font-size="11.5" fill="#0F172A" font-weight="700">TSR-811</text>
+<rect x="116" y="620" width="74" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="153" y="632" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">QM (B-sup)</text>
+<rect x="297.3" y="620" width="126" height="16" rx="8" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/>
+<text x="360.3" y="632" font-size="9" fill="#0F766E" font-weight="700" text-anchor="middle">backed by the design</text>
+<text x="50" y="651" font-size="9.5" fill="#0F172A">Before every drive the driver shall perform the pre-drive checks and shall not</text>
+<text x="50" y="663" font-size="9.5" fill="#0F172A">engage if a check fails (vehicle warning lamps, VSC on, clean camera area, device</text>
+<text x="50" y="675" font-size="9.5" fill="#0F172A">seated, DM camera unobstructed, no offroad alert, driver fit).</text>
+<text x="50" y="708" font-size="9" fill="#475569">protects: AOU-06, 08, 09, 10</text>
+<text x="50" y="720" font-size="9" fill="#475569">carried by: OPS-01…OPS-07; WP-O-03 §5</text>
+<rect x="443.3" y="614" width="393.3" height="116" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3"/>
+<text x="453.3" y="632" font-size="11.5" fill="#0F172A" font-weight="700">TSR-812</text>
+<rect x="519.3" y="620" width="74" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="556.3" y="632" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">QM (B-sup)</text>
+<rect x="717.5" y="620" width="109.2" height="16" rx="8" fill="#F8FAFC" stroke="#334155" stroke-width="1"/>
+<text x="772.1" y="632" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">procedure defined</text>
+<text x="453.3" y="651" font-size="9.5" fill="#0F172A">Each driver shall receive the user information and safety warnings before first use</text>
+<text x="453.3" y="663" font-size="9.5" fill="#0F172A">and acknowledge them; in the development phase only approved safety drivers shall</text>
+<text x="453.3" y="675" font-size="9.5" fill="#0F172A">operate the item.</text>
+<text x="453.3" y="708" font-size="9" fill="#475569">protects: AOU-06, AOU-07</text>
+<text x="453.3" y="720" font-size="9" fill="#475569">carried by: WP-O-03 Part A/B; INS-30</text>
+<rect x="846.7" y="614" width="393.3" height="116" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1.3"/>
+<text x="856.7" y="632" font-size="11.5" fill="#0F172A" font-weight="700">TSR-813</text>
+<rect x="922.7" y="620" width="26" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="935.7" y="632" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">QM</text>
+<rect x="1109.6" y="620" width="120.4" height="16" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="1169.8" y="632" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">waiting on an input</text>
+<text x="856.7" y="651" font-size="9.5" fill="#0F172A">Field monitoring shall collect and analyse drive logs and driver reports of every</text>
+<text x="856.7" y="663" font-size="9.5" fill="#0F172A">installed item, including every disengagement caused by a safety mechanism</text>
+<text x="856.7" y="675" font-size="9.5" fill="#0F172A">(controlsMismatch, relayMalfunction, RX invalid, heartbeat lost, safetyTxBlocked &gt;</text>
+<text x="856.7" y="687" font-size="9.5" fill="#0F172A">0), and feed problem resolution and the safety case.</text>
+<text x="856.7" y="708" font-size="9" fill="#475569">protects: SG-01…07; ISO 21448 §13</text>
+<text x="856.7" y="720" font-size="9" fill="#475569">carried by: OPS-11, OPS-12; WP-O-04; WP-P-03</text>
+<rect x="30" y="756" width="1220" height="164" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="780" font-size="13" fill="#0F172A" font-weight="700">3.3 Service (maintenance and repair)</text>
+<rect x="40" y="790" width="393.3" height="116" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1.3"/>
+<text x="50" y="808" font-size="11.5" fill="#0F172A" font-weight="700">TSR-808</text>
+<rect x="116" y="796" width="26" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="129" y="808" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">B‡</text>
+<rect x="302.9" y="796" width="120.4" height="16" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="363.1" y="808" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">waiting on an input</text>
+<text x="50" y="827" font-size="9.5" fill="#0F172A">Vehicle service actions that can invalidate an AoU or the calibration</text>
+<text x="50" y="839" font-size="9.5" fill="#0F172A">(alignment/steering/suspension, EPS or ECM/ABS replacement or reflash,</text>
+<text x="50" y="851" font-size="9.5" fill="#0F172A">windscreen, camera or radar work, tyre size, brake repair, collision repair, battery</text>
+<text x="50" y="863" font-size="9.5" fill="#0F172A">disconnection, scan-tool sessions, aftermarket accessories) shall trigger the…</text>
+<text x="50" y="884" font-size="9" fill="#475569">protects: AOU-01…05, 08, 09</text>
+<text x="50" y="896" font-size="9" fill="#475569">carried by: SVC-01…SVC-11</text>
+<rect x="443.3" y="790" width="393.3" height="116" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3"/>
+<text x="453.3" y="808" font-size="11.5" fill="#0F172A" font-weight="700">TSR-809</text>
+<rect x="519.3" y="796" width="20" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="529.3" y="808" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">B</text>
+<rect x="717.5" y="796" width="109.2" height="16" rx="8" fill="#F8FAFC" stroke="#334155" stroke-width="1"/>
+<text x="772.1" y="808" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">procedure defined</text>
+<text x="453.3" y="827" font-size="9.5" fill="#0F172A">The reference-configuration check (INS-21…INS-23), PCS-preservation check</text>
+<text x="453.3" y="839" font-size="9.5" fill="#0F172A">(INS-27) and harness inspection shall be repeated at least every 6 months and</text>
+<text x="453.3" y="851" font-size="9.5" fill="#0F172A">after any service trigger; harness and camera windows inspected monthly.</text>
+<text x="453.3" y="884" font-size="9" fill="#475569">protects: SG-07; AOU-09; latent faults of TSR-506</text>
+<text x="453.3" y="896" font-size="9" fill="#475569">carried by: PM-01…PM-04</text>
+<rect x="846.7" y="790" width="393.3" height="116" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3"/>
+<text x="856.7" y="808" font-size="11.5" fill="#0F172A" font-weight="700">TSR-817</text>
+<rect x="922.7" y="796" width="26" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="935.7" y="808" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">B‡</text>
+<rect x="1120.8" y="796" width="109.2" height="16" rx="8" fill="#F8FAFC" stroke="#334155" stroke-width="1"/>
+<text x="1175.4" y="808" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">procedure defined</text>
+<text x="856.7" y="827" font-size="9.5" fill="#0F172A">Item faults shall be handled by replacement, not repair: defective devices or</text>
+<text x="856.7" y="839" font-size="9.5" fill="#0F172A">harnesses shall be quarantined, reported and returned; after replacement the full</text>
+<text x="856.7" y="851" font-size="9.5" fill="#0F172A">provisioning and configuration steps shall be repeated.</text>
+<text x="856.7" y="884" font-size="9" fill="#475569">protects: T-04</text>
+<text x="856.7" y="896" font-size="9" fill="#475569">carried by: ITS-01…ITS-05</text>
+<rect x="30" y="932" width="1220" height="164" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="956" font-size="13" fill="#0F172A" font-weight="700">3.4 Software updates</text>
+<rect x="40" y="966" width="393.3" height="116" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3"/>
+<text x="50" y="984" font-size="11.5" fill="#0F172A" font-weight="700">TSR-810</text>
+<rect x="116" y="972" width="26" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="129" y="984" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">B‡</text>
+<rect x="314.1" y="972" width="109.2" height="16" rx="8" fill="#F8FAFC" stroke="#334155" stroke-width="1"/>
+<text x="368.7" y="984" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">procedure defined</text>
+<text x="50" y="1003" font-size="9.5" fill="#0F172A">Only released baselines shall be installed by update; until signed updates exist,</text>
+<text x="50" y="1015" font-size="9.5" fill="#0F172A">automatic updates shall be disabled and updates installed manually, followed by</text>
+<text x="50" y="1027" font-size="9.5" fill="#0F172A">INS-15…INS-23; model-weight changes require SOTIF re-evaluation; envelope</text>
+<text x="50" y="1039" font-size="9.5" fill="#0F172A">changes require the envelope verification evidence; parameters shall be re-checked…</text>
+<text x="50" y="1060" font-size="9" fill="#475569">protects: FSR-01.10; D-02, D-05; GAP-26</text>
+<text x="50" y="1072" font-size="9" fill="#475569">carried by: UPD-01…UPD-08; WP-O-05</text>
+<rect x="30" y="1108" width="1220" height="164" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="1132" font-size="13" fill="#0F172A" font-weight="700">3.5 Decommissioning and end of support</text>
+<rect x="40" y="1142" width="393.3" height="116" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1.3"/>
+<text x="50" y="1160" font-size="11.5" fill="#0F172A" font-weight="700">TSR-814</text>
+<rect x="116" y="1148" width="164" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="198" y="1160" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">B (stock path); CS (data)</text>
+<rect x="302.9" y="1148" width="120.4" height="16" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="363.1" y="1160" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">waiting on an input</text>
+<text x="50" y="1179" font-size="9.5" fill="#0F172A">On removal of the item the stock camera connection shall be restored and stock</text>
+<text x="50" y="1191" font-size="9.5" fill="#0F172A">TSS functions (LTA/LDA, DRCC, PCS) and the absence of DTCs verified; logs</text>
+<text x="50" y="1203" font-size="9.5" fill="#0F172A">needed for field monitoring retrieved; device data, credentials and identity keys</text>
+<text x="50" y="1215" font-size="9.5" fill="#0F172A">wiped or the device kept under LionDriver control with its history recorded.</text>
+<text x="50" y="1236" font-size="9" fill="#475569">protects: SG-07; ISO/SAE 21434 §14 (by ref.)</text>
+<text x="50" y="1248" font-size="9" fill="#475569">carried by: DEC-01…DEC-11</text>
+<rect x="443.3" y="1142" width="393.3" height="116" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3"/>
+<text x="453.3" y="1160" font-size="11.5" fill="#0F172A" font-weight="700">TSR-818</text>
+<rect x="519.3" y="1148" width="26" height="16" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="532.3" y="1160" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">QM</text>
+<rect x="717.5" y="1148" width="109.2" height="16" rx="8" fill="#F8FAFC" stroke="#334155" stroke-width="1"/>
+<text x="772.1" y="1160" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">procedure defined</text>
+<text x="453.3" y="1179" font-size="9.5" fill="#0F172A">At end of support of a release, every user shall be informed with the date after</text>
+<text x="453.3" y="1191" font-size="9.5" fill="#0F172A">which the release must not be engaged.</text>
+<text x="453.3" y="1236" font-size="9" fill="#475569">protects: ISO/SAE 21434 §14 (by ref.)</text>
+<text x="453.3" y="1248" font-size="9" fill="#475569">carried by: WP-O-02 §7.3; WP-O-05</text>
+<rect x="30" y="1284" width="1220" height="176" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<text x="46" y="1308" font-size="13" fill="#0F172A" font-weight="700">4 Design measures that turn a manual check into a system measure</text>
+<rect x="46" y="1316" width="54.6" height="16" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="73.3" y="1328" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">not met</text>
+<text x="150" y="1328" font-size="10.5" fill="#0F172A">Firmware build type and identity readable for INS-17</text>
+<text x="780" y="1328" font-size="10" fill="#475569">TSR-514 (version shows build type) · Not met (GAP-25)</text>
+<rect x="46" y="1338" width="77.8" height="16" rx="8" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/>
+<text x="84.9" y="1350" font-size="9" fill="#0F766E" font-weight="700" text-anchor="middle">implemented</text>
+<text x="150" y="1350" font-size="10.5" fill="#0F172A">Safety mode/param fixed in firmware so INS-22/23 become a confirmation, not the only control</text>
+<text x="780" y="1350" font-size="10" fill="#475569">TSR-512 · Implemented in the reference build (panda 3859fa8), not verified on hardware; other</text>
+<rect x="46" y="1360" width="54.6" height="16" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="73.3" y="1372" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">not met</text>
+<text x="150" y="1372" font-size="10.5" fill="#0F172A">Relay checked at every power-up so PM-03 is not the latent-fault interval</text>
+<text x="780" y="1372" font-size="10" fill="#475569">TSR-506, TSR-515 · Not met (GAP-12, GAP-43)</text>
+<rect x="46" y="1382" width="54.6" height="16" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="73.3" y="1394" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">not met</text>
+<text x="150" y="1394" font-size="10.5" fill="#0F172A">Configuration extraction from the installation log</text>
+<text x="780" y="1394" font-size="10" fill="#475569">WP-O-01 OI-5 script · Not started</text>
+<rect x="46" y="1404" width="54.6" height="16" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="73.3" y="1416" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">partial</text>
+<text x="150" y="1416" font-size="10.5" fill="#0F172A">Logs identify software, firmware and model versions</text>
+<text x="780" y="1416" font-size="10" fill="#475569">SYS-141; AIR-23 · Partial</text>
+<rect x="46" y="1426" width="77.8" height="16" rx="8" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/>
+<text x="84.9" y="1438" font-size="9" fill="#0F766E" font-weight="700" text-anchor="middle">implemented</text>
+<text x="150" y="1438" font-size="10.5" fill="#0F172A">EPS and ABS/VSC fault codes read by the item, so the OPS-01 lamp check is no longer the only barrier for those</text>
+<text x="780" y="1438" font-size="10" fill="#475569">TSR-629 (DQ-056 A, DQ-132 A) · Implemented in host software; not verified on the vehicle</text>
+<rect x="40" y="1468" width="112.6" height="16" rx="8" fill="#F8FAFC" stroke="#334155" stroke-width="1"/>
+<text x="96.3" y="1480" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">procedure defined</text>
+<rect x="166.6" y="1468" width="124.2" height="16" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="228.7" y="1480" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">waiting on an input</text>
+<rect x="304.8" y="1468" width="147.4" height="16" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="378.5" y="1480" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">blocked by a design gap</text>
+<rect x="466.2" y="1468" width="130" height="16" rx="8" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/>
+<text x="531.2" y="1480" font-size="9" fill="#0F766E" font-weight="700" text-anchor="middle">backed by the design</text>
+<text x="616.2" y="1480" font-size="11" fill="#475569">The status is read from each requirement's Status cell (STATUS_OF quotes the phrase).</text>
+<text x="40" y="1498" font-size="11" fill="#475569">Generated by fig_s06_lifecycle.py from WP-S-06 §3 and §4. "Production" is installation and provisioning of a bought device (tailoring T-07); the procedures are in WP-O-01 to WP-O-05.</text>
+<g class="terms">
+<text x="40" y="1520" font-size="10.5" fill="#475569">Terms: ABS anti-lock braking system; on the Toyota, the ABS/VSC ECU that also runs stability control · AGNOS the comma device's operating system · AIR-nn AI safety requirement (WP-C-11 §6) · AoU assumption of use:</text>
+<text x="40" y="1534.5" font-size="10.5" fill="#475569">what the analysis assumes about the car, the driver or the environment · AOU-nn assumption of use (WP-C-01 §7); an R suffix marks the FSC's refined version · CAN controller area network: the vehicle's data bus ·</text>
+<text x="40" y="1549" font-size="10.5" fill="#475569">CS-nn cybersecurity architecture decision CS-AD-nn (WP-S-07 §3.4) · D-nn design decision of the earlier decision list (D-01…D-12; D-08 is the Experimental Mode decision) · DEC-nn decommissioning step (WP-O-02 §7) ·</text>
+<text x="40" y="1563.5" font-size="10.5" fill="#475569">DM driver monitoring · DQ-nn decision of the project lead (decision register) · DRCC dynamic radar cruise control: Toyota's stock adaptive cruise · DTC diagnostic trouble code: a fault code an ECU stores, read with</text>
+<text x="40" y="1578" font-size="10.5" fill="#475569">a scan tool or over UDS · ECM engine control module · ECU electronic control unit · EPS electric power steering · FSR-nn functional safety requirement (FSC) · GAP-nn gap found by the gap assessment · INS-nn</text>
+<text x="40" y="1592.5" font-size="10.5" fill="#475569">installation check (WP-O-01) · ISO International Organization for Standardization · ITS-nn item service step: replacing a faulty device or harness (WP-O-02 §5) · LD-SDA LionDriver Supervised Driving Assistance, the</text>
+<text x="40" y="1607" font-size="10.5" fill="#475569">item · LDA lane departure alert: Toyota's stock lane warning · LTA lane tracing assist: Toyota's stock lane-centring function · OI-nn open item of the document it appears in · OPS-nn operation step: the driver's</text>
+<text x="40" y="1621.5" font-size="10.5" fill="#475569">pre-drive and field checks (WP-O-02 §3) · PCS pre-collision system: Toyota's stock collision warning and braking · PM-nn periodic maintenance check of the item (WP-O-02 §4) · QM quality managed: no ASIL; ordinary</text>
+<text x="40" y="1636" font-size="10.5" fill="#475569">quality processes suffice · R-DEV installation record block: device and harness (WP-O-01 §5) · R-USR installation record block: driver briefing (WP-O-01 §5) · RX receive · SAE SAE International (formerly the Society</text>
+<text x="40" y="1650.5" font-size="10.5" fill="#475569">of Automotive Engineers) · SG-nn safety goal (HARA §6) · SOTIF safety of the intended functionality (ISO 21448): hazards with nothing failing · SPC-nn special characteristic of the installation (WP-O-01 §4) · SSH</text>
+<text x="40" y="1665" font-size="10.5" fill="#475569">secure shell (remote login) · SVC-nn vehicle service action that needs a re-check of the item (WP-O-02 §4) · SYS system requirement SYS-nnn of WP-S-01 · T-nn code-derived detection or reaction time (WP-S-04 §4); in</text>
+<text x="40" y="1679.5" font-size="10.5" fill="#475569">WP-M-01 and WP-S-06, a tailoring decision T-01…T-08 (WP-M-01 §5) · TSR-nn technical safety requirement (WP-S-02) · TSS Toyota Safety Sense (TSS 2.0: the car's stock lane assist, radar cruise and pre-collision</text>
+<text x="40" y="1694" font-size="10.5" fill="#475569">package) · UPD-nn update procedure step (WP-O-02) · VSC vehicle stability control (Toyota's stability system) · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H</text>
+<text x="40" y="1708.5" font-size="10.5" fill="#475569">hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>

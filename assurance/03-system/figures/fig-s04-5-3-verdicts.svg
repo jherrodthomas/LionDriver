@@ -120,7 +120,7 @@
 <g class="terms">
 <text x="40" y="1390" font-size="10.5" fill="#475569">Terms: CI continuous integration: the checks that run on every pull request · EPS electric power steering · LKA lane keeping assist · M-nn timing measurement of the plan in WP-S-04 §6 · MCU microcontroller: the</text>
 <text x="40" y="1404.5" font-size="10.5" fill="#475569">panda safety processor (STM32H7) · PCM powertrain control module (engine and drive) · RX receive · SG-nn safety goal (HARA §6) · SILENT the panda's safety mode that sends nothing · SoC system on chip: the comma</text>
-<text x="40" y="1419" font-size="10.5" fill="#475569">device's main processor, running openpilot (QM) · T-nn code-derived detection or reaction time (WP-S-04 §4) · TSR-nn technical safety requirement (WP-S-02) · TX transmit · WP-nn work product, e.g. WP-C-04; the</text>
-<text x="40" y="1433.5" font-size="10.5" fill="#475569">letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+<text x="40" y="1419" font-size="10.5" fill="#475569">device's main processor, running openpilot (QM) · T-nn code-derived detection or reaction time (WP-S-04 §4); in WP-M-01 and WP-S-06, a tailoring decision T-01…T-08 (WP-M-01 §5) · TSR-nn technical safety requirement</text>
+<text x="40" y="1433.5" font-size="10.5" fill="#475569">(WP-S-02) · TX transmit · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
 </g>
 </svg>
