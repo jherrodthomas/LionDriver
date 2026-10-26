@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1197" viewBox="0 0 1280 1197" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 1. The item boundary in the DFA view</title>
-<desc>The WP-C-01 item boundary with the WP-A-03 dependent failure analysis on it. E-04 comma device hardware: depends on R-01, R-02, R-03, R-05, R-07, R-16. E-01 SoC software (openpilot): depends on R-02, R-04, R-05, R-07, R-08, R-09, R-11, R-12, R-13, R-14, R-15. E-02 ML models: depends on R-02, R-05, R-08, R-14, R-17. E-03 panda safety MCU: depends on R-02, R-04, R-05, R-06, R-07, R-09, R-10, R-11, R-12, R-13, R-15. E-05 harness and harness box: depends on R-01, R-03, R-06, R-16. Cluster, cruise indicator: depends on R-01, R-09. PCM, ACC execution: depends on R-01, R-06, R-09, R-10, R-16. EPS: depends on R-01, R-06, R-09, R-10, R-16. Stock camera and PCS: depends on R-03, R-16. Driver: depends on R-17. IC-01 (Not independent): not analysed R-10. IC-02 (Partly): not analysed R-06. IC-03 (Open): not analysed none. IC-04 (Partly): not analysed R-01, R-06, R-10, R-16. IC-05 (Not independent): not analysed R-09, R-10. IC-06 (Not independent): not analysed R-05, R-06, R-09, R-10, R-12, R-13, R-15, R-16.</desc>
+<desc>The WP-C-01 item boundary with the WP-A-03 dependent failure analysis on it. E-04 comma device hardware: depends on R-01, R-02, R-03, R-05, R-07, R-16. E-01 SoC software (openpilot): depends on R-02, R-04, R-05, R-07, R-08, R-09, R-11, R-12, R-13, R-14, R-15. E-02 ML models: depends on R-02, R-05, R-08, R-14, R-17. E-03 panda safety MCU: depends on R-02, R-04, R-05, R-06, R-07, R-09, R-10, R-11, R-12, R-13, R-15. E-05 harness and harness box: depends on R-01, R-03, R-06, R-16. Cluster, cruise indicator: depends on R-01, R-09. PCM, ACC execution: depends on R-01, R-06, R-09, R-10, R-16. EPS: depends on R-01, R-06, R-09, R-10, R-16. Stock camera and PCS: depends on R-03, R-16. Driver: depends on R-17. IC-01 (Not independent): not analysed R-10. IC-02 (Partly): not analysed R-06. IC-03 (Open): not analysed none. IC-04 (Partly): not analysed R-01, R-06, R-10, R-16. IC-05 (Not independent): not analysed R-09, R-10. IC-06 (Not independent): not analysed R-05, R-06, R-09, R-10, R-12, R-13, R-16.</desc>
 <defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
 <rect x="0" y="0" width="1280" height="1197" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 1 · The item boundary in the DFA view</text>
@@ -47,8 +47,8 @@
 <text x="356.6" y="287" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-13</text>
 <rect x="380.8" y="274" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
 <text x="400" y="287" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-14</text>
-<rect x="424.2" y="274" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
-<text x="443.4" y="287" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-15</text>
+<rect x="424.2" y="274" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="443.4" y="287" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-15</text>
 <rect x="282" y="364" width="330" height="96" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
 <text x="294" y="384" font-size="12.5" fill="#0F172A" font-weight="700">E-02 ML models</text>
 <rect x="294" y="394" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
@@ -83,8 +83,8 @@
 <text x="863.4" y="287" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-12</text>
 <rect x="887.6" y="274" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
 <text x="906.8" y="287" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-13</text>
-<rect x="714" y="296" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
-<text x="733.2" y="309" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-15</text>
+<rect x="714" y="296" width="38.4" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="733.2" y="309" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-15</text>
 <rect x="430" y="512" width="260" height="104" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
 <text x="442" y="532" font-size="12.5" fill="#0F172A" font-weight="700">E-05 harness and harness box</text>
 <rect x="442" y="542" width="38.4" height="18" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
@@ -145,7 +145,7 @@
 <line x1="612" y1="363" x2="702" y2="363" stroke="#D2553F" stroke-width="2.2" stroke-dasharray="6 4"/>
 <rect x="623" y="352" width="68" height="22" rx="11" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.6"/>
 <text x="657" y="368" font-size="11" fill="#D2553F" font-weight="700" text-anchor="middle">IC-06</text>
-<text x="657" y="388" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">8 not analysed</text>
+<text x="657" y="388" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">7 not analysed</text>
 <line x1="330" y1="460" x2="330" y2="700" stroke="#D97706" stroke-width="2.2" stroke-dasharray="6 4"/>
 <rect x="296" y="652" width="68" height="22" rx="11" fill="#FFFBEB" stroke="#D97706" stroke-width="1.6"/>
 <text x="330" y="668" font-size="11" fill="#D97706" font-weight="700" text-anchor="middle">IC-04</text>
@@ -193,7 +193,7 @@
 <text x="1058" y="525.5" font-size="11" fill="#D2553F" font-weight="700">Not independent</text>
 <text x="1000" y="545.5" font-size="10.5" fill="#0F172A">panda buzzer vs SoC HMI</text>
 <text x="1000" y="558.5" font-size="10" fill="#D97706">15 AND gates; not analysed: R-05, R-06, R-09,</text>
-<text x="1000" y="571" font-size="10" fill="#D97706">R-10, R-12, R-13, R-15, R-16</text>
+<text x="1000" y="571" font-size="10" fill="#D97706">R-10, R-12, R-13, R-16</text>
 <line x1="40" y1="846" x2="1240" y2="846" stroke="#E2E8F0" stroke-width="1"/>
 <text x="40" y="870" font-size="12" fill="#0F172A" font-weight="700">Shared resources (shared-resources.yaml)</text>
 <text x="40" y="890" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-01</text>

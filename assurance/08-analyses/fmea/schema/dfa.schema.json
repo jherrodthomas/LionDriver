@@ -80,7 +80,7 @@
         "additionalProperties": false,
         "required": ["id", "category", "kind", "description", "decompositions", "effect", "measures", "assessment", "rationale"],
         "properties": {
-          "id": {"type": "string", "pattern": "^DFI-[0-9]{2,}$"},
+          "id": {"type": "string", "pattern": "^DFI-[0-9]{2,}[a-z]?$"},
           "category": {"type": "string", "pattern": "^CAT-[0-9]{2}$"},
           "kind": {"enum": ["common_cause", "cascading"]},
           "description": {"type": "string", "minLength": 1},
@@ -118,7 +118,7 @@
         "properties": {
           "id": {"type": "string", "pattern": "^DOI-[0-9]{3,}$"},
           "text": {"type": "string", "minLength": 1},
-          "affects": {"type": "array", "items": {"type": "string", "pattern": "^(DFI|DM|FSR|EL)-[0-9]{2,}$"}},
+          "affects": {"type": "array", "items": {"type": "string", "pattern": "^(DFI-[0-9]{2,}[a-z]?|(DM|FSR|EL)-[0-9]{2,})$"}},
           "status": {"enum": ["open", "closed"]},
           "resolution": {"type": "string"}
         }
