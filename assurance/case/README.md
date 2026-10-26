@@ -4,7 +4,7 @@
 |---|---|
 | Work product | Living Safety Case data (machine-readable copy of [WP-K-01](../10-safety-case/WP-K-01-safety-case.md)), validator and dashboard generator |
 | Standard reference | ISO 26262-2:2018 §6.4.8 (safety case); ISO 26262-8:2018 §10 (documentation management); UL 4600 principles (living safety case, defeaters) |
-| Version | 0.5 (§5.1 downloadable snapshot: build_snapshot.py, the README button and the safety-case-snapshot workflow; gate records and the release status rule; 2026-10-13). 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (Figure 1 added; the full Living Safety Case moved to the assurance README, the front-page README keeps a generated status strip; 2026-10-13). 0.2 (baseline `BL-002` added for the firmware changes integrated 2026-10-12; evidence Sn-15 added; records restated for the 2026-10-12 state carry `source_revision: "bf6ce8c"` and stay on `baseline: BL-001` until they are re-baselined; 2026-10-12). 0.1: initial records |
+| Version | 0.6 (§4: a review record may list interface items IFR-nn of the trace data, the only way an interface becomes agreed, DQ-129 A; 2026-10-25). 0.5 (§5.1 downloadable snapshot: build_snapshot.py, the README button and the safety-case-snapshot workflow; gate records and the release status rule; 2026-10-13). 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (Figure 1 added; the full Living Safety Case moved to the assurance README, the front-page README keeps a generated status strip; 2026-10-13). 0.2 (baseline `BL-002` added for the firmware changes integrated 2026-10-12; evidence Sn-15 added; records restated for the 2026-10-12 state carry `source_revision: "bf6ce8c"` and stay on `baseline: BL-001` until they are re-baselined; 2026-10-12). 0.1: initial records |
 | Status | Draft |
 | Author | Assurance team |
 | Reviewer(s) | TBD (I1) |
@@ -79,6 +79,7 @@ Acceptance rules (V6):
 - `evidence_status: available` means performed and approved (the WP-K-01 §6 rule), so it needs `review_state: accepted`. Missing evidence cannot be accepted.
 - A claim can be `accepted` only if its own review is accepted, every evidence item it cites is available and accepted, every sub-claim is accepted, and no defeater attached to it is open.
 - A configuration can be `assurance-supported` only if it is accepted and at least one accepted claim applies to it.
+- A cross-domain interface is agreed only when an accepted review record lists its interface item (`IFR-nn` in [`trace/items/ifr.yaml`](../trace/items/ifr.yaml)) and the item's `review_ref` names that record (trace check I1, DQ-129 A). The record is written by the interface's two owners.
 
 What never accepts anything: a passing CI run, a passing test, the existence of a file, or an AI-generated review. These can be inputs to a review; only a review record written by the named reviewer, at the independence level the [confirmation measures plan](../01-management/WP-M-06-confirmation-measures-plan.md) requires, changes a review state.
 

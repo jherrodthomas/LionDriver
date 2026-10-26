@@ -13,10 +13,10 @@ This report is informational: it does not fail CI. It changes, and CI asks for i
 | cybersecurity-requirement | 64 | 31 | 0 | 33 |
 | fsr | 58 | 57 | 0 | 1 |
 | hwsr | 46 | 3 | 0 | 43 |
-| swsr | 139 | 129 | 0 | 10 |
+| swsr | 144 | 134 | 0 | 10 |
 | system-requirement | 39 | 39 | 0 | 0 |
 | tsr | 128 | 128 | 0 | 0 |
-| **all** | **474** | **387** | **0** | **87** |
+| **all** | **479** | **392** | **0** | **87** |
 
 193 distinct `allocated_to` values.
 

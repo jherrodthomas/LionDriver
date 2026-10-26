@@ -121,6 +121,15 @@
 # opendbc e233362 cap (#311, impact OI-2 done). No S/O/D change.
 # Rev 0.33 (2026-10-21, FSC/TSC routes walk #395): SFM-005.C2 and SFM-006.C1 record the panda siren on a TX-arrival revocation
 # (panda 8a69ccf, DQ-404 A; plant F-04b at panda f4803c5: siren 0.25 s). After BL-006, so no rating change.
+# Rev 0.34 (2026-10-25, DQ-127 A): this file is the only System FMEA. The WP-A-04 §10 table (SFMEA-01…40) is retired; WP-A-04 §10
+# keeps the old-to-new ID map once. Rows with no equivalent here are taken in as 17 new causes, each inheriting the rating of its
+# SW FMEA or DFMEA row: SFM-002.C5 (EPS misreports torque), SFM-005.C4 and SFM-011.C3 (non-finite input, SWF-045), SFM-009.C4
+# (unannounced item deceleration, SWF-050), SFM-015.C4 (SoC forces the bootloader, DFM-016), SFM-017.C3 (stuck brake or cruise
+# frames accepted, design gap O 8), SFM-022.C4 (DM demo mode, SWF-085), SFM-029.C5 (safety task stopped or starved, SWF-018),
+# SFM-029.C6 (TX burst, SWF-023), SFM-029.C7..C11 (TX frame altered DFM-019, SPI corruption DFM-015, SRAM DFM-003, time base
+# DFM-005, brown-out DFM-007), SFM-033.C4 (MCU hang DFM-004), SFM-033.C5 (car-side transceiver DFM-008), SFM-033.C6 (camera-side
+# FDCAN or transceiver, no DFMEA row, F-17). All AP H; MSR M 10 on the in-scope software causes, hardware causes exempt.
+# SFM-026 notes the panda siren as the SoC-independent control of an alert lost with a crash (as the retired table did). No other change.
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -129,7 +138,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.33"
+  revision: "0.34"
   status: draft
   baseline: BL-006
   rating_tables: RT-3
@@ -153,7 +162,7 @@ analysis:
     - assurance/08-analyses/fmea/fmea-plan.md
     - assurance/08-analyses/fmea/rating-tables.md
     - docs/SAFETY.md
-  updated: 2026-10-16
+  updated: 2026-10-25
 
 # ---------------------------------------------------------------------------
 # Step 2 — Structure
@@ -628,6 +637,36 @@ failure_modes:
             ref: assurance/sim/results/plant-results.md F-01a, F-01a-H (plant 776239d)
           actions:
           - SFM-ACT-012
+      - id: SFM-002.C5
+        element: SFM-SE-030
+        description: >-
+          The EPS misreports its motor torque, so the panda's measured-torque tracking check is misled; the magnitude and rate
+          limits still apply (WP-A-03 DFI-11)
+        prevention_controls:
+        - description: Series-production Toyota ECU with long field exposure; assumed developed to ISO 26262 by the OEM (assumption of use, not verified by LionDriver)
+        detection_controls:
+        - description: No pre-release test targets this cause
+        occurrence: 3
+        detection: 10
+        ap: H
+        actions:
+        - SFM-ACT-003
+        rationale: 'Internal failure of a Toyota ECU, outside the item (scope: interface only), as SFM-005.C1. Requirements TSR-101, TSR-103,
+          TSR-110. Taken in from the retired WP-A-04 §10 table (DQ-127)'
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'None detects the misreport. The panda magnitude and rate limits still bound each frame'
+          system_response: None
+          effect_after_response: 'Unchanged: torque error within the magnitude and rate limits, corrected by the driver'
+          severity_after: 10
+          frequency: 3
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-003
     notes: >-
       HARA input: excessive steering intervention while engaged. Lead decision DQ-060 (2026-10-14, option A): when the
       envelope rejects a steering command, steering switches off until the driver re-engages (TSR-108). At BL-005 the
@@ -1067,6 +1106,38 @@ failure_modes:
             basis: unknown
           actions:
           - SFM-ACT-018
+      - id: SFM-005.C4
+        element: SFM-SE-013
+        linked_failure_mode: SWF-045
+        description: >-
+          A non-finite controller input (desired curvature, roll) zeroes the lateral output without an event while the item shows
+          engaged (controlsd.py:122-131; TSR-604 met in part, GAP-19)
+        prevention_controls:
+        - description: Per-step finiteness guard on the desired curvature, roll, aTarget and lateralDelay (#51); rated in the SW FMEA
+          ref: openpilot/selfdrive/controls/controlsd.py
+        detection_controls:
+        - description: 'As rated in the SW FMEA (SWF-045.C1, D 10): no NaN injection test; controlsd is excluded from the process fuzz test'
+          ref: openpilot/selfdrive/test/process_replay/test_fuzzy.py
+        occurrence: 5
+        detection: 10
+        ap: H
+        rationale: Rated, and actioned, in the SW FMEA (SWF-045.C1, SWF-ACT-041, SWF-ACT-044); this row inherits that rating. Taken in from the retired WP-A-04 §10 table (DQ-127)
+        msr:
+          mechanisms:
+          - 2
+          - 3
+          diagnostic: 'None: controlsd keeps running and the frames keep arriving, so neither the liveness checks nor the panda
+            TX-arrival check (TSR-408) act'
+          system_response: None
+          effect_after_response: 'Unchanged: lateral output zero while the item shows engaged, until the input is finite again'
+          severity_after: 10
+          frequency: 5
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-002
     notes: "With a correct alert the effect is a controlled handback (S 8 per RT-1). Without one it is a HARA candidate."
 
   - id: SFM-006
@@ -1573,6 +1644,36 @@ failure_modes:
             basis: unknown
           actions:
           - SFM-ACT-003
+      - id: SFM-009.C4
+        element: SFM-SE-013
+        linked_failure_mode: SWF-050
+        description: >-
+          The item starts a soft-disable or no-response deceleration with no lead time: a fault soft-disable deceleration is announced
+          only at its start, which TSR-624 accepts for that mild slow-down (DQ-407 A); its jerk is not bounded (TSR-205, GAP-04)
+        prevention_controls:
+        - description: DM escalation alerts precede the no-response deceleration; the fault soft-disable alert sounds from the first frame, and the
+            slow-down is bounded by A_CRUISE_MIN (-1.2 m/s²) for 3 s; rated in the SW FMEA
+          ref: openpilot/selfdrive/selfdrived/state.py
+        detection_controls:
+        - description: No test targets this cause
+        occurrence: 8
+        detection: 10
+        ap: H
+        rationale: Rated, and actioned, in the SW FMEA (SWF-050.C1, SWF-ACT-050); this row inherits that rating. Taken in from the retired WP-A-04 §10 table (DQ-127)
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'None: the item commands the deceleration itself; the minimum-acceleration limit bounds it, but no monitor checks
+            the announcement or the jerk'
+          system_response: None
+          effect_after_response: 'Unchanged: a deceleration of at most -1.2 m/s², announced from its first frame'
+          severity_after: 10
+          frequency: 8
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          rationale: No in-field monitor of the announcement or jerk; the action is in the SW FMEA (SWF-ACT-050)
     notes: "HARA input: unexpected hard braking. False-positive perception without a fault belongs to SOTIF."
 
   - id: SFM-010
@@ -1785,6 +1886,36 @@ failure_modes:
           actions:
           - SFM-ACT-012
           - SFM-ACT-018
+      - id: SFM-011.C3
+        element: SFM-SE-013
+        linked_failure_mode: SWF-045
+        description: >-
+          A non-finite aTarget zeroes the acceleration request without an event while ACC is shown engaged (controlsd.py:129-131;
+          TSR-604 met in part, GAP-19)
+        prevention_controls:
+        - description: controlsd finiteness guard on aTarget (#51); the planner clip keeps NaN; rated in the SW FMEA
+          ref: openpilot/selfdrive/controls/controlsd.py
+        detection_controls:
+        - description: 'As rated in the SW FMEA (SWF-045.C2, D 10): test_longcontrol.py covers state transitions only; no NaN injection test'
+          ref: openpilot/selfdrive/controls/tests/test_longcontrol.py
+        occurrence: 5
+        detection: 10
+        ap: H
+        rationale: Rated, and actioned, in the SW FMEA (SWF-045.C2, SWF-ACT-041, SWF-ACT-044); this row inherits that rating. Taken in from the retired WP-A-04 §10 table (DQ-127)
+        msr:
+          mechanisms:
+          - 3
+          diagnostic: 'None: ACC_CONTROL frames keep arriving with a zero request, so the panda TX-arrival check (TSR-408) does not act'
+          system_response: None
+          effect_after_response: 'Unchanged: no deceleration for a lead while ACC is shown engaged, until the input is finite again'
+          severity_after: 10
+          frequency: 5
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-002
     notes: "With a correct alert, S 8 per RT-1. Without one, HARA candidate."
 
   - id: SFM-012
@@ -2202,6 +2333,27 @@ failure_modes:
         rationale: Hardware fault rated in the DFMEA (DFM-012; no SoC-independent warning exists, DFM-017); this row inherits that rating. A
           harness-box supply loss also unpowers the device (DFM-020, see SFM-033.C3)
         msr_exempt: Hardware cause; rated once in the DFMEA (DFM-012.C1)
+      - id: SFM-015.C4
+        element: SFM-SE-002
+        linked_failure_mode: DFM-016
+        description: >-
+          The SoC drives the MCU's BOOT0 or reset line while driving (fault or compromise), so the panda drops into the ROM bootloader,
+          releases the intercept and stops the item's commands (GAP-38)
+        prevention_controls:
+        - description: Consumer-grade device hardware (comma 3X) without automotive qualification data available to LionDriver; rated in the DFMEA where a DFM
+            row exists
+          ref: assurance/08-analyses/fmea/analyses/dfmea.yaml
+        detection_controls:
+        - description: 'As rated in the DFMEA: no pre-release test of this hardware fault'
+          ref: assurance/08-analyses/fmea/analyses/dfmea.yaml
+        occurrence: 4
+        detection: 10
+        ap: H
+        actions:
+        - SFM-ACT-003
+        rationale: Hardware fault rated in the DFMEA (DFM-016.C1, DFM-ACT-010); this row inherits that rating. pandad recovery only logs it.
+          Requirements TSR-706, TSR-511. Taken in from the retired WP-A-04 §10 table (DQ-127)
+        msr_exempt: Hardware cause; rated once in the DFMEA (DFM-016.C1)
 
   - id: SFM-016
     element: SFM-SE-001
@@ -2358,6 +2510,37 @@ failure_modes:
             ref: .github/workflows/safety.yaml
           actions:
           - SFM-ACT-012
+      - id: SFM-017.C3
+        element: SFM-SE-003
+        description: >-
+          The envelope accepts stuck or replayed 0x226 (brake) or 0x1D2 (cruise) frames whose content is valid: 0x226 has no checksum
+          and neither has a counter, so a brake press or a PCM cruise release is not seen while the frames keep arriving (GAP-01).
+          At BL-006 the RX timeout is 5 periods (TSR-401) and the reference build refuses or revokes CRUISE_ACTIVE with MAIN_ON = 0
+          (TSR-405(c)); stuck content is still accepted
+        prevention_controls:
+        - description: Upstream opendbc Toyota RX checks (checksum on 0x1D2 only, timing on both); no counter in the vehicle DBC
+          ref: opendbc_repo/opendbc/safety/modes/toyota.h
+        detection_controls:
+        - description: No test targets this cause
+        occurrence: 8
+        detection: 10
+        ap: H
+        rationale: Design gap present in the code (O 8). End-to-end protection and plausibility are required by TSR-401…TSR-406 and not
+          implemented; no SW FMEA mode covers 0x1D2 stuck at cruise active (fta-fmea-mapping F-15). Taken in from the retired WP-A-04 §10 table (DQ-127)
+        msr:
+          mechanisms:
+          - 1
+          - 2
+          diagnostic: 'None: the panda and the host both read the stuck frames, so neither sees the brake press'
+          system_response: None
+          effect_after_response: 'Unchanged: the item keeps control while the driver brakes'
+          severity_after: 10
+          frequency: 8
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          rationale: No in-field monitor can see stuck content with valid timing; end-to-end protection (TSR-401…TSR-406) is the measure
     notes: "HARA input: driver brake does not cancel automation. Directly tied to SAFETY.md requirement 1."
 
   - id: SFM-018
@@ -2801,6 +2984,35 @@ failure_modes:
             basis: unknown
           actions:
           - SFM-ACT-005
+      - id: SFM-022.C4
+        element: SFM-SE-015
+        linked_failure_mode: SWF-085
+        description: >-
+          Driver monitoring runs in demo mode while the item is engaged (IsDriverViewEnabled left set): the policy uses a synthetic
+          vehicle state and the monitored seat can switch, so the actual driver may not be watched (GAP-20, TSR-610 not met)
+        prevention_controls:
+        - description: The cabin camera dialog opens only offroad and its buttons are disabled onroad; no engagement interlock; rated in the SW FMEA
+          ref: openpilot/selfdrive/monitoring/dmonitoringd.py
+        detection_controls:
+        - description: 'As rated in the SW FMEA (SWF-085, D 10): no test covers demo mode with the item started'
+        occurrence: 8
+        detection: 10
+        ap: H
+        rationale: Rated, and actioned, in the SW FMEA (SWF-085.C2, SWF-ACT-072); this row inherits the worst of its causes. Taken in from the retired WP-A-04 §10 table (DQ-127)
+        msr:
+          mechanisms:
+          - 1
+          - 2
+          diagnostic: 'None: the camera is alive and the model can be confident, so neither the wheel-touch fallback nor cameraMalfunction acts'
+          system_response: None
+          effect_after_response: 'Unchanged: alerts still escalate on the camera input, possibly for the wrong seat'
+          severity_after: 10
+          frequency: 8
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          rationale: No in-field monitor of demo mode while engaged; the interlock (TSR-610) is actioned in the SW FMEA (SWF-ACT-072)
     notes: "HARA input: loss of the driver as the fallback (L2 safety argument depends on it). DM model performance is also SOTIF/PAS 8800."
 
   - id: SFM-023
@@ -3044,7 +3256,9 @@ failure_modes:
             basis: unknown
           actions:
           - SFM-ACT-007
-    notes: "HARA input: failure to warn the driver of handback."
+    notes: >-
+      HARA input: failure to warn the driver of handback.
+      The panda siren is the SoC-independent control (FSR-02.05; TSR-516, SoC side TSR-606; WP-A-03 DFI-14): since 2026-10-13 it sounds about 0.56 s after the last heartbeat while authority is granted (panda c33343b; WP-S-04 T-07a), but only when the crash also stops the heartbeat; a ui or soundd crash alone does not trigger it. Taken in from the retired WP-A-04 §10 table (DQ-127).
 
   - id: SFM-027
     element: SFM-SE-001
@@ -3274,6 +3488,165 @@ failure_modes:
             basis: unknown
           rationale: Only the harness design keeps the device behind the panda; no in-field monitor can see a bypass. The barrier
             is checked at installation (PFMEA, WP-O-01). Kept as a known gap with F 2
+      - id: SFM-029.C5
+        element: SFM-SE-003
+        linked_failure_mode: SWF-018
+        description: >-
+          The panda 100 Hz safety task stops or is starved (defect, interrupt storm, peripheral lock-up), so the RX timeout, heartbeat
+          and TX-arrival checks are not run and no siren is raised. A stopped task resets the MCU through the IWDG in about 90 ms
+          (TSR-501); a task that is starved but still runs is not detected (no WCET)
+        prevention_controls:
+        - description: IWDG from LSI, 90 ms nominal, window mode, fed only from the safety task after main-loop progress (TSR-501, TSR-502); rated in the SW FMEA
+          ref: panda/board/drivers/hw_watchdog.h
+        detection_controls:
+        - description: 'As rated in the SW FMEA (SWF-018.C1, D 7): host unit tests of reference_lock and hw_watchdog against the real firmware
+            headers (panda CI); the HIL watchdog test with injected hangs is not run (no HIL bench, D-04)'
+          test: panda/tests/reference_lock/test_reference_lock.py
+          ref: panda/tests/hw_watchdog/test_hw_watchdog.py
+        occurrence: 4
+        detection: 7
+        ap: H
+        rationale: Rated, and actioned, in the SW FMEA (SWF-018.C1, SWF-ACT-011); this row inherits that rating. Taken in from the retired WP-A-04 §10 table (DQ-127)
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'None of this mode''s mechanisms: controlsMismatch compares the safety model, which does not change. The IWDG reset
+            (TSR-501) is rated in the SW FMEA and not credited here'
+          system_response: None
+          effect_after_response: 'Unchanged until the IWDG resets the MCU; a starved task keeps authority without supervision'
+          severity_after: 10
+          frequency: 4
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          rationale: Kept at M 10 while the watchdog reset is not verified on hardware; actioned in the SW FMEA (SWF-ACT-011)
+      - id: SFM-029.C6
+        element: SFM-SE-017
+        linked_failure_mode: SWF-023
+        description: >-
+          Actuation frames reach the panda faster than nominal (a backlog forwarded back-to-back, or a burst): each frame is within
+          the limits, but the limits apply per frame, not per time. The reference build counts frames per ID over a 250 ms window
+          and revokes after 3 refusals (TSR-518, txRateExceeded); budgets to be confirmed on logs
+        prevention_controls:
+        - description: Upstream pandad design, reviewed; no derived freshness requirement at BL-004; rated in the SW FMEA
+          ref: openpilot/selfdrive/pandad/pandad.cc
+        detection_controls:
+        - description: No test targets this cause
+        occurrence: 8
+        detection: 10
+        ap: H
+        rationale: Rated, and actioned, in the SW FMEA (SWF-023.C1, SWF-ACT-023, SWF-ACT-024); this row inherits that rating. Taken in from the retired WP-A-04 §10 table (DQ-127)
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'None of this mode''s mechanisms. The TX-rate revocation (TSR-518) and pandaTxRateExceeded (TSR-615) are not credited
+            until the budgets are confirmed'
+          system_response: None
+          effect_after_response: 'Unchanged: in-limit commands compressed in time'
+          severity_after: 10
+          frequency: 8
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          rationale: Kept at M 10 while the TX-rate budgets are not confirmed on logs; actioned in the SW FMEA (SWF-ACT-023, SWF-ACT-024)
+      - id: SFM-029.C7
+        element: SFM-SE-003
+        linked_failure_mode: DFM-019
+        description: >-
+          An approved frame is altered after the TX check: in the copy into FDCAN message RAM, the message RAM, the FDCAN core or the
+          transceiver. The packet XOR catches a change in the software queue only (fdcan.h:100); TSR-517 asks for a read-back (SPF-02)
+        prevention_controls:
+        - description: Consumer-grade device hardware (comma 3X) without automotive qualification data available to LionDriver; rated in the DFMEA where a DFM
+            row exists
+          ref: assurance/08-analyses/fmea/analyses/dfmea.yaml
+        detection_controls:
+        - description: 'As rated in the DFMEA: no pre-release test of this hardware fault'
+          ref: assurance/08-analyses/fmea/analyses/dfmea.yaml
+        occurrence: 3
+        detection: 10
+        ap: H
+        rationale: >-
+          Hardware fault rated in the DFMEA (DFM-019.C1 O3 D10, DFM-019.C2 O2 D10); this row inherits the worst. Taken in from the retired WP-A-04 §10 table (DQ-127)
+        msr_exempt: Hardware cause; rated once in the DFMEA (DFM-019)
+      - id: SFM-029.C8
+        element: SFM-SE-003
+        linked_failure_mode: DFM-015
+        description: >-
+          A corrupted SoC-to-MCU SPI transfer passes the 8-bit XOR, so a wrong CAN frame or a wrong control command (safety mode,
+          parameter) is taken. The TX limits still apply to frames; nothing checks control commands (TSR-410, TSR-413; GAP-10)
+        prevention_controls:
+        - description: Consumer-grade device hardware (comma 3X) without automotive qualification data available to LionDriver; rated in the DFMEA where a DFM
+            row exists
+          ref: assurance/08-analyses/fmea/analyses/dfmea.yaml
+        detection_controls:
+        - description: 'As rated in the DFMEA: no pre-release test of this hardware fault'
+          ref: assurance/08-analyses/fmea/analyses/dfmea.yaml
+        occurrence: 4
+        detection: 10
+        ap: H
+        rationale: >-
+          Hardware fault rated in the DFMEA (DFM-015.C1); this row inherits that rating. SWF-026 is the SW FMEA view. Taken in from the retired WP-A-04 §10 table (DQ-127)
+        msr_exempt: Hardware cause; rated once in the DFMEA (DFM-015.C1)
+      - id: SFM-029.C9
+        element: SFM-SE-003
+        linked_failure_mode: DFM-003
+        description: >-
+          Safety state in panda SRAM (controls_allowed, limits, counters) corrupted: a soft error or permanent fault with no ECC
+          handling (TSR-503, TSR-507; GAP-08), or a wrong-address write by the SPI DMA when a length field exceeds the buffer (no MPU;
+          TSR-412, WP-S-02 NF-04; WP-A-02 FFI-SP-02)
+        prevention_controls:
+        - description: Consumer-grade device hardware (comma 3X) without automotive qualification data available to LionDriver; rated in the DFMEA where a DFM
+            row exists
+          ref: assurance/08-analyses/fmea/analyses/dfmea.yaml
+        detection_controls:
+        - description: 'As rated in the DFMEA: no pre-release test of this hardware fault'
+          ref: assurance/08-analyses/fmea/analyses/dfmea.yaml
+        occurrence: 3
+        detection: 10
+        ap: H
+        rationale: >-
+          Hardware fault rated in the DFMEA (DFM-003.C1, DFM-003.C2, both O3 D10); this row inherits that rating. Taken in from the retired WP-A-04 §10 table (DQ-127)
+        msr_exempt: Hardware cause; rated once in the DFMEA (DFM-003)
+      - id: SFM-029.C10
+        element: SFM-SE-003
+        linked_failure_mode: DFM-005
+        description: >-
+          The panda time base fails or drifts (HSE crystal, PLL). A lost HSE is caught by the clock security system, which resets the
+          MCU (clock.h:118-119); a drift is not detected, so every timeout and rate window scales (TSR-504; reset state TSR-706)
+        prevention_controls:
+        - description: Consumer-grade device hardware (comma 3X) without automotive qualification data available to LionDriver; rated in the DFMEA where a DFM
+            row exists
+          ref: assurance/08-analyses/fmea/analyses/dfmea.yaml
+        detection_controls:
+        - description: 'As rated in the DFMEA: no pre-release test of this hardware fault'
+          ref: assurance/08-analyses/fmea/analyses/dfmea.yaml
+        occurrence: 3
+        detection: 10
+        ap: H
+        rationale: >-
+          Hardware fault rated in the DFMEA (DFM-005.C1); this row inherits that rating. Taken in from the retired WP-A-04 §10 table (DQ-127)
+        msr_exempt: Hardware cause; rated once in the DFMEA (DFM-005.C1)
+      - id: SFM-029.C11
+        element: SFM-SE-003
+        linked_failure_mode: DFM-007
+        description: >-
+          The panda MCU runs in the brown-out zone during a supply dip (BOR level not set, PVD not enabled); the supply voltage is
+          only reported (TSR-505; WP-A-03 DFI-01)
+        prevention_controls:
+        - description: Consumer-grade device hardware (comma 3X) without automotive qualification data available to LionDriver; rated in the DFMEA where a DFM
+            row exists
+          ref: assurance/08-analyses/fmea/analyses/dfmea.yaml
+        detection_controls:
+        - description: 'As rated in the DFMEA: no pre-release test of this hardware fault'
+          ref: assurance/08-analyses/fmea/analyses/dfmea.yaml
+        occurrence: 5
+        detection: 10
+        ap: H
+        rationale: >-
+          Hardware fault rated in the DFMEA (DFM-007.C1); this row inherits that rating. Taken in from the retired WP-A-04 §10 table (DQ-127)
+        msr_exempt: Hardware cause; rated once in the DFMEA (DFM-007.C1)
     notes: "Latent-fault candidate: an unenforced limit has no effect until a second fault occurs. Key input for FMEDA LFM."
 
   - id: SFM-030
@@ -3477,6 +3850,69 @@ failure_modes:
         - SFM-ACT-003
         rationale: Hardware fault rated in the DFMEA (DFM-020.C1 O5 D10, DFM-020.C2 O3 D10; open channel DFM-013.C1 O3 D10); this row
           inherits the worst of them. The DFMEA rates its monitoring (DFM-020); this failure mode has no System FMEA mechanism
+      - id: SFM-033.C4
+        element: SFM-SE-003
+        linked_failure_mode: DFM-004
+        description: >-
+          The panda MCU stops executing with the intercept driven, so forwarding stops and the stock camera stays cut off; the item's
+          commands stop too (EPS timeout, AOU-01R). Since BL-005 the IWDG resets the MCU in about 90 ms, which releases the
+          intercept (TSR-501, TSR-706); not verified on hardware (WP-A-04 OI-5)
+        prevention_controls:
+        - description: Consumer-grade device hardware (comma 3X) without automotive qualification data available to LionDriver; rated in the DFMEA where a DFM
+            row exists
+          ref: assurance/08-analyses/fmea/analyses/dfmea.yaml
+        detection_controls:
+        - description: 'As rated in the DFMEA (DFM-004.C1, D 8): watchdog HIL test with injected hangs (FAULT_INJECTION build); targeted, not yet
+            run (no HIL bench, D-04)'
+          test: panda/tests/hitl/test_10_hw_watchdog.py
+        occurrence: 3
+        detection: 8
+        ap: H
+        actions:
+        - SFM-ACT-003
+        rationale: >-
+          Hardware fault rated in the DFMEA (DFM-004.C1, DFM-ACT-003); this row inherits that rating. Taken in from the retired WP-A-04 §10 table (DQ-127)
+      - id: SFM-033.C5
+        element: SFM-SE-003
+        linked_failure_mode: DFM-008
+        description: >-
+          The panda's car-side transceiver (bus 0) holds the bus dominant or babbles, so the vehicle ECUs lose the stock camera
+          messages the panda forwards and the item's commands (TSR-508)
+        prevention_controls:
+        - description: Consumer-grade device hardware (comma 3X) without automotive qualification data available to LionDriver; rated in the DFMEA where a DFM
+            row exists
+          ref: assurance/08-analyses/fmea/analyses/dfmea.yaml
+        detection_controls:
+        - description: 'As rated in the DFMEA: no pre-release test of this hardware fault'
+          ref: assurance/08-analyses/fmea/analyses/dfmea.yaml
+        occurrence: 3
+        detection: 10
+        ap: H
+        actions:
+        - SFM-ACT-003
+        rationale: >-
+          Hardware fault rated in the DFMEA (DFM-008.C1, DFM-ACT-006); this row inherits that rating. Taken in from the retired WP-A-04 §10 table (DQ-127)
+      - id: SFM-033.C6
+        element: SFM-SE-003
+        description: >-
+          The panda's camera-side FDCAN or transceiver is stuck or error-passive, so camera-side reception stops and the stock PCS
+          frames are not forwarded while the intercept is driven. The error counters and bus-off recovery (fdcan.h:76-84) do not
+          release the intercept (SPF-13; TSR-707, TSR-706)
+        prevention_controls:
+        - description: Consumer-grade device hardware (comma 3X) without automotive qualification data available to LionDriver; rated in the DFMEA where a DFM
+            row exists
+          ref: assurance/08-analyses/fmea/analyses/dfmea.yaml
+        detection_controls:
+        - description: 'As rated in the DFMEA: no pre-release test of this hardware fault'
+          ref: assurance/08-analyses/fmea/analyses/dfmea.yaml
+        occurrence: 3
+        detection: 10
+        ap: H
+        actions:
+        - SFM-ACT-003
+        rationale: >-
+          No DFMEA failure mode yet (fta-fmea-mapping F-17); the random part is rated in FMEDA SG-009 (FMD-017, FMD-011). O 3 as
+          the car-side transceiver (DFM-009). HIL confirmation is WP-A-04 OI-8. Taken in from the retired WP-A-04 §10 table (DQ-127)
     notes: >-
       Open question: which stock TSS2 functions remain on the reference configuration with openpilot longitudinal
       enabled. Must be established from the opendbc Toyota port and in-vehicle test before the HARA.
@@ -3635,7 +4071,7 @@ failure_modes:
           rationale: No in-field monitor can see a defect in the gate itself; the CI mutation tests are the barrier. Kept as a known gap with
             the dual-point condition of FTA MCS-07.7 (the SoC must also send the frame, SFM-035.C1)
     notes: >-
-      Backs FTA BE-7.08 (WP-A-04 SG-07, F-17): the SoC sends a PCS-relevant frame. WP-A-04 §10 SFMEA-05 is the same mode.
+      Backs FTA BE-7.08 (WP-A-04 SG-07, F-17): the SoC sends a PCS-relevant frame. The retired WP-A-04 §10 table had the same mode (DQ-127).
 
   - id: SFM-036
     element: SFM-SE-001

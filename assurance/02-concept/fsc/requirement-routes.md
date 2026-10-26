@@ -35,9 +35,9 @@ Sources (quoted, checked at build): MCS-02.5 SoC stall in [`WP-A-04-system-fta-f
 
 ### 2. FMEA
 
-![Route 2, FMEA: WP-A-04 SFMEA-09 (HMI crash), WP-W-04 SWF-39 (siren omission)](figures/fig-c04-r3-2-fmea.svg)
+![Route 2, FMEA: System FMEA SFM-026 (alert not presented), WP-W-04 SWF-39 (siren omission)](figures/fig-c04-r3-2-fmea.svg)
 
-Sources (quoted, checked at build): SFMEA-09 no take-over warning in [`WP-A-04-system-fta-fmea.md`](../../08-analyses/WP-A-04-system-fta-fmea.md); SWF-39 siren omission in [`WP-W-04-software-safety-analysis.md`](../../05-software/WP-W-04-software-safety-analysis.md).
+Sources (quoted, checked at build): SFM-026 alert not presented in [`system-fmea.yaml`](../../08-analyses/fmea/analyses/system-fmea.yaml); SWF-39 siren omission in [`WP-W-04-software-safety-analysis.md`](../../05-software/WP-W-04-software-safety-analysis.md).
 
 ### 3. STPA
 

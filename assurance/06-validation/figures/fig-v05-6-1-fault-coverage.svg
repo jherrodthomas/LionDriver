@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1371" viewBox="0 0 1280 1371" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 6-1 · Fault-injection coverage</title>
-<desc>Matrix of the 32 fault-injection cases VS-FI-01 to VS-FI-32, grouped by §5.1 to §5.6. For each case: injection levels, the TSR blocks 1xx to 8xx its mechanism names (with counts), the safety goals SG-01 to SG-07 reached through the parent FSRs, whether a §6 analysis item names it, the WP-W-02 implementation status, and the §8 result, which is 'not yet executed' for every case. Below, the 14 §6 analysis items from WP-A-04, WP-A-02 and WP-A-03 with their cases; SPF-01 is not testable by fault injection and SFMEA-33 to -40 have no case yet.</desc>
+<desc>Matrix of the 32 fault-injection cases VS-FI-01 to VS-FI-32, grouped by §5.1 to §5.6. For each case: injection levels, the TSR blocks 1xx to 8xx its mechanism names (with counts), the safety goals SG-01 to SG-07 reached through the parent FSRs, whether a §6 analysis item names it, the WP-W-02 implementation status, and the §8 result, which is 'not yet executed' for every case. Below, the 14 §6 analysis items from WP-A-04, WP-A-02 and WP-A-03 with their cases; SPF-01 is not testable by fault injection and eight System FMEA causes from WP-A-04 v0.2 have no case yet.</desc>
 <defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
 <rect x="0" y="0" width="1280" height="1371" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 6-1 · Fault-injection coverage</text>
@@ -930,7 +930,7 @@
 <text x="106" y="1029" font-size="9.5" fill="#475569"> 5xx Safety-MCU platform integrity  ·  6xx Host-side (SoC) monitoring, DM and HMI  ·  7xx Stock PCS preservation and harness  ·  8xx Production, operation, service and decommissioning</text>
 <line x1="40" y1="1045" x2="1240" y2="1045" stroke="#E2E8F0" stroke-width="1"/>
 <text x="40" y="1061" font-size="13" fill="#0F172A" font-weight="700">§6 Coverage of safety analyses</text>
-<text x="270" y="1061" font-size="10.5" fill="#475569">14 items listed: 13 have a specified case (not executed), 1 not testable by fault injection; WP-A-04 SFMEA-33…-40 have no case yet. §6 names no STPA (WP-A-05) item.</text>
+<text x="270" y="1061" font-size="10.5" fill="#475569">14 items listed: 13 have a specified case (not executed), 1 not testable by fault injection; eight System FMEA causes from WP-A-04 v0.2 have no case yet. §6 names no STPA (WP-A-05) item.</text>
 <text x="40" y="1091" font-size="10.5" fill="#0F172A" font-weight="700">System FTA / FMEA (WP-A-04)</text>
 <rect x="250" y="1077" width="232" height="36" rx="6" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="258" y="1092" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">SPF-01</text>
@@ -965,7 +965,7 @@
 <text x="1022.4" y="1136" font-size="9.5" fill="#475569">0xe7 stops forwarding</text>
 <text x="978" y="1150" font-size="9.5" fill="#0F766E" font-weight="600">→ FI-11, FI-24</text>
 <rect x="250" y="1165" width="232" height="36" rx="6" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.3" stroke-dasharray="4 3"/>
-<text x="258" y="1180" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">SFMEA-33…-40</text>
+<text x="258" y="1180" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">8 System FMEA causes</text>
 <text x="258" y="1194" font-size="9.5" fill="#D2553F" font-weight="600">no fault-injection case yet (OI-6)</text>
 <text x="40" y="1227" font-size="10.5" fill="#0F172A" font-weight="700">Freedom from interference (WP-A-02)</text>
 <rect x="250" y="1213" width="232" height="36" rx="6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>

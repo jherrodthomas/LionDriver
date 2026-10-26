@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="597" viewBox="0 0 1120 597" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 2. How the AND gate check works</title>
+<desc>55 AND gates of WP-A-04; 47 across elements are joined with 17 shared resources and the DFIs of WP-A-03. 5 analysed under the claim; 20 not analysed under the claim; 16 dependence not known yet; 6 no claim covers the gate; 8 not an independence gate.</desc>
+<defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1120" height="597" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 2 · How the AND gate check works</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Three sources are joined for every AND gate of the fault trees; the result is review input for WP-A-03</text>
+<text x="1080" y="44" font-size="11" fill="#475569" text-anchor="end">WP-A-03 §5.1 · dfa_gates.py</text>
+<line x1="40" y1="82" x2="1080" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="40" y="112" width="330" height="76" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="56" y="136" font-size="13.5" fill="#0F172A" font-weight="700">Fault trees</text>
+<text x="354" y="136" font-size="12" fill="#475569" font-weight="600" text-anchor="end">55 AND gates</text>
+<text x="56" y="156" font-size="11.5" fill="#475569">WP-A-04, eight trees, one per safety goal</text>
+<rect x="40" y="202" width="330" height="76" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="56" y="226" font-size="13.5" fill="#0F172A" font-weight="700">Gate classification</text>
+<text x="354" y="226" font-size="12" fill="#475569" font-weight="600" text-anchor="end">47 across elements</text>
+<text x="56" y="246" font-size="11.5" fill="#475569">and-gates.yaml: the elements each input lies in, and</text>
+<text x="56" y="261" font-size="11.5" fill="#475569">the claim that covers it</text>
+<rect x="40" y="292" width="330" height="76" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="56" y="316" font-size="13.5" fill="#0F172A" font-weight="700">Shared-resource map</text>
+<text x="354" y="316" font-size="12" fill="#475569" font-weight="600" text-anchor="end">17 resources</text>
+<text x="56" y="336" font-size="11.5" fill="#475569">shared-resources.yaml: what each element depends on,</text>
+<text x="56" y="351" font-size="11.5" fill="#475569">and the DFIs of each resource</text>
+<rect x="40" y="382" width="330" height="76" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="56" y="406" font-size="13.5" fill="#0F172A" font-weight="700">Claims and initiators</text>
+<text x="354" y="406" font-size="12" fill="#475569" font-weight="600" text-anchor="end">7 claims</text>
+<text x="56" y="426" font-size="11.5" fill="#475569">WP-A-03 §2 claims IC-01…IC-07; §4 DFIs; §5 the</text>
+<text x="56" y="441" font-size="11.5" fill="#475569">DFIs listed under each claim</text>
+<rect x="430" y="152" width="300" height="266" rx="8" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.6"/>
+<text x="448" y="182" font-size="13.5" fill="#0F172A" font-weight="700">For each AND gate across elements</text>
+<text x="448" y="210" font-size="12" fill="#475569" font-weight="700">1</text>
+<text x="470" y="210" font-size="12" fill="#0F172A">Pair up its inputs that lie in different</text>
+<text x="470" y="226" font-size="12" fill="#0F172A">elements.</text>
+<text x="448" y="256" font-size="12" fill="#475569" font-weight="700">2</text>
+<text x="470" y="256" font-size="12" fill="#0F172A">Find the resources both inputs of a pair</text>
+<text x="470" y="272" font-size="12" fill="#0F172A">depend on: the shared resources.</text>
+<text x="448" y="302" font-size="12" fill="#475569" font-weight="700">3</text>
+<text x="470" y="302" font-size="12" fill="#0F172A">Take the DFIs of each shared resource.</text>
+<text x="448" y="332" font-size="12" fill="#475569" font-weight="700">4</text>
+<text x="470" y="332" font-size="12" fill="#0F172A">Is one of them listed under the gate's</text>
+<text x="470" y="348" font-size="12" fill="#0F172A">claim in WP-A-03?</text>
+<line x1="370" y1="150" x2="424" y2="172" stroke="#94A3B8" stroke-width="1.3" marker-end="url(#muted)"/>
+<line x1="370" y1="240" x2="424" y2="240" stroke="#94A3B8" stroke-width="1.3" marker-end="url(#muted)"/>
+<line x1="370" y1="330" x2="424" y2="330" stroke="#94A3B8" stroke-width="1.3" marker-end="url(#muted)"/>
+<line x1="370" y1="420" x2="424" y2="398" stroke="#94A3B8" stroke-width="1.3" marker-end="url(#muted)"/>
+<rect x="790" y="108" width="290" height="66" rx="8" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3"/>
+<text x="806" y="146" font-size="26" fill="#0F766E" font-weight="700">5</text>
+<text x="860" y="130" font-size="12.5" fill="#0F172A" font-weight="700">analysed under the claim</text>
+<text x="860" y="146" font-size="11" fill="#475569">gates whose shared resources all have</text>
+<text x="860" y="159.5" font-size="11" fill="#475569">a DFI under the claim</text>
+<line x1="730" y1="285" x2="784" y2="141" stroke="#94A3B8" stroke-width="1.3" marker-end="url(#muted)"/>
+<rect x="790" y="182" width="290" height="66" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.3"/>
+<text x="806" y="220" font-size="26" fill="#D97706" font-weight="700">20</text>
+<text x="860" y="204" font-size="12.5" fill="#0F172A" font-weight="700">not analysed under the claim</text>
+<text x="860" y="220" font-size="11" fill="#475569">gates with a shared resource whose</text>
+<text x="860" y="233.5" font-size="11" fill="#475569">DFIs are not under the claim</text>
+<line x1="730" y1="285" x2="784" y2="215" stroke="#94A3B8" stroke-width="1.3" marker-end="url(#muted)"/>
+<rect x="790" y="256" width="290" height="66" rx="8" fill="#FFFFFF" stroke="#475569" stroke-width="1.3" stroke-dasharray="4 3"/>
+<text x="806" y="294" font-size="26" fill="#475569" font-weight="700">16</text>
+<text x="860" y="278" font-size="12.5" fill="#0F172A" font-weight="700">dependence not known yet</text>
+<text x="860" y="294" font-size="11" fill="#475569">gates where a dependence is not</text>
+<text x="860" y="307.5" font-size="11" fill="#475569">known yet (and nothing else is missing)</text>
+<line x1="730" y1="285" x2="784" y2="289" stroke="#94A3B8" stroke-width="1.3" marker-end="url(#muted)"/>
+<rect x="790" y="330" width="290" height="66" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.3"/>
+<text x="806" y="368" font-size="26" fill="#D2553F" font-weight="700">6</text>
+<text x="860" y="352" font-size="12.5" fill="#0F172A" font-weight="700">no claim covers the gate</text>
+<text x="860" y="368" font-size="11" fill="#475569">gates across elements that no claim</text>
+<text x="860" y="381.5" font-size="11" fill="#475569">covers</text>
+<line x1="730" y1="285" x2="784" y2="363" stroke="#94A3B8" stroke-width="1.3" marker-end="url(#muted)"/>
+<rect x="790" y="404" width="290" height="66" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.3"/>
+<text x="806" y="442" font-size="26" fill="#475569" font-weight="700">8</text>
+<text x="860" y="426" font-size="12.5" fill="#0F172A" font-weight="700">not an independence gate</text>
+<text x="860" y="442" font-size="11" fill="#475569">same element, a common cause drawn</text>
+<text x="860" y="455.5" font-size="11" fill="#475569">as one event, or a driving situation</text>
+<line x1="730" y1="285" x2="784" y2="437" stroke="#94A3B8" stroke-width="1.3" marker-end="url(#muted)"/>
+<text x="40" y="496" font-size="12" fill="#0F172A">Also counted: 16 claim-and-resource pairs not analysed, 2 resources with an unknown dependence (dfa-gates.md, Findings).</text>
+<text x="40" y="520" font-size="11" fill="#475569">Generated by dfa_figures.py from the join of dfa_gates.py. A gate analysed under its claim is not a verdict: the claim's verdict is WP-A-03 §5 (figures 1 and 3).</text>
+<g class="terms">
+<text x="40" y="542" font-size="10.5" fill="#475569">Terms: DFI-nn dependent failure initiator (WP-A-03 §4): one cause that could defeat two elements at once · IC-nn independence claim (WP-A-03 §2): two elements the safety concept relies</text>
+<text x="40" y="556.5" font-size="10.5" fill="#475569">on not failing together · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O</text>
+<text x="40" y="571" font-size="10.5" fill="#475569">operation, K safety case)</text>
+</g>
+</svg>

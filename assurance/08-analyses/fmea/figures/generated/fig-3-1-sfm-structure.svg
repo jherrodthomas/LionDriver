@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="2015" viewBox="0 0 1280 2015" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-1. System FMEA structure tree (SFM)</title>
-  <desc id="d">System FMEA structure tree (SFM rev 0.33, BL-006): 19 structure elements in 1 root(s), 8 functions with the number of failure modes analyzed for each.</desc>
+  <desc id="d">System FMEA structure tree (SFM rev 0.34, BL-006): 19 structure elements in 1 root(s), 8 functions with the number of failure modes analyzed for each.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,7 +9,7 @@
   </defs>
   <rect width="1280" height="2015" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-1 · System FMEA structure and function tree</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SFM rev 0.33 · BL-006 · draft · AIAG-VDA steps 2–3: structure elements by level, functions of each element</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SFM rev 0.34 · BL-006 · draft · AIAG-VDA steps 2–3: structure elements by level, functions of each element</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.1</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/system-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -18,7 +18,7 @@
   <text x="49" y="1806.9" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-030</text>
   <rect x="136.1" y="1795.9" width="50.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="161.5" y="1806.8" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">external</text>
   <text x="49" y="1821.4" font-size="10.5" fill="#0F172A" font-weight="600">Toyota EPS</text>
-  <text x="49" y="1834.2" font-size="9.5" fill="#475569">2 causes located here</text>
+  <text x="49" y="1834.2" font-size="9.5" fill="#475569">3 causes located here</text>
   <rect x="283" y="1787.4" width="230" height="83.9" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.3" rx="8" stroke-dasharray="5 3"/>
   <text x="292" y="1806.9" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-031</text>
   <rect x="379.1" y="1795.9" width="50.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="404.5" y="1806.8" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">external</text>
@@ -74,13 +74,13 @@
   <text x="293" y="586.8" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-002</text>
   <rect x="380.1" y="575.8" width="47.1" height="15" rx="7.5" fill="#E2E8F0"/><text x="403.7" y="586.7" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">system</text>
   <text x="293" y="601.4" font-size="10.5" fill="#0F172A" font-weight="600">comma 3X device</text>
-  <text x="293" y="614.1" font-size="9.5" fill="#475569">3 causes located here</text>
+  <text x="293" y="614.1" font-size="9.5" fill="#475569">4 causes located here</text>
   <rect x="528" y="122" width="210" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="537" y="141.5" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-003</text>
   <rect x="624.1" y="130.5" width="64.1" height="15" rx="7.5" fill="#E2E8F0"/><text x="656.2" y="141.4" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">subsystem</text>
   <text x="537" y="156.1" font-size="10.5" fill="#0F172A" font-weight="600">Integrated panda (CAN interface and</text>
   <text x="537" y="170.1" font-size="10.5" fill="#0F172A" font-weight="600">safety model)</text>
-  <text x="537" y="182.9" font-size="9.5" fill="#475569">11 causes located here</text>
+  <text x="537" y="182.9" font-size="9.5" fill="#475569">21 causes located here</text>
   <rect x="528" y="213.9" width="210" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="537" y="233.4" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-010</text>
   <rect x="624.1" y="222.4" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="658" y="233.3" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
@@ -103,7 +103,7 @@
   <rect x="624.1" y="483.9" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="658" y="494.8" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
   <text x="537" y="509.5" font-size="10.5" fill="#0F172A" font-weight="600">Control (controlsd,</text>
   <text x="537" y="523.6" font-size="10.5" fill="#0F172A" font-weight="600">lateral/longitudinal controllers)</text>
-  <text x="537" y="536.3" font-size="9.5" fill="#475569">9 causes located here</text>
+  <text x="537" y="536.3" font-size="9.5" fill="#475569">12 causes located here</text>
   <rect x="528" y="567.3" width="210" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="537" y="586.8" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-014</text>
   <rect x="624.1" y="575.8" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="658" y="586.7" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
@@ -115,7 +115,7 @@
   <rect x="624.1" y="667.6" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="658" y="678.6" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
   <text x="537" y="693.2" font-size="10.5" fill="#0F172A" font-weight="600">Driver monitoring</text>
   <text x="537" y="707.3" font-size="10.5" fill="#0F172A" font-weight="600">(dmonitoringmodeld, dmonitoringd)</text>
-  <text x="537" y="720" font-size="9.5" fill="#475569">5 causes located here</text>
+  <text x="537" y="720" font-size="9.5" fill="#475569">6 causes located here</text>
   <rect x="528" y="751" width="210" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="537" y="770.5" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-016</text>
   <rect x="624.1" y="759.5" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="658" y="770.4" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
@@ -126,7 +126,7 @@
   <text x="537" y="862.4" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-017</text>
   <rect x="624.1" y="851.4" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="658" y="862.3" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
   <text x="537" y="877" font-size="10.5" fill="#0F172A" font-weight="600">Panda daemon (pandad)</text>
-  <text x="537" y="889.7" font-size="9.5" fill="#475569">3 causes located here</text>
+  <text x="537" y="889.7" font-size="9.5" fill="#475569">4 causes located here</text>
   <rect x="528" y="920.7" width="210" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="537" y="940.2" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-018</text>
   <rect x="624.1" y="929.2" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="658" y="940.1" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>

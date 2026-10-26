@@ -156,6 +156,12 @@ struct OnroadEvent @0xc4fa6047f024e718 {
     belowHighwaySpeed @111;
     # LionDriver: the minimum-risk maneuver after an unresponsive driver is under way: stopping, or stopped and held (TSR-633, TSR-624)
     minimumRiskManeuver @112;
+    # LionDriver: the EPS reported an active fault code at start-up, so the item does not engage (TSR-629, DQ-132)
+    epsFaultCode @113;
+    # LionDriver: the ABS/VSC ECU reported an active fault code at start-up, so the item does not engage (TSR-629, DQ-132)
+    brakeFaultCode @114;
+    # LionDriver: the start-up fault-code read gave no complete answer, so the item does not engage (TSR-629, DQ-132)
+    faultCodeReadFailed @115;
   }
 }
 

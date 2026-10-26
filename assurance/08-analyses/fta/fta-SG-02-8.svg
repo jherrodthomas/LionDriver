@@ -60,7 +60,7 @@
 <text x="296" y="598.5" class="d">"System Unresponsive" only after</text>
 <text x="296" y="613.0" class="d">5 s; pandad keeps the heartbeat</text>
 <text x="296" y="627.5" class="d">(engaged = 0), so no</text>
-<text x="296" y="642.0" class="d">heartbeat-loss siren (SFMEA-07)…</text>
+<text x="296" y="642.0" class="d">heartbeat-loss siren…</text>
 <rect x="296.0" y="650.0" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="322.9" y="661.5" class="chip" fill="#fff">SWF-036</text>
 <circle cx="392.0" cy="698.0" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>

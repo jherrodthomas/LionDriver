@@ -57,7 +57,7 @@ its tables or from models of the code.
 | Where it comes from | The analysis | Where it goes |
 |---|---|---|
 | [HARA (WP-C-03)](../../02-concept/hara/README.md): preliminary FTTIs per goal · [FSC (WP-C-04)](../../02-concept/fsc/README.md) §8: first budgets | FTTI per goal from vehicle dynamics; detection and reaction budgets; code-derived times T-01…T-34; verdicts; measurement plan | [TSRs (WP-S-02)](../WP-S-02-technical-safety-requirements.md): the time each one sets · [TSC (WP-S-03)](../tsc/README.md) §4 · [System FMEA](../../08-analyses/fmea/msr-plan.md): the monitoring ratings |
-| [ODD (WP-C-02)](../../02-concept/odd/README.md): lane widths and the curve bound | | [Validation (WP-V-01)](../../06-validation/WP-V-01-safety-validation.md) and the HIL bench: measurements M-01…M-12 |
+| [ODD (WP-C-02)](../../02-concept/odd/README.md): lane widths and the curve bound | | [Validation (WP-V-01)](../../06-validation/WP-V-01-safety-validation.md) and the HIL bench: measurements M-01…M-14 |
 
 ## 1. How the budgets are set
 

@@ -20,6 +20,7 @@ on:
       - 'assurance/05-software/coverage/**'
       - 'tools/release/release_variant.sh'
       - 'tools/release/build_release.sh'
+      - 'tools/release/release_files.py'
   pull_request:
     paths:
       - 'opendbc_repo'
@@ -30,6 +31,7 @@ on:
       - 'assurance/05-software/coverage/**'
       - 'tools/release/release_variant.sh'
       - 'tools/release/build_release.sh'
+      - 'tools/release/release_files.py'
   workflow_dispatch:
 
 concurrency:
@@ -140,6 +142,10 @@ jobs:
         (unset RELEASE_VARIANT LIONDRIVER_REFERENCE; source tools/release/release_variant.sh; test "$LIONDRIVER_REFERENCE" = 1)
         (export LIONDRIVER_REFERENCE=; unset RELEASE_VARIANT; source tools/release/release_variant.sh; test "$LIONDRIVER_REFERENCE" = 1)
         (RELEASE_VARIANT=upstream; source tools/release/release_variant.sh 2>/dev/null; test -z "$LIONDRIVER_REFERENCE")
+        # DQ-131: the reference file list ships no joystick or maneuver process; the upstream list keeps them
+        debug='^openpilot/tools/(joystick/joystick_control\.py|longitudinal_maneuvers/|lateral_maneuvers/)'
+        if (unset RELEASE_VARIANT; tools/release/release_files.py | tr '\0' '\n' | grep -E "$debug"); then exit 1; fi
+        test "$(RELEASE_VARIANT=upstream tools/release/release_files.py | tr '\0' '\n' | grep -cE "$debug")" -gt 0
         ! (RELEASE_VARIANT=bogus; source tools/release/release_variant.sh 2>/dev/null)
     - name: Build the reference release firmware
       working-directory: panda

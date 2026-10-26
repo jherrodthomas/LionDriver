@@ -91,7 +91,7 @@ def selfdrive(platform=REFERENCE, status=None):
   return SimpleNamespace(reference_platform=platform in assured_config.ASSURED_PLATFORMS, events=Events(),
                          assured_config=status if status is not None else evaluate(platform=platform),
                          personality=log.LongitudinalPersonality.relaxed, params=mock.Mock(),
-                         set_personality=mock.Mock())
+                         set_personality=mock.Mock(), dtc_entry_events=[])
 
 
 def entry_events(sd, v_ego):

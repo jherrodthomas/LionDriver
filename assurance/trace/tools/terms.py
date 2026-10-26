@@ -49,6 +49,7 @@ PAGES = [
   A / "02-concept/sotif/README.md",
   A / "02-concept/tara/README.md",
   A / "03-system/tsc/README.md",
+  A / "08-analyses/dfa/README.md",
 ]
 FIGURES = [
   A / "02-concept/figures/fig-c01-3-4-function-allocation.svg",
@@ -72,6 +73,11 @@ FIGURES = [
   A / "02-concept/figures/fig-c06-4-1-odd-sotif-view.svg",
   A / "02-concept/figures/fig-c09-1-1-cybersecurity-view.svg",
   A / "03-system/figures/fig-s03-6-2-safety-mechanisms.svg",
+  A / "08-analyses/dfa/fig-dfa-1-boundary.svg",
+  A / "08-analyses/dfa/fig-dfa-2-method.svg",
+  A / "08-analyses/dfa/fig-dfa-3-gaps.svg",
+  A / "08-analyses/dfa/fig-dfa-4-gates.svg",
+  A / "08-analyses/dfa/fig-dfa-5-example.svg",
 ]
 
 # Term -> meaning. A key ending in "-" is a record-code prefix (FSR- matches FSR-01.05). A key ending in "#" is a
@@ -134,6 +140,9 @@ TERMS = {
   "FDCAN": "CAN with flexible data rate (the MCU's CAN controller)",
   "OBD": "on-board diagnostics port",
   "OBD-II": "on-board diagnostics port",
+  "ABS": "anti-lock braking system; on the Toyota, the ABS/VSC ECU that also runs stability control",
+  "DTC": "diagnostic trouble code: a fault code an ECU stores, read with a scan tool or over UDS",
+  "UDS": "unified diagnostic services (ISO 14229): the diagnostic protocol used to read ECU versions and fault codes",
   "TX": "transmit",
   "RX": "receive",
   "SPI": "serial peripheral interface (the link between SoC and MCU)",
@@ -220,6 +229,8 @@ TERMS = {
   "IWDG": "independent watchdog of the MCU",
   "WCET": "worst-case execution time",
   "PCB": "printed circuit board",
+  "EMC": "electromagnetic compatibility: interference between electrical parts and wiring",
+  "HSE": "high-speed external oscillator: the crystal that clocks the panda MCU",
   "NOOUTPUT": "the panda's safety mode that receives but sends nothing",
   "TOYOTA": "the panda's Toyota car mode (parameter 73 in the reference build)",
   "ALLOWED": "the envelope's authority state with controls_allowed = 1 (NOT_ALLOWED: 0), WP-W-05 §5.2",
@@ -286,7 +297,14 @@ TERMS = {
   "DQ-": "decision of the project lead (decision register)",
   "D-": "design decision of the earlier decision list (D-01…D-12; D-08 is the Experimental Mode decision)",
   "GAP-": "gap found by the gap assessment",
+  "GD-": "private record of an unfixed weakness's code locations and mechanism, held until its control is verified (WP-O-05 §4.4)",
   "OI-": "open item of the document it appears in",
+  "DFI-": "dependent failure initiator (WP-A-03 §4): one cause that could defeat two elements at once",
+  "IC-": "independence claim (WP-A-03 §2): two elements the safety concept relies on not failing together",
+  "R-": "shared resource in the DFA map (08-analyses/dfa/shared-resources.yaml): something two elements both depend on",
+  "BE-": "basic event of a WP-A-04 fault tree",
+  "UE-": "undeveloped event of a WP-A-04 fault tree",
+  "G-": "named gate of a WP-A-04 fault tree (G-SIREN, G-LATCUE); numbered gates read G1.1, G2.3 …",
   "RR-": "review record",
   "NF-": "finding of the onboard code review",
   "TL-": "tool entry in the tool register (WP-P-07)",
@@ -312,7 +330,7 @@ NOT_TERMS = {
   "SAFE", "SITUATION", "SITUATIONS", "SPEED", "STATES", "SURFACE", "TO", "TRIGGER", "TRIGGERING", "VALIDATION",
   "WEATHER", "WHAT", "SAFETY", "GOAL", "SOTIF HAZARD", "ELEMENT", "STATE", "THE", "OF", "VIEW", "IN", "ON", "AT",
   "WAY", "OUT", "DOES", "NOTICE", "TODAY", "CLOSES", "BRAKE",
-  "LionDriver", "GitHub", "LibreOffice", "README", "II", "IsDriverViewEnabled",
+  "LionDriver", "GitHub", "LibreOffice", "README", "II", "IsDriverViewEnabled", "CarParams",
 }
 
 WORD_RE = re.compile(r"(?<![\w-])([A-Za-z]*[A-Z][A-Za-z]*[A-Z][A-Za-z]*(?:-[A-Z]+)?)(?![\w])")
