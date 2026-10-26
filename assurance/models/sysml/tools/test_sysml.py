@@ -433,6 +433,24 @@ class Behaviour(unittest.TestCase):
     finally:
       msg.meta["SequenceStep"] = saved
 
+  def test_lifecycle_carries_every_production_requirement_once(self):
+    a = self.m.activities["InstalledItemLifecycle"]
+    self.assertEqual([p.short for p in a.phases], ["3.1", "3.2", "3.3", "3.4", "3.5"])
+    self.assertIn(("start", "installationAndProvisioning"), a.flows)
+    carried = sorted(str(st.values["tsr"]) for v in a.steps.values() for st in v)
+    self.assertEqual(carried, sorted(r for r in self.m.requirements if r.startswith("TSR-8")))
+    rep = check_model.Report()
+    check_model.check_lifecycle(self.m, rep)
+    self.assertEqual(rep.errors, [])
+    saved = list(a.flows)
+    try:
+      a.flows[:] = [f for f in a.flows if f[1] != "softwareUpdates"]
+      rep = check_model.Report()
+      check_model.check_lifecycle(self.m, rep)
+      self.assertIn("phase softwareUpdates is not reached from start", "\n".join(rep.errors))
+    finally:
+      a.flows[:] = saved
+
 
 class TimingHsi(unittest.TestCase):
   """Timing budgets of WP-S-04 §3.7, HSI signals of WP-S-05 §11 and HSI responsibilities of §11.4 (V-18, V-19, V-20)."""
