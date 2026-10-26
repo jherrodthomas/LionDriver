@@ -62,6 +62,26 @@ class TestSchema(unittest.TestCase):
     _, errs = self.run_items(he)
     self.assertEqual(len(errs), 2, errs)  # s above 3, asil not one of QM, A to D
 
+  def test_interface_item_agreed_only_with_review(self):
+    ifr = """- id: IFR-99
+  kind: interface-requirement
+  interface: IX-99
+  title: "t"
+  owners: ["Safety manager", "SOTIF lead"]
+  open_item: null
+  review_ref: null
+  status: proposed
+  source: WP-P-11
+"""
+    self.assertEqual(self.run_items(ifr), (1, []))
+    self.assertEqual(self.run_items(ifr.replace("review_ref: null", "review_ref: REV-001")
+                                    .replace("status: proposed", "status: agreed")), (1, []))
+    _, errs = self.run_items(ifr.replace("status: proposed", "status: agreed"))
+    self.assertEqual(len(errs), 1, errs)  # agreed without a review record
+    _, errs = self.run_items(ifr.replace("status: proposed", "status: verified")
+                             .replace('"SOTIF lead"]', '"Safety manager"]'))
+    self.assertEqual(len(errs), 2, errs)  # not an interface status; the same owner twice
+
 
 if __name__ == "__main__":
   unittest.main()

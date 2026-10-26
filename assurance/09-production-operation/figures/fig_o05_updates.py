@@ -160,8 +160,8 @@ def c(D, r: str) -> tuple[str, str]:
 # ---------------------------------------------------------------- F1: the update path, today against the target
 
 SRC["fig-o05-6-1-update-path.svg"] = [
-  ("S07", "force-checks out `FETCH_HEAD`, resets, cleans and updates submodules"),
-  ("S07", "AGNOS images are checked against hashes in `agnos.json` taken from the same unsigned tree"),
+  ("S07", "the updater installs a git branch that a local setting can choose"),
+  ("S07", "the OS images are checked only against hashes from the same unsigned tree"),
   ("S07", "release ID, git tree commit including submodule pins, AGNOS version and image hashes, panda image hash, model "
           "artefact hashes, minimum version"),
   ("S07", "signed with the offline update key (ECDSA P-256 with SHA-256, the firmware scheme, DQ-191 A)"),

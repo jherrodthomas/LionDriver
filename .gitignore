@@ -61,6 +61,7 @@ openpilot/selfdrive/modeld/models/tg_input_devices.json
 # build artifacts
 docs/_site/
 openpilot/selfdrive/pandad/pandad
+openpilot/system/manager/upstream_build
 openpilot/cereal/services.h
 openpilot/cereal/gen
 openpilot/cereal/messaging/bridge
@@ -115,3 +116,6 @@ assurance/sim/assets/*
 
 # FRET CLI built by assurance/models/fret/install_fret.sh (TE-03)
 .fret/
+
+# Private overlay from jherrodthomas/LionDriver-security (cyber simulation; DQ-421 A, WP-O-05 §4.4). Never commit it here
+assurance/sim/cyber/

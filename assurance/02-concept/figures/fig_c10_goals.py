@@ -143,7 +143,7 @@ MODEL = {
                "CSR-C-04": ("RDP/WRP set so the firmware cannot be replaced or read out", "cannot be replaced or read out without authorization"),
                "CSR-C-05": ("The recovery path does not flash unauthenticated firmware", "shall not flash unauthenticated (development) firmware")}),
   "CSG-03": ("Protect what the control software reads", ("Local access to params / IPC", "SoC params, msgq", "Actuation or DM altered"),
-             ("open", "No control yet: parameters and IPC are unauthenticated"), {
+             ("partial", "Debug and joystick modes left out (reference build); params, IPC open"), {
                "CSR-C-06": ("Params and IPC protected, or the envelope does not depend on them", "or the safety envelope shall not depend on them"),
                "CSR-C-07": ("No debug, maneuver or joystick modes in reference builds", "Developer process-replacement modes (debug, maneuver, joystick)")}),
   "CSG-04": ("Load only verified, non-executable models", ("Tampered model file", "modeld: model load", "Code runs on the SoC"),

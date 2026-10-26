@@ -55,6 +55,14 @@ done
 
 scons
 
+# LionDriver DQ-131: the reference variant has no debug, maneuver or joystick processes (TSR-806, CSG-03)
+if [ "$RELEASE_VARIANT" = reference ]; then
+  test ! -e openpilot/system/manager/upstream_build
+  test ! -e openpilot/tools/joystick/joystick_control.py
+  test ! -e openpilot/tools/longitudinal_maneuvers
+  test ! -e openpilot/tools/lateral_maneuvers
+fi
+
 if [ -z "$PANDA_DEBUG_BUILD" ]; then
   # release panda fw
   CERT=/data/pandaextra/certs/release RELEASE=1 scons panda/

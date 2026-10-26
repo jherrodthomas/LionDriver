@@ -18,7 +18,8 @@
   "trace_prefixes": {
     "hazard_log": ["H", "HE", "SG", "SH"],
     "assumption": ["AOU"],
-    "requirement": ["FSR", "TSR", "SWSR", "HWSR", "CSR", "AIR", "SYS", "FM"]
+    "requirement": ["FSR", "TSR", "SWSR", "HWSR", "CSR", "AIR", "SYS", "FM"],
+    "interface": ["IFR"]
   },
   "kinds": {
     "claim": {
@@ -107,7 +108,7 @@
         "review_date": "date", "outcome": "enum:review_outcome", "baseline": "id", "record": "text",
         "source_revision": "rev"
       },
-      "refs": {"reviewed_objects": ["claim", "evidence", "configuration"], "baseline": ["baseline"]}
+      "refs": {"reviewed_objects": ["claim", "evidence", "configuration", "trace:interface"], "baseline": ["baseline"]}
     }
   }
 }

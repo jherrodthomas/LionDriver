@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-11 Integrated process model (machine-readable) and generated process maps |
 | Standard reference | ISO 26262-2:2018 §6 (safety lifecycle, planning of activities); ISO 21448:2022 §4; ISO/SAE 21434:2021 §6 (cybersecurity activities and their tailoring); ISO/PAS 8800:2024 (AI safety lifecycle); ASPICE 4.0 MAN.3 (project lifecycle definition). Informative: Integrated Automotive Standards Handbook (ISH-2026-001) §3.3–3.4, Ch. 5, Ch. 13 |
-| Version | 0.4 (§6.5 item 3: the lead decided to recruit a volunteer reviewer and QA person, DQ-010 A; 2026-10-23). 0.3 (§6.5 item 4: controllability is to be tested to 110 km/h after a risk review, DQ-091 A, and the ODD-H bound is 110 km/h, DQ-260 A; 2026-10-23). 0.2 (§7 plan view: the model, WP-M-03 §5 and the lead's pending decisions as one linked Jantt chart, built in CI; WP-P-07 TL-50; OI-5; 2026-10-21). 0.1 |
+| Version | 0.5 (OI-2 closed: each interface has an IFR item in `trace/items/ifr.yaml` that holds its two owners, its open item and its agreement state; an interface is agreed only through a recorded review, DQ-129 A; 2026-10-25). 0.4 (§6.5 item 3: the lead decided to recruit a volunteer reviewer and QA person, DQ-010 A; 2026-10-23). 0.3 (§6.5 item 4: controllability is to be tested to 110 km/h after a risk review, DQ-091 A, and the ODD-H bound is 110 km/h, DQ-260 A; 2026-10-23). 0.2 (§7 plan view: the model, WP-M-03 §5 and the lead's pending decisions as one linked Jantt chart, built in CI; WP-P-07 TL-50; OI-5; 2026-10-21). 0.1 |
 | Status | Draft (all phases G0 governance to G6 operation modelled) |
 | ASIL / scope | Process (all disciplines) |
 | Author | Assurance team (initial draft) |
@@ -53,6 +53,7 @@ The model holds only what no other document holds: the activities, their lanes, 
 | Clause references, ASPICE process, gate and status of each work product | WP-M-00 §3 (the row of each produced work product) |
 | Who holds each lane's role, and by which gate | WP-M-02 §3.1 |
 | Which confirmation measures a gate needs | WP-M-06 §9 |
+| Owners, open item and agreement state of each interface | Its IFR item in [`trace/items/ifr.yaml`](../trace/items/ifr.yaml) (DQ-129 A) |
 | Whether a confirmation measure has been performed | A record in `10-safety-case/confirmation/` named as its README requires: `CR-<nn>-<WP-ID>-v<version>.md` for a confirmation review, `SR-<nn>-<gate>.md` for a per-gate SOTIF/AI review, `<measure>.md` otherwise. A CR planned at several gates (CR-03, CR-06) cannot be told apart by file name, so any record of it counts at each of its gates |
 
 A change to the register, the safety plan or the confirmation plan therefore shows up in the maps on the next run, and `--check` fails in CI until the maps are regenerated.
@@ -67,7 +68,7 @@ Records use the same flat YAML subset as [`case/`](../case/README.md): a top-lev
 | `lane` | `model/lifecycle.yaml` | `id`, `name`, `role` (a role in WP-M-02 §3.1), `plan` (the plan that governs the lane) |
 | `activity` | [`model/governance.yaml`](model/governance.yaml), [`model/concept.yaml`](model/concept.yaml), [`model/design.yaml`](model/design.yaml), [`model/development.yaml`](model/development.yaml), [`model/integration.yaml`](model/integration.yaml), [`model/release.yaml`](model/release.yaml), [`model/operation.yaml`](model/operation.yaml) | `id` (`GOV-nn` governance, `CON-nn` concept, `DES-nn` system design, `DEV-nn` HW/SW development, `INT-nn` integration and verification, `REL-nn` validation and release, `OPS-nn` operation), `phase`, `lane`, `name`, `produces`, `inputs`, `handbook_wp`; optional `updates` |
 | `review` | same files as the phase's activities | `id` (the WP-M-06 measure; `<measure>@<gate>` when WP-M-06 plans it at several gates, e.g. `CR-06@G2`), `phase`, `name`, `covers`, `independence`; optional `record_wp` when the measure's record is itself a work product (FSA-F → WP-K-04), which then counts as performed once approved |
-| `interface` | [`model/interfaces.yaml`](model/interfaces.yaml) | `id` (`IX-nn`), `phase`, `between` (two work products), `pattern`, `topic`, `anchors`, `status`, `open_item`, `due` |
+| `interface` | [`model/interfaces.yaml`](model/interfaces.yaml) | `id` (`IX-nn`), `phase`, `between` (two work products), `pattern`, `topic`, `anchors`, `ifr` (its IFR item), `due` |
 | `feedback` | `model/operation.yaml` | `id` (`FB-nn`), `phase`, `source` (the work product that raises the finding), `targets` (work products of earlier phases it re-opens), `finding`, `anchors` |
 
 Rules the records follow:
@@ -76,7 +77,7 @@ Rules the records follow:
 - **Independent assessments are activities in the confirmation lane** when they produce a work product of their own (the FSA report WP-K-04, the cybersecurity assessment WP-K-05). Readiness counts such an activity as checking its inputs.
 - **Activity IDs follow execution order.** An activity's inputs from the same phase come from activities with lower IDs. Work that goes back and forth between disciplines is an interface, not an input, so the input graph has no cycles.
 - **Interfaces are anchored.** Each anchor `WP-x-nn:text` names text that occurs verbatim in that work product. If the documents stop making the link, the check fails.
-- **Interface status** is `documented` (both documents refer to each other; nobody has reviewed the agreement yet) or `open` (a recorded open item still has to settle it, named in `open_item`). There is no "agreed" status yet. It will come from a recorded review, as in `case/`.
+- **Interface status** is read from the interface's IFR item in [`trace/items/ifr.yaml`](../trace/items/ifr.yaml), not kept in the model (DQ-129 A). It is `documented` (both documents refer to each other; nobody has reviewed the agreement yet), `open` (the item names a recorded open item that still has to settle it) or `agreed`. An interface is agreed only when an accepted review record of its two owners lists the IFR item, as in `case/`; trace check I1 enforces it. None is agreed yet.
 - **`handbook_wp`** maps an activity to the handbook's eight integrated work products (Ch. 13: WP-1 item definition, WP-2 unified risk assessment, WP-3 concept, WP-4 requirements specification, WP-6 V&V, WP-7 assurance case). It is informative. LionDriver keeps its own work-product structure.
 
 ## 4. Checks
@@ -91,7 +92,7 @@ Rules the records follow:
 | P4 | In a modelled phase, every work product WP-M-00 gates there is produced by an activity |
 | P5 | Each input is produced by an earlier activity of the same phase or gated at an earlier gate |
 | P6 | The phase's confirmation measures equal the WP-M-06 §9 row for its gate, are defined in WP-M-06, and cover registered work products |
-| P7 | Interfaces connect two work products produced by activities; anchors occur verbatim; `open_item` is set exactly when the status is `open`; an interface is not due before its own phase |
+| P7 | Interfaces connect two work products produced by activities; anchors occur verbatim; each has exactly one IFR item, and the item's owners are the roles of the two lanes; an interface is not due before its own phase |
 | P8 | The committed maps and gate skeletons equal what the model generates (`--check` only) |
 | P9 | Feedback comes from a work product produced in its own phase, goes only to work products of earlier phases, and its anchors occur verbatim |
 
@@ -107,7 +108,7 @@ A new or renamed work product goes into WP-M-00 first; the model then refers to 
 
 ## 6. What the model shows
 
-These findings come from the generated maps. They are observations for the safety manager, not decisions.
+These findings come from the generated maps. They are observations for the safety manager, not decisions. Where a finding calls an interface closed, the documents were changed so that no open item remains. None of the 33 interfaces is agreed: no review by both owners has been recorded (DQ-129 A), and each gate skeleton lists the IFR items due by its gate.
 
 ### 6.0 Governance phase ([G0 map](maps/g0-governance.md))
 
@@ -194,7 +195,7 @@ These findings come from the generated maps. They are observations for the safet
 | ID | Item | Owner | Gate |
 |---|---|---|---|
 | OI-1 | Closed: all phases G0–G6 are modelled | Safety manager | — |
-| OI-2 | Add an "agreed" interface status set only through a recorded review, and decide whether cross-domain interfaces become requirement items (`IFR-nn`) in `trace/` | Safety manager | G2 |
+| OI-2 | Closed 2026-10-25 (decision register DQ-129 A): each interface has an IFR item in [`trace/items/ifr.yaml`](../trace/items/ifr.yaml) with its two owners and a review reference. It is agreed only through an accepted review record that lists it (trace check I1). The maps and gate skeletons read the status from the item | Safety manager | — |
 | OI-3 | Closed: gate review skeletons for G0–G6 are generated in `10-safety-case/gates/skeletons/` | Safety manager | — |
 | OI-4 | Derive pull-request checklists from the model: which activities and interfaces a change to a work product re-opens | Configuration and change manager | G2 |
 | OI-5 | The plan view (§7) places activities inside their phase window because only phase-level effort exists (WP-M-03 §4.2). An effort estimate per activity, with the re-plan of WP-M-03 OI-6, would give real activity dates and a critical path that means something | Project manager | G1 |

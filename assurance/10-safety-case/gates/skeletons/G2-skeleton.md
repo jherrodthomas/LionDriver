@@ -23,7 +23,7 @@
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 5 performed: CR-05, CR-06@G2, FSA-I2, AUD-1, SR-02 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 97 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 94 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
@@ -39,8 +39,8 @@
 | [WP-A-03](../../../08-analyses/WP-A-03-dependent-failure-analysis.md) Dependent failure analysis | DES-08 | Draft | 10 | |
 | [WP-A-01](../../../08-analyses/WP-A-01-asil-decomposition.md) ASIL decomposition rationale | DES-09 | Draft | 4 | |
 | [WP-A-04](../../../08-analyses/WP-A-04-system-fta-fmea.md) System-level safety analyses (FTA, FMEA) | DES-10 | Draft | 7 | |
-| [WP-V-02](../../../06-validation/WP-V-02-sotif-vv-strategy.md) SOTIF verification and validation strategy, validation targets | DES-11 | Draft | 7 | |
-| [WP-S-06](../../../03-system/WP-S-06-requirements-production-operation.md) Requirements for production, operation, service and decommissioning | DES-12 | Draft | 4 | |
+| [WP-V-02](../../../06-validation/WP-V-02-sotif-vv-strategy.md) SOTIF verification and validation strategy, validation targets | DES-11 | Draft | 5 | |
+| [WP-S-06](../../../03-system/WP-S-06-requirements-production-operation.md) Requirements for production, operation, service and decommissioning | DES-12 | Draft | 3 | |
 | [WP-A-05](../../../08-analyses/WP-A-05-stpa.md) System-theoretic process analysis (STPA) | DES-13 | Draft | 10 | |
 | [WP-M-14](../../../01-management/WP-M-14-iso26262-6-implementation-specification.md) ISO 26262-6 software lifecycle implementation specification (future work; activation deferred, D-14) | DES-14 | Draft | 5 | |
 
@@ -56,13 +56,29 @@ A gate cannot pass if a confirmation review WP-M-06 assigns to it has not been p
 | AUD-1 Functional safety audit (process in use for concept and system design) | WP-M-02, WP-M-05 | I3 | `confirmation/AUD-1.md` (not present) | |
 | SR-02 Review of V&V strategy and validation targets | WP-V-02 | I3-equivalent | `confirmation/SR-02.md` (not present) | |
 
-### Open cross-domain interfaces due by this gate
+### Cross-domain interfaces due by this gate
 
-From the [process model](../../../process/README.md). Each one is a condition on the gate unless it is closed before the review.
+From the [process model](../../../process/README.md) and the IFR items in [`trace/items/ifr.yaml`](../../../trace/items/ifr.yaml). An interface is agreed only when an accepted review record of both owners lists its IFR item (DQ-129 A). Each one not agreed is a condition on the gate unless it is agreed before the review.
 
-| Interface | Topic | Open item | Due | Closed? |
-|---|---|---|---|---|
-| IX-13 | The AI safety requirements carry (TBC) performance values that the SOTIF validation targets VT-01…VT-15 must confirm. WP-V-02 §4.1 traces each value: 8 confirmed or replaced (AIR-11 and AIR-14 through VT-14 and VT-15; AIR-01, AIR-03 and AIR-04 derived in §4.3); 6 come from other documents. The targets are not yet frozen: the project lead freezes them once the B1 crash data replaces the illustrative rates, with a later assessor review (DQ-096 B) | WP-V-02 OI-3 | G2 | |
+| IFR | Interface | Title | Owners | Open item | Due | Review record | Agreed? |
+|---|---|---|---|---|---|---|---|
+| IFR-01 | IX-01 | TARA safety impact is rated against the HARA hazards | Safety manager / Cybersecurity manager | — | G1 | none |  |
+| IFR-02 | IX-02 | Cybersecurity goals protect the safety goals | Safety manager / Cybersecurity manager | — | G1 | none |  |
+| IFR-03 | IX-03 | One hazard log for HARA and SOTIF hazards | Safety manager / SOTIF lead | — | G1 | none |  |
+| IFR-04 | IX-04 | Driver monitoring is a SOTIF misuse measure under the C2 ratings | Safety manager / SOTIF lead | — | G1 | none |  |
+| IFR-05 | IX-05 | Driver-monitoring targets are AI safety requirements | SOTIF lead / AI/ML safety lead | — | G2 | none |  |
+| IFR-06 | IX-06 | The claimed ODD rests on LionDriver evaluation data, not on the training data | SOTIF lead / AI/ML safety lead | — | G2 | none |  |
+| IFR-07 | IX-07 | Model artefacts that load through pickle: AI integrity and threat TS-09 | AI/ML safety lead / Cybersecurity manager | — | G1 | none |  |
+| IFR-08 | IX-08 | The FSC transition rule is implemented by FM-03 | Safety manager / SOTIF lead | — | G1 | none |  |
+| IFR-09 | IX-09 | Boot integrity, mode lock and command gating are safety and security requirements | Safety manager / Cybersecurity manager | — | G2 | none |  |
+| IFR-10 | IX-10 | FFI-3 depends on trust boundary TB-2 (BOOT0/NRST) | Safety manager / Cybersecurity manager | — | G2 | none |  |
+| IFR-11 | IX-11 | Unauthenticated SoC messaging is an interference path and an attack surface | Safety manager / Cybersecurity manager | — | G2 | none |  |
+| IFR-12 | IX-12 | ML insufficiencies are [SOTIF] basic events in the system fault trees | Safety manager / SOTIF lead | — | G2 | none |  |
+| IFR-13 | IX-13 | The SOTIF validation targets confirm the AI performance values | SOTIF lead / AI/ML safety lead | WP-V-02 OI-3 | G2 | none |  |
+| IFR-14 | IX-14 | ML outputs reach the actuators only through the envelope (AIR-28) | Safety manager / AI/ML safety lead | — | G2 | none |  |
+| IFR-31 | IX-31 | The cybersecurity manager carries the interface to safety | Safety manager / Cybersecurity manager | — | G0 | none |  |
+| IFR-32 | IX-32 | The AI safety lead supplies model insufficiencies to the SOTIF lead | SOTIF lead / AI/ML safety lead | — | G0 | none |  |
+| IFR-33 | IX-33 | Supplier information on the ML models bounds the AI claims | AI/ML safety lead / Safety manager | — | G0 | none |  |
 
 ### Roles WP-M-02 §3.1 needs by this gate that are not assigned
 

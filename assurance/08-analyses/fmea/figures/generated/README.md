@@ -6,7 +6,7 @@ Generated from the YAML analyses in [`analyses/`](../../analyses/) by `tools/saf
 |---|---|---|---|
 | 2-1 | DFA: dependent failure initiators × ASIL decompositions, measures, open items | `analyses/dfa.yaml` | [fig-2-1-dfa-initiators.svg](fig-2-1-dfa-initiators.svg) |
 | 3-1 | System FMEA structure and function tree (steps 2–3) | `analyses/system-fmea.yaml` | [fig-3-1-sfm-structure.svg](fig-3-1-sfm-structure.svg) |
-| 3-2 | System FMEA failure chains: element → function → failure mode → causes (steps 4–6) | `analyses/system-fmea.yaml` | [1](fig-3-2-sfm-failure-chains-1.svg), [2](fig-3-2-sfm-failure-chains-2.svg), [3](fig-3-2-sfm-failure-chains-3.svg), [4](fig-3-2-sfm-failure-chains-4.svg), [5](fig-3-2-sfm-failure-chains-5.svg), [6](fig-3-2-sfm-failure-chains-6.svg), [7](fig-3-2-sfm-failure-chains-7.svg) |
+| 3-2 | System FMEA failure chains: element → function → failure mode → causes (steps 4–6) | `analyses/system-fmea.yaml` | [1](fig-3-2-sfm-failure-chains-1.svg), [2](fig-3-2-sfm-failure-chains-2.svg), [3](fig-3-2-sfm-failure-chains-3.svg), [4](fig-3-2-sfm-failure-chains-4.svg), [5](fig-3-2-sfm-failure-chains-5.svg), [6](fig-3-2-sfm-failure-chains-6.svg), [7](fig-3-2-sfm-failure-chains-7.svg), [8](fig-3-2-sfm-failure-chains-8.svg) |
 | 3-3 | DFMEA structure and function tree (steps 2–3) | `analyses/dfmea.yaml` | [fig-3-3-dfm-structure.svg](fig-3-3-dfm-structure.svg) |
 | 3-4 | DFMEA failure chains: element → function → failure mode → causes (steps 4–6) | `analyses/dfmea.yaml` | [1](fig-3-4-dfm-failure-chains-1.svg), [2](fig-3-4-dfm-failure-chains-2.svg), [3](fig-3-4-dfm-failure-chains-3.svg) |
 | 3-5 | SW FMEA structure and function tree (steps 2–3) | `analyses/sw-fmea.yaml` | [fig-3-5-swf-structure.svg](fig-3-5-swf-structure.svg) |

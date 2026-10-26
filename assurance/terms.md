@@ -17,6 +17,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 
 | Term | Meaning |
 |---|---|
+| ABS | anti-lock braking system; on the Toyota, the ABS/VSC ECU that also runs stability control |
 | ACC | adaptive cruise control |
 | ACK | acknowledge (NACK: not acknowledge) |
 | AEB | automatic emergency braking |
@@ -39,6 +40,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | DMA | direct memory access: hardware that copies data without the processor |
 | DRV | the driver |
 | DSU | driving support unit (Toyota's radar cruise module) |
+| DTC | diagnostic trouble code: a fault code an ECU stores, read with a scan tool or over UDS |
 | DTCM | the MCU's tightly coupled data memory, where the safety state lives |
 | E/E | electrical and electronic (systems) |
 | ECC | error-correcting code (memory) |
@@ -156,6 +158,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | TSC | technical safety concept |
 | TSS | Toyota Safety Sense (TSS 2.0: the car's stock lane assist, radar cruise and pre-collision package) |
 | TX | transmit |
+| UDS | unified diagnostic services (ISO 14229): the diagnostic protocol used to read ECU versions and fault codes |
 | UI | user interface: the device's screen |
 | UID | unique identifier of the chip |
 | URL | web address |
@@ -200,6 +203,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | FSR-nn | functional safety requirement (FSC) |
 | GAP-nn | gap found by the gap assessment |
 | GC-nn | global pass criterion of every integration test (WP-S-08 §5) |
+| GD-nn | private record of an unfixed weakness's code locations and mechanism, held until its control is verified (WP-O-05 §4.4) |
 | H-nn | hazard (HARA) |
 | HE-nn | hazardous event (HARA) |
 | I-nn | integration step I-1…I-4 (WP-S-08 §3.1) |

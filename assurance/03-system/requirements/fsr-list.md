@@ -4,7 +4,7 @@
 
 All 58 functional safety requirements of [WP-C-04 §5](../../02-concept/WP-C-04-functional-safety-concept.md), one line each. The work product holds the full text and is the source of truth; the ID links to its section.
 
-Status: 15 implemented · 26 partly · 11 not implemented · 6 assumed (EXT / AoU). The rule is that of WP-S-03 Figure 6-1; nothing is verified on hardware yet.
+Status: 16 implemented · 26 partly · 10 not implemented · 6 assumed (EXT / AoU). The rule is that of WP-S-03 Figure 6-1; nothing is verified on hardware yet.
 
 | ID | Parents | ASIL | Allocated to | Status | Requirement (first sentence) |
 |---|---|---|---|---|---|
@@ -33,7 +33,7 @@ Status: 15 implemented · 26 partly · 11 not implemented · 6 assumed (EXT / Ao
 | [FSR-02.09](../../02-concept/WP-C-04-functional-safety-concept.md#5-functional-safety-requirements) | SG-02, SG-04, SG-06, SG-08 | A | E-01/DM | implemented | If the driver does not respond to the highest DM warning, the item shall decelerate the vehicle in a controlled way in its lane to a standstill, keep it … |
 | [FSR-02.10](../../02-concept/WP-C-04-functional-safety-concept.md#5-functional-safety-requirements) | SG-02, SG-06 | C | E-01, E-03 | partly | The item shall detect that the envelope does not grant actuation authority while the SoC is engaged (envelope blocking, stuck authority, safety-mode mismatch) … |
 | [FSR-02.11](../../02-concept/WP-C-04-functional-safety-concept.md#5-functional-safety-requirements) | SG-02, SG-06 | C | E-01/HMI, E-03 | partly | The item shall detect failure of the HMI path that shows the engagement state and gives take-over requests (display, sound) and treat it as a fault leading to … |
-| [FSR-02.12](../../02-concept/WP-C-04-functional-safety-concept.md#5-functional-safety-requirements) | SG-02, SG-06 | QM | E-01 | not implemented | Before granting engagement, and while the item can engage, the item shall read the stored diagnostic trouble codes of the EPS and of the brake and stability … |
+| [FSR-02.12](../../02-concept/WP-C-04-functional-safety-concept.md#5-functional-safety-requirements) | SG-02, SG-06 | QM | E-01 | implemented | Before granting engagement, and while the item can engage, the item shall read the stored diagnostic trouble codes of the EPS and of the brake and stability … |
 | [FSR-03.01](../../02-concept/WP-C-04-functional-safety-concept.md#5-functional-safety-requirements) | SG-03 | C | E-03 | partly | The envelope shall limit the commanded acceleration to an upper bound derived from controllability for the reference vehicle |
 | [FSR-03.02](../../02-concept/WP-C-04-functional-safety-concept.md#5-functional-safety-requirements) | SG-03, SG-04 | C | E-03 | implemented | The envelope shall allow only the inactive acceleration value while longitudinal authority is not granted or while the driver presses the accelerator |
 | [FSR-03.03](../../02-concept/WP-C-04-functional-safety-concept.md#5-functional-safety-requirements) | SG-03 | C | E-03 | not implemented | The envelope shall limit the rate of increase of commanded acceleration (jerk) |

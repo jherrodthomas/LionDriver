@@ -34,7 +34,7 @@
 <text x="54" y="332.5" class="id">BE-7.11</text>
 <text x="246" y="332.5" class="kind">BASIC</text>
 <text x="54" y="347.0" class="d">Connector intermittent or partly</text>
-<text x="54" y="361.5" class="d">seated (SFMEA-30; DFI-05,</text>
+<text x="54" y="361.5" class="d">seated (SFM-015.C3; DFI-05,</text>
 <text x="54" y="376.0" class="d">DFI-20)</text>
 <rect x="54.0" y="384.0" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="81.0" y="395.5" class="chip" fill="#fff">PFM-008</text>

@@ -36,7 +36,7 @@ class TestCsrStatus(unittest.TestCase):
       self.assertEqual(int(m.group(1)), len(g["reqs"]), g["parent"])
 
   def test_changed_cell_fails(self):
-    md = self.md.replace("Not met: RSA-1024 / SHA-1", "Implemented: ECDSA P-256", 1)
+    md = self.md.replace("Not met: the baseline scheme is weaker than required", "Implemented: ECDSA P-256", 1)
     self.assertNotEqual(md, self.md)
     with self.assertRaises(fc.CsrError):
       fc.parse(md)

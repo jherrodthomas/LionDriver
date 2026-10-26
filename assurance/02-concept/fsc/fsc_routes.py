@@ -120,11 +120,11 @@ ROUTES = [
   ),
   dict(
     key="fmea", name="FMEA", short="FMEA", asks="How does each element fail, and what control catches it?",
-    records="WP-A-04 SFMEA-09 (HMI crash), WP-W-04 SWF-39 (siren omission)",
-    src=[("08-analyses/WP-A-04-system-fta-fmea.md", "| SFMEA-09 | E-01 HMI (ui/soundd) | No take-over warning (crash)", "SFMEA-09 no take-over warning"),
+    records="System FMEA SFM-026 (alert not presented), WP-W-04 SWF-39 (siren omission)",
+    src=[("08-analyses/fmea/analyses/system-fmea.yaml", "The panda siren is the SoC-independent control (FSR-02.05;", "SFM-026 alert not presented"),
          ("05-software/WP-W-04-software-safety-analysis.md", "| SWF-39 | U-PND-HK siren | Omission: siren not sounding when SoC lost", "SWF-39 siren omission")],
     fixed=["ACTION", "OBJECT"],
-    gave="The HMI crash row names the control (the panda siren) and traces it to FSR-02.05. The software row turns the "
+    gave="The alert row names the control (the panda siren) and traces it to FSR-02.05. The software row turns the "
          "control into an item with its own failure mode, omission, which a test must exclude.",
     watch="Rows age with the code: until PRs #398 and #399, SWF-39 credited only the heartbeat case and the System FMEA "
           "F-04b entries described a silent SoC stall.",
@@ -382,7 +382,7 @@ def mini_fta(y):
 
 def mini_fmea(y):
   cols = [("Item", 108), ("Failure mode", 176), ("Effect", 128), ("Control", 150), ("Trace", 110)]
-  rows = [["E-01 HMI", "No take-over warning (crash)", "Unannounced loss", "panda siren", "FSR-02.05"],
+  rows = [["HMI (ui, soundd)", "Take-over alert not presented (crash)", "Unannounced loss", "panda siren", "FSR-02.05"],
           ["U-PND-HK siren", "Omission: siren not sounding when SoC lost", "No warning", "malfunction reported", "SWSR-516"]]
   o, x = [], M
   for name, w in cols:
@@ -399,7 +399,7 @@ def mini_fmea(y):
       o += [T(x + 8, yy + 19 + 16 * i, ln, 12, INK, 600 if hl else 400) for i, ln in enumerate(lines)]
       x += w
     yy += h
-  o.append(T(M, yy + 20, "SFMEA-09 (WP-A-04 §7) above, SWF-39 (WP-W-04) below: the control of one row is the item of the next.", 12, MUTED))
+  o.append(T(M, yy + 20, "SFM-026 (System FMEA) above, SWF-39 (WP-W-04) below: the control of one row is the item of the next.", 12, MUTED))
   return o, yy + 30
 
 
