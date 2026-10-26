@@ -687,3 +687,195 @@ def render_sequence(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> s
 
 
 RENDERERS["sequence"] = render_sequence
+
+
+# ---------------------------------------------------------------- V-18 timing budgets
+
+BUDGET_COLORS = {"fdti": ("#2563EB", "FDTI: detection"), "frti": (k.ENVELOPE["chip"], "FRTI: reaction"),
+                 "margin": ("#0F766E", "margin left")}
+
+
+def short_cell(text: str, width: float) -> str:
+  return k.clip(re.sub(r"\s+", " ", re.sub(r"`|\*\*", "", text)), width, 10)
+
+
+def render_budgets(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str:
+  """The FTTI budgets of WP-S-04 §3.7 on one time axis, with the elements their TSRs are allocated to."""
+  view = m.views[vid]
+  w = spec["width"]
+  tmax = spec.get("axis_seconds", 1.2)
+  body = rv.header(w, view, spec["title"], spec["subtitle"], digest)
+  x0, x1 = 470, 1010
+  px = lambda s: x0 + (x1 - x0) * min(s, tmax) / tmax  # noqa: E731
+  top = 104
+  body.append(k.text(40, top + 8, "SAFETY GOAL · FAULT CLASS", 9.5, k.MUTED, 700, extra=' letter-spacing="1"'))
+  body.append(k.text(1040, top + 8, "TSRs · SATISFIED BY (allocation)", 9.5, k.MUTED, 700, extra=' letter-spacing="1"'))
+  for i in range(0, int(round(tmax * 10)) + 1, 2):
+    s_ = i / 10
+    body.append(f'<line x1="{k.f(px(s_))}" y1="{top + 16}" x2="{k.f(px(s_))}" y2="{top + 22}" stroke="{k.FAINT}"/>')
+    body.append(k.text(px(s_), top + 8, f"{s_:g} s", 9.5, k.MUTED, 400, "middle"))
+  y = top + 28
+  rh = 40
+  closed = timeless = 0
+  for i, (label, b) in enumerate(m.budgets.items()):
+    v = b.values
+    sec = {a: v.get(f"{a}Seconds") for a in ("ftti", "fdti", "frti", "margin", "fhti")}
+    if i % 2 == 0:
+      body.append(k.rect(30, y, w - 60, rh, k.WASH, None, 4))
+    xx = 40
+    for g in sysml_lite._as_list(v.get("goals")):
+      p, pw = k.pill(xx, y + 5, g, k.ENVELOPE["chip"], size=9, mono=True)
+      body.append(p)
+      xx += pw + 4
+    rest = re.sub(r"^(SG-\d\d(?:/\d\d)?\s*(?:/\s*SG-\d\d)?\s*)", "", label)
+    body.append(k.text(xx + 4, y + 18, k.clip(rest or "all fault classes", x0 - xx - 24, 11), 11, k.INK, 600))
+    body.append(k.text(40, y + 33, short_cell(f"FTTI {v.get('ftti', '')}", x0 - 60), 10, k.MUTED))
+    numeric = None not in (sec["ftti"], sec["fdti"], sec["frti"])
+    by = y + 9
+    if numeric:
+      closed += 1
+      xa = px(0)
+      for key in ("fdti", "frti"):
+        xb = px((sec["fdti"] if key == "fdti" else sec["fdti"] + sec["frti"]))
+        body.append(k.rect(xa, by, max(xb - xa, 1.5), 14, BUDGET_COLORS[key][0], None, 2))
+        xa = xb
+      xf = px(sec["ftti"])
+      if xf > xa:
+        body.append(k.rect(xa, by + 4, xf - xa, 6, "#99F6E4", None, 2))
+      body.append(f'<line x1="{k.f(xf)}" y1="{k.f(by - 4)}" x2="{k.f(xf)}" y2="{k.f(by + 18)}" stroke="{k.INK}" stroke-width="2"/>')
+      body.append(k.text(xf + 4 if sec["ftti"] <= tmax else xf - 4, by + 26, f"FTTI {sec['ftti']:g} s" + (" →" if sec["ftti"] > tmax else ""),
+                         9.5, k.INK, 700, None if sec["ftti"] <= tmax else "end"))
+    else:
+      timeless += 1
+      parts = [f"FDTI {v.get('fdti', '')}", f"FRTI {v.get('frti', '')}"]
+      body.append(k.text(x0, y + 18, short_cell(" · ".join(parts), x1 - x0), 10, k.MUTED))
+      body.append(k.text(x0, y + 32, "not all times: drawn as text (WP-S-04 §3.7)", 9.5, "#B45309", 600))
+    els: list[str] = []
+    tsrs = [t for t in sysml_lite._as_list(v.get("tsr")) if t]
+    for t in tsrs:
+      for p in m.requirements[t].satisfied_by:
+        ch, title = rv_label(m, p)
+        if (ch or title) not in els:
+          els.append(ch or title)
+    body.append(k.text(1040, y + 17, k.clip(", ".join(t.replace("TSR-", "") for t in tsrs) and
+                                            "TSR " + ", ".join(t.replace("TSR-", "") for t in tsrs) or "no TSR named", w - 1080, 10.5, 600, True),
+                       10.5, k.INK2 if tsrs else "#B45309", 600, None, True))
+    body.append(k.text(1040, y + 32, k.clip("on " + ", ".join(els) if els else "", w - 1080, 10, 400, True), 10, k.MUTED, 400, None, True))
+    y += rh
+  body.append(k.text(40, y + 22, f"{len(m.budgets)} budgets: {closed} given as times and checked to add up (FDTI + FRTI within the FTTI, "
+                     f"FHTI and margin consistent, check H2); {timeless} with a cell that is not a time.", 12, k.INK, 600))
+  legend_y = y + 40
+  items, lx = [], 40
+  for key, (c, lab) in BUDGET_COLORS.items():
+    items.append(k.rect(lx, legend_y + 22 + (4 if key == "margin" else 0), 26, 6 if key == "margin" else 14,
+                        "#99F6E4" if key == "margin" else c, None, 2))
+    items.append(k.text(lx + 34, legend_y + 33, lab, 11, k.INK2))
+    lx += 60 + k.text_w(lab, 11)
+  items += [f'<line x1="{lx}" y1="{legend_y + 18}" x2="{lx}" y2="{legend_y + 40}" stroke="{k.INK}" stroke-width="2"/>',
+            k.text(lx + 8, legend_y + 33, "FTTI", 11, k.INK2)]
+  body += rv.footer(w, legend_y, items)
+  return k.svg_doc(w, legend_y + 92, f"{view.short}. {spec['title']} (SysML v2 view {view.name})",
+                   spec.get("desc", view.doc), body)
+
+
+def rv_label(m: sysml_lite.Model, path: str) -> tuple[str, str]:
+  e = m.elements[path]
+  title = rv.TITLES.get(e.name) or e.name
+  return (e.short or "", title)
+
+
+RENDERERS["budgets"] = render_budgets
+
+
+# ---------------------------------------------------------------- V-19 HSI signals
+
+PROTECTION = {"integrity": re.compile(r"checksum|crc|xor", re.I),
+              "validity": re.compile(r"counter|alive|changes while|supervised|serviced", re.I)}
+
+
+def protection(m: sysml_lite.Model, sid: str, key: str) -> bool:
+  """Whether the signal carries integrity protection (a checksum, CRC or XOR) or a liveness indication (a counter,
+  alive check or supervision) of its own. "as S-nn" refers to another signal's cell; "none…" and "required…" mean
+  not in place."""
+  seen = set()
+  text = ""
+  while sid not in seen:
+    seen.add(sid)
+    text = re.sub(r"`|\*\*", "", str(m.signals[sid].values.get(key, ""))).strip()
+    ref = re.fullmatch(r"as (S-\d\d)", text)
+    if not ref or ref.group(1) not in m.signals:
+      break
+    sid = ref.group(1)
+  low = text.lower()
+  if low.startswith(("none", "required", "—", "-")) or not low:
+    return False
+  return bool(PROTECTION[key].search(text))
+
+
+def render_signals(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str:
+  """The HSI signals of WP-S-05 §11: owner elements, protection in the signal, TSRs and test cases."""
+  view = m.views[vid]
+  w = spec["width"]
+  body = rv.header(w, view, spec["title"], spec["subtitle"], digest)
+  cols = {"id": 40, "name": 96, "dir": 420, "owner": 640, "prot": 930, "asil": 1130, "tsr": 1210, "tests": 1370}
+  top = 104
+  for key, lab in (("name", "SIGNAL"), ("dir", "DIRECTION"), ("owner", "OWNER ELEMENTS"), ("prot", "IN THE SIGNAL"),
+                   ("asil", "ASIL"), ("tsr", "TSRs"), ("tests", "TESTS")):
+    body.append(k.text(cols[key], top + 8, lab, 9.5, k.MUTED, 700, extra=' letter-spacing="1"'))
+  y = top + 20
+  group = None
+  rh = 26
+  no_int = no_live = 0
+  for sid, sg in m.signals.items():
+    v = sg.values
+    if v.get("group") != group:
+      group = v.get("group")
+      y += 6
+      hsi = sysml_lite._as_list(v.get("hsi"))
+      body.append(k.rect(30, y, w - 60, 24, k.WASH, None, 4))
+      body.append(k.text(42, y + 16, f"{group} · {hsi[0]}" + (f"…{hsi[-1][4:]}" if len(hsi) > 1 else ""), 11, k.INK, 700))
+      y += 30
+    p, _ = k.pill(cols["id"], y + 4, sid, "#334155", size=9.5, mono=True)
+    body.append(p)
+    body.append(k.text(cols["name"], y + 17, k.clip(re.sub(r"`", "", sg.doc), cols["dir"] - cols["name"] - 14, 10.5), 10.5, k.INK, 600))
+    body.append(k.text(cols["dir"], y + 17, k.clip(re.sub(r"`", "", str(v.get("direction", ""))), cols["owner"] - cols["dir"] - 14, 10), 10, k.INK2))
+    xx = cols["owner"]
+    for o in sysml_lite._as_list(v.get("owners")):
+      e = m.find(o) or next((x for x in m.elements.values() if x.short == o or x.path.endswith("." + o.split(".")[-1])), None)
+      st = rv.style_of(e) if e is not None else k.OUTSIDE
+      pp, pw = k.pill(xx, y + 5, o, "#FFFFFF", st["chip"], 16, 9, 700, st["stroke"], mono=True)
+      if xx + pw > cols["prot"] - 10:
+        break
+      body.append(pp)
+      xx += pw + 3
+    integ, live = protection(m, sid, "integrity"), protection(m, sid, "validity")
+    no_int += not integ
+    no_live += not live
+    xx = cols["prot"]
+    for ok, lab_ok, lab_no in ((integ, "integrity", "no integrity"), (live, "liveness", "no liveness")):
+      pp, pw = k.pill(xx, y + 5, lab_ok if ok else lab_no, "#F0FDFA" if ok else "#FEF2F2", "#0F766E" if ok else "#D2553F",
+                      16, 9, 700, "#0F766E" if ok else "#D2553F")
+      body.append(pp)
+      xx += pw + 4
+    body.append(k.text(cols["asil"], y + 17, k.clip(str(v.get("asil", "")), 74, 10), 10, k.INK2, 600))
+    tsr = [t for t in sysml_lite._as_list(v.get("tsr")) if t]
+    body.append(k.text(cols["tsr"], y + 17, k.clip(", ".join(t[4:] for t in tsr), cols["tests"] - cols["tsr"] - 10, 10, 400, True),
+                       10, k.INK2, 400, None, True))
+    tests = [t for t in sysml_lite._as_list(v.get("tests")) if t]
+    body.append(k.text(cols["tests"], y + 17, f"{len(tests)} case{'s' if len(tests) != 1 else ''}", 10, k.MUTED))
+    y += rh
+  n = len(m.signals)
+  body.append(k.text(40, y + 22, f"{n} signals: {no_int} carry no checksum, CRC or XOR of their own and {no_live} no counter, "
+                     "alive check or supervision; the receiver's own checks (rates, timeouts, cross-checks) are in the Failure "
+                     "reaction column of WP-S-05 §11.", 12, k.INK, 600))
+  legend_y = y + 40
+  p1, w1 = k.pill(40, legend_y + 21, "integrity", "#F0FDFA", "#0F766E", 16, 9, 700, "#0F766E")
+  p2, w2 = k.pill(320, legend_y + 21, "no liveness", "#FEF2F2", "#D2553F", 16, 9, 700, "#D2553F")
+  items = [p1, k.text(40 + w1 + 8, legend_y + 33, "checksum, CRC or XOR in the signal", 11, k.INK2),
+           p2, k.text(320 + w2 + 8, legend_y + 33, "no counter, alive check or supervision of the signal (\"as S-nn\" followed)", 11, k.INK2)]
+  body += rv.footer(w, legend_y, items)
+  return k.svg_doc(w, legend_y + 92, f"{view.short}. {spec['title']} (SysML v2 view {view.name})",
+                   spec.get("desc", view.doc), body)
+
+
+RENDERERS["signals"] = render_signals

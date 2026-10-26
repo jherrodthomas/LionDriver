@@ -134,4 +134,19 @@ package LionDriverViews {
         expose LdSda::**;
         render Views::asInterconnectionDiagram;
     }
+
+    view <'V-18'> timingBudgets : AllocationView {
+        doc /* The FTTI budgets of WP-S-04 §3.7: FDTI and FRTI against the FTTI per safety goal and fault class, with the elements their TSRs are allocated to. */
+        expose LionDriverTiming::*;
+        expose LionDriverRequirements::*;
+        expose LionDriverSatisfaction::*;
+        render Views::asElementTable;
+    }
+
+    view <'V-19'> hsiSignals : InterconnectionView {
+        doc /* The safety-relevant signals of WP-S-05 §11 with their owner elements, protection, TSRs and test cases. */
+        expose LionDriverSignals::*;
+        expose LdSda::**;
+        render Views::asElementTable;
+    }
 }

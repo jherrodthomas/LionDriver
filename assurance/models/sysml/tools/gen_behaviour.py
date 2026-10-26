@@ -143,8 +143,8 @@ def sequences() -> str:
   for r in steps:
     c = dict(zip(STEP_HEAD, r))
     sid = c["Step"]
-    if not re.fullmatch(r"S-\d\d", sid):
-      raise BehaviourError(f"WP-S-03 Table 4-1: step ID {sid!r} is not S-nn")
+    if not re.fullmatch(r"ST-\d\d", sid):
+      raise BehaviourError(f"WP-S-03 Table 4-1: step ID {sid!r} is not ST-nn")
     for col in ("From", "To"):
       if plain(c[col]) not in names:
         raise BehaviourError(f"WP-S-03 Table 4-1 {sid}: {col} {c[col]!r} is not a lifeline")

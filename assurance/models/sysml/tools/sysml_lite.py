@@ -23,7 +23,8 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 MODEL_DIR = HERE.parent / "model"
 MODEL_FILES = ["LionDriverLibrary.sysml", "Mechanisms.sysml", "Functions.sysml", "Architecture.sysml", "Security.sysml", "Integration.sysml", "Behaviour.sysml", "Requirements.sysml", "Satisfaction.sysml",
-               "Verification.sysml", "Needs.sysml", "StateRecords.sysml", "Sequences.sysml", "Views.sysml"]
+               "Verification.sysml", "Needs.sysml", "StateRecords.sysml", "Sequences.sysml", "Timing.sysml",
+               "Signals.sysml", "Views.sysml"]
 ROOT_USAGE = ("LionDriverArchitecture", "context")
 
 
@@ -435,7 +436,7 @@ class Parser:
       self.body(d)
       return d
     if kw in ("part", "port", "action", "view", "metadata", "interface", "connection", "attribute", "requirement",
-              "verification", "state", "occurrence"):
+              "verification", "state", "occurrence", "constraint", "item"):
       self.next()
       is_def = self.accept("def")
       kind = kw + (" def" if is_def else "")
@@ -755,6 +756,8 @@ class Model:
   state_machines: dict[str, StateMachine] = field(default_factory=dict)
   use_cases: dict[str, UseCase] = field(default_factory=dict)
   sequences: dict[str, Sequence] = field(default_factory=dict)
+  budgets: dict[str, Record] = field(default_factory=dict)       # timing budgets of WP-S-04 §3.7, by row label
+  signals: dict[str, Record] = field(default_factory=dict)       # HSI signals S-nn of WP-S-05 §11
 
   def by_ident(self) -> dict[str, Element]:
     return {e.short: e for e in self.elements.values() if e.short}
@@ -970,6 +973,8 @@ def load(files: list[Path] | None = None) -> Model:
   integration: dict[str, Record] = {}
   state_machines: dict[str, StateMachine] = {}
   sequences: dict[str, Sequence] = {}
+  budgets: dict[str, Record] = {}
+  signals: dict[str, Record] = {}
   for pkg_decl in packages.values():
     for m in pkg_decl.members:
       if m.kind == "part" and m.short and m.type in ("SecurityZone", "TrustBoundary"):
@@ -980,6 +985,10 @@ def load(files: list[Path] | None = None) -> Model:
       if m.kind == "state def":
         sm = _state_machine(m)
         state_machines[sm.short] = sm
+      if m.kind == "constraint" and m.short and m.type == "TimingBudget":
+        budgets[m.short] = Record(m.short, m.name or "", m.doc, dict(m.values))
+      if m.kind == "item" and m.short and m.type == "Signal":
+        signals[m.short] = Record(m.short, m.name or "", m.doc, dict(m.values))
       if m.kind == "occurrence def" and m.short:
         sq = _sequence(m)
         sequences[sq.short] = sq
@@ -988,7 +997,7 @@ def load(files: list[Path] | None = None) -> Model:
     if z is not None and zones and z not in zones:
       raise ModelError(f"{e.path}: @Zone names {z!r}, which is not a security zone")
   return Model(packages, root, elements, connections, allocations, mechanisms, aliases, views, files,
-               requirements, verifications, functions, zones, boundaries, integration, state_machines, use_cases, sequences)
+               requirements, verifications, functions, zones, boundaries, integration, state_machines, use_cases, sequences, budgets, signals)
 
 
 def _use_cases(packages: dict[str, Decl], reqs: dict[str, Requirement], functions: dict[str, Function]) -> dict[str, UseCase]:

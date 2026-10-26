@@ -158,6 +158,7 @@ views:
       - {path: models/sysml/generated/fig-sysml-v08-n2-chart.svg, label: "N2 chart (SysML V-08, below)"}
       - {path: 03-system/figures/fig-s05-2-1-hsi-overview.svg, label: "HSI (WP-S-05)"}
       - {path: models/sysml/generated/fig-sysml-v03-system-interconnection.svg, label: "SysML interconnection"}
+      - {path: models/sysml/generated/fig-sysml-v19-hsi-signals.svg, label: "HSI signals (SysML V-19)"}
   - name: Behaviour (modes and sequences)
     status: present
     where:
@@ -171,6 +172,7 @@ views:
     status: partial
     where:
       - {path: 03-system/figures/fig-s04-5-1-timing-budgets.svg, label: "timing budgets (WP-S-04 §5)"}
+      - {path: models/sysml/generated/fig-sysml-v18-timing-budgets.svg, label: "budgets in the model, checked to add up (SysML V-18)"}
     gap: timing only; no CAN bus-load, CPU, memory or power budget
   - name: Verification matrix (VCRM)
     status: present
