@@ -758,6 +758,7 @@ class Model:
   sequences: dict[str, Sequence] = field(default_factory=dict)
   budgets: dict[str, Record] = field(default_factory=dict)       # timing budgets of WP-S-04 §3.7, by row label
   signals: dict[str, Record] = field(default_factory=dict)       # HSI signals S-nn of WP-S-05 §11
+  responsibilities: dict[str, Record] = field(default_factory=dict)  # HW/SW responsibilities HSI-nn of WP-S-05 §11.4
 
   def by_ident(self) -> dict[str, Element]:
     return {e.short: e for e in self.elements.values() if e.short}
@@ -975,6 +976,7 @@ def load(files: list[Path] | None = None) -> Model:
   sequences: dict[str, Sequence] = {}
   budgets: dict[str, Record] = {}
   signals: dict[str, Record] = {}
+  responsibilities: dict[str, Record] = {}
   for pkg_decl in packages.values():
     for m in pkg_decl.members:
       if m.kind == "part" and m.short and m.type in ("SecurityZone", "TrustBoundary"):
@@ -989,6 +991,8 @@ def load(files: list[Path] | None = None) -> Model:
         budgets[m.short] = Record(m.short, m.name or "", m.doc, dict(m.values))
       if m.kind == "item" and m.short and m.type == "Signal":
         signals[m.short] = Record(m.short, m.name or "", m.doc, dict(m.values))
+      if m.kind == "item" and m.short and m.type == "HsiResponsibility":
+        responsibilities[m.short] = Record(m.short, m.name or "", m.doc, dict(m.values))
       if m.kind == "occurrence def" and m.short:
         sq = _sequence(m)
         sequences[sq.short] = sq
@@ -997,7 +1001,8 @@ def load(files: list[Path] | None = None) -> Model:
     if z is not None and zones and z not in zones:
       raise ModelError(f"{e.path}: @Zone names {z!r}, which is not a security zone")
   return Model(packages, root, elements, connections, allocations, mechanisms, aliases, views, files,
-               requirements, verifications, functions, zones, boundaries, integration, state_machines, use_cases, sequences, budgets, signals)
+               requirements, verifications, functions, zones, boundaries, integration, state_machines, use_cases, sequences, budgets, signals,
+               responsibilities)
 
 
 def _use_cases(packages: dict[str, Decl], reqs: dict[str, Requirement], functions: dict[str, Function]) -> dict[str, UseCase]:

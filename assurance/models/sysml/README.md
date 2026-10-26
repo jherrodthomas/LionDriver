@@ -64,7 +64,7 @@ A generated view replaces a hand-drawn figure when it carries the same facts; un
 | [`model/Sequences.sysml`](model/Sequences.sysml) | **Generated.** The start-up and engagement sequence of WP-S-03 §4.1 (Table 4-1) as an `occurrence def`: one lifeline per element, one `message` per step with its phase, condition, state after, status, records and code, in order |
 | [`model/Timing.sysml`](model/Timing.sysml) | **Generated.** The 17 FTTI budgets of WP-S-04 §3.7 as `constraint` usages of `TimingBudget`, named by the row label: FTTI, FDTI, FRTI, margin and FHTI as written and, where a cell is one time, in seconds; the safety goals and TSRs each names |
 | [`model/Signals.sysml`](model/Signals.sysml) | **Generated.** The 29 safety-relevant signals of WP-S-05 §11 as `item` usages of `Signal`: interface, direction, owner elements, integrity, validity, rate, failure reaction, ASIL, TSRs and test cases |
-| [`model/Views.sysml`](model/Views.sysml) | Views V-01 to V-19: what each exposes and how it is rendered |
+| [`model/Views.sysml`](model/Views.sysml) | Views V-01 to V-20: what each exposes and how it is rendered |
 | [`views/layout.toml`](views/layout.toml) | Placement only: boxes, grids, route adjustments, display names |
 | [`tools/sysml_lite.py`](tools/sysml_lite.py) | Reader for the subset of the textual notation the model uses; builds the instance tree. Refuses any other construct with its line number |
 | [`tools/gen_behaviour.py`](tools/gen_behaviour.py) | Generates `StateRecords.sysml` and `Sequences.sysml` from the records and WP-S-03 §4.1; `--check` fails if they differ |
@@ -73,7 +73,7 @@ A generated view replaces a hand-drawn figure when it carries the same facts; un
 | [`tools/check_model.py`](tools/check_model.py) | Checks M1 to M12, N1 to N3, B1 to B3, H1 to H3 and R1 to R4 (§4), the allocation-resolution report and the requirements-coverage report |
 | [`tools/render_requirements.py`](tools/render_requirements.py) | Renderer of the requirement views V-05 to V-07 and of the needs views V-14 and V-15 |
 | [`tools/gen_tables.py`](tools/gen_tables.py), [`record.toml`](record.toml) | Generates the architecture tables of WP-S-03 §3.1, §3.3, §6 and WP-W-03 §3.1 from the model (SY-05); `record.toml` says whether the work products or the model are the record |
-| [`tools/render_arch.py`](tools/render_arch.py) | Renderer of V-10 functional architecture, V-11 security zones, V-12 integration build-up, V-13 system modes, V-16 state-machine records, V-17 start-up sequence, V-18 timing budgets and V-19 HSI signals |
+| [`tools/render_arch.py`](tools/render_arch.py) | Renderer of V-10 functional architecture, V-11 security zones, V-12 integration build-up, V-13 system modes, V-16 state-machine records, V-17 start-up sequence, V-18 timing budgets, V-19 HSI signals and V-20 HSI responsibilities |
 | [`tools/render_se.py`](tools/render_se.py) | Renderer of the systems-engineering views: V-08 N2 chart, V-09 VCRM and the per-requirement [`generated/vcrm.md`](generated/vcrm.md) |
 | [`tools/render_views.py`](tools/render_views.py), [`tools/svgkit.py`](tools/svgkit.py) | View renderer and drawing kit (palette, measured Inter metrics, orthogonal routing) |
 | [`tools/explorer.py`](tools/explorer.py), [`tools/explorer_assets/`](tools/explorer_assets) | Builds the interactive explorer |
@@ -103,9 +103,10 @@ A generated view replaces a hand-drawn figure when it carries the same facts; un
 | B1 | `StateRecords.sysml` and `Sequences.sysml` equal what `gen_behaviour.py` builds from the state-machine records and WP-S-03 §4.1 |
 | B2 | Every unit that runs a record state machine, and every lifeline of a sequence, is an element of the model; every record a step names is a transition of that record, and the state after the step a state of it; every requirement a step's condition names is in the model. M12 now reads the record states and transitions from the model |
 | B3 | Every lifeline of a sequence takes part in a step |
-| H1 | `Timing.sysml` and `Signals.sysml` equal what `gen_timing_hsi.py` builds from WP-S-04 §3.7 and WP-S-05 §11 |
+| H1 | `Timing.sysml` and `Signals.sysml` equal what `gen_timing_hsi.py` builds from WP-S-04 §3.7 and WP-S-05 §11 (signals §11.1–11.3, responsibilities §11.4) |
 | H2 | Every timing budget names safety goals and TSRs of the model, and adds up where its cells are times: FDTI + FRTI within the FTTI, FHTI = FDTI + FRTI, margin within FTTI − FHTI; every safety goal has a budget |
 | H3 | Every HSI signal has an owner element, a TSR and test cases, and each of them is in the model |
+| H4 | Every interface of WP-S-05 §2 has one hardware/software responsibility (§11.4) and no other does; each names a hardware owner that is hardware (device hardware or harness) and a software owner that is software (SoC software or safety firmware), all elements of the model, TSRs of the model and a status (in place, partial, missing) |
 | R1 | `Requirements.sysml`, `Satisfaction.sysml`, `Verification.sysml` and `Needs.sysml` equal what `gen_requirements.py` builds from the work products today: a requirement, allocation or test case changed in a document without regenerating fails |
 | R2 | Every `satisfy` ends on an element inside the item; every SYS requirement is satisfied and every name in WP-S-01 §10.1 is an element of the model |
 | R3 | Every verification case that names a requirement verifies it in the model, and the requirement lists the case |
@@ -223,6 +224,10 @@ Every figure below is generated. The explorer shows V-01 to V-04 with the model 
 
 ![V-19: HSI signals generated from the SysML model](generated/fig-sysml-v19-hsi-signals.svg)
 
+**V-20 HSI responsibilities:** the 14 interfaces of WP-S-05 §11.4, one row each: what the hardware provides and what the software must do, with their owner elements, how a failure of the other side is detected, the reaction, resources shared with another interface, and the row's status. One is in place, twelve are partial and one (MPU and RAM ECC) is missing; at three (relay, ignition line, siren) a failure is not detected today.
+
+![V-20: HSI responsibilities generated from the SysML model](generated/fig-sysml-v20-hsi-responsibilities.svg)
+
 ### 6.1 Requirements coverage
 
 [`generated/requirements-coverage.md`](generated/requirements-coverage.md) is read from the model on every build. At this baseline: all 39 SYS requirements are satisfied and 25 are verified by a case; 96 of 118 TSRs are satisfied inside the item and the other 22 are allocated to EXT or OPS; 89 TSRs are verified by a case; no test specification names a CSR yet. "Verified" means a case is specified, not that it has passed: execution results are not in the model.
@@ -244,7 +249,7 @@ Keep to SysML v2 words for names: `item`, `view`, `via`, `state`, `flow` and sim
 | OI-3 | **Closed 2026-10-26:** the operating modes (SM-SYS, V-13), the three state-machine records (V-16, B1) and the start-up sequence of WP-S-03 §4.1 (V-17) are in the model; SM-SYS now cites record transitions that are model elements (M12). The other sequences of WP-S-03 §4 (override, heartbeat chain) are not modelled yet |
 | OI-4 | **Closed 2026-10-14:** SG, FSR, TSR, SYS and CSR are in the model with `satisfy` and `verify` relationships (R1–R4). SWSR and HWSR are not yet requirement elements; they follow with OI-1 (hardware parts) and the firmware interfaces of OI-2 |
 | OI-9 | Add verification cases for the cybersecurity requirements (no test specification names a CSR) and for the 14 SYS requirements without a case (WP-S-09 OI-6); the coverage report lists them |
-| OI-10 | MBSE extension: functions and functional chains (V-10), security zones (V-11), integration build-up (V-12), system modes (V-13), state-machine records and the start-up sequence (V-16, V-17), timing budgets and HSI signals (V-18, V-19), and stakeholder needs and use cases with the end-to-end thread (V-14, V-15) are in. Still to do: the override and heartbeat sequences of WP-S-03 §4; a link from each signal to the model interface (IF-nn) it travels on; a review of the function decomposition, the stakeholder needs and the use cases (all AI-drafted) |
+| OI-10 | MBSE extension: functions and functional chains (V-10), security zones (V-11), integration build-up (V-12), system modes (V-13), state-machine records and the start-up sequence (V-16, V-17), timing budgets, HSI signals and HSI responsibilities (V-18, V-19, V-20), and stakeholder needs and use cases with the end-to-end thread (V-14, V-15) are in. Still to do: the override and heartbeat sequences of WP-S-03 §4; a link from each signal to the model interface (IF-nn) it travels on; a review of the function decomposition, the stakeholder needs and the use cases (all AI-drafted) |
 | OI-5 | Finish SY-05: after the review of OI-8, set `record.toml` to `model` and run `gen_tables.py --write` |
 | OI-6 | Carry out SY-06 figure by figure: close the gaps of §2.1, then swap the figure for its view |
 | OI-7 | State in WP-C-01 §3.4 and WP-S-03 §3.3 that IF-05, IF-06 and IF-07 cover the path from the environment or driver to E-01/E-02 |

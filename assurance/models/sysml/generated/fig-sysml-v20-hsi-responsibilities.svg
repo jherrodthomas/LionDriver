@@ -1,0 +1,228 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="1305" viewBox="0 0 1520 1305" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">V-20. HSI responsibilities · hardware, software, detection (SysML v2 view hsiResponsibilities)</title>
+<desc id="d">HSI responsibilities view generated from the SysML v2 model. One row per interface HSI-01 to HSI-14 of WP-S-05 §11.4: what the hardware provides and the software must do, each with its owner elements (chips coloured by integrity), how a failure of the other side is detected (red where it is not detected today), the reaction, resources shared with another interface, and the status of the row: in place, partial or missing.</desc>
+<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter></defs>
+<rect width="1520" height="1305" fill="#FFFFFF"/>
+<text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-20 · HSI responsibilities · hardware, software, detection</text>
+<text x="40" y="69" font-size="12.5" fill="#64748B">The 14 interfaces of WP-S-05 §11.4: what the hardware provides and the software must do, their owner elements, who detects a failure and the reaction</text>
+<text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::hsiResponsibilities</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">InterconnectionView · render asElementTable · model 35a7da61fc39</text>
+<line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
+<text x="40" y="112" font-size="9.5" fill="#64748B" font-weight="700" letter-spacing="1">INTERFACE</text>
+<text x="262" y="112" font-size="9.5" fill="#64748B" font-weight="700" letter-spacing="1">HARDWARE PROVIDES</text>
+<text x="608" y="112" font-size="9.5" fill="#64748B" font-weight="700" letter-spacing="1">SOFTWARE MUST</text>
+<text x="984" y="112" font-size="9.5" fill="#64748B" font-weight="700" letter-spacing="1">FAILURE DETECTED BY</text>
+<text x="1228" y="112" font-size="9.5" fill="#64748B" font-weight="700" letter-spacing="1">REACTION · STATUS</text>
+<rect x="30" y="126" width="1460" height="78" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="40" y="134" width="48.2" height="18" rx="9" fill="#334155"/><text x="64.1" y="146.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-01</text>
+<text x="40" y="166" font-size="10.5" fill="#0F172A" font-weight="600">SoC ↔ MCU SPI link</text>
+<rect x="262" y="134" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="282.5" y="145.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-04a</text>
+<rect x="307" y="134" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="327.5" y="145.2" font-size="9" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-04b</text>
+<text x="262" y="166" font-size="10.5" fill="#334155">SPI4 slave and DMA2 streams into the SRAM1/2 buffers (§3, §8)</text>
+<rect x="608" y="134" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="628.5" y="145.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03b</text>
+<rect x="653" y="134" width="73.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="689.7" y="145.2" font-size="9" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.pandad</text>
+<text x="608" y="166" font-size="10.5" fill="#334155">Check every transfer and bound every length against the MCU buffer</text>
+<text x="608" y="180" font-size="10.5" fill="#334155">(TSR-410, 412); keep the DMA buffers apart from the safety state</text>
+<text x="608" y="194" font-size="10.5" fill="#334155">(TSR-507, HSI-14)</text>
+<text x="984" y="146" font-size="10.5" fill="#334155">SW: per-transfer checksum and length</text>
+<text x="984" y="160" font-size="10.5" fill="#334155">check</text>
+<rect x="1228" y="134" width="42" height="16" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1"/><text x="1249" y="145.2" font-size="9" fill="#B45309" font-weight="700" text-anchor="middle">partial</text>
+<text x="1228" y="166" font-size="10.5" fill="#334155">Transfer refused (NACK) and counted; an error</text>
+<text x="1228" y="180" font-size="10.5" fill="#334155">burst while engaged revokes authority (TSR-413)</text>
+<rect x="30" y="210" width="1460" height="64" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="40" y="218" width="48.2" height="18" rx="9" fill="#334155"/><text x="64.1" y="230.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-02</text>
+<text x="40" y="250" font-size="10.5" fill="#0F172A" font-weight="600">Control requests over SPI endpoint 0</text>
+<text x="40" y="264" font-size="9.5" fill="#64748B">Shared: HSI-01</text>
+<rect x="262" y="218" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="282.5" y="229.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-04a</text>
+<text x="262" y="250" font-size="10.5" fill="#334155">Nothing beyond HSI-01: requests arrive on SPI endpoint 0</text>
+<rect x="608" y="218" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="628.5" y="229.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03b</text>
+<rect x="653" y="218" width="73.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="689.7" y="229.2" font-size="9" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.pandad</text>
+<text x="608" y="250" font-size="10.5" fill="#334155">Accept only the requests the mode allows (TSR-512, 513) and</text>
+<text x="608" y="264" font-size="10.5" fill="#334155">supervise the heartbeat (TSR-407, 409)</text>
+<text x="984" y="230" font-size="10.5" fill="#334155">SW: heartbeat monitor, reference lock</text>
+<rect x="1228" y="218" width="42" height="16" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1"/><text x="1249" y="229.2" font-size="9" fill="#B45309" font-weight="700" text-anchor="middle">partial</text>
+<text x="1228" y="250" font-size="10.5" fill="#334155">Authority revoked with the siren (TSR-516); a</text>
+<text x="1228" y="264" font-size="10.5" fill="#334155">refused request leaves the state unchanged</text>
+<rect x="30" y="280" width="1460" height="77" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="40" y="288" width="48.2" height="18" rx="9" fill="#334155"/><text x="64.1" y="300.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-03</text>
+<text x="40" y="320" font-size="10.5" fill="#0F172A" font-weight="600">CAN packet stream over SPI endpoints</text>
+<text x="40" y="334" font-size="10.5" fill="#0F172A" font-weight="600">1/3</text>
+<text x="40" y="348" font-size="9.5" fill="#64748B">Shared: HSI-01</text>
+<rect x="262" y="288" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="282.5" y="299.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-04a</text>
+<text x="262" y="320" font-size="10.5" fill="#334155">Nothing beyond HSI-01: CAN packets on SPI endpoints 1 and 3</text>
+<rect x="608" y="288" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="628.5" y="299.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03a</text>
+<rect x="653" y="288" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="673.5" y="299.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03b</text>
+<rect x="698" y="288" width="73.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="734.7" y="299.2" font-size="9" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.pandad</text>
+<text x="608" y="320" font-size="10.5" fill="#334155">Unpack the stream and pass every actuation frame through the TX</text>
+<text x="608" y="334" font-size="10.5" fill="#334155">hook (TSR-410, 411, 518)</text>
+<text x="984" y="300" font-size="10.5" fill="#334155">SW: per-packet checksum, TX hook,</text>
+<text x="984" y="314" font-size="10.5" fill="#334155">TX-rate check</text>
+<rect x="1228" y="288" width="42" height="16" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1"/><text x="1249" y="299.2" font-size="9" fill="#B45309" font-weight="700" text-anchor="middle">partial</text>
+<text x="1228" y="320" font-size="10.5" fill="#334155">Frame rejected and returned to the SoC; a rate</text>
+<text x="1228" y="334" font-size="10.5" fill="#334155">excess revokes authority (TSR-518)</text>
+<rect x="30" y="363" width="1460" height="78" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="40" y="371" width="48.2" height="18" rx="9" fill="#334155"/><text x="64.1" y="383.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-04</text>
+<text x="40" y="403" font-size="10.5" fill="#0F172A" font-weight="600">FDCAN1–3 and transceivers</text>
+<text x="40" y="417" font-size="9.5" fill="#64748B">Shared: One TX queue for forwarded and</text>
+<text x="40" y="430" font-size="9.5" fill="#64748B">host frames (SDF-05)</text>
+<rect x="262" y="371" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="282.5" y="382.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-04a</text>
+<text x="262" y="403" font-size="10.5" fill="#334155">FDCAN1–3 controllers with the CAN CRC, error counters and</text>
+<text x="262" y="417" font-size="10.5" fill="#334155">bus-off, and the transceiver enable lines (§5)</text>
+<rect x="608" y="371" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="628.5" y="382.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03a</text>
+<rect x="653" y="371" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="673.5" y="382.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03b</text>
+<text x="608" y="403" font-size="10.5" fill="#334155">Check every RX message the envelope uses (TSR-401…406), forward</text>
+<text x="608" y="417" font-size="10.5" fill="#334155">camera frames unchanged (TSR-704, 707), send only through the TX</text>
+<text x="608" y="431" font-size="10.5" fill="#334155">hook and react to bus-off (TSR-508)</text>
+<text x="984" y="383" font-size="10.5" fill="#334155">HW: CAN CRC and error confinement; SW:</text>
+<text x="984" y="397" font-size="10.5" fill="#334155">RX checks and timeouts</text>
+<rect x="1228" y="371" width="42" height="16" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1"/><text x="1249" y="382.2" font-size="9" fill="#B45309" font-weight="700" text-anchor="middle">partial</text>
+<text x="1228" y="403" font-size="10.5" fill="#334155">An RX fault revokes authority; bus-off is counted</text>
+<text x="1228" y="417" font-size="10.5" fill="#334155">and the core reset, a safety reaction is required</text>
+<text x="1228" y="431" font-size="10.5" fill="#334155">(HWSR-508)</text>
+<rect x="30" y="447" width="1460" height="78" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="40" y="455" width="48.2" height="18" rx="9" fill="#334155"/><text x="64.1" y="467.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-05</text>
+<text x="40" y="487" font-size="10.5" fill="#0F172A" font-weight="600">Harness relay drive</text>
+<rect x="262" y="455" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="282.5" y="466.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-04a</text>
+<rect x="307" y="455" width="35.6" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="324.8" y="466.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-05</text>
+<text x="262" y="487" font-size="10.5" fill="#334155">Open-drain GPIO driving the intercept relay in the harness;</text>
+<text x="262" y="501" font-size="10.5" fill="#334155">released at reset (to be confirmed, AOU-13)</text>
+<rect x="608" y="455" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="628.5" y="466.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03b</text>
+<text x="608" y="487" font-size="10.5" fill="#334155">Drive the relay only in a car mode with a harness detected, and release</text>
+<text x="608" y="501" font-size="10.5" fill="#334155">it in SILENT, NOOUTPUT and ELM327 and in the safe state (TSR-506,</text>
+<text x="608" y="515" font-size="10.5" fill="#334155">706)</text>
+<text x="984" y="467" font-size="10.5" fill="#D2553F" font-weight="600">Not detected: no readback (GAP-12);</text>
+<text x="984" y="481" font-size="10.5" fill="#D2553F" font-weight="600">required by HWSR-506a</text>
+<rect x="1228" y="455" width="42" height="16" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1"/><text x="1249" y="466.2" font-size="9" fill="#B45309" font-weight="700" text-anchor="middle">partial</text>
+<text x="1228" y="487" font-size="10.5" fill="#334155">Relay released: the stock camera path is</text>
+<text x="1228" y="501" font-size="10.5" fill="#334155">restored (SG-07)</text>
+<rect x="30" y="531" width="1460" height="64" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="40" y="539" width="48.2" height="18" rx="9" fill="#334155"/><text x="64.1" y="551.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-06</text>
+<text x="40" y="571" font-size="10.5" fill="#0F172A" font-weight="600">Harness orientation sense</text>
+<text x="40" y="585" font-size="9.5" fill="#64748B">Shared: ADC1 with HSI-13</text>
+<rect x="262" y="539" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="282.5" y="550.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-04a</text>
+<rect x="307" y="539" width="35.6" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="324.8" y="550.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-05</text>
+<text x="262" y="571" font-size="10.5" fill="#334155">ADC1 channels 4 and 17 on the SBU lines (§6)</text>
+<rect x="608" y="539" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="628.5" y="550.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03b</text>
+<text x="608" y="571" font-size="10.5" fill="#334155">Detect the orientation while the relay is not driven, map CAN and relay</text>
+<text x="608" y="585" font-size="10.5" fill="#334155">pins to it, and re-initialise on a change (TSR-701)</text>
+<text x="984" y="551" font-size="10.5" fill="#334155">SW: ADC threshold at 8 Hz</text>
+<rect x="1228" y="539" width="42" height="16" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1"/><text x="1249" y="550.2" font-size="9" fill="#B45309" font-weight="700" text-anchor="middle">partial</text>
+<text x="1228" y="571" font-size="10.5" fill="#334155">CAN re-initialised and the safety mode</text>
+<text x="1228" y="585" font-size="10.5" fill="#334155">re-applied</text>
+<rect x="30" y="601" width="1460" height="64" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="40" y="609" width="48.2" height="18" rx="9" fill="#334155"/><text x="64.1" y="621.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-07</text>
+<text x="40" y="641" font-size="10.5" fill="#0F172A" font-weight="600">Ignition line</text>
+<rect x="262" y="609" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="282.5" y="620.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-04a</text>
+<rect x="307" y="609" width="35.6" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="324.8" y="620.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-05</text>
+<text x="262" y="641" font-size="10.5" fill="#334155">Digital input on the SBU ignition line</text>
+<rect x="608" y="609" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="628.5" y="620.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03b</text>
+<text x="608" y="641" font-size="10.5" fill="#334155">Use the line to select the heartbeat timeouts and the power state</text>
+<text x="608" y="655" font-size="10.5" fill="#334155">(TSR-510)</text>
+<text x="984" y="621" font-size="10.5" fill="#D2553F" font-weight="600">Not detected: no plausibility check of the</text>
+<text x="984" y="635" font-size="10.5" fill="#D2553F" font-weight="600">line (LS-28)</text>
+<rect x="1228" y="609" width="42" height="16" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1"/><text x="1249" y="620.2" font-size="9" fill="#B45309" font-weight="700" text-anchor="middle">partial</text>
+<text x="1228" y="641" font-size="10.5" fill="#334155">—</text>
+<rect x="30" y="671" width="1460" height="64" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="40" y="679" width="48.2" height="18" rx="9" fill="#334155"/><text x="64.1" y="691.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-08</text>
+<text x="40" y="711" font-size="10.5" fill="#0F172A" font-weight="600">Reset / boot pins from SoC</text>
+<rect x="262" y="679" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="282.5" y="690.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-04a</text>
+<rect x="307" y="679" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="327.5" y="690.2" font-size="9" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-04b</text>
+<text x="262" y="711" font-size="10.5" fill="#334155">SoC GPIOs to NRST and BOOT0; ST ROM bootloader on BOOT0</text>
+<text x="262" y="725" font-size="10.5" fill="#334155">high (§7)</text>
+<rect x="608" y="679" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="628.5" y="690.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03b</text>
+<rect x="653" y="679" width="73.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="689.7" y="690.2" font-size="9" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.pandad</text>
+<text x="608" y="711" font-size="10.5" fill="#334155">Keep the MCU outputs safe during reset and boot (TSR-502,</text>
+<text x="608" y="725" font-size="10.5" fill="#334155">HWSR-502c) and keep flash closed to the ROM bootloader (TSR-511)</text>
+<text x="984" y="691" font-size="10.5" fill="#334155">SW: reset cause reported in the health</text>
+<text x="984" y="705" font-size="10.5" fill="#334155">packet</text>
+<rect x="1228" y="679" width="42" height="16" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1"/><text x="1249" y="690.2" font-size="9" fill="#B45309" font-weight="700" text-anchor="middle">partial</text>
+<text x="1228" y="711" font-size="10.5" fill="#334155">Restart in SILENT with the relay released; RDP</text>
+<text x="1228" y="725" font-size="10.5" fill="#334155">and WRP are required (TSR-511)</text>
+<rect x="30" y="741" width="1460" height="64" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="40" y="749" width="48.2" height="18" rx="9" fill="#334155"/><text x="64.1" y="761.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-09</text>
+<text x="40" y="781" font-size="10.5" fill="#0F172A" font-weight="600">Watchdog</text>
+<rect x="262" y="749" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="282.5" y="760.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-04a</text>
+<text x="262" y="781" font-size="10.5" fill="#334155">IWDG1 window watchdog, 90 ms nominal, on its own clock</text>
+<rect x="608" y="749" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="628.5" y="760.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03b</text>
+<text x="608" y="781" font-size="10.5" fill="#334155">Start it at the first relay drive and service it only after the 100 Hz safety</text>
+<text x="608" y="795" font-size="10.5" fill="#334155">task completes (TSR-501)</text>
+<text x="984" y="761" font-size="10.5" fill="#334155">HW: watchdog timeout</text>
+<rect x="1228" y="749" width="48.2" height="16" rx="8" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1252.1" y="760.2" font-size="9" fill="#0F766E" font-weight="700" text-anchor="middle">in place</text>
+<text x="1228" y="781" font-size="10.5" fill="#334155">MCU reset: relay released, restart in SILENT</text>
+<rect x="30" y="811" width="1460" height="64" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="40" y="819" width="48.2" height="18" rx="9" fill="#334155"/><text x="64.1" y="831.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-10</text>
+<text x="40" y="851" font-size="10.5" fill="#0F172A" font-weight="600">Fault / health monitors</text>
+<rect x="262" y="819" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="282.5" y="830.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-04a</text>
+<text x="262" y="851" font-size="10.5" fill="#334155">Fault vectors (NMI, HardFault), clock security system, die</text>
+<text x="262" y="865" font-size="10.5" fill="#334155">temperature sensor, interrupt-rate counters</text>
+<rect x="608" y="819" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="628.5" y="830.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03b</text>
+<text x="608" y="851" font-size="10.5" fill="#334155">Classify each fault and take the safe state (TSR-502…505, 509); today</text>
+<text x="608" y="865" font-size="10.5" fill="#334155">most are reported only</text>
+<text x="984" y="831" font-size="10.5" fill="#334155">HW: CSS and fault vectors; SW: counters</text>
+<text x="984" y="845" font-size="10.5" fill="#334155">and register checks</text>
+<rect x="1228" y="819" width="42" height="16" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1"/><text x="1249" y="830.2" font-size="9" fill="#B45309" font-weight="700" text-anchor="middle">partial</text>
+<text x="1228" y="851" font-size="10.5" fill="#334155">NMI and HardFault reset the MCU; the other</text>
+<text x="1228" y="865" font-size="10.5" fill="#334155">faults are reported only, a reaction is required</text>
+<rect x="30" y="881" width="1460" height="76" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="40" y="889" width="48.2" height="18" rx="9" fill="#334155"/><text x="64.1" y="901.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-11</text>
+<text x="40" y="921" font-size="10.5" fill="#0F172A" font-weight="600">Siren</text>
+<text x="40" y="935" font-size="9.5" fill="#64748B">Shared: The speaker with the SoC's audio</text>
+<text x="40" y="948" font-size="9.5" fill="#64748B">(DFA)</text>
+<rect x="262" y="889" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="282.5" y="900.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-04a</text>
+<rect x="307" y="889" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="327.5" y="900.2" font-size="9" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-04b</text>
+<text x="262" y="921" font-size="10.5" fill="#334155">DAC with DMA and an audio codec over I2C5, or an amplifier, to</text>
+<text x="262" y="935" font-size="10.5" fill="#334155">the speaker</text>
+<rect x="608" y="889" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="628.5" y="900.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03b</text>
+<text x="608" y="921" font-size="10.5" fill="#334155">Sound the siren when authority is revoked or the EPS fault persists</text>
+<text x="608" y="935" font-size="10.5" fill="#334155">(TSR-516), and test it at start-up (TSR-515)</text>
+<text x="984" y="901" font-size="10.5" fill="#D2553F" font-weight="600">Not detected: no feedback from the</text>
+<text x="984" y="915" font-size="10.5" fill="#D2553F" font-weight="600">speaker; a start-up test is required</text>
+<rect x="1228" y="889" width="42" height="16" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1"/><text x="1249" y="900.2" font-size="9" fill="#B45309" font-weight="700" text-anchor="middle">partial</text>
+<text x="1228" y="921" font-size="10.5" fill="#334155">—</text>
+<rect x="30" y="963" width="1460" height="64" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="40" y="971" width="48.2" height="18" rx="9" fill="#334155"/><text x="64.1" y="983.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-12</text>
+<text x="40" y="1003" font-size="10.5" fill="#0F172A" font-weight="600">Flash and bootstub</text>
+<rect x="262" y="971" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="282.5" y="982.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-04a</text>
+<text x="262" y="1003" font-size="10.5" fill="#334155">Flash bank 1: bootstub in sector 0, application from</text>
+<text x="262" y="1017" font-size="10.5" fill="#334155">0x08020000; RDP and WRP option bytes</text>
+<rect x="608" y="971" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="628.5" y="982.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03b</text>
+<text x="608" y="1003" font-size="10.5" fill="#334155">Verify the application's signature before it runs (TSR-511, 514) and its</text>
+<text x="608" y="1017" font-size="10.5" fill="#334155">CRC at start-up and periodically (TSR-503)</text>
+<text x="984" y="983" font-size="10.5" fill="#334155">SW: signature check at boot</text>
+<rect x="1228" y="971" width="42" height="16" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1"/><text x="1249" y="982.2" font-size="9" fill="#B45309" font-weight="700" text-anchor="middle">partial</text>
+<text x="1228" y="1003" font-size="10.5" fill="#334155">The bootstub does not start the application and</text>
+<text x="1228" y="1017" font-size="10.5" fill="#334155">enters the soft flasher</text>
+<rect x="30" y="1033" width="1460" height="64" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="40" y="1041" width="48.2" height="18" rx="9" fill="#334155"/><text x="64.1" y="1053.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-13</text>
+<text x="40" y="1073" font-size="10.5" fill="#0F172A" font-weight="600">Supply measurement</text>
+<text x="40" y="1087" font-size="9.5" fill="#64748B">Shared: ADC1 with HSI-06</text>
+<rect x="262" y="1041" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="282.5" y="1052.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-04a</text>
+<text x="262" y="1073" font-size="10.5" fill="#334155">ADC1 with an input divider on the supply; BOR and PVD in the</text>
+<text x="262" y="1087" font-size="10.5" fill="#334155">MCU</text>
+<rect x="608" y="1041" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="628.5" y="1052.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03b</text>
+<text x="608" y="1073" font-size="10.5" fill="#334155">Measure the supply and take the safe state outside the operating</text>
+<text x="608" y="1087" font-size="10.5" fill="#334155">range (TSR-505, HWSR-505b)</text>
+<text x="984" y="1053" font-size="10.5" fill="#334155">SW: ADC reading on each health request;</text>
+<text x="984" y="1067" font-size="10.5" fill="#334155">BOR and PVD are not configured yet</text>
+<rect x="1228" y="1041" width="42" height="16" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1"/><text x="1249" y="1052.2" font-size="9" fill="#B45309" font-weight="700" text-anchor="middle">partial</text>
+<text x="1228" y="1073" font-size="10.5" fill="#334155">Required: safe state outside the range</text>
+<rect x="30" y="1103" width="1460" height="64" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="40" y="1111" width="48.2" height="18" rx="9" fill="#334155"/><text x="64.1" y="1123.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HSI-14</text>
+<text x="40" y="1143" font-size="10.5" fill="#0F172A" font-weight="600">MPU, RAM ECC (to be added)</text>
+<rect x="262" y="1111" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="282.5" y="1122.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-04a</text>
+<text x="262" y="1143" font-size="10.5" fill="#334155">Cortex-M7 MPU and RAM ECC (RAMECC)</text>
+<rect x="608" y="1111" width="41" height="16" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="628.5" y="1122.2" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03b</text>
+<text x="608" y="1143" font-size="10.5" fill="#334155">Configure MPU regions so DMA and non-safety code cannot reach the</text>
+<text x="608" y="1157" font-size="10.5" fill="#334155">safety state, and handle ECC errors (TSR-503, 507)</text>
+<text x="984" y="1123" font-size="10.5" fill="#334155">HW: MPU fault and ECC error, once</text>
+<text x="984" y="1137" font-size="10.5" fill="#334155">configured</text>
+<rect x="1228" y="1111" width="48.4" height="16" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/><text x="1252.2" y="1122.2" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">missing</text>
+<text x="1228" y="1143" font-size="10.5" fill="#334155">Required: safe state</text>
+<text x="40" y="1195" font-size="12" fill="#0F172A" font-weight="600">14 interfaces: 1 in place, 12 partial, 1 missing; at 3 a failure of the other side is not detected today.</text>
+<line x1="40" y1="1213" x2="1480" y2="1213" stroke="#E2E8F0"/>
+<rect x="40" y="1234" width="48.2" height="16" rx="8" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="64.1" y="1245.2" font-size="9" fill="#0F766E" font-weight="700" text-anchor="middle">in place</text>
+<rect x="98.2" y="1234" width="42" height="16" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1"/><text x="119.2" y="1245.2" font-size="9" fill="#B45309" font-weight="700" text-anchor="middle">partial</text>
+<rect x="150.2" y="1234" width="48.4" height="16" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/><text x="174.4" y="1245.2" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">missing</text>
+<text x="214.6" y="1246" font-size="11" fill="#334155">status of the row in WP-S-05 §11.4; owner chips are coloured by the element's integrity, as in V-03</text>
+<text x="40" y="1289" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+</svg>

@@ -879,3 +879,104 @@ def render_signals(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> st
 
 
 RENDERERS["signals"] = render_signals
+
+
+# ---------------------------------------------------------------- V-20 HSI responsibilities
+
+STATUS_STYLE = {"in place": ("#F0FDFA", "#0F766E"), "partial": ("#FFFBEB", "#B45309"), "missing": ("#FEF2F2", "#D2553F")}
+
+
+def _plain(text) -> str:
+  return re.sub(r"`|\*\*", "", str(text or "")).strip()
+
+
+def render_responsibilities(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str:
+  """WP-S-05 §11.4 per interface: what the hardware provides and the software must do, with their owner elements,
+  who detects a failure of the other side, the reaction and the status."""
+  import gen_timing_hsi
+  view = m.views[vid]
+  w = spec["width"]
+  names = gen_timing_hsi.interfaces()
+  body = rv.header(w, view, spec["title"], spec["subtitle"], digest)
+  cols = [("iface", 40, 210, "INTERFACE"), ("hw", 262, 330, "HARDWARE PROVIDES"), ("sw", 608, 360, "SOFTWARE MUST"),
+          ("detect", 984, 228, "FAILURE DETECTED BY"), ("react", 1228, 252, "REACTION · STATUS")]
+  top = 104
+  for _key, x, _cw, lab in cols:
+    body.append(k.text(x, top + 8, lab, 9.5, k.MUTED, 700, extra=' letter-spacing="1"'))
+  y = top + 22
+  size, lh = 10.5, 14
+  counts = {st: 0 for st in STATUS_STYLE}
+  undetected = 0
+  for hsi, r in m.responsibilities.items():
+    v = r.values
+    status = str(v.get("status", ""))
+    counts[status] = counts.get(status, 0) + 1
+    detect = _plain(v.get("detection"))
+    blind = detect.lower().startswith("not detected")
+    undetected += blind
+    shared = _plain(v.get("shared"))
+    left = k.wrap(names.get(hsi, ""), 200, size, 600)
+    if shared and shared != "—":
+      left_shared = k.wrap("Shared: " + shared, 200, 9.5)
+    else:
+      left_shared = []
+    cells = {"hw": k.wrap(_plain(v.get("hardware")), 330 - 8, size), "sw": k.wrap(_plain(v.get("software")), 360 - 8, size),
+             "detect": k.wrap(detect, 228 - 8, size), "react": k.wrap(_plain(v.get("reaction")), 252 - 8, size)}
+    rh = max(46, 40 + len(left) * lh + len(left_shared) * 13, 40 + max(len(cells[c]) for c in ("hw", "sw", "react")) * lh,
+             20 + len(cells["detect"]) * lh) - 4
+    body.append(k.rect(30, y, w - 60, rh, k.PAPER, k.HAIR, 6))
+    p, _ = k.pill(40, y + 8, hsi, "#334155", size=9.5, mono=True)
+    body.append(p)
+    yy = y + 40
+    for ln in left:
+      body.append(k.text(40, yy, ln, size, k.INK, 600))
+      yy += lh
+    for ln in left_shared:
+      body.append(k.text(40, yy, ln, 9.5, k.MUTED))
+      yy += 13
+    for key, owners_key in (("hw", "hwOwners"), ("sw", "swOwners")):
+      x = next(c[1] for c in cols if c[0] == key)
+      xx = x
+      for o in sysml_lite._as_list(v.get(owners_key)):
+        e = m.find(o)
+        st = rv.style_of(e) if e is not None else k.OUTSIDE
+        pp, pw = k.pill(xx, y + 8, o, "#FFFFFF", st["chip"], 16, 9, 700, st["stroke"], mono=True)
+        body.append(pp)
+        xx += pw + 4
+      yy = y + 40
+      for ln in cells[key]:
+        body.append(k.text(x, yy, ln, size, k.INK2))
+        yy += lh
+    x = next(c[1] for c in cols if c[0] == "detect")
+    yy = y + 20
+    for ln in cells["detect"]:
+      body.append(k.text(x, yy, ln, size, "#D2553F" if blind else k.INK2, 600 if blind else 400))
+      yy += lh
+    x = next(c[1] for c in cols if c[0] == "react")
+    fill, color = STATUS_STYLE.get(status, (k.WASH, k.MUTED))
+    pp, _ = k.pill(x, y + 8, status, fill, color, 16, 9, 700, color)
+    body.append(pp)
+    yy = y + 40
+    for ln in cells["react"]:
+      body.append(k.text(x, yy, ln, size, k.INK2))
+      yy += lh
+    y += rh + 6
+  n = len(m.responsibilities)
+  body.append(k.text(40, y + 22, f"{n} interfaces: {counts.get('in place', 0)} in place, {counts.get('partial', 0)} partial, "
+                     f"{counts.get('missing', 0)} missing; at {undetected} a failure of the other side is not detected "
+                     "today.", 12, k.INK, 600))
+  legend_y = y + 40
+  items = []
+  xx = 40
+  for st, (fill, color) in STATUS_STYLE.items():
+    pp, pw = k.pill(xx, legend_y + 21, st, fill, color, 16, 9, 700, color)
+    items.append(pp)
+    xx += pw + 10
+  items.append(k.text(xx + 6, legend_y + 33, "status of the row in WP-S-05 §11.4; owner chips are coloured by the "
+                      "element's integrity, as in V-03", 11, k.INK2))
+  body += rv.footer(w, legend_y, items)
+  return k.svg_doc(w, legend_y + 92, f"{view.short}. {spec['title']} (SysML v2 view {view.name})",
+                   spec.get("desc", view.doc), body)
+
+
+RENDERERS["responsibilities"] = render_responsibilities
