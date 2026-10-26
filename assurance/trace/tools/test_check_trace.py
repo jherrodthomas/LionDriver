@@ -14,7 +14,9 @@ import copy
 import importlib.util
 import io
 import sys
+import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -181,6 +183,73 @@ SOTIF = [
   {"id": "FM-01", "kind": "functional-modification", "title": "t", "addresses": ["SH-01"], "parents": ["TC-01", "FI-01"],
    "gap_text": "—", "priority": "P1", "status": "proposed", "source": "WP-C-07"},
 ]
+
+
+class TestAsilInheritance(unittest.TestCase):
+  """K5: a requirement is not rated below a parent, with the project's notations (WP-S-02 §2.1)."""
+
+  def k5(self, by_id, known=()):
+    rep = ct.Report()
+    ct.check_asil_inheritance(by_id, rep, list(known))
+    return tags(rep.errors, "K5"), rep.known
+
+  def tree(self, child_asil, parent_asil="C", **extra):
+    by_id = {"SG-01": {"id": "SG-01", "kind": "safety-goal", "asil": parent_asil},
+             "FSR-01.01": {"id": "FSR-01.01", "kind": "fsr", "asil": child_asil, "parents": ["SG-01"]}}
+    by_id.update(extra)
+    return by_id
+
+  def test_parts(self):
+    self.assertEqual([p["level"] for p in ct.asil_parts("B‡/B")], [3, 2])          # B‡ counts as C
+    self.assertEqual([p["level"] for p in ct.asil_parts("QM (no ASIL claim; FSR-07.04 stays the measure)")], [0])
+    self.assertEqual([p["level"] for p in ct.asil_parts("B (stock path); CS (data)")], [2])   # CS is not a level
+    sup = ct.asil_parts("QM (C-sup: TSR-101, TSR-103 bound the effect)")[0]
+    self.assertEqual((sup["sup"], sup["refs"]), ("C", ["TSR-101", "TSR-103"]))
+    self.assertEqual(ct.asil_parts("B(D)")[0]["dec"], "D")
+    for none in ("ext", "— (ext.)", "as ref.", "n/a"):
+      self.assertIsNone(ct.asil_parts(none), none)
+
+  def test_levels(self):
+    self.assertEqual(self.k5(self.tree("C")), ([], []))
+    self.assertEqual(self.k5(self.tree("B‡")), ([], []))
+    self.assertEqual(self.k5(self.tree("ext")), ([], []))
+    self.assertEqual(self.k5(self.tree("C (blocking), B (PCS restore)")), ([], []))    # highest part counts
+    self.assertEqual(len(self.k5(self.tree("B"))[0]), 1)
+    self.assertEqual(len(self.k5(self.tree("QM"))[0]), 1)
+    self.assertEqual(len(self.k5(self.tree("words only"))[0]), 1)
+
+  def test_backstop_notation(self):
+    tsr = lambda a: {"TSR-101": {"id": "TSR-101", "kind": "tsr", "asil": a, "parents": []}}
+    self.assertEqual(self.k5(self.tree("QM (C-sup)")), ([], []))
+    self.assertEqual(self.k5(self.tree("QM (C-sup: TSR-101)", **tsr("C"))), ([], []))
+    self.assertEqual(len(self.k5(self.tree("QM (C-sup: TSR-101)", **tsr("B")))[0]), 1)   # backstop too low
+    self.assertEqual(len(self.k5(self.tree("QM (C-sup: TSR-999)"))[0]), 1)              # backstop missing
+    self.assertEqual(len(self.k5(self.tree("QM (B-sup)"))[0]), 1)                       # supports less than C
+
+  def test_decomposition_needs_wp_a01(self):
+    with tempfile.TemporaryDirectory() as d:
+      a01 = Path(d) / "a01.md"
+      a01.write_text("DEC-99: no requirement cited yet")
+      with mock.patch.object(ct, "WP_A01", a01):
+        self.assertEqual(len(self.k5(self.tree("B(C)"))[0]), 1)
+      a01.write_text("DEC-99: FSR-01.01 decomposed into B(C) + B(C)")
+      with mock.patch.object(ct, "WP_A01", a01):
+        self.assertEqual(self.k5(self.tree("B(C)")), ([], []))
+        self.assertEqual(len(self.k5(self.tree("A(B)"))[0]), 1)       # original ASIL below the parent's
+      a01.write_text("DEC-99: FSR-01.011 and FSR-01.01a decomposed into B(C) + B(C)")
+      with mock.patch.object(ct, "WP_A01", a01):
+        self.assertEqual(len(self.k5(self.tree("B(C)"))[0]), 1)       # another ID that starts the same is no citation
+
+  def test_baseline_is_a_ratchet(self):
+    entry = {"child": "FSR-01.01", "parent": "SG-01", "owner": "OI-x"}
+    errors, known = self.k5(self.tree("B"), [entry])
+    self.assertEqual((errors, len(known)), ([], 1))
+    self.assertIn("owner: OI-x", known[0])
+    errors, _ = self.k5(self.tree("C"), [entry])                              # fixed: the entry must go
+    self.assertTrue(any("no longer occurs" in e for e in errors))
+    gone = dict(entry, child="FSR-09.09")
+    self.assertTrue(any("no longer occurs" in e for e in self.k5(self.tree("C"), [gone])[0]))
+    self.assertEqual(self.k5({"SG-01": self.tree("C")["SG-01"]}, [gone]), ([], []))   # no FSRs in this data set
 
 
 class TestSotifChecks(unittest.TestCase):

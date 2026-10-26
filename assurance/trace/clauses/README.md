@@ -4,7 +4,7 @@
 |---|---|
 | Record | Part of WP-T-01 (requirements and traceability data, [../README.md](../README.md)); supporting assessment aid, not a new registered work product |
 | Scope | Pilot: ISO 26262-3:2018 clauses 5 (item definition), 6 (hazard analysis and risk assessment) and 7 (functional safety concept), against WP-C-01, WP-C-03 and WP-C-04 |
-| Version | 0.1 (2026-10-26): initial pilot, 21 obligations; I0, Claude |
+| Version | 0.2 (2026-10-26): trace check K5 implemented, O3-7.02 open with 51 recorded findings (OI-2 closed). 0.1 (2026-10-26): initial pilot, 21 obligations; I0, Claude |
 | Status | Draft. **No row is verified against the licensed standard**; every row is a proposal |
 | Author | Claude (AI-assisted draft, I0 under WP-M-02 §3.3) |
 | Reviewer(s) | TBD: a holder of the licensed standard verifies each row (§3) |
@@ -31,8 +31,8 @@ up in review: continuous assurance at clause level.
 | ✅ pass | Every automated check passes |
 | 🟡 partial | It passes, but rests on a trace check that is only partly implemented |
 | 👤 manual | The automated checks pass (or there are none), and a human judgement remains |
-| ⬜ gap | A check it needs is not implemented, such as K5 (child ASIL ≥ parent ASIL) |
-| ❌ open | An automated check finds a defect in the work products |
+| ⬜ gap | A check it needs is not implemented (none today: K5 was the last one the pilot needed) |
+| ❌ open | An automated check finds a defect in the work products, including findings recorded with an owner (the K5 baseline, [`../links/k5-known.yaml`](../links/k5-known.yaml)) |
 
 The script fails CI on a broken register: a malformed row, an unknown check, a work product or section that does not
 exist, or a stale coverage page. An `open` obligation does not fail it. The coverage page records the status, and
@@ -66,6 +66,6 @@ row; a wrong one is corrected or withdrawn. The coverage page counts the verifie
 | ID | Item | Responsible role |
 |---|---|---|
 | OI-1 | Verify the 21 rows against the licensed standard (§3) | Standards custodian / safety manager |
-| OI-2 | Implement trace check K5 (child ASIL ≥ parent ASIL unless decomposed), which closes the one gap (O3-7.02) | Assurance tooling |
+| OI-2 | Closed 2026-10-26: trace check K5 implemented. O3-7.02 is now open, not a gap: 51 requirements are rated below a parent, each recorded with its owner in [`../links/k5-known.yaml`](../links/k5-known.yaml) (34 owned by WP-S-02 OI-2 and WP-C-04 OI-9 and OI-11; 17 QM ones without backstop notation have no open item yet) | Safety manager (the findings) |
 | OI-3 | Link the manual obligations to their review records once CR-02 and the WP-C-04 review exist, so they read as evidence | Safety manager |
 | OI-4 | If the pilot is kept, extend it to ISO 26262-4 to -6, ISO 21448 and ISO/SAE 21434 (identifiers only for the work products of 21434) | Safety manager (decision) |

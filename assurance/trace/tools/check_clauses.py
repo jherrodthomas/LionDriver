@@ -3,7 +3,8 @@
 (assurance/trace/clauses/README.md). Pilot: ISO 26262-3:2018, clauses 5 to 7.
 
 Each obligation of clauses/<register>.yaml names the work product that answers it and the checks that evidence it:
-  trace:<ID>      a check of check_trace.py; run here in-process, its errors are counted per check ID, and its
+  trace:<ID>      a check of check_trace.py; run here in-process, its errors and known findings (recorded with an
+                  owner, such as the K5 baseline) are counted per check ID, and its
                   state (implemented, partly, not implemented) is read from the trace README §6 table
   section:<text>  the work product has a heading containing <text> with content under it
   items:<kind>:<field>[,<field>]  every trace item of that kind has those fields filled
@@ -71,7 +72,8 @@ def trace_states(readme: Path = TRACE_README) -> dict[str, str]:
 
 
 def trace_errors() -> tuple[dict[str, list[str]], list[dict]]:
-  """Run check_trace.py's checks (as its main does) and return its errors by check ID, and the trace items."""
+  """Run check_trace.py's checks (as its main does) and return, by check ID, its errors and its known findings
+  (recorded with an owner, such as the K5 baseline), and the trace items."""
   rep = check_trace.Report()
   items: list[dict] = []
   for f in sorted(check_trace.ITEMS_DIR.glob("*.yaml")):
@@ -85,7 +87,7 @@ def trace_errors() -> tuple[dict[str, list[str]], list[dict]]:
     check_trace.check_against_itemdef(by_id, rep)
     check_trace.check_requirements_in_sync(rep)
   errors: dict[str, list[str]] = {}
-  for e in rep.errors:
+  for e in rep.errors + rep.known:
     m = re.match(r"\[([A-Z][0-9]+)\]", e)
     errors.setdefault(m.group(1) if m else "?", []).append(e)
   return errors, items
@@ -149,7 +151,7 @@ def evaluate(reg: dict, states: dict[str, str], terrors: dict[str, list[str]], i
         if state == "no":
           results.append((chk, "gap", "not implemented in check_trace.py"))
         elif errs:
-          results.append((chk, "open", f"{len(errs)} error(s), e.g. {errs[0]}"))
+          results.append((chk, "open", f"{len(errs)} finding(s), e.g. {errs[0]}"))
         else:
           results.append((chk, "pass" if state == "yes" else "partial", "passes" if state == "yes"
                           else "passes; check only partly implemented"))
