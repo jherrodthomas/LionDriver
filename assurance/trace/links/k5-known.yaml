@@ -1,0 +1,157 @@
+# K5 baseline (check_trace.py): requirements rated below a parent when K5 was implemented (2026-10-26), each
+# with the open item that owns it. A finding listed here is reported as known; a new finding fails CI, and so does
+# an entry that no longer occurs, so this list only shrinks. Do not add an entry to make CI pass: raise the ASIL,
+# decompose it in WP-A-01, or name the backstop as QM (X-sup) (WP-S-02 §2.1). I0, Claude; not reviewed.
+- child: FSR-01.14
+  parent: SG-01
+  owner: "none yet; safety manager: name the backstop as QM (X-sup) (WP-S-02 §2.1) or raise the ASIL"
+- child: FSR-02.06
+  parent: SG-02
+  owner: "WP-C-04 OI-11: rated A for SG-08 but also parented to C goals; the safety manager decides whether those goals rest on it (raise) or only use it (QM (C-sup) form)"
+- child: FSR-02.06
+  parent: SG-06
+  owner: "WP-C-04 OI-11: rated A for SG-08 but also parented to C goals; the safety manager decides whether those goals rest on it (raise) or only use it (QM (C-sup) form)"
+- child: FSR-02.07
+  parent: SG-02
+  owner: "WP-C-04 OI-11: rated A for SG-08 but also parented to C goals; the safety manager decides whether those goals rest on it (raise) or only use it (QM (C-sup) form)"
+- child: FSR-02.07
+  parent: SG-06
+  owner: "WP-C-04 OI-11: rated A for SG-08 but also parented to C goals; the safety manager decides whether those goals rest on it (raise) or only use it (QM (C-sup) form)"
+- child: FSR-02.08
+  parent: SG-02
+  owner: "WP-C-04 OI-11: rated A for SG-08 but also parented to C goals; the safety manager decides whether those goals rest on it (raise) or only use it (QM (C-sup) form)"
+- child: FSR-02.08
+  parent: SG-06
+  owner: "WP-C-04 OI-11: rated A for SG-08 but also parented to C goals; the safety manager decides whether those goals rest on it (raise) or only use it (QM (C-sup) form)"
+- child: FSR-02.09
+  parent: SG-02
+  owner: "WP-C-04 OI-11: rated A for SG-08 but also parented to C goals; the safety manager decides whether those goals rest on it (raise) or only use it (QM (C-sup) form)"
+- child: FSR-02.09
+  parent: SG-04
+  owner: "WP-C-04 OI-11: rated A for SG-08 but also parented to C goals; the safety manager decides whether those goals rest on it (raise) or only use it (QM (C-sup) form)"
+- child: FSR-02.09
+  parent: SG-06
+  owner: "WP-C-04 OI-11: rated A for SG-08 but also parented to C goals; the safety manager decides whether those goals rest on it (raise) or only use it (QM (C-sup) form)"
+- child: FSR-02.12
+  parent: SG-02
+  owner: "none yet; safety manager: name the backstop as QM (X-sup) (WP-S-02 §2.1) or raise the ASIL (the field says: QM (supports FSR-02.01, FSR-06.03))"
+- child: FSR-02.12
+  parent: SG-06
+  owner: "none yet; safety manager: name the backstop as QM (X-sup) (WP-S-02 §2.1) or raise the ASIL (the field says: QM (supports FSR-02.01, FSR-06.03))"
+- child: FSR-04.06
+  parent: SG-04
+  owner: "WP-C-04 OI-9 (DQ-052 A): ASIL A until SOTIF validation re-rates the false FCW"
+- child: FSR-07.05
+  parent: SG-07
+  owner: "none yet; safety manager: name the backstop as QM (X-sup) (WP-S-02 §2.1) or raise the ASIL"
+- child: FSR-07.07
+  parent: SG-07
+  owner: "none yet; safety manager: name the backstop as QM (X-sup) (WP-S-02 §2.1) or raise the ASIL (the field says: QM (no ASIL claim; FSR-07.04 stays the measure))"
+- child: HWSR-505b
+  parent: TSR-505
+  owner: "WP-S-02 OI-2: re-derive the HWSR ASILs after HARA v0.4 (WP-H-01)"
+- child: HWSR-506d
+  parent: TSR-506
+  owner: "WP-S-02 OI-2: re-derive the HWSR ASILs after HARA v0.4 (WP-H-01); the parent is split C (blocking) / B (PCS restore): confirm which part it refines"
+- child: HWSR-506e
+  parent: TSR-506
+  owner: "WP-S-02 OI-2: re-derive the HWSR ASILs after HARA v0.4 (WP-H-01); the parent is split C (blocking) / B (PCS restore): confirm which part it refines"
+- child: HWSR-508a
+  parent: TSR-508
+  owner: "WP-S-02 OI-2: re-derive the HWSR ASILs after HARA v0.4 (WP-H-01)"
+- child: HWSR-508b
+  parent: FSR-01.12
+  owner: "WP-S-02 OI-2: re-derive the HWSR ASILs after HARA v0.4 (WP-H-01)"
+- child: HWSR-508b
+  parent: TSR-508
+  owner: "WP-S-02 OI-2: re-derive the HWSR ASILs after HARA v0.4 (WP-H-01)"
+- child: HWSR-508c
+  parent: TSR-508
+  owner: "WP-S-02 OI-2: re-derive the HWSR ASILs after HARA v0.4 (WP-H-01)"
+- child: HWSR-509
+  parent: TSR-509
+  owner: "WP-S-02 OI-2: re-derive the HWSR ASILs after HARA v0.4 (WP-H-01)"
+- child: HWSR-509a
+  parent: TSR-509
+  owner: "WP-S-02 OI-2: re-derive the HWSR ASILs after HARA v0.4 (WP-H-01)"
+- child: HWSR-516
+  parent: FSR-02.05
+  owner: "WP-S-02 OI-2: re-derive the HWSR ASILs after HARA v0.4 (WP-H-01)"
+- child: HWSR-516
+  parent: TSR-516
+  owner: "WP-S-02 OI-2: re-derive the HWSR ASILs after HARA v0.4 (WP-H-01)"
+- child: HWSR-516a
+  parent: FSR-02.05
+  owner: "WP-S-02 OI-2: re-derive the HWSR ASILs after HARA v0.4 (WP-H-01)"
+- child: HWSR-516a
+  parent: TSR-516
+  owner: "WP-S-02 OI-2: re-derive the HWSR ASILs after HARA v0.4 (WP-H-01)"
+- child: HWSR-516b
+  parent: TSR-515
+  owner: "WP-S-02 OI-2: re-derive the HWSR ASILs after HARA v0.4 (WP-H-01)"
+- child: HWSR-516b
+  parent: TSR-516
+  owner: "WP-S-02 OI-2: re-derive the HWSR ASILs after HARA v0.4 (WP-H-01)"
+- child: SWSR-307h
+  parent: TSR-307
+  owner: "WP-S-02 OI-2: re-derive the SWSR ASILs after HARA v0.4 (WP-W-02)"
+- child: SWSR-409h
+  parent: TSR-409
+  owner: "none yet; safety manager: name the backstop as QM (X-sup) (WP-S-02 §2.1) or raise the ASIL"
+- child: SWSR-410h
+  parent: TSR-410
+  owner: "WP-S-02 OI-2: re-derive the SWSR ASILs after HARA v0.4 (WP-W-02)"
+- child: SWSR-514h
+  parent: TSR-514
+  owner: "WP-S-02 OI-2: re-derive the SWSR ASILs after HARA v0.4 (WP-W-02)"
+- child: SWSR-514h
+  parent: TSR-802
+  owner: "WP-S-02 OI-2: re-derive the SWSR ASILs after HARA v0.4 (WP-W-02)"
+- child: SWSR-608
+  parent: TSR-608
+  owner: "WP-C-04 OI-11: how the QM SoC carries the ASIL A of SG-08"
+- child: SWSR-609
+  parent: TSR-609
+  owner: "WP-C-04 OI-11: how the QM SoC carries the ASIL A of SG-08"
+- child: SWSR-610
+  parent: TSR-610
+  owner: "WP-C-04 OI-11: how the QM SoC carries the ASIL A of SG-08"
+- child: SWSR-611
+  parent: TSR-611
+  owner: "WP-C-04 OI-11: how the QM SoC carries the ASIL A of SG-08"
+- child: SWSR-612
+  parent: TSR-612
+  owner: "WP-C-04 OI-11: how the QM SoC carries the ASIL A of SG-08"
+- child: TSR-616
+  parent: FSR-02.02
+  owner: "none yet; safety manager: name the backstop as QM (X-sup) (WP-S-02 §2.1) or raise the ASIL"
+- child: TSR-616
+  parent: FSR-06.01
+  owner: "none yet; safety manager: name the backstop as QM (X-sup) (WP-S-02 §2.1) or raise the ASIL"
+- child: TSR-617
+  parent: FSR-06.04
+  owner: "none yet; safety manager: name the backstop as QM (X-sup) (WP-S-02 §2.1) or raise the ASIL"
+- child: TSR-628
+  parent: FSR-05.03
+  owner: "none yet; safety manager: name the backstop as QM (X-sup) (WP-S-02 §2.1) or raise the ASIL"
+- child: TSR-813
+  parent: SG-01
+  owner: "none yet; safety manager: name the backstop as QM (X-sup) (WP-S-02 §2.1) or raise the ASIL"
+- child: TSR-813
+  parent: SG-02
+  owner: "none yet; safety manager: name the backstop as QM (X-sup) (WP-S-02 §2.1) or raise the ASIL"
+- child: TSR-813
+  parent: SG-03
+  owner: "none yet; safety manager: name the backstop as QM (X-sup) (WP-S-02 §2.1) or raise the ASIL"
+- child: TSR-813
+  parent: SG-04
+  owner: "none yet; safety manager: name the backstop as QM (X-sup) (WP-S-02 §2.1) or raise the ASIL"
+- child: TSR-813
+  parent: SG-05
+  owner: "none yet; safety manager: name the backstop as QM (X-sup) (WP-S-02 §2.1) or raise the ASIL"
+- child: TSR-813
+  parent: SG-06
+  owner: "none yet; safety manager: name the backstop as QM (X-sup) (WP-S-02 §2.1) or raise the ASIL"
+- child: TSR-813
+  parent: SG-07
+  owner: "none yet; safety manager: name the backstop as QM (X-sup) (WP-S-02 §2.1) or raise the ASIL"

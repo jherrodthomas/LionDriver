@@ -5,6 +5,10 @@ Checks implemented so far (IDs per assurance/trace/README.md section 6):
   K1  item files parse and carry the mandatory keys for their kind
   K2  IDs are unique and match the ID pattern
   K3  every reference (parents, aou_dependency) resolves
+  K5  a requirement's ASIL is not below any parent's, unless decomposed (X(Y), cited in WP-A-01) or a QM requirement
+      backed by a named envelope requirement (QM (X-sup), WP-S-02 §2.1); B‡ counts as C. Findings recorded with
+      their owning open item in links/k5-known.yaml are reported as known; a new finding, or an entry that no longer
+      occurs, is an error, so the list only shrinks
   K6  every requirement a test links to in links/verification.yaml exists, is a requirement and is not withdrawn
       (the @req tags of the same check are not implemented)
   K12 every hazardous event is linked to a safety goal or has sg_exempt_reason
@@ -61,6 +65,13 @@ FUNC_RE = re.compile(r"^F-[0-9]{2}$")
 STATUS = {"proposed", "agreed", "implemented", "verified", "withdrawn"}
 IFR_STATUS = {"proposed", "agreed", "withdrawn"}  # an interface is agreed, never implemented or verified itself
 ASIL_ORDER = {"QM": 0, "A": 1, "B": 2, "C": 3, "D": 4}
+K5_KINDS = ("fsr", "tsr", "swsr", "hwsr")
+K5_KNOWN = TRACE_DIR / "links" / "k5-known.yaml"
+WP_A01 = ASSURANCE_DIR / "08-analyses" / "WP-A-01-asil-decomposition.md"
+# one rated part of an `asil` field: a level, ‡ (B‡: ASIL C applies, WP-S-02 §2.1), a decomposition X(Y), and a
+# QM backstop "(X-sup)" or "(X-sup: TSR-…, …)"; "CS" and words such as "ASIL" are not levels
+_ASIL_PART = re.compile(r"(?<![A-Za-z\-])(QM|[ABCD])(?![A-Za-z])(‡?)(?:\(([ABCD])\))?"
+                        r"(?:\s*\(([ABCD])-sup(?::\s*([^)]*))?\))?")
 
 REQUIRED = {
   "hazard": ["id", "kind", "title", "functions", "status", "source"],
@@ -196,12 +207,81 @@ class Report:
   def __init__(self) -> None:
     self.errors: list[str] = []
     self.passed: list[str] = []
+    self.known: list[str] = []      # findings recorded with their owner (K5 baseline)
 
   def err(self, check: str, msg: str) -> None:
     self.errors.append(f"[{check}] {msg}")
 
 
 # ---------------------------------------------------------------- checks
+
+def asil_parts(text) -> list[dict] | None:
+  """The rated parts of an `asil` field, or None when the item makes no ASIL claim of its own: an external measure
+  ("ext", "— (ext.)") or a cross-reference row ("as ref."). Each part: level (0 QM … 4 D; B‡ is C), dec (the
+  original ASIL of a decomposed X(Y)), sup (the ASIL a QM (X-sup) requirement supports) and refs (its backstops)."""
+  t = str(text or "").strip()
+  if not t or t in ("n/a", "None") or re.match(r"^(—\s*)?\(?ext", t) or t.startswith("as ref"):
+    return None
+  parts = []
+  for m in _ASIL_PART.finditer(t):
+    level = "C" if m.group(2) else m.group(1)
+    parts.append({"level": ASIL_ORDER[level], "dec": m.group(3), "sup": m.group(4),
+                  "refs": re.findall(r"\b[A-Z]+-[0-9]{2,3}[a-z]?\b", m.group(5) or "")})
+  return parts
+
+
+def check_asil_inheritance(by_id: dict[str, dict], rep: Report, known: list[dict] | None = None) -> None:
+  """K5: no requirement is rated below a parent (WP-P-06 §7, WP-W-02 §2). A part of the child's ASIL meets a
+  parent's highest part when its level is not lower, when it is a decomposition X(Y) with Y not lower and the child is
+  cited in WP-A-01, or when it is QM (X-sup) with X not lower and every named backstop rated at least X."""
+  if known is None:
+    known = load_yaml(K5_KNOWN) if K5_KNOWN.exists() else []
+  a01 = WP_A01.read_text(encoding="utf-8") if WP_A01.exists() else ""
+  owners = {(k.get("child"), k.get("parent")): k.get("owner") for k in known}
+  found: set[tuple[str, str]] = set()
+
+  def top(item) -> int | None:
+    parts = asil_parts(item.get("asil"))
+    return max((p["level"] for p in parts), default=None) if parts is not None else None
+
+  for iid, it in by_id.items():
+    if it["kind"] not in K5_KINDS:
+      continue
+    parts = asil_parts(it.get("asil"))
+    if parts is None:
+      continue
+    if not parts:
+      rep.err("K5", f"{iid}: asil {it.get('asil')!r} names no ASIL")
+      continue
+    for p in it.get("parents") or []:
+      par = by_id.get(p)
+      need = top(par) if par and "asil" in par else None
+      if need is None:
+        continue
+      def meets(q) -> bool:
+        if q["level"] >= need:
+          return True
+        if q["dec"] and ASIL_ORDER[q["dec"]] >= need and re.search(rf"(?<![\w.-]){re.escape(iid)}(?![\w.-]*\w)", a01):
+          return True
+        if q["sup"] and ASIL_ORDER[q["sup"]] >= need:
+          return all(r in by_id and (top(by_id[r]) or 0) >= ASIL_ORDER[q["sup"]] for r in q["refs"])
+        return False
+      if any(meets(q) for q in parts):
+        continue
+      msg = f"{iid}: asil {it.get('asil')!r} is below its parent {p} ({par.get('asil')!r})"
+      found.add((iid, p))
+      if (iid, p) in owners:
+        rep.known.append(f"[K5] {msg}; owner: {owners[(iid, p)]}")
+      else:
+        rep.err("K5", msg + " (raise it, decompose it in WP-A-01, or name its backstop as QM (X-sup))")
+  kinds = {it["kind"] for it in by_id.values()}
+  prefix = {"FSR": "fsr", "TSR": "tsr", "SWSR": "swsr", "HWSR": "hwsr"}
+  for child, parent in owners:
+    if (child, parent) in found:
+      continue
+    if child in by_id or prefix.get(str(child).split("-")[0]) in kinds:
+      rep.err("K5", f"{K5_KNOWN.name}: {child} under {parent} no longer occurs; remove the entry")
+
 
 def check_items(items: list[dict], rep: Report) -> dict[str, dict]:
   by_id: dict[str, dict] = {}
@@ -279,6 +359,7 @@ def check_links(by_id: dict[str, dict], rep: Report) -> None:
 
   check_requirement_coverage(by_id, rep)
   check_sw_hw_coverage(by_id, rep)
+  check_asil_inheritance(by_id, rep)
   check_sotif(by_id, rep)
   check_ai(by_id, rep)
   check_cs(by_id, rep)
@@ -576,6 +657,8 @@ def main(argv: list[str]) -> int:
     kinds[it["kind"]] = kinds.get(it["kind"], 0) + 1
   print(f"trace: {len(files)} files, {len(by_id)} items " +
         ", ".join(f"{k}={v}" for k, v in sorted(kinds.items())))
+  if rep.known:
+    print(f"known: {len(rep.known)} recorded finding(s) with an owner (K5, {K5_KNOWN.name})")
   if rep.errors:
     for e in rep.errors:
       print("ERROR", e)

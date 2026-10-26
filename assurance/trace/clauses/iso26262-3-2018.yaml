@@ -1,0 +1,211 @@
+# ISO 26262-3:2018 (concept phase) as checkable obligations: pilot of the clause-check register (README.md).
+#
+# Every obligation is written in the project's own words from the structure of the standard; no text, table, note
+# or example of the standard is reproduced. `clause` is the clause of ISO 26262-3:2018 (§5 item definition, §6
+# hazard analysis and risk assessment, §7 functional safety concept); the sub-clause is left empty until a holder
+# of the licensed standard verifies the row and fills `subclause`, `source_verified_by` and `source_verified_date`.
+# An unverified row is a proposal (I0, AI-drafted), not an inventory of the standard.
+#
+#   id            O3-<clause>.<nn>
+#   clause        clause of ISO 26262-3:2018
+#   topic         a short label of our own
+#   obligation    what must be true of the LionDriver work product, one sentence in our own words
+#   work_product  the LionDriver work product that answers it
+#   checks        what evidences it (check_clauses.py runs or resolves each):
+#                   trace:<ID>      a check of assurance/trace/tools/check_trace.py (README §6 table)
+#                   section:<text>  a heading of the work product containing <text>, with content under it
+#                   items:<kind>:<field>[,<field>]  every trace item of that kind has those fields filled
+#                   manual:<what>   human judgement; not automatable, reported as open until a record exists
+#   subclause, source_verified_by, source_verified_date   filled by the verifier against the licensed text
+schema_version: 1
+standard: ISO 26262-3:2018
+obligations:
+  - id: O3-5.01
+    clause: "5"
+    topic: Functions
+    obligation: The item's purpose and each of its functions are described as the driver and the vehicle see them.
+    work_product: WP-C-01
+    checks: ["section:Purpose and functional description", "section:Functions"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: O3-5.02
+    clause: "5"
+    topic: Boundary and elements
+    obligation: The item's boundary is drawn, naming what is inside it and which vehicle elements and surroundings are outside.
+    work_product: WP-C-01
+    checks: ["section:Item boundary", "section:Elements inside the item", "section:Elements outside the item"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: O3-5.03
+    clause: "5"
+    topic: Interfaces
+    obligation: Every interface across the boundary is listed with what it carries.
+    work_product: WP-C-01
+    checks: ["section:Interfaces"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: O3-5.04
+    clause: "5"
+    topic: Operating modes
+    obligation: The item's operating modes and states, and how it moves between them, are stated.
+    work_product: WP-C-01
+    checks: ["section:Operating modes and states"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: O3-5.05
+    clause: "5"
+    topic: Legal and standards
+    obligation: The laws, regulations and standards that bind the item are identified.
+    work_product: WP-C-01
+    checks: ["section:Legal requirements"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: O3-5.06
+    clause: "5"
+    topic: Known hazards
+    obligation: Hazards already known for this kind of function, and lessons from similar systems, are recorded.
+    work_product: WP-C-01
+    checks: ["section:Known hazards"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: O3-5.07
+    clause: "5"
+    topic: Assumptions on others
+    obligation: What the item relies on from the driver, other vehicle systems and external measures is written down as assumptions, and the trace data matches the document.
+    work_product: WP-C-01
+    checks: ["section:Assumptions of use", "trace:X2", "items:aou:text,verification_approach"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: O3-5.08
+    clause: "5"
+    topic: Performance
+    obligation: The functional and non-functional performance the item must reach is summarised.
+    work_product: WP-C-01
+    checks: ["section:Functional and non-functional performance"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: O3-6.01
+    clause: "6"
+    topic: Situations and misuse
+    obligation: The driving situations the analysis crosses with each malfunction are catalogued, including foreseeable misuse.
+    work_product: WP-C-03
+    checks: ["section:Operational situation catalogue", "manual:a reviewer judges the catalogue complete for the ODD and for foreseeable misuse"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: O3-6.02
+    clause: "6"
+    topic: Hazard identification
+    obligation: Hazards are found by a stated method and phrased as vehicle-level behaviour, and each one leads to at least one hazardous event.
+    work_product: WP-C-03
+    checks: ["section:Method", "section:Hazard identification", "trace:R4"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: O3-6.03
+    clause: "6"
+    topic: S, E, C and ASIL
+    obligation: Every hazardous event is rated for severity, exposure and controllability, and its ASIL is the one those three ratings give.
+    work_product: WP-C-03
+    checks: ["section:Hazardous events and risk assessment", "trace:R1", "trace:X1"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: O3-6.04
+    clause: "6"
+    topic: Goal per event
+    obligation: Every hazardous event is covered by a safety goal, or its exemption is explained.
+    work_product: WP-C-03
+    checks: ["trace:K12"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: O3-6.05
+    clause: "6"
+    topic: Goal ASIL
+    obligation: Each safety goal carries the highest ASIL among the hazardous events it covers.
+    work_product: WP-C-03
+    checks: ["trace:R2"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: O3-6.06
+    clause: "6"
+    topic: Safe state and time
+    obligation: Each safety goal says what safe state ends the hazard and how quickly it must be reached.
+    work_product: WP-C-03
+    checks: ["section:Safety goals", "items:safety-goal:safe_state,ftti_text"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: O3-6.07
+    clause: "6"
+    topic: Verification of the HARA
+    obligation: The HARA and the safety goals pass an independent confirmation review before they are relied on.
+    work_product: WP-C-03
+    checks: ["manual:confirmation review CR-02 (I3) of the HARA and safety goals, recorded under 01-management/reviews"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: O3-7.01
+    clause: "7"
+    topic: Requirements per goal
+    obligation: Every safety goal is refined into at least one functional safety requirement.
+    work_product: WP-C-04
+    checks: ["trace:K4", "section:Functional safety requirements"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: O3-7.02
+    clause: "7"
+    topic: Inherited ASIL
+    obligation: A functional safety requirement keeps the ASIL of its goal unless a recorded decomposition lowers it.
+    work_product: WP-C-04
+    checks: ["trace:K5"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: O3-7.03
+    clause: "7"
+    topic: Safe states, timing, warnings
+    obligation: The requirements cover reaching and leaving safe states, the fault tolerant time budget, and warning and degrading the driver's assistance.
+    work_product: WP-C-04
+    checks: ["section:Safe states, transitions", "section:FTTI allocation", "section:Warning and degradation concept"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: O3-7.04
+    clause: "7"
+    topic: Allocation
+    obligation: Every functional safety requirement is allocated to an element of the preliminary architecture.
+    work_product: WP-C-04
+    checks: ["section:Allocation summary", "items:fsr:allocated_to"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: O3-7.05
+    clause: "7"
+    topic: Relied-on measures
+    obligation: Anything the concept relies on outside the item, including the driver, is recorded as an assumption.
+    work_product: WP-C-04
+    checks: ["section:Assumptions of use"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: O3-7.06
+    clause: "7"
+    topic: Verification of the FSC
+    obligation: The functional safety concept is verified against the safety goals and its review is recorded.
+    work_product: WP-C-04
+    checks: ["manual:verification review of WP-C-04, recorded under 01-management/reviews"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
