@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fault Tree Viewer</title>
+<title>LionDriver Fault Trees</title>
 <!-- Template of fta-viewer.html: fta_viewer.py pastes the trees of WP-A-04 in place of the DATA placeholder. -->
 <style>
 :root{--bg:#fcfcfb;--card:#fff;--ink:#0b0b0b;--ink2:#52514e;--mute:#898781;--line:#c9c7bf;--grid:#e1e0d9;--soft:#f3f2ee;--dot:#e7e6e0;
 --or:#2a78d6;--and:#6250d6;--basic:#1baf7a;--ue:#eda100;--hot:#d03b3b;--lat:#c98a00;--find:#2a78d6;
 --s1b:#fbe9e9;--s1f:#9e2424;--s2b:#fdeee6;--s2f:#9a4a25;--s3b:#fff5dc;--s3f:#7a5600;--s4b:#e6f5e6;--s4f:#0a6a0a;--shadow:0 1px 2px rgba(0,0,0,.06),0 4px 14px rgba(0,0,0,.05)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a1a19;--card:#242422;--ink:#f2f1ec;--ink2:#b5b3ab;--mute:#8a8880;--line:#55534e;--grid:#3a3936;--soft:#2e2d2a;--dot:#262624;
---s1b:#4a1f1f;--s1f:#ffb3b3;--s2b:#4a2a1c;--s2f:#ffc6a8;--s3b:#43361a;--s3f:#ffd98a;--s4b:#1d3a1d;--s4f:#9fe09f;--shadow:0 1px 2px rgba(0,0,0,.4)}}
+--s1b:#4a1f1f;--s1f:#ffb3b3;--s2b:#4a2a1c;--s2f:#ffc6a8;--s3b:#43361a;--s3f:#ffd98a;--s4b:#1d3a1d;--s4f:#9fe09f;--shadow:0 1px 2px rgba(0,0,0,.4);color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#1a1a19;--card:#242422;--ink:#f2f1ec;--ink2:#b5b3ab;--mute:#8a8880;--line:#55534e;--grid:#3a3936;--soft:#2e2d2a;--dot:#262624;
---s1b:#4a1f1f;--s1f:#ffb3b3;--s2b:#4a2a1c;--s2f:#ffc6a8;--s3b:#43361a;--s3f:#ffd98a;--s4b:#1d3a1d;--s4f:#9fe09f;--shadow:0 1px 2px rgba(0,0,0,.4)}
+--s1b:#4a1f1f;--s1f:#ffb3b3;--s2b:#4a2a1c;--s2f:#ffc6a8;--s3b:#43361a;--s3f:#ffd98a;--s4b:#1d3a1d;--s4f:#9fe09f;--shadow:0 1px 2px rgba(0,0,0,.4);color-scheme:dark}
 *{box-sizing:border-box}html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:13px/1.35 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
 button,select,input{font:inherit;color:inherit}
