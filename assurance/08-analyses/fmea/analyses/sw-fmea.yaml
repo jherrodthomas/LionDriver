@@ -97,6 +97,23 @@
 #   TX-arrival revocation since 8a69ccf (DQ-404 A, TSR-516(b)). SWF-014, -020, -030, -036, -039, -040 and -048 say so beside the BL-006
 #   'about 3 s'; SWF-014, -036, -039, -040 and -048 carry an open note that their re-rating is pending against the next baseline.
 #   Plant numbers from assurance/sim/results/engaged-mismatch.md (synthetic, no rating credit).
+# rev 1.9 at BL-007 (frozen, 2026-10-26: liondriver-dev 9fe3eb2, panda 3a8b7c2, opendbc 4d1a056). Every change since BL-006 checked against
+#   its rows (baseline.yaml BL-007 lists them). `previous` now records BL-006 for the causes re-rated here; the BL-005 records of rev 1.4 were removed.
+#   Re-rated (all stay AP H): SWF-049.C1 O7 D10 -> O3 D8 (DQ-131 A: maneuver and joystick processes left out of the reference build);
+#   SWF-050.C1 O8 D10 -> O5 D8 (TSR-624 countdown before the no-response stop, #374; the fault soft-disable order is allowed by DQ-407 A);
+#   SWF-061.C1 O5 D9 -> O5 D8 (elapsed-time countdown and the uncertain-output rule, SWSR-635a/b, #366); SWF-062.C1 O8 D9 -> O5 D8 (TSR-633
+#   minimum-risk latch, #372). SWF-067.C1 (O6 D9 -> O5 D8) and C2 (O8 D10 -> O5 D8), re-rated in revs 1.5-1.7 on code after BL-006, now carry
+#   their BL-006 record.
+#   New: SWF-014.C3 (engaged-mismatch check, O3 D4 L); SWF-061.C4 (wheel-touch distance track, TSR-634, O5 D8 H); SWF-091 start-up EPS and
+#   ABS/VSC fault-code read (TSR-629, DQ-132 A; 2 causes, O5 D8 H); SWF-092 panda siren not sounded (2 causes, O3 D4 L); SWF-093 positive
+#   acceleration during stock AEB (DQ-300 A, opendbc f4e6166; 2 causes, O5 D8 and O5 D9, H). New functions SWF-FN-015, -056, -057; new
+#   actions SWF-ACT-080 (vehicle check and mutation of the fault-code read), SWF-ACT-081 (mutation of the AEB stand-down, AOU-04R).
+#   Kept with text only (rev 0.8 rule: the cause's element did not change; the new panda mechanisms are listed as safety mechanisms):
+#   SWF-014.C1/C2, -020, -030, -036, -039, -040, -048; SWF-046.C1 (the final ACCEL_CMD rate limit removes the rate part, the unchecked pitch
+#   remains, O6 D9); SWF-086.C1/C2 (the latch keeps a started stop; the -1.2 m/s² stop is gentler than DQ-365 A described, queued for the lead).
+#   The open notes of rev 1.8 are closed. Actions: SWF-ACT-050 and -059 completed; SWF-ACT-047 and -058 in progress; SWF-ACT-007 evidence.
+#   Totals: 93 failure modes, 149 causes (135 H, 1 M, 13 L); 73 actions (10 completed, 11 in progress, 52 open). D 8 rows need mutation
+#   proof for D 4; nothing in BL-007 is verified on the vehicle.
 # Post rev 1.4, FTA WP-A-04 v1.12 (BE-1.25 in the SG-04 tree), ratings unchanged: SWF-055 and SWF-089 gain HZ-006 end effects (an authority
 #   grant covers longitudinal commands, as SWF-007). SWF-002 stays steering-only (HZ-001); its note says why HZ-006 and HZ-010 do not apply.
 #
@@ -146,11 +163,11 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.8"
+  revision: "1.9"
   status: draft
-  baseline: BL-006
+  baseline: BL-007
   rating_tables: RT-2
-  scope: "P1 elements for AC-001 at BL-006 (proposed; liondriver-dev c61e31b, panda 0a7da85, opendbc 62b89a3; the LIONDRIVER_REFERENCE build is the default; rows of code unchanged since BL-005 keep their BL-005 ratings): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053). P2 elements: card and the Toyota port (SWF-056..060), driver monitoring (SWF-061..064), plannerd (SWF-065..069), radard (SWF-070, SWF-071). P3 elements: modeld as a software element (SWF-072..074; model performance is SOTIF), localization and calibration (SWF-075..077), camerad (SWF-078), sensord (SWF-079), messaging (SWF-080, SWF-081), manager (SWF-082, SWF-083), updated (SWF-084). Rev 1.1: driver-monitoring demo mode (SWF-085) and the forced stop after the terminal alert (SWF-086), for FTA finding F-37. Rev 1.2: no driver-override check on the LKA path in the envelope (SWF-087), for F-28."
+  scope: "P1 elements for AC-001 at BL-007 (frozen; liondriver-dev 9fe3eb2, panda 3a8b7c2, opendbc 4d1a056; the LIONDRIVER_REFERENCE build is the default; rows of code unchanged since an earlier baseline keep that rating): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053). P2 elements: card and the Toyota port (SWF-056..060), driver monitoring (SWF-061..064), plannerd (SWF-065..069), radard (SWF-070, SWF-071). P3 elements: modeld as a software element (SWF-072..074; model performance is SOTIF), localization and calibration (SWF-075..077), camerad (SWF-078), sensord (SWF-079), messaging (SWF-080, SWF-081), manager (SWF-082, SWF-083), updated (SWF-084). Rev 1.1: driver-monitoring demo mode (SWF-085) and the forced stop after the terminal alert (SWF-086), for FTA finding F-37. Rev 1.2: no driver-override check on the LKA path in the envelope (SWF-087), for F-28. Rev 1.9: start-up fault-code read (SWF-091), panda siren (SWF-092), stock-AEB stand-down (SWF-093)."
   team:
     - {name: Jherrod Thomas, role: "Project maintainer, safety lead (reviewer/approver)"}
     - {name: Claude (AI assistant), role: "Drafting assistance; ratings require human review"}
@@ -258,7 +275,10 @@ structure:
   parent: SWF-SE-001
   paths:
   - panda/board/main.c
-  description: set_safety_mode, tick_handler heartbeat and mismatch logic (main.c:31-76, 101-230)
+  - panda/board/drivers/engaged_mismatch.h
+  - panda/board/drivers/heartbeat_siren.h
+  description: set_safety_mode, tick_handler heartbeat and mismatch logic (main.c:31-76, 101-230); since BL-007 the 0.3 s engaged-mismatch check
+    (engaged_mismatch.h) and the siren starts (heartbeat_siren.h), reference build
 - id: SWF-SE-012
   name: Panda host command handler
   kind: sw_unit
@@ -516,8 +536,10 @@ structure:
   - openpilot/selfdrive/car/card.py
   - openpilot/selfdrive/car/stock_aeb_interlock.py
   - openpilot/selfdrive/car/car_events.py
+  - openpilot/selfdrive/car/vehicle_dtc.py
   description: CAN-paced 100 Hz loop (card.py:169-189, 274-288); carState publication (205-233); interlock (stock_aeb_interlock.py:23-53, card.py:86-124); car events
-    from carState, including the EPS-fault warnings (car_events.py:162-177 at BL-005)
+    from carState, including the EPS-fault warnings (car_events.py:162-177 at BL-005); since BL-007 the start-up fault-code read (vehicle_dtc.py,
+    card.py Car.__init__)
 - id: SWF-SE-060
   name: Driver monitoring (dmonitoringmodeld, dmonitoringd)
   kind: sw_element
@@ -777,6 +799,13 @@ functions:
   description: Withdraw controls when the host heartbeat is lost or reports not engaged
   requirements:
   - FSR-007
+- id: SWF-FN-015
+  element: SWF-SE-011
+  description: Sound the panda siren when the panda revokes granted authority because the host stopped (heartbeat loss, TX arrival, engaged mismatch
+    while PCM cruise stays on), independently of the SoC alerts (TSR-516(b), (c))
+  requirements:
+  - FSR-007
+  - FSR-015
 - id: SWF-FN-011
   element: SWF-SE-012
   description: Accept host configuration commands only when they cannot widen what is transmitted
@@ -995,6 +1024,20 @@ functions:
   requirements:
   - FSR-015
   - FSR-016
+- id: SWF-FN-057
+  element: SWF-SE-043
+  description: Request no positive acceleration while the car reports a stock AEB event (TSR-713, SWSR-713h, DQ-300 A), from the first frame of the event, in
+    the host request and in the final ACCEL_CMD
+  requirements:
+  - FSR-018
+  - FSR-037
+- id: SWF-FN-056
+  element: SWF-SE-054
+  description: At start-up, while the item cannot engage and the car is stationary, read the EPS and ABS/VSC fault codes, and refuse engagement while
+    either reports an active code or the read fails (TSR-629, SWSR-629..629d; selfdrived dtc_entry_events)
+  requirements:
+  - FSR-016
+  - FSR-036
 - id: SWF-FN-060
   element: SWF-SE-061
   description: Estimate face, eye and attention state of the driver for every cabin camera frame
@@ -1687,6 +1730,26 @@ failure_modes:
     ap: L
     actions:
     - SWF-ACT-007
+  - id: SWF-014.C3
+    description: 'Defect in the engaged-mismatch check of the reference build (engaged_mismatch.h, panda f4803c5/895dc44, BL-007; TSR-307(a)): authority kept
+      longer than 0.3 s after the first not-engaged heartbeat while granted, or the episode not started or ended early, so a host that drops engagement but
+      keeps the heartbeat alive keeps authority up to the 1 Hz count (about 3 s)'
+    element: SWF-SE-011
+    prevention_controls:
+    - description: 'engaged_mismatch_tick in the 100 Hz safety task, reference build only (the default build since BL-005); LionDriver change with a requirement
+        (TSR-307(a)); MISRA clean in both builds; reviewed in the PR, not independently. O 3 as the other reference-build panda mechanisms with host tests'
+      ref: panda/board/drivers/engaged_mismatch.h
+    detection_controls:
+    - description: 'tests/engaged_mismatch (10 host tests: revoke at 0.3 s in a stall, silent on a cancel at 0.1 s and 0.4 s, no episode without authority or
+        with the heartbeat engaged again), run by the safety.yaml panda host tests job on every change. Mutants of the revoke time, the siren time and the
+        episode end were checked by hand, not in CI. HIL test_16 is bench-only and not run (no rating credit)'
+      test: panda/tests/engaged_mismatch/test_engaged_mismatch.py
+      ref: .github/workflows/safety.yaml
+    occurrence: 3
+    detection: 4
+    ap: L
+    actions:
+    - SWF-ACT-007
   safety_mechanisms:
   - description: 'Heartbeat loss: authority revoked after 0.3 s (TSR-407); SILENT after 5 s; engaged mismatch after about 3 s; siren for 3 s when the 0.3 s
       revocation removes granted authority (panda c33343b, all builds, BL-005); TX arrival revocation in 50/100 ms (TSR-408, reference build).
@@ -1695,7 +1758,9 @@ failure_modes:
       stays on (panda f4803c5, TSR-307(a), TSR-516(c)); plant model 0.39-0.48 s revocation and 0.63-0.88 s siren after selfdrived stops
       (assurance/sim/results/engaged-mismatch.md, synthetic, no rating credit)'
     ref: panda/board/main.c
-  notes: 'Open, 2026-10-21. The engaged-mismatch revoke is 0.3 s with a siren since panda f4803c5 (after BL-006); whether that lowers a rating or the AP of this row is pending a re-rating against the next baseline.'
+  notes: 'Re-rated at BL-007 (rev 1.9): C1 and C2 stay O3 D4 AP L (their mechanisms did not change; the engaged-mismatch path is now 0.3 s in
+    the reference build, which shortens the residual of C2 but does not change its rating). The new check itself is C3, O3 D4 AP L. The 2026-10-21
+    open note is closed.'
 - id: SWF-015
   element: SWF-SE-012
   function: SWF-FN-011
@@ -2898,7 +2963,7 @@ failure_modes:
     timing_basis: code_derived
     timing_ref: 'openpilot/selfdrive/ui/soundd.py:23 (SELFDRIVE_STATE_TIMEOUT)'
   - description: Cluster indication from stock ECUs when item frames stop (XM-04, unverified)
-  notes: 'Open, 2026-10-21. The engaged-mismatch revoke is 0.3 s with a siren since panda f4803c5 (after BL-006); whether that lowers a rating or the AP of this row is pending a re-rating against the next baseline.'
+  notes: 'Re-rated at BL-007 (rev 1.9), O and D unchanged, since the cause is in a host element whose code did not change, and the 0.3 s engaged-mismatch revoke with its siren (SWF-014.C3) is a mechanism of another element, listed under safety mechanisms (rev 0.8 rule). It bounds the effect and gives the driver an SoC-independent warning; the System FMEA credits it at item level.'
 - id: SWF-037
   element: SWF-SE-035
   function: SWF-FN-035
@@ -3034,7 +3099,7 @@ failure_modes:
     ref: panda/board/main.c
   notes: 'Vehicle behaviour with PCM cruise on and the item not sending a valid ACC command is not characterised for the Corolla (uncertain). BL-005: in the reference
     build the panda grants on a PCM edge only with the heartbeat engaged flag (TSR-301), so a stock cruise engagement the host does not take no longer grants
-    authority for up to 3 s. Open, 2026-10-21. The engaged-mismatch revoke is 0.3 s with a siren since panda f4803c5 (after BL-006); whether that lowers a rating or the AP of this row is pending a re-rating against the next baseline.'
+    authority for up to 3 s. Re-rated at BL-007 (rev 1.9), O and D unchanged, since the cause is in a host element whose code did not change, and the 0.3 s engaged-mismatch revoke with its siren (SWF-014.C3) is a mechanism of another element, listed under safety mechanisms (rev 0.8 rule). It bounds the effect and gives the driver an SoC-independent warning; the System FMEA credits it at item level.'
 - id: SWF-040
   element: SWF-SE-041
   function: SWF-FN-040
@@ -3089,7 +3154,7 @@ failure_modes:
   notes: Host counterpart of SWF-014.C2. If selfdrived dies, selfdrived's own commIssue/processNotRunning cannot be raised, so no device
     alert is given either (manager does not alert). The 3 s figure is the panda mismatch path at BL-004; TSR-307a (0.3 s) is not implemented at BL-006 and is implemented in the reference build since panda f4803c5. BL-005 bounds the
     actuation, not the missing alert; the driver sees "Controls Mismatch" only if selfdrived is alive, so after a selfdrived crash the panda revocation is silent
-    apart from the siren rules (SWF-036, SWF-ACT-037); since panda f4803c5 those rules sound the siren 0.5 s after the first not-engaged heartbeat while PCM cruise stays on (TSR-516(c)). Open, 2026-10-21. The engaged-mismatch revoke is 0.3 s with a siren since panda f4803c5 (after BL-006); whether that lowers a rating or the AP of this row is pending a re-rating against the next baseline.
+    apart from the siren rules (SWF-036, SWF-ACT-037); since panda f4803c5 those rules sound the siren 0.5 s after the first not-engaged heartbeat while PCM cruise stays on (TSR-516(c)). Re-rated at BL-007 (rev 1.9), O and D unchanged, since the cause is in a host element whose code did not change, and the 0.3 s engaged-mismatch revoke with its siren (SWF-014.C3) is a mechanism of another element, listed under safety mechanisms (rev 0.8 rule). It bounds the effect and gives the driver an SoC-independent warning; the System FMEA credits it at item level.
 - id: SWF-041
   element: SWF-SE-045
   function: SWF-FN-045
@@ -3406,16 +3471,22 @@ failure_modes:
   severity: 10
   causes:
   - id: SWF-046.C1
-    description: The 4 m/s³ windup/winddown limit is applied before the pitch compensation and the PID (carcontroller.py:197-238), so the sent
-      command has no rate limit; pitch comes from CC.orientationNED, which controlsd fills from deviceMotion with no validity check
-      (controlsd.py:69-71, 158-160)
+    description: 'Pitch comes from CC.orientationNED, which controlsd fills from deviceMotion with no validity check (controlsd.py:69-71, 158-160), and
+      is added after the 4 m/s³ windup/winddown limit (carcontroller.py:197-238), so an implausible pitch moves the sent command by up to ±1.5 m/s². Up to
+      BL-006 the sent command also had no rate limit; since opendbc f4e6166 (BL-007, TSR-713) a final limit of 4.5 m/s³ applies after the pitch and
+      PID terms, so the remaining cause is the unchecked pitch value'
     element: SWF-SE-045
     prevention_controls:
     - description: Pitch compensation clipped to ±1.5 m/s² and high-pass filtered; final clip to the panda range (carcontroller.py:231-232, 250).
         No margin below the envelope (TSR-605 partial)
       ref: opendbc_repo/opendbc/car/toyota/carcontroller.py
+    - description: 'BL-007: final ACCEL_CMD rate limit of 4.5 m/s³ (135 raw per frame) after the pitch and PID terms, below the provisional 5 m/s³ envelope
+        bound (opendbc f4e6166, WP-W-02 §2.5). It bounds how fast the pitch term can move the command, not its value'
+      ref: opendbc_repo/opendbc/car/toyota/carcontroller.py
     detection_controls:
-    - description: process_replay covers card on the Corolla segment; not designed for implausible pitch or step requests
+    - description: process_replay covers card on the Corolla segment; not designed for implausible pitch or step requests. opendbc
+        test_carcontroller.py (6 cases, BL-007) targets the final rate limit and the stock-AEB cap, not the pitch input, and is not run by
+        LionDriver CI (D 9 rule)
       ref: openpilot/selfdrive/test/process_replay/test_processes.py
     occurrence: 6
     detection: 9
@@ -3558,7 +3629,7 @@ failure_modes:
   safety_mechanisms:
   - description: PCM cancels on brake (XM-03, external); panda withdraws controls on brake and PCM cruise off, and on heartbeat mismatch
       after about 3 s
-  notes: 'Open, 2026-10-21. The engaged-mismatch revoke is 0.3 s with a siren since panda f4803c5 (after BL-006); whether that lowers a rating or the AP of this row is pending a re-rating against the next baseline.'
+  notes: 'Re-rated at BL-007 (rev 1.9), O and D unchanged, since the cause is in a host element whose code did not change, and the 0.3 s engaged-mismatch revoke with its siren (SWF-014.C3) is a mechanism of another element, listed under safety mechanisms (rev 0.8 rule). It bounds the effect and gives the driver an SoC-independent warning; the System FMEA credits it at item level.'
 - id: SWF-049
   element: SWF-SE-041
   function: SWF-FN-041
@@ -3579,24 +3650,36 @@ failure_modes:
   - id: SWF-049.C1
     description: 'controlsd uses lateralManeuverPlan whenever its last message was valid (controlsd.py:123-124), with no alive check (SubMaster
       valid changes only on receipt, cereal/messaging/__init__.py:261) and no check of the mode; selfdrived ignores lateralManeuverPlan in its
-      alive/valid checks (selfdrived.py:87). The path is enabled by the LateralManeuverMode developer toggle (process_config.py:43-44, 109;
-      developer.py:134, offroad only; cleared at manager start and offroad, params_keys.h:87)'
+      alive/valid checks (selfdrived.py:87). Up to BL-006 the path was enabled by the LateralManeuverMode developer toggle. Since DQ-131 A (be0b4ff,
+      BL-007) the reference build neither registers nor ships lateral_maneuversd, maneuversd or joystick (process_config.py REFERENCE_EXCLUDED_PROCS),
+      so nothing publishes lateralManeuverPlan, and selfdrived refuses engagement while a debug param is set (DQ-221 A). Remaining: the subscription and
+      the path stay in controlsd, and the processes come back in a build that carries the upstream_build marker (a build-path defect, as SWF-013.C2)'
     element: SWF-SE-041
     prevention_controls:
-    - description: Operational rule only (WP-V-07 bans developer modes; INS-19 reference parameters); TSR-613 (path absent from reference
-        builds) not met (GAP-20). Permanent "Lateral Maneuver Mode" banner when active (selfdrived.py:189-191)
-      ref: assurance/03-system/WP-S-02-technical-safety-requirements.md (TSR-613)
+    - description: 'Reference build without the maneuver and joystick processes (DQ-131 A, TSR-613 in part); the default build is the reference build; entry
+        refusal while a debug param is set as a second barrier (#287). O 3 as the other reference-build mechanisms with tests. Operational rule kept (WP-V-07
+        bans developer modes; INS-19)'
+      ref: openpilot/system/manager/process_config.py
     detection_controls:
-    - description: No test checks that the path is absent or inactive in the shipped configuration
-    occurrence: 7
-    detection: 10
+    - description: 'test_reference_build.py (debug processes not registered, debug params do not change the control processes, the reference release ships no
+        debug process, the default build is the reference build), run by the CI unit_tests job; not proven by mutation (D 8)'
+      test: openpilot/system/manager/test/test_reference_build.py
+    occurrence: 3
+    detection: 8
     ap: H
+    previous:
+      baseline: BL-006
+      occurrence: 7
+      detection: 10
+      ap: H
+      change: 'DQ-131 A implemented (be0b4ff): the maneuver and joystick processes are left out of the reference build, with a test in CI'
     actions:
     - SWF-ACT-047
   safety_mechanisms:
   - description: lateral_maneuversd aborts on steering or gas press; processNotRunning soft-disable if it crashes while the toggle is set;
       panda torque limits
-  notes: Occurrence rated on the prevention controls (none technical), not on how often a user enables developer mode.
+  notes: Occurrence rated on the prevention controls, not on how often a user enables developer mode. Re-rated at BL-007 (rev 1.9); D 4 once the
+    exclusion is proven by mutation, and the path itself goes once controlsd drops the subscription (SWF-ACT-047).
 - id: SWF-050
   element: SWF-SE-041
   function: SWF-FN-048
@@ -3615,26 +3698,41 @@ failure_modes:
   severity: 10
   causes:
   - id: SWF-050.C1
-    description: No lead time between the announcement and the onset of a fault soft-disable deceleration, which TSR-624 allows since
-      DQ-407 A (the slow-down is at most -1.2 m/s² over the 3 s soft disable and its alert sounds from the first frame). Only the
-      driver-monitoring no-response deceleration is preceded by escalating alerts (driverUnresponsive1..3); TSR-624 is recorded as partial
+    description: 'Defect in the announcement of the driver-monitoring no-response stop (TSR-624, #374, BL-007): the DM policy publishes the time left before the
+      stop (driverMonitoringState.noResponseDecelIn) and the terminal alert counts down to it ("Driver Distracted - Car Stops in N s", then "Car Is Stopping"),
+      replaced by the minimum-risk alert once latched; a wrong countdown, a stop that starts less than 1 s after the announcement or a missing alert text or
+      sound. A fault soft-disable deceleration starts with its alert by requirement (TSR-624 as amended by DQ-407 A: at most -1.2 m/s² over the 3 s soft
+      disable, alert from the first frame), so it is no longer a failure of this mode'
     element: SWF-SE-041
     prevention_controls:
-    - description: DM escalation alerts precede the no-response deceleration; nothing precedes a fault soft-disable deceleration
-      ref: openpilot/selfdrive/monitoring/policy.py
+    - description: LionDriver change to upstream code with a requirement (TSR-624, SWSR-624) and targeted unit tests; reviewed in the PR, not independently; O 5
+        as the other new host code with targeted tests
+      ref: openpilot/selfdrive/selfdrived/events.py
     - description: The fault soft-disable alert sounds from the first frame of its deceleration, which is bounded by A_CRUISE_MIN
         (-1.2 m/s²) for SOFT_DISABLE_TIME (3 s); TSR-624 accepts this order (DQ-407 A)
       ref: openpilot/selfdrive/selfdrived/state.py
     detection_controls:
-    - description: No test targets this cause
-    occurrence: 8
-    detection: 10
+    - description: 'test_monitoring.py (the countdown runs 5 s to 0 and the stop starts at least 1 s after the announcement) and test_minimum_risk.py (alert
+        texts and sounds, the new event wired), run by the CI unit_tests job; not proven by mutation (D 8, RT-2)'
+      test: openpilot/selfdrive/monitoring/test_monitoring.py
+      ref: openpilot/selfdrive/selfdrived/tests/test_minimum_risk.py
+    occurrence: 5
+    detection: 8
     ap: H
+    previous:
+      baseline: BL-006
+      occurrence: 8
+      detection: 10
+      ap: H
+      change: 'TSR-624 implemented for the no-response stop (#374, 59e22e0): countdown alert at least 1 s before the stop; the fault soft-disable order
+        accepted by the lead (DQ-407 A) and written into TSR-624'
     actions:
     - SWF-ACT-050
   safety_mechanisms:
-  - description: Soft-disable alert (audible, 3 s) at onset; panda deceleration bound -3.5 m/s² (SWF-003). No jerk bound (SWF-004)
-  notes: WP-A-04 BE-4.10 (SG-04 G4.4); SFM-026 covers an alert that is not presented at all.
+  - description: Soft-disable alert (audible, 3 s) at onset; panda deceleration bound -3.5 m/s² (SWF-003). No jerk bound in the envelope (SWF-004); since
+      opendbc f4e6166 (BL-007) the final ACCEL_CMD is rate-limited to 4.5 m/s³ on the host (TSR-624 ramp part, below the provisional j_down of 5 m/s³)
+  notes: 'WP-A-04 BE-4.10 (SG-04 G4.4); SFM-026 covers an alert that is not presented at all. Re-rated at BL-007 (rev 1.9): C1 was the missing lead time
+    (O8 D10) up to BL-006; it now rates a defect in the countdown.'
 - id: SWF-051
   element: SWF-SE-032
   function: SWF-FN-049
@@ -3774,12 +3872,6 @@ failure_modes:
     occurrence: 3
     detection: 4
     ap: L
-    previous:
-      baseline: BL-005
-      occurrence: 8
-      detection: 9
-      ap: H
-      change: 'opendbc#15 (ATC-20) in the pin (515b9a2, then 62b89a3): no re-grant while a TX-rate excess persists'
     actions:
     - SWF-ACT-054
   safety_mechanisms:
@@ -3828,12 +3920,6 @@ failure_modes:
     occurrence: 3
     detection: 4
     ap: L
-    previous:
-      baseline: BL-005
-      occurrence: 8
-      detection: 9
-      ap: H
-      change: 'opendbc#15 (ATC-26) in the pin (515b9a2, then 62b89a3): a held CRUISE_ACTIVE no longer counts as an edge after a mode change'
     actions:
     - SWF-ACT-054
   safety_mechanisms:
@@ -4139,18 +4225,31 @@ failure_modes:
     ref: openpilot/cereal/messaging/__init__.py
   causes:
   - id: SWF-061.C1
-    description: 'Timers count frames, not time: one awareness step of DT_DMON = 0.05 s per driverStateV2 message (policy.py:228, 237; dmonitoringd.py:21-23). A model running
-      at 16 Hz still passes the frequency check and stretches the 13 s terminal to about 16 s'
+    description: 'Defect in the elapsed-time countdown (SWSR-635a, #366, BL-007): the awareness step, the distraction filter and the wheel-touch distance follow the
+      time since the previous evaluated cabin frame, from the frame index (0.05 s per index) and capped at 2 s; a wrong index difference, a wrong cap or a step still
+      counted per message stretches the timers. Up to BL-006 the timers counted messages, so a DM model running at 16 Hz stretched the 13 s terminal to about 16 s
+      (alert 1 at 21.2 s at 5 Hz). Also the uncertain-output rule (SWSR-635b): a face with an uncertain pose now counts as not attentive, and past orange the
+      countdown keeps running when the face is lost; before, the alert could stay at orange and the terminal step never came'
     element: SWF-SE-062
     prevention_controls:
-    - description: Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure
-        credit (RT-1 §2.2)
+    - description: LionDriver change to upstream code with requirements (SWSR-635a, SWSR-635b; TSR-635) and targeted unit tests; reviewed in the PR, not
+        independently; O 5 as the other new host code with targeted tests. The frame-index clock depends on the cabin camera frame counter being correct
+        (SWF-078)
+      ref: assurance/07-supporting/impact/change-2026-10-20-dm-first-alert-time.md
     detection_controls:
-    - description: test_monitoring.py (13 policy scenarios, CI) steps the policy in frames, so it cannot see a rate error
+    - description: 'test_monitoring.py TestFirstAlertTime (5 tests: skipped frames, uncertain pose, face lost past orange) and test_somehow_indecisive_model (vision
+        timers 5 / 8 / 13 s), run by the CI unit_tests job; 6 fail without the change; not proven by mutation (D 8, RT-2)'
       test: openpilot/selfdrive/monitoring/test_monitoring.py
     occurrence: 5
-    detection: 9
+    detection: 8
     ap: H
+    previous:
+      baseline: BL-006
+      occurrence: 5
+      detection: 9
+      ap: H
+      change: 'SWSR-635a/b implemented (#366, 8c83775): elapsed-time countdown from the frame index; an uncertain output no longer stops it. The cause is now
+        a defect in that code, with targeted tests in CI'
     actions:
     - SWF-ACT-058
   - id: SWF-061.C2
@@ -4182,7 +4281,25 @@ failure_modes:
     ap: H
     actions:
     - SWF-ACT-058
-  notes: Host side of System FMEA SFM-023.C1 and SFM-023.C2. Detection performance of the model is SOTIF (SFM-022.C1, SFM-024.C1). DFA WP-A-03 DFI-32 (one CPU load slows lateral control and stretches the frame-counted DM escalation).
+  - id: SWF-061.C4
+    description: 'Defect in the wheel-touch distance track (TSR-634, SWSR-634, #221, BL-007): alert k fires at 5/15/25 s or 150/240/395 m since the last driver
+      input, whichever comes first; a wrong distance integration (speed source, units), a missing reset on driver input or a distance that raises no alert
+      above the alert speed leaves only the time track, so at highway speed the strongest alert comes after the fixed 25 s'
+    element: SWF-SE-062
+    prevention_controls:
+    - description: LionDriver change with a requirement (SWSR-634, DQ-077 A) and targeted unit tests; reviewed in the PR, not independently; O 5
+      ref: assurance/07-supporting/impact/change-2026-10-17-dm-wheeltouch-distance.md
+    detection_controls:
+    - description: 'test_monitoring.py, 6 distance tests (constant speeds 0-120 km/h, ±1.5 m/s² ramps, interaction reset, vision recovery, disengaged, low speed),
+        run by the CI unit_tests job; 5 fail on the previous logic; not proven by mutation; vehicle validation open (WP-V-02 §4.4)'
+      test: openpilot/selfdrive/monitoring/test_monitoring.py
+    occurrence: 5
+    detection: 8
+    ap: H
+    actions:
+    - SWF-ACT-058
+  notes: Host side of System FMEA SFM-023.C1 and SFM-023.C2. C1 re-rated and C4 added at BL-007 (rev 1.9; change records dm-first-alert-time OI-3 and
+    dm-wheeltouch-distance OI-2). Detection performance of the model is SOTIF (SFM-022.C1, SFM-024.C1). DFA WP-A-03 DFI-32 (one CPU load slows lateral control and stretches the frame-counted DM escalation).
 - id: SWF-062
   element: SWF-SE-062
   function: SWF-FN-061
@@ -4208,23 +4325,37 @@ failure_modes:
     timing_ref: 'openpilot/selfdrive/monitoring/policy.py:44, 454; WP-S-04 T-33'
   causes:
   - id: SWF-062.C1
-    description: By design the six driver-monitoring events are PERMANENT alerts only, with no SOFT_DISABLE or IMMEDIATE_DISABLE (events.py:524-570); the terminal reaction
-      is the forced deceleration with lateral control kept. The SG-010 safe state is decided (DQ-365 A, which absorbed DQ-220; TSR-633) as stop in lane, stay stopped
-      and held, re-engagement locked out until the driver responds. The code does not hold at standstill or lock out until a later disengagement (TSR-633 not met)
+    description: 'Defect in the minimum-risk latch (TSR-633, DQ-365 A, #372, BL-007): selfdrived latches the manoeuvre from the first no-response request until
+      the item disengages (minimum_risk.py, selfdriveState.minimumRiskManeuver), controlsd keeps forceDecel on while it is set, the terminal alert is re-raised
+      while latched and the DM lockout runs from the takeover. A latch that clears while engaged, a forceDecel not held, or a lockout that starts at the stop lets
+      the planner go back to the set speed and the PCM resume from standstill. Up to BL-006 the safe state was not implemented: the forced deceleration was
+      recomputed every frame from the DM request, so a dmonitoringd restart or awareness reset dropped it. The DM events stay PERMANENT alerts by design: the
+      decided safe state keeps lateral control on during the stop'
     element: SWF-SE-062
     prevention_controls:
-    - description: Upstream design; the safe state is now defined (TSR-633, DQ-365 A) but not implemented. No field-exposure evidence cited, so O 8 (RT-2 §2), as
-        SWF-083.C1 and SFM-025.C1
-      ref: assurance/08-analyses/fmea/analyses/fsc.yaml
+    - description: LionDriver change with a requirement (TSR-633, FSR-02.09) and targeted unit tests; reviewed in the PR, not independently; O 5 as the other new
+        host code with targeted tests
+      ref: openpilot/selfdrive/selfdrived/minimum_risk.py
     detection_controls:
-    - description: test_longitudinal runs the force_decel maneuver in CI and test_monitoring checks the alert levels; neither checks that the reaction meets FSR-040
-      test: openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py
-    occurrence: 8
-    detection: 9
+    - description: 'test_minimum_risk.py (latch set, held, cleared only on disengagement), test_monitoring.py (lockout from the takeover) and a longitudinal maneuver
+        that stays stopped under forced deceleration while the lead drives off (test_longitudinal.py), run by the CI unit_tests job; not proven by mutation (D 8).
+        The PCM standstill hold over time is a vehicle test (AOU-16) and not done'
+      test: openpilot/selfdrive/selfdrived/tests/test_minimum_risk.py
+      ref: openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py
+    occurrence: 5
+    detection: 8
     ap: H
+    previous:
+      baseline: BL-006
+      occurrence: 8
+      detection: 9
+      ap: H
+      change: 'TSR-633 implemented (#372, dacd8f7): the minimum-risk manoeuvre is latched until the driver takes over; the stop is held and the lockout runs
+        from the takeover. The cause is now a defect in the latch'
     actions:
     - SWF-ACT-059
-  notes: controlsd also sets CC.driverMonitoringEscalation, which no Toyota code consumes (only Volkswagen).
+  notes: 'controlsd also sets CC.driverMonitoringEscalation, which no Toyota code consumes (only Volkswagen). Re-rated at BL-007 (rev 1.9). The stop
+    deceleration itself (A_CRUISE_MIN, -1.2 m/s²) is SWF-086.C2.'
 - id: SWF-063
   element: SWF-SE-061
   function: SWF-FN-060
@@ -4465,6 +4596,12 @@ failure_modes:
     occurrence: 5
     detection: 8
     ap: H
+    previous:
+      baseline: BL-006
+      occurrence: 6
+      detection: 9
+      ap: H
+      change: 'DQ-221 A implemented (#287, 69cddaa): engagement refused outside the assured settings on the reference platform; rated O5 D9 in rev 1.5 and D 8 in rev 1.6 once CI ran the tests. At BL-006 the single cause was the distance button or menu leaving the assured configuration while driving'
     actions:
     - SWF-ACT-063
   - id: SWF-067.C2
@@ -4484,6 +4621,12 @@ failure_modes:
     occurrence: 5
     detection: 8
     ap: H
+    previous:
+      baseline: BL-006
+      occurrence: 8
+      detection: 10
+      ap: H
+      change: 'DQ-403 A implemented (#342, 5d4ba6e): a menu change while engaged is held until disengagement (rev 1.7). At BL-006 the change took effect at once'
     actions:
     - SWF-ACT-079
   notes: 'Rated O6 D9 (AP H) as a single cause up to rev 1.4, when the distance button and the settings menu could both leave the assured configuration while driving.
@@ -5301,7 +5444,9 @@ failure_modes:
   - id: SWF-086.C1
     description: 'The request crosses three processes with no freshness check on the flag: controlsd reads driverMonitoringState.noResponseForceDecel without an alive or
       valid check (controlsd.py:49-51, 236), and plannerd reads controlsState.forceDecel the same way (longitudinal_planner.py:84); its own valid flag is not read by
-      controlsd (SWF-065.C1). A stopped dmonitoringd leaves the last value in place until selfdrived soft-disables (SWF-064)'
+      controlsd (SWF-065.C1). A stopped dmonitoringd leaves the last value in place until selfdrived soft-disables (SWF-064). BL-007: once the first request arrives, selfdrived latches it (TSR-633, minimum_risk.py) and controlsd
+      keeps forceDecel on from selfdriveState, so a later dmonitoringd stop or reset no longer drops the stop (SWF-062.C1); a request that never arrives, and the
+      unchecked controlsd-to-plannerd link, remain, so O and D are kept'
     element: SWF-SE-041
     prevention_controls:
     - description: Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1
@@ -5317,11 +5462,12 @@ failure_modes:
     - SWF-ACT-073
   - id: SWF-086.C2
     description: 'By design the forced stop is only v_cruise = 0 on the cruise candidate: the planner slows at A_CRUISE_MIN, -1.2 m/s², jerk-limited (longitudinal_planner.py:22,
-      50-52, 84-85), about 25 s and 390 m from 110 km/h, with no stop-time requirement (TSR-633 not met; reaction queued for the lead as DQ-340). The Toyota port does
+      50-52, 84-85), about 25 s and 390 m from 110 km/h, with no stop-time requirement. BL-007: TSR-633 is implemented for the hold and the lockout (SWF-062.C1), but it sets no stop time or deceleration,
+      and the -1.2 m/s² stop is gentler than the about 3 m/s² (10 s from 30 m/s) that DQ-365 A described; queued for the lead. The Toyota port does
       not use CC.driverMonitoringEscalation (read only by the Volkswagen port, carcontroller.py:131)'
     element: SWF-SE-071
     prevention_controls:
-    - description: Upstream design; no LionDriver requirement for the stop time or deceleration (TSR-633 open), so O 8 (RT-2 §2)
+    - description: Upstream design; no LionDriver requirement for the stop time or deceleration (TSR-633 sets none), so O 8 (RT-2 §2)
       ref: openpilot/selfdrive/controls/lib/longitudinal_planner.py
     detection_controls:
     - description: test_longitudinal force_decel maneuvers (CI) fail only if the plant does not decelerate at all (acceleration above -0.04 m/s² while moving, maneuver.py:84-86);
@@ -5411,12 +5557,6 @@ failure_modes:
     occurrence: 5
     detection: 8
     ap: H
-    previous:
-      baseline: BL-005
-      occurrence: 8
-      detection: 10
-      ap: H
-      change: 'TSR-607 (b) implemented (#174, 7158a9a): the lighter prompt only for the first 1.5 s, then the take-over request'
     actions:
     - SWF-ACT-077
     - SWF-ACT-078
@@ -5433,12 +5573,6 @@ failure_modes:
     occurrence: 5
     detection: 8
     ap: H
-    previous:
-      baseline: BL-005
-      occurrence: 8
-      detection: 10
-      ap: H
-      change: 'TSR-607 (c) implemented (f350f5b, #179): the lighter prompt after 1.5 s while the driver keeps steering'
     actions:
     - SWF-ACT-077
     - SWF-ACT-078
@@ -5530,6 +5664,182 @@ failure_modes:
   - description: Relay malfunction detection blocks all TX after a stock message appears on the car side (SWF-012)
     ref: opendbc_repo/opendbc/safety/safety.h
   notes: Found by the DFA (WP-A-03 DM-25) after BL-005; not rated at BL-005. Upstream build unaffected by the fix.
+- id: SWF-091
+  element: SWF-SE-054
+  function: SWF-FN-056
+  failure_mode: Engagement allowed while the EPS or ABS/VSC reports an active fault code at start-up
+  guideword: omission
+  effects:
+  - level: local
+    description: VehicleDtcStatus records the car as healthy, or no fault-code no-entry event is raised, although an ECU reports an active code
+  - level: next_higher
+    description: The item engages on a car whose steering or stability control already has a stored fault; only the driver's lamp check (TSR-811, OPS-01) and
+      the live fault signals (EPS status 0x262, espDisabled, accFaulted) remain
+  - level: end
+    description: Steering assist lost or degraded while engaged on a faulted EPS
+    hazard: HZ-004
+    severity: 10
+  - level: end
+    description: Braking or stability control degraded while the item controls longitudinal motion
+    hazard: HZ-007
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-091.C1
+    description: 'Defect in the read (vehicle_dtc.py, BL-007): status bits parsed wrongly (active = status AND availability AND 0x8B), a wrong ECU address taken
+      from the firmware-query table, an exempt code that should count, or a failed read reported as healthy instead of failed (SWSR-629b, 629c)'
+    element: SWF-SE-054
+    prevention_controls:
+    - description: 'LionDriver change with requirements (TSR-629, SWSR-629..629d; DQ-132 A) and targeted unit tests; reviewed in the PR, not independently. A read
+        that is silent, negative, malformed, reports no supported active bits or has no address counts as failed and refuses engagement (fail closed). O 5 as
+        the other new host code with targeted tests'
+      ref: assurance/07-supporting/impact/change-2026-10-25-startup-fault-code-read.md
+    detection_controls:
+    - description: 'test_vehicle_dtc.py (each active bit alone, unsupported bit ignored, exempt code, silent, 0x7F 0x19 0x11, malformed, availability 0x30, no
+        address, raised error, retry count), run by the CI unit_tests job with mocked UDS responses; not proven by mutation (D 8). Whether the reference car''s
+        EPS and ABS/VSC answer 0x19 is open (VS-SQ-20, change record OI-1)'
+      test: openpilot/selfdrive/car/tests/test_vehicle_dtc.py
+    occurrence: 5
+    detection: 8
+    ap: H
+    actions:
+    - SWF-ACT-080
+  - id: SWF-091.C2
+    description: 'Defect in the entry check (selfdrived dtc_entry_events, add_reference_entry_events): the record not read at start, a missing record not treated
+      as not read, the check skipped outside REPLAY or the simulator, or the no-entry events (epsFaultCode, brakeFaultCode, faultCodeReadFailed) not raised on
+      the reference platform'
+    element: SWF-SE-032
+    prevention_controls:
+    - description: LionDriver change with a requirement (SWSR-629d) and targeted unit tests; reviewed in the PR, not independently; O 5
+      ref: openpilot/selfdrive/selfdrived/selfdrived.py
+    detection_controls:
+    - description: test_vehicle_dtc_entry.py (each outcome raises its no-entry event on the reference platform; other platforms unchanged), run by the CI
+        unit_tests job; not proven by mutation (D 8)
+      test: openpilot/selfdrive/selfdrived/tests/test_vehicle_dtc_entry.py
+    occurrence: 5
+    detection: 8
+    ap: H
+    actions:
+    - SWF-ACT-080
+  safety_mechanisms:
+  - description: The driver's warning-lamp check before driving (TSR-811, OPS-01, AOU-09, AOU-10), the only check for engine, camera and radar codes
+  - description: Live fault signals while driving (EPS status 0x262 and the steering-fault events, TSR-110 envelope refusal; espDisabled, accFaulted)
+    ref: openpilot/selfdrive/car/car_events.py
+  notes: 'New at BL-007 (rev 1.9; change record startup-fault-code-read OI-3). A read sent while moving is not a failure mode here: the read runs only in the
+    firmware-query window, where pandad holds the panda in ELM327 (no actuation), after 20 standstill samples, and the Toyota safety mode does not pass 0x7a1 or
+    0x7b0 once a car mode is set (SWF-015). A read that never answers refuses engagement (availability, not rated). A code that sets after the start-up read is
+    outside TSR-629 by decision (DQ-132 A: start-up only) and is covered by the live fault signals.'
+- id: SWF-092
+  element: SWF-SE-011
+  function: SWF-FN-015
+  failure_mode: Panda siren not sounded when the panda revokes granted authority after the host stops
+  guideword: omission
+  effects:
+  - level: local
+    description: Authority revoked silently on a heartbeat loss, a TX-arrival revocation or an engaged mismatch while PCM cruise stays on
+  - level: next_higher
+    description: If the SoC is also down or its alerts are masked, nothing warns the driver that steering and ACC commands have stopped (UI and soundd only
+      after 5 s, SWF-036)
+  - level: end
+    description: Driver not warned that lateral or longitudinal control has ended
+    hazard: HZ-004
+    severity: 10
+  - level: end
+    description: Driver misinformed about the automation state
+    hazard: HZ-012
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-092.C1
+    description: 'Defect in the panda siren starts (heartbeat_siren.h, engaged_mismatch.h, main.c; panda c33343b, 8a69ccf, f4803c5): the start input not set on a
+      revocation that removed granted authority, the 0.5 s mismatch siren not started while cruise stays on, or a siren on an ordinary disengagement that drops
+      cruise within 0.5 s'
+    element: SWF-SE-011
+    prevention_controls:
+    - description: Reference-build firmware with requirements (TSR-516(b), (c); DQ-404 A); MISRA clean; reviewed in the PR, not independently. O 3 as the other
+        reference-build panda mechanisms with host tests
+      ref: panda/board/drivers/heartbeat_siren.h
+    detection_controls:
+    - description: 'tests/heartbeat_siren and tests/engaged_mismatch host tests (siren at 0.5 s in a stall, silent on a cancel, no siren after a cruise drop), run
+        by the safety.yaml panda host tests job; HIL test_15 and test_16 confirm the siren by ear on the bench only (no rating credit)'
+      test: panda/tests/heartbeat_siren/test_heartbeat_siren.py
+      ref: panda/tests/engaged_mismatch/test_engaged_mismatch.py
+    occurrence: 3
+    detection: 4
+    ap: L
+    actions:
+    - SWF-ACT-007
+  - id: SWF-092.C2
+    description: 'Defect in the opendbc report of a TX-arrival revocation (safety.h, opendbc 0ff85e6): the flag not set when the TX-arrival check revokes granted
+      authority, set on another revocation, or not cleared, so the panda does not start the siren or starts it wrongly (TSR-516(b))'
+    element: SWF-SE-011
+    prevention_controls:
+    - description: Reference-only opendbc code with a requirement (TSR-516(b), DQ-404 A); 100 % line coverage gate; O 3 as SWF-054.C1
+      ref: opendbc_repo/opendbc/safety/safety.h
+    detection_controls:
+    - description: test_toyota.py TX-arrival revocation report tests in the reference variant, with the reference-variant mutation job in CI (safety.yaml); D 4
+      test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+      ref: opendbc_repo/opendbc/safety/tests/mutation.py; .github/workflows/safety.yaml
+    occurrence: 3
+    detection: 4
+    ap: L
+    actions:
+    - SWF-ACT-007
+  safety_mechanisms:
+  - description: SoC alerts on a panda revocation while selfdrived runs (controlsMismatch, pandaHeartbeatLost; SWF-034); UI and soundd critical alert after 5 s
+      without selfdriveState (SWF-036); cluster indication when item frames stop (XM-04, unverified)
+  notes: 'New at BL-007 (rev 1.9; change records panda-tx-arrival-siren OI-4 and panda-engaged-mismatch OI-4). The siren is not verified on the vehicle.'
+- id: SWF-093
+  element: SWF-SE-043
+  function: SWF-FN-057
+  failure_mode: Positive acceleration requested while the car reports a stock AEB event
+  guideword: commission
+  effects:
+  - level: local
+    description: actuators.accel or the final ACCEL_CMD above 0 m/s² while carState.stockAeb is set
+  - level: next_higher
+    description: The item's drive request competes with the car's emergency braking; whether the engine computer gives AEB priority is AOU-04R (not tested)
+  - level: end
+    description: Stock AEB braking reduced or delayed by the item's acceleration request
+    hazard: HZ-011
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-093.C1
+    description: 'Defect in the host stand-down (longcontrol.stock_aeb_stand_down, controlsd; DQ-300 A, #292, BL-007): the target or the upper PID limit not capped
+      at 0 m/s² while carState.stockAeb is set, or capped one frame late'
+    element: SWF-SE-043
+    prevention_controls:
+    - description: LionDriver change with a requirement (TSR-713, SWSR-713h) and targeted unit tests; reviewed in the PR, not independently; O 5
+      ref: assurance/07-supporting/impact/change-2026-10-19-stock-aeb-stand-down.md
+    detection_controls:
+    - description: test_stock_aeb.py (cap from the first frame, braking kept), run by the CI unit_tests job since the LFS mirror returned; not proven by mutation
+        (D 8)
+      test: openpilot/selfdrive/controls/tests/test_stock_aeb.py
+    occurrence: 5
+    detection: 8
+    ap: H
+    actions:
+    - SWF-ACT-081
+  - id: SWF-093.C2
+    description: 'Defect in the opendbc cap of the final ACCEL_CMD during stock AEB (opendbc f4e6166, BL-007): the PID and pitch terms added after the host request
+      lift the command above 0, or the cap waits for the rate limit instead of applying from the first frame'
+    element: SWF-SE-045
+    prevention_controls:
+    - description: LionDriver change to the opendbc Toyota port with a requirement (TSR-713) and targeted tests; O 5
+      ref: opendbc_repo/opendbc/car/toyota/carcontroller.py
+    detection_controls:
+    - description: opendbc test_carcontroller.py (6 cases; 3 fail on the previous code), not run by LionDriver CI (D 9 rule)
+      test: opendbc_repo/opendbc/car/toyota/tests/test_carcontroller.py
+    occurrence: 5
+    detection: 9
+    ap: H
+    actions:
+    - SWF-ACT-081
+  safety_mechanisms:
+  - description: The car's own AEB priority over the ACC request (AOU-04R, untested); envelope acceleration bound +2.0 m/s² (SWF-003)
+  notes: 'New at BL-007 (rev 1.9). An AEB event the car does not report on PRE_COLLISION is not seen by either cause; that and the engine computer''s priority are
+    System FMEA SFM-036 and the AOU-04R vehicle test.'
 actions:
 - id: SWF-ACT-001
   kind: detection
@@ -5586,7 +5896,8 @@ actions:
   status: in_progress
   evidence: 'RX lag: 5 periods at 100 Hz (opendbc#1, panda#3). Heartbeat loss: 0.3 s at 100 Hz (panda#7, BL-003). BL-005: actuation frames supervised for arrival,
     50 ms STEERING_LKA and 100 ms ACC_CONTROL (TSR-408, opendbc#11, reference build by default), which bounds a control-loop stall behind a live heartbeat
-    (SWF-014.C2 AP L). Engaged mismatch still about 3 s at 1 Hz; FTTI derivation and confirmation of the timeouts on reference logs open'
+    (SWF-014.C2 AP L). BL-007: the engaged mismatch revokes 0.3 s after the first not-engaged heartbeat in the reference build (panda f4803c5, TSR-307(a),
+    SWF-014.C3). FTTI derivation and confirmation of the timeouts on reference logs open'
 - id: SWF-ACT-008
   kind: detection
   description: Add a unit or static check that every host TX path calls can_send with skip_tx_hook=false
@@ -5826,7 +6137,9 @@ actions:
   kind: design_change
   description: 'Implement TSR-613: remove the lateralManeuverPlan subscription and the maneuver/joystick processes from the reference build'
   owner: Jherrod Thomas
-  status: open
+  status: in_progress
+  evidence: 'Processes done: DQ-131 A (be0b4ff, BL-007) leaves joystick, maneuversd and lateral_maneuversd out of the reference build (process_config.py
+    REFERENCE_EXCLUDED_PROCS; test_reference_build.py in CI); SWF-049.C1 O7 D10 -> O3 D8. Open: the lateralManeuverPlan subscription and path in controlsd'
 - id: SWF-ACT-048
   kind: detection
   description: Bench or HIL fault injection (WP-V-05) - stop or stall selfdrived, modeld, plannerd and controlsd while engaged and measure time
@@ -5843,7 +6156,10 @@ actions:
   description: 'Implement TSR-624: announce the driver-monitoring no-response deceleration at least 1 s before its onset (a fault
     soft-disable deceleration may start with its alert, DQ-407 A), and ramp both within a_min and j_down'
   owner: Jherrod Thomas
-  status: open
+  status: completed
+  evidence: '#374 (59e22e0, BL-007): driverMonitoringState.noResponseDecelIn and the countdown alert, the stop at least 1 s after it (test_monitoring.py,
+    test_minimum_risk.py in CI); ramp on the host by the final ACCEL_CMD rate limit of 4.5 m/s³ (opendbc f4e6166). The envelope jerk check stays open (SWF-004,
+    SWF-ACT-005). Not verified on the vehicle, not proven by mutation. Achieved at BL-007: SWF-050.C1 O5 D8 (rev 1.9)'
 - id: SWF-ACT-051
   kind: design_change
   description: 'Implement TSR-625: gate FCW on fresh and valid modelV2 and longitudinalPlan, with a unit test for a stale and an invalid
@@ -5903,13 +6219,18 @@ actions:
     not attentive), a length check on brakeDisengageProbs, and unit tests for each in CI (NaN pose, 16 Hz model, empty arrays); a DM frequency check tight
     enough to catch a slowed model (WP-A-03 DFI-32)'
   owner: Jherrod Thomas
-  status: open
+  status: in_progress
+  evidence: 'Timers: elapsed time from the cabin frame index, capped at 2 s (SWSR-635a, #366, BL-007), with tests in CI (SWF-061.C1 O5 D8). Open: the
+    driverStateV2 finiteness and length checks, the brakeDisengageProbs length check, the DM frequency check'
 - id: SWF-ACT-059
   kind: design_change
   description: 'Implement the SG-010 safe state decided in DQ-365 (A, which absorbed DQ-220; TSR-633): after the forced deceleration keep the vehicle stopped and
     held and lock out re-engagement and resumption until the driver responds; add a terminal-alert test that checks standstill, hold and lockout'
   owner: Jherrod Thomas
-  status: open
+  status: completed
+  evidence: '#372 (dacd8f7, BL-007): selfdrive/selfdrived/minimum_risk.py, selfdriveState.minimumRiskManeuver, controlsd keeps forceDecel; test_minimum_risk.py,
+    test_monitoring.py (lockout from the takeover) and a stay-stopped longitudinal maneuver in CI. Open outside this action: the PCM standstill hold over time
+    (AOU-16 vehicle test) and the stop deceleration (SWF-086.C2). Not verified on the vehicle, not proven by mutation. Achieved at BL-007: SWF-062.C1 O5 D8'
 - id: SWF-ACT-060
   kind: detection
   description: Run model_replay for dmonitoringmodeld and modeld in LionDriver CI, and add a non-finite / stale output injection test for dmonitoringd and modeld consumers
@@ -6060,4 +6381,27 @@ actions:
     severity: 10
     occurrence: 5
     detection: 8
+    ap: H
+- id: SWF-ACT-080
+  kind: detection
+  description: 'Start-up fault-code read: vehicle check per ECU (WP-S-09 VS-SQ-20, including whether the reference EPS and ABS/VSC answer UDS 0x19) and mutation of
+    the status-bit and failure rules in vehicle_dtc.py and the entry check, shown to fail test_vehicle_dtc.py and test_vehicle_dtc_entry.py in CI, so D can drop
+    to 4'
+  owner: Jherrod Thomas
+  status: open
+  revised:
+    severity: 10
+    occurrence: 5
+    detection: 4
+    ap: H
+- id: SWF-ACT-081
+  kind: detection
+  description: 'Stock-AEB stand-down: mutate stock_aeb_stand_down and the opendbc cap and show test_stock_aeb.py and test_carcontroller.py fail in CI (run the
+    opendbc Toyota car tests in LionDriver CI); AOU-04R vehicle test of the engine computer''s AEB priority (System FMEA SFM-036)'
+  owner: Jherrod Thomas
+  status: open
+  revised:
+    severity: 10
+    occurrence: 5
+    detection: 4
     ap: H

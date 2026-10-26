@@ -4,9 +4,9 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.10 | draft | BL-005 | RT-3 | 2026-10-16 |
+| 0.11 | draft | BL-007 | RT-3 | 2026-10-16 |
 
-**Scope.** Safety-relevant hardware of AC-001 at BL-005 (hardware as at BL-002): comma 3X panda section (STM32H725, clock and watchdog, MCU supply, CAN transceivers), Toyota harness and relay box, SoC-MCU interface, siren path, enclosure and cooling. SoC, cameras and other QM hardware only where they couple into these (WP-A-03).
+**Scope.** Safety-relevant hardware of AC-001 at BL-007 (hardware as at BL-002): comma 3X panda section (STM32H725, clock and watchdog, MCU supply, CAN transceivers), Toyota harness and relay box, SoC-MCU interface, siren path, enclosure and cooling. SoC, cameras and other QM hardware only where they couple into these (WP-A-03).
 
 **Team.** Jherrod Thomas (Project maintainer, safety lead (reviewer/approver)); Claude (AI assistant) (Drafting assistance; ratings require human review)
 
@@ -359,11 +359,11 @@ Effects:
 | `DFM-011.C1` Analog switch U1 or U2 stuck in the pass-through (NC) position, or SBU1 drive lost or held low (driver open, R2/R3 short) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • Relay-malfunction tests in the opendbc suite exercise the software reaction, not the relay <sub>opendbc_repo/opendbc/safety/tests/test_toyota.py</sub> | 3 | 9 | 🔴 **H** | DFM-ACT-007 |
 | `DFM-011.C2` The 5 V SBU1 drive does not reach the DG419LE logic-high threshold with VL tied to VIN (about 14 V), so the switch does not change over or changes over only at some temperatures (RR-2026-010 F-05; thresholds at VL = VIN not confirmed) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub><br>• Field use: openpilot on TSS2 Toyotas with this box would raise relayMalfunction on every drive if the switch never changed over, which suggests it switches at nominal conditions. Margin over temperature and supply is not shown <sub>assurance/04-hardware/reviews/RR-2026-010.md</sub> | • Relay-malfunction tests in the opendbc suite exercise the software reaction, not the switch threshold <sub>opendbc_repo/opendbc/safety/tests/test_toyota.py</sub> | 2 | 9 | 🔴 **H** | DFM-ACT-014, DFM-ACT-015 |
 
-Safety mechanisms: (1) Relay malfunction detection: stock camera message on the car side after a 1 s grace blocks all TX (safety.h stock_ecu_check)
+Safety mechanisms: (1) Relay malfunction detection: stock camera message on the car side after a 1 s grace blocks all TX (safety.h stock_ecu_check). Since BL-006, reference build: the malfunction is latched for the ignition cycle and TOYOTA is refused until ignition off, so a safety-mode change does not clear it (panda#17, DFA DM-25, SW FMEA SWF-090)
 
 [Monitoring and system response](#7-monitoring-and-system-response): `DFM-011.C1` mechanism 1: M 8 · F 6 · S after response 10 → 🔴 **H**<br>`DFM-011.C2` mechanism 1: M 8 · F 2 · S after response 10 → 🟠 M
 
-<sub>Note: WP-H-03 FM-REL-01.</sub>
+<sub>Note: WP-H-03 FM-REL-01. The BL-006 latch changes the reaction, not the switch; S, O, D and M unchanged.</sub>
 
 #### DFM-020 · Harness box loses its supply while the car is on
 
@@ -520,7 +520,7 @@ Effects:
 | `DFM-017.C1` Siren shares the codec, amplifier or speaker with the SoC audio, which the faulty SoC powers down | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 5 | 10 | 🔴 **H** | DFM-ACT-011, DFM-ACT-016 |
 | `DFM-017.C2` Siren path fault stays latent (no self-test) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 4 | 10 | 🔴 **H** | DFM-ACT-011, DFM-ACT-016 |
 
-Safety mechanisms: (1) BL-005: the panda commands the siren itself when the 0.3 s heartbeat monitor revokes granted authority (panda#15, heartbeat_siren.h) and when an EPS fault persists 0.7 s while engaged (panda#14, eps_fault_siren.h; 0.7 s since panda bf8102a, DQ-048, siren at most 0.96 s after fault onset by design, WP-S-04 T-28; not yet timed on hardware, DFM-ACT-016). Both rely on the speaker path that DFM-017.C1 questions
+Safety mechanisms: (1) BL-005: the panda commands the siren itself when the 0.3 s heartbeat monitor revokes granted authority (panda#15, heartbeat_siren.h) and when an EPS fault persists 0.7 s while engaged (panda#14, eps_fault_siren.h; 0.7 s since panda bf8102a, DQ-048, siren at most 0.96 s after fault onset by design, WP-S-04 T-28; not yet timed on hardware, DFM-ACT-016). BL-007, reference build: also when the TX-arrival check revokes (panda 8a69ccf, DQ-404 A, TSR-516(b)) and 0.5 s after a not-engaged heartbeat while PCM cruise stays on (panda f4803c5, engaged_mismatch.h, TSR-516(c)); an EPS-fault siren still sounds after a revocation (DQ-367). Every trigger relies on the speaker path that DFM-017.C1 questions; the bench HIL tests test_15 and test_16 confirm the siren by ear and are not run in CI
 
 [Monitoring and system response](#7-monitoring-and-system-response): `DFM-017.C1` mechanism 1: M 10 · F 5 · S after response 10 → 🔴 **H**<br>`DFM-017.C2` mechanism 1: M 10 · F 4 · S after response 10 → 🔴 **H**
 

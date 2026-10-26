@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1208" viewBox="0 0 1280 1208" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-8. PFMEA structure tree (PFM)</title>
-  <desc id="d">PFMEA structure tree (PFM rev 0.3, BL-003): 12 structure elements in 1 root(s), 11 functions with the number of failure modes analyzed for each.</desc>
+  <desc id="d">PFMEA structure tree (PFM rev 0.4, BL-007): 12 structure elements in 1 root(s), 11 functions with the number of failure modes analyzed for each.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,7 +9,7 @@
   </defs>
   <rect width="1280" height="1208" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-8 · PFMEA structure and function tree</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">PFM rev 0.3 · BL-003 · draft · AIAG-VDA steps 2–3: structure elements by level, functions of each element</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">PFM rev 0.4 · BL-007 · draft · AIAG-VDA steps 2–3: structure elements by level, functions of each element</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.4</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/pfmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -134,7 +134,7 @@
   <rect x="400.1" y="782.9" width="74.5" height="15" rx="7.5" fill="#E2E8F0"/><text x="437.4" y="793.8" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">process step</text>
   <text x="313" y="808.4" font-size="10.5" fill="#0F172A" font-weight="600">I4 Provisioning: software, firmware,</text>
   <text x="313" y="822.5" font-size="10.5" fill="#0F172A" font-weight="600">parameters (INS-15..20)</text>
-  <text x="313" y="835.2" font-size="9.5" fill="#475569">2 failure modes · 2 causes located here</text>
+  <text x="313" y="835.2" font-size="9.5" fill="#475569">2 failure modes · 3 causes located here</text>
   <rect x="568" y="776.8" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
   <text x="577" y="796.3" font-size="12" fill="#0F172A" font-weight="700">PFM-FN-008</text>
   <rect x="1192.7" y="785.3" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="796.2" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">2 FM</text>

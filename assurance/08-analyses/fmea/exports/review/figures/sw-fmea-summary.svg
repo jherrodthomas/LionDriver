@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 168" width="880" height="168" role="img">
-<title>SW FMEA summary: action priority of 141 causes</title>
+<title>SW FMEA summary: action priority of 149 causes</title>
 <style>
 .bg{fill:#ffffff}.ink{fill:#1f2328}.mut{fill:#59636e}.acc{fill:#0969da}.surf{fill:#f6f8fa}.box{fill:#ffffff;stroke:#d1d9e0}
 .in{fill:#ddf4ff;stroke:#54aeff}.out{fill:#f6f8fa;stroke:#d1d9e0}.bd{fill:none;stroke:#0969da;stroke-dasharray:6 4}.frame{fill:none;stroke:#d1d9e0}
@@ -19,17 +19,18 @@ text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helveti
 .ah{fill:#9198a1}.lbl{fill:#0d1117}.lane{fill:#151b23}.laneT{fill:#9198a1}}
 </style>
 <rect class="bg" x="0" y="0" width="880" height="168" rx="8"/>
-<text x="24.0" y="34.0" class="ink" font-size="15" font-weight="600" text-anchor="start">SW FMEA: action priority of its 141 causes (90 failure modes)</text>
-<rect x="24.0" y="52" width="767.1" height="30" class="hS"/>
-<text x="34.0" y="72.0" class="h" font-size="13" font-weight="700" text-anchor="start">H  130</text>
-<rect x="791.1" y="52" width="5.9" height="30" class="mS"/>
-<rect x="797.0" y="52" width="59.0" height="30" class="lS"/>
+<text x="24.0" y="34.0" class="ink" font-size="15" font-weight="600" text-anchor="start">SW FMEA: action priority of its 149 causes (93 failure modes)</text>
+<rect x="24.0" y="52" width="753.8" height="30" class="hS"/>
+<text x="34.0" y="72.0" class="h" font-size="13" font-weight="700" text-anchor="start">H  135</text>
+<rect x="777.8" y="52" width="5.6" height="30" class="mS"/>
+<rect x="783.4" y="52" width="72.6" height="30" class="lS"/>
+<text x="793.4" y="72.0" class="l" font-size="13" font-weight="700" text-anchor="start">L  13</text>
 <rect x="24" y="52" width="832" height="30" rx="4" class="frame"/>
-<text x="24.0" y="124.0" class="h" font-size="24" font-weight="700" text-anchor="start">130</text>
+<text x="24.0" y="124.0" class="h" font-size="24" font-weight="700" text-anchor="start">135</text>
 <text x="24.0" y="146.0" class="mut" font-size="12" text-anchor="start">causes with priority H</text>
-<text x="232.0" y="124.0" class="h" font-size="24" font-weight="700" text-anchor="start">125</text>
+<text x="232.0" y="124.0" class="h" font-size="24" font-weight="700" text-anchor="start">126</text>
 <text x="232.0" y="146.0" class="mut" font-size="12" text-anchor="start">H without a completed action</text>
-<text x="440.0" y="124.0" class="acc" font-size="24" font-weight="700" text-anchor="start">63 of 71</text>
+<text x="440.0" y="124.0" class="acc" font-size="24" font-weight="700" text-anchor="start">63 of 73</text>
 <text x="440.0" y="146.0" class="mut" font-size="12" text-anchor="start">actions still open</text>
 <text x="648.0" y="124.0" class="ink" font-size="24" font-weight="700" text-anchor="start">S 10</text>
 <text x="648.0" y="146.0" class="mut" font-size="12" text-anchor="start">highest severity</text>

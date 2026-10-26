@@ -6126,3 +6126,28 @@
   sources: ["assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md §4.4 items 5–8", "DQ-421", "LionDriver-security (private): gaps/INVENTORY.md"]
   status: open
 
+
+- id: DQ-424
+  question: "When the driver does not respond and LionDriver stops the car in its lane, how firmly should it brake?"
+  context: >-
+    The stop is now held until the driver takes over (DQ-365 A, TSR-633), but it brakes at only 1.2 m/s², the gentlest
+    rate the planner has: about 25 s and 390 m from 110 km/h. Your DQ-365 answer was described as about 3 m/s² (10 s from
+    30 m/s), and no requirement sets the rate or the stop time. **A firmer stop shortens the time an unresponsive driver
+    rides at speed; a gentler one gives following traffic more warning.** Found in the SW FMEA re-rating at BL-007
+    (SWF-086.C2).
+  reversibility: easy
+  blocks: "SW FMEA SWF-086.C2, SWF-ACT-073; TSR-633 stop rate and time; WP-S-04 §3.8"
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "2 m/s², ramped in (about 15 s and 230 m from 110 km/h)"
+      detail: "Halves the time at speed and stays at an ordinary braking level for following traffic; the ramp keeps within j_down. Cost: a planner change for the forced stop, a TSR-633 rate, tests."
+    - key: B
+      title: "Keep 1.2 m/s² (about 25 s, 390 m)"
+      detail: "No change; gentlest for following traffic. Cost: the longest ride at speed with an unresponsive driver; the DQ-365 description is corrected instead."
+    - key: C
+      title: "3 m/s², as DQ-365 described (about 10 s, 150 m)"
+      detail: "Shortest time at speed. Cost: a firm, unannounced-feeling stop for following traffic (rear-end risk, HZ-006), and the same planner change."
+  sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-086.C2", "DQ-365", "openpilot/selfdrive/controls/lib/longitudinal_planner.py (A_CRUISE_MIN)", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633"]
+  status: queued
