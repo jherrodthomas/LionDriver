@@ -218,6 +218,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | SG-nn | safety goal (HARA §6) |
 | SH-nn | SOTIF hazard (WP-C-05) |
 | SM-nn | safety mechanism (TSC §6) |
+| SN-nn | stakeholder need (WP-S-01 §1.3), SN-01…SN-12 |
 | SS-nn | safe state (FSC §6): SS-L lateral, SS-G longitudinal, SS-S envelope silent |
 | T-nn | code-derived detection or reaction time (WP-S-04 §4) |
 | TB-nn | trust boundary (WP-S-07 §3.2) |
@@ -225,8 +226,9 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | TL-nn | tool entry in the tool register (WP-P-07) |
 | TS-nn | threat scenario (TARA §4) |
 | TSR-nn | technical safety requirement (WP-S-02) |
+| UC-nn | use case (WP-S-01 §1.4), UC-01…UC-11 |
 | UPD-nn | update procedure step (WP-O-02) |
-| V-nn | view of the SysML model (V-01…V-13) |
+| V-nn | view of the SysML model (V-01…V-15) |
 | VF-nn | vehicle family in the vehicle register |
 | VS-nn | verification case: VS-SI system integration, VS-HW hardware, VS-SWQ software, VS-FI fault injection, VS-SQ system qualification |
 | VT-nn | validation target (WP-V-02) |

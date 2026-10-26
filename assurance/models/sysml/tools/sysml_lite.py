@@ -23,7 +23,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 MODEL_DIR = HERE.parent / "model"
 MODEL_FILES = ["LionDriverLibrary.sysml", "Mechanisms.sysml", "Functions.sysml", "Architecture.sysml", "Security.sysml", "Integration.sysml", "Behaviour.sysml", "Requirements.sysml", "Satisfaction.sysml",
-               "Verification.sysml", "Views.sysml"]
+               "Verification.sysml", "Needs.sysml", "Views.sysml"]
 ROOT_USAGE = ("LionDriverArchitecture", "context")
 
 
@@ -344,6 +344,28 @@ class Parser:
       d = Decl("verify", None, target=self.qualified(), fname=self.fname, line=t.line)
       self.expect(";")
       return d
+    if kw == "require":
+      # require <requirement>;  (inside a use case objective: the need the use case serves)
+      self.next()
+      d = Decl("require", None, target=self.qualified(), fname=self.fname, line=t.line)
+      self.expect(";")
+      return d
+    if kw in ("subject", "actor", "stakeholder"):
+      # subject name : Type;  /  subject :>> name;  (also actor, stakeholder: parameters of cases and requirements)
+      self.next()
+      if self.accept(":>>"):
+        d = Decl(kw, None, target=self.qualified(), fname=self.fname, line=t.line)
+      else:
+        d = self.head(kw, t)
+      self.expect(";")
+      return d
+    if kw == "use" and self.peek(1).text == "case":
+      self.next()
+      self.next()
+      kind = "use case def" if self.accept("def") else "use case"
+      d = self.head(kind, t)
+      self.body(d)
+      return d
     if kw == "objective":
       self.next()
       d = Decl("objective", None, fname=self.fname, line=t.line)
@@ -596,6 +618,17 @@ class Function:
 
 
 @dataclass
+class UseCase:
+  short: str
+  name: str
+  doc: str
+  goal: str                                            # doc of its objective
+  actors: list[tuple[str, str]]                        # (name, actor definition)
+  functions: list[str] = field(default_factory=list)   # shorts of the functions it performs
+  needs: list[str] = field(default_factory=list)       # requirement shorts its objective requires
+
+
+@dataclass
 class Requirement:
   short: str
   name: str
@@ -606,6 +639,7 @@ class Requirement:
   derived_from: list[str] = field(default_factory=list)   # requirement shorts this one is derived from
   satisfied_by: list[str] = field(default_factory=list)   # element paths
   verified_by: list[str] = field(default_factory=list)    # verification case shorts
+  stakeholders: list[tuple[str, str]] = field(default_factory=list)  # (name, definition) of its stakeholder parameters
 
 
 @dataclass
@@ -646,6 +680,7 @@ class Model:
   boundaries: dict[str, Record] = field(default_factory=dict)
   integration: dict[str, Record] = field(default_factory=dict)  # steps I-n of WP-S-08 §3.1
   state_machines: dict[str, StateMachine] = field(default_factory=dict)
+  use_cases: dict[str, UseCase] = field(default_factory=dict)
 
   def by_ident(self) -> dict[str, Element]:
     return {e.short: e for e in self.elements.values() if e.short}
@@ -855,6 +890,7 @@ def load(files: list[Path] | None = None) -> Model:
     raise ModelError(f"short names used more than once in the instance tree: {', '.join(dupes)}")
 
   requirements, verifications = _requirements(packages, elements)
+  use_cases = _use_cases(packages, requirements, functions)
   zones: dict[str, Record] = {}
   boundaries: dict[str, Record] = {}
   integration: dict[str, Record] = {}
@@ -874,7 +910,40 @@ def load(files: list[Path] | None = None) -> Model:
     if z is not None and zones and z not in zones:
       raise ModelError(f"{e.path}: @Zone names {z!r}, which is not a security zone")
   return Model(packages, root, elements, connections, allocations, mechanisms, aliases, views, files,
-               requirements, verifications, functions, zones, boundaries, integration, state_machines)
+               requirements, verifications, functions, zones, boundaries, integration, state_machines, use_cases)
+
+
+def _use_cases(packages: dict[str, Decl], reqs: dict[str, Requirement], functions: dict[str, Function]) -> dict[str, UseCase]:
+  """Use cases with their actors, the functions they perform and the needs their objective requires."""
+  by_name = {r.name: s for s, r in reqs.items()}
+  fn_names = {f.name: s for s, f in functions.items()}
+  out: dict[str, UseCase] = {}
+  for pkg in packages.values():
+    for m in pkg.members:
+      if m.kind != "use case":
+        continue
+      if not m.short or not m.name:
+        raise ModelError(f"{m.fname}:{m.line}: a use case needs a short name (its ID) and a name")
+      goal, needs = "", []
+      for o in (x for x in m.members if x.kind == "objective"):
+        goal = o.doc
+        for x in o.members:
+          if x.kind == "require":
+            short = by_name.get(x.target.split("::")[-1])
+            if short is None:
+              raise ModelError(f"{x.fname}:{x.line}: {x.target!r} does not name a requirement")
+            needs.append(short)
+      fns = []
+      for x in m.members:
+        if x.kind == "perform":
+          short = fn_names.get(x.target.split("::")[-1])
+          if short is None:
+            raise ModelError(f"{x.fname}:{x.line}: use case {m.short} performs {x.target!r}, which is not a function")
+          fns.append(short)
+      out[m.short] = UseCase(m.short, m.name, m.doc, goal,
+                             [(x.name, (x.type or "").split("::")[-1]) for x in m.members if x.kind == "actor" and x.name],
+                             fns, needs)
+  return out
 
 
 def _requirements(packages: dict[str, Decl], elements: dict[str, Element]):
@@ -889,7 +958,9 @@ def _requirements(packages: dict[str, Decl], elements: dict[str, Element]):
           raise ModelError(f"{m.fname}:{m.line}: a requirement needs a short name (its ID) and a name")
         if m.short in reqs:
           raise ModelError(f"{m.fname}:{m.line}: requirement {m.short} declared twice")
-        reqs[m.short] = Requirement(m.short, m.name, (m.type or "").split("::")[-1], m.doc, dict(m.values), pkg.name)
+        reqs[m.short] = Requirement(m.short, m.name, (m.type or "").split("::")[-1], m.doc, dict(m.values), pkg.name,
+                                    stakeholders=[(x.name, (x.type or "").split("::")[-1]) for x in m.members
+                                                  if x.kind == "stakeholder" and x.name])
         by_name[m.name] = by_name[f"{pkg.name}::{m.name}"] = m.short
 
   def req(q: str, where: Decl) -> str:
