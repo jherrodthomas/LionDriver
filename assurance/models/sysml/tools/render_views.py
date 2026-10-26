@@ -896,7 +896,11 @@ def render_all(m: sysml_lite.Model) -> dict[str, str]:
     render_requirements.rv = render_se.rv = render_arch.rv = sys.modules[__name__]  # with TITLES filled
     fn = {"interconnection": render_interconnection, "hierarchy": render_hierarchy, "matrix": render_matrix,
           **render_requirements.RENDERERS, **render_se.RENDERERS, **render_arch.RENDERERS}[kind]
-    out[spec["file"]] = fn(m, vid, spec, digest)
+    result = fn(m, vid, spec, digest)
+    if isinstance(result, dict):  # a view drawn as several figures (e.g. one requirement diagram per function)
+      out.update(result)
+    else:
+      out[spec["file"]] = result
   import render_se
   out.update(render_se.extra_outputs(m))
   missing = sorted(set(m.views) - set(layout["views"]))

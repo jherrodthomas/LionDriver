@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1002" viewBox="0 0 1280 1002" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">V-21. Use case diagram · LD-SDA (SysML v2 view useCases)</title>
+<desc id="d">SysML use case diagram generated from the model (LionDriverNeeds): LD-SDA as the subject boundary with the use cases UC-01 to UC-11 inside it, the actors Driver and Owner on the left and Vehicle and Project lead on the right, and an association from each actor to every use case it takes part in.</desc>
+<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter><marker id="rq-teal" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#0F766E"/></marker><marker id="rq-blue" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#2563EB"/></marker><marker id="rq-or" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#C2410C"/></marker><marker id="rq-ink" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#334155"/></marker><marker id="rq-mut" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#64748B"/></marker></defs>
+<rect width="1280" height="1002" fill="#FFFFFF"/>
+<text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-21 · Use case diagram · LD-SDA</text>
+<text x="40" y="69" font-size="12.5" fill="#64748B">The 11 use cases of WP-S-01 §1.4 with LD-SDA as their subject and the actors that take part in them</text>
+<text x="1240" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::useCases</text>
+<text x="1240" y="62" font-size="11" fill="#64748B" text-anchor="end">UseCaseView · render asInterconnectionDiagram · model 1c8f69c71509</text>
+<line x1="40" y1="86" x2="1240" y2="86" stroke="#E2E8F0"/>
+<rect x="370" y="140" width="540" height="710" rx="6" fill="#FFFFFF" stroke="#334155" stroke-width="1.6"/>
+<text x="384" y="162" font-size="12" fill="#0F172A" font-weight="700">«subject» LD-SDA · LionDriver Supervised Driving Assistance</text>
+<line x1="142" y1="344.5" x2="430" y2="203" stroke="#334155" stroke-width="1.1" stroke-opacity="0.7"/>
+<line x1="1138" y1="344.5" x2="850" y2="203" stroke="#334155" stroke-width="1.1" stroke-opacity="0.7"/>
+<line x1="142" y1="344.5" x2="430" y2="263" stroke="#334155" stroke-width="1.1" stroke-opacity="0.7"/>
+<line x1="1138" y1="344.5" x2="850" y2="263" stroke="#334155" stroke-width="1.1" stroke-opacity="0.7"/>
+<line x1="142" y1="344.5" x2="430" y2="323" stroke="#334155" stroke-width="1.1" stroke-opacity="0.7"/>
+<line x1="1138" y1="344.5" x2="850" y2="323" stroke="#334155" stroke-width="1.1" stroke-opacity="0.7"/>
+<line x1="142" y1="344.5" x2="430" y2="383" stroke="#334155" stroke-width="1.1" stroke-opacity="0.7"/>
+<line x1="1138" y1="344.5" x2="850" y2="383" stroke="#334155" stroke-width="1.1" stroke-opacity="0.7"/>
+<line x1="142" y1="344.5" x2="430" y2="443" stroke="#334155" stroke-width="1.1" stroke-opacity="0.7"/>
+<line x1="1138" y1="344.5" x2="850" y2="443" stroke="#334155" stroke-width="1.1" stroke-opacity="0.7"/>
+<line x1="142" y1="344.5" x2="430" y2="503" stroke="#334155" stroke-width="1.1" stroke-opacity="0.7"/>
+<line x1="1138" y1="344.5" x2="850" y2="503" stroke="#334155" stroke-width="1.1" stroke-opacity="0.7"/>
+<line x1="142" y1="344.5" x2="430" y2="563" stroke="#334155" stroke-width="1.1" stroke-opacity="0.7"/>
+<line x1="142" y1="344.5" x2="430" y2="623" stroke="#334155" stroke-width="1.1" stroke-opacity="0.7"/>
+<line x1="142" y1="344.5" x2="430" y2="683" stroke="#334155" stroke-width="1.1" stroke-opacity="0.7"/>
+<line x1="142" y1="344.5" x2="430" y2="743" stroke="#334155" stroke-width="1.1" stroke-opacity="0.7"/>
+<line x1="1138" y1="669.5" x2="850" y2="743" stroke="#334155" stroke-width="1.1" stroke-opacity="0.7"/>
+<line x1="142" y1="669.5" x2="430" y2="803" stroke="#334155" stroke-width="1.1" stroke-opacity="0.7"/>
+<ellipse cx="640" cy="203" rx="210" ry="23" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.4"/>
+<rect x="464" y="194" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="485.2" y="206.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-01</text>
+<text x="516.5" y="207" font-size="12" fill="#0F172A" font-weight="600">Keep the lane on a highway</text>
+<ellipse cx="640" cy="263" rx="210" ry="23" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.4"/>
+<rect x="464" y="254" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="485.2" y="266.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-02</text>
+<text x="516.5" y="267" font-size="12" fill="#0F172A" font-weight="600">Change lanes on request</text>
+<ellipse cx="640" cy="323" rx="210" ry="23" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.4"/>
+<rect x="464" y="314" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="485.2" y="326.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-03</text>
+<text x="516.5" y="327" font-size="12" fill="#0F172A" font-weight="600">Cruise and follow</text>
+<ellipse cx="640" cy="383" rx="210" ry="23" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.4"/>
+<rect x="464" y="374" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="485.2" y="386.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-04</text>
+<text x="516.5" y="387" font-size="12" fill="#0F172A" font-weight="600">Stop and go in a queue</text>
+<ellipse cx="640" cy="443" rx="210" ry="23" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.4"/>
+<rect x="464" y="434" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="485.2" y="446.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-05</text>
+<text x="516.5" y="447" font-size="12" fill="#0F172A" font-weight="600">Engage</text>
+<ellipse cx="640" cy="503" rx="210" ry="23" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.4"/>
+<rect x="464" y="494" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="485.2" y="506.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-06</text>
+<text x="516.5" y="507" font-size="12" fill="#0F172A" font-weight="600">Take over</text>
+<ellipse cx="640" cy="563" rx="210" ry="23" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.4"/>
+<rect x="464" y="554" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="485.2" y="566.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-07</text>
+<text x="516.5" y="567" font-size="12" fill="#0F172A" font-weight="600">Hand back at a limit</text>
+<ellipse cx="640" cy="623" rx="210" ry="23" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.4"/>
+<rect x="464" y="614" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="485.2" y="626.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-08</text>
+<text x="516.5" y="627" font-size="12" fill="#0F172A" font-weight="600">Warn when not assisted</text>
+<ellipse cx="640" cy="683" rx="210" ry="23" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.4"/>
+<rect x="464" y="674" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="485.2" y="686.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-09</text>
+<text x="516.5" y="687" font-size="12" fill="#0F172A" font-weight="600">Keep the driver attentive</text>
+<ellipse cx="640" cy="743" rx="210" ry="23" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.4"/>
+<rect x="464" y="734" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="485.2" y="746.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-10</text>
+<text x="516.5" y="747" font-size="12" fill="#0F172A" font-weight="600">Record and review a drive</text>
+<ellipse cx="640" cy="803" rx="210" ry="23" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.4"/>
+<rect x="464" y="794" width="42.5" height="18" rx="9" fill="#4338CA"/><text x="485.2" y="806.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">UC-11</text>
+<text x="516.5" y="807" font-size="12" fill="#0F172A" font-weight="600">Install and update</text>
+<g fill="none" stroke="#334155" stroke-width="1.8" stroke-linecap="round"><circle cx="120" cy="322.5" r="7.7"/><path d="M120 330.2V351.1M106.8 337.9H133.2M120 351.1L110.1 366.5M120 351.1L129.9 366.5"/></g>
+<text x="120" y="384.5" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Driver</text>
+<text x="120" y="399.5" font-size="10" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«actor»</text>
+<g fill="none" stroke="#334155" stroke-width="1.8" stroke-linecap="round"><circle cx="120" cy="647.5" r="7.7"/><path d="M120 655.2V676.1M106.8 662.9H133.2M120 676.1L110.1 691.5M120 676.1L129.9 691.5"/></g>
+<text x="120" y="709.5" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Owner</text>
+<text x="120" y="724.5" font-size="10" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«actor»</text>
+<g fill="none" stroke="#334155" stroke-width="1.8" stroke-linecap="round"><circle cx="1160" cy="322.5" r="7.7"/><path d="M1160 330.2V351.1M1146.8 337.9H1173.2M1160 351.1L1150.1 366.5M1160 351.1L1169.9 366.5"/></g>
+<text x="1160" y="384.5" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Vehicle</text>
+<text x="1160" y="399.5" font-size="10" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«actor»</text>
+<g fill="none" stroke="#334155" stroke-width="1.8" stroke-linecap="round"><circle cx="1160" cy="647.5" r="7.7"/><path d="M1160 655.2V676.1M1146.8 662.9H1173.2M1160 676.1L1150.1 691.5M1160 676.1L1169.9 691.5"/></g>
+<text x="1160" y="709.5" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Project lead</text>
+<text x="1160" y="724.5" font-size="10" fill="#64748B" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«actor»</text>
+<rect x="24" y="100" width="1232" height="778" rx="4" fill="none" stroke="#94A3B8" stroke-width="1.2"/>
+<path d="M24 100h254.2v12l-10 10h-244.2z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="34" y="115" font-size="11" fill="#334155" font-weight="600">uc [LionDriverNeeds] use cases of LD-SDA</text>
+<text x="40" y="894" font-size="11.5" fill="#334155">11 use cases, 4 actors, 18 associations, from WP-S-01 §1.4 through the model (LionDriverNeeds). Each use case's objective requires the stakeholder needs it serves and it performs functions of WP-C-01 §2.1 (view V-14).</text>
+<line x1="40" y1="910" x2="1240" y2="910" stroke="#E2E8F0"/>
+<g fill="none" stroke="#334155" stroke-width="0.8" stroke-linecap="round"><circle cx="52" cy="928" r="3.5"/><path d="M52 931.5V941M46 935H58M52 941L47.5 948M52 941L56.5 948"/></g>
+<text x="66" y="944" font-size="11" fill="#334155">actor</text>
+<ellipse cx="150" cy="940" rx="34" ry="11" fill="#EEF2FF" stroke="#818CF8"/>
+<text x="192" y="944" font-size="11" fill="#334155">use case</text>
+<line x1="270" y1="940" x2="300" y2="940" stroke="#334155"/>
+<text x="308" y="944" font-size="11" fill="#334155">association: the actor takes part</text>
+<text x="40" y="986" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+</svg>

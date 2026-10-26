@@ -37,8 +37,8 @@ package LionDriverViews {
         render Views::asTreeDiagram;
     }
 
-    view <'V-06'> f01Requirements : RequirementView {
-        doc /* System requirements of F-01 lateral control (WP-S-01 §2), their satisfying elements and verification cases. */
+    view <'V-06'> functionRequirements : RequirementView {
+        doc /* One requirement diagram per function F-01 to F-09: its system requirements (WP-S-01 §2–§9), the needs they derive from, their satisfying elements and verification cases. */
         expose LionDriverRequirements::*;
         expose LionDriverSatisfaction::*;
         expose LionDriverVerification::*;
@@ -155,5 +155,11 @@ package LionDriverViews {
         expose LionDriverSignals::*;
         expose LdSda::**;
         render Views::asElementTable;
+    }
+
+    view <'V-21'> useCases : UseCaseView {
+        doc /* Use case diagram: LD-SDA as the subject, the use cases UC-01 to UC-11 of WP-S-01 §1.4 and the actors that take part in them. */
+        expose LionDriverNeeds::*;
+        render Views::asInterconnectionDiagram;
     }
 }
