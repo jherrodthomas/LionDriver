@@ -182,7 +182,7 @@ def markdown(rows, no_claim, not_under, unknown, res, elements, claims) -> str:
        "WP-A-03 review, not a verdict. Draft, AI-assisted: the classification and the map need review.", "",
        "Every AND gate claims that its inputs do not fail together. A gate whose inputs lie in different elements is an "
        "independence claim; the resources those elements share are where a dependent failure can start. DFI numbers are "
-       "those of WP-A-03 (the decomposition-level DFIs of `fmea/analyses/dfa.yaml` are a separate list).", "",
+       "those of WP-A-03, which the decomposition-level DFA `fmea/analyses/dfa.yaml` also uses.", "",
        "## Summary", "",
        f"{len(rows)} AND gates: {kinds['independence']} across elements, {kinds['same_element']} within one element, "
        f"{kinds['common_cause']} that draw a common cause as one event, {kinds['condition']} with a driving situation.", "",

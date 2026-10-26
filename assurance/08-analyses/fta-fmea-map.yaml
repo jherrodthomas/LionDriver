@@ -34,7 +34,7 @@ events:
   - id: BE-4.01
     class: systematic_sw
     fmea: [SWF-003]
-    note: SWF-003.C3 (lower bound -3.5 m/s² not derived; DFA DFI-14 / DM-10)
+    note: SWF-003.C3 (lower bound -3.5 m/s² not derived; DFA DFI-08 / DM-10)
   - id: BE-4.02
     class: sotif
     fmea: [SFM-009]
@@ -569,7 +569,7 @@ events:
   - id: BE-3.01
     class: systematic_sw
     fmea: [SWF-003]
-    note: SWF-003.C1 (upper bound +2.0 m/s² equals the SoC limit, RAISED_ACCEL_LIMIT not validated for the Corolla; DFA DFI-08 / DFI-14)
+    note: SWF-003.C1 (upper bound +2.0 m/s² equals the SoC limit, RAISED_ACCEL_LIMIT not validated for the Corolla; DFA DFI-08)
   - id: BE-3.02
     class: sotif
     fmea: [SFM-008, PFM-011]

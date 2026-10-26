@@ -1141,7 +1141,7 @@ failure_modes:
       envelope
     element: SWF-SE-008
     prevention_controls:
-    - description: Limits copied from upstream vehicle tuning; no independent envelope (FSC FOI-001, DFA DFI-14)
+    - description: Limits copied from upstream vehicle tuning; no independent envelope (FSC FOI-001, DFA DFI-08)
       ref: opendbc_repo/opendbc/safety/modes/toyota.h:172-177; opendbc_repo/opendbc/car/toyota/values.py:20-50
     detection_controls:
     - description: No test targets this cause
@@ -1274,7 +1274,7 @@ failure_modes:
     element: SWF-SE-008
     prevention_controls:
     - description: Panda limit taken from the platform minimum, not a vehicle envelope (assurance GAP-04, TSR-202 without rationale, WP-A-03
-        DFI-14 / DM-10)
+        DFI-08 / DM-10)
       ref: opendbc_repo/opendbc/safety/modes/toyota.h:333-336
     detection_controls:
     - description: No test targets this cause
@@ -1783,7 +1783,7 @@ failure_modes:
   causes:
   - id: SWF-015.C1
     description: 'ELM327 TX hook allows any ISO 15765 diagnostic frame with no service, ignition or motion condition. BL-005, reference build (default): once
-      TOYOTA has been accepted with the ignition on, ELM327 is refused until the ignition goes off (panda#16, LD-DES-001 DR-05, DFA DFI-08). Before the car mode
+      TOYOTA has been accepted with the ignition on, ELM327 is refused until the ignition goes off (panda#16, LD-DES-001 DR-05, DFA DFI-13c). Before the car mode
       in each ignition cycle (fingerprinting, radar disable), or for a whole drive in which the car mode is never set, the content is still unrestricted'
     element: SWF-SE-008
     prevention_controls:
