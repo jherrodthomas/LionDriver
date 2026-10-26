@@ -76,16 +76,16 @@ class TestReferenceBuild(unittest.TestCase):
       self.assertEqual(running(self.reference.procs, debug), baseline, debug)
 
   def test_joystickd_only_for_not_car(self):
-    self.assertIn("joystickd", running(self.reference.procs, not_car=True))
+    assert "joystickd" in running(self.reference.procs, not_car=True)
 
   def test_upstream_build_keeps_debug_processes(self):
     self.assertFalse(self.upstream.REFERENCE_BUILD)
     self.assertTrue(set(self.reference.REFERENCE_EXCLUDED_PROCS) <= set(self.upstream.managed_processes))
     self.assertTrue({"joystick", "joystickd"} <= running(self.upstream.procs, "JoystickDebugMode"))
     self.assertNotIn("controlsd", running(self.upstream.procs, "JoystickDebugMode"))
-    self.assertIn("maneuversd", running(self.upstream.procs, "LongitudinalManeuverMode"))
+    assert "maneuversd" in running(self.upstream.procs, "LongitudinalManeuverMode")
     self.assertNotIn("plannerd", running(self.upstream.procs, "LongitudinalManeuverMode"))
-    self.assertIn("lateral_maneuversd", running(self.upstream.procs, "LateralManeuverMode"))
+    assert "lateral_maneuversd" in running(self.upstream.procs, "LateralManeuverMode")
 
   def test_reference_release_ships_no_debug_process(self):
     release_files = load_release_files()
