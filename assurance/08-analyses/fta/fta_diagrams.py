@@ -826,7 +826,12 @@ def build() -> dict[str, str]:
             "([fta-fmea-map.yaml](../fta-fmea-map.yaml), checked by `fmea_lint.py`); red \"no FMEA\": an event of a mapped " +
             "tree that no FMEA row backs yet.", "",
             "Minimal cut sets computed from the same trees, and the check of the WP-A-04 tables: " +
-            "[cut-sets.md](cut-sets.md) (`fta_cutsets.py`).", ""]
+            "[cut-sets.md](cut-sets.md) (`fta_cutsets.py`).", "",
+            "Interactive view of every tree on one page, without sheets: [fta-viewer.html](fta-viewer.html) " +
+            "(`fta_viewer.py`; download it and open it in a browser, it needs no network). Gates and transfers open in " +
+            "place, each gate shows its cut sets and the fewest item faults among them, and the red paths are the ones " +
+            "on these sheets; a switch also counts latent events as already failed. Light, dark and left-to-right " +
+            "layouts. The sheets stay the drawing of record.", ""]
   first = trees[0]
   index[4:4] = [f"![First sheet of the {first.goal} fault tree: top event {first.root.ident} {first.title}, with the "
                 "gates and events beneath it down to the transfers to the next sheets; red marks single-point paths]"

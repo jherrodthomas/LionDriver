@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fault Tree Viewer</title>
+<!-- Template of fta-viewer.html: fta_viewer.py pastes the trees of WP-A-04 in place of the DATA placeholder. -->
+<style>
+:root{--bg:#fcfcfb;--card:#fff;--ink:#0b0b0b;--ink2:#52514e;--mute:#898781;--line:#c9c7bf;--grid:#e1e0d9;--soft:#f3f2ee;--dot:#e7e6e0;
+--or:#2a78d6;--and:#6250d6;--basic:#1baf7a;--ue:#eda100;--hot:#d03b3b;--lat:#c98a00;--find:#2a78d6;
+--s1b:#fbe9e9;--s1f:#9e2424;--s2b:#fdeee6;--s2f:#9a4a25;--s3b:#fff5dc;--s3f:#7a5600;--s4b:#e6f5e6;--s4f:#0a6a0a;--shadow:0 1px 2px rgba(0,0,0,.06),0 4px 14px rgba(0,0,0,.05)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a1a19;--card:#242422;--ink:#f2f1ec;--ink2:#b5b3ab;--mute:#8a8880;--line:#55534e;--grid:#3a3936;--soft:#2e2d2a;--dot:#262624;
+--s1b:#4a1f1f;--s1f:#ffb3b3;--s2b:#4a2a1c;--s2f:#ffc6a8;--s3b:#43361a;--s3f:#ffd98a;--s4b:#1d3a1d;--s4f:#9fe09f;--shadow:0 1px 2px rgba(0,0,0,.4)}}
+:root[data-theme="dark"]{--bg:#1a1a19;--card:#242422;--ink:#f2f1ec;--ink2:#b5b3ab;--mute:#8a8880;--line:#55534e;--grid:#3a3936;--soft:#2e2d2a;--dot:#262624;
+--s1b:#4a1f1f;--s1f:#ffb3b3;--s2b:#4a2a1c;--s2f:#ffc6a8;--s3b:#43361a;--s3f:#ffd98a;--s4b:#1d3a1d;--s4f:#9fe09f;--shadow:0 1px 2px rgba(0,0,0,.4)}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:13px/1.35 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+button,select,input{font:inherit;color:inherit}
+header{padding:12px 16px 10px;border-bottom:1px solid var(--grid);display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center}
+.ttl{flex:1 1 360px;min-width:0}.crumb{color:var(--ink2);font-size:12px}.crumb b{color:var(--ink)}
+h1{font-size:18px;margin:2px 0 0;line-height:1.25}
+.bar{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.btn{border:1px solid var(--grid);background:var(--card);border-radius:8px;padding:5px 10px;font-size:12px;color:var(--ink2);cursor:pointer;white-space:nowrap}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn:focus-visible,.card:focus-visible,.tab:focus-visible{outline:2px solid var(--find);outline-offset:2px}
+.tabs{display:flex;gap:4px;overflow-x:auto;padding:8px 16px;border-bottom:1px solid var(--grid);scrollbar-width:none}
+.tab{border:1px solid transparent;background:none;border-radius:8px;padding:5px 10px;font-size:12.5px;color:var(--ink2);cursor:pointer;white-space:nowrap;display:flex;gap:6px;align-items:center}
+.tab[aria-selected="true"]{background:var(--soft);color:var(--ink);border-color:var(--grid);font-weight:600}
+input[type=search]{border:1px solid var(--grid);background:var(--card);border-radius:8px;padding:5px 10px;font-size:12px;width:170px}
+main{position:relative;flex:1;min-height:0}
+#scroll{position:absolute;inset:0;overflow:auto;background-image:radial-gradient(var(--dot) 1.2px,transparent 1.2px);background-size:22px 22px}
+#stage{position:relative;transform-origin:0 0}
+.card{position:absolute;background:var(--card);border:1px solid var(--grid);border-radius:12px;padding:8px 10px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:3px;overflow:hidden;cursor:default}
+.card.gate{cursor:pointer}.card.top{border-top:4px solid var(--ink)}
+.card.lat{border:1.5px dashed var(--mute)}
+.card.hot{box-shadow:0 0 0 2.5px var(--hot),var(--shadow)}.card.hotlat{box-shadow:0 0 0 2px var(--lat),var(--shadow)}
+.card.match{outline:3px solid var(--find);outline-offset:2px}
+.hd{display:flex;align-items:center;gap:5px;font-size:11px;min-width:0}
+.id{font-family:"JetBrains Mono",Menlo,Consolas,"DejaVu Sans Mono",monospace;font-size:11.5px;font-weight:700;white-space:nowrap}
+.kind{margin-left:auto;color:var(--mute);font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex-shrink:1}
+.tx{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;font-size:12.5px}
+.ft{display:flex;align-items:center;gap:6px;margin-top:auto;min-width:0}
+.cs{color:var(--mute);font-size:11px;white-space:nowrap}
+.tag{white-space:nowrap;font-size:9.5px;font-weight:700;border-radius:4px;padding:1px 4px;background:var(--soft);color:var(--ink2)}
+.tag.dash{background:transparent;border:1px dashed var(--mute)}
+.st{font-size:11px;font-weight:700;border-radius:999px;padding:1px 7px;white-space:nowrap}
+.s1{background:var(--s1b);color:var(--s1f)}.s2{background:var(--s2b);color:var(--s2f)}.s3{background:var(--s3b);color:var(--s3f)}.s4{background:var(--s4b);color:var(--s4f)}.s0{background:var(--soft);color:var(--ink2)}
+.tog{margin-left:auto;color:var(--mute);font-size:11px}
+svg.wires{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
+.gsym{position:absolute;pointer-events:none}
+#mini{position:absolute;right:14px;top:14px;width:220px;background:var(--card);border:1px solid var(--grid);border-radius:10px;padding:6px 8px 8px;box-shadow:var(--shadow);cursor:pointer}
+#mini .cs{display:block;margin-bottom:4px}
+#zoom{position:absolute;right:14px;bottom:14px;display:flex;flex-direction:column;gap:4px}
+#zoom .btn{width:34px;padding:5px 0;text-align:center}
+#tip{position:fixed;z-index:5;max-width:360px;background:var(--ink);color:var(--bg);border-radius:8px;padding:8px 10px;font-size:12px;pointer-events:none;display:none;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+#tip b{font-family:"JetBrains Mono",Menlo,monospace}#tip .n{opacity:.8;margin-top:4px}
+footer{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;font-size:12px;color:var(--ink2);padding:8px 16px;border-top:1px solid var(--grid)}
+footer span{display:inline-flex;align-items:center;gap:6px}
+.sum{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px}
+@media (max-width:700px){#mini{display:none}.bar{flex-wrap:nowrap;overflow-x:auto;width:100%;scrollbar-width:none}footer{flex-wrap:nowrap;overflow-x:auto;white-space:nowrap}.sum .cs{display:none}h1{font-size:16px}input[type=search]{width:120px}.hide-s{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="ttl"><div class="crumb" id="crumb"></div><h1 id="title"></h1><div class="sum" id="sum"></div></div>
+  <div class="bar" role="toolbar" aria-label="View">
+    <input type="search" id="find" placeholder="Find ID or text" aria-label="Find an event">
+    <button class="btn" id="b-open">Expand all</button>
+    <button class="btn" id="b-close">Collapse</button>
+    <button class="btn" id="b-lr" aria-pressed="false" title="Draw the tree left to right">Left to right</button>
+    <button class="btn" id="b-lat" aria-pressed="false" title="Count latent basic events as already failed">Latents as failed</button>
+    <button class="btn" id="b-theme" title="Light, dark or the system setting">Theme: auto</button>
+  </div>
+</header>
+<nav class="tabs" id="tabs" role="tablist" aria-label="Safety goals"></nav>
+<main>
+  <div id="scroll"><div id="stage"></div></div>
+  <div id="mini" title="Overview: click to move there"><span class="cs" id="mini-l"></span><svg id="mini-svg" width="204"></svg></div>
+  <div id="zoom"><button class="btn" id="z-in" aria-label="Zoom in">+</button><button class="btn" id="z-out" aria-label="Zoom out">−</button><button class="btn" id="z-fit" aria-label="Fit to screen">⤢</button></div>
+</main>
+<footer id="legend"></footer>
+<div id="tip" role="tooltip"></div>
+<script>const DATA = /*DATA*/null;</script>
+<script>
+"use strict";
+const N = DATA.nodes, $ = s => document.getElementById(s);
+const TAG = {spf: "SPF", latent: null, sotif: "SOTIF", ccf: "CCF", ffi: "FFI", ue: "UE"};
+const S = {g: 0, open: new Set(), lr: false, mode: 1, zoom: 1, q: "", theme: "auto"};
+try { const v = JSON.parse(localStorage.getItem("fta-viewer") || "{}"); S.lr = !!v.lr; S.theme = v.theme || "auto"; } catch (e) {}
+function save() { try { localStorage.setItem("fta-viewer", JSON.stringify({lr: S.lr, theme: S.theme})); } catch (e) {} }
+
+// Occurrence paths: "0", "0.2", "0.2.1" ... with parents
+let OCC = [];
+DATA.goals.forEach((g, gi) => {
+  const all = [];
+  (function walk(o, p, par) { o.p = p; o.par = par; all.push(o); (o.c || []).forEach((c, i) => walk(c, p + "." + i, o)); })(g.root, String(gi), null);
+  OCC[gi] = all;
+});
+const node = o => N[o.k], isGate = o => !!(o.c && o.c.length), hot = o => ((o.h || 0) & S.mode) !== 0;
+const minOf = o => node(o).min ? node(o).min[S.mode === 1 ? 0 : 1] : null;
+const ID = o => node(o).id || "any of";
+
+function defaults() {
+  S.open = new Set();
+  OCC[S.g].forEach(o => { if (isGate(o) && (o.par === null || hot(o))) S.open.add(o.p); });
+}
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c])); }
+
+function stat(m) {
+  if (m === null || m === undefined) return "";
+  if (m === 0) return S.mode === 2 ? '<span class="st s0">◷ 0 detectable</span>' : '<span class="st s0">UE only</span>';
+  if (m === 1) return '<span class="st s1">⛔ 1 fault</span>';
+  if (m === 2) return '<span class="st s2">▲ 2 faults</span>';
+  if (m === 3) return '<span class="st s3">◆ 3 faults</span>';
+  return '<span class="st s4">● ' + m + ' faults</span>';
+}
+function icon(o) {
+  const n = node(o);
+  if (o.t && isGate(o)) return '<svg width="14" height="13" aria-hidden="true"><path d="M7,1 L13,12 H1 Z" fill="none" stroke="var(--ink2)" stroke-width="1.7" stroke-linejoin="round"/></svg>';
+  if (isGate(o)) return '<svg width="14" height="13" aria-hidden="true"><rect x="1" y="1" width="12" height="11" rx="3" fill="var(--' + (n.gate === "OR" ? "or" : "and") + ')"/></svg>';
+  if (n.kind === "undeveloped") return '<svg width="14" height="13" aria-hidden="true"><path d="M7,0.5 L13.5,6.5 L7,12.5 L0.5,6.5 Z" fill="var(--ue)"/></svg>';
+  return '<svg width="14" height="13" aria-hidden="true"><circle cx="7" cy="6.5" r="5.5" fill="var(--basic)"/></svg>';
+}
+function gateShape(kind, col) {
+  const w = 34, h = 30;
+  const p = kind === "OR" ? `M2,${h} Q${w / 2},${h - 9} ${w - 2},${h} Q${w - 2},${h * .35} ${w / 2},1 Q2,${h * .35} 2,${h} Z`
+    : `M3,${h} V${h * .48} A${w / 2 - 3},${h * .48 - 1} 0 0 1 ${w - 3},${h * .48} V${h} Z`;
+  return `<path d="${p}" fill="var(--card)" stroke="${col}" stroke-width="2" stroke-linejoin="round"/>`;
+}
+
+function layout() {
+  const lr = S.lr, CW = lr ? 250 : 190, CH = lr ? 78 : 100, GX = lr ? 12 : 14, GY = lr ? 86 : 62;
+  const vis = [], edges = [];
+  function place(o, depth, off) {
+    const breadth = lr ? CH : CW;
+    let span, cen;
+    if (isGate(o) && S.open.has(o.p)) {
+      let pos = off; const cs = [];
+      o.c.forEach(c => { const r = place(c, depth + 1, pos); cs.push(r[1]); pos += r[0] + GX; });
+      span = pos - GX - off; cen = (cs[0] + cs[cs.length - 1]) / 2;
+      o.c.forEach((c, i) => edges.push([o, c, depth, cen, cs[i]]));
+    } else { span = breadth; cen = off + breadth / 2; }
+    vis.push([o, depth, cen]);
+    return [span, cen];
+  }
+  const span = place(DATA.goals[S.g].root, 0, 0)[0];
+  const maxd = Math.max(...vis.map(v => v[1])), LV = (lr ? CW : CH) + GY, P = 32;
+  const W = (lr ? (maxd + 1) * LV : span) + 2 * P, H = (lr ? span : (maxd + 1) * LV) + 2 * P;
+  return {lr, CW, CH, LV, P, W, H, vis, edges};
+}
+
+function draw() {
+  const g = DATA.goals[S.g], L = layout(), q = S.q.trim().toLowerCase();
+  const matches = new Set();
+  if (q) OCC[S.g].forEach(o => { const n = node(o); if ((n.id || "").toLowerCase().includes(q) || n.text.toLowerCase().includes(q)) matches.add(o.p); });
+  const pos = o => { const v = L.vis.find(x => x[0] === o); return v; };
+  let wires = "", wiresHot = "", cards = "", gates = "";
+  for (const [p, c, d, pc, cc] of L.edges) {
+    let x0, y0, x1, y1, path; const r = 10;
+    if (!L.lr) {
+      x0 = pc + L.P; y0 = d * L.LV + L.CH + 26 + L.P; x1 = cc + L.P; y1 = (d + 1) * L.LV + L.P; const my = (y0 + y1) / 2;
+      if (Math.abs(x1 - x0) < 1) path = `M${x0},${y0} V${y1}`;
+      else { const s = x1 > x0 ? 1 : -1; path = `M${x0},${y0} V${my - r} Q${x0},${my} ${x0 + s * r},${my} H${x1 - s * r} Q${x1},${my} ${x1},${my + r} V${y1}`; }
+    } else {
+      x0 = d * L.LV + L.CW + 26 + L.P; y0 = pc + L.P; x1 = (d + 1) * L.LV + L.P; y1 = cc + L.P; const mx = (x0 + x1) / 2;
+      if (Math.abs(y1 - y0) < 1) path = `M${x0},${y0} H${x1}`;
+      else { const s = y1 > y0 ? 1 : -1; path = `M${x0},${y0} H${mx - r} Q${mx},${y0} ${mx},${y0 + s * r} V${y1 - s * r} Q${mx},${y1} ${mx + r},${y1} H${x1}`; }
+    }
+    if (hot(p) && hot(c)) {
+      const lat = (isGate(c) ? minOf(c) === 0 : node(c).latent) && S.mode === 2;
+      wiresHot += `<path d="${path}" fill="none" stroke="var(--${lat ? "lat" : "hot"})" stroke-width="${lat ? 2.2 : 2.6}"${lat ? ' stroke-dasharray="5 4"' : ""} stroke-linecap="round"/>`;
+    } else wires += `<path d="${path}" fill="none" stroke="var(--line)" stroke-width="1.6"/>`;
+  }
+  for (const [o, d, cen] of L.vis) {
+    const n = node(o), gate = isGate(o), open = gate && S.open.has(o.p);
+    const x = (L.lr ? d * L.LV : cen - L.CW / 2) + L.P, y = (L.lr ? cen - L.CH / 2 : d * L.LV) + L.P;
+    const cls = ["card"]; if (gate) cls.push("gate"); if (o.par === null) cls.push("top"); if (n.latent) cls.push("lat");
+    const lat = S.mode === 2 && (gate ? minOf(o) === 0 : n.latent);
+    if (hot(o)) cls.push(lat ? "hotlat" : "hot"); if (matches.has(o.p)) cls.push("match");
+    const kind = o.par === null ? "Top event" : o.t && gate ? "Transfer" + (o.x ? " · " + o.x : "") : gate ? n.gate + " gate" : n.kind === "undeveloped" ? "Undeveloped" : "Basic event";
+    let tags = n.badges.filter(b => TAG[b[0]]).map(b => `<span class="tag">${TAG[b[0]]}</span>`).join("");
+    if (n.latent) tags += '<span class="tag dash">◷ latent</span>';
+    if (o.t && !gate) tags += '<span class="tag dash">repeated</span>';
+    let ft = "";
+    if (gate) ft = stat(minOf(o)) + `<span class="cs">${n.cs} cut set${n.cs === 1 ? "" : "s"}</span><span class="tog">${open ? "▾" : "▸ " + countBelow(o)}</span>`;
+    cards += `<div class="${cls.join(" ")}" data-p="${o.p}" style="left:${x}px;top:${y}px;width:${L.CW}px;height:${L.CH}px"${gate ? ' tabindex="0" role="button" aria-expanded="' + open + '"' : ' tabindex="0"'}>
+<div class="hd">${icon(o)}<span class="id">${esc(ID(o))}</span>${tags}<span class="kind">${kind}</span></div>
+<div class="tx"${L.lr ? ' style="-webkit-line-clamp:1"' : ""}>${esc(n.text)}</div>${ft ? `<div class="ft">${ft}</div>` : ""}</div>`;
+    if (open) {
+      const col = hot(o) ? (S.mode === 2 && minOf(o) === 0 ? "var(--lat)" : "var(--hot)") : `var(--${n.gate === "OR" ? "or" : "and"})`;
+      const gx = L.lr ? x + L.CW - 2 : x + L.CW / 2 - 17, gy = L.lr ? y + L.CH / 2 - 17 : y + L.CH - 2;
+      const tf = L.lr ? ' transform="translate(30,0) rotate(90)"' : "";
+      gates += `<svg class="gsym" style="left:${gx}px;top:${gy}px" width="${L.lr ? 30 : 34}" height="${L.lr ? 34 : 30}" aria-hidden="true"><g${tf}>${gateShape(n.gate, col)}</g><text x="${L.lr ? 15 : 17}" y="${L.lr ? 20 : 24}" text-anchor="middle" font-size="8.5" font-weight="700" fill="${col}">${n.gate}</text></svg>`;
+    }
+  }
+  const st = $("stage");
+  st.style.width = L.W + "px"; st.style.height = L.H + "px"; st.style.transform = `scale(${S.zoom})`;
+  st.innerHTML = `<svg class="wires" width="${L.W}" height="${L.H}">${wires}${wiresHot}</svg>${cards}${gates}`;
+  $("stage").style.marginBottom = (L.H * (S.zoom - 1)) + "px";
+  $("stage").style.marginRight = (L.W * (S.zoom - 1)) + "px";
+  // header
+  const root = g.root, m = minOf(root);
+  $("crumb").innerHTML = `FTA › <b>${g.goal}</b> · ASIL ${esc(g.asil)} · from ${DATA.source} · ${OCC[S.g].length} nodes, no sheets`;
+  $("title").textContent = `${node(root).id} ${g.title}`;
+  $("sum").innerHTML = stat(m) + `<span class="cs">fewest item faults that reach the top event${S.mode === 2 ? ", latents counted as failed" : ""} · ${node(root).cs} minimal cut sets</span>`;
+  document.querySelectorAll(".tab").forEach((t, i) => t.setAttribute("aria-selected", i === S.g));
+  drawMini(L);
+  return L;
+}
+function countBelow(o) { let k = 0; (function w(x) { (x.c || []).forEach(c => { k++; w(c); }); })(o); return k; }
+
+function drawMini(L) {
+  const sv = $("mini-svg"), w = 204, sc = w / L.W, h = Math.max(30, Math.min(150, L.H * sc));
+  const s = Math.min(sc, h / L.H);
+  sv.setAttribute("height", h); sv.setAttribute("viewBox", `0 0 ${L.W} ${L.H}`);
+  sv.setAttribute("preserveAspectRatio", "xMidYMin meet");
+  let out = "";
+  for (const [o, d, cen] of L.vis) {
+    const x = (L.lr ? d * L.LV : cen - L.CW / 2) + L.P, y = (L.lr ? cen - L.CH / 2 : d * L.LV) + L.P;
+    const col = hot(o) ? "var(--hot)" : isGate(o) ? `var(--${node(o).gate === "OR" ? "or" : "and"})` : node(o).kind === "undeveloped" ? "var(--ue)" : "var(--basic)";
+    out += `<rect x="${x}" y="${y}" width="${L.CW}" height="${L.CH}" rx="10" fill="${col}" opacity=".75"/>`;
+  }
+  out += `<rect id="mini-v" fill="none" stroke="var(--ink)" stroke-width="${2 / s}" rx="6"/>`;
+  sv.innerHTML = out; $("mini-l").textContent = "Overview · " + L.vis.length + " shown of " + OCC[S.g].length;
+  $("mini").style.display = L.W * S.zoom > $("scroll").clientWidth || L.H * S.zoom > $("scroll").clientHeight ? "" : "none";
+  syncMini();
+}
+function syncMini() {
+  const v = $("mini-v"); if (!v) return; const sc = $("scroll");
+  v.setAttribute("x", sc.scrollLeft / S.zoom); v.setAttribute("y", sc.scrollTop / S.zoom);
+  v.setAttribute("width", sc.clientWidth / S.zoom); v.setAttribute("height", sc.clientHeight / S.zoom);
+}
+
+function focusOn(p, L) {
+  const v = L.vis.find(x => x[0].p === p); if (!v) return;
+  const [o, d, cen] = v, sc = $("scroll");
+  const x = ((L.lr ? d * L.LV : cen - L.CW / 2) + L.P) * S.zoom, y = ((L.lr ? cen - L.CH / 2 : d * L.LV) + L.P) * S.zoom;
+  sc.scrollTo({left: Math.max(0, x - sc.clientWidth / 2 + L.CW * S.zoom / 2), top: Math.max(0, y - sc.clientHeight / 3)});
+}
+
+function selectGoal(i, keep) {
+  S.g = i; if (!keep) { defaults(); S.zoom = 1; }
+  history.replaceState(null, "", "#" + DATA.goals[i].goal);
+  const L = draw(); focusOn(String(i), L);
+}
+
+// tabs
+$("tabs").innerHTML = DATA.goals.map((g, i) => {
+  const m = node(g.root).min[0];
+  return `<button class="tab" role="tab" data-i="${i}"><span>${g.goal}</span><span class="st ${m === 0 ? "s0" : m === 1 ? "s1" : m === 2 ? "s2" : m === 3 ? "s3" : "s4"}" title="fewest item faults to the top event">${m === 0 ? "UE only" : (m === 1 ? "⛔" : m === 2 ? "▲" : m === 3 ? "◆" : "●") + " " + m}</span></button>`;
+}).join("");
+$("tabs").addEventListener("click", e => { const b = e.target.closest(".tab"); if (b) selectGoal(+b.dataset.i); });
+
+// cards: open/close and tooltip
+function toggle(p) {
+  const o = OCC[S.g].find(x => x.p === p); if (!o || !isGate(o)) return;
+  if (S.open.has(p)) { OCC[S.g].forEach(x => { if (x.p === p || x.p.startsWith(p + ".")) S.open.delete(x.p); }); } else S.open.add(p);
+  const L = draw(); const el = document.querySelector(`.card[data-p="${p}"]`); if (el) el.focus({preventScroll: true});
+}
+$("stage").addEventListener("click", e => { const c = e.target.closest(".card"); if (c) toggle(c.dataset.p); });
+$("stage").addEventListener("keydown", e => { const c = e.target.closest(".card"); if (c && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); toggle(c.dataset.p); } });
+const tip = $("tip");
+function showTip(c, x, y) {
+  const o = OCC[S.g].find(z => z.p === c.dataset.p), n = node(o);
+  let h = `<b>${esc(ID(o))}</b> ${esc(n.text)}`;
+  const b = n.badges.map(x => x[1]).filter(Boolean); if (b.length) h += `<div class="n">${esc(b.join(" · "))}</div>`;
+  (o.n || n.notes || []).forEach(t => h += `<div class="n">${esc(t)}</div>`);
+  if (o.t) h += `<div class="n">${isGate(o) ? "Transfer: developed under " + (o.x || "this tree") + "; opened here" : "Repeated: same event as where first defined"}</div>`;
+  tip.innerHTML = h; tip.style.display = "block";
+  const r = tip.getBoundingClientRect();
+  tip.style.left = Math.min(x + 12, innerWidth - r.width - 8) + "px"; tip.style.top = Math.min(y + 14, innerHeight - r.height - 8) + "px";
+}
+$("stage").addEventListener("mousemove", e => { const c = e.target.closest(".card"); if (c) showTip(c, e.clientX, e.clientY); else tip.style.display = "none"; });
+$("stage").addEventListener("mouseleave", () => tip.style.display = "none");
+$("stage").addEventListener("focusin", e => { const c = e.target.closest(".card"); if (c) { const r = c.getBoundingClientRect(); showTip(c, r.left, r.bottom); } });
+$("stage").addEventListener("focusout", () => tip.style.display = "none");
+
+// toolbar
+$("b-open").onclick = () => { OCC[S.g].forEach(o => { if (isGate(o)) S.open.add(o.p); }); draw(); };
+$("b-close").onclick = () => { S.open = new Set([String(S.g)]); draw(); };
+$("b-lr").onclick = () => { S.lr = !S.lr; $("b-lr").setAttribute("aria-pressed", S.lr); save(); draw(); };
+$("b-lat").onclick = () => { S.mode = S.mode === 1 ? 2 : 1; $("b-lat").setAttribute("aria-pressed", S.mode === 2); defaults(); draw(); legend(); };
+const THEMES = ["auto", "light", "dark"];
+function applyTheme() { if (S.theme === "auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.dataset.theme = S.theme; $("b-theme").textContent = "Theme: " + S.theme; }
+$("b-theme").onclick = () => { S.theme = THEMES[(THEMES.indexOf(S.theme) + 1) % 3]; applyTheme(); save(); };
+$("find").addEventListener("input", e => {
+  S.q = e.target.value; const q = S.q.trim().toLowerCase(); let first = null;
+  if (q) OCC[S.g].forEach(o => { const n = node(o); if ((n.id || "").toLowerCase().includes(q) || n.text.toLowerCase().includes(q)) { first = first || o; for (let a = o.par; a; a = a.par) S.open.add(a.p); } });
+  const L = draw(); if (first) focusOn(first.p, L);
+});
+function zoom(f) { S.zoom = Math.min(2, Math.max(0.25, f)); draw(); }
+$("z-in").onclick = () => zoom(S.zoom * 1.2); $("z-out").onclick = () => zoom(S.zoom / 1.2);
+$("z-fit").onclick = () => { const L = layout(), sc = $("scroll"); zoom(Math.min(1, sc.clientWidth / L.W, sc.clientHeight / L.H)); };
+$("scroll").addEventListener("scroll", syncMini);
+$("mini").addEventListener("click", e => {
+  const sv = $("mini-svg"), r = sv.getBoundingClientRect(), L = layout(), s = Math.min(r.width / L.W, r.height / L.H);
+  const ox = (r.width - L.W * s) / 2, sc = $("scroll");
+  sc.scrollTo({left: ((e.clientX - r.left - ox) / s) * S.zoom - sc.clientWidth / 2, top: ((e.clientY - r.top) / s) * S.zoom - sc.clientHeight / 2});
+});
+addEventListener("resize", () => drawMini(layout()));
+
+function legend() {
+  const sw = (svg, t) => `<span>${svg}${t}</span>`;
+  $("legend").innerHTML = [
+    sw('<svg width="14" height="13"><rect x="1" y="1" width="12" height="11" rx="3" fill="var(--or)"/></svg>', "OR gate"),
+    sw('<svg width="14" height="13"><rect x="1" y="1" width="12" height="11" rx="3" fill="var(--and)"/></svg>', "AND gate"),
+    sw('<svg width="14" height="13"><circle cx="7" cy="6.5" r="5.5" fill="var(--basic)"/></svg>', "Basic event"),
+    sw('<svg width="14" height="13"><path d="M7,0.5 L13.5,6.5 L7,12.5 L0.5,6.5 Z" fill="var(--ue)"/></svg>', "Undeveloped event"),
+    sw('<svg width="14" height="13"><path d="M7,1 L13,12 H1 Z" fill="none" stroke="var(--ink2)" stroke-width="1.7"/></svg>', "Transfer, opened in place"),
+    sw('<svg width="26" height="6"><line x1="1" y1="3" x2="25" y2="3" stroke="var(--hot)" stroke-width="2.6"/></svg>',
+      S.mode === 1 ? "Single-point path: one item basic event reaches the top event (UE assumed), as on the sheets"
+                   : "Path for one detectable fault, latent basic events counted as already failed"),
+    S.mode === 2 ? sw('<svg width="26" height="6"><line x1="1" y1="3" x2="25" y2="3" stroke="var(--lat)" stroke-width="2.2" stroke-dasharray="5 4"/></svg>', "Part already failed or assumed: latent basic events, undeveloped events") : "",
+    `<span class="hide-s">Chips: fewest item faults in any cut set below the gate. Hover or focus a card for the full text. The SVG sheets stay the drawing of record.</span>`,
+  ].join("");
+}
+
+applyTheme(); $("b-lr").setAttribute("aria-pressed", S.lr); legend();
+const start = DATA.goals.findIndex(g => "#" + g.goal === location.hash);
+selectGoal(start >= 0 ? start : 0);
+</script>
+</body>
+</html>
