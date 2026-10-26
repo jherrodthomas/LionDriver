@@ -29,11 +29,14 @@ so a change to one without the other fails CI (assurance/models/sysml/README.md 
   N2  needs of WP-S-01 §1.3: every need is refined by a requirement and served by a use case; every SYS requirement
       and every safety goal refines a need
   N3  use cases of WP-S-01 §1.4: every function of the model is performed by a use case
-  B1  StateRecords.sysml and Sequences.sysml match the state-machine records and WP-S-03 §4.1 they are generated from
+  B1  StateRecords.sysml, Sequences.sysml and Lifecycle.sysml match the state-machine records, WP-S-03 §4.1 and
+      WP-S-06 §3 they are generated from
   B2  every unit that runs a record state machine is an element of the model; every lifeline of a sequence stands for
       an element; every record a step names is a record transition, and the state after it a state of that machine;
       every requirement a step's condition names is in the model
   B3  every lifeline of a sequence takes part in a step
+  B4  the life cycle of an installed item (Lifecycle.sysml, WP-S-06 §3): every procedure step names a TSR of the model,
+      every TSR-8nn of the model is carried by exactly one step, and every phase, and done, is reached from start
   H1  Timing.sysml and Signals.sysml match WP-S-04 §3.7 and WP-S-05 §11 they are generated from
   H2  every timing budget names safety goals and TSRs of the model and adds up: FDTI + FRTI within the FTTI, FHTI equal
       to FDTI + FRTI and the margin within FTTI - FHTI wherever the cells are times; every safety goal has a budget
@@ -652,7 +655,7 @@ def check_needs(m: sysml_lite.Model, rep: Report) -> None:
       rep.err("N3", f"{f} is performed by no use case (WP-S-01 §1.4)")
 
 
-# ---------------------------------------------------------------- behaviour (B1-B3)
+# ---------------------------------------------------------------- behaviour (B1-B4)
 
 def find_any(m: sysml_lite.Model, ident: str) -> sysml_lite.Element | None:
   """An element by short name, alias or (unique) part name; for a software unit, the first element in it."""
@@ -707,6 +710,37 @@ def check_behaviour(m: sysml_lite.Model, rep: Report) -> None:
       for req in re.findall(r"\b(?:TSR|SYS|FSR|SG)-[0-9.]+[a-z]?\b", str(step.get("condition", ""))):
         if req not in m.requirements:
           rep.err("B2", f"{q.short} {msg.short}: condition names {req}, which is not a requirement of the model")
+  check_lifecycle(m, rep)
+
+
+def check_lifecycle(m: sysml_lite.Model, rep: Report) -> None:
+  if not m.activities:
+    rep.err("B1", "the model has no life cycle of the installed item (WP-S-06 §3)")
+  carried: dict[str, list[str]] = {}
+  for a in m.activities.values():
+    for ph, steps in a.steps.items():
+      for st in steps:
+        tsr = str(st.values.get("tsr", ""))
+        if tsr not in m.requirements:
+          rep.err("B4", f"{a.name}.{ph}.{st.name} names {tsr!r}, which is not a requirement of the model")
+        carried.setdefault(tsr, []).append(f"{ph}.{st.name}")
+    if a.phases:
+      reached, todo = {"start"}, ["start"]
+      while todo:
+        x = todo.pop()
+        for s_, t_ in a.flows:
+          if s_ == x and t_ not in reached:
+            reached.add(t_)
+            todo.append(t_)
+      for ph in a.phases:
+        if ph.name not in reached:
+          rep.err("B4", f"{a.name}: phase {ph.name} is not reached from start")
+      if "done" not in reached:
+        rep.err("B4", f"{a.name}: done is not reached from start")
+  for r in m.requirements:
+    if re.fullmatch(r"TSR-8\d\d", r) and len(carried.get(r, [])) != 1:
+      rep.err("B4", f"{r} is carried by {len(carried.get(r, []))} procedure steps of the life cycle, not one: "
+                    f"{', '.join(carried.get(r, [])) or 'none'}")
 
 
 # ---------------------------------------------------------------- timing and HSI (H1-H4)
@@ -902,10 +936,11 @@ def main(argv: list[str]) -> int:
   print(f"needs: {sum(1 for r in m.requirements.values() if r.definition == 'StakeholderNeed')} stakeholder needs, " +
         f"{len(m.use_cases)} use cases")
   print(f"behaviour: {sum(1 for s in m.state_machines.values() if 'StateRecord' in s.meta)} state-machine records, " +
-        f"{sum(len(q.messages) for q in m.sequences.values())} sequence steps")
+        f"{sum(len(q.messages) for q in m.sequences.values())} sequence steps, " +
+        f"{sum(len(x) for a in m.activities.values() for x in a.steps.values())} life-cycle procedure steps")
   print(f"timing and HSI: {len(m.budgets)} timing budgets, {len(m.signals)} HSI signals, "
         f"{len(m.responsibilities)} HSI responsibilities")
-  print("OK: M1-M12, N1-N3, B1-B3, H1-H4 and R1-R4 passed")
+  print("OK: M1-M12, N1-N3, B1-B4, H1-H4 and R1-R4 passed")
   return 0
 
 

@@ -97,7 +97,8 @@ def parse(md: str) -> tuple[list[tuple[str, list[dict]]], list[dict]]:
         raise LifecycleError(f"{tid}: the phrase {phrase!r} is no longer in its status cell; re-classify it")
       seen.add(tid)
       reqs.append({"id": tid, "text": _plain(c["Requirement"]), "asil": _plain(c["ASIL"]), "parent": _plain(c["Parent"]),
-                   "by": _plain(c["Implemented by"]), "status": st})
+                   "by": _plain(c["Implemented by"]), "record": _plain(c["Verification / record"]), "status": st,
+                   "note": phrase})
     phases.append((f"{m.group(1)} {_plain(m.group(2))}", reqs))
   stray = set(STATUS_OF) - seen
   if stray:

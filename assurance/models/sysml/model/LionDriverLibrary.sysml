@@ -228,6 +228,21 @@ package LionDriverLibrary {
         attribute integrates : String[0..*];
         attribute exercises : String[0..*];
     }
+    // ------------------------------------------------------------------ life cycle
+    action def LifecyclePhase {
+        doc /* A phase of the installed item's life (WP-S-06 §3); section is the section that lists its requirements. */
+        attribute section : String;
+    }
+    action def ProcedureStep {
+        doc /* What the procedures of a phase must achieve to meet one production or operation requirement TSR-8nn. */
+        attribute tsr : String;
+        attribute asil : String;
+        attribute parent : String;
+        attribute steps : String;
+        attribute record : String;
+        attribute status : String;
+        attribute statusNote : String;
+    }
     // ------------------------------------------------------------------ behaviour
     metadata def ModeRow {
         doc /* The WP-C-01 §4 row of an operating mode, and the record states (machine and state) it stands for. */
@@ -288,6 +303,9 @@ package LionDriverLibrary {
     }
     view def UseCaseView {
         doc /* Use cases of the item with their subject and actors. */
+    }
+    view def ActivityView {
+        doc /* An action flow: the actions, the successions between them and what each action carries. */
     }
     view def SequenceView {
         doc /* A sequence of messages between lifelines that stand for elements of the architecture. */

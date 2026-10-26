@@ -1,0 +1,200 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="1092" viewBox="0 0 1520 1092" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">V-23. Life of an installed item (SysML v2 view lifecycle)</title>
+<desc id="d">SysML action flow diagram generated from the model (LionDriverLifecycle, from WP-S-06 §3). Start leads to installation and provisioning, then operation; operation goes to service or to a software update and back, and ends in decommissioning and done. Each phase is an action of LifecyclePhase containing one ProcedureStep action per requirement TSR-801 to TSR-818, with its ASIL, its status, the procedure steps and record that carry it and the cases that verify it.</desc>
+<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter><marker id="lc-arrow" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#334155"/></marker></defs>
+<rect width="1520" height="1092" fill="#FFFFFF"/>
+<text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-23 · Life of an installed item</text>
+<text x="40" y="69" font-size="12.5" fill="#64748B">WP-S-06 §3 as an action flow: the phases from installation to decommissioning, each with the procedure steps that meet its production and operation requirements</text>
+<text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::lifecycle</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">ActivityView · render asInterconnectionDiagram · model 0c3618d61c94</text>
+<line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
+<rect x="100" y="132" width="400" height="808" rx="18" fill="#FFFFFF" stroke="#334155" stroke-width="1.6"/>
+<text x="116" y="152" font-size="12.5" fill="#0F172A" font-weight="700">§3.1 Installation and provisioning ("production")</text>
+<text x="116" y="168" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">action installationAndProvisioning : LifecyclePhase · 9 procedu…</text>
+<rect x="112" y="178" width="376" height="76" rx="10" fill="#FFFBEB" stroke="#B45309" stroke-width="1.3"/>
+<rect x="112" y="184" width="4" height="64" rx="2" fill="#B45309"/>
+<rect x="124" y="186" width="53.9" height="17" rx="8.5" fill="#B45309"/><text x="150.9" y="197.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-801</text>
+<text x="183.9" y="199" font-size="10" fill="#334155" font-weight="600">ASIL B‡</text>
+<text x="478" y="199" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="end">waiting on an input</text>
+<text x="124" y="217" font-size="10.5" fill="#0F172A">Only a released LionDriver baseline shall be installed: the installed</text>
+<text x="124" y="230" font-size="10.5" fill="#0F172A">openpilot commit, AGNOS version and model artefact hashes shall …</text>
+<text x="124" y="245" font-size="9" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">by INS-15, INS-16, INS-18; SPC-04 · record R-SW record, second-p…</text>
+<rect x="112" y="262" width="376" height="76" rx="10" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.3"/>
+<rect x="112" y="268" width="4" height="64" rx="2" fill="#D2553F"/>
+<rect x="124" y="270" width="53.9" height="17" rx="8.5" fill="#D2553F"/><text x="150.9" y="281.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-802</text>
+<text x="183.9" y="283" font-size="10" fill="#334155" font-weight="600">ASIL B‡</text>
+<text x="478" y="283" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">blocked by a design gap</text>
+<text x="124" y="301" font-size="10.5" fill="#0F172A">The panda firmware shall be the release-signed, non-debug build</text>
+<text x="124" y="314" font-size="10.5" fill="#0F172A">recorded in the release record; its version string and signature shall…</text>
+<text x="124" y="329" font-size="9" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">by INS-17; SPC-05 · record R-SW · «verify» no case</text>
+<rect x="112" y="346" width="376" height="76" rx="10" fill="#F8FAFC" stroke="#334155" stroke-width="1.3"/>
+<rect x="112" y="352" width="4" height="64" rx="2" fill="#334155"/>
+<rect x="124" y="354" width="53.9" height="17" rx="8.5" fill="#334155"/><text x="150.9" y="365.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-803</text>
+<text x="183.9" y="367" font-size="10" fill="#334155" font-weight="600">ASIL B‡</text>
+<text x="478" y="367" font-size="9.5" fill="#334155" font-weight="700" text-anchor="end">procedure defined</text>
+<text x="124" y="385" font-size="10.5" fill="#0F172A">Every vehicle ECU firmware version (engine, EPS, ABS, radar, camera)</text>
+<text x="124" y="398" font-size="10.5" fill="#0F172A">shall equal the reference record before engagement; a mismatch sha…</text>
+<text x="124" y="413" font-size="9" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">by INS-21; SPC-07; WP-O-01 §6 · record R-CFG raw FW query output…</text>
+<rect x="112" y="430" width="376" height="76" rx="10" fill="#F8FAFC" stroke="#334155" stroke-width="1.3"/>
+<rect x="112" y="436" width="4" height="64" rx="2" fill="#334155"/>
+<rect x="124" y="438" width="53.9" height="17" rx="8.5" fill="#334155"/><text x="150.9" y="449.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-804</text>
+<text x="183.9" y="451" font-size="10" fill="#334155" font-weight="600">ASIL B‡</text>
+<text x="478" y="451" font-size="9.5" fill="#334155" font-weight="700" text-anchor="end">procedure defined</text>
+<text x="124" y="469" font-size="10.5" fill="#0F172A">The installed configuration shall show fingerprint</text>
+<text x="124" y="482" font-size="10.5" fill="#0F172A">TOYOTA_COROLLA_TSS2 (exact, not fuzzy), safety model toyota, …</text>
+<text x="124" y="497" font-size="9" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">by INS-22, INS-23, INS-24; SPC-06 · record R-CFG · «verify» no c…</text>
+<rect x="112" y="514" width="376" height="76" rx="10" fill="#FFFBEB" stroke="#B45309" stroke-width="1.3"/>
+<rect x="112" y="520" width="4" height="64" rx="2" fill="#B45309"/>
+<rect x="124" y="522" width="53.9" height="17" rx="8.5" fill="#B45309"/><text x="150.9" y="533.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-805</text>
+<text x="183.9" y="535" font-size="10" fill="#334155" font-weight="600">ASIL B</text>
+<text x="478" y="535" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="end">waiting on an input</text>
+<text x="124" y="553" font-size="10.5" fill="#0F172A">Harness seating and the relay intercept/PCS-forwarding function shall</text>
+<text x="124" y="566" font-size="10.5" fill="#0F172A">be verified at installation: no relay malfunction or CAN errors, …</text>
+<text x="124" y="581" font-size="9" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">by INS-11, INS-13, INS-14, INS-27; SPC-01, SPC-02 · record R-INS…</text>
+<rect x="112" y="598" width="376" height="76" rx="10" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3"/>
+<rect x="112" y="604" width="4" height="64" rx="2" fill="#0F766E"/>
+<rect x="124" y="606" width="53.9" height="17" rx="8.5" fill="#0F766E"/><text x="150.9" y="617.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-806</text>
+<text x="183.9" y="619" font-size="10" fill="#334155" font-weight="600">ASIL QM (B-sup)</text>
+<text x="478" y="619" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="end">backed by the design</text>
+<text x="124" y="637" font-size="10.5" fill="#0F172A">The parameter set shall equal the release record: Experimental Mode</text>
+<text x="124" y="650" font-size="10.5" fill="#0F172A">per D-08, DisengageOnAccelerator per WP-C-08, …</text>
+<text x="124" y="665" font-size="9" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">by INS-19; SPC-09 · record R-SW parameter dump · «verify» FI-23</text>
+<rect x="112" y="682" width="376" height="76" rx="10" fill="#FFFBEB" stroke="#B45309" stroke-width="1.3"/>
+<rect x="112" y="688" width="4" height="64" rx="2" fill="#B45309"/>
+<rect x="124" y="690" width="53.9" height="17" rx="8.5" fill="#B45309"/><text x="150.9" y="701.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-807</text>
+<text x="183.9" y="703" font-size="10" fill="#334155" font-weight="600">ASIL QM (SOTIF)</text>
+<text x="478" y="703" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="end">waiting on an input</text>
+<text x="124" y="721" font-size="10.5" fill="#0F172A">The device shall be mounted within the position tolerance and</text>
+<text x="124" y="734" font-size="10.5" fill="#0F172A">calibrated within the angle tolerance band derived from the model …</text>
+<text x="124" y="749" font-size="9" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">by INS-09, INS-10, INS-25, INS-26; SPC-03 · record R-CAL · «veri…</text>
+<rect x="112" y="766" width="376" height="76" rx="10" fill="#FFFBEB" stroke="#B45309" stroke-width="1.3"/>
+<rect x="112" y="772" width="4" height="64" rx="2" fill="#B45309"/>
+<rect x="124" y="774" width="53.9" height="17" rx="8.5" fill="#B45309"/><text x="150.9" y="785.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-815</text>
+<text x="183.9" y="787" font-size="10" fill="#334155" font-weight="600">ASIL B‡</text>
+<text x="478" y="787" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="end">waiting on an input</text>
+<text x="124" y="805" font-size="10.5" fill="#0F172A">Only devices and harnesses of the approved hardware revision, with</text>
+<text x="124" y="818" font-size="10.5" fill="#0F172A">clean history, shall be installed; units returned after a field event or …</text>
+<text x="124" y="833" font-size="9" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">by INS-01…INS-04; ITS-03…ITS-05 · record R-DEV · «verify» no case</text>
+<rect x="112" y="850" width="376" height="76" rx="10" fill="#FFFBEB" stroke="#B45309" stroke-width="1.3"/>
+<rect x="112" y="856" width="4" height="64" rx="2" fill="#B45309"/>
+<rect x="124" y="858" width="53.9" height="17" rx="8.5" fill="#B45309"/><text x="150.9" y="869.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-816</text>
+<text x="183.9" y="871" font-size="10" fill="#334155" font-weight="600">ASIL B‡</text>
+<text x="478" y="871" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="end">waiting on an input</text>
+<text x="124" y="889" font-size="10.5" fill="#0F172A">Installation shall be done by a trained installer, and the installation</text>
+<text x="124" y="902" font-size="10.5" fill="#0F172A">record (R-DEV…R-USR) shall be complete and second-person …</text>
+<text x="124" y="917" font-size="9" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">by WP-O-01 §5; WP-M-04 · record Record review · «verify» no case</text>
+<rect x="572" y="132" width="400" height="304" rx="18" fill="#FFFFFF" stroke="#334155" stroke-width="1.6"/>
+<text x="588" y="152" font-size="12.5" fill="#0F172A" font-weight="700">§3.2 Operation</text>
+<text x="588" y="168" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">action operation : LifecyclePhase · 3 procedure steps</text>
+<rect x="584" y="178" width="376" height="76" rx="10" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3"/>
+<rect x="584" y="184" width="4" height="64" rx="2" fill="#0F766E"/>
+<rect x="596" y="186" width="53.9" height="17" rx="8.5" fill="#0F766E"/><text x="623" y="197.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-811</text>
+<text x="655.9" y="199" font-size="10" fill="#334155" font-weight="600">ASIL QM (B-sup)</text>
+<text x="950" y="199" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="end">backed by the design</text>
+<text x="596" y="217" font-size="10.5" fill="#0F172A">Before every drive the driver shall perform the pre-drive checks and</text>
+<text x="596" y="230" font-size="10.5" fill="#0F172A">shall not engage if a check fails (vehicle warning lamps, VSC on, clea…</text>
+<text x="596" y="245" font-size="9" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">by OPS-01…OPS-07; WP-O-03 §5 · record Briefing acknowledgement ·…</text>
+<rect x="584" y="262" width="376" height="76" rx="10" fill="#F8FAFC" stroke="#334155" stroke-width="1.3"/>
+<rect x="584" y="268" width="4" height="64" rx="2" fill="#334155"/>
+<rect x="596" y="270" width="53.9" height="17" rx="8.5" fill="#334155"/><text x="623" y="281.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-812</text>
+<text x="655.9" y="283" font-size="10" fill="#334155" font-weight="600">ASIL QM (B-sup)</text>
+<text x="950" y="283" font-size="9.5" fill="#334155" font-weight="700" text-anchor="end">procedure defined</text>
+<text x="596" y="301" font-size="10.5" fill="#0F172A">Each driver shall receive the user information and safety warnings</text>
+<text x="596" y="314" font-size="10.5" fill="#0F172A">before first use and acknowledge them; in the development phase …</text>
+<text x="596" y="329" font-size="9" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">by WP-O-03 Part A/B; INS-30 · record R-USR · «verify» no case</text>
+<rect x="584" y="346" width="376" height="76" rx="10" fill="#FFFBEB" stroke="#B45309" stroke-width="1.3"/>
+<rect x="584" y="352" width="4" height="64" rx="2" fill="#B45309"/>
+<rect x="596" y="354" width="53.9" height="17" rx="8.5" fill="#B45309"/><text x="623" y="365.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-813</text>
+<text x="655.9" y="367" font-size="10" fill="#334155" font-weight="600">ASIL QM</text>
+<text x="950" y="367" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="end">waiting on an input</text>
+<text x="596" y="385" font-size="10.5" fill="#0F172A">Field monitoring shall collect and analyse drive logs and driver reports</text>
+<text x="596" y="398" font-size="10.5" fill="#0F172A">of every installed item, including every disengagement caused by a …</text>
+<text x="596" y="413" font-size="9" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">by OPS-11, OPS-12; WP-O-04; WP-P-03 · record Monitoring reports…</text>
+<rect x="572" y="520" width="400" height="220" rx="18" fill="#FFFFFF" stroke="#334155" stroke-width="1.6"/>
+<text x="588" y="540" font-size="12.5" fill="#0F172A" font-weight="700">§3.5 Decommissioning and end of support</text>
+<text x="588" y="556" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">action decommissioningAndEndOfSupport : LifecyclePhase · 2 proc…</text>
+<rect x="584" y="566" width="376" height="76" rx="10" fill="#FFFBEB" stroke="#B45309" stroke-width="1.3"/>
+<rect x="584" y="572" width="4" height="64" rx="2" fill="#B45309"/>
+<rect x="596" y="574" width="53.9" height="17" rx="8.5" fill="#B45309"/><text x="623" y="585.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-814</text>
+<text x="655.9" y="587" font-size="10" fill="#334155" font-weight="600">ASIL B (stock path); CS (data)</text>
+<text x="950" y="587" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="end">waiting on an input</text>
+<text x="596" y="605" font-size="10.5" fill="#0F172A">On removal of the item the stock camera connection shall be restored</text>
+<text x="596" y="618" font-size="10.5" fill="#0F172A">and stock TSS functions (LTA/LDA, DRCC, PCS) and the absence of …</text>
+<text x="596" y="633" font-size="9" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">by DEC-01…DEC-11 · record Decommissioning record · «verify» no c…</text>
+<rect x="584" y="650" width="376" height="76" rx="10" fill="#F8FAFC" stroke="#334155" stroke-width="1.3"/>
+<rect x="584" y="656" width="4" height="64" rx="2" fill="#334155"/>
+<rect x="596" y="658" width="53.9" height="17" rx="8.5" fill="#334155"/><text x="623" y="669.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-818</text>
+<text x="655.9" y="671" font-size="10" fill="#334155" font-weight="600">ASIL QM</text>
+<text x="950" y="671" font-size="9.5" fill="#334155" font-weight="700" text-anchor="end">procedure defined</text>
+<text x="596" y="689" font-size="10.5" fill="#0F172A">At end of support of a release, every user shall be informed with the</text>
+<text x="596" y="702" font-size="10.5" fill="#0F172A">date after which the release must not be engaged.</text>
+<text x="596" y="717" font-size="9" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">by WP-O-02 §7.3; WP-O-05 · record Notification record · «verify»…</text>
+<rect x="1072" y="132" width="400" height="304" rx="18" fill="#FFFFFF" stroke="#334155" stroke-width="1.6"/>
+<text x="1088" y="152" font-size="12.5" fill="#0F172A" font-weight="700">§3.3 Service (maintenance and repair)</text>
+<text x="1088" y="168" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">action service : LifecyclePhase · 3 procedure steps</text>
+<rect x="1084" y="178" width="376" height="76" rx="10" fill="#FFFBEB" stroke="#B45309" stroke-width="1.3"/>
+<rect x="1084" y="184" width="4" height="64" rx="2" fill="#B45309"/>
+<rect x="1096" y="186" width="53.9" height="17" rx="8.5" fill="#B45309"/><text x="1123" y="197.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-808</text>
+<text x="1155.9" y="199" font-size="10" fill="#334155" font-weight="600">ASIL B‡</text>
+<text x="1450" y="199" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="end">waiting on an input</text>
+<text x="1096" y="217" font-size="10.5" fill="#0F172A">Vehicle service actions that can invalidate an AoU or the calibration</text>
+<text x="1096" y="230" font-size="10.5" fill="#0F172A">(alignment/steering/suspension, EPS or ECM/ABS replacement or …</text>
+<text x="1096" y="245" font-size="9" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">by SVC-01…SVC-11 · record R-CAL / R-CFG / R-FUN as listed · «ver…</text>
+<rect x="1084" y="262" width="376" height="76" rx="10" fill="#F8FAFC" stroke="#334155" stroke-width="1.3"/>
+<rect x="1084" y="268" width="4" height="64" rx="2" fill="#334155"/>
+<rect x="1096" y="270" width="53.9" height="17" rx="8.5" fill="#334155"/><text x="1123" y="281.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-809</text>
+<text x="1155.9" y="283" font-size="10" fill="#334155" font-weight="600">ASIL B</text>
+<text x="1450" y="283" font-size="9.5" fill="#334155" font-weight="700" text-anchor="end">procedure defined</text>
+<text x="1096" y="301" font-size="10.5" fill="#0F172A">The reference-configuration check (INS-21…INS-23),</text>
+<text x="1096" y="314" font-size="10.5" fill="#0F172A">PCS-preservation check (INS-27) and harness inspection shall be …</text>
+<text x="1096" y="329" font-size="9" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">by PM-01…PM-04 · record Maintenance log · «verify» no case</text>
+<rect x="1084" y="346" width="376" height="76" rx="10" fill="#F8FAFC" stroke="#334155" stroke-width="1.3"/>
+<rect x="1084" y="352" width="4" height="64" rx="2" fill="#334155"/>
+<rect x="1096" y="354" width="53.9" height="17" rx="8.5" fill="#334155"/><text x="1123" y="365.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-817</text>
+<text x="1155.9" y="367" font-size="10" fill="#334155" font-weight="600">ASIL B‡</text>
+<text x="1450" y="367" font-size="9.5" fill="#334155" font-weight="700" text-anchor="end">procedure defined</text>
+<text x="1096" y="385" font-size="10.5" fill="#0F172A">Item faults shall be handled by replacement, not repair: defective</text>
+<text x="1096" y="398" font-size="10.5" fill="#0F172A">devices or harnesses shall be quarantined, reported and returned; …</text>
+<text x="1096" y="413" font-size="9" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">by ITS-01…ITS-05 · record Problem report (WP-P-03) · «verify» no…</text>
+<rect x="1072" y="520" width="400" height="136" rx="18" fill="#FFFFFF" stroke="#334155" stroke-width="1.6"/>
+<text x="1088" y="540" font-size="12.5" fill="#0F172A" font-weight="700">§3.4 Software updates</text>
+<text x="1088" y="556" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">action softwareUpdates : LifecyclePhase · 1 procedure steps</text>
+<rect x="1084" y="566" width="376" height="76" rx="10" fill="#F8FAFC" stroke="#334155" stroke-width="1.3"/>
+<rect x="1084" y="572" width="4" height="64" rx="2" fill="#334155"/>
+<rect x="1096" y="574" width="53.9" height="17" rx="8.5" fill="#334155"/><text x="1123" y="585.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-810</text>
+<text x="1155.9" y="587" font-size="10" fill="#334155" font-weight="600">ASIL B‡</text>
+<text x="1450" y="587" font-size="9.5" fill="#334155" font-weight="700" text-anchor="end">procedure defined</text>
+<text x="1096" y="605" font-size="10.5" fill="#0F172A">Only released baselines shall be installed by update; until signed</text>
+<text x="1096" y="618" font-size="10.5" fill="#0F172A">updates exist, automatic updates shall be disabled and updates …</text>
+<text x="1096" y="633" font-size="9" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">by UPD-01…UPD-08; WP-O-05 · record Release record (WP-K-06) · «v…</text>
+<circle cx="48" cy="156" r="9" fill="#0F172A"/>
+<text x="48" y="140" font-size="10" fill="#334155" font-weight="600" text-anchor="middle">start</text>
+<circle cx="772" cy="786" r="11" fill="none" stroke="#0F172A" stroke-width="1.6"/><circle cx="772" cy="786" r="6.5" fill="#0F172A"/>
+<text x="792" y="790" font-size="10" fill="#334155" font-weight="600">done</text>
+<path d="M57 156L100 156" fill="none" stroke="#334155" stroke-width="1.5" marker-end="url(#lc-arrow)"/>
+<path d="M772 740L772 775" fill="none" stroke="#334155" stroke-width="1.5" marker-end="url(#lc-arrow)"/>
+<path d="M500 156L572 156" fill="none" stroke="#334155" stroke-width="1.5" marker-end="url(#lc-arrow)"/>
+<path d="M772 436L772 520" fill="none" stroke="#334155" stroke-width="1.5" marker-end="url(#lc-arrow)"/>
+<path d="M972 162L1072 162" fill="none" stroke="#334155" stroke-width="1.5" marker-end="url(#lc-arrow)"/>
+<path d="M1072 184L972 184" fill="none" stroke="#334155" stroke-width="1.5" marker-end="url(#lc-arrow)"/>
+<path d="M972 390L1031 390Q1038 390 1038 397L1038 543Q1038 550 1045 550L1072 550" fill="none" stroke="#334155" stroke-width="1.5" marker-end="url(#lc-arrow)"/>
+<path d="M1072 576L1013 576Q1006 576 1006 569L1006 421Q1006 414 999 414L972 414" fill="none" stroke="#334155" stroke-width="1.5" marker-end="url(#lc-arrow)"/>
+<rect x="24" y="100" width="1472" height="858" rx="4" fill="none" stroke="#94A3B8" stroke-width="1.2"/>
+<path d="M24 100h276.6v12l-10 10h-266.6z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="34" y="115" font-size="11" fill="#334155" font-weight="600">act [LionDriverLifecycle] InstalledItemLifecycle</text>
+<text x="40" y="984" font-size="11.5" fill="#334155">18 procedure steps, one per production or operation requirement: 7 defined, 8 waiting on an input, 1 blocked by a design gap, 2 backed by the design. Each arrow is a succession of the model; operation returns from service and from an update.</text>
+<line x1="40" y1="1000" x2="1480" y2="1000" stroke="#E2E8F0"/>
+<rect x="40" y="1022" width="18" height="14" rx="4" fill="#F8FAFC" stroke="#334155" stroke-width="1.4"/>
+<text x="64" y="1033" font-size="11" fill="#334155">procedure defined</text>
+<rect x="176.4" y="1022" width="18" height="14" rx="4" fill="#FFFBEB" stroke="#B45309" stroke-width="1.4"/>
+<text x="200.4" y="1033" font-size="11" fill="#334155">waiting on an input</text>
+<rect x="314.6" y="1022" width="18" height="14" rx="4" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="338.6" y="1033" font-size="11" fill="#334155">blocked by a design gap</text>
+<rect x="481.6" y="1022" width="18" height="14" rx="4" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="505.6" y="1033" font-size="11" fill="#334155">backed by the design</text>
+<circle cx="641.3" cy="1029" r="6" fill="#0F172A"/>
+<text x="653.3" y="1033" font-size="11" fill="#334155">start</text>
+<circle cx="711.3" cy="1029" r="7" fill="none" stroke="#0F172A" stroke-width="1.4"/><circle cx="711.3" cy="1029" r="4" fill="#0F172A"/>
+<text x="725.3" y="1033" font-size="11" fill="#334155">done</text>
+<text x="40" y="1076" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+</svg>

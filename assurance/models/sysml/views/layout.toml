@@ -866,8 +866,21 @@ blocks = [
   { key = "6xx-a", from = "TSR-601", to = "TSR-618", title = "host monitoring" },
   { key = "6xx-b", from = "TSR-619", to = "TSR-635", title = "host monitoring, DM, HMI" },
   { key = "7xx", from = "TSR-701", to = "TSR-713", title = "PCS preservation and harness" },
+  { key = "8xx", from = "TSR-801", to = "TSR-818", title = "production, operation, service, decommissioning" },
 ]
 desc = """SysML requirement diagram generated from the model for one block of WP-S-02: each technical safety requirement \
 with its ASIL, mechanism type and timing, a «deriveReqt» arrow to each FSR it refines, the elements that satisfy it, the \
 safety mechanisms of WP-S-03 §6 that cite it, and the verification cases that name it; requirements no case names are \
 outlined red."""
+
+[views.V-23]
+file = "fig-sysml-v23-lifecycle.svg"
+kind = "activity"
+activity = "InstalledItemLifecycle"
+title = "Life of an installed item"
+subtitle = "WP-S-06 §3 as an action flow: the phases from installation to decommissioning, each with the procedure steps that meet its production and operation requirements"
+width = 1520
+desc = """SysML action flow diagram generated from the model (LionDriverLifecycle, from WP-S-06 §3). Start leads to \
+installation and provisioning, then operation; operation goes to service or to a software update and back, and ends in \
+decommissioning and done. Each phase is an action of LifecyclePhase containing one ProcedureStep action per requirement \
+TSR-801 to TSR-818, with its ASIL, its status, the procedure steps and record that carry it and the cases that verify it."""
