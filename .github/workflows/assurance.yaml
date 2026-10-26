@@ -236,11 +236,13 @@ jobs:
         python3 assurance/08-analyses/figures/test_fig_a03_dfi_matrix.py
         python3 assurance/08-analyses/figures/fig_a02_interference_map.py --check
         python3 assurance/08-analyses/figures/test_fig_a02_interference_map.py
-    - name: Fault tree diagrams and cut sets match WP-A-04 (and their tests)
+    - name: Fault tree diagrams, viewer and cut sets match WP-A-04 (and their tests)
       run: |
         python3 assurance/08-analyses/fta/fta_diagrams.py --check
         python3 assurance/08-analyses/fta/test_fta_diagrams.py
         python3 assurance/08-analyses/fta/fta_cutsets.py --check
+        python3 assurance/08-analyses/fta/fta_viewer.py --check
+        python3 assurance/08-analyses/fta/test_fta_viewer.py
     - name: FMEA data lint, HARA mapping onto WP-C-03, FTA-FMEA hand-off figures (and their tests)
       run: |
         python3 tools/safety/fmea_lint.py --report
