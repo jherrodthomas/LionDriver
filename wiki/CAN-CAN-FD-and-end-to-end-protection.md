@@ -12,8 +12,8 @@ signals are listed in its §11 and the requirements are the TSR-4xx group of
 > Nothing on this page is verified on the car. The figures show how the checks are designed and which of them are
 > built; the status of each comes from the [TSR list](../assurance/03-system/requirements/tsr-list.md).
 
-Both figures are drawn at each wiki sync by [`tools/wiki/comms_animations.py`](../tools/wiki/comms_animations.py),
-from WP-S-05 and the TSR list. When a record changes, the build fails instead of showing old text.
+The four figures are drawn at each wiki sync by [`tools/wiki/comms_animations.py`](../tools/wiki/comms_animations.py),
+from WP-S-05, WP-S-04 and the TSR list. When a record changes, the build fails instead of showing old text.
 
 ## 1. CAN in one minute
 
@@ -111,7 +111,37 @@ The safety argument therefore rests on timeouts and plausibility checks on the r
 on the send side, and on a stronger link between the main computer and the panda, the one hop LionDriver owns at both
 ends. WP-S-05 §12.7 lists the proposals; none is applied yet.
 
-## 6. Other cars protect their messages better
+## 6. One command, end to end
+
+![Animated: the steering command 0x2E4 travelling from openpilot through the SPI link, the panda and CAN bus 0 to the EPS; under each box what it adds to the frame and what it checks, coloured by status; a bracket shows the counter and checksum spanning the whole path, two shorter ones the XOR on SPI and the CRC-15 on CAN](comms-path.svg)
+
+Section 5 takes the hops one at a time. This figure follows one steering command through all of them, so you can
+see which protection travels with the data and which is rebuilt on the way:
+
+- **End to end:** the counter and checksum. openpilot writes them when it packs the frame, and only the EPS checks
+  them. Nothing in between looks at them.
+- **Per link:** the XOR on the SPI link and the CRC-15 on CAN. Each box adds its own and the next box checks it.
+- **In the middle:** the panda checks the command itself (the torque limits, the rate, and that a fresh command
+  arrives at least every 50 ms). It is the only check that can stop a wrong value openpilot packed correctly.
+
+## 7. From fault to safe state
+
+![Animated: five communication faults on one time axis from fault onset to 0.6 s; for each, a bar for the time to detect it, a bar for the reaction to the safe state, and a red line at the FTTI of its safety goal; three end with margin, one with no margin, one is not detected](comms-timeline.svg)
+
+A check only helps if it acts in time. Each safety goal has a **fault-tolerant time interval** (FTTI): how long a
+fault may last before it can cause harm. Detection and reaction together must fit inside it, with at least 20 % to
+spare ([WP-S-04](../assurance/03-system/WP-S-04-timing-ftti-budget.md) §2). The times are worked out from the code of
+the reference build. None has been measured yet.
+
+- **A message stops, or openpilot stops sending:** caught in time, with margin.
+- **The main computer's heartbeat stops:** caught, but 0.01 s over its detection budget, and the margin left is under
+  the 20 % rule.
+- **The panda hangs while it forwards the camera's braking:** the watchdog and the relay together take the whole 0.2 s.
+  There is no margin. Whether to make the watchdog faster is decided once the braking timing and the watchdog's clock
+  are measured on the bench.
+- **The wheel speeds freeze but keep coming:** nothing detects it, the gap of section 5 again.
+
+## 8. Other cars protect their messages better
 
 The panda's checks can only use what the car puts in its messages. Toyota's is the weakest among the brands openpilot
 supports: an 8-bit sum and, on the messages the panda reads, no counter. Most other brands add a counter; Chrysler and
