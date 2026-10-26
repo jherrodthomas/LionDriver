@@ -3142,7 +3142,7 @@
   sources: ["assurance/03-system/WP-S-03-technical-safety-concept-architecture.md OI-5", "docs/contributing/architecture.md"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "docs/contributing/architecture.md is a short pointer to WP-S-03 and WP-W-03; WP-S-03 v0.20 OI-5 closed", at: 2026-10-26}
+  applied: {ref: "jherrodthomas/LionDriver#490", record: "docs/contributing/architecture.md is a short pointer to WP-S-03 and WP-W-03; WP-S-03 v0.20 OI-5 closed", at: 2026-10-26}
 
 - id: DQ-134
   question: "Should the panda's watchdog and forwarding checks be made faster than 0.1 s, so that the stock pre-collision braking (SG-07) keeps some margin?"
@@ -3198,7 +3198,7 @@
   sources: ["assurance/03-system/WP-S-08-system-integration-test.md OI-4, VS-SI-20", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-707"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "WP-S-08 v0.7 VS-SI-20 latency ≤ 1 ms from TSR-707 and OI-4; revised once the camera message periods are measured", at: 2026-10-26}
+  applied: {ref: "jherrodthomas/LionDriver#490", record: "WP-S-08 v0.7 VS-SI-20 latency ≤ 1 ms from TSR-707 and OI-4; revised once the camera message periods are measured", at: 2026-10-26}
 
 - id: DQ-136
   question: "How far below the panda's limits must openpilot's own commands stay, for verification case VS-SQ-18?"
@@ -3224,7 +3224,7 @@
   sources: ["assurance/03-system/WP-S-09-system-verification.md OI-5, VS-SQ-18", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-605"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "WP-S-09 v0.7 VS-SQ-18 pass criterion uses the TSR-605 margins and OI-5; updated when TSR-605's limits are derived", at: 2026-10-26}
+  applied: {ref: "jherrodthomas/LionDriver#490", record: "WP-S-09 v0.7 VS-SQ-18 pass criterion uses the TSR-605 margins and OI-5; updated when TSR-605's limits are derived", at: 2026-10-26}
 
 - id: DQ-137
   question: "Which US crash data should set the human-driver baseline that LionDriver's SOTIF targets must beat, and how is it cut down to the ODD's roads?"
@@ -3396,7 +3396,7 @@
   sources: ["assurance/03-system/WP-S-02-technical-safety-requirements.md OI-7, TSR-410, TSR-411", "assurance/03-system/WP-S-05-hsi-specification.md §4.1, §12.3, OI-2"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Method recorded (WP-S-02 v0.59 OI-7, WP-S-05 v0.17 OI-2): residual-error target from the ASIL C budget, then the shortest CRC that meets it, with the TSR-411 counter. Left: the analysis, then the panda and host change with tests (panda fork, outside this repository) (jherrodthomas/LionDriver#PRNUM)"
+  note: "Method recorded (WP-S-02 v0.59 OI-7, WP-S-05 v0.17 OI-2): residual-error target from the ASIL C budget, then the shortest CRC that meets it, with the TSR-411 counter. Left: the analysis, then the panda and host change with tests (panda fork, outside this repository) (jherrodthomas/LionDriver#490)"
 
 - id: DQ-144
   question: "Which commands should the released panda firmware accept from the main computer, mode by mode?"
@@ -3422,7 +3422,7 @@
   sources: ["assurance/03-system/WP-S-05-hsi-specification.md §4.2, OI-3"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Method recorded (WP-S-05 v0.17 OI-3): the per-mode request list is derived from TSR-512/513 and CSR-011…016. Left: the review of every request against each mode, and the SWSRs in WP-W-02 (jherrodthomas/LionDriver#PRNUM)"
+  note: "Method recorded (WP-S-05 v0.17 OI-3): the per-mode request list is derived from TSR-512/513 and CSR-011…016. Left: the review of every request against each mode, and the SWSRs in WP-W-02 (jherrodthomas/LionDriver#490)"
 
 - id: DQ-145
   question: "The panda's SPI buffer is 4096 bytes and the main computer's is 2048. Should they be made the same size, or the difference written down as intended?"
@@ -3494,7 +3494,7 @@
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-5", "assurance/05-software/WP-W-03-software-architecture.md ATC-22", "assurance/03-system/WP-S-05-hsi-specification.md §4.2"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Recorded in WP-W-02 v0.49 OI-5 and WP-W-03 v0.21 ATC-22. Left: confirm the list from pandad, the panda change (panda fork) with tests, SWSR-513 (jherrodthomas/LionDriver#PRNUM)"
+  note: "Recorded in WP-W-02 v0.49 OI-5 and WP-W-03 v0.21 ATC-22. Left: confirm the list from pandad, the panda change (panda fork) with tests, SWSR-513 (jherrodthomas/LionDriver#490)"
 
 - id: DQ-148
   question: "When the panda refuses a steering frame from the main computer, should it send its own zero-torque frame in its place, or send nothing?"
@@ -3626,7 +3626,7 @@
   sources: ["assurance/05-software/WP-W-03-software-architecture.md §5.4, OI-4, ATC-04", "assurance/08-analyses/WP-A-02-coexistence-freedom-from-interference.md OI-9"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Recorded in WP-W-03 v0.21 OI-4 and ATC-04, WP-A-02 OI-9. Left: the §5.4.5 handler-time measurements on the target, then the ranking unless the margin is large (jherrodthomas/LionDriver#PRNUM)"
+  note: "Recorded in WP-W-03 v0.21 OI-4 and ATC-04, WP-A-02 OI-9. Left: the §5.4.5 handler-time measurements on the target, then the ranking unless the margin is large (jherrodthomas/LionDriver#490)"
 
 - id: DQ-154
   question: "Should the panda check once more that it still has steering authority, with interrupts masked, just before it hands a frame to the CAN controller?"
@@ -3676,7 +3676,7 @@
   sources: ["assurance/05-software/WP-W-03-software-architecture.md OI-2, ATC-10"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Recorded in WP-W-03 v0.21 OI-2 and ATC-10, WP-A-02 OI-9. Left: the build variant in the panda fork (jherrodthomas/LionDriver#PRNUM)"
+  note: "Recorded in WP-W-03 v0.21 OI-2 and ATC-10, WP-A-02 OI-9. Left: the build variant in the panda fork (jherrodthomas/LionDriver#490)"
 
 - id: DQ-156
   question: "Should USB communication be switched off in the reference panda firmware?"
@@ -3702,7 +3702,7 @@
   sources: ["assurance/05-software/WP-W-03-software-architecture.md OI-3, ATC-11"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Recorded in WP-W-03 v0.21 OI-3 and ATC-11, WP-A-02 OI-9. Left: the panda change and its test (panda fork) (jherrodthomas/LionDriver#PRNUM)"
+  note: "Recorded in WP-W-03 v0.21 OI-3 and ATC-11, WP-A-02 OI-9. Left: the panda change and its test (panda fork) (jherrodthomas/LionDriver#490)"
 
 - id: DQ-157
   question: "Does the panda need a separate transmit queue for the camera's emergency-braking messages, so heavy host traffic cannot delay them?"
@@ -6030,7 +6030,7 @@
   sources: ["LionDriver-security (private): assurance/sim/cyber/README.md §2.4, §6.1 choice 5 (moved there from PR #454, DQ-421 A)", "assurance/02-concept/WP-C-09-tara.md §3", "assurance/02-concept/hatara/hatara-interactions.md"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "WP-C-03 v0.12 §2 note: exposure assumes a random fault, an attacker-triggered event takes the worst situation and the TARA's safety impact governs; joint HARA/TARA view interaction IX-12 (hatara_model.py, table and figures). No rating changes", at: 2026-10-26}
+  applied: {ref: "jherrodthomas/LionDriver#490", record: "WP-C-03 v0.12 §2 note: exposure assumes a random fault, an attacker-triggered event takes the worst situation and the TARA's safety impact governs; joint HARA/TARA view interaction IX-12 (hatara_model.py, table and figures). No rating changes", at: 2026-10-26}
 
 - id: DQ-421
   question: "LionDriver is public. Should the details of security weaknesses that are not fixed yet move to a private repository until they are fixed?"
