@@ -122,6 +122,25 @@ Results: [`results/mount-modes.md`](../results/mount-modes.md).
 
 *Figure 7. The mount's vibration modes and the road-driven jitter.*
 
+### 2.4 Dust in the fan (TC-21, HWSR-509a)
+
+Physics plan round 3, study 15. [`fan_dust.py`](fan_dust.py) runs the MCU study's steady set-up with the fan face's
+cooling stepped from as built (100 %) to stalled (0 %, natural convection), for the cabin air at which the SoC
+reaches the host's 96 °C limit and at which the MCU's junction would reach its 125 °C.
+
+- **Clean to stalled costs {fd['soc_limit_air_lost_k']:.0f} K of cabin air:** the SoC reaches its limit at
+  {fd['steps'][0]['air_at_soc_limit']:.0f} °C clean and {fd['steps'][-1]['air_at_soc_limit']:.0f} °C stalled.
+- **Most of it comes late:** half is lost only once {100 * fd['half_of_loss_by']:.0f} % of the cooling is gone, so a fan
+  that still turns keeps most of its value and the stalled-fan check of HWSR-509a catches what matters most.
+- **The host still stops first** at every step; the MCU stays in range while the host runs its thermal policy.
+- How fast a fan clogs is not modelled.
+
+Results: [`results/fan-dust.md`](../results/fan-dust.md).
+
+![The cabin air at which the SoC reaches its 96 °C limit and at which the MCU's junction would reach 125 °C, against the fan's remaining cooling from clean to stalled; the band between them is where the host stops first](figures/fig-th-8-fan-dust.webp)
+
+*Figure 8. Dust in the fan.*
+
 ## 3. Checks
 
 [`test_thermal.py`](test_thermal.py) runs in CI. Each check is meant to catch a different error:
@@ -139,6 +158,7 @@ Results: [`results/mount-modes.md`](../results/mount-modes.md).
 | V9 Mount modes: a steel cantilever in the same elasticity and eigen code against Euler–Bernoulli's first bending frequency | a wrong weak form, mass matrix or eigen set-up | both bending planes within 1 % |
 | V10 Mount modes, mesh study (55,731, 183,141 and 348,075 unknowns) | a mesh too coarse for the pad | 92.39, 91.62, 91.31 Hz: the finest two 0.3 % apart |
 | V11 Mount modes: the effective masses add to at most the whole mass and to at least 90 % along each axis; slow road waves pass the suspension unchanged | a wrong participation factor or road input | 100 / 99 / 100 % of the mass in six modes |
+| V12 Dust in the fan: the clean and stalled ends equal the MCU study's results; the limits fall monotonically as the fan clogs | a set-up that drifted from the MCU study | equal within 0.1 K |
 
 The pilot's own `--check` reruns every drive and fails if any number moves by more than 0.05 K from the committed
 JSON; the mount study's, if any number moves by more than 1 %. Figures render in CI, but their pixels are not compared, because software rendering differs slightly between
@@ -149,12 +169,13 @@ machines.
 ```sh
 # environment: FEniCSx 0.10.0, FiPy 4.0.3, PyVista 0.49.1, VTK 9.7.0, Mesa 26.2.5 (explicit lock, every package by md5)
 micromamba create -p <env> --file assurance/sim/thermal/thermal-linux-64.lock
-<env>/bin/python assurance/sim/thermal/test_thermal.py              # checks V1–V11, about 2 min
+<env>/bin/python assurance/sim/thermal/test_thermal.py              # checks V1–V12, about 2 min
 <env>/bin/python assurance/sim/thermal/thermal_pilot.py --figures   # results and figures, about 4 min
 <env>/bin/python assurance/sim/thermal/thermal_pilot.py --check     # CI: a fresh run against the committed JSON
 <env>/bin/python assurance/sim/thermal/cabin_drive.py --check      # the device on the cabin model's temperatures
 <env>/bin/python assurance/sim/thermal/mcu_heat.py --figures        # the safety MCU (§2.2), about 30 s
 <env>/bin/python assurance/sim/thermal/mount_modes.py --figures     # the mount's modes (§2.3), about 2 min
+<env>/bin/python assurance/sim/thermal/fan_dust.py --figures        # dust in the fan (§2.4), about 1 min
 ```
 
 Figures render with no screen and no GPU through Mesa's software EGL (`figures.py` sets it up, TE-04 OI-2). They are
@@ -179,6 +200,7 @@ WebP because PNG and GIF go to the repository's read-only LFS store.
 | [`cabin_drive.py`](cabin_drive.py) | The device on the cabin heat soak's temperatures (§2.1) |
 | [`mcu_heat.py`](mcu_heat.py) | The safety MCU next to the SoC (§2.2) |
 | [`mount_modes.py`](mount_modes.py) | The mount's vibration modes and the road camera's jitter (§2.3) |
-| [`figures.py`](figures.py) | The seven figures (PyVista off-screen, matplotlib) |
-| [`test_thermal.py`](test_thermal.py) | Checks V1–V11 |
+| [`fan_dust.py`](fan_dust.py) | Dust in the fan (§2.4) |
+| [`figures.py`](figures.py) | The eight figures (PyVista off-screen, matplotlib) |
+| [`test_thermal.py`](test_thermal.py) | Checks V1–V12 |
 | [`thermal-linux-64.lock`](thermal-linux-64.lock) | The environment, every package by URL and md5 |

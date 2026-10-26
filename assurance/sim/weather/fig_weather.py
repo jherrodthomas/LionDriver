@@ -973,3 +973,144 @@ def device_sun_figures(p, r, out: Path):
   out.mkdir(exist_ok=True)
   _device_sun(p, r, out / "fig-wx-20-device-sun.webp")
   _report(out, "fig-wx-20")
+
+
+# ------------------------------------------------------------------------------------------------ wet curves
+
+def _wet_curves(r, path):
+  v = np.array(r["speeds_kph"])
+  n = r["need"]["flat"]
+  fig, ax = plt.subplots(figsize=(9, 9.5), dpi=100)
+  fig.subplots_adjust(left=0.12, right=0.95, top=0.84, bottom=0.2)
+  fig.text(0.05, 0.95, "A curve at the ODD's bound on a wet road", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.92, f"Cornering at {r['a_lat']:.1f} m/s², with and without the item's {r['a_brake']:.1f} m/s² braking · "
+           "light rain · handbook friction", fontsize=12, color=INK2)
+  ax.fill_between(v, r["available"]["odd_3mm_mira"]["wet"], r["available"]["odd_3mm_continental"]["wet"],
+                  color="#2a78d6", alpha=0.25, lw=0, label="grip, wet: 3 mm, the ODD's minimum (MIRA to Continental)")
+  styles = {"new": ("new tyres", "#86b6ef"), "legal_1_6mm": ("1.6 mm, legal minimum (outside the ODD)", "#104281")}
+  for k, (lab, col) in styles.items():
+    ax.plot(v, r["available"][k]["wet"], "o-", color=col, lw=2.4, label=f"grip, wet: {lab}")
+  ax.axhline(n["corner"], color=INK, lw=1.6, ls=(0, (4, 2)))
+  ax.text(v[0], n["corner"] + 0.01, f"needed to corner: {n['corner']:.2f}", fontsize=11, color=INK, va="bottom")
+  ax.axhline(n["corner_brake"], color=CRIT, lw=1.8)
+  ax.text(v[0], n["corner_brake"] + 0.01, f"needed to corner and brake at the item's rate: {n['corner_brake']:.2f}",
+          fontsize=11, color=CRIT, va="bottom")
+  ax.set_xlim(v[0] - 2, v[-1] + 2); ax.set_ylim(0, 0.7)
+  ax.set_xlabel("speed, km/h"); ax.set_ylabel("tyre-road friction")
+  ax.grid(axis="y", color=GRID); ax.spines[["top", "right"]].set_visible(False)
+  ax.legend(loc="upper right", frameon=False, fontsize=10.5)
+  b = r["brake_in_curve_wet_3mm"]
+  fig.text(0.05, 0.075, f"At 110 km/h the 3 mm tyres hold the curve and leave {b['odd_3mm_mira']['110']:.1f}–"
+           f"{b['odd_3mm_continental']['110']:.1f} m/s² of braking.\nRound friction circle; the 3 mm band from measured "
+           "wet stops 7 % (Continental) to 35 % (MIRA)\nlonger than with new tyres.", fontsize=11.5, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def wet_curves_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _wet_curves(r, out / "fig-wx-21-wet-curves.webp")
+  _report(out, "fig-wx-21")
+
+
+# ------------------------------------------------------------------------------------------------ crest
+
+def _crest(p, r, path):
+  c = r["cases"]["110"]
+  k = c["k"]
+  A = 4.0
+  L = k * A
+  fig = plt.figure(figsize=(9, 11), dpi=100)
+  fig.text(0.05, 0.965, "Over a hill crest: who sees the stopped car first", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.94, f"AASHTO crest built for 110 km/h (K {k:.0f}, 4 % grade change) · heights exaggerated ×40",
+           fontsize=12, color=INK2)
+  ax = fig.add_axes([0.08, 0.6, 0.88, 0.28])
+  x = np.linspace(-L / 2 - 60, L / 2 + 60, 600)
+  def y(xx):
+    xx = np.asarray(xx, float)
+    inside = -xx ** 2 / (200 * k)
+    left = -(L / 2) ** 2 / (200 * k) + (A / 200) * (xx + L / 2)
+    right = -(L / 2) ** 2 / (200 * k) - (A / 200) * (xx - L / 2)
+    return np.where(xx < -L / 2, left, np.where(xx > L / 2, right, inside))
+  ex = 40.0
+  ax.fill_between(x, y(x) * ex - 4, y(x) * ex, color="#d9d7cf", lw=0)
+  ax.plot(x, y(x) * ex, color=INK2, lw=1.5)
+  ch = p["crest"]["camera_height_m"]["value"]; rh = p["crest"]["radar_height_m"]["value"]
+  tg = p["crest"]["targets_m"]
+  for lab, h1, h2, d, col in (("camera", ch, tg["tail_lights"], c["sight_m"]["camera_tail_lights"], "#2a78d6"),
+                              ("radar", rh, tg["radar_return"], c["sight_m"]["radar_return"], CRIT)):
+    x0 = -d / 2 * (math.sqrt(h1) / (math.sqrt(h1) + math.sqrt(h2))) * 2
+    x1 = x0 + d
+    ax.plot([x0, x1], [(y(x0) + h1) * ex, (y(x1) + h2) * ex], color=col, lw=2, label=f"{lab}: sees it at {d:.0f} m")
+    ax.plot([x0], [(y(x0) + h1) * ex], "o", color=col, ms=7)
+    if lab == "camera":
+      car_x = x1
+  ax.add_patch(Rectangle((car_x, float(y(car_x)) * ex), 4.5, tg["roof"] * ex, color=INK, lw=0))
+  ax.text(car_x + 6, float(y(car_x)) * ex + tg["roof"] * ex / 2, "stopped car", fontsize=10.5, color=INK, va="center")
+  ax.set_xlim(x[0], x[-1]); ax.set_yticks([]); ax.set_xlabel("m along the road")
+  ax.spines[["top", "right", "left"]].set_visible(False)
+  ax.legend(loc="lower center", frameon=False, fontsize=10.5, ncol=2)
+  ax2 = fig.add_axes([0.3, 0.17, 0.62, 0.32])
+  rows = [("camera sees the tail lights", c["sight_m"]["camera_tail_lights"], "#2a78d6"),
+          ("driver sees the tail lights", c["sight_m"]["driver_tail_lights"], "#86b6ef"),
+          ("radar sees the car", c["sight_m"]["radar_return"], CRIT),
+          ("stop: driver, wet, 3 mm tread", c["need_at_110_m"]["driver_wet_3mm"], INK),
+          ("stop: the item's −3.5 m/s²", c["need_at_110_m"]["item_rate"], INK2),
+          ("stop: driver, dry", c["need_at_110_m"]["driver_dry"], MUTED)]
+  for i, (lab, val, col) in enumerate(rows):
+    ax2.barh(i, val, color=col, height=0.6)
+    ax2.text(val + 3, i, f"{val:.0f} m", va="center", fontsize=11, color=INK)
+  ax2.set_yticks(range(len(rows))); ax2.set_yticklabels([r_[0] for r_ in rows], fontsize=11)
+  ax2.invert_yaxis(); ax2.set_xlim(0, 300); ax2.set_xlabel("distance at 110 km/h, m")
+  ax2.spines[["top", "right"]].set_visible(False); ax2.grid(axis="x", color=GRID)
+  fig.text(0.05, 0.075, "The radar sits lowest, so over a crest it sees the stopped car last. Radar height is an estimate "
+           "until T1;\nthe item does not brake for an untracked stopped car: the driver and the stock PCS do.",
+           fontsize=11, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def crest_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _crest(p, r, out / "fig-wx-22-crest.webp")
+  _report(out, "fig-wx-22")
+
+
+# ------------------------------------------------------------------------------------------------ stopped car
+
+def _stopped_car(p, r, path):
+  s = p["stopped_car"]
+  w = s["car_rear_m"]["width"]
+  d = np.linspace(20, 300, 400)
+  fig, ax = plt.subplots(figsize=(9, 9.5), dpi=100)
+  fig.subplots_adjust(left=0.12, right=0.95, top=0.84, bottom=0.2)
+  fig.text(0.05, 0.95, "A stopped car ahead: its size in the driving model's input", fontsize=18, weight="bold", color=INK)
+  fig.text(0.05, 0.92, f"{w:.1f} m wide car's rear · model input frames from openpilot's model.py · 110 km/h",
+           fontsize=12, color=INK2)
+  for frame, col in (("narrow", "#2a78d6"), ("wide", "#86b6ef")):
+    fl = r["code"][f"{frame}_fl_px"]
+    ax.plot(d, fl * w / d, color=col, lw=2.4, label=f"{frame} road camera frame ({fl:.0f} px focal length)")
+  ax.axhspan(0, s["small_object_px"]["value"], color="#fdecec", lw=0)
+  ax.text(295, s["small_object_px"]["value"] + 1, "below 32 px: a small object for detectors (MS COCO)", ha="right",
+          fontsize=10.5, color=CRIT)
+  labels = {"item": "item stops at −3.5", "driver_unwarned_dry": "driver, 2.5 s, dry",
+            "driver_unwarned_wet": "driver, 2.5 s, wet 3 mm"}
+  for i, (k, lab) in enumerate(labels.items()):
+    x = r["stop_m"][k]
+    ax.axvline(x, color=INK2, lw=1.2, ls=(0, (4, 2)))
+    ax.text(x + 3, 58 - 7 * (i % 2), f"{lab}\n{x:.0f} m", fontsize=10, color=INK2, va="top")
+  ax.set_xlim(20, 300); ax.set_ylim(0, 60)
+  ax.set_xlabel("distance to the stopped car, m"); ax.set_ylabel("car's width in the model's input, px")
+  ax.grid(axis="y", color=GRID); ax.spines[["top", "right"]].set_visible(False)
+  ax.legend(loc="upper right", bbox_to_anchor=(1.0, 0.72), frameon=False, fontsize=10.5)
+  fig.text(0.05, 0.075, f"For the item to stop on its own the model must take the car as a lead at "
+           f"{r['stop_m']['item']:.0f} m, where it is {r['px_at_stop']['narrow']['item']:.0f} px wide.\nWhat the model "
+           "detects at that size is learned, not computed here.", fontsize=11.5, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def stopped_car_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _stopped_car(p, r, out / "fig-wx-23-stopped-car.webp")
+  _report(out, "fig-wx-23")

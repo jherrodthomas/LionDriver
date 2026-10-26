@@ -1,0 +1,63 @@
+{
+ "about": "Synthetic (DSR-12), design aid, no evidence credit. Geometry of the model's input; what the model detects is learned, not computed here.",
+ "code": {
+  "narrow_fl_px": 910.0,
+  "wide_fl_px": 455.0,
+  "model_input_px": [
+   512,
+   256
+  ],
+  "lead_prob_min": 0.5,
+  "radar_alone_below_mps": 4.0,
+  "radar_alone_within_m": 25.0
+ },
+ "speed_kph": 110.0,
+ "mu": {
+  "dry_3mm": 0.775,
+  "wet_3mm": 0.426
+ },
+ "stop_m": {
+  "item": 148.7,
+  "driver_attentive_dry": 107.2,
+  "driver_unwarned_dry": 137.8,
+  "driver_unwarned_wet": 188.1
+ },
+ "distance_at_px": {
+  "narrow": {
+   "32": 51.2,
+   "20": 81.9,
+   "10": 163.8
+  },
+  "wide": {
+   "32": 25.6,
+   "20": 41.0,
+   "10": 81.9
+  }
+ },
+ "px_at_stop": {
+  "narrow": {
+   "item": 11.0,
+   "driver_attentive_dry": 15.3,
+   "driver_unwarned_dry": 11.9,
+   "driver_unwarned_wet": 8.7
+  },
+  "wide": {
+   "item": 5.5,
+   "driver_attentive_dry": 7.6,
+   "driver_unwarned_dry": 5.9,
+   "driver_unwarned_wet": 4.4
+  }
+ },
+ "seconds_at_px": {
+  "narrow": {
+   "32": 1.68,
+   "20": 2.68,
+   "10": 5.36
+  },
+  "wide": {
+   "32": 0.84,
+   "20": 1.34,
+   "10": 2.68
+  }
+ }
+}

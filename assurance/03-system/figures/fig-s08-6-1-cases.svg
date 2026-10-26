@@ -1,0 +1,327 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1311" viewBox="0 0 1280 1311" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 6-1. The integration test cases (WP-S-08 §6)</title>
+<desc>27 integration test cases of WP-S-08 §6. VS-SI-01 Engagement only on PCM cruise rising edge: steps I-1, I-2, I-4; expected to meet, authority only on the cruise edge. VS-SI-02 Disengagement on brake and cancel: steps I-1, I-3, I-4; expected to meet, logic meets; timing to be measured. VS-SI-03 Driver steering override: steps I-1, I-3; known gap, no driver-torque check in the envelope. VS-SI-04 Gas override and restricted host commands in car mode: steps I-1; expected to meet, gas blocks longitudinal; restricted commands ignored. VS-SI-05 Heartbeat loss: steps I-1, I-2; partly, revoke at 0.3 s; SILENT still after 5 s. VS-SI-06 Heartbeat engaged mismatch: steps I-1; known gap, mismatch takes 3 ticks at 1 Hz. VS-SI-07 Safety mode / param set in car mode: steps I-1; by design, reference build, mode lock in the reference build. VS-SI-08 Configuration commands in car mode: steps I-1; by design, reference build, command gating in the reference build. VS-SI-09 SPI corruption: steps I-2; partly, no corrupted frame expected; XOR not quantified. VS-SI-10 Stale / replayed command stream: steps I-1; known gap, no sequence counter. VS-SI-11 TX flooding (babbling SoC): steps I-1; partly, rate limit by design; no interrupt-rate reaction. VS-SI-12 RX timeout per gating signal: steps I-1, I-3; by design, reference build, timeout ≤ 0.16 s, not on hardware. VS-SI-13 E2E plausibility: stuck and replayed frames: steps I-1, I-3; known gap, only silence is detected. VS-SI-14 Checksum and quality-flag rejection: steps I-1; expected to meet, checksum and wheel fault bits revoke. VS-SI-15 Torque magnitude, rate and measured tracking end-to-end: steps I-1, I-3; partly, limits hold; a violation does not revoke. VS-SI-16 Accel bounds, inactive value, jerk: steps I-1, I-3; partly, bounds hold; jerk not limited. VS-SI-17 Excessive-actuation latch and host fault reactions: steps I-2, I-3; partly, latch meets; NaN clamped to 0. VS-SI-18 Relay state per mode: steps I-1, I-4; partly, released by mode; power-loss state unknown. VS-SI-19 Relay malfunction detection: steps I-1; known gap, relay fault found after 1–2 s. VS-SI-20 PCS message forwarding unchanged: steps I-1, I-2, I-4; expected to meet, static block list. VS-SI-21 PCS masquerade from SoC: steps I-1; by design, reference build, all PCS IDs blocked in the reference build. VS-SI-22 Soft disable on stale inputs: steps I-2, I-3; known gap, up to 3.5 s on stale inputs. VS-SI-23 SoC process kill / hang: steps I-2; partly, 0.3 s where the heartbeat stops; 3–5 s otherwise. VS-SI-24 Cruise mismatch reaction: steps I-2; cannot judge yet, code changed since the run (1 s prompt). VS-SI-25 MCU reset during engagement: steps I-1, I-2; expected to meet, restarts in SILENT; relay reset state unconfirmed. VS-SI-26 Target vs host safety model; process replay regression: steps I-1, I-2; cannot judge yet, needs LionDriver's own drive logs. VS-SI-27 Host reaction to envelope reports: steps I-2; cannot judge yet, host reaction to envelope reports.</desc>
+<defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="1311" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 6-1 · The integration test cases, where each runs and what is expected</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">The 27 cases of §6 by integration step, with the result the code is expected to give: 10 meet, 8 partly, 6 known gap, 3 cannot be judged; none executed</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-S-08 §3.1, §6</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<text x="560" y="116" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">I-1</text>
+<text x="560" y="131" font-size="9" fill="#475569" text-anchor="middle">bench, test host</text>
+<text x="625" y="116" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">I-2</text>
+<text x="625" y="131" font-size="9" fill="#475569" text-anchor="middle">+ openpilot</text>
+<text x="690" y="116" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">I-3</text>
+<text x="690" y="131" font-size="9" fill="#475569" text-anchor="middle">+ plant model</text>
+<text x="755" y="116" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">I-4</text>
+<text x="755" y="131" font-size="9" fill="#475569" text-anchor="middle">in the car</text>
+<text x="815" y="116" font-size="12" fill="#0F172A" font-weight="700">Expected at the baseline</text>
+<text x="815" y="131" font-size="9" fill="#475569">from the code; nothing measured</text>
+<rect x="30" y="144" width="1220" height="136" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="44" y="162" font-size="12.5" fill="#0F172A" font-weight="700">Engagement, disengagement, override (TSR-3xx)</text>
+<line x1="40" y1="196" x2="1240" y2="196" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="187" font-size="11" fill="#0F172A" font-weight="700">VS-SI-01</text>
+<text x="118" y="187" font-size="11" fill="#0F172A">Engagement only on PCM cruise rising edge</text>
+<circle cx="560" cy="183.0" r="6" fill="#C2410C"/>
+<circle cx="625" cy="183.0" r="6" fill="#C2410C"/>
+<circle cx="690" cy="183.0" r="2.5" fill="#94A3B8"/>
+<circle cx="755" cy="183.0" r="6" fill="#C2410C"/>
+<rect x="815" y="174" width="112" height="18" rx="9" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="871" y="187" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">expected to meet</text>
+<text x="935" y="187" font-size="10" fill="#475569">authority only on the cruise edge</text>
+<line x1="40" y1="222" x2="1240" y2="222" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="213" font-size="11" fill="#0F172A" font-weight="700">VS-SI-02</text>
+<text x="118" y="213" font-size="11" fill="#0F172A">Disengagement on brake and cancel</text>
+<circle cx="560" cy="209.0" r="6" fill="#C2410C"/>
+<circle cx="625" cy="209.0" r="2.5" fill="#94A3B8"/>
+<circle cx="690" cy="209.0" r="6" fill="#C2410C"/>
+<circle cx="755" cy="209.0" r="6" fill="#C2410C"/>
+<rect x="815" y="200" width="112" height="18" rx="9" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="871" y="213" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">expected to meet</text>
+<text x="935" y="213" font-size="10" fill="#475569">logic meets; timing to be measured</text>
+<line x1="40" y1="248" x2="1240" y2="248" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="239" font-size="11" fill="#0F172A" font-weight="700">VS-SI-03</text>
+<text x="118" y="239" font-size="11" fill="#0F172A">Driver steering override</text>
+<circle cx="560" cy="235.0" r="6" fill="#C2410C"/>
+<circle cx="625" cy="235.0" r="2.5" fill="#94A3B8"/>
+<circle cx="690" cy="235.0" r="6" fill="#C2410C"/>
+<circle cx="755" cy="235.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="226" width="70" height="18" rx="9" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="850" y="239" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">known gap</text>
+<text x="893" y="239" font-size="10" fill="#475569">no driver-torque check in the envelope</text>
+<line x1="40" y1="274" x2="1240" y2="274" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="265" font-size="11" fill="#0F172A" font-weight="700">VS-SI-04</text>
+<text x="118" y="265" font-size="11" fill="#0F172A">Gas override and restricted host commands in car mode</text>
+<circle cx="560" cy="261.0" r="6" fill="#C2410C"/>
+<circle cx="625" cy="261.0" r="2.5" fill="#94A3B8"/>
+<circle cx="690" cy="261.0" r="2.5" fill="#94A3B8"/>
+<circle cx="755" cy="261.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="252" width="112" height="18" rx="9" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="871" y="265" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">expected to meet</text>
+<text x="935" y="265" font-size="10" fill="#475569">gas blocks longitudinal; restricted commands ignored</text>
+<rect x="30" y="288" width="1220" height="214" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="44" y="306" font-size="12.5" fill="#0F172A" font-weight="700">SoC ↔ panda interface (TSR-4xx, TSR-5xx)</text>
+<line x1="40" y1="340" x2="1240" y2="340" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="331" font-size="11" fill="#0F172A" font-weight="700">VS-SI-05</text>
+<text x="118" y="331" font-size="11" fill="#0F172A">Heartbeat loss</text>
+<circle cx="560" cy="327.0" r="6" fill="#C2410C"/>
+<circle cx="625" cy="327.0" r="6" fill="#C2410C"/>
+<circle cx="690" cy="327.0" r="2.5" fill="#94A3B8"/>
+<circle cx="755" cy="327.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="318" width="52" height="18" rx="9" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="841" y="331" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">partly</text>
+<text x="875" y="331" font-size="10" fill="#475569">revoke at 0.3 s; SILENT still after 5 s</text>
+<line x1="40" y1="366" x2="1240" y2="366" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="357" font-size="11" fill="#0F172A" font-weight="700">VS-SI-06</text>
+<text x="118" y="357" font-size="11" fill="#0F172A">Heartbeat engaged mismatch</text>
+<circle cx="560" cy="353.0" r="6" fill="#C2410C"/>
+<circle cx="625" cy="353.0" r="2.5" fill="#94A3B8"/>
+<circle cx="690" cy="353.0" r="2.5" fill="#94A3B8"/>
+<circle cx="755" cy="353.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="344" width="70" height="18" rx="9" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="850" y="357" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">known gap</text>
+<text x="893" y="357" font-size="10" fill="#475569">mismatch takes 3 ticks at 1 Hz</text>
+<line x1="40" y1="392" x2="1240" y2="392" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="383" font-size="11" fill="#0F172A" font-weight="700">VS-SI-07</text>
+<text x="118" y="383" font-size="11" fill="#0F172A">Safety mode / param set in car mode</text>
+<circle cx="560" cy="379.0" r="6" fill="#C2410C"/>
+<circle cx="625" cy="379.0" r="2.5" fill="#94A3B8"/>
+<circle cx="690" cy="379.0" r="2.5" fill="#94A3B8"/>
+<circle cx="755" cy="379.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="370" width="172" height="18" rx="9" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="901" y="383" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">by design, reference build</text>
+<text x="995" y="383" font-size="10" fill="#475569">mode lock in the reference build</text>
+<line x1="40" y1="418" x2="1240" y2="418" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="409" font-size="11" fill="#0F172A" font-weight="700">VS-SI-08</text>
+<text x="118" y="409" font-size="11" fill="#0F172A">Configuration commands in car mode</text>
+<circle cx="560" cy="405.0" r="6" fill="#C2410C"/>
+<circle cx="625" cy="405.0" r="2.5" fill="#94A3B8"/>
+<circle cx="690" cy="405.0" r="2.5" fill="#94A3B8"/>
+<circle cx="755" cy="405.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="396" width="172" height="18" rx="9" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="901" y="409" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">by design, reference build</text>
+<text x="995" y="409" font-size="10" fill="#475569">command gating in the reference build</text>
+<line x1="40" y1="444" x2="1240" y2="444" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="435" font-size="11" fill="#0F172A" font-weight="700">VS-SI-09</text>
+<text x="118" y="435" font-size="11" fill="#0F172A">SPI corruption</text>
+<circle cx="560" cy="431.0" r="2.5" fill="#94A3B8"/>
+<circle cx="625" cy="431.0" r="6" fill="#C2410C"/>
+<circle cx="690" cy="431.0" r="2.5" fill="#94A3B8"/>
+<circle cx="755" cy="431.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="422" width="52" height="18" rx="9" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="841" y="435" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">partly</text>
+<text x="875" y="435" font-size="10" fill="#475569">no corrupted frame expected; XOR not quantified</text>
+<line x1="40" y1="470" x2="1240" y2="470" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="461" font-size="11" fill="#0F172A" font-weight="700">VS-SI-10</text>
+<text x="118" y="461" font-size="11" fill="#0F172A">Stale / replayed command stream</text>
+<circle cx="560" cy="457.0" r="6" fill="#C2410C"/>
+<circle cx="625" cy="457.0" r="2.5" fill="#94A3B8"/>
+<circle cx="690" cy="457.0" r="2.5" fill="#94A3B8"/>
+<circle cx="755" cy="457.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="448" width="70" height="18" rx="9" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="850" y="461" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">known gap</text>
+<text x="893" y="461" font-size="10" fill="#475569">no sequence counter</text>
+<line x1="40" y1="496" x2="1240" y2="496" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="487" font-size="11" fill="#0F172A" font-weight="700">VS-SI-11</text>
+<text x="118" y="487" font-size="11" fill="#0F172A">TX flooding (babbling SoC)</text>
+<circle cx="560" cy="483.0" r="6" fill="#C2410C"/>
+<circle cx="625" cy="483.0" r="2.5" fill="#94A3B8"/>
+<circle cx="690" cy="483.0" r="2.5" fill="#94A3B8"/>
+<circle cx="755" cy="483.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="474" width="52" height="18" rx="9" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="841" y="487" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">partly</text>
+<text x="875" y="487" font-size="10" fill="#475569">rate limit by design; no interrupt-rate reaction</text>
+<rect x="30" y="510" width="1220" height="110" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="44" y="528" font-size="12.5" fill="#0F172A" font-weight="700">Vehicle CAN RX integrity (TSR-4xx)</text>
+<line x1="40" y1="562" x2="1240" y2="562" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="553" font-size="11" fill="#0F172A" font-weight="700">VS-SI-12</text>
+<text x="118" y="553" font-size="11" fill="#0F172A">RX timeout per gating signal</text>
+<circle cx="560" cy="549.0" r="6" fill="#C2410C"/>
+<circle cx="625" cy="549.0" r="2.5" fill="#94A3B8"/>
+<circle cx="690" cy="549.0" r="6" fill="#C2410C"/>
+<circle cx="755" cy="549.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="540" width="172" height="18" rx="9" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="901" y="553" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">by design, reference build</text>
+<text x="995" y="553" font-size="10" fill="#475569">timeout ≤ 0.16 s, not on hardware</text>
+<line x1="40" y1="588" x2="1240" y2="588" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="579" font-size="11" fill="#0F172A" font-weight="700">VS-SI-13</text>
+<text x="118" y="579" font-size="11" fill="#0F172A">E2E plausibility: stuck and replayed frames</text>
+<circle cx="560" cy="575.0" r="6" fill="#C2410C"/>
+<circle cx="625" cy="575.0" r="2.5" fill="#94A3B8"/>
+<circle cx="690" cy="575.0" r="6" fill="#C2410C"/>
+<circle cx="755" cy="575.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="566" width="70" height="18" rx="9" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="850" y="579" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">known gap</text>
+<text x="893" y="579" font-size="10" fill="#475569">only silence is detected</text>
+<line x1="40" y1="614" x2="1240" y2="614" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="605" font-size="11" fill="#0F172A" font-weight="700">VS-SI-14</text>
+<text x="118" y="605" font-size="11" fill="#0F172A">Checksum and quality-flag rejection</text>
+<circle cx="560" cy="601.0" r="6" fill="#C2410C"/>
+<circle cx="625" cy="601.0" r="2.5" fill="#94A3B8"/>
+<circle cx="690" cy="601.0" r="2.5" fill="#94A3B8"/>
+<circle cx="755" cy="601.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="592" width="112" height="18" rx="9" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="871" y="605" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">expected to meet</text>
+<text x="935" y="605" font-size="10" fill="#475569">checksum and wheel fault bits revoke</text>
+<rect x="30" y="628" width="1220" height="110" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="44" y="646" font-size="12.5" fill="#0F172A" font-weight="700">Actuation limits (TSR-1xx, TSR-2xx)</text>
+<line x1="40" y1="680" x2="1240" y2="680" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="671" font-size="11" fill="#0F172A" font-weight="700">VS-SI-15</text>
+<text x="118" y="671" font-size="11" fill="#0F172A">Torque magnitude, rate and measured tracking end-to-end</text>
+<circle cx="560" cy="667.0" r="6" fill="#C2410C"/>
+<circle cx="625" cy="667.0" r="2.5" fill="#94A3B8"/>
+<circle cx="690" cy="667.0" r="6" fill="#C2410C"/>
+<circle cx="755" cy="667.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="658" width="52" height="18" rx="9" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="841" y="671" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">partly</text>
+<text x="875" y="671" font-size="10" fill="#475569">limits hold; a violation does not revoke</text>
+<line x1="40" y1="706" x2="1240" y2="706" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="697" font-size="11" fill="#0F172A" font-weight="700">VS-SI-16</text>
+<text x="118" y="697" font-size="11" fill="#0F172A">Accel bounds, inactive value, jerk</text>
+<circle cx="560" cy="693.0" r="6" fill="#C2410C"/>
+<circle cx="625" cy="693.0" r="2.5" fill="#94A3B8"/>
+<circle cx="690" cy="693.0" r="6" fill="#C2410C"/>
+<circle cx="755" cy="693.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="684" width="52" height="18" rx="9" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="841" y="697" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">partly</text>
+<text x="875" y="697" font-size="10" fill="#475569">bounds hold; jerk not limited</text>
+<line x1="40" y1="732" x2="1240" y2="732" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="723" font-size="11" fill="#0F172A" font-weight="700">VS-SI-17</text>
+<text x="118" y="723" font-size="11" fill="#0F172A">Excessive-actuation latch and host fault reactions</text>
+<circle cx="560" cy="719.0" r="2.5" fill="#94A3B8"/>
+<circle cx="625" cy="719.0" r="6" fill="#C2410C"/>
+<circle cx="690" cy="719.0" r="6" fill="#C2410C"/>
+<circle cx="755" cy="719.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="710" width="52" height="18" rx="9" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="841" y="723" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">partly</text>
+<text x="875" y="723" font-size="10" fill="#475569">latch meets; NaN clamped to 0</text>
+<rect x="30" y="746" width="1220" height="136" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="44" y="764" font-size="12.5" fill="#0F172A" font-weight="700">Relay and stock PCS path (TSR-506, TSR-7xx)</text>
+<line x1="40" y1="798" x2="1240" y2="798" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="789" font-size="11" fill="#0F172A" font-weight="700">VS-SI-18</text>
+<text x="118" y="789" font-size="11" fill="#0F172A">Relay state per mode</text>
+<circle cx="560" cy="785.0" r="6" fill="#C2410C"/>
+<circle cx="625" cy="785.0" r="2.5" fill="#94A3B8"/>
+<circle cx="690" cy="785.0" r="2.5" fill="#94A3B8"/>
+<circle cx="755" cy="785.0" r="6" fill="#C2410C"/>
+<rect x="815" y="776" width="52" height="18" rx="9" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="841" y="789" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">partly</text>
+<text x="875" y="789" font-size="10" fill="#475569">released by mode; power-loss state unknown</text>
+<line x1="40" y1="824" x2="1240" y2="824" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="815" font-size="11" fill="#0F172A" font-weight="700">VS-SI-19</text>
+<text x="118" y="815" font-size="11" fill="#0F172A">Relay malfunction detection</text>
+<circle cx="560" cy="811.0" r="6" fill="#C2410C"/>
+<circle cx="625" cy="811.0" r="2.5" fill="#94A3B8"/>
+<circle cx="690" cy="811.0" r="2.5" fill="#94A3B8"/>
+<circle cx="755" cy="811.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="802" width="70" height="18" rx="9" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="850" y="815" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">known gap</text>
+<text x="893" y="815" font-size="10" fill="#475569">relay fault found after 1–2 s</text>
+<line x1="40" y1="850" x2="1240" y2="850" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="841" font-size="11" fill="#0F172A" font-weight="700">VS-SI-20</text>
+<text x="118" y="841" font-size="11" fill="#0F172A">PCS message forwarding unchanged</text>
+<circle cx="560" cy="837.0" r="6" fill="#C2410C"/>
+<circle cx="625" cy="837.0" r="6" fill="#C2410C"/>
+<circle cx="690" cy="837.0" r="2.5" fill="#94A3B8"/>
+<circle cx="755" cy="837.0" r="6" fill="#C2410C"/>
+<rect x="815" y="828" width="112" height="18" rx="9" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="871" y="841" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">expected to meet</text>
+<text x="935" y="841" font-size="10" fill="#475569">static block list</text>
+<line x1="40" y1="876" x2="1240" y2="876" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="867" font-size="11" fill="#0F172A" font-weight="700">VS-SI-21</text>
+<text x="118" y="867" font-size="11" fill="#0F172A">PCS masquerade from SoC</text>
+<circle cx="560" cy="863.0" r="6" fill="#C2410C"/>
+<circle cx="625" cy="863.0" r="2.5" fill="#94A3B8"/>
+<circle cx="690" cy="863.0" r="2.5" fill="#94A3B8"/>
+<circle cx="755" cy="863.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="854" width="172" height="18" rx="9" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="901" y="867" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">by design, reference build</text>
+<text x="995" y="867" font-size="10" fill="#475569">all PCS IDs blocked in the reference build</text>
+<rect x="30" y="890" width="1220" height="136" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="44" y="908" font-size="12.5" fill="#0F172A" font-weight="700">SoC fault reactions and warnings (TSR-6xx, TSR-4xx)</text>
+<line x1="40" y1="942" x2="1240" y2="942" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="933" font-size="11" fill="#0F172A" font-weight="700">VS-SI-22</text>
+<text x="118" y="933" font-size="11" fill="#0F172A">Soft disable on stale inputs</text>
+<circle cx="560" cy="929.0" r="2.5" fill="#94A3B8"/>
+<circle cx="625" cy="929.0" r="6" fill="#C2410C"/>
+<circle cx="690" cy="929.0" r="6" fill="#C2410C"/>
+<circle cx="755" cy="929.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="920" width="70" height="18" rx="9" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="850" y="933" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">known gap</text>
+<text x="893" y="933" font-size="10" fill="#475569">up to 3.5 s on stale inputs</text>
+<line x1="40" y1="968" x2="1240" y2="968" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="959" font-size="11" fill="#0F172A" font-weight="700">VS-SI-23</text>
+<text x="118" y="959" font-size="11" fill="#0F172A">SoC process kill / hang</text>
+<circle cx="560" cy="955.0" r="2.5" fill="#94A3B8"/>
+<circle cx="625" cy="955.0" r="6" fill="#C2410C"/>
+<circle cx="690" cy="955.0" r="2.5" fill="#94A3B8"/>
+<circle cx="755" cy="955.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="946" width="52" height="18" rx="9" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="841" y="959" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">partly</text>
+<text x="875" y="959" font-size="10" fill="#475569">0.3 s where the heartbeat stops; 3–5 s otherwise</text>
+<line x1="40" y1="994" x2="1240" y2="994" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="985" font-size="11" fill="#0F172A" font-weight="700">VS-SI-24</text>
+<text x="118" y="985" font-size="11" fill="#0F172A">Cruise mismatch reaction</text>
+<circle cx="560" cy="981.0" r="2.5" fill="#94A3B8"/>
+<circle cx="625" cy="981.0" r="6" fill="#C2410C"/>
+<circle cx="690" cy="981.0" r="2.5" fill="#94A3B8"/>
+<circle cx="755" cy="981.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="972" width="112" height="18" rx="9" fill="#F1F5F9" stroke="#475569" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="871" y="985" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">cannot judge yet</text>
+<text x="935" y="985" font-size="10" fill="#475569">code changed since the run (1 s prompt)</text>
+<line x1="40" y1="1020" x2="1240" y2="1020" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="1011" font-size="11" fill="#0F172A" font-weight="700">VS-SI-25</text>
+<text x="118" y="1011" font-size="11" fill="#0F172A">MCU reset during engagement</text>
+<circle cx="560" cy="1007.0" r="6" fill="#C2410C"/>
+<circle cx="625" cy="1007.0" r="6" fill="#C2410C"/>
+<circle cx="690" cy="1007.0" r="2.5" fill="#94A3B8"/>
+<circle cx="755" cy="1007.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="998" width="112" height="18" rx="9" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="871" y="1011" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">expected to meet</text>
+<text x="935" y="1011" font-size="10" fill="#475569">restarts in SILENT; relay reset state unconfirmed</text>
+<rect x="30" y="1034" width="1220" height="84" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="44" y="1052" font-size="12.5" fill="#0F172A" font-weight="700">Back-to-back</text>
+<line x1="40" y1="1086" x2="1240" y2="1086" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="1077" font-size="11" fill="#0F172A" font-weight="700">VS-SI-26</text>
+<text x="118" y="1077" font-size="11" fill="#0F172A">Target vs host safety model; process replay regression</text>
+<circle cx="560" cy="1073.0" r="6" fill="#C2410C"/>
+<circle cx="625" cy="1073.0" r="6" fill="#C2410C"/>
+<circle cx="690" cy="1073.0" r="2.5" fill="#94A3B8"/>
+<circle cx="755" cy="1073.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="1064" width="112" height="18" rx="9" fill="#F1F5F9" stroke="#475569" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="871" y="1077" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">cannot judge yet</text>
+<text x="935" y="1077" font-size="10" fill="#475569">needs LionDriver's own drive logs</text>
+<line x1="40" y1="1112" x2="1240" y2="1112" stroke="#EEF2F6" stroke-width="1"/>
+<text x="44" y="1103" font-size="11" fill="#0F172A" font-weight="700">VS-SI-27</text>
+<text x="118" y="1103" font-size="11" fill="#0F172A">Host reaction to envelope reports</text>
+<circle cx="560" cy="1099.0" r="2.5" fill="#94A3B8"/>
+<circle cx="625" cy="1099.0" r="6" fill="#C2410C"/>
+<circle cx="690" cy="1099.0" r="2.5" fill="#94A3B8"/>
+<circle cx="755" cy="1099.0" r="2.5" fill="#94A3B8"/>
+<rect x="815" y="1090" width="112" height="18" rx="9" fill="#F1F5F9" stroke="#475569" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="871" y="1103" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">cannot judge yet</text>
+<text x="935" y="1103" font-size="10" fill="#475569">host reaction to envelope reports</text>
+<rect x="40" y="1128" width="30" height="16" rx="8" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="78" y="1140" font-size="11" fill="#0F172A">expected to meet (6)</text>
+<rect x="226" y="1128" width="30" height="16" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="264" y="1140" font-size="11" fill="#0F172A">by design, reference build (4)</text>
+<rect x="475" y="1128" width="30" height="16" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="513" y="1140" font-size="11" fill="#0F172A">partly (8)</text>
+<rect x="598" y="1128" width="30" height="16" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="636" y="1140" font-size="11" fill="#0F172A">known gap (6)</text>
+<rect x="739.9" y="1128" width="30" height="16" rx="8" fill="#F1F5F9" stroke="#475569" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="777.9" y="1140" font-size="11" fill="#0F172A">cannot judge yet (3)</text>
+<circle cx="931.9" cy="1136" r="6" fill="#C2410C"/>
+<text x="943.9" y="1140" font-size="11" fill="#0F172A">runs at this step</text>
+<text x="40" y="1158" font-size="11" fill="#475569">No case has been executed: the HIL bench (D-04) and LionDriver's own drive logs do not exist yet. A case WP-W-08 already covers at I-1 is taken from its report.</text>
+<text x="40" y="1176" font-size="11" fill="#475569">Generated by fig_s08_cases.py from WP-S-08 §6; each expected result is listed in the script with a phrase from its cell, and CI fails when the cell changes.</text>
+<g class="terms">
+<text x="40" y="1198" font-size="10.5" fill="#475569">Terms: CAN controller area network: the vehicle's data bus · CI continuous integration: the checks that run on every pull request · D-nn design decision of the earlier decision list (D-01…D-12; D-08 is the</text>
+<text x="40" y="1212.5" font-size="10.5" fill="#475569">Experimental Mode decision) · HIL hardware in the loop: the bench with the real panda and simulated car buses · I-nn integration step I-1…I-4 (WP-S-08 §3.1) · ID identifier · MCU microcontroller: the panda safety</text>
+<text x="40" y="1227" font-size="10.5" fill="#475569">processor (STM32H7) · NaN not a number: an invalid floating-point value · PCM powertrain control module (engine and drive) · PCS pre-collision system: Toyota's stock collision warning and braking · RX receive ·</text>
+<text x="40" y="1241.5" font-size="10.5" fill="#475569">SILENT the panda's safety mode that sends nothing · SoC system on chip: the comma device's main processor, running openpilot (QM) · SPI serial peripheral interface (the link between SoC and MCU) · TSR-nn technical</text>
+<text x="40" y="1256" font-size="10.5" fill="#475569">safety requirement (WP-S-02) · TX transmit · VS-nn verification case: VS-SI system integration, VS-HW hardware, VS-SWQ software, VS-FI fault injection, VS-SQ system qualification · WP-nn work product, e.g. WP-C-04;</text>
+<text x="40" y="1270.5" font-size="10.5" fill="#475569">the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case) · XOR exclusive or: a simple checksum that misses many multi-bit</text>
+<text x="40" y="1285" font-size="10.5" fill="#475569">errors</text>
+</g>
+</svg>
