@@ -23,7 +23,7 @@
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 5 performed: CR-05, CR-06@G2, FSA-I2, AUD-1, SR-02 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 94 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 93 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
@@ -33,7 +33,7 @@
 | [WP-S-04](../../../03-system/WP-S-04-timing-ftti-budget.md) Timing analysis: FTTI, fault detection and reaction budget | DES-02 | Draft | 10 | |
 | [WP-S-02](../../../03-system/WP-S-02-technical-safety-requirements.md) Technical safety requirements specification | DES-03 | Draft | 6 | |
 | [WP-S-07](../../../03-system/WP-S-07-cybersecurity-requirements-architecture.md) Cybersecurity requirements and architectural design | DES-04 | Draft | 9 | |
-| [WP-S-03](../../../03-system/WP-S-03-technical-safety-concept-architecture.md) Technical safety concept and system architectural design | DES-05 | Draft | 5 | |
+| [WP-S-03](../../../03-system/WP-S-03-technical-safety-concept-architecture.md) Technical safety concept and system architectural design | DES-05 | Draft | 4 | |
 | [WP-S-05](../../../03-system/WP-S-05-hsi-specification.md) Hardware-software interface specification | DES-06 | Draft | 11 | |
 | [WP-A-02](../../../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) Coexistence of elements and freedom from interference | DES-07 | Draft | 5 | |
 | [WP-A-03](../../../08-analyses/WP-A-03-dependent-failure-analysis.md) Dependent failure analysis | DES-08 | Draft | 10 | |
