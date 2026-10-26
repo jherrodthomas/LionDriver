@@ -157,6 +157,8 @@ jobs:
         python3 assurance/03-system/figures/test_fig_s01_requirements.py
         python3 assurance/03-system/figures/fig_s06_lifecycle.py --check
         python3 assurance/03-system/figures/test_fig_s06_lifecycle.py
+        python3 assurance/03-system/figures/fig_s02_allocation.py --check
+        python3 assurance/03-system/figures/test_fig_s02_allocation.py
         python3 assurance/03-system/figures/fig_s05_hsi.py --check
         python3 assurance/03-system/figures/test_fig_s05_hsi.py
         python3 assurance/03-system/figures/fig_s00_se.py --check
