@@ -101,4 +101,24 @@ package LionDriverViews {
         expose LionDriverBehaviour::**;
         render Views::asInterconnectionDiagram;
     }
+
+    view <'V-14'> needsUseCases : NeedsView {
+        doc /* Stakeholder needs SN-01 to SN-12 and actors of WP-S-01 §1.2 and §1.3 against the use cases UC-01 to UC-11 of §1.4, the requirements that refine each need and the functions each use case performs. */
+        expose LionDriverNeeds::*;
+        expose LionDriverRequirements::*;
+        expose LionDriverFunctions::*;
+        render Views::asElementTable;
+    }
+
+    view <'V-15'> endToEndThread : ThreadView {
+        doc /* SN-01 end to end: stakeholder, need, use case, functions and the elements that perform them; system requirements, satisfying elements and verification cases. */
+        expose LionDriverNeeds::sn_01;
+        expose LionDriverNeeds::uc_01;
+        expose LionDriverRequirements::*;
+        expose LionDriverSatisfaction::*;
+        expose LionDriverVerification::*;
+        expose LionDriverFunctions::**;
+        expose LdSda::**;
+        render Views::asTreeDiagram;
+    }
 }

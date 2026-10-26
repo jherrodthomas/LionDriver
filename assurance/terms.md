@@ -11,7 +11,7 @@ Every abbreviation and record code used on the assurance pages and figures is de
 3. **On every figure.** Each generated figure ends with a "Terms:" line for what it draws, so a figure read on its own still explains itself.
 4. **Checked.** CI fails if a block is stale, a figure lacks its line, or a page or figure uses a term that is not in the list. To add one, add it to `TERMS` and run `python3 assurance/trace/tools/terms.py`.
 
-Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md), [hsi](03-system/hsi/README.md), [timing](03-system/timing/README.md), [cybersecurity](03-system/cybersecurity/README.md), [integration](03-system/integration/README.md), [verification](03-system/verification/README.md), [odd](02-concept/odd/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md). Other pages and older figures join the list as they are reworked.
+Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md), [hsi](03-system/hsi/README.md), [timing](03-system/timing/README.md), [cybersecurity](03-system/cybersecurity/README.md), [integration](03-system/integration/README.md), [verification](03-system/verification/README.md), [system-requirements](03-system/system-requirements/README.md), [odd](02-concept/odd/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md). Other pages and older figures join the list as they are reworked.
 
 ## Abbreviations
 
@@ -64,6 +64,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | FTA | fault tree analysis |
 | FTTI | fault-tolerant time interval: fault to hazard, the time a safety mechanism has |
 | FW | firmware |
+| GiB | gibibyte (2³⁰ bytes) |
 | GNSS | global navigation satellite system (GPS) |
 | GPIO | general-purpose input/output pin |
 | GPS | global positioning system |
@@ -87,9 +88,11 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | JPEG | a compressed image format |
 | JWT | JSON web token (the device's login token to the back end) |
 | LD-SDA | LionDriver Supervised Driving Assistance, the item |
+| LDW | lane departure warning |
 | LFS | Git Large File Storage (where the model files live) |
 | LKA | lane keeping assist |
 | LKAS | lane keeping assist system |
+| LOG | verification by analysis of drive logs |
 | MB | megabyte |
 | MCU | microcontroller: the panda safety processor (STM32H7) |
 | MDN | mixture density network (how the model reports a spread of possible values) |
@@ -132,6 +135,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | SHA-1 | secure hash algorithm 1, an outdated hash |
 | SHA-256 | a cryptographic hash used to identify a file exactly |
 | SILENT | the panda's safety mode that sends nothing |
+| SIM | verification by scenario simulation |
 | SoC | system on chip: the comma device's main processor, running openpilot (QM) |
 | SOTIF | safety of the intended functionality (ISO 21448): hazards with nothing failing |
 | SPI | serial peripheral interface (the link between SoC and MCU) |
@@ -143,8 +147,12 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | SW | software |
 | SYS | system requirement SYS-nnn of WP-S-01 |
 | SysML | Systems Modeling Language: the system model in models/sysml |
+| T-HIL | verification by bench test with the real panda (hardware in the loop) |
+| T-SIL | verification by software test or process replay (WP-S-01 §1.1) |
+| T-VEH | verification by vehicle test |
 | TARA | threat analysis and risk assessment (ISO/SAE 21434) |
 | TBC | to be confirmed |
+| TBD | to be determined: a value not yet set |
 | TLS | transport layer security: encrypted network connections |
 | TOYOTA | the panda's Toyota car mode (parameter 73 in the reference build) |
 | TSC | technical safety concept |
@@ -214,6 +222,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | SG-nn | safety goal (HARA §6) |
 | SH-nn | SOTIF hazard (WP-C-05) |
 | SM-nn | safety mechanism (TSC §6) |
+| SN-nn | stakeholder need (WP-S-01 §1.3), SN-01…SN-12 |
 | SS-nn | safe state (FSC §6): SS-L lateral, SS-G longitudinal, SS-S envelope silent |
 | T-nn | code-derived detection or reaction time (WP-S-04 §4) |
 | TB-nn | trust boundary (WP-S-07 §3.2) |
@@ -221,8 +230,9 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | TL-nn | tool entry in the tool register (WP-P-07) |
 | TS-nn | threat scenario (TARA §4) |
 | TSR-nn | technical safety requirement (WP-S-02) |
+| UC-nn | use case (WP-S-01 §1.4), UC-01…UC-11 |
 | UPD-nn | update procedure step (WP-O-02) |
-| V-nn | view of the SysML model (V-01…V-13) |
+| V-nn | view of the SysML model (V-01…V-15) |
 | VF-nn | vehicle family in the vehicle register |
 | VS-nn | verification case: VS-SI system integration, VS-HW hardware, VS-SWQ software, VS-FI fault injection, VS-SQ system qualification |
 | VT-nn | validation target (WP-V-02) |

@@ -9,6 +9,11 @@ that the model can relate requirements to the architecture and to the verificati
                              usages, and the parent links of the trace data as `#derivation` connections
   model/Satisfaction.sysml   `satisfy` relationships from each requirement's allocation: `allocated_to` of
                              the trace data, WP-S-01 §10.1, the Alloc column of WP-S-07 §4
+  model/Needs.sysml          stakeholders and actors (WP-S-01 §1.2) as part definitions, stakeholder needs (§1.3)
+                             as `requirement` usages with their stakeholders, `#derivation` connections from each need
+                             to the SYS requirements and safety goals that refine it, and the use cases (§1.4) as
+                             `use case` usages with their actors, an objective that requires their needs, and a
+                             `perform` of each function they use
   model/Verification.sysml   every test case of a specification table (first header cell "ID", row ID VS-…)
                              as a `verification` usage that verifies the modelled requirements it names
 
@@ -34,7 +39,8 @@ import trace_map as tm  # noqa: E402
 WP_S01 = ASSURANCE / "03-system" / "WP-S-01-system-requirements.md"
 WP_S07 = ASSURANCE / "03-system" / "WP-S-07-cybersecurity-requirements-architecture.md"
 ARCH_FILES = ["LionDriverLibrary.sysml", "Mechanisms.sysml", "Functions.sysml", "Architecture.sysml"]
-OUT = {"req": MODEL_DIR / "Requirements.sysml", "sat": MODEL_DIR / "Satisfaction.sysml", "ver": MODEL_DIR / "Verification.sysml"}
+OUT = {"req": MODEL_DIR / "Requirements.sysml", "sat": MODEL_DIR / "Satisfaction.sysml", "ver": MODEL_DIR / "Verification.sysml",
+       "needs": MODEL_DIR / "Needs.sysml"}
 TRACE_KINDS = {"safety-goal": "SafetyGoal", "fsr": "FunctionalSafetyRequirement", "tsr": "TechnicalSafetyRequirement"}
 MODELLED = ("SG", "FSR", "TSR", "SYS", "CSR")
 # WP-S-07 §4 Alloc column: FW and SoC are elements; ENV (release environment) and USR (owner, service) are not
@@ -173,6 +179,38 @@ def verification_cases(known: set[str]) -> list[dict]:
       if "Step" in header:  # WP-S-08: the integration steps a case runs at
         c["steps"] = re.findall(r"I-\d", cells[header.index("Step")])
   return sorted(cases.values(), key=lambda c: sort_key(c["id"]))
+
+
+def _ids(cell: str) -> list[str]:
+  return [x.strip() for x in plain(cell).split(",") if x.strip()]
+
+
+def camel(words: str, upper: bool) -> str:
+  parts = re.findall(r"[A-Za-z0-9]+", words)
+  out = "".join(w[:1].upper() + w[1:] for w in parts)
+  return out if upper else out[:1].lower() + out[1:]
+
+
+def stakeholder_needs() -> tuple[list[dict], list[dict], list[dict]]:
+  """(stakeholders and actors of §1.2, needs of §1.3, use cases of §1.4) of WP-S-01."""
+  found = {}
+  for heading, head, rows in tables(WP_S01):
+    for sec, want in (("1.2", ["Stakeholder", "Kind", "Who"]),
+                      ("1.3", ["ID", "Stakeholder", "Need", "Refined by", "Source"]),
+                      ("1.4", ["ID", "Use case", "Actors", "Goal and main flow", "Functions", "Needs"])):
+      if heading.startswith(sec + " "):
+        if head != want:
+          raise SystemExit(f"WP-S-01 §{sec}: header {head}, expected {want}")
+        found[sec] = rows
+  missing = [s for s in ("1.2", "1.3", "1.4") if s not in found]
+  if missing:
+    raise SystemExit(f"WP-S-01 has no table in §{', §'.join(missing)}")
+  people = [{"name": plain(r[0]), "kinds": _ids(r[1]), "who": r[2]} for r in found["1.2"]]
+  needs = [{"id": r[0], "stakeholders": _ids(r[1]), "text": r[2], "refined": _ids(r[3]), "source": r[4]}
+           for r in found["1.3"] if re.fullmatch(r"SN-\d\d", r[0])]
+  cases = [{"id": r[0], "title": plain(r[1]), "actors": _ids(r[2]), "goal": r[3], "functions": _ids(r[4]),
+            "needs": _ids(r[5])} for r in found["1.4"] if re.fullmatch(r"UC-\d\d", r[0])]
+  return people, needs, cases
 
 
 # ---------------------------------------------------------------- allocation
@@ -327,7 +365,67 @@ def build() -> dict[str, str]:
     out.append("    }")
   out.append("}")
   ver_text = "\n".join(out) + "\n"
-  return {"req": req_text, "sat": sat_text, "ver": ver_text}
+  return {"req": req_text, "sat": sat_text, "ver": ver_text, "needs": needs_sysml(m, ids)}
+
+
+def needs_sysml(m: sysml_lite.Model, ids: set[str]) -> str:
+  people, needs, cases = stakeholder_needs()
+  defs = {p["name"].lower(): camel(p["name"], True) for p in people}
+  fn_names = {f.short: f.name for f in m.functions.values()}
+
+  def person(name: str, where: str) -> str:
+    if name.lower() not in defs:
+      raise SystemExit(f"WP-S-01 {where} names {name!r}, which is not in §1.2")
+    return defs[name.lower()]
+
+  out = [HEADER, "package LionDriverNeeds {",
+         "    doc /* Stakeholders, stakeholder needs and use cases of WP-S-01 §1.2–§1.4 (ASPICE SYS.1). Each need is refined",
+         "           by the SYS requirements and safety goals named in its row, written as a derivation from the need; each",
+         "           use case serves the needs its objective requires and performs the functions of WP-C-01 §2.1 it uses. */", "",
+         "    private import ScalarValues::*;", "    private import RequirementDerivation::*;", "    private import LionDriverLibrary::*;",
+         "    private import LionDriverArchitecture::*;", "    private import LionDriverFunctions::*;",
+         "    private import LionDriverRequirements::*;", "", "    // stakeholders and actors (§1.2)"]
+  for p in people:
+    base = "Person" if "stakeholder" in p["kinds"] else "ExternalElement"
+    out += [f"    part def {defs[p['name'].lower()]} :> {base} {{ doc /* {doc(p['who'])} */ }}"]
+  out += ["", "    requirement def StakeholderNeed {",
+          "        doc /* A need of one or more stakeholders (WP-S-01 §1.3), in their words rather than as a requirement. */",
+          "        subject ldsda : LdSda;", "        attribute workProduct : String;", "        attribute source : String;", "    }", "",
+          "    // stakeholder needs (§1.3)"]
+  derivations = []
+  for n in needs:
+    out += [f"    requirement <'{n['id']}'> {usage_name(n['id'])} : StakeholderNeed {{", f"        doc /* {doc(n['text'])} */",
+            "        subject :>> ldsda;"]
+    out += [f"        stakeholder {camel(x, False)} : {person(x, n['id'])};" for x in n["stakeholders"]]
+    out += ['        :>> workProduct = "WP-S-01";', f"        :>> source = {s(n['source'])};", "    }"]
+    for r in n["refined"]:
+      if r not in ids:
+        raise SystemExit(f"WP-S-01 {n['id']} is refined by {r}, which is not a modelled requirement")
+      derivations.append((n["id"], r))
+  out += ["", "    // refinement of each need by system requirements and safety goals"]
+  for orig, der in derivations:
+    out += ["    #derivation connection {", f"        end #original ::> {usage_name(orig)};",
+            f"        end #derive ::> {usage_name(der)};", "    }"]
+  need_ids = {n["id"] for n in needs}
+  out += ["", "    use case def ItemUseCase {", "        doc /* A use of LD-SDA, its subject, by its actors (WP-S-01 §1.4). */",
+          "        subject ldsda : LdSda;", "    }", "", "    // use cases (§1.4)"]
+  for c in cases:
+    out += [f"    use case <'{c['id']}'> {usage_name(c['id'])} : ItemUseCase {{", f"        doc /* {doc(c['title'])} */",
+            "        subject :>> ldsda;"]
+    out += [f"        actor {camel(a, False)} : {person(a, c['id'])};" for a in c["actors"]]
+    out += ["        objective {", f"            doc /* {doc(c['goal'])} */"]
+    for n in c["needs"]:
+      if n not in need_ids:
+        raise SystemExit(f"WP-S-01 {c['id']} serves {n}, which is not a need of §1.3")
+      out.append(f"            require {usage_name(n)};")
+    out.append("        }")
+    for f in c["functions"]:
+      if f not in fn_names:
+        raise SystemExit(f"WP-S-01 {c['id']} uses {f}, which is not a function of the model")
+      out.append(f"        perform {fn_names[f]};")
+    out.append("    }")
+  out.append("}")
+  return "\n".join(out) + "\n"
 
 
 def main(argv: list[str]) -> int:

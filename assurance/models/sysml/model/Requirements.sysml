@@ -1748,7 +1748,7 @@ package LionDriverRequirements {
         :>> verifMethod = "T-VEH";
     }
     requirement <'SYS-021'> sys_021 : SystemRequirement {
-        doc /* The set-speed range shall be the PCM cruise set range of the reference vehicle, and shall not exceed the ODD speed bound of 120 km/h (ODD-H) / 90 km/h (ODD-A). */
+        doc /* The set-speed range shall be the PCM cruise set range of the reference vehicle, and shall not exceed the ODD speed bound of 110 km/h (ODD-H, DQ-260; the arterial ODD-A was dropped, DQ-023). */
         :>> workProduct = "WP-S-01";
         :>> allocText = "host.card";
         :>> functionId = "F-02";
