@@ -939,24 +939,30 @@
 
 - id: DQ-041
   question: "Which closed course should you contact first for the vehicle tests?"
-  context: "The override, brake and emergency-braking checks and the controllability tests may only run on a closed course, some at up to 90 km/h. No site has been contacted or priced. **Since you'll use a rented or borrowed car, the site's insurance and car rules matter too.**"
+  context: >-
+    The override, brake, emergency-braking and controllability tests may run only on a closed course, some at up to
+    90 km/h (WP-V-07 level L3). No site has been contacted or priced; the candidate list in the test-sites page is desk
+    research only. **The site must also accept an aftermarket device, its test firmware builds (WP-P-01 §7.1) and the
+    insurance for a rented or borrowed car**, so the first calls decide when any vehicle test can start.
   reversibility: revisit
-  blocks: "Closed-course tests; entry to public-road testing"
+  blocks: "WP-V-01 OI-1; every closed-course test (VS-VAL-01…26); stage 2 of the test equipment (DQ-043 note); entry to public-road testing"
   gate: G1
+  decider: lead
+  asked: 2026-10-26
+  batch: 18
   options:
     - key: A
       recommended: true
-      title: "ITIC and Michelin Laurens (Greenville SC)"
-      detail: "Real proving grounds covering low speed and up to 90 km/h. Cost: likely the most expensive."
+      title: "ITIC in Greenville first, then Michelin Laurens"
+      detail: "Both are proving grounds in the middle of the corridor and appear to cover low speed and up to 90 km/h; ITIC rents by the half day. Cost: likely the most expensive per session."
     - key: B
-      title: "Road Atlanta skid pad for low-speed only"
-      detail: "Cheaper first sessions. Cost: no lane lines and nothing above low speed; a second site is still needed."
+      title: "Road Atlanta's skid pad first, for the low-speed tests"
+      detail: "Cheaper first sessions near Atlanta. Cost: no lane lines and nothing above low speed, so a proving ground is still needed for the 90 km/h tests."
     - key: C
-      title: "NCAT / Auburn as a research partner"
-      detail: "Not a rental; brings reviewers and test subjects. Cost: a slower, partnership-style arrangement."
-  sources: ["assurance/06-validation/WP-V-01-safety-validation.md OI-1"]
-  status: queued
-  note: "The lead answered 'not sure yet' on 2026-10-14, so nothing was decided. Back in the queue on 2026-10-23, to be asked again once access to a reference car is arranged (DQ-039); WP-V-01 OI-1 stays open"
+      title: "NCAT at Auburn, as a research partner"
+      detail: "Not a rental; could bring an independent reviewer and test subjects. Cost: a slower, partnership-style arrangement two hours from Atlanta."
+  sources: ["assurance/06-validation/test-sites/README.md §2, §3, §4", "assurance/06-validation/WP-V-01-safety-validation.md OI-1", "assurance/06-validation/WP-V-07-vehicle-test-operations.md §4, §8.1, §12"]
+  status: open
 
 - id: DQ-042
   question: "When should the pass/fail limits for the controllability tests be fixed: override force and lateral margin?"
@@ -3134,7 +3140,9 @@
       title: "Copy the architecture into it"
       detail: "Readable without leaving docs/. Cost: a second copy to update with every architecture change."
   sources: ["assurance/03-system/WP-S-03-technical-safety-concept-architecture.md OI-5", "docs/contributing/architecture.md"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "jherrodthomas/LionDriver#490", record: "docs/contributing/architecture.md is a short pointer to WP-S-03 and WP-W-03; WP-S-03 v0.20 OI-5 closed", at: 2026-10-26}
 
 - id: DQ-134
   question: "Should the panda's watchdog and forwarding checks be made faster than 0.1 s, so that the stock pre-collision braking (SG-07) keeps some margin?"
@@ -3188,7 +3196,9 @@
       title: "Wait and derive the bound from measured message periods"
       detail: "Set once, from data. Cost: VS-SI-20 stays without a pass criterion until the car is measured."
   sources: ["assurance/03-system/WP-S-08-system-integration-test.md OI-4, VS-SI-20", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-707"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "jherrodthomas/LionDriver#490", record: "WP-S-08 v0.7 VS-SI-20 latency ≤ 1 ms from TSR-707 and OI-4; revised once the camera message periods are measured", at: 2026-10-26}
 
 - id: DQ-136
   question: "How far below the panda's limits must openpilot's own commands stay, for verification case VS-SQ-18?"
@@ -3212,7 +3222,9 @@
       title: "Fix an interim percentage in the test now"
       detail: "Test planning can start at once. Cost: a second number that may disagree with TSR-605 later."
   sources: ["assurance/03-system/WP-S-09-system-verification.md OI-5, VS-SQ-18", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-605"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "jherrodthomas/LionDriver#490", record: "WP-S-09 v0.7 VS-SQ-18 pass criterion uses the TSR-605 margins and OI-5; updated when TSR-605's limits are derived", at: 2026-10-26}
 
 - id: DQ-137
   question: "Which US crash data should set the human-driver baseline that LionDriver's SOTIF targets must beat, and how is it cut down to the ODD's roads?"
@@ -3382,7 +3394,9 @@
       title: "Keep the 8-bit XOR and justify it"
       detail: "No change. Cost: unlikely to meet any ASIL C target, and TSR-410 stays unmet."
   sources: ["assurance/03-system/WP-S-02-technical-safety-requirements.md OI-7, TSR-410, TSR-411", "assurance/03-system/WP-S-05-hsi-specification.md §4.1, §12.3, OI-2"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Method recorded (WP-S-02 v0.59 OI-7, WP-S-05 v0.18 OI-2): residual-error target from the ASIL C budget, then the shortest CRC that meets it, with the TSR-411 counter. Left: the analysis, then the panda and host change with tests (panda fork, outside this repository) (jherrodthomas/LionDriver#490)"
 
 - id: DQ-144
   question: "Which commands should the released panda firmware accept from the main computer, mode by mode?"
@@ -3406,25 +3420,33 @@
       title: "Accept everything and block only known-dangerous commands"
       detail: "Less work. Cost: contradicts TSR-513 and lets future commands through by default."
   sources: ["assurance/03-system/WP-S-05-hsi-specification.md §4.2, OI-3"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Method recorded (WP-S-05 v0.18 OI-3): the per-mode request list is derived from TSR-512/513 and CSR-011…016. Left: the review of every request against each mode, and the SWSRs in WP-W-02 (jherrodthomas/LionDriver#490)"
 
 - id: DQ-145
-  question: "Should host and MCU SPI buffer sizes be aligned, or the difference documented?"
-  context: "Host and MCU SPI buffers differ; either align them or record why the difference is safe."
+  question: "The panda's SPI buffer is 4096 bytes and the main computer's is 2048. Should they be made the same size, or the difference written down as intended?"
+  context: >-
+    The two ends of the main computer–panda link use different buffer sizes (WP-S-05 §3). The panda must not rely on
+    the host's limit and checks lengths itself (TSR-412). **Aligning them removes a class of mismatch; documenting
+    them keeps the code as it is.**
   reversibility: easy
-  blocks: "HSI completeness"
+  blocks: "WP-S-05 OI-5 (HSI completeness)"
   gate: G3
   decider: claude
+  asked: 2026-10-26
+  batch: 18
+  proceed_after: 2026-11-02
   options:
     - key: A
       recommended: true
-      title: "Align sizes"
-      detail: "Removes a mismatch class."
+      title: "Document why they differ, and test that the panda's own length checks hold"
+      detail: "No code change; the panda's bound is the one that matters for safety. Cost: one rationale in WP-S-05 and a test against oversized transfers (VS-FI-07)."
     - key: B
-      title: "Document the rationale"
-      detail: "No code change."
-  sources: ["assurance/03-system/WP-S-05-hsi-specification.md OI-5"]
-  status: queued
+      title: "Align the sizes"
+      detail: "One size on both ends. Cost: a change to pandad or the firmware, carried at every sync."
+  sources: ["assurance/03-system/WP-S-05-hsi-specification.md §3 (SPI buffer size), OI-5", "assurance/06-validation/WP-V-05-fault-injection.md VS-FI-07"]
+  status: open
 
 - id: DQ-146
   question: "Should the openpilot simulator (tools/sim) be adapted to Toyota and run through a real panda?"
@@ -3470,7 +3492,9 @@
       title: "Leave as is and justify each one"
       detail: "No change. Cost: the comms reset stays open while driving."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-5", "assurance/05-software/WP-W-03-software-architecture.md ATC-22", "assurance/03-system/WP-S-05-hsi-specification.md §4.2"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-W-02 v0.49 OI-5 and WP-W-03 v0.21 ATC-22. Left: confirm the list from pandad, the panda change (panda fork) with tests, SWSR-513 (jherrodthomas/LionDriver#490)"
 
 - id: DQ-148
   question: "When the panda refuses a steering frame from the main computer, should it send its own zero-torque frame in its place, or send nothing?"
@@ -3497,22 +3521,29 @@
   note: "Recorded 2026-10-23 in WP-W-02 v0.46 OI-3 and the SWSR-109a status. Left: the panda firmware for SWSR-109/109a and its tests (GAP-46)"
 
 - id: DQ-149
-  question: "Should starting the hardware watchdog in the bootstub (before the application runs) stay a target for SWSR-501b?"
-  context: "The watchdog now starts at the first relay drive (TSR-501 v0.4, HWSR-501c); before that the relay is not driven. A bootstub start was the original target (ATC-02) but makes the flasher and bootloader paths service the watchdog."
+  question: "Should the panda's hardware watchdog be started already in the bootloader, or is starting it when the relay is first driven enough?"
+  context: >-
+    The watchdog now starts when the relay is first driven (TSR-501, HWSR-501c); before that the relay is not driven,
+    so the car runs on its stock path. Starting it in the bootloader was the original target (ATC-02, SWSR-501b).
+    **That would also cover the moments before the relay is driven, but it makes the flasher and bootloader keep the
+    watchdog alive.**
   reversibility: easy
-  blocks: "SWSR-501b, ATC-02"
+  blocks: "SWSR-501b; WP-W-03 ATC-02; WP-W-02 OI-10"
   gate: G3
   decider: claude
+  asked: 2026-10-26
+  batch: 18
+  proceed_after: 2026-11-02
   options:
     - key: A
       recommended: true
-      title: "Drop the target"
-      detail: "Requirements chain already accepts relay-drive start; no bootstub change."
+      title: "Drop the bootloader target; keep the start at the first relay drive"
+      detail: "The requirement chain already accepts it, and with the relay not driven a hang leaves the stock car. Cost: SWSR-501b and ATC-02 are rewritten to match."
     - key: B
-      title: "Keep it and raise a change request"
-      detail: "Covers the pre-relay window too; bootstub/flasher rework."
-  sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-10"]
-  status: queued
+      title: "Keep the target and raise a change request"
+      detail: "Covers the time before the relay is driven too. Cost: the bootloader and flasher paths are reworked and retested."
+  sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-501b, OI-10", "assurance/05-software/WP-W-03-software-architecture.md ATC-02", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-501"]
+  status: open
 
 - id: DQ-150
   question: "How should SWSR-408 be worded: when does command-arrival supervision start, and does a frame refused for its content count as 'accepted'?"
@@ -3593,25 +3624,33 @@
       title: "Keep one level and justify it by measurement"
       detail: "No preemption to analyse. Cost: every change to any handler has to be re-measured."
   sources: ["assurance/05-software/WP-W-03-software-architecture.md §5.4, OI-4, ATC-04", "assurance/08-analyses/WP-A-02-coexistence-freedom-from-interference.md OI-9"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-W-03 v0.21 OI-4 and ATC-04, WP-A-02 OI-9. Left: the §5.4.5 handler-time measurements on the target, then the ranking unless the margin is large (jherrodthomas/LionDriver#490)"
 
 - id: DQ-154
-  question: "Should the transmit path re-check steering authority with interrupts masked just before loading a frame into the CAN controller?"
-  context: "Optional under the priority scheme: closes race R-5 where a frame passes the hook just before revocation. Status 'Not decided'."
+  question: "Should the panda check once more that it still has steering authority, with interrupts masked, just before it hands a frame to the CAN controller?"
+  context: >-
+    A frame can pass the transmit check just before authority is revoked and still be sent (race R-5, WP-W-03 §5.4).
+    The race analysis bounds it to one frame. **A re-check of a few instructions closes it outright.** ATC-18 marks it
+    optional under the priority scheme and not decided.
   reversibility: easy
-  blocks: "SWSR-406"
+  blocks: "SWSR-406; WP-W-03 ATC-18"
   gate: G3
   decider: claude
+  asked: 2026-10-26
+  batch: 18
+  proceed_after: 2026-11-02
   options:
     - key: A
       recommended: true
       title: "Add the re-check"
-      detail: "Closes R-5 for a few instructions with interrupts masked."
+      detail: "Closes R-5 at a cost of a few instructions with interrupts masked. Cost: a panda change with a test, kept at each sync."
     - key: B
       title: "Rely on the race analysis"
-      detail: "No code change; residual race argued."
-  sources: ["assurance/05-software/WP-W-03-software-architecture.md ATC-18"]
-  status: queued
+      detail: "No code change. Cost: the one-frame residual stays and has to be argued in the safety case."
+  sources: ["assurance/05-software/WP-W-03-software-architecture.md §5.4, ATC-18", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-406"]
+  status: open
 
 - id: DQ-155
   question: "Should the reference firmware leave out the safety code for car brands other than Toyota?"
@@ -3635,7 +3674,9 @@
       title: "Keep them and justify them"
       detail: "No build change. Cost: analysis and justification of code that never runs on the reference car."
   sources: ["assurance/05-software/WP-W-03-software-architecture.md OI-2, ATC-10"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-W-03 v0.21 OI-2 and ATC-10, WP-A-02 OI-9. Left: the build variant in the panda fork (jherrodthomas/LionDriver#490)"
 
 - id: DQ-156
   question: "Should USB communication be switched off in the reference panda firmware?"
@@ -3659,25 +3700,34 @@
       title: "Keep USB and justify it"
       detail: "No change. Cost: the USB path has to be analysed and tested like SPI."
   sources: ["assurance/05-software/WP-W-03-software-architecture.md OI-3, ATC-11"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-W-03 v0.21 OI-3 and ATC-11, WP-A-02 OI-9. Left: the panda change and its test (panda fork) (jherrodthomas/LionDriver#490)"
 
 - id: DQ-157
-  question: "Is a separate forwarding queue needed so a host flood cannot delay forwarded camera (PCS) frames?"
-  context: "Forwarded camera frames and host frames share one CAN TX queue. TX-rate supervision bounds the host's share but does not reserve capacity for forwarding (DN-01 §7)."
+  question: "Does the panda need a separate transmit queue for the camera's emergency-braking messages, so heavy host traffic cannot delay them?"
+  context: >-
+    Forwarded camera frames (the stock pre-collision braking, SG-07) and the host's frames share one CAN transmit
+    queue. The TX-rate check bounds the host's share but does not reserve room for forwarding (DN-01 §7). **SG-07's
+    budget already has no margin (DQ-134), so any extra queueing delay counts.**
   reversibility: easy
-  blocks: "SDF-05, SG-07 forwarding"
+  blocks: "WP-W-04 OI-2, SDF-05; the SG-07 forwarding budget"
   gate: G3
   decider: claude
+  after: [DQ-134]
+  asked: 2026-10-26
+  batch: 18
+  proceed_after: 2026-11-02
   options:
     - key: A
       recommended: true
-      title: "Measure queue occupancy on HIL first, add a queue only if needed"
-      detail: "Evidence-based; waits on the bench."
+      title: "Measure queue occupancy on the HIL bench first; add a queue only if needed"
+      detail: "Decides on evidence, with the PCS timing measurement of DQ-134. Cost: waits on the bench."
     - key: B
       title: "Add a reserved forwarding queue now"
-      detail: "Removes the dependency; firmware change in the CAN driver."
-  sources: ["assurance/05-software/WP-W-04-software-safety-analysis.md OI-2"]
-  status: queued
+      detail: "Removes the dependency on host behaviour. Cost: a change in the CAN driver of the safety MCU, with its own analysis and tests."
+  sources: ["assurance/05-software/WP-W-04-software-safety-analysis.md SDF-05, OI-2", "assurance/05-software/design-notes/DN-01-tx-rate-supervision.md §7", "DQ-134"]
+  status: open
 
 - id: DQ-158
   question: "What size and complexity limits apply to large switch/ISR functions, and which tool measures them?"
@@ -3755,22 +3805,31 @@
   status: queued
 
 - id: DQ-162
-  question: "Should model loading replace pickle, or keep pickle behind a verified-hash check?"
-  context: "Models are loaded with pickle (code execution on load) and no hash check (GAP-22). AIR-19/20 allow unsafe deserialization only after hash verification."
-  reversibility: easy
-  blocks: "GAP-22, AIR-19/20"
+  question: "How should the driving and monitoring models be loaded safely: check their hash first and keep today's format, or move to a format that cannot run code?"
+  context: >-
+    The models are loaded with Python's pickle, which can run code, and nothing checks their hash at load (GAP-22).
+    AIR-19 requires a check against the signed release manifest before loading, and AIR-20 forbids code-running
+    loading of anything that has not passed it. **A hash check meets both with a small change; a new format removes
+    the risk entirely but changes upstream runtime code.**
+  reversibility: revisit
+  blocks: "AIR-19, AIR-20; GAP-22; RM-1; WP-W-10 OI-5; WP-C-11 OI-4; WP-M-10 OI-6"
   gate: G3
   decider: claude
+  asked: 2026-10-26
+  batch: 18
   options:
     - key: A
       recommended: true
-      title: "Verify hash before deserialization"
-      detail: "Meets AIR-19/20 with small change."
+      title: "Check each artefact's hash against the release manifest before loading it"
+      detail: "Meets AIR-19 and AIR-20 as written, and engagement is refused on a mismatch. Cost: a signed manifest has to exist (RM-1), and the code-running format stays behind the check."
     - key: B
-      title: "Replace pickle with a safe format"
-      detail: "Removes the risk class; upstream tinygrad changes."
-  sources: ["assurance/05-software/WP-W-10-ml-engineering.md OI-5"]
-  status: queued
+      title: "Replace pickle with a format that cannot run code"
+      detail: "Removes the risk class. Cost: changes to modeld and to how tinygrad's compiled models are stored, carried at every upstream sync."
+    - key: C
+      title: "Both: the hash check now, the new format later"
+      detail: "Meets the requirements now and removes the risk later. Cost: the two changes in sequence."
+  sources: ["assurance/05-software/WP-W-10-ml-engineering.md OI-5", "assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md AIR-19, AIR-20, OI-4", "assurance/01-management/WP-M-10-ai-safety-plan.md OI-6", "assurance/00-assessment/gap-assessment.md GAP-22", "DQ-170 (merged here)", "DQ-188 (merged here)"]
+  status: open
 
 - id: DQ-163
   question: "Is the red panda accepted as representative for stage B1 watchdog evidence?"
@@ -3791,40 +3850,52 @@
   status: queued
 
 - id: DQ-164
-  question: "Should 'vehicle moving' in SWSR-302 mean the sum of wheel speeds (as coded) or any wheel non-zero (as written)?"
-  context: "They differ only if wheel speeds can be negative and sum to zero. The maintainer left it open until a reference-car log shows whether 0xAA carries signed speeds."
+  question: "When the panda decides whether the car is moving, should it add up the four wheel speeds (as coded) or check that any wheel is turning (as SWSR-302 says)?"
+  context: >-
+    The two differ only if a wheel speed can be negative and the four sum to zero. The back-to-back test found the
+    mismatch (B2B-02) and left it open until a log of the reference car shows whether its wheel-speed message carries
+    signed speeds. **The answer decides whether the code or the requirement changes.**
   reversibility: easy
-  blocks: "SWSR-302"
+  blocks: "SWSR-302; B2B-02"
   gate: G3
   decider: claude
+  asked: 2026-10-26
+  batch: 18
+  proceed_after: 2026-11-02
   options:
     - key: A
       recommended: true
-      title: "Get a log; if signed speeds occur, change code to per-wheel"
-      detail: "Decision on evidence."
+      title: "Get a log first; if signed speeds occur, change the code to check each wheel"
+      detail: "Decides on evidence from the reference car. Cost: waits on a drive log that includes reversing."
     - key: B
-      title: "Amend SWSR-302 to the sum now"
-      detail: "Closes the finding; risk if signed speeds exist."
-  sources: ["assurance/05-software/reference-models/results/B2B-TOY-AUTH-2026-10-13.md B2B-02"]
-  status: queued
+      title: "Change SWSR-302 to the sum now"
+      detail: "Closes the finding at once. Cost: wrong if signed speeds do occur."
+  sources: ["assurance/05-software/reference-models/results/B2B-TOY-AUTH-2026-10-13.md B2B-02", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-302"]
+  status: open
 
 - id: DQ-165
-  question: "Which start-up tests (watchdog reset, ECC test, relay toggle with readback, siren self-test) should run every drive cycle, and what is their availability cost?"
-  context: "Latent-fault coverage only counts tests that run every drive cycle and block engagement on failure."
+  question: "Which self-tests should the panda run at every start (watchdog reset, memory ECC, relay toggle with readback, siren), knowing each can block a drive if it fails?"
+  context: >-
+    Latent faults count as covered only by tests that run every drive cycle and block engagement when they fail
+    (WP-H-04 §3.3). None runs today. **More tests raise the latent-fault metric (LFM, ≥ 80 % for ASIL C) but each adds
+    start-up time and a chance of refusing a drive on a false failure.**
   reversibility: easy
-  blocks: "LFM, ATC-03, SWSR-515"
+  blocks: "WP-H-04 OI-4 and the LFM; WP-W-03 ATC-03; SWSR-515"
   gate: G3
   decider: claude
+  asked: 2026-10-26
+  batch: 18
+  proceed_after: 2026-11-02
   options:
     - key: A
       recommended: true
-      title: "Define full set and evaluate false-block rate"
-      detail: "Best LFM; possible start-up delay."
+      title: "Define the full set and measure its false-block rate before choosing"
+      detail: "Best LFM, with the availability cost known. Cost: four tests to build and a bench campaign."
     - key: B
-      title: "Minimal set (watchdog + ECC)"
-      detail: "Less availability impact; lower LFM."
-  sources: ["assurance/04-hardware/WP-H-04-hardware-metrics.md OI-4"]
-  status: queued
+      title: "A minimal set: watchdog reset and ECC test"
+      detail: "Little effect on start-up. Cost: relay and siren faults stay latent, so the LFM may miss the ASIL C target."
+  sources: ["assurance/04-hardware/WP-H-04-hardware-metrics.md §3.3, OI-4", "assurance/05-software/WP-W-03-software-architecture.md ATC-03", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-515"]
+  status: open
 
 - id: DQ-166
   question: "Which interrupt-priority and ISR-timing scheme should the panda safety MCU adopt?"
@@ -3842,25 +3913,33 @@
       title: "Keep flat priority, measure WCET"
       detail: "Least code change; rely on measured latency under load."
   sources: ["assurance/00-assessment/gap-assessment.md GAP-50"]
-  status: queued
+  asked: 2026-10-26
+  status: withdrawn
+  note: "Withdrawn before it was asked: covered by DQ-153 A (2026-10-26): measure the handler times first, then adopt the WP-W-03 §5.4.2 ranking unless the margin is large."
 
 - id: DQ-167
-  question: "Should the safety-mode lock be tied to release builds (RELEASE) as well as the LIONDRIVER_REFERENCE flag?"
-  context: "The lock that stops the QM host from changing the safety mode exists only when LIONDRIVER_REFERENCE is set; non-reference builds keep upstream behaviour. R-28 notes the risk of flashing a non-reference binary."
+  question: "Should the panda's safety-mode lock also switch on for every release build, or stay tied to the LionDriver reference-build flag?"
+  context: >-
+    The lock that stops the main computer from changing the panda's safety mode exists only in builds with the
+    LIONDRIVER_REFERENCE flag; other builds keep upstream behaviour. **If a build without the flag were flashed, the
+    lock would be gone (risk R-28).** WP-M-07 mitigates that with a release check of the build variant.
   reversibility: easy
-  blocks: "R-28; TSR-512/513"
+  blocks: "R-28; TSR-512, TSR-513; GAP-09"
   gate: G3
   decider: claude
+  asked: 2026-10-26
+  batch: 18
+  proceed_after: 2026-11-02
   options:
     - key: A
       recommended: true
-      title: "Keep flag-based, enforce reference build at release"
-      detail: "Upstream behaviour preserved for other builds; release check per WP-P-10."
+      title: "Keep the flag, and enforce the reference variant at release"
+      detail: "The release record checks the flag and the variant of the evidence (WP-P-10). Cost: rests on that check being done every release."
     - key: B
-      title: "Also tie to RELEASE"
-      detail: "Stronger default; diverges from upstream for all release builds."
-  sources: ["assurance/00-assessment/gap-assessment.md GAP-09"]
-  status: queued
+      title: "Also turn the lock on for every release build"
+      detail: "A stronger default that does not depend on the release check. Cost: every release build differs from upstream, including builds for other cars."
+  sources: ["assurance/00-assessment/gap-assessment.md GAP-09", "assurance/01-management/WP-M-07-risk-management.md R-28", "assurance/07-supporting/WP-P-10-release-management.md"]
+  status: open
 
 - id: DQ-168
   question: "Which signing algorithm and boot-chain implementation replace RSA-1024/SHA-1 for LionDriver panda firmware?"
@@ -3883,22 +3962,31 @@
   note: "Merged into DQ-191 (batch 12), which asks the same signing-scheme question and is hard to undo, so it goes to the lead."
 
 - id: DQ-169
-  question: "Which SBOM and vulnerability-scanning tooling should be used, and how is it classified under WP-P-07?"
-  context: "Weekly advisory and dependency scans are planned (WP-W-11 SCAN-03/04) but no tooling exists."
+  question: "Which tools should produce the software bill of materials and scan it and the code for known weaknesses, and how are they classified?"
+  context: >-
+    WP-W-11 plans a weekly scan of the release's software bill of materials (SBOM) and a weekly upstream advisory
+    watch (SCAN-03, SCAN-04), plus static analysis for security; no tool is chosen yet. **Each tool needs a row in
+    WP-P-07 before its results count as evidence.**
   reversibility: easy
-  blocks: "WP-O-05, WP-W-11"
+  blocks: "WP-M-09 OI-4; WP-W-11 §4–5, OI-1; WP-O-05 §3"
   gate: G3
   decider: claude
+  asked: 2026-10-26
+  batch: 18
+  proceed_after: 2026-11-02
   options:
     - key: A
       recommended: true
-      title: "Standard open-source SBOM generator + scanner in CI"
-      detail: "Low cost; classify as TCL1 support tool."
+      title: "Open-source tools in CI: an SBOM generator and a scanner, plus the static analysers already used"
+      detail: "For example syft and grype, with cppcheck and clang-tidy; classified TCL1 as support tools in WP-P-07. Cost: setting up, pinning and keeping the vulnerability database current."
     - key: B
-      title: "GitHub-native dependency alerts only"
-      detail: "Simplest; does not cover AGNOS components."
-  sources: ["assurance/01-management/WP-M-09-cybersecurity-plan.md OI-4"]
-  status: queued
+      title: "GitHub's own dependency alerts only"
+      detail: "Simplest. Cost: covers the Python and lockfile dependencies but not the AGNOS image or vendored code."
+    - key: C
+      title: "A commercial suite"
+      detail: "One supported product. Cost: a licence."
+  sources: ["assurance/01-management/WP-M-09-cybersecurity-plan.md OI-4", "assurance/05-software/WP-W-11-cybersecurity-implementation-verification.md SCAN-03, SCAN-04, OI-1", "DQ-192 (merged here)"]
+  status: open
 
 - id: DQ-170
   question: "Should pickle-based model loading be replaced, or protected by a verified-hash check before loading (RM-1)?"
@@ -3916,7 +4004,9 @@
       title: "Replace pickle with a non-executable format"
       detail: "Removes the risk class; larger change to upstream runtime."
   sources: ["assurance/01-management/WP-M-10-ai-safety-plan.md OI-6"]
-  status: queued
+  asked: 2026-10-26
+  status: withdrawn
+  note: "Withdrawn before it was asked: the same question as DQ-162 (hash check or a safe format for model loading); merged there."
 
 - id: DQ-171
   question: "Should AGNOS images and toolchain wheels be mirrored under LionDriver control?"
@@ -4242,7 +4332,10 @@
       title: "Verify artefact hash (AIR-19) before any pickle load"
       detail: "Smallest change; meets AIR-20 wording."
   sources: ["assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md OI-4"]
-  status: queued
+  gate: G3
+  asked: 2026-10-26
+  status: withdrawn
+  note: "Withdrawn before it was asked: the same question as DQ-162; merged there, with WP-C-11 OI-4 in its sources."
 
 - id: DQ-189
   question: "How is ground truth for lane-centre offset measured without lidar or RTK?"
@@ -4317,7 +4410,10 @@
       title: "Commercial suite"
       detail: "Licence cost."
   sources: ["assurance/05-software/WP-W-11-cybersecurity-implementation-verification.md OI-1"]
-  status: queued
+  gate: G3
+  asked: 2026-10-26
+  status: withdrawn
+  note: "Withdrawn before it was asked: the same question as DQ-169 (SBOM, scanning and static-analysis tools); merged there, with WP-W-11 OI-1 in its sources."
 
 - id: DQ-193
   question: "How are upstream-only practices (comma Jenkins tests) treated in capability ratings once the fork has equivalents?"
@@ -5932,7 +6028,9 @@
       title: "Leave it to the TARA"
       detail: "No change. Cost: the gap stays implicit and an assessor may raise it."
   sources: ["LionDriver-security (private): assurance/sim/cyber/README.md §2.4, §6.1 choice 5 (moved there from PR #454, DQ-421 A)", "assurance/02-concept/WP-C-09-tara.md §3", "assurance/02-concept/hatara/hatara-interactions.md"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-26, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "jherrodthomas/LionDriver#490", record: "WP-C-03 v0.12 §2 note: exposure assumes a random fault, an attacker-triggered event takes the worst situation and the TARA's safety impact governs; joint HARA/TARA view interaction IX-12 (hatara_model.py, table and figures). No rating changes", at: 2026-10-26}
 
 - id: DQ-421
   question: "LionDriver is public. Should the details of security weaknesses that are not fixed yet move to a private repository until they are fixed?"

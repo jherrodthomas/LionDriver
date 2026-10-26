@@ -94,6 +94,11 @@ INTERACTIONS = [
        security="TS-04 can alter DM behaviour; WP-C-09 v0.8 adds DS-13 and DS-14 so it reaches H-07 and H-09",
        follows="Found by this analysis, closed in WP-C-09 v0.8. The derived status reopens it if a link is dropped.",
        ties=["TS-04", "H-07", "H-09", "CSG-03", "DS-13", "DS-14"]),
+  dict(id="IX-12", title="An attacker picks the moment", kind="anta", dir="security → safety",
+       safety="The HARA's exposure E assumes a random fault, striking a situation as often as it occurs",
+       security="An attacker on the SoC waits for the worst situation; the TARA rates safety impact without E",
+       follows="For an attacker-triggered event E does not apply: the TARA's safety impact governs. No rating changes (DQ-420 A).",
+       ties=["TS-04", "SG-01"], status="Recorded in WP-C-03 §2 (DQ-420 A)"),
 ]
 
 
