@@ -44,7 +44,7 @@ firmware at the baseline; the pins and electrical values still have to be confir
 | SysML | Systems Modeling Language: the system model in models/sysml |
 | TSC | technical safety concept |
 | TSR-nn | technical safety requirement (WP-S-02) |
-| V-nn | view of the SysML model (V-01…V-24) |
+| V-nn | view of the SysML model (V-01…V-25) |
 | WP-nn | work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case) |
 | XOR | exclusive or: a simple checksum that misses many multi-bit errors |
 

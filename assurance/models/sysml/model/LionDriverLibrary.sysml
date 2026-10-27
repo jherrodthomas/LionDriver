@@ -304,6 +304,9 @@ package LionDriverLibrary {
     view def UseCaseView {
         doc /* Use cases of the item with their subject and actors. */
     }
+    view def ParametricView {
+        doc /* Constraints with their parameters bound to value properties of the model. */
+    }
     view def ActivityView {
         doc /* An action flow: the actions, the successions between them and what each action carries. */
     }
