@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="485" viewBox="0 0 1280 485" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-14. SW FMEA rating changes since the previous baseline</title>
-  <desc id="d">SW FMEA (SWF rev 1.11): 6 causes re-rated from BL-006 to BL-007; 1 left AP H; occurrence lowered on 5 and detection on 6. One row per cause with its occurrence and detection before and after, the AP change and the code or build change credited.</desc>
+  <desc id="d">SW FMEA (SWF rev 1.12): 6 causes re-rated from BL-006 to BL-007; 1 left AP H; occurrence lowered on 5 and detection on 6. One row per cause with its occurrence and detection before and after, the AP change and the code or build change credited.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -10,7 +10,7 @@
   </defs>
   <rect width="1280" height="485" fill="#FCFCFB"/>
   <text x="40" y="44" font-size="20" fill="#0B0B0B" font-weight="700">Figure 3-14 · SW FMEA — what the last baseline changed</text>
-  <text x="40" y="66" font-size="12.5" fill="#52514E">SWF rev 1.11 · BL-007 · draft · which code changes moved which causes, and how far</text>
+  <text x="40" y="66" font-size="12.5" fill="#52514E">SWF rev 1.12 · BL-007 · draft · which code changes moved which causes, and how far</text>
   <text x="1240" y="44" font-size="11" fill="#52514E" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#52514E" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E1E0D9" stroke-width="1"/>
@@ -160,7 +160,7 @@
   <path d="M432 291H389" stroke="#475569" stroke-width="1.3" marker-end="url(#aG)"/>
   <circle cx="440" cy="291" r="7" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.5"/>
   <text x="440" y="294" font-size="8" fill="#D03B3B" font-weight="700" text-anchor="middle">8</text>
-  <circle cx="380" cy="291" r="7" fill="#D03B3B"><title>SWF-062.C1: BL-006 O8 D9 AP H -&gt; BL-007 O5 D8 AP H</title></circle>
+  <circle cx="380" cy="291" r="7" fill="#D03B3B"><title>SWF-062.C1: BL-006 O8 D9 AP H -&gt; BL-007 O5 D4 AP H</title></circle>
   <text x="380" y="294" font-size="8" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
   <line x1="540" y1="291" x2="720" y2="291" stroke="#E2E8F0" stroke-width="2"/>
   <line x1="540" y1="288" x2="540" y2="294" stroke="#CBD5E1" stroke-width="1"/>
@@ -173,11 +173,11 @@
   <line x1="680" y1="288" x2="680" y2="294" stroke="#CBD5E1" stroke-width="1"/>
   <line x1="700" y1="288" x2="700" y2="294" stroke="#CBD5E1" stroke-width="1"/>
   <line x1="720" y1="288" x2="720" y2="294" stroke="#CBD5E1" stroke-width="1"/>
-  <path d="M692 291H689" stroke="#475569" stroke-width="1.3" marker-end="url(#aG)"/>
+  <path d="M692 291H609" stroke="#475569" stroke-width="1.3" marker-end="url(#aG)"/>
   <circle cx="700" cy="291" r="7" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.5"/>
   <text x="700" y="294" font-size="8" fill="#D03B3B" font-weight="700" text-anchor="middle">9</text>
-  <circle cx="680" cy="291" r="7" fill="#D03B3B"><title>SWF-062.C1: BL-006 O8 D9 AP H -&gt; BL-007 O5 D8 AP H</title></circle>
-  <text x="680" y="294" font-size="8" fill="#FFFFFF" font-weight="700" text-anchor="middle">8</text>
+  <circle cx="600" cy="291" r="7" fill="#D03B3B"><title>SWF-062.C1: BL-006 O8 D9 AP H -&gt; BL-007 O5 D4 AP H</title></circle>
+  <text x="600" y="294" font-size="8" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
   <rect x="760" y="283.5" width="18.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1"/><text x="769.5" y="294.4" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">H</text>
   <path d="M783.9 291H799.9" stroke="#475569" stroke-width="1.3" marker-end="url(#aG)"/>
   <rect x="804.9" y="283.5" width="18.9" height="15" rx="7.5" fill="#D03B3B"/><text x="814.4" y="294.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">H</text>
@@ -200,7 +200,7 @@
   <path d="M392 331H389" stroke="#475569" stroke-width="1.3" marker-end="url(#aG)"/>
   <circle cx="400" cy="331" r="7" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.5"/>
   <text x="400" y="334" font-size="8" fill="#D03B3B" font-weight="700" text-anchor="middle">6</text>
-  <circle cx="380" cy="331" r="7" fill="#D03B3B"><title>SWF-067.C1: BL-006 O6 D9 AP H -&gt; BL-007 O5 D8 AP H</title></circle>
+  <circle cx="380" cy="331" r="7" fill="#D03B3B"><title>SWF-067.C1: BL-006 O6 D9 AP H -&gt; BL-007 O5 D4 AP H</title></circle>
   <text x="380" y="334" font-size="8" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
   <line x1="540" y1="331" x2="720" y2="331" stroke="#E2E8F0" stroke-width="2"/>
   <line x1="540" y1="328" x2="540" y2="334" stroke="#CBD5E1" stroke-width="1"/>
@@ -213,11 +213,11 @@
   <line x1="680" y1="328" x2="680" y2="334" stroke="#CBD5E1" stroke-width="1"/>
   <line x1="700" y1="328" x2="700" y2="334" stroke="#CBD5E1" stroke-width="1"/>
   <line x1="720" y1="328" x2="720" y2="334" stroke="#CBD5E1" stroke-width="1"/>
-  <path d="M692 331H689" stroke="#475569" stroke-width="1.3" marker-end="url(#aG)"/>
+  <path d="M692 331H609" stroke="#475569" stroke-width="1.3" marker-end="url(#aG)"/>
   <circle cx="700" cy="331" r="7" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.5"/>
   <text x="700" y="334" font-size="8" fill="#D03B3B" font-weight="700" text-anchor="middle">9</text>
-  <circle cx="680" cy="331" r="7" fill="#D03B3B"><title>SWF-067.C1: BL-006 O6 D9 AP H -&gt; BL-007 O5 D8 AP H</title></circle>
-  <text x="680" y="334" font-size="8" fill="#FFFFFF" font-weight="700" text-anchor="middle">8</text>
+  <circle cx="600" cy="331" r="7" fill="#D03B3B"><title>SWF-067.C1: BL-006 O6 D9 AP H -&gt; BL-007 O5 D4 AP H</title></circle>
+  <text x="600" y="334" font-size="8" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
   <rect x="760" y="323.5" width="18.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1"/><text x="769.5" y="334.4" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">H</text>
   <path d="M783.9 331H799.9" stroke="#475569" stroke-width="1.3" marker-end="url(#aG)"/>
   <rect x="804.9" y="323.5" width="18.9" height="15" rx="7.5" fill="#D03B3B"/><text x="814.4" y="334.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">H</text>

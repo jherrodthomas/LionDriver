@@ -766,10 +766,11 @@ events:
     class: systematic_sw
     fmea: [SWF-062, SFM-025]
     note: >-
-      SWF-062.C1 (terminal state reached without the safe state: the DM events are PERMANENT alerts only, the item stays
-      engaged after the forced stop) and SFM-025.C1 (no disable reaction at level 3). The safe state is decided (DQ-365 A,
-      FSR-02.09, TSR-633): stopped, held, re-engagement locked out until the driver responds. Neither the hold nor the
-      lockout while stopped is implemented, so the event is present by design (F-38)
+      SWF-062.C1 and SFM-025.C1. The safe state is decided (DQ-365 A, FSR-02.09, TSR-633): stopped, held, re-engagement
+      locked out until the driver responds. Up to BL-006 neither the hold nor the lockout was implemented, so the event was
+      present by design (F-38). Since #372 (BL-007) the minimum-risk latch, the forceDecel hold and the lockout from the
+      takeover are implemented, and both causes are a defect in that code (O 5); their tests are proven by mutation in CI
+      (D 4, SW FMEA rev 1.12). The event stays a single point: no second measure holds the car if that code fails
   - id: UE-8.11
     class: external
     ref: >-

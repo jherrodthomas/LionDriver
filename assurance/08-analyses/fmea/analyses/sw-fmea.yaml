@@ -125,6 +125,10 @@
 #   the reference build before it starts any process (system/manager/reference_env.py; change-2026-10-27-reference-test-switches), with a test in CI
 #   proven by mutants RE-1..RE-4. SWF-028.C2 and SWF-030.C2 O2 D10 -> O2 D4, AP H -> L. SWF-058.C2 and SWF-082.C1 keep their ratings (FINGERPRINT and
 #   BLOCK are removed, the VIN-cache reuse and an unreported process that never starts remain). SWF-ACT-028, -031, -057, -070 in progress.
+# rev 1.12 (after BL-007, ratings within BL-007): the rest of four partly mutated causes is now mutated in CI. New tests run the real
+#   SelfdriveD constructor (test_selfdrived_start.py), the real Controls.state_control and publish (test_controlsd_call_sites.py) and
+#   SelfdriveD.update_events (test_minimum_risk.py); new mutants MR-4..MR-7, AC-3..AC-6, DT-8..DT-11, AE-3 (42 in all). D 8 -> 4: SWF-062.C1,
+#   SWF-067.C1, SWF-091.C2, SWF-093.C1. AP stays H (S 10, O 5). SWF-ACT-080 and -081 stay in progress (vehicle checks, the opendbc cap).
 # Post rev 1.4, FTA WP-A-04 v1.12 (BE-1.25 in the SG-04 tree), ratings unchanged: SWF-055 and SWF-089 gain HZ-006 end effects (an authority
 #   grant covers longitudinal commands, as SWF-007). SWF-002 stays steering-only (HZ-001); its note says why HZ-006 and HZ-010 do not apply.
 #
@@ -174,7 +178,7 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.11"
+  revision: "1.12"
   status: draft
   baseline: BL-007
   rating_tables: RT-2
@@ -4378,7 +4382,9 @@ failure_modes:
         host code with targeted tests
       ref: openpilot/selfdrive/selfdrived/minimum_risk.py
     detection_controls:
-    - description: 'Mutation in CI covers part of this cause (MR-1..MR-3: the latch class; the controlsd forceDecel hold, the alert re-raise and the lockout timing are not mutated), tools/ci/host_mutation.py; D stays 8 until the rest is proven'
+    - description: 'Proven by mutation in CI (after BL-007): the tests fail on each hand-written mutant of this cause (MR-1..MR-7: the latch class,
+        the controlsd forceDecel hold and its hand-off to the car, the alert re-raise in selfdrived and the lockout timing), tools/ci/host_mutation.py
+        in the tests.yaml unit_tests job; so D 4 (RT-2), from D 8 (rev 1.12)'
       ref: tools/ci/host_mutants.toml
     - description: 'test_minimum_risk.py (latch set, held, cleared only on disengagement), test_monitoring.py (lockout from the takeover) and a longitudinal maneuver
         that stays stopped under forced deceleration while the lead drives off (test_longitudinal.py), run by the CI unit_tests job; not proven by mutation (D 8).
@@ -4386,7 +4392,7 @@ failure_modes:
       test: openpilot/selfdrive/selfdrived/tests/test_minimum_risk.py
       ref: openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py
     occurrence: 5
-    detection: 8
+    detection: 4
     ap: H
     previous:
       baseline: BL-006
@@ -4633,13 +4639,15 @@ failure_modes:
         No SWSR yet (change record OI-1)'
       ref: assurance/07-supporting/impact/change-2026-10-19-reference-entry-checks.md
     detection_controls:
-    - description: 'Mutation in CI covers part of this cause (AC-1: assured_config.evaluate; add_reference_entry_events, reference_platform and the distance button are not mutated), tools/ci/host_mutation.py; D stays 8 until the rest is proven'
+    - description: 'Proven by mutation in CI (after BL-007): the tests fail on each hand-written mutant of this cause (AC-1, AC-3..AC-6:
+        assured_config.evaluate, the reference_platform flag set at start, add_reference_entry_events and the distance button),
+        tools/ci/host_mutation.py in the tests.yaml unit_tests job; so D 4 (RT-2), from D 8 (rev 1.12)'
       ref: tools/ci/host_mutants.toml
     - description: 'test_assured_config.py: each setting refuses entry, entry only, other platforms unchanged, distance button ignored on the reference platform. Run
         by the CI unit_tests job since the LFS mirror returned (tests run 39296172878 at 6126485: 1578 passed, 0 failed); not proven by mutation, so D 8, D 4 with mutation'
       test: openpilot/selfdrive/selfdrived/tests/test_assured_config.py
     occurrence: 5
-    detection: 8
+    detection: 4
     ap: H
     previous:
       baseline: BL-006
@@ -5771,13 +5779,15 @@ failure_modes:
     - description: LionDriver change with a requirement (SWSR-629d) and targeted unit tests; reviewed in the PR, not independently; O 5
       ref: openpilot/selfdrive/selfdrived/selfdrived.py
     detection_controls:
-    - description: 'Mutation in CI covers part of this cause (DT-6, DT-7: dtc_entry_events; the start-up read of the record in selfdrived is not mutated), tools/ci/host_mutation.py; D stays 8 until the rest is proven'
+    - description: 'Proven by mutation in CI (after BL-007): the tests fail on each hand-written mutant of this cause (DT-6..DT-11: dtc_entry_events,
+        the start-up read of the record in selfdrived, a missing record, the REPLAY and simulator exemption), tools/ci/host_mutation.py in the
+        tests.yaml unit_tests job; so D 4 (RT-2), from D 8 (rev 1.12)'
       ref: tools/ci/host_mutants.toml
     - description: test_vehicle_dtc_entry.py (each outcome raises its no-entry event on the reference platform; other platforms unchanged), run by the CI
         unit_tests job; not proven by mutation (D 8)
       test: openpilot/selfdrive/selfdrived/tests/test_vehicle_dtc_entry.py
     occurrence: 5
-    detection: 8
+    detection: 4
     ap: H
     actions:
     - SWF-ACT-080
@@ -5873,13 +5883,16 @@ failure_modes:
     - description: LionDriver change with a requirement (TSR-713, SWSR-713h) and targeted unit tests; reviewed in the PR, not independently; O 5
       ref: assurance/07-supporting/impact/change-2026-10-19-stock-aeb-stand-down.md
     detection_controls:
-    - description: 'Mutation in CI covers part of this cause (AE-1, AE-2: stock_aeb_stand_down; its call in controlsd is not covered by a test), tools/ci/host_mutation.py; D stays 8 until the rest is proven'
+    - description: 'Proven by mutation in CI (after BL-007): the tests fail on each hand-written mutant of this cause (AE-1..AE-3:
+        stock_aeb_stand_down and its call in controlsd, test_controlsd_call_sites.py), tools/ci/host_mutation.py in the tests.yaml unit_tests job; so
+        D 4 (RT-2), from D 8 (rev 1.12). A mutant that caps the target but passes the uncapped PID limits on is equivalent on the reference tuning (ki
+        0) and is not counted'
       ref: tools/ci/host_mutants.toml
     - description: test_stock_aeb.py (cap from the first frame, braking kept), run by the CI unit_tests job since the LFS mirror returned; not proven by mutation
         (D 8)
       test: openpilot/selfdrive/controls/tests/test_stock_aeb.py
     occurrence: 5
-    detection: 8
+    detection: 4
     ap: H
     actions:
     - SWF-ACT-081
@@ -6295,7 +6308,8 @@ actions:
   status: completed
   evidence: '#372 (dacd8f7, BL-007): selfdrive/selfdrived/minimum_risk.py, selfdriveState.minimumRiskManeuver, controlsd keeps forceDecel; test_minimum_risk.py,
     test_monitoring.py (lockout from the takeover) and a stay-stopped longitudinal maneuver in CI. Open outside this action: the PCM standstill hold over time
-    (AOU-16 vehicle test) and the stop deceleration (SWF-086.C2). Not verified on the vehicle, not proven by mutation. Achieved at BL-007: SWF-062.C1 O5 D8'
+    (AOU-16 vehicle test) and the stop deceleration (SWF-086.C2). Not verified on the vehicle. Achieved at BL-007: SWF-062.C1 O5 D8; after BL-007 proven by
+    mutation (MR-1..MR-7, test_controlsd_call_sites.py for the controlsd hold), D 4 (rev 1.12)'
 - id: SWF-ACT-060
   kind: detection
   description: Run model_replay for dmonitoringmodeld and modeld in LionDriver CI, and add a non-finite / stale output injection test for dmonitoringd and modeld consumers
@@ -6321,7 +6335,8 @@ actions:
   evidence: 'DQ-221 A implemented in #287 (69cddaa): assured_config.py (settings_in_scope), selfdrived.py (add_reference_entry_events, distance_button_pressed), events.py
     (settingNotAssured); tests in test_assured_config.py, collected by the CI unit_tests job and green there in tests run 39296172878 (6126485, 2026-10-19: 1578 passed,
     0 failed); change record assurance/07-supporting/impact/change-2026-10-19-reference-entry-checks.md. Unit-tested, not proven by mutation and not verified in the
-    vehicle (change record OI-5). Achieved: O5 D8 (rev 1.6)'
+    vehicle (change record OI-5). Achieved: O5 D8 (rev 1.6); after BL-007 proven by mutation
+    (AC-1, AC-3..AC-6, test_selfdrived_start.py for the reference_platform flag), D 4 (rev 1.12)'
   revised:
     severity: 10
     occurrence: 5
@@ -6458,7 +6473,8 @@ actions:
     to 4'
   owner: Jherrod Thomas
   status: in_progress
-  evidence: 'Mutation done (DT-1..DT-7, host_mutation.py in CI): SWF-091.C1 D 4; C2 in part. Open: the vehicle check VS-SQ-20 and the mutation of the start-up record read in selfdrived'
+  evidence: 'Mutation done (DT-1..DT-11, host_mutation.py in CI): SWF-091.C1 D 4 (rev 1.10); SWF-091.C2 D 4 (rev 1.12), with test_selfdrived_start.py
+    running the real SelfdriveD constructor (the start-up read, a missing record, the REPLAY and simulator exemption). Open: the vehicle check VS-SQ-20'
   revised:
     severity: 10
     occurrence: 5
@@ -6470,7 +6486,9 @@ actions:
     opendbc Toyota car tests in LionDriver CI); AOU-04R vehicle test of the engine computer''s AEB priority (System FMEA SFM-036)'
   owner: Jherrod Thomas
   status: in_progress
-  evidence: 'Host part done: stock_aeb_stand_down mutated in CI (AE-1, AE-2); the opendbc Toyota car tests already run in the unit_tests job. Open: a test of the controlsd call, mutation of the opendbc cap, the AOU-04R vehicle test'
+  evidence: 'Host part done: stock_aeb_stand_down and its call in controlsd mutated in CI (AE-1..AE-3; test_controlsd_call_sites.py runs the real
+    Controls.state_control), so SWF-093.C1 D 4 (rev 1.12); the opendbc Toyota car tests already run in the unit_tests job. Open: mutation of the opendbc cap
+    (SWF-093.C2), the AOU-04R vehicle test'
   revised:
     severity: 10
     occurrence: 5
