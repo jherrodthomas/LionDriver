@@ -17,7 +17,7 @@ lead's choice in [DQ-211](../../01-management/decisions/register.yaml), option C
 | `TA` | [`e05-toyota-a-harness.yaml`](e05-toyota-a-harness.yaml) | Toyota A harness: camera connector X1, car connector X2, box plug X3; pins, wire colours, gauge | WP-H-02 §3.6 |
 | `HB` | [`e05-harness-box.yaml`](e05-harness-box.yaml) | Harness box v3: header J1, intercept switches U1/U2 (HE-08), release pull-down R2/R3, ignition sense Q6 (HE-10), supply diode D1, OBD-C receptacle J3, comma power J2 | WP-H-02 §3.6 |
 | `OC` | [`e05-obdc-device.yaml`](e05-obdc-device.yaml) | OBD-C cable from J3 to the comma device port (HE-09), device side inferred from firmware | WP-H-02 §3.6 |
-| `BB` | [`bench-box-vs-hw-22-24.yaml`](bench-box-vs-hw-22-24.yaml) | Bench for VS-HW-22…24: box tested alone, CAN interface, lab supply, SBU1 source, scope, fault-injection points FI-1…FI-4 | WP-H-06 §3.1 |
+| `BB` | [`bench-box-vs-hw-22-24.yaml`](bench-box-vs-hw-22-24.yaml) | Bench for VS-HW-22…24: box tested alone, CAN interface, lab supply, SBU1 source, scope, fault-injection points FI-1…FI-5 | WP-H-06 §3.1 |
 | `HIL` | [`bench-hil.yaml`](bench-hil.yaml) | HIL bench of WP-H-06 Figure 2-1 at instrument level (deferred, DQ-049) | WP-H-06 §2.1 |
 
 ![Wiring of the Toyota A harness from comma's v3 drawing: camera connector X1 (TE 1318774-1) and car connector X2 (TE 1565894-1) with the same pin positions, CAN on pins 5 and 11, radar CAN1 on 6 and 12, IGN on 7, GND on 10; a six-wire branch from each to the 18-pin box plug X3 (Molex 501646-1800), four pass-through wires PT1 to PT4 from X1 to X2, and the loopback 13 to 15 on X3; all wires UL1007 26 AWG](e05-toyota-a-harness.svg)
@@ -39,7 +39,7 @@ its SBU1 when NORMAL) and `panda/board/drivers/can_common.h:130` (a FLIPPED plug
 wrong orientation reading therefore swaps the car and camera buses in firmware; this is the HWSR-701 case that
 VS-HW-13 tests.
 
-![Bench for VS-HW-22 to 24: CAN interface channel A on the camera connector X1 pins 5 and 11 and channel B on the car connector X2 pins 5 and 11, each with a 120 ohm termination; lab supply on X2 pin 7 (IGN) and pin 10; a 0 to 5 V low-impedance source on SBU1 at a USB-C breakout on the box receptacle; scope on the car CAN, VIN and SBU1; fault-injection points FI-1 IGN open, FI-2 VIN shorted through 1 ohm, FI-3 R2 lifted, FI-4 D2 or D3 bridged](bench-box-vs-hw-22-24.svg)
+![Bench for VS-HW-22 to 24: CAN interface channel A on the camera connector X1 pins 5 and 11 and channel B on the car connector X2 pins 5 and 11, each with a 120 ohm termination; lab supply on X2 pin 7 (IGN) and pin 10; a 0 to 5 V low-impedance source on SBU1 at a USB-C breakout on the box receptacle; scope on the car CAN, VIN and SBU1; fault-injection points FI-1 IGN open, FI-2 VIN shorted through 1 ohm, FI-3 R2 lifted, FI-4 D2 or D3 bridged, FI-5 R7/R8 lifted](bench-box-vs-hw-22-24.svg)
 
 *Drawing BB.* The box-alone bench of WP-H-06 §3.1, wired as the
 [bench checklist](../bench/VS-HW-22-24-checklist.md) sets it up. Bench parts WP-H-06 does not name (mating plugs,

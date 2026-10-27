@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-06 Hardware integration and verification specification and report |
 | Standard reference | ISO 26262-5:2018 §10 (hardware integration and verification); ISO 26262-8:2018 §9 (verification), §13 (qualification tests of HW components); ASPICE 4.0 HWE.3, HWE.4 |
-| Version | 0.12 (§3.1 SBU1 drive: low-impedance source, no 1 kΩ series resistor, which divided against R2+R3 to 0.97 V; load check before each step; Figure 3-1 regenerated; found by the harness box SPICE pilot, PR #510; AI-drafted; 2026-10-27). 0.11 (VS-HW-06 points to WP-S-04 M-14, the watchdog's clock spread measured on the bench, DQ-134 A; no case or criterion changed; 2026-10-25). 0.10 (Figure 2-1 and §2.2 re-based from a relay box to the harness box v3 switches, closing wiring OI-W-7; VS-HW-13 checks logical bus 0 = car side in both orientations and a forced wrong reading; 2026-10-20). 0.9 (bench wiring drawn: Figure 2-2 HIL bench and Figure 3-1 harness box bench, WireViz, [`wiring/`](wiring/README.md); 2026-10-20). 0.8 (bench checklist and result sheet for VS-HW-02, VS-HW-22…24 linked; one reversibly modified box suffices; 2026-10-16). 0.7 (DQ-209 option A: VS-HW-02 and VS-HW-22…24 are the decided route for the harness box; 2026-10-16). 0.6 (HIL bench deferred by the lead, DQ-049: T-HIL and FI cases blocked; 2026-10-16). 0.5 (§3.1 bench procedures for VS-HW-22…24; VS-HW-24 adds the logic-threshold check and waits for the DG419LE ratings, DFM-ACT-015; RR-2026-010 F-05; 2026-10-16). 0.4 (harness box v3 drawing: VS-HW-02 re-scoped, VS-HW-22…24 added for the analog-switch failure behaviour; [RR-2026-010](reviews/RR-2026-010.md); 2026-10-15). 0.3 (§2.1 diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
+| Version | 0.13 (VS-HW-24 (e): camera-side termination R7/R8 in intercept, from the harness box SPICE pilot prediction, PR #510; FI-5 in Figure 3-1; AI-drafted; 2026-10-27). 0.12 (§3.1 SBU1 drive: low-impedance source, no 1 kΩ series resistor, which divided against R2+R3 to 0.97 V; load check before each step; Figure 3-1 regenerated; found by the harness box SPICE pilot, PR #510; AI-drafted; 2026-10-27). 0.11 (VS-HW-06 points to WP-S-04 M-14, the watchdog's clock spread measured on the bench, DQ-134 A; no case or criterion changed; 2026-10-25). 0.10 (Figure 2-1 and §2.2 re-based from a relay box to the harness box v3 switches, closing wiring OI-W-7; VS-HW-13 checks logical bus 0 = car side in both orientations and a forced wrong reading; 2026-10-20). 0.9 (bench wiring drawn: Figure 2-2 HIL bench and Figure 3-1 harness box bench, WireViz, [`wiring/`](wiring/README.md); 2026-10-20). 0.8 (bench checklist and result sheet for VS-HW-02, VS-HW-22…24 linked; one reversibly modified box suffices; 2026-10-16). 0.7 (DQ-209 option A: VS-HW-02 and VS-HW-22…24 are the decided route for the harness box; 2026-10-16). 0.6 (HIL bench deferred by the lead, DQ-049: T-HIL and FI cases blocked; 2026-10-16). 0.5 (§3.1 bench procedures for VS-HW-22…24; VS-HW-24 adds the logic-threshold check and waits for the DG419LE ratings, DFM-ACT-015; RR-2026-010 F-05; 2026-10-16). 0.4 (harness box v3 drawing: VS-HW-02 re-scoped, VS-HW-22…24 added for the analog-switch failure behaviour; [RR-2026-010](reviews/RR-2026-010.md); 2026-10-15). 0.3 (§2.1 diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (specification); results section is a template — **Not yet executed** |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
@@ -93,7 +93,7 @@ is implemented and has not been run (bench not built, GAP-30; [HIL bench plan](.
 | Firmware fault-injection build (forced hang, forced exception, corrupted variable, stopped service of the watchdog) | IWDG, exception paths, fault reactions | Changes the software under test; must be argued representative |
 | SWD debugger writes (halt core, flip RAM/register bits) | Hang, data corruption, register divergence | Halting the core also stops some peripherals; debug must be enabled |
 | Hardware: hold NRST, assert BOOT0 | Reset safe state, bootloader state | Needs access to the SoC-side GPIO or test pads |
-| Hardware: SBU1 drive forced or opened, R2/R3 lifted, D2/D3 bridged, box VIN removed (harness box v3, §3.1) | Intercept switch failure behaviour (VS-HW-22…24) | Reversible on the spare box if done as in §3.1; destructive otherwise |
+| Hardware: SBU1 drive forced or opened, R2/R3 lifted, R7/R8 lifted, D2/D3 bridged, box VIN removed (harness box v3, §3.1) | Intercept switch failure behaviour (VS-HW-22…24) | Reversible on the spare box if done as in §3.1; destructive otherwise |
 | Hardware: CAN line short (CAN-H to CAN-L, to GND), open, termination removal | Transceiver/bus faults | Must not damage vehicle-representative nodes |
 | Power: dropouts, slow ramps, brown-out plateau, over-voltage within safe limits | Supply monitoring | Device input rating unknown (WP-H-02 UK-08) |
 | Clock: HSE disturbance (only if a test pad exists) | CSS | Probably not accessible on COTS PCB — fall back to analysis |
@@ -131,7 +131,7 @@ safe state on the scope/CAN log.
 | VS-HW-21 | SoC-independent warning (siren) | FSR-02.05 | Car mode, engaged | Stop the SoC heartbeat | Acoustic warning audible within the FSC timing; check whether it works with the SoC powered down (independence of the audio path, WP-H-02 UK-07) | T-HIL | — |
 | VS-HW-22 | Stock path with the harness box unpowered | HWSR-502a, -702; DFM-020 | Camera and car (or bench nodes) powered; box VIN removed (ignition branch open, no comma power) | §3.1: frame exchange and bus levels with VIN normal, open, shorted to GND and with the device unpowered on the cable; VIN ramp to find the lowest working supply | Stock path works and bus levels meet the ISO 11898-2 receiver thresholds in every unpowered case, or the failure is recorded as confirming RR-2026-010 F-02 | T (bench) | VS-HW-02 |
 | VS-HW-23 | Release default with the pull-down open | HWSR-506, -506e, -711a; DFM-010.C3 | Box with R2 or R3 lifted; SBU1 driven (intercept) | §3.1: release SBU1 by four routes (source open, MCU in reset, cable unplugged, device unpowered); record the switch state over 10 min at three temperatures; intact-box changeover time as reference | Pass-through restored within ≤ 20 ms in every case, or the floating-IN behaviour is recorded as confirming RR-2026-010 F-03 | T (bench, fault injection) | VS-HW-02 |
-| VS-HW-24 | Switch supply stress, logic threshold and pass-through signal integrity | HWSR-506d, -711a; DFM-010.C4, DFM-011.C2, DFM-021 | Box on a programmable supply; DG419LE ratings confirmed (DFM-ACT-015) | §3.1: (a) steady VIN 9…16 V and a transient profile capped at the confirmed rating; (b) SBU1 changeover threshold vs VIN and temperature; (c) CAN signal integrity through U1/U2 with ground offset; (d) clamp diode D2, then D3, forced short | (a) switch works at every steady level and VIN at U1/U2 stays within the absolute maximum; (b) threshold at least 1 V below the SBU1 high level; (c) ISO 11898-2 thresholds met, no error frames in 10 min; (d) effect recorded against DFM-021 | T (bench) | VS-HW-02, DFM-ACT-015 |
+| VS-HW-24 | Switch supply stress, logic threshold and pass-through signal integrity | HWSR-506d, -711a; DFM-010.C4, DFM-011.C2, DFM-021 | Box on a programmable supply; DG419LE ratings confirmed (DFM-ACT-015) | §3.1: (a) steady VIN 9…16 V and a transient profile capped at the confirmed rating; (b) SBU1 changeover threshold vs VIN and temperature; (c) CAN signal integrity through U1/U2 with ground offset; (d) clamp diode D2, then D3, forced short; (e) camera-side termination R7/R8 lifted one at a time, then both, in intercept | (a) switch works at every steady level and VIN at U1/U2 stays within the absolute maximum; (b) threshold at least 1 V below the SBU1 high level; (c) ISO 11898-2 thresholds met, no error frames in 10 min; (d) effect recorded against DFM-021; (e) with one of R7/R8 lifted, no error frames and recessive edge under 1 µs; both lifted: effect recorded | T (bench) | VS-HW-02, DFM-ACT-015 |
 
 ### 3.1 Bench procedures for the harness box (VS-HW-22…24)
 
@@ -146,7 +146,7 @@ The steps below are run from the [bench checklist and result sheet](bench/VS-HW-
 
 | Item | Set-up |
 |---|---|
-| Unit under test | Spare Toyota harness box, inspected in VS-HW-02. VS-HW-23 and VS-HW-24 (d) modify it reversibly (R2 lifted and resoldered, D2/D3 bridged externally), so one box is enough when run in the order of the [bench checklist](bench/VS-HW-22-24-checklist.md); use a second box if one is available |
+| Unit under test | Spare Toyota harness box, inspected in VS-HW-02. VS-HW-23 and VS-HW-24 (d) and (e) modify it reversibly (R2 lifted and resoldered, R7/R8 lifted and resoldered, D2/D3 bridged externally), so one box is enough when run in the order of the [bench checklist](bench/VS-HW-22-24-checklist.md); use a second box if one is available |
 | Camera side | CAN interface channel A on the camera connector (CAN2), as the camera node, 120 Ω termination as on the car. Optional: the real camera instead |
 | Car side | CAN interface channel B on the car connector (CAN0), as the car ADAS node, 120 Ω termination |
 | Box supply | Lab supply on the IGN_12 pin (through D1 as on the car), current-limited to 0.5 A; comma power (J2) not connected unless the step says so |
@@ -155,9 +155,9 @@ The steps below are run from the [bench checklist and result sheet](bench/VS-HW-
 | Traffic | 500 kbit/s. Channel A sends a 10 ms frame (ID 0x343 payload pattern), channel B a 10 ms frame (ID 0x1AA); both log error counters |
 | Records | Scope captures, CAN logs with error counters, supply current, box serial and harness letter (F-13), ambient temperature |
 
-![Figure 3-1: bench wiring for VS-HW-22 to 24: CAN interface channel A on camera connector X1 pins 5 and 11 and channel B on car connector X2 pins 5 and 11, each with 120 ohm; lab supply on X2 pin 7 (IGN) and pin 10; 0 to 5 V low-impedance source on SBU1 at a USB-C breakout on the box receptacle; scope on car CAN, VIN and SBU1; fault-injection points FI-1 IGN open, FI-2 VIN to GND through 1 ohm, FI-3 R2/R3 open, FI-4 D2/D3 bridged](wiring/bench-box-vs-hw-22-24.svg)
+![Figure 3-1: bench wiring for VS-HW-22 to 24: CAN interface channel A on camera connector X1 pins 5 and 11 and channel B on car connector X2 pins 5 and 11, each with 120 ohm; lab supply on X2 pin 7 (IGN) and pin 10; 0 to 5 V low-impedance source on SBU1 at a USB-C breakout on the box receptacle; scope on car CAN, VIN and SBU1; fault-injection points FI-1 IGN open, FI-2 VIN to GND through 1 ohm, FI-3 R2/R3 open, FI-4 D2/D3 bridged, FI-5 R7/R8 open](wiring/bench-box-vs-hw-22-24.svg)
 
-*Figure 3-1.* The common set-up above as wiring, with the four box modifications of the checklist as FI-1…FI-4. Parts
+*Figure 3-1.* The common set-up above as wiring, with the five box modifications of the checklist as FI-1…FI-5. Parts
 this section does not name (mating plugs, USB-C breakout) are marked "to choose". Source:
 [`wiring/bench-box-vs-hw-22-24.yaml`](wiring/bench-box-vs-hw-22-24.yaml).
 
@@ -209,10 +209,18 @@ the confirmed absolute maximum, except on a sacrificial box.
    and the error counters. Compare with a direct cable between the two channels.
 4. (d) Clamp short, on the second box: bridge one D2 diode (CAN0_H to GND). Record which bus fails, the device reaction
    (canError, RX timeouts) and whether the camera path still works. Repeat for D3 (CAN2).
+5. (e) Camera-side termination in intercept. In intercept the camera bus runs from the camera through U1/U2 NO to the
+   device and is terminated only in the box: R7, and R8 through the harness's P13–P15 loopback (60 Ω). Put the reference
+   device on the OBD-C cable with intercept driven by it, remove channel A's own 120 Ω, and send camera frames from channel A.
+   Lift R8 (the same as an open loopback), then R7 alone, then both. In each state record the frames and error counters
+   the device sees on bus 2 and the recessive edge at X1 (end of a dominant bit until Vdiff < 0.5 V). The harness box
+   SPICE pilot (PR #510, a prediction, no credit) expects levels and edges well within the sample point with one resistor
+   left (edge about 0.06 µs) and an edge of about 10 µs with both lifted, which misses the 1.5 µs sample point.
 
 Pass: (a) the switch works at every steady level and the U1 V+ peak stays within the absolute maximum; (b) the switch changes
 over at least 1 V below the 5 V SBU1 high level at every point; (c) ISO 11898-2 receiver thresholds met and no error frames in
-10 min; (d) the effect is recorded against DFM-021. A failed (a) or (b) confirms DFM-010.C4 or DFM-011.C2 and goes to DQ-209.
+10 min; (d) the effect is recorded against DFM-021; (e) with one of R7/R8 lifted, no error frames in 2 min and the recessive
+edge under 1 µs, and with both lifted the effect is recorded. A failed (a) or (b) confirms DFM-010.C4 or DFM-011.C2 and goes to DQ-209.
 
 ## 4. Integration sequence
 

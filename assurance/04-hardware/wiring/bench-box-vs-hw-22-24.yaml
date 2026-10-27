@@ -52,7 +52,7 @@ connectors:
   BO:
     type: USB-C breakout
     subtype: on box receptacle J3; bench part to choose
-    notes: VS-HW-22 step 4 and VS-HW-23 step 3 put the reference device on the OBD-C cable here instead.
+    notes: VS-HW-22 step 4, VS-HW-23 step 3 and VS-HW-24 (e) put the reference device on the OBD-C cable here instead.
     pins: [A8, A1, B8, A4]
     pinlabels: [SBU1 switch drive, GND, SBU2 ignition (observe), VIN (scope ch 2)]
   SCOPE:
@@ -75,6 +75,10 @@ connectors:
     type: "FI-4: D2/D3 bridged (D2, then D3)"
     subtype: VS-HW-24 (d), CAN0_H then CAN2 to GND (box modified, reversible)
     pinlabels: [clamp diode]
+  FI5:
+    type: "FI-5: R7/R8 open (R8, R7, then both lifted)"
+    subtype: VS-HW-24 (e), camera-side termination in intercept (box modified, reversible)
+    pinlabels: [camera-side termination R7/R8]
 
 cables:
   WA:
@@ -131,3 +135,6 @@ connections:
   - - FI4: [1]
     - --
     - X2: [5]
+  - - FI5: [1]
+    - --
+    - X1: [5]

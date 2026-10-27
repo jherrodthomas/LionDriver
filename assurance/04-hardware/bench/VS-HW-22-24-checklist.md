@@ -3,8 +3,8 @@
 | Field | Value |
 |---|---|
 | Record type | Test checklist and result sheet for [WP-H-06](../WP-H-06-hardware-integration-verification.md) §3.1 |
-| Covers | VS-HW-02 (inspection, prerequisite), VS-HW-22 (box unpowered), VS-HW-23 (pull-down open), VS-HW-24 (supply stress, logic threshold, signal integrity, clamp short) |
-| Version | 0.3 (§A: SBU1 source low impedance without the 1 kΩ series resistor, plus a load check; WP-H-06 0.12; 2026-10-27). 0.2 (§A: box-plug crimp part number field, wiring OI-W-3; 2026-10-20). 0.1 (first issue; 2026-10-16) |
+| Covers | VS-HW-02 (inspection, prerequisite), VS-HW-22 (box unpowered), VS-HW-23 (pull-down open), VS-HW-24 (supply stress, logic threshold, signal integrity, clamp short, camera-side termination) |
+| Version | 0.4 (§F: VS-HW-24 (e), camera-side termination R7/R8 in intercept, from the harness box SPICE pilot prediction, PR #510; later sections renumbered; 2026-10-27). 0.3 (§A: SBU1 source low impedance without the 1 kΩ series resistor, plus a load check; WP-H-06 0.12; 2026-10-27). 0.2 (§A: box-plug crimp part number field, wiring OI-W-3; 2026-10-20). 0.1 (first issue; 2026-10-16) |
 | Status | Draft. **Not yet executed** |
 | Author | Claude Code (AI-drafted from WP-H-06 §3.1; to be reviewed before first use) |
 | Decision | Route chosen by the lead: keep comma's box and bench-test it ([DQ-209](../../01-management/decisions/register.yaml)). The SG-07 SPFM deviation ([DQ-320](../../01-management/decisions/register.yaml), [WP-H-04](../WP-H-04-hardware-metrics.md) §5.3) holds only if these tests pass |
@@ -15,7 +15,7 @@
 - Tick a box only when the step is done. Write a measured value with its unit, never "OK".
 - If a step fails, stop that case, fill in the failure row of its result table, and go on with the next case. A failure is a result, not a reason to stop the session.
 - Keep the raw data (scope captures, CAN logs) in `results/<date>-<box serial>/` and name each file after its step, e.g. `22-2-levels.png`.
-- **Order matters.** The run is laid out so that one spare box is enough, as DQ-209 budgeted. The box is modified only in parts E and F, and both modifications are reversible. If a second box is available, use it for E and F instead.
+- **Order matters.** The run is laid out so that one spare box is enough, as DQ-209 budgeted. The box is modified only in parts E, F and G, and every modification is reversible. If a second box is available, use it for E, F and G instead.
 
 ## A. Session record
 
@@ -177,7 +177,38 @@ Write I (intercept) or P (pass-through) in each time column; in row 1, write the
 
 - [ ] **Result VS-HW-23:** Pass / Fail. If it fails, F-03 is confirmed and DFM-010.C3 and HWSR-506e stay open: report to the lead (DQ-320 depends on it).
 
-## F. VS-HW-24 (d): clamp diode short
+## F. VS-HW-24 (e): camera-side termination in intercept
+
+Checks the termination of the camera bus in intercept. The bus then runs from the camera through U1/U2 NO to the device, and only the box terminates it: R7, plus R8 through the harness's P13–P15 loopback, 60 Ω together. Lifting R8 has the same effect as an open loopback. VIN = 13.5 V.
+
+**Set-up:** reference device on the OBD-C cable at the breakout, intercept driven by the device, bench SBU1 source disconnected. **Remove channel A's own 120 Ω**, so that only the box terminates the camera side. Channel A sends 0x343 every 10 ms. Scope ch 1 moves to CAN_H/CAN_L at the camera connector X1.
+
+**Prediction** (harness box SPICE pilot, PR #510; idealised model, no credit): with one resistor left, levels are OK and the recessive edge is about 0.06 µs. With both lifted, the edge is about 10 µs, which misses the 1.5 µs sample point at 500 kbit/s.
+
+**Pass:** rows 1–3 show no error frames in 2 min, and the recessive edge stays under 1 µs. Row 4 has no pass or fail: record the effect against the prediction.
+
+- [ ] **1. Nominal.** Check intercept: no camera frames reach channel B. Run 2 min.
+- [ ] **Modify:** lift one end of R8. Photograph the lifted end.
+- [ ] **2. R8 lifted** (same as the loopback open). Run 2 min.
+- [ ] **Modify:** resolder R8, then lift one end of R7.
+- [ ] **3. R7 lifted.** Run 2 min.
+- [ ] **Modify:** lift R8 as well.
+- [ ] **4. R7 and R8 lifted.** Run 2 min.
+- [ ] **Restore:** resolder R7 and R8. Check with the DMM, box unpowered, that each reads about 120 Ω. Refit channel A's 120 Ω. Repeat row 1.
+
+Measure the recessive edge from the end of a dominant bit until Vdiff falls below 0.5 V, at X1.
+
+| Row | Termination left | Frames on device bus 2 / sent | Device error counters (TEC/REC) | Recessive edge at X1 (µs) | Dominant Vdiff (V) | Pass / Fail / Recorded |
+|---|---|---|---|---|---|---|
+| 1 Nominal | R7 + R8 (60 Ω) | | | | | |
+| 2 R8 lifted | R7 (120 Ω) | | | | | |
+| 3 R7 lifted | R8 (120 Ω) | | | | | |
+| 4 Both lifted | none | | | | | |
+| Restore | R7 + R8 | | | | | |
+
+- [ ] **Result VS-HW-24 (e):** Pass / Fail. If row 2 or 3 fails, a single lost resistor stops camera frames in intercept, which is an SG-07 single-point fault not in the FMEDA: report to the lead.
+
+## G. VS-HW-24 (d): clamp diode short
 
 Verifies the DFM-021 effect analysis. **Bridge the diode externally with a short wire. Do not damage the part**, so the box can be restored.
 
@@ -192,9 +223,9 @@ Verifies the DFM-021 effect analysis. **Bridge the diode externally with a short
 
 - [ ] **Result VS-HW-24 (d):** effect recorded against DFM-021. There is no pass or fail; this step records the effect.
 
-## G. Close-out
+## H. Close-out
 
-- [ ] Box restored: R2 resoldered, every bridge removed, reference exchange passes. Box labelled "bench-tested, modified and restored, see `results/<file>`".
+- [ ] Box restored: R2, R7 and R8 resoldered, channel A's 120 Ω refitted, every bridge removed, reference exchange passes. Box labelled "bench-tested, modified and restored, see `results/<file>`".
 - [ ] Raw data saved in `results/<date>-<box serial>/` and named after each step.
 - [ ] [WP-H-06](../WP-H-06-hardware-integration-verification.md) §7 results table updated for VS-HW-02 and VS-HW-22…24: date, device, harness, result, measured value, evidence file.
 - [ ] Any fail reported to the lead through the decision register, because DQ-209 and DQ-320 depend on these results.
@@ -206,6 +237,7 @@ Verifies the DFM-021 effect analysis. **Bridge the diode externally with a short
 | VS-HW-22 | | | |
 | VS-HW-24 (a)–(c) | | | |
 | VS-HW-23 | | | |
+| VS-HW-24 (e) | | | |
 | VS-HW-24 (d) | | | |
 
 | Sign-off | Name | Date |
