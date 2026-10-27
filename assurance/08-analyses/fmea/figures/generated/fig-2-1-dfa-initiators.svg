@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1818" viewBox="0 0 1280 1818" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 2-1. DFA initiators against the ASIL decompositions</title>
-  <desc id="d">Dependent failure analysis LD-DFA-001 rev 0.16 against FSC rev 0.5: 21 dependent failure initiators in 13 categories mapped onto 11 ASIL decompositions. Initiators: 4 insufficient, 14 open, 3 safe by design. Decompositions: 10 not accepted, 1 not assessable. 25 measures with their status (10 required) and the DFA open items.</desc>
+  <desc id="d">Dependent failure analysis LD-DFA-001 rev 0.16 against FSC rev 0.5: 21 dependent failure initiators, DFI-01a to DFI-36 (the WP-A-03 numbers of those that reach a panda/SoC decomposition), in 13 categories mapped onto 11 ASIL decompositions. Initiators: 4 insufficient, 14 open, 3 safe by design. Decompositions: 10 not accepted, 1 not assessable. 25 measures with their status (10 required) and the DFA open items.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>

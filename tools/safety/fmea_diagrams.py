@@ -2822,8 +2822,10 @@ def render_dfa(doc: dict, fig: str) -> str:
   dc: dict[str, int] = {}
   for d in decs:
     dc[d["status"]] = dc.get(d["status"], 0) + 1
+  ids = sorted((d["id"] for d in dfis), key=lambda i: (int(re.match(r"DFI-(\d+)", i).group(1)), i))
   desc = (f"Dependent failure analysis {a.get('doc_id', a['id'])} rev {a['revision']} against FSC rev {a['fsc_revision']}: "
-          f"{len(dfis)} dependent failure initiators in {len(cats)} categories mapped onto {len(decs)} ASIL decompositions. "
+          f"{len(dfis)} dependent failure initiators, {ids[0]} to {ids[-1]} (the WP-A-03 numbers of those that reach a "
+          f"panda/SoC decomposition), in {len(cats)} categories mapped onto {len(decs)} ASIL decompositions. "
           "Initiators: " + ", ".join(f"{v} {k.replace('_', ' ')}" for k, v in sorted(ac.items())) +
           ". Decompositions: " + ", ".join(f"{v} {k.replace('_', ' ')}" for k, v in sorted(dc.items())) +
           f". {len(measures)} measures with their status ({sum(1 for m in measures.values() if m['status'] == 'required')} required) "
