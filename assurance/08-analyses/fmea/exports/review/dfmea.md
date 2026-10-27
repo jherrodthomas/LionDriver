@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.12 | draft | BL-007 | RT-3 | 2026-10-16 |
+| 0.13 | draft | BL-007 | RT-3 | 2026-10-16 |
 
 **Scope.** Safety-relevant hardware of AC-001 at BL-007 (hardware as at BL-002): comma 3X panda section (STM32H725, clock and watchdog, MCU supply, CAN transceivers), Toyota harness and relay box, SoC-MCU interface, siren path, enclosure and cooling. SoC, cameras and other QM hardware only where they couple into these (WP-A-03).
 
@@ -408,6 +408,46 @@ Safety mechanisms: (1) RX timeouts withdraw control; host canError and canBusMis
 
 <sub>Note: RR-2026-010 F-07. Circuit view (synthetic, no credit) in assurance/sim/results/harness-box.md, with a Falstad link to flip this fault.</sub>
 
+#### DFM-022 · Camera bus left unterminated in intercept
+
+🔴 **H** · **S 10** · guideword *open* · function `DFM-FN-005` Separate the camera from the car bus only while energised; restore the stock camera path whenever de-energised
+
+Effects:
+
+- **End:** Stock AEB unavailable (HZ-011, S 10)
+- **Next higher:** Camera frames lost or corrupted while the device forwards them, so stock PCS messages do not reach the car
+- **Local:** In intercept only the box terminates the camera bus (R7, and R8 through the harness P13-P15 loopback, 60 ohm). With both gone the recessive edge slows to about 10.5 us and misses the 1.5 us sample point (harness box SPICE pilot, a prediction)
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `DFM-022.C1` Termination resistor R7 open together with R8 or the P13-P15 loopback open. One open alone leaves 120 ohm and a recessive edge of about 0.06 us, so it is latent (FMEDA SG-009 FMD-035); pass-through is not affected (R7/R8 are on the NO side) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware test has been run for this cause. Bench step VS-HW-24 (e) lifts R7, R8, then both, in intercept and records error frames and the recessive edge (WP-H-06 v0.13); not yet run <sub>assurance/04-hardware/WP-H-06-hardware-integration-verification.md</sub> | 2 | 10 | 🔴 **H** | DFM-ACT-014 |
+
+Safety mechanisms: (1) None: RX checks cover car-side messages only
+
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-022.C1` mechanism 1: M 10 · F 2 · S after response 10 → 🟠 M
+
+<sub>Note: Added after BL-007 from FMEDA SG-009 rev 0.9 (FMD-C-014) and the harness box SPICE pilot (assurance/04-hardware/spice/predictions.md,</sub>
+
+#### DFM-023 · Camera-side termination shorted in intercept
+
+🔴 **H** · **S 10** · guideword *short* · function `DFM-FN-005` Separate the camera from the car bus only while energised; restore the stock camera path whenever de-energised
+
+Effects:
+
+- **End:** Stock AEB unavailable (HZ-011, S 10)
+- **Next higher:** No camera frames reach the device, so stock PCS messages are not forwarded to the car
+- **Local:** R7 or R8 short ties camera CAN2_H to CAN2_L, so the camera bus is held recessive in intercept
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `DFM-023.C1` Termination resistor R7 or R8 short (FMEDA SG-009 FMD-036); pass-through is not affected (R7/R8 are on the NO side) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause; VS-HW-24 (e) checks the opens only (WP-H-06 v0.13) | 3 | 10 | 🔴 **H** | DFM-ACT-014 |
+
+Safety mechanisms: (1) None: RX checks cover car-side messages only
+
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-023.C1` mechanism 1: M 10 · F 3 · S after response 10 → 🔴 **H**
+
+<sub>Note: Added after BL-007 from FMEDA SG-009 rev 0.9 (FMD-C-014). Not yet in the SG-07 fault tree (fta-fmea-map not_in_fta, tree gap).</sub>
+
 ### `DFM-SE-007` Harness, connectors, SBU orientation and ignition sense
 
 #### DFM-012 · Harness disconnected or intermittent while driving
@@ -562,7 +602,7 @@ Effects:
 | DFM-ACT-011 | detection | Confirm the siren audio topology (UK-07) and add a start-up siren self-test (TSR-515/516) | Jherrod Thomas | open | DFM-017.C1, DFM-017.C2 | — |
 | DFM-ACT-012 | design_change | React to MCU DTS out of range with the safe state (HWSR-509, DC-10); obtain the MCU temperature grade (UK-02) | Jherrod Thomas | open | DFM-018.C1 | — |
 | DFM-ACT-013 | design_change | Implement TSR-517: read back the item's own TX frames from the bus and compare with the approved frame, revoking on a mismatch; enable RAMECC handling for the FDCAN message RAM if the H725 provides it | Jherrod Thomas | open | DFM-019.C1, DFM-019.C2 | — |
-| DFM-ACT-014 | detection | Bench-test the harness box failure behaviour (RR-2026-010): box unpowered with car and camera powered; R2/R3 forced open with the device silent; supply at 14-16 V against the DG419LE ratings; pass-through signal integrity; clamp-diode short on CAN0; confirm the shipped box matches the v3 drawing (VS-HW-02). The decided route for the harness box (DQ-209 option A, 2026-10-16); procedures in WP-H-06 §3.1 | Jherrod Thomas | open | DFM-010.C3, DFM-010.C4, DFM-011.C2, DFM-014.C2, DFM-020.C1, DFM-020.C2, DFM-021.C1 | — |
+| DFM-ACT-014 | detection | Bench-test the harness box failure behaviour (RR-2026-010): box unpowered with car and camera powered; R2/R3 forced open with the device silent; supply at 14-16 V against the DG419LE ratings; pass-through signal integrity; clamp-diode short on CAN0; camera-side termination R7/R8 lifted in intercept (VS-HW-24 (e), DFM-022); confirm the shipped box matches the v3 drawing (VS-HW-02). The decided route for the harness box (DQ-209 option A, 2026-10-16); procedures in WP-H-06 §3.1 | Jherrod Thomas | open | DFM-010.C3, DFM-010.C4, DFM-011.C2, DFM-014.C2, DFM-020.C1, DFM-020.C2, DFM-021.C1, DFM-022.C1, DFM-023.C1 | — |
 | DFM-ACT-015 | detection | Read the Vishay DG417LE/DG418LE/DG419LE datasheet (document 76432) and record the absolute maximum V+ to V-, VL and IN ratings, the single-supply operating range and VINH/VINL at VL = V+ = 14 V; compare with VIN including the D4 clamp level. If a limit is exceeded, raise it with comma.ai and with DQ-209 (RR-2026-010 F-05; blocked at 2026-10-16: vendor and datasheet hosts unreachable from the analysis environment) | Jherrod Thomas | open | DFM-010.C4, DFM-011.C2 | — |
 | DFM-ACT-016 | detection | Time the EPS-fault warning chain on the HIL bench (WP-S-04 T-28): inject a persistent LKA_STATE fault on 0x262 while authority is granted and measure fault onset to audible siren against the 0.96 s design worst case and the SG-02 1 s budget (margin 0.04 s), with the speaker phase varied. Persistence 0.7 s since panda bf8102a (DQ-048). Waits for the HIL bench, which the lead deferred (DQ-049, 2026-10-14) | Jherrod Thomas | open | DFM-017.C1, DFM-017.C2 | — |
 
@@ -600,12 +640,14 @@ Effects:
 | `DFM-020.C1` | Harness box loses its supply while the car is on | 10/5/10 | DFM-ACT-014 |
 | `DFM-020.C2` | Harness box loses its supply while the car is on | 10/3/10 | DFM-ACT-014 |
 | `DFM-021.C1` | Clamp diode short loads or grounds a vehicle bus in the harness box | 10/3/10 | DFM-ACT-014 |
+| `DFM-022.C1` | Camera bus left unterminated in intercept | 10/2/10 | DFM-ACT-014 |
+| `DFM-023.C1` | Camera-side termination shorted in intercept | 10/3/10 | DFM-ACT-014 |
 
 ## 7. Monitoring and system response
 
 FMEA-MSR rates what happens in the car when a cause occurs: does a diagnostic catch it, and does the system reach a safe state within the fault-tolerant time interval (FTTI)? It adds frequency (F), monitoring (M) and the severity after the response, with its own action priority; S, O, D and AP above are unchanged. Scales: [rating-tables.md §7](../../rating-tables.md#7-fmea-msr--monitoring-and-system-response-added-in-rt-2); scope and plan: [msr-plan.md](../../msr-plan.md); FTTI rows: [WP-S-04 §3.7](../../../../03-system/WP-S-04-timing-ftti-budget.md#37-summary-of-fttis-and-budgets).
 
-**Coverage:** 23 of 23 in-scope causes rated, 0 rated elsewhere (`msr: complete`).
+**Coverage:** 25 of 25 in-scope causes rated, 0 rated elsewhere (`msr: complete`).
 
 ![Frequency by monitoring](figures/dfmea-msr.svg)
 
@@ -624,8 +666,10 @@ Sorted by monitoring, weakest first. Timing is detection + reaction time against
 | `DFM-019.C1` Soft error or permanent fault in the copy into FDCAN message RAM, the message RAM or the FDCAN core. The packet XOR is checked at the FDCAN load (fdcan.h:100) and covers only the software queue; the CAN CRC is computed after the fault | None after the FDCAN load: no TX read-back (TSR-517 not implemented) → None | unknown | 10 | 4 | **10** | 🔴 **H** | DFM-ACT-013 |
 | `DFM-003.C2` Wrong-address write by the SPI DMA (no MPU) | None at BL-002: no MPU and no redundant storage of the safety state → None | unknown | 10 | 3 | **10** | 🔴 **H** | DFM-ACT-002 |
 | `DFM-020.C2` Box VIN shorted to ground (TVS D4 short, connector or wiring) | None: the box supply is not supervised, and the device loses power with it → None | unknown | 10 | 3 | **10** | 🔴 **H** | DFM-ACT-014 |
+| `DFM-023.C1` Termination resistor R7 or R8 short (FMEDA SG-009 FMD-036); pass-through is not affected (R7/R8 are on the NO side) | None: the device checks only car-side messages for timeouts, so a silent camera bus is not flagged → None | unknown | 10 | 3 | **10** | 🔴 **H** | DFM-ACT-014 |
 | `DFM-010.C3` Pull-down R2 or R3 open, so IN floats when the device stops driving SBU1 (reset, watchdog, hang, unplugged cable) | None: the open pull-down is latent while the device drives SBU1, and no readback exists (GAP-12) → None | unknown | 10 | 2 | **10** | 🟠 M | DFM-ACT-007, DFM-ACT-014 |
 | `DFM-019.C2` Transceiver fault that changes bits on TX without a CAN error (not credible for a single bit, which the CAN CRC and the bit monitoring of the transmitting controller detect; kept until the transceiver part is known, WP-H-02 UK-01) | None: no TX read-back (TSR-517 not implemented) → None | unknown | 10 | 2 | **10** | 🟠 M | DFM-ACT-013 |
+| `DFM-022.C1` Termination resistor R7 open together with R8 or the P13-P15 loopback open. One open alone leaves 120 ohm and a recessive edge of about 0.06 us, so it is latent (FMEDA SG-009 FMD-035); pass-through is not affected (R7/R8 are on the NO side) | None: the device checks only car-side messages for timeouts; a single open is latent and nothing checks the camera-side termination → None | unknown | 10 | 2 | **10** | 🟠 M | DFM-ACT-014 |
 | `DFM-001.C1` Permanent fault in the Cortex-M7 core or bus matrix; single core, no lockstep, no CPU self-test | None in the MCU at BL-002. The host compares controls_allowed after about 2 s (QM); it does not check limits → None for a wrong limit result | unknown | 10 | 6 | **9** | 🔴 **H** | DFM-ACT-001 |
 | `DFM-012.C1` Connector not fully latched at installation, or vibration loosens it | RX timeouts and host canBusMissing cover a partial disconnect only; a full disconnect also removes the device supply, so nothing warns → Relay drops out with the supply; stock camera restored | unknown | 10 | 5 | **9** | 🔴 **H** | DFM-ACT-008 |
 | `DFM-002.C1` Multi-bit flash error or cell degradation; double-error ECC flag not handled; image signature checked at boot only | Bootstub signature check at power-up only; no periodic code CRC in the pinned firmware → None during the drive | unknown | 10 | 4 | **9** | 🔴 **H** | DFM-ACT-002 |

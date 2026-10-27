@@ -19,7 +19,7 @@ text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helveti
 .ah{fill:#9198a1}.lbl{fill:#0d1117}.lane{fill:#151b23}.laneT{fill:#9198a1}}
 </style>
 <rect class="bg" x="0" y="0" width="868" height="400" rx="8"/>
-<text x="24.0" y="32.0" class="ink" font-size="15" font-weight="600" text-anchor="start">DFMEA: 23 monitoring and system response ratings by frequency and monitoring</text>
+<text x="24.0" y="32.0" class="ink" font-size="15" font-weight="600" text-anchor="start">DFMEA: 25 monitoring and system response ratings by frequency and monitoring</text>
 <text x="24.0" y="52.0" class="mut" font-size="12" text-anchor="start">Cell colour: MSR action priority at S 10 (handbook table, RT-3). Number: causes rated in that cell.</text>
 <text x="82.0" y="91.0" class="mut" font-size="11" text-anchor="end">F 10</text>
 <rect x="92.0" y="74.0" width="56" height="24" rx="3" class="hS"/>
@@ -120,7 +120,7 @@ text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helveti
 <text x="526.0" y="273.0" class="h" font-size="13" font-weight="700" text-anchor="middle">1</text>
 <rect x="556.0" y="256.0" width="56" height="24" rx="3" class="hS"/>
 <rect x="614.0" y="256.0" width="56" height="24" rx="3" class="hS"/>
-<text x="642.0" y="273.0" class="h" font-size="13" font-weight="700" text-anchor="middle">2</text>
+<text x="642.0" y="273.0" class="h" font-size="13" font-weight="700" text-anchor="middle">3</text>
 <text x="82.0" y="299.0" class="mut" font-size="11" text-anchor="end">F 2</text>
 <rect x="92.0" y="282.0" width="56" height="24" rx="3" class="lS"/>
 <rect x="150.0" y="282.0" width="56" height="24" rx="3" class="lS"/>
@@ -133,7 +133,7 @@ text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helveti
 <text x="526.0" y="299.0" class="m" font-size="13" font-weight="700" text-anchor="middle">1</text>
 <rect x="556.0" y="282.0" width="56" height="24" rx="3" class="mS"/>
 <rect x="614.0" y="282.0" width="56" height="24" rx="3" class="mS"/>
-<text x="642.0" y="299.0" class="m" font-size="13" font-weight="700" text-anchor="middle">2</text>
+<text x="642.0" y="299.0" class="m" font-size="13" font-weight="700" text-anchor="middle">3</text>
 <text x="82.0" y="325.0" class="mut" font-size="11" text-anchor="end">F 1</text>
 <rect x="92.0" y="308.0" width="56" height="24" rx="3" class="lS"/>
 <rect x="150.0" y="308.0" width="56" height="24" rx="3" class="lS"/>
