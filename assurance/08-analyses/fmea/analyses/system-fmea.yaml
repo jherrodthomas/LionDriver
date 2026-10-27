@@ -148,6 +148,9 @@
 # assured-settings entry gate (#287, #342) and DQ-131/DQ-121 have no System FMEA cause; the SW FMEA and PFMEA carry them.
 # Rev 0.36 (after BL-007, ratings within BL-007): SFM-009.C4 and SFM-038.C1 D 8 -> 4, re-inherited from SWF-050.C1 and SWF-088.C1/C2
 #   once their tests were proven by mutation in CI (tools/ci/host_mutation.py, SW FMEA rev 1.10). AP stays H (S 10, O 5).
+# Rev 0.37 (after BL-007, ratings within BL-007): SFM-025.C1 D 8 -> 4, re-inherited from SWF-062.C1 once the controlsd hold, the alert
+#   re-raise and the lockout timing were mutated too (MR-4..MR-7, SW FMEA rev 1.12). AP stays H (S 10, O 5). SFM-036.C1 keeps D 8: the
+#   opendbc cap of the command (SWF-093.C2) is not mutated yet.
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -156,7 +159,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.36"
+  revision: "0.37"
   status: draft
   baseline: BL-007
   rating_tables: RT-3
@@ -3173,12 +3176,14 @@ failure_modes:
             upstream openpilot, reviewed in the PR only, ruff and ty in CI; O 5 as the other new host code with targeted tests (SW FMEA SWF-062.C1)'
           ref: openpilot/selfdrive/selfdrived/minimum_risk.py
         detection_controls:
+        - description: 'Proven by mutation in CI after BL-007 (MR-1..MR-7, tools/ci/host_mutation.py), as SWF-062.C1; D 8 -> 4 (System FMEA rev 0.37)'
+          ref: tools/ci/host_mutants.toml
         - description: 'test_minimum_risk.py (the latch), test_monitoring.py (lockout from the takeover) and a test_longitudinal maneuver that stays
             stopped under forced deceleration while the lead drives off, run by the CI unit_tests job; targeted, not proven by mutation, so D 8. The
             PCM standstill hold over time (AOU-16) and the stop time are not verified on the vehicle'
           test: openpilot/selfdrive/selfdrived/tests/test_minimum_risk.py
         occurrence: 5
-        detection: 8
+        detection: 4
         ap: H
         previous:
           baseline: BL-006
@@ -3187,7 +3192,7 @@ failure_modes:
           ap: H
           change: 'TSR-633 implemented (#372): the manoeuvre is latched until the driver takes over, held at standstill, alert re-raised; the cause
             is now a defect in that code'
-        rationale: Rated in the SW FMEA (SWF-062.C1, O 5 D 8 at BL-007); this row inherits that rating
+        rationale: Rated in the SW FMEA (SWF-062.C1, O 5 D 8 at BL-007, D 4 since SW FMEA rev 1.12); this row inherits that rating
         actions:
         - SFM-ACT-005
         msr:

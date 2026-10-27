@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1546" viewBox="0 0 1280 1546" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-13. SW FMEA detection evidence</title>
-  <desc id="d">SW FMEA (SWF rev 1.11): 149 causes by the evidence behind their detection rating: proven 35, targeted 20, generic 22, not run 1, hardware 8, none 63. One row per element, and the 38 cited test files with how CI treats each (1 not run in CI).</desc>
+  <desc id="d">SW FMEA (SWF rev 1.12): 149 causes by the evidence behind their detection rating: proven 39, targeted 16, generic 22, not run 1, hardware 8, none 63. One row per element, and the 38 cited test files with how CI treats each (1 not run in CI).</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -10,15 +10,15 @@
   </defs>
   <rect width="1280" height="1546" fill="#FCFCFB"/>
   <text x="40" y="44" font-size="20" fill="#0B0B0B" font-weight="700">Figure 3-13 · SW FMEA — what each detection rating rests on</text>
-  <text x="40" y="66" font-size="12.5" fill="#52514E">SWF rev 1.11 · BL-007 · draft · is the cited test run in CI, only on hardware, or not run at all</text>
+  <text x="40" y="66" font-size="12.5" fill="#52514E">SWF rev 1.12 · BL-007 · draft · is the cited test run in CI, only on hardware, or not run at all</text>
   <text x="1240" y="44" font-size="11" fill="#52514E" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#52514E" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E1E0D9" stroke-width="1"/>
   <text x="40" y="104" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">ALL CAUSES BY WHAT THEIR DETECTION RATING RESTS ON</text>
-  <rect x="40" y="114" width="281.9" height="22" fill="#2E9E6A"/>
-  <text x="180.9" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">35</text>
-  <rect x="321.9" y="114" width="161.1" height="22" fill="#0F766E"/>
-  <text x="402.4" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">20</text>
+  <rect x="40" y="114" width="314.1" height="22" fill="#2E9E6A"/>
+  <text x="197" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">39</text>
+  <rect x="354.1" y="114" width="128.9" height="22" fill="#0F766E"/>
+  <text x="418.5" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">16</text>
   <rect x="483" y="114" width="177.2" height="22" fill="#94A3B8"/>
   <text x="571.5" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">22</text>
   <rect x="660.1" y="114" width="8.1" height="22" fill="#C2410C"/>
@@ -27,9 +27,9 @@
   <rect x="732.6" y="114" width="507.4" height="22" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.2"/>
   <text x="986.3" y="129" font-size="10.5" fill="#D03B3B" font-weight="700" text-anchor="middle">63</text>
   <rect x="40" y="145" width="13" height="13" fill="#2E9E6A" rx="2"/>
-  <text x="59" y="156" font-size="10.5" fill="#0B0B0B">Test run in CI, D 1–4 (rated as proven: mutation or fault injection) · 35</text>
+  <text x="59" y="156" font-size="10.5" fill="#0B0B0B">Test run in CI, D 1–4 (rated as proven: mutation or fault injection) · 39</text>
   <rect x="440.5" y="145" width="13" height="13" fill="#0F766E" rx="2"/>
-  <text x="459.5" y="156" font-size="10.5" fill="#0B0B0B">Targeted test run in CI, not proven (D 5–8) · 20</text>
+  <text x="459.5" y="156" font-size="10.5" fill="#0B0B0B">Targeted test run in CI, not proven (D 5–8) · 16</text>
   <rect x="724.3" y="145" width="13" height="13" fill="#94A3B8" rx="2"/>
   <text x="743.3" y="156" font-size="10.5" fill="#0B0B0B">Only a generic test run in CI (D 9–10) · 22</text>
   <rect x="982.2" y="145" width="13" height="13" fill="#C2410C" rx="2"/>
@@ -151,10 +151,10 @@
   <text x="40" y="602" font-size="10" fill="#0B0B0B" font-weight="700">SE-032</text>
   <text x="86" y="602" font-size="10" fill="#52514E">Input sampling and event generation</text>
   <rect x="340" y="592" width="12" height="14" fill="#2E9E6A" rx="2"><title>SWF-030.C2 D4 AP L: openpilot/system/manager/test/test_reference_env.py (unit test, collected by tools/test_runner.py)</title></rect>
-  <rect x="355" y="592" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-031.C2 D8 AP H: openpilot/selfdrive/selfdrived/tests/test_state_machine.py (unit test, collected by tools/test_runner.py)</title></rect>
-  <rect x="370" y="592" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-032.C3 D8 AP H: openpilot/selfdrive/selfdrived/tests/test_supervision.py (unit test, collected by tools/test_runner.py)</title></rect>
-  <rect x="385" y="592" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-034.C1 D8 AP H: openpilot/selfdrive/selfdrived/tests/test_supervision.py (unit test, collected by tools/test_runner.py)</title></rect>
-  <rect x="400" y="592" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-091.C2 D8 AP H: openpilot/selfdrive/selfdrived/tests/test_vehicle_dtc_entry.py (unit test, collected by tools/test_runner.py)</title></rect>
+  <rect x="355" y="592" width="12" height="14" fill="#2E9E6A" rx="2"><title>SWF-091.C2 D4 AP H: openpilot/selfdrive/selfdrived/tests/test_vehicle_dtc_entry.py (unit test, collected by tools/test_runner.py)</title></rect>
+  <rect x="370" y="592" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-031.C2 D8 AP H: openpilot/selfdrive/selfdrived/tests/test_state_machine.py (unit test, collected by tools/test_runner.py)</title></rect>
+  <rect x="385" y="592" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-032.C3 D8 AP H: openpilot/selfdrive/selfdrived/tests/test_supervision.py (unit test, collected by tools/test_runner.py)</title></rect>
+  <rect x="400" y="592" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-034.C1 D8 AP H: openpilot/selfdrive/selfdrived/tests/test_supervision.py (unit test, collected by tools/test_runner.py)</title></rect>
   <rect x="415" y="592" width="12" height="14" fill="#94A3B8" rx="2"><title>SWF-032.C1 D10 AP H: openpilot/selfdrive/selfdrived/tests/test_supervision.py (unit test, collected by tools/test_runner.py)</title></rect>
   <rect x="430" y="592" width="12" height="14" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.2" rx="2"><title>SWF-031.C1 D10 AP H: no test cited</title></rect>
   <rect x="445" y="592" width="12" height="14" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.2" rx="2"><title>SWF-032.C2 D10 AP H: no test cited</title></rect>
@@ -203,7 +203,7 @@
   <text x="389" y="723" font-size="9.5" fill="#52514E">3</text>
   <text x="40" y="742" font-size="10" fill="#0B0B0B" font-weight="700">SE-043</text>
   <text x="86" y="742" font-size="10" fill="#52514E">Longitudinal controller</text>
-  <rect x="340" y="732" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-093.C1 D8 AP H: openpilot/selfdrive/controls/tests/test_stock_aeb.py (unit test, collected by tools/test_runner.py)</title></rect>
+  <rect x="340" y="732" width="12" height="14" fill="#2E9E6A" rx="2"><title>SWF-093.C1 D4 AP H: openpilot/selfdrive/controls/tests/test_stock_aeb.py (unit test, collected by tools/test_runner.py)</title></rect>
   <rect x="355" y="732" width="12" height="14" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.2" rx="2"><title>SWF-045.C2 D10 AP H: no test cited</title></rect>
   <rect x="370" y="732" width="12" height="14" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.2" rx="2"><title>SWF-046.C2 D10 AP H: no test cited</title></rect>
   <text x="389" y="743" font-size="9.5" fill="#52514E">3</text>
@@ -255,8 +255,8 @@
   <text x="86" y="922" font-size="10" fill="#52514E">Monitoring policy and dmonitoringd</text>
   <rect x="340" y="912" width="12" height="14" fill="#2E9E6A" rx="2"><title>SWF-061.C1 D4 AP H: openpilot/selfdrive/monitoring/test_monitoring.py (unit test, collected by tools/test_runner.py)</title></rect>
   <rect x="355" y="912" width="12" height="14" fill="#2E9E6A" rx="2"><title>SWF-061.C4 D4 AP H: openpilot/selfdrive/monitoring/test_monitoring.py (unit test, collected by tools/test_runner.py)</title></rect>
-  <rect x="370" y="912" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-061.C2 D8 AP H: openpilot/selfdrive/monitoring/test_monitoring.py (unit test, collected by tools/test_runner.py)</title></rect>
-  <rect x="385" y="912" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-062.C1 D8 AP H: openpilot/selfdrive/selfdrived/tests/test_minimum_risk.py (unit test, collected by tools/test_runner.py)</title></rect>
+  <rect x="370" y="912" width="12" height="14" fill="#2E9E6A" rx="2"><title>SWF-062.C1 D4 AP H: openpilot/selfdrive/selfdrived/tests/test_minimum_risk.py (unit test, collected by tools/test_runner.py)</title></rect>
+  <rect x="385" y="912" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-061.C2 D8 AP H: openpilot/selfdrive/monitoring/test_monitoring.py (unit test, collected by tools/test_runner.py)</title></rect>
   <rect x="400" y="912" width="12" height="14" fill="#94A3B8" rx="2"><title>SWF-061.C3 D9 AP H: openpilot/selfdrive/monitoring/test_monitoring.py (unit test, collected by tools/test_runner.py)</title></rect>
   <rect x="415" y="912" width="12" height="14" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.2" rx="2"><title>SWF-063.C2 D10 AP H: no test cited</title></rect>
   <rect x="430" y="912" width="12" height="14" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.2" rx="2"><title>SWF-085.C1 D10 AP H: no test cited</title></rect>
@@ -269,8 +269,8 @@
   <text x="374" y="943" font-size="9.5" fill="#52514E">2</text>
   <text x="40" y="962" font-size="10" fill="#0B0B0B" font-weight="700">SE-071</text>
   <text x="86" y="962" font-size="10" fill="#52514E">Longitudinal planner and MPC</text>
-  <rect x="340" y="952" width="12" height="14" fill="#2E9E6A" rx="2"><title>SWF-067.C2 D4 AP H: openpilot/selfdrive/selfdrived/tests/test_assured_config.py (unit test, collected by tools/test_runner.py)</title></rect>
-  <rect x="355" y="952" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-067.C1 D8 AP H: openpilot/selfdrive/selfdrived/tests/test_assured_config.py (unit test, collected by tools/test_runner.py)</title></rect>
+  <rect x="340" y="952" width="12" height="14" fill="#2E9E6A" rx="2"><title>SWF-067.C1 D4 AP H: openpilot/selfdrive/selfdrived/tests/test_assured_config.py (unit test, collected by tools/test_runner.py)</title></rect>
+  <rect x="355" y="952" width="12" height="14" fill="#2E9E6A" rx="2"><title>SWF-067.C2 D4 AP H: openpilot/selfdrive/selfdrived/tests/test_assured_config.py (unit test, collected by tools/test_runner.py)</title></rect>
   <rect x="370" y="952" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-086.C2 D8 AP H: openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py (unit test, collected by tools/test_runner.py)</title></rect>
   <rect x="385" y="952" width="12" height="14" fill="#94A3B8" rx="2"><title>SWF-065.C1 D9 AP H: openpilot/selfdrive/test/process_replay/test_processes.py (named in a CI workflow)</title></rect>
   <rect x="400" y="952" width="12" height="14" fill="#94A3B8" rx="2"><title>SWF-065.C2 D9 AP H: openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py (unit test, collected by tools/test_runner.py)</title></rect>
