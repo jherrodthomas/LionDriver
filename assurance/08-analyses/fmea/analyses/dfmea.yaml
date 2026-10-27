@@ -54,12 +54,15 @@
 # or host changes touched. Totals unchanged: 21 failure modes, 30 causes (all AP H); 16 actions.
 # Rev 0.12 (2026-10-27, ratings unchanged): DFM-010, DFM-011, DFM-014 and DFM-021 point at the harness box circuit view
 #   (assurance/sim/harness_box: ngspice DC points and a Falstad link, synthetic, no credit).
+# Rev 0.13 (2026-10-27, after BL-007): new DFM-022 (camera bus unterminated in intercept, R7 with R8 or the loopback open) and
+#   DFM-023 (R7 or R8 short), from FMEDA SG-009 rev 0.9 FMD-C-014 (#511) and the harness box SPICE pilot (#510). O 2 / O 3, D 10
+#   (VS-HW-24 (e) not run), AP H; DFM-ACT-014 covers the bench step. SG-07 tree gap recorded for the FTA owner.
 schema_version: 1
 analysis:
   id: DFM
   type: dfmea
   title: "DFMEA — device, integrated panda, harness, vehicle interfaces"
-  revision: "0.12"
+  revision: "0.13"
   status: draft
   baseline: BL-007
   rating_tables: RT-3
@@ -1414,6 +1417,109 @@ failure_modes:
   - description: RX timeouts withdraw control; host canError and canBusMissing alerts
     ref: opendbc_repo/opendbc/safety/safety.h
   notes: RR-2026-010 F-07. Circuit view (synthetic, no credit) in assurance/sim/results/harness-box.md, with a Falstad link to flip this fault.
+- id: DFM-022
+  element: DFM-SE-006
+  function: DFM-FN-005
+  failure_mode: Camera bus left unterminated in intercept
+  guideword: open
+  effects:
+  - level: local
+    description: In intercept only the box terminates the camera bus (R7, and R8 through the harness P13-P15 loopback, 60 ohm). With both
+      gone the recessive edge slows to about 10.5 us and misses the 1.5 us sample point (harness box SPICE pilot, a prediction)
+  - level: next_higher
+    description: Camera frames lost or corrupted while the device forwards them, so stock PCS messages do not reach the car
+  - level: end
+    description: Stock AEB unavailable
+    hazard: HZ-011
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-022.C1
+    description: Termination resistor R7 open together with R8 or the P13-P15 loopback open. One open alone leaves 120 ohm and a recessive
+      edge of about 0.06 us, so it is latent (FMEDA SG-009 FMD-035); pass-through is not affected (R7/R8 are on the NO side)
+    element: DFM-SE-006
+    prevention_controls:
+    - description: COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02)
+      ref: assurance/04-hardware/WP-H-02-hardware-design.md
+    detection_controls:
+    - description: 'No LionDriver hardware test has been run for this cause. Bench step VS-HW-24 (e) lifts R7, R8, then both, in intercept
+        and records error frames and the recessive edge (WP-H-06 v0.13); not yet run'
+      ref: assurance/04-hardware/WP-H-06-hardware-integration-verification.md
+    occurrence: 2
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-014
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: 'None: the device checks only car-side messages for timeouts; a single open is latent and nothing checks the camera-side
+        termination'
+      system_response: None
+      effect_after_response: 'Unchanged: stock PCS messages are lost while in intercept'
+      severity_after: 10
+      frequency: 2
+      monitoring: 10
+      ap: M
+      timing:
+        basis: unknown
+      fmeda: fmeda-sg009/FMD-035
+      actions:
+      - DFM-ACT-014
+  safety_mechanisms:
+  - description: 'None: RX checks cover car-side messages only'
+    ref: assurance/08-analyses/fmea/analyses/fmeda-sg009.yaml
+  notes: Added after BL-007 from FMEDA SG-009 rev 0.9 (FMD-C-014) and the harness box SPICE pilot (assurance/04-hardware/spice/predictions.md,
+    #510; synthetic, no credit). Not yet in the SG-07 fault tree (fta-fmea-map not_in_fta, tree gap).
+- id: DFM-023
+  element: DFM-SE-006
+  function: DFM-FN-005
+  failure_mode: Camera-side termination shorted in intercept
+  guideword: short
+  effects:
+  - level: local
+    description: R7 or R8 short ties camera CAN2_H to CAN2_L, so the camera bus is held recessive in intercept
+  - level: next_higher
+    description: No camera frames reach the device, so stock PCS messages are not forwarded to the car
+  - level: end
+    description: Stock AEB unavailable
+    hazard: HZ-011
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-023.C1
+    description: Termination resistor R7 or R8 short (FMEDA SG-009 FMD-036); pass-through is not affected (R7/R8 are on the NO side)
+    element: DFM-SE-006
+    prevention_controls:
+    - description: COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02)
+      ref: assurance/04-hardware/WP-H-02-hardware-design.md
+    detection_controls:
+    - description: No LionDriver hardware verification or qualification test exists for this cause; VS-HW-24 (e) checks the opens only
+        (WP-H-06 v0.13)
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-014
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: 'None: the device checks only car-side messages for timeouts, so a silent camera bus is not flagged'
+      system_response: None
+      effect_after_response: 'Unchanged: stock PCS messages are lost while in intercept'
+      severity_after: 10
+      frequency: 3
+      monitoring: 10
+      ap: H
+      timing:
+        basis: unknown
+      fmeda: fmeda-sg009/FMD-036
+      actions:
+      - DFM-ACT-014
+  safety_mechanisms:
+  - description: 'None: RX checks cover car-side messages only'
+    ref: assurance/08-analyses/fmea/analyses/fmeda-sg009.yaml
+  notes: Added after BL-007 from FMEDA SG-009 rev 0.9 (FMD-C-014). Not yet in the SG-07 fault tree (fta-fmea-map not_in_fta, tree gap).
 actions:
 - id: DFM-ACT-001
   kind: prevention
@@ -1490,7 +1596,8 @@ actions:
   kind: detection
   description: 'Bench-test the harness box failure behaviour (RR-2026-010): box unpowered with car and camera powered; R2/R3 forced
     open with the device silent; supply at 14-16 V against the DG419LE ratings; pass-through signal integrity; clamp-diode short
-    on CAN0; confirm the shipped box matches the v3 drawing (VS-HW-02). The decided route for the harness box (DQ-209 option A,
+    on CAN0; camera-side termination R7/R8 lifted in intercept (VS-HW-24 (e), DFM-022); confirm the shipped box matches the v3
+    drawing (VS-HW-02). The decided route for the harness box (DQ-209 option A,
     2026-10-16); procedures in WP-H-06 §3.1'
   owner: Jherrod Thomas
   status: open
