@@ -464,7 +464,7 @@
   mechanism: "TMO"
   timing: "detect ≤ 0.2 s / react ≤ 0.1 s"
   verification: "T-SIL, T-HIL, FI"
-  baseline_impl: "**Met for the four Toyota RX checks, not yet verified on hardware** (opendbc `aff4033`, panda `9f60e17`): lag after 5 nominal periods (`safety_config.rx_timeout_periods`, `modes/toyota.h`), evaluated at 100 Hz in the panda safety task, so detection ≤ 0.16 s. In the reference build `0x262` (25 Hz) and `0x1D3` (33 Hz) are also RX checks (opendbc `98404a4`; nominal rates from openpilot's former CAN parser minimums, to be measured, WP-S-05 OI-7). `0xB4` is not in the RX set: no nominal rate known (IA RX timeout (assurance/07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md) §8)"
+  baseline_impl: "**Met for the four Toyota RX checks, not yet verified on hardware** (opendbc `aff4033`, panda `9f60e17`): lag after 5 nominal periods (`safety_config.rx_timeout_periods`, `modes/toyota.h`), evaluated at 100 Hz in the panda safety task, so detection ≤ 0.162 s. In the reference build `0x262` (25 Hz) and `0x1D3` (33 Hz) are also RX checks (opendbc `98404a4`; nominal rates from openpilot's former CAN parser minimums, to be measured, WP-S-05 OI-7). `0xB4` is not in the RX set: no nominal rate known (IA RX timeout (assurance/07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md) §8)"
   status: proposed
   source: WP-S-02
 

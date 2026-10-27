@@ -466,11 +466,11 @@ MODEL: dict[str, dict] = {
     hazard="H-03 unintended acceleration",
     budget=dict(
       row="SG-03, SG-04",
-      src=[('SG-03, SG-04', 'as SG-01 detection'), ('SG-01 (RX loss/corruption)', '≤ 0.16 s')],
-      today=0.16,
+      src=[('SG-03, SG-04', 'as SG-01 detection'), ('SG-01 (RX loss/corruption)', '≤ 0.162 s')],
+      today=0.162,
       scale=1.2,
       ticks=[0, 0.4, 0.8, 1.2],
-      today_label="≤ 0.16 s, reference build, not verified",
+      today_label="≤ 0.162 s, reference build, not verified",
     ),
     scene=dict(
       STOPPED,
@@ -485,12 +485,12 @@ MODEL: dict[str, dict] = {
       ticks=[0, 0.4, 0.8, 1.2],
       lanes=[
         ("fault", "fault", 0.0, "input lost or corrupt"),
-        ("detected", "detect", 0.16, "RX check ≤ 0.16 s"),
-        ("safe state", "react", 0.16, "authority revoked"),
+        ("detected", "detect", 0.162, "RX check ≤ 0.162 s"),
+        ("safe state", "react", 0.162, "authority revoked"),
       ],
     ),
     must="Detect a lost, corrupt, repeated or stale input within 0.5 s and bring acceleration to zero within the 1 s FTTI.",
-    today="Detection is as for SG-01. Since opendbc de80b63 the RX checks revoke within 0.16 s, not yet verified on hardware; the "
+    today="Detection is as for SG-01. Since opendbc de80b63 the RX checks revoke within 0.162 s, not yet verified on hardware; the "
     "baseline took 1–2 s (GAP-06).",
     chips=["FSR-01.06"],
   ),
@@ -500,11 +500,11 @@ MODEL: dict[str, dict] = {
     hazard="H-04 unintended braking",
     budget=dict(
       row="SG-03, SG-04",
-      src=[('SG-03, SG-04', 'as SG-01 detection'), ('SG-01 (RX loss/corruption)', '≤ 0.16 s')],
-      today=0.16,
+      src=[('SG-03, SG-04', 'as SG-01 detection'), ('SG-01 (RX loss/corruption)', '≤ 0.162 s')],
+      today=0.162,
       scale=1.2,
       ticks=[0, 0.4, 0.8, 1.2],
-      today_label="≤ 0.16 s, reference build, not verified",
+      today_label="≤ 0.162 s, reference build, not verified",
     ),
     scene=dict(
       kind="lon",
@@ -524,12 +524,12 @@ MODEL: dict[str, dict] = {
       ticks=[0, 0.4, 0.8, 1.2],
       lanes=[
         ("fault", "fault", 0.0, "input lost or corrupt"),
-        ("detected", "detect", 0.16, "RX check ≤ 0.16 s"),
-        ("safe state", "react", 0.16, "ACC inactive"),
+        ("detected", "detect", 0.162, "RX check ≤ 0.162 s"),
+        ("safe state", "react", 0.162, "ACC inactive"),
       ],
     ),
     must="Detect a lost or corrupt input within 0.5 s and end the braking command, with bounded jerk, within the 1 s FTTI.",
-    today="Same detection as SG-03: within 0.16 s in the reference build, not yet verified on hardware (GAP-06). The envelope has no "
+    today="Same detection as SG-03: within 0.162 s in the reference build, not yet verified on hardware (GAP-06). The envelope has no "
     "jerk limit, so any in-bound step passes.",
     chips=["FSR-01.06"],
   ),

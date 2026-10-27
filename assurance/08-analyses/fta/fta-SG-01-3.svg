@@ -81,7 +81,7 @@
 <text x="290" y="813.0" class="d">pressed" (no checksum, no</text>
 <text x="290" y="828.0" class="d">counter, timeout ≈2 s; GAP-01,</text>
 <text x="290" y="843.0" class="d">GAP-06). 2026-10-12: loss</text>
-<text x="290" y="858.0" class="d">detected ≤ 0.16 s (5 periods,</text>
+<text x="290" y="858.0" class="d">detected ≤ 0.162 s (5 periods,</text>
 <text x="290" y="873.0" class="d">100 Hz; WP-S-04 T-01); stuck</text>
 <text x="290" y="888.0" class="d">undetected</text>
 <rect x="290.0" y="896.0" width="51.2" height="17" rx="4" fill="none" stroke="#e1e0d9"/>
