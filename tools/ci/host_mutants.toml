@@ -237,3 +237,39 @@ replace = "REFERENCE_EXCLUDED_PROCS = (\"joystick\", \"maneuversd\")"
 tests = ["openpilot/system/manager/test/test_reference_build.py"]
 fmea = ["SWF-049.C1"]
 why = "lateral_maneuversd, the publisher of lateralManeuverPlan, stays in the reference build"
+# test-only environment switches in the reference build on the device (reference_env.py, manager.py)
+[[mutants]]
+id = "RE-1"
+file = "openpilot/system/manager/reference_env.py"
+find = "  if not (reference_build and on_device):"
+replace = "  if True:"
+tests = ["openpilot/system/manager/test/test_reference_env.py"]
+fmea = ["SWF-028.C2", "SWF-030.C2"]
+why = "nothing is removed, so REPLAY, STARTED or BOARDD_SKIP_FW_CHECK reach the processes again"
+
+[[mutants]]
+id = "RE-2"
+file = "openpilot/system/manager/reference_env.py"
+find = "  if not (reference_build and on_device):"
+replace = "  if not (reference_build or on_device):"
+tests = ["openpilot/system/manager/test/test_reference_env.py"]
+fmea = ["SWF-028.C2", "SWF-030.C2"]
+why = "the switches are removed on a PC as well, which breaks the simulator and replay instead of guarding the car"
+
+[[mutants]]
+id = "RE-3"
+file = "openpilot/system/manager/reference_env.py"
+find = "  for name in removed:\n    del environ[name]"
+replace = "  for name in removed[1:]:\n    del environ[name]"
+tests = ["openpilot/system/manager/test/test_reference_env.py"]
+fmea = ["SWF-028.C2", "SWF-030.C2"]
+why = "one switch is reported removed but stays set"
+
+[[mutants]]
+id = "RE-4"
+file = "openpilot/system/manager/manager.py"
+find = "  removed = remove_test_switches(os.environ, REFERENCE_BUILD, not PC)"
+replace = "  removed = []"
+tests = ["openpilot/system/manager/test/test_reference_env.py"]
+fmea = ["SWF-028.C2", "SWF-030.C2"]
+why = "manager does not call the guard"

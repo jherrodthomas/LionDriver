@@ -1,32 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1514" viewBox="0 0 1280 1514" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1546" viewBox="0 0 1280 1546" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-13. SW FMEA detection evidence</title>
-  <desc id="d">SW FMEA (SWF rev 1.10): 149 causes by the evidence behind their detection rating: proven 33, targeted 20, generic 22, not run 1, hardware 8, none 65. One row per element, and the 37 cited test files with how CI treats each (1 not run in CI).</desc>
+  <desc id="d">SW FMEA (SWF rev 1.11): 149 causes by the evidence behind their detection rating: proven 35, targeted 20, generic 22, not run 1, hardware 8, none 63. One row per element, and the 38 cited test files with how CI treats each (1 not run in CI).</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
     <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
     <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
   </defs>
-  <rect width="1280" height="1514" fill="#FFFFFF"/>
+  <rect width="1280" height="1546" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-13 · SW FMEA — what each detection rating rests on</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.10 · BL-007 · draft · is the cited test run in CI, only on hardware, or not run at all</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.11 · BL-007 · draft · is the cited test run in CI, only on hardware, or not run at all</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
   <text x="40" y="104" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">ALL CAUSES BY WHAT THEIR DETECTION RATING RESTS ON</text>
-  <rect x="40" y="114" width="265.8" height="22" fill="#2E9E6A"/>
-  <text x="172.9" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">33</text>
-  <rect x="305.8" y="114" width="161.1" height="22" fill="#0F766E"/>
-  <text x="386.3" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">20</text>
-  <rect x="466.8" y="114" width="177.2" height="22" fill="#94A3B8"/>
-  <text x="555.4" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">22</text>
-  <rect x="644" y="114" width="8.1" height="22" fill="#C2410C"/>
-  <rect x="652.1" y="114" width="64.4" height="22" fill="#6D5BD0"/>
-  <text x="684.3" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">8</text>
-  <rect x="716.5" y="114" width="523.5" height="22" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
-  <text x="978.3" y="129" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle">65</text>
+  <rect x="40" y="114" width="281.9" height="22" fill="#2E9E6A"/>
+  <text x="180.9" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">35</text>
+  <rect x="321.9" y="114" width="161.1" height="22" fill="#0F766E"/>
+  <text x="402.4" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">20</text>
+  <rect x="483" y="114" width="177.2" height="22" fill="#94A3B8"/>
+  <text x="571.5" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">22</text>
+  <rect x="660.1" y="114" width="8.1" height="22" fill="#C2410C"/>
+  <rect x="668.2" y="114" width="64.4" height="22" fill="#6D5BD0"/>
+  <text x="700.4" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">8</text>
+  <rect x="732.6" y="114" width="507.4" height="22" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+  <text x="986.3" y="129" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle">63</text>
   <rect x="40" y="145" width="13" height="13" fill="#2E9E6A" rx="2"/>
-  <text x="59" y="156" font-size="10.5" fill="#0F172A">Test run in CI, D 1–4 (rated as proven: mutation or fault injection) · 33</text>
+  <text x="59" y="156" font-size="10.5" fill="#0F172A">Test run in CI, D 1–4 (rated as proven: mutation or fault injection) · 35</text>
   <rect x="440.5" y="145" width="13" height="13" fill="#0F766E" rx="2"/>
   <text x="459.5" y="156" font-size="10.5" fill="#0F172A">Targeted test run in CI, not proven (D 5–8) · 20</text>
   <rect x="724.3" y="145" width="13" height="13" fill="#94A3B8" rx="2"/>
@@ -36,7 +36,7 @@
   <rect x="40" y="163" width="13" height="13" fill="#6D5BD0" rx="2"/>
   <text x="59" y="174" font-size="10.5" fill="#0F172A">Test runs only on a device or HITL rig · 8</text>
   <rect x="294.2" y="163" width="13" height="13" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2" rx="2"/>
-  <text x="313.2" y="174" font-size="10.5" fill="#0F172A">No test cited · 65</text>
+  <text x="313.2" y="174" font-size="10.5" fill="#0F172A">No test cited · 63</text>
   <line x1="40" y1="196" x2="1240" y2="196" stroke="#E2E8F0" stroke-width="1"/>
   <text x="40" y="218" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">CAUSES PER ELEMENT</text>
   <text x="640" y="218" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">CITED TEST FILES · HOW CI TREATS THEM · CAUSES CITING</text>
@@ -138,9 +138,9 @@
   <text x="404" y="543" font-size="9.5" fill="#475569">4</text>
   <text x="40" y="562" font-size="10" fill="#0F172A" font-weight="700">SE-026</text>
   <text x="86" y="562" font-size="10" fill="#475569">Launcher and firmware check</text>
-  <rect x="340" y="552" width="12" height="14" fill="#6D5BD0" rx="2"><title>SWF-027.C2 D9 AP H: openpilot/selfdrive/pandad/tests/test_pandad.py (skipped off device)</title></rect>
-  <rect x="355" y="552" width="12" height="14" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2" rx="2"><title>SWF-028.C1 D10 AP H: no test cited</title></rect>
-  <rect x="370" y="552" width="12" height="14" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2" rx="2"><title>SWF-028.C2 D10 AP H: no test cited</title></rect>
+  <rect x="340" y="552" width="12" height="14" fill="#2E9E6A" rx="2"><title>SWF-028.C2 D4 AP L: openpilot/system/manager/test/test_reference_env.py (unit test, collected by tools/test_runner.py)</title></rect>
+  <rect x="355" y="552" width="12" height="14" fill="#6D5BD0" rx="2"><title>SWF-027.C2 D9 AP H: openpilot/selfdrive/pandad/tests/test_pandad.py (skipped off device)</title></rect>
+  <rect x="370" y="552" width="12" height="14" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2" rx="2"><title>SWF-028.C1 D10 AP H: no test cited</title></rect>
   <text x="389" y="563" font-size="9.5" fill="#475569">3</text>
   <text x="40" y="582" font-size="10" fill="#0F172A" font-weight="700">SE-031</text>
   <text x="86" y="582" font-size="10" fill="#475569">Engagement state machine</text>
@@ -149,12 +149,12 @@
   <text x="374" y="583" font-size="9.5" fill="#475569">2</text>
   <text x="40" y="602" font-size="10" fill="#0F172A" font-weight="700">SE-032</text>
   <text x="86" y="602" font-size="10" fill="#475569">Input sampling and event generation</text>
-  <rect x="340" y="592" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-031.C2 D8 AP H: openpilot/selfdrive/selfdrived/tests/test_state_machine.py (unit test, collected by tools/test_runner.py)</title></rect>
-  <rect x="355" y="592" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-032.C3 D8 AP H: openpilot/selfdrive/selfdrived/tests/test_supervision.py (unit test, collected by tools/test_runner.py)</title></rect>
-  <rect x="370" y="592" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-034.C1 D8 AP H: openpilot/selfdrive/selfdrived/tests/test_supervision.py (unit test, collected by tools/test_runner.py)</title></rect>
-  <rect x="385" y="592" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-091.C2 D8 AP H: openpilot/selfdrive/selfdrived/tests/test_vehicle_dtc_entry.py (unit test, collected by tools/test_runner.py)</title></rect>
-  <rect x="400" y="592" width="12" height="14" fill="#94A3B8" rx="2"><title>SWF-032.C1 D10 AP H: openpilot/selfdrive/selfdrived/tests/test_supervision.py (unit test, collected by tools/test_runner.py)</title></rect>
-  <rect x="415" y="592" width="12" height="14" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2" rx="2"><title>SWF-030.C2 D10 AP H: no test cited</title></rect>
+  <rect x="340" y="592" width="12" height="14" fill="#2E9E6A" rx="2"><title>SWF-030.C2 D4 AP L: openpilot/system/manager/test/test_reference_env.py (unit test, collected by tools/test_runner.py)</title></rect>
+  <rect x="355" y="592" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-031.C2 D8 AP H: openpilot/selfdrive/selfdrived/tests/test_state_machine.py (unit test, collected by tools/test_runner.py)</title></rect>
+  <rect x="370" y="592" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-032.C3 D8 AP H: openpilot/selfdrive/selfdrived/tests/test_supervision.py (unit test, collected by tools/test_runner.py)</title></rect>
+  <rect x="385" y="592" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-034.C1 D8 AP H: openpilot/selfdrive/selfdrived/tests/test_supervision.py (unit test, collected by tools/test_runner.py)</title></rect>
+  <rect x="400" y="592" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-091.C2 D8 AP H: openpilot/selfdrive/selfdrived/tests/test_vehicle_dtc_entry.py (unit test, collected by tools/test_runner.py)</title></rect>
+  <rect x="415" y="592" width="12" height="14" fill="#94A3B8" rx="2"><title>SWF-032.C1 D10 AP H: openpilot/selfdrive/selfdrived/tests/test_supervision.py (unit test, collected by tools/test_runner.py)</title></rect>
   <rect x="430" y="592" width="12" height="14" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2" rx="2"><title>SWF-031.C1 D10 AP H: no test cited</title></rect>
   <rect x="445" y="592" width="12" height="14" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2" rx="2"><title>SWF-032.C2 D10 AP H: no test cited</title></rect>
   <rect x="460" y="592" width="12" height="14" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2" rx="2"><title>SWF-033.C2 D10 AP H: no test cited</title></rect>
@@ -472,24 +472,28 @@
   <text x="1240" y="1267" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
   <text x="732" y="1280" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="1288" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1298.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1299" font-size="10" fill="#0F172A" font-weight="600">panda/tests/engaged_mismatch/test_engaged_mismatch.py</text>
-  <text x="1240" y="1299" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
-  <text x="732" y="1312" font-size="9.5" fill="#475569" font-style="italic">panda suite engaged_mismatch, run by safety.yaml</text>
+  <text x="732" y="1299" font-size="10" fill="#0F172A" font-weight="600">system/manager/test/test_reference_env.py</text>
+  <text x="1240" y="1299" font-size="10" fill="#475569" font-weight="700" text-anchor="end">2</text>
+  <text x="732" y="1312" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="1320" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1330.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1331" font-size="10" fill="#0F172A" font-weight="600">panda/tests/heartbeat_monitor/test_heartbeat_monitor.py</text>
+  <text x="732" y="1331" font-size="10" fill="#0F172A" font-weight="600">panda/tests/engaged_mismatch/test_engaged_mismatch.py</text>
   <text x="1240" y="1331" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
-  <text x="732" y="1344" font-size="9.5" fill="#475569" font-style="italic">panda suite heartbeat_monitor, run by safety.yaml</text>
+  <text x="732" y="1344" font-size="9.5" fill="#475569" font-style="italic">panda suite engaged_mismatch, run by safety.yaml</text>
   <rect x="640" y="1352" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1362.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1363" font-size="10" fill="#0F172A" font-weight="600">panda/tests/heartbeat_siren/test_heartbeat_siren.py</text>
+  <text x="732" y="1363" font-size="10" fill="#0F172A" font-weight="600">panda/tests/heartbeat_monitor/test_heartbeat_monitor.py</text>
   <text x="1240" y="1363" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
-  <text x="732" y="1376" font-size="9.5" fill="#475569" font-style="italic">panda suite heartbeat_siren, run by safety.yaml</text>
+  <text x="732" y="1376" font-size="9.5" fill="#475569" font-style="italic">panda suite heartbeat_monitor, run by safety.yaml</text>
   <rect x="640" y="1384" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1394.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1395" font-size="10" fill="#0F172A" font-weight="600">panda/tests/reference_lock/test_reference_lock.py</text>
-  <text x="1240" y="1395" font-size="10" fill="#475569" font-weight="700" text-anchor="end">8</text>
-  <text x="732" y="1408" font-size="9.5" fill="#475569" font-style="italic">panda suite reference_lock, run by safety.yaml</text>
-  <line x1="40" y1="1426" x2="1240" y2="1426" stroke="#E2E8F0" stroke-width="1"/>
-  <text x="40" y="1446" font-size="10" fill="#475569">Each square is one cause, coloured by its strongest cited test (detection_controls[].test) and its D rating; hover for the cause and its tests. How CI treats a file is worked out from the repository, not from the analysis text:</text>
-  <text x="40" y="1461" font-size="10" fill="#475569">unit tests need a unittest TestCase that tools/test_runner.py collects; COMMA_HARDWARE_TEST or a device skip means hardware only; panda suites count when safety.yaml runs them; opendbc safety tests and files named in a workflow count as CI.</text>
-  <text x="40" y="1476" font-size="10" fill="#475569">Green means the D rating claims proof, not that this figure checked the proof. A test run in CI says nothing about whether it would fail on the fault.</text>
-  <text x="40" y="1494" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml, .github/workflows/, tools/test_runner.py. Edit the YAML and regenerate; do not edit this file.</text>
+  <text x="732" y="1395" font-size="10" fill="#0F172A" font-weight="600">panda/tests/heartbeat_siren/test_heartbeat_siren.py</text>
+  <text x="1240" y="1395" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
+  <text x="732" y="1408" font-size="9.5" fill="#475569" font-style="italic">panda suite heartbeat_siren, run by safety.yaml</text>
+  <rect x="640" y="1416" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1426.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
+  <text x="732" y="1427" font-size="10" fill="#0F172A" font-weight="600">panda/tests/reference_lock/test_reference_lock.py</text>
+  <text x="1240" y="1427" font-size="10" fill="#475569" font-weight="700" text-anchor="end">8</text>
+  <text x="732" y="1440" font-size="9.5" fill="#475569" font-style="italic">panda suite reference_lock, run by safety.yaml</text>
+  <line x1="40" y1="1458" x2="1240" y2="1458" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="1478" font-size="10" fill="#475569">Each square is one cause, coloured by its strongest cited test (detection_controls[].test) and its D rating; hover for the cause and its tests. How CI treats a file is worked out from the repository, not from the analysis text:</text>
+  <text x="40" y="1493" font-size="10" fill="#475569">unit tests need a unittest TestCase that tools/test_runner.py collects; COMMA_HARDWARE_TEST or a device skip means hardware only; panda suites count when safety.yaml runs them; opendbc safety tests and files named in a workflow count as CI.</text>
+  <text x="40" y="1508" font-size="10" fill="#475569">Green means the D rating claims proof, not that this figure checked the proof. A test run in CI says nothing about whether it would fail on the fault.</text>
+  <text x="40" y="1526" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml, .github/workflows/, tools/test_runner.py. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>

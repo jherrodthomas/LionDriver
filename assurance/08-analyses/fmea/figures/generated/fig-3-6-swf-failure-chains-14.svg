@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="820" viewBox="0 0 1280 820" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-6. SW FMEA failure chains — sheet 14 of 14 (SWF)</title>
-  <desc id="d">SW FMEA failure chains, sheet 14 of 14 (SWF rev 1.10): failure modes SWF-080 to SWF-084 (4 failure modes, 5 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <desc id="d">SW FMEA failure chains, sheet 14 of 14 (SWF rev 1.11): failure modes SWF-080 to SWF-084 (4 failure modes, 5 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,7 +9,7 @@
   </defs>
   <rect width="1280" height="820" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-6 · SW FMEA failure chains — sheet 14 of 14</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.10 · BL-007 · draft · SWF-080 … SWF-084 · 5 causes on this sheet</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.11 · BL-007 · draft · SWF-080 … SWF-084 · 5 causes on this sheet</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -93,7 +93,7 @@
   <text x="885" y="416.8" font-size="10.5" fill="#0F172A">leaves proc None, so shouldBeRunning is false and no event fires</text>
   <text x="885" y="430.9" font-size="10.5" fill="#0F172A">(manager.py:110-112; process.py:121-129)</text>
   <text x="885" y="444" font-size="9.8" fill="#475569" font-weight="600">O2 · D9 · in SWF-SE-140</text>
-  <rect x="885" y="450" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="460.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-070 open</text>
+  <rect x="885" y="450" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="460.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-070 in progress</text>
   <rect x="520" y="505.1" width="326" height="56.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
   <text x="529" y="524.6" font-size="12" fill="#0F172A" font-weight="700">SWF-083</text>
   <rect x="593.9" y="513.6" width="25.2" height="15" rx="7.5" fill="#C2410C"/><text x="606.5" y="524.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S8</text>
@@ -106,7 +106,7 @@
   <text x="885" y="521.1" font-size="10.5" fill="#0F172A">By design manager has no restart policy or process watchdog</text>
   <text x="885" y="535.2" font-size="10.5" fill="#0F172A">(process.py:142-154, 223-238)</text>
   <text x="885" y="548.3" font-size="9.8" fill="#475569" font-weight="600">O8 · D9 · in SWF-SE-140</text>
-  <rect x="885" y="554.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="565.2" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-070 open</text>
+  <rect x="885" y="554.3" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="565.2" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-070 in progress</text>
   <rect x="40" y="632.6" width="180" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="49" y="652.1" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-150</text>
   <text x="49" y="666.6" font-size="10.5" fill="#0F172A" font-weight="600">Software update (updated)</text>
@@ -142,7 +142,8 @@
   <rect x="179.4" y="750.6" width="36.5" height="15" rx="7.5" fill="#0F766E"/><text x="197.7" y="761.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP L</text>
   <text x="223.9" y="761.6" font-size="10.5" fill="#0F172A">Action Priority as rated (rating-tables §5)</text>
   <rect x="455.4" y="750.6" width="59.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="485" y="761.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">ACT open</text>
-  <text x="522.7" y="761.6" font-size="10.5" fill="#0F172A">action status (step 6)</text>
+  <rect x="518.7" y="750.6" width="90.4" height="15" rx="7.5" fill="#D97706"/><text x="563.9" y="761.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">ACT in progress</text>
+  <text x="617.1" y="761.6" font-size="10.5" fill="#0F172A">action status (step 6)</text>
   <text x="40" y="781.6" font-size="10" fill="#475569">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
   <text x="40" y="799.6" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>

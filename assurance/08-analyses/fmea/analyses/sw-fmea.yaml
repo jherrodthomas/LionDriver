@@ -121,6 +121,10 @@
 #   SWF-062.C1, SWF-067.C1, SWF-091.C2, SWF-093.C1 (the controlsd and selfdrived call sites). Corrected: the opendbc Toyota car tests run in the
 #   unit_tests job, so SWF-093.C2 D 9 -> 8 and SWF-046.C1's note. SWF-ACT-078 completed; SWF-ACT-080, -081 in progress. The System FMEA
 #   re-inherits SFM-009.C4 and SFM-038.C1 (D 4).
+# rev 1.11 (after BL-007, ratings within BL-007): DQ-425 A (decider Claude) makes manager remove ten test-only environment switches on the device in
+#   the reference build before it starts any process (system/manager/reference_env.py; change-2026-10-27-reference-test-switches), with a test in CI
+#   proven by mutants RE-1..RE-4. SWF-028.C2 and SWF-030.C2 O2 D10 -> O2 D4, AP H -> L. SWF-058.C2 and SWF-082.C1 keep their ratings (FINGERPRINT and
+#   BLOCK are removed, the VIN-cache reuse and an unreported process that never starts remain). SWF-ACT-028, -031, -057, -070 in progress.
 # Post rev 1.4, FTA WP-A-04 v1.12 (BE-1.25 in the SG-04 tree), ratings unchanged: SWF-055 and SWF-089 gain HZ-006 end effects (an authority
 #   grant covers longitudinal commands, as SWF-007). SWF-002 stays steering-only (HZ-001); its note says why HZ-006 and HZ-010 do not apply.
 #
@@ -170,7 +174,7 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.10"
+  revision: "1.11"
   status: draft
   baseline: BL-007
   rating_tables: RT-2
@@ -2480,22 +2484,31 @@ failure_modes:
     actions:
     - SWF-ACT-028
   - id: SWF-028.C2
-    description: 'Test hooks are read from the environment in the production binary. BOARDD_SKIP_FW_CHECK skips the firmware check (pandad.cc:52), STARTED spoofs
-      ignition so the car mode is kept with ignition off (pandad.cc:223-225), FAKESEND drops TX, and SPI_ERR_PROB corrupts transfers (spi.cc:280)'
+    description: 'Test hooks are read from the environment in the production binary: BOARDD_SKIP_FW_CHECK skips the firmware check (pandad.cc:52), STARTED spoofs
+      ignition so the car mode is kept with ignition off (pandad.cc:223-225), FAKESEND drops TX, and SPI_ERR_PROB corrupts transfers (spi.cc:280). Since
+      DQ-425 A (after BL-007) manager removes them on the device in the reference build, so the remaining cause is a defect in that guard, a new hook not in
+      its list, or pandad started outside manager'
     element: SWF-SE-026
     prevention_controls:
+    - description: 'Reference build on the device (DQ-425 A, after BL-007): manager removes the test-only switches from its environment before it starts
+        any process and logs the ones it removed (system/manager/reference_env.py); every process it starts inherits that environment. A process started by
+        hand from a shell bypasses it (cybersecurity, CSG-03)'
+      ref: openpilot/system/manager/reference_env.py
     - description: No launch path sets these variables (grep over launch scripts, manager and tests; only tests set SPI_ERR_PROB and BOARDD_LOOPBACK). Setting them
         needs a shell on the device, which is a cybersecurity and PFMEA concern
       ref: openpilot/system/manager/process_config.py
     detection_controls:
-    - description: No test targets this cause
+    - description: 'test_reference_env.py (6 tests: each switch removed, PC and non-reference builds unchanged, removed before BLOCK is read and before any
+        process starts, each switch still read somewhere) in the CI unit_tests job, proven by mutants RE-1..RE-4 (tools/ci/host_mutation.py); D 4'
+      test: openpilot/system/manager/test/test_reference_env.py
+      ref: tools/ci/host_mutants.toml
     occurrence: 2
-    detection: 10
-    ap: H
+    detection: 4
+    ap: L
     actions:
     - SWF-ACT-028
-    rationale: The occurrence is credited to process (no launch path sets the hooks). Removing them from release builds (SWF-ACT-028) is the planned treatment, and
-      the residual risk is carried by the TARA and the PFMEA.
+    rationale: The occurrence is credited to process (no launch path sets the hooks). O2 D10 AP H up to rev 1.10; D 4 (AP L) in rev 1.11 once the guard and its
+      mutation-proven test are in CI. The residual (a shell on the device) is carried by the TARA and the PFMEA.
 - id: SWF-029
   element: SWF-SE-024
   function: SWF-FN-023
@@ -2580,16 +2593,24 @@ failure_modes:
   - id: SWF-030.C2
     description: 'Test-only environment flags reach the vehicle: REPLAY sets the state to enabled when a panda reports controlsAllowed, bypassing ENABLE/NO_ENTRY
       (selfdrived.py:496-497); SIMULATION ignores cabinCameraState and managerState and makes every SubMaster alive/freq check pass once seen (selfdrived.py:88-89;
-      cereal/messaging/__init__.py:211,265-266)'
+      cereal/messaging/__init__.py:211,265-266). Since DQ-425 A (after BL-007) manager removes REPLAY, SIMULATION and TESTING_CLOSET on the device in the
+      reference build; the remaining cause is a defect in that guard or selfdrived started outside manager'
     element: SWF-SE-032
     prevention_controls:
+    - description: 'Reference build on the device (DQ-425 A, after BL-007): manager removes the test-only switches from its environment before it starts
+        any process and logs the ones it removed (system/manager/reference_env.py); every process it starts inherits that environment. A process started by
+        hand from a shell bypasses it (cybersecurity, CSG-03)'
+      ref: openpilot/system/manager/reference_env.py
     - description: Neither flag is set by the launch scripts or the manager (launch_*.sh, system/manager); nothing refuses to run or engage with them set
       ref: openpilot/selfdrive/selfdrived/selfdrived.py:29-31
     detection_controls:
-    - description: No test targets this cause
+    - description: 'test_reference_env.py (6 tests: each switch removed, PC and non-reference builds unchanged, removed before BLOCK is read and before any
+        process starts, each switch still read somewhere) in the CI unit_tests job, proven by mutants RE-1..RE-4 (tools/ci/host_mutation.py); D 4'
+      test: openpilot/system/manager/test/test_reference_env.py
+      ref: tools/ci/host_mutants.toml
     occurrence: 2
-    detection: 10
-    ap: H
+    detection: 4
+    ap: L
     actions:
     - SWF-ACT-031
   safety_mechanisms:
@@ -4123,7 +4144,8 @@ failure_modes:
       (car_helpers.py:93-98, 140-142)
     element: SWF-SE-052
     prevention_controls:
-    - description: No launch path sets FINGERPRINT; the cache is upstream behaviour
+    - description: No launch path sets FINGERPRINT; the cache is upstream behaviour. Since DQ-425 A (after BL-007) manager removes FINGERPRINT on the device in the
+        reference build (test_reference_env.py, mutants RE-1..RE-4); the VIN-cache reuse is unchanged, so O and D are kept
       ref: opendbc_repo/opendbc/car/car_helpers.py
     detection_controls:
     - description: No test targets this cause
@@ -5312,7 +5334,8 @@ failure_modes:
     description: The BLOCK environment variable or a process that never starts leaves proc None, so shouldBeRunning is false and no event fires (manager.py:110-112; process.py:121-129)
     element: SWF-SE-140
     prevention_controls:
-    - description: No launch path sets BLOCK; setting it needs a shell on the device
+    - description: No launch path sets BLOCK; setting it needs a shell on the device. Since DQ-425 A (after BL-007) manager removes BLOCK on the device in the
+        reference build before reading it (test_reference_env.py); a process that never starts for another reason is still not reported, so O and D are kept
       ref: openpilot/system/manager/manager.py
     detection_controls:
     - description: test_manager.py (CI) checks blacklisted processes do not start; not designed for the missing report
@@ -6039,7 +6062,7 @@ actions:
   owner: Jherrod Thomas
   status: in_progress
   evidence: 'Reference firmware built by default and the reference-build flag checked before a car mode (#36, #41, TSR-619). Open: check that the panda runs the
-    assured release image (version or signature of the released build, not any reference build), a host test of the check, and compiling out the test hooks'
+    assured release image (version or signature of the released build, not any reference build), a host test of the check, and compiling out the test hooks After BL-007 (DQ-425 A): instead of compiling them out, manager removes BOARDD_SKIP_FW_CHECK, STARTED, FAKESEND, SPI_ERR_PROB and BOARDD_LOOPBACK on the device in the reference build (reference_env.py, mutation-proven test in CI); SWF-028.C2 AP H -> L. The release-image check stays open.'
 - id: SWF-ACT-029
   kind: detection
   description: 'Run the pandad hardware tests (test_pandad.py, test_pandad_spi.py, test_pandad_loopback.py) on a comma 3X before release. While engaged on a bench,
@@ -6064,7 +6087,8 @@ actions:
   description: 'Reference-configuration guard: refuse engagement (permanent NO_ENTRY) when REPLAY, SIMULATION or TESTING_CLOSET is set or the big-model (chestnut)
     path is active, and exclude that path from reference builds (TSR-603, TSR-613)'
   owner: Jherrod Thomas
-  status: open
+  status: in_progress
+  evidence: 'After BL-007 (DQ-425 A): REPLAY, SIMULATION and TESTING_CLOSET removed by manager on the device in the reference build (reference_env.py, mutation-proven test in CI); SWF-030.C2 AP H -> L. Open: the big-model (chestnut) path'
 - id: SWF-ACT-032
   kind: design_change
   description: Supervise carState freshness in selfdrived (age of the last message, at most 2 periods) and raise an immediate disable when it is stale, instead of
@@ -6252,7 +6276,8 @@ actions:
   description: 'Pin the reference identification: accept only an exact FW match to TOYOTA_COROLLA_TSS2 with the expected CarParams for the assured configuration (report a fuzzy
     match through assured_config), ignore FINGERPRINT in release builds, and re-query FW after a VIN-cache hit when an ECU version changed'
   owner: Jherrod Thomas
-  status: open
+  status: in_progress
+  evidence: 'After BL-007 (DQ-425 A): FINGERPRINT removed by manager on the device in the reference build. Open: exact FW match, CarParams check, re-query after a VIN-cache hit'
 - id: SWF-ACT-058
   kind: design_change
   description: 'Driver monitoring robustness: time-based policy timers (monotonic clock), a finiteness and length check of driverStateV2 (non-finite or empty treated as uncertain,
@@ -6342,7 +6367,8 @@ actions:
   description: 'Manager supervision: report every process the configuration needs (including blocked or never started ones) in managerState, ignore BLOCK in release builds,
     and decide whether a crashed safety process may be restarted offroad only. WP-A-03 DFI-25'
   owner: Jherrod Thomas
-  status: open
+  status: in_progress
+  evidence: 'After BL-007 (DQ-425 A): BLOCK removed by manager on the device in the reference build before it is read. Open: report every needed process in managerState, restart policy'
 - id: SWF-ACT-071
   kind: design_change
   description: 'Update integrity: pin the update to signed release tags of the LionDriver repository and verify the signature before finalizing; define rollback (with the PFMEA
