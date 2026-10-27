@@ -60,6 +60,42 @@ tests = ["openpilot/selfdrive/selfdrived/tests/test_minimum_risk.py"]
 fmea = ["SWF-062.C1"]
 why = "the manoeuvre follows the DM request, so a dmonitoringd restart drops it (the BL-006 behaviour)"
 
+[[mutants]]
+id = "MR-4"
+file = "openpilot/selfdrive/controls/controlsd.py"
+find = "                         self.sm['selfdriveState'].minimumRiskManeuver or\n"
+replace = ""
+tests = ["openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py"]
+fmea = ["SWF-062.C1"]
+why = "controlsd recomputes forceDecel from the DM request alone (the BL-006 behaviour), so a dropped request ends the stop"
+
+[[mutants]]
+id = "MR-5"
+file = "openpilot/selfdrive/controls/controlsd.py"
+find = "    CC.driverMonitoringEscalation = cs.forceDecel"
+replace = "    CC.driverMonitoringEscalation = False"
+tests = ["openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py"]
+fmea = ["SWF-062.C1"]
+why = "the forced deceleration is published but never reaches the car"
+
+[[mutants]]
+id = "MR-6"
+file = "openpilot/selfdrive/selfdrived/selfdrived.py"
+find = "      if self.mrm.active:\n"
+replace = "      if False:\n"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_minimum_risk.py"]
+fmea = ["SWF-062.C1"]
+why = "the maneuver alert is not raised while latched, so the stop and the hold go unannounced once DM stops alerting"
+
+[[mutants]]
+id = "MR-7"
+file = "openpilot/selfdrive/monitoring/policy.py"
+find = "    lockout_held = op_engaged and self.no_response_cnt >= self.settings._MAX_NO_RESPONSE"
+replace = "    lockout_held = False"
+tests = ["openpilot/selfdrive/monitoring/test_monitoring.py"]
+fmea = ["SWF-062.C1"]
+why = "the lockout runs during the stop and the hold, so it can end before the driver takes over"
+
 # announcement before the no-response stop (TSR-624; events.py, policy.py)
 [[mutants]]
 id = "AN-1"
@@ -136,6 +172,15 @@ tests = ["openpilot/selfdrive/controls/tests/test_stock_aeb.py"]
 fmea = ["SWF-093.C1"]
 why = "the target is capped but the PID upper limit is not, so a wound-up integrator still drives"
 
+[[mutants]]
+id = "AE-3"
+file = "openpilot/selfdrive/controls/controlsd.py"
+find = "    a_target, pid_accel_limits = stock_aeb_stand_down(CS.stockAeb, a_target, pid_accel_limits)"
+replace = "    pass"
+tests = ["openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py"]
+fmea = ["SWF-093.C1"]
+why = "controlsd does not call the stand-down, so the item keeps requesting drive during a stock AEB event"
+
 # start-up fault-code read (TSR-629, SWSR-629..629d; vehicle_dtc.py, selfdrived.py)
 [[mutants]]
 id = "DT-1"
@@ -200,6 +245,42 @@ tests = ["openpilot/selfdrive/selfdrived/tests/test_vehicle_dtc_entry.py"]
 fmea = ["SWF-091.C2"]
 why = "an active EPS code does not refuse engagement"
 
+[[mutants]]
+id = "DT-11"
+file = "openpilot/selfdrive/selfdrived/selfdrived.py"
+find = "  if \"abs\" in active:\n    events.append(EventName.brakeFaultCode)"
+replace = "  if False:\n    events.append(EventName.brakeFaultCode)"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_vehicle_dtc_entry.py"]
+fmea = ["SWF-091.C2"]
+why = "an active ABS/VSC code does not refuse engagement"
+
+[[mutants]]
+id = "DT-8"
+file = "openpilot/selfdrive/selfdrived/selfdrived.py"
+find = "    self.dtc_entry_events = [] if REPLAY or stock_aeb_interlock.is_simulation() else dtc_entry_events("
+replace = "    self.dtc_entry_events = [] if True else dtc_entry_events("
+tests = ["openpilot/selfdrive/selfdrived/tests/test_selfdrived_start.py"]
+fmea = ["SWF-091.C2"]
+why = "the start-up record is never used, so an active code or a failed read does not refuse engagement"
+
+[[mutants]]
+id = "DT-9"
+file = "openpilot/selfdrive/selfdrived/selfdrived.py"
+find = "    self.dtc_entry_events = [] if REPLAY or stock_aeb_interlock.is_simulation() else dtc_entry_events("
+replace = "    self.dtc_entry_events = [] if REPLAY or SIMULATION else dtc_entry_events("
+tests = ["openpilot/selfdrive/selfdrived/tests/test_selfdrived_start.py"]
+fmea = ["SWF-091.C2"]
+why = "the check is skipped whenever SIMULATION is set, though a vehicle CAN bus is still there without NOBOARD"
+
+[[mutants]]
+id = "DT-10"
+file = "openpilot/selfdrive/car/vehicle_dtc.py"
+find = "      return DtcStatus(False, \"no fault-code record from card\")"
+replace = "      return DtcStatus(True, \"no fault-code record from card\", (EcuDtcResult(\"eps\", OK), EcuDtcResult(\"abs\", OK)))"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_selfdrived_start.py"]
+fmea = ["SWF-091.C2"]
+why = "a missing record counts as a clean read"
+
 # assured-configuration entry gate and settings hold (DQ-221, DQ-403; assured_config.py, selfdrived.py)
 [[mutants]]
 id = "AC-1"
@@ -218,6 +299,42 @@ replace = "    if False:\n      return\n    self.experimental_mode = self.experi
 tests = ["openpilot/selfdrive/selfdrived/tests/test_assured_config.py"]
 fmea = ["SWF-067.C2"]
 why = "a setting changed while engaged takes effect at once (the BL-006 behaviour)"
+
+[[mutants]]
+id = "AC-3"
+file = "openpilot/selfdrive/selfdrived/selfdrived.py"
+find = "    self.reference_platform = self.CP.carFingerprint in assured_config.ASSURED_PLATFORMS"
+replace = "    self.reference_platform = self.CP.carFingerprint not in assured_config.ASSURED_PLATFORMS"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_selfdrived_start.py"]
+fmea = ["SWF-067.C1"]
+why = "the reference platform is not recognised, so none of its entry checks run"
+
+[[mutants]]
+id = "AC-4"
+file = "openpilot/selfdrive/selfdrived/selfdrived.py"
+find = "    if not self.reference_platform:\n      return\n    for event in self.dtc_entry_events:"
+replace = "    if self.reference_platform:\n      return\n    for event in self.dtc_entry_events:"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_assured_config.py"]
+fmea = ["SWF-067.C1"]
+why = "the entry checks run on the other platforms and not on the reference platform"
+
+[[mutants]]
+id = "AC-5"
+file = "openpilot/selfdrive/selfdrived/selfdrived.py"
+find = "    if self.assured_config is not None and not self.assured_config.settings_in_scope:"
+replace = "    if False:"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_assured_config.py"]
+fmea = ["SWF-067.C1"]
+why = "settingNotAssured is never raised, so the item engages outside the assured settings"
+
+[[mutants]]
+id = "AC-6"
+file = "openpilot/selfdrive/selfdrived/selfdrived.py"
+find = "    if self.reference_platform:\n      cloudlog.event(\"distance button ignored: assured configuration\")"
+replace = "    if False:\n      cloudlog.event(\"distance button ignored: assured configuration\")"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_assured_config.py"]
+fmea = ["SWF-067.C1"]
+why = "the distance button changes the following distance on the reference platform"
 
 # debug processes left out of the reference build (DQ-131; process_config.py)
 [[mutants]]

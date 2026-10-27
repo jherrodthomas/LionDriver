@@ -52,7 +52,7 @@ EXPECTED = {
   "VS-SI-09": ("partly", "8-bit XOR residual error not quantified", "no corrupted frame expected; XOR not quantified"),
   "VS-SI-10": ("gap", "Fail (known GAP-10)", "no sequence counter"),
   "VS-SI-11": ("partly", "interrupt-rate fault reaction absent", "rate limit by design; no interrupt-rate reaction"),
-  "VS-SI-12": ("design", "5 nominal periods, ≤ 0.16 s, implemented", "timeout ≤ 0.16 s, not on hardware"),
+  "VS-SI-12": ("design", "5 nominal periods, ≤ 0.162 s, implemented", "timeout ≤ 0.162 s, not on hardware"),
   "VS-SI-13": ("gap", "Fail (known GAP-01)", "only silence is detected"),
   "VS-SI-14": ("meets", "Meets for checksummed messages", "checksum and wheel fault bits revoke"),
   "VS-SI-15": ("partly", "TX violation alone does not revoke", "limits hold; a violation does not revoke"),

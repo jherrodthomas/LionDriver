@@ -806,7 +806,7 @@ class TestFmedaExport(unittest.TestCase):
     self.assertAlmostEqual(m["spfm"], 0.991, places=3)  # WP-H-03 §6.3: 99.1 %, LFM 95.4 %
     self.assertAlmostEqual(m["lfm"], 0.954, places=3)
     m = fmea_lint.fmeda_metrics(fmeda_whatif.scenario_doc(docs["fmeda-sg009"], sets["fmeda-sg009"]), "SG-07")
-    self.assertAlmostEqual(m["spfm"], 0.946, places=3)  # WP-H-03 §6.3: 94.6 %
+    self.assertAlmostEqual(m["spfm"], 0.945, places=3)  # WP-H-03 §6.3: 94.5 %
 
   def test_committed_review_workbooks_current(self):
     import export_fmeda_xlsx

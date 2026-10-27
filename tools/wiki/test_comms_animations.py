@@ -47,6 +47,20 @@ class RecordTests(unittest.TestCase):
     self.assertTrue(C.caught("H3", "CAN CRC", d))
     self.assertTrue(C.caught("H4", "checksum, counter", d))
 
+  def test_the_timeline_verdicts_follow_the_budgets(self):
+    v = {r[0]: C.verdict(r[3], r[4], r[6])[0] for r in C.TIMELINE}
+    self.assertEqual(v["Brake or wheel message stops"], C.GRN)
+    self.assertEqual(v["Main computer's heartbeat stops"], C.AMBER)
+    self.assertEqual(v["panda hangs while forwarding PCS"], C.RED)
+    self.assertEqual(v["Wheel speeds freeze but keep coming"], C.RED)
+
+  def test_a_changed_budget_is_a_problem(self):
+    with tempfile.TemporaryDirectory() as tmp:
+      root = Path(tmp)
+      copy_records(root)
+      edit(root, C.S04, "| SG-01 SoC heartbeat loss | 0.5 s | ≤ 0.3 s (TSR-407) |", "| SG-01 SoC heartbeat loss | 0.5 s | ≤ 0.2 s (TSR-407) |")
+      self.assertTrue(any("heartbeat loss" in e for e in C.problems(root)))
+
   def test_a_reworded_record_is_a_problem(self):
     with tempfile.TemporaryDirectory() as tmp:
       root = Path(tmp)
@@ -75,9 +89,17 @@ class RenderTests(unittest.TestCase):
       self.assertIn("prefers-reduced-motion: reduce", text)
 
   def test_the_gauntlet_shows_the_record_statuses(self):
-    svg = C.render()["comms-e2e.svg"]
-    for k, status in C.data()["status"].items():
+    svg, d = C.render()["comms-e2e.svg"], C.data()
+    gauntlet = {k for h in C.HOPS for _n, k in h[4] if k.startswith("TSR-")}
+    for k, status in ((k, d["status"][k]) for k in sorted(gauntlet)):
       self.assertIn(f"{k} · {C.STATUS[status][4]}", svg)
+
+  def test_the_path_and_timeline_show_the_record_statuses(self):
+    out, d = C.render(), C.data()
+    for k in ("TSR-101", "TSR-410", "TSR-411", "TSR-408", "TSR-518"):
+      self.assertIn(f"{k} · {C.STATUS[d['status'][k]][4]}", out["comms-path.svg"])
+    for r in C.TIMELINE:
+      self.assertIn(f"{r[5]} · {d['status'][r[5]]}", out["comms-timeline.svg"])
 
   def test_the_wiki_build_writes_all_and_accepts_the_embeds(self):
     with tempfile.TemporaryDirectory() as tmp:

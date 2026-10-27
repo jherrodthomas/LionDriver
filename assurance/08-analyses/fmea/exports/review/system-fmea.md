@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.36 | draft | BL-007 | RT-3 | 2026-10-25 |
+| 0.37 | draft | BL-007 | RT-3 | 2026-10-25 |
 
 **Scope.** LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda, software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005; re-checked at BL-006 and BL-007), while the vehicle is driven by a licensed driver inside the ODD: limited-access highways only since WP-C-02 / WP-C-03 v0.4 (DQ-023), up to 110 km/h (DQ-260). Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are preserved), added because the harness intercepts the stock ADAS camera.
 
@@ -629,7 +629,7 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `SFM-025.C1` Defect in the minimum-risk manoeuvre of TSR-633 (#372): the latch in minimum_risk.py not set or cleared while the item is still engaged, controlsd not keeping forceDecel on while selfdriveState.minimumRiskManeuver is set, or the terminal alert not re-raised, so the car resumes or keeps driving with an unresponsive driver. Up to BL-006 the cause was by design: the terminal alerts were ET.PERMANENT only and the forced deceleration was recomputed every DM frame, so a dmonitoringd restart or an awareness reset dropped it | • Lead decision DQ-365 A implemented as TSR-633 (#372, dacd8f7; #374, 59e22e0 for the announcement); new LionDriver code on upstream openpilot, reviewed in the PR only, ruff and ty in CI; O 5 as the other new host code with targeted tests (SW FMEA SWF-062.C1) <sub>openpilot/selfdrive/selfdrived/minimum_risk.py</sub> | • test_minimum_risk.py (the latch), test_monitoring.py (lockout from the takeover) and a test_longitudinal maneuver that stays stopped under forced deceleration while the lead drives off, run by the CI unit_tests job; targeted, not proven by mutation, so D 8. The PCM standstill hold over time (AOU-16) and the stop time are not verified on the vehicle <sub>openpilot/selfdrive/selfdrived/tests/test_minimum_risk.py</sub> | 5 | 8 | 🔴 **H** | SFM-ACT-005 |
+| `SFM-025.C1` Defect in the minimum-risk manoeuvre of TSR-633 (#372): the latch in minimum_risk.py not set or cleared while the item is still engaged, controlsd not keeping forceDecel on while selfdriveState.minimumRiskManeuver is set, or the terminal alert not re-raised, so the car resumes or keeps driving with an unresponsive driver. Up to BL-006 the cause was by design: the terminal alerts were ET.PERMANENT only and the forced deceleration was recomputed every DM frame, so a dmonitoringd restart or an awareness reset dropped it | • Lead decision DQ-365 A implemented as TSR-633 (#372, dacd8f7; #374, 59e22e0 for the announcement); new LionDriver code on upstream openpilot, reviewed in the PR only, ruff and ty in CI; O 5 as the other new host code with targeted tests (SW FMEA SWF-062.C1) <sub>openpilot/selfdrive/selfdrived/minimum_risk.py</sub> | • Proven by mutation in CI after BL-007 (MR-1..MR-7, tools/ci/host_mutation.py), as SWF-062.C1; D 8 -> 4 (System FMEA rev 0.37) <sub>tools/ci/host_mutants.toml</sub><br>• test_minimum_risk.py (the latch), test_monitoring.py (lockout from the takeover) and a test_longitudinal maneuver that stays stopped under forced deceleration while the lead drives off, run by the CI unit_tests job; targeted, not proven by mutation, so D 8. The PCM standstill hold over time (AOU-16) and the stop time are not verified on the vehicle <sub>openpilot/selfdrive/selfdrived/tests/test_minimum_risk.py</sub> | 5 | 4 | 🔴 **H** | SFM-ACT-005 |
 
 Safety mechanisms: (1) Lockout after repeated non-response prevents re-engagement (1/5/15/30 min); since #372 (BL-007) the lockout timer runs from the driver's takeover, not from the start of the stop · (2) BL-007 (#372, TSR-633, DQ-365 A): selfdrived latches the minimum-risk manoeuvre from the first no-response request until the item disengages (minimum_risk.py, selfdriveState.minimumRiskManeuver); controlsd keeps forceDecel on while it is set, so the planner keeps the stop request and the Toyota controller keeps requesting standstill hold, and the terminal alert is re-raised while latched. Since #374 (TSR-624) the stop is announced by a countdown before it starts. Reference platform and all others alike
 
@@ -1010,7 +1010,7 @@ Safety mechanisms: (1) EPS-fault siren from the panda when LKA_STATE reports a f
 | `SFM-022.C4` | Inattentive driver not detected | 10/8/10 | **none** |
 | `SFM-023.C1` | Distraction escalation too slow | 10/6/8 | SFM-ACT-002 |
 | `SFM-023.C2` | Distraction escalation too slow | 10/6/9 | SFM-ACT-002 |
-| `SFM-025.C1` | Terminal driver-unresponsive state does not bring the item to a safe state | 10/5/8 | SFM-ACT-005 |
+| `SFM-025.C1` | Terminal driver-unresponsive state does not bring the item to a safe state | 10/5/4 | SFM-ACT-005 |
 | `SFM-026.C1` | Takeover or disengagement alert not presented | 10/6/10 | SFM-ACT-007 |
 | `SFM-026.C2` | Takeover or disengagement alert not presented | 10/6/8 | SFM-ACT-007, SFM-ACT-003 |
 | `SFM-026.C3` | Takeover or disengagement alert not presented | 10/4/10 | SFM-ACT-007 |

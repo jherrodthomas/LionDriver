@@ -1,6 +1,7 @@
 # Bench wiring for the harness box tests VS-HW-22...24 (WP-H-06 section 3.1 and bench/VS-HW-22-24-checklist.md).
 # The box and the Toyota A harness are tested outside the car: CAN interface channel A acts as the camera,
-# channel B as the car ADAS node, a lab supply feeds IGN_12, a lab source drives SBU1 through 1 kohm.
+# channel B as the car ADAS node, a lab supply feeds IGN_12, a low-impedance lab source drives SBU1 directly
+# (R2+R3 = 240 ohm load SBU1: a series resistor would divide the drive, 1 kohm gives only 0.97 V).
 # Harness pins from e05-toyota-a-harness.yaml; box pins from e05-harness-box.yaml. Bench parts that WP-H-06 does not
 # name (mating plugs, USB-C breakout) are marked "to choose": no part numbers are invented here.
 # Fault-injection points (FI-*) are the modifications the checklist makes; each names its step.
@@ -45,12 +46,13 @@ connectors:
     pinlabels: [+, -]
   SRC:
     type: Lab source 0-5 V
-    subtype: 1 kohm in series (device driver unknown, UK-06)
+    subtype: low impedance (10 ohm or less), current limit about 50 mA; no series resistor
+    notes: R2+R3 draw about 21 mA at 5 V. Device driver unknown (UK-06).
     pinlabels: [out, 0 V]
   BO:
     type: USB-C breakout
     subtype: on box receptacle J3; bench part to choose
-    notes: VS-HW-22 step 4 and VS-HW-23 step 3 put the reference device on the OBD-C cable here instead.
+    notes: VS-HW-22 step 4, VS-HW-23 step 3 and VS-HW-24 (e) put the reference device on the OBD-C cable here instead.
     pins: [A8, A1, B8, A4]
     pinlabels: [SBU1 switch drive, GND, SBU2 ignition (observe), VIN (scope ch 2)]
   SCOPE:
@@ -73,6 +75,10 @@ connectors:
     type: "FI-4: D2/D3 bridged (D2, then D3)"
     subtype: VS-HW-24 (d), CAN0_H then CAN2 to GND (box modified, reversible)
     pinlabels: [clamp diode]
+  FI5:
+    type: "FI-5: R7/R8 open (R8, R7, then both lifted)"
+    subtype: VS-HW-24 (e), camera-side termination in intercept (box modified, reversible)
+    pinlabels: [camera-side termination R7/R8]
 
 cables:
   WA:
@@ -129,3 +135,6 @@ connections:
   - - FI4: [1]
     - --
     - X2: [5]
+  - - FI5: [1]
+    - --
+    - X1: [5]

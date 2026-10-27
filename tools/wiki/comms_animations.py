@@ -6,10 +6,16 @@
                     what the sender adds end to end;
   comms-e2e.svg     the four hops of the reference configuration as tracks, each with the checks a frame passes in
                     order (the "gates"), coloured by whether the check is built; six faults are sent down the tracks
-                    one after another and either stop at the gate that catches them or get through.
+                    one after another and either stop at the gate that catches them or get through;
+  comms-path.svg    one steering command from openpilot to the EPS: what each box adds to the frame and what it checks,
+                    with the end-to-end counter and checksum spanning the whole path and the per-hop XOR and CRC-15
+                    rebuilt on each link;
+  comms-timeline.svg  five comms faults on one time axis from fault onset: the time to detect, the time to the safe
+                    state and the FTTI of the safety goal, with the margin left or the part that is missing.
 
 The hops, the checks and the faults are those of WP-S-05 §12.3; the status of every check that names a requirement is
-read from the TSR list, and the counter and checksum facts from WP-S-05 §5 and §11. Every phrase a figure stands on is
+read from the TSR list, the counter and checksum facts from WP-S-05 §5 and §11, and the times from WP-S-04 §3.7 and
+§4 (code-derived, reference build, not measured). Every phrase a figure stands on is
 tied to its record (SOURCES) and checked at render time (`problems()`): when a record changes, the wiki build fails
 instead of showing old text. build_wiki.py renders them next to the pages at each sync; they loop with CSS and SMIL,
 and reduced motion shows the final frame: the tracks and their gates without the faults.
@@ -29,11 +35,12 @@ sys.path.insert(0, str(HERE))
 from animations import GRN, LIGHT, MID, NAVY, RED, W, Timeline, g, norm, svg, t  # noqa: E402
 from how_animations import box  # noqa: E402
 
-NAMES = ("comms-frames.svg", "comms-e2e.svg")
+NAMES = ("comms-frames.svg", "comms-e2e.svg", "comms-path.svg", "comms-timeline.svg")
 BLUE, AMBER, TEAL, GREY = "#2a78d6", "#b7791f", "#0f766e", "#9aa5b8"
 
 A = Path("assurance")
 S05 = A / "03-system" / "WP-S-05-hsi-specification.md"
+S04 = A / "03-system" / "WP-S-04-timing-ftti-budget.md"
 TSR_LIST = A / "03-system" / "requirements" / "tsr-list.md"
 
 # phrases the figures stand on: (record, phrase)
@@ -47,6 +54,20 @@ SOURCES = [
   (S05, "**The protocol CRC protects one hop, not the path.**"),
   (S05, "CRC-17 (≤ 16 bytes) or CRC-21, with a stuff-bit count inside the CRC field"),
   (S05, "| H1 | SoC (QM) → panda, SPI (§4) | 8-bit XOR per transfer and per CAN packet |"),
+  # comms-timeline.svg: the budgets of WP-S-04 §3.7 and the code-derived times of §4
+  (S04, "margin of at least 20 % of the FTTI"),
+  (S04, "| SG-01 RX loss/corruption | 0.5 s | ≤ 0.2 s (TSR-401) | ≤ 0.1 s |"),
+  (S04, "| SG-01 SoC command stall | 0.5 s | ≤ 0.05 s (TSR-408) | ≤ 0.1 s |"),
+  (S04, "| SG-01 SoC heartbeat loss | 0.5 s | ≤ 0.3 s (TSR-407) | ≤ 0.1 s |"),
+  (S04, "| SG-07 forwarding loss | 0.2 s (preliminary, §3.6) |"),
+  (S04, "≤ 0.1 s (TSR-706, incl. relay drop-out)"),
+  (S04, "**≤ 0.162 s** for `0x1D2`"),
+  (S04, "≤ 0.06 s for `0x2E4`"),
+  (S04, "**≤ 0.31 s** (0.3 s + one task period)"),
+  (S04, "**≈ 90 ms** nominal; ≤ 0.1 s only if the LSI is at most 10 % slow"),
+  (S04, "| RX stuck/inserted | ≤ 0.2 s | not detected (T-03) | **Not met** |"),
+  # comms-path.svg
+  (S04, "has not reached the TX hook for > 50 ms"),
 ]
 
 # gate kinds that do not name a requirement: (fill, stroke, dash, ink, status word)
@@ -85,13 +106,38 @@ FAULTS = [
 ]
 LOOP_SCENE = 4.2
 
+# comms-path.svg: the boxes one steering command (0x2E4) passes, left to right: (box, where, [(verb, what, kind)]);
+# verb "+" adds to the frame, "✓" checks; kind is a FIXED kind or a requirement whose status is read from the TSR list
+PATH = [
+  ("openpilot", "main computer · QM", [("", "computes the torque", "none"), ("+", "counter, checksum", "weak")]),
+  ("SPI link", "main computer → panda", [("+", "8-bit XOR", "weak"), ("+", "CRC", "TSR-410"), ("+", "counter, age", "TSR-411")]),
+  ("panda", "envelope · safety MCU", [("✓", "XOR", "weak"), ("✓", "torque limits", "TSR-101"), ("✓", "rate", "TSR-518"),
+                                       ("✓", "arrives ≤ 50 ms", "TSR-408")]),
+  ("CAN bus 0", "panda → steering", [("+", "CRC-15, stuffing", "protocol")]),
+  ("EPS", "steering ECU", [("✓", "CRC-15", "protocol"), ("✓", "checksum, counter", "ecu"), ("", "applies the torque", "none")]),
+]
+
+# comms-timeline.svg: (fault, how it is caught, safety goal, FTTI, detection time or None, its requirement, reaction time,
+# detection budget); times in s from WP-S-04 §3.7 (budgets) and §4 (T-01, T-34, T-06a, T-09a; reference build, by
+# design). The watchdog row uses its 0.1 s bound, not the 90 ms nominal, because the clock tolerance is not shown.
+TIMELINE = [
+  ("Brake or wheel message stops", "RX timeout, 5 missed periods (T-01)", "SG-01", 0.5, 0.162, "TSR-401", 0.1, 0.2),
+  ("openpilot stops sending steering", "command arrival > 50 ms (T-34)", "SG-01", 0.5, 0.06, "TSR-408", 0.1, 0.05),
+  ("Main computer's heartbeat stops", "heartbeat monitor, 30 ticks (T-06a)", "SG-01", 0.5, 0.31, "TSR-407", 0.1, 0.3),
+  ("panda hangs while forwarding PCS", "hardware watchdog ≤ 0.1 s (T-09a)", "SG-07", 0.2, 0.1, "TSR-501", 0.1, 0.1),
+  ("Wheel speeds freeze but keep coming", "frozen-value check, planned (T-03)", "SG-01", 0.5, None, "TSR-404", None, 0.2),
+]
+MARGIN_RULE = 0.2  # WP-S-04 §2: margin of at least 20 % of the FTTI
+
 
 def _read(root: Path, path: Path) -> str:
   return (root / path).read_text(encoding="utf-8")
 
 
 def tsrs() -> list[str]:
-  return sorted({k for _h, _t, _s, _r, gates in HOPS for _n, k in gates if k.startswith("TSR-")})
+  ks = {k for _h, _t, _s, _r, gates in HOPS for _n, k in gates}
+  ks |= {k for _b, _w, acts in PATH for _v, _x, k in acts} | {r[5] for r in TIMELINE}
+  return sorted(k for k in ks if k.startswith("TSR-"))
 
 
 def data(root: Path = ROOT) -> dict:
@@ -133,6 +179,8 @@ def problems(root: Path = ROOT) -> list[str]:
     d = data(root)
     if d["status"]["TSR-410"] == "implemented" or d["status"]["TSR-404"] == "implemented":
       errs.append(f"{TSR_LIST}: TSR-410 or TSR-404 is now implemented; comms-e2e.svg captions say those faults get through")
+    if d["status"]["TSR-404"] != "not implemented":
+      errs.append(f"{TSR_LIST}: TSR-404 is no longer 'not implemented'; comms-timeline.svg draws the frozen value as not detected")
   except (OSError, ValueError) as e:
     errs.append(f"cannot read the records the CAN page is drawn from: {e}")
   return errs
@@ -306,9 +354,178 @@ def e2e(d: dict) -> str:
   return svg(h, "Six faults, four hops (animated)", " ".join(desc), tl, b)
 
 
+# ---------------------------------------------------------------- 3. one command, end to end
+
+def path(d: dict) -> str:
+  n = len(PATH)
+  step = 2.2
+  tl = Timeline(0.8 + n * step + 4.0)
+  x0, x1 = 24, W - 24
+  cw = (x1 - x0) / n
+  cx = [x0 + cw * (i + 0.5) for i in range(n)]
+  top, rowh = 96, 40
+  rows = max(len(a) for _b, _w, a in PATH)
+  y_bus = top + 62
+  h = y_bus + 34 + rows * rowh + 190
+  b = [t(24, 38, "One steering command, end to end", 24, NAVY, 700),
+       t(24, 62, "What each box adds to frame 0x2E4 (+) and what it checks (✓), from openpilot to the EPS", 15, MID)]
+  # the boxes and the wire between them
+  b.append(f'<line x1="{cx[0]:.0f}" y1="{y_bus}" x2="{cx[-1]:.0f}" y2="{y_bus}" stroke="{LIGHT}" stroke-width="4" stroke-linecap="round"/>')
+  for i, (name, where, _acts) in enumerate(PATH):
+    bx = cx[i] - cw / 2 + 5
+    b += [box(bx, top, cw - 10, 44, NAVY if i in (0, n - 1) else "#fff", NAVY, 9, 1.6),
+          t(cx[i], top + 19, name, 13.5, "#fff" if i in (0, n - 1) else NAVY, 700, "middle"),
+          t(cx[i], top + 35, where, 10, "#dfe6f2" if i in (0, n - 1) else MID, 600, "middle")]
+  # what happens at each box, shown when the frame arrives there
+  for i, (_name, _where, acts) in enumerate(PATH):
+    k = tl.show(0.8 + i * step + 0.9)
+    items = []
+    for j, (verb, what, kind) in enumerate(acts):
+      fill, stroke, dash, ink, word = look(kind, d) if kind != "none" else ("#fff", LIGHT, "", MID, "")
+      y = y_bus + 26 + j * rowh
+      ds = f' stroke-dasharray="{dash}"' if dash else ""
+      items += [(f'<rect x="{cx[i] - cw / 2 + 7:.1f}" y="{y}" width="{cw - 14:.1f}" height="{rowh - 6}" rx="7" fill="{fill}" '
+                 f'stroke="{stroke}" stroke-width="1.4"{ds}/>'),
+                t(cx[i], y + 15, f"{verb} {what}".strip(), 11, NAVY, 700, "middle")]
+      if word:
+        sub = f"{kind} · {word}" if kind.startswith("TSR-") else word
+        items.append(t(cx[i], y + 28, sub, 9.5, ink, 700, "middle"))
+    b.append(g(f"{k} fin", items))
+  # the frame travelling along the wire
+  for i in range(n - 1):
+    b.append(mover(tl.loop, cx[i], cx[i + 1], y_bus, 0.8 + i * step + 1.2, 0.8 + (i + 1) * step, 0.05, AMBER))
+  # what travels end to end and what is rebuilt on every link
+  yb = y_bus + 26 + rows * rowh + 14
+  k = tl.show(0.8 + n * step - 0.4)
+  b.append(g(f"{k} fin", [
+    f'<path d="M{cx[0]:.0f},{yb} v8 H{cx[-1]:.0f} v-8" fill="none" stroke="{AMBER}" stroke-width="2.5"/>',
+    t((cx[0] + cx[-1]) / 2, yb + 26, "End to end: the counter and checksum openpilot writes are checked only by the EPS", 12.5, AMBER, 700, "middle"),
+    f'<path d="M{cx[1] - cw / 2 + 6:.0f},{yb + 40} v8 H{cx[2] + cw / 2 - 6:.0f} v-8" fill="none" stroke="{GREY}" stroke-width="2"/>',
+    t(cx[1] + cw / 2, yb + 64, "per link: XOR on SPI", 11.5, MID, 700, "middle"),
+    f'<path d="M{cx[3] - cw / 2 + 6:.0f},{yb + 40} v8 H{cx[4] + cw / 2 - 6:.0f} v-8" fill="none" stroke="{GREY}" stroke-width="2"/>',
+    t(cx[3] + cw / 2, yb + 64, "per link: CRC-15 on CAN", 11.5, MID, 700, "middle")]))
+  k = tl.show(0.8 + n * step + 0.4)
+  b.append(g(f"{k} fin", [
+    box(16, yb + 80, W - 32, 62, "#fdf3e1", AMBER),
+    t(30, yb + 101, "openpilot writes the counter and checksum, so a wrong torque packed correctly passes both.", 12.5, NAVY, 600),
+    t(30, yb + 119, "Only the panda's limits stand between it and the EPS. The SPI link in between has a weak XOR", 12.5, NAVY),
+    t(30, yb + 135, "today; a CRC and a counter are required (TSR-410, TSR-411).", 12.5, NAVY)]))
+  desc = ["One steering command, frame 0x2E4, from openpilot to the EPS, box by box."]
+  for name, where, acts in PATH:
+    parts = []
+    for verb, what, kind in acts:
+      st = "" if kind == "none" else f" ({look(kind, d)[4]}{', ' + kind if kind.startswith('TSR-') else ''})"
+      parts.append(("adds " if verb == "+" else "checks " if verb == "✓" else "") + what + st)
+    desc.append(f"{name}, {where}: " + "; ".join(parts) + ".")
+  desc.append("The counter and checksum travel end to end, written by openpilot and checked only by the EPS; the XOR on the "
+              "SPI link and the CRC-15 on CAN are rebuilt on each link. A wrong torque packed correctly passes both "
+              "end-to-end checks; only the panda's limits stop it.")
+  return svg(h, "One steering command, end to end (animated)", " ".join(desc), tl, b)
+
+
+# ---------------------------------------------------------------- 4. from fault to safe state
+
+AX0, AX1, AX_MAX = 250, W - 30, 0.6  # time axis: x of 0 s and of AX_MAX s
+
+
+def ax(s: float) -> float:
+  return AX0 + (AX1 - AX0) * min(s, AX_MAX) / AX_MAX
+
+
+def grow(x: float, y: float, w: float, hh: float, c: str, t0: float, t1: float, loop: float) -> str:
+  """A bar that grows from x to x + w between t0 and t1; hidden under reduced motion, where the .fin copy shows."""
+  k = lambda s: f"{min(max(s / loop, 0), 1):.4f}"  # noqa: E731
+  return (f'<rect class="tr" x="{x:.1f}" y="{y}" width="0" height="{hh}" rx="3" fill="{c}">'
+          f'<animate attributeName="width" dur="{loop:g}s" repeatCount="indefinite" values="0;0;{w:.1f};{w:.1f}" '
+          f'keyTimes="0;{k(t0)};{k(t1)};1"/></rect>')
+
+
+def verdict(ftti: float, det: float | None, react: float | None) -> tuple[str, str]:
+  if det is None:
+    return RED, "not detected: the fault outlasts the FTTI"
+  margin = ftti - det - react
+  if margin <= 1e-9:
+    return RED, "no margin: safe state at the FTTI"
+  if margin < MARGIN_RULE * ftti - 1e-9:
+    return AMBER, f"margin {margin:.2f} s, under the 20 % rule"
+  return GRN, f"margin {margin:.2f} s"
+
+
+def timeline(d: dict) -> str:
+  speed, start = 12.0, 0.8  # animation seconds per second of fault time; first frame of the sweep
+  sweep = AX_MAX * speed
+  tl = Timeline(start + sweep + 4.5)
+  top, rowh = 118, 92
+  h = top + rowh * len(TIMELINE) + 96
+  real = lambda s: start + s * speed  # noqa: E731
+  b = [t(24, 38, "From fault to safe state", 24, NAVY, 700),
+       t(24, 62, "Detection, then reaction, against the time the safety goal allows (FTTI)", 15, MID)]
+  # the axis
+  b.append(f'<line x1="{AX0}" y1="{top - 14}" x2="{AX1}" y2="{top - 14}" stroke="{MID}" stroke-width="1.2"/>')
+  for v in (0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6):
+    b += [f'<line x1="{ax(v):.1f}" y1="{top - 18}" x2="{ax(v):.1f}" y2="{top + rowh * len(TIMELINE) - 10}" stroke="#e3e8f1" stroke-width="1"/>',
+          t(ax(v), top - 22, f"{v:g} s", 10.5, MID, 600, "middle")]
+  b.append(t(24, top - 22, "from fault onset", 10.5, MID, 600))
+  for i, (fault, how, sg, ftti, det, req, react, budget) in enumerate(TIMELINE):
+    y = top + i * rowh
+    by = y + 34
+    col, word = verdict(ftti, det, react)
+    status = d["status"][req]
+    b += [box(16, y - 4, W - 32, rowh - 8, "#fff", LIGHT, 10, 1.2),
+          t(28, y + 16, fault, 12.5, NAVY, 700), t(28, y + 32, how, 10.5, MID, 600),
+          t(28, y + 48, f"{sg} · {req} · {status}", 10.5, MID, 600),
+          f'<line x1="{ax(ftti):.1f}" y1="{y + 4}" x2="{ax(ftti):.1f}" y2="{y + rowh - 16}" stroke="{RED}" stroke-width="2.2"/>',
+          t(ax(ftti) + 4, y + 14, f"FTTI {ftti:g} s", 10.5, RED, 700),
+          f'<rect x="{ax(0):.1f}" y="{by + 22}" width="{ax(budget) - ax(0):.1f}" height="4" rx="2" fill="{AMBER}" opacity="0.45"/>',
+          t(ax(0), by + 39, f"detection budget {budget:g} s", 10, AMBER, 700)]
+    if det is None:
+      w = ax(AX_MAX) - ax(0)
+      b.append(grow(ax(0), by, w, 16, RED, real(0), real(AX_MAX), tl.loop))
+      k = tl.show(real(ftti))
+      b.append(g(f"{k} fin", [f'<rect x="{ax(0):.1f}" y="{by}" width="{w:.1f}" height="16" rx="3" fill="{RED}" opacity="0.85"/>',
+                              t(ax(0) + 8, by + 12, "still undetected", 10.5, "#fff", 700),
+                              spark(ax(ftti), by - 6)]))
+    else:
+      safe = det + react
+      b.append(grow(ax(0), by, ax(det) - ax(0), 16, AMBER, real(0), real(det), tl.loop))
+      b.append(grow(ax(det), by, ax(safe) - ax(det), 16, BLUE, real(det), real(safe), tl.loop))
+      k = tl.show(real(det))
+      b.append(g(f"{k} fin", [f'<rect x="{ax(0):.1f}" y="{by}" width="{ax(det) - ax(0):.1f}" height="16" rx="3" fill="{AMBER}"/>',
+                              t(ax(0) + 6, by + 12, f"detect {det:g} s", 10.5, "#fff", 700) if ax(det) - ax(0) > 70 else ""]))
+      k = tl.show(real(safe))
+      items = [f'<rect x="{ax(det):.1f}" y="{by}" width="{ax(safe) - ax(det):.1f}" height="16" rx="3" fill="{BLUE}"/>',
+               f'<circle cx="{ax(safe):.1f}" cy="{by + 8}" r="6" fill="{GRN}" stroke="#fff" stroke-width="1.5"/>']
+      if ftti - safe > 1e-9:
+        items.insert(0, f'<rect x="{ax(safe):.1f}" y="{by + 2}" width="{ax(ftti) - ax(safe):.1f}" height="12" fill="{col}" opacity="0.16"/>')
+      b.append(g(f"{k} fin", items))
+    k = tl.show(real(min(ftti, AX_MAX)) + 0.2)
+    b.append(g(f"{k} fin", [t(W - 28, by + 39, word, 11, col, 700, "end")]))
+  # the cursor
+  cy0, cy1 = top - 14, top + rowh * len(TIMELINE) - 10
+  kt = lambda s: f"{min(max(s / tl.loop, 0), 1):.4f}"  # noqa: E731
+  b.append(f'<g class="tr"><line x1="0" y1="{cy0}" x2="0" y2="{cy1}" stroke="{NAVY}" stroke-width="1.5" stroke-dasharray="3 3"/>'
+           f'<animateTransform attributeName="transform" type="translate" dur="{tl.loop:g}s" repeatCount="indefinite" '
+           f'values="{ax(0):.1f},0;{ax(0):.1f},0;{ax(AX_MAX):.1f},0;{ax(AX_MAX):.1f},0" keyTimes="0;{kt(start)};{kt(start + sweep)};1"/></g>')
+  # legend
+  ly = h - 52
+  x = 24
+  for c, word in ((AMBER, "detecting"), (BLUE, "reacting: authority revoked, relay released"), (GRN, "safe state"), (RED, "FTTI")):
+    b += [f'<rect x="{x}" y="{ly - 11}" width="18" height="13" rx="3" fill="{c}"/>', t(x + 24, ly, word, 11.5, NAVY, 600)]
+    x += 40 + len(word) * 6.4
+  b.append(t(24, h - 24, "Times are code-derived for the reference build (WP-S-04 §4), by design: none is measured yet.", 11.5, MID, 400,
+             "start", True))
+  desc = [("Five communication faults on one time axis from fault onset, 0 to 0.6 s; for each the time to detect it, the "
+           "time to the safe state, and the FTTI of its safety goal, from WP-S-04 §3.7 and §4 (code-derived, not measured).")]
+  for fault, how, sg, ftti, det, req, react, budget in TIMELINE:
+    _c, word = verdict(ftti, det, react)
+    when = "not detected" if det is None else f"detected at {det:g} s, safe at {det + react:g} s"
+    desc.append(f"{fault} ({how}, {req} {d['status'][req]}): {when}; {sg} FTTI {ftti:g} s, detection budget {budget:g} s; {word}.")
+  return svg(h, "From fault to safe state (animated)", " ".join(desc), tl, b)
+
+
 def render(root: Path = ROOT) -> dict[str, str]:
   d = data(root)
-  return dict(zip(NAMES, (frames(), e2e(d)), strict=True))
+  return dict(zip(NAMES, (frames(), e2e(d), path(d), timeline(d)), strict=True))
 
 
 def write_all(out: Path, root: Path = ROOT) -> None:
