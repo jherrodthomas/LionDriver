@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.7 | draft | BL-002 | RT-1 | 2026-10-20 |
+| 0.8 | draft | BL-002 | RT-1 | 2026-10-27 |
 
 **Scope.** Random hardware faults of the panda section and harness that can keep the stock camera's PCS messages from reaching the car (LD-HARA-001 SG-009, ASIL B; assurance WP-C-03 SG-07, ASIL B). Reference device at BL-002
 
@@ -142,7 +142,7 @@ Classified for this file's own goal (rating-tables §6.1). λ is the component r
 - **FMD-030:** Switch unpowered, pass-through not guaranteed (RR-2026-010 F-02, to confirm on the bench). The device loses power with the box, so for SG-02/SG-06 (DQ-362) actuation is lost and only the host can warn (FTA BE-2.07, DFM-020)
 - **FMD-031:** As FMD-030
 - **FMD-032:** Latent loss of reverse or transient protection
-- **FMD-033:** Car or camera bus loaded in either switch state (RR-2026-010 F-07)
+- **FMD-033:** Car or camera bus loaded in either switch state (RR-2026-010 F-07). The harness box SPICE pilot (PR #510; idealised model, generic transceivers; a prediction, no credit) splits the mode: a lower-diode short to GND on CAN_H loses dominant bits; an upper-diode short to VIN holds the line near 13 V, outside the receiver common-mode range; CAN_L to GND and 1 kOhm leakage leave readable levels. A D3 short on camera CAN_H to GND also stops the joined stock bus in pass-through. The whole mode stays single-point until VS-HW-24 (d) measures the split on a real box
 - **FMD-034:** Latent loss of bus protection
 - **FMD-023:** Installation check only (DFM-ACT-008)
 - **FMD-024:** SBU1 undriven, the pull-down selects pass-through and the stock path is restored, if the box stays powered
@@ -199,3 +199,4 @@ From the workbook's `11_Open_Items` tab.
 | 0.5 | 2026-10-18 | Rows that stop actuation noted for SG-02 and SG-06 (DQ-362 A); their metric is the shared SG-01 estimate; no metric change |
 | 0.6 | 2026-10-20 | Wire-end IDs of the WireViz drawings added; no rate, classification or metric change |
 | 0.7 | 2026-10-20 | Format review: target as data, rate kind and wire ends as fields; no rate, classification or metric change |
+| 0.8 | 2026-10-27 | FMD-033 note: harness box SPICE pilot predictions per short path (PR #510); whole mode stays single-point; no rate, classification or metric change |

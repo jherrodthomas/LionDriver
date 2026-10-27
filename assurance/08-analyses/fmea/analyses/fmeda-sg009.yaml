@@ -20,7 +20,7 @@ analysis:
   id: FMD
   type: fmeda
   title: FMEDA — SG-009 stock AEB availability (relay and forwarding path), generic failure rates
-  revision: '0.7'
+  revision: '0.8'
   status: draft
   baseline: BL-002
   rating_tables: RT-1
@@ -45,7 +45,7 @@ analysis:
   - assurance/08-analyses/fmea/analyses/dfmea.yaml
   - assurance/08-analyses/fmea/rating-tables.md
   - ISO 26262-5:2018 §8-9 and Annex D; ISO 26262-11:2018 §4.6 (semiconductors)
-  updated: '2026-10-20'
+  updated: '2026-10-27'
   history:
   - revision: '0.1'
     date: '2026-10-10'
@@ -68,6 +68,9 @@ analysis:
   - revision: '0.7'
     date: '2026-10-20'
     change: 'Format review: target as data, rate kind and wire ends as fields; no rate, classification or metric change'
+  - revision: '0.8'
+    date: '2026-10-27'
+    change: 'FMD-033 note: harness box SPICE pilot predictions per short path (PR #510); whole mode stays single-point; no rate, classification or metric change'
 safety_mechanisms:
 - id: FMD-SM-001
   description: Flash ECC (single-error correction in silicon; corrected reads are transparent)
@@ -420,7 +423,7 @@ components:
     violates_sg_directly: true
     mpf_potential: false
     dfmea_ref: DFM-021
-    notes: Car or camera bus loaded in either switch state (RR-2026-010 F-07)
+    notes: 'Car or camera bus loaded in either switch state (RR-2026-010 F-07). The harness box SPICE pilot (PR #510; idealised model, generic transceivers; a prediction, no credit) splits the mode: a lower-diode short to GND on CAN_H loses dominant bits; an upper-diode short to VIN holds the line near 13 V, outside the receiver common-mode range; CAN_L to GND and 1 kOhm leakage leave readable levels. A D3 short on camera CAN_H to GND also stops the joined stock bus in pass-through. The whole mode stays single-point until VS-HW-24 (d) measures the split on a real box'
   - id: FMD-034
     mode: Open (clamp lost)
     distribution: 0.7

@@ -225,7 +225,7 @@ graph {
  <tr><td>
   <table border="0" cellspacing="0" cellpadding="3" cellborder="1"><tr>
    <td balign="left">Lab source 0-5 V</td>
-   <td balign="left">1 kohm in series (device driver unknown, UK-06)</td>
+   <td balign="left">low impedance (10 ohm or less), current limit about 50 mA; no series resistor</td>
    <td balign="left">2-pin</td>
   </tr></table>
  </td></tr>
@@ -240,6 +240,11 @@ graph {
     <td port="p2r">2</td>
    </tr>
   </table>
+ </td></tr>
+ <tr><td>
+  <table border="0" cellspacing="0" cellpadding="3" cellborder="1"><tr>
+   <td balign="left">R2+R3 draw about 21 mA at 5 V. Device driver unknown (UK-06).</td>
+  </tr></table>
  </td></tr>
 </table>
 > fillcolor="#FFFFFF" shape=box style=filled]

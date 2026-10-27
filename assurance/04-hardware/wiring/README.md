@@ -39,7 +39,7 @@ its SBU1 when NORMAL) and `panda/board/drivers/can_common.h:130` (a FLIPPED plug
 wrong orientation reading therefore swaps the car and camera buses in firmware; this is the HWSR-701 case that
 VS-HW-13 tests.
 
-![Bench for VS-HW-22 to 24: CAN interface channel A on the camera connector X1 pins 5 and 11 and channel B on the car connector X2 pins 5 and 11, each with a 120 ohm termination; lab supply on X2 pin 7 (IGN) and pin 10; a 0 to 5 V source through 1 kohm on SBU1 at a USB-C breakout on the box receptacle; scope on the car CAN, VIN and SBU1; fault-injection points FI-1 IGN open, FI-2 VIN shorted through 1 ohm, FI-3 R2 lifted, FI-4 D2 or D3 bridged](bench-box-vs-hw-22-24.svg)
+![Bench for VS-HW-22 to 24: CAN interface channel A on the camera connector X1 pins 5 and 11 and channel B on the car connector X2 pins 5 and 11, each with a 120 ohm termination; lab supply on X2 pin 7 (IGN) and pin 10; a 0 to 5 V low-impedance source on SBU1 at a USB-C breakout on the box receptacle; scope on the car CAN, VIN and SBU1; fault-injection points FI-1 IGN open, FI-2 VIN shorted through 1 ohm, FI-3 R2 lifted, FI-4 D2 or D3 bridged](bench-box-vs-hw-22-24.svg)
 
 *Drawing BB.* The box-alone bench of WP-H-06 §3.1, wired as the
 [bench checklist](../bench/VS-HW-22-24-checklist.md) sets it up. Bench parts WP-H-06 does not name (mating plugs,

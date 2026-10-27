@@ -4,7 +4,7 @@
 |---|---|
 | Record type | Test checklist and result sheet for [WP-H-06](../WP-H-06-hardware-integration-verification.md) §3.1 |
 | Covers | VS-HW-02 (inspection, prerequisite), VS-HW-22 (box unpowered), VS-HW-23 (pull-down open), VS-HW-24 (supply stress, logic threshold, signal integrity, clamp short) |
-| Version | 0.2 (§A: box-plug crimp part number field, wiring OI-W-3; 2026-10-20). 0.1 (first issue; 2026-10-16) |
+| Version | 0.3 (§A: SBU1 source low impedance without the 1 kΩ series resistor, plus a load check; WP-H-06 0.12; 2026-10-27). 0.2 (§A: box-plug crimp part number field, wiring OI-W-3; 2026-10-20). 0.1 (first issue; 2026-10-16) |
 | Status | Draft. **Not yet executed** |
 | Author | Claude Code (AI-drafted from WP-H-06 §3.1; to be reviewed before first use) |
 | Decision | Route chosen by the lead: keep comma's box and bench-test it ([DQ-209](../../01-management/decisions/register.yaml)). The SG-07 SPFM deviation ([DQ-320](../../01-management/decisions/register.yaml), [WP-H-04](../WP-H-04-hardware-metrics.md) §5.3) holds only if these tests pass |
@@ -43,7 +43,8 @@
 - [ ] Lab supply current limit set to 0.5 A, output off.
 - [ ] CAN interface at 500 kbit/s on both channels. Channel A on the camera connector (CAN2), channel B on the car connector (CAN0). 120 Ω termination on each side.
 - [ ] Traffic running: channel A sends ID 0x343 every 10 ms, channel B sends ID 0x1AA every 10 ms. Both channels log frames and error counters.
-- [ ] SBU1 source: 0–5 V lab source through 1 kΩ, output open.
+- [ ] SBU1 source: 0–5 V low-impedance lab source (output impedance ≤ 10 Ω), current limit about 50 mA, **no series resistor**, output open. *R2+R3 (240 Ω) draw about 21 mA at 5 V; through 1 kΩ SBU1 would reach only 0.97 V.*
+- [ ] SBU1 load check: set 5 V, connect, and read SBU1 at the breakout: ______ V (must be 4.9 V or more) and the source current: ______ mA (about 21 mA). Open the output again.
 - [ ] Scope: differential probe across CAN_H/CAN_L at the car connector. Channel 2 on VIN, channel 3 on SBU1, channel 4 free for U1 pins.
 - [ ] Comma power (J2) **not** connected.
 
