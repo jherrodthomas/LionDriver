@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-03 Hardware safety analysis (FMEA/FMEDA) |
 | Standard reference | ISO 26262-5:2018 §7 (safety analyses on HW design), §8 (metrics input), Annex D (diagnostic coverage of safety mechanisms, informative); ISO 26262-9:2018 §8 (safety analyses); ISO 26262-11:2018 (semiconductor failure modes, informative); ASPICE 4.0 HWE.2 |
-| Version | 0.9 (§6.4: SG-05 estimate from the FMEDA rev 0.7 per-goal classification, SPFM 90.38 %; 2026-10-20). 0.8 (FM-HAR-02: a flipped reading also swaps logical CAN buses 0 and 2; effect traced to the relay-malfunction check; 2026-10-20). 0.7 (§2.3 handbook set approved, DQ-068 option A, OI-2 closed; no ST licence, own self-tests with low CPU coverage, DQ-069 option B: §2.3 STM32H7 row, OI-3 and §6.4 updated, the ASIL C SPFM target likely missed and carried to G2; 2026-10-19). 0.6 (§2.4 mission profile: the WP-H-05 §3 working values approved by the lead 2026-10-18 (DQ-067, A); 2026-10-19). 0.5 (§6.4 added: the SG-001/SG-009 FMEDA rows reused for SG-02, SG-03, SG-05 and SG-06, a note per goal, decision DQ-362 option A; the ASIL C SPFM miss of 0.16 points carried as WP-H-04 OI-6 for G2; 2026-10-18). 0.4 (§6.3 recomputed with FMEDA rev 0.4: U1/U2 at the SN 29500-2 reference value, 2 × 25 FIT, SG-07 SPFM 78.1 %; planned-measure cases recomputed with stated DC assumptions; §2.3 source status; 2026-10-16). 0.3 (OI-9 closed by DQ-064; 2026-10-16). 0.2 (status update 2026-10-12: IWDG (DC-01), 0.3 s heartbeat revocation and the reference-build `0xc5` refusal recorded in the existing-diagnostic cells of FM-CPU-03/05/06, FM-CLK-04, FM-SPI-02, FM-REL-05; no DC credit taken until HIL evidence). 0.1: initial draft |
+| Version | 0.10 (§6.2/§6.3: SG-07 figures from FMEDA SG-009 rev 0.9, camera-side termination R7/R8 added; λ 288 FIT, LFM 97.6 %, λSPF + λRF 63.1 FIT; planned-measure chain 83.6 → 87.3 → 94.5 %; AI-drafted; 2026-10-27). 0.9 (§6.4: SG-05 estimate from the FMEDA rev 0.7 per-goal classification, SPFM 90.38 %; 2026-10-20). 0.8 (FM-HAR-02: a flipped reading also swaps logical CAN buses 0 and 2; effect traced to the relay-malfunction check; 2026-10-20). 0.7 (§2.3 handbook set approved, DQ-068 option A, OI-2 closed; no ST licence, own self-tests with low CPU coverage, DQ-069 option B: §2.3 STM32H7 row, OI-3 and §6.4 updated, the ASIL C SPFM target likely missed and carried to G2; 2026-10-19). 0.6 (§2.4 mission profile: the WP-H-05 §3 working values approved by the lead 2026-10-18 (DQ-067, A); 2026-10-19). 0.5 (§6.4 added: the SG-001/SG-009 FMEDA rows reused for SG-02, SG-03, SG-05 and SG-06, a note per goal, decision DQ-362 option A; the ASIL C SPFM miss of 0.16 points carried as WP-H-04 OI-6 for G2; 2026-10-18). 0.4 (§6.3 recomputed with FMEDA rev 0.4: U1/U2 at the SN 29500-2 reference value, 2 × 25 FIT, SG-07 SPFM 78.1 %; planned-measure cases recomputed with stated DC assumptions; §2.3 source status; 2026-10-16). 0.3 (OI-9 closed by DQ-064; 2026-10-16). 0.2 (status update 2026-10-12: IWDG (DC-01), 0.3 s heartbeat revocation and the reference-build `0xc5` refusal recorded in the existing-diagnostic cells of FM-CPU-03/05/06, FM-CLK-04, FM-SPI-02, FM-REL-05; no DC credit taken until HIL evidence). 0.1: initial draft |
 | Status | Draft (qualitative FMEA); quantitative FMEDA: generic-rate estimate in §6.3, part-level template TBD |
 | ASIL / scope | ASIL C (SG-01 provisional; SG-02, SG-03, SG-06 since WP-C-03 v0.4) / ASIL B (SG-04, SG-05, SG-07) |
 | Author | Assurance team (initial draft) |
@@ -268,9 +268,10 @@ The rates are order-of-magnitude estimates per part type, not values looked up f
 | Goal | Target used | λ (FIT) | SPFM | LFM | λSPF + λRF (FIT) | Result |
 |---|---|---|---|---|---|---|
 | SG-01 lateral | ASIL D (LD-HARA-001); ASIL C here, ASIL B shown alongside (DQ-063) | 255 | 96.8 % | 88.9 % | 8.1 | Misses D on SPFM and LFM. Misses C on SPFM (97 %) by 0.2 points; meets C on LFM. Meets B (90 % / 60 %) |
-| SG-07 stock PCS | ASIL B | 287 | 78.1 % | 97.7 % | 62.9 | Misses B on SPFM (90 %). Accepted by the lead as a recorded deviation, conditional on the harness box bench tests ([WP-H-04](WP-H-04-hardware-metrics.md) §5.3, DQ-320) |
+| SG-07 stock PCS | ASIL B | 288 | 78.1 % | 97.6 % | 63.1 | Misses B on SPFM (90 %). Accepted by the lead as a recorded deviation, conditional on the harness box bench tests ([WP-H-04](WP-H-04-hardware-metrics.md) §5.3, DQ-320) |
 
 The SG-07 drop from 85.9 % (rev 0.3) to 78.1 % comes entirely from the switch rate: 2 × 5 FIT generic became 2 × 25 FIT. With no readback and no stock-path check, 70 % of that rate is single-point for SG-07.
+Rev 0.9 (2026-10-27) adds the camera-side termination R7/R8 (FMD-C-014, 0.4 FIT): a short is single-point for SG-07 (camera frames lost in intercept), and one open is latent, because only both open leave the camera bus unterminated (harness box SPICE pilot, a prediction; VS-HW-24 (e) measures it). λSPF + λRF rises by 0.16 FIT; SPFM stays 78.1 % at one decimal.
 
 Largest contributors:
 - **SG-01:**
@@ -306,8 +307,8 @@ The switch rate matters as much: SG-07 SPFM is 85.9 % at 5 FIT per IC and 78.1 %
   Result: SPFM 99.1 %, LFM 95.4 %, λSPF + λRF 2.3 FIT. That meets ASIL D on generic rates, and so ASIL C and B.
 - **SG-07**, added in this order, each with DC 90 %:
   - switch position readback (DFM-ACT-007, DC-03) on stuck in intercept and SBU1 driver stuck on: SPFM 83.6 %;
-  - releasing the switch on a transceiver fault (DFM-ACT-006) on TX stuck dominant and RX open: 87.4 %;
-  - a readback that also checks stock-path continuity, on channel open and harness open: **94.6 %**, λSPF + λRF 15.6 FIT. That meets ASIL B.
+  - releasing the switch on a transceiver fault (DFM-ACT-006) on TX stuck dominant and RX open: 87.3 %;
+  - a readback that also checks stock-path continuity, on channel open and harness open: **94.5 %**, λSPF + λRF 15.8 FIT. That meets ASIL B. None of the three covers an R7/R8 short (FMEDA rev 0.9), which stays single-point.
 
   Position readback alone no longer reaches 90 % (it did at rev 0.3). The stock-path continuity check is needed.
 - **Caveat for SG-07:** a switch stuck in intercept cannot be released. The readback can only warn that stock AEB is unavailable and refuse to engage. The lead accepted that as the degraded state ([DQ-064](../01-management/decisions/register.yaml), OI-9).

@@ -4,11 +4,11 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.8 | draft | BL-002 | RT-1 | 2026-10-27 |
+| 0.9 | draft | BL-002 | RT-1 | 2026-10-27 |
 
 **Scope.** Random hardware faults of the panda section and harness that can keep the stock camera's PCS messages from reaching the car (LD-HARA-001 SG-009, ASIL B; assurance WP-C-03 SG-07, ASIL B). Reference device at BL-002
 
-> ⚠️ **Estimate.** 12 of 13 failure rates are generic order-of-magnitude estimates, and 0 are converted to the mission profile. The metrics show where the design falls short. They are not evidence that a target is met.
+> ⚠️ **Estimate.** 13 of 14 failure rates are generic order-of-magnitude estimates, and 0 are converted to the mission profile. The metrics show where the design falls short. They are not evidence that a target is met.
 
 ![Metrics per goal and failure-rate split](../../figures/generated/fig-3-11-fmeda-sg009-metrics.svg)
 
@@ -40,9 +40,9 @@ Targets from WP-H-04 §4. LD-HARA-001 rates this file's goal SG-009 at ASIL B; t
 
 | Goal | ASIL | SPFM | LFM | λSPF + λRF (FIT) | Result | Basis |
 |---|---|---:|---:|---:|---|---|
-| SG-07 | B | 78.11 % | 97.71 % | 62.9 | 🔴 missed: SPFM < 90 % | WP-C-03 SG-07 (LD-HARA-001 SG-009); the SPFM shortfall is a recorded deviation, conditional on the harness box bench tests (DQ-320, WP-H-04 §5.3) |
+| SG-07 | B | 78.09 % | 97.60 % | 63.1 | 🔴 missed: SPFM < 90 % | WP-C-03 SG-07 (LD-HARA-001 SG-009); the SPFM shortfall is a recorded deviation, conditional on the harness box bench tests (DQ-320, WP-H-04 §5.3) |
 
-Total safety-related λ 287.4 FIT. λSPF + λRF is the single-point and residual part of PMHF only; the dual-point term is not computed (rating-tables §6.3). 🟠 means met on generic estimates, not verified.
+Total safety-related λ 287.8 FIT. λSPF + λRF is the single-point and residual part of PMHF only; the dual-point term is not computed (rating-tables §6.3). 🟠 means met on generic estimates, not verified.
 
 ## 2. Components and failure-rate sources
 
@@ -59,6 +59,7 @@ Total safety-related λ 287.4 FIT. λSPF + λRF is the single-point and residual
 | FMD-C-011 | SBU1 pull-down: 2 × 120 Ω thick-film resistor in series | 0.4 | generic | — | — | no | <sub>HB.R2/R3.1-J3.A8</sub> |
 | FMD-C-012 | Box supply: D1 Schottky STPS2H100ZFY from ignition, D4 TVS SMF16A | 3 | generic | — | — | no | <sub>HB.J1.2-D1.A, HB.D1.K-J3.A4, HB.J2.4-J3.A4</sub> |
 | FMD-C-013 | Bus clamps: 2 × BAS40SDW Schottky pairs on CAN0 and CAN2 | 2 | generic | — | — | no | — |
+| FMD-C-014 | Camera-side termination in intercept: 2 × 120 Ω thick-film resistor (R7, and R8 through the harness P13–P15 loopback), 60 Ω together | 0.4 | generic | — | — | no | — |
 | FMD-C-008 | Harness connector and harness-box wiring in the stock path | 10 | generic | — | — | no | <sub>TA.W1.1, TA.W1.2, TA.W2.1, TA.W2.2, HB.J1.4-U1.2, HB.J1.6-U2.1, HB.J1.16-U1.1, HB.J1.18-U2.2, OC.W1.1, OC.W1.2, OC.W1.3, OC.W1.4, OC.W1.5, OC.W1.6, OC.W1.7, OC.W1.8, OC.W1.9, OC.W1.10, OC.W1.11, OC.W1.12</sub> |
 | FMD-C-009 | Independent watchdog: LSI oscillator and IWDG | 2 | generic | — | — | no | — |
 
@@ -75,6 +76,7 @@ Total safety-related λ 287.4 FIT. λSPF + λRF is the single-point and residual
 - **FMD-C-011:** Generic estimate (SMD thick-film chip resistor, 2 × about 0.2 FIT). Part class known from the harness box v3 drawing (RR-2026-010 HB-02); maps to the SN 29500 passive-component class, but no reference value could be obtained (standard not reachable, 2026-10-16). Stays generic until the source is confirmed (WP-H-03 OI-2); shipped parts unconfirmed (VS-HW-02)
 - **FMD-C-012:** Generic estimate (power Schottky rectifier STPS2H100ZFY about 2 FIT; TVS diode SMF16A about 1 FIT). The part is known from the harness box v3 drawing (RR-2026-010 HB-01..HB-06) and maps to the SN 29500 discrete-semiconductor class, but no reference value could be obtained: the standard and the vendor FIT reports were not reachable from the analysis environment (2026-10-16). Stays generic until the safety manager confirms the source (WP-H-03 OI-2) and the value is looked up; shipped parts unconfirmed (VS-HW-02)
 - **FMD-C-013:** Generic estimate (small-signal Schottky diode array BAS40SDW, 2 × about 1 FIT). The part is known from the harness box v3 drawing (RR-2026-010 HB-01..HB-06) and maps to the SN 29500 discrete-semiconductor class, but no reference value could be obtained: the standard and the vendor FIT reports were not reachable from the analysis environment (2026-10-16). Stays generic until the safety manager confirms the source (WP-H-03 OI-2) and the value is looked up; shipped parts unconfirmed (VS-HW-02)
+- **FMD-C-014:** Generic estimate (SMD thick-film chip resistor, 2 × about 0.2 FIT), as FMD-C-011. Part class known from the harness box v3 drawing (RR-2026-010 HB-05); maps to the SN 29500 passive-component class, but no reference value could be obtained (standard not reachable, 2026-10-16). Stays generic until the source is confirmed (WP-H-03 OI-2); shipped parts unconfirmed (VS-HW-02)
 - **FMD-C-008:** Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not looked up for the actual part. No BOM or supplier data available (WP-H-02 UK-02)
 - **FMD-C-009:** Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not looked up for the actual part. No BOM or supplier data available (WP-H-02 UK-02)
 
@@ -116,6 +118,8 @@ Classified for this file's own goal (rating-tables §6.1). λ is the component r
 | FMD-032 | FMD-C-012 | Other (D1 short, D4 open: protection lost) | 40 % | 1.2 | 🟡 MPF, latent part | — | DFM-020 | — |
 | FMD-033 | FMD-C-013 | Short or leakage on a CAN line | 30 % | 0.6 | 🔴 SPF | — | DFM-021 | — |
 | FMD-034 | FMD-C-013 | Open (clamp lost) | 70 % | 1.4 | 🟡 MPF, latent part | — | DFM-021 | — |
+| FMD-035 | FMD-C-014 | One resistor open (camera side left with 120 Ω in intercept) | 60 % | 0.24 | 🟡 MPF, latent part | — | — | — |
+| FMD-036 | FMD-C-014 | Short (camera CAN2_H to CAN2_L in intercept) | 40 % | 0.16 | 🔴 SPF | — | — | — |
 | FMD-023 | FMD-C-008 | Open in the stock camera path | 30 % | 3 | 🔴 SPF | — | DFM-013 | — |
 | FMD-024 | FMD-C-008 | Connector loose (whole device off the bus) | 70 % | 7 | safe | — | DFM-012 | — |
 | FMD-025 | FMD-C-009 | Watchdog does not expire (LSI stopped, IWDG fault) | 50 % | 1 | 🟡 MPF, latent part | — | DFM-006 | — |
@@ -144,6 +148,8 @@ Classified for this file's own goal (rating-tables §6.1). λ is the component r
 - **FMD-032:** Latent loss of reverse or transient protection
 - **FMD-033:** Car or camera bus loaded in either switch state (RR-2026-010 F-07). The harness box SPICE pilot (PR #510; idealised model, generic transceivers; a prediction, no credit) splits the mode: a lower-diode short to GND on CAN_H loses dominant bits; an upper-diode short to VIN holds the line near 13 V, outside the receiver common-mode range; CAN_L to GND and 1 kOhm leakage leave readable levels. A D3 short on camera CAN_H to GND also stops the joined stock bus in pass-through. The whole mode stays single-point until VS-HW-24 (d) measures the split on a real box
 - **FMD-034:** Latent loss of bus protection
+- **FMD-035:** Latent: violates SG-009 only with the second resistor open (or the loopback open), which leaves the camera bus unterminated in intercept: the harness box SPICE pilot predicts a recessive edge of about 10.5 µs, missing the 1.5 µs sample point, so camera frames are lost while the device forwards (spice/predictions.md T-both-open, a prediction, no credit). One open alone leaves 120 Ω and an edge of about 0.06 µs. No check in the field; VS-HW-24 (e) measures both cases. Pass-through is not affected (R7/R8 sit on the NO side). No DFMEA row yet
+- **FMD-036:** Camera bus held recessive in intercept: no camera frames reach the device, so stock PCS messages are not forwarded. RX checks cover car-side messages only (as FMD-017), so no mechanism is credited. Pass-through is not affected (R7/R8 sit on the NO side). No DFMEA row yet
 - **FMD-023:** Installation check only (DFM-ACT-008)
 - **FMD-024:** SBU1 undriven, the pull-down selects pass-through and the stock path is restored, if the box stays powered
 - **FMD-025:** Latent until a hang occurs; no periodic proof of the reset path
@@ -182,11 +188,13 @@ From the workbook's `11_Open_Items` tab.
 - **OI-11:** FMD-032 (FMD-C-012): latent fault without coverage: Other (D1 short, D4 open: protection lost)
 - **OI-12:** FMD-033 (FMD-C-013): single-point fault without a safety mechanism: Short or leakage on a CAN line
 - **OI-13:** FMD-034 (FMD-C-013): latent fault without coverage: Open (clamp lost)
-- **OI-14:** FMD-023 (FMD-C-008): single-point fault without a safety mechanism: Open in the stock camera path
-- **OI-15:** FMD-025 (FMD-C-009): latent fault without coverage: Watchdog does not expire (LSI stopped, IWDG fault)
-- **OI-16:** 12 of 13 failure rates are generic estimates: replace with handbook or supplier values per part (WP-H-03 §2.3, OI-10)
-- **OI-17:** No rate is converted to the mission profile (IEC 61709)
-- **OI-18:** Dual-point PMHF term not computed
+- **OI-14:** FMD-035 (FMD-C-014): latent fault without coverage: One resistor open (camera side left with 120 Ω in intercept)
+- **OI-15:** FMD-036 (FMD-C-014): single-point fault without a safety mechanism: Short (camera CAN2_H to CAN2_L in intercept)
+- **OI-16:** FMD-023 (FMD-C-008): single-point fault without a safety mechanism: Open in the stock camera path
+- **OI-17:** FMD-025 (FMD-C-009): latent fault without coverage: Watchdog does not expire (LSI stopped, IWDG fault)
+- **OI-18:** 13 of 14 failure rates are generic estimates: replace with handbook or supplier values per part (WP-H-03 §2.3, OI-10)
+- **OI-19:** No rate is converted to the mission profile (IEC 61709)
+- **OI-20:** Dual-point PMHF term not computed
 
 ## 7. Revision history
 
@@ -200,3 +208,4 @@ From the workbook's `11_Open_Items` tab.
 | 0.6 | 2026-10-20 | Wire-end IDs of the WireViz drawings added; no rate, classification or metric change |
 | 0.7 | 2026-10-20 | Format review: target as data, rate kind and wire ends as fields; no rate, classification or metric change |
 | 0.8 | 2026-10-27 | FMD-033 note: harness box SPICE pilot predictions per short path (PR #510); whole mode stays single-point; no rate, classification or metric change |
+| 0.9 | 2026-10-27 | Camera-side termination R7/R8 added (FMD-C-014): one open latent, short single-point; total and SPF rates change |
