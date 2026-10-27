@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="682" viewBox="0 0 1280 682" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-15. SW FMEA reaction time by defence layer</title>
-  <desc id="d">SW FMEA (SWF rev 1.11): reaction times of 11 of 139 safety mechanisms on 10 failure modes, by defence layer (host, envelope, alert, siren, vehicle), on a log time axis; 11 code-derived. 8 rows have no timed warning to the driver.</desc>
+  <desc id="d">SW FMEA (SWF rev 1.12): reaction times of 11 of 139 safety mechanisms on 10 failure modes, by defence layer (host, envelope, alert, siren, vehicle), on a log time axis; 11 code-derived. 8 rows have no timed warning to the driver.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -10,7 +10,7 @@
   </defs>
   <rect width="1280" height="682" fill="#FCFCFB"/>
   <text x="40" y="44" font-size="20" fill="#0B0B0B" font-weight="700">Figure 3-15 · SW FMEA — who catches it, and when</text>
-  <text x="40" y="66" font-size="12.5" fill="#52514E">SWF rev 1.11 · BL-007 · draft · after a fault starts, how long until each layer reacts, and whether the driver is told</text>
+  <text x="40" y="66" font-size="12.5" fill="#52514E">SWF rev 1.12 · BL-007 · draft · after a fault starts, how long until each layer reacts, and whether the driver is told</text>
   <text x="1240" y="44" font-size="11" fill="#52514E" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#52514E" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E1E0D9" stroke-width="1"/>

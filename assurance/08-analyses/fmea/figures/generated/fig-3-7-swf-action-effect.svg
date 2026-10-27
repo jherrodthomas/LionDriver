@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="2300" viewBox="0 0 1280 2300" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-7. SW FMEA action effect (predicted, not achieved)</title>
-  <desc id="d">SW FMEA (SWF rev 1.11): 149 rated causes, as rated H 132, M 1, L 16; predicted if every action with a revised rating were completed H 112, M 1, L 36. One row per action with a revised rating (SWF-ACT-001, SWF-ACT-002, SWF-ACT-009, SWF-ACT-025, SWF-ACT-030, SWF-ACT-040, SWF-ACT-041, SWF-ACT-054, SWF-ACT-063, SWF-ACT-077, SWF-ACT-078, SWF-ACT-079, SWF-ACT-080, SWF-ACT-081) showing the causes it addresses and the predicted rating, which is not achieved or verified.</desc>
+  <desc id="d">SW FMEA (SWF rev 1.12): 149 rated causes, as rated H 132, M 1, L 16; predicted if every action with a revised rating were completed H 112, M 1, L 36. One row per action with a revised rating (SWF-ACT-001, SWF-ACT-002, SWF-ACT-009, SWF-ACT-025, SWF-ACT-030, SWF-ACT-040, SWF-ACT-041, SWF-ACT-054, SWF-ACT-063, SWF-ACT-077, SWF-ACT-078, SWF-ACT-079, SWF-ACT-080, SWF-ACT-081) showing the causes it addresses and the predicted rating, which is not achieved or verified.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -10,7 +10,7 @@
   </defs>
   <rect width="1280" height="2300" fill="#FCFCFB"/>
   <text x="40" y="44" font-size="20" fill="#0B0B0B" font-weight="700">Figure 3-7 · SW FMEA — Action Priority before and after planned actions</text>
-  <text x="40" y="66" font-size="12.5" fill="#52514E">SWF rev 1.11 · BL-007 · draft · actions that record a predicted (`revised`) rating, and the causes they address</text>
+  <text x="40" y="66" font-size="12.5" fill="#52514E">SWF rev 1.12 · BL-007 · draft · actions that record a predicted (`revised`) rating, and the causes they address</text>
   <text x="1240" y="44" font-size="11" fill="#52514E" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#52514E" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E1E0D9" stroke-width="1"/>
@@ -257,7 +257,7 @@
   <text x="50" y="1464.8" font-size="9.5" fill="#52514E" font-style="italic">(settings_in_scope), selfdrived.py (add_reference_entry_events,</text>
   <text x="50" y="1477.5" font-size="9.5" fill="#52514E" font-style="italic">distance_button_pressed), events.py (settingNotAssured); tests in…</text>
   <rect x="420" y="1381.1" width="36.5" height="15" rx="7.5" fill="#D03B3B"/><text x="438.2" y="1392.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="462.5" y="1392.1" font-size="10.5" fill="#0B0B0B" font-weight="600">S10 O5 D8 · 1 cause</text>
+  <text x="462.5" y="1392.1" font-size="10.5" fill="#0B0B0B" font-weight="600">S10 O5 D4 · 1 cause</text>
   <rect x="420" y="1400.1" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="1411.1" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">SWF-067.C1</text>
   <path d="M820 1431.8H852" fill="none" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#aG)"/>
   <rect x="860" y="1402.8" width="380" height="58" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" rx="8" stroke-dasharray="5 3"/>
@@ -347,15 +347,13 @@
   <text x="50" y="1961.1" font-size="10.5" fill="#0B0B0B">VS-SQ-20, including whether the reference EPS and ABS/VSC</text>
   <text x="50" y="1975.2" font-size="10.5" fill="#0B0B0B">answer UDS 0x19) and mutation of the status-bit and failure rules</text>
   <text x="50" y="1989.2" font-size="10.5" fill="#0B0B0B">in vehicle_dtc.py and the entry check, shown to fail…</text>
-  <text x="50" y="2002" font-size="9.5" fill="#52514E" font-style="italic">Evidence: Mutation done (DT-1..DT-7, host_mutation.py in CI):</text>
-  <text x="50" y="2014.7" font-size="9.5" fill="#52514E" font-style="italic">SWF-091.C1 D 4; C2 in part. Open: the vehicle check VS-SQ-20 and the</text>
-  <text x="50" y="2027.4" font-size="9.5" fill="#52514E" font-style="italic">mutation of the start-up record read in selfdrived</text>
+  <text x="50" y="2002" font-size="9.5" fill="#52514E" font-style="italic">Evidence: Mutation done (DT-1..DT-11, host_mutation.py in CI):</text>
+  <text x="50" y="2014.7" font-size="9.5" fill="#52514E" font-style="italic">SWF-091.C1 D 4 (rev 1.10); SWF-091.C2 D 4 (rev 1.12), with</text>
+  <text x="50" y="2027.4" font-size="9.5" fill="#52514E" font-style="italic">test_selfdrived_start.py running the real SelfdriveD constructor (the…</text>
   <rect x="420" y="1917" width="36.5" height="15" rx="7.5" fill="#D03B3B"/><text x="438.2" y="1927.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="462.5" y="1928" font-size="10.5" fill="#0B0B0B" font-weight="600">S10 O5 D4 · 1 cause</text>
+  <text x="462.5" y="1928" font-size="10.5" fill="#0B0B0B" font-weight="600">S10 O5 D4 · 2 causes</text>
   <rect x="420" y="1936" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="1946.9" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">SWF-091.C1</text>
-  <rect x="420" y="1959" width="36.5" height="15" rx="7.5" fill="#D03B3B"/><text x="438.2" y="1969.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="462.5" y="1970" font-size="10.5" fill="#0B0B0B" font-weight="600">S10 O5 D8 · 1 cause</text>
-  <rect x="420" y="1978" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="1988.9" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">SWF-091.C2</text>
+  <rect x="497.8" y="1936" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="534.7" y="1946.9" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">SWF-091.C2</text>
   <path d="M820 1974.7H852" fill="none" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#aG)"/>
   <rect x="860" y="1945.7" width="380" height="58" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" rx="8" stroke-dasharray="5 3"/>
   <rect x="874" y="1955.7" width="36.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="892.2" y="1966.6" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">AP H</text>
@@ -373,13 +371,15 @@
   <text x="50" y="2098.6" font-size="10.5" fill="#0B0B0B">opendbc cap and show test_stock_aeb.py and test_carcontroller.py</text>
   <text x="50" y="2112.6" font-size="10.5" fill="#0B0B0B">fail in CI (run the opendbc Toyota car tests in LionDriver CI);</text>
   <text x="50" y="2126.7" font-size="10.5" fill="#0B0B0B">AOU-04R vehicle test of the engine computer's AEB priority…</text>
-  <text x="50" y="2139.4" font-size="9.5" fill="#52514E" font-style="italic">Evidence: Host part done: stock_aeb_stand_down mutated in CI (AE-1,</text>
-  <text x="50" y="2152.2" font-size="9.5" fill="#52514E" font-style="italic">AE-2); the opendbc Toyota car tests already run in the unit_tests job.</text>
-  <text x="50" y="2164.9" font-size="9.5" fill="#52514E" font-style="italic">Open: a test of the controlsd call, mutation of the opendbc cap, the…</text>
+  <text x="50" y="2139.4" font-size="9.5" fill="#52514E" font-style="italic">Evidence: Host part done: stock_aeb_stand_down and its call in controlsd</text>
+  <text x="50" y="2152.2" font-size="9.5" fill="#52514E" font-style="italic">mutated in CI (AE-1..AE-3; test_controlsd_call_sites.py runs the real</text>
+  <text x="50" y="2164.9" font-size="9.5" fill="#52514E" font-style="italic">Controls.state_control), so SWF-093.C1 D 4 (rev 1.12); the opendbc…</text>
   <rect x="420" y="2054.4" width="36.5" height="15" rx="7.5" fill="#D03B3B"/><text x="438.2" y="2065.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="462.5" y="2065.4" font-size="10.5" fill="#0B0B0B" font-weight="600">S10 O5 D8 · 2 causes</text>
+  <text x="462.5" y="2065.4" font-size="10.5" fill="#0B0B0B" font-weight="600">S10 O5 D4 · 1 cause</text>
   <rect x="420" y="2073.4" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="2084.3" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">SWF-093.C1</text>
-  <rect x="497.8" y="2073.4" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="534.7" y="2084.3" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">SWF-093.C2</text>
+  <rect x="420" y="2096.4" width="36.5" height="15" rx="7.5" fill="#D03B3B"/><text x="438.2" y="2107.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="462.5" y="2107.4" font-size="10.5" fill="#0B0B0B" font-weight="600">S10 O5 D8 · 1 cause</text>
+  <rect x="420" y="2115.4" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="2126.3" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">SWF-093.C2</text>
   <path d="M820 2112.2H852" fill="none" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#aG)"/>
   <rect x="860" y="2083.2" width="380" height="58" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" rx="8" stroke-dasharray="5 3"/>
   <rect x="874" y="2093.2" width="36.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="892.2" y="2104.1" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">AP H</text>
