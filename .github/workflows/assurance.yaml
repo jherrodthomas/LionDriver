@@ -744,6 +744,47 @@ jobs:
     - name: Cranking-dip results within 1 % of the committed JSON, results page current
       run: '"$SUPPLY_ENV/bin/python" assurance/sim/supply/crank.py --check'
 
+  sim-harness-box:
+    name: simulation harness box
+    # Harness box switch path (assurance/sim/harness_box): the DFMEA box faults as DC operating points in ngspice 41
+    # (TL-58, the supply study's lock), and the same circuits run headless in Falstad CircuitJS (TL-60) with their node
+    # voltages compared to ngspice's within 5 mV. Falstad loads from falstad.com. Design aid: synthetic data (DSR-12),
+    # no credit.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      MICROMAMBA_URL: https://github.com/mamba-org/micromamba-releases/releases/download/2.3.2-0/micromamba-linux-64
+      MICROMAMBA_SHA256: ffc3cb8d52d4d6b354bdbb979c407719c485392b74e462cbd50811aa88e58f85
+      SUPPLY_ENV: ${{ github.workspace }}/../supply-env
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Cache the supply environment (keyed on the lock)
+      id: supply-cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.SUPPLY_ENV }}
+        key: supply-env-${{ hashFiles('assurance/sim/supply/supply-linux-64.lock') }}
+    - name: Create the supply environment from the explicit lock
+      if: steps.supply-cache.outputs.cache-hit != 'true'
+      run: |
+        curl -sSL -o "$RUNNER_TEMP/micromamba" "$MICROMAMBA_URL"
+        echo "$MICROMAMBA_SHA256  $RUNNER_TEMP/micromamba" | sha256sum -c -
+        chmod +x "$RUNNER_TEMP/micromamba"
+        MAMBA_ROOT_PREFIX="$RUNNER_TEMP/mamba" "$RUNNER_TEMP/micromamba" create -y -q -p "$SUPPLY_ENV" \
+          --file assurance/sim/supply/supply-linux-64.lock
+    - name: Checks (ngspice against closed forms, the shared netlist, the Falstad text)
+      run: '"$SUPPLY_ENV/bin/python" assurance/sim/harness_box/test_harness_box.py'
+    - name: Results current, Falstad files and link current
+      run: '"$SUPPLY_ENV/bin/python" assurance/sim/harness_box/harness_box.py --check'
+    - name: Install Playwright and Chromium
+      run: |
+        npm i --no-save --no-audit --no-fund --prefix assurance/sim/harness_box playwright@1.56.1
+        cd assurance/sim/harness_box && npx playwright install --with-deps chromium
+    - name: Falstad runs every scenario and agrees with ngspice within 5 mV
+      run: node assurance/sim/harness_box/check_falstad.mjs
+
   sim-interactive:
     name: simulation interactive pages
     # Interactive 3D pages (assurance/sim/interactive, Machine Skill, tool TL-57): the committed pages equal a fresh build

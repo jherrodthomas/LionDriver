@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-02 Hardware architectural and detailed design (device, panda MCU, harness, relay) |
 | Standard reference | ISO 26262-5:2018 §7 (hardware design: architectural and detailed design, safety-related HW elements); ISO 26262-8:2018 §13; ASPICE 4.0 HWE.2 |
-| Version | 0.10 (§3.6 harness wiring added: Figures 3-4 to 3-6 drawn from comma's published v3 harness drawings with WireViz, [`wiring/`](wiring/README.md); not measured; 2026-10-20). 0.9 (OI-4: DC-03 not pursued, DQ-209 option A; 2026-10-16). 0.8 (OI-1 route set by DQ-065, ask comma and wait; OI-3 both boards kept, DQ-011; 2026-10-16). 0.7 (harness box from the published v3 drawing: the intercept "relay" is two DG419LE analog switches powered from the box supply; HE-08, §3.1, §3.4, UK-03 updated; [RR-2026-010](reviews/RR-2026-010.md); 2026-10-15). 0.6 (§3.2 element hierarchy added as Figure 3-2; power-path diagram renumbered Figure 3-3; 2026-10-13). 0.5 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.4 (§3.1 and §3.4 diagrams redrawn as Figures 3-1 and 3-2; text versions kept; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: IWDG1 now used, started at the first relay drive and fed from the 100 Hz safety task, panda `9f60e17`; 0.3 s heartbeat revocation, panda `c2e5d93`; `0xc5` refused in a car mode in the reference build; DC-01, DC-09 status. Not verified on hardware). 0.1: initial draft |
+| Version | 0.11 (§3.6: link to the harness box switch-path circuit, Falstad and ngspice, `sim/harness_box/`; synthetic, no credit; 2026-10-27). 0.10 (§3.6 harness wiring added: Figures 3-4 to 3-6 drawn from comma's published v3 harness drawings with WireViz, [`wiring/`](wiring/README.md); not measured; 2026-10-20). 0.9 (OI-4: DC-03 not pursued, DQ-209 option A; 2026-10-16). 0.8 (OI-1 route set by DQ-065, ask comma and wait; OI-3 both boards kept, DQ-011; 2026-10-16). 0.7 (harness box from the published v3 drawing: the intercept "relay" is two DG419LE analog switches powered from the box supply; HE-08, §3.1, §3.4, UK-03 updated; [RR-2026-010](reviews/RR-2026-010.md); 2026-10-15). 0.6 (§3.2 element hierarchy added as Figure 3-2; power-path diagram renumbered Figure 3-3; 2026-10-13). 0.5 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.4 (§3.1 and §3.4 diagrams redrawn as Figures 3-1 and 3-2; text versions kept; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: IWDG1 now used, started at the first relay drive and fed from the 100 Hz safety task, panda `9f60e17`; 0.3 s heartbeat revocation, panda `c2e5d93`; `0xc5` refused in a car mode in the reference build; DC-01, DC-09 status. Not verified on hardware). 0.1: initial draft |
 | Status | Draft |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-07) |
 | Author | Assurance team (initial draft) |
@@ -200,6 +200,12 @@ connectors use the same pin positions, with the camera bus CAN2 where the car si
 and the camera bus joins the car bus (stock path). SBU1 at 5 V moves both to NO (intercept). U1/U2 run from box VIN;
 their DG419LE ratings against VIN are unconfirmed (DFM-ACT-015). Source:
 [`wiring/e05-harness-box.yaml`](wiring/e05-harness-box.yaml).
+
+**Try the box faults.** The switch path of Figure 3-5 is also a circuit to flip in the browser: the device's SBU1
+drive against R2/R3 and the DG419LE threshold, the ignition sense through Q6, and a clamp diode on CAN_H, with the
+DFMEA faults DFM-010.C3, DFM-011.C2, DFM-014.C2 and DFM-021.C1 as switches. The Falstad link and the ngspice numbers of
+record are on [`sim/results/harness-box.md`](../sim/results/harness-box.md) (synthetic, no evidence credit; the
+threshold, the SBU1 driver and the SBU2 pull-up are estimates until DFM-ACT-015 and VS-HW-24).
 
 ![Figure 3-6: OBD-C cable from the box receptacle J3 to the device port with the USB-C full-featured crossover: car CAN0 arrives at device B11/B10 as bus 0, camera CAN2 at A11/A10 as bus 2, radar CAN1 at B2/B3 as bus 1, box SBU1 at device SBU2 (relay drive) and box SBU2 at device SBU1 (ignition sense)](wiring/e05-obdc-device.svg)
 

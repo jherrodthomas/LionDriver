@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="861" viewBox="0 0 1280 861" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 4-1. Action Priority overview of the four FMEAs</title>
-  <desc id="d">Action Priority overview: System FMEA SFM rev 0.36 H 107, M 1, L 1; DFMEA DFM rev 0.11 H 30, M 0, L 0; SW FMEA SWF rev 1.11 H 132, M 1, L 16; PFMEA PFM rev 0.4 H 17, M 0, L 1. For each FMEA an occurrence by detection grid of the severity 9–10 causes over the AP table, the causes at other severities, and how the AP H causes are treated (action status or rationale).</desc>
+  <desc id="d">Action Priority overview: System FMEA SFM rev 0.36 H 107, M 1, L 1; DFMEA DFM rev 0.12 H 30, M 0, L 0; SW FMEA SWF rev 1.11 H 132, M 1, L 16; PFMEA PFM rev 0.4 H 17, M 0, L 1. For each FMEA an occurrence by detection grid of the severity 9–10 causes over the AP table, the causes at other severities, and how the AP H causes are treated (action status or rationale).</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -209,7 +209,7 @@
   <rect x="40" y="696" width="49.3" height="16" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1" rx="2"/>
   <text x="95.3" y="708" font-size="10" fill="#0F172A">32  rationale, no action</text>
   <text x="345" y="114" font-size="15" fill="#0F172A" font-weight="700">DFMEA</text>
-  <text x="345" y="131" font-size="10.5" fill="#475569">DFM rev 0.11 · BL-007 · draft</text>
+  <text x="345" y="131" font-size="10.5" fill="#475569">DFM rev 0.12 · BL-007 · draft</text>
   <text x="345" y="146" font-size="10.5" fill="#475569">30 rated causes</text>
   <rect x="345" y="158" width="285" height="22" fill="#D2553F"/>
   <text x="487.5" y="173" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">H 30</text>

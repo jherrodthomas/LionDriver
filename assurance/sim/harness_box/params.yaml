@@ -1,0 +1,44 @@
+# Harness box v3 switch path (harness_box.py): every input with its source and status. Topology from the published
+# harness box drawing as read in RR-2026-010 (HB-01..HB-07) and WP-H-02 HE-08, HE-10. status: published = from a cited
+# document; estimate = a placeholder until DFM-ACT-015 (datasheet limits) or the VS-HW-24 bench measurement replaces it.
+# Units: SI. Synthetic (DSR-12), design aid, no evidence credit (DQ-413).
+
+vin: {value: 14.0, band: [9.0, 16.0], status: published,
+      source: "box VIN = IGN_12 through D1 or comma power (HB-03): a running car's 13.5-14.5 V, 9 V at a weak start, 16 V the TVS D4 stand-off (HB-04)"}
+
+pull_down: {value: 240.0, status: published,
+            source: "R2 + R3, 2 x 120 ohm in series, SBU1 to GND (HB-02; e05 harness box BOM)"}
+
+drive:
+  # the device turns an open-drain, active-low output into a 5 V SBU1 drive; the driver is not published (UK-06)
+  v: {value: 5.0, band: [4.75, 5.25], status: estimate, source: "a 5 V rail, +/-5 %"}
+  r_out: {value: 20.0, band: [5.0, 100.0], status: estimate,
+          source: "output resistance of the unknown SBU1 driver plus the OBD-C cable (UK-06)"}
+
+switch_input:
+  # DG419LE IN pin: the logic-high threshold with VL tied to VIN is not published at VL near 14 V (RR-2026-010 §4,
+  # DFM-ACT-015). Modelled as a fraction of VL; field use (the box switches on TSS2 cars) suggests it stays below 5 V
+  # at nominal VIN, so the nominal fraction is set there, and the band spans a CMOS input from TTL-like to VL/2
+  threshold_fraction: {value: 0.30, band: [0.20, 0.50], status: estimate,
+                       source: "VINH / VL; unknown at VL = VIN (DFM-011.C2, DFM-ACT-015); bench VS-HW-24 (b) measures it"}
+  leak: {value: 1.0e+8, band: [1.0e+7, 1.0e+9], status: estimate,
+         source: "IN-pin leakage and board leakage, as a resistance to VIN and to GND; decides where a floating IN settles"}
+
+ignition_sense:
+  # IGN_12 -> R4/R5 divider -> Q6 (DMN3200U-7) pulls SBU2 low through R1 (HB-06). Q6 is drawn as a switch: R4/R5 are
+  # not published, and the question is only whether SBU2 reads low
+  r1: {value: 1000.0, status: published, source: "R1 1 kohm in series with Q6 to SBU2 (HB-06)"}
+  pull_up_v: {value: 3.3, status: estimate, source: "the device's SBU2 sense rail (the ADC reference, WP-H-02 HE-09)"}
+  pull_up_r: {value: 10000.0, band: [4700.0, 47000.0], status: estimate, source: "the device's SBU2 pull-up; not published"}
+  adc_threshold: {value: 0.9, status: published, source: "avdd_mV / 2 = 900 mV (panda drivers/harness.h, WP-H-02 HE-09)"}
+
+can_clamp:
+  # D2 (BAS40SDW) clamps CAN0_H/L to VIN and GND (HB-04). A dominant CAN_H driven at 3.5 V into the 60 ohm bus;
+  # a leaky or shorted clamp diode to GND as a resistance
+  dominant_v: {value: 3.5, status: published, source: "ISO 11898-2 dominant CAN_H, typical"}
+  recessive_v: {value: 2.5, status: published, source: "ISO 11898-2 recessive level"}
+  driver_r: {value: 30.0, status: estimate, source: "transceiver output resistance, dominant"}
+  bus_r: {value: 60.0, status: published, source: "two 120 ohm terminations in parallel"}
+  leak_r: {value: 100.0, band: [1.0, 10000.0], status: estimate,
+           source: "a degraded BAS40 to GND (DFM-021.C1): 1 ohm is a short, 10 kohm a slight leak"}
+  dominant_threshold: {value: 0.9, status: published, source: "ISO 11898-2 receiver: differential above 0.9 V is dominant"}
