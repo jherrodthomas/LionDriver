@@ -183,7 +183,7 @@ Checks the termination of the camera bus in intercept. The bus then runs from th
 
 **Set-up:** reference device on the OBD-C cable at the breakout, intercept driven by the device, bench SBU1 source disconnected. **Remove channel A's own 120 Ω**, so that only the box terminates the camera side. Channel A sends 0x343 every 10 ms. Scope ch 1 moves to CAN_H/CAN_L at the camera connector X1.
 
-**Prediction** (harness box SPICE pilot, PR #510; idealised model, no credit): with one resistor left, levels are OK and the recessive edge is about 0.06 µs. With both lifted, the edge is about 10 µs, which misses the 1.5 µs sample point at 500 kbit/s.
+**Prediction** ([harness box SPICE pilot](../spice/predictions.md) §2, rows T-loop-open, T-r7-open and T-both-open; idealised model, no credit): with one resistor left, levels are OK and the recessive edge is about 0.06 µs. With both lifted, the edge is about 10 µs, which misses the 1.5 µs sample point at 500 kbit/s.
 
 **Pass:** rows 1–3 show no error frames in 2 min, and the recessive edge stays under 1 µs. Row 4 has no pass or fail: record the effect against the prediction.
 
