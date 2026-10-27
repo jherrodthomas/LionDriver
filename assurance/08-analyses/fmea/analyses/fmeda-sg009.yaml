@@ -20,7 +20,7 @@ analysis:
   id: FMD
   type: fmeda
   title: FMEDA — SG-009 stock AEB availability (relay and forwarding path), generic failure rates
-  revision: '0.9'
+  revision: '0.10'
   status: draft
   baseline: BL-002
   rating_tables: RT-1
@@ -74,6 +74,9 @@ analysis:
   - revision: '0.9'
     date: '2026-10-27'
     change: 'Camera-side termination R7/R8 added (FMD-C-014): one open latent, short single-point; total and SPF rates change'
+  - revision: '0.10'
+    date: '2026-10-27'
+    change: 'FMD-035 and FMD-036 linked to DFMEA DFM-022 and DFM-023 (DFMEA rev 0.13); no rate, classification or metric change'
 safety_mechanisms:
 - id: FMD-SM-001
   description: Flash ECC (single-error correction in silicon; corrected reads are transparent)
@@ -449,13 +452,15 @@ components:
     distribution: 0.6
     violates_sg_directly: false
     mpf_potential: true
-    notes: 'Latent: violates SG-009 only with the second resistor open (or the loopback open), which leaves the camera bus unterminated in intercept: the harness box SPICE pilot predicts a recessive edge of about 10.5 µs, missing the 1.5 µs sample point, so camera frames are lost while the device forwards (spice/predictions.md T-both-open, a prediction, no credit). One open alone leaves 120 Ω and an edge of about 0.06 µs. No check in the field; VS-HW-24 (e) measures both cases. Pass-through is not affected (R7/R8 sit on the NO side). No DFMEA row yet'
+    dfmea_ref: DFM-022
+    notes: 'Latent: violates SG-009 only with the second resistor open (or the loopback open), which leaves the camera bus unterminated in intercept: the harness box SPICE pilot predicts a recessive edge of about 10.5 µs, missing the 1.5 µs sample point, so camera frames are lost while the device forwards (spice/predictions.md T-both-open, a prediction, no credit). One open alone leaves 120 Ω and an edge of about 0.06 µs. No check in the field; VS-HW-24 (e) measures both cases. Pass-through is not affected (R7/R8 sit on the NO side)'
   - id: FMD-036
     mode: Short (camera CAN2_H to CAN2_L in intercept)
     distribution: 0.4
     violates_sg_directly: true
     mpf_potential: false
-    notes: 'Camera bus held recessive in intercept: no camera frames reach the device, so stock PCS messages are not forwarded. RX checks cover car-side messages only (as FMD-017), so no mechanism is credited. Pass-through is not affected (R7/R8 sit on the NO side). No DFMEA row yet'
+    dfmea_ref: DFM-023
+    notes: 'Camera bus held recessive in intercept: no camera frames reach the device, so stock PCS messages are not forwarded. RX checks cover car-side messages only (as FMD-017), so no mechanism is credited. Pass-through is not affected (R7/R8 sit on the NO side)'
 - id: FMD-C-008
   part: Harness connector and harness-box wiring in the stock path
   ref_des: Harness and box wiring

@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.9 | draft | BL-002 | RT-1 | 2026-10-27 |
+| 0.10 | draft | BL-002 | RT-1 | 2026-10-27 |
 
 **Scope.** Random hardware faults of the panda section and harness that can keep the stock camera's PCS messages from reaching the car (LD-HARA-001 SG-009, ASIL B; assurance WP-C-03 SG-07, ASIL B). Reference device at BL-002
 
@@ -118,8 +118,8 @@ Classified for this file's own goal (rating-tables §6.1). λ is the component r
 | FMD-032 | FMD-C-012 | Other (D1 short, D4 open: protection lost) | 40 % | 1.2 | 🟡 MPF, latent part | — | DFM-020 | — |
 | FMD-033 | FMD-C-013 | Short or leakage on a CAN line | 30 % | 0.6 | 🔴 SPF | — | DFM-021 | — |
 | FMD-034 | FMD-C-013 | Open (clamp lost) | 70 % | 1.4 | 🟡 MPF, latent part | — | DFM-021 | — |
-| FMD-035 | FMD-C-014 | One resistor open (camera side left with 120 Ω in intercept) | 60 % | 0.24 | 🟡 MPF, latent part | — | — | — |
-| FMD-036 | FMD-C-014 | Short (camera CAN2_H to CAN2_L in intercept) | 40 % | 0.16 | 🔴 SPF | — | — | — |
+| FMD-035 | FMD-C-014 | One resistor open (camera side left with 120 Ω in intercept) | 60 % | 0.24 | 🟡 MPF, latent part | — | DFM-022 | — |
+| FMD-036 | FMD-C-014 | Short (camera CAN2_H to CAN2_L in intercept) | 40 % | 0.16 | 🔴 SPF | — | DFM-023 | — |
 | FMD-023 | FMD-C-008 | Open in the stock camera path | 30 % | 3 | 🔴 SPF | — | DFM-013 | — |
 | FMD-024 | FMD-C-008 | Connector loose (whole device off the bus) | 70 % | 7 | safe | — | DFM-012 | — |
 | FMD-025 | FMD-C-009 | Watchdog does not expire (LSI stopped, IWDG fault) | 50 % | 1 | 🟡 MPF, latent part | — | DFM-006 | — |
@@ -148,8 +148,8 @@ Classified for this file's own goal (rating-tables §6.1). λ is the component r
 - **FMD-032:** Latent loss of reverse or transient protection
 - **FMD-033:** Car or camera bus loaded in either switch state (RR-2026-010 F-07). The harness box SPICE pilot (PR #510; idealised model, generic transceivers; a prediction, no credit) splits the mode: a lower-diode short to GND on CAN_H loses dominant bits; an upper-diode short to VIN holds the line near 13 V, outside the receiver common-mode range; CAN_L to GND and 1 kOhm leakage leave readable levels. A D3 short on camera CAN_H to GND also stops the joined stock bus in pass-through. The whole mode stays single-point until VS-HW-24 (d) measures the split on a real box
 - **FMD-034:** Latent loss of bus protection
-- **FMD-035:** Latent: violates SG-009 only with the second resistor open (or the loopback open), which leaves the camera bus unterminated in intercept: the harness box SPICE pilot predicts a recessive edge of about 10.5 µs, missing the 1.5 µs sample point, so camera frames are lost while the device forwards (spice/predictions.md T-both-open, a prediction, no credit). One open alone leaves 120 Ω and an edge of about 0.06 µs. No check in the field; VS-HW-24 (e) measures both cases. Pass-through is not affected (R7/R8 sit on the NO side). No DFMEA row yet
-- **FMD-036:** Camera bus held recessive in intercept: no camera frames reach the device, so stock PCS messages are not forwarded. RX checks cover car-side messages only (as FMD-017), so no mechanism is credited. Pass-through is not affected (R7/R8 sit on the NO side). No DFMEA row yet
+- **FMD-035:** Latent: violates SG-009 only with the second resistor open (or the loopback open), which leaves the camera bus unterminated in intercept: the harness box SPICE pilot predicts a recessive edge of about 10.5 µs, missing the 1.5 µs sample point, so camera frames are lost while the device forwards (spice/predictions.md T-both-open, a prediction, no credit). One open alone leaves 120 Ω and an edge of about 0.06 µs. No check in the field; VS-HW-24 (e) measures both cases. Pass-through is not affected (R7/R8 sit on the NO side)
+- **FMD-036:** Camera bus held recessive in intercept: no camera frames reach the device, so stock PCS messages are not forwarded. RX checks cover car-side messages only (as FMD-017), so no mechanism is credited. Pass-through is not affected (R7/R8 sit on the NO side)
 - **FMD-023:** Installation check only (DFM-ACT-008)
 - **FMD-024:** SBU1 undriven, the pull-down selects pass-through and the stock path is restored, if the box stays powered
 - **FMD-025:** Latent until a hang occurs; no periodic proof of the reset path
@@ -209,3 +209,4 @@ From the workbook's `11_Open_Items` tab.
 | 0.7 | 2026-10-20 | Format review: target as data, rate kind and wire ends as fields; no rate, classification or metric change |
 | 0.8 | 2026-10-27 | FMD-033 note: harness box SPICE pilot predictions per short path (PR #510); whole mode stays single-point; no rate, classification or metric change |
 | 0.9 | 2026-10-27 | Camera-side termination R7/R8 added (FMD-C-014): one open latent, short single-point; total and SPF rates change |
+| 0.10 | 2026-10-27 | FMD-035 and FMD-036 linked to DFMEA DFM-022 and DFM-023 (DFMEA rev 0.13); no rate, classification or metric change |
