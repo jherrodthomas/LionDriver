@@ -2632,13 +2632,17 @@ def render_dfa(doc: dict, fig: str) -> str:
             rows_svg.append(rect(cx - 9, y + 4, 18, 18, "#FFFFFF", col, 2, 4))
           else:
             rows_svg.append(rect(cx - 9, y + 4, 18, 18, col, None, 0, 4))
-      mxx = rx
+      mxx, my = rx, y + 5
       if not d["measures"]:
         rows_svg.append(txt(mxx, y + 16, "no measure", 10, RED, 700))
       for mid in d["measures"]:
         st = measures[mid]["status"]
         fill, fg, stroke, dashed = DM_COL[st]
-        p, w = pill(mxx, y + 5, mid, fill, fg, stroke, dashed=dashed)
+        _, w = pill(0, 0, mid, fill, fg, stroke, dashed=dashed)
+        if mxx > rx and mxx + w > 1240:  # wrap to a new line rather than run past the figure edge
+          mxx, my = rx, my + 20
+          rh += 20
+        p, w = pill(mxx, my, mid, fill, fg, stroke, dashed=dashed)
         rows_svg.append(p)
         mxx += w + 4
       rows_svg.append(line(lab_x, y + rh, 1240, y + rh, "#F1F5F9"))
