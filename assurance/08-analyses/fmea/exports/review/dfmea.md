@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.11 | draft | BL-007 | RT-3 | 2026-10-16 |
+| 0.12 | draft | BL-007 | RT-3 | 2026-10-16 |
 
 **Scope.** Safety-relevant hardware of AC-001 at BL-007 (hardware as at BL-002): comma 3X panda section (STM32H725, clock and watchdog, MCU supply, CAN transceivers), Toyota harness and relay box, SoC-MCU interface, siren path, enclosure and cooling. SoC, cameras and other QM hardware only where they couple into these (WP-A-03).
 
@@ -341,7 +341,7 @@ Safety mechanisms: (1) None: no relay readback (GAP-12)
 
 [Monitoring and system response](#7-monitoring-and-system-response): `DFM-010.C1` mechanism 1: M 10 · F 6 · S after response 10 → 🔴 **H**<br>`DFM-010.C2` mechanism 1: M 10 · F 4 · S after response 10 → 🔴 **H**<br>`DFM-010.C3` mechanism 1: M 10 · F 2 · S after response 10 → 🟠 M<br>`DFM-010.C4` mechanism 1: M 10 · F 4 · S after response 10 → 🔴 **H**
 
-<sub>Note: WP-H-03 FM-REL-02/04: a single-point path for the PCS goal that no firmware change can close. RR-2026-010 F-03: the release default rests on R2+R3 (HWSR-506e).</sub>
+<sub>Note: WP-H-03 FM-REL-02/04: a single-point path for the PCS goal that no firmware change can close. RR-2026-010 F-03: the release default rests on R2+R3 (HWSR-506e). Circuit view (synthetic, no credit) in assurance/sim/results/harness-box.md, with a Falstad link to flip this fault.</sub>
 
 #### DFM-011 · Intercept switch stays in pass-through when driven
 
@@ -363,7 +363,7 @@ Safety mechanisms: (1) Relay malfunction detection: stock camera message on the 
 
 [Monitoring and system response](#7-monitoring-and-system-response): `DFM-011.C1` mechanism 1: M 8 · F 6 · S after response 10 → 🔴 **H**<br>`DFM-011.C2` mechanism 1: M 8 · F 2 · S after response 10 → 🟠 M
 
-<sub>Note: WP-H-03 FM-REL-01. The BL-006 latch changes the reaction, not the switch; S, O, D and M unchanged.</sub>
+<sub>Note: WP-H-03 FM-REL-01. The BL-006 latch changes the reaction, not the switch; S, O, D and M unchanged. Circuit view (synthetic, no credit) in assurance/sim/results/harness-box.md, with a Falstad link to flip this fault.</sub>
 
 #### DFM-020 · Harness box loses its supply while the car is on
 
@@ -406,7 +406,7 @@ Safety mechanisms: (1) RX timeouts withdraw control; host canError and canBusMis
 
 [Monitoring and system response](#7-monitoring-and-system-response): `DFM-021.C1` mechanism 1: M 8 · F 3 · S after response 10 → 🔴 **H**
 
-<sub>Note: RR-2026-010 F-07.</sub>
+<sub>Note: RR-2026-010 F-07. Circuit view (synthetic, no credit) in assurance/sim/results/harness-box.md, with a Falstad link to flip this fault.</sub>
 
 ### `DFM-SE-007` Harness, connectors, SBU orientation and ignition sense
 
@@ -461,7 +461,7 @@ Effects:
 | `DFM-014.C1` Ignition sense line shorted | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-008 |
 | `DFM-014.C2` Ignition-sense transistor Q6 (DMN3200U, harness box) drain-source short, holding SBU2 low | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-008, DFM-ACT-014 |
 
-<sub>Note: WP-H-03 FM-IGN-02. Line open is the safe direction (2 s timeout).</sub>
+<sub>Note: WP-H-03 FM-IGN-02. Line open is the safe direction (2 s timeout). Circuit view (synthetic, no credit) in assurance/sim/results/harness-box.md, with a Falstad link to flip this fault.</sub>
 
 ### `DFM-SE-008` SoC-MCU interface: SPI link, STM_RST_N, STM_BOOT0
 

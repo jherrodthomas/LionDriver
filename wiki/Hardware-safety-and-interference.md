@@ -55,6 +55,15 @@ Two related ideas belong with it, and are analysed in the
   openpilot computer and the safety chip. The fault-tree AND gates and the shared resources behind them are checked
   in [`dfa-gates.md`](../assurance/08-analyses/dfa/dfa-gates.md).
 
+## Try it: the harness box faults
+
+The harness box decides whether the stock camera reaches the car or the item intercepts it. Its switch path is a
+circuit you can open in the browser and break: the
+[harness box results page](../assurance/sim/results/harness-box.md) has a Falstad link where each DFMEA fault of the
+box (pull-down open, switch threshold too high, ignition-sense transistor shorted, clamp diode leaking) is a switch to
+flip. The numbers of record are ngspice's, on the same page, and CI checks the two agree. Synthetic, no evidence
+credit; three part values are still estimates.
+
 ## Where next
 
 - [From hazard to test](From-hazard-to-test.md): where these hardware requirements come from.
