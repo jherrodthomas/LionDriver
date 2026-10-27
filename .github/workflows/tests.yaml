@@ -124,6 +124,13 @@ jobs:
       env:
         RAYLIB_BACKEND: headless
       run: tools/op.sh test
+    # LionDriver SW FMEA SWF-ACT-078, -080, -081: each hand-written mutant of the host safety code must make its
+    # targeted tests fail, so those tests count as proven (RT-2 detection D 4)
+    - name: Host safety tests kill their mutants
+      timeout-minutes: 15
+      env:
+        RAYLIB_BACKEND: headless
+      run: .venv/bin/python tools/ci/host_mutation.py
 
   process_replay:
     name: process replay

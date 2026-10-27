@@ -1,0 +1,239 @@
+# Hand-written mutants of the LionDriver host safety code, run by host_mutation.py (SW FMEA SWF-ACT-078, -080, -081).
+# Each mutant is a defect an FMEA cause describes; the tests named for it must fail on it. `find` must occur exactly
+# once in `file`. `fmea` names the causes whose detection rating rests on the tests killing the mutant. TOML, so that
+# the openpilot environment reads it with the standard library.
+schema_version = 1
+
+# EPS-fault warning escalation (TSR-607 (b), (c); car_events.py)
+[[mutants]]
+id = "CE-1"
+file = "openpilot/selfdrive/car/car_events.py"
+find = "silent_allowed = self.steer_fault_frames <= STEER_FAULT_SILENT_FRAMES"
+replace = "silent_allowed = True"
+tests = ["openpilot/selfdrive/car/tests/test_steer_fault_warning.py"]
+fmea = ["SWF-088.C1"]
+why = "the lighter prompt stays latched for the whole fault (the BL-005 behaviour, GAP-03)"
+
+[[mutants]]
+id = "CE-2"
+file = "openpilot/selfdrive/car/car_events.py"
+find = "silent_allowed = self.steer_fault_frames <= STEER_FAULT_SILENT_FRAMES"
+replace = "silent_allowed = self.steer_fault_frames <= STEER_FAULT_SILENT_FRAMES * 2"
+tests = ["openpilot/selfdrive/car/tests/test_steer_fault_warning.py"]
+fmea = ["SWF-088.C1"]
+why = "the take-over request comes after 3 s instead of 1.5 s"
+
+[[mutants]]
+id = "CE-3"
+file = "openpilot/selfdrive/car/car_events.py"
+find = "        if self.steer_fault_frames > STEER_FAULT_SILENT_FRAMES:\n          events.add(EventName.steerTempUnavailableSilent)"
+replace = "        if False:\n          events.add(EventName.steerTempUnavailableSilent)"
+tests = ["openpilot/selfdrive/car/tests/test_steer_fault_warning.py"]
+fmea = ["SWF-088.C2"]
+why = "no prompt while the driver keeps steering through the fault (the BL-005 behaviour)"
+
+# minimum-risk latch (TSR-633; minimum_risk.py)
+[[mutants]]
+id = "MR-1"
+file = "openpilot/selfdrive/selfdrived/minimum_risk.py"
+find = "    if not enabled:\n      self.active = False"
+replace = "    if not enabled:\n      pass"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_minimum_risk.py"]
+fmea = ["SWF-062.C1"]
+why = "the latch is not cleared when the driver takes over, so the next engagement starts stopping"
+
+[[mutants]]
+id = "MR-2"
+file = "openpilot/selfdrive/selfdrived/minimum_risk.py"
+find = "    elif no_response_decel:\n      self.active = True"
+replace = "    elif no_response_decel:\n      pass"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_minimum_risk.py"]
+fmea = ["SWF-062.C1"]
+why = "the latch is never set"
+
+[[mutants]]
+id = "MR-3"
+file = "openpilot/selfdrive/selfdrived/minimum_risk.py"
+find = "    return self.active"
+replace = "    return no_response_decel and enabled"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_minimum_risk.py"]
+fmea = ["SWF-062.C1"]
+why = "the manoeuvre follows the DM request, so a dmonitoringd restart drops it (the BL-006 behaviour)"
+
+# announcement before the no-response stop (TSR-624; events.py, policy.py)
+[[mutants]]
+id = "AN-1"
+file = "openpilot/selfdrive/selfdrived/events.py"
+find = "    if decel_in > 0:\n      text_2 = f\"{alert_text_2} - Car Stops in {math.ceil(decel_in)} s\""
+replace = "    if False:\n      text_2 = f\"{alert_text_2} - Car Stops in {math.ceil(decel_in)} s\""
+tests = ["openpilot/selfdrive/selfdrived/tests/test_minimum_risk.py"]
+fmea = ["SWF-050.C1"]
+why = "the terminal alert does not count down to the stop"
+
+[[mutants]]
+id = "AN-2"
+file = "openpilot/selfdrive/monitoring/policy.py"
+find = "dm.noResponseDecelIn = max(0., (self.no_response_timeout - self.cnt_since_alert_3) * DT_DMON) \\"
+replace = "dm.noResponseDecelIn = max(0., self.no_response_timeout * DT_DMON) \\"
+tests = ["openpilot/selfdrive/monitoring/test_monitoring.py"]
+fmea = ["SWF-050.C1"]
+why = "the countdown does not run down, so the stop starts while the alert still shows 5 s"
+
+# DM countdown in elapsed time and the uncertain-output rule (SWSR-635a/b; policy.py)
+[[mutants]]
+id = "PO-1"
+file = "openpilot/selfdrive/monitoring/policy.py"
+find = "      dt = min((frame_id - self.last_frame_id) * DT_DMON, self.settings._MAX_FRAME_GAP_TIME)"
+replace = "      dt = DT_DMON"
+tests = ["openpilot/selfdrive/monitoring/test_monitoring.py"]
+fmea = ["SWF-061.C1"]
+why = "timers count evaluated frames again, so a slow DM model stretches every alert (the BL-006 behaviour)"
+
+[[mutants]]
+id = "PO-2"
+file = "openpilot/selfdrive/monitoring/policy.py"
+find = "    step = self.step_change * self.dt / DT_DMON"
+replace = "    step = self.step_change"
+tests = ["openpilot/selfdrive/monitoring/test_monitoring.py"]
+fmea = ["SWF-061.C1"]
+why = "awareness moves one fixed step per frame whatever the elapsed time"
+
+[[mutants]]
+id = "PO-3"
+file = "openpilot/selfdrive/monitoring/policy.py"
+find = "      # running when the face is lost or the model is uncertain, so the escalation does not stop at orange\n      self.step_change = DT_DMON / self.settings._VISION_POLICY_ALERT_3_TIMEOUT"
+replace = "      # running when the face is lost or the model is uncertain, so the escalation does not stop at orange\n      self.step_change = 0."
+tests = ["openpilot/selfdrive/monitoring/test_monitoring.py"]
+fmea = ["SWF-061.C1"]
+why = "past orange the countdown stops when the face is lost (the BL-006 behaviour, SWSR-635b)"
+
+# wheel-touch distance track (TSR-634; policy.py)
+[[mutants]]
+id = "WT-1"
+file = "openpilot/selfdrive/monitoring/policy.py"
+find = "      self.wheeltouch_distance += car_speed * self.dt"
+replace = "      self.wheeltouch_distance += 0."
+tests = ["openpilot/selfdrive/monitoring/test_monitoring.py"]
+fmea = ["SWF-061.C4"]
+why = "no distance is integrated, so only the 5/15/25 s time track remains"
+
+# stock-AEB stand-down (DQ-300, TSR-713; longcontrol.py)
+[[mutants]]
+id = "AE-1"
+file = "openpilot/selfdrive/controls/lib/longcontrol.py"
+find = "  return min(a_target, 0.0), (accel_limits[0], min(accel_limits[1], 0.0))"
+replace = "  return a_target, accel_limits"
+tests = ["openpilot/selfdrive/controls/tests/test_stock_aeb.py"]
+fmea = ["SWF-093.C1"]
+why = "no stand-down during a stock AEB event"
+
+[[mutants]]
+id = "AE-2"
+file = "openpilot/selfdrive/controls/lib/longcontrol.py"
+find = "  return min(a_target, 0.0), (accel_limits[0], min(accel_limits[1], 0.0))"
+replace = "  return min(a_target, 0.0), accel_limits"
+tests = ["openpilot/selfdrive/controls/tests/test_stock_aeb.py"]
+fmea = ["SWF-093.C1"]
+why = "the target is capped but the PID upper limit is not, so a wound-up integrator still drives"
+
+# start-up fault-code read (TSR-629, SWSR-629..629d; vehicle_dtc.py, selfdrived.py)
+[[mutants]]
+id = "DT-1"
+file = "openpilot/selfdrive/car/vehicle_dtc.py"
+find = "    if status & availability & ACTIVE_STATUS_MASK and (ecu, code) not in EXEMPT_DTCS:"
+replace = "    if status & 0x01 and (ecu, code) not in EXEMPT_DTCS:"
+tests = ["openpilot/selfdrive/car/tests/test_vehicle_dtc.py"]
+fmea = ["SWF-091.C1"]
+why = "only test-failed counts as active; confirmed and warning-lamp codes are missed"
+
+[[mutants]]
+id = "DT-2"
+file = "openpilot/selfdrive/car/vehicle_dtc.py"
+find = "  return EcuDtcResult(ecu, ACTIVE if active else OK, tuple(active), tuple(stored))"
+replace = "  return EcuDtcResult(ecu, OK, tuple(active), tuple(stored))"
+tests = ["openpilot/selfdrive/car/tests/test_vehicle_dtc.py"]
+fmea = ["SWF-091.C1"]
+why = "an active code is reported healthy"
+
+[[mutants]]
+id = "DT-3"
+file = "openpilot/selfdrive/car/vehicle_dtc.py"
+find = "  if availability & ACTIVE_STATUS_MASK == 0:"
+replace = "  if False:"
+tests = ["openpilot/selfdrive/car/tests/test_vehicle_dtc.py"]
+fmea = ["SWF-091.C1"]
+why = "an ECU that supports none of the active bits counts as healthy instead of failed"
+
+[[mutants]]
+id = "DT-4"
+file = "openpilot/selfdrive/car/vehicle_dtc.py"
+find = "      results.append(EcuDtcResult(name, FAILED, detail=f\"no complete answer from 0x{addrs[name][0]:x}\"))"
+replace = "      results.append(EcuDtcResult(name, OK, detail=f\"no complete answer from 0x{addrs[name][0]:x}\"))"
+tests = ["openpilot/selfdrive/car/tests/test_vehicle_dtc.py"]
+fmea = ["SWF-091.C1"]
+why = "a silent ECU is reported healthy (fail open)"
+
+[[mutants]]
+id = "DT-5"
+file = "openpilot/selfdrive/car/vehicle_dtc.py"
+find = "    if not cs.standstill:\n      return False"
+replace = "    if False:\n      return False"
+tests = ["openpilot/selfdrive/car/tests/test_vehicle_dtc.py"]
+fmea = ["SWF-091.C1"]
+why = "the read is sent while the car moves"
+
+[[mutants]]
+id = "DT-6"
+file = "openpilot/selfdrive/selfdrived/selfdrived.py"
+find = "  if not status.complete():\n    events.append(EventName.faultCodeReadFailed)"
+replace = "  if False:\n    events.append(EventName.faultCodeReadFailed)"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_vehicle_dtc_entry.py"]
+fmea = ["SWF-091.C2"]
+why = "a failed read does not refuse engagement"
+
+[[mutants]]
+id = "DT-7"
+file = "openpilot/selfdrive/selfdrived/selfdrived.py"
+find = "  if \"eps\" in active:\n    events.append(EventName.epsFaultCode)"
+replace = "  if False:\n    events.append(EventName.epsFaultCode)"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_vehicle_dtc_entry.py"]
+fmea = ["SWF-091.C2"]
+why = "an active EPS code does not refuse engagement"
+
+# assured-configuration entry gate and settings hold (DQ-221, DQ-403; assured_config.py, selfdrived.py)
+[[mutants]]
+id = "AC-1"
+file = "openpilot/selfdrive/selfdrived/assured_config.py"
+find = "for key, (assured, reason) in ASSURED_PARAMS.items() if param_values.get(key) != assured]"
+replace = "for key, (assured, reason) in ASSURED_PARAMS.items() if False]"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_assured_config.py"]
+fmea = ["SWF-067.C1"]
+why = "no setting is ever outside the assured configuration"
+
+[[mutants]]
+id = "AC-2"
+file = "openpilot/selfdrive/selfdrived/selfdrived.py"
+find = "    if self.reference_platform and self.enabled:\n      return\n    self.experimental_mode = self.experimental_mode_setting"
+replace = "    if False:\n      return\n    self.experimental_mode = self.experimental_mode_setting"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_assured_config.py"]
+fmea = ["SWF-067.C2"]
+why = "a setting changed while engaged takes effect at once (the BL-006 behaviour)"
+
+# debug processes left out of the reference build (DQ-131; process_config.py)
+[[mutants]]
+id = "PC-1"
+file = "openpilot/system/manager/process_config.py"
+find = "  procs = [p for p in procs if p.name not in REFERENCE_EXCLUDED_PROCS]"
+replace = "  procs = list(procs)"
+tests = ["openpilot/system/manager/test/test_reference_build.py"]
+fmea = ["SWF-049.C1"]
+why = "the maneuver and joystick processes are registered in the reference build"
+
+[[mutants]]
+id = "PC-2"
+file = "openpilot/system/manager/process_config.py"
+find = "REFERENCE_EXCLUDED_PROCS = (\"joystick\", \"maneuversd\", \"lateral_maneuversd\")"
+replace = "REFERENCE_EXCLUDED_PROCS = (\"joystick\", \"maneuversd\")"
+tests = ["openpilot/system/manager/test/test_reference_build.py"]
+fmea = ["SWF-049.C1"]
+why = "lateral_maneuversd, the publisher of lateralManeuverPlan, stays in the reference build"

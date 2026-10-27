@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1411" viewBox="0 0 1280 1411" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-6. SW FMEA failure chains — sheet 7 of 14 (SWF)</title>
-  <desc id="d">SW FMEA failure chains, sheet 7 of 14 (SWF rev 1.9): failure modes SWF-036 to SWF-050 (7 failure modes, 10 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <desc id="d">SW FMEA failure chains, sheet 7 of 14 (SWF rev 1.10): failure modes SWF-036 to SWF-050 (7 failure modes, 10 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,7 +9,7 @@
   </defs>
   <rect width="1280" height="1411" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-6 · SW FMEA failure chains — sheet 7 of 14</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.9 · BL-007 · draft · SWF-036 … SWF-050 · 10 causes on this sheet</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.10 · BL-007 · draft · SWF-036 … SWF-050 · 10 causes on this sheet</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -192,11 +192,11 @@
   <rect x="566.3" y="1027.6" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1038.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-003</text>
   <rect x="876" y="953.3" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
   <text x="885" y="972.8" font-size="12" fill="#0F172A" font-weight="700">SWF-049.C1</text>
-  <rect x="1194.5" y="961.8" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="972.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <rect x="1194.5" y="961.8" width="36.5" height="15" rx="7.5" fill="#0F766E"/><text x="1212.8" y="972.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP L</text>
   <text x="885" y="987.4" font-size="10.5" fill="#0F172A">controlsd uses lateralManeuverPlan whenever its last message was</text>
   <text x="885" y="1001.5" font-size="10.5" fill="#0F172A">valid (controlsd.py:123-124), with no alive check (SubMaster valid</text>
   <text x="885" y="1015.5" font-size="10.5" fill="#0F172A">changes only on receipt, cereal/messaging/__init__.py:261) and no…</text>
-  <text x="885" y="1028.7" font-size="9.8" fill="#475569" font-weight="600">O3 · D8 · in SWF-SE-041</text>
+  <text x="885" y="1028.7" font-size="9.8" fill="#475569" font-weight="600">O3 · D4 · in SWF-SE-041</text>
   <rect x="885" y="1034.7" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="1045.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-047 in progress</text>
   <rect x="250" y="1082.2" width="240" height="93.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
   <text x="259" y="1101.7" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-046</text>
@@ -249,7 +249,7 @@
   <text x="885" y="1232.6" font-size="10.5" fill="#0F172A">Defect in the announcement of the driver-monitoring no-response</text>
   <text x="885" y="1246.6" font-size="10.5" fill="#0F172A">stop (TSR-624, #374, BL-007): the DM policy publishes the time</text>
   <text x="885" y="1260.7" font-size="10.5" fill="#0F172A">left before the stop (driverMonitoringState.noResponseDecelIn) and…</text>
-  <text x="885" y="1273.8" font-size="9.8" fill="#475569" font-weight="600">O5 · D8 · in SWF-SE-041</text>
+  <text x="885" y="1273.8" font-size="9.8" fill="#475569" font-weight="600">O5 · D4 · in SWF-SE-041</text>
   <rect x="885" y="1279.8" width="135.3" height="15" rx="7.5" fill="#2E9E6A"/><text x="952.7" y="1290.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-050 completed</text>
   <line x1="40" y1="1331.3" x2="1240" y2="1331.3" stroke="#E2E8F0" stroke-width="1"/>
   <text x="40" y="1353.3" font-size="10.5" fill="#0F172A" font-weight="700">Legend</text>

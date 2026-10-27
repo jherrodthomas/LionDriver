@@ -69,7 +69,7 @@ class TestCards(unittest.TestCase):
     c1 = next(c for f in doc["failure_modes"] if f["id"] == "SFM-036" for c in f["causes"] if c["id"] == "SFM-036.C1")
     c1["occurrence"], c1["detection"] = 8, 10  # the BL-006 rating: completed, but the cause has not reached it
     self.assertIn(("SFM-ACT-020", "completed, not yet credited"), fc.cards(doc, self.mapping)["SFM-036"]["actions"])
-    self.assertIn(("SFM-ACT-023", "completed"), cs["SFM-038"]["actions"])  # SFM-038.C1 is at its revised O5 D8
+    self.assertIn(("SFM-ACT-023", "completed"), cs["SFM-038"]["actions"])  # SFM-038.C1 O5 D4 betters its revised O5 D8
     self.assertIn(("SFM-ACT-017", "completed"), cs["SFM-004"]["actions"])  # no revised rating: plain completed
     svg = "".join(self.out.values())
     self.assertIn("MSR H", svg)
