@@ -52,12 +52,14 @@
 # mismatch while cruise stays on (f4803c5, TSR-516(c)); DFM-017's mechanism lists the new triggers. None changes a hardware cause, a
 # detection test or a diagnostic of a hardware fault, so S, O, D, AP and every MSR rating are unchanged. No row cites a file the opendbc
 # or host changes touched. Totals unchanged: 21 failure modes, 30 causes (all AP H); 16 actions.
+# Rev 0.12 (2026-10-27, ratings unchanged): DFM-010, DFM-011, DFM-014 and DFM-021 point at the harness box circuit view
+#   (assurance/sim/harness_box: ngspice DC points and a Falstad link, synthetic, no credit).
 schema_version: 1
 analysis:
   id: DFM
   type: dfmea
   title: "DFMEA — device, integrated panda, harness, vehicle interfaces"
-  revision: "0.11"
+  revision: "0.12"
   status: draft
   baseline: BL-007
   rating_tables: RT-3
@@ -791,7 +793,7 @@ failure_modes:
   - description: 'None: no relay readback (GAP-12)'
     ref: assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md
   notes: 'WP-H-03 FM-REL-02/04: a single-point path for the PCS goal that no firmware change can close. RR-2026-010 F-03: the release
-    default rests on R2+R3 (HWSR-506e).'
+    default rests on R2+R3 (HWSR-506e). Circuit view (synthetic, no credit) in assurance/sim/results/harness-box.md, with a Falstad link to flip this fault.'
 - id: DFM-011
   element: DFM-SE-006
   function: DFM-FN-005
@@ -886,7 +888,7 @@ failure_modes:
       Since BL-006, reference build: the malfunction is latched for the ignition cycle and TOYOTA is refused until ignition off, so a safety-mode
       change does not clear it (panda#17, DFA DM-25, SW FMEA SWF-090)'
     ref: opendbc_repo/opendbc/safety/safety.h
-  notes: WP-H-03 FM-REL-01. The BL-006 latch changes the reaction, not the switch; S, O, D and M unchanged.
+  notes: WP-H-03 FM-REL-01. The BL-006 latch changes the reaction, not the switch; S, O, D and M unchanged. Circuit view (synthetic, no credit) in assurance/sim/results/harness-box.md, with a Falstad link to flip this fault.
 - id: DFM-012
   element: DFM-SE-007
   function: DFM-FN-006
@@ -1001,7 +1003,7 @@ failure_modes:
     actions:
     - DFM-ACT-008
     - DFM-ACT-014
-  notes: WP-H-03 FM-IGN-02. Line open is the safe direction (2 s timeout).
+  notes: WP-H-03 FM-IGN-02. Line open is the safe direction (2 s timeout). Circuit view (synthetic, no credit) in assurance/sim/results/harness-box.md, with a Falstad link to flip this fault.
 - id: DFM-015
   element: DFM-SE-008
   function: DFM-FN-007
@@ -1411,7 +1413,7 @@ failure_modes:
   safety_mechanisms:
   - description: RX timeouts withdraw control; host canError and canBusMissing alerts
     ref: opendbc_repo/opendbc/safety/safety.h
-  notes: RR-2026-010 F-07.
+  notes: RR-2026-010 F-07. Circuit view (synthetic, no credit) in assurance/sim/results/harness-box.md, with a Falstad link to flip this fault.
 actions:
 - id: DFM-ACT-001
   kind: prevention
