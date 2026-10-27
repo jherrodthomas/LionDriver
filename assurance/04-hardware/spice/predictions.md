@@ -91,5 +91,6 @@ Voltage at IN. Generic ESD clamps to VIN and GND stand for the CMOS input protec
 | `BIT` | 2e-06 s | bit time at 500 kbit/s |
 | `SAMPLE` | 1.5e-06 s | sample point, 75 % of the bit |
 | `I_LEAK` | 1e-06 A | net leakage into the U1/U2 IN node, sign unknown |
+| `R_PULLDOWN` | 240 ohm | R2 + R3, 2 x 120 ohm in series, SBU1 to GND (from the v3 drawing, HB-02; not an estimate) |
 
 Diode model: `.model dsch d(is=1e-8 n=1.05 rs=1 cjo=5p)` (generic small-signal Schottky, not the BAS40SDW vendor model).

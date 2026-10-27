@@ -14,7 +14,10 @@ and a D2 leak to GND, with a Falstad view. It came in on the same day as this pi
 D2 to GND), they agree: a floating IN can settle on either side of the threshold, and a short to GND loses dominant
 bits. This pilot adds the cases that model does not have, each tied to a bench step: D3 on the camera bus and its effect
 on the joined stock bus, clamp shorts to VIN, the camera-bus terminations with a transient, on-resistance and ground
-offset, and the bench's own SBU1 drive. Merging the two into one netlist is proposed to that session.
+offset, and the bench's own SBU1 drive. Agreed with that session: until the switch-level campaign the two stay
+separate, and `test_box_model.py` (`TestAgreesWithSimHarnessBox`) checks the shared values (R2/R3, the SBU1 drive
+divider within 5 mV, VIN inside its band) and the overlapping answers. At the campaign, `harness_box.py` takes its
+topology from this netlist's node list.
 
 ## 1. What the pilot says
 

@@ -66,6 +66,7 @@ ASSUMPTIONS = {
   "BIT": (2e-6, "s", "bit time at 500 kbit/s"),
   "SAMPLE": (1.5e-6, "s", "sample point, 75 % of the bit"),
   "I_LEAK": (1e-6, "A", "net leakage into the U1/U2 IN node, sign unknown"),
+  "R_PULLDOWN": (240.0, "ohm", "R2 + R3, 2 x 120 ohm in series, SBU1 to GND (from the v3 drawing, HB-02; not an estimate)"),
 }
 SCHOTTKY = ".model dsch d(is=1e-8 n=1.05 rs=1 cjo=5p) ; generic small-signal Schottky, not the BAS40SDW vendor model"
 ISO_REC_MAX = 0.5   # ISO 11898-2 receiver: recessive below 0.5 V
@@ -208,7 +209,8 @@ def edge_case(state, faults=(), cam_term=False):
 def sbu1_case(pulldown=True, leak=1e-6, src=None, r_src=None):
   """Voltage at the U1/U2 IN node: R2+R3 to GND (or open), an input leakage, and an optional source on SBU1.
   The IN pins are given generic ESD clamps to VL (= VIN) and GND, as CMOS inputs have."""
-  body = [f"VVIN vin 0 {p('VIN'):g}", f"RPD sbu1 0 {'240' if pulldown else '1e12'}",
+  body = [f"VVIN vin 0 {p('VIN'):g}",
+          f"RPD sbu1 0 {format(p('R_PULLDOWN'), 'g') if pulldown else '1e12'}",
           f"ILEAK 0 sbu1 {leak:g}", "DESDUP sbu1 vin dsch", "DESDDN 0 sbu1 dsch"]
   if src is not None:
     body += [f"VSRC srcn 0 {src:g}", f"RSRC srcn sbu1 {r_src:g}"]

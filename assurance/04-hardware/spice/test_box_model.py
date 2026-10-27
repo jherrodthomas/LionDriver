@@ -88,5 +88,46 @@ class TestOutputs(unittest.TestCase):
     self.assertLess(float(r["I-open-/sbu1"]["dominant Vdiff or IN (V)"]), 0.5)
 
 
+class TestAgreesWithSimHarnessBox(unittest.TestCase):
+  """Cross-check with assurance/sim/harness_box (agreed with the simulation session, option c): the two models of the
+  same box keep the same shared values and reach the same answers where their cases overlap. A mismatch fails here
+  first; one topology source replaces this test at the switch-level campaign."""
+
+  SIM = bm.HERE.parent.parent / "sim"
+
+  @classmethod
+  def setUpClass(cls):
+    cls.params = yaml.safe_load((cls.SIM / "harness_box" / "params.yaml").read_text(encoding="utf-8"))
+    import json
+    res = json.loads((cls.SIM / "results" / "harness-box.json").read_text(encoding="utf-8"))
+    cls.sim = {s["id"]: s for s in res["scenarios"]}
+    with open(bm.OUT_TSV, encoding="utf-8") as f:
+      cls.rows = {r["id"]: r for r in csv.DictReader(f, delimiter="\t")}
+
+  def test_same_pull_down(self):
+    self.assertEqual(self.params["pull_down"]["value"], bm.p("R_PULLDOWN"))
+
+  def test_vin_inside_their_band(self):
+    lo, hi = self.params["vin"]["band"]
+    self.assertTrue(lo <= bm.p("VIN") <= hi)
+
+  def test_same_sbu1_drive_divider(self):
+    # their nominal drive (5 V through r_out into R2/R3) gives the same SBU1 in both netlists, within their 5 mV
+    d = self.params["drive"]
+    r = bm.sbu1_case(pulldown=True, leak=0.0, src=d["v"]["value"], r_src=d["r_out"]["value"])
+    self.assertAlmostEqual(r["vin_node"], self.sim["intercept"]["nodes"]["SBU1"], delta=0.005)
+
+  def test_pull_down_open_settles_on_the_leakage_rail(self):
+    vin_sim = self.sim["pulldown_open_leak_up"]["nodes"]["VIN"]
+    self.assertGreater(self.sim["pulldown_open_leak_up"]["nodes"]["SBU1"], 0.5 * vin_sim)
+    self.assertGreater(float(self.rows["I-open+/sbu1"]["dominant Vdiff or IN (V)"]), 0.5 * bm.p("VIN"))
+    self.assertLess(self.sim["pulldown_open_leak_down"]["nodes"]["SBU1"], 0.5)
+    self.assertLess(float(self.rows["I-open-/sbu1"]["dominant Vdiff or IN (V)"]), 0.5)
+
+  def test_d2_short_to_gnd_loses_dominant_in_both(self):
+    self.assertIn("NOT dominant", self.sim["clamp_short"]["verdict"])
+    self.assertEqual(self.rows["C-D2-H-gnd/pass"]["verdict"], "dominant lost")
+
+
 if __name__ == "__main__":
   unittest.main()
