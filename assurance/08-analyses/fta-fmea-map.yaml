@@ -913,6 +913,19 @@ not_in_fta:
     goal: SG-07
     kind: justified
     reason: "As for SG-01: a vehicle outside the reference configuration is outside the item definition and AOU-04R. Controlled by the installation check (WP-O-02)."
+  - fm: DFM-022
+    goal: SG-07
+    kind: tree_gap
+    reason: >-
+      The camera bus left unterminated in intercept (R7 with R8 or the P13-P15 loopback open; FMEDA SG-009 FMD-035, latent after
+      one open) loses the camera frames the item forwards, so stock PCS messages do not reach the car. The SG-07 tree (§8) has no
+      event for the camera-side termination; for the FTA owner to add it under the intercept branch, next to BE-7.18
+  - fm: DFM-023
+    goal: SG-07
+    kind: tree_gap
+    reason: >-
+      R7 or R8 short holds the camera bus recessive in intercept (FMEDA SG-009 FMD-036, single-point), so no camera frames reach the
+      item and stock PCS messages are not forwarded. Not an event of the SG-07 tree yet; for the FTA owner, as DFM-022
   # ---- SG-02
   - fm: PFM-015
     goal: SG-02

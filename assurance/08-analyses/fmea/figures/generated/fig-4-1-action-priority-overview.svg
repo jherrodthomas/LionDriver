@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="861" viewBox="0 0 1280 861" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 4-1. Action Priority overview of the four FMEAs</title>
-  <desc id="d">Action Priority overview: System FMEA SFM rev 0.37 H 107, M 1, L 1; DFMEA DFM rev 0.12 H 30, M 0, L 0; SW FMEA SWF rev 1.12 H 132, M 1, L 16; PFMEA PFM rev 0.4 H 17, M 0, L 1. For each FMEA an occurrence by detection grid of the severity 9–10 causes over the AP table, the causes at other severities, and how the AP H causes are treated (action status or rationale).</desc>
+  <desc id="d">Action Priority overview: System FMEA SFM rev 0.37 H 107, M 1, L 1; DFMEA DFM rev 0.13 H 32, M 0, L 0; SW FMEA SWF rev 1.12 H 132, M 1, L 16; PFMEA PFM rev 0.4 H 17, M 0, L 1. For each FMEA an occurrence by detection grid of the severity 9–10 causes over the AP table, the causes at other severities, and how the AP H causes are treated (action status or rationale).</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -210,11 +210,11 @@
   <rect x="40" y="696" width="49.3" height="16" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1" rx="2"/>
   <text x="95.3" y="708" font-size="10" fill="#0B0B0B">32  rationale, no action</text>
   <text x="345" y="114" font-size="15" fill="#0B0B0B" font-weight="700">DFMEA</text>
-  <text x="345" y="131" font-size="10.5" fill="#52514E">DFM rev 0.12 · BL-007 · draft</text>
-  <text x="345" y="146" font-size="10.5" fill="#52514E">30 rated causes</text>
+  <text x="345" y="131" font-size="10.5" fill="#52514E">DFM rev 0.13 · BL-007 · draft</text>
+  <text x="345" y="146" font-size="10.5" fill="#52514E">32 rated causes</text>
   <rect x="345" y="158" width="285" height="22" fill="#D03B3B"/>
-  <text x="487.5" y="173" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">H 30</text>
-  <text x="345" y="194" font-size="10.5" fill="#0B0B0B" font-weight="600">AP as rated: H 30  M 0  L 0</text>
+  <text x="487.5" y="173" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">H 32</text>
+  <text x="345" y="194" font-size="10.5" fill="#0B0B0B" font-weight="600">AP as rated: H 32  M 0  L 0</text>
   <text x="345" y="214" font-size="10" fill="#52514E" font-weight="700">Causes with S 9–10 by occurrence × detection</text>
   <text x="369" y="238.5" font-size="9.5" fill="#52514E" text-anchor="end">10</text>
   <rect x="375" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -313,7 +313,7 @@
   <text x="562" y="392.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
   <rect x="573" y="378" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <circle cx="584" cy="389" r="9.5" fill="#D03B3B"/>
-  <text x="584" y="392.6" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">14</text>
+  <text x="584" y="392.6" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">15</text>
   <text x="369" y="414.5" font-size="9.5" fill="#52514E" text-anchor="end">2</text>
   <rect x="375" y="400" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="397" y="400" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
@@ -330,7 +330,7 @@
   <text x="562" y="414.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="573" y="400" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <circle cx="584" cy="411" r="9.5" fill="#D03B3B"/>
-  <text x="584" y="414.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+  <text x="584" y="414.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
   <text x="369" y="436.5" font-size="9.5" fill="#52514E" text-anchor="end">1</text>
   <rect x="375" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="397" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
@@ -355,11 +355,11 @@
   <text x="485" y="470" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="middle">Detection D →</text>
   <text x="351" y="334" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="middle" transform="rotate(-90 351 334)">Occurrence O →</text>
   <text x="345" y="484" font-size="10" fill="#52514E">All rated causes have S 9–10.</text>
-  <text x="345" y="516" font-size="10" fill="#52514E" font-weight="700">AP H causes (30) by treatment</text>
-  <rect x="345" y="530" width="148.5" height="16" fill="#FBE4DF" stroke="#D03B3B" stroke-width="1" rx="2"/>
-  <text x="499.5" y="542" font-size="10" fill="#0B0B0B">27  action open</text>
-  <rect x="345" y="552" width="16.5" height="16" fill="#F1F5F9" stroke="#64748B" stroke-width="1" rx="2"/>
-  <text x="367.5" y="564" font-size="10" fill="#0B0B0B">3  not implemented</text>
+  <text x="345" y="516" font-size="10" fill="#52514E" font-weight="700">AP H causes (32) by treatment</text>
+  <rect x="345" y="530" width="149.5" height="16" fill="#FBE4DF" stroke="#D03B3B" stroke-width="1" rx="2"/>
+  <text x="500.5" y="542" font-size="10" fill="#0B0B0B">29  action open</text>
+  <rect x="345" y="552" width="15.5" height="16" fill="#F1F5F9" stroke="#64748B" stroke-width="1" rx="2"/>
+  <text x="366.5" y="564" font-size="10" fill="#0B0B0B">3  not implemented</text>
   <text x="650" y="114" font-size="15" fill="#0B0B0B" font-weight="700">SW FMEA</text>
   <text x="650" y="131" font-size="10.5" fill="#52514E">SWF rev 1.12 · BL-007 · draft</text>
   <text x="650" y="146" font-size="10.5" fill="#52514E">149 rated causes</text>
