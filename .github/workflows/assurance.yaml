@@ -400,6 +400,39 @@ jobs:
         python3 assurance/04-hardware/wiring/make_wiring.py --check
         python3 assurance/04-hardware/wiring/test_make_wiring.py
 
+  box-spice:
+    name: harness box ngspice pilot
+    # Passive-network faults of comma's harness box v3 (assurance/04-hardware/spice, tool TL-58): predictions for the
+    # VS-HW-22...24 pass criteria, no FMEDA credit. Same pinned ngspice 41 environment and cache key as sim-supply.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      MICROMAMBA_URL: https://github.com/mamba-org/micromamba-releases/releases/download/2.3.2-0/micromamba-linux-64
+      MICROMAMBA_SHA256: ffc3cb8d52d4d6b354bdbb979c407719c485392b74e462cbd50811aa88e58f85
+      SUPPLY_ENV: ${{ github.workspace }}/../supply-env
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Cache the supply environment (keyed on the lock)
+      id: supply-cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.SUPPLY_ENV }}
+        key: supply-env-${{ hashFiles('assurance/sim/supply/supply-linux-64.lock') }}
+    - name: Create the supply environment from the explicit lock
+      if: steps.supply-cache.outputs.cache-hit != 'true'
+      run: |
+        curl -sSL -o "$RUNNER_TEMP/micromamba" "$MICROMAMBA_URL"
+        echo "$MICROMAMBA_SHA256  $RUNNER_TEMP/micromamba" | sha256sum -c -
+        chmod +x "$RUNNER_TEMP/micromamba"
+        MAMBA_ROOT_PREFIX="$RUNNER_TEMP/mamba" "$RUNNER_TEMP/micromamba" create -y -q -p "$SUPPLY_ENV" \
+          --file assurance/sim/supply/supply-linux-64.lock
+    - name: Box pilot predictions and netlist current, and their tests
+      run: |
+        "$SUPPLY_ENV/bin/python" assurance/04-hardware/spice/box_model.py --check
+        "$SUPPLY_ENV/bin/python" assurance/04-hardware/spice/test_box_model.py
+
   fmdtools:
     name: fmdtools fault-propagation models
     # NASA fmdtools models of the fault trees (TE-02; assurance/models/fmdtools). Synthetic: no evidence credit.

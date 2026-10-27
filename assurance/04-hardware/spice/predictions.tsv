@@ -1,0 +1,43 @@
+id	group	case	state	prediction for	recessive Vdiff (V)	dominant Vdiff or IN (V)	recessive edge (us)	verdict
+C-D2-H-gnd/pass	clamp	D2 lower diode short (line to GND) on CAN0_H (CAN0 car)	pass	VS-HW-24 (d)	-0.0237	-0.345		dominant lost
+C-D2-H-gnd/intercept	clamp	D2 lower diode short (line to GND) on CAN0_H (CAN0 car)	intercept	VS-HW-24 (d)	-0.0119	-0.343		dominant lost
+C-D2-H-vin/pass	clamp	D2 upper diode short (line to VIN) on CAN0_H (CAN0 car)	pass	VS-HW-24 (d)	0.101	8.91		line at 13.2 V: outside the receiver common-mode range
+C-D2-H-vin/intercept	clamp	D2 upper diode short (line to VIN) on CAN0_H (CAN0 car)	intercept	VS-HW-24 (d)	0.0511	8.93		line at 13.2 V: outside the receiver common-mode range
+C-D2-H-gnd_leak/pass	clamp	D2 lower diode leakage, 1 kohm to GND on CAN0_H (CAN0 car)	pass	VS-HW-24 (d)	-0.018	2.12		levels OK
+C-D2-H-gnd_leak/intercept	clamp	D2 lower diode leakage, 1 kohm to GND on CAN0_H (CAN0 car)	intercept	VS-HW-24 (d)	-0.0103	2.13		levels OK
+C-D2-L-gnd/pass	clamp	D2 lower diode short (line to GND) on CAN0_L (CAN0 car)	pass	VS-HW-24 (d)	0.0237	3.16		levels OK
+C-D2-L-gnd/intercept	clamp	D2 lower diode short (line to GND) on CAN0_L (CAN0 car)	intercept	VS-HW-24 (d)	0.0119	3.17		levels OK
+C-D2-L-vin/pass	clamp	D2 upper diode short (line to VIN) on CAN0_L (CAN0 car)	pass	VS-HW-24 (d)	-0.101	-6.1		line at 13.2 V: outside the receiver common-mode range
+C-D2-L-vin/intercept	clamp	D2 upper diode short (line to VIN) on CAN0_L (CAN0 car)	intercept	VS-HW-24 (d)	-0.0511	-6.1		line at 13.2 V: outside the receiver common-mode range
+C-D2-L-gnd_leak/pass	clamp	D2 lower diode leakage, 1 kohm to GND on CAN0_L (CAN0 car)	pass	VS-HW-24 (d)	0.018	2.19		levels OK
+C-D2-L-gnd_leak/intercept	clamp	D2 lower diode leakage, 1 kohm to GND on CAN0_L (CAN0 car)	intercept	VS-HW-24 (d)	0.0103	2.2		levels OK
+C-D3-H-gnd/pass	clamp	D3 lower diode short (line to GND) on CAN2_H (CAN2 camera)	pass	VS-HW-24 (d)	-0.0236	-0.203		dominant lost
+C-D3-H-gnd/intercept	clamp	D3 lower diode short (line to GND) on CAN2_H (CAN2 camera)	intercept	VS-HW-24 (d)	-0.0179	-0.38		dominant lost
+C-D3-H-vin/pass	clamp	D3 upper diode short (line to VIN) on CAN2_H (CAN2 camera)	pass	VS-HW-24 (d)	0.101	5.23		line at 13.1 V: outside the receiver common-mode range
+C-D3-H-vin/intercept	clamp	D3 upper diode short (line to VIN) on CAN2_H (CAN2 camera)	intercept	VS-HW-24 (d)	0.0765	9.9		line at 13.2 V: outside the receiver common-mode range
+C-D3-H-gnd_leak/pass	clamp	D3 lower diode leakage, 1 kohm to GND on CAN2_H (CAN2 camera)	pass	VS-HW-24 (d)	-0.0179	1.37		levels OK
+C-D3-H-gnd_leak/intercept	clamp	D3 lower diode leakage, 1 kohm to GND on CAN2_H (CAN2 camera)	intercept	VS-HW-24 (d)	-0.0154	2.51		levels OK
+C-D3-L-gnd/pass	clamp	D3 lower diode short (line to GND) on CAN2_L (CAN2 camera)	pass	VS-HW-24 (d)	0.0236	1.86		levels OK
+C-D3-L-gnd/intercept	clamp	D3 lower diode short (line to GND) on CAN2_L (CAN2 camera)	intercept	VS-HW-24 (d)	0.0179	3.52		levels OK
+C-D3-L-vin/pass	clamp	D3 upper diode short (line to VIN) on CAN2_L (CAN2 camera)	pass	VS-HW-24 (d)	-0.101	-3.58		line at 13.1 V: outside the receiver common-mode range
+C-D3-L-vin/intercept	clamp	D3 upper diode short (line to VIN) on CAN2_L (CAN2 camera)	intercept	VS-HW-24 (d)	-0.0765	-6.77		line at 13.2 V: outside the receiver common-mode range
+C-D3-L-gnd_leak/pass	clamp	D3 lower diode leakage, 1 kohm to GND on CAN2_L (CAN2 camera)	pass	VS-HW-24 (d)	0.0179	1.42		levels OK
+C-D3-L-gnd_leak/intercept	clamp	D3 lower diode leakage, 1 kohm to GND on CAN2_L (CAN2 camera)	intercept	VS-HW-24 (d)	0.0154	2.59		levels OK
+T-nominal/intercept	termination	Nominal: R7 and R8 through the P13-P15 loopback (60 ohm)	intercept	VS-HW-24 (c)		2.57	0.0314	levels OK
+T-loop-open/intercept	termination	Loopback P13-P15 open in the plug (R7 only, 120 ohm)	intercept	VS-HW-24 (c)		3	0.0552	levels OK
+T-r7-open/intercept	termination	R7 open (R8 only, 120 ohm)	intercept	VS-HW-24 (c)		3	0.0552	levels OK
+T-both-open/intercept	termination	R7 open and loopback open (camera bus unterminated in intercept)	intercept	VS-HW-24 (c)		3.99	10.5	recessive edge too slow for the sample point
+T-camterm/intercept	termination	Assumption variant: camera has its own 120 ohm (40 ohm in intercept)	intercept	VS-HW-24 (c)		2.03	0.0159	levels OK
+S-ron-10/pass	signal	Pass-through, R_on 10 ohm per channel, camera to car	pass	VS-HW-24 (c)	0	1.84		levels OK
+S-ron-30/pass	signal	Pass-through, R_on 30 ohm per channel, camera to car	pass	VS-HW-24 (c)	0	1.41		levels OK
+S-ron-50/pass	signal	Pass-through, R_on 50 ohm per channel, camera to car	pass	VS-HW-24 (c)	0	1.14		levels OK
+S-ron-70/pass	signal	Pass-through, R_on 70 ohm per channel, camera to car	pass	VS-HW-24 (c)	0	0.957		levels OK
+S-ron-100/pass	signal	Pass-through, R_on 100 ohm per channel, camera to car	pass	VS-HW-24 (c)	0	0.771		dominant lost
+S-gnd-1/pass	signal	Pass-through, camera ground -1 V from box ground, camera to car	pass	VS-HW-24 (c)	0	1.41		levels OK
+S-gnd+1/pass	signal	Pass-through, camera ground +1 V from box ground, camera to car	pass	VS-HW-24 (c)	0	1.41		levels OK
+I-intact+/sbu1	release	R2/R3 intact, leakage +1 uA into IN	-	VS-HW-23 (reference)		0		IN held near 0 V: pass-through default holds
+I-intact-/sbu1	release	R2/R3 intact, leakage -1 uA out of IN	-	VS-HW-23 (reference)		0		IN held near 0 V: pass-through default holds
+I-open+/sbu1	release	R2/R3 open, SBU1 undriven, leakage +1 uA into IN	-	VS-HW-23 steps 2-4		13.3		IN pulled to a rail by leakage alone: switch state undefined
+I-open-/sbu1	release	R2/R3 open, SBU1 undriven, leakage -1 uA out of IN	-	VS-HW-23 steps 2-4		-0.125		IN pulled to a rail by leakage alone: switch state undefined
+I-bench-1k/sbu1	release	Bench drive of WP-H-06 3.1: 5 V through 1 kohm, R2/R3 intact	-	VS-HW-23 step 1, VS-HW-24 (b)		0.968		IN reaches only about 1 V: intercept not reached on an intact box
+I-stiff-5V/sbu1	release	Stiff 5 V drive (10 ohm source), R2/R3 intact	-	VS-HW-23 step 1, VS-HW-24 (b)		4.8		IN near 5 V; the drive must source about 20 mA

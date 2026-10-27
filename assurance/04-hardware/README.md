@@ -28,6 +28,7 @@ Standard clauses: 26262-5, 26262-8 §13, HWE.1–4.
 |---|---|
 | [`bench/`](bench/) | — |
 | [`reviews/`](reviews/) | — |
+| [`spice/`](spice/README.md) | Harness box circuit simulation (ngspice pilot) |
 | [`wiring/`](wiring/README.md) | Harness and bench wiring drawings |
 
 GitHub lists this folder's files above this page; each work product's document embeds its own figures.
