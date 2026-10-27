@@ -225,7 +225,7 @@ graph {
  <tr><td>
   <table border="0" cellspacing="0" cellpadding="3" cellborder="1"><tr>
    <td balign="left">Lab source 0-5 V</td>
-   <td balign="left">1 kohm in series (device driver unknown, UK-06)</td>
+   <td balign="left">low impedance (10 ohm or less), current limit about 50 mA; no series resistor</td>
    <td balign="left">2-pin</td>
   </tr></table>
  </td></tr>
@@ -240,6 +240,11 @@ graph {
     <td port="p2r">2</td>
    </tr>
   </table>
+ </td></tr>
+ <tr><td>
+  <table border="0" cellspacing="0" cellpadding="3" cellborder="1"><tr>
+   <td balign="left">R2+R3 draw about 21 mA at 5 V. Device driver unknown (UK-06).</td>
+  </tr></table>
  </td></tr>
 </table>
 > fillcolor="#FFFFFF" shape=box style=filled]
@@ -279,7 +284,7 @@ graph {
  </td></tr>
  <tr><td>
   <table border="0" cellspacing="0" cellpadding="3" cellborder="1"><tr>
-   <td balign="left">VS-HW-22 step 4 and VS-HW-23 step 3 put the reference device on the OBD-C cable here instead.</td>
+   <td balign="left">VS-HW-22 step 4, VS-HW-23 step 3 and VS-HW-24 (e) put the reference device on the OBD-C cable here instead.</td>
   </tr></table>
  </td></tr>
 </table>
@@ -410,6 +415,30 @@ graph {
   <table border="0" cellspacing="0" cellpadding="3" cellborder="1">
    <tr>
     <td>clamp diode</td>
+    <td port="p1r">1</td>
+   </tr>
+  </table>
+ </td></tr>
+</table>
+> fillcolor="#FFFFFF" shape=box style=filled]
+	FI5 [label=<
+<table border="0" cellspacing="0" cellpadding="0">
+ <tr><td>
+  <table border="0" cellspacing="0" cellpadding="3" cellborder="1"><tr>
+   <td balign="left">FI5</td>
+  </tr></table>
+ </td></tr>
+ <tr><td>
+  <table border="0" cellspacing="0" cellpadding="3" cellborder="1"><tr>
+   <td balign="left">FI-5: R7/R8 open (R8, R7, then both lifted)</td>
+   <td balign="left">VS-HW-24 (e), camera-side termination in intercept (box modified, reversible)</td>
+   <td balign="left">1-pin</td>
+  </tr></table>
+ </td></tr>
+ <tr><td>
+  <table border="0" cellspacing="0" cellpadding="3" cellborder="1">
+   <tr>
+    <td>camera-side termination R7/R8</td>
     <td port="p1r">1</td>
    </tr>
   </table>
@@ -712,4 +741,6 @@ graph {
 	FI3:p1r:e -- BO:p1l:w
 	edge [color="#000000" dir=none style=dashed]
 	FI4:p1r:e -- X2:p1l:w
+	edge [color="#000000" dir=none style=dashed]
+	FI5:p1r:e -- X1:p1l:w
 }

@@ -20,6 +20,7 @@ BB.FI1.1-X2.7	BB	line	PSU + lead			FI1:1	PSU + lead	X2:7	IGN (box IGN_12)
 BB.FI2.1-BO.A4	BB	line	VIN			FI2:1	VIN	BO:A4	VIN (scope ch 2)
 BB.FI3.1-BO.A8	BB	line	SBU1 pull-down R2/R3			FI3:1	SBU1 pull-down R2/R3	BO:A8	SBU1 switch drive
 BB.FI4.1-X2.5	BB	line	clamp diode			FI4:1	clamp diode	X2:5	CAN0_H car
+BB.FI5.1-X1.5	BB	line	camera-side termination R7/R8			FI5:1	camera-side termination R7/R8	X1:5	CAN2_H camera
 HIL.PC.1-JNG.1	HIL	link	USB to CAN interface			PC:1	USB to CAN interface	JNG:1	USB
 HIL.PC.2-PSU.1	HIL	line	USB or GPIO to supply			PC:2	USB or GPIO to supply	PSU:1	control
 HIL.PC.3-DEV.1	HIL	line	USB to reference device			PC:3	USB to reference device	DEV:1	USB

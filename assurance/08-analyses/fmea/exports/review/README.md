@@ -16,6 +16,6 @@ Written by `tools/safety/fmeda_review_md.py` and `tools/safety/export_fmeda_xlsx
 | FMEDA | Revision | Goals and ASIL targets | Workbook |
 |---|---|---|---|
 | [FMEDA — SG-001 lateral (panda safety path)](fmeda-sg001.md) | 0.7 (draft) | SG-01 C, SG-02 C, SG-03 C, SG-04 B, SG-05 B, SG-06 C | [xlsx](fmeda-sg001-review.xlsx) |
-| [FMEDA — SG-009 stock AEB availability (relay and forwarding path)](fmeda-sg009.md) | 0.7 (draft) | SG-07 B | [xlsx](fmeda-sg009-review.xlsx) |
+| [FMEDA — SG-009 stock AEB availability (relay and forwarding path)](fmeda-sg009.md) | 0.9 (draft) | SG-07 B | [xlsx](fmeda-sg009-review.xlsx) |
 
 Ratings and the action-priority table: [rating-tables.md](../../rating-tables.md). The plan and method: [fmea-plan.md](../../fmea-plan.md).
