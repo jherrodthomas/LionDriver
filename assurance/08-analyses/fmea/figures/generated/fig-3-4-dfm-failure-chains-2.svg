@@ -5,261 +5,333 @@
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
     <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
+    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1.2" cy="1.2" r="1.2" fill="#E7E6E0"/></pattern>
     <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
   </defs>
-  <rect width="1280" height="1659" fill="#FFFFFF"/>
-  <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-4 · DFMEA failure chains — sheet 2 of 3</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">DFM rev 0.12 · BL-007 · draft · DFM-010 … DFM-015 · 14 causes on this sheet</text>
-  <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.2</text>
-  <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/dfmea.yaml</text>
-  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
-  <text x="40" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">STRUCTURE ELEMENT</text>
-  <text x="250" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FUNCTION (STEP 3)</text>
-  <text x="520" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FAILURE MODE · S · END EFFECT (STEP 4)</text>
-  <text x="876" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FAILURE CAUSE · O · D · AP · ACTIONS (STEPS 4–6)</text>
-  <path d="M220 550.9H235V545.6H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 545.6H505V298.4H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 545.6H505V606.3H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 545.6H505V808.8H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 545.6H505V948.2H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 298.4H861V144H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 298.4H861V242.3H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 298.4H861V326.5H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 298.4H861V424.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 606.3H861V543.1H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 606.3H861V641.4H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 808.8H861V759.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 808.8H861V858H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 948.2H861V955.2H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M220 1212.6H235V1207.3H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 1207.3H505V1068.4H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 1207.3H505V1165.7H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 1207.3H505V1312.1H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 1068.4H861V1068.4H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 1165.7H861V1158.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 1312.1H861V1262.9H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 1312.1H861V1347.1H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M220 1479.7H235V1467.4H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 1467.4H505V1475.4H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 1475.4H861V1474.9H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <rect x="40" y="528.9" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
-  <text x="49" y="548.4" font-size="12" fill="#0F172A" font-weight="700">DFM-SE-006</text>
-  <text x="49" y="563" font-size="10.5" fill="#0F172A" font-weight="600">Intercept switch (harness box</text>
-  <text x="49" y="577.1" font-size="10.5" fill="#0F172A" font-weight="600">U1/U2) and its drive</text>
-  <text x="49" y="589.8" font-size="9.5" fill="#475569">component</text>
-  <text x="49" y="602.5" font-size="9.5" fill="#475569">in DFM-SE-001</text>
-  <rect x="250" y="523.6" width="240" height="93.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
-  <text x="259" y="543.1" font-size="12" fill="#0F172A" font-weight="700">DFM-FN-005</text>
-  <text x="259" y="557.7" font-size="10.5" fill="#0F172A">Separate the camera from the car bus only</text>
-  <text x="259" y="571.8" font-size="10.5" fill="#0F172A">while energised; restore the stock camera</text>
-  <text x="259" y="585.8" font-size="10.5" fill="#0F172A">path whenever de-energised</text>
-  <rect x="259" y="591.8" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="602.7" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-008</text>
-  <rect x="318.4" y="591.8" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="602.7" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-037</text>
-  <rect x="377.8" y="591.8" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="405.5" y="602.7" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-038</text>
-  <rect x="520" y="276.4" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="295.9" font-size="12" fill="#0F172A" font-weight="700">DFM-010</text>
-  <rect x="593.9" y="284.9" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="295.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="284.9" width="38.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="648.7" y="295.9" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">stuck</text>
-  <text x="529" y="310.5" font-size="10.5" fill="#0F172A" font-weight="600">Intercept switch stays in intercept when released</text>
-  <text x="529" y="323.6" font-size="9.8" fill="#475569" font-style="italic">End effect: Stock AEB unavailable</text>
-  <text x="529" y="340.6" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="329.6" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="340.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
-  <rect x="876" y="122" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="141.5" font-size="12" fill="#0F172A" font-weight="700">DFM-010.C1</text>
-  <rect x="1194.5" y="130.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="141.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="156.1" font-size="10.5" fill="#0F172A">Analog switch U1 or U2 stuck in the intercept (NO) position, or its</text>
-  <text x="885" y="170.1" font-size="10.5" fill="#0F172A">IN input damaged high</text>
-  <text x="885" y="183.3" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in DFM-SE-006</text>
-  <rect x="885" y="189.3" width="165.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#64748B" stroke-width="1"/><text x="967.7" y="200.2" font-size="9.5" font-weight="700" fill="#64748B" text-anchor="middle" letter-spacing=".02em">DFM-ACT-007 not implemented</text>
-  <rect x="876" y="220.3" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="239.8" font-size="12" fill="#0F172A" font-weight="700">DFM-010.C2</text>
-  <rect x="1194.5" y="228.8" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="239.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="254.3" font-size="10.5" fill="#0F172A">SBU1 drive stuck high (device-side driver or MCU pin, UK-06)</text>
-  <text x="885" y="267.5" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in DFM-SE-006</text>
-  <rect x="885" y="273.5" width="165.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#64748B" stroke-width="1"/><text x="967.7" y="284.4" font-size="9.5" font-weight="700" fill="#64748B" text-anchor="middle" letter-spacing=".02em">DFM-ACT-007 not implemented</text>
-  <rect x="876" y="304.5" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="324" font-size="12" fill="#0F172A" font-weight="700">DFM-010.C3</text>
-  <rect x="1194.5" y="313" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="323.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="338.5" font-size="10.5" fill="#0F172A">Pull-down R2 or R3 open, so IN floats when the device stops driving</text>
-  <text x="885" y="352.6" font-size="10.5" fill="#0F172A">SBU1 (reset, watchdog, hang, unplugged cable)</text>
-  <text x="885" y="365.7" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in DFM-SE-006</text>
-  <rect x="885" y="371.7" width="165.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#64748B" stroke-width="1"/><text x="967.7" y="382.7" font-size="9.5" font-weight="700" fill="#64748B" text-anchor="middle" letter-spacing=".02em">DFM-ACT-007 not implemented</text>
-  <rect x="1054.5" y="371.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1108.9" y="382.7" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-014 open</text>
-  <rect x="876" y="402.7" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="422.2" font-size="12" fill="#0F172A" font-weight="700">DFM-010.C4</text>
-  <rect x="1194.5" y="411.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="422.2" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="436.8" font-size="10.5" fill="#0F172A">U1/U2 overstressed or latched up by box supply transients above</text>
-  <text x="885" y="450.9" font-size="10.5" fill="#0F172A">the DG419LE absolute maximum (V+ = VL = VIN with no regulator;</text>
-  <text x="885" y="465" font-size="10.5" fill="#0F172A">the SMF16A clamp D4 only starts to conduct above its 16 V…</text>
-  <text x="885" y="478.1" font-size="9.8" fill="#475569" font-weight="600">O4 · D10 · in DFM-SE-006</text>
-  <rect x="885" y="484.1" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="495" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-014 open</text>
-  <rect x="997.9" y="484.1" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="495" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-015 open</text>
-  <rect x="520" y="584.3" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="603.8" font-size="12" fill="#0F172A" font-weight="700">DFM-011</text>
-  <rect x="593.9" y="592.8" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="603.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="592.8" width="38.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="648.7" y="603.7" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">stuck</text>
-  <text x="529" y="618.4" font-size="10.5" fill="#0F172A" font-weight="600">Intercept switch stays in pass-through when driven</text>
-  <text x="529" y="631.5" font-size="9.8" fill="#475569" font-style="italic">End effect: Erratic or excessive steering or braking</text>
-  <text x="529" y="648.5" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="637.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="648.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
-  <rect x="618.8" y="637.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="648.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-006</text>
-  <rect x="876" y="521.1" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="540.6" font-size="12" fill="#0F172A" font-weight="700">DFM-011.C1</text>
-  <rect x="1194.5" y="529.6" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="540.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="555.2" font-size="10.5" fill="#0F172A">Analog switch U1 or U2 stuck in the pass-through (NC) position, or</text>
-  <text x="885" y="569.2" font-size="10.5" fill="#0F172A">SBU1 drive lost or held low (driver open, R2/R3 short)</text>
-  <text x="885" y="582.4" font-size="9.8" fill="#475569" font-weight="600">O3 · D9 · in DFM-SE-006</text>
-  <rect x="885" y="588.4" width="165.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#64748B" stroke-width="1"/><text x="967.7" y="599.3" font-size="9.5" font-weight="700" fill="#64748B" text-anchor="middle" letter-spacing=".02em">DFM-ACT-007 not implemented</text>
-  <rect x="876" y="619.4" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="638.9" font-size="12" fill="#0F172A" font-weight="700">DFM-011.C2</text>
-  <rect x="1194.5" y="627.9" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="638.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="653.4" font-size="10.5" fill="#0F172A">The 5 V SBU1 drive does not reach the DG419LE logic-high</text>
-  <text x="885" y="667.5" font-size="10.5" fill="#0F172A">threshold with VL tied to VIN (about 14 V), so the switch does not</text>
-  <text x="885" y="681.6" font-size="10.5" fill="#0F172A">change over or changes over only at some temperatures…</text>
-  <text x="885" y="694.7" font-size="9.8" fill="#475569" font-weight="600">O2 · D9 · in DFM-SE-006</text>
-  <rect x="885" y="700.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="711.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-014 open</text>
-  <rect x="997.9" y="700.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="711.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-015 open</text>
-  <rect x="520" y="786.8" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="806.3" font-size="12" fill="#0F172A" font-weight="700">DFM-020</text>
-  <rect x="593.9" y="795.3" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="806.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="795.3" width="31.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="645.3" y="806.3" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">loss</text>
-  <text x="529" y="820.9" font-size="10.5" fill="#0F172A" font-weight="600">Harness box loses its supply while the car is on</text>
-  <text x="529" y="834" font-size="9.8" fill="#475569" font-style="italic">End effect: Stock AEB unavailable</text>
-  <text x="529" y="851" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="840" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="851" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
-  <rect x="618.8" y="840" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="851" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-004</text>
-  <rect x="876" y="737.7" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="757.2" font-size="12" fill="#0F172A" font-weight="700">DFM-020.C1</text>
-  <rect x="1194.5" y="746.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="757.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="771.8" font-size="10.5" fill="#0F172A">Ignition branch to the box open (crimp, connector) or D1 open,</text>
-  <text x="885" y="785.8" font-size="10.5" fill="#0F172A">without comma power installed</text>
-  <text x="885" y="799" font-size="9.8" fill="#475569" font-weight="600">O5 · D10 · in DFM-SE-006</text>
-  <rect x="885" y="805" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="815.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-014 open</text>
-  <rect x="876" y="836" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="855.5" font-size="12" fill="#0F172A" font-weight="700">DFM-020.C2</text>
-  <rect x="1194.5" y="844.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="855.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="870" font-size="10.5" fill="#0F172A">Box VIN shorted to ground (TVS D4 short, connector or wiring)</text>
-  <text x="885" y="883.2" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in DFM-SE-006</text>
-  <rect x="885" y="889.2" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="900.1" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-014 open</text>
-  <rect x="520" y="926.2" width="326" height="92.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="945.7" font-size="12" fill="#0F172A" font-weight="700">DFM-021</text>
-  <rect x="593.9" y="934.7" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="945.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="934.7" width="36.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="647.7" y="945.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">short</text>
-  <text x="529" y="960.2" font-size="10.5" fill="#0F172A" font-weight="600">Clamp diode short loads or grounds a vehicle bus in the</text>
-  <text x="529" y="974.3" font-size="10.5" fill="#0F172A" font-weight="600">harness box</text>
-  <text x="529" y="987.4" font-size="9.8" fill="#475569" font-style="italic">End effect: Stock AEB unavailable</text>
-  <text x="529" y="1004.4" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="993.4" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1004.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
-  <rect x="618.8" y="993.4" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="1004.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-004</text>
-  <rect x="876" y="933.2" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="952.7" font-size="12" fill="#0F172A" font-weight="700">DFM-021.C1</text>
-  <rect x="1194.5" y="941.7" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="952.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="967.3" font-size="10.5" fill="#0F172A">Schottky clamp D2 or D3 (BAS40SDW) short or leaky</text>
-  <text x="885" y="980.4" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in DFM-SE-006</text>
-  <rect x="885" y="986.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="997.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-014 open</text>
-  <rect x="40" y="1190.6" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
-  <text x="49" y="1210.1" font-size="12" fill="#0F172A" font-weight="700">DFM-SE-007</text>
-  <text x="49" y="1224.7" font-size="10.5" fill="#0F172A" font-weight="600">Harness, connectors, SBU</text>
-  <text x="49" y="1238.8" font-size="10.5" fill="#0F172A" font-weight="600">orientation and ignition sense</text>
-  <text x="49" y="1251.5" font-size="9.5" fill="#475569">interface</text>
-  <text x="49" y="1264.2" font-size="9.5" fill="#475569">in DFM-SE-001</text>
-  <rect x="250" y="1185.3" width="240" height="93.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
-  <text x="259" y="1204.8" font-size="12" fill="#0F172A" font-weight="700">DFM-FN-006</text>
-  <text x="259" y="1219.4" font-size="10.5" fill="#0F172A">Connect the device to the vehicle buses,</text>
-  <text x="259" y="1233.5" font-size="10.5" fill="#0F172A">power and ignition, and report harness</text>
-  <text x="259" y="1247.5" font-size="10.5" fill="#0F172A">orientation correctly</text>
-  <rect x="259" y="1253.5" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1264.4" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-010</text>
-  <rect x="318.4" y="1253.5" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="1264.4" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-038</text>
-  <rect x="520" y="1046.4" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="1065.9" font-size="12" fill="#0F172A" font-weight="700">DFM-012</text>
-  <rect x="593.9" y="1054.9" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1065.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="1054.9" width="64" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="661.4" y="1065.9" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">connection</text>
-  <text x="529" y="1080.5" font-size="10.5" fill="#0F172A" font-weight="600">Harness disconnected or intermittent while driving</text>
-  <text x="529" y="1093.7" font-size="9.8" fill="#475569" font-style="italic">End effect: Loss of lateral control while engaged</text>
-  <text x="529" y="1110.7" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="1099.7" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1110.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-004</text>
-  <rect x="876" y="1046.4" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="1065.9" font-size="12" fill="#0F172A" font-weight="700">DFM-012.C1</text>
-  <rect x="1194.5" y="1054.9" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1065.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="1080.5" font-size="10.5" fill="#0F172A">Connector not fully latched at installation, or vibration loosens it</text>
-  <text x="885" y="1093.7" font-size="9.8" fill="#475569" font-weight="600">O5 · D10 · in DFM-SE-007</text>
-  <rect x="885" y="1099.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1110.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-008 open</text>
-  <rect x="520" y="1143.7" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="1163.2" font-size="12" fill="#0F172A" font-weight="700">DFM-013</text>
-  <rect x="593.9" y="1152.2" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1163.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="1152.2" width="34.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="646.8" y="1163.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">open</text>
-  <text x="529" y="1177.8" font-size="10.5" fill="#0F172A" font-weight="600">Stock camera path open inside the harness box</text>
-  <text x="529" y="1190.9" font-size="9.8" fill="#475569" font-style="italic">End effect: Stock AEB unavailable</text>
-  <text x="529" y="1207.9" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="1196.9" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1207.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
-  <rect x="876" y="1136.7" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="1156.2" font-size="12" fill="#0F172A" font-weight="700">DFM-013.C1</text>
-  <rect x="1194.5" y="1145.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1156.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="1170.7" font-size="10.5" fill="#0F172A">Open in the harness box stock path (U1/U2 channel open, solder</text>
-  <text x="885" y="1184.8" font-size="10.5" fill="#0F172A">joint, connector contact)</text>
-  <text x="885" y="1197.9" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in DFM-SE-006</text>
-  <rect x="885" y="1203.9" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1214.8" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-008 open</text>
-  <rect x="520" y="1290.1" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="1309.6" font-size="12" fill="#0F172A" font-weight="700">DFM-014</text>
-  <rect x="593.9" y="1298.6" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1309.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="1298.6" width="36.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="647.7" y="1309.5" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">short</text>
-  <text x="529" y="1324.1" font-size="10.5" fill="#0F172A" font-weight="600">Ignition sense reads on when the ignition is off</text>
-  <text x="529" y="1337.3" font-size="9.8" fill="#475569" font-style="italic">End effect: Longer actuation window after SoC loss</text>
-  <text x="529" y="1354.3" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="1343.3" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1354.2" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
-  <rect x="876" y="1240.9" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="1260.4" font-size="12" fill="#0F172A" font-weight="700">DFM-014.C1</text>
-  <rect x="1194.5" y="1249.4" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1260.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="1275" font-size="10.5" fill="#0F172A">Ignition sense line shorted</text>
-  <text x="885" y="1288.1" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in DFM-SE-007</text>
-  <rect x="885" y="1294.1" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1305" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-008 open</text>
-  <rect x="876" y="1325.1" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="1344.6" font-size="12" fill="#0F172A" font-weight="700">DFM-014.C2</text>
-  <rect x="1194.5" y="1333.6" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1344.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="1359.2" font-size="10.5" fill="#0F172A">Ignition-sense transistor Q6 (DMN3200U, harness box) drain-source</text>
-  <text x="885" y="1373.3" font-size="10.5" fill="#0F172A">short, holding SBU2 low</text>
-  <text x="885" y="1386.4" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in DFM-SE-007</text>
-  <rect x="885" y="1392.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1403.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-008 open</text>
-  <rect x="997.9" y="1392.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="1403.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-014 open</text>
-  <rect x="40" y="1457.7" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
-  <text x="49" y="1477.2" font-size="12" fill="#0F172A" font-weight="700">DFM-SE-008</text>
-  <text x="49" y="1491.8" font-size="10.5" fill="#0F172A" font-weight="600">SoC-MCU interface: SPI link,</text>
-  <text x="49" y="1505.9" font-size="10.5" fill="#0F172A" font-weight="600">STM_RST_N, STM_BOOT0</text>
-  <text x="49" y="1518.6" font-size="9.5" fill="#475569">interface</text>
-  <text x="49" y="1531.3" font-size="9.5" fill="#475569">in DFM-SE-001</text>
-  <rect x="250" y="1445.4" width="240" height="107.3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
-  <text x="259" y="1464.9" font-size="12" fill="#0F172A" font-weight="700">DFM-FN-007</text>
-  <text x="259" y="1479.5" font-size="10.5" fill="#0F172A">Carry commands, CAN frames and</text>
-  <text x="259" y="1493.5" font-size="10.5" fill="#0F172A">heartbeat between SoC and MCU intact;</text>
-  <text x="259" y="1507.6" font-size="10.5" fill="#0F172A">keep the MCU running the signed</text>
-  <text x="259" y="1521.7" font-size="10.5" fill="#0F172A">application</text>
-  <rect x="259" y="1527.7" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1538.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-007</text>
-  <rect x="318.4" y="1527.7" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="1538.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-010</text>
-  <rect x="520" y="1453.4" width="326" height="91.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="1472.9" font-size="12" fill="#0F172A" font-weight="700">DFM-015</text>
-  <rect x="593.9" y="1461.9" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1472.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="1461.9" width="31.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="645.4" y="1472.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">emc</text>
-  <text x="529" y="1487.4" font-size="10.5" fill="#0F172A" font-weight="600">Corrupted SoC-to-MCU transfer accepted</text>
-  <text x="529" y="1500.6" font-size="9.8" fill="#475569" font-style="italic">End effect: Wrong in-envelope actuation, or a wrong configuration</text>
-  <text x="529" y="1513.7" font-size="9.8" fill="#475569" font-style="italic">request</text>
-  <text x="529" y="1530.7" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="1519.7" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1530.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
-  <rect x="876" y="1452.9" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="1472.4" font-size="12" fill="#0F172A" font-weight="700">DFM-015.C1</text>
-  <rect x="1194.5" y="1461.4" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1472.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="1487" font-size="10.5" fill="#0F172A">Bit errors on the SPI link (EMC, signal integrity); 8-bit XOR only, no</text>
-  <text x="885" y="1501" font-size="10.5" fill="#0F172A">sequence counter</text>
-  <text x="885" y="1514.2" font-size="9.8" fill="#475569" font-weight="600">O4 · D10 · in DFM-SE-008</text>
-  <rect x="885" y="1520.2" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1531.1" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-009 open</text>
-  <line x1="40" y1="1578.7" x2="1240" y2="1578.7" stroke="#E2E8F0" stroke-width="1"/>
-  <text x="40" y="1600.7" font-size="10.5" fill="#0F172A" font-weight="700">Legend</text>
-  <rect x="96" y="1589.7" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="114.2" y="1600.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <rect x="136.5" y="1589.7" width="38.9" height="15" rx="7.5" fill="#D97706"/><text x="156" y="1600.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP M</text>
-  <rect x="179.4" y="1589.7" width="36.5" height="15" rx="7.5" fill="#0F766E"/><text x="197.7" y="1600.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP L</text>
-  <text x="223.9" y="1600.7" font-size="10.5" fill="#0F172A">Action Priority as rated (rating-tables §5)</text>
-  <rect x="455.4" y="1589.7" width="59.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="485" y="1600.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">ACT open</text>
-  <rect x="518.7" y="1589.7" width="115.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#64748B" stroke-width="1"/><text x="576.6" y="1600.6" font-size="9.5" font-weight="700" fill="#64748B" text-anchor="middle" letter-spacing=".02em">ACT not implemented</text>
-  <text x="642.6" y="1600.7" font-size="10.5" fill="#0F172A">action status (step 6)</text>
-  <text x="40" y="1620.7" font-size="10" fill="#475569">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
-  <text x="40" y="1638.7" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/dfmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+  <rect width="1280" height="1659" fill="#FCFCFB"/>
+  <text x="40" y="44" font-size="20" fill="#0B0B0B" font-weight="700">Figure 3-4 · DFMEA failure chains — sheet 2 of 3</text>
+  <text x="40" y="66" font-size="12.5" fill="#52514E">DFM rev 0.12 · BL-007 · draft · DFM-010 … DFM-015 · 14 causes on this sheet</text>
+  <text x="1240" y="44" font-size="11" fill="#52514E" text-anchor="end">fmea-plan.md §3.2</text>
+  <text x="1240" y="62" font-size="11" fill="#52514E" text-anchor="end">analyses/dfmea.yaml</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E1E0D9" stroke-width="1"/>
+  <rect x="0" y="83" width="1280" height="1483.7" fill="url(#dots)"/>
+  <text x="40" y="108" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">STRUCTURE ELEMENT</text>
+  <text x="250" y="108" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">FUNCTION (STEP 3)</text>
+  <text x="520" y="108" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">FAILURE MODE · S · END EFFECT (STEP 4)</text>
+  <text x="876" y="108" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">FAILURE CAUSE · O · D · AP · ACTIONS (STEPS 4–6)</text>
+  <path d="M220 550.9H232.3Q235 550.9 235 548.3V548.3Q235 545.6 237.7 545.6H250" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 545.6H497Q505 545.6 505 537.6V306.4Q505 298.4 513 298.4H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 545.6H497Q505 545.6 505 553.6V598.3Q505 606.3 513 606.3H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 545.6H497Q505 545.6 505 553.6V800.8Q505 808.8 513 808.8H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 545.6H497Q505 545.6 505 553.6V940.2Q505 948.2 513 948.2H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 298.4H853Q861 298.4 861 290.4V152Q861 144 869 144H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 298.4H853Q861 298.4 861 290.4V250.3Q861 242.3 869 242.3H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 298.4H853Q861 298.4 861 306.4V318.5Q861 326.5 869 326.5H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 298.4H853Q861 298.4 861 306.4V416.7Q861 424.7 869 424.7H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 606.3H853Q861 606.3 861 598.3V551.1Q861 543.1 869 543.1H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 606.3H853Q861 606.3 861 614.3V633.4Q861 641.4 869 641.4H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 808.8H853Q861 808.8 861 800.8V767.7Q861 759.7 869 759.7H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 808.8H853Q861 808.8 861 816.8V850Q861 858 869 858H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 948.2H857.5Q861 948.2 861 951.7V951.7Q861 955.2 864.5 955.2H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M220 1212.6H232.3Q235 1212.6 235 1210V1210Q235 1207.3 237.7 1207.3H250" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 1207.3H497Q505 1207.3 505 1199.3V1076.4Q505 1068.4 513 1068.4H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 1207.3H497Q505 1207.3 505 1199.3V1173.7Q505 1165.7 513 1165.7H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 1207.3H497Q505 1207.3 505 1215.3V1304.1Q505 1312.1 513 1312.1H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 1068.4H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 1165.7H857.5Q861 1165.7 861 1162.2V1162.2Q861 1158.7 864.5 1158.7H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 1312.1H853Q861 1312.1 861 1304.1V1270.9Q861 1262.9 869 1262.9H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 1312.1H853Q861 1312.1 861 1320.1V1339.1Q861 1347.1 869 1347.1H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M220 1479.7H228.8Q235 1479.7 235 1473.6V1473.6Q235 1467.4 241.2 1467.4H250" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 1467.4H501Q505 1467.4 505 1471.4V1471.4Q505 1475.4 509 1475.4H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 1475.4H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <rect x="40" y="531.9" width="180" height="82.6" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="40" y="528.9" width="180" height="82.6" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="50.5" y="538.9" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="68" y="548.4" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-SE-006</text>
+  <text x="211" y="547.4" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">ELEMENT</text>
+  <text x="50" y="563" font-size="10.5" fill="#0B0B0B" font-weight="600">Intercept switch (harness box</text>
+  <text x="50" y="577.1" font-size="10.5" fill="#0B0B0B" font-weight="600">U1/U2) and its drive</text>
+  <text x="50" y="589.8" font-size="9.5" fill="#52514E">component</text>
+  <text x="50" y="602.5" font-size="9.5" fill="#52514E">in DFM-SE-001</text>
+  <rect x="250" y="526.6" width="240" height="93.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="250" y="523.6" width="240" height="93.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="260.5" y="533.6" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="278" y="543.1" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-FN-005</text>
+  <text x="481" y="542.1" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FUNCTION</text>
+  <text x="260" y="557.7" font-size="10.5" fill="#0B0B0B">Separate the camera from the car bus only</text>
+  <text x="260" y="571.8" font-size="10.5" fill="#0B0B0B">while energised; restore the stock camera</text>
+  <text x="260" y="585.8" font-size="10.5" fill="#0B0B0B">path whenever de-energised</text>
+  <rect x="260" y="591.8" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="287.7" y="602.7" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-008</text>
+  <rect x="319.4" y="591.8" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="347.1" y="602.7" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-037</text>
+  <rect x="378.8" y="591.8" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="406.5" y="602.7" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-038</text>
+  <rect x="520" y="279.4" width="326" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="276.4" width="326" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 285.9L543 291.9L536.5 297.9L530 291.9Z" fill="#EB6834"/>
+  <text x="548" y="295.9" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-010</text>
+  <rect x="603.3" y="284.9" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="295.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="284.9" width="38.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="658.1" y="295.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">stuck</text>
+  <text x="837" y="294.9" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="310.5" font-size="10.5" fill="#0B0B0B" font-weight="600">Intercept switch stays in intercept when released</text>
+  <text x="530" y="323.6" font-size="9.8" fill="#52514E" font-style="italic">End effect: Stock AEB unavailable</text>
+  <text x="530" y="340.6" font-size="9.5" fill="#52514E" font-weight="600">hazard</text>
+  <rect x="567.3" y="329.6" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="591.6" y="340.6" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
+  <rect x="876" y="125" width="364" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="122" width="364" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="137.5" r="5.5" fill="#6250D6"/>
+  <text x="904" y="141.5" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-010.C1</text>
+  <rect x="1182.5" y="130.5" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="138" r="4.3" fill="#9E2424"/><rect x="1189.4" y="137.2" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="141.4" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="156.1" font-size="10.5" fill="#0B0B0B">Analog switch U1 or U2 stuck in the intercept (NO) position, or its</text>
+  <text x="886" y="170.1" font-size="10.5" fill="#0B0B0B">IN input damaged high</text>
+  <text x="886" y="183.3" font-size="9.8" fill="#52514E" font-weight="600">O3 · D10 · in DFM-SE-006</text>
+  <rect x="886" y="189.3" width="165.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="968.7" y="200.2" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">DFM-ACT-007 not implemented</text>
+  <rect x="876" y="223.3" width="364" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="220.3" width="364" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="235.8" r="5.5" fill="#6250D6"/>
+  <text x="904" y="239.8" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-010.C2</text>
+  <rect x="1182.5" y="228.8" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="236.3" r="4.3" fill="#9E2424"/><rect x="1189.4" y="235.5" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="239.7" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="254.3" font-size="10.5" fill="#0B0B0B">SBU1 drive stuck high (device-side driver or MCU pin, UK-06)</text>
+  <text x="886" y="267.5" font-size="9.8" fill="#52514E" font-weight="600">O3 · D10 · in DFM-SE-006</text>
+  <rect x="886" y="273.5" width="165.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="968.7" y="284.4" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">DFM-ACT-007 not implemented</text>
+  <rect x="876" y="307.5" width="364" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="304.5" width="364" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="320" r="5.5" fill="#6250D6"/>
+  <text x="904" y="324" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-010.C3</text>
+  <rect x="1182.5" y="313" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="320.5" r="4.3" fill="#9E2424"/><rect x="1189.4" y="319.7" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="323.9" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="338.5" font-size="10.5" fill="#0B0B0B">Pull-down R2 or R3 open, so IN floats when the device stops driving</text>
+  <text x="886" y="352.6" font-size="10.5" fill="#0B0B0B">SBU1 (reset, watchdog, hang, unplugged cable)</text>
+  <text x="886" y="365.7" font-size="9.8" fill="#52514E" font-weight="600">O3 · D10 · in DFM-SE-006</text>
+  <rect x="886" y="371.7" width="165.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="968.7" y="382.7" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">DFM-ACT-007 not implemented</text>
+  <rect x="1055.5" y="371.7" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="1109.9" y="382.7" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">DFM-ACT-014 open</text>
+  <rect x="876" y="405.7" width="364" height="106.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="402.7" width="364" height="106.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="418.2" r="5.5" fill="#6250D6"/>
+  <text x="904" y="422.2" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-010.C4</text>
+  <rect x="1182.5" y="411.2" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="418.7" r="4.3" fill="#9E2424"/><rect x="1189.4" y="417.9" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="422.2" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="436.8" font-size="10.5" fill="#0B0B0B">U1/U2 overstressed or latched up by box supply transients above</text>
+  <text x="886" y="450.9" font-size="10.5" fill="#0B0B0B">the DG419LE absolute maximum (V+ = VL = VIN with no regulator;</text>
+  <text x="886" y="465" font-size="10.5" fill="#0B0B0B">the SMF16A clamp D4 only starts to conduct above its 16 V…</text>
+  <text x="886" y="478.1" font-size="9.8" fill="#52514E" font-weight="600">O4 · D10 · in DFM-SE-006</text>
+  <rect x="886" y="484.1" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="495" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">DFM-ACT-014 open</text>
+  <rect x="998.9" y="484.1" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="1053.3" y="495" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">DFM-ACT-015 open</text>
+  <rect x="520" y="587.3" width="326" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="584.3" width="326" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 593.8L543 599.8L536.5 605.8L530 599.8Z" fill="#EB6834"/>
+  <text x="548" y="603.8" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-011</text>
+  <rect x="603.3" y="592.8" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="603.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="592.8" width="38.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="658.1" y="603.7" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">stuck</text>
+  <text x="837" y="602.8" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="618.4" font-size="10.5" fill="#0B0B0B" font-weight="600">Intercept switch stays in pass-through when driven</text>
+  <text x="530" y="631.5" font-size="9.8" fill="#52514E" font-style="italic">End effect: Erratic or excessive steering or braking</text>
+  <text x="530" y="648.5" font-size="9.5" fill="#52514E" font-weight="600">hazard</text>
+  <rect x="567.3" y="637.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="591.6" y="648.4" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
+  <rect x="619.8" y="637.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="644.1" y="648.4" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-006</text>
+  <rect x="876" y="524.1" width="364" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="521.1" width="364" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="536.6" r="5.5" fill="#6250D6"/>
+  <text x="904" y="540.6" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-011.C1</text>
+  <rect x="1182.5" y="529.6" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="537.1" r="4.3" fill="#9E2424"/><rect x="1189.4" y="536.3" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="540.5" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="555.2" font-size="10.5" fill="#0B0B0B">Analog switch U1 or U2 stuck in the pass-through (NC) position, or</text>
+  <text x="886" y="569.2" font-size="10.5" fill="#0B0B0B">SBU1 drive lost or held low (driver open, R2/R3 short)</text>
+  <text x="886" y="582.4" font-size="9.8" fill="#52514E" font-weight="600">O3 · D9 · in DFM-SE-006</text>
+  <rect x="886" y="588.4" width="165.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="968.7" y="599.3" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">DFM-ACT-007 not implemented</text>
+  <rect x="876" y="622.4" width="364" height="106.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="619.4" width="364" height="106.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="634.9" r="5.5" fill="#6250D6"/>
+  <text x="904" y="638.9" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-011.C2</text>
+  <rect x="1182.5" y="627.9" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="635.4" r="4.3" fill="#9E2424"/><rect x="1189.4" y="634.6" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="638.8" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="653.4" font-size="10.5" fill="#0B0B0B">The 5 V SBU1 drive does not reach the DG419LE logic-high</text>
+  <text x="886" y="667.5" font-size="10.5" fill="#0B0B0B">threshold with VL tied to VIN (about 14 V), so the switch does not</text>
+  <text x="886" y="681.6" font-size="10.5" fill="#0B0B0B">change over or changes over only at some temperatures…</text>
+  <text x="886" y="694.7" font-size="9.8" fill="#52514E" font-weight="600">O2 · D9 · in DFM-SE-006</text>
+  <rect x="886" y="700.7" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="711.6" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">DFM-ACT-014 open</text>
+  <rect x="998.9" y="700.7" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="1053.3" y="711.6" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">DFM-ACT-015 open</text>
+  <rect x="520" y="789.8" width="326" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="786.8" width="326" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 796.3L543 802.3L536.5 808.3L530 802.3Z" fill="#EB6834"/>
+  <text x="548" y="806.3" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-020</text>
+  <rect x="603.3" y="795.3" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="806.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="795.3" width="31.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="654.7" y="806.3" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">loss</text>
+  <text x="837" y="805.3" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="820.9" font-size="10.5" fill="#0B0B0B" font-weight="600">Harness box loses its supply while the car is on</text>
+  <text x="530" y="834" font-size="9.8" fill="#52514E" font-style="italic">End effect: Stock AEB unavailable</text>
+  <text x="530" y="851" font-size="9.5" fill="#52514E" font-weight="600">hazard</text>
+  <rect x="567.3" y="840" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="591.6" y="851" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
+  <rect x="619.8" y="840" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="644.1" y="851" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-004</text>
+  <rect x="876" y="740.7" width="364" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="737.7" width="364" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="753.2" r="5.5" fill="#6250D6"/>
+  <text x="904" y="757.2" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-020.C1</text>
+  <rect x="1182.5" y="746.2" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="753.7" r="4.3" fill="#9E2424"/><rect x="1189.4" y="752.9" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="757.1" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="771.8" font-size="10.5" fill="#0B0B0B">Ignition branch to the box open (crimp, connector) or D1 open,</text>
+  <text x="886" y="785.8" font-size="10.5" fill="#0B0B0B">without comma power installed</text>
+  <text x="886" y="799" font-size="9.8" fill="#52514E" font-weight="600">O5 · D10 · in DFM-SE-006</text>
+  <rect x="886" y="805" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="815.9" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">DFM-ACT-014 open</text>
+  <rect x="876" y="839" width="364" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="836" width="364" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="851.5" r="5.5" fill="#6250D6"/>
+  <text x="904" y="855.5" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-020.C2</text>
+  <rect x="1182.5" y="844.5" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="852" r="4.3" fill="#9E2424"/><rect x="1189.4" y="851.2" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="855.4" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="870" font-size="10.5" fill="#0B0B0B">Box VIN shorted to ground (TVS D4 short, connector or wiring)</text>
+  <text x="886" y="883.2" font-size="9.8" fill="#52514E" font-weight="600">O3 · D10 · in DFM-SE-006</text>
+  <rect x="886" y="889.2" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="900.1" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">DFM-ACT-014 open</text>
+  <rect x="520" y="929.2" width="326" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="926.2" width="326" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 935.7L543 941.7L536.5 947.7L530 941.7Z" fill="#EB6834"/>
+  <text x="548" y="945.7" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-021</text>
+  <rect x="603.3" y="934.7" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="945.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="934.7" width="36.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="657.1" y="945.6" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">short</text>
+  <text x="837" y="944.7" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="960.2" font-size="10.5" fill="#0B0B0B" font-weight="600">Clamp diode short loads or grounds a vehicle bus in the</text>
+  <text x="530" y="974.3" font-size="10.5" fill="#0B0B0B" font-weight="600">harness box</text>
+  <text x="530" y="987.4" font-size="9.8" fill="#52514E" font-style="italic">End effect: Stock AEB unavailable</text>
+  <text x="530" y="1004.4" font-size="9.5" fill="#52514E" font-weight="600">hazard</text>
+  <rect x="567.3" y="993.4" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="591.6" y="1004.4" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
+  <rect x="619.8" y="993.4" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="644.1" y="1004.4" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-004</text>
+  <rect x="876" y="936.2" width="364" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="933.2" width="364" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="948.7" r="5.5" fill="#6250D6"/>
+  <text x="904" y="952.7" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-021.C1</text>
+  <rect x="1182.5" y="941.7" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="949.2" r="4.3" fill="#9E2424"/><rect x="1189.4" y="948.4" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="952.6" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="967.3" font-size="10.5" fill="#0B0B0B">Schottky clamp D2 or D3 (BAS40SDW) short or leaky</text>
+  <text x="886" y="980.4" font-size="9.8" fill="#52514E" font-weight="600">O3 · D10 · in DFM-SE-006</text>
+  <rect x="886" y="986.4" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="997.3" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">DFM-ACT-014 open</text>
+  <rect x="40" y="1193.6" width="180" height="82.6" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="40" y="1190.6" width="180" height="82.6" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="50.5" y="1200.6" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="68" y="1210.1" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-SE-007</text>
+  <text x="211" y="1209.1" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">ELEMENT</text>
+  <text x="50" y="1224.7" font-size="10.5" fill="#0B0B0B" font-weight="600">Harness, connectors, SBU</text>
+  <text x="50" y="1238.8" font-size="10.5" fill="#0B0B0B" font-weight="600">orientation and ignition sense</text>
+  <text x="50" y="1251.5" font-size="9.5" fill="#52514E">interface</text>
+  <text x="50" y="1264.2" font-size="9.5" fill="#52514E">in DFM-SE-001</text>
+  <rect x="250" y="1188.3" width="240" height="93.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="250" y="1185.3" width="240" height="93.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="260.5" y="1195.3" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="278" y="1204.8" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-FN-006</text>
+  <text x="481" y="1203.8" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FUNCTION</text>
+  <text x="260" y="1219.4" font-size="10.5" fill="#0B0B0B">Connect the device to the vehicle buses,</text>
+  <text x="260" y="1233.5" font-size="10.5" fill="#0B0B0B">power and ignition, and report harness</text>
+  <text x="260" y="1247.5" font-size="10.5" fill="#0B0B0B">orientation correctly</text>
+  <rect x="260" y="1253.5" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="287.7" y="1264.4" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-010</text>
+  <rect x="319.4" y="1253.5" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="347.1" y="1264.4" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-038</text>
+  <rect x="520" y="1049.4" width="326" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="1046.4" width="326" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 1055.9L543 1061.9L536.5 1067.9L530 1061.9Z" fill="#EB6834"/>
+  <text x="548" y="1065.9" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-012</text>
+  <rect x="603.3" y="1054.9" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="1065.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="1054.9" width="64" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="670.8" y="1065.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">connection</text>
+  <text x="837" y="1064.9" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="1080.5" font-size="10.5" fill="#0B0B0B" font-weight="600">Harness disconnected or intermittent while driving</text>
+  <text x="530" y="1093.7" font-size="9.8" fill="#52514E" font-style="italic">End effect: Loss of lateral control while engaged</text>
+  <text x="530" y="1110.7" font-size="9.5" fill="#52514E" font-weight="600">hazard</text>
+  <rect x="567.3" y="1099.7" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="591.6" y="1110.6" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-004</text>
+  <rect x="876" y="1049.4" width="364" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="1046.4" width="364" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="1061.9" r="5.5" fill="#6250D6"/>
+  <text x="904" y="1065.9" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-012.C1</text>
+  <rect x="1182.5" y="1054.9" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="1062.4" r="4.3" fill="#9E2424"/><rect x="1189.4" y="1061.6" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="1065.9" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="1080.5" font-size="10.5" fill="#0B0B0B">Connector not fully latched at installation, or vibration loosens it</text>
+  <text x="886" y="1093.7" font-size="9.8" fill="#52514E" font-weight="600">O5 · D10 · in DFM-SE-007</text>
+  <rect x="886" y="1099.7" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="1110.6" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">DFM-ACT-008 open</text>
+  <rect x="520" y="1146.7" width="326" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="1143.7" width="326" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 1153.2L543 1159.2L536.5 1165.2L530 1159.2Z" fill="#EB6834"/>
+  <text x="548" y="1163.2" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-013</text>
+  <rect x="603.3" y="1152.2" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="1163.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="1152.2" width="34.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="656.2" y="1163.1" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">open</text>
+  <text x="837" y="1162.2" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="1177.8" font-size="10.5" fill="#0B0B0B" font-weight="600">Stock camera path open inside the harness box</text>
+  <text x="530" y="1190.9" font-size="9.8" fill="#52514E" font-style="italic">End effect: Stock AEB unavailable</text>
+  <text x="530" y="1207.9" font-size="9.5" fill="#52514E" font-weight="600">hazard</text>
+  <rect x="567.3" y="1196.9" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="591.6" y="1207.8" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
+  <rect x="876" y="1139.7" width="364" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="1136.7" width="364" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="1152.2" r="5.5" fill="#6250D6"/>
+  <text x="904" y="1156.2" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-013.C1</text>
+  <rect x="1182.5" y="1145.2" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="1152.7" r="4.3" fill="#9E2424"/><rect x="1189.4" y="1151.9" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="1156.1" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="1170.7" font-size="10.5" fill="#0B0B0B">Open in the harness box stock path (U1/U2 channel open, solder</text>
+  <text x="886" y="1184.8" font-size="10.5" fill="#0B0B0B">joint, connector contact)</text>
+  <text x="886" y="1197.9" font-size="9.8" fill="#52514E" font-weight="600">O3 · D10 · in DFM-SE-006</text>
+  <rect x="886" y="1203.9" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="1214.8" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">DFM-ACT-008 open</text>
+  <rect x="520" y="1293.1" width="326" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="1290.1" width="326" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 1299.6L543 1305.6L536.5 1311.6L530 1305.6Z" fill="#EB6834"/>
+  <text x="548" y="1309.6" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-014</text>
+  <rect x="603.3" y="1298.6" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="1309.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="1298.6" width="36.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="657.1" y="1309.5" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">short</text>
+  <text x="837" y="1308.6" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="1324.1" font-size="10.5" fill="#0B0B0B" font-weight="600">Ignition sense reads on when the ignition is off</text>
+  <text x="530" y="1337.3" font-size="9.8" fill="#52514E" font-style="italic">End effect: Longer actuation window after SoC loss</text>
+  <text x="530" y="1354.3" font-size="9.5" fill="#52514E" font-weight="600">hazard</text>
+  <rect x="567.3" y="1343.3" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="591.6" y="1354.2" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
+  <rect x="876" y="1243.9" width="364" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="1240.9" width="364" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="1256.4" r="5.5" fill="#6250D6"/>
+  <text x="904" y="1260.4" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-014.C1</text>
+  <rect x="1182.5" y="1249.4" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="1256.9" r="4.3" fill="#9E2424"/><rect x="1189.4" y="1256.1" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="1260.3" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="1275" font-size="10.5" fill="#0B0B0B">Ignition sense line shorted</text>
+  <text x="886" y="1288.1" font-size="9.8" fill="#52514E" font-weight="600">O3 · D10 · in DFM-SE-007</text>
+  <rect x="886" y="1294.1" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="1305" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">DFM-ACT-008 open</text>
+  <rect x="876" y="1328.1" width="364" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="1325.1" width="364" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="1340.6" r="5.5" fill="#6250D6"/>
+  <text x="904" y="1344.6" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-014.C2</text>
+  <rect x="1182.5" y="1333.6" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="1341.1" r="4.3" fill="#9E2424"/><rect x="1189.4" y="1340.3" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="1344.5" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="1359.2" font-size="10.5" fill="#0B0B0B">Ignition-sense transistor Q6 (DMN3200U, harness box) drain-source</text>
+  <text x="886" y="1373.3" font-size="10.5" fill="#0B0B0B">short, holding SBU2 low</text>
+  <text x="886" y="1386.4" font-size="9.8" fill="#52514E" font-weight="600">O3 · D10 · in DFM-SE-007</text>
+  <rect x="886" y="1392.4" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="1403.3" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">DFM-ACT-008 open</text>
+  <rect x="998.9" y="1392.4" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="1053.3" y="1403.3" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">DFM-ACT-014 open</text>
+  <rect x="40" y="1460.7" width="180" height="82.6" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="40" y="1457.7" width="180" height="82.6" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="50.5" y="1467.7" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="68" y="1477.2" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-SE-008</text>
+  <text x="211" y="1476.2" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">ELEMENT</text>
+  <text x="50" y="1491.8" font-size="10.5" fill="#0B0B0B" font-weight="600">SoC-MCU interface: SPI link,</text>
+  <text x="50" y="1505.9" font-size="10.5" fill="#0B0B0B" font-weight="600">STM_RST_N, STM_BOOT0</text>
+  <text x="50" y="1518.6" font-size="9.5" fill="#52514E">interface</text>
+  <text x="50" y="1531.3" font-size="9.5" fill="#52514E">in DFM-SE-001</text>
+  <rect x="250" y="1448.4" width="240" height="107.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="250" y="1445.4" width="240" height="107.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="260.5" y="1455.4" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="278" y="1464.9" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-FN-007</text>
+  <text x="481" y="1463.9" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FUNCTION</text>
+  <text x="260" y="1479.5" font-size="10.5" fill="#0B0B0B">Carry commands, CAN frames and</text>
+  <text x="260" y="1493.5" font-size="10.5" fill="#0B0B0B">heartbeat between SoC and MCU intact;</text>
+  <text x="260" y="1507.6" font-size="10.5" fill="#0B0B0B">keep the MCU running the signed</text>
+  <text x="260" y="1521.7" font-size="10.5" fill="#0B0B0B">application</text>
+  <rect x="260" y="1527.7" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="287.7" y="1538.6" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-007</text>
+  <rect x="319.4" y="1527.7" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="347.1" y="1538.6" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-010</text>
+  <rect x="520" y="1456.4" width="326" height="91.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="1453.4" width="326" height="91.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 1462.9L543 1468.9L536.5 1474.9L530 1468.9Z" fill="#EB6834"/>
+  <text x="548" y="1472.9" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-015</text>
+  <rect x="603.3" y="1461.9" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="1472.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="1461.9" width="31.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="654.8" y="1472.8" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">emc</text>
+  <text x="837" y="1471.9" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="1487.4" font-size="10.5" fill="#0B0B0B" font-weight="600">Corrupted SoC-to-MCU transfer accepted</text>
+  <text x="530" y="1500.6" font-size="9.8" fill="#52514E" font-style="italic">End effect: Wrong in-envelope actuation, or a wrong configuration</text>
+  <text x="530" y="1513.7" font-size="9.8" fill="#52514E" font-style="italic">request</text>
+  <text x="530" y="1530.7" font-size="9.5" fill="#52514E" font-weight="600">hazard</text>
+  <rect x="567.3" y="1519.7" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="591.6" y="1530.6" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
+  <rect x="876" y="1455.9" width="364" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="1452.9" width="364" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="1468.4" r="5.5" fill="#6250D6"/>
+  <text x="904" y="1472.4" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-015.C1</text>
+  <rect x="1182.5" y="1461.4" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="1468.9" r="4.3" fill="#9E2424"/><rect x="1189.4" y="1468.1" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="1472.3" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="1487" font-size="10.5" fill="#0B0B0B">Bit errors on the SPI link (EMC, signal integrity); 8-bit XOR only, no</text>
+  <text x="886" y="1501" font-size="10.5" fill="#0B0B0B">sequence counter</text>
+  <text x="886" y="1514.2" font-size="9.8" fill="#52514E" font-weight="600">O4 · D10 · in DFM-SE-008</text>
+  <rect x="886" y="1520.2" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="1531.1" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">DFM-ACT-009 open</text>
+  <line x1="40" y1="1578.7" x2="1240" y2="1578.7" stroke="#E1E0D9" stroke-width="1"/>
+  <text x="40" y="1600.7" font-size="10.5" fill="#0B0B0B" font-weight="700">Legend</text>
+  <rect x="96" y="1589.7" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="105.5" cy="1597.2" r="4.3" fill="#9E2424"/><rect x="102.9" y="1596.4" width="5.2" height="1.6" fill="#FBE9E9"/><text x="113" y="1600.6" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <rect x="148.5" y="1589.7" width="50.9" height="15" rx="7.5" fill="#FFF5DC"/><path d="M158 1593.2L162.4 1600.8H153.6Z" fill="#7A5600"/><text x="165.5" y="1600.6" font-size="9.5" font-weight="700" fill="#7A5600">AP M</text>
+  <rect x="203.4" y="1589.7" width="48.5" height="15" rx="7.5" fill="#E6F5E6"/><circle cx="212.9" cy="1597.2" r="3.6" fill="#0A6A0A"/><text x="220.4" y="1600.6" font-size="9.5" font-weight="700" fill="#0A6A0A">AP L</text>
+  <text x="259.9" y="1600.7" font-size="10.5" fill="#0B0B0B">Action Priority as rated (rating-tables §5)</text>
+  <rect x="491.4" y="1589.7" width="59.3" height="15" rx="7.5" fill="#FBE9E9"/><text x="521" y="1600.6" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">ACT open</text>
+  <rect x="554.7" y="1589.7" width="115.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="612.6" y="1600.6" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">ACT not implemented</text>
+  <text x="678.6" y="1600.7" font-size="10.5" fill="#0B0B0B">action status (step 6)</text>
+  <text x="40" y="1620.7" font-size="10" fill="#52514E">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
+  <text x="40" y="1638.7" font-size="9.5" fill="#898781">Generated by tools/safety/fmea_diagrams.py from analyses/dfmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>
