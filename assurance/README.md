@@ -13,7 +13,7 @@ structure follows UL 4600 principles where they apply to a supervised Level 2 sy
 
 ## Living Safety Case
 
-LionDriver publishes its safety argument as it is built: the claims it makes, the evidence for each one, the known counter-evidence against it, and what has and has not been reviewed. The figures below are generated from the structured records in [`case/`](case/README.md) and checked by CI on every pull request. Nothing on this card is typed by hand.
+LionDriver publishes its safety argument as it is built: the claims it makes, the evidence for each one, the known counter-evidence against it, and what has and has not been reviewed. The figures below are generated from the structured records in [`case-records/`](case-records/README.md) and checked by CI on every pull request. Nothing on this card is typed by hand.
 
 <p align="center">
   <img src="../docs/assets/liondriver/assurance/dashboard.svg" width="100%" alt="Living Safety Case dashboard generated from the assurance records. The same values are listed as text in the table below.">
@@ -28,7 +28,7 @@ LionDriver publishes its safety argument as it is built: the claims it makes, th
 <details>
 <summary><b>Recorded values as text</b></summary>
 
-<!-- BEGIN GENERATED: assurance-summary (assurance/case/tools/generate_dashboard.py) -->
+<!-- BEGIN GENERATED: assurance-summary (assurance/case-records/tools/generate_dashboard.py) -->
 
 | Indicator | Recorded value |
 |---|---|
@@ -42,7 +42,7 @@ LionDriver publishes its safety argument as it is built: the claims it makes, th
 | Open defeaters (known counter-evidence) | 42 |
 | Evaluated configurations | 1 |
 | Assurance-supported configurations | 0 |
-| Records digest | `b7cad95d3344` |
+| Records digest | `2a45377b928e` |
 
 | Lifecycle area | Status | Evidence (drafted / missing / accepted) |
 |---|---|---|
@@ -57,19 +57,19 @@ LionDriver publishes its safety argument as it is built: the claims it makes, th
 
 </details>
 
-**Read more:** [full safety case (WP-K-01)](10-safety-case/WP-K-01-safety-case.md) · [how the figures are computed](case/README.md#5-dashboard-figures) · [known gaps](00-assessment/gap-assessment.md)
+**Read more:** [full safety case (WP-K-01)](10-safety-case/WP-K-01-safety-case.md) · [how the figures are computed](case-records/README.md#5-dashboard-figures) · [known gaps](00-assessment/gap-assessment.md)
 
 **What the dashboard guarantees:**
 
-- A claim counts as accepted only when a recorded review accepts it, every piece of evidence it cites is available and accepted, and no defeater against it is open. The [validator](case/tools/validate.py) refuses anything else.
+- A claim counts as accepted only when a recorded review accepts it, every piece of evidence it cites is available and accepted, and no defeater against it is open. The [validator](case-records/tools/validate.py) refuses anything else.
 - A passing CI run, a passing test or the existence of a document never accepts a claim on its own, and an AI-generated review is not a substitute for independent confirmation.
 - A change to safety-relevant code needs an [impact analysis](01-management/WP-M-12-impact-analysis.md) that names the assurance records it affects.
 
 How the records, the validator and the generators fit together:
 
-![Figure: records, validator, generators and published outputs of the Living Safety Case](case/figures/fig-case-1-how-it-works.svg)
+![Figure: records, validator, generators and published outputs of the Living Safety Case](case-records/figures/fig-case-1-how-it-works.svg)
 
-Details: [Living Safety Case records](case/README.md).
+Details: [Living Safety Case records](case-records/README.md).
 
 ## Start here
 
@@ -103,7 +103,7 @@ Details: [Living Safety Case records](case/README.md).
 | `10-safety-case/` | Safety, SOTIF and cybersecurity cases; assessment and release records | 26262-2 §6, 21448 §12, 21434 §6, UL 4600 |
 | `process/` | [Integrated process model](process/README.md): activities, lanes, cross-domain interfaces and gates as data; generated Mermaid process maps | 26262-2 §6, 21434 §6, MAN.3 |
 | `trace/` | Machine-readable requirement and trace data | 26262-8 §6, ASPICE traceability BPs |
-| `case/` | Living Safety Case records (claims, evidence, defeaters, configurations, reviews), validator and dashboard generator | 26262-2 §6, UL 4600 |
+| `case-records/` | Living Safety Case records (claims, evidence, defeaters, configurations, reviews), validator and dashboard generator | 26262-2 §6, UL 4600 |
 
 ## Conventions
 

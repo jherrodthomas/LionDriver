@@ -3,7 +3,7 @@
 A first look at LionDriver's safety case for someone who has never read one: what it is, how one big claim is
 broken down, what makes evidence count, and why doubts are written down. This page explains and links. The case
 itself is [WP-K-01](../assurance/10-safety-case/WP-K-01-safety-case.md) and the records in
-[`assurance/case/`](../assurance/case/README.md); nothing here is a claim, evidence or a review.
+[`assurance/case-records/`](../assurance/case-records/README.md); nothing here is a claim, evidence or a review.
 
 Every figure on this page is drawn at each wiki sync by
 [`tools/wiki/case_animations.py`](../tools/wiki/case_animations.py) from those records: every ID, title, status and
@@ -22,7 +22,7 @@ operate in a specific environment. Each part of that sentence is something you c
 
 | Part | In LionDriver |
 |---|---|
-| The system | openpilot with the panda safety MCU on the reference Toyota Corolla ([`CFG-001`](../assurance/case/configurations/cfg-001-toyota-corolla-e210.yaml)) |
+| The system | openpilot with the panda safety MCU on the reference Toyota Corolla ([`CFG-001`](../assurance/case-records/configurations/cfg-001-toyota-corolla-e210.yaml)) |
 | The environment | Its operational design domain: limited-access highways only ([WP-C-02](../assurance/02-concept/WP-C-02-odd-and-intended-functionality.md)) |
 | Acceptably safe | The top claim, G0: the reference configuration poses no unreasonable risk |
 | Structured argument | Claims split into smaller claims by arguments (strategies) |
@@ -50,7 +50,7 @@ The symbols are those of the Goal Structuring Notation (GSN): a rectangle is a c
 
 A test that passes is not yet evidence that counts. Before a piece of evidence can support a claim, it must say what
 it is and where it is, which baseline and which car it applies to, it must be complete, and someone independent
-must have reviewed it. The rules are in [`assurance/case/README.md` §4](../assurance/case/README.md#4-rules): a
+must have reviewed it. The rules are in [`assurance/case-records/README.md` §4](../assurance/case-records/README.md#4-rules): a
 passing CI run, a passing test, a file that exists or an AI-written review never accept anything on their own.
 
 ## 4. Defeaters: the doubts we write down

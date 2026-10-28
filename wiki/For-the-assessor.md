@@ -39,7 +39,7 @@ Case](Reading-the-Living-Safety-Case.md) explains why zero accepted evidence is 
 | 2 | [WP-M-02 functional safety plan](../assurance/01-management/WP-M-02-safety-plan.md) | Roles and who holds them (§3), the lifecycle phases and gates (§4), the early-implementation rule for at-risk work (§4.1), how the plan tailors the standard (§6) |
 | 3 | [WP-M-06 confirmation measures plan](../assurance/01-management/WP-M-06-confirmation-measures-plan.md) | What you would be asked to do (below), the independence scheme (§3), the assessor qualification and independence requirements (§6.1), the records and their location (§10) |
 | 4 | [WP-M-00 work product register](../assurance/01-management/WP-M-00-work-product-register.md) | The gates and their exit criteria (§2), every work product with its clause, gate and status (§3) |
-| 5 | [WP-K-01 safety case](../assurance/10-safety-case/WP-K-01-safety-case.md) | The argument structure, the assumptions (§5), the evidence status (§6), the defeaters (§7). The GSN diagrams are under [`gsn/`](../assurance/10-safety-case/gsn) and the machine-readable records under [`assurance/case/`](../assurance/case/README.md) |
+| 5 | [WP-K-01 safety case](../assurance/10-safety-case/WP-K-01-safety-case.md) | The argument structure, the assumptions (§5), the evidence status (§6), the defeaters (§7). The GSN diagrams are under [`gsn/`](../assurance/10-safety-case/gsn) and the machine-readable records under [`assurance/case-records/`](../assurance/case-records/README.md) |
 | 6 | [WP-K-04 functional safety assessment](../assurance/10-safety-case/WP-K-04-functional-safety-assessment.md) | The assessment plan and the report template you would fill in, including the independence declaration (§2) |
 | 7 | [Baseline gap assessment](../assurance/00-assessment/gap-assessment.md) | What the project itself found wanting in the inherited code and process, finding by finding |
 
@@ -76,10 +76,10 @@ A review is against a named state of the record, never against the moving branch
 
 | Thing | Where |
 |---|---|
-| Engineering baselines, and whether each is frozen by a tag or still under development | [`assurance/case/baselines/`](../assurance/case/baselines), rules in [WP-P-01](../assurance/07-supporting/WP-P-01-configuration-management-plan.md) |
-| The reference configuration the claims apply to | [`cfg-001`](../assurance/case/configurations/cfg-001-toyota-corolla-e210.yaml) and the [reference vehicle](Reference-vehicle.md) page |
+| Engineering baselines, and whether each is frozen by a tag or still under development | [`assurance/case-records/baselines/`](../assurance/case-records/baselines), rules in [WP-P-01](../assurance/07-supporting/WP-P-01-configuration-management-plan.md) |
+| The reference configuration the claims apply to | [`cfg-001`](../assurance/case-records/configurations/cfg-001-toyota-corolla-e210.yaml) and the [reference vehicle](Reference-vehicle.md) page |
 | A snapshot of the safety case as a PDF at a named baseline, with a manifest of hashes and a build attestation | [Snapshot releases](https://github.com/jherrodthomas/LionDriver/releases/tag/snapshot-latest) |
-| A numbered controlled copy issued to you by name | [Controlled copy workflow](../.github/workflows/safety-case-controlled-copy.yaml), recorded in [`distribution.yaml`](../assurance/case/distribution.yaml) under [WP-P-04](../assurance/07-supporting/WP-P-04-documentation-management.md) |
+| A numbered controlled copy issued to you by name | [Controlled copy workflow](../.github/workflows/safety-case-controlled-copy.yaml), recorded in [`distribution.yaml`](../assurance/case-records/distribution.yaml) under [WP-P-04](../assurance/07-supporting/WP-P-04-documentation-management.md) |
 | The digest that identifies the exact state of every record | The dashboard headline in the [README](../README.md#living-safety-case) |
 | Which files count as safety-relevant, and in which class | [Safety-relevant paths](../assurance/07-supporting/safety-relevant-paths.txt), owned by WP-P-01 |
 
@@ -95,7 +95,7 @@ adds vehicle and installation records and interviews with the role holders.
   writing, and is stored under
   [`10-safety-case/confirmation/`](../assurance/10-safety-case/confirmation/README.md) using the
   [WP-P-05 §7.2 template](../assurance/07-supporting/WP-P-05-verification-review-procedure.md#72-review-record-template-r3-inspections-confirmation-reviews-reviews-outside-github).
-- Only a review record in [`case/reviews/`](../assurance/case/reviews/reviews.yaml) can move a claim or evidence
+- Only a review record in [`case/reviews/`](../assurance/case-records/reviews/reviews.yaml) can move a claim or evidence
   item to accepted. The validator rejects an accepted object whose review reference does not point to an accepted
   review that lists it.
 - **What does not count.** A passing CI run. An AI-generated pre-review such as the `RR-2026-nnn` records or the
@@ -111,7 +111,7 @@ The project publishes its own counter-evidence. Start with these rather than hun
 | List | Where |
 |---|---|
 | Findings against the inherited code and process, GAP-nn | [Gap assessment](../assurance/00-assessment/gap-assessment.md) |
-| Defeaters attached to claims, DF-nn | [WP-K-01 §7](../assurance/10-safety-case/WP-K-01-safety-case.md#7-defeaters-counter-evidence) and [`case/defeaters/`](../assurance/case/defeaters) |
+| Defeaters attached to claims, DF-nn | [WP-K-01 §7](../assurance/10-safety-case/WP-K-01-safety-case.md#7-defeaters-counter-evidence) and [`case/defeaters/`](../assurance/case-records/defeaters) |
 | Assumptions the argument rests on, AOU-nn | [WP-K-01 §5](../assurance/10-safety-case/WP-K-01-safety-case.md#5-assumptions) |
 | Open items of each work product | The last section of every work product, counted per gate in the [gate skeletons](../assurance/10-safety-case/gates/skeletons) |
 | Project risks, R-nn | [WP-M-07 risk register](../assurance/01-management/WP-M-07-risk-management.md) |

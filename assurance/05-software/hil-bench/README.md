@@ -212,7 +212,7 @@ Each campaign produces:
 
 - a test log: date, operator, DUT serial and board type, panda and opendbc commits, image hash, bench configuration (stage, parts), raw pytest output and scope captures;
 - the summary filled into the WP-W-08 §7 report template;
-- an evidence entry in the living safety case (`assurance/case/`), linked to the claim it supports, with the result stated as measured, including failures.
+- an evidence entry in the living safety case (`assurance/case-records/`), linked to the claim it supports, with the result stated as measured, including failures.
 
 Results go in the record as observed. A failed or skipped case is recorded as such with a problem report (WP-W-08 §4), never re-labelled as passed.
 

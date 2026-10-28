@@ -12,7 +12,7 @@ page says what the reference configuration is, why it was chosen, and how a seco
 
 The engineering facts live in the [vehicle register](../docs/liondriver/vehicles/README.md), generated from
 [`vehicles.yaml`](../docs/liondriver/vehicles/vehicles.yaml), and the safety-case record is
-[`cfg-001-toyota-corolla-e210.yaml`](../assurance/case/configurations/cfg-001-toyota-corolla-e210.yaml). This
+[`cfg-001-toyota-corolla-e210.yaml`](../assurance/case-records/configurations/cfg-001-toyota-corolla-e210.yaml). This
 table repeats the headline facts; the register is authoritative and marks values still awaiting their source.
 
 | Attribute | Value |
@@ -74,7 +74,7 @@ faults safely and that stock pre-collision braking stays available, is written d
 | Classification | Meaning | How a configuration gets there |
 |---|---|---|
 | **Upstream Compatible** | Supported by the inherited openpilot integration | Listed in [CARS.md](../docs/CARS.md) at the pinned upstream version |
-| **LionDriver Evaluated** | Undergoing or completed documented engineering evaluation | A configuration record in `assurance/case/configurations/` with an item definition and an impact analysis against the platform assumptions |
+| **LionDriver Evaluated** | Undergoing or completed documented engineering evaluation | A configuration record in `assurance/case-records/configurations/` with an item definition and an impact analysis against the platform assumptions |
 | **Assurance Supported** | Defined configuration with accepted evidence for specific safety claims | At least one claim for that configuration accepted through a recorded review; the validator refuses the classification otherwise |
 
 The counts on the README's ecosystem card are generated from those sources, so they cannot drift from the

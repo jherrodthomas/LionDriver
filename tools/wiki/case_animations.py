@@ -5,11 +5,11 @@
                           the top claim G0, the argument S0 into G1…G5, the evidence, the documents;
   case-claim-tree.svg     one path down the claim tree: G0 → S0 → G1 → S1 → G1.1 → S1.1 → G1.1.4 → its evidence;
   case-evidence.svg       what makes evidence count, on the record Sn-15: five questions, its status and review state,
-                          what never counts on its own (the acceptance rules of assurance/case/README.md §4);
+                          what never counts on its own (the acceptance rules of assurance/case-records/README.md §4);
   case-defeaters.svg      defeaters on G1.1.4, with DF-02 and its closure route, the acceptance rule, and an
                           illustration (labelled as one) of how a defeater is closed.
 
-Every ID, title, status and count drawn is read from `assurance/case/` (claims, arguments, evidence, defeaters) at
+Every ID, title, status and count drawn is read from `assurance/case-records/` (claims, arguments, evidence, defeaters) at
 render time, so the figures follow the records. The few phrases that are the animation's own summary of a record
 are checked against it (`problems()`): when the record changes, the wiki build fails instead of animating old text.
 build_wiki.py renders them next to the pages at each sync (nothing is committed), as it does for animations.py.
@@ -223,7 +223,7 @@ def what_is_it(r) -> str:
   doc = [f'<rect x="{40 + k * 8}" y="{478 - k * 8}" width="66" height="70" rx="4" fill="#fff" stroke="{AMBER}" stroke-width="2"/>' for k in range(3)]
   doc += [f'<line x1="66" y1="{y}" x2="114" y2="{y}" stroke="{LIGHT}" stroke-width="3"/>' for y in (480, 492, 504, 516)]
   doc += [t(140, 486, "Documented", 13, AMBER, 700), t(140, 504, "WP-K-01, and records anyone can", 11.5, NAVY),
-          t(140, 520, "check (assurance/case, validated in CI)", 11.5, NAVY)]
+          t(140, 520, "check (assurance/case-records, validated in CI)", 11.5, NAVY)]
   b.append(g(f"{tl.show(13.6)} fin", doc))
   state = ("Ours is in development: no claim is accepted yet, and the evidence awaits review." if n["claims_accepted"] == 0
            else f"{n['claims_accepted']} of {n['claims']} claims accepted so far.")

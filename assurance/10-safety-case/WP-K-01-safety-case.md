@@ -42,7 +42,7 @@ GSN elements are written as text with these prefixes. Each element has a stable 
 
 Indented trees show "supported by" (→) and "in context of" (⊙) relations. The evidence status of each `Sn` is in §6; defeaters are in §7.
 
-Diagrams: the argument is also drawn in GSN graphical notation (GSN Community Standard v3), one sheet per sub-argument, in [gsn/](gsn/README.md). The sheets are generated from the case records ([`assurance/case/`](../case/README.md)) and the contexts in this document by `assurance/case/tools/gsn_diagrams.py`; CI fails if they are out of date. Solutions are coloured by evidence status, and open defeaters are listed on the goal they undermine.
+Diagrams: the argument is also drawn in GSN graphical notation (GSN Community Standard v3), one sheet per sub-argument, in [gsn/](gsn/README.md). The sheets are generated from the case records ([`assurance/case-records/`](../case-records/README.md)) and the contexts in this document by `assurance/case-records/tools/gsn_diagrams.py`; CI fails if they are out of date. Solutions are coloured by evidence status, and open defeaters are listed on the goal they undermine.
 
 ## 3. Top level
 
@@ -404,6 +404,6 @@ UL 4600 addresses products without a human driver and LionDriver makes **no conf
 | OI-1 | Re-baseline G1.1 once the envelope strategy decision (WP-C-04 OI-1) is taken; if option (c), add the claim that the reduced authority gives C1 and record the resulting ASIL | G1 |
 | OI-2 | Break down G1.x to TSR level now that WP-S-02 exists (Draft); link solutions to `trace/` IDs | G2 |
 | OI-3 | Add the CS-to-safety links (CSG ↔ SG) from WP-C-10 (Draft) and WP-K-03 | G1 |
-| OI-4 | Closed 2026-10-22: the GSN sheets are generated from the case records by `assurance/case/tools/gsn_diagrams.py` and checked in CI ([gsn/](gsn/README.md)); register DQ-128 withdrawn as done | — |
+| OI-4 | Closed 2026-10-22: the GSN sheets are generated from the case records by `assurance/case-records/tools/gsn_diagrams.py` and checked in CI ([gsn/](gsn/README.md)); register DQ-128 withdrawn as done | — |
 | OI-5 | Interim assessment of the argument structure by the external assessor (FSA-I1). Not scheduled: the lead decided on 2026-10-14 to engage no assessor for now (D-06, decision register DQ-009, C); open until one is engaged | G1 |
 | OI-6 | Closed: WP-C-03 v0.1 recorded H-07 as reserved; v0.2 rates it (HE-07.1…07.3) under SG-02/SG-06 | G1 |

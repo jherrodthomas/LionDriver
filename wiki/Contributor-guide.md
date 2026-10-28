@@ -26,9 +26,9 @@ The assurance checks need only Python:
 
 ```sh
 python3 assurance/trace/tools/check_trace.py          # hazard log, goals and assumptions
-python3 assurance/case/tools/validate.py              # Living Safety Case records
-python3 assurance/case/tools/generate_dashboard.py    # regenerate the dashboard after a record change
-python3 assurance/case/tools/test_case.py             # validator self-tests
+python3 assurance/case-records/tools/validate.py              # Living Safety Case records
+python3 assurance/case-records/tools/generate_dashboard.py    # regenerate the dashboard after a record change
+python3 assurance/case-records/tools/test_case.py             # validator self-tests
 ```
 
 ## Branches and pull requests
@@ -66,12 +66,12 @@ changes only through a change request.
    [WP-P-02 change management](../assurance/07-supporting/WP-P-02-change-management.md). "No assurance object
    affected" is a valid result, with a reason.
 3. **Verification.** The tests or analyses that show the change is correct, and their results.
-4. **Record updates.** The affected records in [`assurance/case/`](../assurance/case/README.md) or
+4. **Record updates.** The affected records in [`assurance/case-records/`](../assurance/case-records/README.md) or
    [`assurance/trace/`](../assurance/trace/README.md), with the dashboard regenerated.
 
 ## What can and cannot change a review state
 
-- Only a review record in [`assurance/case/reviews/`](../assurance/case/reviews), written by the named reviewer
+- Only a review record in [`assurance/case-records/reviews/`](../assurance/case-records/reviews), written by the named reviewer
   at the independence level the
   [confirmation measures plan](../assurance/01-management/WP-M-06-confirmation-measures-plan.md) requires, can
   mark a claim or evidence item as accepted.

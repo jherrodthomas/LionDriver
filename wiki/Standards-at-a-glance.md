@@ -15,7 +15,7 @@ standard is tailored to an open-source, supervised Level 2 system.
 | **ISO 21448**, SOTIF | What if nothing breaks but the system still gets it wrong? | [SOTIF hazards, WP-C-05](../assurance/02-concept/WP-C-05-sotif-hazard-identification.md) · [insufficiencies and triggering conditions, WP-C-06](../assurance/02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) · [validation strategy, WP-V-02](../assurance/06-validation/WP-V-02-sotif-vv-strategy.md) · explained on [SOTIF and ISO 26262](SOTIF-and-ISO-26262.md) |
 | **ISO/SAE 21434**, cybersecurity | What if someone attacks it? | [TARA, WP-C-09](../assurance/02-concept/WP-C-09-tara.md) · [cybersecurity goals and concept, WP-C-10](../assurance/02-concept/WP-C-10-cybersecurity-goals-and-concept.md) · [cybersecurity case, WP-K-03](../assurance/10-safety-case/WP-K-03-cybersecurity-case.md) · explained on [Cybersecurity and ISO/SAE 21434](Cybersecurity-and-ISO-21434.md) |
 | **ISO/PAS 8800**, AI safety | How far can a learned component be trusted? | [AI system definition and requirements, WP-C-11](../assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) · [ML engineering, WP-W-10](../assurance/05-software/WP-W-10-ml-engineering.md) · explained on [AI safety and ISO/PAS 8800](AI-safety-and-ISO-PAS-8800.md) |
-| **UL 4600**, safety case | Is the whole argument convincing? | [Safety case, WP-K-01](../assurance/10-safety-case/WP-K-01-safety-case.md) · [machine-readable records](../assurance/case/README.md) |
+| **UL 4600**, safety case | Is the whole argument convincing? | [Safety case, WP-K-01](../assurance/10-safety-case/WP-K-01-safety-case.md) · [machine-readable records](../assurance/case-records/README.md) |
 
 ## Supporting practices
 

@@ -3,7 +3,7 @@
 # Engineering facts about the vehicles LionDriver targets (model codes, model years, powertrain, equipment,
 # platform, firmware, physical data). It makes no safety claim. Safety work products cite a family or
 # configuration by ID (VF-nnn, CFG-nnn) and take the facts from here instead of restating them:
-# WP-C-01 §1, the assurance configuration records (assurance/case/configurations/), the FMEA item
+# WP-C-01 §1, the assurance configuration records (assurance/case-records/configurations/), the FMEA item
 # structure (assurance/08-analyses/fmea/item/variants.yaml) and the FMEA/FMEDA exports.
 #
 # Edit this file, then run `python3 tools/vehicles/vehicle_register.py` to regenerate README.md.

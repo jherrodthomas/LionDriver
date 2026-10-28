@@ -60,7 +60,7 @@ A change to the register, the safety plan or the confirmation plan therefore sho
 
 ## 3. Record format
 
-Records use the same flat YAML subset as [`case/`](../case/README.md): a top-level list of mappings with scalar or flow-list values. Flow-list items cannot contain commas. One record per item, with a `kind`:
+Records use the same flat YAML subset as [`case-records/`](../case-records/README.md): a top-level list of mappings with scalar or flow-list values. Flow-list items cannot contain commas. One record per item, with a `kind`:
 
 | Kind | File | Fields |
 |---|---|---|
@@ -77,7 +77,7 @@ Rules the records follow:
 - **Independent assessments are activities in the confirmation lane** when they produce a work product of their own (the FSA report WP-K-04, the cybersecurity assessment WP-K-05). Readiness counts such an activity as checking its inputs.
 - **Activity IDs follow execution order.** An activity's inputs from the same phase come from activities with lower IDs. Work that goes back and forth between disciplines is an interface, not an input, so the input graph has no cycles.
 - **Interfaces are anchored.** Each anchor `WP-x-nn:text` names text that occurs verbatim in that work product. If the documents stop making the link, the check fails.
-- **Interface status** is read from the interface's IFR item in [`trace/items/ifr.yaml`](../trace/items/ifr.yaml), not kept in the model (DQ-129 A). It is `documented` (both documents refer to each other; nobody has reviewed the agreement yet), `open` (the item names a recorded open item that still has to settle it) or `agreed`. An interface is agreed only when an accepted review record of its two owners lists the IFR item, as in `case/`; trace check I1 enforces it. None is agreed yet.
+- **Interface status** is read from the interface's IFR item in [`trace/items/ifr.yaml`](../trace/items/ifr.yaml), not kept in the model (DQ-129 A). It is `documented` (both documents refer to each other; nobody has reviewed the agreement yet), `open` (the item names a recorded open item that still has to settle it) or `agreed`. An interface is agreed only when an accepted review record of its two owners lists the IFR item, as in `case-records/`; trace check I1 enforces it. None is agreed yet.
 - **`handbook_wp`** maps an activity to the handbook's eight integrated work products (Ch. 13: WP-1 item definition, WP-2 unified risk assessment, WP-3 concept, WP-4 requirements specification, WP-6 V&V, WP-7 assurance case). It is informative. LionDriver keeps its own work-product structure.
 
 ## 4. Checks

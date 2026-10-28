@@ -28,8 +28,8 @@ one to distrust.
 
 ## What the dashboard guarantees
 
-- Every figure is generated from the records under [`assurance/case/`](../assurance/case/README.md) by
-  [`generate_dashboard.py`](../assurance/case/tools/generate_dashboard.py), never typed by hand.
+- Every figure is generated from the records under [`assurance/case-records/`](../assurance/case-records/README.md) by
+  [`generate_dashboard.py`](../assurance/case-records/tools/generate_dashboard.py), never typed by hand.
 - The [assurance workflow](../.github/workflows/assurance.yaml) validates the records and regenerates the
   dashboard on every pull request, and fails if the committed dashboard is out of date or the records are
   inconsistent.
@@ -37,9 +37,9 @@ one to distrust.
 
 ## How the records fit together
 
-![How the Living Safety Case works: hazards and safety goals lead to claims; claims are supported by evidence items with review states and challenged by defeaters; baselines freeze the whole.](../assurance/case/figures/fig-case-1-how-it-works.svg)
+![How the Living Safety Case works: hazards and safety goals lead to claims; claims are supported by evidence items with review states and challenged by defeaters; baselines freeze the whole.](../assurance/case-records/figures/fig-case-1-how-it-works.svg)
 
-*Figure 1 of the [case records README](../assurance/case/README.md).*
+*Figure 1 of the [case records README](../assurance/case-records/README.md).*
 
 1. **Hazards and safety goals**, from the [HARA](../assurance/02-concept/WP-C-03-hara.md). Each goal carries an
    ASIL.
@@ -50,8 +50,8 @@ one to distrust.
    main source.
 5. **Baselines and reviews**: named states of the whole, and the confirmation reviews recorded against them.
 
-The record formats are described in [`assurance/case/README.md`](../assurance/case/README.md) and enforced by
-[`validate.py`](../assurance/case/tools/validate.py).
+The record formats are described in [`assurance/case-records/README.md`](../assurance/case-records/README.md) and enforced by
+[`validate.py`](../assurance/case-records/tools/validate.py).
 
 ## Verifying a snapshot
 

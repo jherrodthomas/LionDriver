@@ -26,7 +26,7 @@ submodules point at LionDriver forks, are recorded in
 | Path | What it is |
 |---|---|
 | [`assurance/`](../assurance/README.md) | Every work product, analysis, decision and review |
-| [`assurance/case/`](../assurance/case/README.md) | Machine-readable claims, evidence, defeaters, baselines and reviews; the dashboard is generated from here |
+| [`assurance/case-records/`](../assurance/case-records/README.md) | Machine-readable claims, evidence, defeaters, baselines and reviews; the dashboard is generated from here |
 | [`assurance/trace/`](../assurance/trace/README.md) | Traceability data between hazards, goals, requirements and tests |
 | [`docs/liondriver/`](../docs/liondriver/README.md) | Architecture, vehicle compatibility, vehicle register, contributing |
 | [`docs/safety/field-monitoring/`](../docs/safety/field-monitoring/README.md) | Hazard log, case register and the root cause process |
@@ -54,7 +54,7 @@ answers to, is in [`assurance/README.md`](../assurance/README.md#layout).
 | `08-analyses/` | `WP-A` | ASIL decomposition, freedom from interference, dependent failure analysis, FTA and FMEA, STPA |
 | `09-production-operation/` | `WP-O` | Installation and provisioning, operation and service, user information, field monitoring, cybersecurity incident response |
 | `10-safety-case/` | `WP-K` | The safety case, the cybersecurity case, assessment and release records |
-| `case/`, `trace/`, `process/`, `models/`, `sim/` | | Machine-readable records, traceability, the integrated process model, reference models and simulation |
+| `case-records/`, `trace/`, `process/`, `models/`, `sim/` | | Machine-readable records, traceability, the integrated process model, reference models and simulation |
 
 ## What checks a change
 

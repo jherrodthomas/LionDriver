@@ -3,7 +3,7 @@
 # work products, topic, anchors and due gate; this file holds the owners and the agreement state. Kept by hand.
 # Schema: see ../README.md §4.10. Checked by tools/check_trace.py (I1) and process_model.py (P7).
 # status: proposed until an accepted review record of both owners lists the item (review_ref, REV-nnn in
-# assurance/case/reviews/reviews.yaml); only then agreed. No such review has been recorded yet.
+# assurance/case-records/reviews/reviews.yaml); only then agreed. No such review has been recorded yet.
 
 - id: IFR-01
   kind: interface-requirement

@@ -14,7 +14,7 @@ everything else. This tool turns that folder into what the GitHub wiki repositor
   * the infographics of infographics.py are rendered from the records and written next to the pages, so a
     page embeds one as `![alt](decision-register.svg)`; the animations of animations.py (from the requirement
     texts), the fault tree figures of fta_animations.py (from WP-A-04), the safety-case explainers of
-    case_animations.py (from assurance/case), the hazard-to-test explainers of h2t_animations.py (from the
+    case_animations.py (from assurance/case-records), the hazard-to-test explainers of h2t_animations.py (from the
     concept, system, software and hardware work products), the hardware figures of hw_animations.py (from
     the FMEDA and WP-A-02), the after-release figures of p7_animations.py (from WP-O-01, WP-O-02, WP-O-04) and
     the SOTIF figures of sotif_animations.py (from WP-C-03…07, WP-V-01, WP-V-02, WP-V-04 and the case records) and

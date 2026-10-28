@@ -6,7 +6,7 @@ one as its own project, with its own team, documents and report. This page expla
 runs them as one system instead, and how you can see that in its records. It explains and links. The lifecycle is in
 the process model ([WP-P-11](../assurance/process/README.md)), the work products in the
 [register, WP-M-00](../assurance/01-management/WP-M-00-work-product-register.md), the hazard log in the
-[HARA, WP-C-03](../assurance/02-concept/WP-C-03-hara.md) §7 and the case in [`assurance/case/`](../assurance/case/README.md).
+[HARA, WP-C-03](../assurance/02-concept/WP-C-03-hara.md) §7 and the case in [`assurance/case-records/`](../assurance/case-records/README.md).
 
 Every figure is drawn at each wiki sync by [`tools/wiki/integrated_animations.py`](../tools/wiki/integrated_animations.py).
 The lane and interface counts, the register coverage, the hazard log, the trace lanes and the case status are read
