@@ -51,7 +51,7 @@ H01 = Path("assurance") / "04-hardware" / "WP-H-01-hardware-safety-requirements.
 V05 = Path("assurance") / "06-validation" / "WP-V-05-fault-injection.md"
 LATERAL = Path("opendbc_repo") / "opendbc" / "safety" / "lateral.h"
 WATCHDOG = Path("panda") / "board" / "drivers" / "hw_watchdog.h"
-CASE = Path("assurance") / "case"
+CASE = Path("assurance") / "case-records"
 
 # (file, phrase): every record the figures quote or summarise
 SOURCES = [

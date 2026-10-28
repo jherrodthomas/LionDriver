@@ -46,9 +46,9 @@ C07 = Path("assurance") / "02-concept" / "WP-C-07-sotif-functional-modifications
 V01 = Path("assurance") / "06-validation" / "WP-V-01-safety-validation.md"
 V02 = Path("assurance") / "06-validation" / "WP-V-02-sotif-vv-strategy.md"
 V04 = Path("assurance") / "06-validation" / "WP-V-04-sotif-unknown-scenarios.md"
-G1 = Path("assurance") / "case" / "claims" / "g1-functional-safety.yaml"
-G2 = Path("assurance") / "case" / "claims" / "g2-sotif.yaml"
-EV = Path("assurance") / "case" / "evidence" / "evidence.yaml"
+G1 = Path("assurance") / "case-records" / "claims" / "g1-functional-safety.yaml"
+G2 = Path("assurance") / "case-records" / "claims" / "g2-sotif.yaml"
+EV = Path("assurance") / "case-records" / "evidence" / "evidence.yaml"
 TOYOTA = Path("opendbc_repo") / "opendbc" / "safety" / "modes" / "toyota.h"   # checked when the submodule is there
 
 # (record, phrase a figure stands on)

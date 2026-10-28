@@ -51,7 +51,7 @@ IFR = A / "trace" / "items" / "ifr.yaml"
 HARA = A / "02-concept" / "WP-C-03-hara.md"
 TARA = A / "02-concept" / "WP-C-09-tara.md"
 MAP = A / "trace" / "maps" / "aspice-trace-map.md"
-CASE = A / "case"
+CASE = A / "case-records"
 REG_HEADER = "| ID | Work product | ISO 26262 | ISO 21448 | ISO/SAE 21434 | Other | ASPICE | Gate | Status |"
 
 # (record, phrase a figure stands on)

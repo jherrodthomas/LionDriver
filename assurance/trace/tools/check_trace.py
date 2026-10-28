@@ -55,7 +55,7 @@ LINKABLE = {"fsr", "tsr", "swsr", "hwsr", "cybersecurity-requirement", "ai-requi
             "functional-modification"}
 HARA_MD = ASSURANCE_DIR / "02-concept" / "WP-C-03-hara.md"
 ITEMDEF_MD = ASSURANCE_DIR / "02-concept" / "WP-C-01-item-definition.md"
-REVIEWS = ASSURANCE_DIR / "case" / "reviews" / "reviews.yaml"
+REVIEWS = ASSURANCE_DIR / "case-records" / "reviews" / "reviews.yaml"
 INTERFACES = ASSURANCE_DIR / "process" / "model" / "interfaces.yaml"
 
 ID_RE = re.compile(

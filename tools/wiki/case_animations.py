@@ -31,7 +31,7 @@ ROOT = HERE.parents[1]
 sys.path.insert(0, str(HERE))
 from animations import GRN, LIGHT, MID, NAVY, RED, RED_BG, W, Timeline, g, norm, stick, svg, t  # noqa: E402
 
-CASE = Path("assurance") / "case"
+CASE = Path("assurance") / "case-records"
 NAMES = ("case-what-is-it.svg", "case-claim-tree.svg", "case-evidence.svg", "case-defeaters.svg")
 BLUE, TEAL, VIOLET, ORANGE, AMBER = "#2a78d6", "#0f766e", "#6250d6", "#c2410c", "#b7791f"
 EV_GREEN = "#1f9d63"
