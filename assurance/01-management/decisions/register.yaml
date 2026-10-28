@@ -114,10 +114,10 @@
     - key: B
       title: "Everything in the body, in V order"
       detail: "One reading order from goals to evidence. Cost: the argument is split by long tables."
-  sources: ["assurance/case/tools/build_snapshot.py", "ISO 9001 §7.5.2"]
+  sources: ["assurance/case-records/tools/build_snapshot.py", "ISO 9001 §7.5.2"]
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-14, note: "Agreed in chat to the recommended option for all three snapshot questions."}
-  applied: {ref: 47bc583, record: "assurance/case/README.md §5.1 (content order); snapshot_pages.py", at: 2026-10-14}
+  applied: {ref: 47bc583, record: "assurance/case-records/README.md §5.1 (content order); snapshot_pages.py", at: 2026-10-14}
 
 - id: DQ-005
   ref: SNAP-2
@@ -140,7 +140,7 @@
   sources: ["WP-P-04 §4–§10", "IATF 16949 §7.5.3.2.1"]
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-14, note: "Agreed in chat to the recommended option for all three snapshot questions."}
-  applied: {ref: 0bcbed8, record: "WP-P-04 §9.1; assurance/case/README.md §5.1", at: 2026-10-14}
+  applied: {ref: 0bcbed8, record: "WP-P-04 §9.1; assurance/case-records/README.md §5.1", at: 2026-10-14}
 
 - id: DQ-006
   ref: SNAP-3
@@ -160,10 +160,10 @@
     - key: B
       title: "Everything in one PR"
       detail: "One review. Cost: a very large PR that is hard to review."
-  sources: ["assurance/case/tools/build_snapshot.py"]
+  sources: ["assurance/case-records/tools/build_snapshot.py"]
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-14, note: "Agreed in chat to the recommended option for all three snapshot questions."}
-  applied: {ref: 0bcbed8, record: "assurance/case/README.md §5.1 (header, footer and front matter built first)", at: 2026-10-14}
+  applied: {ref: 0bcbed8, record: "assurance/case-records/README.md §5.1 (header, footer and front matter built first)", at: 2026-10-14}
 
 # ---- Added 2026-10-14 from a sweep of every open item in assurance/ (676 rows: 433 tasks stay in their documents).
 # DQ-007…DQ-011 are asked now. The rest are `queued`: listed on the page, not yet asked. `decider: claude` marks a
@@ -3015,7 +3015,7 @@
   sources: ["assurance/10-safety-case/WP-K-01-safety-case.md OI-4"]
   asked: 2026-10-22
   status: withdrawn
-  note: "Withdrawn before it was asked: already done. The GSN sheets are generated from the case records by assurance/case/tools/gsn_diagrams.py and checked in CI (10-safety-case/gsn/README.md); WP-K-01 OI-4 closed."
+  note: "Withdrawn before it was asked: already done. The GSN sheets are generated from the case records by assurance/case-records/tools/gsn_diagrams.py and checked in CI (10-safety-case/gsn/README.md); WP-K-01 OI-4 closed."
 
 - id: DQ-129
   question: "Should the interfaces between the safety, SOTIF, cybersecurity and AI work count as agreed only after a recorded review, and become requirement items (IFR-nn) in the trace data?"
@@ -4201,7 +4201,7 @@
     - key: B
       title: "Add now"
       detail: "Ready for reuse; speculative."
-  sources: ["assurance/case/README.md OI-2"]
+  sources: ["assurance/case-records/README.md OI-2"]
   status: queued
 
 - id: DQ-178

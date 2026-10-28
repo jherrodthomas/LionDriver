@@ -18,7 +18,7 @@ LionDriver is openpilot plus an open engineering assurance framework. This page 
 | See what the learned models see and output, and what can go wrong | [Perception models](perception-models.md) |
 | See which vehicles are supported, and what that does and does not mean | [Vehicle compatibility](compatibility.md) |
 | Look up the exact vehicles a configuration covers (model years, model code, firmware) | [Vehicle register](vehicles/README.md) |
-| See the current assurance state and how it is computed | [Living Safety Case](../../assurance/case/README.md) |
+| See the current assurance state and how it is computed | [Living Safety Case](../../assurance/case-records/README.md) |
 | Browse every safety, SOTIF, cybersecurity and AI-safety work product | [Assurance work products](../../assurance/README.md) |
 | Contribute, especially to safety-relevant code | [Contributing to LionDriver](contributing.md) |
 | Get oriented: roadmap, glossary, how decisions are made | [Wiki](https://github.com/jherrodthomas/LionDriver/wiki), kept in [`wiki/`](../../wiki/README.md) and mirrored on merge |
@@ -41,7 +41,7 @@ All engineering work products are drafts under review. Each one states its own s
 | Cybersecurity (ISO/SAE 21434) | [TARA](../../assurance/02-concept/WP-C-09-tara.md) · [Cybersecurity goals and concept](../../assurance/02-concept/WP-C-10-cybersecurity-goals-and-concept.md) · [Cybersecurity case](../../assurance/10-safety-case/WP-K-03-cybersecurity-case.md) |
 | AI safety (ISO/PAS 8800) | [AI system definition and requirements](../../assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) · [ML engineering](../../assurance/05-software/WP-W-10-ml-engineering.md) |
 | Verification and validation | [Unit verification](../../assurance/05-software/WP-W-06-software-unit-verification.md) · [Fault injection](../../assurance/06-validation/WP-V-05-fault-injection.md) · [Safety validation](../../assurance/06-validation/WP-V-01-safety-validation.md) |
-| Safety case | [Safety case](../../assurance/10-safety-case/WP-K-01-safety-case.md) · [Machine-readable records](../../assurance/case/README.md) · [Traceability data](../../assurance/trace/README.md) |
+| Safety case | [Safety case](../../assurance/10-safety-case/WP-K-01-safety-case.md) · [Machine-readable records](../../assurance/case-records/README.md) · [Traceability data](../../assurance/trace/README.md) |
 
 ## Inherited openpilot documentation
 

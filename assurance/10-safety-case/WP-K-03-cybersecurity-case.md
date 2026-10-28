@@ -18,7 +18,7 @@ The cybersecurity case argues that the cybersecurity of the LD-SDA reference con
 
 Notation follows [WP-K-01 §2](WP-K-01-safety-case.md#2-notation) with prefixes `CG` (goal/claim), `CS` (strategy), `CC` (context), `CA` (assumption, reusing CA-01…CA-05 of WP-C-10), `CJ` (justification), `CSn` (evidence) and `CDF` (defeater).
 
-Diagrams: the argument is also drawn in GSN graphical notation, one sheet per sub-argument, in [gsn/](gsn/README.md) (sheets `gsn-cs-*`). They are generated from §2–§4 and §6 of this document by `assurance/case/tools/gsn_diagrams.py`; CI fails if they are out of date or if the §3 trees and the §6 register disagree on a defeater.
+Diagrams: the argument is also drawn in GSN graphical notation, one sheet per sub-argument, in [gsn/](gsn/README.md) (sheets `gsn-cs-*`). They are generated from §2–§4 and §6 of this document by `assurance/case-records/tools/gsn_diagrams.py`; CI fails if they are out of date or if the §3 trees and the §6 register disagree on a defeater.
 
 ## 2. Top-level argument
 

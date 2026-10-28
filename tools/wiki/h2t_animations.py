@@ -15,7 +15,7 @@ One real chain, followed from the item to the tests: SG-01 (no steering the driv
 
 They loop with CSS and need no script; a viewer who asks for reduced motion sees the final frame. Every phrase that
 quotes or summarises a record is checked against it at render time (`problems()`), and the evidence statuses are
-read from `assurance/case`. The code excerpts are checked against opendbc and panda when those submodules are checked
+read from `assurance/case-records`. The code excerpts are checked against opendbc and panda when those submodules are checked
 out (the wiki workflow does not check them out; the assurance workflow's checks cover them). build_wiki.py renders
 the figures next to the pages at each sync (nothing is committed).
 
@@ -51,7 +51,7 @@ H01 = Path("assurance") / "04-hardware" / "WP-H-01-hardware-safety-requirements.
 V05 = Path("assurance") / "06-validation" / "WP-V-05-fault-injection.md"
 LATERAL = Path("opendbc_repo") / "opendbc" / "safety" / "lateral.h"
 WATCHDOG = Path("panda") / "board" / "drivers" / "hw_watchdog.h"
-CASE = Path("assurance") / "case"
+CASE = Path("assurance") / "case-records"
 
 # (file, phrase): every record the figures quote or summarise
 SOURCES = [

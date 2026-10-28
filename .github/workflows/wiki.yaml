@@ -38,7 +38,7 @@ jobs:
       with:
         persist-credentials: false
         fetch-depth: 300   # merge history for the Session log page
-    - name: Install PyYAML (the safety-case figures read assurance/case)
+    - name: Install PyYAML (the safety-case figures read assurance/case-records)
       run: python3 -m pip install --quiet --user --break-system-packages pyyaml
     - name: Build tool unit tests (and a check of wiki/)
       run: python3 -m unittest discover -s tools/wiki -p 'test_*.py' -v
@@ -65,7 +65,7 @@ jobs:
       with:
         persist-credentials: false
         fetch-depth: 300   # merge history for the Session log page
-    - name: Install PyYAML (the safety-case figures read assurance/case)
+    - name: Install PyYAML (the safety-case figures read assurance/case-records)
       run: python3 -m pip install --quiet --user --break-system-packages pyyaml
     - name: Build the pages
       run: >

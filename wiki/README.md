@@ -30,7 +30,7 @@ in [`assurance/`](../assurance/README.md) that owns it.
   `{{REPO}}`, `{{BRANCH}}`, `{{SYNC_COMMIT}}` and `{{SYNC_DATE}}` are filled in at build time, and
   `{{MERGE_LOG}}` becomes the list of merged pull requests read from the checkout's merge commits.
 - Do not type figures that the repository generates (claim counts, evidence counts, vehicle counts). Link to the
-  generated source instead, or embed the badge from `assurance/case/badge.json`.
+  generated source instead, or embed the badge from `assurance/case-records/badge.json`.
 - Images: only figures that already exist in the repository, embedded as `![alt](../path/to/figure.svg)`; the build
   turns that into the raw file address on the synced branch. Never draw a figure for the wiki that touches safety
   content; a flow that needs a drawing is written as a Mermaid block, which GitHub renders and reviewers read as
@@ -46,7 +46,7 @@ in [`assurance/`](../assurance/README.md) that owns it.
   way against WP-A-04, the item definition and the TSC.
 - The figures of "What is a safety case?" (`case-what-is-it.svg`, `case-claim-tree.svg`, `case-evidence.svg`,
   `case-defeaters.svg`) are rendered by [`tools/wiki/case_animations.py`](../tools/wiki/case_animations.py) from the
-  records in `assurance/case/`, with the same checks.
+  records in `assurance/case-records/`, with the same checks.
 - The figures of "From hazard to test" (`h2t-item.svg`, `h2t-hara.svg`, `h2t-what-how.svg`, `h2t-allocation.svg`,
   `h2t-engineers.svg`, `h2t-mechanism.svg`, `h2t-testing.svg`) are rendered by
   [`tools/wiki/h2t_animations.py`](../tools/wiki/h2t_animations.py), with the same checks against the concept,

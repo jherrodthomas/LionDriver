@@ -386,7 +386,7 @@
           "pattern": "^REV-[0-9]{3}$"
         }
       ],
-      "description": "Review record in assurance/case/reviews/reviews.yaml"
+      "description": "Review record in assurance/case-records/reviews/reviews.yaml"
     }
   },
   "allOf": [

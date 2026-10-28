@@ -22,17 +22,17 @@
 
 ## Living Safety Case
 
-LionDriver publishes its safety argument as it is built: the claims, the evidence for each one, the known counter-evidence against it, and what has and has not been reviewed. Every figure is generated from the records in [`assurance/case/`](assurance/case/README.md) and checked by CI on every pull request.
+LionDriver publishes its safety argument as it is built: the claims, the evidence for each one, the known counter-evidence against it, and what has and has not been reviewed. Every figure is generated from the records in [`assurance/case-records/`](assurance/case-records/README.md) and checked by CI on every pull request.
 
 <p align="center">
   <img src="docs/assets/liondriver/assurance/dashboard.svg" width="100%" alt="Living Safety Case dashboard generated from the assurance records. The same values are listed as text in the full Living Safety Case.">
 </p>
 
-<!-- BEGIN GENERATED: assurance-headline (assurance/case/tools/generate_dashboard.py) -->
+<!-- BEGIN GENERATED: assurance-headline (assurance/case-records/tools/generate_dashboard.py) -->
 
-[![Download the safety case snapshot (PDF)](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fjherrodthomas%2FLionDriver%2Fliondriver-dev%2Fassurance%2Fcase%2Fbadge.json)](https://github.com/jherrodthomas/LionDriver/releases/download/snapshot-latest/LionDriver-safety-case.pdf) · [all snapshots and how to verify them](https://github.com/jherrodthomas/LionDriver/releases/tag/snapshot-latest)
+[![Download the safety case snapshot (PDF)](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fjherrodthomas%2FLionDriver%2Fliondriver-dev%2Fassurance%2Fcase-records%2Fbadge.json)](https://github.com/jherrodthomas/LionDriver/releases/download/snapshot-latest/LionDriver-safety-case.pdf) · [all snapshots and how to verify them](https://github.com/jherrodthomas/LionDriver/releases/tag/snapshot-latest)
 
-**Development** · baseline `BL-002` at `bf6ce8c` · 36 claims (0 with accepted evidence) · 50 evidence items (0 accepted) · 42 open defeaters · records digest `b7cad95d3344`
+**Development** · baseline `BL-002` at `bf6ce8c` · 36 claims (0 with accepted evidence) · 50 evidence items (0 accepted) · 42 open defeaters · records digest `2a45377b928e`
 
 <!-- END GENERATED: assurance-headline -->
 
@@ -105,7 +105,7 @@ Status is taken from what exists in the repository. "Draft" means the work produ
 |---|---|---|
 | **1 · Foundation** | Project governance and [safety management plan](assurance/01-management/WP-M-02-safety-plan.md) | Draft |
 | | [Upstream baseline assessment](assurance/00-assessment/gap-assessment.md) | Draft |
-| | [Assurance data model](assurance/case/README.md) and [traceability data](assurance/trace/README.md) | Draft; hazards, goals, assumptions and safety case recorded, requirements not yet |
+| | [Assurance data model](assurance/case-records/README.md) and [traceability data](assurance/trace/README.md) | Draft; hazards, goals, assumptions and safety case recorded, requirements not yet |
 | **2 · Safety Engineering** | [Hazard analysis](assurance/02-concept/WP-C-03-hara.md) and [functional safety concept](assurance/02-concept/WP-C-04-functional-safety-concept.md) | Draft |
 | | [SOTIF analysis](assurance/02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md), [cybersecurity analysis](assurance/02-concept/WP-C-09-tara.md), [AI safety requirements](assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) | Draft |
 | | [Architecture analysis](assurance/03-system/WP-S-03-technical-safety-concept-architecture.md) | Draft |
@@ -131,8 +131,8 @@ scons -u
 **For the assurance records**, only Python 3 is needed:
 
 ```bash
-python3 assurance/case/tools/validate.py
-python3 assurance/case/tools/generate_dashboard.py --check
+python3 assurance/case-records/tools/validate.py
+python3 assurance/case-records/tools/generate_dashboard.py --check
 ```
 
 **In a car:** LionDriver publishes no release build. Development builds must not be used on public roads outside the controlled test regime in [WP-V-07](assurance/06-validation/WP-V-07-vehicle-test-operations.md). How openpilot itself is installed and used is described in the [upstream project](https://github.com/commaai/openpilot#using-openpilot-in-a-car).

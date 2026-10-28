@@ -14,11 +14,11 @@
   <g font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif">
     <text x="40" y="56" font-size="15" font-weight="700" fill="#E2B85C" text-anchor="start" letter-spacing="3">LIVING SAFETY CASE</text>
     <text x="40" y="96" font-size="30" font-weight="700" fill="#F4F6FA" text-anchor="start">Recorded assurance state</text>
-    <text x="40" y="126" font-size="16" font-weight="400" fill="#93A1BC" text-anchor="start">Every figure is counted from the structured records in assurance/case.</text>
+    <text x="40" y="126" font-size="16" font-weight="400" fill="#93A1BC" text-anchor="start">Every figure is counted from the structured records in assurance/case-records.</text>
     <rect x="824" y="38" width="136" height="31" rx="15.5" fill="#4EA8FF" fill-opacity="0.12" stroke="#4EA8FF"/>
     <text x="892.0" y="56" font-size="15" font-weight="600" fill="#4EA8FF" text-anchor="middle" letter-spacing="1.2">DEVELOPMENT</text>
     <text x="960" y="100" font-size="15" font-weight="400" fill="#93A1BC" text-anchor="end">Baseline BL-002 · bf6ce8c · under development</text>
-    <text x="960" y="124" font-size="15" font-weight="400" fill="#5F6E8C" text-anchor="end">Records digest b7cad95d3344</text>
+    <text x="960" y="124" font-size="15" font-weight="400" fill="#5F6E8C" text-anchor="end">Records digest 2a45377b928e</text>
     <rect x="40" y="160" width="218" height="128" rx="14" fill="#111E37" stroke="#24345A"/>
     <rect x="40" y="182" width="3" height="38" rx="1.5" fill="#4EA8FF"/>
     <text x="62" y="218" font-size="44" font-weight="700" fill="#F4F6FA" text-anchor="start">36</text>

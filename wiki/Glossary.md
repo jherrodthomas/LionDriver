@@ -26,19 +26,19 @@ revision and status.
 | Code | Reads as | Where it lives |
 |---|---|---|
 | `H-`, `HE-` | Hazard, hazardous event | [HARA, WP-C-03](../assurance/02-concept/WP-C-03-hara.md) |
-| `SG-` | Safety goal, with its ASIL | HARA; recorded in [`assurance/case/`](../assurance/case/README.md) |
+| `SG-` | Safety goal, with its ASIL | HARA; recorded in [`assurance/case-records/`](../assurance/case-records/README.md) |
 | `FSR-` | Functional safety requirement | [Functional safety concept, WP-C-04](../assurance/02-concept/WP-C-04-functional-safety-concept.md) |
 | `TSR-` | Technical safety requirement | [WP-S-02](../assurance/03-system/WP-S-02-technical-safety-requirements.md) |
 | `HWSR-`, `SWSR-` | Hardware and software safety requirement | [WP-H-01](../assurance/04-hardware/WP-H-01-hardware-safety-requirements.md), [WP-W-02](../assurance/05-software/WP-W-02-software-safety-requirements.md); trace data in [`assurance/trace/`](../assurance/trace/README.md) |
-| `AOU-` | Assumption of use: what the analysis assumes about the car, the driver or the environment | [`assurance/case/`](../assurance/case/README.md) |
+| `AOU-` | Assumption of use: what the analysis assumes about the car, the driver or the environment | [`assurance/case-records/`](../assurance/case-records/README.md) |
 | `SM-` | Safety mechanism | [Technical safety concept, WP-S-03](../assurance/03-system/WP-S-03-technical-safety-concept-architecture.md) |
 | `SFM-` | System failure mode | [System FTA and FMEA, WP-A-04](../assurance/08-analyses/WP-A-04-system-fta-fmea.md) |
 | `SWF-` | Software failure mode | [Software safety analysis, WP-W-04](../assurance/05-software/WP-W-04-software-safety-analysis.md) |
 | `DFI-` | Dependent failure initiator | [Dependent failure analysis, WP-A-03](../assurance/08-analyses/WP-A-03-dependent-failure-analysis.md) |
-| `DF-` | Defeater: known counter-evidence against a claim | [`assurance/case/defeaters/`](../assurance/case/defeaters) |
-| `ACT-` | Action recorded against the safety case | [`assurance/case/actions/`](../assurance/case/actions) |
-| `BL-` | Baseline: a frozen, named state of the record. The dashboard names the baseline and the commit it was taken at | [`assurance/case/baselines/`](../assurance/case/baselines) |
-| `CFG-` | Vehicle configuration | [`assurance/case/configurations/`](../assurance/case/configurations), [vehicle register](../docs/liondriver/vehicles/README.md) |
+| `DF-` | Defeater: known counter-evidence against a claim | [`assurance/case-records/defeaters/`](../assurance/case-records/defeaters) |
+| `ACT-` | Action recorded against the safety case | [`assurance/case-records/actions/`](../assurance/case-records/actions) |
+| `BL-` | Baseline: a frozen, named state of the record. The dashboard names the baseline and the commit it was taken at | [`assurance/case-records/baselines/`](../assurance/case-records/baselines) |
+| `CFG-` | Vehicle configuration | [`assurance/case-records/configurations/`](../assurance/case-records/configurations), [vehicle register](../docs/liondriver/vehicles/README.md) |
 | `DQ-` | Decision question for the project lead | [Decision register](How-decisions-are-made.md) |
 | `DEC-`, `IR-` | ASIL decomposition record and independence requirement; `B(C)` is an element developed to ASIL B for an ASIL C goal ([explained](ASIL-decomposition.md)) | [WP-A-01](../assurance/08-analyses/WP-A-01-asil-decomposition.md) |
 | `GAP-` | A gap between the inherited baseline and what the safety goals need | [Gap assessment](../assurance/00-assessment/gap-assessment.md) |

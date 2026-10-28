@@ -46,7 +46,7 @@ ASSURANCE_DIR = TRACE_DIR.parent
 REPO = ASSURANCE_DIR.parent
 REGISTER = ASSURANCE_DIR / "01-management" / "WP-M-00-work-product-register.md"
 GATES_DIR = ASSURANCE_DIR / "10-safety-case" / "gates"
-CASE_TOOLS = ASSURANCE_DIR / "case" / "tools"
+CASE_TOOLS = ASSURANCE_DIR / "case-records" / "tools"
 VERIFICATION_LINKS = TRACE_DIR / "links" / "verification.yaml"
 
 LENSES = ("status", "trace", "vv", "goal", "gate")

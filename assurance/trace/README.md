@@ -153,7 +153,7 @@ All links are stored on the child (or on the item that depends) as a list of IDs
 | SYS ↔ safety **[ext]** | `related_tsr`, `related_items` | SYS → TSR; SYS → SH, AIR | The TSRs, SOTIF hazards and AI requirements of the requirement's WP-S-01 §10 row; system requirements have no parent item, they refine the item functions (`functions`) |
 | SOTIF ↔ HARA | `shares_event` **[ext]** | SH → HE/H | One hazard log (WP-M-01 §6) |
 | interface of **[ext]** | `interface` | IFR → IX | The process-model interface the item stands for; the model's IX record names the item back in `ifr` |
-| agreed by **[ext]** | `review_ref` | IFR → REV | The accepted review record ([`case/reviews/reviews.yaml`](../case/reviews/reviews.yaml)) that agreed the interface |
+| agreed by **[ext]** | `review_ref` | IFR → REV | The accepted review record ([`case/reviews/reviews.yaml`](../case-records/reviews/reviews.yaml)) that agreed the interface |
 | assumption credited | `aou_dependency` **[ext]** | HE, SG, FSR, TSR → AOU | The rating or requirement depends on the assumption |
 | allocation | `allocated_to` | requirement → element | WP-P-06 §2 |
 | implementation | `@req` tag in code | code → requirement | WP-P-06 §6 |
@@ -313,7 +313,7 @@ The trace map lists, for review, each modification whose Addresses differ from t
 | `status` | `proposed` until the interface is agreed; `agreed` only with a `review_ref` to an accepted review record that lists the item and with no open item (I1); `withdrawn`. Interfaces are never `implemented` or `verified` |
 | `source` | `WP-P-11` |
 
-A passing check, an edit to the model or an AI-generated review never agrees an interface, as in [`case/`](../case/README.md#4-rules). No interface review has been recorded, so every item is `proposed`.
+A passing check, an edit to the model or an AI-generated review never agrees an interface, as in [`case-records/`](../case-records/README.md#4-rules). No interface review has been recorded, so every item is `proposed`.
 
 ## 5. How tests and code reference requirements
 

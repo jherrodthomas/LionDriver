@@ -10,7 +10,7 @@
 
 The lane and interface counts are read from the process model (WP-P-11), the coverage matrix from the work-product
 register (WP-M-00), the hazard log from WP-C-03 §7 and WP-C-09 §3, the trace lanes from the ASPICE trace map (WP-T-01)
-and the case from assurance/case. Every other phrase is tied to its record (SOURCES) and checked at render time
+and the case from assurance/case-records. Every other phrase is tied to its record (SOURCES) and checked at render time
 (`problems()`). When a record changes, the wiki build fails instead of showing old text. build_wiki.py renders them next
 to the pages at each sync; they loop with CSS and reduced motion shows the final frame.
 
@@ -51,7 +51,7 @@ IFR = A / "trace" / "items" / "ifr.yaml"
 HARA = A / "02-concept" / "WP-C-03-hara.md"
 TARA = A / "02-concept" / "WP-C-09-tara.md"
 MAP = A / "trace" / "maps" / "aspice-trace-map.md"
-CASE = A / "case"
+CASE = A / "case-records"
 REG_HEADER = "| ID | Work product | ISO 26262 | ISO 21448 | ISO/SAE 21434 | Other | ASPICE | Gate | Status |"
 
 # (record, phrase a figure stands on)
@@ -532,7 +532,7 @@ def one_case(d):
   b.append(g(f"{tl.show(14.6)} fin", [f'<rect x="24" y="420" width="{W - 48}" height="42" rx="8" fill="#fff" stroke="{RED}" stroke-width="1.8"/>',
                                       t(40, 446, f"{len(df)} defeaters: recorded doubts, each pointing at the claims it weakens", 12.5, RED, 700)]))
   b.append(g(f"{tl.show(19.8)} fin", [f'<rect x="24" y="478" width="{W - 110}" height="144" rx="10" fill="#eef2f8" stroke="{NAVY}"/>',
-             t(40, 500, "LionDriver today (assurance/case)", 13, NAVY, 700),
+             t(40, 500, "LionDriver today (assurance/case-records)", 13, NAVY, 700),
              t(40, 522, f"{nclaims} claims, all draft; none accepted by review.", 12, NAVY),
              t(40, 542, f"{len(ev)} pieces of evidence: {evs['partial']} partial, {evs['missing']} missing, none accepted.", 12, NAVY),
              t(40, 562, "The case is generated from records and checked in CI, so its status is never", 12, NAVY),

@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="830" viewBox="0 0 1280 830" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 1. How the Living Safety Case is built (assurance/case-records/README.md)</title>
+  <desc id="d">Structured records in assurance/case-records (claims, arguments, evidence, defeaters, actions, reviews, baselines and configurations, with references to the hazard log and requirements in trace/items) are checked by validate.py, which also compares them with WP-K-01 (check X3). Only valid records reach generate_dashboard.py and gsn_diagrams.py, which write the status cards, the README headline strip, the Living Safety Case table in assurance/README.md, status.json and the GSN diagrams. A claim is accepted only by a recorded review, with all cited evidence available and accepted, all sub-claims accepted and no open defeater. CI runs the validator and the generators in check mode on every pull request.</desc>
+  <defs>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <marker id="aN" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F172A"/></marker>
+    <marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F766E"/></marker>
+    <marker id="aE" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E9E6A"/></marker>
+    <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
+    <style>
+      .t{fill:#0F172A}.m{fill:#475569}.s{font-size:11px}.xs{font-size:10px}.b{font-weight:700}.sb{font-weight:600}
+      .mono{font-family:'DejaVu Sans Mono',Menlo,Consolas,monospace}
+      .box{fill:#FFFFFF;stroke:#94A3B8;stroke-width:1.2}
+      .tool{fill:#F8FAFC;stroke:#334155;stroke-width:1.4}
+      .out{fill:#F0FDFA;stroke:#5EAAA0;stroke-width:1.2}
+    </style>
+  </defs>
+  <rect width="1280" height="830" fill="#FFFFFF"/>
+
+  <!-- header -->
+  <text x="40" y="44" class="t b" font-size="20">Figure 1 · How the Living Safety Case is built</text>
+  <text x="40" y="66" class="m" font-size="12.5">Records → validator → generators → published figures. Nothing on the dashboard is typed by hand.</text>
+  <text x="1240" y="44" class="m s" text-anchor="end">assurance/case-records/README.md</text>
+  <text x="1240" y="62" class="m s" text-anchor="end">§2 layout · §4 rules · §5 figures</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+
+  <!-- ===== column titles ===== -->
+  <text x="40" y="112" class="m xs b" letter-spacing=".12em">1 · RECORDS</text>
+  <text x="560" y="112" class="m xs b" letter-spacing=".12em">2 · TOOLS</text>
+  <text x="820" y="112" class="m xs b" letter-spacing=".12em">3 · GENERATED OUTPUTS</text>
+
+  <!-- ===== records panel ===== -->
+  <rect x="40" y="124" width="460" height="496" rx="14" fill="#F8FAFC" stroke="#CBD5E1"/>
+  <text x="58" y="148" class="t b" font-size="13">assurance/case-records/</text>
+  <text x="168" y="148" class="m s">YAML records, one kind per folder</text>
+
+  <!-- claim (GSN goal) -->
+  <rect x="195" y="166" width="150" height="44" rx="4" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.6"/>
+  <text x="270" y="185" class="t sb" font-size="12" text-anchor="middle">Claim  G0, G1…</text>
+  <text x="270" y="200" class="m xs" text-anchor="middle">GSN goal · 36 records</text>
+  <!-- argument (GSN strategy) -->
+  <path d="M207 240 H352 L333 284 H188 Z" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+  <text x="270" y="259" class="t sb" font-size="12" text-anchor="middle">Argument  S0, S1…</text>
+  <text x="270" y="274" class="m xs" text-anchor="middle">GSN strategy · 6</text>
+  <!-- sub-claim -->
+  <rect x="195" y="314" width="150" height="44" rx="4" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.6"/>
+  <text x="270" y="333" class="t sb" font-size="12" text-anchor="middle">Sub-claim  G1.1.4…</text>
+  <text x="270" y="348" class="m xs" text-anchor="middle">GSN goal</text>
+  <!-- evidence (GSN solution) -->
+  <ellipse cx="270" cy="414" rx="78" ry="26" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.6"/>
+  <text x="270" y="411" class="t sb" font-size="12" text-anchor="middle">Evidence  Sn-01…</text>
+  <text x="270" y="426" class="m xs" text-anchor="middle">GSN solution · 50</text>
+
+  <!-- review -->
+  <rect x="58" y="240" width="112" height="44" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.4"/>
+  <text x="114" y="259" class="t sb" font-size="12" text-anchor="middle">Review  REV-…</text>
+  <text x="114" y="274" class="m xs" text-anchor="middle">named reviewer</text>
+  <!-- defeater -->
+  <rect x="384" y="314" width="102" height="44" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+  <text x="435" y="333" class="t sb" font-size="12" text-anchor="middle">Defeater  DF-…</text>
+  <text x="435" y="348" class="m xs" text-anchor="middle">41 open</text>
+  <!-- action -->
+  <rect x="384" y="392" width="102" height="44" rx="8" class="box"/>
+  <text x="435" y="411" class="t sb" font-size="12" text-anchor="middle">Action  ACT-…</text>
+  <text x="435" y="426" class="m xs" text-anchor="middle">WP-K-01 §10</text>
+
+  <!-- scope -->
+  <rect x="58" y="476" width="200" height="40" rx="8" class="box"/>
+  <text x="158" y="493" class="t sb" font-size="12" text-anchor="middle">Baseline  BL-001, BL-002</text>
+  <text x="158" y="507" class="m xs" text-anchor="middle">git revision the record describes</text>
+  <rect x="270" y="476" width="216" height="40" rx="8" class="box"/>
+  <text x="378" y="493" class="t sb" font-size="12" text-anchor="middle">Configuration  CFG-001</text>
+  <text x="378" y="507" class="m xs" text-anchor="middle">E210 Corolla, TSS 2.0</text>
+  <text x="270" y="534" class="m xs" text-anchor="middle">every record names the baseline and configuration it applies to</text>
+
+  <!-- trace items (outside the case folder) -->
+  <rect x="58" y="552" width="428" height="52" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-dasharray="5 3"/>
+  <text x="272" y="572" class="t sb" font-size="12" text-anchor="middle">trace/items/ · hazard log and requirements</text>
+  <text x="272" y="588" class="m xs" text-anchor="middle">hazards, safety goals, AoU, FSR, TSR · referenced by ID, resolved by check V3</text>
+
+  <!-- record relations -->
+  <path d="M270 210 V238" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#aN)"/>
+  <path d="M270 284 V312" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#aN)"/>
+  <path d="M270 358 V386" fill="none" stroke="#0F172A" stroke-width="1.5" marker-end="url(#aN)"/>
+  <text x="280" y="228" class="m xs">decomposed by</text>
+  <text x="280" y="376" class="m xs">evidence_refs</text>
+  <!-- undermines -->
+  <path d="M384 336 H349" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-dasharray="5 3" marker-end="url(#aR)"/>
+  <text x="435" y="306" fill="#C2410C" font-size="10" font-weight="600" text-anchor="middle">undermines</text>
+  <!-- accepts -->
+  <path d="M170 254 H182 V188 H193" fill="none" stroke="#2E9E6A" stroke-width="1.8" marker-end="url(#aE)"/>
+  <path d="M114 284 V414 H190" fill="none" stroke="#2E9E6A" stroke-width="1.8" marker-end="url(#aE)"/>
+  <text x="122" y="306" fill="#2E9E6A" font-size="10" font-weight="600">accepts</text>
+  <!-- related_* to trace -->
+  <path d="M232 438 V474" fill="none" stroke="#94A3B8" stroke-width="1" stroke-dasharray="2 3"/>
+
+  <!-- ===== tools ===== -->
+  <!-- WP-K-01 reviewed document -->
+  <rect x="560" y="124" width="220" height="48" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.4"/>
+  <text x="670" y="144" class="t sb" font-size="12" text-anchor="middle">WP-K-01 safety case</text>
+  <text x="670" y="160" class="m xs" text-anchor="middle">the reviewed document</text>
+  <!-- validate -->
+  <rect x="560" y="204" width="220" height="100" rx="10" class="tool"/>
+  <text x="576" y="226" class="t b mono" font-size="12">validate.py</text>
+  <text x="576" y="245" class="t xs">V1–V3 schema, IDs, references</text>
+  <text x="576" y="260" class="t xs">V4 two-way links · V5 locations exist</text>
+  <text x="576" y="275" class="t xs">V6 acceptance rules · V8 one tree</text>
+  <text x="576" y="290" class="t xs">X3 tables match WP-K-01</text>
+  <!-- generate -->
+  <rect x="560" y="340" width="220" height="64" rx="10" class="tool"/>
+  <text x="576" y="362" class="t b mono" font-size="12">generate_dashboard.py</text>
+  <text x="576" y="380" class="m xs">computes every figure (§5)</text>
+  <text x="576" y="394" class="m xs">deterministic: digest, no timestamp</text>
+  <!-- gsn -->
+  <rect x="560" y="440" width="220" height="56" rx="10" class="tool"/>
+  <text x="576" y="462" class="t b mono" font-size="12">gsn_diagrams.py</text>
+  <text x="576" y="480" class="m xs">GSN sheets from the claim tree</text>
+
+  <!-- records -> tools -->
+  <path d="M500 372 H530" fill="none" stroke="#475569" stroke-width="1.6"/>
+  <path d="M530 254 V468" fill="none" stroke="#475569" stroke-width="1.6"/>
+  <path d="M530 254 H558" fill="none" stroke="#475569" stroke-width="1.6" marker-end="url(#aG)"/>
+  <!-- WP-K-01 X3 -->
+  <path d="M670 172 V202" fill="none" stroke="#B45309" stroke-width="1.6" marker-end="url(#aG)"/>
+  <rect x="682" y="178" width="30" height="16" rx="8" fill="#B45309"/><text x="697" y="190" fill="#fff" font-size="9.5" font-weight="700" text-anchor="middle">X3</text>
+  <!-- validate -> generators (only valid records) -->
+  <path d="M670 304 V338" fill="none" stroke="#475569" stroke-width="1.6" marker-end="url(#aG)"/>
+  <text x="680" y="325" class="m xs">valid records only</text>
+  <path d="M530 468 H558" fill="none" stroke="#475569" stroke-width="1.6" marker-end="url(#aG)"/>
+  <circle cx="530" cy="372" r="3" fill="#475569"/>
+
+  <!-- ===== outputs ===== -->
+  <rect x="820" y="124" width="420" height="58" rx="8" class="out"/>
+  <text x="836" y="146" class="t sb" font-size="12">Status cards · dashboard, lifecycle, ecosystem</text>
+  <text x="836" y="164" class="m xs mono">docs/assets/liondriver/assurance/*.svg</text>
+  <rect x="820" y="196" width="420" height="58" rx="8" class="out"/>
+  <text x="836" y="218" class="t sb" font-size="12">Front-page status strip</text>
+  <text x="836" y="236" class="m xs mono">README.md · assurance-headline markers</text>
+  <rect x="820" y="268" width="420" height="58" rx="8" class="out"/>
+  <text x="836" y="290" class="t sb" font-size="12">Living Safety Case · values as text</text>
+  <text x="836" y="308" class="m xs mono">assurance/README.md · assurance-summary markers</text>
+  <rect x="820" y="340" width="420" height="58" rx="8" class="out"/>
+  <text x="836" y="362" class="t sb" font-size="12">Machine-readable summary</text>
+  <text x="836" y="380" class="m xs mono">assurance/case-records/status.json</text>
+  <rect x="820" y="440" width="420" height="56" rx="8" class="out"/>
+  <text x="836" y="462" class="t sb" font-size="12">GSN diagrams</text>
+  <text x="836" y="480" class="m xs mono">assurance/10-safety-case/gsn/*.svg</text>
+
+  <!-- generate -> outputs -->
+  <path d="M780 372 H800" fill="none" stroke="#0F766E" stroke-width="1.8"/>
+  <path d="M800 153 V369" fill="none" stroke="#0F766E" stroke-width="1.8"/>
+  <path d="M800 153 H818" fill="none" stroke="#0F766E" stroke-width="1.8" marker-end="url(#aT)"/>
+  <path d="M800 225 H818" fill="none" stroke="#0F766E" stroke-width="1.8" marker-end="url(#aT)"/>
+  <path d="M800 297 H818" fill="none" stroke="#0F766E" stroke-width="1.8" marker-end="url(#aT)"/>
+  <path d="M800 369 H818" fill="none" stroke="#0F766E" stroke-width="1.8" marker-end="url(#aT)"/>
+  <path d="M780 468 H818" fill="none" stroke="#0F766E" stroke-width="1.8" marker-end="url(#aT)"/>
+
+  <!-- ===== acceptance rule ===== -->
+  <rect x="560" y="530" width="680" height="90" rx="10" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <rect x="560" y="530" width="6" height="90" rx="3" fill="#2E9E6A"/>
+  <text x="582" y="552" class="t b" font-size="13">Acceptance rule (V6)</text>
+  <text x="582" y="572" class="t s">A claim is accepted only when its own review is accepted, every evidence item it cites is available and</text>
+  <text x="582" y="588" class="t s">accepted, every sub-claim is accepted, and no defeater attached to it is open.</text>
+  <text x="582" y="607" class="s" fill="#C2410C" font-weight="600">Never by: a passing CI run, a passing test, the existence of a file, or an AI-generated review.</text>
+
+  <!-- ===== CI band ===== -->
+  <rect x="40" y="648" width="1200" height="84" rx="12" fill="#0F172A"/>
+  <text x="64" y="676" fill="#F1D58A" font-size="11" font-weight="700" letter-spacing=".12em">CI GATE · EVERY PULL REQUEST</text>
+  <text x="64" y="698" fill="#FFFFFF" font-size="12.5" class="mono">validate.py · test_case.py · generate_dashboard.py --check · gsn_diagrams.py --check · test_gsn.py</text>
+  <text x="64" y="718" fill="#CBD5E1" font-size="11">An invalid record or an out-of-date output fails the pull request (.github/workflows/assurance.yaml).</text>
+
+  <!-- ===== legend ===== -->
+  <line x1="40" y1="760" x2="1240" y2="760" stroke="#E2E8F0"/>
+  <g transform="translate(40,788)" font-size="10.5">
+    <line x1="0" y1="0" x2="28" y2="0" stroke="#0F172A" stroke-width="1.5"/><text x="36" y="4" class="t">Argument structure (GSN)</text>
+    <line x1="210" y1="0" x2="238" y2="0" stroke="#2E9E6A" stroke-width="1.8"/><text x="246" y="4" class="t">Review accepts</text>
+    <line x1="360" y1="0" x2="388" y2="0" stroke="#C2410C" stroke-width="1.8" stroke-dasharray="5 3"/><text x="396" y="4" class="t">Undermines (open defeater)</text>
+    <line x1="580" y1="0" x2="608" y2="0" stroke="#475569" stroke-width="1.6"/><text x="616" y="4" class="t">Checked input</text>
+    <line x1="716" y1="0" x2="744" y2="0" stroke="#0F766E" stroke-width="1.8"/><text x="752" y="4" class="t">Generated output</text>
+    <rect x="868" y="-8" width="28" height="16" rx="4" fill="#FFFBEB" stroke="#B45309"/><text x="904" y="4" class="t">Reviewed document</text>
+    <text x="1200" y="4" class="m" text-anchor="end">counts at BL-002</text>
+  </g>
+</svg>

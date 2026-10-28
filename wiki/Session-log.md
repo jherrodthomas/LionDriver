@@ -8,7 +8,7 @@ title; the [glossary](Glossary.md) decodes the codes in them.
 What the log does not show: a change pushed to the branch without a pull request, and the state of a work
 product. For the state, use the [roadmap](Roadmap-and-status.md) and the
 [work product register](../assurance/01-management/WP-M-00-work-product-register.md). For named states of the
-whole record, see the [baselines](../assurance/case/baselines) and the
+whole record, see the [baselines](../assurance/case-records/baselines) and the
 [snapshot releases](https://github.com/jherrodthomas/LionDriver/releases/tag/snapshot-latest).
 
 ## Merged pull requests

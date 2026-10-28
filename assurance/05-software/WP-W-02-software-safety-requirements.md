@@ -60,7 +60,7 @@ These apply to every SWSR allocated to E-03 and are not repeated per row. They c
 
 Drafting origin: **ai-assisted (Claude), not reviewed**. Every commit that wrote this document carries a Claude co-author trailer. A human review record is needed before any SWSR leaves `proposed` ([WP-M-14 §2.5](../01-management/WP-M-14-iso26262-6-implementation-specification.md#25-human-controlled-decisions)).
 
-Every SWSR applies to the reference configuration CFG-001 ([`case/configurations/`](../case/configurations/cfg-001-toyota-corolla-e210.yaml)) unless the table below narrows it. The generator copies both values into `swsr.yaml` (`proposed_by`, `applies_to`).
+Every SWSR applies to the reference configuration CFG-001 ([`case/configurations/`](../case-records/configurations/cfg-001-toyota-corolla-e210.yaml)) unless the table below narrows it. The generator copies both values into `swsr.yaml` (`proposed_by`, `applies_to`).
 
 | SWSR | Applies to |
 |---|---|

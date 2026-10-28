@@ -20,7 +20,7 @@ on:
       - '.github/workflows/safety-case-snapshot.yaml'
   pull_request:
     paths:
-      - 'assurance/case/**'
+      - 'assurance/case-records/**'
       - '.github/workflows/safety-case-snapshot.yaml'
   workflow_dispatch:
 
@@ -52,11 +52,11 @@ jobs:
         persist-credentials: false
     - name: Check the records, trace and links first
       run: |
-        python3 assurance/case/tools/validate.py
+        python3 assurance/case-records/tools/validate.py
         python3 assurance/trace/tools/check_trace.py
         python3 assurance/trace/tools/check_links.py
-        python3 assurance/case/tools/generate_dashboard.py --check
-        python3 assurance/case/tools/distribution.py --check
+        python3 assurance/case-records/tools/generate_dashboard.py --check
+        python3 assurance/case-records/tools/distribution.py --check
     - name: Fetch the previous snapshot manifest
       if: github.event_name != 'pull_request' && !startsWith(github.ref, 'refs/tags/')
       env:
@@ -65,16 +65,16 @@ jobs:
     - name: Build the snapshot (HTML and manifest)
       run: |
         if [[ "$GITHUB_REF" == refs/tags/bl-* ]]; then
-          python3 assurance/case/tools/build_snapshot.py --out "$OUT" --tag "$GITHUB_REF_NAME"
+          python3 assurance/case-records/tools/build_snapshot.py --out "$OUT" --tag "$GITHUB_REF_NAME"
         else
-          python3 assurance/case/tools/build_snapshot.py --out "$OUT" --previous previous/manifest.json
+          python3 assurance/case-records/tools/build_snapshot.py --out "$OUT" --previous previous/manifest.json
         fi
     - name: Install Chromium and the QR code package for printing
       run: |
         npm install --no-save --no-audit --no-fund "playwright@$PLAYWRIGHT_VERSION" "qrcode@$QRCODE_VERSION"
         npx playwright install --with-deps chromium
     - name: Print the PDF
-      run: node assurance/case/tools/render_snapshot.cjs "$OUT"
+      run: node assurance/case-records/tools/render_snapshot.cjs "$OUT"
     - name: Hashes
       run: |
         cd "$OUT"

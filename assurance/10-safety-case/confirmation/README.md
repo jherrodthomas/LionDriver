@@ -9,7 +9,7 @@ No confirmation measure has been performed yet.
 - Records use the review record template of [WP-P-05 §7.2](../../07-supporting/WP-P-05-verification-review-procedure.md#72-review-record-template-r3-inspections-confirmation-reviews-reviews-outside-github) with review type `confirmation`, `audit` or `assessment`.
 - Each record is written by the named reviewer, auditor or assessor at the independence level WP-M-06 requires, and states that independence in writing (WP-M-06 §6.1).
 - Author-side self-checks and AI-generated pre-review audits (for example [RR-2026-001](../../02-concept/reviews/RR-2026-001.md), [RR-2026-002](../../01-management/reviews/RR-2026-002.md)) are inputs to a confirmation measure. They are never stored here and never count as one.
-- An accepted confirmation review is also entered in [`case/reviews/reviews.yaml`](../../case/reviews/reviews.yaml) so the Living Safety Case can reference it.
+- An accepted confirmation review is also entered in [`case/reviews/reviews.yaml`](../../case-records/reviews/reviews.yaml) so the Living Safety Case can reference it.
 
 ## File naming
 

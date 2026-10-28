@@ -22,7 +22,7 @@ The opendbc and panda links point at the exact commits the `opendbc_repo` and `p
 
 openpilot already separates a large, learned, QM "doer" (the driving stack on the application processor) from a small, deterministic "checker" (the safety mode on the panda microcontroller). The checker bounds what the doer can make the car do, whatever the doer computes. LionDriver's safety argument is built on that split; the strategy and its open questions are in the [assurance strategy](../../assurance/01-management/WP-M-01-assurance-strategy.md) and the [functional safety concept](../../assurance/02-concept/WP-C-04-functional-safety-concept.md).
 
-The [gap assessment](../../assurance/00-assessment/gap-assessment.md) lists where the inherited checker falls short of what the safety goals need (for example, no independent hardware watchdog and report-only fault handling). Those gaps are recorded as defeaters in the [Living Safety Case](../../assurance/case/README.md) until evidence closes them.
+The [gap assessment](../../assurance/00-assessment/gap-assessment.md) lists where the inherited checker falls short of what the safety goals need (for example, no independent hardware watchdog and report-only fault handling). Those gaps are recorded as defeaters in the [Living Safety Case](../../assurance/case-records/README.md) until evidence closes them.
 
 ## What "multi-vehicle" means here
 

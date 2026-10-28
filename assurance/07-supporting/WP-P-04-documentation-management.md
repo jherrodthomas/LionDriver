@@ -106,8 +106,8 @@ ISO 9001:2015 §7.5.3.2 and IATF 16949 §7.5.3.2.1 ask for control of the distri
 
 | Copy | How it is made | Record | Marking on every page |
 |---|---|---|---|
-| Public snapshot | Released automatically on each merge or baseline tag ([`assurance/case/README.md` §5.1](../case/README.md#51-downloadable-snapshot)) | None: GitHub reports only a download count, so who downloads it is not known | `UNCONTROLLED`, with the snapshot ID, version, configuration, commit, pins, issue time and retention |
-| Controlled copy | The `safety-case-controlled-copy` workflow, run by someone with write access, naming the recipient and the purpose | An entry `CC-YYYY-NNN` in the public [`distribution.yaml`](../case/distribution.yaml): recipient, purpose, the GitHub login that issued it, the source commit and the run, written and pushed before the copy is printed | `CONTROLLED COPY CC-YYYY-NNN`, and the recipient and purpose in the footer |
+| Public snapshot | Released automatically on each merge or baseline tag ([`assurance/case-records/README.md` §5.1](../case-records/README.md#51-downloadable-snapshot)) | None: GitHub reports only a download count, so who downloads it is not known | `UNCONTROLLED`, with the snapshot ID, version, configuration, commit, pins, issue time and retention |
+| Controlled copy | The `safety-case-controlled-copy` workflow, run by someone with write access, naming the recipient and the purpose | An entry `CC-YYYY-NNN` in the public [`distribution.yaml`](../case-records/distribution.yaml): recipient, purpose, the GitHub login that issued it, the source commit and the run, written and pushed before the copy is printed | `CONTROLLED COPY CC-YYYY-NNN`, and the recipient and purpose in the footer |
 
 A controlled copy is not updated when the safety case changes. It is withdrawn by setting its entry to `withdrawn` with the date and reason; entries are never deleted. The current version is always the repository and the newest release.
 

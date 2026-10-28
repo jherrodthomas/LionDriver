@@ -1,3 +1,0 @@
-# Controlled copies of the safety case (WP-K-01). Public record; see assurance/case/tools/distribution.py.
-# Appended only by the safety-case-controlled-copy workflow. A copy is withdrawn by setting status: withdrawn
-# and adding withdrawn_at and reason; entries are never deleted (WP-P-04 §10).

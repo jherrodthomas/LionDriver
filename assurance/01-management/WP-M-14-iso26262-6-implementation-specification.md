@@ -41,7 +41,7 @@ The licensed text of ISO 26262 is authoritative. No standard text is reproduced 
 | Rule | Consequence in this repository |
 |---|---|
 | A template is not evidence | Templates live in a template location (§10) and carry no status. A work product copied from a template starts at `Planned` or `Skeleton` |
-| A passing CI run is not approval | CI results are evidence inputs. They never change a `review_state` ([`case/README.md` §4](../case/README.md)) |
+| A passing CI run is not approval | CI results are evidence inputs. They never change a `review_state` ([`case-records/README.md` §4](../case-records/README.md)) |
 | A test is not verification of a requirement | A requirement is verified only when a reviewed verification record links that requirement to a result on an identified build and configuration (§8) |
 | No invented numbers | Coverage, timing, resource figures and metrics appear only when measured, with the build, tool version and command recorded. Otherwise the record says `Not established` |
 | Drafts stay drafts | AI- or tool-generated content is marked as such and stays below `Approved` until a named human reviewer accepts it (§2.5) |
@@ -50,7 +50,7 @@ The licensed text of ISO 26262 is authoritative. No standard text is reproduced 
 
 The specification calls for more statuses than the current work product convention ([`assurance/README.md`](../README.md): Skeleton, Draft, In review, Approved, Baselined). The proposed mapping below is adopted in Phase B (§15). It is not applied to existing documents yet.
 
-| Specification status | Current convention | Requirement `status` ([WP-P-06](../07-supporting/WP-P-06-requirements-management-traceability.md)) | Case record ([schema](../case/schema/case-schema.json)) | Meaning |
+| Specification status | Current convention | Requirement `status` ([WP-P-06](../07-supporting/WP-P-06-requirements-management-traceability.md)) | Case record ([schema](../case-records/schema/case-schema.json)) | Meaning |
 |---|---|---|---|---|
 | Planned | (none; propose adding) | — | — | Identified in the register; no content |
 | Draft | Skeleton / Draft | `proposed` | `draft` | Content exists; not reviewed |
@@ -143,7 +143,7 @@ This is an inventory of what exists. It is **not** the Phase A gap assessment, a
 | Existing software tests | Yes, upstream assets plus LionDriver tests in the opendbc and panda forks | Not reviewed as evidence | Safety tests, MISRA and mutation run in fork CI ([`safety.yaml`](../../.github/workflows/safety.yaml)); line coverage only (GAP-13); host builds, not target (GAP-13, GAP-41) |
 | Target test environment | Plan only ([`hil-bench/`](../05-software/hil-bench/README.md)) | Draft | No bench exists (D-04, GAP-30) |
 | Review records | No | — | `case/reviews/` holds no record |
-| Living Safety Case | Yes ([`case/`](../case/README.md)) | Development | No claim has accepted evidence |
+| Living Safety Case | Yes ([`case-records/`](../case-records/README.md)) | Development | No claim has accepted evidence |
 
 Conclusion of the snapshot: **no entry criterion is met.** All the prerequisites exist as drafts, and the requirement chain from FSR to SWSR is populated and checked. None is approved or confirmed and no review record exists. Part 6 stays deferred, and the pre-entry track (§2.3) continues.
 
@@ -367,7 +367,7 @@ Assessment candidates, from the safety-relevant file list ([`safety-relevant-pat
 
 ## 7. Multi-vehicle configuration management
 
-The Part 6 lifecycle runs once at platform level. Configuration-specific assurance is added on top of it, so the lifecycle is not repeated for every vehicle. The approach follows the configurable-software guidance of ISO 26262-6 Annex C and builds on [WP-W-09](../05-software/WP-W-09-configuration-calibration-data.md) and the configuration records in [`case/configurations/`](../case/configurations/).
+The Part 6 lifecycle runs once at platform level. Configuration-specific assurance is added on top of it, so the lifecycle is not repeated for every vehicle. The approach follows the configurable-software guidance of ISO 26262-6 Annex C and builds on [WP-W-09](../05-software/WP-W-09-configuration-calibration-data.md) and the configuration records in [`case/configurations/`](../case-records/configurations/).
 
 ### 7.1 Three tiers
 
@@ -375,7 +375,7 @@ The Part 6 lifecycle runs once at platform level. Configuration-specific assuran
 |---|---|---|
 | Upstream-compatible | `upstream-compatible` | Supported by the upstream code. No LionDriver evaluation. **No assurance claim** |
 | LionDriver-evaluated | `liondriver-evaluated` | Analysed by LionDriver. Evidence in progress. Today only CFG-001 (Toyota Corolla, 12th generation (E210), TSS 2.0), `in-progress` |
-| Assurance-supported | `assurance-supported` | Has at least one claim with accepted evidence ([`case/README.md` §5](../case/README.md)). None today |
+| Assurance-supported | `assurance-supported` | Has at least one claim with accepted evidence ([`case-records/README.md` §5](../case-records/README.md)). None today |
 
 ### 7.2 Records
 
@@ -434,7 +434,7 @@ A verification result record carries at least: result ID, verification case ID, 
 
 ## 9. Living Safety Case integration
 
-Part 6 evidence enters the safety case through the existing records in [`case/`](../case/README.md). The case already enforces that only a recorded human review accepts anything.
+Part 6 evidence enters the safety case through the existing records in [`case-records/`](../case-records/README.md). The case already enforces that only a recorded human review accepts anything.
 
 The integration exposes, per claim: the supporting arguments, linked evidence with version and source baseline, applicable configurations, verification and review status, open issues and defeaters, change impacts, and approval history.
 
@@ -456,13 +456,13 @@ The structure proposed in the source specification is mapped onto the existing t
 |---|---|---|
 | `management/software-safety-plan/` | [WP-M-02](WP-M-02-safety-plan.md) + this document | Reuse; no new folder |
 | `software/05-development-environment/` … `11-embedded-software-testing/` | [`05-software/`](../05-software/) WP-W-01, -02, -03/-04, -05, -06, -07, -08 | Reuse. Clause-specific records go in `trace/items/` (requirements, architecture, units) and in a results store (below) |
-| `software/configuration-profiles/` | [`case/configurations/`](../case/configurations/) + WP-W-09 | Reuse |
+| `software/configuration-profiles/` | [`case/configurations/`](../case-records/configurations/) + WP-W-09 | Reuse |
 | `analyses/software-fmea/`, `software-fta/` | [WP-W-04](../05-software/WP-W-04-software-safety-analysis.md); system level in [`08-analyses/`](../08-analyses/) | Reuse; structured worksheets may be added under `05-software/analyses/` in Phase C if the Markdown tables become unmanageable |
 | `analyses/dependent-failures/`, `freedom-from-interference/` | [WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md), [WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md), WP-W-04 §4, WP-W-03 §6 | Reuse |
 | `traceability/` | [`trace/`](../trace/README.md) | Reuse; add item kinds |
-| `evidence/` | [`case/evidence/`](../case/evidence/) for evidence records; raw results as CI artifacts or a results folder decided in Phase B | Reuse + decide |
-| `reviews/` | [`case/reviews/`](../case/reviews/) | Reuse |
-| `baselines/` | [`case/baselines/`](../case/baselines/) + git tags ([WP-P-10](../07-supporting/WP-P-10-release-management.md)) | Reuse |
+| `evidence/` | [`case/evidence/`](../case-records/evidence/) for evidence records; raw results as CI artifacts or a results folder decided in Phase B | Reuse + decide |
+| `reviews/` | [`case/reviews/`](../case-records/reviews/) | Reuse |
+| `baselines/` | [`case/baselines/`](../case-records/baselines/) + git tags ([WP-P-10](../07-supporting/WP-P-10-release-management.md)) | Reuse |
 | `reports/` | Generated outputs only (dashboard SVGs under `docs/assets/liondriver/assurance/`) | Reuse; generated files are never authoritative |
 | `templates/` | New `assurance/templates/` in Phase B | Create when needed |
 
@@ -470,7 +470,7 @@ Sensitive vulnerability information is not published automatically; it follows [
 
 ## 11. Work product register extension
 
-[WP-M-00](WP-M-00-work-product-register.md) remains the master register. Phase B adds a machine-readable Part 6 register (proposed `assurance/trace/items/register-part6.yaml`, or a `case/` kind, decided in Phase B) generated into WP-M-00 §3.5 so the two cannot drift.
+[WP-M-00](WP-M-00-work-product-register.md) remains the master register. Phase B adds a machine-readable Part 6 register (proposed `assurance/trace/items/register-part6.yaml`, or a `case-records/` kind, decided in Phase B) generated into WP-M-00 §3.5 so the two cannot drift.
 
 Fields per record: work product ID, name, ISO 26262 clause, governing process, owner, ASIL applicability, component, configuration, source requirements, required inputs, expected outputs, verification obligations, review authority, status (§2.2), version, baseline, evidence references, open findings, approval record, and **classification**:
 
@@ -503,7 +503,7 @@ Each check produces a machine-readable result (JSON) and a readable summary. The
 
 ## 13. Software engineering dashboard
 
-Extends [`case/tools/generate_dashboard.py`](../case/tools/generate_dashboard.py) and keeps its rules: values come from records, generated files are checked for freshness in CI, and no value is typed by hand.
+Extends [`case/tools/generate_dashboard.py`](../case-records/tools/generate_dashboard.py) and keeps its rules: values come from records, generated files are checked for freshness in CI, and no value is typed by hand.
 
 - **Design:** the shared assurance figure palette, with [`01-management/figures/fig_m_management.py`](figures/fig_m_management.py) as the source: ink `#0F172A` text on light surfaces; discipline accents SAFETY `#C2410C`, SW `#0F766E`, HW `#4F46E5`; status GREEN `#2E9E6A`, AMBER `#D97706`, RED `#D2553F`. Green only for an approved or baselined status. `generate_dashboard.py` still uses a navy and gold scheme; it is moved to this palette when it is extended.
 - **Views:** Clause 5–11 lifecycle overview; work product register and maturity; requirements traceability; architecture relationships; verification results; coverage where measured; open findings; review obligations; configuration applicability; baseline history; links to the Living Safety Case.

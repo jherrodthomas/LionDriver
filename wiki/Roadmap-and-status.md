@@ -20,7 +20,7 @@ its document-control header.
 |---|---|---|
 | **1 · Foundation** | Project governance and [safety plan](../assurance/01-management/WP-M-02-safety-plan.md) | Draft |
 | | [Upstream baseline gap assessment](../assurance/00-assessment/gap-assessment.md) | Draft |
-| | [Assurance data model](../assurance/case/README.md) and [traceability data](../assurance/trace/README.md) | Draft; hazards, goals, assumptions and safety case recorded, requirements not yet |
+| | [Assurance data model](../assurance/case-records/README.md) and [traceability data](../assurance/trace/README.md) | Draft; hazards, goals, assumptions and safety case recorded, requirements not yet |
 | **2 · Safety engineering** | [Hazard analysis](../assurance/02-concept/WP-C-03-hara.md) and [functional safety concept](../assurance/02-concept/WP-C-04-functional-safety-concept.md) | Draft |
 | | [SOTIF analysis](../assurance/02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md), [cybersecurity analysis](../assurance/02-concept/WP-C-09-tara.md), [AI safety requirements](../assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) | Draft |
 | | Architecture analysis: [technical safety concept](../assurance/03-system/WP-S-03-technical-safety-concept-architecture.md), [FTA and FMEA](../assurance/08-analyses/WP-A-04-system-fta-fmea.md), [dependent failure analysis](../assurance/08-analyses/WP-A-03-dependent-failure-analysis.md), [STPA](../assurance/08-analyses/WP-A-05-stpa.md) | Draft |

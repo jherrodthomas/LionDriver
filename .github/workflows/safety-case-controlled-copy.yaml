@@ -2,7 +2,7 @@ name: safety case controlled copy
 
 # Issues a controlled copy of the safety case (WP-K-01) to a named recipient (ISO 9001 §7.5.3.2,
 # IATF 16949 §7.5.3.2.1). Only people with write access can run it. The run:
-#   1. appends the next CC-YYYY-NNN entry to assurance/case/distribution.yaml, with the recipient,
+#   1. appends the next CC-YYYY-NNN entry to assurance/case-records/distribution.yaml, with the recipient,
 #      the purpose and the GitHub login that started the run, and pushes that record to liondriver-dev;
 #   2. builds the snapshot from the commit that holds the record, stamped with the copy number on
 #      every page (build_snapshot.py --copy), prints it, hashes and attests it;
@@ -50,10 +50,10 @@ jobs:
         fetch-depth: 0
     - name: Check the records, trace, links and distribution record first
       run: |
-        python3 assurance/case/tools/validate.py
+        python3 assurance/case-records/tools/validate.py
         python3 assurance/trace/tools/check_trace.py
         python3 assurance/trace/tools/check_links.py
-        python3 assurance/case/tools/distribution.py --check
+        python3 assurance/case-records/tools/distribution.py --check
     - name: Record the copy in the distribution record
       id: record
       env:
@@ -62,22 +62,22 @@ jobs:
         RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
       run: |
         based_on=$(git rev-parse HEAD)
-        id=$(cd assurance/case/tools && python3 distribution.py issue --recipient "$RECIPIENT" --purpose "$PURPOSE" \
+        id=$(cd assurance/case-records/tools && python3 distribution.py issue --recipient "$RECIPIENT" --purpose "$PURPOSE" \
           --issuer "$GITHUB_ACTOR" --based-on "$based_on" --run "$RUN_URL")
         echo "id=$id" >> "$GITHUB_OUTPUT"
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git add assurance/case/distribution.yaml
+        git add assurance/case-records/distribution.yaml
         git commit -m "Distribution record: controlled copy $id issued by @$GITHUB_ACTOR"
         git push origin HEAD:liondriver-dev
     - name: Build the copy (HTML and manifest)
-      run: python3 assurance/case/tools/build_snapshot.py --out "$OUT" --copy "${{ steps.record.outputs.id }}"
+      run: python3 assurance/case-records/tools/build_snapshot.py --out "$OUT" --copy "${{ steps.record.outputs.id }}"
     - name: Install Chromium and the QR code package for printing
       run: |
         npm install --no-save --no-audit --no-fund "playwright@$PLAYWRIGHT_VERSION" "qrcode@$QRCODE_VERSION"
         npx playwright install --with-deps chromium
     - name: Print the PDF
-      run: node assurance/case/tools/render_snapshot.cjs "$OUT"
+      run: node assurance/case-records/tools/render_snapshot.cjs "$OUT"
     - name: Name and hash the files
       run: |
         cd "$OUT"
