@@ -613,12 +613,15 @@ def cards(fid):
   return out
 
 
-def card_svg(x, y, c):
-  b = [f'<rect x="{x}" y="{y}" width="{CW}" height="{{H}}" rx="10" fill="#FFFFFF" stroke="{HAIR}"/>']
+def card_svg(x, y, c, cw=CW):
+  pw = cw - 24
+  ch_h, sc_h = pw * 110 / 280, pw * 130 / 280
+  b = [f'<rect x="{x}" y="{y}" width="{cw}" height="{{H}}" rx="10" fill="#FFFFFF" stroke="{HAIR}"/>']
   px, cy_ = x + 12, y + 26
   b.append(t(px, cy_, c["gw"], 12, MUTED, 600))
   b.append(t(px + 34, cy_, c["name"], 15, INK, 700))
-  b.append(t(px + 34 + hf.text_w(c["name"], 15, True) + 8, cy_, c["sub"], 11, MUTED))
+  if px + 34 + hf.text_w(c["name"], 15, True) + 8 + hf.text_w(c["sub"], 11) <= x + cw - 12:
+    b.append(t(px + 34 + hf.text_w(c["name"], 15, True) + 8, cy_, c["sub"], 11, MUTED))
   cy_ += 12
   goal = f'{c["hz"]} · {c["sg"]} · ASIL {c["asil"]}' if c["asil"] else f'{c["hz"]} · {c["sg"]}'
   p, w = pill(px, cy_, goal, "#FEE2E2", "#7F1D1D", 18, 10)
@@ -626,18 +629,18 @@ def card_svg(x, y, c):
   if c["sub_by"]:
     b.append(pill(px + w + 6, cy_, f'covered by {c["sub_by"]}', "#E2E8F0", "#334155", 18, 10)[0])
   cy_ += 26
-  for line in wrap(c["hazard"], PW, 10.5):
+  for line in wrap(c["hazard"], pw, 10.5):
     b.append(t(px, cy_ + 8, line, 10.5, MUTED))
     cy_ += 14
   cy_ += 4
-  b.append(f'<svg x="{px}" y="{cy_:.1f}" width="{PW}" height="{CH_H:.1f}" viewBox="0 0 280 110">'
+  b.append(f'<svg x="{px}" y="{cy_:.1f}" width="{pw}" height="{ch_h:.1f}" viewBox="0 0 280 110">'
            f'<rect width="280" height="110" rx="6" fill="#F8FAFC"/>' + "".join(c["chart"]) + "</svg>")
-  cy_ += CH_H + 6
-  b.append(f'<svg x="{px}" y="{cy_:.1f}" width="{PW}" height="{SC_H:.1f}" viewBox="0 0 280 130">'
+  cy_ += ch_h + 6
+  b.append(f'<svg x="{px}" y="{cy_:.1f}" width="{pw}" height="{sc_h:.1f}" viewBox="0 0 280 130">'
            f'<clipPath id="k{c["gw"]}"><rect width="280" height="130" rx="6"/></clipPath>'
            f'<g clip-path="url(#k{c["gw"]})">' + "".join(c["scene"]) + "</g></svg>")
-  cy_ += SC_H + 8
-  for line in wrap(c["why"], PW, 11):
+  cy_ += sc_h + 8
+  for line in wrap(c["why"], pw, 11):
     cy_ += 14
     b.append(t(px, cy_, line, 11, INK))
   h = cy_ + 14 - y
@@ -645,51 +648,87 @@ def card_svg(x, y, c):
   return b, h
 
 
-def legend(y):
-  b, x = [], M
+def legend(y, m=M, w=None):
+  """The legend from x = m; with a sheet width w, items that would pass the right margin start a new line.
+  Returns the elements and the y of the last line."""
+  b, x = [], m
   items = [("req", "Required (intended)"), ("perf", "Performed (malfunction)"), ("fault", "Fault starts"),
            ("ring", "The moment it matters"), ("band", "Gap between intended and actual"), ("other", "Other traffic")]
   for kind, label in items:
+    if w is not None and x > m and x + 22 + hf.text_w(label, 11) > w - m:
+      x, y = m, y + 20
     mark, used = sk.legend_swatch(kind, x, y)
     b.append(mark)
     x += used
     b.append(t(x, y, label, 11, INK))
     x += hf.text_w(label, 11) + 22
-  return b
+  return b, y
 
 
-def sheet(fid):
+PHONE = dict(cols=2, cw=290, gap=12, m=24)   # 2 * 24 + 2 * 290 + 12 = 640 px: the cards at full size on a phone
+
+
+def _phone_header(w, m, title, subtitle):
+  b, y = [], 30
+  for line in wrap(title, w - 2 * m, 18, True):
+    b.append(t(m, y, line, 18, INK, 700))
+    y += 23
+  for line in wrap(subtitle, w - 2 * m, 12):
+    b.append(t(m, y, line, 12, MUTED))
+    y += 16
+  b.append(t(m, y, "WP-C-03 §4 · hara_model.FM · schematic, not simulation output · phone view", 11, MUTED))
+  y += 10
+  b.append(f'<line x1="{m}" y1="{y}" x2="{w - m}" y2="{y}" stroke="{HAIR}"/>')
+  return b, y + 22
+
+
+def sheet(fid, cols=COLS, cw=CW, gap=GAP, m=M, phone=False):
   fname, fig, what, _ = SHEETS[fid]
   cs = cards(fid)
   fname_txt = function_name(fid)
-  w = 2 * M + COLS * CW + (COLS - 1) * GAP
+  w = 2 * m + cols * cw + (cols - 1) * gap
   n = f"All {len(cs)}" if len(cs) == 14 else f"The {len(cs)} safety-relevant (SC)"
-  body = hf.header(w, f"{fig} · {fid} {fname_txt}",
-                   f"{n} guide words. Chart: the function ({what}), required vs performed. Scene: what it does to the car.",
-                   "WP-C-03 §4 · hara_model.FM", "Schematic, not simulation output")
-  body += legend(108)
-  y, rows = 128, []
-  for r in range(0, len(cs), COLS):
-    built = [card_svg(M + k * (CW + GAP), y, c) for k, c in enumerate(cs[r:r + COLS])]
+  sub = f"{n} guide words. Chart: the function ({what}), required vs performed. Scene: what it does to the car."
+  if phone:
+    body, ly = _phone_header(w, m, f"{fig} · {fid} {fname_txt}", sub)
+    leg, ly = legend(ly, m, w)
+    body += leg
+    y = ly + 20
+  else:
+    body = hf.header(w, f"{fig} · {fid} {fname_txt}", sub, "WP-C-03 §4 · hara_model.FM", "Schematic, not simulation output")
+    body += legend(108)[0]
+    y = 128
+  rows = []
+  for r in range(0, len(cs), cols):
+    built = [card_svg(m + k * (cw + gap), y, c, cw) for k, c in enumerate(cs[r:r + cols])]
     row_h = max(h for _, h in built)
     for b, h in built:   # one height per row
       b[0] = b[0].replace(f'height="{h:.0f}"', f'height="{row_h:.0f}"', 1)
       rows.append(b)
-    y += row_h + GAP
+    y += row_h + gap
   for b in rows:
     body += b
-  body.append(t(M, y + 6, "Scenes are drawn to explain each hazard; the plant runs are in assurance/sim §3.7. "
-                "Ratings are proposals for review until the I3 confirmation review (WP-C-03 header).", 10.5, MUTED))
-  body.append(t(w - M, y + 6, hf.GENERATED.split(" — ")[0], 10, MUTED, None, "end"))
+  foot = ("Scenes are drawn to explain each hazard; the plant runs are in assurance/sim §3.7. "
+          "Ratings are proposals for review until the I3 confirmation review (WP-C-03 header).")
+  if phone:
+    for line in wrap(foot + " " + hf.GENERATED.split(" — ")[0] + ".", w - 2 * m, 10.5):
+      body.append(t(m, y + 6, line, 10.5, MUTED))
+      y += 14
+  else:
+    body.append(t(m, y + 6, foot, 10.5, MUTED))
+    body.append(t(w - m, y + 6, hf.GENERATED.split(" — ")[0], 10, MUTED, None, "end"))
   desc = (f"{len(cs)} cards for {fid} {fname_txt}, one per SC guide word. " +
           " ".join(f"{c['gw']} {c['name']}: {c['hz']}, {c['sg']}{' ASIL ' + c['asil'] if c['asil'] else ''}"
                    f"{', covered by ' + c['sub_by'] if c['sub_by'] else ''}"
                    f"{'; callout: ' + c['label'] if c['label'] else ''}." for c in cs))
-  return fname, svg_doc(w, int(y + 24), f"{fig}: {fid} {fname_txt} under its SC guide words (WP-C-03 §4)", desc, body)
+  if phone:
+    fname = fname.replace(".svg", "-phone.svg")
+  return fname, svg_doc(w, int(y + 24), f"{fig}: {fid} {fname_txt} under its SC guide words (WP-C-03 §4)"
+                        f"{', phone view' if phone else ''}", desc, body)
 
 
 def build() -> dict[str, str]:
-  return dict(sheet(fid) for fid in SHEETS)
+  return {**dict(sheet(fid) for fid in SHEETS), **dict(sheet(fid, **PHONE, phone=True) for fid in SHEETS)}
 
 
 if __name__ == "__main__":

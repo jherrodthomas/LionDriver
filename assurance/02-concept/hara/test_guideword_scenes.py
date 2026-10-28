@@ -13,6 +13,16 @@ import hara_model as hm
 
 
 class TestGuidewordScenes(unittest.TestCase):
+  def test_phone_sheets_fit_a_phone_and_carry_every_card(self):
+    import xml.etree.ElementTree as ET
+    out = gs.build()
+    for fid in gs.SHEETS:
+      full = gs.SHEETS[fid][0]
+      phone = full.replace(".svg", "-phone.svg")
+      self.assertEqual(ET.fromstring(out[phone]).get("width"), "640", phone)
+      for c in gs.cards(fid):
+        self.assertIn(f">{c['gw']}<", out[phone], f"{phone}: {c['gw']}")
+
   def test_one_card_per_sc_guide_word(self):
     for fid in gs.SHEETS:
       sc = sorted(g for g, row in hm.FM[fid].items() if row[0] == hm.SC)
