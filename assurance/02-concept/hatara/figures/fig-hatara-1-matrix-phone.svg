@@ -1,0 +1,194 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="687" viewBox="0 0 640 687" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">HATARA Figure 1. Where a threat reaches a hazard, phone view</title>
+<desc id="d">HATARA Figure 1, phone view: 9 hazards, each with the threat scenarios WP-C-09 §3 links to it (74 links in all). H-01: TS-01, TS-02, TS-03, TS-04, TS-05, TS-06, TS-08, TS-09, TS-10, TS-14. H-02: TS-01, TS-02, TS-03, TS-04, TS-05, TS-06, TS-08, TS-09, TS-10, TS-12. H-03: TS-01, TS-02, TS-03, TS-04, TS-05, TS-06, TS-08, TS-09, TS-10, TS-14. H-04: TS-01, TS-02, TS-03, TS-04, TS-05, TS-06, TS-08, TS-09, TS-10, TS-14. H-05: TS-01, TS-02, TS-03, TS-04, TS-05, TS-06, TS-08, TS-09, TS-10. H-06: TS-01, TS-02, TS-03, TS-04, TS-05, TS-06, TS-08, TS-09, TS-10, TS-12. H-07: TS-04, TS-06, TS-08, TS-09, TS-10. H-08: TS-01, TS-02, TS-03, TS-05, TS-06, TS-08, TS-09, TS-10, TS-14. H-09: TS-04.</desc>
+<defs></defs>
+<rect width="640" height="687" fill="#FFFFFF"/>
+<text x="24" y="30" font-size="18" fill="#0F172A" font-weight="700">HATARA · where a threat reaches a hazard</text>
+<text x="24" y="53" font-size="12" fill="#475569">One row per WP-C-03 hazard. Chips: the WP-C-09 threat scenarios §3 links to it, coloured by risk;</text>
+<text x="24" y="69" font-size="12" fill="#475569">dashed: an interaction names the link, §3 does not carry it.</text>
+<text x="24" y="85" font-size="11" fill="#475569">WP-C-03 · WP-C-09 §3, §8 · phone view</text>
+<line x1="24" y1="95" x2="616" y2="95" stroke="#E2E8F0"/>
+<rect x="24" y="103" width="22" height="14" rx="3" fill="#DC2626"/>
+<text x="52" y="115" font-size="10.5" fill="#0F172A">risk 5</text>
+<rect x="106" y="103" width="22" height="14" rx="3" fill="#F97316"/>
+<text x="134" y="115" font-size="10.5" fill="#0F172A">risk 4</text>
+<rect x="188" y="103" width="22" height="14" rx="3" fill="#F59E0B"/>
+<text x="216" y="115" font-size="10.5" fill="#0F172A">risk 3</text>
+<text x="24" y="151" font-size="12" fill="#475569" font-weight="700">H-01</text>
+<text x="74" y="151" font-size="13" fill="#0F172A" font-weight="600">Excessive lateral motion</text>
+<rect x="74" y="161" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="96.264" y="174" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-01</text>
+<rect x="124.52799999999999" y="161" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="146.792" y="174" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-02</text>
+<rect x="175.05599999999998" y="161" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="197.32" y="174" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-03</text>
+<rect x="225.58399999999997" y="161" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="247.848" y="174" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-04</text>
+<rect x="276.11199999999997" y="161" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="298.376" y="174" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-05</text>
+<rect x="326.64" y="161" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="348.904" y="174" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-06</text>
+<rect x="377.168" y="161" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="399.432" y="174" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-08</text>
+<rect x="427.696" y="161" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="449.96" y="174" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-09</text>
+<rect x="478.22400000000005" y="161" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="500.488" y="174" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-10</text>
+<rect x="528.7520000000001" y="161" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="551.016" y="174" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-14</text>
+<line x1="24" y1="185" x2="616" y2="185" stroke="#E2E8F0"/>
+<text x="24" y="207" font-size="12" fill="#475569" font-weight="700">H-02</text>
+<text x="74" y="207" font-size="13" fill="#0F172A" font-weight="600">Silent loss of lateral control</text>
+<rect x="74" y="217" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="96.264" y="230" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-01</text>
+<rect x="124.52799999999999" y="217" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="146.792" y="230" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-02</text>
+<rect x="175.05599999999998" y="217" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="197.32" y="230" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-03</text>
+<rect x="225.58399999999997" y="217" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="247.848" y="230" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-04</text>
+<rect x="276.11199999999997" y="217" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="298.376" y="230" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-05</text>
+<rect x="326.64" y="217" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="348.904" y="230" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-06</text>
+<rect x="377.168" y="217" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="399.432" y="230" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-08</text>
+<rect x="427.696" y="217" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="449.96" y="230" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-09</text>
+<rect x="478.22400000000005" y="217" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="500.488" y="230" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-10</text>
+<rect x="528.7520000000001" y="217" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="551.016" y="230" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-12</text>
+<line x1="24" y1="241" x2="616" y2="241" stroke="#E2E8F0"/>
+<text x="24" y="263" font-size="12" fill="#475569" font-weight="700">H-03</text>
+<text x="74" y="263" font-size="13" fill="#0F172A" font-weight="600">Unintended acceleration</text>
+<rect x="74" y="273" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="96.264" y="286" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-01</text>
+<rect x="124.52799999999999" y="273" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="146.792" y="286" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-02</text>
+<rect x="175.05599999999998" y="273" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="197.32" y="286" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-03</text>
+<rect x="225.58399999999997" y="273" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="247.848" y="286" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-04</text>
+<rect x="276.11199999999997" y="273" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="298.376" y="286" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-05</text>
+<rect x="326.64" y="273" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="348.904" y="286" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-06</text>
+<rect x="377.168" y="273" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="399.432" y="286" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-08</text>
+<rect x="427.696" y="273" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="449.96" y="286" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-09</text>
+<rect x="478.22400000000005" y="273" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="500.488" y="286" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-10</text>
+<rect x="528.7520000000001" y="273" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="551.016" y="286" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-14</text>
+<line x1="24" y1="297" x2="616" y2="297" stroke="#E2E8F0"/>
+<text x="24" y="319" font-size="12" fill="#475569" font-weight="700">H-04</text>
+<text x="74" y="319" font-size="13" fill="#0F172A" font-weight="600">Excessive deceleration</text>
+<rect x="74" y="329" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="96.264" y="342" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-01</text>
+<rect x="124.52799999999999" y="329" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="146.792" y="342" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-02</text>
+<rect x="175.05599999999998" y="329" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="197.32" y="342" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-03</text>
+<rect x="225.58399999999997" y="329" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="247.848" y="342" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-04</text>
+<rect x="276.11199999999997" y="329" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="298.376" y="342" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-05</text>
+<rect x="326.64" y="329" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="348.904" y="342" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-06</text>
+<rect x="377.168" y="329" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="399.432" y="342" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-08</text>
+<rect x="427.696" y="329" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="449.96" y="342" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-09</text>
+<rect x="478.22400000000005" y="329" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="500.488" y="342" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-10</text>
+<rect x="528.7520000000001" y="329" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="551.016" y="342" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-14</text>
+<line x1="24" y1="353" x2="616" y2="353" stroke="#E2E8F0"/>
+<text x="24" y="375" font-size="12" fill="#475569" font-weight="700">H-05</text>
+<text x="74" y="375" font-size="13" fill="#0F172A" font-weight="600">Override or disengage prevented</text>
+<rect x="74" y="385" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="96.264" y="398" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-01</text>
+<rect x="124.52799999999999" y="385" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="146.792" y="398" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-02</text>
+<rect x="175.05599999999998" y="385" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="197.32" y="398" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-03</text>
+<rect x="225.58399999999997" y="385" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="247.848" y="398" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-04</text>
+<rect x="276.11199999999997" y="385" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="298.376" y="398" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-05</text>
+<rect x="326.64" y="385" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="348.904" y="398" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-06</text>
+<rect x="377.168" y="385" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="399.432" y="398" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-08</text>
+<rect x="427.696" y="385" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="449.96" y="398" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-09</text>
+<rect x="478.22400000000005" y="385" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="500.488" y="398" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-10</text>
+<line x1="24" y1="409" x2="616" y2="409" stroke="#E2E8F0"/>
+<text x="24" y="431" font-size="12" fill="#475569" font-weight="700">H-06</text>
+<text x="74" y="431" font-size="13" fill="#0F172A" font-weight="600">Silent loss of deceleration</text>
+<rect x="74" y="441" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="96.264" y="454" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-01</text>
+<rect x="124.52799999999999" y="441" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="146.792" y="454" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-02</text>
+<rect x="175.05599999999998" y="441" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="197.32" y="454" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-03</text>
+<rect x="225.58399999999997" y="441" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="247.848" y="454" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-04</text>
+<rect x="276.11199999999997" y="441" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="298.376" y="454" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-05</text>
+<rect x="326.64" y="441" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="348.904" y="454" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-06</text>
+<rect x="377.168" y="441" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="399.432" y="454" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-08</text>
+<rect x="427.696" y="441" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="449.96" y="454" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-09</text>
+<rect x="478.22400000000005" y="441" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="500.488" y="454" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-10</text>
+<rect x="528.7520000000001" y="441" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="551.016" y="454" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-12</text>
+<line x1="24" y1="465" x2="616" y2="465" stroke="#E2E8F0"/>
+<text x="24" y="487" font-size="12" fill="#475569" font-weight="700">H-07</text>
+<text x="74" y="487" font-size="13" fill="#0F172A" font-weight="600">Mode confusion</text>
+<rect x="74" y="497" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="96.264" y="510" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-04</text>
+<rect x="124.52799999999999" y="497" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="146.792" y="510" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-06</text>
+<rect x="175.05599999999998" y="497" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="197.32" y="510" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-08</text>
+<rect x="225.58399999999997" y="497" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="247.848" y="510" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-09</text>
+<rect x="276.11199999999997" y="497" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="298.376" y="510" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-10</text>
+<line x1="24" y1="521" x2="616" y2="521" stroke="#E2E8F0"/>
+<text x="24" y="543" font-size="12" fill="#475569" font-weight="700">H-08</text>
+<text x="74" y="543" font-size="13" fill="#0F172A" font-weight="600">Stock PCS/AEB suppressed</text>
+<rect x="74" y="553" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="96.264" y="566" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-01</text>
+<rect x="124.52799999999999" y="553" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="146.792" y="566" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-02</text>
+<rect x="175.05599999999998" y="553" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="197.32" y="566" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-03</text>
+<rect x="225.58399999999997" y="553" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="247.848" y="566" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-05</text>
+<rect x="276.11199999999997" y="553" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="298.376" y="566" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-06</text>
+<rect x="326.64" y="553" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="348.904" y="566" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-08</text>
+<rect x="377.168" y="553" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="399.432" y="566" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-09</text>
+<rect x="427.696" y="553" width="44.5" height="18" rx="4" fill="#F97316"/>
+<text x="449.96" y="566" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-10</text>
+<rect x="478.22400000000005" y="553" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="500.488" y="566" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-14</text>
+<line x1="24" y1="577" x2="616" y2="577" stroke="#E2E8F0"/>
+<text x="24" y="599" font-size="12" fill="#475569" font-weight="700">H-09</text>
+<text x="74" y="599" font-size="13" fill="#0F172A" font-weight="600">Unsupervised driver, control goes on</text>
+<rect x="74" y="609" width="44.5" height="18" rx="4" fill="#DC2626"/>
+<text x="96.264" y="622" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TS-04</text>
+<line x1="24" y1="633" x2="616" y2="633" stroke="#E2E8F0"/>
+<text x="24" y="653" font-size="10.5" fill="#475569">Filled: WP-C-09 §3 links them, so a safety goal rests on security there. Dashed: named by an interaction, not carried by</text>
+<text x="24" y="667" font-size="10.5" fill="#475569">a damage scenario; the analyses disagree. Generated by hatara_figures.py.</text>
+</svg>
