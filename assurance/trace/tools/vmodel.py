@@ -619,8 +619,9 @@ def goals(d: Data) -> list[str]:
   return sorted(d.m.ids["SG"])
 
 
-def goal_grid(model=None, width: float = 1280, cols: int = 4, top: float = 0) -> Drawing:
-  """One goal-lens card per safety goal, `cols` per row, with a title per card and a legend under the grid."""
+def goal_grid(model=None, width: float = 1280, cols: int = 4, top: float = 0, stacked: bool = False) -> Drawing:
+  """One goal-lens card per safety goal, `cols` per row, with a title per card and a legend under the grid (one entry
+  per line with `stacked`, for narrow drawings)."""
   d = as_data(model)
   gs = goals(d)
   margin, gap, head = 40, 24, 24
@@ -628,7 +629,8 @@ def goal_grid(model=None, width: float = 1280, cols: int = 4, top: float = 0) ->
   cards = [draw("goal", "card", goal=g, model=d) for g in gs]
   ch = cards[0].height * cw / W
   rows = (len(gs) + cols - 1) // cols
-  height = round(top + rows * (head + ch + gap) + 40)
+  used = sorted({s for c in cards for s in c.states.values()}, key=list(STATE).index)
+  height = round(top + rows * (head + ch + gap) + 40 + (18 * len(used) if stacked else 0))
   dr = Drawing(width, height, "System V per safety goal", "")
   dr.rect(0, 0, width, height, "#FFFFFF", "none", sw=0, rx=0)
   for i, (g, card) in enumerate(zip(gs, cards, strict=True)):
@@ -638,16 +640,21 @@ def goal_grid(model=None, width: float = 1280, cols: int = 4, top: float = 0) ->
     dr.text(x + text_w(g, 13, True) + 8, y + 16, f"ASIL {d.m.items[g].get('asil', '')}", 11, fill=MUTED)
     dr.body.append(place(card, x, y + head, cw))
     dr.rect(x, y + head, cw, ch, "none", "#E2E8F0", sw=1, rx=6)
-  used = sorted({s for c in cards for s in c.states.values()}, key=list(STATE).index)
-  ly = height - 14
+  ly = height - 14 - (18 * len(used) if stacked else 0)
   x = margin
   for st in used:
     fill, stroke, dash, label = STATE[st]
     dr.rect(x, ly - 10, 16, 12, fill, stroke, sw=1.4, rx=3, dash="3 2" if dash else "")
     dr.text(x + 22, ly, label, 11, fill=MUTED)
-    x += 22 + text_w(label, 11) + 22
-  dr.text(width - margin, ly, "left: items of the level under the goal · right: named by a case / items", 11,
-          fill=MUTED, anchor="end")
+    if stacked:
+      ly += 18
+    else:
+      x += 22 + text_w(label, 11) + 22
+  note = "left: items of the level under the goal · right: named by a case / items"
+  if stacked:
+    dr.text(margin, ly, note, 11, fill=MUTED)
+  else:
+    dr.text(width - margin, ly, note, 11, fill=MUTED, anchor="end")
   dr.desc = "One system V per safety goal. " + " ".join(
     f"{g}: " + "; ".join(f"{lv(k).process} {boxes.words}" for k, boxes in values(d, "goal", g)[0].items()) + "."
     for g in gs)

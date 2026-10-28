@@ -1,0 +1,269 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="3192" viewBox="0 0 640 3192" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">HATARA Figure 2. Where one side's measure changes the other's risk, phone view</title>
+<desc id="d">HATARA Figure 2: IX-01 A recovery path is also an attack path (antagonism, safety → security): The envelope's availability was bought with a route around its authenticity. Authenticate the recovery or remove it. Status: CSR-C-05 not implemented. IX-02 Test modes become a back door (antagonism, safety → security): Validation aids must be absent from reference builds, not merely unused. Status: CSR-C-07 partial. IX-03 A rejected frame is a lost function (antagonism, security → safety): A security rejection must end in the safety reaction: an announced take-over request, never a silent stop. Status: CSR-C-09 not implemented. IX-04 One lock serves both (mutual reinforcement, both): The reference lock closes a hazard and a threat with one mechanism. Verify it once, for both. Status: CSR-C-01 implemented, not verified. IX-05 A rejected image must leave the stock car (antagonism, security → safety): The item may stop, but the stock path must stay: the switches fall back to pass-through only while the pull-down holds (LS-33). Status: CSR-C-03 not implemented. IX-06 A fault reaction is a DoS lever (antagonism, safety → security): It stays safe only while the alert path survives the same attack; otherwise it is the silent loss of H-02 and H-06. Status: Alert path under the same attack not analysed. IX-07 The service mode trusts the ignition line (antagonism, safety → security): The lock needs an ignition signal the harness cannot fake. Until then it is a known gap. Status: Known gap (LS-28). IX-08 One counter serves both (mutual reinforcement, both): One counter and CRC closes a stuck-frame fault and an injected frame. Specify it once, for both. Status: CSR-C-09 not implemented. IX-09 The driver camera is also a privacy asset (antagonism, safety → security): Every frame the safety function keeps is a privacy exposure. Keep and upload only what it needs (CSG-08). Status: CSR-C-14 not confirmed. IX-10 Firmware integrity holds up SG-01…SG-07 (conditional dependency, security → safety): Until both are met, SG-01 to SG-07 do not hold against an attacker on the SoC. SG-08 needs CSG-03 instead (IX-11). Status: Recorded in WP-C-10 §8. IX-11 Screen and DM attacks reach H-07, H-09 (conditional dependency, security → safety): Found by this analysis, closed in WP-C-09 v0.8. The derived status reopens it if a link is dropped. Status: Closed: WP-C-09 §3 links them now. IX-12 An attacker picks the moment (antagonism, security → safety): For an attacker-triggered event E does not apply: the TARA's safety impact governs. No rating changes (DQ-420 A). Status: Recorded in WP-C-03 §2 (DQ-420 A).</desc>
+<defs></defs>
+<rect width="640" height="3192" fill="#FFFFFF"/>
+<text x="24" y="30" font-size="18" fill="#0F172A" font-weight="700">HATARA · where one side's measure changes the other's risk</text>
+<text x="24" y="53" font-size="12" fill="#475569">One card per interaction of hatara_model.py: the safety side, the security side, the arrow from cause to</text>
+<text x="24" y="69" font-size="12" fill="#475569">effect, what follows, and what ties it to the analyses.</text>
+<text x="24" y="85" font-size="11" fill="#475569">WP-C-03 · WP-C-09 · WP-C-10 · Kriaa et al. types · phone view</text>
+<line x1="24" y1="95" x2="616" y2="95" stroke="#E2E8F0"/>
+<rect x="24" y="115" width="131.2" height="18" rx="9" fill="#FFFFFF" stroke="#0F766E"/><text x="89.618" y="127.6" font-size="10" fill="#0F766E" font-weight="700" text-anchor="middle">Conditional dependency</text>
+<rect x="163.236" y="115" width="116.0" height="18" rx="9" fill="#FFFFFF" stroke="#16A34A"/><text x="221.222" y="127.6" font-size="10" fill="#16A34A" font-weight="700" text-anchor="middle">Mutual reinforcement</text>
+<rect x="287.208" y="115" width="70.6" height="18" rx="9" fill="#FFFFFF" stroke="#DC2626"/><text x="322.51" y="127.6" font-size="10" fill="#DC2626" font-weight="700" text-anchor="middle">Antagonism</text>
+<g>
+<rect x="24.0" y="147" width="592.0" height="235" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+<title>IX-01: A recovery path is also an attack path</title>
+<rect x="36" y="158" width="70.6" height="18" rx="9" fill="#FFFFFF" stroke="#DC2626"/><text x="71.302" y="170.6" font-size="10" fill="#DC2626" font-weight="700" text-anchor="middle">Antagonism</text>
+<text x="114.604" y="172" font-size="10" fill="#475569" font-weight="600">safety → security</text>
+<text x="604" y="172" font-size="10" fill="#475569" font-weight="600" text-anchor="end">IX-01</text>
+<text x="36" y="195" font-size="13" fill="#0F172A" font-weight="700">A recovery path is also an attack path</text>
+<rect x="36.0" y="207" width="568.0" height="44" rx="6" fill="#2563EB" fill-opacity="0.07" stroke="#2563EB" stroke-opacity="0.4"/>
+<text x="44" y="221" font-size="9" fill="#2563EB" font-weight="700">Safety</text>
+<text x="98" y="222" font-size="9.5" fill="#0F172A">If the panda fails to boot, pandad flashes the development bootstub to bring it back</text>
+<rect x="36.0" y="261" width="568.0" height="44" rx="6" fill="#7C3AED" fill-opacity="0.07" stroke="#7C3AED" stroke-opacity="0.4"/>
+<text x="44" y="275" font-size="9" fill="#7C3AED" font-weight="700">Security</text>
+<text x="98" y="276" font-size="9.5" fill="#0F172A">The same path flashes unauthenticated firmware onto the safety MCU (TS-03, risk 5)</text>
+<path d="M584.0 229.0 L584.0 283.0" stroke="#DC2626" stroke-width="2" stroke-dasharray="3 3"/>
+<circle cx="584.0" cy="283.0" r="5" fill="#DC2626"><animate attributeName="cy" values="229.0;229.0;283.0;283.0" keyTimes="0;0.2;0.6;1" dur="4s" repeatCount="indefinite"/></circle>
+<text x="36" y="327" font-size="10" fill="#0F172A">The envelope's availability was bought with a route around its authenticity. Authenticate the recovery or remove it.</text>
+<text x="36" y="348" font-size="9.5" fill="#475569">Ties</text>
+<text x="86" y="348" font-size="9.5" fill="#0F172A">TS-03 · CSR-C-05 · GAP-38</text>
+<text x="36" y="364" font-size="9.5" fill="#475569">Status</text>
+<text x="86" y="364" font-size="9.5" fill="#B91C1C" font-weight="600">CSR-C-05 not implemented</text>
+</g>
+<g>
+<rect x="24.0" y="394" width="592.0" height="235" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+<title>IX-02: Test modes become a back door</title>
+<rect x="36" y="405" width="70.6" height="18" rx="9" fill="#FFFFFF" stroke="#DC2626"/><text x="71.302" y="417.6" font-size="10" fill="#DC2626" font-weight="700" text-anchor="middle">Antagonism</text>
+<text x="114.604" y="419" font-size="10" fill="#475569" font-weight="600">safety → security</text>
+<text x="604" y="419" font-size="10" fill="#475569" font-weight="600" text-anchor="end">IX-02</text>
+<text x="36" y="442" font-size="13" fill="#0F172A" font-weight="700">Test modes become a back door</text>
+<rect x="36.0" y="454" width="568.0" height="44" rx="6" fill="#2563EB" fill-opacity="0.07" stroke="#2563EB" stroke-opacity="0.4"/>
+<text x="44" y="468" font-size="9" fill="#2563EB" font-weight="700">Safety</text>
+<text x="98" y="469" font-size="9.5" fill="#0F172A">Debug, maneuver and joystick modes exist to validate control on the bench and the road</text>
+<rect x="36.0" y="508" width="568.0" height="44" rx="6" fill="#7C3AED" fill-opacity="0.07" stroke="#7C3AED" stroke-opacity="0.4"/>
+<text x="44" y="522" font-size="9" fill="#7C3AED" font-weight="700">Security</text>
+<text x="98" y="523" font-size="9.5" fill="#0F172A">They replace the control processes, so a local attacker gets actuation through them (TS-04)</text>
+<path d="M584.0 476.0 L584.0 530.0" stroke="#DC2626" stroke-width="2" stroke-dasharray="3 3"/>
+<circle cx="584.0" cy="530.0" r="5" fill="#DC2626"><animate attributeName="cy" values="476.0;476.0;530.0;530.0" keyTimes="0;0.2;0.6;1" dur="4s" repeatCount="indefinite"/></circle>
+<text x="36" y="574" font-size="10" fill="#0F172A">Validation aids must be absent from reference builds, not merely unused.</text>
+<text x="36" y="595" font-size="9.5" fill="#475569">Ties</text>
+<text x="86" y="595" font-size="9.5" fill="#0F172A">TS-04 · CSR-C-07 · FM-06</text>
+<text x="36" y="611" font-size="9.5" fill="#475569">Status</text>
+<text x="86" y="611" font-size="9.5" fill="#B45309" font-weight="600">CSR-C-07 partial</text>
+</g>
+<g>
+<rect x="24.0" y="641" width="592.0" height="235" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+<title>IX-03: A rejected frame is a lost function</title>
+<rect x="36" y="652" width="70.6" height="18" rx="9" fill="#FFFFFF" stroke="#DC2626"/><text x="71.302" y="664.6" font-size="10" fill="#DC2626" font-weight="700" text-anchor="middle">Antagonism</text>
+<text x="114.604" y="666" font-size="10" fill="#475569" font-weight="600">security → safety</text>
+<text x="604" y="666" font-size="10" fill="#475569" font-weight="600" text-anchor="end">IX-03</text>
+<text x="36" y="689" font-size="13" fill="#0F172A" font-weight="700">A rejected frame is a lost function</text>
+<rect x="36.0" y="701" width="568.0" height="44" rx="6" fill="#2563EB" fill-opacity="0.07" stroke="#2563EB" stroke-opacity="0.4"/>
+<text x="44" y="715" font-size="9" fill="#2563EB" font-weight="700">Safety</text>
+<text x="98" y="716" font-size="9.5" fill="#0F172A">If the item stops controlling without telling the driver, that is silent loss (H-02, H-06)</text>
+<rect x="36.0" y="755" width="568.0" height="44" rx="6" fill="#7C3AED" fill-opacity="0.07" stroke="#7C3AED" stroke-opacity="0.4"/>
+<text x="44" y="769" font-size="9" fill="#7C3AED" font-weight="700">Security</text>
+<text x="98" y="770" font-size="9.5" fill="#0F172A">Counter and CRC checks on received frames will reject forged and damaged frames</text>
+<path d="M584.0 777.0 L584.0 723.0" stroke="#DC2626" stroke-width="2" stroke-dasharray="3 3"/>
+<circle cx="584.0" cy="723.0" r="5" fill="#DC2626"><animate attributeName="cy" values="777.0;777.0;723.0;723.0" keyTimes="0;0.2;0.6;1" dur="4s" repeatCount="indefinite"/></circle>
+<text x="36" y="821" font-size="10" fill="#0F172A">A security rejection must end in the safety reaction: an announced take-over request, never a silent stop.</text>
+<text x="36" y="842" font-size="9.5" fill="#475569">Ties</text>
+<text x="86" y="842" font-size="9.5" fill="#0F172A">CSR-C-09 · FSR-02.10 · H-02 · H-06</text>
+<text x="36" y="858" font-size="9.5" fill="#475569">Status</text>
+<text x="86" y="858" font-size="9.5" fill="#B91C1C" font-weight="600">CSR-C-09 not implemented</text>
+</g>
+<g>
+<rect x="24.0" y="888" width="592.0" height="235" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+<title>IX-04: One lock serves both</title>
+<rect x="36" y="899" width="116.0" height="18" rx="9" fill="#FFFFFF" stroke="#16A34A"/><text x="93.986" y="911.6" font-size="10" fill="#16A34A" font-weight="700" text-anchor="middle">Mutual reinforcement</text>
+<text x="159.972" y="913" font-size="10" fill="#475569" font-weight="600">both</text>
+<text x="604" y="913" font-size="10" fill="#475569" font-weight="600" text-anchor="end">IX-04</text>
+<text x="36" y="936" font-size="13" fill="#0F172A" font-weight="700">One lock serves both</text>
+<rect x="36.0" y="948" width="568.0" height="44" rx="6" fill="#2563EB" fill-opacity="0.07" stroke="#2563EB" stroke-opacity="0.4"/>
+<text x="44" y="962" font-size="9" fill="#2563EB" font-weight="700">Safety</text>
+<text x="98" y="963" font-size="9.5" fill="#0F172A">The envelope must run the Toyota safety mode with its limits (SG-01 to SG-07)</text>
+<rect x="36.0" y="1002" width="568.0" height="44" rx="6" fill="#7C3AED" fill-opacity="0.07" stroke="#7C3AED" stroke-opacity="0.4"/>
+<text x="44" y="1016" font-size="9" fill="#7C3AED" font-weight="700">Security</text>
+<text x="98" y="1017" font-size="9.5" fill="#0F172A">No SoC command may change the safety mode or parameter (CSG-01, TS-02)</text>
+<path d="M584.0 970.0 L584.0 1024.0" stroke="#16A34A" stroke-width="2.4"/>
+<circle cx="584.0" cy="997.0" r="5" fill="#16A34A"><animate attributeName="r" values="4;7;4" dur="2s" repeatCount="indefinite"/></circle>
+<text x="36" y="1068" font-size="10" fill="#0F172A">The reference lock closes a hazard and a threat with one mechanism. Verify it once, for both.</text>
+<text x="36" y="1089" font-size="9.5" fill="#475569">Ties</text>
+<text x="86" y="1089" font-size="9.5" fill="#0F172A">TSR-512 · TSR-513 · CSR-C-01 · TS-02</text>
+<text x="36" y="1105" font-size="9.5" fill="#475569">Status</text>
+<text x="86" y="1105" font-size="9.5" fill="#0369A1" font-weight="600">CSR-C-01 implemented, not verified</text>
+</g>
+<g>
+<rect x="24.0" y="1135" width="592.0" height="248" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+<title>IX-05: A rejected image must leave the stock car</title>
+<rect x="36" y="1146" width="70.6" height="18" rx="9" fill="#FFFFFF" stroke="#DC2626"/><text x="71.302" y="1158.6" font-size="10" fill="#DC2626" font-weight="700" text-anchor="middle">Antagonism</text>
+<text x="114.604" y="1160" font-size="10" fill="#475569" font-weight="600">security → safety</text>
+<text x="604" y="1160" font-size="10" fill="#475569" font-weight="600" text-anchor="end">IX-05</text>
+<text x="36" y="1183" font-size="13" fill="#0F172A" font-weight="700">A rejected image must leave the stock car</text>
+<rect x="36.0" y="1195" width="568.0" height="44" rx="6" fill="#2563EB" fill-opacity="0.07" stroke="#2563EB" stroke-opacity="0.4"/>
+<text x="44" y="1209" font-size="9" fill="#2563EB" font-weight="700">Safety</text>
+<text x="98" y="1210" font-size="9.5" fill="#0F172A">Stock PCS must keep working whatever the item does (SG-07, H-08)</text>
+<rect x="36.0" y="1249" width="568.0" height="44" rx="6" fill="#7C3AED" fill-opacity="0.07" stroke="#7C3AED" stroke-opacity="0.4"/>
+<text x="44" y="1263" font-size="9" fill="#7C3AED" font-weight="700">Security</text>
+<text x="98" y="1264" font-size="9.5" fill="#0F172A">Verified boot leaves the panda unable to run firmware that fails its check</text>
+<path d="M584.0 1271.0 L584.0 1217.0" stroke="#DC2626" stroke-width="2" stroke-dasharray="3 3"/>
+<circle cx="584.0" cy="1217.0" r="5" fill="#DC2626"><animate attributeName="cy" values="1271.0;1271.0;1217.0;1217.0" keyTimes="0;0.2;0.6;1" dur="4s" repeatCount="indefinite"/></circle>
+<text x="36" y="1315" font-size="10" fill="#0F172A">The item may stop, but the stock path must stay: the switches fall back to pass-through only while the pull-down holds</text>
+<text x="36" y="1328" font-size="10" fill="#0F172A">(LS-33).</text>
+<text x="36" y="1349" font-size="9.5" fill="#475569">Ties</text>
+<text x="86" y="1349" font-size="9.5" fill="#0F172A">CSR-C-03 · SG-07 · H-08 · LS-33</text>
+<text x="36" y="1365" font-size="9.5" fill="#475569">Status</text>
+<text x="86" y="1365" font-size="9.5" fill="#B91C1C" font-weight="600">CSR-C-03 not implemented</text>
+</g>
+<g>
+<rect x="24.0" y="1395" width="592.0" height="235" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+<title>IX-06: A fault reaction is a DoS lever</title>
+<rect x="36" y="1406" width="70.6" height="18" rx="9" fill="#FFFFFF" stroke="#DC2626"/><text x="71.302" y="1418.6" font-size="10" fill="#DC2626" font-weight="700" text-anchor="middle">Antagonism</text>
+<text x="114.604" y="1420" font-size="10" fill="#475569" font-weight="600">safety → security</text>
+<text x="604" y="1420" font-size="10" fill="#475569" font-weight="600" text-anchor="end">IX-06</text>
+<text x="36" y="1443" font-size="13" fill="#0F172A" font-weight="700">A fault reaction is a DoS lever</text>
+<rect x="36.0" y="1455" width="568.0" height="44" rx="6" fill="#2563EB" fill-opacity="0.07" stroke="#2563EB" stroke-opacity="0.4"/>
+<text x="44" y="1469" font-size="9" fill="#2563EB" font-weight="700">Safety</text>
+<text x="98" y="1470" font-size="9.5" fill="#0F172A">Heartbeat loss or a controls mismatch withdraws authority at once, with an alert (LS-24)</text>
+<rect x="36.0" y="1509" width="568.0" height="44" rx="6" fill="#7C3AED" fill-opacity="0.07" stroke="#7C3AED" stroke-opacity="0.4"/>
+<text x="44" y="1523" font-size="9" fill="#7C3AED" font-weight="700">Security</text>
+<text x="98" y="1524" font-size="9.5" fill="#0F172A">An attacker who stalls SoC processes (TS-12) can trigger that withdrawal at will</text>
+<path d="M584.0 1477.0 L584.0 1531.0" stroke="#DC2626" stroke-width="2" stroke-dasharray="3 3"/>
+<circle cx="584.0" cy="1531.0" r="5" fill="#DC2626"><animate attributeName="cy" values="1477.0;1477.0;1531.0;1531.0" keyTimes="0;0.2;0.6;1" dur="4s" repeatCount="indefinite"/></circle>
+<text x="36" y="1575" font-size="10" fill="#0F172A">It stays safe only while the alert path survives the same attack; otherwise it is the silent loss of H-02 and H-06.</text>
+<text x="36" y="1596" font-size="9.5" fill="#475569">Ties</text>
+<text x="86" y="1596" font-size="9.5" fill="#0F172A">TS-12 · LS-24 · TSR-615 · H-02 · H-06</text>
+<text x="36" y="1612" font-size="9.5" fill="#475569">Status</text>
+<text x="86" y="1612" font-size="9.5" fill="#0F172A">Alert path under the same attack not analysed</text>
+</g>
+<g>
+<rect x="24.0" y="1642" width="592.0" height="235" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+<title>IX-07: The service mode trusts the ignition line</title>
+<rect x="36" y="1653" width="70.6" height="18" rx="9" fill="#FFFFFF" stroke="#DC2626"/><text x="71.302" y="1665.6" font-size="10" fill="#DC2626" font-weight="700" text-anchor="middle">Antagonism</text>
+<text x="114.604" y="1667" font-size="10" fill="#475569" font-weight="600">safety → security</text>
+<text x="604" y="1667" font-size="10" fill="#475569" font-weight="600" text-anchor="end">IX-07</text>
+<text x="36" y="1690" font-size="13" fill="#0F172A" font-weight="700">The service mode trusts the ignition line</text>
+<rect x="36.0" y="1702" width="568.0" height="44" rx="6" fill="#2563EB" fill-opacity="0.07" stroke="#2563EB" stroke-opacity="0.4"/>
+<text x="44" y="1716" font-size="9" fill="#2563EB" font-weight="700">Safety</text>
+<text x="98" y="1717" font-size="9.5" fill="#0F172A">Diagnostics over the OBD port are allowed only with the ignition off, for service</text>
+<rect x="36.0" y="1756" width="568.0" height="44" rx="6" fill="#7C3AED" fill-opacity="0.07" stroke="#7C3AED" stroke-opacity="0.4"/>
+<text x="44" y="1770" font-size="9" fill="#7C3AED" font-weight="700">Security</text>
+<text x="98" y="1771" font-size="9.5" fill="#0F172A">An open ignition branch reads as ignition off while driving and releases that lock (LS-28)</text>
+<path d="M584.0 1724.0 L584.0 1778.0" stroke="#DC2626" stroke-width="2" stroke-dasharray="3 3"/>
+<circle cx="584.0" cy="1778.0" r="5" fill="#DC2626"><animate attributeName="cy" values="1724.0;1724.0;1778.0;1778.0" keyTimes="0;0.2;0.6;1" dur="4s" repeatCount="indefinite"/></circle>
+<text x="36" y="1822" font-size="10" fill="#0F172A">The lock needs an ignition signal the harness cannot fake. Until then it is a known gap.</text>
+<text x="36" y="1843" font-size="9.5" fill="#475569">Ties</text>
+<text x="86" y="1843" font-size="9.5" fill="#0F172A">LS-28</text>
+<text x="36" y="1859" font-size="9.5" fill="#475569">Status</text>
+<text x="86" y="1859" font-size="9.5" fill="#0F172A">Known gap (LS-28)</text>
+</g>
+<g>
+<rect x="24.0" y="1889" width="592.0" height="235" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+<title>IX-08: One counter serves both</title>
+<rect x="36" y="1900" width="116.0" height="18" rx="9" fill="#FFFFFF" stroke="#16A34A"/><text x="93.986" y="1912.6" font-size="10" fill="#16A34A" font-weight="700" text-anchor="middle">Mutual reinforcement</text>
+<text x="159.972" y="1914" font-size="10" fill="#475569" font-weight="600">both</text>
+<text x="604" y="1914" font-size="10" fill="#475569" font-weight="600" text-anchor="end">IX-08</text>
+<text x="36" y="1937" font-size="13" fill="#0F172A" font-weight="700">One counter serves both</text>
+<rect x="36.0" y="1949" width="568.0" height="44" rx="6" fill="#2563EB" fill-opacity="0.07" stroke="#2563EB" stroke-opacity="0.4"/>
+<text x="44" y="1963" font-size="9" fill="#2563EB" font-weight="700">Safety</text>
+<text x="98" y="1964" font-size="9.5" fill="#0F172A">The brake frame has no counter or checksum, so a stuck value passes (LS-21)</text>
+<rect x="36.0" y="2003" width="568.0" height="44" rx="6" fill="#7C3AED" fill-opacity="0.07" stroke="#7C3AED" stroke-opacity="0.4"/>
+<text x="44" y="2017" font-size="9" fill="#7C3AED" font-weight="700">Security</text>
+<text x="98" y="2018" font-size="9.5" fill="#0F172A">CAN integrity adds a counter and CRC against injected frames (GAP-01)</text>
+<path d="M584.0 1971.0 L584.0 2025.0" stroke="#16A34A" stroke-width="2.4"/>
+<circle cx="584.0" cy="1998.0" r="5" fill="#16A34A"><animate attributeName="r" values="4;7;4" dur="2s" repeatCount="indefinite"/></circle>
+<text x="36" y="2069" font-size="10" fill="#0F172A">One counter and CRC closes a stuck-frame fault and an injected frame. Specify it once, for both.</text>
+<text x="36" y="2090" font-size="9.5" fill="#475569">Ties</text>
+<text x="86" y="2090" font-size="9.5" fill="#0F172A">CSR-C-09 · GAP-01 · LS-21 · H-05 · H-03</text>
+<text x="36" y="2106" font-size="9.5" fill="#475569">Status</text>
+<text x="86" y="2106" font-size="9.5" fill="#B91C1C" font-weight="600">CSR-C-09 not implemented</text>
+</g>
+<g>
+<rect x="24.0" y="2136" width="592.0" height="235" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+<title>IX-09: The driver camera is also a privacy asset</title>
+<rect x="36" y="2147" width="70.6" height="18" rx="9" fill="#FFFFFF" stroke="#DC2626"/><text x="71.302" y="2159.6" font-size="10" fill="#DC2626" font-weight="700" text-anchor="middle">Antagonism</text>
+<text x="114.604" y="2161" font-size="10" fill="#475569" font-weight="600">safety → security</text>
+<text x="604" y="2161" font-size="10" fill="#475569" font-weight="600" text-anchor="end">IX-09</text>
+<text x="36" y="2184" font-size="13" fill="#0F172A" font-weight="700">The driver camera is also a privacy asset</text>
+<rect x="36.0" y="2196" width="568.0" height="44" rx="6" fill="#2563EB" fill-opacity="0.07" stroke="#2563EB" stroke-opacity="0.4"/>
+<text x="44" y="2210" font-size="9" fill="#2563EB" font-weight="700">Safety</text>
+<text x="98" y="2211" font-size="9.5" fill="#0F172A">Driver monitoring needs a cabin camera to catch inattention (H-09)</text>
+<rect x="36.0" y="2250" width="568.0" height="44" rx="6" fill="#7C3AED" fill-opacity="0.07" stroke="#7C3AED" stroke-opacity="0.4"/>
+<text x="44" y="2264" font-size="9" fill="#7C3AED" font-weight="700">Security</text>
+<text x="98" y="2265" font-size="9.5" fill="#0F172A">Its video is personal data that an attacker or a thief can take (TS-11, DS-08)</text>
+<path d="M584.0 2218.0 L584.0 2272.0" stroke="#DC2626" stroke-width="2" stroke-dasharray="3 3"/>
+<circle cx="584.0" cy="2272.0" r="5" fill="#DC2626"><animate attributeName="cy" values="2218.0;2218.0;2272.0;2272.0" keyTimes="0;0.2;0.6;1" dur="4s" repeatCount="indefinite"/></circle>
+<text x="36" y="2316" font-size="10" fill="#0F172A">Every frame the safety function keeps is a privacy exposure. Keep and upload only what it needs (CSG-08).</text>
+<text x="36" y="2337" font-size="9.5" fill="#475569">Ties</text>
+<text x="86" y="2337" font-size="9.5" fill="#0F172A">TS-11 · DS-08 · CSG-08 · H-09 · CSR-C-14</text>
+<text x="36" y="2353" font-size="9.5" fill="#475569">Status</text>
+<text x="86" y="2353" font-size="9.5" fill="#475569" font-weight="600">CSR-C-14 not confirmed</text>
+</g>
+<g>
+<rect x="24.0" y="2383" width="592.0" height="235" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+<title>IX-10: Firmware integrity holds up SG-01…SG-07</title>
+<rect x="36" y="2394" width="131.2" height="18" rx="9" fill="#FFFFFF" stroke="#0F766E"/><text x="101.618" y="2406.6" font-size="10" fill="#0F766E" font-weight="700" text-anchor="middle">Conditional dependency</text>
+<text x="175.236" y="2408" font-size="10" fill="#475569" font-weight="600">security → safety</text>
+<text x="604" y="2408" font-size="10" fill="#475569" font-weight="600" text-anchor="end">IX-10</text>
+<text x="36" y="2431" font-size="13" fill="#0F172A" font-weight="700">Firmware integrity holds up SG-01…SG-07</text>
+<rect x="36.0" y="2443" width="568.0" height="44" rx="6" fill="#2563EB" fill-opacity="0.07" stroke="#2563EB" stroke-opacity="0.4"/>
+<text x="44" y="2457" font-size="9" fill="#2563EB" font-weight="700">Safety</text>
+<text x="98" y="2458" font-size="9.5" fill="#0F172A">SG-01 to SG-07 rest on the envelope firmware; SG-08 rests on DM on the SoC (WP-C-04)</text>
+<rect x="36.0" y="2497" width="568.0" height="44" rx="6" fill="#7C3AED" fill-opacity="0.07" stroke="#7C3AED" stroke-opacity="0.4"/>
+<text x="44" y="2511" font-size="9" fill="#7C3AED" font-weight="700">Security</text>
+<text x="98" y="2512" font-size="9.5" fill="#0F172A">Safety-mode integrity (CSG-01) and firmware authenticity (CSG-02) protect that firmware</text>
+<path d="M584.0 2519.0 L584.0 2465.0" stroke="#0F766E" stroke-width="2" stroke-dasharray="3 3"/>
+<circle cx="584.0" cy="2465.0" r="5" fill="#0F766E"><animate attributeName="cy" values="2519.0;2519.0;2465.0;2465.0" keyTimes="0;0.2;0.6;1" dur="4s" repeatCount="indefinite"/></circle>
+<text x="36" y="2563" font-size="10" fill="#0F172A">Until both are met, SG-01 to SG-07 do not hold against an attacker on the SoC. SG-08 needs CSG-03 instead (IX-11).</text>
+<text x="36" y="2584" font-size="9.5" fill="#475569">Ties</text>
+<text x="86" y="2584" font-size="9.5" fill="#0F172A">CSG-01 · CSG-02 · SG-01 · SG-07 · SG-08 · CSG-03 · TS-02 · TS-03</text>
+<text x="36" y="2600" font-size="9.5" fill="#475569">Status</text>
+<text x="86" y="2600" font-size="9.5" fill="#0F172A">Recorded in WP-C-10 §8</text>
+</g>
+<g>
+<rect x="24.0" y="2630" width="592.0" height="235" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+<title>IX-11: Screen and DM attacks reach H-07, H-09</title>
+<rect x="36" y="2641" width="131.2" height="18" rx="9" fill="#FFFFFF" stroke="#0F766E"/><text x="101.618" y="2653.6" font-size="10" fill="#0F766E" font-weight="700" text-anchor="middle">Conditional dependency</text>
+<text x="175.236" y="2655" font-size="10" fill="#475569" font-weight="600">security → safety</text>
+<text x="604" y="2655" font-size="10" fill="#475569" font-weight="600" text-anchor="end">IX-11</text>
+<text x="36" y="2678" font-size="13" fill="#0F172A" font-weight="700">Screen and DM attacks reach H-07, H-09</text>
+<rect x="36.0" y="2690" width="568.0" height="44" rx="6" fill="#2563EB" fill-opacity="0.07" stroke="#2563EB" stroke-opacity="0.4"/>
+<text x="44" y="2704" font-size="9" fill="#2563EB" font-weight="700">Safety</text>
+<text x="98" y="2705" font-size="9.5" fill="#0F172A">WP-C-03 names spoofed HMI state for mode confusion (H-07); missed inattention is H-09</text>
+<rect x="36.0" y="2744" width="568.0" height="44" rx="6" fill="#7C3AED" fill-opacity="0.07" stroke="#7C3AED" stroke-opacity="0.4"/>
+<text x="44" y="2758" font-size="9" fill="#7C3AED" font-weight="700">Security</text>
+<text x="98" y="2759" font-size="9.5" fill="#0F172A">TS-04 can alter DM behaviour; WP-C-09 v0.8 adds DS-13 and DS-14 so it reaches H-07 and H-09</text>
+<path d="M584.0 2766.0 L584.0 2712.0" stroke="#0F766E" stroke-width="2" stroke-dasharray="3 3"/>
+<circle cx="584.0" cy="2712.0" r="5" fill="#0F766E"><animate attributeName="cy" values="2766.0;2766.0;2712.0;2712.0" keyTimes="0;0.2;0.6;1" dur="4s" repeatCount="indefinite"/></circle>
+<text x="36" y="2810" font-size="10" fill="#0F172A">Found by this analysis, closed in WP-C-09 v0.8. The derived status reopens it if a link is dropped.</text>
+<text x="36" y="2831" font-size="9.5" fill="#475569">Ties</text>
+<text x="86" y="2831" font-size="9.5" fill="#0F172A">TS-04 · H-07 · H-09 · CSG-03 · DS-13 · DS-14</text>
+<text x="36" y="2847" font-size="9.5" fill="#475569">Status</text>
+<text x="86" y="2847" font-size="9.5" fill="#15803D" font-weight="600">Closed: WP-C-09 §3 links them now</text>
+</g>
+<g>
+<rect x="24.0" y="2877" width="592.0" height="235" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+<title>IX-12: An attacker picks the moment</title>
+<rect x="36" y="2888" width="70.6" height="18" rx="9" fill="#FFFFFF" stroke="#DC2626"/><text x="71.302" y="2900.6" font-size="10" fill="#DC2626" font-weight="700" text-anchor="middle">Antagonism</text>
+<text x="114.604" y="2902" font-size="10" fill="#475569" font-weight="600">security → safety</text>
+<text x="604" y="2902" font-size="10" fill="#475569" font-weight="600" text-anchor="end">IX-12</text>
+<text x="36" y="2925" font-size="13" fill="#0F172A" font-weight="700">An attacker picks the moment</text>
+<rect x="36.0" y="2937" width="568.0" height="44" rx="6" fill="#2563EB" fill-opacity="0.07" stroke="#2563EB" stroke-opacity="0.4"/>
+<text x="44" y="2951" font-size="9" fill="#2563EB" font-weight="700">Safety</text>
+<text x="98" y="2952" font-size="9.5" fill="#0F172A">The HARA's exposure E assumes a random fault, striking a situation as often as it occurs</text>
+<rect x="36.0" y="2991" width="568.0" height="44" rx="6" fill="#7C3AED" fill-opacity="0.07" stroke="#7C3AED" stroke-opacity="0.4"/>
+<text x="44" y="3005" font-size="9" fill="#7C3AED" font-weight="700">Security</text>
+<text x="98" y="3006" font-size="9.5" fill="#0F172A">An attacker on the SoC waits for the worst situation; the TARA rates safety impact without E</text>
+<path d="M584.0 3013.0 L584.0 2959.0" stroke="#DC2626" stroke-width="2" stroke-dasharray="3 3"/>
+<circle cx="584.0" cy="2959.0" r="5" fill="#DC2626"><animate attributeName="cy" values="3013.0;3013.0;2959.0;2959.0" keyTimes="0;0.2;0.6;1" dur="4s" repeatCount="indefinite"/></circle>
+<text x="36" y="3057" font-size="10" fill="#0F172A">For an attacker-triggered event E does not apply: the TARA's safety impact governs. No rating changes (DQ-420 A).</text>
+<text x="36" y="3078" font-size="9.5" fill="#475569">Ties</text>
+<text x="86" y="3078" font-size="9.5" fill="#0F172A">TS-04 · SG-01</text>
+<text x="36" y="3094" font-size="9.5" fill="#475569">Status</text>
+<text x="86" y="3094" font-size="9.5" fill="#0F172A">Recorded in WP-C-03 §2 (DQ-420 A)</text>
+</g>
+<text x="24" y="3132" font-size="10.5" fill="#475569">Types after Kriaa et al. (conditional dependency, mutual reinforcement, antagonism; independent pairs are not listed).</text>
+<text x="24" y="3146" font-size="10.5" fill="#475569">Requirement statuses from WP-C-10 §7; gap status from WP-C-09 §3. Generated by hatara_figures.py.</text>
+</svg>

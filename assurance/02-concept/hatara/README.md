@@ -21,15 +21,15 @@ Each interaction has a type after Kriaa et al.: conditional dependency, mutual r
 
 ## Figure 1: where a threat reaches a hazard
 
-![HATARA Figure 1: the nine WP-C-03 hazards against the fourteen WP-C-09 threat scenarios; filled cells are the links WP-C-09 §3 carries, dashed cells would be links an interaction names but no damage scenario carries (none since WP-C-09 v0.8)](figures/fig-hatara-1-matrix.svg)
+[![HATARA Figure 1: the nine WP-C-03 hazards against the fourteen WP-C-09 threat scenarios; filled cells are the links WP-C-09 §3 carries, dashed cells would be links an interaction names but no damage scenario carries (none since WP-C-09 v0.8)](figures/fig-hatara-1-matrix-phone.svg)](figures/fig-hatara-1-matrix.svg)
 
-*Every hazard against every threat scenario. Filled cells are links WP-C-09 §3 carries. Dashed cells are links an interaction names but the TARA does not carry. Interaction IX-11 found one: TS-04 can alter driver monitoring, yet until WP-C-09 v0.8 none of its damage scenarios reached H-07 (mode confusion) or H-09 (unsupervised driver). DS-13 and DS-14 now carry both links, so IX-11 reads Closed and no cell is dashed.*
+*Every hazard against every threat scenario (phone view; tap it for the [full matrix](figures/fig-hatara-1-matrix.svg)). Filled cells are links WP-C-09 §3 carries. Dashed cells are links an interaction names but the TARA does not carry. Interaction IX-11 found one: TS-04 can alter driver monitoring, yet until WP-C-09 v0.8 none of its damage scenarios reached H-07 (mode confusion) or H-09 (unsupervised driver). DS-13 and DS-14 now carry both links, so IX-11 reads Closed and no cell is dashed.*
 
 ## Figure 2: where one side's measure changes the other's risk
 
-![HATARA Figure 2: one card per interaction, each with its type and direction, the safety side and the security side with an arrow from cause to effect, what follows, the records it ties to and its status](figures/fig-hatara-2-interactions.svg)
+[![HATARA Figure 2: one card per interaction, each with its type and direction, the safety side and the security side with an arrow from cause to effect, what follows, the records it ties to and its status](figures/fig-hatara-2-interactions-phone.svg)](figures/fig-hatara-2-interactions.svg)
 
-*One card per interaction. The arrow runs from the side that causes the effect to the side that takes it; mutual reinforcement is drawn as a joint. Requirement statuses come from WP-C-10 §7. The gap status comes from WP-C-09 §3.*
+*One card per interaction (phone view; tap it for the [four-column sheet](figures/fig-hatara-2-interactions.svg)). The arrow runs from the side that causes the effect to the side that takes it; mutual reinforcement is drawn as a joint. Requirement statuses come from WP-C-10 §7. The gap status comes from WP-C-09 §3.*
 
 ## What the checks enforce
 

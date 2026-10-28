@@ -927,6 +927,76 @@ def fig10(d: Data) -> str:
   return svg(W, int(dr.height), "Figure 10 · The system V per safety goal", dr.desc, out)
 
 
+# ---------------------------------------------------------------- phone views (640 px)
+
+PW = 640
+
+
+def _pwrap(s: str, width: float, size: float) -> list[str]:
+  out, cur = [], ""
+  for word in s.split():
+    nxt = f"{cur} {word}".strip()
+    if cur and len(nxt) * 0.55 * size > width:
+      out.append(cur)
+      cur = word
+    else:
+      cur = nxt
+  return out + ([cur] if cur else [])
+
+
+def phone_header(number: int, title: str, subtitle: str, ref: str) -> tuple[list[str], float]:
+  """The figure header at phone width: title and subtitle wrapped, the reference under them. Returns the next free y."""
+  out, y = [], 30.0
+  for ln in _pwrap(f"Figure {number} · {title}", PW - 48, 18):
+    out.append(text(24, y, ln, size=18, weight=700))
+    y += 23
+  for ln in _pwrap(subtitle, PW - 48, 12):
+    out.append(text(24, y, ln, size=12, fill=MUTED))
+    y += 16
+  out.append(text(24, y, f"{ref} · phone view", size=11, fill=MUTED))
+  out.append(line(24, y + 10, PW - 24, y + 10, stroke=HAIR, sw=1))
+  return out, y + 30
+
+
+def fig7_phone(d: Data) -> str:
+  status = {c: w for c, _, w in d.checks}
+  tile_w, tile_h, gap = 190, 58, 10
+  out, y = phone_header(7, "Consistency checks: what is enforced, what is a roadmap",
+                        "Each tile is a check of §6. Green runs in CI and passes; amber runs in part; grey is not implemented. "
+                        "The middle group is the path from “specified” to “verified”.", "WP-T-01 §6")
+  for title, ids in CHECK_GROUPS:
+    out.append(text(24, y + 8, title, size=10.5, weight=700, fill=MUTED))
+    y += 18
+    for i, c in enumerate(ids):
+      if i and i % 3 == 0:
+        y += tile_h + gap
+      fill, stroke, dash = CHECK_STYLE[status[c]]
+      x = 24 + (i % 3) * (tile_w + gap)
+      out.append(rect(x, y, tile_w, tile_h, fill=fill, stroke=stroke, rx=8, dash=dash, sw=1.4))
+      out.append(text(x + 12, y + 22, c, size=14, weight=700, fill=INK if status[c] != "no" else MUTED))
+      out.append(text(x + 12, y + 42, CHECK_SHORT[c], size=10.5, fill=MUTED))
+    y += tile_h + 26
+  n = Counter(status.values())
+  for entry in ((GREEN_BG, GREEN, f"implemented · {n['yes']}"), (AMBER_BG, AMBER, f"partly · {n['partly']}"),
+                (CHIP, FAINT + " dashed", f"not yet · {n['no']}")):
+    out += legend(24, y + 6, [entry])
+    y += 20
+  return svg(PW, int(y + 14), "Figure 7 · Consistency checks, phone view",
+             f"{n['yes']} checks implemented ({', '.join(c for c, w in status.items() if w == 'yes')}), " +
+             f"{n['partly']} partly ({', '.join(c for c, w in status.items() if w == 'partly')}), {n['no']} not yet " +
+             f"({', '.join(c for c, w in status.items() if w == 'no')}).", out)
+
+
+def fig10_phone(d: Data) -> str:
+  vd = vmodel.load(d.m)
+  out, y = phone_header(10, "The system V per safety goal",
+                        "Left: the goal's items at each level (TSRs allocated to operation left out). Right: how many of them the "
+                        "paired test cases name, a specified link, not a passed test.", "WP-T-01 §2.1")
+  dr = vmodel.goal_grid(vd, width=PW, cols=2, top=y, stacked=True)
+  out += [vmodel.marker_defs(dr.body), *dr.body[1:]]   # the grid's own white background would cover the header
+  return svg(PW, int(dr.height), "Figure 10 · The system V per safety goal, phone view", dr.desc, out)
+
+
 # ---------------------------------------------------------------- main
 
 FIGURES = {
@@ -941,11 +1011,15 @@ FIGURES = {
   "fig-9-system-v-status.svg": fig9,
   "fig-10-v-per-goal.svg": fig10,
 }
+PHONE = {   # phone views (640 px) of the widest figures; the README embeds them, each linked to its full figure
+  "fig-7-consistency-checks-phone.svg": fig7_phone,
+  "fig-10-v-per-goal-phone.svg": fig10_phone,
+}
 
 
 def render_all() -> dict[Path, str]:
   d = load()
-  return {FIG_DIR / name: fn(d) for name, fn in FIGURES.items()}
+  return {FIG_DIR / name: fn(d) for name, fn in {**FIGURES, **PHONE}.items()}
 
 
 def main(argv: list[str]) -> int:
