@@ -10,9 +10,10 @@ Id	Description	Qty	Unit	Designators
 9	Connector, FI-2: VIN to GND, 1 ohm, VS-HW-22 step 3 (models a D4 short), 1 pins	1		FI2
 10	Connector, FI-3: R2/R3 open (R2 lifted at one end), VS-HW-23 steps 2-5 (box modified, reversible), 1 pins	1		FI3
 11	Connector, FI-4: D2/D3 bridged (D2, then D3), VS-HW-24 (d), CAN0_H then CAN2 to GND (box modified, reversible), 1 pins	1		FI4
-12	Connector, Lab source 0-5 V, 1 kohm in series (device driver unknown, UK-06), 2 pins	1		SRC
-13	Connector, Lab supply, 0-20 V, current limit 0.5 A, 2 pins	1		PSU
-14	Connector, Scope, 4 channels, differential probe on ch 1, 4 pins	1		SCOPE
-15	Connector, Toyota A camera connector X1, TE 1318774-1; bench mating plug to choose, 3 pins	1		X1
-16	Connector, Toyota A car connector X2, TE 1565894-1; bench mating plug to choose, 4 pins	1		X2
-17	Connector, USB-C breakout, on box receptacle J3; bench part to choose, 4 pins	1		BO
+12	Connector, FI-5: R7/R8 open (R8, R7, then both lifted), VS-HW-24 (e), camera-side termination in intercept (box modified, reversible), 1 pins	1		FI5
+13	Connector, Lab source 0-5 V, low impedance (10 ohm or less), current limit about 50 mA; no series resistor, 2 pins	1		SRC
+14	Connector, Lab supply, 0-20 V, current limit 0.5 A, 2 pins	1		PSU
+15	Connector, Scope, 4 channels, differential probe on ch 1, 4 pins	1		SCOPE
+16	Connector, Toyota A camera connector X1, TE 1318774-1; bench mating plug to choose, 3 pins	1		X1
+17	Connector, Toyota A car connector X2, TE 1565894-1; bench mating plug to choose, 4 pins	1		X2
+18	Connector, USB-C breakout, on box receptacle J3; bench part to choose, 4 pins	1		BO

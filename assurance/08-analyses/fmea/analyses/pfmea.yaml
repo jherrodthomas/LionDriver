@@ -5,14 +5,27 @@
 #   practised: O=7-8 (RT-1 §4.2), O=3 where a technical control is enforced (pins, LFS hashes).
 # - Detection mostly human inspection with an unproven method (D=8) or an unproven script (D=7).
 # - Every failure mode can reach a hazardous event or occupant injury, so S=10 (RT-1 §4.1); one cause is AP L.
+# Rev 0.4 (2026-10-26): baseline BL-003 -> BL-007 (frozen: liondriver-dev 9fe3eb2, panda 3a8b7c2, opendbc 4d1a056). The whole file was
+# re-checked against the build, release and host changes since BL-003 (it had not been re-rated at BL-004..BL-006); `previous` = BL-003.
+# - PFM-001.C1 O 8 D 8 H -> O 5 D 5 H: the reference build is the default (BL-005), release_variant.sh and build_release.sh RELEASE=1, and the
+#   CI panda reference release build job checks the flags; the cause is now a bypass by environment variable. PFM-ACT-001 open -> in_progress.
+# - PFM-011.C1 O 8 D 8 H -> O 4 D 7 H: Experimental Mode off by default, the assured-settings entry gate (#287) and hold (#342), debug
+#   processes left out of the reference build (DQ-131 A). SSH split out as new PFM-011.C2 (O 8 D 8 H, unchanged control). PFM-ACT-008
+#   open -> in_progress.
+# - Text only: PFM-007.C1 notes the start-up fault-code read (TSR-629, DQ-132 A), which checks health, not configuration; rating kept.
+#   DQ-121 (uploader and athena never started) removes remote access and uploads, not an update or install step: no row changes.
+# - Every other row unchanged: the release key (PFM-002), HIL bench and evidence package (PFM-004; the bench HIL tests exist but are not
+#   run), installer and update channel (PFM-005, PFM-016, PFM-017), harness and mounting (PFM-006, PFM-008..010), model files (PFM-012),
+#   fingerprint (PFM-013), PCS check (PFM-014), user information (PFM-015; WP-O-03 is a draft) are as at BL-003.
+# Totals: 17 failure modes, 18 causes (17 H, 1 L); 11 actions (9 open, 2 in progress).
 schema_version: 1
 analysis:
   id: PFM
   type: pfmea
   title: "PFMEA — build, release, install, calibration, OTA"
-  revision: "0.3"
+  revision: "0.4"
   status: draft
-  baseline: BL-003
+  baseline: BL-007
   rating_tables: RT-1
   scope: "Release (WP-P-10), installation and provisioning (WP-O-01) and software update/rollback for the reference configuration AC-001, as defined at BL-003. Calibration and fingerprinting are covered as installation steps."
   out_of_scope:
@@ -26,7 +39,7 @@ analysis:
     - assurance/08-analyses/fmea/rating-tables.md
     - assurance/07-supporting/WP-P-10-release-management.md
     - assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
-  updated: 2026-10-12
+  updated: 2026-10-26
 structure:
 - id: PFM-SE-001
   name: Producing the as-driven reference configuration (AC-001)
@@ -164,17 +177,32 @@ failure_modes:
   severity: 10
   causes:
   - id: PFM-001.C1
-    description: panda/SConscript defaults to DEBUG with ALLOW_DEBUG; LIONDRIVER_REFERENCE is opt-in and no build path sets it
+    description: 'The release is built with a bypass of the release defaults: PANDA_DEBUG_BUILD set (build_release.sh then builds the panda
+      without RELEASE=1, with ALLOW_DEBUG) or RELEASE_VARIANT=upstream / an empty LIONDRIVER_REFERENCE, neither of which needs a recorded
+      override. Up to BL-003 panda/SConscript defaulted to DEBUG and no build path set LIONDRIVER_REFERENCE; since BL-005 the root SConstruct and
+      tools/release/release_variant.sh default to the reference build and build_release.sh builds the panda with RELEASE=1'
     element: PFM-SE-011
     prevention_controls:
-    - description: WP-P-10 §6 rule (RELEASE=1 with the LionDriver key); not implemented
-      ref: assurance/07-supporting/WP-P-10-release-management.md
+    - description: 'Technical defaults: SConstruct sets LIONDRIVER_REFERENCE=1 unless it is set; release_variant.sh selects the reference variant
+      and refuses an unknown one; build_release.sh builds RELEASE=1 unless PANDA_DEBUG_BUILD is set. Proven in CI, but a variable bypasses them
+      (O 5). Signing with a LionDriver key is PFM-002'
+      ref: tools/release/release_variant.sh
     detection_controls:
-    - description: INS-17 reads the version string (human check); planned release check for RELEASE and absent ALLOW_DEBUG not implemented
-      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
-    occurrence: 8
-    detection: 8
+    - description: 'CI job panda reference release build (safety.yaml, WP-W-03 ATC-19): variant selection checks, then RELEASE=1 build and an
+        assertion that every firmware compile carries -DLIONDRIVER_REFERENCE and none -DALLOW_DEBUG. Proven automated check at a later station
+        (CI, not the publication step, and signed with the debug key), so D 5. At run time pandad refuses a car mode on a non-reference panda
+        (TSR-619); INS-17 reads the version string (human check)'
+      ref: .github/workflows/safety.yaml
+    occurrence: 5
+    detection: 5
     ap: H
+    previous:
+      baseline: BL-003
+      occurrence: 8
+      detection: 8
+      ap: H
+      change: 'Reference build the default (BL-005, #36/#41), release variant script and CI release-build check (ATC-19); re-checked at BL-007'
+
     actions:
     - PFM-ACT-001
     linked_failure_mode: SWF-013
@@ -375,7 +403,11 @@ failure_modes:
   severity: 10
   causes:
   - id: PFM-007.C1
-    description: Exact ECU firmware compare and DTC read are manual steps; the reference ECU versions are not recorded yet (WP-C-01 OI-1)
+    description: 'Exact ECU firmware compare is a manual step; the reference ECU versions are not recorded yet (WP-C-01 OI-1). Since BL-007 the
+      EPS and ABS/VSC fault codes are read automatically at every stationary start and an active code or a failed read refuses engagement
+      (TSR-629, DQ-132 A, vehicle_dtc.py; unit-tested with mocked UDS answers, not verified on the vehicle): that checks the car''s health
+      (AOU-09), not its configuration, so the rating is unchanged'
+
     element: PFM-SE-021
     prevention_controls:
     - description: INS-05..08, INS-21 (draft)
@@ -503,10 +535,39 @@ failure_modes:
   severity: 10
   causes:
   - id: PFM-011.C1
-    description: Upstream default turns Experimental Mode on (B-06 open); parameters set by hand
+    description: 'An assured setting (ExperimentalMode, LongitudinalPersonality, AlphaLongitudinalEnabled, the joystick and maneuver debug modes)
+      is set by hand away from its reference value and the entry gate fails to refuse engagement. Up to BL-003 the upstream default turned
+      Experimental Mode on (B-06) and parameters were set by hand only'
     element: PFM-SE-023
     prevention_controls:
-    - description: D-08 decided; INS-19 parameter list (draft)
+    - description: 'Technical controls in BL-007: ExperimentalMode defaults off (params_keys.h, chill-mode default); on the reference platform the
+        item does not engage while any ASSURED_PARAMS setting differs from its assured value (#287, DQ-221 A) and a change made while engaged is
+        held until disengagement (#342, DQ-403 A); the reference build neither registers nor ships the joystick and maneuver processes (DQ-131 A).
+        Not bypassable without a code change (O 4)'
+      ref: openpilot/selfdrive/selfdrived/assured_config.py
+    detection_controls:
+    - description: 'Automated check at the step itself: NO_ENTRY settingNotAssured at every engagement attempt; test_assured_config.py and
+        test_reference_build.py in the CI unit_tests job, the release file list checked in the panda reference release build job. Targeted, not
+        proven by mutation and not verified on the vehicle, so D 7. INS-19 parameter dump compared by hand'
+      test: openpilot/selfdrive/selfdrived/tests/test_assured_config.py
+      ref: openpilot/selfdrive/selfdrived/selfdrived.py
+    occurrence: 4
+    detection: 7
+    ap: H
+    previous:
+      baseline: BL-003
+      occurrence: 8
+      detection: 8
+      ap: H
+      change: 'Experimental Mode off by default; reference entry gate on the assured settings (#287) and settings held while engaged (#342);
+        debug processes left out of the reference build (DQ-131 A)'
+    actions:
+    - PFM-ACT-008
+  - id: PFM-011.C2
+    description: SSH enabled by hand and left on (SshEnabled defaults off); the entry gate does not check it
+    element: PFM-SE-023
+    prevention_controls:
+    - description: D-08 decided; INS-19 parameter list (draft); SshEnabled has no default value, so it is off until set
       ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
     detection_controls:
     - description: INS-19 parameter dump compared by hand
@@ -717,7 +778,12 @@ actions:
   description: Make RELEASE=1 LIONDRIVER_REFERENCE=1 with the LionDriver key the only release build, and add an automated release check (version contains RELEASE,
     ALLOW_DEBUG absent, reference lock present) that blocks publication (WP-P-10 §6; SW FMEA SWF-ACT-009)
   owner: Jherrod Thomas
-  status: open
+  status: in_progress
+  evidence: 'In BL-007: the reference variant is the default (SConstruct, tools/release/release_variant.sh), build_release.sh builds the panda
+    with RELEASE=1, and the CI job panda reference release build asserts -DLIONDRIVER_REFERENCE on every firmware compile and no -DALLOW_DEBUG.
+    Open: the LionDriver release key (PFM-ACT-002), removing the PANDA_DEBUG_BUILD and RELEASE_VARIANT=upstream bypasses from release builds or
+    recording their use, and a check that blocks publication rather than a CI job'
+
 - id: PFM-ACT-002
   kind: design_change
   description: Generate the LionDriver release key offline and define the signing procedure (D-09); remove the debug key from release builds
@@ -754,7 +820,11 @@ actions:
   kind: design_change
   description: Ship the reference parameter set as release defaults (Chill Mode, B-06; debug modes off; SSH off) and check it at boot
   owner: Jherrod Thomas
-  status: open
+  status: in_progress
+  evidence: 'In BL-007: Experimental Mode off by default, every assured setting checked at each engagement on the reference platform (#287,
+    test_assured_config.py), debug processes left out of the reference build (DQ-131 A, test_reference_build.py). Open: SSH (PFM-011.C2) is
+    not checked, and the check is at engagement, not at boot'
+
 - id: PFM-ACT-009
   kind: detection
   description: Provide a log-analysis tool for INS-27 that proves forwarding of stock PCS messages and blocking of intercepted ones

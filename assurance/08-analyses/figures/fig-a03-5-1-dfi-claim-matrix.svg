@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1214" viewBox="0 0 1280 1214" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1302" viewBox="0 0 1280 1302" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
 <title id="t">Figure 5-1. Dependent failure initiators against the independence claims they reach, with evaluation (WP-A-03 §4, §5)</title>
-<desc id="d">Matrix of the 33 dependent failure initiators DFI-01 to DFI-26 of §4 (rows, grouped by §4.1 to §4.6) against the independence claims IC-01 to IC-07 (columns). A red cell means §5 lists the initiator as not controlled for that claim, an amber cell partly controlled. Split cells show a rating that improves in the reference build. Dashed cells with a dagger are claims named in the §4 Elements reached column but not listed in §5. The bottom row gives the §5 verdict per claim: IC-01 and IC-06 not independent, IC-02, IC-04 and IC-05 partly, IC-03 open, IC-07 not applicable. 16 initiators are rated not controlled at the baseline; none is rated controlled.</desc>
+<desc id="d">Matrix of the 36 dependent failure initiators DFI-01 to DFI-26 of §4 (rows, grouped by §4.1 to §4.6) against the independence claims IC-01 to IC-07 (columns). A red cell means §5 lists the initiator as not controlled for that claim, an amber cell partly controlled. Split cells show a rating that improves in the reference build. Dashed cells with a dagger are claims named in the §4 Elements reached column but not listed in §5. The bottom row gives the §5 verdict per claim: IC-01 and IC-06 not independent, IC-02, IC-04 and IC-05 partly, IC-03 open, IC-07 not applicable. 17 initiators are rated not controlled at the baseline; none is rated controlled.</desc>
 <defs><pattern id="na" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="6" stroke="#E2E8F0" stroke-width="2"/></pattern></defs>
-<rect width="1280" height="1214" fill="#FFFFFF"/>
+<rect width="1280" height="1302" fill="#FFFFFF"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 5-1 · Dependent failure initiators vs independence claims</text>
 <text x="40" y="66" font-size="12.5" fill="#475569">Rows: DFI-xx of §4 · columns: claims IC-xx of §2 · cell colour: evaluation from §5 · baseline 8b8c6ae, reference-build changes split</text>
 <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-A-03 §5</text>
@@ -26,13 +26,13 @@
 <text x="1080" y="126" font-size="10" fill="#475569" text-anchor="middle">buzzer vs SoC HMI</text>
 <text x="1176" y="110" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">IC-07</text>
 <text x="1176" y="126" font-size="10" fill="#475569" text-anchor="middle">(fallback E-07)</text>
-<rect x="554" y="154" width="92" height="902" fill="#FBFCFD"/>
-<rect x="650" y="154" width="92" height="902" fill="#FFFFFF"/>
-<rect x="746" y="154" width="92" height="902" fill="#FBFCFD"/>
-<rect x="842" y="154" width="92" height="902" fill="#FFFFFF"/>
-<rect x="938" y="154" width="92" height="902" fill="#FBFCFD"/>
-<rect x="1034" y="154" width="92" height="902" fill="#FFFFFF"/>
-<rect x="1130" y="154" width="92" height="902" fill="url(#na)"/>
+<rect x="554" y="154" width="92" height="990" fill="#FBFCFD"/>
+<rect x="650" y="154" width="92" height="990" fill="#FFFFFF"/>
+<rect x="746" y="154" width="92" height="990" fill="#FBFCFD"/>
+<rect x="842" y="154" width="92" height="990" fill="#FFFFFF"/>
+<rect x="938" y="154" width="92" height="990" fill="#FBFCFD"/>
+<rect x="1034" y="154" width="92" height="990" fill="#FFFFFF"/>
+<rect x="1130" y="154" width="92" height="990" fill="url(#na)"/>
 <rect x="40" y="156" width="1200" height="18" fill="#F1F5F9" rx="4"/>
 <text x="48" y="169" font-size="10.5" fill="#475569" font-weight="700">§4.1 Shared resources (random hardware and external resources)</text>
 <line x1="40" y1="198" x2="1240" y2="198" stroke="#F1F5F9"/>
@@ -310,31 +310,56 @@
 <text x="463" y="1049" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
 <rect x="754" y="1038" width="76" height="14" fill="#D2553F" rx="3"/>
 <text x="792" y="1049" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
-<line x1="40" y1="1062" x2="1240" y2="1062" stroke="#475569"/>
-<text x="40" y="1084" font-size="12" fill="#0F172A" font-weight="700">Verdict per claim (§5, current baseline)</text>
-<text x="40" y="1100" font-size="10" fill="#475569">IC-01: unchanged in the reference build (§5)</text>
-<rect x="558" y="1070" width="84" height="36" fill="#D2553F" rx="6"/>
-<text x="600" y="1085.5" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Not</text>
-<text x="600" y="1098.5" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">independent</text>
-<rect x="654" y="1070" width="84" height="36" fill="#D97706" rx="6"/>
-<text x="696" y="1092" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Partly</text>
-<rect x="750" y="1070" width="84" height="36" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1" rx="6"/>
-<text x="792" y="1092" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">Open</text>
-<rect x="846" y="1070" width="84" height="36" fill="#D97706" rx="6"/>
-<text x="888" y="1092" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Partly</text>
-<rect x="942" y="1070" width="84" height="36" fill="#D2553F" rx="6"/>
-<text x="984" y="1085.5" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Not</text>
-<text x="984" y="1098.5" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">independent</text>
-<rect x="1038" y="1070" width="84" height="36" fill="#D2553F" rx="6"/>
-<text x="1080" y="1085.5" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Not</text>
-<text x="1080" y="1098.5" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">independent</text>
-<rect x="1134" y="1070" width="84" height="36" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1" rx="6" stroke-dasharray="4 3"/>
-<text x="1176" y="1092" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">n/a</text>
-<line x1="40" y1="1116" x2="1240" y2="1116" stroke="#E2E8F0"/>
-<g transform="translate(40,1128)"><rect x="0" y="0" width="26" height="14" fill="#D2553F" rx="3"/><text x="13" y="11" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text><text x="34" y="11" font-size="10.5" fill="#0F172A">Not controlled</text></g>
-<g transform="translate(190,1128)"><rect x="0" y="0" width="26" height="14" fill="#D97706" rx="3"/><text x="13" y="11" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text><text x="34" y="11" font-size="10.5" fill="#0F172A">Partly controlled (none is rated controlled)</text></g>
-<g transform="translate(500,1128)"><rect x="0" y="0" width="13" height="14" fill="#D2553F"/><rect x="13" y="0" width="13" height="14" fill="#D97706"/><text x="34" y="11" font-size="10.5" fill="#0F172A">Baseline → reference build bf6ce8c (not verified on hardware)</text></g>
-<g transform="translate(900,1128)"><rect x="0" y="0" width="26" height="14" fill="#FFFFFF" stroke="#D97706" stroke-width="1.4" rx="3" stroke-dasharray="3 2"/><text x="34" y="11" font-size="10.5" fill="#0F172A">† named in §4 “Elements reached”, not listed in §5</text></g>
-<g transform="translate(40,1154)"><rect x="0" y="0" width="26" height="14" fill="url(#na)" stroke="#94A3B8" stroke-width="1" rx="3"/><text x="34" y="11" font-size="10.5" fill="#0F172A">Fallback claim, not applicable unless WP-A-01 DEC-01 is activated</text></g>
-<text x="40" y="1188" font-size="10.5" fill="#475569">IC-05 §5 also counts WP-A-02 FFI-CM-05/08 as partly controlled (interference, analysed in WP-A-02).</text>
+<rect x="40" y="1058" width="1200" height="18" fill="#F1F5F9" rx="4"/>
+<text x="48" y="1071" font-size="10.5" fill="#475569" font-weight="700">§4.9 Initiators found by the decomposition DFA (dfa.yaml)</text>
+<line x1="40" y1="1100" x2="1240" y2="1100" stroke="#F1F5F9"/>
+<text x="40" y="1093" font-size="11" fill="#0F172A" font-weight="700">DFI-34</text>
+<text x="92" y="1093" font-size="11" fill="#0F172A">Malformed or flooding SPI traffic from the SoC</text>
+<rect x="452" y="1082" width="22" height="14" fill="#D97706" rx="3"/>
+<text x="463" y="1093" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="562" y="1082" width="76" height="14" fill="#D97706" rx="3"/>
+<text x="600" y="1093" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<line x1="40" y1="1122" x2="1240" y2="1122" stroke="#F1F5F9"/>
+<text x="40" y="1115" font-size="11" fill="#0F172A" font-weight="700">DFI-35</text>
+<text x="92" y="1115" font-size="11" fill="#0F172A">Stale but well-formed commands while the heartbeat says…</text>
+<rect x="452" y="1104" width="22" height="14" fill="#D97706" rx="3"/>
+<text x="463" y="1115" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="562" y="1104" width="76" height="14" fill="#D97706" rx="3"/>
+<text x="600" y="1115" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<line x1="40" y1="1144" x2="1240" y2="1144" stroke="#F1F5F9"/>
+<text x="40" y="1137" font-size="11" fill="#0F172A" font-weight="700">DFI-36</text>
+<text x="92" y="1137" font-size="11" fill="#0F172A">One OTA release replaces SoC software and panda firmware…</text>
+<rect x="452" y="1126" width="22" height="14" fill="#D2553F" rx="3"/>
+<text x="463" y="1137" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<rect x="562" y="1126" width="76" height="14" fill="#D2553F" rx="3"/>
+<text x="600" y="1137" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<rect x="1042" y="1126" width="76" height="14" fill="#D2553F" rx="3"/>
+<text x="1080" y="1137" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<line x1="40" y1="1150" x2="1240" y2="1150" stroke="#475569"/>
+<text x="40" y="1172" font-size="12" fill="#0F172A" font-weight="700">Verdict per claim (§5, current baseline)</text>
+<text x="40" y="1188" font-size="10" fill="#475569">IC-01: unchanged in the reference build (§5)</text>
+<rect x="558" y="1158" width="84" height="36" fill="#D2553F" rx="6"/>
+<text x="600" y="1173.5" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Not</text>
+<text x="600" y="1186.5" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">independent</text>
+<rect x="654" y="1158" width="84" height="36" fill="#D97706" rx="6"/>
+<text x="696" y="1180" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Partly</text>
+<rect x="750" y="1158" width="84" height="36" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1" rx="6"/>
+<text x="792" y="1180" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">Open</text>
+<rect x="846" y="1158" width="84" height="36" fill="#D97706" rx="6"/>
+<text x="888" y="1180" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Partly</text>
+<rect x="942" y="1158" width="84" height="36" fill="#D2553F" rx="6"/>
+<text x="984" y="1173.5" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Not</text>
+<text x="984" y="1186.5" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">independent</text>
+<rect x="1038" y="1158" width="84" height="36" fill="#D2553F" rx="6"/>
+<text x="1080" y="1173.5" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Not</text>
+<text x="1080" y="1186.5" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">independent</text>
+<rect x="1134" y="1158" width="84" height="36" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1" rx="6" stroke-dasharray="4 3"/>
+<text x="1176" y="1180" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">n/a</text>
+<line x1="40" y1="1204" x2="1240" y2="1204" stroke="#E2E8F0"/>
+<g transform="translate(40,1216)"><rect x="0" y="0" width="26" height="14" fill="#D2553F" rx="3"/><text x="13" y="11" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text><text x="34" y="11" font-size="10.5" fill="#0F172A">Not controlled</text></g>
+<g transform="translate(190,1216)"><rect x="0" y="0" width="26" height="14" fill="#D97706" rx="3"/><text x="13" y="11" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text><text x="34" y="11" font-size="10.5" fill="#0F172A">Partly controlled (none is rated controlled)</text></g>
+<g transform="translate(500,1216)"><rect x="0" y="0" width="13" height="14" fill="#D2553F"/><rect x="13" y="0" width="13" height="14" fill="#D97706"/><text x="34" y="11" font-size="10.5" fill="#0F172A">Baseline → reference build bf6ce8c (not verified on hardware)</text></g>
+<g transform="translate(900,1216)"><rect x="0" y="0" width="26" height="14" fill="#FFFFFF" stroke="#D97706" stroke-width="1.4" rx="3" stroke-dasharray="3 2"/><text x="34" y="11" font-size="10.5" fill="#0F172A">† named in §4 “Elements reached”, not listed in §5</text></g>
+<g transform="translate(40,1242)"><rect x="0" y="0" width="26" height="14" fill="url(#na)" stroke="#94A3B8" stroke-width="1" rx="3"/><text x="34" y="11" font-size="10.5" fill="#0F172A">Fallback claim, not applicable unless WP-A-01 DEC-01 is activated</text></g>
+<text x="40" y="1276" font-size="10.5" fill="#475569">IC-05 §5 also counts WP-A-02 FFI-CM-05/08 as partly controlled (interference, analysed in WP-A-02).</text>
 </svg>

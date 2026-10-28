@@ -144,8 +144,8 @@
 <text x="1004" y="898.0" class="d">whose ACC cancel had no effect …</text>
 <rect x="1004.0" y="906.0" width="101.6" height="17" rx="4" fill="none" stroke="#898781" stroke-dasharray="3 2"/>
 <text x="1054.8" y="918.0" class="chip" fill="#52514e">latent, baseline</text>
-<rect x="1109.6" y="906.0" width="51.2" height="17" rx="4" fill="#fbe9e9"/>
-<text x="1135.2" y="918.0" class="chip" fill="#9e2424">no FMEA</text>
+<rect x="1109.6" y="906.0" width="51.2" height="17" rx="4" fill="none" stroke="#e1e0d9"/>
+<text x="1135.2" y="918.0" class="chip" fill="#52514e">SWF-092</text>
 <rect x="1230" y="738.0" width="220" height="111.0" rx="12" class="shadow"/>
 <rect x="1230" y="735.0" width="220" height="111.0" rx="12" fill="#ffffff" stroke="#e1e0d9" stroke-width="1"/>
 <circle cx="1249" cy="755.0" r="5.5" fill="#1baf7a"/>

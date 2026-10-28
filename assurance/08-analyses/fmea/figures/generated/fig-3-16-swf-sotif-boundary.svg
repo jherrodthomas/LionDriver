@@ -1,153 +1,157 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="875" viewBox="0 0 1280 875" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-16. SW FMEA and SOTIF boundary</title>
-  <desc id="d">SW FMEA (SWF rev 1.8): the functional safety / SOTIF boundary for 15 top-level elements: 8 functional safety only, 7 split, 0 SOTIF only. Per element, the causes rated here by AP, and the performance part left to SOTIF with its WP-C-05 reference.</desc>
+  <desc id="d">SW FMEA (SWF rev 1.12): the functional safety / SOTIF boundary for 15 top-level elements: 8 functional safety only, 7 split, 0 SOTIF only. Per element, the causes rated here by AP, and the performance part left to SOTIF with its WP-C-05 reference.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
     <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
+    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1.2" cy="1.2" r="1.2" fill="#E7E6E0"/></pattern>
     <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
   </defs>
-  <rect width="1280" height="875" fill="#FFFFFF"/>
-  <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-16 · SW FMEA — where it stops and SOTIF starts</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.8 · BL-006 · draft · per element, which failures this FMEA rates and which are performance limits for SOTIF</text>
-  <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
-  <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
-  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
-  <text x="40" y="104" font-size="11" fill="#0F172A" font-weight="600">15 top-level elements: 8 functional safety only, 7 split between this FMEA and SOTIF, 0 SOTIF only. Left of the line: software faults rated here. Right: performance limits with correct software.</text>
-  <text x="40" y="130" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">ELEMENT</text>
-  <text x="628" y="130" font-size="9.5" fill="#475569" font-weight="700" text-anchor="end" letter-spacing=".06em">RATED IN THIS SW FMEA · CAUSES BY AP</text>
+  <rect width="1280" height="875" fill="#FCFCFB"/>
+  <text x="40" y="44" font-size="20" fill="#0B0B0B" font-weight="700">Figure 3-16 · SW FMEA — where it stops and SOTIF starts</text>
+  <text x="40" y="66" font-size="12.5" fill="#52514E">SWF rev 1.12 · BL-007 · draft · per element, which failures this FMEA rates and which are performance limits for SOTIF</text>
+  <text x="1240" y="44" font-size="11" fill="#52514E" text-anchor="end">fmea-plan.md §3.3</text>
+  <text x="1240" y="62" font-size="11" fill="#52514E" text-anchor="end">analyses/sw-fmea.yaml</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E1E0D9" stroke-width="1"/>
+  <text x="40" y="104" font-size="11" fill="#0B0B0B" font-weight="600">15 top-level elements: 8 functional safety only, 7 split between this FMEA and SOTIF, 0 SOTIF only. Left of the line: software faults rated here. Right: performance limits with correct software.</text>
+  <text x="40" y="130" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">ELEMENT</text>
+  <text x="628" y="130" font-size="9.5" fill="#52514E" font-weight="700" text-anchor="end" letter-spacing=".06em">RATED IN THIS SW FMEA · CAUSES BY AP</text>
   <text x="654" y="130" font-size="9.5" fill="#5B21B6" font-weight="700" letter-spacing=".06em">LEFT TO SOTIF (ISO 21448, WP-C-05)</text>
   <rect x="640" y="140" width="600" height="642" fill="#FAF5FF"/>
   <line x1="640" y1="136" x2="640" y2="786" stroke="#7C3AED" stroke-width="2"/>
   <line x1="40" y1="140" x2="1240" y2="140" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="40" y="155" font-size="10.5" fill="#0F172A" font-weight="700">SE-001</text>
-  <text x="40" y="169" font-size="9" fill="#475569">Panda safety model (opendbc safety + panda firmware integration)</text>
-  <rect x="428" y="151" width="62.5" height="14" fill="#0F766E"><title>SWF-SE-001: 10 cause(s) AP L</title></rect>
-  <rect x="490.5" y="151" width="137.5" height="14" fill="#D2553F"><title>SWF-SE-001: 22 cause(s) AP H</title></rect>
-  <text x="424" y="162" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">25 FM · 32 causes</text>
+  <text x="40" y="155" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-001</text>
+  <text x="40" y="169" font-size="9" fill="#52514E">Panda safety model (opendbc safety + panda firmware integration)</text>
+  <rect x="428" y="151" width="74.3" height="14" fill="#0F766E"><title>SWF-SE-001: 13 cause(s) AP L</title></rect>
+  <rect x="502.3" y="151" width="125.7" height="14" fill="#D03B3B"><title>SWF-SE-001: 22 cause(s) AP H</title></rect>
+  <text x="424" y="162" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">26 FM · 35 causes</text>
   <rect x="654" y="150.5" width="93.2" height="15" rx="7.5" fill="#FFFFFF" stroke="#64748B" stroke-width="1"/><text x="700.6" y="161.4" font-size="9.5" font-weight="700" fill="#64748B" text-anchor="middle" letter-spacing=".02em">functional safety</text>
-  <text x="759.2" y="161.5" font-size="9.5" fill="#475569" font-style="italic">no SOTIF part: failures here come from faults, rated on the left</text>
+  <text x="759.2" y="161.5" font-size="9.5" fill="#52514E" font-style="italic">no SOTIF part: failures here come from faults, rated on the left</text>
   <line x1="40" y1="176" x2="1240" y2="176" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="40" y="191" font-size="10.5" fill="#0F172A" font-weight="700">SE-020</text>
-  <text x="40" y="205" font-size="9" fill="#475569">pandad (panda daemon and SoC-panda link)</text>
-  <rect x="528" y="187" width="6.2" height="14" fill="#D97706"><title>SWF-SE-020: 1 cause(s) AP M</title></rect>
-  <rect x="534.2" y="187" width="93.8" height="14" fill="#D2553F"><title>SWF-SE-020: 15 cause(s) AP H</title></rect>
-  <text x="524" y="198" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">10 FM · 16 causes</text>
+  <text x="40" y="191" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-020</text>
+  <text x="40" y="205" font-size="9" fill="#52514E">pandad (panda daemon and SoC-panda link)</text>
+  <rect x="536.6" y="187" width="5.7" height="14" fill="#0F766E"><title>SWF-SE-020: 1 cause(s) AP L</title></rect>
+  <rect x="542.3" y="187" width="5.7" height="14" fill="#D97706"><title>SWF-SE-020: 1 cause(s) AP M</title></rect>
+  <rect x="548" y="187" width="80" height="14" fill="#D03B3B"><title>SWF-SE-020: 14 cause(s) AP H</title></rect>
+  <text x="532.6" y="198" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">10 FM · 16 causes</text>
   <rect x="654" y="186.5" width="93.2" height="15" rx="7.5" fill="#FFFFFF" stroke="#64748B" stroke-width="1"/><text x="700.6" y="197.4" font-size="9.5" font-weight="700" fill="#64748B" text-anchor="middle" letter-spacing=".02em">functional safety</text>
-  <text x="759.2" y="197.5" font-size="9.5" fill="#475569" font-style="italic">no SOTIF part: failures here come from faults, rated on the left</text>
+  <text x="759.2" y="197.5" font-size="9.5" fill="#52514E" font-style="italic">no SOTIF part: failures here come from faults, rated on the left</text>
   <line x1="40" y1="212" x2="1240" y2="212" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="40" y="227" font-size="10.5" fill="#0F172A" font-weight="700">SE-030</text>
-  <text x="40" y="241" font-size="9" fill="#475569">selfdrived (engagement supervision)</text>
-  <rect x="503" y="223" width="125" height="14" fill="#D2553F"><title>SWF-SE-030: 20 cause(s) AP H</title></rect>
-  <text x="499" y="234" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">11 FM · 20 causes</text>
+  <text x="40" y="227" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-030</text>
+  <text x="40" y="241" font-size="9" fill="#52514E">selfdrived (engagement supervision)</text>
+  <rect x="508" y="223" width="5.7" height="14" fill="#0F766E"><title>SWF-SE-030: 1 cause(s) AP L</title></rect>
+  <rect x="513.7" y="223" width="114.3" height="14" fill="#D03B3B"><title>SWF-SE-030: 20 cause(s) AP H</title></rect>
+  <text x="504" y="234" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">12 FM · 21 causes</text>
   <rect x="654" y="222.5" width="93.2" height="15" rx="7.5" fill="#FFFFFF" stroke="#64748B" stroke-width="1"/><text x="700.6" y="233.4" font-size="9.5" font-weight="700" fill="#64748B" text-anchor="middle" letter-spacing=".02em">functional safety</text>
-  <text x="759.2" y="233.5" font-size="9.5" fill="#475569" font-style="italic">no SOTIF part: failures here come from faults, rated on the left</text>
+  <text x="759.2" y="233.5" font-size="9.5" fill="#52514E" font-style="italic">no SOTIF part: failures here come from faults, rated on the left</text>
   <line x1="40" y1="248" x2="1240" y2="248" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="40" y="263" font-size="10.5" fill="#0F172A" font-weight="700">SE-040</text>
-  <text x="40" y="277" font-size="9" fill="#475569">Control (controlsd, lateral/longitudinal controllers, Toyota…</text>
-  <rect x="503" y="259" width="125" height="14" fill="#D2553F"><title>SWF-SE-040: 20 cause(s) AP H</title></rect>
-  <text x="499" y="270" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">13 FM · 20 causes</text>
+  <text x="40" y="263" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-040</text>
+  <text x="40" y="277" font-size="9" fill="#52514E">Control (controlsd, lateral/longitudinal controllers, Toyota…</text>
+  <rect x="502.3" y="259" width="5.7" height="14" fill="#0F766E"><title>SWF-SE-040: 1 cause(s) AP L</title></rect>
+  <rect x="508" y="259" width="120" height="14" fill="#D03B3B"><title>SWF-SE-040: 21 cause(s) AP H</title></rect>
+  <text x="498.3" y="270" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">14 FM · 22 causes</text>
   <rect x="654" y="258.5" width="32.6" height="15" rx="7.5" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1"/><text x="670.3" y="269.4" font-size="9.5" font-weight="700" fill="#5B21B6" text-anchor="middle" letter-spacing=".02em">split</text>
-  <text x="759.2" y="269.5" font-size="9.5" fill="#0F172A">Whether lateral and longitudinal control perform well enough for the road, e.g. curves beyond the lateral</text>
-  <text x="759.2" y="282.5" font-size="9.5" fill="#0F172A">limit (EPS authority, curvature limits)</text>
+  <text x="759.2" y="269.5" font-size="9.5" fill="#0B0B0B">Whether lateral and longitudinal control perform well enough for the road, e.g. curves beyond the lateral</text>
+  <text x="759.2" y="282.5" font-size="9.5" fill="#0B0B0B">limit (EPS authority, curvature limits)</text>
   <text x="759.2" y="295.5" font-size="9" fill="#5B21B6" font-weight="600">WP-C-05 SH-02</text>
   <line x1="40" y1="306" x2="1240" y2="306" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="40" y="321" font-size="10.5" fill="#0F172A" font-weight="700">SE-050</text>
-  <text x="40" y="335" font-size="9" fill="#475569">Car interface (card and the opendbc Toyota port, CAN parse and…</text>
-  <rect x="559.2" y="317" width="68.8" height="14" fill="#D2553F"><title>SWF-SE-050: 11 cause(s) AP H</title></rect>
-  <text x="555.2" y="328" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">6 FM · 11 causes</text>
+  <text x="40" y="321" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-050</text>
+  <text x="40" y="335" font-size="9" fill="#52514E">Car interface (card and the opendbc Toyota port, CAN parse and…</text>
+  <rect x="559.4" y="317" width="68.6" height="14" fill="#D03B3B"><title>SWF-SE-050: 12 cause(s) AP H</title></rect>
+  <text x="555.4" y="328" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">7 FM · 12 causes</text>
   <rect x="654" y="316.5" width="93.2" height="15" rx="7.5" fill="#FFFFFF" stroke="#64748B" stroke-width="1"/><text x="700.6" y="327.4" font-size="9.5" font-weight="700" fill="#64748B" text-anchor="middle" letter-spacing=".02em">functional safety</text>
-  <text x="759.2" y="327.5" font-size="9.5" fill="#475569" font-style="italic">no SOTIF part: failures here come from faults, rated on the left</text>
+  <text x="759.2" y="327.5" font-size="9.5" fill="#52514E" font-style="italic">no SOTIF part: failures here come from faults, rated on the left</text>
   <line x1="40" y1="342" x2="1240" y2="342" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="40" y="357" font-size="10.5" fill="#0F172A" font-weight="700">SE-060</text>
-  <text x="40" y="371" font-size="9" fill="#475569">Driver monitoring (dmonitoringmodeld, dmonitoringd)</text>
-  <rect x="571.8" y="353" width="56.2" height="14" fill="#D2553F"><title>SWF-SE-060: 9 cause(s) AP H</title></rect>
-  <text x="567.8" y="364" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">5 FM · 9 causes</text>
+  <text x="40" y="357" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-060</text>
+  <text x="40" y="371" font-size="9" fill="#52514E">Driver monitoring (dmonitoringmodeld, dmonitoringd)</text>
+  <rect x="570.9" y="353" width="57.1" height="14" fill="#D03B3B"><title>SWF-SE-060: 10 cause(s) AP H</title></rect>
+  <text x="566.9" y="364" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">5 FM · 10 causes</text>
   <rect x="654" y="352.5" width="32.6" height="15" rx="7.5" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1"/><text x="670.3" y="363.4" font-size="9.5" font-weight="700" fill="#5B21B6" text-anchor="middle" letter-spacing=".02em">split</text>
-  <text x="759.2" y="363.5" font-size="9.5" fill="#0F172A">Detection performance of the driver-monitoring model (sunglasses, glare, face out of view) and whether</text>
-  <text x="759.2" y="376.5" font-size="9.5" fill="#0F172A">the policy thresholds suit the driver</text>
+  <text x="759.2" y="363.5" font-size="9.5" fill="#0B0B0B">Detection performance of the driver-monitoring model (sunglasses, glare, face out of view) and whether</text>
+  <text x="759.2" y="376.5" font-size="9.5" fill="#0B0B0B">the policy thresholds suit the driver</text>
   <text x="759.2" y="389.5" font-size="9" fill="#5B21B6" font-weight="600">WP-C-05 SH-12</text>
   <line x1="40" y1="400" x2="1240" y2="400" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="40" y="415" font-size="10.5" fill="#0F172A" font-weight="700">SE-070</text>
-  <text x="40" y="429" font-size="9" fill="#475569">Longitudinal planning (plannerd)</text>
-  <rect x="565.5" y="411" width="62.5" height="14" fill="#D2553F"><title>SWF-SE-070: 10 cause(s) AP H</title></rect>
-  <text x="561.5" y="422" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">6 FM · 10 causes</text>
+  <text x="40" y="415" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-070</text>
+  <text x="40" y="429" font-size="9" fill="#52514E">Longitudinal planning (plannerd)</text>
+  <rect x="570.9" y="411" width="57.1" height="14" fill="#D03B3B"><title>SWF-SE-070: 10 cause(s) AP H</title></rect>
+  <text x="566.9" y="422" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">6 FM · 10 causes</text>
   <rect x="654" y="410.5" width="32.6" height="15" rx="7.5" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1"/><text x="670.3" y="421.4" font-size="9.5" font-weight="700" fill="#5B21B6" text-anchor="middle" letter-spacing=".02em">split</text>
-  <text x="759.2" y="421.5" font-size="9.5" fill="#0F172A">Whether the plan is adequate for the scene: following distance, deceleration limit, cut-ins, traffic control</text>
-  <text x="759.2" y="434.5" font-size="9.5" fill="#0F172A">in Experimental mode</text>
+  <text x="759.2" y="421.5" font-size="9.5" fill="#0B0B0B">Whether the plan is adequate for the scene: following distance, deceleration limit, cut-ins, traffic control</text>
+  <text x="759.2" y="434.5" font-size="9.5" fill="#0B0B0B">in Experimental mode</text>
   <text x="759.2" y="447.5" font-size="9" fill="#5B21B6" font-weight="600">WP-C-05 SH-03, SH-06, SH-09</text>
   <line x1="40" y1="458" x2="1240" y2="458" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="40" y="473" font-size="10.5" fill="#0F172A" font-weight="700">SE-080</text>
-  <text x="40" y="487" font-size="9" fill="#475569">Lead estimation (radard and the Toyota radar interface)</text>
-  <rect x="596.8" y="469" width="31.2" height="14" fill="#D2553F"><title>SWF-SE-080: 5 cause(s) AP H</title></rect>
-  <text x="592.8" y="480" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">2 FM · 5 causes</text>
+  <text x="40" y="473" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-080</text>
+  <text x="40" y="487" font-size="9" fill="#52514E">Lead estimation (radard and the Toyota radar interface)</text>
+  <rect x="599.4" y="469" width="28.6" height="14" fill="#D03B3B"><title>SWF-SE-080: 5 cause(s) AP H</title></rect>
+  <text x="595.4" y="480" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">2 FM · 5 causes</text>
   <rect x="654" y="468.5" width="32.6" height="15" rx="7.5" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1"/><text x="670.3" y="479.4" font-size="9.5" font-weight="700" fill="#5B21B6" text-anchor="middle" letter-spacing=".02em">split</text>
-  <text x="759.2" y="479.5" font-size="9.5" fill="#0F172A">Radar and vision perception performance: false targets, stationary objects, lead association</text>
+  <text x="759.2" y="479.5" font-size="9.5" fill="#0B0B0B">Radar and vision perception performance: false targets, stationary objects, lead association</text>
   <text x="759.2" y="492.5" font-size="9" fill="#5B21B6" font-weight="600">WP-C-05 SH-03, SH-04, SH-06</text>
   <line x1="40" y1="503" x2="1240" y2="503" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="40" y="518" font-size="10.5" fill="#0F172A" font-weight="700">SE-090</text>
-  <text x="40" y="532" font-size="9" fill="#475569">Driving model process (modeld)</text>
-  <rect x="596.8" y="514" width="31.2" height="14" fill="#D2553F"><title>SWF-SE-090: 5 cause(s) AP H</title></rect>
-  <text x="592.8" y="525" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">3 FM · 5 causes</text>
+  <text x="40" y="518" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-090</text>
+  <text x="40" y="532" font-size="9" fill="#52514E">Driving model process (modeld)</text>
+  <rect x="599.4" y="514" width="28.6" height="14" fill="#D03B3B"><title>SWF-SE-090: 5 cause(s) AP H</title></rect>
+  <text x="595.4" y="525" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">3 FM · 5 causes</text>
   <rect x="654" y="513.5" width="32.6" height="15" rx="7.5" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1"/><text x="670.3" y="524.4" font-size="9.5" font-weight="700" fill="#5B21B6" text-anchor="middle" letter-spacing=".02em">split</text>
-  <text x="759.2" y="524.5" font-size="9.5" fill="#0F172A">Whether the path, curvature and leads are right for correct inputs (driving-model performance)</text>
+  <text x="759.2" y="524.5" font-size="9.5" fill="#0B0B0B">Whether the path, curvature and leads are right for correct inputs (driving-model performance)</text>
   <text x="759.2" y="537.5" font-size="9" fill="#5B21B6" font-weight="600">WP-C-05 SH-01, SH-03, SH-04, SH-06; WP-C-11</text>
   <line x1="40" y1="548" x2="1240" y2="548" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="40" y="563" font-size="10.5" fill="#0F172A" font-weight="700">SE-100</text>
-  <text x="40" y="577" font-size="9" fill="#475569">Localization and calibration (locationd, calibrationd, paramsd…</text>
-  <rect x="609.2" y="559" width="18.8" height="14" fill="#D2553F"><title>SWF-SE-100: 3 cause(s) AP H</title></rect>
-  <text x="605.2" y="570" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">3 FM · 3 causes</text>
+  <text x="40" y="563" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-100</text>
+  <text x="40" y="577" font-size="9" fill="#52514E">Localization and calibration (locationd, calibrationd, paramsd…</text>
+  <rect x="610.9" y="559" width="17.1" height="14" fill="#D03B3B"><title>SWF-SE-100: 3 cause(s) AP H</title></rect>
+  <text x="606.9" y="570" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">3 FM · 3 causes</text>
   <rect x="654" y="558.5" width="32.6" height="15" rx="7.5" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1"/><text x="670.3" y="569.4" font-size="9.5" font-weight="700" fill="#5B21B6" text-anchor="middle" letter-spacing=".02em">split</text>
-  <text x="759.2" y="569.5" font-size="9.5" fill="#0F172A">Estimation accuracy within the sensor limits (pose, calibration, vehicle parameters)</text>
+  <text x="759.2" y="569.5" font-size="9.5" fill="#0B0B0B">Estimation accuracy within the sensor limits (pose, calibration, vehicle parameters)</text>
   <text x="759.2" y="582.5" font-size="9" fill="#5B21B6" font-weight="600">WP-C-05 SH-01, SH-02</text>
   <line x1="40" y1="593" x2="1240" y2="593" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="40" y="608" font-size="10.5" fill="#0F172A" font-weight="700">SE-110</text>
-  <text x="40" y="622" font-size="9" fill="#475569">Camera acquisition (camerad)</text>
-  <rect x="609.2" y="604" width="18.8" height="14" fill="#D2553F"><title>SWF-SE-110: 3 cause(s) AP H</title></rect>
-  <text x="605.2" y="615" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">1 FM · 3 causes</text>
+  <text x="40" y="608" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-110</text>
+  <text x="40" y="622" font-size="9" fill="#52514E">Camera acquisition (camerad)</text>
+  <rect x="610.9" y="604" width="17.1" height="14" fill="#D03B3B"><title>SWF-SE-110: 3 cause(s) AP H</title></rect>
+  <text x="606.9" y="615" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">1 FM · 3 causes</text>
   <rect x="654" y="603.5" width="32.6" height="15" rx="7.5" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1"/><text x="670.3" y="614.4" font-size="9.5" font-weight="700" fill="#5B21B6" text-anchor="middle" letter-spacing=".02em">split</text>
-  <text x="759.2" y="614.5" font-size="9.5" fill="#0F172A">Image quality limits of the cameras (glare, low light, weather)</text>
+  <text x="759.2" y="614.5" font-size="9.5" fill="#0B0B0B">Image quality limits of the cameras (glare, low light, weather)</text>
   <text x="759.2" y="627.5" font-size="9" fill="#5B21B6" font-weight="600">WP-C-05 SH-01, SH-12</text>
   <line x1="40" y1="638" x2="1240" y2="638" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="40" y="653" font-size="10.5" fill="#0F172A" font-weight="700">SE-120</text>
-  <text x="40" y="667" font-size="9" fill="#475569">IMU acquisition (sensord)</text>
-  <rect x="621.8" y="649" width="6.2" height="14" fill="#D2553F"><title>SWF-SE-120: 1 cause(s) AP H</title></rect>
-  <text x="617.8" y="660" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">1 FM · 1 causes</text>
+  <text x="40" y="653" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-120</text>
+  <text x="40" y="667" font-size="9" fill="#52514E">IMU acquisition (sensord)</text>
+  <rect x="622.3" y="649" width="5.7" height="14" fill="#D03B3B"><title>SWF-SE-120: 1 cause(s) AP H</title></rect>
+  <text x="618.3" y="660" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">1 FM · 1 causes</text>
   <rect x="654" y="648.5" width="93.2" height="15" rx="7.5" fill="#FFFFFF" stroke="#64748B" stroke-width="1"/><text x="700.6" y="659.4" font-size="9.5" font-weight="700" fill="#64748B" text-anchor="middle" letter-spacing=".02em">functional safety</text>
-  <text x="759.2" y="659.5" font-size="9.5" fill="#475569" font-style="italic">no SOTIF part: failures here come from faults, rated on the left</text>
+  <text x="759.2" y="659.5" font-size="9.5" fill="#52514E" font-style="italic">no SOTIF part: failures here come from faults, rated on the left</text>
   <line x1="40" y1="674" x2="1240" y2="674" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="40" y="689" font-size="10.5" fill="#0F172A" font-weight="700">SE-130</text>
-  <text x="40" y="703" font-size="9" fill="#475569">Messaging (cereal and msgq)</text>
-  <rect x="609.2" y="685" width="18.8" height="14" fill="#D2553F"><title>SWF-SE-130: 3 cause(s) AP H</title></rect>
-  <text x="605.2" y="696" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">2 FM · 3 causes</text>
+  <text x="40" y="689" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-130</text>
+  <text x="40" y="703" font-size="9" fill="#52514E">Messaging (cereal and msgq)</text>
+  <rect x="610.9" y="685" width="17.1" height="14" fill="#D03B3B"><title>SWF-SE-130: 3 cause(s) AP H</title></rect>
+  <text x="606.9" y="696" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">2 FM · 3 causes</text>
   <rect x="654" y="684.5" width="93.2" height="15" rx="7.5" fill="#FFFFFF" stroke="#64748B" stroke-width="1"/><text x="700.6" y="695.4" font-size="9.5" font-weight="700" fill="#64748B" text-anchor="middle" letter-spacing=".02em">functional safety</text>
-  <text x="759.2" y="695.5" font-size="9.5" fill="#475569" font-style="italic">no SOTIF part: failures here come from faults, rated on the left</text>
+  <text x="759.2" y="695.5" font-size="9.5" fill="#52514E" font-style="italic">no SOTIF part: failures here come from faults, rated on the left</text>
   <line x1="40" y1="710" x2="1240" y2="710" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="40" y="725" font-size="10.5" fill="#0F172A" font-weight="700">SE-140</text>
-  <text x="40" y="739" font-size="9" fill="#475569">Process manager (manager)</text>
-  <rect x="615.5" y="721" width="12.5" height="14" fill="#D2553F"><title>SWF-SE-140: 2 cause(s) AP H</title></rect>
-  <text x="611.5" y="732" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">2 FM · 2 causes</text>
+  <text x="40" y="725" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-140</text>
+  <text x="40" y="739" font-size="9" fill="#52514E">Process manager (manager)</text>
+  <rect x="616.6" y="721" width="11.4" height="14" fill="#D03B3B"><title>SWF-SE-140: 2 cause(s) AP H</title></rect>
+  <text x="612.6" y="732" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">2 FM · 2 causes</text>
   <rect x="654" y="720.5" width="93.2" height="15" rx="7.5" fill="#FFFFFF" stroke="#64748B" stroke-width="1"/><text x="700.6" y="731.4" font-size="9.5" font-weight="700" fill="#64748B" text-anchor="middle" letter-spacing=".02em">functional safety</text>
-  <text x="759.2" y="731.5" font-size="9.5" fill="#475569" font-style="italic">no SOTIF part: failures here come from faults, rated on the left</text>
+  <text x="759.2" y="731.5" font-size="9.5" fill="#52514E" font-style="italic">no SOTIF part: failures here come from faults, rated on the left</text>
   <line x1="40" y1="746" x2="1240" y2="746" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="40" y="761" font-size="10.5" fill="#0F172A" font-weight="700">SE-150</text>
-  <text x="40" y="775" font-size="9" fill="#475569">Software update (updated)</text>
-  <rect x="621.8" y="757" width="6.2" height="14" fill="#D2553F"><title>SWF-SE-150: 1 cause(s) AP H</title></rect>
-  <text x="617.8" y="768" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">1 FM · 1 causes</text>
+  <text x="40" y="761" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-150</text>
+  <text x="40" y="775" font-size="9" fill="#52514E">Software update (updated)</text>
+  <rect x="622.3" y="757" width="5.7" height="14" fill="#D03B3B"><title>SWF-SE-150: 1 cause(s) AP H</title></rect>
+  <text x="618.3" y="768" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">1 FM · 1 causes</text>
   <rect x="654" y="756.5" width="93.2" height="15" rx="7.5" fill="#FFFFFF" stroke="#64748B" stroke-width="1"/><text x="700.6" y="767.4" font-size="9.5" font-weight="700" fill="#64748B" text-anchor="middle" letter-spacing=".02em">functional safety</text>
-  <text x="759.2" y="767.5" font-size="9.5" fill="#475569" font-style="italic">no SOTIF part: failures here come from faults, rated on the left</text>
-  <line x1="40" y1="782" x2="1240" y2="782" stroke="#E2E8F0" stroke-width="1"/>
-  <rect x="40" y="793" width="14" height="14" fill="#D2553F"/>
-  <text x="60" y="804" font-size="10.5" fill="#0F172A">causes rated AP H</text>
+  <text x="759.2" y="767.5" font-size="9.5" fill="#52514E" font-style="italic">no SOTIF part: failures here come from faults, rated on the left</text>
+  <line x1="40" y1="782" x2="1240" y2="782" stroke="#E1E0D9" stroke-width="1"/>
+  <rect x="40" y="793" width="14" height="14" fill="#D03B3B"/>
+  <text x="60" y="804" font-size="10.5" fill="#0B0B0B">causes rated AP H</text>
   <rect x="175.8" y="793" width="14" height="14" fill="#D97706"/>
-  <text x="195.8" y="804" font-size="10.5" fill="#0F172A">causes rated AP M</text>
+  <text x="195.8" y="804" font-size="10.5" fill="#0B0B0B">causes rated AP M</text>
   <rect x="314" y="793" width="14" height="14" fill="#0F766E"/>
-  <text x="334" y="804" font-size="10.5" fill="#0F172A">causes rated AP L</text>
+  <text x="334" y="804" font-size="10.5" fill="#0B0B0B">causes rated AP L</text>
   <rect x="449.8" y="793" width="93.2" height="15" rx="7.5" fill="#FFFFFF" stroke="#64748B" stroke-width="1"/><text x="496.4" y="803.9" font-size="9.5" font-weight="700" fill="#64748B" text-anchor="middle" letter-spacing=".02em">functional safety</text>
   <rect x="553" y="793" width="32.6" height="15" rx="7.5" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1"/><text x="569.4" y="803.9" font-size="9.5" font-weight="700" fill="#5B21B6" text-anchor="middle" letter-spacing=".02em">split</text>
   <rect x="595.7" y="793" width="42.4" height="15" rx="7.5" fill="#7C3AED"/><text x="616.9" y="803.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SOTIF</text>
-  <text x="652.1" y="804" font-size="10.5" fill="#0F172A">boundary recorded on the element (`sotif.boundary`)</text>
-  <text x="40" y="822" font-size="10" fill="#475569">Rows are the top-level elements in structure order; causes of child elements count toward their parent. A split element has software faults rated here and a performance part owned by SOTIF, quoted from `sotif.sotif_part` with its WP-C-05 reference.</text>
-  <text x="40" y="837" font-size="10" fill="#475569">The right lane says what this FMEA does not rate; it is not a claim that the SOTIF analysis covers it.</text>
-  <text x="40" y="855" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+  <text x="652.1" y="804" font-size="10.5" fill="#0B0B0B">boundary recorded on the element (`sotif.boundary`)</text>
+  <text x="40" y="822" font-size="10" fill="#52514E">Rows are the top-level elements in structure order; causes of child elements count toward their parent. A split element has software faults rated here and a performance part owned by SOTIF, quoted from `sotif.sotif_part` with its WP-C-05 reference.</text>
+  <text x="40" y="837" font-size="10" fill="#52514E">The right lane says what this FMEA does not rate; it is not a claim that the SOTIF analysis covers it.</text>
+  <text x="40" y="855" font-size="9.5" fill="#898781">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>

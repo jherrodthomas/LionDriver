@@ -32,7 +32,7 @@ LionDriver publishes its safety argument as it is built: the claims, the evidenc
 
 [![Download the safety case snapshot (PDF)](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fjherrodthomas%2FLionDriver%2Fliondriver-dev%2Fassurance%2Fcase%2Fbadge.json)](https://github.com/jherrodthomas/LionDriver/releases/download/snapshot-latest/LionDriver-safety-case.pdf) · [all snapshots and how to verify them](https://github.com/jherrodthomas/LionDriver/releases/tag/snapshot-latest)
 
-**Development** · baseline `BL-002` at `bf6ce8c` · 36 claims (0 with accepted evidence) · 50 evidence items (0 accepted) · 42 open defeaters · records digest `d6368d324eab`
+**Development** · baseline `BL-002` at `bf6ce8c` · 36 claims (0 with accepted evidence) · 50 evidence items (0 accepted) · 42 open defeaters · records digest `b7cad95d3344`
 
 <!-- END GENERATED: assurance-headline -->
 
@@ -88,7 +88,7 @@ LionDriver follows standards-informed development: its work products are structu
 | Automotive SPICE | [Capability baseline](assurance/01-management/WP-M-13-aspice-capability-baseline.md) |
 | Systems engineering and requirements management | [System requirements](assurance/03-system/WP-S-01-system-requirements.md) · [traceability procedure](assurance/07-supporting/WP-P-06-requirements-management-traceability.md) · [trace data](assurance/trace/README.md) |
 | Safety analysis | [ASIL decomposition](assurance/08-analyses/WP-A-01-asil-decomposition.md) · [freedom from interference](assurance/08-analyses/WP-A-02-coexistence-freedom-from-interference.md) · [dependent failures](assurance/08-analyses/WP-A-03-dependent-failure-analysis.md) · [FTA/FMEA](assurance/08-analyses/WP-A-04-system-fta-fmea.md) |
-| Simulation, SIL and HIL | [Embedded software testing](assurance/05-software/WP-W-08-embedded-software-testing.md) · [SOTIF verification and validation strategy](assurance/06-validation/WP-V-02-sotif-vv-strategy.md) · [simulation track](assurance/sim/README.md) · [ASIL C hazardous events in the plant loop](assurance/sim/README.md#37-the-asil-c-hazardous-events-in-the-loop) |
+| Simulation, SIL and HIL | [Embedded software testing](assurance/05-software/WP-W-08-embedded-software-testing.md) · [SOTIF verification and validation strategy](assurance/06-validation/WP-V-02-sotif-vv-strategy.md) · [simulation track](assurance/sim/README.md) · [ASIL C hazardous events in the plant loop](assurance/sim/README.md#37-the-asil-c-hazardous-events-in-the-loop) · [harness box faults, interactive in Falstad](assurance/sim/harness_box/README.md) |
 | Fault injection | [Fault injection specification](assurance/06-validation/WP-V-05-fault-injection.md) |
 | Independent review | [Confirmation measures plan](assurance/01-management/WP-M-06-confirmation-measures-plan.md) · [verification review procedure](assurance/07-supporting/WP-P-05-verification-review-procedure.md) |
 | IEC 61508 | Referenced for supplier safety documentation of the safety microcontroller ([component qualification](assurance/04-hardware/WP-H-07-hardware-component-qualification.md)) |

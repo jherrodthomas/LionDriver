@@ -45,17 +45,29 @@
 # Rev 0.10 (2026-10-19, RT-3, DQ-207 A): MSR AP from the AIAG-VDA handbook table for S 9-10 (rating-tables §7.4). Only the F 2 rows
 # move: DFM-010.C3, DFM-011.C2 and DFM-019.C2 MSR AP H -> M. S, F, M and every other rating unchanged. Applied by the System FMEA
 # session with the RT-3 change.
+# Rev 0.11 (2026-10-26): baseline BL-005 -> BL-007 (frozen: liondriver-dev 9fe3eb2, panda 3a8b7c2, opendbc 4d1a056). The hardware is
+# unchanged since BL-002. The whole file was re-checked against the panda changes a55bdfc..3a8b7c2 (BL-006 and BL-007): the relay
+# malfunction latched for the ignition cycle (panda#17, BL-006; added to the DFM-011 mechanism text), the EPS-fault siren at 0.7 s and
+# still sounding after a revocation (bf8102a, DQ-048, DQ-367), the siren on a TX-arrival revocation (8a69ccf, DQ-404) and on an engaged
+# mismatch while cruise stays on (f4803c5, TSR-516(c)); DFM-017's mechanism lists the new triggers. None changes a hardware cause, a
+# detection test or a diagnostic of a hardware fault, so S, O, D, AP and every MSR rating are unchanged. No row cites a file the opendbc
+# or host changes touched. Totals unchanged: 21 failure modes, 30 causes (all AP H); 16 actions.
+# Rev 0.12 (2026-10-27, ratings unchanged): DFM-010, DFM-011, DFM-014 and DFM-021 point at the harness box circuit view
+#   (assurance/sim/harness_box: ngspice DC points and a Falstad link, synthetic, no credit).
+# Rev 0.13 (2026-10-27, after BL-007): new DFM-022 (camera bus unterminated in intercept, R7 with R8 or the loopback open) and
+#   DFM-023 (R7 or R8 short), from FMEDA SG-009 rev 0.9 FMD-C-014 (#511) and the harness box SPICE pilot (#510). O 2 / O 3, D 10
+#   (VS-HW-24 (e) not run), AP H; DFM-ACT-014 covers the bench step. SG-07 tree gap recorded for the FTA owner.
 schema_version: 1
 analysis:
   id: DFM
   type: dfmea
   title: "DFMEA — device, integrated panda, harness, vehicle interfaces"
-  revision: "0.10"
+  revision: "0.13"
   status: draft
-  baseline: BL-005
+  baseline: BL-007
   rating_tables: RT-3
   msr: complete
-  scope: "Safety-relevant hardware of AC-001 at BL-005 (hardware as at BL-002): comma 3X panda section (STM32H725, clock and watchdog, MCU supply, CAN transceivers), Toyota harness and relay box, SoC-MCU interface, siren path, enclosure and cooling. SoC, cameras and other QM hardware only where they couple into these (WP-A-03)."
+  scope: "Safety-relevant hardware of AC-001 at BL-007 (hardware as at BL-002): comma 3X panda section (STM32H725, clock and watchdog, MCU supply, CAN transceivers), Toyota harness and relay box, SoC-MCU interface, siren path, enclosure and cooling. SoC, cameras and other QM hardware only where they couple into these (WP-A-03)."
   team:
     - {name: Jherrod Thomas, role: "Project maintainer, safety lead (reviewer/approver)"}
     - {name: Claude (AI assistant), role: "Drafting assistance; ratings require human review"}
@@ -784,7 +796,7 @@ failure_modes:
   - description: 'None: no relay readback (GAP-12)'
     ref: assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md
   notes: 'WP-H-03 FM-REL-02/04: a single-point path for the PCS goal that no firmware change can close. RR-2026-010 F-03: the release
-    default rests on R2+R3 (HWSR-506e).'
+    default rests on R2+R3 (HWSR-506e). Circuit view (synthetic, no credit) in assurance/sim/results/harness-box.md, with a Falstad link to flip this fault.'
 - id: DFM-011
   element: DFM-SE-006
   function: DFM-FN-005
@@ -875,9 +887,11 @@ failure_modes:
       - DFM-ACT-014
       - DFM-ACT-015
   safety_mechanisms:
-  - description: 'Relay malfunction detection: stock camera message on the car side after a 1 s grace blocks all TX (safety.h stock_ecu_check)'
+  - description: 'Relay malfunction detection: stock camera message on the car side after a 1 s grace blocks all TX (safety.h stock_ecu_check).
+      Since BL-006, reference build: the malfunction is latched for the ignition cycle and TOYOTA is refused until ignition off, so a safety-mode
+      change does not clear it (panda#17, DFA DM-25, SW FMEA SWF-090)'
     ref: opendbc_repo/opendbc/safety/safety.h
-  notes: WP-H-03 FM-REL-01.
+  notes: WP-H-03 FM-REL-01. The BL-006 latch changes the reaction, not the switch; S, O, D and M unchanged. Circuit view (synthetic, no credit) in assurance/sim/results/harness-box.md, with a Falstad link to flip this fault.
 - id: DFM-012
   element: DFM-SE-007
   function: DFM-FN-006
@@ -992,7 +1006,7 @@ failure_modes:
     actions:
     - DFM-ACT-008
     - DFM-ACT-014
-  notes: WP-H-03 FM-IGN-02. Line open is the safe direction (2 s timeout).
+  notes: WP-H-03 FM-IGN-02. Line open is the safe direction (2 s timeout). Circuit view (synthetic, no credit) in assurance/sim/results/harness-box.md, with a Falstad link to flip this fault.
 - id: DFM-015
   element: DFM-SE-008
   function: DFM-FN-007
@@ -1152,8 +1166,10 @@ failure_modes:
   safety_mechanisms:
   - description: 'BL-005: the panda commands the siren itself when the 0.3 s heartbeat monitor revokes granted authority (panda#15,
       heartbeat_siren.h) and when an EPS fault persists 0.7 s while engaged (panda#14, eps_fault_siren.h; 0.7 s since panda bf8102a, DQ-048, siren
-      at most 0.96 s after fault onset by design, WP-S-04 T-28; not yet timed on hardware, DFM-ACT-016). Both rely on the speaker
-      path that DFM-017.C1 questions'
+      at most 0.96 s after fault onset by design, WP-S-04 T-28; not yet timed on hardware, DFM-ACT-016). BL-007, reference build: also when the
+      TX-arrival check revokes (panda 8a69ccf, DQ-404 A, TSR-516(b)) and 0.5 s after a not-engaged heartbeat while PCM cruise stays on (panda
+      f4803c5, engaged_mismatch.h, TSR-516(c)); an EPS-fault siren still sounds after a revocation (DQ-367). Every trigger relies on the speaker
+      path that DFM-017.C1 questions; the bench HIL tests test_15 and test_16 confirm the siren by ear and are not run in CI'
     ref: panda/board/drivers/heartbeat_siren.h
   notes: 'WP-H-03 FM-SIR-01; WP-A-03 DFI-23. BL-005 makes this path the SoC-independent cue of TSR-516(b), so a shared or
     SoC-powered audio stage now defeats a specified warning, not only a convenience. Ratings unchanged: no hardware evidence
@@ -1400,7 +1416,110 @@ failure_modes:
   safety_mechanisms:
   - description: RX timeouts withdraw control; host canError and canBusMissing alerts
     ref: opendbc_repo/opendbc/safety/safety.h
-  notes: RR-2026-010 F-07.
+  notes: RR-2026-010 F-07. Circuit view (synthetic, no credit) in assurance/sim/results/harness-box.md, with a Falstad link to flip this fault.
+- id: DFM-022
+  element: DFM-SE-006
+  function: DFM-FN-005
+  failure_mode: Camera bus left unterminated in intercept
+  guideword: open
+  effects:
+  - level: local
+    description: In intercept only the box terminates the camera bus (R7, and R8 through the harness P13-P15 loopback, 60 ohm). With both
+      gone the recessive edge slows to about 10.5 us and misses the 1.5 us sample point (harness box SPICE pilot, a prediction)
+  - level: next_higher
+    description: Camera frames lost or corrupted while the device forwards them, so stock PCS messages do not reach the car
+  - level: end
+    description: Stock AEB unavailable
+    hazard: HZ-011
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-022.C1
+    description: Termination resistor R7 open together with R8 or the P13-P15 loopback open. One open alone leaves 120 ohm and a recessive
+      edge of about 0.06 us, so it is latent (FMEDA SG-009 FMD-035); pass-through is not affected (R7/R8 are on the NO side)
+    element: DFM-SE-006
+    prevention_controls:
+    - description: COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02)
+      ref: assurance/04-hardware/WP-H-02-hardware-design.md
+    detection_controls:
+    - description: 'No LionDriver hardware test has been run for this cause. Bench step VS-HW-24 (e) lifts R7, R8, then both, in intercept
+        and records error frames and the recessive edge (WP-H-06 v0.13); not yet run'
+      ref: assurance/04-hardware/WP-H-06-hardware-integration-verification.md
+    occurrence: 2
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-014
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: 'None: the device checks only car-side messages for timeouts; a single open is latent and nothing checks the camera-side
+        termination'
+      system_response: None
+      effect_after_response: 'Unchanged: stock PCS messages are lost while in intercept'
+      severity_after: 10
+      frequency: 2
+      monitoring: 10
+      ap: M
+      timing:
+        basis: unknown
+      fmeda: fmeda-sg009/FMD-035
+      actions:
+      - DFM-ACT-014
+  safety_mechanisms:
+  - description: 'None: RX checks cover car-side messages only'
+    ref: assurance/08-analyses/fmea/analyses/fmeda-sg009.yaml
+  notes: Added after BL-007 from FMEDA SG-009 rev 0.9 (FMD-C-014) and the harness box SPICE pilot (assurance/04-hardware/spice/predictions.md,
+    #510; synthetic, no credit). Not yet in the SG-07 fault tree (fta-fmea-map not_in_fta, tree gap).
+- id: DFM-023
+  element: DFM-SE-006
+  function: DFM-FN-005
+  failure_mode: Camera-side termination shorted in intercept
+  guideword: short
+  effects:
+  - level: local
+    description: R7 or R8 short ties camera CAN2_H to CAN2_L, so the camera bus is held recessive in intercept
+  - level: next_higher
+    description: No camera frames reach the device, so stock PCS messages are not forwarded to the car
+  - level: end
+    description: Stock AEB unavailable
+    hazard: HZ-011
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-023.C1
+    description: Termination resistor R7 or R8 short (FMEDA SG-009 FMD-036); pass-through is not affected (R7/R8 are on the NO side)
+    element: DFM-SE-006
+    prevention_controls:
+    - description: COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02)
+      ref: assurance/04-hardware/WP-H-02-hardware-design.md
+    detection_controls:
+    - description: No LionDriver hardware verification or qualification test exists for this cause; VS-HW-24 (e) checks the opens only
+        (WP-H-06 v0.13)
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-014
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: 'None: the device checks only car-side messages for timeouts, so a silent camera bus is not flagged'
+      system_response: None
+      effect_after_response: 'Unchanged: stock PCS messages are lost while in intercept'
+      severity_after: 10
+      frequency: 3
+      monitoring: 10
+      ap: H
+      timing:
+        basis: unknown
+      fmeda: fmeda-sg009/FMD-036
+      actions:
+      - DFM-ACT-014
+  safety_mechanisms:
+  - description: 'None: RX checks cover car-side messages only'
+    ref: assurance/08-analyses/fmea/analyses/fmeda-sg009.yaml
+  notes: Added after BL-007 from FMEDA SG-009 rev 0.9 (FMD-C-014). Not yet in the SG-07 fault tree (fta-fmea-map not_in_fta, tree gap).
 actions:
 - id: DFM-ACT-001
   kind: prevention
@@ -1477,7 +1596,8 @@ actions:
   kind: detection
   description: 'Bench-test the harness box failure behaviour (RR-2026-010): box unpowered with car and camera powered; R2/R3 forced
     open with the device silent; supply at 14-16 V against the DG419LE ratings; pass-through signal integrity; clamp-diode short
-    on CAN0; confirm the shipped box matches the v3 drawing (VS-HW-02). The decided route for the harness box (DQ-209 option A,
+    on CAN0; camera-side termination R7/R8 lifted in intercept (VS-HW-24 (e), DFM-022); confirm the shipped box matches the v3
+    drawing (VS-HW-02). The decided route for the harness box (DQ-209 option A,
     2026-10-16); procedures in WP-H-06 §3.1'
   owner: Jherrod Thomas
   status: open

@@ -1,9 +1,11 @@
 from types import SimpleNamespace
 
 from opendbc.car.structs import car
+from opendbc.car.toyota.values import CAR as TOYOTA
 from openpilot.common.test import OpenpilotTestCase
 from openpilot.selfdrive.selfdrived.events import EVENTS, ET, AudibleAlert, EventName, dm_terminal_alert, minimum_risk_maneuver_alert
 from openpilot.selfdrive.selfdrived.minimum_risk import MinimumRiskManeuver
+from openpilot.selfdrive.selfdrived.selfdrived import SelfdriveD
 
 
 class TestMinimumRiskManeuver(OpenpilotTestCase):
@@ -56,3 +58,26 @@ class TestManeuverAnnouncement(OpenpilotTestCase):
 
   def test_events_wired(self):
     assert EVENTS[EventName.minimumRiskManeuver][ET.PERMANENT] is minimum_risk_maneuver_alert
+
+
+class TestManeuverAlertInSelfdrived(OpenpilotTestCase):
+  """TSR-633, TSR-624: selfdrived raises the maneuver's alert on every frame while latched, with no DM alert"""
+
+  def setUp(self):
+    super().setUp()
+    CP = car.CarParams.new_message()
+    CP.carFingerprint = TOYOTA.TOYOTA_COROLLA_TSS2
+    self.sd = SelfdriveD(CP=CP.as_reader())
+    self.sd.initialized = True
+
+  def events(self, latched):
+    self.sd.mrm.active = latched
+    self.sd.update_events(car.CarState.new_message())
+    return self.sd.events.names
+
+  def test_raised_while_latched(self):
+    for _ in range(3):
+      assert EventName.minimumRiskManeuver in self.events(True)
+
+  def test_not_raised_when_not_latched(self):
+    assert EventName.minimumRiskManeuver not in self.events(False)

@@ -19,7 +19,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 |---|---|---|---|
 | Register | `assurance/trace/clauses/iso21448-2022.yaml` | 27 obligations of ISO 21448:2022 §4–§13 in the project's own words, against WP-M-08, WP-C-02, WP-C-05…07, WP-V-02…04, WP-K-02 and WP-O-04; no standard text; none verified against the licensed standard. Activities that must have been *carried out* (validation runs, residual-risk estimate, release evaluation, review of the targets) are manual checks, since the work products hold plans and templates | [`iso21448-2022-coverage.md`](../../trace/clauses/iso21448-2022-coverage.md): 23 pass, 4 manual |
 | Checker | `assurance/trace/tools/check_clauses.py`, `test_check_clauses.py` | A register names its `id_prefix` (the 26262-3 one `O3`, this one `S`); a section check takes the heading that is exactly its text before one that only contains it ("Validation targets" had matched "Method for deriving validation targets"); withdrawn trace items are not checked for fields (SH-07) | 2 new tests (8 in all); the 26262-3 register's results are unchanged |
-| Docs, CI | Register README v0.3, trace README v0.7, WP-P-07 v0.9.25 (TL-59 scope), the CI step's name | The second register listed; how manual checks are used in it | CI run on this PR |
+| Docs, CI | Register README v0.3, trace README v0.7, WP-P-07 v0.9.27 (TL-59 scope), the CI step's name | The second register listed; how manual checks are used in it | CI run on this PR |
 
 ## 2. Impact
 

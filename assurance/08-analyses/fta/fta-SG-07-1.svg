@@ -189,6 +189,8 @@
 <text x="1718" y="606.0" class="d">0 from the first frame)</text>
 <rect x="1718.0" y="614.0" width="51.2" height="17" rx="4" fill="none" stroke="#e1e0d9"/>
 <text x="1743.6" y="626.0" class="chip" fill="#52514e">SFM-036</text>
+<rect x="1773.2" y="614.0" width="51.2" height="17" rx="4" fill="none" stroke="#e1e0d9"/>
+<text x="1798.8" y="626.0" class="chip" fill="#52514e">SWF-093</text>
 <rect x="1944" y="506.0" width="220" height="74.0" rx="12" class="shadow"/>
 <rect x="1944" y="503.0" width="220" height="74.0" rx="12" fill="#ffffff" stroke="#e1e0d9" stroke-width="1"/>
 <path d="M1963,517.0 L1969.5,523.0 L1963,529.0 L1956.5,523.0 Z" fill="#eda100"/>

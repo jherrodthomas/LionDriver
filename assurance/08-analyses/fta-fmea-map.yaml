@@ -34,7 +34,7 @@ events:
   - id: BE-4.01
     class: systematic_sw
     fmea: [SWF-003]
-    note: SWF-003.C3 (lower bound -3.5 m/s² not derived; DFA DFI-14 / DM-10)
+    note: SWF-003.C3 (lower bound -3.5 m/s² not derived; DFA DFI-08 / DM-10)
   - id: BE-4.02
     class: sotif
     fmea: [SFM-009]
@@ -327,8 +327,9 @@ events:
     fmeda: [fmeda-sg009:FMD-022, fmeda-sg009:FMD-023]
   - id: BE-7.13
     class: systematic_sw
-    fmea: [SFM-036]
+    fmea: [SFM-036, SWF-093]
     note: >-
+      SWF-093 (SW FMEA rev 1.9): defects in the host stand-down and in the opendbc cap of the final ACCEL_CMD (f4e6166).
       SFM-036.C1: no item reaction to a stock PCS event on the longitudinal command (always true at the baseline; SFM-ACT-020).
       DQ-300 A (2026-10-18): the item requests zero acceleration during a PCS event; implemented by #292
       (change-2026-10-19-stock-aeb-stand-down, unit-tested only), so SFM-036.C1 now means a defect in that stand-down or an
@@ -444,11 +445,13 @@ events:
     note: SWF-045 (no event, alert or disable for the latched NaN; TSR-604 not met)
   - id: BE-2.14
     class: systematic_sw
-    gap: >-
-      No FMEA mode for the panda siren not being triggered. Implemented triggers: heartbeat loss (c33343b), EPS fault
-      (≤ 0.96 s, bf8102a), command-arrival revocation (8a69ccf) and engaged mismatch with PCM cruise still active
-      (TSR-516(c), f4803c5). Not implemented: the TSR-516(b) triggers on an RX fault, a rejected command, a TX failure
-      or bus-off and a platform fault. DFM-017 covers the siren path, not its trigger logic. F-28
+    fmea: [SWF-092]
+    note: >-
+      SWF-092 (SW FMEA rev 1.9, BL-007) rates the trigger logic of the implemented triggers: heartbeat loss (c33343b),
+      command-arrival revocation (8a69ccf, opendbc 0ff85e6) and engaged mismatch with PCM cruise still active (TSR-516(c),
+      f4803c5); the EPS-fault trigger (≤ 0.96 s, bf8102a) is SWF-088's mechanism and DFM-017's path. Not implemented, so
+      still latent by design: the TSR-516(b) triggers on an RX fault, a rejected command, a TX failure or bus-off and a
+      platform fault. DFM-017 covers the siren path, not its trigger logic. F-28
   - id: BE-2.15
     class: random_hw
     fmea: [DFM-017]
@@ -566,7 +569,7 @@ events:
   - id: BE-3.01
     class: systematic_sw
     fmea: [SWF-003]
-    note: SWF-003.C1 (upper bound +2.0 m/s² equals the SoC limit, RAISED_ACCEL_LIMIT not validated for the Corolla; DFA DFI-08 / DFI-14)
+    note: SWF-003.C1 (upper bound +2.0 m/s² equals the SoC limit, RAISED_ACCEL_LIMIT not validated for the Corolla; DFA DFI-08)
   - id: BE-3.02
     class: sotif
     fmea: [SFM-008, PFM-011]
@@ -763,10 +766,11 @@ events:
     class: systematic_sw
     fmea: [SWF-062, SFM-025]
     note: >-
-      SWF-062.C1 (terminal state reached without the safe state: the DM events are PERMANENT alerts only, the item stays
-      engaged after the forced stop) and SFM-025.C1 (no disable reaction at level 3). The safe state is decided (DQ-365 A,
-      FSR-02.09, TSR-633): stopped, held, re-engagement locked out until the driver responds. Neither the hold nor the
-      lockout while stopped is implemented, so the event is present by design (F-38)
+      SWF-062.C1 and SFM-025.C1. The safe state is decided (DQ-365 A, FSR-02.09, TSR-633): stopped, held, re-engagement
+      locked out until the driver responds. Up to BL-006 neither the hold nor the lockout was implemented, so the event was
+      present by design (F-38). Since #372 (BL-007) the minimum-risk latch, the forceDecel hold and the lockout from the
+      takeover are implemented, and both causes are a defect in that code (O 5); their tests are proven by mutation in CI
+      (D 4, SW FMEA rev 1.12). The event stays a single point: no second measure holds the car if that code fails
   - id: UE-8.11
     class: external
     ref: >-
@@ -909,6 +913,19 @@ not_in_fta:
     goal: SG-07
     kind: justified
     reason: "As for SG-01: a vehicle outside the reference configuration is outside the item definition and AOU-04R. Controlled by the installation check (WP-O-02)."
+  - fm: DFM-022
+    goal: SG-07
+    kind: tree_gap
+    reason: >-
+      The camera bus left unterminated in intercept (R7 with R8 or the P13-P15 loopback open; FMEDA SG-009 FMD-035, latent after
+      one open) loses the camera frames the item forwards, so stock PCS messages do not reach the car. The SG-07 tree (§8) has no
+      event for the camera-side termination; for the FTA owner to add it under the intercept branch, next to BE-7.18
+  - fm: DFM-023
+    goal: SG-07
+    kind: tree_gap
+    reason: >-
+      R7 or R8 short holds the camera bus recessive in intercept (FMEDA SG-009 FMD-036, single-point), so no camera frames reach the
+      item and stock PCS messages are not forwarded. Not an event of the SG-07 tree yet; for the FTA owner, as DFM-022
   # ---- SG-02
   - fm: PFM-015
     goal: SG-02
@@ -1016,3 +1033,16 @@ not_in_fta:
       The SG-06 tree analyses the assured configuration. The driver can change the following distance or Experimental
       Mode while driving (SWF-067.C1), and the item only logs it. Whether to refuse engagement outside the assured settings
       is queued for the lead (DQ-221); until it is decided, the tree has no event for planning in another configuration.
+  - fm: SWF-091
+    goal: SG-02
+    kind: justified
+    reason: >-
+      The start-up fault-code read (TSR-629, BL-007) is a barrier against engaging on a car with a stored EPS fault; the
+      SG-02 tree starts from an EPS fault while engaged (BE-2.01, external), which the read neither causes nor detects, and
+      does not credit the read. A failed read removes an uncredited barrier; the driver's lamp check (TSR-811) remains.
+  - fm: SWF-091
+    goal: SG-06
+    kind: justified
+    reason: >-
+      As for SG-02: the read is an uncredited start-up barrier against a stored ABS/VSC fault; the SG-06 tree starts from a
+      loss of longitudinal control while engaged and does not credit the read.

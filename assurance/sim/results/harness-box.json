@@ -1,0 +1,209 @@
+{
+ "note": "Synthetic (DSR-12), design aid, no evidence credit (DQ-413). ngspice 41 DC operating points.",
+ "scenarios": [
+  {
+   "id": "intercept",
+   "title": "Device drives SBU1: intercept",
+   "fmea": "nominal",
+   "switches": {
+    "drive": true
+   },
+   "params": {},
+   "nodes": {
+    "VIN": 14.0,
+    "VTH": 4.2,
+    "SBU1": 4.615369,
+    "SBU2": 0.3,
+    "CANH": 3.166667
+   },
+   "verdict": "IN reads intercept (SBU1 +0.42 V from the threshold)"
+  },
+  {
+   "id": "pass_through",
+   "title": "SBU1 undriven: stock path",
+   "fmea": "nominal",
+   "switches": {
+    "drive": false
+   },
+   "params": {},
+   "nodes": {
+    "VIN": 14.0,
+    "VTH": 4.2,
+    "SBU1": 3.4e-05,
+    "SBU2": 0.3,
+    "CANH": 3.166667
+   },
+   "verdict": "IN reads pass-through (SBU1 -4.20 V from the threshold)"
+  },
+  {
+   "id": "pulldown_open_leak_up",
+   "title": "Pull-down open, SBU1 undriven, IN leaks to VIN",
+   "fmea": "DFM-010.C3",
+   "switches": {
+    "drive": false,
+    "pulldown": false
+   },
+   "params": {
+    "leak_hi": 10000000.0,
+    "leak_lo": 1000000000.0
+   },
+   "nodes": {
+    "VIN": 14.0,
+    "VTH": 4.2,
+    "SBU1": 13.86139,
+    "SBU2": 0.3,
+    "CANH": 3.166667
+   },
+   "verdict": "IN reads intercept (SBU1 +9.66 V from the threshold)"
+  },
+  {
+   "id": "pulldown_open_leak_down",
+   "title": "Pull-down open, SBU1 undriven, IN leaks to GND",
+   "fmea": "DFM-010.C3",
+   "switches": {
+    "drive": false,
+    "pulldown": false
+   },
+   "params": {
+    "leak_hi": 1000000000.0,
+    "leak_lo": 10000000.0
+   },
+   "nodes": {
+    "VIN": 14.0,
+    "VTH": 4.2,
+    "SBU1": 0.138614,
+    "SBU2": 0.3,
+    "CANH": 3.166667
+   },
+   "verdict": "IN reads pass-through (SBU1 -4.06 V from the threshold)"
+  },
+  {
+   "id": "threshold_high_vin_high",
+   "title": "Drive at the low band, threshold and VIN at the high band",
+   "fmea": "DFM-011.C2",
+   "switches": {
+    "drive": true
+   },
+   "params": {
+    "vin": 16.0,
+    "k": 0.5,
+    "drive_v": 4.75,
+    "drive_r": 100.0
+   },
+   "nodes": {
+    "VIN": 16.0,
+    "VTH": 8.0,
+    "SBU1": 3.352942,
+    "SBU2": 0.3,
+    "CANH": 3.166667
+   },
+   "verdict": "IN reads pass-through (SBU1 -4.65 V from the threshold)"
+  },
+  {
+   "id": "ignition_off",
+   "title": "Ignition off",
+   "fmea": "nominal",
+   "switches": {
+    "q6": false
+   },
+   "params": {},
+   "nodes": {
+    "VIN": 14.0,
+    "VTH": 4.2,
+    "SBU1": 4.615369,
+    "SBU2": 3.3,
+    "CANH": 3.166667
+   },
+   "verdict": "device reads ignition off"
+  },
+  {
+   "id": "ignition_on",
+   "title": "Ignition on",
+   "fmea": "nominal",
+   "switches": {
+    "q6": true
+   },
+   "params": {},
+   "nodes": {
+    "VIN": 14.0,
+    "VTH": 4.2,
+    "SBU1": 4.615369,
+    "SBU2": 0.3,
+    "CANH": 3.166667
+   },
+   "verdict": "device reads ignition on"
+  },
+  {
+   "id": "q6_short",
+   "title": "Ignition off, Q6 shorted",
+   "fmea": "DFM-014.C2",
+   "switches": {
+    "q6": false,
+    "q6_short": true
+   },
+   "params": {},
+   "nodes": {
+    "VIN": 14.0,
+    "VTH": 4.2,
+    "SBU1": 4.615369,
+    "SBU2": 0.3,
+    "CANH": 3.166667
+   },
+   "verdict": "device reads ignition on"
+  },
+  {
+   "id": "can_nominal",
+   "title": "Dominant CAN_H, clamp diode healthy",
+   "fmea": "nominal",
+   "switches": {
+    "clamp_leak": false
+   },
+   "params": {},
+   "nodes": {
+    "VIN": 14.0,
+    "VTH": 4.2,
+    "SBU1": 4.615369,
+    "SBU2": 0.3,
+    "CANH": 3.166667
+   },
+   "verdict": "differential 1.67 V: dominant"
+  },
+  {
+   "id": "clamp_leak",
+   "title": "Dominant CAN_H, clamp diode leaking (nominal leak)",
+   "fmea": "DFM-021.C1",
+   "switches": {
+    "clamp_leak": true
+   },
+   "params": {},
+   "nodes": {
+    "VIN": 14.0,
+    "VTH": 4.2,
+    "SBU1": 4.615369,
+    "SBU2": 0.3,
+    "CANH": 2.638893
+   },
+   "verdict": "differential 1.14 V: dominant"
+  },
+  {
+   "id": "clamp_short",
+   "title": "Dominant CAN_H, clamp diode shorted",
+   "fmea": "DFM-021.C1",
+   "switches": {
+    "clamp_leak": true
+   },
+   "params": {
+    "leak_r": 1.0
+   },
+   "nodes": {
+    "VIN": 14.0,
+    "VTH": 4.2,
+    "SBU1": 4.615369,
+    "SBU2": 0.3,
+    "CANH": 0.150937
+   },
+   "verdict": "differential -1.35 V: NOT dominant: frames corrupted, bus errors"
+  }
+ ],
+ "link": "https://www.falstad.com/circuit/circuitjs.html?running=true&cct=%24%201%200.000005%2010.20027730826997%2050%205%2043%205e-11%0Ax%2016%2032%20300%2036%204%2016%20Switch%5Csdrive%5Cs%28DFM-010.C3%2C%5CsDFM-011.C2%29%0AR%2064%2096%2064%2048%200%200%2040%2014%200%200%200.5%0A207%2064%2096%2016%2096%204%20VIN%0Ar%2064%2096%2064%20208%200%2070000%0A207%2064%20208%2016%20208%204%20VTH%0Ar%2064%20208%2064%20320%200%2030000%0Ag%2064%20320%2064%20368%200%200%0AR%20192%2096%20192%2048%200%200%2040%205%200%200%200.5%0Ar%20192%2096%20192%20160%200%2020%0As%20192%20160%20192%20224%200%200%20false%0A207%20192%20224%20144%20224%204%20SBU1%0As%20192%20224%20192%20288%200%200%20false%0Ar%20192%20288%20192%20384%200%20240%0Ag%20192%20384%20192%20432%200%200%0Aw%20192%20224%20320%20224%200%0Ar%20320%20224%20320%20128%200%20100000000%0A207%20320%20128%20368%20128%204%20VIN%0Ar%20320%20224%20320%20320%200%20100000000%0Ag%20320%20320%20320%20368%200%200%0Ax%2016%20464%20420%20468%204%2012%20IN%5Csswitches%5Csto%5Csintercept%5Cswhen%5CsSBU1%5Cs%3E%5CsVTH%5Cs%28VTH%5Cs%3D%5Csk%5Csx%5CsVIN%29%0Ax%20464%2032%20720%2036%204%2016%20Ignition%5Cssense%5Cs%28DFM-014.C2%29%0AR%20512%2096%20512%2048%200%200%2040%203.3%200%200%200.5%0Ar%20512%2096%20512%20208%200%2010000%0A207%20512%20208%20464%20208%204%20SBU2%0Ar%20512%20208%20512%20304%200%201000%0As%20512%20304%20512%20384%200%200%20false%0Aw%20512%20304%20608%20304%200%0As%20608%20304%20608%20384%200%201%20false%0Aw%20608%20384%20512%20384%200%0Ag%20512%20384%20512%20432%200%200%0Ax%20464%20464%20760%20468%204%2012%20The%5Csdevice%5Csreads%5Csignition%5Cson%5Cswhen%5CsSBU2%5Cs%3C%5Cs0.9%5CsV%0Ax%20800%2032%201060%2036%204%2016%20CAN%5Csclamp%5CsD2%5Cs%28DFM-021.C1%29%0AR%20848%2096%20848%2048%200%200%2040%203.5%200%200%200.5%0Ar%20848%2096%20848%20208%200%2030%0A207%20848%20208%20800%20208%204%20CANH%0Ar%20848%20208%20976%20208%200%2060%0AR%20976%20208%20976%20160%200%200%2040%202.5%200%200%200.5%0As%20848%20208%20848%20288%200%201%20false%0Ar%20848%20288%20848%20384%200%20100%0Ag%20848%20384%20848%20432%200%200%0Ax%20800%20464%201100%20468%204%2012%20Dominant%5Csneeds%5CsCAN_H%5Cs-%5CsCAN_L%5Cs%3E%5Cs0.9%5CsV%5Cs%28CAN_L%5Csat%5Cs1.5%5CsV%29%0A"
+}

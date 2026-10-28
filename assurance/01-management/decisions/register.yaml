@@ -3337,40 +3337,56 @@
   applied: {ref: be0b4ff, record: "WP-V-02 v0.15 §4.5 (SU-01…03, draft arguments not yet checked against logs); WP-V-04 v0.10; WP-M-08 v0.9 OI-8 closed", at: 2026-10-26}
 
 - id: DQ-141
-  question: "Is a soft real-time 100 Hz loop on the bench PC acceptable for the HIL plant model at bench stage B3?"
-  context: "The HIL plant model runs on a bench PC; whether a non-real-time OS loop is good enough is undecided."
+  question: "Can the bench PC run the Corolla plant model for closed-loop integration tests on an ordinary operating system, or does it need a real-time one?"
+  context: >-
+    Closed-loop integration (WP-S-08 step I-3) has a bench PC play the car: it answers the panda's steering and
+    acceleration frames with Corolla wheel-speed, torque and brake frames at 100 Hz. On an ordinary Linux kernel the
+    10 ms period jitters. The panda's own timeouts start at 50 ms (TSR-408), so small jitter is harmless, but a late
+    frame could trip a timeout the real car would not. **Measuring the jitter first avoids buying real-time hardware
+    that may not be needed.**
   reversibility: easy
-  blocks: "HIL stage B3"
+  blocks: "WP-S-08 I-3 closed-loop cases; HIL bench stage B3"
   gate: G3
   decider: claude
+  asked: 2026-10-27
+  batch: 19
+  proceed_after: 2026-11-03
   options:
     - key: A
       recommended: true
-      title: "Accept with measured jitter bound"
-      detail: "Simple; measure and record jitter."
+      title: "Ordinary OS, accepted only with a measured jitter bound"
+      detail: "Measure the period over a long run; accept if 99.9 % of frames arrive within 1 ms of their slot and none is a full period late, and record the bound with the results. Cost: one measurement and a check in the test harness."
     - key: B
-      title: "Real-time target"
-      detail: "More hardware/software effort."
-  sources: ["assurance/models/README.md “Item 4 also has an open question: whether a soft real-time l”"]
-  status: queued
+      title: "Real-time kernel (PREEMPT_RT) or a dedicated real-time target from the start"
+      detail: "Tight timing without measuring first. Cost: a kernel build or extra hardware, and keeping it working."
+  sources: ["assurance/models/README.md item 4", "assurance/03-system/WP-S-08-system-integration-test.md I-3", "assurance/05-software/hil-bench/README.md §2 (B3)"]
+  status: open
 
 - id: DQ-142
-  question: "What latent-fault interval is assumed for the harness intercept switch (box v3 analog switches, no relay) until start-up tests exist?"
-  context: "PM-03 assumes the relay is checked every 6 months; WP-H-04 must use the same assumption until TSR-515 start-up tests replace it."
+  question: "Until the panda tests its intercept switch at every start, how often should the hardware metrics assume a hidden fault in it is found?"
+  context: >-
+    If the switch that lets the panda take over the camera's steering line fails silently, nothing notices until it is
+    checked. The hardware metrics (WP-H-04) need an assumed interval for that. The 6-monthly service check (PM-03,
+    WP-O-02) re-runs the configuration checks; a check at every power-up (TSR-515) would replace it but is not built.
+    The harness box v3 uses analog switches, not a relay, so the check covers the switch path. **A shorter interval
+    looks better in the metrics only if a check really happens that often.**
   reversibility: easy
-  blocks: "WP-H-04 latent-fault metrics"
+  blocks: "WP-H-04 latent-fault metric; WP-S-06 OI-2"
   gate: G3
   decider: claude
+  asked: 2026-10-27
+  batch: 19
+  proceed_after: 2026-11-03
   options:
     - key: A
       recommended: true
-      title: "Use 6 months (PM-03) in WP-H-04"
-      detail: "Consistent with WP-S-06; replaced by TSR-515 later."
+      title: "Use the 6-month service check until the start-up test exists"
+      detail: "Matches what is actually done today; the metric is recalculated with one drive cycle once TSR-515 is built. Cost: a weaker latent-fault metric until then, shown honestly."
     - key: B
-      title: "Shorter interval"
-      detail: "Better metrics; more user burden."
-  sources: ["assurance/03-system/WP-S-06-requirements-production-operation.md OI-2"]
-  status: queued
+      title: "Assume a shorter interval now"
+      detail: "A better number. Cost: it needs a check the driver or a technician really performs that often, which no procedure has yet."
+  sources: ["assurance/03-system/WP-S-06-requirements-production-operation.md OI-2", "assurance/09-production-operation/WP-O-02-operation-service-decommissioning.md PM-03", "assurance/04-hardware/WP-H-04-hardware-metrics.md"]
+  status: open
 
 - id: DQ-143
   question: "How should the CRC that protects commands from the main computer to the panda be chosen?"
@@ -3449,22 +3465,33 @@
   status: open
 
 - id: DQ-146
-  question: "Should the openpilot simulator (tools/sim) be adapted to Toyota and run through a real panda?"
-  context: "That would make integration step I-3 closed-loop with the real envelope firmware; a test-method choice."
+  question: "For closed-loop integration tests, what should play the car around a real panda: the existing Corolla plant model, or openpilot's driving simulator adapted to Toyota?"
+  context: >-
+    Integration step I-3 needs a vehicle that answers the panda's commands, so timing at the limits can be tested with
+    the real firmware. The layer-1 plant model already models the Corolla's steering and longitudinal response and
+    runs the real panda safety code in simulation. openpilot's simulator (tools/sim, MetaDrive) also renders camera
+    images for the driving model, but speaks Honda, not Toyota. **I-3 tests the envelope and its timing, which needs
+    the car's frames, not the camera.**
   reversibility: easy
-  blocks: "WP-S-08 I-3"
+  blocks: "WP-S-08 I-3; WP-S-08 OI-5"
   gate: G3
   decider: claude
+  asked: 2026-10-27
+  batch: 19
+  proceed_after: 2026-11-03
   options:
     - key: A
       recommended: true
-      title: "Adapt tools/sim and route through real panda"
-      detail: "Closed-loop envelope tests; engineering effort."
+      title: "Drive a real panda from the layer-1 plant on the bench PC; keep the simulator for layer 3"
+      detail: "Reuses a model that is already checked in CI; the bench PC sends the Corolla frames through the panda jungle. Cost: a CAN output for the plant and the jitter check of the bench-PC question."
     - key: B
-      title: "Rely on HIL replay only"
-      detail: "Less effort; no closed-loop coverage."
-  sources: ["assurance/03-system/WP-S-08-system-integration-test.md OI-5"]
-  status: queued
+      title: "Adapt tools/sim to Toyota and route it through a real panda"
+      detail: "The whole stack in the loop, camera included. Cost: a Toyota port of the simulator bridge, more to maintain, and slower runs."
+    - key: C
+      title: "No closed loop; replay recorded traffic only"
+      detail: "Least effort. Cost: no test of how the system behaves when the car responds to its commands."
+  sources: ["assurance/03-system/WP-S-08-system-integration-test.md I-3, OI-5", "assurance/sim/README.md (layers 1 and 3)", "assurance/05-software/hil-bench/README.md"]
+  status: open
 
 - id: DQ-147
   question: "While the car is under control, should the panda refuse every command the main computer does not need, instead of only the ones known to be dangerous?"
@@ -3567,40 +3594,56 @@
   applied: {ref: "jherrodthomas/LionDriver#204, jherrodthomas/opendbc#19", record: "WP-W-02 v0.28 SWSR-408 and OI-13; WP-W-03 ATC-27; change-2026-10-17-pin-27f20db", at: 2026-10-17}
 
 - id: DQ-151
-  question: "Should host requirements be written for the four selfdrived state transitions that have none (driver disengage, override while engaged, pre-enable phase)?"
-  context: "The state-machine checker (finding S7) found transitions X2, E2, O2 and P1 without a host SWSR; a soft-disable event is not acted on in preEnabled."
+  question: "Should host software requirements be written for the four selfdrived state changes that have none: the driver disengaging, the driver overriding while engaged, and the pre-enable phase?"
+  context: >-
+    The state-machine checker (finding S7, WP-W-05 §5.3) found four transitions of selfdrived (X2, E2, O2, P1) with no
+    host requirement, and in the pre-enable phase a soft-disable event is not acted on. The panda's envelope
+    requirements (SWSR-301, SWSR-302) cover disengagement on its side, so the car stays safe, but the host behaviour
+    is untested against a requirement. **Writing them closes the gap the checker reports; arguing them away needs a
+    reviewer to accept the envelope as enough.**
   reversibility: easy
-  blocks: "WP-W-05 §5.3"
+  blocks: "WP-W-02 OI-12; WP-W-05 §5.3"
   gate: G3
   decider: claude
+  asked: 2026-10-27
+  batch: 19
+  proceed_after: 2026-11-03
   options:
     - key: A
       recommended: true
-      title: "Derive host SWSRs"
-      detail: "Complete host requirement coverage; more QM test cases."
+      title: "Derive host requirements for the four transitions"
+      detail: "Complete host coverage; the pre-enable soft-disable case gets a requirement and a test. Cost: four SWSRs and their QM tests."
     - key: B
       title: "Record why none is needed"
-      detail: "Less work; must argue envelope-side SWSR-301/302 suffice."
-  sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-12"]
-  status: queued
+      detail: "Less work. Cost: a written argument that the envelope requirements alone suffice, which the pre-enable case makes harder."
+  sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-12", "assurance/05-software/WP-W-05-software-unit-design.md §5.3"]
+  status: open
 
 - id: DQ-152
-  question: "What field layout should the envelope's reason code (SWSR-108a) use towards the host?"
-  context: "The reason code must match the HSI (WP-S-05 §4.2) and the pandaStates message in cereal."
+  question: "How should the panda report why it took steering authority away: as a new field in the message the main computer logs, or squeezed into the existing health flags?"
+  context: >-
+    SWSR-108a asks the panda to record the cause of every revocation (TX violation, RX checksum, timeout, brake,
+    heartbeat and others) and report it in its health packet. Today only a blocked-frame count and an RX-invalid flag
+    are reported, so a log cannot say why the car stopped steering. The main computer logs the health packet as
+    `pandaStates`, which already has a LionDriver field (`requestsRejected`). **A proper field makes every revocation
+    explainable in field data; packing bits saves a schema change but runs out of room.**
   reversibility: easy
-  blocks: "SWSR-108a"
+  blocks: "SWSR-108a; WP-W-02 OI-8; WP-S-05 §4.2"
   gate: G3
   decider: claude
+  asked: 2026-10-27
+  batch: 19
+  proceed_after: 2026-11-03
   options:
     - key: A
       recommended: true
-      title: "Layout per WP-S-05 §4.2 with a new pandaStates field"
-      detail: "Single source of truth; cereal schema change."
+      title: "A reason code and per-cause counters, laid out in WP-S-05 §4.2, with a new pandaStates field"
+      detail: "One documented layout for firmware, host and logs. Cost: a health-packet change and a cereal schema field, carried at each sync."
     - key: B
-      title: "Pack into existing health flag bits"
-      detail: "No schema change; limited bits."
-  sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-8"]
-  status: queued
+      title: "Pack the cause into spare bits of the existing health flags"
+      detail: "No schema change. Cost: few bits, no counters, and the meaning hidden in bit positions."
+  sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-108a, OI-8", "assurance/03-system/WP-S-05-hsi-specification.md §4.2", "openpilot/cereal/log.capnp (PandaState)"]
+  status: open
 
 - id: DQ-153
   question: "Should the panda's safety checks get a higher interrupt priority than its communication, or stay at the same level?"
@@ -3730,22 +3773,29 @@
   status: open
 
 - id: DQ-158
-  question: "What size and complexity limits apply to large switch/ISR functions, and which tool measures them?"
-  context: "ENV-R-07 needs limits; current numbers are line spans. A complexity tool (e.g. lizard or pmccabe) must be selected and classified."
+  question: "How should the size and complexity limit for the panda's big functions be checked: with a measuring tool, or by review?"
+  context: >-
+    The coding rules set a limit (ENV-R-07: functions at most 60 logical lines and cyclomatic complexity 15, unless
+    justified), but nothing measures it; today's numbers are line spans read by hand. Some interrupt handlers and
+    command switches are far longer. A tool used for evidence has to be classified (WP-P-07). **A measured limit can
+    gate CI; review alone leaves the rule unenforced.**
   reversibility: easy
-  blocks: "ENV-R-07, ATC-17"
+  blocks: "ENV-R-07; WP-W-05 OI-2; WP-W-01 OI-5"
   gate: G3
   decider: claude
+  asked: 2026-10-27
+  batch: 19
+  proceed_after: 2026-11-03
   options:
     - key: A
       recommended: true
-      title: "Set limits, measure with a classified tool"
-      detail: "Objective gate; tool classification effort."
+      title: "Measure in CI with an open-source tool (lizard), classified under WP-P-07"
+      detail: "Objective numbers on every change; justified exceptions listed once. Cost: the classification record and a list of justified exceptions for the large handlers."
     - key: B
-      title: "Review-based judgement"
-      detail: "No tool; weaker evidence."
-  sources: ["assurance/05-software/WP-W-05-software-unit-design.md OI-2"]
-  status: queued
+      title: "Judge it in review"
+      detail: "No tool. Cost: weaker evidence and no automatic check."
+  sources: ["assurance/05-software/WP-W-05-software-unit-design.md OI-2", "assurance/05-software/WP-W-01-software-development-environment-guidelines.md ENV-R-07"]
+  status: open
 
 - id: DQ-159
   question: "Which MC/DC coverage measurement approach should the envelope tests use, plus a branch-coverage gate?"
@@ -3769,40 +3819,53 @@
   applied: {ref: "jherrodthomas/LionDriver#83", record: "WP-W-06 §4 and OI-3; WP-P-07 TL-42, TL-43; tools/ci/coverage/structural_coverage.py; .github/workflows/safety.yaml structural_coverage", at: 2026-10-14}
 
 - id: DQ-160
-  question: "Which abstract-interpretation or bounded-model-checking tool should be used for VS-UV-S3?"
-  context: "Static verification beyond MISRA is planned; a tool must be chosen and classified (WP-P-07)."
+  question: "Which tool should prove properties of the panda's safety code beyond the MISRA checks: an open-source model checker or a commercial analyser?"
+  context: >-
+    Verification case VS-UV-S3 plans static proof of properties such as no overflow or out-of-bounds access in the
+    safety code, beyond what cppcheck's MISRA checks find. No tool is chosen yet, and the chosen one must be
+    classified (WP-P-07). **The open-source tools fit the open safety case; commercial analysers are stronger on whole
+    programs but cost licences.**
   reversibility: easy
-  blocks: "VS-UV-S3"
+  blocks: "VS-UV-S3; WP-W-06 OI-2"
   gate: G3
   decider: claude
+  asked: 2026-10-27
+  batch: 19
+  proceed_after: 2026-11-03
   options:
     - key: A
       recommended: true
-      title: "Open-source tool (e.g. CBMC or Frama-C)"
-      detail: "No licence cost; classification effort."
+      title: "CBMC on the safety modes and the envelope core, classified under WP-P-07"
+      detail: "Bounded proofs that run in CI and that anyone can rerun. Cost: harnesses per function and the classification record."
     - key: B
-      title: "Commercial analyser"
-      detail: "Stronger support; licence cost."
-  sources: ["assurance/05-software/WP-W-06-software-unit-verification.md OI-2"]
-  status: queued
+      title: "A commercial abstract-interpretation analyser"
+      detail: "Whole-program results with vendor support. Cost: licence fees, and results others cannot rerun."
+  sources: ["assurance/05-software/WP-W-06-software-unit-verification.md OI-2, VS-UV-S3"]
+  status: open
 
 - id: DQ-161
-  question: "Should GNU statement-expression macros be replaced with typed inline functions to remove MISRA deviations DEV-09/10/12/13?"
-  context: "These macros need standing deviation records; replacing them changes safety code but removes the deviations."
+  question: "Should the min, max, clamp and abs macros in the safety code be replaced with typed inline functions, removing four standing MISRA deviations?"
+  context: >-
+    The safety helpers in opendbc and the panda firmware use GNU statement-expression macros (`({ … })` with
+    `__typeof__`) for min, max, clamp and abs. They need four deviation records (DEV-09, DEV-10, DEV-12, DEV-13), two
+    of them against a mandatory rule where cppcheck misreads the extension. Replacing them changes safety code in many
+    places. **Removing them clears the deviations for good; keeping them keeps the code as upstream has it.**
   reversibility: revisit
-  blocks: "MISRA compliance, WP-W-01 OI-2"
+  blocks: "WP-W-01 OI-9; MISRA compliance (DEV-09/10/12/13)"
   gate: G3
   decider: claude
+  asked: 2026-10-27
+  batch: 19
   options:
     - key: A
       recommended: true
-      title: "Replace"
-      detail: "Fewer deviations; code change and re-test."
+      title: "Replace them with typed inline functions"
+      detail: "No deviations left; each call states its type. Cost: changes across the safety modes and firmware, re-run tests and mutation tests, and a difference from upstream at every sync."
     - key: B
-      title: "Keep with approved deviations"
-      detail: "No code churn."
-  sources: ["assurance/05-software/WP-W-01-software-development-environment-guidelines.md OI-9"]
-  status: queued
+      title: "Keep them with approved deviations"
+      detail: "No code churn. Cost: four deviation records with rationale, and the two mandatory-rule entries argued as tool false positives."
+  sources: ["assurance/05-software/WP-W-01-software-development-environment-guidelines.md OI-9, DEV-09, DEV-10, DEV-12, DEV-13", "opendbc_repo/opendbc/safety/helpers.h", "panda/board/utils.h"]
+  status: open
 
 - id: DQ-162
   question: "How should the driving and monitoring models be loaded safely: check their hash first and keep today's format, or move to a format that cannot run code?"
@@ -3832,22 +3895,29 @@
   status: open
 
 - id: DQ-163
-  question: "Is the red panda accepted as representative for stage B1 watchdog evidence?"
-  context: "The red panda may differ from the reference device in relay drive and harness detection."
+  question: "Can tests on the red panda board count as development evidence for the watchdog, or must they wait for the reference device?"
+  context: >-
+    The first HIL bench (stage B1) uses a red panda, whose relay drive and harness detection may differ from the panda
+    inside the comma device. The watchdog cases (VS-FI-17, VS-SWQ-14) test the firmware, which is the same on both.
+    **Accepting the red panda lets B1 produce evidence now; the device-specific parts are repeated on the reference
+    device before release.**
   reversibility: easy
-  blocks: "VS-FI-17, VS-SWQ-14"
+  blocks: "VS-FI-17, VS-SWQ-14; HIL bench R-2"
   gate: G3
   decider: claude
+  asked: 2026-10-27
+  batch: 19
+  proceed_after: 2026-11-03
   options:
     - key: A
       recommended: true
-      title: "Accept for development evidence; repeat on the reference device (B4) before release"
-      detail: "B1 proceeds; final evidence on the real device."
+      title: "Accept the red panda for development evidence; repeat on the reference device (B4) before release"
+      detail: "B1 proceeds; the release evidence still comes from the real device. Cost: the repeat runs at B4."
     - key: B
       title: "Test only on the reference device"
-      detail: "Needs B4 setup first."
-  sources: ["assurance/05-software/hil-bench/README.md R-2"]
-  status: queued
+      detail: "One set of evidence. Cost: waits for the B4 bench and the reference device."
+  sources: ["assurance/05-software/hil-bench/README.md R-2, §2 (B1, B4)"]
+  status: open
 
 - id: DQ-164
   question: "When the panda decides whether the car is moving, should it add up the four wheel speeds (as coded) or check that any wheel is turning (as SWSR-302 says)?"
@@ -6126,3 +6196,63 @@
   sources: ["assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md §4.4 items 5–8", "DQ-421", "LionDriver-security (private): gaps/INVENTORY.md"]
   status: open
 
+
+- id: DQ-424
+  question: "When the driver does not respond and LionDriver stops the car in its lane, how firmly should it brake?"
+  context: >-
+    If the driver ignores every alert, LionDriver slows the car to a stop in its lane and holds it there until the
+    driver takes over (your DQ-365 answer, TSR-633). Today it brakes at 1.2 m/s², the gentlest rate the planner has:
+    about 25 s and 390 m from 110 km/h. DQ-365 was described as about 3 m/s², and no requirement sets the rate. **A
+    firmer stop shortens the time an unresponsive driver rides at speed; a gentler one gives following traffic more
+    warning.** Found in the software FMEA re-rating at BL-007 (SWF-086.C2).
+  reversibility: easy
+  blocks: "SW FMEA SWF-086.C2, SWF-ACT-073; TSR-633 stop rate and time; WP-S-04 §3.8"
+  gate: G2
+  decider: lead
+  asked: 2026-10-27
+  batch: 19
+  figure: figures/dq-424.svg
+  caption: "Speed after the stop starts, from 110 km/h, at each braking rate."
+  options:
+    - key: A
+      recommended: true
+      title: "2 m/s², ramped in (about 15 s and 230 m from 110 km/h)"
+      detail: "Halves the time at speed and stays at an ordinary braking level for following traffic; the ramp keeps the jerk within its limit. Cost: a planner change for the forced stop, a rate in TSR-633, tests."
+    - key: B
+      title: "Keep 1.2 m/s² (about 25 s and 390 m)"
+      detail: "No change; the gentlest for following traffic. Cost: the longest ride at speed with an unresponsive driver; the DQ-365 description is corrected instead."
+    - key: C
+      title: "3 m/s², as DQ-365 described (about 10 s and 150 m)"
+      detail: "Shortest time at speed. Cost: a firm stop that following drivers may not expect (rear-end risk, HZ-006), and the same planner change."
+  sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-086.C2", "DQ-365", "openpilot/selfdrive/controls/lib/longitudinal_planner.py (A_CRUISE_MIN)", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633"]
+  status: open
+
+- id: DQ-425
+  question: "Should the reference build on the device ignore the test-only switches (REPLAY, SIMULATION, FINGERPRINT, BLOCK, STARTED and the others)?"
+  context: >-
+    A reversible technical choice, so Claude goes with the recommendation unless you object. Ten environment switches
+    meant for tests and the simulator still work on the car: one makes the item show engaged whenever the panda allows
+    control, one skips the panda firmware check, one fakes ignition, one overrides the car identification. Nothing sets
+    them, but a shell on the device can. **The fix keeps them on a PC, where the simulator and tests need them, and
+    removes them on the device before any process starts.** Same reasoning as your DQ-131 answer for the debug modes.
+  reversibility: easy
+  blocks: "SW FMEA SWF-028.C2, SWF-030.C2 (AP H -> L), SWF-058.C2, SWF-082.C1; SWF-ACT-028, -031, -057, -070"
+  gate: G1
+  decider: claude
+  asked: 2026-10-27
+  proceed_after: 2026-10-30
+  after:
+    - DQ-131
+  options:
+    - key: A
+      recommended: true
+      title: "manager removes them on the device in the reference build, and logs what it removed"
+      detail: "One small module, tested and mutation-checked in CI. Cost: a process started by hand from a shell still sees them (a cybersecurity matter, shell access)."
+    - key: B
+      title: "Compile or code them out of each process in the reference build"
+      detail: "Also covers a process started by hand. Cost: changes in pandad, selfdrived, card, the messaging library and opendbc, each a fork difference to carry at upstream syncs."
+    - key: C
+      title: "Leave them; rely on no shell access"
+      detail: "No change. Cost: SWF-028.C2 and SWF-030.C2 stay AP H with nothing that detects them."
+  sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-028, SWF-030, SWF-058, SWF-082", "assurance/07-supporting/impact/change-2026-10-27-reference-test-switches.md", "DQ-131"]
+  status: open

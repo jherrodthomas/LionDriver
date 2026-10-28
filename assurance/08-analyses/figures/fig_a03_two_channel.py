@@ -48,27 +48,27 @@ GROUPS = [
 ]
 
 PLACE = {
-  "DFI-03": ("cascade", "holds reset / BOOT0"),
-  "DFI-06": ("cascade", "floods or garbles SPI"),
-  "DFI-07": ("cascade", "sets the safety mode"),
-  "DFI-08": ("cascade", "switches to diagnostic mode"),
-  "DFI-09": ("cascade", "reflashes panda firmware"),
-  "DFI-10": ("cascade", "sends stale commands"),
-  "DFI-04": ("board", "one clock source"),
-  "DFI-11": ("board", "heat at the windshield"),
-  "DFI-16": ("board", "board manufacturing defect"),
-  "DFI-01": ("supply", "supply lost"),
-  "DFI-02": ("supply", "brown-out, erratic run"),
-  "DFI-12": ("harness", "EMC or ESD at the harness"),
-  "DFI-13": ("harness", "loose connector, vibration"),
-  "DFI-20": ("box", "box VIN lost, car on"),
-  "DFI-21": ("box", "box VIN lost, HMI side"),
-  "DFI-05": ("vehicle", "same CAN signals to both"),
-  "DFI-19": ("vehicle", "SoC drives cluster lamps"),
-  "DFI-14": ("development", "one spec, one repository"),
-  "DFI-15": ("development", "same people and practice"),
-  "DFI-17": ("field", "wrong or half-seated harness"),
-  "DFI-18": ("field", "one OTA updates both"),
+  "DFI-13a": ("cascade", "holds reset / BOOT0"),
+  "DFI-34": ("cascade", "floods or garbles SPI"),
+  "DFI-13b": ("cascade", "sets the safety mode"),
+  "DFI-13c": ("cascade", "switches to diagnostic mode"),
+  "DFI-13d": ("cascade", "reflashes panda firmware"),
+  "DFI-35": ("cascade", "sends stale commands"),
+  "DFI-02": ("board", "one clock source"),
+  "DFI-04": ("board", "heat at the windshield"),
+  "DFI-03": ("board", "board manufacturing defect"),
+  "DFI-01a": ("supply", "supply lost"),
+  "DFI-01b": ("supply", "brown-out, erratic run"),
+  "DFI-07": ("harness", "EMC or ESD at the harness"),
+  "DFI-05": ("harness", "loose connector, vibration"),
+  "DFI-27a": ("box", "box VIN lost, car on"),
+  "DFI-27b": ("box", "box VIN lost, HMI side"),
+  "DFI-10": ("vehicle", "same CAN signals to both"),
+  "DFI-15": ("vehicle", "SoC drives cluster lamps"),
+  "DFI-08": ("development", "one spec, one repository"),
+  "DFI-16": ("development", "same people and practice"),
+  "DFI-20": ("field", "wrong or half-seated harness"),
+  "DFI-36": ("field", "one OTA updates both"),
 }
 
 W, H = 1600, 1150
@@ -165,8 +165,8 @@ def draw(data: dict) -> str:
   text(60, 50, title, 24, "bold")
   text(60, 76, f"Dependent failure initiators of dfa.yaml rev {rev} on the two channels every ASIL decomposition "
                "of the FSC relies on, coloured by their DFA assessment", 14, fill=MUTED)
-  text(1540, 50, "IDs as in dfa.yaml", 12, "bold", MUTED, "end")
-  text(1540, 68, "(WP-A-03 §4.1–4.8 number its own DFIs)", 11, fill=MUTED, anchor="end")
+  text(1540, 50, "IDs as in WP-A-03 §4", 12, "bold", MUTED, "end")
+  text(1540, 68, "(a letter marks one part of a §4 initiator)", 11, fill=MUTED, anchor="end")
 
   # item boundary
   bx, by, bw, bh = 70, 104, 1460, 700

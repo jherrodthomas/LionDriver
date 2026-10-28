@@ -1,6 +1,8 @@
 # Configurations that safety analyses are performed against. Schema: schema/baseline.schema.json
 # A baseline is "proposed" until Phase 1 of fmea-plan.md starts, then "frozen".
 # Changing any field of a frozen baseline requires a new BL id and an impact analysis.
+# BL-007 is the first frozen baseline (project lead, 2026-10-26: freeze the next baseline and re-rate every FMEA against it).
+# BL-001..BL-006 stay as recorded: they are the configurations of the earlier ratings and no longer change.
 schema_version: 1
 baselines:
   - id: BL-001
@@ -183,6 +185,45 @@ baselines:
       submodules:
         panda: 0a7da851d6a7c7ca65cee19fa09ea2d90a2ceb17
         opendbc_repo: 62b89a3e651a3a3dd6aa8e4da1ea859a9d9b2aff
+        msgq_repo: 0e266c1dbcf7328beee3e57b4a8688555387c877
+        rednose_repo: 8671c17c3a4cdc4be5df07a068039e2da5b94eaa
+        teleoprtc_repo: 1aa8fc433bef1519a95c0700c96258c3be6dfb34
+        tinygrad_repo: d3f09c9bbd542fbfbe68c8569a1173550c408969
+      os: AGNOS 19.9 (launch_env.sh)
+  - id: BL-007
+    status: frozen
+    description: >-
+      BL-006 plus liondriver-dev up to 9fe3eb2 (#486, 2026-10-26). Host, reference platform: no engagement outside the assured
+      settings or below 60 km/h (#287, DQ-221 A, DQ-280 A); a setting changed while engaged is held until disengagement
+      (#342, DQ-403 A); no drive request while the car reports a stock AEB event (DQ-300 A, stock_aeb_interlock.py); wheel-touch
+      reminders also bounded by distance (TSR-634, #221); the DM countdown runs in elapsed time and an uncertain DM output no
+      longer stops it (SWSR-635a/b, #366); the minimum-risk manoeuvre is latched until the driver takes over (TSR-633, #372,
+      minimum_risk.py) and announced with a countdown before it starts (TSR-624, #374); start-up EPS and ABS/VSC fault-code
+      read with an entry check (TSR-629, DQ-132 A, vehicle_dtc.py); joystick and maneuver processes excluded from the
+      reference build (DQ-131 A) and the uploader and athena never started (DQ-121 A). opendbc 62b89a3 -> 4d1a056: only
+      accepted command frames keep TX-arrival authority (SWSR-408); final ACCEL_CMD rate-limited and no positive request
+      during stock AEB (TSR-713, SWSR-713h); a TX-arrival revocation is reported for the siren. panda 0a7da85 -> 3a8b7c2,
+      reference build: EPS-fault siren persistence 0.7 s and still sounding after a revocation (DQ-048 A, DQ-367); siren on a
+      TX-arrival revocation (DQ-404 A, TSR-516(b)); a not-engaged heartbeat revokes within 0.3 s, with the siren at 0.5 s
+      while PCM cruise stays on (TSR-307(a), TSR-516(c), engaged_mismatch.h); HIL test for it (bench only). Not in BL-007:
+      TSR-409 command-value freshness, TSR-204 envelope jerk limit, TSR-304 driver-override check, SFM-ACT-005, the host use of
+      the panda epsFault and requestsRejected fields (SFM-ACT-024). Nothing in BL-007 is verified on the vehicle.
+    vehicle:
+      make: Toyota
+      model: Corolla
+      model_year: 2020
+      trim: LE
+      market: US
+      platform_notes: TSS2; openpilot longitudinal per docs/CARS.md (Corolla 2020-22)
+    hardware:
+      device: comma 3X
+      panda: integrated in device
+      harness: Toyota A connector + harness box + comma power v3 (per docs/CARS.md)
+    software:
+      repo_commit: 9fe3eb267ef47e00954941e74c67201e8b281e71
+      submodules:
+        panda: 3a8b7c2ccd4d8634b66796b9bb51233a25bb95f2
+        opendbc_repo: 4d1a05691cf04197380a790241fda81360bff8d6
         msgq_repo: 0e266c1dbcf7328beee3e57b4a8688555387c877
         rednose_repo: 8671c17c3a4cdc4be5df07a068039e2da5b94eaa
         teleoprtc_repo: 1aa8fc433bef1519a95c0700c96258c3be6dfb34
