@@ -7,6 +7,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import fta_cutsets as fc
+import fta_classic
 import fta_diagrams as fd
 
 
@@ -207,7 +208,7 @@ class TestPhoneViews(unittest.TestCase):
   def test_every_sheet_has_a_phone_view_naming_every_event(self):
     import xml.etree.ElementTree as ET
     out = fd.build()
-    sheets = [n for n in out if n.startswith("fta-") and not n.endswith("-phone.svg")]
+    sheets = [n for n in out if n.startswith("fta-") and not n.endswith(("-phone.svg", "-cards.svg"))]
     self.assertTrue(sheets)
     for name in sheets:
       phone = name.replace(".svg", "-phone.svg")
@@ -217,6 +218,30 @@ class TestPhoneViews(unittest.TestCase):
       self.assertIn("prefers-color-scheme: dark", svg)
       for ident in set(fd.re.findall(r'class="id"[^>]*>([^<]+)<', out[name])):
         self.assertIn(f">{ident}<", svg, f"{phone}: {ident} missing")
+
+
+class TestTraditionalSheets(unittest.TestCase):
+  """The traditional IEC 61025 sheets stay the drawing of record; the card views come in addition, never instead."""
+
+  @classmethod
+  def setUpClass(cls):
+    cls.out = fd.build()
+    cls.sheets = sorted(n for n in cls.out if n.startswith("fta-") and not n.endswith(("-phone.svg", "-cards.svg")))
+
+  def test_every_sheet_has_a_card_view_with_the_same_events(self):
+    for name in self.sheets:
+      card = name.replace(".svg", "-cards.svg")
+      self.assertIn(card, self.out, name)
+      ids = lambda svg: set(fd.re.findall(r'class="id"[^>]*>([^<]+)<', svg))   # noqa: E731
+      self.assertEqual(ids(self.out[name]), ids(self.out[card]), card)
+
+  def test_record_sheets_are_the_traditional_drawing(self):
+    for name in self.sheets:
+      svg = self.out[name]
+      self.assertIn(f'fill="{fta_classic.NAVY}"', svg, name)   # the navy title band of the traditional sheet
+      self.assertIn('class="w"', svg, name)                     # straight bus wires, not the card view's elbows
+      self.assertNotIn("Each event is a card", svg)
+    self.assertIn("Traditional sheets (the drawing of record)", self.out["README.md"])
 
 
 if __name__ == "__main__":

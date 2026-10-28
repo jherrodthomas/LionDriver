@@ -2,12 +2,16 @@
 """Draw the WP-A-04 fault trees as conventional FTA diagrams (IEC 61025 symbols).
 
 The source of record is the indented text tree of each safety goal in
-`../WP-A-04-system-fta-fmea.md`. This script parses those trees and writes one
-SVG per sheet, plus `README.md` listing the sheets. Nothing here is analysis
-content: change the trees in WP-A-04 and regenerate.
+`../WP-A-04-system-fta-fmea.md`. This script parses those trees and writes, per
+sheet, three SVGs plus `README.md` listing them. Nothing here is analysis content:
+change the trees in WP-A-04 and regenerate.
 
-Each event is a card in the style of `fta-viewer.html`. Symbols: the icon before
-the ID is the IEC 61025 shape (square = gate, with its AND / OR symbol beneath the
+  fta-<goal>-<n>.svg        the traditional IEC 61025 sheet, the drawing of record (drawn by fta_classic.py)
+  fta-<goal>-<n>-cards.svg  the same sheet in the easier-to-read card style of fta-viewer.html (drawn here)
+  fta-<goal>-<n>-phone.svg  the same sheet as an outline at phone width (drawn here)
+
+In the card view each event is a card in the style of `fta-viewer.html`. Symbols:
+the icon before the ID is the IEC 61025 shape (square = gate, with its AND / OR symbol beneath the
 card; circle = basic event; diamond = undeveloped event; triangle = transfer, to
 another sheet or to a gate developed in another tree). An event that already
 appears earlier (same ID) is drawn again with a "repeated" tag. Each gate card
@@ -1018,8 +1022,8 @@ def build() -> dict[str, str]:
     "Generated from the text trees in [WP-A-04](../WP-A-04-system-fta-fmea.md) by `fta_diagrams.py`. " +
     "WP-A-04 is the analysis of record; edit it and run `python3 fta_diagrams.py` (CI runs `--check`).",
     "",
-    "| Goal | Top event | Sheets |",
-    "|---|---|---|",
+    "| Goal | Top event | Sheets (traditional, of record) | Card view | Phone outline |",
+    "|---|---|---|---|---|",
   ]
   all_sheets = {tree.goal: paginate(tree) for tree in trees}
   SHEET_OF.clear()
@@ -1038,21 +1042,39 @@ def build() -> dict[str, str]:
     if n.children and n.ref_of is None:
       STATS[id(n)] = (_min_be(n), len(solver.cut_sets(n)))
       stack += n.children
+  import fta_classic   # imports this module, so not at the top
+  fta_classic.fd = sys.modules[__name__]   # the FMEA tags and sheet numbers filled above, also when run as a script
   asils = goal_asils()
   for tree in trees:
     sheets = all_sheets[tree.goal]
     hot = single_point_nodes(tree)
-    names = []
+    classic, cards, phones = [], [], []
     for no, root in enumerate(sheets, 1):
+      asil = asils.get(tree.goal, "?")
       name = f"fta-{tree.goal}-{no}.svg"
-      outputs[name] = render_sheet(tree, sheets, no, asils.get(tree.goal, "?"), hot)
+      outputs[name] = fta_classic.render_sheet(tree, sheets, no, asil, hot)
+      card = f"fta-{tree.goal}-{no}-cards.svg"
+      outputs[card] = render_sheet(tree, sheets, no, asil, hot)
       phone = f"fta-{tree.goal}-{no}-phone.svg"
-      outputs[phone] = render_phone(tree, sheets, no, asils.get(tree.goal, "?"), hot, name)
-      names.append(f"[{no}: {root.ident}]({name}) ([outline]({phone}))")
-    index.append(f"| {tree.goal} | {tree.root.ident} {tree.title} | {', '.join(names)} |")
-  index += ["", "Each event is a card, styled like [fta-viewer.html](fta-viewer.html). Symbols follow IEC 61025, " +
-            "as the icon before the ID: square = gate (blue OR, violet AND), with the gate symbol beneath the card; " +
-            "circle = basic event; diamond = undeveloped event; triangle = transfer. A dashed card is a latent event. " +
+      outputs[phone] = render_phone(tree, sheets, no, asil, hot, name)
+      classic.append(f"[{no}: {root.ident}]({name})")
+      cards.append(f"[{no}]({card})")
+      phones.append(f"[{no}]({phone})")
+    index.append(f"| {tree.goal} | {tree.root.ident} {tree.title} | {', '.join(classic)} | {', '.join(cards)} | "
+                 f"{', '.join(phones)} |")
+  index += ["", "**Traditional sheets (the drawing of record).** Symbols follow IEC 61025: rectangle = top or intermediate "
+            "event; OR / AND gate beneath it; circle = basic event; diamond = undeveloped event; triangle = transfer. " +
+            "Tags: SPF (single point in the baseline design), latent, SOTIF, CCF (→ WP-A-03 DFI), " +
+            "FFI (→ WP-A-02), repeated (event drawn again; defined where first shown). " +
+            "Red path: single-point path, one basic event in the item reaching the top event " +
+            "(undeveloped events outside the item assumed), computed from the gate logic. " +
+            "Dark tags: the FMEA failure modes and FMEDA rows that realise a basic event " +
+            "([fta-fmea-map.yaml](../fta-fmea-map.yaml), checked by `fmea_lint.py`); red \"no FMEA\": an event of a mapped " +
+            "tree that no FMEA row backs yet. Drawn by `fta_classic.py`.", "",
+            "**Card view (easier to read; same tree, same sheets, same red paths).** Each event is a card, styled like " +
+            "[fta-viewer.html](fta-viewer.html), with the IEC 61025 shape as the icon before the ID: square = gate " +
+            "(blue OR, violet AND), with the gate symbol beneath the card; circle = basic event; diamond = undeveloped " +
+            "event; triangle = transfer. A dashed card is a latent event. " +
             "Each gate card shows the fewest item basic events in a cut set below it (undeveloped events assumed) and " +
             "its number of minimal cut sets. " +
             "Tags: SPF (single point in the baseline design), latent, SOTIF, CCF (→ WP-A-03 DFI), " +
@@ -1068,13 +1090,15 @@ def build() -> dict[str, str]:
             "(`fta_viewer.py`; download it and open it in a browser, it needs no network). Gates and transfers open in " +
             "place, each gate shows its cut sets and the fewest item faults among them, and the red paths are the ones " +
             "on these sheets; a switch also counts latent events as already failed. Light, dark and left-to-right " +
-            "layouts. The sheets stay the drawing of record.", ""]
+            "layouts. The card view, the phone outline and the viewer are reading aids; the traditional sheets stay the "
+            "drawing of record.", ""]
   first = trees[0]
   index[4:4] = [f"[![First sheet of the {first.goal} fault tree as an outline: top event {first.root.ident} {first.title}, "
                 "with the gates and events beneath it down to the transfers to the next sheets; red marks single-point "
                 f"paths](fta-{first.goal}-1-phone.svg)](fta-{first.goal}-1.svg)", "",
-                f"*Sheet 1 of {first.goal} as an outline that reads on a phone; tap it for the [full sheet](fta-{first.goal}-1.svg). "
-                "Every sheet has both, listed below; the notation is explained under the table.*", ""]
+                f"*Sheet 1 of {first.goal} as an outline that reads on a phone; tap it for the traditional "
+                f"[full sheet](fta-{first.goal}-1.svg), the drawing of record. Every sheet has all three, listed below; the "
+                "notation is explained under the table.*", ""]
   outputs["README.md"] = "\n".join(index)
   return outputs
 
@@ -1098,14 +1122,14 @@ def main(argv: list[str]) -> int:
       print("run: python3 assurance/08-analyses/fta/fta_diagrams.py", file=sys.stderr)
       return 1
     n = sum(1 for k in outputs if k.endswith("-phone.svg"))
-    print(f"fta_diagrams: {len(outputs) - 1 - n} sheet(s) and {n} phone views current")
+    print(f"fta_diagrams: {n} sheet(s), {n} card views and {n} phone views current")
     return 0
   for n in sorted(existing - set(outputs)):
     (HERE / n).unlink()
   for n, c in outputs.items():
     (HERE / n).write_text(c, encoding="utf-8")
   n = sum(1 for k in outputs if k.endswith("-phone.svg"))
-  print(f"fta_diagrams: wrote {len(outputs) - 1 - n} sheet(s), {n} phone views and README.md")
+  print(f"fta_diagrams: wrote {n} sheet(s), {n} card views, {n} phone views and README.md")
   return 0
 
 
