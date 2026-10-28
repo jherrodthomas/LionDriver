@@ -1,0 +1,260 @@
+# ISO 21448:2022 (SOTIF) as checkable obligations: the second register of the clause-check pilot (README.md).
+#
+# Every obligation is written in the project's own words from the structure of the standard; no text, table, note,
+# annex or example of the standard is reproduced. `clause` is the clause of ISO 21448:2022 (§4 management of the
+# SOTIF activities, §5 specification of the function, §6 hazards and acceptance criteria, §7 functional
+# insufficiencies and triggering conditions, §8 functional modifications, §9 verification and validation strategy,
+# §10 known scenarios, §11 unknown scenarios, §12 achievement of the SOTIF and release, §13 operation phase). The
+# sub-clause is left empty until a holder of the licensed standard verifies the row (README §3). An unverified row is
+# a proposal (I0, AI-drafted), not an inventory of the standard.
+#
+# Keys and check kinds as in iso26262-3-2018.yaml. Where a work product holds only a plan or a results template
+# (validation runs, residual-risk estimate, release evaluation), the obligation that the activity was carried out is
+# a `manual:` check: a section that exists does not show that it was done.
+schema_version: 1
+standard: ISO 21448:2022
+id_prefix: S
+obligations:
+  - id: S-4.01
+    clause: "4"
+    topic: Planned activities
+    obligation: The SOTIF activities are planned clause by clause, with who is responsible for each.
+    work_product: WP-M-08
+    checks: ["section:SOTIF activities by clause", "section:Roles and responsibilities"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-4.02
+    clause: "4"
+    topic: Re-evaluation on change
+    obligation: A change to the function, its software or its learned model triggers a fresh look at the SOTIF analyses.
+    work_product: WP-M-08
+    checks: ["section:Change-triggered re-evaluation"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-5.01
+    clause: "5"
+    topic: Intended functionality
+    obligation: What each function is meant to do, and what the driver remains responsible for, is described.
+    work_product: WP-C-02
+    checks: ["section:Intended functionality", "section:Driver role"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-5.02
+    clause: "5"
+    topic: Operating domain
+    obligation: The conditions the function is designed to operate in are defined with their parameters and bounds.
+    work_product: WP-C-02
+    checks: ["section:Reference ODD", "section:ODD taxonomy"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-5.03
+    clause: "5"
+    topic: Known limits
+    obligation: The performance limits the function inherits from its sensors, model and actuators are stated.
+    work_product: WP-C-02
+    checks: ["section:System limits"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-5.04
+    clause: "5"
+    topic: Domain boundary
+    obligation: How the function must behave when it reaches or leaves its operating domain is specified.
+    work_product: WP-C-02
+    checks: ["section:Behaviour at the ODD boundary", "section:Required behaviour at ODD exit"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-6.01
+    clause: "6"
+    topic: Hazards of the nominal function
+    obligation: Hazards that arise with no fault, from the function itself, are found by a stated method and kept in step with the trace data.
+    work_product: WP-C-05
+    checks: ["section:Method", "section:SOTIF hazards", "trace:X3", "items:sotif-hazard:text,situations"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-6.02
+    clause: "6"
+    topic: Foreseeable misuse
+    obligation: Ways a driver can foreseeably misuse the function are considered as hazard sources.
+    work_product: WP-C-05
+    checks: ["section:Foreseeable misuse considered"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-6.03
+    clause: "6"
+    topic: Acceptance criteria
+    obligation: The level of residual risk the project will accept is stated, with how validation targets will follow from it.
+    work_product: WP-C-05
+    checks: ["section:Acceptance criteria", "section:Derivation method for validation targets"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-6.04
+    clause: "6"
+    topic: Risk of each hazard
+    obligation: Each SOTIF hazard's risk is evaluated and summarised.
+    work_product: WP-C-05
+    checks: ["section:Risk evaluation summary"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-7.01
+    clause: "7"
+    topic: Functional insufficiencies
+    obligation: Shortfalls of the specification and performance limits are listed per component that can contribute to a hazard.
+    work_product: WP-C-06
+    checks: ["section:Components analysed", "section:Functional insufficiencies", "items:functional-insufficiency:fi_type,component"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-7.02
+    clause: "7"
+    topic: Triggering conditions
+    obligation: The conditions that can set off each insufficiency are listed and linked to it.
+    work_product: WP-C-06
+    checks: ["section:Triggering conditions", "items:triggering-condition:category,insufficiencies"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-7.03
+    clause: "7"
+    topic: Closed chain
+    obligation: Every SOTIF hazard in use is reached through at least one insufficiency and condition, and every insufficiency is evaluated with a condition.
+    work_product: WP-C-06
+    checks: ["trace:S1"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-7.04
+    clause: "7"
+    topic: Acceptability per chain
+    obligation: Whether the risk of each condition-insufficiency-hazard chain is acceptable is recorded.
+    work_product: WP-C-06
+    checks: ["section:FI → SH evaluation", "items:triggering-condition:evaluation"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-8.01
+    clause: "8"
+    topic: Modifications
+    obligation: Where a chain's risk is not acceptable, a change to the function is defined, naming the hazards, conditions and insufficiencies it addresses.
+    work_product: WP-C-07
+    checks: ["section:Modifications", "items:functional-modification:addresses,parents,priority", "trace:S1"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-8.02
+    clause: "8"
+    topic: Modifications in the data
+    obligation: The modifications, insufficiencies and conditions in the trace data match the documents that define them.
+    work_product: WP-C-07
+    checks: ["trace:X3"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-9.01
+    clause: "9"
+    topic: Validation targets
+    obligation: The verification and validation strategy turns the acceptance criteria into stated validation targets by a stated method.
+    work_product: WP-V-02
+    checks: ["section:Method for deriving validation targets", "section:Validation targets"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-9.02
+    clause: "9"
+    topic: Targets judged sufficient
+    obligation: A reviewer agrees that the targets, if met, show the acceptance criteria are met.
+    work_product: WP-V-02
+    checks: ["manual:review of WP-V-02's targets against WP-C-05's acceptance criteria"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-10.01
+    clause: "10"
+    topic: Known scenarios
+    obligation: Hazardous scenarios already known are catalogued and traced to the requirements and conditions they test.
+    work_product: WP-V-03
+    checks: ["section:Scenario catalogue", "section:Scenario-to-requirement coverage"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-10.02
+    clause: "10"
+    topic: Known scenarios run
+    obligation: The known scenarios are run on the item and their results show acceptable behaviour.
+    work_product: WP-V-03
+    checks: ["manual:a test campaign recorded in WP-V-03 §5 on the item (the simulation results there are synthetic, no credit)"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-11.01
+    clause: "11"
+    topic: Search for the unknown
+    obligation: Methods to discover hazardous scenarios not yet known are planned, with how each discovery feeds back into the analyses.
+    work_product: WP-V-04
+    checks: ["section:Discovery methods", "section:Event triage and feedback", "section:Exploration plan"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-11.02
+    clause: "11"
+    topic: Residual risk estimated
+    obligation: The residual risk from scenarios still unknown is estimated and compared with the targets.
+    work_product: WP-V-04
+    checks: ["section:Residual risk estimation", "manual:a residual-risk estimate recorded in WP-V-04 §6 from exploration data"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-12.01
+    clause: "12"
+    topic: Release criteria
+    obligation: The criteria for releasing the function, and the evidence each one needs, are defined before the evaluation.
+    work_product: WP-K-02
+    checks: ["section:Release criteria", "section:Evidence checklist"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-12.02
+    clause: "12"
+    topic: SOTIF evaluated
+    obligation: The achievement of the SOTIF is evaluated against those criteria and a release recommendation is recorded.
+    work_product: WP-K-02
+    checks: ["manual:the evaluation of WP-K-02 §5 executed (not executed at this baseline)"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-13.01
+    clause: "13"
+    topic: Field monitoring
+    obligation: What is watched in the field, with what exposure data and along which data path, is defined.
+    work_product: WP-O-04
+    checks: ["section:What is monitored", "section:Data sources and data path"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-13.02
+    clause: "13"
+    topic: Thresholds
+    obligation: Field indicators have thresholds that trigger action.
+    work_product: WP-O-04
+    checks: ["section:KPIs and thresholds"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
+  - id: S-13.03
+    clause: "13"
+    topic: Feedback from the field
+    obligation: What is learned in the field flows back into the hazard, insufficiency and scenario analyses.
+    work_product: WP-O-04
+    checks: ["section:Feeding the analyses"]
+    subclause: null
+    source_verified_by: null
+    source_verified_date: null
