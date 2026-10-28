@@ -19,6 +19,7 @@
 #   subclause, source_verified_by, source_verified_date   filled by the verifier against the licensed text
 schema_version: 1
 standard: ISO 26262-3:2018
+id_prefix: O3
 obligations:
   - id: O3-5.01
     clause: "5"

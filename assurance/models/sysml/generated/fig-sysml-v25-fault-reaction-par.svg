@@ -1,0 +1,398 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="1666" viewBox="0 0 1520 1666" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">V-25. Fault reaction times (SysML v2 view faultReactionTimes)</title>
+<desc id="d">SysML parametric diagram generated from the model (LionDriverTiming, from WP-S-04 §4 and §5). One constraint property {time ≤ budget} per fault class, with its time parameter bound to the latest time the item takes and to the code-derived times T-nn it rests on, and its budget parameter bound to the budget; grouped by verdict: not met, partly, no derived time, met by design, met in code.</desc>
+<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter></defs>
+<rect width="1520" height="1666" fill="#FFFFFF"/>
+<text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-25 · Fault reaction times</text>
+<text x="40" y="69" font-size="12.5" fill="#64748B">WP-S-04 §5 as a parametric diagram: per fault class, the constraint time ≤ budget with the time the item takes, the code-derived times it rests on, and the budget</text>
+<text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::faultReactionTimes</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">ParametricView · render asInterconnectionDiagram · model aec35341f186</text>
+<line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
+<text x="52" y="150" font-size="12" fill="#D2553F" font-weight="700">Not met (7)</text>
+<rect x="52" y="160" width="464" height="122" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.3"/>
+<text x="62" y="178" font-size="11.5" fill="#0F172A" font-weight="700">RX stuck/inserted</text>
+<text x="506" y="178" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-403, TSR-404, T…</text>
+<rect x="62" y="190" width="150" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="68" y="202" font-size="8.5" fill="#64748B" font-weight="600">time</text>
+<text x="68" y="215" font-size="9.5" fill="#0F172A">rate, frozen-content and</text>
+<text x="68" y="226.5" font-size="9.5" fill="#0F172A">cross-checks not built</text>
+<rect x="376" y="190" width="130" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="382" y="202" font-size="8.5" fill="#64748B" font-weight="600">budget</text>
+<text x="382" y="215" font-size="9.5" fill="#0F172A" font-weight="600">≤ 0.2 s</text>
+<rect x="222" y="196" width="124" height="46" rx="16" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.5"/>
+<text x="284" y="211" font-size="8.5" fill="#64748B" text-anchor="middle">«constraint»</text>
+<text x="284" y="228" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">{time ≤ budget}</text>
+<rect x="218" y="215" width="8" height="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.3"/>
+<rect x="342" y="215" width="8" height="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.3"/>
+<line x1="212" y1="219" x2="218" y2="219" stroke="#334155" stroke-width="1.1"/>
+<line x1="350" y1="219" x2="376" y2="219" stroke="#334155" stroke-width="1.1"/>
+<text x="62" y="270" font-size="9" fill="#64748B" font-weight="600">code:</text>
+<rect x="96" y="258" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="113.2" y="269.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-03</text>
+<rect x="528" y="160" width="464" height="122" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.3"/>
+<text x="538" y="178" font-size="11.5" fill="#0F172A" font-weight="700">Relay stuck released</text>
+<text x="982" y="178" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-506</text>
+<rect x="538" y="190" width="150" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="544" y="202" font-size="8.5" fill="#64748B" font-weight="600">time</text>
+<text x="544" y="215" font-size="9.5" fill="#0F172A">no relay read-back</text>
+<rect x="852" y="190" width="130" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="858" y="202" font-size="8.5" fill="#64748B" font-weight="600">budget</text>
+<text x="858" y="215" font-size="9.5" fill="#0F172A" font-weight="600">≤ 0.3 s</text>
+<rect x="698" y="196" width="124" height="46" rx="16" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.5"/>
+<text x="760" y="211" font-size="8.5" fill="#64748B" text-anchor="middle">«constraint»</text>
+<text x="760" y="228" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">{time ≤ budget}</text>
+<rect x="694" y="215" width="8" height="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.3"/>
+<rect x="818" y="215" width="8" height="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.3"/>
+<line x1="688" y1="219" x2="694" y2="219" stroke="#334155" stroke-width="1.1"/>
+<line x1="826" y1="219" x2="852" y2="219" stroke="#334155" stroke-width="1.1"/>
+<text x="538" y="270" font-size="9" fill="#64748B" font-weight="600">code:</text>
+<rect x="572" y="258" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="589.2" y="269.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-08</text>
+<rect x="1004" y="160" width="464" height="122" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.3"/>
+<text x="1014" y="178" font-size="11.5" fill="#0F172A" font-weight="700">Steering override</text>
+<text x="1458" y="178" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-304</text>
+<rect x="1014" y="190" width="150" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="1020" y="202" font-size="8.5" fill="#64748B" font-weight="600">time</text>
+<text x="1020" y="215" font-size="9.5" fill="#0F172A">no driver-torque monitor in</text>
+<text x="1020" y="226.5" font-size="9.5" fill="#0F172A">the envelope</text>
+<rect x="1328" y="190" width="130" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="1334" y="202" font-size="8.5" fill="#64748B" font-weight="600">budget</text>
+<text x="1334" y="215" font-size="9.5" fill="#0F172A" font-weight="600">≤ 0.2 s</text>
+<rect x="1174" y="196" width="124" height="46" rx="16" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.5"/>
+<text x="1236" y="211" font-size="8.5" fill="#64748B" text-anchor="middle">«constraint»</text>
+<text x="1236" y="228" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">{time ≤ budget}</text>
+<rect x="1170" y="215" width="8" height="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.3"/>
+<rect x="1294" y="215" width="8" height="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.3"/>
+<line x1="1164" y1="219" x2="1170" y2="219" stroke="#334155" stroke-width="1.1"/>
+<line x1="1302" y1="219" x2="1328" y2="219" stroke="#334155" stroke-width="1.1"/>
+<text x="1014" y="270" font-size="9" fill="#64748B" font-weight="600">no code-derived time</text>
+<rect x="52" y="294" width="464" height="122" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.3"/>
+<text x="62" y="312" font-size="11.5" fill="#0F172A" font-weight="700">Stale SoC inputs</text>
+<text x="506" y="312" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-601, TSR-602</text>
+<rect x="62" y="324" width="150" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="68" y="336" font-size="8.5" fill="#64748B" font-weight="600">time</text>
+<text x="68" y="349" font-size="9.5" fill="#0F172A">3–3.5 s of actuation on a</text>
+<text x="68" y="360.5" font-size="9.5" fill="#0F172A">failed input</text>
+<rect x="376" y="324" width="130" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="382" y="336" font-size="8.5" fill="#64748B" font-weight="600">budget</text>
+<text x="382" y="349" font-size="9.5" fill="#0F172A" font-weight="600">≤ 0.2 s actuation on</text>
+<text x="382" y="360.5" font-size="9.5" fill="#0F172A" font-weight="600">failed input</text>
+<rect x="222" y="330" width="124" height="46" rx="16" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.5"/>
+<text x="284" y="345" font-size="8.5" fill="#64748B" text-anchor="middle">«constraint»</text>
+<text x="284" y="362" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">{time ≤ budget}</text>
+<rect x="218" y="349" width="8" height="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.3"/>
+<rect x="342" y="349" width="8" height="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.3"/>
+<line x1="212" y1="353" x2="218" y2="353" stroke="#334155" stroke-width="1.1"/>
+<line x1="350" y1="353" x2="376" y2="353" stroke="#334155" stroke-width="1.1"/>
+<text x="62" y="404" font-size="9" fill="#64748B" font-weight="600">code:</text>
+<rect x="96" y="392" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="113.2" y="403.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-14</text>
+<rect x="134.4" y="392" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="151.6" y="403.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-16</text>
+<rect x="528" y="294" width="464" height="122" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.3"/>
+<text x="538" y="312" font-size="11.5" fill="#0F172A" font-weight="700">Diagnostic masking</text>
+<text x="982" y="312" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-603</text>
+<rect x="538" y="324" width="150" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="544" y="336" font-size="8.5" fill="#64748B" font-weight="600">time</text>
+<text x="544" y="349" font-size="9.5" fill="#0F172A">up to 5 s blind while the big</text>
+<text x="544" y="360.5" font-size="9.5" fill="#0F172A">model loads</text>
+<rect x="852" y="324" width="130" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="858" y="336" font-size="8.5" fill="#64748B" font-weight="600">budget</text>
+<text x="858" y="349" font-size="9.5" fill="#0F172A" font-weight="600">none while engaged</text>
+<rect x="698" y="330" width="124" height="46" rx="16" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.5"/>
+<text x="760" y="345" font-size="8.5" fill="#64748B" text-anchor="middle">«constraint»</text>
+<text x="760" y="362" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">{time ≤ budget}</text>
+<rect x="694" y="349" width="8" height="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.3"/>
+<rect x="818" y="349" width="8" height="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.3"/>
+<line x1="688" y1="353" x2="694" y2="353" stroke="#334155" stroke-width="1.1"/>
+<line x1="826" y1="353" x2="852" y2="353" stroke="#334155" stroke-width="1.1"/>
+<text x="538" y="404" font-size="9" fill="#64748B" font-weight="600">code:</text>
+<rect x="572" y="392" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="589.2" y="403.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-22</text>
+<rect x="1004" y="294" width="464" height="122" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.3"/>
+<text x="1014" y="312" font-size="11.5" fill="#0F172A" font-weight="700">Cruise mismatch</text>
+<text x="1458" y="312" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-308</text>
+<rect x="1014" y="324" width="150" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="1020" y="336" font-size="8.5" fill="#64748B" font-weight="600">time</text>
+<text x="1020" y="349" font-size="9.5" fill="#0F172A">6 s, no reaction</text>
+<rect x="1328" y="324" width="130" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="1334" y="336" font-size="8.5" fill="#64748B" font-weight="600">budget</text>
+<text x="1334" y="349" font-size="9.5" fill="#0F172A" font-weight="600">≤ 1 s with reaction</text>
+<rect x="1174" y="330" width="124" height="46" rx="16" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.5"/>
+<text x="1236" y="345" font-size="8.5" fill="#64748B" text-anchor="middle">«constraint»</text>
+<text x="1236" y="362" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">{time ≤ budget}</text>
+<rect x="1170" y="349" width="8" height="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.3"/>
+<rect x="1294" y="349" width="8" height="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.3"/>
+<line x1="1164" y1="353" x2="1170" y2="353" stroke="#334155" stroke-width="1.1"/>
+<line x1="1302" y1="353" x2="1328" y2="353" stroke="#334155" stroke-width="1.1"/>
+<text x="1014" y="404" font-size="9" fill="#64748B" font-weight="600">code:</text>
+<rect x="1048" y="392" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="1065.2" y="403.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-19</text>
+<rect x="52" y="428" width="464" height="122" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.3"/>
+<text x="62" y="446" font-size="11.5" fill="#0F172A" font-weight="700">sendcan age</text>
+<text x="506" y="446" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-614</text>
+<rect x="62" y="458" width="150" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="68" y="470" font-size="8.5" fill="#64748B" font-weight="600">time</text>
+<text x="68" y="483" font-size="9.5" fill="#0F172A">1 s against 20 ms</text>
+<rect x="376" y="458" width="130" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="382" y="470" font-size="8.5" fill="#64748B" font-weight="600">budget</text>
+<text x="382" y="483" font-size="9.5" fill="#0F172A" font-weight="600">≤ 20 ms</text>
+<rect x="222" y="464" width="124" height="46" rx="16" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.5"/>
+<text x="284" y="479" font-size="8.5" fill="#64748B" text-anchor="middle">«constraint»</text>
+<text x="284" y="496" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">{time ≤ budget}</text>
+<rect x="218" y="483" width="8" height="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.3"/>
+<rect x="342" y="483" width="8" height="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.3"/>
+<line x1="212" y1="487" x2="218" y2="487" stroke="#334155" stroke-width="1.1"/>
+<line x1="350" y1="487" x2="376" y2="487" stroke="#334155" stroke-width="1.1"/>
+<text x="62" y="538" font-size="9" fill="#64748B" font-weight="600">code:</text>
+<rect x="96" y="526" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="113.2" y="537.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-11</text>
+<text x="52" y="586" font-size="12" fill="#B45309" font-weight="700">Partly, or just over the budget (2)</text>
+<rect x="52" y="596" width="464" height="122" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.3"/>
+<text x="62" y="614" font-size="11.5" fill="#0F172A" font-weight="700">SoC heartbeat loss</text>
+<text x="506" y="614" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-407, TSR-510</text>
+<rect x="62" y="626" width="150" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="68" y="638" font-size="8.5" fill="#64748B" font-weight="600">time</text>
+<text x="68" y="651" font-size="9.5" fill="#0F172A">revoke by design ≤ 0.31 s;</text>
+<text x="68" y="662.5" font-size="9.5" fill="#0F172A">SILENT still 4–5 s</text>
+<rect x="376" y="626" width="130" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="382" y="638" font-size="8.5" fill="#64748B" font-weight="600">budget</text>
+<text x="382" y="651" font-size="9.5" fill="#0F172A" font-weight="600">≤ 0.3 s</text>
+<rect x="222" y="632" width="124" height="46" rx="16" fill="#FFFFFF" stroke="#B45309" stroke-width="1.5"/>
+<text x="284" y="647" font-size="8.5" fill="#64748B" text-anchor="middle">«constraint»</text>
+<text x="284" y="664" font-size="10.5" fill="#B45309" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">{time ≤ budget}</text>
+<rect x="218" y="651" width="8" height="8" fill="#FFFFFF" stroke="#B45309" stroke-width="1.3"/>
+<rect x="342" y="651" width="8" height="8" fill="#FFFFFF" stroke="#B45309" stroke-width="1.3"/>
+<line x1="212" y1="655" x2="218" y2="655" stroke="#334155" stroke-width="1.1"/>
+<line x1="350" y1="655" x2="376" y2="655" stroke="#334155" stroke-width="1.1"/>
+<text x="62" y="706" font-size="9" fill="#64748B" font-weight="600">code:</text>
+<rect x="96" y="694" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="113.2" y="705.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-06</text>
+<rect x="134.4" y="694" width="39.5" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="154.2" y="705.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-06a</text>
+<rect x="177.9" y="694" width="39.5" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="197.7" y="705.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-06b</text>
+<rect x="528" y="596" width="464" height="122" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.3"/>
+<text x="538" y="614" font-size="11.5" fill="#0F172A" font-weight="700">SoC command stall</text>
+<text x="982" y="614" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-408, TSR-109</text>
+<rect x="538" y="626" width="150" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="544" y="638" font-size="8.5" fill="#64748B" font-weight="600">time</text>
+<text x="544" y="651" font-size="9.5" fill="#0F172A">≤ 0.06 s against 0.05 s: one</text>
+<text x="544" y="662.5" font-size="9.5" fill="#0F172A">task period over</text>
+<rect x="852" y="626" width="130" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="858" y="638" font-size="8.5" fill="#64748B" font-weight="600">budget</text>
+<text x="858" y="651" font-size="9.5" fill="#0F172A" font-weight="600">≤ 0.05 s</text>
+<rect x="698" y="632" width="124" height="46" rx="16" fill="#FFFFFF" stroke="#B45309" stroke-width="1.5"/>
+<text x="760" y="647" font-size="8.5" fill="#64748B" text-anchor="middle">«constraint»</text>
+<text x="760" y="664" font-size="10.5" fill="#B45309" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">{time ≤ budget}</text>
+<rect x="694" y="651" width="8" height="8" fill="#FFFFFF" stroke="#B45309" stroke-width="1.3"/>
+<rect x="818" y="651" width="8" height="8" fill="#FFFFFF" stroke="#B45309" stroke-width="1.3"/>
+<line x1="688" y1="655" x2="694" y2="655" stroke="#334155" stroke-width="1.1"/>
+<line x1="826" y1="655" x2="852" y2="655" stroke="#334155" stroke-width="1.1"/>
+<text x="538" y="706" font-size="9" fill="#64748B" font-weight="600">code:</text>
+<rect x="572" y="694" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="589.2" y="705.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-13</text>
+<rect x="610.4" y="694" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="627.6" y="705.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-23</text>
+<rect x="648.8" y="694" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="666" y="705.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-34</text>
+<text x="52" y="754" font-size="12" fill="#64748B" font-weight="700">No derived time yet (1)</text>
+<rect x="52" y="764" width="464" height="122" rx="8" fill="#F1F5F9" stroke="#64748B" stroke-width="1.3"/>
+<text x="62" y="782" font-size="11.5" fill="#0F172A" font-weight="700">Take-over request</text>
+<text x="506" y="782" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-606</text>
+<rect x="62" y="794" width="150" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="68" y="806" font-size="8.5" fill="#64748B" font-weight="600">time</text>
+<text x="68" y="819" font-size="9.5" fill="#0F172A">alerts immediate; latency not</text>
+<text x="68" y="830.5" font-size="9.5" fill="#0F172A">measured</text>
+<rect x="376" y="794" width="130" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="382" y="806" font-size="8.5" fill="#64748B" font-weight="600">budget</text>
+<text x="382" y="819" font-size="9.5" fill="#0F172A" font-weight="600">≤ 1 s after detection</text>
+<rect x="222" y="800" width="124" height="46" rx="16" fill="#FFFFFF" stroke="#64748B" stroke-width="1.5"/>
+<text x="284" y="815" font-size="8.5" fill="#64748B" text-anchor="middle">«constraint»</text>
+<text x="284" y="832" font-size="10.5" fill="#64748B" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">{time ≤ budget}</text>
+<rect x="218" y="819" width="8" height="8" fill="#FFFFFF" stroke="#64748B" stroke-width="1.3"/>
+<rect x="342" y="819" width="8" height="8" fill="#FFFFFF" stroke="#64748B" stroke-width="1.3"/>
+<line x1="212" y1="823" x2="218" y2="823" stroke="#334155" stroke-width="1.1"/>
+<line x1="350" y1="823" x2="376" y2="823" stroke="#334155" stroke-width="1.1"/>
+<text x="62" y="874" font-size="9" fill="#64748B" font-weight="600">no code-derived time</text>
+<text x="52" y="922" font-size="12" fill="#1D4ED8" font-weight="700">Met by design in the reference build, not verified (8)</text>
+<rect x="52" y="932" width="464" height="122" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<text x="62" y="950" font-size="11.5" fill="#0F172A" font-weight="700">RX loss</text>
+<text x="506" y="950" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-401</text>
+<rect x="62" y="962" width="150" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="68" y="974" font-size="8.5" fill="#64748B" font-weight="600">time</text>
+<text x="68" y="987" font-size="9.5" fill="#0F172A">≤ 0.2 s by design; 0x262</text>
+<text x="68" y="998.5" font-size="9.5" fill="#0F172A">marginal at ≈ 0.21 s</text>
+<rect x="376" y="962" width="130" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="382" y="974" font-size="8.5" fill="#64748B" font-weight="600">budget</text>
+<text x="382" y="987" font-size="9.5" fill="#0F172A" font-weight="600">≤ 0.2 s</text>
+<rect x="222" y="968" width="124" height="46" rx="16" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<text x="284" y="983" font-size="8.5" fill="#64748B" text-anchor="middle">«constraint»</text>
+<text x="284" y="1000" font-size="10.5" fill="#1D4ED8" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">{time ≤ budget}</text>
+<rect x="218" y="987" width="8" height="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<rect x="342" y="987" width="8" height="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<line x1="212" y1="991" x2="218" y2="991" stroke="#334155" stroke-width="1.1"/>
+<line x1="350" y1="991" x2="376" y2="991" stroke="#334155" stroke-width="1.1"/>
+<text x="62" y="1042" font-size="9" fill="#64748B" font-weight="600">code:</text>
+<rect x="96" y="1030" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="113.2" y="1041.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-01</text>
+<rect x="528" y="932" width="464" height="122" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<text x="538" y="950" font-size="11.5" fill="#0F172A" font-weight="700">SoC heartbeat loss → warning</text>
+<text x="982" y="950" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-516, TSR-407</text>
+<rect x="538" y="962" width="150" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="544" y="974" font-size="8.5" fill="#64748B" font-weight="600">time</text>
+<text x="544" y="987" font-size="9.5" fill="#0F172A">siren ≤ 0.56 s when authority</text>
+<text x="544" y="998.5" font-size="9.5" fill="#0F172A">was granted</text>
+<rect x="852" y="962" width="130" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="858" y="974" font-size="8.5" fill="#64748B" font-weight="600">budget</text>
+<text x="858" y="987" font-size="9.5" fill="#0F172A" font-weight="600">warning within SG-02 1 s</text>
+<text x="858" y="998.5" font-size="9.5" fill="#0F172A" font-weight="600">(§3.7)</text>
+<rect x="698" y="968" width="124" height="46" rx="16" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<text x="760" y="983" font-size="8.5" fill="#64748B" text-anchor="middle">«constraint»</text>
+<text x="760" y="1000" font-size="10.5" fill="#1D4ED8" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">{time ≤ budget}</text>
+<rect x="694" y="987" width="8" height="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<rect x="818" y="987" width="8" height="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<line x1="688" y1="991" x2="694" y2="991" stroke="#334155" stroke-width="1.1"/>
+<line x1="826" y1="991" x2="852" y2="991" stroke="#334155" stroke-width="1.1"/>
+<text x="538" y="1042" font-size="9" fill="#64748B" font-weight="600">code:</text>
+<rect x="572" y="1030" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="589.2" y="1041.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-06</text>
+<rect x="610.4" y="1030" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="627.6" y="1041.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-07</text>
+<rect x="648.8" y="1030" width="39.5" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="668.5" y="1041.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-07a</text>
+<rect x="1004" y="932" width="464" height="122" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<text x="1014" y="950" font-size="11.5" fill="#0F172A" font-weight="700">Host/panda mismatch</text>
+<text x="1458" y="950" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-307</text>
+<rect x="1014" y="962" width="150" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="1020" y="974" font-size="8.5" fill="#64748B" font-weight="600">time</text>
+<text x="1020" y="987" font-size="9.5" fill="#0F172A">revoked ≤ 0.31 s (was 2–3 s)</text>
+<rect x="1328" y="962" width="130" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="1334" y="974" font-size="8.5" fill="#64748B" font-weight="600">budget</text>
+<text x="1334" y="987" font-size="9.5" fill="#0F172A" font-weight="600">≤ 0.3 s</text>
+<rect x="1174" y="968" width="124" height="46" rx="16" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<text x="1236" y="983" font-size="8.5" fill="#64748B" text-anchor="middle">«constraint»</text>
+<text x="1236" y="1000" font-size="10.5" fill="#1D4ED8" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">{time ≤ budget}</text>
+<rect x="1170" y="987" width="8" height="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<rect x="1294" y="987" width="8" height="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<line x1="1164" y1="991" x2="1170" y2="991" stroke="#334155" stroke-width="1.1"/>
+<line x1="1302" y1="991" x2="1328" y2="991" stroke="#334155" stroke-width="1.1"/>
+<text x="1014" y="1042" font-size="9" fill="#64748B" font-weight="600">code:</text>
+<rect x="1048" y="1030" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="1065.2" y="1041.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-05</text>
+<rect x="1086.4" y="1030" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="1103.6" y="1041.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-17</text>
+<rect x="52" y="1066" width="464" height="122" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<text x="62" y="1084" font-size="11.5" fill="#0F172A" font-weight="700">MCU hang</text>
+<text x="506" y="1084" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-501</text>
+<rect x="62" y="1096" width="150" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="68" y="1108" font-size="8.5" fill="#64748B" font-weight="600">time</text>
+<text x="68" y="1121" font-size="9.5" fill="#0F172A">≈ 90 ms watchdog, if the</text>
+<text x="68" y="1132.5" font-size="9.5" fill="#0F172A">clock tolerance holds</text>
+<rect x="376" y="1096" width="130" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="382" y="1108" font-size="8.5" fill="#64748B" font-weight="600">budget</text>
+<text x="382" y="1121" font-size="9.5" fill="#0F172A" font-weight="600">≤ 0.1 s</text>
+<rect x="222" y="1102" width="124" height="46" rx="16" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<text x="284" y="1117" font-size="8.5" fill="#64748B" text-anchor="middle">«constraint»</text>
+<text x="284" y="1134" font-size="10.5" fill="#1D4ED8" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">{time ≤ budget}</text>
+<rect x="218" y="1121" width="8" height="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<rect x="342" y="1121" width="8" height="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<line x1="212" y1="1125" x2="218" y2="1125" stroke="#334155" stroke-width="1.1"/>
+<line x1="350" y1="1125" x2="376" y2="1125" stroke="#334155" stroke-width="1.1"/>
+<text x="62" y="1176" font-size="9" fill="#64748B" font-weight="600">code:</text>
+<rect x="96" y="1164" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="113.2" y="1175.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-09</text>
+<rect x="134.4" y="1164" width="39.5" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="154.2" y="1175.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-09a</text>
+<rect x="528" y="1066" width="464" height="122" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<text x="538" y="1084" font-size="11.5" fill="#0F172A" font-weight="700">Cruise active with main off</text>
+<text x="982" y="1084" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-405</text>
+<rect x="538" y="1096" width="150" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="544" y="1108" font-size="8.5" fill="#64748B" font-weight="600">time</text>
+<text x="544" y="1121" font-size="9.5" fill="#0F172A">refused at once; revoked after</text>
+<text x="544" y="1132.5" font-size="9.5" fill="#0F172A">150 ms</text>
+<rect x="852" y="1096" width="130" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="858" y="1108" font-size="8.5" fill="#64748B" font-weight="600">budget</text>
+<text x="858" y="1121" font-size="9.5" fill="#0F172A" font-weight="600">≤ 0.2 s</text>
+<rect x="698" y="1102" width="124" height="46" rx="16" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<text x="760" y="1117" font-size="8.5" fill="#64748B" text-anchor="middle">«constraint»</text>
+<text x="760" y="1134" font-size="10.5" fill="#1D4ED8" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">{time ≤ budget}</text>
+<rect x="694" y="1121" width="8" height="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<rect x="818" y="1121" width="8" height="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<line x1="688" y1="1125" x2="694" y2="1125" stroke="#334155" stroke-width="1.1"/>
+<line x1="826" y1="1125" x2="852" y2="1125" stroke="#334155" stroke-width="1.1"/>
+<text x="538" y="1176" font-size="9" fill="#64748B" font-weight="600">code:</text>
+<rect x="572" y="1164" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="589.2" y="1175.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-26</text>
+<rect x="1004" y="1066" width="464" height="122" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<text x="1014" y="1084" font-size="11.5" fill="#0F172A" font-weight="700">SoC TX rate above budget</text>
+<text x="1458" y="1084" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-518</text>
+<rect x="1014" y="1096" width="150" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="1020" y="1108" font-size="8.5" fill="#64748B" font-weight="600">time</text>
+<text x="1020" y="1121" font-size="9.5" fill="#0F172A">revoked ≤ 0.1 s after the first</text>
+<text x="1020" y="1132.5" font-size="9.5" fill="#0F172A">rejected frame</text>
+<rect x="1328" y="1096" width="130" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="1334" y="1108" font-size="8.5" fill="#64748B" font-weight="600">budget</text>
+<text x="1334" y="1121" font-size="9.5" fill="#0F172A" font-weight="600">revoke</text>
+<rect x="1174" y="1102" width="124" height="46" rx="16" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<text x="1236" y="1117" font-size="8.5" fill="#64748B" text-anchor="middle">«constraint»</text>
+<text x="1236" y="1134" font-size="10.5" fill="#1D4ED8" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">{time ≤ budget}</text>
+<rect x="1170" y="1121" width="8" height="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<rect x="1294" y="1121" width="8" height="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<line x1="1164" y1="1125" x2="1170" y2="1125" stroke="#334155" stroke-width="1.1"/>
+<line x1="1302" y1="1125" x2="1328" y2="1125" stroke="#334155" stroke-width="1.1"/>
+<text x="1014" y="1176" font-size="9" fill="#64748B" font-weight="600">code:</text>
+<rect x="1048" y="1164" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="1065.2" y="1175.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-27</text>
+<rect x="52" y="1200" width="464" height="122" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<text x="62" y="1218" font-size="11.5" fill="#0F172A" font-weight="700">EPS fault</text>
+<text x="506" y="1218" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-110, TSR-516</text>
+<rect x="62" y="1230" width="150" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="68" y="1242" font-size="8.5" fill="#64748B" font-weight="600">time</text>
+<text x="68" y="1255" font-size="9.5" fill="#0F172A">torque refused at once; siren</text>
+<text x="68" y="1266.5" font-size="9.5" fill="#0F172A">≤ 0.96 s</text>
+<rect x="376" y="1230" width="130" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="382" y="1242" font-size="8.5" fill="#64748B" font-weight="600">budget</text>
+<text x="382" y="1255" font-size="9.5" fill="#0F172A" font-weight="600">LKA refused; warning</text>
+<text x="382" y="1266.5" font-size="9.5" fill="#0F172A" font-weight="600">within SG-02 1 s (§3.7)</text>
+<rect x="222" y="1236" width="124" height="46" rx="16" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<text x="284" y="1251" font-size="8.5" fill="#64748B" text-anchor="middle">«constraint»</text>
+<text x="284" y="1268" font-size="10.5" fill="#1D4ED8" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">{time ≤ budget}</text>
+<rect x="218" y="1255" width="8" height="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<rect x="342" y="1255" width="8" height="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<line x1="212" y1="1259" x2="218" y2="1259" stroke="#334155" stroke-width="1.1"/>
+<line x1="350" y1="1259" x2="376" y2="1259" stroke="#334155" stroke-width="1.1"/>
+<text x="62" y="1310" font-size="9" fill="#64748B" font-weight="600">code:</text>
+<rect x="96" y="1298" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="113.2" y="1309.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-28</text>
+<rect x="528" y="1200" width="464" height="122" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<text x="538" y="1218" font-size="11.5" fill="#0F172A" font-weight="700">Full SoC stall → warning</text>
+<text x="982" y="1218" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-516, TSR-408</text>
+<rect x="538" y="1230" width="150" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="544" y="1242" font-size="8.5" fill="#64748B" font-weight="600">time</text>
+<text x="544" y="1255" font-size="9.5" fill="#0F172A">siren ≤ 0.31 s after the last</text>
+<text x="544" y="1266.5" font-size="9.5" fill="#0F172A">command frame</text>
+<rect x="852" y="1230" width="130" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="858" y="1242" font-size="8.5" fill="#64748B" font-weight="600">budget</text>
+<text x="858" y="1255" font-size="9.5" fill="#0F172A" font-weight="600">warning within SG-02 1 s</text>
+<text x="858" y="1266.5" font-size="9.5" fill="#0F172A" font-weight="600">(§3.7); TSR-516(b)</text>
+<rect x="698" y="1236" width="124" height="46" rx="16" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<text x="760" y="1251" font-size="8.5" fill="#64748B" text-anchor="middle">«constraint»</text>
+<text x="760" y="1268" font-size="10.5" fill="#1D4ED8" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">{time ≤ budget}</text>
+<rect x="694" y="1255" width="8" height="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<rect x="818" y="1255" width="8" height="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<line x1="688" y1="1259" x2="694" y2="1259" stroke="#334155" stroke-width="1.1"/>
+<line x1="826" y1="1259" x2="852" y2="1259" stroke="#334155" stroke-width="1.1"/>
+<text x="538" y="1310" font-size="9" fill="#64748B" font-weight="600">code:</text>
+<rect x="572" y="1298" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="589.2" y="1309.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-34</text>
+<rect x="610.4" y="1298" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="627.6" y="1309.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-07</text>
+<text x="52" y="1358" font-size="12" fill="#1D4ED8" font-weight="700">Met, code-derived (envelope side) (1)</text>
+<rect x="52" y="1368" width="464" height="122" rx="8" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.3"/>
+<text x="62" y="1386" font-size="11.5" fill="#0F172A" font-weight="700">Brake / cancel</text>
+<text x="506" y="1386" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-302, TSR-109</text>
+<rect x="62" y="1398" width="150" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="68" y="1410" font-size="8.5" fill="#64748B" font-weight="600">time</text>
+<text x="68" y="1423" font-size="9.5" fill="#0F172A">25–30 ms; EPS and PCM</text>
+<text x="68" y="1434.5" font-size="9.5" fill="#0F172A">response to verify</text>
+<rect x="376" y="1398" width="130" height="58" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="382" y="1410" font-size="8.5" fill="#64748B" font-weight="600">budget</text>
+<text x="382" y="1423" font-size="9.5" fill="#0F172A" font-weight="600">≤ 30 ms</text>
+<rect x="222" y="1404" width="124" height="46" rx="16" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<text x="284" y="1419" font-size="8.5" fill="#64748B" text-anchor="middle">«constraint»</text>
+<text x="284" y="1436" font-size="10.5" fill="#1D4ED8" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">{time ≤ budget}</text>
+<rect x="218" y="1423" width="8" height="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<rect x="342" y="1423" width="8" height="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.3"/>
+<line x1="212" y1="1427" x2="218" y2="1427" stroke="#334155" stroke-width="1.1"/>
+<line x1="350" y1="1427" x2="376" y2="1427" stroke="#334155" stroke-width="1.1"/>
+<text x="62" y="1478" font-size="9" fill="#64748B" font-weight="600">code:</text>
+<rect x="96" y="1466" width="34.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="113.2" y="1477.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-04</text>
+<rect x="24" y="100" width="1472" height="1416" rx="4" fill="none" stroke="#94A3B8" stroke-width="1.2"/>
+<path d="M24 100h251.1v12l-10 10h-241.1z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="34" y="115" font-size="11" fill="#334155" font-weight="600">par [LionDriverTiming] fault reaction times</text>
+<text x="40" y="1542" font-size="11.5" fill="#334155">19 fault classes: 7 not met, 2 partly, 1 with no derived time, 9 met by design or in code. Each is a constraint of the model bound to the time the item takes and to its budget; 24 of the 37 code-derived times of §4 are cited (check H6). Nothing is measured yet</text>
+<text x="40" y="1558" font-size="11.5" fill="#334155">(WP-S-04 §6).</text>
+<line x1="40" y1="1574" x2="1480" y2="1574" stroke="#E2E8F0"/>
+<rect x="40" y="1594" width="60" height="18" rx="9" fill="#FFFFFF" stroke="#334155" stroke-width="1.4"/>
+<text x="110" y="1607" font-size="11" fill="#334155">constraint property: the time to react shall not exceed the budget</text>
+<rect x="520" y="1599" width="8" height="8" fill="#FFFFFF" stroke="#334155" stroke-width="1.2"/>
+<text x="536" y="1607" font-size="11" fill="#334155">parameter, bound to a value</text>
+<rect x="740" y="1595" width="39.5" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="759.8" y="1606.1" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">T-06a</text>
+<text x="790" y="1607" font-size="11" fill="#334155">code-derived time of WP-S-04 §4</text>
+<text x="40" y="1650" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+</svg>

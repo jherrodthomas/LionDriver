@@ -63,18 +63,18 @@ A generated view replaces a hand-drawn figure when it carries the same facts; un
 | [`model/StateRecords.sysml`](model/StateRecords.sysml) | **Generated.** The three state-machine records of WP-W-05 §5 (SM-SAFETY-MODE, SM-TOY-AUTH, SM-SELFDRIVED) as `state def`s: states, initial state and every record transition with its trigger, guard, effect, build, SWSRs, gap and code as `@RecordTransition`; a record transition from any state or to the requested mode becomes one SysML transition per source and target |
 | [`model/Sequences.sysml`](model/Sequences.sysml) | **Generated.** The start-up and engagement sequence of WP-S-03 §4.1 (Table 4-1) as an `occurrence def`: one lifeline per element, one `message` per step with its phase, condition, state after, status, records and code, in order |
 | [`model/Lifecycle.sysml`](model/Lifecycle.sysml) | **Generated.** The life of an installed item of WP-S-06 §3 as an `action def`: one `LifecyclePhase` action per phase (installation and provisioning, operation, service, software updates, decommissioning), in each one `ProcedureStep` action per requirement TSR-801 to TSR-818 with its ASIL, parent, procedure steps, record and status, and the successions from `start` through the phases to `done` |
-| [`model/Timing.sysml`](model/Timing.sysml) | **Generated.** The 17 FTTI budgets of WP-S-04 §3.7 as `constraint` usages of `TimingBudget`, named by the row label: FTTI, FDTI, FRTI, margin and FHTI as written and, where a cell is one time, in seconds; the safety goals and TSRs each names |
+| [`model/Timing.sysml`](model/Timing.sysml) | **Generated.** The 17 FTTI budgets of WP-S-04 §3.7 as `constraint` usages of `TimingBudget`, named by the row label: FTTI, FDTI, FRTI, margin and FHTI as written and, where a cell is one time, in seconds; the safety goals and TSRs each names; the 37 code-derived times T-nn of §4 as `item` usages of `CodeDerivedTime`; and the 19 fault reaction times of §5 as `constraint` usages of `FaultReactionTime` (time ≤ budget), named by the fault class, with the times they cite, the TSRs and the verdict of WP-S-04 Figure 5-3 |
 | [`model/Signals.sysml`](model/Signals.sysml) | **Generated.** The 29 safety-relevant signals of WP-S-05 §11 as `item` usages of `Signal`: interface, direction, owner elements, integrity, validity, rate, failure reaction, ASIL, TSRs and test cases; and the 14 hardware/software responsibilities of §11.4 with the HW resource of the §2 summary and the parts of the safety MCU hardware (E-04a) it uses |
-| [`model/Views.sysml`](model/Views.sysml) | Views V-01 to V-24: what each exposes and how it is rendered |
+| [`model/Views.sysml`](model/Views.sysml) | Views V-01 to V-25: what each exposes and how it is rendered |
 | [`views/layout.toml`](views/layout.toml) | Placement only: boxes, grids, route adjustments, display names |
 | [`tools/sysml_lite.py`](tools/sysml_lite.py) | Reader for the subset of the textual notation the model uses; builds the instance tree. Refuses any other construct with its line number |
 | [`tools/gen_behaviour.py`](tools/gen_behaviour.py) | Generates `StateRecords.sysml`, `Sequences.sysml` and `Lifecycle.sysml` from the records, WP-S-03 §4.1 and WP-S-06 §3; `--check` fails if they differ |
 | [`tools/gen_timing_hsi.py`](tools/gen_timing_hsi.py) | Generates `Timing.sysml` and `Signals.sysml` from WP-S-04 §3.7 and WP-S-05 §11; `--check` fails if they differ |
 | [`tools/gen_requirements.py`](tools/gen_requirements.py) | Generates the four requirement and needs files above from the work products; `--check` fails if they differ |
-| [`tools/check_model.py`](tools/check_model.py) | Checks M1 to M12, N1 to N3, B1 to B4, H1 to H5 and R1 to R4 (§4), the allocation-resolution report and the requirements-coverage report |
+| [`tools/check_model.py`](tools/check_model.py) | Checks M1 to M12, N1 to N3, B1 to B4, H1 to H6 and R1 to R4 (§4), the allocation-resolution report and the requirements-coverage report |
 | [`tools/render_requirements.py`](tools/render_requirements.py) | Renderer of the requirement views V-05 to V-07, the needs views V-14 and V-15, the use case diagram V-21 and the TSR requirement diagrams V-22 |
 | [`tools/gen_tables.py`](tools/gen_tables.py), [`record.toml`](record.toml) | Generates the architecture tables of WP-S-03 §3.1, §3.3, §6 and WP-W-03 §3.1 from the model (SY-05); `record.toml` says whether the work products or the model are the record |
-| [`tools/render_arch.py`](tools/render_arch.py) | Renderer of V-10 functional architecture, V-11 security zones, V-12 integration build-up, V-13 system modes, V-16 state-machine records, V-17 start-up sequence, V-18 timing budgets, V-19 HSI signals, V-20 HSI responsibilities, V-23 life of an installed item and V-24 HSI internal block diagram |
+| [`tools/render_arch.py`](tools/render_arch.py) | Renderer of V-10 functional architecture, V-11 security zones, V-12 integration build-up, V-13 system modes, V-16 state-machine records, V-17 start-up sequence, V-18 timing budgets, V-19 HSI signals, V-20 HSI responsibilities, V-23 life of an installed item, V-24 HSI internal block diagram and V-25 fault reaction times |
 | [`tools/render_se.py`](tools/render_se.py) | Renderer of the systems-engineering views: V-08 N2 chart, V-09 VCRM and the per-requirement [`generated/vcrm.md`](generated/vcrm.md) |
 | [`tools/render_views.py`](tools/render_views.py), [`tools/svgkit.py`](tools/svgkit.py) | View renderer and drawing kit (palette, measured Inter metrics, orthogonal routing) |
 | [`tools/explorer.py`](tools/explorer.py), [`tools/explorer_assets/`](tools/explorer_assets) | Builds the interactive explorer |
@@ -110,6 +110,7 @@ A generated view replaces a hand-drawn figure when it carries the same facts; un
 | H3 | Every HSI signal has an owner element, a TSR and test cases, and each of them is in the model |
 | H4 | Every interface of WP-S-05 §2 has one hardware/software responsibility (§11.4) and no other does; each names a hardware owner that is hardware (device hardware or harness) and a software owner that is software (SoC software or safety firmware), all elements of the model, TSRs of the model and a status (in place, partial, missing) |
 | H5 | Every hardware resource of WP-S-05 §2 is a part of the safety MCU hardware E-04a, and every part of E-04a is behind some interface |
+| H6 | Every fault reaction time of WP-S-04 §5 cites code-derived times of §4 that are in the model, names TSRs of the model and has a verdict |
 | R1 | `Requirements.sysml`, `Satisfaction.sysml`, `Verification.sysml` and `Needs.sysml` equal what `gen_requirements.py` builds from the work products today: a requirement, allocation or test case changed in a document without regenerating fails |
 | R2 | Every `satisfy` ends on an element inside the item; every SYS requirement is satisfied and every name in WP-S-01 §10.1 is an element of the model |
 | R3 | Every verification case that names a requirement verifies it in the model, and the requirement lists the case |
@@ -122,7 +123,7 @@ Integrity in a table cell is read as the highest level it names (`B (PCS restore
 python3 tools/gen_requirements.py      # regenerate the requirement files (--check to compare)
 python3 tools/gen_behaviour.py         # regenerate the state-machine records, sequences and life cycle (--check to compare)
 python3 tools/gen_timing_hsi.py        # regenerate the timing budgets and HSI signals (--check to compare)
-python3 tools/check_model.py           # M1-M12, N1-N3, B1-B4, H1-H5, R1-R4 (--write regenerates the two reports)
+python3 tools/check_model.py           # M1-M12, N1-N3, B1-B4, H1-H6, R1-R4 (--write regenerates the two reports)
 python3 tools/gen_tables.py            # T1: architecture tables (--write once record.toml says model)
 python3 tools/render_views.py --check  # figures match the model
 python3 tools/explorer.py --check      # explorer matches the model
@@ -130,7 +131,7 @@ python3 tools/test_sysml.py
 tools/pilot/validate.sh                # SysML v2 conformance (JDK 21+, python3 with zstandard)
 ```
 
-All of them run in CI (`.github/workflows/assurance.yaml`, job "sysml model"). Result at this baseline: M1 to M12, N1 to N3, B1 to B4, H1 to H5, R1 to R4 and T1 pass; the pilot reports 0 errors and 0 warnings for the seventeen files.
+All of them run in CI (`.github/workflows/assurance.yaml`, job "sysml model"). Result at this baseline: M1 to M12, N1 to N3, B1 to B4, H1 to H6, R1 to R4 and T1 pass; the pilot reports 0 errors and 0 warnings for the seventeen files.
 
 Writing the model found one difference worth recording. WP-S-03 §3.3 defines IF-05/06 as camera images reaching E-01/E-02 and IF-07 as starting in E-01, while WP-C-01 §3.4 defines the same IDs at the item boundary (road environment and driver to the cameras and display). The model now carries both hops under one identifier; the work products should say that the identifier covers the whole path (OI-7).
 
@@ -234,6 +235,10 @@ Every figure below is generated. The explorer shows V-01 to V-04 with the model 
 **V-18 Timing budgets:** the 17 budgets of WP-S-04 §3.7 on one time axis, each with its safety goals, its TSRs and the elements those TSRs are allocated to. Seven are plain times and add up (H2); ten have a cell that is not one time.
 
 ![V-18: timing budgets generated from the SysML model](generated/fig-sysml-v18-timing-budgets.svg)
+
+**V-25 Fault reaction times:** WP-S-04 §5 as a SysML parametric diagram. Each fault class is a constraint `{time ≤ budget}` whose time parameter is bound to the time the item takes, with the code-derived times T-nn of §4 it rests on, and whose budget parameter is bound to the budget; the classes are grouped by verdict (check H6).
+
+![V-25: fault reaction times generated from the SysML model](generated/fig-sysml-v25-fault-reaction-par.svg)
 
 **V-19 HSI signals:** the 29 signals of WP-S-05 §11 by interface, with their owner elements, whether the signal carries a checksum and a liveness indication of its own, the ASIL, TSRs and test cases. Eleven carry no checksum, CRC or XOR; 22 no counter, alive check or supervision.
 

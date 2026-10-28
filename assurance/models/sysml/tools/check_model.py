@@ -46,6 +46,8 @@ so a change to one without the other fails CI (assurance/models/sysml/README.md 
       software or safety firmware), all elements of the model, and TSRs of the model
   H5  every hardware resource of WP-S-05 §2 is a part of the safety MCU hardware E-04a, and every part of E-04a is
       behind some interface
+  H6  every fault reaction time of WP-S-04 §5 cites code-derived times of §4 that are in the model, names TSRs of the
+      model and has a verdict
   R4  the requirements-coverage report (generated/requirements-coverage.md) is up to date: satisfied,
       verified and derived, per kind, with the requirements that are not (informational)
 
@@ -745,7 +747,7 @@ def check_lifecycle(m: sysml_lite.Model, rep: Report) -> None:
                     f"{', '.join(carried.get(r, [])) or 'none'}")
 
 
-# ---------------------------------------------------------------- timing and HSI (H1-H5)
+# ---------------------------------------------------------------- timing and HSI (H1-H6)
 
 HW_ROOTS = ("context.ldsda.deviceHardware", "context.ldsda.harness")
 SW_ROOTS = ("context.ldsda.socSoftware", "context.ldsda.safetyFirmware")
@@ -840,6 +842,21 @@ def check_timing_hsi(m: sysml_lite.Model, rep: Report) -> None:
         rep.err("H5", f"{hsi} uses {part!r}, which is not a part of the safety MCU hardware E-04a")
   for part in sorted(mcu_parts - used):
     rep.err("H5", f"E-04a part {part} is behind no hardware-software interface of WP-S-05 §2")
+  if not m.reactions:
+    rep.err("H1", "the model has no fault reaction times (WP-S-04 §5)")
+  for name, rr in m.reactions.items():
+    v = rr.values
+    for t in (x for x in sysml_lite._as_list(v.get("times")) if x):
+      if t not in m.code_times:
+        rep.err("H6", f"fault class {name!r} cites {t}, which is not a code-derived time of WP-S-04 §4")
+    tsr = [x for x in sysml_lite._as_list(v.get("tsr")) if x]
+    if not tsr:
+      rep.err("H6", f"fault class {name!r} names no TSR")
+    for x in tsr:
+      if x not in m.requirements:
+        rep.err("H6", f"fault class {name!r} names {x}, which is not a requirement of the model")
+    if v.get("verdict") not in gen_timing_hsi.VERDICTS:
+      rep.err("H6", f"fault class {name!r}: verdict {v.get('verdict')!r} is not one of {', '.join(gen_timing_hsi.VERDICTS)}")
 
 
 def outside_reason(text: str) -> str | None:
@@ -951,9 +968,10 @@ def main(argv: list[str]) -> int:
   print(f"behaviour: {sum(1 for s in m.state_machines.values() if 'StateRecord' in s.meta)} state-machine records, " +
         f"{sum(len(q.messages) for q in m.sequences.values())} sequence steps, " +
         f"{sum(len(x) for a in m.activities.values() for x in a.steps.values())} life-cycle procedure steps")
-  print(f"timing and HSI: {len(m.budgets)} timing budgets, {len(m.signals)} HSI signals, "
+  print(f"timing and HSI: {len(m.budgets)} timing budgets, {len(m.code_times)} code-derived times, "
+        f"{len(m.reactions)} fault reaction times, {len(m.signals)} HSI signals, "
         f"{len(m.responsibilities)} HSI responsibilities")
-  print("OK: M1-M12, N1-N3, B1-B4, H1-H5 and R1-R4 passed")
+  print("OK: M1-M12, N1-N3, B1-B4, H1-H6 and R1-R4 passed")
   return 0
 
 

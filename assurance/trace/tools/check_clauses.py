@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Clause-check register: standard obligations, in the project's own words, checked against the work products
-(assurance/trace/clauses/README.md). Pilot: ISO 26262-3:2018, clauses 5 to 7.
+(assurance/trace/clauses/README.md). Pilot: ISO 26262-3:2018 clauses 5 to 7 and ISO 21448:2022 clauses 4 to 13.
 
 Each obligation of clauses/<register>.yaml names the work product that answers it and the checks that evidence it:
   trace:<ID>      a check of check_trace.py; run here in-process, its errors and known findings (recorded with an
                   owner, such as the K5 baseline) are counted per check ID, and its
                   state (implemented, partly, not implemented) is read from the trace README §6 table
-  section:<text>  the work product has a heading containing <text> with content under it
-  items:<kind>:<field>[,<field>]  every trace item of that kind has those fields filled
+  section:<text>  the work product has a heading that is <text> (after its number), else one containing <text>,
+                  with content under it
+  items:<kind>:<field>[,<field>]  every trace item of that kind (not withdrawn) has those fields filled
   manual:<what>   human judgement, reported as open
 
 An obligation is `open` when an automated check finds a gap in the work products, `gap` when a check it needs is not
@@ -42,7 +43,7 @@ TRACE_README = TRACE_DIR / "README.md"
 sys.path.insert(0, str(TOOLS))
 import check_trace  # noqa: E402
 
-ID_RE = re.compile(r"^O[0-9]+-[0-9]+\.[0-9]{2}$")
+ID_RE = re.compile(r"^[A-Z][A-Z0-9]*-[0-9]+\.[0-9]{2}$")
 WP_RE = re.compile(r"^WP-[A-Z]-[0-9]{2}$")
 KEYS = ("id", "clause", "topic", "obligation", "work_product", "checks", "subclause", "source_verified_by",
         "source_verified_date")
@@ -130,8 +131,9 @@ def evaluate(reg: dict, states: dict[str, str], terrors: dict[str, list[str]], i
     if not ID_RE.match(oid) or oid in seen:
       problems.append(f"{oid}: ID malformed or duplicated")
     seen.add(oid)
-    if not oid.startswith(f"O{reg['standard'].split('-')[1].split(':')[0]}-{ob['clause']}."):
-      problems.append(f"{oid}: ID does not match the standard part and clause {ob['clause']}")
+    if not oid.startswith(f"{reg.get('id_prefix')}-{ob['clause']}."):
+      problems.append(f"{oid}: ID does not start with the register's id_prefix and clause ({reg.get('id_prefix')}-"
+                      f"{ob['clause']}.)")
     if not str(ob["obligation"]).strip() or not ob["checks"]:
       problems.append(f"{oid}: empty obligation or no checks")
     wp = ob["work_product"]
@@ -156,7 +158,9 @@ def evaluate(reg: dict, states: dict[str, str], terrors: dict[str, list[str]], i
           results.append((chk, "pass" if state == "yes" else "partial", "passes" if state == "yes"
                           else "passes; check only partly implemented"))
       elif kind == "section":
-        hit = next(((lv, t, n) for lv, t, n in heads if arg.lower() in t.lower()), None)
+        bare = lambda t: re.sub(r"^[0-9.]+\s+", "", t).strip().lower()     # "4.2 Driver role" -> "driver role"
+        hit = next(((lv, t, n) for lv, t, n in heads if bare(t) == arg.lower()), None) or \
+          next(((lv, t, n) for lv, t, n in heads if arg.lower() in t.lower()), None)
         if md and hit is None:
           problems.append(f"{oid}: {wp} has no heading containing '{arg}'")
           continue
@@ -169,7 +173,8 @@ def evaluate(reg: dict, states: dict[str, str], terrors: dict[str, list[str]], i
         if not group or not flist or any(f not in check_trace.REQUIRED.get(ikind, []) for f in flist):
           problems.append(f"{oid}: {chk}: unknown item kind or field")
           continue
-        empty = [it["id"] for it in group if any(it.get(f) in (None, "", []) for f in flist)]
+        empty = [it["id"] for it in group if it.get("status") != "withdrawn"
+                 and any(it.get(f) in (None, "", []) for f in flist)]
         results.append((chk, "open" if empty else "pass",
                         f"{len(empty)} of {len(group)} without " + ", ".join(flist) + (f": {', '.join(empty[:5])}"
                                                                                        if empty else "")))

@@ -99,10 +99,57 @@ def budgets() -> list[dict]:
   return out
 
 
+CODE_HEAD = ["#", "Mechanism", "Code", "Derivation", "Worst-case time"]
+REACTION_HEAD = ["Fault class", "Budget", "Baseline", "Verdict", "Required change", "TSR"]
+VERDICTS = ("met", "design", "partly", "not", "verify")
+
+
+def code_times() -> list[dict]:
+  """The code-derived detection and reaction times T-nn of WP-S-04 §4."""
+  for heading, head, rows in tables(WP_S04):
+    if heading.startswith("4. ") and head == CODE_HEAD:
+      out = []
+      for r in rows:
+        c = dict(zip(CODE_HEAD, r))
+        if not re.fullmatch(r"T-\d\d[a-z]?", c["#"]):
+          raise TimingError(f"WP-S-04 §4: {c['#']!r} is not a time ID T-nn")
+        out.append({"id": c["#"], "mechanism": plain(c["Mechanism"]), "code": c["Code"], "derivation": c["Derivation"],
+                    "worst": c["Worst-case time"]})
+      return out
+  raise TimingError(f"WP-S-04 §4 has no table with columns {CODE_HEAD}")
+
+
+def reactions() -> list[dict]:
+  """The fault classes of WP-S-04 §5: budget, baseline time, the code-derived times it cites, the latest verdict as
+  WP-S-04 Figure 5-3 sorts it (fig_s04_verdicts.VERDICT, held to the Verdict cell by a quoted phrase), TSRs."""
+  sys.path.insert(0, str(ASSURANCE / "03-system" / "figures"))
+  import fig_s04_verdicts as fv
+  try:
+    sorted_rows = {r["name"]: r for r in fv.parse(WP_S04.read_text(encoding="utf-8"))}
+  except fv.VerdictError as e:
+    raise TimingError(f"WP-S-04 §5: {e}") from e
+  for heading, head, rows in tables(WP_S04):
+    if heading.startswith("5. ") and head == REACTION_HEAD:
+      out = []
+      for r in rows:
+        c = dict(zip(REACTION_HEAD, r))
+        name = plain(re.sub(r"\s*\(added [^)]*\)", "", c["Fault class"]))
+        sr = sorted_rows.get(name)
+        if sr is None:
+          raise TimingError(f"WP-S-04 §5 row {name!r} is not sorted by fig_s04_verdicts")
+        times = list(dict.fromkeys(re.findall(r"\bT-\d\d[a-z]?\b", plain(c["Baseline"] + " " + c["Verdict"]))))
+        out.append({"name": name, "budget": plain(c["Budget"]), "baseline": plain(c["Baseline"]), "verdict": sr["verdict"],
+                    "latest": sr["says"], "change": plain(c["Required change"]), "times": times,
+                    "tsr": expand_numbers(re.sub(r"TSR-", "", c["TSR"]), "TSR")})
+      return out
+  raise TimingError(f"WP-S-04 §5 has no table with columns {REACTION_HEAD}")
+
+
 def timing_sysml() -> str:
   out = [HEADER, "package LionDriverTiming {",
          "    doc /* The FTTI budgets of WP-S-04 §3.7, one constraint per row, named by the row label. The cells are kept as",
-         "           written; a cell that is one time is also given in seconds, which check H2 adds up. */", "",
+         "           written; a cell that is one time is also given in seconds, which check H2 adds up. Then the",
+         "           code-derived times T-nn of §4 and the fault reaction times of §5, which check H6 holds together. */", "",
          "    private import ScalarValues::*;", "",
          "    constraint def TimingBudget {",
          "        doc /* Fault tolerant time interval of a safety goal and fault class, split into detection (FDTI) and reaction",
@@ -118,6 +165,31 @@ def timing_sysml() -> str:
       if v is not None:
         out.append(f"        :>> {a}Seconds = {num(v)};")
     out += [f"        :>> goals = {str_list(b['goals'])};", f"        :>> tsr = {str_list(b['tsr'])};", "    }"]
+  out += ["", "    item def CodeDerivedTime {",
+          "        doc /* A detection or reaction time derived from the code (WP-S-04 §4): the mechanism, where it is, how the",
+          "               time follows from the code, and the worst case. Nothing here is measured. */",
+          "        attribute mechanism : String;", "        attribute code : String;", "        attribute derivation : String;",
+          "        attribute worstCase : String;", "    }", ""]
+  for t in code_times():
+    out += [f"    item <'{t['id']}'> {t['id'].lower().replace('-', '_')} : CodeDerivedTime {{", f"        doc /* {doc(t['mechanism'])} */",
+            f"        :>> mechanism = {s(t['mechanism'])};", f"        :>> code = {s(t['code'])};",
+            f"        :>> derivation = {s(t['derivation'])};", f"        :>> worstCase = {s(t['worst'])};", "    }"]
+  out += ["", "    constraint def FaultReactionTime {",
+          "        doc /* The time from a fault to the item's reaction shall not exceed its budget (WP-S-04 §5): time <= budget.",
+          "               The time is bound to the code-derived times it cites; verdict is met, design (met by design in the",
+          "               reference build), partly, not or verify (no derived time yet). */",
+          "        attribute budget : String;", "        attribute budgetSeconds : Real[0..1];", "        attribute baseline : String;",
+          "        attribute latest : String;", "        attribute verdict : String;", "        attribute change : String;",
+          "        attribute times : String[0..*];", "        attribute tsr : String[0..*];", "    }", ""]
+  for i, r in enumerate(reactions(), 1):
+    out += [f"    constraint <'{r['name']}'> reaction_{i:02d} : FaultReactionTime {{", f"        doc /* {doc(r['name'])} */",
+            f"        :>> budget = {s(r['budget'])};"]
+    v = seconds(r["budget"])
+    if v is not None:
+      out.append(f"        :>> budgetSeconds = {num(v)};")
+    out += [f"        :>> baseline = {s(r['baseline'])};", f"        :>> latest = {s(r['latest'])};",
+            f"        :>> verdict = {s(r['verdict'])};", f"        :>> change = {s(r['change'])};",
+            f"        :>> times = {str_list(r['times'])};", f"        :>> tsr = {str_list(r['tsr'])};", "    }"]
   out.append("}")
   return "\n".join(out) + "\n"
 

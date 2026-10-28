@@ -3,7 +3,8 @@
 
 package LionDriverTiming {
     doc /* The FTTI budgets of WP-S-04 §3.7, one constraint per row, named by the row label. The cells are kept as
-           written; a cell that is one time is also given in seconds, which check H2 adds up. */
+           written; a cell that is one time is also given in seconds, which check H2 adds up. Then the
+           code-derived times T-nn of §4 and the fault reaction times of §5, which check H6 holds together. */
 
     private import ScalarValues::*;
 
@@ -239,5 +240,490 @@ package LionDriverTiming {
         :>> fhti = "TBD";
         :>> goals = ("SG-08");
         :>> tsr = ("TSR-609", "TSR-633");
+    }
+
+    item def CodeDerivedTime {
+        doc /* A detection or reaction time derived from the code (WP-S-04 §4): the mechanism, where it is, how the
+               time follows from the code, and the worst case. Nothing here is measured. */
+        attribute mechanism : String;
+        attribute code : String;
+        attribute derivation : String;
+        attribute worstCase : String;
+    }
+
+    item <'T-01'> t_01 : CodeDerivedTime {
+        doc /* RX timeout */
+        :>> mechanism = "RX timeout";
+        :>> code = "opendbc_repo/opendbc/safety/safety.h:321-344; called at 1 Hz from panda/board/main.c:241-242";
+        :>> derivation = "threshold max(10 × period, 1 s); for the Corolla messages 10 × period is 120 ms (0xAA 83 Hz), 200 ms (0x260 50 Hz), 303 ms (0x1D2 33 Hz), 250 ms (0x226 40 Hz), so 1 s applies; evaluated once per second";
+        :>> worstCase = "1–2 s (at 8b8c6ae). *Status 2026-10-12:* 5 nominal periods (rx_timeout_periods, opendbc de80b63), evaluated by the 100 Hz safety task (panda 171fcdf): ≤ 0.162 s for 0x1D2 (5 × 30.3 ms + one 10 ms task period, 161.5 ms; §3.10); the reference build adds 0x262 (25 Hz, ≈ 0.21 s, slightly above TSR-401's 0.2 s if the real rate is 25 Hz) and 0x1D3 (33 Hz, ≈ 0.162 s) (opendbc 21d8dd8). Not verified on hardware";
+    }
+    item <'T-02'> t_02 : CodeDerivedTime {
+        doc /* RX checksum / quality */
+        :>> mechanism = "RX checksum / quality";
+        :>> code = "safety.h:112-121, 164-197";
+        :>> derivation = "on receipt";
+        :>> worstCase = "1 message period (12–30 ms)";
+    }
+    item <'T-03'> t_03 : CodeDerivedTime {
+        doc /* RX counter */
+        :>> mechanism = "RX counter";
+        :>> code = "—";
+        :>> derivation = "no Toyota counters (modes/toyota.h:39-46)";
+        :>> worstCase = "not detected";
+    }
+    item <'T-04'> t_04 : CodeDerivedTime {
+        doc /* Brake / cruise revoke */
+        :>> mechanism = "Brake / cruise revoke";
+        :>> code = "safety.h:350-356, 518-527";
+        :>> derivation = "on receipt";
+        :>> worstCase = "25 ms (brake 40 Hz), 30 ms (cruise 33 Hz)";
+    }
+    item <'T-05'> t_05 : CodeDerivedTime {
+        doc /* Heartbeat engaged mismatch */
+        :>> mechanism = "Heartbeat engaged mismatch";
+        :>> code = "panda/board/main.c:181-189";
+        :>> derivation = "3 consecutive 1 Hz ticks";
+        :>> worstCase = "2–3 s";
+    }
+    item <'T-06'> t_06 : CodeDerivedTime {
+        doc /* Heartbeat loss → SILENT */
+        :>> mechanism = "Heartbeat loss → SILENT";
+        :>> code = "main.c:101-103, 153-162, 191-213";
+        :>> derivation = "counter +1 per 1 Hz tick, reset by each 0xf3; ≥ 5 with ignition, ≥ 2 without";
+        :>> worstCase = "4–5 s (ign on), 1–2 s (ign off) (at 8b8c6ae; split into T-06a/T-06b below)";
+    }
+    item <'T-06a'> t_06a : CodeDerivedTime {
+        doc /* Heartbeat loss → authority revoked (added 2026-10-12) */
+        :>> mechanism = "Heartbeat loss → authority revoked (added 2026-10-12)";
+        :>> code = "panda/board/drivers/heartbeat_monitor.h; main.c safety_task_handler (panda b87197f, pin c2e5d93)";
+        :>> derivation = "100 Hz safety task counts ticks since the last 0xf3; in a car mode clears controls_allowed at 30 ticks";
+        :>> worstCase = "≤ 0.31 s (0.3 s + one task period). Not verified on hardware";
+    }
+    item <'T-06b'> t_06b : CodeDerivedTime {
+        doc /* Heartbeat loss → SILENT (2026-10-12) */
+        :>> mechanism = "Heartbeat loss → SILENT (2026-10-12)";
+        :>> code = "as T-06";
+        :>> derivation = "unchanged";
+        :>> worstCase = "4–5 s (ign on), 1–2 s (ign off); TSR-510 (SILENT ≤ 2 s) not met";
+    }
+    item <'T-07'> t_07 : CodeDerivedTime {
+        doc /* Siren after heartbeat loss */
+        :>> mechanism = "Siren after heartbeat loss";
+        :>> code = "main.c:169-171, 198-201";
+        :>> derivation = "3 s siren if authority within last 5 s";
+        :>> worstCase = "starts at T-06";
+    }
+    item <'T-07a'> t_07a : CodeDerivedTime {
+        doc /* Siren when heartbeat loss revokes granted authority (added 2026-10-13) */
+        :>> mechanism = "Siren when heartbeat loss revokes granted authority (added 2026-10-13)";
+        :>> code = "panda/board/drivers/heartbeat_siren.h; main.c safety_task_handler and tick_handler (panda 7dd0c4b, pin c33343b; all builds)";
+        :>> derivation = "when the T-06a revocation in a car mode finds controls_allowed set, the 100 Hz safety task requests the siren at once for 3 s (300 ticks); none if authority was not granted at that moment; the 8 Hz tick drives the speaker only on every other tick (set_siren((loop_counter & 1U) && ...)), so it sounds within 2 × 125 ms of the request; the T-07 path is unchanged";
+        :>> worstCase = "siren ≤ 0.3 s + 10 ms + 250 ms ≈ 0.56 s after the last heartbeat (≤ 0.26 s after the T-06a detection) (TSR-516(a), and (b) for this revocation). T-07 (4–5 s) still sounds when it fires and alone covers authority that ended within the 5 s before the loss (OI-9). Not verified on hardware";
+    }
+    item <'T-08'> t_08 : CodeDerivedTime {
+        doc /* Relay malfunction */
+        :>> mechanism = "Relay malfunction";
+        :>> code = "safety.h:372-380";
+        :>> derivation = "first offending frame after safety_mode_cnt > 1 (1 Hz)";
+        :>> worstCase = "1–2 s after mode set; then immediate";
+    }
+    item <'T-09'> t_09 : CodeDerivedTime {
+        doc /* Software watchdog */
+        :>> mechanism = "Software watchdog";
+        :>> code = "panda/board/drivers/simple_watchdog.h; main.c:119, 301";
+        :>> derivation = "375 ms threshold, checked from the 8 Hz tick it supervises";
+        :>> worstCase = "cannot detect a tick-ISR hang";
+    }
+    item <'T-09a'> t_09a : CodeDerivedTime {
+        doc /* Hardware watchdog IWDG1 (added 2026-10-12) */
+        :>> mechanism = "Hardware watchdog IWDG1 (added 2026-10-12)";
+        :>> code = "panda/board/drivers/hw_watchdog.h (PR /4, RLR 719, WINR 679); fed from safety_task_handler (panda 171fcdf, a35d1c6)";
+        :>> derivation = "timeout 4 × (719 + 1) / f_LSI ≈ 90 ms nominal; window: a feed earlier than ≈ 5 ms after the previous one resets; fed by the 100 Hz task only after main-loop progress; started at the first relay drive after reset";
+        :>> worstCase = "≈ 90 ms nominal; ≤ 0.1 s only if the LSI is at most 10 % slow (watchdog impact record OI-2). Hangs before the first relay drive not covered. Not verified on hardware (M-06)";
+    }
+    item <'T-10'> t_10 : CodeDerivedTime {
+        doc /* Heartbeat send rate */
+        :>> mechanism = "Heartbeat send rate";
+        :>> code = "openpilot/selfdrive/pandad/pandad.cc:385-394";
+        :>> derivation = "every 10th frame of the 100 Hz loop";
+        :>> worstCase = "100 ms period";
+    }
+    item <'T-11'> t_11 : CodeDerivedTime {
+        doc /* sendcan age limit */
+        :>> mechanism = "sendcan age limit";
+        :>> code = "pandad.cc:78-79";
+        :>> derivation = "logMonoTime age";
+        :>> worstCase = "1 s";
+    }
+    item <'T-12'> t_12 : CodeDerivedTime {
+        doc /* SPI ACK timeout */
+        :>> mechanism = "SPI ACK timeout";
+        :>> code = "openpilot/selfdrive/pandad/spi.cc:30, 216, 246";
+        :>> derivation = "500 ms per wait, retries until > 5 timeouts";
+        :>> worstCase = "up to seconds";
+    }
+    item <'T-13'> t_13 : CodeDerivedTime {
+        doc /* card sends only if carControl alive */
+        :>> mechanism = "card sends only if carControl alive";
+        :>> code = "openpilot/selfdrive/car/card.py:234-238";
+        :>> derivation = "10 × 10 ms";
+        :>> worstCase = "0.1 s";
+    }
+    item <'T-14'> t_14 : CodeDerivedTime {
+        doc /* Inter-process alive */
+        :>> mechanism = "Inter-process alive";
+        :>> code = "openpilot/cereal/messaging/__init__.py:265";
+        :>> derivation = "10 × period";
+        :>> worstCase = "0.1 s (100 Hz), 0.5 s (20 Hz: modelV2, longitudinalPlan, radarState, DM)";
+    }
+    item <'T-15'> t_15 : CodeDerivedTime {
+        doc /* Frequency check */
+        :>> mechanism = "Frequency check";
+        :>> code = "cereal/messaging/__init__.py:152-153";
+        :>> derivation = "average rate outside 0.8–1.2 × nominal over moving windows of 1–10 s";
+        :>> worstCase = "≈ 1–10 s";
+    }
+    item <'T-16'> t_16 : CodeDerivedTime {
+        doc /* Soft disable */
+        :>> mechanism = "Soft disable";
+        :>> code = "openpilot/selfdrive/selfdrived/state.py:7";
+        :>> derivation = "actuation continues during countdown";
+        :>> worstCase = "3 s (+ up to 0.5 s alive window = 3.5 s)";
+    }
+    item <'T-17'> t_17 : CodeDerivedTime {
+        doc /* controlsMismatch (panda vs host authority) */
+        :>> mechanism = "controlsMismatch (panda vs host authority)";
+        :>> code = "selfdrived.py:53-56, 361-366, 566-574; selfdrived/supervision.py";
+        :>> derivation = "200 cycles at 100 Hz before #51. *Status 2026-10-13 (#51, TSR-621):* 2 consecutive pandaStates samples (10 Hz), at most 0.5 s after the first mismatched frame; samples in the first 0.3 s after engaging not counted (2026-10-14, TSR-301)";
+        :>> worstCase = "2 s before #51; now ≤ 0.5 s. Unit tests; not verified on hardware";
+    }
+    item <'T-18'> t_18 : CodeDerivedTime {
+        doc /* Safety mode/param mismatch */
+        :>> mechanism = "Safety mode/param mismatch";
+        :>> code = "selfdrived.py:351-366";
+        :>> derivation = "only after 10 s from start";
+        :>> worstCase = "10 s after start";
+    }
+    item <'T-19'> t_19 : CodeDerivedTime {
+        doc /* cruiseMismatch */
+        :>> mechanism = "cruiseMismatch";
+        :>> code = "selfdrived.py:57, 464-468; events.py:464-470";
+        :>> derivation = "6 s, no reaction, before #51. *Status 2026-10-13 (#51, TSR-308):* 1 s (CRUISE_MISMATCH_TIME), repeating prompt; controlsd keeps requesting the cancel";
+        :>> worstCase = "1 s to the prompt. Unit tests; not verified on the vehicle";
+    }
+    item <'T-20'> t_20 : CodeDerivedTime {
+        doc /* selfdrivedLagging / Ratekeeper */
+        :>> mechanism = "selfdrivedLagging / Ratekeeper";
+        :>> code = "openpilot/common/realtime.py:72-74; selfdrived.py:157";
+        :>> derivation = "average dt over 100 samples > period/0.9";
+        :>> worstCase = "≈ 1 s averaging";
+    }
+    item <'T-21'> t_21 : CodeDerivedTime {
+        doc /* Excessive actuation */
+        :>> mechanism = "Excessive actuation";
+        :>> code = "selfdrive/selfdrived/helpers.py:12";
+        :>> derivation = "0.25 s persistence";
+        :>> worstCase = "0.25 s";
+    }
+    item <'T-22'> t_22 : CodeDerivedTime {
+        doc /* Big-model diagnostic masking */
+        :>> mechanism = "Big-model diagnostic masking";
+        :>> code = "selfdrived.py:428-430";
+        :>> derivation = "masked during load + 5 s";
+        :>> worstCase = "up to 5 s blind (GAP-17)";
+    }
+    item <'T-23'> t_23 : CodeDerivedTime {
+        doc /* EPS drop-out handling (vehicle) */
+        :>> mechanism = "EPS drop-out handling (vehicle)";
+        :>> code = "comment opendbc_repo/opendbc/car/toyota/carstate.py:15-16";
+        :>> derivation = "LKA_STATE 9 → 11 over ≈ 2 s, then 3";
+        :>> worstCase = "≈ 2 s (unverified, AOU-01R)";
+    }
+    item <'T-24'> t_24 : CodeDerivedTime {
+        doc /* DM escalation */
+        :>> mechanism = "DM escalation";
+        :>> code = "selfdrive/monitoring/policy.py:31-36, 44";
+        :>> derivation = "vision 5/8/13 s; wheel-touch 5/15/25 s; +5 s at alert 3 → force decel";
+        :>> worstCase = "per policy";
+    }
+    item <'T-25'> t_25 : CodeDerivedTime {
+        doc /* Host steering fault hysteresis */
+        :>> mechanism = "Host steering fault hysteresis";
+        :>> code = "selfdrive/car/car_events.py (onboard review)";
+        :>> derivation = "1.5 s";
+        :>> worstCase = "1.5 s";
+    }
+    item <'T-26'> t_26 : CodeDerivedTime {
+        doc /* Cruise active with main off (reference build, added 2026-10-12) */
+        :>> mechanism = "Cruise active with main off (reference build, added 2026-10-12)";
+        :>> code = "opendbc_repo/opendbc/safety/modes/toyota.h (TOYOTA_CRUISE_MAIN_TOLERANCE_US, opendbc 8836b65)";
+        :>> derivation = "CRUISE_ACTIVE (0x1D2) becoming active while MAIN_ON (0x1D3) is 0: refused on receipt; main going off while engaged: revoked once the disagreement lasts > 150 ms";
+        :>> worstCase = "refuse at once; revoke after 150 ms (+ one 30 ms frame) (TSR-405(c)). Not verified on hardware";
+    }
+    item <'T-27'> t_27 : CodeDerivedTime {
+        doc /* TX rate supervision (reference build, added 2026-10-12) */
+        :>> mechanism = "TX rate supervision (reference build, added 2026-10-12)";
+        :>> code = "opendbc_repo/opendbc/safety/safety.h tx_rate_check (opendbc 951b459)";
+        :>> derivation = "per-ID sliding 250 ms window; 3 rejections while controls are allowed revoke";
+        :>> worstCase = "revoke ≤ 0.1 s after the first rejected frame (≤ 0.2 s from onset at 2× the rate; unit tests) (TSR-518). Not verified on hardware";
+    }
+    item <'T-28'> t_28 : CodeDerivedTime {
+        doc /* EPS fault (reference build, added 2026-10-12) */
+        :>> mechanism = "EPS fault (reference build, added 2026-10-12)";
+        :>> code = "modes/toyota.h (opendbc 338f5fc); panda/board/drivers/eps_fault_siren.h (panda 6a7f2fb)";
+        :>> derivation = "LKA_STATE fault codes on 0x262: STEERING_LKA with torque refused from the receipt of the fault frame; siren once the fault has persisted 0.7 s (70 ticks) after it was seen while controls_allowed (panda bf8102a, DQ-048; counted on after a revocation since 3ee2796, DQ-367), driven by the 8 Hz speaker tick on every other tick";
+        :>> worstCase = "LKA refused on receipt of the fault frame (TSR-110); siren ≤ 0.7 s + 10 ms + 2 × 125 ms ≈ 0.96 s after fault onset worst case (TSR-516(b)); within the SG-02 1 s warning row. With the 1 s persistence before panda bf8102a: ≤ 1.26 s, over the row (OI-8). Not verified on hardware";
+    }
+    item <'T-30'> t_30 : CodeDerivedTime {
+        doc /* Controller saturation warning steerSaturated (added 2026-10-16) */
+        :>> mechanism = "Controller saturation warning steerSaturated (added 2026-10-16)";
+        :>> code = "openpilot/selfdrive/controls/lib/latcontrol.py:8, 22-29; opendbc_repo/opendbc/car/toyota/interface.py:50";
+        :>> derivation = "saturation time accumulates to steerLimitTimer = 0.4 s (LKA torque cars)";
+        :>> worstCase = "0.4 s + 1 frame";
+    }
+    item <'T-31'> t_31 : CodeDerivedTime {
+        doc /* Forward collision warning (added 2026-10-16) */
+        :>> mechanism = "Forward collision warning (added 2026-10-16)";
+        :>> code = "selfdrive/selfdrived/selfdrived.py:488-493";
+        :>> derivation = "model hardBrakePredicted or planner FCW";
+        :>> worstCase = "not derived; measure (M-12)";
+    }
+    item <'T-32'> t_32 : CodeDerivedTime {
+        doc /* Host check of panda authority while disengaged (added 2026-10-16) */
+        :>> mechanism = "Host check of panda authority while disengaged (added 2026-10-16)";
+        :>> code = "—";
+        :>> derivation = "not implemented (TSR-630)";
+        :>> worstCase = "not detected";
+    }
+    item <'T-33'> t_33 : CodeDerivedTime {
+        doc /* Terminal DM reaction (added 2026-10-16) */
+        :>> mechanism = "Terminal DM reaction (added 2026-10-16)";
+        :>> code = "selfdrive/monitoring/policy.py:44, 457; selfdrive/selfdrived/minimum_risk.py; selfdrive/controls/controlsd.py:237-239";
+        :>> derivation = "forced deceleration 5 s after the terminal alert, latched until the driver takes over; the vehicle stops in lane and stays held (TSR-633)";
+        :>> worstCase = "5 s to deceleration; safe state reached at standstill, held while the PCM holds (AOU-16, not verified)";
+    }
+    item <'T-34'> t_34 : CodeDerivedTime {
+        doc /* SoC command arrival (TSR-408; reference build, added 2026-10-16) */
+        :>> mechanism = "SoC command arrival (TSR-408; reference build, added 2026-10-16)";
+        :>> code = "opendbc_repo/opendbc/safety/safety.h tx_arrival_ok, modes/toyota.h (opendbc 273f44e)";
+        :>> derivation = "while authority is granted, the 100 Hz safety task revokes it when 0x2E4 has not reached the TX hook for > 50 ms or, with openpilot longitudinal, 0x343 for > 100 ms";
+        :>> worstCase = "≤ 0.06 s for 0x2E4, ≤ 0.11 s for 0x343 (one task period added). Runs in the safety task before the heartbeat check (main.c safety_task_handler), so in a full SoC stall it revokes first and the heartbeat check finds authority gone. Since panda 8a69ccf / opendbc 4d1a056 the revocation sets safety_tx_arrival_revoked and the heartbeat siren starts in the same task (TSR-516(b), DQ-404 A): siren ≤ 0.06 s + 2 × 125 ms ≈ 0.31 s after the last 0x2E4 (the 0.06 s already holds the task period). Simulated 0.043 s, siren 0.25–0.29 s (§3.9). Not verified on hardware";
+    }
+
+    constraint def FaultReactionTime {
+        doc /* The time from a fault to the item's reaction shall not exceed its budget (WP-S-04 §5): time <= budget.
+               The time is bound to the code-derived times it cites; verdict is met, design (met by design in the
+               reference build), partly, not or verify (no derived time yet). */
+        attribute budget : String;
+        attribute budgetSeconds : Real[0..1];
+        attribute baseline : String;
+        attribute latest : String;
+        attribute verdict : String;
+        attribute change : String;
+        attribute times : String[0..*];
+        attribute tsr : String[0..*];
+    }
+
+    constraint <'RX loss'> reaction_01 : FaultReactionTime {
+        doc /* RX loss */
+        :>> budget = "≤ 0.2 s";
+        :>> budgetSeconds = 0.2;
+        :>> baseline = "1–2 s (T-01)";
+        :>> latest = "≤ 0.2 s by design; 0x262 marginal at ≈ 0.21 s";
+        :>> verdict = "design";
+        :>> change = "5 periods, evaluation ≥ 50 Hz (move timeout check out of the 1 Hz path)";
+        :>> times = ("T-01");
+        :>> tsr = ("TSR-401");
+    }
+    constraint <'RX stuck/inserted'> reaction_02 : FaultReactionTime {
+        doc /* RX stuck/inserted */
+        :>> budget = "≤ 0.2 s";
+        :>> budgetSeconds = 0.2;
+        :>> baseline = "not detected (T-03)";
+        :>> latest = "rate, frozen-content and cross-checks not built";
+        :>> verdict = "not";
+        :>> change = "rate, frozen-content, cross-checks";
+        :>> times = ("T-03");
+        :>> tsr = ("TSR-403", "TSR-404", "TSR-405");
+    }
+    constraint <'SoC heartbeat loss'> reaction_03 : FaultReactionTime {
+        doc /* SoC heartbeat loss */
+        :>> budget = "≤ 0.3 s";
+        :>> budgetSeconds = 0.3;
+        :>> baseline = "4–5 s (T-06)";
+        :>> latest = "revoke by design ≤ 0.31 s; SILENT still 4–5 s";
+        :>> verdict = "partly";
+        :>> change = "evaluate at ≥ 10 Hz; revoke at 0.3 s; SILENT ≤ 2 s";
+        :>> times = ("T-06", "T-06a", "T-06b");
+        :>> tsr = ("TSR-407", "TSR-510");
+    }
+    constraint <'SoC heartbeat loss → warning'> reaction_04 : FaultReactionTime {
+        doc /* SoC heartbeat loss → warning */
+        :>> budget = "warning within SG-02 1 s (§3.7)";
+        :>> baseline = "siren at T-06: 4–5 s (T-07)";
+        :>> latest = "siren ≤ 0.56 s when authority was granted";
+        :>> verdict = "design";
+        :>> change = "none (OI-9 closed)";
+        :>> times = ("T-06", "T-07", "T-07a");
+        :>> tsr = ("TSR-516", "TSR-407");
+    }
+    constraint <'Host/panda mismatch'> reaction_05 : FaultReactionTime {
+        doc /* Host/panda mismatch */
+        :>> budget = "≤ 0.3 s";
+        :>> budgetSeconds = 0.3;
+        :>> baseline = "2–3 s (T-05), 2 s (T-17)";
+        :>> latest = "revoked ≤ 0.31 s (was 2–3 s)";
+        :>> verdict = "design";
+        :>> change = "0.3 s both sides";
+        :>> times = ("T-05", "T-17");
+        :>> tsr = ("TSR-307");
+    }
+    constraint <'SoC command stall'> reaction_06 : FaultReactionTime {
+        doc /* SoC command stall */
+        :>> budget = "≤ 0.05 s";
+        :>> budgetSeconds = 0.05;
+        :>> baseline = "0.1 s at host (T-13), then EPS ≈ 2 s (T-23)";
+        :>> latest = "≤ 0.06 s against 0.05 s: one task period over";
+        :>> verdict = "partly";
+        :>> change = "command-frame freshness in the MCU + active zero frame";
+        :>> times = ("T-13", "T-23", "T-34");
+        :>> tsr = ("TSR-408", "TSR-109");
+    }
+    constraint <'MCU hang'> reaction_07 : FaultReactionTime {
+        doc /* MCU hang */
+        :>> budget = "≤ 0.1 s";
+        :>> budgetSeconds = 0.1;
+        :>> baseline = "not detected (T-09)";
+        :>> latest = "≈ 90 ms watchdog, if the clock tolerance holds";
+        :>> verdict = "design";
+        :>> change = "IWDG";
+        :>> times = ("T-09", "T-09a");
+        :>> tsr = ("TSR-501");
+    }
+    constraint <'Relay stuck released'> reaction_08 : FaultReactionTime {
+        doc /* Relay stuck released */
+        :>> budget = "≤ 0.3 s";
+        :>> budgetSeconds = 0.3;
+        :>> baseline = "1–2 s window (T-08)";
+        :>> latest = "no relay read-back";
+        :>> verdict = "not";
+        :>> change = "readback";
+        :>> times = ("T-08");
+        :>> tsr = ("TSR-506");
+    }
+    constraint <'Brake / cancel'> reaction_09 : FaultReactionTime {
+        doc /* Brake / cancel */
+        :>> budget = "≤ 30 ms";
+        :>> budgetSeconds = 0.03;
+        :>> baseline = "25–30 ms (T-04)";
+        :>> latest = "25–30 ms; EPS and PCM response to verify";
+        :>> verdict = "met";
+        :>> change = "verify EPS/PCM response; TSR-109";
+        :>> times = ("T-04");
+        :>> tsr = ("TSR-302", "TSR-109");
+    }
+    constraint <'Steering override'> reaction_10 : FaultReactionTime {
+        doc /* Steering override */
+        :>> budget = "≤ 0.2 s";
+        :>> budgetSeconds = 0.2;
+        :>> baseline = "not in envelope";
+        :>> latest = "no driver-torque monitor in the envelope";
+        :>> verdict = "not";
+        :>> change = "driver-torque monitor";
+        :>> times = "";
+        :>> tsr = ("TSR-304");
+    }
+    constraint <'Stale SoC inputs'> reaction_11 : FaultReactionTime {
+        doc /* Stale SoC inputs */
+        :>> budget = "≤ 0.2 s actuation on failed input";
+        :>> baseline = "3–3.5 s (T-14 + T-16)";
+        :>> latest = "3–3.5 s of actuation on a failed input";
+        :>> verdict = "not";
+        :>> change = "immediate disable for untrusted inputs; freshness in controlsd";
+        :>> times = ("T-14", "T-16");
+        :>> tsr = ("TSR-601", "TSR-602");
+    }
+    constraint <'Diagnostic masking'> reaction_12 : FaultReactionTime {
+        doc /* Diagnostic masking */
+        :>> budget = "none while engaged";
+        :>> baseline = "5 s (T-22)";
+        :>> latest = "up to 5 s blind while the big model loads";
+        :>> verdict = "not";
+        :>> change = "remove masking / exclude E-06";
+        :>> times = ("T-22");
+        :>> tsr = ("TSR-603");
+    }
+    constraint <'Cruise mismatch'> reaction_13 : FaultReactionTime {
+        doc /* Cruise mismatch */
+        :>> budget = "≤ 1 s with reaction";
+        :>> baseline = "6 s, no reaction (T-19)";
+        :>> latest = "6 s, no reaction";
+        :>> verdict = "not";
+        :>> change = "1 s, warn + cancel";
+        :>> times = ("T-19");
+        :>> tsr = ("TSR-308");
+    }
+    constraint <'sendcan age'> reaction_14 : FaultReactionTime {
+        doc /* sendcan age */
+        :>> budget = "≤ 20 ms";
+        :>> budgetSeconds = 0.02;
+        :>> baseline = "1 s (T-11)";
+        :>> latest = "1 s against 20 ms";
+        :>> verdict = "not";
+        :>> change = "20 ms";
+        :>> times = ("T-11");
+        :>> tsr = ("TSR-614");
+    }
+    constraint <'Take-over request'> reaction_15 : FaultReactionTime {
+        doc /* Take-over request */
+        :>> budget = "≤ 1 s after detection";
+        :>> baseline = "alerts immediate; timing unverified";
+        :>> latest = "alerts immediate; latency not measured";
+        :>> verdict = "verify";
+        :>> change = "measure";
+        :>> times = "";
+        :>> tsr = ("TSR-606");
+    }
+    constraint <'Cruise active with main off'> reaction_16 : FaultReactionTime {
+        doc /* Cruise active with main off */
+        :>> budget = "≤ 0.2 s";
+        :>> budgetSeconds = 0.2;
+        :>> baseline = "refuse at once; revoke after 150 ms (T-26)";
+        :>> latest = "refused at once; revoked after 150 ms";
+        :>> verdict = "design";
+        :>> change = "—";
+        :>> times = ("T-26");
+        :>> tsr = ("TSR-405");
+    }
+    constraint <'SoC TX rate above budget'> reaction_17 : FaultReactionTime {
+        doc /* SoC TX rate above budget */
+        :>> budget = "revoke";
+        :>> baseline = "≤ 0.1 s after first rejected frame, ≤ 0.2 s from onset at 2× (T-27)";
+        :>> latest = "revoked ≤ 0.1 s after the first rejected frame";
+        :>> verdict = "design";
+        :>> change = "—";
+        :>> times = ("T-27");
+        :>> tsr = ("TSR-518");
+    }
+    constraint <'EPS fault'> reaction_18 : FaultReactionTime {
+        doc /* EPS fault */
+        :>> budget = "LKA refused; warning within SG-02 1 s (§3.7)";
+        :>> baseline = "LKA refused on receipt; siren ≤ 0.96 s worst case after onset (T-28, panda bf8102a)";
+        :>> latest = "torque refused at once; siren ≤ 0.96 s";
+        :>> verdict = "design";
+        :>> change = "— (done: persistence 0.7 s)";
+        :>> times = ("T-28");
+        :>> tsr = ("TSR-110", "TSR-516");
+    }
+    constraint <'Full SoC stall → warning'> reaction_19 : FaultReactionTime {
+        doc /* Full SoC stall → warning */
+        :>> budget = "warning within SG-02 1 s (§3.7); TSR-516(b)";
+        :>> baseline = "revoke ≤ 0.06 s (T-34); siren on that revocation ≤ 0.31 s after the last 0x2E4 (panda 8a69ccf, opendbc 4d1a056); 1 Hz siren at 4–5 s (T-07) unchanged";
+        :>> latest = "siren ≤ 0.31 s after the last command frame";
+        :>> verdict = "design";
+        :>> change = "done: siren on a T-34 revocation (DQ-404 A); HIL test_15 stall case on the bench";
+        :>> times = ("T-34", "T-07");
+        :>> tsr = ("TSR-516", "TSR-408");
     }
 }
