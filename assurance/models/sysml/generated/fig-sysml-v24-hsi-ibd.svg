@@ -6,7 +6,7 @@
 <text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-24 · HSI internal block diagram</text>
 <text x="40" y="69" font-size="12.5" fill="#64748B">The 14 hardware-software interfaces of the safety MCU: the firmware and SoC software that own them above, the parts of the MCU hardware they use below</text>
 <text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::hsiInternalBlocks</text>
-<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">InterconnectionView · render asInterconnectionDiagram · model aec35341f186</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">InterconnectionView · render asInterconnectionDiagram · model a064c51b9f0b</text>
 <line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
 <rect x="60" y="150" width="345" height="40" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
 <text x="68" y="166" font-size="9" fill="#64748B">«part»</text>

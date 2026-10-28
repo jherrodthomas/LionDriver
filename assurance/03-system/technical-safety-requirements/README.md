@@ -98,6 +98,12 @@ of the ASIL requirements.
 *Safety mechanisms by element (V-04).* A TSR states the property; a mechanism of WP-S-03 §6 is what delivers it. Each
 mechanism cites the TSRs it meets, and those citations are the «SM» rows of the requirement diagrams below.
 
+[![SysML view V-26: the safety mechanisms drawn on the architecture, top to bottom from the ML models and SoC software through the SoC to MCU link, safety layer, platform firmware and safety MCU to the harness and the car; each element lists the mechanisms it performs, coloured by DC target, and each interface the mechanisms that guard it](../../models/sysml/generated/fig-sysml-v26-mechanisms-on-architecture.svg)](../../models/sysml/generated/fig-sysml-v26-mechanisms-on-architecture.svg)
+
+*Safety mechanisms on the architecture (V-26).* The same allocation drawn on the item, at phone width. Under each
+interface are the mechanisms that implement a TSR the interface carries, for example SM-12, SM-13, SM-14 and SM-22 on
+the SPI link IF-04.
+
 ## 3. The requirements, block by block
 
 One SysML requirement diagram per block (V-22). Each TSR is a «requirement» with its ASIL, mechanism kind and timing.
@@ -245,7 +251,7 @@ This folder has no files of its own besides this page.
 
 | Figure | Generator |
 |---|---|
-| SysML views V-03 and V-04 | [`render_views.py`](../../models/sysml/tools/render_views.py), from the SysML model and the view layout |
+| SysML views V-03, V-04 and V-26 | [`render_views.py`](../../models/sysml/tools/render_views.py) and [`render_arch.py`](../../models/sysml/tools/render_arch.py), from the SysML model and the view layout |
 | SysML views V-05 and V-22 (one per block) | [`render_requirements.py`](../../models/sysml/tools/render_requirements.py), from the SysML model; the TSRs are generated into it from WP-S-02 by [`gen_requirements.py`](../../models/sysml/tools/gen_requirements.py) |
 | SysML view V-09, the verification matrix | [`render_se.py`](../../models/sysml/tools/render_se.py), from the SysML model |
 | WP-S-02 Figure 2-1, where the requirements sit | [`fig_s02_allocation.py`](../figures/fig_s02_allocation.py), from the trace copy of §3–§10 and WP-S-06; the status rule is that of WP-S-03 Figure 6-1, so nothing is hand-listed |

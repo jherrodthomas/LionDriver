@@ -193,4 +193,12 @@ package LionDriverViews {
         expose LionDriverTiming::*;
         render Views::asInterconnectionDiagram;
     }
+
+    view <'V-26'> mechanismsOnArchitecture : AllocationView {
+        doc /* The safety mechanisms SM-01 to SM-43 drawn on the architecture: each on the elements that perform it, and on each interface IF-nn the mechanisms that implement a TSR the interface carries. */
+        expose LionDriverMechanisms::*;
+        expose LdSda::**;
+        expose OperationalContext::*;
+        render Views::asInterconnectionDiagram;
+    }
 }
