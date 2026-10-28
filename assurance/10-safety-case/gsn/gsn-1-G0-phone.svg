@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="846" viewBox="0 0 640 846" role="img" aria-labelledby="t d">
+<title id="t">Safety case (GSN), sheet 1: G0, phone view</title>
+<desc id="d">Safety case (GSN), sheet 1 of 6 as an outline: G0, The LionDriver reference configuration, operated by an attentive driver within its ODD, does not pose unreasonable risk to vehicle occupants or other road users. The residual risk is no worse than manual driving of the same vehicle with its stock TSS 2.0 driver assistance. S0 (strategy); G1 (goal, developed on sheet 2); G2 (goal, developed on sheet 4); G3 (goal, defeaters DF-15, developed on sheet 5); G4 (goal, defeaters DF-22 DF-23 DF-19 DF-29 DF-37); Sn-68 (solution, partial); Sn-70 (solution, partial); G5 (goal, developed on sheet 6); Sn-49 (solution, partial); Sn-55 (solution, partial); Sn-56 (solution, partial). 0 of 5 solutions available.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c0; --st:#4b5bb7; --st-bg:#e4e7fb;
+      --ok:#2e7d32; --ok-bg:#edf7ee; --pa:#b07d00; --pa-bg:#fdf5e1; --mi:#c62828; --mi-bg:#fdecec; --no:#7d8798; --no-bg:#f1f3f6; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#161d25; --ink:#e4eaf0; --ink2:#94a2b1; --line:#2a3440; --rail:#4a5665; --st:#9aa6f0; --st-bg:#232a4a;
+        --ok:#79d6a0; --ok-bg:#173527; --pa:#f0cf6a; --pa-bg:#3a3214; --mi:#ff8f86; --mi-bg:#431b19; --no:#94a2b1; --no-bg:#1f2731; }
+}
+.bg { fill:var(--bg); } .t { font:14px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.h { font:600 20px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.pid { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--ink); }
+.pc { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
+.rule { stroke:var(--line); stroke-width:1; } .rail { stroke:var(--rail); stroke-width:1.2; fill:none; }
+</style>
+<rect class="bg" width="640" height="846"/>
+<path d="M28.0,118.0 V203.0 H34.0" class="rail"/>
+<path d="M48.0,213.0 V234.0 H54.0" class="rail"/>
+<path d="M48.0,213.0 V329.0 H54.0" class="rail"/>
+<path d="M48.0,213.0 V424.0 H54.0" class="rail"/>
+<path d="M48.0,213.0 V519.0 H54.0" class="rail"/>
+<path d="M68.0,529.0 V596.0 H74.0" class="rail"/>
+<path d="M68.0,529.0 V627.0 H74.0" class="rail"/>
+<path d="M48.0,213.0 V658.0 H54.0" class="rail"/>
+<path d="M28.0,118.0 V753.0 H34.0" class="rail"/>
+<path d="M28.0,118.0 V784.0 H34.0" class="rail"/>
+<path d="M28.0,118.0 V815.0 H34.0" class="rail"/>
+<text x="16" y="34" class="h">Safety case · sheet 1 of 6: G0</text>
+<text x="16" y="56" class="t2">Phone view of gsn-1-G0.svg; the full sheet has the GSN drawing.</text>
+<circle cx="22.0" cy="74.0" r="6" style="fill:var(--ok)"/><text x="32.0" y="78" class="t2">evidence available</text>
+<circle cx="167.6" cy="74.0" r="6" style="fill:var(--pa)"/><text x="177.6" y="78" class="t2">partial</text>
+<circle cx="245.0" cy="74.0" r="6" style="fill:var(--mi)"/><text x="255.0" y="78" class="t2">missing</text>
+<circle cx="322.4" cy="74.0" r="6" style="fill:var(--no)"/><text x="332.4" y="78" class="t2">not developed</text>
+<rect x="16" y="99.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="48" y="113.0" class="pid">G0</text>
+<text x="112" y="113.0" class="t">The LionDriver reference configuration, operated by an attentive driver</text>
+<text x="112" y="131.0" class="t">within its ODD, does not pose unreasonable risk to vehicle occupants or</text>
+<text x="112" y="149.0" class="t">other road users. The residual risk is no worse than manual driving of…</text>
+<rect x="112.0" y="159.0" width="162.8" height="18" rx="9" style="fill:var(--no-bg)"/><text x="119.0" y="172.0" class="pc" style="fill:var(--no)">C1 · C2 · C3 · C4 · C5 …</text>
+<line x1="112" y1="187.0" x2="624" y2="187.0" class="rule"/>
+<path d="M42,194.0 h20 l-6,18 h-20 z" style="fill:var(--st-bg);stroke:var(--st);stroke-width:1.5"/>
+<text x="68" y="208.0" class="pid">S0</text>
+<text x="132" y="208.0" class="t">Argue over each source of risk, one sub-claim per discipline</text>
+<line x1="132" y1="218.0" x2="624" y2="218.0" class="rule"/>
+<rect x="56" y="225.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="239.0" class="pid">G1</text>
+<text x="152" y="239.0" class="t">Hazards from E/E malfunctions of the item are reduced to a</text>
+<text x="152" y="257.0" class="t">tolerable level: every safety goal SG-01…SG-08 is met with the</text>
+<text x="152" y="275.0" class="t">integrity of its ASIL.</text>
+<rect x="152.0" y="285.0" width="150.4" height="18" rx="9" style="fill:var(--st-bg)"/><text x="159.0" y="298.0" class="pc" style="fill:var(--st)">→ developed on sheet 2</text>
+<rect x="308.4" y="285.0" width="57.4" height="18" rx="9" style="fill:var(--no-bg)"/><text x="315.4" y="298.0" class="pc" style="fill:var(--no)">C4 · C7</text>
+<line x1="152" y1="313.0" x2="624" y2="313.0" class="rule"/>
+<rect x="56" y="320.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="334.0" class="pid">G2</text>
+<text x="152" y="334.0" class="t">Hazards from functional insufficiencies of the intended</text>
+<text x="152" y="352.0" class="t">functionality and from reasonably foreseeable misuse are</text>
+<text x="152" y="370.0" class="t">acceptably low.</text>
+<rect x="152.0" y="380.0" width="150.4" height="18" rx="9" style="fill:var(--st-bg)"/><text x="159.0" y="393.0" class="pc" style="fill:var(--st)">→ developed on sheet 4</text>
+<rect x="308.4" y="380.0" width="82.2" height="18" rx="9" style="fill:var(--no-bg)"/><text x="315.4" y="393.0" class="pc" style="fill:var(--no)">C8 · C9 · A</text>
+<line x1="152" y1="408.0" x2="624" y2="408.0" class="rule"/>
+<rect x="56" y="415.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="429.0" class="pid">G3</text>
+<text x="152" y="429.0" class="t">The ML components (driving model, DM model) are adequately</text>
+<text x="152" y="447.0" class="t">specified, developed, validated and monitored for their role in</text>
+<text x="152" y="465.0" class="t">the architecture.</text>
+<rect x="152.0" y="475.0" width="150.4" height="18" rx="9" style="fill:var(--st-bg)"/><text x="159.0" y="488.0" class="pc" style="fill:var(--st)">→ developed on sheet 5</text>
+<rect x="308.4" y="475.0" width="131.8" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="315.4" y="488.0" class="pc" style="fill:var(--mi)">⚠ 1 defeater: DF-15</text>
+<rect x="446.2" y="475.0" width="63.6" height="18" rx="9" style="fill:var(--no-bg)"/><text x="453.2" y="488.0" class="pc" style="fill:var(--no)">C10 · J3</text>
+<line x1="152" y1="503.0" x2="624" y2="503.0" class="rule"/>
+<rect x="56" y="510.0" width="24" height="18" rx="2" style="fill:var(--pa-bg);stroke:var(--pa);stroke-width:1.5"/>
+<text x="88" y="524.0" class="pid">G4</text>
+<text x="152" y="524.0" class="t">Cybersecurity risks that can affect safety (and privacy) are</text>
+<text x="152" y="542.0" class="t">treated. Developed in the cybersecurity case WP-K-03.</text>
+<rect x="152.0" y="552.0" width="231.0" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="565.0" class="pc" style="fill:var(--mi)">⚠ 5 defeaters: DF-22, DF-23, DF-19…</text>
+<rect x="389.0" y="552.0" width="20.2" height="18" rx="9" style="fill:var(--no-bg)"/><text x="396.0" y="565.0" class="pc" style="fill:var(--no)">A</text>
+<line x1="152" y1="580.0" x2="624" y2="580.0" class="rule"/>
+<circle cx="88" cy="596.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="601.0" class="pid">Sn-68</text>
+<text x="172" y="601.0" class="t">CS incident response and updates</text>
+<line x1="172" y1="611.0" x2="624" y2="611.0" class="rule"/>
+<circle cx="88" cy="627.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="632.0" class="pid">Sn-70</text>
+<text x="172" y="632.0" class="t">Cybersecurity case</text>
+<line x1="172" y1="642.0" x2="624" y2="642.0" class="rule"/>
+<rect x="56" y="649.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="663.0" class="pid">G5</text>
+<text x="152" y="663.0" class="t">The work was done by competent people under controlled processes,</text>
+<text x="152" y="681.0" class="t">was independently confirmed, and the claims stay valid in</text>
+<text x="152" y="699.0" class="t">operation.</text>
+<rect x="152.0" y="709.0" width="150.4" height="18" rx="9" style="fill:var(--st-bg)"/><text x="159.0" y="722.0" class="pc" style="fill:var(--st)">→ developed on sheet 6</text>
+<line x1="152" y1="737.0" x2="624" y2="737.0" class="rule"/>
+<circle cx="48" cy="753.0" r="10" style="fill:var(--pa)"/>
+<text x="68" y="758.0" class="pid">Sn-49</text>
+<text x="132" y="758.0" class="t">Hazard analysis and risk assessment</text>
+<line x1="132" y1="768.0" x2="624" y2="768.0" class="rule"/>
+<circle cx="48" cy="784.0" r="10" style="fill:var(--pa)"/>
+<text x="68" y="789.0" class="pid">Sn-55</text>
+<text x="132" y="789.0" class="t">Item definition</text>
+<line x1="132" y1="799.0" x2="624" y2="799.0" class="rule"/>
+<circle cx="48" cy="815.0" r="10" style="fill:var(--pa)"/>
+<text x="68" y="820.0" class="pid">Sn-56</text>
+<text x="132" y="820.0" class="t">ODD specification</text>
+<line x1="132" y1="830.0" x2="624" y2="830.0" class="rule"/>
+</svg>

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="418" viewBox="0 0 640 418" role="img" aria-labelledby="t d">
+<title id="t">Cybersecurity case (GSN), sheet 7: CG6, phone view</title>
+<desc id="d">Cybersecurity case (GSN), sheet 7 of 7 as an outline: CG6, The cybersecurity process was followed and independently assessed. CG6.1 (goal); CSn-60 (solution, partial); CG6.2 (goal); CSn-61 (solution, partial); CSn-24 (solution, missing); CG6.3 (goal); CSn-62 (solution, missing); CG6.4 (goal); CSn-63 (solution, missing). 0 of 5 solutions available.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c0; --st:#4b5bb7; --st-bg:#e4e7fb;
+      --ok:#2e7d32; --ok-bg:#edf7ee; --pa:#b07d00; --pa-bg:#fdf5e1; --mi:#c62828; --mi-bg:#fdecec; --no:#7d8798; --no-bg:#f1f3f6; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#161d25; --ink:#e4eaf0; --ink2:#94a2b1; --line:#2a3440; --rail:#4a5665; --st:#9aa6f0; --st-bg:#232a4a;
+        --ok:#79d6a0; --ok-bg:#173527; --pa:#f0cf6a; --pa-bg:#3a3214; --mi:#ff8f86; --mi-bg:#431b19; --no:#94a2b1; --no-bg:#1f2731; }
+}
+.bg { fill:var(--bg); } .t { font:14px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.h { font:600 20px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.pid { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--ink); }
+.pc { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
+.rule { stroke:var(--line); stroke-width:1; } .rail { stroke:var(--rail); stroke-width:1.2; fill:none; }
+</style>
+<rect class="bg" width="640" height="418"/>
+<path d="M28.0,118.0 V139.0 H34.0" class="rail"/>
+<path d="M48.0,149.0 V170.0 H54.0" class="rail"/>
+<path d="M28.0,118.0 V201.0 H34.0" class="rail"/>
+<path d="M48.0,211.0 V232.0 H54.0" class="rail"/>
+<path d="M48.0,211.0 V263.0 H54.0" class="rail"/>
+<path d="M28.0,118.0 V294.0 H34.0" class="rail"/>
+<path d="M48.0,304.0 V325.0 H54.0" class="rail"/>
+<path d="M28.0,118.0 V356.0 H34.0" class="rail"/>
+<path d="M48.0,366.0 V387.0 H54.0" class="rail"/>
+<text x="16" y="34" class="h">Cybersecurity case · sheet 7 of 7: CG6</text>
+<text x="16" y="56" class="t2">Phone view of gsn-cs-7-CG6.svg; the full sheet has the GSN drawing.</text>
+<circle cx="22.0" cy="74.0" r="6" style="fill:var(--ok)"/><text x="32.0" y="78" class="t2">evidence available</text>
+<circle cx="167.6" cy="74.0" r="6" style="fill:var(--pa)"/><text x="177.6" y="78" class="t2">partial</text>
+<circle cx="245.0" cy="74.0" r="6" style="fill:var(--mi)"/><text x="255.0" y="78" class="t2">missing</text>
+<circle cx="322.4" cy="74.0" r="6" style="fill:var(--no)"/><text x="332.4" y="78" class="t2">not developed</text>
+<rect x="16" y="99.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="48" y="113.0" class="pid">CG6</text>
+<text x="112" y="113.0" class="t">The cybersecurity process was followed and independently assessed.</text>
+<line x1="112" y1="123.0" x2="624" y2="123.0" class="rule"/>
+<rect x="36" y="130.0" width="24" height="18" rx="2" style="fill:var(--pa-bg);stroke:var(--pa);stroke-width:1.5"/>
+<text x="68" y="144.0" class="pid">CG6.1</text>
+<text x="132" y="144.0" class="t">Plan, tailoring and roles agreed</text>
+<line x1="132" y1="154.0" x2="624" y2="154.0" class="rule"/>
+<circle cx="68" cy="170.0" r="10" style="fill:var(--pa)"/>
+<text x="88" y="175.0" class="pid">CSn-60</text>
+<text x="152" y="175.0" class="t">Cybersecurity plan and tailoring agreement</text>
+<line x1="152" y1="185.0" x2="624" y2="185.0" class="rule"/>
+<rect x="36" y="192.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="68" y="206.0" class="pid">CG6.2</text>
+<text x="132" y="206.0" class="t">Reuse / OTS / OSS handled per plan</text>
+<line x1="132" y1="216.0" x2="624" y2="216.0" class="rule"/>
+<circle cx="68" cy="232.0" r="10" style="fill:var(--pa)"/>
+<text x="88" y="237.0" class="pid">CSn-61</text>
+<text x="152" y="237.0" class="t">Reuse / impact analysis of the openpilot baseline</text>
+<line x1="152" y1="247.0" x2="624" y2="247.0" class="rule"/>
+<circle cx="68" cy="263.0" r="10" style="fill:var(--mi)"/>
+<text x="88" y="268.0" class="pid">CSn-24</text>
+<text x="152" y="268.0" class="t">SBOM and vulnerability scan report for the release</text>
+<line x1="152" y1="278.0" x2="624" y2="278.0" class="rule"/>
+<rect x="36" y="285.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="68" y="299.0" class="pid">CG6.3</text>
+<text x="132" y="299.0" class="t">Work products reviewed at required independence</text>
+<line x1="132" y1="309.0" x2="624" y2="309.0" class="rule"/>
+<circle cx="68" cy="325.0" r="10" style="fill:var(--mi)"/>
+<text x="88" y="330.0" class="pid">CSn-62</text>
+<text x="152" y="330.0" class="t">Review records at required independence</text>
+<line x1="152" y1="340.0" x2="624" y2="340.0" class="rule"/>
+<rect x="36" y="347.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="68" y="361.0" class="pid">CG6.4</text>
+<text x="132" y="361.0" class="t">Cybersecurity assessment does not reject</text>
+<line x1="132" y1="371.0" x2="624" y2="371.0" class="rule"/>
+<circle cx="68" cy="387.0" r="10" style="fill:var(--mi)"/>
+<text x="88" y="392.0" class="pid">CSn-63</text>
+<text x="152" y="392.0" class="t">Cybersecurity assessment report</text>
+<line x1="152" y1="402.0" x2="624" y2="402.0" class="rule"/>
+</svg>
