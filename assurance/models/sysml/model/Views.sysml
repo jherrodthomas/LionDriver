@@ -187,4 +187,10 @@ package LionDriverViews {
         expose LionDriverSignals::*;
         render Views::asInterconnectionDiagram;
     }
+
+    view <'V-25'> faultReactionTimes : ParametricView {
+        doc /* The fault reaction times of WP-S-04 §5 as constraints {time <= budget}, each bound to the time the item takes, the code-derived times of §4 it rests on and its budget. */
+        expose LionDriverTiming::*;
+        render Views::asInterconnectionDiagram;
+    }
 }

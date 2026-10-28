@@ -771,6 +771,8 @@ class Model:
   signals: dict[str, Record] = field(default_factory=dict)       # HSI signals S-nn of WP-S-05 §11
   responsibilities: dict[str, Record] = field(default_factory=dict)  # HW/SW responsibilities HSI-nn of WP-S-05 §11.4
   activities: dict[str, Activity] = field(default_factory=dict)     # action defs made of phases (WP-S-06 §3)
+  code_times: dict[str, Record] = field(default_factory=dict)       # code-derived times T-nn of WP-S-04 §4
+  reactions: dict[str, Record] = field(default_factory=dict)        # fault reaction times of WP-S-04 §5, by fault class
 
   def by_ident(self) -> dict[str, Element]:
     return {e.short: e for e in self.elements.values() if e.short}
@@ -990,6 +992,8 @@ def load(files: list[Path] | None = None) -> Model:
   signals: dict[str, Record] = {}
   responsibilities: dict[str, Record] = {}
   activities: dict[str, Activity] = {}
+  code_times: dict[str, Record] = {}
+  reactions: dict[str, Record] = {}
   for pkg_decl in packages.values():
     for m in pkg_decl.members:
       if m.kind == "part" and m.short and m.type in ("SecurityZone", "TrustBoundary"):
@@ -1002,6 +1006,10 @@ def load(files: list[Path] | None = None) -> Model:
         state_machines[sm.short] = sm
       if m.kind == "constraint" and m.short and m.type == "TimingBudget":
         budgets[m.short] = Record(m.short, m.name or "", m.doc, dict(m.values))
+      if m.kind == "constraint" and m.short and m.type == "FaultReactionTime":
+        reactions[m.short] = Record(m.short, m.name or "", m.doc, dict(m.values))
+      if m.kind == "item" and m.short and m.type == "CodeDerivedTime":
+        code_times[m.short] = Record(m.short, m.name or "", m.doc, dict(m.values))
       if m.kind == "item" and m.short and m.type == "Signal":
         signals[m.short] = Record(m.short, m.name or "", m.doc, dict(m.values))
       if m.kind == "item" and m.short and m.type == "HsiResponsibility":
@@ -1026,7 +1034,7 @@ def load(files: list[Path] | None = None) -> Model:
       raise ModelError(f"{e.path}: @Zone names {z!r}, which is not a security zone")
   return Model(packages, root, elements, connections, allocations, mechanisms, aliases, views, files,
                requirements, verifications, functions, zones, boundaries, integration, state_machines, use_cases, sequences, budgets, signals,
-               responsibilities, activities)
+               responsibilities, activities, code_times, reactions)
 
 
 def _use_cases(packages: dict[str, Decl], reqs: dict[str, Requirement], functions: dict[str, Function]) -> dict[str, UseCase]:

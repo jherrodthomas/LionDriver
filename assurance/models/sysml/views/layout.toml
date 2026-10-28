@@ -901,3 +901,14 @@ desc = """SysML internal block diagram generated from the model for the hardware
 the boundary, the safety MCU firmware E-03b and the other software owners of each interface (E-03a, host pandad); on \
 the boundary, the 14 interfaces HSI-01 to HSI-14 with their status, signals, TSRs and who detects a failure; below, the \
 parts of the safety MCU hardware E-04a each interface uses, and the parts outside the MCU they lead to."""
+
+[views.V-25]
+file = "fig-sysml-v25-fault-reaction-par.svg"
+kind = "parametric"
+title = "Fault reaction times"
+subtitle = "WP-S-04 §5 as a parametric diagram: per fault class, the constraint time ≤ budget with the time the item takes, the code-derived times it rests on, and the budget"
+width = 1520
+desc = """SysML parametric diagram generated from the model (LionDriverTiming, from WP-S-04 §4 and §5). One constraint \
+property {time ≤ budget} per fault class, with its time parameter bound to the latest time the item takes and to the \
+code-derived times T-nn it rests on, and its budget parameter bound to the budget; grouped by verdict: not met, partly, \
+no derived time, met by design, met in code."""

@@ -533,6 +533,25 @@ class TimingHsi(unittest.TestCase):
     finally:
       self.m.responsibilities["HSI-13"] = saved
 
+  def test_fault_reaction_times(self):
+    r = self.m.reactions
+    self.assertEqual(len(r), 19)
+    self.assertEqual(sysml_lite._as_list(r["Stale SoC inputs"].values["times"]), ["T-14", "T-16"])  # "T-14 + T-16"
+    self.assertEqual(sysml_lite._as_list(r["RX stuck/inserted"].values["tsr"]), ["TSR-403", "TSR-404", "TSR-405"])
+    self.assertEqual(r["SoC command stall"].values["verdict"], "partly")
+    one = r["MCU hang"]
+    saved = dict(one.values)
+    try:
+      one.values.update(times=["T-99"], tsr=["TSR-999"], verdict="fine")
+      rep = check_model.Report()
+      check_model.check_timing_hsi(self.m, rep)
+      text = "\n".join(rep.errors)
+      self.assertIn("fault class 'MCU hang' cites T-99", text)
+      self.assertIn("fault class 'MCU hang' names TSR-999", text)
+      self.assertIn("fault class 'MCU hang': verdict 'fine'", text)
+    finally:
+      one.values = saved
+
   def test_hardware_parts_of_each_interface(self):
     v = self.m.responsibilities
     self.assertEqual(sysml_lite._as_list(v["HSI-04"].values["hwParts"]), ["fdcanPeripherals", "gpio"])  # FDCAN first

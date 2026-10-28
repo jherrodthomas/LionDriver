@@ -1301,3 +1301,103 @@ def sysml_lite_find(m: sysml_lite.Model, ident: str):
 
 
 RENDERERS["hsiblocks"] = render_hsi_ibd
+
+# ---------------------------------------------------------------- V-25 fault reaction times, parametric
+
+PAR_VERDICT = [("not", "not met", "#D2553F", "#FEF2F2"), ("partly", "partly, or just over the budget", "#B45309", "#FFFBEB"),
+               ("verify", "no derived time yet", "#64748B", "#F1F5F9"),
+               ("design", "met by design in the reference build, not verified", "#1D4ED8", "#FFFFFF"),
+               ("met", "met, code-derived (envelope side)", "#1D4ED8", "#EFF6FF")]
+
+
+def par_cell(x: float, y: float, w: float, h: float, name: str, r: sysml_lite.Record, col: str, bg: str) -> list[str]:
+  """One fault reaction time as a small parametric diagram: the constraint {time <= budget}, its two parameters bound
+  to the time (latest, with the code-derived times it cites) and the budget."""
+  v = r.values
+  lst = sysml_lite._as_list
+  out = [k.rect(x, y, w, h, bg, col, 8, 1.3)]
+  out.append(k.text(x + 10, y + 18, k.clip(name, w - 120, 11.5, 700), 11.5, k.INK, 700))
+  tsr = [t for t in lst(v.get("tsr")) if t]
+  out.append(k.text(x + w - 10, y + 18, k.clip(", ".join(tsr), 110, 9, 400, True), 9, k.MUTED, 400, "end", True))
+  bx, bw, by, bh = x + 10, 150, y + 30, 58
+  cx_, cw_ = x + w / 2 - 62, 124
+  rx_ = x + w - 10 - 130
+  # value properties
+  out.append(k.rect(bx, by, bw, bh, "#FFFFFF", k.FAINT, 4, 1.1))
+  out.append(k.text(bx + 6, by + 12, "time", 8.5, k.MUTED, 600))
+  for i, ln in enumerate(k.wrap(str(v.get("latest", "")), bw - 12, 9.5)[:3]):
+    out.append(k.text(bx + 6, by + 25 + i * 11.5, ln, 9.5, k.INK))
+  out.append(k.rect(rx_, by, 130, bh, "#FFFFFF", k.FAINT, 4, 1.1))
+  out.append(k.text(rx_ + 6, by + 12, "budget", 8.5, k.MUTED, 600))
+  for i, ln in enumerate(k.wrap(str(v.get("budget", "")), 118, 9.5, 600)[:3]):
+    out.append(k.text(rx_ + 6, by + 25 + i * 11.5, ln, 9.5, k.INK, 600))
+  # the constraint property with its two parameters, and the binding connectors
+  cy = by + 6
+  out.append(k.rect(cx_, cy, cw_, bh - 12, "#FFFFFF", col, 16, 1.5))
+  out.append(k.text(cx_ + cw_ / 2, cy + 15, "«constraint»", 8.5, k.MUTED, 400, "middle"))
+  out.append(k.text(cx_ + cw_ / 2, cy + 32, "{time ≤ budget}", 10.5, col, 700, "middle", True))
+  pin_y = cy + (bh - 12) / 2
+  for px_ in (cx_, cx_ + cw_):
+    out.append(f'<rect x="{k.f(px_ - 4)}" y="{k.f(pin_y - 4)}" width="8" height="8" fill="#FFFFFF" stroke="{col}" '
+               'stroke-width="1.3"/>')
+  out.append(f'<line x1="{k.f(bx + bw)}" y1="{k.f(pin_y)}" x2="{k.f(cx_ - 4)}" y2="{k.f(pin_y)}" stroke="{k.INK2}" '
+             'stroke-width="1.1"/>')
+  out.append(f'<line x1="{k.f(cx_ + cw_ + 4)}" y1="{k.f(pin_y)}" x2="{k.f(rx_)}" y2="{k.f(pin_y)}" stroke="{k.INK2}" '
+             'stroke-width="1.1"/>')
+  # the code-derived times the time is bound to
+  times = [t for t in lst(v.get("times")) if t]
+  xx = bx
+  out.append(k.text(xx, y + h - 12, "code:" if times else "no code-derived time", 9, k.MUTED, 600))
+  xx += 34
+  for t in times:
+    p, pw = k.pill(xx, y + h - 24, t, "#FFFFFF", k.INK2, 16, 8.5, 700, k.FAINT, mono=True)
+    out.append(p)
+    xx += pw + 4
+  return out
+
+
+def render_reactions(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str:
+  """Parametric view of the fault reaction times of WP-S-04 §5: one constraint {time <= budget} per fault class, its
+  parameters bound to the time the item takes (with the code-derived times T-nn of §4 it rests on) and to the budget,
+  grouped by the verdict."""
+  view = m.views[vid]
+  w = spec["width"]
+  body = rv.header(w, view, spec["title"], spec["subtitle"], digest)
+  cols, gap, ch = 3, 12, 122
+  cw = (w - 80 - 24 - (cols - 1) * gap) / cols
+  y = 136
+  for key, title, col, bg in PAR_VERDICT:
+    rows = [(n, r) for n, r in m.reactions.items() if r.values.get("verdict") == key]
+    if not rows:
+      continue
+    body.append(k.text(52, y + 14, f"{title[0].upper() + title[1:]} ({len(rows)})", 12, col, 700))
+    y += 24
+    for i, (n, r) in enumerate(rows):
+      x = 52 + (i % cols) * (cw + gap)
+      body += par_cell(x, y + (i // cols) * (ch + gap), cw, ch, n, r, col, bg)
+    y += ((len(rows) + cols - 1) // cols) * (ch + gap) + 10
+  bottom = y + 4
+  from render_requirements import sysml_frame
+  body += sysml_frame(24, 100, w - 48, bottom - 100, "par", "LionDriverTiming", "fault reaction times")
+  count = {kk: sum(1 for r in m.reactions.values() if r.values.get("verdict") == kk) for kk, *_ in PAR_VERDICT}
+  cited = {t for r in m.reactions.values() for t in sysml_lite._as_list(r.values.get("times")) if t}
+  note = (f"{len(m.reactions)} fault classes: {count['not']} not met, {count['partly']} partly, {count['verify']} with no "
+          f"derived time, {count['design'] + count['met']} met by design or in code. Each is a constraint of the model "
+          f"bound to the time the item takes and to its budget; {len(cited)} of the {len(m.code_times)} code-derived times "
+          "of §4 are cited (check H6). Nothing is measured yet (WP-S-04 §6).")
+  for i, ln in enumerate(k.wrap(note, w - 80, 11.5)):
+    body.append(k.text(40, bottom + 26 + i * 16, ln, 11.5, k.INK2))
+  legend_y = bottom + 26 + 16 * len(k.wrap(note, w - 80, 11.5))
+  items = [k.rect(40, legend_y + 20, 60, 18, "#FFFFFF", k.INK2, 9, 1.4),
+           k.text(110, legend_y + 33, "constraint property: the time to react shall not exceed the budget", 11, k.INK2),
+           f'<rect x="{k.f(520)}" y="{k.f(legend_y + 25)}" width="8" height="8" fill="#FFFFFF" stroke="{k.INK2}" '
+           'stroke-width="1.2"/>',
+           k.text(536, legend_y + 33, "parameter, bound to a value", 11, k.INK2),
+           k.pill(740, legend_y + 21, "T-06a", "#FFFFFF", k.INK2, 16, 8.5, 700, k.FAINT, mono=True)[0],
+           k.text(790, legend_y + 33, "code-derived time of WP-S-04 §4", 11, k.INK2)]
+  body += rv.footer(w, legend_y, items)
+  return k.svg_doc(w, legend_y + 92, f"{view.short}. {spec['title']} (SysML v2 view {view.name})",
+                   spec.get("desc", view.doc), body)
+
+
+RENDERERS["parametric"] = render_reactions
