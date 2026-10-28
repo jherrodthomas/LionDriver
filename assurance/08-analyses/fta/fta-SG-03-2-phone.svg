@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1084" viewBox="0 0 640 1084" role="img" aria-labelledby="t d">
+<title id="t">SG-03 fault tree, sheet 2: phone view</title>
+<desc id="d">SG-03 fault tree (ASIL C), sheet 2 of 6 as an outline: G3.1 (AND), single-point path; G3.1.1 (OR), single-point path; BE-3.01, single-point path; G3.1.1.a (AND); G3.1.1.b (OR); BE-3.02; BE-1.05; G-LENV (OR); BE-4.16; BE-1.07; BE-1.08; BE-1.09; BE-3.04, single-point path; UE-3.05.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c0; --hot:#c62828; --hot-bg:#fdecec;
+      --or:#2f6fb5; --and:#7a4fc4; --soft:#eef1f5; --ue:#7a5600; --ue-bg:#fff5dc; --sheet:#16202b; --sheet-ink:#ffffff; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#161d25; --ink:#e4eaf0; --ink2:#94a2b1; --line:#2a3440; --rail:#4a5665; --hot:#ff8f86; --hot-bg:#431b19;
+        --or:#7fb0ec; --and:#b9a0f0; --soft:#1f2731; --ue:#f0cf6a; --ue-bg:#3a3214; --sheet:#e4eaf0; --sheet-ink:#161d25; }
+}
+.bg { fill:var(--bg); } .t { font:14px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.ti { font:italic 12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.h { font:600 20px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.pid { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--ink); } .pidhot { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--hot); }
+.gl { font:700 8px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--bg); }
+.pc { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
+.rule { stroke:var(--line); stroke-width:1; } .rail { stroke:var(--rail); stroke-width:1.2; fill:none; }
+.railhot { stroke:var(--hot); stroke-width:2; fill:none; }
+</style>
+<rect class="bg" width="640" height="1084"/>
+<path d="M28.0,115.0 V163.0 H33.0" class="railhot"/>
+<path d="M46.0,174.0 V222.0 H51.0" class="railhot"/>
+<path d="M46.0,174.0 V317.0 H51.0" class="rail"/>
+<path d="M64.0,328.0 V376.0 H69.0" class="rail"/>
+<path d="M82.0,387.0 V435.0 H87.0" class="rail"/>
+<path d="M82.0,387.0 V494.0 H87.0" class="rail"/>
+<path d="M64.0,328.0 V569.0 H69.0" class="rail"/>
+<path d="M82.0,580.0 V628.0 H87.0" class="rail"/>
+<path d="M82.0,580.0 V705.0 H87.0" class="rail"/>
+<path d="M82.0,580.0 V822.0 H87.0" class="rail"/>
+<path d="M82.0,580.0 V917.0 H87.0" class="rail"/>
+<path d="M46.0,174.0 V994.0 H51.0" class="railhot"/>
+<path d="M28.0,115.0 V1053.0 H33.0" class="rail"/>
+<text x="16" y="34" class="h">SG-03 fault tree · sheet 2 of 6</text>
+<text x="16" y="56" class="t2">ASIL C · phone view of fta-SG-03-2.svg; the full sheet has the drawing.</text>
+<text x="16" y="76" class="t2">Red: a single item fault reaches the top event along this path.</text>
+<rect x="16.0" y="94.0" width="24" height="20" rx="3" style="fill:var(--and);stroke:var(--hot);stroke-width:2"/><text x="28.0" y="107.0" class="gl" text-anchor="middle">AND</text>
+<text x="46" y="109.0" class="pidhot">G3.1</text>
+<text x="116" y="109.0" class="t">Positive acceleration above controllable bound executed while engaged</text>
+<rect x="116.0" y="119.0" width="224.8" height="18" rx="9" style="fill:var(--soft)"/><text x="123.0" y="132.0" class="pc" style="fill:var(--ink2)">fewest item faults 1 · 10 cut sets</text>
+<rect x="346.8" y="119.0" width="88.4" height="18" rx="9" style="fill:var(--soft)"/><text x="353.8" y="132.0" class="pc" style="fill:var(--ink2)">from sheet 1</text>
+<line x1="116" y1="147.0" x2="624" y2="147.0" class="rule"/>
+<rect x="34.0" y="153.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--hot);stroke-width:2"/><text x="46.0" y="166.0" class="gl" text-anchor="middle">OR</text>
+<text x="64" y="168.0" class="pidhot">G3.1.1</text>
+<text x="134" y="168.0" class="t">0x343 ACC_CONTROL accel above controllable bound on bus 0</text>
+<rect x="134.0" y="178.0" width="224.8" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="191.0" class="pc" style="fill:var(--ink2)">fewest item faults 1 · 10 cut sets</text>
+<line x1="134" y1="206.0" x2="624" y2="206.0" class="rule"/>
+<circle cx="64.0" cy="222.0" r="10" style="fill:var(--hot-bg);stroke:var(--hot);stroke-width:1.5"/>
+<text x="82" y="227.0" class="pidhot">BE-3.01</text>
+<text x="152" y="227.0" class="t">Envelope accel upper bound (+2.0 m/s², toyota.h:208) above the</text>
+<text x="152" y="245.0" class="t">controllable value; RAISED_ACCEL_LIMIT not validated for Corolla</text>
+<text x="152" y="263.0" class="t">(toyota/interface.py:117-118; GAP-04; CCF → DFI-08)</text>
+<rect x="152.0" y="273.0" width="107.0" height="18" rx="9" style="fill:var(--hot-bg)"/><text x="159.0" y="286.0" class="pc" style="fill:var(--hot)">SPF, systematic</text>
+<rect x="265.0" y="273.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="272.0" y="286.0" class="pc" style="fill:var(--ink2)">SWF-003</text>
+<line x1="152" y1="301.0" x2="624" y2="301.0" class="rule"/>
+<rect x="52.0" y="307.0" width="24" height="20" rx="3" style="fill:var(--and);stroke:var(--ink);stroke-width:0"/><text x="64.0" y="320.0" class="gl" text-anchor="middle">AND</text>
+<text x="82" y="322.0" class="pid">G3.1.1.a</text>
+<text x="152" y="322.0" class="t">SoC excessive accel AND envelope fails to clamp</text>
+<rect x="152.0" y="332.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="159.0" y="345.0" class="pc" style="fill:var(--ink2)">fewest item faults 2 · 8 cut sets</text>
+<line x1="152" y1="360.0" x2="624" y2="360.0" class="rule"/>
+<rect x="70.0" y="366.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--ink);stroke-width:0"/><text x="82.0" y="379.0" class="gl" text-anchor="middle">OR</text>
+<text x="100" y="381.0" class="pid">G3.1.1.b</text>
+<text x="170" y="381.0" class="t">SoC commands excessive acceleration</text>
+<rect x="170.0" y="391.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="177.0" y="404.0" class="pc" style="fill:var(--ink2)">fewest item faults 1 · 2 cut sets</text>
+<line x1="170" y1="419.0" x2="624" y2="419.0" class="rule"/>
+<circle cx="100.0" cy="435.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<text x="118" y="440.0" class="pid">BE-3.02</text>
+<text x="188" y="440.0" class="t">Planner/controller fault, wrong lead, e2e accel</text>
+<rect x="188.0" y="450.0" width="63.6" height="18" rx="9" style="fill:var(--soft)"/><text x="195.0" y="463.0" class="pc" style="fill:var(--ink2)">SOTIF/QM</text>
+<rect x="257.6" y="450.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="264.6" y="463.0" class="pc" style="fill:var(--ink2)">SFM-008</text>
+<rect x="321.0" y="450.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="328.0" y="463.0" class="pc" style="fill:var(--ink2)">PFM-011</text>
+<line x1="188" y1="478.0" x2="624" y2="478.0" class="rule"/>
+<circle cx="100.0" cy="494.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<text x="118" y="499.0" class="pid">BE-1.05</text>
+<text x="188" y="499.0" class="t">Wrong CarParams / fingerprint (CCF → DFI-09)</text>
+<text x="188" y="515.0" class="ti">wrong CarParams / fingerprint; as SG-01</text>
+<rect x="188.0" y="525.0" width="76.0" height="18" rx="9" style="fill:var(--soft)"/><text x="195.0" y="538.0" class="pc" style="fill:var(--ink2)">CCF DFI-09</text>
+<rect x="270.0" y="525.0" width="107.0" height="18" rx="9" style="fill:var(--soft)"/><text x="277.0" y="538.0" class="pc" style="fill:var(--ink2)">repeated, SG-01</text>
+<rect x="383.0" y="525.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="390.0" y="538.0" class="pc" style="fill:var(--ink2)">SFM-032</text>
+<rect x="446.4" y="525.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="453.4" y="538.0" class="pc" style="fill:var(--ink2)">PFM-013</text>
+<rect x="509.8" y="525.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="516.8" y="538.0" class="pc" style="fill:var(--ink2)">SWF-058</text>
+<line x1="188" y1="553.0" x2="624" y2="553.0" class="rule"/>
+<rect x="70.0" y="559.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--ink);stroke-width:0"/><text x="82.0" y="572.0" class="gl" text-anchor="middle">OR</text>
+<text x="100" y="574.0" class="pid">G-LENV</text>
+<text x="170" y="574.0" class="t">Longitudinal envelope does not clamp</text>
+<rect x="170.0" y="584.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="177.0" y="597.0" class="pc" style="fill:var(--ink2)">fewest item faults 1 · 4 cut sets</text>
+<rect x="394.6" y="584.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="401.6" y="597.0" class="pc" style="fill:var(--ink2)">SFM-029</text>
+<line x1="170" y1="612.0" x2="624" y2="612.0" class="rule"/>
+<circle cx="100.0" cy="628.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<text x="118" y="633.0" class="pid">BE-4.16</text>
+<text x="188" y="633.0" class="t">Envelope software defect in the longitudinal checks</text>
+<text x="188" y="651.0" class="t">(longitudinal_accel_checks, longitudinal.h:8-12)</text>
+<rect x="188.0" y="661.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="195.0" y="674.0" class="pc" style="fill:var(--ink2)">SWF-003</text>
+<rect x="251.4" y="661.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="258.4" y="674.0" class="pc" style="fill:var(--ink2)">SWF-016</text>
+<line x1="188" y1="689.0" x2="624" y2="689.0" class="rule"/>
+<circle cx="100.0" cy="705.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<text x="118" y="710.0" class="pid">BE-1.07</text>
+<text x="188" y="710.0" class="t">MCU execution fault (RAM/register/CPU) corrupts limit or</text>
+<text x="188" y="728.0" class="t">check, not detected (no MPU, no ECC handling, faults</text>
+<text x="188" y="746.0" class="t">report-only; GAP-08)</text>
+<rect x="188.0" y="756.0" width="107.0" height="18" rx="9" style="fill:var(--soft)"/><text x="195.0" y="769.0" class="pc" style="fill:var(--ink2)">repeated, SG-01</text>
+<rect x="301.0" y="756.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="308.0" y="769.0" class="pc" style="fill:var(--ink2)">DFM-001</text>
+<rect x="364.4" y="756.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="371.4" y="769.0" class="pc" style="fill:var(--ink2)">DFM-002</text>
+<rect x="427.8" y="756.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="434.8" y="769.0" class="pc" style="fill:var(--ink2)">DFM-003</text>
+<rect x="491.2" y="756.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="498.2" y="769.0" class="pc" style="fill:var(--ink2)">DFM-005</text>
+<rect x="554.6" y="756.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="561.6" y="769.0" class="pc" style="fill:var(--ink2)">DFM-007</text>
+<rect x="188.0" y="778.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="195.0" y="791.0" class="pc" style="fill:var(--ink2)">DFM-018</text>
+<rect x="251.4" y="778.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="258.4" y="791.0" class="pc" style="fill:var(--ink2)">FMD-001</text>
+<rect x="314.8" y="778.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="321.8" y="791.0" class="pc" style="fill:var(--ink2)">FMD-006</text>
+<rect x="378.2" y="778.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="385.2" y="791.0" class="pc" style="fill:var(--ink2)">FMD-009</text>
+<rect x="441.6" y="778.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="448.6" y="791.0" class="pc" style="fill:var(--ink2)">FMD-013</text>
+<rect x="505.0" y="778.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="512.0" y="791.0" class="pc" style="fill:var(--ink2)">FMD-015</text>
+<line x1="188" y1="806.0" x2="624" y2="806.0" class="rule"/>
+<circle cx="100.0" cy="822.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<text x="118" y="827.0" class="pid">BE-1.08</text>
+<text x="188" y="827.0" class="t">Safety mode/param changed by SoC (0xdc, GAP-09) [FFI →</text>
+<text x="188" y="845.0" class="t">FFI-CM-06; CCF → DFI-13: same SoC fault can cause G-SoC and</text>
+<text x="188" y="863.0" class="t">BE-1.08]</text>
+<rect x="188.0" y="873.0" width="107.0" height="18" rx="9" style="fill:var(--soft)"/><text x="195.0" y="886.0" class="pc" style="fill:var(--ink2)">repeated, SG-01</text>
+<rect x="301.0" y="873.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="308.0" y="886.0" class="pc" style="fill:var(--ink2)">SWF-013</text>
+<rect x="364.4" y="873.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="371.4" y="886.0" class="pc" style="fill:var(--ink2)">SWF-022</text>
+<line x1="188" y1="901.0" x2="624" y2="901.0" class="rule"/>
+<circle cx="100.0" cy="917.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<text x="118" y="922.0" class="pid">BE-1.09</text>
+<text x="188" y="922.0" class="t">Envelope firmware replaced via boot pins / softloader</text>
+<text x="188" y="940.0" class="t">(GAP-38, GAP-24) [FFI → FFI-CM-12; CCF → DFI-13]</text>
+<rect x="188.0" y="950.0" width="107.0" height="18" rx="9" style="fill:var(--soft)"/><text x="195.0" y="963.0" class="pc" style="fill:var(--ink2)">repeated, SG-01</text>
+<rect x="301.0" y="950.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="308.0" y="963.0" class="pc" style="fill:var(--ink2)">SWF-028</text>
+<rect x="364.4" y="950.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="371.4" y="963.0" class="pc" style="fill:var(--ink2)">PFM-001</text>
+<rect x="427.8" y="950.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="434.8" y="963.0" class="pc" style="fill:var(--ink2)">DFM-016</text>
+<rect x="491.2" y="950.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="498.2" y="963.0" class="pc" style="fill:var(--ink2)">PFM-002</text>
+<rect x="554.6" y="950.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="561.6" y="963.0" class="pc" style="fill:var(--ink2)">SWF-084</text>
+<line x1="188" y1="978.0" x2="624" y2="978.0" class="rule"/>
+<circle cx="64.0" cy="994.0" r="10" style="fill:var(--hot-bg);stroke:var(--hot);stroke-width:1.5"/>
+<text x="82" y="999.0" class="pidhot">BE-3.04</text>
+<text x="152" y="999.0" class="t">Frame corrupted after TX hook (as BE-1.10)</text>
+<rect x="152.0" y="1009.0" width="100.8" height="18" rx="9" style="fill:var(--hot-bg)"/><text x="159.0" y="1022.0" class="pc" style="fill:var(--hot)">SPF, random HW</text>
+<rect x="258.8" y="1009.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="265.8" y="1022.0" class="pc" style="fill:var(--ink2)">DFM-019</text>
+<rect x="322.2" y="1009.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="329.2" y="1022.0" class="pc" style="fill:var(--ink2)">FMD-002</text>
+<rect x="385.6" y="1009.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="392.6" y="1022.0" class="pc" style="fill:var(--ink2)">FMD-010</text>
+<rect x="449.0" y="1009.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="456.0" y="1022.0" class="pc" style="fill:var(--ink2)">FMD-019</text>
+<line x1="152" y1="1037.0" x2="624" y2="1037.0" class="rule"/>
+<path d="M46.0,1042.0 l11,11 l-11,11 l-11,-11 z" style="fill:var(--ue-bg);stroke:var(--ink);stroke-width:1.5"/>
+<text x="64" y="1058.0" class="pid">UE-3.05</text>
+<text x="134" y="1058.0" class="t">PCM executes request without its own bound (AOU-05R fails)</text>
+<line x1="134" y1="1068.0" x2="624" y2="1068.0" class="rule"/>
+</svg>

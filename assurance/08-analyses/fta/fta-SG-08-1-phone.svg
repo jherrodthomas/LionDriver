@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="762" viewBox="0 0 640 762" role="img" aria-labelledby="t d">
+<title id="t">SG-08 fault tree, sheet 1: phone view</title>
+<desc id="d">SG-08 fault tree (ASIL A), sheet 1 of 2 as an outline: TE-08 (OR), single-point path; G8.1 (OR), single-point path; G8.2 (OR), single-point path; BE-8.07, single-point path; G-HMI, single-point path; G8.3 (OR), single-point path; BE-8.08, single-point path; UE-8.09; BE-8.10, single-point path; UE-8.11.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c0; --hot:#c62828; --hot-bg:#fdecec;
+      --or:#2f6fb5; --and:#7a4fc4; --soft:#eef1f5; --ue:#7a5600; --ue-bg:#fff5dc; --sheet:#16202b; --sheet-ink:#ffffff; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#161d25; --ink:#e4eaf0; --ink2:#94a2b1; --line:#2a3440; --rail:#4a5665; --hot:#ff8f86; --hot-bg:#431b19;
+        --or:#7fb0ec; --and:#b9a0f0; --soft:#1f2731; --ue:#f0cf6a; --ue-bg:#3a3214; --sheet:#e4eaf0; --sheet-ink:#161d25; }
+}
+.bg { fill:var(--bg); } .t { font:14px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.ti { font:italic 12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.h { font:600 20px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.pid { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--ink); } .pidhot { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--hot); }
+.gl { font:700 8px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--bg); }
+.pc { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
+.rule { stroke:var(--line); stroke-width:1; } .rail { stroke:var(--rail); stroke-width:1.2; fill:none; }
+.railhot { stroke:var(--hot); stroke-width:2; fill:none; }
+</style>
+<rect class="bg" width="640" height="762"/>
+<path d="M28.0,115.0 V163.0 H33.0" class="railhot"/>
+<path d="M28.0,115.0 V222.0 H33.0" class="railhot"/>
+<path d="M46.0,233.0 V281.0 H51.0" class="railhot"/>
+<path d="M46.0,233.0 V358.0 H51.0" class="railhot"/>
+<path d="M28.0,115.0 V433.0 H33.0" class="railhot"/>
+<path d="M46.0,444.0 V492.0 H51.0" class="railhot"/>
+<path d="M46.0,444.0 V587.0 H51.0" class="rail"/>
+<path d="M46.0,444.0 V618.0 H51.0" class="railhot"/>
+<path d="M46.0,444.0 V713.0 H51.0" class="rail"/>
+<text x="16" y="34" class="h">SG-08 fault tree · sheet 1 of 2</text>
+<text x="16" y="56" class="t2">ASIL A · phone view of fta-SG-08-1.svg; the full sheet has the drawing.</text>
+<text x="16" y="76" class="t2">Red: a single item fault reaches the top event along this path.</text>
+<rect x="16.0" y="94.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--hot);stroke-width:2"/><text x="28.0" y="107.0" class="gl" text-anchor="middle">OR</text>
+<text x="46" y="109.0" class="pidhot">TE-08</text>
+<text x="116" y="109.0" class="t">Automated control continues with an inattentive or unresponsive driver</text>
+<rect x="116.0" y="119.0" width="224.8" height="18" rx="9" style="fill:var(--soft)"/><text x="123.0" y="132.0" class="pc" style="fill:var(--ink2)">fewest item faults 0 · 13 cut sets</text>
+<line x1="116" y1="147.0" x2="624" y2="147.0" class="rule"/>
+<rect x="34.0" y="153.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--hot);stroke-width:2"/><text x="46.0" y="166.0" class="gl" text-anchor="middle">▸</text>
+<text x="64" y="168.0" class="pidhot">G8.1</text>
+<text x="134" y="168.0" class="t">Inattentive or unresponsive driver not detected while engaged</text>
+<rect x="134.0" y="178.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="191.0" class="pc" style="fill:var(--ink2)">fewest item faults 1 · 5 cut sets</text>
+<rect x="358.6" y="178.0" width="150.4" height="18" rx="9" style="fill:var(--sheet)"/><text x="365.6" y="191.0" class="pc" style="fill:var(--sheet-ink)">continued on sheet 2 ▸</text>
+<line x1="134" y1="206.0" x2="624" y2="206.0" class="rule"/>
+<rect x="34.0" y="212.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--hot);stroke-width:2"/><text x="46.0" y="225.0" class="gl" text-anchor="middle">OR</text>
+<text x="64" y="227.0" class="pidhot">G8.2</text>
+<text x="134" y="227.0" class="t">Take-over escalation too slow or not delivered</text>
+<rect x="134.0" y="237.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="250.0" class="pc" style="fill:var(--ink2)">fewest item faults 1 · 4 cut sets</text>
+<line x1="134" y1="265.0" x2="624" y2="265.0" class="rule"/>
+<circle cx="64.0" cy="281.0" r="10" style="fill:var(--hot-bg);stroke:var(--hot);stroke-width:1.5"/>
+<text x="82" y="286.0" class="pidhot">BE-8.07</text>
+<text x="152" y="286.0" class="t">Policy timers, recovery factor or exemptions misconfigured (alerts</text>
+<text x="152" y="304.0" class="t">later than 5/8/13 s; no monitoring below 10 km/h)</text>
+<rect x="152.0" y="314.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="159.0" y="327.0" class="pc" style="fill:var(--ink2)">SFM-023</text>
+<rect x="215.4" y="314.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="222.4" y="327.0" class="pc" style="fill:var(--ink2)">SWF-061</text>
+<line x1="152" y1="342.0" x2="624" y2="342.0" class="rule"/>
+<path d="M64.0,348.0 l11,19 h-22 z" style="fill:var(--soft);stroke:var(--hot);stroke-width:1.5"/>
+<text x="82" y="363.0" class="pidhot">G-HMI</text>
+<text x="152" y="363.0" class="t">HMI does not deliver the warning</text>
+<text x="152" y="379.0" class="ti">HMI hang, mute or masked alert; as SG-02</text>
+<rect x="152.0" y="389.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="159.0" y="402.0" class="pc" style="fill:var(--ink2)">fewest item faults 1 · 3 cut sets</text>
+<rect x="376.6" y="389.0" width="76.0" height="18" rx="9" style="fill:var(--soft)"/><text x="383.6" y="402.0" class="pc" style="fill:var(--ink2)">CCF DFI-25</text>
+<rect x="458.6" y="389.0" width="107.0" height="18" rx="9" style="fill:var(--soft)"/><text x="465.6" y="402.0" class="pc" style="fill:var(--ink2)">→ SG-02 sheet 9</text>
+<line x1="152" y1="417.0" x2="624" y2="417.0" class="rule"/>
+<rect x="34.0" y="423.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--hot);stroke-width:2"/><text x="46.0" y="436.0" class="gl" text-anchor="middle">OR</text>
+<text x="64" y="438.0" class="pidhot">G8.3</text>
+<text x="134" y="438.0" class="t">No-response reaction does not reach the safe state</text>
+<rect x="134.0" y="448.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="461.0" class="pc" style="fill:var(--ink2)">fewest item faults 0 · 4 cut sets</text>
+<rect x="358.6" y="448.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="365.6" y="461.0" class="pc" style="fill:var(--ink2)">SFM-025</text>
+<line x1="134" y1="476.0" x2="624" y2="476.0" class="rule"/>
+<circle cx="64.0" cy="492.0" r="10" style="fill:var(--hot-bg);stroke:var(--hot);stroke-width:1.5"/>
+<text x="82" y="497.0" class="pidhot">BE-8.08</text>
+<text x="152" y="497.0" class="t">noResponseForceDecel not set, or not turned into a stop: defect in</text>
+<text x="152" y="515.0" class="t">the policy, controlsd or the planner (policy.py:454,</text>
+<text x="152" y="533.0" class="t">controlsd.py:236, longitudinal_planner.py:84)</text>
+<rect x="152.0" y="543.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="159.0" y="556.0" class="pc" style="fill:var(--ink2)">SWF-086</text>
+<line x1="152" y1="571.0" x2="624" y2="571.0" class="rule"/>
+<path d="M64.0,576.0 l11,11 l-11,11 l-11,-11 z" style="fill:var(--ue-bg);stroke:var(--ink);stroke-width:1.5"/>
+<text x="82" y="592.0" class="pid">UE-8.09</text>
+<text x="152" y="592.0" class="t">PCM does not execute the stop request (AOU-05R)</text>
+<line x1="152" y1="602.0" x2="624" y2="602.0" class="rule"/>
+<circle cx="64.0" cy="618.0" r="10" style="fill:var(--hot-bg);stroke:var(--hot);stroke-width:1.5"/>
+<text x="82" y="623.0" class="pidhot">BE-8.10</text>
+<text x="152" y="623.0" class="t">Vehicle not kept stopped, or the item not locked out, after the</text>
+<text x="152" y="641.0" class="t">stop: no standstill hold and no re-engagement or resume lockout</text>
+<text x="152" y="659.0" class="t">until the driver responds (TSR-633 not met, TSR-611 partial)</text>
+<rect x="152.0" y="669.0" width="100.8" height="18" rx="9" style="fill:var(--soft)"/><text x="159.0" y="682.0" class="pc" style="fill:var(--ink2)">latent, design</text>
+<rect x="258.8" y="669.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="265.8" y="682.0" class="pc" style="fill:var(--ink2)">SWF-062</text>
+<rect x="322.2" y="669.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="329.2" y="682.0" class="pc" style="fill:var(--ink2)">SFM-025</text>
+<line x1="152" y1="697.0" x2="624" y2="697.0" class="rule"/>
+<path d="M64.0,702.0 l11,11 l-11,11 l-11,-11 z" style="fill:var(--ue-bg);stroke:var(--ink);stroke-width:1.5"/>
+<text x="82" y="718.0" class="pid">UE-8.11</text>
+<text x="152" y="718.0" class="t">PCM does not hold the vehicle at standstill under ACC (AOU-16;</text>
+<text x="152" y="736.0" class="t">vehicle test, DQ-365)</text>
+<line x1="152" y1="746.0" x2="624" y2="746.0" class="rule"/>
+</svg>

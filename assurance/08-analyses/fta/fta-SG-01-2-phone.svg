@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="271" viewBox="0 0 640 271" role="img" aria-labelledby="t d">
+<title id="t">SG-01 fault tree, sheet 2: phone view</title>
+<desc id="d">SG-01 fault tree (ASIL C), sheet 2 of 6 as an outline: G1.1 (AND), single-point path; G1.1.1 (OR), single-point path; UE-1.11.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c0; --hot:#c62828; --hot-bg:#fdecec;
+      --or:#2f6fb5; --and:#7a4fc4; --soft:#eef1f5; --ue:#7a5600; --ue-bg:#fff5dc; --sheet:#16202b; --sheet-ink:#ffffff; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#161d25; --ink:#e4eaf0; --ink2:#94a2b1; --line:#2a3440; --rail:#4a5665; --hot:#ff8f86; --hot-bg:#431b19;
+        --or:#7fb0ec; --and:#b9a0f0; --soft:#1f2731; --ue:#f0cf6a; --ue-bg:#3a3214; --sheet:#e4eaf0; --sheet-ink:#161d25; }
+}
+.bg { fill:var(--bg); } .t { font:14px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.ti { font:italic 12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.h { font:600 20px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.pid { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--ink); } .pidhot { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--hot); }
+.gl { font:700 8px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--bg); }
+.pc { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
+.rule { stroke:var(--line); stroke-width:1; } .rail { stroke:var(--rail); stroke-width:1.2; fill:none; }
+.railhot { stroke:var(--hot); stroke-width:2; fill:none; }
+</style>
+<rect class="bg" width="640" height="271"/>
+<path d="M28.0,115.0 V163.0 H33.0" class="railhot"/>
+<path d="M28.0,115.0 V222.0 H33.0" class="rail"/>
+<text x="16" y="34" class="h">SG-01 fault tree · sheet 2 of 6</text>
+<text x="16" y="56" class="t2">ASIL C · phone view of fta-SG-01-2.svg; the full sheet has the drawing.</text>
+<text x="16" y="76" class="t2">Red: a single item fault reaches the top event along this path.</text>
+<rect x="16.0" y="94.0" width="24" height="20" rx="3" style="fill:var(--and);stroke:var(--hot);stroke-width:2"/><text x="28.0" y="107.0" class="gl" text-anchor="middle">AND</text>
+<text x="46" y="109.0" class="pidhot">G1.1</text>
+<text x="116" y="109.0" class="t">Torque above the controllable bound reaches the wheel while engaged</text>
+<rect x="116.0" y="119.0" width="224.8" height="18" rx="9" style="fill:var(--soft)"/><text x="123.0" y="132.0" class="pc" style="fill:var(--ink2)">fewest item faults 1 · 22 cut sets</text>
+<rect x="346.8" y="119.0" width="88.4" height="18" rx="9" style="fill:var(--soft)"/><text x="353.8" y="132.0" class="pc" style="fill:var(--ink2)">from sheet 1</text>
+<line x1="116" y1="147.0" x2="624" y2="147.0" class="rule"/>
+<rect x="34.0" y="153.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--hot);stroke-width:2"/><text x="46.0" y="166.0" class="gl" text-anchor="middle">▸</text>
+<text x="64" y="168.0" class="pidhot">G1.1.1</text>
+<text x="134" y="168.0" class="t">Command above controllable bound transmitted on bus 0 (0x2E4)</text>
+<rect x="134.0" y="178.0" width="224.8" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="191.0" class="pc" style="fill:var(--ink2)">fewest item faults 1 · 22 cut sets</text>
+<rect x="364.8" y="178.0" width="150.4" height="18" rx="9" style="fill:var(--sheet)"/><text x="371.8" y="191.0" class="pc" style="fill:var(--sheet-ink)">continued on sheet 4 ▸</text>
+<line x1="134" y1="206.0" x2="624" y2="206.0" class="rule"/>
+<path d="M46.0,211.0 l11,11 l-11,11 l-11,-11 z" style="fill:var(--ue-bg);stroke:var(--ink);stroke-width:1.5"/>
+<text x="64" y="227.0" class="pid">UE-1.11</text>
+<text x="134" y="227.0" class="t">EPS does not limit LKA torque to an overpowerable level (AOU-01R</text>
+<text x="134" y="245.0" class="t">fails)</text>
+<line x1="134" y1="255.0" x2="624" y2="255.0" class="rule"/>
+</svg>

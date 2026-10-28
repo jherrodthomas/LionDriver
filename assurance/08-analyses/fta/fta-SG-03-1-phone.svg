@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1040" viewBox="0 0 640 1040" role="img" aria-labelledby="t d">
+<title id="t">SG-03 fault tree, sheet 1: phone view</title>
+<desc id="d">SG-03 fault tree (ASIL C), sheet 1 of 6 as an outline: TE-03 (OR), single-point path; G3.1 (AND), single-point path; G3.6 (AND); G3.2 (AND); G3.3 (AND); G3.4 (AND), single-point path; BE-3.11, single-point path; UE-3.12; G3.5 (AND); G3.7 (AND); G3.7.1 (OR); BE-4.19; BE-4.20; BE-4.21.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c0; --hot:#c62828; --hot-bg:#fdecec;
+      --or:#2f6fb5; --and:#7a4fc4; --soft:#eef1f5; --ue:#7a5600; --ue-bg:#fff5dc; --sheet:#16202b; --sheet-ink:#ffffff; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#161d25; --ink:#e4eaf0; --ink2:#94a2b1; --line:#2a3440; --rail:#4a5665; --hot:#ff8f86; --hot-bg:#431b19;
+        --or:#7fb0ec; --and:#b9a0f0; --soft:#1f2731; --ue:#f0cf6a; --ue-bg:#3a3214; --sheet:#e4eaf0; --sheet-ink:#161d25; }
+}
+.bg { fill:var(--bg); } .t { font:14px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.ti { font:italic 12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.h { font:600 20px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.pid { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--ink); } .pidhot { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--hot); }
+.gl { font:700 8px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--bg); }
+.pc { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
+.rule { stroke:var(--line); stroke-width:1; } .rail { stroke:var(--rail); stroke-width:1.2; fill:none; }
+.railhot { stroke:var(--hot); stroke-width:2; fill:none; }
+</style>
+<rect class="bg" width="640" height="1040"/>
+<path d="M28.0,115.0 V163.0 H33.0" class="railhot"/>
+<path d="M28.0,115.0 V222.0 H33.0" class="rail"/>
+<path d="M28.0,115.0 V281.0 H33.0" class="rail"/>
+<path d="M28.0,115.0 V358.0 H33.0" class="rail"/>
+<path d="M28.0,115.0 V417.0 H33.0" class="railhot"/>
+<path d="M46.0,428.0 V476.0 H51.0" class="railhot"/>
+<path d="M46.0,428.0 V589.0 H51.0" class="rail"/>
+<path d="M28.0,115.0 V620.0 H33.0" class="rail"/>
+<path d="M28.0,115.0 V679.0 H33.0" class="rail"/>
+<path d="M46.0,690.0 V738.0 H51.0" class="rail"/>
+<path d="M64.0,749.0 V797.0 H69.0" class="rail"/>
+<path d="M64.0,749.0 V872.0 H69.0" class="rail"/>
+<path d="M46.0,690.0 V931.0 H51.0" class="rail"/>
+<text x="16" y="34" class="h">SG-03 fault tree · sheet 1 of 6</text>
+<text x="16" y="56" class="t2">ASIL C · phone view of fta-SG-03-1.svg; the full sheet has the drawing.</text>
+<text x="16" y="76" class="t2">Red: a single item fault reaches the top event along this path.</text>
+<rect x="16.0" y="94.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--hot);stroke-width:2"/><text x="28.0" y="107.0" class="gl" text-anchor="middle">OR</text>
+<text x="46" y="109.0" class="pidhot">TE-03</text>
+<text x="116" y="109.0" class="t">Unintended acceleration</text>
+<rect x="116.0" y="119.0" width="224.8" height="18" rx="9" style="fill:var(--soft)"/><text x="123.0" y="132.0" class="pc" style="fill:var(--ink2)">fewest item faults 1 · 23 cut sets</text>
+<line x1="116" y1="147.0" x2="624" y2="147.0" class="rule"/>
+<rect x="34.0" y="153.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--hot);stroke-width:2"/><text x="46.0" y="166.0" class="gl" text-anchor="middle">▸</text>
+<text x="64" y="168.0" class="pidhot">G3.1</text>
+<text x="134" y="168.0" class="t">Positive acceleration above controllable bound executed while engaged</text>
+<rect x="134.0" y="178.0" width="224.8" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="191.0" class="pc" style="fill:var(--ink2)">fewest item faults 1 · 10 cut sets</text>
+<rect x="364.8" y="178.0" width="150.4" height="18" rx="9" style="fill:var(--sheet)"/><text x="371.8" y="191.0" class="pc" style="fill:var(--sheet-ink)">continued on sheet 2 ▸</text>
+<line x1="134" y1="206.0" x2="624" y2="206.0" class="rule"/>
+<rect x="34.0" y="212.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--ink);stroke-width:0"/><text x="46.0" y="225.0" class="gl" text-anchor="middle">▸</text>
+<text x="64" y="227.0" class="pid">G3.6</text>
+<text x="134" y="227.0" class="t">Acceleration step within the bound</text>
+<rect x="134.0" y="237.0" width="212.4" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="250.0" class="pc" style="fill:var(--ink2)">fewest item faults 2 · 1 cut set</text>
+<rect x="352.4" y="237.0" width="150.4" height="18" rx="9" style="fill:var(--sheet)"/><text x="359.4" y="250.0" class="pc" style="fill:var(--sheet-ink)">continued on sheet 4 ▸</text>
+<line x1="134" y1="265.0" x2="624" y2="265.0" class="rule"/>
+<rect x="34.0" y="271.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--ink);stroke-width:0"/><text x="46.0" y="284.0" class="gl" text-anchor="middle">▸</text>
+<text x="64" y="286.0" class="pid">G3.2</text>
+<text x="134" y="286.0" class="t">In-bound but unintended positive acceleration (e.g. toward a</text>
+<text x="134" y="304.0" class="t">stationary lead)</text>
+<rect x="134.0" y="314.0" width="212.4" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="327.0" class="pc" style="fill:var(--ink2)">fewest item faults 2 · 1 cut set</text>
+<rect x="352.4" y="314.0" width="150.4" height="18" rx="9" style="fill:var(--sheet)"/><text x="359.4" y="327.0" class="pc" style="fill:var(--sheet-ink)">continued on sheet 5 ▸</text>
+<line x1="134" y1="342.0" x2="624" y2="342.0" class="rule"/>
+<rect x="34.0" y="348.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--ink);stroke-width:0"/><text x="46.0" y="361.0" class="gl" text-anchor="middle">▸</text>
+<text x="64" y="363.0" class="pid">G3.3</text>
+<text x="134" y="363.0" class="t">Acceleration while not engaged or after driver brake</text>
+<rect x="134.0" y="373.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="386.0" class="pc" style="fill:var(--ink2)">fewest item faults 2 · 6 cut sets</text>
+<rect x="358.6" y="373.0" width="150.4" height="18" rx="9" style="fill:var(--sheet)"/><text x="365.6" y="386.0" class="pc" style="fill:var(--sheet-ink)">continued on sheet 3 ▸</text>
+<line x1="134" y1="401.0" x2="624" y2="401.0" class="rule"/>
+<rect x="34.0" y="407.0" width="24" height="20" rx="3" style="fill:var(--and);stroke:var(--hot);stroke-width:2"/><text x="46.0" y="420.0" class="gl" text-anchor="middle">AND</text>
+<text x="64" y="422.0" class="pidhot">G3.4</text>
+<text x="134" y="422.0" class="t">Gas override misinterpreted</text>
+<rect x="134.0" y="432.0" width="212.4" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="445.0" class="pc" style="fill:var(--ink2)">fewest item faults 1 · 1 cut set</text>
+<line x1="134" y1="460.0" x2="624" y2="460.0" class="rule"/>
+<circle cx="64.0" cy="476.0" r="10" style="fill:var(--hot-bg);stroke:var(--hot);stroke-width:1.5"/>
+<text x="82" y="481.0" class="pidhot">BE-3.11</text>
+<text x="152" y="481.0" class="t">Gas-pressed signal (PCM_CRUISE.GAS_RELEASED) stuck "pressed":</text>
+<text x="152" y="499.0" class="t">envelope then allows only inactive accel (safe direction) — or</text>
+<text x="152" y="517.0" class="t">stuck "released" while the driver presses: envelope allows accel</text>
+<text x="152" y="535.0" class="t">(longitudinal.h:3-5)</text>
+<rect x="152.0" y="545.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="159.0" y="558.0" class="pc" style="fill:var(--ink2)">SWF-017</text>
+<rect x="215.4" y="545.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="222.4" y="558.0" class="pc" style="fill:var(--ink2)">SWF-006</text>
+<line x1="152" y1="573.0" x2="624" y2="573.0" class="rule"/>
+<path d="M64.0,578.0 l11,11 l-11,11 l-11,-11 z" style="fill:var(--ue-bg);stroke:var(--ink);stroke-width:1.5"/>
+<text x="82" y="594.0" class="pid">UE-3.12</text>
+<text x="152" y="594.0" class="t">PCM adds item accel on top of driver pedal (to verify, AOU-05R)</text>
+<line x1="152" y1="604.0" x2="624" y2="604.0" class="rule"/>
+<rect x="34.0" y="610.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--ink);stroke-width:0"/><text x="46.0" y="623.0" class="gl" text-anchor="middle">▸</text>
+<text x="64" y="625.0" class="pid">G3.5</text>
+<text x="134" y="625.0" class="t">Stale positive acceleration held beyond FTTI</text>
+<rect x="134.0" y="635.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="648.0" class="pc" style="fill:var(--ink2)">fewest item faults 2 · 2 cut sets</text>
+<rect x="358.6" y="635.0" width="150.4" height="18" rx="9" style="fill:var(--sheet)"/><text x="365.6" y="648.0" class="pc" style="fill:var(--sheet-ink)">continued on sheet 6 ▸</text>
+<line x1="134" y1="663.0" x2="624" y2="663.0" class="rule"/>
+<rect x="34.0" y="669.0" width="24" height="20" rx="3" style="fill:var(--and);stroke:var(--ink);stroke-width:0"/><text x="46.0" y="682.0" class="gl" text-anchor="middle">AND</text>
+<text x="64" y="684.0" class="pid">G3.7</text>
+<text x="134" y="684.0" class="t">Stock ACC and item 0x343 on the car bus together while engaged</text>
+<rect x="134.0" y="694.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="707.0" class="pc" style="fill:var(--ink2)">fewest item faults 2 · 2 cut sets</text>
+<line x1="134" y1="722.0" x2="624" y2="722.0" class="rule"/>
+<rect x="52.0" y="728.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--ink);stroke-width:0"/><text x="64.0" y="741.0" class="gl" text-anchor="middle">OR</text>
+<text x="82" y="743.0" class="pid">G3.7.1</text>
+<text x="152" y="743.0" class="t">Stock camera ACC_CONTROL reaches the car side</text>
+<rect x="152.0" y="753.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="159.0" y="766.0" class="pc" style="fill:var(--ink2)">fewest item faults 1 · 2 cut sets</text>
+<line x1="152" y1="781.0" x2="624" y2="781.0" class="rule"/>
+<circle cx="82.0" cy="797.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<text x="100" y="802.0" class="pid">BE-4.19</text>
+<text x="170" y="802.0" class="t">(relay stays released; as SG-04)</text>
+<text x="170" y="818.0" class="ti">relay stays released; as SG-04</text>
+<rect x="170.0" y="828.0" width="107.0" height="18" rx="9" style="fill:var(--soft)"/><text x="177.0" y="841.0" class="pc" style="fill:var(--ink2)">repeated, SG-01</text>
+<rect x="283.0" y="828.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="290.0" y="841.0" class="pc" style="fill:var(--ink2)">DFM-011</text>
+<rect x="346.4" y="828.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="353.4" y="841.0" class="pc" style="fill:var(--ink2)">SFM-034</text>
+<rect x="409.8" y="828.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="416.8" y="841.0" class="pc" style="fill:var(--ink2)">FMD-020</text>
+<rect x="473.2" y="828.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="480.2" y="841.0" class="pc" style="fill:var(--ink2)">FMD-023</text>
+<line x1="170" y1="856.0" x2="624" y2="856.0" class="rule"/>
+<circle cx="82.0" cy="872.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<text x="100" y="877.0" class="pid">BE-4.20</text>
+<text x="170" y="877.0" class="t">(stock 0x343 forwarded while the item transmits; as SG-04)</text>
+<rect x="170.0" y="887.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="177.0" y="900.0" class="pc" style="fill:var(--ink2)">SWF-010</text>
+<line x1="170" y1="915.0" x2="624" y2="915.0" class="rule"/>
+<circle cx="64.0" cy="931.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<text x="82" y="936.0" class="pid">BE-4.21</text>
+<text x="152" y="936.0" class="t">(relay malfunction detected after 1–2 s, not at all, or cleared by</text>
+<text x="152" y="954.0" class="t">a mode change; as SG-04)</text>
+<text x="152" y="970.0" class="ti">relay malfunction detected after 1–2 s, not at all, or cleared by</text>
+<text x="152" y="986.0" class="ti">a mode change; as SG-04</text>
+<rect x="152.0" y="996.0" width="107.0" height="18" rx="9" style="fill:var(--soft)"/><text x="159.0" y="1009.0" class="pc" style="fill:var(--ink2)">repeated, SG-01</text>
+<rect x="265.0" y="996.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="272.0" y="1009.0" class="pc" style="fill:var(--ink2)">SWF-012</text>
+<rect x="328.4" y="996.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="335.4" y="1009.0" class="pc" style="fill:var(--ink2)">SWF-090</text>
+<line x1="152" y1="1024.0" x2="624" y2="1024.0" class="rule"/>
+</svg>

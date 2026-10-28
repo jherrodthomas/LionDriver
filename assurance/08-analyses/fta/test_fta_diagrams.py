@@ -203,5 +203,21 @@ class TestCutSets(unittest.TestCase):
     self.assertIn(frozenset({"BE-4.02", "BE-4.16", "UE-4.04"}), sets)  # BE-4.16 is reached only through G-LENV
 
 
+class TestPhoneViews(unittest.TestCase):
+  def test_every_sheet_has_a_phone_view_naming_every_event(self):
+    import xml.etree.ElementTree as ET
+    out = fd.build()
+    sheets = [n for n in out if n.startswith("fta-") and not n.endswith("-phone.svg")]
+    self.assertTrue(sheets)
+    for name in sheets:
+      phone = name.replace(".svg", "-phone.svg")
+      self.assertIn(phone, out, name)
+      svg = out[phone]
+      self.assertEqual(ET.fromstring(svg).get("width"), str(fd.PHONE_W))
+      self.assertIn("prefers-color-scheme: dark", svg)
+      for ident in set(fd.re.findall(r'class="id"[^>]*>([^<]+)<', out[name])):
+        self.assertIn(f">{ident}<", svg, f"{phone}: {ident} missing")
+
+
 if __name__ == "__main__":
   unittest.main()
