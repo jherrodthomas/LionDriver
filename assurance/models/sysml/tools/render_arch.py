@@ -3,6 +3,9 @@
   V-10 functional architecture   the functions F-01 to F-09 along their functional chain, each step on the element
                                  that performs it (LionDriverFunctions, perform statements)
 
+  V-26 safety mechanisms         SM-01 to SM-43 on the elements that perform them and on the interfaces whose TSRs
+                                 they implement, top to bottom along the command path, at phone width
+
 Called by render_views.render_all, which sets `rv` to itself so that TITLES and the shared frame are available.
 layout.toml gives the title, subtitle and canvas width only; positions follow from the model.
 """
@@ -1401,3 +1404,150 @@ def render_reactions(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> 
 
 
 RENDERERS["parametric"] = render_reactions
+
+# ---------------------------------------------------------------- V-26 safety mechanisms on the architecture
+
+def tsr_match(t: str, u: str) -> bool:
+  """TSR-307(b) is on TSR-307; TSR-1xx (an interface's TSR family) covers TSR-101 to TSR-199."""
+  t = t.split("(")[0]
+  return t == u or (u.endswith("xx") and t.startswith(u[:-2]))
+
+
+def interface_guards(m: sysml_lite.Model) -> dict[str, list[sysml_lite.Mechanism]]:
+  """Per interface IF-nn, the mechanisms that implement a TSR the interface carries (@InterfaceId tsr)."""
+  tsr: dict[str, set[str]] = {}
+  for c in m.connections:
+    if c.interface_id:
+      tsr.setdefault(c.interface_id, set()).update(sysml_lite._as_list((c.meta.get("InterfaceId") or {}).get("tsr")))
+  return {i: [me for me in m.mechanisms.values() if any(tsr_match(t, u) for t in me.tsr for u in ts)]
+          for i, ts in tsr.items()}
+
+
+def mech_chip(x: float, y: float, w: float, me: sysml_lite.Mechanism, also: list[str]) -> list[str]:
+  """One mechanism in its element: the SM id coloured by DC target, its name, and the other elements performing it."""
+  label, fill, color, stroke = rv.dc_style(me)
+  out = []
+  p, pw = k.pill(x, y + 3, me.short, fill, color, 18, 10.5, 700, stroke)
+  out.append(p)
+  tail = "+" + " +".join(also) if also else ""
+  tw = k.text_w(tail, 10, 600) + 6 if tail else 0
+  out.append(k.text(x + pw + 6, y + 16, k.clip(me.doc or me.name, w - pw - 8 - tw, 11.5), 11.5, k.INK))
+  if tail:
+    out.append(k.text(x + w, y + 16, tail, 10, k.MUTED, 600, "end"))
+  return [f'<g data-sm="{me.short}"><title>{k.escape(f"{me.short} {me.doc} · DC {me.dc_target}")}</title>', *out, "</g>"]
+
+
+def render_mechanisms(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str:
+  """The architecture top to bottom along the command path, with every safety mechanism drawn on the element that
+  performs it and, on each interface, the mechanisms whose TSRs the interface carries. Phone width."""
+  view = m.views[vid]
+  w, mx = spec["width"], 24
+  bw = w - 2 * mx
+  body = [k.text(mx, 38, f"{view.short} · {spec['title']}", 19, k.INK, 700)]
+  y = 60
+  for ln in k.wrap(spec["subtitle"], bw, 12.5):
+    body.append(k.text(mx, y, ln, 12.5, k.MUTED))
+    y += 17
+  body.append(k.text(mx, y + 2, f"SysML v2 view LionDriverViews::{view.name} · model {digest}", 10.5, k.FAINT))
+  y += 16
+  body.append(f'<line x1="{mx}" y1="{y}" x2="{w - mx}" y2="{y}" stroke="{k.HAIR}"/>')
+  mechs = list(m.mechanisms.values())
+  counts: dict[str, list] = {}
+  for me in mechs:
+    label, *style = rv.dc_style(me)
+    counts.setdefault(label, [0, style])[0] += 1
+  y += 14
+  body.append(k.text(mx, y + 13, f"{len(mechs)} mechanisms", 13, k.INK, 700))
+  xx = mx + k.text_w(f"{len(mechs)} mechanisms", 13, 700) + 12
+  for label in ("high", "medium", "low", "QM", *sorted(set(counts) - {"high", "medium", "low", "QM"})):
+    if label in counts:
+      n, (fill, color, stroke) = counts[label]
+      p, pw = k.pill(xx, y, f"{n} {label}", fill, color, 18, 10.5, 700, stroke)
+      body.append(p)
+      xx += pw + 6
+  y += 34
+  guards = interface_guards(m)
+  shorts = {e.path: e.short for e in m.elements.values()}
+  titles = spec.get("titles", {})
+  for step in spec["sequence"]:
+    if step.startswith("IF"):
+      # the interfaces between the blocks above and below: a connector with the mechanisms guarding each
+      ids = step.split()
+      rows = []
+      for i in ids:
+        conn = next(c for c in m.connections if c.interface_id == i)
+        rows.append((i, rv.edge_class(conn), sorted(guards.get(i, []), key=lambda me: int(me.short[3:]))))
+      top, at = y, len(body)
+      for i, cls, gs in rows:
+        st = k.EDGE[cls]
+        p, pw = k.pill(mx + 34, y + 4, i, st["color"], h=18, size=10.5, mono=True)
+        body.append(p)
+        body.append(k.text(mx + 34 + pw + 8, y + 17, k.clip(spec["interfaces"][i], bw - 42 - pw, 11.5), 11.5, k.INK2, 600))
+        y += 26
+        gx = mx + 34
+        if not gs:
+          body.append(k.text(gx, y + 10, "no mechanism with a TSR of this interface", 10.5, k.FAINT))
+          y += 18
+        for me in gs:
+          label, fill, color, stroke = rv.dc_style(me)
+          p, pw = k.pill(gx, y, me.short, fill, color, 18, 10, 700, stroke)
+          if gx + pw > w - mx:
+            gx, y = mx + 34, y + 22
+            p, pw = k.pill(gx, y, me.short, fill, color, 18, 10, 700, stroke)
+          body.append(f'<g data-sm="{me.short}" data-if="{i}">{p}</g>')
+          gx += pw + 5
+        y += 30 if gs else 6
+      st = k.EDGE[rows[0][1]]
+      dash = f' stroke-dasharray="{st["dash"]}"' if st["dash"] else ""
+      body.insert(at, f'<line x1="{mx + 16}" y1="{k.f(top - 10)}" x2="{mx + 16}" y2="{k.f(y + 4)}" '
+                  f'stroke="{st["color"]}" stroke-width="2.4"{dash}/>')
+      y += 4
+      continue
+    if step == "vehicle":
+      body.append(k.rect(mx, y, bw, 44, k.OUTSIDE["fill"], k.OUTSIDE["stroke"], 8))
+      body.append(k.text(mx + 14, y + 27, spec["vehicle"], 12.5, k.INK2, 600))
+      y += 56
+      continue
+    e = m.find(step)
+    st = rv.style_of(e)
+    mine = sorted((me for me in mechs if e.path in me.performers), key=lambda me: int(me.short[3:]))
+    cw, nrow = bw - 24, len(mine)
+    bh = 50 + nrow * 26 + 6
+    block = [k.rect(mx, y, bw, bh, st.get("fill", "#FFFFFF"), st["stroke"], 10, 1.4)]
+    p, pw = k.pill(mx + 12, y + 12, e.short, st["chip"], h=18, size=10.5)
+    block.append(p)
+    block.append(k.text(mx + 12 + pw + 8, y + 26, titles.get(e.short, rv.Canvas.default_title(e)), 14, k.INK, 700))
+    ip, _ = rv.integrity_pill(w - mx - 12, y + 12, e, h=18, size=10)
+    block.append(ip)
+    block.append(k.text(w - mx - 12 - k.text_w(k.INTEGRITY_LABEL.get(e.integrity(), ""), 10, 700) - 22, y + 26,
+                        f"{len(mine)}", 13, st["chip"], 700, "end"))
+    for n, me in enumerate(mine):
+      cx, cy = mx + 12, y + 44 + n * 26
+      also = [shorts[p] for p in me.performers if p != e.path and p in shorts]
+      block += mech_chip(cx, cy, cw, me, also)
+    body.append(f'<g data-element="{e.short}">')
+    body += block
+    body.append("</g>")
+    y += bh + 14
+  # legend
+  y += 4
+  body.append(f'<line x1="{mx}" y1="{y}" x2="{w - mx}" y2="{y}" stroke="{k.HAIR}"/>')
+  y += 14
+  xx = mx
+  for dc in ("high", "medium", "low", "QM"):
+    fill, color = rv.DC_FILL[dc]
+    p, pw = k.pill(xx, y, dc, fill, color, 18, 10)
+    body.append(p)
+    xx += pw + 5
+  body.append(k.text(xx + 6, y + 13, "DC target of the mechanism (WP-S-03 §6)", 11, k.INK2))
+  y += 28
+  for ln in k.wrap("+E-nn: also performed by that element. Under an interface IF-nn: the mechanisms that implement a "
+                   "TSR the interface carries, so a fault on that link is caught there.", bw, 11):
+    body.append(k.text(mx, y + 10, ln, 11, k.INK2))
+    y += 16
+  y += 8
+  body.append(k.text(mx, y + 10, rv.GENERATED, 9.5, k.FAINT))
+  return k.svg_doc(w, y + 28, f"{view.short}. {spec['title']} (SysML v2 view {view.name})", spec.get("desc", view.doc), body)
+
+
+RENDERERS["mechanisms"] = render_mechanisms

@@ -791,6 +791,15 @@ DC_FILL = {"high": ("#9A3412", "#FFFFFF"), "medium": ("#FB923C", "#FFFFFF"), "lo
            "QM": ("#E2E8F0", "#334155")}
 
 
+def dc_style(me: sysml_lite.Mechanism) -> tuple[str, str, str, str | None]:
+  """Label, fill, text colour and outline of a mechanism's DC target: high, medium, low, QM, or its note (enabler)."""
+  dc = me.dc_target.split(" ")[0].split("(")[0].strip().rstrip(",") or "—"
+  key = "QM" if dc.startswith(("QM", "ASIL")) else dc
+  fill, color = DC_FILL.get(key, ("#FFFFFF", k.MUTED))
+  label = key if key in DC_FILL else (re.findall(r"\((\w+)\)", me.dc_target) or [dc])[0]
+  return label, fill, color, None if key in DC_FILL else k.FAINT
+
+
 def render_matrix(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str:
   view = m.views[vid]
   cols = [m.find(c) for c in spec["columns"]]
@@ -840,11 +849,8 @@ def render_matrix(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str
     for i in idx:
       st = style_of(cols[i])
       body.append(f'<circle cx="{k.f(cx0 + i * cell_w + cell_w / 2)}" cy="{k.f(cy)}" r="5.6" fill="{st["chip"]}"/>')
-    dc = me.dc_target.split(" ")[0].split("(")[0].strip().rstrip(",") or "—"
-    key = "QM" if dc.startswith(("QM", "ASIL")) else dc
-    fill, color = DC_FILL.get(key, ("#FFFFFF", k.MUTED))
-    label = key if key in DC_FILL else (re.findall(r"\((\w+)\)", me.dc_target) or [dc])[0]
-    svg, _ = k.pill(dc_x, y + 1.5, label, fill, color, h=16, size=9, stroke=None if key in DC_FILL else k.FAINT)
+    label, fill, color, stroke = dc_style(me)
+    svg, _ = k.pill(dc_x, y + 1.5, label, fill, color, h=16, size=9, stroke=stroke)
     body.append(svg)
     tsr = ", ".join(s.replace("TSR-", "") for s in me.tsr)
     body.append(k.text(tsr_x, cy + 3.4, k.clip(tsr, w - 40 - tsr_x, 9.5, mono=True), 9.5, k.INK2, mono=True))

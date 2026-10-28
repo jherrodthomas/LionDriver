@@ -912,3 +912,37 @@ desc = """SysML parametric diagram generated from the model (LionDriverTiming, f
 property {time ≤ budget} per fault class, with its time parameter bound to the latest time the item takes and to the \
 code-derived times T-nn it rests on, and its budget parameter bound to the budget; grouped by verdict: not met, partly, \
 no derived time, met by design, met in code."""
+
+# ======================================================================= V-26
+
+[views.V-26]
+file = "fig-sysml-v26-mechanisms-on-architecture.svg"
+kind = "mechanisms"
+title = "Safety mechanisms on the architecture"
+subtitle = "SM-01 to SM-43 on the element that performs each (perform statements) and on the interfaces whose TSRs they implement, along the path from the SoC to the car"
+width = 640
+sequence = ["E-02", "E-01", "IF-04 IF-04b IF-07", "E-03a", "E-03b", "E-04a", "IF-10 IF-08", "E-05", "IF-01 IF-02 IF-03", "vehicle"]
+vehicle = "Vehicle CAN · EPS, ECM / PCM, ABS / VSC, cluster"
+desc = """Allocation view generated from the SysML v2 model, drawn at phone width. Top to bottom along the command \
+path: the ML models and SoC software (QM), the SoC to MCU link, the safety layer, platform firmware and safety MCU \
+(ASIL C), the harness and the vehicle CAN. Each element lists the safety mechanisms of WP-S-03 §6 it performs, \
+coloured by diagnostic-coverage target, with the other elements that share the mechanism; between the elements, each \
+interface IF-nn lists the mechanisms that implement a technical safety requirement the interface carries."""
+
+[views.V-26.titles]
+"E-01" = "SoC software"
+"E-02" = "ML models"
+"E-03a" = "Safety layer"
+"E-03b" = "Platform firmware"
+"E-04a" = "STM32H7 safety MCU"
+"E-05" = "Harness"
+
+[views.V-26.interfaces]
+"IF-04" = "SPI link, SoC ↔ safety MCU"
+"IF-04b" = "MCU boot and reset lines"
+"IF-07" = "Alerts and siren to the driver"
+"IF-10" = "Intercept relay and harness sense"
+"IF-08" = "12 V supply and ignition"
+"IF-01" = "Commands to the car (EPS, PCM)"
+"IF-02" = "Car and radar CAN in"
+"IF-03" = "Camera CAN, forwarded"

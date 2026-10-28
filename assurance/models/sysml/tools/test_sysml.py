@@ -161,6 +161,19 @@ class Rendering(unittest.TestCase):
     for iid in ("IF-01", "IF-03", "IF-04", "IF-04b", "IF-07", "IF-08", "IF-09", "IF-10"):
       self.assertIn(iid, v03)
 
+  def test_mechanisms_on_the_architecture(self):
+    import render_arch
+    m = sysml_lite.load()
+    svg = render_views.render_all(m)["fig-sysml-v26-mechanisms-on-architecture.svg"]
+    for sid, me in m.mechanisms.items():  # every mechanism drawn once per element that performs it
+      self.assertEqual(svg.count(f'<g data-sm="{sid}"><title>'), len(me.performers), sid)
+    guards = render_arch.interface_guards(m)
+    self.assertEqual([me.short for me in guards["IF-04"]], ["SM-12", "SM-13", "SM-14", "SM-22"])
+    self.assertIn("SM-01", [me.short for me in guards["IF-01"]])  # TSR-101 is in the family TSR-1xx of IF-01
+    self.assertIn('<g data-sm="SM-09" data-if="IF-02">', svg)
+    self.assertTrue(render_arch.tsr_match("TSR-307(b)", "TSR-3xx"))
+    self.assertFalse(render_arch.tsr_match("TSR-410", "TSR-41"))
+
   def test_n2_rolls_up_to_components(self):
     m = sysml_lite.load()
     order, cells = render_se.n2_cells(m)
