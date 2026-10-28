@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1059" viewBox="0 0 640 1059" role="img" aria-labelledby="t d">
+<title id="t">Safety case (GSN), sheet 6: G5, phone view</title>
+<desc id="d">Safety case (GSN), sheet 6 of 6 as an outline: G5, The work was done by competent people under controlled processes, was independently confirmed, and the claims stay valid in operation. S5 (strategy); G5.1 (goal); Sn-60 (solution, partial); G5.2 (goal, defeaters DF-24 DF-30 DF-31); Sn-61 (solution, partial); Sn-62 (solution, missing); G5.3 (goal, defeaters DF-25); Sn-63 (solution, partial); G5.4 (goal, defeaters DF-26); Sn-64 (solution, missing); Sn-65 (solution, missing); G5.5 (goal); Sn-66 (solution, partial); Sn-67 (solution, partial); G5.6 (goal); Sn-30 (solution, partial); Sn-32 (solution, partial); Sn-47 (solution, partial); Sn-44 (solution, partial); Sn-68 (solution, partial); G5.7 (goal); Sn-69 (solution, partial). 0 of 14 solutions available.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c0; --st:#4b5bb7; --st-bg:#e4e7fb;
+      --ok:#2e7d32; --ok-bg:#edf7ee; --pa:#b07d00; --pa-bg:#fdf5e1; --mi:#c62828; --mi-bg:#fdecec; --no:#7d8798; --no-bg:#f1f3f6; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#161d25; --ink:#e4eaf0; --ink2:#94a2b1; --line:#2a3440; --rail:#4a5665; --st:#9aa6f0; --st-bg:#232a4a;
+        --ok:#79d6a0; --ok-bg:#173527; --pa:#f0cf6a; --pa-bg:#3a3214; --mi:#ff8f86; --mi-bg:#431b19; --no:#94a2b1; --no-bg:#1f2731; }
+}
+.bg { fill:var(--bg); } .t { font:14px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.h { font:600 20px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.pid { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--ink); }
+.pc { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
+.rule { stroke:var(--line); stroke-width:1; } .rail { stroke:var(--rail); stroke-width:1.2; fill:none; }
+</style>
+<rect class="bg" width="640" height="1059"/>
+<path d="M28.0,118.0 V157.0 H34.0" class="rail"/>
+<path d="M48.0,167.0 V224.0 H54.0" class="rail"/>
+<path d="M68.0,234.0 V255.0 H74.0" class="rail"/>
+<path d="M48.0,167.0 V286.0 H54.0" class="rail"/>
+<path d="M68.0,296.0 V363.0 H74.0" class="rail"/>
+<path d="M68.0,296.0 V394.0 H74.0" class="rail"/>
+<path d="M48.0,167.0 V425.0 H54.0" class="rail"/>
+<path d="M68.0,435.0 V484.0 H74.0" class="rail"/>
+<path d="M48.0,167.0 V515.0 H54.0" class="rail"/>
+<path d="M68.0,525.0 V592.0 H74.0" class="rail"/>
+<path d="M68.0,525.0 V623.0 H74.0" class="rail"/>
+<path d="M48.0,167.0 V654.0 H54.0" class="rail"/>
+<path d="M68.0,664.0 V685.0 H74.0" class="rail"/>
+<path d="M68.0,664.0 V716.0 H74.0" class="rail"/>
+<path d="M48.0,167.0 V747.0 H54.0" class="rail"/>
+<path d="M68.0,757.0 V796.0 H74.0" class="rail"/>
+<path d="M68.0,757.0 V827.0 H74.0" class="rail"/>
+<path d="M68.0,757.0 V858.0 H74.0" class="rail"/>
+<path d="M68.0,757.0 V889.0 H74.0" class="rail"/>
+<path d="M68.0,757.0 V920.0 H74.0" class="rail"/>
+<path d="M48.0,167.0 V951.0 H54.0" class="rail"/>
+<path d="M68.0,961.0 V1028.0 H74.0" class="rail"/>
+<text x="16" y="34" class="h">Safety case · sheet 6 of 6: G5</text>
+<text x="16" y="56" class="t2">Phone view of gsn-6-G5.svg; the full sheet has the GSN drawing.</text>
+<circle cx="22.0" cy="74.0" r="6" style="fill:var(--ok)"/><text x="32.0" y="78" class="t2">evidence available</text>
+<circle cx="167.6" cy="74.0" r="6" style="fill:var(--pa)"/><text x="177.6" y="78" class="t2">partial</text>
+<circle cx="245.0" cy="74.0" r="6" style="fill:var(--mi)"/><text x="255.0" y="78" class="t2">missing</text>
+<circle cx="322.4" cy="74.0" r="6" style="fill:var(--no)"/><text x="332.4" y="78" class="t2">not developed</text>
+<rect x="16" y="99.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="48" y="113.0" class="pid">G5</text>
+<text x="112" y="113.0" class="t">The work was done by competent people under controlled processes, was</text>
+<text x="112" y="131.0" class="t">independently confirmed, and the claims stay valid in operation.</text>
+<line x1="112" y1="141.0" x2="624" y2="141.0" class="rule"/>
+<path d="M42,148.0 h20 l-6,18 h-20 z" style="fill:var(--st-bg);stroke:var(--st);stroke-width:1.5"/>
+<text x="68" y="162.0" class="pid">S5</text>
+<text x="132" y="162.0" class="t">Argue over planning, configuration and change control, verification</text>
+<text x="132" y="180.0" class="t">and review, competence and independence, confirmation measures, tools</text>
+<text x="132" y="198.0" class="t">and reused components, and operation-phase processes</text>
+<line x1="132" y1="208.0" x2="624" y2="208.0" class="rule"/>
+<rect x="56" y="215.0" width="24" height="18" rx="2" style="fill:var(--pa-bg);stroke:var(--pa);stroke-width:1.5"/>
+<text x="88" y="229.0" class="pid">G5.1</text>
+<text x="152" y="229.0" class="t">Plans exist and are followed.</text>
+<line x1="152" y1="239.0" x2="624" y2="239.0" class="rule"/>
+<circle cx="88" cy="255.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="260.0" class="pid">Sn-60</text>
+<text x="172" y="260.0" class="t">Management plans</text>
+<line x1="172" y1="270.0" x2="624" y2="270.0" class="rule"/>
+<rect x="56" y="277.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="291.0" class="pid">G5.2</text>
+<text x="152" y="291.0" class="t">Safety-relevant code and evidence are under LionDriver</text>
+<text x="152" y="309.0" class="t">configuration and change control.</text>
+<rect x="152.0" y="319.0" width="224.8" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="332.0" class="pc" style="fill:var(--mi)">⚠ 3 defeaters: DF-24, DF-30, DF-31</text>
+<line x1="152" y1="347.0" x2="624" y2="347.0" class="rule"/>
+<circle cx="88" cy="363.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="368.0" class="pid">Sn-61</text>
+<text x="172" y="368.0" class="t">CM and change management</text>
+<line x1="172" y1="378.0" x2="624" y2="378.0" class="rule"/>
+<circle cx="88" cy="394.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="399.0" class="pid">Sn-62</text>
+<text x="172" y="399.0" class="t">Baseline manifest</text>
+<line x1="172" y1="409.0" x2="624" y2="409.0" class="rule"/>
+<rect x="56" y="416.0" width="24" height="18" rx="2" style="fill:var(--pa-bg);stroke:var(--pa);stroke-width:1.5"/>
+<text x="88" y="430.0" class="pid">G5.3</text>
+<text x="152" y="430.0" class="t">Requirements are traceable from SG to code and test.</text>
+<rect x="152.0" y="440.0" width="131.8" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="453.0" class="pc" style="fill:var(--mi)">⚠ 1 defeater: DF-25</text>
+<line x1="152" y1="468.0" x2="624" y2="468.0" class="rule"/>
+<circle cx="88" cy="484.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="489.0" class="pid">Sn-63</text>
+<text x="172" y="489.0" class="t">Traceability procedure and data, trace check report</text>
+<line x1="172" y1="499.0" x2="624" y2="499.0" class="rule"/>
+<rect x="56" y="506.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="520.0" class="pid">G5.4</text>
+<text x="152" y="520.0" class="t">Verification reviews and confirmation measures were performed at</text>
+<text x="152" y="538.0" class="t">the required independence.</text>
+<rect x="152.0" y="548.0" width="131.8" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="561.0" class="pc" style="fill:var(--mi)">⚠ 1 defeater: DF-26</text>
+<line x1="152" y1="576.0" x2="624" y2="576.0" class="rule"/>
+<circle cx="88" cy="592.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="597.0" class="pid">Sn-64</text>
+<text x="172" y="597.0" class="t">Verification review records</text>
+<line x1="172" y1="607.0" x2="624" y2="607.0" class="rule"/>
+<circle cx="88" cy="623.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="628.0" class="pid">Sn-65</text>
+<text x="172" y="628.0" class="t">Confirmation reviews, audit, FSA</text>
+<line x1="172" y1="638.0" x2="624" y2="638.0" class="rule"/>
+<rect x="56" y="645.0" width="24" height="18" rx="2" style="fill:var(--pa-bg);stroke:var(--pa);stroke-width:1.5"/>
+<text x="88" y="659.0" class="pid">G5.5</text>
+<text x="152" y="659.0" class="t">Tools and reused software components are qualified.</text>
+<line x1="152" y1="669.0" x2="624" y2="669.0" class="rule"/>
+<circle cx="88" cy="685.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="690.0" class="pid">Sn-66</text>
+<text x="172" y="690.0" class="t">Tool qualification</text>
+<line x1="172" y1="700.0" x2="624" y2="700.0" class="rule"/>
+<circle cx="88" cy="716.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="721.0" class="pid">Sn-67</text>
+<text x="172" y="721.0" class="t">SW component qualification</text>
+<line x1="172" y1="731.0" x2="624" y2="731.0" class="rule"/>
+<rect x="56" y="738.0" width="24" height="18" rx="2" style="fill:var(--pa-bg);stroke:var(--pa);stroke-width:1.5"/>
+<text x="88" y="752.0" class="pid">G5.6</text>
+<text x="152" y="752.0" class="t">Installation, operation, service, decommissioning and field</text>
+<text x="152" y="770.0" class="t">monitoring keep the reference configuration and the AoUs valid.</text>
+<line x1="152" y1="780.0" x2="624" y2="780.0" class="rule"/>
+<circle cx="88" cy="796.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="801.0" class="pid">Sn-30</text>
+<text x="172" y="801.0" class="t">Installation and provisioning control; installation records</text>
+<line x1="172" y1="811.0" x2="624" y2="811.0" class="rule"/>
+<circle cx="88" cy="827.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="832.0" class="pid">Sn-32</text>
+<text x="172" y="832.0" class="t">Operation, service, decommissioning</text>
+<line x1="172" y1="842.0" x2="624" y2="842.0" class="rule"/>
+<circle cx="88" cy="858.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="863.0" class="pid">Sn-47</text>
+<text x="172" y="863.0" class="t">User information and briefing</text>
+<line x1="172" y1="873.0" x2="624" y2="873.0" class="rule"/>
+<circle cx="88" cy="889.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="894.0" class="pid">Sn-44</text>
+<text x="172" y="894.0" class="t">Field monitoring</text>
+<line x1="172" y1="904.0" x2="624" y2="904.0" class="rule"/>
+<circle cx="88" cy="920.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="925.0" class="pid">Sn-68</text>
+<text x="172" y="925.0" class="t">CS incident response and updates</text>
+<line x1="172" y1="935.0" x2="624" y2="935.0" class="rule"/>
+<rect x="56" y="942.0" width="24" height="18" rx="2" style="fill:var(--pa-bg);stroke:var(--pa);stroke-width:1.5"/>
+<text x="88" y="956.0" class="pid">G5.7</text>
+<text x="152" y="956.0" class="t">No public-road operation happened outside the controlled test</text>
+<text x="152" y="974.0" class="t">regime.</text>
+<rect x="152.0" y="984.0" width="20.2" height="18" rx="9" style="fill:var(--no-bg)"/><text x="159.0" y="997.0" class="pc" style="fill:var(--no)">A</text>
+<line x1="152" y1="1012.0" x2="624" y2="1012.0" class="rule"/>
+<circle cx="88" cy="1028.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="1033.0" class="pid">Sn-69</text>
+<text x="172" y="1033.0" class="t">Vehicle test operations and records</text>
+<line x1="172" y1="1043.0" x2="624" y2="1043.0" class="rule"/>
+</svg>

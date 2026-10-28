@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="627" viewBox="0 0 640 627" role="img" aria-labelledby="t d">
+<title id="t">Cybersecurity case (GSN), sheet 5: CG4, phone view</title>
+<desc id="d">Cybersecurity case (GSN), sheet 5 of 7 as an outline: CG4, The residual risk after validation is acceptable. CG4.1 (goal); CSn-30 (solution, missing); CSn-31 (solution, missing); CSn-32 (solution, missing); CSn-33 (solution, missing); CSn-34 (solution, missing); CSn-35 (solution, missing); CSn-36 (solution, missing); CSn-37 (solution, missing); CG4.2 (goal); CSn-05 (solution, missing); CSn-43 (solution, partial); CG4.3 (goal); CSn-44 (solution, missing). 0 of 11 solutions available.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c0; --st:#4b5bb7; --st-bg:#e4e7fb;
+      --ok:#2e7d32; --ok-bg:#edf7ee; --pa:#b07d00; --pa-bg:#fdf5e1; --mi:#c62828; --mi-bg:#fdecec; --no:#7d8798; --no-bg:#f1f3f6; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#161d25; --ink:#e4eaf0; --ink2:#94a2b1; --line:#2a3440; --rail:#4a5665; --st:#9aa6f0; --st-bg:#232a4a;
+        --ok:#79d6a0; --ok-bg:#173527; --pa:#f0cf6a; --pa-bg:#3a3214; --mi:#ff8f86; --mi-bg:#431b19; --no:#94a2b1; --no-bg:#1f2731; }
+}
+.bg { fill:var(--bg); } .t { font:14px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.h { font:600 20px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.pid { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--ink); }
+.pc { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
+.rule { stroke:var(--line); stroke-width:1; } .rail { stroke:var(--rail); stroke-width:1.2; fill:none; }
+</style>
+<rect class="bg" width="640" height="627"/>
+<path d="M28.0,118.0 V139.0 H34.0" class="rail"/>
+<path d="M48.0,149.0 V188.0 H54.0" class="rail"/>
+<path d="M48.0,149.0 V219.0 H54.0" class="rail"/>
+<path d="M48.0,149.0 V250.0 H54.0" class="rail"/>
+<path d="M48.0,149.0 V299.0 H54.0" class="rail"/>
+<path d="M48.0,149.0 V330.0 H54.0" class="rail"/>
+<path d="M48.0,149.0 V361.0 H54.0" class="rail"/>
+<path d="M48.0,149.0 V392.0 H54.0" class="rail"/>
+<path d="M48.0,149.0 V423.0 H54.0" class="rail"/>
+<path d="M28.0,118.0 V454.0 H34.0" class="rail"/>
+<path d="M48.0,464.0 V485.0 H54.0" class="rail"/>
+<path d="M48.0,464.0 V516.0 H54.0" class="rail"/>
+<path d="M28.0,118.0 V547.0 H34.0" class="rail"/>
+<path d="M48.0,557.0 V596.0 H54.0" class="rail"/>
+<text x="16" y="34" class="h">Cybersecurity case · sheet 5 of 7: CG4</text>
+<text x="16" y="56" class="t2">Phone view of gsn-cs-5-CG4.svg; the full sheet has the GSN drawing.</text>
+<circle cx="22.0" cy="74.0" r="6" style="fill:var(--ok)"/><text x="32.0" y="78" class="t2">evidence available</text>
+<circle cx="167.6" cy="74.0" r="6" style="fill:var(--pa)"/><text x="177.6" y="78" class="t2">partial</text>
+<circle cx="245.0" cy="74.0" r="6" style="fill:var(--mi)"/><text x="255.0" y="78" class="t2">missing</text>
+<circle cx="322.4" cy="74.0" r="6" style="fill:var(--no)"/><text x="332.4" y="78" class="t2">not developed</text>
+<rect x="16" y="99.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="48" y="113.0" class="pid">CG4</text>
+<text x="112" y="113.0" class="t">The residual risk after validation is acceptable.</text>
+<line x1="112" y1="123.0" x2="624" y2="123.0" class="rule"/>
+<rect x="36" y="130.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="68" y="144.0" class="pid">CG4.1</text>
+<text x="132" y="144.0" class="t">Validation and penetration testing found no open Critical/High</text>
+<text x="132" y="162.0" class="t">finding</text>
+<line x1="132" y1="172.0" x2="624" y2="172.0" class="rule"/>
+<circle cx="68" cy="188.0" r="10" style="fill:var(--mi)"/>
+<text x="88" y="193.0" class="pid">CSn-30</text>
+<text x="152" y="193.0" class="t">Validation TC-01, TC-02 (command fuzzing, mode lock)</text>
+<line x1="152" y1="203.0" x2="624" y2="203.0" class="rule"/>
+<circle cx="68" cy="219.0" r="10" style="fill:var(--mi)"/>
+<text x="88" y="224.0" class="pid">CSn-31</text>
+<text x="152" y="224.0" class="t">Validation TC-03…TC-05 (firmware, boot pins, option bytes)</text>
+<line x1="152" y1="234.0" x2="624" y2="234.0" class="rule"/>
+<circle cx="68" cy="250.0" r="10" style="fill:var(--mi)"/>
+<text x="88" y="255.0" class="pid">CSn-32</text>
+<text x="152" y="255.0" class="t">Validation TC-06, TC-07 (params/IPC, envelope under SoC</text>
+<text x="152" y="273.0" class="t">compromise)</text>
+<line x1="152" y1="283.0" x2="624" y2="283.0" class="rule"/>
+<circle cx="68" cy="299.0" r="10" style="fill:var(--mi)"/>
+<text x="88" y="304.0" class="pid">CSn-33</text>
+<text x="152" y="304.0" class="t">Validation TC-08 (model artefacts)</text>
+<line x1="152" y1="314.0" x2="624" y2="314.0" class="rule"/>
+<circle cx="68" cy="330.0" r="10" style="fill:var(--mi)"/>
+<text x="88" y="335.0" class="pid">CSn-34</text>
+<text x="152" y="335.0" class="t">Validation TC-09, TC-10 (CAN robustness)</text>
+<line x1="152" y1="345.0" x2="624" y2="345.0" class="rule"/>
+<circle cx="68" cy="361.0" r="10" style="fill:var(--mi)"/>
+<text x="88" y="366.0" class="pid">CSn-35</text>
+<text x="152" y="366.0" class="t">Validation TC-11…TC-13 (remote surface, back-end independence)</text>
+<line x1="152" y1="376.0" x2="624" y2="376.0" class="rule"/>
+<circle cx="68" cy="392.0" r="10" style="fill:var(--mi)"/>
+<text x="88" y="397.0" class="pid">CSn-36</text>
+<text x="152" y="397.0" class="t">Validation TC-14, TC-15 (updates, supply chain)</text>
+<line x1="152" y1="407.0" x2="624" y2="407.0" class="rule"/>
+<circle cx="68" cy="423.0" r="10" style="fill:var(--mi)"/>
+<text x="88" y="428.0" class="pid">CSn-37</text>
+<text x="152" y="428.0" class="t">Validation TC-16, TC-17 (data at rest, decommissioning)</text>
+<line x1="152" y1="438.0" x2="624" y2="438.0" class="rule"/>
+<rect x="36" y="445.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="68" y="459.0" class="pid">CG4.2</text>
+<text x="132" y="459.0" class="t">Every retained finding is rated, justified and listed (§5)</text>
+<line x1="132" y1="469.0" x2="624" y2="469.0" class="rule"/>
+<circle cx="68" cy="485.0" r="10" style="fill:var(--mi)"/>
+<text x="88" y="490.0" class="pid">CSn-05</text>
+<text x="152" y="490.0" class="t">Residual-risk TARA iteration</text>
+<line x1="152" y1="500.0" x2="624" y2="500.0" class="rule"/>
+<circle cx="68" cy="516.0" r="10" style="fill:var(--pa)"/>
+<text x="88" y="521.0" class="pid">CSn-43</text>
+<text x="152" y="521.0" class="t">Residual-risk list (§5) with acceptance</text>
+<line x1="152" y1="531.0" x2="624" y2="531.0" class="rule"/>
+<rect x="36" y="538.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="68" y="552.0" class="pid">CG4.3</text>
+<text x="132" y="552.0" class="t">Safety-relevant residuals accepted by the safety manager in the</text>
+<text x="132" y="570.0" class="t">safety case</text>
+<line x1="132" y1="580.0" x2="624" y2="580.0" class="rule"/>
+<circle cx="68" cy="596.0" r="10" style="fill:var(--mi)"/>
+<text x="88" y="601.0" class="pid">CSn-44</text>
+<text x="152" y="601.0" class="t">Safety manager acceptance of safety-relevant CS residuals</text>
+<line x1="152" y1="611.0" x2="624" y2="611.0" class="rule"/>
+</svg>

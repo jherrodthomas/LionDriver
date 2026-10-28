@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="919" viewBox="0 0 640 919" role="img" aria-labelledby="t d">
+<title id="t">Safety case (GSN), sheet 3: G1.1, phone view</title>
+<desc id="d">Safety case (GSN), sheet 3 of 6 as an outline: G1.1, SG-01 (lateral motion, ASIL C ⚠ / B if C1 shown under option c) is met. S1.1 (strategy); G1.1.1 (goal, defeaters DF-28 DF-34); Sn-01 (solution, partial); Sn-20 (solution, missing); G1.1.2 (goal, defeaters DF-03 DF-16 DF-27 DF-30); Sn-02 (solution, partial); Sn-03 (solution, partial); Sn-10 (solution, partial); Sn-12 (solution, missing); G1.1.3 (goal, defeaters DF-38); Sn-10 (solution, partial); Sn-12 (solution, missing); G1.1.4 (goal, defeaters DF-01 DF-02 DF-03 DF-04 DF-05 DF-06 DF-29 DF-36 DF-40 DF-42); Sn-04 (solution, partial); Sn-13 (solution, missing); Sn-15 (solution, partial). 0 of 11 solutions available.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c0; --st:#4b5bb7; --st-bg:#e4e7fb;
+      --ok:#2e7d32; --ok-bg:#edf7ee; --pa:#b07d00; --pa-bg:#fdf5e1; --mi:#c62828; --mi-bg:#fdecec; --no:#7d8798; --no-bg:#f1f3f6; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#161d25; --ink:#e4eaf0; --ink2:#94a2b1; --line:#2a3440; --rail:#4a5665; --st:#9aa6f0; --st-bg:#232a4a;
+        --ok:#79d6a0; --ok-bg:#173527; --pa:#f0cf6a; --pa-bg:#3a3214; --mi:#ff8f86; --mi-bg:#431b19; --no:#94a2b1; --no-bg:#1f2731; }
+}
+.bg { fill:var(--bg); } .t { font:14px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.h { font:600 20px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.pid { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--ink); }
+.pc { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
+.rule { stroke:var(--line); stroke-width:1; } .rail { stroke:var(--rail); stroke-width:1.2; fill:none; }
+</style>
+<rect class="bg" width="640" height="919"/>
+<path d="M28.0,118.0 V167.0 H34.0" class="rail"/>
+<path d="M48.0,177.0 V234.0 H54.0" class="rail"/>
+<path d="M68.0,244.0 V311.0 H74.0" class="rail"/>
+<path d="M68.0,244.0 V342.0 H74.0" class="rail"/>
+<path d="M48.0,177.0 V373.0 H54.0" class="rail"/>
+<path d="M68.0,383.0 V432.0 H74.0" class="rail"/>
+<path d="M68.0,383.0 V463.0 H74.0" class="rail"/>
+<path d="M68.0,383.0 V494.0 H74.0" class="rail"/>
+<path d="M68.0,383.0 V543.0 H74.0" class="rail"/>
+<path d="M48.0,177.0 V574.0 H54.0" class="rail"/>
+<path d="M68.0,584.0 V633.0 H74.0" class="rail"/>
+<path d="M68.0,584.0 V682.0 H74.0" class="rail"/>
+<path d="M48.0,177.0 V713.0 H54.0" class="rail"/>
+<path d="M68.0,723.0 V790.0 H74.0" class="rail"/>
+<path d="M68.0,723.0 V821.0 H74.0" class="rail"/>
+<path d="M68.0,723.0 V852.0 H74.0" class="rail"/>
+<text x="16" y="34" class="h">Safety case · sheet 3 of 6: G1.1</text>
+<text x="16" y="56" class="t2">Phone view of gsn-3-G1.1.svg; the full sheet has the GSN drawing.</text>
+<circle cx="22.0" cy="74.0" r="6" style="fill:var(--ok)"/><text x="32.0" y="78" class="t2">evidence available</text>
+<circle cx="167.6" cy="74.0" r="6" style="fill:var(--pa)"/><text x="177.6" y="78" class="t2">partial</text>
+<circle cx="245.0" cy="74.0" r="6" style="fill:var(--mi)"/><text x="255.0" y="78" class="t2">missing</text>
+<circle cx="322.4" cy="74.0" r="6" style="fill:var(--no)"/><text x="332.4" y="78" class="t2">not developed</text>
+<rect x="16" y="99.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="48" y="113.0" class="pid">G1.1</text>
+<text x="112" y="113.0" class="t">SG-01 (lateral motion, ASIL C ⚠ / B if C1 shown under option c) is met.</text>
+<rect x="112.0" y="123.0" width="131.8" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="119.0" y="136.0" class="pc" style="fill:var(--mi)">⚠ 1 defeater: DF-14</text>
+<rect x="249.8" y="123.0" width="20.2" height="18" rx="9" style="fill:var(--no-bg)"/><text x="256.8" y="136.0" class="pc" style="fill:var(--no)">A</text>
+<line x1="112" y1="151.0" x2="624" y2="151.0" class="rule"/>
+<path d="M42,158.0 h20 l-6,18 h-20 z" style="fill:var(--st-bg);stroke:var(--st);stroke-width:1.5"/>
+<text x="68" y="172.0" class="pid">S1.1</text>
+<text x="132" y="172.0" class="t">Argue over (i) envelope limits keep any command controllable, (ii)</text>
+<text x="132" y="190.0" class="t">the limits are enforced by an element of sufficient integrity, (iii)</text>
+<text x="132" y="208.0" class="t">faults of the enforcing element are detected and reacted to in FTTI</text>
+<line x1="132" y1="218.0" x2="624" y2="218.0" class="rule"/>
+<rect x="56" y="225.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="239.0" class="pid">G1.1.1</text>
+<text x="152" y="239.0" class="t">Envelope limits (torque magnitude, rate, measured tracking) are</text>
+<text x="152" y="257.0" class="t">controllable by a typical driver (C1 basis).</text>
+<rect x="152.0" y="267.0" width="181.4" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="280.0" class="pc" style="fill:var(--mi)">⚠ 2 defeaters: DF-28, DF-34</text>
+<rect x="339.4" y="267.0" width="20.2" height="18" rx="9" style="fill:var(--no-bg)"/><text x="346.4" y="280.0" class="pc" style="fill:var(--no)">A</text>
+<line x1="152" y1="295.0" x2="624" y2="295.0" class="rule"/>
+<circle cx="88" cy="311.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="316.0" class="pid">Sn-01</text>
+<text x="172" y="316.0" class="t">Functional safety requirements FSR-01.01…FSR-07.05</text>
+<line x1="172" y1="326.0" x2="624" y2="326.0" class="rule"/>
+<circle cx="88" cy="342.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="347.0" class="pid">Sn-20</text>
+<text x="172" y="347.0" class="t">Vehicle controllability and EPS characterisation (AOU-01/02)</text>
+<line x1="172" y1="357.0" x2="624" y2="357.0" class="rule"/>
+<rect x="56" y="364.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="378.0" class="pid">G1.1.2</text>
+<text x="152" y="378.0" class="t">Limits are enforced on every TX frame by the Toyota safety mode.</text>
+<rect x="152.0" y="388.0" width="231.0" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="401.0" class="pc" style="fill:var(--mi)">⚠ 4 defeaters: DF-03, DF-16, DF-27…</text>
+<line x1="152" y1="416.0" x2="624" y2="416.0" class="rule"/>
+<circle cx="88" cy="432.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="437.0" class="pid">Sn-02</text>
+<text x="172" y="437.0" class="t">Technical safety requirements</text>
+<line x1="172" y1="447.0" x2="624" y2="447.0" class="rule"/>
+<circle cx="88" cy="463.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="468.0" class="pid">Sn-03</text>
+<text x="172" y="468.0" class="t">Software safety requirements</text>
+<line x1="172" y1="478.0" x2="624" y2="478.0" class="rule"/>
+<circle cx="88" cy="494.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="499.0" class="pid">Sn-10</text>
+<text x="172" y="499.0" class="t">opendbc safety unit tests (100% line coverage gate, MISRA,</text>
+<text x="172" y="517.0" class="t">mutation, UBSan)</text>
+<line x1="172" y1="527.0" x2="624" y2="527.0" class="rule"/>
+<circle cx="88" cy="543.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="548.0" class="pid">Sn-12</text>
+<text x="172" y="548.0" class="t">HIL tests of the envelope</text>
+<line x1="172" y1="558.0" x2="624" y2="558.0" class="rule"/>
+<rect x="56" y="565.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="579.0" class="pid">G1.1.3</text>
+<text x="152" y="579.0" class="t">No steering actuation while not engaged.</text>
+<rect x="152.0" y="589.0" width="131.8" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="602.0" class="pc" style="fill:var(--mi)">⚠ 1 defeater: DF-38</text>
+<line x1="152" y1="617.0" x2="624" y2="617.0" class="rule"/>
+<circle cx="88" cy="633.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="638.0" class="pid">Sn-10</text>
+<text x="172" y="638.0" class="t">opendbc safety unit tests (100% line coverage gate, MISRA,</text>
+<text x="172" y="656.0" class="t">mutation, UBSan)</text>
+<line x1="172" y1="666.0" x2="624" y2="666.0" class="rule"/>
+<circle cx="88" cy="682.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="687.0" class="pid">Sn-12</text>
+<text x="172" y="687.0" class="t">HIL tests of the envelope</text>
+<line x1="172" y1="697.0" x2="624" y2="697.0" class="rule"/>
+<rect x="56" y="704.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="718.0" class="pid">G1.1.4</text>
+<text x="152" y="718.0" class="t">Envelope faults (MCU hang, SPI corruption, wrong safety mode,</text>
+<text x="152" y="736.0" class="t">stale RX) reach the safe state within the FTTI.</text>
+<rect x="152.0" y="746.0" width="237.2" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="759.0" class="pc" style="fill:var(--mi)">⚠ 10 defeaters: DF-01, DF-02, DF-03…</text>
+<line x1="152" y1="774.0" x2="624" y2="774.0" class="rule"/>
+<circle cx="88" cy="790.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="795.0" class="pid">Sn-04</text>
+<text x="172" y="795.0" class="t">FTTI and timing budget</text>
+<line x1="172" y1="805.0" x2="624" y2="805.0" class="rule"/>
+<circle cx="88" cy="821.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="826.0" class="pid">Sn-13</text>
+<text x="172" y="826.0" class="t">Fault injection</text>
+<line x1="172" y1="836.0" x2="624" y2="836.0" class="rule"/>
+<circle cx="88" cy="852.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="857.0" class="pid">Sn-15</text>
+<text x="172" y="857.0" class="t">panda firmware host unit tests (watchdog, heartbeat monitor,</text>
+<text x="172" y="875.0" class="t">heartbeat-loss siren, reference lock, IRQ priorities, EPS-fault</text>
+<text x="172" y="893.0" class="t">siren)</text>
+<line x1="172" y1="903.0" x2="624" y2="903.0" class="rule"/>
+</svg>

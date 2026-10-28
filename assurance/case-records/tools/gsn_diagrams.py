@@ -782,6 +782,119 @@ def render_sheet(sheets: list[Node], no: int, case: str = "Safety case", source:
   return "\n".join(head + body + leg + foot) + "\n</svg>\n"
 
 
+# ---------------------------------------------------------------- phone view
+
+PHONE_W = 640
+PHONE_STATUS = {"available": "ok", "partial": "pa", "missing": "mi", "none": "no"}
+PHONE_CSS = """<style>
+svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c0; --st:#4b5bb7; --st-bg:#e4e7fb;
+      --ok:#2e7d32; --ok-bg:#edf7ee; --pa:#b07d00; --pa-bg:#fdf5e1; --mi:#c62828; --mi-bg:#fdecec; --no:#7d8798; --no-bg:#f1f3f6; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#161d25; --ink:#e4eaf0; --ink2:#94a2b1; --line:#2a3440; --rail:#4a5665; --st:#9aa6f0; --st-bg:#232a4a;
+        --ok:#79d6a0; --ok-bg:#173527; --pa:#f0cf6a; --pa-bg:#3a3214; --mi:#ff8f86; --mi-bg:#431b19; --no:#94a2b1; --no-bg:#1f2731; }
+}
+.bg { fill:var(--bg); } .t { font:14px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.h { font:600 20px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.pid { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--ink); }
+.pc { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
+.rule { stroke:var(--line); stroke-width:1; } .rail { stroke:var(--rail); stroke-width:1.2; fill:none; }
+</style>"""
+
+
+def _pwrap(text: str, px: float, char: float = 7.1) -> list[str]:
+  return wrap(text, max(8, int(px / char)))
+
+
+def render_phone(sheets: list[Node], no: int, case: str = "Safety case", full: str = "") -> str:
+  """The sheet as an indented outline at phone width (640 px): one row per goal, strategy and solution, in reading
+  order, with the same evidence colours, defeaters, contexts and sheet links as the full sheet."""
+  root = sheets[no - 1]
+  rows: list[tuple[Node, int, Node | None]] = []
+
+  def visit(n: Node, depth: int, parent: Node | None) -> None:
+    rows.append((n, depth, parent))
+    if n is not root and n.sheet_link:
+      return
+    for c in n.children:
+      visit(c, depth + 1, n)
+
+  visit(root, 0, None)
+  body: list[str] = []
+  rails: list[str] = []
+  y = 34.0
+  summary = _pwrap(root.text, PHONE_W - 32, 8.6)
+  body.append(f'<text x="16" y="{y:.0f}" class="h">{escape(case)} · sheet {no} of {len(sheets)}: {escape(root.ident)}</text>')
+  y += 22
+  body.append(f'<text x="16" y="{y:.0f}" class="t2">Phone view of {escape(full)}; the full sheet has the GSN drawing.</text>')
+  y += 22
+  lx = 16.0
+  for k, lab in (("ok", "evidence available"), ("pa", "partial"), ("mi", "missing"), ("no", "not developed")):
+    body.append(f'<circle cx="{lx + 6:.1f}" cy="{y - 4:.1f}" r="6" style="fill:var(--{k})"/>'
+                f'<text x="{lx + 16:.1f}" y="{y:.0f}" class="t2">{lab}</text>')
+    lx += 26 + 6.2 * len(lab) + 8
+  y += 14
+  centre: dict[int, tuple[float, float]] = {}
+  for n, depth, parent in rows:
+    x = 16 + 20 * depth
+    tx = x + 96
+    lines = _clip(_pwrap(n.text, PHONE_W - 16 - tx), 3, max(8, int((PHONE_W - 16 - tx) / 7.1)))
+    chips: list[tuple[str, str]] = []
+    if n is not root and n.sheet_link:
+      chips.append((f"→ developed on sheet {n.sheet_link}", "st"))
+    if n.undeveloped:
+      chips.append(("◇ undeveloped", "no"))
+    if n.defeaters:
+      more = "…" if len(n.defeaters) > 3 else ""
+      chips.append((f"⚠ {len(n.defeaters)} defeater{'s' if len(n.defeaters) > 1 else ''}: "
+                    f"{', '.join(n.defeaters[:3])}{more}", "mi"))
+    if n.sides:
+      ids = [i or k for k, i, _t in n.sides]
+      chips.append((" · ".join(ids[:5]) + (" …" if len(ids) > 5 else ""), "no"))
+    top = y + 6
+    cy = top + 10
+    if n.kind == "solution":
+      st = PHONE_STATUS.get(n.status, "no")
+      body.append(f'<circle cx="{x + 12}" cy="{cy:.1f}" r="10" style="fill:var(--{st})"/>')
+    elif n.kind == "strategy":
+      body.append(f'<path d="M{x + 6},{top + 1:.1f} h20 l-6,18 h-20 z" style="fill:var(--st-bg);stroke:var(--st);stroke-width:1.5"/>')
+    else:
+      sup = PHONE_STATUS[support(n)]
+      body.append(f'<rect x="{x}" y="{top + 1:.1f}" width="24" height="18" rx="2" style="fill:var(--{sup}-bg);stroke:var(--{sup});stroke-width:1.5"/>')
+    centre[id(n)] = (x + 12, cy)
+    if parent is not None:
+      px, py = centre[id(parent)]
+      rails.append(f'<path d="M{px:.1f},{py + 10:.1f} V{cy:.1f} H{x - 2:.1f}" class="rail"/>')
+    body.append(f'<text x="{x + 32}" y="{cy + 5:.1f}" class="pid">{escape(n.ident)}</text>')
+    for i, ln in enumerate(lines):
+      body.append(f'<text x="{tx}" y="{cy + 5 + 18 * i:.1f}" class="t">{escape(ln)}</text>')
+    yy = cy + 5 + 18 * (len(lines) - 1) + 10
+    cx = float(tx)
+    for lab, k in chips:
+      w = 14 + 6.2 * len(lab)
+      if cx > tx and cx + w > PHONE_W - 16:
+        cx, yy = float(tx), yy + 22
+      body.append(f'<rect x="{cx:.1f}" y="{yy:.1f}" width="{w:.1f}" height="18" rx="9" style="fill:var(--{k}-bg)"/>'
+                  f'<text x="{cx + 7:.1f}" y="{yy + 13:.1f}" class="pc" style="fill:var(--{k})">{escape(lab)}</text>')
+      cx += w + 6
+    bottom = (yy + 18 if chips else cy + 5 + 18 * (len(lines) - 1)) + 10
+    body.append(f'<line x1="{tx}" y1="{bottom:.1f}" x2="{PHONE_W - 16}" y2="{bottom:.1f}" class="rule"/>')
+    y = bottom
+  h = y + 16
+  sols = [n for n, _d, _p in rows if n.kind == "solution"]
+  desc = (f"{case} (GSN), sheet {no} of {len(sheets)} as an outline: {root.ident}, {root.text} " +
+          "; ".join(f"{n.ident} ({n.kind}{', ' + n.status if n.kind == 'solution' else ''}"
+                    f"{', defeaters ' + ' '.join(n.defeaters) if n.defeaters else ''}"
+                    f"{', developed on sheet ' + str(n.sheet_link) if n is not root and n.sheet_link else ''}"
+                    f"{', undeveloped' if n.undeveloped else ''})" for n, _d, _p in rows[1:]) +
+          f". {sum(s.status == 'available' for s in sols)} of {len(sols)} solutions available.")
+  return "\n".join([f'<svg xmlns="http://www.w3.org/2000/svg" width="{PHONE_W}" height="{h:.0f}" viewBox="0 0 {PHONE_W} {h:.0f}" '
+                    'role="img" aria-labelledby="t d">',
+                    f'<title id="t">{escape(case)} (GSN), sheet {no}: {escape(root.ident)}, phone view</title>',
+                    f'<desc id="d">{escape(desc)}</desc>', PHONE_CSS,
+                    f'<rect class="bg" width="{PHONE_W}" height="{h:.0f}"/>', *rails, *body, "</svg>"]) + "\n"
+
+
 CASES = [
   # (prefix, case name, source label, tree builder, document, document ID)
   ("gsn", "Safety case", "case records (assurance/case-records/) and WP-K-01 contexts", build_tree,
@@ -804,8 +917,11 @@ def build() -> dict[str, str]:
     "- **Cybersecurity case** ([WP-K-03](../WP-K-03-cybersecurity-case.md)): structure from the text trees of " +
     "§2–§3, evidence status from §4, defeaters from §6. It supports G4 of the safety case.",
     "",
-    "| Case | Sheet | Argument from | Goals | Solutions |",
-    "|---|---|---|---|---|",
+    "Each sheet has a phone view next to it, the same argument as an indented outline at phone width. The table "
+    "links both.",
+    "",
+    "| Case | Sheet | Phone view | Argument from | Goals | Solutions |",
+    "|---|---|---|---|---|---|",
   ]
   first = None
   for prefix, case, source, builder, doc, doc_id in CASES:
@@ -813,11 +929,13 @@ def build() -> dict[str, str]:
     for no, root_node in enumerate(sheets, 1):
       name = f"{prefix}-{no}-{root_node.ident}.svg"
       outputs[name] = render_sheet(sheets, no, case, source, doc_id)
+      phone = f"{prefix}-{no}-{root_node.ident}-phone.svg"
+      outputs[phone] = render_phone(sheets, no, case, name)
       box = make_box(root_node, root_node)
       goals = sum(1 for b in _walk(box) if b.node.kind == "goal")
       sols = sum(1 for b in _walk(box) if b.node.kind == "solution")
-      index.append(f"| {doc} | [{no}]({name}) | {root_node.ident} | {goals} | {sols} |")
-      first = first or (name, root_node.ident, case)
+      index.append(f"| {doc} | [{no}]({name}) | [outline]({phone}) | {root_node.ident} | {goals} | {sols} |")
+      first = first or (name, root_node.ident, case, phone)
   index += ["", "Notation: goal = rectangle; strategy = parallelogram; solution = circle (green available, " +
             "amber partial, white dashed missing); context = rounded box; assumption / justification = oval " +
             "(A / J); diamond = undeveloped goal. Solid arrows are SupportedBy, hollow arrows InContextOf. " +
@@ -826,12 +944,12 @@ def build() -> dict[str, str]:
             "Defeaters (open counter-evidence, WP-K-01 §7, WP-K-03 §6) are listed in red on the goal they " +
             "undermine. In the cybersecurity case the requirements that refine a goal (CSR-nnn) are shown as " +
             "a context.", ""]
-  name, ident, case = first
-  index[7:7] = [f"![First sheet of the {case.lower()}: the top goal {ident} with the strategies and goals that support it, "
-                "each goal coloured by the worst evidence status below it, and open defeaters in red on the goal they "
-                f"undermine]({name})", "",
-                "*Sheet 1, the top of the argument; the notation is explained under the table and every sheet is "
-                "listed in it.*", ""]
+  name, ident, case, phone = first
+  index[7:7] = [f"[![First sheet of the {case.lower()} as an outline: the top goal {ident} with the strategies, goals and "
+                "solutions that support it, each goal coloured by the worst evidence status below it, solutions by their "
+                f"own status, and open defeaters in red on the goal they undermine]({phone})]({name})", "",
+                f"*Sheet 1, the top of the argument, as an outline that reads on a phone; tap it for the [full GSN sheet]({name}). "
+                "The notation is explained under the table and every sheet is listed in it.*", ""]
   outputs["README.md"] = "\n".join(index)
   return outputs
 

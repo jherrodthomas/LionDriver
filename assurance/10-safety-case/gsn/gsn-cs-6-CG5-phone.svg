@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="673" viewBox="0 0 640 673" role="img" aria-labelledby="t d">
+<title id="t">Cybersecurity case (GSN), sheet 6: CG5, phone view</title>
+<desc id="d">Cybersecurity case (GSN), sheet 6 of 7 as an outline: CG5, Cybersecurity is maintained after release (monitoring, incident response, updates, end of support) CG5.1 (goal); CSn-50 (solution, partial); CG5.2 (goal); CSn-50 (solution, partial); CSn-51 (solution, partial); CG5.3 (goal); CSn-14 (solution, missing); CSn-50 (solution, partial); CG5.4 (goal); CSn-52 (solution, partial); CG5.5 (goal); CSn-53 (solution, partial); CG5.6 (goal, defeaters CDF-10); CSn-54 (solution, missing). 0 of 8 solutions available.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c0; --st:#4b5bb7; --st-bg:#e4e7fb;
+      --ok:#2e7d32; --ok-bg:#edf7ee; --pa:#b07d00; --pa-bg:#fdf5e1; --mi:#c62828; --mi-bg:#fdecec; --no:#7d8798; --no-bg:#f1f3f6; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#161d25; --ink:#e4eaf0; --ink2:#94a2b1; --line:#2a3440; --rail:#4a5665; --st:#9aa6f0; --st-bg:#232a4a;
+        --ok:#79d6a0; --ok-bg:#173527; --pa:#f0cf6a; --pa-bg:#3a3214; --mi:#ff8f86; --mi-bg:#431b19; --no:#94a2b1; --no-bg:#1f2731; }
+}
+.bg { fill:var(--bg); } .t { font:14px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.h { font:600 20px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.pid { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--ink); }
+.pc { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
+.rule { stroke:var(--line); stroke-width:1; } .rail { stroke:var(--rail); stroke-width:1.2; fill:none; }
+</style>
+<rect class="bg" width="640" height="673"/>
+<path d="M28.0,118.0 V157.0 H34.0" class="rail"/>
+<path d="M48.0,167.0 V188.0 H54.0" class="rail"/>
+<path d="M28.0,118.0 V237.0 H34.0" class="rail"/>
+<path d="M48.0,247.0 V268.0 H54.0" class="rail"/>
+<path d="M48.0,247.0 V317.0 H54.0" class="rail"/>
+<path d="M28.0,118.0 V348.0 H34.0" class="rail"/>
+<path d="M48.0,358.0 V379.0 H54.0" class="rail"/>
+<path d="M48.0,358.0 V410.0 H54.0" class="rail"/>
+<path d="M28.0,118.0 V459.0 H34.0" class="rail"/>
+<path d="M48.0,469.0 V490.0 H54.0" class="rail"/>
+<path d="M28.0,118.0 V521.0 H34.0" class="rail"/>
+<path d="M48.0,531.0 V552.0 H54.0" class="rail"/>
+<path d="M28.0,118.0 V583.0 H34.0" class="rail"/>
+<path d="M48.0,593.0 V642.0 H54.0" class="rail"/>
+<text x="16" y="34" class="h">Cybersecurity case · sheet 6 of 7: CG5</text>
+<text x="16" y="56" class="t2">Phone view of gsn-cs-6-CG5.svg; the full sheet has the GSN drawing.</text>
+<circle cx="22.0" cy="74.0" r="6" style="fill:var(--ok)"/><text x="32.0" y="78" class="t2">evidence available</text>
+<circle cx="167.6" cy="74.0" r="6" style="fill:var(--pa)"/><text x="177.6" y="78" class="t2">partial</text>
+<circle cx="245.0" cy="74.0" r="6" style="fill:var(--mi)"/><text x="255.0" y="78" class="t2">missing</text>
+<circle cx="322.4" cy="74.0" r="6" style="fill:var(--no)"/><text x="332.4" y="78" class="t2">not developed</text>
+<rect x="16" y="99.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="48" y="113.0" class="pid">CG5</text>
+<text x="112" y="113.0" class="t">Cybersecurity is maintained after release (monitoring, incident</text>
+<text x="112" y="131.0" class="t">response, updates, end of support)</text>
+<line x1="112" y1="141.0" x2="624" y2="141.0" class="rule"/>
+<rect x="36" y="148.0" width="24" height="18" rx="2" style="fill:var(--pa-bg);stroke:var(--pa);stroke-width:1.5"/>
+<text x="68" y="162.0" class="pid">CG5.1</text>
+<text x="132" y="162.0" class="t">Monitoring, event evaluation and vulnerability management running</text>
+<line x1="132" y1="172.0" x2="624" y2="172.0" class="rule"/>
+<circle cx="68" cy="188.0" r="10" style="fill:var(--pa)"/>
+<text x="88" y="193.0" class="pid">CSn-50</text>
+<text x="152" y="193.0" class="t">Monitoring, vulnerability management, incident response, update</text>
+<text x="152" y="211.0" class="t">management</text>
+<line x1="152" y1="221.0" x2="624" y2="221.0" class="rule"/>
+<rect x="36" y="228.0" width="24" height="18" rx="2" style="fill:var(--pa-bg);stroke:var(--pa);stroke-width:1.5"/>
+<text x="68" y="242.0" class="pid">CG5.2</text>
+<text x="132" y="242.0" class="t">Incident response plan in place, including stop-use coordination</text>
+<line x1="132" y1="252.0" x2="624" y2="252.0" class="rule"/>
+<circle cx="68" cy="268.0" r="10" style="fill:var(--pa)"/>
+<text x="88" y="273.0" class="pid">CSn-50</text>
+<text x="152" y="273.0" class="t">Monitoring, vulnerability management, incident response, update</text>
+<text x="152" y="291.0" class="t">management</text>
+<line x1="152" y1="301.0" x2="624" y2="301.0" class="rule"/>
+<circle cx="68" cy="317.0" r="10" style="fill:var(--pa)"/>
+<text x="88" y="322.0" class="pid">CSn-51</text>
+<text x="152" y="322.0" class="t">Field-action criteria incl. stop-use for exploitable vulnerability</text>
+<line x1="152" y1="332.0" x2="624" y2="332.0" class="rule"/>
+<rect x="36" y="339.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="68" y="353.0" class="pid">CG5.3</text>
+<text x="132" y="353.0" class="t">Update management with integrity, impact analysis, rollback</text>
+<line x1="132" y1="363.0" x2="624" y2="363.0" class="rule"/>
+<circle cx="68" cy="379.0" r="10" style="fill:var(--mi)"/>
+<text x="88" y="384.0" class="pid">CSn-14</text>
+<text x="152" y="384.0" class="t">Signed update design and implementation</text>
+<line x1="152" y1="394.0" x2="624" y2="394.0" class="rule"/>
+<circle cx="68" cy="410.0" r="10" style="fill:var(--pa)"/>
+<text x="88" y="415.0" class="pid">CSn-50</text>
+<text x="152" y="415.0" class="t">Monitoring, vulnerability management, incident response, update</text>
+<text x="152" y="433.0" class="t">management</text>
+<line x1="152" y1="443.0" x2="624" y2="443.0" class="rule"/>
+<rect x="36" y="450.0" width="24" height="18" rx="2" style="fill:var(--pa-bg);stroke:var(--pa);stroke-width:1.5"/>
+<text x="68" y="464.0" class="pid">CG5.4</text>
+<text x="132" y="464.0" class="t">Production/provisioning controls (keys, firmware, option bytes)</text>
+<line x1="132" y1="474.0" x2="624" y2="474.0" class="rule"/>
+<circle cx="68" cy="490.0" r="10" style="fill:var(--pa)"/>
+<text x="88" y="495.0" class="pid">CSn-52</text>
+<text x="152" y="495.0" class="t">Provisioning controls (keys, firmware, option bytes)</text>
+<line x1="152" y1="505.0" x2="624" y2="505.0" class="rule"/>
+<rect x="36" y="512.0" width="24" height="18" rx="2" style="fill:var(--pa-bg);stroke:var(--pa);stroke-width:1.5"/>
+<text x="68" y="526.0" class="pid">CG5.5</text>
+<text x="132" y="526.0" class="t">End of support and decommissioning defined</text>
+<line x1="132" y1="536.0" x2="624" y2="536.0" class="rule"/>
+<circle cx="68" cy="552.0" r="10" style="fill:var(--pa)"/>
+<text x="88" y="557.0" class="pid">CSn-53</text>
+<text x="152" y="557.0" class="t">End of support and decommissioning</text>
+<line x1="152" y1="567.0" x2="624" y2="567.0" class="rule"/>
+<rect x="36" y="574.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="68" y="588.0" class="pid">CG5.6</text>
+<text x="132" y="588.0" class="t">LionDriver vulnerability intake published</text>
+<rect x="132.0" y="598.0" width="138.0" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="139.0" y="611.0" class="pc" style="fill:var(--mi)">⚠ 1 defeater: CDF-10</text>
+<line x1="132" y1="626.0" x2="624" y2="626.0" class="rule"/>
+<circle cx="68" cy="642.0" r="10" style="fill:var(--mi)"/>
+<text x="88" y="647.0" class="pid">CSn-54</text>
+<text x="152" y="647.0" class="t">Published LionDriver `SECURITY.md` and intake</text>
+<line x1="152" y1="657.0" x2="624" y2="657.0" class="rule"/>
+</svg>

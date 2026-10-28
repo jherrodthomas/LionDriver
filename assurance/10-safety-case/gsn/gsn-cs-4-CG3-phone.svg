@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="650" viewBox="0 0 640 650" role="img" aria-labelledby="t d">
+<title id="t">Cybersecurity case (GSN), sheet 4: CG3, phone view</title>
+<desc id="d">Cybersecurity case (GSN), sheet 4 of 7 as an outline: CG3, Each retained/shared/avoided risk (CSC-01…CSC-05) is justified and its condition holds CG3.1 (goal); CSn-34 (solution, missing); CSn-40 (solution, partial); CG3.2 (goal); CSn-35 (solution, missing); CSn-41 (solution, partial); CG3.3 (goal); CSn-37 (solution, missing); CG3.4 (goal); CSn-24 (solution, missing); CSn-50 (solution, partial); CG3.5 (goal); CSn-42 (solution, partial). 0 of 8 solutions available.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c0; --st:#4b5bb7; --st-bg:#e4e7fb;
+      --ok:#2e7d32; --ok-bg:#edf7ee; --pa:#b07d00; --pa-bg:#fdf5e1; --mi:#c62828; --mi-bg:#fdecec; --no:#7d8798; --no-bg:#f1f3f6; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#161d25; --ink:#e4eaf0; --ink2:#94a2b1; --line:#2a3440; --rail:#4a5665; --st:#9aa6f0; --st-bg:#232a4a;
+        --ok:#79d6a0; --ok-bg:#173527; --pa:#f0cf6a; --pa-bg:#3a3214; --mi:#ff8f86; --mi-bg:#431b19; --no:#94a2b1; --no-bg:#1f2731; }
+}
+.bg { fill:var(--bg); } .t { font:14px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.h { font:600 20px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.pid { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--ink); }
+.pc { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
+.rule { stroke:var(--line); stroke-width:1; } .rail { stroke:var(--rail); stroke-width:1.2; fill:none; }
+</style>
+<rect class="bg" width="640" height="650"/>
+<path d="M28.0,118.0 V157.0 H34.0" class="rail"/>
+<path d="M48.0,167.0 V206.0 H54.0" class="rail"/>
+<path d="M48.0,167.0 V237.0 H54.0" class="rail"/>
+<path d="M28.0,118.0 V268.0 H34.0" class="rail"/>
+<path d="M48.0,278.0 V317.0 H54.0" class="rail"/>
+<path d="M48.0,278.0 V348.0 H54.0" class="rail"/>
+<path d="M28.0,118.0 V379.0 H34.0" class="rail"/>
+<path d="M48.0,389.0 V428.0 H54.0" class="rail"/>
+<path d="M28.0,118.0 V459.0 H34.0" class="rail"/>
+<path d="M48.0,469.0 V490.0 H54.0" class="rail"/>
+<path d="M48.0,469.0 V521.0 H54.0" class="rail"/>
+<path d="M28.0,118.0 V570.0 H34.0" class="rail"/>
+<path d="M48.0,580.0 V619.0 H54.0" class="rail"/>
+<text x="16" y="34" class="h">Cybersecurity case · sheet 4 of 7: CG3</text>
+<text x="16" y="56" class="t2">Phone view of gsn-cs-4-CG3.svg; the full sheet has the GSN drawing.</text>
+<circle cx="22.0" cy="74.0" r="6" style="fill:var(--ok)"/><text x="32.0" y="78" class="t2">evidence available</text>
+<circle cx="167.6" cy="74.0" r="6" style="fill:var(--pa)"/><text x="177.6" y="78" class="t2">partial</text>
+<circle cx="245.0" cy="74.0" r="6" style="fill:var(--mi)"/><text x="255.0" y="78" class="t2">missing</text>
+<circle cx="322.4" cy="74.0" r="6" style="fill:var(--no)"/><text x="332.4" y="78" class="t2">not developed</text>
+<rect x="16" y="99.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="48" y="113.0" class="pid">CG3</text>
+<text x="112" y="113.0" class="t">Each retained/shared/avoided risk (CSC-01…CSC-05) is justified and its</text>
+<text x="112" y="131.0" class="t">condition holds</text>
+<line x1="112" y1="141.0" x2="624" y2="141.0" class="rule"/>
+<rect x="36" y="148.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="68" y="162.0" class="pid">CG3.1</text>
+<text x="132" y="162.0" class="t">CSC-01 physical CAN residual retained (condition: CSG-05 implemented;</text>
+<text x="132" y="180.0" class="t">CA-05)</text>
+<line x1="132" y1="190.0" x2="624" y2="190.0" class="rule"/>
+<circle cx="68" cy="206.0" r="10" style="fill:var(--mi)"/>
+<text x="88" y="211.0" class="pid">CSn-34</text>
+<text x="152" y="211.0" class="t">Validation TC-09, TC-10 (CAN robustness)</text>
+<line x1="152" y1="221.0" x2="624" y2="221.0" class="rule"/>
+<circle cx="68" cy="237.0" r="10" style="fill:var(--pa)"/>
+<text x="88" y="242.0" class="pid">CSn-40</text>
+<text x="152" y="242.0" class="t">Physical-access assumption recorded in user information</text>
+<line x1="152" y1="252.0" x2="624" y2="252.0" class="rule"/>
+<rect x="36" y="259.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="68" y="273.0" class="pid">CG3.2</text>
+<text x="132" y="273.0" class="t">CSC-02 back-end security shared (condition: CSG-06 device-side</text>
+<text x="132" y="291.0" class="t">constraints; no safety dependency, CSR-117)</text>
+<line x1="132" y1="301.0" x2="624" y2="301.0" class="rule"/>
+<circle cx="68" cy="317.0" r="10" style="fill:var(--mi)"/>
+<text x="88" y="322.0" class="pid">CSn-35</text>
+<text x="152" y="322.0" class="t">Validation TC-11…TC-13 (remote surface, back-end independence)</text>
+<line x1="152" y1="332.0" x2="624" y2="332.0" class="rule"/>
+<circle cx="68" cy="348.0" r="10" style="fill:var(--pa)"/>
+<text x="88" y="353.0" class="pid">CSn-41</text>
+<text x="152" y="353.0" class="t">Onroad streaming block (inherited mechanism)</text>
+<line x1="152" y1="363.0" x2="624" y2="363.0" class="rule"/>
+<rect x="36" y="370.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="68" y="384.0" class="pid">CG3.3</text>
+<text x="132" y="384.0" class="t">CSC-03 non-repudiation retained (condition: identity key protected,</text>
+<text x="132" y="402.0" class="t">CSR-141)</text>
+<line x1="132" y1="412.0" x2="624" y2="412.0" class="rule"/>
+<circle cx="68" cy="428.0" r="10" style="fill:var(--mi)"/>
+<text x="88" y="433.0" class="pid">CSn-37</text>
+<text x="152" y="433.0" class="t">Validation TC-16, TC-17 (data at rest, decommissioning)</text>
+<line x1="152" y1="443.0" x2="624" y2="443.0" class="rule"/>
+<rect x="36" y="450.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="68" y="464.0" class="pid">CG3.4</text>
+<text x="132" y="464.0" class="t">CSC-04 OTS supply chain shared (condition: SBOM + monitoring running)</text>
+<line x1="132" y1="474.0" x2="624" y2="474.0" class="rule"/>
+<circle cx="68" cy="490.0" r="10" style="fill:var(--mi)"/>
+<text x="88" y="495.0" class="pid">CSn-24</text>
+<text x="152" y="495.0" class="t">SBOM and vulnerability scan report for the release</text>
+<line x1="152" y1="505.0" x2="624" y2="505.0" class="rule"/>
+<circle cx="68" cy="521.0" r="10" style="fill:var(--pa)"/>
+<text x="88" y="526.0" class="pid">CSn-50</text>
+<text x="152" y="526.0" class="t">Monitoring, vulnerability management, incident response, update</text>
+<text x="152" y="544.0" class="t">management</text>
+<line x1="152" y1="554.0" x2="624" y2="554.0" class="rule"/>
+<rect x="36" y="561.0" width="24" height="18" rx="2" style="fill:var(--pa-bg);stroke:var(--pa);stroke-width:1.5"/>
+<text x="68" y="575.0" class="pid">CG3.5</text>
+<text x="132" y="575.0" class="t">CSC-05 eGPU avoided (condition: excluded from reference</text>
+<text x="132" y="593.0" class="t">configuration)</text>
+<line x1="132" y1="603.0" x2="624" y2="603.0" class="rule"/>
+<circle cx="68" cy="619.0" r="10" style="fill:var(--pa)"/>
+<text x="88" y="624.0" class="pid">CSn-42</text>
+<text x="152" y="624.0" class="t">eGPU exclusion in reference configuration</text>
+<line x1="152" y1="634.0" x2="624" y2="634.0" class="rule"/>
+</svg>

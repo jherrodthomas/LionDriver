@@ -80,6 +80,30 @@ class TestGsn(unittest.TestCase):
     for name, content in gd.build().items():
       self.assertEqual((gd.OUT_DIR / name).read_text(encoding="utf-8"), content, name)
 
+  def test_every_sheet_has_a_phone_view_with_every_element(self):
+    import xml.etree.ElementTree as ET
+    out = gd.build()
+    for prefix, case, _src, builder, _doc, _id in gd.CASES:
+      sheets = gd.paginate(builder())
+      for no, root in enumerate(sheets, 1):
+        svg = out[f"{prefix}-{no}-{root.ident}-phone.svg"]
+        el = ET.fromstring(svg)
+        self.assertEqual(el.get("width"), str(gd.PHONE_W))
+        self.assertIn("prefers-color-scheme: dark", svg)
+        seen = []
+
+        def visit(n, top=True):
+          seen.append(n.ident)
+          if not top and n.sheet_link:
+            return
+          for c in n.children:
+            visit(c, False)
+        visit(root)
+        for ident in seen:
+          self.assertIn(f">{ident}<", svg, f"{prefix} sheet {no}: {ident} missing from the phone view")
+        for d in root.defeaters:
+          self.assertIn(d, svg)
+
 
 if __name__ == "__main__":
   unittest.main()
