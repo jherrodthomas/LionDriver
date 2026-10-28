@@ -7,10 +7,16 @@ requirements allocated to it (resolved as in check_model.py M8). No network acce
 
   explorer.py                  write generated/explorer.html
   explorer.py --check          fail if generated/explorer.html is out of date
-  explorer.py --fragment PATH  also write the page without the document wrapper (for publishing)
+  explorer.py --fragment PATH  also write the page without the document wrapper, and its fingerprint; then republish
+                               PATH to EXPLORER_URL
+
+The page is also published as a private claude.ai page of the project lead (EXPLORER_URL), the way to open it on a
+phone. explorer.sha256 holds the fingerprint of the fragment as last published; --check fails when the model changed
+and the published page was not rebuilt and republished, as tools/xlsx_viewer.py does for the workbook viewer.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 from collections import defaultdict
@@ -24,6 +30,8 @@ import sysml_lite
 import svgkit as k
 
 OUT = render_views.OUT / "explorer.html"
+EXPLORER_URL = "https://claude.ai/artifact/BtL3sDAq4JsqJdCEQEnco4"
+FINGERPRINT = HERE / "explorer.sha256"
 VIEW_ORDER = ["V-01", "V-03", "V-02", "V-04", "V-05", "V-06", "V-07"]
 
 
@@ -158,11 +166,18 @@ def main(argv: list[str]) -> int:
   figures = render_views.render_all(m)
   frag = page(m, figures)
   html = document(frag)
+  fp = hashlib.sha256(frag.encode()).hexdigest()
   if "--fragment" in argv:
     Path(argv[argv.index("--fragment") + 1]).write_text(frag, encoding="utf-8")
+    FINGERPRINT.write_text(f"{fp}  published at {EXPLORER_URL}\n", encoding="utf-8")
   if "--check" in argv:
     if not OUT.exists() or OUT.read_text(encoding="utf-8") != html:
       print(f"FAIL {OUT.name} is out of date (run tools/explorer.py)")
+      return 1
+    stored = FINGERPRINT.read_text(encoding="utf-8").split()[0] if FINGERPRINT.exists() else ""
+    if stored != fp:
+      print("FAIL the published explorer is out of date: run tools/explorer.py --fragment <scratch>/sysml-explorer.html "
+            f"and republish that file to {EXPLORER_URL}")
       return 1
     print("explorer: up to date")
     return 0
