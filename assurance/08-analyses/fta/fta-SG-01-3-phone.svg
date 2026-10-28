@@ -2,20 +2,20 @@
 <title id="t">SG-01 fault tree, sheet 3: phone view</title>
 <desc id="d">SG-01 fault tree (ASIL C), sheet 3 of 6 as an outline: G1.2 (OR), single-point path; G1.2.1 (AND); G1.2.2 (AND); G1.2.2.a (OR); BE-1.16; BE-1.17; BE-1.15; BE-1.18, single-point path.</desc>
 <style>
-svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c0; --hot:#c62828; --hot-bg:#fdecec;
-      --or:#2f6fb5; --and:#7a4fc4; --soft:#eef1f5; --ue:#7a5600; --ue-bg:#fff5dc; --sheet:#16202b; --sheet-ink:#ffffff; }
+svg { --bg:#fcfcfb; --card:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --mute:#898781; --line:#c9c7bf; --grid:#e1e0d9; --soft:#f3f2ee;
+      --or:#2a78d6; --and:#6250d6; --basic:#1baf7a; --ue:#eda100; --hot:#d03b3b; --chipink:#ffffff;
+      --s1b:#fbe9e9; --s1f:#9e2424; --s2b:#fdeee6; --s2f:#9a4a25;
+      --s3b:#fff5dc; --s3f:#7a5600; --s4b:#e6f5e6; --s4f:#0a6a0a; }
 @media (prefers-color-scheme: dark) {
-  svg { --bg:#161d25; --ink:#e4eaf0; --ink2:#94a2b1; --line:#2a3440; --rail:#4a5665; --hot:#ff8f86; --hot-bg:#431b19;
-        --or:#7fb0ec; --and:#b9a0f0; --soft:#1f2731; --ue:#f0cf6a; --ue-bg:#3a3214; --sheet:#e4eaf0; --sheet-ink:#161d25; }
+  svg { --bg:#1a1a19; --card:#242422; --ink:#f2f1ec; --ink2:#b5b3ab; --mute:#8a8880; --line:#55534e; --grid:#3a3936;
+        --soft:#2e2d2a; --chipink:#1a1a19; --s1b:#4a1f1f; --s1f:#ffb3b3; --s2b:#4a2a1c; --s2f:#ffc6a8; --s3b:#43361a;
+        --s3f:#ffd98a; --s4b:#1d3a1d; --s4f:#9fe09f; }
 }
-.bg { fill:var(--bg); } .t { font:14px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
-.t2 { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
-.ti { font:italic 12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
-.h { font:600 20px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
-.pid { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--ink); } .pidhot { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--hot); }
-.gl { font:700 8px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--bg); }
-.pc { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
-.rule { stroke:var(--line); stroke-width:1; } .rail { stroke:var(--rail); stroke-width:1.2; fill:none; }
+.bg { fill:var(--bg); } .t { font:14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); } .t2 { font:12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); }
+.ti { font:italic 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); } .h { font:600 20px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); }
+.pid { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--ink); } .pidhot { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--hot); }
+.gl { font:700 8px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:#ffffff; } .pc { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; } .ps { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.rule { stroke:var(--grid); stroke-width:1; } .rail { stroke:var(--line); stroke-width:1.2; fill:none; }
 .railhot { stroke:var(--hot); stroke-width:2; fill:none; }
 </style>
 <rect class="bg" width="640" height="698"/>
@@ -29,60 +29,72 @@ svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c
 <text x="16" y="34" class="h">SG-01 fault tree · sheet 3 of 6</text>
 <text x="16" y="56" class="t2">ASIL C · phone view of fta-SG-01-3.svg; the full sheet has the drawing.</text>
 <text x="16" y="76" class="t2">Red: a single item fault reaches the top event along this path.</text>
-<rect x="16.0" y="94.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--hot);stroke-width:2"/><text x="28.0" y="107.0" class="gl" text-anchor="middle">OR</text>
+<rect x="16.0" y="94.0" width="24" height="20" rx="4" fill="var(--or)" stroke="var(--hot)" stroke-width="2.4"/><text x="28.0" y="107.0" class="gl" text-anchor="middle">OR</text>
 <text x="46" y="109.0" class="pidhot">G1.2</text>
 <text x="116" y="109.0" class="t">Torque while not engaged</text>
-<rect x="116.0" y="119.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="123.0" y="132.0" class="pc" style="fill:var(--ink2)">fewest item faults 1 · 9 cut sets</text>
-<rect x="340.6" y="119.0" width="88.4" height="18" rx="9" style="fill:var(--soft)"/><text x="347.6" y="132.0" class="pc" style="fill:var(--ink2)">from sheet 1</text>
+<rect x="116.0" y="119.0" width="66.7" height="18" rx="9" fill="var(--s1b)"/>
+<circle cx="127.0" cy="128.0" r="5" fill="var(--s1f)"/><rect x="124.0" y="127.0" width="6" height="2" fill="var(--s1b)"/>
+<text x="135.0" y="132.0" class="ps" fill="var(--s1f)">1 fault</text>
+<text x="188.7" y="132.0" class="t2">9 cut sets</text>
+<rect x="258.7" y="119.0" width="88.4" height="18" rx="4" fill="none" stroke="var(--line)"/><text x="265.7" y="132.0" class="pc" fill="var(--ink2)">from sheet 1</text>
 <line x1="116" y1="147.0" x2="624" y2="147.0" class="rule"/>
-<rect x="34.0" y="153.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--ink);stroke-width:0"/><text x="46.0" y="166.0" class="gl" text-anchor="middle">▸</text>
+<rect x="34.0" y="153.0" width="24" height="20" rx="4" fill="var(--or)"/><text x="46.0" y="166.0" class="gl" text-anchor="middle">▸</text>
 <text x="64" y="168.0" class="pid">G1.2.1</text>
 <text x="134" y="168.0" class="t">Authority falsely granted AND SoC commands torque</text>
-<rect x="134.0" y="178.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="191.0" class="pc" style="fill:var(--ink2)">fewest item faults 2 · 6 cut sets</text>
-<rect x="358.6" y="178.0" width="150.4" height="18" rx="9" style="fill:var(--sheet)"/><text x="365.6" y="191.0" class="pc" style="fill:var(--sheet-ink)">continued on sheet 5 ▸</text>
+<rect x="134.0" y="178.0" width="72.8" height="18" rx="9" fill="var(--s2b)"/>
+<path d="M145.0,182.5 L150.0,191.0 H140.0 Z" fill="var(--s2f)"/>
+<text x="153.0" y="191.0" class="ps" fill="var(--s2f)">2 faults</text>
+<text x="212.8" y="191.0" class="t2">6 cut sets</text>
+<rect x="282.8" y="178.0" width="150.4" height="18" rx="4" fill="var(--ink)"/><text x="289.8" y="191.0" class="pc" fill="var(--chipink)">continued on sheet 5 ▸</text>
 <line x1="134" y1="206.0" x2="624" y2="206.0" class="rule"/>
-<rect x="34.0" y="212.0" width="24" height="20" rx="3" style="fill:var(--and);stroke:var(--ink);stroke-width:0"/><text x="46.0" y="225.0" class="gl" text-anchor="middle">AND</text>
+<rect x="34.0" y="212.0" width="24" height="20" rx="4" fill="var(--and)"/><text x="46.0" y="225.0" class="gl" text-anchor="middle">AND</text>
 <text x="64" y="227.0" class="pid">G1.2.2</text>
 <text x="134" y="227.0" class="t">Authority not revoked after the driver disengages AND SoC keeps</text>
 <text x="134" y="245.0" class="t">commanding</text>
-<rect x="134.0" y="255.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="268.0" class="pc" style="fill:var(--ink2)">fewest item faults 2 · 2 cut sets</text>
+<rect x="134.0" y="255.0" width="72.8" height="18" rx="9" fill="var(--s2b)"/>
+<path d="M145.0,259.5 L150.0,268.0 H140.0 Z" fill="var(--s2f)"/>
+<text x="153.0" y="268.0" class="ps" fill="var(--s2f)">2 faults</text>
+<text x="212.8" y="268.0" class="t2">2 cut sets</text>
 <line x1="134" y1="283.0" x2="624" y2="283.0" class="rule"/>
-<rect x="52.0" y="289.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--ink);stroke-width:0"/><text x="64.0" y="302.0" class="gl" text-anchor="middle">OR</text>
+<rect x="52.0" y="289.0" width="24" height="20" rx="4" fill="var(--or)"/><text x="64.0" y="302.0" class="gl" text-anchor="middle">OR</text>
 <text x="82" y="304.0" class="pid">G1.2.2.a</text>
 <text x="152" y="304.0" class="t">Disengagement not seen by the envelope</text>
-<rect x="152.0" y="314.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="159.0" y="327.0" class="pc" style="fill:var(--ink2)">fewest item faults 1 · 2 cut sets</text>
+<rect x="152.0" y="314.0" width="66.7" height="18" rx="9" fill="var(--s1b)"/>
+<circle cx="163.0" cy="323.0" r="5" fill="var(--s1f)"/><rect x="160.0" y="322.0" width="6" height="2" fill="var(--s1b)"/>
+<text x="171.0" y="327.0" class="ps" fill="var(--s1f)">1 fault</text>
+<text x="224.7" y="327.0" class="t2">2 cut sets</text>
 <line x1="152" y1="342.0" x2="624" y2="342.0" class="rule"/>
-<circle cx="82.0" cy="358.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<circle cx="82.0" cy="358.0" r="9.5" fill="var(--basic)"/>
 <text x="100" y="363.0" class="pid">BE-1.16</text>
 <text x="170" y="363.0" class="t">Brake 0x226 lost/stuck "not pressed" (no checksum, no counter,</text>
 <text x="170" y="381.0" class="t">timeout ≈2 s; GAP-01, GAP-06). 2026-10-12: loss detected ≤</text>
 <text x="170" y="399.0" class="t">0.162 s (5 periods, 100 Hz; WP-S-04 T-01); stuck undetected</text>
-<rect x="170.0" y="409.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="177.0" y="422.0" class="pc" style="fill:var(--ink2)">SWF-006</text>
-<rect x="233.4" y="409.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="240.4" y="422.0" class="pc" style="fill:var(--ink2)">SWF-005</text>
+<rect x="170.0" y="409.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="177.0" y="422.0" class="pc" fill="var(--ink2)">SWF-006</text>
+<rect x="233.4" y="409.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="240.4" y="422.0" class="pc" fill="var(--ink2)">SWF-005</text>
 <line x1="170" y1="437.0" x2="624" y2="437.0" class="rule"/>
-<circle cx="82.0" cy="453.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<circle cx="82.0" cy="453.0" r="9.5" fill="var(--basic)"/>
 <text x="100" y="458.0" class="pid">BE-1.17</text>
 <text x="170" y="458.0" class="t">0x1D2 stuck "cruise active" with valid checksum (GAP-01)</text>
-<rect x="170.0" y="468.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="177.0" y="481.0" class="pc" style="fill:var(--ink2)">SWF-006</text>
+<rect x="170.0" y="468.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="177.0" y="481.0" class="pc" fill="var(--ink2)">SWF-006</text>
 <line x1="170" y1="496.0" x2="624" y2="496.0" class="rule"/>
-<circle cx="64.0" cy="512.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<circle cx="64.0" cy="512.0" r="9.5" fill="var(--basic)"/>
 <text x="82" y="517.0" class="pid">BE-1.15</text>
 <text x="152" y="517.0" class="t">SoC commands non-zero torque (normally gated by its own engagement</text>
 <text x="152" y="535.0" class="t">state, which is fed by the same CAN data — CCF → DFI-10)</text>
 <text x="152" y="551.0" class="ti">the SoC reads the same frames, so it keeps commanding; CCF →</text>
 <text x="152" y="567.0" class="ti">DFI-10</text>
-<rect x="152.0" y="577.0" width="63.6" height="18" rx="9" style="fill:var(--soft)"/><text x="159.0" y="590.0" class="pc" style="fill:var(--ink2)">repeated</text>
-<rect x="221.6" y="577.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="228.6" y="590.0" class="pc" style="fill:var(--ink2)">SFM-001</text>
-<rect x="285.0" y="577.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="292.0" y="590.0" class="pc" style="fill:var(--ink2)">SWF-041</text>
-<rect x="348.4" y="577.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="355.4" y="590.0" class="pc" style="fill:var(--ink2)">SFM-013</text>
-<rect x="411.8" y="577.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="418.8" y="590.0" class="pc" style="fill:var(--ink2)">SWF-030</text>
-<rect x="475.2" y="577.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="482.2" y="590.0" class="pc" style="fill:var(--ink2)">SWF-057</text>
+<rect x="152.0" y="577.0" width="63.6" height="18" rx="4" fill="none" stroke="var(--line)"/><text x="159.0" y="590.0" class="pc" fill="var(--ink2)">repeated</text>
+<rect x="221.6" y="577.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="228.6" y="590.0" class="pc" fill="var(--ink2)">SFM-001</text>
+<rect x="285.0" y="577.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="292.0" y="590.0" class="pc" fill="var(--ink2)">SWF-041</text>
+<rect x="348.4" y="577.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="355.4" y="590.0" class="pc" fill="var(--ink2)">SFM-013</text>
+<rect x="411.8" y="577.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="418.8" y="590.0" class="pc" fill="var(--ink2)">SWF-030</text>
+<rect x="475.2" y="577.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="482.2" y="590.0" class="pc" fill="var(--ink2)">SWF-057</text>
 <line x1="152" y1="605.0" x2="624" y2="605.0" class="rule"/>
-<circle cx="46.0" cy="621.0" r="10" style="fill:var(--hot-bg);stroke:var(--hot);stroke-width:1.5"/>
+<circle cx="46.0" cy="621.0" r="9.5" fill="var(--basic)" stroke="var(--hot)" stroke-width="2.4"/>
 <text x="64" y="626.0" class="pidhot">BE-1.18</text>
 <text x="134" y="626.0" class="t">Envelope bypass: ALLOUTPUT/debug mode in a DEBUG build</text>
 <text x="134" y="644.0" class="t">(panda/SConscript:12-20, GAP-25)</text>
-<rect x="134.0" y="654.0" width="82.2" height="18" rx="9" style="fill:var(--hot-bg)"/><text x="141.0" y="667.0" class="pc" style="fill:var(--hot)">SPF, config</text>
-<rect x="222.2" y="654.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="229.2" y="667.0" class="pc" style="fill:var(--ink2)">PFM-001</text>
+<rect x="134.0" y="654.0" width="82.2" height="18" rx="4" fill="var(--s1b)"/><text x="141.0" y="667.0" class="pc" fill="var(--s1f)">SPF, config</text>
+<rect x="222.2" y="654.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="229.2" y="667.0" class="pc" fill="var(--ink2)">PFM-001</text>
 <line x1="134" y1="682.0" x2="624" y2="682.0" class="rule"/>
 </svg>

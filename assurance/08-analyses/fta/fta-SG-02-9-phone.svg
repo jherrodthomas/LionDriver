@@ -2,20 +2,20 @@
 <title id="t">SG-02 fault tree, sheet 9: phone view</title>
 <desc id="d">SG-02 fault tree (ASIL C), sheet 9 of 9 as an outline: G2.1.1 (OR); BE-2.08; UE-2.19; G-HMI (OR); BE-2.12; BE-2.13; BE-2.25.</desc>
 <style>
-svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c0; --hot:#c62828; --hot-bg:#fdecec;
-      --or:#2f6fb5; --and:#7a4fc4; --soft:#eef1f5; --ue:#7a5600; --ue-bg:#fff5dc; --sheet:#16202b; --sheet-ink:#ffffff; }
+svg { --bg:#fcfcfb; --card:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --mute:#898781; --line:#c9c7bf; --grid:#e1e0d9; --soft:#f3f2ee;
+      --or:#2a78d6; --and:#6250d6; --basic:#1baf7a; --ue:#eda100; --hot:#d03b3b; --chipink:#ffffff;
+      --s1b:#fbe9e9; --s1f:#9e2424; --s2b:#fdeee6; --s2f:#9a4a25;
+      --s3b:#fff5dc; --s3f:#7a5600; --s4b:#e6f5e6; --s4f:#0a6a0a; }
 @media (prefers-color-scheme: dark) {
-  svg { --bg:#161d25; --ink:#e4eaf0; --ink2:#94a2b1; --line:#2a3440; --rail:#4a5665; --hot:#ff8f86; --hot-bg:#431b19;
-        --or:#7fb0ec; --and:#b9a0f0; --soft:#1f2731; --ue:#f0cf6a; --ue-bg:#3a3214; --sheet:#e4eaf0; --sheet-ink:#161d25; }
+  svg { --bg:#1a1a19; --card:#242422; --ink:#f2f1ec; --ink2:#b5b3ab; --mute:#8a8880; --line:#55534e; --grid:#3a3936;
+        --soft:#2e2d2a; --chipink:#1a1a19; --s1b:#4a1f1f; --s1f:#ffb3b3; --s2b:#4a2a1c; --s2f:#ffc6a8; --s3b:#43361a;
+        --s3f:#ffd98a; --s4b:#1d3a1d; --s4f:#9fe09f; }
 }
-.bg { fill:var(--bg); } .t { font:14px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
-.t2 { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
-.ti { font:italic 12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
-.h { font:600 20px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
-.pid { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--ink); } .pidhot { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--hot); }
-.gl { font:700 8px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--bg); }
-.pc { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
-.rule { stroke:var(--line); stroke-width:1; } .rail { stroke:var(--rail); stroke-width:1.2; fill:none; }
+.bg { fill:var(--bg); } .t { font:14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); } .t2 { font:12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); }
+.ti { font:italic 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); } .h { font:600 20px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); }
+.pid { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--ink); } .pidhot { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--hot); }
+.gl { font:700 8px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:#ffffff; } .pc { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; } .ps { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.rule { stroke:var(--grid); stroke-width:1; } .rail { stroke:var(--line); stroke-width:1.2; fill:none; }
 .railhot { stroke:var(--hot); stroke-width:2; fill:none; }
 </style>
 <rect class="bg" width="640" height="643"/>
@@ -28,53 +28,58 @@ svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c
 <text x="16" y="34" class="h">SG-02 fault tree · sheet 9 of 9</text>
 <text x="16" y="56" class="t2">ASIL C · phone view of fta-SG-02-9.svg; the full sheet has the drawing.</text>
 <text x="16" y="76" class="t2">Red: a single item fault reaches the top event along this path.</text>
-<rect x="16.0" y="94.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--ink);stroke-width:0"/><text x="28.0" y="107.0" class="gl" text-anchor="middle">OR</text>
+<rect x="16.0" y="94.0" width="24" height="20" rx="4" fill="var(--or)"/><text x="28.0" y="107.0" class="gl" text-anchor="middle">OR</text>
 <text x="46" y="109.0" class="pid">G2.1.1</text>
 <text x="116" y="109.0" class="t">SoC warning missing or late</text>
-<rect x="116.0" y="119.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="123.0" y="132.0" class="pc" style="fill:var(--ink2)">fewest item faults 0 · 5 cut sets</text>
-<rect x="340.6" y="119.0" width="88.4" height="18" rx="9" style="fill:var(--soft)"/><text x="347.6" y="132.0" class="pc" style="fill:var(--ink2)">from sheet 2</text>
+<rect x="116.0" y="119.0" width="66.7" height="18" rx="9" fill="var(--soft)"/>
+<text x="124.0" y="132.0" class="ps" fill="var(--ink2)">UE only</text>
+<text x="188.7" y="132.0" class="t2">5 cut sets</text>
+<rect x="258.7" y="119.0" width="88.4" height="18" rx="4" fill="none" stroke="var(--line)"/><text x="265.7" y="132.0" class="pc" fill="var(--ink2)">from sheet 2</text>
 <line x1="116" y1="147.0" x2="624" y2="147.0" class="rule"/>
-<circle cx="46.0" cy="163.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<circle cx="46.0" cy="163.0" r="9.5" fill="var(--basic)"/>
 <text x="64" y="168.0" class="pid">BE-2.08</text>
 <text x="134" y="168.0" class="t">EPS fault warned only by the host; after a steering override in the</text>
 <text x="134" y="186.0" class="t">last 1.5 s or at standstill only a low-priority prompt, no soft</text>
 <text x="134" y="204.0" class="t">disable or take-over alert, latched for the fault (car_events.py:171,</text>
 <text x="134" y="222.0" class="t">events.py:516; not in the envelope, GAP-03). 2026-10-12, reference…</text>
-<rect x="134.0" y="232.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="245.0" class="pc" style="fill:var(--ink2)">SFM-038</text>
-<rect x="197.4" y="232.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="204.4" y="245.0" class="pc" style="fill:var(--ink2)">SWF-088</text>
+<rect x="134.0" y="232.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="141.0" y="245.0" class="pc" fill="var(--ink2)">SFM-038</text>
+<rect x="197.4" y="232.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="204.4" y="245.0" class="pc" fill="var(--ink2)">SWF-088</text>
 <line x1="134" y1="260.0" x2="624" y2="260.0" class="rule"/>
-<path d="M46.0,265.0 l11,11 l-11,11 l-11,-11 z" style="fill:var(--ue-bg);stroke:var(--ink);stroke-width:1.5"/>
+<path d="M46.0,265.0 l11,11 l-11,11 l-11,-11 z" fill="var(--ue)"/>
 <text x="64" y="281.0" class="pid">UE-2.19</text>
 <text x="134" y="281.0" class="t">EPS stops accepting LKA requests without a fault state in 0x262:</text>
 <text x="134" y="299.0" class="t">neither the host nor the envelope sees it; no check of EPS acceptance</text>
 <text x="134" y="317.0" class="t">against the command (SFM-005.C1; TSR-626, WP-A-03 OI-8)</text>
-<rect x="134.0" y="327.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="340.0" class="pc" style="fill:var(--ink2)">SFM-005</text>
+<rect x="134.0" y="327.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="141.0" y="340.0" class="pc" fill="var(--ink2)">SFM-005</text>
 <line x1="134" y1="355.0" x2="624" y2="355.0" class="rule"/>
-<rect x="34.0" y="361.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--ink);stroke-width:0"/><text x="46.0" y="374.0" class="gl" text-anchor="middle">OR</text>
+<rect x="34.0" y="361.0" width="24" height="20" rx="4" fill="var(--or)"/><text x="46.0" y="374.0" class="gl" text-anchor="middle">OR</text>
 <text x="64" y="376.0" class="pid">G-HMI</text>
 <text x="134" y="376.0" class="t">HMI does not deliver the warning</text>
-<rect x="134.0" y="386.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="399.0" class="pc" style="fill:var(--ink2)">fewest item faults 1 · 3 cut sets</text>
-<rect x="358.6" y="386.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="365.6" y="399.0" class="pc" style="fill:var(--ink2)">SFM-026</text>
-<rect x="422.0" y="386.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="429.0" y="399.0" class="pc" style="fill:var(--ink2)">SFM-027</text>
+<rect x="134.0" y="386.0" width="66.7" height="18" rx="9" fill="var(--s1b)"/>
+<circle cx="145.0" cy="395.0" r="5" fill="var(--s1f)"/><rect x="142.0" y="394.0" width="6" height="2" fill="var(--s1b)"/>
+<text x="153.0" y="399.0" class="ps" fill="var(--s1f)">1 fault</text>
+<text x="206.7" y="399.0" class="t2">3 cut sets</text>
+<rect x="276.7" y="386.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="283.7" y="399.0" class="pc" fill="var(--ink2)">SFM-026</text>
+<rect x="340.1" y="386.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="347.1" y="399.0" class="pc" fill="var(--ink2)">SFM-027</text>
 <line x1="134" y1="414.0" x2="624" y2="414.0" class="rule"/>
-<circle cx="64.0" cy="430.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<circle cx="64.0" cy="430.0" r="9.5" fill="var(--basic)"/>
 <text x="82" y="435.0" class="pid">BE-2.12</text>
 <text x="152" y="435.0" class="t">HMI hang: render loop or audio stream stalled while processes stay</text>
 <text x="152" y="453.0" class="t">alive (processNotRunning covers crashes only)</text>
-<rect x="152.0" y="463.0" width="76.0" height="18" rx="9" style="fill:var(--soft)"/><text x="159.0" y="476.0" class="pc" style="fill:var(--ink2)">CCF DFI-25</text>
-<rect x="234.0" y="463.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="241.0" y="476.0" class="pc" style="fill:var(--ink2)">SFM-026</text>
-<rect x="297.4" y="463.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="304.4" y="476.0" class="pc" style="fill:var(--ink2)">SWF-082</text>
+<rect x="152.0" y="463.0" width="76.0" height="18" rx="4" fill="var(--soft)"/><text x="159.0" y="476.0" class="pc" fill="var(--ink2)">CCF DFI-25</text>
+<rect x="234.0" y="463.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="241.0" y="476.0" class="pc" fill="var(--ink2)">SFM-026</text>
+<rect x="297.4" y="463.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="304.4" y="476.0" class="pc" fill="var(--ink2)">SWF-082</text>
 <line x1="152" y1="491.0" x2="624" y2="491.0" class="rule"/>
-<circle cx="64.0" cy="507.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<circle cx="64.0" cy="507.0" r="9.5" fill="var(--basic)"/>
 <text x="82" y="512.0" class="pid">BE-2.13</text>
 <text x="152" y="512.0" class="t">Alert volume not audible (no defined minimum; FFI-CM-18)</text>
-<rect x="152.0" y="522.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="159.0" y="535.0" class="pc" style="fill:var(--ink2)">SFM-026</text>
+<rect x="152.0" y="522.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="159.0" y="535.0" class="pc" fill="var(--ink2)">SFM-026</text>
 <line x1="152" y1="550.0" x2="624" y2="550.0" class="rule"/>
-<circle cx="64.0" cy="566.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<circle cx="64.0" cy="566.0" r="9.5" fill="var(--basic)"/>
 <text x="82" y="571.0" class="pid">BE-2.25</text>
 <text x="152" y="571.0" class="t">Take-over alert masked by an alert of higher priority but lower</text>
 <text x="152" y="589.0" class="t">urgency (SoftDisableAlert is Priority.MID; alertmanager.py:63)</text>
-<rect x="152.0" y="599.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="159.0" y="612.0" class="pc" style="fill:var(--ink2)">SWF-035</text>
-<rect x="215.4" y="599.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="222.4" y="612.0" class="pc" style="fill:var(--ink2)">SFM-027</text>
+<rect x="152.0" y="599.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="159.0" y="612.0" class="pc" fill="var(--ink2)">SWF-035</text>
+<rect x="215.4" y="599.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="222.4" y="612.0" class="pc" fill="var(--ink2)">SFM-027</text>
 <line x1="152" y1="627.0" x2="624" y2="627.0" class="rule"/>
 </svg>

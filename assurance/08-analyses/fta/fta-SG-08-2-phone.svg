@@ -2,20 +2,20 @@
 <title id="t">SG-08 fault tree, sheet 2: phone view</title>
 <desc id="d">SG-08 fault tree (ASIL A), sheet 2 of 2 as an outline: G8.1 (OR), single-point path; BE-8.01, single-point path; BE-8.02, single-point path; G8.1.1 (AND); BE-8.03; G8.1.2 (OR); BE-8.04; BE-8.05; BE-8.06, single-point path.</desc>
 <style>
-svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c0; --hot:#c62828; --hot-bg:#fdecec;
-      --or:#2f6fb5; --and:#7a4fc4; --soft:#eef1f5; --ue:#7a5600; --ue-bg:#fff5dc; --sheet:#16202b; --sheet-ink:#ffffff; }
+svg { --bg:#fcfcfb; --card:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --mute:#898781; --line:#c9c7bf; --grid:#e1e0d9; --soft:#f3f2ee;
+      --or:#2a78d6; --and:#6250d6; --basic:#1baf7a; --ue:#eda100; --hot:#d03b3b; --chipink:#ffffff;
+      --s1b:#fbe9e9; --s1f:#9e2424; --s2b:#fdeee6; --s2f:#9a4a25;
+      --s3b:#fff5dc; --s3f:#7a5600; --s4b:#e6f5e6; --s4f:#0a6a0a; }
 @media (prefers-color-scheme: dark) {
-  svg { --bg:#161d25; --ink:#e4eaf0; --ink2:#94a2b1; --line:#2a3440; --rail:#4a5665; --hot:#ff8f86; --hot-bg:#431b19;
-        --or:#7fb0ec; --and:#b9a0f0; --soft:#1f2731; --ue:#f0cf6a; --ue-bg:#3a3214; --sheet:#e4eaf0; --sheet-ink:#161d25; }
+  svg { --bg:#1a1a19; --card:#242422; --ink:#f2f1ec; --ink2:#b5b3ab; --mute:#8a8880; --line:#55534e; --grid:#3a3936;
+        --soft:#2e2d2a; --chipink:#1a1a19; --s1b:#4a1f1f; --s1f:#ffb3b3; --s2b:#4a2a1c; --s2f:#ffc6a8; --s3b:#43361a;
+        --s3f:#ffd98a; --s4b:#1d3a1d; --s4f:#9fe09f; }
 }
-.bg { fill:var(--bg); } .t { font:14px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
-.t2 { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
-.ti { font:italic 12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
-.h { font:600 20px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
-.pid { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--ink); } .pidhot { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--hot); }
-.gl { font:700 8px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--bg); }
-.pc { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
-.rule { stroke:var(--line); stroke-width:1; } .rail { stroke:var(--rail); stroke-width:1.2; fill:none; }
+.bg { fill:var(--bg); } .t { font:14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); } .t2 { font:12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); }
+.ti { font:italic 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); } .h { font:600 20px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); }
+.pid { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--ink); } .pidhot { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--hot); }
+.gl { font:700 8px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:#ffffff; } .pc { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; } .ps { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.rule { stroke:var(--grid); stroke-width:1; } .rail { stroke:var(--line); stroke-width:1.2; fill:none; }
 .railhot { stroke:var(--hot); stroke-width:2; fill:none; }
 </style>
 <rect class="bg" width="640" height="779"/>
@@ -30,61 +30,70 @@ svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c
 <text x="16" y="34" class="h">SG-08 fault tree · sheet 2 of 2</text>
 <text x="16" y="56" class="t2">ASIL A · phone view of fta-SG-08-2.svg; the full sheet has the drawing.</text>
 <text x="16" y="76" class="t2">Red: a single item fault reaches the top event along this path.</text>
-<rect x="16.0" y="94.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--hot);stroke-width:2"/><text x="28.0" y="107.0" class="gl" text-anchor="middle">OR</text>
+<rect x="16.0" y="94.0" width="24" height="20" rx="4" fill="var(--or)" stroke="var(--hot)" stroke-width="2.4"/><text x="28.0" y="107.0" class="gl" text-anchor="middle">OR</text>
 <text x="46" y="109.0" class="pidhot">G8.1</text>
 <text x="116" y="109.0" class="t">Inattentive or unresponsive driver not detected while engaged</text>
-<rect x="116.0" y="119.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="123.0" y="132.0" class="pc" style="fill:var(--ink2)">fewest item faults 1 · 5 cut sets</text>
-<rect x="340.6" y="119.0" width="88.4" height="18" rx="9" style="fill:var(--soft)"/><text x="347.6" y="132.0" class="pc" style="fill:var(--ink2)">from sheet 1</text>
+<rect x="116.0" y="119.0" width="66.7" height="18" rx="9" fill="var(--s1b)"/>
+<circle cx="127.0" cy="128.0" r="5" fill="var(--s1f)"/><rect x="124.0" y="127.0" width="6" height="2" fill="var(--s1b)"/>
+<text x="135.0" y="132.0" class="ps" fill="var(--s1f)">1 fault</text>
+<text x="188.7" y="132.0" class="t2">5 cut sets</text>
+<rect x="258.7" y="119.0" width="88.4" height="18" rx="4" fill="none" stroke="var(--line)"/><text x="265.7" y="132.0" class="pc" fill="var(--ink2)">from sheet 1</text>
 <line x1="116" y1="147.0" x2="624" y2="147.0" class="rule"/>
-<circle cx="46.0" cy="163.0" r="10" style="fill:var(--hot-bg);stroke:var(--hot);stroke-width:1.5"/>
+<circle cx="46.0" cy="163.0" r="9.5" fill="var(--basic)" stroke="var(--hot)" stroke-width="2.4"/>
 <text x="64" y="168.0" class="pidhot">BE-8.01</text>
 <text x="134" y="168.0" class="t">DM model false negative: eyes off the road or eyes closed classified</text>
 <text x="134" y="186.0" class="t">attentive</text>
-<rect x="134.0" y="196.0" width="45.0" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="209.0" class="pc" style="fill:var(--ink2)">SOTIF</text>
-<rect x="185.0" y="196.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="192.0" y="209.0" class="pc" style="fill:var(--ink2)">SFM-022</text>
+<rect x="134.0" y="196.0" width="45.0" height="18" rx="4" fill="var(--soft)"/><text x="141.0" y="209.0" class="pc" fill="var(--ink2)">SOTIF</text>
+<rect x="185.0" y="196.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="192.0" y="209.0" class="pc" fill="var(--ink2)">SFM-022</text>
 <line x1="134" y1="224.0" x2="624" y2="224.0" class="rule"/>
-<circle cx="46.0" cy="240.0" r="10" style="fill:var(--hot-bg);stroke:var(--hot);stroke-width:1.5"/>
+<circle cx="46.0" cy="240.0" r="9.5" fill="var(--basic)" stroke="var(--hot)" stroke-width="2.4"/>
 <text x="64" y="245.0" class="pidhot">BE-8.02</text>
 <text x="134" y="245.0" class="t">Pose thresholds or the pose calibration wrong for the driver or the</text>
 <text x="134" y="263.0" class="t">mount (policy.py:60-91)</text>
-<rect x="134.0" y="273.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="286.0" class="pc" style="fill:var(--ink2)">SFM-022</text>
+<rect x="134.0" y="273.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="141.0" y="286.0" class="pc" fill="var(--ink2)">SFM-022</text>
 <line x1="134" y1="301.0" x2="624" y2="301.0" class="rule"/>
-<rect x="34.0" y="307.0" width="24" height="20" rx="3" style="fill:var(--and);stroke:var(--ink);stroke-width:0"/><text x="46.0" y="320.0" class="gl" text-anchor="middle">AND</text>
+<rect x="34.0" y="307.0" width="24" height="20" rx="4" fill="var(--and)"/><text x="46.0" y="320.0" class="gl" text-anchor="middle">AND</text>
 <text x="64" y="322.0" class="pid">G8.1.1</text>
 <text x="134" y="322.0" class="t">DM input degraded and not escalated</text>
-<rect x="134.0" y="332.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="345.0" class="pc" style="fill:var(--ink2)">fewest item faults 2 · 2 cut sets</text>
+<rect x="134.0" y="332.0" width="72.8" height="18" rx="9" fill="var(--s2b)"/>
+<path d="M145.0,336.5 L150.0,345.0 H140.0 Z" fill="var(--s2f)"/>
+<text x="153.0" y="345.0" class="ps" fill="var(--s2f)">2 faults</text>
+<text x="212.8" y="345.0" class="t2">2 cut sets</text>
 <line x1="134" y1="360.0" x2="624" y2="360.0" class="rule"/>
-<circle cx="64.0" cy="376.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<circle cx="64.0" cy="376.0" r="9.5" fill="var(--basic)"/>
 <text x="82" y="381.0" class="pid">BE-8.03</text>
 <text x="152" y="381.0" class="t">Driver camera or IR illumination degraded, covered or failed, or</text>
 <text x="152" y="399.0" class="t">dmonitoringmodeld stopped (random HW)</text>
-<rect x="152.0" y="409.0" width="57.4" height="18" rx="9" style="fill:var(--hot-bg)"/><text x="159.0" y="422.0" class="pc" style="fill:var(--hot)">no FMEA</text>
+<rect x="152.0" y="409.0" width="57.4" height="18" rx="4" fill="var(--s1b)"/><text x="159.0" y="422.0" class="pc" fill="var(--s1f)">no FMEA</text>
 <line x1="152" y1="437.0" x2="624" y2="437.0" class="rule"/>
-<rect x="52.0" y="443.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--ink);stroke-width:0"/><text x="64.0" y="456.0" class="gl" text-anchor="middle">OR</text>
+<rect x="52.0" y="443.0" width="24" height="20" rx="4" fill="var(--or)"/><text x="64.0" y="456.0" class="gl" text-anchor="middle">OR</text>
 <text x="82" y="458.0" class="pid">G8.1.2</text>
 <text x="152" y="458.0" class="t">Degraded input does not lead to an alert</text>
-<rect x="152.0" y="468.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="159.0" y="481.0" class="pc" style="fill:var(--ink2)">fewest item faults 1 · 2 cut sets</text>
+<rect x="152.0" y="468.0" width="66.7" height="18" rx="9" fill="var(--s1b)"/>
+<circle cx="163.0" cy="477.0" r="5" fill="var(--s1f)"/><rect x="160.0" y="476.0" width="6" height="2" fill="var(--s1b)"/>
+<text x="171.0" y="481.0" class="ps" fill="var(--s1f)">1 fault</text>
+<text x="224.7" y="481.0" class="t2">2 cut sets</text>
 <line x1="152" y1="496.0" x2="624" y2="496.0" class="rule"/>
-<circle cx="82.0" cy="512.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<circle cx="82.0" cy="512.0" r="9.5" fill="var(--basic)"/>
 <text x="100" y="517.0" class="pid">BE-8.04</text>
 <text x="170" y="517.0" class="t">driverStateV2 always valid=True at the source</text>
 <text x="170" y="535.0" class="t">(dmonitoringmodeld.py:99; GAP-21, TSR-609 not met)</text>
-<rect x="170.0" y="545.0" width="100.8" height="18" rx="9" style="fill:var(--soft)"/><text x="177.0" y="558.0" class="pc" style="fill:var(--ink2)">latent, design</text>
-<rect x="276.8" y="545.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="283.8" y="558.0" class="pc" style="fill:var(--ink2)">SWF-063</text>
+<rect x="170.0" y="545.0" width="100.8" height="18" rx="4" fill="none" stroke="var(--mute)" stroke-dasharray="3 2"/><text x="177.0" y="558.0" class="pc" fill="var(--ink2)">latent, design</text>
+<rect x="276.8" y="545.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="283.8" y="558.0" class="pc" fill="var(--ink2)">SWF-063</text>
 <line x1="170" y1="573.0" x2="624" y2="573.0" class="rule"/>
-<circle cx="82.0" cy="589.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<circle cx="82.0" cy="589.0" r="9.5" fill="var(--basic)"/>
 <text x="100" y="594.0" class="pid">BE-8.05</text>
 <text x="170" y="594.0" class="t">Wheel-touch fallback resets awareness on any steering or gas</text>
 <text x="170" y="612.0" class="t">input (policy.py:375-376; GAP-21, TSR-612 not met)</text>
-<rect x="170.0" y="622.0" width="100.8" height="18" rx="9" style="fill:var(--soft)"/><text x="177.0" y="635.0" class="pc" style="fill:var(--ink2)">latent, design</text>
-<rect x="276.8" y="622.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="283.8" y="635.0" class="pc" style="fill:var(--ink2)">SWF-061</text>
+<rect x="170.0" y="622.0" width="100.8" height="18" rx="4" fill="none" stroke="var(--mute)" stroke-dasharray="3 2"/><text x="177.0" y="635.0" class="pc" fill="var(--ink2)">latent, design</text>
+<rect x="276.8" y="622.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="283.8" y="635.0" class="pc" fill="var(--ink2)">SWF-061</text>
 <line x1="170" y1="650.0" x2="624" y2="650.0" class="rule"/>
-<circle cx="46.0" cy="666.0" r="10" style="fill:var(--hot-bg);stroke:var(--hot);stroke-width:1.5"/>
+<circle cx="46.0" cy="666.0" r="9.5" fill="var(--basic)" stroke="var(--hot)" stroke-width="2.4"/>
 <text x="64" y="671.0" class="pidhot">BE-8.06</text>
 <text x="134" y="671.0" class="t">DM demo mode (IsDriverViewEnabled) active while the item can engage:</text>
 <text x="134" y="689.0" class="t">the policy runs on a synthetic vehicle state (zero calibration, fixed</text>
 <text x="134" y="707.0" class="t">speed) and may switch the monitored seat while engaged, so a</text>
 <text x="134" y="725.0" class="t">distracted driver can be judged against the wrong pose reference or…</text>
-<rect x="134.0" y="735.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="748.0" class="pc" style="fill:var(--ink2)">SWF-085</text>
+<rect x="134.0" y="735.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="141.0" y="748.0" class="pc" fill="var(--ink2)">SWF-085</text>
 <line x1="134" y1="763.0" x2="624" y2="763.0" class="rule"/>
 </svg>

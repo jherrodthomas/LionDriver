@@ -2,20 +2,20 @@
 <title id="t">SG-01 fault tree, sheet 5: phone view</title>
 <desc id="d">SG-01 fault tree (ASIL C), sheet 5 of 6 as an outline: G1.2.1 (AND); G1.2.1.a (OR); BE-1.12; BE-1.13; BE-1.14; BE-1.25; BE-1.08; BE-1.09; BE-1.15.</desc>
 <style>
-svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c0; --hot:#c62828; --hot-bg:#fdecec;
-      --or:#2f6fb5; --and:#7a4fc4; --soft:#eef1f5; --ue:#7a5600; --ue-bg:#fff5dc; --sheet:#16202b; --sheet-ink:#ffffff; }
+svg { --bg:#fcfcfb; --card:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --mute:#898781; --line:#c9c7bf; --grid:#e1e0d9; --soft:#f3f2ee;
+      --or:#2a78d6; --and:#6250d6; --basic:#1baf7a; --ue:#eda100; --hot:#d03b3b; --chipink:#ffffff;
+      --s1b:#fbe9e9; --s1f:#9e2424; --s2b:#fdeee6; --s2f:#9a4a25;
+      --s3b:#fff5dc; --s3f:#7a5600; --s4b:#e6f5e6; --s4f:#0a6a0a; }
 @media (prefers-color-scheme: dark) {
-  svg { --bg:#161d25; --ink:#e4eaf0; --ink2:#94a2b1; --line:#2a3440; --rail:#4a5665; --hot:#ff8f86; --hot-bg:#431b19;
-        --or:#7fb0ec; --and:#b9a0f0; --soft:#1f2731; --ue:#f0cf6a; --ue-bg:#3a3214; --sheet:#e4eaf0; --sheet-ink:#161d25; }
+  svg { --bg:#1a1a19; --card:#242422; --ink:#f2f1ec; --ink2:#b5b3ab; --mute:#8a8880; --line:#55534e; --grid:#3a3936;
+        --soft:#2e2d2a; --chipink:#1a1a19; --s1b:#4a1f1f; --s1f:#ffb3b3; --s2b:#4a2a1c; --s2f:#ffc6a8; --s3b:#43361a;
+        --s3f:#ffd98a; --s4b:#1d3a1d; --s4f:#9fe09f; }
 }
-.bg { fill:var(--bg); } .t { font:14px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
-.t2 { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
-.ti { font:italic 12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
-.h { font:600 20px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
-.pid { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--ink); } .pidhot { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--hot); }
-.gl { font:700 8px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--bg); }
-.pc { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
-.rule { stroke:var(--line); stroke-width:1; } .rail { stroke:var(--rail); stroke-width:1.2; fill:none; }
+.bg { fill:var(--bg); } .t { font:14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); } .t2 { font:12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); }
+.ti { font:italic 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); } .h { font:600 20px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); }
+.pid { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--ink); } .pidhot { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--hot); }
+.gl { font:700 8px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:#ffffff; } .pc { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; } .ps { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.rule { stroke:var(--grid); stroke-width:1; } .rail { stroke:var(--line); stroke-width:1.2; fill:none; }
 .railhot { stroke:var(--hot); stroke-width:2; fill:none; }
 </style>
 <rect class="bg" width="640" height="779"/>
@@ -30,72 +30,78 @@ svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c
 <text x="16" y="34" class="h">SG-01 fault tree · sheet 5 of 6</text>
 <text x="16" y="56" class="t2">ASIL C · phone view of fta-SG-01-5.svg; the full sheet has the drawing.</text>
 <text x="16" y="76" class="t2">Red: a single item fault reaches the top event along this path.</text>
-<rect x="16.0" y="94.0" width="24" height="20" rx="3" style="fill:var(--and);stroke:var(--ink);stroke-width:0"/><text x="28.0" y="107.0" class="gl" text-anchor="middle">AND</text>
+<rect x="16.0" y="94.0" width="24" height="20" rx="4" fill="var(--and)"/><text x="28.0" y="107.0" class="gl" text-anchor="middle">AND</text>
 <text x="46" y="109.0" class="pid">G1.2.1</text>
 <text x="116" y="109.0" class="t">Authority falsely granted AND SoC commands torque</text>
-<rect x="116.0" y="119.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="123.0" y="132.0" class="pc" style="fill:var(--ink2)">fewest item faults 2 · 6 cut sets</text>
-<rect x="340.6" y="119.0" width="88.4" height="18" rx="9" style="fill:var(--soft)"/><text x="347.6" y="132.0" class="pc" style="fill:var(--ink2)">from sheet 3</text>
+<rect x="116.0" y="119.0" width="72.8" height="18" rx="9" fill="var(--s2b)"/>
+<path d="M127.0,123.5 L132.0,132.0 H122.0 Z" fill="var(--s2f)"/>
+<text x="135.0" y="132.0" class="ps" fill="var(--s2f)">2 faults</text>
+<text x="194.8" y="132.0" class="t2">6 cut sets</text>
+<rect x="264.8" y="119.0" width="88.4" height="18" rx="4" fill="none" stroke="var(--line)"/><text x="271.8" y="132.0" class="pc" fill="var(--ink2)">from sheet 3</text>
 <line x1="116" y1="147.0" x2="624" y2="147.0" class="rule"/>
-<rect x="34.0" y="153.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--ink);stroke-width:0"/><text x="46.0" y="166.0" class="gl" text-anchor="middle">OR</text>
+<rect x="34.0" y="153.0" width="24" height="20" rx="4" fill="var(--or)"/><text x="46.0" y="166.0" class="gl" text-anchor="middle">OR</text>
 <text x="64" y="168.0" class="pid">G1.2.1.a</text>
 <text x="134" y="168.0" class="t">False authority</text>
-<rect x="134.0" y="178.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="191.0" class="pc" style="fill:var(--ink2)">fewest item faults 1 · 6 cut sets</text>
+<rect x="134.0" y="178.0" width="66.7" height="18" rx="9" fill="var(--s1b)"/>
+<circle cx="145.0" cy="187.0" r="5" fill="var(--s1f)"/><rect x="142.0" y="186.0" width="6" height="2" fill="var(--s1b)"/>
+<text x="153.0" y="191.0" class="ps" fill="var(--s1f)">1 fault</text>
+<text x="206.7" y="191.0" class="t2">6 cut sets</text>
 <line x1="134" y1="206.0" x2="624" y2="206.0" class="rule"/>
-<circle cx="64.0" cy="222.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<circle cx="64.0" cy="222.0" r="9.5" fill="var(--basic)"/>
 <text x="82" y="227.0" class="pid">BE-1.12</text>
 <text x="152" y="227.0" class="t">Corrupted/replayed 0x1D2 creates false cruise rising edge with</text>
 <text x="152" y="245.0" class="t">valid 8-bit checksum (no counter, GAP-01)</text>
-<rect x="152.0" y="255.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="159.0" y="268.0" class="pc" style="fill:var(--ink2)">SWF-007</text>
+<rect x="152.0" y="255.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="159.0" y="268.0" class="pc" fill="var(--ink2)">SWF-007</text>
 <line x1="152" y1="283.0" x2="624" y2="283.0" class="rule"/>
-<circle cx="64.0" cy="299.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<circle cx="64.0" cy="299.0" r="9.5" fill="var(--basic)"/>
 <text x="82" y="304.0" class="pid">BE-1.13</text>
 <text x="152" y="304.0" class="t">Panda RX path delivers stale/stuck cruise frame to both envelope</text>
 <text x="152" y="322.0" class="t">and SoC (single RX path; CCF → DFI-10)</text>
-<rect x="152.0" y="332.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="159.0" y="345.0" class="pc" style="fill:var(--ink2)">SWF-006</text>
+<rect x="152.0" y="332.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="159.0" y="345.0" class="pc" fill="var(--ink2)">SWF-006</text>
 <line x1="152" y1="360.0" x2="624" y2="360.0" class="rule"/>
-<circle cx="64.0" cy="376.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<circle cx="64.0" cy="376.0" r="9.5" fill="var(--basic)"/>
 <text x="82" y="381.0" class="pid">BE-1.14</text>
 <text x="152" y="381.0" class="t">MCU fault sets controls_allowed (BE-1.07 class)</text>
-<rect x="152.0" y="391.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="159.0" y="404.0" class="pc" style="fill:var(--ink2)">DFM-003</text>
-<rect x="215.4" y="391.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="222.4" y="404.0" class="pc" style="fill:var(--ink2)">FMD-009</text>
+<rect x="152.0" y="391.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="159.0" y="404.0" class="pc" fill="var(--ink2)">DFM-003</text>
+<rect x="215.4" y="391.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="222.4" y="404.0" class="pc" fill="var(--ink2)">FMD-009</text>
 <line x1="152" y1="419.0" x2="624" y2="419.0" class="rule"/>
-<circle cx="64.0" cy="435.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<circle cx="64.0" cy="435.0" r="9.5" fill="var(--basic)"/>
 <text x="82" y="440.0" class="pid">BE-1.25</text>
 <text x="152" y="440.0" class="t">Envelope software defect in the not-allowed torque check or the</text>
 <text x="152" y="458.0" class="t">controls_allowed bookkeeping (lateral.h:111-114), e.g. a cruise</text>
 <text x="152" y="476.0" class="t">edge refused for MAIN_ON = 0 left the engagement window open</text>
 <text x="152" y="494.0" class="t">(SM-F1, SWF-089; reference build fixed at BL-006, opendbc#17)</text>
-<rect x="152.0" y="504.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="159.0" y="517.0" class="pc" style="fill:var(--ink2)">SWF-002</text>
-<rect x="215.4" y="504.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="222.4" y="517.0" class="pc" style="fill:var(--ink2)">SWF-055</text>
-<rect x="278.8" y="504.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="285.8" y="517.0" class="pc" style="fill:var(--ink2)">SWF-089</text>
+<rect x="152.0" y="504.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="159.0" y="517.0" class="pc" fill="var(--ink2)">SWF-002</text>
+<rect x="215.4" y="504.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="222.4" y="517.0" class="pc" fill="var(--ink2)">SWF-055</text>
+<rect x="278.8" y="504.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="285.8" y="517.0" class="pc" fill="var(--ink2)">SWF-089</text>
 <line x1="152" y1="532.0" x2="624" y2="532.0" class="rule"/>
-<circle cx="64.0" cy="548.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<circle cx="64.0" cy="548.0" r="9.5" fill="var(--basic)"/>
 <text x="82" y="553.0" class="pid">BE-1.08</text>
 <text x="152" y="553.0" class="t">Safety mode/param changed by SoC (0xdc, GAP-09) [FFI → FFI-CM-06;</text>
 <text x="152" y="571.0" class="t">CCF → DFI-13: same SoC fault can cause G-SoC and BE-1.08]</text>
-<rect x="152.0" y="581.0" width="63.6" height="18" rx="9" style="fill:var(--soft)"/><text x="159.0" y="594.0" class="pc" style="fill:var(--ink2)">repeated</text>
-<rect x="221.6" y="581.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="228.6" y="594.0" class="pc" style="fill:var(--ink2)">SWF-013</text>
-<rect x="285.0" y="581.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="292.0" y="594.0" class="pc" style="fill:var(--ink2)">SWF-022</text>
+<rect x="152.0" y="581.0" width="63.6" height="18" rx="4" fill="none" stroke="var(--line)"/><text x="159.0" y="594.0" class="pc" fill="var(--ink2)">repeated</text>
+<rect x="221.6" y="581.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="228.6" y="594.0" class="pc" fill="var(--ink2)">SWF-013</text>
+<rect x="285.0" y="581.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="292.0" y="594.0" class="pc" fill="var(--ink2)">SWF-022</text>
 <line x1="152" y1="609.0" x2="624" y2="609.0" class="rule"/>
-<circle cx="64.0" cy="625.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<circle cx="64.0" cy="625.0" r="9.5" fill="var(--basic)"/>
 <text x="82" y="630.0" class="pid">BE-1.09</text>
 <text x="152" y="630.0" class="t">Envelope firmware replaced via boot pins / softloader (GAP-38,</text>
 <text x="152" y="648.0" class="t">GAP-24) [FFI → FFI-CM-12; CCF → DFI-13]</text>
-<rect x="152.0" y="658.0" width="63.6" height="18" rx="9" style="fill:var(--soft)"/><text x="159.0" y="671.0" class="pc" style="fill:var(--ink2)">repeated</text>
-<rect x="221.6" y="658.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="228.6" y="671.0" class="pc" style="fill:var(--ink2)">SWF-028</text>
-<rect x="285.0" y="658.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="292.0" y="671.0" class="pc" style="fill:var(--ink2)">PFM-001</text>
-<rect x="348.4" y="658.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="355.4" y="671.0" class="pc" style="fill:var(--ink2)">DFM-016</text>
-<rect x="411.8" y="658.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="418.8" y="671.0" class="pc" style="fill:var(--ink2)">PFM-002</text>
-<rect x="475.2" y="658.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="482.2" y="671.0" class="pc" style="fill:var(--ink2)">SWF-084</text>
+<rect x="152.0" y="658.0" width="63.6" height="18" rx="4" fill="none" stroke="var(--line)"/><text x="159.0" y="671.0" class="pc" fill="var(--ink2)">repeated</text>
+<rect x="221.6" y="658.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="228.6" y="671.0" class="pc" fill="var(--ink2)">SWF-028</text>
+<rect x="285.0" y="658.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="292.0" y="671.0" class="pc" fill="var(--ink2)">PFM-001</text>
+<rect x="348.4" y="658.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="355.4" y="671.0" class="pc" fill="var(--ink2)">DFM-016</text>
+<rect x="411.8" y="658.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="418.8" y="671.0" class="pc" fill="var(--ink2)">PFM-002</text>
+<rect x="475.2" y="658.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="482.2" y="671.0" class="pc" fill="var(--ink2)">SWF-084</text>
 <line x1="152" y1="686.0" x2="624" y2="686.0" class="rule"/>
-<circle cx="46.0" cy="702.0" r="10" style="fill:var(--soft);stroke:var(--ink);stroke-width:1.5"/>
+<circle cx="46.0" cy="702.0" r="9.5" fill="var(--basic)"/>
 <text x="64" y="707.0" class="pid">BE-1.15</text>
 <text x="134" y="707.0" class="t">SoC commands non-zero torque (normally gated by its own engagement</text>
 <text x="134" y="725.0" class="t">state, which is fed by the same CAN data — CCF → DFI-10)</text>
-<rect x="134.0" y="735.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="748.0" class="pc" style="fill:var(--ink2)">SFM-001</text>
-<rect x="197.4" y="735.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="204.4" y="748.0" class="pc" style="fill:var(--ink2)">SWF-041</text>
-<rect x="260.8" y="735.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="267.8" y="748.0" class="pc" style="fill:var(--ink2)">SFM-013</text>
-<rect x="324.2" y="735.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="331.2" y="748.0" class="pc" style="fill:var(--ink2)">SWF-030</text>
-<rect x="387.6" y="735.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="394.6" y="748.0" class="pc" style="fill:var(--ink2)">SWF-057</text>
+<rect x="134.0" y="735.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="141.0" y="748.0" class="pc" fill="var(--ink2)">SFM-001</text>
+<rect x="197.4" y="735.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="204.4" y="748.0" class="pc" fill="var(--ink2)">SWF-041</text>
+<rect x="260.8" y="735.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="267.8" y="748.0" class="pc" fill="var(--ink2)">SFM-013</text>
+<rect x="324.2" y="735.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="331.2" y="748.0" class="pc" fill="var(--ink2)">SWF-030</text>
+<rect x="387.6" y="735.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="394.6" y="748.0" class="pc" fill="var(--ink2)">SWF-057</text>
 <line x1="134" y1="763.0" x2="624" y2="763.0" class="rule"/>
 </svg>

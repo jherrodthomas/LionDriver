@@ -2,20 +2,20 @@
 <title id="t">SG-07 fault tree, sheet 2: phone view</title>
 <desc id="d">SG-07 fault tree (ASIL B), sheet 2 of 4 as an outline: G7.1 (OR), single-point path; BE-7.01, single-point path; BE-7.02, single-point path; BE-7.03, single-point path; BE-7.04, single-point path; BE-7.05, single-point path; BE-7.06, single-point path.</desc>
 <style>
-svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c0; --hot:#c62828; --hot-bg:#fdecec;
-      --or:#2f6fb5; --and:#7a4fc4; --soft:#eef1f5; --ue:#7a5600; --ue-bg:#fff5dc; --sheet:#16202b; --sheet-ink:#ffffff; }
+svg { --bg:#fcfcfb; --card:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --mute:#898781; --line:#c9c7bf; --grid:#e1e0d9; --soft:#f3f2ee;
+      --or:#2a78d6; --and:#6250d6; --basic:#1baf7a; --ue:#eda100; --hot:#d03b3b; --chipink:#ffffff;
+      --s1b:#fbe9e9; --s1f:#9e2424; --s2b:#fdeee6; --s2f:#9a4a25;
+      --s3b:#fff5dc; --s3f:#7a5600; --s4b:#e6f5e6; --s4f:#0a6a0a; }
 @media (prefers-color-scheme: dark) {
-  svg { --bg:#161d25; --ink:#e4eaf0; --ink2:#94a2b1; --line:#2a3440; --rail:#4a5665; --hot:#ff8f86; --hot-bg:#431b19;
-        --or:#7fb0ec; --and:#b9a0f0; --soft:#1f2731; --ue:#f0cf6a; --ue-bg:#3a3214; --sheet:#e4eaf0; --sheet-ink:#161d25; }
+  svg { --bg:#1a1a19; --card:#242422; --ink:#f2f1ec; --ink2:#b5b3ab; --mute:#8a8880; --line:#55534e; --grid:#3a3936;
+        --soft:#2e2d2a; --chipink:#1a1a19; --s1b:#4a1f1f; --s1f:#ffb3b3; --s2b:#4a2a1c; --s2f:#ffc6a8; --s3b:#43361a;
+        --s3f:#ffd98a; --s4b:#1d3a1d; --s4f:#9fe09f; }
 }
-.bg { fill:var(--bg); } .t { font:14px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
-.t2 { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
-.ti { font:italic 12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
-.h { font:600 20px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
-.pid { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--ink); } .pidhot { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--hot); }
-.gl { font:700 8px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--bg); }
-.pc { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
-.rule { stroke:var(--line); stroke-width:1; } .rail { stroke:var(--rail); stroke-width:1.2; fill:none; }
+.bg { fill:var(--bg); } .t { font:14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); } .t2 { font:12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); }
+.ti { font:italic 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); } .h { font:600 20px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); }
+.pid { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--ink); } .pidhot { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--hot); }
+.gl { font:700 8px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:#ffffff; } .pc { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; } .ps { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.rule { stroke:var(--grid); stroke-width:1; } .rail { stroke:var(--line); stroke-width:1.2; fill:none; }
 .railhot { stroke:var(--hot); stroke-width:2; fill:none; }
 </style>
 <rect class="bg" width="640" height="647"/>
@@ -28,60 +28,63 @@ svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c
 <text x="16" y="34" class="h">SG-07 fault tree · sheet 2 of 4</text>
 <text x="16" y="56" class="t2">ASIL B · phone view of fta-SG-07-2.svg; the full sheet has the drawing.</text>
 <text x="16" y="76" class="t2">Red: a single item fault reaches the top event along this path.</text>
-<rect x="16.0" y="94.0" width="24" height="20" rx="3" style="fill:var(--or);stroke:var(--hot);stroke-width:2"/><text x="28.0" y="107.0" class="gl" text-anchor="middle">OR</text>
+<rect x="16.0" y="94.0" width="24" height="20" rx="4" fill="var(--or)" stroke="var(--hot)" stroke-width="2.4"/><text x="28.0" y="107.0" class="gl" text-anchor="middle">OR</text>
 <text x="46" y="109.0" class="pidhot">G7.1</text>
 <text x="116" y="109.0" class="t">Camera-side PCS frames not forwarded while the relay intercepts</text>
-<rect x="116.0" y="119.0" width="218.6" height="18" rx="9" style="fill:var(--soft)"/><text x="123.0" y="132.0" class="pc" style="fill:var(--ink2)">fewest item faults 1 · 6 cut sets</text>
-<rect x="340.6" y="119.0" width="88.4" height="18" rx="9" style="fill:var(--soft)"/><text x="347.6" y="132.0" class="pc" style="fill:var(--ink2)">from sheet 1</text>
-<rect x="435.0" y="119.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="442.0" y="132.0" class="pc" style="fill:var(--ink2)">SFM-033</text>
+<rect x="116.0" y="119.0" width="66.7" height="18" rx="9" fill="var(--s1b)"/>
+<circle cx="127.0" cy="128.0" r="5" fill="var(--s1f)"/><rect x="124.0" y="127.0" width="6" height="2" fill="var(--s1b)"/>
+<text x="135.0" y="132.0" class="ps" fill="var(--s1f)">1 fault</text>
+<text x="188.7" y="132.0" class="t2">6 cut sets</text>
+<rect x="258.7" y="119.0" width="88.4" height="18" rx="4" fill="none" stroke="var(--line)"/><text x="265.7" y="132.0" class="pc" fill="var(--ink2)">from sheet 1</text>
+<rect x="353.1" y="119.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="360.1" y="132.0" class="pc" fill="var(--ink2)">SFM-033</text>
 <line x1="116" y1="147.0" x2="624" y2="147.0" class="rule"/>
-<circle cx="46.0" cy="163.0" r="10" style="fill:var(--hot-bg);stroke:var(--hot);stroke-width:1.5"/>
+<circle cx="46.0" cy="163.0" r="9.5" fill="var(--basic)" stroke="var(--hot)" stroke-width="2.4"/>
 <text x="64" y="168.0" class="pidhot">BE-7.01</text>
 <text x="134" y="168.0" class="t">MCU hang with the relay energised (no IWDG; GAP-07, GAP-43)</text>
 <text x="134" y="186.0" class="t">2026-10-12: IWDG reset ≤ ≈ 90 ms nominal (TSR-501); residual:</text>
 <text x="134" y="204.0" class="t">hang-to-reset plus relay drop-out against the 0.2 s FTTI</text>
-<rect x="134.0" y="214.0" width="51.2" height="18" rx="9" style="fill:var(--hot-bg)"/><text x="141.0" y="227.0" class="pc" style="fill:var(--hot)">SPF-06</text>
-<rect x="191.2" y="214.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="198.2" y="227.0" class="pc" style="fill:var(--ink2)">DFM-004</text>
-<rect x="254.6" y="214.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="261.6" y="227.0" class="pc" style="fill:var(--ink2)">DFM-006</text>
-<rect x="318.0" y="214.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="325.0" y="227.0" class="pc" style="fill:var(--ink2)">SWF-018</text>
-<rect x="381.4" y="214.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="388.4" y="227.0" class="pc" style="fill:var(--ink2)">FMD-001</text>
-<rect x="444.8" y="214.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="451.8" y="227.0" class="pc" style="fill:var(--ink2)">FMD-005</text>
-<rect x="508.2" y="214.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="515.2" y="227.0" class="pc" style="fill:var(--ink2)">FMD-008</text>
-<rect x="134.0" y="236.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="249.0" class="pc" style="fill:var(--ink2)">FMD-025</text>
+<rect x="134.0" y="214.0" width="51.2" height="18" rx="4" fill="var(--s1b)"/><text x="141.0" y="227.0" class="pc" fill="var(--s1f)">SPF-06</text>
+<rect x="191.2" y="214.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="198.2" y="227.0" class="pc" fill="var(--ink2)">DFM-004</text>
+<rect x="254.6" y="214.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="261.6" y="227.0" class="pc" fill="var(--ink2)">DFM-006</text>
+<rect x="318.0" y="214.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="325.0" y="227.0" class="pc" fill="var(--ink2)">SWF-018</text>
+<rect x="381.4" y="214.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="388.4" y="227.0" class="pc" fill="var(--ink2)">FMD-001</text>
+<rect x="444.8" y="214.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="451.8" y="227.0" class="pc" fill="var(--ink2)">FMD-005</text>
+<rect x="508.2" y="214.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="515.2" y="227.0" class="pc" fill="var(--ink2)">FMD-008</text>
+<rect x="134.0" y="236.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="141.0" y="249.0" class="pc" fill="var(--ink2)">FMD-025</text>
 <line x1="134" y1="264.0" x2="624" y2="264.0" class="rule"/>
-<circle cx="46.0" cy="280.0" r="10" style="fill:var(--hot-bg);stroke:var(--hot);stroke-width:1.5"/>
+<circle cx="46.0" cy="280.0" r="9.5" fill="var(--basic)" stroke="var(--hot)" stroke-width="2.4"/>
 <text x="64" y="285.0" class="pidhot">BE-7.02</text>
 <text x="134" y="285.0" class="t">Power-save command 0xe7 in car mode stops the camera-side bus</text>
 <text x="134" y="303.0" class="t">(FFI-CM-08)</text>
-<rect x="134.0" y="313.0" width="51.2" height="18" rx="9" style="fill:var(--hot-bg)"/><text x="141.0" y="326.0" class="pc" style="fill:var(--hot)">SPF-08</text>
-<rect x="191.2" y="313.0" width="32.6" height="18" rx="9" style="fill:var(--soft)"/><text x="198.2" y="326.0" class="pc" style="fill:var(--ink2)">FFI</text>
-<rect x="229.8" y="313.0" width="57.4" height="18" rx="9" style="fill:var(--hot-bg)"/><text x="236.8" y="326.0" class="pc" style="fill:var(--hot)">no FMEA</text>
+<rect x="134.0" y="313.0" width="51.2" height="18" rx="4" fill="var(--s1b)"/><text x="141.0" y="326.0" class="pc" fill="var(--s1f)">SPF-08</text>
+<rect x="191.2" y="313.0" width="32.6" height="18" rx="4" fill="var(--soft)"/><text x="198.2" y="326.0" class="pc" fill="var(--ink2)">FFI</text>
+<rect x="229.8" y="313.0" width="57.4" height="18" rx="4" fill="var(--s1b)"/><text x="236.8" y="326.0" class="pc" fill="var(--s1f)">no FMEA</text>
 <line x1="134" y1="341.0" x2="624" y2="341.0" class="rule"/>
-<circle cx="46.0" cy="357.0" r="10" style="fill:var(--hot-bg);stroke:var(--hot);stroke-width:1.5"/>
+<circle cx="46.0" cy="357.0" r="9.5" fill="var(--basic)" stroke="var(--hot)" stroke-width="2.4"/>
 <text x="64" y="362.0" class="pidhot">BE-7.03</text>
 <text x="134" y="362.0" class="t">Other SoC configuration commands disturb bus 2 (0xe5, 0xde, 0xf1;</text>
 <text x="134" y="380.0" class="t">FFI-CM-09)</text>
-<rect x="134.0" y="390.0" width="32.6" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="403.0" class="pc" style="fill:var(--ink2)">FFI</text>
-<rect x="172.6" y="390.0" width="57.4" height="18" rx="9" style="fill:var(--hot-bg)"/><text x="179.6" y="403.0" class="pc" style="fill:var(--hot)">no FMEA</text>
+<rect x="134.0" y="390.0" width="32.6" height="18" rx="4" fill="var(--soft)"/><text x="141.0" y="403.0" class="pc" fill="var(--ink2)">FFI</text>
+<rect x="172.6" y="390.0" width="57.4" height="18" rx="4" fill="var(--s1b)"/><text x="179.6" y="403.0" class="pc" fill="var(--s1f)">no FMEA</text>
 <line x1="134" y1="418.0" x2="624" y2="418.0" class="rule"/>
-<circle cx="46.0" cy="434.0" r="10" style="fill:var(--hot-bg);stroke:var(--hot);stroke-width:1.5"/>
+<circle cx="46.0" cy="434.0" r="9.5" fill="var(--basic)" stroke="var(--hot)" stroke-width="2.4"/>
 <text x="64" y="439.0" class="pidhot">BE-7.04</text>
 <text x="134" y="439.0" class="t">Forwarding queue overflow or latency under worst-case load (TSR-707</text>
 <text x="134" y="457.0" class="t">not verified; overflow counted only, can_common.h:165)</text>
-<rect x="134.0" y="467.0" width="57.4" height="18" rx="9" style="fill:var(--hot-bg)"/><text x="141.0" y="480.0" class="pc" style="fill:var(--hot)">no FMEA</text>
+<rect x="134.0" y="467.0" width="57.4" height="18" rx="4" fill="var(--s1b)"/><text x="141.0" y="480.0" class="pc" fill="var(--s1f)">no FMEA</text>
 <line x1="134" y1="495.0" x2="624" y2="495.0" class="rule"/>
-<circle cx="46.0" cy="511.0" r="10" style="fill:var(--hot-bg);stroke:var(--hot);stroke-width:1.5"/>
+<circle cx="46.0" cy="511.0" r="9.5" fill="var(--basic)" stroke="var(--hot)" stroke-width="2.4"/>
 <text x="64" y="516.0" class="pidhot">BE-7.05</text>
 <text x="134" y="516.0" class="t">Block list wrongly includes a PCS message (systematic; static list</text>
 <text x="134" y="534.0" class="t">safety.h:270-281)</text>
-<rect x="134.0" y="544.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="557.0" class="pc" style="fill:var(--ink2)">SWF-011</text>
-<rect x="197.4" y="544.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="204.4" y="557.0" class="pc" style="fill:var(--ink2)">FMD-002</text>
-<rect x="260.8" y="544.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="267.8" y="557.0" class="pc" style="fill:var(--ink2)">FMD-006</text>
+<rect x="134.0" y="544.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="141.0" y="557.0" class="pc" fill="var(--ink2)">SWF-011</text>
+<rect x="197.4" y="544.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="204.4" y="557.0" class="pc" fill="var(--ink2)">FMD-002</text>
+<rect x="260.8" y="544.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="267.8" y="557.0" class="pc" fill="var(--ink2)">FMD-006</text>
 <line x1="134" y1="572.0" x2="624" y2="572.0" class="rule"/>
-<circle cx="46.0" cy="588.0" r="10" style="fill:var(--hot-bg);stroke:var(--hot);stroke-width:1.5"/>
+<circle cx="46.0" cy="588.0" r="9.5" fill="var(--basic)" stroke="var(--hot)" stroke-width="2.4"/>
 <text x="64" y="593.0" class="pidhot">BE-7.06</text>
 <text x="134" y="593.0" class="t">Camera-side FDCAN or transceiver fault (random HW)</text>
-<rect x="134.0" y="603.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="141.0" y="616.0" class="pc" style="fill:var(--ink2)">FMD-017</text>
-<rect x="197.4" y="603.0" width="57.4" height="18" rx="9" style="fill:var(--soft)"/><text x="204.4" y="616.0" class="pc" style="fill:var(--ink2)">FMD-011</text>
+<rect x="134.0" y="603.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="141.0" y="616.0" class="pc" fill="var(--ink2)">FMD-017</text>
+<rect x="197.4" y="603.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="204.4" y="616.0" class="pc" fill="var(--ink2)">FMD-011</text>
 <line x1="134" y1="631.0" x2="624" y2="631.0" class="rule"/>
 </svg>

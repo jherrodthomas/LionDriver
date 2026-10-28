@@ -843,25 +843,29 @@ def render_sheet(tree: Tree, sheets: list[Node], sheet_no: int, asil: str, hot: 
 # ---------------------------------------------------------------- phone view
 
 PHONE_W = 640
-PHONE_CSS = """<style>
-svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c0; --hot:#c62828; --hot-bg:#fdecec;
-      --or:#2f6fb5; --and:#7a4fc4; --soft:#eef1f5; --ue:#7a5600; --ue-bg:#fff5dc; --sheet:#16202b; --sheet-ink:#ffffff; }
-@media (prefers-color-scheme: dark) {
-  svg { --bg:#161d25; --ink:#e4eaf0; --ink2:#94a2b1; --line:#2a3440; --rail:#4a5665; --hot:#ff8f86; --hot-bg:#431b19;
-        --or:#7fb0ec; --and:#b9a0f0; --soft:#1f2731; --ue:#f0cf6a; --ue-bg:#3a3214; --sheet:#e4eaf0; --sheet-ink:#161d25; }
-}
-.bg { fill:var(--bg); } .t { font:14px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
-.t2 { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
-.ti { font:italic 12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
-.h { font:600 20px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
-.pid { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--ink); } .pidhot { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--hot); }
-.gl { font:700 8px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--bg); }
-.pc { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
-.rule { stroke:var(--line); stroke-width:1; } .rail { stroke:var(--rail); stroke-width:1.2; fill:none; }
-.railhot { stroke:var(--hot); stroke-width:2; fill:none; }
+PHONE_CSS = f"""<style>
+svg {{ --bg:{BG}; --card:{CARD}; --ink:{INK}; --ink2:{INK2}; --mute:{MUTED}; --line:{LINE}; --grid:{GRID}; --soft:{SOFT};
+      --or:{OR_C}; --and:{AND_C}; --basic:{BASIC_C}; --ue:{UE_C}; --hot:{HOT}; --chipink:#ffffff;
+      --s1b:{STAT_STYLE[1][0]}; --s1f:{STAT_STYLE[1][1]}; --s2b:{STAT_STYLE[2][0]}; --s2f:{STAT_STYLE[2][1]};
+      --s3b:{STAT_STYLE[3][0]}; --s3f:{STAT_STYLE[3][1]}; --s4b:{STAT_STYLE[4][0]}; --s4f:{STAT_STYLE[4][1]}; }}
+@media (prefers-color-scheme: dark) {{
+  svg {{ --bg:#1a1a19; --card:#242422; --ink:#f2f1ec; --ink2:#b5b3ab; --mute:#8a8880; --line:#55534e; --grid:#3a3936;
+        --soft:#2e2d2a; --chipink:#1a1a19; --s1b:#4a1f1f; --s1f:#ffb3b3; --s2b:#4a2a1c; --s2f:#ffc6a8; --s3b:#43361a;
+        --s3f:#ffd98a; --s4b:#1d3a1d; --s4f:#9fe09f; }}
+}}
+.bg {{ fill:var(--bg); }} .t {{ font:14px {SANS}; fill:var(--ink); }} .t2 {{ font:12px {SANS}; fill:var(--ink2); }}
+.ti {{ font:italic 12px {SANS}; fill:var(--ink2); }} .h {{ font:600 20px {SANS}; fill:var(--ink); }}
+.pid {{ font:700 13px {MONO}; fill:var(--ink); }} .pidhot {{ font:700 13px {MONO}; fill:var(--hot); }}
+.gl {{ font:700 8px {SANS}; fill:#ffffff; }} .pc {{ font:600 11px {SANS}; }} .ps {{ font:600 11px {SANS}; }}
+.rule {{ stroke:var(--grid); stroke-width:1; }} .rail {{ stroke:var(--line); stroke-width:1.2; fill:none; }}
+.railhot {{ stroke:var(--hot); stroke-width:2; fill:none; }}
 </style>"""
-PHONE_CHIP = {   # badge kind -> (fill token, text token)
-  "spf": ("hot-bg", "hot"), "nofmea": ("hot-bg", "hot"), "ue": ("ue-bg", "ue"), "sheet": ("sheet", "sheet-ink"),
+PHONE_CHIP = {   # badge kind -> (fill, text, outline, dashed): BADGE_STYLE in theme tokens
+  "spf": ("var(--s1b)", "var(--s1f)", "", False), "nofmea": ("var(--s1b)", "var(--s1f)", "", False),
+  "latent": ("none", "var(--ink2)", "var(--mute)", True), "sotif": ("var(--soft)", "var(--ink2)", "", False),
+  "ccf": ("var(--soft)", "var(--ink2)", "", False), "ffi": ("var(--soft)", "var(--ink2)", "", False),
+  "ue": ("var(--s3b)", "var(--s3f)", "", False), "repeat": ("none", "var(--ink2)", "var(--line)", False),
+  "sheet": ("var(--ink)", "var(--chipink)", "", False), "fmea": ("none", "var(--ink2)", "var(--grid)", False),
 }
 
 
@@ -870,19 +874,40 @@ def _pwrap(text: str, px: float) -> list[str]:
 
 
 def _phone_icon(symbol: str, x: float, cy: float, hot: bool) -> str:
-  stroke = "var(--hot)" if hot else "var(--ink)"
+  """The type icons of _icon() at 24 px: gate square (OR blue, AND violet, labelled), basic green circle, undeveloped amber
+  diamond, transfer outlined triangle; a red ring on a single-point path."""
+  ring = ' stroke="var(--hot)" stroke-width="2.4"' if hot else ""
   if symbol in ("or", "and", "transfer_out"):
-    fill = "var(--and)" if symbol == "and" else "var(--or)"
     lab = {"or": "OR", "and": "AND", "transfer_out": "▸"}[symbol]
-    return (f'<rect x="{x:.1f}" y="{cy - 10:.1f}" width="24" height="20" rx="3" style="fill:{fill};stroke:{stroke};'
-            f'stroke-width:{2 if hot else 0}"/><text x="{x + 12:.1f}" y="{cy + 3:.1f}" class="gl" text-anchor="middle">{lab}</text>')
+    return (f'<rect x="{x:.1f}" y="{cy - 10:.1f}" width="24" height="20" rx="4" fill="var(--{"and" if symbol == "and" else "or"})"{ring}/>'
+            f'<text x="{x + 12:.1f}" y="{cy + 3:.1f}" class="gl" text-anchor="middle">{lab}</text>')
   if symbol == "undeveloped":
-    return (f'<path d="M{x + 12:.1f},{cy - 11:.1f} l11,11 l-11,11 l-11,-11 z" style="fill:var(--ue-bg);stroke:{stroke};'
-            'stroke-width:1.5"/>')
+    return f'<path d="M{x + 12:.1f},{cy - 11:.1f} l11,11 l-11,11 l-11,-11 z" fill="var(--ue)"{ring}/>'
   if symbol == "transfer_in":
-    return f'<path d="M{x + 12:.1f},{cy - 10:.1f} l11,19 h-22 z" style="fill:var(--soft);stroke:{stroke};stroke-width:1.5"/>'
-  return (f'<circle cx="{x + 12:.1f}" cy="{cy:.1f}" r="10" style="fill:{"var(--hot-bg)" if hot else "var(--soft)"};'
-          f'stroke:{stroke};stroke-width:1.5"/>')
+    return (f'<path d="M{x + 12:.1f},{cy - 10:.1f} l11,19 h-22 z" fill="none" stroke="{"var(--hot)" if hot else "var(--ink2)"}" '
+            'stroke-width="1.8" stroke-linejoin="round"/>')
+  return f'<circle cx="{x + 12:.1f}" cy="{cy:.1f}" r="9.5" fill="var(--basic)"{ring}/>'
+
+
+def _phone_stat(x: float, y: float, m: int, n: int) -> tuple[list[str], float]:
+  """The fewest-item-faults pill of _stat() in theme tokens, then the cut-set count as muted text."""
+  k = min(m, 4)
+  bg, fg = ("var(--soft)", "var(--ink2)") if k == 0 else (f"var(--s{k}b)", f"var(--s{k}f)")
+  w = _stat_w(m)
+  out = [f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="18" rx="9" fill="{bg}"/>']
+  cx, cy = x + 11, y + 9
+  if m == 1:
+    out.append(f'<circle cx="{cx}" cy="{cy}" r="5" fill="{fg}"/><rect x="{cx - 3}" y="{cy - 1}" width="6" height="2" fill="{bg}"/>')
+  elif m == 2:
+    out.append(f'<path d="M{cx},{cy - 4.5} L{cx + 5},{cy + 4} H{cx - 5} Z" fill="{fg}"/>')
+  elif m == 3:
+    out.append(f'<path d="M{cx},{cy - 5} L{cx + 5},{cy} L{cx},{cy + 5} L{cx - 5},{cy} Z" fill="{fg}"/>')
+  elif m >= 4:
+    out.append(f'<circle cx="{cx}" cy="{cy}" r="4.5" fill="{fg}"/>')
+  out.append(f'<text x="{x + (19 if m else 8):.1f}" y="{y + 13:.1f}" class="ps" fill="{fg}">{escape(_stat_label(m))}</text>')
+  lab = f"{n} cut set{'s' if n != 1 else ''}"
+  out.append(f'<text x="{x + w + 6:.1f}" y="{y + 13:.1f}" class="t2">{lab}</text>')
+  return out, w + 6 + 6.2 * len(lab)
 
 
 def render_phone(tree: Tree, sheets: list[Node], sheet_no: int, asil: str, hot: set[int], full: str) -> str:
@@ -920,9 +945,6 @@ def render_phone(tree: Tree, sheets: list[Node], sheet_no: int, asil: str, hot: 
       lines[-1] = lines[-1][:max(8, int(width / 7.1)) - 1] + "…"
     notes = [ln for note in n.notes for ln in _pwrap(note, width)][:2]
     chips = [(k, lab) for row in b.chip_rows for k, lab, _w in row]
-    if b.stat:
-      m, c = b.stat
-      chips.insert(0, ("stat", f"fewest item faults {m} · {c} cut set{'s' if c != 1 else ''}"))
     cy = y + 16
     body.append(_phone_icon(b.symbol, x, cy, b.hot))
     centre[id(b)] = (x + 12, cy)
@@ -939,15 +961,20 @@ def render_phone(tree: Tree, sheets: list[Node], sheet_no: int, asil: str, hot: 
       yy += 16
       body.append(f'<text x="{tx}" y="{yy:.1f}" class="ti">{escape(ln)}</text>')
     cx, chip_y = float(tx), yy + 10
+    if b.stat:
+      els, used = _phone_stat(cx, chip_y, *b.stat)
+      body += els
+      cx += used + 8
     for k, lab in chips:
       w = 14 + 6.2 * len(lab)
       if cx > tx and cx + w > PHONE_W - 16:
         cx, chip_y = float(tx), chip_y + 22
-      fill, ink = PHONE_CHIP.get(k, ("soft", "ink2"))
-      body.append(f'<rect x="{cx:.1f}" y="{chip_y:.1f}" width="{w:.1f}" height="18" rx="9" style="fill:var(--{fill})"/>'
-                  f'<text x="{cx + 7:.1f}" y="{chip_y + 13:.1f}" class="pc" style="fill:var(--{ink})">{escape(lab)}</text>')
+      fill, ink, outline, dashed = PHONE_CHIP.get(k, ("var(--soft)", "var(--ink2)", "", False))
+      stroke = f' stroke="{outline}"' + (' stroke-dasharray="3 2"' if dashed else "") if outline else ""
+      body.append(f'<rect x="{cx:.1f}" y="{chip_y:.1f}" width="{w:.1f}" height="18" rx="4" fill="{fill}"{stroke}/>'
+                  f'<text x="{cx + 7:.1f}" y="{chip_y + 13:.1f}" class="pc" fill="{ink}">{escape(lab)}</text>')
       cx += w + 6
-    bottom = (chip_y + 18 if chips else yy) + 10
+    bottom = (chip_y + 18 if chips or b.stat else yy) + 10
     body.append(f'<line x1="{tx}" y1="{bottom:.1f}" x2="{PHONE_W - 16}" y2="{bottom:.1f}" class="rule"/>')
     y = bottom
   h = y + 16
@@ -1070,13 +1097,15 @@ def main(argv: list[str]) -> int:
         print(f"no longer generated: {n}", file=sys.stderr)
       print("run: python3 assurance/08-analyses/fta/fta_diagrams.py", file=sys.stderr)
       return 1
-    print(f"fta_diagrams: {len(outputs) - 1} sheet(s) current")
+    n = sum(1 for k in outputs if k.endswith("-phone.svg"))
+    print(f"fta_diagrams: {len(outputs) - 1 - n} sheet(s) and {n} phone views current")
     return 0
   for n in sorted(existing - set(outputs)):
     (HERE / n).unlink()
   for n, c in outputs.items():
     (HERE / n).write_text(c, encoding="utf-8")
-  print(f"fta_diagrams: wrote {len(outputs) - 1} sheet(s) and README.md")
+  n = sum(1 for k in outputs if k.endswith("-phone.svg"))
+  print(f"fta_diagrams: wrote {len(outputs) - 1 - n} sheet(s), {n} phone views and README.md")
   return 0
 
 
