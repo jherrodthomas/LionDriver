@@ -1,0 +1,288 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="2071" viewBox="0 0 640 2071" role="img" aria-labelledby="t d">
+<title id="t">Safety case (GSN), sheet 2: G1, phone view</title>
+<desc id="d">Safety case (GSN), sheet 2 of 6 as an outline: G1, Hazards from E/E malfunctions of the item are reduced to a tolerable level: every safety goal SG-01…SG-08 is met with the integrity of its ASIL. S1 (strategy); G1.1 (goal, defeaters DF-14, developed on sheet 3); G1.2 (goal, defeaters DF-07 DF-08 DF-36 DF-41); Sn-01 (solution, partial); Sn-02 (solution, partial); Sn-14 (solution, partial); Sn-13 (solution, missing); G1.3 (goal, defeaters DF-14 DF-38); Sn-01 (solution, partial); Sn-02 (solution, partial); Sn-10 (solution, partial); Sn-12 (solution, missing); Sn-21 (solution, missing); G1.4 (goal, defeaters DF-09 DF-38); Sn-01 (solution, partial); Sn-02 (solution, partial); Sn-21 (solution, missing); G1.5 (goal, defeaters DF-10 DF-05 DF-14 DF-36); Sn-01 (solution, partial); Sn-02 (solution, partial); Sn-10 (solution, partial); Sn-22 (solution, missing); G1.6 (goal, defeaters DF-07 DF-41); Sn-01 (solution, partial); Sn-14 (solution, partial); Sn-13 (solution, missing); G1.7 (goal, defeaters DF-11 DF-12 DF-14 DF-32 DF-33 DF-38 DF-39); Sn-01 (solution, partial); Sn-02 (solution, partial); Sn-23 (solution, missing); Sn-30 (solution, partial); Sn-15 (solution, partial); G1.8 (goal, defeaters DF-03 DF-12 DF-06 DF-18 DF-22 DF-29 DF-32 DF-34 DF-37 DF-39 DF-40); Sn-05 (solution, partial); Sn-06 (solution, partial); Sn-15 (solution, partial); G1.9 (goal, defeaters DF-04 DF-13 DF-01 DF-33 DF-42); Sn-07 (solution, partial); Sn-08 (solution, partial); Sn-09 (solution, partial); Sn-11 (solution, missing); G1.10 (goal, defeaters DF-14); Sn-20 (solution, missing); Sn-21 (solution, missing); Sn-22 (solution, missing); Sn-49 (solution, partial). 0 of 35 solutions available.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c0; --st:#4b5bb7; --st-bg:#e4e7fb;
+      --ok:#2e7d32; --ok-bg:#edf7ee; --pa:#b07d00; --pa-bg:#fdf5e1; --mi:#c62828; --mi-bg:#fdecec; --no:#7d8798; --no-bg:#f1f3f6; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#161d25; --ink:#e4eaf0; --ink2:#94a2b1; --line:#2a3440; --rail:#4a5665; --st:#9aa6f0; --st-bg:#232a4a;
+        --ok:#79d6a0; --ok-bg:#173527; --pa:#f0cf6a; --pa-bg:#3a3214; --mi:#ff8f86; --mi-bg:#431b19; --no:#94a2b1; --no-bg:#1f2731; }
+}
+.bg { fill:var(--bg); } .t { font:14px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.h { font:600 20px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.pid { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--ink); }
+.pc { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
+.rule { stroke:var(--line); stroke-width:1; } .rail { stroke:var(--rail); stroke-width:1.2; fill:none; }
+</style>
+<rect class="bg" width="640" height="2071"/>
+<path d="M28.0,118.0 V203.0 H34.0" class="rail"/>
+<path d="M48.0,213.0 V234.0 H54.0" class="rail"/>
+<path d="M48.0,213.0 V311.0 H54.0" class="rail"/>
+<path d="M68.0,321.0 V370.0 H74.0" class="rail"/>
+<path d="M68.0,321.0 V401.0 H74.0" class="rail"/>
+<path d="M68.0,321.0 V432.0 H74.0" class="rail"/>
+<path d="M68.0,321.0 V463.0 H74.0" class="rail"/>
+<path d="M48.0,213.0 V494.0 H54.0" class="rail"/>
+<path d="M68.0,504.0 V553.0 H74.0" class="rail"/>
+<path d="M68.0,504.0 V584.0 H74.0" class="rail"/>
+<path d="M68.0,504.0 V615.0 H74.0" class="rail"/>
+<path d="M68.0,504.0 V664.0 H74.0" class="rail"/>
+<path d="M68.0,504.0 V695.0 H74.0" class="rail"/>
+<path d="M48.0,213.0 V726.0 H54.0" class="rail"/>
+<path d="M68.0,736.0 V785.0 H74.0" class="rail"/>
+<path d="M68.0,736.0 V816.0 H74.0" class="rail"/>
+<path d="M68.0,736.0 V847.0 H74.0" class="rail"/>
+<path d="M48.0,213.0 V878.0 H54.0" class="rail"/>
+<path d="M68.0,888.0 V937.0 H74.0" class="rail"/>
+<path d="M68.0,888.0 V968.0 H74.0" class="rail"/>
+<path d="M68.0,888.0 V999.0 H74.0" class="rail"/>
+<path d="M68.0,888.0 V1048.0 H74.0" class="rail"/>
+<path d="M48.0,213.0 V1079.0 H54.0" class="rail"/>
+<path d="M68.0,1089.0 V1138.0 H74.0" class="rail"/>
+<path d="M68.0,1089.0 V1169.0 H74.0" class="rail"/>
+<path d="M68.0,1089.0 V1200.0 H74.0" class="rail"/>
+<path d="M48.0,213.0 V1231.0 H54.0" class="rail"/>
+<path d="M68.0,1241.0 V1290.0 H74.0" class="rail"/>
+<path d="M68.0,1241.0 V1321.0 H74.0" class="rail"/>
+<path d="M68.0,1241.0 V1352.0 H74.0" class="rail"/>
+<path d="M68.0,1241.0 V1383.0 H74.0" class="rail"/>
+<path d="M68.0,1241.0 V1414.0 H74.0" class="rail"/>
+<path d="M48.0,213.0 V1481.0 H54.0" class="rail"/>
+<path d="M68.0,1491.0 V1540.0 H74.0" class="rail"/>
+<path d="M68.0,1491.0 V1571.0 H74.0" class="rail"/>
+<path d="M68.0,1491.0 V1602.0 H74.0" class="rail"/>
+<path d="M48.0,213.0 V1669.0 H54.0" class="rail"/>
+<path d="M68.0,1679.0 V1746.0 H74.0" class="rail"/>
+<path d="M68.0,1679.0 V1777.0 H74.0" class="rail"/>
+<path d="M68.0,1679.0 V1808.0 H74.0" class="rail"/>
+<path d="M68.0,1679.0 V1839.0 H74.0" class="rail"/>
+<path d="M48.0,213.0 V1870.0 H54.0" class="rail"/>
+<path d="M68.0,1880.0 V1947.0 H74.0" class="rail"/>
+<path d="M68.0,1880.0 V1978.0 H74.0" class="rail"/>
+<path d="M68.0,1880.0 V2009.0 H74.0" class="rail"/>
+<path d="M28.0,118.0 V2040.0 H34.0" class="rail"/>
+<text x="16" y="34" class="h">Safety case · sheet 2 of 6: G1</text>
+<text x="16" y="56" class="t2">Phone view of gsn-2-G1.svg; the full sheet has the GSN drawing.</text>
+<circle cx="22.0" cy="74.0" r="6" style="fill:var(--ok)"/><text x="32.0" y="78" class="t2">evidence available</text>
+<circle cx="167.6" cy="74.0" r="6" style="fill:var(--pa)"/><text x="177.6" y="78" class="t2">partial</text>
+<circle cx="245.0" cy="74.0" r="6" style="fill:var(--mi)"/><text x="255.0" y="78" class="t2">missing</text>
+<circle cx="322.4" cy="74.0" r="6" style="fill:var(--no)"/><text x="332.4" y="78" class="t2">not developed</text>
+<rect x="16" y="99.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="48" y="113.0" class="pid">G1</text>
+<text x="112" y="113.0" class="t">Hazards from E/E malfunctions of the item are reduced to a tolerable</text>
+<text x="112" y="131.0" class="t">level: every safety goal SG-01…SG-08 is met with the integrity of its</text>
+<text x="112" y="149.0" class="t">ASIL.</text>
+<rect x="112.0" y="159.0" width="57.4" height="18" rx="9" style="fill:var(--no-bg)"/><text x="119.0" y="172.0" class="pc" style="fill:var(--no)">C4 · C7</text>
+<line x1="112" y1="187.0" x2="624" y2="187.0" class="rule"/>
+<path d="M42,194.0 h20 l-6,18 h-20 z" style="fill:var(--st-bg);stroke:var(--st);stroke-width:1.5"/>
+<text x="68" y="208.0" class="pid">S1</text>
+<text x="132" y="208.0" class="t">Argue per safety goal, then over the properties every SG depends on</text>
+<line x1="132" y1="218.0" x2="624" y2="218.0" class="rule"/>
+<rect x="56" y="225.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="239.0" class="pid">G1.1</text>
+<text x="152" y="239.0" class="t">SG-01 (lateral motion, ASIL C ⚠ / B if C1 shown under option c) is</text>
+<text x="152" y="257.0" class="t">met.</text>
+<rect x="152.0" y="267.0" width="150.4" height="18" rx="9" style="fill:var(--st-bg)"/><text x="159.0" y="280.0" class="pc" style="fill:var(--st)">→ developed on sheet 3</text>
+<rect x="308.4" y="267.0" width="131.8" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="315.4" y="280.0" class="pc" style="fill:var(--mi)">⚠ 1 defeater: DF-14</text>
+<rect x="446.2" y="267.0" width="20.2" height="18" rx="9" style="fill:var(--no-bg)"/><text x="453.2" y="280.0" class="pc" style="fill:var(--no)">A</text>
+<line x1="152" y1="295.0" x2="624" y2="295.0" class="rule"/>
+<rect x="56" y="302.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="316.0" class="pid">G1.2</text>
+<text x="152" y="316.0" class="t">SG-02 (lateral loss without warning, B) is met.</text>
+<rect x="152.0" y="326.0" width="231.0" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="339.0" class="pc" style="fill:var(--mi)">⚠ 4 defeaters: DF-07, DF-08, DF-36…</text>
+<line x1="152" y1="354.0" x2="624" y2="354.0" class="rule"/>
+<circle cx="88" cy="370.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="375.0" class="pid">Sn-01</text>
+<text x="172" y="375.0" class="t">Functional safety requirements FSR-01.01…FSR-07.05</text>
+<line x1="172" y1="385.0" x2="624" y2="385.0" class="rule"/>
+<circle cx="88" cy="401.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="406.0" class="pid">Sn-02</text>
+<text x="172" y="406.0" class="t">Technical safety requirements</text>
+<line x1="172" y1="416.0" x2="624" y2="416.0" class="rule"/>
+<circle cx="88" cy="432.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="437.0" class="pid">Sn-14</text>
+<text x="172" y="437.0" class="t">SW integration / process replay</text>
+<line x1="172" y1="447.0" x2="624" y2="447.0" class="rule"/>
+<circle cx="88" cy="463.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="468.0" class="pid">Sn-13</text>
+<text x="172" y="468.0" class="t">Fault injection</text>
+<line x1="172" y1="478.0" x2="624" y2="478.0" class="rule"/>
+<rect x="56" y="485.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="499.0" class="pid">G1.3</text>
+<text x="152" y="499.0" class="t">SG-03 (unintended acceleration, B ⚠) is met.</text>
+<rect x="152.0" y="509.0" width="181.4" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="522.0" class="pc" style="fill:var(--mi)">⚠ 2 defeaters: DF-14, DF-38</text>
+<rect x="339.4" y="509.0" width="20.2" height="18" rx="9" style="fill:var(--no-bg)"/><text x="346.4" y="522.0" class="pc" style="fill:var(--no)">A</text>
+<line x1="152" y1="537.0" x2="624" y2="537.0" class="rule"/>
+<circle cx="88" cy="553.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="558.0" class="pid">Sn-01</text>
+<text x="172" y="558.0" class="t">Functional safety requirements FSR-01.01…FSR-07.05</text>
+<line x1="172" y1="568.0" x2="624" y2="568.0" class="rule"/>
+<circle cx="88" cy="584.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="589.0" class="pid">Sn-02</text>
+<text x="172" y="589.0" class="t">Technical safety requirements</text>
+<line x1="172" y1="599.0" x2="624" y2="599.0" class="rule"/>
+<circle cx="88" cy="615.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="620.0" class="pid">Sn-10</text>
+<text x="172" y="620.0" class="t">opendbc safety unit tests (100% line coverage gate, MISRA,</text>
+<text x="172" y="638.0" class="t">mutation, UBSan)</text>
+<line x1="172" y1="648.0" x2="624" y2="648.0" class="rule"/>
+<circle cx="88" cy="664.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="669.0" class="pid">Sn-12</text>
+<text x="172" y="669.0" class="t">HIL tests of the envelope</text>
+<line x1="172" y1="679.0" x2="624" y2="679.0" class="rule"/>
+<circle cx="88" cy="695.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="700.0" class="pid">Sn-21</text>
+<text x="172" y="700.0" class="t">PCM ACC envelope test (AOU-05)</text>
+<line x1="172" y1="710.0" x2="624" y2="710.0" class="rule"/>
+<rect x="56" y="717.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="731.0" class="pid">G1.4</text>
+<text x="152" y="731.0" class="t">SG-04 (excessive deceleration, B ⚠) is met.</text>
+<rect x="152.0" y="741.0" width="181.4" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="754.0" class="pc" style="fill:var(--mi)">⚠ 2 defeaters: DF-09, DF-38</text>
+<rect x="339.4" y="741.0" width="20.2" height="18" rx="9" style="fill:var(--no-bg)"/><text x="346.4" y="754.0" class="pc" style="fill:var(--no)">A</text>
+<line x1="152" y1="769.0" x2="624" y2="769.0" class="rule"/>
+<circle cx="88" cy="785.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="790.0" class="pid">Sn-01</text>
+<text x="172" y="790.0" class="t">Functional safety requirements FSR-01.01…FSR-07.05</text>
+<line x1="172" y1="800.0" x2="624" y2="800.0" class="rule"/>
+<circle cx="88" cy="816.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="821.0" class="pid">Sn-02</text>
+<text x="172" y="821.0" class="t">Technical safety requirements</text>
+<line x1="172" y1="831.0" x2="624" y2="831.0" class="rule"/>
+<circle cx="88" cy="847.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="852.0" class="pid">Sn-21</text>
+<text x="172" y="852.0" class="t">PCM ACC envelope test (AOU-05)</text>
+<line x1="172" y1="862.0" x2="624" y2="862.0" class="rule"/>
+<rect x="56" y="869.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="883.0" class="pid">G1.5</text>
+<text x="152" y="883.0" class="t">SG-05 (release on driver action, B ⚠) is met.</text>
+<rect x="152.0" y="893.0" width="231.0" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="906.0" class="pc" style="fill:var(--mi)">⚠ 4 defeaters: DF-10, DF-05, DF-14…</text>
+<rect x="389.0" y="893.0" width="20.2" height="18" rx="9" style="fill:var(--no-bg)"/><text x="396.0" y="906.0" class="pc" style="fill:var(--no)">A</text>
+<line x1="152" y1="921.0" x2="624" y2="921.0" class="rule"/>
+<circle cx="88" cy="937.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="942.0" class="pid">Sn-01</text>
+<text x="172" y="942.0" class="t">Functional safety requirements FSR-01.01…FSR-07.05</text>
+<line x1="172" y1="952.0" x2="624" y2="952.0" class="rule"/>
+<circle cx="88" cy="968.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="973.0" class="pid">Sn-02</text>
+<text x="172" y="973.0" class="t">Technical safety requirements</text>
+<line x1="172" y1="983.0" x2="624" y2="983.0" class="rule"/>
+<circle cx="88" cy="999.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="1004.0" class="pid">Sn-10</text>
+<text x="172" y="1004.0" class="t">opendbc safety unit tests (100% line coverage gate, MISRA,</text>
+<text x="172" y="1022.0" class="t">mutation, UBSan)</text>
+<line x1="172" y1="1032.0" x2="624" y2="1032.0" class="rule"/>
+<circle cx="88" cy="1048.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="1053.0" class="pid">Sn-22</text>
+<text x="172" y="1053.0" class="t">Brake override test (AOU-03)</text>
+<line x1="172" y1="1063.0" x2="624" y2="1063.0" class="rule"/>
+<rect x="56" y="1070.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="1084.0" class="pid">G1.6</text>
+<text x="152" y="1084.0" class="t">SG-06 (longitudinal loss without warning, B) is met.</text>
+<rect x="152.0" y="1094.0" width="181.4" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="1107.0" class="pc" style="fill:var(--mi)">⚠ 2 defeaters: DF-07, DF-41</text>
+<line x1="152" y1="1122.0" x2="624" y2="1122.0" class="rule"/>
+<circle cx="88" cy="1138.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="1143.0" class="pid">Sn-01</text>
+<text x="172" y="1143.0" class="t">Functional safety requirements FSR-01.01…FSR-07.05</text>
+<line x1="172" y1="1153.0" x2="624" y2="1153.0" class="rule"/>
+<circle cx="88" cy="1169.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="1174.0" class="pid">Sn-14</text>
+<text x="172" y="1174.0" class="t">SW integration / process replay</text>
+<line x1="172" y1="1184.0" x2="624" y2="1184.0" class="rule"/>
+<circle cx="88" cy="1200.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="1205.0" class="pid">Sn-13</text>
+<text x="172" y="1205.0" class="t">Fault injection</text>
+<line x1="172" y1="1215.0" x2="624" y2="1215.0" class="rule"/>
+<rect x="56" y="1222.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="1236.0" class="pid">G1.7</text>
+<text x="152" y="1236.0" class="t">SG-07 (stock PCS preserved, B) is met.</text>
+<rect x="152.0" y="1246.0" width="231.0" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="1259.0" class="pc" style="fill:var(--mi)">⚠ 7 defeaters: DF-11, DF-12, DF-14…</text>
+<rect x="389.0" y="1246.0" width="20.2" height="18" rx="9" style="fill:var(--no-bg)"/><text x="396.0" y="1259.0" class="pc" style="fill:var(--no)">A</text>
+<line x1="152" y1="1274.0" x2="624" y2="1274.0" class="rule"/>
+<circle cx="88" cy="1290.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="1295.0" class="pid">Sn-01</text>
+<text x="172" y="1295.0" class="t">Functional safety requirements FSR-01.01…FSR-07.05</text>
+<line x1="172" y1="1305.0" x2="624" y2="1305.0" class="rule"/>
+<circle cx="88" cy="1321.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="1326.0" class="pid">Sn-02</text>
+<text x="172" y="1326.0" class="t">Technical safety requirements</text>
+<line x1="172" y1="1336.0" x2="624" y2="1336.0" class="rule"/>
+<circle cx="88" cy="1352.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="1357.0" class="pid">Sn-23</text>
+<text x="172" y="1357.0" class="t">Stock PCS target test (AOU-04)</text>
+<line x1="172" y1="1367.0" x2="624" y2="1367.0" class="rule"/>
+<circle cx="88" cy="1383.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="1388.0" class="pid">Sn-30</text>
+<text x="172" y="1388.0" class="t">Installation and provisioning control; installation records</text>
+<line x1="172" y1="1398.0" x2="624" y2="1398.0" class="rule"/>
+<circle cx="88" cy="1414.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="1419.0" class="pid">Sn-15</text>
+<text x="172" y="1419.0" class="t">panda firmware host unit tests (watchdog, heartbeat monitor,</text>
+<text x="172" y="1437.0" class="t">heartbeat-loss siren, reference lock, IRQ priorities, EPS-fault</text>
+<text x="172" y="1455.0" class="t">siren)</text>
+<line x1="172" y1="1465.0" x2="624" y2="1465.0" class="rule"/>
+<rect x="56" y="1472.0" width="24" height="18" rx="2" style="fill:var(--pa-bg);stroke:var(--pa);stroke-width:1.5"/>
+<text x="88" y="1486.0" class="pid">G1.8</text>
+<text x="152" y="1486.0" class="t">The QM SoC stack cannot interfere with the envelope (FFI).</text>
+<rect x="152.0" y="1496.0" width="237.2" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="1509.0" class="pc" style="fill:var(--mi)">⚠ 11 defeaters: DF-03, DF-12, DF-06…</text>
+<line x1="152" y1="1524.0" x2="624" y2="1524.0" class="rule"/>
+<circle cx="88" cy="1540.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="1545.0" class="pid">Sn-05</text>
+<text x="172" y="1545.0" class="t">FFI analysis</text>
+<line x1="172" y1="1555.0" x2="624" y2="1555.0" class="rule"/>
+<circle cx="88" cy="1571.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="1576.0" class="pid">Sn-06</text>
+<text x="172" y="1576.0" class="t">Dependent failure analysis</text>
+<line x1="172" y1="1586.0" x2="624" y2="1586.0" class="rule"/>
+<circle cx="88" cy="1602.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="1607.0" class="pid">Sn-15</text>
+<text x="172" y="1607.0" class="t">panda firmware host unit tests (watchdog, heartbeat monitor,</text>
+<text x="172" y="1625.0" class="t">heartbeat-loss siren, reference lock, IRQ priorities, EPS-fault</text>
+<text x="172" y="1643.0" class="t">siren)</text>
+<line x1="172" y1="1653.0" x2="624" y2="1653.0" class="rule"/>
+<rect x="56" y="1660.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="1674.0" class="pid">G1.9</text>
+<text x="152" y="1674.0" class="t">Random hardware failures of the panda MCU, relay, power and</text>
+<text x="152" y="1692.0" class="t">harness are sufficiently controlled for the target ASIL.</text>
+<rect x="152.0" y="1702.0" width="231.0" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="1715.0" class="pc" style="fill:var(--mi)">⚠ 5 defeaters: DF-04, DF-13, DF-01…</text>
+<line x1="152" y1="1730.0" x2="624" y2="1730.0" class="rule"/>
+<circle cx="88" cy="1746.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="1751.0" class="pid">Sn-07</text>
+<text x="172" y="1751.0" class="t">Hardware FMEDA</text>
+<line x1="172" y1="1761.0" x2="624" y2="1761.0" class="rule"/>
+<circle cx="88" cy="1777.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="1782.0" class="pid">Sn-08</text>
+<text x="172" y="1782.0" class="t">Hardware architectural metrics</text>
+<line x1="172" y1="1792.0" x2="624" y2="1792.0" class="rule"/>
+<circle cx="88" cy="1808.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="1813.0" class="pid">Sn-09</text>
+<text x="172" y="1813.0" class="t">Random HW failure evaluation</text>
+<line x1="172" y1="1823.0" x2="624" y2="1823.0" class="rule"/>
+<circle cx="88" cy="1839.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="1844.0" class="pid">Sn-11</text>
+<text x="172" y="1844.0" class="t">HW component qualification</text>
+<line x1="172" y1="1854.0" x2="624" y2="1854.0" class="rule"/>
+<rect x="56" y="1861.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="1875.0" class="pid">G1.10</text>
+<text x="152" y="1875.0" class="t">The assumptions credited in controllability (AOU-01/02/03/05) are</text>
+<text x="152" y="1893.0" class="t">verified.</text>
+<rect x="152.0" y="1903.0" width="131.8" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="1916.0" class="pc" style="fill:var(--mi)">⚠ 1 defeater: DF-14</text>
+<rect x="289.8" y="1903.0" width="20.2" height="18" rx="9" style="fill:var(--no-bg)"/><text x="296.8" y="1916.0" class="pc" style="fill:var(--no)">A</text>
+<line x1="152" y1="1931.0" x2="624" y2="1931.0" class="rule"/>
+<circle cx="88" cy="1947.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="1952.0" class="pid">Sn-20</text>
+<text x="172" y="1952.0" class="t">Vehicle controllability and EPS characterisation (AOU-01/02)</text>
+<line x1="172" y1="1962.0" x2="624" y2="1962.0" class="rule"/>
+<circle cx="88" cy="1978.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="1983.0" class="pid">Sn-21</text>
+<text x="172" y="1983.0" class="t">PCM ACC envelope test (AOU-05)</text>
+<line x1="172" y1="1993.0" x2="624" y2="1993.0" class="rule"/>
+<circle cx="88" cy="2009.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="2014.0" class="pid">Sn-22</text>
+<text x="172" y="2014.0" class="t">Brake override test (AOU-03)</text>
+<line x1="172" y1="2024.0" x2="624" y2="2024.0" class="rule"/>
+<circle cx="48" cy="2040.0" r="10" style="fill:var(--pa)"/>
+<text x="68" y="2045.0" class="pid">Sn-49</text>
+<text x="132" y="2045.0" class="t">Hazard analysis and risk assessment</text>
+<line x1="132" y1="2055.0" x2="624" y2="2055.0" class="rule"/>
+</svg>

@@ -1,0 +1,253 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1716" viewBox="0 0 640 1716" role="img" aria-labelledby="t d">
+<title id="t">Cybersecurity case (GSN), sheet 3: CG2, phone view</title>
+<desc id="d">Cybersecurity case (GSN), sheet 3 of 7 as an outline: CG2, Each cybersecurity goal CSG-01…CSG-08 is achieved CS2 (strategy); CG2.1 (goal, defeaters CDF-02 CDF-04); CSn-10 (solution, partial); CSn-20 (solution, missing); CSn-21 (solution, partial); CSn-30 (solution, missing); CG2.2 (goal, defeaters CDF-01 CDF-02 CDF-03); CSn-10 (solution, partial); CSn-11 (solution, missing); CSn-20 (solution, missing); CSn-22 (solution, missing); CSn-31 (solution, missing); CG2.3 (goal, defeaters CDF-04); CSn-10 (solution, partial); CSn-12 (solution, partial); CSn-20 (solution, missing); CSn-32 (solution, missing); CG2.4 (goal, defeaters CDF-05); CSn-10 (solution, partial); CSn-20 (solution, missing); CSn-33 (solution, missing); CG2.5 (goal); CSn-10 (solution, partial); CSn-20 (solution, missing); CSn-23 (solution, partial); CSn-34 (solution, missing); CG2.6 (goal, defeaters CDF-06); CSn-10 (solution, partial); CSn-13 (solution, missing); CSn-20 (solution, missing); CSn-35 (solution, missing); CG2.7 (goal, defeaters CDF-07 CDF-08); CSn-10 (solution, partial); CSn-14 (solution, missing); CSn-20 (solution, missing); CSn-24 (solution, missing); CSn-36 (solution, missing); CG2.8 (goal, defeaters CDF-09); CSn-10 (solution, partial); CSn-20 (solution, missing); CSn-37 (solution, missing). 0 of 32 solutions available.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c0; --st:#4b5bb7; --st-bg:#e4e7fb;
+      --ok:#2e7d32; --ok-bg:#edf7ee; --pa:#b07d00; --pa-bg:#fdf5e1; --mi:#c62828; --mi-bg:#fdecec; --no:#7d8798; --no-bg:#f1f3f6; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#161d25; --ink:#e4eaf0; --ink2:#94a2b1; --line:#2a3440; --rail:#4a5665; --st:#9aa6f0; --st-bg:#232a4a;
+        --ok:#79d6a0; --ok-bg:#173527; --pa:#f0cf6a; --pa-bg:#3a3214; --mi:#ff8f86; --mi-bg:#431b19; --no:#94a2b1; --no-bg:#1f2731; }
+}
+.bg { fill:var(--bg); } .t { font:14px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.h { font:600 20px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.pid { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--ink); }
+.pc { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
+.rule { stroke:var(--line); stroke-width:1; } .rail { stroke:var(--rail); stroke-width:1.2; fill:none; }
+</style>
+<rect class="bg" width="640" height="1716"/>
+<path d="M28.0,118.0 V167.0 H34.0" class="rail"/>
+<path d="M48.0,177.0 V216.0 H54.0" class="rail"/>
+<path d="M68.0,226.0 V275.0 H74.0" class="rail"/>
+<path d="M68.0,226.0 V306.0 H74.0" class="rail"/>
+<path d="M68.0,226.0 V337.0 H74.0" class="rail"/>
+<path d="M68.0,226.0 V386.0 H74.0" class="rail"/>
+<path d="M48.0,177.0 V417.0 H54.0" class="rail"/>
+<path d="M68.0,427.0 V476.0 H74.0" class="rail"/>
+<path d="M68.0,427.0 V507.0 H74.0" class="rail"/>
+<path d="M68.0,427.0 V538.0 H74.0" class="rail"/>
+<path d="M68.0,427.0 V569.0 H74.0" class="rail"/>
+<path d="M68.0,427.0 V600.0 H74.0" class="rail"/>
+<path d="M48.0,177.0 V631.0 H54.0" class="rail"/>
+<path d="M68.0,641.0 V690.0 H74.0" class="rail"/>
+<path d="M68.0,641.0 V721.0 H74.0" class="rail"/>
+<path d="M68.0,641.0 V752.0 H74.0" class="rail"/>
+<path d="M68.0,641.0 V783.0 H74.0" class="rail"/>
+<path d="M48.0,177.0 V832.0 H54.0" class="rail"/>
+<path d="M68.0,842.0 V891.0 H74.0" class="rail"/>
+<path d="M68.0,842.0 V922.0 H74.0" class="rail"/>
+<path d="M68.0,842.0 V953.0 H74.0" class="rail"/>
+<path d="M48.0,177.0 V984.0 H54.0" class="rail"/>
+<path d="M68.0,994.0 V1043.0 H74.0" class="rail"/>
+<path d="M68.0,994.0 V1074.0 H74.0" class="rail"/>
+<path d="M68.0,994.0 V1105.0 H74.0" class="rail"/>
+<path d="M68.0,994.0 V1136.0 H74.0" class="rail"/>
+<path d="M48.0,177.0 V1167.0 H54.0" class="rail"/>
+<path d="M68.0,1177.0 V1226.0 H74.0" class="rail"/>
+<path d="M68.0,1177.0 V1257.0 H74.0" class="rail"/>
+<path d="M68.0,1177.0 V1288.0 H74.0" class="rail"/>
+<path d="M68.0,1177.0 V1319.0 H74.0" class="rail"/>
+<path d="M48.0,177.0 V1350.0 H54.0" class="rail"/>
+<path d="M68.0,1360.0 V1409.0 H74.0" class="rail"/>
+<path d="M68.0,1360.0 V1440.0 H74.0" class="rail"/>
+<path d="M68.0,1360.0 V1471.0 H74.0" class="rail"/>
+<path d="M68.0,1360.0 V1502.0 H74.0" class="rail"/>
+<path d="M68.0,1360.0 V1533.0 H74.0" class="rail"/>
+<path d="M48.0,177.0 V1564.0 H54.0" class="rail"/>
+<path d="M68.0,1574.0 V1623.0 H74.0" class="rail"/>
+<path d="M68.0,1574.0 V1654.0 H74.0" class="rail"/>
+<path d="M68.0,1574.0 V1685.0 H74.0" class="rail"/>
+<text x="16" y="34" class="h">Cybersecurity case · sheet 3 of 7: CG2</text>
+<text x="16" y="56" class="t2">Phone view of gsn-cs-3-CG2.svg; the full sheet has the GSN drawing.</text>
+<circle cx="22.0" cy="74.0" r="6" style="fill:var(--ok)"/><text x="32.0" y="78" class="t2">evidence available</text>
+<circle cx="167.6" cy="74.0" r="6" style="fill:var(--pa)"/><text x="177.6" y="78" class="t2">partial</text>
+<circle cx="245.0" cy="74.0" r="6" style="fill:var(--mi)"/><text x="255.0" y="78" class="t2">missing</text>
+<circle cx="322.4" cy="74.0" r="6" style="fill:var(--no)"/><text x="332.4" y="78" class="t2">not developed</text>
+<rect x="16" y="99.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="48" y="113.0" class="pid">CG2</text>
+<text x="112" y="113.0" class="t">Each cybersecurity goal CSG-01…CSG-08 is achieved</text>
+<rect x="112.0" y="123.0" width="32.6" height="18" rx="9" style="fill:var(--no-bg)"/><text x="119.0" y="136.0" class="pc" style="fill:var(--no)">CJ2</text>
+<line x1="112" y1="151.0" x2="624" y2="151.0" class="rule"/>
+<path d="M42,158.0 h20 l-6,18 h-20 z" style="fill:var(--st-bg);stroke:var(--st);stroke-width:1.5"/>
+<text x="68" y="172.0" class="pid">CS2</text>
+<text x="132" y="172.0" class="t">Argue per goal over refinement, implementation, verification and</text>
+<text x="132" y="190.0" class="t">validation</text>
+<line x1="132" y1="200.0" x2="624" y2="200.0" class="rule"/>
+<rect x="56" y="207.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="221.0" class="pid">CG2.1</text>
+<text x="152" y="221.0" class="t">CSG-01 safety configuration integrity (CAL 3)</text>
+<rect x="152.0" y="231.0" width="193.8" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="244.0" class="pc" style="fill:var(--mi)">⚠ 2 defeaters: CDF-02, CDF-04</text>
+<rect x="351.8" y="231.0" width="88.4" height="18" rx="9" style="fill:var(--no-bg)"/><text x="358.8" y="244.0" class="pc" style="fill:var(--no)">Requirements</text>
+<line x1="152" y1="259.0" x2="624" y2="259.0" class="rule"/>
+<circle cx="88" cy="275.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="280.0" class="pid">CSn-10</text>
+<text x="172" y="280.0" class="t">CS goals, claims, concept; detailed CSRs and architecture</text>
+<line x1="172" y1="290.0" x2="624" y2="290.0" class="rule"/>
+<circle cx="88" cy="306.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="311.0" class="pid">CSn-20</text>
+<text x="172" y="311.0" class="t">Secure coding, SAST results, per-CSR verification (VS-CS)</text>
+<line x1="172" y1="321.0" x2="624" y2="321.0" class="rule"/>
+<circle cx="88" cy="337.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="342.0" class="pid">CSn-21</text>
+<text x="172" y="342.0" class="t">Safety-mode lock and command-gating tests (shared with TSR-512,</text>
+<text x="172" y="360.0" class="t">TSR-513)</text>
+<line x1="172" y1="370.0" x2="624" y2="370.0" class="rule"/>
+<circle cx="88" cy="386.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="391.0" class="pid">CSn-30</text>
+<text x="172" y="391.0" class="t">Validation TC-01, TC-02 (command fuzzing, mode lock)</text>
+<line x1="172" y1="401.0" x2="624" y2="401.0" class="rule"/>
+<rect x="56" y="408.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="422.0" class="pid">CG2.2</text>
+<text x="152" y="422.0" class="t">CSG-02 firmware and boot-chain integrity (CAL 3)</text>
+<rect x="152.0" y="432.0" width="243.4" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="445.0" class="pc" style="fill:var(--mi)">⚠ 3 defeaters: CDF-01, CDF-02, CDF-03</text>
+<rect x="401.4" y="432.0" width="88.4" height="18" rx="9" style="fill:var(--no-bg)"/><text x="408.4" y="445.0" class="pc" style="fill:var(--no)">Requirements</text>
+<line x1="152" y1="460.0" x2="624" y2="460.0" class="rule"/>
+<circle cx="88" cy="476.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="481.0" class="pid">CSn-10</text>
+<text x="172" y="481.0" class="t">CS goals, claims, concept; detailed CSRs and architecture</text>
+<line x1="172" y1="491.0" x2="624" y2="491.0" class="rule"/>
+<circle cx="88" cy="507.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="512.0" class="pid">CSn-11</text>
+<text x="172" y="512.0" class="t">Boot-chain and RDP architecture decisions CS-AD-01…04</text>
+<line x1="172" y1="522.0" x2="624" y2="522.0" class="rule"/>
+<circle cx="88" cy="538.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="543.0" class="pid">CSn-20</text>
+<text x="172" y="543.0" class="t">Secure coding, SAST results, per-CSR verification (VS-CS)</text>
+<line x1="172" y1="553.0" x2="624" y2="553.0" class="rule"/>
+<circle cx="88" cy="569.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="574.0" class="pid">CSn-22</text>
+<text x="172" y="574.0" class="t">Release build-config audit report (BA-01…BA-08)</text>
+<line x1="172" y1="584.0" x2="624" y2="584.0" class="rule"/>
+<circle cx="88" cy="600.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="605.0" class="pid">CSn-31</text>
+<text x="172" y="605.0" class="t">Validation TC-03…TC-05 (firmware, boot pins, option bytes)</text>
+<line x1="172" y1="615.0" x2="624" y2="615.0" class="rule"/>
+<rect x="56" y="622.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="636.0" class="pid">CG2.3</text>
+<text x="152" y="636.0" class="t">CSG-03 params / IPC integrity (CAL 2)</text>
+<rect x="152.0" y="646.0" width="138.0" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="659.0" class="pc" style="fill:var(--mi)">⚠ 1 defeater: CDF-04</text>
+<rect x="296.0" y="646.0" width="88.4" height="18" rx="9" style="fill:var(--no-bg)"/><text x="303.0" y="659.0" class="pc" style="fill:var(--no)">Requirements</text>
+<line x1="152" y1="674.0" x2="624" y2="674.0" class="rule"/>
+<circle cx="88" cy="690.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="695.0" class="pid">CSn-10</text>
+<text x="172" y="695.0" class="t">CS goals, claims, concept; detailed CSRs and architecture</text>
+<line x1="172" y1="705.0" x2="624" y2="705.0" class="rule"/>
+<circle cx="88" cy="721.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="726.0" class="pid">CSn-12</text>
+<text x="172" y="726.0" class="t">FFI analysis treating SoC attacker as common cause</text>
+<line x1="172" y1="736.0" x2="624" y2="736.0" class="rule"/>
+<circle cx="88" cy="752.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="757.0" class="pid">CSn-20</text>
+<text x="172" y="757.0" class="t">Secure coding, SAST results, per-CSR verification (VS-CS)</text>
+<line x1="172" y1="767.0" x2="624" y2="767.0" class="rule"/>
+<circle cx="88" cy="783.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="788.0" class="pid">CSn-32</text>
+<text x="172" y="788.0" class="t">Validation TC-06, TC-07 (params/IPC, envelope under SoC</text>
+<text x="172" y="806.0" class="t">compromise)</text>
+<line x1="172" y1="816.0" x2="624" y2="816.0" class="rule"/>
+<rect x="56" y="823.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="837.0" class="pid">CG2.4</text>
+<text x="152" y="837.0" class="t">CSG-04 model artefact integrity (CAL 2)</text>
+<rect x="152.0" y="847.0" width="138.0" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="860.0" class="pc" style="fill:var(--mi)">⚠ 1 defeater: CDF-05</text>
+<rect x="296.0" y="847.0" width="88.4" height="18" rx="9" style="fill:var(--no-bg)"/><text x="303.0" y="860.0" class="pc" style="fill:var(--no)">Requirements</text>
+<line x1="152" y1="875.0" x2="624" y2="875.0" class="rule"/>
+<circle cx="88" cy="891.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="896.0" class="pid">CSn-10</text>
+<text x="172" y="896.0" class="t">CS goals, claims, concept; detailed CSRs and architecture</text>
+<line x1="172" y1="906.0" x2="624" y2="906.0" class="rule"/>
+<circle cx="88" cy="922.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="927.0" class="pid">CSn-20</text>
+<text x="172" y="927.0" class="t">Secure coding, SAST results, per-CSR verification (VS-CS)</text>
+<line x1="172" y1="937.0" x2="624" y2="937.0" class="rule"/>
+<circle cx="88" cy="953.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="958.0" class="pid">CSn-33</text>
+<text x="172" y="958.0" class="t">Validation TC-08 (model artefacts)</text>
+<line x1="172" y1="968.0" x2="624" y2="968.0" class="rule"/>
+<rect x="56" y="975.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="989.0" class="pid">CG2.5</text>
+<text x="152" y="989.0" class="t">CSG-05 vehicle CAN integrity (CAL 2)</text>
+<rect x="152.0" y="999.0" width="88.4" height="18" rx="9" style="fill:var(--no-bg)"/><text x="159.0" y="1012.0" class="pc" style="fill:var(--no)">Requirements</text>
+<line x1="152" y1="1027.0" x2="624" y2="1027.0" class="rule"/>
+<circle cx="88" cy="1043.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="1048.0" class="pid">CSn-10</text>
+<text x="172" y="1048.0" class="t">CS goals, claims, concept; detailed CSRs and architecture</text>
+<line x1="172" y1="1058.0" x2="624" y2="1058.0" class="rule"/>
+<circle cx="88" cy="1074.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="1079.0" class="pid">CSn-20</text>
+<text x="172" y="1079.0" class="t">Secure coding, SAST results, per-CSR verification (VS-CS)</text>
+<line x1="172" y1="1089.0" x2="624" y2="1089.0" class="rule"/>
+<circle cx="88" cy="1105.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="1110.0" class="pid">CSn-23</text>
+<text x="172" y="1110.0" class="t">Envelope TX allow-list and relay-malfunction tests</text>
+<line x1="172" y1="1120.0" x2="624" y2="1120.0" class="rule"/>
+<circle cx="88" cy="1136.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="1141.0" class="pid">CSn-34</text>
+<text x="172" y="1141.0" class="t">Validation TC-09, TC-10 (CAN robustness)</text>
+<line x1="172" y1="1151.0" x2="624" y2="1151.0" class="rule"/>
+<rect x="56" y="1158.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="1172.0" class="pid">CG2.6</text>
+<text x="152" y="1172.0" class="t">CSG-06 remote and interactive access minimized (CAL 3)</text>
+<rect x="152.0" y="1182.0" width="138.0" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="1195.0" class="pc" style="fill:var(--mi)">⚠ 1 defeater: CDF-06</text>
+<rect x="296.0" y="1182.0" width="88.4" height="18" rx="9" style="fill:var(--no-bg)"/><text x="303.0" y="1195.0" class="pc" style="fill:var(--no)">Requirements</text>
+<line x1="152" y1="1210.0" x2="624" y2="1210.0" class="rule"/>
+<circle cx="88" cy="1226.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="1231.0" class="pid">CSn-10</text>
+<text x="172" y="1231.0" class="t">CS goals, claims, concept; detailed CSRs and architecture</text>
+<line x1="172" y1="1241.0" x2="624" y2="1241.0" class="rule"/>
+<circle cx="88" cy="1257.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="1262.0" class="pid">CSn-13</text>
+<text x="172" y="1262.0" class="t">Reference-configuration remote-feature decision</text>
+<line x1="172" y1="1272.0" x2="624" y2="1272.0" class="rule"/>
+<circle cx="88" cy="1288.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="1293.0" class="pid">CSn-20</text>
+<text x="172" y="1293.0" class="t">Secure coding, SAST results, per-CSR verification (VS-CS)</text>
+<line x1="172" y1="1303.0" x2="624" y2="1303.0" class="rule"/>
+<circle cx="88" cy="1319.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="1324.0" class="pid">CSn-35</text>
+<text x="172" y="1324.0" class="t">Validation TC-11…TC-13 (remote surface, back-end independence)</text>
+<line x1="172" y1="1334.0" x2="624" y2="1334.0" class="rule"/>
+<rect x="56" y="1341.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="1355.0" class="pid">CG2.7</text>
+<text x="152" y="1355.0" class="t">CSG-07 authenticated updates and supply chain (CAL 3)</text>
+<rect x="152.0" y="1365.0" width="193.8" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="1378.0" class="pc" style="fill:var(--mi)">⚠ 2 defeaters: CDF-07, CDF-08</text>
+<rect x="351.8" y="1365.0" width="88.4" height="18" rx="9" style="fill:var(--no-bg)"/><text x="358.8" y="1378.0" class="pc" style="fill:var(--no)">Requirements</text>
+<line x1="152" y1="1393.0" x2="624" y2="1393.0" class="rule"/>
+<circle cx="88" cy="1409.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="1414.0" class="pid">CSn-10</text>
+<text x="172" y="1414.0" class="t">CS goals, claims, concept; detailed CSRs and architecture</text>
+<line x1="172" y1="1424.0" x2="624" y2="1424.0" class="rule"/>
+<circle cx="88" cy="1440.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="1445.0" class="pid">CSn-14</text>
+<text x="172" y="1445.0" class="t">Signed update design and implementation</text>
+<line x1="172" y1="1455.0" x2="624" y2="1455.0" class="rule"/>
+<circle cx="88" cy="1471.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="1476.0" class="pid">CSn-20</text>
+<text x="172" y="1476.0" class="t">Secure coding, SAST results, per-CSR verification (VS-CS)</text>
+<line x1="172" y1="1486.0" x2="624" y2="1486.0" class="rule"/>
+<circle cx="88" cy="1502.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="1507.0" class="pid">CSn-24</text>
+<text x="172" y="1507.0" class="t">SBOM and vulnerability scan report for the release</text>
+<line x1="172" y1="1517.0" x2="624" y2="1517.0" class="rule"/>
+<circle cx="88" cy="1533.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="1538.0" class="pid">CSn-36</text>
+<text x="172" y="1538.0" class="t">Validation TC-14, TC-15 (updates, supply chain)</text>
+<line x1="172" y1="1548.0" x2="624" y2="1548.0" class="rule"/>
+<rect x="56" y="1555.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="1569.0" class="pid">CG2.8</text>
+<text x="152" y="1569.0" class="t">CSG-08 personal data and identity key protected (CAL 2)</text>
+<rect x="152.0" y="1579.0" width="138.0" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="1592.0" class="pc" style="fill:var(--mi)">⚠ 1 defeater: CDF-09</text>
+<rect x="296.0" y="1579.0" width="88.4" height="18" rx="9" style="fill:var(--no-bg)"/><text x="303.0" y="1592.0" class="pc" style="fill:var(--no)">Requirements</text>
+<line x1="152" y1="1607.0" x2="624" y2="1607.0" class="rule"/>
+<circle cx="88" cy="1623.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="1628.0" class="pid">CSn-10</text>
+<text x="172" y="1628.0" class="t">CS goals, claims, concept; detailed CSRs and architecture</text>
+<line x1="172" y1="1638.0" x2="624" y2="1638.0" class="rule"/>
+<circle cx="88" cy="1654.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="1659.0" class="pid">CSn-20</text>
+<text x="172" y="1659.0" class="t">Secure coding, SAST results, per-CSR verification (VS-CS)</text>
+<line x1="172" y1="1669.0" x2="624" y2="1669.0" class="rule"/>
+<circle cx="88" cy="1685.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="1690.0" class="pid">CSn-37</text>
+<text x="172" y="1690.0" class="t">Validation TC-16, TC-17 (data at rest, decommissioning)</text>
+<line x1="172" y1="1700.0" x2="624" y2="1700.0" class="rule"/>
+</svg>

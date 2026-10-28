@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="767" viewBox="0 0 640 767" role="img" aria-labelledby="t d">
+<title id="t">Safety case (GSN), sheet 5: G3, phone view</title>
+<desc id="d">Safety case (GSN), sheet 5 of 6 as an outline: G3, The ML components (driving model, DM model) are adequately specified, developed, validated and monitored for their role in the architecture. S3 (strategy); G3.1 (goal, defeaters DF-19 DF-31); Sn-50 (solution, missing); Sn-31 (solution, missing); G3.2 (goal, defeaters DF-20); Sn-51 (solution, partial); G3.3 (goal, defeaters DF-16 DF-35); Sn-52 (solution, missing); Sn-42 (solution, missing); G3.4 (goal, defeaters DF-21 DF-08); Sn-53 (solution, partial); G3.5 (goal); Sn-60 (solution, partial); Sn-54 (solution, partial). 0 of 8 solutions available.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#16202b; --ink2:#5b6876; --line:#d5dbe2; --rail:#aab3c0; --st:#4b5bb7; --st-bg:#e4e7fb;
+      --ok:#2e7d32; --ok-bg:#edf7ee; --pa:#b07d00; --pa-bg:#fdf5e1; --mi:#c62828; --mi-bg:#fdecec; --no:#7d8798; --no-bg:#f1f3f6; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#161d25; --ink:#e4eaf0; --ink2:#94a2b1; --line:#2a3440; --rail:#4a5665; --st:#9aa6f0; --st-bg:#232a4a;
+        --ok:#79d6a0; --ok-bg:#173527; --pa:#f0cf6a; --pa-bg:#3a3214; --mi:#ff8f86; --mi-bg:#431b19; --no:#94a2b1; --no-bg:#1f2731; }
+}
+.bg { fill:var(--bg); } .t { font:14px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.h { font:600 20px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.pid { font:600 13px ui-monospace,Menlo,Consolas,monospace; fill:var(--ink); }
+.pc { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
+.rule { stroke:var(--line); stroke-width:1; } .rail { stroke:var(--rail); stroke-width:1.2; fill:none; }
+</style>
+<rect class="bg" width="640" height="767"/>
+<path d="M28.0,118.0 V185.0 H34.0" class="rail"/>
+<path d="M48.0,195.0 V234.0 H54.0" class="rail"/>
+<path d="M68.0,244.0 V293.0 H74.0" class="rail"/>
+<path d="M68.0,244.0 V324.0 H74.0" class="rail"/>
+<path d="M48.0,195.0 V355.0 H54.0" class="rail"/>
+<path d="M68.0,365.0 V414.0 H74.0" class="rail"/>
+<path d="M48.0,195.0 V445.0 H54.0" class="rail"/>
+<path d="M68.0,455.0 V504.0 H74.0" class="rail"/>
+<path d="M68.0,455.0 V535.0 H74.0" class="rail"/>
+<path d="M48.0,195.0 V566.0 H54.0" class="rail"/>
+<path d="M68.0,576.0 V643.0 H74.0" class="rail"/>
+<path d="M48.0,195.0 V674.0 H54.0" class="rail"/>
+<path d="M68.0,684.0 V705.0 H74.0" class="rail"/>
+<path d="M68.0,684.0 V736.0 H74.0" class="rail"/>
+<text x="16" y="34" class="h">Safety case · sheet 5 of 6: G3</text>
+<text x="16" y="56" class="t2">Phone view of gsn-5-G3.svg; the full sheet has the GSN drawing.</text>
+<circle cx="22.0" cy="74.0" r="6" style="fill:var(--ok)"/><text x="32.0" y="78" class="t2">evidence available</text>
+<circle cx="167.6" cy="74.0" r="6" style="fill:var(--pa)"/><text x="177.6" y="78" class="t2">partial</text>
+<circle cx="245.0" cy="74.0" r="6" style="fill:var(--mi)"/><text x="255.0" y="78" class="t2">missing</text>
+<circle cx="322.4" cy="74.0" r="6" style="fill:var(--no)"/><text x="332.4" y="78" class="t2">not developed</text>
+<rect x="16" y="99.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="48" y="113.0" class="pid">G3</text>
+<text x="112" y="113.0" class="t">The ML components (driving model, DM model) are adequately specified,</text>
+<text x="112" y="131.0" class="t">developed, validated and monitored for their role in the architecture.</text>
+<rect x="112.0" y="141.0" width="131.8" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="119.0" y="154.0" class="pc" style="fill:var(--mi)">⚠ 1 defeater: DF-15</text>
+<rect x="249.8" y="141.0" width="63.6" height="18" rx="9" style="fill:var(--no-bg)"/><text x="256.8" y="154.0" class="pc" style="fill:var(--no)">C10 · J3</text>
+<line x1="112" y1="169.0" x2="624" y2="169.0" class="rule"/>
+<path d="M42,176.0 h20 l-6,18 h-20 z" style="fill:var(--st-bg);stroke:var(--st);stroke-width:1.5"/>
+<text x="68" y="190.0" class="pid">S3</text>
+<text x="132" y="190.0" class="t">Argue over model identity, input-space/ODD fit, performance evidence,</text>
+<text x="132" y="208.0" class="t">runtime supervision, and change control</text>
+<line x1="132" y1="218.0" x2="624" y2="218.0" class="rule"/>
+<rect x="56" y="225.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="239.0" class="pid">G3.1</text>
+<text x="152" y="239.0" class="t">The deployed models are exactly the validated ones.</text>
+<rect x="152.0" y="249.0" width="181.4" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="262.0" class="pc" style="fill:var(--mi)">⚠ 2 defeaters: DF-19, DF-31</text>
+<line x1="152" y1="277.0" x2="624" y2="277.0" class="rule"/>
+<circle cx="88" cy="293.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="298.0" class="pid">Sn-50</text>
+<text x="172" y="298.0" class="t">Model hashes in release record</text>
+<line x1="172" y1="308.0" x2="624" y2="308.0" class="rule"/>
+<circle cx="88" cy="324.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="329.0" class="pid">Sn-31</text>
+<text x="172" y="329.0" class="t">Model hash check at installation (INS-18)</text>
+<line x1="172" y1="339.0" x2="624" y2="339.0" class="rule"/>
+<rect x="56" y="346.0" width="24" height="18" rx="2" style="fill:var(--pa-bg);stroke:var(--pa);stroke-width:1.5"/>
+<text x="88" y="360.0" class="pid">G3.2</text>
+<text x="152" y="360.0" class="t">The models' input space covers the ODD.</text>
+<rect x="152.0" y="370.0" width="131.8" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="383.0" class="pc" style="fill:var(--mi)">⚠ 1 defeater: DF-20</text>
+<line x1="152" y1="398.0" x2="624" y2="398.0" class="rule"/>
+<circle cx="88" cy="414.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="419.0" class="pid">Sn-51</text>
+<text x="172" y="419.0" class="t">Dataset / ODD coverage analysis</text>
+<line x1="172" y1="429.0" x2="624" y2="429.0" class="rule"/>
+<rect x="56" y="436.0" width="24" height="18" rx="2" style="fill:var(--mi-bg);stroke:var(--mi);stroke-width:1.5"/>
+<text x="88" y="450.0" class="pid">G3.3</text>
+<text x="152" y="450.0" class="t">Model performance meets AIR targets in the ODD.</text>
+<rect x="152.0" y="460.0" width="181.4" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="473.0" class="pc" style="fill:var(--mi)">⚠ 2 defeaters: DF-16, DF-35</text>
+<line x1="152" y1="488.0" x2="624" y2="488.0" class="rule"/>
+<circle cx="88" cy="504.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="509.0" class="pid">Sn-52</text>
+<text x="172" y="509.0" class="t">Model test reports</text>
+<line x1="172" y1="519.0" x2="624" y2="519.0" class="rule"/>
+<circle cx="88" cy="535.0" r="10" style="fill:var(--mi)"/>
+<text x="108" y="540.0" class="pid">Sn-42</text>
+<text x="172" y="540.0" class="t">Known-scenario evaluation</text>
+<line x1="172" y1="550.0" x2="624" y2="550.0" class="rule"/>
+<rect x="56" y="557.0" width="24" height="18" rx="2" style="fill:var(--pa-bg);stroke:var(--pa);stroke-width:1.5"/>
+<text x="88" y="571.0" class="pid">G3.4</text>
+<text x="152" y="571.0" class="t">Out-of-distribution or degraded model behaviour is detected or</text>
+<text x="152" y="589.0" class="t">bounded.</text>
+<rect x="152.0" y="599.0" width="181.4" height="18" rx="9" style="fill:var(--mi-bg)"/><text x="159.0" y="612.0" class="pc" style="fill:var(--mi)">⚠ 2 defeaters: DF-21, DF-08</text>
+<line x1="152" y1="627.0" x2="624" y2="627.0" class="rule"/>
+<circle cx="88" cy="643.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="648.0" class="pid">Sn-53</text>
+<text x="172" y="648.0" class="t">AI runtime supervision design, AIR-nn</text>
+<line x1="172" y1="658.0" x2="624" y2="658.0" class="rule"/>
+<rect x="56" y="665.0" width="24" height="18" rx="2" style="fill:var(--pa-bg);stroke:var(--pa);stroke-width:1.5"/>
+<text x="88" y="679.0" class="pid">G3.5</text>
+<text x="152" y="679.0" class="t">Model changes are controlled (D-05).</text>
+<line x1="152" y1="689.0" x2="624" y2="689.0" class="rule"/>
+<circle cx="88" cy="705.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="710.0" class="pid">Sn-60</text>
+<text x="172" y="710.0" class="t">Management plans</text>
+<line x1="172" y1="720.0" x2="624" y2="720.0" class="rule"/>
+<circle cx="88" cy="736.0" r="10" style="fill:var(--pa)"/>
+<text x="108" y="741.0" class="pid">Sn-54</text>
+<text x="172" y="741.0" class="t">AI safety plan</text>
+<line x1="172" y1="751.0" x2="624" y2="751.0" class="rule"/>
+</svg>
