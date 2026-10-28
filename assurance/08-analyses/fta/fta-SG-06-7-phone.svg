@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="494" viewBox="0 0 640 494" role="img" aria-labelledby="t d">
+<title id="t">SG-06 fault tree, sheet 7: phone view</title>
+<desc id="d">SG-06 fault tree (ASIL C), sheet 7 of 9 as an outline: G6.9 (AND); BE-6.09; G6.9.1 (OR); BE-6.10; G-HMI; G-LONCUE.</desc>
+<style>
+svg { --bg:#fcfcfb; --card:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --mute:#898781; --line:#c9c7bf; --grid:#e1e0d9; --soft:#f3f2ee;
+      --or:#2a78d6; --and:#6250d6; --basic:#1baf7a; --ue:#eda100; --hot:#d03b3b; --chipink:#ffffff;
+      --s1b:#fbe9e9; --s1f:#9e2424; --s2b:#fdeee6; --s2f:#9a4a25;
+      --s3b:#fff5dc; --s3f:#7a5600; --s4b:#e6f5e6; --s4f:#0a6a0a; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#1a1a19; --card:#242422; --ink:#f2f1ec; --ink2:#b5b3ab; --mute:#8a8880; --line:#55534e; --grid:#3a3936;
+        --soft:#2e2d2a; --chipink:#1a1a19; --s1b:#4a1f1f; --s1f:#ffb3b3; --s2b:#4a2a1c; --s2f:#ffc6a8; --s3b:#43361a;
+        --s3f:#ffd98a; --s4b:#1d3a1d; --s4f:#9fe09f; }
+}
+.bg { fill:var(--bg); } .t { font:14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); } .t2 { font:12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); }
+.ti { font:italic 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); } .h { font:600 20px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); }
+.pid { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--ink); } .pidhot { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--hot); }
+.gl { font:700 8px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:#ffffff; } .pc { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; } .ps { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.rule { stroke:var(--grid); stroke-width:1; } .rail { stroke:var(--line); stroke-width:1.2; fill:none; }
+.railhot { stroke:var(--hot); stroke-width:2; fill:none; }
+</style>
+<rect class="bg" width="640" height="494"/>
+<path d="M28.0,115.0 V163.0 H33.0" class="rail"/>
+<path d="M28.0,115.0 V240.0 H33.0" class="rail"/>
+<path d="M46.0,251.0 V299.0 H51.0" class="rail"/>
+<path d="M46.0,251.0 V376.0 H51.0" class="rail"/>
+<path d="M28.0,115.0 V435.0 H33.0" class="rail"/>
+<text x="16" y="34" class="h">SG-06 fault tree · sheet 7 of 9</text>
+<text x="16" y="56" class="t2">ASIL C · phone view of fta-SG-06-7.svg; the full sheet has the drawing.</text>
+<text x="16" y="76" class="t2">Red: a single item fault reaches the top event along this path.</text>
+<rect x="16.0" y="94.0" width="24" height="20" rx="4" fill="var(--and)"/><text x="28.0" y="107.0" class="gl" text-anchor="middle">AND</text>
+<text x="46" y="109.0" class="pid">G6.9</text>
+<text x="116" y="109.0" class="t">Lead missed or late and no adequate take-over request</text>
+<rect x="116.0" y="119.0" width="72.8" height="18" rx="9" fill="var(--s4b)"/>
+<circle cx="127.0" cy="128.0" r="4.5" fill="var(--s4f)"/>
+<text x="135.0" y="132.0" class="ps" fill="var(--s4f)">4 faults</text>
+<text x="194.8" y="132.0" class="t2">12 cut sets</text>
+<rect x="271.0" y="119.0" width="88.4" height="18" rx="4" fill="none" stroke="var(--line)"/><text x="278.0" y="132.0" class="pc" fill="var(--ink2)">from sheet 1</text>
+<rect x="365.4" y="119.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="372.4" y="132.0" class="pc" fill="var(--ink2)">SFM-010</text>
+<line x1="116" y1="147.0" x2="624" y2="147.0" class="rule"/>
+<circle cx="46.0" cy="163.0" r="9.5" fill="var(--basic)"/>
+<text x="64" y="168.0" class="pid">BE-6.09</text>
+<text x="134" y="168.0" class="t">Lead missed, detected late or tracked too slowly: the plan asks for</text>
+<text x="134" y="186.0" class="t">too little or late deceleration (SFM-010.C1, SFM-012.C2; SH-06)</text>
+<rect x="134.0" y="196.0" width="45.0" height="18" rx="4" fill="var(--soft)"/><text x="141.0" y="209.0" class="pc" fill="var(--ink2)">SOTIF</text>
+<rect x="185.0" y="196.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="192.0" y="209.0" class="pc" fill="var(--ink2)">SFM-010</text>
+<rect x="248.4" y="196.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="255.4" y="209.0" class="pc" fill="var(--ink2)">SFM-012</text>
+<rect x="311.8" y="196.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="318.8" y="209.0" class="pc" fill="var(--ink2)">PFM-012</text>
+<line x1="134" y1="224.0" x2="624" y2="224.0" class="rule"/>
+<rect x="34.0" y="230.0" width="24" height="20" rx="4" fill="var(--or)"/><text x="46.0" y="243.0" class="gl" text-anchor="middle">OR</text>
+<text x="64" y="245.0" class="pid">G6.9.1</text>
+<text x="134" y="245.0" class="t">Forward collision warning missing or late</text>
+<rect x="134.0" y="255.0" width="66.7" height="18" rx="9" fill="var(--s1b)"/>
+<circle cx="145.0" cy="264.0" r="5" fill="var(--s1f)"/><rect x="142.0" y="263.0" width="6" height="2" fill="var(--s1b)"/>
+<text x="153.0" y="268.0" class="ps" fill="var(--s1f)">1 fault</text>
+<text x="206.7" y="268.0" class="t2">4 cut sets</text>
+<line x1="134" y1="283.0" x2="624" y2="283.0" class="rule"/>
+<circle cx="64.0" cy="299.0" r="9.5" fill="var(--basic)"/>
+<text x="82" y="304.0" class="pid">BE-6.10</text>
+<text x="152" y="304.0" class="t">FCW comes from the same model and lead as the plan: no independent</text>
+<text x="152" y="322.0" class="t">source for a missed lead</text>
+<rect x="152.0" y="332.0" width="119.4" height="18" rx="4" fill="none" stroke="var(--mute)" stroke-dasharray="3 2"/><text x="159.0" y="345.0" class="pc" fill="var(--ink2)">latent, by design</text>
+<line x1="152" y1="360.0" x2="624" y2="360.0" class="rule"/>
+<path d="M64.0,366.0 l11,19 h-22 z" fill="none" stroke="var(--ink2)" stroke-width="1.8" stroke-linejoin="round"/>
+<text x="82" y="381.0" class="pid">G-HMI</text>
+<text x="152" y="381.0" class="t">HMI does not deliver the warning</text>
+<rect x="152.0" y="391.0" width="66.7" height="18" rx="9" fill="var(--s1b)"/>
+<circle cx="163.0" cy="400.0" r="5" fill="var(--s1f)"/><rect x="160.0" y="399.0" width="6" height="2" fill="var(--s1b)"/>
+<text x="171.0" y="404.0" class="ps" fill="var(--s1f)">1 fault</text>
+<text x="224.7" y="404.0" class="t2">3 cut sets</text>
+<rect x="294.7" y="391.0" width="107.0" height="18" rx="4" fill="none" stroke="var(--line)"/><text x="301.7" y="404.0" class="pc" fill="var(--ink2)">→ SG-02 sheet 9</text>
+<line x1="152" y1="419.0" x2="624" y2="419.0" class="rule"/>
+<path d="M46.0,425.0 l11,19 h-22 z" fill="none" stroke="var(--ink2)" stroke-width="1.8" stroke-linejoin="round"/>
+<text x="64" y="440.0" class="pid">G-LONCUE</text>
+<text x="134" y="440.0" class="t">SoC-independent cue missing or late (longitudinal loss)</text>
+<rect x="134.0" y="450.0" width="72.8" height="18" rx="9" fill="var(--s2b)"/>
+<path d="M145.0,454.5 L150.0,463.0 H140.0 Z" fill="var(--s2f)"/>
+<text x="153.0" y="463.0" class="ps" fill="var(--s2f)">2 faults</text>
+<text x="212.8" y="463.0" class="t2">3 cut sets</text>
+<rect x="282.8" y="450.0" width="69.8" height="18" rx="4" fill="none" stroke="var(--line)"/><text x="289.8" y="463.0" class="pc" fill="var(--ink2)">→ sheet 2</text>
+<line x1="134" y1="478.0" x2="624" y2="478.0" class="rule"/>
+</svg>

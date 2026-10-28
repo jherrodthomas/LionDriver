@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="376" viewBox="0 0 640 376" role="img" aria-labelledby="t d">
+<title id="t">SG-03 fault tree, sheet 4: phone view</title>
+<desc id="d">SG-03 fault tree (ASIL C), sheet 4 of 6 as an outline: G3.6 (AND); BE-4.17; BE-3.03; UE-3.05.</desc>
+<style>
+svg { --bg:#fcfcfb; --card:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --mute:#898781; --line:#c9c7bf; --grid:#e1e0d9; --soft:#f3f2ee;
+      --or:#2a78d6; --and:#6250d6; --basic:#1baf7a; --ue:#eda100; --hot:#d03b3b; --chipink:#ffffff;
+      --s1b:#fbe9e9; --s1f:#9e2424; --s2b:#fdeee6; --s2f:#9a4a25;
+      --s3b:#fff5dc; --s3f:#7a5600; --s4b:#e6f5e6; --s4f:#0a6a0a; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#1a1a19; --card:#242422; --ink:#f2f1ec; --ink2:#b5b3ab; --mute:#8a8880; --line:#55534e; --grid:#3a3936;
+        --soft:#2e2d2a; --chipink:#1a1a19; --s1b:#4a1f1f; --s1f:#ffb3b3; --s2b:#4a2a1c; --s2f:#ffc6a8; --s3b:#43361a;
+        --s3f:#ffd98a; --s4b:#1d3a1d; --s4f:#9fe09f; }
+}
+.bg { fill:var(--bg); } .t { font:14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); } .t2 { font:12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); }
+.ti { font:italic 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); } .h { font:600 20px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); }
+.pid { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--ink); } .pidhot { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--hot); }
+.gl { font:700 8px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:#ffffff; } .pc { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; } .ps { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.rule { stroke:var(--grid); stroke-width:1; } .rail { stroke:var(--line); stroke-width:1.2; fill:none; }
+.railhot { stroke:var(--hot); stroke-width:2; fill:none; }
+</style>
+<rect class="bg" width="640" height="376"/>
+<path d="M28.0,115.0 V163.0 H33.0" class="rail"/>
+<path d="M28.0,115.0 V240.0 H33.0" class="rail"/>
+<path d="M28.0,115.0 V317.0 H33.0" class="rail"/>
+<text x="16" y="34" class="h">SG-03 fault tree · sheet 4 of 6</text>
+<text x="16" y="56" class="t2">ASIL C · phone view of fta-SG-03-4.svg; the full sheet has the drawing.</text>
+<text x="16" y="76" class="t2">Red: a single item fault reaches the top event along this path.</text>
+<rect x="16.0" y="94.0" width="24" height="20" rx="4" fill="var(--and)"/><text x="28.0" y="107.0" class="gl" text-anchor="middle">AND</text>
+<text x="46" y="109.0" class="pid">G3.6</text>
+<text x="116" y="109.0" class="t">Acceleration step within the bound</text>
+<rect x="116.0" y="119.0" width="72.8" height="18" rx="9" fill="var(--s2b)"/>
+<path d="M127.0,123.5 L132.0,132.0 H122.0 Z" fill="var(--s2f)"/>
+<text x="135.0" y="132.0" class="ps" fill="var(--s2f)">2 faults</text>
+<text x="194.8" y="132.0" class="t2">1 cut set</text>
+<rect x="258.6" y="119.0" width="88.4" height="18" rx="4" fill="none" stroke="var(--line)"/><text x="265.6" y="132.0" class="pc" fill="var(--ink2)">from sheet 1</text>
+<line x1="116" y1="147.0" x2="624" y2="147.0" class="rule"/>
+<circle cx="46.0" cy="163.0" r="9.5" fill="var(--basic)"/>
+<text x="64" y="168.0" class="pid">BE-4.17</text>
+<text x="134" y="168.0" class="t">Host sends a step: the CarController jerk limit is applied before</text>
+<text x="134" y="186.0" class="t">pitch compensation and the PID (carcontroller.py:197-238)</text>
+<rect x="134.0" y="196.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="141.0" y="209.0" class="pc" fill="var(--ink2)">SWF-046</text>
+<rect x="197.4" y="196.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="204.4" y="209.0" class="pc" fill="var(--ink2)">SWF-066</text>
+<line x1="134" y1="224.0" x2="624" y2="224.0" class="rule"/>
+<circle cx="46.0" cy="240.0" r="9.5" fill="var(--basic)"/>
+<text x="64" y="245.0" class="pid">BE-3.03</text>
+<text x="134" y="245.0" class="t">No jerk limit in envelope: step to +2.0 m/s² allowed (GAP-04,</text>
+<text x="134" y="263.0" class="t">FSR-03.03 not implemented)</text>
+<rect x="134.0" y="273.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="141.0" y="286.0" class="pc" fill="var(--ink2)">SWF-004</text>
+<line x1="134" y1="301.0" x2="624" y2="301.0" class="rule"/>
+<path d="M46.0,306.0 l11,11 l-11,11 l-11,-11 z" fill="var(--ue)"/>
+<text x="64" y="322.0" class="pid">UE-3.05</text>
+<text x="134" y="322.0" class="t">PCM executes request without its own bound (AOU-05R fails)</text>
+<rect x="134.0" y="332.0" width="63.6" height="18" rx="4" fill="none" stroke="var(--line)"/><text x="141.0" y="345.0" class="pc" fill="var(--ink2)">repeated</text>
+<line x1="134" y1="360.0" x2="624" y2="360.0" class="rule"/>
+</svg>

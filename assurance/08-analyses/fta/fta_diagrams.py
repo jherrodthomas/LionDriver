@@ -840,6 +840,154 @@ def render_sheet(tree: Tree, sheets: list[Node], sheet_no: int, asil: str, hot: 
   return "\n".join(head + body + footer) + "\n</svg>\n"
 
 
+# ---------------------------------------------------------------- phone view
+
+PHONE_W = 640
+PHONE_CSS = f"""<style>
+svg {{ --bg:{BG}; --card:{CARD}; --ink:{INK}; --ink2:{INK2}; --mute:{MUTED}; --line:{LINE}; --grid:{GRID}; --soft:{SOFT};
+      --or:{OR_C}; --and:{AND_C}; --basic:{BASIC_C}; --ue:{UE_C}; --hot:{HOT}; --chipink:#ffffff;
+      --s1b:{STAT_STYLE[1][0]}; --s1f:{STAT_STYLE[1][1]}; --s2b:{STAT_STYLE[2][0]}; --s2f:{STAT_STYLE[2][1]};
+      --s3b:{STAT_STYLE[3][0]}; --s3f:{STAT_STYLE[3][1]}; --s4b:{STAT_STYLE[4][0]}; --s4f:{STAT_STYLE[4][1]}; }}
+@media (prefers-color-scheme: dark) {{
+  svg {{ --bg:#1a1a19; --card:#242422; --ink:#f2f1ec; --ink2:#b5b3ab; --mute:#8a8880; --line:#55534e; --grid:#3a3936;
+        --soft:#2e2d2a; --chipink:#1a1a19; --s1b:#4a1f1f; --s1f:#ffb3b3; --s2b:#4a2a1c; --s2f:#ffc6a8; --s3b:#43361a;
+        --s3f:#ffd98a; --s4b:#1d3a1d; --s4f:#9fe09f; }}
+}}
+.bg {{ fill:var(--bg); }} .t {{ font:14px {SANS}; fill:var(--ink); }} .t2 {{ font:12px {SANS}; fill:var(--ink2); }}
+.ti {{ font:italic 12px {SANS}; fill:var(--ink2); }} .h {{ font:600 20px {SANS}; fill:var(--ink); }}
+.pid {{ font:700 13px {MONO}; fill:var(--ink); }} .pidhot {{ font:700 13px {MONO}; fill:var(--hot); }}
+.gl {{ font:700 8px {SANS}; fill:#ffffff; }} .pc {{ font:600 11px {SANS}; }} .ps {{ font:600 11px {SANS}; }}
+.rule {{ stroke:var(--grid); stroke-width:1; }} .rail {{ stroke:var(--line); stroke-width:1.2; fill:none; }}
+.railhot {{ stroke:var(--hot); stroke-width:2; fill:none; }}
+</style>"""
+PHONE_CHIP = {   # badge kind -> (fill, text, outline, dashed): BADGE_STYLE in theme tokens
+  "spf": ("var(--s1b)", "var(--s1f)", "", False), "nofmea": ("var(--s1b)", "var(--s1f)", "", False),
+  "latent": ("none", "var(--ink2)", "var(--mute)", True), "sotif": ("var(--soft)", "var(--ink2)", "", False),
+  "ccf": ("var(--soft)", "var(--ink2)", "", False), "ffi": ("var(--soft)", "var(--ink2)", "", False),
+  "ue": ("var(--s3b)", "var(--s3f)", "", False), "repeat": ("none", "var(--ink2)", "var(--line)", False),
+  "sheet": ("var(--ink)", "var(--chipink)", "", False), "fmea": ("none", "var(--ink2)", "var(--grid)", False),
+}
+
+
+def _pwrap(text: str, px: float) -> list[str]:
+  return wrap(text, max(8, int(px / 7.1)))
+
+
+def _phone_icon(symbol: str, x: float, cy: float, hot: bool) -> str:
+  """The type icons of _icon() at 24 px: gate square (OR blue, AND violet, labelled), basic green circle, undeveloped amber
+  diamond, transfer outlined triangle; a red ring on a single-point path."""
+  ring = ' stroke="var(--hot)" stroke-width="2.4"' if hot else ""
+  if symbol in ("or", "and", "transfer_out"):
+    lab = {"or": "OR", "and": "AND", "transfer_out": "▸"}[symbol]
+    return (f'<rect x="{x:.1f}" y="{cy - 10:.1f}" width="24" height="20" rx="4" fill="var(--{"and" if symbol == "and" else "or"})"{ring}/>'
+            f'<text x="{x + 12:.1f}" y="{cy + 3:.1f}" class="gl" text-anchor="middle">{lab}</text>')
+  if symbol == "undeveloped":
+    return f'<path d="M{x + 12:.1f},{cy - 11:.1f} l11,11 l-11,11 l-11,-11 z" fill="var(--ue)"{ring}/>'
+  if symbol == "transfer_in":
+    return (f'<path d="M{x + 12:.1f},{cy - 10:.1f} l11,19 h-22 z" fill="none" stroke="{"var(--hot)" if hot else "var(--ink2)"}" '
+            'stroke-width="1.8" stroke-linejoin="round"/>')
+  return f'<circle cx="{x + 12:.1f}" cy="{cy:.1f}" r="9.5" fill="var(--basic)"{ring}/>'
+
+
+def _phone_stat(x: float, y: float, m: int, n: int) -> tuple[list[str], float]:
+  """The fewest-item-faults pill of _stat() in theme tokens, then the cut-set count as muted text."""
+  k = min(m, 4)
+  bg, fg = ("var(--soft)", "var(--ink2)") if k == 0 else (f"var(--s{k}b)", f"var(--s{k}f)")
+  w = _stat_w(m)
+  out = [f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="18" rx="9" fill="{bg}"/>']
+  cx, cy = x + 11, y + 9
+  if m == 1:
+    out.append(f'<circle cx="{cx}" cy="{cy}" r="5" fill="{fg}"/><rect x="{cx - 3}" y="{cy - 1}" width="6" height="2" fill="{bg}"/>')
+  elif m == 2:
+    out.append(f'<path d="M{cx},{cy - 4.5} L{cx + 5},{cy + 4} H{cx - 5} Z" fill="{fg}"/>')
+  elif m == 3:
+    out.append(f'<path d="M{cx},{cy - 5} L{cx + 5},{cy} L{cx},{cy + 5} L{cx - 5},{cy} Z" fill="{fg}"/>')
+  elif m >= 4:
+    out.append(f'<circle cx="{cx}" cy="{cy}" r="4.5" fill="{fg}"/>')
+  out.append(f'<text x="{x + (19 if m else 8):.1f}" y="{y + 13:.1f}" class="ps" fill="{fg}">{escape(_stat_label(m))}</text>')
+  lab = f"{n} cut set{'s' if n != 1 else ''}"
+  out.append(f'<text x="{x + w + 6:.1f}" y="{y + 13:.1f}" class="t2">{lab}</text>')
+  return out, w + 6 + 6.2 * len(lab)
+
+
+def render_phone(tree: Tree, sheets: list[Node], sheet_no: int, asil: str, hot: set[int], full: str) -> str:
+  """The sheet as an indented outline at phone width (640 px): one row per event in reading order, with the gate
+  type, the tags, the cut-set figures and the single-point paths (red) of the full sheet."""
+  root = sheets[sheet_no - 1]
+  box = make_box(root, root, True, hot)
+  rows: list[tuple[Box, int, Box | None]] = []
+
+  def visit(b: Box, d: int, parent: Box | None) -> None:
+    rows.append((b, d, parent))
+    for c in b.children:
+      visit(c, d + 1, b)
+
+  visit(box, 0, None)
+  body: list[str] = []
+  rails: list[str] = []
+  y = 34.0
+  body.append(f'<text x="16" y="{y:.0f}" class="h">{escape(tree.goal)} fault tree · sheet {sheet_no} of {len(sheets)}</text>')
+  y += 22
+  body.append(f'<text x="16" y="{y:.0f}" class="t2">ASIL {escape(asil)} · phone view of {escape(full)}; the full sheet has the drawing.</text>')
+  y += 20
+  body.append(f'<text x="16" y="{y:.0f}" class="t2">Red: a single item fault reaches the top event along this path.</text>')
+  y += 12
+  centre: dict[int, tuple[float, float]] = {}
+  for b, depth, parent in rows:
+    n = b.node
+    x = 16 + 18 * depth
+    tx = x + 100
+    width = PHONE_W - 16 - tx
+    label = b.title or "any of"
+    lines = _pwrap(n.text, width) if n.text else []
+    if len(lines) > 4:
+      lines = lines[:4]
+      lines[-1] = lines[-1][:max(8, int(width / 7.1)) - 1] + "…"
+    notes = [ln for note in n.notes for ln in _pwrap(note, width)][:2]
+    chips = [(k, lab) for row in b.chip_rows for k, lab, _w in row]
+    cy = y + 16
+    body.append(_phone_icon(b.symbol, x, cy, b.hot))
+    centre[id(b)] = (x + 12, cy)
+    if parent is not None:
+      px, py = centre[id(parent)]
+      rails.append(f'<path d="M{px:.1f},{py + 11:.1f} V{cy:.1f} H{x - 1:.1f}" class="{"railhot" if b.hot and parent.hot else "rail"}"/>')
+    body.append(f'<text x="{x + 30}" y="{cy + 5:.1f}" class="{"pidhot" if b.hot else "pid"}">{escape(label)}</text>')
+    yy = cy + 5
+    for i, ln in enumerate(lines):
+      body.append(f'<text x="{tx}" y="{yy + 18 * i:.1f}" class="t">{escape(ln)}</text>')
+    if lines:
+      yy += 18 * (len(lines) - 1)
+    for ln in notes:
+      yy += 16
+      body.append(f'<text x="{tx}" y="{yy:.1f}" class="ti">{escape(ln)}</text>')
+    cx, chip_y = float(tx), yy + 10
+    if b.stat:
+      els, used = _phone_stat(cx, chip_y, *b.stat)
+      body += els
+      cx += used + 8
+    for k, lab in chips:
+      w = 14 + 6.2 * len(lab)
+      if cx > tx and cx + w > PHONE_W - 16:
+        cx, chip_y = float(tx), chip_y + 22
+      fill, ink, outline, dashed = PHONE_CHIP.get(k, ("var(--soft)", "var(--ink2)", "", False))
+      stroke = f' stroke="{outline}"' + (' stroke-dasharray="3 2"' if dashed else "") if outline else ""
+      body.append(f'<rect x="{cx:.1f}" y="{chip_y:.1f}" width="{w:.1f}" height="18" rx="4" fill="{fill}"{stroke}/>'
+                  f'<text x="{cx + 7:.1f}" y="{chip_y + 13:.1f}" class="pc" fill="{ink}">{escape(lab)}</text>')
+      cx += w + 6
+    bottom = (chip_y + 18 if chips or b.stat else yy) + 10
+    body.append(f'<line x1="{tx}" y1="{bottom:.1f}" x2="{PHONE_W - 16}" y2="{bottom:.1f}" class="rule"/>')
+    y = bottom
+  h = y + 16
+  desc = (f"{tree.goal} fault tree (ASIL {asil}), sheet {sheet_no} of {len(sheets)} as an outline: " +
+          "; ".join(f"{b.title or 'any of'}{' (' + b.node.gate + ')' if b.node.gate else ''}"
+                    f"{', single-point path' if b.hot else ''}" for b, _d, _p in rows) + ".")
+  return "\n".join([f'<svg xmlns="http://www.w3.org/2000/svg" width="{PHONE_W}" height="{h:.0f}" viewBox="0 0 {PHONE_W} {h:.0f}" '
+                    'role="img" aria-labelledby="t d">',
+                    f'<title id="t">{escape(tree.goal)} fault tree, sheet {sheet_no}: phone view</title>',
+                    f'<desc id="d">{escape(desc)}</desc>', PHONE_CSS,
+                    f'<rect class="bg" width="{PHONE_W}" height="{h:.0f}"/>', *rails, *body, "</svg>"]) + "\n"
+
+
 def _walk_sheet(b: Box):
   yield b
   for c in b.children:
@@ -898,7 +1046,9 @@ def build() -> dict[str, str]:
     for no, root in enumerate(sheets, 1):
       name = f"fta-{tree.goal}-{no}.svg"
       outputs[name] = render_sheet(tree, sheets, no, asils.get(tree.goal, "?"), hot)
-      names.append(f"[{no}: {root.ident}]({name})")
+      phone = f"fta-{tree.goal}-{no}-phone.svg"
+      outputs[phone] = render_phone(tree, sheets, no, asils.get(tree.goal, "?"), hot, name)
+      names.append(f"[{no}: {root.ident}]({name}) ([outline]({phone}))")
     index.append(f"| {tree.goal} | {tree.root.ident} {tree.title} | {', '.join(names)} |")
   index += ["", "Each event is a card, styled like [fta-viewer.html](fta-viewer.html). Symbols follow IEC 61025, " +
             "as the icon before the ID: square = gate (blue OR, violet AND), with the gate symbol beneath the card; " +
@@ -920,11 +1070,11 @@ def build() -> dict[str, str]:
             "on these sheets; a switch also counts latent events as already failed. Light, dark and left-to-right " +
             "layouts. The sheets stay the drawing of record.", ""]
   first = trees[0]
-  index[4:4] = [f"![First sheet of the {first.goal} fault tree: top event {first.root.ident} {first.title}, with the "
-                "gates and events beneath it down to the transfers to the next sheets; red marks single-point paths]"
-                f"(fta-{first.goal}-1.svg)", "",
-                f"*Sheet 1 of {first.goal}, as an example of the notation explained under the table; every sheet is "
-                "listed below.*", ""]
+  index[4:4] = [f"[![First sheet of the {first.goal} fault tree as an outline: top event {first.root.ident} {first.title}, "
+                "with the gates and events beneath it down to the transfers to the next sheets; red marks single-point "
+                f"paths](fta-{first.goal}-1-phone.svg)](fta-{first.goal}-1.svg)", "",
+                f"*Sheet 1 of {first.goal} as an outline that reads on a phone; tap it for the [full sheet](fta-{first.goal}-1.svg). "
+                "Every sheet has both, listed below; the notation is explained under the table.*", ""]
   outputs["README.md"] = "\n".join(index)
   return outputs
 
@@ -947,13 +1097,15 @@ def main(argv: list[str]) -> int:
         print(f"no longer generated: {n}", file=sys.stderr)
       print("run: python3 assurance/08-analyses/fta/fta_diagrams.py", file=sys.stderr)
       return 1
-    print(f"fta_diagrams: {len(outputs) - 1} sheet(s) current")
+    n = sum(1 for k in outputs if k.endswith("-phone.svg"))
+    print(f"fta_diagrams: {len(outputs) - 1 - n} sheet(s) and {n} phone views current")
     return 0
   for n in sorted(existing - set(outputs)):
     (HERE / n).unlink()
   for n, c in outputs.items():
     (HERE / n).write_text(c, encoding="utf-8")
-  print(f"fta_diagrams: wrote {len(outputs) - 1} sheet(s) and README.md")
+  n = sum(1 for k in outputs if k.endswith("-phone.svg"))
+  print(f"fta_diagrams: wrote {len(outputs) - 1 - n} sheet(s), {n} phone views and README.md")
   return 0
 
 

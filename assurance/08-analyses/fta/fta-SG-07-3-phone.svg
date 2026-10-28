@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="584" viewBox="0 0 640 584" role="img" aria-labelledby="t d">
+<title id="t">SG-07 fault tree, sheet 3: phone view</title>
+<desc id="d">SG-07 fault tree (ASIL B), sheet 3 of 4 as an outline: G7.4 (OR), single-point path; BE-7.11, single-point path; BE-7.12, single-point path; BE-7.17, single-point path; BE-7.18, single-point path; BE-7.19, single-point path.</desc>
+<style>
+svg { --bg:#fcfcfb; --card:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --mute:#898781; --line:#c9c7bf; --grid:#e1e0d9; --soft:#f3f2ee;
+      --or:#2a78d6; --and:#6250d6; --basic:#1baf7a; --ue:#eda100; --hot:#d03b3b; --chipink:#ffffff;
+      --s1b:#fbe9e9; --s1f:#9e2424; --s2b:#fdeee6; --s2f:#9a4a25;
+      --s3b:#fff5dc; --s3f:#7a5600; --s4b:#e6f5e6; --s4f:#0a6a0a; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#1a1a19; --card:#242422; --ink:#f2f1ec; --ink2:#b5b3ab; --mute:#8a8880; --line:#55534e; --grid:#3a3936;
+        --soft:#2e2d2a; --chipink:#1a1a19; --s1b:#4a1f1f; --s1f:#ffb3b3; --s2b:#4a2a1c; --s2f:#ffc6a8; --s3b:#43361a;
+        --s3f:#ffd98a; --s4b:#1d3a1d; --s4f:#9fe09f; }
+}
+.bg { fill:var(--bg); } .t { font:14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); } .t2 { font:12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); }
+.ti { font:italic 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); } .h { font:600 20px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); }
+.pid { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--ink); } .pidhot { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--hot); }
+.gl { font:700 8px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:#ffffff; } .pc { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; } .ps { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.rule { stroke:var(--grid); stroke-width:1; } .rail { stroke:var(--line); stroke-width:1.2; fill:none; }
+.railhot { stroke:var(--hot); stroke-width:2; fill:none; }
+</style>
+<rect class="bg" width="640" height="584"/>
+<path d="M28.0,115.0 V181.0 H33.0" class="railhot"/>
+<path d="M28.0,115.0 V240.0 H33.0" class="railhot"/>
+<path d="M28.0,115.0 V335.0 H33.0" class="railhot"/>
+<path d="M28.0,115.0 V448.0 H33.0" class="railhot"/>
+<path d="M28.0,115.0 V525.0 H33.0" class="railhot"/>
+<text x="16" y="34" class="h">SG-07 fault tree · sheet 3 of 4</text>
+<text x="16" y="56" class="t2">ASIL B · phone view of fta-SG-07-3.svg; the full sheet has the drawing.</text>
+<text x="16" y="76" class="t2">Red: a single item fault reaches the top event along this path.</text>
+<rect x="16.0" y="94.0" width="24" height="20" rx="4" fill="var(--or)" stroke="var(--hot)" stroke-width="2.4"/><text x="28.0" y="107.0" class="gl" text-anchor="middle">OR</text>
+<text x="46" y="109.0" class="pidhot">G7.4</text>
+<text x="116" y="109.0" class="t">Stock path cut or a vehicle bus blocked in the harness or at the car</text>
+<text x="116" y="127.0" class="t">side</text>
+<rect x="116.0" y="137.0" width="66.7" height="18" rx="9" fill="var(--s1b)"/>
+<circle cx="127.0" cy="146.0" r="5" fill="var(--s1f)"/><rect x="124.0" y="145.0" width="6" height="2" fill="var(--s1b)"/>
+<text x="135.0" y="150.0" class="ps" fill="var(--s1f)">1 fault</text>
+<text x="188.7" y="150.0" class="t2">5 cut sets</text>
+<rect x="258.7" y="137.0" width="88.4" height="18" rx="4" fill="none" stroke="var(--line)"/><text x="265.7" y="150.0" class="pc" fill="var(--ink2)">from sheet 1</text>
+<line x1="116" y1="165.0" x2="624" y2="165.0" class="rule"/>
+<circle cx="46.0" cy="181.0" r="9.5" fill="var(--basic)" stroke="var(--hot)" stroke-width="2.4"/>
+<text x="64" y="186.0" class="pidhot">BE-7.11</text>
+<text x="134" y="186.0" class="t">Connector intermittent or partly seated (SFM-015.C3; DFI-05, DFI-20)</text>
+<rect x="134.0" y="196.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="141.0" y="209.0" class="pc" fill="var(--ink2)">PFM-008</text>
+<rect x="197.4" y="196.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="204.4" y="209.0" class="pc" fill="var(--ink2)">PFM-006</text>
+<rect x="260.8" y="196.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="267.8" y="209.0" class="pc" fill="var(--ink2)">PFM-014</text>
+<rect x="324.2" y="196.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="331.2" y="209.0" class="pc" fill="var(--ink2)">FMD-024</text>
+<line x1="134" y1="224.0" x2="624" y2="224.0" class="rule"/>
+<circle cx="46.0" cy="240.0" r="9.5" fill="var(--basic)" stroke="var(--hot)" stroke-width="2.4"/>
+<text x="64" y="245.0" class="pidhot">BE-7.12</text>
+<text x="134" y="245.0" class="t">Stock camera path open inside the harness box (U1/U2 channel open,</text>
+<text x="134" y="263.0" class="t">solder joint, contact; the path is not passive, accepted with comma's</text>
+<text x="134" y="281.0" class="t">box, DQ-209 A; RR-2026-010 F-01)</text>
+<rect x="134.0" y="291.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="141.0" y="304.0" class="pc" fill="var(--ink2)">DFM-013</text>
+<rect x="197.4" y="291.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="204.4" y="304.0" class="pc" fill="var(--ink2)">FMD-022</text>
+<rect x="260.8" y="291.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="267.8" y="304.0" class="pc" fill="var(--ink2)">FMD-023</text>
+<line x1="134" y1="319.0" x2="624" y2="319.0" class="rule"/>
+<circle cx="46.0" cy="335.0" r="9.5" fill="var(--basic)" stroke="var(--hot)" stroke-width="2.4"/>
+<text x="64" y="340.0" class="pidhot">BE-7.17</text>
+<text x="134" y="340.0" class="t">Harness box loses its supply while the car is on: U1/U2 unpowered,</text>
+<text x="134" y="358.0" class="t">pass-through not guaranteed, D2/D3 clamp CAN0/CAN2 to the dead rail</text>
+<text x="134" y="376.0" class="t">(derived from the v3 drawing; bench test VS-HW-22, DQ-209 A;</text>
+<text x="134" y="394.0" class="t">RR-2026-010 F-02)</text>
+<rect x="134.0" y="404.0" width="51.2" height="18" rx="4" fill="var(--s1b)"/><text x="141.0" y="417.0" class="pc" fill="var(--s1f)">SPF-15</text>
+<rect x="191.2" y="404.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="198.2" y="417.0" class="pc" fill="var(--ink2)">DFM-020</text>
+<rect x="254.6" y="404.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="261.6" y="417.0" class="pc" fill="var(--ink2)">FMD-030</text>
+<rect x="318.0" y="404.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="325.0" y="417.0" class="pc" fill="var(--ink2)">FMD-031</text>
+<line x1="134" y1="432.0" x2="624" y2="432.0" class="rule"/>
+<circle cx="46.0" cy="448.0" r="9.5" fill="var(--basic)" stroke="var(--hot)" stroke-width="2.4"/>
+<text x="64" y="453.0" class="pidhot">BE-7.18</text>
+<text x="134" y="453.0" class="t">Clamp diode D2 or D3 short or leaky: loads or grounds a vehicle bus</text>
+<text x="134" y="471.0" class="t">in either switch state (RR-2026-010 F-07)</text>
+<rect x="134.0" y="481.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="141.0" y="494.0" class="pc" fill="var(--ink2)">DFM-021</text>
+<rect x="197.4" y="481.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="204.4" y="494.0" class="pc" fill="var(--ink2)">FMD-033</text>
+<line x1="134" y1="509.0" x2="624" y2="509.0" class="rule"/>
+<circle cx="46.0" cy="525.0" r="9.5" fill="var(--basic)" stroke="var(--hot)" stroke-width="2.4"/>
+<text x="64" y="530.0" class="pidhot">BE-7.19</text>
+<text x="134" y="530.0" class="t">Car-side transceiver holds bus 0 dominant (TXD stuck low)</text>
+<rect x="134.0" y="540.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="141.0" y="553.0" class="pc" fill="var(--ink2)">DFM-008</text>
+<rect x="197.4" y="540.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="204.4" y="553.0" class="pc" fill="var(--ink2)">FMD-016</text>
+<line x1="134" y1="568.0" x2="624" y2="568.0" class="rule"/>
+</svg>

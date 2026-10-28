@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="834" viewBox="0 0 640 834" role="img" aria-labelledby="t d">
+<title id="t">SG-04 fault tree, sheet 1: phone view</title>
+<desc id="d">SG-04 fault tree (ASIL B), sheet 1 of 9 as an outline: TE-04 (OR), single-point path; G4.1 (AND), single-point path; G4.2 (AND); G4.3 (AND); G4.4 (AND); G4.5 (AND), single-point path; G4.6 (AND); G4.7 (AND), single-point path; BE-4.14, single-point path; UE-4.15; G4.8 (AND); G4.9 (OR), single-point path.</desc>
+<style>
+svg { --bg:#fcfcfb; --card:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --mute:#898781; --line:#c9c7bf; --grid:#e1e0d9; --soft:#f3f2ee;
+      --or:#2a78d6; --and:#6250d6; --basic:#1baf7a; --ue:#eda100; --hot:#d03b3b; --chipink:#ffffff;
+      --s1b:#fbe9e9; --s1f:#9e2424; --s2b:#fdeee6; --s2f:#9a4a25;
+      --s3b:#fff5dc; --s3f:#7a5600; --s4b:#e6f5e6; --s4f:#0a6a0a; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#1a1a19; --card:#242422; --ink:#f2f1ec; --ink2:#b5b3ab; --mute:#8a8880; --line:#55534e; --grid:#3a3936;
+        --soft:#2e2d2a; --chipink:#1a1a19; --s1b:#4a1f1f; --s1f:#ffb3b3; --s2b:#4a2a1c; --s2f:#ffc6a8; --s3b:#43361a;
+        --s3f:#ffd98a; --s4b:#1d3a1d; --s4f:#9fe09f; }
+}
+.bg { fill:var(--bg); } .t { font:14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); } .t2 { font:12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); }
+.ti { font:italic 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); } .h { font:600 20px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); }
+.pid { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--ink); } .pidhot { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--hot); }
+.gl { font:700 8px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:#ffffff; } .pc { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; } .ps { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.rule { stroke:var(--grid); stroke-width:1; } .rail { stroke:var(--line); stroke-width:1.2; fill:none; }
+.railhot { stroke:var(--hot); stroke-width:2; fill:none; }
+</style>
+<rect class="bg" width="640" height="834"/>
+<path d="M28.0,115.0 V163.0 H33.0" class="railhot"/>
+<path d="M28.0,115.0 V222.0 H33.0" class="rail"/>
+<path d="M28.0,115.0 V281.0 H33.0" class="rail"/>
+<path d="M28.0,115.0 V340.0 H33.0" class="rail"/>
+<path d="M28.0,115.0 V399.0 H33.0" class="railhot"/>
+<path d="M28.0,115.0 V490.0 H33.0" class="rail"/>
+<path d="M28.0,115.0 V549.0 H33.0" class="railhot"/>
+<path d="M46.0,560.0 V608.0 H51.0" class="railhot"/>
+<path d="M46.0,560.0 V685.0 H51.0" class="rail"/>
+<path d="M28.0,115.0 V716.0 H33.0" class="rail"/>
+<path d="M28.0,115.0 V775.0 H33.0" class="railhot"/>
+<text x="16" y="34" class="h">SG-04 fault tree · sheet 1 of 9</text>
+<text x="16" y="56" class="t2">ASIL B · phone view of fta-SG-04-1.svg; the full sheet has the drawing.</text>
+<text x="16" y="76" class="t2">Red: a single item fault reaches the top event along this path.</text>
+<rect x="16.0" y="94.0" width="24" height="20" rx="4" fill="var(--or)" stroke="var(--hot)" stroke-width="2.4"/><text x="28.0" y="107.0" class="gl" text-anchor="middle">OR</text>
+<text x="46" y="109.0" class="pidhot">TE-04</text>
+<text x="116" y="109.0" class="t">Uncontrollable deceleration</text>
+<rect x="116.0" y="119.0" width="66.7" height="18" rx="9" fill="var(--s1b)"/>
+<circle cx="127.0" cy="128.0" r="5" fill="var(--s1f)"/><rect x="124.0" y="127.0" width="6" height="2" fill="var(--s1b)"/>
+<text x="135.0" y="132.0" class="ps" fill="var(--s1f)">1 fault</text>
+<text x="188.7" y="132.0" class="t2">23 cut sets</text>
+<line x1="116" y1="147.0" x2="624" y2="147.0" class="rule"/>
+<rect x="34.0" y="153.0" width="24" height="20" rx="4" fill="var(--or)" stroke="var(--hot)" stroke-width="2.4"/><text x="46.0" y="166.0" class="gl" text-anchor="middle">▸</text>
+<text x="64" y="168.0" class="pidhot">G4.1</text>
+<text x="134" y="168.0" class="t">Deceleration above the controllable bound executed while engaged</text>
+<rect x="134.0" y="178.0" width="66.7" height="18" rx="9" fill="var(--s1b)"/>
+<circle cx="145.0" cy="187.0" r="5" fill="var(--s1f)"/><rect x="142.0" y="186.0" width="6" height="2" fill="var(--s1b)"/>
+<text x="153.0" y="191.0" class="ps" fill="var(--s1f)">1 fault</text>
+<text x="206.7" y="191.0" class="t2">6 cut sets</text>
+<rect x="276.7" y="178.0" width="150.4" height="18" rx="4" fill="var(--ink)"/><text x="283.7" y="191.0" class="pc" fill="var(--chipink)">continued on sheet 3 ▸</text>
+<rect x="433.1" y="178.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="440.1" y="191.0" class="pc" fill="var(--ink2)">SFM-009</text>
+<line x1="134" y1="206.0" x2="624" y2="206.0" class="rule"/>
+<rect x="34.0" y="212.0" width="24" height="20" rx="4" fill="var(--or)"/><text x="46.0" y="225.0" class="gl" text-anchor="middle">▸</text>
+<text x="64" y="227.0" class="pid">G4.2</text>
+<text x="134" y="227.0" class="t">Deceleration step within the bound</text>
+<rect x="134.0" y="237.0" width="72.8" height="18" rx="9" fill="var(--s2b)"/>
+<path d="M145.0,241.5 L150.0,250.0 H140.0 Z" fill="var(--s2f)"/>
+<text x="153.0" y="250.0" class="ps" fill="var(--s2f)">2 faults</text>
+<text x="212.8" y="250.0" class="t2">1 cut set</text>
+<rect x="276.6" y="237.0" width="150.4" height="18" rx="4" fill="var(--ink)"/><text x="283.6" y="250.0" class="pc" fill="var(--chipink)">continued on sheet 7 ▸</text>
+<line x1="134" y1="265.0" x2="624" y2="265.0" class="rule"/>
+<rect x="34.0" y="271.0" width="24" height="20" rx="4" fill="var(--or)"/><text x="46.0" y="284.0" class="gl" text-anchor="middle">▸</text>
+<text x="64" y="286.0" class="pid">G4.3</text>
+<text x="134" y="286.0" class="t">Unwarranted braking within the bound</text>
+<rect x="134.0" y="296.0" width="72.8" height="18" rx="9" fill="var(--s2b)"/>
+<path d="M145.0,300.5 L150.0,309.0 H140.0 Z" fill="var(--s2f)"/>
+<text x="153.0" y="309.0" class="ps" fill="var(--s2f)">2 faults</text>
+<text x="212.8" y="309.0" class="t2">2 cut sets</text>
+<rect x="282.8" y="296.0" width="150.4" height="18" rx="4" fill="var(--ink)"/><text x="289.8" y="309.0" class="pc" fill="var(--chipink)">continued on sheet 4 ▸</text>
+<rect x="439.2" y="296.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="446.2" y="309.0" class="pc" fill="var(--ink2)">SFM-009</text>
+<line x1="134" y1="324.0" x2="624" y2="324.0" class="rule"/>
+<rect x="34.0" y="330.0" width="24" height="20" rx="4" fill="var(--or)"/><text x="46.0" y="343.0" class="gl" text-anchor="middle">▸</text>
+<text x="64" y="345.0" class="pid">G4.4</text>
+<text x="134" y="345.0" class="t">Item-initiated deceleration not announced</text>
+<rect x="134.0" y="355.0" width="72.8" height="18" rx="9" fill="var(--s2b)"/>
+<path d="M145.0,359.5 L150.0,368.0 H140.0 Z" fill="var(--s2f)"/>
+<text x="153.0" y="368.0" class="ps" fill="var(--s2f)">2 faults</text>
+<text x="212.8" y="368.0" class="t2">3 cut sets</text>
+<rect x="282.8" y="355.0" width="150.4" height="18" rx="4" fill="var(--ink)"/><text x="289.8" y="368.0" class="pc" fill="var(--chipink)">continued on sheet 5 ▸</text>
+<line x1="134" y1="383.0" x2="624" y2="383.0" class="rule"/>
+<rect x="34.0" y="389.0" width="24" height="20" rx="4" fill="var(--or)" stroke="var(--hot)" stroke-width="2.4"/><text x="46.0" y="402.0" class="gl" text-anchor="middle">▸</text>
+<text x="64" y="404.0" class="pidhot">G4.5</text>
+<text x="134" y="404.0" class="t">False FCW causes reflex braking (HE-04.5)</text>
+<text x="134" y="420.0" class="ti">CCF → DFI-26: the same false lead also makes the planner brake,</text>
+<text x="134" y="436.0" class="ti">BE-4.06</text>
+<rect x="134.0" y="446.0" width="66.7" height="18" rx="9" fill="var(--s1b)"/>
+<circle cx="145.0" cy="455.0" r="5" fill="var(--s1f)"/><rect x="142.0" y="454.0" width="6" height="2" fill="var(--s1b)"/>
+<text x="153.0" y="459.0" class="ps" fill="var(--s1f)">1 fault</text>
+<text x="206.7" y="459.0" class="t2">1 cut set</text>
+<rect x="270.5" y="446.0" width="150.4" height="18" rx="4" fill="var(--ink)"/><text x="277.5" y="459.0" class="pc" fill="var(--chipink)">continued on sheet 9 ▸</text>
+<line x1="134" y1="474.0" x2="624" y2="474.0" class="rule"/>
+<rect x="34.0" y="480.0" width="24" height="20" rx="4" fill="var(--or)"/><text x="46.0" y="493.0" class="gl" text-anchor="middle">▸</text>
+<text x="64" y="495.0" class="pid">G4.6</text>
+<text x="134" y="495.0" class="t">Braking while not engaged (HE-04.4)</text>
+<rect x="134.0" y="505.0" width="72.8" height="18" rx="9" fill="var(--s2b)"/>
+<path d="M145.0,509.5 L150.0,518.0 H140.0 Z" fill="var(--s2f)"/>
+<text x="153.0" y="518.0" class="ps" fill="var(--s2f)">2 faults</text>
+<text x="212.8" y="518.0" class="t2">5 cut sets</text>
+<rect x="282.8" y="505.0" width="150.4" height="18" rx="4" fill="var(--ink)"/><text x="289.8" y="518.0" class="pc" fill="var(--chipink)">continued on sheet 2 ▸</text>
+<line x1="134" y1="533.0" x2="624" y2="533.0" class="rule"/>
+<rect x="34.0" y="539.0" width="24" height="20" rx="4" fill="var(--and)" stroke="var(--hot)" stroke-width="2.4"/><text x="46.0" y="552.0" class="gl" text-anchor="middle">AND</text>
+<text x="64" y="554.0" class="pidhot">G4.7</text>
+<text x="134" y="554.0" class="t">Deceleration step at the transition to the safe state (FSR-04.03)</text>
+<rect x="134.0" y="564.0" width="66.7" height="18" rx="9" fill="var(--s1b)"/>
+<circle cx="145.0" cy="573.0" r="5" fill="var(--s1f)"/><rect x="142.0" y="572.0" width="6" height="2" fill="var(--s1b)"/>
+<text x="153.0" y="577.0" class="ps" fill="var(--s1f)">1 fault</text>
+<text x="206.7" y="577.0" class="t2">1 cut set</text>
+<line x1="134" y1="592.0" x2="624" y2="592.0" class="rule"/>
+<circle cx="64.0" cy="608.0" r="9.5" fill="var(--basic)" stroke="var(--hot)" stroke-width="2.4"/>
+<text x="82" y="613.0" class="pidhot">BE-4.14</text>
+<text x="152" y="613.0" class="t">Authority revoked: envelope accepts only the inactive value at</text>
+<text x="152" y="631.0" class="t">once, with no ramp on the item side</text>
+<rect x="152.0" y="641.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="159.0" y="654.0" class="pc" fill="var(--ink2)">SWF-053</text>
+<line x1="152" y1="669.0" x2="624" y2="669.0" class="rule"/>
+<path d="M64.0,674.0 l11,11 l-11,11 l-11,-11 z" fill="var(--ue)"/>
+<text x="82" y="690.0" class="pid">UE-4.15</text>
+<text x="152" y="690.0" class="t">PCM steps to the inactive value without its own ramp (AOU-05R)</text>
+<line x1="152" y1="700.0" x2="624" y2="700.0" class="rule"/>
+<rect x="34.0" y="706.0" width="24" height="20" rx="4" fill="var(--or)"/><text x="46.0" y="719.0" class="gl" text-anchor="middle">▸</text>
+<text x="64" y="721.0" class="pid">G4.8</text>
+<text x="134" y="721.0" class="t">Stock ACC and item 0x343 on the car bus together while engaged</text>
+<rect x="134.0" y="731.0" width="72.8" height="18" rx="9" fill="var(--s2b)"/>
+<path d="M145.0,735.5 L150.0,744.0 H140.0 Z" fill="var(--s2f)"/>
+<text x="153.0" y="744.0" class="ps" fill="var(--s2f)">2 faults</text>
+<text x="212.8" y="744.0" class="t2">2 cut sets</text>
+<rect x="282.8" y="731.0" width="150.4" height="18" rx="4" fill="var(--ink)"/><text x="289.8" y="744.0" class="pc" fill="var(--chipink)">continued on sheet 8 ▸</text>
+<rect x="439.2" y="731.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="446.2" y="744.0" class="pc" fill="var(--ink2)">SFM-034</text>
+<line x1="134" y1="759.0" x2="624" y2="759.0" class="rule"/>
+<rect x="34.0" y="765.0" width="24" height="20" rx="4" fill="var(--or)" stroke="var(--hot)" stroke-width="2.4"/><text x="46.0" y="778.0" class="gl" text-anchor="middle">▸</text>
+<text x="64" y="780.0" class="pidhot">G4.9</text>
+<text x="134" y="780.0" class="t">Item deceleration during accelerator override (DQ-363 A)</text>
+<rect x="134.0" y="790.0" width="66.7" height="18" rx="9" fill="var(--s1b)"/>
+<circle cx="145.0" cy="799.0" r="5" fill="var(--s1f)"/><rect x="142.0" y="798.0" width="6" height="2" fill="var(--s1b)"/>
+<text x="153.0" y="803.0" class="ps" fill="var(--s1f)">1 fault</text>
+<text x="206.7" y="803.0" class="t2">2 cut sets</text>
+<rect x="276.7" y="790.0" width="150.4" height="18" rx="4" fill="var(--ink)"/><text x="283.7" y="803.0" class="pc" fill="var(--chipink)">continued on sheet 6 ▸</text>
+<rect x="433.1" y="790.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="440.1" y="803.0" class="pc" fill="var(--ink2)">SFM-020</text>
+<line x1="134" y1="818.0" x2="624" y2="818.0" class="rule"/>
+</svg>

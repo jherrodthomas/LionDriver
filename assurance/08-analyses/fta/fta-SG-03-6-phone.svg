@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="491" viewBox="0 0 640 491" role="img" aria-labelledby="t d">
+<title id="t">SG-03 fault tree, sheet 6: phone view</title>
+<desc id="d">SG-03 fault tree (ASIL C), sheet 6 of 6 as an outline: G3.5 (AND); any of (OR); BE-1.19; BE-1.21; BE-1.22.</desc>
+<style>
+svg { --bg:#fcfcfb; --card:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --mute:#898781; --line:#c9c7bf; --grid:#e1e0d9; --soft:#f3f2ee;
+      --or:#2a78d6; --and:#6250d6; --basic:#1baf7a; --ue:#eda100; --hot:#d03b3b; --chipink:#ffffff;
+      --s1b:#fbe9e9; --s1f:#9e2424; --s2b:#fdeee6; --s2f:#9a4a25;
+      --s3b:#fff5dc; --s3f:#7a5600; --s4b:#e6f5e6; --s4f:#0a6a0a; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#1a1a19; --card:#242422; --ink:#f2f1ec; --ink2:#b5b3ab; --mute:#8a8880; --line:#55534e; --grid:#3a3936;
+        --soft:#2e2d2a; --chipink:#1a1a19; --s1b:#4a1f1f; --s1f:#ffb3b3; --s2b:#4a2a1c; --s2f:#ffc6a8; --s3b:#43361a;
+        --s3f:#ffd98a; --s4b:#1d3a1d; --s4f:#9fe09f; }
+}
+.bg { fill:var(--bg); } .t { font:14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); } .t2 { font:12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); }
+.ti { font:italic 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); } .h { font:600 20px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); }
+.pid { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--ink); } .pidhot { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--hot); }
+.gl { font:700 8px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:#ffffff; } .pc { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; } .ps { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.rule { stroke:var(--grid); stroke-width:1; } .rail { stroke:var(--line); stroke-width:1.2; fill:none; }
+.railhot { stroke:var(--hot); stroke-width:2; fill:none; }
+</style>
+<rect class="bg" width="640" height="491"/>
+<path d="M28.0,115.0 V163.0 H33.0" class="rail"/>
+<path d="M46.0,174.0 V222.0 H51.0" class="rail"/>
+<path d="M46.0,174.0 V303.0 H51.0" class="rail"/>
+<path d="M28.0,115.0 V362.0 H33.0" class="rail"/>
+<text x="16" y="34" class="h">SG-03 fault tree · sheet 6 of 6</text>
+<text x="16" y="56" class="t2">ASIL C · phone view of fta-SG-03-6.svg; the full sheet has the drawing.</text>
+<text x="16" y="76" class="t2">Red: a single item fault reaches the top event along this path.</text>
+<rect x="16.0" y="94.0" width="24" height="20" rx="4" fill="var(--and)"/><text x="28.0" y="107.0" class="gl" text-anchor="middle">AND</text>
+<text x="46" y="109.0" class="pid">G3.5</text>
+<text x="116" y="109.0" class="t">Stale positive acceleration held beyond FTTI</text>
+<rect x="116.0" y="119.0" width="72.8" height="18" rx="9" fill="var(--s2b)"/>
+<path d="M127.0,123.5 L132.0,132.0 H122.0 Z" fill="var(--s2f)"/>
+<text x="135.0" y="132.0" class="ps" fill="var(--s2f)">2 faults</text>
+<text x="194.8" y="132.0" class="t2">2 cut sets</text>
+<rect x="264.8" y="119.0" width="88.4" height="18" rx="4" fill="none" stroke="var(--line)"/><text x="271.8" y="132.0" class="pc" fill="var(--ink2)">from sheet 1</text>
+<line x1="116" y1="147.0" x2="624" y2="147.0" class="rule"/>
+<rect x="34.0" y="153.0" width="24" height="20" rx="4" fill="var(--or)"/><text x="46.0" y="166.0" class="gl" text-anchor="middle">OR</text>
+<text x="64" y="168.0" class="pid">any of</text>
+<text x="134" y="168.0" class="t">Any of BE-1.19, BE-1.21</text>
+<rect x="134.0" y="178.0" width="66.7" height="18" rx="9" fill="var(--s1b)"/>
+<circle cx="145.0" cy="187.0" r="5" fill="var(--s1f)"/><rect x="142.0" y="186.0" width="6" height="2" fill="var(--s1b)"/>
+<text x="153.0" y="191.0" class="ps" fill="var(--s1f)">1 fault</text>
+<text x="206.7" y="191.0" class="t2">2 cut sets</text>
+<line x1="134" y1="206.0" x2="624" y2="206.0" class="rule"/>
+<circle cx="64.0" cy="222.0" r="9.5" fill="var(--basic)"/>
+<text x="82" y="227.0" class="pid">BE-1.19</text>
+<text x="152" y="227.0" class="t">controlsd hang / stale modelV2 used up to ≈3.5 s (GAP-16)</text>
+<rect x="152.0" y="237.0" width="107.0" height="18" rx="4" fill="none" stroke="var(--line)"/><text x="159.0" y="250.0" class="pc" fill="var(--ink2)">repeated, SG-01</text>
+<rect x="265.0" y="237.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="272.0" y="250.0" class="pc" fill="var(--ink2)">SFM-006</text>
+<rect x="328.4" y="237.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="335.4" y="250.0" class="pc" fill="var(--ink2)">SFM-037</text>
+<rect x="391.8" y="237.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="398.8" y="250.0" class="pc" fill="var(--ink2)">SWF-040</text>
+<rect x="455.2" y="237.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="462.2" y="250.0" class="pc" fill="var(--ink2)">SWF-043</text>
+<rect x="518.6" y="237.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="525.6" y="250.0" class="pc" fill="var(--ink2)">SWF-033</text>
+<rect x="152.0" y="259.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="159.0" y="272.0" class="pc" fill="var(--ink2)">SWF-072</text>
+<rect x="215.4" y="259.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="222.4" y="272.0" class="pc" fill="var(--ink2)">SWF-078</text>
+<rect x="278.8" y="259.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="285.8" y="272.0" class="pc" fill="var(--ink2)">SWF-080</text>
+<rect x="342.2" y="259.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="349.2" y="272.0" class="pc" fill="var(--ink2)">SWF-081</text>
+<line x1="152" y1="287.0" x2="624" y2="287.0" class="rule"/>
+<circle cx="64.0" cy="303.0" r="9.5" fill="var(--basic)"/>
+<text x="82" y="308.0" class="pid">BE-1.21</text>
+<text x="152" y="308.0" class="t">SoC replays an old command buffer (no sequence counter, GAP-10)</text>
+<rect x="152.0" y="318.0" width="107.0" height="18" rx="4" fill="none" stroke="var(--line)"/><text x="159.0" y="331.0" class="pc" fill="var(--ink2)">repeated, SG-01</text>
+<rect x="265.0" y="318.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="272.0" y="331.0" class="pc" fill="var(--ink2)">SWF-023</text>
+<line x1="152" y1="346.0" x2="624" y2="346.0" class="rule"/>
+<circle cx="46.0" cy="362.0" r="9.5" fill="var(--basic)"/>
+<text x="64" y="367.0" class="pid">BE-1.22</text>
+<text x="134" y="367.0" class="t">Command freshness not supervised: heartbeat shows pandad liveness</text>
+<text x="134" y="385.0" class="t">only; mismatch 3 s, loss 5 s (main.c:182-213; GAP-06, GAP-10) .</text>
+<text x="134" y="403.0" class="t">2026-10-12, reference build: heartbeat loss revokes at 0.3 s</text>
+<text x="134" y="421.0" class="t">(TSR-407); actuation-frame arrival supervised (TSR-408, opendbc…</text>
+<text x="134" y="437.0" class="ti">slow envelope detection</text>
+<rect x="134.0" y="447.0" width="113.2" height="18" rx="4" fill="none" stroke="var(--mute)" stroke-dasharray="3 2"/><text x="141.0" y="460.0" class="pc" fill="var(--ink2)">latent, baseline</text>
+<rect x="253.2" y="447.0" width="107.0" height="18" rx="4" fill="none" stroke="var(--line)"/><text x="260.2" y="460.0" class="pc" fill="var(--ink2)">repeated, SG-01</text>
+<rect x="366.2" y="447.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="373.2" y="460.0" class="pc" fill="var(--ink2)">SWF-014</text>
+<rect x="429.6" y="447.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="436.6" y="460.0" class="pc" fill="var(--ink2)">SWF-020</text>
+<rect x="493.0" y="447.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="500.0" y="460.0" class="pc" fill="var(--ink2)">SWF-018</text>
+<rect x="556.4" y="447.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="563.4" y="460.0" class="pc" fill="var(--ink2)">DFM-014</text>
+<line x1="134" y1="475.0" x2="624" y2="475.0" class="rule"/>
+</svg>

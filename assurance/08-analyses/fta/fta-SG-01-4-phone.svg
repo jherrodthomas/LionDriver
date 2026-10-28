@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="430" viewBox="0 0 640 430" role="img" aria-labelledby="t d">
+<title id="t">SG-01 fault tree, sheet 4: phone view</title>
+<desc id="d">SG-01 fault tree (ASIL C), sheet 4 of 6 as an outline: G1.1.1 (OR), single-point path; BE-1.01, single-point path; G1.1.1.a (AND); BE-1.10, single-point path.</desc>
+<style>
+svg { --bg:#fcfcfb; --card:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --mute:#898781; --line:#c9c7bf; --grid:#e1e0d9; --soft:#f3f2ee;
+      --or:#2a78d6; --and:#6250d6; --basic:#1baf7a; --ue:#eda100; --hot:#d03b3b; --chipink:#ffffff;
+      --s1b:#fbe9e9; --s1f:#9e2424; --s2b:#fdeee6; --s2f:#9a4a25;
+      --s3b:#fff5dc; --s3f:#7a5600; --s4b:#e6f5e6; --s4f:#0a6a0a; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#1a1a19; --card:#242422; --ink:#f2f1ec; --ink2:#b5b3ab; --mute:#8a8880; --line:#55534e; --grid:#3a3936;
+        --soft:#2e2d2a; --chipink:#1a1a19; --s1b:#4a1f1f; --s1f:#ffb3b3; --s2b:#4a2a1c; --s2f:#ffc6a8; --s3b:#43361a;
+        --s3f:#ffd98a; --s4b:#1d3a1d; --s4f:#9fe09f; }
+}
+.bg { fill:var(--bg); } .t { font:14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); } .t2 { font:12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); }
+.ti { font:italic 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink2); } .h { font:600 20px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:var(--ink); }
+.pid { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--ink); } .pidhot { font:700 13px 'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; fill:var(--hot); }
+.gl { font:700 8px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; fill:#ffffff; } .pc { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; } .ps { font:600 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.rule { stroke:var(--grid); stroke-width:1; } .rail { stroke:var(--line); stroke-width:1.2; fill:none; }
+.railhot { stroke:var(--hot); stroke-width:2; fill:none; }
+</style>
+<rect class="bg" width="640" height="430"/>
+<path d="M28.0,115.0 V163.0 H33.0" class="railhot"/>
+<path d="M28.0,115.0 V258.0 H33.0" class="rail"/>
+<path d="M28.0,115.0 V317.0 H33.0" class="railhot"/>
+<text x="16" y="34" class="h">SG-01 fault tree · sheet 4 of 6</text>
+<text x="16" y="56" class="t2">ASIL C · phone view of fta-SG-01-4.svg; the full sheet has the drawing.</text>
+<text x="16" y="76" class="t2">Red: a single item fault reaches the top event along this path.</text>
+<rect x="16.0" y="94.0" width="24" height="20" rx="4" fill="var(--or)" stroke="var(--hot)" stroke-width="2.4"/><text x="28.0" y="107.0" class="gl" text-anchor="middle">OR</text>
+<text x="46" y="109.0" class="pidhot">G1.1.1</text>
+<text x="116" y="109.0" class="t">Command above controllable bound transmitted on bus 0 (0x2E4)</text>
+<rect x="116.0" y="119.0" width="66.7" height="18" rx="9" fill="var(--s1b)"/>
+<circle cx="127.0" cy="128.0" r="5" fill="var(--s1f)"/><rect x="124.0" y="127.0" width="6" height="2" fill="var(--s1b)"/>
+<text x="135.0" y="132.0" class="ps" fill="var(--s1f)">1 fault</text>
+<text x="188.7" y="132.0" class="t2">22 cut sets</text>
+<rect x="264.9" y="119.0" width="88.4" height="18" rx="4" fill="none" stroke="var(--line)"/><text x="271.9" y="132.0" class="pc" fill="var(--ink2)">from sheet 2</text>
+<line x1="116" y1="147.0" x2="624" y2="147.0" class="rule"/>
+<circle cx="46.0" cy="163.0" r="9.5" fill="var(--basic)" stroke="var(--hot)" stroke-width="2.4"/>
+<text x="64" y="168.0" class="pidhot">BE-1.01</text>
+<text x="134" y="168.0" class="t">Envelope torque limits set above the controllable bound (raw</text>
+<text x="134" y="186.0" class="t">1500/15/25/450 not derived, GAP-04; identical in controller, CCF →</text>
+<text x="134" y="204.0" class="t">DFI-08)</text>
+<rect x="134.0" y="214.0" width="107.0" height="18" rx="4" fill="var(--s1b)"/><text x="141.0" y="227.0" class="pc" fill="var(--s1f)">SPF, systematic</text>
+<rect x="247.0" y="214.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="254.0" y="227.0" class="pc" fill="var(--ink2)">SWF-001</text>
+<rect x="310.4" y="214.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="317.4" y="227.0" class="pc" fill="var(--ink2)">SFM-002</text>
+<line x1="134" y1="242.0" x2="624" y2="242.0" class="rule"/>
+<rect x="34.0" y="248.0" width="24" height="20" rx="4" fill="var(--or)"/><text x="46.0" y="261.0" class="gl" text-anchor="middle">▸</text>
+<text x="64" y="263.0" class="pid">G1.1.1.a</text>
+<text x="134" y="263.0" class="t">SoC commands excessive torque AND envelope fails to clamp</text>
+<rect x="134.0" y="273.0" width="72.8" height="18" rx="9" fill="var(--s2b)"/>
+<path d="M145.0,277.5 L150.0,286.0 H140.0 Z" fill="var(--s2f)"/>
+<text x="153.0" y="286.0" class="ps" fill="var(--s2f)">2 faults</text>
+<text x="212.8" y="286.0" class="t2">20 cut sets</text>
+<rect x="289.0" y="273.0" width="150.4" height="18" rx="4" fill="var(--ink)"/><text x="296.0" y="286.0" class="pc" fill="var(--chipink)">continued on sheet 6 ▸</text>
+<line x1="134" y1="301.0" x2="624" y2="301.0" class="rule"/>
+<circle cx="46.0" cy="317.0" r="9.5" fill="var(--basic)" stroke="var(--hot)" stroke-width="2.4"/>
+<text x="64" y="322.0" class="pidhot">BE-1.10</text>
+<text x="134" y="322.0" class="t">Frame corrupted after safety_tx_hook in a part not covered by the</text>
+<text x="134" y="340.0" class="t">packet XOR: copy into FDCAN message RAM, message RAM itself, FDCAN</text>
+<text x="134" y="358.0" class="t">core, transceiver (the 8-bit XOR checked before loading, fdcan.h:100,</text>
+<text x="134" y="376.0" class="t">covers only the software TX queue)</text>
+<rect x="134.0" y="386.0" width="100.8" height="18" rx="4" fill="var(--s1b)"/><text x="141.0" y="399.0" class="pc" fill="var(--s1f)">SPF, random HW</text>
+<rect x="240.8" y="386.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="247.8" y="399.0" class="pc" fill="var(--ink2)">DFM-019</text>
+<rect x="304.2" y="386.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="311.2" y="399.0" class="pc" fill="var(--ink2)">FMD-002</text>
+<rect x="367.6" y="386.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="374.6" y="399.0" class="pc" fill="var(--ink2)">FMD-010</text>
+<rect x="431.0" y="386.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="438.0" y="399.0" class="pc" fill="var(--ink2)">FMD-019</text>
+<line x1="134" y1="414.0" x2="624" y2="414.0" class="rule"/>
+</svg>
