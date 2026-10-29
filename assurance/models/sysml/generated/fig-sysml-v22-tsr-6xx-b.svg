@@ -6,7 +6,7 @@
 <text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-22 · TSR requirement diagram · host monitoring, DM, HMI</text>
 <text x="40" y="69" font-size="12.5" fill="#64748B">TSR-619…TSR-635 of WP-S-02 with the FSRs they derive from, the elements that satisfy them, the mechanisms that cite them and the cases that verify them</text>
 <text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::tsrBlocks</text>
-<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">RequirementView · render asTreeDiagram · model 33f30bfe6c7a</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">RequirementView · render asTreeDiagram · model fb3820f70a0d</text>
 <line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
 <text x="40" y="140" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">DERIVED FROM · «requirement» FSR</text>
 <text x="360" y="140" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">TECHNICAL SAFETY REQUIREMENTS · «requirement»</text>
@@ -129,7 +129,7 @@
 <text x="950" y="996" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
 <rect x="1016" y="985" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="995.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
 <text x="950" y="1016" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM</text>
-<text x="1016" y="1016" font-size="9.5" fill="#94A3B8" font-weight="600">none</text>
+<rect x="1016" y="1005" width="39.5" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1035.8" y="1015.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-44</text>
 <text x="950" y="1036" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
 <rect x="1016" y="1025" width="39.5" height="15" rx="7.5" fill="#EFF6FF" stroke="#2563EB" stroke-width="1"/><text x="1035.8" y="1035.6" font-size="8.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-20</text>
 <rect x="360" y="1058" width="560" height="74" rx="8" fill="#FFF7ED" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
@@ -195,7 +195,7 @@
 <text x="950" y="1488" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
 <rect x="1016" y="1477" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="1487.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
 <text x="950" y="1508" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM</text>
-<text x="1016" y="1508" font-size="9.5" fill="#94A3B8" font-weight="600">none</text>
+<rect x="1016" y="1497" width="39.5" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1035.8" y="1507.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-26</text>
 <text x="950" y="1528" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
 <text x="1016" y="1528" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
 <rect x="40" y="156" width="270" height="44" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>

@@ -54,7 +54,7 @@ A generated view replaces a hand-drawn figure when it carries the same facts; un
 | [`model/Security.sysml`](model/Security.sysml) | Security zones Z1 to Z7 and trust boundaries TB-1 to TB-7 of WP-S-07 §3, every column of both tables; elements name their zone with `@Zone` |
 | [`model/Integration.sysml`](model/Integration.sysml) | Integration steps I-1 to I-4 of WP-S-08 §3.1, every column, with the elements each integrates and the interfaces it exercises |
 | [`model/Behaviour.sysml`](model/Behaviour.sysml) | The operating modes of WP-C-01 §4 as the state machine SM-SYS: states with their §4 row and record states, transitions with the record transitions they stand for and who enforces them |
-| [`model/Mechanisms.sysml`](model/Mechanisms.sysml) | SM-01 to SM-43 as `action` usages of `SafetyMechanism` with coverage, DC target and TSRs (WP-S-03 §6) |
+| [`model/Mechanisms.sysml`](model/Mechanisms.sysml) | SM-01 to SM-45 as `action` usages of `SafetyMechanism` with coverage, DC target and TSRs (WP-S-03 §6) |
 | [`model/Architecture.sysml`](model/Architecture.sysml) | E-01 to E-05 with their parts and software units, allocation of software to hardware, interfaces IF-01 to IF-10, the 23 cereal services of WP-S-03 §9 between modelled processes, `perform` statements, the vehicle context and the allocation short forms `P-SW`, `P-HW`, `SoC`, `HAR` as aliases |
 | [`model/Requirements.sysml`](model/Requirements.sysml) | **Generated.** 282 requirements as `requirement` usages: safety goals SG, FSRs and TSRs from the trace data, system requirements SYS of WP-S-01, cybersecurity requirements CSR of WP-S-07 §4, each with its text, ASIL, allocation text and verification method; the parent links of the trace data as `#derivation` connections |
 | [`model/Satisfaction.sysml`](model/Satisfaction.sysml) | **Generated.** `satisfy` relationships from each requirement's allocation: `allocated_to` of the trace data (resolved as in M8), WP-S-01 §10.1, the Alloc column of WP-S-07 §4 (FW → E-03, SoC → E-01); a safety goal is satisfied by the item. EXT, OPS, ENV and USR give no relationship |
@@ -176,13 +176,13 @@ Every figure below is generated. The explorer shows V-01 to V-04 with the model 
 
 ![V-02: element hierarchy generated from the SysML model](generated/fig-sysml-v02-element-hierarchy.svg)
 
-**V-04 Safety mechanism allocation:** SM-01 to SM-43 against the elements that perform them.
+**V-04 Safety mechanism allocation:** SM-01 to SM-45 against the elements that perform them.
 
 ![V-04: safety mechanism allocation generated from the SysML model](generated/fig-sysml-v04-mechanism-allocation.svg)
 
 **V-26 Safety mechanisms on the architecture:** the same allocation drawn on the architecture, at phone width. Top to bottom along the command path (ML models, SoC software, the SoC to MCU link, safety layer, platform firmware, safety MCU, harness, vehicle CAN), each element lists the mechanisms it performs, coloured by DC target, with the other elements that share each one. Between the elements, each interface IF-nn lists the mechanisms that implement a TSR the interface carries: the checks that catch a fault on that link.
 
-![V-26: safety mechanisms on the architecture generated from the SysML model. Each element of the item, from the ML models and SoC software down to the harness, lists the safety mechanisms SM-01 to SM-43 it performs, coloured by diagnostic-coverage target; between the elements, the interfaces IF-01 to IF-10 list the mechanisms that guard them.](generated/fig-sysml-v26-mechanisms-on-architecture.svg)
+![V-26: safety mechanisms on the architecture generated from the SysML model. Each element of the item, from the ML models and SoC software down to the harness, lists the safety mechanisms SM-01 to SM-45 it performs, coloured by diagnostic-coverage target; between the elements, the interfaces IF-01 to IF-10 list the mechanisms that guard them.](generated/fig-sysml-v26-mechanisms-on-architecture.svg)
 
 **V-27 Safety mechanisms per safety goal:** one card per goal SG-01 to SG-08, at phone width. Each goal is traced through its FSRs and TSRs (deriveReqt) to the mechanisms that implement those TSRs, grouped by their status in WP-S-03 §6 (implemented, partial, not there yet) and coloured by DC target. Below, each FSR with no mechanism behind it: red when it is a gap, grey when it is met outside the item (an assumption of use) or by reference to other FSRs.
 

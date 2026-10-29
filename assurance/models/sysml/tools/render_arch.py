@@ -3,7 +3,7 @@
   V-10 functional architecture   the functions F-01 to F-09 along their functional chain, each step on the element
                                  that performs it (LionDriverFunctions, perform statements)
 
-  V-26 safety mechanisms         SM-01 to SM-43 on the elements that perform them and on the interfaces whose TSRs
+  V-26 safety mechanisms         SM-01 to SM-45 on the elements that perform them and on the interfaces whose TSRs
                                  they implement, top to bottom along the command path, at phone width
   V-27 coverage per goal         per safety goal, the mechanisms behind it (SG -> FSR -> TSR -> SM) by status, and the
                                  FSRs with no mechanism behind them, at phone width
