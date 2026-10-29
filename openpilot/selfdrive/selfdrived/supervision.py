@@ -50,3 +50,18 @@ class TxBlockedMonitor:
     previous = self.last.get(index)
     self.last[index] = count
     return engaged and previous is not None and count > previous
+
+
+FCW_INPUTS = ('modelV2', 'longitudinalPlan')
+FCW_MAX_AGE_PERIODS = 2.
+
+
+def fcw_inputs_fresh(valid: dict, recv_frame: dict, frame: int, frequency: dict, dt: float) -> bool:
+  """TSR-625 (SWSR-625): FCW only from inputs that are valid and received within 2 nominal periods, in selfdrived frames
+  (the loop clock, so a process replay gives the same answer as the drive). An input never received is not fresh."""
+  for s in FCW_INPUTS:
+    if not valid[s] or recv_frame[s] <= 0:
+      return False
+    if (frame - recv_frame[s]) * dt > FCW_MAX_AGE_PERIODS / frequency[s]:
+      return False
+  return True
