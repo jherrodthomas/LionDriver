@@ -7,7 +7,7 @@ Times are seconds from fault onset. Deviation is the lateral offset from the off
 | Label (WP-V-02 §5.3.5) | Value |
 |---|---|
 | data_kind | synthetic |
-| simulator | LionDriver fault-injection plant model, fidelity L1 (`assurance/sim/plant`): CommonRoad vehicle models 3.0.2; panda safety code compiled from panda `3a8b7c2` and opendbc `4d1a056` (reference build) |
+| simulator | LionDriver fault-injection plant model, fidelity L1 (`assurance/sim/plant`): CommonRoad vehicle models 3.0.2; panda safety code compiled from panda `3a8b7c2` and opendbc `f23b4fa` (reference build) |
 | asset archive hash | none (nothing is rendered) |
 | scenario ID and family | F-07-KS01 and N-4 run on the road of scenario KS-01 (family SF-1); L-01…L-04 take the KS-08 time gap (SF-2). The other cases use generic highway roads, not WP-V-03 scenarios |
 | fidelity-case status | none |

@@ -2870,8 +2870,10 @@ def render_dfa(doc: dict, fig: str) -> str:
     fill, fg = DEC_COL[d["status"]]
     body.append(txt(40, ky, d["fsr"], 10, INK, 700))
     body.append(txt(96, ky, fit(ch, 300, 10), 10, INK))
-    body.append(txt(400, ky, fit(d["status"].replace("_", " ") + " — " + d.get("rationale", ""), 240, 9.5),
-                    9.5, RED if d["status"] == "not_accepted" else MUTED, 600 if d["status"] == "not_accepted" else 400))
+    bad = d["status"] == "not_accepted"
+    for k, ln in enumerate(wrap(d["status"].replace("_", " ") + " — " + d.get("rationale", ""), 240, 9.5, 600 if bad else 400)):
+      body.append(txt(400, ky + 12 * k, ln, 9.5, RED if bad else MUTED, 600 if bad else 400))
+    ky += 12 * k + 3
   my = y
   for mid, m in measures.items():
     my += 16
@@ -2879,8 +2881,11 @@ def render_dfa(doc: dict, fig: str) -> str:
     p, w = pill(660, my - 11, mid, fill, fg, stroke, dashed=dashed)
     body.append(p)
     alloc = ", ".join(m.get("allocated_to", []))
-    body.append(txt(660 + 52, my, fit(f"{m['description']}", 400, 10), 10, INK))
     body.append(txt(1240, my, fit(alloc, 110, 9.5), 9.5, MUTED, 600, anchor="end"))
+    # the whole description, wrapped: a cut-off measure reads as a different measure
+    for k, ln in enumerate(wrap(m["description"], 410, 10)):
+      body.append(txt(660 + 52, my + 13 * k, ln, 10, INK))
+    my += 13 * k + 3
   y = max(ky, my) + 26
 
   # open items
@@ -2893,8 +2898,13 @@ def render_dfa(doc: dict, fig: str) -> str:
     p, w = pill(40, y - 11, f"{oi['id']} {st}", "#FFFFFF" if st != "closed" else "#F1F5F9",
                 AMBER if st != "closed" else MUTED, AMBER if st != "closed" else "#CBD5E1")
     body.append(p)
-    body.append(txt(40 + 130, y, fit(oi["text"], 640, 10), 10, INK))
-    body.append(txt(1240, y, fit("affects " + ", ".join(oi["affects"]), 290, 9.5), 9.5, MUTED, 600, anchor="end"))
+    text = wrap(oi["text"], 640, 10)
+    affects = wrap("affects " + ", ".join(oi["affects"]), 290, 9.5, 600)
+    for k, ln in enumerate(text):
+      body.append(txt(40 + 130, y + 13 * k, ln, 10, INK))
+    for k, ln in enumerate(affects):
+      body.append(txt(1240, y + 13 * k, ln, 9.5, MUTED, 600, anchor="end"))
+    y += 13 * (max(len(text), len(affects)) - 1) + 3
   y += 26
   body += footer(y, 1280, "analyses/dfa.yaml")
   height = y + 20

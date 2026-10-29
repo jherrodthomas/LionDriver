@@ -51,7 +51,7 @@ to, the kind of safety mechanism, its timing and how it is verified, and says wh
 | TSC | technical safety concept |
 | TSR-nn | technical safety requirement (WP-S-02) |
 | TX | transmit |
-| V-nn | view of the SysML model (V-01…V-25) |
+| V-nn | view of the SysML model (V-01…V-27) |
 | WP-nn | work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case) |
 
 All terms: [abbreviations and record codes](../../terms.md).
@@ -84,7 +84,7 @@ cite them and the cases that verify them are all in the model, and every figure 
 
 ## 1. The technical safety architecture
 
-![SysML view V-03: technical safety architecture, the elements of LD-SDA (host software, envelope firmware, safety MCU, harness and relay) and the vehicle, with the connections between them and the TSRs each element satisfies](../../models/sysml/generated/fig-sysml-v03-system-interconnection.svg)
+[![SysML view V-03 in its phone layout: technical safety architecture, the elements of LD-SDA (host software, envelope firmware, safety MCU, harness and relay) and the vehicle stacked top to bottom, with the interfaces between them and the safety mechanisms each element performs; tap for the full-width diagram](../../models/sysml/generated/fig-sysml-v03-system-interconnection-phone.svg)](../../models/sysml/generated/fig-sysml-v03-system-interconnection.svg)
 
 *The elements the requirements are allocated to (V-03).* The QM partition on the left (host software E-01, ML models
 E-02), the ASIL C safety envelope on the right (firmware E-03a and E-03b on the STM32H7 safety MCU E-04a) and the

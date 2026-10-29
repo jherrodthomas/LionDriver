@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1555" viewBox="0 0 1280 1555" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-2. System FMEA failure chains — sheet 4 of 8 (SFM)</title>
-  <desc id="d">System FMEA failure chains, sheet 4 of 8 (SFM rev 0.39): failure modes SFM-013 to SFM-017 (5 failure modes, 14 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <desc id="d">System FMEA failure chains, sheet 4 of 8 (SFM rev 0.40): failure modes SFM-013 to SFM-017 (5 failure modes, 14 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,7 +9,7 @@
   </defs>
   <rect width="1280" height="1555" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-2 · System FMEA failure chains — sheet 4 of 8</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SFM rev 0.39 · BL-007 · draft · SFM-013 … SFM-017 · 14 causes on this sheet</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SFM rev 0.40 · BL-007 · draft · SFM-013 … SFM-017 · 14 causes on this sheet</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.1</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/system-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>

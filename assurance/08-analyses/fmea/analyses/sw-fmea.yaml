@@ -139,6 +139,9 @@
 # rev 1.15 (after BL-007, ratings within BL-007): TSR-625 freshness gate: selfdrived raises FCW only from a valid modelV2 and longitudinalPlan received within
 #   2 nominal periods (change-2026-10-29-fcw-input-freshness). SWF-051.C1 O 7 D 10 -> O 5 D 4 (mutants FC-1..FC-5, 56 in all); AP stays H (S 10).
 #   SWF-ACT-051 completed. host_mutation.py now drops a mutated file's cached bytecode, which could mask a mutant of the same length.
+# rev 1.16 (after BL-007, ratings within BL-007): opendbc f23b4fa (opendbc#22): the Toyota CarController sends the inactive acceleration whenever
+#   longitudinal control is not active (change-2026-10-29-toyota-inactive-accel). SWF-052.C1 O 6 D 9 -> O 5 D 4 (mutant IA-1); SWF-093.C2 D 8 -> 4, the
+#   opendbc stock-AEB cap now mutated (AE-5, AE-6; 59 host mutants). AP stays H (S 10). SWF-ACT-052 completed; SWF-ACT-081 keeps the AOU-04R vehicle test.
 # Post rev 1.4, FTA WP-A-04 v1.12 (BE-1.25 in the SG-04 tree), ratings unchanged: SWF-055 and SWF-089 gain HZ-006 end effects (an authority
 #   grant covers longitudinal commands, as SWF-007). SWF-002 stays steering-only (HZ-001); its note says why HZ-006 and HZ-010 do not apply.
 #
@@ -188,7 +191,7 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.15"
+  revision: "1.16"
   status: draft
   baseline: BL-007
   rating_tables: RT-2
@@ -3842,18 +3845,21 @@ failure_modes:
   severity: 10
   causes:
   - id: SWF-052.C1
-    description: The Toyota CarController takes pcm_accel_cmd from actuators.accel with no longActive gate (carcontroller.py:197-250); the
-      inactive value relies on LongControl returning 0 in its off state (longcontrol.py:65-67), so a defect or stale carControl upstream
-      passes through
+    description: 'Defect in the inactive-value gate of the Toyota CarController (after BL-007, opendbc f23b4fa, change-2026-10-29-toyota-inactive-accel): while
+      CC.longActive is false ACCEL_CMD is not INACTIVE_ACCEL, so a defect or a stale carControl upstream passes a braking request through. Up to rev 1.15
+      pcm_accel_cmd came from actuators.accel with no longActive gate and relied on LongControl returning 0 in its off state (O 6, D 9)'
     element: SWF-SE-045
     prevention_controls:
-    - description: Upstream review, ruff and ty in CI; no requirement for the inactive value on the host
-      ref: opendbc_repo/opendbc/car/toyota/carcontroller.py
+    - description: 'LionDriver change to the opendbc Toyota port (opendbc#22): INACTIVE_ACCEL whenever CC.longActive is false, on 0x343 and 0x183; targeted
+        tests; reviewed in the PR, not independently; no host requirement for the inactive value (TSR-203 is the envelope''s); O 5'
+      ref: assurance/07-supporting/impact/change-2026-10-29-toyota-inactive-accel.md
     detection_controls:
-    - description: process_replay covers card on the Corolla segment; not designed for a non-zero request while not engaged
-      ref: openpilot/selfdrive/test/process_replay/test_processes.py
-    occurrence: 6
-    detection: 9
+    - description: 'Proven by mutation in CI: opendbc test_carcontroller.py (the inactive value for -3.5, -0.5 and +1.5 m/s² requests, the decoded ACC_CONTROL
+        frame, the rate-limited return) fails on mutant IA-1, tools/ci/host_mutation.py in the tests.yaml unit_tests job; so D 4 (RT-2), from D 9 (rev 1.16)'
+      ref: tools/ci/host_mutants.toml
+      test: opendbc_repo/opendbc/car/toyota/tests/test_carcontroller.py
+    occurrence: 5
+    detection: 4
     ap: H
     actions:
     - SWF-ACT-052
@@ -5933,11 +5939,13 @@ failure_modes:
     - description: LionDriver change to the opendbc Toyota port with a requirement (TSR-713) and targeted tests; O 5
       ref: opendbc_repo/opendbc/car/toyota/carcontroller.py
     detection_controls:
-    - description: 'opendbc test_carcontroller.py (6 cases; 3 fail on the previous code), run by the LionDriver tests.yaml unit_tests job
-        (step "Run opendbc Toyota car tests"); targeted, not proven by mutation (D 8). Corrected from D 9 after BL-007: rev 1.9 said it was not run'
+    - description: 'Proven by mutation in CI (rev 1.16): opendbc test_carcontroller.py, run by the LionDriver tests.yaml unit_tests job, fails on each
+        hand-written mutant of the cap (AE-5: cap not applied during the event, AE-6: cap above 0), tools/ci/host_mutation.py; so D 4 (RT-2), from D 8.
+        D 9 -> 8 after BL-007 (rev 1.10: the tests are run by CI)'
+      ref: tools/ci/host_mutants.toml
       test: opendbc_repo/opendbc/car/toyota/tests/test_carcontroller.py
     occurrence: 5
-    detection: 8
+    detection: 4
     ap: H
     actions:
     - SWF-ACT-081
@@ -6292,7 +6300,14 @@ actions:
   kind: design_change
   description: Send the inactive acceleration from the Toyota CarController whenever CC.longActive is false, with a unit test
   owner: Jherrod Thomas
-  status: open
+  status: completed
+  evidence: 'opendbc#22 (merge f23b4fa, pinned in LionDriver): the Toyota CarController sends INACTIVE_ACCEL whenever CC.longActive is false; three new
+    test_carcontroller.py cases, mutant IA-1 killed (rev 1.16). The PCM response to the inactive value stays with SWF-ACT-053 (AOU-05R)'
+  revised:
+    severity: 10
+    occurrence: 5
+    detection: 4
+    ap: H
 - id: SWF-ACT-053
   kind: detection
   description: Vehicle test of the PCM response when the inactive value replaces an active deceleration (TSR-208, AOU-05R); if the PCM
@@ -6541,9 +6556,9 @@ actions:
     opendbc Toyota car tests in LionDriver CI); AOU-04R vehicle test of the engine computer''s AEB priority (System FMEA SFM-036)'
   owner: Jherrod Thomas
   status: in_progress
-  evidence: 'Host part done: stock_aeb_stand_down and its call in controlsd mutated in CI (AE-1..AE-3; test_controlsd_call_sites.py runs the real
-    Controls.state_control), so SWF-093.C1 D 4 (rev 1.12); the opendbc Toyota car tests already run in the unit_tests job. Open: mutation of the opendbc cap
-    (SWF-093.C2), the AOU-04R vehicle test'
+  evidence: 'Mutation done: stock_aeb_stand_down and its call in controlsd (AE-1..AE-3; test_controlsd_call_sites.py runs the real Controls.state_control),
+    so SWF-093.C1 D 4 (rev 1.12); the opendbc cap (AE-5, AE-6, test_carcontroller.py in the unit_tests job), so SWF-093.C2 D 4 (rev 1.16). Open: the AOU-04R
+    vehicle test'
   revised:
     severity: 10
     occurrence: 5

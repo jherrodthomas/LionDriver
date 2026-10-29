@@ -25,7 +25,7 @@ technical safety requirements, TSR-801…TSR-818, carried out by the procedures 
 | T-nn | code-derived detection or reaction time (WP-S-04 §4); in WP-M-01 and WP-S-06, a tailoring decision T-01…T-08 (WP-M-01 §5) |
 | TSC | technical safety concept |
 | TSR-nn | technical safety requirement (WP-S-02) |
-| V-nn | view of the SysML model (V-01…V-25) |
+| V-nn | view of the SysML model (V-01…V-27) |
 | VS-nn | verification case: VS-SI system integration, VS-HW hardware, VS-SWQ software, VS-FI fault injection, VS-SQ system qualification |
 | WP-nn | work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case) |
 
