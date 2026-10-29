@@ -48,3 +48,24 @@ class TestLatControl(OpenpilotTestCase):
     for _ in range(1000):
       _, _, lac_log = controller.update(True, CS, VM, params, False, 1, False, 0.2)
     assert lac_log.saturated
+
+
+class TestLatControlReset(OpenpilotTestCase):
+  # LionDriver (SWF-042.C1): reset() clears the integrator, so an engagement does not start with the last one's correction
+
+  @parameterized.expand([(HONDA.HONDA_CIVIC, LatControlPID), (TOYOTA.TOYOTA_COROLLA_TSS2, LatControlTorque),
+                         (VOLKSWAGEN.VOLKSWAGEN_ID4_MK2, LatControlCurvature)])
+  def test_reset_clears_integrator(self, car_name, controller):
+    CarInterface = interfaces[car_name]
+    CP = CarInterface.get_non_essential_params(car_name)
+    controller = controller(CP.as_reader(), CarInterface(CP), DT_CTRL)
+    VM = VehicleModel(CP)
+    CS = car.CarState.new_message()
+    CS.vEgo = 30
+    params = log.VehicleParameters.new_message()
+
+    for _ in range(300):
+      controller.update(True, CS, VM, params, False, 0.0001, False, 0.2)
+    assert controller.pid.i != 0.
+    controller.reset()
+    assert controller.pid.i == 0.

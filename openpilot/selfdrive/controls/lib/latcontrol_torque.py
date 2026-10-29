@@ -46,6 +46,11 @@ class LatControlTorque(LatControl):
     self.lookahead_frames = int(JERK_LOOKAHEAD_SECONDS / self.dt)
     self.jerk_filter = FirstOrderFilter(0.0, 1 / (2 * np.pi * LP_FILTER_CUTOFF_HZ), self.dt)
 
+  def reset(self):
+    # LionDriver (SWF-042.C1): no integrator from the last engagement on the next one, as LatControlCurvature
+    super().reset()
+    self.pid.reset()
+
   def update_torque_parameters(self, latAccelFactor, latAccelOffset, friction):
     self.torque_params.latAccelFactor = latAccelFactor
     self.torque_params.latAccelOffset = latAccelOffset

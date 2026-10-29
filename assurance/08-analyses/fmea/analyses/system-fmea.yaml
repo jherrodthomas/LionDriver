@@ -151,6 +151,8 @@
 # Rev 0.37 (after BL-007, ratings within BL-007): SFM-025.C1 D 8 -> 4, re-inherited from SWF-062.C1 once the controlsd hold, the alert
 #   re-raise and the lockout timing were mutated too (MR-4..MR-7, SW FMEA rev 1.12). AP stays H (S 10, O 5). SFM-036.C1 keeps D 8: the
 #   opendbc cap of the command (SWF-093.C2) is not mutated yet.
+# Rev 0.38 (after BL-007, ratings within BL-007): SFM-002.C1 and SFM-007.C1 O 7 D 10 -> O 5 D 4, re-inherited from SWF-042.C1 once both
+#   lateral controllers clear their integrator in reset() (DQ-426 A, SW FMEA rev 1.13). SFM-002.C1 stays AP H (S 10); SFM-007.C1 AP H -> M (S 7).
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -159,7 +161,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.37"
+  revision: "0.38"
   status: draft
   baseline: BL-007
   rating_tables: RT-3
@@ -483,14 +485,16 @@ failure_modes:
         linked_failure_mode: SWF-042
         description: Lateral controller output too high (gain, torque model, saturation logic)
         prevention_controls:
-        - description: Upstream review and lint; LatControlCurvature does reset its PID (latcontrol_curvature.py:28-31), so the omission may be an oversight or
-            deliberate upstream; no requirement states either
-          ref: openpilot/selfdrive/controls/lib/latcontrol_curvature.py
+        - description: 'LionDriver change: LatControlTorque and LatControlPID reset their PID in reset(), as LatControlCurvature does (DQ-426 A); targeted unit
+            tests; no requirement yet; O 5'
+          ref: assurance/07-supporting/impact/change-2026-10-29-lateral-integrator-reset.md
         detection_controls:
-        - description: test_latcontrol.py covers saturation only; test_latcontrol_torque_buffer.py covers the request buffer only; nothing checks controller state
-            across disengagement
-        occurrence: 7
-        detection: 10
+        - description: 'test_latcontrol.py and test_controlsd_call_sites.py, proven by mutants LR-1..LR-3 in CI (tools/ci/host_mutation.py); D 4, from D 10
+            (SW FMEA rev 1.13)'
+          ref: tools/ci/host_mutants.toml
+          test: openpilot/selfdrive/controls/tests/test_latcontrol.py
+        occurrence: 5
+        detection: 4
         ap: H
         actions:
         - SFM-ACT-001
@@ -1315,15 +1319,17 @@ failure_modes:
         linked_failure_mode: SWF-042
         description: Controller instability (gain, delay compensation, lagd estimate)
         prevention_controls:
-        - description: Upstream review and lint; LatControlCurvature does reset its PID (latcontrol_curvature.py:28-31), so the omission may be an oversight or
-            deliberate upstream; no requirement states either
-          ref: openpilot/selfdrive/controls/lib/latcontrol_curvature.py
+        - description: 'LionDriver change: LatControlTorque and LatControlPID reset their PID in reset(), as LatControlCurvature does (DQ-426 A); targeted unit
+            tests; no requirement yet; O 5'
+          ref: assurance/07-supporting/impact/change-2026-10-29-lateral-integrator-reset.md
         detection_controls:
-        - description: test_latcontrol.py covers saturation only; test_latcontrol_torque_buffer.py covers the request buffer only; nothing checks controller state
-            across disengagement
-        occurrence: 7
-        detection: 10
-        ap: H
+        - description: 'test_latcontrol.py and test_controlsd_call_sites.py, proven by mutants LR-1..LR-3 in CI (tools/ci/host_mutation.py); D 4, from D 10
+            (SW FMEA rev 1.13)'
+          ref: tools/ci/host_mutants.toml
+          test: openpilot/selfdrive/controls/tests/test_latcontrol.py
+        occurrence: 5
+        detection: 4
+        ap: M
         rationale: Rated, and actioned, in the SW FMEA (SWF-042.C1, SWF-ACT-042, SWF-ACT-043); this row inherits that rating
       - id: SFM-007.C2
         element: SFM-SE-019

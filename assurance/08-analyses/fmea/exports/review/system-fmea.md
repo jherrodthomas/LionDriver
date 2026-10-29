@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.37 | draft | BL-007 | RT-3 | 2026-10-25 |
+| 0.38 | draft | BL-007 | RT-3 | 2026-10-25 |
 
 **Scope.** LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda, software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005; re-checked at BL-006 and BL-007), while the vehicle is driven by a licensed driver inside the ODD: limited-access highways only since WP-C-02 / WP-C-03 v0.4 (DQ-023), up to 110 km/h (DQ-260). Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are preserved), added because the harness intercepts the stock ADAS camera.
 
@@ -147,7 +147,7 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `SFM-002.C1` Lateral controller output too high (gain, torque model, saturation logic) | • Upstream review and lint; LatControlCurvature does reset its PID (latcontrol_curvature.py:28-31), so the omission may be an oversight or deliberate upstream; no requirement states either <sub>openpilot/selfdrive/controls/lib/latcontrol_curvature.py</sub> | • test_latcontrol.py covers saturation only; test_latcontrol_torque_buffer.py covers the request buffer only; nothing checks controller state across disengagement | 7 | 10 | 🔴 **H** | SFM-ACT-001, SFM-ACT-019 |
+| `SFM-002.C1` Lateral controller output too high (gain, torque model, saturation logic) | • LionDriver change: LatControlTorque and LatControlPID reset their PID in reset(), as LatControlCurvature does (DQ-426 A); targeted unit tests; no requirement yet; O 5 <sub>assurance/07-supporting/impact/change-2026-10-29-lateral-integrator-reset.md</sub> | • test_latcontrol.py and test_controlsd_call_sites.py, proven by mutants LR-1..LR-3 in CI (tools/ci/host_mutation.py); D 4, from D 10 (SW FMEA rev 1.13) <sub>openpilot/selfdrive/controls/tests/test_latcontrol.py</sub> | 5 | 4 | 🔴 **H** | SFM-ACT-001, SFM-ACT-019 |
 | `SFM-002.C2` Model outputs excessive desired curvature | • Upstream neural network trained and validated by comma.ai; no development or validation evidence is available to LionDriver (SOTIF / ISO PAS 8800 scope, WP-C-06) <sub>openpilot/selfdrive/modeld</sub> | • No pre-release test targets this cause | 7 | 10 | 🔴 **H** | SFM-ACT-001, SFM-ACT-009, SFM-ACT-019 |
 | `SFM-002.C3` Safety model torque/rate limits wrong for this vehicle or not enforced | • Panda limits are copied from upstream vehicle tuning (same constants as the SoC side); no independent envelope derived from vehicle measurements (FSC FOI-001) <sub>opendbc_repo/opendbc/safety/modes/toyota.h</sub><br>• Panda safety code: MISRA C:2012, 100% line coverage, review; rated in the SW FMEA <sub>assurance/08-analyses/fmea/analyses/sw-fmea.yaml</sub> | • opendbc safety suite with 100% line coverage and mutation tests, run by CI on every change (proven, early, test-to-fail) <sub>opendbc_repo/opendbc/safety/tests/test_toyota.py</sub> | 6 | 9 | 🔴 **H** | SFM-ACT-001 |
 | `SFM-002.C4` Wrong vehicle parameters (steer ratio, lateral accel factor, torque offsets) from online learners | • Upstream openpilot code with upstream review; ruff and type checks in CI (static analysis job); unit tests are not requirements-based; no field-exposure evidence for this configuration, so none is credited (RT-1 §2.2) <sub>scripts/lint/lint.sh</sub><br>• paramsd bounds the learned steer ratio to 0.5-2x CarParams and rate-limits offsets; torqued accepts estimates only within sanity bounds of the CarParams values <sub>openpilot/selfdrive/locationd/paramsd.py:47</sub> | • As rated in the SW FMEA (SWF-076.C1, D 9 at BL-005): test_paramsd.py (CI) checks the saved-parameter handling; not designed for out-of-bound use <sub>openpilot/selfdrive/locationd/test/test_paramsd.py</sub><br>• paramsd and torqued unit tests (estimate bounds and convergence); targeted, not proven by fault injection <sub>openpilot/selfdrive/locationd/test/test_paramsd.py</sub> | 5 | 9 | 🔴 **H** | SFM-ACT-001, SFM-ACT-002, SFM-ACT-019 |
@@ -261,7 +261,7 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `SFM-007.C1` Controller instability (gain, delay compensation, lagd estimate) | • Upstream review and lint; LatControlCurvature does reset its PID (latcontrol_curvature.py:28-31), so the omission may be an oversight or deliberate upstream; no requirement states either <sub>openpilot/selfdrive/controls/lib/latcontrol_curvature.py</sub> | • test_latcontrol.py covers saturation only; test_latcontrol_torque_buffer.py covers the request buffer only; nothing checks controller state across disengagement | 7 | 10 | 🔴 **H** | — |
+| `SFM-007.C1` Controller instability (gain, delay compensation, lagd estimate) | • LionDriver change: LatControlTorque and LatControlPID reset their PID in reset(), as LatControlCurvature does (DQ-426 A); targeted unit tests; no requirement yet; O 5 <sub>assurance/07-supporting/impact/change-2026-10-29-lateral-integrator-reset.md</sub> | • test_latcontrol.py and test_controlsd_call_sites.py, proven by mutants LR-1..LR-3 in CI (tools/ci/host_mutation.py); D 4, from D 10 (SW FMEA rev 1.13) <sub>openpilot/selfdrive/controls/tests/test_latcontrol.py</sub> | 5 | 4 | 🟠 M | — |
 | `SFM-007.C2` Control loop timing jitter (CPU load, thermal throttling) | • Upstream openpilot code with upstream review; ruff and type checks in CI (static analysis job); unit tests are not requirements-based; no field-exposure evidence for this configuration, so none is credited (RT-1 §2.2) <sub>scripts/lint/lint.sh</sub><br>• Real-time scheduling priority and CPU affinity set by the control processes (config_realtime_process) <sub>openpilot/selfdrive/controls/controlsd.py:238</sub> | • No pre-release test targets this cause | 5 | 10 | 🔴 **H** | SFM-ACT-003 |
 
 #### SFM-008 · Unintended acceleration
@@ -948,7 +948,7 @@ Safety mechanisms: (1) EPS-fault siren from the panda when LKA_STATE reports a f
 | `SFM-001.C1` | Steering torque applied when not engaged | 10/6/8 | **none** |
 | `SFM-001.C2` | Steering torque applied when not engaged | 10/5/3 | **none** |
 | `SFM-001.C3` | Steering torque applied when not engaged | 10/4/9 | **none** |
-| `SFM-002.C1` | Steering torque or torque rate above limits | 10/7/10 | SFM-ACT-001, SFM-ACT-019 |
+| `SFM-002.C1` | Steering torque or torque rate above limits | 10/5/4 | SFM-ACT-001, SFM-ACT-019 |
 | `SFM-002.C2` | Steering torque or torque rate above limits | 10/7/10 | SFM-ACT-001, SFM-ACT-009, SFM-ACT-019 |
 | `SFM-002.C3` | Steering torque or torque rate above limits | 10/6/9 | SFM-ACT-001 |
 | `SFM-002.C4` | Steering torque or torque rate above limits | 10/5/9 | SFM-ACT-001, SFM-ACT-002, SFM-ACT-019 |
@@ -967,7 +967,6 @@ Safety mechanisms: (1) EPS-fault siren from the panda when LKA_STATE reports a f
 | `SFM-006.C1` | Lateral command frozen at last value | 10/6/10 | **none** |
 | `SFM-006.C2` | Lateral command frozen at last value | 10/4/10 | SFM-ACT-002 |
 | `SFM-006.C3` | Lateral command frozen at last value | 10/5/10 | SFM-ACT-002 |
-| `SFM-007.C1` | Oscillating lateral control | 7/7/10 | **none** |
 | `SFM-007.C2` | Oscillating lateral control | 7/5/10 | SFM-ACT-003 |
 | `SFM-008.C1` | Unintended acceleration | 10/7/9 | SFM-ACT-001, SFM-ACT-002 |
 | `SFM-008.C2` | Unintended acceleration | 10/7/10 | SFM-ACT-001 |

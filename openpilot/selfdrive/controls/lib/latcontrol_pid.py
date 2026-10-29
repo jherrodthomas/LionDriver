@@ -14,6 +14,11 @@ class LatControlPID(LatControl):
     self.ff_factor = CP.lateralTuning.pid.kf
     self.get_steer_feedforward = CI.get_steer_feedforward_function()
 
+  def reset(self):
+    # LionDriver (SWF-042.C1): no integrator from the last engagement on the next one, as LatControlCurvature
+    super().reset()
+    self.pid.reset()
+
   def update(self, active, CS, VM, params, steer_limited_by_safety, desired_curvature, curvature_limited, lat_delay):
     pid_log = log.ControlsState.LateralPIDState.new_message()
     pid_log.steeringAngleDeg = float(CS.steeringAngleDeg)

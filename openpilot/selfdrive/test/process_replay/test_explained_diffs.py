@@ -8,6 +8,7 @@ from openpilot.selfdrive.test.process_replay.test_processes import EXPLAINED_DIF
 
 TESLA_CARD = ("aebd8f1d4ea16066|000002d8--5850d3ea5c--2", "card")
 TOYOTA_DMONITORINGD = ("regen218A4DCFAA1|2025-04-08--22-57-51--0", "dmonitoringd")
+HONDA_CONTROLSD = ("regenB328FF8BA0A|2025-04-08--22-57-45--0", "controlsd")
 
 
 def sendcan(*frames):
@@ -71,3 +72,23 @@ class TestExplainedDiffs(unittest.TestCase):
     self.assertEqual(compare_logs([dm_state(78)], [dm_state(77)], entry["fields"]), [])
     # the alert level is still compared
     self.assertTrue(compare_logs([dm_state(78)], [dm_state(77, log.DriverMonitoringState.AlertLevel.one)], entry["fields"]))
+
+  def test_swf042_integrator_reset_diff_is_explained(self):
+    entry = EXPLAINED_DIFFS[HONDA_CONTROLSD]
+
+    def controls(i, torque, lat_active=True):
+      cs = log.Event.new_message()
+      cs.init("controlsState")
+      cs.controlsState.lateralControlState.init("pidState")
+      cs.controlsState.lateralControlState.pidState.i = i
+      cs.controlsState.lateralControlState.pidState.output = torque
+      cc = log.Event.new_message()
+      cc.init("carControl")
+      cc.carControl.actuators.torque = torque
+      cc.carControl.latActive = lat_active
+      return [cs.as_reader(), cc.as_reader()]
+
+    self.assertTrue(compare_logs(controls(-0.066, -0.36), controls(0., -0.30)))
+    self.assertEqual(compare_logs(controls(-0.066, -0.36), controls(0., -0.30), entry["fields"]), [])
+    # whether lateral control is active is still compared
+    self.assertTrue(compare_logs(controls(-0.066, -0.36), controls(0., -0.30, lat_active=False), entry["fields"]))

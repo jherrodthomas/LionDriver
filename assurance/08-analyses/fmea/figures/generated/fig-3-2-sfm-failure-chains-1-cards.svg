@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1630" viewBox="0 0 1280 1630" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-2. System FMEA failure chains — sheet 1 of 8 (SFM)</title>
-  <desc id="d">System FMEA failure chains, sheet 1 of 8 (SFM rev 0.37): failure modes SFM-001 to SFM-004 (4 failure modes, 15 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <desc id="d">System FMEA failure chains, sheet 1 of 8 (SFM rev 0.38): failure modes SFM-001 to SFM-004 (4 failure modes, 15 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -10,7 +10,7 @@
   </defs>
   <rect width="1280" height="1630" fill="#FCFCFB"/>
   <text x="40" y="44" font-size="20" fill="#0B0B0B" font-weight="700">Figure 3-2 · System FMEA failure chains — sheet 1 of 8</text>
-  <text x="40" y="66" font-size="12.5" fill="#52514E">SFM rev 0.37 · BL-007 · draft · SFM-001 … SFM-004 · 15 causes on this sheet</text>
+  <text x="40" y="66" font-size="12.5" fill="#52514E">SFM rev 0.38 · BL-007 · draft · SFM-001 … SFM-004 · 15 causes on this sheet</text>
   <text x="1240" y="44" font-size="11" fill="#52514E" text-anchor="end">fmea-plan.md §3.1</text>
   <text x="1240" y="62" font-size="11" fill="#52514E" text-anchor="end">analyses/system-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E1E0D9" stroke-width="1"/>
@@ -112,7 +112,7 @@
   <rect x="1182.5" y="417.2" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="424.7" r="4.3" fill="#9E2424"/><rect x="1189.4" y="423.9" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="428.2" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
   <text x="886" y="442.8" font-size="10.5" fill="#0B0B0B">Lateral controller output too high (gain, torque model, saturation</text>
   <text x="886" y="456.9" font-size="10.5" fill="#0B0B0B">logic)</text>
-  <text x="886" y="470" font-size="9.8" fill="#52514E" font-weight="600">O7 · D10 · in SFM-SE-013 · → SWF-042</text>
+  <text x="886" y="470" font-size="9.8" fill="#52514E" font-weight="600">O5 · D4 · in SFM-SE-013 · → SWF-042</text>
   <rect x="886" y="476" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="486.9" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">SFM-ACT-001 open</text>
   <rect x="998.9" y="476" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="1053.3" y="486.9" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">SFM-ACT-019 open</text>
   <rect x="876" y="510" width="364" height="78.2" fill="#000000" rx="12" opacity=".05"/>

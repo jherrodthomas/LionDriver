@@ -129,6 +129,9 @@
 #   SelfdriveD constructor (test_selfdrived_start.py), the real Controls.state_control and publish (test_controlsd_call_sites.py) and
 #   SelfdriveD.update_events (test_minimum_risk.py); new mutants MR-4..MR-7, AC-3..AC-6, DT-8..DT-11, AE-3 (42 in all). D 8 -> 4: SWF-062.C1,
 #   SWF-067.C1, SWF-091.C2, SWF-093.C1. AP stays H (S 10, O 5). SWF-ACT-080 and -081 stay in progress (vehicle checks, the opendbc cap).
+# rev 1.13 (after BL-007, ratings within BL-007): DQ-426 A (decider Claude) makes LatControlTorque and LatControlPID clear their PID integrator in
+#   reset(), which controlsd calls whenever lateral control is off (change-2026-10-29-lateral-integrator-reset); upstream still carries it over.
+#   SWF-042.C1 rewritten to a defect in the reset, O 7 D 10 -> O 5 D 4 (mutants LR-1..LR-3, 45 in all), AP stays H (S 10, O 5). SWF-ACT-042 completed.
 # Post rev 1.4, FTA WP-A-04 v1.12 (BE-1.25 in the SG-04 tree), ratings unchanged: SWF-055 and SWF-089 gain HZ-006 end effects (an authority
 #   grant covers longitudinal commands, as SWF-007). SWF-002 stays steering-only (HZ-001); its note says why HZ-006 and HZ-010 do not apply.
 #
@@ -178,7 +181,7 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.12"
+  revision: "1.13"
   status: draft
   baseline: BL-007
   rating_tables: RT-2
@@ -3248,20 +3251,22 @@ failure_modes:
   severity: 10
   causes:
   - id: SWF-042.C1
-    description: 'LatControlTorque does not reset its PID integrator when lateral control ends: controlsd calls LaC.reset() when not latActive
-      (controlsd.py:112-113), but LatControlTorque has no reset() override and the base class clears only sat_time (latcontrol.py:19-20); the
-      inactive branch skips pid.update (latcontrol_torque.py:114-116). The integrator from the last engagement (bounded by the lat-accel limits,
-      pid.py:48-55) is added on the next engagement'
+    description: 'Defect in the integrator reset (after BL-007, change-2026-10-29-lateral-integrator-reset): LatControlTorque.reset or LatControlPID.reset
+      does not clear the PID, or controlsd does not call LaC.reset() when lateral control ends, so the integrator from the last engagement (bounded by the
+      lat-accel limits, pid.py:48-55) is added on the next one. Up to rev 1.12 the reset was missing in both controllers (O 7, D 10)'
     element: SWF-SE-042
     prevention_controls:
-    - description: Upstream review and lint; LatControlCurvature does reset its PID (latcontrol_curvature.py:28-31), so the omission may be an
-        oversight or deliberate upstream; no requirement states either
-      ref: openpilot/selfdrive/controls/lib/latcontrol_curvature.py
+    - description: 'LionDriver change: both controllers reset their PID in reset(), as LatControlCurvature does (latcontrol_torque.py, latcontrol_pid.py); targeted
+        unit tests; reviewed in the PR, not independently; no requirement yet (SWF-ACT-043); O 5'
+      ref: assurance/07-supporting/impact/change-2026-10-29-lateral-integrator-reset.md
     detection_controls:
-    - description: test_latcontrol.py covers saturation only; test_latcontrol_torque_buffer.py covers the request buffer only; nothing checks
-        controller state across disengagement
-    occurrence: 7
-    detection: 10
+    - description: 'Proven by mutation in CI: test_latcontrol.py (TestLatControlReset, the reference Corolla TSS2 torque controller, PID and curvature) and
+        test_controlsd_call_sites.py (TestLateralResetCallSite, the real Controls.state_control) fail on each hand-written mutant of this cause (LR-1..LR-3:
+        either reset, and the controlsd call), tools/ci/host_mutation.py in the tests.yaml unit_tests job; so D 4 (RT-2), from D 10 (rev 1.13)'
+      ref: tools/ci/host_mutants.toml
+      test: openpilot/selfdrive/controls/tests/test_latcontrol.py
+    occurrence: 5
+    detection: 4
     ap: H
     actions:
     - SWF-ACT-042
@@ -6183,7 +6188,15 @@ actions:
   description: Reset the LatControlTorque PID (and LatControlPID) in reset(), or record why upstream carries the integrator over engagements;
     check against current upstream openpilot
   owner: Jherrod Thomas
-  status: open
+  status: completed
+  evidence: 'Both controllers reset their PID in reset() (DQ-426 A, decider Claude; change-2026-10-29-lateral-integrator-reset). Upstream master e376168
+    (2026-10-27) still has no reset in either; it gives no reason, so LionDriver diverges, as LatControlCurvature already does. Tested on the reference
+    controller and through controlsd, proven by mutants LR-1..LR-3 in CI (rev 1.13). The requirement and the full gating table stay with SWF-ACT-043'
+  revised:
+    severity: 10
+    occurrence: 5
+    detection: 4
+    ap: H
 - id: SWF-ACT-043
   kind: detection
   description: Requirements-based unit tests for controlsd and the Toyota CarController (latActive/longActive gating table per FSR-006, zero

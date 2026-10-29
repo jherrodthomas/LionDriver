@@ -88,6 +88,18 @@ EXPLAINED_DIFFS: dict[tuple[str, str], dict[str, list]] = {
   ("regen218A4DCFAA1|2025-04-08--22-57-51--0", "dmonitoringd"): {
     "fields": ["driverMonitoringState.wheeltouchPolicyState.awarenessPercent"],
   },
+  # SWF-042.C1 (DQ-426): the lateral controllers clear their integrator when steering assist ends. On this Hyundai route
+  # (torque controller) only the logged integrator differs while assist is off; the torque command is unchanged.
+  # assurance/07-supporting/impact/change-2026-10-29-lateral-integrator-reset.md
+  ("regenAFB9780D823|2025-04-08--23-00-34--0", "controlsd"): {
+    "fields": ["controlsState.lateralControlState.torqueState.i"],
+  },
+  # On this Honda route (PID controller) the old integrator is no longer added at re-engagement, so the steering command
+  # differs for about 3.3 s after it; carControl.enabled, latActive and every other field are still compared.
+  ("regenB328FF8BA0A|2025-04-08--22-57-45--0", "controlsd"): {
+    "fields": ["controlsState.lateralControlState.pidState.i", "controlsState.lateralControlState.pidState.output",
+               "carControl.actuators.torque"],
+  },
 }
 
 
