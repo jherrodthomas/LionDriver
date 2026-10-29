@@ -155,6 +155,8 @@
 #   lateral controllers clear their integrator in reset() (DQ-426 A, SW FMEA rev 1.13). SFM-002.C1 stays AP H (S 10); SFM-007.C1 AP H -> M (S 7).
 # Rev 0.39 (after BL-007, ratings within BL-007): SFM-022.C4 O 8 D 10 -> O 5 D 4, re-inherited from SWF-085 once the demo-mode interlock
 #   (TSR-610, DQ-427, SW FMEA rev 1.14) was implemented and mutated; its MSR row F 8 M 10 -> F 5 M 7 (timing not measured). AP stays H.
+# Rev 0.40 (after BL-007, ratings within BL-007): SFM-036.C1 D 8 -> 4: with the opendbc cap mutated too (AE-5, AE-6, SW FMEA rev 1.16), every
+#   part of the stand-down is proven by mutation in CI. AP stays H (S 10, O 5).
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -163,7 +165,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.39"
+  revision: "0.40"
   status: draft
   baseline: BL-007
   rating_tables: RT-3
@@ -4197,12 +4199,13 @@ failure_modes:
             (AOU-04R)'
           ref: assurance/07-supporting/impact/change-2026-10-19-stock-aeb-stand-down.md
         detection_controls:
-        - description: 'test_stock_aeb.py (4 tests) in the CI unit_tests job (tests run 39296172878); targeted, not proven by mutation, so D 8. The
-            opendbc test_carcontroller.py cases ran locally only (LionDriver CI does not run opendbc car tests). Not verified on the vehicle (the
-            AOU-04R test also checks that stockAeb is reported during a PCS event)'
+        - description: 'Proven by mutation in CI (System FMEA rev 0.40): test_stock_aeb.py and test_controlsd_call_sites.py on the host stand-down (AE-1..AE-3)
+            and opendbc test_carcontroller.py on the 0x343 cap (AE-5, AE-6), all in the unit_tests job, as SWF-093.C1/C2; D 4, from D 8. Not verified on
+            the vehicle (the AOU-04R test also checks that stockAeb is reported during a PCS event)'
+          ref: tools/ci/host_mutants.toml
           test: openpilot/selfdrive/controls/tests/test_stock_aeb.py
         occurrence: 5
-        detection: 8
+        detection: 4
         ap: H
         previous:
           baseline: BL-006
