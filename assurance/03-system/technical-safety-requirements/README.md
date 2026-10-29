@@ -84,7 +84,7 @@ cite them and the cases that verify them are all in the model, and every figure 
 
 ## 1. The technical safety architecture
 
-![SysML view V-03: technical safety architecture, the elements of LD-SDA (host software, envelope firmware, safety MCU, harness and relay) and the vehicle, with the connections between them and the TSRs each element satisfies](../../models/sysml/generated/fig-sysml-v03-system-interconnection.svg)
+[![SysML view V-03 in its phone layout: technical safety architecture, the elements of LD-SDA (host software, envelope firmware, safety MCU, harness and relay) and the vehicle stacked top to bottom, with the interfaces between them and the safety mechanisms each element performs; tap for the full-width diagram](../../models/sysml/generated/fig-sysml-v03-system-interconnection-phone.svg)](../../models/sysml/generated/fig-sysml-v03-system-interconnection.svg)
 
 *The elements the requirements are allocated to (V-03).* The QM partition on the left (host software E-01, ML models
 E-02), the ASIL C safety envelope on the right (firmware E-03a and E-03b on the STM32H7 safety MCU E-04a) and the

@@ -168,9 +168,9 @@ Every figure below is generated. The explorer shows V-01 to V-04 with the model 
 
 ![V-01: item context generated from the SysML model](generated/fig-sysml-v01-item-context.svg)
 
-**V-03 Technical safety architecture:** the WP-S-03 Figure 3-2 content drawn from the model.
+**V-03 Technical safety architecture:** the WP-S-03 Figure 3-2 content drawn from the model. Shown here in its phone layout, the same elements, texts and interfaces stacked top to bottom along the command path; tap it for the full-width diagram, which shows where each interface attaches.
 
-![V-03: technical safety architecture generated from the SysML model](generated/fig-sysml-v03-system-interconnection.svg)
+[![V-03: technical safety architecture generated from the SysML model, in its phone layout. Top to bottom: the road and the driver, the camera links, the QM partition (device hardware E-04b, SoC software E-01 with its processes, ML models E-02), the SPI and boot links to the MCU, the ASIL C envelope (safety layer E-03a and platform firmware E-03b with their software units, STM32H7 E-04a), the relay and harness E-05, the car side, then the alerts, supply and back-end links. Each block lists the safety mechanisms it performs](generated/fig-sysml-v03-system-interconnection-phone.svg)](generated/fig-sysml-v03-system-interconnection.svg)
 
 **V-02 Element hierarchy:** every part and software unit with integrity, unit and build scope.
 

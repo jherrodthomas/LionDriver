@@ -3,6 +3,9 @@
   V-10 functional architecture   the functions F-01 to F-09 along their functional chain, each step on the element
                                  that performs it (LionDriverFunctions, perform statements)
 
+  V-03 at phone width            the technical safety architecture stacked top to bottom along the command path
+                                 (render_interconnection_phone, from V-03's [phone] layout)
+
   V-26 safety mechanisms         SM-01 to SM-45 on the elements that perform them and on the interfaces whose TSRs
                                  they implement, top to bottom along the command path, at phone width
   V-27 coverage per goal         per safety goal, the mechanisms behind it (SG -> FSR -> TSR -> SM) by status, and the
@@ -1406,6 +1409,186 @@ def render_reactions(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> 
 
 
 RENDERERS["parametric"] = render_reactions
+
+# ---------------------------------------------------------------- V-03 at phone width
+
+def _element(m: sysml_lite.Model, ident: str) -> sysml_lite.Element:
+  """An element by id or by name in the context, as V-03's layout names it."""
+  e = m.find(ident) or m.elements.get(ident) or m.elements.get("context." + ident)
+  if e is None:
+    raise sysml_lite.ModelError(f"layout.toml V-03 phone: {ident!r} is not an element of the model")
+  return e
+
+
+def _node_text(spec: dict) -> dict[str, dict]:
+  """Title and subtitle of each element as V-03 draws them, so that both versions say the same."""
+  return {n["el"]: n for n in spec.get("node", []) if "el" in n}
+
+
+def _phone_block(m: sysml_lite.Model, el: str, spec: dict, x: float, y: float, w: float) -> tuple[list[str], float]:
+  """One element as a block: its id, title and integrity, its subtitle, and its parts (or its software units) as cards
+  or chips."""
+  e = _element(m, el)
+  st = rv.style_of(e)
+  ns = _node_text(spec).get(el, {})
+  title = ns.get("title") or rv.Canvas.default_title(e)
+  out = []
+  hx = x + 12
+  if e.short:
+    p, pw = k.pill(hx, y + 12, e.short, st["chip"], h=18, size=10.5)
+    out.append(p)
+    hx += pw + 8
+  out.append(k.text(hx, y + 26, title, 14, k.INK, 700))
+  ip, _ = rv.integrity_pill(x + w - 12, y + 12, e, h=18, size=10)
+  out.append(ip)
+  yy = y + 40
+  for ln in k.wrap(ns.get("sub", ""), w - 24, 11)[:3]:
+    out.append(k.text(x + 12, yy + 10, ln, 11, k.MUTED))
+    yy += 15
+  subs = spec.get("subs", {})
+  kids = [] if el in spec["phone"].get("no_parts", []) else list(e.children)
+  if ns.get("list") == "units-inline":
+    units = []
+    for c in e.walk():
+      u = (c.meta.get("Unit") or {}).get("id")
+      if c is not e and u and u not in units:
+        units.append(u)
+    yy += 6
+    cx = x + 12
+    for u in units:
+      p, pw = k.pill(cx, yy, u, "#FFEDD5", k.ENVELOPE["text"], 18, 9.5, 600, "#FDBA74", mono=True)
+      if cx + pw > x + w - 12:
+        cx, yy = x + 12, yy + 22
+        p, pw = k.pill(cx, yy, u, "#FFEDD5", k.ENVELOPE["text"], 18, 9.5, 600, "#FDBA74", mono=True)
+      out.append(p)
+      cx += pw + 5
+    yy += 24
+  elif kids:
+    yy += 6
+    cw = (w - 24 - 8) / 2
+    for i, c in enumerate(kids):
+      cx, cy = x + 12 + (i % 2) * (cw + 8), yy + (i // 2) * 48
+      cst = rv.style_of(c)
+      out.append(k.rect(cx, cy, cw, 42, "#FFFFFF", cst["stroke"], 6, 1))
+      name = rv.Canvas.default_title(c)
+      out.append(k.text(cx + 8, cy + 17, k.clip(name, cw - 16, 12, 600), 12, k.INK, 600))
+      key = c.short if c.short and c.short.startswith("host.") else c.name
+      sub = subs.get(key, "")
+      if c.integrity() == "QMBsup":
+        tag = "QM · B-sup"
+        out.append(k.text(cx + cw - 8, cy + 17, tag, 9, k.INK2, 700, "end"))
+      out.append(k.text(cx + 8, cy + 33, k.clip(sub, cw - 16, 10.5), 10.5, k.MUTED))
+    yy += -(-len(kids) // 2) * 48
+  sm = rv.sm_line(e)
+  if sm:
+    for ln in k.wrap(sm, w - 24, 10.5, 700):
+      out.append(k.text(x + 12, yy + 12, ln, 10.5, k.ENVELOPE["chip"], 700))
+      yy += 15
+  yy += 8
+  return [k.rect(x, y, w, yy - y, st.get("fill", "#FFFFFF"), st["stroke"], 10, 1.4), *out], yy
+
+
+def _phone_links(m: sysml_lite.Model, ids: list[str], labels: dict, x: float, y: float) -> tuple[list[str], float]:
+  """A connector between two blocks with the interfaces it carries, coloured by edge class as in V-03."""
+  out, top = [], y
+  y += 6
+  first = None
+  for i in ids:
+    conn = next(c for c in m.connections if c.interface_id == i)
+    cls = rv.edge_class(conn)
+    first = first or cls
+    st = k.EDGE[cls]
+    p, pw = k.pill(x + 34, y, i, st["color"], h=18, size=10.5, mono=True)
+    out.append(p)
+    out.append(k.text(x + 34 + pw + 8, y + 13, labels.get(i, ""), 11.5, k.INK2, 600))
+    y += 24
+  st = k.EDGE[first]
+  dash = f' stroke-dasharray="{st["dash"]}"' if st["dash"] else ""
+  line = (f'<line x1="{x + 16}" y1="{k.f(top - 4)}" x2="{x + 16}" y2="{k.f(y + 6)}" stroke="{st["color"]}" '
+          f'stroke-width="2.4"{dash}/>')
+  return [line, *out], y + 10
+
+
+def render_interconnection_phone(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str:
+  """V-03 for a phone: the same elements and interfaces stacked top to bottom along the command path, from the driver
+  and the road through the device's QM partition and the ASIL C envelope to the harness and the car."""
+  view = m.views[vid]
+  ph = spec["phone"]
+  w, mx = ph["width"], 24
+  bw = w - 2 * mx
+  body = [k.text(mx, 38, f"{view.short} · {spec['title']}", 19, k.INK, 700)]
+  y = 60
+  for ln in k.wrap(ph["subtitle"], bw, 12.5):
+    body.append(k.text(mx, y, ln, 12.5, k.MUTED))
+    y += 17
+  body.append(k.text(mx, y + 2, f"SysML v2 view LionDriverViews::{view.name} · phone layout · model {digest}", 10.5,
+                     k.FAINT))
+  y += 16
+  body.append(f'<line x1="{mx}" y1="{y}" x2="{w - mx}" y2="{y}" stroke="{k.HAIR}"/>')
+  y += 16
+  labels = ph["interfaces"]
+  ns = _node_text(spec)
+  for step in ph["sequence"]:
+    if step.startswith("IF"):
+      svg, y = _phone_links(m, step.split(), labels, mx, y)
+      body += svg
+    elif step.startswith("band:"):
+      text, style = ph["bands"][step[5:]]
+      st = {"slate": k.SLATE, "envelope": k.ENVELOPE}[style]
+      body.append(k.rect(mx, y, bw, 22, st["chip"], rx=4))
+      body.append(k.text(mx + bw / 2, y + 15, text, 10.5, "#FFFFFF", 700, "middle", extra=' letter-spacing="0.6"'))
+      y += 30
+    elif step.startswith("row:"):
+      els = step[4:].split()
+      cw = (bw - 8 * (len(els) - 1)) / len(els)
+      h = 58
+      for i, el in enumerate(els):
+        e = _element(m, el)
+        st = rv.style_of(e)
+        n = ns.get(el, {})
+        cx = mx + i * (cw + 8)
+        body.append(k.rect(cx, y, cw, h, st.get("fill", k.OUTSIDE["fill"]), st["stroke"], 8, 1.2,
+                           "4 3" if e.scope() == "excluded" else None))
+        tx = cx + 10
+        if e.short and not e.short.startswith("host."):
+          p, pw = k.pill(tx, y + 8, e.short, st["chip"], h=16, size=9)
+          body.append(p)
+          tx += pw + 6
+        body.append(k.text(tx, y + 21, k.clip(n.get("title") or rv.Canvas.default_title(e), cx + cw - tx - 8, 12, 700),
+                           12, k.INK, 700))
+        for j, ln in enumerate(k.wrap(n.get("sub", ""), cw - 20, 10.5)[:2]):
+          body.append(k.text(cx + 10, y + 37 + j * 13, ln, 10.5, k.MUTED))
+      y += h + 12
+    else:
+      svg, y2 = _phone_block(m, step, spec, mx, y, bw)
+      body += svg
+      y = y2 + 12
+  # legend
+  y += 4
+  body.append(f'<line x1="{mx}" y1="{y}" x2="{w - mx}" y2="{y}" stroke="{k.HAIR}"/>')
+  y += 16
+  xx = mx
+  for cls in ("actuation", "ffi", "sensing", "power", "network"):
+    st = k.EDGE[cls]
+    lab = {"actuation": "actuation", "ffi": "SoC ↔ MCU", "sensing": "sensing, HMI", "power": "power",
+           "network": "untrusted"}[cls]
+    dash = f' stroke-dasharray="{st["dash"]}"' if st["dash"] else ""
+    lw = 20 + 6 + k.text_w(lab, 11) + 16
+    if xx + lw > w - mx:
+      xx, y = mx, y + 20
+    body.append(f'<line x1="{xx}" y1="{y + 9}" x2="{xx + 20}" y2="{y + 9}" stroke="{st["color"]}" stroke-width="2.4"{dash}/>')
+    body.append(k.text(xx + 26, y + 13, lab, 11, k.INK2))
+    xx += lw
+  y += 26
+  for ln in k.wrap("SM-nn: the safety mechanisms each element performs (WP-S-03 §6). The full-width V-03 shows where "
+                   "each interface attaches; this layout lists them between the blocks they join.", bw, 11):
+    body.append(k.text(mx, y + 10, ln, 11, k.INK2))
+    y += 16
+  y += 8
+  body.append(k.text(mx, y + 10, rv.GENERATED, 9.5, k.FAINT))
+  return k.svg_doc(w, y + 28, f"{view.short}. {spec['title']}, phone layout (SysML v2 view {view.name})",
+                   ph.get("desc", spec.get("desc", view.doc)), body)
+
 
 # ---------------------------------------------------------------- V-26 safety mechanisms on the architecture
 

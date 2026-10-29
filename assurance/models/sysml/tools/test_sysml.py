@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import sys
 import unittest
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -155,7 +156,7 @@ class Rendering(unittest.TestCase):
       self.assertTrue(any(f.startswith(f"fig-sysml-{vid.lower().replace('-', '')}-") for f in svgs), vid)
     self.assertEqual(len([f for f in svgs if f.startswith("fig-sysml-v06-")]), 8)
     layout = render_views.tomllib.loads(render_views.LAYOUT.read_text(encoding="utf-8"))["views"]
-    per_view = sum(len(s.get("functions") or s.get("blocks") or [1]) for s in layout.values())
+    per_view = sum(len(s.get("functions") or s.get("blocks") or [1]) + ("phone" in s) for s in layout.values())
     self.assertEqual(len(svgs), per_view)
     v03 = files["fig-sysml-v03-system-interconnection.svg"]
     for iid in ("IF-01", "IF-03", "IF-04", "IF-04b", "IF-07", "IF-08", "IF-09", "IF-10"):
@@ -197,6 +198,20 @@ class Rendering(unittest.TestCase):
         self.assertEqual(svg.count(f'data-sm="{m_.short}" data-goal="{g}"'), 1, (g, m_.short))
     for f, kind in kinds.items():  # every open FSR drawn with its kind
       self.assertIn(f'data-fsr="{f}" data-kind="{kind}"', svg)
+
+  def test_v03_phone_layout(self):
+    m = sysml_lite.load()
+    files = render_views.render_all(m)
+    full, phone = files["fig-sysml-v03-system-interconnection.svg"], files["fig-sysml-v03-system-interconnection-phone.svg"]
+    self.assertEqual(ET.fromstring(phone).get("width"), "640")
+    for iid in ("IF-01", "IF-02", "IF-03", "IF-04", "IF-04b", "IF-07", "IF-08", "IF-09", "IF-10"):
+      self.assertIn(iid, phone)  # every interface V-03 draws is listed
+    for el in ("E-01", "E-02", "E-03a", "E-03b", "E-04a", "E-04b", "E-05"):
+      self.assertIn(f">{el}<", phone)
+    for unit in ("U-SAF-TOY", "U-PND-SPI"):
+      self.assertIn(unit, full)
+      self.assertIn(unit, phone)
+    self.assertIn("SM-25", phone)  # the mechanisms each block performs, as in V-03
 
   def test_n2_rolls_up_to_components(self):
     m = sysml_lite.load()
