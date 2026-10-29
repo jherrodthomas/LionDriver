@@ -116,7 +116,7 @@ goals, for example FSR-01.09, the envelope's own execution faults, which serves 
 
 *Safety mechanisms per goal (SysML view V-27).* The same goals followed one step further: from each FSR through its
 TSRs to the mechanisms of WP-S-03 §6 that implement them, with their status today. A red box is an FSR with no
-mechanism behind it yet (FSR-02.12, FSR-07.07 and FSR-08.01 today); a grey box is met outside the item, through an
+mechanism behind it yet; a grey box is met outside the item, through an
 assumption of use, or by reference to other FSRs. Generated from the SysML model by
 [`render_arch.py`](../../models/sysml/tools/render_arch.py).
 

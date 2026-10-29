@@ -184,7 +184,10 @@ class Rendering(unittest.TestCase):
     kinds = {f.short: kind for c in cov.values() for f, kind, _ in c["open"]}
     self.assertEqual(kinds["FSR-03.04"], "reference")
     self.assertEqual(kinds["FSR-05.07"], "outside")
-    self.assertEqual(kinds["FSR-08.01"], "gap")
+    tsr_with_sm = {t.split("(")[0] for me_ in m.mechanisms.values() for t in me_.tsr}
+    for c in cov.values():  # an open FSR has no derived TSR that a mechanism implements
+      for f, _, _ in c["open"]:
+        self.assertFalse(tsr_with_sm & {r.short for r in m.requirements.values() if f.short in r.derived_from}, f.short)
     me = m.mechanisms
     self.assertEqual(render_arch.mech_status(me["SM-02"]), "impl")
     self.assertEqual(render_arch.mech_status(me["SM-11"]), "partial")  # "New at baseline; **Partial** ..."
@@ -192,7 +195,8 @@ class Rendering(unittest.TestCase):
     for g, c in cov.items():  # every mechanism behind a goal drawn once on its card
       for m_ in c["mechs"]:
         self.assertEqual(svg.count(f'data-sm="{m_.short}" data-goal="{g}"'), 1, (g, m_.short))
-    self.assertIn('data-fsr="FSR-07.07" data-kind="gap"', svg)
+    for f, kind in kinds.items():  # every open FSR drawn with its kind
+      self.assertIn(f'data-fsr="{f}" data-kind="{kind}"', svg)
 
   def test_n2_rolls_up_to_components(self):
     m = sysml_lite.load()

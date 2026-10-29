@@ -186,7 +186,7 @@ Every figure below is generated. The explorer shows V-01 to V-04 with the model 
 
 **V-27 Safety mechanisms per safety goal:** one card per goal SG-01 to SG-08, at phone width. Each goal is traced through its FSRs and TSRs (deriveReqt) to the mechanisms that implement those TSRs, grouped by their status in WP-S-03 §6 (implemented, partial, not there yet) and coloured by DC target. Below, each FSR with no mechanism behind it: red when it is a gap, grey when it is met outside the item (an assumption of use) or by reference to other FSRs.
 
-![V-27: safety mechanisms per safety goal generated from the SysML model. One card per goal SG-01 to SG-08 with the mechanisms behind it by status and DC target, and the FSRs no mechanism stands behind: FSR-02.12, FSR-07.07 and FSR-08.01 are gaps](generated/fig-sysml-v27-mechanism-coverage-per-goal.svg)
+![V-27: safety mechanisms per safety goal generated from the SysML model. One card per goal SG-01 to SG-08 with the mechanisms behind it by status and DC target, and the FSRs no mechanism stands behind, in red when they are gaps](generated/fig-sysml-v27-mechanism-coverage-per-goal.svg)
 
 **V-05 Requirement thread:** one requirement (TSR-407, heartbeat loss) with what it derives from, up to the stakeholder need behind its safety goals, what satisfies it, the mechanisms that cite it and the cases that verify it.
 
