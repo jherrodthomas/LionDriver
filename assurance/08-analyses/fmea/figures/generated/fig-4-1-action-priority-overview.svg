@@ -5,25 +5,24 @@
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
     <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
-    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1.2" cy="1.2" r="1.2" fill="#E7E6E0"/></pattern>
     <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
   </defs>
-  <rect width="1280" height="861" fill="#FCFCFB"/>
-  <text x="40" y="44" font-size="20" fill="#0B0B0B" font-weight="700">Figure 4-1 · Action Priority overview of the four FMEAs</text>
-  <text x="40" y="66" font-size="12.5" fill="#52514E">Ratings as recorded (AIAG-VDA 2019 AP, step 5) · where the causes sit in the AP table · how AP H is treated (step 6)</text>
-  <text x="1240" y="44" font-size="11" fill="#52514E" text-anchor="end">fmea-plan.md §4</text>
-  <text x="1240" y="62" font-size="11" fill="#52514E" text-anchor="end">analyses/*fmea.yaml</text>
-  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E1E0D9" stroke-width="1"/>
-  <text x="40" y="114" font-size="15" fill="#0B0B0B" font-weight="700">System FMEA</text>
-  <text x="40" y="131" font-size="10.5" fill="#52514E">SFM rev 0.37 · BL-007 · draft</text>
-  <text x="40" y="146" font-size="10.5" fill="#52514E">109 rated causes</text>
-  <rect x="40" y="158" width="279.8" height="22" fill="#D03B3B"/>
+  <rect width="1280" height="861" fill="#FFFFFF"/>
+  <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 4-1 · Action Priority overview of the four FMEAs</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">Ratings as recorded (AIAG-VDA 2019 AP, step 5) · where the causes sit in the AP table · how AP H is treated (step 6)</text>
+  <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §4</text>
+  <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/*fmea.yaml</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="114" font-size="15" fill="#0F172A" font-weight="700">System FMEA</text>
+  <text x="40" y="131" font-size="10.5" fill="#475569">SFM rev 0.37 · BL-007 · draft</text>
+  <text x="40" y="146" font-size="10.5" fill="#475569">109 rated causes</text>
+  <rect x="40" y="158" width="279.8" height="22" fill="#D2553F"/>
   <text x="179.9" y="173" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">H 107</text>
   <rect x="319.8" y="158" width="2.6" height="22" fill="#D97706"/>
   <rect x="322.4" y="158" width="2.6" height="22" fill="#0F766E"/>
-  <text x="40" y="194" font-size="10.5" fill="#0B0B0B" font-weight="600">AP as rated: H 107  M 1  L 1</text>
-  <text x="40" y="214" font-size="10" fill="#52514E" font-weight="700">Causes with S 9–10 by occurrence × detection</text>
-  <text x="64" y="238.5" font-size="9.5" fill="#52514E" text-anchor="end">10</text>
+  <text x="40" y="194" font-size="10.5" fill="#0F172A" font-weight="600">AP as rated: H 107  M 1  L 1</text>
+  <text x="40" y="214" font-size="10" fill="#475569" font-weight="700">Causes with S 9–10 by occurrence × detection</text>
+  <text x="64" y="238.5" font-size="9.5" fill="#475569" text-anchor="end">10</text>
   <rect x="70" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="92" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="114" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -34,7 +33,7 @@
   <rect x="224" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="246" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="268" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <text x="64" y="260.5" font-size="9.5" fill="#52514E" text-anchor="end">9</text>
+  <text x="64" y="260.5" font-size="9.5" fill="#475569" text-anchor="end">9</text>
   <rect x="70" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="92" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="114" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -45,7 +44,7 @@
   <rect x="224" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="246" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="268" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <text x="64" y="282.5" font-size="9.5" fill="#52514E" text-anchor="end">8</text>
+  <text x="64" y="282.5" font-size="9.5" fill="#475569" text-anchor="end">8</text>
   <rect x="70" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="92" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="114" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -54,15 +53,15 @@
   <rect x="180" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="202" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="224" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="235" cy="279" r="9.5" fill="#D03B3B"/>
+  <circle cx="235" cy="279" r="9.5" fill="#D2553F"/>
   <text x="235" y="282.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="246" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="257" cy="279" r="9.5" fill="#D03B3B"/>
+  <circle cx="257" cy="279" r="9.5" fill="#D2553F"/>
   <text x="257" y="282.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
   <rect x="268" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="279" cy="279" r="9.5" fill="#D03B3B"/>
+  <circle cx="279" cy="279" r="9.5" fill="#D2553F"/>
   <text x="279" y="282.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
-  <text x="64" y="304.5" font-size="9.5" fill="#52514E" text-anchor="end">7</text>
+  <text x="64" y="304.5" font-size="9.5" fill="#475569" text-anchor="end">7</text>
   <rect x="70" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="92" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="114" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -71,15 +70,15 @@
   <rect x="180" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="202" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="224" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="235" cy="301" r="9.5" fill="#D03B3B"/>
+  <circle cx="235" cy="301" r="9.5" fill="#D2553F"/>
   <text x="235" y="304.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
   <rect x="246" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="257" cy="301" r="9.5" fill="#D03B3B"/>
+  <circle cx="257" cy="301" r="9.5" fill="#D2553F"/>
   <text x="257" y="304.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="268" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="279" cy="301" r="9.5" fill="#D03B3B"/>
+  <circle cx="279" cy="301" r="9.5" fill="#D2553F"/>
   <text x="279" y="304.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
-  <text x="64" y="326.5" font-size="9.5" fill="#52514E" text-anchor="end">6</text>
+  <text x="64" y="326.5" font-size="9.5" fill="#475569" text-anchor="end">6</text>
   <rect x="70" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="92" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="114" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -88,36 +87,36 @@
   <rect x="180" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="202" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="224" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="235" cy="323" r="9.5" fill="#D03B3B"/>
+  <circle cx="235" cy="323" r="9.5" fill="#D2553F"/>
   <text x="235" y="326.6" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">10</text>
   <rect x="246" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="257" cy="323" r="9.5" fill="#D03B3B"/>
+  <circle cx="257" cy="323" r="9.5" fill="#D2553F"/>
   <text x="257" y="326.6" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">13</text>
   <rect x="268" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="279" cy="323" r="9.5" fill="#D03B3B"/>
+  <circle cx="279" cy="323" r="9.5" fill="#D2553F"/>
   <text x="279" y="326.6" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">12</text>
-  <text x="64" y="348.5" font-size="9.5" fill="#52514E" text-anchor="end">5</text>
+  <text x="64" y="348.5" font-size="9.5" fill="#475569" text-anchor="end">5</text>
   <rect x="70" y="334" width="22" height="22" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="92" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="114" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="125" cy="345" r="9.5" fill="#D03B3B"/>
+  <circle cx="125" cy="345" r="9.5" fill="#D2553F"/>
   <text x="125" y="348.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
   <rect x="136" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="147" cy="345" r="9.5" fill="#D03B3B"/>
+  <circle cx="147" cy="345" r="9.5" fill="#D2553F"/>
   <text x="147" y="348.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
   <rect x="158" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="180" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="202" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="224" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="235" cy="345" r="9.5" fill="#D03B3B"/>
+  <circle cx="235" cy="345" r="9.5" fill="#D2553F"/>
   <text x="235" y="348.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
   <rect x="246" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="257" cy="345" r="9.5" fill="#D03B3B"/>
+  <circle cx="257" cy="345" r="9.5" fill="#D2553F"/>
   <text x="257" y="348.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="268" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="279" cy="345" r="9.5" fill="#D03B3B"/>
+  <circle cx="279" cy="345" r="9.5" fill="#D2553F"/>
   <text x="279" y="348.6" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">12</text>
-  <text x="64" y="370.5" font-size="9.5" fill="#52514E" text-anchor="end">4</text>
+  <text x="64" y="370.5" font-size="9.5" fill="#475569" text-anchor="end">4</text>
   <rect x="70" y="356" width="22" height="22" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="92" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="114" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -125,16 +124,16 @@
   <rect x="158" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="180" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="202" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="213" cy="367" r="9.5" fill="#D03B3B"/>
+  <circle cx="213" cy="367" r="9.5" fill="#D2553F"/>
   <text x="213" y="370.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="224" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="246" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="257" cy="367" r="9.5" fill="#D03B3B"/>
+  <circle cx="257" cy="367" r="9.5" fill="#D2553F"/>
   <text x="257" y="370.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
   <rect x="268" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="279" cy="367" r="9.5" fill="#D03B3B"/>
+  <circle cx="279" cy="367" r="9.5" fill="#D2553F"/>
   <text x="279" y="370.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
-  <text x="64" y="392.5" font-size="9.5" fill="#52514E" text-anchor="end">3</text>
+  <text x="64" y="392.5" font-size="9.5" fill="#475569" text-anchor="end">3</text>
   <rect x="70" y="378" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="92" y="378" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="114" y="378" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
@@ -145,15 +144,15 @@
   <rect x="180" y="378" width="22" height="22" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="202" y="378" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="224" y="378" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="235" cy="389" r="9.5" fill="#D03B3B"/>
+  <circle cx="235" cy="389" r="9.5" fill="#D2553F"/>
   <text x="235" y="392.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="246" y="378" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="257" cy="389" r="9.5" fill="#D03B3B"/>
+  <circle cx="257" cy="389" r="9.5" fill="#D2553F"/>
   <text x="257" y="392.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="268" y="378" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="279" cy="389" r="9.5" fill="#D03B3B"/>
+  <circle cx="279" cy="389" r="9.5" fill="#D2553F"/>
   <text x="279" y="392.6" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">13</text>
-  <text x="64" y="414.5" font-size="9.5" fill="#52514E" text-anchor="end">2</text>
+  <text x="64" y="414.5" font-size="9.5" fill="#475569" text-anchor="end">2</text>
   <rect x="70" y="400" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="92" y="400" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="114" y="400" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
@@ -164,9 +163,9 @@
   <rect x="224" y="400" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="246" y="400" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="268" y="400" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="279" cy="411" r="9.5" fill="#D03B3B"/>
+  <circle cx="279" cy="411" r="9.5" fill="#D2553F"/>
   <text x="279" y="414.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-  <text x="64" y="436.5" font-size="9.5" fill="#52514E" text-anchor="end">1</text>
+  <text x="64" y="436.5" font-size="9.5" fill="#475569" text-anchor="end">1</text>
   <rect x="70" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="92" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="114" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
@@ -177,46 +176,46 @@
   <rect x="224" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="246" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="268" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
-  <text x="81" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">1</text>
-  <text x="103" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">2</text>
-  <text x="125" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">3</text>
-  <text x="147" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">4</text>
-  <text x="169" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">5</text>
-  <text x="191" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">6</text>
-  <text x="213" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">7</text>
-  <text x="235" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">8</text>
-  <text x="257" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">9</text>
-  <text x="279" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">10</text>
-  <text x="180" y="470" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="middle">Detection D →</text>
-  <text x="46" y="334" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="middle" transform="rotate(-90 46 334)">Occurrence O →</text>
-  <text x="40" y="484" font-size="10" fill="#52514E" font-weight="700">Other severities (not in the grid):</text>
-  <rect x="40" y="492" width="36.5" height="15" rx="7.5" fill="#D03B3B"/><text x="58.2" y="502.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="82.5" y="503" font-size="10" fill="#0B0B0B">SFM-007.C1  S7 O7 D10</text>
-  <rect x="40" y="507" width="36.5" height="15" rx="7.5" fill="#D03B3B"/><text x="58.2" y="517.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="82.5" y="518" font-size="10" fill="#0B0B0B">SFM-007.C2  S7 O5 D10</text>
+  <text x="81" y="456" font-size="9.5" fill="#475569" text-anchor="middle">1</text>
+  <text x="103" y="456" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
+  <text x="125" y="456" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
+  <text x="147" y="456" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
+  <text x="169" y="456" font-size="9.5" fill="#475569" text-anchor="middle">5</text>
+  <text x="191" y="456" font-size="9.5" fill="#475569" text-anchor="middle">6</text>
+  <text x="213" y="456" font-size="9.5" fill="#475569" text-anchor="middle">7</text>
+  <text x="235" y="456" font-size="9.5" fill="#475569" text-anchor="middle">8</text>
+  <text x="257" y="456" font-size="9.5" fill="#475569" text-anchor="middle">9</text>
+  <text x="279" y="456" font-size="9.5" fill="#475569" text-anchor="middle">10</text>
+  <text x="180" y="470" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">Detection D →</text>
+  <text x="46" y="334" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle" transform="rotate(-90 46 334)">Occurrence O →</text>
+  <text x="40" y="484" font-size="10" fill="#475569" font-weight="700">Other severities (not in the grid):</text>
+  <rect x="40" y="492" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="58.2" y="502.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="82.5" y="503" font-size="10" fill="#0F172A">SFM-007.C1  S7 O7 D10</text>
+  <rect x="40" y="507" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="58.2" y="517.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="82.5" y="518" font-size="10" fill="#0F172A">SFM-007.C2  S7 O5 D10</text>
   <rect x="40" y="522" width="38.9" height="15" rx="7.5" fill="#D97706"/><text x="59.5" y="532.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP M</text>
-  <text x="84.9" y="533" font-size="10" fill="#0B0B0B">SFM-024.C1  S4 O7 D10</text>
-  <rect x="40" y="537" width="36.5" height="15" rx="7.5" fill="#D03B3B"/><text x="58.2" y="547.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="82.5" y="548" font-size="10" fill="#0B0B0B">SFM-031.C1  S8 O5 D10</text>
+  <text x="84.9" y="533" font-size="10" fill="#0F172A">SFM-024.C1  S4 O7 D10</text>
+  <rect x="40" y="537" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="58.2" y="547.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="82.5" y="548" font-size="10" fill="#0F172A">SFM-031.C1  S8 O5 D10</text>
   <text x="40" y="574" font-size="10" fill="#D97706" font-weight="600">AP M: SFM-024.C1</text>
   <text x="40" y="590" font-size="10" fill="#0F766E" font-weight="600">AP L: SFM-029.C1</text>
-  <text x="40" y="616" font-size="10" fill="#52514E" font-weight="700">AP H causes (107) by treatment</text>
+  <text x="40" y="616" font-size="10" fill="#475569" font-weight="700">AP H causes (107) by treatment</text>
   <rect x="40" y="630" width="6.2" height="16" fill="#2E9E6A" rx="2"/>
-  <text x="52.2" y="642" font-size="10" fill="#0B0B0B">4  action completed</text>
+  <text x="52.2" y="642" font-size="10" fill="#0F172A">4  action completed</text>
   <rect x="40" y="652" width="9.3" height="16" fill="#D97706" rx="2"/>
-  <text x="55.3" y="664" font-size="10" fill="#0B0B0B">6  action in progress</text>
-  <rect x="40" y="674" width="100.2" height="16" fill="#FBE4DF" stroke="#D03B3B" stroke-width="1" rx="2"/>
-  <text x="146.2" y="686" font-size="10" fill="#0B0B0B">65  action open</text>
+  <text x="55.3" y="664" font-size="10" fill="#0F172A">6  action in progress</text>
+  <rect x="40" y="674" width="100.2" height="16" fill="#FBE4DF" stroke="#D2553F" stroke-width="1" rx="2"/>
+  <text x="146.2" y="686" font-size="10" fill="#0F172A">65  action open</text>
   <rect x="40" y="696" width="49.3" height="16" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1" rx="2"/>
-  <text x="95.3" y="708" font-size="10" fill="#0B0B0B">32  rationale, no action</text>
-  <text x="345" y="114" font-size="15" fill="#0B0B0B" font-weight="700">DFMEA</text>
-  <text x="345" y="131" font-size="10.5" fill="#52514E">DFM rev 0.13 · BL-007 · draft</text>
-  <text x="345" y="146" font-size="10.5" fill="#52514E">32 rated causes</text>
-  <rect x="345" y="158" width="285" height="22" fill="#D03B3B"/>
+  <text x="95.3" y="708" font-size="10" fill="#0F172A">32  rationale, no action</text>
+  <text x="345" y="114" font-size="15" fill="#0F172A" font-weight="700">DFMEA</text>
+  <text x="345" y="131" font-size="10.5" fill="#475569">DFM rev 0.13 · BL-007 · draft</text>
+  <text x="345" y="146" font-size="10.5" fill="#475569">32 rated causes</text>
+  <rect x="345" y="158" width="285" height="22" fill="#D2553F"/>
   <text x="487.5" y="173" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">H 32</text>
-  <text x="345" y="194" font-size="10.5" fill="#0B0B0B" font-weight="600">AP as rated: H 32  M 0  L 0</text>
-  <text x="345" y="214" font-size="10" fill="#52514E" font-weight="700">Causes with S 9–10 by occurrence × detection</text>
-  <text x="369" y="238.5" font-size="9.5" fill="#52514E" text-anchor="end">10</text>
+  <text x="345" y="194" font-size="10.5" fill="#0F172A" font-weight="600">AP as rated: H 32  M 0  L 0</text>
+  <text x="345" y="214" font-size="10" fill="#475569" font-weight="700">Causes with S 9–10 by occurrence × detection</text>
+  <text x="369" y="238.5" font-size="9.5" fill="#475569" text-anchor="end">10</text>
   <rect x="375" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="397" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="419" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -227,7 +226,7 @@
   <rect x="529" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="551" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="573" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <text x="369" y="260.5" font-size="9.5" fill="#52514E" text-anchor="end">9</text>
+  <text x="369" y="260.5" font-size="9.5" fill="#475569" text-anchor="end">9</text>
   <rect x="375" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="397" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="419" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -238,7 +237,7 @@
   <rect x="529" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="551" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="573" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <text x="369" y="282.5" font-size="9.5" fill="#52514E" text-anchor="end">8</text>
+  <text x="369" y="282.5" font-size="9.5" fill="#475569" text-anchor="end">8</text>
   <rect x="375" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="397" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="419" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -249,7 +248,7 @@
   <rect x="529" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="551" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="573" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <text x="369" y="304.5" font-size="9.5" fill="#52514E" text-anchor="end">7</text>
+  <text x="369" y="304.5" font-size="9.5" fill="#475569" text-anchor="end">7</text>
   <rect x="375" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="397" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="419" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -260,7 +259,7 @@
   <rect x="529" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="551" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="573" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <text x="369" y="326.5" font-size="9.5" fill="#52514E" text-anchor="end">6</text>
+  <text x="369" y="326.5" font-size="9.5" fill="#475569" text-anchor="end">6</text>
   <rect x="375" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="397" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="419" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -271,7 +270,7 @@
   <rect x="529" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="551" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="573" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <text x="369" y="348.5" font-size="9.5" fill="#52514E" text-anchor="end">5</text>
+  <text x="369" y="348.5" font-size="9.5" fill="#475569" text-anchor="end">5</text>
   <rect x="375" y="334" width="22" height="22" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="397" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="419" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -282,9 +281,9 @@
   <rect x="529" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="551" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="573" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="584" cy="345" r="9.5" fill="#D03B3B"/>
+  <circle cx="584" cy="345" r="9.5" fill="#D2553F"/>
   <text x="584" y="348.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
-  <text x="369" y="370.5" font-size="9.5" fill="#52514E" text-anchor="end">4</text>
+  <text x="369" y="370.5" font-size="9.5" fill="#475569" text-anchor="end">4</text>
   <rect x="375" y="356" width="22" height="22" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="397" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="419" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -295,9 +294,9 @@
   <rect x="529" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="551" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="573" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="584" cy="367" r="9.5" fill="#D03B3B"/>
+  <circle cx="584" cy="367" r="9.5" fill="#D2553F"/>
   <text x="584" y="370.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
-  <text x="369" y="392.5" font-size="9.5" fill="#52514E" text-anchor="end">3</text>
+  <text x="369" y="392.5" font-size="9.5" fill="#475569" text-anchor="end">3</text>
   <rect x="375" y="378" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="397" y="378" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="419" y="378" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
@@ -306,15 +305,15 @@
   <rect x="485" y="378" width="22" height="22" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="507" y="378" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="529" y="378" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="540" cy="389" r="9.5" fill="#D03B3B"/>
+  <circle cx="540" cy="389" r="9.5" fill="#D2553F"/>
   <text x="540" y="392.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="551" y="378" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="562" cy="389" r="9.5" fill="#D03B3B"/>
+  <circle cx="562" cy="389" r="9.5" fill="#D2553F"/>
   <text x="562" y="392.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
   <rect x="573" y="378" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="584" cy="389" r="9.5" fill="#D03B3B"/>
+  <circle cx="584" cy="389" r="9.5" fill="#D2553F"/>
   <text x="584" y="392.6" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">15</text>
-  <text x="369" y="414.5" font-size="9.5" fill="#52514E" text-anchor="end">2</text>
+  <text x="369" y="414.5" font-size="9.5" fill="#475569" text-anchor="end">2</text>
   <rect x="375" y="400" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="397" y="400" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="419" y="400" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
@@ -323,15 +322,15 @@
   <rect x="485" y="400" width="22" height="22" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="507" y="400" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="529" y="400" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="540" cy="411" r="9.5" fill="#D03B3B"/>
+  <circle cx="540" cy="411" r="9.5" fill="#D2553F"/>
   <text x="540" y="414.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="551" y="400" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="562" cy="411" r="9.5" fill="#D03B3B"/>
+  <circle cx="562" cy="411" r="9.5" fill="#D2553F"/>
   <text x="562" y="414.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="573" y="400" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="584" cy="411" r="9.5" fill="#D03B3B"/>
+  <circle cx="584" cy="411" r="9.5" fill="#D2553F"/>
   <text x="584" y="414.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
-  <text x="369" y="436.5" font-size="9.5" fill="#52514E" text-anchor="end">1</text>
+  <text x="369" y="436.5" font-size="9.5" fill="#475569" text-anchor="end">1</text>
   <rect x="375" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="397" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="419" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
@@ -342,34 +341,34 @@
   <rect x="529" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="551" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="573" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
-  <text x="386" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">1</text>
-  <text x="408" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">2</text>
-  <text x="430" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">3</text>
-  <text x="452" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">4</text>
-  <text x="474" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">5</text>
-  <text x="496" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">6</text>
-  <text x="518" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">7</text>
-  <text x="540" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">8</text>
-  <text x="562" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">9</text>
-  <text x="584" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">10</text>
-  <text x="485" y="470" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="middle">Detection D →</text>
-  <text x="351" y="334" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="middle" transform="rotate(-90 351 334)">Occurrence O →</text>
-  <text x="345" y="484" font-size="10" fill="#52514E">All rated causes have S 9–10.</text>
-  <text x="345" y="516" font-size="10" fill="#52514E" font-weight="700">AP H causes (32) by treatment</text>
-  <rect x="345" y="530" width="149.5" height="16" fill="#FBE4DF" stroke="#D03B3B" stroke-width="1" rx="2"/>
-  <text x="500.5" y="542" font-size="10" fill="#0B0B0B">29  action open</text>
+  <text x="386" y="456" font-size="9.5" fill="#475569" text-anchor="middle">1</text>
+  <text x="408" y="456" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
+  <text x="430" y="456" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
+  <text x="452" y="456" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
+  <text x="474" y="456" font-size="9.5" fill="#475569" text-anchor="middle">5</text>
+  <text x="496" y="456" font-size="9.5" fill="#475569" text-anchor="middle">6</text>
+  <text x="518" y="456" font-size="9.5" fill="#475569" text-anchor="middle">7</text>
+  <text x="540" y="456" font-size="9.5" fill="#475569" text-anchor="middle">8</text>
+  <text x="562" y="456" font-size="9.5" fill="#475569" text-anchor="middle">9</text>
+  <text x="584" y="456" font-size="9.5" fill="#475569" text-anchor="middle">10</text>
+  <text x="485" y="470" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">Detection D →</text>
+  <text x="351" y="334" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle" transform="rotate(-90 351 334)">Occurrence O →</text>
+  <text x="345" y="484" font-size="10" fill="#475569">All rated causes have S 9–10.</text>
+  <text x="345" y="516" font-size="10" fill="#475569" font-weight="700">AP H causes (32) by treatment</text>
+  <rect x="345" y="530" width="149.5" height="16" fill="#FBE4DF" stroke="#D2553F" stroke-width="1" rx="2"/>
+  <text x="500.5" y="542" font-size="10" fill="#0F172A">29  action open</text>
   <rect x="345" y="552" width="15.5" height="16" fill="#F1F5F9" stroke="#64748B" stroke-width="1" rx="2"/>
-  <text x="366.5" y="564" font-size="10" fill="#0B0B0B">3  not implemented</text>
-  <text x="650" y="114" font-size="15" fill="#0B0B0B" font-weight="700">SW FMEA</text>
-  <text x="650" y="131" font-size="10.5" fill="#52514E">SWF rev 1.12 · BL-007 · draft</text>
-  <text x="650" y="146" font-size="10.5" fill="#52514E">149 rated causes</text>
-  <rect x="650" y="158" width="252.5" height="22" fill="#D03B3B"/>
+  <text x="366.5" y="564" font-size="10" fill="#0F172A">3  not implemented</text>
+  <text x="650" y="114" font-size="15" fill="#0F172A" font-weight="700">SW FMEA</text>
+  <text x="650" y="131" font-size="10.5" fill="#475569">SWF rev 1.12 · BL-007 · draft</text>
+  <text x="650" y="146" font-size="10.5" fill="#475569">149 rated causes</text>
+  <rect x="650" y="158" width="252.5" height="22" fill="#D2553F"/>
   <text x="776.2" y="173" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">H 132</text>
   <rect x="902.5" y="158" width="1.9" height="22" fill="#D97706"/>
   <rect x="904.4" y="158" width="30.6" height="22" fill="#0F766E"/>
-  <text x="650" y="194" font-size="10.5" fill="#0B0B0B" font-weight="600">AP as rated: H 132  M 1  L 16</text>
-  <text x="650" y="214" font-size="10" fill="#52514E" font-weight="700">Causes with S 9–10 by occurrence × detection</text>
-  <text x="674" y="238.5" font-size="9.5" fill="#52514E" text-anchor="end">10</text>
+  <text x="650" y="194" font-size="10.5" fill="#0F172A" font-weight="600">AP as rated: H 132  M 1  L 16</text>
+  <text x="650" y="214" font-size="10" fill="#475569" font-weight="700">Causes with S 9–10 by occurrence × detection</text>
+  <text x="674" y="238.5" font-size="9.5" fill="#475569" text-anchor="end">10</text>
   <rect x="680" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="702" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="724" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -380,7 +379,7 @@
   <rect x="834" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="856" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="878" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <text x="674" y="260.5" font-size="9.5" fill="#52514E" text-anchor="end">9</text>
+  <text x="674" y="260.5" font-size="9.5" fill="#475569" text-anchor="end">9</text>
   <rect x="680" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="702" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="724" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -391,7 +390,7 @@
   <rect x="834" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="856" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="878" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <text x="674" y="282.5" font-size="9.5" fill="#52514E" text-anchor="end">8</text>
+  <text x="674" y="282.5" font-size="9.5" fill="#475569" text-anchor="end">8</text>
   <rect x="680" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="702" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="724" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -400,15 +399,15 @@
   <rect x="790" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="812" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="834" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="845" cy="279" r="9.5" fill="#D03B3B"/>
+  <circle cx="845" cy="279" r="9.5" fill="#D2553F"/>
   <text x="845" y="282.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="856" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="867" cy="279" r="9.5" fill="#D03B3B"/>
+  <circle cx="867" cy="279" r="9.5" fill="#D2553F"/>
   <text x="867" y="282.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
   <rect x="878" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="889" cy="279" r="9.5" fill="#D03B3B"/>
+  <circle cx="889" cy="279" r="9.5" fill="#D2553F"/>
   <text x="889" y="282.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
-  <text x="674" y="304.5" font-size="9.5" fill="#52514E" text-anchor="end">7</text>
+  <text x="674" y="304.5" font-size="9.5" fill="#475569" text-anchor="end">7</text>
   <rect x="680" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="702" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="724" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -417,15 +416,15 @@
   <rect x="790" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="812" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="834" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="845" cy="301" r="9.5" fill="#D03B3B"/>
+  <circle cx="845" cy="301" r="9.5" fill="#D2553F"/>
   <text x="845" y="304.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
   <rect x="856" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="867" cy="301" r="9.5" fill="#D03B3B"/>
+  <circle cx="867" cy="301" r="9.5" fill="#D2553F"/>
   <text x="867" y="304.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
   <rect x="878" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="889" cy="301" r="9.5" fill="#D03B3B"/>
+  <circle cx="889" cy="301" r="9.5" fill="#D2553F"/>
   <text x="889" y="304.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
-  <text x="674" y="326.5" font-size="9.5" fill="#52514E" text-anchor="end">6</text>
+  <text x="674" y="326.5" font-size="9.5" fill="#475569" text-anchor="end">6</text>
   <rect x="680" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="702" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="724" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -434,57 +433,57 @@
   <rect x="790" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="812" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="834" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="845" cy="323" r="9.5" fill="#D03B3B"/>
+  <circle cx="845" cy="323" r="9.5" fill="#D2553F"/>
   <text x="845" y="326.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
   <rect x="856" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="867" cy="323" r="9.5" fill="#D03B3B"/>
+  <circle cx="867" cy="323" r="9.5" fill="#D2553F"/>
   <text x="867" y="326.6" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">19</text>
   <rect x="878" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="889" cy="323" r="9.5" fill="#D03B3B"/>
+  <circle cx="889" cy="323" r="9.5" fill="#D2553F"/>
   <text x="889" y="326.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
-  <text x="674" y="348.5" font-size="9.5" fill="#52514E" text-anchor="end">5</text>
+  <text x="674" y="348.5" font-size="9.5" fill="#475569" text-anchor="end">5</text>
   <rect x="680" y="334" width="22" height="22" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="702" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="724" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="735" cy="345" r="9.5" fill="#D03B3B"/>
+  <circle cx="735" cy="345" r="9.5" fill="#D2553F"/>
   <text x="735" y="348.6" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">10</text>
   <rect x="746" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="757" cy="345" r="9.5" fill="#D03B3B"/>
+  <circle cx="757" cy="345" r="9.5" fill="#D2553F"/>
   <text x="757" y="348.6" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">11</text>
   <rect x="768" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="790" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="812" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="834" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="845" cy="345" r="9.5" fill="#D03B3B"/>
+  <circle cx="845" cy="345" r="9.5" fill="#D2553F"/>
   <text x="845" y="348.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">8</text>
   <rect x="856" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="867" cy="345" r="9.5" fill="#D03B3B"/>
+  <circle cx="867" cy="345" r="9.5" fill="#D2553F"/>
   <text x="867" y="348.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
   <rect x="878" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="889" cy="345" r="9.5" fill="#D03B3B"/>
+  <circle cx="889" cy="345" r="9.5" fill="#D2553F"/>
   <text x="889" y="348.6" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">10</text>
-  <text x="674" y="370.5" font-size="9.5" fill="#52514E" text-anchor="end">4</text>
+  <text x="674" y="370.5" font-size="9.5" fill="#475569" text-anchor="end">4</text>
   <rect x="680" y="356" width="22" height="22" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="702" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="724" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="735" cy="367" r="9.5" fill="#D03B3B"/>
+  <circle cx="735" cy="367" r="9.5" fill="#D2553F"/>
   <text x="735" y="370.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="746" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="768" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="790" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="812" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="823" cy="367" r="9.5" fill="#D03B3B"/>
+  <circle cx="823" cy="367" r="9.5" fill="#D2553F"/>
   <text x="823" y="370.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="834" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="845" cy="367" r="9.5" fill="#D03B3B"/>
+  <circle cx="845" cy="367" r="9.5" fill="#D2553F"/>
   <text x="845" y="370.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="856" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="867" cy="367" r="9.5" fill="#D03B3B"/>
+  <circle cx="867" cy="367" r="9.5" fill="#D2553F"/>
   <text x="867" y="370.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
   <rect x="878" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="889" cy="367" r="9.5" fill="#D03B3B"/>
+  <circle cx="889" cy="367" r="9.5" fill="#D2553F"/>
   <text x="889" y="370.6" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">12</text>
-  <text x="674" y="392.5" font-size="9.5" fill="#52514E" text-anchor="end">3</text>
+  <text x="674" y="392.5" font-size="9.5" fill="#475569" text-anchor="end">3</text>
   <rect x="680" y="378" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="702" y="378" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="724" y="378" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
@@ -495,15 +494,15 @@
   <rect x="790" y="378" width="22" height="22" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="812" y="378" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="834" y="378" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="845" cy="389" r="9.5" fill="#D03B3B"/>
+  <circle cx="845" cy="389" r="9.5" fill="#D2553F"/>
   <text x="845" y="392.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="856" y="378" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="867" cy="389" r="9.5" fill="#D03B3B"/>
+  <circle cx="867" cy="389" r="9.5" fill="#D2553F"/>
   <text x="867" y="392.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
   <rect x="878" y="378" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="889" cy="389" r="9.5" fill="#D03B3B"/>
+  <circle cx="889" cy="389" r="9.5" fill="#D2553F"/>
   <text x="889" y="392.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">7</text>
-  <text x="674" y="414.5" font-size="9.5" fill="#52514E" text-anchor="end">2</text>
+  <text x="674" y="414.5" font-size="9.5" fill="#475569" text-anchor="end">2</text>
   <rect x="680" y="400" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="702" y="400" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="724" y="400" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
@@ -515,12 +514,12 @@
   <rect x="812" y="400" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="834" y="400" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="856" y="400" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="867" cy="411" r="9.5" fill="#D03B3B"/>
+  <circle cx="867" cy="411" r="9.5" fill="#D2553F"/>
   <text x="867" y="414.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="878" y="400" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="889" cy="411" r="9.5" fill="#D03B3B"/>
+  <circle cx="889" cy="411" r="9.5" fill="#D2553F"/>
   <text x="889" y="414.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
-  <text x="674" y="436.5" font-size="9.5" fill="#52514E" text-anchor="end">1</text>
+  <text x="674" y="436.5" font-size="9.5" fill="#475569" text-anchor="end">1</text>
   <rect x="680" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="702" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="724" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
@@ -531,51 +530,51 @@
   <rect x="834" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="856" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="878" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
-  <text x="691" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">1</text>
-  <text x="713" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">2</text>
-  <text x="735" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">3</text>
-  <text x="757" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">4</text>
-  <text x="779" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">5</text>
-  <text x="801" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">6</text>
-  <text x="823" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">7</text>
-  <text x="845" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">8</text>
-  <text x="867" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">9</text>
-  <text x="889" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">10</text>
-  <text x="790" y="470" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="middle">Detection D →</text>
-  <text x="656" y="334" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="middle" transform="rotate(-90 656 334)">Occurrence O →</text>
-  <text x="650" y="484" font-size="10" fill="#52514E" font-weight="700">Other severities (not in the grid):</text>
+  <text x="691" y="456" font-size="9.5" fill="#475569" text-anchor="middle">1</text>
+  <text x="713" y="456" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
+  <text x="735" y="456" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
+  <text x="757" y="456" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
+  <text x="779" y="456" font-size="9.5" fill="#475569" text-anchor="middle">5</text>
+  <text x="801" y="456" font-size="9.5" fill="#475569" text-anchor="middle">6</text>
+  <text x="823" y="456" font-size="9.5" fill="#475569" text-anchor="middle">7</text>
+  <text x="845" y="456" font-size="9.5" fill="#475569" text-anchor="middle">8</text>
+  <text x="867" y="456" font-size="9.5" fill="#475569" text-anchor="middle">9</text>
+  <text x="889" y="456" font-size="9.5" fill="#475569" text-anchor="middle">10</text>
+  <text x="790" y="470" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">Detection D →</text>
+  <text x="656" y="334" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle" transform="rotate(-90 656 334)">Occurrence O →</text>
+  <text x="650" y="484" font-size="10" fill="#475569" font-weight="700">Other severities (not in the grid):</text>
   <rect x="650" y="492" width="38.9" height="15" rx="7.5" fill="#D97706"/><text x="669.5" y="502.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP M</text>
-  <text x="694.9" y="503" font-size="10" fill="#0B0B0B">SWF-025.C1  S8 O5 D4</text>
-  <rect x="650" y="507" width="36.5" height="15" rx="7.5" fill="#D03B3B"/><text x="668.2" y="517.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="692.5" y="518" font-size="10" fill="#0B0B0B">SWF-029.C1  S8 O6 D10</text>
-  <rect x="650" y="522" width="36.5" height="15" rx="7.5" fill="#D03B3B"/><text x="668.2" y="532.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="692.5" y="533" font-size="10" fill="#0B0B0B">SWF-029.C2  S8 O6 D10</text>
-  <rect x="650" y="537" width="36.5" height="15" rx="7.5" fill="#D03B3B"/><text x="668.2" y="547.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="692.5" y="548" font-size="10" fill="#0B0B0B">SWF-064.C1  S8 O5 D9</text>
-  <rect x="650" y="552" width="36.5" height="15" rx="7.5" fill="#D03B3B"/><text x="668.2" y="562.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="692.5" y="563" font-size="10" fill="#0B0B0B">SWF-083.C1  S8 O8 D9</text>
+  <text x="694.9" y="503" font-size="10" fill="#0F172A">SWF-025.C1  S8 O5 D4</text>
+  <rect x="650" y="507" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="668.2" y="517.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="692.5" y="518" font-size="10" fill="#0F172A">SWF-029.C1  S8 O6 D10</text>
+  <rect x="650" y="522" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="668.2" y="532.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="692.5" y="533" font-size="10" fill="#0F172A">SWF-029.C2  S8 O6 D10</text>
+  <rect x="650" y="537" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="668.2" y="547.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="692.5" y="548" font-size="10" fill="#0F172A">SWF-064.C1  S8 O5 D9</text>
+  <rect x="650" y="552" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="668.2" y="562.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="692.5" y="563" font-size="10" fill="#0F172A">SWF-083.C1  S8 O8 D9</text>
   <text x="650" y="589" font-size="10" fill="#D97706" font-weight="600">AP M: SWF-025.C1</text>
   <text x="650" y="605" font-size="10" fill="#0F766E" font-weight="600">AP L: SWF-001.C3, SWF-008.C1, SWF-013.C1,</text>
   <text x="650" y="618" font-size="10" fill="#0F766E" font-weight="600">SWF-013.C2, SWF-014.C1, SWF-014.C2, SWF-014.C3,</text>
   <text x="650" y="631" font-size="10" fill="#0F766E" font-weight="600">SWF-028.C2, SWF-030.C2, SWF-049.C1, SWF-054.C1,</text>
   <text x="650" y="644" font-size="10" fill="#0F766E" font-weight="600">SWF-055.C1, SWF-089.C1, SWF-090.C1, SWF-092.C1,</text>
   <text x="650" y="657" font-size="10" fill="#0F766E" font-weight="600">SWF-092.C2</text>
-  <text x="650" y="683" font-size="10" fill="#52514E" font-weight="700">AP H causes (132) by treatment</text>
+  <text x="650" y="683" font-size="10" fill="#475569" font-weight="700">AP H causes (132) by treatment</text>
   <rect x="650" y="697" width="11.2" height="16" fill="#2E9E6A" rx="2"/>
-  <text x="667.2" y="709" font-size="10" fill="#0B0B0B">9  action completed</text>
+  <text x="667.2" y="709" font-size="10" fill="#0F172A">9  action completed</text>
   <rect x="650" y="719" width="47.5" height="16" fill="#D97706" rx="2"/>
-  <text x="703.5" y="731" font-size="10" fill="#0B0B0B">38  action in progress</text>
-  <rect x="650" y="741" width="106.2" height="16" fill="#FBE4DF" stroke="#D03B3B" stroke-width="1" rx="2"/>
-  <text x="762.2" y="753" font-size="10" fill="#0B0B0B">85  action open</text>
-  <text x="955" y="114" font-size="15" fill="#0B0B0B" font-weight="700">PFMEA</text>
-  <text x="955" y="131" font-size="10.5" fill="#52514E">PFM rev 0.4 · BL-007 · draft</text>
-  <text x="955" y="146" font-size="10.5" fill="#52514E">18 rated causes</text>
-  <rect x="955" y="158" width="269.2" height="22" fill="#D03B3B"/>
+  <text x="703.5" y="731" font-size="10" fill="#0F172A">38  action in progress</text>
+  <rect x="650" y="741" width="106.2" height="16" fill="#FBE4DF" stroke="#D2553F" stroke-width="1" rx="2"/>
+  <text x="762.2" y="753" font-size="10" fill="#0F172A">85  action open</text>
+  <text x="955" y="114" font-size="15" fill="#0F172A" font-weight="700">PFMEA</text>
+  <text x="955" y="131" font-size="10.5" fill="#475569">PFM rev 0.4 · BL-007 · draft</text>
+  <text x="955" y="146" font-size="10.5" fill="#475569">18 rated causes</text>
+  <rect x="955" y="158" width="269.2" height="22" fill="#D2553F"/>
   <text x="1089.6" y="173" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">H 17</text>
   <rect x="1224.2" y="158" width="15.8" height="22" fill="#0F766E"/>
-  <text x="955" y="194" font-size="10.5" fill="#0B0B0B" font-weight="600">AP as rated: H 17  M 0  L 1</text>
-  <text x="955" y="214" font-size="10" fill="#52514E" font-weight="700">Causes with S 9–10 by occurrence × detection</text>
-  <text x="979" y="238.5" font-size="9.5" fill="#52514E" text-anchor="end">10</text>
+  <text x="955" y="194" font-size="10.5" fill="#0F172A" font-weight="600">AP as rated: H 17  M 0  L 1</text>
+  <text x="955" y="214" font-size="10" fill="#475569" font-weight="700">Causes with S 9–10 by occurrence × detection</text>
+  <text x="979" y="238.5" font-size="9.5" fill="#475569" text-anchor="end">10</text>
   <rect x="985" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1007" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1029" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -586,7 +585,7 @@
   <rect x="1139" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1161" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1183" y="224" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <text x="979" y="260.5" font-size="9.5" fill="#52514E" text-anchor="end">9</text>
+  <text x="979" y="260.5" font-size="9.5" fill="#475569" text-anchor="end">9</text>
   <rect x="985" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1007" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1029" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -595,11 +594,11 @@
   <rect x="1095" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1117" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1139" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="1150" cy="257" r="9.5" fill="#D03B3B"/>
+  <circle cx="1150" cy="257" r="9.5" fill="#D2553F"/>
   <text x="1150" y="260.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="1161" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1183" y="246" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <text x="979" y="282.5" font-size="9.5" fill="#52514E" text-anchor="end">8</text>
+  <text x="979" y="282.5" font-size="9.5" fill="#475569" text-anchor="end">8</text>
   <rect x="985" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1007" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1029" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -607,18 +606,18 @@
   <rect x="1073" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1095" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1117" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="1128" cy="279" r="9.5" fill="#D03B3B"/>
+  <circle cx="1128" cy="279" r="9.5" fill="#D2553F"/>
   <text x="1128" y="282.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="1139" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="1150" cy="279" r="9.5" fill="#D03B3B"/>
+  <circle cx="1150" cy="279" r="9.5" fill="#D2553F"/>
   <text x="1150" y="282.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
   <rect x="1161" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="1172" cy="279" r="9.5" fill="#D03B3B"/>
+  <circle cx="1172" cy="279" r="9.5" fill="#D2553F"/>
   <text x="1172" y="282.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="1183" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="1194" cy="279" r="9.5" fill="#D03B3B"/>
+  <circle cx="1194" cy="279" r="9.5" fill="#D2553F"/>
   <text x="1194" y="282.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
-  <text x="979" y="304.5" font-size="9.5" fill="#52514E" text-anchor="end">7</text>
+  <text x="979" y="304.5" font-size="9.5" fill="#475569" text-anchor="end">7</text>
   <rect x="985" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1007" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1029" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -626,14 +625,14 @@
   <rect x="1073" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1095" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1117" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="1128" cy="301" r="9.5" fill="#D03B3B"/>
+  <circle cx="1128" cy="301" r="9.5" fill="#D2553F"/>
   <text x="1128" y="304.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="1139" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="1150" cy="301" r="9.5" fill="#D03B3B"/>
+  <circle cx="1150" cy="301" r="9.5" fill="#D2553F"/>
   <text x="1150" y="304.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
   <rect x="1161" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1183" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <text x="979" y="326.5" font-size="9.5" fill="#52514E" text-anchor="end">6</text>
+  <text x="979" y="326.5" font-size="9.5" fill="#475569" text-anchor="end">6</text>
   <rect x="985" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1007" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1029" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -644,22 +643,22 @@
   <rect x="1139" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1161" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1183" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <text x="979" y="348.5" font-size="9.5" fill="#52514E" text-anchor="end">5</text>
+  <text x="979" y="348.5" font-size="9.5" fill="#475569" text-anchor="end">5</text>
   <rect x="985" y="334" width="22" height="22" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1007" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1029" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1051" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1073" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="1084" cy="345" r="9.5" fill="#D03B3B"/>
+  <circle cx="1084" cy="345" r="9.5" fill="#D2553F"/>
   <text x="1084" y="348.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="1095" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="1106" cy="345" r="9.5" fill="#D03B3B"/>
+  <circle cx="1106" cy="345" r="9.5" fill="#D2553F"/>
   <text x="1106" y="348.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="1117" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1139" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1161" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1183" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <text x="979" y="370.5" font-size="9.5" fill="#52514E" text-anchor="end">4</text>
+  <text x="979" y="370.5" font-size="9.5" fill="#475569" text-anchor="end">4</text>
   <rect x="985" y="356" width="22" height="22" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1007" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1029" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -667,12 +666,12 @@
   <rect x="1073" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1095" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1117" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="1128" cy="367" r="9.5" fill="#D03B3B"/>
+  <circle cx="1128" cy="367" r="9.5" fill="#D2553F"/>
   <text x="1128" y="370.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="1139" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1161" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1183" y="356" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <text x="979" y="392.5" font-size="9.5" fill="#52514E" text-anchor="end">3</text>
+  <text x="979" y="392.5" font-size="9.5" fill="#475569" text-anchor="end">3</text>
   <rect x="985" y="378" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1007" y="378" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1029" y="378" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
@@ -682,12 +681,12 @@
   <rect x="1073" y="378" width="22" height="22" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1095" y="378" width="22" height="22" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1117" y="378" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="1128" cy="389" r="9.5" fill="#D03B3B"/>
+  <circle cx="1128" cy="389" r="9.5" fill="#D2553F"/>
   <text x="1128" y="392.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="1139" y="378" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1161" y="378" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1183" y="378" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <text x="979" y="414.5" font-size="9.5" fill="#52514E" text-anchor="end">2</text>
+  <text x="979" y="414.5" font-size="9.5" fill="#475569" text-anchor="end">2</text>
   <rect x="985" y="400" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1007" y="400" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1029" y="400" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
@@ -698,7 +697,7 @@
   <rect x="1139" y="400" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1161" y="400" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1183" y="400" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <text x="979" y="436.5" font-size="9.5" fill="#52514E" text-anchor="end">1</text>
+  <text x="979" y="436.5" font-size="9.5" fill="#475569" text-anchor="end">1</text>
   <rect x="985" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1007" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1029" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
@@ -709,35 +708,35 @@
   <rect x="1139" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1161" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="1183" y="422" width="22" height="22" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="1"/>
-  <text x="996" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">1</text>
-  <text x="1018" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">2</text>
-  <text x="1040" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">3</text>
-  <text x="1062" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">4</text>
-  <text x="1084" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">5</text>
-  <text x="1106" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">6</text>
-  <text x="1128" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">7</text>
-  <text x="1150" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">8</text>
-  <text x="1172" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">9</text>
-  <text x="1194" y="456" font-size="9.5" fill="#52514E" text-anchor="middle">10</text>
-  <text x="1095" y="470" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="middle">Detection D →</text>
-  <text x="961" y="334" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="middle" transform="rotate(-90 961 334)">Occurrence O →</text>
-  <text x="955" y="484" font-size="10" fill="#52514E">All rated causes have S 9–10.</text>
+  <text x="996" y="456" font-size="9.5" fill="#475569" text-anchor="middle">1</text>
+  <text x="1018" y="456" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
+  <text x="1040" y="456" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
+  <text x="1062" y="456" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
+  <text x="1084" y="456" font-size="9.5" fill="#475569" text-anchor="middle">5</text>
+  <text x="1106" y="456" font-size="9.5" fill="#475569" text-anchor="middle">6</text>
+  <text x="1128" y="456" font-size="9.5" fill="#475569" text-anchor="middle">7</text>
+  <text x="1150" y="456" font-size="9.5" fill="#475569" text-anchor="middle">8</text>
+  <text x="1172" y="456" font-size="9.5" fill="#475569" text-anchor="middle">9</text>
+  <text x="1194" y="456" font-size="9.5" fill="#475569" text-anchor="middle">10</text>
+  <text x="1095" y="470" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">Detection D →</text>
+  <text x="961" y="334" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle" transform="rotate(-90 961 334)">Occurrence O →</text>
+  <text x="955" y="484" font-size="10" fill="#475569">All rated causes have S 9–10.</text>
   <text x="955" y="506" font-size="10" fill="#0F766E" font-weight="600">AP L: PFM-003.C1</text>
-  <text x="955" y="532" font-size="10" fill="#52514E" font-weight="700">AP H causes (17) by treatment</text>
+  <text x="955" y="532" font-size="10" fill="#475569" font-weight="700">AP H causes (17) by treatment</text>
   <rect x="955" y="546" width="29.1" height="16" fill="#D97706" rx="2"/>
-  <text x="990.1" y="558" font-size="10" fill="#0B0B0B">3  action in progress</text>
-  <rect x="955" y="568" width="135.9" height="16" fill="#FBE4DF" stroke="#D03B3B" stroke-width="1" rx="2"/>
-  <text x="1096.9" y="580" font-size="10" fill="#0B0B0B">14  action open</text>
-  <line x1="40" y1="783" x2="1240" y2="783" stroke="#E1E0D9" stroke-width="1"/>
+  <text x="990.1" y="558" font-size="10" fill="#0F172A">3  action in progress</text>
+  <rect x="955" y="568" width="135.9" height="16" fill="#FBE4DF" stroke="#D2553F" stroke-width="1" rx="2"/>
+  <text x="1096.9" y="580" font-size="10" fill="#0F172A">14  action open</text>
+  <line x1="40" y1="783" x2="1240" y2="783" stroke="#E2E8F0" stroke-width="1"/>
   <rect x="40" y="794" width="14" height="14" fill="#FBE4DF"/>
-  <circle cx="68" cy="801" r="7" fill="#D03B3B"/>
-  <text x="82" y="805" font-size="10.5" fill="#0B0B0B">AP H region of the AIAG-VDA table / causes rated H</text>
+  <circle cx="68" cy="801" r="7" fill="#D2553F"/>
+  <text x="82" y="805" font-size="10.5" fill="#0F172A">AP H region of the AIAG-VDA table / causes rated H</text>
   <rect x="365.6" y="794" width="14" height="14" fill="#FDEFD8"/>
   <circle cx="393.6" cy="801" r="7" fill="#D97706"/>
-  <text x="407.6" y="805" font-size="10.5" fill="#0B0B0B">AP M region of the AIAG-VDA table / causes rated M</text>
+  <text x="407.6" y="805" font-size="10.5" fill="#0F172A">AP M region of the AIAG-VDA table / causes rated M</text>
   <rect x="696.1" y="794" width="14" height="14" fill="#DDF0EC"/>
   <circle cx="724.1" cy="801" r="7" fill="#0F766E"/>
-  <text x="738.1" y="805" font-size="10.5" fill="#0B0B0B">AP L region of the AIAG-VDA table / causes rated L</text>
-  <text x="40" y="823" font-size="10" fill="#52514E">Grid background = AP for S 9–10 from the AIAG-VDA table (rating-tables §5); circle = number of causes rated at that O and D. AP values are those stored in the YAML (fmea_lint checks them against the table).</text>
-  <text x="40" y="841" font-size="9.5" fill="#898781">Generated by tools/safety/fmea_diagrams.py from analyses/system-fmea.yaml, dfmea.yaml, sw-fmea.yaml, pfmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+  <text x="738.1" y="805" font-size="10.5" fill="#0F172A">AP L region of the AIAG-VDA table / causes rated L</text>
+  <text x="40" y="823" font-size="10" fill="#475569">Grid background = AP for S 9–10 from the AIAG-VDA table (rating-tables §5); circle = number of causes rated at that O and D. AP values are those stored in the YAML (fmea_lint checks them against the table).</text>
+  <text x="40" y="841" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/system-fmea.yaml, dfmea.yaml, sw-fmea.yaml, pfmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>

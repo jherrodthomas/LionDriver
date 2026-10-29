@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1092 758" width="1092" height="758" role="img">
+<title>LionDriver item boundary, Corolla E210 · ZRE212 · US</title>
+<style>
+.bg{fill:#fcfcfb}.dot{fill:#e7e6e0}.ink{fill:#0b0b0b}.mut{fill:#52514e}.acc{fill:#2a78d6}.surf{fill:#f3f2ee}.box{fill:#ffffff;stroke:#e1e0d9}
+.in{fill:#eef4fc;stroke:#2a78d6}.out{fill:#f3f2ee;stroke:#e1e0d9}.bd{fill:none;stroke:#2a78d6;stroke-dasharray:6 4}.frame{fill:none;stroke:#e1e0d9}
+.hS{fill:#fbe9e9}.h{fill:#9e2424}.mS{fill:#fff5dc}.m{fill:#7a5600}.lS{fill:#e6f5e6}.l{fill:#0a6a0a}
+.hB{fill:#fbe9e9;stroke:#d03b3b}.lB{fill:#e6f5e6;stroke:#0ca30c}.nB{fill:#f1eefc;stroke:#6250d6}.n{fill:#6250d6}
+.ln{stroke:#898781;fill:none}.data{stroke:#2a78d6;fill:none}.energy{stroke:#eb6834;fill:none;stroke-width:2.2}
+.physical{stroke:#898781;fill:none;stroke-dasharray:5 3}.material{stroke:#008300;fill:none;stroke-dasharray:1.5 3}
+.ah{fill:#898781}.lbl{fill:#fcfcfb}.lane{fill:#f3f2ee}.laneT{fill:#52514e}
+text{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif}
+.mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace}
+@media (prefers-color-scheme: dark){
+.bg{fill:#1a1a19}.dot{fill:#262624}.ink{fill:#f2f1ec}.mut{fill:#b5b3ab}.acc{fill:#6aa5ec}.surf{fill:#242422}.box{fill:#242422;stroke:#3a3936}
+.in{fill:#1b2a3d;stroke:#4f8fe0}.out{fill:#242422;stroke:#3a3936}.bd{stroke:#6aa5ec}.frame{stroke:#3a3936}
+.hS{fill:#4a1f1f}.h{fill:#ffb3b3}.mS{fill:#43361a}.m{fill:#ffd98a}.lS{fill:#1d3a1d}.l{fill:#9fe09f}
+.hB{fill:#4a1f1f;stroke:#d03b3b}.lB{fill:#1d3a1d;stroke:#0ca30c}.nB{fill:#2a2347;stroke:#8f80e8}.n{fill:#b0a6f0}
+.ln{stroke:#8a8880}.data{stroke:#6aa5ec}.energy{stroke:#f08a5d}.physical{stroke:#8a8880}.material{stroke:#5cc45c}
+.ah{fill:#8a8880}.lbl{fill:#1a1a19}.lane{fill:#242422}.laneT{fill:#b5b3ab}}
+</style>
+<defs><pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle class="dot" cx="1.2" cy="1.2" r="1.2"/></pattern></defs>
+<rect class="bg" x="0" y="0" width="1092" height="758" rx="12"/>
+<rect x="0" y="0" width="1092" height="758" rx="12" fill="url(#dots)"/>
+<text x="30.0" y="30.0" class="ink" font-size="15" font-weight="600" text-anchor="start">LionDriver item boundary, Corolla E210 · ZRE212 · US</text>
+<rect x="232" y="48" width="628" height="510" rx="10" class="bd"/>
+<text x="242.0" y="62.0" class="acc" font-size="11" font-weight="600" text-anchor="start">LD-SDA item: comma 3X, integrated panda, harness</text>
+<path d="M198.0 411.0 L222.0 411.0 L222.0 515.0 L246.0 515.0" class="data"/>
+<path d="M246.0 515.0 L239.6 517.7 L239.6 512.3 Z" class="ah"/>
+<path d="M198.0 203.0 L229.0 203.0 L229.0 307.0 L246.0 307.0" class="data"/>
+<path d="M246.0 307.0 L239.6 309.7 L239.6 304.3 Z" class="ah"/>
+<path d="M198.0 619.0 L438.0 619.0 L438.0 307.0 L678.0 307.0" class="data"/>
+<path d="M678.0 307.0 L671.6 309.7 L671.6 304.3 Z" class="ah"/>
+<path d="M414.0 515.0 L462.0 515.0" class="data"/>
+<path d="M462.0 515.0 L455.6 517.7 L455.6 512.3 Z" class="ah"/>
+<path d="M546.0 486.0 L546.0 336.0" class="data"/>
+<path d="M546.0 336.0 L548.7 342.4 L543.3 342.4 Z" class="ah"/>
+<path d="M462.0 307.0 L414.0 307.0" class="data"/>
+<path d="M414.0 307.0 L420.4 304.3 L420.4 309.7 Z" class="ah"/>
+<path d="M414.0 307.0 L445.0 307.0 L445.0 515.0 L462.0 515.0" class="data"/>
+<path d="M462.0 515.0 L455.6 517.7 L455.6 512.3 Z" class="ah"/>
+<path d="M330.0 278.0 L330.0 128.0" class="data"/>
+<path d="M330.0 128.0 L332.7 134.4 L327.3 134.4 Z" class="ah"/>
+<path d="M246.0 99.0 L208.0 99.0 L208.0 203.0 L198.0 203.0" class="data"/>
+<path d="M198.0 203.0 L204.4 200.3 L204.4 205.7 Z" class="ah"/>
+<path d="M630.0 307.0 L678.0 307.0" class="data"/>
+<path d="M678.0 307.0 L671.6 309.7 L671.6 304.3 Z" class="ah"/>
+<path d="M630.0 307.0 L636.4 304.3 L636.4 309.7 Z" class="ah"/>
+<path d="M846.0 307.0 L870.0 307.0 L870.0 99.0 L894.0 99.0" class="data"/>
+<path d="M894.0 99.0 L887.6 101.7 L887.6 96.3 Z" class="ah"/>
+<path d="M894.0 105.0 L877.0 105.0 L877.0 313.0 L846.0 313.0" class="data"/>
+<path d="M846.0 313.0 L852.4 310.3 L852.4 315.7 Z" class="ah"/>
+<path d="M846.0 307.0 L856.0 307.0 L856.0 203.0 L894.0 203.0" class="data"/>
+<path d="M894.0 203.0 L887.6 205.7 L887.6 200.3 Z" class="ah"/>
+<path d="M894.0 209.0 L884.0 209.0 L884.0 313.0 L846.0 313.0" class="data"/>
+<path d="M846.0 313.0 L852.4 310.3 L852.4 315.7 Z" class="ah"/>
+<path d="M894.0 411.0 L849.0 411.0 L849.0 307.0 L846.0 307.0" class="data"/>
+<path d="M846.0 307.0 L852.4 304.3 L852.4 309.7 Z" class="ah"/>
+<path d="M846.0 307.0 L891.0 307.0 L891.0 619.0 L894.0 619.0" class="data"/>
+<path d="M894.0 619.0 L887.6 621.7 L887.6 616.3 Z" class="ah"/>
+<path d="M762.0 336.0 L762.0 486.0" class="data"/>
+<path d="M762.0 486.0 L759.3 479.6 L764.7 479.6 Z" class="ah"/>
+<path d="M846.0 515.0 L842.0 515.0 L842.0 619.0 L894.0 619.0" class="physical"/>
+<path d="M894.0 619.0 L887.6 621.7 L887.6 616.3 Z" class="ah"/>
+<path d="M846.0 515.0 L839.6 517.7 L839.6 512.3 Z" class="ah"/>
+<path d="M894.0 625.0 L898.0 625.0 L898.0 521.0 L846.0 521.0" class="energy"/>
+<path d="M846.0 521.0 L852.4 518.3 L852.4 523.7 Z" class="ah"/>
+<path d="M678.0 307.0 L424.0 307.0 L424.0 203.0 L198.0 203.0" class="data"/>
+<path d="M198.0 203.0 L204.4 200.3 L204.4 205.7 Z" class="ah"/>
+<path d="M198.0 203.0 L546.0 203.0 L546.0 99.0 L894.0 99.0" class="physical"/>
+<path d="M894.0 99.0 L887.6 101.7 L887.6 96.3 Z" class="ah"/>
+<path d="M198.0 203.0 L894.0 203.0" class="physical"/>
+<path d="M894.0 203.0 L887.6 205.7 L887.6 200.3 Z" class="ah"/>
+<rect x="30.0" y="174.0" width="168.0" height="58.0" rx="10" class="out"/>
+<text x="40.0" y="195.0" class="ink" font-size="12" font-weight="600" text-anchor="start">Driver</text>
+<text x="40.0" y="209.0" class="mut" font-size="10.5" text-anchor="start">Supervises, overrides,</text>
+<text x="40.0" y="221.5" class="mut" font-size="10.5" text-anchor="start">answers alerts</text>
+<rect x="30.0" y="382.0" width="168.0" height="58.0" rx="10" class="out"/>
+<text x="40.0" y="403.0" class="ink" font-size="12" font-weight="600" text-anchor="start">Road environment</text>
+<text x="40.0" y="417.0" class="mut" font-size="10.5" text-anchor="start">Highway scene, lanes, leads,</text>
+<text x="40.0" y="429.5" class="mut" font-size="10.5" text-anchor="start">weather, light</text>
+<rect x="30.0" y="590.0" width="168.0" height="58.0" rx="10" class="out"/>
+<text x="40.0" y="611.0" class="ink" font-size="12" font-weight="600" text-anchor="start">Toyota forward radar</text>
+<text x="40.0" y="625.0" class="mut" font-size="10.5" text-anchor="start">Lead tracks on radar CAN</text>
+<text x="40.0" y="637.5" class="mut" font-size="10.5" text-anchor="start">(panda bus 1)</text>
+<rect x="246.0" y="70.0" width="168.0" height="58.0" rx="10" class="in"/>
+<text x="256.0" y="91.0" class="ink" font-size="12" font-weight="600" text-anchor="start">HMI</text>
+<text x="256.0" y="105.0" class="mut" font-size="10.5" text-anchor="start">ui, soundd, display, speaker</text>
+<rect x="246.0" y="278.0" width="168.0" height="58.0" rx="10" class="in"/>
+<text x="256.0" y="299.0" class="ink" font-size="12" font-weight="600" text-anchor="start">Supervision + DM</text>
+<text x="256.0" y="313.0" class="mut" font-size="10.5" text-anchor="start">selfdrived,</text>
+<text x="256.0" y="325.5" class="mut" font-size="10.5" text-anchor="start">dmonitoringmodeld/d</text>
+<rect x="246.0" y="486.0" width="168.0" height="58.0" rx="10" class="in"/>
+<text x="256.0" y="507.0" class="ink" font-size="12" font-weight="600" text-anchor="start">Perception + planning</text>
+<text x="256.0" y="521.0" class="mut" font-size="10.5" text-anchor="start">camerad, modeld, locationd,</text>
+<text x="256.0" y="533.5" class="mut" font-size="10.5" text-anchor="start">plannerd, radard</text>
+<rect x="462.0" y="486.0" width="168.0" height="58.0" rx="10" class="in"/>
+<text x="472.0" y="507.0" class="ink" font-size="12" font-weight="600" text-anchor="start">Control</text>
+<text x="472.0" y="521.0" class="mut" font-size="10.5" text-anchor="start">controlsd,</text>
+<text x="472.0" y="533.5" class="mut" font-size="10.5" text-anchor="start">lateral/longitudinal…</text>
+<rect x="462.0" y="278.0" width="168.0" height="58.0" rx="10" class="in"/>
+<text x="472.0" y="299.0" class="ink" font-size="12" font-weight="600" text-anchor="start">Car interface + pandad</text>
+<text x="472.0" y="313.0" class="mut" font-size="10.5" text-anchor="start">card, opendbc Toyota port,</text>
+<text x="472.0" y="325.5" class="mut" font-size="10.5" text-anchor="start">pandad</text>
+<rect x="678.0" y="278.0" width="168.0" height="58.0" rx="10" class="in"/>
+<text x="688.0" y="299.0" class="ink" font-size="12" font-weight="600" text-anchor="start">Panda safety model</text>
+<text x="688.0" y="313.0" class="mut" font-size="10.5" text-anchor="start">STM32H7, opendbc safety</text>
+<text x="688.0" y="325.5" class="mut" font-size="10.5" text-anchor="start">Toyota mode</text>
+<rect x="678.0" y="486.0" width="168.0" height="58.0" rx="10" class="in"/>
+<text x="688.0" y="507.0" class="ink" font-size="12" font-weight="600" text-anchor="start">Harness + relay</text>
+<text x="688.0" y="521.0" class="mut" font-size="10.5" text-anchor="start">Toyota A connector, harness</text>
+<text x="688.0" y="533.5" class="mut" font-size="10.5" text-anchor="start">box, power</text>
+<rect x="894.0" y="70.0" width="168.0" height="58.0" rx="10" class="out"/>
+<text x="904.0" y="91.0" class="ink" font-size="12" font-weight="600" text-anchor="start">Toyota EPS</text>
+<text x="904.0" y="105.0" class="mut" font-size="10.5" text-anchor="start">LKA torque interface, driver</text>
+<text x="904.0" y="117.5" class="mut" font-size="10.5" text-anchor="start">torque sensor</text>
+<rect x="894.0" y="174.0" width="168.0" height="58.0" rx="10" class="out"/>
+<text x="904.0" y="195.0" class="ink" font-size="12" font-weight="600" text-anchor="start">Powertrain + brake (ACC)</text>
+<text x="904.0" y="209.0" class="mut" font-size="10.5" text-anchor="start">ECM/PCM, ABS/VSC via PCM ACC</text>
+<text x="904.0" y="221.5" class="mut" font-size="10.5" text-anchor="start">interface</text>
+<rect x="894.0" y="382.0" width="168.0" height="58.0" rx="10" class="out"/>
+<text x="904.0" y="403.0" class="ink" font-size="12" font-weight="600" text-anchor="start">Stock ADAS camera (TSS2)</text>
+<text x="904.0" y="417.0" class="mut" font-size="10.5" text-anchor="start">LKA/ACC intercepted, PCS</text>
+<text x="904.0" y="429.5" class="mut" font-size="10.5" text-anchor="start">forwarded</text>
+<rect x="894.0" y="590.0" width="168.0" height="58.0" rx="10" class="out"/>
+<text x="904.0" y="611.0" class="ink" font-size="12" font-weight="600" text-anchor="start">Vehicle CAN + 12 V</text>
+<text x="904.0" y="625.0" class="mut" font-size="10.5" text-anchor="start">Car-side CAN bus 0, cluster,</text>
+<text x="904.0" y="637.5" class="mut" font-size="10.5" text-anchor="start">12 V, ignition</text>
+<rect x="209.3" y="455.0" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="222.0" y="466.5" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I01</text>
+<rect x="216.3" y="247.0" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="229.0" y="258.5" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I02</text>
+<rect x="425.4" y="455.0" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="438.0" y="466.5" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I03</text>
+<rect x="425.4" y="507.0" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="438.0" y="518.5" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I04</text>
+<rect x="533.4" y="403.0" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="546.0" y="414.5" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I05</text>
+<rect x="425.4" y="299.0" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="438.0" y="310.5" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I06</text>
+<rect x="432.4" y="403.0" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="445.0" y="414.5" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I07</text>
+<rect x="317.4" y="195.0" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="330.0" y="206.5" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I08</text>
+<rect x="195.3" y="143.0" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="208.0" y="154.5" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I09</text>
+<rect x="641.4" y="299.0" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="654.0" y="310.5" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I10</text>
+<rect x="857.4" y="195.0" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="870.0" y="206.5" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I11</text>
+<rect x="864.4" y="169.8" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="877.0" y="181.3" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I12</text>
+<rect x="843.4" y="247.0" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="856.0" y="258.5" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I13</text>
+<rect x="871.4" y="268.6" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="884.0" y="280.1" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I14</text>
+<rect x="836.4" y="351.0" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="849.0" y="362.5" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I15</text>
+<rect x="878.4" y="455.0" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="891.0" y="466.5" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I16</text>
+<rect x="749.4" y="403.0" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="762.0" y="414.5" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I17</text>
+<rect x="829.4" y="559.0" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="842.0" y="570.5" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I18</text>
+<rect x="885.4" y="565.0" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="898.0" y="576.5" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I19</text>
+<rect x="264.5" y="195.0" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="277.1" y="206.5" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I20</text>
+<rect x="359.4" y="195.0" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="372.0" y="206.5" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I21</text>
+<rect x="533.4" y="195.0" width="25.3" height="15.0" rx="3" class="lbl"/>
+<text x="546.0" y="206.5" class="mut mono" font-size="10" font-weight="600" text-anchor="middle">I22</text>
+<path d="M30 728 L64 728" class="data"/>
+<text x="70.0" y="732.0" class="mut" font-size="11" text-anchor="start">data / signal</text>
+<path d="M174.5 728 L208.5 728" class="energy"/>
+<text x="214.5" y="732.0" class="mut" font-size="11" text-anchor="start">energy</text>
+<path d="M273.5 728 L307.5 728" class="physical"/>
+<text x="313.5" y="732.0" class="mut" font-size="11" text-anchor="start">physical / mechanical</text>
+<path d="M470.0 728 L504.0 728" class="material"/>
+<text x="510.0" y="732.0" class="mut" font-size="11" text-anchor="start">material</text>
+<rect x="592.0" y="719.0" width="28.0" height="18.0" rx="3" class="in"/>
+<text x="626.0" y="732.0" class="mut" font-size="11" text-anchor="start">analysed element</text>
+<rect x="742.0" y="719.0" width="28.0" height="18.0" rx="3" class="out"/>
+<text x="776.0" y="732.0" class="mut" font-size="11" text-anchor="start">outside the boundary</text>
+</svg>

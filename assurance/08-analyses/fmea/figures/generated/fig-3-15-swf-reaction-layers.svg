@@ -5,23 +5,22 @@
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
     <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
-    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1.2" cy="1.2" r="1.2" fill="#E7E6E0"/></pattern>
     <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
   </defs>
-  <rect width="1280" height="682" fill="#FCFCFB"/>
-  <text x="40" y="44" font-size="20" fill="#0B0B0B" font-weight="700">Figure 3-15 · SW FMEA — who catches it, and when</text>
-  <text x="40" y="66" font-size="12.5" fill="#52514E">SWF rev 1.12 · BL-007 · draft · after a fault starts, how long until each layer reacts, and whether the driver is told</text>
-  <text x="1240" y="44" font-size="11" fill="#52514E" text-anchor="end">fmea-plan.md §3.3</text>
-  <text x="1240" y="62" font-size="11" fill="#52514E" text-anchor="end">analyses/sw-fmea.yaml</text>
-  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E1E0D9" stroke-width="1"/>
-  <text x="40" y="104" font-size="11" fill="#0B0B0B" font-weight="600">11 of 139 safety mechanisms carry a reaction time, on 10 failure modes; 11 code-derived. 8 of those 10 have no timed warning to the driver.</text>
-  <text x="40" y="130" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">FAILURE MODE</text>
-  <text x="330" y="130" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">TIME FROM THE FAULT TO EACH LAYER'S REACTION (LOG SCALE)</text>
-  <text x="930" y="130" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">FIRST TIMED WARNING TO THE DRIVER</text>
-  <text x="330" y="146" font-size="9" fill="#52514E" font-weight="600" text-anchor="middle">10 ms</text>
-  <text x="520" y="146" font-size="9" fill="#52514E" font-weight="600" text-anchor="middle">100 ms</text>
-  <text x="710" y="146" font-size="9" fill="#52514E" font-weight="600" text-anchor="middle">1 s</text>
-  <text x="900" y="146" font-size="9" fill="#52514E" font-weight="600" text-anchor="middle">10 s</text>
+  <rect width="1280" height="682" fill="#FFFFFF"/>
+  <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-15 · SW FMEA — who catches it, and when</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.12 · BL-007 · draft · after a fault starts, how long until each layer reacts, and whether the driver is told</text>
+  <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
+  <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="104" font-size="11" fill="#0F172A" font-weight="600">11 of 139 safety mechanisms carry a reaction time, on 10 failure modes; 11 code-derived. 8 of those 10 have no timed warning to the driver.</text>
+  <text x="40" y="130" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FAILURE MODE</text>
+  <text x="330" y="130" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">TIME FROM THE FAULT TO EACH LAYER'S REACTION (LOG SCALE)</text>
+  <text x="930" y="130" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FIRST TIMED WARNING TO THE DRIVER</text>
+  <text x="330" y="146" font-size="9" fill="#475569" font-weight="600" text-anchor="middle">10 ms</text>
+  <text x="520" y="146" font-size="9" fill="#475569" font-weight="600" text-anchor="middle">100 ms</text>
+  <text x="710" y="146" font-size="9" fill="#475569" font-weight="600" text-anchor="middle">1 s</text>
+  <text x="900" y="146" font-size="9" fill="#475569" font-weight="600" text-anchor="middle">10 s</text>
   <line x1="330" y1="154" x2="330" y2="568" stroke="#E2E8F0" stroke-width="1"/>
   <line x1="387.2" y1="154" x2="387.2" y2="568" stroke="#F1F5F9" stroke-width="1"/>
   <line x1="462.8" y1="154" x2="462.8" y2="568" stroke="#F1F5F9" stroke-width="1"/>
@@ -32,81 +31,81 @@
   <line x1="767.2" y1="154" x2="767.2" y2="568" stroke="#F1F5F9" stroke-width="1"/>
   <line x1="842.8" y1="154" x2="842.8" y2="568" stroke="#F1F5F9" stroke-width="1"/>
   <line x1="900" y1="154" x2="900" y2="568" stroke="#E2E8F0" stroke-width="1"/>
-  <text x="40" y="169" font-size="10.5" fill="#0B0B0B" font-weight="700">SWF-018</text>
-  <text x="40" y="183" font-size="9" fill="#52514E">Safety checks stop running while the relay is driven</text>
+  <text x="40" y="169" font-size="10.5" fill="#0F172A" font-weight="700">SWF-018</text>
+  <text x="40" y="183" font-size="9" fill="#475569">Safety checks stop running while the relay is driven</text>
   <line x1="330" y1="172" x2="900" y2="172" stroke="#E2E8F0" stroke-width="1.5"/>
   <rect x="506.3" y="167" width="10" height="10" fill="#0F766E"><title>SWF-018 · envelope 90 ms (code-derived): IWDG window watchdog resets the MCU within about 90 ms; reset releases the relay [panda/board/drivers/hw_watchdog.h:21 (90 ms at 32 kHz LSI)]</title></rect>
   <text x="511.3" y="162" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle">90 ms</text>
   <text x="930" y="175" font-size="10" fill="#C2410C" font-weight="700">none timed</text>
-  <text x="40" y="211" font-size="10.5" fill="#0B0B0B" font-weight="700">SWF-020</text>
-  <text x="40" y="225" font-size="9" fill="#52514E">Heartbeat reports engaged while no fresh command reaches…</text>
+  <text x="40" y="211" font-size="10.5" fill="#0F172A" font-weight="700">SWF-020</text>
+  <text x="40" y="225" font-size="9" fill="#475569">Heartbeat reports engaged while no fresh command reaches…</text>
   <line x1="330" y1="214" x2="900" y2="214" stroke="#E2E8F0" stroke-width="1.5"/>
   <rect x="457.8" y="209" width="10" height="10" fill="#0F766E"><title>SWF-020 · envelope 50 ms (code-derived): BL-005, reference build: when no STEERING_LKA arrives for 50 ms (ACC_CONTROL 100 ms) the panda revokes authority whatever the heartbeat says (TSR-408, SWF-014.C2). It covers the "none arrive" branch only; frames that keep arriving with a stale value are not detected [opendbc_repo/opendbc/safety/modes/toyota.h (TX arrival, STEERING_LKA 50 ms; TSR-408)]</title></rect>
   <text x="462.8" y="204" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle">50 ms</text>
   <text x="930" y="217" font-size="10" fill="#C2410C" font-weight="700">none timed</text>
-  <text x="40" y="253" font-size="10.5" fill="#0B0B0B" font-weight="700">SWF-021</text>
-  <text x="40" y="267" font-size="9" fill="#52514E">Heartbeat gap longer than the 0.3 s panda budget while…</text>
+  <text x="40" y="253" font-size="10.5" fill="#0F172A" font-weight="700">SWF-021</text>
+  <text x="40" y="267" font-size="9" fill="#475569">Heartbeat gap longer than the 0.3 s panda budget while…</text>
   <line x1="330" y1="256" x2="900" y2="256" stroke="#E2E8F0" stroke-width="1.5"/>
   <circle cx="652.8" cy="256" r="5.5" fill="#334155"><title>SWF-021 · host 500 ms (code-derived): selfdrived controlsMismatch (IMMEDIATE_DISABLE, QM) after 2 consecutive pandaStates samples with controlsAllowed false, and at most 0.5 s after the first mismatched frame (supervision.py ControlsMismatch, TSR-621, #51; 200 cumulative frames at BL-004). pandaHeartbeatLost (immediate disable) on pandaState.heartbeatLost (TSR-615). Both need pandaStates to keep arriving [openpilot/selfdrive/selfdrived/selfdrived.py:361-375 (controlsMismatch; TSR-621)]</title></circle>
   <text x="652.8" y="246" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle">500 ms</text>
   <path d="M662.2 249.5L668.7 256L662.2 262.5L655.7 256z" fill="#6D5BD0"><title>SWF-021 · siren 560 ms (code-derived): Panda siren for 3 s when the 0.3 s revocation removes granted authority, about 0.56 s after the last heartbeat (panda c33343b, all builds; WP-S-04 T-07a); host unit test panda/tests/heartbeat_siren in CI, not on target. Independent of the SoC [panda/board/main.c:236-256; WP-S-04 T-07a]</title></path>
   <text x="662.2" y="274" font-size="8.5" fill="#6D5BD0" font-weight="700" text-anchor="middle">560 ms</text>
-  <text x="930" y="259" font-size="10" fill="#0B0B0B" font-weight="600">siren after 560 ms</text>
-  <text x="40" y="295" font-size="10.5" fill="#0B0B0B" font-weight="700">SWF-023</text>
-  <text x="40" y="309" font-size="9" fill="#52514E">Stale or burst-replayed sendcan frames forwarded to the…</text>
+  <text x="930" y="259" font-size="10" fill="#0F172A" font-weight="600">siren after 560 ms</text>
+  <text x="40" y="295" font-size="10.5" fill="#0F172A" font-weight="700">SWF-023</text>
+  <text x="40" y="309" font-size="9" fill="#475569">Stale or burst-replayed sendcan frames forwarded to the…</text>
   <line x1="330" y1="298" x2="900" y2="298" stroke="#E2E8F0" stroke-width="1.5"/>
   <rect x="605.7" y="293" width="10" height="10" fill="#0F766E"><title>SWF-023 · envelope 300 ms (code-derived): Heartbeat revocation after 0.3 s bounds replay after a pandad stall of more than 0.3 s, because the main loop stalls with the same SPI lock [panda/board/drivers/heartbeat_monitor.h (TSR-407)]</title></rect>
   <text x="610.7" y="288" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle">300 ms</text>
   <text x="930" y="301" font-size="10" fill="#C2410C" font-weight="700">none timed</text>
-  <text x="40" y="337" font-size="10.5" fill="#0B0B0B" font-weight="700">SWF-027</text>
-  <text x="40" y="351" font-size="9" fill="#52514E">pandad hangs or restarts while engaged</text>
+  <text x="40" y="337" font-size="10.5" fill="#0F172A" font-weight="700">SWF-027</text>
+  <text x="40" y="351" font-size="9" fill="#475569">pandad hangs or restarts while engaged</text>
   <line x1="330" y1="340" x2="900" y2="340" stroke="#E2E8F0" stroke-width="1.5"/>
   <rect x="605.7" y="335" width="10" height="10" fill="#0F766E"><title>SWF-027 · envelope 300 ms (code-derived): Panda heartbeat monitor revokes authority after 0.3 s (TSR-407). SILENT and a 3 s siren follow after the 1 Hz heartbeat timeout. 2026-10-13 (panda c33343b, all builds, not credited in the ratings): the siren also sounds at the revocation when authority was granted, about 0.56 s after the last heartbeat [panda/board/drivers/heartbeat_monitor.h (TSR-407)]</title></rect>
   <text x="610.7" y="330" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle">300 ms</text>
   <text x="930" y="343" font-size="10" fill="#C2410C" font-weight="700">none timed</text>
-  <text x="40" y="379" font-size="10.5" fill="#0B0B0B" font-weight="700">SWF-036</text>
-  <text x="40" y="393" font-size="9" fill="#52514E">selfdrived stops publishing selfdriveState (crash or hang)…</text>
+  <text x="40" y="379" font-size="10.5" fill="#0F172A" font-weight="700">SWF-036</text>
+  <text x="40" y="393" font-size="9" fill="#475569">selfdrived stops publishing selfdriveState (crash or hang)…</text>
   <line x1="330" y1="382" x2="900" y2="382" stroke="#E2E8F0" stroke-width="1.5"/>
   <path d="M842.8 376L848.8 387L836.8 387z" fill="#D97706"><title>SWF-036 · alert 5 s (code-derived): UI and soundd critical alert after 5 s without selfdriveState (EL-05, QM) [openpilot/selfdrive/ui/soundd.py:23 (SELFDRIVE_STATE_TIMEOUT)]</title></path>
   <text x="842.8" y="372" font-size="8.5" fill="#D97706" font-weight="700" text-anchor="middle">5 s</text>
-  <text x="930" y="385" font-size="10" fill="#0B0B0B" font-weight="600">alert after 5 s</text>
-  <text x="40" y="421" font-size="10.5" fill="#0B0B0B" font-weight="700">SWF-047</text>
-  <text x="40" y="435" font-size="9" fill="#52514E">Control step late, repeated or missing, or item frames droppe…</text>
+  <text x="930" y="385" font-size="10" fill="#0F172A" font-weight="600">alert after 5 s</text>
+  <text x="40" y="421" font-size="10.5" fill="#0F172A" font-weight="700">SWF-047</text>
+  <text x="40" y="435" font-size="9" fill="#475569">Control step late, repeated or missing, or item frames droppe…</text>
   <line x1="330" y1="424" x2="900" y2="424" stroke="#E2E8F0" stroke-width="1.5"/>
   <circle cx="520" cy="424" r="5.5" fill="#334155"><title>SWF-047 · host 100 ms (code-derived): card stops actuating 0.1 s after carControl stops (card.py:234); selfdrived commIssue/processNotRunning soft-disable alert; EPS LKA message time-out (vehicle) [openpilot/selfdrive/car/card.py:247 (all_alive carControl: 10 periods at 100 Hz)]</title></circle>
   <text x="520" y="414" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle">100 ms</text>
   <text x="930" y="427" font-size="10" fill="#C2410C" font-weight="700">none timed</text>
-  <text x="40" y="463" font-size="10.5" fill="#0B0B0B" font-weight="700">SWF-062</text>
-  <text x="40" y="477" font-size="9" fill="#52514E">Terminal unresponsive-driver state reached without the item…</text>
+  <text x="40" y="463" font-size="10.5" fill="#0F172A" font-weight="700">SWF-062</text>
+  <text x="40" y="477" font-size="9" fill="#475569">Terminal unresponsive-driver state reached without the item…</text>
   <line x1="330" y1="466" x2="900" y2="466" stroke="#E2E8F0" stroke-width="1.5"/>
   <circle cx="842.8" cy="466" r="5.5" fill="#334155"><title>SWF-062 · host 5 s (code-derived): Forced deceleration to standstill after 5 s at the terminal level (policy.py:435-436, 454; controlsd.py:236; longitudinal_planner.py:84-85); lockout (NO_ENTRY) after 2 terminal events or 1 no-response [openpilot/selfdrive/monitoring/policy.py:44, 454; WP-S-04 T-33]</title></circle>
   <text x="842.8" y="456" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle">5 s</text>
   <text x="930" y="469" font-size="10" fill="#C2410C" font-weight="700">none timed</text>
-  <text x="40" y="505" font-size="10.5" fill="#0B0B0B" font-weight="700">SWF-065</text>
-  <text x="40" y="519" font-size="9" fill="#52514E">Planned acceleration too high, or deceleration too low, for th…</text>
+  <text x="40" y="505" font-size="10.5" fill="#0F172A" font-weight="700">SWF-065</text>
+  <text x="40" y="519" font-size="9" fill="#475569">Planned acceleration too high, or deceleration too low, for th…</text>
   <line x1="330" y1="508" x2="900" y2="508" stroke="#E2E8F0" stroke-width="1.5"/>
   <circle cx="652.8" cy="508" r="5.5" fill="#334155"><title>SWF-065 · host 500 ms (code-derived): controlsd stops longitudinal control on a longitudinalPlan older than 0.5 s or a non-finite aTarget (TSR-602, SWF-045) [openpilot/selfdrive/controls/controlsd.py:118-131 (TSR-602)]</title></circle>
   <text x="652.8" y="498" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle">500 ms</text>
   <text x="930" y="511" font-size="10" fill="#C2410C" font-weight="700">none timed</text>
-  <text x="40" y="547" font-size="10.5" fill="#0B0B0B" font-weight="700">SWF-072</text>
-  <text x="40" y="561" font-size="9" fill="#52514E">modelV2 published as valid while its content is non-finite…</text>
+  <text x="40" y="547" font-size="10.5" fill="#0F172A" font-weight="700">SWF-072</text>
+  <text x="40" y="561" font-size="9" fill="#475569">modelV2 published as valid while its content is non-finite…</text>
   <line x1="330" y1="550" x2="900" y2="550" stroke="#E2E8F0" stroke-width="1.5"/>
   <circle cx="652.8" cy="550" r="5.5" fill="#334155"><title>SWF-072 · host 500 ms (code-derived): controlsd turns lateral control off for a non-finite curvature and on a modelV2 older than 0.5 s (TSR-602, SWF-045) [openpilot/selfdrive/controls/controlsd.py:118-129 (TSR-602)]</title></circle>
   <text x="652.8" y="540" font-size="8.5" fill="#334155" font-weight="700" text-anchor="middle">500 ms</text>
   <text x="930" y="553" font-size="10" fill="#C2410C" font-weight="700">none timed</text>
-  <line x1="40" y1="574" x2="1240" y2="574" stroke="#E1E0D9" stroke-width="1"/>
+  <line x1="40" y1="574" x2="1240" y2="574" stroke="#E2E8F0" stroke-width="1"/>
   <circle cx="46" cy="592" r="5.5" fill="#334155"></circle>
-  <text x="58" y="596" font-size="10.5" fill="#0B0B0B">host stops acting (SoC software)</text>
+  <text x="58" y="596" font-size="10.5" fill="#0F172A">host stops acting (SoC software)</text>
   <rect x="247.6" y="587" width="10" height="10" fill="#0F766E"></rect>
-  <text x="264.6" y="596" font-size="10.5" fill="#0B0B0B">panda revokes or blocks authority</text>
+  <text x="264.6" y="596" font-size="10.5" fill="#0F172A">panda revokes or blocks authority</text>
   <path d="M462.6 586L468.6 597L456.6 597z" fill="#D97706"></path>
-  <text x="474.6" y="596" font-size="10.5" fill="#0B0B0B">device alert to the driver</text>
+  <text x="474.6" y="596" font-size="10.5" fill="#0F172A">device alert to the driver</text>
   <path d="M626.4 585.5L632.9 592L626.4 598.5L619.9 592z" fill="#6D5BD0"></path>
-  <text x="638.4" y="596" font-size="10.5" fill="#0B0B0B">panda siren</text>
+  <text x="638.4" y="596" font-size="10.5" fill="#0F172A">panda siren</text>
   <circle cx="724.1" cy="592" r="5" fill="#FFFFFF" stroke="#2E9E6A" stroke-width="2.4"></circle>
-  <text x="736.1" y="596" font-size="10.5" fill="#0B0B0B">stock ECU reacts</text>
-  <text x="40" y="614" font-size="10" fill="#52514E">Each row is a failure mode with at least one safety mechanism that records `reaction_s`; each mark is one mechanism at the time from the fault to its layer's reaction. Hover a mark for the mechanism and where its time comes from.</text>
-  <text x="40" y="629" font-size="10" fill="#52514E">Filled marks are read from the code (code-derived) or measured; hollow marks are a requirement budget or an estimate. No time here is measured, and the figure does not check any time against an FTTI.</text>
-  <text x="40" y="644" font-size="10" fill="#52514E">"None timed" means no alert or siren mechanism on that row records a time; the driver may still be warned by an untimed mechanism listed in the YAML.</text>
-  <text x="40" y="662" font-size="9.5" fill="#898781">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+  <text x="736.1" y="596" font-size="10.5" fill="#0F172A">stock ECU reacts</text>
+  <text x="40" y="614" font-size="10" fill="#475569">Each row is a failure mode with at least one safety mechanism that records `reaction_s`; each mark is one mechanism at the time from the fault to its layer's reaction. Hover a mark for the mechanism and where its time comes from.</text>
+  <text x="40" y="629" font-size="10" fill="#475569">Filled marks are read from the code (code-derived) or measured; hollow marks are a requirement budget or an estimate. No time here is measured, and the figure does not check any time against an FTTI.</text>
+  <text x="40" y="644" font-size="10" fill="#475569">"None timed" means no alert or siren mechanism on that row records a time; the driver may still be warned by an untimed mechanism listed in the YAML.</text>
+  <text x="40" y="662" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>

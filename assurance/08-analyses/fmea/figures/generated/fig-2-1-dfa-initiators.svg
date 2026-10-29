@@ -5,61 +5,60 @@
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
     <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
-    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1.2" cy="1.2" r="1.2" fill="#E7E6E0"/></pattern>
     <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
   </defs>
-  <rect width="1280" height="1818" fill="#FCFCFB"/>
-  <text x="40" y="44" font-size="20" fill="#0B0B0B" font-weight="700">Figure 2-1 · Dependent failure initiators × ASIL decompositions</text>
-  <text x="40" y="66" font-size="12.5" fill="#52514E">LD-DFA-001 rev 0.16 · FSC rev 0.5 · BL-004 · draft · cell = the initiator affects that decomposition, coloured by the initiator's assessment</text>
-  <text x="1240" y="44" font-size="11" fill="#52514E" text-anchor="end">fmea-plan.md §2</text>
-  <text x="1240" y="62" font-size="11" fill="#52514E" text-anchor="end">analyses/dfa.yaml</text>
-  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E1E0D9" stroke-width="1"/>
-  <text x="40" y="112" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">DEPENDENT FAILURE INITIATOR (BY ISO 26262-9 CATEGORY)</text>
-  <text x="747" y="112" font-size="9.5" fill="#52514E" font-weight="700" text-anchor="middle" letter-spacing=".06em">ASIL DECOMPOSITION (PARENT FSR)</text>
-  <text x="1060" y="112" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">MEASURES</text>
-  <text x="477" y="135" font-size="10" fill="#0B0B0B" font-weight="700" text-anchor="middle">FSR-001</text>
-  <text x="477" y="148" font-size="9" fill="#52514E" text-anchor="middle">002 ‖ 003</text>
-  <rect x="453" y="154" width="48" height="16" fill="#D03B3B" rx="3"/>
+  <rect width="1280" height="1818" fill="#FFFFFF"/>
+  <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 2-1 · Dependent failure initiators × ASIL decompositions</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">LD-DFA-001 rev 0.16 · FSC rev 0.5 · BL-004 · draft · cell = the initiator affects that decomposition, coloured by the initiator's assessment</text>
+  <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §2</text>
+  <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/dfa.yaml</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="112" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">DEPENDENT FAILURE INITIATOR (BY ISO 26262-9 CATEGORY)</text>
+  <text x="747" y="112" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle" letter-spacing=".06em">ASIL DECOMPOSITION (PARENT FSR)</text>
+  <text x="1060" y="112" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">MEASURES</text>
+  <text x="477" y="135" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">FSR-001</text>
+  <text x="477" y="148" font-size="9" fill="#475569" text-anchor="middle">002 ‖ 003</text>
+  <rect x="453" y="154" width="48" height="16" fill="#D2553F" rx="3"/>
   <text x="477" y="165.5" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">not acc.</text>
-  <text x="531" y="135" font-size="10" fill="#0B0B0B" font-weight="700" text-anchor="middle">FSR-004</text>
-  <text x="531" y="148" font-size="9" fill="#52514E" text-anchor="middle">005 ‖ 006</text>
-  <rect x="507" y="154" width="48" height="16" fill="#D03B3B" rx="3"/>
+  <text x="531" y="135" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">FSR-004</text>
+  <text x="531" y="148" font-size="9" fill="#475569" text-anchor="middle">005 ‖ 006</text>
+  <rect x="507" y="154" width="48" height="16" fill="#D2553F" rx="3"/>
   <text x="531" y="165.5" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">not acc.</text>
-  <text x="585" y="135" font-size="10" fill="#0B0B0B" font-weight="700" text-anchor="middle">FSR-009</text>
-  <text x="585" y="148" font-size="9" fill="#52514E" text-anchor="middle">010 ‖ 011</text>
-  <rect x="561" y="154" width="48" height="16" fill="#D03B3B" rx="3"/>
+  <text x="585" y="135" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">FSR-009</text>
+  <text x="585" y="148" font-size="9" fill="#475569" text-anchor="middle">010 ‖ 011</text>
+  <rect x="561" y="154" width="48" height="16" fill="#D2553F" rx="3"/>
   <text x="585" y="165.5" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">not acc.</text>
-  <text x="639" y="135" font-size="10" fill="#0B0B0B" font-weight="700" text-anchor="middle">FSR-012</text>
-  <text x="639" y="148" font-size="9" fill="#52514E" text-anchor="middle">013 ‖ 014</text>
+  <text x="639" y="135" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">FSR-012</text>
+  <text x="639" y="148" font-size="9" fill="#475569" text-anchor="middle">013 ‖ 014</text>
   <rect x="615" y="154" width="48" height="16" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1" rx="3"/>
-  <text x="639" y="165.5" font-size="9" fill="#52514E" font-weight="700" text-anchor="middle">n/assess.</text>
-  <text x="693" y="135" font-size="10" fill="#0B0B0B" font-weight="700" text-anchor="middle">FSR-015</text>
-  <text x="693" y="148" font-size="9" fill="#52514E" text-anchor="middle">016 ‖ 017</text>
-  <rect x="669" y="154" width="48" height="16" fill="#D03B3B" rx="3"/>
+  <text x="639" y="165.5" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">n/assess.</text>
+  <text x="693" y="135" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">FSR-015</text>
+  <text x="693" y="148" font-size="9" fill="#475569" text-anchor="middle">016 ‖ 017</text>
+  <rect x="669" y="154" width="48" height="16" fill="#D2553F" rx="3"/>
   <text x="693" y="165.5" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">not acc.</text>
-  <text x="747" y="135" font-size="10" fill="#0B0B0B" font-weight="700" text-anchor="middle">FSR-018</text>
-  <text x="747" y="148" font-size="9" fill="#52514E" text-anchor="middle">019 ‖ 020</text>
-  <rect x="723" y="154" width="48" height="16" fill="#D03B3B" rx="3"/>
+  <text x="747" y="135" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">FSR-018</text>
+  <text x="747" y="148" font-size="9" fill="#475569" text-anchor="middle">019 ‖ 020</text>
+  <rect x="723" y="154" width="48" height="16" fill="#D2553F" rx="3"/>
   <text x="747" y="165.5" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">not acc.</text>
-  <text x="801" y="135" font-size="10" fill="#0B0B0B" font-weight="700" text-anchor="middle">FSR-021</text>
-  <text x="801" y="148" font-size="9" fill="#52514E" text-anchor="middle">022 ‖ 023</text>
-  <rect x="777" y="154" width="48" height="16" fill="#D03B3B" rx="3"/>
+  <text x="801" y="135" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">FSR-021</text>
+  <text x="801" y="148" font-size="9" fill="#475569" text-anchor="middle">022 ‖ 023</text>
+  <rect x="777" y="154" width="48" height="16" fill="#D2553F" rx="3"/>
   <text x="801" y="165.5" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">not acc.</text>
-  <text x="855" y="135" font-size="10" fill="#0B0B0B" font-weight="700" text-anchor="middle">FSR-025</text>
-  <text x="855" y="148" font-size="9" fill="#52514E" text-anchor="middle">026 ‖ 027</text>
-  <rect x="831" y="154" width="48" height="16" fill="#D03B3B" rx="3"/>
+  <text x="855" y="135" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">FSR-025</text>
+  <text x="855" y="148" font-size="9" fill="#475569" text-anchor="middle">026 ‖ 027</text>
+  <rect x="831" y="154" width="48" height="16" fill="#D2553F" rx="3"/>
   <text x="855" y="165.5" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">not acc.</text>
-  <text x="909" y="135" font-size="10" fill="#0B0B0B" font-weight="700" text-anchor="middle">FSR-028</text>
-  <text x="909" y="148" font-size="9" fill="#52514E" text-anchor="middle">029 ‖ 030</text>
-  <rect x="885" y="154" width="48" height="16" fill="#D03B3B" rx="3"/>
+  <text x="909" y="135" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">FSR-028</text>
+  <text x="909" y="148" font-size="9" fill="#475569" text-anchor="middle">029 ‖ 030</text>
+  <rect x="885" y="154" width="48" height="16" fill="#D2553F" rx="3"/>
   <text x="909" y="165.5" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">not acc.</text>
-  <text x="963" y="135" font-size="10" fill="#0B0B0B" font-weight="700" text-anchor="middle">FSR-031</text>
-  <text x="963" y="148" font-size="9" fill="#52514E" text-anchor="middle">032 ‖ 033</text>
-  <rect x="939" y="154" width="48" height="16" fill="#D03B3B" rx="3"/>
+  <text x="963" y="135" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">FSR-031</text>
+  <text x="963" y="148" font-size="9" fill="#475569" text-anchor="middle">032 ‖ 033</text>
+  <rect x="939" y="154" width="48" height="16" fill="#D2553F" rx="3"/>
   <text x="963" y="165.5" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">not acc.</text>
-  <text x="1017" y="135" font-size="10" fill="#0B0B0B" font-weight="700" text-anchor="middle">FSR-034</text>
-  <text x="1017" y="148" font-size="9" fill="#52514E" text-anchor="middle">035 ‖ 036</text>
-  <rect x="993" y="154" width="48" height="16" fill="#D03B3B" rx="3"/>
+  <text x="1017" y="135" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">FSR-034</text>
+  <text x="1017" y="148" font-size="9" fill="#475569" text-anchor="middle">035 ‖ 036</text>
+  <rect x="993" y="154" width="48" height="16" fill="#D2553F" rx="3"/>
   <text x="1017" y="165.5" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">not acc.</text>
   <line x1="450" y1="174" x2="450" y2="1080" stroke="#E2E8F0" stroke-width="1"/>
   <line x1="504" y1="174" x2="504" y2="1080" stroke="#E2E8F0" stroke-width="1"/>
@@ -75,10 +74,10 @@
   <line x1="1044" y1="174" x2="1044" y2="1080" stroke="#E2E8F0" stroke-width="1"/>
   <rect x="613" y="174" width="52" height="906" fill="url(#hatch)"/>
   <rect x="40" y="178" width="1200" height="20" fill="#F8FAFC"/>
-  <text x="46" y="192" font-size="10.5" fill="#0B0B0B" font-weight="700">CAT-01 · Shared power supply</text>
-  <text x="46" y="216" font-size="10.5" fill="#0B0B0B" font-weight="700">DFI-01a</text>
-  <rect x="94" y="205" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="215.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CC</text>
-  <text x="125.8" y="216" font-size="10" fill="#0B0B0B">Loss of the device supply (12 V input, comma power, harness…</text>
+  <text x="46" y="192" font-size="10.5" fill="#0F172A" font-weight="700">CAT-01 · Shared power supply</text>
+  <text x="46" y="216" font-size="10.5" fill="#0F172A" font-weight="700">DFI-01a</text>
+  <rect x="94" y="205" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="215.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CC</text>
+  <text x="125.8" y="216" font-size="10" fill="#0F172A">Loss of the device supply (12 V input, comma power, harness…</text>
   <rect x="468" y="204" width="18" height="18" fill="#FFFFFF" stroke="#0F766E" stroke-width="2" rx="4"/>
   <rect x="522" y="204" width="18" height="18" fill="#FFFFFF" stroke="#0F766E" stroke-width="2" rx="4"/>
   <rect x="576" y="204" width="18" height="18" fill="#FFFFFF" stroke="#0F766E" stroke-width="2" rx="4"/>
@@ -93,9 +92,9 @@
   <rect x="1108.6" y="205" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1130.9" y="215.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-02</text>
   <rect x="1157.3" y="205" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1179.6" y="215.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-03</text>
   <line x1="40" y1="226" x2="1240" y2="226" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="46" y="242" font-size="10.5" fill="#0B0B0B" font-weight="700">DFI-01b</text>
-  <rect x="94" y="231" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="241.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CC</text>
-  <text x="125.8" y="242" font-size="10" fill="#0B0B0B">Undervoltage or brown-out leaves one or both processors…</text>
+  <text x="46" y="242" font-size="10.5" fill="#0F172A" font-weight="700">DFI-01b</text>
+  <rect x="94" y="231" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="241.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CC</text>
+  <text x="125.8" y="242" font-size="10" fill="#0F172A">Undervoltage or brown-out leaves one or both processors…</text>
   <rect x="468" y="230" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="522" y="230" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="576" y="230" width="18" height="18" fill="#D97706" rx="4"/>
@@ -106,9 +105,9 @@
   <rect x="1008" y="230" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="1060" y="231" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1082.3" y="241.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-17</text>
   <line x1="40" y1="252" x2="1240" y2="252" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="46" y="268" font-size="10.5" fill="#0B0B0B" font-weight="700">DFI-27a</text>
-  <rect x="94" y="257" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="267.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CC</text>
-  <text x="125.8" y="268" font-size="10" fill="#0B0B0B">Loss of the harness-box supply VIN while the car is on: ignitio…</text>
+  <text x="46" y="268" font-size="10.5" fill="#0F172A" font-weight="700">DFI-27a</text>
+  <rect x="94" y="257" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="267.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CC</text>
+  <text x="125.8" y="268" font-size="10" fill="#0F172A">Loss of the harness-box supply VIN while the car is on: ignitio…</text>
   <rect x="468" y="256" width="18" height="18" fill="#FFFFFF" stroke="#0F766E" stroke-width="2" rx="4"/>
   <rect x="522" y="256" width="18" height="18" fill="#FFFFFF" stroke="#0F766E" stroke-width="2" rx="4"/>
   <rect x="576" y="256" width="18" height="18" fill="#FFFFFF" stroke="#0F766E" stroke-width="2" rx="4"/>
@@ -119,21 +118,21 @@
   <rect x="1008" y="256" width="18" height="18" fill="#FFFFFF" stroke="#0F766E" stroke-width="2" rx="4"/>
   <rect x="1060" y="257" width="44.6" height="15" rx="7.5" fill="#2E9E6A"/><text x="1082.3" y="267.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">DM-01</text>
   <rect x="1108.6" y="257" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1130.9" y="267.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-03</text>
-  <rect x="1157.3" y="257" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="1179.6" y="267.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-23</text>
+  <rect x="1157.3" y="257" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="1179.6" y="267.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-23</text>
   <line x1="40" y1="278" x2="1240" y2="278" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="46" y="294" font-size="10.5" fill="#0B0B0B" font-weight="700">DFI-27b</text>
-  <rect x="94" y="283" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="293.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CC</text>
-  <text x="125.8" y="294" font-size="10" fill="#0B0B0B">The same loss of the harness-box supply removes both…</text>
+  <text x="46" y="294" font-size="10.5" fill="#0F172A" font-weight="700">DFI-27b</text>
+  <rect x="94" y="283" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="293.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CC</text>
+  <text x="125.8" y="294" font-size="10" fill="#0F172A">The same loss of the harness-box supply removes both…</text>
   <rect x="684" y="282" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="846" y="282" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="1060" y="283" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1082.3" y="293.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-11</text>
-  <rect x="1108.6" y="283" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="1130.9" y="293.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-23</text>
+  <rect x="1108.6" y="283" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="1130.9" y="293.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-23</text>
   <line x1="40" y1="304" x2="1240" y2="304" stroke="#F1F5F9" stroke-width="1"/>
   <rect x="40" y="308" width="1200" height="20" fill="#F8FAFC"/>
-  <text x="46" y="322" font-size="10.5" fill="#0B0B0B" font-weight="700">CAT-02 · Shared clock and reset</text>
-  <text x="46" y="346" font-size="10.5" fill="#0B0B0B" font-weight="700">DFI-13a</text>
-  <rect x="94" y="335" width="32.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="110.4" y="345.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CAS</text>
-  <text x="132.7" y="346" font-size="10" fill="#0B0B0B">The SoC drives the panda's reset and BOOT0 lines; a faulty…</text>
+  <text x="46" y="322" font-size="10.5" fill="#0F172A" font-weight="700">CAT-02 · Shared clock and reset</text>
+  <text x="46" y="346" font-size="10.5" fill="#0F172A" font-weight="700">DFI-13a</text>
+  <rect x="94" y="335" width="32.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="110.4" y="345.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CAS</text>
+  <text x="132.7" y="346" font-size="10" fill="#0F172A">The SoC drives the panda's reset and BOOT0 lines; a faulty…</text>
   <rect x="468" y="334" width="18" height="18" fill="#FFFFFF" stroke="#0F766E" stroke-width="2" rx="4"/>
   <rect x="522" y="334" width="18" height="18" fill="#FFFFFF" stroke="#0F766E" stroke-width="2" rx="4"/>
   <rect x="576" y="334" width="18" height="18" fill="#FFFFFF" stroke="#0F766E" stroke-width="2" rx="4"/>
@@ -148,9 +147,9 @@
   <rect x="1108.6" y="335" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1130.9" y="345.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-02</text>
   <rect x="1157.3" y="335" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1179.6" y="345.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-03</text>
   <line x1="40" y1="356" x2="1240" y2="356" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="46" y="372" font-size="10.5" fill="#0B0B0B" font-weight="700">DFI-02</text>
-  <rect x="94" y="361" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="371.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CC</text>
-  <text x="125.8" y="372" font-size="10" fill="#0B0B0B">Shared clock source between SoC and panda.</text>
+  <text x="46" y="372" font-size="10.5" fill="#0F172A" font-weight="700">DFI-02</text>
+  <rect x="94" y="361" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="371.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CC</text>
+  <text x="125.8" y="372" font-size="10" fill="#0F172A">Shared clock source between SoC and panda.</text>
   <rect x="468" y="360" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="522" y="360" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="576" y="360" width="18" height="18" fill="#D97706" rx="4"/>
@@ -162,34 +161,34 @@
   <rect x="1060" y="361" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1082.3" y="371.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-18</text>
   <line x1="40" y1="382" x2="1240" y2="382" stroke="#F1F5F9" stroke-width="1"/>
   <rect x="40" y="386" width="1200" height="20" fill="#F8FAFC"/>
-  <text x="46" y="400" font-size="10.5" fill="#0B0B0B" font-weight="700">CAT-03 · Shared processing or memory</text>
+  <text x="46" y="400" font-size="10.5" fill="#0F172A" font-weight="700">CAT-03 · Shared processing or memory</text>
   <rect x="450" y="388" width="594" height="16" fill="url(#hatch)" stroke="#CBD5E1" stroke-width="1" rx="3" stroke-dasharray="4 3"/>
   <rect x="458" y="389.5" width="77" height="13" fill="#F8FAFC" rx="3"/>
-  <text x="463" y="399.5" font-size="9.5" fill="#52514E" font-weight="700">not applicable</text>
-  <text x="1060" y="400" font-size="9.5" fill="#52514E" font-style="italic">The panda is a separate MCU with its…</text>
+  <text x="463" y="399.5" font-size="9.5" fill="#475569" font-weight="700">not applicable</text>
+  <text x="1060" y="400" font-size="9.5" fill="#475569" font-style="italic">The panda is a separate MCU with its…</text>
   <rect x="40" y="410" width="1200" height="20" fill="#F8FAFC"/>
-  <text x="46" y="424" font-size="10.5" fill="#0B0B0B" font-weight="700">CAT-04 · Shared information inputs</text>
-  <text x="46" y="448" font-size="10.5" fill="#0B0B0B" font-weight="700">DFI-10</text>
-  <rect x="94" y="437" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="447.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CC</text>
-  <text x="125.8" y="448" font-size="10" fill="#0B0B0B">Both channels decide brake press, cruise state and driver…</text>
-  <rect x="900" y="436" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="954" y="436" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="1008" y="436" width="18" height="18" fill="#D03B3B" rx="4"/>
+  <text x="46" y="424" font-size="10.5" fill="#0F172A" font-weight="700">CAT-04 · Shared information inputs</text>
+  <text x="46" y="448" font-size="10.5" fill="#0F172A" font-weight="700">DFI-10</text>
+  <rect x="94" y="437" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="447.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CC</text>
+  <text x="125.8" y="448" font-size="10" fill="#0F172A">Both channels decide brake press, cruise state and driver…</text>
+  <rect x="900" y="436" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="954" y="436" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="1008" y="436" width="18" height="18" fill="#D2553F" rx="4"/>
   <rect x="1060" y="437" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1082.3" y="447.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-05</text>
   <rect x="1108.6" y="437" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1130.9" y="447.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-06</text>
   <line x1="40" y1="458" x2="1240" y2="458" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="46" y="474" font-size="10.5" fill="#0B0B0B" font-weight="700">DFI-15</text>
-  <rect x="94" y="463" width="32.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="110.4" y="473.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CAS</text>
-  <text x="132.7" y="474" font-size="10" fill="#0B0B0B">The cluster's lane-assist and ACC indications are driven by…</text>
+  <text x="46" y="474" font-size="10.5" fill="#0F172A" font-weight="700">DFI-15</text>
+  <rect x="94" y="463" width="32.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="110.4" y="473.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CAS</text>
+  <text x="132.7" y="474" font-size="10" fill="#0F172A">The cluster's lane-assist and ACC indications are driven by…</text>
   <rect x="684" y="462" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="846" y="462" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="1060" y="463" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1082.3" y="473.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-11</text>
   <line x1="40" y1="484" x2="1240" y2="484" stroke="#F1F5F9" stroke-width="1"/>
   <rect x="40" y="488" width="1200" height="20" fill="#F8FAFC"/>
-  <text x="46" y="502" font-size="10.5" fill="#0B0B0B" font-weight="700">CAT-05 · Communication between channels</text>
-  <text x="46" y="526" font-size="10.5" fill="#0B0B0B" font-weight="700">DFI-34</text>
-  <rect x="94" y="515" width="32.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="110.4" y="525.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CAS</text>
-  <text x="132.7" y="526" font-size="10" fill="#0B0B0B">Malformed, flooding or out-of-sequence SPI traffic from a…</text>
+  <text x="46" y="502" font-size="10.5" fill="#0F172A" font-weight="700">CAT-05 · Communication between channels</text>
+  <text x="46" y="526" font-size="10.5" fill="#0F172A" font-weight="700">DFI-34</text>
+  <rect x="94" y="515" width="32.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="110.4" y="525.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CAS</text>
+  <text x="132.7" y="526" font-size="10" fill="#0F172A">Malformed, flooding or out-of-sequence SPI traffic from a…</text>
   <rect x="468" y="514" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="522" y="514" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="576" y="514" width="18" height="18" fill="#D97706" rx="4"/>
@@ -198,13 +197,13 @@
   <rect x="900" y="514" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="954" y="514" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="1008" y="514" width="18" height="18" fill="#D97706" rx="4"/>
-  <rect x="1060" y="515" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="1082.3" y="525.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-15</text>
+  <rect x="1060" y="515" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="1082.3" y="525.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-15</text>
   <line x1="40" y1="536" x2="1240" y2="536" stroke="#F1F5F9" stroke-width="1"/>
   <rect x="40" y="540" width="1200" height="20" fill="#F8FAFC"/>
-  <text x="46" y="554" font-size="10.5" fill="#0B0B0B" font-weight="700">CAT-06 · Configuration and mode control</text>
-  <text x="46" y="578" font-size="10.5" fill="#0B0B0B" font-weight="700">DFI-13b</text>
-  <rect x="94" y="567" width="32.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="110.4" y="577.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CAS</text>
-  <text x="132.7" y="578" font-size="10" fill="#0B0B0B">The SoC sets the panda's safety model, safety parameter an…</text>
+  <text x="46" y="554" font-size="10.5" fill="#0F172A" font-weight="700">CAT-06 · Configuration and mode control</text>
+  <text x="46" y="578" font-size="10.5" fill="#0F172A" font-weight="700">DFI-13b</text>
+  <rect x="94" y="567" width="32.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="110.4" y="577.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CAS</text>
+  <text x="132.7" y="578" font-size="10" fill="#0F172A">The SoC sets the panda's safety model, safety parameter an…</text>
   <rect x="468" y="566" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="522" y="566" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="576" y="566" width="18" height="18" fill="#D97706" rx="4"/>
@@ -216,48 +215,48 @@
   <rect x="954" y="566" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="1008" y="566" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="1060" y="567" width="44.6" height="15" rx="7.5" fill="#2E9E6A"/><text x="1082.3" y="577.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">DM-04</text>
-  <rect x="1108.6" y="567" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="1130.9" y="577.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-07</text>
+  <rect x="1108.6" y="567" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="1130.9" y="577.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-07</text>
   <rect x="1157.3" y="567" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1179.6" y="577.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-21</text>
   <rect x="1060" y="587" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1082.3" y="597.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-22</text>
   <rect x="1108.6" y="587" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1130.9" y="597.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-25</text>
   <line x1="40" y1="608" x2="1240" y2="608" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="46" y="624" font-size="10.5" fill="#0B0B0B" font-weight="700">DFI-13c</text>
-  <rect x="94" y="613" width="32.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="110.4" y="623.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CAS</text>
-  <text x="132.7" y="624" font-size="10" fill="#0B0B0B">The SoC can put the panda in ELM327 (diagnostic) mode…</text>
+  <text x="46" y="624" font-size="10.5" fill="#0F172A" font-weight="700">DFI-13c</text>
+  <rect x="94" y="613" width="32.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="110.4" y="623.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CAS</text>
+  <text x="132.7" y="624" font-size="10" fill="#0F172A">The SoC can put the panda in ELM327 (diagnostic) mode…</text>
   <rect x="576" y="612" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="1060" y="613" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1082.3" y="623.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-12</text>
   <rect x="1108.6" y="613" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1130.9" y="623.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-21</text>
-  <rect x="1157.3" y="613" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="1179.6" y="623.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-24</text>
+  <rect x="1157.3" y="613" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="1179.6" y="623.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-24</text>
   <line x1="40" y1="634" x2="1240" y2="634" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="46" y="650" font-size="10.5" fill="#0B0B0B" font-weight="700">DFI-13d</text>
-  <rect x="94" y="639" width="32.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="110.4" y="649.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CAS</text>
-  <text x="132.7" y="650" font-size="10" fill="#0B0B0B">The SoC flashes panda firmware from its own filesystem…</text>
-  <rect x="468" y="638" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="522" y="638" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="576" y="638" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="684" y="638" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="738" y="638" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="792" y="638" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="846" y="638" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="900" y="638" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="954" y="638" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="1008" y="638" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="1060" y="639" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="1082.3" y="649.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-08</text>
+  <text x="46" y="650" font-size="10.5" fill="#0F172A" font-weight="700">DFI-13d</text>
+  <rect x="94" y="639" width="32.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="110.4" y="649.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CAS</text>
+  <text x="132.7" y="650" font-size="10" fill="#0F172A">The SoC flashes panda firmware from its own filesystem…</text>
+  <rect x="468" y="638" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="522" y="638" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="576" y="638" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="684" y="638" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="738" y="638" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="792" y="638" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="846" y="638" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="900" y="638" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="954" y="638" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="1008" y="638" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="1060" y="639" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="1082.3" y="649.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-08</text>
   <line x1="40" y1="660" x2="1240" y2="660" stroke="#F1F5F9" stroke-width="1"/>
   <rect x="40" y="664" width="1200" height="20" fill="#F8FAFC"/>
-  <text x="46" y="678" font-size="10.5" fill="#0B0B0B" font-weight="700">CAT-07 · Timing and execution</text>
-  <text x="46" y="702" font-size="10.5" fill="#0B0B0B" font-weight="700">DFI-35</text>
-  <rect x="94" y="691" width="32.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="110.4" y="701.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CAS</text>
-  <text x="132.7" y="702" font-size="10" fill="#0B0B0B">SoC lag or a stuck SoC loop keeps sending stale but…</text>
+  <text x="46" y="678" font-size="10.5" fill="#0F172A" font-weight="700">CAT-07 · Timing and execution</text>
+  <text x="46" y="702" font-size="10.5" fill="#0F172A" font-weight="700">DFI-35</text>
+  <rect x="94" y="691" width="32.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="110.4" y="701.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CAS</text>
+  <text x="132.7" y="702" font-size="10" fill="#0F172A">SoC lag or a stuck SoC loop keeps sending stale but…</text>
   <rect x="468" y="690" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="522" y="690" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="1060" y="691" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1082.3" y="701.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-20</text>
   <line x1="40" y1="712" x2="1240" y2="712" stroke="#F1F5F9" stroke-width="1"/>
   <rect x="40" y="716" width="1200" height="20" fill="#F8FAFC"/>
-  <text x="46" y="730" font-size="10.5" fill="#0B0B0B" font-weight="700">CAT-08 · Environment (thermal, EMC/ESD, vibration)</text>
-  <text x="46" y="754" font-size="10.5" fill="#0B0B0B" font-weight="700">DFI-04</text>
-  <rect x="94" y="743" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="753.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CC</text>
-  <text x="125.8" y="754" font-size="10" fill="#0B0B0B">High temperature in the windshield mount affects SoC and…</text>
+  <text x="46" y="730" font-size="10.5" fill="#0F172A" font-weight="700">CAT-08 · Environment (thermal, EMC/ESD, vibration)</text>
+  <text x="46" y="754" font-size="10.5" fill="#0F172A" font-weight="700">DFI-04</text>
+  <rect x="94" y="743" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="753.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CC</text>
+  <text x="125.8" y="754" font-size="10" fill="#0F172A">High temperature in the windshield mount affects SoC and…</text>
   <rect x="468" y="742" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="522" y="742" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="576" y="742" width="18" height="18" fill="#D97706" rx="4"/>
@@ -266,11 +265,11 @@
   <rect x="900" y="742" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="954" y="742" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="1008" y="742" width="18" height="18" fill="#D97706" rx="4"/>
-  <rect x="1060" y="743" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="1082.3" y="753.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-14</text>
+  <rect x="1060" y="743" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="1082.3" y="753.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-14</text>
   <line x1="40" y1="764" x2="1240" y2="764" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="46" y="780" font-size="10.5" fill="#0B0B0B" font-weight="700">DFI-07</text>
-  <rect x="94" y="769" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="779.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CC</text>
-  <text x="125.8" y="780" font-size="10" fill="#0B0B0B">EMC transients, radiated disturbance or ESD at the harness…</text>
+  <text x="46" y="780" font-size="10.5" fill="#0F172A" font-weight="700">DFI-07</text>
+  <rect x="94" y="769" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="779.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CC</text>
+  <text x="125.8" y="780" font-size="10" fill="#0F172A">EMC transients, radiated disturbance or ESD at the harness…</text>
   <rect x="468" y="768" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="522" y="768" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="576" y="768" width="18" height="18" fill="#D97706" rx="4"/>
@@ -279,11 +278,11 @@
   <rect x="900" y="768" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="954" y="768" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="1008" y="768" width="18" height="18" fill="#D97706" rx="4"/>
-  <rect x="1060" y="769" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="1082.3" y="779.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-13</text>
+  <rect x="1060" y="769" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="1082.3" y="779.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-13</text>
   <line x1="40" y1="790" x2="1240" y2="790" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="46" y="806" font-size="10.5" fill="#0B0B0B" font-weight="700">DFI-05</text>
-  <rect x="94" y="795" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="805.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CC</text>
-  <text x="125.8" y="806" font-size="10" fill="#0B0B0B">Vibration or a loose harness connector interrupting power and…</text>
+  <text x="46" y="806" font-size="10.5" fill="#0F172A" font-weight="700">DFI-05</text>
+  <rect x="94" y="795" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="805.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CC</text>
+  <text x="125.8" y="806" font-size="10" fill="#0F172A">Vibration or a loose harness connector interrupting power and…</text>
   <rect x="468" y="794" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="522" y="794" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="576" y="794" width="18" height="18" fill="#D97706" rx="4"/>
@@ -296,22 +295,22 @@
   <rect x="1108.6" y="795" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1130.9" y="805.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-05</text>
   <line x1="40" y1="816" x2="1240" y2="816" stroke="#F1F5F9" stroke-width="1"/>
   <rect x="40" y="820" width="1200" height="20" fill="#F8FAFC"/>
-  <text x="46" y="834" font-size="10.5" fill="#0B0B0B" font-weight="700">CAT-09 · Development — specification</text>
-  <text x="46" y="858" font-size="10.5" fill="#0B0B0B" font-weight="700">DFI-08</text>
-  <rect x="94" y="847" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="857.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CC</text>
-  <text x="125.8" y="858" font-size="10" fill="#0B0B0B">SoC controller limits and panda safety limits are specified in t…</text>
-  <rect x="468" y="846" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="738" y="846" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="792" y="846" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="954" y="846" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="1060" y="847" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="1082.3" y="857.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-10</text>
+  <text x="46" y="834" font-size="10.5" fill="#0F172A" font-weight="700">CAT-09 · Development — specification</text>
+  <text x="46" y="858" font-size="10.5" fill="#0F172A" font-weight="700">DFI-08</text>
+  <rect x="94" y="847" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="857.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CC</text>
+  <text x="125.8" y="858" font-size="10" fill="#0F172A">SoC controller limits and panda safety limits are specified in t…</text>
+  <rect x="468" y="846" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="738" y="846" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="792" y="846" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="954" y="846" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="1060" y="847" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="1082.3" y="857.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-10</text>
   <rect x="1108.6" y="847" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1130.9" y="857.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-20</text>
   <line x1="40" y1="868" x2="1240" y2="868" stroke="#F1F5F9" stroke-width="1"/>
   <rect x="40" y="872" width="1200" height="20" fill="#F8FAFC"/>
-  <text x="46" y="886" font-size="10.5" fill="#0B0B0B" font-weight="700">CAT-10 · Development — tools, process and people</text>
-  <text x="46" y="910" font-size="10.5" fill="#0B0B0B" font-weight="700">DFI-16</text>
-  <rect x="94" y="899" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="909.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CC</text>
-  <text x="125.8" y="910" font-size="10" fill="#0B0B0B">Same upstream organization, reviewers and practices for both…</text>
+  <text x="46" y="886" font-size="10.5" fill="#0F172A" font-weight="700">CAT-10 · Development — tools, process and people</text>
+  <text x="46" y="910" font-size="10.5" fill="#0F172A" font-weight="700">DFI-16</text>
+  <rect x="94" y="899" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="909.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CC</text>
+  <text x="125.8" y="910" font-size="10" fill="#0F172A">Same upstream organization, reviewers and practices for both…</text>
   <rect x="468" y="898" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="522" y="898" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="576" y="898" width="18" height="18" fill="#D97706" rx="4"/>
@@ -324,10 +323,10 @@
   <rect x="1108.6" y="899" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1130.9" y="909.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-20</text>
   <line x1="40" y1="920" x2="1240" y2="920" stroke="#F1F5F9" stroke-width="1"/>
   <rect x="40" y="924" width="1200" height="20" fill="#F8FAFC"/>
-  <text x="46" y="938" font-size="10.5" fill="#0B0B0B" font-weight="700">CAT-11 · Manufacturing</text>
-  <text x="46" y="962" font-size="10.5" fill="#0B0B0B" font-weight="700">DFI-03</text>
-  <rect x="94" y="951" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="961.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CC</text>
-  <text x="125.8" y="962" font-size="10" fill="#0B0B0B">A board-level manufacturing defect affecting both processors.</text>
+  <text x="46" y="938" font-size="10.5" fill="#0F172A" font-weight="700">CAT-11 · Manufacturing</text>
+  <text x="46" y="962" font-size="10.5" fill="#0F172A" font-weight="700">DFI-03</text>
+  <rect x="94" y="951" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="961.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CC</text>
+  <text x="125.8" y="962" font-size="10" fill="#0F172A">A board-level manufacturing defect affecting both processors.</text>
   <rect x="468" y="950" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="522" y="950" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="576" y="950" width="18" height="18" fill="#D97706" rx="4"/>
@@ -336,199 +335,199 @@
   <rect x="900" y="950" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="954" y="950" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="1008" y="950" width="18" height="18" fill="#D97706" rx="4"/>
-  <text x="1060" y="962" font-size="10" fill="#D03B3B" font-weight="700">no measure</text>
+  <text x="1060" y="962" font-size="10" fill="#D2553F" font-weight="700">no measure</text>
   <line x1="40" y1="972" x2="1240" y2="972" stroke="#F1F5F9" stroke-width="1"/>
   <rect x="40" y="976" width="1200" height="20" fill="#F8FAFC"/>
-  <text x="46" y="990" font-size="10.5" fill="#0B0B0B" font-weight="700">CAT-12 · Installation</text>
-  <text x="46" y="1014" font-size="10.5" fill="#0B0B0B" font-weight="700">DFI-20</text>
-  <rect x="94" y="1003" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="1013.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CC</text>
-  <text x="125.8" y="1014" font-size="10" fill="#0B0B0B">Wrong harness for the vehicle, or a partly seated connector.</text>
+  <text x="46" y="990" font-size="10.5" fill="#0F172A" font-weight="700">CAT-12 · Installation</text>
+  <text x="46" y="1014" font-size="10.5" fill="#0F172A" font-weight="700">DFI-20</text>
+  <rect x="94" y="1003" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="1013.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CC</text>
+  <text x="125.8" y="1014" font-size="10" fill="#0F172A">Wrong harness for the vehicle, or a partly seated connector.</text>
   <rect x="576" y="1002" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="900" y="1002" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="1008" y="1002" width="18" height="18" fill="#D97706" rx="4"/>
   <rect x="1060" y="1003" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="1082.3" y="1013.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-05</text>
-  <rect x="1108.6" y="1003" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="1130.9" y="1013.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-19</text>
+  <rect x="1108.6" y="1003" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="1130.9" y="1013.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-19</text>
   <line x1="40" y1="1024" x2="1240" y2="1024" stroke="#F1F5F9" stroke-width="1"/>
   <rect x="40" y="1028" width="1200" height="20" fill="#F8FAFC"/>
-  <text x="46" y="1042" font-size="10.5" fill="#0B0B0B" font-weight="700">CAT-13 · Service and software update</text>
-  <text x="46" y="1066" font-size="10.5" fill="#0B0B0B" font-weight="700">DFI-36</text>
-  <rect x="94" y="1055" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="1065.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CC</text>
-  <text x="125.8" y="1066" font-size="10" fill="#0B0B0B">One OTA release replaces SoC software and panda firmware…</text>
-  <rect x="468" y="1054" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="522" y="1054" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="576" y="1054" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="684" y="1054" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="738" y="1054" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="792" y="1054" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="846" y="1054" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="900" y="1054" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="954" y="1054" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="1008" y="1054" width="18" height="18" fill="#D03B3B" rx="4"/>
-  <rect x="1060" y="1055" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="1082.3" y="1065.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-08</text>
-  <rect x="1108.6" y="1055" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="1130.9" y="1065.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-09</text>
+  <text x="46" y="1042" font-size="10.5" fill="#0F172A" font-weight="700">CAT-13 · Service and software update</text>
+  <text x="46" y="1066" font-size="10.5" fill="#0F172A" font-weight="700">DFI-36</text>
+  <rect x="94" y="1055" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="106.9" y="1065.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CC</text>
+  <text x="125.8" y="1066" font-size="10" fill="#0F172A">One OTA release replaces SoC software and panda firmware…</text>
+  <rect x="468" y="1054" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="522" y="1054" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="576" y="1054" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="684" y="1054" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="738" y="1054" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="792" y="1054" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="846" y="1054" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="900" y="1054" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="954" y="1054" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="1008" y="1054" width="18" height="18" fill="#D2553F" rx="4"/>
+  <rect x="1060" y="1055" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="1082.3" y="1065.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-08</text>
+  <rect x="1108.6" y="1055" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="1130.9" y="1065.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-09</text>
   <line x1="40" y1="1076" x2="1240" y2="1076" stroke="#F1F5F9" stroke-width="1"/>
-  <line x1="40" y1="1096" x2="1240" y2="1096" stroke="#E1E0D9" stroke-width="1"/>
-  <text x="40" y="1118" font-size="10.5" fill="#0B0B0B" font-weight="700">Initiator assessment:</text>
-  <rect x="161.6" y="1107" width="14" height="14" fill="#D03B3B" rx="3"/>
-  <text x="181.6" y="1118" font-size="10.5" fill="#0B0B0B">insufficient</text>
+  <line x1="40" y1="1096" x2="1240" y2="1096" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="1118" font-size="10.5" fill="#0F172A" font-weight="700">Initiator assessment:</text>
+  <rect x="161.6" y="1107" width="14" height="14" fill="#D2553F" rx="3"/>
+  <text x="181.6" y="1118" font-size="10.5" fill="#0F172A">insufficient</text>
   <rect x="255" y="1107" width="14" height="14" fill="#D97706" rx="3"/>
-  <text x="275" y="1118" font-size="10.5" fill="#0B0B0B">open</text>
+  <text x="275" y="1118" font-size="10.5" fill="#0F172A">open</text>
   <rect x="316.5" y="1107" width="14" height="14" fill="#FFFFFF" stroke="#0F766E" stroke-width="2" rx="3"/>
-  <text x="336.5" y="1118" font-size="10.5" fill="#0B0B0B">safe by design (argued)</text>
-  <rect x="472.8" y="1107" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="485.7" y="1117.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CC</text>
-  <text x="503.6" y="1118" font-size="10.5" fill="#0B0B0B">common cause</text>
-  <rect x="590" y="1107" width="32.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="606.4" y="1117.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">CAS</text>
-  <text x="627.8" y="1118" font-size="10.5" fill="#0B0B0B">cascading</text>
-  <text x="40" y="1140" font-size="10.5" fill="#0B0B0B" font-weight="700">Measure status:</text>
+  <text x="336.5" y="1118" font-size="10.5" fill="#0F172A">safe by design (argued)</text>
+  <rect x="472.8" y="1107" width="25.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="485.7" y="1117.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CC</text>
+  <text x="503.6" y="1118" font-size="10.5" fill="#0F172A">common cause</text>
+  <rect x="590" y="1107" width="32.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="606.4" y="1117.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">CAS</text>
+  <text x="627.8" y="1118" font-size="10.5" fill="#0F172A">cascading</text>
+  <text x="40" y="1140" font-size="10.5" fill="#0F172A" font-weight="700">Measure status:</text>
   <rect x="136.6" y="1129" width="43.4" height="15" rx="7.5" fill="#2E9E6A"/><text x="158.3" y="1139.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">DM-nn</text>
-  <text x="185" y="1140" font-size="10.5" fill="#0B0B0B">existing (verified)</text>
+  <text x="185" y="1140" font-size="10.5" fill="#0F172A">existing (verified)</text>
   <rect x="290.6" y="1129" width="43.4" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="312.3" y="1139.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-nn</text>
-  <text x="339" y="1140" font-size="10.5" fill="#0B0B0B">existing, not verified</text>
-  <rect x="459.2" y="1129" width="43.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="480.9" y="1139.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-nn</text>
-  <text x="507.6" y="1140" font-size="10.5" fill="#0B0B0B">required, missing</text>
-  <text x="610.3" y="1140" font-size="10.5" fill="#0B0B0B" font-weight="700">Decomposition:</text>
-  <rect x="699" y="1129" width="50" height="15" fill="#D03B3B" rx="3"/>
+  <text x="339" y="1140" font-size="10.5" fill="#0F172A">existing, not verified</text>
+  <rect x="459.2" y="1129" width="43.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="480.9" y="1139.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-nn</text>
+  <text x="507.6" y="1140" font-size="10.5" fill="#0F172A">required, missing</text>
+  <text x="610.3" y="1140" font-size="10.5" fill="#0F172A" font-weight="700">Decomposition:</text>
+  <rect x="699" y="1129" width="50" height="15" fill="#D2553F" rx="3"/>
   <text x="724" y="1140" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">not acc.</text>
-  <text x="755" y="1140" font-size="10.5" fill="#0B0B0B">not accepted</text>
+  <text x="755" y="1140" font-size="10.5" fill="#0F172A">not accepted</text>
   <rect x="833.6" y="1129" width="50" height="15" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1" rx="3"/>
-  <text x="858.6" y="1140" font-size="9" fill="#52514E" font-weight="700" text-anchor="middle">n/assess.</text>
-  <text x="889.6" y="1140" font-size="10.5" fill="#0B0B0B">not assessable</text>
-  <line x1="40" y1="1166" x2="1240" y2="1166" stroke="#E1E0D9" stroke-width="1"/>
-  <text x="40" y="1188" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">DECOMPOSITIONS (FSC CHANNELS → ELEMENTS)</text>
-  <text x="660" y="1188" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">MEASURES</text>
-  <text x="40" y="1204" font-size="10" fill="#0B0B0B" font-weight="700">FSR-001</text>
-  <text x="96" y="1204" font-size="10" fill="#0B0B0B">FSR-002 [EL-07] ‖ FSR-003 [EL-03]</text>
-  <text x="400" y="1204" font-size="9.5" fill="#D03B3B" font-weight="600">not accepted — SoC can reconfigure (DFI-13b) and…</text>
-  <text x="40" y="1220" font-size="10" fill="#0B0B0B" font-weight="700">FSR-004</text>
-  <text x="96" y="1220" font-size="10" fill="#0B0B0B">FSR-005 [EL-07] ‖ FSR-006 [EL-03]</text>
-  <text x="400" y="1220" font-size="9.5" fill="#D03B3B" font-weight="600">not accepted — DFI-13b, DFI-13d and DFI-36.</text>
-  <text x="40" y="1236" font-size="10" fill="#0B0B0B" font-weight="700">FSR-009</text>
-  <text x="96" y="1236" font-size="10" fill="#0B0B0B">FSR-010 [EL-07] ‖ FSR-011 [EL-03, EL-04, EL-06]</text>
-  <text x="400" y="1236" font-size="9.5" fill="#D03B3B" font-weight="600">not accepted — The configuration the panda…</text>
-  <text x="40" y="1252" font-size="10" fill="#0B0B0B" font-weight="700">FSR-012</text>
-  <text x="96" y="1252" font-size="10" fill="#0B0B0B">FSR-013 [EL-03, EL-04] ‖ FSR-014 [EL-07]</text>
-  <text x="400" y="1252" font-size="9.5" fill="#52514E">not assessable — The independent lane monitor…</text>
-  <text x="40" y="1268" font-size="10" fill="#0B0B0B" font-weight="700">FSR-015</text>
-  <text x="96" y="1268" font-size="10" fill="#0B0B0B">FSR-016 [EL-03, EL-04, EL-05] ‖ FSR-017 [EL-07, XM-04]</text>
-  <text x="400" y="1268" font-size="9.5" fill="#D03B3B" font-weight="600">not accepted — The cluster's lane-assist indication…</text>
-  <text x="40" y="1284" font-size="10" fill="#0B0B0B" font-weight="700">FSR-018</text>
-  <text x="96" y="1284" font-size="10" fill="#0B0B0B">FSR-019 [EL-07] ‖ FSR-020 [EL-03, EL-04]</text>
-  <text x="400" y="1284" font-size="9.5" fill="#D03B3B" font-weight="600">not accepted — DFI-13b, DFI-13d, DFI-08 and…</text>
-  <text x="40" y="1300" font-size="10" fill="#0B0B0B" font-weight="700">FSR-021</text>
-  <text x="96" y="1300" font-size="10" fill="#0B0B0B">FSR-022 [EL-07] ‖ FSR-023 [EL-03]</text>
-  <text x="400" y="1300" font-size="9.5" fill="#D03B3B" font-weight="600">not accepted — DFI-13b, DFI-13d, DFI-08 and…</text>
-  <text x="40" y="1316" font-size="10" fill="#0B0B0B" font-weight="700">FSR-025</text>
-  <text x="96" y="1316" font-size="10" fill="#0B0B0B">FSR-026 [EL-03, EL-04, EL-05] ‖ FSR-027 [EL-07, XM-04]</text>
-  <text x="400" y="1316" font-size="9.5" fill="#D03B3B" font-weight="600">not accepted — As FSR-015 (DFI-15).</text>
-  <text x="40" y="1332" font-size="10" fill="#0B0B0B" font-weight="700">FSR-028</text>
-  <text x="96" y="1332" font-size="10" fill="#0B0B0B">FSR-029 [EL-07] ‖ FSR-030 [EL-03, EL-04]</text>
-  <text x="400" y="1332" font-size="9.5" fill="#D03B3B" font-weight="600">not accepted — Both channels read the same brake…</text>
-  <text x="40" y="1348" font-size="10" fill="#0B0B0B" font-weight="700">FSR-031</text>
-  <text x="96" y="1348" font-size="10" fill="#0B0B0B">FSR-032 [EL-07] ‖ FSR-033 [EL-03, EL-04]</text>
-  <text x="400" y="1348" font-size="9.5" fill="#D03B3B" font-weight="600">not accepted — DFI-10 (driver torque signal)…</text>
-  <text x="40" y="1364" font-size="10" fill="#0B0B0B" font-weight="700">FSR-034</text>
-  <text x="96" y="1364" font-size="10" fill="#0B0B0B">FSR-035 [EL-07] ‖ FSR-036 [EL-04]</text>
-  <text x="400" y="1364" font-size="9.5" fill="#D03B3B" font-weight="600">not accepted — Both channels follow the same…</text>
+  <text x="858.6" y="1140" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">n/assess.</text>
+  <text x="889.6" y="1140" font-size="10.5" fill="#0F172A">not assessable</text>
+  <line x1="40" y1="1166" x2="1240" y2="1166" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="1188" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">DECOMPOSITIONS (FSC CHANNELS → ELEMENTS)</text>
+  <text x="660" y="1188" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">MEASURES</text>
+  <text x="40" y="1204" font-size="10" fill="#0F172A" font-weight="700">FSR-001</text>
+  <text x="96" y="1204" font-size="10" fill="#0F172A">FSR-002 [EL-07] ‖ FSR-003 [EL-03]</text>
+  <text x="400" y="1204" font-size="9.5" fill="#D2553F" font-weight="600">not accepted — SoC can reconfigure (DFI-13b) and…</text>
+  <text x="40" y="1220" font-size="10" fill="#0F172A" font-weight="700">FSR-004</text>
+  <text x="96" y="1220" font-size="10" fill="#0F172A">FSR-005 [EL-07] ‖ FSR-006 [EL-03]</text>
+  <text x="400" y="1220" font-size="9.5" fill="#D2553F" font-weight="600">not accepted — DFI-13b, DFI-13d and DFI-36.</text>
+  <text x="40" y="1236" font-size="10" fill="#0F172A" font-weight="700">FSR-009</text>
+  <text x="96" y="1236" font-size="10" fill="#0F172A">FSR-010 [EL-07] ‖ FSR-011 [EL-03, EL-04, EL-06]</text>
+  <text x="400" y="1236" font-size="9.5" fill="#D2553F" font-weight="600">not accepted — The configuration the panda…</text>
+  <text x="40" y="1252" font-size="10" fill="#0F172A" font-weight="700">FSR-012</text>
+  <text x="96" y="1252" font-size="10" fill="#0F172A">FSR-013 [EL-03, EL-04] ‖ FSR-014 [EL-07]</text>
+  <text x="400" y="1252" font-size="9.5" fill="#475569">not assessable — The independent lane monitor…</text>
+  <text x="40" y="1268" font-size="10" fill="#0F172A" font-weight="700">FSR-015</text>
+  <text x="96" y="1268" font-size="10" fill="#0F172A">FSR-016 [EL-03, EL-04, EL-05] ‖ FSR-017 [EL-07, XM-04]</text>
+  <text x="400" y="1268" font-size="9.5" fill="#D2553F" font-weight="600">not accepted — The cluster's lane-assist indication…</text>
+  <text x="40" y="1284" font-size="10" fill="#0F172A" font-weight="700">FSR-018</text>
+  <text x="96" y="1284" font-size="10" fill="#0F172A">FSR-019 [EL-07] ‖ FSR-020 [EL-03, EL-04]</text>
+  <text x="400" y="1284" font-size="9.5" fill="#D2553F" font-weight="600">not accepted — DFI-13b, DFI-13d, DFI-08 and…</text>
+  <text x="40" y="1300" font-size="10" fill="#0F172A" font-weight="700">FSR-021</text>
+  <text x="96" y="1300" font-size="10" fill="#0F172A">FSR-022 [EL-07] ‖ FSR-023 [EL-03]</text>
+  <text x="400" y="1300" font-size="9.5" fill="#D2553F" font-weight="600">not accepted — DFI-13b, DFI-13d, DFI-08 and…</text>
+  <text x="40" y="1316" font-size="10" fill="#0F172A" font-weight="700">FSR-025</text>
+  <text x="96" y="1316" font-size="10" fill="#0F172A">FSR-026 [EL-03, EL-04, EL-05] ‖ FSR-027 [EL-07, XM-04]</text>
+  <text x="400" y="1316" font-size="9.5" fill="#D2553F" font-weight="600">not accepted — As FSR-015 (DFI-15).</text>
+  <text x="40" y="1332" font-size="10" fill="#0F172A" font-weight="700">FSR-028</text>
+  <text x="96" y="1332" font-size="10" fill="#0F172A">FSR-029 [EL-07] ‖ FSR-030 [EL-03, EL-04]</text>
+  <text x="400" y="1332" font-size="9.5" fill="#D2553F" font-weight="600">not accepted — Both channels read the same brake…</text>
+  <text x="40" y="1348" font-size="10" fill="#0F172A" font-weight="700">FSR-031</text>
+  <text x="96" y="1348" font-size="10" fill="#0F172A">FSR-032 [EL-07] ‖ FSR-033 [EL-03, EL-04]</text>
+  <text x="400" y="1348" font-size="9.5" fill="#D2553F" font-weight="600">not accepted — DFI-10 (driver torque signal)…</text>
+  <text x="40" y="1364" font-size="10" fill="#0F172A" font-weight="700">FSR-034</text>
+  <text x="96" y="1364" font-size="10" fill="#0F172A">FSR-035 [EL-07] ‖ FSR-036 [EL-04]</text>
+  <text x="400" y="1364" font-size="9.5" fill="#D2553F" font-weight="600">not accepted — Both channels follow the same…</text>
   <rect x="660" y="1193" width="44.6" height="15" rx="7.5" fill="#2E9E6A"/><text x="682.3" y="1203.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">DM-01</text>
-  <text x="712" y="1204" font-size="10" fill="#0B0B0B">All item CAN transmission passes through the panda; an unpowered or reset pand…</text>
-  <text x="1240" y="1204" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">EL-07</text>
+  <text x="712" y="1204" font-size="10" fill="#0F172A">All item CAN transmission passes through the panda; an unpowered or reset pand…</text>
+  <text x="1240" y="1204" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">EL-07</text>
   <rect x="660" y="1209" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="682.3" y="1219.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-02</text>
-  <text x="712" y="1220" font-size="10" fill="#0B0B0B">Harness intercept switches (2 x DG419LE, U1 on CAN_H, U2 on CAN_L, one…</text>
-  <text x="1240" y="1220" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">EL-08</text>
+  <text x="712" y="1220" font-size="10" fill="#0F172A">Harness intercept switches (2 x DG419LE, U1 on CAN_H, U2 on CAN_L, one…</text>
+  <text x="1240" y="1220" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">EL-08</text>
   <rect x="660" y="1225" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="682.3" y="1235.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-03</text>
-  <text x="712" y="1236" font-size="10" fill="#0B0B0B">Toyota EPS and powertrain end LKA/ACC when item messages stop (message…</text>
-  <text x="1240" y="1236" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">XM-02, XM-05</text>
+  <text x="712" y="1236" font-size="10" fill="#0F172A">Toyota EPS and powertrain end LKA/ACC when item messages stop (message…</text>
+  <text x="1240" y="1236" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">XM-02, XM-05</text>
   <rect x="660" y="1241" width="44.6" height="15" rx="7.5" fill="#2E9E6A"/><text x="682.3" y="1251.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">DM-04</text>
-  <text x="712" y="1252" font-size="10" fill="#0B0B0B">SoC compares the panda's reported safety model, parameter and alternative…</text>
-  <text x="1240" y="1252" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">EL-04</text>
+  <text x="712" y="1252" font-size="10" fill="#0F172A">SoC compares the panda's reported safety model, parameter and alternative…</text>
+  <text x="1240" y="1252" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">EL-04</text>
   <rect x="660" y="1257" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="682.3" y="1267.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-05</text>
-  <text x="712" y="1268" font-size="10" fill="#0B0B0B">Panda RX checks on safety-relevant vehicle messages. At BL-001 (Toyota)…</text>
-  <text x="1240" y="1268" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">EL-07</text>
+  <text x="712" y="1268" font-size="10" fill="#0F172A">Panda RX checks on safety-relevant vehicle messages. At BL-001 (Toyota)…</text>
+  <text x="1240" y="1268" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">EL-07</text>
   <rect x="660" y="1273" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="682.3" y="1283.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-06</text>
-  <text x="712" y="1284" font-size="10" fill="#0B0B0B">Panda controls-allowed follows PCM cruise state, a signal path diverse from the…</text>
-  <text x="1240" y="1284" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">EL-07</text>
-  <rect x="660" y="1289" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1299.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-07</text>
-  <text x="712" y="1300" font-size="10" fill="#0B0B0B">Panda-side configuration lock: accept only the safety model and parameter…</text>
-  <text x="1240" y="1300" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">EL-07</text>
-  <rect x="660" y="1305" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1315.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-08</text>
-  <text x="712" y="1316" font-size="10" fill="#0B0B0B">Firmware authenticity: panda bootloader accepts only signed LionDriver release…</text>
-  <text x="1240" y="1316" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">EL-07</text>
-  <rect x="660" y="1321" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1331.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-09</text>
-  <text x="712" y="1332" font-size="10" fill="#0B0B0B">Separate release gate for panda firmware and safety model (safety test suite, HIL…</text>
-  <text x="1240" y="1332" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">process</text>
-  <rect x="660" y="1337" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1347.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-10</text>
-  <text x="712" y="1348" font-size="10" fill="#0B0B0B">Envelope derived from vehicle measurements independently of opendbc, with both…</text>
-  <text x="1240" y="1348" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">process</text>
+  <text x="712" y="1284" font-size="10" fill="#0F172A">Panda controls-allowed follows PCM cruise state, a signal path diverse from the…</text>
+  <text x="1240" y="1284" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">EL-07</text>
+  <rect x="660" y="1289" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1299.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-07</text>
+  <text x="712" y="1300" font-size="10" fill="#0F172A">Panda-side configuration lock: accept only the safety model and parameter…</text>
+  <text x="1240" y="1300" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">EL-07</text>
+  <rect x="660" y="1305" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1315.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-08</text>
+  <text x="712" y="1316" font-size="10" fill="#0F172A">Firmware authenticity: panda bootloader accepts only signed LionDriver release…</text>
+  <text x="1240" y="1316" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">EL-07</text>
+  <rect x="660" y="1321" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1331.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-09</text>
+  <text x="712" y="1332" font-size="10" fill="#0F172A">Separate release gate for panda firmware and safety model (safety test suite, HIL…</text>
+  <text x="1240" y="1332" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">process</text>
+  <rect x="660" y="1337" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1347.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-10</text>
+  <text x="712" y="1348" font-size="10" fill="#0F172A">Envelope derived from vehicle measurements independently of opendbc, with both…</text>
+  <text x="1240" y="1348" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">process</text>
   <rect x="660" y="1353" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="682.3" y="1363.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-11</text>
-  <text x="712" y="1364" font-size="10" fill="#0B0B0B">Panda blocks assist-active HUD and status bits when controls are not allowed.…</text>
-  <text x="1240" y="1364" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">EL-07</text>
+  <text x="712" y="1364" font-size="10" fill="#0F172A">Panda blocks assist-active HUD and status bits when controls are not allowed.…</text>
+  <text x="1240" y="1364" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">EL-07</text>
   <rect x="660" y="1369" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="682.3" y="1379.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-12</text>
-  <text x="712" y="1380" font-size="10" fill="#0B0B0B">Panda accepts diagnostic (ELM327) mode only offroad. Reference build: ELM327…</text>
-  <text x="1240" y="1380" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">EL-07</text>
-  <rect x="660" y="1385" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1395.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-13</text>
-  <text x="712" y="1396" font-size="10" fill="#0B0B0B">EMC/ESD immunity testing of device and harness (ISO 7637-2, ISO 11452, ISO…</text>
-  <text x="1240" y="1396" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">process</text>
-  <rect x="660" y="1401" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1411.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-14</text>
-  <text x="712" y="1412" font-size="10" fill="#0B0B0B">Thermal characterization of the windshield-mounted device against panda MCU an…</text>
-  <text x="1240" y="1412" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">process</text>
-  <rect x="660" y="1417" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1427.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-15</text>
-  <text x="712" y="1428" font-size="10" fill="#0B0B0B">Panda robustness against host input: protocol fuzzing and malformed-command…</text>
-  <text x="1240" y="1428" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">EL-07</text>
+  <text x="712" y="1380" font-size="10" fill="#0F172A">Panda accepts diagnostic (ELM327) mode only offroad. Reference build: ELM327…</text>
+  <text x="1240" y="1380" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">EL-07</text>
+  <rect x="660" y="1385" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1395.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-13</text>
+  <text x="712" y="1396" font-size="10" fill="#0F172A">EMC/ESD immunity testing of device and harness (ISO 7637-2, ISO 11452, ISO…</text>
+  <text x="1240" y="1396" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">process</text>
+  <rect x="660" y="1401" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1411.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-14</text>
+  <text x="712" y="1412" font-size="10" fill="#0F172A">Thermal characterization of the windshield-mounted device against panda MCU an…</text>
+  <text x="1240" y="1412" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">process</text>
+  <rect x="660" y="1417" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1427.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-15</text>
+  <text x="712" y="1428" font-size="10" fill="#0F172A">Panda robustness against host input: protocol fuzzing and malformed-command…</text>
+  <text x="1240" y="1428" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">EL-07</text>
   <rect x="660" y="1433" width="44.6" height="15" rx="7.5" fill="#2E9E6A"/><text x="682.3" y="1443.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">DM-16</text>
-  <text x="712" y="1444" font-size="10" fill="#0B0B0B">Implementation diversity: panda safety in C (MISRA, cppcheck) versus SoC…</text>
-  <text x="1240" y="1444" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">EL-07, EL-03</text>
+  <text x="712" y="1444" font-size="10" fill="#0F172A">Implementation diversity: panda safety in C (MISRA, cppcheck) versus SoC…</text>
+  <text x="1240" y="1444" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">EL-07, EL-03</text>
   <rect x="660" y="1449" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="682.3" y="1459.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-17</text>
-  <text x="712" y="1460" font-size="10" fill="#0B0B0B">Panda brown-out reset and supply monitoring.</text>
-  <text x="1240" y="1460" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">EL-07</text>
+  <text x="712" y="1460" font-size="10" fill="#0F172A">Panda brown-out reset and supply monitoring.</text>
+  <text x="1240" y="1460" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">EL-07</text>
   <rect x="660" y="1465" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="682.3" y="1475.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-18</text>
-  <text x="712" y="1476" font-size="10" fill="#0B0B0B">Panda clock independent of the SoC.</text>
-  <text x="1240" y="1476" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">EL-07</text>
-  <rect x="660" y="1481" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1491.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-19</text>
-  <text x="712" y="1492" font-size="10" fill="#0B0B0B">Installation checks in the release and install control plan (PFMEA).</text>
-  <text x="1240" y="1492" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">process</text>
+  <text x="712" y="1476" font-size="10" fill="#0F172A">Panda clock independent of the SoC.</text>
+  <text x="1240" y="1476" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">EL-07</text>
+  <rect x="660" y="1481" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1491.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-19</text>
+  <text x="712" y="1492" font-size="10" fill="#0F172A">Installation checks in the release and install control plan (PFMEA).</text>
+  <text x="1240" y="1492" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">process</text>
   <rect x="660" y="1497" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="682.3" y="1507.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-20</text>
-  <text x="712" y="1508" font-size="10" fill="#0B0B0B">opendbc safety test suite with coverage over the panda safety model.</text>
-  <text x="1240" y="1508" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">EL-07</text>
+  <text x="712" y="1508" font-size="10" fill="#0F172A">opendbc safety test suite with coverage over the panda safety model.</text>
+  <text x="1240" y="1508" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">EL-07</text>
   <rect x="660" y="1513" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="682.3" y="1523.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-21</text>
-  <text x="712" y="1524" font-size="10" fill="#0B0B0B">Panda reference-build configuration lock (TSR-512/513): only SILENT, NOOUTPU…</text>
-  <text x="1240" y="1524" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">EL-07</text>
+  <text x="712" y="1524" font-size="10" fill="#0F172A">Panda reference-build configuration lock (TSR-512/513): only SILENT, NOOUTPU…</text>
+  <text x="1240" y="1524" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">EL-07</text>
   <rect x="660" y="1529" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="682.3" y="1539.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-22</text>
-  <text x="712" y="1540" font-size="10" fill="#0B0B0B">The SoC does not configure a car safety mode, and raises…</text>
-  <text x="1240" y="1540" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">EL-04</text>
-  <rect x="660" y="1545" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1555.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-23</text>
-  <text x="712" y="1556" font-size="10" fill="#0B0B0B">Bench tests of the harness box failure behaviour: box unpowered with camera and…</text>
-  <text x="1240" y="1556" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">process</text>
+  <text x="712" y="1540" font-size="10" fill="#0F172A">The SoC does not configure a car safety mode, and raises…</text>
+  <text x="1240" y="1540" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">EL-04</text>
+  <rect x="660" y="1545" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1555.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-23</text>
+  <text x="712" y="1556" font-size="10" fill="#0F172A">Bench tests of the harness box failure behaviour: box unpowered with camera and…</text>
+  <text x="1240" y="1556" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">process</text>
   <rect x="660" y="1561" width="44.6" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="682.3" y="1571.9" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">DM-25</text>
-  <text x="712" y="1572" font-size="10" fill="#0B0B0B">A safety-mode change does not undo the panda's fault reactions: after a mode…</text>
-  <text x="1240" y="1572" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">EL-07</text>
-  <rect x="660" y="1577" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1587.9" font-size="9.5" font-weight="700" fill="#D03B3B" text-anchor="middle" letter-spacing=".02em">DM-24</text>
-  <text x="712" y="1588" font-size="10" fill="#0B0B0B">The panda releases the ELM327 lock (DM-12) only on an ignition-off confirmed b…</text>
-  <text x="1240" y="1588" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">EL-07</text>
-  <line x1="40" y1="1614" x2="1240" y2="1614" stroke="#E1E0D9" stroke-width="1"/>
-  <text x="40" y="1636" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">DFA OPEN ITEMS</text>
+  <text x="712" y="1572" font-size="10" fill="#0F172A">A safety-mode change does not undo the panda's fault reactions: after a mode…</text>
+  <text x="1240" y="1572" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">EL-07</text>
+  <rect x="660" y="1577" width="44.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="682.3" y="1587.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DM-24</text>
+  <text x="712" y="1588" font-size="10" fill="#0F172A">The panda releases the ELM327 lock (DM-12) only on an ignition-off confirmed b…</text>
+  <text x="1240" y="1588" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">EL-07</text>
+  <line x1="40" y1="1614" x2="1240" y2="1614" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="1636" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">DFA OPEN ITEMS</text>
   <rect x="40" y="1642" width="77.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/><text x="78.9" y="1652.9" font-size="9.5" font-weight="700" fill="#D97706" text-anchor="middle" letter-spacing=".02em">DOI-001 open</text>
-  <text x="170" y="1653" font-size="10" fill="#0B0B0B">Verify the existing_unverified measures (DM-02, DM-03, DM-05, DM-06, DM-17, DM-18, DM-20) with the panda and opendbc…</text>
-  <text x="1240" y="1653" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">affects DM-02, DM-03, DM-05, DM-06, DM-17, DM-18, DM-2…</text>
-  <rect x="40" y="1659" width="86.2" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="83.1" y="1669.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">DOI-002 closed</text>
-  <text x="170" y="1670" font-size="10" fill="#0B0B0B">Design the panda-side configuration lock (DM-07) and firmware authenticity (DM-08). These change upstream panda firmware and…</text>
-  <text x="1240" y="1670" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">affects DM-07, DM-08, DFI-13b, DFI-13d</text>
+  <text x="170" y="1653" font-size="10" fill="#0F172A">Verify the existing_unverified measures (DM-02, DM-03, DM-05, DM-06, DM-17, DM-18, DM-20) with the panda and opendbc…</text>
+  <text x="1240" y="1653" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">affects DM-02, DM-03, DM-05, DM-06, DM-17, DM-18, DM-2…</text>
+  <rect x="40" y="1659" width="86.2" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="83.1" y="1669.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">DOI-002 closed</text>
+  <text x="170" y="1670" font-size="10" fill="#0F172A">Design the panda-side configuration lock (DM-07) and firmware authenticity (DM-08). These change upstream panda firmware and…</text>
+  <text x="1240" y="1670" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">affects DM-07, DM-08, DFI-13b, DFI-13d</text>
   <rect x="40" y="1676" width="77.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/><text x="78.9" y="1686.9" font-size="9.5" font-weight="700" fill="#D97706" text-anchor="middle" letter-spacing=".02em">DOI-003 open</text>
-  <text x="170" y="1687" font-size="10" fill="#0B0B0B">Define the separate panda safety release gate (DM-09) in the PFMEA and release control plan; hand the malicious-update case to…</text>
-  <text x="1240" y="1687" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">affects DM-09, DFI-36</text>
+  <text x="170" y="1687" font-size="10" fill="#0F172A">Define the separate panda safety release gate (DM-09) in the PFMEA and release control plan; hand the malicious-update case to…</text>
+  <text x="1240" y="1687" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">affects DM-09, DFI-36</text>
   <rect x="40" y="1693" width="77.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/><text x="78.9" y="1703.9" font-size="9.5" font-weight="700" fill="#D97706" text-anchor="middle" letter-spacing=".02em">DOI-004 open</text>
-  <text x="170" y="1704" font-size="10" fill="#0B0B0B">Verify the PCM brake/cancel path (XM-03, FSC FOI-006) as the diverse input for DFI-10.</text>
-  <text x="1240" y="1704" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">affects DFI-10</text>
+  <text x="170" y="1704" font-size="10" fill="#0F172A">Verify the PCM brake/cancel path (XM-03, FSC FOI-006) as the diverse input for DFI-10.</text>
+  <text x="1240" y="1704" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">affects DFI-10</text>
   <rect x="40" y="1710" width="77.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/><text x="78.9" y="1720.9" font-size="9.5" font-weight="700" fill="#D97706" text-anchor="middle" letter-spacing=".02em">DOI-005 open</text>
-  <text x="170" y="1721" font-size="10" fill="#0B0B0B">Refine FSR-017 and FSR-027 in FSC rev 0.2 so the panda enforces status bits consistent with controls-allowed (DM-11). Progress…</text>
-  <text x="1240" y="1721" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">affects DFI-15, DM-11, FSR-017, FSR-027</text>
+  <text x="170" y="1721" font-size="10" fill="#0F172A">Refine FSR-017 and FSR-027 in FSC rev 0.2 so the panda enforces status bits consistent with controls-allowed (DM-11). Progress…</text>
+  <text x="1240" y="1721" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">affects DFI-15, DM-11, FSR-017, FSR-027</text>
   <rect x="40" y="1727" width="77.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/><text x="78.9" y="1737.9" font-size="9.5" font-weight="700" fill="#D97706" text-anchor="middle" letter-spacing=".02em">DOI-006 open</text>
-  <text x="170" y="1738" font-size="10" fill="#0B0B0B">Plan EMC/ESD immunity (DM-13), thermal characterization (DM-14) and host-input robustness testing (DM-15).</text>
-  <text x="1240" y="1738" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">affects DM-13, DM-14, DM-15</text>
+  <text x="170" y="1738" font-size="10" fill="#0F172A">Plan EMC/ESD immunity (DM-13), thermal characterization (DM-14) and host-input robustness testing (DM-15).</text>
+  <text x="1240" y="1738" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">affects DM-13, DM-14, DM-15</text>
   <rect x="40" y="1744" width="77.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/><text x="78.9" y="1754.9" font-size="9.5" font-weight="700" fill="#D97706" text-anchor="middle" letter-spacing=".02em">DOI-007 open</text>
-  <text x="170" y="1755" font-size="10" fill="#0B0B0B">Implement and verify LD-DES-001 (DR-01..DR-16) in LionDriver forks of panda and opendbc and in pandad/selfdrived, after decision…</text>
-  <text x="1240" y="1755" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">affects DM-07, DM-08, DM-12, DFI-13b, DFI-13c, DFI-13d</text>
+  <text x="170" y="1755" font-size="10" fill="#0F172A">Implement and verify LD-DES-001 (DR-01..DR-16) in LionDriver forks of panda and opendbc and in pandad/selfdrived, after decision…</text>
+  <text x="1240" y="1755" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">affects DM-07, DM-08, DM-12, DFI-13b, DFI-13c, DFI-13d</text>
   <rect x="40" y="1761" width="77.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/><text x="78.9" y="1771.9" font-size="9.5" font-weight="700" fill="#D97706" text-anchor="middle" letter-spacing=".02em">DOI-008 open</text>
-  <text x="170" y="1772" font-size="10" fill="#0B0B0B">Harness box (RR-2026-010): run the bench tests DM-23 and record what the unpowered switches do to the stock path and to CAN…</text>
-  <text x="1240" y="1772" font-size="9.5" fill="#52514E" font-weight="600" text-anchor="end">affects DFI-13c, DFI-27a, DFI-27b, DM-02, DM-23, DM-24</text>
-  <text x="40" y="1798" font-size="9.5" fill="#898781">Generated by tools/safety/fmea_diagrams.py from analyses/dfa.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+  <text x="170" y="1772" font-size="10" fill="#0F172A">Harness box (RR-2026-010): run the bench tests DM-23 and record what the unpowered switches do to the stock path and to CAN…</text>
+  <text x="1240" y="1772" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">affects DFI-13c, DFI-27a, DFI-27b, DM-02, DM-23, DM-24</text>
+  <text x="40" y="1798" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/dfa.yaml. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>

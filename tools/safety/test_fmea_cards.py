@@ -95,5 +95,16 @@ class TestCards(unittest.TestCase):
     self.assertEqual(self.out, fc.build())
 
 
+
+class TestTwoStyles(unittest.TestCase):
+  def test_original_cards_are_the_record_and_card_versions_follow(self):
+    self.assertFalse(fc.CARDS)
+    out = fc.build_all()
+    for name in fc.SHEETS:
+      self.assertIn(name, out)
+      self.assertIn(fc.fd.cards_name(name), out)
+      self.assertNotIn('id="dots"', out[name], name)
+      self.assertIn('id="dots"', out[fc.fd.cards_name(name)], name)
+
 if __name__ == "__main__":
   unittest.main()

@@ -33,6 +33,18 @@ class Committed(unittest.TestCase):
       self.assertEqual(m.check_diagram(name, doc, dg), [], name)
 
 
+
+class TwoStyles(unittest.TestCase):
+  def test_pages_embed_the_original_figures_and_each_has_a_card_version(self):
+    files, _ = m.build_all()
+    svgs = [p for p in files if p.suffix == ".svg" and not p.stem.endswith("-cards")]
+    self.assertTrue(svgs)
+    for p in svgs:
+      self.assertIn(p.with_name(p.stem + "-cards.svg"), files, p.name)
+      self.assertIn("#1f2328", files[p])   # the original (GitHub Primer) ink
+    pages = "".join(t for p, t in files.items() if p.suffix == ".md")
+    self.assertNotIn("-cards.svg", pages)
+
 class Checks(unittest.TestCase):
   def test_unknown_failure_mode_in_error_state(self):
     doc, dg = load("dfmea")

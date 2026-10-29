@@ -5,54 +5,53 @@
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
     <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
-    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1.2" cy="1.2" r="1.2" fill="#E7E6E0"/></pattern>
     <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
   </defs>
-  <rect width="1280" height="1513" fill="#FCFCFB"/>
-  <text x="40" y="44" font-size="20" fill="#0B0B0B" font-weight="700">Figure 3-12 · SW FMEA — occurrence × detection, element by element</text>
-  <text x="40" y="66" font-size="12.5" fill="#52514E">SWF rev 1.12 · BL-007 · draft · why each cause has its priority, and what the planned actions are predicted to change</text>
-  <text x="1240" y="44" font-size="11" fill="#52514E" text-anchor="end">fmea-plan.md §3.3</text>
-  <text x="1240" y="62" font-size="11" fill="#52514E" text-anchor="end">analyses/sw-fmea.yaml</text>
-  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E1E0D9" stroke-width="1"/>
+  <rect width="1280" height="1513" fill="#FFFFFF"/>
+  <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-12 · SW FMEA — occurrence × detection, element by element</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.12 · BL-007 · draft · why each cause has its priority, and what the planned actions are predicted to change</text>
+  <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
+  <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
   <defs><g id="odg8"><rect x="0" y="0" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="11" y="0" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="22" y="0" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="33" y="0" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="44" y="0" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="55" y="0" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="66" y="0" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="77" y="0" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="88" y="0" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="99" y="0" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="0" y="11" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="11" y="11" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="22" y="11" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="33" y="11" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="44" y="11" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="55" y="11" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="66" y="11" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="77" y="11" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="88" y="11" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="99" y="11" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="0" y="22" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="11" y="22" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="22" y="22" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="33" y="22" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="44" y="22" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="55" y="22" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="66" y="22" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="77" y="22" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="88" y="22" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="99" y="22" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="0" y="33" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="11" y="33" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="22" y="33" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="33" y="33" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="44" y="33" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="55" y="33" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="66" y="33" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="77" y="33" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="88" y="33" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="99" y="33" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="0" y="44" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="11" y="44" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="22" y="44" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="33" y="44" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="44" y="44" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="55" y="44" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="66" y="44" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="77" y="44" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="88" y="44" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="99" y="44" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="0" y="55" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="11" y="55" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="22" y="55" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="33" y="55" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="44" y="55" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="55" y="55" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="66" y="55" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="77" y="55" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="88" y="55" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="99" y="55" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="0" y="66" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="11" y="66" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="22" y="66" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="33" y="66" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="44" y="66" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="55" y="66" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="66" y="66" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="77" y="66" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="88" y="66" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="99" y="66" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="0" y="77" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="11" y="77" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="22" y="77" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="33" y="77" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="44" y="77" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="55" y="77" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="66" y="77" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="77" y="77" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="88" y="77" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="99" y="77" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="0" y="88" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="11" y="88" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="22" y="88" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="33" y="88" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="44" y="88" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="55" y="88" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="66" y="88" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="77" y="88" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="88" y="88" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="99" y="88" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="0" y="99" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="11" y="99" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="22" y="99" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="33" y="99" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="44" y="99" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="55" y="99" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="66" y="99" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="77" y="99" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="88" y="99" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="99" y="99" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/></g><g id="odg10"><rect x="0" y="0" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="11" y="0" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="22" y="0" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="33" y="0" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="44" y="0" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="55" y="0" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="66" y="0" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="77" y="0" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="88" y="0" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="99" y="0" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="0" y="11" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="11" y="11" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="22" y="11" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="33" y="11" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="44" y="11" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="55" y="11" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="66" y="11" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="77" y="11" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="88" y="11" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="99" y="11" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="0" y="22" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="11" y="22" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="22" y="22" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="33" y="22" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="44" y="22" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="55" y="22" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="66" y="22" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="77" y="22" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="88" y="22" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="99" y="22" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="0" y="33" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="11" y="33" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="22" y="33" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="33" y="33" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="44" y="33" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="55" y="33" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="66" y="33" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="77" y="33" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="88" y="33" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="99" y="33" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="0" y="44" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="11" y="44" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="22" y="44" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="33" y="44" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="44" y="44" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="55" y="44" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="66" y="44" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="77" y="44" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="88" y="44" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="99" y="44" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="0" y="55" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="11" y="55" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="22" y="55" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="33" y="55" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="44" y="55" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="55" y="55" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="66" y="55" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="77" y="55" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="88" y="55" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="99" y="55" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="0" y="66" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="11" y="66" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="22" y="66" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="33" y="66" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="44" y="66" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="55" y="66" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="66" y="66" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="77" y="66" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="88" y="66" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="99" y="66" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="0" y="77" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="11" y="77" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="22" y="77" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="33" y="77" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="44" y="77" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="55" y="77" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="66" y="77" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="77" y="77" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="88" y="77" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="99" y="77" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="0" y="88" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="11" y="88" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="22" y="88" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="33" y="88" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="44" y="88" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="55" y="88" width="11" height="11" fill="#FDEFD8" stroke="#FFFFFF" stroke-width="0.8"/><rect x="66" y="88" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="77" y="88" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="88" y="88" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="99" y="88" width="11" height="11" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="0.8"/><rect x="0" y="99" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="11" y="99" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="22" y="99" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="33" y="99" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="44" y="99" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="55" y="99" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="66" y="99" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="77" y="99" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="88" y="99" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/><rect x="99" y="99" width="11" height="11" fill="#DDF0EC" stroke="#FFFFFF" stroke-width="0.8"/></g></defs>
-  <text x="40" y="104" font-size="11" fill="#0B0B0B" font-weight="600">149 rated causes on 50 elements · AP H 132, of which 91 at D 9–10, 19 at D 5–8, 22 at D 1–4. Each panel is one element: where its causes sit in the AP table, and where the actions with a predicted rating would move them.</text>
-  <text x="40" y="137" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-002</text>
-  <text x="172" y="137" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">1 · H 1</text>
-  <text x="40" y="151" font-size="9" fill="#52514E">RX validation and RX timing…</text>
+  <text x="40" y="104" font-size="11" fill="#0F172A" font-weight="600">149 rated causes on 50 elements · AP H 132, of which 91 at D 9–10, 19 at D 5–8, 22 at D 1–4. Each panel is one element: where its causes sit in the AP table, and where the actions with a predicted rating would move them.</text>
+  <text x="40" y="137" font-size="10.5" fill="#0F172A" font-weight="700">SE-002</text>
+  <text x="172" y="137" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">1 · H 1</text>
+  <text x="40" y="151" font-size="9" fill="#475569">RX validation and RX timing…</text>
   <use href="#odg10" x="62" y="160"/>
-  <text x="58" y="168.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="58" y="223.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="58" y="267.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="67.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="111.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="166.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="89.5" cy="231.5" r="4.6" fill="#D03B3B"><title>SWF-006.C1 O4 D3 AP H</title></circle>
-  <text x="190" y="137" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-004</text>
-  <text x="322" y="137" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">2 · H 2</text>
-  <text x="190" y="151" font-size="9" fill="#52514E">Forwarding hook</text>
+  <text x="58" y="168.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="58" y="223.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="58" y="267.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="67.5" y="280" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="111.5" y="280" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="166.5" y="280" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="89.5" cy="231.5" r="4.6" fill="#D2553F"><title>SWF-006.C1 O4 D3 AP H</title></circle>
+  <text x="190" y="137" font-size="10.5" fill="#0F172A" font-weight="700">SE-004</text>
+  <text x="322" y="137" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">2 · H 2</text>
+  <text x="190" y="151" font-size="9" fill="#475569">Forwarding hook</text>
   <use href="#odg10" x="212" y="160"/>
-  <text x="208" y="168.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="208" y="223.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="208" y="267.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="217.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="261.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="316.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">10</text>
+  <text x="208" y="168.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="208" y="223.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="208" y="267.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="217.5" y="280" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="261.5" y="280" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="316.5" y="280" font-size="8" fill="#475569" text-anchor="middle">10</text>
   <path d="M239.5 220.5L239.5 242.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
   <circle cx="239.5" cy="242.5" r="3.6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="2 1.4"/>
   <path d="M239.5 220.5L239.5 242.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
   <circle cx="239.5" cy="242.5" r="3.6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="2 1.4"/>
-  <circle cx="239.5" cy="220.5" r="5.4" fill="#D03B3B"><title>SWF-010.C1 O5 D3 AP H; SWF-011.C1 O5 D3 AP H</title></circle>
+  <circle cx="239.5" cy="220.5" r="5.4" fill="#D2553F"><title>SWF-010.C1 O5 D3 AP H; SWF-011.C1 O5 D3 AP H</title></circle>
   <text x="239.5" y="223.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-  <text x="340" y="137" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-005</text>
-  <text x="472" y="137" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">6 · H 3</text>
-  <text x="340" y="151" font-size="9" fill="#52514E">Controls-allowed logic</text>
+  <text x="340" y="137" font-size="10.5" fill="#0F172A" font-weight="700">SE-005</text>
+  <text x="472" y="137" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">6 · H 3</text>
+  <text x="340" y="151" font-size="9" fill="#475569">Controls-allowed logic</text>
   <use href="#odg10" x="362" y="160"/>
-  <text x="358" y="168.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="358" y="223.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="358" y="267.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="367.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="411.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="466.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">10</text>
+  <text x="358" y="168.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="358" y="223.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="358" y="267.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="367.5" y="280" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="411.5" y="280" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="466.5" y="280" font-size="8" fill="#475569" text-anchor="middle">10</text>
   <path d="M389.5 220.5L389.5 242.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
   <circle cx="389.5" cy="242.5" r="3.6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="2 1.4"/>
   <path d="M389.5 220.5L389.5 242.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
@@ -63,297 +62,297 @@
   <circle cx="400.5" cy="242.5" r="3.6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="2 1.4"/>
   <circle cx="400.5" cy="242.5" r="5.4" fill="#0F766E"><title>SWF-054.C1 O3 D4 AP L; SWF-055.C1 O3 D4 AP L; SWF-089.C1 O3 D4 AP L</title></circle>
   <text x="400.5" y="245.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
-  <circle cx="389.5" cy="220.5" r="5.4" fill="#D03B3B"><title>SWF-007.C1 O5 D3 AP H; SWF-008.C2 O5 D3 AP H; SWF-009.C1 O5 D3 AP H</title></circle>
+  <circle cx="389.5" cy="220.5" r="5.4" fill="#D2553F"><title>SWF-007.C1 O5 D3 AP H; SWF-008.C2 O5 D3 AP H; SWF-009.C1 O5 D3 AP H</title></circle>
   <text x="389.5" y="223.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
-  <text x="490" y="137" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-006</text>
-  <text x="622" y="137" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">3 · H 3</text>
-  <text x="490" y="151" font-size="9" fill="#52514E">Steering torque checks</text>
+  <text x="490" y="137" font-size="10.5" fill="#0F172A" font-weight="700">SE-006</text>
+  <text x="622" y="137" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">3 · H 3</text>
+  <text x="490" y="151" font-size="9" fill="#475569">Steering torque checks</text>
   <use href="#odg10" x="512" y="160"/>
-  <text x="508" y="168.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="508" y="223.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="508" y="267.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="517.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="561.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="616.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">10</text>
+  <text x="508" y="168.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="508" y="223.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="508" y="267.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="517.5" y="280" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="561.5" y="280" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="616.5" y="280" font-size="8" fill="#475569" text-anchor="middle">10</text>
   <path d="M539.5 220.5L539.5 242.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
   <circle cx="539.5" cy="242.5" r="3.6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="2 1.4"/>
   <path d="M539.5 220.5L539.5 242.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
   <circle cx="539.5" cy="242.5" r="3.6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="2 1.4"/>
-  <circle cx="539.5" cy="220.5" r="5.4" fill="#D03B3B"><title>SWF-001.C2 O5 D3 AP H; SWF-002.C1 O5 D3 AP H</title></circle>
+  <circle cx="539.5" cy="220.5" r="5.4" fill="#D2553F"><title>SWF-001.C2 O5 D3 AP H; SWF-002.C1 O5 D3 AP H</title></circle>
   <text x="539.5" y="223.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-  <circle cx="616.5" cy="187.5" r="4.6" fill="#D03B3B"><title>SWF-087.C1 O8 D10 AP H</title></circle>
-  <text x="640" y="137" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-007</text>
-  <text x="772" y="137" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">4 · H 4</text>
-  <text x="640" y="151" font-size="9" fill="#52514E">Longitudinal checks</text>
+  <circle cx="616.5" cy="187.5" r="4.6" fill="#D2553F"><title>SWF-087.C1 O8 D10 AP H</title></circle>
+  <text x="640" y="137" font-size="10.5" fill="#0F172A" font-weight="700">SE-007</text>
+  <text x="772" y="137" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">4 · H 4</text>
+  <text x="640" y="151" font-size="9" fill="#475569">Longitudinal checks</text>
   <use href="#odg10" x="662" y="160"/>
-  <text x="658" y="168.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="658" y="223.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="658" y="267.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="667.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="711.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="766.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">10</text>
+  <text x="658" y="168.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="658" y="223.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="658" y="267.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="667.5" y="280" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="711.5" y="280" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="766.5" y="280" font-size="8" fill="#475569" text-anchor="middle">10</text>
   <path d="M689.5 220.5L689.5 242.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
   <circle cx="689.5" cy="242.5" r="3.6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="2 1.4"/>
   <path d="M689.5 220.5L689.5 242.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
   <circle cx="689.5" cy="242.5" r="3.6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="2 1.4"/>
-  <circle cx="689.5" cy="220.5" r="5.4" fill="#D03B3B"><title>SWF-003.C2 O5 D3 AP H; SWF-017.C1 O5 D3 AP H</title></circle>
+  <circle cx="689.5" cy="220.5" r="5.4" fill="#D2553F"><title>SWF-003.C2 O5 D3 AP H; SWF-017.C1 O5 D3 AP H</title></circle>
   <text x="689.5" y="223.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-  <circle cx="755.5" cy="187.5" r="5.4" fill="#D03B3B"><title>SWF-004.C1 O8 D9 AP H; SWF-053.C1 O8 D9 AP H</title></circle>
+  <circle cx="755.5" cy="187.5" r="5.4" fill="#D2553F"><title>SWF-004.C1 O8 D9 AP H; SWF-053.C1 O8 D9 AP H</title></circle>
   <text x="755.5" y="190.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-  <text x="790" y="137" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-008</text>
-  <text x="922" y="137" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">5 · H 5</text>
-  <text x="790" y="151" font-size="9" fill="#52514E">Toyota safety mode</text>
+  <text x="790" y="137" font-size="10.5" fill="#0F172A" font-weight="700">SE-008</text>
+  <text x="922" y="137" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">5 · H 5</text>
+  <text x="790" y="151" font-size="9" fill="#475569">Toyota safety mode</text>
   <use href="#odg10" x="812" y="160"/>
-  <text x="808" y="168.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="808" y="223.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="808" y="267.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="817.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="861.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="916.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="905.5" cy="242.5" r="4.6" fill="#D03B3B"><title>SWF-005.C1 O3 D9 AP H</title></circle>
-  <circle cx="894.5" cy="231.5" r="4.6" fill="#D03B3B"><title>SWF-015.C1 O4 D8 AP H</title></circle>
-  <circle cx="905.5" cy="209.5" r="5.4" fill="#D03B3B"><title>SWF-001.C1 O6 D9 AP H; SWF-003.C1 O6 D9 AP H; SWF-003.C3 O6 D9 AP H</title></circle>
+  <text x="808" y="168.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="808" y="223.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="808" y="267.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="817.5" y="280" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="861.5" y="280" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="916.5" y="280" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="905.5" cy="242.5" r="4.6" fill="#D2553F"><title>SWF-005.C1 O3 D9 AP H</title></circle>
+  <circle cx="894.5" cy="231.5" r="4.6" fill="#D2553F"><title>SWF-015.C1 O4 D8 AP H</title></circle>
+  <circle cx="905.5" cy="209.5" r="5.4" fill="#D2553F"><title>SWF-001.C1 O6 D9 AP H; SWF-003.C1 O6 D9 AP H; SWF-003.C3 O6 D9 AP H</title></circle>
   <text x="905.5" y="212.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
-  <text x="940" y="137" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-009</text>
-  <text x="1072" y="137" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">2 · H 1</text>
-  <text x="940" y="151" font-size="9" fill="#52514E">Relay malfunction detection</text>
+  <text x="940" y="137" font-size="10.5" fill="#0F172A" font-weight="700">SE-009</text>
+  <text x="1072" y="137" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">2 · H 1</text>
+  <text x="940" y="151" font-size="9" fill="#475569">Relay malfunction detection</text>
   <use href="#odg10" x="962" y="160"/>
-  <text x="958" y="168.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="958" y="223.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="958" y="267.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="967.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="1011.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="1066.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">10</text>
+  <text x="958" y="168.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="958" y="223.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="958" y="267.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="967.5" y="280" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="1011.5" y="280" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="1066.5" y="280" font-size="8" fill="#475569" text-anchor="middle">10</text>
   <path d="M989.5 220.5L989.5 242.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
   <circle cx="989.5" cy="242.5" r="3.6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="2 1.4"/>
   <circle cx="1000.5" cy="242.5" r="4.6" fill="#0F766E"><title>SWF-090.C1 O3 D4 AP L</title></circle>
-  <circle cx="989.5" cy="220.5" r="4.6" fill="#D03B3B"><title>SWF-012.C1 O5 D3 AP H</title></circle>
-  <text x="1090" y="137" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-011</text>
-  <text x="1222" y="137" font-size="9.5" fill="#52514E" font-weight="700" text-anchor="end">5 · H 0</text>
-  <text x="1090" y="151" font-size="9" fill="#52514E">Panda main loop: safety mod…</text>
+  <circle cx="989.5" cy="220.5" r="4.6" fill="#D2553F"><title>SWF-012.C1 O5 D3 AP H</title></circle>
+  <text x="1090" y="137" font-size="10.5" fill="#0F172A" font-weight="700">SE-011</text>
+  <text x="1222" y="137" font-size="9.5" fill="#475569" font-weight="700" text-anchor="end">5 · H 0</text>
+  <text x="1090" y="151" font-size="9" fill="#475569">Panda main loop: safety mod…</text>
   <use href="#odg10" x="1112" y="160"/>
-  <text x="1108" y="168.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="1108" y="223.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="1108" y="267.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="1117.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="1161.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="1216.5" y="280" font-size="8" fill="#52514E" text-anchor="middle">10</text>
+  <text x="1108" y="168.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="1108" y="223.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="1108" y="267.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="1117.5" y="280" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="1161.5" y="280" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="1216.5" y="280" font-size="8" fill="#475569" text-anchor="middle">10</text>
   <circle cx="1150.5" cy="242.5" r="5.4" fill="#0F766E"><title>SWF-014.C1 O3 D4 AP L; SWF-014.C2 O3 D4 AP L; SWF-014.C3 O3 D4 AP L; SWF-092.C1 O3 D4 AP L; SWF-092.C2 O3 D4 AP L</title></circle>
   <text x="1150.5" y="245.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
-  <text x="40" y="321" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-012</text>
-  <text x="172" y="321" font-size="9.5" fill="#52514E" font-weight="700" text-anchor="end">4 · H 0</text>
-  <text x="40" y="335" font-size="9" fill="#52514E">Panda host command handler</text>
+  <text x="40" y="321" font-size="10.5" fill="#0F172A" font-weight="700">SE-012</text>
+  <text x="172" y="321" font-size="9.5" fill="#475569" font-weight="700" text-anchor="end">4 · H 0</text>
+  <text x="40" y="335" font-size="9" fill="#475569">Panda host command handler</text>
   <use href="#odg10" x="62" y="344"/>
-  <text x="58" y="352.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="58" y="407.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="58" y="451.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="67.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="111.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="166.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">10</text>
+  <text x="58" y="352.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="58" y="407.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="58" y="451.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="67.5" y="464" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="111.5" y="464" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="166.5" y="464" font-size="8" fill="#475569" text-anchor="middle">10</text>
   <circle cx="100.5" cy="426.5" r="3.6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="2 1.4"/>
   <circle cx="100.5" cy="426.5" r="3.6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="2 1.4"/>
   <circle cx="100.5" cy="426.5" r="3.6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="2 1.4"/>
   <circle cx="100.5" cy="426.5" r="5.4" fill="#0F766E"><title>SWF-001.C3 O3 D4 AP L; SWF-008.C1 O3 D4 AP L; SWF-013.C1 O3 D4 AP L; SWF-013.C2 O3 D4 AP L</title></circle>
   <text x="100.5" y="429.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
-  <text x="190" y="321" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-013</text>
-  <text x="322" y="321" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">1 · H 1</text>
-  <text x="190" y="335" font-size="9" fill="#52514E">Panda CAN send path</text>
+  <text x="190" y="321" font-size="10.5" fill="#0F172A" font-weight="700">SE-013</text>
+  <text x="322" y="321" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">1 · H 1</text>
+  <text x="190" y="335" font-size="9" fill="#475569">Panda CAN send path</text>
   <use href="#odg10" x="212" y="344"/>
-  <text x="208" y="352.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="208" y="407.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="208" y="451.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="217.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="261.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="316.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="294.5" cy="426.5" r="4.6" fill="#D03B3B"><title>SWF-016.C1 O3 D8 AP H</title></circle>
-  <text x="340" y="321" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-014</text>
-  <text x="472" y="321" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">2 · H 2</text>
-  <text x="340" y="335" font-size="9" fill="#52514E">Panda hardware watchdog a…</text>
+  <text x="208" y="352.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="208" y="407.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="208" y="451.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="217.5" y="464" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="261.5" y="464" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="316.5" y="464" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="294.5" cy="426.5" r="4.6" fill="#D2553F"><title>SWF-016.C1 O3 D8 AP H</title></circle>
+  <text x="340" y="321" font-size="10.5" fill="#0F172A" font-weight="700">SE-014</text>
+  <text x="472" y="321" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">2 · H 2</text>
+  <text x="340" y="335" font-size="9" fill="#475569">Panda hardware watchdog a…</text>
   <use href="#odg10" x="362" y="344"/>
-  <text x="358" y="352.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="358" y="407.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="358" y="451.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="367.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="411.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="466.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="433.5" cy="415.5" r="4.6" fill="#D03B3B"><title>SWF-018.C1 O4 D7 AP H</title></circle>
-  <circle cx="444.5" cy="404.5" r="4.6" fill="#D03B3B"><title>SWF-019.C1 O5 D8 AP H</title></circle>
-  <text x="490" y="321" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-021</text>
-  <text x="622" y="321" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">3 · H 3</text>
-  <text x="490" y="335" font-size="9" fill="#52514E">Main loop and heartbeat</text>
+  <text x="358" y="352.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="358" y="407.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="358" y="451.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="367.5" y="464" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="411.5" y="464" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="466.5" y="464" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="433.5" cy="415.5" r="4.6" fill="#D2553F"><title>SWF-018.C1 O4 D7 AP H</title></circle>
+  <circle cx="444.5" cy="404.5" r="4.6" fill="#D2553F"><title>SWF-019.C1 O5 D8 AP H</title></circle>
+  <text x="490" y="321" font-size="10.5" fill="#0F172A" font-weight="700">SE-021</text>
+  <text x="622" y="321" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">3 · H 3</text>
+  <text x="490" y="335" font-size="9" fill="#475569">Main loop and heartbeat</text>
   <use href="#odg10" x="512" y="344"/>
-  <text x="508" y="352.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="508" y="407.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="508" y="451.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="517.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="561.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="616.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="605.5" cy="393.5" r="4.6" fill="#D03B3B"><title>SWF-021.C2 O6 D9 AP H</title></circle>
-  <circle cx="605.5" cy="382.5" r="4.6" fill="#D03B3B"><title>SWF-021.C1 O7 D9 AP H</title></circle>
-  <circle cx="616.5" cy="371.5" r="4.6" fill="#D03B3B"><title>SWF-020.C1 O8 D10 AP H</title></circle>
-  <text x="640" y="321" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-022</text>
-  <text x="772" y="321" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">3 · H 3</text>
-  <text x="640" y="335" font-size="9" fill="#52514E">Safety mode setter</text>
+  <text x="508" y="352.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="508" y="407.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="508" y="451.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="517.5" y="464" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="561.5" y="464" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="616.5" y="464" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="605.5" cy="393.5" r="4.6" fill="#D2553F"><title>SWF-021.C2 O6 D9 AP H</title></circle>
+  <circle cx="605.5" cy="382.5" r="4.6" fill="#D2553F"><title>SWF-021.C1 O7 D9 AP H</title></circle>
+  <circle cx="616.5" cy="371.5" r="4.6" fill="#D2553F"><title>SWF-020.C1 O8 D10 AP H</title></circle>
+  <text x="640" y="321" font-size="10.5" fill="#0F172A" font-weight="700">SE-022</text>
+  <text x="772" y="321" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">3 · H 3</text>
+  <text x="640" y="335" font-size="9" fill="#475569">Safety mode setter</text>
   <use href="#odg10" x="662" y="344"/>
-  <text x="658" y="352.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="658" y="407.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="658" y="451.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="667.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="711.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="766.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="766.5" cy="415.5" r="4.6" fill="#D03B3B"><title>SWF-022.C2 O4 D10 AP H</title></circle>
-  <circle cx="766.5" cy="393.5" r="4.6" fill="#D03B3B"><title>SWF-029.C2 O6 D10 AP H</title></circle>
-  <circle cx="766.5" cy="382.5" r="4.6" fill="#D03B3B"><title>SWF-022.C1 O7 D10 AP H</title></circle>
-  <text x="790" y="321" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-023</text>
-  <text x="922" y="321" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">2 · H 2</text>
-  <text x="790" y="335" font-size="9" fill="#52514E">sendcan forwarding thread</text>
+  <text x="658" y="352.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="658" y="407.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="658" y="451.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="667.5" y="464" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="711.5" y="464" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="766.5" y="464" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="766.5" cy="415.5" r="4.6" fill="#D2553F"><title>SWF-022.C2 O4 D10 AP H</title></circle>
+  <circle cx="766.5" cy="393.5" r="4.6" fill="#D2553F"><title>SWF-029.C2 O6 D10 AP H</title></circle>
+  <circle cx="766.5" cy="382.5" r="4.6" fill="#D2553F"><title>SWF-022.C1 O7 D10 AP H</title></circle>
+  <text x="790" y="321" font-size="10.5" fill="#0F172A" font-weight="700">SE-023</text>
+  <text x="922" y="321" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">2 · H 2</text>
+  <text x="790" y="335" font-size="9" fill="#475569">sendcan forwarding thread</text>
   <use href="#odg10" x="812" y="344"/>
-  <text x="808" y="352.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="808" y="407.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="808" y="451.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="817.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="861.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="916.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="916.5" cy="404.5" r="4.6" fill="#D03B3B"><title>SWF-024.C1 O5 D10 AP H</title></circle>
-  <circle cx="916.5" cy="371.5" r="4.6" fill="#D03B3B"><title>SWF-023.C1 O8 D10 AP H</title></circle>
-  <text x="940" y="321" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-024</text>
-  <text x="1072" y="321" font-size="9.5" fill="#52514E" font-weight="700" text-anchor="end">1 · H 0 · S8</text>
-  <text x="940" y="335" font-size="9" fill="#52514E">CAN RX and panda state…</text>
+  <text x="808" y="352.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="808" y="407.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="808" y="451.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="817.5" y="464" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="861.5" y="464" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="916.5" y="464" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="916.5" cy="404.5" r="4.6" fill="#D2553F"><title>SWF-024.C1 O5 D10 AP H</title></circle>
+  <circle cx="916.5" cy="371.5" r="4.6" fill="#D2553F"><title>SWF-023.C1 O8 D10 AP H</title></circle>
+  <text x="940" y="321" font-size="10.5" fill="#0F172A" font-weight="700">SE-024</text>
+  <text x="1072" y="321" font-size="9.5" fill="#475569" font-weight="700" text-anchor="end">1 · H 0 · S8</text>
+  <text x="940" y="335" font-size="9" fill="#475569">CAN RX and panda state…</text>
   <use href="#odg8" x="962" y="344"/>
-  <text x="958" y="352.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="958" y="407.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="958" y="451.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="967.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="1011.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="1066.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">10</text>
+  <text x="958" y="352.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="958" y="407.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="958" y="451.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="967.5" y="464" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="1011.5" y="464" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="1066.5" y="464" font-size="8" fill="#475569" text-anchor="middle">10</text>
   <circle cx="1000.5" cy="404.5" r="3.6" fill="#FFFFFF" stroke="#D97706" stroke-width="1.4" stroke-dasharray="2 1.4"/>
   <circle cx="1000.5" cy="404.5" r="4.6" fill="#D97706"><title>SWF-025.C1 O5 D4 AP M</title></circle>
-  <text x="1090" y="321" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-025</text>
-  <text x="1222" y="321" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">4 · H 4</text>
-  <text x="1090" y="335" font-size="9" fill="#52514E">SPI transport</text>
+  <text x="1090" y="321" font-size="10.5" fill="#0F172A" font-weight="700">SE-025</text>
+  <text x="1222" y="321" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">4 · H 4</text>
+  <text x="1090" y="335" font-size="9" fill="#475569">SPI transport</text>
   <use href="#odg10" x="1112" y="344"/>
-  <text x="1108" y="352.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="1108" y="407.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="1108" y="451.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="1117.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="1161.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="1216.5" y="464" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="1205.5" cy="415.5" r="4.6" fill="#D03B3B"><title>SWF-026.C1 O4 D9 AP H</title></circle>
-  <circle cx="1205.5" cy="393.5" r="4.6" fill="#D03B3B"><title>SWF-024.C2 O6 D9 AP H</title></circle>
-  <circle cx="1216.5" cy="393.5" r="4.6" fill="#D03B3B"><title>SWF-029.C1 O6 D10 AP H</title></circle>
-  <circle cx="1205.5" cy="382.5" r="4.6" fill="#D03B3B"><title>SWF-027.C1 O7 D9 AP H</title></circle>
-  <text x="40" y="505" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-026</text>
-  <text x="172" y="505" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">3 · H 2</text>
-  <text x="40" y="519" font-size="9" fill="#52514E">Launcher and firmware check</text>
+  <text x="1108" y="352.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="1108" y="407.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="1108" y="451.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="1117.5" y="464" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="1161.5" y="464" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="1216.5" y="464" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="1205.5" cy="415.5" r="4.6" fill="#D2553F"><title>SWF-026.C1 O4 D9 AP H</title></circle>
+  <circle cx="1205.5" cy="393.5" r="4.6" fill="#D2553F"><title>SWF-024.C2 O6 D9 AP H</title></circle>
+  <circle cx="1216.5" cy="393.5" r="4.6" fill="#D2553F"><title>SWF-029.C1 O6 D10 AP H</title></circle>
+  <circle cx="1205.5" cy="382.5" r="4.6" fill="#D2553F"><title>SWF-027.C1 O7 D9 AP H</title></circle>
+  <text x="40" y="505" font-size="10.5" fill="#0F172A" font-weight="700">SE-026</text>
+  <text x="172" y="505" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">3 · H 2</text>
+  <text x="40" y="519" font-size="9" fill="#475569">Launcher and firmware check</text>
   <use href="#odg10" x="62" y="528"/>
-  <text x="58" y="536.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="58" y="591.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="58" y="635.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="67.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="111.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="166.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">10</text>
+  <text x="58" y="536.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="58" y="591.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="58" y="635.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="67.5" y="648" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="111.5" y="648" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="166.5" y="648" font-size="8" fill="#475569" text-anchor="middle">10</text>
   <circle cx="100.5" cy="621.5" r="4.6" fill="#0F766E"><title>SWF-028.C2 O2 D4 AP L</title></circle>
-  <circle cx="166.5" cy="588.5" r="4.6" fill="#D03B3B"><title>SWF-028.C1 O5 D10 AP H</title></circle>
-  <circle cx="155.5" cy="577.5" r="4.6" fill="#D03B3B"><title>SWF-027.C2 O6 D9 AP H</title></circle>
-  <text x="190" y="505" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-031</text>
-  <text x="322" y="505" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">2 · H 2</text>
-  <text x="190" y="519" font-size="9" fill="#52514E">Engagement state machine</text>
+  <circle cx="166.5" cy="588.5" r="4.6" fill="#D2553F"><title>SWF-028.C1 O5 D10 AP H</title></circle>
+  <circle cx="155.5" cy="577.5" r="4.6" fill="#D2553F"><title>SWF-027.C2 O6 D9 AP H</title></circle>
+  <text x="190" y="505" font-size="10.5" fill="#0F172A" font-weight="700">SE-031</text>
+  <text x="322" y="505" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">2 · H 2</text>
+  <text x="190" y="519" font-size="9" fill="#475569">Engagement state machine</text>
   <use href="#odg10" x="212" y="528"/>
-  <text x="208" y="536.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="208" y="591.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="208" y="635.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="217.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="261.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="316.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">10</text>
+  <text x="208" y="536.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="208" y="591.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="208" y="635.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="217.5" y="648" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="261.5" y="648" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="316.5" y="648" font-size="8" fill="#475569" text-anchor="middle">10</text>
   <path d="M294.5 577.5L250.5 588.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
-  <circle cx="250.5" cy="588.5" r="3.6" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.4" stroke-dasharray="2 1.4"/>
-  <circle cx="294.5" cy="577.5" r="4.6" fill="#D03B3B"><title>SWF-030.C1 O6 D8 AP H</title></circle>
-  <circle cx="305.5" cy="555.5" r="4.6" fill="#D03B3B"><title>SWF-038.C1 O8 D9 AP H</title></circle>
-  <text x="340" y="505" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-032</text>
-  <text x="472" y="505" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">12 · H 11</text>
-  <text x="340" y="519" font-size="9" fill="#52514E">Input sampling and event…</text>
+  <circle cx="250.5" cy="588.5" r="3.6" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="2 1.4"/>
+  <circle cx="294.5" cy="577.5" r="4.6" fill="#D2553F"><title>SWF-030.C1 O6 D8 AP H</title></circle>
+  <circle cx="305.5" cy="555.5" r="4.6" fill="#D2553F"><title>SWF-038.C1 O8 D9 AP H</title></circle>
+  <text x="340" y="505" font-size="10.5" fill="#0F172A" font-weight="700">SE-032</text>
+  <text x="472" y="505" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">12 · H 11</text>
+  <text x="340" y="519" font-size="9" fill="#475569">Input sampling and event…</text>
   <use href="#odg10" x="362" y="528"/>
-  <text x="358" y="536.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="358" y="591.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="358" y="635.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="367.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="411.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="466.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">10</text>
+  <text x="358" y="536.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="358" y="591.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="358" y="635.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="367.5" y="648" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="411.5" y="648" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="466.5" y="648" font-size="8" fill="#475569" text-anchor="middle">10</text>
   <path d="M444.5 566.5L400.5 588.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
-  <circle cx="400.5" cy="588.5" r="3.6" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.4" stroke-dasharray="2 1.4"/>
+  <circle cx="400.5" cy="588.5" r="3.6" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="2 1.4"/>
   <path d="M444.5 588.5L400.5 588.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
-  <circle cx="400.5" cy="588.5" r="3.6" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.4" stroke-dasharray="2 1.4"/>
+  <circle cx="400.5" cy="588.5" r="3.6" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="2 1.4"/>
   <path d="M444.5 588.5L400.5 588.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
-  <circle cx="400.5" cy="588.5" r="3.6" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.4" stroke-dasharray="2 1.4"/>
-  <circle cx="400.5" cy="588.5" r="3.6" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.4" stroke-dasharray="2 1.4"/>
+  <circle cx="400.5" cy="588.5" r="3.6" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="2 1.4"/>
+  <circle cx="400.5" cy="588.5" r="3.6" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="2 1.4"/>
   <circle cx="400.5" cy="621.5" r="4.6" fill="#0F766E"><title>SWF-030.C2 O2 D4 AP L</title></circle>
-  <circle cx="466.5" cy="599.5" r="5.4" fill="#D03B3B"><title>SWF-032.C2 O4 D10 AP H; SWF-034.C2 O4 D10 AP H</title></circle>
+  <circle cx="466.5" cy="599.5" r="5.4" fill="#D2553F"><title>SWF-032.C2 O4 D10 AP H; SWF-034.C2 O4 D10 AP H</title></circle>
   <text x="466.5" y="602.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-  <circle cx="400.5" cy="588.5" r="4.6" fill="#D03B3B"><title>SWF-091.C2 O5 D4 AP H</title></circle>
-  <circle cx="444.5" cy="588.5" r="5.4" fill="#D03B3B"><title>SWF-032.C3 O5 D8 AP H; SWF-034.C1 O5 D8 AP H</title></circle>
+  <circle cx="400.5" cy="588.5" r="4.6" fill="#D2553F"><title>SWF-091.C2 O5 D4 AP H</title></circle>
+  <circle cx="444.5" cy="588.5" r="5.4" fill="#D2553F"><title>SWF-032.C3 O5 D8 AP H; SWF-034.C1 O5 D8 AP H</title></circle>
   <text x="444.5" y="591.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-  <circle cx="466.5" cy="577.5" r="5.4" fill="#D03B3B"><title>SWF-031.C1 O6 D10 AP H; SWF-033.C2 O6 D10 AP H; SWF-034.C3 O6 D10 AP H</title></circle>
+  <circle cx="466.5" cy="577.5" r="5.4" fill="#D2553F"><title>SWF-031.C1 O6 D10 AP H; SWF-033.C2 O6 D10 AP H; SWF-034.C3 O6 D10 AP H</title></circle>
   <text x="466.5" y="580.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
-  <circle cx="444.5" cy="566.5" r="4.6" fill="#D03B3B"><title>SWF-031.C2 O7 D8 AP H</title></circle>
-  <circle cx="466.5" cy="566.5" r="4.6" fill="#D03B3B"><title>SWF-051.C1 O7 D10 AP H</title></circle>
-  <circle cx="466.5" cy="555.5" r="4.6" fill="#D03B3B"><title>SWF-032.C1 O8 D10 AP H</title></circle>
-  <text x="490" y="505" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-033</text>
-  <text x="622" y="505" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">2 · H 2</text>
-  <text x="490" y="519" font-size="9" fill="#52514E">Event catalogue and reaction…</text>
+  <circle cx="444.5" cy="566.5" r="4.6" fill="#D2553F"><title>SWF-031.C2 O7 D8 AP H</title></circle>
+  <circle cx="466.5" cy="566.5" r="4.6" fill="#D2553F"><title>SWF-051.C1 O7 D10 AP H</title></circle>
+  <circle cx="466.5" cy="555.5" r="4.6" fill="#D2553F"><title>SWF-032.C1 O8 D10 AP H</title></circle>
+  <text x="490" y="505" font-size="10.5" fill="#0F172A" font-weight="700">SE-033</text>
+  <text x="622" y="505" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">2 · H 2</text>
+  <text x="490" y="519" font-size="9" fill="#475569">Event catalogue and reaction…</text>
   <use href="#odg10" x="512" y="528"/>
-  <text x="508" y="536.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="508" y="591.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="508" y="635.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="517.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="561.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="616.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="605.5" cy="588.5" r="4.6" fill="#D03B3B"><title>SWF-039.C1 O5 D9 AP H</title></circle>
-  <circle cx="605.5" cy="555.5" r="4.6" fill="#D03B3B"><title>SWF-033.C1 O8 D9 AP H</title></circle>
-  <text x="640" y="505" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-034</text>
-  <text x="772" y="505" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">1 · H 1</text>
-  <text x="640" y="519" font-size="9" fill="#52514E">Alert manager</text>
+  <text x="508" y="536.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="508" y="591.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="508" y="635.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="517.5" y="648" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="561.5" y="648" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="616.5" y="648" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="605.5" cy="588.5" r="4.6" fill="#D2553F"><title>SWF-039.C1 O5 D9 AP H</title></circle>
+  <circle cx="605.5" cy="555.5" r="4.6" fill="#D2553F"><title>SWF-033.C1 O8 D9 AP H</title></circle>
+  <text x="640" y="505" font-size="10.5" fill="#0F172A" font-weight="700">SE-034</text>
+  <text x="772" y="505" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">1 · H 1</text>
+  <text x="640" y="519" font-size="9" fill="#475569">Alert manager</text>
   <use href="#odg10" x="662" y="528"/>
-  <text x="658" y="536.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="658" y="591.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="658" y="635.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="667.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="711.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="766.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="755.5" cy="577.5" r="4.6" fill="#D03B3B"><title>SWF-035.C1 O6 D9 AP H</title></circle>
-  <text x="790" y="505" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-035</text>
-  <text x="922" y="505" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">2 · H 2</text>
-  <text x="790" y="519" font-size="9" fill="#52514E">Excessive actuation check</text>
+  <text x="658" y="536.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="658" y="591.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="658" y="635.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="667.5" y="648" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="711.5" y="648" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="766.5" y="648" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="755.5" cy="577.5" r="4.6" fill="#D2553F"><title>SWF-035.C1 O6 D9 AP H</title></circle>
+  <text x="790" y="505" font-size="10.5" fill="#0F172A" font-weight="700">SE-035</text>
+  <text x="922" y="505" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">2 · H 2</text>
+  <text x="790" y="519" font-size="9" fill="#475569">Excessive actuation check</text>
   <use href="#odg10" x="812" y="528"/>
-  <text x="808" y="536.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="808" y="591.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="808" y="635.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="817.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="861.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="916.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="916.5" cy="577.5" r="4.6" fill="#D03B3B"><title>SWF-037.C2 O6 D10 AP H</title></circle>
-  <circle cx="916.5" cy="555.5" r="4.6" fill="#D03B3B"><title>SWF-037.C1 O8 D10 AP H</title></circle>
-  <text x="940" y="505" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-036</text>
-  <text x="1072" y="505" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">2 · H 2</text>
-  <text x="940" y="519" font-size="9" fill="#52514E">selfdriveState publication an…</text>
+  <text x="808" y="536.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="808" y="591.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="808" y="635.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="817.5" y="648" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="861.5" y="648" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="916.5" y="648" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="916.5" cy="577.5" r="4.6" fill="#D2553F"><title>SWF-037.C2 O6 D10 AP H</title></circle>
+  <circle cx="916.5" cy="555.5" r="4.6" fill="#D2553F"><title>SWF-037.C1 O8 D10 AP H</title></circle>
+  <text x="940" y="505" font-size="10.5" fill="#0F172A" font-weight="700">SE-036</text>
+  <text x="1072" y="505" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">2 · H 2</text>
+  <text x="940" y="519" font-size="9" fill="#475569">selfdriveState publication an…</text>
   <use href="#odg10" x="962" y="528"/>
-  <text x="958" y="536.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="958" y="591.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="958" y="635.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="967.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="1011.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="1066.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="1066.5" cy="588.5" r="4.6" fill="#D03B3B"><title>SWF-036.C2 O5 D10 AP H</title></circle>
-  <circle cx="1055.5" cy="566.5" r="4.6" fill="#D03B3B"><title>SWF-036.C1 O7 D9 AP H</title></circle>
-  <text x="1090" y="505" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-041</text>
-  <text x="1222" y="505" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">10 · H 9</text>
-  <text x="1090" y="519" font-size="9" fill="#52514E">controlsd main loop, input…</text>
+  <text x="958" y="536.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="958" y="591.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="958" y="635.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="967.5" y="648" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="1011.5" y="648" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="1066.5" y="648" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="1066.5" cy="588.5" r="4.6" fill="#D2553F"><title>SWF-036.C2 O5 D10 AP H</title></circle>
+  <circle cx="1055.5" cy="566.5" r="4.6" fill="#D2553F"><title>SWF-036.C1 O7 D9 AP H</title></circle>
+  <text x="1090" y="505" font-size="10.5" fill="#0F172A" font-weight="700">SE-041</text>
+  <text x="1222" y="505" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">10 · H 9</text>
+  <text x="1090" y="519" font-size="9" fill="#475569">controlsd main loop, input…</text>
   <use href="#odg10" x="1112" y="528"/>
-  <text x="1108" y="536.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="1108" y="591.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="1108" y="635.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="1117.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="1161.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="1216.5" y="648" font-size="8" fill="#52514E" text-anchor="middle">10</text>
+  <text x="1108" y="536.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="1108" y="591.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="1108" y="635.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="1117.5" y="648" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="1161.5" y="648" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="1216.5" y="648" font-size="8" fill="#475569" text-anchor="middle">10</text>
   <path d="M1194.5 588.5L1150.5 610.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
   <circle cx="1150.5" cy="610.5" r="3.6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="2 1.4"/>
   <path d="M1205.5 577.5L1150.5 610.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
@@ -369,371 +368,371 @@
   <path d="M1205.5 577.5L1150.5 610.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
   <circle cx="1150.5" cy="610.5" r="3.6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="2 1.4"/>
   <circle cx="1150.5" cy="610.5" r="4.6" fill="#0F766E"><title>SWF-049.C1 O3 D4 AP L</title></circle>
-  <circle cx="1150.5" cy="588.5" r="4.6" fill="#D03B3B"><title>SWF-050.C1 O5 D4 AP H</title></circle>
-  <circle cx="1194.5" cy="588.5" r="5.4" fill="#D03B3B"><title>SWF-040.C1 O5 D8 AP H; SWF-043.C1 O5 D8 AP H</title></circle>
+  <circle cx="1150.5" cy="588.5" r="4.6" fill="#D2553F"><title>SWF-050.C1 O5 D4 AP H</title></circle>
+  <circle cx="1194.5" cy="588.5" r="5.4" fill="#D2553F"><title>SWF-040.C1 O5 D8 AP H; SWF-043.C1 O5 D8 AP H</title></circle>
   <text x="1194.5" y="591.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-  <circle cx="1205.5" cy="588.5" r="4.6" fill="#D03B3B"><title>SWF-086.C1 O5 D9 AP H</title></circle>
-  <circle cx="1216.5" cy="588.5" r="5.4" fill="#D03B3B"><title>SWF-043.C2 O5 D10 AP H; SWF-045.C1 O5 D10 AP H</title></circle>
+  <circle cx="1205.5" cy="588.5" r="4.6" fill="#D2553F"><title>SWF-086.C1 O5 D9 AP H</title></circle>
+  <circle cx="1216.5" cy="588.5" r="5.4" fill="#D2553F"><title>SWF-043.C2 O5 D10 AP H; SWF-045.C1 O5 D10 AP H</title></circle>
   <text x="1216.5" y="591.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-  <circle cx="1205.5" cy="577.5" r="5.4" fill="#D03B3B"><title>SWF-042.C3 O6 D9 AP H; SWF-048.C1 O6 D9 AP H</title></circle>
+  <circle cx="1205.5" cy="577.5" r="5.4" fill="#D2553F"><title>SWF-042.C3 O6 D9 AP H; SWF-048.C1 O6 D9 AP H</title></circle>
   <text x="1205.5" y="580.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-  <circle cx="1216.5" cy="577.5" r="4.6" fill="#D03B3B"><title>SWF-047.C1 O6 D10 AP H</title></circle>
-  <text x="40" y="689" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-042</text>
-  <text x="172" y="689" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">3 · H 3</text>
-  <text x="40" y="703" font-size="9" fill="#52514E">Lateral torque controller</text>
+  <circle cx="1216.5" cy="577.5" r="4.6" fill="#D2553F"><title>SWF-047.C1 O6 D10 AP H</title></circle>
+  <text x="40" y="689" font-size="10.5" fill="#0F172A" font-weight="700">SE-042</text>
+  <text x="172" y="689" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">3 · H 3</text>
+  <text x="40" y="703" font-size="9" fill="#475569">Lateral torque controller</text>
   <use href="#odg10" x="62" y="712"/>
-  <text x="58" y="720.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="58" y="775.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="58" y="819.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="67.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="111.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="166.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="155.5" cy="761.5" r="4.6" fill="#D03B3B"><title>SWF-042.C2 O6 D9 AP H</title></circle>
-  <circle cx="166.5" cy="750.5" r="5.4" fill="#D03B3B"><title>SWF-042.C1 O7 D10 AP H; SWF-044.C1 O7 D10 AP H</title></circle>
+  <text x="58" y="720.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="58" y="775.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="58" y="819.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="67.5" y="832" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="111.5" y="832" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="166.5" y="832" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="155.5" cy="761.5" r="4.6" fill="#D2553F"><title>SWF-042.C2 O6 D9 AP H</title></circle>
+  <circle cx="166.5" cy="750.5" r="5.4" fill="#D2553F"><title>SWF-042.C1 O7 D10 AP H; SWF-044.C1 O7 D10 AP H</title></circle>
   <text x="166.5" y="753.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-  <text x="190" y="689" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-043</text>
-  <text x="322" y="689" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">3 · H 3</text>
-  <text x="190" y="703" font-size="9" fill="#52514E">Longitudinal controller</text>
+  <text x="190" y="689" font-size="10.5" fill="#0F172A" font-weight="700">SE-043</text>
+  <text x="322" y="689" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">3 · H 3</text>
+  <text x="190" y="703" font-size="9" fill="#475569">Longitudinal controller</text>
   <use href="#odg10" x="212" y="712"/>
-  <text x="208" y="720.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="208" y="775.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="208" y="819.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="217.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="261.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="316.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">10</text>
+  <text x="208" y="720.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="208" y="775.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="208" y="819.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="217.5" y="832" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="261.5" y="832" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="316.5" y="832" font-size="8" fill="#475569" text-anchor="middle">10</text>
   <path d="M316.5 772.5L250.5 794.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
   <circle cx="250.5" cy="794.5" r="3.6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="2 1.4"/>
-  <circle cx="250.5" cy="772.5" r="3.6" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.4" stroke-dasharray="2 1.4"/>
-  <circle cx="250.5" cy="772.5" r="4.6" fill="#D03B3B"><title>SWF-093.C1 O5 D4 AP H</title></circle>
-  <circle cx="316.5" cy="772.5" r="4.6" fill="#D03B3B"><title>SWF-045.C2 O5 D10 AP H</title></circle>
-  <circle cx="316.5" cy="750.5" r="4.6" fill="#D03B3B"><title>SWF-046.C2 O7 D10 AP H</title></circle>
-  <text x="340" y="689" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-045</text>
-  <text x="472" y="689" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">5 · H 5</text>
-  <text x="340" y="703" font-size="9" fill="#52514E">Toyota CarController</text>
+  <circle cx="250.5" cy="772.5" r="3.6" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="2 1.4"/>
+  <circle cx="250.5" cy="772.5" r="4.6" fill="#D2553F"><title>SWF-093.C1 O5 D4 AP H</title></circle>
+  <circle cx="316.5" cy="772.5" r="4.6" fill="#D2553F"><title>SWF-045.C2 O5 D10 AP H</title></circle>
+  <circle cx="316.5" cy="750.5" r="4.6" fill="#D2553F"><title>SWF-046.C2 O7 D10 AP H</title></circle>
+  <text x="340" y="689" font-size="10.5" fill="#0F172A" font-weight="700">SE-045</text>
+  <text x="472" y="689" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">5 · H 5</text>
+  <text x="340" y="703" font-size="9" fill="#475569">Toyota CarController</text>
   <use href="#odg10" x="362" y="712"/>
-  <text x="358" y="720.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="358" y="775.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="358" y="819.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="367.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="411.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="466.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">10</text>
+  <text x="358" y="720.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="358" y="775.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="358" y="819.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="367.5" y="832" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="411.5" y="832" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="466.5" y="832" font-size="8" fill="#475569" text-anchor="middle">10</text>
   <path d="M444.5 772.5L400.5 772.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
-  <circle cx="400.5" cy="772.5" r="3.6" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.4" stroke-dasharray="2 1.4"/>
-  <circle cx="444.5" cy="772.5" r="4.6" fill="#D03B3B"><title>SWF-093.C2 O5 D8 AP H</title></circle>
-  <circle cx="466.5" cy="772.5" r="4.6" fill="#D03B3B"><title>SWF-047.C3 O5 D10 AP H</title></circle>
-  <circle cx="455.5" cy="761.5" r="5.4" fill="#D03B3B"><title>SWF-041.C1 O6 D9 AP H; SWF-046.C1 O6 D9 AP H; SWF-052.C1 O6 D9 AP H</title></circle>
+  <circle cx="400.5" cy="772.5" r="3.6" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="2 1.4"/>
+  <circle cx="444.5" cy="772.5" r="4.6" fill="#D2553F"><title>SWF-093.C2 O5 D8 AP H</title></circle>
+  <circle cx="466.5" cy="772.5" r="4.6" fill="#D2553F"><title>SWF-047.C3 O5 D10 AP H</title></circle>
+  <circle cx="455.5" cy="761.5" r="5.4" fill="#D2553F"><title>SWF-041.C1 O6 D9 AP H; SWF-046.C1 O6 D9 AP H; SWF-052.C1 O6 D9 AP H</title></circle>
   <text x="455.5" y="764.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
-  <text x="490" y="689" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-046</text>
-  <text x="622" y="689" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">1 · H 1</text>
-  <text x="490" y="703" font-size="9" fill="#52514E">card actuation hand-off</text>
+  <text x="490" y="689" font-size="10.5" fill="#0F172A" font-weight="700">SE-046</text>
+  <text x="622" y="689" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">1 · H 1</text>
+  <text x="490" y="703" font-size="9" fill="#475569">card actuation hand-off</text>
   <use href="#odg10" x="512" y="712"/>
-  <text x="508" y="720.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="508" y="775.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="508" y="819.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="517.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="561.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="616.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="594.5" cy="761.5" r="4.6" fill="#D03B3B"><title>SWF-047.C2 O6 D8 AP H</title></circle>
-  <text x="640" y="689" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-051</text>
-  <text x="772" y="689" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">5 · H 5</text>
-  <text x="640" y="703" font-size="9" fill="#52514E">CAN parser and Toyota…</text>
+  <text x="508" y="720.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="508" y="775.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="508" y="819.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="517.5" y="832" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="561.5" y="832" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="616.5" y="832" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="594.5" cy="761.5" r="4.6" fill="#D2553F"><title>SWF-047.C2 O6 D8 AP H</title></circle>
+  <text x="640" y="689" font-size="10.5" fill="#0F172A" font-weight="700">SE-051</text>
+  <text x="772" y="689" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">5 · H 5</text>
+  <text x="640" y="703" font-size="9" fill="#475569">CAN parser and Toyota…</text>
   <use href="#odg10" x="662" y="712"/>
-  <text x="658" y="720.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="658" y="775.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="658" y="819.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="667.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="711.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="766.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="755.5" cy="794.5" r="4.6" fill="#D03B3B"><title>SWF-056.C2 O3 D9 AP H</title></circle>
-  <circle cx="766.5" cy="794.5" r="5.4" fill="#D03B3B"><title>SWF-056.C1 O3 D10 AP H; SWF-057.C2 O3 D10 AP H</title></circle>
+  <text x="658" y="720.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="658" y="775.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="658" y="819.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="667.5" y="832" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="711.5" y="832" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="766.5" y="832" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="755.5" cy="794.5" r="4.6" fill="#D2553F"><title>SWF-056.C2 O3 D9 AP H</title></circle>
+  <circle cx="766.5" cy="794.5" r="5.4" fill="#D2553F"><title>SWF-056.C1 O3 D10 AP H; SWF-057.C2 O3 D10 AP H</title></circle>
   <text x="766.5" y="797.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-  <circle cx="755.5" cy="761.5" r="5.4" fill="#D03B3B"><title>SWF-056.C3 O6 D9 AP H; SWF-057.C1 O6 D9 AP H</title></circle>
+  <circle cx="755.5" cy="761.5" r="5.4" fill="#D2553F"><title>SWF-056.C3 O6 D9 AP H; SWF-057.C1 O6 D9 AP H</title></circle>
   <text x="755.5" y="764.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-  <text x="790" y="689" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-052</text>
-  <text x="922" y="689" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">2 · H 2</text>
-  <text x="790" y="703" font-size="9" fill="#52514E">Fingerprinting and CarParams</text>
+  <text x="790" y="689" font-size="10.5" fill="#0F172A" font-weight="700">SE-052</text>
+  <text x="922" y="689" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">2 · H 2</text>
+  <text x="790" y="703" font-size="9" fill="#475569">Fingerprinting and CarParams</text>
   <use href="#odg10" x="812" y="712"/>
-  <text x="808" y="720.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="808" y="775.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="808" y="819.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="817.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="861.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="916.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="916.5" cy="805.5" r="4.6" fill="#D03B3B"><title>SWF-058.C2 O2 D10 AP H</title></circle>
-  <circle cx="905.5" cy="783.5" r="4.6" fill="#D03B3B"><title>SWF-058.C1 O4 D9 AP H</title></circle>
-  <text x="940" y="689" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-053</text>
-  <text x="1072" y="689" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">1 · H 1</text>
-  <text x="940" y="703" font-size="9" fill="#52514E">CAN packer and Toyota…</text>
+  <text x="808" y="720.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="808" y="775.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="808" y="819.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="817.5" y="832" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="861.5" y="832" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="916.5" y="832" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="916.5" cy="805.5" r="4.6" fill="#D2553F"><title>SWF-058.C2 O2 D10 AP H</title></circle>
+  <circle cx="905.5" cy="783.5" r="4.6" fill="#D2553F"><title>SWF-058.C1 O4 D9 AP H</title></circle>
+  <text x="940" y="689" font-size="10.5" fill="#0F172A" font-weight="700">SE-053</text>
+  <text x="1072" y="689" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">1 · H 1</text>
+  <text x="940" y="703" font-size="9" fill="#475569">CAN packer and Toyota…</text>
   <use href="#odg10" x="962" y="712"/>
-  <text x="958" y="720.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="958" y="775.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="958" y="819.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="967.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="1011.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="1066.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="1055.5" cy="783.5" r="4.6" fill="#D03B3B"><title>SWF-059.C1 O4 D9 AP H</title></circle>
-  <text x="1090" y="689" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-054</text>
-  <text x="1222" y="689" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">4 · H 4</text>
-  <text x="1090" y="703" font-size="9" fill="#52514E">card main loop and stock AE…</text>
+  <text x="958" y="720.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="958" y="775.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="958" y="819.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="967.5" y="832" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="1011.5" y="832" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="1066.5" y="832" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="1055.5" cy="783.5" r="4.6" fill="#D2553F"><title>SWF-059.C1 O4 D9 AP H</title></circle>
+  <text x="1090" y="689" font-size="10.5" fill="#0F172A" font-weight="700">SE-054</text>
+  <text x="1222" y="689" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">4 · H 4</text>
+  <text x="1090" y="703" font-size="9" fill="#475569">card main loop and stock AE…</text>
   <use href="#odg10" x="1112" y="712"/>
-  <text x="1108" y="720.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="1108" y="775.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="1108" y="819.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="1117.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="1161.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="1216.5" y="832" font-size="8" fill="#52514E" text-anchor="middle">10</text>
+  <text x="1108" y="720.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="1108" y="775.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="1108" y="819.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="1117.5" y="832" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="1161.5" y="832" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="1216.5" y="832" font-size="8" fill="#475569" text-anchor="middle">10</text>
   <path d="M1150.5 772.5L1194.5 772.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
-  <circle cx="1194.5" cy="772.5" r="3.6" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.4" stroke-dasharray="2 1.4"/>
+  <circle cx="1194.5" cy="772.5" r="3.6" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="2 1.4"/>
   <path d="M1150.5 772.5L1194.5 772.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
-  <circle cx="1194.5" cy="772.5" r="3.6" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.4" stroke-dasharray="2 1.4"/>
-  <circle cx="1150.5" cy="772.5" r="3.6" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.4" stroke-dasharray="2 1.4"/>
-  <circle cx="1150.5" cy="772.5" r="5.4" fill="#D03B3B"><title>SWF-088.C1 O5 D4 AP H; SWF-088.C2 O5 D4 AP H; SWF-091.C1 O5 D4 AP H</title></circle>
+  <circle cx="1194.5" cy="772.5" r="3.6" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="2 1.4"/>
+  <circle cx="1150.5" cy="772.5" r="3.6" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="2 1.4"/>
+  <circle cx="1150.5" cy="772.5" r="5.4" fill="#D2553F"><title>SWF-088.C1 O5 D4 AP H; SWF-088.C2 O5 D4 AP H; SWF-091.C1 O5 D4 AP H</title></circle>
   <text x="1150.5" y="775.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
-  <circle cx="1205.5" cy="772.5" r="4.6" fill="#D03B3B"><title>SWF-060.C1 O5 D9 AP H</title></circle>
-  <text x="40" y="873" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-060</text>
-  <text x="172" y="873" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">1 · H 1 · S8</text>
-  <text x="40" y="887" font-size="9" fill="#52514E">Driver monitoring…</text>
+  <circle cx="1205.5" cy="772.5" r="4.6" fill="#D2553F"><title>SWF-060.C1 O5 D9 AP H</title></circle>
+  <text x="40" y="873" font-size="10.5" fill="#0F172A" font-weight="700">SE-060</text>
+  <text x="172" y="873" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">1 · H 1 · S8</text>
+  <text x="40" y="887" font-size="9" fill="#475569">Driver monitoring…</text>
   <use href="#odg8" x="62" y="896"/>
-  <text x="58" y="904.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="58" y="959.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="58" y="1003.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="67.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="111.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="166.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="155.5" cy="956.5" r="4.6" fill="#D03B3B"><title>SWF-064.C1 O5 D9 AP H</title></circle>
-  <text x="190" y="873" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-061</text>
-  <text x="322" y="873" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">1 · H 1</text>
-  <text x="190" y="887" font-size="9" fill="#52514E">Driver-monitoring model…</text>
+  <text x="58" y="904.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="58" y="959.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="58" y="1003.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="67.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="111.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="166.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="155.5" cy="956.5" r="4.6" fill="#D2553F"><title>SWF-064.C1 O5 D9 AP H</title></circle>
+  <text x="190" y="873" font-size="10.5" fill="#0F172A" font-weight="700">SE-061</text>
+  <text x="322" y="873" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">1 · H 1</text>
+  <text x="190" y="887" font-size="9" fill="#475569">Driver-monitoring model…</text>
   <use href="#odg10" x="212" y="896"/>
-  <text x="208" y="904.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="208" y="959.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="208" y="1003.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="217.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="261.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="316.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="316.5" cy="967.5" r="4.6" fill="#D03B3B"><title>SWF-063.C1 O4 D10 AP H</title></circle>
-  <text x="340" y="873" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-062</text>
-  <text x="472" y="873" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">8 · H 8</text>
-  <text x="340" y="887" font-size="9" fill="#52514E">Monitoring policy and…</text>
+  <text x="208" y="904.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="208" y="959.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="208" y="1003.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="217.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="261.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="316.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="316.5" cy="967.5" r="4.6" fill="#D2553F"><title>SWF-063.C1 O4 D10 AP H</title></circle>
+  <text x="340" y="873" font-size="10.5" fill="#0F172A" font-weight="700">SE-062</text>
+  <text x="472" y="873" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">8 · H 8</text>
+  <text x="340" y="887" font-size="9" fill="#475569">Monitoring policy and…</text>
   <use href="#odg10" x="362" y="896"/>
-  <text x="358" y="904.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="358" y="959.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="358" y="1003.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="367.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="411.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="466.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="466.5" cy="967.5" r="4.6" fill="#D03B3B"><title>SWF-063.C2 O4 D10 AP H</title></circle>
-  <circle cx="400.5" cy="956.5" r="5.4" fill="#D03B3B"><title>SWF-061.C1 O5 D4 AP H; SWF-061.C4 O5 D4 AP H; SWF-062.C1 O5 D4 AP H</title></circle>
+  <text x="358" y="904.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="358" y="959.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="358" y="1003.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="367.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="411.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="466.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="466.5" cy="967.5" r="4.6" fill="#D2553F"><title>SWF-063.C2 O4 D10 AP H</title></circle>
+  <circle cx="400.5" cy="956.5" r="5.4" fill="#D2553F"><title>SWF-061.C1 O5 D4 AP H; SWF-061.C4 O5 D4 AP H; SWF-062.C1 O5 D4 AP H</title></circle>
   <text x="400.5" y="959.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
-  <circle cx="466.5" cy="956.5" r="4.6" fill="#D03B3B"><title>SWF-085.C1 O5 D10 AP H</title></circle>
-  <circle cx="444.5" cy="945.5" r="4.6" fill="#D03B3B"><title>SWF-061.C2 O6 D8 AP H</title></circle>
-  <circle cx="455.5" cy="945.5" r="4.6" fill="#D03B3B"><title>SWF-061.C3 O6 D9 AP H</title></circle>
-  <circle cx="466.5" cy="923.5" r="4.6" fill="#D03B3B"><title>SWF-085.C2 O8 D10 AP H</title></circle>
-  <text x="490" y="873" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-070</text>
-  <text x="622" y="873" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">2 · H 2</text>
-  <text x="490" y="887" font-size="9" fill="#52514E">Longitudinal planning…</text>
+  <circle cx="466.5" cy="956.5" r="4.6" fill="#D2553F"><title>SWF-085.C1 O5 D10 AP H</title></circle>
+  <circle cx="444.5" cy="945.5" r="4.6" fill="#D2553F"><title>SWF-061.C2 O6 D8 AP H</title></circle>
+  <circle cx="455.5" cy="945.5" r="4.6" fill="#D2553F"><title>SWF-061.C3 O6 D9 AP H</title></circle>
+  <circle cx="466.5" cy="923.5" r="4.6" fill="#D2553F"><title>SWF-085.C2 O8 D10 AP H</title></circle>
+  <text x="490" y="873" font-size="10.5" fill="#0F172A" font-weight="700">SE-070</text>
+  <text x="622" y="873" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">2 · H 2</text>
+  <text x="490" y="887" font-size="9" fill="#475569">Longitudinal planning…</text>
   <use href="#odg10" x="512" y="896"/>
-  <text x="508" y="904.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="508" y="959.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="508" y="1003.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="517.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="561.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="616.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="605.5" cy="967.5" r="4.6" fill="#D03B3B"><title>SWF-068.C1 O4 D9 AP H</title></circle>
-  <circle cx="616.5" cy="967.5" r="4.6" fill="#D03B3B"><title>SWF-068.C2 O4 D10 AP H</title></circle>
-  <text x="640" y="873" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-071</text>
-  <text x="772" y="873" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">7 · H 7</text>
-  <text x="640" y="887" font-size="9" fill="#52514E">Longitudinal planner and MPC</text>
+  <text x="508" y="904.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="508" y="959.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="508" y="1003.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="517.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="561.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="616.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="605.5" cy="967.5" r="4.6" fill="#D2553F"><title>SWF-068.C1 O4 D9 AP H</title></circle>
+  <circle cx="616.5" cy="967.5" r="4.6" fill="#D2553F"><title>SWF-068.C2 O4 D10 AP H</title></circle>
+  <text x="640" y="873" font-size="10.5" fill="#0F172A" font-weight="700">SE-071</text>
+  <text x="772" y="873" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">7 · H 7</text>
+  <text x="640" y="887" font-size="9" fill="#475569">Longitudinal planner and MPC</text>
   <use href="#odg10" x="662" y="896"/>
-  <text x="658" y="904.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="658" y="959.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="658" y="1003.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="667.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="711.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="766.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">10</text>
+  <text x="658" y="904.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="658" y="959.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="658" y="1003.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="667.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="711.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="766.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">10</text>
   <path d="M755.5 934.5L700.5 978.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
   <circle cx="700.5" cy="978.5" r="3.6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="2 1.4"/>
   <path d="M700.5 956.5L744.5 956.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
-  <circle cx="744.5" cy="956.5" r="3.6" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.4" stroke-dasharray="2 1.4"/>
+  <circle cx="744.5" cy="956.5" r="3.6" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="2 1.4"/>
   <path d="M700.5 956.5L744.5 956.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
-  <circle cx="744.5" cy="956.5" r="3.6" fill="#FFFFFF" stroke="#D03B3B" stroke-width="1.4" stroke-dasharray="2 1.4"/>
-  <circle cx="766.5" cy="967.5" r="4.6" fill="#D03B3B"><title>SWF-065.C3 O4 D10 AP H</title></circle>
-  <circle cx="700.5" cy="956.5" r="5.4" fill="#D03B3B"><title>SWF-067.C1 O5 D4 AP H; SWF-067.C2 O5 D4 AP H</title></circle>
+  <circle cx="744.5" cy="956.5" r="3.6" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="2 1.4"/>
+  <circle cx="766.5" cy="967.5" r="4.6" fill="#D2553F"><title>SWF-065.C3 O4 D10 AP H</title></circle>
+  <circle cx="700.5" cy="956.5" r="5.4" fill="#D2553F"><title>SWF-067.C1 O5 D4 AP H; SWF-067.C2 O5 D4 AP H</title></circle>
   <text x="700.5" y="959.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-  <circle cx="755.5" cy="956.5" r="4.6" fill="#D03B3B"><title>SWF-065.C2 O5 D9 AP H</title></circle>
-  <circle cx="755.5" cy="934.5" r="5.4" fill="#D03B3B"><title>SWF-065.C1 O7 D9 AP H; SWF-066.C1 O7 D9 AP H</title></circle>
+  <circle cx="755.5" cy="956.5" r="4.6" fill="#D2553F"><title>SWF-065.C2 O5 D9 AP H</title></circle>
+  <circle cx="755.5" cy="934.5" r="5.4" fill="#D2553F"><title>SWF-065.C1 O7 D9 AP H; SWF-066.C1 O7 D9 AP H</title></circle>
   <text x="755.5" y="937.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-  <circle cx="744.5" cy="923.5" r="4.6" fill="#D03B3B"><title>SWF-086.C2 O8 D8 AP H</title></circle>
-  <text x="790" y="873" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-072</text>
-  <text x="922" y="873" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">1 · H 1</text>
-  <text x="790" y="887" font-size="9" fill="#52514E">Forward collision warning…</text>
+  <circle cx="744.5" cy="923.5" r="4.6" fill="#D2553F"><title>SWF-086.C2 O8 D8 AP H</title></circle>
+  <text x="790" y="873" font-size="10.5" fill="#0F172A" font-weight="700">SE-072</text>
+  <text x="922" y="873" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">1 · H 1</text>
+  <text x="790" y="887" font-size="9" fill="#475569">Forward collision warning…</text>
   <use href="#odg10" x="812" y="896"/>
-  <text x="808" y="904.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="808" y="959.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="808" y="1003.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="817.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="861.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="916.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="894.5" cy="945.5" r="4.6" fill="#D03B3B"><title>SWF-069.C1 O6 D8 AP H</title></circle>
-  <text x="940" y="873" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-081</text>
-  <text x="1072" y="873" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">5 · H 5</text>
-  <text x="940" y="887" font-size="9" fill="#52514E">Lead selection and…</text>
+  <text x="808" y="904.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="808" y="959.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="808" y="1003.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="817.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="861.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="916.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="894.5" cy="945.5" r="4.6" fill="#D2553F"><title>SWF-069.C1 O6 D8 AP H</title></circle>
+  <text x="940" y="873" font-size="10.5" fill="#0F172A" font-weight="700">SE-081</text>
+  <text x="1072" y="873" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">5 · H 5</text>
+  <text x="940" y="887" font-size="9" fill="#475569">Lead selection and…</text>
   <use href="#odg10" x="962" y="896"/>
-  <text x="958" y="904.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="958" y="959.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="958" y="1003.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="967.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="1011.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="1066.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="1055.5" cy="967.5" r="4.6" fill="#D03B3B"><title>SWF-070.C3 O4 D9 AP H</title></circle>
-  <circle cx="1044.5" cy="956.5" r="4.6" fill="#D03B3B"><title>SWF-070.C2 O5 D8 AP H</title></circle>
-  <circle cx="1055.5" cy="945.5" r="5.4" fill="#D03B3B"><title>SWF-071.C1 O6 D9 AP H; SWF-071.C2 O6 D9 AP H</title></circle>
+  <text x="958" y="904.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="958" y="959.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="958" y="1003.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="967.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="1011.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="1066.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="1055.5" cy="967.5" r="4.6" fill="#D2553F"><title>SWF-070.C3 O4 D9 AP H</title></circle>
+  <circle cx="1044.5" cy="956.5" r="4.6" fill="#D2553F"><title>SWF-070.C2 O5 D8 AP H</title></circle>
+  <circle cx="1055.5" cy="945.5" r="5.4" fill="#D2553F"><title>SWF-071.C1 O6 D9 AP H; SWF-071.C2 O6 D9 AP H</title></circle>
   <text x="1055.5" y="948.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-  <circle cx="1044.5" cy="934.5" r="4.6" fill="#D03B3B"><title>SWF-070.C1 O7 D8 AP H</title></circle>
-  <text x="1090" y="873" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-090</text>
-  <text x="1222" y="873" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">2 · H 2</text>
-  <text x="1090" y="887" font-size="9" fill="#52514E">Driving model process…</text>
+  <circle cx="1044.5" cy="934.5" r="4.6" fill="#D2553F"><title>SWF-070.C1 O7 D8 AP H</title></circle>
+  <text x="1090" y="873" font-size="10.5" fill="#0F172A" font-weight="700">SE-090</text>
+  <text x="1222" y="873" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">2 · H 2</text>
+  <text x="1090" y="887" font-size="9" fill="#475569">Driving model process…</text>
   <use href="#odg10" x="1112" y="896"/>
-  <text x="1108" y="904.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="1108" y="959.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="1108" y="1003.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="1117.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="1161.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="1216.5" y="1016" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="1216.5" cy="978.5" r="4.6" fill="#D03B3B"><title>SWF-074.C1 O3 D10 AP H</title></circle>
-  <circle cx="1216.5" cy="967.5" r="4.6" fill="#D03B3B"><title>SWF-073.C1 O4 D10 AP H</title></circle>
-  <text x="40" y="1057" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-091</text>
-  <text x="172" y="1057" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">3 · H 3</text>
-  <text x="40" y="1071" font-size="9" fill="#52514E">Model execution, output…</text>
+  <text x="1108" y="904.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="1108" y="959.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="1108" y="1003.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="1117.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="1161.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="1216.5" y="1016" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="1216.5" cy="978.5" r="4.6" fill="#D2553F"><title>SWF-074.C1 O3 D10 AP H</title></circle>
+  <circle cx="1216.5" cy="967.5" r="4.6" fill="#D2553F"><title>SWF-073.C1 O4 D10 AP H</title></circle>
+  <text x="40" y="1057" font-size="10.5" fill="#0F172A" font-weight="700">SE-091</text>
+  <text x="172" y="1057" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">3 · H 3</text>
+  <text x="40" y="1071" font-size="9" fill="#475569">Model execution, output…</text>
   <use href="#odg10" x="62" y="1080"/>
-  <text x="58" y="1088.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="58" y="1143.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="58" y="1187.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="67.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="111.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="166.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="166.5" cy="1151.5" r="5.4" fill="#D03B3B"><title>SWF-072.C1 O4 D10 AP H; SWF-072.C2 O4 D10 AP H</title></circle>
+  <text x="58" y="1088.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="58" y="1143.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="58" y="1187.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="67.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="111.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="166.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="166.5" cy="1151.5" r="5.4" fill="#D2553F"><title>SWF-072.C1 O4 D10 AP H; SWF-072.C2 O4 D10 AP H</title></circle>
   <text x="166.5" y="1154.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-  <circle cx="166.5" cy="1140.5" r="4.6" fill="#D03B3B"><title>SWF-072.C3 O5 D10 AP H</title></circle>
-  <text x="190" y="1057" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-101</text>
-  <text x="322" y="1057" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">1 · H 1</text>
-  <text x="190" y="1071" font-size="9" fill="#52514E">locationd pose filter</text>
+  <circle cx="166.5" cy="1140.5" r="4.6" fill="#D2553F"><title>SWF-072.C3 O5 D10 AP H</title></circle>
+  <text x="190" y="1057" font-size="10.5" fill="#0F172A" font-weight="700">SE-101</text>
+  <text x="322" y="1057" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">1 · H 1</text>
+  <text x="190" y="1071" font-size="9" fill="#475569">locationd pose filter</text>
   <use href="#odg10" x="212" y="1080"/>
-  <text x="208" y="1088.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="208" y="1143.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="208" y="1187.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="217.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="261.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="316.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="305.5" cy="1129.5" r="4.6" fill="#D03B3B"><title>SWF-077.C1 O6 D9 AP H</title></circle>
-  <text x="340" y="1057" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-102</text>
-  <text x="472" y="1057" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">1 · H 1</text>
-  <text x="340" y="1071" font-size="9" fill="#52514E">Camera calibration…</text>
+  <text x="208" y="1088.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="208" y="1143.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="208" y="1187.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="217.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="261.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="316.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="305.5" cy="1129.5" r="4.6" fill="#D2553F"><title>SWF-077.C1 O6 D9 AP H</title></circle>
+  <text x="340" y="1057" font-size="10.5" fill="#0F172A" font-weight="700">SE-102</text>
+  <text x="472" y="1057" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">1 · H 1</text>
+  <text x="340" y="1071" font-size="9" fill="#475569">Camera calibration…</text>
   <use href="#odg10" x="362" y="1080"/>
-  <text x="358" y="1088.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="358" y="1143.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="358" y="1187.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="367.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="411.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="466.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="444.5" cy="1140.5" r="4.6" fill="#D03B3B"><title>SWF-075.C1 O5 D8 AP H</title></circle>
-  <text x="490" y="1057" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-103</text>
-  <text x="622" y="1057" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">1 · H 1</text>
-  <text x="490" y="1071" font-size="9" fill="#52514E">Online vehicle parameters…</text>
+  <text x="358" y="1088.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="358" y="1143.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="358" y="1187.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="367.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="411.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="466.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="444.5" cy="1140.5" r="4.6" fill="#D2553F"><title>SWF-075.C1 O5 D8 AP H</title></circle>
+  <text x="490" y="1057" font-size="10.5" fill="#0F172A" font-weight="700">SE-103</text>
+  <text x="622" y="1057" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">1 · H 1</text>
+  <text x="490" y="1071" font-size="9" fill="#475569">Online vehicle parameters…</text>
   <use href="#odg10" x="512" y="1080"/>
-  <text x="508" y="1088.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="508" y="1143.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="508" y="1187.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="517.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="561.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="616.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="605.5" cy="1140.5" r="4.6" fill="#D03B3B"><title>SWF-076.C1 O5 D9 AP H</title></circle>
-  <text x="640" y="1057" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-110</text>
-  <text x="772" y="1057" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">3 · H 3</text>
-  <text x="640" y="1071" font-size="9" fill="#52514E">Camera acquisition (camerad)</text>
+  <text x="508" y="1088.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="508" y="1143.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="508" y="1187.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="517.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="561.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="616.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="605.5" cy="1140.5" r="4.6" fill="#D2553F"><title>SWF-076.C1 O5 D9 AP H</title></circle>
+  <text x="640" y="1057" font-size="10.5" fill="#0F172A" font-weight="700">SE-110</text>
+  <text x="772" y="1057" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">3 · H 3</text>
+  <text x="640" y="1071" font-size="9" fill="#475569">Camera acquisition (camerad)</text>
   <use href="#odg10" x="662" y="1080"/>
-  <text x="658" y="1088.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="658" y="1143.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="658" y="1187.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="667.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="711.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="766.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="766.5" cy="1162.5" r="5.4" fill="#D03B3B"><title>SWF-078.C2 O3 D10 AP H; SWF-078.C3 O3 D10 AP H</title></circle>
+  <text x="658" y="1088.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="658" y="1143.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="658" y="1187.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="667.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="711.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="766.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="766.5" cy="1162.5" r="5.4" fill="#D2553F"><title>SWF-078.C2 O3 D10 AP H; SWF-078.C3 O3 D10 AP H</title></circle>
   <text x="766.5" y="1165.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-  <circle cx="766.5" cy="1140.5" r="4.6" fill="#D03B3B"><title>SWF-078.C1 O5 D10 AP H</title></circle>
-  <text x="790" y="1057" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-120</text>
-  <text x="922" y="1057" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">1 · H 1</text>
-  <text x="790" y="1071" font-size="9" fill="#52514E">IMU acquisition (sensord)</text>
+  <circle cx="766.5" cy="1140.5" r="4.6" fill="#D2553F"><title>SWF-078.C1 O5 D10 AP H</title></circle>
+  <text x="790" y="1057" font-size="10.5" fill="#0F172A" font-weight="700">SE-120</text>
+  <text x="922" y="1057" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">1 · H 1</text>
+  <text x="790" y="1071" font-size="9" fill="#475569">IMU acquisition (sensord)</text>
   <use href="#odg10" x="812" y="1080"/>
-  <text x="808" y="1088.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="808" y="1143.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="808" y="1187.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="817.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="861.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="916.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="916.5" cy="1151.5" r="4.6" fill="#D03B3B"><title>SWF-079.C1 O4 D10 AP H</title></circle>
-  <text x="940" y="1057" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-131</text>
-  <text x="1072" y="1057" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">1 · H 1</text>
-  <text x="940" y="1071" font-size="9" fill="#52514E">SubMaster liveness and…</text>
+  <text x="808" y="1088.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="808" y="1143.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="808" y="1187.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="817.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="861.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="916.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="916.5" cy="1151.5" r="4.6" fill="#D2553F"><title>SWF-079.C1 O4 D10 AP H</title></circle>
+  <text x="940" y="1057" font-size="10.5" fill="#0F172A" font-weight="700">SE-131</text>
+  <text x="1072" y="1057" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">1 · H 1</text>
+  <text x="940" y="1071" font-size="9" fill="#475569">SubMaster liveness and…</text>
   <use href="#odg10" x="962" y="1080"/>
-  <text x="958" y="1088.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="958" y="1143.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="958" y="1187.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="967.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="1011.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="1066.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">10</text>
+  <text x="958" y="1088.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="958" y="1143.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="958" y="1187.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="967.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="1011.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="1066.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">10</text>
   <path d="M1044.5 1118.5L1000.5 1162.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2.5 2"/>
   <circle cx="1000.5" cy="1162.5" r="3.6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="2 1.4"/>
-  <circle cx="1044.5" cy="1118.5" r="4.6" fill="#D03B3B"><title>SWF-081.C1 O7 D8 AP H</title></circle>
-  <text x="1090" y="1057" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-132</text>
-  <text x="1222" y="1057" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">2 · H 2</text>
-  <text x="1090" y="1071" font-size="9" fill="#52514E">msgq ring buffer</text>
+  <circle cx="1044.5" cy="1118.5" r="4.6" fill="#D2553F"><title>SWF-081.C1 O7 D8 AP H</title></circle>
+  <text x="1090" y="1057" font-size="10.5" fill="#0F172A" font-weight="700">SE-132</text>
+  <text x="1222" y="1057" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">2 · H 2</text>
+  <text x="1090" y="1071" font-size="9" fill="#475569">msgq ring buffer</text>
   <use href="#odg10" x="1112" y="1080"/>
-  <text x="1108" y="1088.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="1108" y="1143.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="1108" y="1187.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="1117.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="1161.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="1216.5" y="1200" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="1216.5" cy="1162.5" r="5.4" fill="#D03B3B"><title>SWF-080.C1 O3 D10 AP H; SWF-080.C2 O3 D10 AP H</title></circle>
+  <text x="1108" y="1088.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="1108" y="1143.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="1108" y="1187.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="1117.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="1161.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="1216.5" y="1200" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="1216.5" cy="1162.5" r="5.4" fill="#D2553F"><title>SWF-080.C1 O3 D10 AP H; SWF-080.C2 O3 D10 AP H</title></circle>
   <text x="1216.5" y="1165.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-  <text x="40" y="1241" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-140</text>
-  <text x="172" y="1241" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">2 · H 2</text>
-  <text x="40" y="1255" font-size="9" fill="#52514E">Process manager (manager)</text>
+  <text x="40" y="1241" font-size="10.5" fill="#0F172A" font-weight="700">SE-140</text>
+  <text x="172" y="1241" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">2 · H 2</text>
+  <text x="40" y="1255" font-size="9" fill="#475569">Process manager (manager)</text>
   <use href="#odg10" x="62" y="1264"/>
-  <text x="58" y="1272.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="58" y="1327.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="58" y="1371.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="67.5" y="1384" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="111.5" y="1384" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="166.5" y="1384" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="155.5" cy="1357.5" r="4.6" fill="#D03B3B"><title>SWF-082.C1 O2 D9 AP H</title></circle>
-  <circle cx="155.5" cy="1291.5" r="4.6" fill="#D03B3B"><title>SWF-083.C1 O8 D9 AP H</title></circle>
-  <text x="190" y="1241" font-size="10.5" fill="#0B0B0B" font-weight="700">SE-150</text>
-  <text x="322" y="1241" font-size="9.5" fill="#D03B3B" font-weight="700" text-anchor="end">1 · H 1</text>
-  <text x="190" y="1255" font-size="9" fill="#52514E">Software update (updated)</text>
+  <text x="58" y="1272.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="58" y="1327.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="58" y="1371.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="67.5" y="1384" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="111.5" y="1384" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="166.5" y="1384" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="155.5" cy="1357.5" r="4.6" fill="#D2553F"><title>SWF-082.C1 O2 D9 AP H</title></circle>
+  <circle cx="155.5" cy="1291.5" r="4.6" fill="#D2553F"><title>SWF-083.C1 O8 D9 AP H</title></circle>
+  <text x="190" y="1241" font-size="10.5" fill="#0F172A" font-weight="700">SE-150</text>
+  <text x="322" y="1241" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">1 · H 1</text>
+  <text x="190" y="1255" font-size="9" fill="#475569">Software update (updated)</text>
   <use href="#odg10" x="212" y="1264"/>
-  <text x="208" y="1272.5" font-size="8" fill="#52514E" text-anchor="end">10</text>
-  <text x="208" y="1327.5" font-size="8" fill="#52514E" text-anchor="end">5</text>
-  <text x="208" y="1371.5" font-size="8" fill="#52514E" text-anchor="end">1</text>
-  <text x="217.5" y="1384" font-size="8" fill="#52514E" text-anchor="middle">1</text>
-  <text x="261.5" y="1384" font-size="8" fill="#52514E" text-anchor="middle">5</text>
-  <text x="316.5" y="1384" font-size="8" fill="#52514E" text-anchor="middle">10</text>
-  <circle cx="316.5" cy="1335.5" r="4.6" fill="#D03B3B"><title>SWF-084.C1 O4 D10 AP H</title></circle>
-  <line x1="40" y1="1420" x2="1240" y2="1420" stroke="#E1E0D9" stroke-width="1"/>
+  <text x="208" y="1272.5" font-size="8" fill="#475569" text-anchor="end">10</text>
+  <text x="208" y="1327.5" font-size="8" fill="#475569" text-anchor="end">5</text>
+  <text x="208" y="1371.5" font-size="8" fill="#475569" text-anchor="end">1</text>
+  <text x="217.5" y="1384" font-size="8" fill="#475569" text-anchor="middle">1</text>
+  <text x="261.5" y="1384" font-size="8" fill="#475569" text-anchor="middle">5</text>
+  <text x="316.5" y="1384" font-size="8" fill="#475569" text-anchor="middle">10</text>
+  <circle cx="316.5" cy="1335.5" r="4.6" fill="#D2553F"><title>SWF-084.C1 O4 D10 AP H</title></circle>
+  <line x1="40" y1="1420" x2="1240" y2="1420" stroke="#E2E8F0" stroke-width="1"/>
   <rect x="40" y="1431" width="14" height="14" fill="#FBE4DF"/>
-  <circle cx="66" cy="1438" r="5" fill="#D03B3B"/>
-  <text x="78" y="1442" font-size="10.5" fill="#0B0B0B">AP H region / cause rated H</text>
+  <circle cx="66" cy="1438" r="5" fill="#D2553F"/>
+  <text x="78" y="1442" font-size="10.5" fill="#0F172A">AP H region / cause rated H</text>
   <rect x="240.8" y="1431" width="14" height="14" fill="#FDEFD8"/>
   <circle cx="266.8" cy="1438" r="5" fill="#D97706"/>
-  <text x="278.8" y="1442" font-size="10.5" fill="#0B0B0B">AP M region / cause rated M</text>
+  <text x="278.8" y="1442" font-size="10.5" fill="#0F172A">AP M region / cause rated M</text>
   <rect x="446.6" y="1431" width="14" height="14" fill="#DDF0EC"/>
   <circle cx="472.6" cy="1438" r="5" fill="#0F766E"/>
-  <text x="484.6" y="1442" font-size="10.5" fill="#0B0B0B">AP L region / cause rated L</text>
+  <text x="484.6" y="1442" font-size="10.5" fill="#0F172A">AP L region / cause rated L</text>
   <circle cx="653.5" cy="1438" r="3.6" fill="#FFFFFF" stroke="#D97706" stroke-width="1.4" stroke-dasharray="2 1.4"/>
   <path d="M663.5 1438H681.5" stroke="#475569" stroke-dasharray="2.5 2"/>
-  <text x="687.5" y="1442" font-size="10.5" fill="#0B0B0B">predicted by an action's `revised` rating (not achieved, not verified)</text>
-  <text x="40" y="1460" font-size="10" fill="#52514E">Rows: occurrence O 10 (top) to 1; columns: detection D 1 to 10. Background = AP from the AIAG-VDA table (rating-tables §5) at the element's highest severity; a number in a marker counts causes at that O and D; the tag gives causes · AP H.</text>
-  <text x="40" y="1475" font-size="10" fill="#52514E">A cause far right (D 9–10) is high because no targeted test detects it; far up, because the code is likely to be wrong. AP values are those stored in the YAML (fmea_lint checks them against the table).</text>
-  <text x="40" y="1493" font-size="9.5" fill="#898781">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+  <text x="687.5" y="1442" font-size="10.5" fill="#0F172A">predicted by an action's `revised` rating (not achieved, not verified)</text>
+  <text x="40" y="1460" font-size="10" fill="#475569">Rows: occurrence O 10 (top) to 1; columns: detection D 1 to 10. Background = AP from the AIAG-VDA table (rating-tables §5) at the element's highest severity; a number in a marker counts causes at that O and D; the tag gives causes · AP H.</text>
+  <text x="40" y="1475" font-size="10" fill="#475569">A cause far right (D 9–10) is high because no targeted test detects it; far up, because the code is likely to be wrong. AP values are those stored in the YAML (fmea_lint checks them against the table).</text>
+  <text x="40" y="1493" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>

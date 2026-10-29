@@ -1,0 +1,231 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1638" viewBox="0 0 1280 1638" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 3-2. System FMEA failure chains — sheet 7 of 8 (SFM)</title>
+  <desc id="d">System FMEA failure chains, sheet 7 of 8 (SFM rev 0.37): failure modes SFM-029 to SFM-031 (3 failure modes, 14 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <defs>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
+    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1.2" cy="1.2" r="1.2" fill="#E7E6E0"/></pattern>
+    <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
+  </defs>
+  <rect width="1280" height="1638" fill="#FCFCFB"/>
+  <text x="40" y="44" font-size="20" fill="#0B0B0B" font-weight="700">Figure 3-2 · System FMEA failure chains — sheet 7 of 8</text>
+  <text x="40" y="66" font-size="12.5" fill="#52514E">SFM rev 0.37 · BL-007 · draft · SFM-029 … SFM-031 · 14 causes on this sheet</text>
+  <text x="1240" y="44" font-size="11" fill="#52514E" text-anchor="end">fmea-plan.md §3.1</text>
+  <text x="1240" y="62" font-size="11" fill="#52514E" text-anchor="end">analyses/system-fmea.yaml</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E1E0D9" stroke-width="1"/>
+  <rect x="0" y="83" width="1280" height="1462.9" fill="url(#dots)"/>
+  <text x="40" y="108" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">STRUCTURE ELEMENT</text>
+  <text x="250" y="108" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">FUNCTION (STEP 3)</text>
+  <text x="520" y="108" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">FAILURE MODE · S · END EFFECT (STEP 4)</text>
+  <text x="876" y="108" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">FAILURE CAUSE · O · D · AP · ACTIONS (STEPS 4–6)</text>
+  <path d="M220 814H250" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 813.4H497Q505 813.4 505 805.4V672Q505 664 513 664H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 813.4H497Q505 813.4 505 821.4V1328.4Q505 1336.4 513 1336.4H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 813.4H497Q505 813.4 505 821.4V1478.7Q505 1486.7 513 1486.7H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 664H853Q861 664 861 656V152Q861 144 869 144H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 664H853Q861 664 861 656V236.2Q861 228.2 869 228.2H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 664H853Q861 664 861 656V320.4Q861 312.4 869 312.4H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 664H853Q861 664 861 656V404.6Q861 396.6 869 396.6H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 664H853Q861 664 861 656V502.9Q861 494.9 869 494.9H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 664H853Q861 664 861 656V615.2Q861 607.2 869 607.2H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 664H853Q861 664 861 672V711.6Q861 719.6 869 719.6H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 664H853Q861 664 861 672V823.9Q861 831.9 869 831.9H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 664H853Q861 664 861 672V936.2Q861 944.2 869 944.2H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 664H853Q861 664 861 672V1048.6Q861 1056.6 869 1056.6H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 664H853Q861 664 861 672V1160.9Q861 1168.9 869 1168.9H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 1336.4H853Q861 1336.4 861 1328.4V1295.3Q861 1287.3 869 1287.3H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 1336.4H853Q861 1336.4 861 1344.4V1363.5Q861 1371.5 869 1371.5H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 1486.7H855.5Q861 1486.7 861 1481.2V1481.2Q861 1475.7 866.5 1475.7H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <rect x="40" y="795" width="180" height="69.9" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="40" y="792" width="180" height="69.9" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="50.5" y="802" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="68" y="811.5" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SFM-SE-001</text>
+  <rect x="144" y="800.5" width="35.6" height="15" rx="7.5" fill="#F3F2EE"/><text x="161.8" y="811.5" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">cont.</text>
+  <text x="50" y="826.1" font-size="10.5" fill="#0B0B0B" font-weight="600">LionDriver item (L2 ACC +</text>
+  <text x="50" y="840.2" font-size="10.5" fill="#0B0B0B" font-weight="600">ALC + driver monitoring)</text>
+  <text x="50" y="852.9" font-size="9.5" fill="#52514E">item</text>
+  <rect x="250" y="794.4" width="240" height="71.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="250" y="791.4" width="240" height="71.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="260.5" y="801.4" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="278" y="810.9" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SFM-FN-007</text>
+  <text x="481" y="809.9" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FUNCTION</text>
+  <text x="260" y="825.4" font-size="10.5" fill="#0B0B0B">F7 Actuation limiting: bound actuator</text>
+  <text x="260" y="839.5" font-size="10.5" fill="#0B0B0B">commands in magnitude and rate; detect</text>
+  <text x="260" y="853.6" font-size="10.5" fill="#0B0B0B">excessive actuation</text>
+  <rect x="520" y="645" width="326" height="91.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="642" width="326" height="91.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 651.5L543 657.5L536.5 663.5L530 657.5Z" fill="#EB6834"/>
+  <text x="548" y="661.5" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SFM-029</text>
+  <rect x="603.3" y="650.5" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="661.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="650.5" width="31.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="654.7" y="661.4" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">loss</text>
+  <text x="837" y="660.5" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="676" font-size="10.5" fill="#0B0B0B" font-weight="600">Actuator command limits not enforced</text>
+  <text x="530" y="689.2" font-size="9.8" fill="#52514E" font-style="italic">End effect: Any upstream fault can produce SFM-002 / SFM-008</text>
+  <text x="530" y="702.3" font-size="9.8" fill="#52514E" font-style="italic">/ SFM-009 effects</text>
+  <text x="530" y="719.3" font-size="9.5" fill="#52514E" font-weight="600">hazard</text>
+  <rect x="567.3" y="708.3" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="591.6" y="719.2" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
+  <rect x="619.8" y="708.3" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="644.1" y="719.2" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-005</text>
+  <rect x="672.3" y="708.3" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="696.6" y="719.2" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-006</text>
+  <rect x="876" y="125" width="364" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="122" width="364" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="137.5" r="5.5" fill="#6250D6"/>
+  <text x="904" y="141.5" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SFM-029.C1</text>
+  <rect x="1182.5" y="130.5" width="48.5" height="15" rx="7.5" fill="#E6F5E6"/><circle cx="1192" cy="138" r="3.6" fill="#0A6A0A"/><text x="1199.5" y="141.4" font-size="9.5" font-weight="700" fill="#0A6A0A">AP L</text>
+  <text x="886" y="156.1" font-size="10.5" fill="#0B0B0B">Wrong safety model or parameter set for this car</text>
+  <text x="886" y="169.2" font-size="9.8" fill="#52514E" font-weight="600">O3 · D4 · in SFM-SE-003 · → SWF-013</text>
+  <rect x="886" y="175.2" width="104.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="938.2" y="186.1" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">rationale, no action</text>
+  <rect x="876" y="209.2" width="364" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="206.2" width="364" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="221.7" r="5.5" fill="#6250D6"/>
+  <text x="904" y="225.7" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SFM-029.C2</text>
+  <rect x="1182.5" y="214.7" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="222.2" r="4.3" fill="#9E2424"/><rect x="1189.4" y="221.4" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="225.6" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="240.3" font-size="10.5" fill="#0B0B0B">Safety model limit defect in firmware</text>
+  <text x="886" y="253.4" font-size="9.8" fill="#52514E" font-weight="600">O6 · D9 · in SFM-SE-003 · → SWF-001</text>
+  <rect x="886" y="259.4" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="270.3" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">SFM-ACT-001 open</text>
+  <rect x="876" y="293.4" width="364" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="290.4" width="364" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="305.9" r="5.5" fill="#6250D6"/>
+  <text x="904" y="309.9" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SFM-029.C3</text>
+  <rect x="1182.5" y="298.9" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="306.4" r="4.3" fill="#9E2424"/><rect x="1189.4" y="305.6" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="309.8" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="324.5" font-size="10.5" fill="#0B0B0B">Panda MCU hardware fault (see DFMEA/FMEDA)</text>
+  <text x="886" y="337.6" font-size="9.8" fill="#52514E" font-weight="600">O3 · D10 · in SFM-SE-003 · → DFM-001</text>
+  <rect x="886" y="343.6" width="104.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="938.2" y="354.5" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">rationale, no action</text>
+  <rect x="876" y="377.6" width="364" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="374.6" width="364" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="390.1" r="5.5" fill="#6250D6"/>
+  <text x="904" y="394.1" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SFM-029.C4</text>
+  <rect x="1182.5" y="383.1" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="390.6" r="4.3" fill="#9E2424"/><rect x="1189.4" y="389.8" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="394" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="408.7" font-size="10.5" fill="#0B0B0B">Harness allows the device to reach a bus without passing the panda</text>
+  <text x="886" y="422.7" font-size="10.5" fill="#0B0B0B">filter</text>
+  <text x="886" y="435.9" font-size="9.8" fill="#52514E" font-weight="600">O2 · D10 · in SFM-SE-004</text>
+  <rect x="886" y="441.9" width="104.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="938.2" y="452.8" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">rationale, no action</text>
+  <rect x="876" y="475.9" width="364" height="106.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="472.9" width="364" height="106.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="488.4" r="5.5" fill="#6250D6"/>
+  <text x="904" y="492.4" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SFM-029.C5</text>
+  <rect x="1182.5" y="481.4" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="488.9" r="4.3" fill="#9E2424"/><rect x="1189.4" y="488.1" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="492.3" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="506.9" font-size="10.5" fill="#0B0B0B">The panda 100 Hz safety task stops or is starved (defect, interrupt</text>
+  <text x="886" y="521" font-size="10.5" fill="#0B0B0B">storm, peripheral lock-up), so the RX timeout, heartbeat and</text>
+  <text x="886" y="535.1" font-size="10.5" fill="#0B0B0B">TX-arrival checks are not run and no siren is raised. A stopped tas…</text>
+  <text x="886" y="548.2" font-size="9.8" fill="#52514E" font-weight="600">O4 · D7 · in SFM-SE-003 · → SWF-018</text>
+  <rect x="886" y="554.2" width="104.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="938.2" y="565.1" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">rationale, no action</text>
+  <rect x="876" y="588.2" width="364" height="106.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="585.2" width="364" height="106.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="600.7" r="5.5" fill="#6250D6"/>
+  <text x="904" y="604.7" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SFM-029.C6</text>
+  <rect x="1182.5" y="593.7" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="601.2" r="4.3" fill="#9E2424"/><rect x="1189.4" y="600.4" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="604.6" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="619.3" font-size="10.5" fill="#0B0B0B">Actuation frames reach the panda faster than nominal (a backlog</text>
+  <text x="886" y="633.4" font-size="10.5" fill="#0B0B0B">forwarded back-to-back, or a burst): each frame is within the limits,</text>
+  <text x="886" y="647.4" font-size="10.5" fill="#0B0B0B">but the limits apply per frame, not per time. The reference build…</text>
+  <text x="886" y="660.6" font-size="9.8" fill="#52514E" font-weight="600">O8 · D10 · in SFM-SE-017 · → SWF-023</text>
+  <rect x="886" y="666.6" width="104.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="938.2" y="677.5" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">rationale, no action</text>
+  <rect x="876" y="700.6" width="364" height="106.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="697.6" width="364" height="106.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="713.1" r="5.5" fill="#6250D6"/>
+  <text x="904" y="717.1" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SFM-029.C7</text>
+  <rect x="1182.5" y="706.1" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="713.6" r="4.3" fill="#9E2424"/><rect x="1189.4" y="712.8" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="717" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="731.6" font-size="10.5" fill="#0B0B0B">An approved frame is altered after the TX check: in the copy into</text>
+  <text x="886" y="745.7" font-size="10.5" fill="#0B0B0B">FDCAN message RAM, the message RAM, the FDCAN core or the</text>
+  <text x="886" y="759.8" font-size="10.5" fill="#0B0B0B">transceiver. The packet XOR catches a change in the software…</text>
+  <text x="886" y="772.9" font-size="9.8" fill="#52514E" font-weight="600">O3 · D10 · in SFM-SE-003 · → DFM-019</text>
+  <rect x="886" y="778.9" width="104.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="938.2" y="789.8" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">rationale, no action</text>
+  <rect x="876" y="812.9" width="364" height="106.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="809.9" width="364" height="106.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="825.4" r="5.5" fill="#6250D6"/>
+  <text x="904" y="829.4" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SFM-029.C8</text>
+  <rect x="1182.5" y="818.4" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="825.9" r="4.3" fill="#9E2424"/><rect x="1189.4" y="825.1" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="829.3" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="844" font-size="10.5" fill="#0B0B0B">A corrupted SoC-to-MCU SPI transfer passes the 8-bit XOR, so a</text>
+  <text x="886" y="858" font-size="10.5" fill="#0B0B0B">wrong CAN frame or a wrong control command (safety mode,</text>
+  <text x="886" y="872.1" font-size="10.5" fill="#0B0B0B">parameter) is taken. The TX limits still apply to frames; nothing…</text>
+  <text x="886" y="885.2" font-size="9.8" fill="#52514E" font-weight="600">O4 · D10 · in SFM-SE-003 · → DFM-015</text>
+  <rect x="886" y="891.2" width="104.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="938.2" y="902.2" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">rationale, no action</text>
+  <rect x="876" y="925.2" width="364" height="106.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="922.2" width="364" height="106.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="937.7" r="5.5" fill="#6250D6"/>
+  <text x="904" y="941.7" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SFM-029.C9</text>
+  <rect x="1182.5" y="930.7" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="938.2" r="4.3" fill="#9E2424"/><rect x="1189.4" y="937.4" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="941.7" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="956.3" font-size="10.5" fill="#0B0B0B">Safety state in panda SRAM (controls_allowed, limits, counters)</text>
+  <text x="886" y="970.4" font-size="10.5" fill="#0B0B0B">corrupted: a soft error or permanent fault with no ECC handling</text>
+  <text x="886" y="984.5" font-size="10.5" fill="#0B0B0B">(TSR-503, TSR-507; GAP-08), or a wrong-address write by the SPI…</text>
+  <text x="886" y="997.6" font-size="9.8" fill="#52514E" font-weight="600">O3 · D10 · in SFM-SE-003 · → DFM-003</text>
+  <rect x="886" y="1003.6" width="104.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="938.2" y="1014.5" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">rationale, no action</text>
+  <rect x="876" y="1037.6" width="364" height="106.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="1034.6" width="364" height="106.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="1050.1" r="5.5" fill="#6250D6"/>
+  <text x="904" y="1054.1" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SFM-029.C10</text>
+  <rect x="1182.5" y="1043.1" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="1050.6" r="4.3" fill="#9E2424"/><rect x="1189.4" y="1049.8" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="1054" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="1068.7" font-size="10.5" fill="#0B0B0B">The panda time base fails or drifts (HSE crystal, PLL). A lost HSE</text>
+  <text x="886" y="1082.7" font-size="10.5" fill="#0B0B0B">is caught by the clock security system, which resets the MCU</text>
+  <text x="886" y="1096.8" font-size="10.5" fill="#0B0B0B">(clock.h:118-119); a drift is not detected, so every timeout and rat…</text>
+  <text x="886" y="1109.9" font-size="9.8" fill="#52514E" font-weight="600">O3 · D10 · in SFM-SE-003 · → DFM-005</text>
+  <rect x="886" y="1115.9" width="104.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="938.2" y="1126.8" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">rationale, no action</text>
+  <rect x="876" y="1149.9" width="364" height="106.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="1146.9" width="364" height="106.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="1162.4" r="5.5" fill="#6250D6"/>
+  <text x="904" y="1166.4" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SFM-029.C11</text>
+  <rect x="1182.5" y="1155.4" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="1162.9" r="4.3" fill="#9E2424"/><rect x="1189.4" y="1162.1" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="1166.4" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="1181" font-size="10.5" fill="#0B0B0B">The panda MCU runs in the brown-out zone during a supply dip</text>
+  <text x="886" y="1195.1" font-size="10.5" fill="#0B0B0B">(BOR level not set, PVD not enabled); the supply voltage is only</text>
+  <text x="886" y="1209.1" font-size="10.5" fill="#0B0B0B">reported (TSR-505; WP-A-03 DFI-01)</text>
+  <text x="886" y="1222.3" font-size="9.8" fill="#52514E" font-weight="600">O5 · D10 · in SFM-SE-003 · → DFM-007</text>
+  <rect x="886" y="1228.3" width="104.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="938.2" y="1239.2" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">rationale, no action</text>
+  <rect x="520" y="1317.4" width="326" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="1314.4" width="326" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 1323.9L543 1329.9L536.5 1335.9L530 1329.9Z" fill="#EB6834"/>
+  <text x="548" y="1333.9" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SFM-030</text>
+  <rect x="603.3" y="1322.9" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="1333.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="1322.9" width="31.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="654.7" y="1333.8" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">loss</text>
+  <text x="837" y="1332.9" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="1348.5" font-size="10.5" fill="#0B0B0B" font-weight="600">Excessive actuation not detected</text>
+  <text x="530" y="1361.6" font-size="9.8" fill="#52514E" font-style="italic">End effect: SFM-002/008/009 effects persist</text>
+  <text x="530" y="1378.6" font-size="9.5" fill="#52514E" font-weight="600">hazard</text>
+  <rect x="567.3" y="1367.6" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="591.6" y="1378.5" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
+  <rect x="619.8" y="1367.6" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="644.1" y="1378.5" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-005</text>
+  <rect x="672.3" y="1367.6" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="696.6" y="1378.5" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-006</text>
+  <rect x="876" y="1268.3" width="364" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="1265.3" width="364" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="1280.8" r="5.5" fill="#6250D6"/>
+  <text x="904" y="1284.8" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SFM-030.C1</text>
+  <rect x="1182.5" y="1273.8" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="1281.3" r="4.3" fill="#9E2424"/><rect x="1189.4" y="1280.5" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="1284.7" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="1299.3" font-size="10.5" fill="#0B0B0B">Calibrated pose wrong (calibration or IMU fault)</text>
+  <text x="886" y="1312.5" font-size="9.8" fill="#52514E" font-weight="600">O5 · D8 · in SFM-SE-011</text>
+  <rect x="886" y="1318.5" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="1329.4" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">SFM-ACT-002 open</text>
+  <rect x="876" y="1352.5" width="364" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="1349.5" width="364" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="1365" r="5.5" fill="#6250D6"/>
+  <text x="904" y="1369" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SFM-030.C2</text>
+  <rect x="1182.5" y="1358" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="1365.5" r="4.3" fill="#9E2424"/><rect x="1189.4" y="1364.7" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="1368.9" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="1383.5" font-size="10.5" fill="#0B0B0B">device_motion_valid gate blocks detection when aEgo and IMU</text>
+  <text x="886" y="1397.6" font-size="10.5" fill="#0B0B0B">disagree</text>
+  <text x="886" y="1410.7" font-size="9.8" fill="#52514E" font-weight="600">O6 · D10 · in SFM-SE-014 · → SWF-037</text>
+  <rect x="886" y="1416.7" width="104.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="938.2" y="1427.7" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">rationale, no action</text>
+  <rect x="520" y="1467.7" width="326" height="56.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="1464.7" width="326" height="56.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 1474.2L543 1480.2L536.5 1486.2L530 1480.2Z" fill="#EB6834"/>
+  <text x="548" y="1484.2" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SFM-031</text>
+  <rect x="603.3" y="1473.2" width="25.2" height="15" rx="7.5" fill="#0B0B0B"/><text x="615.9" y="1484.2" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S8</text>
+  <rect x="632.5" y="1473.2" width="64" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="664.5" y="1484.2" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">unintended</text>
+  <text x="837" y="1483.2" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="1498.8" font-size="10.5" fill="#0B0B0B" font-weight="600">False excessive-actuation detection</text>
+  <text x="530" y="1511.9" font-size="9.8" fill="#52514E" font-style="italic">End effect: Unneeded handback to the driver</text>
+  <rect x="876" y="1456.7" width="364" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="1453.7" width="364" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="1469.2" r="5.5" fill="#6250D6"/>
+  <text x="904" y="1473.2" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SFM-031.C1</text>
+  <rect x="1182.5" y="1462.2" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="1469.7" r="4.3" fill="#9E2424"/><rect x="1189.4" y="1468.9" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="1473.2" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="1487.8" font-size="10.5" fill="#0B0B0B">IMU noise or bad mounting</text>
+  <text x="886" y="1500.9" font-size="9.8" fill="#52514E" font-weight="600">O5 · D10 · in SFM-SE-011</text>
+  <rect x="886" y="1506.9" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="1517.9" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">SFM-ACT-003 open</text>
+  <line x1="40" y1="1557.9" x2="1240" y2="1557.9" stroke="#E1E0D9" stroke-width="1"/>
+  <text x="40" y="1579.9" font-size="10.5" fill="#0B0B0B" font-weight="700">Legend</text>
+  <rect x="96" y="1568.9" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="105.5" cy="1576.4" r="4.3" fill="#9E2424"/><rect x="102.9" y="1575.6" width="5.2" height="1.6" fill="#FBE9E9"/><text x="113" y="1579.9" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <rect x="148.5" y="1568.9" width="50.9" height="15" rx="7.5" fill="#FFF5DC"/><path d="M158 1572.4L162.4 1580H153.6Z" fill="#7A5600"/><text x="165.5" y="1579.9" font-size="9.5" font-weight="700" fill="#7A5600">AP M</text>
+  <rect x="203.4" y="1568.9" width="48.5" height="15" rx="7.5" fill="#E6F5E6"/><circle cx="212.9" cy="1576.4" r="3.6" fill="#0A6A0A"/><text x="220.4" y="1579.9" font-size="9.5" font-weight="700" fill="#0A6A0A">AP L</text>
+  <text x="259.9" y="1579.9" font-size="10.5" fill="#0B0B0B">Action Priority as rated (rating-tables §5)</text>
+  <rect x="491.4" y="1568.9" width="59.3" height="15" rx="7.5" fill="#FBE9E9"/><text x="521" y="1579.9" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">ACT open</text>
+  <rect x="554.7" y="1568.9" width="104.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="606.9" y="1579.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">rationale, no action</text>
+  <text x="667.1" y="1579.9" font-size="10.5" fill="#0B0B0B">action status (step 6)</text>
+  <text x="40" y="1599.9" font-size="10" fill="#52514E">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
+  <text x="40" y="1617.9" font-size="9.5" fill="#898781">Generated by tools/safety/fmea_diagrams.py from analyses/system-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+</svg>
