@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="2058" viewBox="0 0 1280 2058" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="2189" viewBox="0 0 1280 2189" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 6-2. Safety mechanisms by element (WP-S-03 §6)</title>
-<desc>43 safety mechanisms of WP-S-03 §6 grouped by element. E-03a: SM-01 Torque magnitude limit (speed-dependent) (partly), SM-02 Torque rate and RT-window limit (implemented), SM-03 Measured-torque tracking (implemented), SM-04 Authority gating (PCM edge, brake, gas, steer request) (partly), SM-05 Driver-torque override monitor (not implemented), SM-06 EPS status monitor (partly), SM-07 Longitudinal bounds and jerk limits (partly), SM-08 Active safe-state frame (not implemented), SM-09 RX timeout (implemented), SM-10 RX checksum + length (partly), SM-11 RX rate, frozen-content and cross-checks (partly), SM-13 Command-frame freshness (partly), SM-24 Relay malfunction detection (traffic-based) (implemented), SM-29 Engagement follows PCM cruise; revoke on SoC "not engaged" (partly), SM-35 Forwarding with fixed block list and forwarding supervision (partly), SM-36 PCS and DSU message TX gate (implemented), SM-39 Per-ID TX rate supervision (implemented). E-03b: SM-12 Heartbeat + control-loop liveness (partly), SM-14 SPI CRC + sequence counter + bounds checks (partly), SM-16 Fault → safe state (not implemented), SM-22 Configuration lock and command gating (partly), SM-23 SoC-independent siren (partly), SM-38 Post-load TX read-back (not implemented). E-04a: SM-15 Independent watchdog (implemented), SM-17 RAM ECC, flash CRC, register checks (partly), SM-18 Clock monitor (CSS + cross-check) (partly), SM-19 Supply monitor (BOR, PVD, input voltage) (unknown), SM-20 Relay readback and latch (partly), SM-21 MPU isolation (not implemented), SM-40 Car-side transceiver supervision (partly), SM-41 MCU die-temperature monitor (partly), SM-42 Harness orientation and connection detection (partly). E-01: SM-25 Host fault classification and freshness (partly), SM-26 Driver monitoring (partly), SM-27 Excessive-actuation detector (implemented), SM-28 Controller margin (partly), SM-30 Engagement and authority mismatch detection (SoC side) (partly), SM-31 HMI path liveness and audible minimum (partly), SM-32 Announced, bounded item-initiated deceleration (partly), SM-33 FCW input freshness and false-alarm rate (partly), SM-34 PCM ACC-fault reaction (implemented), SM-37 Stock AEB/FCW event indication (implemented), SM-43 ACC cancel on every fault-induced disengagement (implemented).</desc>
+<desc>45 safety mechanisms of WP-S-03 §6 grouped by element. E-03a: SM-01 Torque magnitude limit (speed-dependent) (partly), SM-02 Torque rate and RT-window limit (implemented), SM-03 Measured-torque tracking (implemented), SM-04 Authority gating (PCM edge, brake, gas, steer request) (partly), SM-05 Driver-torque override monitor (not implemented), SM-06 EPS status monitor (partly), SM-07 Longitudinal bounds and jerk limits (partly), SM-08 Active safe-state frame (not implemented), SM-09 RX timeout (implemented), SM-10 RX checksum + length (partly), SM-11 RX rate, frozen-content and cross-checks (partly), SM-13 Command-frame freshness (partly), SM-24 Relay malfunction detection (traffic-based) (implemented), SM-29 Engagement follows PCM cruise; revoke on SoC "not engaged" (partly), SM-35 Forwarding with fixed block list and forwarding supervision (partly), SM-36 PCS and DSU message TX gate (implemented), SM-39 Per-ID TX rate supervision (implemented). E-03b: SM-12 Heartbeat + control-loop liveness (partly), SM-14 SPI CRC + sequence counter + bounds checks (partly), SM-16 Fault → safe state (not implemented), SM-22 Configuration lock and command gating (partly), SM-23 SoC-independent siren (partly), SM-38 Post-load TX read-back (not implemented). E-04a: SM-15 Independent watchdog (implemented), SM-17 RAM ECC, flash CRC, register checks (partly), SM-18 Clock monitor (CSS + cross-check) (partly), SM-19 Supply monitor (BOR, PVD, input voltage) (unknown), SM-20 Relay readback and latch (partly), SM-21 MPU isolation (not implemented), SM-40 Car-side transceiver supervision (partly), SM-41 MCU die-temperature monitor (partly), SM-42 Harness orientation and connection detection (partly). E-01: SM-25 Host fault classification and freshness (partly), SM-26 Driver monitoring (partly), SM-27 Excessive-actuation detector (implemented), SM-28 Controller margin (partly), SM-30 Engagement and authority mismatch detection (SoC side) (partly), SM-31 HMI path liveness and audible minimum (partly), SM-32 Announced, bounded item-initiated deceleration (partly), SM-33 FCW input freshness and false-alarm rate (partly), SM-34 PCM ACC-fault reaction (implemented), SM-37 Stock AEB/FCW event indication (implemented), SM-43 ACC cancel on every fault-induced disengagement (implemented), SM-44 Start-up fault-code entry check (implemented), SM-45 Stock-AEB stand-down (implemented).</desc>
 <defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
-<rect x="0" y="0" width="1280" height="2058" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="0" y="0" width="1280" height="2189" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 6-2 · Safety mechanisms by element</text>
-<text x="40" y="66" font-size="12.5" fill="#475569">The 43 mechanisms of the §6 catalogue on the element that carries them, with the fault each covers, its TSRs, its DC target and its status</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">The 45 mechanisms of the §6 catalogue on the element that carries them, with the fault each covers, its TSRs, its DC target and its status</text>
 <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-S-03 §3.1, §6</text>
 <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
 <rect x="30" y="108" width="1220" height="624" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
@@ -314,11 +314,11 @@
 <text x="54" y="1363" font-size="10" fill="#475569">Covers: harness flipped, not connected or partly</text>
 <text x="54" y="1376" font-size="10" fill="#475569">inserted; wrong CAN routing or relay pin</text>
 <text x="54" y="1402" font-size="9.5" fill="#475569">TSR 701 · DC medium</text>
-<rect x="30" y="1442" width="1220" height="392" rx="12" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.2"/>
+<rect x="30" y="1442" width="1220" height="508" rx="12" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.2"/>
 <text x="46" y="1468" font-size="14" fill="#0F172A" font-weight="700">E-01 · Host SoC software and models</text>
 <text x="350.5" y="1468" font-size="11" fill="#475569">openpilot processes and ML models (E-01, E-02)</text>
 <rect x="1100.8" y="1454" width="133.2" height="20" rx="10" fill="#0F766E" stroke="none" stroke-width="0"/>
-<text x="1167.4" y="1468" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">QM · 11 mechanisms</text>
+<text x="1167.4" y="1468" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">QM · 13 mechanisms</text>
 <rect x="40" y="1482" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
 <rect x="40" y="1482" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
 <text x="54" y="1502" font-size="12" fill="#0F172A" font-weight="700">SM-25</text>
@@ -336,7 +336,7 @@
 <text x="428" y="1502" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">+E-02</text>
 <text x="357" y="1522" font-size="11.5" fill="#0F172A" font-weight="600">Driver monitoring</text>
 <text x="357" y="1537" font-size="10" fill="#475569">Covers: inattention (misuse)</text>
-<text x="357" y="1576" font-size="9.5" fill="#475569">TSR 608–612 · DC QM (SOTIF)</text>
+<text x="357" y="1576" font-size="9.5" fill="#475569">TSR 608–612, 635 · DC QM (SOTIF)</text>
 <rect x="646" y="1482" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
 <rect x="646" y="1482" width="5" height="104" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
 <text x="660" y="1502" font-size="12" fill="#0F172A" font-weight="700">SM-27</text>
@@ -418,28 +418,47 @@
 <text x="660" y="1784" font-size="10" fill="#475569">Covers: driver not told by an independent cue that the</text>
 <text x="660" y="1797" font-size="10" fill="#475569">item disengaged on a fault</text>
 <text x="660" y="1808" font-size="9.5" fill="#475569">TSR 303 · DC QM (B-sup: SM-23 via TSR-516(c), SM-29)</text>
-<rect x="40" y="1845" width="30" height="15" rx="7.5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/>
-<text x="78" y="1856" font-size="11" fill="#0F172A">implemented (11)</text>
-<rect x="200.8" y="1845" width="30" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
-<text x="238.8" y="1856" font-size="11" fill="#0F172A">partly (26)</text>
-<rect x="330.1" y="1845" width="30" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
-<text x="368.1" y="1856" font-size="11" fill="#0F172A">not implemented (5)</text>
-<rect x="509.8" y="1845" width="30" height="15" rx="7.5" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1" stroke-dasharray="4 3"/>
-<text x="547.8" y="1856" font-size="11" fill="#0F172A">unknown (1)</text>
-<rect x="639.1" y="1845" width="46" height="15" rx="4" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
-<text x="662.1" y="1856" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">+E-0x</text>
-<text x="693.1" y="1856" font-size="11" fill="#0F172A">also carried by that element</text>
-<text x="40" y="1878" font-size="11" fill="#475569">Status is the latest in §6 (the reference build where it is given). Nothing is verified: implemented means the code does it, drawn blue, not green. Mixed statuses (Impl / Partial) count as partly.</text>
-<text x="40" y="1894" font-size="11" fill="#475569">DC targets are targets for the FMEDA (WP-H-03) and software safety analysis (WP-W-04), not demonstrated. Generated by fig_s03_mechanisms.py from WP-S-03 §3.1 and §6.</text>
+<rect x="949" y="1714" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="949" y="1714" width="5" height="104" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<text x="963" y="1734" font-size="12" fill="#0F172A" font-weight="700">SM-44</text>
+<rect x="1146.9" y="1722" width="83.1" height="17" rx="8.5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/>
+<text x="1188.5" y="1734" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">implemented</text>
+<text x="963" y="1754" font-size="11.5" fill="#0F172A" font-weight="600">Start-up fault-code entry check</text>
+<text x="963" y="1769" font-size="10" fill="#475569">Covers: engagement with an active EPS or ABS/VSC</text>
+<text x="963" y="1782" font-size="10" fill="#475569">fault code stored at start-up, or with the read</text>
+<text x="963" y="1808" font-size="9.5" fill="#475569">TSR 629 · DC QM</text>
+<rect x="40" y="1830" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="40" y="1830" width="5" height="104" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<text x="54" y="1850" font-size="12" fill="#0F172A" font-weight="700">SM-45</text>
+<rect x="237.9" y="1838" width="83.1" height="17" rx="8.5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/>
+<text x="279.4" y="1850" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">implemented</text>
+<text x="54" y="1870" font-size="11.5" fill="#0F172A" font-weight="600">Stock-AEB stand-down</text>
+<text x="54" y="1885" font-size="10" fill="#475569">Covers: positive acceleration requested while the stock</text>
+<text x="54" y="1898" font-size="10" fill="#475569">system brakes for an AEB event</text>
+<text x="54" y="1924" font-size="9.5" fill="#475569">TSR 713 · DC QM (B-sup: PCM AEB priority, AOU-04R)</text>
+<rect x="40" y="1961" width="30" height="15" rx="7.5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/>
+<text x="78" y="1972" font-size="11" fill="#0F172A">implemented (13)</text>
+<rect x="200.8" y="1961" width="30" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="238.8" y="1972" font-size="11" fill="#0F172A">partly (26)</text>
+<rect x="330.1" y="1961" width="30" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="368.1" y="1972" font-size="11" fill="#0F172A">not implemented (5)</text>
+<rect x="509.8" y="1961" width="30" height="15" rx="7.5" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="547.8" y="1972" font-size="11" fill="#0F172A">unknown (1)</text>
+<rect x="639.1" y="1961" width="46" height="15" rx="4" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="662.1" y="1972" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">+E-0x</text>
+<text x="693.1" y="1972" font-size="11" fill="#0F172A">also carried by that element</text>
+<text x="40" y="1994" font-size="11" fill="#475569">Status is the latest in §6 (the reference build where it is given). Nothing is verified: implemented means the code does it, drawn blue, not green. Mixed statuses (Impl / Partial) count as partly.</text>
+<text x="40" y="2010" font-size="11" fill="#475569">DC targets are targets for the FMEDA (WP-H-03) and software safety analysis (WP-W-04), not demonstrated. Generated by fig_s03_mechanisms.py from WP-S-03 §3.1 and §6.</text>
 <g class="terms">
-<text x="40" y="1916" font-size="10.5" fill="#475569">Terms: ACC adaptive cruise control · AEB automatic emergency braking · ASIL Automotive Safety Integrity Level, A (lowest) to D (highest), from ISO 26262 · BOR brown-out reset (MCU supply monitor) · CAN controller</text>
-<text x="40" y="1930.5" font-size="10.5" fill="#475569">area network: the vehicle's data bus · CRC cyclic redundancy check · CSS clock security system (MCU clock monitor) · DC diagnostic coverage: the share of faults a safety mechanism detects · DM driver monitoring ·</text>
-<text x="40" y="1945" font-size="10.5" fill="#475569">DSU driving support unit (Toyota's radar cruise module) · E-nn element of the item (WP-C-01 §3.1), E-01…E-06 · ECC error-correcting code (memory) · EPS electric power steering · FCW forward collision warning · FDCAN</text>
-<text x="40" y="1959.5" font-size="10.5" fill="#475569">CAN with flexible data rate (the MCU's CAN controller) · FMEDA failure modes, effects and diagnostic analysis (hardware metrics) · HMI human-machine interface: display, sounds, cluster · LKA lane keeping assist ·</text>
-<text x="40" y="1974" font-size="10.5" fill="#475569">MCU microcontroller: the panda safety processor (STM32H7) · ML machine learning · MPU memory protection unit · PCM powertrain control module (engine and drive) · PCS pre-collision system: Toyota's stock collision</text>
-<text x="40" y="1988.5" font-size="10.5" fill="#475569">warning and braking · PVD programmable voltage detector (MCU supply monitor) · QM quality managed: no ASIL; ordinary quality processes suffice · RAM random-access memory · RT real time · RX receive · SM-nn safety</text>
-<text x="40" y="2003" font-size="10.5" fill="#475569">mechanism (TSC §6) · SoC system on chip: the comma device's main processor, running openpilot (QM) · SOTIF safety of the intended functionality (ISO 21448): hazards with nothing failing · SPI serial peripheral</text>
-<text x="40" y="2017.5" font-size="10.5" fill="#475569">interface (the link between SoC and MCU) · TSR-nn technical safety requirement (WP-S-02) · TX transmit · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W</text>
-<text x="40" y="2032" font-size="10.5" fill="#475569">software, V validation, P processes, A analyses, O operation, K safety case)</text>
+<text x="40" y="2032" font-size="10.5" fill="#475569">Terms: ABS anti-lock braking system; on the Toyota, the ABS/VSC ECU that also runs stability control · ACC adaptive cruise control · AEB automatic emergency braking · AOU-nn assumption of use (WP-C-01 §7); an R</text>
+<text x="40" y="2046.5" font-size="10.5" fill="#475569">suffix marks the FSC's refined version · ASIL Automotive Safety Integrity Level, A (lowest) to D (highest), from ISO 26262 · BOR brown-out reset (MCU supply monitor) · CAN controller area network: the vehicle's data</text>
+<text x="40" y="2061" font-size="10.5" fill="#475569">bus · CRC cyclic redundancy check · CSS clock security system (MCU clock monitor) · DC diagnostic coverage: the share of faults a safety mechanism detects · DM driver monitoring · DSU driving support unit (Toyota's</text>
+<text x="40" y="2075.5" font-size="10.5" fill="#475569">radar cruise module) · E-nn element of the item (WP-C-01 §3.1), E-01…E-06 · ECC error-correcting code (memory) · EPS electric power steering · FCW forward collision warning · FDCAN CAN with flexible data rate (the</text>
+<text x="40" y="2090" font-size="10.5" fill="#475569">MCU's CAN controller) · FMEDA failure modes, effects and diagnostic analysis (hardware metrics) · HMI human-machine interface: display, sounds, cluster · LKA lane keeping assist · MCU microcontroller: the panda</text>
+<text x="40" y="2104.5" font-size="10.5" fill="#475569">safety processor (STM32H7) · ML machine learning · MPU memory protection unit · PCM powertrain control module (engine and drive) · PCS pre-collision system: Toyota's stock collision warning and braking · PVD</text>
+<text x="40" y="2119" font-size="10.5" fill="#475569">programmable voltage detector (MCU supply monitor) · QM quality managed: no ASIL; ordinary quality processes suffice · RAM random-access memory · RT real time · RX receive · SM-nn safety mechanism (TSC §6) · SoC</text>
+<text x="40" y="2133.5" font-size="10.5" fill="#475569">system on chip: the comma device's main processor, running openpilot (QM) · SOTIF safety of the intended functionality (ISO 21448): hazards with nothing failing · SPI serial peripheral interface (the link between</text>
+<text x="40" y="2148" font-size="10.5" fill="#475569">SoC and MCU) · TSR-nn technical safety requirement (WP-S-02) · TX transmit · VSC vehicle stability control (Toyota's stability system) · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C</text>
+<text x="40" y="2162.5" font-size="10.5" fill="#475569">concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
 </g>
 </svg>

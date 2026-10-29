@@ -6,7 +6,7 @@
   V-03 at phone width            the technical safety architecture stacked top to bottom along the command path
                                  (render_interconnection_phone, from V-03's [phone] layout)
 
-  V-26 safety mechanisms         SM-01 to SM-43 on the elements that perform them and on the interfaces whose TSRs
+  V-26 safety mechanisms         SM-01 to SM-45 on the elements that perform them and on the interfaces whose TSRs
                                  they implement, top to bottom along the command path, at phone width
   V-27 coverage per goal         per safety goal, the mechanisms behind it (SG -> FSR -> TSR -> SM) by status, and the
                                  FSRs with no mechanism behind them, at phone width

@@ -68,7 +68,7 @@ package LionDriverViews {
     }
 
     view <'V-04'> mechanismAllocation : AllocationView {
-        doc /* Safety mechanisms SM-01 to SM-43 against the elements that perform them. */
+        doc /* Safety mechanisms SM-01 to SM-45 against the elements that perform them. */
         expose LionDriverMechanisms::*;
         expose LdSda::**;
         render Views::asElementTable;
@@ -195,7 +195,7 @@ package LionDriverViews {
     }
 
     view <'V-26'> mechanismsOnArchitecture : AllocationView {
-        doc /* The safety mechanisms SM-01 to SM-43 drawn on the architecture: each on the elements that perform it, and on each interface IF-nn the mechanisms that implement a TSR the interface carries. */
+        doc /* The safety mechanisms SM-01 to SM-45 drawn on the architecture: each on the elements that perform it, and on each interface IF-nn the mechanisms that implement a TSR the interface carries. */
         expose LionDriverMechanisms::*;
         expose LdSda::**;
         expose OperationalContext::*;

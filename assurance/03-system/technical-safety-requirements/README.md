@@ -94,7 +94,7 @@ of the ASIL requirements.
 
 ## 2. The mechanisms that implement them
 
-![SysML view V-04: the safety mechanisms SM-01 to SM-43 against the elements that perform them](../../models/sysml/generated/fig-sysml-v04-mechanism-allocation.svg)
+![SysML view V-04: the safety mechanisms SM-01 to SM-45 against the elements that perform them](../../models/sysml/generated/fig-sysml-v04-mechanism-allocation.svg)
 
 *Safety mechanisms by element (V-04).* A TSR states the property; a mechanism of WP-S-03 §6 is what delivers it. Each
 mechanism cites the TSRs it meets, and those citations are the «SM» rows of the requirement diagrams below.

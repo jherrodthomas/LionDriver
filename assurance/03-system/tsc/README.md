@@ -74,7 +74,7 @@ All terms: [abbreviations and record codes](../../terms.md).
    (GAP-38).
 4. **The driver is an independent channel.** Brake, cancel and steering act on vehicle elements outside the item, and
    the envelope follows the PCM cruise state (AP-6).
-5. **43 safety mechanisms.** None of them is verified. "Implemented" means the code does it.
+5. **45 safety mechanisms.** None of them is verified. "Implemented" means the code does it.
 
 | Where it comes from | The concept | Where it goes |
 |---|---|---|
@@ -151,7 +151,7 @@ reaction against each goal's FTTI, today and in the reference build.
 
 ## 4. The safety mechanisms
 
-![WP-S-03 Figure 6-2: the 43 safety mechanisms grouped by element, each with the fault it covers, its TSRs, its DC target and its status](../figures/fig-s03-6-2-safety-mechanisms.svg)
+![WP-S-03 Figure 6-2: the 45 safety mechanisms grouped by element, each with the fault it covers, its TSRs, its DC target and its status](../figures/fig-s03-6-2-safety-mechanisms.svg)
 
 *Figure 6-2 (§6).* One tile per mechanism, on the element that carries it, coloured by status. Most of the envelope's
 mechanisms are partly there. The ones not started are the driver-torque override monitor (SM-05), the active

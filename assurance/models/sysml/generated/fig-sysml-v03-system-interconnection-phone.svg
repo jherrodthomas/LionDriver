@@ -6,7 +6,7 @@
 <text x="24" y="38" font-size="19" fill="#0F172A" font-weight="700">V-03 · Technical safety architecture</text>
 <text x="24" y="60" font-size="12.5" fill="#64748B">The same architecture stacked for a phone: from the road and the driver, through the QM partition</text>
 <text x="24" y="77" font-size="12.5" fill="#64748B">and the ASIL C envelope of the comma device, to the harness and the car</text>
-<text x="24" y="96" font-size="10.5" fill="#94A3B8">SysML v2 view LionDriverViews::systemInterconnection · phone layout · model 3c073a48b59c</text>
+<text x="24" y="96" font-size="10.5" fill="#94A3B8">SysML v2 view LionDriverViews::systemInterconnection · phone layout · model 792e71217e60</text>
 <line x1="24" y1="110" x2="616" y2="110" stroke="#E2E8F0"/>
 <rect x="24" y="126" width="292" height="58" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
 <text x="34" y="147" font-size="12" fill="#0F172A" font-weight="700">Road environment</text>
@@ -105,7 +105,7 @@
 <rect x="324" y="945" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
 <text x="332" y="962" font-size="12" fill="#0F172A" font-weight="600">athena · loggerd</text>
 <text x="332" y="978" font-size="10.5" fill="#64748B">updated, uploader · F-09</text>
-<text x="36" y="1005" font-size="10.5" fill="#C2410C" font-weight="700">SM-25 · 26 · 27 · 28 · 30 · 31 · 32 · 33 · 34 · 37 · 43</text>
+<text x="36" y="1005" font-size="10.5" fill="#C2410C" font-weight="700">SM-25 · 26 · 27 · 28 · 30 · 31 · 32 · 33 · 34 · 37 · 43 · 44 · 45</text>
 <rect x="24" y="1028" width="592" height="78" rx="10" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.4"/>
 <rect x="36" y="1040" width="39" height="18" rx="9" fill="#4F46E5"/><text x="55.5" y="1052.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-02</text>
 <text x="83" y="1054" font-size="14" fill="#0F172A" font-weight="700">ML models</text>
