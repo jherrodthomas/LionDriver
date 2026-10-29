@@ -64,7 +64,7 @@ STATUS_OF = {
   "CSR-063": ("not", 'Not implemented (GAP-20)'),
   "CSR-064": ("check", 'Not determined: process user/privilege model'),
   "CSR-071": ("in", 'Implemented in the reference build (DQ-131 A'),
-  "CSR-072": ("not", 'Not implemented (GAP-20;'),
+  "CSR-072": ("in", 'Implemented in host software, not verified on the vehicle'),
   "CSR-073": ("partly", 'Partly (DQ-131 A)'),
   "CSR-081": ("not", 'Not met (GAP-22'),
   "CSR-082": ("not", 'Not implemented (GAP-22)'),
