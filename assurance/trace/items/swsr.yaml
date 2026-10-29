@@ -1791,7 +1791,7 @@
   acceptance: "No FCW from a stale or invalid input; rate measurable from logs"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: no freshness gate (`selfdrived.py:488-493`)"
+  baseline_impl: "Partial: freshness gate implemented, not verified on the vehicle (`supervision.fcw_inputs_fresh` in `selfdrived`; `test_fcw_freshness.py`, mutants FC-1…FC-5); FCW trigger source not logged yet"
   status: proposed
   source: WP-W-02
 

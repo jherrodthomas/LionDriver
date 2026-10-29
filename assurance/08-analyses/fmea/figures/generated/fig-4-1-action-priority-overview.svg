@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="861" viewBox="0 0 1280 861" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 4-1. Action Priority overview of the four FMEAs</title>
-  <desc id="d">Action Priority overview: System FMEA SFM rev 0.39 H 106, M 2, L 1; DFMEA DFM rev 0.13 H 32, M 0, L 0; SW FMEA SWF rev 1.14 H 132, M 1, L 16; PFMEA PFM rev 0.4 H 17, M 0, L 1. For each FMEA an occurrence by detection grid of the severity 9–10 causes over the AP table, the causes at other severities, and how the AP H causes are treated (action status or rationale).</desc>
+  <desc id="d">Action Priority overview: System FMEA SFM rev 0.39 H 106, M 2, L 1; DFMEA DFM rev 0.13 H 32, M 0, L 0; SW FMEA SWF rev 1.15 H 132, M 1, L 16; PFMEA PFM rev 0.4 H 17, M 0, L 1. For each FMEA an occurrence by detection grid of the severity 9–10 causes over the AP table, the causes at other severities, and how the AP H causes are treated (action status or rationale).</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -360,7 +360,7 @@
   <rect x="345" y="552" width="15.5" height="16" fill="#F1F5F9" stroke="#64748B" stroke-width="1" rx="2"/>
   <text x="366.5" y="564" font-size="10" fill="#0F172A">3  not implemented</text>
   <text x="650" y="114" font-size="15" fill="#0F172A" font-weight="700">SW FMEA</text>
-  <text x="650" y="131" font-size="10.5" fill="#475569">SWF rev 1.14 · BL-007 · draft</text>
+  <text x="650" y="131" font-size="10.5" fill="#475569">SWF rev 1.15 · BL-007 · draft</text>
   <text x="650" y="146" font-size="10.5" fill="#475569">149 rated causes</text>
   <rect x="650" y="158" width="252.5" height="22" fill="#D2553F"/>
   <text x="776.2" y="173" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">H 132</text>
@@ -423,7 +423,7 @@
   <text x="867" y="304.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
   <rect x="878" y="290" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <circle cx="889" cy="301" r="9.5" fill="#D2553F"/>
-  <text x="889" y="304.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+  <text x="889" y="304.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
   <text x="674" y="326.5" font-size="9.5" fill="#475569" text-anchor="end">6</text>
   <rect x="680" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="702" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -449,7 +449,7 @@
   <text x="735" y="348.6" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">10</text>
   <rect x="746" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <circle cx="757" cy="345" r="9.5" fill="#D2553F"/>
-  <text x="757" y="348.6" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">14</text>
+  <text x="757" y="348.6" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">15</text>
   <rect x="768" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="790" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="812" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
@@ -560,12 +560,12 @@
   <text x="650" y="644" font-size="10" fill="#0F766E" font-weight="600">SWF-055.C1, SWF-089.C1, SWF-090.C1, SWF-092.C1,</text>
   <text x="650" y="657" font-size="10" fill="#0F766E" font-weight="600">SWF-092.C2</text>
   <text x="650" y="683" font-size="10" fill="#475569" font-weight="700">AP H causes (132) by treatment</text>
-  <rect x="650" y="697" width="15" height="16" fill="#2E9E6A" rx="2"/>
-  <text x="671" y="709" font-size="10" fill="#0F172A">12  action completed</text>
+  <rect x="650" y="697" width="16.2" height="16" fill="#2E9E6A" rx="2"/>
+  <text x="672.2" y="709" font-size="10" fill="#0F172A">13  action completed</text>
   <rect x="650" y="719" width="47.5" height="16" fill="#D97706" rx="2"/>
   <text x="703.5" y="731" font-size="10" fill="#0F172A">38  action in progress</text>
-  <rect x="650" y="741" width="102.5" height="16" fill="#FBE4DF" stroke="#D2553F" stroke-width="1" rx="2"/>
-  <text x="758.5" y="753" font-size="10" fill="#0F172A">82  action open</text>
+  <rect x="650" y="741" width="101.2" height="16" fill="#FBE4DF" stroke="#D2553F" stroke-width="1" rx="2"/>
+  <text x="757.2" y="753" font-size="10" fill="#0F172A">81  action open</text>
   <text x="955" y="114" font-size="15" fill="#0F172A" font-weight="700">PFMEA</text>
   <text x="955" y="131" font-size="10.5" fill="#475569">PFM rev 0.4 · BL-007 · draft</text>
   <text x="955" y="146" font-size="10.5" fill="#475569">18 rated causes</text>

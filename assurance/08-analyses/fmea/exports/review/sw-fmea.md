@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 1.14 | draft | BL-007 | RT-2 | 2026-10-17 |
+| 1.15 | draft | BL-007 | RT-2 | 2026-10-17 |
 
 **Scope.** P1 elements for AC-001 at BL-007 (frozen; liondriver-dev 9fe3eb2, panda 3a8b7c2, opendbc 4d1a056; the LIONDRIVER_REFERENCE build is the default; rows of code unchanged since an earlier baseline keep that rating): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053). P2 elements: card and the Toyota port (SWF-056..060), driver monitoring (SWF-061..064), plannerd (SWF-065..069), radard (SWF-070, SWF-071). P3 elements: modeld as a software element (SWF-072..074; model performance is SOTIF), localization and calibration (SWF-075..077), camerad (SWF-078), sensord (SWF-079), messaging (SWF-080, SWF-081), manager (SWF-082, SWF-083), updated (SWF-084). Rev 1.1: driver-monitoring demo mode (SWF-085) and the forced stop after the terminal alert (SWF-086), for FTA finding F-37. Rev 1.2: no driver-override check on the LKA path in the envelope (SWF-087), for F-28. Rev 1.9: start-up fault-code read (SWF-091), panda siren (SWF-092), stock-AEB stand-down (SWF-093).
 
@@ -983,9 +983,9 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `SWF-051.C1` The FCW condition reads the last received modelV2 and longitudinalPlan; a held or invalid message keeps raising FCW in the same cycle in which commIssue is raised (TSR-625 freshness gate not implemented) | • Upstream design, reviewed; no derived freshness requirement for FCW inputs at BL-004 <sub>openpilot/selfdrive/selfdrived/selfdrived.py</sub> | • No test targets this cause | 7 | 10 | 🔴 **H** | SWF-ACT-051 |
+| `SWF-051.C1` Defect in the FCW freshness gate (after BL-007, TSR-625, change-2026-10-29-fcw-input-freshness): modelV2 or longitudinalPlan not checked for validity or for an age within 2 nominal periods (supervision.fcw_inputs_fresh), or selfdrived raising FCW without the gate, so a held or invalid message keeps raising FCW. Up to rev 1.14 there was no gate (O 7, D 10) | • LionDriver change with a requirement (TSR-625, SWSR-625): FCW only while both inputs are valid and received within 2 periods (10 selfdrived frames); reviewed in the PR, not independently; O 5 <sub>assurance/07-supporting/impact/change-2026-10-29-fcw-input-freshness.md</sub> | • Proven by mutation in CI: test_fcw_freshness.py (the gate, and the real SelfdriveD.update_events with a hard-brake prediction) fails on each hand-written mutant of this cause (FC-1..FC-5: validity, the 2-period bound, never received, the planner input, the call in selfdrived), tools/ci/host_mutation.py in the tests.yaml unit_tests job; so D 4 (RT-2), from D 10 (rev 1.15) <sub>openpilot/selfdrive/selfdrived/tests/test_fcw_freshness.py</sub> | 5 | 4 | 🔴 **H** | SWF-ACT-051 |
 
-Safety mechanisms: (1) None for FCW; commIssue soft-disables control when modelV2 or longitudinalPlan is not alive or not valid
+Safety mechanisms: (1) FCW freshness gate (TSR-625, rev 1.15); commIssue soft-disables control when modelV2 or longitudinalPlan is not alive or not valid
 
 <sub>Note: WP-A-04 BE-4.11 (SG-04 G4.5). False leads that trigger a valid FCW are SOTIF (SFM-009.C1, WP-C-06).</sub>
 
@@ -2045,7 +2045,7 @@ Safety mechanisms: (1) updated runs offroad only and the swap happens at boot (l
 | SWF-ACT-048 | detection | Bench or HIL fault injection (WP-V-05) - stop or stall selfdrived, modeld, plannerd and controlsd while engaged and measure time to zero torque/acceleration and to the alert; run test_onroad timing tests on a comma 3X for each release | Jherrod Thomas | open | SWF-043.C1, SWF-047.C2, SWF-068.C2 | — |
 | SWF-ACT-049 | detection | Vehicle test of PCM cancel and cluster state on each host disengagement path (fault disable, cancel button, brake, selfdrived loss) | Jherrod Thomas | open | SWF-039.C1, SWF-048.C1 | — |
 | SWF-ACT-050 | design_change | Implement TSR-624: announce the driver-monitoring no-response deceleration at least 1 s before its onset (a fault soft-disable deceleration may start with its alert, DQ-407 A), and ramp both within a_min and j_down | Jherrod Thomas | completed | SWF-050.C1, SWF-066.C1 | — |
-| SWF-ACT-051 | design_change | Implement TSR-625: gate FCW on fresh and valid modelV2 and longitudinalPlan, with a unit test for a stale and an invalid input | Jherrod Thomas | open | SWF-051.C1 | — |
+| SWF-ACT-051 | design_change | Implement TSR-625: gate FCW on fresh and valid modelV2 and longitudinalPlan, with a unit test for a stale and an invalid input | Jherrod Thomas | completed | SWF-051.C1 | 10/5/4 → 🔴 **H** |
 | SWF-ACT-052 | design_change | Send the inactive acceleration from the Toyota CarController whenever CC.longActive is false, with a unit test | Jherrod Thomas | open | SWF-052.C1 | — |
 | SWF-ACT-053 | detection | Vehicle test of the PCM response when the inactive value replaces an active deceleration (TSR-208, AOU-05R); if the PCM steps, specify an item-side ramp after revocation (FSR-04.03) | Jherrod Thomas | open | SWF-053.C1 | — |
 | SWF-ACT-055 | detection | Make the host supervision tests run in CI: test_supervision.py and test_input_freshness.py define plain classes, which tools/test_runner.py (unittest loader) collects as 0 tests. Derive them from unittest.TestCase (or the repo's test base class), check that the unit_tests job reports them, and prove them by a mutation of supervision.py and input_freshness.py so D can drop below 8 | Jherrod Thomas | in_progress | SWF-034.C1 | — |
@@ -2147,7 +2147,6 @@ Safety mechanisms: (1) updated runs offroad only and the swap happens at boot (l
 | `SWF-047.C2` | Control step late, repeated or missing, or item frames dropped, while engaged | 10/6/8 | SWF-ACT-048 |
 | `SWF-047.C3` | Control step late, repeated or missing, or item frames dropped, while engaged | 10/5/10 | SWF-ACT-043, SWF-ACT-044 |
 | `SWF-048.C1` | PCM cruise cancel not requested, or not effective, when the item is not enabled | 10/6/9 | SWF-ACT-040, SWF-ACT-049 |
-| `SWF-051.C1` | Forward collision warning raised from stale or invalid model or planner input | 10/7/10 | SWF-ACT-051 |
 | `SWF-052.C1` | Negative acceleration sent in ACC_CONTROL while longitudinal control is not active | 10/6/9 | SWF-ACT-052 |
 | `SWF-053.C1` | Active deceleration request ends in one step when authority is revoked | 10/8/9 | SWF-ACT-053 |
 | `SWF-056.C1` | Vehicle input lost, delayed or frozen while carState still reports it as current and valid | 10/3/10 | SWF-ACT-056 |

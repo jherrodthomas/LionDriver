@@ -471,3 +471,48 @@ replace = "    demo_mode = driver_view"
 tests = ["openpilot/selfdrive/selfdrived/tests/test_driver_view.py"]
 fmea = ["SWF-085.C1", "SWF-085.C2"]
 why = "dmonitoringd does not use the started check"
+
+[[mutants]]
+id = "FC-1"
+file = "openpilot/selfdrive/selfdrived/supervision.py"
+find = "    if not valid[s] or recv_frame[s] <= 0:"
+replace = "    if recv_frame[s] <= 0:"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_fcw_freshness.py"]
+fmea = ["SWF-051.C1"]
+why = "an invalid modelV2 or longitudinalPlan still raises FCW"
+
+[[mutants]]
+id = "FC-2"
+file = "openpilot/selfdrive/selfdrived/supervision.py"
+find = "FCW_MAX_AGE_PERIODS = 2."
+replace = "FCW_MAX_AGE_PERIODS = 3."
+tests = ["openpilot/selfdrive/selfdrived/tests/test_fcw_freshness.py"]
+fmea = ["SWF-051.C1"]
+why = "the age bound is wider than the 2 periods of TSR-625"
+
+[[mutants]]
+id = "FC-3"
+file = "openpilot/selfdrive/selfdrived/supervision.py"
+find = "    if not valid[s] or recv_frame[s] <= 0:"
+replace = "    if not valid[s] or recv_frame[s] < 0:"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_fcw_freshness.py"]
+fmea = ["SWF-051.C1"]
+why = "an input never received counts as fresh"
+
+[[mutants]]
+id = "FC-4"
+file = "openpilot/selfdrive/selfdrived/supervision.py"
+find = "FCW_INPUTS = ('modelV2', 'longitudinalPlan')"
+replace = "FCW_INPUTS = ('modelV2',)"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_fcw_freshness.py"]
+fmea = ["SWF-051.C1"]
+why = "the planner input is not checked"
+
+[[mutants]]
+id = "FC-5"
+file = "openpilot/selfdrive/selfdrived/selfdrived.py"
+find = "    if (planner_fcw or model_fcw) and fcw_fresh and not self.CP.notCar:"
+replace = "    if (planner_fcw or model_fcw) and not self.CP.notCar:"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_fcw_freshness.py"]
+fmea = ["SWF-051.C1"]
+why = "selfdrived does not use the freshness gate"

@@ -136,6 +136,9 @@
 #   while IsDriverViewEnabled is set (driverViewActive), and dmonitoringd uses demo mode only while card is not running (change-2026-10-29-driver-view-interlock).
 #   SWF-085.C1 O 5 D 10 -> O 5 D 4 and SWF-085.C2 O 8 D 10 -> O 5 D 4, both rewritten to a defect in the checks (mutants DV-1..DV-6, 51 in all); AP stays H
 #   (S 10). SWF-ACT-072 completed.
+# rev 1.15 (after BL-007, ratings within BL-007): TSR-625 freshness gate: selfdrived raises FCW only from a valid modelV2 and longitudinalPlan received within
+#   2 nominal periods (change-2026-10-29-fcw-input-freshness). SWF-051.C1 O 7 D 10 -> O 5 D 4 (mutants FC-1..FC-5, 56 in all); AP stays H (S 10).
+#   SWF-ACT-051 completed. host_mutation.py now drops a mutated file's cached bytecode, which could mask a mutant of the same length.
 # Post rev 1.4, FTA WP-A-04 v1.12 (BE-1.25 in the SG-04 tree), ratings unchanged: SWF-055 and SWF-089 gain HZ-006 end effects (an authority
 #   grant covers longitudinal commands, as SWF-007). SWF-002 stays steering-only (HZ-001); its note says why HZ-006 and HZ-010 do not apply.
 #
@@ -185,7 +188,7 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.14"
+  revision: "1.15"
   status: draft
   baseline: BL-007
   rating_tables: RT-2
@@ -3798,21 +3801,28 @@ failure_modes:
   severity: 10
   causes:
   - id: SWF-051.C1
-    description: The FCW condition reads the last received modelV2 and longitudinalPlan; a held or invalid message keeps raising FCW in
-      the same cycle in which commIssue is raised (TSR-625 freshness gate not implemented)
+    description: 'Defect in the FCW freshness gate (after BL-007, TSR-625, change-2026-10-29-fcw-input-freshness): modelV2 or longitudinalPlan not checked for
+      validity or for an age within 2 nominal periods (supervision.fcw_inputs_fresh), or selfdrived raising FCW without the gate, so a held or invalid message
+      keeps raising FCW. Up to rev 1.14 there was no gate (O 7, D 10)'
     element: SWF-SE-032
     prevention_controls:
-    - description: Upstream design, reviewed; no derived freshness requirement for FCW inputs at BL-004
-      ref: openpilot/selfdrive/selfdrived/selfdrived.py
+    - description: 'LionDriver change with a requirement (TSR-625, SWSR-625): FCW only while both inputs are valid and received within 2 periods (10 selfdrived
+        frames); reviewed in the PR, not independently; O 5'
+      ref: assurance/07-supporting/impact/change-2026-10-29-fcw-input-freshness.md
     detection_controls:
-    - description: No test targets this cause
-    occurrence: 7
-    detection: 10
+    - description: 'Proven by mutation in CI: test_fcw_freshness.py (the gate, and the real SelfdriveD.update_events with a hard-brake prediction) fails on each
+        hand-written mutant of this cause (FC-1..FC-5: validity, the 2-period bound, never received, the planner input, the call in selfdrived),
+        tools/ci/host_mutation.py in the tests.yaml unit_tests job; so D 4 (RT-2), from D 10 (rev 1.15)'
+      ref: tools/ci/host_mutants.toml
+      test: openpilot/selfdrive/selfdrived/tests/test_fcw_freshness.py
+    occurrence: 5
+    detection: 4
     ap: H
     actions:
     - SWF-ACT-051
   safety_mechanisms:
-  - description: None for FCW; commIssue soft-disables control when modelV2 or longitudinalPlan is not alive or not valid
+  - description: 'FCW freshness gate (TSR-625, rev 1.15); commIssue soft-disables control when modelV2 or longitudinalPlan is not alive or not valid'
+    ref: openpilot/selfdrive/selfdrived/supervision.py
   notes: WP-A-04 BE-4.11 (SG-04 G4.5). False leads that trigger a valid FCW are SOTIF (SFM-009.C1, WP-C-06).
 - id: SWF-052
   element: SWF-SE-045
@@ -6269,7 +6279,15 @@ actions:
   description: 'Implement TSR-625: gate FCW on fresh and valid modelV2 and longitudinalPlan, with a unit test for a stale and an invalid
     input'
   owner: Jherrod Thomas
-  status: open
+  status: completed
+  evidence: 'selfdrived raises FCW only while modelV2 and longitudinalPlan are valid and received within 2 nominal periods (supervision.fcw_inputs_fresh,
+    change-2026-10-29-fcw-input-freshness); test_fcw_freshness.py covers a stale and an invalid input of each, through the real SelfdriveD; mutants FC-1..FC-5
+    (rev 1.15). The FCW trigger-source log and the false-FCW rate target of SWSR-625 stay open (WP-V-02)'
+  revised:
+    severity: 10
+    occurrence: 5
+    detection: 4
+    ap: H
 - id: SWF-ACT-052
   kind: design_change
   description: Send the inactive acceleration from the Toyota CarController whenever CC.longActive is false, with a unit test

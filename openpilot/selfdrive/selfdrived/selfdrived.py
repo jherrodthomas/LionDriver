@@ -6,6 +6,7 @@ import threading
 import openpilot.cereal.messaging as messaging
 
 from openpilot.cereal import log
+from openpilot.cereal.services import SERVICE_LIST
 from opendbc.car.structs import car
 from openpilot.cereal.visionipc import VisionStreamType
 from msgq.visionipc import VisionIpcClient
@@ -19,7 +20,7 @@ from openpilot.common.gps import get_gps_location_service
 from openpilot.selfdrive.car.car_events import CarEvents
 from openpilot.selfdrive.car import stock_aeb_interlock, vehicle_dtc
 from openpilot.selfdrive.locationd.helpers import PoseCalibrator, Pose
-from openpilot.selfdrive.selfdrived.supervision import ControlsMismatch, TxBlockedMonitor
+from openpilot.selfdrive.selfdrived.supervision import ControlsMismatch, TxBlockedMonitor, FCW_INPUTS, fcw_inputs_fresh
 from openpilot.selfdrive.selfdrived.events import Events, ET
 from openpilot.selfdrive.selfdrived.minimum_risk import MinimumRiskManeuver
 from openpilot.selfdrive.selfdrived.helpers import ExcessiveActuationCheck
@@ -57,6 +58,7 @@ MISMATCH_SAMPLES = 2         # consecutive pandaStates samples with controlsAllo
 MISMATCH_MAX_TIME = 0.5      # s from the first mismatched frame, whatever the pandaStates rate
 MISMATCH_ENGAGE_GRACE = 0.3  # s after engaging in which samples are not counted: the panda grants on the heartbeat (LS-06)
 CRUISE_MISMATCH_TIME = 1.0   # s of stock cruise engaged while the item is not
+FCW_FREQUENCY = {s: SERVICE_LIST[s].frequency for s in FCW_INPUTS}  # TSR-625: modelV2 and longitudinalPlan, 20 Hz
 
 
 def dtc_entry_events(status: vehicle_dtc.DtcStatus) -> list:
@@ -517,7 +519,9 @@ class SelfdriveD:
     stock_long_is_braking = self.enabled and not self.CP.openpilotLongitudinalControl and CS.aEgo < -1.25
     model_fcw = self.sm['modelV2'].meta.hardBrakePredicted and not CS.brakePressed and not stock_long_is_braking
     planner_fcw = self.sm['longitudinalPlan'].fcw and self.enabled
-    if (planner_fcw or model_fcw) and not self.CP.notCar:
+    # LionDriver (TSR-625, SWSR-625): no FCW from a stale or invalid modelV2 or longitudinalPlan
+    fcw_fresh = fcw_inputs_fresh(self.sm.valid, self.sm.recv_frame, self.sm.frame, FCW_FREQUENCY, DT_CTRL)
+    if (planner_fcw or model_fcw) and fcw_fresh and not self.CP.notCar:
       self.events.add(EventName.fcw)
 
     # GPS checks
