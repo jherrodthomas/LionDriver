@@ -6,7 +6,7 @@
 <text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-03 · Technical safety architecture</text>
 <text x="40" y="69" font-size="12.5" fill="#64748B">LD-SDA in its vehicle context · QM partition and ASIL C safety envelope · interfaces IF-01 to IF-10 · SM from WP-S-03 §6</text>
 <text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::systemInterconnection</text>
-<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">InterconnectionView · render asInterconnectionDiagram · model a064c51b9f0b</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">InterconnectionView · render asInterconnectionDiagram · model 44a51812c862</text>
 <line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
 <g data-el="context.ldsda.deviceHardware">
 <rect x="250" y="104" width="990" height="668" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
@@ -30,7 +30,7 @@
 <text x="499.8" y="208.5" font-size="14" fill="#0F172A" font-weight="700">SoC software</text>
 <text x="602.5" y="208" font-size="11" fill="#64748B">openpilot · WP-S-03 §8</text>
 <rect x="815.8" y="195.5" width="30.2" height="17" rx="8.5" fill="#475569"/><text x="830.9" y="207.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">QM</text>
-<text x="456" y="656" font-size="9.5" fill="#C2410C" font-weight="700">SM-25 · 26 · 27 · 28 · 30 · 31 · 32 · 33 · 34 · 37 · 43</text>
+<text x="456" y="656" font-size="9.5" fill="#C2410C" font-weight="700">SM-25 · 26 · 27 · 28 · 30 · 31 · 32 · 33 · 34 · 37 · 43 · 44 · 45</text>
 </g>
 <g data-el="context.ldsda.safetyFirmware">
 <rect x="876" y="182" width="348" height="404" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>

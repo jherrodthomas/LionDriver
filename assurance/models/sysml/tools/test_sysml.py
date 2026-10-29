@@ -56,7 +56,7 @@ class Reader(unittest.TestCase):
 
   def test_model_loads(self):
     m = sysml_lite.load()
-    self.assertEqual(len(m.mechanisms), 43)
+    self.assertEqual(len(m.mechanisms), 45)
     self.assertEqual(m.find("P-SW").short, "E-03")
     e = m.find("panda.safety.toyota.eps_fault")
     self.assertEqual(e.integrity(), "C")
@@ -305,7 +305,7 @@ class Extension(unittest.TestCase):
 
   def test_function_steps_are_not_mechanisms(self):
     self.assertNotIn("F-01", self.m.mechanisms)
-    self.assertEqual(len(self.m.mechanisms), 43)
+    self.assertEqual(len(self.m.mechanisms), 45)
 
   def test_zones_inherit_and_boundaries_join_zones(self):
     self.assertEqual(self.m.find("host.pandad").zone(), "Z2")

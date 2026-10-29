@@ -651,6 +651,8 @@ package LionDriverArchitecture {
             perform LionDriverMechanisms::accFaultReaction;
             perform LionDriverMechanisms::stockAebIndication;
             perform LionDriverMechanisms::accCancelOnFault;
+            perform LionDriverMechanisms::startupFaultCodeCheck;
+            perform LionDriverMechanisms::stockAebStandDown;
         }
         part <'E-02'> mlModels : MlModels {
             @Zone { id = "Z2"; }

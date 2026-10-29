@@ -1,16 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="1149" viewBox="0 0 1240 1149" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="1187" viewBox="0 0 1240 1187" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
 <title id="t">V-04. Safety mechanism allocation (SysML v2 view mechanismAllocation)</title>
 <desc id="d">Allocation view generated from the SysML v2 model: each safety mechanism of WP-S-03 §6 against the elements that perform it, grouped by the first performing element, with its diagnostic-coverage target and the technical safety requirements it implements.</desc>
 <defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter></defs>
-<rect width="1240" height="1149" fill="#FFFFFF"/>
+<rect width="1240" height="1187" fill="#FFFFFF"/>
 <text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-04 · Safety mechanism allocation</text>
 <text x="40" y="69" font-size="12.5" fill="#64748B">Which element performs each of SM-01 to SM-43 (perform statements of the model), with the DC target and TSRs of WP-S-03 §6</text>
 <text x="1200" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::mechanismAllocation</text>
-<text x="1200" y="62" font-size="11" fill="#64748B" text-anchor="end">AllocationView · render asElementTable · model a064c51b9f0b</text>
+<text x="1200" y="62" font-size="11" fill="#64748B" text-anchor="end">AllocationView · render asElementTable · model 44a51812c862</text>
 <line x1="40" y1="86" x2="1200" y2="86" stroke="#E2E8F0"/>
 <rect x="419.1" y="116" width="35.8" height="18" rx="9" fill="#475569"/><text x="437" y="128.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-01</text>
 <text x="437" y="150" font-size="9.5" fill="#334155" text-anchor="middle">SoC software</text>
-<text x="437" y="182" font-size="13" fill="#475569" font-weight="700" text-anchor="middle">11</text>
+<text x="437" y="182" font-size="13" fill="#475569" font-weight="700" text-anchor="middle">13</text>
 <rect x="492.1" y="116" width="37.8" height="18" rx="9" fill="#4F46E5"/><text x="511" y="128.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-02</text>
 <text x="511" y="150" font-size="9.5" fill="#334155" text-anchor="middle">ML models</text>
 <text x="511" y="182" font-size="13" fill="#4F46E5" font-weight="700" text-anchor="middle">1</text>
@@ -47,7 +47,7 @@
 <circle cx="437" cy="224.5" r="5.6" fill="#475569"/>
 <circle cx="511" cy="224.5" r="5.6" fill="#4F46E5"/>
 <rect x="868" y="216.5" width="29.4" height="16" rx="8" fill="#E2E8F0"/><text x="882.7" y="227.7" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">QM</text>
-<text x="1018" y="227.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">608, 609, 610, 611, 612</text>
+<text x="1018" y="227.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">608, 609, 610, 611, 612, 635</text>
 </g>
 <g data-sm="SM-27">
 <rect x="40" y="234" width="1160" height="19" rx="3" fill="#F8FAFC"/>
@@ -121,300 +121,316 @@
 <rect x="868" y="387.5" width="29.4" height="16" rx="8" fill="#E2E8F0"/><text x="882.7" y="398.7" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">QM</text>
 <text x="1018" y="398.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">303</text>
 </g>
-<line x1="40" y1="409" x2="1200" y2="409" stroke="#E2E8F0"/>
+<g data-sm="SM-44">
+<rect x="40" y="405" width="1160" height="19" rx="3" fill="#FFFFFF"/>
+<text x="46" y="418.1" font-size="10" fill="#C2410C" font-weight="700">SM-44</text>
+<text x="96" y="418.1" font-size="10.5" fill="#0F172A">Start-up fault-code entry check</text>
+<circle cx="437" cy="414.5" r="5.6" fill="#475569"/>
+<rect x="868" y="406.5" width="29.4" height="16" rx="8" fill="#E2E8F0"/><text x="882.7" y="417.7" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">QM</text>
+<text x="1018" y="417.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">629</text>
+</g>
+<g data-sm="SM-45">
+<rect x="40" y="424" width="1160" height="19" rx="3" fill="#F8FAFC"/>
+<text x="46" y="437.1" font-size="10" fill="#C2410C" font-weight="700">SM-45</text>
+<text x="96" y="437.1" font-size="10.5" fill="#0F172A">Stock-AEB stand-down</text>
+<circle cx="437" cy="433.5" r="5.6" fill="#475569"/>
+<rect x="868" y="425.5" width="29.4" height="16" rx="8" fill="#E2E8F0"/><text x="882.7" y="436.7" font-size="9" fill="#334155" font-weight="700" text-anchor="middle">QM</text>
+<text x="1018" y="436.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">713</text>
+</g>
+<line x1="40" y1="447" x2="1200" y2="447" stroke="#E2E8F0"/>
 <g data-sm="SM-01">
-<rect x="40" y="413" width="1160" height="19" rx="3" fill="#FFFFFF"/>
-<text x="46" y="426.1" font-size="10" fill="#C2410C" font-weight="700">SM-01</text>
-<text x="96" y="426.1" font-size="10.5" fill="#0F172A">Torque magnitude limit (speed-dependent)</text>
-<circle cx="585" cy="422.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="414.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="425.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
-<text x="1018" y="425.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">101, 102</text>
+<rect x="40" y="451" width="1160" height="19" rx="3" fill="#FFFFFF"/>
+<text x="46" y="464.1" font-size="10" fill="#C2410C" font-weight="700">SM-01</text>
+<text x="96" y="464.1" font-size="10.5" fill="#0F172A">Torque magnitude limit (speed-dependent)</text>
+<circle cx="585" cy="460.5" r="5.6" fill="#C2410C"/>
+<rect x="868" y="452.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="463.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
+<text x="1018" y="463.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">101, 102</text>
 </g>
 <g data-sm="SM-02">
-<rect x="40" y="432" width="1160" height="19" rx="3" fill="#F8FAFC"/>
-<text x="46" y="445.1" font-size="10" fill="#C2410C" font-weight="700">SM-02</text>
-<text x="96" y="445.1" font-size="10.5" fill="#0F172A">Torque rate and RT-window limit</text>
-<circle cx="585" cy="441.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="433.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="444.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
-<text x="1018" y="444.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">103</text>
-</g>
-<g data-sm="SM-03">
-<rect x="40" y="451" width="1160" height="19" rx="3" fill="#FFFFFF"/>
-<text x="46" y="464.1" font-size="10" fill="#C2410C" font-weight="700">SM-03</text>
-<text x="96" y="464.1" font-size="10.5" fill="#0F172A">Measured-torque tracking</text>
-<circle cx="585" cy="460.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="452.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="463.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
-<text x="1018" y="463.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">104</text>
-</g>
-<g data-sm="SM-04">
 <rect x="40" y="470" width="1160" height="19" rx="3" fill="#F8FAFC"/>
-<text x="46" y="483.1" font-size="10" fill="#C2410C" font-weight="700">SM-04</text>
-<text x="96" y="483.1" font-size="10.5" fill="#0F172A">Authority gating (PCM edge, brake, gas, steer request)</text>
+<text x="46" y="483.1" font-size="10" fill="#C2410C" font-weight="700">SM-02</text>
+<text x="96" y="483.1" font-size="10.5" fill="#0F172A">Torque rate and RT-window limit</text>
 <circle cx="585" cy="479.5" r="5.6" fill="#C2410C"/>
 <rect x="868" y="471.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="482.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
-<text x="1018" y="482.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">105, 106, 107, 203, 301, 302,…</text>
+<text x="1018" y="482.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">103</text>
 </g>
-<g data-sm="SM-05">
+<g data-sm="SM-03">
 <rect x="40" y="489" width="1160" height="19" rx="3" fill="#FFFFFF"/>
-<text x="46" y="502.1" font-size="10" fill="#C2410C" font-weight="700">SM-05</text>
-<text x="96" y="502.1" font-size="10.5" fill="#0F172A">Driver-torque override monitor</text>
+<text x="46" y="502.1" font-size="10" fill="#C2410C" font-weight="700">SM-03</text>
+<text x="96" y="502.1" font-size="10.5" fill="#0F172A">Measured-torque tracking</text>
 <circle cx="585" cy="498.5" r="5.6" fill="#C2410C"/>
 <rect x="868" y="490.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="501.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
-<text x="1018" y="501.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">304, 628</text>
+<text x="1018" y="501.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">104</text>
+</g>
+<g data-sm="SM-04">
+<rect x="40" y="508" width="1160" height="19" rx="3" fill="#F8FAFC"/>
+<text x="46" y="521.1" font-size="10" fill="#C2410C" font-weight="700">SM-04</text>
+<text x="96" y="521.1" font-size="10.5" fill="#0F172A">Authority gating (PCM edge, brake, gas, steer request)</text>
+<circle cx="585" cy="517.5" r="5.6" fill="#C2410C"/>
+<rect x="868" y="509.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="520.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
+<text x="1018" y="520.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">105, 106, 107, 203, 301, 302,…</text>
+</g>
+<g data-sm="SM-05">
+<rect x="40" y="527" width="1160" height="19" rx="3" fill="#FFFFFF"/>
+<text x="46" y="540.1" font-size="10" fill="#C2410C" font-weight="700">SM-05</text>
+<text x="96" y="540.1" font-size="10.5" fill="#0F172A">Driver-torque override monitor</text>
+<circle cx="585" cy="536.5" r="5.6" fill="#C2410C"/>
+<rect x="868" y="528.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="539.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
+<text x="1018" y="539.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">304, 628</text>
 </g>
 <g data-sm="SM-06">
-<rect x="40" y="508" width="1160" height="19" rx="3" fill="#F8FAFC"/>
-<text x="46" y="521.1" font-size="10" fill="#C2410C" font-weight="700">SM-06</text>
-<text x="96" y="521.1" font-size="10.5" fill="#0F172A">EPS status monitor</text>
-<circle cx="585" cy="517.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="509.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="520.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
-<text x="1018" y="520.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">110, 607</text>
+<rect x="40" y="546" width="1160" height="19" rx="3" fill="#F8FAFC"/>
+<text x="46" y="559.1" font-size="10" fill="#C2410C" font-weight="700">SM-06</text>
+<text x="96" y="559.1" font-size="10.5" fill="#0F172A">EPS status monitor</text>
+<circle cx="585" cy="555.5" r="5.6" fill="#C2410C"/>
+<rect x="868" y="547.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="558.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
+<text x="1018" y="558.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">110, 607</text>
 </g>
 <g data-sm="SM-07">
-<rect x="40" y="527" width="1160" height="19" rx="3" fill="#FFFFFF"/>
-<text x="46" y="540.1" font-size="10" fill="#C2410C" font-weight="700">SM-07</text>
-<text x="96" y="540.1" font-size="10.5" fill="#0F172A">Longitudinal bounds and jerk limits</text>
-<circle cx="585" cy="536.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="528.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="539.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
-<text x="1018" y="539.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">201, 202, 203, 204, 205, 206,…</text>
+<rect x="40" y="565" width="1160" height="19" rx="3" fill="#FFFFFF"/>
+<text x="46" y="578.1" font-size="10" fill="#C2410C" font-weight="700">SM-07</text>
+<text x="96" y="578.1" font-size="10.5" fill="#0F172A">Longitudinal bounds and jerk limits</text>
+<circle cx="585" cy="574.5" r="5.6" fill="#C2410C"/>
+<rect x="868" y="566.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="577.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
+<text x="1018" y="577.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">201, 202, 203, 204, 205, 206,…</text>
 </g>
 <g data-sm="SM-08">
-<rect x="40" y="546" width="1160" height="19" rx="3" fill="#F8FAFC"/>
-<text x="46" y="559.1" font-size="10" fill="#C2410C" font-weight="700">SM-08</text>
-<text x="96" y="559.1" font-size="10.5" fill="#0F172A">Active safe-state frame</text>
-<circle cx="585" cy="555.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="547.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="558.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
-<text x="1018" y="558.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">108, 109</text>
+<rect x="40" y="584" width="1160" height="19" rx="3" fill="#F8FAFC"/>
+<text x="46" y="597.1" font-size="10" fill="#C2410C" font-weight="700">SM-08</text>
+<text x="96" y="597.1" font-size="10.5" fill="#0F172A">Active safe-state frame</text>
+<circle cx="585" cy="593.5" r="5.6" fill="#C2410C"/>
+<rect x="868" y="585.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="596.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
+<text x="1018" y="596.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">108, 109</text>
 </g>
 <g data-sm="SM-09">
-<rect x="40" y="565" width="1160" height="19" rx="3" fill="#FFFFFF"/>
-<text x="46" y="578.1" font-size="10" fill="#C2410C" font-weight="700">SM-09</text>
-<text x="96" y="578.1" font-size="10.5" fill="#0F172A">RX timeout</text>
-<circle cx="585" cy="574.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="566.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="577.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
-<text x="1018" y="577.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">401</text>
-</g>
-<g data-sm="SM-10">
-<rect x="40" y="584" width="1160" height="19" rx="3" fill="#F8FAFC"/>
-<text x="46" y="597.1" font-size="10" fill="#C2410C" font-weight="700">SM-10</text>
-<text x="96" y="597.1" font-size="10.5" fill="#0F172A">RX checksum + length</text>
-<circle cx="585" cy="593.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="585.5" width="29.6" height="16" rx="8" fill="#FED7AA"/><text x="882.8" y="596.7" font-size="9" fill="#7C2D12" font-weight="700" text-anchor="middle">low</text>
-<text x="1018" y="596.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">402</text>
-</g>
-<g data-sm="SM-11">
 <rect x="40" y="603" width="1160" height="19" rx="3" fill="#FFFFFF"/>
-<text x="46" y="616.1" font-size="10" fill="#C2410C" font-weight="700">SM-11</text>
-<text x="96" y="616.1" font-size="10.5" fill="#0F172A">RX rate, frozen-content and cross-checks</text>
+<text x="46" y="616.1" font-size="10" fill="#C2410C" font-weight="700">SM-09</text>
+<text x="96" y="616.1" font-size="10.5" fill="#0F172A">RX timeout</text>
 <circle cx="585" cy="612.5" r="5.6" fill="#C2410C"/>
 <rect x="868" y="604.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="615.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
-<text x="1018" y="615.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">403, 404, 405</text>
+<text x="1018" y="615.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">401</text>
 </g>
-<g data-sm="SM-13">
+<g data-sm="SM-10">
 <rect x="40" y="622" width="1160" height="19" rx="3" fill="#F8FAFC"/>
-<text x="46" y="635.1" font-size="10" fill="#C2410C" font-weight="700">SM-13</text>
-<text x="96" y="635.1" font-size="10.5" fill="#0F172A">Command-frame freshness</text>
-<line x1="585" y1="631.5" x2="659" y2="631.5" stroke="#CBD5E1" stroke-width="2.4" stroke-linecap="round"/>
+<text x="46" y="635.1" font-size="10" fill="#C2410C" font-weight="700">SM-10</text>
+<text x="96" y="635.1" font-size="10.5" fill="#0F172A">RX checksum + length</text>
 <circle cx="585" cy="631.5" r="5.6" fill="#C2410C"/>
-<circle cx="659" cy="631.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="623.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="634.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
-<text x="1018" y="634.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">408, 614</text>
+<rect x="868" y="623.5" width="29.6" height="16" rx="8" fill="#FED7AA"/><text x="882.8" y="634.7" font-size="9" fill="#7C2D12" font-weight="700" text-anchor="middle">low</text>
+<text x="1018" y="634.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">402</text>
 </g>
-<g data-sm="SM-24">
+<g data-sm="SM-11">
 <rect x="40" y="641" width="1160" height="19" rx="3" fill="#FFFFFF"/>
-<text x="46" y="654.1" font-size="10" fill="#C2410C" font-weight="700">SM-24</text>
-<text x="96" y="654.1" font-size="10.5" fill="#0F172A">Relay malfunction detection (traffic-based)</text>
+<text x="46" y="654.1" font-size="10" fill="#C2410C" font-weight="700">SM-11</text>
+<text x="96" y="654.1" font-size="10.5" fill="#0F172A">RX rate, frozen-content and cross-checks</text>
 <circle cx="585" cy="650.5" r="5.6" fill="#C2410C"/>
 <rect x="868" y="642.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="653.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
-<text x="1018" y="653.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">710</text>
+<text x="1018" y="653.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">403, 404, 405</text>
 </g>
-<g data-sm="SM-29">
+<g data-sm="SM-13">
 <rect x="40" y="660" width="1160" height="19" rx="3" fill="#F8FAFC"/>
-<text x="46" y="673.1" font-size="10" fill="#C2410C" font-weight="700">SM-29</text>
-<text x="96" y="673.1" font-size="10.5" fill="#0F172A">Engagement follows PCM cruise; revoke on SoC "not eng…</text>
+<text x="46" y="673.1" font-size="10" fill="#C2410C" font-weight="700">SM-13</text>
+<text x="96" y="673.1" font-size="10.5" fill="#0F172A">Command-frame freshness</text>
 <line x1="585" y1="669.5" x2="659" y2="669.5" stroke="#CBD5E1" stroke-width="2.4" stroke-linecap="round"/>
 <circle cx="585" cy="669.5" r="5.6" fill="#C2410C"/>
 <circle cx="659" cy="669.5" r="5.6" fill="#C2410C"/>
 <rect x="868" y="661.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="672.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
-<text x="1018" y="672.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">307(a), 309</text>
+<text x="1018" y="672.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">408, 614</text>
+</g>
+<g data-sm="SM-24">
+<rect x="40" y="679" width="1160" height="19" rx="3" fill="#FFFFFF"/>
+<text x="46" y="692.1" font-size="10" fill="#C2410C" font-weight="700">SM-24</text>
+<text x="96" y="692.1" font-size="10.5" fill="#0F172A">Relay malfunction detection (traffic-based)</text>
+<circle cx="585" cy="688.5" r="5.6" fill="#C2410C"/>
+<rect x="868" y="680.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="691.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
+<text x="1018" y="691.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">710</text>
+</g>
+<g data-sm="SM-29">
+<rect x="40" y="698" width="1160" height="19" rx="3" fill="#F8FAFC"/>
+<text x="46" y="711.1" font-size="10" fill="#C2410C" font-weight="700">SM-29</text>
+<text x="96" y="711.1" font-size="10.5" fill="#0F172A">Engagement follows PCM cruise; revoke on SoC "not eng…</text>
+<line x1="585" y1="707.5" x2="659" y2="707.5" stroke="#CBD5E1" stroke-width="2.4" stroke-linecap="round"/>
+<circle cx="585" cy="707.5" r="5.6" fill="#C2410C"/>
+<circle cx="659" cy="707.5" r="5.6" fill="#C2410C"/>
+<rect x="868" y="699.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="710.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
+<text x="1018" y="710.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">307(a), 309</text>
 </g>
 <g data-sm="SM-35">
-<rect x="40" y="679" width="1160" height="19" rx="3" fill="#FFFFFF"/>
-<text x="46" y="692.1" font-size="10" fill="#C2410C" font-weight="700">SM-35</text>
-<text x="96" y="692.1" font-size="10.5" fill="#0F172A">Forwarding with fixed block list and forwarding supervision</text>
-<line x1="585" y1="688.5" x2="659" y2="688.5" stroke="#CBD5E1" stroke-width="2.4" stroke-linecap="round"/>
-<circle cx="585" cy="688.5" r="5.6" fill="#C2410C"/>
-<circle cx="659" cy="688.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="680.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="691.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
-<text x="1018" y="691.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">704, 707, 711</text>
+<rect x="40" y="717" width="1160" height="19" rx="3" fill="#FFFFFF"/>
+<text x="46" y="730.1" font-size="10" fill="#C2410C" font-weight="700">SM-35</text>
+<text x="96" y="730.1" font-size="10.5" fill="#0F172A">Forwarding with fixed block list and forwarding supervision</text>
+<line x1="585" y1="726.5" x2="659" y2="726.5" stroke="#CBD5E1" stroke-width="2.4" stroke-linecap="round"/>
+<circle cx="585" cy="726.5" r="5.6" fill="#C2410C"/>
+<circle cx="659" cy="726.5" r="5.6" fill="#C2410C"/>
+<rect x="868" y="718.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="729.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
+<text x="1018" y="729.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">704, 707, 711</text>
 </g>
 <g data-sm="SM-36">
-<rect x="40" y="698" width="1160" height="19" rx="3" fill="#F8FAFC"/>
-<text x="46" y="711.1" font-size="10" fill="#C2410C" font-weight="700">SM-36</text>
-<text x="96" y="711.1" font-size="10.5" fill="#0F172A">PCS and DSU message TX gate</text>
-<circle cx="585" cy="707.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="699.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="710.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
-<text x="1018" y="710.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">705</text>
+<rect x="40" y="736" width="1160" height="19" rx="3" fill="#F8FAFC"/>
+<text x="46" y="749.1" font-size="10" fill="#C2410C" font-weight="700">SM-36</text>
+<text x="96" y="749.1" font-size="10.5" fill="#0F172A">PCS and DSU message TX gate</text>
+<circle cx="585" cy="745.5" r="5.6" fill="#C2410C"/>
+<rect x="868" y="737.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="748.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
+<text x="1018" y="748.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">705</text>
 </g>
 <g data-sm="SM-39">
-<rect x="40" y="717" width="1160" height="19" rx="3" fill="#FFFFFF"/>
-<text x="46" y="730.1" font-size="10" fill="#C2410C" font-weight="700">SM-39</text>
-<text x="96" y="730.1" font-size="10.5" fill="#0F172A">Per-ID TX rate supervision</text>
-<circle cx="585" cy="726.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="718.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="729.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
-<text x="1018" y="729.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">518</text>
+<rect x="40" y="755" width="1160" height="19" rx="3" fill="#FFFFFF"/>
+<text x="46" y="768.1" font-size="10" fill="#C2410C" font-weight="700">SM-39</text>
+<text x="96" y="768.1" font-size="10.5" fill="#0F172A">Per-ID TX rate supervision</text>
+<circle cx="585" cy="764.5" r="5.6" fill="#C2410C"/>
+<rect x="868" y="756.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="767.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
+<text x="1018" y="767.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">518</text>
 </g>
-<line x1="40" y1="740" x2="1200" y2="740" stroke="#E2E8F0"/>
+<line x1="40" y1="778" x2="1200" y2="778" stroke="#E2E8F0"/>
 <g data-sm="SM-12">
-<rect x="40" y="744" width="1160" height="19" rx="3" fill="#F8FAFC"/>
-<text x="46" y="757.1" font-size="10" fill="#C2410C" font-weight="700">SM-12</text>
-<text x="96" y="757.1" font-size="10.5" fill="#0F172A">Heartbeat + control-loop liveness</text>
-<circle cx="659" cy="753.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="745.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="756.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
-<text x="1018" y="756.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">407, 409</text>
+<rect x="40" y="782" width="1160" height="19" rx="3" fill="#F8FAFC"/>
+<text x="46" y="795.1" font-size="10" fill="#C2410C" font-weight="700">SM-12</text>
+<text x="96" y="795.1" font-size="10.5" fill="#0F172A">Heartbeat + control-loop liveness</text>
+<circle cx="659" cy="791.5" r="5.6" fill="#C2410C"/>
+<rect x="868" y="783.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="794.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
+<text x="1018" y="794.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">407, 409</text>
 </g>
 <g data-sm="SM-14">
-<rect x="40" y="763" width="1160" height="19" rx="3" fill="#FFFFFF"/>
-<text x="46" y="776.1" font-size="10" fill="#C2410C" font-weight="700">SM-14</text>
-<text x="96" y="776.1" font-size="10.5" fill="#0F172A">SPI CRC + sequence counter + bounds checks</text>
-<circle cx="659" cy="772.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="764.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="775.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
-<text x="1018" y="775.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">410, 411, 412, 413</text>
+<rect x="40" y="801" width="1160" height="19" rx="3" fill="#FFFFFF"/>
+<text x="46" y="814.1" font-size="10" fill="#C2410C" font-weight="700">SM-14</text>
+<text x="96" y="814.1" font-size="10.5" fill="#0F172A">SPI CRC + sequence counter + bounds checks</text>
+<circle cx="659" cy="810.5" r="5.6" fill="#C2410C"/>
+<rect x="868" y="802.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="813.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
+<text x="1018" y="813.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">410, 411, 412, 413</text>
 </g>
 <g data-sm="SM-15">
-<rect x="40" y="782" width="1160" height="19" rx="3" fill="#F8FAFC"/>
-<text x="46" y="795.1" font-size="10" fill="#C2410C" font-weight="700">SM-15</text>
-<text x="96" y="795.1" font-size="10.5" fill="#0F172A">Independent watchdog</text>
-<line x1="659" y1="791.5" x2="733" y2="791.5" stroke="#CBD5E1" stroke-width="2.4" stroke-linecap="round"/>
-<circle cx="659" cy="791.5" r="5.6" fill="#C2410C"/>
-<circle cx="733" cy="791.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="783.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="794.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
-<text x="1018" y="794.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">501</text>
-</g>
-<g data-sm="SM-16">
-<rect x="40" y="801" width="1160" height="19" rx="3" fill="#FFFFFF"/>
-<text x="46" y="814.1" font-size="10" fill="#C2410C" font-weight="700">SM-16</text>
-<text x="96" y="814.1" font-size="10.5" fill="#0F172A">Fault → safe state</text>
-<circle cx="659" cy="810.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="802.5" width="47.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="891.7" y="813.7" font-size="9" fill="#64748B" font-weight="700" text-anchor="middle">enabler</text>
-<text x="1018" y="813.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">406, 502, 706</text>
-</g>
-<g data-sm="SM-17">
 <rect x="40" y="820" width="1160" height="19" rx="3" fill="#F8FAFC"/>
-<text x="46" y="833.1" font-size="10" fill="#C2410C" font-weight="700">SM-17</text>
-<text x="96" y="833.1" font-size="10.5" fill="#0F172A">RAM ECC, flash CRC, register checks</text>
+<text x="46" y="833.1" font-size="10" fill="#C2410C" font-weight="700">SM-15</text>
+<text x="96" y="833.1" font-size="10.5" fill="#0F172A">Independent watchdog</text>
 <line x1="659" y1="829.5" x2="733" y2="829.5" stroke="#CBD5E1" stroke-width="2.4" stroke-linecap="round"/>
 <circle cx="659" cy="829.5" r="5.6" fill="#C2410C"/>
 <circle cx="733" cy="829.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="821.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="832.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
-<text x="1018" y="832.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">503</text>
+<rect x="868" y="821.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="832.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
+<text x="1018" y="832.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">501</text>
 </g>
-<g data-sm="SM-22">
+<g data-sm="SM-16">
 <rect x="40" y="839" width="1160" height="19" rx="3" fill="#FFFFFF"/>
-<text x="46" y="852.1" font-size="10" fill="#C2410C" font-weight="700">SM-22</text>
-<text x="96" y="852.1" font-size="10.5" fill="#0F172A">Configuration lock and command gating</text>
+<text x="46" y="852.1" font-size="10" fill="#C2410C" font-weight="700">SM-16</text>
+<text x="96" y="852.1" font-size="10.5" fill="#0F172A">Fault → safe state</text>
 <circle cx="659" cy="848.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="840.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="851.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
-<text x="1018" y="851.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">511, 512, 513, 514, 619, 620</text>
+<rect x="868" y="840.5" width="47.4" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="891.7" y="851.7" font-size="9" fill="#64748B" font-weight="700" text-anchor="middle">enabler</text>
+<text x="1018" y="851.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">406, 502, 706</text>
 </g>
-<g data-sm="SM-23">
+<g data-sm="SM-17">
 <rect x="40" y="858" width="1160" height="19" rx="3" fill="#F8FAFC"/>
-<text x="46" y="871.1" font-size="10" fill="#C2410C" font-weight="700">SM-23</text>
-<text x="96" y="871.1" font-size="10.5" fill="#0F172A">SoC-independent siren</text>
+<text x="46" y="871.1" font-size="10" fill="#C2410C" font-weight="700">SM-17</text>
+<text x="96" y="871.1" font-size="10.5" fill="#0F172A">RAM ECC, flash CRC, register checks</text>
 <line x1="659" y1="867.5" x2="733" y2="867.5" stroke="#CBD5E1" stroke-width="2.4" stroke-linecap="round"/>
 <circle cx="659" cy="867.5" r="5.6" fill="#C2410C"/>
 <circle cx="733" cy="867.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="859.5" width="49.8" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="892.9" y="870.7" font-size="9" fill="#64748B" font-weight="700" text-anchor="middle">warning</text>
-<text x="1018" y="870.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">516</text>
+<rect x="868" y="859.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="870.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
+<text x="1018" y="870.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">503</text>
 </g>
-<g data-sm="SM-38">
+<g data-sm="SM-22">
 <rect x="40" y="877" width="1160" height="19" rx="3" fill="#FFFFFF"/>
-<text x="46" y="890.1" font-size="10" fill="#C2410C" font-weight="700">SM-38</text>
-<text x="96" y="890.1" font-size="10.5" fill="#0F172A">Post-load TX read-back</text>
-<line x1="659" y1="886.5" x2="733" y2="886.5" stroke="#CBD5E1" stroke-width="2.4" stroke-linecap="round"/>
+<text x="46" y="890.1" font-size="10" fill="#C2410C" font-weight="700">SM-22</text>
+<text x="96" y="890.1" font-size="10.5" fill="#0F172A">Configuration lock and command gating</text>
 <circle cx="659" cy="886.5" r="5.6" fill="#C2410C"/>
-<circle cx="733" cy="886.5" r="5.6" fill="#C2410C"/>
 <rect x="868" y="878.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="889.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
-<text x="1018" y="889.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">517</text>
+<text x="1018" y="889.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">511, 512, 513, 514, 619, 620</text>
 </g>
-<g data-sm="SM-40">
+<g data-sm="SM-23">
 <rect x="40" y="896" width="1160" height="19" rx="3" fill="#F8FAFC"/>
-<text x="46" y="909.1" font-size="10" fill="#C2410C" font-weight="700">SM-40</text>
-<text x="96" y="909.1" font-size="10.5" fill="#0F172A">Car-side transceiver supervision</text>
+<text x="46" y="909.1" font-size="10" fill="#C2410C" font-weight="700">SM-23</text>
+<text x="96" y="909.1" font-size="10.5" fill="#0F172A">SoC-independent siren</text>
 <line x1="659" y1="905.5" x2="733" y2="905.5" stroke="#CBD5E1" stroke-width="2.4" stroke-linecap="round"/>
 <circle cx="659" cy="905.5" r="5.6" fill="#C2410C"/>
 <circle cx="733" cy="905.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="897.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="908.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
-<text x="1018" y="908.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">508</text>
+<rect x="868" y="897.5" width="49.8" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="892.9" y="908.7" font-size="9" fill="#64748B" font-weight="700" text-anchor="middle">warning</text>
+<text x="1018" y="908.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">516</text>
 </g>
-<g data-sm="SM-41">
+<g data-sm="SM-38">
 <rect x="40" y="915" width="1160" height="19" rx="3" fill="#FFFFFF"/>
-<text x="46" y="928.1" font-size="10" fill="#C2410C" font-weight="700">SM-41</text>
-<text x="96" y="928.1" font-size="10.5" fill="#0F172A">MCU die-temperature monitor</text>
+<text x="46" y="928.1" font-size="10" fill="#C2410C" font-weight="700">SM-38</text>
+<text x="96" y="928.1" font-size="10.5" fill="#0F172A">Post-load TX read-back</text>
 <line x1="659" y1="924.5" x2="733" y2="924.5" stroke="#CBD5E1" stroke-width="2.4" stroke-linecap="round"/>
 <circle cx="659" cy="924.5" r="5.6" fill="#C2410C"/>
 <circle cx="733" cy="924.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="916.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="927.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
-<text x="1018" y="927.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">509</text>
+<rect x="868" y="916.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="927.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
+<text x="1018" y="927.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">517</text>
 </g>
-<line x1="40" y1="938" x2="1200" y2="938" stroke="#E2E8F0"/>
+<g data-sm="SM-40">
+<rect x="40" y="934" width="1160" height="19" rx="3" fill="#F8FAFC"/>
+<text x="46" y="947.1" font-size="10" fill="#C2410C" font-weight="700">SM-40</text>
+<text x="96" y="947.1" font-size="10.5" fill="#0F172A">Car-side transceiver supervision</text>
+<line x1="659" y1="943.5" x2="733" y2="943.5" stroke="#CBD5E1" stroke-width="2.4" stroke-linecap="round"/>
+<circle cx="659" cy="943.5" r="5.6" fill="#C2410C"/>
+<circle cx="733" cy="943.5" r="5.6" fill="#C2410C"/>
+<rect x="868" y="935.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="946.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
+<text x="1018" y="946.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">508</text>
+</g>
+<g data-sm="SM-41">
+<rect x="40" y="953" width="1160" height="19" rx="3" fill="#FFFFFF"/>
+<text x="46" y="966.1" font-size="10" fill="#C2410C" font-weight="700">SM-41</text>
+<text x="96" y="966.1" font-size="10.5" fill="#0F172A">MCU die-temperature monitor</text>
+<line x1="659" y1="962.5" x2="733" y2="962.5" stroke="#CBD5E1" stroke-width="2.4" stroke-linecap="round"/>
+<circle cx="659" cy="962.5" r="5.6" fill="#C2410C"/>
+<circle cx="733" cy="962.5" r="5.6" fill="#C2410C"/>
+<rect x="868" y="954.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="965.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
+<text x="1018" y="965.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">509</text>
+</g>
+<line x1="40" y1="976" x2="1200" y2="976" stroke="#E2E8F0"/>
 <g data-sm="SM-18">
-<rect x="40" y="942" width="1160" height="19" rx="3" fill="#F8FAFC"/>
-<text x="46" y="955.1" font-size="10" fill="#C2410C" font-weight="700">SM-18</text>
-<text x="96" y="955.1" font-size="10.5" fill="#0F172A">Clock monitor (CSS + cross-check)</text>
-<circle cx="733" cy="951.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="943.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="954.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
-<text x="1018" y="954.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">504</text>
+<rect x="40" y="980" width="1160" height="19" rx="3" fill="#F8FAFC"/>
+<text x="46" y="993.1" font-size="10" fill="#C2410C" font-weight="700">SM-18</text>
+<text x="96" y="993.1" font-size="10.5" fill="#0F172A">Clock monitor (CSS + cross-check)</text>
+<circle cx="733" cy="989.5" r="5.6" fill="#C2410C"/>
+<rect x="868" y="981.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="992.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
+<text x="1018" y="992.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">504</text>
 </g>
 <g data-sm="SM-19">
-<rect x="40" y="961" width="1160" height="19" rx="3" fill="#FFFFFF"/>
-<text x="46" y="974.1" font-size="10" fill="#C2410C" font-weight="700">SM-19</text>
-<text x="96" y="974.1" font-size="10.5" fill="#0F172A">Supply monitor (BOR, PVD, input voltage)</text>
-<circle cx="733" cy="970.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="962.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="973.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
-<text x="1018" y="973.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">505</text>
-</g>
-<g data-sm="SM-20">
-<rect x="40" y="980" width="1160" height="19" rx="3" fill="#F8FAFC"/>
-<text x="46" y="993.1" font-size="10" fill="#C2410C" font-weight="700">SM-20</text>
-<text x="96" y="993.1" font-size="10.5" fill="#0F172A">Relay readback and latch</text>
-<line x1="733" y1="989.5" x2="807" y2="989.5" stroke="#CBD5E1" stroke-width="2.4" stroke-linecap="round"/>
-<circle cx="733" cy="989.5" r="5.6" fill="#C2410C"/>
-<circle cx="807" cy="989.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="981.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="992.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
-<text x="1018" y="992.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">506, 710, 712</text>
-</g>
-<g data-sm="SM-21">
 <rect x="40" y="999" width="1160" height="19" rx="3" fill="#FFFFFF"/>
-<text x="46" y="1012.1" font-size="10" fill="#C2410C" font-weight="700">SM-21</text>
-<text x="96" y="1012.1" font-size="10.5" fill="#0F172A">MPU isolation</text>
+<text x="46" y="1012.1" font-size="10" fill="#C2410C" font-weight="700">SM-19</text>
+<text x="96" y="1012.1" font-size="10.5" fill="#0F172A">Supply monitor (BOR, PVD, input voltage)</text>
 <circle cx="733" cy="1008.5" r="5.6" fill="#C2410C"/>
 <rect x="868" y="1000.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="1011.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
-<text x="1018" y="1011.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">507</text>
+<text x="1018" y="1011.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">505</text>
 </g>
-<g data-sm="SM-42">
+<g data-sm="SM-20">
 <rect x="40" y="1018" width="1160" height="19" rx="3" fill="#F8FAFC"/>
-<text x="46" y="1031.1" font-size="10" fill="#C2410C" font-weight="700">SM-42</text>
-<text x="96" y="1031.1" font-size="10.5" fill="#0F172A">Harness orientation and connection detection</text>
+<text x="46" y="1031.1" font-size="10" fill="#C2410C" font-weight="700">SM-20</text>
+<text x="96" y="1031.1" font-size="10.5" fill="#0F172A">Relay readback and latch</text>
 <line x1="733" y1="1027.5" x2="807" y2="1027.5" stroke="#CBD5E1" stroke-width="2.4" stroke-linecap="round"/>
 <circle cx="733" cy="1027.5" r="5.6" fill="#C2410C"/>
 <circle cx="807" cy="1027.5" r="5.6" fill="#C2410C"/>
-<rect x="868" y="1019.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="1030.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
-<text x="1018" y="1030.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">701</text>
+<rect x="868" y="1019.5" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="884.6" y="1030.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
+<text x="1018" y="1030.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">506, 710, 712</text>
 </g>
-<line x1="40" y1="1041" x2="1200" y2="1041" stroke="#E2E8F0"/>
-<line x1="40" y1="1057" x2="1200" y2="1057" stroke="#E2E8F0"/>
-<circle cx="45" cy="1083" r="5" fill="#475569"/>
-<text x="55" y="1087" font-size="10.5" fill="#334155">performed by a QM element</text>
-<circle cx="219.44" cy="1083" r="5" fill="#4F46E5"/>
-<text x="229.4" y="1087" font-size="10.5" fill="#334155">by an ML element</text>
-<circle cx="342.745" cy="1083" r="5" fill="#C2410C"/>
-<text x="352.7" y="1087" font-size="10.5" fill="#334155">by an ASIL C element</text>
-<line x1="479.005" y1="1083" x2="505.005" y2="1083" stroke="#CBD5E1" stroke-width="2.4" stroke-linecap="round"/>
-<text x="513" y="1087" font-size="10.5" fill="#334155">shared mechanism</text>
-<rect x="631" y="1075" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="647.6" y="1086.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
-<rect x="670.2" y="1075" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="695" y="1086.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
-<rect x="725.7" y="1075" width="29.6" height="16" rx="8" fill="#FED7AA"/><text x="740.5" y="1086.2" font-size="9" fill="#7C2D12" font-weight="700" text-anchor="middle">low</text>
-<text x="765.3" y="1087" font-size="10.5" fill="#334155">DC target</text>
-<text x="40" y="1133" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+<g data-sm="SM-21">
+<rect x="40" y="1037" width="1160" height="19" rx="3" fill="#FFFFFF"/>
+<text x="46" y="1050.1" font-size="10" fill="#C2410C" font-weight="700">SM-21</text>
+<text x="96" y="1050.1" font-size="10.5" fill="#0F172A">MPU isolation</text>
+<circle cx="733" cy="1046.5" r="5.6" fill="#C2410C"/>
+<rect x="868" y="1038.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="1049.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
+<text x="1018" y="1049.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">507</text>
+</g>
+<g data-sm="SM-42">
+<rect x="40" y="1056" width="1160" height="19" rx="3" fill="#F8FAFC"/>
+<text x="46" y="1069.1" font-size="10" fill="#C2410C" font-weight="700">SM-42</text>
+<text x="96" y="1069.1" font-size="10.5" fill="#0F172A">Harness orientation and connection detection</text>
+<line x1="733" y1="1065.5" x2="807" y2="1065.5" stroke="#CBD5E1" stroke-width="2.4" stroke-linecap="round"/>
+<circle cx="733" cy="1065.5" r="5.6" fill="#C2410C"/>
+<circle cx="807" cy="1065.5" r="5.6" fill="#C2410C"/>
+<rect x="868" y="1057.5" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="892.7" y="1068.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
+<text x="1018" y="1068.9" font-size="9.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">701</text>
+</g>
+<line x1="40" y1="1079" x2="1200" y2="1079" stroke="#E2E8F0"/>
+<line x1="40" y1="1095" x2="1200" y2="1095" stroke="#E2E8F0"/>
+<circle cx="45" cy="1121" r="5" fill="#475569"/>
+<text x="55" y="1125" font-size="10.5" fill="#334155">performed by a QM element</text>
+<circle cx="219.44" cy="1121" r="5" fill="#4F46E5"/>
+<text x="229.4" y="1125" font-size="10.5" fill="#334155">by an ML element</text>
+<circle cx="342.745" cy="1121" r="5" fill="#C2410C"/>
+<text x="352.7" y="1125" font-size="10.5" fill="#334155">by an ASIL C element</text>
+<line x1="479.005" y1="1121" x2="505.005" y2="1121" stroke="#CBD5E1" stroke-width="2.4" stroke-linecap="round"/>
+<text x="513" y="1125" font-size="10.5" fill="#334155">shared mechanism</text>
+<rect x="631" y="1113" width="33.3" height="16" rx="8" fill="#9A3412"/><text x="647.6" y="1124.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
+<rect x="670.2" y="1113" width="49.5" height="16" rx="8" fill="#FB923C"/><text x="695" y="1124.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
+<rect x="725.7" y="1113" width="29.6" height="16" rx="8" fill="#FED7AA"/><text x="740.5" y="1124.2" font-size="9" fill="#7C2D12" font-weight="700" text-anchor="middle">low</text>
+<text x="765.3" y="1125" font-size="10.5" fill="#334155">DC target</text>
+<text x="40" y="1171" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
 </svg>

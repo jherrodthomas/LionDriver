@@ -1,7 +1,7 @@
 package LionDriverMechanisms {
     doc
     /*
-     * Safety mechanisms SM-01 to SM-43 of WP-S-03 §6 (catalogue as of version 0.15).
+     * Safety mechanisms SM-01 to SM-45 of WP-S-03 §6 (catalogue as of version 0.22).
      * Every column of the §6 row is here (SY-05); tools/gen_tables.py writes the table.
      * The elements that perform each mechanism are declared in LionDriverArchitecture
      * (perform statements), following the Element column of WP-S-03 §6.
@@ -238,7 +238,7 @@ package LionDriverMechanisms {
         doc /* Driver monitoring */
         :>> covers = "inattention (misuse)";
         :>> dcTarget = "QM (SOTIF)";
-        :>> tsr = ("TSR-608", "TSR-609", "TSR-610", "TSR-611", "TSR-612");
+        :>> tsr = ("TSR-608", "TSR-609", "TSR-610", "TSR-611", "TSR-612", "TSR-635");
         :>> element = "E-01/E-02";
         :>> status = "Partial";
         :>> latent = "DM validity (TSR-609)";
@@ -395,5 +395,23 @@ package LionDriverMechanisms {
         :>> element = "E-01";
         :>> status = "Impl (host)";
         :>> latent = "T-VEH (cluster and PCM cue, AOU-12)";
+    }
+    action <'SM-44'> startupFaultCodeCheck : SafetyMechanism {
+        doc /* Start-up fault-code entry check */
+        :>> covers = "engagement with an active EPS or ABS/VSC fault code stored at start-up, or with the read incomplete";
+        :>> dcTarget = "QM";
+        :>> tsr = "TSR-629";
+        :>> element = "E-01";
+        :>> status = "Impl (host)";
+        :>> latent = "T-VEH (VS-SQ-20: whether the reference EPS and ABS/VSC answer UDS 0x19)";
+    }
+    action <'SM-45'> stockAebStandDown : SafetyMechanism {
+        doc /* Stock-AEB stand-down */
+        :>> covers = "positive acceleration requested while the stock system brakes for an AEB event";
+        :>> dcTarget = "QM (B-sup: PCM AEB priority, AOU-04R)";
+        :>> tsr = "TSR-713";
+        :>> element = "E-01";
+        :>> status = "Impl (host, opendbc)";
+        :>> latent = "T-VEH (AOU-04R)";
     }
 }

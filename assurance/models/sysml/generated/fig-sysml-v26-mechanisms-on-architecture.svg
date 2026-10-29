@@ -1,20 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="2638" viewBox="0 0 640 2638" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="2690" viewBox="0 0 640 2690" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
 <title id="t">V-26. Safety mechanisms on the architecture (SysML v2 view mechanismsOnArchitecture)</title>
 <desc id="d">Allocation view generated from the SysML v2 model, drawn at phone width. Top to bottom along the command path: the ML models and SoC software (QM), the SoC to MCU link, the safety layer, platform firmware and safety MCU (ASIL C), the harness and the vehicle CAN. Each element lists the safety mechanisms of WP-S-03 §6 it performs, coloured by diagnostic-coverage target, with the other elements that share the mechanism; between the elements, each interface IF-nn lists the mechanisms that implement a technical safety requirement the interface carries.</desc>
 <defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter></defs>
-<rect width="640" height="2638" fill="#FFFFFF"/>
+<rect width="640" height="2690" fill="#FFFFFF"/>
 <text x="24" y="38" font-size="19" fill="#0F172A" font-weight="700">V-26 · Safety mechanisms on the architecture</text>
 <text x="24" y="60" font-size="12.5" fill="#64748B">SM-01 to SM-43 on the element that performs each (perform statements) and on the interfaces</text>
 <text x="24" y="77" font-size="12.5" fill="#64748B">whose TSRs they implement, along the path from the SoC to the car</text>
-<text x="24" y="96" font-size="10.5" fill="#94A3B8">SysML v2 view LionDriverViews::mechanismsOnArchitecture · model a064c51b9f0b</text>
+<text x="24" y="96" font-size="10.5" fill="#94A3B8">SysML v2 view LionDriverViews::mechanismsOnArchitecture · model 44a51812c862</text>
 <line x1="24" y1="110" x2="616" y2="110" stroke="#E2E8F0"/>
-<text x="24" y="137" font-size="13" fill="#0F172A" font-weight="700">43 mechanisms</text>
-<rect x="137.3" y="124" width="50.6" height="18" rx="9" fill="#9A3412"/><text x="162.6" y="136.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">14 high</text>
-<rect x="193.9" y="124" width="69.1" height="18" rx="9" fill="#FB923C"/><text x="228.5" y="136.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">15 medium</text>
-<rect x="269" y="124" width="39.2" height="18" rx="9" fill="#FED7AA"/><text x="288.6" y="136.8" font-size="10.5" fill="#7C2D12" font-weight="700" text-anchor="middle">1 low</text>
-<rect x="314.2" y="124" width="43.5" height="18" rx="9" fill="#E2E8F0"/><text x="336" y="136.8" font-size="10.5" fill="#334155" font-weight="700" text-anchor="middle">11 QM</text>
-<rect x="363.7" y="124" width="60" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="393.7" y="136.8" font-size="10.5" fill="#64748B" font-weight="700" text-anchor="middle">1 enabler</text>
-<rect x="429.7" y="124" width="62.8" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="461.1" y="136.8" font-size="10.5" fill="#64748B" font-weight="700" text-anchor="middle">1 warning</text>
+<text x="24" y="137" font-size="13" fill="#0F172A" font-weight="700">45 mechanisms</text>
+<rect x="137.1" y="124" width="50.6" height="18" rx="9" fill="#9A3412"/><text x="162.5" y="136.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">14 high</text>
+<rect x="193.8" y="124" width="69.1" height="18" rx="9" fill="#FB923C"/><text x="228.3" y="136.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">15 medium</text>
+<rect x="268.9" y="124" width="39.2" height="18" rx="9" fill="#FED7AA"/><text x="288.5" y="136.8" font-size="10.5" fill="#7C2D12" font-weight="700" text-anchor="middle">1 low</text>
+<rect x="314.1" y="124" width="45.8" height="18" rx="9" fill="#E2E8F0"/><text x="337" y="136.8" font-size="10.5" fill="#334155" font-weight="700" text-anchor="middle">13 QM</text>
+<rect x="365.9" y="124" width="60" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="395.9" y="136.8" font-size="10.5" fill="#64748B" font-weight="700" text-anchor="middle">1 enabler</text>
+<rect x="431.9" y="124" width="62.8" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="463.3" y="136.8" font-size="10.5" fill="#64748B" font-weight="700" text-anchor="middle">1 warning</text>
 <g data-element="E-02">
 <rect x="24" y="158" width="592" height="82" rx="10" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.4"/>
 <rect x="36" y="170" width="39" height="18" rx="9" fill="#4F46E5"/><text x="55.5" y="182.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-02</text>
@@ -28,11 +28,11 @@
 </g>
 </g>
 <g data-element="E-01">
-<rect x="24" y="254" width="592" height="342" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
+<rect x="24" y="254" width="592" height="394" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
 <rect x="36" y="266" width="36.9" height="18" rx="9" fill="#475569"/><text x="54.4" y="278.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-01</text>
 <text x="80.9" y="280" font-size="14" fill="#0F172A" font-weight="700">SoC software</text>
 <rect x="572.9" y="266" width="31.1" height="18" rx="9" fill="#475569"/><text x="588.4" y="278.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">QM</text>
-<text x="564.9" y="280" font-size="13" fill="#475569" font-weight="700" text-anchor="end">11</text>
+<text x="564.9" y="280" font-size="13" fill="#475569" font-weight="700" text-anchor="end">13</text>
 <g data-sm="SM-25"><title>SM-25 Host fault classification and freshness · DC QM</title>
 <rect x="36" y="301" width="48.9" height="18" rx="9" fill="#E2E8F0"/><text x="60.4" y="313.8" font-size="10.5" fill="#334155" font-weight="700" text-anchor="middle">SM-25</text>
 <text x="90.9" y="314" font-size="11.5" fill="#0F172A">Host fault classification and freshness</text>
@@ -78,285 +78,293 @@
 <rect x="36" y="561" width="49.5" height="18" rx="9" fill="#E2E8F0"/><text x="60.7" y="573.8" font-size="10.5" fill="#334155" font-weight="700" text-anchor="middle">SM-43</text>
 <text x="91.5" y="574" font-size="11.5" fill="#0F172A">ACC cancel on every fault-induced disengagement</text>
 </g>
+<g data-sm="SM-44"><title>SM-44 Start-up fault-code entry check · DC QM</title>
+<rect x="36" y="587" width="49.8" height="18" rx="9" fill="#E2E8F0"/><text x="60.9" y="599.8" font-size="10.5" fill="#334155" font-weight="700" text-anchor="middle">SM-44</text>
+<text x="91.8" y="600" font-size="11.5" fill="#0F172A">Start-up fault-code entry check</text>
 </g>
-<line x1="40" y1="600" x2="40" y2="782" stroke="#7C3AED" stroke-width="2.4"/>
-<rect x="58" y="614" width="45.5" height="18" rx="9" fill="#7C3AED"/><text x="80.8" y="626.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-04</text>
-<text x="111.5" y="627" font-size="11.5" fill="#334155" font-weight="600">SPI link, SoC ↔ safety MCU</text>
-<g data-sm="SM-12" data-if="IF-04"><rect x="58" y="636" width="45.1" height="18" rx="9" fill="#FB923C"/><text x="80.5" y="648.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-12</text></g>
-<g data-sm="SM-13" data-if="IF-04"><rect x="108.1" y="636" width="45.3" height="18" rx="9" fill="#9A3412"/><text x="130.8" y="648.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-13</text></g>
-<g data-sm="SM-14" data-if="IF-04"><rect x="158.4" y="636" width="45.6" height="18" rx="9" fill="#9A3412"/><text x="181.2" y="648.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-14</text></g>
-<g data-sm="SM-22" data-if="IF-04"><rect x="209" y="636" width="47.1" height="18" rx="9" fill="#9A3412"/><text x="232.5" y="648.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-22</text></g>
-<rect x="58" y="670" width="51.8" height="18" rx="9" fill="#7C3AED"/><text x="83.9" y="682.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-04b</text>
-<text x="117.8" y="683" font-size="11.5" fill="#334155" font-weight="600">MCU boot and reset lines</text>
-<g data-sm="SM-22" data-if="IF-04b"><rect x="58" y="692" width="47.1" height="18" rx="9" fill="#9A3412"/><text x="81.5" y="704.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-22</text></g>
-<rect x="58" y="726" width="45.5" height="18" rx="9" fill="#0F766E"/><text x="80.8" y="738.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-07</text>
-<text x="111.5" y="739" font-size="11.5" fill="#334155" font-weight="600">Alerts and siren to the driver</text>
-<g data-sm="SM-23" data-if="IF-07"><rect x="58" y="748" width="47.3" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="81.7" y="760.6" font-size="10" fill="#64748B" font-weight="700" text-anchor="middle">SM-23</text></g>
-<g data-sm="SM-25" data-if="IF-07"><rect x="110.3" y="748" width="47.2" height="18" rx="9" fill="#E2E8F0"/><text x="133.9" y="760.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-25</text></g>
+<g data-sm="SM-45"><title>SM-45 Stock-AEB stand-down · DC QM (B-sup: PCM AEB priority, AOU-04R)</title>
+<rect x="36" y="613" width="49.4" height="18" rx="9" fill="#E2E8F0"/><text x="60.7" y="625.8" font-size="10.5" fill="#334155" font-weight="700" text-anchor="middle">SM-45</text>
+<text x="91.4" y="626" font-size="11.5" fill="#0F172A">Stock-AEB stand-down</text>
+</g>
+</g>
+<line x1="40" y1="652" x2="40" y2="834" stroke="#7C3AED" stroke-width="2.4"/>
+<rect x="58" y="666" width="45.5" height="18" rx="9" fill="#7C3AED"/><text x="80.8" y="678.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-04</text>
+<text x="111.5" y="679" font-size="11.5" fill="#334155" font-weight="600">SPI link, SoC ↔ safety MCU</text>
+<g data-sm="SM-12" data-if="IF-04"><rect x="58" y="688" width="45.1" height="18" rx="9" fill="#FB923C"/><text x="80.5" y="700.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-12</text></g>
+<g data-sm="SM-13" data-if="IF-04"><rect x="108.1" y="688" width="45.3" height="18" rx="9" fill="#9A3412"/><text x="130.8" y="700.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-13</text></g>
+<g data-sm="SM-14" data-if="IF-04"><rect x="158.4" y="688" width="45.6" height="18" rx="9" fill="#9A3412"/><text x="181.2" y="700.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-14</text></g>
+<g data-sm="SM-22" data-if="IF-04"><rect x="209" y="688" width="47.1" height="18" rx="9" fill="#9A3412"/><text x="232.5" y="700.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-22</text></g>
+<rect x="58" y="722" width="51.8" height="18" rx="9" fill="#7C3AED"/><text x="83.9" y="734.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-04b</text>
+<text x="117.8" y="735" font-size="11.5" fill="#334155" font-weight="600">MCU boot and reset lines</text>
+<g data-sm="SM-22" data-if="IF-04b"><rect x="58" y="744" width="47.1" height="18" rx="9" fill="#9A3412"/><text x="81.5" y="756.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-22</text></g>
+<rect x="58" y="778" width="45.5" height="18" rx="9" fill="#0F766E"/><text x="80.8" y="790.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-07</text>
+<text x="111.5" y="791" font-size="11.5" fill="#334155" font-weight="600">Alerts and siren to the driver</text>
+<g data-sm="SM-23" data-if="IF-07"><rect x="58" y="800" width="47.3" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="81.7" y="812.6" font-size="10" fill="#64748B" font-weight="700" text-anchor="middle">SM-23</text></g>
+<g data-sm="SM-25" data-if="IF-07"><rect x="110.3" y="800" width="47.2" height="18" rx="9" fill="#E2E8F0"/><text x="133.9" y="812.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-25</text></g>
 <g data-element="E-03a">
-<rect x="24" y="782" width="592" height="498" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
-<rect x="36" y="794" width="45.3" height="18" rx="9" fill="#C2410C"/><text x="58.6" y="806.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-03a</text>
-<text x="89.3" y="808" font-size="14" fill="#0F172A" font-weight="700">Safety layer</text>
-<rect x="582.6" y="794" width="21.4" height="18" rx="9" fill="#C2410C"/><text x="593.3" y="806.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
-<text x="574.6" y="808" font-size="13" fill="#C2410C" font-weight="700" text-anchor="end">17</text>
+<rect x="24" y="834" width="592" height="498" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<rect x="36" y="846" width="45.3" height="18" rx="9" fill="#C2410C"/><text x="58.6" y="858.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-03a</text>
+<text x="89.3" y="860" font-size="14" fill="#0F172A" font-weight="700">Safety layer</text>
+<rect x="582.6" y="846" width="21.4" height="18" rx="9" fill="#C2410C"/><text x="593.3" y="858.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<text x="574.6" y="860" font-size="13" fill="#C2410C" font-weight="700" text-anchor="end">17</text>
 <g data-sm="SM-01"><title>SM-01 Torque magnitude limit (speed-dependent) · DC high (for SoC command faults)</title>
-<rect x="36" y="829" width="47.1" height="18" rx="9" fill="#9A3412"/><text x="59.5" y="841.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-01</text>
-<text x="89.1" y="842" font-size="11.5" fill="#0F172A">Torque magnitude limit (speed-dependent)</text>
+<rect x="36" y="881" width="47.1" height="18" rx="9" fill="#9A3412"/><text x="59.5" y="893.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-01</text>
+<text x="89.1" y="894" font-size="11.5" fill="#0F172A">Torque magnitude limit (speed-dependent)</text>
 </g>
 <g data-sm="SM-02"><title>SM-02 Torque rate and RT-window limit · DC high</title>
-<rect x="36" y="855" width="49.2" height="18" rx="9" fill="#9A3412"/><text x="60.6" y="867.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-02</text>
-<text x="91.2" y="868" font-size="11.5" fill="#0F172A">Torque rate and RT-window limit</text>
+<rect x="36" y="907" width="49.2" height="18" rx="9" fill="#9A3412"/><text x="60.6" y="919.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-02</text>
+<text x="91.2" y="920" font-size="11.5" fill="#0F172A">Torque rate and RT-window limit</text>
 </g>
 <g data-sm="SM-03"><title>SM-03 Measured-torque tracking · DC medium (depends on `0x260` integrity)</title>
-<rect x="36" y="881" width="49.4" height="18" rx="9" fill="#FB923C"/><text x="60.7" y="893.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-03</text>
-<text x="91.4" y="894" font-size="11.5" fill="#0F172A">Measured-torque tracking</text>
+<rect x="36" y="933" width="49.4" height="18" rx="9" fill="#FB923C"/><text x="60.7" y="945.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-03</text>
+<text x="91.4" y="946" font-size="11.5" fill="#0F172A">Measured-torque tracking</text>
 </g>
 <g data-sm="SM-04"><title>SM-04 Authority gating (PCM edge, brake, gas, steer request) · DC high</title>
-<rect x="36" y="907" width="49.7" height="18" rx="9" fill="#9A3412"/><text x="60.8" y="919.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-04</text>
-<text x="91.7" y="920" font-size="11.5" fill="#0F172A">Authority gating (PCM edge, brake, gas, steer request)</text>
+<rect x="36" y="959" width="49.7" height="18" rx="9" fill="#9A3412"/><text x="60.8" y="971.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-04</text>
+<text x="91.7" y="972" font-size="11.5" fill="#0F172A">Authority gating (PCM edge, brake, gas, steer request)</text>
 </g>
 <g data-sm="SM-05"><title>SM-05 Driver-torque override monitor · DC medium</title>
-<rect x="36" y="933" width="49.3" height="18" rx="9" fill="#FB923C"/><text x="60.6" y="945.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-05</text>
-<text x="91.3" y="946" font-size="11.5" fill="#0F172A">Driver-torque override monitor</text>
+<rect x="36" y="985" width="49.3" height="18" rx="9" fill="#FB923C"/><text x="60.6" y="997.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-05</text>
+<text x="91.3" y="998" font-size="11.5" fill="#0F172A">Driver-torque override monitor</text>
 </g>
 <g data-sm="SM-06"><title>SM-06 EPS status monitor · DC medium</title>
-<rect x="36" y="959" width="49.4" height="18" rx="9" fill="#FB923C"/><text x="60.7" y="971.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-06</text>
-<text x="91.4" y="972" font-size="11.5" fill="#0F172A">EPS status monitor</text>
+<rect x="36" y="1011" width="49.4" height="18" rx="9" fill="#FB923C"/><text x="60.7" y="1023.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-06</text>
+<text x="91.4" y="1024" font-size="11.5" fill="#0F172A">EPS status monitor</text>
 </g>
 <g data-sm="SM-07"><title>SM-07 Longitudinal bounds and jerk limits · DC high</title>
-<rect x="36" y="985" width="48.6" height="18" rx="9" fill="#9A3412"/><text x="60.3" y="997.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-07</text>
-<text x="90.7" y="998" font-size="11.5" fill="#0F172A">Longitudinal bounds and jerk limits</text>
+<rect x="36" y="1037" width="48.6" height="18" rx="9" fill="#9A3412"/><text x="60.3" y="1049.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-07</text>
+<text x="90.7" y="1050" font-size="11.5" fill="#0F172A">Longitudinal bounds and jerk limits</text>
 </g>
 <g data-sm="SM-08"><title>SM-08 Active safe-state frame · DC high</title>
-<rect x="36" y="1011" width="49.4" height="18" rx="9" fill="#9A3412"/><text x="60.7" y="1023.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-08</text>
-<text x="91.4" y="1024" font-size="11.5" fill="#0F172A">Active safe-state frame</text>
+<rect x="36" y="1063" width="49.4" height="18" rx="9" fill="#9A3412"/><text x="60.7" y="1075.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-08</text>
+<text x="91.4" y="1076" font-size="11.5" fill="#0F172A">Active safe-state frame</text>
 </g>
 <g data-sm="SM-09"><title>SM-09 RX timeout · DC medium (alone)</title>
-<rect x="36" y="1037" width="49.4" height="18" rx="9" fill="#FB923C"/><text x="60.7" y="1049.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-09</text>
-<text x="91.4" y="1050" font-size="11.5" fill="#0F172A">RX timeout</text>
+<rect x="36" y="1089" width="49.4" height="18" rx="9" fill="#FB923C"/><text x="60.7" y="1101.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-09</text>
+<text x="91.4" y="1102" font-size="11.5" fill="#0F172A">RX timeout</text>
 </g>
 <g data-sm="SM-10"><title>SM-10 RX checksum + length · DC low (8-bit additive)</title>
-<rect x="36" y="1063" width="47.1" height="18" rx="9" fill="#FED7AA"/><text x="59.5" y="1075.8" font-size="10.5" fill="#7C2D12" font-weight="700" text-anchor="middle">SM-10</text>
-<text x="89.1" y="1076" font-size="11.5" fill="#0F172A">RX checksum + length</text>
+<rect x="36" y="1115" width="47.1" height="18" rx="9" fill="#FED7AA"/><text x="59.5" y="1127.8" font-size="10.5" fill="#7C2D12" font-weight="700" text-anchor="middle">SM-10</text>
+<text x="89.1" y="1128" font-size="11.5" fill="#0F172A">RX checksum + length</text>
 </g>
 <g data-sm="SM-11"><title>SM-11 RX rate, frozen-content and cross-checks · DC medium (combined with SM-09/10)</title>
-<rect x="36" y="1089" width="44.6" height="18" rx="9" fill="#FB923C"/><text x="58.3" y="1101.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-11</text>
-<text x="86.6" y="1102" font-size="11.5" fill="#0F172A">RX rate, frozen-content and cross-checks</text>
+<rect x="36" y="1141" width="44.6" height="18" rx="9" fill="#FB923C"/><text x="58.3" y="1153.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-11</text>
+<text x="86.6" y="1154" font-size="11.5" fill="#0F172A">RX rate, frozen-content and cross-checks</text>
 </g>
 <g data-sm="SM-13"><title>SM-13 Command-frame freshness · DC high</title>
-<rect x="36" y="1115" width="46.9" height="18" rx="9" fill="#9A3412"/><text x="59.4" y="1127.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-13</text>
-<text x="88.9" y="1128" font-size="11.5" fill="#0F172A">Command-frame freshness</text>
-<text x="604" y="1128" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-03b</text>
-</g>
-<g data-sm="SM-24"><title>SM-24 Relay malfunction detection (traffic-based) · DC medium</title>
-<rect x="36" y="1141" width="49.3" height="18" rx="9" fill="#FB923C"/><text x="60.6" y="1153.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-24</text>
-<text x="91.3" y="1154" font-size="11.5" fill="#0F172A">Relay malfunction detection (traffic-based)</text>
-</g>
-<g data-sm="SM-29"><title>SM-29 Engagement follows PCM cruise; revoke on SoC "not engaged" · DC high</title>
-<rect x="36" y="1167" width="49" height="18" rx="9" fill="#9A3412"/><text x="60.5" y="1179.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-29</text>
-<text x="91" y="1180" font-size="11.5" fill="#0F172A">Engagement follows PCM cruise; revoke on SoC "not engaged"</text>
+<rect x="36" y="1167" width="46.9" height="18" rx="9" fill="#9A3412"/><text x="59.4" y="1179.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-13</text>
+<text x="88.9" y="1180" font-size="11.5" fill="#0F172A">Command-frame freshness</text>
 <text x="604" y="1180" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-03b</text>
 </g>
+<g data-sm="SM-24"><title>SM-24 Relay malfunction detection (traffic-based) · DC medium</title>
+<rect x="36" y="1193" width="49.3" height="18" rx="9" fill="#FB923C"/><text x="60.6" y="1205.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-24</text>
+<text x="91.3" y="1206" font-size="11.5" fill="#0F172A">Relay malfunction detection (traffic-based)</text>
+</g>
+<g data-sm="SM-29"><title>SM-29 Engagement follows PCM cruise; revoke on SoC "not engaged" · DC high</title>
+<rect x="36" y="1219" width="49" height="18" rx="9" fill="#9A3412"/><text x="60.5" y="1231.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-29</text>
+<text x="91" y="1232" font-size="11.5" fill="#0F172A">Engagement follows PCM cruise; revoke on SoC "not engaged"</text>
+<text x="604" y="1232" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-03b</text>
+</g>
 <g data-sm="SM-35"><title>SM-35 Forwarding with fixed block list and forwarding supervision · DC high (block list, design); medium (overflow counting)</title>
-<rect x="36" y="1193" width="49.1" height="18" rx="9" fill="#9A3412"/><text x="60.5" y="1205.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-35</text>
-<text x="91.1" y="1206" font-size="11.5" fill="#0F172A">Forwarding with fixed block list and forwarding supervision</text>
-<text x="604" y="1206" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-03b</text>
+<rect x="36" y="1245" width="49.1" height="18" rx="9" fill="#9A3412"/><text x="60.5" y="1257.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-35</text>
+<text x="91.1" y="1258" font-size="11.5" fill="#0F172A">Forwarding with fixed block list and forwarding supervision</text>
+<text x="604" y="1258" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-03b</text>
 </g>
 <g data-sm="SM-36"><title>SM-36 PCS and DSU message TX gate · DC high (when implemented)</title>
-<rect x="36" y="1219" width="49.2" height="18" rx="9" fill="#9A3412"/><text x="60.6" y="1231.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-36</text>
-<text x="91.2" y="1232" font-size="11.5" fill="#0F172A">PCS and DSU message TX gate</text>
+<rect x="36" y="1271" width="49.2" height="18" rx="9" fill="#9A3412"/><text x="60.6" y="1283.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-36</text>
+<text x="91.2" y="1284" font-size="11.5" fill="#0F172A">PCS and DSU message TX gate</text>
 </g>
 <g data-sm="SM-39"><title>SM-39 Per-ID TX rate supervision · DC medium</title>
-<rect x="36" y="1245" width="49.2" height="18" rx="9" fill="#FB923C"/><text x="60.6" y="1257.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-39</text>
-<text x="91.2" y="1258" font-size="11.5" fill="#0F172A">Per-ID TX rate supervision</text>
+<rect x="36" y="1297" width="49.2" height="18" rx="9" fill="#FB923C"/><text x="60.6" y="1309.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-39</text>
+<text x="91.2" y="1310" font-size="11.5" fill="#0F172A">Per-ID TX rate supervision</text>
 </g>
 </g>
 <g data-element="E-03b">
-<rect x="24" y="1294" width="592" height="394" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
-<rect x="36" y="1306" width="45.8" height="18" rx="9" fill="#C2410C"/><text x="58.9" y="1318.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-03b</text>
-<text x="89.8" y="1320" font-size="14" fill="#0F172A" font-weight="700">Platform firmware</text>
-<rect x="582.6" y="1306" width="21.4" height="18" rx="9" fill="#C2410C"/><text x="593.3" y="1318.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
-<text x="574.6" y="1320" font-size="13" fill="#C2410C" font-weight="700" text-anchor="end">13</text>
+<rect x="24" y="1346" width="592" height="394" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<rect x="36" y="1358" width="45.8" height="18" rx="9" fill="#C2410C"/><text x="58.9" y="1370.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-03b</text>
+<text x="89.8" y="1372" font-size="14" fill="#0F172A" font-weight="700">Platform firmware</text>
+<rect x="582.6" y="1358" width="21.4" height="18" rx="9" fill="#C2410C"/><text x="593.3" y="1370.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<text x="574.6" y="1372" font-size="13" fill="#C2410C" font-weight="700" text-anchor="end">13</text>
 <g data-sm="SM-12"><title>SM-12 Heartbeat + control-loop liveness · DC medium</title>
-<rect x="36" y="1341" width="46.7" height="18" rx="9" fill="#FB923C"/><text x="59.3" y="1353.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-12</text>
-<text x="88.7" y="1354" font-size="11.5" fill="#0F172A">Heartbeat + control-loop liveness</text>
+<rect x="36" y="1393" width="46.7" height="18" rx="9" fill="#FB923C"/><text x="59.3" y="1405.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-12</text>
+<text x="88.7" y="1406" font-size="11.5" fill="#0F172A">Heartbeat + control-loop liveness</text>
 </g>
 <g data-sm="SM-13"><title>SM-13 Command-frame freshness · DC high</title>
-<rect x="36" y="1367" width="46.9" height="18" rx="9" fill="#9A3412"/><text x="59.4" y="1379.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-13</text>
-<text x="88.9" y="1380" font-size="11.5" fill="#0F172A">Command-frame freshness</text>
-<text x="604" y="1380" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-03a</text>
+<rect x="36" y="1419" width="46.9" height="18" rx="9" fill="#9A3412"/><text x="59.4" y="1431.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-13</text>
+<text x="88.9" y="1432" font-size="11.5" fill="#0F172A">Command-frame freshness</text>
+<text x="604" y="1432" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-03a</text>
 </g>
 <g data-sm="SM-14"><title>SM-14 SPI CRC + sequence counter + bounds checks · DC high (with CRC-16/32)</title>
-<rect x="36" y="1393" width="47.2" height="18" rx="9" fill="#9A3412"/><text x="59.6" y="1405.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-14</text>
-<text x="89.2" y="1406" font-size="11.5" fill="#0F172A">SPI CRC + sequence counter + bounds checks</text>
+<rect x="36" y="1445" width="47.2" height="18" rx="9" fill="#9A3412"/><text x="59.6" y="1457.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-14</text>
+<text x="89.2" y="1458" font-size="11.5" fill="#0F172A">SPI CRC + sequence counter + bounds checks</text>
 </g>
 <g data-sm="SM-15"><title>SM-15 Independent watchdog · DC medium (timeout only) / high (window + logical checkpoint)</title>
-<rect x="36" y="1419" width="46.8" height="18" rx="9" fill="#FB923C"/><text x="59.4" y="1431.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-15</text>
-<text x="88.8" y="1432" font-size="11.5" fill="#0F172A">Independent watchdog</text>
-<text x="604" y="1432" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-04a</text>
-</g>
-<g data-sm="SM-16"><title>SM-16 Fault → safe state · DC — (enabler)</title>
-<rect x="36" y="1445" width="46.9" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="59.4" y="1457.8" font-size="10.5" fill="#64748B" font-weight="700" text-anchor="middle">SM-16</text>
-<text x="88.9" y="1458" font-size="11.5" fill="#0F172A">Fault → safe state</text>
-</g>
-<g data-sm="SM-17"><title>SM-17 RAM ECC, flash CRC, register checks · DC high (ECC), medium (register)</title>
-<rect x="36" y="1471" width="46.1" height="18" rx="9" fill="#9A3412"/><text x="59.1" y="1483.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-17</text>
-<text x="88.1" y="1484" font-size="11.5" fill="#0F172A">RAM ECC, flash CRC, register checks</text>
+<rect x="36" y="1471" width="46.8" height="18" rx="9" fill="#FB923C"/><text x="59.4" y="1483.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-15</text>
+<text x="88.8" y="1484" font-size="11.5" fill="#0F172A">Independent watchdog</text>
 <text x="604" y="1484" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-04a</text>
 </g>
-<g data-sm="SM-22"><title>SM-22 Configuration lock and command gating · DC high</title>
-<rect x="36" y="1497" width="48.8" height="18" rx="9" fill="#9A3412"/><text x="60.4" y="1509.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-22</text>
-<text x="90.8" y="1510" font-size="11.5" fill="#0F172A">Configuration lock and command gating</text>
+<g data-sm="SM-16"><title>SM-16 Fault → safe state · DC — (enabler)</title>
+<rect x="36" y="1497" width="46.9" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="59.4" y="1509.8" font-size="10.5" fill="#64748B" font-weight="700" text-anchor="middle">SM-16</text>
+<text x="88.9" y="1510" font-size="11.5" fill="#0F172A">Fault → safe state</text>
 </g>
-<g data-sm="SM-23"><title>SM-23 SoC-independent siren · DC — (warning)</title>
-<rect x="36" y="1523" width="49" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="60.5" y="1535.8" font-size="10.5" fill="#64748B" font-weight="700" text-anchor="middle">SM-23</text>
-<text x="91" y="1536" font-size="11.5" fill="#0F172A">SoC-independent siren</text>
+<g data-sm="SM-17"><title>SM-17 RAM ECC, flash CRC, register checks · DC high (ECC), medium (register)</title>
+<rect x="36" y="1523" width="46.1" height="18" rx="9" fill="#9A3412"/><text x="59.1" y="1535.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-17</text>
+<text x="88.1" y="1536" font-size="11.5" fill="#0F172A">RAM ECC, flash CRC, register checks</text>
 <text x="604" y="1536" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-04a</text>
 </g>
+<g data-sm="SM-22"><title>SM-22 Configuration lock and command gating · DC high</title>
+<rect x="36" y="1549" width="48.8" height="18" rx="9" fill="#9A3412"/><text x="60.4" y="1561.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-22</text>
+<text x="90.8" y="1562" font-size="11.5" fill="#0F172A">Configuration lock and command gating</text>
+</g>
+<g data-sm="SM-23"><title>SM-23 SoC-independent siren · DC — (warning)</title>
+<rect x="36" y="1575" width="49" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="60.5" y="1587.8" font-size="10.5" fill="#64748B" font-weight="700" text-anchor="middle">SM-23</text>
+<text x="91" y="1588" font-size="11.5" fill="#0F172A">SoC-independent siren</text>
+<text x="604" y="1588" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-04a</text>
+</g>
 <g data-sm="SM-29"><title>SM-29 Engagement follows PCM cruise; revoke on SoC "not engaged" · DC high</title>
-<rect x="36" y="1549" width="49" height="18" rx="9" fill="#9A3412"/><text x="60.5" y="1561.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-29</text>
-<text x="91" y="1562" font-size="11.5" fill="#0F172A">Engagement follows PCM cruise; revoke on SoC "not engaged"</text>
-<text x="604" y="1562" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-03a</text>
+<rect x="36" y="1601" width="49" height="18" rx="9" fill="#9A3412"/><text x="60.5" y="1613.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-29</text>
+<text x="91" y="1614" font-size="11.5" fill="#0F172A">Engagement follows PCM cruise; revoke on SoC "not engaged"</text>
+<text x="604" y="1614" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-03a</text>
 </g>
 <g data-sm="SM-35"><title>SM-35 Forwarding with fixed block list and forwarding supervision · DC high (block list, design); medium (overflow counting)</title>
-<rect x="36" y="1575" width="49.1" height="18" rx="9" fill="#9A3412"/><text x="60.5" y="1587.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-35</text>
-<text x="91.1" y="1588" font-size="11.5" fill="#0F172A">Forwarding with fixed block list and forwarding supervision</text>
-<text x="604" y="1588" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-03a</text>
+<rect x="36" y="1627" width="49.1" height="18" rx="9" fill="#9A3412"/><text x="60.5" y="1639.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-35</text>
+<text x="91.1" y="1640" font-size="11.5" fill="#0F172A">Forwarding with fixed block list and forwarding supervision</text>
+<text x="604" y="1640" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-03a</text>
 </g>
 <g data-sm="SM-38"><title>SM-38 Post-load TX read-back · DC high</title>
-<rect x="36" y="1601" width="49.2" height="18" rx="9" fill="#9A3412"/><text x="60.6" y="1613.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-38</text>
-<text x="91.2" y="1614" font-size="11.5" fill="#0F172A">Post-load TX read-back</text>
-<text x="604" y="1614" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-04a</text>
+<rect x="36" y="1653" width="49.2" height="18" rx="9" fill="#9A3412"/><text x="60.6" y="1665.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-38</text>
+<text x="91.2" y="1666" font-size="11.5" fill="#0F172A">Post-load TX read-back</text>
+<text x="604" y="1666" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-04a</text>
 </g>
 <g data-sm="SM-40"><title>SM-40 Car-side transceiver supervision · DC medium</title>
-<rect x="36" y="1627" width="49.7" height="18" rx="9" fill="#FB923C"/><text x="60.8" y="1639.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-40</text>
-<text x="91.7" y="1640" font-size="11.5" fill="#0F172A">Car-side transceiver supervision</text>
-<text x="604" y="1640" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-04a</text>
+<rect x="36" y="1679" width="49.7" height="18" rx="9" fill="#FB923C"/><text x="60.8" y="1691.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-40</text>
+<text x="91.7" y="1692" font-size="11.5" fill="#0F172A">Car-side transceiver supervision</text>
+<text x="604" y="1692" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-04a</text>
 </g>
 <g data-sm="SM-41"><title>SM-41 MCU die-temperature monitor · DC medium</title>
-<rect x="36" y="1653" width="47.2" height="18" rx="9" fill="#FB923C"/><text x="59.6" y="1665.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-41</text>
-<text x="89.2" y="1666" font-size="11.5" fill="#0F172A">MCU die-temperature monitor</text>
-<text x="604" y="1666" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-04a</text>
+<rect x="36" y="1705" width="47.2" height="18" rx="9" fill="#FB923C"/><text x="59.6" y="1717.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-41</text>
+<text x="89.2" y="1718" font-size="11.5" fill="#0F172A">MCU die-temperature monitor</text>
+<text x="604" y="1718" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-04a</text>
 </g>
 </g>
 <g data-element="E-04a">
-<rect x="24" y="1702" width="592" height="342" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
-<rect x="36" y="1714" width="45.6" height="18" rx="9" fill="#C2410C"/><text x="58.8" y="1726.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-04a</text>
-<text x="89.6" y="1728" font-size="14" fill="#0F172A" font-weight="700">STM32H7 safety MCU</text>
-<rect x="582.6" y="1714" width="21.4" height="18" rx="9" fill="#C2410C"/><text x="593.3" y="1726.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
-<text x="574.6" y="1728" font-size="13" fill="#C2410C" font-weight="700" text-anchor="end">11</text>
+<rect x="24" y="1754" width="592" height="342" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<rect x="36" y="1766" width="45.6" height="18" rx="9" fill="#C2410C"/><text x="58.8" y="1778.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-04a</text>
+<text x="89.6" y="1780" font-size="14" fill="#0F172A" font-weight="700">STM32H7 safety MCU</text>
+<rect x="582.6" y="1766" width="21.4" height="18" rx="9" fill="#C2410C"/><text x="593.3" y="1778.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<text x="574.6" y="1780" font-size="13" fill="#C2410C" font-weight="700" text-anchor="end">11</text>
 <g data-sm="SM-15"><title>SM-15 Independent watchdog · DC medium (timeout only) / high (window + logical checkpoint)</title>
-<rect x="36" y="1749" width="46.8" height="18" rx="9" fill="#FB923C"/><text x="59.4" y="1761.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-15</text>
-<text x="88.8" y="1762" font-size="11.5" fill="#0F172A">Independent watchdog</text>
-<text x="604" y="1762" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-03b</text>
+<rect x="36" y="1801" width="46.8" height="18" rx="9" fill="#FB923C"/><text x="59.4" y="1813.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-15</text>
+<text x="88.8" y="1814" font-size="11.5" fill="#0F172A">Independent watchdog</text>
+<text x="604" y="1814" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-03b</text>
 </g>
 <g data-sm="SM-17"><title>SM-17 RAM ECC, flash CRC, register checks · DC high (ECC), medium (register)</title>
-<rect x="36" y="1775" width="46.1" height="18" rx="9" fill="#9A3412"/><text x="59.1" y="1787.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-17</text>
-<text x="88.1" y="1788" font-size="11.5" fill="#0F172A">RAM ECC, flash CRC, register checks</text>
-<text x="604" y="1788" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-03b</text>
+<rect x="36" y="1827" width="46.1" height="18" rx="9" fill="#9A3412"/><text x="59.1" y="1839.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-17</text>
+<text x="88.1" y="1840" font-size="11.5" fill="#0F172A">RAM ECC, flash CRC, register checks</text>
+<text x="604" y="1840" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-03b</text>
 </g>
 <g data-sm="SM-18"><title>SM-18 Clock monitor (CSS + cross-check) · DC medium</title>
-<rect x="36" y="1801" width="46.9" height="18" rx="9" fill="#FB923C"/><text x="59.4" y="1813.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-18</text>
-<text x="88.9" y="1814" font-size="11.5" fill="#0F172A">Clock monitor (CSS + cross-check)</text>
+<rect x="36" y="1853" width="46.9" height="18" rx="9" fill="#FB923C"/><text x="59.4" y="1865.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-18</text>
+<text x="88.9" y="1866" font-size="11.5" fill="#0F172A">Clock monitor (CSS + cross-check)</text>
 </g>
 <g data-sm="SM-19"><title>SM-19 Supply monitor (BOR, PVD, input voltage) · DC medium</title>
-<rect x="36" y="1827" width="46.9" height="18" rx="9" fill="#FB923C"/><text x="59.4" y="1839.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-19</text>
-<text x="88.9" y="1840" font-size="11.5" fill="#0F172A">Supply monitor (BOR, PVD, input voltage)</text>
+<rect x="36" y="1879" width="46.9" height="18" rx="9" fill="#FB923C"/><text x="59.4" y="1891.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-19</text>
+<text x="88.9" y="1892" font-size="11.5" fill="#0F172A">Supply monitor (BOR, PVD, input voltage)</text>
 </g>
 <g data-sm="SM-20"><title>SM-20 Relay readback and latch · DC high (with readback)</title>
-<rect x="36" y="1853" width="49.2" height="18" rx="9" fill="#9A3412"/><text x="60.6" y="1865.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-20</text>
-<text x="91.2" y="1866" font-size="11.5" fill="#0F172A">Relay readback and latch</text>
-<text x="604" y="1866" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-05</text>
+<rect x="36" y="1905" width="49.2" height="18" rx="9" fill="#9A3412"/><text x="60.6" y="1917.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-20</text>
+<text x="91.2" y="1918" font-size="11.5" fill="#0F172A">Relay readback and latch</text>
+<text x="604" y="1918" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-05</text>
 </g>
 <g data-sm="SM-21"><title>SM-21 MPU isolation · DC medium</title>
-<rect x="36" y="1879" width="46.7" height="18" rx="9" fill="#FB923C"/><text x="59.3" y="1891.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-21</text>
-<text x="88.7" y="1892" font-size="11.5" fill="#0F172A">MPU isolation</text>
+<rect x="36" y="1931" width="46.7" height="18" rx="9" fill="#FB923C"/><text x="59.3" y="1943.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-21</text>
+<text x="88.7" y="1944" font-size="11.5" fill="#0F172A">MPU isolation</text>
 </g>
 <g data-sm="SM-23"><title>SM-23 SoC-independent siren · DC — (warning)</title>
-<rect x="36" y="1905" width="49" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="60.5" y="1917.8" font-size="10.5" fill="#64748B" font-weight="700" text-anchor="middle">SM-23</text>
-<text x="91" y="1918" font-size="11.5" fill="#0F172A">SoC-independent siren</text>
-<text x="604" y="1918" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-03b</text>
-</g>
-<g data-sm="SM-38"><title>SM-38 Post-load TX read-back · DC high</title>
-<rect x="36" y="1931" width="49.2" height="18" rx="9" fill="#9A3412"/><text x="60.6" y="1943.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-38</text>
-<text x="91.2" y="1944" font-size="11.5" fill="#0F172A">Post-load TX read-back</text>
-<text x="604" y="1944" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-03b</text>
-</g>
-<g data-sm="SM-40"><title>SM-40 Car-side transceiver supervision · DC medium</title>
-<rect x="36" y="1957" width="49.7" height="18" rx="9" fill="#FB923C"/><text x="60.8" y="1969.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-40</text>
-<text x="91.7" y="1970" font-size="11.5" fill="#0F172A">Car-side transceiver supervision</text>
+<rect x="36" y="1957" width="49" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="60.5" y="1969.8" font-size="10.5" fill="#64748B" font-weight="700" text-anchor="middle">SM-23</text>
+<text x="91" y="1970" font-size="11.5" fill="#0F172A">SoC-independent siren</text>
 <text x="604" y="1970" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-03b</text>
 </g>
-<g data-sm="SM-41"><title>SM-41 MCU die-temperature monitor · DC medium</title>
-<rect x="36" y="1983" width="47.2" height="18" rx="9" fill="#FB923C"/><text x="59.6" y="1995.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-41</text>
-<text x="89.2" y="1996" font-size="11.5" fill="#0F172A">MCU die-temperature monitor</text>
+<g data-sm="SM-38"><title>SM-38 Post-load TX read-back · DC high</title>
+<rect x="36" y="1983" width="49.2" height="18" rx="9" fill="#9A3412"/><text x="60.6" y="1995.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-38</text>
+<text x="91.2" y="1996" font-size="11.5" fill="#0F172A">Post-load TX read-back</text>
 <text x="604" y="1996" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-03b</text>
 </g>
+<g data-sm="SM-40"><title>SM-40 Car-side transceiver supervision · DC medium</title>
+<rect x="36" y="2009" width="49.7" height="18" rx="9" fill="#FB923C"/><text x="60.8" y="2021.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-40</text>
+<text x="91.7" y="2022" font-size="11.5" fill="#0F172A">Car-side transceiver supervision</text>
+<text x="604" y="2022" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-03b</text>
+</g>
+<g data-sm="SM-41"><title>SM-41 MCU die-temperature monitor · DC medium</title>
+<rect x="36" y="2035" width="47.2" height="18" rx="9" fill="#FB923C"/><text x="59.6" y="2047.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-41</text>
+<text x="89.2" y="2048" font-size="11.5" fill="#0F172A">MCU die-temperature monitor</text>
+<text x="604" y="2048" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-03b</text>
+</g>
 <g data-sm="SM-42"><title>SM-42 Harness orientation and connection detection · DC medium</title>
-<rect x="36" y="2009" width="49.3" height="18" rx="9" fill="#FB923C"/><text x="60.6" y="2021.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-42</text>
-<text x="91.3" y="2022" font-size="11.5" fill="#0F172A">Harness orientation and connection detection</text>
-<text x="604" y="2022" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-05</text>
+<rect x="36" y="2061" width="49.3" height="18" rx="9" fill="#FB923C"/><text x="60.6" y="2073.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-42</text>
+<text x="91.3" y="2074" font-size="11.5" fill="#0F172A">Harness orientation and connection detection</text>
+<text x="604" y="2074" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-05</text>
 </g>
 </g>
-<line x1="40" y1="2048" x2="40" y2="2174" stroke="#C2410C" stroke-width="2.4"/>
-<rect x="58" y="2062" width="45.5" height="18" rx="9" fill="#C2410C"/><text x="80.8" y="2074.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-10</text>
-<text x="111.5" y="2075" font-size="11.5" fill="#334155" font-weight="600">Intercept relay and harness sense</text>
-<g data-sm="SM-20" data-if="IF-10"><rect x="58" y="2084" width="47.5" height="18" rx="9" fill="#9A3412"/><text x="81.8" y="2096.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-20</text></g>
-<g data-sm="SM-42" data-if="IF-10"><rect x="110.5" y="2084" width="47.6" height="18" rx="9" fill="#FB923C"/><text x="134.3" y="2096.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-42</text></g>
-<rect x="58" y="2118" width="45.5" height="18" rx="9" fill="#B45309"/><text x="80.8" y="2130.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-08</text>
-<text x="111.5" y="2131" font-size="11.5" fill="#334155" font-weight="600">12 V supply and ignition</text>
-<g data-sm="SM-19" data-if="IF-08"><rect x="58" y="2140" width="45.3" height="18" rx="9" fill="#FB923C"/><text x="80.7" y="2152.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-19</text></g>
+<line x1="40" y1="2100" x2="40" y2="2226" stroke="#C2410C" stroke-width="2.4"/>
+<rect x="58" y="2114" width="45.5" height="18" rx="9" fill="#C2410C"/><text x="80.8" y="2126.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-10</text>
+<text x="111.5" y="2127" font-size="11.5" fill="#334155" font-weight="600">Intercept relay and harness sense</text>
+<g data-sm="SM-20" data-if="IF-10"><rect x="58" y="2136" width="47.5" height="18" rx="9" fill="#9A3412"/><text x="81.8" y="2148.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-20</text></g>
+<g data-sm="SM-42" data-if="IF-10"><rect x="110.5" y="2136" width="47.6" height="18" rx="9" fill="#FB923C"/><text x="134.3" y="2148.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-42</text></g>
+<rect x="58" y="2170" width="45.5" height="18" rx="9" fill="#B45309"/><text x="80.8" y="2182.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-08</text>
+<text x="111.5" y="2183" font-size="11.5" fill="#334155" font-weight="600">12 V supply and ignition</text>
+<g data-sm="SM-19" data-if="IF-08"><rect x="58" y="2192" width="45.3" height="18" rx="9" fill="#FB923C"/><text x="80.7" y="2204.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-19</text></g>
 <g data-element="E-05">
-<rect x="24" y="2174" width="592" height="108" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
-<rect x="36" y="2186" width="39.1" height="18" rx="9" fill="#C2410C"/><text x="55.5" y="2198.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-05</text>
-<text x="83.1" y="2200" font-size="14" fill="#0F172A" font-weight="700">Harness</text>
-<rect x="582.6" y="2186" width="21.4" height="18" rx="9" fill="#C2410C"/><text x="593.3" y="2198.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
-<text x="574.6" y="2200" font-size="13" fill="#C2410C" font-weight="700" text-anchor="end">2</text>
+<rect x="24" y="2226" width="592" height="108" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<rect x="36" y="2238" width="39.1" height="18" rx="9" fill="#C2410C"/><text x="55.5" y="2250.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-05</text>
+<text x="83.1" y="2252" font-size="14" fill="#0F172A" font-weight="700">Harness</text>
+<rect x="582.6" y="2238" width="21.4" height="18" rx="9" fill="#C2410C"/><text x="593.3" y="2250.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<text x="574.6" y="2252" font-size="13" fill="#C2410C" font-weight="700" text-anchor="end">2</text>
 <g data-sm="SM-20"><title>SM-20 Relay readback and latch · DC high (with readback)</title>
-<rect x="36" y="2221" width="49.2" height="18" rx="9" fill="#9A3412"/><text x="60.6" y="2233.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-20</text>
-<text x="91.2" y="2234" font-size="11.5" fill="#0F172A">Relay readback and latch</text>
-<text x="604" y="2234" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-04a</text>
+<rect x="36" y="2273" width="49.2" height="18" rx="9" fill="#9A3412"/><text x="60.6" y="2285.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-20</text>
+<text x="91.2" y="2286" font-size="11.5" fill="#0F172A">Relay readback and latch</text>
+<text x="604" y="2286" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-04a</text>
 </g>
 <g data-sm="SM-42"><title>SM-42 Harness orientation and connection detection · DC medium</title>
-<rect x="36" y="2247" width="49.3" height="18" rx="9" fill="#FB923C"/><text x="60.6" y="2259.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-42</text>
-<text x="91.3" y="2260" font-size="11.5" fill="#0F172A">Harness orientation and connection detection</text>
-<text x="604" y="2260" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-04a</text>
+<rect x="36" y="2299" width="49.3" height="18" rx="9" fill="#FB923C"/><text x="60.6" y="2311.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-42</text>
+<text x="91.3" y="2312" font-size="11.5" fill="#0F172A">Harness orientation and connection detection</text>
+<text x="604" y="2312" font-size="10" fill="#64748B" font-weight="600" text-anchor="end">+E-04a</text>
 </g>
 </g>
-<line x1="40" y1="2286" x2="40" y2="2468" stroke="#C2410C" stroke-width="2.4"/>
-<rect x="58" y="2300" width="45.5" height="18" rx="9" fill="#C2410C"/><text x="80.8" y="2312.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-01</text>
-<text x="111.5" y="2313" font-size="11.5" fill="#334155" font-weight="600">Commands to the car (EPS, PCM)</text>
-<g data-sm="SM-01" data-if="IF-01"><rect x="58" y="2322" width="45.5" height="18" rx="9" fill="#9A3412"/><text x="80.8" y="2334.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-01</text></g>
-<g data-sm="SM-02" data-if="IF-01"><rect x="108.5" y="2322" width="47.5" height="18" rx="9" fill="#9A3412"/><text x="132.2" y="2334.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-02</text></g>
-<g data-sm="SM-03" data-if="IF-01"><rect x="161" y="2322" width="47.7" height="18" rx="9" fill="#FB923C"/><text x="184.8" y="2334.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-03</text></g>
-<g data-sm="SM-04" data-if="IF-01"><rect x="213.7" y="2322" width="48" height="18" rx="9" fill="#9A3412"/><text x="237.7" y="2334.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-04</text></g>
-<g data-sm="SM-06" data-if="IF-01"><rect x="266.7" y="2322" width="47.7" height="18" rx="9" fill="#FB923C"/><text x="290.6" y="2334.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-06</text></g>
-<g data-sm="SM-07" data-if="IF-01"><rect x="319.4" y="2322" width="47" height="18" rx="9" fill="#9A3412"/><text x="342.9" y="2334.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-07</text></g>
-<g data-sm="SM-08" data-if="IF-01"><rect x="371.4" y="2322" width="47.7" height="18" rx="9" fill="#9A3412"/><text x="395.2" y="2334.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-08</text></g>
-<g data-sm="SM-36" data-if="IF-01"><rect x="424.1" y="2322" width="47.5" height="18" rx="9" fill="#9A3412"/><text x="447.8" y="2334.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-36</text></g>
-<rect x="58" y="2356" width="45.5" height="18" rx="9" fill="#0F766E"/><text x="80.8" y="2368.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-02</text>
-<text x="111.5" y="2369" font-size="11.5" fill="#334155" font-weight="600">Car and radar CAN in</text>
-<g data-sm="SM-04" data-if="IF-02"><rect x="58" y="2378" width="48" height="18" rx="9" fill="#9A3412"/><text x="82" y="2390.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-04</text></g>
-<g data-sm="SM-05" data-if="IF-02"><rect x="111" y="2378" width="47.6" height="18" rx="9" fill="#FB923C"/><text x="134.8" y="2390.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-05</text></g>
-<g data-sm="SM-09" data-if="IF-02"><rect x="163.6" y="2378" width="47.7" height="18" rx="9" fill="#FB923C"/><text x="187.4" y="2390.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-09</text></g>
-<g data-sm="SM-10" data-if="IF-02"><rect x="216.3" y="2378" width="45.5" height="18" rx="9" fill="#FED7AA"/><text x="239.1" y="2390.6" font-size="10" fill="#7C2D12" font-weight="700" text-anchor="middle">SM-10</text></g>
-<g data-sm="SM-11" data-if="IF-02"><rect x="266.8" y="2378" width="43.1" height="18" rx="9" fill="#FB923C"/><text x="288.4" y="2390.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-11</text></g>
-<g data-sm="SM-16" data-if="IF-02"><rect x="314.9" y="2378" width="45.3" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="337.6" y="2390.6" font-size="10" fill="#64748B" font-weight="700" text-anchor="middle">SM-16</text></g>
-<g data-sm="SM-29" data-if="IF-02"><rect x="365.2" y="2378" width="47.3" height="18" rx="9" fill="#9A3412"/><text x="388.9" y="2390.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-29</text></g>
-<g data-sm="SM-30" data-if="IF-02"><rect x="417.5" y="2378" width="47.7" height="18" rx="9" fill="#E2E8F0"/><text x="441.4" y="2390.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-30</text></g>
-<g data-sm="SM-43" data-if="IF-02"><rect x="470.2" y="2378" width="47.8" height="18" rx="9" fill="#E2E8F0"/><text x="494.1" y="2390.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-43</text></g>
-<rect x="58" y="2412" width="45.5" height="18" rx="9" fill="#0F766E"/><text x="80.8" y="2424.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-03</text>
-<text x="111.5" y="2425" font-size="11.5" fill="#334155" font-weight="600">Camera CAN, forwarded</text>
-<g data-sm="SM-35" data-if="IF-03"><rect x="58" y="2434" width="47.4" height="18" rx="9" fill="#9A3412"/><text x="81.7" y="2446.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-35</text></g>
-<rect x="24" y="2468" width="592" height="44" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
-<text x="38" y="2495" font-size="12.5" fill="#334155" font-weight="600">Vehicle CAN · EPS, ECM / PCM, ABS / VSC, cluster</text>
-<line x1="24" y1="2528" x2="616" y2="2528" stroke="#E2E8F0"/>
-<rect x="24" y="2542" width="35.4" height="18" rx="9" fill="#9A3412"/><text x="41.7" y="2554.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
-<rect x="64.4" y="2542" width="53.4" height="18" rx="9" fill="#FB923C"/><text x="91.1" y="2554.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
-<rect x="122.8" y="2542" width="31.3" height="18" rx="9" fill="#FED7AA"/><text x="138.5" y="2554.6" font-size="10" fill="#7C2D12" font-weight="700" text-anchor="middle">low</text>
-<rect x="159.1" y="2542" width="31.1" height="18" rx="9" fill="#E2E8F0"/><text x="174.7" y="2554.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">QM</text>
-<text x="201.2" y="2555" font-size="11" fill="#334155">DC target of the mechanism (WP-S-03 §6)</text>
-<text x="24" y="2580" font-size="11" fill="#334155">+E-nn: also performed by that element. Under an interface IF-nn: the mechanisms that implement a TSR the</text>
-<text x="24" y="2596" font-size="11" fill="#334155">interface carries, so a fault on that link is caught there.</text>
-<text x="24" y="2620" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+<line x1="40" y1="2338" x2="40" y2="2520" stroke="#C2410C" stroke-width="2.4"/>
+<rect x="58" y="2352" width="45.5" height="18" rx="9" fill="#C2410C"/><text x="80.8" y="2364.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-01</text>
+<text x="111.5" y="2365" font-size="11.5" fill="#334155" font-weight="600">Commands to the car (EPS, PCM)</text>
+<g data-sm="SM-01" data-if="IF-01"><rect x="58" y="2374" width="45.5" height="18" rx="9" fill="#9A3412"/><text x="80.8" y="2386.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-01</text></g>
+<g data-sm="SM-02" data-if="IF-01"><rect x="108.5" y="2374" width="47.5" height="18" rx="9" fill="#9A3412"/><text x="132.2" y="2386.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-02</text></g>
+<g data-sm="SM-03" data-if="IF-01"><rect x="161" y="2374" width="47.7" height="18" rx="9" fill="#FB923C"/><text x="184.8" y="2386.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-03</text></g>
+<g data-sm="SM-04" data-if="IF-01"><rect x="213.7" y="2374" width="48" height="18" rx="9" fill="#9A3412"/><text x="237.7" y="2386.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-04</text></g>
+<g data-sm="SM-06" data-if="IF-01"><rect x="266.7" y="2374" width="47.7" height="18" rx="9" fill="#FB923C"/><text x="290.6" y="2386.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-06</text></g>
+<g data-sm="SM-07" data-if="IF-01"><rect x="319.4" y="2374" width="47" height="18" rx="9" fill="#9A3412"/><text x="342.9" y="2386.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-07</text></g>
+<g data-sm="SM-08" data-if="IF-01"><rect x="371.4" y="2374" width="47.7" height="18" rx="9" fill="#9A3412"/><text x="395.2" y="2386.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-08</text></g>
+<g data-sm="SM-36" data-if="IF-01"><rect x="424.1" y="2374" width="47.5" height="18" rx="9" fill="#9A3412"/><text x="447.8" y="2386.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-36</text></g>
+<rect x="58" y="2408" width="45.5" height="18" rx="9" fill="#0F766E"/><text x="80.8" y="2420.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-02</text>
+<text x="111.5" y="2421" font-size="11.5" fill="#334155" font-weight="600">Car and radar CAN in</text>
+<g data-sm="SM-04" data-if="IF-02"><rect x="58" y="2430" width="48" height="18" rx="9" fill="#9A3412"/><text x="82" y="2442.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-04</text></g>
+<g data-sm="SM-05" data-if="IF-02"><rect x="111" y="2430" width="47.6" height="18" rx="9" fill="#FB923C"/><text x="134.8" y="2442.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-05</text></g>
+<g data-sm="SM-09" data-if="IF-02"><rect x="163.6" y="2430" width="47.7" height="18" rx="9" fill="#FB923C"/><text x="187.4" y="2442.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-09</text></g>
+<g data-sm="SM-10" data-if="IF-02"><rect x="216.3" y="2430" width="45.5" height="18" rx="9" fill="#FED7AA"/><text x="239.1" y="2442.6" font-size="10" fill="#7C2D12" font-weight="700" text-anchor="middle">SM-10</text></g>
+<g data-sm="SM-11" data-if="IF-02"><rect x="266.8" y="2430" width="43.1" height="18" rx="9" fill="#FB923C"/><text x="288.4" y="2442.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-11</text></g>
+<g data-sm="SM-16" data-if="IF-02"><rect x="314.9" y="2430" width="45.3" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="337.6" y="2442.6" font-size="10" fill="#64748B" font-weight="700" text-anchor="middle">SM-16</text></g>
+<g data-sm="SM-29" data-if="IF-02"><rect x="365.2" y="2430" width="47.3" height="18" rx="9" fill="#9A3412"/><text x="388.9" y="2442.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-29</text></g>
+<g data-sm="SM-30" data-if="IF-02"><rect x="417.5" y="2430" width="47.7" height="18" rx="9" fill="#E2E8F0"/><text x="441.4" y="2442.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-30</text></g>
+<g data-sm="SM-43" data-if="IF-02"><rect x="470.2" y="2430" width="47.8" height="18" rx="9" fill="#E2E8F0"/><text x="494.1" y="2442.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-43</text></g>
+<rect x="58" y="2464" width="45.5" height="18" rx="9" fill="#0F766E"/><text x="80.8" y="2476.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-03</text>
+<text x="111.5" y="2477" font-size="11.5" fill="#334155" font-weight="600">Camera CAN, forwarded</text>
+<g data-sm="SM-35" data-if="IF-03"><rect x="58" y="2486" width="47.4" height="18" rx="9" fill="#9A3412"/><text x="81.7" y="2498.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-35</text></g>
+<rect x="24" y="2520" width="592" height="44" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="38" y="2547" font-size="12.5" fill="#334155" font-weight="600">Vehicle CAN · EPS, ECM / PCM, ABS / VSC, cluster</text>
+<line x1="24" y1="2580" x2="616" y2="2580" stroke="#E2E8F0"/>
+<rect x="24" y="2594" width="35.4" height="18" rx="9" fill="#9A3412"/><text x="41.7" y="2606.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
+<rect x="64.4" y="2594" width="53.4" height="18" rx="9" fill="#FB923C"/><text x="91.1" y="2606.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
+<rect x="122.8" y="2594" width="31.3" height="18" rx="9" fill="#FED7AA"/><text x="138.5" y="2606.6" font-size="10" fill="#7C2D12" font-weight="700" text-anchor="middle">low</text>
+<rect x="159.1" y="2594" width="31.1" height="18" rx="9" fill="#E2E8F0"/><text x="174.7" y="2606.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">QM</text>
+<text x="201.2" y="2607" font-size="11" fill="#334155">DC target of the mechanism (WP-S-03 §6)</text>
+<text x="24" y="2632" font-size="11" fill="#334155">+E-nn: also performed by that element. Under an interface IF-nn: the mechanisms that implement a TSR the</text>
+<text x="24" y="2648" font-size="11" fill="#334155">interface carries, so a fault on that link is caught there.</text>
+<text x="24" y="2672" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
 </svg>

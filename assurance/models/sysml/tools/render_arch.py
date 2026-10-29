@@ -3,7 +3,7 @@
   V-10 functional architecture   the functions F-01 to F-09 along their functional chain, each step on the element
                                  that performs it (LionDriverFunctions, perform statements)
 
-  V-26 safety mechanisms         SM-01 to SM-43 on the elements that perform them and on the interfaces whose TSRs
+  V-26 safety mechanisms         SM-01 to SM-45 on the elements that perform them and on the interfaces whose TSRs
                                  they implement, top to bottom along the command path, at phone width
 
 Called by render_views.render_all, which sets `rv` to itself so that TITLES and the shared frame are available.
