@@ -946,3 +946,17 @@ interface IF-nn lists the mechanisms that implement a technical safety requireme
 "IF-01" = "Commands to the car (EPS, PCM)"
 "IF-02" = "Car and radar CAN in"
 "IF-03" = "Camera CAN, forwarded"
+
+# ======================================================================= V-27
+
+[views.V-27]
+file = "fig-sysml-v27-mechanism-coverage-per-goal.svg"
+kind = "coverage"
+title = "Safety mechanisms per safety goal"
+subtitle = "Each goal traced through its FSRs and TSRs to the mechanisms that implement them (WP-S-03 §6), by status today, and the FSRs with no mechanism behind them"
+width = 640
+desc = """Allocation view generated from the SysML v2 model, drawn at phone width. One card per safety goal SG-01 to \
+SG-08: the safety mechanisms that implement a TSR derived from one of the goal's FSRs, grouped by their status in \
+WP-S-03 §6 (implemented, partial, not there yet) and coloured by diagnostic-coverage target, with a bar of the shares. \
+Below, each FSR with no mechanism behind it: in red a gap, in grey an FSR met outside the item (an assumption of use) \
+or by reference to other FSRs."""

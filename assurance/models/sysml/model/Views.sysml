@@ -201,4 +201,11 @@ package LionDriverViews {
         expose OperationalContext::*;
         render Views::asInterconnectionDiagram;
     }
+
+    view <'V-27'> mechanismCoveragePerGoal : AllocationView {
+        doc /* Per safety goal SG-01 to SG-08, the safety mechanisms behind it, traced through its FSRs and TSRs (deriveReqt) to the mechanisms that implement those TSRs, with their status, and the FSRs no mechanism stands behind. */
+        expose LionDriverMechanisms::*;
+        expose LionDriverRequirements::*;
+        render Views::asElementTable;
+    }
 }

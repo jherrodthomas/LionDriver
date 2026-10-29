@@ -5,6 +5,8 @@
 
   V-26 safety mechanisms         SM-01 to SM-43 on the elements that perform them and on the interfaces whose TSRs
                                  they implement, top to bottom along the command path, at phone width
+  V-27 coverage per goal         per safety goal, the mechanisms behind it (SG -> FSR -> TSR -> SM) by status, and the
+                                 FSRs with no mechanism behind them, at phone width
 
 Called by render_views.render_all, which sets `rv` to itself so that TITLES and the shared frame are available.
 layout.toml gives the title, subtitle and canvas width only; positions follow from the model.
@@ -1551,3 +1553,174 @@ def render_mechanisms(m: sysml_lite.Model, vid: str, spec: dict, digest: str) ->
 
 
 RENDERERS["mechanisms"] = render_mechanisms
+
+# ---------------------------------------------------------------- V-27 mechanism coverage per safety goal
+
+MECH_STATUS = [("impl", "implemented", "#1D4ED8"), ("partial", "partial", "#B45309"),
+               ("missing", "not there yet", "#D2553F"), ("unknown", "unknown", k.FAINT)]
+GOAL_ASIL = {"C": k.ENVELOPE["chip"], "B": k.ASIL_B["chip"], "A": "#FB923C"}
+
+
+def mech_status(me: sysml_lite.Mechanism) -> str:
+  """The current status of a WP-S-03 §6 row: its last bold update when it has one ("New at baseline; **Partial** ...")."""
+  s = str(me.values.get("status", ""))
+  bold = re.findall(r"\*\*([^*]+)\*\*", s)
+  s = (bold[-1] if bold else s).lower()
+  if s.startswith("impl"):
+    return "impl"
+  if s.startswith("partial"):
+    return "partial"
+  if s.startswith(("new", "not met")):
+    return "missing"
+  return "unknown"
+
+
+def goal_coverage(m: sysml_lite.Model) -> list[dict]:
+  """Per safety goal, its FSRs, the mechanisms that implement a TSR derived from them, and the FSRs no mechanism stands
+  behind: outside the item (an AOU), by reference to other FSRs, or a gap."""
+  reqs = m.requirements
+  by_tsr: dict[str, list[sysml_lite.Mechanism]] = {}
+  for me in m.mechanisms.values():
+    for t in me.tsr:
+      by_tsr.setdefault(t.split("(")[0], []).append(me)
+  children: dict[str, list[sysml_lite.Requirement]] = {}
+  for r in reqs.values():
+    for p in r.derived_from:
+      children.setdefault(p, []).append(r)
+  out = []
+  for sg in sorted(s for s in reqs if s.startswith("SG-")):
+    fsrs = sorted((r for r in children.get(sg, []) if r.short.startswith("FSR-")), key=lambda r: r.short)
+    mechs, open_fsrs, bare = {}, [], 0
+    for f in fsrs:
+      found = False
+      for t in (r for r in children.get(f.short, []) if r.short.startswith("TSR-")):
+        bare += t.short not in by_tsr
+        for me in by_tsr.get(t.short, []):
+          mechs[me.short] = me
+          found = True
+      if not found:
+        ext = re.search(r"External measure, (AOU-\w+)", f.doc)
+        ref = re.match(r"(FSR-[\d.…]+) apply", f.doc)
+        kind = "outside" if ext else "reference" if ref else "gap"
+        open_fsrs.append((f, kind, (ext or ref).group(1) if ext or ref else None))
+    out.append({"goal": reqs[sg], "fsrs": fsrs, "mechs": sorted(mechs.values(), key=lambda me: int(me.short[3:])),
+                "open": open_fsrs, "bare": bare})
+  return out
+
+
+def render_goal_coverage(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> str:
+  """One card per safety goal: the mechanisms behind it (SG -> FSR -> TSR -> SM) by status, coloured by DC target, and
+  the FSRs with no mechanism behind them. Phone width."""
+  view = m.views[vid]
+  w, mx = spec["width"], 24
+  bw = w - 2 * mx
+  bx, iw = mx + 12, bw - 24
+  body = [k.text(mx, 38, f"{view.short} · {spec['title']}", 19, k.INK, 700)]
+  y = 60
+  for ln in k.wrap(spec["subtitle"], bw, 12.5):
+    body.append(k.text(mx, y, ln, 12.5, k.MUTED))
+    y += 17
+  body.append(k.text(mx, y + 2, f"SysML v2 view LionDriverViews::{view.name} · model {digest}", 10.5, k.FAINT))
+  y += 16
+  body.append(f'<line x1="{mx}" y1="{y}" x2="{w - mx}" y2="{y}" stroke="{k.HAIR}"/>')
+  y += 16
+  for cov in goal_coverage(m):
+    g = cov["goal"]
+    asil = str(g.values.get("asil", ""))
+    by = {key: [me for me in cov["mechs"] if mech_status(me) == key] for key, _, _ in MECH_STATUS}
+    top = y
+    card = []
+    p, pw = k.pill(bx, y + 12, g.short, GOAL_ASIL.get(asil, k.SLATE["chip"]), h=20, size=11)
+    card.append(p)
+    ap, _ = k.pill(w - mx - 12, y + 12, f"ASIL {asil}", "#FFFFFF", k.INK2, 20, 10, 700, k.FAINT, "end")
+    card.append(ap)
+    title = re.sub(r"^The item shall ", "", g.doc).rstrip(".")
+    ty = y + 27
+    for ln in k.wrap(title[:1].upper() + title[1:], iw - pw - 78, 12.5, 600)[:3]:
+      card.append(k.text(bx + pw + 8, ty, ln, 12.5, k.INK, 600))
+      ty += 16
+    yy = max(ty, y + 44) + 4
+    n = len(cov["mechs"]) or 1
+    xx = bx
+    for key, _, col in MECH_STATUS:
+      if by[key]:
+        card.append(k.rect(xx, yy, iw * len(by[key]) / n, 10, col, rx=2))
+        xx += iw * len(by[key]) / n
+    if not cov["mechs"]:
+      card.append(k.rect(bx, yy, iw, 10, "#FFFFFF", "#D2553F", 2, 1, "3 2"))
+    yy += 26
+    nm = len(cov["mechs"])
+    card.append(k.text(bx, yy, f"{nm} mechanism{'s' * (nm != 1)} via {len(cov['fsrs'])} FSRs", 11.5, k.INK2, 600))
+    yy += 10
+    for key, lab, col in MECH_STATUS:
+      if not by[key]:
+        continue
+      yy += 8
+      head = f"{lab} ({len(by[key])})"
+      card.append(f'<circle cx="{k.f(bx + 4)}" cy="{k.f(yy + 9)}" r="4" fill="{col}"/>')
+      card.append(k.text(bx + 14, yy + 13, head, 11, col, 700))
+      gx = bx + 14 + k.text_w(head, 11, 700) + 10
+      for me in by[key]:
+        label, fill, color, stroke = rv.dc_style(me)
+        pp, ppw = k.pill(gx, yy, me.short, fill, color, 18, 10, 700, stroke)
+        if gx + ppw > w - mx - 12:
+          gx, yy = bx + 14, yy + 22
+          pp, ppw = k.pill(gx, yy, me.short, fill, color, 18, 10, 700, stroke)
+        card.append(f'<g data-sm="{me.short}" data-goal="{g.short}" data-status="{key}">{pp}</g>')
+        gx += ppw + 4
+      yy += 20
+    for f, kind, ref in cov["open"]:
+      yy += 8
+      if kind == "outside":
+        note, col, bg = f"Outside the item: {ref} (the car's own systems). " + f.doc.split("(External")[0], k.MUTED, k.WASH
+      elif kind == "reference":
+        note, col, bg = f"Shares the mechanisms of {ref} by reference; no TSR of its own.", k.MUTED, k.WASH
+      else:
+        note, col, bg = "No mechanism yet. " + f.doc, "#D2553F", "#FEF2F2"
+      lines = k.wrap(note, iw - 100, 11)
+      if len(lines) > 2:
+        lines = [lines[0], k.clip(lines[1] + " …", iw - 100, 11)]
+      hh = 12 + 15 * len(lines)
+      card.append(f'<g data-fsr="{f.short}" data-kind="{kind}">')
+      card.append(k.rect(bx, yy, iw, hh, bg, col, 6, 1))
+      card.append(k.text(bx + 10, yy + 18, f.short, 11, col, 700, mono=True))
+      for i, ln in enumerate(lines):
+        card.append(k.text(bx + 90, yy + 18 + 15 * i, ln, 11, k.INK2))
+      card.append("</g>")
+      yy += hh
+    yy += 10
+    card.append(k.text(bx, yy + 8, f"{cov['bare']} of its TSRs name no mechanism (met by design, test or the driver)",
+                       10.5, k.MUTED))
+    yy += 18
+    body.append(f'<g data-goal="{g.short}">')
+    body.append(k.rect(mx, top, bw, yy - top, "#FFFFFF", k.HAIR, 10, 1.2))
+    body += card
+    body.append("</g>")
+    y = yy + 14
+  # legend
+  y += 2
+  xx = mx
+  for _, lab, col in MECH_STATUS[:3]:
+    body.append(f'<circle cx="{xx + 5}" cy="{y + 9}" r="5" fill="{col}"/>')
+    body.append(k.text(xx + 14, y + 13, lab, 11, k.INK2))
+    xx += 14 + k.text_w(lab, 11) + 18
+  body.append(k.text(xx, y + 13, "status in WP-S-03 §6", 11, k.MUTED))
+  y += 26
+  xx = mx
+  for dc in ("high", "medium", "low", "QM"):
+    fill, color = rv.DC_FILL[dc]
+    p, pw = k.pill(xx, y, dc, fill, color, 18, 10)
+    body.append(p)
+    xx += pw + 5
+  body.append(k.text(xx + 6, y + 13, "chip colour: DC target", 11, k.INK2))
+  y += 28
+  for ln in k.wrap("Red: an FSR with no mechanism behind it yet. Grey: met outside the item (an AOU) or by reference "
+                   "to other FSRs.", bw, 11):
+    body.append(k.text(mx, y + 10, ln, 11, k.INK2))
+    y += 16
+  y += 8
+  body.append(k.text(mx, y + 10, rv.GENERATED, 9.5, k.FAINT))
+  return k.svg_doc(w, y + 28, f"{view.short}. {spec['title']} (SysML v2 view {view.name})", spec.get("desc", view.doc), body)
+
+
+RENDERERS["coverage"] = render_goal_coverage
