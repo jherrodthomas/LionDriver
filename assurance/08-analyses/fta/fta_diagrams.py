@@ -1009,6 +1009,50 @@ def load_fmea_refs() -> dict[str, dict]:
   return {r["id"]: r for r in doc.get("events", []) + doc.get("gates", [])}
 
 
+def _short(text: str, limit: int = 90) -> str:
+  """The first clause of an event text, for a one-line list."""
+  while (m := re.search(r" ?\([^()]*\)| ?\[[^\[\]]*\]", text)):   # asides, innermost first
+    text = text[:m.start()] + text[m.end():]
+  text = text.split("; ")[0].rstrip(" .:,")
+  return text if len(text) <= limit else text[:limit - 1].rsplit(" ", 1)[0] + "…"
+
+
+def summaries(trees: list[Tree], all_sheets: dict[str, list[Node]], solver, asils: dict[str, str]) -> list[str]:
+  """README section: sheet 1 and a few lines on each fault tree of the goals with the highest ASIL."""
+  top = min((a for a in asils.values() if a in "ABCD"), default=None, key=lambda a: "DCBA".index(a))
+  chosen = [t for t in trees if asils.get(t.goal) == top]
+  if not chosen:
+    return []
+  defs = solver.events
+  out = [f"## The ASIL {top} fault trees in brief", "",
+         f"Sheet 1 of each of the {len(chosen)} trees of the ASIL {top} safety goals, as drawn on record, with what "
+         "the trees show. Counted from the trees in WP-A-04 by `fta_cutsets.py`; the red paths on the sheets lead to the " +
+         "single points.", ""]
+  for t in chosen:
+    sheets = all_sheets[t.goal]
+    cut_sets = solver.cut_sets(t.root)
+    single = sorted({e for c in cut_sets if sum(x.startswith("BE-") for x in c) == 1 for e in c if e.startswith("BE-")})
+    links = ", ".join(f"[{no}](fta-{t.goal}-{no}.svg)" for no in range(1, len(sheets) + 1))
+    out += [f"### {t.goal} · ASIL {top} · {t.root.ident} {t.title}", "",
+            f"[![Sheet 1 of {len(sheets)} of the {t.goal} fault tree, traditional IEC 61025 drawing: top event "
+            f"{t.root.ident} {t.title}, with the gates and events beneath it down to the transfers to the next "
+            f"sheets; red marks single-point paths](fta-{t.goal}-1.svg)](fta-{t.goal}-1.svg)", "",
+            f"- **{len(sheets)} sheets:** {links}.",
+            f"- **{len(cut_sets)} minimal cut sets.**"]
+    if single:
+      n = len(single)
+      out.append(f"- **{n} single point{'s' if n > 1 else ''}:** {'each' if n > 1 else 'this'} basic event in the "
+                 "item reaches the top event on its own (undeveloped events outside the item assumed).")
+      for e in single:
+        where = f", defined in {defs[e].tree}" if defs[e].tree != t.goal else ""
+        flag = ", latent" if solver.is_latent(e) else ""
+        out.append(f"  - {e}: {_short(defs[e].text)}{where}{flag}")
+    else:
+      out.append(f"- **No single point:** the smallest cut sets need {_min_be(t.root)} basic events in the item.")
+    out.append("")
+  return out
+
+
 def build() -> dict[str, str]:
   FMEA_REFS.clear()
   FMEA_REFS.update(load_fmea_refs())
@@ -1021,6 +1065,8 @@ def build() -> dict[str, str]:
     "",
     "Generated from the text trees in [WP-A-04](../WP-A-04-system-fta-fmea.md) by `fta_diagrams.py`. " +
     "WP-A-04 is the analysis of record; edit it and run `python3 fta_diagrams.py` (CI runs `--check`).",
+    "",
+    "## All sheets",
     "",
     "| Goal | Top event | Sheets (traditional, of record) | Card view | Phone outline |",
     "|---|---|---|---|---|",
@@ -1092,13 +1138,7 @@ def build() -> dict[str, str]:
             "on these sheets; a switch also counts latent events as already failed. Light, dark and left-to-right " +
             "layouts. The card view, the phone outline and the viewer are reading aids; the traditional sheets stay the "
             "drawing of record.", ""]
-  first = trees[0]
-  index[4:4] = [f"[![First sheet of the {first.goal} fault tree as an outline: top event {first.root.ident} {first.title}, "
-                "with the gates and events beneath it down to the transfers to the next sheets; red marks single-point "
-                f"paths](fta-{first.goal}-1-phone.svg)](fta-{first.goal}-1.svg)", "",
-                f"*Sheet 1 of {first.goal} as an outline that reads on a phone; tap it for the traditional "
-                f"[full sheet](fta-{first.goal}-1.svg), the drawing of record. Every sheet has all three, listed below; the "
-                "notation is explained under the table.*", ""]
+  index[4:4] = summaries(trees, all_sheets, solver, asils)
   outputs["README.md"] = "\n".join(index)
   return outputs
 

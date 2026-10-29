@@ -2,9 +2,51 @@
 
 Generated from the text trees in [WP-A-04](../WP-A-04-system-fta-fmea.md) by `fta_diagrams.py`. WP-A-04 is the analysis of record; edit it and run `python3 fta_diagrams.py` (CI runs `--check`).
 
-[![First sheet of the SG-01 fault tree as an outline: top event TE-01 uncontrollable lateral motion, or steering actuation while not engaged, with the gates and events beneath it down to the transfers to the next sheets; red marks single-point paths](fta-SG-01-1-phone.svg)](fta-SG-01-1.svg)
+## The ASIL C fault trees in brief
 
-*Sheet 1 of SG-01 as an outline that reads on a phone; tap it for the traditional [full sheet](fta-SG-01-1.svg), the drawing of record. Every sheet has all three, listed below; the notation is explained under the table.*
+Sheet 1 of each of the 4 trees of the ASIL C safety goals, as drawn on record, with what the trees show. Counted from the trees in WP-A-04 by `fta_cutsets.py`; the red paths on the sheets lead to the single points.
+
+### SG-01 · ASIL C · TE-01 uncontrollable lateral motion, or steering actuation while not engaged
+
+[![Sheet 1 of 6 of the SG-01 fault tree, traditional IEC 61025 drawing: top event TE-01 uncontrollable lateral motion, or steering actuation while not engaged, with the gates and events beneath it down to the transfers to the next sheets; red marks single-point paths](fta-SG-01-1.svg)](fta-SG-01-1.svg)
+
+- **6 sheets:** [1](fta-SG-01-1.svg), [2](fta-SG-01-2.svg), [3](fta-SG-01-3.svg), [4](fta-SG-01-4.svg), [5](fta-SG-01-5.svg), [6](fta-SG-01-6.svg).
+- **36 minimal cut sets.**
+- **3 single points:** each basic event in the item reaches the top event on its own (undeveloped events outside the item assumed).
+  - BE-1.01: Envelope torque limits set above the controllable bound
+  - BE-1.10: Frame corrupted after safety_tx_hook in a part not covered by the packet XOR: copy into…
+  - BE-1.18: Envelope bypass: ALLOUTPUT/debug mode in a DEBUG build
+
+### SG-02 · ASIL C · TE-02 loss or degradation of lateral control without adequate take-over warning
+
+[![Sheet 1 of 9 of the SG-02 fault tree, traditional IEC 61025 drawing: top event TE-02 loss or degradation of lateral control without adequate take-over warning, with the gates and events beneath it down to the transfers to the next sheets; red marks single-point paths](fta-SG-02-1.svg)](fta-SG-02-1.svg)
+
+- **9 sheets:** [1](fta-SG-02-1.svg), [2](fta-SG-02-2.svg), [3](fta-SG-02-3.svg), [4](fta-SG-02-4.svg), [5](fta-SG-02-5.svg), [6](fta-SG-02-6.svg), [7](fta-SG-02-7.svg), [8](fta-SG-02-8.svg), [9](fta-SG-02-9.svg).
+- **100 minimal cut sets.**
+- **1 single point:** this basic event in the item reaches the top event on its own (undeveloped events outside the item assumed).
+  - BE-2.07: Loss of the 12 V supply to the device
+
+### SG-03 · ASIL C · TE-03 unintended acceleration
+
+[![Sheet 1 of 6 of the SG-03 fault tree, traditional IEC 61025 drawing: top event TE-03 unintended acceleration, with the gates and events beneath it down to the transfers to the next sheets; red marks single-point paths](fta-SG-03-1.svg)](fta-SG-03-1.svg)
+
+- **6 sheets:** [1](fta-SG-03-1.svg), [2](fta-SG-03-2.svg), [3](fta-SG-03-3.svg), [4](fta-SG-03-4.svg), [5](fta-SG-03-5.svg), [6](fta-SG-03-6.svg).
+- **23 minimal cut sets.**
+- **3 single points:** each basic event in the item reaches the top event on its own (undeveloped events outside the item assumed).
+  - BE-3.01: Envelope accel upper bound above the controllable value
+  - BE-3.04: Frame corrupted after TX hook
+  - BE-3.11: Gas-pressed signal stuck "pressed": envelope then allows only inactive accel — or stuck…
+
+### SG-06 · ASIL C · TE-06 loss of longitudinal deceleration without take-over warning
+
+[![Sheet 1 of 9 of the SG-06 fault tree, traditional IEC 61025 drawing: top event TE-06 loss of longitudinal deceleration without take-over warning, with the gates and events beneath it down to the transfers to the next sheets; red marks single-point paths](fta-SG-06-1.svg)](fta-SG-06-1.svg)
+
+- **9 sheets:** [1](fta-SG-06-1.svg), [2](fta-SG-06-2.svg), [3](fta-SG-06-3.svg), [4](fta-SG-06-4.svg), [5](fta-SG-06-5.svg), [6](fta-SG-06-6.svg), [7](fta-SG-06-7.svg), [8](fta-SG-06-8.svg), [9](fta-SG-06-9.svg).
+- **85 minimal cut sets.**
+- **1 single point:** this basic event in the item reaches the top event on its own (undeveloped events outside the item assumed).
+  - BE-2.07: Loss of the 12 V supply to the device, defined in SG-02
+
+## All sheets
 
 | Goal | Top event | Sheets (traditional, of record) | Card view | Phone outline |
 |---|---|---|---|---|

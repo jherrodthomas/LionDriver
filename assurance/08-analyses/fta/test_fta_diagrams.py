@@ -243,6 +243,19 @@ class TestTraditionalSheets(unittest.TestCase):
       self.assertNotIn("Each event is a card", svg)
     self.assertIn("Traditional sheets (the drawing of record)", self.out["README.md"])
 
+  def test_readme_summarises_the_highest_asil_trees_with_their_record_sheets(self):
+    readme = self.out["README.md"]
+    images = fd.re.findall(r"!\[[^\]]*\]\(([^)]+)\)", readme)
+    asils = fd.goal_asils()
+    top = min(asils.values(), key="DCBA".index)
+    self.assertEqual(images, [f"fta-{g}-1.svg" for g in sorted(asils) if asils[g] == top])
+    for g in sorted(asils):
+      self.assertEqual(f"### {g} · ASIL" in readme, asils[g] == top, g)
+    self.assertIn("BE-2.07: Loss of the 12 V supply to the device, defined in SG-02", readme)   # through a transfer in SG-06
+
+  def test_short_event_text(self):
+    self.assertEqual(fd._short('Gas signal (A.B) stuck "on" [CCF → DFI-1]; see GAP-2'), 'Gas signal stuck "on"')
+
 
 if __name__ == "__main__":
   unittest.main()
