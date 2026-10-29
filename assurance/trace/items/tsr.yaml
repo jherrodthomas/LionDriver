@@ -1079,7 +1079,7 @@
   mechanism: "CFG"
   timing: "—"
   verification: "R, T-SIL"
-  baseline_impl: "Not met: `selfdrive/monitoring/dmonitoringd.py:26-38` (GAP-20)"
+  baseline_impl: "Implemented in host software, not verified on the vehicle (SWSR-610, DQ-427, change-2026-10-29-driver-view-interlock): dmonitoringd uses demo mode only while card is not running (offroad); selfdrived raises `driverViewActive` while `IsDriverViewEnabled` is set, NO_ENTRY and SOFT_DISABLE. Earlier: `selfdrive/monitoring/dmonitoringd.py:26-38` (GAP-20)"
   status: proposed
   source: WP-S-02
 

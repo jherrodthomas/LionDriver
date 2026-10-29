@@ -4,7 +4,7 @@
 
 All 128 technical safety requirements of [WP-S-02 §3–§10](../WP-S-02-technical-safety-requirements.md) and [WP-S-06](../WP-S-06-requirements-production-operation.md), one line each. The work product holds the full text and is the source of truth; the ID links to its section.
 
-Status: 21 implemented · 61 partly · 41 not implemented · 5 assumed (EXT / AoU). The rule is that of WP-S-03 Figure 6-1; nothing is verified on hardware yet.
+Status: 22 implemented · 61 partly · 40 not implemented · 5 assumed (EXT / AoU). The rule is that of WP-S-03 Figure 6-1; nothing is verified on hardware yet.
 
 | ID | Parents | ASIL | Allocated to | Status | Requirement (first sentence) |
 |---|---|---|---|---|---|
@@ -79,7 +79,7 @@ Status: 21 implemented · 61 partly · 41 not implemented · 5 assumed (EXT / Ao
 | [TSR-607](../WP-S-02-technical-safety-requirements.md#8-tsr-6xx-host-side-soc-monitoring-dm-and-hmi) | FSR-02.01 | QM | SoC | partly | The SoC shall warn the driver when the EPS reports LKA unavailable or faulted (complements TSR-110) |
 | [TSR-608](../WP-S-02-technical-safety-requirements.md#8-tsr-6xx-host-side-soc-monitoring-dm-and-hmi) | FSR-02.06 | A | SoC | implemented | Driver monitoring shall escalate warnings for an inattentive driver with the timing set in WP-C-08 §5 (baseline vision 5/8/13 s, wheel-touch 5/15/25 s) |
 | [TSR-609](../WP-S-02-technical-safety-requirements.md#8-tsr-6xx-host-side-soc-monitoring-dm-and-hmi) | FSR-02.07 | A | SoC | not implemented | The DM chain shall mark its output invalid when the cabin image or model output is missing or not credible, and an invalid DM output for > 2 s while engaged … |
-| [TSR-610](../WP-S-02-technical-safety-requirements.md#8-tsr-6xx-host-side-soc-monitoring-dm-and-hmi) | FSR-02.08 | A | SoC | not implemented | DM demo mode (IsDriverViewEnabled) shall not be active while the item can engage |
+| [TSR-610](../WP-S-02-technical-safety-requirements.md#8-tsr-6xx-host-side-soc-monitoring-dm-and-hmi) | FSR-02.08 | A | SoC | implemented | DM demo mode (IsDriverViewEnabled) shall not be active while the item can engage |
 | [TSR-611](../WP-S-02-technical-safety-requirements.md#8-tsr-6xx-host-side-soc-monitoring-dm-and-hmi) | FSR-02.09 | A | SoC | partly | If the driver does not respond to the highest DM warning, the SoC shall decelerate, disengage and lock out re-engagement for 1/5/15/30 min |
 | [TSR-612](../WP-S-02-technical-safety-requirements.md#8-tsr-6xx-host-side-soc-monitoring-dm-and-hmi) | FSR-02.07 | A | SoC | not implemented | The wheel-touch fallback shall reset awareness only on a deliberate driver input above a defined threshold, not on any steering or gas input |
 | [TSR-613](../WP-S-02-technical-safety-requirements.md#8-tsr-6xx-host-side-soc-monitoring-dm-and-hmi) | FSR-02.08, FSR-01.14 | QM | SoC | partly | Debug, joystick and maneuver modes, and the lateralManeuverPlan path to the actuator, shall be absent from reference-configuration builds |

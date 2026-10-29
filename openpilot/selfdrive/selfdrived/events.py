@@ -1058,6 +1058,13 @@ EVENTS: dict[int, dict[str, Alert | AlertCallbackType]] = {
     ET.NO_ENTRY: NoEntryAlert("Fault Code Check Failed: Restart Car"),
   },
 
+  # LionDriver (TSR-610, SWSR-610): no engagement while the driver-camera view is open, which puts driver monitoring in
+  # demo mode and covers the onroad view; set while engaged, a soft disable
+  EventName.driverViewActive: {
+    ET.NO_ENTRY: NoEntryAlert("Close Driver Camera View"),
+    ET.SOFT_DISABLE: soft_disable_alert("Driver Camera View Open"),
+  },
+
   # LionDriver TSR-633, TSR-624: stopping in lane, then held, until the driver takes over
   EventName.minimumRiskManeuver: {
     ET.PERMANENT: minimum_risk_maneuver_alert,

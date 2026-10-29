@@ -6280,3 +6280,31 @@
       detail: "No fork difference. Cost: an old correction is applied at engagement; SWF-042.C1 stays AP H with no test."
   sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-042", "assurance/07-supporting/impact/change-2026-10-29-lateral-integrator-reset.md"]
   status: open
+- id: DQ-427
+  question: "With the driver-camera view open, should the car refuse to engage, and disengage if the view turns on while engaged?"
+  context: >-
+    A reversible technical choice, so Claude goes with the recommendation unless you object. Opening the driver-camera
+    view puts driver monitoring in demo mode: it stops using the car's real speed and state, and the monitored seat
+    can switch. The view can only be opened parked, but it can stay open after you start driving, and nothing stopped
+    engagement. **The fix keeps monitoring the real driver whenever the car is on, refuses to engage while the view is
+    open ("Close Driver Camera View"), and gives a take-over alert and disengages if it is set while engaged.** This is
+    your TSR-610 requirement.
+  reversibility: easy
+  blocks: "SW FMEA SWF-085.C1, SWF-085.C2 (D 10 -> 4), SWF-ACT-072; System FMEA SFM-022.C4; TSR-610, SWSR-610, CSR-072"
+  gate: G1
+  decider: claude
+  asked: 2026-10-29
+  proceed_after: 2026-11-01
+  options:
+    - key: A
+      recommended: true
+      title: "Refuse entry while the view is open, soft disable if set while engaged; monitoring ignores demo mode while the car is on"
+      detail: "Small changes in selfdrived and dmonitoringd, tested on the real processes and mutation-checked in CI. Cost: a driver who leaves the view open must close it before engaging."
+    - key: B
+      title: "Refuse entry only, never disengage"
+      detail: "No take-over alert if the parameter changes while engaged. Cost: the view covers the road view and its alerts while engaged, until closed."
+    - key: C
+      title: "Also have the UI clear the parameter when the car turns on"
+      detail: "The view closes by itself. Cost: changes in both UIs (comma 3X and comma four) with UI tests; not needed for safety once monitoring ignores it."
+  sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-085", "assurance/07-supporting/impact/change-2026-10-29-driver-view-interlock.md", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-610"]
+  status: open

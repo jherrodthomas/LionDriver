@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1598" viewBox="0 0 1280 1598" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-6. SW FMEA failure chains — sheet 11 of 14 (SWF)</title>
-  <desc id="d">SW FMEA failure chains, sheet 11 of 14 (SWF rev 1.13): failure modes SWF-061 to SWF-065 (5 failure modes, 12 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <desc id="d">SW FMEA failure chains, sheet 11 of 14 (SWF rev 1.14): failure modes SWF-061 to SWF-065 (5 failure modes, 12 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -10,7 +10,7 @@
   </defs>
   <rect width="1280" height="1598" fill="#FCFCFB"/>
   <text x="40" y="44" font-size="20" fill="#0B0B0B" font-weight="700">Figure 3-6 · SW FMEA failure chains — sheet 11 of 14</text>
-  <text x="40" y="66" font-size="12.5" fill="#52514E">SWF rev 1.13 · BL-007 · draft · SWF-061 … SWF-065 · 12 causes on this sheet</text>
+  <text x="40" y="66" font-size="12.5" fill="#52514E">SWF rev 1.14 · BL-007 · draft · SWF-061 … SWF-065 · 12 causes on this sheet</text>
   <text x="1240" y="44" font-size="11" fill="#52514E" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#52514E" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E1E0D9" stroke-width="1"/>
@@ -153,22 +153,22 @@
   <circle cx="892.5" cy="711.2" r="5.5" fill="#6250D6"/>
   <text x="904" y="715.2" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SWF-085.C1</text>
   <rect x="1182.5" y="704.2" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="711.7" r="4.3" fill="#9E2424"/><rect x="1189.4" y="710.9" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="715.1" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
-  <text x="886" y="729.8" font-size="10.5" fill="#0B0B0B">The cabin camera dialog sets IsDriverViewEnabled and clears it only</text>
-  <text x="886" y="743.9" font-size="10.5" fill="#0B0B0B">when the dialog closes (ui/onroad/cabin_camera_dialog.py:18-22;</text>
-  <text x="886" y="757.9" font-size="10.5" fill="#0B0B0B">ui/mici/onroad/cabin_camera_dialog.py:44, 52). The dialog opens…</text>
-  <text x="886" y="771.1" font-size="9.8" fill="#52514E" font-weight="600">O5 · D10 · in SWF-SE-062</text>
-  <rect x="886" y="777.1" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="788" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">SWF-ACT-072 open</text>
-  <rect x="998.9" y="777.1" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="1053.3" y="788" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">SWF-ACT-076 open</text>
+  <text x="886" y="729.8" font-size="10.5" fill="#0B0B0B">The driver-camera view left open across the onroad transition (cabin</text>
+  <text x="886" y="743.9" font-size="10.5" fill="#0B0B0B">camera dialog, ui/onroad/cabin_camera_dialog.py:18-22;</text>
+  <text x="886" y="757.9" font-size="10.5" fill="#0B0B0B">ui/mici/onroad/cabin_camera_dialog.py:44, 52; the comma four UI…</text>
+  <text x="886" y="771.1" font-size="9.8" fill="#52514E" font-weight="600">O5 · D4 · in SWF-SE-062</text>
+  <rect x="886" y="777.1" width="135.3" height="15" rx="7.5" fill="#E6F5E6"/><text x="953.7" y="788" font-size="9.5" font-weight="700" fill="#0A6A0A" text-anchor="middle" letter-spacing=".02em">SWF-ACT-072 completed</text>
+  <rect x="1025.3" y="777.1" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="1079.7" y="788" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">SWF-ACT-076 open</text>
   <rect x="876" y="811.1" width="364" height="106.3" fill="#000000" rx="12" opacity=".05"/>
   <rect x="876" y="808.1" width="364" height="106.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
   <circle cx="892.5" cy="823.6" r="5.5" fill="#6250D6"/>
   <text x="904" y="827.6" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SWF-085.C2</text>
   <rect x="1182.5" y="816.6" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="824.1" r="4.3" fill="#9E2424"/><rect x="1189.4" y="823.3" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="827.5" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
-  <text x="886" y="842.1" font-size="10.5" fill="#0B0B0B">No engagement interlock: nothing in selfdrived or controlsd reads</text>
-  <text x="886" y="856.2" font-size="10.5" fill="#0B0B0B">IsDriverViewEnabled, so a parameter left set (written by tooling, or a</text>
-  <text x="886" y="870.3" font-size="10.5" fill="#0B0B0B">UI crash before hide_event; it is cleared only at manager start…</text>
-  <text x="886" y="883.4" font-size="9.8" fill="#52514E" font-weight="600">O8 · D10 · in SWF-SE-062</text>
-  <rect x="886" y="889.4" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="900.3" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">SWF-ACT-072 open</text>
+  <text x="886" y="842.1" font-size="10.5" fill="#0B0B0B">Defect in the selfdrived interlock (rev 1.14, DQ-427):</text>
+  <text x="886" y="856.2" font-size="10.5" fill="#0B0B0B">IsDriverViewEnabled left set (written by tooling, or a UI crash before</text>
+  <text x="886" y="870.3" font-size="10.5" fill="#0B0B0B">hide_event; cleared only at manager start, params_keys.h:61) not…</text>
+  <text x="886" y="883.4" font-size="9.8" fill="#52514E" font-weight="600">O5 · D4 · in SWF-SE-062</text>
+  <rect x="886" y="889.4" width="135.3" height="15" rx="7.5" fill="#E6F5E6"/><text x="953.7" y="900.3" font-size="9.5" font-weight="700" fill="#0A6A0A" text-anchor="middle" letter-spacing=".02em">SWF-ACT-072 completed</text>
   <rect x="40" y="1012.8" width="180" height="69.9" fill="#000000" rx="12" opacity=".05"/>
   <rect x="40" y="1009.8" width="180" height="69.9" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
   <rect x="50.5" y="1019.8" width="12" height="11" fill="#52514E" rx="3"/>

@@ -137,6 +137,7 @@ class SelfdriveD:
     # read params
     self.is_metric = self.params.get_bool("IsMetric")
     self.is_ldw_enabled = self.params.get_bool("IsLdwEnabled")
+    self.driver_view = self.params.get_bool("IsDriverViewEnabled")
     self.disengage_on_accelerator = self.params.get_bool("DisengageOnAccelerator")
 
     car_recognized = self.CP.brand != 'mock'
@@ -508,6 +509,10 @@ class SelfdriveD:
 
     self.add_reference_entry_events(CS)
 
+    # LionDriver (TSR-610, SWSR-610): driver monitoring is in demo mode while the driver-camera view is open
+    if self.driver_view:
+      self.events.add(EventName.driverViewActive)
+
     # Check for FCW
     stock_long_is_braking = self.enabled and not self.CP.openpilotLongitudinalControl and CS.aEgo < -1.25
     model_fcw = self.sm['modelV2'].meta.hardBrakePredicted and not CS.brakePressed and not stock_long_is_braking
@@ -689,6 +694,7 @@ class SelfdriveD:
       self.disengage_on_accelerator = self.params.get_bool("DisengageOnAccelerator")
       self.experimental_mode_setting = self.params.get_bool("ExperimentalMode") and self.CP.openpilotLongitudinalControl
       self.personality_setting = self.params.get("LongitudinalPersonality", return_default=True)
+      self.driver_view = self.params.get_bool("IsDriverViewEnabled")
       self.update_assured_config()
       time.sleep(0.1)
 
