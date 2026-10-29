@@ -676,7 +676,7 @@
   other_parents: false
   allocated_to: "SoC"
   verification: "UT"
-  baseline_impl: "Not implemented (GAP-20; details: private record GD-09)"
+  baseline_impl: "Implemented in host software, not verified on the vehicle: dmonitoringd uses demo mode only while card is not running, and selfdrived refuses engagement while the key is set (TSR-610, SWSR-610; GAP-20; details: private record GD-09)"
   status: proposed
   source: WP-S-07
 

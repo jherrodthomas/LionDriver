@@ -153,6 +153,8 @@
 #   opendbc cap of the command (SWF-093.C2) is not mutated yet.
 # Rev 0.38 (after BL-007, ratings within BL-007): SFM-002.C1 and SFM-007.C1 O 7 D 10 -> O 5 D 4, re-inherited from SWF-042.C1 once both
 #   lateral controllers clear their integrator in reset() (DQ-426 A, SW FMEA rev 1.13). SFM-002.C1 stays AP H (S 10); SFM-007.C1 AP H -> M (S 7).
+# Rev 0.39 (after BL-007, ratings within BL-007): SFM-022.C4 O 8 D 10 -> O 5 D 4, re-inherited from SWF-085 once the demo-mode interlock
+#   (TSR-610, DQ-427, SW FMEA rev 1.14) was implemented and mutated; its MSR row F 8 M 10 -> F 5 M 7 (timing not measured). AP stays H.
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -161,7 +163,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.38"
+  revision: "0.39"
   status: draft
   baseline: BL-007
   rating_tables: RT-3
@@ -3037,30 +3039,35 @@ failure_modes:
         linked_failure_mode: SWF-085
         description: >-
           Driver monitoring runs in demo mode while the item is engaged (IsDriverViewEnabled left set): the policy uses a synthetic
-          vehicle state and the monitored seat can switch, so the actual driver may not be watched (GAP-20, TSR-610 not met)
+          vehicle state and the monitored seat can switch, so the actual driver may not be watched. Since SW FMEA rev 1.14 (TSR-610, DQ-427)
+          dmonitoringd ignores demo mode while started and selfdrived refuses engagement and soft-disables while the parameter is set; the
+          remaining cause is a defect in those checks
         prevention_controls:
-        - description: The cabin camera dialog opens only offroad and its buttons are disabled onroad; no engagement interlock; rated in the SW FMEA
-          ref: openpilot/selfdrive/monitoring/dmonitoringd.py
+        - description: 'LionDriver change with a requirement (TSR-610, SWSR-610): demo mode only offroad, engagement interlock in selfdrived; O 5, as rated in
+            the SW FMEA'
+          ref: assurance/07-supporting/impact/change-2026-10-29-driver-view-interlock.md
         detection_controls:
-        - description: 'As rated in the SW FMEA (SWF-085, D 10): no test covers demo mode with the item started'
-        occurrence: 8
-        detection: 10
+        - description: 'test_driver_view.py with the item started, proven by mutants DV-1..DV-6 in CI; D 4, from D 10 (SW FMEA rev 1.14)'
+          ref: tools/ci/host_mutants.toml
+          test: openpilot/selfdrive/selfdrived/tests/test_driver_view.py
+        occurrence: 5
+        detection: 4
         ap: H
         rationale: Rated, and actioned, in the SW FMEA (SWF-085.C2, SWF-ACT-072); this row inherits the worst of its causes. Taken in from the retired WP-A-04 §10 table (DQ-127)
         msr:
           mechanisms:
           - 1
           - 2
-          diagnostic: 'None: the camera is alive and the model can be confident, so neither the wheel-touch fallback nor cameraMalfunction acts'
-          system_response: None
-          effect_after_response: 'Unchanged: alerts still escalate on the camera input, possibly for the wrong seat'
+          diagnostic: selfdrived reads IsDriverViewEnabled at start and every 0.1 s and raises driverViewActive (TSR-610)
+          system_response: NO_ENTRY while set; SOFT_DISABLE with a take-over alert if set while engaged. dmonitoringd keeps monitoring the real driver while started
+          effect_after_response: Not engaged with demo mode; if set while engaged, the driver takes over within the soft-disable time
           severity_after: 10
-          frequency: 8
-          monitoring: 10
+          frequency: 5
+          monitoring: 7
           ap: H
           timing:
             basis: unknown
-          rationale: No in-field monitor of demo mode while engaged; the interlock (TSR-610) is actioned in the SW FMEA (SWF-ACT-072)
+          rationale: The interlock (TSR-610) targets this cause; its timing is not compared with an FTTI, so M 7 (RT-2 §7.3). F follows the cause's O 5
     notes: "HARA input: loss of the driver as the fallback (L2 safety argument depends on it). DM model performance is also SOTIF/PAS 8800."
 
   - id: SFM-023

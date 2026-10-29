@@ -162,6 +162,8 @@ struct OnroadEvent @0xc4fa6047f024e718 {
     brakeFaultCode @114;
     # LionDriver: the start-up fault-code read gave no complete answer, so the item does not engage (TSR-629, DQ-132)
     faultCodeReadFailed @115;
+    # LionDriver: the driver-camera view (driver monitoring demo mode) is open, so the item does not engage, and disengages if engaged (TSR-610)
+    driverViewActive @116;
   }
 }
 

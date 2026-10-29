@@ -1535,7 +1535,7 @@
   acceptance: "No engagement with key set"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met (`dmonitoringd.py:26-38`) (GAP-20); W-09 DVR-12"
+  baseline_impl: "`IsDriverViewEnabled`: implemented, not verified on the vehicle (DQ-427): `driverViewActive` NO_ENTRY and SOFT_DISABLE in selfdrived, demo mode in dmonitoringd only while card is not running; `test_driver_view.py`, mutants DV-1…DV-6. The debug, maneuver and joystick modes are left out of the reference build (DQ-131, SWSR-613). W-09 DVR-12"
   status: proposed
   source: WP-W-02
 

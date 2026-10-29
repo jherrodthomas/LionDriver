@@ -417,3 +417,57 @@ replace = "    if False:\n      self.LaC.reset()"
 tests = ["openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py"]
 fmea = ["SWF-042.C1"]
 why = "controlsd does not reset the lateral controller when lateral control ends"
+
+[[mutants]]
+id = "DV-1"
+file = "openpilot/selfdrive/selfdrived/selfdrived.py"
+find = "    if self.driver_view:\n      self.events.add(EventName.driverViewActive)"
+replace = "    if False:\n      self.events.add(EventName.driverViewActive)"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_driver_view.py"]
+fmea = ["SWF-085.C1", "SWF-085.C2"]
+why = "selfdrived does not raise the event, so the item engages with the driver-camera view open"
+
+[[mutants]]
+id = "DV-2"
+file = "openpilot/selfdrive/selfdrived/selfdrived.py"
+find = "    self.driver_view = self.params.get_bool(\"IsDriverViewEnabled\")\n    self.disengage_on_accelerator"
+replace = "    self.driver_view = False\n    self.disengage_on_accelerator"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_driver_view.py"]
+fmea = ["SWF-085.C2"]
+why = "a parameter left set at start is not seen until the parameter thread runs"
+
+[[mutants]]
+id = "DV-3"
+file = "openpilot/selfdrive/selfdrived/selfdrived.py"
+find = "      self.driver_view = self.params.get_bool(\"IsDriverViewEnabled\")\n      self.update_assured_config()"
+replace = "      self.update_assured_config()"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_driver_view.py"]
+fmea = ["SWF-085.C1"]
+why = "a view opened after start is never seen by selfdrived"
+
+[[mutants]]
+id = "DV-4"
+file = "openpilot/selfdrive/selfdrived/events.py"
+find = "    ET.SOFT_DISABLE: soft_disable_alert(\"Driver Camera View Open\"),\n"
+replace = ""
+tests = ["openpilot/selfdrive/selfdrived/tests/test_driver_view.py"]
+fmea = ["SWF-085.C1"]
+why = "the view set while engaged only refuses entry, so the item stays engaged"
+
+[[mutants]]
+id = "DV-5"
+file = "openpilot/selfdrive/monitoring/dmonitoringd.py"
+find = "  return driver_view and not car_state_alive"
+replace = "  return driver_view"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_driver_view.py"]
+fmea = ["SWF-085.C1", "SWF-085.C2"]
+why = "driver monitoring stays in demo mode while started"
+
+[[mutants]]
+id = "DV-6"
+file = "openpilot/selfdrive/monitoring/dmonitoringd.py"
+find = "    demo_mode = demo_active(driver_view, sm.alive['carState'])"
+replace = "    demo_mode = driver_view"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_driver_view.py"]
+fmea = ["SWF-085.C1", "SWF-085.C2"]
+why = "dmonitoringd does not use the started check"

@@ -116,7 +116,7 @@
 <rect x="776.7" y="168" width="6.1" height="5" fill="#D97706"/>
 <rect x="784.5" y="168" width="6.1" height="5" fill="#1D4ED8"/>
 <rect x="792.2" y="168" width="6.1" height="5" fill="#D2553F"/>
-<rect x="799.9" y="168" width="6.1" height="5" fill="#D2553F"/>
+<rect x="799.9" y="168" width="6.1" height="5" fill="#1D4ED8"/>
 <rect x="807.7" y="168" width="6.1" height="5" fill="#D97706"/>
 <rect x="815.4" y="168" width="6.1" height="5" fill="#D2553F"/>
 <rect x="823.1" y="168" width="6.1" height="5" fill="#D97706"/>
@@ -393,7 +393,7 @@
 <text x="56" y="510" font-size="10.5" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FSR-02.08</text>
 <text x="138" y="510" font-size="9.5" fill="#475569" font-weight="700">A</text>
 <text x="238" y="510" font-size="9.5" fill="#475569" text-anchor="end">3</text>
-<rect x="799.7" y="501" width="6.5" height="10" rx="1.5" fill="#D2553F"/>
+<rect x="799.7" y="501" width="6.5" height="10" rx="1.5" fill="#1D4ED8"/>
 <rect x="822.9" y="501" width="6.5" height="10" rx="1.5" fill="#D97706"/>
 <rect x="1140.1" y="501" width="6.5" height="10" rx="1.5" fill="#D97706"/>
 <line x1="248" y1="519" x2="1240" y2="519" stroke="#F1F5F9"/>

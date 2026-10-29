@@ -132,6 +132,10 @@
 # rev 1.13 (after BL-007, ratings within BL-007): DQ-426 A (decider Claude) makes LatControlTorque and LatControlPID clear their PID integrator in
 #   reset(), which controlsd calls whenever lateral control is off (change-2026-10-29-lateral-integrator-reset); upstream still carries it over.
 #   SWF-042.C1 rewritten to a defect in the reset, O 7 D 10 -> O 5 D 4 (mutants LR-1..LR-3, 45 in all), AP stays H (S 10, O 5). SWF-ACT-042 completed.
+# rev 1.14 (after BL-007, ratings within BL-007): DQ-427 A (decider Claude) implements TSR-610 / SWSR-610: selfdrived refuses engagement and soft-disables
+#   while IsDriverViewEnabled is set (driverViewActive), and dmonitoringd uses demo mode only while card is not running (change-2026-10-29-driver-view-interlock).
+#   SWF-085.C1 O 5 D 10 -> O 5 D 4 and SWF-085.C2 O 8 D 10 -> O 5 D 4, both rewritten to a defect in the checks (mutants DV-1..DV-6, 51 in all); AP stays H
+#   (S 10). SWF-ACT-072 completed.
 # Post rev 1.4, FTA WP-A-04 v1.12 (BE-1.25 in the SG-04 tree), ratings unchanged: SWF-055 and SWF-089 gain HZ-006 end effects (an authority
 #   grant covers longitudinal commands, as SWF-007). SWF-002 stays steering-only (HZ-001); its note says why HZ-006 and HZ-010 do not apply.
 #
@@ -181,7 +185,7 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.13"
+  revision: "1.14"
   status: draft
   baseline: BL-007
   rating_tables: RT-2
@@ -5453,35 +5457,45 @@ failure_modes:
   severity: 10
   causes:
   - id: SWF-085.C1
-    description: 'The cabin camera dialog sets IsDriverViewEnabled and clears it only when the dialog closes (ui/onroad/cabin_camera_dialog.py:18-22; ui/mici/onroad/cabin_camera_dialog.py:44,
-      52). The dialog opens only offroad, but stays open across the onroad transition: the comma four UI pops it 2.5 s after going onroad (mici/layouts/main.py:112-124,
-      not while onboarding), the comma 3X UI on its interactive timeout or a touch (cabin_camera_dialog.py:16). dmonitoringd re-reads the parameter every 40 frames, 2 s
-      (dmonitoringd.py:36-38). While open, the comma four dialog also publishes its own selfdriveState with only alertSound set (mici cabin_camera_dialog.py:48, 102-116),
-      a second publisher beside selfdrived'
+    description: 'The driver-camera view left open across the onroad transition (cabin camera dialog, ui/onroad/cabin_camera_dialog.py:18-22; ui/mici/onroad/cabin_camera_dialog.py:44,
+      52; the comma four UI closes it 2.5 s after going onroad, the comma 3X UI on its timeout or a touch). Since rev 1.14 (after BL-007, DQ-427,
+      change-2026-10-29-driver-view-interlock) dmonitoringd uses demo mode only while card is not running, so the remaining cause is a defect in that check
+      (demo_active or its call in the loop) or in the selfdrived interlock of SWF-085.C2. The comma four dialog also publishes its own selfdriveState (second
+      publisher, SWF-ACT-076). Up to rev 1.13: demo mode applied whenever the parameter was set (O 5, D 10)'
     element: SWF-SE-062
     prevention_controls:
-    - description: The dialog buttons are disabled onroad (layouts/settings/device.py:61; mici device_layout.py:185); the comma four UI closes dialogs after going onroad.
-        Upstream code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirement implemented (TSR-610 not met)
-      ref: openpilot/selfdrive/ui/mici/layouts/main.py
+    - description: 'LionDriver change with a requirement (TSR-610, SWSR-610): demo mode only while card is not running (dmonitoringd.demo_active); upstream UI
+        disables the dialog buttons onroad; reviewed in the PR, not independently; O 5'
+      ref: assurance/07-supporting/impact/change-2026-10-29-driver-view-interlock.md
     detection_controls:
-    - description: No test covers demo mode with the item started; test_widget_leaks only constructs the dialogs
+    - description: 'Proven by mutation in CI: test_driver_view.py runs the real dmonitoringd loop offroad and started, and fails on each hand-written mutant of
+        this cause (DV-5, DV-6, and DV-1, DV-3, DV-4 for the selfdrived side), tools/ci/host_mutation.py in the tests.yaml unit_tests job; so D 4 (RT-2), from
+        D 10 (rev 1.14)'
+      ref: tools/ci/host_mutants.toml
+      test: openpilot/selfdrive/selfdrived/tests/test_driver_view.py
     occurrence: 5
-    detection: 10
+    detection: 4
     ap: H
     actions:
     - SWF-ACT-072
     - SWF-ACT-076
   - id: SWF-085.C2
-    description: 'No engagement interlock: nothing in selfdrived or controlsd reads IsDriverViewEnabled, so a parameter left set (written by tooling, or a UI crash before
-      hide_event; it is cleared only at manager start, params_keys.h:61) keeps demo mode for the drive (GAP-20, TSR-610 not met)'
+    description: 'Defect in the selfdrived interlock (rev 1.14, DQ-427): IsDriverViewEnabled left set (written by tooling, or a UI crash before hide_event; cleared
+      only at manager start, params_keys.h:61) not read at start or by the parameter thread, or driverViewActive not raised, or without its NO_ENTRY and
+      SOFT_DISABLE. Up to rev 1.13 there was no interlock at all (GAP-20; O 8, D 10)'
     element: SWF-SE-062
     prevention_controls:
-    - description: Upstream design with no interlock; requirement TSR-610 not implemented, so O 8 (RT-2 §2), as the other by-design gaps
-      ref: openpilot/selfdrive/monitoring/dmonitoringd.py
+    - description: 'LionDriver change with a requirement (TSR-610, SWSR-610): selfdrived raises driverViewActive while the parameter is set; reviewed in the PR, not
+        independently; O 5'
+      ref: assurance/07-supporting/impact/change-2026-10-29-driver-view-interlock.md
     detection_controls:
-    - description: No test; fault-injection scenario VS-FI-23 (params tampering) is specified in WP-V-05 but not run
-    occurrence: 8
-    detection: 10
+    - description: 'Proven by mutation in CI: test_driver_view.py (real SelfdriveD constructor, update_events and parameter thread) fails on each hand-written
+        mutant of this cause (DV-1..DV-4), tools/ci/host_mutation.py; so D 4 (RT-2), from D 10 (rev 1.14). Fault-injection scenario VS-FI-23 (params tampering)
+        is still not run'
+      ref: tools/ci/host_mutants.toml
+      test: openpilot/selfdrive/selfdrived/tests/test_driver_view.py
+    occurrence: 5
+    detection: 4
     ap: H
     actions:
     - SWF-ACT-072
@@ -6408,7 +6422,17 @@ actions:
   description: 'Demo-mode interlock (TSR-610): selfdrived refuses engagement while IsDriverViewEnabled is set and raises a fault if it is set while engaged; the UI clears
     the parameter on the onroad transition; dmonitoringd ignores demo mode while started. Add a test with the item started'
   owner: Jherrod Thomas
-  status: open
+  status: completed
+  evidence: 'Done with a different third part (DQ-427 A, decider Claude; change-2026-10-29-driver-view-interlock): selfdrived raises driverViewActive (NO_ENTRY,
+    SOFT_DISABLE) while IsDriverViewEnabled is set, and dmonitoringd uses demo mode only while card is not running. The UI does not clear the parameter on the
+    onroad transition: with both checks the parameter has no effect on monitoring while started and blocks engagement, so the driver closes the view. Tested
+    with the item started (test_driver_view.py, real dmonitoringd loop and SelfdriveD), mutants DV-1..DV-6 (rev 1.14). The second selfdriveState publisher
+    stays with SWF-ACT-076'
+  revised:
+    severity: 10
+    occurrence: 5
+    detection: 4
+    ap: H
 - id: SWF-ACT-073
   kind: detection
   description: 'End-to-end test of the terminal reaction: drive policy, controlsd and plannerd from a recorded or synthetic unresponsive-driver input and check that
