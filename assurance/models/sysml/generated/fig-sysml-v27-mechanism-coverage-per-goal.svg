@@ -1,0 +1,387 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="2698" viewBox="0 0 640 2698" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">V-27. Safety mechanisms per safety goal (SysML v2 view mechanismCoveragePerGoal)</title>
+<desc id="d">Allocation view generated from the SysML v2 model, drawn at phone width. One card per safety goal SG-01 to SG-08: the safety mechanisms that implement a TSR derived from one of the goal's FSRs, grouped by their status in WP-S-03 §6 (implemented, partial, not there yet) and coloured by diagnostic-coverage target, with a bar of the shares. Below, each FSR with no mechanism behind it: in red a gap, in grey an FSR met outside the item (an assumption of use) or by reference to other FSRs.</desc>
+<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter></defs>
+<rect width="640" height="2698" fill="#FFFFFF"/>
+<text x="24" y="38" font-size="19" fill="#0F172A" font-weight="700">V-27 · Safety mechanisms per safety goal</text>
+<text x="24" y="60" font-size="12.5" fill="#64748B">Each goal traced through its FSRs and TSRs to the mechanisms that implement them (WP-S-03 §6),</text>
+<text x="24" y="77" font-size="12.5" fill="#64748B">by status today, and the FSRs with no mechanism behind them</text>
+<text x="24" y="96" font-size="10.5" fill="#94A3B8">SysML v2 view LionDriverViews::mechanismCoveragePerGoal · model 33f30bfe6c7a</text>
+<line x1="24" y1="110" x2="616" y2="110" stroke="#E2E8F0"/>
+<g data-goal="SG-01">
+<rect x="24" y="126" width="592" height="283" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="36" y="138" width="46.7" height="20" rx="10" fill="#C2410C"/><text x="59.3" y="152" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">SG-01</text>
+<rect x="557.7" y="138" width="46.3" height="20" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="580.9" y="151.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">ASIL C</text>
+<text x="90.7" y="153" font-size="12.5" fill="#0F172A" font-weight="600">Not cause lateral motion of the vehicle that exceeds what the driver can</text>
+<text x="90.7" y="169" font-size="12.5" fill="#0F172A" font-weight="600">control, including any steering actuation while the item is not engaged</text>
+<rect x="36" y="189" width="176.3" height="10" rx="2" fill="#1D4ED8"/>
+<rect x="212.3" y="189" width="293.8" height="10" rx="2" fill="#B45309"/>
+<rect x="506.1" y="189" width="78.3" height="10" rx="2" fill="#D2553F"/>
+<rect x="584.4" y="189" width="19.6" height="10" rx="2" fill="#94A3B8"/>
+<text x="36" y="215" font-size="11.5" fill="#334155" font-weight="600">29 mechanisms via 14 FSRs</text>
+<circle cx="40" cy="242" r="4" fill="#1D4ED8"/>
+<text x="50" y="246" font-size="11" fill="#1D4ED8" font-weight="700">implemented (9)</text>
+<g data-sm="SM-02" data-goal="SG-01" data-status="impl"><rect x="148.7" y="233" width="47.5" height="18" rx="9" fill="#9A3412"/><text x="172.4" y="245.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-02</text></g>
+<g data-sm="SM-03" data-goal="SG-01" data-status="impl"><rect x="200.2" y="233" width="47.7" height="18" rx="9" fill="#FB923C"/><text x="224" y="245.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-03</text></g>
+<g data-sm="SM-04" data-goal="SG-01" data-status="impl"><rect x="251.9" y="233" width="48" height="18" rx="9" fill="#9A3412"/><text x="275.9" y="245.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-04</text></g>
+<g data-sm="SM-09" data-goal="SG-01" data-status="impl"><rect x="303.9" y="233" width="47.7" height="18" rx="9" fill="#FB923C"/><text x="327.7" y="245.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-09</text></g>
+<g data-sm="SM-15" data-goal="SG-01" data-status="impl"><rect x="355.6" y="233" width="45.2" height="18" rx="9" fill="#FB923C"/><text x="378.2" y="245.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-15</text></g>
+<g data-sm="SM-24" data-goal="SG-01" data-status="impl"><rect x="404.8" y="233" width="47.6" height="18" rx="9" fill="#FB923C"/><text x="428.6" y="245.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-24</text></g>
+<g data-sm="SM-27" data-goal="SG-01" data-status="impl"><rect x="456.4" y="233" width="46.6" height="18" rx="9" fill="#E2E8F0"/><text x="479.7" y="245.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-27</text></g>
+<g data-sm="SM-29" data-goal="SG-01" data-status="impl"><rect x="507" y="233" width="47.3" height="18" rx="9" fill="#9A3412"/><text x="530.6" y="245.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-29</text></g>
+<g data-sm="SM-39" data-goal="SG-01" data-status="impl"><rect x="50" y="255" width="47.5" height="18" rx="9" fill="#FB923C"/><text x="73.8" y="267.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-39</text></g>
+<circle cx="40" cy="292" r="4" fill="#B45309"/>
+<text x="50" y="296" font-size="11" fill="#B45309" font-weight="700">partial (15)</text>
+<g data-sm="SM-01" data-goal="SG-01" data-status="partial"><rect x="117" y="283" width="45.5" height="18" rx="9" fill="#9A3412"/><text x="139.7" y="295.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-01</text></g>
+<g data-sm="SM-10" data-goal="SG-01" data-status="partial"><rect x="166.5" y="283" width="45.5" height="18" rx="9" fill="#FED7AA"/><text x="189.2" y="295.6" font-size="10" fill="#7C2D12" font-weight="700" text-anchor="middle">SM-10</text></g>
+<g data-sm="SM-11" data-goal="SG-01" data-status="partial"><rect x="216" y="283" width="43.1" height="18" rx="9" fill="#FB923C"/><text x="237.5" y="295.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-11</text></g>
+<g data-sm="SM-12" data-goal="SG-01" data-status="partial"><rect x="263.1" y="283" width="45.1" height="18" rx="9" fill="#FB923C"/><text x="285.6" y="295.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-12</text></g>
+<g data-sm="SM-13" data-goal="SG-01" data-status="partial"><rect x="312.2" y="283" width="45.3" height="18" rx="9" fill="#9A3412"/><text x="334.8" y="295.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-13</text></g>
+<g data-sm="SM-14" data-goal="SG-01" data-status="partial"><rect x="361.5" y="283" width="45.6" height="18" rx="9" fill="#9A3412"/><text x="384.3" y="295.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-14</text></g>
+<g data-sm="SM-17" data-goal="SG-01" data-status="partial"><rect x="411.1" y="283" width="44.6" height="18" rx="9" fill="#9A3412"/><text x="433.4" y="295.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-17</text></g>
+<g data-sm="SM-18" data-goal="SG-01" data-status="partial"><rect x="459.7" y="283" width="45.3" height="18" rx="9" fill="#FB923C"/><text x="482.3" y="295.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-18</text></g>
+<g data-sm="SM-20" data-goal="SG-01" data-status="partial"><rect x="509" y="283" width="47.5" height="18" rx="9" fill="#9A3412"/><text x="532.7" y="295.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-20</text></g>
+<g data-sm="SM-22" data-goal="SG-01" data-status="partial"><rect x="50" y="305" width="47.1" height="18" rx="9" fill="#9A3412"/><text x="73.5" y="317.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-22</text></g>
+<g data-sm="SM-25" data-goal="SG-01" data-status="partial"><rect x="101.1" y="305" width="47.2" height="18" rx="9" fill="#E2E8F0"/><text x="124.7" y="317.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-25</text></g>
+<g data-sm="SM-28" data-goal="SG-01" data-status="partial"><rect x="152.3" y="305" width="47.3" height="18" rx="9" fill="#E2E8F0"/><text x="175.9" y="317.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-28</text></g>
+<g data-sm="SM-30" data-goal="SG-01" data-status="partial"><rect x="203.6" y="305" width="47.7" height="18" rx="9" fill="#E2E8F0"/><text x="227.4" y="317.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-30</text></g>
+<g data-sm="SM-40" data-goal="SG-01" data-status="partial"><rect x="255.3" y="305" width="48" height="18" rx="9" fill="#FB923C"/><text x="279.3" y="317.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-40</text></g>
+<g data-sm="SM-41" data-goal="SG-01" data-status="partial"><rect x="307.3" y="305" width="45.6" height="18" rx="9" fill="#FB923C"/><text x="330.1" y="317.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-41</text></g>
+<circle cx="40" cy="342" r="4" fill="#D2553F"/>
+<text x="50" y="346" font-size="11" fill="#D2553F" font-weight="700">not there yet (4)</text>
+<g data-sm="SM-08" data-goal="SG-01" data-status="missing"><rect x="147.2" y="333" width="47.7" height="18" rx="9" fill="#9A3412"/><text x="171.1" y="345.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-08</text></g>
+<g data-sm="SM-16" data-goal="SG-01" data-status="missing"><rect x="198.9" y="333" width="45.3" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="221.6" y="345.6" font-size="10" fill="#64748B" font-weight="700" text-anchor="middle">SM-16</text></g>
+<g data-sm="SM-21" data-goal="SG-01" data-status="missing"><rect x="248.2" y="333" width="45.1" height="18" rx="9" fill="#FB923C"/><text x="270.8" y="345.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-21</text></g>
+<g data-sm="SM-38" data-goal="SG-01" data-status="missing"><rect x="297.3" y="333" width="47.5" height="18" rx="9" fill="#9A3412"/><text x="321.1" y="345.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-38</text></g>
+<circle cx="40" cy="370" r="4" fill="#94A3B8"/>
+<text x="50" y="374" font-size="11" fill="#94A3B8" font-weight="700">unknown (1)</text>
+<g data-sm="SM-19" data-goal="SG-01" data-status="unknown"><rect x="125.5" y="361" width="45.3" height="18" rx="9" fill="#FB923C"/><text x="148.1" y="373.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-19</text></g>
+<text x="36" y="399" font-size="10.5" fill="#64748B">11 of its TSRs name no mechanism (met by design, test or the driver)</text>
+</g>
+<g data-goal="SG-02">
+<rect x="24" y="423" width="592" height="311" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="36" y="435" width="48.9" height="20" rx="10" fill="#C2410C"/><text x="60.4" y="449" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">SG-02</text>
+<rect x="557.7" y="435" width="46.3" height="20" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="580.9" y="448.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">ASIL C</text>
+<text x="92.9" y="450" font-size="12.5" fill="#0F172A" font-weight="600">Not lose or degrade lateral control while engaged without giving the</text>
+<text x="92.9" y="466" font-size="12.5" fill="#0F172A" font-weight="600">driver an adequate take-over warning</text>
+<rect x="36" y="486" width="108.2" height="10" rx="2" fill="#1D4ED8"/>
+<rect x="144.2" y="486" width="324.6" height="10" rx="2" fill="#B45309"/>
+<rect x="468.8" y="486" width="108.2" height="10" rx="2" fill="#D2553F"/>
+<rect x="577" y="486" width="27" height="10" rx="2" fill="#94A3B8"/>
+<text x="36" y="512" font-size="11.5" fill="#334155" font-weight="600">21 mechanisms via 16 FSRs</text>
+<circle cx="40" cy="539" r="4" fill="#1D4ED8"/>
+<text x="50" y="543" font-size="11" fill="#1D4ED8" font-weight="700">implemented (4)</text>
+<g data-sm="SM-04" data-goal="SG-02" data-status="impl"><rect x="149" y="530" width="48" height="18" rx="9" fill="#9A3412"/><text x="173" y="542.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-04</text></g>
+<g data-sm="SM-15" data-goal="SG-02" data-status="impl"><rect x="201" y="530" width="45.2" height="18" rx="9" fill="#FB923C"/><text x="223.6" y="542.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-15</text></g>
+<g data-sm="SM-29" data-goal="SG-02" data-status="impl"><rect x="250.2" y="530" width="47.3" height="18" rx="9" fill="#9A3412"/><text x="273.8" y="542.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-29</text></g>
+<g data-sm="SM-43" data-goal="SG-02" data-status="impl"><rect x="301.5" y="530" width="47.8" height="18" rx="9" fill="#E2E8F0"/><text x="325.4" y="542.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-43</text></g>
+<circle cx="40" cy="567" r="4" fill="#B45309"/>
+<text x="50" y="571" font-size="11" fill="#B45309" font-weight="700">partial (12)</text>
+<g data-sm="SM-06" data-goal="SG-02" data-status="partial"><rect x="116.9" y="558" width="47.7" height="18" rx="9" fill="#FB923C"/><text x="140.7" y="570.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-06</text></g>
+<g data-sm="SM-12" data-goal="SG-02" data-status="partial"><rect x="168.6" y="558" width="45.1" height="18" rx="9" fill="#FB923C"/><text x="191.1" y="570.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-12</text></g>
+<g data-sm="SM-13" data-goal="SG-02" data-status="partial"><rect x="217.7" y="558" width="45.3" height="18" rx="9" fill="#9A3412"/><text x="240.3" y="570.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-13</text></g>
+<g data-sm="SM-17" data-goal="SG-02" data-status="partial"><rect x="267" y="558" width="44.6" height="18" rx="9" fill="#9A3412"/><text x="289.3" y="570.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-17</text></g>
+<g data-sm="SM-18" data-goal="SG-02" data-status="partial"><rect x="315.6" y="558" width="45.3" height="18" rx="9" fill="#FB923C"/><text x="338.2" y="570.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-18</text></g>
+<g data-sm="SM-23" data-goal="SG-02" data-status="partial"><rect x="364.9" y="558" width="47.3" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="388.5" y="570.6" font-size="10" fill="#64748B" font-weight="700" text-anchor="middle">SM-23</text></g>
+<g data-sm="SM-25" data-goal="SG-02" data-status="partial"><rect x="416.2" y="558" width="47.2" height="18" rx="9" fill="#E2E8F0"/><text x="439.8" y="570.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-25</text></g>
+<g data-sm="SM-26" data-goal="SG-02" data-status="partial"><rect x="467.4" y="558" width="47.3" height="18" rx="9" fill="#E2E8F0"/><text x="491" y="570.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-26</text></g>
+<g data-sm="SM-30" data-goal="SG-02" data-status="partial"><rect x="518.7" y="558" width="47.7" height="18" rx="9" fill="#E2E8F0"/><text x="542.5" y="570.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-30</text></g>
+<g data-sm="SM-31" data-goal="SG-02" data-status="partial"><rect x="50" y="580" width="45.3" height="18" rx="9" fill="#E2E8F0"/><text x="72.7" y="592.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-31</text></g>
+<g data-sm="SM-40" data-goal="SG-02" data-status="partial"><rect x="99.3" y="580" width="48" height="18" rx="9" fill="#FB923C"/><text x="123.3" y="592.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-40</text></g>
+<g data-sm="SM-41" data-goal="SG-02" data-status="partial"><rect x="151.3" y="580" width="45.6" height="18" rx="9" fill="#FB923C"/><text x="174.1" y="592.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-41</text></g>
+<circle cx="40" cy="617" r="4" fill="#D2553F"/>
+<text x="50" y="621" font-size="11" fill="#D2553F" font-weight="700">not there yet (4)</text>
+<g data-sm="SM-08" data-goal="SG-02" data-status="missing"><rect x="147.2" y="608" width="47.7" height="18" rx="9" fill="#9A3412"/><text x="171.1" y="620.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-08</text></g>
+<g data-sm="SM-16" data-goal="SG-02" data-status="missing"><rect x="198.9" y="608" width="45.3" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="221.6" y="620.6" font-size="10" fill="#64748B" font-weight="700" text-anchor="middle">SM-16</text></g>
+<g data-sm="SM-21" data-goal="SG-02" data-status="missing"><rect x="248.2" y="608" width="45.1" height="18" rx="9" fill="#FB923C"/><text x="270.8" y="620.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-21</text></g>
+<g data-sm="SM-38" data-goal="SG-02" data-status="missing"><rect x="297.3" y="608" width="47.5" height="18" rx="9" fill="#9A3412"/><text x="321.1" y="620.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-38</text></g>
+<circle cx="40" cy="645" r="4" fill="#94A3B8"/>
+<text x="50" y="649" font-size="11" fill="#94A3B8" font-weight="700">unknown (1)</text>
+<g data-sm="SM-19" data-goal="SG-02" data-status="unknown"><rect x="125.5" y="636" width="45.3" height="18" rx="9" fill="#FB923C"/><text x="148.1" y="648.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-19</text></g>
+<g data-fsr="FSR-02.12" data-kind="gap">
+<rect x="36" y="664" width="568" height="42" rx="6" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="46" y="682" font-size="11" fill="#D2553F" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-02.12</text>
+<text x="126" y="682" font-size="11" fill="#334155">No mechanism yet. Before granting engagement, and while the item can engage, the item</text>
+<text x="126" y="697" font-size="11" fill="#334155">shall read the stored diagnostic trouble codes of the EPS and of the brake and stability …</text>
+</g>
+<text x="36" y="724" font-size="10.5" fill="#64748B">12 of its TSRs name no mechanism (met by design, test or the driver)</text>
+</g>
+<g data-goal="SG-03">
+<rect x="24" y="748" width="592" height="331" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="36" y="760" width="49.1" height="20" rx="10" fill="#C2410C"/><text x="60.5" y="774" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">SG-03</text>
+<rect x="557.7" y="760" width="46.3" height="20" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="580.9" y="773.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">ASIL C</text>
+<text x="93.1" y="775" font-size="12.5" fill="#0F172A" font-weight="600">Not cause unintended vehicle acceleration</text>
+<rect x="36" y="796" width="165.7" height="10" rx="2" fill="#1D4ED8"/>
+<rect x="201.7" y="796" width="307.7" height="10" rx="2" fill="#B45309"/>
+<rect x="509.3" y="796" width="71" height="10" rx="2" fill="#D2553F"/>
+<rect x="580.3" y="796" width="23.7" height="10" rx="2" fill="#94A3B8"/>
+<text x="36" y="822" font-size="11.5" fill="#334155" font-weight="600">24 mechanisms via 13 FSRs</text>
+<circle cx="40" cy="849" r="4" fill="#1D4ED8"/>
+<text x="50" y="853" font-size="11" fill="#1D4ED8" font-weight="700">implemented (7)</text>
+<g data-sm="SM-04" data-goal="SG-03" data-status="impl"><rect x="147.9" y="840" width="48" height="18" rx="9" fill="#9A3412"/><text x="171.9" y="852.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-04</text></g>
+<g data-sm="SM-09" data-goal="SG-03" data-status="impl"><rect x="199.9" y="840" width="47.7" height="18" rx="9" fill="#FB923C"/><text x="223.7" y="852.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-09</text></g>
+<g data-sm="SM-15" data-goal="SG-03" data-status="impl"><rect x="251.6" y="840" width="45.2" height="18" rx="9" fill="#FB923C"/><text x="274.2" y="852.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-15</text></g>
+<g data-sm="SM-24" data-goal="SG-03" data-status="impl"><rect x="300.8" y="840" width="47.6" height="18" rx="9" fill="#FB923C"/><text x="324.6" y="852.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-24</text></g>
+<g data-sm="SM-29" data-goal="SG-03" data-status="impl"><rect x="352.4" y="840" width="47.3" height="18" rx="9" fill="#9A3412"/><text x="376" y="852.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-29</text></g>
+<g data-sm="SM-39" data-goal="SG-03" data-status="impl"><rect x="403.7" y="840" width="47.5" height="18" rx="9" fill="#FB923C"/><text x="427.4" y="852.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-39</text></g>
+<g data-sm="SM-43" data-goal="SG-03" data-status="impl"><rect x="455.2" y="840" width="47.8" height="18" rx="9" fill="#E2E8F0"/><text x="479.1" y="852.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-43</text></g>
+<circle cx="40" cy="877" r="4" fill="#B45309"/>
+<text x="50" y="881" font-size="11" fill="#B45309" font-weight="700">partial (13)</text>
+<g data-sm="SM-07" data-goal="SG-03" data-status="partial"><rect x="117.1" y="868" width="47" height="18" rx="9" fill="#9A3412"/><text x="140.6" y="880.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-07</text></g>
+<g data-sm="SM-10" data-goal="SG-03" data-status="partial"><rect x="168.1" y="868" width="45.5" height="18" rx="9" fill="#FED7AA"/><text x="190.8" y="880.6" font-size="10" fill="#7C2D12" font-weight="700" text-anchor="middle">SM-10</text></g>
+<g data-sm="SM-11" data-goal="SG-03" data-status="partial"><rect x="217.6" y="868" width="43.1" height="18" rx="9" fill="#FB923C"/><text x="239.1" y="880.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-11</text></g>
+<g data-sm="SM-12" data-goal="SG-03" data-status="partial"><rect x="264.7" y="868" width="45.1" height="18" rx="9" fill="#FB923C"/><text x="287.2" y="880.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-12</text></g>
+<g data-sm="SM-13" data-goal="SG-03" data-status="partial"><rect x="313.8" y="868" width="45.3" height="18" rx="9" fill="#9A3412"/><text x="336.4" y="880.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-13</text></g>
+<g data-sm="SM-14" data-goal="SG-03" data-status="partial"><rect x="363.1" y="868" width="45.6" height="18" rx="9" fill="#9A3412"/><text x="385.9" y="880.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-14</text></g>
+<g data-sm="SM-17" data-goal="SG-03" data-status="partial"><rect x="412.7" y="868" width="44.6" height="18" rx="9" fill="#9A3412"/><text x="435" y="880.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-17</text></g>
+<g data-sm="SM-18" data-goal="SG-03" data-status="partial"><rect x="461.3" y="868" width="45.3" height="18" rx="9" fill="#FB923C"/><text x="483.9" y="880.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-18</text></g>
+<g data-sm="SM-20" data-goal="SG-03" data-status="partial"><rect x="510.6" y="868" width="47.5" height="18" rx="9" fill="#9A3412"/><text x="534.3" y="880.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-20</text></g>
+<g data-sm="SM-22" data-goal="SG-03" data-status="partial"><rect x="50" y="890" width="47.1" height="18" rx="9" fill="#9A3412"/><text x="73.5" y="902.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-22</text></g>
+<g data-sm="SM-30" data-goal="SG-03" data-status="partial"><rect x="101.1" y="890" width="47.7" height="18" rx="9" fill="#E2E8F0"/><text x="124.9" y="902.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-30</text></g>
+<g data-sm="SM-40" data-goal="SG-03" data-status="partial"><rect x="152.8" y="890" width="48" height="18" rx="9" fill="#FB923C"/><text x="176.8" y="902.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-40</text></g>
+<g data-sm="SM-41" data-goal="SG-03" data-status="partial"><rect x="204.8" y="890" width="45.6" height="18" rx="9" fill="#FB923C"/><text x="227.6" y="902.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-41</text></g>
+<circle cx="40" cy="927" r="4" fill="#D2553F"/>
+<text x="50" y="931" font-size="11" fill="#D2553F" font-weight="700">not there yet (3)</text>
+<g data-sm="SM-16" data-goal="SG-03" data-status="missing"><rect x="146.9" y="918" width="45.3" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="169.6" y="930.6" font-size="10" fill="#64748B" font-weight="700" text-anchor="middle">SM-16</text></g>
+<g data-sm="SM-21" data-goal="SG-03" data-status="missing"><rect x="196.2" y="918" width="45.1" height="18" rx="9" fill="#FB923C"/><text x="218.8" y="930.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-21</text></g>
+<g data-sm="SM-38" data-goal="SG-03" data-status="missing"><rect x="245.3" y="918" width="47.5" height="18" rx="9" fill="#9A3412"/><text x="269" y="930.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-38</text></g>
+<circle cx="40" cy="955" r="4" fill="#94A3B8"/>
+<text x="50" y="959" font-size="11" fill="#94A3B8" font-weight="700">unknown (1)</text>
+<g data-sm="SM-19" data-goal="SG-03" data-status="unknown"><rect x="125.5" y="946" width="45.3" height="18" rx="9" fill="#FB923C"/><text x="148.1" y="958.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-19</text></g>
+<g data-fsr="FSR-03.04" data-kind="reference">
+<rect x="36" y="974" width="568" height="27" rx="6" fill="#F8FAFC" stroke="#64748B" stroke-width="1"/>
+<text x="46" y="992" font-size="11" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-03.04</text>
+<text x="126" y="992" font-size="11" fill="#334155">Shares the mechanisms of FSR-01.05…01.12 by reference; no TSR of its own.</text>
+</g>
+<g data-fsr="FSR-03.06" data-kind="outside">
+<rect x="36" y="1009" width="568" height="42" rx="6" fill="#F8FAFC" stroke="#64748B" stroke-width="1"/>
+<text x="46" y="1027" font-size="11" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-03.06</text>
+<text x="126" y="1027" font-size="11" fill="#334155">Outside the item: AOU-05R (the car's own systems). The PCM shall bound ACC</text>
+<text x="126" y="1042" font-size="11" fill="#334155">acceleration requests to its own envelope and honour the cancel request.</text>
+</g>
+<text x="36" y="1069" font-size="10.5" fill="#64748B">10 of its TSRs name no mechanism (met by design, test or the driver)</text>
+</g>
+<g data-goal="SG-04">
+<rect x="24" y="1093" width="592" height="261" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="36" y="1105" width="49.4" height="20" rx="10" fill="#EA580C"/><text x="60.7" y="1119" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">SG-04</text>
+<rect x="558.5" y="1105" width="45.5" height="20" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="581.2" y="1118.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">ASIL B</text>
+<text x="93.4" y="1120" font-size="12.5" fill="#0F172A" font-weight="600">Not cause deceleration that exceeds what following traffic and the driver</text>
+<text x="93.4" y="1136" font-size="12.5" fill="#0F172A" font-weight="600">can control</text>
+<rect x="36" y="1156" width="118.3" height="10" rx="2" fill="#1D4ED8"/>
+<rect x="154.3" y="1156" width="355" height="10" rx="2" fill="#B45309"/>
+<rect x="509.3" y="1156" width="71" height="10" rx="2" fill="#D2553F"/>
+<rect x="580.3" y="1156" width="23.7" height="10" rx="2" fill="#94A3B8"/>
+<text x="36" y="1182" font-size="11.5" fill="#334155" font-weight="600">24 mechanisms via 14 FSRs</text>
+<circle cx="40" cy="1209" r="4" fill="#1D4ED8"/>
+<text x="50" y="1213" font-size="11" fill="#1D4ED8" font-weight="700">implemented (5)</text>
+<g data-sm="SM-04" data-goal="SG-04" data-status="impl"><rect x="148.6" y="1200" width="48" height="18" rx="9" fill="#9A3412"/><text x="172.6" y="1212.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-04</text></g>
+<g data-sm="SM-09" data-goal="SG-04" data-status="impl"><rect x="200.6" y="1200" width="47.7" height="18" rx="9" fill="#FB923C"/><text x="224.4" y="1212.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-09</text></g>
+<g data-sm="SM-15" data-goal="SG-04" data-status="impl"><rect x="252.2" y="1200" width="45.2" height="18" rx="9" fill="#FB923C"/><text x="274.9" y="1212.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-15</text></g>
+<g data-sm="SM-29" data-goal="SG-04" data-status="impl"><rect x="301.4" y="1200" width="47.3" height="18" rx="9" fill="#9A3412"/><text x="325.1" y="1212.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-29</text></g>
+<g data-sm="SM-39" data-goal="SG-04" data-status="impl"><rect x="352.8" y="1200" width="47.5" height="18" rx="9" fill="#FB923C"/><text x="376.5" y="1212.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-39</text></g>
+<circle cx="40" cy="1237" r="4" fill="#B45309"/>
+<text x="50" y="1241" font-size="11" fill="#B45309" font-weight="700">partial (15)</text>
+<g data-sm="SM-07" data-goal="SG-04" data-status="partial"><rect x="117" y="1228" width="47" height="18" rx="9" fill="#9A3412"/><text x="140.5" y="1240.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-07</text></g>
+<g data-sm="SM-10" data-goal="SG-04" data-status="partial"><rect x="168" y="1228" width="45.5" height="18" rx="9" fill="#FED7AA"/><text x="190.7" y="1240.6" font-size="10" fill="#7C2D12" font-weight="700" text-anchor="middle">SM-10</text></g>
+<g data-sm="SM-11" data-goal="SG-04" data-status="partial"><rect x="217.5" y="1228" width="43.1" height="18" rx="9" fill="#FB923C"/><text x="239" y="1240.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-11</text></g>
+<g data-sm="SM-12" data-goal="SG-04" data-status="partial"><rect x="264.6" y="1228" width="45.1" height="18" rx="9" fill="#FB923C"/><text x="287.1" y="1240.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-12</text></g>
+<g data-sm="SM-13" data-goal="SG-04" data-status="partial"><rect x="313.7" y="1228" width="45.3" height="18" rx="9" fill="#9A3412"/><text x="336.3" y="1240.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-13</text></g>
+<g data-sm="SM-14" data-goal="SG-04" data-status="partial"><rect x="363" y="1228" width="45.6" height="18" rx="9" fill="#9A3412"/><text x="385.8" y="1240.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-14</text></g>
+<g data-sm="SM-17" data-goal="SG-04" data-status="partial"><rect x="412.6" y="1228" width="44.6" height="18" rx="9" fill="#9A3412"/><text x="434.9" y="1240.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-17</text></g>
+<g data-sm="SM-18" data-goal="SG-04" data-status="partial"><rect x="461.2" y="1228" width="45.3" height="18" rx="9" fill="#FB923C"/><text x="483.8" y="1240.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-18</text></g>
+<g data-sm="SM-22" data-goal="SG-04" data-status="partial"><rect x="510.5" y="1228" width="47.1" height="18" rx="9" fill="#9A3412"/><text x="534" y="1240.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-22</text></g>
+<g data-sm="SM-26" data-goal="SG-04" data-status="partial"><rect x="50" y="1250" width="47.3" height="18" rx="9" fill="#E2E8F0"/><text x="73.7" y="1262.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-26</text></g>
+<g data-sm="SM-30" data-goal="SG-04" data-status="partial"><rect x="101.3" y="1250" width="47.7" height="18" rx="9" fill="#E2E8F0"/><text x="125.2" y="1262.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-30</text></g>
+<g data-sm="SM-32" data-goal="SG-04" data-status="partial"><rect x="153" y="1250" width="47.3" height="18" rx="9" fill="#E2E8F0"/><text x="176.7" y="1262.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-32</text></g>
+<g data-sm="SM-33" data-goal="SG-04" data-status="partial"><rect x="204.3" y="1250" width="47.5" height="18" rx="9" fill="#E2E8F0"/><text x="228.1" y="1262.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-33</text></g>
+<g data-sm="SM-40" data-goal="SG-04" data-status="partial"><rect x="255.8" y="1250" width="48" height="18" rx="9" fill="#FB923C"/><text x="279.8" y="1262.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-40</text></g>
+<g data-sm="SM-41" data-goal="SG-04" data-status="partial"><rect x="307.8" y="1250" width="45.6" height="18" rx="9" fill="#FB923C"/><text x="330.6" y="1262.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-41</text></g>
+<circle cx="40" cy="1287" r="4" fill="#D2553F"/>
+<text x="50" y="1291" font-size="11" fill="#D2553F" font-weight="700">not there yet (3)</text>
+<g data-sm="SM-16" data-goal="SG-04" data-status="missing"><rect x="146.9" y="1278" width="45.3" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="169.6" y="1290.6" font-size="10" fill="#64748B" font-weight="700" text-anchor="middle">SM-16</text></g>
+<g data-sm="SM-21" data-goal="SG-04" data-status="missing"><rect x="196.2" y="1278" width="45.1" height="18" rx="9" fill="#FB923C"/><text x="218.8" y="1290.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-21</text></g>
+<g data-sm="SM-38" data-goal="SG-04" data-status="missing"><rect x="245.3" y="1278" width="47.5" height="18" rx="9" fill="#9A3412"/><text x="269" y="1290.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-38</text></g>
+<circle cx="40" cy="1315" r="4" fill="#94A3B8"/>
+<text x="50" y="1319" font-size="11" fill="#94A3B8" font-weight="700">unknown (1)</text>
+<g data-sm="SM-19" data-goal="SG-04" data-status="unknown"><rect x="125.5" y="1306" width="45.3" height="18" rx="9" fill="#FB923C"/><text x="148.1" y="1318.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-19</text></g>
+<text x="36" y="1344" font-size="10.5" fill="#64748B">10 of its TSRs name no mechanism (met by design, test or the driver)</text>
+</g>
+<g data-goal="SG-05">
+<rect x="24" y="1368" width="592" height="311" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="36" y="1380" width="49" height="20" rx="10" fill="#EA580C"/><text x="60.5" y="1394" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">SG-05</text>
+<rect x="558.5" y="1380" width="45.5" height="20" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="581.2" y="1393.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">ASIL B</text>
+<text x="93" y="1395" font-size="12.5" fill="#0F172A" font-weight="600">Release control immediately when the driver brakes, cancels, or</text>
+<text x="93" y="1411" font-size="12.5" fill="#0F172A" font-weight="600">overrides steering</text>
+<rect x="36" y="1431" width="113.6" height="10" rx="2" fill="#1D4ED8"/>
+<rect x="149.6" y="1431" width="284" height="10" rx="2" fill="#B45309"/>
+<rect x="433.6" y="1431" width="142" height="10" rx="2" fill="#D2553F"/>
+<rect x="575.6" y="1431" width="28.4" height="10" rx="2" fill="#94A3B8"/>
+<text x="36" y="1457" font-size="11.5" fill="#334155" font-weight="600">20 mechanisms via 12 FSRs</text>
+<circle cx="40" cy="1484" r="4" fill="#1D4ED8"/>
+<text x="50" y="1488" font-size="11" fill="#1D4ED8" font-weight="700">implemented (4)</text>
+<g data-sm="SM-04" data-goal="SG-05" data-status="impl"><rect x="149" y="1475" width="48" height="18" rx="9" fill="#9A3412"/><text x="173" y="1487.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-04</text></g>
+<g data-sm="SM-09" data-goal="SG-05" data-status="impl"><rect x="201" y="1475" width="47.7" height="18" rx="9" fill="#FB923C"/><text x="224.8" y="1487.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-09</text></g>
+<g data-sm="SM-15" data-goal="SG-05" data-status="impl"><rect x="252.7" y="1475" width="45.2" height="18" rx="9" fill="#FB923C"/><text x="275.3" y="1487.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-15</text></g>
+<g data-sm="SM-29" data-goal="SG-05" data-status="impl"><rect x="301.9" y="1475" width="47.3" height="18" rx="9" fill="#9A3412"/><text x="325.5" y="1487.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-29</text></g>
+<circle cx="40" cy="1512" r="4" fill="#B45309"/>
+<text x="50" y="1516" font-size="11" fill="#B45309" font-weight="700">partial (10)</text>
+<g data-sm="SM-07" data-goal="SG-05" data-status="partial"><rect x="117.3" y="1503" width="47" height="18" rx="9" fill="#9A3412"/><text x="140.8" y="1515.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-07</text></g>
+<g data-sm="SM-10" data-goal="SG-05" data-status="partial"><rect x="168.3" y="1503" width="45.5" height="18" rx="9" fill="#FED7AA"/><text x="191.1" y="1515.6" font-size="10" fill="#7C2D12" font-weight="700" text-anchor="middle">SM-10</text></g>
+<g data-sm="SM-11" data-goal="SG-05" data-status="partial"><rect x="217.8" y="1503" width="43.1" height="18" rx="9" fill="#FB923C"/><text x="239.4" y="1515.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-11</text></g>
+<g data-sm="SM-14" data-goal="SG-05" data-status="partial"><rect x="264.9" y="1503" width="45.6" height="18" rx="9" fill="#9A3412"/><text x="287.7" y="1515.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-14</text></g>
+<g data-sm="SM-17" data-goal="SG-05" data-status="partial"><rect x="314.5" y="1503" width="44.6" height="18" rx="9" fill="#9A3412"/><text x="336.8" y="1515.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-17</text></g>
+<g data-sm="SM-18" data-goal="SG-05" data-status="partial"><rect x="363.1" y="1503" width="45.3" height="18" rx="9" fill="#FB923C"/><text x="385.8" y="1515.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-18</text></g>
+<g data-sm="SM-22" data-goal="SG-05" data-status="partial"><rect x="412.4" y="1503" width="47.1" height="18" rx="9" fill="#9A3412"/><text x="436" y="1515.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-22</text></g>
+<g data-sm="SM-30" data-goal="SG-05" data-status="partial"><rect x="463.5" y="1503" width="47.7" height="18" rx="9" fill="#E2E8F0"/><text x="487.4" y="1515.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-30</text></g>
+<g data-sm="SM-40" data-goal="SG-05" data-status="partial"><rect x="515.2" y="1503" width="48" height="18" rx="9" fill="#FB923C"/><text x="539.2" y="1515.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-40</text></g>
+<g data-sm="SM-41" data-goal="SG-05" data-status="partial"><rect x="50" y="1525" width="45.6" height="18" rx="9" fill="#FB923C"/><text x="72.8" y="1537.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-41</text></g>
+<circle cx="40" cy="1562" r="4" fill="#D2553F"/>
+<text x="50" y="1566" font-size="11" fill="#D2553F" font-weight="700">not there yet (5)</text>
+<g data-sm="SM-05" data-goal="SG-05" data-status="missing"><rect x="146.8" y="1553" width="47.6" height="18" rx="9" fill="#FB923C"/><text x="170.6" y="1565.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-05</text></g>
+<g data-sm="SM-08" data-goal="SG-05" data-status="missing"><rect x="198.4" y="1553" width="47.7" height="18" rx="9" fill="#9A3412"/><text x="222.2" y="1565.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-08</text></g>
+<g data-sm="SM-16" data-goal="SG-05" data-status="missing"><rect x="250.1" y="1553" width="45.3" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="272.7" y="1565.6" font-size="10" fill="#64748B" font-weight="700" text-anchor="middle">SM-16</text></g>
+<g data-sm="SM-21" data-goal="SG-05" data-status="missing"><rect x="299.4" y="1553" width="45.1" height="18" rx="9" fill="#FB923C"/><text x="321.9" y="1565.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-21</text></g>
+<g data-sm="SM-38" data-goal="SG-05" data-status="missing"><rect x="348.5" y="1553" width="47.5" height="18" rx="9" fill="#9A3412"/><text x="372.2" y="1565.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-38</text></g>
+<circle cx="40" cy="1590" r="4" fill="#94A3B8"/>
+<text x="50" y="1594" font-size="11" fill="#94A3B8" font-weight="700">unknown (1)</text>
+<g data-sm="SM-19" data-goal="SG-05" data-status="unknown"><rect x="125.5" y="1581" width="45.3" height="18" rx="9" fill="#FB923C"/><text x="148.1" y="1593.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-19</text></g>
+<g data-fsr="FSR-05.07" data-kind="outside">
+<rect x="36" y="1609" width="568" height="42" rx="6" fill="#F8FAFC" stroke="#64748B" stroke-width="1"/>
+<text x="46" y="1627" font-size="11" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-05.07</text>
+<text x="126" y="1627" font-size="11" fill="#334155">Outside the item: AOU-03R (the car's own systems). Driver brake input shall produce</text>
+<text x="126" y="1642" font-size="11" fill="#334155">braking regardless of ACC commands.</text>
+</g>
+<text x="36" y="1669" font-size="10.5" fill="#64748B">9 of its TSRs name no mechanism (met by design, test or the driver)</text>
+</g>
+<g data-goal="SG-06">
+<rect x="24" y="1693" width="592" height="311" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="36" y="1705" width="49.1" height="20" rx="10" fill="#C2410C"/><text x="60.5" y="1719" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">SG-06</text>
+<rect x="557.7" y="1705" width="46.3" height="20" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="580.9" y="1718.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">ASIL C</text>
+<text x="93.1" y="1720" font-size="12.5" fill="#0F172A" font-weight="600">Not lose longitudinal deceleration capability while engaged without</text>
+<text x="93.1" y="1736" font-size="12.5" fill="#0F172A" font-weight="600">giving the driver an adequate take-over warning</text>
+<rect x="36" y="1756" width="162.3" height="10" rx="2" fill="#1D4ED8"/>
+<rect x="198.3" y="1756" width="297.5" height="10" rx="2" fill="#B45309"/>
+<rect x="495.8" y="1756" width="81.1" height="10" rx="2" fill="#D2553F"/>
+<rect x="577" y="1756" width="27" height="10" rx="2" fill="#94A3B8"/>
+<text x="36" y="1782" font-size="11.5" fill="#334155" font-weight="600">21 mechanisms via 16 FSRs</text>
+<circle cx="40" cy="1809" r="4" fill="#1D4ED8"/>
+<text x="50" y="1813" font-size="11" fill="#1D4ED8" font-weight="700">implemented (6)</text>
+<g data-sm="SM-04" data-goal="SG-06" data-status="impl"><rect x="148.7" y="1800" width="48" height="18" rx="9" fill="#9A3412"/><text x="172.7" y="1812.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-04</text></g>
+<g data-sm="SM-15" data-goal="SG-06" data-status="impl"><rect x="200.7" y="1800" width="45.2" height="18" rx="9" fill="#FB923C"/><text x="223.3" y="1812.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-15</text></g>
+<g data-sm="SM-27" data-goal="SG-06" data-status="impl"><rect x="249.9" y="1800" width="46.6" height="18" rx="9" fill="#E2E8F0"/><text x="273.2" y="1812.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-27</text></g>
+<g data-sm="SM-29" data-goal="SG-06" data-status="impl"><rect x="300.5" y="1800" width="47.3" height="18" rx="9" fill="#9A3412"/><text x="324.1" y="1812.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-29</text></g>
+<g data-sm="SM-34" data-goal="SG-06" data-status="impl"><rect x="351.8" y="1800" width="47.8" height="18" rx="9" fill="#E2E8F0"/><text x="375.7" y="1812.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-34</text></g>
+<g data-sm="SM-43" data-goal="SG-06" data-status="impl"><rect x="403.6" y="1800" width="47.8" height="18" rx="9" fill="#E2E8F0"/><text x="427.5" y="1812.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-43</text></g>
+<circle cx="40" cy="1837" r="4" fill="#B45309"/>
+<text x="50" y="1841" font-size="11" fill="#B45309" font-weight="700">partial (11)</text>
+<g data-sm="SM-12" data-goal="SG-06" data-status="partial"><rect x="114.7" y="1828" width="45.1" height="18" rx="9" fill="#FB923C"/><text x="137.2" y="1840.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-12</text></g>
+<g data-sm="SM-13" data-goal="SG-06" data-status="partial"><rect x="163.8" y="1828" width="45.3" height="18" rx="9" fill="#9A3412"/><text x="186.4" y="1840.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-13</text></g>
+<g data-sm="SM-17" data-goal="SG-06" data-status="partial"><rect x="213.1" y="1828" width="44.6" height="18" rx="9" fill="#9A3412"/><text x="235.4" y="1840.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-17</text></g>
+<g data-sm="SM-18" data-goal="SG-06" data-status="partial"><rect x="261.7" y="1828" width="45.3" height="18" rx="9" fill="#FB923C"/><text x="284.3" y="1840.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-18</text></g>
+<g data-sm="SM-23" data-goal="SG-06" data-status="partial"><rect x="311" y="1828" width="47.3" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="334.6" y="1840.6" font-size="10" fill="#64748B" font-weight="700" text-anchor="middle">SM-23</text></g>
+<g data-sm="SM-25" data-goal="SG-06" data-status="partial"><rect x="362.3" y="1828" width="47.2" height="18" rx="9" fill="#E2E8F0"/><text x="385.9" y="1840.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-25</text></g>
+<g data-sm="SM-26" data-goal="SG-06" data-status="partial"><rect x="413.5" y="1828" width="47.3" height="18" rx="9" fill="#E2E8F0"/><text x="437.1" y="1840.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-26</text></g>
+<g data-sm="SM-30" data-goal="SG-06" data-status="partial"><rect x="464.8" y="1828" width="47.7" height="18" rx="9" fill="#E2E8F0"/><text x="488.6" y="1840.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-30</text></g>
+<g data-sm="SM-31" data-goal="SG-06" data-status="partial"><rect x="516.5" y="1828" width="45.3" height="18" rx="9" fill="#E2E8F0"/><text x="539.1" y="1840.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-31</text></g>
+<g data-sm="SM-40" data-goal="SG-06" data-status="partial"><rect x="50" y="1850" width="48" height="18" rx="9" fill="#FB923C"/><text x="74" y="1862.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-40</text></g>
+<g data-sm="SM-41" data-goal="SG-06" data-status="partial"><rect x="102" y="1850" width="45.6" height="18" rx="9" fill="#FB923C"/><text x="124.8" y="1862.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-41</text></g>
+<circle cx="40" cy="1887" r="4" fill="#D2553F"/>
+<text x="50" y="1891" font-size="11" fill="#D2553F" font-weight="700">not there yet (3)</text>
+<g data-sm="SM-16" data-goal="SG-06" data-status="missing"><rect x="146.9" y="1878" width="45.3" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="169.6" y="1890.6" font-size="10" fill="#64748B" font-weight="700" text-anchor="middle">SM-16</text></g>
+<g data-sm="SM-21" data-goal="SG-06" data-status="missing"><rect x="196.2" y="1878" width="45.1" height="18" rx="9" fill="#FB923C"/><text x="218.8" y="1890.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-21</text></g>
+<g data-sm="SM-38" data-goal="SG-06" data-status="missing"><rect x="245.3" y="1878" width="47.5" height="18" rx="9" fill="#9A3412"/><text x="269" y="1890.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-38</text></g>
+<circle cx="40" cy="1915" r="4" fill="#94A3B8"/>
+<text x="50" y="1919" font-size="11" fill="#94A3B8" font-weight="700">unknown (1)</text>
+<g data-sm="SM-19" data-goal="SG-06" data-status="unknown"><rect x="125.5" y="1906" width="45.3" height="18" rx="9" fill="#FB923C"/><text x="148.1" y="1918.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-19</text></g>
+<g data-fsr="FSR-02.12" data-kind="gap">
+<rect x="36" y="1934" width="568" height="42" rx="6" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="46" y="1952" font-size="11" fill="#D2553F" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-02.12</text>
+<text x="126" y="1952" font-size="11" fill="#334155">No mechanism yet. Before granting engagement, and while the item can engage, the item</text>
+<text x="126" y="1967" font-size="11" fill="#334155">shall read the stored diagnostic trouble codes of the EPS and of the brake and stability …</text>
+</g>
+<text x="36" y="1994" font-size="10.5" fill="#64748B">11 of its TSRs name no mechanism (met by design, test or the driver)</text>
+</g>
+<g data-goal="SG-07">
+<rect x="24" y="2018" width="592" height="339" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="36" y="2030" width="48.3" height="20" rx="10" fill="#EA580C"/><text x="60.2" y="2044" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">SG-07</text>
+<rect x="558.5" y="2030" width="45.5" height="20" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="581.2" y="2043.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">ASIL B</text>
+<text x="92.3" y="2045" font-size="12.5" fill="#0F172A" font-weight="600">Not suppress, delay or alter the vehicle's stock pre-collision (PCS/AEB)</text>
+<text x="92.3" y="2061" font-size="12.5" fill="#0F172A" font-weight="600">function</text>
+<rect x="36" y="2081" width="133.6" height="10" rx="2" fill="#1D4ED8"/>
+<rect x="169.6" y="2081" width="267.3" height="10" rx="2" fill="#B45309"/>
+<rect x="436.9" y="2081" width="100.2" height="10" rx="2" fill="#D2553F"/>
+<rect x="537.2" y="2081" width="66.8" height="10" rx="2" fill="#94A3B8"/>
+<text x="36" y="2107" font-size="11.5" fill="#334155" font-weight="600">17 mechanisms via 10 FSRs</text>
+<circle cx="40" cy="2134" r="4" fill="#1D4ED8"/>
+<text x="50" y="2138" font-size="11" fill="#1D4ED8" font-weight="700">implemented (4)</text>
+<g data-sm="SM-15" data-goal="SG-07" data-status="impl"><rect x="149" y="2125" width="45.2" height="18" rx="9" fill="#FB923C"/><text x="171.6" y="2137.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-15</text></g>
+<g data-sm="SM-24" data-goal="SG-07" data-status="impl"><rect x="198.2" y="2125" width="47.6" height="18" rx="9" fill="#FB923C"/><text x="222" y="2137.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-24</text></g>
+<g data-sm="SM-35" data-goal="SG-07" data-status="impl"><rect x="249.8" y="2125" width="47.4" height="18" rx="9" fill="#9A3412"/><text x="273.5" y="2137.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-35</text></g>
+<g data-sm="SM-37" data-goal="SG-07" data-status="impl"><rect x="301.2" y="2125" width="46.8" height="18" rx="9" fill="#E2E8F0"/><text x="324.6" y="2137.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-37</text></g>
+<circle cx="40" cy="2162" r="4" fill="#B45309"/>
+<text x="50" y="2166" font-size="11" fill="#B45309" font-weight="700">partial (8)</text>
+<g data-sm="SM-14" data-goal="SG-07" data-status="partial"><rect x="112.4" y="2153" width="45.6" height="18" rx="9" fill="#9A3412"/><text x="135.2" y="2165.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-14</text></g>
+<g data-sm="SM-17" data-goal="SG-07" data-status="partial"><rect x="162" y="2153" width="44.6" height="18" rx="9" fill="#9A3412"/><text x="184.3" y="2165.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-17</text></g>
+<g data-sm="SM-18" data-goal="SG-07" data-status="partial"><rect x="210.6" y="2153" width="45.3" height="18" rx="9" fill="#FB923C"/><text x="233.2" y="2165.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-18</text></g>
+<g data-sm="SM-20" data-goal="SG-07" data-status="partial"><rect x="259.9" y="2153" width="47.5" height="18" rx="9" fill="#9A3412"/><text x="283.6" y="2165.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-20</text></g>
+<g data-sm="SM-22" data-goal="SG-07" data-status="partial"><rect x="311.4" y="2153" width="47.1" height="18" rx="9" fill="#9A3412"/><text x="334.9" y="2165.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-22</text></g>
+<g data-sm="SM-40" data-goal="SG-07" data-status="partial"><rect x="362.5" y="2153" width="48" height="18" rx="9" fill="#FB923C"/><text x="386.5" y="2165.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-40</text></g>
+<g data-sm="SM-41" data-goal="SG-07" data-status="partial"><rect x="414.5" y="2153" width="45.6" height="18" rx="9" fill="#FB923C"/><text x="437.3" y="2165.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-41</text></g>
+<g data-sm="SM-42" data-goal="SG-07" data-status="partial"><rect x="464.1" y="2153" width="47.6" height="18" rx="9" fill="#FB923C"/><text x="487.9" y="2165.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-42</text></g>
+<circle cx="40" cy="2190" r="4" fill="#D2553F"/>
+<text x="50" y="2194" font-size="11" fill="#D2553F" font-weight="700">not there yet (3)</text>
+<g data-sm="SM-16" data-goal="SG-07" data-status="missing"><rect x="146.9" y="2181" width="45.3" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="169.6" y="2193.6" font-size="10" fill="#64748B" font-weight="700" text-anchor="middle">SM-16</text></g>
+<g data-sm="SM-21" data-goal="SG-07" data-status="missing"><rect x="196.2" y="2181" width="45.1" height="18" rx="9" fill="#FB923C"/><text x="218.8" y="2193.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-21</text></g>
+<g data-sm="SM-38" data-goal="SG-07" data-status="missing"><rect x="245.3" y="2181" width="47.5" height="18" rx="9" fill="#9A3412"/><text x="269" y="2193.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-38</text></g>
+<circle cx="40" cy="2218" r="4" fill="#94A3B8"/>
+<text x="50" y="2222" font-size="11" fill="#94A3B8" font-weight="700">unknown (2)</text>
+<g data-sm="SM-19" data-goal="SG-07" data-status="unknown"><rect x="127.7" y="2209" width="45.3" height="18" rx="9" fill="#FB923C"/><text x="150.3" y="2221.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-19</text></g>
+<g data-sm="SM-36" data-goal="SG-07" data-status="unknown"><rect x="176.9" y="2209" width="47.5" height="18" rx="9" fill="#9A3412"/><text x="200.7" y="2221.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">SM-36</text></g>
+<g data-fsr="FSR-07.04" data-kind="outside">
+<rect x="36" y="2237" width="568" height="42" rx="6" fill="#F8FAFC" stroke="#64748B" stroke-width="1"/>
+<text x="46" y="2255" font-size="11" fill="#64748B" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-07.04</text>
+<text x="126" y="2255" font-size="11" fill="#334155">Outside the item: AOU-04R (the car's own systems). openpilot longitudinal commands</text>
+<text x="126" y="2270" font-size="11" fill="#334155">shall not prevent PCS braking from taking priority in the PCM.</text>
+</g>
+<g data-fsr="FSR-07.07" data-kind="gap">
+<rect x="36" y="2287" width="568" height="42" rx="6" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="46" y="2305" font-size="11" fill="#D2553F" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-07.07</text>
+<text x="126" y="2305" font-size="11" fill="#334155">No mechanism yet. While the stock system reports an AEB event, the item shall request</text>
+<text x="126" y="2320" font-size="11" fill="#334155">zero acceleration from the PCM (no added drive), so that stock AEB braking does not …</text>
+</g>
+<text x="36" y="2347" font-size="10.5" fill="#64748B">13 of its TSRs name no mechanism (met by design, test or the driver)</text>
+</g>
+<g data-goal="SG-08">
+<rect x="24" y="2371" width="592" height="205" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="36" y="2383" width="49.1" height="20" rx="10" fill="#FB923C"/><text x="60.5" y="2397" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">SG-08</text>
+<rect x="557.6" y="2383" width="46.4" height="20" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="580.8" y="2396.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">ASIL A</text>
+<text x="93.1" y="2398" font-size="12.5" fill="#0F172A" font-weight="600">Not continue automated control while the driver is not supervising or not</text>
+<text x="93.1" y="2414" font-size="12.5" fill="#0F172A" font-weight="600">responding without escalating to a minimal-risk reaction</text>
+<rect x="36" y="2434" width="568" height="10" rx="2" fill="#B45309"/>
+<text x="36" y="2460" font-size="11.5" fill="#334155" font-weight="600">1 mechanism via 5 FSRs</text>
+<circle cx="40" cy="2487" r="4" fill="#B45309"/>
+<text x="50" y="2491" font-size="11" fill="#B45309" font-weight="700">partial (1)</text>
+<g data-sm="SM-26" data-goal="SG-08" data-status="partial"><rect x="109.9" y="2478" width="47.3" height="18" rx="9" fill="#E2E8F0"/><text x="133.6" y="2490.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">SM-26</text></g>
+<g data-fsr="FSR-08.01" data-kind="gap">
+<rect x="36" y="2506" width="568" height="42" rx="6" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="46" y="2524" font-size="11" fill="#D2553F" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-08.01</text>
+<text x="126" y="2524" font-size="11" fill="#334155">No mechanism yet. While engaged, the item shall give the first driver alert within 6 s of</text>
+<text x="126" y="2539" font-size="11" fill="#334155">the loss of attention, measured end to end from the driver's change of state to the alert …</text>
+</g>
+<text x="36" y="2566" font-size="10.5" fill="#64748B">5 of its TSRs name no mechanism (met by design, test or the driver)</text>
+</g>
+<circle cx="29" cy="2601" r="5" fill="#1D4ED8"/>
+<text x="38" y="2605" font-size="11" fill="#334155">implemented</text>
+<circle cx="128.32" cy="2601" r="5" fill="#B45309"/>
+<text x="137.3" y="2605" font-size="11" fill="#334155">partial</text>
+<circle cx="192.44" cy="2601" r="5" fill="#D2553F"/>
+<text x="201.4" y="2605" font-size="11" fill="#334155">not there yet</text>
+<text x="285.6" y="2605" font-size="11" fill="#64748B">status in WP-S-03 §6</text>
+<rect x="24" y="2618" width="35.4" height="18" rx="9" fill="#9A3412"/><text x="41.7" y="2630.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">high</text>
+<rect x="64.4" y="2618" width="53.4" height="18" rx="9" fill="#FB923C"/><text x="91.1" y="2630.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">medium</text>
+<rect x="122.8" y="2618" width="31.3" height="18" rx="9" fill="#FED7AA"/><text x="138.5" y="2630.6" font-size="10" fill="#7C2D12" font-weight="700" text-anchor="middle">low</text>
+<rect x="159.1" y="2618" width="31.1" height="18" rx="9" fill="#E2E8F0"/><text x="174.7" y="2630.6" font-size="10" fill="#334155" font-weight="700" text-anchor="middle">QM</text>
+<text x="201.2" y="2631" font-size="11" fill="#334155">chip colour: DC target</text>
+<text x="24" y="2656" font-size="11" fill="#334155">Red: an FSR with no mechanism behind it yet. Grey: met outside the item (an AOU) or by reference to other FSRs.</text>
+<text x="24" y="2680" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+</svg>
