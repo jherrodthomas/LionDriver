@@ -1,0 +1,482 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1718" viewBox="0 0 1280 1718" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 3-9. PFMEA failure chains — sheet 1 of 2 (PFM)</title>
+  <desc id="d">PFMEA failure chains, sheet 1 of 2 (PFM rev 0.4): failure modes PFM-003 to PFM-012 (12 failure modes, 13 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <defs>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
+    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1.2" cy="1.2" r="1.2" fill="#E7E6E0"/></pattern>
+    <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
+  </defs>
+  <rect width="1280" height="1718" fill="#FCFCFB"/>
+  <text x="40" y="44" font-size="20" fill="#0B0B0B" font-weight="700">Figure 3-9 · PFMEA failure chains — sheet 1 of 2</text>
+  <text x="40" y="66" font-size="12.5" fill="#52514E">PFM rev 0.4 · BL-007 · draft · PFM-003 … PFM-012 · 13 causes on this sheet</text>
+  <text x="1240" y="44" font-size="11" fill="#52514E" text-anchor="end">fmea-plan.md §3.4</text>
+  <text x="1240" y="62" font-size="11" fill="#52514E" text-anchor="end">analyses/pfmea.yaml</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E1E0D9" stroke-width="1"/>
+  <rect x="0" y="83" width="1280" height="1542.9" fill="url(#dots)"/>
+  <text x="40" y="108" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">STRUCTURE ELEMENT</text>
+  <text x="250" y="108" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">FUNCTION (STEP 3)</text>
+  <text x="520" y="108" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">FAILURE MODE · S · END EFFECT (STEP 4)</text>
+  <text x="876" y="108" font-size="9.5" fill="#52514E" font-weight="700" letter-spacing=".06em">FAILURE CAUSE · O · D · AP · ACTIONS (STEPS 4–6)</text>
+  <path d="M220 144H230.6Q235 144 235 148.4V148.4Q235 152.8 239.4 152.8H250" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 152.8H501.7Q505 152.8 505 149.5V149.5Q505 146.2 508.3 146.2H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 146.2H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M220 318.6H230.6Q235 318.6 235 323V323Q235 327.4 239.4 327.4H250" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 327.4H497Q505 327.4 505 319.4V283.7Q505 275.7 513 275.7H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 327.4H497Q505 327.4 505 335.4V379Q505 387 513 387H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 275.7H857.5Q861 275.7 861 272.2V272.2Q861 268.7 864.5 268.7H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 387H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M220 507.3H230.6Q235 507.3 235 511.7V511.7Q235 516 239.4 516H250" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 516H501.7Q505 516 505 512.8V512.8Q505 509.5 508.3 509.5H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 509.5H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M220 632H230.6Q235 632 235 636.3V636.3Q235 640.7 239.4 640.7H250" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 640.7H501.7Q505 640.7 505 637.4V637.4Q505 634.2 508.3 634.2H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 634.2H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M220 761.5H234.1Q235 761.5 235 762.3V762.3Q235 763.2 235.9 763.2H250" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 763.2H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 763.7H857.5Q861 763.7 861 760.1V760.1Q861 756.6 864.5 756.6H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M220 888.8H234.1Q235 888.8 235 889.6V889.6Q235 890.5 235.9 890.5H250" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 890.5H501.7Q505 890.5 505 887.2V887.2Q505 883.9 508.3 883.9H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 883.9H857.5Q861 883.9 861 880.4V880.4Q861 876.9 864.5 876.9H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M220 1119.9H232.3Q235 1119.9 235 1117.2V1117.2Q235 1114.6 237.7 1114.6H250" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 1114.6H497Q505 1114.6 505 1106.6V1019.2Q505 1011.2 513 1011.2H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 1114.6H501.5Q505 1114.6 505 1118.1V1118.1Q505 1121.6 508.5 1121.6H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 1114.6H497Q505 1114.6 505 1122.6V1228.9Q505 1236.9 513 1236.9H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 1011.2H857.7Q861 1011.2 861 1014.5V1014.5Q861 1017.8 864.3 1017.8H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 1121.6H857.5Q861 1121.6 861 1118.1V1118.1Q861 1114.6 864.5 1114.6H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 1236.9H853Q861 1236.9 861 1228.9V1226.8Q861 1218.8 869 1218.8H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M220 1438.2H230.6Q235 1438.2 235 1442.6V1442.6Q235 1447 239.4 1447H250" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 1447H497Q505 1447 505 1439V1396.7Q505 1388.7 513 1388.7H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M490 1447H497Q505 1447 505 1455V1547.7Q505 1555.7 513 1555.7H520" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 1388.7H853Q861 1388.7 861 1380.7V1347.1Q861 1339.1 869 1339.1H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 1388.7H853Q861 1388.7 861 1396.7V1443.5Q861 1451.5 869 1451.5H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M846 1555.7H876" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <rect x="40" y="125" width="180" height="96.7" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="40" y="122" width="180" height="96.7" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="50.5" y="132" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="68" y="141.5" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-SE-010</text>
+  <text x="211" y="140.5" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">ELEMENT</text>
+  <text x="50" y="156.1" font-size="10.5" fill="#0B0B0B" font-weight="600">R1 Freeze and pin the</text>
+  <text x="50" y="170.1" font-size="10.5" fill="#0B0B0B" font-weight="600">baseline (WP-P-10 §4 steps</text>
+  <text x="50" y="184.2" font-size="10.5" fill="#0B0B0B" font-weight="600">1-3)</text>
+  <text x="50" y="196.9" font-size="9.5" fill="#52514E">process step</text>
+  <text x="50" y="209.7" font-size="9.5" fill="#52514E">in PFM-SE-001</text>
+  <rect x="250" y="133.8" width="240" height="79.1" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="250" y="130.8" width="240" height="79.1" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="260.5" y="140.8" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="278" y="150.3" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-FN-001</text>
+  <text x="481" y="149.3" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FUNCTION</text>
+  <text x="260" y="164.8" font-size="10.5" fill="#0B0B0B">Freeze every component of the release at</text>
+  <text x="260" y="178.9" font-size="10.5" fill="#0B0B0B">an identified, protected version</text>
+  <rect x="260" y="184.9" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="287.7" y="195.8" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-009</text>
+  <rect x="520" y="127.2" width="326" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="124.2" width="326" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 133.7L543 139.7L536.5 145.7L530 139.7Z" fill="#EB6834"/>
+  <text x="548" y="143.7" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-003</text>
+  <rect x="603.3" y="132.7" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="143.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="132.7" width="80.1" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="678.9" y="143.6" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">wrong version</text>
+  <text x="837" y="142.7" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="158.3" font-size="10.5" fill="#0B0B0B" font-weight="600">A component enters the release at a different version than</text>
+  <text x="530" y="172.3" font-size="10.5" fill="#0B0B0B" font-weight="600">verified</text>
+  <text x="530" y="185.5" font-size="9.8" fill="#52514E" font-style="italic">End effect: Unverified behaviour of the envelope or controller</text>
+  <text x="530" y="202.5" font-size="9.5" fill="#52514E" font-weight="600">hazard</text>
+  <rect x="567.3" y="191.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="591.6" y="202.4" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
+  <rect x="619.8" y="191.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="644.1" y="202.4" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-005</text>
+  <rect x="876" y="127.2" width="364" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="124.2" width="364" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="139.7" r="5.5" fill="#6250D6"/>
+  <text x="904" y="143.7" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-003.C1</text>
+  <rect x="1182.5" y="132.7" width="48.5" height="15" rx="7.5" fill="#E6F5E6"/><circle cx="1192" cy="140.2" r="3.6" fill="#0A6A0A"/><text x="1199.5" y="143.6" font-size="9.5" font-weight="700" fill="#0A6A0A">AP L</text>
+  <text x="886" y="158.3" font-size="10.5" fill="#0B0B0B">Submodule pin moved after verification, or tinygrad tracked by</text>
+  <text x="886" y="172.3" font-size="10.5" fill="#0B0B0B">branch</text>
+  <text x="886" y="185.5" font-size="9.8" fill="#52514E" font-weight="600">O3 · D4 · in PFM-SE-010</text>
+  <rect x="886" y="191.5" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="202.4" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">PFM-ACT-003 open</text>
+  <rect x="40" y="299.6" width="180" height="110.7" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="40" y="296.6" width="180" height="110.7" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="50.5" y="306.6" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="68" y="316.1" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-SE-011</text>
+  <text x="211" y="315.1" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">ELEMENT</text>
+  <text x="50" y="330.7" font-size="10.5" fill="#0B0B0B" font-weight="600">R2 Build the release (host</text>
+  <text x="50" y="344.7" font-size="10.5" fill="#0B0B0B" font-weight="600">tree, panda RELEASE</text>
+  <text x="50" y="358.8" font-size="10.5" fill="#0B0B0B" font-weight="600">firmware; WP-P-10 §4 step 4,</text>
+  <text x="50" y="372.9" font-size="10.5" fill="#0B0B0B" font-weight="600">§6)</text>
+  <text x="50" y="385.6" font-size="9.5" fill="#52514E">process step</text>
+  <text x="50" y="398.3" font-size="9.5" fill="#52514E">in PFM-SE-001</text>
+  <rect x="250" y="308.4" width="240" height="93.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="250" y="305.4" width="240" height="93.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="260.5" y="315.4" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="278" y="324.9" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-FN-002</text>
+  <text x="481" y="323.9" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FUNCTION</text>
+  <text x="260" y="339.4" font-size="10.5" fill="#0B0B0B">Produce the release artifacts, including a</text>
+  <text x="260" y="353.5" font-size="10.5" fill="#0B0B0B">panda RELEASE build with the LionDriver</text>
+  <text x="260" y="367.6" font-size="10.5" fill="#0B0B0B">key and the reference lock</text>
+  <rect x="260" y="373.6" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="287.7" y="384.5" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-010</text>
+  <rect x="520" y="256.7" width="326" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="253.7" width="326" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 263.2L543 269.2L536.5 275.2L530 269.2Z" fill="#EB6834"/>
+  <text x="548" y="273.2" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-001</text>
+  <rect x="603.3" y="262.2" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="273.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="262.2" width="107.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="692.5" y="273.1" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">wrong configuration</text>
+  <text x="837" y="272.2" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="287.8" font-size="10.5" fill="#0B0B0B" font-weight="600">panda firmware released as a DEBUG build, or without</text>
+  <text x="530" y="301.8" font-size="10.5" fill="#0B0B0B" font-weight="600">LIONDRIVER_REFERENCE</text>
+  <text x="530" y="315" font-size="9.8" fill="#52514E" font-style="italic">End effect: Envelope can be bypassed or misconfigured</text>
+  <text x="530" y="332" font-size="9.5" fill="#52514E" font-weight="600">hazard</text>
+  <rect x="567.3" y="321" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="591.6" y="331.9" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
+  <rect x="619.8" y="321" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="644.1" y="331.9" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-005</text>
+  <rect x="672.3" y="321" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="696.6" y="331.9" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-006</text>
+  <rect x="876" y="249.7" width="364" height="106.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="246.7" width="364" height="106.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="262.2" r="5.5" fill="#6250D6"/>
+  <text x="904" y="266.2" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-001.C1</text>
+  <rect x="1182.5" y="255.2" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="262.7" r="4.3" fill="#9E2424"/><rect x="1189.4" y="261.9" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="266.1" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="280.7" font-size="10.5" fill="#0B0B0B">The release is built with a bypass of the release defaults:</text>
+  <text x="886" y="294.8" font-size="10.5" fill="#0B0B0B">PANDA_DEBUG_BUILD set (build_release.sh then builds the panda</text>
+  <text x="886" y="308.9" font-size="10.5" fill="#0B0B0B">without RELEASE=1, with ALLOW_DEBUG) or…</text>
+  <text x="886" y="322" font-size="9.8" fill="#52514E" font-weight="600">O5 · D5 · in PFM-SE-011 · → SWF-013</text>
+  <rect x="886" y="328" width="140" height="15" rx="7.5" fill="#FFF5DC"/><text x="956" y="338.9" font-size="9.5" font-weight="700" fill="#7A5600" text-anchor="middle" letter-spacing=".02em">PFM-ACT-001 in progress</text>
+  <rect x="520" y="368" width="326" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="365" width="326" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 374.5L543 380.5L536.5 386.5L530 380.5Z" fill="#EB6834"/>
+  <text x="548" y="384.5" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-002</text>
+  <rect x="603.3" y="373.5" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="384.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="373.5" width="97.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="687.7" y="384.4" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">unverified artifact</text>
+  <text x="837" y="383.5" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="399.1" font-size="10.5" fill="#0B0B0B" font-weight="600">panda firmware signed with the debug key or a key not</text>
+  <text x="530" y="413.2" font-size="10.5" fill="#0B0B0B" font-weight="600">controlled by LionDriver</text>
+  <text x="530" y="426.3" font-size="9.8" fill="#52514E" font-style="italic">End effect: Unverified envelope firmware in the vehicle</text>
+  <text x="530" y="443.3" font-size="9.5" fill="#52514E" font-weight="600">hazard</text>
+  <rect x="567.3" y="432.3" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="591.6" y="443.2" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
+  <rect x="619.8" y="432.3" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="644.1" y="443.2" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-005</text>
+  <rect x="876" y="368" width="364" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="365" width="364" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="380.5" r="5.5" fill="#6250D6"/>
+  <text x="904" y="384.5" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-002.C1</text>
+  <rect x="1182.5" y="373.5" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="381" r="4.3" fill="#9E2424"/><rect x="1189.4" y="380.2" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="384.4" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="399.1" font-size="10.5" fill="#0B0B0B">No LionDriver release key yet (D-09 decided, not implemented);</text>
+  <text x="886" y="413.2" font-size="10.5" fill="#0B0B0B">debug private key is in the repository</text>
+  <text x="886" y="426.3" font-size="9.8" fill="#52514E" font-weight="600">O8 · D8 · in PFM-SE-011</text>
+  <rect x="886" y="432.3" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="443.2" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">PFM-ACT-002 open</text>
+  <rect x="40" y="488.3" width="180" height="96.7" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="40" y="485.3" width="180" height="96.7" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="50.5" y="495.3" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="68" y="504.8" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-SE-012</text>
+  <text x="211" y="503.8" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">ELEMENT</text>
+  <text x="50" y="519.4" font-size="10.5" fill="#0B0B0B" font-weight="600">R3 Verify and assemble the</text>
+  <text x="50" y="533.4" font-size="10.5" fill="#0B0B0B" font-weight="600">evidence package (WP-P-10</text>
+  <text x="50" y="547.5" font-size="10.5" fill="#0B0B0B" font-weight="600">§4 steps 5-8, §5)</text>
+  <text x="50" y="560.2" font-size="9.5" fill="#52514E">process step</text>
+  <text x="50" y="573" font-size="9.5" fill="#52514E">in PFM-SE-001</text>
+  <rect x="250" y="497" width="240" height="79.1" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="250" y="494" width="240" height="79.1" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="260.5" y="504" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="278" y="513.5" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-FN-003</text>
+  <text x="481" y="512.5" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FUNCTION</text>
+  <text x="260" y="528.1" font-size="10.5" fill="#0B0B0B">Run and archive all required verification on</text>
+  <text x="260" y="542.2" font-size="10.5" fill="#0B0B0B">the exact release commit</text>
+  <rect x="260" y="548.2" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="287.7" y="559.1" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-002</text>
+  <rect x="520" y="490.5" width="326" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="487.5" width="326" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 497L543 503L536.5 509L530 503Z" fill="#EB6834"/>
+  <text x="548" y="507" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-004</text>
+  <rect x="603.3" y="496" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="506.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="496" width="63.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="670.8" y="506.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">incomplete</text>
+  <text x="837" y="506" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="521.6" font-size="10.5" fill="#0B0B0B" font-weight="600">Release made without the required verification on the</text>
+  <text x="530" y="535.6" font-size="10.5" fill="#0B0B0B" font-weight="600">release commit</text>
+  <text x="530" y="548.8" font-size="9.8" fill="#52514E" font-style="italic">End effect: Undetected defect in a deployed configuration</text>
+  <text x="530" y="565.8" font-size="9.5" fill="#52514E" font-weight="600">hazard</text>
+  <rect x="567.3" y="554.8" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="591.6" y="565.7" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
+  <rect x="619.8" y="554.8" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="644.1" y="565.7" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-005</text>
+  <rect x="672.3" y="554.8" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="696.6" y="565.7" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
+  <rect x="876" y="490.5" width="364" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="487.5" width="364" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="503" r="5.5" fill="#6250D6"/>
+  <text x="904" y="507" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-004.C1</text>
+  <rect x="1182.5" y="496" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="503.5" r="4.3" fill="#9E2424"/><rect x="1189.4" y="502.7" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="506.9" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="521.6" font-size="10.5" fill="#0B0B0B">No HIL bench or vehicle test capability yet (D-04, GAP-30); evidence</text>
+  <text x="886" y="535.6" font-size="10.5" fill="#0B0B0B">package location not defined (WP-P-10 OI-2)</text>
+  <text x="886" y="548.8" font-size="9.8" fill="#52514E" font-weight="600">O9 · D8 · in PFM-SE-012</text>
+  <rect x="886" y="554.8" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="565.7" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">PFM-ACT-003 open</text>
+  <rect x="40" y="613" width="180" height="96.7" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="40" y="610" width="180" height="96.7" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="50.5" y="620" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="68" y="629.5" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-SE-013</text>
+  <text x="211" y="628.5" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">ELEMENT</text>
+  <text x="50" y="644" font-size="10.5" fill="#0B0B0B" font-weight="600">R4 Release decision and</text>
+  <text x="50" y="658.1" font-size="10.5" fill="#0B0B0B" font-weight="600">publication (WP-P-10 §4 steps</text>
+  <text x="50" y="672.2" font-size="10.5" fill="#0B0B0B" font-weight="600">9-10)</text>
+  <text x="50" y="684.9" font-size="9.5" fill="#52514E">process step</text>
+  <text x="50" y="697.6" font-size="9.5" fill="#52514E">in PFM-SE-001</text>
+  <rect x="250" y="621.7" width="240" height="79.1" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="250" y="618.7" width="240" height="79.1" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="260.5" y="628.7" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="278" y="638.2" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-FN-004</text>
+  <text x="481" y="637.2" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FUNCTION</text>
+  <text x="260" y="652.8" font-size="10.5" fill="#0B0B0B">Publish only the approved release through</text>
+  <text x="260" y="666.9" font-size="10.5" fill="#0B0B0B">the LionDriver channel</text>
+  <rect x="260" y="672.9" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="287.7" y="683.8" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-009</text>
+  <rect x="520" y="615.2" width="326" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="612.2" width="326" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 621.7L543 627.7L536.5 633.7L530 627.7Z" fill="#EB6834"/>
+  <text x="548" y="631.7" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-005</text>
+  <rect x="603.3" y="620.7" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="631.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="620.7" width="80.1" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="678.9" y="631.6" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">wrong version</text>
+  <text x="837" y="630.7" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="646.2" font-size="10.5" fill="#0B0B0B" font-weight="600">Device installed from the upstream installer or a</text>
+  <text x="530" y="660.3" font-size="10.5" fill="#0B0B0B" font-weight="600">development branch instead of the LionDriver release</text>
+  <text x="530" y="673.4" font-size="9.8" fill="#52514E" font-style="italic">End effect: Unassured configuration driven</text>
+  <text x="530" y="690.4" font-size="9.5" fill="#52514E" font-weight="600">hazard</text>
+  <rect x="567.3" y="679.4" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="591.6" y="690.3" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
+  <rect x="619.8" y="679.4" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="644.1" y="690.3" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-005</text>
+  <rect x="876" y="615.2" width="364" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="612.2" width="364" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="627.7" r="5.5" fill="#6250D6"/>
+  <text x="904" y="631.7" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-005.C1</text>
+  <rect x="1182.5" y="620.7" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="628.2" r="4.3" fill="#9E2424"/><rect x="1189.4" y="627.4" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="631.6" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="646.2" font-size="10.5" fill="#0B0B0B">Installer URL entered by hand; comma's default installer is the</text>
+  <text x="886" y="660.3" font-size="10.5" fill="#0B0B0B">natural path; no LionDriver release channel yet</text>
+  <text x="886" y="673.4" font-size="9.8" fill="#52514E" font-weight="600">O8 · D8 · in PFM-SE-013</text>
+  <rect x="886" y="679.4" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="690.3" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">PFM-ACT-004 open</text>
+  <rect x="40" y="742.5" width="180" height="82.6" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="40" y="739.5" width="180" height="82.6" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="50.5" y="749.5" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="68" y="759" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-SE-020</text>
+  <text x="211" y="758" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">ELEMENT</text>
+  <text x="50" y="773.5" font-size="10.5" fill="#0B0B0B" font-weight="600">I1 Incoming inspection</text>
+  <text x="50" y="787.6" font-size="10.5" fill="#0B0B0B" font-weight="600">(WP-O-01 INS-01..04)</text>
+  <text x="50" y="800.3" font-size="9.5" fill="#52514E">process step</text>
+  <text x="50" y="813.1" font-size="9.5" fill="#52514E">in PFM-SE-001</text>
+  <rect x="250" y="744.2" width="240" height="79.1" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="250" y="741.2" width="240" height="79.1" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="260.5" y="751.2" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="278" y="760.7" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-FN-005</text>
+  <text x="481" y="759.7" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FUNCTION</text>
+  <text x="260" y="775.3" font-size="10.5" fill="#0B0B0B">Use only the approved, undamaged device</text>
+  <text x="260" y="789.3" font-size="10.5" fill="#0B0B0B">and harness</text>
+  <rect x="260" y="795.3" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="287.7" y="806.3" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-037</text>
+  <rect x="319.4" y="795.3" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="347.1" y="806.3" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-038</text>
+  <rect x="520" y="744.7" width="326" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="741.7" width="326" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 751.2L543 757.2L536.5 763.2L530 757.2Z" fill="#EB6834"/>
+  <text x="548" y="761.2" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-006</text>
+  <rect x="603.3" y="750.2" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="761.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="750.2" width="49" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="663.3" y="761.1" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">damage</text>
+  <text x="837" y="760.2" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="775.7" font-size="10.5" fill="#0B0B0B" font-weight="600">Wrong or damaged harness installed</text>
+  <text x="530" y="788.9" font-size="9.8" fill="#52514E" font-style="italic">End effect: Stock AEB unavailable or CAN faults while driving</text>
+  <text x="530" y="805.9" font-size="9.5" fill="#52514E" font-weight="600">hazard</text>
+  <rect x="567.3" y="794.9" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="591.6" y="805.8" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
+  <rect x="619.8" y="794.9" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="644.1" y="805.8" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-004</text>
+  <rect x="876" y="737.6" width="364" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="734.6" width="364" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="750.1" r="5.5" fill="#6250D6"/>
+  <text x="904" y="754.1" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-006.C1</text>
+  <rect x="1182.5" y="743.1" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="750.6" r="4.3" fill="#9E2424"/><rect x="1189.4" y="749.8" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="754" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="768.7" font-size="10.5" fill="#0B0B0B">Visual inspection only; harness revision not recorded against an</text>
+  <text x="886" y="782.8" font-size="10.5" fill="#0B0B0B">approved list</text>
+  <text x="886" y="795.9" font-size="9.8" fill="#52514E" font-weight="600">O7 · D8 · in PFM-SE-020</text>
+  <rect x="886" y="801.9" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="812.8" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">PFM-ACT-005 open</text>
+  <rect x="40" y="869.8" width="180" height="82.6" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="40" y="866.8" width="180" height="82.6" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="50.5" y="876.8" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="68" y="886.3" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-SE-021</text>
+  <text x="211" y="885.3" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">ELEMENT</text>
+  <text x="50" y="900.8" font-size="10.5" fill="#0B0B0B" font-weight="600">I2 Vehicle preconditions</text>
+  <text x="50" y="914.9" font-size="10.5" fill="#0B0B0B" font-weight="600">(INS-05..08)</text>
+  <text x="50" y="927.6" font-size="9.5" fill="#52514E">process step</text>
+  <text x="50" y="940.4" font-size="9.5" fill="#52514E">in PFM-SE-001</text>
+  <rect x="250" y="871.5" width="240" height="79.1" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="250" y="868.5" width="240" height="79.1" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="260.5" y="878.5" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="278" y="888" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-FN-006</text>
+  <text x="481" y="887" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FUNCTION</text>
+  <text x="260" y="902.6" font-size="10.5" fill="#0B0B0B">Install only on a vehicle that is in the</text>
+  <text x="260" y="916.6" font-size="10.5" fill="#0B0B0B">reference configuration and healthy</text>
+  <rect x="260" y="922.6" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="287.7" y="933.6" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-009</text>
+  <rect x="520" y="864.9" width="326" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="861.9" width="326" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 871.4L543 877.4L536.5 883.4L530 877.4Z" fill="#EB6834"/>
+  <text x="548" y="881.4" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-007</text>
+  <rect x="603.3" y="870.4" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="881.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="870.4" width="107.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="692.5" y="881.4" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">wrong configuration</text>
+  <text x="837" y="880.4" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="896" font-size="10.5" fill="#0B0B0B" font-weight="600">Item installed on a vehicle outside the reference</text>
+  <text x="530" y="910.1" font-size="10.5" fill="#0B0B0B" font-weight="600">configuration</text>
+  <text x="530" y="923.2" font-size="9.8" fill="#52514E" font-style="italic">End effect: Safety argument does not hold for this vehicle</text>
+  <text x="530" y="940.2" font-size="9.5" fill="#52514E" font-weight="600">hazard</text>
+  <rect x="567.3" y="929.2" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="591.6" y="940.1" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
+  <rect x="619.8" y="929.2" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="644.1" y="940.1" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
+  <rect x="876" y="857.9" width="364" height="106.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="854.9" width="364" height="106.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="870.4" r="5.5" fill="#6250D6"/>
+  <text x="904" y="874.4" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-007.C1</text>
+  <rect x="1182.5" y="863.4" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="870.9" r="4.3" fill="#9E2424"/><rect x="1189.4" y="870.1" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="874.3" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="889" font-size="10.5" fill="#0B0B0B">Exact ECU firmware compare is a manual step; the reference ECU</text>
+  <text x="886" y="903" font-size="10.5" fill="#0B0B0B">versions are not recorded yet (WP-C-01 OI-1). Since BL-007 the</text>
+  <text x="886" y="917.1" font-size="10.5" fill="#0B0B0B">EPS and ABS/VSC fault codes are read automatically at every…</text>
+  <text x="886" y="930.2" font-size="9.8" fill="#52514E" font-weight="600">O8 · D7 · in PFM-SE-021</text>
+  <rect x="886" y="936.2" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="947.2" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">PFM-ACT-006 open</text>
+  <rect x="40" y="1100.9" width="180" height="82.6" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="40" y="1097.9" width="180" height="82.6" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="50.5" y="1107.9" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="68" y="1117.4" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-SE-022</text>
+  <text x="211" y="1116.4" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">ELEMENT</text>
+  <text x="50" y="1131.9" font-size="10.5" fill="#0B0B0B" font-weight="600">I3 Mechanical and electrical</text>
+  <text x="50" y="1146" font-size="10.5" fill="#0B0B0B" font-weight="600">installation (INS-09..14)</text>
+  <text x="50" y="1158.7" font-size="9.5" fill="#52514E">process step</text>
+  <text x="50" y="1171.5" font-size="9.5" fill="#52514E">in PFM-SE-001</text>
+  <rect x="250" y="1095.6" width="240" height="93.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="250" y="1092.6" width="240" height="93.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="260.5" y="1102.6" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="278" y="1112.1" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-FN-007</text>
+  <text x="481" y="1111.1" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FUNCTION</text>
+  <text x="260" y="1126.6" font-size="10.5" fill="#0B0B0B">Mount the device and connect the harness</text>
+  <text x="260" y="1140.7" font-size="10.5" fill="#0B0B0B">so that the CAN path, relay and camera</text>
+  <text x="260" y="1154.8" font-size="10.5" fill="#0B0B0B">view are as designed</text>
+  <rect x="260" y="1160.8" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="287.7" y="1171.7" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-037</text>
+  <rect x="319.4" y="1160.8" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="347.1" y="1171.7" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-038</text>
+  <rect x="520" y="992.2" width="326" height="91.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="989.2" width="326" height="91.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 998.7L543 1004.7L536.5 1010.7L530 1004.7Z" fill="#EB6834"/>
+  <text x="548" y="1008.7" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-008</text>
+  <rect x="603.3" y="997.7" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="1008.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="997.7" width="63.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="670.8" y="1008.7" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">incomplete</text>
+  <text x="837" y="1007.7" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="1023.3" font-size="10.5" fill="#0B0B0B" font-weight="600">Harness connector not fully latched</text>
+  <text x="530" y="1036.4" font-size="9.8" fill="#52514E" font-style="italic">End effect: Loss of lateral control or of the stock path while</text>
+  <text x="530" y="1049.6" font-size="9.8" fill="#52514E" font-style="italic">driving</text>
+  <text x="530" y="1066.6" font-size="9.5" fill="#52514E" font-weight="600">hazard</text>
+  <rect x="567.3" y="1055.6" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="591.6" y="1066.5" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-004</text>
+  <rect x="619.8" y="1055.6" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="644.1" y="1066.5" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
+  <rect x="876" y="998.8" width="364" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="995.8" width="364" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="1011.3" r="5.5" fill="#6250D6"/>
+  <text x="904" y="1015.3" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-008.C1</text>
+  <rect x="1182.5" y="1004.3" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="1011.8" r="4.3" fill="#9E2424"/><rect x="1189.4" y="1011" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="1015.2" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="1029.9" font-size="10.5" fill="#0B0B0B">Latch engagement judged by feel; no positive check</text>
+  <text x="886" y="1043" font-size="9.8" fill="#52514E" font-weight="600">O7 · D8 · in PFM-SE-022</text>
+  <rect x="886" y="1049" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="1059.9" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">PFM-ACT-005 open</text>
+  <rect x="520" y="1102.6" width="326" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="1099.6" width="326" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 1109.1L543 1115.1L536.5 1121.1L530 1115.1Z" fill="#EB6834"/>
+  <text x="548" y="1119.1" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-009</text>
+  <rect x="603.3" y="1108.1" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="1119" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="1108.1" width="93.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="685.5" y="1119" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">wrong parameter</text>
+  <text x="837" y="1118.1" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="1133.7" font-size="10.5" fill="#0B0B0B" font-weight="600">Device mounted outside the position and attitude tolerance</text>
+  <text x="530" y="1146.8" font-size="9.8" fill="#52514E" font-style="italic">End effect: Lateral control steers off the lane centre</text>
+  <text x="530" y="1163.8" font-size="9.5" fill="#52514E" font-weight="600">hazard</text>
+  <rect x="567.3" y="1152.8" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="591.6" y="1163.7" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-003</text>
+  <rect x="876" y="1095.6" width="364" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="1092.6" width="364" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="1108.1" r="5.5" fill="#6250D6"/>
+  <text x="904" y="1112.1" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-009.C1</text>
+  <rect x="1182.5" y="1101.1" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="1108.6" r="4.3" fill="#9E2424"/><rect x="1189.4" y="1107.8" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="1112" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="1126.6" font-size="10.5" fill="#0B0B0B">Mount tolerance band not defined (WP-O-01 OI-2); calibration limits</text>
+  <text x="886" y="1140.7" font-size="10.5" fill="#0B0B0B">are wide (pitch -5.2..+9.7 deg, yaw +/-4 deg)</text>
+  <text x="886" y="1153.8" font-size="9.8" fill="#52514E" font-weight="600">O8 · D8 · in PFM-SE-022</text>
+  <rect x="886" y="1159.8" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="1170.8" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">PFM-ACT-007 open</text>
+  <rect x="520" y="1217.9" width="326" height="56.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="1214.9" width="326" height="56.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 1224.4L543 1230.4L536.5 1236.4L530 1230.4Z" fill="#EB6834"/>
+  <text x="548" y="1234.4" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-010</text>
+  <rect x="603.3" y="1223.4" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="1234.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="1223.4" width="66" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="671.8" y="1234.3" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">wrong step</text>
+  <text x="837" y="1233.4" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="1248.9" font-size="10.5" fill="#0B0B0B" font-weight="600">Harness routed through an airbag deployment zone</text>
+  <text x="530" y="1262.1" font-size="9.8" fill="#52514E" font-style="italic">End effect: Occupant injury in a crash</text>
+  <rect x="876" y="1199.8" width="364" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="1196.8" width="364" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="1212.3" r="5.5" fill="#6250D6"/>
+  <text x="904" y="1216.3" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-010.C1</text>
+  <rect x="1182.5" y="1205.3" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="1212.8" r="4.3" fill="#9E2424"/><rect x="1189.4" y="1212" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="1216.3" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="1230.9" font-size="10.5" fill="#0B0B0B">Routing left to the installer's judgement; airbag zones not marked</text>
+  <text x="886" y="1245" font-size="10.5" fill="#0B0B0B">for the reference vehicle</text>
+  <text x="886" y="1258.1" font-size="9.8" fill="#52514E" font-weight="600">O7 · D8 · in PFM-SE-022</text>
+  <rect x="886" y="1264.1" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="1275" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">PFM-ACT-005 open</text>
+  <rect x="40" y="1419.2" width="180" height="96.7" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="40" y="1416.2" width="180" height="96.7" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="50.5" y="1426.2" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="68" y="1435.7" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-SE-023</text>
+  <text x="211" y="1434.7" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">ELEMENT</text>
+  <text x="50" y="1450.3" font-size="10.5" fill="#0B0B0B" font-weight="600">I4 Provisioning: software,</text>
+  <text x="50" y="1464.3" font-size="10.5" fill="#0B0B0B" font-weight="600">firmware, parameters</text>
+  <text x="50" y="1478.4" font-size="10.5" fill="#0B0B0B" font-weight="600">(INS-15..20)</text>
+  <text x="50" y="1491.1" font-size="9.5" fill="#52514E">process step</text>
+  <text x="50" y="1503.9" font-size="9.5" fill="#52514E">in PFM-SE-001</text>
+  <rect x="250" y="1428" width="240" height="79.1" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="250" y="1425" width="240" height="79.1" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="260.5" y="1435" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="278" y="1444.5" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-FN-008</text>
+  <text x="481" y="1443.5" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FUNCTION</text>
+  <text x="260" y="1459" font-size="10.5" fill="#0B0B0B">Provision the released software, panda</text>
+  <text x="260" y="1473.1" font-size="10.5" fill="#0B0B0B">firmware, models and parameter set</text>
+  <rect x="260" y="1479.1" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="287.7" y="1490" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-009</text>
+  <rect x="319.4" y="1479.1" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="347.1" y="1490" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-010</text>
+  <rect x="520" y="1369.7" width="326" height="105.4" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="1366.7" width="326" height="105.4" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 1376.2L543 1382.2L536.5 1388.2L530 1382.2Z" fill="#EB6834"/>
+  <text x="548" y="1386.2" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-011</text>
+  <rect x="603.3" y="1375.2" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="1386.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="1375.2" width="93.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="685.5" y="1386.1" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">wrong parameter</text>
+  <text x="837" y="1385.2" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="1400.8" font-size="10.5" fill="#0B0B0B" font-weight="600">Parameters not at the reference values (Experimental</text>
+  <text x="530" y="1414.9" font-size="10.5" fill="#0B0B0B" font-weight="600">Mode on, debug or maneuver modes, SSH)</text>
+  <text x="530" y="1428" font-size="9.8" fill="#52514E" font-style="italic">End effect: Model-driven longitudinal behaviour or debug control</text>
+  <text x="530" y="1441.1" font-size="9.8" fill="#52514E" font-style="italic">in the vehicle</text>
+  <text x="530" y="1458.1" font-size="9.5" fill="#52514E" font-weight="600">hazard</text>
+  <rect x="567.3" y="1447.1" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="591.6" y="1458" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-005</text>
+  <rect x="619.8" y="1447.1" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="644.1" y="1458" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-006</text>
+  <rect x="876" y="1320.1" width="364" height="106.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="1317.1" width="364" height="106.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="1332.6" r="5.5" fill="#6250D6"/>
+  <text x="904" y="1336.6" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-011.C1</text>
+  <rect x="1182.5" y="1325.6" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="1333.1" r="4.3" fill="#9E2424"/><rect x="1189.4" y="1332.3" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="1336.5" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="1351.2" font-size="10.5" fill="#0B0B0B">An assured setting (ExperimentalMode, LongitudinalPersonality,</text>
+  <text x="886" y="1365.3" font-size="10.5" fill="#0B0B0B">AlphaLongitudinalEnabled, the joystick and maneuver debug modes)</text>
+  <text x="886" y="1379.3" font-size="10.5" fill="#0B0B0B">is set by hand away from its reference value and the entry gate…</text>
+  <text x="886" y="1392.5" font-size="9.8" fill="#52514E" font-weight="600">O4 · D7 · in PFM-SE-023</text>
+  <rect x="886" y="1398.5" width="140" height="15" rx="7.5" fill="#FFF5DC"/><text x="956" y="1409.4" font-size="9.5" font-weight="700" fill="#7A5600" text-anchor="middle" letter-spacing=".02em">PFM-ACT-008 in progress</text>
+  <rect x="876" y="1432.5" width="364" height="92.3" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="1429.5" width="364" height="92.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="1445" r="5.5" fill="#6250D6"/>
+  <text x="904" y="1449" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-011.C2</text>
+  <rect x="1182.5" y="1438" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="1445.5" r="4.3" fill="#9E2424"/><rect x="1189.4" y="1444.7" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="1448.9" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="1463.5" font-size="10.5" fill="#0B0B0B">SSH enabled by hand and left on (SshEnabled defaults off); the</text>
+  <text x="886" y="1477.6" font-size="10.5" fill="#0B0B0B">entry gate does not check it</text>
+  <text x="886" y="1490.7" font-size="9.8" fill="#52514E" font-weight="600">O8 · D8 · in PFM-SE-023</text>
+  <rect x="886" y="1496.7" width="140" height="15" rx="7.5" fill="#FFF5DC"/><text x="956" y="1507.7" font-size="9.5" font-weight="700" fill="#7A5600" text-anchor="middle" letter-spacing=".02em">PFM-ACT-008 in progress</text>
+  <rect x="520" y="1536.7" width="326" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="520" y="1533.7" width="326" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <path d="M536.5 1543.2L543 1549.2L536.5 1555.2L530 1549.2Z" fill="#EB6834"/>
+  <text x="548" y="1553.2" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-012</text>
+  <rect x="603.3" y="1542.2" width="31.5" height="15" rx="7.5" fill="#0B0B0B"/><text x="619.1" y="1553.2" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="638.8" y="1542.2" width="80.1" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="678.9" y="1553.2" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">wrong version</text>
+  <text x="837" y="1552.2" font-size="8.5" fill="#898781" font-weight="600" text-anchor="end" letter-spacing=".08em">FAILURE MODE</text>
+  <text x="530" y="1567.8" font-size="10.5" fill="#0B0B0B" font-weight="600">Model weights on the device differ from the release</text>
+  <text x="530" y="1580.9" font-size="9.8" fill="#52514E" font-style="italic">End effect: Unvalidated lateral and longitudinal behaviour</text>
+  <text x="530" y="1597.9" font-size="9.5" fill="#52514E" font-weight="600">hazard</text>
+  <rect x="567.3" y="1586.9" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="591.6" y="1597.9" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-003</text>
+  <rect x="619.8" y="1586.9" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C9C7BF" stroke-width="1"/><text x="644.1" y="1597.9" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">HZ-007</text>
+  <rect x="876" y="1536.7" width="364" height="78.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="876" y="1533.7" width="364" height="78.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <circle cx="892.5" cy="1549.2" r="5.5" fill="#6250D6"/>
+  <text x="904" y="1553.2" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">PFM-012.C1</text>
+  <rect x="1182.5" y="1542.2" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="1549.7" r="4.3" fill="#9E2424"/><rect x="1189.4" y="1548.9" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="1553.2" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <text x="886" y="1567.8" font-size="10.5" fill="#0B0B0B">Model files changed by an update or local edit</text>
+  <text x="886" y="1580.9" font-size="9.8" fill="#52514E" font-weight="600">O3 · D7 · in PFM-SE-023</text>
+  <rect x="886" y="1586.9" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="1597.9" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">PFM-ACT-006 open</text>
+  <line x1="40" y1="1637.9" x2="1240" y2="1637.9" stroke="#E1E0D9" stroke-width="1"/>
+  <text x="40" y="1659.9" font-size="10.5" fill="#0B0B0B" font-weight="700">Legend</text>
+  <rect x="96" y="1648.9" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="105.5" cy="1656.4" r="4.3" fill="#9E2424"/><rect x="102.9" y="1655.6" width="5.2" height="1.6" fill="#FBE9E9"/><text x="113" y="1659.9" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
+  <rect x="148.5" y="1648.9" width="50.9" height="15" rx="7.5" fill="#FFF5DC"/><path d="M158 1652.4L162.4 1660H153.6Z" fill="#7A5600"/><text x="165.5" y="1659.9" font-size="9.5" font-weight="700" fill="#7A5600">AP M</text>
+  <rect x="203.4" y="1648.9" width="48.5" height="15" rx="7.5" fill="#E6F5E6"/><circle cx="212.9" cy="1656.4" r="3.6" fill="#0A6A0A"/><text x="220.4" y="1659.9" font-size="9.5" font-weight="700" fill="#0A6A0A">AP L</text>
+  <text x="259.9" y="1659.9" font-size="10.5" fill="#0B0B0B">Action Priority as rated (rating-tables §5)</text>
+  <rect x="491.4" y="1648.9" width="59.3" height="15" rx="7.5" fill="#FBE9E9"/><text x="521" y="1659.9" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">ACT open</text>
+  <rect x="554.7" y="1648.9" width="90.4" height="15" rx="7.5" fill="#FFF5DC"/><text x="599.9" y="1659.9" font-size="9.5" font-weight="700" fill="#7A5600" text-anchor="middle" letter-spacing=".02em">ACT in progress</text>
+  <text x="653.1" y="1659.9" font-size="10.5" fill="#0B0B0B">action status (step 6)</text>
+  <text x="40" y="1679.9" font-size="10" fill="#52514E">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
+  <text x="40" y="1697.9" font-size="9.5" fill="#898781">Generated by tools/safety/fmea_diagrams.py from analyses/pfmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+</svg>

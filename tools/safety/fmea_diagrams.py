@@ -28,8 +28,11 @@ analyses use). test_fmea_diagrams.py checks it against PyYAML when that is insta
 
 from __future__ import annotations
 
+import json
 import math
+import os
 import re
+import subprocess
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -475,10 +478,19 @@ def fmeda_metrics(doc, goal: str | None = None):
 
 FONT = "Inter, 'Segoe UI', Helvetica, Arial, sans-serif"
 MONO = "'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace"
-INK, MUTED = "#0B0B0B", "#52514E"
-RED, AMBER, GREEN = "#D03B3B", "#D97706", "#2E9E6A"
-# Neutrals and card styling shared with the fault tree sheets and fta-viewer.html (assurance/08-analyses/fta)
-BG, CARD, GRID, LINE, SOFT, FAINT = "#FCFCFB", "#FFFFFF", "#E1E0D9", "#C9C7BF", "#F3F2EE", "#898781"
+# Two styles. The original figures are the record (fig-*.svg); the card style of the fault tree card view and
+# fta-viewer.html is an easier-to-read second version of every figure (fig-*-cards.svg). The style is fixed when the
+# module is imported: build_all() draws the record here and the card versions in a second process with
+# FMEA_FIG_STYLE=cards.
+CARDS = os.environ.get("FMEA_FIG_STYLE") == "cards"
+if CARDS:
+  INK, MUTED, RED = "#0B0B0B", "#52514E", "#D03B3B"
+  BG, GRID, FAINT = "#FCFCFB", "#E1E0D9", "#898781"
+else:
+  INK, MUTED, RED = "#0F172A", "#475569", "#D2553F"
+  BG, GRID, FAINT = "#FFFFFF", "#E2E8F0", "#94A3B8"
+AMBER, GREEN = "#D97706", "#2E9E6A"
+CARD, LINE, SOFT = "#FFFFFF", "#C9C7BF", "#F3F2EE"   # card style only
 CAT_BLUE, CAT_ORANGE, CAT_AQUA, CAT_VIOLET = "#2A78D6", "#EB6834", "#1BAF7A", "#6250D6"
 AP_TINT_PILL = {"H": ("#FBE9E9", "#9E2424"), "M": ("#FFF5DC", "#7A5600"), "L": ("#E6F5E6", "#0A6A0A")}
 ACTION_TINT = {"open": ("#FBE9E9", "#9E2424", None), "decision_pending": ("#FFFFFF", "#7A5600", "#E0B44C"),
@@ -630,13 +642,14 @@ def ap_pill_w(ap: str, label: str | None = None) -> float:
   return tw(label or f"AP {ap}", PILL_SIZE, 700) + 24
 
 
-DEFS = """  <defs>
+_DEFS = """  <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
     <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
-    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1.2" cy="1.2" r="1.2" fill="#E7E6E0"/></pattern>
-    <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
+@@DOTS@@    <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
   </defs>"""
+DEFS = _DEFS.replace("@@DOTS@@", '    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1.2" '
+                     'cy="1.2" r="1.2" fill="#E7E6E0"/></pattern>\n' if CARDS else "")
 
 
 def svg_doc(w: float, h: float, title: str, desc: str, fig: str, heading: str, sub: str, ref1: str, ref2: str,
@@ -670,7 +683,14 @@ FMEA_FILES = (("system-fmea", "3-1", "3-2", "sfm"), ("dfmea", "3-3", "3-4", "dfm
               ("sw-fmea", "3-5", "3-6", "swf"), ("pfmea", "3-8", "3-9", "pfm"))
 PLAN_SECTION = {"system-fmea": "§3.1", "dfmea": "§3.2", "sw-fmea": "§3.3", "pfmea": "§3.4"}
 
-COL_STYLE = {  # icon colour and shape before the ID; every card is white with a hairline border
+COL_STYLE_CLASSIC = {  # fill, stroke of the original boxes
+  "element": ("#F8FAFC", SLATE),
+  "external": ("#F1F5F9", "#94A3B8"),
+  "function": ("#F0FDFA", TEAL),
+  "fm": ("#FFF7ED", ORANGE),
+  "cause": ("#FFFFFF", "#94A3B8"),
+}
+COL_STYLE = {  # card style: icon colour and shape before the ID; every card is white with a hairline border
   "element": (MUTED, "square"),
   "external": (MUTED, "outline"),
   "function": (CAT_BLUE, "square"),
@@ -752,7 +772,46 @@ def tw_mono(s: str, size: float) -> float:
   return len(s) * size * 0.6
 
 
+def _draw_tbox_classic(b: TBox, out: list[str]) -> None:
+  fill, stroke = COL_STYLE_CLASSIC[b.style or b.kind]
+  dash = ' stroke-dasharray="5 3"' if b.dashed else ""
+  out.append(rect(b.x, b.y, b.w, b.h, fill, stroke, 1.3, 8, dash))
+  x0 = b.x + PAD
+  y = b.y + PAD + 10.5
+  out.append(txt(x0, y, b.ident, 12, INK, 700))
+  px = x0 + tw(b.ident, 12, 700) + 7
+  for label, f, fg, st in b.head_pills:
+    s, w = pill(px, y - 11, label, f, fg, st)
+    out.append(s)
+    px += w + 4
+  if b.right_pill:
+    label, f, fg, st = b.right_pill
+    w = pill_w(label)
+    s, _ = pill(b.x + b.w - PAD - w, y - 11, label, f, fg, st)
+    out.append(s)
+  y += 2.5
+  for text, size, fl, weight, italic in b.lines:
+    y += size * 1.34
+    out.append(txt(x0, y - 2, text, size, fl, weight, italic=italic))
+  rows = b.chip_rows()
+  if rows:
+    y += 4
+    for i, row in enumerate(rows):
+      cx = x0
+      if i == 0 and b.chip_caption:
+        out.append(txt(cx, y + 11, b.chip_caption, 9.5, MUTED, 600))
+        cx += tw(b.chip_caption, 9.5, 600) + 6
+      for label, f, fg, st, dashed in row:
+        s, w = pill(cx, y, label, f, fg, st, dashed=dashed)
+        out.append(s)
+        cx += w + 4
+      y += PILL_H + 3
+
+
 def draw_tbox(b: TBox, out: list[str]) -> None:
+  if not CARDS:
+    _draw_tbox_classic(b, out)
+    return
   style = b.style or b.kind
   dash = ' stroke-dasharray="5 3"' if b.dashed else ""
   out.append(rect(b.x, b.y + 3, b.w, b.h, "#000000", rx=12, extra=' opacity=".05"'))
@@ -853,7 +912,12 @@ def draw_tree(roots: list[TBox], out: list[str]) -> None:
       px, py = b.x + b.w, b.y + min(b.h / 2, 22)
       for c in b.children:
         cx, cy = c.x, c.y + min(c.h / 2, 22)
-        out.append(elbow(px, py, cx, cy))
+        if CARDS:
+          out.append(elbow(px, py, cx, cy))
+        else:
+          xm = px + min(17, (cx - px) / 2)
+          out.append(f'<path d="M{n(px)} {n(py)}H{n(xm)}V{n(cy)}H{n(cx - 1)}" fill="none" stroke="#94A3B8" '
+                     f'stroke-width="1.2" marker-end="url(#aS)"/>')
       for c in b.children:
         edges(c)
 
@@ -984,7 +1048,7 @@ def render_structure(f: Fmea) -> str:
     x = els[k]
     style = "external" if x["kind"] == "external" else "element"
     b = TBox("element", k, el_w, style=style, dashed=x["kind"] == "external")
-    b.head_pills.append((x["kind"].replace("_", " "), SOFT, MUTED, None))
+    b.head_pills.append((x["kind"].replace("_", " "), SOFT if CARDS else "#E2E8F0", MUTED, None))
     add_text(b, x["name"], 10.5, INK, 600, 3)
     stats = []
     if fm_by_el.get(k):
@@ -999,10 +1063,13 @@ def render_structure(f: Fmea) -> str:
   def fn_box(fn: dict, owner: str) -> TBox:
     b = TBox("function", fn["id"], fn_w)
     k = fm_by_fn.get(fn["id"], 0)
-    b.right_pill = (f"{k} FM", SOFT, INK, None) if k else ("no FM", AP_TINT_PILL["H"][0], AP_TINT_PILL["H"][1], None)
+    if CARDS:
+      b.right_pill = (f"{k} FM", SOFT, INK, None) if k else ("no FM", AP_TINT_PILL["H"][0], AP_TINT_PILL["H"][1], None)
+    else:
+      b.right_pill = (f"{k} FM", "#FFFFFF", ORANGE, ORANGE) if k else ("no FM", "#FFFFFF", RED, RED)
     add_text(b, fn["description"], 10.5, INK, 400, 2)
     for r in fn.get("requirements", []):
-      b.chips.append((r, SOFT, MUTED, None, False))
+      b.chips.append((r, SOFT, MUTED, None, False) if CARDS else (r, "#E2E8F0", INK, None, False))
     if fn.get("requirements"):
       b.chip_caption = "traces to"
     b.x = fn_x
@@ -1049,7 +1116,8 @@ def render_structure(f: Fmea) -> str:
     body.append(txt(col_x[d], 108, f"Structure level {d}" if d else "Structure root (level 0)", 10, MUTED, 700,
                     extra=' letter-spacing=".06em"'))
   body.append(txt(fn_x, 108, "Functions (step 3) · failure modes found", 10, MUTED, 700, extra=' letter-spacing=".06em"'))
-  body.insert(0, rect(0, 83, 1280, bottom - 69, "url(#dots)"))
+  if CARDS:
+    body.insert(0, rect(0, 83, 1280, bottom - 69, "url(#dots)"))
   draw_tree(roots, body)
 
   y = bottom + 26
@@ -1058,14 +1126,20 @@ def render_structure(f: Fmea) -> str:
   lx = 40
   for style, label in (("element", "Structure element (kind)"), ("external", "External element (outside the item)"),
                        ("function", "Function")):
-    body.append(kind_icon(style, lx, y - 10))
-    body.append(txt(lx + 19, y, label, 10.5, INK))
-    lx += 19 + tw(label, 10.5) + 22
-  s, w = pill(lx, y - 11, "n FM", SOFT, INK)
+    if CARDS:
+      body.append(kind_icon(style, lx, y - 10))
+      body.append(txt(lx + 19, y, label, 10.5, INK))
+      lx += 19 + tw(label, 10.5) + 22
+    else:
+      fill, stroke = COL_STYLE_CLASSIC[style]
+      body.append(rect(lx, y - 11, 26, 14, fill, stroke, 1.3, 4, ' stroke-dasharray="5 3"' if style == "external" else ""))
+      body.append(txt(lx + 32, y, label, 10.5, INK))
+      lx += 32 + tw(label, 10.5) + 22
+  s, w = pill(lx, y - 11, "n FM", SOFT, INK) if CARDS else pill(lx, y - 11, "n FM", "#FFFFFF", ORANGE, ORANGE)
   body.append(s)
   body.append(txt(lx + w + 6, y, "failure modes analyzed for the function", 10.5, INK))
   lx += w + 6 + tw("failure modes analyzed for the function", 10.5) + 22
-  s, w = pill(lx, y - 11, "no FM", *AP_TINT_PILL["H"])
+  s, w = pill(lx, y - 11, "no FM", *AP_TINT_PILL["H"]) if CARDS else pill(lx, y - 11, "no FM", "#FFFFFF", RED, RED)
   body.append(s)
   body.append(txt(lx + w + 6, y, "none yet", 10.5, INK))
   y += 20
@@ -1092,10 +1166,12 @@ CH_W = (180, 240, 326, 364)
 def _cause_box(f: Fmea, fm: dict, c: dict, actions: dict) -> TBox:
   b = TBox("cause", c["id"], CH_W[3])
   ap = c.get("ap")
-  if ap:
+  if ap and CARDS:
     b.ap = ap
+  elif ap:
+    b.right_pill = (f"AP {ap}", AP_COL[ap], "#FFFFFF", None)
   else:
-    b.right_pill = ("not rated", CARD, MUTED, LINE)
+    b.right_pill = ("not rated", CARD, MUTED, LINE) if CARDS else ("not rated", "#FFFFFF", SLATE, SLATE)
   add_text(b, c["description"], 10.5, INK, 400, 3)
   meta = []
   if c.get("occurrence") is not None:
@@ -1108,21 +1184,26 @@ def _cause_box(f: Fmea, fm: dict, c: dict, actions: dict) -> TBox:
     add_text(b, " · ".join(meta), 9.8, MUTED, 600, 2)
   for a in c.get("actions", []):
     st = actions[a]["status"]
-    fill, fg, stroke = ACTION_TINT[st]
-    b.chips.append((f"{a} {ACTION_LABEL[st]}", fill, fg, stroke, st == "decision_pending"))
+    fill, fg, stroke = (ACTION_TINT if CARDS else ACTION_COL)[st]
+    b.chips.append((f"{a} {ACTION_LABEL[st]}", fill, fg, stroke, CARDS and st == "decision_pending"))
   if not c.get("actions") and c.get("rationale"):
-    b.chips.append(("rationale, no action", CARD, MUTED, LINE, False))
+    b.chips.append(("rationale, no action", CARD, MUTED, LINE, False) if CARDS else
+                   ("rationale, no action", "#F1F5F9", MUTED, "#CBD5E1", False))
   return b
 
 
 def _fm_box(fm: dict) -> TBox:
   b = TBox("fm", fm["id"], CH_W[2])
-  b.head_pills.append((f"S{fm['severity']}", INK, "#FFFFFF", None))
-  b.head_pills.append((fm["guideword"].replace("_", " "), CARD, MUTED, LINE))
+  if CARDS:
+    b.head_pills.append((f"S{fm['severity']}", INK, "#FFFFFF", None))
+    b.head_pills.append((fm["guideword"].replace("_", " "), CARD, MUTED, LINE))
+  else:
+    b.head_pills.append((f"S{fm['severity']}", ORANGE, "#FFFFFF", None))
+    b.head_pills.append((fm["guideword"].replace("_", " "), "#FFFFFF", ORANGE, "#FDBA74"))
   add_text(b, fm["failure_mode"], 10.5, INK, 600, 3)
   add_text(b, _end_effect(fm), 9.8, MUTED, 400, 2, italic=True, prefix="End effect: ")
   for h in _hazards(fm):
-    b.chips.append((h, CARD, INK, LINE, False))
+    b.chips.append((h, CARD, INK, LINE, False) if CARDS else (h, "#FFFFFF", ORANGE, ORANGE, False))
   if b.chips:
     b.chip_caption = "hazard"
   return b
@@ -1131,19 +1212,19 @@ def _fm_box(fm: dict) -> TBox:
 def _fn_box(fn: dict, fm_el: str, cont: bool) -> TBox:
   b = TBox("function", fn["id"], CH_W[1])
   if cont:
-    b.head_pills.append(("continued", SOFT, MUTED, None))
+    b.head_pills.append(("continued", SOFT if CARDS else "#E2E8F0", MUTED, None))
   add_text(b, fn["description"], 10.5, INK, 400, 4)
   if fn["element"] != fm_el:
     add_text(b, f"function of {fn['element']}", 9.5, MUTED, 600, 1)
   for r in fn.get("requirements", []):
-    b.chips.append((r, SOFT, MUTED, None, False))
+    b.chips.append((r, SOFT, MUTED, None, False) if CARDS else (r, "#E2E8F0", INK, None, False))
   return b
 
 
 def _el_box(x: dict, parent_chain: list[str], cont: bool) -> TBox:
   b = TBox("element", x["id"], CH_W[0], style="external" if x["kind"] == "external" else "element")
   if cont:
-    b.head_pills.append(("cont.", SOFT, MUTED, None))
+    b.head_pills.append(("cont.", SOFT if CARDS else "#E2E8F0", MUTED, None))
   add_text(b, x["name"], 10.5, INK, 600, 4)
   add_text(b, x["kind"].replace("_", " "), 9.5, MUTED, 400, 1)
   if parent_chain:
@@ -1214,7 +1295,8 @@ def render_chain_sheet(f: Fmea, fms: list[dict], no: int, total: int, seen_fn: s
   for x, label in zip(CH_X, heads):
     body.append(txt(x, 108, label.upper(), 9.5, MUTED, 700, extra=' letter-spacing=".06em"'))
   bottom = place_tree(roots, 122)
-  body.insert(0, rect(0, 83, 1280, bottom - 69, "url(#dots)"))
+  if CARDS:
+    body.insert(0, rect(0, 83, 1280, bottom - 69, "url(#dots)"))
   draw_tree(roots, body)
 
   y = bottom + 26
@@ -1224,7 +1306,7 @@ def render_chain_sheet(f: Fmea, fms: list[dict], no: int, total: int, seen_fn: s
   body.append(txt(lx, y, "Legend", 10.5, INK, 700))
   lx += 56
   for ap in "HML":
-    s, w = ap_pill(lx, y - 11, ap)
+    s, w = ap_pill(lx, y - 11, ap) if CARDS else pill(lx, y - 11, f"AP {ap}", AP_COL[ap], "#FFFFFF")
     body.append(s)
     lx += w + 4
   body.append(txt(lx + 4, y, "Action Priority as rated (rating-tables §5)", 10.5, INK))
@@ -1232,12 +1314,13 @@ def render_chain_sheet(f: Fmea, fms: list[dict], no: int, total: int, seen_fn: s
   used_status = sorted({actions[a]["status"] for fm in fms for c in fm["causes"] for a in c.get("actions", [])},
                        key=list(ACTION_COL).index)
   for st in used_status:
-    fill, fg, stroke = ACTION_TINT[st]
-    s, w = pill(lx, y - 11, f"ACT {ACTION_LABEL[st]}", fill, fg, stroke, dashed=st == "decision_pending")
+    fill, fg, stroke = (ACTION_TINT if CARDS else ACTION_COL)[st]
+    s, w = pill(lx, y - 11, f"ACT {ACTION_LABEL[st]}", fill, fg, stroke, dashed=CARDS and st == "decision_pending")
     body.append(s)
     lx += w + 4
   if any(not c.get("actions") and c.get("rationale") for fm in fms for c in fm["causes"]):
-    s, w = pill(lx, y - 11, "rationale, no action", CARD, MUTED, LINE)
+    s, w = (pill(lx, y - 11, "rationale, no action", CARD, MUTED, LINE) if CARDS else
+            pill(lx, y - 11, "rationale, no action", "#F1F5F9", MUTED, "#CBD5E1"))
     body.append(s)
     lx += w + 4
   body.append(txt(lx + 4, y, "action status (step 6)", 10.5, INK))
@@ -1342,10 +1425,10 @@ def render_action_effect(f: Fmea, fig: str) -> str:
     linked = [cid for cid, (fm, c) in causes.items() if a["id"] in c.get("actions", [])]
     st = a["status"]
     # left: action box
-    ab = TBox("cause", a["id"], 360, style="action")
-    fill, fg, stroke = ACTION_TINT[st]
+    ab = TBox("cause", a["id"], 360, style="action" if CARDS else "")
+    fill, fg, stroke = (ACTION_TINT if CARDS else ACTION_COL)[st]
     ab.right_pill = (ACTION_LABEL[st], fill, fg, stroke)
-    ab.head_pills.append((a["kind"].replace("_", " "), SOFT, MUTED, None))
+    ab.head_pills.append((a["kind"].replace("_", " "), SOFT if CARDS else "#E2E8F0", MUTED, None))
     add_text(ab, a["description"], 10.5, INK, 400, 4)
     if a.get("evidence"):
       add_text(ab, a["evidence"], 9.5, MUTED, 400, 3, italic=True, prefix="Evidence: ")
@@ -2912,10 +2995,14 @@ def build(docs: dict[str, dict] | None = None) -> dict[str, str]:
         "of record; edit it and run `python3 tools/safety/fmea_diagrams.py` (`--check` fails when a figure is stale). "
         "Figure numbers follow the sections of [fmea-plan.md](../../fmea-plan.md). This folder is owned by the generator: "
         "hand-drawn figures belong in `figures/`, one level up.", "",
-        "| Figure | Shows | Source | Files |", "|---|---|---|---|"]
+        "Every figure comes in two versions: the original drawing (`fig-*.svg`), which is the figure of record and the "
+        "one the FMEA documents embed, and an easier-to-read card version (`fig-*-cards.svg`) in the style of the fault "
+        "tree card view and fta-viewer.html. Both are drawn from the same YAML and show the same content.", "",
+        "| Figure | Shows | Source | Files (of record) | Card version |", "|---|---|---|---|---|"]
   for fig, title, src, files in sorted(index, key=fig_key):
     links = ", ".join(f"[{i}]({fn})" if len(files) > 1 else f"[{fn}]({fn})" for i, fn in enumerate(files, 1))
-    md.append(f"| {fig} | {title} | `{src}` | {links} |")
+    cards = ", ".join(f"[{i}]({cards_name(fn)})" for i, fn in enumerate(files, 1))
+    md.append(f"| {fig} | {title} | `{src}` | {links} | {cards} |")
   md += ["",
          "Conventions: Action Priority H / M / L in red / amber / teal as rated in the YAML; predicted ratings of open "
          "actions are hatched and dashed and never shown as achieved. FMEDA metrics are drawn from generic failure-rate "
@@ -2927,10 +3014,40 @@ def build(docs: dict[str, dict] | None = None) -> dict[str, str]:
   return outputs
 
 
+def cards_name(name: str) -> str:
+  return name[:-len(".svg")] + "-cards.svg"
+
+
+def build_cards() -> dict[str, str]:
+  """The card versions, drawn in a second process: the style is fixed when the module is imported."""
+  env = dict(os.environ, FMEA_FIG_STYLE="cards")
+  proc = subprocess.run([sys.executable, str(Path(__file__).resolve()), "--emit-json"], env=env, capture_output=True,
+                        text=True, check=False)
+  if proc.returncode != 0:
+    raise FigError(f"card versions: {(proc.stderr or proc.stdout).strip()[-600:]}")
+  return {cards_name(k): v for k, v in json.loads(proc.stdout).items() if k != "README.md"}
+
+
+def build_all() -> dict[str, str]:
+  """The figures of record and their card versions."""
+  if CARDS:
+    raise FigError("build_all() runs in the original style; unset FMEA_FIG_STYLE")
+  outputs = build()
+  outputs.update(build_cards())
+  return outputs
+
+
 def main(argv: list[str]) -> int:
   check = "--check" in argv
+  if "--emit-json" in argv:   # used by build_cards()
+    try:
+      print(json.dumps(build(), ensure_ascii=False))
+    except FigError as ex:
+      print(f"fmea_diagrams: {ex}", file=sys.stderr)
+      return 1
+    return 0
   try:
-    outputs = build()
+    outputs = build_all()
   except FigError as ex:
     print(f"fmea_diagrams: {ex}", file=sys.stderr)
     return 1
@@ -2950,14 +3067,16 @@ def main(argv: list[str]) -> int:
         print(f"no longer generated: {k}", file=sys.stderr)
       print(f"run: python3 {GENERATOR}", file=sys.stderr)
       return 1
-    print(f"fmea_diagrams: {len(outputs) - 1} figure file(s) current")
+    n = sum(1 for k in outputs if k.endswith("-cards.svg"))
+    print(f"fmea_diagrams: {len(outputs) - 1 - n} figure file(s) and {n} card versions current")
     return 0
   OUT_DIR.mkdir(parents=True, exist_ok=True)
   for k in sorted(existing - set(outputs)):
     (OUT_DIR / k).unlink()
   for k, v in outputs.items():
     (OUT_DIR / k).write_text(v, encoding="utf-8")
-  print(f"fmea_diagrams: wrote {len(outputs) - 1} figure file(s) and README.md to "
+  n = sum(1 for k in outputs if k.endswith("-cards.svg"))
+  print(f"fmea_diagrams: wrote {len(outputs) - 1 - n} figure file(s), {n} card versions and README.md to "
         f"{OUT_DIR.relative_to(ROOT)}")
   return 0
 

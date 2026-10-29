@@ -21,6 +21,10 @@ Everything on a card is read from the YAML except the scene, which is chosen per
 a failure mode has no scene or sheet, a scene or sheet names one that is not in the YAML, a hazard is not mapped or an
 action does not exist. Long texts are cut with "…" on the card and given in full in the figure's text description.
 
+Each sheet comes twice: fig-3-17-sfm-cards-<n>.svg in the original style, the figure of record, and
+fig-3-17-sfm-cards-<n>-cards.svg in the card style of the FMEA and fault tree card views (FMEA_FIG_STYLE=cards, drawn
+in a second process because the palette is fixed when fmea_diagrams is imported).
+
     python3 tools/safety/fmea_cards.py            # regenerate the SVGs
     python3 tools/safety/fmea_cards.py --check    # fail if the YAML disagrees or an SVG is stale
 
@@ -29,6 +33,9 @@ Standard library only (the YAML is read with fmea_diagrams' loader). Output is d
 
 from __future__ import annotations
 
+import json
+import os
+import subprocess
 import sys
 from pathlib import Path
 
@@ -40,14 +47,21 @@ for p in ("assurance/08-analyses/figures", "assurance/02-concept/sotif", "assura
 import fmea_diagrams as fd  # the FMEA's own stdlib YAML loader
 import fta_fmea_figures as ff  # FMEA failure mode -> fault-tree events, from fta-fmea-map.yaml
 import stpa_ls_scenes as ls  # road scenes, shared with the STPA loss scenario cards
-from hara_figures import pill, svg_doc, t, text_w, wrap  # noqa: E402
+from hara_figures import HAIR as _HAIR, INK as _INK, MUTED as _MUTED, header as _header, pill, svg_doc, t, text_w, wrap  # noqa: E402
 
-# Palette and card styling of the FMEA trees and fault tree sheets (fmea_diagrams.py, fta_diagrams.py)
-INK, MUTED, HAIR, LINE, SOFT, BG = fd.INK, fd.MUTED, fd.GRID, fd.LINE, fd.SOFT, fd.BG
+# Two styles, as in fmea_diagrams.py: the original cards are the figure of record (fig-3-17-sfm-cards-<n>.svg); the
+# card style of the FMEA and fault tree card views is a second version (…-cards.svg), drawn when FMEA_FIG_STYLE=cards.
+CARDS = fd.CARDS
+if CARDS:
+  INK, MUTED, HAIR, LINE, SOFT, BG = fd.INK, fd.MUTED, fd.GRID, fd.LINE, fd.SOFT, fd.BG
+else:
+  INK, MUTED, HAIR, LINE, SOFT, BG = _INK, _MUTED, _HAIR, "#94A3B8", "#F1F5F9", "#FFFFFF"
 DOTS = '<pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1.2" cy="1.2" r="1.2" fill="#E7E6E0"/></pattern>'
 
 
 def header(w, title, subtitle, ref1, ref2):
+  if not CARDS:
+    return _header(w, title, subtitle, ref1, ref2)
   return [t(40, 44, title, 20, INK, 700), t(40, 66, subtitle, 12.5, MUTED),
           t(w - 40, 44, ref1, 11, MUTED, None, "end"), t(w - 40, 62, ref2, 11, MUTED, None, "end"),
           f'<line x1="40" y1="82" x2="{w - 40}" y2="82" stroke="{HAIR}"/>']
@@ -93,10 +107,14 @@ SCENE = {  # failure mode -> (scene kind, first tag, second tag); a drawing of t
 }
 CW, GAP, M, COLS = 400, 20, 40, 3
 PW = CW - 24
-STEP = [MUTED, "#B45309", fd.RED]
+STEP = [MUTED, "#B45309", fd.RED] if CARDS else ["#475569", "#B45309", "#DC2626"]
 LEVELS = (("local", "Local"), ("next_higher", "Next level"), ("end", "End effect"))
-ACT_C = {st: fd.ACTION_TINT[st][:2] for st in ("open", "in_progress", "completed")}
+if CARDS:
+  ACT_C = {st: fd.ACTION_TINT[st][:2] for st in ("open", "in_progress", "completed")}
+else:
+  ACT_C = {"open": ("#FEE2E2", "#7F1D1D"), "in_progress": ("#FEF3C7", "#78350F"), "completed": ("#DCFCE7", "#14532D")}
 ACT_C["completed, not yet credited"] = ("#ECFCCB", "#3F6212")
+AP_C = {"H": "#DC2626", "M": "#D97706", "L": "#0F766E"}   # original style
 
 
 def monitoring(m):
@@ -187,16 +205,24 @@ def meter(x, y, v, col, lab):
 def card(x, y, c):
   b = [None, f"<title>{c['id']}: {c['title']}</title>"]
   px, yy = x + 12, y + 24
-  b.append(fd.kind_icon("fm", px, yy - 10.5))
-  b.append(f'<text x="{px + 18}" y="{yy}" font-size="11.5" font-weight="700" fill="{INK}" font-family="{fd.MONO}">{c["id"]}</text>')
-  tl = cut(c["title"], PW - 86, 13.5, 2, True)
+  if CARDS:
+    b.append(fd.kind_icon("fm", px, yy - 10.5))
+    b.append(f'<text x="{px + 18}" y="{yy}" font-size="11.5" font-weight="700" fill="{INK}" font-family="{fd.MONO}">{c["id"]}</text>')
+  else:
+    b.append(t(px, yy, c["id"], 12, MUTED, 600))
+  tx = 86 if CARDS else 68
+  tl = cut(c["title"], PW - (86 if CARDS else 70), 13.5, 2, True)
   for i, ln in enumerate(tl):
-    b.append(t(px + 86, yy + 17 * i, ln, 13.5, INK, 700))
+    b.append(t(px + tx, yy + 17 * i, ln, 13.5, INK, 700))
   yy += 17 * len(tl) - 4
   aps = [k["ap"] for k in c["causes"]]
   ap_label = f"AP H × {aps.count('H')} of {len(aps)}"
-  chips = [(INK, "#FFFFFF", None, f"S {c['s']}")] + [("#FFFFFF", INK, LINE, h) for h in c["hz"]] + \
-          [(SOFT, MUTED, None, c["gw"]), ("ap", None, None, ap_label)]
+  if CARDS:
+    chips = [(INK, "#FFFFFF", None, f"S {c['s']}")] + [("#FFFFFF", INK, LINE, h) for h in c["hz"]] + \
+            [(SOFT, MUTED, None, c["gw"]), ("ap", None, None, ap_label)]
+  else:
+    chips = [("#0F172A", "#FFFFFF", None, f"S {c['s']}")] + [("#FEE2E2", "#B91C1C", None, h) for h in c["hz"]] + \
+            [("#F1F5F9", "#334155", None, c["gw"]), ("#FFFFFF", "#DC2626", "#DC2626", ap_label)]
   cx = px
   for bg, fg, st, s in chips:
     w = (fd.ap_pill_w("H", s) if bg == "ap" else text_w(s, 10, True) + 14)
@@ -213,13 +239,16 @@ def card(x, y, c):
     sx = px + i * (sw + 14)
     an = (f'<animate attributeName="opacity" values="0.35;0.35;1;1" keyTimes="0;{0.1 + 0.25 * i:.2f};{0.13 + 0.25 * i:.2f};1" '
           f'dur="6s" repeatCount="indefinite"/>')
-    b.append(f'<g>{an}<rect x="{sx:.1f}" y="{yy}" width="{sw:.1f}" height="{sh}" rx="10" fill="#FFFFFF" stroke="{STEP[i]}" stroke-width="1.4"/>')
+    b.append(f'<g>{an}<rect x="{sx:.1f}" y="{yy}" width="{sw:.1f}" height="{sh}" rx="{10 if CARDS else 7}" fill="#FFFFFF" '
+             f'stroke="{STEP[i]}" stroke-width="1.4"/>')
     b.append(t(round(sx + 8, 1), yy + 15, lab, 9.5, STEP[i], 700))
     for k, ln in enumerate(cut(text, sw - 14, 9, 6)):
       b.append(t(round(sx + 8, 1), yy + 30 + 11.5 * k, ln, 9, INK))
     b.append("</g>")
     if i < 2:
-      b.append(f'<path d="M{sx + sw + 3:.1f} {yy + sh / 2 - 6} L{sx + sw + 11:.1f} {yy + sh / 2} L{sx + sw + 3:.1f} {yy + sh / 2 + 6} Z" fill="{LINE}"/>')
+      arrow = LINE if CARDS else "#94A3B8"
+      b.append(f'<path d="M{sx + sw + 3:.1f} {yy + sh / 2 - 6} L{sx + sw + 11:.1f} {yy + sh / 2} L{sx + sw + 3:.1f} '
+               f'{yy + sh / 2 + 6} Z" fill="{arrow}"/>')
   yy += sh + 8
   sth = PW * ls.fm.sk.STRIP_H / 280
   kind, t1, t2 = c["scene"]
@@ -237,12 +266,17 @@ def card(x, y, c):
     for i, ln in enumerate(lines):
       b.append(t(px, yy + 12 + 12 * i, ln, 9.5, INK))
     mx = px + PW - 140
-    b += meter(mx, yy + 2, k["o"], MUTED, "O") + meter(mx, yy + 14, k["d"], MUTED, "D") + meter(mx, yy + 26, k["m"], col, "M")
-    if k["ap"] in fd.AP_TINT_PILL:
+    od = MUTED if CARDS else "#64748B"
+    b += meter(mx, yy + 2, k["o"], od, "O") + meter(mx, yy + 14, k["d"], od, "D") + meter(mx, yy + 26, k["m"], col, "M")
+    if not CARDS:
+      b.append(t(px + PW, yy + 11, k["ap"], 10, AP_C.get(k["ap"], MUTED), 700, "end"))
+      if k["msr_ap"]:
+        b.append(t(px + PW, yy + 35, f"MSR {k['msr_ap']}", 8.5, AP_C.get(k["msr_ap"], MUTED), 700, "end"))
+    elif k["ap"] in fd.AP_TINT_PILL:
       b.append(fd.ap_pill(px + PW - fd.ap_pill_w(k["ap"], k["ap"]), yy + 1, k["ap"], k["ap"], 14)[0])
     else:
       b.append(t(px + PW, yy + 11, k["ap"], 10, MUTED, 700, "end"))
-    if k["msr_ap"] in fd.AP_TINT_PILL:
+    if CARDS and k["msr_ap"] in fd.AP_TINT_PILL:
       lab = f"MSR {k['msr_ap']}"
       b.append(fd.ap_pill(px + PW - fd.ap_pill_w(k["msr_ap"], lab), yy + 25, k["msr_ap"], lab, 14)[0])
     yy += max(12 * len(lines), 36) + 6
@@ -252,7 +286,7 @@ def card(x, y, c):
   if not c["actions"]:
     b.append(t(cx, yy + 6, "none", 9.5, MUTED))
   for a, st in c["actions"]:
-    bg, fg = ACT_C.get(st, (SOFT, MUTED))
+    bg, fg = ACT_C.get(st, (SOFT, MUTED) if CARDS else ("#F1F5F9", "#334155"))
     s = f"{a} {st.replace('_', ' ')}"
     w = text_w(s, 9, True) + 12
     if cx + w > px + PW:
@@ -266,10 +300,14 @@ def card(x, y, c):
   for goal, ids, kind in c["trees"]:
     if kind:
       chips.append((f"{goal} {'outside the tree, justified' if kind == 'justified' else 'tree gap'}",
-                    (SOFT, MUTED, None) if kind == "justified" else fd.AP_TINT_PILL["H"] + (None,), 10))
+                    ((SOFT, MUTED, None) if kind == "justified" else fd.AP_TINT_PILL["H"] + (None,)) if CARDS else
+                    (("#F1F5F9", "#334155", None) if kind == "justified" else ("#FEE2E2", "#B91C1C", None)), 10))
       continue
-    chips.append((goal, (INK, "#FFFFFF", None), 4))
-    chips += [(i, fd.AP_TINT_PILL["H"] + (None,) if sp else ("#FFFFFF", INK, LINE), 4) for i, sp in ids]
+    chips.append((goal, (INK, "#FFFFFF", None) if CARDS else ("#0F172A", "#FFFFFF", None), 4))
+    if CARDS:
+      chips += [(i, fd.AP_TINT_PILL["H"] + (None,) if sp else ("#FFFFFF", INK, LINE), 4) for i, sp in ids]
+    else:
+      chips += [(i, ("#FFFFFF", "#DC2626", "#DC2626") if sp else ("#FFFFFF", "#1D4ED8", "#2563EB"), 4) for i, sp in ids]
     chips[-1] = chips[-1][:2] + (10,)
   if not chips:
     b.append(t(cx, yy + 6, "in no fault tree", 9.5, MUTED))
@@ -310,7 +348,8 @@ def sheet(name, cs):
     for k, (b, _) in enumerate(built):
       cx0 = M + k * (CW + GAP)
       b[0] = (f'<rect x="{cx0}" y="{y + 3}" width="{CW}" height="{row_h:.0f}" rx="12" fill="#000000" opacity=".05"/>'
-              f'<rect x="{cx0}" y="{y}" width="{CW}" height="{row_h:.0f}" rx="12" fill="#FFFFFF" stroke="{HAIR}"/>')
+              if CARDS else "") + \
+             f'<rect x="{cx0}" y="{y}" width="{CW}" height="{row_h:.0f}" rx="12" fill="#FFFFFF" stroke="{HAIR}"/>'
       body += ["<g>"] + b + ["</g>"]
     y += row_h + GAP
   body.append(t(M, y + 6, "Ratings, effects, hazards and actions from the YAML at its current baseline; scenes are drawings. Text cut with … "
@@ -325,6 +364,8 @@ def sheet(name, cs):
     ("; ".join(f"{g} {kind.replace('_', ' ')}" if kind else f"{g} " + ", ".join(e + (" (single point)" if sp else "") for e, sp in ev)
                for g, ev, kind in cs[i]["trees"]) or "none") + "." for i in ids)
   h = int(y + 38)
+  if not CARDS:
+    return svg_doc(w, h, f"Figure {num}. System FMEA failure modes: {title}", desc, body)
   body.insert(0, f'<rect y="83" width="{w}" height="{h - 83}" fill="url(#dots)"/>')
   out = svg_doc(w, h, f"Figure {num}. System FMEA failure modes: {title}", desc, body, DOTS)
   return out.replace(f'<rect width="{w}" height="{h}" fill="#FFFFFF"/>', f'<rect width="{w}" height="{h}" fill="{BG}"/>', 1)
@@ -335,10 +376,27 @@ def build() -> dict[str, str]:
   return {name: sheet(name, cs) for name in SHEETS}
 
 
+def build_all() -> dict[str, str]:
+  """The sheets of record and their card versions (drawn in a second process, as in fmea_diagrams.build_cards())."""
+  if CARDS:
+    raise CardError("build_all() runs in the original style; unset FMEA_FIG_STYLE")
+  out = build()
+  env = dict(os.environ, FMEA_FIG_STYLE="cards")
+  proc = subprocess.run([sys.executable, str(Path(__file__).resolve()), "--emit-json"], env=env, capture_output=True,
+                        text=True, check=False)
+  if proc.returncode != 0:
+    raise CardError(f"card versions: {(proc.stderr or proc.stdout).strip()[-600:]}")
+  out.update({fd.cards_name(k): v for k, v in json.loads(proc.stdout).items()})
+  return out
+
+
 def main(argv: list[str]) -> int:
   check = "--check" in argv
+  if "--emit-json" in argv:   # used by build_all()
+    print(json.dumps(build(), ensure_ascii=False))
+    return 0
   try:
-    out = build()
+    out = build_all()
   except (CardError, fd.FigError, ff.FigureError) as e:
     print(f"fmea_cards: {e}", file=sys.stderr)
     return 1

@@ -12,8 +12,10 @@ grouped by structure element; the actions; and a list of the causes that still h
 completed action.
 
 The analyses (analyses/<analysis>.yaml) and their diagram data (diagrams/<analysis>.yaml) are the sources of truth.
-Regenerate, never edit the output. The SVGs carry their own light and dark palettes (the neutrals and status tints of
-the fault tree and FMEA figures, fta_diagrams.py and fmea_diagrams.py) and switch with the viewer's theme.
+Regenerate, never edit the output. The SVGs carry their own light and dark palettes and switch with the viewer's
+theme. Each figure comes twice: the original drawing (GitHub Primer colours), which the pages embed and which is the
+figure of record, and an easier-to-read card version (`-cards.svg`, the neutrals and status tints of the fault tree
+and FMEA card views).
 
 Usage:
   tools/safety/fmea_review_md.py            write all pages and figures
@@ -55,7 +57,29 @@ NOISE = [("piece_to_piece", "Piece to piece"), ("change_over_time", "Change over
 # --------------------------------------------------------------------------------------------------------------------
 # SVG
 
-STYLE = """<style>
+# Two styles. The original figures are the record (figures/<analysis>-*.svg, embedded in the pages); the card style of
+# the FMEA and fault tree card views is a second version of each (…-cards.svg). build_all() draws both.
+CARDS = False   # the style svg() and rect() draw in; build_all() sets it per figure
+STYLE_ORIGINAL = """<style>
+.bg{fill:#ffffff}.ink{fill:#1f2328}.mut{fill:#59636e}.acc{fill:#0969da}.surf{fill:#f6f8fa}.box{fill:#ffffff;stroke:#d1d9e0}
+.in{fill:#ddf4ff;stroke:#54aeff}.out{fill:#f6f8fa;stroke:#d1d9e0}.bd{fill:none;stroke:#0969da;stroke-dasharray:6 4}.frame{fill:none;stroke:#d1d9e0}
+.hS{fill:#ffebe9}.h{fill:#cf222e}.mS{fill:#fff8c5}.m{fill:#9a6700}.lS{fill:#dafbe1}.l{fill:#1a7f37}
+.hB{fill:#ffebe9;stroke:#ff8182}.lB{fill:#dafbe1;stroke:#4ac26b}.nB{fill:#fbefff;stroke:#c297ff}.n{fill:#8250df}
+.ln{stroke:#59636e;fill:none}.data{stroke:#0969da;fill:none}.energy{stroke:#bc4c00;fill:none;stroke-width:2.2}
+.physical{stroke:#59636e;fill:none;stroke-dasharray:5 3}.material{stroke:#1a7f37;fill:none;stroke-dasharray:1.5 3}
+.ah{fill:#59636e}.lbl{fill:#ffffff}.lane{fill:#f6f8fa}.laneT{fill:#59636e}
+text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif}
+.mono{font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace}
+@media (prefers-color-scheme: dark){
+.bg{fill:#0d1117}.ink{fill:#e6edf3}.mut{fill:#9198a1}.acc{fill:#4493f8}.surf{fill:#151b23}.box{fill:#0d1117;stroke:#3d444d}
+.in{fill:#0c2d6b;stroke:#1f6feb}.out{fill:#151b23;stroke:#3d444d}.bd{stroke:#4493f8}.frame{stroke:#3d444d}
+.hS{fill:#3c1618}.h{fill:#ff7b72}.mS{fill:#3a2a0c}.m{fill:#d29922}.lS{fill:#12261a}.l{fill:#3fb950}
+.hB{fill:#3c1618;stroke:#da3633}.lB{fill:#12261a;stroke:#238636}.nB{fill:#271052;stroke:#8957e5}.n{fill:#ab7df8}
+.ln{stroke:#9198a1}.data{stroke:#4493f8}.energy{stroke:#f0883e}.physical{stroke:#9198a1}.material{stroke:#3fb950}
+.ah{fill:#9198a1}.lbl{fill:#0d1117}.lane{fill:#151b23}.laneT{fill:#9198a1}}
+</style>"""
+
+STYLE_CARDS = """<style>
 .bg{fill:#fcfcfb}.dot{fill:#e7e6e0}.ink{fill:#0b0b0b}.mut{fill:#52514e}.acc{fill:#2a78d6}.surf{fill:#f3f2ee}.box{fill:#ffffff;stroke:#e1e0d9}
 .in{fill:#eef4fc;stroke:#2a78d6}.out{fill:#f3f2ee;stroke:#e1e0d9}.bd{fill:none;stroke:#2a78d6;stroke-dasharray:6 4}.frame{fill:none;stroke:#e1e0d9}
 .hS{fill:#fbe9e9}.h{fill:#9e2424}.mS{fill:#fff5dc}.m{fill:#7a5600}.lS{fill:#e6f5e6}.l{fill:#0a6a0a}
@@ -77,11 +101,12 @@ text{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",H
 
 def svg(w: int, h: int, title: str, body: str) -> str:
   return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}" width="{w}" height="{h}" role="img">\n' +
-          f"<title>{escape(title)}</title>\n{STYLE}\n" +
-          '<defs><pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">'
-          '<circle class="dot" cx="1.2" cy="1.2" r="1.2"/></pattern></defs>\n' +
-          f'<rect class="bg" x="0" y="0" width="{w}" height="{h}" rx="12"/>\n'
-          f'<rect x="0" y="0" width="{w}" height="{h}" rx="12" fill="url(#dots)"/>\n{body}</svg>\n')
+          f"<title>{escape(title)}</title>\n{STYLE_CARDS if CARDS else STYLE_ORIGINAL}\n" +
+          ('<defs><pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">'
+           '<circle class="dot" cx="1.2" cy="1.2" r="1.2"/></pattern></defs>\n'
+           f'<rect class="bg" x="0" y="0" width="{w}" height="{h}" rx="12"/>\n'
+           f'<rect x="0" y="0" width="{w}" height="{h}" rx="12" fill="url(#dots)"/>\n' if CARDS else
+           f'<rect class="bg" x="0" y="0" width="{w}" height="{h}" rx="8"/>\n') + f"{body}</svg>\n")
 
 
 def wrap(text: str, width: int, max_lines: int = 4) -> list[str]:
@@ -111,7 +136,8 @@ def lines_at(x, y, lines, cls="ink", size=12, weight=None, anchor="start", lh=No
   return "".join(text(x, y + i * lh, s, cls, size, weight, anchor) for i, s in enumerate(lines))
 
 
-def rect(x, y, w, h, cls, rx=10) -> str:
+def rect(x, y, w, h, cls, rx=None) -> str:
+  rx = (10 if CARDS else 6) if rx is None else rx
   return f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="{h:.1f}" rx="{rx}" class="{cls}"/>\n'
 
 
@@ -729,6 +755,17 @@ def check_diagram(name: str, doc: dict, dg: dict) -> list[str]:
 # --------------------------------------------------------------------------------------------------------------------
 
 
+def figure(files: dict[Path, str], stem: str, render, *args) -> None:
+  """A figure of record (original style, embedded in the page) and its card version."""
+  global CARDS
+  for cards, suffix in ((False, ""), (True, "-cards")):
+    CARDS = cards
+    try:
+      files[FIG / f"{stem}{suffix}.svg"] = render(*args)
+    finally:
+      CARDS = False
+
+
 def build_all() -> tuple[dict[Path, str], list[str]]:
   files: dict[Path, str] = {}
   errs: list[str] = []
@@ -744,17 +781,17 @@ def build_all() -> tuple[dict[Path, str], list[str]]:
     mc = msr_coverage(name, doc)
     c["msr"] = f"{mc['rated']} of {mc['in_scope']}" if mc["applies"] else "—"
     allc[name] = c
-    files[FIG / f"{name}-summary.svg"] = summary_svg(name, doc, c)
+    figure(files, f"{name}-summary", summary_svg, name, doc, c)
     if msr_rows(doc):
-      files[FIG / f"{name}-msr.svg"] = msr_svg(name, doc)
+      figure(files, f"{name}-msr", msr_svg, name, doc)
     if dg and not errs:
       fn_titles = {f["id"]: one(f["description"]) for f in doc["functions"]}
       if dg.get("block_diagram"):
-        files[FIG / f"{name}-block.svg"] = block_svg(name, dg["block_diagram"])
+        figure(files, f"{name}-block", block_svg, name, dg["block_diagram"])
       if dg.get("process_flow"):
-        files[FIG / f"{name}-flow.svg"] = flow_svg(name, dg["process_flow"])
+        figure(files, f"{name}-flow", flow_svg, name, dg["process_flow"])
       if dg.get("p_diagram"):
-        files[FIG / f"{name}-p-diagram.svg"] = p_svg(name, dg["p_diagram"], fn_titles)
+        figure(files, f"{name}-p-diagram", p_svg, name, dg["p_diagram"], fn_titles)
     files[OUT / f"{name}.md"] = page(name, doc, dg, c)
   files[OUT / "README.md"] = index(allc, docs)
   return files, errs

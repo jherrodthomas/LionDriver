@@ -1,0 +1,219 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1055" viewBox="0 0 1280 1055" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 3-3. DFMEA structure tree (DFM)</title>
+  <desc id="d">DFMEA structure tree (DFM rev 0.13, BL-007): 10 structure elements in 1 root(s), 9 functions with the number of failure modes analyzed for each.</desc>
+  <defs>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
+    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1.2" cy="1.2" r="1.2" fill="#E7E6E0"/></pattern>
+    <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
+  </defs>
+  <rect width="1280" height="1055" fill="#FCFCFB"/>
+  <text x="40" y="44" font-size="20" fill="#0B0B0B" font-weight="700">Figure 3-3 · DFMEA structure and function tree</text>
+  <text x="40" y="66" font-size="12.5" fill="#52514E">DFM rev 0.13 · BL-007 · draft · AIAG-VDA steps 2–3: structure elements by level, functions of each element</text>
+  <text x="1240" y="44" font-size="11" fill="#52514E" text-anchor="end">fmea-plan.md §3.2</text>
+  <text x="1240" y="62" font-size="11" fill="#52514E" text-anchor="end">analyses/dfmea.yaml</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E1E0D9" stroke-width="1"/>
+  <rect x="0" y="83" width="1280" height="898.2" fill="url(#dots)"/>
+  <text x="40" y="108" font-size="10" fill="#52514E" font-weight="700" letter-spacing=".06em">Structure root (level 0)</text>
+  <text x="284" y="108" font-size="10" fill="#52514E" font-weight="700" letter-spacing=".06em">Structure level 1</text>
+  <text x="528" y="108" font-size="10" fill="#52514E" font-weight="700" letter-spacing=".06em">Structure level 2</text>
+  <text x="772" y="108" font-size="10" fill="#52514E" font-weight="700" letter-spacing=".06em">Functions (step 3) · failure modes found</text>
+  <path d="M250 531H259Q267 531 267 523V197.2Q267 189.2 275 189.2H284" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M250 531H259Q267 531 267 523V334.2Q267 326.2 275 326.2H284" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M250 531H259Q267 531 267 523V440.1Q267 432.1 275 432.1H284" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M250 531H265.8Q267 531 267 529.8V529.8Q267 528.7 268.2 528.7H284" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M250 531H259Q267 531 267 539V621.8Q267 629.8 275 629.8H284" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M250 531H259Q267 531 267 539V722.9Q267 730.9 275 730.9H284" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M250 531H259Q267 531 267 539V819.4Q267 827.4 275 827.4H284" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M250 531H259Q267 531 267 539V911.3Q267 919.3 275 919.3H284" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M494 189.2H503Q511 189.2 511 181.2V156.6Q511 148.6 519 148.6H528" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M494 189.2H503Q511 189.2 511 197.2V231.1Q511 239.1 519 239.1H772" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M738 148.6H752.7Q755 148.6 755 146.3V146.3Q755 144 757.3 144H772" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M494 326.2H506.3Q511 326.2 511 330.9V330.9Q511 335.6 515.7 335.6H772" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M494 432.1H509.8Q511 432.1 511 433.3V433.3Q511 434.5 512.2 434.5H772" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M494 528.7H508.7Q511 528.7 511 526.3V526.3Q511 524 513.3 524H772" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M494 629.8H508.7Q511 629.8 511 627.5V627.5Q511 625.2 513.3 625.2H772" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M494 730.9H508.7Q511 730.9 511 728.6V728.6Q511 726.3 513.3 726.3H772" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M494 827.4H509.8Q511 827.4 511 828.6V828.6Q511 829.8 512.2 829.8H772" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M494 919.3H509.8Q511 919.3 511 920.5V920.5Q511 921.7 512.2 921.7H772" fill="none" stroke="#C9C7BF" stroke-width="1.6" stroke-linecap="round"/>
+  <rect x="40" y="512" width="210" height="71.2" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="40" y="509" width="210" height="71.2" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="50.5" y="519" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="68" y="528.5" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-SE-001</text>
+  <rect x="144" y="517.5" width="47.1" height="15" rx="7.5" fill="#F3F2EE"/><text x="167.5" y="528.4" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">system</text>
+  <text x="50" y="543.1" font-size="10.5" fill="#0B0B0B" font-weight="600">Item hardware: comma 3X with</text>
+  <text x="50" y="557.1" font-size="10.5" fill="#0B0B0B" font-weight="600">integrated panda, Toyota harness</text>
+  <text x="50" y="571.2" font-size="10.5" fill="#0B0B0B" font-weight="600">and relay box, installed in a Corolla…</text>
+  <rect x="284" y="170.2" width="210" height="69.9" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="284" y="167.2" width="210" height="69.9" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="294.5" y="177.2" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="312" y="186.7" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-SE-002</text>
+  <rect x="388" y="175.7" width="64.1" height="15" rx="7.5" fill="#F3F2EE"/><text x="420.1" y="186.6" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">subsystem</text>
+  <text x="294" y="201.2" font-size="10.5" fill="#0B0B0B" font-weight="600">Safety MCU STM32H725: core,</text>
+  <text x="294" y="215.3" font-size="10.5" fill="#0B0B0B" font-weight="600">flash, SRAM</text>
+  <text x="294" y="228" font-size="9.5" fill="#52514E">4 failure modes · 5 causes located here</text>
+  <rect x="528" y="129.6" width="210" height="69.9" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="528" y="126.6" width="210" height="69.9" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="538.5" y="136.6" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="556" y="146.1" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-SE-003</text>
+  <rect x="632" y="135.1" width="64.1" height="15" rx="7.5" fill="#F3F2EE"/><text x="664.1" y="146.1" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">component</text>
+  <text x="538" y="160.7" font-size="10.5" fill="#0B0B0B" font-weight="600">MCU clock and independent</text>
+  <text x="538" y="174.8" font-size="10.5" fill="#0B0B0B" font-weight="600">watchdog (HSE, PLL, LSI, IWDG)</text>
+  <text x="538" y="187.5" font-size="9.5" fill="#52514E">3 failure modes · 3 causes located here</text>
+  <rect x="772" y="125" width="468" height="79.1" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="772" y="122" width="468" height="79.1" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="782.5" y="132" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="800" y="141.5" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-FN-002</text>
+  <rect x="1192.7" y="130.5" width="38.3" height="15" rx="7.5" fill="#F3F2EE"/><text x="1211.8" y="141.4" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">3 FM</text>
+  <text x="782" y="156.1" font-size="10.5" fill="#0B0B0B">Provide an accurate time base for all timeouts, and reset the MCU (releasing the relay)</text>
+  <text x="782" y="170.1" font-size="10.5" fill="#0B0B0B">within 0.1 s if execution stops</text>
+  <text x="782" y="187.1" font-size="9.5" fill="#52514E" font-weight="600">traces to</text>
+  <rect x="830.3" y="176.1" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="858" y="187.1" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-007</text>
+  <rect x="889.7" y="176.1" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="917.4" y="187.1" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-038</text>
+  <rect x="772" y="220.1" width="468" height="65.1" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="772" y="217.1" width="468" height="65.1" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="782.5" y="227.1" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="800" y="236.6" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-FN-001</text>
+  <rect x="1192.7" y="225.6" width="38.3" height="15" rx="7.5" fill="#F3F2EE"/><text x="1211.8" y="236.6" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">3 FM</text>
+  <text x="782" y="251.2" font-size="10.5" fill="#0B0B0B">Execute the safety model and hold its code, constants and state without corruption</text>
+  <text x="782" y="268.2" font-size="9.5" fill="#52514E" font-weight="600">traces to</text>
+  <rect x="830.3" y="257.2" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="858" y="268.1" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-002</text>
+  <rect x="889.7" y="257.2" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="917.4" y="268.1" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-005</text>
+  <rect x="949.1" y="257.2" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="976.8" y="268.1" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-019</text>
+  <rect x="284" y="307.2" width="210" height="83.9" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="284" y="304.2" width="210" height="83.9" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="294.5" y="314.2" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="312" y="323.7" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-SE-004</text>
+  <rect x="388" y="312.7" width="64.1" height="15" rx="7.5" fill="#F3F2EE"/><text x="420.1" y="323.6" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">component</text>
+  <text x="294" y="338.3" font-size="10.5" fill="#0B0B0B" font-weight="600">MCU power supply and supervision</text>
+  <text x="294" y="352.3" font-size="10.5" fill="#0B0B0B" font-weight="600">(board regulator, SMPS/LDO, BOR,</text>
+  <text x="294" y="366.4" font-size="10.5" fill="#0B0B0B" font-weight="600">PVD)</text>
+  <text x="294" y="379.1" font-size="9.5" fill="#52514E">1 failure mode · 1 cause located here</text>
+  <rect x="772" y="316.6" width="468" height="65.1" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="772" y="313.6" width="468" height="65.1" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="782.5" y="323.6" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="800" y="333.1" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-FN-003</text>
+  <rect x="1192.7" y="322.1" width="38.3" height="15" rx="7.5" fill="#F3F2EE"/><text x="1211.8" y="333.1" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="782" y="347.7" font-size="10.5" fill="#0B0B0B">Supply the MCU within its operating range, or hold it in reset</text>
+  <text x="782" y="364.7" font-size="9.5" fill="#52514E" font-weight="600">traces to</text>
+  <rect x="830.3" y="353.7" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="858" y="364.6" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-002</text>
+  <rect x="889.7" y="353.7" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="917.4" y="364.6" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-038</text>
+  <rect x="284" y="413.1" width="210" height="69.9" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="284" y="410.1" width="210" height="69.9" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="294.5" y="420.1" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="312" y="429.6" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-SE-005</text>
+  <rect x="388" y="418.6" width="64.1" height="15" rx="7.5" fill="#F3F2EE"/><text x="420.1" y="429.6" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">component</text>
+  <text x="294" y="444.2" font-size="10.5" fill="#0B0B0B" font-weight="600">CAN transceivers XCVR1-4 and</text>
+  <text x="294" y="458.3" font-size="10.5" fill="#0B0B0B" font-weight="600">enables</text>
+  <text x="294" y="471" font-size="9.5" fill="#52514E">2 failure modes · 3 causes located here</text>
+  <rect x="772" y="415.5" width="468" height="65.1" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="772" y="412.5" width="468" height="65.1" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="782.5" y="422.5" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="800" y="432" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-FN-004</text>
+  <rect x="1192.7" y="421" width="38.3" height="15" rx="7.5" fill="#F3F2EE"/><text x="1211.8" y="432" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">3 FM</text>
+  <text x="782" y="446.6" font-size="10.5" fill="#0B0B0B">Transmit and receive on buses 0, 1 and 2 without disturbing the vehicle bus</text>
+  <text x="782" y="463.6" font-size="9.5" fill="#52514E" font-weight="600">traces to</text>
+  <rect x="830.3" y="452.6" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="858" y="463.5" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-005</text>
+  <rect x="889.7" y="452.6" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="917.4" y="463.5" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-037</text>
+  <rect x="284" y="509.7" width="210" height="69.9" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="284" y="506.7" width="210" height="69.9" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="294.5" y="516.7" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="312" y="526.2" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-SE-006</text>
+  <rect x="388" y="515.2" width="64.1" height="15" rx="7.5" fill="#F3F2EE"/><text x="420.1" y="526.1" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">component</text>
+  <text x="294" y="540.7" font-size="10.5" fill="#0B0B0B" font-weight="600">Intercept switch (harness box</text>
+  <text x="294" y="554.8" font-size="10.5" fill="#0B0B0B" font-weight="600">U1/U2) and its drive</text>
+  <text x="294" y="567.5" font-size="9.5" fill="#52514E">6 failure modes · 12 causes located here</text>
+  <rect x="772" y="505" width="468" height="79.1" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="772" y="502" width="468" height="79.1" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="782.5" y="512" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="800" y="521.5" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-FN-005</text>
+  <rect x="1192.7" y="510.5" width="38.3" height="15" rx="7.5" fill="#F3F2EE"/><text x="1211.8" y="521.4" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">6 FM</text>
+  <text x="782" y="536.1" font-size="10.5" fill="#0B0B0B">Separate the camera from the car bus only while energised; restore the stock camera</text>
+  <text x="782" y="550.2" font-size="10.5" fill="#0B0B0B">path whenever de-energised</text>
+  <text x="782" y="567.2" font-size="9.5" fill="#52514E" font-weight="600">traces to</text>
+  <rect x="830.3" y="556.2" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="858" y="567.1" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-008</text>
+  <rect x="889.7" y="556.2" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="917.4" y="567.1" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-037</text>
+  <rect x="949.1" y="556.2" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="976.8" y="567.1" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-038</text>
+  <rect x="284" y="610.8" width="210" height="69.9" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="284" y="607.8" width="210" height="69.9" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="294.5" y="617.8" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="312" y="627.3" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-SE-007</text>
+  <rect x="388" y="616.3" width="54.5" height="15" rx="7.5" fill="#F3F2EE"/><text x="415.2" y="627.2" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">interface</text>
+  <text x="294" y="641.9" font-size="10.5" fill="#0B0B0B" font-weight="600">Harness, connectors, SBU</text>
+  <text x="294" y="655.9" font-size="10.5" fill="#0B0B0B" font-weight="600">orientation and ignition sense</text>
+  <text x="294" y="668.7" font-size="9.5" fill="#52514E">3 failure modes · 3 causes located here</text>
+  <rect x="772" y="606.2" width="468" height="79.1" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="772" y="603.2" width="468" height="79.1" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="782.5" y="613.2" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="800" y="622.7" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-FN-006</text>
+  <rect x="1192.7" y="611.7" width="38.3" height="15" rx="7.5" fill="#F3F2EE"/><text x="1211.8" y="622.6" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">3 FM</text>
+  <text x="782" y="637.2" font-size="10.5" fill="#0B0B0B">Connect the device to the vehicle buses, power and ignition, and report harness</text>
+  <text x="782" y="651.3" font-size="10.5" fill="#0B0B0B">orientation correctly</text>
+  <text x="782" y="668.3" font-size="9.5" fill="#52514E" font-weight="600">traces to</text>
+  <rect x="830.3" y="657.3" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="858" y="668.2" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-010</text>
+  <rect x="889.7" y="657.3" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="917.4" y="668.2" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-038</text>
+  <rect x="284" y="711.9" width="210" height="69.9" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="284" y="708.9" width="210" height="69.9" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="294.5" y="718.9" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="312" y="728.4" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-SE-008</text>
+  <rect x="388" y="717.4" width="54.5" height="15" rx="7.5" fill="#F3F2EE"/><text x="415.2" y="728.4" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">interface</text>
+  <text x="294" y="743" font-size="10.5" fill="#0B0B0B" font-weight="600">SoC-MCU interface: SPI link,</text>
+  <text x="294" y="757.1" font-size="10.5" fill="#0B0B0B" font-weight="600">STM_RST_N, STM_BOOT0</text>
+  <text x="294" y="769.8" font-size="9.5" fill="#52514E">2 failure modes · 2 causes located here</text>
+  <rect x="772" y="707.3" width="468" height="79.1" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="772" y="704.3" width="468" height="79.1" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="782.5" y="714.3" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="800" y="723.8" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-FN-007</text>
+  <rect x="1192.7" y="712.8" width="38.3" height="15" rx="7.5" fill="#F3F2EE"/><text x="1211.8" y="723.7" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">2 FM</text>
+  <text x="782" y="738.4" font-size="10.5" fill="#0B0B0B">Carry commands, CAN frames and heartbeat between SoC and MCU intact; keep the</text>
+  <text x="782" y="752.4" font-size="10.5" fill="#0B0B0B">MCU running the signed application</text>
+  <text x="782" y="769.4" font-size="9.5" fill="#52514E" font-weight="600">traces to</text>
+  <rect x="830.3" y="758.4" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="858" y="769.4" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-007</text>
+  <rect x="889.7" y="758.4" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="917.4" y="769.4" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-010</text>
+  <rect x="284" y="808.4" width="210" height="69.9" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="284" y="805.4" width="210" height="69.9" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="294.5" y="815.4" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="312" y="824.9" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-SE-009</text>
+  <rect x="388" y="813.9" width="64.1" height="15" rx="7.5" fill="#F3F2EE"/><text x="420.1" y="824.9" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">component</text>
+  <text x="294" y="839.5" font-size="10.5" fill="#0B0B0B" font-weight="600">SoC-independent acoustic warning</text>
+  <text x="294" y="853.6" font-size="10.5" fill="#0B0B0B" font-weight="600">path (siren)</text>
+  <text x="294" y="866.3" font-size="9.5" fill="#52514E">1 failure mode · 2 causes located here</text>
+  <rect x="772" y="810.8" width="468" height="65.1" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="772" y="807.8" width="468" height="65.1" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="782.5" y="817.8" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="800" y="827.3" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-FN-008</text>
+  <rect x="1192.7" y="816.3" width="38.3" height="15" rx="7.5" fill="#F3F2EE"/><text x="1211.8" y="827.3" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="782" y="841.9" font-size="10.5" fill="#0B0B0B">Sound a warning when the SoC is lost while engaged, independently of the SoC audio</text>
+  <text x="782" y="858.9" font-size="9.5" fill="#52514E" font-weight="600">traces to</text>
+  <rect x="830.3" y="847.9" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="858" y="858.8" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-015</text>
+  <rect x="284" y="900.3" width="210" height="69.9" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="284" y="897.3" width="210" height="69.9" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="294.5" y="907.3" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="312" y="916.8" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-SE-010</text>
+  <rect x="388" y="905.8" width="64.1" height="15" rx="7.5" fill="#F3F2EE"/><text x="420.1" y="916.7" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">component</text>
+  <text x="294" y="931.4" font-size="10.5" fill="#0B0B0B" font-weight="600">Enclosure, windscreen mount and</text>
+  <text x="294" y="945.5" font-size="10.5" fill="#0B0B0B" font-weight="600">cooling (fan, DTS)</text>
+  <text x="294" y="958.2" font-size="9.5" fill="#52514E">1 failure mode · 1 cause located here</text>
+  <rect x="772" y="902.7" width="468" height="65.1" fill="#000000" rx="12" opacity=".05"/>
+  <rect x="772" y="899.7" width="468" height="65.1" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
+  <rect x="782.5" y="909.7" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="800" y="919.2" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">DFM-FN-009</text>
+  <rect x="1192.7" y="908.2" width="38.3" height="15" rx="7.5" fill="#F3F2EE"/><text x="1211.8" y="919.1" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="782" y="933.8" font-size="10.5" fill="#0B0B0B">Keep the device mechanically secured and within its thermal operating range</text>
+  <text x="782" y="950.8" font-size="9.5" fill="#52514E" font-weight="600">traces to</text>
+  <rect x="830.3" y="939.8" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="858" y="950.7" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-002</text>
+  <rect x="889.7" y="939.8" width="55.4" height="15" rx="7.5" fill="#F3F2EE"/><text x="917.4" y="950.7" font-size="9.5" font-weight="700" fill="#52514E" text-anchor="middle" letter-spacing=".02em">FSR-015</text>
+  <line x1="40" y1="993.2" x2="1240" y2="993.2" stroke="#E1E0D9" stroke-width="1"/>
+  <rect x="40.5" y="1005.7" width="12" height="11" fill="#52514E" rx="3"/>
+  <text x="59" y="1015.2" font-size="10.5" fill="#0B0B0B">Structure element (kind)</text>
+  <rect x="203.3" y="1006.2" width="11" height="10" fill="#FFFFFF" stroke="#52514E" stroke-width="1.5" rx="3"/>
+  <text x="221.3" y="1015.2" font-size="10.5" fill="#0B0B0B">External element (outside the item)</text>
+  <rect x="420.6" y="1005.7" width="12" height="11" fill="#2A78D6" rx="3"/>
+  <text x="439.1" y="1015.2" font-size="10.5" fill="#0B0B0B">Function</text>
+  <rect x="504.4" y="1004.2" width="37.7" height="15" rx="7.5" fill="#F3F2EE"/><text x="523.2" y="1015.1" font-size="9.5" font-weight="700" fill="#0B0B0B" text-anchor="middle" letter-spacing=".02em">n FM</text>
+  <text x="548.1" y="1015.2" font-size="10.5" fill="#0B0B0B">failure modes analyzed for the function</text>
+  <rect x="766.2" y="1004.2" width="43.4" height="15" rx="7.5" fill="#FBE9E9"/><text x="787.9" y="1015.1" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">no FM</text>
+  <text x="815.6" y="1015.2" font-size="10.5" fill="#0B0B0B">none yet</text>
+  <text x="40" y="1035.2" font-size="9.5" fill="#898781">Generated by tools/safety/fmea_diagrams.py from analyses/dfmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+</svg>

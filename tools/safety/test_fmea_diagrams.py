@@ -87,8 +87,24 @@ class TestFigures(unittest.TestCase):
       path = fd.OUT_DIR / name
       self.assertTrue(path.exists(), f"{name} missing; run python3 {fd.GENERATOR}")
       self.assertEqual(path.read_text(encoding="utf-8"), content, f"{name} stale; run python3 {fd.GENERATOR}")
-    extra = {p.name for p in fd.OUT_DIR.glob("*.svg") if fd.OWNED_RE.match(p.name)} - set(self.out)
+    cards = fd.build_cards()
+    for name, content in cards.items():
+      self.assertEqual((fd.OUT_DIR / name).read_text(encoding="utf-8"), content, f"{name} stale; run python3 {fd.GENERATOR}")
+    extra = {p.name for p in fd.OUT_DIR.glob("*.svg") if fd.OWNED_RE.match(p.name)} - set(self.out) - set(cards)
     self.assertFalse(extra, f"no longer generated: {sorted(extra)}")
+
+  def test_original_style_is_the_record(self):
+    # The original drawing is the figure of record; the card style comes in addition (fig-*-cards.svg), never instead.
+    self.assertFalse(fd.CARDS)
+    cards = fd.build_cards()
+    for name in self.svgs:
+      self.assertIn(fd.cards_name(name), cards, name)
+      self.assertNotIn('id="dots"', self.svgs[name], name)
+      self.assertIn('id="dots"', cards[fd.cards_name(name)], name)
+    chain = self.svgs["fig-3-6-swf-failure-chains-1.svg"]
+    self.assertIn('marker-end="url(#aS)"', chain)   # the original arrows between the columns
+    self.assertIn(f'fill="{fd.BG}"', chain)
+    self.assertIn("Card version", self.out["README.md"])
 
   def test_deterministic(self):
     self.assertEqual(fd.build(self.docs), self.out)
