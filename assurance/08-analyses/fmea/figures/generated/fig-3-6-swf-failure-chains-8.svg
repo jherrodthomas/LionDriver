@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1411" viewBox="0 0 1280 1411" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-6. SW FMEA failure chains — sheet 8 of 14 (SWF)</title>
-  <desc id="d">SW FMEA failure chains, sheet 8 of 14 (SWF rev 1.12): failure modes SWF-042 to SWF-052 (6 failure modes, 10 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <desc id="d">SW FMEA failure chains, sheet 8 of 14 (SWF rev 1.13): failure modes SWF-042 to SWF-052 (6 failure modes, 10 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,7 +9,7 @@
   </defs>
   <rect width="1280" height="1411" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-6 · SW FMEA failure chains — sheet 8 of 14</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.12 · BL-007 · draft · SWF-042 … SWF-052 · 10 causes on this sheet</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.13 · BL-007 · draft · SWF-042 … SWF-052 · 10 causes on this sheet</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -67,12 +67,12 @@
   <rect x="876" y="122" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
   <text x="885" y="141.5" font-size="12" fill="#0F172A" font-weight="700">SWF-042.C1</text>
   <rect x="1194.5" y="130.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="141.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="156.1" font-size="10.5" fill="#0F172A">LatControlTorque does not reset its PID integrator when lateral</text>
-  <text x="885" y="170.1" font-size="10.5" fill="#0F172A">control ends: controlsd calls LaC.reset() when not latActive</text>
-  <text x="885" y="184.2" font-size="10.5" fill="#0F172A">(controlsd.py:112-113), but LatControlTorque has no reset() overrid…</text>
-  <text x="885" y="197.3" font-size="9.8" fill="#475569" font-weight="600">O7 · D10 · in SWF-SE-042</text>
-  <rect x="885" y="203.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="214.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-042 open</text>
-  <rect x="997.9" y="203.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="214.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-043 open</text>
+  <text x="885" y="156.1" font-size="10.5" fill="#0F172A">Defect in the integrator reset (after BL-007,</text>
+  <text x="885" y="170.1" font-size="10.5" fill="#0F172A">change-2026-10-29-lateral-integrator-reset): LatControlTorque.reset</text>
+  <text x="885" y="184.2" font-size="10.5" fill="#0F172A">or LatControlPID.reset does not clear the PID, or controlsd does no…</text>
+  <text x="885" y="197.3" font-size="9.8" fill="#475569" font-weight="600">O5 · D4 · in SWF-SE-042</text>
+  <rect x="885" y="203.3" width="135.3" height="15" rx="7.5" fill="#2E9E6A"/><text x="952.7" y="214.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-042 completed</text>
+  <rect x="1024.3" y="203.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1078.7" y="214.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-043 open</text>
   <rect x="876" y="234.3" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
   <text x="885" y="253.8" font-size="12" fill="#0F172A" font-weight="700">SWF-042.C2</text>
   <rect x="1194.5" y="242.8" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="253.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
@@ -238,7 +238,8 @@
   <text x="223.9" y="1353.4" font-size="10.5" fill="#0F172A">Action Priority as rated (rating-tables §5)</text>
   <rect x="455.4" y="1342.4" width="59.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="485" y="1353.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">ACT open</text>
   <rect x="518.7" y="1342.4" width="90.4" height="15" rx="7.5" fill="#D97706"/><text x="563.9" y="1353.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">ACT in progress</text>
-  <text x="617.1" y="1353.4" font-size="10.5" fill="#0F172A">action status (step 6)</text>
+  <rect x="613.1" y="1342.4" width="85.7" height="15" rx="7.5" fill="#2E9E6A"/><text x="655.9" y="1353.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">ACT completed</text>
+  <text x="706.7" y="1353.4" font-size="10.5" fill="#0F172A">action status (step 6)</text>
   <text x="40" y="1373.4" font-size="10" fill="#475569">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
   <text x="40" y="1391.4" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>

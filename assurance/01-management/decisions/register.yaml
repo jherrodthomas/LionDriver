@@ -6256,3 +6256,27 @@
       detail: "No change. Cost: SWF-028.C2 and SWF-030.C2 stay AP H with nothing that detects them."
   sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-028, SWF-030, SWF-058, SWF-082", "assurance/07-supporting/impact/change-2026-10-27-reference-test-switches.md", "DQ-131"]
   status: open
+- id: DQ-426
+  question: "Should the steering controller forget its built-up correction each time steering assist ends?"
+  context: >-
+    A reversible technical choice, so Claude goes with the recommendation unless you object. The Corolla's steering
+    controller builds up a correction (an integrator) while engaged. Upstream openpilot keeps it when assist ends and
+    adds it again at the next engagement, even minutes later on a different road, so the first moments of an engagement
+    can pull with an old correction. The curvature controller other cars use already clears it. **The fix clears it
+    whenever steering assist is off, so every engagement starts from zero.** Upstream master (2026-10-27) still keeps it.
+  reversibility: easy
+  blocks: "SW FMEA SWF-042.C1 (D 10 -> 4), SWF-ACT-042; System FMEA SFM-002.C1, SFM-007.C1"
+  gate: G1
+  decider: claude
+  asked: 2026-10-29
+  proceed_after: 2026-11-01
+  options:
+    - key: A
+      recommended: true
+      title: "Clear the correction when steering assist ends (torque and PID controllers)"
+      detail: "Two short methods, tested and mutation-checked in CI. Cost: a steady bias such as road crown is re-learned over the first seconds of each engagement, and the code differs from upstream."
+    - key: B
+      title: "Keep upstream behaviour and record why"
+      detail: "No fork difference. Cost: an old correction is applied at engagement; SWF-042.C1 stays AP H with no test."
+  sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-042", "assurance/07-supporting/impact/change-2026-10-29-lateral-integrator-reset.md"]
+  status: open

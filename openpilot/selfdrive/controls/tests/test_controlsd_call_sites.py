@@ -122,3 +122,16 @@ class TestHarness(OpenpilotTestCase):
     t = controls()
     CC, _ = t.c.state_control()
     self.assertTrue(CC.longActive and CC.latActive)
+
+
+class TestLateralResetCallSite(OpenpilotTestCase):
+  # SWF-042.C1: when lateral control ends, controlsd resets the reference car's torque controller, integrator included
+  def test_integrator_cleared_when_lateral_control_ends(self):
+    t = controls()
+    t.sm['modelV2'].action.desiredCurvature = 0.0005
+    for _ in range(300):
+      step(t)
+    assert t.c.LaC.pid.i != 0.
+    t.sm['selfdriveState'].active = False
+    step(t)
+    assert t.c.LaC.pid.i == 0.

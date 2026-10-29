@@ -390,3 +390,30 @@ replace = "  removed = []"
 tests = ["openpilot/system/manager/test/test_reference_env.py"]
 fmea = ["SWF-028.C2", "SWF-030.C2"]
 why = "manager does not call the guard"
+
+[[mutants]]
+id = "LR-1"
+file = "openpilot/selfdrive/controls/lib/latcontrol_torque.py"
+find = "    super().reset()\n    self.pid.reset()"
+replace = "    super().reset()"
+tests = ["openpilot/selfdrive/controls/tests/test_latcontrol.py", "openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py"]
+fmea = ["SWF-042.C1"]
+why = "the reference car's torque controller keeps the last engagement's integrator into the next one"
+
+[[mutants]]
+id = "LR-2"
+file = "openpilot/selfdrive/controls/lib/latcontrol_pid.py"
+find = "    super().reset()\n    self.pid.reset()"
+replace = "    super().reset()"
+tests = ["openpilot/selfdrive/controls/tests/test_latcontrol.py"]
+fmea = ["SWF-042.C1"]
+why = "the angle PID keeps the last engagement's integrator into the next one"
+
+[[mutants]]
+id = "LR-3"
+file = "openpilot/selfdrive/controls/controlsd.py"
+find = "    if not CC.latActive:\n      self.LaC.reset()"
+replace = "    if False:\n      self.LaC.reset()"
+tests = ["openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py"]
+fmea = ["SWF-042.C1"]
+why = "controlsd does not reset the lateral controller when lateral control ends"
