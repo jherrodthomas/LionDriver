@@ -23,12 +23,19 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 
 - **Safety:** removes a torque step at engagement from a stale correction (HZ-002 abrupt pull, HZ-003 lane departure, SWF-042 end effects). The integrator is bounded by the lateral-acceleration limits, and the CarController and panda limits (1500 units, 15 up / 25 down per frame) still apply, so the old behaviour stayed inside the envelope; the change reduces what reaches it.
 - **Driving:** a steady bias (road crown, a small calibration offset) is re-learned over the first seconds of each engagement, at KI 0.15 in lateral-acceleration space, instead of starting from the last value. The feed-forward term, which carries most of the command, is unchanged.
-- **Process replay:** `controlsd` output can differ from comma's reference logs on any segment that re-engages lateral control after building up an integrator. If CI shows a diff, it is listed in `EXPLAINED_DIFFS` for the affected `controlsState.lateralControlState` fields with this record as the reason (§3).
+- **Process replay:** `controlsd` output differs from comma's reference logs on two of 66 segments, neither of them Toyota (§3). Each is listed in `EXPLAINED_DIFFS` (`test_processes.py`) for that field, process and segment only.
 - **Upstream:** a fork difference to carry at each openpilot sync (WP-M-11). If upstream adds its own reset, this one is dropped.
 
 ## 3. Process replay
 
-To be filled from the CI run of this PR.
+CI process replay on `db9eb79` (#530): 4 of 66 segments changed. Two are the existing explained diffs (Tesla `card`, CA-001; Toyota `dmonitoringd`, TSR-634). Two are this change, both in `controlsd`:
+
+| Segment | Controller | Fields | What it shows |
+|---|---|---|---|
+| Hyundai `regenAFB9780D823\|2025-04-08--23-00-34--0` | torque | `controlsState.lateralControlState.torqueState.i` (1474 frames) | While assist is off the logged integrator is 0 instead of the last value, -0.010. The torque command does not differ: the segment does not re-engage lateral control with that integrator |
+| Honda `regenB328FF8BA0A\|2025-04-08--22-57-45--0` | PID | `pidState.i` (357), `pidState.output` (331), `carControl.actuators.torque` (331) | The cause in action. At re-engagement (frame 5644) the old integrator, -0.066, is no longer added: the command is -0.30 instead of -0.36 and converges over about 3.3 s (331 frames at 100 Hz) as the integrator builds up again |
+
+The Toyota reference segment (`regen218A4DCFAA1`) shows no `controlsd` diff. `test_explained_diffs.py` checks that the Honda entry excludes only its three fields and that `latActive` is still compared.
 
 ## 4. Open items
 
