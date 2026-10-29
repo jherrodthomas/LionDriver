@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1564" viewBox="0 0 1280 1564" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-6. SW FMEA failure chains — sheet 2 of 14 (SWF)</title>
-  <desc id="d">SW FMEA failure chains, sheet 2 of 14 (SWF rev 1.14): failure modes SWF-001 to SWF-012 (8 failure modes, 12 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <desc id="d">SW FMEA failure chains, sheet 2 of 14 (SWF rev 1.15): failure modes SWF-001 to SWF-012 (8 failure modes, 12 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -10,7 +10,7 @@
   </defs>
   <rect width="1280" height="1564" fill="#FCFCFB"/>
   <text x="40" y="44" font-size="20" fill="#0B0B0B" font-weight="700">Figure 3-6 · SW FMEA failure chains — sheet 2 of 14</text>
-  <text x="40" y="66" font-size="12.5" fill="#52514E">SWF rev 1.14 · BL-007 · draft · SWF-001 … SWF-012 · 12 causes on this sheet</text>
+  <text x="40" y="66" font-size="12.5" fill="#52514E">SWF rev 1.15 · BL-007 · draft · SWF-001 … SWF-012 · 12 causes on this sheet</text>
   <text x="1240" y="44" font-size="11" fill="#52514E" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#52514E" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E1E0D9" stroke-width="1"/>

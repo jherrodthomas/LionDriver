@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Tests for host_mutation.py: the mutant list is well formed and still matches the code; no openpilot build needed."""
 
+import os
 import sys
 import tempfile
 import unittest
@@ -59,3 +60,24 @@ class TestLoader(unittest.TestCase):
 
 if __name__ == "__main__":
   unittest.main()
+
+
+class TestBytecode(unittest.TestCase):
+  def test_same_length_mutant_is_not_masked_by_cached_bytecode(self):
+    # the original is imported (and cached) and the mutant written within the same second: same size, same mtime
+    import importlib
+    with tempfile.TemporaryDirectory() as d:
+      src = Path(d) / "hm_probe_mod.py"
+      src.write_text("VALUE = 2\n", encoding="utf-8")
+      sys.path.insert(0, d)
+      try:
+        mod = importlib.import_module("hm_probe_mod")
+        self.assertEqual(mod.VALUE, 2)
+        st = src.stat()
+        hm.write_source(src, "VALUE = 3\n")
+        os.utime(src, ns=(st.st_atime_ns, st.st_mtime_ns))
+        del sys.modules["hm_probe_mod"]
+        self.assertEqual(importlib.import_module("hm_probe_mod").VALUE, 3)
+      finally:
+        sys.path.remove(d)
+        sys.modules.pop("hm_probe_mod", None)

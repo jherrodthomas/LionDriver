@@ -18,6 +18,7 @@ the run instead of passing silently. Needs the openpilot environment (CI unit_te
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import json
 import subprocess
 import sys
@@ -68,6 +69,14 @@ def mutate(text: str, m: Mutant) -> str:
   return text.replace(m.find, m.replace)
 
 
+def write_source(path: Path, text: str) -> None:
+  """Write a source file and drop its cached bytecode. A mutant of the same length written within the same second as the
+  original keeps the size and mtime that the .pyc records, so Python would load the stale original and the mutant would
+  survive for no reason."""
+  path.write_text(text, encoding="utf-8")
+  Path(importlib.util.cache_from_source(str(path))).unlink(missing_ok=True)
+
+
 def run_tests(tests: tuple[str, ...]) -> subprocess.CompletedProcess:
   cmd = [sys.executable, str(REPO / "tools/test_runner.py"), "-j", "1", "--durations", "0", *tests]
   return subprocess.run(cmd, cwd=REPO, capture_output=True, text=True, timeout=TIMEOUT_S)
@@ -84,10 +93,10 @@ def check(mutants: list[Mutant]) -> list[dict]:
     original = path.read_text(encoding="utf-8")
     mutated = mutate(original, m)
     try:
-      path.write_text(mutated, encoding="utf-8")
+      write_source(path, mutated)
       r = run_tests(m.tests)
     finally:
-      path.write_text(original, encoding="utf-8")
+      write_source(path, original)
     if "COLLECTION ERROR" in r.stdout:
       reason = "an import or syntax error kills nothing"
       raise MutantError(f"{m.id}: the tests could not be collected on the mutant ({reason}):\n{r.stdout[-2000:]}")
